@@ -2734,3 +2734,17 @@ proc/message_ghosts(var/message, show_wraith = FALSE)
 			y_max--
 	}
 	return y_max
+
+/// Returns an html input and a script which allows to toggle elements of a certain class visible or hidden depending what filter the user types in the input.
+proc/search_snippet(var/inputStyle = "", var/inputPlaceholder = "filter packages", var/toggledClass = "supply-package")
+	. = {"<input type="text" id="searchSnippetFilter" style="[inputStyle]" placeholder="[inputPlaceholder]">
+		<script>
+			document.querySelector('#searchSnippetFilter').addEventListener('input', function(event) {
+				var re = new RegExp(event.target.value, "i");
+				rowList = document.querySelectorAll('.[toggledClass]');
+
+				for (var i = 0; i < rowList.length; i++) {
+					rowList\[i\].style.display = rowList\[i\].innerText.match(re) ? '' : 'none';
+				}
+			});
+		</script>"}
