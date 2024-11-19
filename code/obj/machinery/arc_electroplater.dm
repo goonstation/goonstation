@@ -34,7 +34,7 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 			boutput(user, SPAN_ALERT("You try to turn on \the [src] and jump into it, but it is out of power."))
 			return 0
 		user.visible_message(SPAN_ALERT("<b>[user] jumps into \the [src].</b>"), SPAN_ALERT("<b>You jump into \the [src].</b>"))
-		var/obj/statue = user.become_statue(src.my_bar.material, survive=TRUE)
+		var/obj/statue = user.become_statue(src.my_bar.material.getID(), survive=TRUE)
 		user.TakeDamage("All", burn=200)
 		qdel(src.my_bar)
 		src.my_bar = null
