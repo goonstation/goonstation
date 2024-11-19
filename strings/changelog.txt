@@ -1,4 +1,10 @@
 
+(t)tue nov 19 24
+(u)Glamurio (Ryou)
+(p)21230
+(e)🔄🧱📦|C-Rework, A-Materials, A-Game-Objects
+(*)Statues have been reworked, and can now be mined or cut up depending on the hardness of the material, potentially yielding  the brain of the person encased.
+(*)Material made of ice will now melt when exposed to heat.
 (t)mon nov 18 24
 (u)LeahTheTech
 (+)Photophosphide no longer explodes while in disposal/mail pipes.
