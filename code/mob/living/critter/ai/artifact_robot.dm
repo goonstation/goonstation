@@ -93,7 +93,7 @@
 		return TRUE
 
 /datum/aiTask/succeedable/floor_place/succeeded()
-	var/obj/artifact/robot/art = holder.owner.loc
+	var/obj/machinery/artifact/robot/art = holder.owner.loc
 	var/datum/artifact/robot/art_datum = art.artifact
 	if(istype(art) && istype(art_datum))
 		return istype(holder.target, art_datum.floor_type)
@@ -101,10 +101,10 @@
 
 /datum/aiTask/succeedable/floor_place/on_tick()
 	if(!has_started)
-		if(holder.owner && istype(holder.target, /turf/space) && BOUNDS_DIST(holder.owner, holder.target) == 0)
+		if(holder.owner && BOUNDS_DIST(holder.owner, holder.target) == 0)
 			holder.owner.set_dir(get_dir(holder.owner, holder.target))
 			var/turf/space/S = holder.target
-			var/obj/artifact/robot/art = holder.owner.loc
+			var/obj/machinery/artifact/robot/art = holder.owner.loc
 			if(istype(art))
 				var/datum/artifact/robot/art_datum = art.artifact
 				if(istype(art_datum))
@@ -156,7 +156,7 @@
 		return TRUE
 
 /datum/aiTask/succeedable/wall_place/succeeded()
-	var/obj/artifact/robot/art = holder.owner.loc
+	var/obj/machinery/artifact/robot/art = holder.owner.loc
 	var/datum/artifact/robot/art_datum = art.artifact
 	if(istype(art) && istype(art_datum))
 		return istype(holder.target, art_datum.wall_type)
@@ -164,10 +164,10 @@
 
 /datum/aiTask/succeedable/wall_place/on_tick()
 	if(!has_started)
-		if(holder.owner && istype(holder.target, /turf/space) && BOUNDS_DIST(holder.owner, holder.target) == 0)
+		if(holder.owner && BOUNDS_DIST(holder.owner, holder.target) == 0)
 			holder.owner.set_dir(get_dir(holder.owner, holder.target))
 			var/turf/space/S = holder.target
-			var/obj/artifact/robot/art = holder.owner.loc
+			var/obj/machinery/artifact/robot/art = holder.owner.loc
 			var/datum/artifact/robot/art_datum = art.artifact
 			if(istype(art) && istype(art_datum))
 				S.ReplaceWith(art_datum.wall_type)
