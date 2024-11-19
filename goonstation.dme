@@ -1168,6 +1168,7 @@
 #include "code\modules\events\minor\appendicitis_event.dm"
 #include "code\modules\events\minor\artifact.dm"
 #include "code\modules\events\minor\buddy_time.dm"
+#include "code\modules\events\minor\dead_drops.dm"
 #include "code\modules\events\minor\gimmick_flood.dm"
 #include "code\modules\events\minor\illegal_trinkets.dm"
 #include "code\modules\events\minor\pests.dm"

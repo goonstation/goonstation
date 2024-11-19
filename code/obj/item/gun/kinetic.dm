@@ -2320,7 +2320,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	attack_self(mob/user as mob)
 
 		user.drop_item(src) //clear hands
-		boutput(user, SPAN_NOTICE("You rip apart the the [src]!"))
+		boutput(user, SPAN_NOTICE("You rip apart the [src]!"))
 		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 
 		// give an OPEN slamgun
