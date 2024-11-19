@@ -572,7 +572,10 @@
 		else boutput(user, SPAN_ALERT("\The [src] is already full!"))
 
 	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
-		if (istype(over_object, /obj/table) && src.contents.len > 0)
+		if ((istype(over_object, /obj/table) || \
+					(isturf(over_object) && total_density(over_location) < 1)) && \
+					in_interact_range(over_object,src) && \
+					src.contents.len > 0)
 			usr.visible_message(SPAN_NOTICE("[usr] dumps out [src]'s contents onto [over_object]!"))
 			for (var/obj/item/thing in src.contents)
 				thing.set_loc(over_location)
@@ -588,7 +591,8 @@
 
 	get_help_message(dist, mob/user)
 		. = ..()
-		. += "Hold this and drag a nearby cigarette onto it to auto-fill.\nDrag this onto a table while holding it to dump its contents."
+		. += "Hold this and drag a nearby cigarette onto it to auto-fill.\n \
+			Drag this onto a nearby table or floor while holding it to dump its contents."
 
 
 
