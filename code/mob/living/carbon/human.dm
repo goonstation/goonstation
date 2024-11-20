@@ -336,6 +336,8 @@
 			r_leg:set_skin_tone()
 			howmany--
 
+		src.holder.update_body()
+
 		if (holder.client) holder.next_move = world.time + 7 //Fix for not being able to move after you got new limbs.
 
 	proc/reset_stone() // reset skintone to whatever the holder's s_tone is
