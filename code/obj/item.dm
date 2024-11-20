@@ -686,7 +686,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	return 1
 
 /obj/item/proc/split_stack(var/toRemove)
-	if(toRemove >= src.amount || toRemove < 1) return null
+	if(toRemove >= src.amount || toRemove < 1 || QDELETED(src)) return null
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)

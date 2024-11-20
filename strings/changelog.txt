@@ -1,4 +1,24 @@
 
+(t)wed nov 20 24
+(u)Azrun
+(+)ABCU on a planet near you! Allow for ABCU to work with terrainify.
+(u)NightmarechaMillian
+(p)21357
+(e)🎨|C-Sprites
+(+)Added projectile sprites to metal and bone pipeshot.
+(t)tue nov 19 24
+(u)Glamurio (Ryou)
+(p)21230
+(e)🔄🧱📦|C-Rework, A-Materials, A-Game-Objects
+(*)Statues have been reworked, and can now be mined or cut up depending on the hardness of the material, potentially yielding  the brain of the person encased.
+(*)Material made of ice will now melt when exposed to heat.
+(t)mon nov 18 24
+(u)LeahTheTech
+(+)Photophosphide no longer explodes while in disposal/mail pipes.
+(u)NightmarechaMillian
+(p)21327
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Breaching weapons (sledgehammers, fireaxes, etc) will now also deal 4x damage to windows
 (t)sat nov 16 24
 (u)FlameArrow57
 (p)21339
