@@ -284,6 +284,7 @@ ABSTRACT_TYPE(/obj/hotspot)
 /obj/hotspot/gasfire
 	icon = 'icons/effects/fire_atmospheric.dmi'
 	icon_state = "1"
+	appearance_flags = TILE_BOUND // prevents fires laying against walls from showing over the wall
 	alpha = 160
 	pixel_x = -16
 
