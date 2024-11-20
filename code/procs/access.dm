@@ -321,7 +321,7 @@
 		if("Assistant", "Staff Assistant", "Radio Show Host")
 			return list(access_maint_tunnels, access_tech_storage)
 		if("Mail Courier")
-			return list(access_mail, access_maint_tunnels, access_tech_storage)
+			return list(access_mail, access_heads, access_medical, access_researchfoyer, access_research, access_maint_tunnels, access_tech_storage)
 
 		// --------------------------- Other or gimmick
 		if("VIP")
