@@ -1936,7 +1936,6 @@
 #include "code\obj\artifacts\artifact_objects\container.dm"
 #include "code\obj\artifacts\artifact_objects\curser.dm"
 #include "code\obj\artifacts\artifact_objects\darkness_field.dm"
-#include "code\obj\artifacts\artifact_objects\fabricator.dm"
 #include "code\obj\artifacts\artifact_objects\forcefield.dm"
 #include "code\obj\artifacts\artifact_objects\healer.dm"
 #include "code\obj\artifacts\artifact_objects\heatwave.dm"
