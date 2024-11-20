@@ -290,6 +290,8 @@
 		if (!holder)
 			return
 
+		var/force_redraw = FALSE
+
 		if (!l_arm && howmany > 0)
 			if (holder?.mutantrace?.l_limb_arm_type_mutantrace)
 				l_arm = new holder.mutantrace.l_limb_arm_type_mutantrace(holder)
@@ -301,6 +303,7 @@
 			l_arm:set_skin_tone()
 			holder.hud.update_hands()
 			howmany--
+			force_redraw = TRUE
 
 		if (!r_arm && howmany > 0)
 			if (holder?.mutantrace?.r_limb_arm_type_mutantrace)
@@ -313,6 +316,7 @@
 			r_arm:set_skin_tone()
 			holder.hud.update_hands()
 			howmany--
+			force_redraw = TRUE
 
 		if (!l_leg && howmany > 0)
 			if (holder?.mutantrace?.l_limb_leg_type_mutantrace)
@@ -324,6 +328,7 @@
 			l_leg:original_holder = holder
 			l_leg:set_skin_tone()
 			howmany--
+			force_redraw = TRUE
 
 		if (!r_leg && howmany > 0)
 			if (holder?.mutantrace?.r_limb_leg_type_mutantrace)
@@ -335,8 +340,10 @@
 			r_leg:original_holder = holder
 			r_leg:set_skin_tone()
 			howmany--
+			force_redraw = TRUE
 
-		src.holder.update_body()
+		if(force_redraw)
+			src.holder.update_body()
 
 		if (holder.client) holder.next_move = world.time + 7 //Fix for not being able to move after you got new limbs.
 
