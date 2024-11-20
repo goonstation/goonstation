@@ -32264,7 +32264,7 @@
 /obj/item/currency/spacecash/thousand,
 /obj/item/tank/oxygen,
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "dlG" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Medical Booth";
@@ -33542,7 +33542,7 @@
 "eIE" = (
 /obj/item/seed/grass,
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "eJl" = (
 /obj/table/flock/auto,
 /obj/machinery/light/flock,
@@ -34664,7 +34664,7 @@
 "gbR" = (
 /obj/item/reagent_containers/food/snacks/donkpocket,
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "gcE" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -35205,7 +35205,7 @@
 "gJW" = (
 /mob/living/critter/small_animal/walrus,
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "gKt" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -35736,7 +35736,7 @@
 "hvM" = (
 /obj/item/seed/alien,
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "hwl" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "QM"
@@ -36005,7 +36005,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "hPo" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -36128,7 +36128,7 @@
 /obj/shrub,
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "ieC" = (
 /obj/forcefield/energyshield/perma,
 /obj/strip_door,
@@ -36360,7 +36360,7 @@
 "isW" = (
 /obj/item/spraybottle,
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "itd" = (
 /obj/table/reinforced/chemistry/auto,
 /turf/simulated/floor,
@@ -36560,7 +36560,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "iLk" = (
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
@@ -37584,7 +37584,7 @@
 	},
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "keq" = (
 /obj/disposalpipe/segment/morgue,
 /obj/cable{
@@ -39029,7 +39029,7 @@
 "maS" = (
 /mob/living/critter/small_animal/seal,
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "mbP" = (
 /obj/item/raw_material/bohrum,
 /obj/item/raw_material/bohrum,
@@ -40316,7 +40316,7 @@
 /area/station/hallway/primary/south)
 "nxK" = (
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "nyt" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -41757,7 +41757,7 @@
 "ptx" = (
 /obj/item/reagent_containers/food/snacks/plant/coconut,
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "ptF" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 8
@@ -41962,7 +41962,7 @@
 "pGL" = (
 /obj/item/currency/spacecash/thousand,
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "pHw" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency{
@@ -43074,7 +43074,7 @@
 /area/station/crew_quarters/info)
 "rgy" = (
 /turf/simulated/wall/auto/asteroid,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "rhl" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -43395,7 +43395,7 @@
 "rDX" = (
 /obj/item/reagent_containers/food/snacks/granola_bar,
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "rEn" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -44322,7 +44322,7 @@
 "tas" = (
 /obj/item/rubberduck,
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "taN" = (
 /obj/submachine/weapon_vendor/fishing/portable,
 /turf/simulated/floor/green,
@@ -44330,7 +44330,7 @@
 "tbf" = (
 /obj/item/reagent_containers/food/snacks/snack_cake/golden,
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "tbN" = (
 /obj/stool/chair/dining/wood{
 	dir = 8
@@ -45066,7 +45066,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "uew" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
@@ -45303,7 +45303,7 @@
 /obj/item/seed/grass,
 /obj/item/seed/grass,
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "uAB" = (
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/baroffice)
@@ -45497,7 +45497,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "uRN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -45758,7 +45758,7 @@
 "vwG" = (
 /obj/item/reagent_containers/food/snacks/burrito,
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "vxJ" = (
 /obj/disposaloutlet{
 	mailgroup = "medresearch";
@@ -47138,7 +47138,7 @@
 "xdY" = (
 /obj/item/reagent_containers/food/snacks/snack_cake,
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "xem" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
@@ -47524,7 +47524,7 @@
 "xIT" = (
 /obj/submachine/GTM,
 /turf/simulated/wall/auto/asteroid,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "xJL" = (
 /obj/machinery/door/airlock/pyro/alt{
 	id = "med_bathroom"
@@ -47671,7 +47671,7 @@
 /obj/item/skull,
 /obj/item/currency/spacecash/thousand,
 /turf/simulated/floor/grass,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "xYi" = (
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,

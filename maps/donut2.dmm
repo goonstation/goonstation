@@ -11653,7 +11653,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "biO" = (
 /obj/stool/chair{
 	dir = 4
@@ -15600,11 +15600,11 @@
 /area/station/maintenance/south)
 "bGU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "bGV" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "bGX" = (
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -15654,28 +15654,28 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "bHr" = (
 /obj/stool,
 /turf/simulated/floor/grime,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "bHs" = (
 /turf/simulated/floor/grime,
 /area/station/quartermaster/refinery)
 "bHt" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "bHw" = (
 /obj/cable{
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "bHz" = (
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "bHA" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -15828,7 +15828,7 @@
 /obj/storage/closet/welding_supply,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "bHX" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -15836,7 +15836,7 @@
 "bIa" = (
 /obj/storage/crate,
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "bIb" = (
 /obj/table/auto,
 /obj/item/device/appraisal{
@@ -15855,7 +15855,7 @@
 	pixel_y = 3
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "bId" = (
 /obj/grille/catwalk,
 /obj/cable/yellow{
@@ -16108,7 +16108,7 @@
 	icon_state = "catwalk_cross";
 	layer = 2
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "bIQ" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -16118,7 +16118,7 @@
 	icon_state = "catwalk_cross";
 	layer = 2
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "bIR" = (
 /obj/landmark/magnet_shield,
 /obj/securearea{
@@ -16374,7 +16374,7 @@
 	pixel_x = -3
 	},
 /turf/simulated/floor/grime,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "bPa" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
@@ -17156,7 +17156,7 @@
 	rand_pos = 0
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/wreckage)
+/area/abandonedship)
 "cpz" = (
 /obj/machinery/camera/television{
 	c_tag = "test chamber 2";
@@ -17271,7 +17271,7 @@
 	name = "Ranch Ship"
 	},
 /turf/simulated/floor/green,
-/area/station/wreckage)
+/area/abandonedship)
 "cul" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17666,7 +17666,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/wreckage)
+/area/abandonedship)
 "cFX" = (
 /obj/stool/chair{
 	dir = 8
@@ -17879,7 +17879,7 @@
 "cML" = (
 /obj/decal/poster/wallsign/stencil/left/h,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/wreckage)
+/area/abandonedship)
 "cNm" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -18335,7 +18335,7 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 9
 	},
-/area/station/wreckage)
+/area/abandonedship)
 "cZN" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/shuttlebay,
@@ -18654,7 +18654,7 @@
 	},
 /obj/item/storage/toolbox/emergency,
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "dkq" = (
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/yellow/side{
@@ -19160,7 +19160,7 @@
 /obj/decal/poster/wallsign/stencil/left/r,
 /obj/decal/poster/wallsign/stencil/right/a,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/wreckage)
+/area/abandonedship)
 "dCn" = (
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
@@ -19957,7 +19957,7 @@
 "ead" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/shuttlebay,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "ear" = (
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -20245,7 +20245,7 @@
 	dir = 6;
 	layer = 2
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "ejJ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -20563,7 +20563,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "etX" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/blueblack,
@@ -20709,7 +20709,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/wreckage)
+/area/abandonedship)
 "exr" = (
 /obj/item/plate,
 /obj/item/reagent_containers/food/snacks/snack_cake/golden,
@@ -21351,7 +21351,7 @@
 	dir = 9;
 	layer = 2
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "eSH" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -21383,7 +21383,7 @@
 "eUx" = (
 /obj/machinery/sheet_extruder,
 /turf/simulated/floor/grime,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "eVj" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -21553,7 +21553,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/grime,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "faR" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -21581,7 +21581,7 @@
 /obj/decal/poster/wallsign/stencil/left/n,
 /obj/decal/poster/wallsign/stencil/right/c,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/wreckage)
+/area/abandonedship)
 "fbx" = (
 /obj/table/auto,
 /obj/random_item_spawner/snacks/maybe_few,
@@ -21733,7 +21733,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "feA" = (
 /obj/cable/yellow{
 	icon_state = "2-4"
@@ -22068,7 +22068,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/dirt,
-/area/station/wreckage)
+/area/abandonedship)
 "fpl" = (
 /obj/decal/tile_edge/floorguide/arrow_s{
 	dir = 4
@@ -22328,7 +22328,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "fBl" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
@@ -22512,7 +22512,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/plating/catwalk,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "fIq" = (
 /obj/stool/bed/moveable,
 /obj/decal/cleanable/dirt/dirt2,
@@ -22561,7 +22561,7 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor/grime,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "fJk" = (
 /obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
@@ -22756,7 +22756,7 @@
 /area/station/hallway/secondary/exit)
 "fQm" = (
 /turf/simulated/floor/grime,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "fQt" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -22780,7 +22780,7 @@
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "fSn" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -24055,7 +24055,7 @@
 /area/station/maintenance/west)
 "gIe" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/wreckage)
+/area/abandonedship)
 "gIh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -24563,7 +24563,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "gUr" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -24615,7 +24615,7 @@
 "gVX" = (
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
-/area/station/wreckage)
+/area/abandonedship)
 "gYc" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -25139,7 +25139,7 @@
 "hqn" = (
 /obj/machinery/manufacturer/qm,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "hqG" = (
 /obj/railing/orange/reinforced{
 	dir = 1
@@ -25147,7 +25147,7 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
-/area/station/wreckage)
+/area/abandonedship)
 "hqQ" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -25311,7 +25311,7 @@
 /obj/shrub,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grass/leafy,
-/area/station/wreckage)
+/area/abandonedship)
 "hwm" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -25576,7 +25576,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "hFr" = (
 /obj/table/endtable_classic,
 /obj/item/storage/box/nerd_kit{
@@ -25631,7 +25631,7 @@
 	},
 /obj/railing/orange/reinforced,
 /turf/simulated/floor/grasstodirt,
-/area/station/wreckage)
+/area/abandonedship)
 "hGM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25660,7 +25660,7 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 10
 	},
-/area/station/wreckage)
+/area/abandonedship)
 "hIn" = (
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
@@ -25919,7 +25919,7 @@
 "hQp" = (
 /obj/railing/orange/reinforced,
 /turf/simulated/floor/grasstodirt,
-/area/station/wreckage)
+/area/abandonedship)
 "hQw" = (
 /obj/disposalpipe/segment,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -27172,7 +27172,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "iBz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -27192,7 +27192,7 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "iCW" = (
 /obj/storage/closet{
 	name = "shower storage"
@@ -28110,7 +28110,7 @@
 "jhA" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "jhM" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/baroffice)
@@ -28747,7 +28747,7 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 8
 	},
-/area/station/wreckage)
+/area/abandonedship)
 "jCE" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/cargo,
@@ -30104,7 +30104,7 @@
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "kxW" = (
 /obj/item/rods/steel,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
@@ -30500,7 +30500,7 @@
 "kKI" = (
 /obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/shuttlebay,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "kKR" = (
 /obj/table/reinforced/auto,
 /obj/item/clipboard,
@@ -30762,7 +30762,7 @@
 "kPQ" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/grime,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "kPX" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -31662,7 +31662,7 @@
 /area/station/security/processing)
 "luE" = (
 /turf/simulated/floor/dirt,
-/area/station/wreckage)
+/area/abandonedship)
 "luU" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/mapping_helper/access/tox_storage,
@@ -32192,7 +32192,7 @@
 	icon_state = "catwalk_cross";
 	layer = 2
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "lGz" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/machinery/drainage,
@@ -32741,7 +32741,7 @@
 /area/station/security/checkpoint/research)
 "lTq" = (
 /turf/simulated/floor/grass/leafy,
-/area/station/wreckage)
+/area/abandonedship)
 "lUk" = (
 /obj/machinery/shower{
 	dir = 8;
@@ -32862,7 +32862,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "lZI" = (
 /turf/simulated/wall/false_wall,
 /area/station/crew_quarters/baroffice)
@@ -32985,7 +32985,7 @@
 "mdZ" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/shuttlebay,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "mei" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -33458,7 +33458,7 @@
 "mro" = (
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "mrv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable/blue{
@@ -35201,7 +35201,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "nso" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -35400,7 +35400,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/dirt,
-/area/station/wreckage)
+/area/abandonedship)
 "nyO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -36208,7 +36208,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "nZu" = (
 /obj/machinery/neosmelter,
 /turf/simulated/floor/shuttlebay{
@@ -36868,7 +36868,7 @@
 	doants = 0
 	},
 /turf/simulated/floor/dirt,
-/area/station/wreckage)
+/area/abandonedship)
 "ory" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -37262,7 +37262,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/wreckage)
+/area/abandonedship)
 "ozB" = (
 /obj/item/toy/plush/small/stress_ball,
 /obj/disposalpipe/segment{
@@ -38139,7 +38139,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "oWv" = (
 /obj/grille/catwalk,
 /obj/cable/yellow{
@@ -38170,7 +38170,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "oYS" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/stool/chair{
@@ -38612,7 +38612,7 @@
 /area/station/maintenance/east)
 "pou" = (
 /turf/simulated/floor/plating,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "pox" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -38741,7 +38741,7 @@
 	pixel_y = 25
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "psM" = (
 /obj/machinery/light/incandescent,
 /obj/shrub{
@@ -39476,7 +39476,7 @@
 	dir = 5;
 	layer = 2
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "pKa" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -39759,7 +39759,7 @@
 /obj/submachine/seed_vendor,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/dirt,
-/area/station/wreckage)
+/area/abandonedship)
 "pWa" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
@@ -40003,7 +40003,7 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/structure/woodwall,
 /turf/simulated/floor/plating,
-/area/station/wreckage)
+/area/abandonedship)
 "qeb" = (
 /obj/shrub{
 	dir = 10
@@ -40648,7 +40648,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/dirt,
-/area/station/wreckage)
+/area/abandonedship)
 "qwN" = (
 /obj/overlay{
 	icon = 'icons/misc/beach2.dmi';
@@ -40986,7 +40986,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/dirt,
-/area/station/wreckage)
+/area/abandonedship)
 "qFw" = (
 /obj/machinery/light/emergency{
 	dir = 8
@@ -42018,7 +42018,7 @@
 "rqk" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "rqV" = (
 /obj/table/auto,
 /obj/item/paper_bin{
@@ -42978,7 +42978,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/station/wreckage)
+/area/abandonedship)
 "rWe" = (
 /obj/decal/tile_edge/floorguide/command{
 	dir = 4
@@ -43340,7 +43340,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/wreckage)
+/area/abandonedship)
 "sgA" = (
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
@@ -43527,7 +43527,7 @@
 "snf" = (
 /obj/storage/crate,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "sng" = (
 /obj/landmark/start/job/medical_doctor,
 /obj/disposalpipe/segment{
@@ -43821,7 +43821,7 @@
 "stQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/wreckage)
+/area/abandonedship)
 "suc" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -44721,7 +44721,7 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
-/area/station/wreckage)
+/area/abandonedship)
 "sTZ" = (
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -44925,7 +44925,7 @@
 	name = "Rancher Shuttle Controls"
 	},
 /turf/simulated/floor/dirt,
-/area/station/wreckage)
+/area/abandonedship)
 "sZq" = (
 /obj/decal/poster/wallsign/danger_highvolt,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -44933,7 +44933,7 @@
 "sZG" = (
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/shuttlebay,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "taE" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/circuit/green,
@@ -45071,7 +45071,7 @@
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/airless/plating/catwalk,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "tgz" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -45088,7 +45088,7 @@
 	icon_state = "catwalk_cross";
 	layer = 2
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "tgX" = (
 /obj/machinery/camera{
 	c_tag = "West Maintenance External Access";
@@ -45127,7 +45127,7 @@
 /area/station/hallway/primary/east)
 "tia" = (
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "tiL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -46691,7 +46691,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "ufA" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -46732,7 +46732,7 @@
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grass/leafy,
-/area/station/wreckage)
+/area/abandonedship)
 "ugn" = (
 /obj/submachine/ATM{
 	pixel_x = 30
@@ -46789,7 +46789,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "ugH" = (
 /obj/machinery/turret,
 /obj/lattice,
@@ -46809,7 +46809,7 @@
 "uiu" = (
 /obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/grime,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "uiK" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -46888,7 +46888,7 @@
 	name = "Mineral Magnet Pad"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "ukA" = (
 /turf/simulated/wall/false_wall,
 /area/station/security/brig)
@@ -47013,7 +47013,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/wreckage)
+/area/abandonedship)
 "umD" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -47052,7 +47052,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/plating/catwalk,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "uoo" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -47708,7 +47708,7 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 8
 	},
-/area/station/wreckage)
+/area/abandonedship)
 "uPc" = (
 /obj/decal/cleanable/writing{
 	words = "honk :("
@@ -47797,7 +47797,7 @@
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/dirt,
-/area/station/wreckage)
+/area/abandonedship)
 "uRu" = (
 /obj/machinery/light/incandescent,
 /obj/decal/tile_edge/stripe/extra_big,
@@ -47994,7 +47994,7 @@
 	name = "Ranch Ship"
 	},
 /turf/simulated/floor/plating,
-/area/station/wreckage)
+/area/abandonedship)
 "uWC" = (
 /obj/cable,
 /obj/machinery/power/apc{
@@ -48387,7 +48387,7 @@
 "vjI" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/grime,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "vjO" = (
 /obj/rack,
 /obj/item/device/radio/intercom/science{
@@ -48716,7 +48716,7 @@
 "vqG" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grime,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "vqV" = (
 /obj/stool/chair/dining/wood{
 	dir = 1
@@ -48914,7 +48914,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "vvV" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/machinery/portable_atmospherics/scrubber,
@@ -49240,7 +49240,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "vEU" = (
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/plating,
@@ -49303,7 +49303,7 @@
 	icon_state = "alt_propulsion"
 	},
 /turf/space,
-/area/station/wreckage)
+/area/abandonedship)
 "vGW" = (
 /obj/disposalpipe/switch_junction{
 	dir = 1;
@@ -50637,7 +50637,7 @@
 	dir = 9;
 	layer = 2
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "wwb" = (
 /obj/cable/yellow{
 	icon_state = "4-8"
@@ -51318,7 +51318,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "wUF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -52043,7 +52043,7 @@
 /area/station/turret_protected/armory_outside)
 "xtE" = (
 /turf/simulated/floor/shuttlebay,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "xtW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -52215,7 +52215,7 @@
 	dir = 8;
 	tag = "icon-catwalk (WEST)"
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "xza" = (
 /obj/stool/chair/comfy/blue{
 	dir = 8
@@ -52235,7 +52235,7 @@
 	dir = 9;
 	layer = 2
 	},
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "xzr" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment/mail{
@@ -52258,7 +52258,7 @@
 	pixel_y = 15
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/wreckage)
+/area/abandonedship)
 "xAN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -52510,7 +52510,7 @@
 /obj/table/auto,
 /obj/machinery/recharger,
 /turf/simulated/floor/grime,
-/area/station/quartermaster/magnet)
+/area/station/mining/magnet)
 "xMe" = (
 /obj/storage/crate,
 /obj/item/device/light/glowstick{
@@ -52771,7 +52771,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/dirt,
-/area/station/wreckage)
+/area/abandonedship)
 "xVY" = (
 /obj/lattice{
 	dir = 1;
@@ -53189,7 +53189,7 @@
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grass/leafy,
-/area/station/wreckage)
+/area/abandonedship)
 "yhW" = (
 /obj/machinery/camera,
 /turf/simulated/floor/plating,

@@ -26757,7 +26757,9 @@
 /obj/blind_switch/area{
 	pixel_x = -24
 	},
-/obj/machinery/computer/power_monitor/smes,
+/obj/machinery/computer/power_monitor{
+	name = "Station Power Grid Monitoring"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
 "bCF" = (

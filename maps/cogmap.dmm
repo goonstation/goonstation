@@ -21941,24 +21941,24 @@
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "bzR" = (
 /obj/storage/crate,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "bzS" = (
 /obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/grime,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "bzU" = (
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/grime,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "bzX" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
@@ -22142,7 +22142,7 @@
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "bAL" = (
 /obj/machinery/alarm{
 	dir = 4;
@@ -22160,7 +22160,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "bAQ" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -22174,7 +22174,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "bAS" = (
 /turf/simulated/wall/auto/reinforced/supernorn{
 	explosion_resistance = 15;
@@ -22515,7 +22515,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "bCD" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -22523,7 +22523,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	icon_state = "catwalk_cross"
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "bCF" = (
 /obj/decal/cleanable/rust,
 /turf/simulated/wall/auto/reinforced/supernorn{
@@ -22689,13 +22689,13 @@
 /obj/landmark/gps_waypoint,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "bDF" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "bDH" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
@@ -22887,19 +22887,19 @@
 	name = "Mineral Magnet Pad"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "bEs" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "bEw" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "bEB" = (
 /obj/item/slag_shovel{
 	pixel_x = 7;
@@ -27593,11 +27593,11 @@
 /area/station/mining/staff_room)
 "bWm" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "bWn" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "bWo" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 1
@@ -27916,7 +27916,7 @@
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "bXs" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
@@ -28695,13 +28695,13 @@
 	name = "Danger: High Voltage"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "cab" = (
 /obj/machinery/neosmelter,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "cac" = (
 /obj/grille/catwalk,
 /obj/landmark/magnet_shield,
@@ -29119,13 +29119,13 @@
 	dir = 1
 	},
 /turf/simulated/floor/grime,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "cbB" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
 /turf/simulated/floor/grime,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "cbD" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -29498,17 +29498,17 @@
 "ccF" = (
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/grime,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "ccJ" = (
 /obj/stool,
 /turf/simulated/floor/grime,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "ccK" = (
 /obj/machinery/computer/magnet{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "ccL" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -29888,17 +29888,17 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/grime,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "cdW" = (
 /obj/machinery/light_switch{
 	name = "S light switch";
 	pixel_y = -24
 	},
 /turf/simulated/floor/grime,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "cdX" = (
 /turf/simulated/floor/grime,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "cdY" = (
 /obj/table/auto,
 /obj/machinery/recharger{
@@ -29909,14 +29909,14 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "cdZ" = (
 /obj/machinery/computer/barcode,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "cea" = (
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "ceb" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -30633,7 +30633,7 @@
 	dir = 8;
 	icon_state = "catwalk_cross"
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "cgA" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -31010,7 +31010,7 @@
 	dir = 8;
 	icon_state = "catwalk_cross"
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "chK" = (
 /obj/landmark/magnet_center{
 	height = 13;
@@ -31352,7 +31352,7 @@
 	layer = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "ciW" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -31760,7 +31760,7 @@
 	pixel_y = -2
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "ckn" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	autoclose = 1;
@@ -32223,15 +32223,15 @@
 "clH" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "clI" = (
 /obj/machinery/oreaccumulator,
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "clJ" = (
 /obj/storage/crate,
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "clK" = (
 /obj/table/auto,
 /obj/item/paper/book/from_file/matsci_guide{
@@ -32251,7 +32251,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "clL" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	autoclose = 1;
@@ -37317,7 +37317,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/grime,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "cKR" = (
 /obj/landmark/start/job/engineer,
 /obj/decal/tile_edge/stripe/extra_big,
@@ -37658,7 +37658,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "cVP" = (
 /obj/grille/catwalk{
 	dir = 10
@@ -38246,7 +38246,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "dtA" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -38930,7 +38930,7 @@
 	pixel_x = 12
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "dQM" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -40481,7 +40481,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "eQN" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -42220,7 +42220,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "geR" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/routing/sortingRoom)
@@ -42707,7 +42707,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "gDS" = (
 /obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
@@ -43739,7 +43739,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "hra" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple{
@@ -46311,7 +46311,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "jvf" = (
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
@@ -47018,7 +47018,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "jVY" = (
 /obj/landmark/start/job/botanist,
 /turf/simulated/floor/green/side{
@@ -47436,7 +47436,7 @@
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "koa" = (
 /obj/storage/closet/fire,
 /obj/machinery/alarm{
@@ -48217,7 +48217,7 @@
 	pixel_x = -15
 	},
 /turf/simulated/floor/grime,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "kTD" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -48289,7 +48289,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "kXt" = (
 /turf/simulated/floor/yellow/side{
 	dir = 10
@@ -49290,7 +49290,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "lUF" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	name = "Core Access"
@@ -49715,7 +49715,7 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "mlR" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -51447,7 +51447,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "nyV" = (
 /obj/machinery/firealarm/north,
 /obj/machinery/disposal,
@@ -53919,7 +53919,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	icon_state = "catwalk_cross"
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "pnt" = (
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
@@ -54598,7 +54598,7 @@
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "pTS" = (
 /obj/machinery/alarm{
 	pixel_y = 23
@@ -54793,7 +54793,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	icon_state = "catwalk_cross"
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "qcF" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
@@ -55364,7 +55364,7 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "qxz" = (
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	dir = 8;
@@ -58570,7 +58570,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "sRY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -60818,7 +60818,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "uzt" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -60922,7 +60922,7 @@
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "uCf" = (
 /obj/storage/secure/closet/brig_automatic/minibrig,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -63357,7 +63357,7 @@
 	pixel_x = 12
 	},
 /turf/simulated/floor/grime,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "wzI" = (
 /obj/machinery/light{
 	dir = 8;
@@ -63778,7 +63778,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "wQB" = (
 /obj/machinery/light{
 	dir = 8;
@@ -65034,7 +65034,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/refinery)
+/area/station/mining/magnet)
 "xUX" = (
 /obj/machinery/firealarm/east,
 /obj/storage/secure/closet/command/medical_director,
