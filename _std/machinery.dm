@@ -58,7 +58,6 @@
 #define PROCESSING_MAX_IN_USE PROCESSING_32TH
 
 #define MACHINES_CONVEYORS				1 // Conveyor belts
-#define MACHINES_ATMOSALERTS			2 // UNUSED, prior /obj/machinery/computer/atmosphere/alerts
 #define MACHINES_COMMSCONSOLES		3 // /obj/machinery/computer/communications
 #define MACHINES_POWER						4 // /obj/machinery/power, perhaps worth splitting further
 #define MACHINES_PIPES						5 // /obj/machinery/pipes
