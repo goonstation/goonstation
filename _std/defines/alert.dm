@@ -5,7 +5,6 @@
 #define ALERT_KIND_ATMOS "atmos"
 #define ALERT_KIND_FIRE "fire"
 #define ALERT_KIND_POWER "power"
-#define ALERT_KIND_MOTION "motion"
 
 #define ALERT_POWER_ALARM_OK 1
 #define ALERT_POWER_ALARM_BAD 0
