@@ -228,7 +228,7 @@ ABSTRACT_TYPE(/obj/hotspot)
 
 	src.perform_exposure()
 	if(src.catalyst_active)
-		var/image/catalyst_overlay = SafeGetOverlayImage("catalyst", src.icon, src.icon_state)
+		var/image/catalyst_overlay = SafeGetOverlayImage("catalyst", src.icon, src.icon_state) // might need to change alpha mask loc for this
 		var/list/rgb =  rgb2num(src.color)
 		var/list/hsl = rgb2hsl(rgb[1],rgb[2],rgb[3])
 		var/new_color = hsl2rgb(hsl[1]+60%255, clamp(hsl[2],50,180), hsl[3]*0.8)
@@ -254,7 +254,8 @@ ABSTRACT_TYPE(/obj/hotspot)
 
 	if (bypassing)
 		if (istype(src, /obj/hotspot/gasfire))
-			icon_state = "3"
+			//icon_state = "3"
+			src.UpdateIcon()
 		location.burn_tile()
 
 		//Possible spread due to radiated heat
@@ -267,9 +268,11 @@ ABSTRACT_TYPE(/obj/hotspot)
 
 	else if (istype(src, /obj/hotspot/gasfire))
 		if (volume > (CELL_VOLUME * 0.4))
-			icon_state = "2"
+			//icon_state = "2"
+			src.UpdateIcon()
 		else
-			icon_state = "1"
+			//icon_state = "1"
+			src.UpdateIcon()
 
 	return TRUE
 
@@ -279,12 +282,67 @@ ABSTRACT_TYPE(/obj/hotspot)
 
 /// fire created by a gaseous source. or atmos fire.
 /obj/hotspot/gasfire
+	icon = 'icons/effects/fire_atmospheric.dmi'
 	icon_state = "1"
 	alpha = 160
+	pixel_x = -16
 
 /obj/hotspot/gasfire/New(turf/newLoc)
 	..()
 	src.set_dir(pick(cardinal))
+
+/obj/hotspot/gasfire/update_icon(...)
+	..()
+	src.icon_state = "1"
+	// turf north, turf east, turf west
+	var/turf/tn = get_step(src, NORTH)
+	var/turf/te = get_step(src, EAST)
+	var/turf/tw = get_step(src, WEST)
+
+	var/tn_valid = !IS_VALID_FLUID_TURF(tn) && IS_PERSPECTIVE_WALL(tn)
+	for (var/atom/A as anything in tn)
+		if (IS_PERSPECTIVE_BLOCK(A))
+			tn_valid = TRUE
+			break
+	var/te_valid = !IS_VALID_FLUID_TURF(te) && IS_PERSPECTIVE_WALL(te)
+	for (var/atom/A as anything in te)
+		if (IS_PERSPECTIVE_BLOCK(A))
+			te_valid = TRUE
+			break
+	var/tw_valid = !IS_VALID_FLUID_TURF(tw) && IS_PERSPECTIVE_WALL(tw)
+	for (var/atom/A as anything in tw)
+		if (IS_PERSPECTIVE_BLOCK(A))
+			tw_valid = TRUE
+			break
+
+	// assuming all turfs exist for the moment
+	if (tn_valid)
+		if (te_valid && tw_valid)
+			src.icon_state = "1-NEW"
+		else if (te_valid && !tw_valid)
+			src.icon_state = "1-NE"
+		else if (!te_valid && tw_valid)
+			src.icon_state = "1-NW"
+		else
+			src.icon_state = "1-N"
+	else if (te_valid)
+		if (tw_valid)
+			src.icon_state = "1-EW"
+		else
+			src.icon_state = "1-E"
+	else if (tw_valid)
+		src.icon_state = "1-W"
+	else
+		src.icon_state = "1"
+
+	src.remove_filter("fire-NW-alphamask")
+	src.remove_filter("fire-NE-alphamask")
+	var/obj/hotspot/gasfire = locate(/obj/hotspot/gasfire) in get_step(src, NORTHWEST)
+	if (gasfire)
+		src.add_filter("fire-NW-alphamask", 0, alpha_mask_filter(icon = icon(src.icon, "NW-alpha"), flags = MASK_INVERSE))
+	gasfire = locate(/obj/hotspot/gasfire) in get_step(src, NORTHEAST)
+	if (gasfire)
+		src.add_filter("fire-NE-alphamask", 0, alpha_mask_filter(icon = icon(src.icon, "NE-alpha"), flags = MASK_INVERSE))
 
 // now this is ss13 level code
 /// Converts our temperature into an approximate color based on blackbody radiation.
