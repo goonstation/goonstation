@@ -1,4 +1,9 @@
 
+(t)wed nov 20 24
+(u)NightmarechaMillian
+(p)21357
+(e)🎨|C-Sprites
+(+)Added projectile sprites to metal and bone pipeshot.
 (t)tue nov 19 24
 (u)Glamurio (Ryou)
 (p)21230
