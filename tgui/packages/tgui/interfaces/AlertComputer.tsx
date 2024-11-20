@@ -1,4 +1,4 @@
-import { Button, Icon, Table } from 'tgui-core/components';
+import { Icon, Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -56,45 +56,16 @@ const AlertRow = (props: AlertRowProps) => {
   return (
     <Table.Row className="candystripe">
       <Table.Cell verticalAlign="middle">{alert.zone}</Table.Cell>
-      <AlertCell
-        area_ckey={alert.area_ckey}
-        kind="atmos"
-        severity={alert.atmos}
-      />
-      <AlertCell
-        area_ckey={alert.area_ckey}
-        kind="fire"
-        severity={alert.fire}
-      />
-      <AlertCell
-        area_ckey={alert.area_ckey}
-        kind="power"
-        severity={alert.power}
-      />
+      <Table.Cell textColor={getAlertButtonColor(alert.atmos)}>
+        {getAlertButtonText(alert.atmos)}
+      </Table.Cell>
+      <Table.Cell textColor={getAlertButtonColor(alert.fire)}>
+        {getAlertButtonText(alert.fire)}
+      </Table.Cell>
+      <Table.Cell textColor={getAlertButtonColor(alert.power)}>
+        {getAlertButtonText(alert.power)}
+      </Table.Cell>
     </Table.Row>
-  );
-};
-
-interface AlertCellProps {
-  area_ckey: string;
-  kind: string;
-  severity: number | null;
-}
-
-const AlertCell = (props: AlertCellProps) => {
-  const { act } = useBackend();
-  const { area_ckey, kind, severity } = props;
-  return (
-    <Table.Cell textColor={getAlertButtonColor(severity)}>
-      <Button
-        icon="bell-slash"
-        disabled={severity === 0}
-        onClick={() => act(`clear_${kind}`, { area_ckey: area_ckey })}
-        tooltip="Reset alarm"
-        mr="5px"
-      />
-      {getAlertButtonText(severity)}
-    </Table.Cell>
   );
 };
 
