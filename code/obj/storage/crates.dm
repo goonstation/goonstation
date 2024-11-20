@@ -498,7 +498,7 @@ TYPEINFO(/obj/storage/crate/chest)
 	icon_state = "mailcrate"
 	icon_opened = "mailcrateopen"
 	icon_closed = "mailcrate"
-	destinations = list("Mail")
+	delivery_destination = "Mail"
 
 // Gannets' Nuke Ops Specialist Class Crates
 
