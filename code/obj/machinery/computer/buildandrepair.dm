@@ -78,7 +78,7 @@ TYPEINFO(/obj/item/circuitboard)
 	name = "circuit board (injector control)"
 	computertype = /obj/machinery/computer/general_air_control/fuel_injection
 /obj/item/circuitboard/general_alert
-	name = "circuit board (engineering alert)"
+	name = "circuit board (general alert)"
 	computertype = /obj/machinery/computer/general_alert
 /obj/item/circuitboard/pod
 	name = "circuit board (massdriver control)"

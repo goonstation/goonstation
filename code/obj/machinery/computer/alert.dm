@@ -18,7 +18,7 @@
 		return max(src.atmos, src.power, src.fire)
 
 /obj/machinery/computer/general_alert
-	name = "engineering alert computer"
+	name = "general alert computer"
 	icon_state = "alert:0"
 	circuit_type = /obj/item/circuitboard/general_alert
 	base_icon_state = "alert"
@@ -95,25 +95,6 @@
 	new_zone.zone = zone
 	new_zone.set_severity(kind, severity)
 	src.alerts += new_zone
-	src.update_alert_icon()
-
-/obj/machinery/computer/general_alert/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.) return
-
-	var/removing_zone = params["area_ckey"]
-	for (var/datum/zone_alert/alert in src.alerts)
-		if(ckey(alert.zone) == removing_zone)
-			var/kind = ""
-			switch(action)
-				if("clear_atmos")
-					kind="atmos"
-				if("clear_fire")
-					kind="fire"
-				if("clear_power")
-					kind="power"
-			src.update_alert(alert.zone, kind, ALERT_SEVERITY_RESET)
-			break
 	src.update_alert_icon()
 
 /obj/machinery/computer/general_alert/ui_interact(mob/user, datum/tgui/ui)
