@@ -678,6 +678,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.grump_message(usr, "ERROR: Invalid Operation.", sound = TRUE)
 					return
 				src.queue -= src.queue[operation]
+				actions.interrupt(src, INTERRUPT_ALWAYS)
+
 				// This is a new production if we removed the item at index 1, otherwise we just removed something not being produced yet
 				begin_work( new_production = (operation == 1) )
 				return TRUE
