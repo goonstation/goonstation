@@ -297,20 +297,23 @@ ABSTRACT_TYPE(/obj/hotspot)
 	var/turf/tw = get_step(src, WEST)
 
 	var/tn_valid = !IS_VALID_FLUID_TURF(tn) && IS_PERSPECTIVE_WALL(tn)
-	for (var/atom/A as anything in tn)
-		if (IS_PERSPECTIVE_BLOCK(A))
-			tn_valid = TRUE
-			break
+	if (!tn_valid)
+		for (var/atom/A as anything in tn)
+			if (IS_PERSPECTIVE_BLOCK(A))
+				tn_valid = TRUE
+				break
 	var/te_valid = !IS_VALID_FLUID_TURF(te) && IS_PERSPECTIVE_WALL(te)
-	for (var/atom/A as anything in te)
-		if (IS_PERSPECTIVE_BLOCK(A))
-			te_valid = TRUE
-			break
+	if (!te_valid)
+		for (var/atom/A as anything in te)
+			if (IS_PERSPECTIVE_BLOCK(A))
+				te_valid = TRUE
+				break
 	var/tw_valid = !IS_VALID_FLUID_TURF(tw) && IS_PERSPECTIVE_WALL(tw)
-	for (var/atom/A as anything in tw)
-		if (IS_PERSPECTIVE_BLOCK(A))
-			tw_valid = TRUE
-			break
+	if (!tw_valid)
+		for (var/atom/A as anything in tw)
+			if (IS_PERSPECTIVE_BLOCK(A))
+				tw_valid = TRUE
+				break
 
 	if (tn_valid)
 		if (te_valid && tw_valid)
