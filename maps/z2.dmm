@@ -71738,10 +71738,6 @@
 	name = "front gate"
 	},
 /area/crypt/graveyard/swamp)
-"qSC" = (
-/obj/machinery/door/airlock/pyro,
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/maze)
 "qTn" = (
 /turf/unsimulated/floor/carpet{
 	icon_state = "fblue2";
@@ -158208,7 +158204,7 @@ eyS
 eyS
 iZL
 eyS
-qSC
+iZL
 uKm
 iZL
 eyS
@@ -159412,7 +159408,7 @@ eyS
 eyS
 yam
 eyS
-qSC
+iZL
 eyS
 iZL
 eyS
@@ -160626,7 +160622,7 @@ iZL
 eyS
 iZL
 gIQ
-qSC
+iZL
 eyS
 iZL
 eyS
