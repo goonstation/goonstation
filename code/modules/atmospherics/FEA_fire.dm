@@ -298,20 +298,20 @@ ABSTRACT_TYPE(/obj/hotspot)
 
 	var/tn_valid = !IS_VALID_FLUID_TURF(tn) && IS_PERSPECTIVE_WALL(tn)
 	if (!tn_valid)
-		for (var/atom/A as anything in tn)
-			if (IS_PERSPECTIVE_BLOCK(A))
+		for (var/obj/O in tn)
+			if (IS_PERSPECTIVE_BLOCK(O))
 				tn_valid = TRUE
 				break
 	var/te_valid = !IS_VALID_FLUID_TURF(te) && IS_PERSPECTIVE_WALL(te)
 	if (!te_valid)
-		for (var/atom/A as anything in te)
-			if (IS_PERSPECTIVE_BLOCK(A))
+		for (var/obj/O in te)
+			if (IS_PERSPECTIVE_BLOCK(O))
 				te_valid = TRUE
 				break
 	var/tw_valid = !IS_VALID_FLUID_TURF(tw) && IS_PERSPECTIVE_WALL(tw)
 	if (!tw_valid)
-		for (var/atom/A as anything in tw)
-			if (IS_PERSPECTIVE_BLOCK(A))
+		for (var/obj/O in tw)
+			if (IS_PERSPECTIVE_BLOCK(O))
 				tw_valid = TRUE
 				break
 
