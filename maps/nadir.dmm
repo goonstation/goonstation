@@ -2089,9 +2089,7 @@
 	},
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/carpet/grime,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
+/area/station/mailroom)
 "aXs" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/staff_room)
@@ -5332,9 +5330,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
+/area/station/mailroom)
 "csW" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 6
@@ -9074,9 +9070,7 @@
 "eaN" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/industrial,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
+/area/station/mailroom)
 "ebi" = (
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor/grime,
@@ -16135,6 +16129,9 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery)
+"gUk" = (
+/turf/simulated/floor/industrial,
+/area/station/mailroom)
 "gUl" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/stinger_kit{
@@ -20041,9 +20038,7 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/industrial,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
+/area/station/mailroom)
 "irk" = (
 /obj/machinery/door/airlock/pyro/alt{
 	id = "eastcc_stall3"
@@ -27294,9 +27289,7 @@
 /obj/stool/chair/comfy,
 /obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/carpet/grime,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
+/area/station/mailroom)
 "lqF" = (
 /turf/simulated/floor/engine,
 /area/listeningpost/power)
@@ -28606,9 +28599,7 @@
 "lPb" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/wall/auto/supernorn,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
+/area/station/mailroom)
 "lPy" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -29667,9 +29658,7 @@
 /obj/decal/cleanable/dirt,
 /obj/machinery/computer/transception,
 /turf/simulated/floor/carpet/grime,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
+/area/station/mailroom)
 "miB" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -29698,9 +29687,7 @@
 	},
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/industrial,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
+/area/station/mailroom)
 "mjg" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/inner/west)
@@ -33750,9 +33737,7 @@
 	dir = null
 	},
 /turf/simulated/floor/plating,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
+/area/station/mailroom)
 "nVL" = (
 /obj/fitness/weightlifter,
 /turf/simulated/floor/grey,
@@ -41093,6 +41078,9 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"rmN" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/mailroom)
 "rmU" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/illuminated_sign/open_neon{
@@ -45553,9 +45541,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
+/area/station/mailroom)
 "tkN" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -48200,9 +48186,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/industrial,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
+/area/station/mailroom)
 "urh" = (
 /obj/storage/closet/fire,
 /obj/machinery/light/small{
@@ -55947,9 +55931,7 @@
 /obj/decal/cleanable/dirt,
 /obj/storage/secure/closet/civilian/mail,
 /turf/simulated/floor/carpet/grime,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
+/area/station/mailroom)
 "xPY" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -111351,12 +111333,12 @@ jNc
 mqR
 nQG
 xkH
-kRh
+rmN
 csB
-kRh
-kRh
-kRh
-kRh
+rmN
+rmN
+rmN
+rmN
 kRh
 neB
 neB
@@ -111653,12 +111635,12 @@ pCL
 kRh
 qSl
 sTM
-kRh
+rmN
 tkJ
-mTx
+gUk
 lqD
 mip
-kRh
+rmN
 neB
 neB
 hOA
@@ -111955,12 +111937,12 @@ kRh
 kRh
 nQG
 ycg
-kRh
+rmN
 uqY
 nVG
 xPH
-kRh
-kRh
+rmN
+rmN
 fxH
 fxH
 dAB
@@ -112261,7 +112243,7 @@ iqN
 miX
 eaN
 aXj
-kRh
+rmN
 lCi
 neB
 neB
@@ -112559,11 +112541,11 @@ ayE
 kRh
 nJe
 oZL
-kRh
+rmN
 lPb
-kRh
-kRh
-kRh
+rmN
+rmN
+rmN
 neB
 neB
 neB
