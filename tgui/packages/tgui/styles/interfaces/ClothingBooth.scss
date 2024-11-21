@@ -1,6 +1,7 @@
-@use '../base.scss';
-@use '../colors.scss';
-@use '../functions.scss' as *;
+@use 'sass:color';
+@use '../base';
+@use '../colors';
+@use '../functions' as *;
 
 .clothingbooth {
   &__boothitem {
@@ -9,7 +10,7 @@
     cursor: pointer;
 
     &:hover {
-      background-color: darken(colors.$good, 30%);
+      background-color: color.adjust(colors.$good, $lightness: -30%);
     }
 
     &--selected,
