@@ -279,6 +279,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 	speech_verb_say = list("mutters", "gurgles", "whimpers")
 
+	start_listen_effects = list(LISTEN_EFFECT_MEAT_HEAD)
 	start_listen_modifiers = null
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
 	start_listen_languages = list(LANGUAGE_ALL)
@@ -395,12 +396,6 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			dialog.Cut(MEATHEAD_MAX_CUSTOM_UTTERANCES, MEATHEAD_MAX_CUSTOM_UTTERANCES+1)
 
 		return 0
-
-	hear(datum/say_message/message)
-		if (prob(80))
-			return
-
-		src.update_meat_head_dialog(message.content)
 
 	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/clothing/head))

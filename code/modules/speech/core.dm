@@ -1,5 +1,7 @@
 /// This atom's listen module tree. May be null if no input modules are registered.
 /atom/var/datum/listen_module_tree/listen_tree = null
+/// The listen effects that this atom *starts* with. It will not be updated nor used again after initialisation.
+/atom/var/list/start_listen_effects = null
 /// The listen modifiers that this atom *starts* with. It will not be updated nor used again after initialisation.
 /atom/var/list/start_listen_modifiers = null
 /// The listen inputs that this atom *starts* with. It will not be updated nor used again after initialisation.
@@ -8,15 +10,7 @@
 /atom/var/list/start_listen_languages = null
 
 /atom/New()
-	// This is some memory witchcraft used to check whether `/atom/proc/hear` has been overridden by the parent type.
-	// If `/atom/proc/hear` has been overridden, create the listen tree and enable it.
-	var/datum/proc_ownership_cache/proc_ownership_cache = global.get_singleton(/datum/proc_ownership_cache)
-	var/hear_ref = proc_ownership_cache.get_proc_ref(src.type, PROC_REF(hear))
-	if (hear_ref && (hear_ref != proc_ownership_cache.get_proc_ref(/atom, PROC_REF(hear))))
-		src.ensure_listen_tree().request_enable()
-
-	// Otherwise, if start listen inputs exist, create the listen tree, but don't enable it.
-	else if (length(src.start_listen_inputs))
+	if (length(src.start_listen_inputs))
 		src.ensure_listen_tree()
 
 	. = ..()
@@ -26,10 +20,6 @@
 	qdel(src.speech_tree)
 
 	. = ..()
-
-/// Determines what happens to a message after this atom's listen tree has finished processing it. Typically the final destination of say message datums.
-/atom/proc/hear(datum/say_message/message)
-	boutput(src, message.format_for_output(src))
 
 
 /// This atom's speech module tree. Lazy loaded on the first `say()` call.
@@ -130,7 +120,7 @@
 /// Returns this atom's listen module tree. If this atom does not possess a listen module tree, instantiates one.
 /atom/proc/ensure_listen_tree()
 	RETURN_TYPE(/datum/listen_module_tree)
-	src.listen_tree ||= new(src, src.start_listen_inputs, src.start_listen_modifiers, src.start_listen_languages)
+	src.listen_tree ||= new(src, src.start_listen_inputs, src.start_listen_modifiers, src.start_listen_effects, src.start_listen_languages)
 	return src.listen_tree
 
 /// A stub proc to facilitate `say()` passing on messages prefixed with "*".
@@ -192,7 +182,7 @@ Follow-Up PRs:
 	. = ..()
 
 	src.speech_tree = new(null, list(SPEECH_OUTPUT_OOC, SPEECH_OUTPUT_LOOC), null, null, src.mob.speech_tree)
-	src.listen_tree = new(null, null, null, null, src.mob.listen_tree)
+	src.listen_tree = new(null, null, null, list(LISTEN_EFFECT_DISPLAY_TO_CLIENT), null, src.mob.listen_tree)
 
 	src.preferences.listen_ooc = !src.preferences.listen_ooc
 	src.toggle_ooc(!src.preferences.listen_ooc)

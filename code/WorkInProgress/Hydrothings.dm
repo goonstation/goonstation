@@ -1435,6 +1435,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	icon = 'icons/misc/owlzone.dmi'
 	icon_state = "gregjr"
 
+	start_listen_effects = list(LISTEN_EFFECT_LIL_GREG)
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
@@ -1468,9 +1469,3 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 					cantalk = 1
 					sleep(2 SECONDS)
 					return
-
-	hear(datum/say_message/message)
-		if (prob(90) || !ismob(message.speaker))
-			return
-
-		src.say("Woah [message.speaker] thats [pick("radical", "awesome", "sweet", "delicious", "100% spectacular", "better then sliced bread", "hootacular", "horrible", "hootastic", "dab worthy")]!")

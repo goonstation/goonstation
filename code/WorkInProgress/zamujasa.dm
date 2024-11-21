@@ -29,11 +29,8 @@
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "mic"
 	item_state = "mic"
+	start_listen_effects = list(LISTEN_EFFECT_PROTOTYPE_MAPTEXT)
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_1)
-
-	hear(datum/say_message/message)
-		new /obj/maptext_junk/speech(message.speaker, msg = message.content)
-
 
 /obj/maptext_junk
 	mouse_opacity = 0

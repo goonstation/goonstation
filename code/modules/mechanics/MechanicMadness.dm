@@ -2584,6 +2584,7 @@
 	desc = ""
 	icon_state = "comp_mic"
 
+	start_listen_effects = list(LISTEN_EFFECT_MICROPHONE_COMPONENT)
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
 	start_listen_languages = list(LANGUAGE_ALL)
 
@@ -2597,20 +2598,6 @@
 		add_sender = !add_sender
 		boutput(user, "Show-Source now [add_sender ? "on":"off"]")
 		return 1
-
-	hear(datum/say_message/message)
-		if ((src.level == OVERFLOOR) || !message.can_relay)
-			return
-
-		var/content
-		if (src.add_sender)
-			content = "name=[message.speaker_to_display]&message=[message.content]"
-		else
-			content = message.content
-
-		LIGHT_UP_HOUSING
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, content)
-		animate_flash_color_fill(src, "#00FF00", 2, 2)
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_mic"

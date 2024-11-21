@@ -5,6 +5,7 @@
 	desc = "A small beacon that is tracked by the Teleporter Computer, allowing things to be sent to its general location."
 	burn_possible = FALSE
 	anchored = ANCHORED
+	start_listen_effects = null
 
 	var/list/obj/portals_pointed_at_us
 
@@ -15,9 +16,6 @@
 /obj/item/device/radio/beacon/disposing()
 	STOP_TRACKING
 	. = ..()
-
-/obj/item/device/radio/beacon/hear()
-	return
 
 /obj/item/device/radio/beacon/receive_signal()
 	return

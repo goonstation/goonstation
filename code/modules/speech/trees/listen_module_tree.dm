@@ -1,7 +1,7 @@
 /**
  *	Listen module tree datums handle applying the effects of listen modifier modules to say message datums received by
  *	the parent atom from an listen input module. All say message datums will be processed here prior to being passed to
- *	the `/atom/proc/hear()` proc.
+ *	listen effect modules.
  */
 /datum/listen_module_tree
 	/// If disabled, this listen module tree will not receive any messages.
@@ -22,11 +22,11 @@
 	VAR_PROTECTED/list/datum/signal_recipients
 
 	/// An associative list of listen input module subscription counts, indexed by the module ID.
-	VAR_PROTECTED/list/input_module_ids_with_subcount
+	VAR_PROTECTED/list/listen_input_ids_with_subcount
 	/// An associative list of listen input modules, indexed by the module ID.
-	VAR_PROTECTED/list/datum/listen_module/input/input_modules_by_id
+	VAR_PROTECTED/list/datum/listen_module/input/listen_inputs_by_id
 	/// An associative list of listen input modules, indexed by the module channel.
-	VAR_PROTECTED/list/list/datum/listen_module/input/input_modules_by_channel
+	VAR_PROTECTED/list/list/datum/listen_module/input/listen_inputs_by_channel
 
 	/// An associative list of listen modifier module subscription counts, indexed by the module ID.
 	VAR_PROTECTED/list/listen_modifier_ids_with_subcount
@@ -35,6 +35,11 @@
 	/// An associative list of listen modifier modules that overide say channel modifier preferences, indexed by the module ID.
 	VAR_PROTECTED/list/datum/speech_module/modifier/persistent_listen_modifiers_by_id
 
+	/// An associative list of listen effect module subscription counts, indexed by the module ID.
+	VAR_PROTECTED/list/listen_effect_ids_with_subcount
+	/// An associative list of listen effect modules, indexed by the module ID.
+	VAR_PROTECTED/list/datum/listen_module/effect/listen_effects_by_id
+
 	/// An associative list of language datum subscription counts, indexed by the language ID.
 	VAR_PROTECTED/list/known_language_ids_with_subcount
 	/// An associative list of language datums, indexed by the language ID.
@@ -42,7 +47,7 @@
 	/// Whether this listen module tree is capable of understanding all languages.
 	VAR_PROTECTED/understands_all_languages = FALSE
 
-/datum/listen_module_tree/New(atom/parent, list/inputs = list(), list/modifiers = list(), list/languages = list())
+/datum/listen_module_tree/New(atom/parent, list/inputs = list(), list/modifiers = list(), list/effects = list(), list/languages = list())
 	. = ..()
 
 	src.listener_parent = parent
@@ -52,13 +57,16 @@
 	src.message_buffer = list()
 	src.signal_recipients = list()
 
-	src.input_module_ids_with_subcount = list()
-	src.input_modules_by_id = list()
-	src.input_modules_by_channel = list()
+	src.listen_input_ids_with_subcount = list()
+	src.listen_inputs_by_id = list()
+	src.listen_inputs_by_channel = list()
 
 	src.listen_modifier_ids_with_subcount = list()
 	src.listen_modifiers_by_id = list()
 	src.persistent_listen_modifiers_by_id = list()
+
+	src.listen_effect_ids_with_subcount = list()
+	src.listen_effects_by_id = list()
 
 	src.known_language_ids_with_subcount = list()
 	src.known_languages_by_id = list()
@@ -68,6 +76,9 @@
 
 	for (var/modifier_id in modifiers)
 		src.AddListenModifier(modifier_id)
+
+	for (var/effect_id in effects)
+		src.AddListenEffect(effect_id)
 
 	for (var/language_id in languages)
 		src.AddKnownLanguage(language_id)
@@ -83,12 +94,15 @@
 
 	src.auxiliary_trees = null
 
-	for (var/input_id in src.input_modules_by_id)
-		qdel(src.input_modules_by_id[input_id])
+	for (var/input_id in src.listen_inputs_by_id)
+		qdel(src.listen_inputs_by_id[input_id])
 
 	src.persistent_listen_modifiers_by_id = null
 	for (var/modifier_id in src.listen_modifiers_by_id)
 		qdel(src.listen_modifiers_by_id[modifier_id])
+
+	for (var/effect_id in src.listen_effects_by_id)
+		qdel(src.listen_effects_by_id[effect_id])
 
 	for (var/atom/A as anything in src.secondary_parents)
 		A.listen_tree = null
@@ -100,9 +114,10 @@
 	src.secondary_parents = null
 	src.message_buffer = null
 	src.signal_recipients = null
-	src.input_modules_by_id = null
+	src.listen_inputs_by_id = null
 	src.listen_modifiers_by_id = null
-	src.input_modules_by_channel = null
+	src.listen_effects_by_id = null
+	src.listen_inputs_by_channel = null
 	src.listener_origin = null
 
 	. = ..()
@@ -110,7 +125,7 @@
 /// Process the heard message, applying the effects of each listen modifier module.
 /datum/listen_module_tree/proc/process(datum/say_message/message)
 	if (!istype(message))
-		CRASH("A non say_message thing was passed to a listen_module_tree. This should never happen.")
+		CRASH("A non say message datum was passed to a listen module tree. This should never happen.")
 
 	// If the say channel permits, apply the effects of all languages and modifiers, otherwise only apply modifiers that override say channel preferences.
 	if (message.received_module.say_channel.affected_by_modifiers)
@@ -148,7 +163,8 @@
 /datum/listen_module_tree/proc/flush_message_buffer()
 	for (var/id in src.message_buffer)
 		var/datum/say_message/message = src.message_buffer[id]
-		src.listener_parent.hear(message)
+		for (var/effect_id in src.listen_effects_by_id)
+			src.listen_effects_by_id[effect_id].process(message)
 
 		if (src.signal_recipients[message.signal_recipient])
 			src.UnregisterSignal(message.signal_recipient, COMSIG_FLUSH_MESSAGE_BUFFER)
@@ -162,8 +178,8 @@
 		return
 
 	src.enabled = TRUE
-	for (var/input_id in src.input_modules_by_id)
-		src.input_modules_by_id[input_id].enable()
+	for (var/input_id in src.listen_inputs_by_id)
+		src.listen_inputs_by_id[input_id].enable()
 
 /// Disable this listen module tree, disallowing it's modules to receive messages.
 /datum/listen_module_tree/proc/disable()
@@ -171,8 +187,8 @@
 		return
 
 	src.enabled = FALSE
-	for (var/input_id in src.input_modules_by_id)
-		src.input_modules_by_id[input_id].disable()
+	for (var/input_id in src.listen_inputs_by_id)
+		src.listen_inputs_by_id[input_id].disable()
 
 /// Add an enable request to this listen module tree.
 /datum/listen_module_tree/proc/request_enable()
@@ -216,50 +232,50 @@
 
 	SEND_SIGNAL(src, COMSIG_LISTENER_ORIGIN_UPDATED, old_origin, new_origin)
 
-/// Adds a new input module to the tree. Returns a reference to the new input module on success.
+/// Adds a new listen input module to the tree. Returns a reference to the new input module on success.
 /datum/listen_module_tree/proc/_AddListenInput(input_id, list/arguments = list(), count = 1)
 	RETURN_TYPE(/datum/listen_module/input)
 
 	var/module_id = "[input_id][arguments["subchannel"]]"
-	src.input_module_ids_with_subcount[module_id] += count
-	if (src.input_modules_by_id[module_id])
-		return src.input_modules_by_id[module_id]
+	src.listen_input_ids_with_subcount[module_id] += count
+	if (src.listen_inputs_by_id[module_id])
+		return src.listen_inputs_by_id[module_id]
 
 	arguments["parent"] = src
 	var/datum/listen_module/input/new_input = global.SpeechManager.GetInputInstance(input_id, arguments)
 	if (!istype(new_input))
 		return
 
-	src.input_modules_by_id[module_id] = new_input
-	src.input_modules_by_channel[new_input.channel] ||= list()
-	src.input_modules_by_channel[new_input.channel] += new_input
+	src.listen_inputs_by_id[module_id] = new_input
+	src.listen_inputs_by_channel[new_input.channel] ||= list()
+	src.listen_inputs_by_channel[new_input.channel] += new_input
 	return new_input
 
-/// Removes an input from the tree. Returns TRUE on success, FALSE on failure.
+/// Removes a listen input module from the tree. Returns TRUE on success, FALSE on failure.
 /datum/listen_module_tree/proc/RemoveListenInput(input_id, subchannel, count = 1)
 	var/module_id = "[input_id][subchannel]"
-	if (!src.input_modules_by_id[module_id])
+	if (!src.listen_inputs_by_id[module_id])
 		return FALSE
 
-	src.input_module_ids_with_subcount[module_id] -= count
-	if (!src.input_module_ids_with_subcount[module_id])
-		src.input_modules_by_channel[src.input_modules_by_id[module_id].channel] -= src.input_modules_by_id[module_id]
-		qdel(src.input_modules_by_id[module_id])
-		src.input_modules_by_id -= module_id
+	src.listen_input_ids_with_subcount[module_id] -= count
+	if (!src.listen_input_ids_with_subcount[module_id])
+		src.listen_inputs_by_channel[src.listen_inputs_by_id[module_id].channel] -= src.listen_inputs_by_id[module_id]
+		qdel(src.listen_inputs_by_id[module_id])
+		src.listen_inputs_by_id -= module_id
 
 	return TRUE
 
-/// Returns the input module that matches the specified ID.
+/// Returns the listen input module that matches the specified ID.
 /datum/listen_module_tree/proc/GetInputByID(input_id, subchannel)
 	RETURN_TYPE(/datum/listen_module/input)
-	return src.input_modules_by_id["[input_id][subchannel]"]
+	return src.listen_inputs_by_id["[input_id][subchannel]"]
 
-/// Returns a list of output modules that output to the specified channel.
+/// Returns a list of listen input modules that receive from the specified channel.
 /datum/listen_module_tree/proc/GetInputsByChannel(channel_id)
 	RETURN_TYPE(/list/datum/listen_module/input)
-	return src.input_modules_by_channel[channel_id]
+	return src.listen_inputs_by_channel[channel_id]
 
-/// Adds a new modifier module to the tree. Returns a reference to the new modifier module on success.
+/// Adds a new listen modifier module to the tree. Returns a reference to the new modifier module on success.
 /datum/listen_module_tree/proc/_AddListenModifier(modifier_id, list/arguments = list(), count = 1)
 	RETURN_TYPE(/datum/listen_module/modifier)
 
@@ -281,7 +297,7 @@
 
 	return new_modifier
 
-/// Removes a modifier from the tree. Returns TRUE on success, FALSE on failure.
+/// Removes a listen modifier module from the tree. Returns TRUE on success, FALSE on failure.
 /datum/listen_module_tree/proc/RemoveListenModifier(modifier_id, count = 1)
 	if (!src.listen_modifiers_by_id[modifier_id])
 		return FALSE
@@ -298,6 +314,39 @@
 /datum/listen_module_tree/proc/GetModifierByID(modifier_id)
 	RETURN_TYPE(/list/datum/listen_module/modifier)
 	return src.listen_modifiers_by_id[modifier_id]
+
+/// Adds a new listen effect module to the tree. Returns a reference to the new effect module on success.
+/datum/listen_module_tree/proc/_AddListenEffect(effect_id, list/arguments = list(), count = 1)
+	RETURN_TYPE(/datum/listen_module/effect)
+
+	src.listen_effect_ids_with_subcount[effect_id] += count
+	if (src.listen_effects_by_id[effect_id])
+		return src.listen_effects_by_id[effect_id]
+
+	arguments["parent"] = src
+	var/datum/listen_module/effect/new_effect = global.SpeechManager.GetListenEffectInstance(effect_id, arguments)
+	if (!istype(new_effect))
+		return
+
+	src.listen_effects_by_id[effect_id] = new_effect
+	return new_effect
+
+/// Removes a listen effect module from the tree. Returns TRUE on success, FALSE on failure.
+/datum/listen_module_tree/proc/RemoveListenEffect(effect_id, count = 1)
+	if (!src.listen_effects_by_id[effect_id])
+		return FALSE
+
+	src.listen_effect_ids_with_subcount[effect_id] -= count
+	if (!src.listen_effect_ids_with_subcount[effect_id])
+		qdel(src.listen_effects_by_id[effect_id])
+		src.listen_effects_by_id -= effect_id
+
+	return TRUE
+
+/// Returns the listen effect module that matches the specified ID.
+/datum/listen_module_tree/proc/GetEffectByID(effect_id)
+	RETURN_TYPE(/list/datum/listen_module/effect)
+	return src.listen_effects_by_id[effect_id]
 
 /// Adds a known language to this listen tree. Known languages allow messages to be understood. Returns TRUE on success, FALSE on failure.
 /datum/listen_module_tree/proc/AddKnownLanguage(language_id, count = 1)

@@ -24,6 +24,7 @@
 	voice_sound_override = 'sound/misc/talk/bottalk_2.ogg'
 
 	speech_verb_say = list("farts", "toots", "honks", "parps")
+	start_listen_effects = list(LISTEN_EFFECT_BUTTBOT)
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
 	start_speech_modifiers = list(SPEECH_MODIFIER_BOT, SPEECH_MODIFIER_ACCENT_BUTT)
 
@@ -201,12 +202,6 @@
 
 	if (prob(50))
 		src.butt_memory -= src.butt_memory[butt_index]
-
-/obj/machinery/bot/buttbot/hear(datum/say_message/message)
-	if (!src.on || !ismob(message.speaker))
-		return
-
-	src.butt_memory |= message.content
 
 /obj/machinery/bot/buttbot/Topic(href, href_list)
 	if(!(BOUNDS_DIST(usr, src) == 0))

@@ -5,6 +5,7 @@
 	icon_state = "mic"
 	item_state = "mic"
 
+	start_listen_effects = list(LISTEN_EFFECT_MICROPHONE)
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_1)
 	start_listen_languages = list(LANGUAGE_ALL)
 
@@ -34,37 +35,6 @@
 		else
 			return ..()
 
-	hear(datum/say_message/message)
-		if (!src.on || !CAN_RELAY_MESSAGE(message, SAY_RELAY_MICROPHONE))
-			return
-
-		var/feedback = FALSE
-		var/list/obj/loudspeaker/loudspeakers = list()
-		for_by_tcl(loudspeaker, /obj/loudspeaker)
-			if (!IN_RANGE(src, loudspeaker, 7))
-				continue
-
-			if (IN_RANGE(src, loudspeaker, 2))
-				feedback = TRUE
-
-			loudspeakers += loudspeaker
-
-		feedback &&= prob(10)
-
-		message.message_size_override = clamp(length(loudspeakers) + src.font_amp, 0, src.max_font)
-		message.output_module_channel = SAY_CHANNEL_OUTLOUD
-		FORMAT_MESSAGE_FOR_RELAY(message, SAY_RELAY_MICROPHONE)
-
-		for (var/obj/loudspeaker/loudspeaker as anything in loudspeakers)
-			var/datum/say_message/loudspeaker_message = message.Copy()
-			loudspeaker_message.speaker = loudspeaker
-			loudspeaker_message.message_origin = loudspeaker
-			loudspeaker.ensure_speech_tree().process(loudspeaker_message)
-
-			if (feedback)
-				loudspeaker.visible_message(SPAN_ALERT("[loudspeaker] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!"))
-				playsound(loudspeaker.loc, 'sound/items/mic_feedback.ogg', 30, 1)
-
 
 TYPEINFO(/obj/mic_stand)
 	mats = 10
@@ -74,10 +44,7 @@ TYPEINFO(/obj/mic_stand)
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "micstand"
 	layer = FLY_LAYER
-
-	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_1)
-	start_listen_languages = list(LANGUAGE_ALL)
-
+	open_to_sound = TRUE
 	var/obj/item/device/microphone/myMic = null
 
 	New()
@@ -106,9 +73,6 @@ TYPEINFO(/obj/mic_stand)
 			src.UpdateIcon()
 		else
 			return ..()
-
-	hear(datum/say_message/message)
-		src.myMic?.hear(message)
 
 	update_icon()
 		if (myMic)

@@ -236,6 +236,8 @@
 	var/ai_delay_move = FALSE //! Delays the AI from moving a single time if set
 	default_mutantrace = /datum/mutantrace/monkey
 
+	start_listen_effects = list(LISTEN_EFFECT_MONKEY)
+
 	New()
 		..()
 		START_TRACKING
@@ -541,41 +543,6 @@
 		src.set_a_intent(INTENT_DISARM)
 		theft_target.Attackhand(src)
 		src.set_a_intent(src.ai_default_intent)
-
-	hear(datum/say_message/message)
-		. = ..()
-
-		if (!isalive(src) || !ismob(message.speaker) || !(message.flags & (SAYFLAG_LOUD_SINGING | SAYFLAG_BAD_SINGING)))
-			return
-
-		SPAWN(0.5 SECONDS)
-			// The monkey is angered.
-			if (prob(20))
-				src.visible_message("<B>[src.name]</B> becomes furious at [message.speaker] for their [(message.flags & SAYFLAG_BAD_SINGING) ? "bad" : "loud"] singing!")
-				src.say(pick(
-					"Must take revenge for insult to music!",
-					"I now attack you like your singing attacked my ears!",
-				))
-
-				src.was_harmed(message.speaker)
-
-			// The monkey is merely irritated.
-			else
-				src.visible_message(pick(
-					"<B>[name]</B> doesn't seem to like [message.speaker]'s singing",
-					"<B>[name]</B> puts their hands over their ears",
-				), TRUE)
-
-				src.say(pick(
-					"You human sing worse than a baboon!",
-					"Me know gorillas with better vocal pitch than you!",
-					"Monkeys ears too sensitive for this cacophony!",
-					"You sound like you singing in two keys at same time!",
-					"Monkey no like atonal music!",
-				))
-
-				if (prob(40) && !ON_COOLDOWN(src, "monkey_sing_scream", 10 SECONDS))
-					src.emote("scream")
 
 	proc/pursuited_by(atom/movable/AM)
 		src.ai_set_state(AI_FLEEING)

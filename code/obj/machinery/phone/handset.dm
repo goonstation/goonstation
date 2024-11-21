@@ -4,6 +4,7 @@
 	desc = "I wonder if the last crewmember to use this washed their hands before touching it."
 	w_class = W_CLASS_TINY
 
+	start_listen_effects = list(LISTEN_EFFECT_HANDSET)
 	start_listen_modifiers = list(LISTEN_MODIFIER_PHONE)
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED)
 	start_listen_languages = list(LANGUAGE_ALL)
@@ -54,19 +55,6 @@
 /obj/item/phone_handset/update_icon()
 	. = ..()
 	src.UpdateOverlays(src.SafeGetOverlayImage("stripe", 'icons/obj/machines/phones.dmi',"[src.icon_state]-stripe"), "stripe")
-
-/obj/item/phone_handset/hear(datum/say_message/message)
-	if (!src.parent.linked || !src.parent.linked.handset)
-		return
-
-	var/datum/signal/signal = get_free_signal()
-	signal.transmission_method = TRANSMISSION_RADIO
-	signal.source = src.parent
-	signal.encryption = "\ref[src.parent]"
-	signal.data["message"] = message
-	signal.data["address_1"] = src.parent.linked.net_id
-
-	SEND_SIGNAL(src.parent, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, src.parent.frequency)
 
 /obj/item/phone_handset/proc/get_holder()
 	RETURN_TYPE(/mob)

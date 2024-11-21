@@ -84,6 +84,7 @@ TYPEINFO(/obj/item/device/audio_log)
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
 
+	start_listen_effects = list(LISTEN_EFFECT_AUDIO_LOG)
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
 	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_AUDIO_LOG)
@@ -220,19 +221,6 @@ TYPEINFO(/obj/item/device/audio_log)
 		if (istype(W, /obj/item/audio_tape) && in_interact_range(src, user) && in_interact_range(W, user))
 			return src.Attackby(W, user)
 		return ..()
-
-	hear(datum/say_message/message)
-		if (src.mode != MODE_RECORDING || !src.tape)
-			return
-
-		var/mob/M = message.speaker
-		if (istype(M) && (M.mind?.assigned_role == "Captain"))
-			M.unlock_medal("Captain's Log", TRUE)
-
-		if (!src.tape.add_message(message.speaker_to_display, message.content, src.continuous))
-			src.say("Memory full. Have a nice day.", flags = 0, message_params = list("speaker_to_display" = ""))
-			src.mode = MODE_OFF
-			src.updateSelfDialog()
 
 	proc/play()
 		if (!src.tape)

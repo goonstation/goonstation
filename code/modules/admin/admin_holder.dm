@@ -30,6 +30,8 @@
 	LISTEN_MODIFIER_CHAT_CONTEXT_FLAGS, \
 )
 
+#define ADMIN_LISTEN_EFFECTS null
+
 #define ADMIN_UNDERSTOOD_LANGUAGES list( \
 	LANGUAGE_ALL, \
 )
@@ -101,7 +103,7 @@
 	New(client/C)
 		. = ..()
 		src.admin_speech_tree = new(null, ADMIN_SPEECH_OUTPUTS, ADMIN_SPEECH_MODIFIERS, ADMIN_SPEECH_PREFIXES)
-		src.admin_listen_tree = new(null, ADMIN_LISTEN_INPUTS, ADMIN_LISTEN_MODIFIERS, ADMIN_UNDERSTOOD_LANGUAGES)
+		src.admin_listen_tree = new(null, ADMIN_LISTEN_INPUTS, ADMIN_LISTEN_MODIFIERS, ADMIN_LISTEN_EFFECTS, ADMIN_UNDERSTOOD_LANGUAGES)
 
 		src.owner = C
 		src.hidden_categories = list()

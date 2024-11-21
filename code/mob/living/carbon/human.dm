@@ -2447,14 +2447,6 @@
 	..()
 	src.update_sight()
 
-/mob/living/carbon/human/hear(datum/say_message/message)
-	. = ..()
-
-	if (!src.sims || !ismob(message.speaker) || (message.speaker == src))
-		return
-
-	src.sims.affectMotive("social", 5)
-
 /mob/living/carbon/human/proc/lose_limb(var/limb)
 	if (!src.limbs)
 		return

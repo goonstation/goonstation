@@ -12,3 +12,8 @@
 /datum/listen_module/input/outloud/range_1
 	id = LISTEN_INPUT_OUTLOUD_RANGE_1
 	hearing_range = 1
+
+
+/datum/listen_module/input/outloud/range_2
+	id = LISTEN_INPUT_OUTLOUD_RANGE_2
+	hearing_range = 2

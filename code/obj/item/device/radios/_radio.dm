@@ -18,6 +18,7 @@ TYPEINFO(/obj/item/device/radio)
 	throw_range = 9
 	w_class = W_CLASS_SMALL
 
+	start_listen_effects = list(LISTEN_EFFECT_RADIO)
 	start_listen_modifiers = list(LISTEN_MODIFIER_RADIO)
 	start_listen_inputs = list(LISTEN_INPUT_EQUIPPED)
 	start_listen_languages = list(LANGUAGE_ALL)
@@ -140,54 +141,6 @@ TYPEINFO(/obj/item/device/radio)
 			var/channel_name = global.headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] || "???"
 			var/frequency = format_frequency(src.secure_frequencies["[sayToken]"])
 			. += "<br>[channel_name]: \[[frequency]\] (Activator: <b>[sayToken]</b>)"
-
-/obj/item/device/radio/hear(datum/say_message/message)
-	if (src.bricked)
-		return
-
-	var/signal_frequency
-	if (length(src.secure_frequencies))
-		// `copytext` returns the message prefix without the leading colon.
-		signal_frequency = src.secure_frequencies[copytext(message.prefix, 2, length(message.prefix) + 1)]
-
-	signal_frequency ||= src.frequency
-
-	if (signal_frequency != R_FREQ_DEFAULT)
-		message.hear_sound = 'sound/misc/talk/radio2.ogg'
-
-	else if (global.signal_loss && !src.hardened) // Prevent broadcasting to the general frequency during a solar flare.
-		return
-
-	if (isAI(message.speaker))
-		message.hear_sound = 'sound/misc/talk/radio_ai.ogg'
-
-	var/datum/signal/signal = get_free_signal()
-	signal.transmission_method = TRANSMISSION_RADIO
-	signal.source = src
-	signal.encryption = "\ref[src]"
-	signal.data["message"] = message
-
-	src.last_transmission = world.time
-
-	if (SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, signal_frequency))
-		src.ensure_speech_tree()
-
-		// Send the message to the global radio channel.
-		var/datum/say_message/global_message = message.Copy()
-		global_message.output_module_channel = SAY_CHANNEL_GLOBAL_RADIO
-		src.speech_tree.process(global_message)
-
-		// If the message has been sent on the default frequency, send it to the global radio default channel.
-		if (signal_frequency == R_FREQ_DEFAULT)
-			var/datum/say_message/radio_default_message = message.Copy()
-			radio_default_message.output_module_channel = SAY_CHANNEL_GLOBAL_RADIO_DEFAULT_ONLY
-			src.speech_tree.process(radio_default_message)
-
-		// If the radio and frequency is unprotected, send it to the global radio unprotected channel.
-		if (!src.protected_radio && isnull(src.traitorradio) && !(signal_frequency in global.protected_frequencies))
-			var/datum/say_message/radio_unprotected_message = message.Copy()
-			radio_unprotected_message.output_module_channel = SAY_CHANNEL_GLOBAL_RADIO_UNPROTECTED_ONLY
-			src.speech_tree.process(radio_unprotected_message)
 
 /obj/item/device/radio/receive_signal(datum/signal/signal)
 	if (!src.speaker_enabled || src.bricked || !(src.wires & WIRE_RECEIVE) || !signal.data || !istype(signal.data["message"], /datum/say_message))

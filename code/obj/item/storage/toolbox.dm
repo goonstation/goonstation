@@ -173,6 +173,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 	desc = "His Grace."
 	icon_state = "green"
 	item_state = "toolbox-green"
+	start_listen_effects = list(LISTEN_EFFECT_MEMETIC_TOOLBOX)
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
 	var/list/servantlinks = list()
 	var/hunger = 0
@@ -291,17 +292,6 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 
 		..()
 		return
-
-	hear(datum/say_message/message)
-		if (src.loc != message.speaker)
-			return
-
-		for(var/datum/ailment_data/A in src.servantlinks)
-			var/mob/living/M = A.affected_mob
-			if(!M || M == message.speaker)
-				continue
-
-			boutput(M, "<i><b><font color=blue face = Tempus Sans ITC>[message.content]</font></b></i>")
 
 /mob/living/proc/contract_memetic_madness(var/obj/item/storage/toolbox/memetic/newprogenitor)
 	if(src.find_ailment_by_type(/datum/ailment/disability/memetic_madness))

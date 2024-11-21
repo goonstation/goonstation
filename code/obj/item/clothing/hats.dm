@@ -333,6 +333,7 @@ proc/filter_trait_hats(var/type)
 	name = "DetGadget hat"
 	desc = "Detective's special hat you can outfit with various items for easy retrieval!"
 
+	start_listen_effects = list(LISTEN_EFFECT_DETGADGET)
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED)
 	start_listen_modifiers = null
 	start_listen_languages = list(LANGUAGE_ENGLISH)
@@ -367,55 +368,6 @@ proc/filter_trait_hats(var/type)
 				. += "<br>There is no [name]!"
 		if (cigs.len)
 			. += "<br>[SPAN_NOTICE("It contains <b>[cigs.len]</b> cigarettes!")]"
-
-	hear(datum/say_message/message)
-		if (!ismob(message.speaker))
-			return
-
-		var/phrase_location = findtext(message.content, src.phrase)
-		if (!phrase_location)
-			return
-
-		var/mob/M = message.speaker
-		var/gadget = copytext(message.content, phrase_location + length(src.phrase))
-		gadget = replacetext(gadget, " ", "")
-
-		for (var/name in src.items)
-			if (!findtext(gadget, name))
-				continue
-
-			var/obj/item/I = locate(src.items[name]) in src.contents
-			if (!istype(I))
-				continue
-
-			M.put_in_hand_or_drop(I)
-			M.visible_message(SPAN_ALERT("<b>[M]</b>'s hat snaps open and pulls out \the [I]!"))
-			return
-
-		if (findtext(gadget, "cigarette"))
-			var/num_of_cigarettes = length(src.cigs)
-			if (!num_of_cigarettes)
-				M.show_text("You're out of cigs, shit! How you gonna get through the rest of the day?", "red")
-				return
-
-			var/obj/item/clothing/mask/cigarette/cigarette = src.cigs[num_of_cigarettes]
-			src.cigs -= cigarette
-
-			var/location = "hand"
-			var/mob/living/carbon/human/H = M
-			if (istype(H) && H.equip_if_possible(cigarette, SLOT_WEAR_MASK))
-				location = "mouth"
-			else
-				M.put_in_hand_or_drop(cigarette)
-
-			M.visible_message(SPAN_ALERT("<b>[M]</b>'s hat snaps open and puts \the [cigarette] in [his_or_her(M)] [location]!"))
-			var/obj/item/device/light/zippo/lighter = (locate(/obj/item/device/light/zippo) in src.contents)
-			if (lighter)
-				cigarette.light(M, SPAN_ALERT("<b>[M]</b>'s hat proceeds to light \the [cigarette] with \the [lighter], whoa."))
-				lighter.firesource_interact()
-
-		else
-			M.show_text("Requested object missing or nonexistant!", "red")
 
 	attackby(obj/item/W, mob/M)
 		var/success = 0

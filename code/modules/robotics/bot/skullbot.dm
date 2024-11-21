@@ -17,6 +17,7 @@
 	voice_sound_override = 'sound/misc/talk/skelly.ogg'
 
 	speech_verb_say = list("rattles", "clacks")
+	start_listen_effects = list(LISTEN_EFFECT_SKULLBOT)
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
 	start_speech_modifiers = list(SPEECH_MODIFIER_BOT, SPEECH_MODIFIER_ACCENT_CLACK)
 
@@ -55,12 +56,6 @@
 		src.health -= W.force * 0.5
 		if (src.health <= 0)
 			src.explode()
-
-	hear(datum/say_message/message)
-		if (!src.on || !ismob(message.speaker) || prob(75))
-			return
-
-		src.say(message.content, flags = 0, message_params = list("can_relay" = FALSE))
 
 	gib()
 		return src.explode()

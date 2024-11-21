@@ -16,11 +16,10 @@
 	c_flags = ONBACK
 	item_state = "electropack"
 	cant_self_remove = TRUE
+	start_listen_effects = null
+
 	var/code = 2
 	var/on = FALSE
-
-/obj/item/device/radio/electropack/hear()
-	return
 
 /obj/item/device/radio/electropack/receive_signal(datum/signal/signal)
 	if (!signal || !signal.data || ("[signal.data["code"]]" != "[code]"))

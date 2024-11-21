@@ -20,17 +20,17 @@
 
 /datum/speech_module_tree/auxiliary/_AddSpeechOutput(output_id, list/arguments = list(), count = 1)
 	var/module_id = "[output_id][arguments["subchannel"]]"
-	src.output_module_ids_with_subcount[module_id] += count
+	src.speech_output_ids_with_subcount[module_id] += count
 	src.target_speech_tree?._AddSpeechOutput(output_id, arguments, count)
 	return TRUE
 
 /datum/speech_module_tree/auxiliary/RemoveSpeechOutput(output_id, subchannel, count = 1)
 	var/module_id = "[output_id][subchannel]"
 
-	if (!src.output_module_ids_with_subcount[module_id])
+	if (!src.speech_output_ids_with_subcount[module_id])
 		return FALSE
 
-	src.output_module_ids_with_subcount[module_id] -= count
+	src.speech_output_ids_with_subcount[module_id] -= count
 	src.target_speech_tree?.RemoveSpeechOutput(output_id, subchannel, count)
 	return TRUE
 
@@ -77,8 +77,8 @@
 
 /datum/speech_module_tree/auxiliary/proc/update_target_speech_tree(datum/speech_module_tree/speech_tree)
 	if (src.target_speech_tree)
-		for (var/output_id in src.output_module_ids_with_subcount)
-			src.target_speech_tree.RemoveSpeechOutput(output_id, count = src.output_module_ids_with_subcount[output_id])
+		for (var/output_id in src.speech_output_ids_with_subcount)
+			src.target_speech_tree.RemoveSpeechOutput(output_id, count = src.speech_output_ids_with_subcount[output_id])
 
 		for (var/modifier_id in src.speech_modifier_ids_with_subcount)
 			src.target_speech_tree.RemoveSpeechModifier(modifier_id, count = src.speech_modifier_ids_with_subcount[modifier_id])
@@ -92,8 +92,8 @@
 	if (!src.target_speech_tree)
 		return
 
-	for (var/output_id in src.output_module_ids_with_subcount)
-		src.target_speech_tree._AddSpeechOutput(output_id, count = src.output_module_ids_with_subcount[output_id])
+	for (var/output_id in src.speech_output_ids_with_subcount)
+		src.target_speech_tree._AddSpeechOutput(output_id, count = src.speech_output_ids_with_subcount[output_id])
 
 	for (var/modifier_id in src.speech_modifier_ids_with_subcount)
 		src.target_speech_tree._AddSpeechModifier(modifier_id, count = src.speech_modifier_ids_with_subcount[modifier_id])

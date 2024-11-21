@@ -11,12 +11,10 @@
 	w_class = W_CLASS_TINY
 	frequency = FREQ_SIGNALER
 	has_microphone = FALSE
+	start_listen_effects = null
 	var/code = 30
 	var/delay = 0
 	var/airlock_wire = null
-
-/obj/item/device/radio/signaler/hear()
-	return
 
 /obj/item/device/radio/signaler/receive_signal(datum/signal/signal)
 	if (!(src.wires & WIRE_RECEIVE) || !signal || !signal.data || ("[signal.data["code"]]" != "[code]"))

@@ -124,6 +124,7 @@
 
 	speech_verb_say = "beeps"
 
+	start_listen_effects = list(LISTEN_EFFECT_BRADBURY)
 	start_listen_modifiers = null
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
 	start_listen_languages = list(LANGUAGE_ALL)
@@ -162,13 +163,6 @@
 
 			src.visible_message("[user] prods Bradbury II with [W]. Nothing happens.")
 		return
-
-	hear(datum/say_message/message)
-		if (!src.on || prob(95))
-			return
-
-		src.say(message.content, message_params = list("can_relay" = FALSE))
-		playsound(src, 'sound/machines/modem.ogg', 80, TRUE)
 
 	power_change()
 		if(powered(EQUIP) && !on)

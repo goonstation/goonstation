@@ -9,6 +9,8 @@
 #define AddListenInput(input_id, arguments...) _AddListenInput(input_id, list(##arguments))
 /// A wrapper for _AddListenModifier that permits the usage of named arguments.
 #define AddListenModifier(modifier_id, arguments...) _AddListenModifier(modifier_id, list(##arguments))
+/// A wrapper for _AddListenEffect that permits the usage of named arguments.
+#define AddListenEffect(effect_id, arguments...) _AddListenEffect(effect_id, list(##arguments))
 
 
 //------------ Cooldowns ------------//

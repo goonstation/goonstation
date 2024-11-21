@@ -59,6 +59,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 	rand_pos = 0
 	density = 0
 	desc = "A Loudspeaker."
+	start_listen_effects = null
 
 /obj/item/device/radio/intercom/loudspeaker/speaker/New()
 	. = ..()
@@ -75,9 +76,6 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 			src.pixel_x = -21
 		if (WEST)
 			src.pixel_x = 21
-
-/obj/item/device/radio/intercom/loudspeaker/speaker/hear()
-	return
 
 /obj/item/device/radio/intercom/loudspeaker/speaker/receive_signal()
 	. = ..()

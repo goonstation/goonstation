@@ -14,6 +14,8 @@ var/global/datum/speech_manager/SpeechManager = new()
 	VAR_PRIVATE/list/listen_input_cache
 	/// An associative list of cached listen modifier module types, indexed by their ID.
 	VAR_PRIVATE/list/listen_modifier_cache
+	/// An associative list of cached listen effect module types, indexed by their ID.
+	VAR_PRIVATE/list/listen_effect_cache
 
 	/// An associative list of cached shared input format module datum singletons, indexed by their ID.
 	VAR_PRIVATE/list/datum/shared_input_format_module/shared_input_format_cache
@@ -42,14 +44,14 @@ var/global/datum/speech_manager/SpeechManager = new()
 	for (var/datum/speech_module/output/T as anything in concrete_typesof(/datum/speech_module/output))
 		var/module_id = T::id
 		if (src.speech_output_cache[module_id])
-			CRASH("Non unique output found: [module_id]. These MUST be unique.")
+			CRASH("Non unique speech output found: [module_id]. These MUST be unique.")
 		src.speech_output_cache[module_id] = T
 
 	src.speech_modifier_cache = list()
 	for (var/datum/speech_module/modifier/T as anything in concrete_typesof(/datum/speech_module/modifier))
 		var/module_id = T::id
 		if (src.speech_modifier_cache[module_id])
-			CRASH("Non unique modifier found: [module_id]. These MUST be unique.")
+			CRASH("Non unique speech modifier found: [module_id]. These MUST be unique.")
 		src.speech_modifier_cache[module_id] = T
 
 	src.speech_prefix_cache = list()
@@ -57,7 +59,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 	for (var/datum/speech_module/prefix/T as anything in concrete_typesof(/datum/speech_module/prefix))
 		var/module_id = T::id
 		if (src.speech_prefix_cache[module_id])
-			CRASH("Non unique prefix found: [module_id]. These MUST be unique.")
+			CRASH("Non unique speech prefix found: [module_id]. These MUST be unique.")
 		src.speech_prefix_cache[module_id] = T
 		src.prefix_id_cache[T::prefix_id] = module_id
 
@@ -65,15 +67,22 @@ var/global/datum/speech_manager/SpeechManager = new()
 	for (var/datum/listen_module/input/T as anything in concrete_typesof(/datum/listen_module/input))
 		var/module_id = T::id
 		if (src.listen_input_cache[module_id])
-			CRASH("Non unique input found: [module_id]. These MUST be unique.")
+			CRASH("Non unique listen input found: [module_id]. These MUST be unique.")
 		src.listen_input_cache[module_id] = T
 
 	src.listen_modifier_cache = list()
 	for (var/datum/listen_module/modifier/T as anything in concrete_typesof(/datum/listen_module/modifier))
 		var/module_id = T::id
 		if (src.listen_modifier_cache[module_id])
-			CRASH("Non unique listen modifer found: [module_id]. These MUST be unique.")
+			CRASH("Non unique listen modifier found: [module_id]. These MUST be unique.")
 		src.listen_modifier_cache[module_id] = T
+
+	src.listen_effect_cache = list()
+	for (var/datum/listen_module/effect/T as anything in concrete_typesof(/datum/listen_module/effect))
+		var/module_id = T::id
+		if (src.listen_effect_cache[module_id])
+			CRASH("Non unique listen effect found: [module_id]. These MUST be unique.")
+		src.listen_effect_cache[module_id] = T
 
 	// Populate the shared input format module cache.
 	src.shared_input_format_cache = list()
@@ -118,7 +127,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 	if (result)
 		return new result(arglist(arguments))
 	else
-		CRASH("Invalid output lookup: [output_id]")
+		CRASH("Invalid speech output lookup: [output_id]")
 
 /// Returns a unique instance of the speech modifier module requested, or runtimes on bad ID.
 /datum/speech_manager/proc/GetSpeechModifierInstance(modifier_id, list/arguments)
@@ -127,7 +136,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 	if (result)
 		return new result(arglist(arguments))
 	else
-		CRASH("Invalid modifier lookup: [modifier_id]")
+		CRASH("Invalid speech modifier lookup: [modifier_id]")
 
 /// Returns a unique instance of the speech prefix module requested, or runtimes on bad ID.
 /datum/speech_manager/proc/GetSpeechPrefixInstance(prefix_id, list/arguments)
@@ -136,7 +145,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 	if (result)
 		return new result(arglist(arguments))
 	else
-		CRASH("Invalid prefix lookup: [prefix_id]")
+		CRASH("Invalid speech prefix lookup: [prefix_id]")
 
 /// Returns the longest prefix ID that corresponds to a prefix module from a specified prefix ID.
 /datum/speech_manager/proc/TruncatePrefix(prefix_id)
@@ -166,7 +175,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 	if (result)
 		return new result(arglist(arguments))
 	else
-		CRASH("Invalid input lookup: [input_id]")
+		CRASH("Invalid listen input lookup: [input_id]")
 
 /// Returns a unique instance of the listen modifier module requested, or runtimes on bad ID.
 /datum/speech_manager/proc/GetListenModifierInstance(modifier_id, list/arguments)
@@ -176,6 +185,15 @@ var/global/datum/speech_manager/SpeechManager = new()
 		return new result(arglist(arguments))
 	else
 		CRASH("Invalid listen modifier lookup: [modifier_id]")
+
+/// Returns a unique instance of the listen effect module requested, or runtimes on bad ID.
+/datum/speech_manager/proc/GetListenEffectInstance(effect_id, list/arguments)
+	RETURN_TYPE(/datum/listen_module/effect)
+	var/result = src.listen_effect_cache[effect_id]
+	if (result)
+		return new result(arglist(arguments))
+	else
+		CRASH("Invalid listen effect lookup: [effect_id]")
 
 /// Returns the global instance of the shared input module datum corresponding to the ID given. Does not runtime of bad ID.
 /datum/speech_manager/proc/GetSharedInputFormatModuleInstance(module_id)

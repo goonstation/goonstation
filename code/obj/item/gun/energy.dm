@@ -1394,6 +1394,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	muzzle_flash = "muzzle_flash_elec"
 	var/emagged = FALSE
 
+	start_listen_effects = list(LISTEN_EFFECT_LAWBRINGER)
 	start_listen_modifiers = null
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED)
 	start_listen_languages = list(LANGUAGE_ENGLISH)
@@ -1447,46 +1448,6 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				owner_prints = H.bioHolder.Uid
 				src.name = "HoS [H.real_name]'s Lawbringer"
 				tooltip_rebuild = 1
-
-	hear(datum/say_message/message)
-		//this is all set up for mobs and ceebs changing it, so lets say the lawbringer somehow knows if you're a mob
-		var/mob/M = null
-		if(!ismob(message.original_speaker))
-			return
-		else
-			M = message.original_speaker
-
-		//only work if the voice is the same as the voice of your owner fingerprints.
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (owner_prints && (H.bioHolder.Uid != owner_prints))
-				are_you_the_law(M, message.content)
-				return
-		else
-			are_you_the_law(M, message.content)
-			return //AFAIK only humans have fingerprints/"palmprints(in judge dredd)" so just ignore any talk from non-humans arlight? it's not a big deal.
-
-		if(!src.projectiles && !length(src.projectiles) > 1)
-			boutput(M, SPAN_NOTICE("Gun broke. Call 1-800-CODER."))
-			set_current_projectile(new/datum/projectile/energy_bolt/aoe)
-			item_state = "lawg-detain"
-			M.update_inhands()
-			UpdateIcon()
-
-		var/text = sanitize_talk(message.content)
-		if (fingerprints_can_shoot(M))
-			src.change_mode(M, text)
-		else		//if you're not the owner and try to change it, then fuck you
-			switch(text)
-				if ("detain","execute","knockout","hotshot","incendiary","bigshot","assault","highpower","clownshot","clown", "pulse", "punch")
-					random_burn_damage(M, 50)
-					M.changeStatus("knockdown", 4 SECONDS)
-					elecflash(src,power=2)
-					M.visible_message(SPAN_ALERT("[M] tries to fire [src]! The gun initiates its failsafe mode."))
-					return
-
-		M.update_inhands()
-		UpdateIcon()
 
 	proc/change_mode(var/mob/M, var/text, var/sound = TRUE)
 		switch(text)

@@ -84,6 +84,8 @@
 
 	speech_verb_say = list("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles")
 
+	start_listen_effects = list(LISTEN_EFFECT_PARROT)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
@@ -121,32 +123,6 @@
 		..()
 		if (src.treasure)
 			. += "<br>[src] is holding \a [src.treasure]."
-
-	hear(datum/say_message/message)
-		. = ..()
-
-		if (!src.alive || src.sleeping || !src.text)
-			return
-
-		var/boost = 0
-		if ((message.flags & SAYFLAG_SINGING) && ismob(message.speaker))
-			if (message.flags & (SAYFLAG_LOUD_SINGING | SAYFLAG_BAD_SINGING))
-				SPAWN(0.3 SECONDS)
-					if (BOUNDS_DIST(src, message.speaker) == 0)
-						src.CritterAttack(message.speaker)
-					else
-						flick("[src.species]-flaploop", src)
-
-			else
-				SPAWN(rand(4, 10))
-					src.chatter(TRUE)
-
-			boost = src.signing_learn_boost
-
-		if (prob(src.learn_words_chance + boost))
-			src.learn_stuff(message.content)
-		if (prob(src.learn_phrase_chance + boost))
-			src.learn_stuff(message.content, TRUE)
 
 	proc/learn_stuff(var/message, var/learn_phrase = 0)
 		if (!message)
