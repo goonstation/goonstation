@@ -1,0 +1,5 @@
+cd "$(dirname "$0")"
+SERVER_ID=$(basename $(dirname $(readlink -f ../../)))
+ENV_FILE=".env.$SERVER_ID"
+[ ! -f "$ENV_FILE" ] && echo "Unable to locate env file: $ENV_FILE" && exit 1
+exec /usr/bin/docker compose --env-file ".env.$SERVER_ID" "$@"

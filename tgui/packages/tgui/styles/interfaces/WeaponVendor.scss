@@ -1,6 +1,6 @@
-@use '../colors.scss';
-@use '../functions.scss' as *;
-@use '../components/Button.scss';
+@use '../colors';
+@use '../functions' as *;
+@use '../components/Button';
 
 $categories: (
   'sidearm': colors.$teal,

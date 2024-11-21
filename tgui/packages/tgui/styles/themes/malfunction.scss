@@ -6,12 +6,12 @@
 @use 'sass:color';
 @use 'sass:meta';
 
-@use '../colors.scss' with (
+@use '../colors' with (
   $primary: #910101,
   $fg-map-keys: (),
   $bg-map-keys: ()
 );
-@use '../base.scss' with (
+@use '../base' with (
   $color-bg: #1b3443,
   $color-bg-grad-spread: 6%
 );

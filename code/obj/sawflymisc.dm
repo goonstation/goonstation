@@ -6,8 +6,8 @@
 
 -->Things it DOES NOT include that are sawfly-related, and where they can be found:
 -The pouch of sawflies for nukies at the bottom of ammo pouches.dm
--Their AI, which can be found in mob/living/critter/ai/sawflyai.dm
 -The critter itself, which is in mob/living/critter/sawfly.dm
+-Their AI, which is generic critter with local changes to the mob code
 */
 
 // -------------------grenades-------------
@@ -15,8 +15,8 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	mats = list("metal_dense" = 7,
 				"conductive" = 7,
 				"energy" = 5)
-/obj/item/old_grenade/sawfly
 
+/obj/item/old_grenade/sawfly
 	name = "Compact sawfly"
 	desc = "A self-deploying antipersonnel robot. It's folded up and offline..."
 	det_time = 1.5 SECONDS
@@ -32,7 +32,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	contraband = 2
 	overlays = null
 	armed = FALSE
-	HELP_MESSAGE_OVERRIDE({"Use the sawfly in hand or use the remote to deploy it. Use the remote or click on the sawfly on <span class='help'>help</span> or <span class='grab'>grab</span> intent to deactivate it."})
+	HELP_MESSAGE_OVERRIDE({"Use the sawfly in hand or use the remote to deploy it. To deactivate, use the remote or (syndicate only) click on the sawfly with <span class='help'>help</span> or <span class='grab'>grab</span> intent."})
 
 	//used in dictating behavior when deployed from grenade
 	var/mob/living/critter/robotic/sawfly/heldfly = null
@@ -151,8 +151,8 @@ TYPEINFO(/obj/item/remote/sawflyremote)
 				return
 			user.visible_message("<b class='alert'>[user] [pick(list("gouges", "carves", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes",))] [target]!</b>")
 			playsound(user, 'sound/machines/chainsaw_green.ogg', 50, TRUE)
-			if(prob(3))
-				user.communalbeep()
+			if(prob(5))
+				user.dobeep()
 			take_bleeding_damage(target, null, 10, DAMAGE_STAB)
 			random_brute_damage(target, 14, TRUE)
 			target.was_harmed(user)

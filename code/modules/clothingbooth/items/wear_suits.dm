@@ -205,3 +205,31 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/poncho)
 /datum/clothingbooth_item/wear_suit/waistcoat
 	cost = PAY_TRADESMAN/3
 	item_path = /obj/item/clothing/suit/wcoat
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/sweater_vest)
+/datum/clothingbooth_item/wear_suit/sweater_vest
+
+	tan
+		name = "Tan"
+		swatch_background_color = "#C9A46E"
+		item_path = /obj/item/clothing/suit/sweater_vest/tan
+	red
+		name = "Red"
+		swatch_background_color = "#8D1422"
+		item_path = /obj/item/clothing/suit/sweater_vest/red
+	navy
+		name = "Navy"
+		swatch_background_color = "#37598D"
+		item_path = /obj/item/clothing/suit/sweater_vest/navy
+	green
+		name = "Green"
+		swatch_background_color = "#5D8038"
+		item_path = /obj/item/clothing/suit/sweater_vest/green
+	grey
+		name = "Grey"
+		swatch_background_color = "#747E84"
+		item_path = /obj/item/clothing/suit/sweater_vest/grey
+	black
+		name = "Black"
+		swatch_background_color = "#343442"
+		item_path = /obj/item/clothing/suit/sweater_vest/black
