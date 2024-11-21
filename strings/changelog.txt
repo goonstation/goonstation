@@ -1,5 +1,9 @@
 
 (t)thu nov 21 24
+(u)JORJ949
+(p)21231
+(e)🗺💅|A-Mapping, C-QoL
+(+)Cogmap 2's AI Upload has been shrunk, among other changes.
 (u)NightmarechaMillian
 (p)21276
 (e)🔎💅🔊🐁|C-Code-Quality, C-QoL, C-Sound, A-Critters
