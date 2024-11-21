@@ -3127,7 +3127,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	name = "Mk.1.5 Light Phasers"
 	item_requirements = list("metal_dense" = 15,
 							 "conductive" = 15,
-							 "crystal" = 15)
+							 "crystal" = 15) //
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/phaser)
 	create = 1
 	time = 20 SECONDS
