@@ -312,7 +312,6 @@ ABSTRACT_TYPE(/obj/hotspot)
 			tw_valid = TRUE
 			break
 
-	// assuming all turfs exist for the moment
 	if (tn_valid)
 		if (te_valid && tw_valid)
 			src.icon_state = "[base_icon]-NEW"
