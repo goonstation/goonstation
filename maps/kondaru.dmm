@@ -13193,7 +13193,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "bai" = (
 /obj/loudspeaker,
@@ -20909,10 +20909,11 @@
 /area/station/storage/warehouse)
 "bHB" = (
 /obj/mic_stand,
-/obj/disposalpipe/segment/mail/vertical,
+/obj/disposalpipe/junction/right/south,
 /turf/simulated/floor/specialroom/bar/edge,
 /area/station/storage/warehouse)
 "bHC" = (
+/obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/storage/warehouse)
 "bHD" = (
@@ -30930,7 +30931,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quarters_north)
 "cSF" = (
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "cSO" = (
 /obj/storage/crate,
@@ -32670,7 +32671,7 @@
 /obj/blind_switch/area/west{
 	id = "mailroom"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "eaD" = (
 /obj/disposalpipe/segment/brig{
@@ -35070,6 +35071,12 @@
 /area/station/maintenance/storage{
 	name = "Secure Atmospherics"
 	})
+"fGQ" = (
+/obj/disposalpipe/switch_junction/right/west{
+	name = "undeliverable mail junction"
+	},
+/turf/simulated/floor/neutral/side,
+/area/station/hallway/primary/south)
 "fGU" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
@@ -39213,11 +39220,11 @@
 	pixel_x = -10
 	},
 /obj/machinery/disposal/mail/qm/autoname{
-	mail_tag = "sortingroom";
+	mail_tag = "sorting room";
 	mailgroup = "Mail";
 	name = "Mail Room"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "iGD" = (
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -41205,8 +41212,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/floorflusher/industrial,
 /obj/disposalpipe/trunk/mail/west,
+/obj/machinery/floorflusher/industrial{
+	name = "industrial loading chute - mail"
+	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/cargobay)
 "jWH" = (
@@ -41992,7 +42001,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "kDl" = (
 /obj/lattice{
@@ -42583,7 +42592,7 @@
 	dir = 10;
 	name = "autoname - SS13"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "kWb" = (
 /obj/table/auto,
@@ -44883,6 +44892,13 @@
 /obj/storage/closet/office,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"mGS" = (
+/obj/machinery/conveyor/EW{
+	id = "qmin"
+	},
+/obj/railing/yellow,
+/turf/simulated/floor/caution/northsouth,
+/area/station/quartermaster/cargobay)
 "mHd" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
@@ -46278,8 +46294,8 @@
 /area/station/crew_quarters/radio/news_office)
 "nNa" = (
 /obj/disposalpipe/switch_junction/right/west{
-	name = "mail room mail junction";
-	mail_tag = list(null, "sortingroom")dddddddddddddd)
+	name = "sorting room mail junction";
+	mail_tag = "sorting room"
 	},
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/south)
@@ -51643,6 +51659,9 @@
 	icon_state = "2-4"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/railing/yellow{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/cargobay)
 "rBa" = (
@@ -52630,7 +52649,7 @@
 /obj/table/reinforced/industrial/auto,
 /obj/spawner/mail/two,
 /obj/item/wrench/green,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "ssd" = (
 /obj/machinery/light_switch/east,
@@ -53151,10 +53170,6 @@
 	dir = 8
 	},
 /area/station/engine/coldloop)
-"sIc" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/storage/warehouse)
 "sIi" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -55420,7 +55435,7 @@
 /obj/table/reinforced/industrial/auto,
 /obj/item/wrapping_paper,
 /obj/item/scissors,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "upo" = (
 /obj/disposalpipe/segment/bent/east,
@@ -59442,7 +59457,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "xft" = (
 /obj/disposalpipe/segment/horizontal,
@@ -60985,10 +61000,6 @@
 	dir = 8
 	},
 /area/station/security/secwing)
-"yfA" = (
-/obj/machinery/light/runway_light,
-/turf/space,
-/area/space)
 "yfW" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -102144,8 +102155,8 @@ sJN
 bCl
 bCv
 bDA
-byk
-sIc
+fGQ
+qZj
 bHC
 udH
 bKC
@@ -103684,7 +103695,7 @@ hTW
 abZ
 aPh
 aaa
-yfA
+aaa
 aaa
 aaa
 aaa
@@ -108206,7 +108217,7 @@ cuz
 kUZ
 uHA
 iIL
-xsj
+mGS
 jWx
 tWV
 aaf

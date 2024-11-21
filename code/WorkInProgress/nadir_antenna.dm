@@ -892,7 +892,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 	desc = "A console capable of remotely connecting to and operating cargo transception pads."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "QMpad"
-	req_access = list(access_cargo)
+	req_access = list(access_cargo, access_mail)
 	circuit_type = /obj/item/circuitboard/transception
 	object_flags = CAN_REPROGRAM_ACCESS
 	frequency = FREQ_TRANSCEPTION_SYS

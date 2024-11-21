@@ -2083,7 +2083,7 @@
 "aXj" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/disposal/mail/qm/autoname{
-	mail_tag = "sortingroom";
+	mail_tag = "sorting room";
 	mailgroup = "Mail";
 	name = "Mail Room"
 	},
@@ -3318,6 +3318,9 @@
 "bvx" = (
 /obj/grille/catwalk,
 /obj/disposalpipe/segment/mail/bent/east,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -5325,6 +5328,9 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/mapping_helper/access/mail,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -6030,8 +6036,8 @@
 	})
 "cLn" = (
 /obj/machinery/light,
-/obj/machinery/disposal/mail/qm,
 /obj/disposalpipe/trunk/mail/north,
+/obj/machinery/disposal/mail/autoname/qm,
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/cargobay{
 	name = "Cargo Primary Endpoint"
@@ -29340,6 +29346,9 @@
 /obj/decal/stage_edge{
 	dir = 8
 	},
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -29684,6 +29693,10 @@
 /obj/table/reinforced/industrial/auto,
 /obj/item/wrench/green,
 /obj/disposalpipe/segment/mail/vertical,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -45533,6 +45546,9 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/decal/cleanable/mail_fraud,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -48174,6 +48190,9 @@
 /obj/decal/cleanable/dirt,
 /obj/disposaloutlet/south,
 /obj/disposalpipe/trunk/mail/west,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -50040,7 +50059,7 @@
 "vnq" = (
 /obj/disposalpipe/switch_junction/right/south{
 	name = "mail junction (mail room)";
-	mail_tag = "sortingroom"
+	mail_tag = "sorting room"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)

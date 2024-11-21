@@ -37408,7 +37408,7 @@
 /obj/strip_door,
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	mail_tag = "sortingroom";
+	mail_tag = "sorting room";
 	name = "sorting room router"
 	},
 /obj/machinery/door/firedoor/pyro{
@@ -49142,6 +49142,9 @@
 /area/station/engine/hotloop)
 "lLv" = (
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/railing/yellow{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "lLB" = (
@@ -58157,7 +58160,7 @@
 	dir = 1
 	},
 /obj/machinery/disposal/mail/qm/autoname{
-	mail_tag = "sortingroom";
+	mail_tag = "sorting room";
 	mailgroup = "Mail";
 	name = "Mail Room"
 	},

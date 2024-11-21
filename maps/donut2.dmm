@@ -2494,9 +2494,9 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "aoS" = (
-/obj/machinery/conveyor/NS{
-	id = "cargobelt_in";
-	operating = 1
+/obj/machinery/cargo_router{
+	default_direction = 2;
+	destinations = list("Mail"=4)
 	},
 /turf/space,
 /area/supply/delivery_point)
@@ -2522,7 +2522,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "apa" = (
 /obj/shrub{
@@ -18263,11 +18263,10 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "cWY" = (
 /obj/disposalpipe/segment/mail,
-/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -20005,15 +20004,15 @@
 /area/station/hallway/primary/south)
 "ebs" = (
 /obj/machinery/light/incandescent,
-/obj/machinery/disposal/mail/qm/autoname{
-	mail_tag = "sortingroom";
-	mailgroup = "Mail";
-	name = "Mail Room"
-	},
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/disposal/mail/qm/autoname{
+	mail_tag = "sorting room";
+	mailgroup = "Mail";
+	name = "Mail Room"
+	},
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "ebu" = (
 /obj/machinery/light/incandescent,
@@ -22864,7 +22863,7 @@
 /area/station/crew_quarters/stockex)
 "fUX" = (
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "fVw" = (
 /turf/simulated/wall/auto/supernorn,
@@ -23115,7 +23114,7 @@
 /turf/simulated/floor/yellow/side,
 /area/station/engine/inner)
 "gcW" = (
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "gdX" = (
 /obj/item/storage/toilet/random{
@@ -25337,7 +25336,7 @@
 /obj/table/reinforced/industrial/auto,
 /obj/item/wrench/green,
 /obj/spawner/mail/two,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "hxd" = (
 /obj/storage/closet/wardrobe/black,
@@ -26958,7 +26957,8 @@
 /obj/stool/chair/dining/industrial{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "ivS" = (
 /obj/shrub{
@@ -28263,9 +28263,9 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "jpm" = (
-/obj/machinery/cargo_router{
-	default_direction = 2;
-	destinations = list("Mail"=4)
+/obj/machinery/conveyor/NS{
+	id = "cargobelt_in";
+	operating = 1
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -31957,7 +31957,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "lBj" = (
 /obj/table/wood/auto,
@@ -36040,7 +36040,7 @@
 /obj/machinery/door/airlock/pyro/alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "nUH" = (
 /turf/simulated/floor/engine,
@@ -36508,7 +36508,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "ohG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -38391,7 +38391,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "phs" = (
 /turf/simulated/floor/wood/two,
@@ -39167,7 +39167,7 @@
 	},
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	mail_tag = "sortingroom";
+	mail_tag = "sorting room";
 	name = "sorting room router";
 	icon_state = "pipe-sj2"
 	},
@@ -41502,7 +41502,7 @@
 	},
 /obj/mapping_helper/access/mail,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "qVL" = (
 /obj/decal/cleanable/dirt/dirt5,
@@ -41668,7 +41668,7 @@
 	id = "cargo-art-in";
 	operating = 1
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "rcM" = (
 /obj/machinery/light/incandescent,
@@ -42057,6 +42057,18 @@
 	dir = 8
 	},
 /area/station/science/lobby)
+"rri" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/machinery/conveyor/SN{
+	operating = 1
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/space)
 "rro" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -46719,7 +46731,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "ugd" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
@@ -48177,7 +48189,7 @@
 	default_direction = 8;
 	destinations = list("Mail"=2)
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "vbW" = (
 /obj/disposalpipe/segment{
@@ -87541,7 +87553,7 @@ aaa
 aaa
 aaa
 lPV
-ijd
+rri
 aoO
 dgx
 apj

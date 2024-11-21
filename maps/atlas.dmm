@@ -182,7 +182,7 @@
 /obj/table/reinforced/industrial/auto,
 /obj/item/scissors,
 /obj/item/wrapping_paper,
-/turf/simulated/floor/caution/westeast,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "aaV" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -471,7 +471,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/west)
 "abY" = (
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "abZ" = (
 /obj/cable{
@@ -5043,7 +5043,7 @@
 /obj/table/reinforced/industrial/auto,
 /obj/item/wrench/green,
 /obj/spawner/mail/two,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "aBI" = (
 /obj/submachine/laundry_machine,
@@ -5273,7 +5273,7 @@
 	pixel_y = 28
 	},
 /obj/storage/secure/closet/civilian/mail,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "aCT" = (
 /obj/rack,
@@ -18121,7 +18121,7 @@
 /obj/stool/chair/dining/industrial{
 	dir = 8
 	},
-/turf/simulated/floor/caution/westeast,
+/turf/simulated/floor/industrial,
 /area/station/mailroom)
 "nTr" = (
 /obj/machinery/vehicle/miniputt/indyputt/armed,

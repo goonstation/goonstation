@@ -860,7 +860,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/scissors,
 	/obj/item/wrapping_paper,
 	/obj/item/pinpointer/mail_recepient,
-	/obj/item/satchel/mail)
+	/obj/item/satchel/mail,
+	/obj/item/stamp)
 
 /obj/storage/secure/closet/civilian/hydro
 	name = "\improper Botanical supplies locker"
