@@ -157,6 +157,9 @@ var/reboot_file_path = "data/restarting"
 		// Delete .dyn.rsc so that stupid shit doesn't happen
 		fdel("[config.dmb_filename].dyn.rsc")
 
+		if (world.system_type == UNIX && shell())
+			shell("find ./tools -type f -name '*.sh' -o -name 'dc' -exec chmod +x {} \\;")
+
 		logTheThing(LOG_DIARY, null, "Update complete.", "admin")
 	else
 		logTheThing(LOG_DIARY, null, "No update found. Skipping update process.", "admin")

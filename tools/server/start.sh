@@ -28,6 +28,7 @@ if [ -n "$(ls -A update)" ]; then
 		mv "$filename" ..
 	done
 	cd ..
+	find ./tools -type f -name "*.sh" -o -name "dc" -exec chmod +x {} \;
 fi
 
 # Update external libraries
