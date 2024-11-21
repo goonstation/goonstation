@@ -155,3 +155,77 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 		if (correct_vowels > 0)
 			return " emits [correct_vowel_msg]."
 		return " emits [misplaced_vowel_msg]."
+
+/datum/artifact_trigger/repair
+	type_name = "Repair"
+	stimulus_required = "repair"
+	hint_prob = 100
+	do_amount_check = FALSE
+
+	// list of tools to pull from
+	var/list/possible_tools = list(TOOL_SNIPPING, TOOL_PRYING, TOOL_SCREWING, TOOL_WELDING, TOOL_WRENCHING, TOOL_PULSING)
+	// list of tools that are required to repair this artifact
+	var/list/tools_required = list()
+	// the artifact this trigger is tied to
+	var/datum/artifact/artifact = null
+	// the current item we're working on based on origin
+	var/current_thingy = null
+
+	New()
+		..()
+		if (!src.tools_required)
+			// add random amount of tools in an ordered list
+			for (var/i in 1 to rand(4, 5))
+				src.tools_required = pick(src.possible_tools)
+
+	proc/get_desc()
+		var/return_msg = ""
+		var/verby = src.get_current_tool_verb()
+
+		if (length(src.tools_required) < 1)
+			return return_msg
+
+		src.current_thingy = src.current_thingy ? src.current_thingy : pick(src.artifact.artitype.nouns_small)
+		var/list/action_list = list(
+			"Seems like you need to [verby] [current_thingy].",
+			"[capitalize(verby)]ing [current_thingy] seems like the next step.",
+			"Looks like you'll need to [verby] [current_thingy] to advance.",
+			"That [current_thingy] is going to need some [verby]ing.",
+			"[current_thingy] needs some [verby]ing to proceed.",
+			"You need to [verby] [current_thingy] to repair it."
+		)
+		return_msg = pick(action_list)
+		return return_msg
+
+	proc/get_current_tool_verb()
+		var/verby = ""
+		switch(src.tools_required[1])
+			if(TOOL_SNIPPING)
+				verby = "cut"
+			if(TOOL_PRYING)
+				verby = "pry"
+			if(TOOL_SCREWING)
+				verby = "screw"
+			if(TOOL_WELDING)
+				verby = "weld"
+			if(TOOL_WRENCHING)
+				verby = "wrench"
+			if(TOOL_PULSING)
+				verby = "shock"
+			else
+				verby= "work"
+		return verby
+
+	proc/parse_tool(var/obj/item/I, var/mob/user)
+		if (length(src.tools_required) > 0)
+			var/verby = src.get_current_tool_verb()
+			boutput(user, SPAN_ALERT("[I] ain't the right tool for the job. You need something that can [verby]."))
+		if(istool(I, src.tools_required[1]))
+			SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECOND, /datum/artifact_trigger/repair/proc/use_tool, list(I, user), I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+
+	proc/use_tool(var/obj/item/I, var/mob/user)
+		var/verby = src.get_current_tool_verb()
+		src.current_thingy = src.current_thingy ? src.current_thingy : pick(src.artifact.artitype.nouns_small)
+		user.visible_message(SPAN_ALERT("[user] [verby]!"), "You [verby] [src.current_thingy].")
+		src.current_thingy = null
+		src.tools_required.Remove(src.tools_required[1])

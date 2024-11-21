@@ -133,7 +133,12 @@
 		selection = pick(valid_triggers)
 		if (ispath(selection))
 			var/datum/artifact_trigger/AT = new selection
-			A.triggers += AT
+			if(istype(AT, /datum/artifact_trigger/repair))
+				var/datum/artifact_trigger/repair/R = AT
+				R.artifact = A
+				A.triggers += R
+			else
+				A.triggers += AT
 			valid_triggers -= selection
 
 	artifact_controls.artifacts += src
@@ -284,10 +289,21 @@
 						return
 					src.ArtifactDeactivated()
 
-	if (isweldingtool(W))
-		if (W:try_weld(user,0,-1,0,1))
-			src.ArtifactStimulus("heat", 800)
-			src.visible_message(SPAN_ALERT("[user.name] burns the artifact with [W]!"))
+	if(istool(W, TOOL_SNIPPING | TOOL_PRYING | TOOL_SCREWING | TOOL_WELDING | TOOL_WRENCHING | TOOL_PULSING))
+		var/datum/artifact_trigger/repair/trigger = locate(/datum/artifact_trigger/repair) in src.artifact.triggers
+		if (trigger)
+			trigger.parse_tool(W, user, src.artifact)
+			return 0
+
+		if (isweldingtool(W))
+			if (W:try_weld(user,0,-1,0,1))
+				src.ArtifactStimulus("heat", 800)
+				src.visible_message(SPAN_ALERT("[user.name] burns the artifact with [W]!"))
+				return 0
+
+		if(ispulsingtool(W))
+			src.ArtifactStimulus("elec", 1000)
+			src.visible_message(SPAN_ALERT("[user.name] shocks \the [src] with \the [W]!"))
 			return 0
 
 	if (istype(W,/obj/item/device/light/zippo))
@@ -324,11 +340,6 @@
 		var/obj/item/device/flyswatter/swatter = W
 		src.ArtifactStimulus("elec", 1500)
 		src.visible_message(SPAN_ALERT("[user.name] shocks \the [src] with \the [swatter]!"))
-		return 0
-
-	if(ispulsingtool(W))
-		src.ArtifactStimulus("elec", 1000)
-		src.visible_message(SPAN_ALERT("[user.name] shocks \the [src] with \the [W]!"))
 		return 0
 
 	if (istype(W,/obj/item/parts/robot_parts))
