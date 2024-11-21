@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use '../base.scss';
-@use '../functions.scss' as *;
-@use './Input.scss';
+@use '../base';
+@use '../functions' as *;
+@use './Input';
 
 $text-color: Input.$text-color !default;
 $background-color: Input.$background-color !default;
@@ -67,8 +67,8 @@ $border-radius: Input.$border-radius !default;
 
   &:-ms-input-placeholder {
     font-style: italic;
-    color: #777;
-    color: rgba(255, 255, 255, 0.45);
+    color: hsl(0, 0%, 46.7%);
+    color: hsla(0, 0%, 100%, 0.45);
   }
 }
 

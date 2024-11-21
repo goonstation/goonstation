@@ -4,9 +4,9 @@
  */
 
 @use 'sass:color';
-@use '../base.scss';
-@use '../functions.scss' as *;
-@use './Input.scss';
+@use '../base';
+@use '../functions' as *;
+@use './Input';
 
 $text-color: Input.$text-color !default;
 $background-color: Input.$background-color !default;
