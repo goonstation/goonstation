@@ -338,6 +338,8 @@ ABSTRACT_TYPE(/obj/hotspot)
 
 	src.remove_filter("fire-NW-alphamask")
 	src.remove_filter("fire-NE-alphamask")
+	if (!tn_valid)
+		return
 	var/obj/hotspot/gasfire = locate(/obj/hotspot/gasfire) in get_step(src, NORTHWEST)
 	if (gasfire)
 		src.add_filter("fire-NW-alphamask", 0, alpha_mask_filter(icon = icon(src.icon, "NW-alpha"), flags = MASK_INVERSE))
