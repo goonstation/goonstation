@@ -244,6 +244,9 @@
 	icon_state = "grenade-launcher"
 	muzzle_flash = "muzzle_flash_launch"
 
+	lower_ammo
+		remaining_ammunition = 6
+
 /obj/item/shipcomponent/mainweapon/UFO
 	name = "UFO Blaster"
 	desc = "An extraterrestrial weapons system."

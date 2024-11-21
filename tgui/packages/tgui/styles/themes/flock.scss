@@ -9,11 +9,11 @@
 
 $flock: #14aa94;
 
-@use '../colors.scss' with (
+@use '../colors' with (
   $fg-map-keys: (),
   $bg-map-keys: ()
 );
-@use '../base.scss' with (
+@use '../base' with (
   $color-bg: color.scale($flock, $lightness: -45%)
 );
 

@@ -1104,11 +1104,15 @@
 							if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
 								var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
 								var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
+								var/original_tool_loc = O.loc
 								drop_item()
 								O.set_loc(src)
-								equip_if_possible(O, drophand)
-								src.visible_message(SPAN_ALERT("<B>[src] pulls a set of tools out of \the [C]!</B>"))
-								playsound(src.loc, "rustle", 60, 1)
+								if(equip_if_possible(O, drophand))
+									src.visible_message(SPAN_ALERT("<B>[src] pulls a set of tools out of \the [C]!</B>"))
+									playsound(src.loc, "rustle", 60, 1)
+								else
+									O.set_loc(original_tool_loc)
+									boutput(src, SPAN_ALERT("You aren't able to equip the omnitool to that hand!"))
 								break
 				else
 					message = "<B>[src]</B> tries to stretch [his_or_her(src)] arms."

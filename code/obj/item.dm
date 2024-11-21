@@ -440,7 +440,7 @@ ABSTRACT_TYPE(/obj/item)
 		SPAN_NOTICE("You take a bite of [src]!"))
 
 //disgusting proc. merge with foods later. PLEASE
-/obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/by_matter_eater=FALSE)
+/obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/by_matter_eater=FALSE, var/force_edible = FALSE)
 	if (!iscarbon(M) && !ismobcritter(M))
 		return FALSE
 	if (M?.bioHolder && !M.bioHolder.HasEffect("mattereater"))
@@ -686,7 +686,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	return 1
 
 /obj/item/proc/split_stack(var/toRemove)
-	if(toRemove >= src.amount || toRemove < 1) return null
+	if(toRemove >= src.amount || toRemove < 1 || QDELETED(src)) return null
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)

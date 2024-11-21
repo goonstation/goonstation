@@ -358,6 +358,6 @@
 			if (istype(master))
 				master.moving = 0
 				master.bot_mover = null
-				master.process() // responsive, robust AI = calling process() a million zillion times
+				master.ProcessMachine() // responsive, robust AI = calling process() a million zillion times
 				master = null
 				qdel(src)

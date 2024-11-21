@@ -103,10 +103,12 @@
 		if (fold == "Paper hat")
 			user.show_text("You fold the paper into a hat! Neat.", "blue")
 			var/obj/item/clothing/head/paper_hat/H = new()
+			H.setMaterial(src.material)
 			user.put_in_hand_or_drop(H)
 		else if (fold == "Cigarette packet")
 			user.show_text("You fold the paper into a cigarette packet! Neat.", "blue")
 			var/obj/item/cigpacket/paperpack/H = new()
+			H.setMaterial(src.material)
 			user.put_in_hand_or_drop(H)
 		else
 			var/obj/item/paper/folded/F = null
@@ -120,6 +122,7 @@
 			F.old_desc = src.desc
 			F.old_icon_state = src.icon_state
 			F.stamps = src.stamps
+			F.setMaterial(src.material)
 			user.put_in_hand_or_drop(F)
 
 		qdel(src)

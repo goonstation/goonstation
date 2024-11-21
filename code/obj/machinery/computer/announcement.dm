@@ -169,9 +169,15 @@
 		if (person.traitHolder.getTraitWithCategory("background"))
 			return TRUE
 
+		var/job = person.mind.assigned_role
+		if (!job || (job == "MODE"))
+			job = "Staff Assistant"
+		if (issilicon(person) && !isAI(person))
+			job = "Cyborg"
+
 		var/message = src.arrivalalert
 		message = replacetext(message, "$NAME", person.real_name)
-		message = replacetext(message, "$JOB", person.mind.assigned_role)
+		message = replacetext(message, "$JOB", job)
 		message = replacetext(message, "$STATION", "[station_name()]")
 		message = replacetext(message, "$THEY", "[he_or_she(person)]")
 		message = replacetext(message, "$THEM", "[him_or_her(person)]")
@@ -185,7 +191,7 @@
 		var/job = person.mind.assigned_role
 		if(!job || (job == "MODE"))
 			job = "Staff Assistant"
-		if(issilicon(person))
+		if(issilicon(person) && !isAI(person))
 			job = "Cyborg"
 
 		var/message = src.departurealert

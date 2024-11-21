@@ -381,6 +381,7 @@ var/list/admin_verbs = list(
 		/client/proc/implant_all,
 		/client/proc/cmd_crusher_walls,
 		/client/proc/cmd_disco_lights,
+		/client/proc/cmd_event_controller,
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_terrainify_station,
 		/client/proc/cmd_caviewer,

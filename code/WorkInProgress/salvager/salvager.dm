@@ -3,9 +3,10 @@
 /obj/item/salvager
 	name = "salvage reclaimer"
 	desc = "A strange hodgepodge of industrial equipment used to break apart equipment and structures and reclaim the material.  A retractable crank acts as a great belt hook and recharging aid."
-#ifndef SECRETS_ENABLED
-	icon_state = "broken_egun"
-#endif
+	icon = 'icons/obj/items/device.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	icon_state = "salvager"
+	item_state = "salvager"
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	force = 10.0
@@ -115,20 +116,16 @@
 
 		if(.)
 			. = max(., 2 SECONDS)
-#ifdef SECRETS_ENABLED
 			icon_state = "salvager-on"
 			item_state = "salvager-on"
-#endif
 			user.update_inhands()
 			var/positions = src.get_welding_positions()
 			actions.start(new /datum/action/bar/private/welding/salvage(user, A, ., /obj/item/salvager/proc/weld_action, \
 				list(A, user), null, positions[1], positions[2], src),user)
 
 	proc/weld_action(atom/A, mob/user as mob)
-#ifdef SECRETS_ENABLED
 		icon_state = "salvager"
 		item_state = "salvager"
-#endif
 		user.update_inhands()
 
 		if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced))
@@ -277,14 +274,135 @@
 	onDelete()
 		var/obj/item/salvager/S = src.call_proc_on
 		if(istype(S))
-#ifdef SECRETS_ENABLED
 			S.icon_state = "salvager"
 			S.item_state = "salvager"
-#endif
 			var/mob/M = owner
 			if(istype(M))
 				M.update_inhands()
 		..()
+
+
+/obj/item/weldingtool/arcwelder
+	name = "arc welder"
+	desc = "A tool that, when turned on, uses electricity to emit a concentrated arc, welding metal together or slicing it apart."
+	icon = 'icons/obj/items/tools/weldingtool.dmi'
+	inhand_image_icon = 'icons/mob/inhand/tools/weldingtool.dmi'
+	wear_image_icon = null // TODO: replace with a belt icon
+	icon_state = "arcwelder-off"
+	item_state = "arcwelder-off"
+	inventory_counter_enabled = TRUE
+	var/charge_to_fuel = 7
+
+	New()
+		..()
+		var/cell = new/obj/item/ammo/power_cell/self_charging{charge = 100; max_charge = 100; recharge_rate = 4}
+		AddComponent(/datum/component/cell_holder, new_cell=cell, chargable=TRUE, max_cell=500, swappable=FALSE)
+		src.setItemSpecial(/datum/item_special/spark/arcwelder)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
+		UpdateIcon()
+
+	examine()
+		return
+
+	afterattack(obj/O, mob/user)
+		if (src.welding)
+			use_fuel((ismob(O) || istype(O, /obj/blob) || istype(O, /obj/critter)) ? 2 : 0.2)
+			if (get_fuel() <= 0)
+				src.set_state(on = FALSE, user = user)
+			var/turf/location = user.loc
+			if (istype(location, /turf))
+				location.hotspot_expose(700, 50, 1)
+			if (O && !ismob(O) && O.reagents)
+				boutput(user, SPAN_NOTICE("You heat \the [O.name]."))
+				O.reagents.temperature_reagents(4000,50, 100, 100, 1)
+
+	attackby(obj/item/I, mob/user)
+		return
+
+	get_fuel()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			. = ret["charge"] / charge_to_fuel
+
+	use_fuel(var/amount)
+		amount = min(get_fuel(), amount)
+		amount *= src.charge_to_fuel
+		SEND_SIGNAL(src, COMSIG_CELL_USE, amount)
+
+	process()
+		..()
+		if(welding)
+			use_fuel(1)
+			if (!get_fuel())
+				src.set_state(on = FALSE, user = ismob(src.loc) ? src.loc : null)
+
+	try_weld(mob/user, var/fuel_amt = 2, var/use_amt = -1, var/noisy=1, var/burn_eyes=1)
+		if (src.welding)
+			if(use_amt == -1)
+				use_amt = fuel_amt
+			if (src.get_fuel() < fuel_amt)
+				boutput(user, SPAN_NOTICE("Need more energy!"))
+				return FALSE //welding, doesnt have fuel
+			src.use_fuel(use_amt)
+			if(noisy)
+				playsound(user.loc, list('sound/effects/welding_arc.ogg'), 50, 1)
+			if(burn_eyes)
+				src.eyecheck(user)
+			return TRUE //welding, has fuel
+		return FALSE //not welding
+
+	firesource_interact()
+		return
+
+	set_state(on, mob/user)
+		if (src.welding != on)
+			src.welding = on
+			if (src.welding)
+				if (get_fuel() <= 0)
+					boutput(user, SPAN_NOTICE("Need more fuel!"))
+					src.welding = FALSE
+					return FALSE
+				boutput(user, SPAN_NOTICE("You will now weld when you attack."))
+				src.force = 25
+				hit_type = DAMAGE_BURN
+				set_icon_state("arcwelder-on")
+				src.item_state = "arcwelder-on"
+				processing_items |= src
+				if(user && !ON_COOLDOWN(src, "playsound", 1.5 SECONDS))
+					playsound(src.loc, 'sound/effects/welderarc_ignite.ogg', 65, 1)
+				SEND_SIGNAL(src, COMSIG_LIGHT_ENABLE)
+			else
+				boutput(user, SPAN_NOTICE("Not welding anymore."))
+				src.force = 3
+				hit_type = DAMAGE_BLUNT
+				set_icon_state("arcwelder-off")
+				src.item_state = "arcwelder-off"
+				SEND_SIGNAL(src, COMSIG_LIGHT_DISABLE)
+		if(istype(user))
+			user.update_inhands()
+
+	update_icon()
+		var/list/ret = list()
+		if (SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
+		else
+			inventory_counter.update_text("-")
+
+
+/datum/item_special/spark/arcwelder
+	cooldown = 1.5 SECONDS
+
+	pixelaction(atom/target, params, mob/user, reach)
+		var/fuel_cost = 2
+		// ITEMSPECIAL_PIXELDIST_SQUARED
+		if(!istype(master, /obj/item/weldingtool/arcwelder) || get_dist_pixel_squared(user, target, params) <= (70 * 70) ) return
+		var/obj/item/weldingtool/arcwelder/ARC = master
+		if (!ARC.welding) return
+		if ( ARC.get_fuel() < ( fuel_cost * 1.1 ) )
+			playsound(master, 'sound/weapons/Gunclick.ogg', 50, 0, 0.1, 2)
+			return
+		if(..())
+			ARC.use_fuel(fuel_cost)
 
 /obj/item/storage/box/salvager_frame_compartment
 	name = "electronics frame compartment"
@@ -317,6 +435,250 @@
 
 /obj/item/device/radio/headset/salvager
 	protected_radio = TRUE // Ops can spawn with the deaf trait.
+
+/obj/item/device/powersink/salvager
+	desc = "A nulling power sink which drains energy from electrical systems.  Installed with high capacity cells to steal away power."
+	drain_rate = 45000		// amount of power to drain per tick
+	max_power = 2e7		// maximum power that can be drained before exploding
+	color = list(1,0,0,-0.00168067,0.998559,0.00168067,0.213445,0.182953,0.786555)
+
+	New()
+		. = ..()
+		light.set_brightness(1.5)
+
+	get_desc(dist)
+		if(dist <= 1)
+			var/ratio = round(src.power_drained / src.max_power * 100, 2)
+			. += " The display indicates [engineering_notation(power_drained)]W and [ratio]% capacity."
+
+	process()
+		var/previous_drain_rate = drain_rate
+		//... decentivize non-station power...
+		if(!istype(get_area(src), /area/station))
+			src.light.set_color(0.5, 0.2, 0.2)
+			drain_rate *= 0.3
+		else
+			src.light.set_color(1, 1, 1)
+		. = ..()
+		if(attached)
+			var/datum/powernet/PN = attached.get_powernet()
+			if(PN)
+				if(!ON_COOLDOWN(src,"noise",rand(1 SECOND, 5 SECONDS)))
+					playsound(src,'sound/machines/engine_highpower.ogg', 70, 1, 3, -2)
+		drain_rate = previous_drain_rate
+
+
+/obj/item/deployer/barricade/barbed
+	name = "barbed barricade deployer"
+	object_type = /obj/barricade/barbed
+
+	New()
+		. = ..()
+		var/overlay = image(src.icon_state, "b_sharp")
+		UpdateOverlays(overlay, "barb")
+
+/obj/item/deployer/barricade/barbed/wire
+	name = "barbed wire segment"
+	desc = "A coiled up length of barbed wire that can be used to make some kind of barricade."
+	icon_state = "barbed_wire"
+	amount = 3
+	inventory_counter_enabled = TRUE
+	object_type = /obj/barricade/barbed/wire
+	build_duration = 1.5 SECONDS
+
+	deploy(mob/user as mob, turf/T as turf)
+		. = ..()
+		if(.)
+			var/obj/barricade/B = .
+			B.dir = user.dir
+
+/obj/item/breaching_hammer/salvager
+	name = "battered breaching sledgehammer"
+	desc = "A heavy metal hammer designed to crumple space stations. And crumple just about anything else too."
+	color = list(2.15523,3.9902,-1.72794,-1.54738,-3.42157,2.1152,0.654062,0.621849,0.422269)
+
+	click_delay = 25
+	force = 25 //this number is multiplied by 4 when attacking doors.
+	stamina_damage = 60
+	stamina_cost = 25
+
+/obj/item/gun/kinetic/pumpweapon/riotgun/salvager
+	name = "reclaimed shotgun"
+	desc = "A pump action shotgun."
+	gildable = FALSE
+	max_ammo_capacity = 4
+	color = list(1.47114,0.473684,-0.473684,-1.4581,-0.473684,1.47368,0.983451,1,5.43476e-007)
+
+	New()
+		..()
+		ammo.amount_left = 0
+
+
+/obj/item/gun/energy/makeshift/basic_salvager // for salvagers
+
+	New()
+		..()
+		var/obj/item/cell/charged/C = new /obj/item/cell/charged
+		C.UpdateIcon() // fix visual bug
+		src.attach_cell(C)
+		var/obj/item/light/tube/T = new /obj/item/light/tube/yellowish
+		src.attach_light(T)
+
+/obj/item/storage/grenade_pouch/salvager_distract
+	spawn_contents = list(/obj/item/old_grenade/smoke=3,/obj/item/chem_grenade/flashbang = 2)
+
+TYPEINFO(/obj/item/salvager_hand_tele)
+	mats = list("MET-1" = 5, "POW-1"=5, "CON-2" = 5, "telecrystal" = 30)
+
+/obj/item/salvager_hand_tele
+	name = "makeshift teleporter"
+	desc = "A questionable portable teleportation device that is coupled to a specific location."
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "hand_tele_s"
+	item_state = "electronic"
+	throwforce = 5
+	health = 5
+	w_class = W_CLASS_SMALL
+	c_flags = ONBELT
+	throw_speed = 3
+	throw_range = 5
+	m_amt = 10000
+	var/charges = 3
+	var/image/indicator
+	var/image/indicator_light
+
+	New()
+		..()
+		indicator = image(src.icon, "hand_tele_o")
+		indicator_light = image(src.icon, "hand_tele_o", layer=LIGHTING_LAYER_BASE)
+		indicator_light.blend_mode = BLEND_ADD
+		indicator_light.plane = PLANE_LIGHTING
+		indicator_light.color = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5)
+		UpdateIcon()
+
+	update_icon()
+		if(charges)
+			src.UpdateOverlays(indicator, "indicator")
+		else
+			src.UpdateOverlays(null, "indicator")
+
+	get_desc(dist)
+		if(dist < 1)
+			. += " The display indicates that there are [charges] charges remaining and there is small hole that telecrystals can inserted on the side."
+
+	attack_self(mob/user)
+		. = ..()
+		if(user.mind.get_antagonist(ROLE_SALVAGER))
+			if(length(landmarks[LANDMARK_SALVAGER_TELEPORTER]))
+				actions.start(new /datum/action/bar/private/salvager_tele(user, src), user)
+			else
+				boutput(user, SPAN_ALERT("Something is wrong..."))
+		else
+			var/results = rand(1,10)
+			switch( results )
+				if(1 to 5)
+					boutput(user, SPAN_ALERT("You can't make any sense of this device.  Maybe it isn't for you."))
+				if(6 to 8)
+					boutput(user, SPAN_ALERT("\the [src] screen flashes momentarily before discharing a shock."))
+					user.shock(src, 2500, "chest", 1, 1)
+					user.changeStatus("stunned", 3 SECONDS)
+				if(9 to 10)
+					boutput(user, SPAN_ALERT("[src] gets really hot... and explodes?!?"))
+					elecflash(src)
+					user.u_equip(src)
+					qdel(src)
+
+	attackby(obj/item/W, mob/user, params)
+		if(istype(W, /obj/item/raw_material/telecrystal))
+			if(charges < 5)
+				boutput(user, SPAN_ALERT("You gently place \the [W] into a small receptical on the side of \the [src]."))
+				user.u_equip(W)
+				qdel(W)
+				charges++
+				src.UpdateIcon()
+			else
+				boutput(user, SPAN_ALERT("You can't quite seem to get \the [W] into \the [src].  There are already enough crystals inside."))
+		else
+			..()
+
+/datum/action/bar/private/salvager_tele
+	duration = 6 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
+	var/mob/target
+	var/obj/item/salvager_hand_tele/device
+
+	New(Target, Device)
+		target = Target
+		device = Device
+		..()
+
+	onUpdate()
+		..()
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if(prob(25))
+			elecflash(device)
+
+	onStart()
+		..()
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		playsound(owner.loc, 'sound/machines/click.ogg', 60, 1)
+
+	onEnd()
+		..()
+		var/turf/destination = pick(landmarks[LANDMARK_SALVAGER_TELEPORTER])
+		animate_teleport(target)
+		target.emote("scream")
+		SPAWN(6 DECI SECONDS)
+			showswirl(target)
+			target.set_loc(destination)
+			showswirl(target)
+			elecflash(src)
+			device.charges--
+			device.UpdateIcon()
+			if(device.charges <= 0)
+				if(prob(33))
+					boutput(target, SPAN_ALERT("\The [device] disintegrates!  Well, I guess there are more where that came from."))
+					target.u_equip(device)
+					qdel(device)
+				else
+					boutput(target, SPAN_ALERT("\The [device] lights stop flashing!  Must need more fuel?"))
+
+/obj/item/clothing/glasses/salvager
+	name = "\improper S.A.V. goggles"
+	icon_state = "salvager"
+	item_state = "salvager"
+	desc = "The Salvager Appraisal Visualizer is latest in value viewing technology!."
+
+	equipped(var/mob/user, var/slot)
+		..()
+		if (slot == SLOT_GLASSES)
+			get_image_group(CLIENT_IMAGE_GROUP_SALVAGER_VALUES).add_mob(user)
+
+	unequipped(var/mob/user)
+		if(src.equipped_in_slot == SLOT_GLASSES)
+			get_image_group(CLIENT_IMAGE_GROUP_SALVAGER_VALUES).remove_mob(user)
+		..()
+
+/obj/item/device/radio_upgrade/salvager
+	name = "private radio channel upgrade"
+	desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
+	secure_frequencies = null
+	secure_classes = null
+
+	pickup(mob/user)
+		. = ..()
+		if(secure_frequencies || secure_classes)
+			return
+		var/datum/antagonist/salvager/SA = user?.mind?.get_antagonist(ROLE_SALVAGER)
+		if(SA)
+			var/salv_freq = SA.pick_radio_freq()
+			src.secure_frequencies = list("z" = salv_freq)
+			src.secure_classes = list(RADIOCL_OTHER)
+
 
 /obj/salvager_putt_spawner
 	name = "syndiputt spawner"
@@ -457,79 +819,14 @@
 		if((POD_ACCESS_SALVAGER in src.access_type) && length(landmarks[LANDMARK_SALVAGER_BEACON]))
 			. = pick(landmarks[LANDMARK_SALVAGER_BEACON])
 
-var/datum/magpie_manager/magpie_man = new
-/datum/magpie_manager
-	var/obj/npc/trader/salvager/magpie
-
-	proc/setup()
-		src.magpie = locate("M4GP13")
 
 
-/obj/npc/trader/salvager
-	name = "M4GP13 Salvage and Barter System"
-	icon = 'icons/obj/trader.dmi'
-	icon_state = "crate_dispenser"
-	picture = "generic.png"
-	angrynope = "Unable to process request."
-	whotext = "I am the salvage reclamation and supply commissary.  In short I will provide goods in exchange for reclaimed materials and equipment."
-	barter = TRUE
-	currency = "Salvage Points"
-
-	speech_verb_say = "beeps"
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
-
-	use_speech_bubble = TRUE
-	voice_sound_override = 'sound/misc/talk/bottalk_1.ogg'
-
-	New()
-		..()
-
-		for(var/sell_type in concrete_typesof(/datum/commodity/magpie/sell))
-			src.goods_sell += new sell_type(src)
-
-		for(var/buy_type in (concrete_typesof(/datum/commodity/magpie/buy) - concrete_typesof(/datum/commodity/magpie/buy/random_buy)))
-			src.goods_buy += new buy_type(src)
-
-		greeting= {"[src.name]'s light flash, and he states, \"Greetings, welcome to my shop. Please select from my available equipment.\""}
-
-		sell_dialogue = "[src.name] states, \"There are several individuals in my database that are looking to procure goods."
-
-		buy_dialogue = "[src.name] states,\"Please select what you would like to buy\"."
-
-		successful_sale_dialogue = list("[src.name] states, \"Thank you for the business organic.\"",
-			"[src.name], \"I am adding you to the Good Customer Database.\"")
-
-		failed_sale_dialogue = list("[src.name] states, \"<ERROR> Item not in purchase database.\"",
-			"[src.name] states, \"I'm sorry I currently have no interest in that item, perhaps you should try another trader.\"",
-			"[src.name] starts making a loud and irritating noise. [src.name] states, \"Fatal Exception Error: Cannot locate item\"",
-			"[src.name] states, \"Invalid Input\"")
-
-		successful_purchase_dialogue = list("[src.name] states, \"Thank you for your business\".",
-			"[src.name] states, \"Looking forward to future transactions\".")
-
-		failed_purchase_dialogue = list("[src.name] states, \"I am sorry, but you currenty do not have enough funds to purchase this.\"",
-			"[src.name] states, \"Funds not found.\"")
-
-		pickupdialogue = "[src.name] states, \"Thank you for your business. Please come again\"."
-
-		pickupdialoguefailure = "[src.name] states, \"I'm sorry, but you don't have anything to pick up\"."
 
 
 // Stubs for the public
 /obj/item/clothing/suit/space/salvager
 /obj/item/clothing/head/helmet/space/engineer/salvager
-/obj/item/clothing/glasses/salvager
-#ifndef SECRETS_ENABLED
-	icon_state = "construction"
-	item_state = "construction"
-#endif
 /obj/salvager_cryotron
 /obj/item/salvager_hand_tele
 /obj/item/device/pda2/salvager
 
-ABSTRACT_TYPE(/datum/commodity/magpie/sell)
-/datum/commodity/magpie/sell
-ABSTRACT_TYPE(/datum/commodity/magpie/buy)
-/datum/commodity/magpie/buy
-ABSTRACT_TYPE(/datum/commodity/magpie/buy/random_buy)
-/datum/commodity/magpie/buy/random_buy

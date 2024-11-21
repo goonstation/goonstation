@@ -376,6 +376,7 @@
 			if (!H.sims)
 				H.sims = new /datum/simsHolder(H)
 			H.sims.addMotive(/datum/simsMotive/hygiene)
+			H.sims.add_hud() // ensure hud has hygiene motive
 
 	onRemove(var/mob/owner)
 		if(ishuman(owner))
@@ -1168,6 +1169,20 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "burning"
 	icon_state = "onfire"
 	points = 2
+
+/datum/trait/spontaneous_combustion
+	name = "Spontaneous Combustion"
+	desc = "You very, VERY rarely spontaneously light on fire."
+	id = "spontaneous_combustion"
+	icon_state = "onfire"
+	points = 0
+
+	onLife(mob/owner, mult)
+		. = ..()
+		if(probmult(0.01))
+			owner.setStatus("burning", 100 SECONDS, 60 SECONDS)
+			playsound(owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+			owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> suddenly bursts into flames!"))
 
 /datum/trait/carpenter
 	name = "Carpenter"

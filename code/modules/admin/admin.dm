@@ -3405,6 +3405,7 @@ var/global/noir = 0
 					if("respawn_panel")
 						usr.client.cmd_custom_spawn_event()
 					if("randomevents")
+						//random_events.ui_interact(src.owner.mob)
 						random_events.event_config()
 					if("motives")
 						simsController.showControls(usr)

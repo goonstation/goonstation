@@ -561,6 +561,24 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				qdel(I)
 		return
 
+/datum/materialProc/ice_melt
+	desc = "It would melt when exposed to heat."
+
+	execute(var/atom/owner, var/temp)
+		if(temp < T0C) return // less than reaction temp
+
+		var/turf/T = get_turf(owner)
+
+		// Make a water puddle and chunks
+		if (istype(T))
+			if (!istype(owner, /obj/item/raw_material))
+				var/obj/item/raw_material/ice/cube = new /obj/item/raw_material/ice(T)
+				cube.set_loc(T)
+			make_cleanable(/obj/decal/cleanable/water, T)
+			owner.visible_message(SPAN_NOTICE("[owner] melts, dissolving into water."))
+			playsound(owner, 'sound/misc/drain_glug.ogg', 50, TRUE, 5)
+			qdel(owner)
+
 /datum/materialProc/soulsteel_entered
 	execute(var/obj/item/owner, var/atom/movable/entering)
 		if (!isobj(owner) || owner.anchored >= ANCHORED_ALWAYS) return

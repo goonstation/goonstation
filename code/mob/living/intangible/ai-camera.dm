@@ -25,6 +25,7 @@
 	can_bleed = FALSE
 	metabolizes = FALSE
 	blood_id = null
+	use_stamina = FALSE // floating ghostly eyes dont get tired
 
 	speech_verb_say = "states"
 	speech_verb_ask = "queries"

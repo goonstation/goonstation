@@ -2034,9 +2034,7 @@
 		return
 
 	if (istype(src.mob, /mob/dead/target_observer))
-		var/mob/dead/target_observer/old_mob = src.mob
-		src.mob = src.mob.ghost // switch our mob to /mob/dead/observer
-		qdel(old_mob) // so we don't leave a bunch of these empty observers inside mobs
+		qdel(src.mob) // so we don't leave a bunch of these empty observers inside mobs
 
 	var/mob/dead/observer/O = src.mob
 	var/client/C
@@ -2052,8 +2050,9 @@
 		if (C?.mob)
 			M = C.mob
 
-	boutput(src, SPAN_NOTICE("Now observing <b>[M] ([C])</b><br>") + M.get_desc())
 	O.insert_observer(M)
+	usr = src.mob // necessary so the get_desc() call works
+	boutput(src, SPAN_NOTICE("Now observing <b>[M] ([C])</b><br>") + M.get_desc())
 
 
 /client/proc/orp()

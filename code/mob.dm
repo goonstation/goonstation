@@ -401,6 +401,9 @@
 	if (src.buckled)
 		src.buckled.buckled_guy = null
 
+	for(var/obj/item/grab/G in src.grabbed_by)
+		qdel(G)
+
 	mobs.Remove(src)
 
 	if (src.ai)
