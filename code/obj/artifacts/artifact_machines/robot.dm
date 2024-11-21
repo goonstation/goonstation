@@ -7,18 +7,18 @@
 	type_name = "Automaton"
 	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 200
-	validtypes = list("martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/language)
+	validtypes = list("ancient")
 	fault_blacklist = list(ITEM_ONLY_FAULTS,TOUCH_ONLY_FAULTS)
 	activ_text = "whirs to life!"
 	deact_text = "becomes eerily still."
-	react_xray = list(50,20,90,8,"MECHANICAL")
 	// possible AI types that the robot can have
+	react_xray = list(50,20,90,8,"MECHANICAL")
 	var/static/list/datum/aiHolder/possible_ais = list(/datum/aiHolder/artifact_wallplacer, /datum/aiHolder/artifact_wallsmasher, /datum/aiHolder/artifact_floorplacer, /datum/aiHolder/wanderer)
 	// possible floor types for the floor placing robots
-	var/static/list/turf/floor_types = list(/turf/simulated/grass)
 	// possible wall types for the wall placing robots
-	var/static/list/turf/wall_types = list(/turf/simulated/wall/auto/reinforced)
+	var/static/list/turf/floor_types = list(/turf/simulated/floor/industrial, /turf/simulated/floor/mauxite, /turf/simulated/floor/circuit/vintage, /turf/simulated/floor/glassblock/transparent, /turf/simulated/floor/void, /turf/simulated/floor/techfloor/yellow)
+	var/static/list/turf/wall_types = list(/turf/simulated/wall/auto/supernorn/material/mauxite, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn)
 
 	var/aiHolder_type
 	var/floor_type
