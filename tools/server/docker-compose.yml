@@ -17,9 +17,10 @@ services:
       - "${SS13_PORT:-6969}:${SS13_PORT:-6969}"
     environment:
       - SS13_ID=${SS13_ID:-main}
+      - SS13_PORT=${SS13_PORT:-6969}
     healthcheck:
-      test: /usr/bin/bash /ss13_server/tools/byond_fetch.sh localhost ${SS13_PORT:-6969} "?ping" || exit 1
-      interval: 10s
+      test: /usr/bin/bash /ss13_server/tools/server/healthcheck.sh
+      interval: 20s
       timeout: 5s
       retries: 3
       start_period: 60s
