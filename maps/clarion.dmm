@@ -14796,6 +14796,13 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"cQG" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/industrial,
+/area/station/mailroom)
 "cQP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -35044,13 +35051,6 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/disposal)
-"sen" = (
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/mailroom)
 "sfn" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
@@ -83304,7 +83304,7 @@ bID
 jMU
 cGv
 aPN
-vYE
+cQG
 cGv
 mfN
 aem
@@ -83607,7 +83607,7 @@ ubO
 vpg
 kVP
 vYE
-sen
+bcS
 tcv
 bpb
 aqp
