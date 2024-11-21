@@ -14,7 +14,7 @@
 	deact_text = "becomes eerily still."
 	react_xray = list(50,20,90,8,"MECHANICAL")
 	// possible AI types that the robot can have
-	var/static/list/datum/aiHolder/possible_ais = list(/datum/aiHolder/artifact_wallsmasher, /datum/aiHolder/artifact_floorplacer, /datum/aiHolder/artifact_wallplacer, /datum/aiHolder/wanderer)
+	var/static/list/datum/aiHolder/possible_ais = list(/datum/aiHolder/artifact_wallplacer, /datum/aiHolder/artifact_wallsmasher, /datum/aiHolder/artifact_floorplacer, /datum/aiHolder/wanderer)
 	// possible floor types for the floor placing robots
 	var/static/list/turf/floor_types = list(/turf/simulated/grass)
 	// possible wall types for the wall placing robots
@@ -45,6 +45,7 @@
 // Mob bits
 
 /mob/living/critter/robotic/artifact
+	name = "bizarre machine" //this should always be overridden by parent artifact appearance, but just in case
 	var/obj/machinery/artifact/robot/parent_artifact
 	can_throw = FALSE
 	can_grab = FALSE
@@ -53,7 +54,7 @@
 	health_brute = 50
 	health_brute_vuln = 0.45
 	health_burn = 50
-	health_burn_vuln = 0.65
+	health_burn_vuln = 0.2
 
 	New(loc, var/obj/machinery/artifact/robot/parent, var/aitype)
 		if(!istype(parent))
@@ -65,6 +66,8 @@
 		src.ai = new aitype(src)
 		src.is_npc = TRUE
 		src.appearance = parent.appearance
+		src.name_tag = new()
+		src.update_name_tag()
 		animate_bumble(src)
 
 	setup_healths()

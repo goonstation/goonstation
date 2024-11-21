@@ -77,8 +77,14 @@
 /datum/aiTask/sequence/goalbased/floor_place/get_targets()
 	. = ..()
 	var/list/turf/results = list()
+	var/mob/living/critter/robotic/artifact/robit = holder.owner
+	var/datum/artifact/robot/art_datum = robit.parent_artifact.artifact
+	if(!istype(art_datum))
+		return results
 	for(var/turf/T in view(src.max_dist, src.holder.owner))
 		if(istype(T, /turf/simulated/wall))
+			continue
+		if(istype(T, art_datum.floor_type))
 			continue
 		results += T
 	return results
@@ -89,26 +95,29 @@
 	var/has_started = FALSE
 
 /datum/aiTask/succeedable/floor_place/failed()
-	if(!holder.owner || !holder.target || BOUNDS_DIST(holder.owner, holder.target) > 0) //the tasks fails and is re-evaluated if the target is not in range
+	var/mob/living/critter/robotic/artifact/robit = holder.owner
+	var/datum/artifact/robot/art_datum = robit.parent_artifact.artifact
+	if(!istype(art_datum))
+		return TRUE
+	if(!holder.owner || !istype(holder.owner.loc, art_datum.floor_type) || BOUNDS_DIST(holder.owner, holder.target) > 0) //the tasks fails and is re-evaluated if the target is not in range
 		return TRUE
 
 /datum/aiTask/succeedable/floor_place/succeeded()
-	var/obj/machinery/artifact/robot/art = holder.owner.loc
-	var/datum/artifact/robot/art_datum = art.artifact
-	if(istype(art) && istype(art_datum))
-		return istype(holder.target, art_datum.floor_type)
+	var/mob/living/critter/robotic/artifact/robit = holder.owner
+	var/datum/artifact/robot/art_datum = robit.parent_artifact.artifact
+	if(istype(art_datum))
+		return istype(holder.owner.loc, art_datum.floor_type)
 	return FALSE
 
 /datum/aiTask/succeedable/floor_place/on_tick()
 	if(!has_started)
 		if(holder.owner && BOUNDS_DIST(holder.owner, holder.target) == 0)
 			holder.owner.set_dir(get_dir(holder.owner, holder.target))
-			var/turf/space/S = holder.target
-			var/obj/machinery/artifact/robot/art = holder.owner.loc
-			if(istype(art))
-				var/datum/artifact/robot/art_datum = art.artifact
-				if(istype(art_datum))
-					S.ReplaceWith(art_datum.floor_type)
+			var/turf/floor = holder.target
+			var/mob/living/critter/robotic/artifact/robit = holder.owner
+			var/datum/artifact/robot/art_datum = robit.parent_artifact.artifact
+			if(istype(art_datum))
+				floor.ReplaceWith(art_datum.floor_type)
 			has_started = TRUE
 
 /datum/aiTask/succeedable/floor_place/on_reset()
@@ -152,25 +161,29 @@
 	var/has_started = FALSE
 
 /datum/aiTask/succeedable/wall_place/failed()
-	if(!holder.owner || !holder.target || BOUNDS_DIST(holder.owner, holder.target) > 0) //the tasks fails and is re-evaluated if the target is not in range
+	var/mob/living/critter/robotic/artifact/robit = holder.owner
+	var/datum/artifact/robot/art_datum = robit.parent_artifact.artifact
+	if(!istype(art_datum))
+		return TRUE
+	if(!holder.owner || !istype(holder.owner.loc, art_datum.floor_type) || BOUNDS_DIST(holder.owner, holder.target) > 0) //the tasks fails and is re-evaluated if the target is not in range
 		return TRUE
 
 /datum/aiTask/succeedable/wall_place/succeeded()
-	var/obj/machinery/artifact/robot/art = holder.owner.loc
-	var/datum/artifact/robot/art_datum = art.artifact
-	if(istype(art) && istype(art_datum))
-		return istype(holder.target, art_datum.wall_type)
+	var/mob/living/critter/robotic/artifact/robit = holder.owner
+	var/datum/artifact/robot/art_datum = robit.parent_artifact.artifact
+	if(istype(art_datum))
+		return istype(holder.owner.loc, art_datum.wall_type)
 	return FALSE
 
 /datum/aiTask/succeedable/wall_place/on_tick()
 	if(!has_started)
 		if(holder.owner && BOUNDS_DIST(holder.owner, holder.target) == 0)
 			holder.owner.set_dir(get_dir(holder.owner, holder.target))
-			var/turf/space/S = holder.target
-			var/obj/machinery/artifact/robot/art = holder.owner.loc
-			var/datum/artifact/robot/art_datum = art.artifact
-			if(istype(art) && istype(art_datum))
-				S.ReplaceWith(art_datum.wall_type)
+			var/turf/floor = holder.target
+			var/mob/living/critter/robotic/artifact/robit = holder.owner
+			var/datum/artifact/robot/art_datum = robit.parent_artifact.artifact
+			if(istype(art_datum))
+				floor.ReplaceWith(art_datum.wall_type)
 			has_started = TRUE
 
 /datum/aiTask/succeedable/wall_place/on_reset()
