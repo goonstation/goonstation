@@ -42058,16 +42058,14 @@
 	},
 /area/station/science/lobby)
 "rri" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
 /obj/machinery/conveyor/SN{
 	operating = 1
 	},
-/turf/simulated/floor/airless/plating/catwalk{
+/obj/lattice{
 	dir = 8;
-	tag = "icon-catwalk (WEST)"
+	icon_state = "lattice-dir"
 	},
+/turf/space,
 /area/space)
 "rro" = (
 /obj/machinery/power/data_terminal,
