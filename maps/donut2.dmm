@@ -25792,6 +25792,12 @@
 	dir = 1
 	},
 /area/station/hallway/primary/north)
+"hLY" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/industrial,
+/area/station/mailroom)
 "hMa" = (
 /obj/disposalpipe/junction/left/west,
 /turf/simulated/floor,
@@ -36040,6 +36046,9 @@
 /obj/machinery/door/airlock/pyro/alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/industrial,
 /area/station/mailroom)
 "nUH" = (
@@ -36507,6 +36516,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/industrial,
 /area/station/mailroom)
@@ -37527,6 +37539,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
+"oFo" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor/industrial,
+/area/station/mailroom)
 "oFu" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -41981,6 +42000,9 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "roF" = (
@@ -88764,7 +88786,7 @@ qVy
 gcW
 aoZ
 ivP
-gcW
+hLY
 ohk
 nTX
 rnq
@@ -89066,7 +89088,7 @@ kDy
 kDy
 dwW
 hwY
-gcW
+oFo
 ebs
 riV
 eYb
