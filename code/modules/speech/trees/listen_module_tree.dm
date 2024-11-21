@@ -87,22 +87,18 @@
 	for (var/datum/signal_recipient as anything in src.signal_recipients)
 		src.UnregisterSignal(signal_recipient, COMSIG_FLUSH_MESSAGE_BUFFER)
 
-	src.signal_recipients = null
-
 	for (var/datum/listen_module_tree/auxiliary/auxiliary_tree as anything in src.auxiliary_trees)
 		auxiliary_tree.update_target_listen_tree(null)
 
-	src.auxiliary_trees = null
-
-	for (var/input_id in src.listen_inputs_by_id)
-		qdel(src.listen_inputs_by_id[input_id])
+	for (var/effect_id in src.listen_effects_by_id)
+		qdel(src.listen_effects_by_id[effect_id])
 
 	src.persistent_listen_modifiers_by_id = null
 	for (var/modifier_id in src.listen_modifiers_by_id)
 		qdel(src.listen_modifiers_by_id[modifier_id])
 
-	for (var/effect_id in src.listen_effects_by_id)
-		qdel(src.listen_effects_by_id[effect_id])
+	for (var/input_id in src.listen_inputs_by_id)
+		qdel(src.listen_inputs_by_id[input_id])
 
 	for (var/atom/A as anything in src.secondary_parents)
 		A.listen_tree = null
@@ -111,14 +107,16 @@
 		src.listener_parent.listen_tree = null
 		src.listener_parent = null
 
+	src.listener_origin = null
 	src.secondary_parents = null
+	src.auxiliary_trees = null
 	src.message_buffer = null
 	src.signal_recipients = null
+
 	src.listen_inputs_by_id = null
+	src.listen_inputs_by_channel = null
 	src.listen_modifiers_by_id = null
 	src.listen_effects_by_id = null
-	src.listen_inputs_by_channel = null
-	src.listener_origin = null
 
 	. = ..()
 

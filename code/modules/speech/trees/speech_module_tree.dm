@@ -73,14 +73,14 @@
 	for (var/datum/speech_module_tree/auxiliary/auxiliary_tree as anything in src.auxiliary_trees)
 		auxiliary_tree.update_target_speech_tree(null)
 
-	for (var/output_id in src.speech_outputs_by_id)
-		qdel(src.speech_outputs_by_id[output_id])
+	for (var/prefix_id in src.speech_prefixes_by_id)
+		qdel(src.speech_modifiers_by_id[prefix_id])
 
 	for (var/modifier_id in src.speech_modifiers_by_id)
 		qdel(src.speech_modifiers_by_id[modifier_id])
 
-	for (var/prefix_id in src.speech_prefixes_by_id)
-		qdel(src.speech_modifiers_by_id[prefix_id])
+	for (var/output_id in src.speech_outputs_by_id)
+		qdel(src.speech_outputs_by_id[output_id])
 
 	for (var/atom/A as anything in src.secondary_parents)
 		A.speech_tree = null
@@ -92,6 +92,7 @@
 	src.speaker_origin = null
 	src.secondary_parents = null
 	src.auxiliary_trees = null
+
 	src.speech_outputs_by_id = null
 	src.speech_outputs_by_channel = null
 	src.speech_modifiers_by_id = null
