@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use '../base.scss';
+@use '../base';
 
 $background-color: base.$color-bg !default;
 
@@ -13,6 +13,7 @@ $background-color: base.$color-bg !default;
   padding: 1rem;
 }
 
+// |GOONSTATION-ADD|
 .Modal--fitted {
   padding: 0;
 }
