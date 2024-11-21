@@ -228,7 +228,7 @@ ABSTRACT_TYPE(/obj/hotspot)
 
 	src.perform_exposure()
 	if(src.catalyst_active)
-		var/image/catalyst_overlay = SafeGetOverlayImage("catalyst", src.icon, src.icon_state) // might need to change alpha mask loc for this
+		var/image/catalyst_overlay = SafeGetOverlayImage("catalyst", src.icon, src.icon_state)
 		var/list/rgb =  rgb2num(src.color)
 		var/list/hsl = rgb2hsl(rgb[1],rgb[2],rgb[3])
 		var/new_color = hsl2rgb(hsl[1]+60%255, clamp(hsl[2],50,180), hsl[3]*0.8)
@@ -254,8 +254,7 @@ ABSTRACT_TYPE(/obj/hotspot)
 
 	if (bypassing)
 		if (istype(src, /obj/hotspot/gasfire))
-			//icon_state = "3"
-			src.UpdateIcon()
+			src.UpdateIcon("3")
 		location.burn_tile()
 
 		//Possible spread due to radiated heat
@@ -268,11 +267,9 @@ ABSTRACT_TYPE(/obj/hotspot)
 
 	else if (istype(src, /obj/hotspot/gasfire))
 		if (volume > (CELL_VOLUME * 0.4))
-			//icon_state = "2"
-			src.UpdateIcon()
+			src.UpdateIcon("2")
 		else
-			//icon_state = "1"
-			src.UpdateIcon()
+			src.UpdateIcon("1")
 
 	return TRUE
 
@@ -292,9 +289,8 @@ ABSTRACT_TYPE(/obj/hotspot)
 	..()
 	src.set_dir(pick(cardinal))
 
-/obj/hotspot/gasfire/update_icon(...)
+/obj/hotspot/gasfire/update_icon(base_icon)
 	..()
-	src.icon_state = "1"
 	// turf north, turf east, turf west
 	var/turf/tn = get_step(src, NORTH)
 	var/turf/te = get_step(src, EAST)
@@ -319,22 +315,22 @@ ABSTRACT_TYPE(/obj/hotspot)
 	// assuming all turfs exist for the moment
 	if (tn_valid)
 		if (te_valid && tw_valid)
-			src.icon_state = "1-NEW"
+			src.icon_state = "[base_icon]-NEW"
 		else if (te_valid && !tw_valid)
-			src.icon_state = "1-NE"
+			src.icon_state = "[base_icon]-NE"
 		else if (!te_valid && tw_valid)
-			src.icon_state = "1-NW"
+			src.icon_state = "[base_icon]-NW"
 		else
-			src.icon_state = "1-N"
+			src.icon_state = "[base_icon]-N"
 	else if (te_valid)
 		if (tw_valid)
-			src.icon_state = "1-EW"
+			src.icon_state = "[base_icon]-EW"
 		else
-			src.icon_state = "1-E"
+			src.icon_state = "[base_icon]-E"
 	else if (tw_valid)
-		src.icon_state = "1-W"
+		src.icon_state = "[base_icon]-W"
 	else
-		src.icon_state = "1"
+		src.icon_state = "[base_icon]"
 
 	src.remove_filter("fire-NW-alphamask")
 	src.remove_filter("fire-NE-alphamask")
