@@ -33746,6 +33746,9 @@
 "nVG" = (
 /obj/machinery/transception_pad,
 /obj/decal/stripe_delivery,
+/obj/cable{
+	dir = null
+	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -48192,6 +48195,9 @@
 /obj/disposalpipe/trunk/mail/west,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
