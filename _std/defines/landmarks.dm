@@ -118,3 +118,6 @@
 #define LANDMARK_HTR_TEAM "HTR_TEAM"
 #define LANDMARK_HTR_VENDOR "HTR_VENDOR"
 #define LANDMARK_HTR_BOTS "HTR_BOTS"
+
+// maze wooooh
+#define LANDMARK_MAZE "mazewarp"

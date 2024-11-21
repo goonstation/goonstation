@@ -196,7 +196,7 @@
 	var/time = 30
 	var/timing = 0
 	var/last_tick = 0
-	//var/emagged = 0
+	var/emagged = FALSE
 
 /obj/machinery/sim/vr_bed/New()
 	..()
@@ -252,6 +252,13 @@
 		boutput(M, SPAN_NOTICE("<B>You cannot possibly fit into that!</B>"))
 		return
 
+	if(src.emagged && iscarbon(M))
+		boutput(M, SPAN_ALERT("<b>You feel a terrible pain in your head, and everything goes black...<b/>"))
+		M.setStatusMin("unconscious", 5 SECONDS) //lets give them *some* chance eh?
+		src.visible_message(SPAN_ALERT("[M] is suddenly warped away by the VR pod!"))
+		M.set_loc(pick_landmark(LANDMARK_MAZE))
+		return
+
 	if (!isobserver(M) || isAIeye(M))
 		M.set_loc(src)
 		M.network_device = src
@@ -259,20 +266,29 @@
 		src.occupant = M
 		src.con_user = M
 		src.active = 1
-	/*
-	if(src.emagged)
-		boutput(M, "You feel a terrible pain in your head, and everything goes black...")
-		M.paralysis += 5
-		sleep(0.5 SECONDS)
-		M.set_loc(pick(mazewarp))
-		return
-	*/
+
 	//Station_VNet.Enter_Vspace(M, M.network_device, M.network_device:network)
 	Station_VNet.Enter_Vspace(M, src, src.network)
 	for(var/obj/O in src)
 		O.set_loc(src.loc)
 	src.UpdateIcon()
 	return
+
+/obj/machinery/sim/vr_bed/emag_act(mob/user, obj/item/card/emag/E)
+	if (!src.emagged)
+		src.emagged = TRUE
+		playsound(src, 'sound/effects/sparks4.ogg', 50)
+		logTheThing(LOG_COMBAT, user, "emagged the vr pod at \[[log_loc(src)]]")
+		logTheThing(LOG_ADMIN, user, "emagged the vr pod at \[[log_loc(src)]]") //sending people to fuck you land is important no?
+		user.show_text("You short out the network locater on [src].", "red")
+		src.audible_message(SPAN_COMBAT("<B>[src] buzzes oddly!</B>"))
+		return TRUE
+
+/obj/machinery/sim/vr_bed/demag(mob/user, obj/item/card/emag/E)
+	if (src.emagged)
+		src.emagged = FALSE
+		user.show_text("You repair [src]'s network locater.", "blue")
+		return TRUE
 
 /obj/machinery/sim/vr_bed/Click(location,control,params)
 	var/lpm = params2list(params)

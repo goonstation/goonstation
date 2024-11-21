@@ -2519,6 +2519,7 @@
 #include "code\z_adventurezones\lavamoon.dm"
 #include "code\z_adventurezones\luna.dm"
 #include "code\z_adventurezones\mad_mars.dm"
+#include "code\z_adventurezones\maze.dm"
 #include "code\z_adventurezones\meatland.dm"
 #include "code\z_adventurezones\numbersstation.dm"
 #include "code\z_adventurezones\observatory.dm"
