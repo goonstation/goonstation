@@ -538,6 +538,7 @@
 	var/max_cigs = 6
 	var/cigtype = /obj/item/clothing/mask/cigarette
 	var/package_style = "cigpacket"
+	var/list/allowed = list(/obj/item/clothing/mask/cigarette)
 	c_flags = ONBELT
 	stamina_damage = 3
 	stamina_cost = 3
@@ -545,31 +546,11 @@
 
 	New()
 		..()
+		AddComponent(/datum/component/transfer_input/quickloading, allowed, "onLoading", "filterLoading")
 		if (!cigtype)
 			return
 		for(var/i in 1 to src.max_cigs)
 			new src.cigtype(src)
-
-	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
-		if (!istype(O, /obj/item/clothing/mask/cigarette) || src.loc != user) return
-		if (length(src.contents) < src.max_cigs)
-			user.visible_message(SPAN_NOTICE("[user] begins quickly filling \the [src]."))
-			var/staystill = user.loc
-			for(var/obj/item/clothing/mask/cigarette/cig in view(1,user))
-				if (!istype(cig, O) || QDELETED(cig) || cig.on) continue
-				if (cig in user)
-					continue
-				cig.add_fingerprint(user)
-				if ((length(src.contents) < src.max_cigs))
-					cig.set_loc(src)
-				src.UpdateIcon()
-				sleep(0.2 SECONDS)
-				if (user.loc != staystill || src.loc != user) break
-				if (length(src.contents) >= src.max_cigs)
-					boutput(user, SPAN_NOTICE("\The [src] is now full!"))
-					break
-			boutput(user, SPAN_NOTICE("You finish filling \the [src]."))
-		else boutput(user, SPAN_ALERT("\The [src] is already full!"))
 
 	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
 		if ((istype(over_object, /obj/table) || \
@@ -594,7 +575,16 @@
 		. += "Hold this and drag a nearby cigarette onto it to auto-fill.\n \
 			Drag this onto a nearby table or floor while holding it to dump its contents."
 
+/obj/item/cigpacket/proc/onLoading(atom/movable/incoming)
+	src.UpdateIcon()
+	// No idea is usr works via components like this, but there seems to be no recourse without altering the component itself.
+	incoming.add_fingerprint(usr)
+	return TRUE
 
+/obj/item/cigpacket/proc/filterLoading(obj/item/clothing/mask/cigarette/cig)
+	if (length(src.contents) >= max_cigs) return FALSE
+	if (cig.on) return FALSE
+	return TRUE
 
 /obj/item/cigpacket/nicofree
 	name = "nicotine-free cigarette packet"
