@@ -260,7 +260,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 		mainframe = user
 
 	if(user.client.check_key(KEY_OPEN))
-		if (src.occupant && !ishuman(src.occupant))
+		if (src.occupant)
 			mainframe.deploy_to_shell(src.occupant)
 
 /obj/machinery/recharge_station/proc/build_icon()
