@@ -1,5 +1,7 @@
 
 (t)fri nov 22 24
+(u)LeahTheTech
+(*)Stammering no longer duplicates numbers, but drunkenness now has a chance to make them come out off by one.
 (u)Colossus
 (p)21194
 (e)🆕🍝|C-Feature, A-Catering
