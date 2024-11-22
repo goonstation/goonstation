@@ -291,52 +291,51 @@ ABSTRACT_TYPE(/obj/hotspot)
 
 /obj/hotspot/gasfire/update_icon(base_icon)
 	..()
-	// turf north, turf east, turf west
-	var/turf/tn = get_step(src, NORTH)
-	var/turf/te = get_step(src, EAST)
-	var/turf/tw = get_step(src, WEST)
+	var/turf/north_turf = get_step(src, NORTH)
+	var/turf/east_turf = get_step(src, EAST)
+	var/turf/west_turf = get_step(src, WEST)
 
-	var/tn_valid = !IS_VALID_FLUID_TURF(tn) && IS_PERSPECTIVE_WALL(tn)
-	if (!tn_valid)
-		for (var/obj/O in tn)
+	var/north_valid = !IS_VALID_FLUID_TURF(north_turf) && IS_PERSPECTIVE_WALL(north_turf)
+	if (!north_valid)
+		for (var/obj/O in north_turf)
 			if (IS_PERSPECTIVE_BLOCK(O))
-				tn_valid = TRUE
+				north_valid = TRUE
 				break
-	var/te_valid = !IS_VALID_FLUID_TURF(te) && IS_PERSPECTIVE_WALL(te)
-	if (!te_valid)
-		for (var/obj/O in te)
+	var/east_valid = !IS_VALID_FLUID_TURF(east_turf) && IS_PERSPECTIVE_WALL(east_turf)
+	if (!east_valid)
+		for (var/obj/O in east_turf)
 			if (IS_PERSPECTIVE_BLOCK(O))
-				te_valid = TRUE
+				east_valid = TRUE
 				break
-	var/tw_valid = !IS_VALID_FLUID_TURF(tw) && IS_PERSPECTIVE_WALL(tw)
-	if (!tw_valid)
-		for (var/obj/O in tw)
+	var/west_valid = !IS_VALID_FLUID_TURF(west_turf) && IS_PERSPECTIVE_WALL(west_turf)
+	if (!west_valid)
+		for (var/obj/O in west_turf)
 			if (IS_PERSPECTIVE_BLOCK(O))
-				tw_valid = TRUE
+				west_valid = TRUE
 				break
 
-	if (tn_valid)
-		if (te_valid && tw_valid)
+	if (north_valid)
+		if (east_valid && west_valid)
 			src.icon_state = "[base_icon]-NEW"
-		else if (te_valid && !tw_valid)
+		else if (east_valid && !west_valid)
 			src.icon_state = "[base_icon]-NE"
-		else if (!te_valid && tw_valid)
+		else if (!east_valid && west_valid)
 			src.icon_state = "[base_icon]-NW"
 		else
 			src.icon_state = "[base_icon]-N"
-	else if (te_valid)
-		if (tw_valid)
+	else if (east_valid)
+		if (west_valid)
 			src.icon_state = "[base_icon]-EW"
 		else
 			src.icon_state = "[base_icon]-E"
-	else if (tw_valid)
+	else if (west_valid)
 		src.icon_state = "[base_icon]-W"
 	else
 		src.icon_state = "[base_icon]"
 
 	src.remove_filter("fire-NW-alphamask")
 	src.remove_filter("fire-NE-alphamask")
-	if (!tn_valid)
+	if (!north_valid)
 		return
 	var/obj/hotspot/gasfire = locate(/obj/hotspot/gasfire) in get_step(src, NORTHWEST)
 	if (gasfire)
