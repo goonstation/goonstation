@@ -17,7 +17,7 @@
 	var/static/list/datum/aiHolder/possible_ais = list(/datum/aiHolder/artifact_wallplacer, /datum/aiHolder/artifact_wallsmasher, /datum/aiHolder/artifact_floorplacer, /datum/aiHolder/wanderer, /datum/aiHolder/aggressive)
 	// possible floor types for the floor placing robots
 	// possible wall types for the wall placing robots
-	var/static/list/turf/floor_types = list(/turf/simulated/floor/industrial, /turf/simulated/floor/mauxite, /turf/simulated/floor/circuit/vintage, /turf/simulated/floor/glassblock/transparent, /turf/simulated/floor/void, /turf/simulated/floor/techfloor/yellow)
+	var/static/list/turf/floor_types = list(/turf/simulated/floor/industrial, /turf/simulated/floor/mauxite, /turf/simulated/floor/circuit/vintage, /turf/simulated/floor/glassblock/transparent, /turf/simulated/floor/engine, /turf/simulated/floor/techfloor/yellow)
 	var/static/list/turf/wall_types = list(/turf/simulated/wall/auto/supernorn/material/mauxite, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn)
 
 	var/aiHolder_type
@@ -33,12 +33,12 @@
 	effect_activate(var/obj/O)
 		. = ..()
 		if(!istype(O.loc, /mob/living/critter/robotic/artifact))
-			var/mob/living/critter/robotic/artifact/alive_form = new(O.loc, O, pick(possible_ais))
+			var/mob/living/critter/robotic/artifact/alive_form = new(O.loc, O, aiHolder_type)
 			O.set_loc(alive_form) //put the artifact inside the mob for convenience
 
 	effect_deactivate(obj/O)
 		var/mob/living/critter/robotic/artifact/alive_form = O.loc
-		if(!istype(alive_form))
+		if(istype(alive_form))
 			alive_form.gib()
 		. = ..()
 
@@ -61,13 +61,18 @@
 			throw EXCEPTION("Tried to create an artifact robot without a parent artifact!")
 		if(!ispath(aitype))
 			throw EXCEPTION("Tried to create an artifact robot without an ai type!")
-		.=..()
+		.=..(loc)
 		parent_artifact = parent
 		src.ai = new aitype(src)
 		src.is_npc = TRUE
 		src.appearance = parent.appearance
 		src.name_tag = new()
 		src.update_name_tag()
+
+		//you cannot stun a machine
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "artifact_robot", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "artifact_robot", 100)
+
 		animate_bumble(src)
 
 	setup_healths()
@@ -78,7 +83,7 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/artifact
+		HH.limb = new /datum/limb/artifact_robot_attack
 		HH.can_hold_items = FALSE
 
 	death(var/gibbed)
@@ -91,7 +96,7 @@
 			qdel(src)
 		.=..()
 
-/datum/limb/artifact
+/datum/limb/artifact_robot_attack
 	var/damtype = "brute"
 	var/dmg_amount = 0
 	var/stamina_dmg = 0

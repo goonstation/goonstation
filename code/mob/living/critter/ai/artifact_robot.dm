@@ -22,11 +22,12 @@
 	add_task(holder.get_instance(/datum/aiTask/succeedable/wall_smash, list(holder)))
 
 /datum/aiTask/sequence/goalbased/wall_smash/get_targets()
-	. = ..()
-	var/list/turf/walls = list()
+	var/list/result = list()
 	for(var/turf/simulated/wall/W in view(src.max_dist, src.holder.owner))
-		walls += W
-	return walls
+		result += W
+	for(var/obj/structure/girder/G in view(src.max_dist, src.holder.owner))
+		result += G
+	return result
 
 //subtask for the wall smashing
 /datum/aiTask/succeedable/wall_smash
@@ -38,14 +39,19 @@
 		return TRUE
 
 /datum/aiTask/succeedable/wall_smash/succeeded()
-	return !istype(holder.target, /turf/simulated/wall)
+	return !istype(holder.target, /turf/simulated/wall) && !istype(holder.target, /obj/structure/girder)
 
 /datum/aiTask/succeedable/wall_smash/on_tick()
 	if(!has_started)
-		if(holder.owner && istype(holder.target, /turf/simulated/wall) && BOUNDS_DIST(holder.owner, holder.target) == 0)
+		if(holder.owner && !succeeded() && BOUNDS_DIST(holder.owner, holder.target) == 0)
 			holder.owner.set_dir(get_dir(holder.owner, holder.target))
 			var/turf/simulated/wall/W = holder.target
-			W.dismantle_wall()
+			if(istype(W))
+				W.dismantle_wall()
+			else
+				var/obj/structure/girder/G = holder.target
+				if(istype(G))
+					qdel(G) //I guess girders don't have a deconstruct proc?
 			has_started = TRUE
 
 /datum/aiTask/succeedable/wall_smash/on_reset()
@@ -68,11 +74,17 @@
 	name = "placing floors"
 	weight = 1
 	distance_from_target = 0
-	max_dist = 7
+	max_dist = 5
+	score_by_distance_only = FALSE
 
 /datum/aiTask/sequence/goalbased/floor_place/New(parentHolder, transTask) //goalbased aitasks have an inherent movement component
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/floor_place, list(holder)))
+
+/datum/aiTask/sequence/goalbased/floor_place/score_target(atom/target)
+	. = ..() //score based on distance
+	//add a random modifier to each score so we don't just always pick the closest tile
+	. += rand(-50,50)
 
 /datum/aiTask/sequence/goalbased/floor_place/get_targets()
 	. = ..()
