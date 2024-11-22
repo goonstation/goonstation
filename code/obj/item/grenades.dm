@@ -1462,6 +1462,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				if (istype(O, /obj/machinery/door))
 					O.ex_act(1)
 					continue
+				if (istype(O, /obj/machinery/lawrack))
+					O.ex_act(1)
+					continue
 				if (istype(O, /obj/storage))
 					O.ex_act(2)
 					continue
