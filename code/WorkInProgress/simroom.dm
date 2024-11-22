@@ -256,6 +256,7 @@
 		boutput(M, SPAN_ALERT("<b>You feel a terrible pain in your head, and everything goes black...<b/>"))
 		M.setStatusMin("unconscious", 5 SECONDS) //lets give them *some* chance eh?
 		src.visible_message(SPAN_ALERT("[M] is suddenly warped away by the VR pod!"))
+		message_admins("[key_name(M)] has entered the maze.")
 		M.set_loc(pick_landmark(LANDMARK_MAZE))
 		return
 
@@ -279,7 +280,7 @@
 		src.emagged = TRUE
 		playsound(src, 'sound/effects/sparks4.ogg', 50)
 		logTheThing(LOG_COMBAT, user, "emagged the vr pod at \[[log_loc(src)]]")
-		logTheThing(LOG_ADMIN, user, "emagged the vr pod at \[[log_loc(src)]]") //sending people to fuck you land is important no?
+		message_admins("[key_name(user)] emagged the vr pod at \[[log_loc(src)]]") //sending people to fuck you land is important no?
 		user.show_text("You short out the network locater on [src].", "red")
 		src.audible_message(SPAN_COMBAT("<B>[src] buzzes oddly!</B>"))
 		return TRUE
