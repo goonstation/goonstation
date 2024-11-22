@@ -1,4 +1,9 @@
 
+(t)fri nov 22 24
+(u)Colossus
+(p)21194
+(e)🆕🍝|C-Feature, A-Catering
+(+)Added support for fishing bait, you are more likely to catch real goldfish with regular goldfish, and pufferfish need meat as bait.
 (t)thu nov 21 24
 (u)JORJ949
 (p)21232
