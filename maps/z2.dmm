@@ -43049,7 +43049,7 @@
 "cZS" = (
 /obj/disposalpipe/segment/bent/east,
 /turf/space,
-/area/space)
+/area/maze)
 "dab" = (
 /obj/lattice{
 	dir = 6;
@@ -59256,6 +59256,9 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"huL" = (
+/turf/unsimulated/floor/airless/plating,
+/area/maze)
 "hvd" = (
 /obj/decoration/ritual,
 /obj/map/light/dimred,
@@ -63954,7 +63957,7 @@
 /obj/lattice,
 /obj/disposalpipe/segment/horizontal,
 /turf/space,
-/area/space)
+/area/maze)
 "kVN" = (
 /obj/fakeobject/teleport_pad,
 /turf/unsimulated/floor/shuttle{
@@ -64580,6 +64583,10 @@
 	},
 /turf/unsimulated/floor/tatami/west,
 /area/centcom/offices/angel)
+"ltl" = (
+/obj/disposalpipe/segment/horizontal,
+/turf/space,
+/area/maze)
 "ltm" = (
 /obj/machinery/door/poddoor{
 	id = "mars_vault";
@@ -66536,7 +66543,7 @@
 "ndU" = (
 /obj/disposalpipe/segment/bent/west,
 /turf/space,
-/area/space)
+/area/maze)
 "ndW" = (
 /obj/decal/exhibit/lowend{
 	exhibit_id = "ex_centcom_lowend_1";
@@ -67534,7 +67541,7 @@
 "nOE" = (
 /obj/disposalpipe/segment/bent/south,
 /turf/space,
-/area/space)
+/area/maze)
 "nOG" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 8
@@ -68346,10 +68353,6 @@
 "osO" = (
 /turf/unsimulated/floor/carpet/office/other,
 /area/centcom/offices/adhara)
-"osW" = (
-/obj/disposalpipe/segment/horizontal,
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/space)
 "osX" = (
 /obj/decal/icefloor,
 /mob/living/critter/spider/ice,
@@ -72841,9 +72844,6 @@
 /mob/living/critter/small_animal/mouse,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
-"rJm" = (
-/turf/unsimulated/wall/auto/supernorn,
-/area/space)
 "rJq" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -73228,7 +73228,7 @@
 	id = "maze-red"
 	},
 /turf/unsimulated/floor/airless/plating,
-/area/space)
+/area/maze)
 "rZE" = (
 /obj/map/light/lava,
 /obj/indestructible/shuttle_corner{
@@ -73986,7 +73986,7 @@
 "sCJ" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/space,
-/area/space)
+/area/maze)
 "sCP" = (
 /obj/decoration/junctionbox/junctionbox3{
 	pixel_y = 32
@@ -77079,6 +77079,10 @@
 /obj/random_item_spawner/hat/lots,
 /turf/unsimulated/floor/wood/six,
 /area/afterlife/bar/sanctuary)
+"vlM" = (
+/obj/lattice,
+/turf/space,
+/area/maze)
 "vlQ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -77457,7 +77461,7 @@
 "vyp" = (
 /obj/disposalpipe/segment/vertical,
 /turf/space,
-/area/space)
+/area/maze)
 "vzL" = (
 /obj/lattice{
 	dir = 5;
@@ -78606,7 +78610,7 @@
 /obj/lattice,
 /obj/disposalpipe/segment/vertical,
 /turf/space,
-/area/space)
+/area/maze)
 "wpw" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -80016,6 +80020,9 @@
 /obj/map/light/brighterwhite,
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
+"xrW" = (
+/turf/space,
+/area/maze)
 "xsc" = (
 /obj/decal/tile_edge/flowers{
 	icon_state = "flowers4"
@@ -154861,8 +154868,8 @@ aES
 dFc
 aaa
 cnw
-wJD
-wJD
+cnw
+cnw
 wJD
 wJD
 wJD
@@ -155163,9 +155170,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 cnw
 cnw
 cnw
@@ -155465,9 +155472,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 cnw
 cnw
 cnw
@@ -155767,9 +155774,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 cnw
 cnw
 cnw
@@ -155815,7 +155822,7 @@ xsu
 bnM
 bnM
 bnM
-qpv
+ltl
 cnw
 cnw
 cnw
@@ -156069,9 +156076,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 cnw
 cnw
 cnw
@@ -156371,9 +156378,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 cnw
 cnw
 cnw
@@ -156673,9 +156680,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 xsu
 xsu
 xsu
@@ -156975,9 +156982,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 xsu
 pRc
 pWe
@@ -157277,9 +157284,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 xsu
 hdU
 qRh
@@ -157299,8 +157306,8 @@ vWO
 hvM
 iCf
 lIJ
-qpv
-qpv
+ltl
+ltl
 uum
 fit
 eyS
@@ -157322,7 +157329,7 @@ tiS
 nBs
 xsu
 cnw
-qpv
+ltl
 cxp
 cnw
 cnw
@@ -157579,9 +157586,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 xsu
 rsD
 lqP
@@ -157624,7 +157631,7 @@ xsu
 gIQ
 xsu
 cnw
-qpv
+ltl
 cxp
 cnw
 cnw
@@ -157881,9 +157888,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 xsu
 uha
 qRh
@@ -157926,7 +157933,7 @@ xsu
 gIQ
 xsu
 cnw
-qpv
+ltl
 cxp
 cnw
 cnw
@@ -158183,9 +158190,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 xsu
 pWe
 pWe
@@ -158485,9 +158492,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 xsu
 edS
 xsu
@@ -158530,7 +158537,7 @@ xsu
 gIQ
 xsu
 cnw
-qpv
+ltl
 cxp
 cnw
 cnw
@@ -158787,9 +158794,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 xsu
 edS
 kIB
@@ -158832,7 +158839,7 @@ tjf
 mTR
 xsu
 cnw
-qpv
+ltl
 cxp
 cnw
 cnw
@@ -159089,9 +159096,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 xsu
 edS
 lqP
@@ -159134,7 +159141,7 @@ eyS
 eyS
 xsu
 cnw
-qpv
+ltl
 cxp
 cnw
 cnw
@@ -159391,9 +159398,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 xsu
 eoJ
 xsu
@@ -159693,9 +159700,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 xsu
 edS
 lqP
@@ -159738,7 +159745,7 @@ pse
 eyS
 xsu
 cnw
-qpv
+ltl
 cxp
 cnw
 cnw
@@ -159995,9 +160002,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 xsu
 edS
 xsu
@@ -160040,7 +160047,7 @@ pse
 eyS
 xsu
 cnw
-qpv
+ltl
 cxp
 cnw
 cnw
@@ -160297,9 +160304,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 xsu
 xwP
 lqP
@@ -160342,7 +160349,7 @@ pse
 eyS
 xsu
 cnw
-qpv
+ltl
 cxp
 cnw
 cnw
@@ -160599,9 +160606,9 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
 xsu
 qvM
 xsu
@@ -160644,7 +160651,7 @@ pse
 eyS
 xsu
 cnw
-qpv
+ltl
 cxp
 cnw
 cnw
@@ -160901,17 +160908,17 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
-rJm
+bnM
 rZp
-rJm
-cxp
-cnw
-cnw
-cnw
-cnw
+bnM
+vlM
+xrW
+wJD
+wJD
+wJD
 cnw
 cnw
 bnM
@@ -160946,7 +160953,7 @@ pse
 eyS
 xsu
 xsu
-qpv
+ltl
 cxp
 cnw
 cnw
@@ -161203,17 +161210,17 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
+wJD
+bnM
+rZp
+huL
+xrW
+xrW
 wJD
 cnw
-cnw
-rJm
-rZp
-jOp
-cnw
-cnw
-cnw
-cnw
-cnw
+wJD
 cnw
 cnw
 bnM
@@ -161248,7 +161255,7 @@ pse
 pxQ
 eyS
 xsu
-qpv
+ltl
 cxp
 cnw
 cnw
@@ -161505,17 +161512,17 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
+wJD
+vlM
+huL
+vlM
+xrW
+xrW
 wJD
 cnw
-cnw
-cxp
-jOp
-cxp
-cnw
-cnw
-cnw
-cnw
-cnw
+wJD
 cnw
 cnw
 cnw
@@ -161550,7 +161557,7 @@ lIJ
 xsu
 ezm
 xsu
-osW
+pse
 hdy
 hdy
 cnw
@@ -161807,17 +161814,17 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
+wJD
+xrW
+vlM
+xrW
+xrW
+xrW
 wJD
 cnw
-cnw
-cnw
-cxp
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+wJD
 cnw
 cnw
 cnw
@@ -162109,16 +162116,16 @@ aES
 dFc
 aaa
 cnw
-wJD
-cnw
-cnw
-cnw
-cnw
-cnw
 cnw
 cnw
 wJD
+xrW
+xrW
+xrW
+xrW
+xrW
 wJD
+cnw
 wJD
 cnw
 cnw
@@ -162411,14 +162418,14 @@ aES
 dFc
 aaa
 cnw
+cnw
+cnw
 wJD
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+xrW
+xrW
+xrW
+xrW
+xrW
 wJD
 cnw
 wJD
@@ -162713,8 +162720,8 @@ aES
 dFc
 aaa
 cnw
-wJD
-wJD
+cnw
+cnw
 wJD
 wJD
 wJD
