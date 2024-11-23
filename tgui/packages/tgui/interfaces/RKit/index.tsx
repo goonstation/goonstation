@@ -102,7 +102,9 @@ const ScannedItemExtraButtons = (props: ScannedItemExtraButtonsData) => {
     >
       <Button
         width={BlueprintMiniButtonStyle.Width}
-        height={BlueprintButtonStyle.Height / 2 - 0.1}
+        height={
+          BlueprintButtonStyle.Height / 2 - BlueprintMiniButtonStyle.Spacing / 4
+        }
         py={BlueprintMiniButtonStyle.IconSize / 2}
         align="center"
         style={{ display: 'block' }}
@@ -114,7 +116,9 @@ const ScannedItemExtraButtons = (props: ScannedItemExtraButtonsData) => {
 
       <Button
         width={BlueprintMiniButtonStyle.Width}
-        height={BlueprintButtonStyle.Height / 2 - 0.1}
+        height={
+          BlueprintButtonStyle.Height / 2 - BlueprintMiniButtonStyle.Spacing / 4
+        }
         py={BlueprintMiniButtonStyle.IconSize / 2}
         align="center"
         style={{ display: 'block' }}
