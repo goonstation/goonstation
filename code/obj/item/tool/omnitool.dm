@@ -172,7 +172,7 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (!H.sight_check()) //don't blind if we're already blind
-				safety = EYE_DAMAGE_IMMUNE
+				safety = 2
 			// we want to check for the thermals first so having a polarized eye doesn't protect you if you also have a thermal eye
 			else if (istype(H.glasses, /obj/item/clothing/glasses/thermal) || H.eye_istype(/obj/item/organ/eye/cyber/thermal) || istype(H.glasses, /obj/item/clothing/glasses/nightvision) || H.eye_istype(/obj/item/organ/eye/cyber/nightvision))
 				safety = -1
