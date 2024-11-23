@@ -1764,9 +1764,9 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (!src.inhand_image)
 		src.inhand_image = image(src.inhand_image_icon, "", MOB_INHAND_LAYER)
 
+	if (!hand)
+		hand = "L"
 	var/state = src.item_state ? src.item_state + "-[hand]" : (src.icon_state ? src.icon_state + "-[hand]" : hand)
-	if(!(state in icon_states(src.inhand_image_icon)))
-		state = src.item_state ? src.item_state + "-L" : (src.icon_state ? src.icon_state + "-L" : "L")
 
 	src.inhand_image.icon_state = state
 	if (src.color)
