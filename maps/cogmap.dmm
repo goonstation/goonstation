@@ -55125,12 +55125,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/command{
-	name = "AI Upload"
-	},
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/glass/command,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "qqS" = (
