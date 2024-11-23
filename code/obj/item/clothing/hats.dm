@@ -1191,6 +1191,14 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		setProperty("stamregen", 10)
 		setProperty("deflection", 60)
 
+	proc/change_big_icon_state(var/BIG)
+		if(BIG == TRUE)
+			src.icon = initial(src.icon)
+			src.icon_state = initial(src.icon_state)
+		else
+			src.icon = 'icons/mob/clothing/bighat.dmi'
+			src.icon_state = "syndicate_top_biggest"
+
 
 	attack_hand(mob/living/carbon/human/user)
 		if(user.head == src)
@@ -1202,7 +1210,10 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			user.hud.remove_item(current_head)
 			user.head = null
 			user.drop_from_slot(current_head, get_turf(current_head))
-		user.equip_if_possible(src, SLOT_HEAD)
+		if (user.equip_if_possible(src, SLOT_HEAD))
+			change_big_icon_state(FALSE)
+
+
 
 	equipped(mob/user, slot)
 		..()
@@ -1210,8 +1221,14 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		APPLY_ATOM_PROPERTY(user, PROP_MOB_STUN_RESIST, src.type, 80) // falling to a couple batons is shameful
 		APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/pain_immune, src.type) // slow for nothing
 		user.add_antagonist(role_id = ROLE_CONFIRMED_CRIMINAL, do_equip = FALSE, do_objectives = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE) //crime time
-		command_alert("An overwhelming aura of VALIDITY has been detected at [get_area(src)].", alert_origin = ALERT_ANOMALY)
+		command_alert("An overwhelming aura of EEEEVVVVIIIILLLL has been detected at [get_area(src)].", alert_origin = ALERT_ANOMALY)
 		src.maptext_thingamajig = new /obj/machinery/maptext_monitor/health/constantly_overhead(user)
+
+	unequipped(mob/user)
+		. = ..()
+		change_big_icon_state(TRUE)
+		qdel(src.maptext_thingamajig)
+		src.maptext_thingamajig = null
 
 	suicide(var/mob/user as mob)
 		var/turf/T = get_turf(src)
@@ -1239,6 +1256,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	wear_image_icon = 'icons/mob/clothing/biggestesthat.dmi'
 	icon_state = "spessdome_top_TheOne"
 	rarity = ITEM_RARITY_MYTHIC
+	anchored = ANCHORED
 
 	setupProperties()
 		..()
@@ -1252,6 +1270,32 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		setProperty("chemprot", 50)
 		setProperty("stamregen", 5)
 		setProperty("rangedprot", 4)
+
+	proc/change_big_icon_state(var/BIG)
+		if(BIG == TRUE)
+			src.icon = initial(src.icon)
+			src.icon_state = initial(src.icon_state)
+		else
+			src.icon = 'icons/mob/clothing/bighat.dmi'
+			src.icon_state = "spessdome_top_TheOne"
+
+
+	attack_hand(mob/living/carbon/human/user)
+		if(user.head == src)
+			return
+		user.drop_from_slot(src, get_turf(src))
+		var/obj/item/current_head = user.head
+		if (current_head)
+			boutput(user, SPAN_NOTICE("You cannot pick up [src.name] while currently wearing another hat."))
+
+		else
+			boutput(user, SPAN_NOTICE("You put the [src.name] on immediately because it is too tall too unwieldly in your hands."))
+			if (user.equip_if_possible(src, SLOT_HEAD))
+				change_big_icon_state(FALSE)
+
+	unequipped(mob/user)
+		. = ..()
+		change_big_icon_state(TRUE)
 
 /obj/item/clothing/head/witchfinder
 	name = "witchfinder general's hat"
