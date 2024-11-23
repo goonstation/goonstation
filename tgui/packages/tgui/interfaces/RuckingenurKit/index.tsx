@@ -14,10 +14,10 @@ import {
   BlueprintButtonStyle,
   BlueprintMiniButtonStyle,
 } from '../Manufacturer/constant';
-import { RKitData, ScannedItemData } from './type';
+import { RuckingenurKitData, ScannedItemData } from './type';
 
-export const RKit = () => {
-  const { data } = useBackend<RKitData>();
+export const RuckingenurKit = () => {
+  const { data } = useBackend<RuckingenurKitData>();
   const { scanned_items, hide_allowed, olde } = data;
 
   return (
@@ -38,7 +38,7 @@ export const RKit = () => {
   );
 };
 
-type ScannedItemProps = Pick<RKitData, 'hide_allowed' | 'olde'> & {
+type ScannedItemProps = Pick<RuckingenurKitData, 'hide_allowed' | 'olde'> & {
   ScannedItem: ScannedItemData;
 };
 const ScannedItem = memo((props: ScannedItemProps) => {
@@ -74,7 +74,7 @@ function propsAreEqual(
 
 type ScannedItemMainButtonData = ScannedItemProps;
 const ScannedItemMainButton = (props: ScannedItemMainButtonData) => {
-  const { act } = useBackend<RKitData>();
+  const { act } = useBackend<RuckingenurKitData>();
   const { ScannedItem, hide_allowed, olde } = props;
   const { name, has_item_mats, blueprint_available, locked, imagePath, ref } =
     ScannedItem;
@@ -117,7 +117,7 @@ const ScannedItemMainButton = (props: ScannedItemMainButtonData) => {
 
 type ScannedItemExtraButtonsData = ScannedItemProps;
 const ScannedItemExtraButtons = (props: ScannedItemExtraButtonsData) => {
-  const { act } = useBackend<RKitData>();
+  const { act } = useBackend<RuckingenurKitData>();
   const { ScannedItem, hide_allowed } = props;
   const { description, ref, locked } = ScannedItem;
 
