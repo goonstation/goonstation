@@ -1,5 +1,9 @@
 
 (t)sat nov 23 24
+(u)JORJ949
+(p)21385
+(e)💅🤖|C-QoL, A-Silicons
+(+)AI shell Ctrl-Click to deploy function expanded to cyborg docks for shells that are recharging.
 (u)LeahTheTech
 (+)Tweaked the HoS beret sprite slightly.
 (t)fri nov 22 24
