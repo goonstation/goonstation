@@ -1,6 +1,6 @@
 @use 'sass:meta';
 @use 'sass:color';
-@use './colors.scss';
+@use './colors';
 
 // Core styles
 @include meta.load-css('~tgui/styles/reset.scss');
