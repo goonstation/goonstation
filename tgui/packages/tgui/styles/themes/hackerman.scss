@@ -22,7 +22,7 @@
 
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    'pkg:tgui-styles/components/Button.scss',
     $with: (
       'color-default': colors.$primary,
       'color-disabled': #4a6a4a,
@@ -30,7 +30,7 @@
     )
   );
   @include meta.load-css(
-    '../components/Tabs.scss',
+    'pkg:tgui-styles/components/Tabs.scss',
     $with: (
       'color-default': colors.$primary,
       'tab-color-selected': #00ff003f,
@@ -38,11 +38,11 @@
     )
   );
   @include meta.load-css(
-    '../components/Input.scss',
+    'pkg:tgui-styles/components/Input.scss',
     $with: ('border-color': colors.$primary)
   );
-  @include meta.load-css('../components/Modal.scss');
-  @include meta.load-css('../components/Section.scss');
+  @include meta.load-css('pkg:tgui-styles/components/Modal.scss');
+  @include meta.load-css('pkg:tgui-styles/components/Section.scss');
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');

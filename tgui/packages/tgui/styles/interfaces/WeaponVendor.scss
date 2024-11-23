@@ -1,6 +1,6 @@
 @use '../colors';
 @use '../functions' as *;
-@use '../components/Button';
+@use 'pkg:tgui-styles/components/Button';
 
 $categories: (
   'sidearm': colors.$teal,

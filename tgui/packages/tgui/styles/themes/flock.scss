@@ -20,20 +20,20 @@ $flock: #14aa94;
 .theme-flock {
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    'pkg:tgui-styles/components/Button.scss',
     $with: (
       'color-default': $flock,
       'color-transparent-text': rgba(227, 240, 255, 0.75)
     )
   );
   @include meta.load-css(
-    '../components/ProgressBar.scss',
+    'pkg:tgui-styles/components/ProgressBar.scss',
     $with: (
       'color-default-fill': $flock,
       'background-color': rgba(0, 0, 0, 0.5)
     )
   );
-  @include meta.load-css('../components/Section.scss');
+  @include meta.load-css('pkg:tgui-styles/components/Section.scss');
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');
