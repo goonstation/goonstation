@@ -114,7 +114,7 @@ const ScannedItemExtraButtons = (props: ScannedItemExtraButtonsData) => {
           py={BlueprintMiniButtonStyle.IconSize / 2}
           align="center"
           style={{ display: 'block' }}
-          disabled={locked} // For locking visual feedback
+          disabled={locked} // For visual feedback when locking
         >
           <Icon name="info" />
         </Button>
