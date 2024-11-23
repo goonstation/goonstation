@@ -5,14 +5,7 @@
  * @license MIT
  */
 
-import {
-  Button,
-  Icon,
-  Image,
-  Section,
-  Stack,
-  Tooltip,
-} from 'tgui-core/components';
+import { Button, Icon, Image, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -107,18 +100,17 @@ const ScannedItemExtraButtons = (props: ScannedItemExtraButtonsData) => {
       mx={BlueprintButtonStyle.MarginX}
       my={BlueprintButtonStyle.MarginY}
     >
-      <Tooltip content={description ? description : null}>
-        <Button
-          width={BlueprintMiniButtonStyle.Width}
-          height={BlueprintButtonStyle.Height / 2 - 0.1}
-          py={BlueprintMiniButtonStyle.IconSize / 2}
-          align="center"
-          style={{ display: 'block' }}
-          disabled={locked} // For visual feedback when locking
-        >
-          <Icon name="info" />
-        </Button>
-      </Tooltip>
+      <Button
+        width={BlueprintMiniButtonStyle.Width}
+        height={BlueprintButtonStyle.Height / 2 - 0.1}
+        py={BlueprintMiniButtonStyle.IconSize / 2}
+        align="center"
+        style={{ display: 'block' }}
+        disabled={locked} // For visual feedback when locking
+        tooltip={description ? description : null}
+      >
+        <Icon name="info" />
+      </Button>
 
       <Button
         width={BlueprintMiniButtonStyle.Width}
