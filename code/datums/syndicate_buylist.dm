@@ -1051,7 +1051,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/record_player
 	name = "Portable Record player"
-	item = /obj/submachine/record_player/portable
+	items = list(/obj/submachine/record_player/portable)
 	cost = 2
 	vr_allowed = FALSE
 	not_in_crates = TRUE
