@@ -5,6 +5,7 @@
  * @license MIT
  */
 
+import { memo } from 'react';
 import { Button, Icon, Image, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
@@ -17,14 +18,19 @@ import { RKitData, ScannedItemData } from './type';
 
 export const RKit = () => {
   const { data } = useBackend<RKitData>();
-  const { scanned_items } = data;
+  const { scanned_items, hide_allowed, olde } = data;
 
   return (
     <Window width={925} height={420}>
       <Window.Content>
         <Section title="Scanned Items" scrollable fill>
           {scanned_items.map((scanned_item) => (
-            <ScannedItem ScannedItem={scanned_item} key={scanned_item.ref} />
+            <ScannedItem
+              ScannedItem={scanned_item}
+              key={scanned_item.ref}
+              hide_allowed={hide_allowed}
+              olde={olde}
+            />
           ))}
         </Section>
       </Window.Content>
@@ -32,26 +38,46 @@ export const RKit = () => {
   );
 };
 
-interface ScannedItemProps {
+type ScannedItemProps = Pick<RKitData, 'hide_allowed' | 'olde'> & {
   ScannedItem: ScannedItemData;
-}
-const ScannedItem = (props: ScannedItemProps) => {
-  const { ScannedItem } = props;
+};
+const ScannedItem = memo((props: ScannedItemProps) => {
+  const { ScannedItem, hide_allowed, olde } = props;
 
   return (
     <Stack style={{ display: 'inline-flex' }}>
-      <ScannedItemMainButton ScannedItem={ScannedItem} />
-      <ScannedItemExtraButtons ScannedItem={ScannedItem} />
+      <ScannedItemMainButton
+        ScannedItem={ScannedItem}
+        hide_allowed={hide_allowed}
+        olde={olde}
+      />
+      <ScannedItemExtraButtons
+        ScannedItem={ScannedItem}
+        hide_allowed={hide_allowed}
+        olde={olde}
+      />
     </Stack>
   );
-};
+}, propsAreEqual);
+
+function propsAreEqual(
+  prevProps: ScannedItemProps,
+  nextProps: ScannedItemProps,
+) {
+  return (
+    JSON.stringify(prevProps.ScannedItem) ===
+      JSON.stringify(nextProps.ScannedItem) &&
+    prevProps.hide_allowed === nextProps.hide_allowed &&
+    prevProps.olde === nextProps.olde
+  );
+}
 
 type ScannedItemMainButtonData = ScannedItemProps;
 const ScannedItemMainButton = (props: ScannedItemMainButtonData) => {
-  const { data, act } = useBackend<RKitData>();
-  const { hide_allowed, olde } = data;
+  const { act } = useBackend<RKitData>();
+  const { ScannedItem, hide_allowed, olde } = props;
   const { name, has_item_mats, blueprint_available, locked, imagePath, ref } =
-    props.ScannedItem;
+    ScannedItem;
 
   const mode = has_item_mats && olde ? 'done' : 'blueprint';
   const available = blueprint_available && (!locked || hide_allowed || olde);
@@ -91,9 +117,9 @@ const ScannedItemMainButton = (props: ScannedItemMainButtonData) => {
 
 type ScannedItemExtraButtonsData = ScannedItemProps;
 const ScannedItemExtraButtons = (props: ScannedItemExtraButtonsData) => {
-  const { data, act } = useBackend<RKitData>();
-  const { hide_allowed } = data;
-  const { description, ref, locked } = props.ScannedItem;
+  const { act } = useBackend<RKitData>();
+  const { ScannedItem, hide_allowed } = props;
+  const { description, ref, locked } = ScannedItem;
 
   return (
     <Stack.Item
