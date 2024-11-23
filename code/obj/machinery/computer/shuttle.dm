@@ -405,6 +405,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 	var/logBioeleAccident = FALSE
 	var/adminOnly = FALSE
 
+
 /obj/machinery/computer/elevator/icebase
 	machine_registry_idx = MACHINES_ELEVATORICEBASE
 	areaLower = /area/shuttle/icebase_elevator/lower
@@ -415,15 +416,24 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 	machine_registry_idx = MACHINES_ELEVATORBIODOME
 	areaLower = /area/shuttle/biodome_elevator/lower
 	areaUpper = /area/shuttle/biodome_elevator/upper
-	endTurfToLeave = /turf/unsimulated/floor/setpieces/ancient_pit/shaft
+	endTurfToLeave = /turf/simulated/floor/auto/elevator_shaft/biodome
 	logBioeleAccident = TRUE
 
 /obj/machinery/computer/elevator/sea
 	machine_registry_idx = MACHINES_ELEVATORSEA
 	areaLower = /area/shuttle/sea_elevator/lower
 	areaUpper = /area/shuttle/sea_elevator/upper
-	endTurfToLeave = /turf/simulated/floor/specialroom/sea_elevator_shaft
+	endTurfToLeave = /turf/simulated/floor/auto/elevator_shaft/sea
 	circuit_type = /obj/item/circuitboard/sea_elevator
+
+	New()
+		..()
+		var/area/top = locate(areaUpper)
+		var/turf/topshaft = top.find_middle()
+		if(topshaft && topshaft?.type == endTurfToLeave)
+			location = 0
+		else
+			location = 1
 
 /obj/machinery/computer/elevator/centcomm
 	machine_registry_idx = MACHINES_ELEVATORCENTCOM

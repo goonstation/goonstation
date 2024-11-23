@@ -13,7 +13,7 @@ GAUNTLET CARDS
 	wear_image_icon = 'icons/mob/clothing/card.dmi'
 	w_class = W_CLASS_TINY
 	object_flags = NO_GHOSTCRITTER
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	stamina_damage = 0
 	stamina_cost = 0
 	var/list/files = list("tools" = 1)
@@ -45,6 +45,12 @@ TYPEINFO(/obj/item/card/emag)
 
 	attack()	//Fucking attack messages up in this joint.
 		return
+
+/obj/item/card/emag/attack_self(mob/user as mob)
+	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+		return
+	playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, FALSE, pitch=1.1)
+	actions.start(new /datum/action/show_item(user, src, "id", 5, 3), user)
 
 /obj/item/card/emag/fake
 //delicious fake emag
@@ -218,6 +224,7 @@ TYPEINFO(/obj/item/card/emag)
 			assignment = "Syndicate Commander"
 			access = list(access_syndicate_shuttle, access_syndicate_commander)
 
+
 /obj/item/card/id/dabbing_license
 	name = "Dabbing License"
 	icon_state = "id_dab"
@@ -241,10 +248,12 @@ TYPEINFO(/obj/item/card/emag)
 		People dabbed on: [dabbed_on_count]<br/>"}
 
 /obj/item/card/id/dabbing_license/attack_self(mob/user as mob)
+	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+		return
 	user.visible_message("[user] shows you: [bicon(src)] [src.name]: [get_desc(0, user)]")
-
 	src.add_fingerprint(user)
-	return
+	playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, FALSE, pitch=0.9)
+	actions.start(new /datum/action/show_item(user, src, "id", 5, 3), user)
 
 /obj/item/card/id/captains_spare/explosive
 	pickup(mob/user)
@@ -263,10 +272,11 @@ TYPEINFO(/obj/item/card/emag)
 		user.gib()
 
 /obj/item/card/id/attack_self(mob/user as mob)
+	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+		return
 	user.visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]", "You show off your card: [bicon(src)] [src.name]: assignment: [src.assignment]")
-
 	src.add_fingerprint(user)
-	return
+	actions.start(new /datum/action/show_item(user, src, "id", 5, 3), user)
 
 /obj/item/card/id/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (src.emagged)
@@ -296,7 +306,6 @@ TYPEINFO(/obj/item/card/emag)
 	boutput(usr, "[bicon(src)] [src.name]: The current assignment on the card is [src.assignment].")
 	return
 */
-
 /obj/item/card/id/syndicate
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate_shuttle)

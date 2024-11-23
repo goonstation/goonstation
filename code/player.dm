@@ -307,7 +307,7 @@
 			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in has_medal for [medal_name]: [error.message]", "debug")
 			return FALSE
 
-		return hasMedal["has_medal"]
+		return hasMedal.has_medal
 
 	/// Returns a list of all medals of this player. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/get_all_medals()

@@ -2,6 +2,8 @@
 	id = ROLE_HARBINGER_SUMMON
 	display_name = "harbinger summon"
 	mob_path = /mob/living/critter/wraith/nascent
+	remove_on_clone = TRUE
+	has_info_popup = FALSE
 
 	give_equipment()
 		var/mob/current_mob = src.owner.current

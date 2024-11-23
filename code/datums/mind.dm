@@ -13,7 +13,6 @@ datum/mind
 	var/remembered_pin = null
 	var/last_memory_time = 0 //Give a small delay when adding memories to prevent spam. It could happen!
 	var/miranda // sec's miranda rights thingy.
-	var/last_miranda_time = 0 // this is different than last_memory_time, this is when the rights were last SAID, not last CHANGED
 
 	var/violated_hippocratic_oath = 0
 	var/soul = 100 // how much soul we have left
@@ -328,7 +327,7 @@ datum/mind
 		if (!antagonist_role)
 			return FALSE
 		if (antagonist_role.faction)
-			antagonist_role.owner.current.faction -= antagonist_role.faction
+			LAZYLISTREMOVE(antagonist_role.owner.current.faction, antagonist_role.faction)
 		antagonist_role.remove_self(take_gear, source)
 		src.antagonists.Remove(antagonist_role)
 		var/mob/living/carbon/human/H = src.current

@@ -551,7 +551,7 @@
 			var/obj/item/reagent_containers/food/snacks/candy/newcandy = new newcandy_path
 			user.put_in_hand_or_drop(newcandy)
 			if (prob(5))
-				newcandy.razor_blade = 1
+				newcandy.has_razor_blade = TRUE
 			boutput(user, "You grab [newcandy] from the cauldron!")
 
 		/// subtype named "ephemeral" which only spawns on halloween

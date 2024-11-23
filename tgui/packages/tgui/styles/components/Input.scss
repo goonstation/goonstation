@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use '../base.scss';
-@use '../functions.scss' as *;
+@use '../base';
+@use '../functions' as *;
 
 $text-color: base.$color-fg !default;
-$background-color: #0a0a0a !default;
-$border-color: #88bfff !default;
+$background-color: hsl(0, 0%, 3.9%) !default;
+$border-color: hsl(212.3, 100%, 76.7%) !default;
 $border-radius: base.$border-radius !default;
 
 .Input {
@@ -58,8 +58,8 @@ $border-radius: base.$border-radius !default;
 
   &:-ms-input-placeholder {
     font-style: italic;
-    color: #777;
-    color: rgba(255, 255, 255, 0.45);
+    color: hsl(0, 0%, 46.7%);
+    color: hsla(0, 0%, 100%, 0.45);
   }
 }
 

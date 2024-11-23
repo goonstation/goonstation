@@ -208,7 +208,7 @@
 
 	return list(list(
 		"real_name" = mind.current.real_name,
-		"dead" = isdead(mind.current),
+		"dead" = isdead(mind.current) || isVRghost(mind.current),
 		"player" = mind.displayed_key,
 		"role" = full_role,
 		"head" = is_head,

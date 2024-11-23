@@ -3,13 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use '../colors.scss';
+@use '../colors';
 
 a {
-  &:link, &:visited {
+  &:link,
+  &:visited {
     color: colors.$blue;
   }
-  &:hover, &:active {
+  &:hover,
+  &:active {
     color: colors.$primary;
   }
 }

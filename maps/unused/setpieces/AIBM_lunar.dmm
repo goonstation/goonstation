@@ -604,7 +604,7 @@
 	name = "Security Checkpoint";
 	req_access_txt = "255"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this firelock useless.  Well I mean actually it doesnt have much at all, but it's probably in key areas or something.  Get off my back."
 	},
 /turf/unsimulated/floor/red,
@@ -712,7 +712,7 @@
 	},
 /area/moon/underground)
 "ck" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -1407,7 +1407,7 @@
 /turf/unsimulated/floor,
 /area/moon/underground)
 "dX" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -1565,7 +1565,7 @@
 /turf/unsimulated/floor,
 /area/moon/underground)
 "es" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "It's jammed, apparently.  Or just really locked.";
 	name = "sealed airlock"
 	},
@@ -2350,7 +2350,7 @@
 /turf/unsimulated/floor/lunar,
 /area/moon)
 "gG" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -2749,7 +2749,7 @@
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -4111,7 +4111,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "kb" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4123,7 +4123,7 @@
 	},
 /area/moon/museum/west)
 "kc" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4135,7 +4135,7 @@
 	},
 /area/moon/museum/west)
 "kd" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4172,7 +4172,7 @@
 	},
 /area/moon/museum)
 "kh" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4184,7 +4184,7 @@
 	},
 /area/moon/museum)
 "ki" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4673,7 +4673,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "lf" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -5128,7 +5128,7 @@
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum/giftshop)
 "mh" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -5141,7 +5141,7 @@
 	},
 /area/moon/museum)
 "mi" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -5159,7 +5159,7 @@
 	},
 /area/moon/museum/giftshop)
 "mk" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -5606,7 +5606,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "nf" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';

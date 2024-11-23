@@ -389,7 +389,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/orange/wedge
 	name = "orange wedge"
-	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
 	initial_volume = 6
 	throwforce = 0
 	w_class = W_CLASS_TINY
@@ -478,7 +478,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge
 	name = "grapefruit wedge"
-	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	bites_left = 1
@@ -997,6 +997,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	crop_prefix = "unpeeled "
 	desc = "Cavendish, of course."
 	icon_state = "banana"
+	item_state = "banana"
 	planttype = /datum/plant/fruit/banana
 	bites_left = 2
 	heal_amt = 2
@@ -1031,6 +1032,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			var/index = findtext(src.name, "unpeeled")
 			src.name = splicetext(src.name, index, index + 9)
 			src.icon_state = "banana-fruit"
+			src.item_state = "banana-fruit"
+			user.update_inhands()
 			var/obj/item/bananapeel/droppeel = new /obj/item/bananapeel(user.loc)
 			// Scale peel size to banana size
 			// If banana 80% normal size or larger, directly copy banana's size for the peel
@@ -1071,18 +1074,34 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	brew_result = list("juice_pumpkin"= 40)
 	var/obj/item/clothing/head/carving_result = /obj/item/clothing/head/pumpkin
 	var/obj/item/reagent_containers/food/spoon_result = /obj/item/reagent_containers/food/drinks/bowl/pumpkin
+	var/obj/item/ai_plating_kit/wire_result = /obj/item/ai_plating_kit/pumpkin
 
 	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/cable_coil))
+			var/obj/item/cable_coil/coil = W
+			if (coil.use(3))
+				user.visible_message(SPAN_NOTICE("[user] adds wiring to the [src]!"))
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
+				var/obj/item/ai_plating_kit/result = new src.wire_result(user.loc)
+				user.put_in_hand_or_drop(result)
+				qdel(src)
+				if (coil.amount < 1)
+					user.drop_item()
+					qdel(coil)
+			else
+				boutput(user, "You need at least three lengths of cable to add to [src]!")
 		if (iscuttingtool(W))
 			src.carving_message(W, user)
 			var/obj/item/clothing/head/result = new src.carving_result(user.loc)
 			result.name = "carved [src.name]"
+			result.transform = src.transform
 			qdel(src)
 		else if (isspooningtool(W))
 			src.spoon_message(W, user)
 			var/obj/item/reagent_containers/result = new src.spoon_result(user.loc)
 			result.reagents.maximum_volume = max(result.reagents.maximum_volume, src.reagents.total_volume)
 			src.reagents.trans_to(result, src.reagents.maximum_volume)
+			result.transform = src.transform
 			qdel(src)
 
 	proc/carving_message(obj/item/knife, mob/user)
@@ -1143,7 +1162,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/lime/wedge
 	name = "lime wedge"
-	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	bites_left = 1
@@ -1177,7 +1196,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/lemon/wedge
 	name = "lemon wedge"
-	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	bites_left = 1
@@ -1479,7 +1498,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/pineappleslice
 	name = "pineapple slice"
 	desc = "Juicy!"
-	icon_state = "pineapple-slice"
+	icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
+	icon_state = "pineapple"
 	planttype = /datum/plant/fruit/pineapple
 	bites_left = 1
 	heal_amt = 2

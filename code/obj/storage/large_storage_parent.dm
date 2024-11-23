@@ -95,13 +95,20 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		var/i = 1
 		for (var/thing in src.spawn_contents)
 			var/amt = 1
-			if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
-				amt = abs(spawn_contents[thing])
-			do
-				var/atom/A = new thing(src)
-				A.layer += 0.00001 * i
-				i++
-			while (--amt > 0)
+			if(!istext(thing)) //cannot use ispath for reasons BYOND comprehension
+				if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
+					amt = abs(spawn_contents[thing])
+				do
+					var/atom/A = new thing(src)
+					A.layer += 0.00001 * i
+					i++
+				while (--amt > 0)
+			else if (thing in reagents_cache)
+				var/turf/T = get_turf(src)
+				var/vol = 1
+				if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
+					vol = abs(spawn_contents[thing])
+				T.fluid_react_single(thing, vol)
 
 	proc/get_welding_positions()
 		var/start
@@ -231,7 +238,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				user.show_text("You kick at [src], but it doesn't budge!", "red")
 				user.unlock_medal("IT'S A TRAP", 1)
 				for (var/mob/M in hearers(src, null))
-					M.show_text("<font size=[max(0, 5 - GET_DIST(src, M))]>THUD, thud!</font>")
+					M.show_text("<font size=[max(0, 5 - GET_DIST(src, M))]>THUD, thud!</font>", group = "storage_thud")
 				playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 				var/shakes = 5
 				while (shakes > 0)
@@ -305,7 +312,10 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 							return
 						src._health = src._max_health
 						src.visible_message(SPAN_ALERT("[user] repairs [src] with [I]."))
-					else if (!src.is_short && !src.legholes && src.can_leghole)
+					else if (!src.is_short && !src.legholes)
+						if (!src.can_leghole)
+							boutput(user, SPAN_ALERT("You can't cut holes in that!"))
+							return
 						if (!weldingtool.try_weld(user, 1))
 							return
 						src.legholes = 1
@@ -840,8 +850,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				for (var/obj/item/I in M)
 					if (istype(I, /obj/item/implant))
 						I.set_loc(meatcube)
-
-					I.set_loc(src)
+					else
+						I.set_loc(src)
 
 			src.locked = FALSE
 

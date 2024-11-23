@@ -193,12 +193,14 @@
 		else if(istype(I, /obj/item/currency/spacecash/))
 			if (src.accessed_record)
 				boutput(user, SPAN_NOTICE("You insert the cash into the ATM."))
-
-				if(istype(I, /obj/item/currency/spacecash/buttcoin))
-					boutput(user, SPAN_SUCCESS("Your transaction will complete anywhere within 10 to 10e27 minutes from now."))
-				else
-					src.accessed_record["current_money"] += I.amount
-
+				src.accessed_record["current_money"] += I.amount
+				I.amount = 0
+				qdel(I)
+			else boutput(user, SPAN_ALERT("You need to log in before depositing cash!"))
+		else if(istype(I, /obj/item/currency/buttcoin/))
+			if (src.accessed_record)
+				boutput(user, SPAN_NOTICE("You insert the cash into the ATM."))
+				boutput(user, SPAN_SUCCESS("Your transaction will complete anywhere within 10 to 10e27 minutes from now."))
 				I.amount = 0
 				qdel(I)
 			else boutput(user, SPAN_ALERT("You need to log in before depositing cash!"))

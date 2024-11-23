@@ -73,8 +73,9 @@
 			spawn_rules_controller.apply_to(clone)
 
 		if(swapSouls && H.mind)
-			H.mind.transfer_to(clone)
 			clone.is_npc = FALSE
+			H.is_npc = TRUE
+			H.mind.transfer_to(clone)
 		APPLY_ATOM_PROPERTY(clone, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "cloner art")
 		clone.changeStatus("unconscious", imprison_time) // so they don't ruin the surprise
 		O.ArtifactFaultUsed(H)
@@ -118,7 +119,7 @@
 			clone.ai_aggressive = 1
 			clone.ai_calm_down = 0
 			sleep(randfloat(3 SECOND, 20 SECONDS))
-			while (!isdead(clone) && isnull(clone.client))
+			while (!isdead(clone) && isnull(clone.client) && !QDELETED(clone))
 				clone.say(phrase_log.random_phrase("say"))
 				sleep(randfloat(3 SECOND, 20 SECONDS))
 

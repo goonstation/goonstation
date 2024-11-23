@@ -41,6 +41,12 @@
 		icon_state = "space-OLD"
 		desc = "A relic of the past."
 		item_state = null
+	fishbowl
+		name = "fishbowl helmet"
+		icon_state = "space-fish"
+		desc = "You're about 90% sure this isn't just a regular fishbowl."
+		item_state = "s_helmet"
+		seal_hair = 0
 
 /obj/item/clothing/head/helmet/space/engineer
 	name = "engineering space helmet"
@@ -401,26 +407,22 @@
 					var/mob/living/carbon/human/H = toggler
 					if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)) //handling of the rest is done in life.dm
 						if (src.on)
-							H.vision.set_scan(1)
-							APPLY_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
+							H.meson(src)
 						else
-							H.vision.set_scan(0)
-							REMOVE_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
+							H.unmeson(src)
 
 			equipped(var/mob/living/user, var/slot)
 				..()
 				if(!isliving(user))
 					return
 				if (slot == SLOT_HEAD && on)
-					user.vision.set_scan(1)
-					APPLY_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
+					user.meson(src)
 
 			unequipped(var/mob/living/user)
 				..()
 				if(!isliving(user))
 					return
-				user.vision.set_scan(0)
-				REMOVE_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
+				user.unmeson(src)
 
 		medic
 			name = "specialist health monitor"
@@ -1107,7 +1109,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	desc = "Someone's cut out a bit of this bucket so you can put it on your head."
 	icon_state = "buckethelm"
 	item_state = "buckethelm"
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	c_flags = COVERSEYES | BLOCKCHOKE
 	hides_from_examine = C_EARS
 
@@ -1135,7 +1137,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	desc = "Looks like this bucket has been turned upside down so it can be used as a hat."
 	icon_state = "buckethat"
 	item_state = "buckethat"
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	block_vision = 1
 	seal_hair = 1
 	var/bucket_type = /obj/item/reagent_containers/glass/bucket

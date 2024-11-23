@@ -9,7 +9,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	density = 1
 	stops_space_move = 1
 	dir = NORTHEAST //full tile
-	flags = USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
+	flags = USEDELAY | ON_BORDER | FLUID_DENSE
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	text = "<font color=#aaf>#"
@@ -473,7 +473,10 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		else
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 75, 1)
-			src.damage_blunt(W.force)
+			if (ischoppingtool(W))
+				src.damage_blunt(W.force*4, user)
+			else
+				src.damage_blunt(W.force)
 			..()
 		return
 
@@ -760,7 +763,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	health_multiplier = 2
 	alpha = 160
 	object_flags = 0 // so they don't inherit the HAS_DIRECTIONAL_BLOCKING flag from thindows
-	flags = USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = USEDELAY | ON_BORDER | FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 	var/mod = "W-"
 	var/connectdir

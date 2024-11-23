@@ -195,7 +195,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 		playsound(src, src.bot_voice, 40, 1)
 		if (src.text2speech)
 			SPAWN(0)
-				var/audio = dectalk("\[:nk\][message]")
+				var/audio = dectalk("\[:nk\][message]", BOTTALK_VOLUME)
 				if (audio && audio["audio"])
 					for (var/mob/O in hearers(src, null))
 						if (!O.client)
@@ -400,6 +400,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 			if (istype(master))
 				master.moving = 0
 				master.bot_mover = null
-				master.process() // responsive, robust AI = calling process() a million zillion times
+				master.ProcessMachine() // responsive, robust AI = calling process() a million zillion times
 				master = null
 				qdel(src)

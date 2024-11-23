@@ -438,8 +438,22 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 	syndicate
 		icon_state = "pda-syn"
+		desc = "A cheap knockoff looking portable microcomputer claiming to be made by ElecTek LTD. It has a slot for an ID card, and a hole to put a pen into."
+		locked_bg_color = TRUE
+		bg_color = "#A33131"
+		r_tone = /datum/ringtone/basic/ring10
+		screen_x = 2
+		window_title = "Personnel Data Actuator"
 		setup_default_module = /obj/item/device/pda_module/flashlight/sy_red
 		team_num = TEAM_SYNDICATE
+
+		New()
+			..()
+			var/datum/computer/file/text/pda2manual/old_manual = locate() in src.hd.root.contents
+			src.hd.root.remove_file(old_manual)
+			var/datum/computer/file/pda_program/emergency_alert/crisis = locate() in src.hd.root.contents
+			src.hd.root.remove_file(crisis)
+			src.hd.root.add_file(new /datum/computer/file/text/pda2manual/knockoff)
 
 /obj/item/device/pda_module/flashlight/nt_blue
 	name = "\improper NanoTrasen blue flashlight module"
@@ -502,6 +516,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 	//You can only pick this up if you're on the correct team, otherwise it explodes.
 	//exactly the same as /obj/item/card/id/pod_wars. Copy paste bad, but these two things I don't want people stealing, would be real lame... Might get rid of in the future if this structure isn't required.
+#if defined(MAP_OVERRIDE_POD_WARS)
 	attack_hand(mob/user)
 		if (get_pod_wars_team_num(user) == team)
 			..()
@@ -511,6 +526,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			user.u_equip(src)
 			src.dropped(user)
 			qdel(src)
+#endif
 
 /obj/item/device/radio/headset/pod_wars/nanotrasen
 	name = "radio headset"
@@ -841,15 +857,17 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			target.changeStatus("slowed", 4 SECONDS)
 			target.TakeDamageAccountArmor("All", rand(1,2), 0, 0, DAMAGE_CUT)
 
-	Cross(atom/movable/mover)
+	Crossed(atom/movable/mover)
+		. = ..()
+		// This change prevents ghosts from being affected by barbed wire
+		if (HAS_ATOM_PROPERTY(mover, PROP_ATOM_FLOATING))
+			return
 		if(ismob(mover))
 			var/mob/M = mover
 			if(M.m_intent != "walk")
 				pokey(M, 98)
 			else
 				pokey(M, 30)
-
-		return (!density)
 
 //barricade deployer
 

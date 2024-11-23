@@ -379,14 +379,17 @@ var/list/admin_verbs = list(
 		/client/proc/implant_all,
 		/client/proc/cmd_crusher_walls,
 		/client/proc/cmd_disco_lights,
+		/client/proc/cmd_event_controller,
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_terrainify_station,
 		/client/proc/cmd_caviewer,
+		/client/proc/cmd_paraviewer,
 		/client/proc/cmd_custom_spawn_event,
 		/client/proc/cmd_special_shuttle,
 		/client/proc/toggle_all_artifacts,
 		/client/proc/spawn_tons_of_artifacts,
 		/client/proc/toggle_radio_maptext,
+		/client/proc/toggle_ghost_invisibility,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,
@@ -400,6 +403,7 @@ var/list/admin_verbs = list(
 		/client/proc/special_fullbright,
 		/client/proc/replace_space_exclusive,
 		/client/proc/dereplace_space,
+		/client/proc/unterrainify,
 		/client/proc/ghostdroneAll,
 		/client/proc/showLoadingHint,
 		/client/proc/showPregameHTML,
@@ -427,6 +431,7 @@ var/list/admin_verbs = list(
 		/client/proc/region_allocator_panel,
 		/datum/admins/proc/toggle_pcap_kick_messages,
 		/client/proc/set_round_req_bypass,
+		/client/proc/test_spacebee_command,
 		),
 
 	7 = list(
@@ -1092,7 +1097,7 @@ var/list/fun_images = list()
 	SHOW_VERB_DESC
 	if(istext(J))
 		var/idx = job_controls.savefile_get_job_names(src)?.Find(J)
-		if(job_controls.savefile_load(src, idx))
+		if(job_controls.cloudsave_load(src, idx))
 			J = job_controls.create_job(TRUE)
 
 	respawn_as_self_internal(new_self=TRUE, jobstring = J.name)
@@ -1760,6 +1765,7 @@ var/list/fun_images = list()
 	if(src.holder.respawn_as_self_mob)
 		qdel(src.holder.respawn_as_self_mob)
 	src.holder.respawn_as_self_mob = O
+	animate(src.holder.respawn_as_self_mob, transform = null)
 
 /client/proc/removeOther(var/mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
@@ -2570,12 +2576,17 @@ var/list/fun_images = list()
 				players[M.mind.get_player()] = antag
 				break
 	var/total = 0
+	var/list/key_list = list()
 	for (var/datum/player/player in players)
 		var/datum/antagonist/antag = players[player]
 		boutput(src, "Giving token to roundstart [antag.display_name] [player.ckey], they now have [player.get_antag_tokens() + 1]")
 		total += 1
 		player.set_antag_tokens(player.get_antag_tokens() + 1)
+		key_list += player.key
 	boutput(src, "Roundstart antags given tokens: [total]")
+	var/key_text = english_list(key_list)
+	logTheThing(LOG_ADMIN, src, "[key_name(src.mob)] distributed antagonist tokens to the following roundstart antagonists: [key_text]")
+	message_admins("[key_name(src.mob)] distributed antagonist tokens to the following roundstart antagonists: [key_text]")
 
 /client/proc/spawn_all_type()
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
@@ -2636,7 +2647,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	ADMIN_ONLY
 	SHOW_VERB_DESC
-	for(var/obj/machinery/door/airlock/airlock)
+	for_by_tcl(airlock, /obj/machinery/door/airlock)
 		airlock.secondsElectrified = 0
 		LAGCHECK(LAG_LOW)
 	message_admins("Admin [key_name(usr)] de-electrified all airlocks.")
@@ -2672,3 +2683,12 @@ var/list/fun_images = list()
 		logTheThing(LOG_ADMIN, src, "[key_name(src)] sets [ckey]'s bypass round requirement flag to [value]")
 	else
 		boutput(src, SPAN_ALERT("Unable to put cloud data, uh oh!"))
+
+/client/proc/test_spacebee_command(command as text)
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Test spacebee command"
+	set desc = "Run a discord/IRC bot command on the current server, omit the ;;. Local servers are considered server 0 for server targeted commands."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	spacebee_extension_system.process_raw_command(command, usr.key)

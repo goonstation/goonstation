@@ -443,13 +443,13 @@ Contents:
 	icon_state = "furnace"
 	density = 1
 	anchored = ANCHORED_ALWAYS
-	var/obj/effects/tatara/effect
+	var/obj/effects/little_sparks/tatara/effect
 
 	var/temperature = T0C + 870
 
 	New()
 		..()
-		effect = new /obj/effects/tatara(src)
+		effect = new(src)
 		vis_contents += effect
 
 	attackby(obj/item/W, mob/user as mob)
@@ -551,15 +551,6 @@ Contents:
 	desc = "A little wooden tool for raking sand in to patterns."
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "rake"
-
-/obj/fakeobject/sealed_door
-	name = "laboratory door"
-	desc = "It appears to be sealed."
-	icon = 'icons/obj/dojo.dmi'
-	icon_state = "sealed_door"
-	density = 1
-	anchored = ANCHORED_ALWAYS
-	opacity = 1
 
 /obj/fakeobject/katana_fake
 	name = "katana sheath"

@@ -40,6 +40,7 @@
 #define MGA_CRISIS "Crisis Alert"
 #define MGA_RADIO "Radio Alert"
 #define MGA_TRACKING "Tracking Alert"
+#define MGA_SYNDICATE "Syndicate Alert"
 
 // Job categories
 #define JOB_SPECIAL "special"
@@ -54,3 +55,14 @@
 #define STAPLE_JOBS (1<<0)
 #define SPECIAL_JOBS (1<<1)
 #define HIDDEN_JOBS (1<<2)
+
+// Job round requirements
+#define ROUNDS_MIN_CAPTAIN 30 // captains should know what they're doing (they won't)
+#define ROUNDS_MIN_SECURITY 30 // higher barrier of entry than before but now with a trainee job to get into the rythym of things to compensate
+#define ROUNDS_MIN_DETECTIVE 15 // half of sec, please stop shooting people with lethals
+#define ROUNDS_MIN_SECASS 5
+
+// Job round maximum (for newbees)
+#define ROUNDS_MAX_RESASS 75
+#define ROUNDS_MAX_MEDASS 75
+#define ROUNDS_MAX_TECHASS 75

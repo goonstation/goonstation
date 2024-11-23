@@ -347,7 +347,7 @@
 /obj/item/ammo/bullets/bullet_22
 	sname = ".22 LR"
 	name = ".22 magazine"
-	desc = "Despite being very small, these bullets are still lethal."
+	desc = "Cheap and easily mass-produced, these are a popular round for target practice, varmint-shooting and self-defense in confined spaces."
 	icon_state = "pistol_magazine"
 	amount_left = 10
 	max_amount = 10
@@ -358,7 +358,8 @@
 		ammo_type = new/datum/projectile/bullet/bullet_22/a180
 		amount_left = 177
 		max_amount = 177
-		desc = "177 rounds of .22 unceremoniously crammed into a goofy pancake magazine."
+		desc = "177 rounds of .22 fastidiously loaded into a fussy pancake magazine."
+
 /obj/item/ammo/bullets/bullet_22/smartgun
 	name = ".22 smartgun magazine"
 	desc = "A fancy, high-tech extended magazine of .22 bullets."
@@ -706,12 +707,11 @@
 	throwforce = 0
 
 //0.40
-/obj/item/ammo/bullets/blow_darts
+/obj/item/ammo/bullets/tranq_darts/blow_darts //kind of cursed pathing because we need the dynamic icon behaviour
 	sname = "blowdart"
 	name = "poison blowdarts"
 	ammo_type = new/datum/projectile/bullet/blow_dart
 	desc = "These darts are loaded with a dangerous paralytic toxin."
-	icon_state = "tranq_clip"
 	amount_left = 4
 	max_amount = 4
 	ammo_cat = AMMO_BLOWDART
@@ -732,6 +732,16 @@
 		desc = "These darts are loaded with a potent mind-altering drug. They smell like honey."
 		ammo_type = new/datum/projectile/bullet/blow_dart/ls_bee
 		color = "yellow"
+
+	ketamine
+		name = "sleep blowdarts"
+		desc = "These darts are loaded with a heavy dose of horse-tranquilizer."
+		ammo_type = new/datum/projectile/bullet/blow_dart/ketamine
+		color = "#00c5e7"
+
+		single //I hate this
+			amount_left = 1
+			max_amount = 1
 
 //0.41
 /obj/item/ammo/bullets/derringer
@@ -809,6 +819,10 @@
 			amount_left = 2
 			max_amount = 2
 
+		four //for FLW
+			amount_left = 4
+			max_amount = 4
+
 
 /obj/item/ammo/bullets/buckshot_burst // real spread shotgun ammo
 	sname = "Buckshot"
@@ -861,6 +875,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	sname = "bone load"
 	desc = "This appears to be some bone fragments haphazardly shoved into a few cut open pipe frames - grotesque!"
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/bone
+	icon_state = "makeshiftbone"
 
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"
@@ -1215,7 +1230,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 			return
 		if (src.loc == user && AMMO.has_grenade != 0)
 			for(var/i in 1 to amount_left)
-				user.put_in_hand_or_drop(SEMI_DEEP_COPY(AMMO.get_nade()))
+				user.put_in_hand_or_drop(AMMO.get_nade():launcher_clone())
 			AMMO.unload_nade()
 			boutput(user, "You pry the grenade[amount_left>1?"s":""] out of [src].")
 			src.add_fingerprint(user)
@@ -1236,7 +1251,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(AMMO.has_grenade && src.delete_on_reload)
 			for(var/i in 1 to amount_left)
-				user.put_in_hand_or_drop(SEMI_DEEP_COPY(AMMO.get_nade()))
+				user.put_in_hand_or_drop(AMMO.get_nade():launcher_clone())
 			AMMO.unload_nade()
 			qdel(src)
 
@@ -1556,6 +1571,16 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	g_amt = 40000
 	charge = 400
 	max_charge = 400
+
+/obj/item/ammo/power_cell/tiny
+	name = "Power Cell - 50"
+	desc = "A power cell that holds a max of 50PU"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	m_amt = 5000
+	g_amt = 10000
+	charge = 50
+	max_charge = 50
 
 /obj/item/ammo/power_cell/self_charging
 	name = "Power Cell - Atomic"

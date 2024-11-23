@@ -41,6 +41,10 @@ TYPEINFO(/obj/item/device/t_scanner)
 			var/datum/contextAction/t_scanner/action = new actionType(src)
 			actions += action
 
+	dropped(mob/user)
+		. = ..()
+		user?.closeContextActions()
+
 	/// Update the inventory, ability, and context buttons
 	proc/set_on(new_on, mob/user=null)
 		on = new_on
@@ -509,6 +513,9 @@ TYPEINFO(/obj/item/device/reagentscanner)
 		return
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
+		if(istype(A, /obj/machinery/photocopier))
+			return // Upload scan results to the photocopier without scanning the photocopier itself
+
 		user.visible_message(SPAN_NOTICE("<b>[user]</b> scans [A] with [src]!"),\
 		SPAN_NOTICE("You scan [A] with [src]!"))
 
@@ -526,9 +533,14 @@ TYPEINFO(/obj/item/device/reagentscanner)
 		if (isnull(src.scan_results))
 			boutput(user, SPAN_ALERT("\The [src] encounters an error and crashes!"))
 		else
-			boutput(user, "[src.scan_results]")
+			var/scan_output = "[src.scan_results]"
+			if (user.traitHolder.hasTrait("training_bartender"))
+				var/eth_eq = get_ethanol_equivalent(user, A.reagents)
+				if (eth_eq)
+					scan_output += "<br> [SPAN_REGULAR("You estimate there's the equivalent of <b>[eth_eq] units of ethanol</b> here.")]"
+			boutput(user, scan_output)
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user as mob) // no eth_eq here cuz then we'd have to save how the reagent container used to be
 		if (isnull(src.scan_results))
 			boutput(user, SPAN_NOTICE("No previous scan results located."))
 			return
@@ -1042,8 +1054,9 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 		return T.target_byond_key
 
-
-
+/obj/item/device/ticket_writer/crust
+	name = "crusty old security TicketWriter 1000"
+	desc = "An old TicketWriter model held together by hopes and dreams alone."
 
 TYPEINFO(/obj/item/device/appraisal)
 	mats = 5

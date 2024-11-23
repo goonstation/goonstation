@@ -25,6 +25,7 @@
 	can_bleed = FALSE
 	metabolizes = FALSE
 	blood_id = null
+	use_stamina = FALSE // floating ghostly eyes dont get tired
 
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0
@@ -47,9 +48,10 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_AI_EYE)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT, src)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
-		AddComponent(/datum/component/minimap_marker, MAP_AI, "ai_eye")
+		AddComponent(/datum/component/minimap_marker/minimap, MAP_AI, "ai_eye")
 
 	Login()
 		.=..()
@@ -171,6 +173,11 @@
 		//var/inrange = in_interact_range(target, src)
 		//var/obj/item/equipped = src.equipped()
 
+		if(src.client.check_any_key(KEY_OPEN) && istype(target, /mob/living/silicon))
+			var/mob/living/silicon/S = target
+			src.mainframe.deploy_to_shell(S)
+			return
+
 		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_POINT) ) // ugh
 			if (src.targeting_ability)
 				..()
@@ -282,9 +289,6 @@
 
 	resist()
 		return 0 //can't actually resist anything because there's nothing to resist, but maybe the hot key could be used for something?
-
-	vomit()
-		return 0 //can't puke
 
 	//death stuff that should be passed to mainframe
 	gib(give_medal, include_ejectables) //this should be admin only, I would hope
@@ -510,6 +514,12 @@
 		set name = "Change Designation"
 		set desc = "Change your name."
 		mainframe?.rename_self()
+
+	verb/go_offline()
+		set category = "AI Commands"
+		set name = "Go Offline"
+		set desc = "Disconnect your brain such that a new AI can take your place."
+		mainframe?.go_offline()
 
 	stopObserving()
 		src.set_loc(get_turf(src))

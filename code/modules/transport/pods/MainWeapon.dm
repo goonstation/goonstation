@@ -244,6 +244,9 @@
 	icon_state = "grenade-launcher"
 	muzzle_flash = "muzzle_flash_launch"
 
+	lower_ammo
+		remaining_ammunition = 6
+
 /obj/item/shipcomponent/mainweapon/UFO
 	name = "UFO Blaster"
 	desc = "An extraterrestrial weapons system."
@@ -736,7 +739,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 		//walls can be built on most floors. avoid some types that are unsuitable
 		if (mode == EFIF_MODE_WALLS || mode == EFIF_MODE_REPAIR)
 			if(istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/airbridge) && !istype(T,/turf/simulated/floor/shuttle)\
-				&& !istype(T,/turf/simulated/floor/setpieces) && !istype(T,/turf/simulated/floor/martian))
+				&& !istype(T,/turf/simulated/floor/setpieces) && !istype(T,/turf/simulated/floor/martian) && !istype(T,/turf/simulated/floor/feather))
 				return TRUE
 		//fallback: space is good
 		if (istype(T,/turf/space))

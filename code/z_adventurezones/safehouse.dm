@@ -60,7 +60,7 @@
 	plane = PLANE_NOSHADOW_BELOW
 	color = "#D1E6FF" //To match with asteroid var/stone_color, change if you need it to match something.
 
-	flags = IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID //The poddoors aren't inherently fullbright, need a suitable turf or area underneath.
+	flags = IS_PERSPECTIVE_FLUID | FLUID_DENSE //The poddoors aren't inherently fullbright, need a suitable turf or area underneath.
 
 	podbay_autoclose
 		autoclose = TRUE
@@ -93,12 +93,12 @@
 	initializeBioholder() //We need bioholder data intialised so we can use it elsewhere.
 		bioHolder.ownerName = name
 		bioHolder.ownerType = src.type
-		bioHolder.mobAppearance.customization_first = new /datum/customization_style/moustache/vandyke
-		bioHolder.mobAppearance.customization_first_color = "#241200"
-		bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-		bioHolder.mobAppearance.customization_second_color = "#241200"
-		bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
-		bioHolder.mobAppearance.customization_third_color = "#241200"
+		bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/moustache/vandyke
+		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#241200"
+		bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/none
+		bioHolder.mobAppearance.customizations["hair_middle"].color = "#241200"
+		bioHolder.mobAppearance.customizations["hair_top"].style =  new /datum/customization_style/none
+		bioHolder.mobAppearance.customizations["hair_top"].color = "#241200"
 		bioHolder.mobAppearance.e_color = "#363978"
 		bioHolder.mobAppearance.s_tone = "#FFCC99"
 		bioHolder.age = 52

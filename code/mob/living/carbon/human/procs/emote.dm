@@ -676,7 +676,7 @@
 								thing = src.l_hand
 							else if (src.r_hand)
 								thing = src.r_hand
-						if (thing)
+						if (thing && !(istype(thing, /obj/item/grab)))
 							SEND_SIGNAL(thing, COMSIG_ITEM_TWIRLED, src, thing)
 							message = thing.on_spin_emote(src)
 							maptext_out = "<I>twirls [thing]</I>"
@@ -1101,11 +1101,15 @@
 							if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
 								var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
 								var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
+								var/original_tool_loc = O.loc
 								drop_item()
 								O.set_loc(src)
-								equip_if_possible(O, drophand)
-								src.visible_message(SPAN_ALERT("<B>[src] pulls a set of tools out of \the [C]!</B>"))
-								playsound(src.loc, "rustle", 60, 1)
+								if(equip_if_possible(O, drophand))
+									src.visible_message(SPAN_ALERT("<B>[src] pulls a set of tools out of \the [C]!</B>"))
+									playsound(src.loc, "rustle", 60, 1)
+								else
+									O.set_loc(original_tool_loc)
+									boutput(src, SPAN_ALERT("You aren't able to equip the omnitool to that hand!"))
 								break
 				else
 					message = "<B>[src]</B> tries to stretch [his_or_her(src)] arms."
@@ -1641,7 +1645,7 @@
 							var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
 							var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
 							drop_item()
-							D.set_loc(src)
+							D.set_loc(src.loc)
 							equip_if_possible(D, drophand)
 							src.visible_message(SPAN_ALERT("<B>[src] pulls a derringer out of \the [C]!</B>"))
 							playsound(src.loc, "rustle", 60, 1)
@@ -2005,7 +2009,7 @@
 							src.charges -= 1
 							playsound(src, src.sound_burp, 70, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 							return
-					else if ((src.charges >= 1) && (muzzled) && !src.reagents?.get_reagent_amount("promethazine"))
+					else if ((src.charges >= 1) && (muzzled) && !HAS_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT))
 						for (var/mob/O in viewers(src, null))
 							O.show_message("<B>[src]</B> vomits in [his_or_her(src)] own mouth a bit.")
 						src.TakeDamage("head", 0, 50, 0, DAMAGE_BURN)
@@ -2327,6 +2331,8 @@
 		gas.farts = 1.69
 	else
 		gas.farts = 0.69
+	if(src.bioHolder.HasEffect("radioactive_farts"))
+		gas.radgas = 2
 	gas.temperature = T20C
 	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 	if (T)

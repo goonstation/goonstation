@@ -16,6 +16,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	var/initial_proj = /datum/projectile/laser/blaster
 	var/team_num = 0	//1 is NT, 2 is Syndicate
 
+#if defined(MAP_OVERRIDE_POD_WARS)
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user))
 			if (team_num)
@@ -41,6 +42,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 					return
 			else
 				return ..(target, user, second_shot)
+#endif
 
 	disposing()
 		indicator_display = null
@@ -203,7 +205,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	w_class = W_CLASS_SMALL
 	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	stamina_damage = 25
 	stamina_cost = 10
 	stamina_crit_chance = 40

@@ -187,22 +187,6 @@
 	icon_state = "firex"
 	anchored = ANCHORED
 
-/obj/fakeobject/firelock_broken
-	name = "rusted firelock"
-	desc = "Rust has rendered this firelock useless."
-	icon = 'icons/obj/doors/door_fire2.dmi'
-	icon_state = "door0"
-	anchored = ANCHORED
-
-/obj/fakeobject/airlock_broken
-	name = "rusted airlock"
-	desc = "Rust has rendered this airlock useless."
-	icon = 'icons/obj/doors/Door1.dmi';
-	icon_state = "doorl";
-	anchored = ANCHORED
-	density = 1
-	opacity = 1
-
 /obj/fakeobject/lighttube_broken
 	name = "shattered light tube"
 	desc = "Something has broken this light."
@@ -453,3 +437,81 @@
 	desc = "Pathology equipment dispenser. It looks super old and busted."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "med-broken"
+
+/obj/fakeobject/bigcabinets
+	name = "equipment cabinet"
+	desc = "Some sort of electronic equipment in a freestanding enclosure."
+	icon = 'icons/obj/large/32x64.dmi'
+	icon_state = "bigcabinet1"
+	bound_width = 32
+	bound_height = 64
+
+	gauges
+		icon_state = "bigcabinet2"
+
+	gaugeswithlamp
+		icon_state = "bigcabinet3"
+
+	monitors
+		name = "AV Monitors"
+		icon_state = "bigcabinet4"
+
+	rackmount
+		icon_state = "bigcabinet5"
+
+	slider
+		icon_state = "bigcabinet6"
+
+	doorcontrol
+		name = "access console"
+		icon_state = "doorcontrol"
+
+/obj/fakeobject/bigatmos
+	name = "atmospherics equipment"
+	desc = "Industrial-scale air-handling equipment."
+	icon = 'icons/obj/large/32x64.dmi'
+	icon_state = "bigatmos1"
+	bound_width = 32
+	bound_height = 64
+
+	bigatmos2
+		icon_state = "bigatmos2"
+
+	bigatmos3
+		icon_state = "bigatmos3"
+
+/obj/fakeobject/biggercabinets
+	name = "big equipment cabinet"
+	desc = "An even bigger enclosure for industrial equipment."
+	icon = 'icons/obj/large/64x64.dmi'
+	icon_state = "displays"
+	bound_width = 64
+	bound_height = 64
+
+	gauges
+		icon_state = "gauges"
+
+	lockdown
+		icon_state = "lockdown"
+
+	recorders
+		name = "chart recorders"
+		desc = "Paper chart recorders, with a little robotic pen inscribing sensor readings on each side."
+		icon_state = "recorders"
+
+/obj/fakeobject/tower
+	name = "sensor mast"
+	desc = "A tall pylon with various sensor and antenna mounts."
+	icon = 'icons/obj/large/32x96.dmi'
+	icon_state = "tower1"
+	bound_width = 32
+	bound_height = 32 // ignore the top part i guess
+
+	tower2
+		icon_state = "tower2"
+
+	huge
+		icon = 'icons/obj/large/96x160.dmi'
+		icon_state = "tower"
+		bound_width = 96
+		bound_height = 64

@@ -75,6 +75,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/timeout = 60 //The time until we auto disconnect (if we don't get a refresh ping)
 	var/timeout_alert = 0 //Have we sent a timeout refresh alert?
 	var/hardened = 0 // azone/listening post apcs that you dont want fucked with. immune to explosions, blobs, meteors
+	var/update_requested = FALSE // Whether the next APC process should include an update (set after turfs are reallocated to this APC's area)
 
 //	luminosity = 1
 	var/debug = 0
@@ -201,7 +202,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		if (src.autoname_on_spawn == 1 || (name == "N APC" || name == "E APC" || name == "S APC" || name == "W APC"))
 			src.name = "[area.name] APC"
 	if (!QDELETED(src.area))
-		src.area.area_apc = src
+		if(istype(src.area,/area/unconnected_zone)) //if we built in an as-yet APCless zone, we've created a new built zone as a consequence
+			unconnected_zone.propagate_zone(get_turf(src))
+		else
+			src.area.area_apc = src
 
 	src.UpdateIcon()
 
@@ -905,6 +909,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 /obj/machinery/power/apc/proc/report()
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
 
+/obj/machinery/power/apc/proc/request_update()
+	src.update_requested = TRUE
+
 /obj/machinery/power/apc/proc/update()
 	if (!QDELETED(src.area))
 
@@ -1192,6 +1199,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		if(!area.requires_power)
 			return
 	else
+		if (QDELETED(src)) //we're in the failed-to-gc pile, stop generating runtimes
+			src.UnsubscribeProcess()
+			return
 		SPAWN(1)
 			qdel(src)
 		CRASH("Broken-ass APC [identify_object(src)] @[x],[y],[z] on [map_settings ? map_settings.name : "UNKNOWN"]")
@@ -1304,7 +1314,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 	// update icon & area power if anything changed
 
-	if(last_lt != lighting || last_eq != equipment || last_en != environ || last_ch != charging)
+	if(last_lt != lighting || last_eq != equipment || last_en != environ || last_ch != charging || update_requested)
+		if(update_requested)
+			update_requested = FALSE
 		UpdateIcon()
 		update()
 

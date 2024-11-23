@@ -4,7 +4,7 @@
  */
 
 @use 'sass:meta';
-@use './base.scss';
+@use 'base';
 
 // Core styles
 @include meta.load-css('./reset.scss');
@@ -23,15 +23,20 @@
 @include meta.load-css('./components/BlockQuote.scss');
 @include meta.load-css('./components/Button.scss');
 @include meta.load-css('./components/ColorBox.scss');
+@include meta.load-css('./components/Dialog.scss');
 @include meta.load-css('./components/Dimmer.scss');
 @include meta.load-css('./components/Divider.scss');
 @include meta.load-css('./components/Dropdown.scss');
 @include meta.load-css('./components/Flex.scss');
-@include meta.load-css('./components/GeneIcon.scss');
 @include meta.load-css('./components/Icon.scss');
+// |GOONSTATION-CHANGE| This component's stylesheet includes styles that apply to other things,
+// and the component is not used by Goonstation; including here for completeness, and a note that
+// until this is fixed including *all* of tgui-styles may break a bunch of our styles
+// @include meta.load-css('./components/ImageButton.scss');
 @include meta.load-css('./components/Input.scss');
 @include meta.load-css('./components/Knob.scss');
 @include meta.load-css('./components/LabeledList.scss');
+@include meta.load-css('./components/MenuBar.scss');
 @include meta.load-css('./components/Modal.scss');
 @include meta.load-css('./components/NoticeBox.scss');
 @include meta.load-css('./components/NumberInput.scss');
@@ -44,7 +49,10 @@
 @include meta.load-css('./components/Tabs.scss');
 @include meta.load-css('./components/TextArea.scss');
 @include meta.load-css('./components/Tooltip.scss');
-@include meta.load-css('./components/TooltipOverflow.scss');
+
+// Goonstation Component Styles
+@include meta.load-css('./components/goon/GeneIcon.scss');
+@include meta.load-css('./components/goon/TooltipOverflow.scss');
 
 // Interfaces
 @include meta.load-css('./interfaces/common/ListSearch.scss');
@@ -71,6 +79,7 @@
 @include meta.load-css('./interfaces/Phone.scss');
 @include meta.load-css('./interfaces/PINInputModal.scss');
 @include meta.load-css('./interfaces/PortableAtmos.scss');
+@include meta.load-css('./interfaces/TraitorTips.scss');
 @include meta.load-css('./interfaces/WeaponVendor.scss');
 
 // Layouts
@@ -79,6 +88,9 @@
 @include meta.load-css('./layouts/NtosWindow.scss');
 @include meta.load-css('./layouts/TitleBar.scss');
 @include meta.load-css('./layouts/Window.scss');
+
+// |GOOONSTATION-CHANGE|
+// @include meta.load-css('highlight.js/scss/github-dark.scss');
 
 // NT Theme
 .Layout__content {

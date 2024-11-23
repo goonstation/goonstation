@@ -4,7 +4,7 @@
 	anchored = ANCHORED
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pool"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID | FLUID_DENSE
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID | FLUID_DENSE_ALWAYS
 
 	Cross(atom/movable/mover)
 		ENSURE_TYPE(mover)
@@ -42,6 +42,7 @@
 	var/in_use = 0
 	var/suiciding = 0
 	var/deadly = 0
+	var/buckled_guy // a a aaaaaaa aa aaaaaaaa
 
 	attackby(obj/item/W, mob/user)
 		return src.Attackhand(user)

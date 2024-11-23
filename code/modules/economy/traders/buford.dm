@@ -9,25 +9,34 @@
 	chance_leave = 66
 	chance_arrive = 100
 
-	max_goods_buy = 4
-	max_goods_sell = 6
+	base_goods_buy = list(
+		TRADER_RARITY_COMMON = list(
+			/datum/commodity/trader/buford/vennecure,
+			/datum/commodity/trader/buford/megaweed,
+			/datum/commodity/trader/buford/whiteweed,
+			/datum/commodity/trader/buford/omegaweed,
+			/datum/commodity/trader/buford/psilocybin,
+			/datum/commodity/trader/buford/pizza
+		),
+		TRADER_RARITY_UNCOMMON = list(),
+		TRADER_RARITY_RARE = list()
+	)
 
-	base_goods_buy = list(/datum/commodity/trader/buford/vennecure,
-	/datum/commodity/trader/buford/megaweed,
-	/datum/commodity/trader/buford/whiteweed,
-	/datum/commodity/trader/buford/omegaweed,
-	/datum/commodity/trader/buford/psilocybin,
-	/datum/commodity/trader/buford/pizza)
-
-	base_goods_sell = list(/datum/commodity/trader/buford/alienseeds,
-	/datum/commodity/trader/buford/weedseeds,
-	/datum/commodity/trader/buford/powerplant,
-	/datum/commodity/trader/buford/mutriant,
-	/datum/commodity/trader/buford/groboost,
-	/datum/commodity/trader/buford/fruitful,
-	/datum/commodity/trader/buford/topcrop,
-	/datum/commodity/trader/buford/weedkiller,
-	/datum/commodity/trader/buford/methane)
+	base_goods_sell = list(
+		TRADER_RARITY_COMMON = list(
+			/datum/commodity/trader/buford/powerplant,
+			/datum/commodity/trader/buford/mutriant,
+			/datum/commodity/trader/buford/groboost,
+			/datum/commodity/trader/buford/fruitful,
+			/datum/commodity/trader/buford/topcrop,
+			/datum/commodity/trader/buford/weedkiller
+		),
+		TRADER_RARITY_UNCOMMON = list(
+			/datum/commodity/trader/buford/alienseeds,
+			/datum/commodity/trader/buford/weedseeds,
+		),
+		TRADER_RARITY_RARE = list(/datum/commodity/trader/buford/methane)
+	)
 
 	dialogue_greet = list("Hey man. Got the good shit for sale, yeah.",
 	"Sup brother, what's goin' on. Got the damn fresh shit for you here.",

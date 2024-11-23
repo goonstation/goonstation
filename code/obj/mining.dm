@@ -165,7 +165,7 @@
 			for (var/mob/living/L in T)
 				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
 					qdel(L)
-			if(istype(T,/turf/unsimulated) && ( T.GetComponent(/datum/component/buildable_turf) || (station_repair.station_generator && (origin.z == Z_LEVEL_STATION))))
+			if(istype(T,/turf/unsimulated) && ( T.can_build || (station_repair.station_generator && (origin.z == Z_LEVEL_STATION))))
 				T.ReplaceWith(/turf/space, force=TRUE)
 			else
 				T.ReplaceWith(/turf/space)
@@ -256,7 +256,7 @@
 			if (!T)
 				boutput(usr, SPAN_ALERT("Error: magnet area spans over construction area bounds."))
 				return 0
-			var/isterrain = T.GetComponent(/datum/component/buildable_turf) && istype(T,/turf/unsimulated)
+			var/isterrain = T.can_build && istype(T,/turf/unsimulated)
 			if ((!istype(T, /turf/space) && !isterrain) && !istype(T, /turf/simulated/floor/plating/airless/asteroid) && !istype(T, /turf/simulated/wall/auto/asteroid))
 				boutput(usr, SPAN_ALERT("Error: [T] detected in [width]x[height] magnet area. Cannot magnetize."))
 				return 0
@@ -264,13 +264,13 @@
 		var/borders = list()
 		for (var/cx = origin.x - 1, cx <= origin.x + width, cx++)
 			var/turf/S = locate(cx, origin.y - 1, origin.z)
-			var/isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			var/isterrain = S.can_build && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, SPAN_ALERT("Error: bordering tile has a gap, cannot magnetize area."))
 				return 0
 			borders += S
 			S = locate(cx, origin.y + height, origin.z)
-			isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			isterrain = S.can_build && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, SPAN_ALERT("Error: bordering tile has a gap, cannot magnetize area."))
 				return 0
@@ -278,13 +278,13 @@
 
 		for (var/cy = origin.y, cy <= origin.y + height - 1, cy++)
 			var/turf/S = locate(origin.x - 1, cy, origin.z)
-			var/isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			var/isterrain = S.can_build && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, SPAN_ALERT("Error: bordering tile has a gap, cannot magnetize area."))
 				return 0
 			borders += S
 			S = locate(origin.x + width, cy, origin.z)
-			isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			isterrain = S.can_build && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, SPAN_ALERT("Error: bordering tile has a gap, cannot magnetize area."))
 				return 0
@@ -320,7 +320,8 @@
 			qdel(W)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		var/isterrain = target.GetComponent(/datum/component/buildable_turf) && istype(target,/turf/unsimulated)
+		var/turf/target_turf = target
+		var/isterrain = istype(target_turf,/turf/unsimulated) && target_turf.can_build
 		if (!magnet)
 			if (istype(target, /obj/machinery/magnet_chassis))
 				magnet = target:linked_magnet
@@ -705,6 +706,7 @@
 		.["time"] = TIME
 
 	ui_act(action, params)
+		. = ..()
 		var/magnetNotReady = src.active || (src.last_used > TIME && !src.cooldown_override) || src.last_use_attempt > TIME
 		switch(action)
 			if ("geoscan")
@@ -874,7 +876,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	light_mod = "wall-"
 	plane = PLANE_NOSHADOW_BELOW
 	layer = ASTEROID_LAYER
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 	default_material = "rock"
 	color = "#D1E6FF"
 
@@ -896,7 +898,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/weakened = 0
 	var/amount = 2
 	var/invincible = 0
-	var/quality = 0
 	var/default_ore = /obj/item/raw_material/rock
 	var/datum/ore/ore = null
 	var/datum/ore/event/event = null
@@ -993,7 +994,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			stone_color = "#2070CC"
 			default_ore = /obj/item/raw_material/ice
 			hardness = 5
-			quality = 15
 			amount = 6
 
 		ice_char
@@ -1363,24 +1363,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				O.onExcavate(src)
 			var/makeores
 			for(makeores = src.amount, makeores > 0, makeores--)
-				var/obj/item/raw_material/MAT = new ore_to_create(src)
-
-				// rocks don't deserve quality; moreover this speeds up big explosions since rocks don't need to copyMaterial() anymore
-				if(ore_to_create ==  /obj/item/raw_material/rock)
-					continue
-
-				if(MAT.material)
-					//If we don't use quality anymore, remove this
-					MAT.material = MAT.material.getMutable()
-					if(MAT.material.getQuality() != 0) //If it's 0 then that's probably the default, so let's use the asteroids quality only if it's higher. That way materials that have a quality by default will not occur at any quality less than the set one. And materials that do not have a quality by default, use the asteroids quality instead.
-						var/newQual = max(MAT.material.getQuality(), src.quality)
-						MAT.material.setQuality(newQual)
-						MAT.quality = newQual
-					else
-						MAT.material.setQuality(src.quality)
-						MAT.quality = src.quality
-
-				MAT.name = getOreQualityName(MAT.quality) + " [MAT.name]"
+				new ore_to_create(src)
 		if(!icon_old)
 			icon_old = icon_state
 
@@ -1452,6 +1435,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/image/coloration_overlay = null
 	var/list/space_overlays = null
 	turf_flags = MOB_SLIP | MOB_STEP | FLUID_MOVE
+	can_build = TRUE
 
 #ifdef UNDERWATER_MAP
 	fullbright = 0
@@ -1491,11 +1475,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 	proc/weaken_asteroid()
 		return
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/tile/))
-			var/obj/item/tile/tile = W
-			tile.build(src)
 
 	update_icon()
 		. = ..()
@@ -2043,6 +2022,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 	icon_state = "cgaunts"
 	item_state = "bgloves"
 	material_prints = "industrial-grade mineral fibers"
+	fingertip_color = "#535353"
 	var/obj/item/mining_tool/tool = new /obj/item/mining_tool/concussive_gloves_internal
 
 	setupProperties()
@@ -2102,7 +2082,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 					if (\
 						(\
 							istype(target, /turf/simulated/wall/auto/asteroid/) ||\
-							istype(target, /obj/geode) && istypes(get_turf(target), list(/turf/space, /turf/simulated/floor/plating/airless, /turf/simulated/floor/airless/plating))\
+							istype(target, /obj/geode)\
 						) && !src.hacked)
 						boutput(user, SPAN_ALERT("You slap the charge on [target], [det_time/10] seconds!"))
 						user.visible_message(SPAN_ALERT("[user] has attached [src] to [target]."))
@@ -2319,7 +2299,7 @@ TYPEINFO(/obj/item/cargotele)
 				mob_teled = TRUE
 
 		if(!mob_teled)
-			logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] to [log_loc(src.target)].")
+			logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] ([cargo.type]) to [log_loc(src.target)].")
 
 		cargo.set_loc(get_turf(src.target))
 		target.receive_cargo(cargo)

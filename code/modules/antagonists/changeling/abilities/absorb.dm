@@ -36,7 +36,7 @@
 			H.TakeDamage("All", 15, 0, 0)
 			take_bleeding_damage(H, null, 8, DAMAGE_STAB, TRUE)
 			for (var/L in valid_limbs)
-				var/obj/item/parts/possible_limb = H.limbs?[L]
+				var/obj/item/parts/possible_limb = H.limbs.vars?[L]
 				if (possible_limb)
 					ownerMob.visible_message("<span class='combat bold'>[ownerMob] viciously devours [H]'s [possible_limb]!</span>")
 					possible_limb.remove(FALSE)
@@ -54,6 +54,7 @@
 		var/mob/ownerMob = owner
 		ownerMob.show_message(SPAN_NOTICE("We must hold still for a moment..."), 1)
 		ON_COOLDOWN(target, "changeling_remove_limb", 1 SECOND) //don't eat a limb right away
+		logTheThing(LOG_COMBAT, ownerMob, "starts trying to devour [constructTarget(target,"combat")] as a changeling in horror form [log_loc(owner)].")
 
 	onEnd()
 		..()
@@ -84,6 +85,7 @@
 	cooldown = 5 SECONDS
 	targeted = 0
 	target_anything = 0
+	do_logs = FALSE
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 
 	cast(atom/target)
@@ -170,6 +172,7 @@
 			target:was_harmed(owner, special = "ling")
 
 		devour.addBHData(target)
+		logTheThing(LOG_COMBAT, owner, "starts trying to absorb [constructTarget(target,"combat")] as a changeling [log_loc(owner)].")
 
 	onEnd()
 		..()
@@ -208,6 +211,7 @@
 	cooldown = 0
 	targeted = 0
 	target_anything = 0
+	do_logs = FALSE
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 
 	cast(atom/target)

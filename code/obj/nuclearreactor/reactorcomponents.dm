@@ -305,7 +305,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	gas_volume = 100
 	thermal_mass = 420*50//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
-	return_air()
+	return_air(direct = FALSE)
 		return air_contents
 
 	melt()

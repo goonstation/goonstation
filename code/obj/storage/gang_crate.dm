@@ -41,6 +41,20 @@
 		unlocked
 			locked = FALSE
 			anchored = UNANCHORED
+	guns_and_gear_bonus
+		New()
+			initialize_loot_master(4,4)
+			// 3 guns, ammo, 3 bits of gear
+			var/obj/loot_spawner/random/bonus_loot = pick(/obj/loot_spawner/random/xlong/m16,/obj/loot_spawner/random/xlong_tall/a180,/obj/loot_spawner/random/xlong_tall/ks23,/obj/loot_spawner/random/long_tall/draco)
+			lootMaster.place_loot_instance(src,1,1,new bonus_loot)
+			lootMaster.add_random_loot(src, GANG_CRATE_GUN, 2)
+			lootMaster.add_random_loot(src, GANG_CRATE_AMMO_LIMITED, 3)
+			lootMaster.add_random_loot(src, GANG_CRATE_GEAR, 3)
+			// fill the rest with whatever
+			lootMaster.fill_remaining(src, GIMMICK)
+			..()
+
+	//debug crate, good for visualizing spawns and diagnosing issues
 	guns_and_gear_visualized
 		anchored = UNANCHORED
 		locked = FALSE
@@ -904,9 +918,9 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/short)
 	spraypaint
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/spray_paint,scale_x=0.6,scale_y=0.45,off_x=-2)
-			spawn_item(C,I,/obj/item/spray_paint,scale_x=0.6,scale_y=0.45)
-			spawn_item(C,I,/obj/item/spray_paint,scale_x=0.6,scale_y=0.45,off_x=2)
+			spawn_item(C,I,/obj/item/spray_paint_gang,scale_x=0.6,scale_y=0.45,off_x=-2)
+			spawn_item(C,I,/obj/item/spray_paint_gang,scale_x=0.6,scale_y=0.45)
+			spawn_item(C,I,/obj/item/spray_paint_gang,scale_x=0.6,scale_y=0.45,off_x=2)
 	flash
 		weight = 1 // it sucks getting more than 1 of these
 		tier = GANG_CRATE_GEAR

@@ -4,8 +4,8 @@
  */
 
 @use 'sass:color';
-@use '../base.scss';
-@use '../functions.scss' as *;
+@use '../base';
+@use '../functions' as *;
 
 .Window {
   position: fixed;
@@ -15,9 +15,11 @@
   right: 0;
   color: base.$color-fg;
   background-color: base.$color-bg;
-  background-image: linear-gradient(to bottom,
+  background-image: linear-gradient(
+    to bottom,
     base.$color-bg-start 0%,
-    base.$color-bg-end 100%);
+    base.$color-bg-end 100%
+  );
 }
 
 .Window__titleBar {
@@ -42,6 +44,8 @@
 
 .Window__contentPadding {
   margin: 0.5rem;
+  // IE8: Calc not supported
+  height: 100%;
   // 0.01 is needed to make the scrollbar not appear
   // due to rem rendering inaccuracies in IE11.
   height: calc(100% - 1.01rem);

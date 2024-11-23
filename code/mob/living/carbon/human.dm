@@ -169,7 +169,7 @@
 
 	var/default_mutantrace = /datum/mutantrace/human
 
-/mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
+/mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE, role_for_traits)
 	. = ..()
 
 	image_eyes_L = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
@@ -244,7 +244,7 @@
 	src.set_mutantrace(src.default_mutantrace)
 	src.update_colorful_parts()
 
-	init_preferences?.apply_post_new_stuff(src)
+	init_preferences?.apply_post_new_stuff(src, role_for_traits)
 
 	inventory = new(src)
 
@@ -261,7 +261,8 @@
 	New(mob/new_holder, var/ling) // to prevent lings from spawning a shitload of limbs in unspeakable locations
 		..()
 		holder = new_holder
-		if (holder && !ling) create(holder.AH_we_spawned_with)
+		if (holder && !ling)
+			create(holder.AH_we_spawned_with)
 
 	disposing()
 		if (l_arm)
@@ -289,6 +290,8 @@
 		if (!holder)
 			return
 
+		var/force_redraw = FALSE
+
 		if (!l_arm && howmany > 0)
 			if (holder?.mutantrace?.l_limb_arm_type_mutantrace)
 				l_arm = new holder.mutantrace.l_limb_arm_type_mutantrace(holder)
@@ -300,6 +303,7 @@
 			l_arm:set_skin_tone()
 			holder.hud.update_hands()
 			howmany--
+			force_redraw = TRUE
 
 		if (!r_arm && howmany > 0)
 			if (holder?.mutantrace?.r_limb_arm_type_mutantrace)
@@ -312,6 +316,7 @@
 			r_arm:set_skin_tone()
 			holder.hud.update_hands()
 			howmany--
+			force_redraw = TRUE
 
 		if (!l_leg && howmany > 0)
 			if (holder?.mutantrace?.l_limb_leg_type_mutantrace)
@@ -323,6 +328,7 @@
 			l_leg:original_holder = holder
 			l_leg:set_skin_tone()
 			howmany--
+			force_redraw = TRUE
 
 		if (!r_leg && howmany > 0)
 			if (holder?.mutantrace?.r_limb_leg_type_mutantrace)
@@ -334,6 +340,10 @@
 			r_leg:original_holder = holder
 			r_leg:set_skin_tone()
 			howmany--
+			force_redraw = TRUE
+
+		if(force_redraw)
+			src.holder.update_body()
 
 		if (holder.client) holder.next_move = world.time + 7 //Fix for not being able to move after you got new limbs.
 
@@ -512,8 +522,8 @@
 		hud.inventory_bg = null
 		hud.inventory_items = null
 		qdel(hud)
-	STOP_TRACKING
 
+	STOP_TRACKING
 
 	for(var/obj/item/implant/imp in src.implant)
 		imp.dispose()
@@ -536,24 +546,14 @@
 
 	src.chest_item = null
 
-	if (mutantrace)
-		mutantrace.dispose()
-		mutantrace = null
+	QDEL_NULL(src.mutantrace)
+
 	target = null
-	if (limbs)
-		limbs.dispose()
-		limbs = null
-	if (organHolder)
-		organHolder.dispose()
-		organHolder = null
 
-	if (src.cloner_defects)
-		qdel(src.cloner_defects)
-		src.cloner_defects = null
-
-	if (src.inventory)
-		src.inventory.dispose()
-		src.inventory = null
+	QDEL_NULL(src.limbs)
+	QDEL_NULL(src.organHolder)
+	QDEL_NULL(src.cloner_defects)
+	QDEL_NULL(src.inventory)
 
 	src.juggle_dummy = null
 
@@ -753,7 +753,6 @@
 
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 	add_lifeprocess(/datum/lifeprocess/decomposition)
-	remove_lifeprocess(/datum/lifeprocess/blood)
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		if (src.mind.ckey && !inafterlife(src))
@@ -1140,12 +1139,15 @@
 					src.set_a_intent(INTENT_DISARM)
 				return
 		else
-			if (src.client.check_key(KEY_THROW) && src.a_intent == "help" && isliving(target) && BOUNDS_DIST(src, target) <= 0)
+			if (src.client.check_key(KEY_THROW) && src.equipped() && src.a_intent == "help" && isliving(target) && BOUNDS_DIST(src, target) <= 0)
 				var/obj/item/thing = src.equipped() || src.l_hand || src.r_hand
 				if (thing)
 					usr = src
 					var/mob/living/living_target = target
 					living_target.give_item()
+					return
+			else if (src.client.check_key(KEY_THROW) && !src.equipped() && BOUNDS_DIST(src, target) <= 0)
+				if (src.auto_pickup_item(target))
 					return
 			else if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
 				SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
@@ -1398,7 +1400,7 @@
 	else
 		. = "<span class='name' data-ctx='\ref[src.mind]'>"
 	if (src.wear_mask?.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
-		if (src.wear_id)
+		if (src.wear_id && length(src.wear_id:registered))
 			if (just_name_itself)
 				return src.wear_id:registered
 			. += "[src.wear_id:registered]</span>"
@@ -1657,7 +1659,7 @@
 				rendered = SPAN_SAY("[SPAN_NAME("[src.name]")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]")
 			else
 				if (src.wear_mask && src.wear_mask.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
-					if (src.wear_id)
+					if (src.wear_id && src.wear_id:registered)
 						rendered = SPAN_SAY("[SPAN_NAME("[src.wear_id:registered]")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]")
 					else
 						rendered = SPAN_SAY("[SPAN_NAME("Unknown")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]")
@@ -1676,7 +1678,7 @@
 		rendered = SPAN_SAY("[SPAN_NAME("[src.name]")] whispers, [SPAN_MESSAGE("[message]")]")
 	else
 		if (src.wear_mask && src.wear_mask.vchange)//(istype(src:wear_mask, /obj/item/clothing/mask/gas/voice))
-			if (src.wear_id)
+			if (src.wear_id && length(src.wear_id:registered))
 				rendered = SPAN_SAY("[SPAN_NAME("[src.wear_id:registered]")] whispers, [SPAN_MESSAGE("[message]")]")
 			else
 				rendered = SPAN_SAY("[SPAN_NAME("Unknown")] whispers, [SPAN_MESSAGE("[message]")]")
@@ -2483,8 +2485,8 @@
 			src.equip_if_possible(NEW, SLOT_SHOES)
 			src.update_clothing()
 			qdel(SH)
-		else if (src.limbs && (istype(src.limbs.l_leg, /obj/item/parts/robot_parts) && !istype(src.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/light)) && (istype(src.limbs.r_leg, /obj/item/parts/robot_parts) && !istype(src.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/light))) // Light cyborg legs don't count.
-			src.visible_message(SPAN_ALERT("[src] rips apart the shackles with pure machine-like strength!</b>"), SPAN_NOTICE("You rip apart the shackles."))
+		else if (src.limbs && src.limbs.l_leg.breaks_cuffs && src.limbs.r_leg.breaks_cuffs)
+			src.visible_message(SPAN_ALERT("[src] rips apart the shackles with [src.limbs.l_leg.kind_of_limb & LIMB_ROBOT ? "machine-like" : "unnatural"] strength!</b>"), SPAN_NOTICE("You rip apart the shackles."))
 			var/obj/item/clothing/shoes/NEW2 = new SH.type
 			if (NEW2.chained)
 				qdel(NEW2)
@@ -2530,9 +2532,9 @@
 
 			src.handcuffs.material_trigger_when_attacked(src, src, 1)
 			src.handcuffs.destroy_handcuffs(src)
-		else if ( src.limbs && (istype(src.limbs.l_arm, /obj/item/parts/robot_parts) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm/left/light)) && (istype(src.limbs.r_arm, /obj/item/parts/robot_parts) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm/right/light))) //Gotta be two standard borg arms
+		else if ( src.limbs && src.limbs.l_arm?.breaks_cuffs && src.limbs.r_arm?.breaks_cuffs)
 			for (var/mob/O in AIviewers(src))
-				O.show_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with machine-like strength!</B>"), 1)
+				O.show_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with [src.limbs.l_arm.kind_of_limb & LIMB_ROBOT ? "machine-like" : "unnatural"] strength!</B>"), 1)
 			boutput(src, SPAN_NOTICE("You rip apart your handcuffs."))
 
 			src.handcuffs.material_trigger_when_attacked(src, src, 1)
@@ -2588,7 +2590,7 @@
 	SPAWN(1.5 SECONDS)
 		qdel(src)
 
-/mob/living/carbon/human/get_equipped_items()
+/mob/living/carbon/human/get_equipped_items(include_pockets = FALSE)
 	. = ..()
 	if (src.belt) . += src.belt
 	if (src.glasses) . += src.glasses
@@ -2598,6 +2600,10 @@
 	if (src.wear_id) . += src.wear_id
 	if (src.wear_suit) . += src.wear_suit
 	if (src.w_uniform) . += src.w_uniform
+	if(include_pockets)
+		if (src.l_store) . += src.l_store
+		if (src.r_store) . += src.r_store
+
 
 /mob/living/carbon/human/protected_from_space()
 	var/space_suit = 0
@@ -2705,7 +2711,7 @@
 			if (prob(75) && organHolder.tail.loc == src)
 				ret += organHolder.tail
 		if (prob(50) && !isskeleton(src)) // Skeletons don't have hair, so don't create and drop a wig for them on death
-			var/obj/item/clothing/head/wig/W = create_wig()
+			var/obj/item/clothing/head/wig/W = create_wig(keep_hair = TRUE)
 			if (W)
 				processed += W
 				ret += W
@@ -2723,7 +2729,13 @@
 			ret += A
 	return ret
 
-/mob/living/carbon/human/proc/create_wig()
+/mob/living/carbon/human/proc/is_bald()
+	var/datum/appearanceHolder/AH = src.bioHolder.mobAppearance
+	return istype(AH.customizations["hair_bottom"], /datum/customization_style/none) \
+	&& istype(AH.customizations["hair_middle"], /datum/customization_style/none) \
+	&& istype(AH.customizations["hair_top"], /datum/customization_style/none)
+
+/mob/living/carbon/human/proc/create_wig(var/keep_hair = FALSE)
 	if (!src.bioHolder || !src.bioHolder.mobAppearance)
 		return null
 	var/obj/item/clothing/head/wig/W = new(src)
@@ -2733,12 +2745,17 @@
 	W.icon_state = "bald" // Let's give the actual hair a chance to shine
 
 	var/hair_list = list()
-	hair_list[src.bioHolder.mobAppearance.customization_first.id] = src.bioHolder.mobAppearance.customization_first_color
-	hair_list[src.bioHolder.mobAppearance.customization_second.id] = src.bioHolder.mobAppearance.customization_second_color
-	hair_list[src.bioHolder.mobAppearance.customization_third.id] = src.bioHolder.mobAppearance.customization_third_color
+	hair_list[src.bioHolder.mobAppearance.customizations["hair_bottom"].style.id] = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
+	hair_list[src.bioHolder.mobAppearance.customizations["hair_middle"].style.id] = src.bioHolder.mobAppearance.customizations["hair_middle"].color
+	hair_list[src.bioHolder.mobAppearance.customizations["hair_top"].style.id] = src.bioHolder.mobAppearance.customizations["hair_top"].color
 
 	W.setup_wig(hair_list)
 
+	if (!keep_hair)
+		src.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customizations["hair_middle"].style = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customizations["hair_top"].style = new /datum/customization_style/none
+		src.update_colorful_parts()
 	return W
 
 
@@ -2981,8 +2998,9 @@
 			src.remove_juggle(user)
 			user.set_loc(src.loc)
 
-/mob/living/carbon/human/return_air()
-	return src.loc?.return_air()
+/mob/living/carbon/human/return_air(direct = FALSE)
+	if (!direct)
+		return src.loc?.return_air()
 
 /mob/living/carbon/human/does_it_metabolize()
 	return 1
@@ -3335,7 +3353,7 @@
 	else if (src.shoes && src.shoes.chained)
 		missing_legs = 2
 
-	if (missing_legs == 2)
+	if (missing_legs == 2 && !(locate(/datum/movement_modifier/slither) in src.movement_modifiers))
 		. += 14 - ((2-missing_arms) * 2) // each missing leg adds 7 of movement delay. Each functional arm reduces this by 2.
 	else
 		. += 7*missing_legs
@@ -3620,3 +3638,29 @@
 			if ((!has_contraband_permit && GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND) > 0) || (!has_carry_permit && GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS) > 0))
 				arrestState = ARREST_STATE_CONTRABAND
 	src.arrestIcon.icon_state = arrestState
+
+/mob/living/carbon/human/get_genetic_traits()
+	return list(5,5,1)
+
+mob/living/carbon/human/has_genetics()
+	return TRUE
+
+/mob/living/carbon/human/get_fingertip_color()
+	var/hand_color = null
+	if (istype(src.gloves))
+		var/obj/item/clothing/gloves/gloves = src.gloves
+		hand_color = gloves.get_fingertip_color()
+		if (!isnull(hand_color))
+			return hand_color
+
+	var/obj/item/parts/limb = null
+	if(src.hand)
+		limb = src.limbs.l_arm
+	else
+		limb = src.limbs.r_arm
+	if (istype(limb))
+		hand_color = limb.get_fingertip_color()
+		if (!isnull(hand_color))
+			return hand_color
+
+	. = ..()

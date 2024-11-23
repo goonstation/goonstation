@@ -28,6 +28,29 @@ sound time adjustment, SOUND_UPDATE offset var, query with query
 atoms can be rendered by reference in browser
 */
 
+// find lagging shitters
+// for\(var/([\w/]*)\)
+
+// /client/verb/grab_all_lists()
+//     set category = "Debug"
+//     set name = "Get all lists"
+
+//     var/list/all_lists_heap = list("No length" = 0)
+//     var/list/all_lists_joined = list()
+//     for(var/list/thing)
+//         if(!length(thing))
+//             all_lists_heap["No length"]++
+//         else if(all_lists_heap["[thing[1]]"])
+//             all_lists_heap["[thing[1]]"]++
+//         else
+//             all_lists_heap["[thing[1]]"] += 1
+
+//     sortList(all_lists_heap, cmp = GLOBAL_PROC_REF(cmp_numeric_asc), associative = TRUE)
+
+//     for(var/thing in all_lists_heap)
+//         all_lists_joined += "<br>[thing], count: [all_lists_heap[thing]]</br>\n"
+//     usr << browse(all_lists_joined.Join(), "window=listlog")
+
 
 // playsound\(([^,]*), "(sound/[^\[]+)"
 // playsound($1, '$2'

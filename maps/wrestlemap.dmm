@@ -1440,6 +1440,7 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
+/obj/machinery/info_map,
 /turf/simulated/floor/orange/side{
 	dir = 8
 	},
@@ -2823,6 +2824,10 @@
 /area/station/security/brig{
 	name = "The Cage Arena"
 	})
+"boe" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/orange/side,
+/area/station/hallway/secondary/exit)
 "boq" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -7862,7 +7867,7 @@
 /turf/simulated/floor/plating/airless/random,
 /area/station/mining/staff_room)
 "dyX" = (
-/obj/storage/cart/forensic,
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/red/standard/edge/ne,
 /area/station/security/detectives_office)
 "dza" = (
@@ -8717,8 +8722,6 @@
 /area/station/hallway/primary/west)
 "dPw" = (
 /obj/table/wood/auto,
-/obj/item/device/detective_scanner,
-/obj/item/spraybottle/detective,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
@@ -8786,6 +8789,7 @@
 /turf/simulated/floor/caution,
 /area/station/engine/engineering/ce)
 "dRe" = (
+/obj/machinery/info_map,
 /turf/simulated/floor/carpet/green/fancy/junction/sw_n,
 /area/station/hallway/primary/central)
 "dRh" = (
@@ -9325,9 +9329,7 @@
 /obj/window/reinforced/west{
 	dir = 2
 	},
-/obj/displaycase{
-	displayed = /obj/item/captaingun
-	},
+/obj/displaycase/captain,
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
 "edG" = (
@@ -11189,11 +11191,11 @@
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "eVd" = (
-/obj/machinery/vending/standard,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
 	},
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -13528,18 +13530,10 @@
 /turf/simulated/floor/grey,
 /area/station/security/interrogation)
 "fUH" = (
-/obj/storage/cart/medcart,
-/obj/item/storage/firstaid/toxin,
-/obj/item/staple_gun,
-/obj/item/clothing/gloves/latex,
-/obj/item/reagent_containers/iv_drip/saline,
-/obj/item/robodefibrillator{
-	pixel_x = 4;
-	pixel_y = 2
-	},
 /obj/machinery/status_display{
 	pixel_y = 30
 	},
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -16640,7 +16634,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "hsK" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -17139,9 +17133,7 @@
 /area/station/science/lab)
 "hCV" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "hCX" = (
@@ -19374,7 +19366,6 @@
 	rand_pos = 0
 	},
 /obj/disposalpipe/segment/mail,
-/obj/mapping_helper/access/medical,
 /obj/table/reinforced/auto,
 /obj/item/stamp{
 	pixel_y = 6;
@@ -19618,7 +19609,7 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "iGW" = (
-/obj/machinery/drone_recharger,
+/obj/machinery/info_map,
 /turf/simulated/floor/caution/north,
 /area/station/hallway/secondary/entry)
 "iHh" = (
@@ -21838,9 +21829,7 @@
 /area/station/hangar/science)
 "jzU" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/black,
 /area/station/security/brig)
@@ -31301,7 +31290,6 @@
 	name = "Corpse Tunnel"
 	})
 "nNJ" = (
-/obj/mapping_helper/access/medical,
 /obj/table/reinforced/auto,
 /obj/item/clipboard{
 	pixel_x = 14;
@@ -31554,57 +31542,23 @@
 	})
 "nRm" = (
 /obj/storage/crate,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /obj/item/clothing/gloves/boxing,
 /obj/item/clothing/gloves/boxing,
 /turf/simulated/floor/specialroom/arcade,
@@ -32351,7 +32305,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "ohB" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
@@ -35002,9 +34956,7 @@
 	})
 "pvP" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/incandescent/cool{
 	dir = 4;
 	pixel_x = 10
@@ -36197,7 +36149,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
@@ -36627,6 +36579,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
+/obj/machinery/info_map,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/central{
 	name = "Ringside Hallway"
@@ -37940,7 +37893,6 @@
 /obj/table/wood/auto,
 /obj/item/paper_bin,
 /obj/item/pen/fancy,
-/obj/item/hand_labeler,
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "qIs" = (
@@ -41878,15 +41830,7 @@
 	name = "Security Lobby"
 	})
 "suv" = (
-/obj/storage/cart/medcart,
-/obj/item/hand_labeler,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/item/storage/firstaid/oxygen,
-/obj/item/bandage,
-/obj/item/robodefibrillator{
-	pixel_x = 4;
-	pixel_y = 2
-	},
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -43553,7 +43497,7 @@
 /area/station/maintenance/solar/east)
 "tel" = (
 /turf/space,
-/area/shuttle/merchant_shuttle/left_station/cogmap)
+/area/shuttle/merchant_shuttle/left_station/cogmap/wrestlemap)
 "ter" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/cable{
@@ -44508,6 +44452,10 @@
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/carpet/green/fancy/narrow/eastwest,
 /area/station/engine/monitoring)
+"tCN" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/hallway/primary/south)
 "tCO" = (
 /obj/table/reinforced/auto,
 /obj/item/weldingtool{
@@ -45388,7 +45336,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "tZa" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 4;
 	id = "Sleeper_Access";
 	name = "Listening Post"
@@ -51294,6 +51242,10 @@
 /area/station/security/brig{
 	name = "Brig Bathroom"
 	})
+"wBj" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/quartermaster/office)
 "wBp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -51459,7 +51411,7 @@
 	id = "disposals";
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -54324,6 +54276,15 @@
 /obj/item/furniture_parts/table/wood/round,
 /turf/simulated/floor/wood/two,
 /area/research_outpost/protest)
+"xNK" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/tile_edge/line/grey{
+	dir = 5;
+	icon_state = "line2"
+	},
+/obj/machinery/info_map,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "xNO" = (
 /obj/item/storage/pill_bottle/antirad{
 	pixel_y = 5
@@ -96614,7 +96575,7 @@ cbd
 jiK
 osG
 thD
-wRq
+xNK
 ugi
 wNQ
 crY
@@ -102103,7 +102064,7 @@ tvO
 tvO
 tvO
 oEt
-ldM
+tCN
 wXJ
 bna
 bna
@@ -106036,7 +105997,7 @@ uKe
 hwm
 lIC
 vSC
-tnb
+wBj
 uDO
 uDO
 uDO
@@ -113226,7 +113187,7 @@ swQ
 tIf
 gvB
 ylI
-lcp
+boe
 sbp
 sbp
 bzW

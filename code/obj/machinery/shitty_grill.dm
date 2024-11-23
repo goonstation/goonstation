@@ -166,7 +166,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 		if (!src.grillitem)
 			on = !on
 			cooktime = 0
-			boutput(user, SPAN_ALERT("You [on ? "light" : "turn off"] the [src] ."))
+			boutput(user, SPAN_ALERT("You [on ? "light" : "turn off"] the [src]."))
 			if (on)
 				icon_state = "shittygrill_on"
 				light.enable()

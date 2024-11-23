@@ -377,6 +377,8 @@ ABSTRACT_TYPE(/datum/req_contract)
 	var/requis_desc = ""
 	///Tracks whether contract is pinned; one contract at a time may be pinned, reserving it for QM and preventing it from leaving with market shift
 	var/pinned = FALSE
+	///determines payout multiplier
+	var/static/count = 0
 
 	New() //in individual definitions, create entries and THEN call this, it'll get things set up for you
 		..()
@@ -425,6 +427,7 @@ ABSTRACT_TYPE(/datum/req_contract)
 					else
 						src.requis_desc += "| Acceptable categories: Any<br>"
 			src.payout += rce.feemod * rce.count
+		src.payout *= 1.1**count + 0.1*count
 
 /**
  * Called to tally a crate's contents, to evaluate whether they've fulfilled the contract.

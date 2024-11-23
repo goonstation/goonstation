@@ -166,6 +166,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 			if (client) winset(src, "joinmenu.button_ready", "is-disabled=true;is-visible=false")
 			if (client) winset(src, "joinmenu.button_cancel", "is-disabled=false;is-visible=true")
 			if (client) winset(src, "joinmenu.button_ready_antag", "is-disabled=true")
+		#ifndef NO_PREGAME_HTML
 		if(pregameHTML && client)
 			winshow(client, "pregameBrowser", 1)
 			client << browse(pregameHTML, "window=pregameBrowser")
@@ -173,6 +174,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 		else if(client)
 			winshow(src.last_client, "pregameBrowser", 0)
 			src.last_client << browse("", "window=pregameBrowser")
+		#endif
 
 	Stat()
 		..()
@@ -257,6 +259,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 							S.mind?.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
 						S.Equip_Bank_Purchase(S.mind?.purchased_bank_item)
 						S.apply_roundstart_events()
+						S.show_laws()
 						SPAWN(1 DECI SECOND)
 							S.bioHolder?.mobAppearance?.pronouns = S.client.preferences.AH.pronouns
 							S.choose_name()
@@ -336,9 +339,17 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 					location = pick_landmark(JOB.special_spawn_location)
 				if (!isnull(location))
 					character.set_loc(location)
-			else if (character.traitHolder && character.traitHolder.hasTrait("stowaway"))
-				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
-				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
+			else if (istype(JOB, /datum/job/special/stowaway))
+				var/list/obj/storage/SL = get_random_station_storage_list(closed=TRUE, breathable=TRUE)
+				if(length(SL) > 0)
+					boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
+					character.set_loc(pick(SL))
+					logTheThing(LOG_STATION, src, "has the Stowaway job and spawns in storage at [log_loc(src)]")
+				else
+					var/starting_loc = null
+					starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(round(world.maxx / 2), round(world.maxy / 2), 1))
+					character.set_loc(starting_loc)
+					logTheThing(LOG_STATION, src, "has the Stowaway job but there were no valid containers to stow into!")
 			else if (character.traitHolder && character.traitHolder.hasTrait("pilot"))
 				if (istype(character.loc, /obj/machinery/vehicle))
 					boutput(character.mind.current,"<h3 class='notice'>You've become lost on your way to the station! Good luck!</h3>")
@@ -761,9 +772,10 @@ a.latejoin-card:hover {
 
 		var/mob/new_character = null
 		if (J)
-			new_character = new J.mob_type(spawn_turf, client.preferences.AH, client.preferences)
+			new_character = new J.mob_type(spawn_turf, client.preferences.AH, client.preferences, FALSE, src.mind?.assigned_role)
 		else
-			new_character = new /mob/living/carbon/human(spawn_turf, client.preferences.AH, client.preferences) // fallback
+			// fallback
+			new_character = new /mob/living/carbon/human(spawn_turf, client.preferences.AH, client.preferences, FALSE, src.mind?.assigned_role)
 		new_character.set_dir(pick(NORTH, EAST, SOUTH, WEST))
 		if (!J || J.uses_character_profile)//borg joins don't lock out your character profile
 			src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)

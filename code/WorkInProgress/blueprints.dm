@@ -358,6 +358,8 @@
 
 			if(istype(pos, /turf/space))
 				O = new/obj/effects/abcuMarker(pos)
+			else if(pos.can_build && pos.z == Z_LEVEL_STATION)
+				O = new/obj/effects/abcuMarker(pos)
 			else
 				O = new/obj/effects/abcuMarker/red(pos)
 				src.invalid_count++
@@ -559,7 +561,7 @@
 )
 
 #define WHITELIST_TURFS list(/turf/simulated)
-#define BLACKLIST_TURFS list(/turf/simulated/floor/specialroom/sea_elevator_shaft, /turf/simulated/shuttle, /turf/simulated/floor/shuttle, /turf/simulated/wall/auto/shuttle)
+#define BLACKLIST_TURFS list(/turf/simulated/floor/auto/elevator_shaft, /turf/simulated/shuttle, /turf/simulated/floor/shuttle, /turf/simulated/wall/auto/shuttle)
 
 /datum/abcu_blueprint
 	var/cost_metal = 0

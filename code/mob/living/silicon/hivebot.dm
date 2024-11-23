@@ -584,8 +584,6 @@
 	return 1
 
 /mob/living/silicon/hivebot/update_icon()
-	src.overlays = null
-
 	if (isalive(src))
 		if (src.beebot == 1)
 			src.icon_state = "eyebot-bee[src.client ? null : "-logout"]"
@@ -776,7 +774,7 @@ Frequency:
 	UpdateIcon()
 
 	if (src.mainframe)
-		src.real_name = "SHELL/[src.mainframe]"
+		src.real_name = "SHELL/[src.mainframe.name]"
 		src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 		src.name = src.real_name
 		src.update_name_tag()
@@ -991,9 +989,10 @@ Frequency:
 		if (C.tg_controls)
 			C.apply_keybind("robot_tg")
 
-	update_icon() // Haine wandered in here and just junked up this code with bees.  I'm so sorry it's so ugly aaaa
-		src.overlays = null
+	create_offline_indicator()
+		return
 
+	update_icon() // Haine wandered in here and just junked up this code with bees.  I'm so sorry it's so ugly aaaa
 		if(isalive(src))
 			if(src.client)
 				if(pixel_y)

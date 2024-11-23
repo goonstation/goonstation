@@ -37,7 +37,7 @@
 
 	/// Add a ban
 	proc/add(admin_ckey, server_id, ckey, comp_id, ip, reason, duration = FALSE, requires_appeal = FALSE, added_externally = FALSE)
-		duration = duration ? duration / 10 : duration // duration given in deciseconds, api expects seconds
+		duration = floor(duration ? duration / 10 : duration) // duration given in deciseconds, api expects seconds
 
 		var/datum/apiModel/Tracked/BanResource/ban
 		if (!added_externally)
@@ -146,7 +146,7 @@
 
 		// Build a message to show to the player
 		var/message = "[ban.reason]<br>"
-		message += "Banned By: [ban.game_admin["ckey"]]<br>"
+		message += "Banned By: [ban.game_admin.ckey]<br>"
 		message += "This ban applies to [ban.server_id ? "this server only" : "all servers"].<br>"
 		if (ban.expires_at)
 			message += "(This ban will be automatically removed in [ban.duration_human])"
@@ -163,7 +163,7 @@
 
 	/// Update an existing ban
 	proc/update(banId, admin_ckey, server_id, ckey, comp_id, ip, reason, duration, requires_appeal)
-		duration = duration ? duration / 10 : duration // duration given in deciseconds, api expects seconds
+		duration = floor(duration ? duration / 10 : duration) // duration given in deciseconds, api expects seconds
 		var/datum/apiRoute/bans/update/updateBan = new
 		updateBan.routeParams = list("[banId]")
 		updateBan.buildBody(
@@ -244,7 +244,7 @@
 		var/messageAdminsAdmin = admin_ckey == "bot" ? admin_ckey : key_name(adminClient ? adminClient : admin_ckey)
 		var/target = "(Ckey: [banDetail.ckey], IP: [banDetail.ip], CompID: [banDetail.comp_id])"
 
-		var/original_ckey = banDetail.original_ban_detail["ckey"]
+		var/original_ckey = banDetail.original_ban_detail.ckey
 
 		// Tell admins
 		var/msg = "added ban [evasion ? "evasion" : ""] details [target] to Ban ID <a href='[goonhub_href("/admin/bans/[banId]", TRUE)]'>[banId]</a>, Original Ckey: [original_ckey]"
@@ -294,16 +294,16 @@
 	var/mob/M
 	if (target && ismob(target)) M = target
 
-	var/ckey = ckey(tgui_input_text(src.mob, "Ckey of the player", "Ckey", M ? M.ckey : ""))
+	var/ckey = ckey(input(src.mob, "Ckey of the player", "Ckey", M ? M.ckey : "") as text)
 	if (!ckey) return
 
 	var/datum/player/player = find_player(ckey)
 	var/client/targetC = player?.client
 
 	var/defaultIp = targetC ? targetC.address : (M ? M.lastKnownIP : "")
-	var/ip = tgui_input_text(src.mob, "IP of the player", "IP", defaultIp, null, FALSE, null, TRUE)
+	var/ip = input(src.mob, "IP of the player", "IP", defaultIp) as text
 	var/defaultCompId = targetC ? targetC.computer_id : (M ? M.computer_id : "")
-	var/compId = tgui_input_text(src.mob, "Computer ID of the player", "Computer ID", defaultCompId, null, FALSE, null, TRUE)
+	var/compId = input(src.mob, "Computer ID of the player", "Computer ID", defaultCompId) as text
 
 	var/datum/game_server/game_server = global.game_servers.input_server(src.mob, "What server does the ban apply to?", "Ban", can_pick_all=TRUE)
 	if(isnull(game_server))

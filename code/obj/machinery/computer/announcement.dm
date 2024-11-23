@@ -19,7 +19,10 @@
 	var/voice_message = "broadcasts"
 	var/voice_name = "Announcement Computer"
 	var/sound_to_play = 'sound/misc/announcement_1.ogg'
+	var/sound_volume = 100
 	var/override_font = null
+	///Override for where this says it's coming from
+	var/area_name = null
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
@@ -134,12 +137,12 @@
 			msg_sound = 'sound/misc/flockmind/flockmind_caw.ogg'
 
 
-		var/header = "[A.name] Announcement by [ID.registered] ([ID.assignment])"
+		var/header = "[src.area_name || A.name] Announcement by [ID.registered] ([ID.assignment])"
 		if (override_font )
 			message = "<font face = '[override_font]'> [message] </font>"
 			header = "<font face = '[override_font]'> [header] </font>"
 
-		command_announcement(message, header, msg_sound)
+		command_announcement(message, header, msg_sound, volume = src.sound_volume)
 		ON_COOLDOWN(user,"announcement_computer",announcement_delay)
 		return TRUE
 
@@ -181,7 +184,13 @@
 		if (!src.announcement_radio)
 			src.announcement_radio = new(src)
 
-		var/message = replacetext(replacetext(replacetext(src.arrivalalert, "$STATION", "[station_name()]"), "$JOB", person.mind.assigned_role), "$NAME", person.real_name)
+		var/job = person.mind.assigned_role
+		if(!job || job == "MODE")
+			job = "Staff Assistant"
+		if(issilicon(person) && !isAI(person))
+			job = "Cyborg"
+
+		var/message = replacetext(replacetext(replacetext(src.arrivalalert, "$STATION", "[station_name()]"), "$JOB", job), "$NAME", person.real_name)
 		message = replacetext(replacetext(replacetext(message, "$THEY", "[he_or_she(person)]"), "$THEM", "[him_or_her(person)]"), "$THEIR", "[his_or_her(person)]")
 
 		var/list/messages = process_language(message)
@@ -196,8 +205,9 @@
 		var/job = person.mind.assigned_role
 		if(!job || job == "MODE")
 			job = "Staff Assistant"
-		if(issilicon(person))
+		if(issilicon(person) && !isAI(person))
 			job = "Cyborg"
+
 		var/message = replacetext(replacetext(replacetext(src.departurealert, "$STATION", "[station_name()]"), "$JOB", job), "$NAME", person.real_name)
 		message = replacetext(replacetext(replacetext(message, "$THEY", "[he_or_she(person)]"), "$THEM", "[him_or_her(person)]"), "$THEIR", "[his_or_her(person)]")
 
@@ -206,6 +216,67 @@
 		src.announcement_radio.talk_into(src, messages, 0, src.name, src.say_language)
 		logTheThing(LOG_STATION, src, "ANNOUNCES: [message]")
 		return 1
+
+/obj/machinery/computer/announcement/station
+	req_access = null
+	name = "Station Announcement Computer"
+	circuit_type = /obj/item/circuitboard/announcement/station
+
+	bridge
+		req_access = list(access_heads)
+		name = "Bridge Announcement Computer"
+		announces_arrivals = 1
+		circuit_type = /obj/item/circuitboard/announcement/bridge
+
+	captain
+		req_access = list(access_captain)
+		name = "Executive Announcement Computer"
+		circuit_type = /obj/item/circuitboard/announcement/captain
+
+	security
+		req_access = list(access_maxsec)
+		name = "Security Announcement Computer"
+		area_name = "Security"
+		circuit_type = /obj/item/circuitboard/announcement/security
+
+	research
+		req_access = list(access_research_director)
+		name = "Research Announcement Computer"
+		area_name = "Research"
+		circuit_type = /obj/item/circuitboard/announcement/research
+
+	medical
+		req_access = list(access_medical_director)
+		name = "Medical Announcement Computer"
+		area_name = "Medical"
+		circuit_type = /obj/item/circuitboard/announcement/medical
+
+	engineering
+		req_access = list(access_engineering_chief)
+		name = "Engineering Announcement Computer"
+		area_name = "Engineering"
+		circuit_type = /obj/item/circuitboard/announcement/engineering
+
+	ai
+		req_access = list(access_ai_upload)
+		name = "AI Announcement Computer"
+		circuit_type = /obj/item/circuitboard/announcement/ai
+
+	cargo
+		req_access = list(access_cargo)
+		name = "QM Announcement Computer"
+		area_name = "Cargo"
+		sound_to_play = 'sound/misc/bingbong.ogg'
+		sound_volume = 70
+		circuit_type = /obj/item/circuitboard/announcement/cargo
+
+	catering
+		req_access = list(access_bar, access_kitchen)
+		name = "Catering Announcement Computer"
+		area_name = "Catering"
+		sound_to_play = 'sound/misc/bingbong.ogg'
+		sound_volume = 70 //a little less earsplitting
+		circuit_type = /obj/item/circuitboard/announcement/catering
 
 /obj/machinery/computer/announcement/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
@@ -217,9 +288,13 @@
 /obj/machinery/computer/announcement/syndicate
 	name = "Syndicate Announcement computer"
 	theme = "syndicate"
+	icon_state = "announcementsyndie"
+	area_name = "Syndicate"
 	req_access = list(access_syndicate_shuttle)
+	circuit_type = /obj/item/circuitboard/announcement/syndicate
 
 	commander
+		area_name = null
 		req_access = list(access_syndicate_commander)
 
 	console
@@ -231,7 +306,7 @@
 	req_access = null
 	name = "Illegal Announcement Computer"
 	icon_state = "announcementclown"
-	circuit_type = /obj/item/circuitboard/clown_announcement
+	circuit_type = /obj/item/circuitboard/announcement/clown
 	var/emagged = FALSE
 	sound_to_play = 'sound/machines/announcement_clown.ogg'
 	override_font = "Comic Sans MS"

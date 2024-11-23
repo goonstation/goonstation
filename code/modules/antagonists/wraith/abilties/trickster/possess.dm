@@ -60,6 +60,7 @@
 		boutput(src.target, SPAN_ALERT("You suddenly feel awfully woozy..."))
 		src.target.emote("scream")
 		src.target.change_misstep_chance(20)
+		APPLY_ATOM_PROPERTY(src.target, PROP_MOB_PRE_POSSESSION, "\ref[src]")
 
 	onUpdate()
 		..()
@@ -86,6 +87,11 @@
 		..()
 		var/datum/statusEffect/trickster_possessed/TP = src.target.setStatus("trickster_possessed", 65 SECONDS)
 		TP.setup(src.owner, src.target)
+		REMOVE_ATOM_PROPERTY(src.target, PROP_MOB_PRE_POSSESSION, "\ref[src]")
+
+	onInterrupt(flag)
+		REMOVE_ATOM_PROPERTY(src.target, PROP_MOB_PRE_POSSESSION, "\ref[src]")
+		. = ..()
 
 
 

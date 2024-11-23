@@ -1,7 +1,7 @@
 //Reserved Area Ambience sound channels
-#define SOUNDCHANNEL_LOOPING 123
-#define SOUNDCHANNEL_FX_1 124
-#define SOUNDCHANNEL_FX_2 125
+#define SOUNDCHANNEL_LOOPING 990
+#define SOUNDCHANNEL_FX_1 991
+#define SOUNDCHANNEL_FX_2 992
 #define SOUNDCHANNEL_RADIO 1013
 #define SOUNDCHANNEL_ADMIN_LOW 1014 // lower end of the range of admin channels
 #define SOUNDCHANNEL_ADMIN_HIGH 1024 // upper end
@@ -49,3 +49,6 @@ var/global/list/audio_channel_name_to_id = list(
 
 /// the world gets split into a K-by-K grid and each tick each sound can only be played once in each big tile of this grid
 #define SOUND_LIMITER_GRID_SIZE 3
+
+///how loud are dectalk bots
+#define BOTTALK_VOLUME 33

@@ -42,6 +42,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	var/issawfly = FALSE //for sawfly remote
 	///damage when loaded into a 40mm convesion chamber
 	var/launcher_damage = 25
+	var/detonating = FALSE
 	HELP_MESSAGE_OVERRIDE({"You can use a <b>screwdriver</b> to adjust the detonation time."})
 
 	attack_self(mob/user as mob)
@@ -108,7 +109,8 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 			src.icon_state = initial(src.icon_state)
 
 	ex_act(severity)
-		src.detonate(null)
+		if(!src.detonating)
+			src.detonate(null)
 		. = ..()
 
 	///clone for grenade launcher purposes only. Not a real deep copy, just barely good enough to work for something that's going to be instantly detonated
@@ -116,7 +118,9 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 		return new src.type
 
 	proc/detonate(mob/user) // Most grenades require a turf reference.
+		SHOULD_CALL_PARENT(TRUE)
 		var/turf/T = get_turf(src)
+		src.detonating = TRUE
 		if (!T || !isturf(T))
 			return null
 		else
@@ -920,6 +924,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	var/sound_explode = 'sound/effects/Explosion2.ogg'
 	var/sound_beep = 'sound/machines/twobeep.ogg'
 	var/is_dangerous = TRUE
+	var/icon_state_armed = null
 
 	proc/detonate()
 		playsound(src.loc, sound_explode, 45, 1)
@@ -934,8 +939,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	proc/beep(i)
 		var/k = i/2
 		sleep(k*k)
-		flick(icon_state+"_beep", src)
+
 		src.playbeep(src.loc, i, src.sound_beep)
+
 		if(i>=0)
 			src.beep(i-1)
 		else
@@ -949,10 +955,14 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
 
 	proc/arm(mob/usr as mob)
+
 		usr.show_message(SPAN_ALERT("<B>You have armed the [src.name]!"))
 		for(var/mob/O in viewers(usr))
 			if (O.client)
 				O.show_message(SPAN_ALERT("<B>[usr] has armed the [src.name]! Run!</B>"), 1)
+
+		if (icon_state_armed)
+			icon_state = icon_state_armed
 
 		SPAWN(0)
 			src.beep(10)
@@ -990,6 +1000,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	desc = "Owls. Owls everywhere"
 	icon_state = "owlbomb"
 	sound_beep = 'sound/voice/animal/hoot.ogg'
+	icon_state_armed = "owlbomb_beep"
 
 	detonate()
 		for(var/mob/living/carbon/human/M in range(5, get_turf(src)))
@@ -1003,6 +1014,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	desc = "Owls. Owls everywhere"
 	icon_state = "owlbomb"
 	sound_beep = 'sound/voice/animal/hoot.ogg'
+	icon_state_armed = "owlbomb_beep"
 
 	dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
 		if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/owl_mask)))
@@ -1043,6 +1055,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	name = "hotdog bomb"
 	desc = "A hotdog bomb? What the heck does that even mean?!"
 	icon_state = "hotdog"
+	icon_state_armed = "hotdog_beep"
 
 	dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
 		if (!(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/gimmick/hotdog)))
@@ -1080,14 +1093,35 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	desc = "What a crappy grenade."
 	icon_state = "fartbomb"
 	sound_beep = 'sound/voice/farts/poo2.ogg'
+	icon_state_armed = "fartbomb_beep"
 	sound_explode = 'sound/voice/farts/superfart.ogg'
 	is_dangerous = FALSE
 
 /obj/item/gimmickbomb/gold
 	name = "Gold Bomb"
 	desc = "Why explode when you can gold!"
-	icon_state = "banana"
+	icon_state = "goldbomb"
+	icon_state_armed = "goldbomb1"
 	sound_beep = 'sound/machines/twobeep.ogg'
+
+	beep(i)
+		var/k = i/2
+		sleep(k*k)
+
+		src.setMaterial(getMaterial("gold"))
+
+		src.playbeep(src.loc, i, src.sound_beep)
+
+		if (icon_state_armed)
+			if (icon_state == src.icon_state)
+				icon_state = icon_state_armed
+			else
+				icon_state = src.icon_state
+
+		if(i>=0)
+			src.beep(i-1)
+		else
+			src.detonate()
 
 	detonate()
 		for(var/turf/G in range(5, src))
@@ -1100,7 +1134,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
 			SPAWN(0)
-				M.become_statue(getMaterial("gold"))
+				M.become_statue("gold")
 		..()
 
 
@@ -1350,6 +1384,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 						src.boom()
 						return
 				else
+					message_ghosts("[src] has been attached at [log_loc(target, ghostjump=TRUE)].")
 					boutput(user, SPAN_ALERT("You slap the charge on [target], [det_time/10] seconds!"))
 					user.visible_message(SPAN_ALERT("[user] has attached [src] to [target]."))
 					src.icon_state = "bcharge2"
@@ -1366,9 +1401,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 					SPAWN(src.det_time)
 						if (src)
 							src.boom()
-							if (target)
-								if (istype(target, /obj/machinery))
-									target.ex_act(1) // Reliably blasts through doors.
 						return
 		return
 
@@ -1427,6 +1459,12 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 					var/obj/machinery/door/firedoor/firelock = O
 					qdel(firelock)
 					continue
+				if (istype(O, /obj/machinery/door))
+					O.ex_act(1)
+					continue
+				if (istype(O, /obj/storage))
+					O.ex_act(2)
+					continue
 		qdel(src)
 		return
 
@@ -1471,6 +1509,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 						src.boom()
 						return
 				else
+					message_ghosts("[src] has been attached at [log_loc(target, ghostjump=TRUE)].")
 					boutput(user, SPAN_ALERT("You slap the charge on [target], [det_time/10] seconds!"))
 					user.visible_message(SPAN_ALERT("[user] has attached [src] to [target]."))
 					src.icon_state = "bcharge2"

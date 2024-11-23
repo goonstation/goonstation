@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use '../base.scss';
-@use './Divider.scss';
+@use '../base';
+@use './Divider';
 
 $zebra-background-color: base.$color-bg-section !default;
 
@@ -25,6 +25,24 @@ $zebra-background-color: base.$color-bg-section !default;
 
   &:first-child {
     margin-top: 0;
+  }
+}
+
+.Stack--reverse > .Stack__item {
+  margin-left: 0;
+  margin-right: 0.5em;
+
+  &:first-child {
+    margin-right: 0;
+  }
+}
+
+.Stack--reverse--vertical > .Stack__item {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+
+  &:first-child {
+    margin-bottom: 0;
   }
 }
 

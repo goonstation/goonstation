@@ -51,6 +51,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	var/ultravision = 0
 	var/tranquilizer_resistance = 0
 	explosion_resistance = 0
+	var/has_genes = FALSE
 
 	var/list/inhands = list()
 	var/list/healthlist = list()
@@ -156,6 +157,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		for (var/abil in src.add_abilities)
 			if (ispath(abil))
 				abilityHolder.addAbility(abil)
+
+	if(src.bioHolder)
+		src.bioHolder.genetic_stability = 50
 
 	SPAWN(0.5 SECONDS) //if i don't spawn, no abilities even show up
 		if (abilityHolder)
@@ -539,6 +543,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		var/mob/living/living_target = target
 		living_target.give_item()
 		return
+	else if (src.client.check_key(KEY_THROW) && !src.equipped() && BOUNDS_DIST(src, target) <= 0)
+		if (src.auto_pickup_item(target))
+			return
 	else if ((src.client?.check_key(KEY_THROW) || src.in_throw_mode) && src.can_throw)
 		src.throw_item(target,params)
 		return
@@ -1305,7 +1312,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/is_heat_resistant()
 	if (!get_health_holder("burn"))
 		return TRUE
-	return FALSE
+	return ..()
 
 /mob/living/critter/ex_act(var/severity)
 	..() // Logs.
@@ -1631,6 +1638,23 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/can_hold_two_handed()
 	return TRUE // critters can hold two handed items in one hand
 
+/mob/living/critter/get_genetic_traits()
+	if(has_genes)
+		switch(rand(1,10))
+			if(1)
+				. = list(2,0,0)
+			if(2)
+				. = list(1,1,0)
+			if(3 to 4)
+				. = list(0,2,0)
+			if(5 to 7)
+				. = list(0,1,0)
+			else
+				. = list()
+
+/mob/living/critter/has_genetics()
+	return has_genes
+
 ABSTRACT_TYPE(/mob/living/critter/robotic)
 /// Parent for robotic critters. Handles some traits that robots should have- damaged by EMPs, immune to fire and rads
 /mob/living/critter/robotic
@@ -1649,6 +1673,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT, src)
 
 	/// EMP does 10 brute and 10 burn by default, can be adjusted linearly with emp_vuln
 	emp_act()
@@ -1662,9 +1687,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 
 	can_drink()
 		return FALSE
-
-	vomit()
-		return
 
 	isBlindImmune()
 		return TRUE
