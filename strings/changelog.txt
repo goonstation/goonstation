@@ -1,4 +1,7 @@
 
+(t)sat nov 23 24
+(u)LeahTheTech
+(+)Tweaked the HoS beret sprite slightly.
 (t)fri nov 22 24
 (u)ZeWaka
 (e)🆕|C-Feature
