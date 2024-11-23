@@ -3,7 +3,6 @@ import { KEY } from 'common/keys';
 import { BooleanLike, classes } from 'common/react';
 import {
   ChangeEvent,
-  createRef,
   MouseEvent,
   ReactNode,
   useEffect,
@@ -291,7 +290,7 @@ function ButtonInput(props: InputProps) {
     ...rest
   } = props;
   const [inInput, setInInput] = useState(false);
-  const inputRef = createRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const toDisplay = content || children;
 
