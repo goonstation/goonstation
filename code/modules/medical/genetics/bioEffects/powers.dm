@@ -540,11 +540,8 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			boutput(H, SPAN_NOTICE("This only works on human hair!"))
 			return
 
-		if (istype(H.mutantrace, /datum/mutantrace/lizard))
+		if (!HAS_FLAG(H.mutantrace.mutant_appearance_flags, HAS_HUMAN_HAIR) && !H.bioHolder.HasEffect("hair_growth"))
 			boutput(H, SPAN_NOTICE("You don't have any hair!"))
-			return
-		else if (H.mutantrace?.override_hair && !istype(H.mutantrace, /datum/mutantrace/cow))
-			boutput(H, SPAN_NOTICE("Whatever hair you have isn't affected!"))
 			return
 
 		if (H.bioHolder?.mobAppearance)

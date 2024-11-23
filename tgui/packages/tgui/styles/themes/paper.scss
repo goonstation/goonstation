@@ -6,7 +6,7 @@
 @use 'sass:color';
 @use 'sass:meta';
 
-@use '../colors.scss' with (
+@use '../colors' with (
   $primary: #ffffff,
   $bg-lightness: 25%,
   $fg-lightness: -10%,
@@ -15,7 +15,7 @@
   $fg-map-keys: (),
   $bg-map-keys: ()
 );
-@use '../base.scss' with (
+@use '../base' with (
   $color-fg: #000000,
   $color-bg: #dfdfdf,
   $color-bg-grad-spread: 0%

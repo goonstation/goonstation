@@ -1055,6 +1055,7 @@ proc/broadcast_to_all_gangs(var/message)
 			return
 		if(!ishuman(user))
 			boutput(user, SPAN_ALERT("You don't have the dexterity to spray paint a gang tag!"))
+			return
 
 		return validLocation
 
