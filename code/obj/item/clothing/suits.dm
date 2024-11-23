@@ -1214,6 +1214,24 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		..()
 		setProperty("space_movespeed", 1.5)
 
+/obj/item/emergencysuitfolded
+	name = "folded emergency suit"
+	desc = "A suit that protects against low pressure environments for a short time. At least, it would be if it hadn't been vacuum-compressed into a small rectangle. You'll have to unfold it before putting it on."
+	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
+	icon_state = "emerg_folded"
+	item_state = "emerg"
+	w_class = W_CLASS_TINY
+
+	attack_self(mob/user as mob)
+
+		user.drop_item(src) //clear hands
+		boutput(user, SPAN_NOTICE("You deploy the [src]!"))
+		//maybe play a sound?
+
+		var/obj/item/newsuit = new /obj/item/clothing/suit/space/emerg
+		user.put_in_hand_or_drop(newsuit)
+		qdel(src)
+
 /obj/item/clothing/suit/space/emerg/science
 	name = "bomb retreival suit"
 	desc = "A suit that protects against low pressure environments for a short time. Given to science since they blew up the more expensive ones."
@@ -1961,6 +1979,43 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "puffer-rancher"
 	item_state = "puffer-rancher"
 
+
+ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
+/obj/item/clothing/suit/sweater_vest
+	name = "sweater vest"
+	desc = "A knit sweater vest. Surprisingly not very itchy at all."
+	icon_state = "sweater_vest-tan"
+	item_state = "sweater_vest-tan"
+	body_parts_covered = TORSO
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 15)
+
+/obj/item/clothing/suit/sweater_vest/tan
+	icon_state = "sweater_vest-tan"
+	item_state = "sweater_vest-tan"
+
+/obj/item/clothing/suit/sweater_vest/red
+	icon_state = "sweater_vest-red"
+	item_state = "sweater_vest-red"
+
+/obj/item/clothing/suit/sweater_vest/navy
+	icon_state = "sweater_vest-navy"
+	item_state = "sweater_vest-navy"
+
+/obj/item/clothing/suit/sweater_vest/green
+	icon_state = "sweater_vest-green"
+	item_state = "sweater_vest-green"
+
+/obj/item/clothing/suit/sweater_vest/grey
+	icon_state = "sweater_vest-grey"
+	item_state = "sweater_vest-grey"
+
+/obj/item/clothing/suit/sweater_vest/black
+	icon_state = "sweater_vest-black"
+	item_state = "sweater_vest-black"
+
 /obj/item/clothing/suit/hi_vis
 	name = "hi-vis vest"
 	desc = "For when you just have to be seen!"
@@ -2085,6 +2140,11 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		. = ..()
 		src.AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_WEAR_SUIT), 0.8, 1, FALSE, 2)
 		src.AddComponent(/datum/component/power_cell, 100, 100, 5, 30 SECONDS, TRUE)
+
+/obj/item/clothing/suit/security_badge/paper
+	name = "Hall Monitor Badge"
+	desc = "A piece of soggy notebook paper with a red S doodled on it, presumably to represent security."
+	icon_state = "security_badge_paper"
 
 /obj/item/clothing/suit/hosmedal
 	name = "war medal"

@@ -6839,7 +6839,7 @@
 /turf/simulated/floor/airless/damaged3,
 /area/abandonedmedicalship)
 "aJN" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/map/light/white,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
@@ -14090,7 +14090,8 @@
 	pixel_x = 24;
 	req_access_txt = "";
 	start_charge = 0;
-	tag = "icon-apc-b (EAST)"
+	tag = "icon-apc-b (EAST)";
+	noalerts = 1
 	},
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat/core)
@@ -15979,7 +15980,7 @@
 	name = "salvage belt - east";
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/map/light/white,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{

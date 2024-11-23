@@ -9,11 +9,22 @@
 	world.log = file("data/errors.log")
 #endif
 
+	var/should_init_tracy = FALSE
+	tracy_initialized = FALSE
+
 #ifdef TRACY_PROFILER_HOOK
-	prof_init()
+	global.tracy_init_reason = "TRACY_PROFILER_HOOK defined"
+	should_init_tracy = TRUE
 #else
-	check_tracy_toggle()
+	if (fexists(TRACY_ENABLE_PATH))
+		global.tracy_init_reason ||= "enabled for round"
+		world.log << "[TRACY_ENABLE_PATH] exists, initializing byond-tracy!"
+		should_init_tracy = TRUE
+		fdel(TRACY_ENABLE_PATH)
 #endif
+	if (should_init_tracy)
+		prof_init()
+
 	enable_auxtools_debugger()
 
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_PREGAME))
@@ -110,6 +121,9 @@
 
 	// no log because this is functionally instant
 	global_signal_holder = new
+
+	Z_LOG_DEBUG("Preload", "Loading saved gamemode...")
+	world.load_mode()
 
 	Z_LOG_DEBUG("Preload", "Starting controllers")
 

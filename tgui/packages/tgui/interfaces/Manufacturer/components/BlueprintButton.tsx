@@ -26,8 +26,8 @@ const getBlueprintTime = (time, manufacturerSpeed) => {
 };
 
 export type BlueprintButtonProps = {
-  actionRemoveBlueprint: (byondRef: string) => void;
-  actionVendProduct: (byondRef: string) => void;
+  onBlueprintRemove: (byondRef: string) => void;
+  onVendProduct: (byondRef: string) => void;
   blueprintData: ManufacturableData;
   materialData: ResourceData[];
   manufacturerSpeed: number;
@@ -78,8 +78,8 @@ const getProductionSatisfaction = (
 
 export const BlueprintButton = (props: BlueprintButtonProps) => {
   const {
-    actionRemoveBlueprint,
-    actionVendProduct,
+    onBlueprintRemove,
+    onVendProduct,
     blueprintData,
     materialData,
     manufacturerSpeed,
@@ -158,7 +158,7 @@ export const BlueprintButton = (props: BlueprintButtonProps) => {
           key={blueprintData.name}
           imagePath={blueprintData.img}
           disabled={!hasPower || notProduceable}
-          onClick={() => actionVendProduct(blueprintData.byondRef)}
+          onClick={() => onVendProduct(blueprintData.byondRef)}
         >
           <CenteredText
             height={BlueprintButtonStyle.Height}
@@ -181,8 +181,8 @@ export const BlueprintButton = (props: BlueprintButtonProps) => {
                 disabled={canDelete ? false : !hasPower || notProduceable}
                 onClick={() =>
                   canDelete
-                    ? actionRemoveBlueprint(blueprintData.byondRef)
-                    : actionVendProduct(blueprintData.byondRef)
+                    ? onBlueprintRemove(blueprintData.byondRef)
+                    : onVendProduct(blueprintData.byondRef)
                 }
                 py={BlueprintMiniButtonStyle.IconSize / 2}
               >
@@ -204,7 +204,7 @@ export const BlueprintButton = (props: BlueprintButtonProps) => {
                 }
                 align="center"
                 disabled={!hasPower || notProduceable}
-                onClick={() => actionVendProduct(blueprintData.byondRef)}
+                onClick={() => onVendProduct(blueprintData.byondRef)}
                 py={BlueprintMiniButtonStyle.IconSize / 2}
               >
                 <Icon name="gear" size={BlueprintMiniButtonStyle.IconSize} />

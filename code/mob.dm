@@ -405,6 +405,9 @@
 	if (src.buckled)
 		src.buckled.buckled_guy = null
 
+	for(var/obj/item/grab/G in src.grabbed_by)
+		qdel(G)
+
 	mobs.Remove(src)
 
 	if (src.ai)
@@ -1915,7 +1918,7 @@
 			for (var/obj/item/W in src)
 				if (istype(W, /obj/item/clothing))
 					var/obj/item/clothing/C = W
-					C.add_stain("singed")
+					C.add_stain(/datum/stain/singed)
 			unequip_all()
 
 	if (drop_equipment)

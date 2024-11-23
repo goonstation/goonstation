@@ -2,6 +2,7 @@
 	id = ROLE_TRAITOR
 	display_name = "traitor"
 	antagonist_icon = "traitor"
+	popup_name_override = "traitorhard" //Will be set to ROLE_TRAITOR once given an uplink
 
 	/// Our initial uplink. This is only used to determine the popup shown to the player, so it isn't too important to track.
 	var/obj/item/uplink/uplink
@@ -59,6 +60,9 @@
 				loc_string = "on the ground beneath you"
 			else
 				loc_string = "in [H.back] on your back"
+
+		src.popup_name_override = ROLE_TRAITOR
+
 		uplink.setup(src.owner, uplink_source)
 
 		// step 3 of uplinkification: inform the player about it and store the code in their memory
@@ -93,14 +97,6 @@
 		objective_set_path = pick(typesof(/datum/objective_set/traitor))
 		#endif
 		new objective_set_path(src.owner, src)
-
-	do_popup(override)
-		if (!override) // Display a different popup depending on the type of uplink we got
-			if (!uplink)
-				override = "traitorhard"
-			else
-				override = "traitorpda"
-		..(override)
 
 	get_statistics()
 		var/list/purchased_items = list()

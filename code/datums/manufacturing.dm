@@ -843,7 +843,7 @@
 /datum/manufacture/condenser
 	name = "Chemical Condenser"
 	item_requirements = list("molitz" = 5)
-	item_outputs = list(/obj/item/reagent_containers/glass/condenser)
+	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/condenser)
 	create = 1
 	time = 5 SECONDS
 	category = "Tool"
@@ -851,7 +851,15 @@
 /datum/manufacture/fractionalcondenser
 	name = "Fractional Condenser"
 	item_requirements = list("molitz" = 6)
-	item_outputs = list(/obj/item/reagent_containers/glass/condenser/fractional)
+	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/condenser/fractional)
+	create = 1
+	time = 5 SECONDS
+	category = "Tool"
+
+/datum/manufacture/dropper_funnel
+	name = "Dropper Funnel"
+	item_requirements = list("molitz" = 3)
+	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/dropper)
 	create = 1
 	time = 5 SECONDS
 	category = "Tool"
@@ -1144,7 +1152,7 @@
 	item_outputs = list(/obj/item/organ/heart/cyber)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cyberbutt
 	name = "Cyberbutt"
@@ -1154,7 +1162,7 @@
 	item_outputs = list(/obj/item/clothing/head/butt/cyberbutt)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cardboard_ai
 	name = "Cardboard 'AI'"
@@ -1172,7 +1180,7 @@
 	item_outputs = list(/obj/item/organ/appendix/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cyberpancreas
 	name = "Cyberpancreas"
@@ -1182,7 +1190,7 @@
 	item_outputs = list(/obj/item/organ/pancreas/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cyberspleen
 	name = "Cyberspleen"
@@ -1192,7 +1200,7 @@
 	item_outputs = list(/obj/item/organ/spleen/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cyberintestines
 	name = "Cyberintestines"
@@ -1202,7 +1210,7 @@
 	item_outputs = list(/obj/item/organ/intestines/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cyberstomach
 	name = "Cyberstomach"
@@ -1212,7 +1220,7 @@
 	item_outputs = list(/obj/item/organ/stomach/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cyberkidney
 	name = "Cyberkidney"
@@ -1222,7 +1230,7 @@
 	item_outputs = list(/obj/item/organ/kidney/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cyberliver
 	name = "Cyberliver"
@@ -1232,7 +1240,7 @@
 	item_outputs = list(/obj/item/organ/liver/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cyberlung_left
 	name = "Left Cyberlung"
@@ -1242,7 +1250,7 @@
 	item_outputs = list(/obj/item/organ/lung/cyber/left)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cyberlung_right
 	name = "Right Cyberlung"
@@ -1252,7 +1260,7 @@
 	item_outputs = list(/obj/item/organ/lung/cyber/right)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cybereye
 	name = "Cybereye"
@@ -1263,7 +1271,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/configurable)
 	create = 1
 	time = 20 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cybereye_sunglass
 	name = "Polarized Cybereye"
@@ -1274,7 +1282,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/sunglass)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cybereye_sechud
 	name = "Security HUD Cybereye"
@@ -1285,7 +1293,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/sechud)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cybereye_thermal
 	name = "Thermal Imager Cybereye"
@@ -1296,7 +1304,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/thermal)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cybereye_meson
 	name = "Mesonic Imager Cybereye"
@@ -1307,7 +1315,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/meson)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cybereye_spectro
 	name = "Spectroscopic Imager Cybereye"
@@ -1318,7 +1326,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/spectro)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cybereye_prodoc
 	name = "ProDoc Healthview Cybereye"
@@ -1329,7 +1337,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/prodoc)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cybereye_camera
 	name = "Camera Cybereye"
@@ -1340,7 +1348,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/camera)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cybereye_laser
 	name = "Laser Cybereye"
@@ -1352,7 +1360,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/laser)
 	create = 1
 	time = 40 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/implant_health
 	name = "Health Monitor Implant"
@@ -1701,6 +1709,48 @@
 	create = 1
 	time = 60 SECONDS
 	category = "Component"
+
+/datum/manufacture/syndicate_laws
+	name = "Syndicate Law Module Set"
+	item_requirements = list("metal_dense" = 40)
+	item_outputs = list(/obj/item/aiModule/syndicate/law1, /obj/item/aiModule/syndicate/law2, /obj/item/aiModule/syndicate/law3, /obj/item/aiModule/syndicate/law4)
+	create = 1
+	time = 60 SECONDS
+	category = "Component"
+
+ABSTRACT_TYPE(/datum/manufacture/aiModule)
+/datum/manufacture/aiModule
+	name = "AI Law Module - 'YOU SHOULDNT SEE ME'"
+	item_requirements = list("metal_dense" = 10)
+	item_outputs = list(/obj/item/aiModule/asimov1)
+	create = 1
+	time = 20 SECONDS
+	category = "Component"
+
+	makeCaptain
+		name = "AI Law Module - 'MakeCaptain'"
+		item_outputs = list(/obj/item/aiModule/makeCaptain)
+
+	oneHuman
+		name = "AI Law Module - 'OneHuman'"
+		item_outputs = list(/obj/item/aiModule/oneHuman)
+
+	notHuman
+		name = "AI Law Module - 'NotHuman'"
+		item_outputs = list(/obj/item/aiModule/notHuman)
+
+	emergency
+		name = "AI Law Module - 'Emergency'"
+		item_outputs = list(/obj/item/aiModule/emergency)
+
+	removeCrew
+		name = "AI Law Module - 'RemoveCrew'"
+		item_outputs = list(/obj/item/aiModule/removeCrew)
+
+	freeform
+		name = "AI Law Module - 'Freeform'"
+		item_outputs = list(/obj/item/aiModule/freeform)
+
 
 // Robotics Research
 

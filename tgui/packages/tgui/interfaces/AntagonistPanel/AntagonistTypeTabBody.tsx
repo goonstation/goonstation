@@ -118,7 +118,9 @@ const AntagonistList = (props: TabSectionData) => {
   }
 
   const sortAntagonists =
-    antagonistData.sort((a, b) => a.real_name.localeCompare(b.real_name)) || [];
+    antagonistData.sort((a, b) =>
+      (a.real_name ?? '').localeCompare(b.real_name ?? ''),
+    ) || [];
 
   return (
     <Section>
@@ -365,11 +367,12 @@ const ViewVariablesButton = (props) => {
 
 const NuclearBombReadout = (props: TabSectionData) => {
   const { sectionData } = props;
+  const { act } = useBackend<AntagonistPanelData>();
+
   if (!sectionData) {
-    return;
+    return null;
   }
 
-  const { act } = useBackend<AntagonistPanelData>();
   const nuclearBombData: NuclearBombData = sectionData;
 
   return (
@@ -518,11 +521,12 @@ const GangReadout = (props: TabSectionData) => {
 };
 
 const GangLockerReadout = (props: TabSectionData) => {
+  const { act } = useBackend<AntagonistPanelData>();
+
   if (!props.sectionData) {
-    return;
+    return null;
   }
 
-  const { act } = useBackend<AntagonistPanelData>();
   const gangLockerData: GangLockerData = props.sectionData;
 
   return (
