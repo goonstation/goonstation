@@ -8,14 +8,16 @@
 import { useEffect } from 'react';
 import { Section } from 'tgui-core/components';
 
-import { useBackend } from '../../backend';
 import { Box } from '../../components';
-import { TerminalData, TerminalOutputSectionProps } from './types';
+import type { TerminalData } from './types';
+
+type TerminalOutputSectionProps = Pick<
+  TerminalData,
+  'bgColor' | 'displayHTML' | 'fontColor'
+>;
 
 export const TerminalOutputSection = (props: TerminalOutputSectionProps) => {
-  const { data } = useBackend<TerminalData>();
-  const { fontColor, bgColor } = data;
-  const { displayHTML } = props;
+  const { displayHTML, fontColor, bgColor } = props;
 
   useEffect(() => {
     const terminalOutputScroll = document.querySelector(
