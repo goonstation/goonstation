@@ -6,7 +6,7 @@
  */
 
 @use '../colors';
-@use '../components/Button';
+@use 'pkg:tgui-styles/components/Button';
 
 $categories: (
   'Main': colors.$red,

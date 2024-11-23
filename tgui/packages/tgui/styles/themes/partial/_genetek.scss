@@ -20,7 +20,7 @@ $genetek: #1b676b !default;
 
 @mixin genetek-theme-buttons {
   @include meta.load-css(
-    '../../components/Button.scss',
+    'pkg:tgui-styles/components/Button.scss',
     $with: (
       'color-default': $genetek,
       'color-transparent-text': rgba(234, 253, 230, 0.75)
@@ -31,13 +31,13 @@ $genetek: #1b676b !default;
 @mixin genetek-theme {
   // Components
   @include meta.load-css(
-    '../../components/ProgressBar.scss',
+    'pkg:tgui-styles/components/ProgressBar.scss',
     $with: (
       'color-default-fill': $genetek,
       'background-color': rgba(0, 0, 0, 0.5)
     )
   );
-  @include meta.load-css('../../components/Section.scss');
+  @include meta.load-css('pkg:tgui-styles/components/Section.scss');
 
   // Layouts
   @include meta.load-css('../../layouts/Layout.scss');

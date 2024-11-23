@@ -27,7 +27,7 @@ $lightorange: #fda751;
 
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    'pkg:tgui-styles/components/Button.scss',
     $with: (
       'color-default': color.scale($lightorange, $whiteness: +30%),
       'color-disabled': #5e5e5e,
@@ -38,26 +38,26 @@ $lightorange: #fda751;
     )
   );
   @include meta.load-css(
-    '../components/ProgressBar.scss',
+    'pkg:tgui-styles/components/ProgressBar.scss',
     $with: ('background-color': rgba(68, 46, 26, 0.5))
   );
   @include meta.load-css(
-    '../components/Knob.scss',
+    'pkg:tgui-styles/components/Knob.scss',
     $with: ('ring-color': $lightorange)
   );
   @include meta.load-css(
-    '../components/Input.scss',
+    'pkg:tgui-styles/components/Input.scss',
     $with: ('border-color': $lightorange)
   );
   @include meta.load-css(
-    '../components/BlockQuote.scss',
+    'pkg:tgui-styles/components/BlockQuote.scss',
     $with: ('color-default': $lightorange)
   );
   @include meta.load-css(
-    '../components/NumberInput.scss',
+    'pkg:tgui-styles/components/NumberInput.scss',
     $with: ('border-color': color.scale($lightorange, $lightness: +10%))
   );
-  @include meta.load-css('../components/Section.scss');
+  @include meta.load-css('pkg:tgui-styles/components/Section.scss');
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');

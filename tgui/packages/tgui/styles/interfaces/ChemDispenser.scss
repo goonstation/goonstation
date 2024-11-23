@@ -1,6 +1,6 @@
 @use '../colors';
-@use '../components/Button';
 @use '../base';
+@use 'pkg:tgui-styles/components/Button';
 
 .chem-dispenser {
   &__buttons {

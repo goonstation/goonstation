@@ -25,7 +25,7 @@
 
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    'pkg:tgui-styles/components/Button.scss',
     $with: (
       'color-default': #e8e4c9,
       'color-disabled': #505046,
@@ -35,10 +35,10 @@
     )
   );
   @include meta.load-css(
-    '../components/ProgressBar.scss',
+    'pkg:tgui-styles/components/ProgressBar.scss',
     $with: ('background-color': rgba(0, 0, 0, 0.5))
   );
-  @include meta.load-css('../components/Section.scss');
+  @include meta.load-css('pkg:tgui-styles/components/Section.scss');
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');

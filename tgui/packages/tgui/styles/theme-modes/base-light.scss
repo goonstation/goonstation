@@ -39,30 +39,30 @@ $primary-color: color.scale($bg-color, $lightness: -20%) !default;
 
 // Components
 @include meta.load-css(
-  '../components/Tooltip.scss',
+  'pkg:tgui-styles/components/Tooltip.scss',
   $with: ('color': base.$color-fg, 'background-color': $component-bg-color)
 );
 @include meta.load-css(
-  '../components/Divider.scss',
+  'pkg:tgui-styles/components/Divider.scss',
   $with: ('color': rgba(0, 0, 0, 0.1))
 );
 @include meta.load-css(
-  '../components/Stack.scss',
+  'pkg:tgui-styles/components/Stack.scss',
   $with: ('zebra-background-color': base.$color-bg-section)
 );
 @include meta.load-css(
-  '../components/ProgressBar.scss',
+  'pkg:tgui-styles/components/ProgressBar.scss',
   $with: (
     'color-default-fill': base.$color-bg,
     'background-color': rgba(255, 255, 255, 0.5)
   )
 );
 @include meta.load-css(
-  '../components/Section.scss',
+  'pkg:tgui-styles/components/Section.scss',
   $with: ('background-color': rgba(0, 0, 0, 0.1))
 );
 @include meta.load-css(
-  '../components/Button.scss',
+  'pkg:tgui-styles/components/Button.scss',
   $with: (
     'color-default': base.$color-bg,
     'color-disabled': #777777,
@@ -73,23 +73,23 @@ $primary-color: color.scale($bg-color, $lightness: -20%) !default;
   )
 );
 @include meta.load-css(
-  '../components/Input.scss',
+  'pkg:tgui-styles/components/Input.scss',
   $with: (
     'background-color': $component-bg-color,
     'border-color': $border-color
   )
 );
 @include meta.load-css(
-  '../components/TextArea.scss',
+  'pkg:tgui-styles/components/TextArea.scss',
   $with: ('background-color': $component-bg-color)
 );
 @include meta.load-css(
-  '../components/Modal.scss',
+  'pkg:tgui-styles/components/Modal.scss',
   $with: ('background-color': $component-bg-color)
 );
-@include meta.load-css('../components/NumberInput.scss');
+@include meta.load-css('pkg:tgui-styles/components/NumberInput.scss');
 @include meta.load-css(
-  '../components/Tabs.scss',
+  'pkg:tgui-styles/components/Tabs.scss',
   $with: (
     'text-color': rgba(0, 0, 0, 0.5),
     'text-color-selected': rgba(0, 0, 0, 0.9),
@@ -98,10 +98,10 @@ $primary-color: color.scale($bg-color, $lightness: -20%) !default;
   )
 );
 @include meta.load-css(
-  '../components/Slider.scss',
+  'pkg:tgui-styles/components/Slider.scss',
   $with: ('popup-background-color': #ffffff, 'popup-text-color': #000000)
 );
-@include meta.load-css('../components/BlockQuote.scss');
+@include meta.load-css('pkg:tgui-styles/components/BlockQuote.scss');
 
 // Layouts
 @include meta.load-css('../layouts/Layout.scss');
