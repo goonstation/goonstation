@@ -5,6 +5,7 @@
  * @license ISC (https://choosealicense.com/licenses/isc/)
  */
 
+import { BooleanLike } from 'common/react';
 import {
   Button,
   Icon,
@@ -20,9 +21,6 @@ import { BlueprintButtonStyle, BlueprintMiniButtonStyle } from '../constant';
 import { ManufacturableData, RequirementData, ResourceData } from '../type';
 import { ButtonWithBadge } from './ButtonWithBadge';
 import { CenteredText } from './CenteredText';
-import { truncate } from '../../../format';
-import { BlueprintButtonStyle, BlueprintMiniButtonStyle } from '../constant';
-import { BooleanLike } from "common/react";
 
 const getBlueprintTime = (time, manufacturerSpeed) => {
   return round(time / 10 / manufacturerSpeed, 0.01);
@@ -90,9 +88,10 @@ export const BlueprintButton = (props: BlueprintButtonProps) => {
     hasPower,
   } = props;
   // Condense producability
-  const notProducible = !!Object.keys(blueprintProducibilityData).find((requirement_name: string) => (
-    !!blueprintProducibilityData[requirement_name] === false
-  ) === true);
+  const notProduceable = !!Object.keys(blueprintProducibilityData).find(
+    (requirement_name: string) =>
+      (!!blueprintProducibilityData[requirement_name] === false) === true,
+  );
   // Don't include this flavor if we only output one item, because if so, then we know what we're making
   const outputs =
     (blueprintData?.item_names?.length ?? 0) < 2 &&
@@ -123,7 +122,13 @@ export const BlueprintButton = (props: BlueprintButtonProps) => {
           (value: string, index: number) => (
             <LabeledList.Item
               key={index}
-              labelColor={blueprintProducibilityData[blueprintData.requirement_data[value].name] ? undefined : 'bad'}
+              labelColor={
+                blueprintProducibilityData[
+                  blueprintData.requirement_data[value].name
+                ]
+                  ? undefined
+                  : 'bad'
+              }
               label={blueprintData.requirement_data[value].name}
               textAlign="right"
             >

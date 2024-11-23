@@ -166,7 +166,9 @@ export const Manufacturer = () => {
                             actionVendProduct={actionVendProduct}
                             blueprintData={blueprint}
                             manufacturerSpeed={data.speed}
-                            blueprintProducibilityData={data.producibility_data[blueprint.byondRef]}
+                            blueprintProducibilityData={
+                              data.producibility_data[blueprint.byondRef]
+                            }
                             deleteAllowed={
                               data.delete_allowed !== AccessLevels.DENIED
                             }
