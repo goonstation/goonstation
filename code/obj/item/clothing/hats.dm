@@ -1192,7 +1192,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		setProperty("deflection", 60)
 
 	proc/change_big_icon_state(var/BIG)
-		if(BIG)
+		if(BIG == TRUE)
 			src.icon = initial(src.icon)
 			src.icon_state = initial(src.icon_state)
 		else
@@ -1212,8 +1212,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			user.drop_from_slot(current_head, get_turf(current_head))
 		if (user.equip_if_possible(src, SLOT_HEAD))
 			change_big_icon_state(FALSE)
-		// else
-		// 	change_big_icon_state(TRUE)
 
 
 
@@ -1274,7 +1272,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		setProperty("rangedprot", 4)
 
 	proc/change_big_icon_state(var/BIG)
-		if(BIG)
+		if(BIG == TRUE)
 			src.icon = initial(src.icon)
 			src.icon_state = initial(src.icon_state)
 		else
