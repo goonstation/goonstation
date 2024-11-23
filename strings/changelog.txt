@@ -6,6 +6,7 @@
 (+)AI shell Ctrl-Click to deploy function expanded to cyborg docks for shells that are recharging.
 (u)LeahTheTech
 (+)Tweaked the HoS beret sprite slightly.
+(+)Singularity startup is now a little bit cooler.
 (t)fri nov 22 24
 (u)ZeWaka
 (e)🆕|C-Feature
