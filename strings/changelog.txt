@@ -1,4 +1,8 @@
 
+(t)fri nov 22 24
+(u)ZeWaka
+(e)🆕|C-Feature
+(*)When you click the 'Map' button in the top-right, it focuses on your current location.
 (t)wed nov 20 24
 (u)Azrun
 (+)ABCU on a planet near you! Allow for ABCU to work with terrainify.
