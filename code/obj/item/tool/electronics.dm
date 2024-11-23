@@ -637,7 +637,7 @@
 		if(world.time - boot_time <= 3 SECONDS)
 			for (var/datum/electronics/scanned_item/O in originalData.scanned_items)
 				ruck_controls.scan_in(O.name, O.item_type, O.mats, O.locked) //Copy the database on digest so we never waste the effort
-			updateDialog()
+			tgui_process.update_uis(src)
 			return
 
 		return
@@ -662,7 +662,7 @@
 			return
 	var/strippedName = scanFile.scannedName
 	ruck_controls.scan_in(strippedName, scanFile.scannedPath, scanFile.scannedMats)
-	updateDialog()
+	tgui_process.update_uis(src)
 
 	if(src.net_id != host_ruck || command != "add") //Only the host sends PDA messages, and we don't send them for internal transfer
 		return
@@ -689,7 +689,7 @@
 		for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 			if (targetitem == O.name)
 				O.locked = targetlock
-				updateDialog()
+				tgui_process.update_uis(src)
 		return
 
 	if(signal.encryption)
@@ -796,6 +796,8 @@
 		else
 			boutput(user, SPAN_ALERT("No new items entered into kit."))
 
+		tgui_process.update_uis(src)
+
 	else
 		..()
 
@@ -877,7 +879,7 @@
 			for (var/datum/electronics/scanned_item/OP in ruck_controls.scanned_items) //Lock items with the same name, that's how LOCK works
 				if(O.name == OP.name)
 					OP.locked = O.locked
-			updateDialog()
+
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.data["address_tag"] = "TRANSRKIT"
