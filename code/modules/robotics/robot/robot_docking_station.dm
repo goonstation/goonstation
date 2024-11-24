@@ -646,6 +646,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			if (R.shell || R.dependent) //no renaming AI shells
 				return
 			var/newname = copytext(strip_html(sanitize(tgui_input_text(user, "What do you want to rename [R]?", "Cyborg Maintenance", R.name))), 1, 64)
+			newname = remove_bad_name_characters(newname)
 			if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat || !newname)
 				return
 			if (url_regex?.Find(newname))
