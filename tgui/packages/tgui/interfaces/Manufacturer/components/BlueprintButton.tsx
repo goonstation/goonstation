@@ -28,8 +28,8 @@ const getBlueprintTime = (time, manufacturerSpeed) => {
 };
 
 export type BlueprintButtonProps = {
-  actionRemoveBlueprint: (byondRef: string) => void;
-  actionVendProduct: (byondRef: string) => void;
+  onBlueprintRemove: (byondRef: string) => void;
+  onVendProduct: (byondRef: string) => void;
   blueprintData: ManufacturableData;
   blueprintProducibilityData: Record<string, BooleanLike>;
   manufacturerSpeed: number;
@@ -80,8 +80,8 @@ const getProductionSatisfaction = (
 
 export const BlueprintButtonView = (props: BlueprintButtonProps) => {
   const {
-    actionRemoveBlueprint,
-    actionVendProduct,
+    onBlueprintRemove,
+    onVendProduct,
     blueprintData,
     blueprintProducibilityData,
     manufacturerSpeed,
