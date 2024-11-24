@@ -5,20 +5,20 @@
  * @license ISC
  */
 
-export type TerminalOutputSectionProps = Pick<TerminalData, 'displayHTML'>;
+import type { BooleanLike } from 'tgui-core/react';
 
 export type PeripheralData = {
   card: string;
   icon: string;
   label: string;
-  Clown?: boolean;
+  Clown?: BooleanLike;
   color: any;
   index: number;
 };
 
 export type TerminalData = {
   displayHTML: string;
-  TermActive: boolean;
+  TermActive: BooleanLike;
   windowName: string;
   fontColor: string;
   bgColor: string;
