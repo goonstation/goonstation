@@ -1,6 +1,11 @@
 var/list/bad_name_characters = list("_", "'", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\", "/")
 var/regex/emoji_regex = regex(@{"([^\u0020-\u8000]+)"})
 
+proc/remove_bad_name_characters(string)
+	for (var/char in bad_name_characters)
+		string = replacetext(string, char, "")
+	return emoji_regex.Replace_char(string, "")
+
 var/list/removed_jobs = list(
 	// jobs that have been removed or replaced (replaced -> new name, removed -> null)
 	"Barman" = "Bartender",
@@ -422,7 +427,7 @@ var/list/removed_jobs = list(
 				if (isnull(new_name))
 					return
 				new_name = trimtext(new_name)
-				new_name = src.remove_bad_name_characters(new_name)
+				new_name = remove_bad_name_characters(new_name)
 				if (length(new_name) < NAME_CHAR_MIN)
 					tgui_alert(usr, "Your first name is too short. It must be at least [NAME_CHAR_MIN] characters long.", "Name too short")
 					return
@@ -448,7 +453,7 @@ var/list/removed_jobs = list(
 				if (isnull(new_name))
 					new_name = ""
 				new_name = trimtext(new_name)
-				new_name = src.remove_bad_name_characters(new_name)
+				new_name = remove_bad_name_characters(new_name)
 				if (length(new_name) > NAME_CHAR_MAX)
 					tgui_alert(usr, "Your middle name is too long. It must be no more than [NAME_CHAR_MAX] characters long.", "Name too long")
 					return
@@ -464,7 +469,7 @@ var/list/removed_jobs = list(
 				if (isnull(new_name))
 					return
 				new_name = trimtext(new_name)
-				new_name = src.remove_bad_name_characters(new_name)
+				new_name = remove_bad_name_characters(new_name)
 				if (length(new_name) < NAME_CHAR_MIN)
 					tgui_alert(usr, "Your last name is too short. It must be at least [NAME_CHAR_MIN] characters long.", "Name too short")
 					return
@@ -1036,12 +1041,6 @@ var/list/removed_jobs = list(
 				src.blType = "A+"
 				src.update_preview_icon()
 				return TRUE
-
-
-	proc/remove_bad_name_characters(string)
-		for (var/char in bad_name_characters)
-			string = replacetext(string, char, "")
-		return emoji_regex.Replace_char(string, "")
 
 #ifndef SECRETS_ENABLED
 #define CHAR_EXPORT_SECRET "input_validation_is_hell_sorry"

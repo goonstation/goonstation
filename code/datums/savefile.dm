@@ -350,7 +350,7 @@
 			src.randomize_name()
 
 		//macros save me from infinite var hell
-#define FIX_NAME(name_var) var/fixed_##name_var = src.remove_bad_name_characters(src.##name_var);\
+#define FIX_NAME(name_var) var/fixed_##name_var = remove_bad_name_characters(src.##name_var);\
 		if (fixed_##name_var != src.##name_var){\
 			src.##name_var = fixed_##name_var;\
 			src.profile_modified = TRUE;\
