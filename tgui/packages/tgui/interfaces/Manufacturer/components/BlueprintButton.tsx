@@ -6,6 +6,7 @@
  */
 
 import { BooleanLike } from 'common/react';
+import { memo, useCallback, useMemo } from 'react';
 import {
   Button,
   Icon,
@@ -77,7 +78,7 @@ const getProductionSatisfaction = (
   return patterns_satisfied;
 };
 
-export const BlueprintButton = (props: BlueprintButtonProps) => {
+export const BlueprintButtonView = (props: BlueprintButtonProps) => {
   const {
     actionRemoveBlueprint,
     actionVendProduct,
@@ -92,6 +93,17 @@ export const BlueprintButton = (props: BlueprintButtonProps) => {
     (requirement_name: string) =>
       (!!blueprintProducibilityData[requirement_name] === false) === true,
   );
+  const memoizedActionRemoveBlueprint = useCallback(
+    () => actionRemoveBlueprint(blueprintData.byondRef),
+    [],
+  );
+  const memoizedActionVendProduct = useCallback(
+    () => actionVendProduct(blueprintData.byondRef),
+    [],
+  );
+  const memoizedBlueprintProducibilityData = useMemo(() => {
+    return blueprintProducibilityData;
+  }, [blueprintProducibilityData]);
   // Don't include this flavor if we only output one item, because if so, then we know what we're making
   const outputs =
     (blueprintData?.item_names?.length ?? 0) < 2 &&
@@ -123,7 +135,7 @@ export const BlueprintButton = (props: BlueprintButtonProps) => {
             <LabeledList.Item
               key={index}
               labelColor={
-                blueprintProducibilityData[
+                memoizedBlueprintProducibilityData[
                   blueprintData.requirement_data[value].name
                 ]
                   ? undefined
@@ -161,7 +173,7 @@ export const BlueprintButton = (props: BlueprintButtonProps) => {
           key={blueprintData.name}
           imagePath={blueprintData.img}
           disabled={!hasPower || notProduceable}
-          onClick={() => actionVendProduct(blueprintData.byondRef)}
+          onClick={memoizedActionVendProduct}
         >
           <CenteredText
             height={BlueprintButtonStyle.Height}
@@ -182,10 +194,10 @@ export const BlueprintButton = (props: BlueprintButtonProps) => {
                 }
                 align="center"
                 disabled={canDelete ? false : !hasPower || notProduceable}
-                onClick={() =>
+                onClick={
                   canDelete
-                    ? actionRemoveBlueprint(blueprintData.byondRef)
-                    : actionVendProduct(blueprintData.byondRef)
+                    ? memoizedActionRemoveBlueprint
+                    : memoizedActionVendProduct
                 }
                 py={BlueprintMiniButtonStyle.IconSize / 2}
               >
@@ -207,7 +219,7 @@ export const BlueprintButton = (props: BlueprintButtonProps) => {
                 }
                 align="center"
                 disabled={!hasPower || notProduceable}
-                onClick={() => actionVendProduct(blueprintData.byondRef)}
+                onClick={memoizedActionVendProduct}
                 py={BlueprintMiniButtonStyle.IconSize / 2}
               >
                 <Icon name="gear" size={BlueprintMiniButtonStyle.IconSize} />
@@ -219,3 +231,21 @@ export const BlueprintButton = (props: BlueprintButtonProps) => {
     </Stack>
   );
 };
+
+export const BlueprintButton = memo(BlueprintButtonView, (prevProps, nextProps) => {
+  if (
+    prevProps.blueprintData !== nextProps.blueprintData ||
+    prevProps.blueprintProducibilityData !== nextProps.blueprintProducibilityData ||
+    prevProps.manufacturerSpeed !== nextProps.manufacturerSpeed ||
+    prevProps.deleteAllowed !== nextProps.deleteAllowed ||
+    prevProps.hasPower !== nextProps.hasPower
+  ) {
+    return false;
+  }
+  for (let key in prevProps.blueprintProducibilityData) {
+    if (prevProps.blueprintProducibilityData[key] !== nextProps.blueprintProducibilityData[key]) {
+      return false;
+    }
+  }
+  return true;
+});

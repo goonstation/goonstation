@@ -6,7 +6,7 @@
  */
 
 import { toTitleCase } from 'common/string';
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import {
   Box,
   Button,
@@ -25,6 +25,7 @@ import { pluralize } from 'tgui-core/string';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { is_set } from '../common/bitflag';
+import { useConstant } from '../common/hooks';
 import { BlueprintButton } from './components/BlueprintButton';
 import { CardInfo } from './components/CardInfo';
 import { CollapsibleWireMenu } from './components/CollapsibleWireMenu';
@@ -69,10 +70,14 @@ export const Manufacturer = () => {
         : 'mend',
       wire: index + 1,
     });
-  const actionVendProduct = (byondRef: string) =>
-    act('request_product', { blueprint_ref: byondRef });
-  const actionRemoveBlueprint = (byondRef: string) =>
-    act('delete', { blueprint_ref: byondRef });
+  const actionVendProduct = useCallback(
+    (byondRef: string) => act('request_product', { blueprint_ref: byondRef }),
+    [],
+  );
+  const actionRemoveBlueprint = useCallback(
+    (byondRef: string) => act('delete', { blueprint_ref: byondRef }),
+    [],
+  );
   const actionSetSpeed = (new_speed: number) =>
     act('speed', { value: new_speed });
   const actionRepeat = () => act('repeat');
@@ -90,6 +95,7 @@ export const Manufacturer = () => {
       setSwappingMaterialRef(null);
     }
   };
+  const memoizedProducibilityData = useMemo(() => data.producibility_data);
   const hasPower = !!data.indicators?.hasPower;
   const manudriveName = data.manudrive?.name ?? '';
   const manudriveLimit = data.manudrive?.limit;
@@ -167,7 +173,7 @@ export const Manufacturer = () => {
                             blueprintData={blueprint}
                             manufacturerSpeed={data.speed}
                             blueprintProducibilityData={
-                              data.producibility_data[blueprint.byondRef]
+                              memoizedProducibilityData[blueprint.byondRef]
                             }
                             deleteAllowed={
                               data.delete_allowed !== AccessLevels.DENIED
@@ -191,7 +197,7 @@ export const Manufacturer = () => {
                 />
               </Stack.Item>
               <Stack.Item>
-                <Section title="Loaded Materials" textAlign="center">
+                <Section title="LoadedDDDDDD Materials" textAlign="center">
                   <LabeledList>
                     {data.resource_data?.map((resourceData: ResourceData) => (
                       <LabeledList.Item
