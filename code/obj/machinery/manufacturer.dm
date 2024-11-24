@@ -91,6 +91,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/obj/item/disk/data/floppy/manudrive/manudrive = null //! Where insertible manudrives are held for reading blueprints and getting/setting fablimits.
 	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
 	var/list/material_patterns_by_ref = list() //! Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
+	// Kind of hacky but resource amts don't fit in ui_static_data, but they also shouldn't be updated so often in ui_data. And it's better than contents_prev
+	VAR_PROTECTED/contents_changed = TRUE //! Helper flag for whether or not the contents have chanced since the UI last read them. INTERNAL ONLY
 
 	/* Production options */
 	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned "Miscellaneous".
@@ -306,13 +308,17 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.update_static_data(user)
 
 		// Send material data as tuples of material name, material id, material amount
-		var/resource_data = list()
-		for (var/obj/item/material_piece/P as anything in src.get_contents())
-			if (!P.material)
-				continue
-			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_ref["\ref[P.material]"]))
+		var/resource_data = null
+		var/list/blueprint_producibility_by_ref = null
+		if (src.contents_changed == TRUE)
+			// Handle updating material data and blueprint production eligibility when contents changed
+			src.contents_changed = FALSE
+			for (var/obj/item/material_piece/P as anything in src.get_contents())
+				if (!P.material)
+					continue
+				resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_ref["\ref[P.material]"]))
+			blueprint_producibility_by_ref = src.get_producibility_for_blueprints()
 
-		var/list/blueprint_producibility_by_ref = src.get_producibility_for_blueprints()
 
 		// Package additional information into each queued item for the badges so that it can lookup its already sent information
 		var/queue_data = list()
@@ -344,6 +350,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"error" = src.error,
 			"resource_data" = resource_data,
 			"producibility_data" = blueprint_producibility_by_ref,
+			"contents_changed" = src.contents_changed,
 			"manudrive_uses_left" = src.get_drive_uses_left(),
 			"indicators" = list("electrified" = src.is_electrified(),
 							    "malfunctioning" = src.malfunction,
@@ -1108,6 +1115,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (eject_amount > P.amount)
 			src.grump_message(user, "ERROR: Cannot eject [eject_amount] piece\s, as there are only [floor(P.amount)] piece\s available to eject.", sound = TRUE)
 			eject_amount = floor(P.amount)
+		src.contents_changed = TRUE
 		if (eject_amount == P.amount)
 			P.UpdateStackAppearance()
 			P.set_loc(src.get_output_location())
@@ -1613,6 +1621,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	/// Go through the material requirements of a blueprint, removing the respective used materials
 	proc/remove_materials(datum/manufacture/M)
+		src.contents_changed = TRUE
 		var/list/mats_used = get_materials_needed(M)
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
 			var/required_amount = M.item_requirements[R]
@@ -1804,6 +1813,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			while(to_throw > 0)
 				if(!length(src.nearby_turfs)) //SpyGuy for RTE "pick() from empty list"
 					break
+				src.contents_changed = TRUE
 				X = pick(src.get_contents())
 				src.storage.transfer_stored_item(X, src.loc)
 				X.throw_at(pick(src.nearby_turfs), 16, 3)
@@ -1884,6 +1894,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	proc/add_contents(obj/item/W, mob/user = null)
 		src.ensure_contents()
+		src.contents_changed = TRUE
 		src.storage.add_contents(W, user, visible=FALSE)
 
 	/// Safely gets our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
@@ -1898,6 +1909,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		return storage_contents
 
 	on_add_contents(obj/item/I)
+		src.contents_changed = TRUE
 		if (!("\ref[I.material]" in src.material_patterns_by_ref))
 			src.material_patterns_by_ref["\ref[I.material]"] = src.get_requirements_material_satisfies(I.material)
 

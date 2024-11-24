@@ -77,6 +77,10 @@ export const Manufacturer = () => {
   const [swappingMaterialRef, setSwappingMaterialRef] = useState<string | null>(
     null,
   );
+  const memoized_producibility_data = useMemo(
+    () => producibility_data,
+    [producibility_data],
+  );
   const staticActions = useMemo(
     () => ({
       handleBlueprintRemove: (byondRef: string) =>
@@ -227,7 +231,7 @@ export const Manufacturer = () => {
                             blueprintData={blueprint}
                             manufacturerSpeed={speed}
                             blueprintProducibilityData={
-                              producibility_data[blueprint.byondRef]
+                              memoized_producibility_data[blueprint.byondRef]
                             }
                             deleteAllowed={
                               delete_allowed !== AccessLevels.DENIED

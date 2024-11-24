@@ -230,22 +230,27 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
   );
 };
 
-export const BlueprintButton = memo(BlueprintButtonView);
+// export const BlueprintButton = memo(BlueprintButtonView);
 
-// export const BlueprintButton = memo(BlueprintButtonView, (prevProps, nextProps) => {
-//   if (
-//     prevProps.blueprintData !== nextProps.blueprintData ||
-//     prevProps.blueprintProducibilityData !== nextProps.blueprintProducibilityData ||
-//     prevProps.manufacturerSpeed !== nextProps.manufacturerSpeed ||
-//     prevProps.deleteAllowed !== nextProps.deleteAllowed ||
-//     prevProps.hasPower !== nextProps.hasPower
-//   ) {
-//     return false;
-//   }
-//   for (let key in prevProps.blueprintProducibilityData) {
-//     if (prevProps.blueprintProducibilityData[key] !== nextProps.blueprintProducibilityData[key]) {
-//       return false;
-//     }
-//   }
-//   return true;
-// });
+export const BlueprintButton = memo(
+  BlueprintButtonView,
+  (prevProps, nextProps) => {
+    if (
+      prevProps.blueprintData !== nextProps.blueprintData ||
+      prevProps.manufacturerSpeed !== nextProps.manufacturerSpeed ||
+      prevProps.deleteAllowed !== nextProps.deleteAllowed ||
+      prevProps.hasPower !== nextProps.hasPower
+    ) {
+      return false;
+    }
+    for (let key in prevProps.blueprintProducibilityData) {
+      if (
+        prevProps.blueprintProducibilityData[key] !==
+        nextProps.blueprintProducibilityData[key]
+      ) {
+        return false;
+      }
+    }
+    return true;
+  },
+);
