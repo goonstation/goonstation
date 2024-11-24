@@ -47,7 +47,6 @@ const ScannedItem = memo((props: ScannedItemProps) => {
 
   return (
     <Stack style={{ display: 'inline-flex' }}>
-      {Math.random()}
       <ScannedItemMainButton
         ScannedItem={ScannedItem}
         hide_allowed={hide_allowed}
