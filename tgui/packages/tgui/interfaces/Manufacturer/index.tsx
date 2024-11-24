@@ -114,18 +114,17 @@ export const Manufacturer = () => {
   // Local states for pleasant UX while selecting one button (highlight green) and then second button (perform action)
   const handleSwapPriority = useCallback(
     (materialRef: string) => {
-      if (materialRef === swappingMaterialRef) {
+      if (swappingMaterialRef === null) {
+        setSwappingMaterialRef(materialRef);
+      } else if (swappingMaterialRef === materialRef) {
+        setSwappingMaterialRef(null);
+      } else {
         act('material_swap', {
           resource_1: swappingMaterialRef,
           resource_2: materialRef,
         });
+        setSwappingMaterialRef(null);
       }
-      setSwappingMaterialRef((prev) => {
-        if (prev === null) {
-          return materialRef;
-        }
-        return null;
-      });
     },
     [act, swappingMaterialRef],
   );
