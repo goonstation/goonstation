@@ -70,10 +70,7 @@
 			set name = "Map"
 			set desc = "Open an interactive map in your browser"
 			set hidden = 1
-			if (map_settings)
-				src << link(goonhub_href(map_settings.goonhub_map))
-			else
-				src << link(goonhub_href("/maps/cogmap"))
+			src << link(generate_ingame_map_link(src))
 
 		forum()
 			set category = "Commands"
@@ -85,3 +82,10 @@
 	proc
 		set_macro(name)
 			winset(src, "mainwindow", "macro=\"[name]\"")
+
+/proc/generate_ingame_map_link(client/our_user)
+	. = "/maps/cogmap"
+	if (map_settings)
+		. = map_settings.goonhub_map
+	. = goonhub_href(.)
+	. += "?sx=[our_user.mob.x]&sy=[our_user.mob.y]&zoom=0"

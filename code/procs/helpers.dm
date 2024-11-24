@@ -996,14 +996,18 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		chars[i] = "*"
 	return sanitize(jointext(chars, ""))
 
-/proc/stutter(n)
-	var/te = html_decode(n)
-	var/t = ""
-	n = length(n)
-	var/p = null
-	p = 1
-	while(p <= n)
-		var/n_letter = copytext(te, p, p + 1)
+/proc/stutter(text)
+	text = html_decode(text)
+	var/output = ""
+	var/length = length(text)
+	var/pos = null
+	pos = 1
+	while(pos <= length)
+		var/n_letter = copytext(text, pos, pos + 1)
+		if (text2num(n_letter))
+			output += n_letter
+			pos++
+			continue
 		if (prob(80))
 			if (prob(10))
 				n_letter = "[n_letter][n_letter][n_letter][n_letter]"
@@ -1015,9 +1019,9 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 						n_letter = n_letter
 					else
 						n_letter = "[n_letter][n_letter]"
-		t = "[t][n_letter]"
-		p++
-	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+		output = "[output][n_letter]"
+		pos++
+	return copytext(sanitize(output), 1, MAX_MESSAGE_LEN)
 
 /proc/shake_camera(mob/M, duration, strength=1, delay=0.4)
 	if(!M || !M.client)

@@ -12,6 +12,8 @@ However, ***you must follow the guide in its entirety.<br>***
 **<font color="#F95454">No skipping</font>, even if you think you have a good reason. <ins>There are no optional sections.</ins>**<br>
 Help and support is *not offered whatsoever* if you skip portions of the guide.
 
+<u>You'll also want to ensure BYOND is installed in the **default location** for ease of use.</u>
+
 
 ## :question: So, how do I get started?
 
@@ -32,8 +34,6 @@ If this is your first time using VSCode, take a minute to familiarize yourself w
 3. These are the tabs and files you have open. From here, you can see any files you've changed, and see any unsaved or modified files
 4. This is the current file that you've selected's contents.
 5. This is the output terminal. If and when you have any bugs, you'll see them here, and you can track your code compiling from here, as well as being able to interface with git directly through command-line prompts.
-
-<u>You'll also want to ensure BYOND is installed in the **default location** for ease of use.</u>
 
 
 Now, we need to create our own repository to contribute to! :rocket:

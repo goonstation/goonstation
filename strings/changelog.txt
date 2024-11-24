@@ -1,4 +1,35 @@
 
+(t)sat nov 23 24
+(u)JORJ949
+(p)21385
+(e)💅🤖|C-QoL, A-Silicons
+(+)AI shell Ctrl-Click to deploy function expanded to cyborg docks for shells that are recharging.
+(u)LeahTheTech
+(+)Tweaked the HoS beret sprite slightly.
+(+)Singularity startup is now a little bit cooler.
+(t)fri nov 22 24
+(u)ZeWaka
+(e)🆕|C-Feature
+(*)When you click the 'Map' button in the top-right, it focuses on your current location.
+(u)LeahTheTech
+(*)Stammering no longer duplicates numbers, but drunkenness now has a chance to make them come out off by one.
+(u)Colossus
+(p)21194
+(e)🆕🍝|C-Feature, A-Catering
+(+)Added support for fishing bait, you are more likely to catch real goldfish with regular goldfish, and pufferfish need meat as bait.
+(t)thu nov 21 24
+(u)JORJ949
+(p)21232
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Cogmap 1's AI Upload changed slightly to remove thindows.
+(u)JORJ949
+(p)21231
+(e)🗺💅|A-Mapping, C-QoL
+(+)Cogmap 2's AI Upload has been shrunk, among other changes.
+(u)NightmarechaMillian
+(p)21276
+(e)🔎💅🔊🐁|C-Code-Quality, C-QoL, C-Sound, A-Critters
+(+)You can now pass through sawflies if they're friendly to you.
 (t)wed nov 20 24
 (u)Azrun
 (+)ABCU on a planet near you! Allow for ABCU to work with terrainify.

@@ -97,7 +97,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	/* Production options */
 	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned "Miscellaneous".
-	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Machinery", "Medicine", "Miscellaneous", "Downloaded")
+	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Organ", "Machinery", "Medicine", "Miscellaneous", "Downloaded")
 	var/accept_blueprints = TRUE //! Whether or not we accept blueprints from the ruk kit into this manufacturer.
 
 	var/list/available = list() //! A list of every manufacture datum typepath available in this unit subtype by default
@@ -1614,7 +1614,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				return -1 // Represents unlimited with manudrives, we roll with it
 			for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
 				if(!isnull(MD.num_working))
-					return src.manudrive.fablimit - MD.num_working
+					return MD.fablimit - MD.num_working
 		return 0 // none loaded
 
 	proc/begin_work(new_production = TRUE)
