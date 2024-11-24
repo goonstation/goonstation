@@ -24,7 +24,6 @@ import { pluralize } from 'tgui-core/string';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { is_set } from '../common/bitflag';
-import { useConstant } from '../common/hooks';
 import { BlueprintButton } from './components/BlueprintButton';
 import { CardInfo } from './components/CardInfo';
 import { CollapsibleWireMenu } from './components/CollapsibleWireMenu';
@@ -68,6 +67,7 @@ export const Manufacturer = () => {
     recipe_blueprints,
     repeat,
     resource_data,
+    producibility_data,
     rockboxes,
     speed,
     wire_bitflags,
@@ -226,7 +226,9 @@ export const Manufacturer = () => {
                             onVendProduct={staticActions.handleProductVend}
                             blueprintData={blueprint}
                             manufacturerSpeed={speed}
-                            materialData={resource_data}
+                            blueprintProducibilityData={
+                              producibility_data[blueprint.byondRef]
+                            }
                             deleteAllowed={
                               delete_allowed !== AccessLevels.DENIED
                             }

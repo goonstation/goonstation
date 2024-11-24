@@ -93,12 +93,12 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
     (requirement_name: string) =>
       (!!blueprintProducibilityData[requirement_name] === false) === true,
   );
-  const memoizedActionRemoveBlueprint = useCallback(
-    () => actionRemoveBlueprint(blueprintData.byondRef),
+  const memoizedOnRemoveBlueprint = useCallback(
+    () => onBlueprintRemove(blueprintData.byondRef),
     [],
   );
-  const memoizedActionVendProduct = useCallback(
-    () => actionVendProduct(blueprintData.byondRef),
+  const memoizedOnVendProduct = useCallback(
+    () => onVendProduct(blueprintData.byondRef),
     [],
   );
   const memoizedBlueprintProducibilityData = useMemo(() => {
@@ -173,7 +173,7 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
           key={blueprintData.name}
           imagePath={blueprintData.img}
           disabled={!hasPower || notProduceable}
-          onClick={memoizedActionVendProduct}
+          onClick={memoizedOnVendProduct}
         >
           <CenteredText
             height={BlueprintButtonStyle.Height}
@@ -195,9 +195,7 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
                 align="center"
                 disabled={canDelete ? false : !hasPower || notProduceable}
                 onClick={
-                  canDelete
-                    ? memoizedActionRemoveBlueprint
-                    : memoizedActionVendProduct
+                  canDelete ? memoizedOnRemoveBlueprint : memoizedOnVendProduct
                 }
                 py={BlueprintMiniButtonStyle.IconSize / 2}
               >
@@ -219,7 +217,7 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
                 }
                 align="center"
                 disabled={!hasPower || notProduceable}
-                onClick={memoizedActionVendProduct}
+                onClick={memoizedOnVendProduct}
                 py={BlueprintMiniButtonStyle.IconSize / 2}
               >
                 <Icon name="gear" size={BlueprintMiniButtonStyle.IconSize} />
@@ -232,20 +230,22 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
   );
 };
 
-export const BlueprintButton = memo(BlueprintButtonView, (prevProps, nextProps) => {
-  if (
-    prevProps.blueprintData !== nextProps.blueprintData ||
-    prevProps.blueprintProducibilityData !== nextProps.blueprintProducibilityData ||
-    prevProps.manufacturerSpeed !== nextProps.manufacturerSpeed ||
-    prevProps.deleteAllowed !== nextProps.deleteAllowed ||
-    prevProps.hasPower !== nextProps.hasPower
-  ) {
-    return false;
-  }
-  for (let key in prevProps.blueprintProducibilityData) {
-    if (prevProps.blueprintProducibilityData[key] !== nextProps.blueprintProducibilityData[key]) {
-      return false;
-    }
-  }
-  return true;
-});
+export const BlueprintButton = memo(BlueprintButtonView);
+
+// export const BlueprintButton = memo(BlueprintButtonView, (prevProps, nextProps) => {
+//   if (
+//     prevProps.blueprintData !== nextProps.blueprintData ||
+//     prevProps.blueprintProducibilityData !== nextProps.blueprintProducibilityData ||
+//     prevProps.manufacturerSpeed !== nextProps.manufacturerSpeed ||
+//     prevProps.deleteAllowed !== nextProps.deleteAllowed ||
+//     prevProps.hasPower !== nextProps.hasPower
+//   ) {
+//     return false;
+//   }
+//   for (let key in prevProps.blueprintProducibilityData) {
+//     if (prevProps.blueprintProducibilityData[key] !== nextProps.blueprintProducibilityData[key]) {
+//       return false;
+//     }
+//   }
+//   return true;
+// });
