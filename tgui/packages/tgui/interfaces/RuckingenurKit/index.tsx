@@ -7,6 +7,7 @@
 
 import { memo } from 'react';
 import { Button, Icon, Image, Section, Stack } from 'tgui-core/components';
+import { shallowDiffers } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -46,6 +47,7 @@ const ScannedItem = memo((props: ScannedItemProps) => {
 
   return (
     <Stack style={{ display: 'inline-flex' }}>
+      {Math.random()}
       <ScannedItemMainButton
         ScannedItem={ScannedItem}
         hide_allowed={hide_allowed}
@@ -65,8 +67,7 @@ function propsAreEqual(
   nextProps: ScannedItemProps,
 ) {
   return (
-    JSON.stringify(prevProps.ScannedItem) ===
-      JSON.stringify(nextProps.ScannedItem) &&
+    !shallowDiffers(prevProps.ScannedItem, nextProps.ScannedItem) &&
     prevProps.hide_allowed === nextProps.hide_allowed &&
     prevProps.olde === nextProps.olde
   );
