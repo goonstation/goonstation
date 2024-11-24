@@ -1,4 +1,9 @@
 
+(t)sun nov 24 24
+(u)LeahTheTech
+(p)21430
+(e)|
+(+)Character names can no longer contain emojis.
 (t)sat nov 23 24
 (u)JORJ949
 (p)21385
