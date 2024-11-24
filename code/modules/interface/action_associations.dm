@@ -66,6 +66,8 @@ var/list/action_names = list(
 
 	"unequip" = "Unequip (Silicon)",
 	"pickup" = "Pick Up",
+	"autostore_belt" = "Store to/Unstore from Belt",
+	"autostore_backpack" = "Store to/Unstore from Backpack",
 	"drop" = "Drop",
 	"stop_pull" = "Stop Pulling",
 

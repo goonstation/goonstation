@@ -167,6 +167,11 @@
 
 	var/datum/humanInventory/inventory = null
 
+	/// last item that the human stored in their belt storage
+	var/obj/item/last_stored_belt = null
+	/// last item that the human stored in their backpack storage
+	var/obj/item/last_stored_backpack = null
+
 	var/default_mutantrace = /datum/mutantrace/human
 
 /mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE, role_for_traits)
@@ -958,6 +963,10 @@
 			src.set_a_intent(INTENT_HARM)
 		if ("drop")
 			src.drop_item(null, TRUE)
+		if ("autostore_belt")
+			src.auto_store_unstore_belt()
+		if ("autostore_backpack")
+			src.auto_store_unstore_backpack()
 		if ("swaphand")
 			src.swap_hand()
 		if ("attackself")
@@ -3664,3 +3673,31 @@ mob/living/carbon/human/has_genetics()
 			return hand_color
 
 	. = ..()
+
+/// handles hotkey actino for storing/unstoring item to/from belt storage
+/mob/living/carbon/human/proc/auto_store_unstore_belt()
+	if (!src.belt || !src.belt.storage)
+		return
+	var/obj/item/I = src.equipped()
+	var/list/belt_contents = src.belt.storage.get_contents()
+	if (I)
+		src.belt.Attackby(I, src)
+		if (I in belt_contents)
+			src.last_stored_belt = I
+	else if (src.last_stored_belt)
+		if (!QDELETED(src.last_stored_belt) && (src.last_stored_belt in belt_contents))
+			src.last_stored_belt.Attackhand(src)
+
+/// handles hotkey actino for storing/unstoring item to/from backpack storage
+/mob/living/carbon/human/proc/auto_store_unstore_backpack()
+	if (!src.back || !src.back.storage)
+		return
+	var/obj/item/I = src.equipped()
+	var/list/backpack_contents = src.back.storage.get_contents()
+	if (I)
+		src.back.Attackby(I, src)
+		if (I in backpack_contents)
+			src.last_stored_backpack = I
+	else if (src.last_stored_backpack)
+		if (!QDELETED(src.last_stored_backpack) && (src.last_stored_backpack in backpack_contents))
+			src.last_stored_backpack.Attackhand(src)

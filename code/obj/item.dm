@@ -926,6 +926,13 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			..()
 	else
 		..()
+	// only items can be worn on belt or back right now
+	if (src.storage && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if (src == H.belt && (W in src.storage.get_contents()))
+			H.last_stored_belt = W
+		else if (src == H.back && (W in src.storage.get_contents()))
+			H.last_stored_backpack = W
 
 /obj/item/proc/process()
 	SHOULD_NOT_SLEEP(TRUE)

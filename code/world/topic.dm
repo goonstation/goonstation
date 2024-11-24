@@ -194,6 +194,14 @@
 							twitch_mob.hotkey("drop")
 							return 1
 
+						if ("autostore_belt")
+							twitch_mob.hotkey("autostore_belt")
+							return TRUE
+
+						if ("autostore_backpack")
+							twitch_mob.hotkey("autostore_backpack")
+							return TRUE
+
 						if("use")
 							twitch_mob.hotkey("attackself")
 							return 1
