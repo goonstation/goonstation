@@ -20,13 +20,14 @@ export const TerminalOutputSection = (props: TerminalOutputSectionProps) => {
   const { displayHTML, fontColor, bgColor } = props;
 
   useEffect(() => {
-    const terminalOutputScroll = document.querySelector(
-      "#terminalOutput div[class^='_content']",
+    // TODO: replace this with a useRef implementation once Section component supports it
+    const sectionContentElement = document.querySelector(
+      '#terminalOutput div.Section__content',
     );
-    if (!terminalOutputScroll) {
+    if (!sectionContentElement) {
       return;
     }
-    terminalOutputScroll.scrollTop = terminalOutputScroll.scrollHeight;
+    sectionContentElement.scrollTop = sectionContentElement.scrollHeight;
   }, [displayHTML]);
 
   return (
