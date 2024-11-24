@@ -347,7 +347,7 @@
 						var/datum/antagonist/traitor/T = owner.mind?.get_antagonist(ROLE_TRAITOR)
 						if (istype(T))
 							T.surplus_crate_items.Add(item_datum)
-					telecrystals += item_datum.cost
+				telecrystals += item_datum.cost
 			var/str_contents = jointext(crate_contents, ", ")
 			logTheThing(LOG_DEBUG, owner, "surplus crate contains: [str_contents] at [log_loc(src)]")
 		#undef NESTED_SCALING_FACTOR
