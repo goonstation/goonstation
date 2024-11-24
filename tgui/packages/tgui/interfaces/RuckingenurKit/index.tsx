@@ -65,10 +65,11 @@ function propsAreEqual(
   prevProps: ScannedItemProps,
   nextProps: ScannedItemProps,
 ) {
+  const { ScannedItem: prevScannedItem, ...prevRest } = prevProps;
+  const { ScannedItem: nextScannedItem, ...nextRest } = nextProps;
   return (
-    !shallowDiffers(prevProps.ScannedItem, nextProps.ScannedItem) &&
-    prevProps.hide_allowed === nextProps.hide_allowed &&
-    prevProps.olde === nextProps.olde
+    !shallowDiffers(prevScannedItem, nextScannedItem) &&
+    !shallowDiffers(prevRest, nextRest)
   );
 }
 
