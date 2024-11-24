@@ -3,7 +3,7 @@
 (u)LeahTheTech
 (p)21430
 (e)|
-(+)Character names can no longer contain emojis.
+(+)Nanotrasen IT contractors have updated the records department to a brand new version of ThinkDOS that doesn't support the ancient "emoji" standard anymore. Consequently, you can no longer use emojis in your character names.
 (t)sat nov 23 24
 (u)JORJ949
 (p)21385
