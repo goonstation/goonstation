@@ -6,7 +6,7 @@
  */
 
 import { toTitleCase } from 'common/string';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import {
   Button,
   Collapsible,
@@ -49,6 +49,7 @@ export const Manufacturer = () => {
     all_categories,
     available_blueprints,
     banking_info,
+    contents_changed,
     delete_allowed,
     downloaded_blueprints,
     error,
@@ -77,10 +78,13 @@ export const Manufacturer = () => {
   const [swappingMaterialRef, setSwappingMaterialRef] = useState<string | null>(
     null,
   );
-  const memoized_producibility_data = useMemo(
-    () => producibility_data,
-    [producibility_data],
-  );
+  // Refs for stuff that shouldn't change too much
+  const memoized_resource_data = useRef(resource_data);
+  const memoized_producibility_data = useRef(producibility_data);
+  if (contents_changed) {
+    memoized_producibility_data.current = producibility_data;
+    memoized_resource_data.current = resource_data;
+  }
   const staticActions = useMemo(
     () => ({
       handleBlueprintRemove: (byondRef: string) =>
@@ -231,7 +235,9 @@ export const Manufacturer = () => {
                             blueprintData={blueprint}
                             manufacturerSpeed={speed}
                             blueprintProducibilityData={
-                              memoized_producibility_data[blueprint.byondRef]
+                              memoized_producibility_data.current[
+                                blueprint.byondRef
+                              ]
                             }
                             deleteAllowed={
                               delete_allowed !== AccessLevels.DENIED
@@ -257,38 +263,40 @@ export const Manufacturer = () => {
               <Stack.Item>
                 <Section title="LoadedDDDDDD Materials" textAlign="center">
                   <LabeledList>
-                    {resource_data?.map((resourceData: ResourceData) => (
-                      <LabeledList.Item
-                        key={resourceData.byondRef}
-                        buttons={
-                          <>
-                            <Button
-                              icon="eject"
-                              onClick={() =>
-                                act('material_eject', {
-                                  resource: resourceData.byondRef,
-                                })
-                              }
-                            />
-                            <Button
-                              icon="arrows-up-down"
-                              color={
-                                swappingMaterialRef !== resourceData.byondRef
-                                  ? null
-                                  : 'green'
-                              }
-                              onClick={() =>
-                                handleSwapPriority(resourceData.byondRef)
-                              }
-                            />
-                          </>
-                        }
-                        label={toTitleCase(resourceData.name)}
-                        textAlign="center"
-                      >
-                        {resourceData.amount.toFixed(1).padStart(5, '\u2007')}
-                      </LabeledList.Item>
-                    ))}
+                    {memoized_resource_data.current?.map(
+                      (resourceData: ResourceData) => (
+                        <LabeledList.Item
+                          key={resourceData.byondRef}
+                          buttons={
+                            <>
+                              <Button
+                                icon="eject"
+                                onClick={() =>
+                                  act('material_eject', {
+                                    resource: resourceData.byondRef,
+                                  })
+                                }
+                              />
+                              <Button
+                                icon="arrows-up-down"
+                                color={
+                                  swappingMaterialRef !== resourceData.byondRef
+                                    ? null
+                                    : 'green'
+                                }
+                                onClick={() =>
+                                  handleSwapPriority(resourceData.byondRef)
+                                }
+                              />
+                            </>
+                          }
+                          label={toTitleCase(resourceData.name)}
+                          textAlign="center"
+                        >
+                          {resourceData.amount.toFixed(1).padStart(5, '\u2007')}
+                        </LabeledList.Item>
+                      ),
+                    )}
                   </LabeledList>
                 </Section>
               </Stack.Item>

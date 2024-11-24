@@ -93,6 +93,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/list/material_patterns_by_ref = list() //! Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
 	// Kind of hacky but resource amts don't fit in ui_static_data, but they also shouldn't be updated so often in ui_data. And it's better than contents_prev
 	VAR_PROTECTED/contents_changed = TRUE //! Helper flag for whether or not the contents have chanced since the UI last read them. INTERNAL ONLY
+	VAR_PROTECTED/stored_resource_data = null //! Variable which caches resource data for the UI
+	VAR_PROTECTED/stored_producibility_by_ref = null //! Variable which caches producibility data for the UI
 
 	/* Production options */
 	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned "Miscellaneous".
@@ -307,18 +309,22 @@ TYPEINFO(/obj/machinery/manufacturer)
 			should_update_static = FALSE
 			src.update_static_data(user)
 
-		// Send material data as tuples of material name, material id, material amount
-		var/resource_data = null
-		var/list/blueprint_producibility_by_ref = null
-		if (src.contents_changed == TRUE)
+		// Get data about resources in the manufacturer and what it can/can't make, fetching stored values first.
+		var/resource_data = src.stored_resource_data
+		var/list/blueprint_producibility_by_ref = src.stored_producibility_by_ref
+		var/contents_set_changed = src.contents_changed // preserve value for UI
+		if (src.contents_changed)
 			// Handle updating material data and blueprint production eligibility when contents changed
 			src.contents_changed = FALSE
+			resource_data = list()
 			for (var/obj/item/material_piece/P as anything in src.get_contents())
 				if (!P.material)
 					continue
 				resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_ref["\ref[P.material]"]))
 			blueprint_producibility_by_ref = src.get_producibility_for_blueprints()
-
+			// Lastly, store it for next time
+			src.stored_resource_data = resource_data
+			src.stored_producibility_by_ref = blueprint_producibility_by_ref
 
 		// Package additional information into each queued item for the badges so that it can lookup its already sent information
 		var/queue_data = list()
@@ -350,7 +356,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"error" = src.error,
 			"resource_data" = resource_data,
 			"producibility_data" = blueprint_producibility_by_ref,
-			"contents_changed" = src.contents_changed,
+			"contents_changed" = contents_set_changed,
 			"manudrive_uses_left" = src.get_drive_uses_left(),
 			"indicators" = list("electrified" = src.is_electrified(),
 							    "malfunctioning" = src.malfunction,

@@ -20,6 +20,8 @@ export type ManufacturerData = {
   hidden_blueprints: Record<string, ManufacturableData[]>;
 
   producibility_data: Record<string, Record<string, BooleanLike>>;
+
+  contents_changed: BooleanLike;
   delete_allowed: BooleanLike;
   hacked: BooleanLike;
   malfunction: BooleanLike;
