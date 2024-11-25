@@ -538,6 +538,7 @@
 	var/max_cigs = 6
 	var/cigtype = /obj/item/clothing/mask/cigarette
 	var/package_style = "cigpacket"
+	var/list/allowed = list(/obj/item/clothing/mask/cigarette)
 	c_flags = ONBELT
 	stamina_damage = 3
 	stamina_cost = 3
@@ -545,11 +546,45 @@
 
 	New()
 		..()
+		AddComponent(/datum/component/transfer_input/quickloading, allowed, "onLoading", "filterLoading")
 		if (!cigtype)
 			return
 		for(var/i in 1 to src.max_cigs)
 			new src.cigtype(src)
 
+	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
+		if ((istype(over_object, /obj/table) || \
+					(isturf(over_object) && total_density(over_location) < 1)) && \
+					in_interact_range(over_object,src) && \
+					src.contents.len > 0)
+			usr.visible_message(SPAN_NOTICE("[usr] dumps out [src]'s contents onto [over_object]!"))
+			for (var/obj/item/thing in src.contents)
+				thing.set_loc(over_location)
+			src.UpdateIcon()
+			if (!islist(params)) params = params2list(params)
+			if (params) params["dumped"] = 1
+		else ..()
+
+	should_place_on(obj/target, params)
+		if (istype(target, /obj/table) && params && params["dumped"])
+			return FALSE
+		return ..()
+
+	get_help_message(dist, mob/user)
+		. = ..()
+		. += "Hold this and drag a nearby cigarette onto it to auto-fill.\n \
+			Drag this onto a nearby table or floor while holding it to dump its contents."
+
+/obj/item/cigpacket/proc/onLoading(atom/movable/incoming)
+	src.UpdateIcon()
+	// No idea is usr works via components like this, but there seems to be no recourse without altering the component itself.
+	incoming.add_fingerprint(usr)
+	return TRUE
+
+/obj/item/cigpacket/proc/filterLoading(obj/item/clothing/mask/cigarette/cig)
+	if (length(src.contents) >= max_cigs) return FALSE
+	if (cig.on) return FALSE
+	return TRUE
 
 /obj/item/cigpacket/nicofree
 	name = "nicotine-free cigarette packet"

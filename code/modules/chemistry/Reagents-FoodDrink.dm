@@ -4191,6 +4191,17 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
+		fooddrink/kombucha
+			name = "kombucha"
+			id = "kombucha"
+			fluid_r = 255
+			fluid_g = 239
+			fluid_b = 148
+			transparency = 200
+			taste = list("fizzy", "rich", "vinegary")
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
 		fooddrink/cafe_gele
 			name = "cafe gele"
 			id = "cafe_gele"
