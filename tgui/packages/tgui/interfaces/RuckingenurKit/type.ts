@@ -10,7 +10,7 @@ import { BooleanLike } from 'tgui-core/react';
 export interface RuckingenurKitData {
   hide_allowed: BooleanLike;
   scanned_items: Array<ScannedItemData>;
-  olde: BooleanLike;
+  legacyElectronicFrameMode: BooleanLike;
 }
 
 export interface ScannedItemData {

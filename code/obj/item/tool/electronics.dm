@@ -828,7 +828,7 @@
 	. = list(
 		hide_allowed = src.allowed(user),
 		scanned_items = scanned_items,
-		olde = src.olde
+		legacyElectronicFrameMode = src.olde
 	)
 
 /obj/machinery/rkit/ui_act(action, params)

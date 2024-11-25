@@ -19,7 +19,7 @@ import { RuckingenurKitData, ScannedItemData } from './type';
 
 export const RuckingenurKit = () => {
   const { data } = useBackend<RuckingenurKitData>();
-  const { scanned_items, hide_allowed, olde } = data;
+  const { scanned_items, hide_allowed, legacyElectronicFrameMode } = data;
 
   return (
     <Window width={925} height={420}>
@@ -30,7 +30,7 @@ export const RuckingenurKit = () => {
               ScannedItem={scanned_item}
               key={scanned_item.ref}
               hide_allowed={hide_allowed}
-              olde={olde}
+              legacyElectronicFrameMode={legacyElectronicFrameMode}
             />
           ))}
         </Section>
@@ -39,23 +39,26 @@ export const RuckingenurKit = () => {
   );
 };
 
-type ScannedItemProps = Pick<RuckingenurKitData, 'hide_allowed' | 'olde'> & {
+type ScannedItemProps = Pick<
+  RuckingenurKitData,
+  'hide_allowed' | 'legacyElectronicFrameMode'
+> & {
   ScannedItem: ScannedItemData;
 };
 const ScannedItem = memo((props: ScannedItemProps) => {
-  const { ScannedItem, hide_allowed, olde } = props;
+  const { ScannedItem, hide_allowed, legacyElectronicFrameMode } = props;
 
   return (
     <Stack style={{ display: 'inline-flex' }}>
       <ScannedItemMainButton
         ScannedItem={ScannedItem}
         hide_allowed={hide_allowed}
-        olde={olde}
+        legacyElectronicFrameMode={legacyElectronicFrameMode}
       />
       <ScannedItemExtraButtons
         ScannedItem={ScannedItem}
         hide_allowed={hide_allowed}
-        olde={olde}
+        legacyElectronicFrameMode={legacyElectronicFrameMode}
       />
     </Stack>
   );
@@ -76,12 +79,15 @@ function propsAreEqual(
 type ScannedItemMainButtonData = ScannedItemProps;
 const ScannedItemMainButton = (props: ScannedItemMainButtonData) => {
   const { act } = useBackend<RuckingenurKitData>();
-  const { ScannedItem, hide_allowed, olde } = props;
+  const { ScannedItem, hide_allowed, legacyElectronicFrameMode } = props;
   const { name, has_item_mats, blueprint_available, locked, imagePath, ref } =
     ScannedItem;
 
-  const mode = has_item_mats && olde ? 'done' : 'blueprint';
-  const available = blueprint_available && (!locked || hide_allowed || olde);
+  const mode =
+    has_item_mats && legacyElectronicFrameMode ? 'done' : 'blueprint';
+  const available =
+    blueprint_available &&
+    (!locked || hide_allowed || legacyElectronicFrameMode);
 
   return (
     <Stack.Item
