@@ -5,8 +5,8 @@
 
 @use 'sass:color';
 @use 'sass:math';
-@use '../base.scss';
-@use '../colors.scss';
+@use '../base';
+@use '../colors';
 
 $color-default: color.scale(
   colors.fg(colors.$primary),

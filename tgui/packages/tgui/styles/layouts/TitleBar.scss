@@ -4,8 +4,8 @@
  */
 
 @use 'sass:color';
-@use '../base.scss';
-@use '../colors.scss';
+@use '../base';
+@use '../colors';
 
 $text-color: rgba(255, 255, 255, 0.75) !default;
 $background-color: #363636 !default;

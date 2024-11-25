@@ -110,7 +110,8 @@ Left Mouse Button on turf/mob/obj      = Animate!<br>
 		/proc/spawn_beam,
 		/proc/animate_orbit,
 		/proc/animate_juggle,
-		/proc/animate_meltspark
+		/proc/animate_meltspark,
+		/proc/animate_little_spark,
 	)
 
 	New()

@@ -63,7 +63,7 @@ interface SpaceHeaterData {
   set_temperature;
 }
 
-export const space_heater = () => {
+export const SpaceHeater = () => {
   const { data } = useBackend<SpaceHeaterData>();
   const { emagged, on, set_temperature } = data;
   return (
