@@ -22008,7 +22008,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/space,
+/turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "jRG" = (
 /obj/item/device/radio/intercom/AI{
