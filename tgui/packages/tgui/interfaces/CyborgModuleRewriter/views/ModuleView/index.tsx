@@ -7,7 +7,7 @@
 
 import { Button, Section, Stack, Tabs } from 'tgui-core/components';
 
-import { useBackend } from '../../../../backend';
+import { useSafeBackend } from '../../../../backend';
 import * as actions from '../../action';
 import { EmptyPlaceholder } from '../../EmptyPlaceholder';
 import { Direction } from '../../type/action';
@@ -18,8 +18,9 @@ import { ModuleDetail } from './ModuleDetail';
 const SIDEBAR_WIDTH = 20;
 
 export const ModuleView = () => {
-  const { act, data } = useBackend<CyborgModuleRewriterData>();
-  const { modules: { available = [], selected } = {} } = data;
+  const { act, data } = useSafeBackend<CyborgModuleRewriterData>();
+  const { modules } = data;
+  const { available, selected } = modules ?? {};
   const handleEjectModule = (itemRef: string) =>
     actions.ejectModule(act, { itemRef });
   const handleMoveToolDown = (itemRef: string) =>
@@ -38,9 +39,9 @@ export const ModuleView = () => {
     actions.resetModule(act, { moduleId });
   const handleSelectModule = (itemRef: string) =>
     actions.selectModule(act, { itemRef });
-  const { item_ref: selectedModuleRef, tools = [] } = selected || {};
+  const { item_ref: selectedModuleRef, tools } = selected ?? {};
 
-  if (available.length === 0) {
+  if (!available || available.length === 0) {
     return (
       <Section fill>
         <EmptyPlaceholder>No modules inserted</EmptyPlaceholder>
@@ -58,14 +59,14 @@ export const ModuleView = () => {
                 <Button
                   icon="eject"
                   color="transparent"
-                  onClick={() => handleEjectModule(itemRef)}
+                  onClick={() => itemRef && handleEjectModule(itemRef)}
                   tooltip={`Eject ${name}`}
                 />
               );
               return (
                 <Tabs.Tab
                   key={itemRef}
-                  onClick={() => handleSelectModule(itemRef)}
+                  onClick={() => itemRef && handleSelectModule(itemRef)}
                   rightSlot={ejectButton}
                   selected={itemRef === selectedModuleRef}
                 >
@@ -83,7 +84,7 @@ export const ModuleView = () => {
             onMoveToolUp={handleMoveToolUp}
             onRemoveTool={handleRemoveTool}
             onResetModule={handleResetModule}
-            tools={tools}
+            tools={tools ?? null}
           />
         ) : (
           <Section fill>

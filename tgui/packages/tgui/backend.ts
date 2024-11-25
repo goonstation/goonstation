@@ -301,6 +301,16 @@ export const useBackend = <TData>() => {
   };
 };
 
+// |GOONSTATION-ADD|
+export type NestedPartial<T> = {
+  [K in keyof T]?: T[K] extends Array<infer R>
+    ? Array<NestedPartial<R>> | null
+    : NestedPartial<T[K]> | null;
+};
+
+// |GOONSTATION-ADD|
+export const useSafeBackend = <TData>() => useBackend<NestedPartial<TData>>();
+
 /**
  * A tuple that contains the state and a setter function for it.
  */

@@ -8,6 +8,7 @@
 import { useState } from 'react';
 import { Button, Section, Stack } from 'tgui-core/components';
 
+import type { NestedPartial } from '../../../../backend';
 import type { ToolData } from '../../type/data';
 import { Tools } from './Tools';
 
@@ -43,29 +44,31 @@ interface ModuleProps {
   onMoveToolUp: (itemRef: string) => void;
   onRemoveTool: (itemRef: string) => void;
   onResetModule: (moduleId: string) => void;
-  tools: ToolData[];
+  tools: NestedPartial<ToolData>[] | null;
 }
 
 export const ModuleDetail = (props: ModuleProps, context: unknown) => {
   const { onMoveToolDown, onMoveToolUp, onRemoveTool, onResetModule, tools } =
     props;
-  const [selectedToolRef, setSelectedToolRef] = useState<string | undefined>(
-    undefined,
-  );
+  const [selectedToolRef, setSelectedToolRef] = useState<string | null>(null);
   const handleRemoveTool = (itemRef: string) => {
-    const toolIndex = tools.findIndex((tool) => tool.item_ref === itemRef);
-    setSelectedToolRef(tools[toolIndex + 1]?.item_ref);
+    const toolIndex = (tools ?? []).findIndex(
+      (tool) => tool.item_ref === itemRef,
+    );
+    setSelectedToolRef(tools?.[toolIndex + 1]?.item_ref ?? null);
     onRemoveTool(itemRef);
   };
   const resolvedSelectedToolRef =
     selectedToolRef &&
-    tools.find((tool) => tool.item_ref === selectedToolRef)?.item_ref;
+    ((tools ?? []).find((tool) => tool.item_ref === selectedToolRef)
+      ?.item_ref ??
+      null);
   if (selectedToolRef && !resolvedSelectedToolRef) {
-    setSelectedToolRef(undefined);
+    setSelectedToolRef(null);
   }
   const toolsButtons = (
     <OrganizeButtons
-      itemRef={resolvedSelectedToolRef}
+      itemRef={resolvedSelectedToolRef ?? undefined}
       onMoveDown={onMoveToolDown}
       onMoveUp={onMoveToolUp}
       onRemove={handleRemoveTool}

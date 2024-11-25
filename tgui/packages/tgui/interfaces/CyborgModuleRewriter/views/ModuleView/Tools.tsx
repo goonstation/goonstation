@@ -8,6 +8,7 @@
 import { PropsWithChildren } from 'react';
 import { Tabs } from 'tgui-core/components';
 
+import type { NestedPartial } from '../../../../backend';
 import { EmptyPlaceholder } from '../../EmptyPlaceholder';
 import type { ToolData } from '../../type/data';
 
@@ -27,13 +28,13 @@ const Tool = (props: PropsWithChildren<ToolProps>) => {
 
 interface ToolsProps {
   onSelectTool: (itemRef: string) => void;
-  selectedToolRef: string | undefined;
-  tools: ToolData[] | undefined;
+  selectedToolRef: string | null;
+  tools: NestedPartial<ToolData>[] | null;
 }
 
 export const Tools = (props: ToolsProps) => {
-  const { onSelectTool, selectedToolRef, tools = [] } = props;
-  if (tools.length === 0) {
+  const { onSelectTool, selectedToolRef, tools } = props;
+  if (!tools || tools.length === 0) {
     return <EmptyPlaceholder>Module has no tools</EmptyPlaceholder>;
   }
   return (
@@ -43,7 +44,7 @@ export const Tools = (props: ToolsProps) => {
         return (
           <Tool
             key={itemRef}
-            onClick={() => onSelectTool(itemRef)}
+            onClick={() => itemRef && onSelectTool(itemRef)}
             selected={itemRef === selectedToolRef}
           >
             {name}
