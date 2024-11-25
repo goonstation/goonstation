@@ -261,7 +261,7 @@ export const Manufacturer = () => {
                 />
               </Stack.Item>
               <Stack.Item>
-                <Section title="LoadedDDDDDD Materials" textAlign="center">
+                <Section title="Loaded Materials" textAlign="center">
                   <LabeledList>
                     {memoized_resource_data.current?.map(
                       (resourceData: ResourceData) => (
