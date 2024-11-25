@@ -349,7 +349,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 
 	caxe
 		comname = "Crash axe"
-		desc = "A light utility axe capable of service as a vicious weapon."
+		desc = "A light utility axe that can be serviced as a vicious weapon."
 		comtype = /obj/item/crashaxe
 		price = 200
 

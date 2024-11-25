@@ -2143,10 +2143,9 @@ obj/item/whetstone
 
 	w_class = W_CLASS_SMALL
 	hit_type = DAMAGE_CUT
-	leaves_slash_wound = TRUE //yeah prolly
-	force = 14
+	force = 13
 	stamina_damage = 25
-	throwforce = 24
+	throwforce = 21
 	throw_speed = 4
 	throw_range = 7
 
@@ -2158,7 +2157,7 @@ obj/item/whetstone
 
 	New()
 		..()
-		src.setItemSpecial(/datum/item_special/swipe)
+		src.setItemSpecial(/datum/item_special/simple)
 		BLOCK_SETUP(BLOCK_ROD)
 
 	// I refuse to add to the item/knife/butcher inheritance tree. I just won't do it.
@@ -2166,8 +2165,8 @@ obj/item/whetstone
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 
-			C.changeStatus("knockdown", 3 SECONDS) //stun is meant to give an opportunity to sneak in and steal weapons, not for rampaging
-			C.changeStatus("disorient", 5 SECONDS)
+			C.changeStatus("knockdown", 2 SECONDS) //stun is meant to give an opportunity to sneak in and steal weapons, not for rampaging
+			C.changeStatus("disorient", 4 SECONDS)
 			C.force_laydown_standup()
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
 
@@ -2186,7 +2185,7 @@ obj/item/whetstone
 			src.tool_flags = breaking_tool_flags
 			icon_state = "crashaxe"
 			boutput(user, SPAN_NOTICE("You adjust your grip on [src], readying it to break stuff."))
-			src.setItemSpecial(/datum/item_special/swipe)
+			src.setItemSpecial(/datum/item_special/simple)
 
 /obj/item/swords/sord
 	name = "gross sord"
