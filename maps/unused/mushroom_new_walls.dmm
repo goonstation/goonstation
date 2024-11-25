@@ -3908,7 +3908,7 @@
 "avM" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	id = "Disposal Exit";
+	id = s;
 	throw_speed = 4
 	},
 /turf/simulated/floor/plating,
@@ -5028,6 +5028,10 @@
 	},
 /obj/disposalpipe/trunk{
 	dir = 1
+	},
+/obj/machinery/conveyor/WE{
+	id = "garbage";
+	operating = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -21995,7 +21999,7 @@
 "jRC" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	dir = 4;
-	id = "disp-vent";
+	id = "Disposal Exit";
 	name = "Disposal Vents"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
@@ -29237,6 +29241,7 @@
 	},
 /obj/machinery/conveyor/WE{
 	id = "garbage";
+	move_lag = 30;
 	operating = 1
 	},
 /turf/simulated/floor/plating,
@@ -39719,6 +39724,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/qm)
+"xfl" = (
+/obj/machinery/conveyor/WE{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "xfu" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -90036,7 +90049,7 @@ aso
 ath
 aua
 arn
-aBS
+xfl
 axg
 azg
 hMM
