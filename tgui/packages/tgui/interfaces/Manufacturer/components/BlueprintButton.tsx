@@ -19,7 +19,7 @@ import { round } from 'tgui-core/math';
 
 import { truncate } from '../../../format';
 import { BlueprintButtonStyle, BlueprintMiniButtonStyle } from '../constant';
-import { ManufacturableData, RequirementData, ResourceData } from '../type';
+import { ManufacturableData } from '../type';
 import { ButtonWithBadge } from './ButtonWithBadge';
 import { CenteredText } from './CenteredText';
 
@@ -35,47 +35,6 @@ export type BlueprintButtonProps = {
   manufacturerSpeed: number;
   deleteAllowed: boolean;
   hasPower: boolean;
-};
-
-/*
-Get whether or not there is a sufficient amount to make. does NOT affect sanity checks on the DM side,
-this just offloads some of the computation to the client.
-
-Consequently, if the checks on the .dm end change, this has to change as well.
-
-Only the DM checks matter for actually making the item though, this just enables and disables buttons /
-shows what materials are missing.
-*/
-const getProductionSatisfaction = (
-  requirement_data: RequirementData[],
-  materials_stored: ResourceData[],
-) => {
-  if (!requirement_data || !materials_stored) {
-    return false;
-  }
-  // Copy values of mats stored to edit in case we need to try the same material twice
-  let material_amts_predicted: Record<string, number> = {};
-  materials_stored.forEach(
-    (value: ResourceData) =>
-      (material_amts_predicted[value.byondRef] = value.amount),
-  );
-  let patterns_satisfied: boolean[] = [];
-  for (let i in requirement_data) {
-    const target_pattern = requirement_data[i].id;
-    const target_amount = requirement_data[i].amount / 10;
-    const matchingMaterial = materials_stored.find(
-      (material: ResourceData) =>
-        material_amts_predicted[material.byondRef] >= target_amount &&
-        material.satisfies?.includes(target_pattern),
-    );
-    if (matchingMaterial === undefined) {
-      patterns_satisfied.push(false);
-      continue;
-    }
-    material_amts_predicted[matchingMaterial.byondRef] -= target_amount;
-    patterns_satisfied.push(true);
-  }
-  return patterns_satisfied;
 };
 
 export const BlueprintButtonView = (props: BlueprintButtonProps) => {
