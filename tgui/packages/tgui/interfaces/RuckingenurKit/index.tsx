@@ -15,6 +15,7 @@ import {
   BlueprintButtonStyle,
   BlueprintMiniButtonStyle,
 } from '../Manufacturer/constant';
+import { ScannedItemLegacyElectronicFrameMode } from './ScannedItemLegacyElectronicFrameMode';
 import { RuckingenurKitData, ScannedItemData } from './type';
 
 export const RuckingenurKit = () => {
@@ -25,46 +26,48 @@ export const RuckingenurKit = () => {
     <Window width={925} height={420}>
       <Window.Content>
         <Section title="Scanned Items" scrollable fill>
-          {scanned_items.map((scanned_item) => (
-            <ScannedItem
-              ScannedItem={scanned_item}
-              key={scanned_item.ref}
-              hide_allowed={hide_allowed}
-              legacyElectronicFrameMode={legacyElectronicFrameMode}
-            />
-          ))}
+          {scanned_items.map((scanned_item) =>
+            !legacyElectronicFrameMode ? (
+              <ScannedItem
+                ScannedItem={scanned_item}
+                key={scanned_item.ref}
+                hide_allowed={hide_allowed}
+              />
+            ) : (
+              <ScannedItemLegacyElectronicFrameMode
+                ScannedItem={scanned_item}
+                key={scanned_item.ref}
+                hide_allowed={hide_allowed}
+              />
+            ),
+          )}
         </Section>
       </Window.Content>
     </Window>
   );
 };
 
-type ScannedItemProps = Pick<
-  RuckingenurKitData,
-  'hide_allowed' | 'legacyElectronicFrameMode'
-> & {
+export type ScannedItemProps = Pick<RuckingenurKitData, 'hide_allowed'> & {
   ScannedItem: ScannedItemData;
 };
 const ScannedItem = memo((props: ScannedItemProps) => {
-  const { ScannedItem, hide_allowed, legacyElectronicFrameMode } = props;
+  const { ScannedItem, hide_allowed } = props;
 
   return (
     <Stack style={{ display: 'inline-flex' }}>
       <ScannedItemMainButton
         ScannedItem={ScannedItem}
         hide_allowed={hide_allowed}
-        legacyElectronicFrameMode={legacyElectronicFrameMode}
       />
       <ScannedItemExtraButtons
         ScannedItem={ScannedItem}
         hide_allowed={hide_allowed}
-        legacyElectronicFrameMode={legacyElectronicFrameMode}
       />
     </Stack>
   );
 }, propsAreEqual);
 
-function propsAreEqual(
+export function propsAreEqual(
   prevProps: ScannedItemProps,
   nextProps: ScannedItemProps,
 ) {
@@ -76,18 +79,14 @@ function propsAreEqual(
   );
 }
 
-type ScannedItemMainButtonData = ScannedItemProps;
+export type ScannedItemMainButtonData = ScannedItemProps;
 const ScannedItemMainButton = (props: ScannedItemMainButtonData) => {
   const { act } = useBackend<RuckingenurKitData>();
-  const { ScannedItem, hide_allowed, legacyElectronicFrameMode } = props;
-  const { name, has_item_mats, blueprint_available, locked, imagePath, ref } =
-    ScannedItem;
+  const { ScannedItem, hide_allowed } = props;
+  const { name, blueprint_available, locked, imagePath, ref } = ScannedItem;
 
-  const mode =
-    has_item_mats && legacyElectronicFrameMode ? 'done' : 'blueprint';
-  const available =
-    blueprint_available &&
-    (!locked || hide_allowed || legacyElectronicFrameMode);
+  const mode = 'blueprint';
+  const available = blueprint_available && (!locked || hide_allowed);
 
   return (
     <Stack.Item
@@ -123,7 +122,7 @@ const ScannedItemMainButton = (props: ScannedItemMainButtonData) => {
 };
 
 type ScannedItemExtraButtonsData = ScannedItemProps;
-const ScannedItemExtraButtons = (props: ScannedItemExtraButtonsData) => {
+export const ScannedItemExtraButtons = (props: ScannedItemExtraButtonsData) => {
   const { act } = useBackend<RuckingenurKitData>();
   const { ScannedItem, hide_allowed } = props;
   const { description, ref, locked } = ScannedItem;
