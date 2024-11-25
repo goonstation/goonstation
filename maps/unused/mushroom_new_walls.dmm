@@ -3901,7 +3901,7 @@
 /area/station/maintenance/disposal)
 "avL" = (
 /obj/machinery/launcher_loader/east{
-	id = s
+	id = "Disposal Exit"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
