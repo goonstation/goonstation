@@ -638,6 +638,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.grump_message(usr, "You cannot do that while the unit is working, it is already using the current materials!")
 					return
 				src.swap_materials(usr, locate(params["resource_1"]), locate(params["resource_2"]))
+				src.contents_changed = TRUE
 				return TRUE
 
 			if ("card")
