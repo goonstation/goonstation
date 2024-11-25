@@ -148,7 +148,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 
 /datum/syndicate_buylist/generic/cashcase
 	name = "Syndicate briefcase full of cash"
-	item = /obj/item/cash_briefcase/syndicate/loaded
+	item =s list(/obj/item/cash_briefcase/syndicate/loaded)
 	cost = 2
 	max_buy = 2
 	desc = "A syndicate briefcase designed to hold large quantities of cash. Comes loaded with 15 thousand credits."
