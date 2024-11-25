@@ -2851,6 +2851,7 @@
 			return
 		else
 			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
+			newname = remove_bad_name_characters(newname)
 			if (!length(newname) || copytext(newname,1,2) == " ")
 				src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
 				continue

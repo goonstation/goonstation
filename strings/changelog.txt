@@ -1,4 +1,17 @@
 
+(t)sun nov 24 24
+(u)Egregorious
+(p)21374
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Enabled quick-filling and dumping of cigarette packets. Inspect them for more detailed information.
+(u)FlameArrow57
+(p)21432
+(e)🆕🍝|C-Feature, A-Catering
+(+)Added kombucha drink recipe. 3u sweet tea + 1u beer + 1u antihol -> 3u kombucha over 9 seconds
+(u)LeahTheTech
+(p)21430
+(e)|
+(+)Nanotrasen IT contractors have updated the records department to a brand new version of ThinkDOS that doesn't support the ancient "emoji" standard anymore. Consequently, you can no longer use emojis in your character names.
 (t)sat nov 23 24
 (u)JORJ949
 (p)21385
