@@ -19,6 +19,7 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitThis": true,
     // "noUncheckedIndexedAccess": true, TODO: enable
+    // "noUnusedLocals": true, TODO: enable
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": false,

@@ -79,7 +79,7 @@ const DataInputEntry = (props) => {
 };
 
 export const DataInputBitFieldEntry = (props) => {
-  const { value, tooltip, name, type, list } = props;
+  const { value, name, type } = props;
   const { act } = useBackend();
   return (
     <Section>
@@ -104,7 +104,7 @@ export const DataInputBitFieldEntry = (props) => {
 };
 
 const DataInputListEntry = (props) => {
-  const { value, tooltip, name, type, list } = props;
+  const { value, name, type, list } = props;
   const { act } = useBackend();
   return (
     <Section fill scrollable height={15}>
