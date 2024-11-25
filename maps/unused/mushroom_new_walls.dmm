@@ -21999,7 +21999,7 @@
 "jRC" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	dir = 4;
-	id = "Disposal Exit";
+	id = "disp-vent";
 	name = "Disposal Vents"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
