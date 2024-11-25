@@ -34,7 +34,7 @@ export const AutoInjector = () => {
   } = data;
 
   return (
-    <Window width={360} height={520} theme={'neutral'}>
+    <Window width={360} height={520}>
       <Window.Content>
         <Section
           title={'Contents'}
