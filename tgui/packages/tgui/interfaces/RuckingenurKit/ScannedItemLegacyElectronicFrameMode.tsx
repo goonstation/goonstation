@@ -27,7 +27,6 @@ export const ScannedItemLegacyElectronicFrameMode = memo(
       <Stack style={{ display: 'inline-flex' }}>
         <ScannedItemMainButton
           ScannedItem={ScannedItem}
-          hide_allowed={hide_allowed}
           mode={mode}
           available={available}
         />

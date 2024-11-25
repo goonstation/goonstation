@@ -30,7 +30,6 @@ export const ScannedItem = memo((props: ScannedItemProps) => {
     <Stack style={{ display: 'inline-flex' }}>
       <ScannedItemMainButton
         ScannedItem={ScannedItem}
-        hide_allowed={hide_allowed}
         mode={mode}
         available={available}
       />
@@ -54,7 +53,7 @@ export function propsAreEqual(
   );
 }
 
-type ScannedItemMainButtonData = ScannedItemProps & {
+type ScannedItemMainButtonData = Pick<ScannedItemProps, 'ScannedItem'> & {
   mode: string;
   available: BooleanLike;
 };
