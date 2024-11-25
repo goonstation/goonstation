@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { Button, NoticeBox, Stack } from 'tgui-core/components';
+import { Button, NoticeBox } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -14,26 +14,18 @@ import { Output } from './Output';
 import { Pump } from './Pump';
 import type { GasMixerData } from './types';
 
-const PUMP_SECTION_WIDTH = '320px';
-
 export const GasMixer = (_props: unknown) => {
   const { data, act } = useBackend<GasMixerData>();
   const { name, mixerid, mixer_information } = data;
   return (
-    <Window theme="ntos" title={name} width={550} height={285}>
-      <Window.Content>
+    <Window theme="ntos" title={name} width={350} height={525}>
+      <Window.Content scrollable>
         {mixerid ? (
           mixer_information ? (
             <>
               <Inputs />
-              <Stack>
-                <Stack.Item width={PUMP_SECTION_WIDTH}>
-                  <Pump />
-                </Stack.Item>
-                <Stack.Item grow>
-                  <Output />
-                </Stack.Item>
-              </Stack>
+              <Pump />
+              <Output />
             </>
           ) : (
             <NoticeBox warning>

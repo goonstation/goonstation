@@ -19,7 +19,7 @@ import type { GasMixerData } from './types';
 
 export const Pump = () => {
   return (
-    <Section title="Pump" height="100%">
+    <Section title="Pump">
       <LabeledList>
         <LabeledList.Item label="Gas Input Ratio">
           <GasInputRatio />
