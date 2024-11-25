@@ -19,6 +19,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": false,
+    "strictBindCallApply": true,
     "strictNullChecks": true,
     "target": "ES5"
   },

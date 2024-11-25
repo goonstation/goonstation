@@ -83,7 +83,7 @@ export const DataInputBitFieldEntry = (props) => {
   const { act } = useBackend();
   return (
     <Section>
-      {Array.apply(null, { length: 24 }).map((item, buttonIndex) => (
+      {Array.apply(null, Array(24)).map((_item, buttonIndex) => (
         <Button.Checkbox
           minWidth={4}
           checked={value & (1 << buttonIndex)}
