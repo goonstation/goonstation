@@ -237,7 +237,7 @@ export const Manufacturer = () => {
                             blueprintData={blueprint}
                             manufacturerSpeed={speed}
                             blueprintProducibilityData={
-                              producibility_data[
+                              producibility_data_ref.current[
                                 blueprint.byondRef
                               ]
                             }
@@ -265,7 +265,7 @@ export const Manufacturer = () => {
               <Stack.Item>
                 <Section title="Loaded Materials" textAlign="center">
                   <LabeledList>
-                    {resource_data?.map(
+                    {resource_data_ref.current?.map(
                       (resourceData: ResourceData) => (
                         <LabeledList.Item
                           key={resourceData.byondRef}
