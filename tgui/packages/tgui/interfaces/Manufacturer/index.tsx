@@ -78,13 +78,6 @@ export const Manufacturer = () => {
   const [swappingMaterialRef, setSwappingMaterialRef] = useState<string | null>(
     null,
   );
-  // Refs for stuff that shouldn't change too much
-  const memoized_resource_data = useRef(resource_data);
-  const memoized_producibility_data = useRef(producibility_data);
-  if (contents_changed) {
-    memoized_producibility_data.current = producibility_data;
-    memoized_resource_data.current = resource_data;
-  }
   const staticActions = useMemo(
     () => ({
       handleBlueprintRemove: (byondRef: string) =>
@@ -123,7 +116,7 @@ export const Manufacturer = () => {
   // Local states for pleasant UX while selecting one button (highlight green) and then second button (perform action)
   const handleSwapPriority = useCallback(
     (materialRef: string) => {
-      if (materialRef === swappingMaterialRef) {
+      if (swappingMaterialRef !== null && materialRef !== swappingMaterialRef) {
         act('material_swap', {
           resource_1: swappingMaterialRef,
           resource_2: materialRef,
@@ -141,6 +134,15 @@ export const Manufacturer = () => {
   const hasPower = !!indicators?.hasPower;
   const manudriveName = manudrive?.name ?? '';
   const manudriveLimit = manudrive?.limit;
+
+  // Stores a ref copy of the resource+producibility data which is updated ONLY when the contents of the manufacturer are changed.
+  // This helps make sure that the buttons can actually be memoized, as they wouldn't otherwise.
+  const resource_data_ref = useRef(resource_data);
+  const producibility_data_ref = useRef(producibility_data);
+  if (contents_changed) {
+    producibility_data_ref.current = producibility_data;
+    resource_data_ref.current = resource_data;
+  }
 
   // Converts the blueprints we get into one larger list sorted by category.
   // This is done here instead of sending one big list to reduce the amount of times we need to refresh static data.
@@ -235,7 +237,7 @@ export const Manufacturer = () => {
                             blueprintData={blueprint}
                             manufacturerSpeed={speed}
                             blueprintProducibilityData={
-                              memoized_producibility_data.current[
+                              producibility_data[
                                 blueprint.byondRef
                               ]
                             }
@@ -263,7 +265,7 @@ export const Manufacturer = () => {
               <Stack.Item>
                 <Section title="Loaded Materials" textAlign="center">
                   <LabeledList>
-                    {memoized_resource_data.current?.map(
+                    {resource_data?.map(
                       (resourceData: ResourceData) => (
                         <LabeledList.Item
                           key={resourceData.byondRef}
