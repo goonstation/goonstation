@@ -649,6 +649,7 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	see_face = FALSE
 	allow_staple = 0
 	var/low_visibility = TRUE
+	material_amt = 0.5
 
 	attackby(obj/item/W, mob/user) // Allows the mask be modified, if one only wants the fashion
 		if (isweldingtool(W) && low_visibility)
