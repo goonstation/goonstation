@@ -3684,7 +3684,8 @@ mob/living/carbon/human/has_genetics()
 		src.belt.Attackby(I, src)
 		if (I in belt_contents)
 			src.last_stored_belt = I
-	else if (src.last_stored_belt)
+			ON_COOLDOWN(src, "belt_auto_unstore", COMBAT_CLICK_DELAY)
+	else if (src.last_stored_belt && !GET_COOLDOWN(src, "belt_auto_unstore"))
 		if (!QDELETED(src.last_stored_belt) && (src.last_stored_belt in belt_contents))
 			src.last_stored_belt.Attackhand(src)
 
@@ -3698,6 +3699,7 @@ mob/living/carbon/human/has_genetics()
 		src.back.Attackby(I, src)
 		if (I in backpack_contents)
 			src.last_stored_backpack = I
-	else if (src.last_stored_backpack)
+			ON_COOLDOWN(src, "backpack_auto_unstore", COMBAT_CLICK_DELAY)
+	else if (src.last_stored_backpack && !GET_COOLDOWN(src, "backpack_auto_unstore"))
 		if (!QDELETED(src.last_stored_backpack) && (src.last_stored_backpack in backpack_contents))
 			src.last_stored_backpack.Attackhand(src)
