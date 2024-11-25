@@ -21,7 +21,6 @@ export type ManufacturerData = {
 
   producibility_data: Record<string, Record<string, BooleanLike>>;
 
-  contents_changed: BooleanLike;
   delete_allowed: BooleanLike;
   hacked: BooleanLike;
   malfunction: BooleanLike;

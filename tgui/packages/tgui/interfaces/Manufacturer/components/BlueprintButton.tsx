@@ -193,13 +193,18 @@ export const BlueprintButton = memo(
   BlueprintButtonView,
   (prevProps, nextProps) => {
     if (
-      prevProps.blueprintData !== nextProps.blueprintData ||
       prevProps.manufacturerSpeed !== nextProps.manufacturerSpeed ||
       prevProps.deleteAllowed !== nextProps.deleteAllowed ||
       prevProps.hasPower !== nextProps.hasPower
     ) {
       return false;
     }
+    // Special check for blueprintData as it has moving parts and otherwise pretends to change on material swap
+    // The only truly constant thing it checks is byondRef as NOTHING else should change if the ref doesn't
+    if (prevProps.blueprintData.byondRef !== nextProps.blueprintData.byondRef) {
+      return false;
+    }
+    // Slightly more in depth check for the producibility data to see if it actually changed
     for (let key in prevProps.blueprintProducibilityData) {
       if (
         prevProps.blueprintProducibilityData[key] !==

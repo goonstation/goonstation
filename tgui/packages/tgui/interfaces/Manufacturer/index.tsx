@@ -49,7 +49,6 @@ export const Manufacturer = () => {
     all_categories,
     available_blueprints,
     banking_info,
-    contents_changed,
     delete_allowed,
     downloaded_blueprints,
     error,
@@ -139,7 +138,11 @@ export const Manufacturer = () => {
   // This helps make sure that the buttons can actually be memoized, as they wouldn't otherwise.
   const resource_data_ref = useRef(resource_data);
   const producibility_data_ref = useRef(producibility_data);
-  if (contents_changed) {
+
+  // Checking for a change in resource data via stringified vars is effectively checking if contents change
+  if (
+    JSON.stringify(resource_data) !== JSON.stringify(resource_data_ref.current)
+  ) {
     producibility_data_ref.current = producibility_data;
     resource_data_ref.current = resource_data;
   }
@@ -237,9 +240,7 @@ export const Manufacturer = () => {
                             blueprintData={blueprint}
                             manufacturerSpeed={speed}
                             blueprintProducibilityData={
-                              producibility_data_ref.current[
-                                blueprint.byondRef
-                              ]
+                              producibility_data_ref.current[blueprint.byondRef]
                             }
                             deleteAllowed={
                               delete_allowed !== AccessLevels.DENIED
