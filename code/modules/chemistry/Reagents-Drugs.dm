@@ -975,8 +975,10 @@ datum
 			addiction_prob = 10
 			addiction_min = 10
 			overdose = 20
+			stun_resist = 50
 			hunger_value = -0.1
 			thirst_value = -0.09
+			threshold = THRESHOLD_INIT
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom

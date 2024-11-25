@@ -76,6 +76,7 @@ datum
 			overdose = 15
 			var/counter = 1 //Data is conserved...so some jerkbag could inject a monkey with this, wait for data to build up, then extract some instant KO juice.  Dumb.
 			depletion_rate = 0.4
+			stun_resist = 25
 			value = 5
 			threshold = THRESHOLD_INIT
 
@@ -135,6 +136,7 @@ datum
 			minimum_reaction_temperature = T0C + 80 //This stuff is extremely flammable
 			var/temp_reacted = 0
 			value = 5
+			stun_resist = 30
 			threshold = THRESHOLD_INIT
 
 			cross_threshold_over()
@@ -1286,6 +1288,7 @@ datum
 			transparency = 220
 			addiction_prob = 1
 			addiction_min = 10
+			stun_resist = 15
 			value = 10 // 4 3 1 1 1
 			threshold = THRESHOLD_INIT
 			var/list/flushed_reagents = list("histamine","itching")
