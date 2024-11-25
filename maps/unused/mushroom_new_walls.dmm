@@ -3901,14 +3901,14 @@
 /area/station/maintenance/disposal)
 "avL" = (
 /obj/machinery/launcher_loader/east{
-	id = "Disposal Exit"
+	id = s
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "avM" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	id = s;
+	id = "Disposal Exit";
 	throw_speed = 4
 	},
 /turf/simulated/floor/plating,
@@ -21999,7 +21999,7 @@
 "jRC" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	dir = 4;
-	id = "disp-vent";
+	id = "Disposal Exit";
 	name = "Disposal Vents"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
