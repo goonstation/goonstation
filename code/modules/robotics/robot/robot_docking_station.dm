@@ -246,6 +246,23 @@ TYPEINFO(/obj/machinery/recharge_station)
 	if (ishuman(AM))
 		src.move_human_inside(user, AM)
 
+/obj/machinery/recharge_station/receive_silicon_hotkey(mob/user)
+	. = ..()
+
+	if (!isAI(user))
+		return
+
+	var/mob/living/silicon/ai/mainframe = null
+	if (isAIeye(user))
+		var/mob/living/intangible/aieye/eye = user
+		mainframe = eye.mainframe
+	else
+		mainframe = user
+
+	if(user.client.check_key(KEY_OPEN))
+		if (src.occupant)
+			mainframe.deploy_to_shell(src.occupant)
+
 /obj/machinery/recharge_station/proc/build_icon()
 	if (src.occupant)
 		src.UpdateOverlays(image('icons/obj/robot_parts.dmi', "station-occu"), "occupant")
@@ -629,6 +646,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			if (R.shell || R.dependent) //no renaming AI shells
 				return
 			var/newname = copytext(strip_html(sanitize(tgui_input_text(user, "What do you want to rename [R]?", "Cyborg Maintenance", R.name))), 1, 64)
+			newname = remove_bad_name_characters(newname)
 			if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat || !newname)
 				return
 			if (url_regex?.Find(newname))

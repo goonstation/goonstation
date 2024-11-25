@@ -1199,6 +1199,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		if(!area.requires_power)
 			return
 	else
+		if (QDELETED(src)) //we're in the failed-to-gc pile, stop generating runtimes
+			src.UnsubscribeProcess()
+			return
 		SPAWN(1)
 			qdel(src)
 		CRASH("Broken-ass APC [identify_object(src)] @[x],[y],[z] on [map_settings ? map_settings.name : "UNKNOWN"]")
