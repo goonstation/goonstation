@@ -11,19 +11,19 @@ import { formatMoney } from '../../../format';
 import { BankAccount } from '../type';
 
 export type CardInfoProps = {
-  actionCardLogin: () => void;
-  actionCardLogout: () => void;
+  onCardLogin: () => void;
+  onCardLogout: () => void;
   banking_info: BankAccount;
 };
 
 export const CardInfo = (props: CardInfoProps) => {
-  const { actionCardLogin, actionCardLogout, banking_info } = props;
+  const { onCardLogin, onCardLogout, banking_info } = props;
   return banking_info === null ? (
     <Section textAlign="center">
       <Stack vertical>
         <Stack.Item>No Account Found.</Stack.Item>
         <Stack.Item>
-          <Button icon="add" onClick={() => actionCardLogin()}>
+          <Button icon="add" onClick={onCardLogin}>
             Add Account
           </Button>
         </Stack.Item>
@@ -33,7 +33,7 @@ export const CardInfo = (props: CardInfoProps) => {
     <Section
       title="Account Info"
       buttons={
-        <Button icon="minus" onClick={() => actionCardLogout()}>
+        <Button icon="minus" onClick={onCardLogout}>
           Log Out
         </Button>
       }

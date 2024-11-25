@@ -2583,6 +2583,7 @@ proc/get_mobs_trackable_by_AI()
 			newname = default_name
 		else
 			newname = tgui_input_text(renaming_mob || src, "You are an AI. Would you like to change your name to something else?", "Name Change", client?.preferences?.robot_name || default_name)
+			newname = remove_bad_name_characters(newname)
 			if(newname && newname != default_name)
 				phrase_log.log_phrase("name-ai", newname, no_duplicates=TRUE)
 		if (src.brain.owner != brain_owner)

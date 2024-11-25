@@ -1820,7 +1820,7 @@ datum
 					boutput(M, SPAN_NOTICE("<b>Oh. God.</b>"))
 					SPAWN(2 SECONDS)
 						if (M)
-							M.become_statue_ice()
+							M.become_statue("ice")
 				..()
 				return
 
@@ -4188,6 +4188,17 @@ datum
 			fluid_b = 54
 			transparency = 220
 			taste = list("aromatic", "citrusy")
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/kombucha
+			name = "kombucha"
+			id = "kombucha"
+			fluid_r = 255
+			fluid_g = 239
+			fluid_b = 148
+			transparency = 200
+			taste = list("fizzy", "rich", "vinegary")
 			reagent_state = LIQUID
 			thirst_value = 0.8
 

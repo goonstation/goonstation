@@ -315,10 +315,12 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	var/list/obj/murder_supplies = list()
 
 	for(var/datum/syndicate_buylist/D in syndi_buylist_cache)
-		if(D.item)
-			if(!D.br_allowed)
-				continue
-			murder_supplies.Add(D.item)
+		if(length(D.items) == 0)
+			continue
+		if(!D.br_allowed)
+			continue
+		for (var/item in D.items)
+			murder_supplies.Add(item)
 
 	var/list/weapon_supplies = list()
 	// Feel free to add more!
