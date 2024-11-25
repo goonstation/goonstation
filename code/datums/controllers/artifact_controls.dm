@@ -674,6 +674,8 @@ var/datum/artifact_controller/artifact_controls
 	fx_green_max = 100
 	fx_blue_min = 20
 	fx_blue_max = 50
+	nofx = TRUE
+	max_sprites = 2
 	adjectives = list("gleaming", "ornate", "intricate", "rusty", "polished", "brassy", "corroded", "artisanal")
 	nouns_large = list("contraption", "mechanism", "machine", "apparatus", "engine", "framework", "device", "automaton")
 	nouns_small = list("cog", "gear", "sprocket", "spring", "lever", "pinion", "dial", "wheel")
@@ -685,8 +687,6 @@ var/datum/artifact_controller/artifact_controls
 
 	post_setup(obj/artifact)
 		. = ..()
-		if(startswith(artifact.icon_state, "clockwork"))
-			src.active_icon_state = "[artifact.icon_state]-active"
 
 	generate_name()
 		var/namestring = ""

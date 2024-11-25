@@ -136,6 +136,7 @@
 			if(istype(AT, /datum/artifact_trigger/repair))
 				var/datum/artifact_trigger/repair/R = AT
 				R.artifact = A
+				R.artifact.examine_hint = R.get_desc()
 				A.triggers += R
 			else
 				A.triggers += AT
@@ -162,11 +163,8 @@
 		var/turf/T = get_turf(src)
 		if (T) T.visible_message("<b>[src] [A.activ_text]</b>") //ZeWaka: Fix for null.visible_message()
 	A.activated = 1
-	if (A.artitype.name == "clockwork")
-		var/datum/artifact_origin/clockwork/AO = A.artitype
-		src.icon_state = AO.active_icon_state
 	if (A.nofx)
-		src.icon_state = src.icon_state + "fx"
+		src.icon_state = src.icon_state + "-active"
 	else
 		A.show_fx(src)
 	A.effect_activate(src)
@@ -194,7 +192,7 @@
 		T.visible_message("<b>[src] [A.deact_text]</b>")
 	A.activated = 0
 	if (A.nofx)
-		src.icon_state = src.icon_state - "fx"
+		src.icon_state = src.icon_state - "-active"
 	else
 		A.hide_fx(src)
 	A.effect_deactivate(src)

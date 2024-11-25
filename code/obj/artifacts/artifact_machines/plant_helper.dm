@@ -8,7 +8,8 @@
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	validtypes = list("martian","precursor")
-	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/carbon_touch)
+	validtriggers = list(/datum/artifact_trigger/force, /datum/artifact_trigger/electric, /datum/artifact_trigger/carbon_touch,
+	/datum/artifact_trigger/repair)
 	activated = 0
 	activ_text = "begins to radiate a strange energy field!"
 	deact_text = "shuts down, causing the energy field to vanish!"

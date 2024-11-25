@@ -9,7 +9,7 @@
 	rarity_weight = 200
 	validtypes = list("ancient","clockwork")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
-	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch)
+	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/repair)
 	activated = 0
 	react_xray = list(13,60,80,6,"COMPLEX")
 	touch_descriptors = list("You seem to have a little difficulty taking your hand off its surface.")

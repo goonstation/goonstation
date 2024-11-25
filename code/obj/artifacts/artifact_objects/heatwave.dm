@@ -9,8 +9,8 @@
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 365
 	validtypes = list("ancient","eldritch","precursor","clockwork")
-	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,/datum/artifact_trigger/heat,
-		/datum/artifact_trigger/language)
+	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,
+	/datum/artifact_trigger/silicon_touch,/datum/artifact_trigger/heat, /datum/artifact_trigger/language, /datum/artifact_trigger/repair)
 	fault_blacklist = list(ITEM_ONLY_FAULTS,TOUCH_ONLY_FAULTS)
 	activ_text = "starts emitting HUGE flames!"
 	deact_text = "stops emitting flames."

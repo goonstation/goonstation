@@ -82,7 +82,7 @@
 	type_name = "Large power cell"
 	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 350
-	validtypes = list("ancient","martian","wizard","precursor")
+	validtypes = list("ancient","martian","wizard","precursor","clockwork")
 	automatic_activation = 0
 	react_elec = list("equal",0,10)
 	react_xray = list(10,80,95,11,"SEGMENTED")

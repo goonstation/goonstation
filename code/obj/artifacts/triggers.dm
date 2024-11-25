@@ -170,62 +170,90 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 	var/datum/artifact/artifact = null
 	// the current item we're working on based on origin
 	var/current_thingy = null
+	// the description for the tool we need
+	var/tool_desc = ""
 
 	New()
 		..()
-		if (!src.tools_required)
+		if (length(src.tools_required) < 1)
 			// add random amount of tools in an ordered list
 			for (var/i in 1 to rand(4, 5))
-				src.tools_required = pick(src.possible_tools)
+				src.tools_required += pick(src.possible_tools)
 
+	/// Returns advice on the next tool to be used to repair the artifact
 	proc/get_desc()
-		var/return_msg = ""
-		var/verby = src.get_current_tool_verb()
+		var/verby = src.get_current_tool_data("verb")
 
 		if (length(src.tools_required) < 1)
-			return return_msg
+			return "Looks like the artifact is fully repaired."
 
 		src.current_thingy = src.current_thingy ? src.current_thingy : pick(src.artifact.artitype.nouns_small)
 		var/list/action_list = list(
-			"Seems like you need to [verby] [current_thingy].",
-			"[capitalize(verby)]ing [current_thingy] seems like the next step.",
-			"Looks like you'll need to [verby] [current_thingy] to advance.",
-			"That [current_thingy] is going to need some [verby]ing.",
-			"[current_thingy] needs some [verby]ing to proceed.",
-			"You need to [verby] [current_thingy] to repair it."
+			"Seems like you need to [verby] the [current_thingy], it's completely busted.",
+			"[capitalize(verby)]ing the [current_thingy] seems necessary, considering its state.",
+			"Looks like you'll need to [verby] the [current_thingy] to get this thing running.",
+			"That [current_thingy] looks broken. It's going to need some [verby]ing.",
+			"Could be that the [current_thingy] needs some [verby]ing to proceed. Probably.",
+			"Maybe [verby]ing the [current_thingy] will repair it?"
 		)
-		return_msg = pick(action_list)
-		return return_msg
+		src.tool_desc = src.tool_desc ? src.tool_desc : pick(action_list)
+		return src.tool_desc
 
-	proc/get_current_tool_verb()
+	proc/remove_tool()
+		src.current_thingy = null
+		src.tool_desc = null
+		src.tools_required.Remove(src.tools_required[1])
+		src.artifact.examine_hint = src.get_desc()
+
+	proc/get_current_tool_data(var/action = "verb")
 		var/verby = ""
+		var/soundy = 'sound/items/Crowbar.ogg'
+		if(length(src.tools_required) == 0)
+			return ""
 		switch(src.tools_required[1])
 			if(TOOL_SNIPPING)
 				verby = "cut"
+				soundy = 'sound/items/Wirecutter.ogg'
 			if(TOOL_PRYING)
 				verby = "pry"
+				soundy = 'sound/items/Crowbar.ogg'
 			if(TOOL_SCREWING)
 				verby = "screw"
+				soundy = 'sound/items/Screwdriver.ogg'
 			if(TOOL_WELDING)
 				verby = "weld"
+				soundy = 'sound/items/Welder.ogg'
 			if(TOOL_WRENCHING)
 				verby = "wrench"
+				soundy = 'sound/items/Ratchet.ogg'
 			if(TOOL_PULSING)
 				verby = "shock"
+				soundy = 'sound/effects/electric_shock_short.ogg'
 			else
-				verby= "work"
-		return verby
+				verby = "work"
+				soundy = 'sound/items/Crowbar.ogg'
+		if (action == "verb")
+			return verby
+		else if (action == "sound")
+			return soundy
 
 	proc/parse_tool(var/obj/item/I, var/mob/user)
-		if (length(src.tools_required) > 0)
-			var/verby = src.get_current_tool_verb()
-			boutput(user, SPAN_ALERT("[I] ain't the right tool for the job. You need something that can [verby]."))
+		if(length(src.tools_required) == 0)
+			return
 		if(istool(I, src.tools_required[1]))
-			SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECOND, /datum/artifact_trigger/repair/proc/use_tool, list(I, user), I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+			var/soundy = src.get_current_tool_data("sound")
+			playsound(src.artifact.holder.loc, soundy, 100, 1)
+			// Using the artifact object here as a target instead of the /datum because of range checks, but we pass the trigger as a param
+			SETUP_GENERIC_ACTIONBAR(user, src.artifact.holder, rand(1, 3) SECONDS, /datum/artifact_trigger/repair/proc/use_tool, list(src, user), I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+		else
+			var/verby = src.get_current_tool_data("verb")
+			boutput(user, SPAN_ALERT("[I] ain't the right tool for the job. You need something that can [verby]."))
 
-	proc/use_tool(var/obj/item/I, var/mob/user)
-		var/verby = src.get_current_tool_verb()
-		src.current_thingy = src.current_thingy ? src.current_thingy : pick(src.artifact.artitype.nouns_small)
-		user.visible_message(SPAN_ALERT("[user] [verby]!"), "You [verby] [src.current_thingy].")
-		src.current_thingy = null
-		src.tools_required.Remove(src.tools_required[1])
+	proc/use_tool(var/datum/artifact_trigger/repair/trigger, var/mob/user)
+		var/verby = trigger.get_current_tool_data("verb")
+		trigger.current_thingy = trigger.current_thingy ? trigger.current_thingy : pick(trigger.artifact.artitype.nouns_small)
+		user.visible_message(SPAN_ALERT("[user] works on [trigger.artifact]."), "You [verby] the [trigger.current_thingy] inside [src].")
+		trigger.remove_tool()
+		if(length(trigger.tools_required) == 0)
+			var/obj/holder = src
+			holder.ArtifactActivated()
