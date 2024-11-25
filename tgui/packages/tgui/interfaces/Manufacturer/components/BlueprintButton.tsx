@@ -230,8 +230,6 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
   );
 };
 
-// export const BlueprintButton = memo(BlueprintButtonView);
-
 export const BlueprintButton = memo(
   BlueprintButtonView,
   (prevProps, nextProps) => {
