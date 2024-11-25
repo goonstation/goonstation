@@ -317,26 +317,22 @@
 						master.autoequip_slot(I, SLOT_GLASSES) || \
 						master.autoequip_slot(I, SLOT_EARS) || \
 						master.autoequip_slot(I, SLOT_WEAR_MASK) || \
-						master.autoequip_slot(I, SLOT_HEAD))
-						return
-
-					if (master.autoequip_slot(I, SLOT_BACK))
-						master.last_stored_backpack = I
+						master.autoequip_slot(I, SLOT_HEAD) || \
+						master.autoequip_slot(I, SLOT_BACK))
 						return
 
 					if (!master.belt?.storage || I.storage) // belt BEFORE trying storages, and only swap if its not a storage swap
 						master.autoequip_slot(I, SLOT_BELT)
 						if (master.equipped() != I)
-							master.last_stored_belt = I
+
 							return
 
 					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
+						if ((S.master == src.master.belt?.storage || S.master == src.master.back?.storage) && GET_COOLDOWN(src.master, "auto_store_hotkey"))
+							return
 						S.master.add_contents_safe(I, user)
 						if (master.equipped() != I)
-							if (S.master == src.master.belt?.storage)
-								src.master.last_stored_belt = I
-							else if (S.master == src.master.back?.storage)
-								src.master.last_stored_backpack = I
+							ON_COOLDOWN(src.master, "auto_unstore_hotkey", COMBAT_CLICK_DELAY)
 							return
 
 					//ONLY do these if theyre actually empty, we dont want to pocket swap.
@@ -384,26 +380,22 @@
 						master.autoequip_slot(I, SLOT_GLASSES) || \
 						master.autoequip_slot(I, SLOT_EARS) || \
 						master.autoequip_slot(I, SLOT_WEAR_MASK) || \
-						master.autoequip_slot(I, SLOT_HEAD))
-						return
-
-					if (master.autoequip_slot(I, SLOT_BACK))
-						master.last_stored_backpack = I
+						master.autoequip_slot(I, SLOT_HEAD) || \
+						master.autoequip_slot(I, SLOT_BACK))
 						return
 
 					if (!master.belt?.storage || I.storage) // belt BEFORE trying storages, and only swap if its not a storage swap
 						master.autoequip_slot(I, SLOT_BELT)
 						if (master.equipped() != I)
-							master.last_stored_belt = I
+
 							return
 
 					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
+						if ((S.master == src.master.belt?.storage || S.master == src.master.back?.storage) && GET_COOLDOWN(src.master, "auto_store_hotkey"))
+							return
 						S.master.add_contents_safe(I, user)
 						if (master.equipped() != I)
-							if (S.master == src.master.belt?.storage)
-								src.master.last_stored_belt = I
-							else if (S.master == src.master.back?.storage)
-								src.master.last_stored_backpack = I
+							ON_COOLDOWN(src.master, "auto_unstore_hotkey", COMBAT_CLICK_DELAY)
 							return
 
 					//ONLY do these if theyre actually empty, we dont want to pocket swap.

@@ -3674,32 +3674,38 @@ mob/living/carbon/human/has_genetics()
 
 	. = ..()
 
-/// handles hotkey actino for storing/unstoring item to/from belt storage
+/// handles hotkey action for storing/unstoring item to/from belt storage
 /mob/living/carbon/human/proc/auto_store_unstore_belt()
 	if (!src.belt || !src.belt.storage)
 		return
 	var/obj/item/I = src.equipped()
 	var/list/belt_contents = src.belt.storage.get_contents()
 	if (I)
+		if (GET_COOLDOWN(src, "auto_store_hotkey"))
+			return
 		src.belt.Attackby(I, src)
 		if (I in belt_contents)
 			src.last_stored_belt = I
-			ON_COOLDOWN(src, "belt_auto_unstore", COMBAT_CLICK_DELAY)
-	else if (src.last_stored_belt && !GET_COOLDOWN(src, "belt_auto_unstore"))
+			ON_COOLDOWN(src, "auto_unstore_hotkey", COMBAT_CLICK_DELAY)
+	else if (src.last_stored_belt && !GET_COOLDOWN(src, "auto_unstore_hotkey"))
 		if (!QDELETED(src.last_stored_belt) && (src.last_stored_belt in belt_contents))
 			src.last_stored_belt.Attackhand(src)
+			ON_COOLDOWN(src, "auto_store_hotkey", COMBAT_CLICK_DELAY)
 
-/// handles hotkey actino for storing/unstoring item to/from backpack storage
+/// handles hotkey action for storing/unstoring item to/from backpack storage
 /mob/living/carbon/human/proc/auto_store_unstore_backpack()
 	if (!src.back || !src.back.storage)
 		return
 	var/obj/item/I = src.equipped()
 	var/list/backpack_contents = src.back.storage.get_contents()
 	if (I)
+		if (GET_COOLDOWN(src, "auto_store_hotkey"))
+			return
 		src.back.Attackby(I, src)
 		if (I in backpack_contents)
 			src.last_stored_backpack = I
-			ON_COOLDOWN(src, "backpack_auto_unstore", COMBAT_CLICK_DELAY)
-	else if (src.last_stored_backpack && !GET_COOLDOWN(src, "backpack_auto_unstore"))
+			ON_COOLDOWN(src, "auto_unstore_hotkey", COMBAT_CLICK_DELAY)
+	else if (src.last_stored_backpack && !GET_COOLDOWN(src, "auto_unstore_hotkey"))
 		if (!QDELETED(src.last_stored_backpack) && (src.last_stored_backpack in backpack_contents))
 			src.last_stored_backpack.Attackhand(src)
+			ON_COOLDOWN(src, "auto_store_hotkey", COMBAT_CLICK_DELAY)
