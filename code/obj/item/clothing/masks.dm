@@ -655,8 +655,9 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 			if(!W:try_weld(user, 1))
 				return
 			user.visible_message(SPAN_ALERT("<B>[user]</B> melts the mask's eye slits to be larger."))
-			user.removeOverlayComposition(/datum/overlayComposition/steelmask)
-			user.updateOverlaysClient(user.client)
+			if(src in user.get_equipped_items())
+				user.removeOverlayComposition(/datum/overlayComposition/steelmask)
+				user.updateOverlaysClient(user.client)
 			setProperty("meleeprot_head", 3)
 			delProperty("disorient_resist_eye")
 			src.low_visibility = FALSE
