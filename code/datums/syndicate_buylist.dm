@@ -18,7 +18,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist)
 /datum/syndicate_buylist
 	/// Name of the buylist entry
 	var/name = null
-	/// A typepath for the items that will be spawned when the datum is purchased
+	/// Typepaths of the items that will be spawned when the datum is purchased
 	var/list/atom/items = list()
 	/// The TC cost of the datum in a buylist. Set to 0 to make it unavailable
 	var/cost = null
