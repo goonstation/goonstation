@@ -18,6 +18,7 @@
     "noEmit": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitThis": true,
+    // "noUncheckedIndexedAccess": true, TODO: enable
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": false,
