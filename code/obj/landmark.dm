@@ -532,7 +532,7 @@ var/global/list/job_start_locations = list()
 		. = ..()
 		var/mob/living/L = AM
 		if (!isintangible(L))
-			L.unlock_medal("To to the Moon!", TRUE)
+			L.unlock_medal("To the Moon!", TRUE)
 
 /obj/landmark/lrt/ainley
 	name = "Ainley Staff Retreat"
