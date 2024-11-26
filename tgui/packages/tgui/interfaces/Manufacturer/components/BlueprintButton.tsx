@@ -49,9 +49,8 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
     hasPower,
   } = props;
   // Condense producability
-  const notProduceable = !!Object.keys(blueprintProducibilityData).find(
-    (requirement_name: string) =>
-      (!!blueprintProducibilityData[requirement_name] === false) === true,
+  const notProduceable = Object.values(blueprintProducibilityData).some(
+    (x) => !x,
   );
   const memoizedOnRemoveBlueprint = useCallback(
     () => onBlueprintRemove(blueprintData.byondRef),
@@ -190,8 +189,16 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
 export const BlueprintButton = memo(
   BlueprintButtonView,
   (prevProps, nextProps) => {
-    const { blueprintData: prevBlueprintData, blueprintProducibilityData: prevBlueprintProducibilityData, ...prevRest } = prevProps;
-    const { blueprintData: nextBlueprintData, blueprintProducibilityData: nextBlueprintProducibilityData, ...nextRest } = nextProps;
+    const {
+      blueprintData: prevBlueprintData,
+      blueprintProducibilityData: prevBlueprintProducibilityData,
+      ...prevRest
+    } = prevProps;
+    const {
+      blueprintData: nextBlueprintData,
+      blueprintProducibilityData: nextBlueprintProducibilityData,
+      ...nextRest
+    } = nextProps;
     if (shallowDiffers(prevRest, nextRest)) {
       return false;
     }
