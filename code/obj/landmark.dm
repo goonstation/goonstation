@@ -531,7 +531,7 @@ var/global/list/job_start_locations = list()
 	Crossed(atom/movable/AM)
 		. = ..()
 		var/mob/living/L = AM
-		if (!isintangible(L))
+		if (istype(L) && !isintangible(L))
 			L.unlock_medal("To the Moon!", TRUE)
 
 /obj/landmark/lrt/ainley
@@ -553,7 +553,7 @@ var/global/list/job_start_locations = list()
 	Crossed(atom/movable/AM)
 		. = ..()
 		var/mob/living/L = AM
-		if (!isintangible(L))
+		if (istype(L) && !isintangible(L))
 			L.unlock_medal("Ice Cold", TRUE)
 
 /obj/landmark/character_preview_spawn
