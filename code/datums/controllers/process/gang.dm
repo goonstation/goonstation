@@ -193,7 +193,7 @@
 			broadcast += " - [duffle_broadcasts[targetGang]]"
 			broadcast += "<br>"
 			broadcast += " - [vandalism_broadcasts[targetGang]]"
-			targetGang.broadcast_to_gang(broadcast)
+			targetGang.announcer_say_source.say(broadcast, flags = SAYFLAG_IGNORE_HTML)
 
 	proc/doDuffles(gang_duffle_list)
 		var/datum/game_mode/gang/gamemode = ticker.mode

@@ -453,8 +453,7 @@
 			else
 				src.radio = new /obj/item/device/radio/spy (src)
 			SPAWN(1 DECI SECOND)
-				src.radio.broadcasting = FALSE
-				//src.radio.listening = 0
+				src.radio.toggle_microphone(FALSE)
 
 	attack_self(mob/user as mob)
 		var/choice = "Set radio"
@@ -602,8 +601,8 @@
 /obj/item/device/radio/spy
 	name = "spy radio"
 	desc = "Spy radio housed in a sticker. Wait, how are you reading this?"
-	listening = 0
-	hardened = 0
+	initial_speaker_enabled = FALSE
+	hardened = FALSE
 
 /obj/item/device/radio/spy/det_only
 	locked_frequency = 1

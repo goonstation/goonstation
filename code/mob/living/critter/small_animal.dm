@@ -156,9 +156,9 @@ proc/filter_carrier_pets(var/type)
 	hand_count = 2
 	icon_state = "mouse_white"
 	icon_state_dead = "mouse_white-dead"
-	speechverb_say = "squeaks"
-	speechverb_exclaim = "squeals"
-	speechverb_ask = "squeaks"
+	speech_verb_say = "squeaks"
+	speech_verb_exclaim = "squeals"
+	speech_verb_ask = "squeaks"
 	health_brute = 8
 	health_burn = 8
 	faction = list(FACTION_NEUTRAL)
@@ -349,9 +349,9 @@ proc/filter_carrier_pets(var/type)
 	icon_state = "cat1"
 	icon_state_dead = "cat1-dead"
 	hand_count = 2
-	speechverb_say = "meows"
-	speechverb_exclaim = "yowls"
-	speechverb_ask = "mews"
+	speech_verb_say = "meows"
+	speech_verb_exclaim = "yowls"
+	speech_verb_ask = "mews"
 	health_brute = 15
 	health_burn = 15
 	flags = TABLEPASS
@@ -678,9 +678,9 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	icon_state_dead = "pug-lying"
 	hand_count = 2
 	add_abilities = list(/datum/targetable/critter/pounce)
-	speechverb_say = "barks"
-	speechverb_exclaim = "howls"
-	speechverb_ask = "yips"
+	speech_verb_say = "barks"
+	speech_verb_exclaim = "howls"
+	speech_verb_ask = "yips"
 	health_brute = 30
 	health_burn = 30
 	ai_retaliate_patience = 4 //dogoos are big softies, you can hit them 4 times before they attack back
@@ -817,23 +817,15 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	icon_state = "gup"
 	icon_state_dead = "pug-lying"
 	dogtype = "gup"
-	speechverb_say = "skrab"
-	speechverb_exclaim = "slwoh"
-	speechverb_ask = "spiy"
-	speechverb_stammer = "sremmats"
-	speechverb_gasp = "spsag"
 	player_can_spawn_with_pet = FALSE
 
-	mob_flags = SPEECH_REVERSE
-	/*
-	say(var/message)
-		message = strip_html(trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
-		if (!message)
-			return
-		if (dd_hasprefix(message, "*") && !src.stat)
-			return ..()
-		message = reverse_text(message)
-		..(message)*/
+	speech_verb_say = "skrab"
+	speech_verb_exclaim = "slwoh"
+	speech_verb_ask = "spiy"
+	speech_verb_stammer = "sremmats"
+	speech_verb_gasp = "spsag"
+
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_INVERTED_SPEECH)
 
 	visible_message(var/message, var/self_message, var/blind_message, var/group)
 		message = "<span style='-ms-transform: rotate(180deg)'>[message]</span>"
@@ -1035,11 +1027,11 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	icon = 'icons/misc/bird.dmi'
 	icon_state = "parrot"
 	icon_state_dead = "parrot-dead"
-	speechverb_say = "chirps"
-	speechverb_exclaim = "shrieks"
-	speechverb_ask = "squawks"
-	speechverb_gasp = "mumbles"
-	speechverb_stammer = "cackles"
+	speech_verb_say = "chirps"
+	speech_verb_exclaim = "shrieks"
+	speech_verb_ask = "squawks"
+	speech_verb_gasp = "mumbles"
+	speech_verb_stammer = "cackles"
 	death_text = "%src% lets out a final weak squawk and keels over."
 	flags = TABLEPASS
 	fits_under_table = 1
@@ -1342,11 +1334,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "Did you know? By 2063, it is expected that there will be more owls on Earth than human beings."
 	icon_state = "smallowl"
 	icon_state_dead = "smallowl-dead"
-	speechverb_say = "hoos"
-	speechverb_exclaim = "shrieks"
-	speechverb_ask = "warbles"
-	speechverb_gasp = "mumbles"
-	speechverb_stammer = "cackles"
+	speech_verb_say = "hoos"
+	speech_verb_exclaim = "shrieks"
+	speech_verb_ask = "warbles"
+	speech_verb_gasp = "mumbles"
+	speech_verb_stammer = "cackles"
 	death_text = "%src% lets out a final weak hoot and keels over."
 	feather_color = list("#803427","#7d5431")
 	good_grip = 0
@@ -1420,11 +1412,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "A turkey that came from space. Or maybe went to space. Who knows how it got here?"
 	icon_state = "then"
 	icon_state_dead = "then-dead"
-	speechverb_say = "gobbles"
-	speechverb_exclaim = "calls"
-	speechverb_ask = "warbles"
-	speechverb_gasp = "mumbles"
-	speechverb_stammer = "cackles"
+	speech_verb_say = "gobbles"
+	speech_verb_exclaim = "calls"
+	speech_verb_ask = "warbles"
+	speech_verb_gasp = "mumbles"
+	speech_verb_stammer = "cackles"
 	death_text = "%src% lets out a final weak gobble and keels over."
 	feather_color = "#632c0c"
 	flags = null
@@ -1481,11 +1473,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "doodle"
 	icon_state_dead = "doodle-dead"
 	icon_state_poof = "doodle-poof"
-	speechverb_say = "eents"
-	speechverb_exclaim = "calls"
-	speechverb_ask = "peents"
-	speechverb_gasp = "mumbles"
-	speechverb_stammer = "chirps"
+	speech_verb_say = "eents"
+	speech_verb_exclaim = "calls"
+	speech_verb_ask = "peents"
+	speech_verb_gasp = "mumbles"
+	speech_verb_stammer = "chirps"
 	death_text = "%src% lets out a final weak eent and keels over."
 	feather_color = list("#ffd0a4","#cc9475","#b85a39","#572c26")
 	bird_call_msg = list("peents", "eents")
@@ -1517,11 +1509,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "A spacefaring species of bird from the <i>Laridae</i> family."
 	icon_state = "gull"
 	icon_state_dead = "gull-dead"
-	speechverb_say = "laughs"
-	speechverb_exclaim = "calls"
-	speechverb_ask = "caws"
-	speechverb_gasp = "mumbles"
-	speechverb_stammer = "cackles"
+	speech_verb_say = "laughs"
+	speech_verb_exclaim = "calls"
+	speech_verb_ask = "caws"
+	speech_verb_gasp = "mumbles"
+	speech_verb_stammer = "cackles"
 	death_text = "%src% lets out a final weak caw and keels over."
 	feather_color = list("#ffffff","#949494","#353535")
 	good_grip = 0
@@ -1546,11 +1538,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "A spacefaring species of bird from the <i>Corvidae</i> family."
 	icon_state = "crow"
 	icon_state_dead = "crow-dead"
-	speechverb_say = "caws"
-	speechverb_exclaim = "calls"
-	speechverb_ask = "caws"
-	speechverb_gasp = "mumbles"
-	speechverb_stammer = "cackles"
+	speech_verb_say = "caws"
+	speech_verb_exclaim = "calls"
+	speech_verb_ask = "caws"
+	speech_verb_gasp = "mumbles"
+	speech_verb_stammer = "cackles"
 	death_text = "%src% lets out a final weak caw and keels over."
 	feather_color = "#212121"
 	good_grip = 1
@@ -1585,11 +1577,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "An offshoot species of <i>branta canadensis</i> adapted for space."
 	icon_state = "goose"
 	icon_state_dead = "goose-dead"
-	speechverb_say = "honks"
-	speechverb_exclaim = "calls"
-	speechverb_ask = "warbles"
-	speechverb_gasp = "mumbles"
-	speechverb_stammer = "cackles"
+	speech_verb_say = "honks"
+	speech_verb_exclaim = "calls"
+	speech_verb_ask = "warbles"
+	speech_verb_gasp = "mumbles"
+	speech_verb_stammer = "cackles"
 	death_text = "%src% lets out a final weak honk and keels over."
 	feather_color = list("#393939","#f2ebd5","#68422a","#ffffff")
 	flags = null
@@ -1677,9 +1669,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 2
 	icon_state = "sparrow"
 	icon_state_dead = "sparrow-dead"
-	speechverb_say = "chirps"
-	speechverb_exclaim = "chitters"
-	speechverb_ask = "peeps"
+	speech_verb_say = "chirps"
+	speech_verb_exclaim = "chitters"
+	speech_verb_ask = "peeps"
 	health_brute = 8
 	health_burn = 8
 	player_can_spawn_with_pet = TRUE
@@ -1801,9 +1793,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "An unpleasant insect that lives in filthy places."
 	icon_state = "roach"
 	icon_state_dead = "roach-dead"
-	speechverb_say = "clicks"
-	speechverb_exclaim = "screeches"
-	speechverb_ask = "chitters"
+	speech_verb_say = "clicks"
+	speech_verb_exclaim = "screeches"
+	speech_verb_ask = "chitters"
 	health_brute = 5
 	health_burn = 5
 	flags = TABLEPASS | DOORPASS
@@ -1898,9 +1890,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "Ack! Get it away! AAAAAAAA."
 	icon_state = "spacescorpion"
 	icon_state_dead = "spacescorpion-dead"
-	speechverb_say = "clicks"
-	speechverb_exclaim = "screeches"
-	speechverb_ask = "chitters"
+	speech_verb_say = "clicks"
+	speech_verb_exclaim = "screeches"
+	speech_verb_ask = "chitters"
 	health_brute = 30
 	health_burn = 30
 	density = TRUE
@@ -2031,9 +2023,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "A snake. With a rattle. A rattlesnake."
 	icon_state = "rattlesnake"
 	icon_state_dead = "rattlesnake_dead"
-	speechverb_say = "hisses"
-	speechverb_exclaim = "rattles"
-	speechverb_ask = "hisses"
+	speech_verb_say = "hisses"
+	speech_verb_exclaim = "rattles"
+	speech_verb_ask = "hisses"
 	health_brute = 20
 	health_burn = 20
 	flags = TABLEPASS
@@ -2225,8 +2217,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "ferret"
 	icon_state_dead = "ferret-dead"
 	hand_count = 2
-	speechverb_say = "chatters"
-	speechverb_exclaim = "squeaks"
+	speech_verb_say = "chatters"
+	speech_verb_exclaim = "squeaks"
 	flags = TABLEPASS
 	fits_under_table = 1
 	var/freakout = 0
@@ -2300,8 +2292,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "frog"
 	icon_state_dead = "frog-dead"
 	hand_count = 2
-	speechverb_say = "croaks"
-	speechverb_exclaim = "croaks"
+	speech_verb_say = "croaks"
+	speech_verb_exclaim = "croaks"
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
@@ -2362,8 +2354,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "possum"
 	icon_state_dead = "possum-dead"
 	hand_count = 2
-	speechverb_say = "hisses"
-	speechverb_exclaim = "barks"
+	speech_verb_say = "hisses"
+	speech_verb_exclaim = "barks"
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
@@ -2475,8 +2467,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "armadillo"
 	icon_state_dead = "armadillo-dead"
 	hand_count = 2
-	speechverb_say = "hisses"
-	speechverb_exclaim = "barks"
+	speech_verb_say = "hisses"
+	speech_verb_exclaim = "barks"
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
@@ -2618,8 +2610,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "iguana1"
 	icon_state_dead = "iguana1-dead"
 	hand_count = 2
-	speechverb_say = "hisses"
-	speechverb_exclaim = "wheezes"
+	speech_verb_say = "hisses"
+	speech_verb_exclaim = "wheezes"
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
@@ -2732,8 +2724,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "seal"
 	icon_state_dead = "seal-dead"
 	hand_count = 2
-	speechverb_say = "trills"
-	speechverb_exclaim = "barks"
+	speech_verb_say = "trills"
+	speech_verb_exclaim = "barks"
 	death_text = "%src% lets out a final weak coo and keels over."
 	butcherable = BUTCHER_YOU_MONSTER
 	health_brute = 15
@@ -2848,8 +2840,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "walrus"
 	icon_state_dead = "walrus-dead"
 	hand_count = 2
-	speechverb_say = "harrumphs"
-	speechverb_exclaim = "roars"
+	speech_verb_say = "harrumphs"
+	speech_verb_exclaim = "roars"
 	death_text = "%src% lets out a final weak grumble and keels over."
 	butcherable = BUTCHER_YOU_MONSTER
 	health_brute = 15
@@ -2929,9 +2921,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 2
 	icon_state = "bat"
 	icon_state_dead = "bat-dead"
-	speechverb_say = "squeaks"
-	speechverb_exclaim = "shrieks"
-	speechverb_ask = "squeaks"
+	speech_verb_say = "squeaks"
+	speech_verb_exclaim = "shrieks"
+	speech_verb_ask = "squeaks"
 	health_brute = 8
 	health_burn = 8
 	is_npc = FALSE // needs special AI will come later
@@ -3055,9 +3047,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "A wasp in space."
 	icon_state = "wasp"
 	icon_state_dead = "wasp-dead"
-	speechverb_say = "buzzes"
-	speechverb_exclaim = "screeches"
-	speechverb_ask = "hums"
+	speech_verb_say = "buzzes"
+	speech_verb_exclaim = "screeches"
+	speech_verb_ask = "hums"
 	health_brute = 5
 	health_brute_vuln = 1
 	health_burn = 5
@@ -3183,9 +3175,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 2
 	health_brute = 25
 	health_burn = 25
-	speechverb_say = "chatters"
-	speechverb_exclaim = "barks"
-	speechverb_ask = "squeaks"
+	speech_verb_say = "chatters"
+	speech_verb_exclaim = "barks"
+	speech_verb_ask = "squeaks"
 	pet_text = list("pets","cuddles","snuggles","pats")
 	flags = TABLEPASS
 	fits_under_table = TRUE
@@ -3253,9 +3245,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "slug"
 	icon_state_dead = "slug-dead"
 	blood_id = "hemolymph"
-	speechverb_say = "blorps"
-	speechverb_exclaim = "bloops"
-	speechverb_ask = "burbles"
+	speech_verb_say = "blorps"
+	speech_verb_exclaim = "bloops"
+	speech_verb_ask = "burbles"
 	health_brute = 5
 	health_burn = 5
 	flags = TABLEPASS
@@ -3311,7 +3303,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	blood_color = "#f846cc"
 	color = "#ffabfb"
 	pet_text = "gently pats"
-	speechverb_say = "blurps"
+	speech_verb_say = "blurps"
 	voice_name = "Snaily Softserve"
 	memory = "i love being a snail..."
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
@@ -3344,9 +3336,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 2
 	icon_state = "butterfly1"
 	icon_state_dead = "butterfly1-dead"
-	speechverb_say = "whispers"
-	speechverb_exclaim = "hums"
-	speechverb_ask = "muses"
+	speech_verb_say = "whispers"
+	speech_verb_exclaim = "hums"
+	speech_verb_ask = "muses"
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/butter
 	name_the_meat = FALSE
 	death_text = "%src% disintegrates."
@@ -3445,9 +3437,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 2
 	icon_state = "fly"
 	icon_state_dead = "fly-dead"
-	speechverb_say = "bzzs"
-	speechverb_exclaim = "bzzts"
-	speechverb_ask = "pesters"
+	speech_verb_say = "bzzs"
+	speech_verb_exclaim = "bzzts"
+	speech_verb_ask = "pesters"
 	death_text = "%src% splats."
 	blood_id = "hemolymph"
 	flags = TABLEPASS | DOORPASS
@@ -3512,9 +3504,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "sqwibby"
 	icon_state_dead = "sqwibby-dead"
 	blood_id = "hemolymph"
-	speechverb_say = "bzzs"
-	speechverb_exclaim = "bzzts"
-	speechverb_ask = "pesters"
+	speech_verb_say = "bzzs"
+	speech_verb_exclaim = "bzzts"
+	speech_verb_ask = "pesters"
 	death_text = "%src% splats."
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = TRUE
@@ -3578,9 +3570,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/start_icon = "lobsterman"
 	icon_state_dead = "lobsterman-dead"
 
-	speechverb_say = "clicks"
-	speechverb_exclaim = "screeches"
-	speechverb_ask = "chitters"
+	speech_verb_say = "clicks"
+	speech_verb_exclaim = "screeches"
+	speech_verb_ask = "chitters"
 	hand_count = 2
 	health_brute = 20
 	health_burn = 20
@@ -3653,9 +3645,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon = 'icons/mob/critter/robotic/boogie.dmi'
 	icon_state = "boogie"
 	icon_state_dead = "boogie-dead"
-	speechverb_say = "sings"
-	speechverb_exclaim = "yells"
-	speechverb_ask = "asks"
+	speech_verb_say = "sings"
+	speech_verb_exclaim = "yells"
+	speech_verb_ask = "asks"
 	health_brute = 20
 	health_burn = 20
 	has_genes = FALSE
@@ -4013,6 +4005,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		boutput(src, "<span style='color:red; font-size:1.5em'><b>You are now in someone's pocket, can talk to [him_or_her(M)], and click on [his_or_her(M)] screen to ping in the place where you're ctrl+clicking. This is a feature meant for teaching and helping players. Do not abuse it by using it to just chat with your friends!</b></span>")
 		logTheThing(LOG_ADMIN, src, "jumps into [constructTarget(M, "admin")]'s pocket as a mentor mouse at [log_loc(M)].")
 		var/mob/dead/target_observer/mentor_mouse_observer/obs = new(M, src.is_admin)
+		M.ensure_listen_tree().AddListenInput(LISTEN_INPUT_MENTOR_MOUSE)
 		obs.set_observe_target(M)
 		obs.my_mouse = src
 		src.set_loc(obs)
@@ -4124,6 +4117,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	use_custom_color = FALSE
 	player_can_spawn_with_pet = FALSE
 
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_ANIMAL)
+	say_language = LANGUAGE_ENGLISH
+
 	New()
 		. = ..()
 		src.fur_color = "#be5a53"
@@ -4149,11 +4145,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		else
 			return ..()
 
-	understands_language(language)
-		if(language == "animal") // by default admin mice speak english but we want them to understand animal-ese
-			return 1
-		return ..()
-
 	Life(datum/controller/process/mobs/parent)
 		. = ..()
 		if(src.client && !isadmin(src))
@@ -4171,9 +4162,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "crab"
 	blood_id = "hemolymph"
 	hand_count = 2
-	speechverb_say = "snips"
-	speechverb_gasp = "claks"
-	speechverb_exclaim = "snaps"
+	speech_verb_say = "snips"
+	speech_verb_gasp = "claks"
+	speech_verb_exclaim = "snaps"
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently pets", "rubs", "cuddles, coddles")
@@ -4308,9 +4299,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "This is an alien trilobite."
 	icon_state = "trilobite"
 	icon_state_dead = "trilobite-dead"
-	speechverb_say = "clicks"
-	speechverb_exclaim = "screeches"
-	speechverb_ask = "chitters"
+	speech_verb_say = "clicks"
+	speech_verb_exclaim = "screeches"
+	speech_verb_ask = "chitters"
 	health_brute = 6
 	health_burn = 6
 	flags = TABLEPASS | DOORPASS
@@ -4391,9 +4382,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "hallucigenia"
 	icon_state_dead = "hallucigenia-dead"
 	blood_id = "hemolymph"
-	speechverb_say = "clicks"
-	speechverb_exclaim = "screeches"
-	speechverb_ask = "chitters"
+	speech_verb_say = "clicks"
+	speech_verb_exclaim = "screeches"
+	speech_verb_ask = "chitters"
 	health_brute = 4
 	health_burn = 4
 	flags = TABLEPASS | DOORPASS
@@ -4452,9 +4443,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "This is an alien pikaia."
 	icon_state = "pikaia"
 	icon_state_dead = "pikaia-dead"
-	speechverb_say = "bloops"
-	speechverb_exclaim = "blips"
-	speechverb_ask = "blups"
+	speech_verb_say = "bloops"
+	speech_verb_exclaim = "blips"
+	speech_verb_ask = "blups"
 	health_brute = 24
 	health_burn = 24
 	flags = TABLEPASS | DOORPASS
@@ -4645,9 +4636,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	fits_under_table = 1
 	hand_count = 2
 	icon_state = "bunny"
-	speechverb_say = "mutters"
-	speechverb_exclaim = "squeals"
-	speechverb_ask = "squeaks"
+	speech_verb_say = "mutters"
+	speech_verb_exclaim = "squeals"
+	speech_verb_ask = "squeaks"
 	health_brute = 8
 	health_burn = 8
 	butcherable = BUTCHER_YOU_MONSTER
