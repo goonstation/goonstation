@@ -407,7 +407,8 @@
 	if (BOUNDS_DIST(holder.target, holder.owner))
 		holder.move_to(holder.target)
 	else
-		holder.owner.weapon_attack(holder.target, holder.owner.equipped(), TRUE)
+		if(!ON_COOLDOWN(src, "livingobj_click_delay", holder.owner.combat_click_delay))
+			holder.owner.weapon_attack(holder.target, holder.owner.equipped(), TRUE)
 
 /datum/aiTask/timed/targeted/living_object/frustration_check()
 	. = 0
