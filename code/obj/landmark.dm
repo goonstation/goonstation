@@ -526,13 +526,6 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/lrt/luna_museum
 	name = "Luna"
-	deleted_on_start = FALSE
-
-	Crossed(atom/movable/AM)
-		. = ..()
-		var/mob/living/L = AM
-		if (istype(L) && !isintangible(L))
-			L.unlock_medal("To the Moon!", TRUE)
 
 /obj/landmark/lrt/ainley
 	name = "Ainley Staff Retreat"
