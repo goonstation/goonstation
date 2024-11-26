@@ -16,6 +16,7 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 import { round } from 'tgui-core/math';
+import { shallowDiffers } from 'tgui-core/react';
 
 import { truncate } from '../../../format';
 import { BlueprintButtonStyle, BlueprintMiniButtonStyle } from '../constant';
@@ -189,11 +190,9 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
 export const BlueprintButton = memo(
   BlueprintButtonView,
   (prevProps, nextProps) => {
-    if (
-      prevProps.manufacturerSpeed !== nextProps.manufacturerSpeed ||
-      prevProps.deleteAllowed !== nextProps.deleteAllowed ||
-      prevProps.hasPower !== nextProps.hasPower
-    ) {
+    const { blueprintData: prevBlueprintData, blueprintProducibilityData: prevBlueprintProducibilityData, ...prevRest } = prevProps;
+    const { blueprintData: nextBlueprintData, blueprintProducibilityData: nextBlueprintProducibilityData, ...nextRest } = nextProps;
+    if (shallowDiffers(prevRest, nextRest)) {
       return false;
     }
     // Special check for blueprintData as it has moving parts and otherwise pretends to change on material swap
@@ -204,8 +203,8 @@ export const BlueprintButton = memo(
     // Slightly more in depth check for the producibility data to see if it actually changed
     for (let key in prevProps.blueprintProducibilityData) {
       if (
-        prevProps.blueprintProducibilityData[key] !==
-        nextProps.blueprintProducibilityData[key]
+        prevBlueprintProducibilityData[key] !==
+        nextBlueprintProducibilityData[key]
       ) {
         return false;
       }
