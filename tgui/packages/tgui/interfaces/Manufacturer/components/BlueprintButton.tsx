@@ -6,7 +6,7 @@
  */
 
 import { BooleanLike } from 'common/react';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import {
   Button,
   Icon,
@@ -60,9 +60,6 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
     () => onVendProduct(blueprintData.byondRef),
     [blueprintData.byondRef],
   );
-  const memoizedBlueprintProducibilityData = useMemo(() => {
-    return blueprintProducibilityData;
-  }, [blueprintProducibilityData]);
   // Don't include this flavor if we only output one item, because if so, then we know what we're making
   const outputs =
     (blueprintData?.item_names?.length ?? 0) < 2 &&
@@ -94,7 +91,7 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
             <LabeledList.Item
               key={index}
               labelColor={
-                memoizedBlueprintProducibilityData[
+                blueprintProducibilityData[
                   blueprintData.requirement_data[value].name
                 ]
                   ? undefined
