@@ -54,11 +54,11 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
   );
   const memoizedOnRemoveBlueprint = useCallback(
     () => onBlueprintRemove(blueprintData.byondRef),
-    [],
+    [blueprintData.byondRef],
   );
   const memoizedOnVendProduct = useCallback(
     () => onVendProduct(blueprintData.byondRef),
-    [],
+    [blueprintData.byondRef],
   );
   const memoizedBlueprintProducibilityData = useMemo(() => {
     return blueprintProducibilityData;
