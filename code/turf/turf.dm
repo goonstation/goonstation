@@ -247,16 +247,6 @@
 		SHOULD_CALL_PARENT(FALSE)
 		return FALSE
 
-/obj/overlay/tile_gas_effect
-	name = ""
-	anchored = ANCHORED
-	density = 0
-	mouse_opacity = 0
-
-	Move()
-		SHOULD_CALL_PARENT(FALSE)
-		return FALSE
-
 /turf/unsimulated
 	pass_unstable = FALSE
 	event_handler_flags = IMMUNE_SINGULARITY
@@ -318,7 +308,7 @@
 		toxins = ONE_ATMOSPHERE/3
 		New()
 			..()
-			var/obj/overlay/tile_gas_effect/gas_icon_overlay = new
+			var/atom/movable/tile_gas_effect/gas_icon_overlay = new
 			gas_icon_overlay.icon = 'icons/effects/tile_effects.dmi'
 			gas_icon_overlay.icon_state = "plasma-alpha"
 			gas_icon_overlay.dir = pick(cardinal)

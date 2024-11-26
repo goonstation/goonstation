@@ -8,6 +8,26 @@ var/global/list/turf/hotly_processed_turfs = list()
 	global.hotly_processed_turfs = .
 #endif
 
+/atom/movable/tile_gas_effect
+	name = ""
+	density = FALSE
+	mouse_opacity = 0
+	anchored = ANCHORED_ALWAYS
+	pass_unstable = FALSE
+	mat_changename = FALSE
+	mat_changedesc = FALSE
+	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_TRENCH_WARP
+
+	meteorhit()
+		return
+
+	ex_act()
+		return
+
+	track_blood()
+		src.tracked_blood = null
+		return
+
 /turf
 	/// Pressure delta between us and some turf.
 	var/tmp/pressure_difference = 0
@@ -116,7 +136,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 	ARCHIVED(var/tmp/temperature) //USED ONLY FOR SOLIDS
 #endif
 	/// The overlay used to show gases on us such as plasma.
-	var/tmp/obj/overlay/tile_gas_effect/gas_icon_overlay
+	var/tmp/atom/movable/tile_gas_effect/gas_icon_overlay
 	/// Bitfield representing gas graphics on us.
 	var/tmp/visuals_state
 
@@ -162,14 +182,11 @@ var/global/list/turf/hotly_processed_turfs = list()
 /// Updates, or creates, our overlay if [/datum/gas_mixture/var/graphic] on model is different from [/turf/simulated/var/tmp/visuals_state].
 /// If model doesn't have a graphic, delete our overlay.
 /turf/simulated/proc/update_visuals(datum/gas_mixture/model)
-	if (src.disposed)
-		return
 
 	if (model.graphic)
 		if (model.graphic != visuals_state)
 			if(!src.gas_icon_overlay)
-				src.gas_icon_overlay = new /obj/overlay/tile_gas_effect
-				src.gas_icon_overlay.set_loc(src)
+				src.gas_icon_overlay = new /atom/movable/tile_gas_effect(src)
 			else
 				src.gas_icon_overlay.overlays.len = 0
 
