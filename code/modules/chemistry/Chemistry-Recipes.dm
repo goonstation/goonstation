@@ -975,6 +975,20 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
+	kombucha
+		name = "Kombucha"
+		id = "kombucha"
+		result = "kombucha"
+		required_reagents = list("sweet_tea" = 3, "beer" = 1, "antihol" = 1)
+		result_amount = 3
+		mix_phrase = "The tea fizzes lightly, giving off a soft vinegar scent."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+		min_temperature = T0C + 16
+		max_temperature = T0C + 29
+		instant = FALSE
+		reaction_speed = 0.333 // about 100u after 5 minutes
+
 	catamount
 		name = "catamount"
 		id = "catamount"

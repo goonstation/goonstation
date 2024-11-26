@@ -5,17 +5,25 @@
  * @license ISC
  */
 
+import { useCallback } from 'react';
 import { Button, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { TerminalData } from './types';
+import type { PeripheralData, TerminalData } from './types';
 
-export const PheripheralsSection = () => {
-  const { act, data } = useBackend<TerminalData>();
-  const peripherals = data.peripherals || [];
+interface PeripheralsSectionProps {
+  peripherals: PeripheralData[];
+}
 
-  const handlePheripheralClick = (peripheral) =>
-    act('buttonPressed', { card: peripheral.card, index: peripheral.index });
+export const PeripheralsSection = (props: PeripheralsSectionProps) => {
+  const { act } = useBackend<TerminalData>();
+  const { peripherals } = props;
+
+  const handlePeripheralClick = useCallback(
+    (peripheral: PeripheralData) =>
+      act('buttonPressed', { card: peripheral.card, index: peripheral.index }),
+    [act],
+  );
 
   return (
     <Section fitted>
@@ -26,7 +34,7 @@ export const PheripheralsSection = () => {
             icon={peripheral.icon}
             fontFamily={peripheral.Clown ? 'Comic Sans MS' : 'Consolas'}
             color={peripheral.color ? 'green' : 'grey'}
-            onClick={() => handlePheripheralClick(peripheral)}
+            onClick={() => handlePeripheralClick(peripheral)}
           >
             {peripheral.label}
           </Button>

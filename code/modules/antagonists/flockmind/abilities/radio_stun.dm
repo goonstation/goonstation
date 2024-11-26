@@ -28,3 +28,6 @@
 	else
 		boutput(holder.get_controlling_mob(), SPAN_ALERT("No targets in range with active radio headsets."))
 		return TRUE
+
+/datum/targetable/flockmindAbility/radioStun/logCast(atom/target)
+	return

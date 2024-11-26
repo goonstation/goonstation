@@ -514,6 +514,7 @@ var/global/list/module_editors = list()
 			newname = default_name
 		else
 			newname = tgui_input_text(src, "You are a Robot. Would you like to change your name to something else?", "Name Change", default_name)
+			newname = remove_bad_name_characters(newname)
 			if(newname && newname != default_name)
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 		if (!newname)

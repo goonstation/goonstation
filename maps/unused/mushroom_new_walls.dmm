@@ -5029,6 +5029,10 @@
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/machinery/conveyor/WE{
+	id = "garbage";
+	operating = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aBS" = (
@@ -12877,12 +12881,6 @@
 /obj/machinery/firealarm/south,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
-"cfQ" = (
-/obj/machinery/conveyor/WE{
-	id = "qmout"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "cfZ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -17507,7 +17505,11 @@
 	},
 /area/station/chapel/sanctuary)
 "fSm" = (
-/obj/machinery/conveyor/NS,
+/obj/machinery/conveyor/NS{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "fSD" = (
@@ -21997,7 +21999,7 @@
 "jRC" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	dir = 4;
-	id = "disp-vent";
+	id = "Disposal Exit";
 	name = "Disposal Vents"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
@@ -22006,7 +22008,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/space,
+/turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "jRG" = (
 /obj/item/device/radio/intercom/AI{
@@ -29238,7 +29240,9 @@
 	dir = 4
 	},
 /obj/machinery/conveyor/WE{
-	id = "qmout"
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -39720,6 +39724,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/qm)
+"xfl" = (
+/obj/machinery/conveyor/WE{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "xfu" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -90037,7 +90049,7 @@ aso
 ath
 aua
 arn
-cfQ
+xfl
 axg
 azg
 hMM

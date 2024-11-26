@@ -35,7 +35,6 @@
 			if (T)
 				var/falloff = GET_DIST(holder.owner, M)
 				M.throw_at(T, target_dist - falloff, throw_speed)
-			logTheThing(LOG_COMBAT, src.holder.owner, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
 		else if (istype(target, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/airlock = target
 			if (airlock.hardened)
