@@ -56,7 +56,7 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
     () => onBlueprintRemove(blueprintData.byondRef),
     [blueprintData.byondRef],
   );
-  const memoizedOnVendProduct = useCallback(
+  const handleVendProduct = useCallback(
     () => onVendProduct(blueprintData.byondRef),
     [blueprintData.byondRef],
   );
@@ -129,7 +129,7 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
           key={blueprintData.name}
           imagePath={blueprintData.img}
           disabled={!hasPower || notProduceable}
-          onClick={memoizedOnVendProduct}
+          onClick={handleVendProduct}
         >
           <CenteredText
             height={BlueprintButtonStyle.Height}
@@ -151,7 +151,7 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
                 align="center"
                 disabled={canDelete ? false : !hasPower || notProduceable}
                 onClick={
-                  canDelete ? memoizedOnRemoveBlueprint : memoizedOnVendProduct
+                  canDelete ? memoizedOnRemoveBlueprint : handleVendProduct
                 }
                 py={BlueprintMiniButtonStyle.IconSize / 2}
               >
@@ -173,7 +173,7 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
                 }
                 align="center"
                 disabled={!hasPower || notProduceable}
-                onClick={memoizedOnVendProduct}
+                onClick={handleVendProduct}
                 py={BlueprintMiniButtonStyle.IconSize / 2}
               >
                 <Icon name="gear" size={BlueprintMiniButtonStyle.IconSize} />
