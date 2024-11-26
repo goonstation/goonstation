@@ -133,17 +133,13 @@ export const Manufacturer = () => {
   const manudriveName = manudrive?.name ?? '';
   const manudriveLimit = manudrive?.limit;
 
-  // Stores a ref copy of the resource+producibility data which is updated ONLY when the contents of the manufacturer are changed.
-  // This helps make sure that the buttons can actually be memoized, as they wouldn't otherwise.
-  const resource_data_ref = useRef(resource_data);
+  // Only change producibility_data if it actually changes. Not doing this will cause issues for performance with blueprint buttons.
   const producibility_data_ref = useRef(producibility_data);
-
-  // Checking for a change in resource data via stringified vars is effectively checking if contents change
   if (
-    JSON.stringify(resource_data) !== JSON.stringify(resource_data_ref.current)
+    JSON.stringify(producibility_data) !==
+    JSON.stringify(producibility_data_ref.current)
   ) {
     producibility_data_ref.current = producibility_data;
-    resource_data_ref.current = resource_data;
   }
 
   // Converts the blueprints we get into one larger list sorted by category.
@@ -265,40 +261,38 @@ export const Manufacturer = () => {
               <Stack.Item>
                 <Section title="Loaded Materials" textAlign="center">
                   <LabeledList>
-                    {resource_data_ref.current?.map(
-                      (resourceData: ResourceData) => (
-                        <LabeledList.Item
-                          key={resourceData.byondRef}
-                          buttons={
-                            <>
-                              <Button
-                                icon="eject"
-                                onClick={() =>
-                                  act('material_eject', {
-                                    resource: resourceData.byondRef,
-                                  })
-                                }
-                              />
-                              <Button
-                                icon="arrows-up-down"
-                                color={
-                                  swappingMaterialRef !== resourceData.byondRef
-                                    ? null
-                                    : 'green'
-                                }
-                                onClick={() =>
-                                  handleSwapPriority(resourceData.byondRef)
-                                }
-                              />
-                            </>
-                          }
-                          label={toTitleCase(resourceData.name)}
-                          textAlign="center"
-                        >
-                          {resourceData.amount.toFixed(1).padStart(5, '\u2007')}
-                        </LabeledList.Item>
-                      ),
-                    )}
+                    {resource_data?.map((resourceData: ResourceData) => (
+                      <LabeledList.Item
+                        key={resourceData.byondRef}
+                        buttons={
+                          <>
+                            <Button
+                              icon="eject"
+                              onClick={() =>
+                                act('material_eject', {
+                                  resource: resourceData.byondRef,
+                                })
+                              }
+                            />
+                            <Button
+                              icon="arrows-up-down"
+                              color={
+                                swappingMaterialRef !== resourceData.byondRef
+                                  ? null
+                                  : 'green'
+                              }
+                              onClick={() =>
+                                handleSwapPriority(resourceData.byondRef)
+                              }
+                            />
+                          </>
+                        }
+                        label={toTitleCase(resourceData.name)}
+                        textAlign="center"
+                      >
+                        {resourceData.amount.toFixed(1).padStart(5, '\u2007')}
+                      </LabeledList.Item>
+                    ))}
                   </LabeledList>
                 </Section>
               </Stack.Item>
