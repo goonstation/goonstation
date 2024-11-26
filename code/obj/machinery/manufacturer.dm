@@ -91,6 +91,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/obj/item/disk/data/floppy/manudrive/manudrive = null //! Where insertible manudrives are held for reading blueprints and getting/setting fablimits.
 	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
 	var/list/material_patterns_by_ref = list() //! Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
+	var/list/cached_producibility_data = list() //! List which stores producibility data to be returned early in get_producibility_for_blueprints
+	// Because of how get_producibility_for_blueprints works it only updates if the materials changed in quantity or order, so this makes sure we have something for comparison
+	// The other option would be to manually set a trigger or flag whenever the contents are hard-coded to change but that would be unwarranted work onto future contributions
+	var/list/stored_previous_materials_data = list() //! List which stores the materials as they were last seen in get_producibility_for_blueprints
 
 	/* Production options */
 	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned "Miscellaneous".
@@ -471,6 +475,29 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	/// Get an associated list for the UI of blueprintRef to associated list of requirement name to whether that one's producible
 	proc/get_producibility_for_blueprints()
+		// Run a comparison against the shallow storage of the previous contents to see if it changed
+		var/contents_changed = FALSE
+		var/list/C = src.get_contents()
+		var/list/refs_encountered = list() //! List to gather the refs still in the container, to find what might no longer exist in the container and prune it from stored data accordingly
+		for (var/obj/item/material_piece/M as anything in C)
+			var/M_ref = "\ref[M]"
+			refs_encountered.Add(M_ref)
+			// Do checks if we still aren't convinced contents changed
+			if (!contents_changed)
+				// Compare amounts, where stored_previous_materials_data[ref] contains the amount last recorded
+				if (!(M_ref in src.stored_previous_materials_data) || M.amount != src.stored_previous_materials_data[M_ref])
+					contents_changed = TRUE
+			// After checking this one, overwrite the previous entry with the new
+			src.stored_previous_materials_data[M_ref] = M.amount
+		// Quick pass to remove any stored material refs that shouldn't exist
+		for (var/ref in src.stored_previous_materials_data)
+			if (!(ref in refs_encountered))
+				src.stored_previous_materials_data.Remove(ref)
+		// Return cached if nothing changed
+		if (!contents_changed)
+			return src.cached_producibility_data
+		for (var/obj/item/material_piece/M as anything in C)
+		// Do actual computation since it's necessary
 		var/list/output = list()
 		for (var/datum/manufacture/M as anything in ALL_BLUEPRINTS)
 			var/M_ref = "\ref[M]"
@@ -478,11 +505,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 			output[M_ref] = list()
 			// 'convert' the result of R = P_ref to R.name = boolean
 			for (var/datum/manufacturing_requirement/needed_R as anything in M.item_requirements)
-				output[M_ref][needed_R.name] = FALSE
+				output[M_ref][needed_R.getName()] = FALSE
 				for (var/datum/manufacturing_requirement/satisfied_R as anything in mats_needed)
 					if (satisfied_R == needed_R)
-						output[M_ref][needed_R.name] = TRUE
+						output[M_ref][needed_R.getName()] = TRUE
 						break
+		// Store this as cached now that it has, in fact, changed
+		src.cached_producibility_data = output
 		return output
 
 	attack_hand(mob/user)
