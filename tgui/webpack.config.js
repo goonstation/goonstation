@@ -24,7 +24,7 @@ const createStats = (verbose) => ({
 });
 
 module.exports = (env = {}, argv) => {
-  const mode = argv.mode || 'development';
+  const mode = argv.mode || 'production';
   const bench = env.TGUI_BENCH;
   const config = {
     mode: mode === 'production' ? 'production' : 'development',
@@ -101,7 +101,6 @@ module.exports = (env = {}, argv) => {
       ],
     },
     optimization: {
-      minimize: false,
       emitOnErrors: false,
     },
     performance: {
@@ -119,6 +118,7 @@ module.exports = (env = {}, argv) => {
     plugins: [
       new webpack.EnvironmentPlugin({
         NODE_ENV: env.NODE_ENV || mode,
+        WEBPACK_HMR_ENABLED: env.WEBPACK_HMR_ENABLED || argv.hot || false,
         DEV_SERVER_IP: env.DEV_SERVER_IP || null,
       }),
       new ExtractCssPlugin({
