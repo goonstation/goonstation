@@ -29,22 +29,11 @@
 // Increases perceptual color lightness.
 @function lighten($color, $percent) {
   $scaled: hsl(
-    color.hue($color),
-    color.saturation($color),
-    color.lightness($color) * (1 + num($percent))
+    color.channel($color, 'hue', $space: hsl),
+    color.channel($color, 'saturation', $space: hsl),
+    color.channel($color, 'lightness', $space: hsl) * (1 + num($percent))
   );
-  $mixed: color.mix(#ffffff, $color, 100% * num($percent));
-  @return color.mix($scaled, $mixed, 75%);
-}
-
-// Decreases perceptual color lightness.
-@function darken($color, $percent) {
-  $scaled: hsl(
-    color.hue($color),
-    color.saturation($color),
-    color.lightness($color) * (1 - num($percent))
-  );
-  $mixed: color.mix(#000000, $color, 100% * num($percent));
+  $mixed: color.mix(hsl(0, 0%, 100%), $color, 100% * num($percent));
   @return color.mix($scaled, $mixed, 75%);
 }
 
@@ -52,9 +41,9 @@
 // 1 is pure white, 0 is pure black.
 @function luminance($color) {
   $colors: (
-    'red': color.red($color),
-    'green': color.green($color),
-    'blue': color.blue($color),
+    'red': color.channel($color, 'red', $space: rgb),
+    'green': color.channel($color, 'green', $space: rgb),
+    'blue': color.channel($color, 'blue', $space: rgb),
   );
 
   @each $name, $value in $colors {
@@ -66,16 +55,17 @@
       $value: math.div($value + 0.055, 1.055);
       $value: math.pow($value, 2.4);
     }
-    // prettier-ignore
-    $colors: map.merge($colors, (
-      $name: $value,
-    ));
+
+    $colors: map.merge(
+      $colors,
+      (
+        $name: $value,
+      )
+    );
   }
 
-  // prettier-ignore
-  @return (map.get($colors, 'red') * .2126)
-    + (map.get($colors, 'green') * .7152)
-    + (map.get($colors, 'blue') * .0722);
+  @return (map.get($colors, 'red') * 0.2126) +
+    (map.get($colors, 'green') * 0.7152) + (map.get($colors, 'blue') * 0.0722);
 }
 
 // Blends an RGBA color with a static background color based on its

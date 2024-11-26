@@ -132,7 +132,7 @@
 	build_supply_pack_cache()
 	build_syndi_buylist_cache()
 	build_manufacturer_icons()
-	clothingbooth_setup()
+	build_clothingbooth_caches()
 	initialize_biomes()
 
 	Z_LOG_DEBUG("World/Init", "Setting up airlock/APC wires...")
