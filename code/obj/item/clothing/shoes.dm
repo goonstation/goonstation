@@ -434,7 +434,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 		if (prob(10))
 			if (ON_COOLDOWN(src, "EXPLOSION", 1 SECOND))
 				return
-			var/turf/explosion_target = get_turf(pick(view(8, user)))
+			var/turf/explosion_target = get_turf(pick(oview(9, user)))
 			new /obj/effects/explosion/dangerous(explosion_target)
 
 /obj/item/clothing/shoes/ziggy

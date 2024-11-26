@@ -88,4 +88,9 @@
 	if (map_settings)
 		. = map_settings.goonhub_map
 	. = goonhub_href(.)
-	. += "?sx=[our_user.mob.x]&sy=[our_user.mob.y]&zoom=0"
+	var/turf/T = get_turf(our_user.mob)
+	if (!T || T.z != Z_LEVEL_STATION && T.z != Z_LEVEL_DEBRIS) //no maps for weird z levels or nullspace
+		return .
+	. += "?sx=[T.x]&sy=[T.y]&zoom=0"
+	if (T.z == Z_LEVEL_DEBRIS)
+		. += "&layer=debris"
