@@ -1,4 +1,156 @@
 
+(t)sun nov 24 24
+(u)Egregorious
+(p)21374
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Enabled quick-filling and dumping of cigarette packets. Inspect them for more detailed information.
+(u)FlameArrow57
+(p)21432
+(e)🆕🍝|C-Feature, A-Catering
+(+)Added kombucha drink recipe. 3u sweet tea + 1u beer + 1u antihol -> 3u kombucha over 9 seconds
+(u)LeahTheTech
+(p)21430
+(e)|
+(+)Nanotrasen IT contractors have updated the records department to a brand new version of ThinkDOS that doesn't support the ancient "emoji" standard anymore. Consequently, you can no longer use emojis in your character names.
+(t)sat nov 23 24
+(u)JORJ949
+(p)21385
+(e)💅🤖|C-QoL, A-Silicons
+(+)AI shell Ctrl-Click to deploy function expanded to cyborg docks for shells that are recharging.
+(u)LeahTheTech
+(+)Tweaked the HoS beret sprite slightly.
+(+)Singularity startup is now a little bit cooler.
+(t)fri nov 22 24
+(u)ZeWaka
+(e)🆕|C-Feature
+(*)When you click the 'Map' button in the top-right, it focuses on your current location.
+(u)LeahTheTech
+(*)Stammering no longer duplicates numbers, but drunkenness now has a chance to make them come out off by one.
+(u)Colossus
+(p)21194
+(e)🆕🍝|C-Feature, A-Catering
+(+)Added support for fishing bait, you are more likely to catch real goldfish with regular goldfish, and pufferfish need meat as bait.
+(t)thu nov 21 24
+(u)JORJ949
+(p)21232
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Cogmap 1's AI Upload changed slightly to remove thindows.
+(u)JORJ949
+(p)21231
+(e)🗺💅|A-Mapping, C-QoL
+(+)Cogmap 2's AI Upload has been shrunk, among other changes.
+(u)NightmarechaMillian
+(p)21276
+(e)🔎💅🔊🐁|C-Code-Quality, C-QoL, C-Sound, A-Critters
+(+)You can now pass through sawflies if they're friendly to you.
+(t)wed nov 20 24
+(u)Azrun
+(+)ABCU on a planet near you! Allow for ABCU to work with terrainify.
+(u)NightmarechaMillian
+(p)21357
+(e)🎨|C-Sprites
+(+)Added projectile sprites to metal and bone pipeshot.
+(t)tue nov 19 24
+(u)Glamurio (Ryou)
+(p)21230
+(e)🔄🧱📦|C-Rework, A-Materials, A-Game-Objects
+(*)Statues have been reworked, and can now be mined or cut up depending on the hardness of the material, potentially yielding  the brain of the person encased.
+(*)Material made of ice will now melt when exposed to heat.
+(t)mon nov 18 24
+(u)LeahTheTech
+(+)Photophosphide no longer explodes while in disposal/mail pipes.
+(u)NightmarechaMillian
+(p)21327
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Breaching weapons (sledgehammers, fireaxes, etc) will now also deal 4x damage to windows
+(t)sat nov 16 24
+(u)FlameArrow57
+(p)21339
+(e)🆕📦🔬|C-Feature, A-Game-Objects, A-Science
+(+)Heat Surge artifact can now produce fire with different colors than just red.
+(t)fri nov 15 24
+(u)LeahTheTech
+(*)Added chocolate eggs made with one egg and one chocolate bar. Each egg can contain one small item which can be retrieved (or accidentally swallowed) when the egg is eaten. Eggs which contain items are considered contraband due to posing a SEVERE choking hazard.
+(u)DisturbHerb, Glamurio, LeahTheTech, Mordent, Trazodont, Tyrant
+(p)18190
+(e)🆕🗺🎨💅📄📜|C-Feature, A-Mapping, C-Sprites, C-QoL, A-UI, C-Documentation
+(*)Revamped the clothing booth interface and reworked how it functions.
+(*)Please bug report any missing items or different prices from the old interface!
+(+)Credit to DisturbHerb, Glamurio, LeahTheTech, and Mordent for the clothing booth UI.
+(+)Credit to Trazodont and Tyrant for volunteering with the clothing booth item data entry process.
+(t)thu nov 14 24
+(u)LeahTheTech
+(p)21316
+(e)🎨|C-Sprites
+(*)Pride flags can now be made into capes by attaching a bit of wire to them.
+(t)sun nov 10 24
+(u)LeahTheTech
+(p)21290
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Laser mirrors now reflect any energy projectile at any angle.
+(t)sat nov 09 24
+(u)LorrMaster
+(p)21165
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Photocopier can now scan and print wanted posters, discount credits, paper copies of books & newspapers, booklets, contents of folders, reagent scanner results, and information from IDs.
+(+)Packets can be used by bureaucrats on the photocopier to perform their grueling tasks from the comfort of their office chair. Details can be printed from the photocopier directly.
+(t)fri nov 08 24
+(u)pgmzeta + LeahTheTech
+(*)Added pop up information maps to every rotation map.
+(u)Garash2k
+(p)19559
+(e)🆕📄|C-Feature, A-UI
+(+)New UI for the antag tip popups! Make sure to report any errors
+(u)JORJ949
+(p)21160
+(e)🆕🎨🐁|C-Feature, C-Sprites, A-Critters
+(*)Added janitorial whistle for controlling cleanbots.
+(t)mon nov 04 24
+(u)Egregorious
+(p)20960
+(e)⚖🍝🌱|C-Balance, A-Catering, A-Hydroponics
+(+)Botany's jelly beans are a lot more colourful.
+(u)LeahTheTech
+(*)Mirabilis is no longer a secret chem and has a simplified recipe: 1 Coagulated Gnesis + 1 Port + 1 Oculine = 2 Mirabilis.
+(u)Klushy225
+(p)21052
+(e)🎨🐣|C-Sprites, A-Respawning
+(+)Adds the Hall Monitor gimmick job.
+(u)JORJ949
+(p)21200
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Non-nuclear syndicate PDAs start with messenger on.
+(+)Mindhack cloners now only send messages to syndicate PDAs.
+(u)TDHooligan, Guv
+(p)21211
+(e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
+(+)The bartender's shaker now shows if your cocktail is a safe temperature to drink
+(u)TDHooligan
+(p)21187
+(e)🎨📦⚗|C-Sprites, A-Game-Objects, A-Chemistry
+(*)Chemists now have access to the Dropper Funnel; make instant reactions happen at your own pace!
+(t)sun nov 03 24
+(u)FlameArrow57
+(p)21221
+(e)🆕🏅🔬|C-Feature, A-Medal, A-Science
+(*)Added a new Scientist/Research Director objective to activate 10 artifacts in a single shift, with a medal tied to it
+(t)sat nov 02 24
+(u)NightmarechaMillian
+(p)21217
+(e)🎨💅|C-Sprites, C-QoL
+(+)Emergency suits in boxes now start folded so they can actually fit back into the box
+(t)fri nov 01 24
+(u)Facsimil
+(p)21098
+(e)🔊📦|C-Sound, A-Game-Objects
+(*)Replaced the Electric Guitar's sound files.
+(u)FlameArrow57
+(p)21162
+(e)🆕🔬|C-Feature, A-Science
+(*)Added a new artifact stimulus - Language. See minor changes for details
+(+)Language activated artifacts are activated by saying a 5 letter word with vowels in correct places
+(+)Speaking near one of these artifacts will give a hint from the artifact
+(+)Using too many vowels will give a Dull chime. A vowel in the right place will give a High chime. A vowel in the wrong position will give a Low chime
 (t)tue oct 29 24
 (u)tarmunora
 (+)Trickster wraith possession no longer automatically uncuffs target, instead, the possession action prevents the target from self-cuffing before the takeover

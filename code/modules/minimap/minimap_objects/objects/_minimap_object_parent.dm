@@ -19,7 +19,7 @@
 /obj/minimap/New()
 	. = ..()
 	START_TRACKING
-	if (global.current_state > GAME_STATE_PLAYING)
+	if (global.current_state > GAME_STATE_WORLD_NEW)
 		src.initialise_minimap()
 
 /obj/minimap/disposing()
@@ -38,3 +38,8 @@
 		click_overlay_icon.ChangeOpacity(0)
 		src.icon = click_overlay_icon
 		src.mouse_opacity = 2
+
+/obj/minimap/proc/get_turf_at_screen_coords(screen_x,screen_y)
+	var/x = round((screen_x - src.map.minimap_render.pixel_x) / (src.map.zoom_coefficient * src.map.map_scale))
+	var/y = round((screen_y - src.map.minimap_render.pixel_y) / (src.map.zoom_coefficient * src.map.map_scale))
+	return locate(x, y, map.z_level)

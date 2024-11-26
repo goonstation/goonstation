@@ -11,12 +11,12 @@ $generic: #484455;
 $accent: #4f56a5;
 $border-color: #7b86ff;
 
-@use '../colors.scss' with (
+@use '../colors' with (
   $fg-map-keys: (),
   $bg-map-keys: (),
   $primary: $accent
 );
-@use '../base.scss' with (
+@use '../base' with (
   $color-bg: color.scale($generic, $lightness: -45%),
   $border-radius: 2px
 );

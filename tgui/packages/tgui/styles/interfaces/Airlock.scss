@@ -1,6 +1,6 @@
-@use '../colors.scss';
-@use '../components/Button.scss';
-@use '../base.scss';
+@use '../colors';
+@use '../components/Button';
+@use '../base';
 
 .AccessPanel-wires-btn {
   &.Button--selected {

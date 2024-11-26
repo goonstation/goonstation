@@ -358,6 +358,8 @@
 
 			if(istype(pos, /turf/space))
 				O = new/obj/effects/abcuMarker(pos)
+			else if(pos.can_build && pos.z == Z_LEVEL_STATION)
+				O = new/obj/effects/abcuMarker(pos)
 			else
 				O = new/obj/effects/abcuMarker/red(pos)
 				src.invalid_count++

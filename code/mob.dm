@@ -405,6 +405,9 @@
 	if (src.buckled)
 		src.buckled.buckled_guy = null
 
+	for(var/obj/item/grab/G in src.grabbed_by)
+		qdel(G)
+
 	mobs.Remove(src)
 
 	if (src.ai)
@@ -1915,7 +1918,7 @@
 			for (var/obj/item/W in src)
 				if (istype(W, /obj/item/clothing))
 					var/obj/item/clothing/C = W
-					C.add_stain("singed")
+					C.add_stain(/datum/stain/singed)
 			unequip_all()
 
 	if (drop_equipment)
@@ -2848,6 +2851,7 @@
 			return
 		else
 			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
+			newname = remove_bad_name_characters(newname)
 			if (!length(newname) || copytext(newname,1,2) == " ")
 				src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
 				continue

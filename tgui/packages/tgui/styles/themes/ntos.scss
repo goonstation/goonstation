@@ -8,11 +8,11 @@
 
 $nanotrasen: #384e68;
 
-@use '../colors.scss' with (
+@use '../colors' with (
   $fg-map-keys: (),
   $bg-map-keys: ()
 );
-@use '../base.scss' with (
+@use '../base' with (
   $color-bg: color.scale($nanotrasen, $lightness: -45%)
 );
 

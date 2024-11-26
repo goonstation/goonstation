@@ -883,7 +883,7 @@ proc/broadcast_to_all_gangs(var/message)
 					tableList.Add(O)
 
 			if (!is_blocked_turf(T))
-				if (T.intact)
+				if (T.intact && !(istype(T, /turf/simulated/floor/glassblock) || istype(T, /turf/simulated/floor/auto/glassblock)))
 					turfList.Add(T)
 				else
 					uncoveredTurfList.Add(T)
@@ -1055,6 +1055,7 @@ proc/broadcast_to_all_gangs(var/message)
 			return
 		if(!ishuman(user))
 			boutput(user, SPAN_ALERT("You don't have the dexterity to spray paint a gang tag!"))
+			return
 
 		return validLocation
 
