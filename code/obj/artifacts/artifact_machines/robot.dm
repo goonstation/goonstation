@@ -1,10 +1,10 @@
 /obj/machinery/artifact/robot
-	name = "automaton"
+	name = "drone"
 	associated_datum = /datum/artifact/robot
 
 /datum/artifact/robot
 	associated_object = /obj/machinery/artifact/robot
-	type_name = "Automaton"
+	type_name = "Drone"
 	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 200
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/language)
