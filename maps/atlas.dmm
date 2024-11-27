@@ -11981,10 +11981,10 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/computer3/terminal,
 /obj/machinery/light/incandescent/harsh{
 	dir = 1
 	},
+/obj/machinery/computer3/terminal/zeta,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},

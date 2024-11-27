@@ -1494,7 +1494,7 @@
 	var/special = 0
 	if (src.stamina < STAMINA_WINDED_SPEAK_MIN)
 		special = "gasp_whisper"
-	if (src.oxyloss > 10)
+	if (src.oxyloss > 10 && !HAS_ATOM_PROPERTY(src, PROP_MOB_REBREATHING))
 		special = "gasp_whisper"
 
 	return ..(text, special, sayverb)
