@@ -19,7 +19,7 @@
 
 /datum/aiTask/sequence/goalbased/wall_smash/New(parentHolder, transTask) //goalbased aitasks have an inherent movement component
 	..(parentHolder, transTask)
-	add_task(holder.get_instance(/datum/aiTask/succeedable/wall_smash, list(holder)))
+	add_task(holder.get_instance(/datum/aiTask/succeedable/actionbar/wall_smash, list(holder)))
 
 /datum/aiTask/sequence/goalbased/wall_smash/get_targets()
 	var/list/result = list()
@@ -30,32 +30,32 @@
 	return result
 
 //subtask for the wall smashing
-/datum/aiTask/succeedable/wall_smash
+/datum/aiTask/succeedable/actionbar/wall_smash
 	name = "wall smash subtask"
-	var/has_started = FALSE
+	duration = 5 SECONDS
+	callback_proc = PROC_REF(smash_wall_or_girder)
+	action_icon = null
+	action_icon_state = null
+	end_message = null
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
 
-/datum/aiTask/succeedable/wall_smash/failed()
-	if(!holder.owner || !holder.target || BOUNDS_DIST(holder.owner, holder.target) > 0) //the tasks fails and is re-evaluated if the target is not in range
+/datum/aiTask/succeedable/actionbar/wall_smash/failed()
+	.=..() //did actionbar fail
+	if(. || !holder.owner || !holder.target || BOUNDS_DIST(holder.owner, holder.target) > 0) //the tasks fails and is re-evaluated if the target is not in range
 		return TRUE
 
-/datum/aiTask/succeedable/wall_smash/succeeded()
-	return !istype(holder.target, /turf/simulated/wall) && !istype(holder.target, /obj/structure/girder)
+/datum/aiTask/succeedable/actionbar/wall_smash/succeeded()
+	.=..() //did actionbar succeed
+	return . && !istype(holder.target, /turf/simulated/wall) && !istype(holder.target, /obj/structure/girder)
 
-/datum/aiTask/succeedable/wall_smash/on_tick()
-	if(!has_started)
-		if(holder.owner && !succeeded() && BOUNDS_DIST(holder.owner, holder.target) == 0)
-			holder.owner.set_dir(get_dir(holder.owner, holder.target))
-			var/turf/simulated/wall/W = holder.target
-			if(istype(W))
-				W.dismantle_wall()
-			else
-				var/obj/structure/girder/G = holder.target
-				if(istype(G))
-					qdel(G) //I guess girders don't have a deconstruct proc?
-			has_started = TRUE
-
-/datum/aiTask/succeedable/wall_smash/on_reset()
-	has_started = FALSE
+/datum/aiTask/succeedable/actionbar/wall_smash/proc/smash_wall_or_girder(var/mob/owner, var/target)
+	var/turf/simulated/wall/W = target
+	if(istype(W))
+		W.dismantle_wall()
+	else
+		var/obj/structure/girder/G = holder.target
+		if(istype(G))
+			qdel(G) //I guess girders don't have a deconstruct proc?
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // floor builder
@@ -79,7 +79,7 @@
 
 /datum/aiTask/sequence/goalbased/floor_place/New(parentHolder, transTask) //goalbased aitasks have an inherent movement component
 	..(parentHolder, transTask)
-	add_task(holder.get_instance(/datum/aiTask/succeedable/floor_place, list(holder)))
+	add_task(holder.get_instance(/datum/aiTask/succeedable/actionbar/floor_place, list(holder)))
 
 /datum/aiTask/sequence/goalbased/floor_place/score_target(atom/target)
 	. = ..() //score based on distance
@@ -102,38 +102,35 @@
 	return results
 
 //subtask for the floor placing
-/datum/aiTask/succeedable/floor_place
+/datum/aiTask/succeedable/actionbar/floor_place
 	name = "floor place subtask"
-	var/has_started = FALSE
+	duration = 2 SECONDS
+	callback_proc = PROC_REF(place_floor)
+	action_icon = null
+	action_icon_state = null
+	end_message = null
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
 
-/datum/aiTask/succeedable/floor_place/failed()
-	var/mob/living/critter/robotic/artifact/robit = holder.owner
-	var/datum/artifact/robot/art_datum = robit.parent_artifact.artifact
-	if(!istype(art_datum))
-		return TRUE
-	if(!holder.owner || !istype(holder.owner.loc, art_datum.floor_type) || BOUNDS_DIST(holder.owner, holder.target) > 0) //the tasks fails and is re-evaluated if the target is not in range
+/datum/aiTask/succeedable/actionbar/floor_place/failed()
+	.=..() //did actionbar fail
+	if(. || !holder.owner || !holder.target || BOUNDS_DIST(holder.owner, holder.target) > 0) //the tasks fails and is re-evaluated if the target is not in range
 		return TRUE
 
-/datum/aiTask/succeedable/floor_place/succeeded()
-	var/mob/living/critter/robotic/artifact/robit = holder.owner
-	var/datum/artifact/robot/art_datum = robit.parent_artifact.artifact
-	if(istype(art_datum))
-		return istype(holder.owner.loc, art_datum.floor_type)
+/datum/aiTask/succeedable/actionbar/floor_place/succeeded()
+	.=..() //did actionbar succeed
+	if(.)
+		var/mob/living/critter/robotic/artifact/robit = holder.owner
+		var/datum/artifact/robot/art_datum = robit.parent_artifact.artifact
+		if(istype(art_datum))
+			return istype(holder.owner.loc, art_datum.floor_type)
 	return FALSE
 
-/datum/aiTask/succeedable/floor_place/on_tick()
-	if(!has_started)
-		if(holder.owner && BOUNDS_DIST(holder.owner, holder.target) == 0)
-			holder.owner.set_dir(get_dir(holder.owner, holder.target))
-			var/turf/floor = holder.target
-			var/mob/living/critter/robotic/artifact/robit = holder.owner
-			var/datum/artifact/robot/art_datum = robit.parent_artifact.artifact
-			if(istype(art_datum))
-				floor.ReplaceWith(art_datum.floor_type)
-			has_started = TRUE
+/datum/aiTask/succeedable/actionbar/floor_place/proc/place_floor(var/mob/living/critter/robotic/artifact/owner, var/turf/target)
+	if(istype(owner) && istype(target))
+		var/datum/artifact/robot/art_datum = owner.parent_artifact?.artifact
+		if(istype(art_datum))
+			target.ReplaceWith(art_datum.floor_type)
 
-/datum/aiTask/succeedable/floor_place/on_reset()
-	has_started = FALSE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // wall builder
@@ -156,7 +153,7 @@
 
 /datum/aiTask/sequence/goalbased/wall_place/New(parentHolder, transTask) //goalbased aitasks have an inherent movement component
 	..(parentHolder, transTask)
-	add_task(holder.get_instance(/datum/aiTask/succeedable/wall_place, list(holder)))
+	add_task(holder.get_instance(/datum/aiTask/succeedable/actionbar/wall_place, list(holder)))
 
 /datum/aiTask/sequence/goalbased/wall_place/get_targets()
 	. = ..()
@@ -168,35 +165,32 @@
 	return results
 
 //subtask for the wall placing
-/datum/aiTask/succeedable/wall_place
+/datum/aiTask/succeedable/actionbar/wall_place
 	name = "wall place subtask"
-	var/has_started = FALSE
+	duration = 3 SECONDS
+	callback_proc = PROC_REF(place_wall)
+	action_icon = null
+	action_icon_state = null
+	end_message = null
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
 
-/datum/aiTask/succeedable/wall_place/failed()
-	var/mob/living/critter/robotic/artifact/robit = holder.owner
-	var/datum/artifact/robot/art_datum = robit.parent_artifact.artifact
-	if(!istype(art_datum))
-		return TRUE
-	if(!holder.owner || !istype(holder.owner.loc, art_datum.floor_type) || BOUNDS_DIST(holder.owner, holder.target) > 0) //the tasks fails and is re-evaluated if the target is not in range
+/datum/aiTask/succeedable/actionbar/wall_place/failed()
+	.=..() //did actionbar fail
+	if(. || !holder.owner || !holder.target || BOUNDS_DIST(holder.owner, holder.target) > 0) //the tasks fails and is re-evaluated if the target is not in range
 		return TRUE
 
-/datum/aiTask/succeedable/wall_place/succeeded()
-	var/mob/living/critter/robotic/artifact/robit = holder.owner
-	var/datum/artifact/robot/art_datum = robit.parent_artifact.artifact
-	if(istype(art_datum))
-		return istype(holder.owner.loc, art_datum.wall_type)
+/datum/aiTask/succeedable/actionbar/wall_place/succeeded()
+	.=..() //did actionbar succeed
+	if(.)
+		var/mob/living/critter/robotic/artifact/robit = holder.owner
+		var/datum/artifact/robot/art_datum = robit.parent_artifact.artifact
+		if(istype(art_datum))
+			return istype(holder.owner.loc, art_datum.wall_type)
 	return FALSE
 
-/datum/aiTask/succeedable/wall_place/on_tick()
-	if(!has_started)
-		if(holder.owner && BOUNDS_DIST(holder.owner, holder.target) == 0)
-			holder.owner.set_dir(get_dir(holder.owner, holder.target))
-			var/turf/floor = holder.target
-			var/mob/living/critter/robotic/artifact/robit = holder.owner
-			var/datum/artifact/robot/art_datum = robit.parent_artifact.artifact
-			if(istype(art_datum))
-				floor.ReplaceWith(art_datum.wall_type)
-			has_started = TRUE
+/datum/aiTask/succeedable/actionbar/wall_place/proc/place_wall(var/mob/living/critter/robotic/artifact/owner, var/turf/target)
+	if(istype(owner) && istype(target))
+		var/datum/artifact/robot/art_datum = owner.parent_artifact?.artifact
+		if(istype(art_datum))
+			target.ReplaceWith(art_datum.wall_type)
 
-/datum/aiTask/succeedable/wall_place/on_reset()
-	has_started = FALSE

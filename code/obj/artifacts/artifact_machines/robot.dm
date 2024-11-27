@@ -23,12 +23,28 @@
 	var/aiHolder_type
 	var/floor_type
 	var/wall_type
+	//artifact limb var storage
+	var/limb_damtype = "brute"
+	var/limb_dmg_amount = 0
+	var/limb_stamina_dmg = 0
+	var/limb_hitsound
+
 
 	New()
 		.=..()
 		aiHolder_type = pick(possible_ais)
 		floor_type = pick(floor_types)
 		wall_type = pick(wall_types)
+
+		//this is copy pasted from the melee artifact New()
+		limb_damtype = pick("brute", "fire", "toxin")
+		limb_dmg_amount = rand(3,6)
+		limb_dmg_amount *= rand(1,5)
+		if (prob(45))
+			limb_stamina_dmg = rand(50,120)
+		limb_hitsound = pick('sound/impact_sounds/Metal_Hit_Heavy_1.ogg','sound/impact_sounds/Wood_Hit_1.ogg','sound/effects/exlow.ogg','sound/effects/mag_magmisimpact.ogg','sound/impact_sounds/Energy_Hit_1.ogg',
+		'sound/impact_sounds/Generic_Snap_1.ogg','sound/machines/mixer.ogg','sound/impact_sounds/Generic_Hit_Heavy_1.ogg','sound/weapons/ACgun2.ogg','sound/impact_sounds/Energy_Hit_3.ogg','sound/weapons/flashbang.ogg',
+		'sound/weapons/grenade.ogg','sound/weapons/railgun.ogg')
 
 	effect_activate(var/obj/O)
 		. = ..()
@@ -61,7 +77,7 @@
 			throw EXCEPTION("Tried to create an artifact robot without a parent artifact!")
 		if(!ispath(aitype))
 			throw EXCEPTION("Tried to create an artifact robot without an ai type!")
-		.=..(loc)
+
 		parent_artifact = parent
 		src.ai = new aitype(src)
 		src.is_npc = TRUE
@@ -74,6 +90,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "artifact_robot", 100)
 
 		animate_bumble(src)
+		.=..(loc)
 
 	setup_healths()
 		. = ..()
@@ -83,7 +100,7 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/artifact_robot_attack
+		HH.limb = new /datum/limb/artifact_robot_attack(null, parent_artifact.artifact)
 		HH.can_hold_items = FALSE
 
 	death(var/gibbed)
@@ -102,18 +119,15 @@
 	var/stamina_dmg = 0
 	var/hitsound
 
-	New()
-		.=..()
-		//yummy copy-pasta
-		src.damtype = pick("brute", "fire", "toxin")
-		src.dmg_amount = rand(3,6)
-		src.dmg_amount *= rand(1,5)
-		if (prob(45))
-			src.stamina_dmg = rand(50,120)
-		src.hitsound = pick('sound/impact_sounds/Metal_Hit_Heavy_1.ogg','sound/impact_sounds/Wood_Hit_1.ogg','sound/effects/exlow.ogg','sound/effects/mag_magmisimpact.ogg','sound/impact_sounds/Energy_Hit_1.ogg',
-		'sound/impact_sounds/Generic_Snap_1.ogg','sound/machines/mixer.ogg','sound/impact_sounds/Generic_Hit_Heavy_1.ogg','sound/weapons/ACgun2.ogg','sound/impact_sounds/Energy_Hit_3.ogg','sound/weapons/flashbang.ogg',
-		'sound/weapons/grenade.ogg','sound/weapons/railgun.ogg')
-
+	New(var/obj/item/parts/holder, var/datum/artifact/robot/artifact_datum)
+		.=..(holder)
+		if(istype(artifact_datum))
+			src.damtype = artifact_datum.limb_damtype
+			src.dmg_amount = artifact_datum.limb_dmg_amount
+			src.stamina_dmg = artifact_datum.limb_stamina_dmg
+			src.hitsound = artifact_datum.limb_hitsound
+		else
+			throw EXCEPTION("This limb must be created with a robot artifact datum (/datum/artifact/robot)")
 
 	help(mob/target, var/mob/living/user)
 		harm(target, user)
