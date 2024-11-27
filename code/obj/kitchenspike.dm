@@ -54,16 +54,17 @@ TYPEINFO(/obj/kitchenspike)
 	src.get_meat(user)
 
 /obj/kitchenspike/proc/get_meat(mob/user)
-	if(src.occupied)
-		if(src.meat >= 1)
-			src.meat--
-			new /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat(src.loc)
-			if (src.meat >= 1)
-				boutput(user, "You remove some meat from the monkey.")
-			else
-				boutput(user, "You remove the last piece of meat from the monkey!")
-				src.occupied = FALSE
-				src.UpdateIcon()
+	if(!src.occupied)
+		return
+	if(src.meat >= 1)
+		src.meat--
+		new /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat(src.loc)
+		if (src.meat >= 1)
+			boutput(user, "You remove some meat from the monkey.")
+		else
+			boutput(user, "You remove the last piece of meat from the monkey!")
+			src.occupied = FALSE
+			src.UpdateIcon()
 
 /obj/kitchenspike/update_icon()
 	. = ..()
