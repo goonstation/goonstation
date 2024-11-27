@@ -874,15 +874,14 @@
 /obj/machinery/launcher_loader/west{
 	id = "qm_dock"
 	},
+/obj/railing/yellow/reinforced,
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "afm" = (
 /obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "afC" = (
@@ -1655,9 +1654,6 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "akl" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/door_control{
 	id = "cargodock_out";
 	name = "Outlet Door Control";
@@ -1729,9 +1725,6 @@
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-8"
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -3288,6 +3281,10 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/disposalpipe/junction/left/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "ata" = (
@@ -3715,10 +3712,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/solar/east)
 "auO" = (
-/obj/machinery/door_control{
-	id = "qm_dock";
-	name = "Loading Door Control";
-	pixel_x = -24
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
@@ -3729,6 +3724,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
@@ -4372,11 +4370,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "ayp" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/switch_junction/right/south{
-	mail_tag = "cargo";
+	mail_tag = "QM";
 	name = "Mail Junction - Cargo"
 	},
 /turf/simulated/floor,
@@ -4859,11 +4854,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aAS" = (
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/disposalpipe/segment/mail,
 /obj/landmark/start/job/quartermaster,
+/obj/stool/chair/yellow{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "aAV" = (
@@ -5316,10 +5311,10 @@
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
 "aDC" = (
-/obj/stool/chair{
+/obj/landmark/start/job/quartermaster,
+/obj/stool/chair/yellow{
 	dir = 4
 	},
-/obj/landmark/start/job/quartermaster,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "aDE" = (
@@ -5343,7 +5338,6 @@
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aDJ" = (
-/obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -5911,9 +5905,6 @@
 	},
 /area/station/quartermaster/office)
 "aHs" = (
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/landmark/start/job/quartermaster,
 /obj/cable{
 	icon_state = "0-8"
@@ -5922,6 +5913,9 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
+/obj/stool/chair/yellow{
+	dir = 8
+	},
 /turf/simulated/floor/orangeblack/corner{
 	dir = 8
 	},
@@ -6098,7 +6092,7 @@
 "aIF" = (
 /obj/machinery/firealarm/south,
 /obj/machinery/camera{
-	c_tag = "Cargo Bay Lobby";
+	c_tag = "Cargo Bay Office";
 	dir = 1
 	},
 /turf/simulated/floor/orangeblack/side,
@@ -7560,7 +7554,7 @@
 /obj/machinery/light/incandescent{
 	dir = 4
 	},
-/obj/machinery/disposal/mail/qm,
+/obj/machinery/disposal/mail/autoname/qm,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "aRu" = (
@@ -11967,15 +11961,6 @@
 	dir = 1
 	},
 /area/station/medical/research)
-"bAn" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster/office)
 "bAw" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
@@ -12648,6 +12633,15 @@
 	dir = 8
 	},
 /area/station/medical/research)
+"bXh" = (
+/obj/stool/chair/yellow{
+	dir = 1
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/cargooffice)
 "bXR" = (
 /obj/cable{
 	icon_state = "4-9"
@@ -12859,6 +12853,16 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery)
+"ceA" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/cargooffice)
 "ceZ" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -13076,6 +13080,15 @@
 /obj/stool/chair/dining/wood,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
+"cmc" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/railing/yellow/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "cmg" = (
 /obj/stool/chair/office/red,
 /turf/simulated/floor/engine,
@@ -13920,6 +13933,9 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom/extra2)
+"cQu" = (
+/turf/simulated/floor/industrial,
+/area/station/mailroom)
 "cQC" = (
 /obj/landmark/start/job/miner,
 /turf/simulated/floor/yellow/corner{
@@ -14937,6 +14953,12 @@
 	},
 /turf/space,
 /area/station/engine/proto)
+"dMo" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/cargooffice)
 "dMs" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -15222,9 +15244,9 @@
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
 "eaM" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-4"
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
@@ -15885,6 +15907,9 @@
 	dir = 8
 	},
 /area/station/crew_quarters/courtroom)
+"eAn" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/quartermaster/cargooffice)
 "eAu" = (
 /obj/submachine/cargopad/robotics,
 /turf/simulated/floor/blueblack/corner{
@@ -17837,6 +17862,9 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
+"gkQ" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/mailroom)
 "gla" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -19024,6 +19052,16 @@
 /obj/machinery/vending/security,
 /turf/simulated/floor/red,
 /area/station/security/processing)
+"hii" = (
+/obj/machinery/camera{
+	c_tag = "Cargo Bay Office";
+	dir = 1
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/cargooffice)
 "hjc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19103,6 +19141,13 @@
 /obj/item/device/radio/intercom/AI,
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai_upload)
+"hmh" = (
+/obj/machinery/cargo_router{
+	default_direction = 4;
+	destinations = list("Mail"=1)
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/quartermaster/office)
 "hml" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -19385,6 +19430,12 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
+"huE" = (
+/obj/railing/yellow/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "huS" = (
 /obj/lattice{
 	dir = 9;
@@ -19470,6 +19521,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"hzz" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/disposalpipe/trunk/mail,
+/obj/machinery/disposal/mail/qm/autoname{
+	mail_tag = "sorting room";
+	mailgroup = "Mail";
+	name = "Mail Room"
+	},
+/turf/simulated/floor/industrial,
+/area/station/mailroom)
 "hAe" = (
 /obj/machinery/vehicle/pod_smooth/heavy/security,
 /obj/machinery/light/incandescent{
@@ -19650,6 +19714,14 @@
 	dir = 6
 	},
 /area/station/medical/research)
+"hKc" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating,
+/area/station/mailroom)
 "hKu" = (
 /obj/decal/stripe_delivery,
 /obj/machinery/light/incandescent{
@@ -19794,6 +19866,15 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/captain)
+"hQQ" = (
+/obj/storage/secure/closet/engineering/cargo,
+/obj/machinery/power/apc/autoname_east,
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/cargooffice)
 "hRb" = (
 /turf/simulated/floor/red/corner{
 	dir = 8
@@ -19862,6 +19943,13 @@
 	dir = 6
 	},
 /area/station/engine/engineering)
+"hWK" = (
+/obj/stool/chair/dining/industrial{
+	dir = 1
+	},
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/industrial,
+/area/station/mailroom)
 "hXm" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -20155,6 +20243,10 @@
 	},
 /obj/machinery/light/small/frostedred{
 	dir = 8
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -21076,6 +21168,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"jeh" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/obj/storage/secure/closet/engineering/cargo,
+/turf/simulated/floor,
+/area/station/quartermaster/cargooffice)
 "jek" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -22111,6 +22210,13 @@
 	dir = 6
 	},
 /area/station/chapel/sanctuary)
+"jVB" = (
+/obj/disposaloutlet/east,
+/obj/disposalpipe/trunk/mail{
+	dir = 8
+	},
+/turf/simulated/floor/industrial,
+/area/station/mailroom)
 "jXg" = (
 /obj/machinery/mass_driver{
 	desc = "A device that launches objects, like ANCIENT SIRENS, for example, on it at great velocity when activated.";
@@ -22726,6 +22832,10 @@
 	},
 /turf/simulated/floor/red,
 /area/station/hangar/sec)
+"kxV" = (
+/obj/storage/secure/closet/engineering/cargo,
+/turf/simulated/floor,
+/area/station/quartermaster/cargooffice)
 "kya" = (
 /obj/machinery/light/incandescent,
 /obj/cable{
@@ -22937,7 +23047,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "kHJ" = (
-/obj/landmark/start/job/mail_courier,
 /obj/stool/bench/yellow,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
@@ -24738,6 +24847,11 @@
 /obj/machinery/power/solar,
 /turf/simulated/floor/airless/solar,
 /area/space)
+"mda" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/cargooffice)
 "mdg" = (
 /obj/table/auto,
 /obj/item/storage/box/lightbox/bulbs,
@@ -26078,7 +26192,9 @@
 	dir = 2;
 	name = "factory pipe"
 	},
-/obj/machinery/floorflusher/industrial,
+/obj/machinery/floorflusher/industrial{
+	name = "industrial loading chute - mail"
+	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "niO" = (
@@ -27352,6 +27468,13 @@
 "ohT" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
+"oif" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/obj/decal/cleanable/mail_fraud,
+/turf/simulated/floor/industrial,
+/area/station/mailroom)
 "oii" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -27793,6 +27916,20 @@
 	icon_state = "blue2"
 	},
 /area/station/bridge)
+"oxR" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mail,
+/turf/simulated/floor/industrial,
+/area/station/mailroom)
 "oxW" = (
 /obj/mapping_helper/access/chemistry,
 /obj/cable{
@@ -28723,6 +28860,13 @@
 	},
 /turf/space,
 /area/space)
+"pbY" = (
+/obj/disposalpipe/switch_junction/left/south{
+	mail_tag = "sorting room";
+	name = "Mail Junction - Sorting Room"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "pca" = (
 /obj/landmark/start/job/assistant,
 /obj/stool/chair,
@@ -28778,6 +28922,16 @@
 	dir = 1
 	},
 /area/station/security/processing)
+"pcV" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/industrial,
+/area/station/mailroom)
 "pda" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/generic/communications,
@@ -29089,6 +29243,16 @@
 	dir = 1
 	},
 /area/station/hallway/primary/central)
+"plH" = (
+/obj/machinery/floorflusher/industrial{
+	name = "industrial loading chute - mail"
+	},
+/obj/disposalpipe/trunk/mail{
+	dir = 4;
+	mail_tag = "detective's office"
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "plV" = (
 /obj/table/wood/auto,
 /obj/item/clothing/mask/cigarette{
@@ -30117,6 +30281,10 @@
 /obj/cable,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
+"pYz" = (
+/obj/storage/secure/closet/civilian/mail,
+/turf/simulated/floor/industrial,
+/area/station/mailroom)
 "pYE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -31003,6 +31171,17 @@
 /obj/machinery/door_control/podbay/engineering/new_walls/west,
 /turf/simulated/floor,
 /area/station/hangar/engine)
+"qIP" = (
+/obj/machinery/door/airlock/pyro/mining{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/cargo,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/cargooffice)
 "qIR" = (
 /obj/table/reinforced/chemistry/auto{
 	desc = "A black countertop table for storing kitchen-y objects.";
@@ -31783,12 +31962,12 @@
 /turf/simulated/floor/engine,
 /area/station/engine/ptl)
 "rfC" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/cable{
-	icon_state = "0-2"
-	},
+/obj/machinery/door/airlock/pyro/mining,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/cargo,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
+/area/station/quartermaster/cargooffice)
 "rgs" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -31930,6 +32109,12 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
+"rmp" = (
+/obj/disposalpipe/switch_junction/left/south{
+	name = "Undeliverable Mail Router"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "rmF" = (
 /obj/disposalpipe/segment,
 /obj/landmark/start/job/head_of_security,
@@ -34070,6 +34255,10 @@
 	},
 /turf/simulated/floor/purple/side,
 /area/station/science/hall)
+"sNd" = (
+/obj/machinery/computer/stockexchange,
+/turf/simulated/floor,
+/area/station/quartermaster/cargooffice)
 "sNi" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -36220,6 +36409,11 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom/extra1)
+"ulO" = (
+/obj/item/wrench/green,
+/obj/table/reinforced/industrial/auto,
+/turf/simulated/floor/industrial,
+/area/station/mailroom)
 "umj" = (
 /obj/table/reinforced{
 	dir = 10;
@@ -37845,6 +38039,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"vzc" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/cargooffice)
 "vzp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -41025,6 +41227,11 @@
 	dir = 1
 	},
 /area/station/hallway/primary/central)
+"xXP" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/plating,
+/area/station/mailroom)
 "xXU" = (
 /obj/machinery/door/airlock/pyro/external{
 	req_access_txt = null
@@ -78266,13 +78473,13 @@ aaa
 aaa
 aiP
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aCm
+gkQ
+hKc
+xXP
+xXP
+mda
+vzc
+eAn
 vvm
 aCm
 qdE
@@ -78568,15 +78775,15 @@ aaa
 aaa
 aiP
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aCm
+gkQ
+jVB
+pYz
+gkQ
+sNd
+bXh
+eAn
 axh
-aok
+huE
 arl
 aBp
 aBp
@@ -78871,15 +79078,15 @@ pfw
 xpB
 pfw
 alA
-aaa
-aaa
-aaa
-aaa
-aaa
-aCm
+oif
+cQu
+gkQ
+jeh
+dMo
+eAn
 afk
-aok
-arl
+plH
+hmh
 aok
 aok
 aok
@@ -79173,14 +79380,14 @@ anr
 aoQ
 apD
 alA
-giH
-aaa
-aaa
-aaa
-aaa
-aCm
+ulO
+hWK
+gkQ
+kxV
+hii
+eAn
 gsr
-aok
+cmc
 arl
 aok
 aok
@@ -79475,11 +79682,11 @@ anv
 aoR
 apQ
 alA
-anw
-aaa
-aaa
-aaa
-aaa
+hzz
+pcV
+gkQ
+hQQ
+ceA
 rfC
 afm
 eaM
@@ -79777,14 +79984,14 @@ alA
 iKD
 alA
 alA
-ahN
-ahN
-ahN
+gkQ
+oxR
+gkQ
 aJw
-aJw
+qIP
 aCm
 baH
-bAn
+aCm
 ntb
 aCm
 ycc
@@ -80381,8 +80588,8 @@ anW
 aoU
 aoU
 aqC
-aoU
-aoU
+rmp
+pbY
 alH
 qjt
 auR

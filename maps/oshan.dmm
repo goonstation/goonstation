@@ -42353,7 +42353,9 @@
 /area/flock_trader)
 "pZY" = (
 /obj/disposalpipe/trunk/mail/west,
-/obj/machinery/floorflusher/industrial,
+/obj/machinery/floorflusher/industrial{
+	name = "industrial loading chute - mail"
+	},
 /turf/space/fluid,
 /area/space)
 "qaf" = (
