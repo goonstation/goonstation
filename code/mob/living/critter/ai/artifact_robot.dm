@@ -34,8 +34,8 @@
 	name = "wall smash subtask"
 	duration = 5 SECONDS
 	callback_proc = PROC_REF(smash_wall_or_girder)
-	action_icon = null
-	action_icon_state = null
+	action_icon = 'icons/ui/actions.dmi'
+	action_icon_state = "decon"
 	end_message = null
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
 
@@ -56,6 +56,9 @@
 		var/obj/structure/girder/G = holder.target
 		if(istype(G))
 			qdel(G) //I guess girders don't have a deconstruct proc?
+
+/datum/aiTask/succeedable/actionbar/wall_smash/before_action_start()
+	playsound(holder.owner, pick(list('sound/items/Welder.ogg', 'sound/items/Welder2.ogg')), 50, TRUE)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // floor builder
@@ -106,8 +109,8 @@
 	name = "floor place subtask"
 	duration = 2 SECONDS
 	callback_proc = PROC_REF(place_floor)
-	action_icon = null
-	action_icon_state = null
+	action_icon = 'icons/ui/actions.dmi'
+	action_icon_state = "working"
 	end_message = null
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
 
@@ -129,6 +132,7 @@
 	if(istype(owner) && istype(target))
 		var/datum/artifact/robot/art_datum = owner.parent_artifact?.artifact
 		if(istype(art_datum))
+			playsound(owner, 'sound/machines/click.ogg', 50, TRUE)
 			target.ReplaceWith(art_datum.floor_type)
 
 
@@ -169,8 +173,8 @@
 	name = "wall place subtask"
 	duration = 3 SECONDS
 	callback_proc = PROC_REF(place_wall)
-	action_icon = null
-	action_icon_state = null
+	action_icon = 'icons/ui/actions.dmi'
+	action_icon_state = "working"
 	end_message = null
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
 
@@ -187,6 +191,10 @@
 		if(istype(art_datum))
 			return istype(holder.owner.loc, art_datum.wall_type)
 	return FALSE
+
+/datum/aiTask/succeedable/actionbar/wall_place/before_action_start()
+	playsound(holder.owner, 'sound/items/Ratchet.ogg', 50, TRUE)
+
 
 /datum/aiTask/succeedable/actionbar/wall_place/proc/place_wall(var/mob/living/critter/robotic/artifact/owner, var/turf/target)
 	if(istype(owner) && istype(target))
