@@ -57,6 +57,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			return TRUE
 		if (locate(/obj/storage/secure/closet/fridge) in src.loc) // includes fridges
 			return TRUE
+		if (locate(/obj/machinery/conveyor) in src.loc) // Sushi Belts
+			return TRUE
 		return FALSE
 
 	get_average_color()
