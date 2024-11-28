@@ -216,7 +216,7 @@
 		if( the_mob.buckled )
 			SPAWN(0)
 				the_mob.emote("scream")
-				the_mob:canmove = 0
+				the_mob.canmove = 0
 				for(var/i=0, i<30, i++)
 					if(!the_mob)
 						return
@@ -225,16 +225,18 @@
 					the_mob.pixel_y = rand(-5,5)
 					if (!the_mob.buckled) //Runtime fix: Cannot read null.anchored
 						the_mob.gib()
-					if(!the_mob.buckled:anchored)
-						step(the_mob.buckled, pick(cardinal))
-					if(i>10)
-						the_mob:update_burning(10)
-						if(prob(30))
-							the_mob.emote("scream")
-						sleep(0.1 SECONDS)
+						return // you MUST ride it out
 					else
-						the_mob:update_burning(1)
-						sleep(0.3 SECONDS)
+						if(!the_mob.buckled:anchored)
+							step(the_mob.buckled, pick(cardinal))
+						if(i>10)
+							the_mob:update_burning(10)
+							if(prob(30))
+								the_mob.emote("scream")
+							sleep(0.1 SECONDS)
+						else
+							the_mob:update_burning(1)
+							sleep(0.3 SECONDS)
 				the_mob.unlock_medal( "Too Fast Too Furious", 1 )
 				logTheThing(LOG_COMBAT, the_mob, "was gibbed by rocket shoes at [log_loc(the_mob)].")
 				the_mob.gib()
