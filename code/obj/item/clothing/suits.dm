@@ -2027,6 +2027,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 		src.reflection = image(src.wear_image_icon, "[src.icon_state]-overlay")
 		src.reflection.plane = PLANE_SELFILLUM
 		src.reflection.color = rgb(255, 255, 255)
+		src.reflection.alpha = 200
 
 	equipped(mob/user, slot)
 		..()
