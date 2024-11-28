@@ -50,11 +50,13 @@
 		. = ..()
 		if(!istype(O.loc, /mob/living/critter/robotic/artifact))
 			var/mob/living/critter/robotic/artifact/alive_form = new(O.loc, O, aiHolder_type)
+			O.transfer_stickers(alive_form)
 			O.set_loc(alive_form) //put the artifact inside the mob for convenience
 
 	effect_deactivate(obj/O)
 		var/mob/living/critter/robotic/artifact/alive_form = O.loc
 		if(istype(alive_form))
+			alive_form.transfer_stickers(O)
 			alive_form.gib()
 		. = ..()
 
@@ -107,6 +109,7 @@
 
 	death(var/gibbed)
 		//don't care if we're gibbed, just drop the artifact and disable it
+		src.transfer_stickers(parent_artifact)
 		parent_artifact.set_loc(src.loc)
 		parent_artifact.ArtifactDeactivated()
 		//and then get rid of the mob
