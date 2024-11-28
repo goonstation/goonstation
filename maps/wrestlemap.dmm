@@ -33852,7 +33852,7 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/critter/bat/doctor,
+/mob/living/critter/small_animal/bat/doctor,
 /turf/simulated/floor/wood,
 /area/station/medical/head)
 "oTz" = (

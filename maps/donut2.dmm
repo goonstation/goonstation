@@ -8038,7 +8038,7 @@
 "aPO" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/blue,
-/obj/critter/bat/doctor,
+/mob/living/critter/small_animal/bat/doctor,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 9

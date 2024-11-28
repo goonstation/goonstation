@@ -1617,7 +1617,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/critter/bat/doctor,
+/mob/living/critter/small_animal/bat/doctor,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
 "adi" = (
