@@ -14949,11 +14949,8 @@
 	},
 /area/station/hallway/primary/west)
 "biM" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
 /obj/disposalpipe/segment/bent/east,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -30871,11 +30868,8 @@
 	},
 /area/station/mining/magnet)
 "cQW" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
 /obj/disposalpipe/segment/bent/east,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -34058,11 +34052,8 @@
 	},
 /area/station/hallway/primary/south)
 "eVT" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
 /obj/disposalpipe/segment/bent/west,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -35462,13 +35453,10 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "fXT" = (
-/obj/grille/catwalk{
-	dir = 10;
-	icon_state = "catwalk_cross"
-	},
 /obj/machinery/computer/magnet{
 	dir = 4
 	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -55292,10 +55280,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "ury" = (
-/obj/grille/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -60329,13 +60314,10 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/north)
 "xQB" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
 /obj/machinery/computer/telescope{
 	dir = 8
 	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},

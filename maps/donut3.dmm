@@ -11055,6 +11055,9 @@
 	},
 /obj/machinery/manufacturer/general,
 /obj/decal/stripe_caution,
+/obj/item/device/radio/intercom/mining{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
 "diU" = (
@@ -30168,6 +30171,18 @@
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating/jen,
 /area/station/science/gen_storage)
+"jdN" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/item/device/radio/intercom/mining{
+	dir = 1
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/station/mining/staff_room)
 "jdO" = (
 /obj/sea_plant_manta/coralfingers,
 /obj/fluid_spawner{
@@ -75019,9 +75034,7 @@
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
 "wCM" = (
-/obj/grille/catwalk{
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
@@ -130474,8 +130487,8 @@ npG
 kuM
 wyK
 xSZ
-xSZ
-dCg
+jdN
+mYB
 rdj
 rdj
 rdj
