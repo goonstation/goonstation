@@ -1,5 +1,9 @@
 
 (t)thu nov 28 24
+(u)glowbold
+(p)21460
+(e)🆕🎨💡|C-Feature, C-Sprites, A-Station-Systems
+(+)Travelling traders are now represented on station infomaps with a credit symbol.
 (u)FlameArrow57
 (p)21457
 (e)🆕🗺🏅|C-Feature, A-Mapping, A-Medal
