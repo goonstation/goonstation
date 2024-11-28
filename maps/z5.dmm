@@ -27,13 +27,10 @@
 /turf/simulated/floor,
 /area/mining/quarters)
 "ar" = (
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/yellow/side,
 /area/mining/dock)
 "at" = (
@@ -44,11 +41,8 @@
 /turf/simulated/wall/auto/martian,
 /area/noGenerate)
 "ax" = (
-/obj/machinery/light_switch{
-	name = "N light switch";
-	pixel_y = 24
-	},
 /obj/machinery/vending/air_vendor/plasma,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
@@ -388,15 +382,6 @@
 /obj/machinery/conveyor/NS{
 	id = "MINSouth"
 	},
-/obj/machinery/door/poddoor{
-	id = "MINdoorS";
-	name = "South Conveyor Door"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
 /turf/simulated/floor/plating,
 /area/mining/manufacturing)
 "hK" = (
@@ -597,10 +582,9 @@
 /turf/simulated/floor/shuttlebay,
 /area/mining/hangar)
 "nq" = (
-/obj/machinery/door_control{
+/obj/machinery/door_control/podbay/miningoutpost/new_walls/east{
 	id = "MINdoorS";
-	name = "South Door Switch";
-	pixel_x = 24
+	name = "South Door Switch"
 	},
 /turf/simulated/floor/caution/south,
 /area/mining/manufacturing)
@@ -1188,10 +1172,7 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/security)
 "qK" = (
-/obj/machinery/firealarm{
-	pixel_y = 24;
-	text = "NF"
-	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "qP" = (
@@ -1652,7 +1633,9 @@
 	name = "decomposed corpse"
 	},
 /turf/simulated/floor/plating/damaged3,
-/area/spyshack)
+/area/spyshack{
+	lightswitch = 0
+	})
 "tJ" = (
 /obj/lattice,
 /obj/fakeobject/pipe{
@@ -1977,10 +1960,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/firealarm/west,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "wc" = (
@@ -1999,11 +1979,8 @@
 	tag = ""
 	},
 /obj/machinery/vending/coffee,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /obj/decal/stripe_caution,
+/obj/machinery/firealarm/west,
 /turf/simulated/floor,
 /area/mining/manufacturing)
 "we" = (
@@ -2065,6 +2042,10 @@
 	icon_state = "catwalk_cross"
 	},
 /area/mining/mainasteroid)
+"wu" = (
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/plating,
+/area/mining/manufacturing)
 "wv" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
@@ -2161,11 +2142,7 @@
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/atmospherics)
 "xb" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	layer = 3.5;
-	pixel_y = -24
-	},
+/obj/machinery/firealarm/south,
 /turf/simulated/floor/yellow/side,
 /area/mining/dock)
 "xc" = (
@@ -2410,10 +2387,7 @@
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/sensor/mining,
 /obj/item/shipcomponent/sensor/mining,
-/obj/machinery/firealarm{
-	pixel_y = 24;
-	text = "NF"
-	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
@@ -2488,11 +2462,8 @@
 /turf/simulated/floor/red/side,
 /area/evilreaver/security)
 "za" = (
-/obj/machinery/light_switch{
-	icon_state = "light0";
-	name = "W light switch";
-	on = 0;
-	pixel_x = -24
+/obj/machinery/light_switch/west{
+	on = 0
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/spyshack)
@@ -2571,10 +2542,7 @@
 /turf/simulated/floor/grime,
 /area/tech_outpost)
 "zv" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/firealarm/east,
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "zw" = (
@@ -2687,14 +2655,11 @@
 /area/mining/refinery)
 "Al" = (
 /obj/machinery/vending/coffee,
-/obj/machinery/light_switch{
-	name = "N light switch";
-	pixel_y = 24
-	},
 /obj/item/paper/businesscard/josh{
 	pixel_x = 15;
 	pixel_y = 27
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/grime,
 /area/tech_outpost)
 "Am" = (
@@ -2716,10 +2681,7 @@
 /turf/space,
 /area/noGenerate)
 "As" = (
-/obj/machinery/firealarm{
-	pixel_y = 24;
-	text = "NF"
-	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/caution/south,
 /area/mining/manufacturing)
 "Au" = (
@@ -3348,11 +3310,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light_switch{
-	name = "N light switch";
-	pixel_y = 24
-	},
 /obj/decal/stripe_delivery,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "EM" = (
@@ -3453,11 +3412,6 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
 "Fq" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	on = 0;
-	pixel_x = -24
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -3469,6 +3423,9 @@
 	tag = ""
 	},
 /obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/light_switch/west{
+	on = 0
+	},
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "Fr" = (
@@ -3490,6 +3447,21 @@
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
+"FB" = (
+/obj/machinery/conveyor/NS{
+	id = "MINSouth"
+	},
+/obj/machinery/door/poddoor{
+	id = "MINdoorS";
+	name = "South Conveyor Door"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/mining/manufacturing)
 "FD" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -4018,11 +3990,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mining/mainasteroid)
 "IL" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26;
-	pixel_y = 1
-	},
+/obj/machinery/firealarm/east,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "IO" = (
@@ -4216,10 +4184,7 @@
 /turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "Kh" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "Kk" = (
@@ -4359,10 +4324,7 @@
 	desc = "Caution! Construction Zone!";
 	name = "caution sign"
 	},
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -4467,14 +4429,11 @@
 /turf/simulated/floor/grime,
 /area/mining/hangar)
 "LK" = (
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
 /obj/item/rods/steel,
 /obj/item/rods/steel,
 /obj/item/rods/steel,
 /obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/grime,
 /area/mining/comms)
 "LL" = (
@@ -5034,6 +4993,11 @@
 "PC" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/mining/dock)
+"PI" = (
+/obj/disposalpipe/segment/transport,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating/airless,
+/area/mining/manufacturing)
 "PM" = (
 /obj/lattice,
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
@@ -5300,15 +5264,14 @@
 	},
 /area/mining/mainasteroid)
 "RD" = (
-/obj/machinery/light_switch{
-	name = "N light switch";
-	pixel_y = 24
-	},
 /obj/machinery/light/incandescent,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/decal/stripe_delivery,
+/obj/machinery/light_switch/north{
+	on = 0
+	},
 /turf/simulated/floor,
 /area/mining/magnet_control)
 "RJ" = (
@@ -5444,11 +5407,8 @@
 /turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "SN" = (
-/obj/machinery/light_switch{
-	name = "N light switch";
-	pixel_y = 24
-	},
 /obj/machinery/bot/medbot,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/caution/south,
 /area/mining/manufacturing)
 "SP" = (
@@ -5506,17 +5466,11 @@
 /area/evilreaver/genetics)
 "Tf" = (
 /obj/storage/closet/wardrobe/yellow,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/firealarm/west,
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "Th" = (
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/caution/east,
 /area/mining/quarters)
 "Tj" = (
@@ -5532,10 +5486,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/firealarm/west,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "Tn" = (
@@ -5934,7 +5885,9 @@
 	dir = 8;
 	layer = 3
 	},
-/obj/strip_door,
+/obj/strip_door{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/mining/manufacturing)
 "VT" = (
@@ -6434,10 +6387,7 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/security)
 "Zh" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/firealarm/west,
 /turf/simulated/floor/grime,
 /area/mining/refinery)
 "Zi" = (
@@ -53221,8 +53171,8 @@ YZ
 tU
 sI
 sB
-sB
-sU
+wu
+PI
 sU
 sU
 sU
@@ -53524,7 +53474,7 @@ nq
 Ij
 zs
 hA
-lp
+FB
 lp
 lp
 lp
