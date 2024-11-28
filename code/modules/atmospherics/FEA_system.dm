@@ -200,7 +200,6 @@ var/global/total_gas_mixtures = 0
 	PROTECTED_PROC(TRUE)
 	for(var/turf/simulated/T as anything in tiles_to_update) // ZEWAKA-ATMOS SPACE + SPACE FLUID LEAKAGE
 		if(!issimulatedturf(T))
-			stack_trace("Turf bug occured at [T.x], [T.y], [T.z]. Turf is of type [T.type].")
 			continue
 		T.update_air_properties()
 	tiles_to_update.len = 0
