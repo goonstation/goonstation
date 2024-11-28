@@ -46,7 +46,9 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 	proc/can_wear_hood()
 		. = FALSE
 		var/mob/living/carbon/human/H = src.loc
-		if (istype(H) && H.wear_suit == src && !H.head)
+		if (!istype(H))
+			return
+		if ((H.wear_suit == src && !H.head) || !H.wear_suit)
 			return TRUE
 
 	/// what happens after the hood is toggled. override as needed
