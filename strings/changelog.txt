@@ -1,4 +1,38 @@
 
+(t)thu nov 28 24
+(u)glowbold
+(p)21460
+(e)🆕🎨💡|C-Feature, C-Sprites, A-Station-Systems
+(+)Travelling traders are now represented on station infomaps with a credit symbol.
+(u)FlameArrow57
+(p)21457
+(e)🆕🗺🏅|C-Feature, A-Mapping, A-Medal
+(*)Added 4 azone related medals for Mars, Lava moon, Ice moon, and Ainley Asylum
+(t)wed nov 27 24
+(u)Valtsu0
+(p)21412
+(e)🗺🤖|A-Mapping, A-Silicons
+(+)Cogmap1 AI upload door has been replaced with a see-through one
+(u)glowbold
+(p)21292
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Quartermasters can order a replacement Rockbox. It requires Chief Engineer access to open, and must be assembled.
+(u)glowbold
+(p)21468
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Knives (and other cutting tools) get steaks from meat spikes.
+(u)LeahTheTech
+(p)21472
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Disco balls look cooler now.
+(u)FlameArrow57
+(p)21196
+(e)🆕🎨⚖🔬|C-Feature, C-Sprites, C-Balance, A-Science
+(*)Added a new Talisman tiny-sized artifact! See minor changelog for details
+(+)Holding this artifact in your hand, pocket, or inventory will provide its passive, beneficial effect to you
+(+)Beneficial effects include increased speed, extreme cold protection, minor cold and heat protection, increased max health, wealth, and damage reduction
+(+)Users will periodically have a purple shimmer over them
+(+)Talisman artifacts can be disabled with EMPs, are found in container artifacts, and have frequent fault chance rolls
 (t)sun nov 24 24
 (u)Egregorious
 (p)21374

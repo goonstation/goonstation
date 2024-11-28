@@ -988,6 +988,11 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				if (src.status == IOCORE_DEAD)
 					return
 
+				if (istype(get_area(src), /area/iomoon/robot_ruins/boss_chamber))
+					for (var/mob/living/L in range(6, src))
+						if (!isintangible(L))
+							L.unlock_medal("What's Buried Stays Buried", TRUE)
+
 				STOP_TRACKING_CAT(TR_CAT_CRITTERS)
 
 				src.status = IOCORE_DEAD
