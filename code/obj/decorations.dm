@@ -1063,7 +1063,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		src.toggle_on()
 
 	proc/add_lights()
-		SPAWN(0)
+		SPAWN(0) //SDMM doesn't seem to understand waitfor sooo
 			for (var/i in 1 to 8)
 				var/type = prob(50) ? pick(concrete_typesof(/obj/overlay/simple_light/disco_lighting/rainbow/random_start)) : pick(concrete_typesof(/obj/overlay/simple_light/disco_lighting/oscillator))
 				var/obj/overlay/simple_light/disco_lighting/overlay = new type()
@@ -1102,6 +1102,11 @@ TYPEINFO(/obj/shrub/syndicateplant)
 			src.light.disable()
 			src.remove_lights()
 			particleMaster.RemoveSystem(/datum/particleSystem/sparkles_disco, src)
+
+	disposing()
+		if (src.on)
+			src.remove_lights()
+		..()
 
 /obj/admin_plaque
 	name = "Admin's Office"
