@@ -252,6 +252,11 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/toxins
 		mailgroups = list(MGD_SCIENCE,MGD_PARTY)
 
+	mail
+		setup_default_cartridge = /obj/item/disk/data/cartridge/quartermaster
+		mailgroups = list(MGD_CARGO,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SHIPPING)
+
 	quartermaster
 		name = "Quartermaster PDA"
 		icon_state = "pda-q"

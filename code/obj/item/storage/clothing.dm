@@ -259,6 +259,7 @@
 	/obj/item/clothing/head/mailcap,\
 	/obj/item/clothing/shoes/black,\
 	/obj/item/clothing/gloves/black,\
+	/obj/item/device/pda2/mail, \
 	/obj/item/device/radio/headset/mail)
 
 /* ============================== */
