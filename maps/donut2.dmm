@@ -15508,6 +15508,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail,
+/obj/item/device/radio/intercom/mining{
+	dir = 4
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
@@ -33820,6 +33823,9 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent,
+/obj/item/device/radio/intercom/mining{
+	dir = 8
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -39684,6 +39690,13 @@
 "qaf" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/psychiatrist)
+"qak" = (
+/obj/machinery/light/incandescent,
+/obj/item/device/radio/intercom/mining{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/station/mining/magnet)
 "qao" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor,
@@ -82920,7 +82933,7 @@ aaa
 aaa
 aaa
 bGV
-vqG
+qak
 fQm
 bHr
 bHw

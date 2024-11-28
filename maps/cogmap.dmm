@@ -28715,6 +28715,9 @@
 	dir = 4
 	},
 /obj/decal/stripe_delivery,
+/obj/item/device/radio/intercom/mining{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/supplylobby)
 "bZV" = (
@@ -29954,6 +29957,9 @@
 	pixel_x = -1;
 	pixel_y = 8
 	},
+/obj/item/device/radio/intercom/mining{
+	dir = 8
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "cdZ" = (
@@ -30225,6 +30231,9 @@
 	},
 /area/station/mining/staff_room)
 "cfd" = (
+/obj/item/device/radio/intercom/mining{
+	dir = 8
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},

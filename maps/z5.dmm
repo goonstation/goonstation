@@ -3206,6 +3206,9 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/item/device/radio/intercom/mining{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "DN" = (

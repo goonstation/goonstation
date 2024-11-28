@@ -6088,6 +6088,7 @@
 /area/station/hangar/arrivals)
 "aHH" = (
 /obj/machinery/portable_reclaimer,
+/obj/item/device/radio/intercom/mining,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -19438,6 +19439,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/item/device/radio/intercom/mining{
+	dir = 4
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -22625,6 +22629,9 @@
 	dir = 8;
 	name = "autoname  - SS13";
 	tag = ""
+	},
+/obj/item/device/radio/intercom/mining{
+	dir = 8
 	},
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)

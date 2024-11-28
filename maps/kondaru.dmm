@@ -17112,6 +17112,14 @@
 /obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment2)
+"brD" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/item/device/radio/intercom/mining,
+/turf/space,
+/area/station/mining/magnet)
 "brE" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/treatment2)
@@ -31166,6 +31174,9 @@
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/machinery/light/small,
+/obj/item/device/radio/intercom/mining{
+	dir = 4
+	},
 /turf/simulated/floor/circuit,
 /area/station/bridge)
 "cZU" = (
@@ -38509,6 +38520,15 @@
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/caution/corner/nw,
 /area/station/engine/gas)
+"ilj" = (
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/item/device/radio/intercom/mining,
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
+/area/station/hallway/primary/south)
 "ill" = (
 /obj/machinery/light{
 	dir = 4;
@@ -59254,6 +59274,9 @@
 	tag = ""
 	},
 /obj/machinery/manufacturer/mining,
+/obj/item/device/radio/intercom/mining{
+	dir = 8
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -106737,7 +106760,7 @@ qnr
 bBt
 frY
 bmy
-bCq
+ilj
 bDA
 bFs
 bHT
@@ -107323,7 +107346,7 @@ aQJ
 aeV
 qoc
 mLb
-juf
+brD
 jpN
 umn
 umn
