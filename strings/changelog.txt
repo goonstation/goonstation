@@ -1,4 +1,17 @@
 
+(t)wed nov 27 24
+(u)LeahTheTech
+(p)21472
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Disco balls look cooler now.
+(u)FlameArrow57
+(p)21196
+(e)🆕🎨⚖🔬|C-Feature, C-Sprites, C-Balance, A-Science
+(*)Added a new Talisman tiny-sized artifact! See minor changelog for details
+(+)Holding this artifact in your hand, pocket, or inventory will provide its passive, beneficial effect to you
+(+)Beneficial effects include increased speed, extreme cold protection, minor cold and heat protection, increased max health, wealth, and damage reduction
+(+)Users will periodically have a purple shimmer over them
+(+)Talisman artifacts can be disabled with EMPs, are found in container artifacts, and have frequent fault chance rolls
 (t)sun nov 24 24
 (u)Egregorious
 (p)21374
