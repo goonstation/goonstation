@@ -79,6 +79,8 @@
 			throw EXCEPTION("Tried to create an artifact robot without an ai type!")
 
 		parent_artifact = parent
+		.=..(loc)
+
 		src.ai = new aitype(src)
 		src.is_npc = TRUE
 		src.appearance = parent.appearance
@@ -90,7 +92,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "artifact_robot", 100)
 
 		animate_bumble(src)
-		.=..(loc)
+
 
 	setup_healths()
 		. = ..()
