@@ -1,5 +1,9 @@
 
 (t)thu nov 28 24
+(u)Amylizzle
+(p)21384
+(e)🆕📦📡🐁|C-Feature, A-Game-Objects, A-AI, A-Critters
+(*)Adds a new artifact type: Drones
 (u)glowbold
 (p)21460
 (e)🆕🎨💡|C-Feature, C-Sprites, A-Station-Systems
