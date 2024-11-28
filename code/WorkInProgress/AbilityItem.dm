@@ -136,7 +136,15 @@
 
 	execute_ability()
 		var/obj/item/clothing/suit/W = the_item
-		W.AttackSelf(the_mob)
+		if (!W.hooded)
+			if (W.can_wear_hood())
+				W.AttackSelf(the_mob)
+				W.on_toggle_hood()
+			else
+				boutput(the_mob, SPAN_ALERT("You're already wearing something on your head!"))
+		else
+			W.AttackSelf(the_mob)
+			W.on_toggle_hood()
 		..()
 
 /obj/ability_button/magboot_toggle
