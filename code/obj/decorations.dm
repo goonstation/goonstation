@@ -1057,6 +1057,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		light = new
 		light.set_brightness(0.8)
 		light.set_color(2,2,2)
+		light.set_height(2.4)
 		light.attach(src)
 
 	attack_hand(mob/user)
