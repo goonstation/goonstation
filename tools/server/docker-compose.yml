@@ -1,0 +1,28 @@
+version: '3'
+
+name: "ss13-${SS13_ID:-main}"
+
+services:
+  ss13:
+    container_name: "ss13-${SS13_ID:-main}"
+    restart: unless-stopped
+    image: "ss13:1"
+    build: .
+    volumes:
+      - /pop/ss13/byond:/byond:ro
+      - /pop/ss13/rust-g:/rust-g:ro
+      - /pop/ss13/byond-tracy:/byond-tracy:ro
+      - ../../:/ss13_server:rw
+    ports:
+      - "${SS13_PORT:-6969}:${SS13_PORT:-6969}"
+    environment:
+      - SS13_ID=${SS13_ID:-main}
+      - SS13_PORT=${SS13_PORT:-6969}
+    healthcheck:
+      test: /usr/bin/bash /ss13_server/tools/server/healthcheck.sh
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    labels:
+      - monocker.enable=true

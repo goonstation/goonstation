@@ -267,7 +267,7 @@ var/global/meteor_shower_active = 0
 	var/sound_explode = 'sound/effects/exlow.ogg'
 	var/list/oredrops = list(/obj/item/raw_material/rock)
 	var/list/oredrops_rare = list(/obj/item/raw_material/rock)
-	var/transmute_material = null
+	var/datum/material/transmute_material = null
 	var/transmute_range = 4
 	var/meteorhit_chance = 100
 
@@ -438,7 +438,7 @@ var/global/meteor_shower_active = 0
 					if("statue")
 						if(distPercent < 40) // only inner 40% of range
 							if(M)
-								M.become_statue(transmute_material)
+								M.become_statue(transmute_material.getID())
 			else
 				G.setMaterial(transmute_material)
 

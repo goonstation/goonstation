@@ -27,7 +27,7 @@ interface GimmickObjectData {
 
 export const GimmickObject = () => {
   const { act, data } = useBackend<GimmickObjectData>();
-  const { eventList, interactiveTypes, activeStage, icon, iconState } = data;
+  const { eventList, interactiveTypes, activeStage } = data;
 
   return (
     <Window title="Gimmick Object Editor" width={675} height={600}>

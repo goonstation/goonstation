@@ -9986,7 +9986,7 @@
 	name = "Magnet Area Boundary"
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
-/area/space)
+/area/mining/magnet)
 "cga" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -10767,7 +10767,7 @@
 	name = "Magnet Area Boundary"
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
-/area/space)
+/area/mining/magnet)
 "dqZ" = (
 /obj/machinery/light/small/floor/harsh,
 /obj/cable{
@@ -10915,7 +10915,7 @@
 	name = "Magnet Area Boundary"
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
-/area/space)
+/area/mining/magnet)
 "dCV" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 9
@@ -11948,10 +11948,10 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/computer3/terminal,
 /obj/machinery/light/incandescent/harsh{
 	dir = 1
 	},
+/obj/machinery/computer3/terminal/zeta,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -13101,7 +13101,7 @@
 	name = "ACTIVE MAGNET AREA"
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
-/area/space)
+/area/mining/magnet)
 "gRl" = (
 /obj/machinery/vending/floppy,
 /turf/simulated/floor/plating/random,
@@ -15948,7 +15948,7 @@
 	name = "ACTIVE MAGNET AREA"
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
-/area/space)
+/area/mining/magnet)
 "kNc" = (
 /obj/lattice{
 	dir = 4;
@@ -16512,6 +16512,9 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
+"lLe" = (
+/turf/space,
+/area/mining/magnet)
 "lLE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -18995,7 +18998,7 @@
 	width = 13
 	},
 /turf/space,
-/area/space)
+/area/mining/magnet)
 "psU" = (
 /obj/railing/orange/reinforced{
 	dir = 1
@@ -19217,7 +19220,7 @@
 	name = "Magnet Area Boundary"
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
-/area/space)
+/area/mining/magnet)
 "pRr" = (
 /obj/decal/poster/wallsign/security,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -19779,7 +19782,7 @@
 	name = "Magnet Area Boundary"
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
-/area/space)
+/area/mining/magnet)
 "qTZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -22236,7 +22239,7 @@
 	name = "ACTIVE MAGNET AREA"
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
-/area/space)
+/area/mining/magnet)
 "uCW" = (
 /obj/storage/secure/closet/fridge,
 /obj/random_item_spawner/snacks/six,
@@ -23259,7 +23262,7 @@
 	name = "ACTIVE MAGNET AREA"
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
-/area/space)
+/area/mining/magnet)
 "wbj" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -52017,19 +52020,19 @@ aaa
 aaa
 xML
 dCT
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
 pRb
 xML
 aaa
@@ -52319,19 +52322,19 @@ aaa
 aaa
 xML
 dCT
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
 pRb
 xML
 aaa
@@ -52621,19 +52624,19 @@ aaa
 aaa
 xML
 dCT
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
 pRb
 xML
 aaa
@@ -52923,19 +52926,19 @@ aaa
 aaa
 xML
 dCT
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
 pRb
 xML
 aaa
@@ -53225,19 +53228,19 @@ aaa
 aaa
 xML
 dCT
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
 pRb
 xML
 aaa
@@ -53527,19 +53530,19 @@ aaa
 aaa
 xML
 dCT
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
 pRb
 xML
 aaa
@@ -53829,19 +53832,19 @@ aaa
 aaa
 xML
 dCT
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
 psJ
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
 pRb
 xML
 aaa
@@ -54131,19 +54134,19 @@ aaa
 aaa
 xML
 dCT
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
 pRb
 xML
 aaa
@@ -54433,19 +54436,19 @@ aaa
 aaa
 xML
 dCT
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
 pRb
 xML
 aaa
@@ -54735,19 +54738,19 @@ aaa
 aaa
 xML
 dCT
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
 pRb
 xML
 aaa
@@ -55037,19 +55040,19 @@ aaa
 aaa
 xML
 dCT
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
 pRb
 xML
 aaa
@@ -55339,19 +55342,19 @@ aaa
 aaa
 xML
 dCT
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
 pRb
 xML
 aaa
@@ -55641,19 +55644,19 @@ aaa
 aaa
 xML
 dCT
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
+lLe
 pRb
 xML
 aaa

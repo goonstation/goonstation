@@ -705,6 +705,8 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/arrival/station
 	icon_state = "shuttle"
 	flags = FLUID_DENSE
+	minimaps_to_render_on = MAP_ALL
+	station_map_colour = MAPC_NANOTRASEN
 
 /area/shuttle/escape
 	allowed_restricted_z = TRUE
@@ -1284,10 +1286,6 @@ ABSTRACT_TYPE(/area/adventure)
 	requires_power = FALSE
 #endif
 
-/area/spacehabitat/pool
-	name = "Pool Room"
-	icon_state = "yellow"
-	requires_power = FALSE
 
 /area/abandonedship
 	name = "Abandoned ship"
@@ -1302,6 +1300,17 @@ ABSTRACT_TYPE(/area/adventure)
 	name = "Habitat Dome Beach"
 	icon_state = "yellow"
 	force_fullbright = 1
+
+/area/spacehabitat/pool
+	name = "Pool Room"
+	icon_state = "yellow"
+	requires_power = FALSE
+
+/area/spacehabitat/owlery
+	name = "Owlery"
+	icon_state = "yellow"
+	sound_environment = 15
+	requires_power = FALSE
 
 /area/salyut
 	name = "Soviet derelict"
@@ -2850,6 +2859,7 @@ TYPEINFO(/area/station/engine/substation)
 /area/station/engine/proto
 	name = "Prototype Engine"
 	icon_state = "prototype_engine"
+	minimaps_to_render_on = 0
 
 /area/station/engine/thermo
 	name = "Thermoelectric Generator"
@@ -2861,6 +2871,7 @@ TYPEINFO(/area/station/engine/substation)
 	luminosity = 1
 	force_fullbright = 1
 	requires_power = 0
+	minimaps_to_render_on = 0
 
 
 /area/station/teleporter
@@ -3305,6 +3316,7 @@ ABSTRACT_TYPE(/area/station/janitor)
 
 /area/station/science/testchamber/bombchamber
 	name = "Bomb Testing Chamber"
+	minimaps_to_render_on = null
 
 ABSTRACT_TYPE(/area/station/science)
 /area/station/science
@@ -3625,6 +3637,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 /area/research_outpost/indigo_rye
 	name = "Indigo"
+	minimaps_to_render_on = null
 
 /area/research_outpost/hangar
 		name = "Research Outpost Hangar"

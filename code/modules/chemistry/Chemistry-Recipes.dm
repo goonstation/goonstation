@@ -410,9 +410,11 @@
 		reaction_icon_color = "#ffffff"
 
 		does_react(var/datum/reagents/holder)
+			if (!length(holder.covered_turf())) //don't react until the fluid group is set up
+				return FALSE
 			return holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group)
 
-		on_reaction(datum/reagents/holder)
+		on_reaction(datum/reagents/holder, created_volume)
 			var/list/covered = holder.covered_turf()
 			if (covered.len < 5)
 				for(var/turf/t in covered)
@@ -972,6 +974,20 @@
 		mix_phrase = "The tea sweetens. Visually. Somehow."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
+
+	kombucha
+		name = "Kombucha"
+		id = "kombucha"
+		result = "kombucha"
+		required_reagents = list("sweet_tea" = 3, "beer" = 1, "antihol" = 1)
+		result_amount = 3
+		mix_phrase = "The tea fizzes lightly, giving off a soft vinegar scent."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+		min_temperature = T0C + 16
+		max_temperature = T0C + 29
+		instant = FALSE
+		reaction_speed = 0.333 // about 100u after 5 minutes
 
 	catamount
 		name = "catamount"
@@ -3299,7 +3315,7 @@
 			if(src.is_currently_exploding)
 				return
 			var/turf/T = get_turf(holder.my_atom)
-			if (istype(T) && T.is_lit(0.1))
+			if (istype(T) && T.is_lit(0.1) && !istype(holder.my_atom.loc, /obj/disposalholder))
 				var/obj/particle/chemical_shine/shine = new /obj/particle/chemical_shine
 				is_currently_exploding = TRUE
 				shine.set_loc(T)

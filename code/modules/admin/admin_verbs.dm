@@ -438,7 +438,6 @@ var/list/admin_verbs = list(
 		// LEVEL_CODER, coder
 		/client/proc/cmd_job_controls,
 		/client/proc/cmd_modify_market_variables,
-		/client/proc/debug_pools,
 		/client/proc/debug_global_variable,
 		/client/proc/call_proc,
 		/client/proc/call_proc_all,
