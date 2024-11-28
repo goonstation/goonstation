@@ -1,5 +1,5 @@
 /obj/grille
-	desc = "A metal mesh often built underneath windows to reinforce them. The holes let fluids, gasses, and energy beams through."
+	desc = "A metal mesh often built underneath windows to reinforce them. The holes let fluids and gasses through."
 	name = "grille"
 	icon = 'icons/obj/SL_windows_grilles.dmi'
 	icon_state = "grille0-0"

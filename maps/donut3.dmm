@@ -24490,6 +24490,11 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
+"hqf" = (
+/obj/decal/poster/wallsign/hazard_rad,
+/obj/window/auto,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
 "hqp" = (
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/black,
@@ -56520,6 +56525,10 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
+"qYL" = (
+/obj/window/auto/crystal,
+/turf/simulated/floor/plating,
+/area/station/engine/singcore)
 "qYR" = (
 /obj/decal/stripe_caution,
 /obj/machinery/computer/magnet,
@@ -140454,13 +140463,13 @@ ocE
 ocE
 oWs
 aSs
-sXE
+hqf
 aSs
 lWj
 fgg
 lWj
 aSs
-sXE
+hqf
 aSs
 oWs
 vmV
@@ -141662,13 +141671,13 @@ rdj
 rdj
 rdj
 rYX
-rYX
+qYL
 rYX
 rYX
 brS
 rYX
 rYX
-rYX
+qYL
 rYX
 rdj
 rdj
@@ -144078,13 +144087,13 @@ rdj
 rdj
 rdj
 rYX
-rYX
+qYL
 rYX
 rYX
 brS
 rYX
 rYX
-rYX
+qYL
 rYX
 rdj
 rdj
@@ -145286,13 +145295,13 @@ ocE
 ocE
 oWs
 aSs
-sXE
+hqf
 aSs
 lWj
 fgg
 lWj
 aSs
-sXE
+hqf
 aSs
 oWs
 vOK
