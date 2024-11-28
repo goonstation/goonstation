@@ -2462,9 +2462,7 @@
 /turf/simulated/floor/red/side,
 /area/evilreaver/security)
 "za" = (
-/obj/machinery/light_switch/west{
-	on = 0
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/plating/damaged3,
 /area/spyshack)
 "zb" = (
@@ -3423,9 +3421,7 @@
 	tag = ""
 	},
 /obj/random_item_spawner/junk/one_or_zero,
-/obj/machinery/light_switch/west{
-	on = 0
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "Fr" = (
@@ -5269,9 +5265,7 @@
 	icon_state = "4-8"
 	},
 /obj/decal/stripe_delivery,
-/obj/machinery/light_switch/north{
-	on = 0
-	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor,
 /area/mining/magnet_control)
 "RJ" = (
