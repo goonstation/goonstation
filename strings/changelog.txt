@@ -1,5 +1,7 @@
 
 (t)thu nov 28 24
+(u)tarmunora
+(+)Repairing glass tables now respects conservation of mass
 (u)Amylizzle
 (p)21384
 (e)🆕📦📡🐁|C-Feature, A-Game-Objects, A-AI, A-Critters

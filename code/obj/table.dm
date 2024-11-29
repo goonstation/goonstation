@@ -1115,7 +1115,7 @@ TYPEINFO(/obj/table/glass)
 				var/obj/item/sheet/S = W
 				if (!S.material || !(S.material.getMaterialFlags() & MATERIAL_CRYSTAL))
 					boutput(user, SPAN_ALERT("You have to use glass or another crystalline material to repair [src]!"))
-				else if (S.change_stack_amount(-1))
+				else if (S.change_stack_amount(-2))
 					boutput(user, SPAN_NOTICE("You add glass to [src]!"))
 					if (S.reinforcement)
 						src.reinforced = 1
