@@ -484,6 +484,9 @@
 		var/obj/machinery/clonepod/P = A
 		if(P.occupant)
 			reagents = P.occupant.reagents
+	else if (istype(A, /obj/fluid_pipe))
+		var/obj/fluid_pipe/P = A
+		reagents = P.network.reagents
 
 	if (reagents)
 		if (length(reagents.reagent_list))

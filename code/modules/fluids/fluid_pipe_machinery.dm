@@ -1,6 +1,6 @@
 ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery)
 /obj/machinery/fluid_pipe_machinery
-	icon = 'icons/obj/fluid_pipe.dmi'
+	icon = 'icons/obj/fluidpipes/fluid_pipe.dmi'
 	processing_tier = PROCESSING_QUARTER
 	anchored = ANCHORED
 	plane = PLANE_FLOOR
@@ -8,21 +8,21 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery)
 	var/initialize_directions
 
 /// Accepts an input network and an ideal amount of fluid to pull from network.
-/// Returns a reagents datum containing a scaled amount of fluid linear to fullness of network or null if no fluid in network. Quantized to 0.1 units.
-/obj/machinery/fluid_pipe_machinery/proc/pull_from_network(var/datum/flow_network/network, var/maximum = 100)
-	return network.reagents.remove_any_to(max(0.1,round(maximum * (network.reagents.total_volume / network.reagents.maximum_volume), 0.1)))
+/// Returns a reagents datum containing a scaled amount of fluid linear to fullness of network or null if no fluid in network. Quantized to QUANTIZATION_UNITS units.
+/obj/machinery/fluid_pipe_machinery/proc/pull_from_network(datum/flow_network/network, maximum = 100)
+	return network.reagents.remove_any_to(max(MINIMUM_REAGENT_MOVED, round(maximum * (network.reagents.total_volume / network.reagents.maximum_volume), QUANTIZATION_UNITS)))
 
 /// Accepts an input network and the reagents datum to add to the network.
 /// Returns TRUE on complete addition to network and deletion of reagents datum. Returns FALSE if reagents remaining and reagents not deleted.
-/obj/machinery/fluid_pipe_machinery/proc/push_to_network(var/datum/flow_network/network, var/datum/reagents/topush)
-	topush?.trans_to(network, topush.total_volume)
+/obj/machinery/fluid_pipe_machinery/proc/push_to_network(datum/flow_network/network, datum/reagents/topush)
+	topush?.trans_to(network, topush.total_volume, 1, FALSE)
 	if(topush.total_volume)
 		return FALSE
 	qdel(topush)
 	return TRUE
 
 /// Clear ourselves from our network and then relook.
-/obj/machinery/fluid_pipe_machinery/proc/refresh_network(var/datum/flow_network/network)
+/obj/machinery/fluid_pipe_machinery/proc/refresh_network(datum/flow_network/network)
 	return
 
 
@@ -49,7 +49,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary)
 			src.network.machines += src
 			break
 
-/obj/machinery/fluid_pipe_machinery/unary/refresh_network(var/datum/flow_network/network)
+/obj/machinery/fluid_pipe_machinery/unary/refresh_network(datum/flow_network/network)
 	src.network?.machines -= src
 	src.network = null
 	src.initialize()
@@ -67,28 +67,44 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary/drain)
 	if(T.active_liquid?.group?.amt_per_tile)
 		//pick a random unit between drain_min and drain_max to drain, if there is less fluid then what we chose, drain it all.
 		var/amount = min(rand(src.drain_min, src.drain_max), src.network.reagents.maximum_volume - src.network.reagents.total_volume)/T.active_liquid.group.amt_per_tile
-		T.active_liquid.group.drain(T.active_liquid, amount, src.network)
-		playsound(T, 'sound/misc/drain_glug.ogg', 50, TRUE)
+		if(amount > 0) // rounding errors can make it go very very slightly below zero
+			T.active_liquid.group.drain(T.active_liquid, amount, src.network)
+			playsound(T, 'sound/misc/drain_glug.ogg', 50, TRUE)
 
-/obj/machinery/fluid_pipe_machinery/unary/drain/passive
-	name = "drain"
-	desc = "A drainage pipe embedded in the floor to prevent flooding. Where does the drain go? Into that pipe obviously."
-	icon_state = "drain"
-	drain_min = 2
-	drain_max = 7
+/obj/machinery/fluid_pipe_machinery/unary/drain/inlet_pump
+	name = "Inlet Pump"
+	icon_state = "inlet0"
+	desc = "A powered and togglable drainage pipe."
 
-/obj/machinery/fluid_pipe_machinery/unary/drain/passive/process()
+	var/on = FALSE
+	drain_min = 10
+	drain_max = 15
+
+/obj/machinery/fluid_pipe_machinery/unary/drain/inlet_pump/attack_hand(mob/user)
+	interact_particle(user, src)
+	src.on = !src.on
+	src.UpdateIcon()
+	user.visible_message(SPAN_NOTICE("[user] turns [src.on ? "on" : "off"] [src]."), SPAN_NOTICE("You turn [src.on ? "on" : "off"] [src]."))
+
+/obj/machinery/fluid_pipe_machinery/unary/drain/inlet_pump/process()
+	if(!src.on)
+		return
 	src.drain()
 
-/obj/machinery/fluid_pipe_machinery/unary/drain/passive/big
-	icon_state = "bigdrain"
-	drain_min = 6
-	drain_max = 14
+/obj/machinery/fluid_pipe_machinery/unary/drain/inlet_pump/hide(intact)
+	src.icon_state = "inlet[src.on][CHECKHIDEPIPE(src) ? "h" : null]"
+
+/obj/machinery/fluid_pipe_machinery/unary/drain/inlet_pump/update_icon()
+	var/turf/T = get_turf(src)
+	var/intact = T.intact
+	flick("inlet[!src.on][src.on][CHECKHIDEPIPE(src) ? "h" : null]", src)
+	src.icon_state = "inlet[src.on][CHECKHIDEPIPE(src) ? "h" : null]"
 
 
 /obj/machinery/fluid_pipe_machinery/unary/outlet_pump
 	name = "Outlet Pump"
-	icon_state = "inlet_off"
+	icon_state = "output0"
+	desc = "A hand"
 
 	var/on = FALSE
 	var/pullrate = 200
@@ -96,20 +112,18 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary/drain)
 /obj/machinery/fluid_pipe_machinery/unary/outlet_pump/attack_hand(mob/user)
 	interact_particle(user, src)
 	src.on = !src.on
-	src.icon_state = src.on ? "inlet_on" : "inlet_off"
+	src.UpdateIcon()
 	user.visible_message(SPAN_NOTICE("[user] turns [src.on ? "on" : "off"] [src]."), SPAN_NOTICE("You turn [src.on ? "on" : "off"] [src]."))
 
 /obj/machinery/fluid_pipe_machinery/unary/outlet_pump/process()
-	if(!src.on)
-		return
-	if(!src.network)
-		src.on = FALSE
-		src.icon_state = "inlet_off"
+	if(!src.on || !src.network)
 		return
 	var/turf/simulated/T = get_turf(src)
 	var/datum/reagents/fluid = src.pull_from_network(src.network, src.pullrate)
 	fluid?.trans_to(T, fluid.total_volume)
 
+/obj/machinery/fluid_pipe_machinery/unary/outlet_pump/update_icon()
+	icon_state = "output[src.on]"
 
 ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
 /obj/machinery/fluid_pipe_machinery/binary
@@ -138,7 +152,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
 			src.network2.machines += src
 			break
 
-/obj/machinery/fluid_pipe_machinery/binary/refresh_network(var/datum/flow_network/network)
+/obj/machinery/fluid_pipe_machinery/binary/refresh_network(datum/flow_network/network)
 	src.network1?.machines -= src
 	src.network2?.machines -= src
 	src.network1 = null
@@ -148,23 +162,53 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
 
 /obj/machinery/fluid_pipe_machinery/binary/pump
 	name = "Fluid Pump"
-	icon_state = "pump_off"
+	icon_state = "pump0"
 	var/on = FALSE
 	var/pumprate = 200
 
 /obj/machinery/fluid_pipe_machinery/binary/pump/attack_hand(mob/user)
 	interact_particle(user, src)
 	src.on = !src.on
-	src.icon_state = src.on ? "pump_on" : "pump_off"
+	src.UpdateIcon()
 	user.visible_message(SPAN_NOTICE("[user] turns [src.on ? "on" : "off"] [src]."), SPAN_NOTICE("You turn [src.on ? "on" : "off"] [src]."))
+
+/obj/machinery/fluid_pipe_machinery/binary/pump/update_icon()
+	flick("pump[!src.on][src.on]", src)
+	src.icon_state = "pump[src.on]"
 
 /obj/machinery/fluid_pipe_machinery/binary/pump/process()
 	if(!src.on)
 		return
-	if(!src.network1 || !src.network2)
-		src.on = FALSE
-		src.icon_state = "pump_off"
-		return
 	var/datum/reagents/removed_fluid = src.pull_from_network(src.network1, src.pumprate)
 	if(!src.push_to_network(src.network2, removed_fluid))
 		removed_fluid.trans_to(network1, removed_fluid.total_volume)
+
+/obj/machinery/fluid_pipe_machinery/binary/valve
+	name = "Fluid Valve"
+	icon_state = "valve0"
+	var/on = FALSE
+
+/obj/machinery/fluid_pipe_machinery/binary/valve/attack_hand(mob/user)
+	interact_particle(user, src)
+	if(ON_COOLDOWN(src, "fluidvalve", 1 SECOND))
+		return
+	src.on = !src.on
+	src.UpdateIcon()
+	user.visible_message(SPAN_NOTICE("[user] turns [src.on ? "on" : "off"] [src]."), SPAN_NOTICE("You turn [src.on ? "on" : "off"] [src]."))
+	if(!(src.network1 && src.network2))
+		return
+	if(src.on)
+		src.network1.merge_network(src.network2)
+	else
+		src.network1.rebuild_network()
+
+/obj/machinery/fluid_pipe_machinery/binary/valve/update_icon()
+	flick("valve[!src.on][src.on]", src)
+	src.icon_state = "valve[src.on]"
+
+/obj/machinery/fluid_pipe_machinery/binary/valve/refresh_network(datum/flow_network/network)
+	..()
+	if(!src.on)
+		return
+	if(src.network1 && src.network2)
+		src.network1.merge_network(src.network2)

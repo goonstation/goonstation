@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 /obj/fluid_pipe
 	name = "fluid pipe"
 	desc = "A pipe. For fluids."
-	icon = 'icons/obj/fluid_pipe.dmi'
+	icon = 'icons/obj/fluidpipes/fluid_pipe.dmi'
 	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_BELOW
 	layer = FLUID_PIPE_LAYER
@@ -17,12 +17,15 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	var/initialize_directions
 	/// The network we belong to.
 	var/datum/flow_network/network
+	var/hogs_tile = FALSE //does it take up the entire tile no matter what?
 
 /obj/fluid_pipe/New()
 	..()
 	var/turf/T = get_turf(src)
 	src.hide(T.intact)
 	src.initialize_dir_vars()
+
+/obj/fluid_pipe/initialize()
 	src.refresh_connections()
 
 /obj/fluid_pipe/onDestroy()
@@ -30,7 +33,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 
 /// Accepts a reagents datum to start with.
 /// Replaces our network with a new one and relooks for pipes to connect to.
-/obj/fluid_pipe/proc/refresh_connections(var/datum/reagents/flow_network/leftover)
+/obj/fluid_pipe/proc/refresh_connections(datum/reagents/flow_network/leftover)
 	src.network = new(src)
 	leftover?.trans_to_direct(src.network.reagents, leftover.total_volume)
 	var/connect_directions = src.initialize_directions
@@ -38,11 +41,10 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 		if(HAS_ANY_FLAGS(direction, connect_directions))
 			for(var/obj/fluid_pipe/target in get_step(src,direction))
 				if(target.initialize_directions & get_dir(target,src))
-					if(target.network != src.network)
-						src.network.merge_pipe(target)
+					src.network.merge_pipe(target)
 					connect_directions &= ~direction
 					break
-	if(connect_directions) ///If we have any remaining directions, look for machines.
+	if(connect_directions) // If we have any remaining directions, look for machines.
 		for(var/direction in cardinal)
 			if(HAS_ANY_FLAGS(direction, connect_directions))
 				for(var/obj/machinery/fluid_pipe_machinery/target in get_step(src,direction))
@@ -135,21 +137,19 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 /obj/fluid_pipe/fluid_tank
 	name = "fluid tank"
 	desc = "A big ol' tank of fluid."
+	icon = 'icons/obj/fluidpipes/fluid_tank.dmi'
 	icon_state = "tank"
+	density = TRUE
 	plane = PLANE_DEFAULT
-	layer = OBJ_LAYER
+	layer = EFFECTS_LAYER_BASE
 	level = OVERFLOOR
 	capacity = LARGE_FLUID_CAPACITY
 
 /obj/fluid_pipe/fluid_tank/initialize_dir_vars()
-	switch(dir)
-		if(NORTH, SOUTH)
-			initialize_directions = SOUTH|NORTH
-		if(EAST, WEST)
-			initialize_directions = EAST|WEST
+	src.initialize_directions = src.dir
 
 /obj/fluid_pipe/fluid_tank/see_fluid
-	icon_state = "tank-viewable"
+	icon_state = "tank-view"
 
 /obj/fluid_pipe/fluid_tank/see_fluid/refresh_connections(datum/reagents/flow_network/leftover)
 	..()
@@ -157,7 +157,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 		/datum/component/reagent_overlay/other_target, \
 		reagent_overlay_icon = src.icon, \
 		reagent_overlay_icon_state = src.icon_state, \
-		reagent_overlay_states = 10, \
+		reagent_overlay_states = 8, \
 		queue_updates = FALSE, \
 		target = src.network)
 
@@ -190,9 +190,8 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	src.reagents = null
 	..()
 
-/// Accepts a pipe to merge into us.
-/// Merges all machines and pipes in it's network into us then deletes that network.
-/datum/flow_network/proc/merge_pipe(var/obj/fluid_pipe/fluid_pipe)
+/// Accepts a pipe to merge with.
+/datum/flow_network/proc/merge_pipe(obj/fluid_pipe/fluid_pipe)
 	if(isnull(fluid_pipe.network))
 		fluid_pipe.network = src
 		var/datum/component/reagent_overlay/other_target/fluid_component = fluid_pipe.GetComponent(/datum/component/reagent_overlay/other_target)
@@ -208,13 +207,25 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 				target = src)
 		return
 
-	var/datum/flow_network/network = fluid_pipe.network
+	src.merge_network(fluid_pipe.network)
+
+/// Accepts a network to merge with.
+/// Merges all machines and pipes into the bigger network then deletes the smaller one.
+/datum/flow_network/proc/merge_network(datum/flow_network/network)
 	if(src == network)
 		return
-	src.reagents.maximum_volume += network.reagents.maximum_volume
-	network.reagents.trans_to_direct(src.reagents, network.reagents.total_volume)
-	for(var/obj/fluid_pipe/pipe as anything in network.pipes)
-		pipe.network = src
+	var/datum/flow_network/assuming_network
+	var/datum/flow_network/assumed_network
+	if(length(src.pipes) > length(network.pipes)) //lets iterate through the smaller list, not the bigger one
+		assuming_network = src
+		assumed_network = network
+	else
+		assuming_network = network
+		assumed_network = src
+	assuming_network.reagents.maximum_volume += assumed_network.reagents.maximum_volume
+	assumed_network.reagents.trans_to_direct(assuming_network.reagents, assumed_network.reagents.total_volume)
+	for(var/obj/fluid_pipe/pipe as anything in assumed_network.pipes)
+		pipe.network = assuming_network
 		var/datum/component/reagent_overlay/other_target/fluid_component = pipe.GetComponent(/datum/component/reagent_overlay/other_target)
 		if(fluid_component)
 			var/states = fluid_component.reagent_overlay_states
@@ -225,12 +236,13 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 				reagent_overlay_icon_state = pipe.icon_state, \
 				reagent_overlay_states = states, \
 				queue_updates = FALSE, \
-				target = src)
-	for(var/obj/machinery/fluid_pipe_machinery/machine as anything in network.machines)
-		machine.refresh_network(src)
-	src.pipes += network.pipes
-	network.pipes.len = 0
-	qdel(network)
+				target = assuming_network)
+	for(var/obj/machinery/fluid_pipe_machinery/machine as anything in assumed_network.machines)
+		machine.refresh_network(assuming_network)
+	assuming_network.pipes += assumed_network.pipes
+	assumed_network.pipes.len = 0
+	qdel(assumed_network)
+
 
 /// Refreshes all machines and pipes and removes ourself. Delays during explosions.
 /datum/flow_network/proc/rebuild_network()
@@ -249,7 +261,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	qdel(src)
 
 /// Removes a pipe from our network. Spills its contents on its turf. Refreshes network afterwards.
-/datum/flow_network/proc/remove_pipe(var/obj/fluid_pipe/node)
+/datum/flow_network/proc/remove_pipe(obj/fluid_pipe/node)
 	var/turf/T = get_turf(node)
 	var/datum/reagents/fluid = src.reagents.remove_any_to(src.reagents.total_volume * (node.capacity/src.reagents.maximum_volume))
 	fluid?.trans_to(T, fluid.total_volume)
@@ -267,5 +279,5 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	var/datum/flow_network/fluid_network
 	inert = TRUE //you can do that somewhere else
 
-/datum/reagents/flow_network/reagents_changed(var/add = 0)
+/datum/reagents/flow_network/reagents_changed(add = 0)
 	fluid_network.on_reagent_changed()
