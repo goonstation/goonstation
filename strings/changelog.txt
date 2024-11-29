@@ -1,5 +1,13 @@
 
 (t)thu nov 28 24
+(u)Glamurio (Ryou)
+(p)21336
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Rocko now snuggly fits inside of pet carriers.
+(u)Glamurio (Ryou)
+(p)21470
+(e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
+(+)Hi-vis vests now actually reflect light in dark areas.
 (u)tarmunora
 (+)Repairing glass tables now respects conservation of mass
 (u)Amylizzle
