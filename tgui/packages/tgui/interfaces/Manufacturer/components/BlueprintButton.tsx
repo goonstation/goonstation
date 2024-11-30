@@ -20,7 +20,7 @@ import { shallowDiffers } from 'tgui-core/react';
 
 import { truncate } from '../../../format';
 import { BlueprintButtonStyle, BlueprintMiniButtonStyle } from '../constant';
-import { ManufacturableData } from '../type';
+import type { ManufacturableData } from '../type';
 import { ButtonWithBadge } from './ButtonWithBadge';
 import { CenteredText } from './CenteredText';
 
@@ -54,11 +54,11 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
   );
   const memoizedOnRemoveBlueprint = useCallback(
     () => onBlueprintRemove(blueprintData.byondRef),
-    [blueprintData.byondRef],
+    [blueprintData.byondRef, onBlueprintRemove],
   );
   const handleVendProduct = useCallback(
     () => onVendProduct(blueprintData.byondRef),
-    [blueprintData.byondRef],
+    [blueprintData.byondRef, onVendProduct],
   );
   // Don't include this flavor if we only output one item, because if so, then we know what we're making
   const outputs =
@@ -70,7 +70,7 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
         Outputs: <br />
         {blueprintData?.item_names?.map((value: string, index: number) => (
           <b key={index}>
-            {blueprintData.create}x {value}
+            {`${blueprintData.create}x ${value}`}
             <br />
           </b>
         ))}
@@ -111,12 +111,10 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
 
   const canDelete = blueprintData.isMechBlueprint && deleteAllowed;
   // /datum/manufacture contains no description of its 'contents', so the first item works
-  let content_info = '';
-  if (canDelete) {
-    content_info = 'Click this to remove the blueprint from the fabricator.';
-  } else {
-    content_info = blueprintData?.item_descriptions?.[0] ?? '';
-  }
+  const content_info = canDelete
+    ? 'Click this to remove the blueprint from the fabricator.'
+    : (blueprintData?.item_descriptions?.[0] ?? '');
+
   return (
     <Stack style={{ display: BlueprintButtonStyle.Display }}>
       <Stack.Item
@@ -208,13 +206,13 @@ export const BlueprintButton = memo(
       return false;
     }
     // Slightly more in depth check for the producibility data to see if it actually changed
-    for (let key in prevProps.blueprintProducibilityData) {
-      if (
-        prevBlueprintProducibilityData[key] !==
-        nextBlueprintProducibilityData[key]
-      ) {
-        return false;
-      }
+    if (
+      shallowDiffers(
+        prevBlueprintProducibilityData,
+        nextBlueprintProducibilityData,
+      )
+    ) {
+      return false;
     }
     return true;
   },

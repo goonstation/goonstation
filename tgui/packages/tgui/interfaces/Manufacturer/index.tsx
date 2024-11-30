@@ -6,7 +6,7 @@
  */
 
 import { toTitleCase } from 'common/string';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import {
   Button,
   Collapsible,
@@ -24,6 +24,7 @@ import { pluralize } from 'tgui-core/string';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { is_set } from '../common/bitflag';
+import { useHashedMemo } from '../common/hooks';
 import { BlueprintButton } from './components/BlueprintButton';
 import { CardInfo } from './components/CardInfo';
 import { CollapsibleWireMenu } from './components/CollapsibleWireMenu';
@@ -134,13 +135,7 @@ export const Manufacturer = () => {
   const manudriveLimit = manudrive?.limit;
 
   // Only change producibility_data if it actually changes. Not doing this will cause issues for performance with blueprint buttons.
-  const producibility_data_ref = useRef(producibility_data);
-  if (
-    JSON.stringify(producibility_data) !==
-    JSON.stringify(producibility_data_ref.current)
-  ) {
-    producibility_data_ref.current = producibility_data;
-  }
+  const diffedProducibilityData = useHashedMemo(producibility_data);
 
   // Converts the blueprints we get into one larger list sorted by category.
   // This is done here instead of sending one big list to reduce the amount of times we need to refresh static data.
@@ -235,7 +230,7 @@ export const Manufacturer = () => {
                             blueprintData={blueprint}
                             manufacturerSpeed={speed}
                             blueprintProducibilityData={
-                              producibility_data_ref.current[blueprint.byondRef]
+                              diffedProducibilityData[blueprint.byondRef]
                             }
                             deleteAllowed={
                               delete_allowed !== AccessLevels.DENIED
