@@ -19,10 +19,13 @@
 	var/static/list/turf/floor_types = list(/turf/simulated/floor/industrial, /turf/simulated/floor/auto/glassblock/cyan, /turf/simulated/floor/circuit/vintage, /turf/simulated/floor/glassblock/transparent, /turf/simulated/floor/engine, /turf/simulated/floor/techfloor/yellow, /turf/simulated/floor/mauxite)
 	// possible wall types for the wall placing robots
 	var/static/list/turf/wall_types = list(/turf/simulated/wall/auto/supernorn/material/mauxite, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn)
+	// possible item types for the recycler to create
+	var/static/list/obj/item/item_types = list(/obj/item/bananapeel)
 
 	var/aiHolder_type
 	var/floor_type
 	var/wall_type
+	var/item_type
 	//artifact limb var storage
 	var/limb_damtype = "brute"
 	var/limb_dmg_amount = 0

@@ -202,3 +202,66 @@
 		if(istype(art_datum))
 			target.ReplaceWith(art_datum.wall_type)
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// recycler
+
+/datum/aiHolder/artifact_recycler
+	New()
+		..()
+		default_task = get_instance(/datum/aiTask/prioritizer/artifact_recycler, list(src))
+
+/datum/aiTask/prioritizer/artifact_recycler/New()
+	..()
+	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander, list(src.holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/recycle_random_object, list(src.holder, src))
+
+/datum/aiTask/sequence/goalbased/recycle_random_object
+	name = "recycling objects"
+	weight = 1
+	distance_from_target = 0
+	max_dist = 5
+
+/datum/aiTask/sequence/goalbased/recycle_random_object/New(parentHolder, transTask) //goalbased aitasks have an inherent movement component
+	..(parentHolder, transTask)
+	add_task(holder.get_instance(/datum/aiTask/succeedable/actionbar/recycle_random_object, list(holder)))
+
+/datum/aiTask/sequence/goalbased/recycle_random_object/get_targets()
+	. = ..()
+	var/list/obj/item/results = list()
+	for(var/obj/item/O in view(src.max_dist, src.holder.owner))
+		if(istype(O.loc, /turf))
+			results += O
+	return results
+
+//subtask for picking up item
+/datum/aiTask/succeedable/actionbar/recycle_random_object
+	name = "recycle object subtask"
+	duration = 3 SECONDS
+	callback_proc = PROC_REF(produce_object)
+	action_icon = 'icons/obj/scrap.dmi'
+	action_icon_state = "Crusher_1"
+	end_message = null
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
+
+/datum/aiTask/succeedable/actionbar/recycle_random_object/failed()
+	.=..() //did actionbar fail
+	if(. || !holder.owner || !holder.target || BOUNDS_DIST(holder.owner, holder.target) > 0) //the tasks fails and is re-evaluated if the target is not in range. "in range" counts for the item being inside the mob
+		//drop the item if the task failed
+		var/obj/item/pickup = holder.target
+		if(istype(pickup))
+			pickup.set_loc(get_turf(holder.owner))
+		return TRUE
+
+/datum/aiTask/succeedable/actionbar/recycle_random_object/before_action_start()
+	//pick up the item
+	var/obj/item/pickup = holder.target
+	if(istype(pickup))
+		pickup.set_loc(holder.owner)
+	playsound(holder.owner, 'sound/items/mining_drill.ogg', 40, TRUE, 0, 0.8)
+
+/datum/aiTask/succeedable/actionbar/recycle_random_object/proc/produce_object(var/mob/living/critter/robotic/artifact/owner, var/obj/target)
+	if(istype(owner) && istype(target))
+		var/datum/artifact/robot/art_datum = owner.parent_artifact?.artifact
+		if(istype(art_datum))
+			new art_datum.item_type(get_turf(owner)) //spawn item on turf
+			qdel(target) //delete the recycled one
