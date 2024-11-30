@@ -282,6 +282,7 @@ var/global/debug_messages = 0
 			"description" = customization[ARG_INFO_DESC])
 		if(length(customization) >= ARG_INFO_DEFAULT)
 			.["options"][customization[ARG_INFO_NAME]]["value"] = customization[ARG_INFO_DEFAULT]
+			src.listargs[customization[ARG_INFO_NAME]] = customization[ARG_INFO_DEFAULT]
 		else
 			.["options"][customization[ARG_INFO_NAME]]["value"] = null
 

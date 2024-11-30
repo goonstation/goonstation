@@ -329,7 +329,7 @@ var/list/ai_move_scheduled = list()
 		transition_tasks[transTask] = 0
 
 	next_task()
-		if (length(holder.priority_tasks)) //consume priority tasks first
+		if (length(holder?.priority_tasks)) //consume priority tasks first
 			var/datum/aiTask/chosen_one = holder.priority_tasks[1]
 			holder.priority_tasks -= chosen_one
 			return chosen_one

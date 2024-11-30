@@ -373,7 +373,7 @@ const FilterBlendmodeEntry = (props) => {
 };
 
 const FilterDataEntry = (props) => {
-  const { name, value, hasValue, filterName } = props;
+  const { name, hasValue } = props;
 
   const filterEntryTypes = {
     int: <FilterIntegerEntry {...props} />,
