@@ -147,7 +147,7 @@
 
 						var/fart_on_other = 0
 						for (var/atom/A as anything in src.loc)
-							if (A.event_handler_flags & IS_FARTABLE && !ON_COOLDOWN(A, "\ref[src]fart" 0.1 SECONDS))
+							if (A.event_handler_flags & IS_FARTABLE && !ON_COOLDOWN(A, "\ref[src]fart", 0.1 SECONDS))
 								if (istype(A,/mob/living))
 									var/mob/living/M = A
 									if (M == src || !M.lying)
