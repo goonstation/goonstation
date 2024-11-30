@@ -790,8 +790,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/handheld_vacuum = 1
 		),
 		"wizard" = list(
-			/obj/item/reagent_containers/food/drinks/tea/mugwort = 20,
-			/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor = 20,
+			/obj/item/reagent_containers/food/drinks/tea/mugwort = 10,
+			/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor = 30,
 			/obj/item/kitchen/everyflavor_box = 3,
 			/obj/item/staff = 10,
 			/obj/item/staff/crystal = 5,
@@ -813,9 +813,15 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/paper/Wizardry101 = 10,
 			/obj/item/paper/businesscard/cosmicacres = 2,
 			/datum/projectile/fireball = 5,
-			/datum/projectile/special/homing/magicmissile/weak = 30,
+			/datum/projectile/special/homing/magicmissile/weak = 20,
 			/datum/projectile/special/homing/magicmissile = 15,
-			/datum/projectile/artifact/prismatic_projectile = 10,
+			/datum/projectile/artifact/prismatic_projectile = 20,
+			"snake" = 10,
+			/obj/forcefield/autoexpire = 4,
+			/obj/decal/icefloor = 10,
+			/obj/lightning_target = 10,
+			/obj/item/clothing/gloves/ring/wizard/blink = 0.1,
+			/obj/item/clothing/gloves/ring/wizard/forcewall = 0.1,
 		)
 	)
 
@@ -1147,6 +1153,12 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			if ("sticker")
 				spawn_type = pick(concrete_typesof(/obj/item/sticker))
 				. = new spawn_type(src.loc)
+			if ("snake")
+				. = generate_thing("wizard")
+				var/atom/movable/AM = .
+				if (istype(AM) && !QDELETED(AM) && !istype(AM, /obj/projectile))
+					var/mob/living/critter/small_animal/snake/snake = new(src.loc, .)
+					snake.start_expiration(2 MINUTES)
 			else
 				CRASH("Unknown spawn type: [spawn_type]")
 
