@@ -416,6 +416,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/mob/living/critter/robotic/sawfly = 2,
 			/obj/item/reagent_containers/food/snacks/donkpocket_w = 1,
 			/obj/bomb_decoy = 0.4,
+			/obj/machinery/nuclearbomb/event/micronuke = 0.05,
 		),
 		"hell" = list(
 			"fireflash" = 15,
