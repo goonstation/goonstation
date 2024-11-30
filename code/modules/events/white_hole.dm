@@ -822,6 +822,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/lightning_target = 10,
 			/obj/item/clothing/gloves/ring/wizard/blink = 0.1,
 			/obj/item/clothing/gloves/ring/wizard/forcewall = 0.1,
+			/obj/item/enchantment_scroll = 0.5,
+			"wizard crystal" = 1
 		)
 	)
 
@@ -1159,6 +1161,9 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 				if (istype(AM) && !QDELETED(AM) && !istype(AM, /obj/projectile))
 					var/mob/living/critter/small_animal/snake/snake = new(src.loc, .)
 					snake.start_expiration(2 MINUTES)
+			if ("wizard crystal")
+				spawn_type = pick(concrete_typesof(/obj/item/wizard_crystal))
+				. = new spawn_type(src.loc)
 			else
 				CRASH("Unknown spawn type: [spawn_type]")
 
