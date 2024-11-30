@@ -2692,8 +2692,8 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/implantcase/counterrev{
-	pixel_y = 6
+/obj/item/storage/box/revimp_kit{
+	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/security/hos)
@@ -60268,6 +60268,10 @@
 	dir = 8;
 	pixel_x = -23
 	},
+/obj/item/storage/box/revimp_kit{
+	pixel_x = -6;
+	pixel_y = 17
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "shD" = (
@@ -71153,6 +71157,9 @@
 	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/item/storage/box/revimp_kit{
+	pixel_x = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 6;
