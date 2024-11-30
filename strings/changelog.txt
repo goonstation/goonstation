@@ -1,4 +1,6 @@
-
+(t)sat nov 30 24
+(u)LeahTheTech
+(+)Pointing at someone with a GUN will now use a unique point icon to indicate that it's a GUN!!
 (t)fri nov 29 24
 (u)glowbold
 (p)21491
