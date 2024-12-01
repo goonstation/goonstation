@@ -507,10 +507,11 @@ proc/filter_carrier_pets(var/type)
 		..()
 
 	death(var/gibbed)
+		..()
 		for (var/mob/living/M in mobs)
 			if (M.mind && M.mind.assigned_role == "Head of Security")
 				boutput(M, SPAN_ALERT("You feel a wave of sadness wash over you, something terrible has happened."))
-		return ..()
+		src.UpdateIcon()
 
 	on_pet(mob/user)
 		if (..())
