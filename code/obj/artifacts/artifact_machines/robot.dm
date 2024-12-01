@@ -25,16 +25,16 @@
 	 	/obj/item/fuel_pellet/cerenkite=25,
 		/obj/item/balloon_animal/random=5,
 		/obj/item/brick=10,
-		/obj/item/chilly_orb=100, //weird, mysterious, useless
+		/obj/item/chilly_orb=50, //weird, mysterious, useless
 		/obj/item/mine/radiation/armed=100, //haha mean
 		/obj/item/mine/stun/armed=80,
 		/obj/item/nuclear_waste=50,
-		/obj/item/old_grenade/light_gimmick=1000,
+		/obj/item/old_grenade/light_gimmick=200,
 		/obj/item/rubberduck=15, //quack
 		/obj/item/seed/alien=100,
-		/mob/living/critter/robotic/repairbot=1000,
-		/mob/living/critter/robotic/repairbot/security=1200,
-		/obj/item/artifact=2000, //maybe too OP, so expensive
+		/mob/living/critter/robotic/repairbot=100,
+		/mob/living/critter/robotic/repairbot/security=120,
+		/obj/item/artifact=200, //maybe too OP, so expensive
 		/obj/machinery/bot/duckbot=100 //implies duckbots are ancient eldritch tech
 		)
 
