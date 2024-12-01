@@ -496,7 +496,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// Return cached if nothing changed
 		if (!contents_changed)
 			return src.cached_producibility_data
-		for (var/obj/item/material_piece/M as anything in C)
 		// Do actual computation since it's necessary
 		var/list/output = list()
 		for (var/datum/manufacture/M as anything in ALL_BLUEPRINTS)
