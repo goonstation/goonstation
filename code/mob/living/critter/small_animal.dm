@@ -381,7 +381,7 @@ proc/filter_carrier_pets(var/type)
 		START_TRACKING
 
 		#ifdef HALLOWEEN
-		var r = rand(1,4)
+		var/r = rand(1,4)
 		costume_name = "sylv_costume_[r]"
 		#endif
 
