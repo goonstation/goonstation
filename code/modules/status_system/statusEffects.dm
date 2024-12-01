@@ -3033,10 +3033,10 @@
 			..()
 			var/mob/living/carbon/human/H = src.owner
 			var/mult = src.get_mult(timePassed)
-			H.blood_volume -= 3 * mult
+			H.blood_volume -= 1.5 * mult
 			if (H.bleeding <= 1) // mostly enabled to show bleed indicator
 				H.bleeding = 1
-			src.blood_to_collect -= 3 * mult
+			src.blood_to_collect -= 1.5 * mult
 			if (probmult(7))
 				boutput(H, SPAN_ALERT(pick("You see things", "You have thoughts about blood", "You can feel an Eldritch presence", "You can feel your blood",
 					"You get the sense something is stealing from you", "Something doesn't feel right", "The artifact hungers", "You see visions of Eldritch artifacts",

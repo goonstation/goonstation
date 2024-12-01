@@ -81,7 +81,7 @@
 
 		owner.blood_volume = max(0, owner.blood_volume) //clean up negative blood amounts here. Lazy fix, but easier than cleaning up every place that blood is removed
 		var/current_blood_amt = owner.blood_volume
-		if (owner.reagents?.total_volume > 0 && src.owner.regens_blood)
+		if (owner.reagents?.total_volume > 0)
 			current_blood_amt += owner.reagents.total_volume / 4 // dropping how much reagents count so that people stop going hypertensive at the drop of a hat
 			var/cho_amt = owner.reagents.get_reagent_amount("cholesterol")
 			var/gnesis_amt = owner.reagents.get_reagent_amount("flockdrone_fluid")
