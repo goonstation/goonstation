@@ -161,6 +161,10 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/real_goldfish = 5,\
 	/obj/item/reagent_containers/food/fish/red_herring = 1)
 
+/datum/fishing_spot/drain/New()
+	..()
+	src.fishing_lootpools += new /datum/fishing_lootpool/real_goldfish(src)
+
 /datum/fishing_spot/clown_shoes
 	fishing_atom_type = /obj/item/clothing/shoes/clown_shoes
 	rod_tier_required = 1
@@ -485,6 +489,10 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/real_goldfish = 5,\
 	/obj/item/light/bulb/yellow/broken = 20)
 
+/datum/fishing_spot/disposal_chute/New()
+	..()
+	src.fishing_lootpools += new /datum/fishing_lootpool/real_goldfish(src)
+
 /datum/fishing_spot/janitor_bucket
 	fishing_atom_type = /obj/mopbucket
 	rod_tier_required = 1
@@ -544,6 +552,10 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/bass = 30,\
 	/obj/item/reagent_containers/food/fish/real_goldfish = 5,\
 	/obj/item/reagent_containers/food/fish/salmon = 20)
+
+/datum/fishing_spot/drain/New()
+	..()
+	src.fishing_lootpools += new /datum/fishing_lootpool/real_goldfish(src)
 
 // Alien/mutant fishing spots
 /datum/fishing_spot/meatzone_acid
@@ -773,6 +785,10 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fish_available = list(/obj/item/coin = 25,\
 	/obj/item/reagent_containers/food/fish/real_goldfish = 5,\
 	/obj/item/currency/spacecash/really_small = 20)
+
+/datum/fishing_spot/vending/New()
+	..()
+	src.fishing_lootpools += new /datum/fishing_lootpool/real_goldfish(src)
 
 //Arc electroplater
 /datum/fishing_spot/arc_electroplater

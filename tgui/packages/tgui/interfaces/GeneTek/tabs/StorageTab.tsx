@@ -13,8 +13,8 @@ import type { GeneTekData } from '../type';
 
 export const StorageTab = () => {
   const { data, act } = useBackend<GeneTekData>();
-  const [menu, setMenu] = useSharedState('menu', 'research');
-  const [isCombining, setIsCombining] = useSharedState('iscombining', false);
+  const [_menu, setMenu] = useSharedState('menu', 'research');
+  const [_isCombining, setIsCombining] = useSharedState('iscombining', false);
   const { saveSlots, samples, savedMutations, savedChromosomes, toSplice } =
     data;
 

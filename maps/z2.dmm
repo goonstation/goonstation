@@ -15877,6 +15877,7 @@
 /area/precursor)
 "blP" = (
 /obj/landmark/fall/ice/deep,
+/obj/landmark/icemoon_medal,
 /turf/unsimulated/floor/void{
 	desc = "You can barely see ...";
 	icon = 'icons/misc/worlds.dmi';
@@ -18952,6 +18953,7 @@
 "bxT" = (
 /obj/landmark/fall/ice/deep,
 /obj/map/light/dimred,
+/obj/landmark/icemoon_medal,
 /turf/unsimulated/floor/void{
 	desc = "You can barely see ...";
 	icon = 'icons/misc/worlds.dmi';
@@ -69209,7 +69211,7 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
 "pKi" = (
-/obj/machinery/clothingbooth,
+/obj/machinery/clothingbooth/free,
 /obj/map/light/brighterwhite,
 /turf/unsimulated/floor/carpet/blue/fancy/narrow/northsouth,
 /area/afterlife/bar/sanctuary)

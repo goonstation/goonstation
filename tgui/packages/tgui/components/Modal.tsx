@@ -12,15 +12,21 @@ import { Dimmer } from './Dimmer';
 type ModalProps = {
   /** If true, the modal will take up the full screen. */
   full?: boolean;
+  fitted?: boolean;
 } & BoxProps;
 
 export function Modal(props: ModalProps) {
-  const { className, children, full, ...rest } = props;
+  const { className, children, fitted, full, ...rest } = props;
 
   return (
     <Dimmer full={full}>
       <div
-        className={classes(['Modal', className, computeBoxClassName(rest)])}
+        className={classes([
+          'Modal',
+          fitted && 'Modal--fitted',
+          className,
+          computeBoxClassName(rest),
+        ])}
         {...computeBoxProps(rest)}
       >
         {children}

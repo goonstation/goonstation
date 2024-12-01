@@ -20,7 +20,6 @@
 		if (!ismob(target) || target == src.holder.owner || !IN_RANGE(src.holder.owner, target, (WIDE_TILE_WIDTH / 2)))
 			return TRUE
 		arcFlash(src.holder.owner, target, src.wattage)
-		logTheThing(LOG_COMBAT, src.holder.owner, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
 
 		var/list/exempt_targets = list(src.holder.owner, target)
 		var/mob/chain_source = target

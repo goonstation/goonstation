@@ -20,6 +20,10 @@
 	qdel(src.storage)
 	src.storage = null
 
+/// override as necessary, used to affect an atom stored in any nested level of storage when any higher parent storage changes location
+/atom/proc/parent_storage_loc_changed()
+	return
+
 /// a datum for atoms that allows holdable storage of items in a hud
 /datum/storage
 	/// Types that can be held

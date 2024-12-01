@@ -64,13 +64,13 @@ var/global/datum/phrase_log/phrase_log = new
 			" EXPANSION MODULE",
 			" Expansion Module",
 			//
-			"overrides? all",
+			"over+ides? all",
 			"the shuttle",
 			"daddy",
 			"uwu",
 			"owo",
 			"non.?human",
-			"overrides?.*1",
+			"over+ides?.*1",
 			"\\bkill\\b",
 			"suicide",
 			"turn yourself",
@@ -176,7 +176,7 @@ var/global/datum/phrase_log/phrase_log = new
 		if(pos)
 			phrase = replacetext(phrase, src.uncool_words, "**$1**")
 			var/ircmsg[] = new()
-			ircmsg["key"] = user.key
+			ircmsg["key"] = user.ckey
 			ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
 			ircmsg["pos"] = pos+2+length(category)+4
 			ircmsg["phrase"] = "\[[uppertext(category)]\]: [phrase]"

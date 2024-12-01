@@ -5,21 +5,23 @@
  * @license ISC
  */
 
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useCallback } from 'react';
 import { Tabs } from 'tgui-core/components';
 
 import { EmptyPlaceholder } from '../../EmptyPlaceholder';
 import type { ToolData } from '../../type/data';
 
 interface ToolProps {
+  itemRef: string;
+  onClick: (itemRef: string) => void;
   selected: boolean;
-  onClick: () => void;
 }
 
 const Tool = (props: PropsWithChildren<ToolProps>) => {
-  const { children, onClick, selected } = props;
+  const { children, itemRef, onClick, selected } = props;
+  const handleClick = useCallback(() => onClick(itemRef), [itemRef, onClick]);
   return (
-    <Tabs.Tab onClick={onClick} selected={selected}>
+    <Tabs.Tab onClick={handleClick} selected={selected}>
       {children}
     </Tabs.Tab>
   );
@@ -43,7 +45,8 @@ export const Tools = (props: ToolsProps) => {
         return (
           <Tool
             key={itemRef}
-            onClick={() => onSelectTool(itemRef)}
+            itemRef={itemRef}
+            onClick={onSelectTool}
             selected={itemRef === selectedToolRef}
           >
             {name}
