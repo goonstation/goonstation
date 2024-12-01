@@ -81,6 +81,10 @@
 	holder?.stop_move() // Just in case they yeet themselves out of existance
 	holder?.owner.move_dir = null // clear out direction so it doesn't get latched when client is attached
 
+/datum/aiTask/timed/wander/short
+	minimum_task_ticks = 1
+	maximum_task_ticks = 3
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TARGETED TASK
 // a timed task that also relates to a target and the acquisition of said target

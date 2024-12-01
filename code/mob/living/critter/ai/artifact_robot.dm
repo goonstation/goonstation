@@ -212,7 +212,7 @@
 
 /datum/aiTask/prioritizer/artifact_recycler/New()
 	..()
-	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander, list(src.holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/short, list(src.holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/recycle_random_object, list(src.holder, src))
 
 /datum/aiTask/sequence/goalbased/recycle_random_object
@@ -242,8 +242,8 @@
 	name = "recycle object subtask"
 	duration = 3 SECONDS
 	callback_proc = PROC_REF(produce_object)
-	action_icon = 'icons/obj/scrap.dmi'
-	action_icon_state = "Crusher_1"
+	action_icon = 'icons/effects/effects.dmi'
+	action_icon_state = "gears"
 	end_message = null
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
 
