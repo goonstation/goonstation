@@ -26,7 +26,8 @@
 
 /datum/aiTask/sequence/goalbased/proc/precondition()
 	// useful for goals that have a requirement, return 0 to instantly make this state score 0 and not be picked
-	. = TRUE
+	if(src.holder)
+		. = TRUE
 
 /datum/aiTask/sequence/goalbased/on_tick()
 	..()
