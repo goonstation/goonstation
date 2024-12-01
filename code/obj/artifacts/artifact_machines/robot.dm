@@ -14,7 +14,7 @@
 	deact_text = "becomes eerily still."
 	react_xray = list(50,20,90,8,"MECHANICAL")
 	// possible AI types that the robot can have
-	var/static/list/datum/aiHolder/possible_ais = list(/datum/aiHolder/artifact_wallplacer, /datum/aiHolder/artifact_wallsmasher, /datum/aiHolder/artifact_floorplacer, /datum/aiHolder/wanderer, /datum/aiHolder/aggressive)
+	var/static/list/datum/aiHolder/possible_ais = list(/datum/aiHolder/artifact_wallplacer, /datum/aiHolder/artifact_wallsmasher, /datum/aiHolder/artifact_floorplacer, /datum/aiHolder/wanderer, /datum/aiHolder/aggressive, /datum/aiHolder/artifact_recycler)
 	// possible floor types for the floor placing robots
 	var/static/list/turf/floor_types = list(/turf/simulated/floor/industrial, /turf/simulated/floor/auto/glassblock/cyan, /turf/simulated/floor/circuit/vintage, /turf/simulated/floor/glassblock/transparent, /turf/simulated/floor/engine, /turf/simulated/floor/techfloor/yellow, /turf/simulated/floor/mauxite)
 	// possible wall types for the wall placing robots

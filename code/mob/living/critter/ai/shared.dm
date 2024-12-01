@@ -290,7 +290,7 @@
 /datum/aiTask/succeedable/actionbar/proc/before_action_start()
 
 /datum/aiTask/succeedable/actionbar/succeeded()
-	return (_has_started && QDELETED(actionbar)) || (istype(actionbar) && actionbar.state == ACTIONSTATE_DELETE && actionbar.interrupt_start == 0)
+	return (_has_started && QDELETED(actionbar)) || (istype(actionbar) && actionbar.state == ACTIONSTATE_DELETE && actionbar.interrupt_start == -1)
 
 /datum/aiTask/succeedable/actionbar/failed()
 	return (istype(actionbar) && actionbar.state == ACTIONSTATE_DELETE && actionbar.interrupt_start > -1)
