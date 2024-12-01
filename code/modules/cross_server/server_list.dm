@@ -28,7 +28,7 @@
 		))
 	add_server(new/datum/game_server(
 		"main5",
-		"Goonstation 5 Roleplay overflow: Rocko",
+		"Goonstation 5 Event: Rocko",
 		"byond://goon5.goonhub.com:26500",
 		5
 		))

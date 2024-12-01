@@ -525,11 +525,13 @@
 /proc/get_ethanol_equivalent(mob/user, datum/reagents/R)
 	var/eth_eq = 0
 	var/should_we_output = FALSE //looks bad if we output this when it's just ethanol in there
+	if(!istype(R))
+		return
 	for (var/current_id in R.reagent_list)
 		var/datum/reagent/current_reagent = R.reagent_list[current_id]
 		if (istype(current_reagent, /datum/reagent/fooddrink/alcoholic))
 			var/datum/reagent/fooddrink/alcoholic/alch_reagent = current_reagent
-			eth_eq += alch_reagent.alch_strength * alch_reagent.volume
+			eth_eq += (alch_reagent.alch_strength * alch_reagent.depletion_rate) * alch_reagent.volume
 			should_we_output = TRUE
 		if (current_reagent.id == "ethanol")
 			eth_eq += current_reagent.volume

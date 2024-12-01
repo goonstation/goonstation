@@ -417,8 +417,7 @@ MATERIAL
 
 				if ("barricade","zbarricade")
 					var/turf/T = get_turf(usr)
-					var/obj/item/sheet/wood/W = src
-					if (!istype(T, /turf/simulated/floor) || locate(W.wall_type) in T.contents)
+					if (!istype(T, /turf/simulated/floor) || locate(/obj/structure/woodwall) in T.contents)
 						boutput(usr,SPAN_ALERT("You can't build that here."))
 						return
 					if (params["recipeID"] == "barricade")
