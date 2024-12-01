@@ -143,7 +143,7 @@ TYPEINFO(/obj/item/organ/eye/cyber)
 	emp_act()
 		..()
 		if (!src.broken)
-			src.take_damage(20, 20, 0)
+			src.donor.take_eye_damage(0.01, 0) //nonzero amount of eye damage in order to trigger actually updating the blindness/etc
 			if (src.holder && src.holder.donor)
 				src.holder.donor.show_text("<b>Your [src.organ_name] [pick("crackles and sparks", "makes a weird crunchy noise", "buzzes strangely")]!</b>", "red")
 
