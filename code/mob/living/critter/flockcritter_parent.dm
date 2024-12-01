@@ -123,8 +123,9 @@ TYPEINFO(/mob/living/critter/flock)
 	src.ai?.die()
 	actions.stop_all(src)
 	src.is_npc = FALSE
-	src.flock_name_tag.set_name(src.name)
-	src.flock_name_tag.set_info_tag(he_or_she(src))
+	if(src.flock_name_tag)
+		src.flock_name_tag.set_name(src.name)
+		src.flock_name_tag.set_info_tag(he_or_she(src))
 	if (!src.flock)
 		return
 

@@ -2848,9 +2848,11 @@ TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock/purple)
 DEFINE_FLOORS(mauxite,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "floor$$mauxite";\
-	default_material = "mauxite")
+	default_material = "mauxite";\
+	uses_default_material_appearance = TRUE)
 
 DEFINE_FLOORS(bamboo,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "floor$$bamboo";\
-	default_material = "bamboo")
+	default_material = "bamboo";\
+	uses_default_material_appearance = TRUE)

@@ -1943,12 +1943,6 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "puffer-medsci"
 	item_state = "puffer-medsci"
 
-/obj/item/clothing/suit/puffer/hi_vis
-	name = "hi-vis puffer jacket"
-	desc = "A coat that makes you even more visible!"
-	icon_state = "puffer-hivis"
-	item_state = "puffer-hivis"
-
 /obj/item/clothing/suit/puffer/engi
 	name = "engineering puffer jacket"
 	desc = "A big comfy puffer jacket, perfect for the engine!"
@@ -2025,10 +2019,41 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	icon_state = "hi-vis"
 	item_state = "hi-vis"
 	body_parts_covered = TORSO
+	/// Hi-vis vests can reflect light, sorta
+	var/image/reflection
+
+	New()
+		..()
+		src.reflection = image(src.wear_image_icon, "[src.icon_state]-overlay")
+		src.reflection.plane = PLANE_SELFILLUM
+		src.reflection.color = rgb(255, 255, 255)
+		src.reflection.alpha = 200
+
+	equipped(mob/user, slot)
+		..()
+		user.UpdateOverlays(src.reflection, "reflection")
+
+	unequipped(mob/user)
+		. = ..()
+		user.ClearSpecificOverlays("reflection")
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 5)
+
+/obj/item/clothing/suit/hi_vis/puffer
+	name = "hi-vis puffer jacket"
+	desc = "A coat that makes you even more visible!"
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon_state = "puffer-hivis"
+	item_state = "puffer-hivis"
+	body_parts_covered = TORSO|LEGS|ARMS
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 30)
 
 /obj/item/clothing/suit/hitman
 	name = "black jacket"

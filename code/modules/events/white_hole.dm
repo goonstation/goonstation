@@ -1,6 +1,6 @@
 #define VALID_WHITE_HOLE_LOCATIONS list("artlab", "teg", "flock", "chapel", "trench", "asteroid", \
 	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", \
-	"medbay", "security", "cargo", "nuclear", "janitorial")
+	"medbay", "security", "cargo", "nuclear", "janitorial", "wizard")
 
 TYPEINFO(/datum/random_event/major/white_hole)
 	initialization_args = list(
@@ -416,6 +416,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/mob/living/critter/robotic/sawfly = 2,
 			/obj/item/reagent_containers/food/snacks/donkpocket_w = 1,
 			/obj/bomb_decoy = 0.4,
+			/obj/machinery/nuclearbomb/event/micronuke = 0.05,
 		),
 		"hell" = list(
 			"fireflash" = 15,
@@ -788,6 +789,42 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/reagent_containers/glass/bucket = 4,
 			/obj/vehicle/floorbuffer = 1,
 			/obj/item/handheld_vacuum = 1
+		),
+		"wizard" = list(
+			/obj/item/reagent_containers/food/drinks/tea/mugwort = 10,
+			/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor = 30,
+			/obj/item/kitchen/everyflavor_box = 3,
+			/obj/item/staff = 10,
+			/obj/item/staff/crystal = 5,
+			/obj/item/staff/monkey_staff = 0.05,
+			/obj/item/clothing/head/wizard = 5,
+			/obj/item/clothing/head/wizard/purple = 5,
+			/obj/item/clothing/head/wizard/red = 5,
+			/obj/item/clothing/head/wizard/green = 5,
+			/obj/item/clothing/head/wizard/witch = 5,
+			/obj/item/clothing/head/wizard/necro = 2,
+			/obj/item/clothing/suit/wizrobe = 3,
+			/obj/item/clothing/suit/wizrobe/purple = 3,
+			/obj/item/clothing/suit/wizrobe/green = 3,
+			/obj/item/clothing/suit/wizrobe/red = 3,
+			/obj/item/clothing/suit/wizrobe/necro = 1,
+			/obj/item/clothing/suit/bathrobe = 1,
+			/obj/item/clothing/head/apprentice = 1,
+			/obj/item/toy/plush/small/kitten/wizard = 1,
+			/obj/item/paper/Wizardry101 = 10,
+			/obj/item/paper/businesscard/cosmicacres = 2,
+			/datum/projectile/fireball = 5,
+			/datum/projectile/special/homing/magicmissile/weak = 20,
+			/datum/projectile/special/homing/magicmissile = 15,
+			/datum/projectile/artifact/prismatic_projectile = 20,
+			"snake" = 10,
+			/obj/forcefield/autoexpire = 4,
+			/obj/decal/icefloor = 10,
+			/obj/lightning_target = 10,
+			/obj/item/clothing/gloves/ring/wizard/blink = 0.1,
+			/obj/item/clothing/gloves/ring/wizard/forcewall = 0.1,
+			/obj/item/enchantment_scroll = 0.5,
+			"wizard crystal" = 1
 		)
 	)
 
@@ -1118,6 +1155,15 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 				fireflash_melting(src, rand(1, 6), rand(200, 3000), rand(50, 300))
 			if ("sticker")
 				spawn_type = pick(concrete_typesof(/obj/item/sticker))
+				. = new spawn_type(src.loc)
+			if ("snake")
+				. = generate_thing("wizard")
+				var/atom/movable/AM = .
+				if (istype(AM) && !QDELETED(AM) && !istype(AM, /obj/projectile))
+					var/mob/living/critter/small_animal/snake/snake = new(src.loc, .)
+					snake.start_expiration(2 MINUTES)
+			if ("wizard crystal")
+				spawn_type = pick(concrete_typesof(/obj/item/wizard_crystal))
 				. = new spawn_type(src.loc)
 			else
 				CRASH("Unknown spawn type: [spawn_type]")

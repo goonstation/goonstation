@@ -111,7 +111,7 @@ var/datum/station_zlevel_repair/station_repair = new
 					if(istype(V,/obj/machinery/vending/jobclothing/research))
 						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/sci, 2)
 					else if(istype(V,/obj/machinery/vending/jobclothing/engineering))
-						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/hi_vis, 2)
+						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/hi_vis/puffer, 2)
 						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/engi, 2)
 					else if(istype(V,/obj/machinery/vending/jobclothing/medical))
 						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/med, 2)

@@ -153,7 +153,7 @@ interface KnobZoneProps {
 }
 const KnobZone = () => {
   const { act, data } = useBackend<KnobZoneProps>();
-  const { loadedSound, volume, frequency } = data;
+  const { volume, frequency } = data;
 
   const setVolume = (value) => act('set-volume', { volume: value });
   const resetVolume = (value) => act('set-volume', { volume: 'reset' });
