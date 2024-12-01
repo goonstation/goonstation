@@ -3056,7 +3056,11 @@
 		onRemove()
 			var/mob/living/carbon/human/H = src.owner
 			if (!QDELETED(H))
-				H.regens_blood = TRUE
+				var/count
+				for(var/datum/statusEffect/art_curse/blood/status in H.statusEffects)
+					count += 1
+				if (count == 1)
+					H.regens_blood = TRUE
 			..()
 
 	aging
