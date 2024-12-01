@@ -150,9 +150,9 @@
 		if (space_left < 1)
 			return
 		var/moving_tiles = space_left
-		if (space_left > W.amount)
-			moving_tiles = W.amount
-		W.change_stack_amount(moving_tile * -1)
+		if (space_left > T.amount)
+			moving_tiles = T.amount
+		T.change_stack_amount(moving_tiles * -1)
 		src.amount += moving_tiles
 		boutput(user, SPAN_ALERT("You load [moving_tiles] tiles into the floorbot. It now contains [src.amount] tiles!"))
 		src.UpdateIcon()
