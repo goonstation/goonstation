@@ -249,11 +249,12 @@
 
 /datum/aiTask/succeedable/actionbar/recycle_random_object/failed()
 	.=..() //did actionbar fail
-	if(. || !holder.owner || !holder.target || BOUNDS_DIST(holder.owner, holder.target) > 0) //the tasks fails and is re-evaluated if the target is not in range. "in range" counts for the item being inside the mob
+	if(.)
 		//drop the item if the task failed
 		var/obj/item/pickup = holder.target
 		if(istype(pickup))
 			pickup.set_loc(get_turf(holder.owner))
+			holder.owner.visible_message(SPAN_NOTICE("[holder.owner] drops \the [pickup] on the floor"))
 		return TRUE
 
 /datum/aiTask/succeedable/actionbar/recycle_random_object/before_action_start()
@@ -269,5 +270,6 @@
 	if(istype(owner) && istype(target))
 		var/datum/artifact/robot/art_datum = owner.parent_artifact?.artifact
 		if(istype(art_datum))
-			new art_datum.item_type(get_turf(owner)) //spawn item on turf
+			var/obj/item/thing = new art_datum.item_type(get_turf(owner)) //spawn item on turf
+			holder.owner.visible_message(SPAN_NOTICE("[holder.owner] drops \a [thing] on the floor"))
 			qdel(target) //delete the recycled one
