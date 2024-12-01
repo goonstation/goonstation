@@ -76,9 +76,18 @@
 		for (var/mob/living/carbon/human/H as anything in (picked_to_curse + list(user)))
 			if (!H.last_ckey)
 				continue
-			//if (H.hasStatus("art_talisman_held"))
-			//	boutput(user, SPAN_ALERT("The artifact you're carrying wards you from a curse!"))
-			// if death curse, also destroy the artifact
+			if (H.hasStatus("art_talisman_held"))
+				if (src.chosen_curse != BLOOD_CURSE && src.chosen_curse != AGING_CURSE)
+					boutput(user, SPAN_ALERT("The artifact you're carrying wards you from a curse!"))
+					for (var/datum/statusEffect/talisman_held/talisman_effect in H.statusEffects)
+						talisman_effect.glimmer.activate_glimmer()
+				else
+					boutput(user, SPAN_ALERT("The artifact you're carrying wards you from a curse, but then suddenly detonates!"))
+					for (var/datum/statusEffect/talisman_held/talisman_effect in H.statusEffects)
+						explosion(talisman_effect.art, get_turf(H), -1, -1, 2)
+						qdel(talisman_effect.art)
+						break
+				continue
 			var/datum/statusEffect/active_curse = user.setStatus(src.chosen_curse, src.durations[src.chosen_curse], src)
 			src.active_cursees[H] = active_curse
 			if (src.chosen_curse == BLOOD_CURSE)
