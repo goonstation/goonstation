@@ -113,22 +113,13 @@
 /turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon
 	name = "hot catwalk support"
 	icon_state = "auto_lava"
-	var/is_safe = FALSE
+	carbon_dioxide = 20
+	temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 1
 
 	New()
-		if (!src.is_safe)
-			src.carbon_dioxide = 20
-			src.temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 1
-		else // put under unsimulated to not repeat code
-			src.oxygen = MOLES_O2STANDARD
-			src.nitrogen = MOLES_N2STANDARD
-			src.temperature = T20C
 		..()
 		var/image/lava = image(icon = 'icons/turf/floors.dmi', icon_state = "lava", layer = src.layer - 0.1)
 		src.UpdateOverlays(lava, "lava")
-
-/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon/safe
-	is_safe = TRUE
 
 ////////////////////////////////////////////////////////////
 
