@@ -2975,3 +2975,29 @@
 		src.art = null
 		qdel(src.glimmer)
 		src.glimmer = null
+
+/datum/statusEffect/art_dim_corrosion
+	id = "art_dim_corrosion"
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/corrosion_stacks = 0 // 1 stack per tick
+
+	preCheck(atom/A)
+		if (!isobj(A) || (!A.density && !istype(A, /obj/item)) || istype(A, /obj/item/artifact) || istype(A, /obj/artifact) || istype(A, /obj/machinery/artifact) || \
+				istype(A, /obj/artifact_door))
+			return
+		return ..()
+
+	onAdd(optional)
+		..()
+		src.owner.visible_message(SPAN_ALERT("[src.owner] starts corroding!"))
+
+	onUpdate(timePassed)
+		..()
+		var/mult = timePassed / LIFE_PROCESS_TICK_SPACING
+		if (istype(get_area(src.owner), /area/artifact_backroom) && istype(src.owner.loc, /turf))
+			src.corrosion_stacks += 1 * mult
+		if (src.corrosion_stacks >= 8)
+			src.owner.visible_message(SPAN_ALERT("[src.owner] fully corrodes and is destroyed!!"))
+			new /obj/decal/cleanable/molten_item(get_turf(src.owner))
+			qdel(src.owner)
+			src.owner.delStatus(src)
