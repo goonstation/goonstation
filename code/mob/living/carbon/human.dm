@@ -2223,6 +2223,8 @@
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in H.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return FALSE
+				else if (src.wear_suit?.hooded)
+					return FALSE
 				else
 					return TRUE
 		if (SLOT_SHOES)
