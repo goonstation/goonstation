@@ -1,3 +1,9 @@
+
+(t)sun dec 01 24
+(u)JORJ949
+(p)21433
+(e)⚖🤖|C-Balance, A-Silicons
+(+)AI Upload Foyer cameras can now only be viewed by AIs
 (t)sat nov 30 24
 (u)LeahTheTech
 (+)Pointing at someone with a GUN will now use a unique point icon to indicate that it's a GUN!!
