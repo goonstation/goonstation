@@ -27,35 +27,53 @@
 		if (!reach)
 			return
 		if (BOUNDS_DIST(user, target) > 0 || !iswall(target) || istype(get_area(target), /area/artifact_backroom) || user.z == Z_LEVEL_SECRET || user.z == Z_LEVEL_ADVENTURE)
-			boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand. [src] probably doesn't work here?"))
+			boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand. [src] probably doesn't work here"))
 			return
 
 		if (user.dir == NORTH)
-			if (!south_entr_placed)
-				src.create_south_entrance(target)
-				src.update_visual_mirrors(target, SOUTH_ENTRANCE)
+			if (!src.south_entr_placed)
+				src.create_entrance(SOUTH_ENTRANCE, target, user)
 			else
 				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
 		else if (user.dir == SOUTH)
-			if (!north_entr_placed)
-				src.create_north_entrance(target)
-				src.update_visual_mirrors(target, NORTH_ENTRANCE)
+			if (!src.north_entr_placed)
+				src.create_entrance(NORTH_ENTRANCE, target, user)
 			else
 				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
 		else if (user.dir == EAST)
-			if (!west_entr_placed)
-				src.create_west_entrance(target)
-				src.update_visual_mirrors(target, WEST_ENTRANCE)
+			if (!src.west_entr_placed)
+				src.create_entrance(WEST_ENTRANCE, target, user)
 			else
 				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
 		else if (user.dir == WEST)
-			if (!east_entr_placed)
-				src.create_east_entrance(target)
-				src.update_visual_mirrors(target, EAST_ENTRANCE)
+			if (!src.east_entr_placed)
+				src.create_entrance(EAST_ENTRANCE, target, user)
 			else
 				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
 
-	proc/create_entrance_door(turf/entrance, mob/user)
+	proc/create_entrance(entrance_dir, turf/entrance, mob/user)
+		switch (entrance_dir)
+			if (SOUTH_ENTRANCE)
+				var/obj/cross_dummy/north/n = new (entrance, src.backroom_region.turf_at(15, 14))
+				var/obj/cross_dummy/south/s = new (src.backroom_region.turf_at(15, 13), get_step(entrance, SOUTH))
+				src.south_dummies += n
+				src.south_dummies += s
+			if (NORTH_ENTRANCE)
+				var/obj/cross_dummy/south/s = new (entrance, src.backroom_region.turf_at(15, 24))
+				var/obj/cross_dummy/north/n = new (src.backroom_region.turf_at(15, 25), get_step(entrance, NORTH))
+				src.north_dummies += s
+				src.north_dummies += n
+			if (EAST_ENTRANCE)
+				var/obj/cross_dummy/west/w = new (entrance, src.backroom_region.turf_at(17, 19))
+				var/obj/cross_dummy/east/e = new (src.backroom_region.turf_at(18, 29), get_step(entrance, EAST))
+				src.east_dummies += w
+				src.east_dummies += e
+			if (WEST_ENTRANCE)
+				var/obj/cross_dummy/east/e = new (entrance, src.backroom_region.turf_at(13, 19))
+				var/obj/cross_dummy/west/w = new (src.backroom_region.turf_at(12, 19), get_step(entrance, WEST))
+				src.west_dummies += e
+				src.west_dummies += w
+
 		entrance.density = FALSE
 		var/obj/artifact_door/wooden_door = new(entrance)
 		wooden_door.set_dir(get_dir(wooden_door, user))
@@ -66,38 +84,6 @@
 		entrance.name = "Thick void mist"
 		entrance.desc = "Void mist thick enough that you can't see through it.. How did this get here?"
 		RL_UPDATE_LIGHT(entrance)
-
-	proc/create_south_entrance(turf/entrance, mob/user)
-		var/obj/cross_dummy/north/n = new (entrance, src.backroom_region.turf_at(15, 14))
-		var/obj/cross_dummy/south/s = new (src.backroom_region.turf_at(15, 13), get_step(entrance, SOUTH))
-		src.south_dummies += n
-		src.south_dummies += s
-
-		src.create_entrance_door(entrance, user, SOUTH_ENTRANCE)
-
-	proc/create_north_entrance(turf/entrance, mob/user)
-		var/obj/cross_dummy/south/s = new (entrance, src.backroom_region.turf_at(15, 24))
-		var/obj/cross_dummy/north/n = new (src.backroom_region.turf_at(15, 25), get_step(entrance, NORTH))
-		src.north_dummies += s
-		src.north_dummies += n
-
-		src.create_entrance_door(entrance, user, NORTH_ENTRANCE)
-
-	proc/create_east_entrance(turf/entrance, mob/user)
-		var/obj/cross_dummy/west/w = new (entrance, src.backroom_region.turf_at(17, 19))
-		var/obj/cross_dummy/east/e = new (src.backroom_region.turf_at(18, 29), get_step(entrance, EAST))
-		src.east_dummies += w
-		src.east_dummies += e
-
-		src.create_entrance_door(entrance, user, EAST_ENTRANCE)
-
-	proc/create_west_entrance(turf/entrance, mob/user)
-		var/obj/cross_dummy/east/e = new (entrance, src.backroom_region.turf_at(13, 19))
-		var/obj/cross_dummy/west/w = new (src.backroom_region.turf_at(12, 19), get_step(entrance, WEST))
-		src.east_dummies += e
-		src.east_dummies += w
-
-		src.create_entrance_door(entrance, user, WEST_ENTRANCE)
 
 	proc/update_visual_mirrors(turf/station_reference, entrance)
 		var/col_start
