@@ -317,7 +317,7 @@
 		if (istype(W, /obj/item/raw_material/plasmastone) && !loaded)
 			loaded = 1
 			boutput(user, SPAN_NOTICE("You charge the magnetizer with the plasmastone."))
-			qdel(W)
+			W.change_stack_amount(-1)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		var/turf/target_turf = target
