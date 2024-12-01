@@ -38,6 +38,7 @@
 		aiHolder_type = pick(possible_ais)
 		floor_type = pick(floor_types)
 		wall_type = pick(wall_types)
+		item_type = pick(item_types)
 
 		//this is copy pasted from the melee artifact New()
 		limb_damtype = pick("brute", "fire", "toxin")

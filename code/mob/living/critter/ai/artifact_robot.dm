@@ -228,8 +228,12 @@
 /datum/aiTask/sequence/goalbased/recycle_random_object/get_targets()
 	. = ..()
 	var/list/obj/item/results = list()
+	var/mob/living/critter/robotic/artifact/robit = holder.owner
+	var/datum/artifact/robot/art_datum = robit.parent_artifact.artifact
+	if(!istype(art_datum))
+		return
 	for(var/obj/item/O in view(src.max_dist, src.holder.owner))
-		if(istype(O.loc, /turf))
+		if(!istype(O, art_datum.item_type) && istype(O.loc, /turf))
 			results += O
 	return results
 
@@ -256,7 +260,9 @@
 	//pick up the item
 	var/obj/item/pickup = holder.target
 	if(istype(pickup))
+		holder.owner.put_in_hand(pickup)
 		pickup.set_loc(holder.owner)
+		holder.owner.visible_message(SPAN_NOTICE("[holder.owner] pulls \the [pickup] into itself"))
 	playsound(holder.owner, 'sound/items/mining_drill.ogg', 40, TRUE, 0, 0.8)
 
 /datum/aiTask/succeedable/actionbar/recycle_random_object/proc/produce_object(var/mob/living/critter/robotic/artifact/owner, var/obj/target)
