@@ -87,6 +87,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	var/is_pet = null // null = autodetect
 	///Do we randomize stuff?
 	var/generic = TRUE
+	var/drop_contents_on_death = FALSE // Drop everything on death?
 
 	New(loc)
 		if(isnull(src.is_pet))
@@ -121,7 +122,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			return ..()
 
 	death(var/gibbed)
-		if (!gibbed)
+		if (!gibbed && src.drop_contents_on_death)
 			src.unequip_all()
 		..()
 
@@ -348,7 +349,6 @@ proc/filter_carrier_pets(var/type)
 	desc = "A turtle. They are noble creatures of the land and sea."
 	icon_state = "turtle"
 	icon_state_dead = "turtle-dead"
-	var/base_icon_state = "turtle"
 	health_brute = 20
 	health_burn = 20
 	stamina = 0 // Turtles are slow
@@ -358,6 +358,8 @@ proc/filter_carrier_pets(var/type)
 	ai_type = /datum/aiHolder/turtle
 	player_can_spawn_with_pet = TRUE
 	density = FALSE
+	drop_contents_on_death = FALSE
+
 	var/shell_count = 0		//Count down to 0. Measured in process cycles. If they are in their shell when this is 0, exit.
 	var/rigged = FALSE
 	var/rigger = null
@@ -408,27 +410,28 @@ proc/filter_carrier_pets(var/type)
 		if (src.costume_name)
 			. += "And he's wearing an adorable costume! Wow!"
 
-	//I'm sorry sylvester... I'll fix this later when I have time, I promise. - Kyle
 	update_icon()
 		if (isalive(src))
-			if (src.wearing_beret)
+			if (src.shell_count)
+				src.icon_state = "turtle-shell"
+			else if (src.wearing_beret)
 				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat) || istype(wearing_beret, /obj/item/clothing/head/hosberet))
-					src.icon_state = "[base_icon_state]-beret"
+					src.icon_state = "turtle-beret"
 				else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
-					src.icon_state = "[base_icon_state]-beret-com"
+					src.icon_state = "turtle-beret-com"
 			else
-				src.icon_state = base_icon_state
+				src.icon_state = "turtle"
 			if (costume_name)
 				src.UpdateOverlays(costume_alive, "costume")
 
 		else
 			if (src.wearing_beret)
 				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat) || istype(wearing_beret, /obj/item/clothing/head/hosberet))
-					src.icon_state = "[base_icon_state]-dead-beret"
+					src.icon_state = "turtle-dead-beret"
 				else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
-					src.icon_state = "[base_icon_state]-dead-beret-com"
+					src.icon_state = "turtle-dead-beret-com"
 			else
-				src.icon_state = "[base_icon_state]-dead"
+				src.icon_state = "turtle-dead"
 			if (costume_name)
 				src.UpdateOverlays(costume_dead, "costume")
 
@@ -454,8 +457,7 @@ proc/filter_carrier_pets(var/type)
 					return
 		if (prob(80))
 			src.enter_shell() //Turtle is spooked
-		else
-			. = ..()
+		. = ..()
 
 	mouse_drop(atom/over_object as mob|obj)
 		if (over_object == usr && ishuman(usr))
@@ -521,19 +523,6 @@ proc/filter_carrier_pets(var/type)
 				src.ai.interrupt()
 				src.visible_message(SPAN_NOTICE("[src] notices a Clown and knocks [human] over!"))
 				human.setStatus("resting", duration = INFINITE_STATUS)
-
-	seek_target(range)
-		. = list()
-		var/list/hearers_list = hearers(range, src)
-		for (var/mob/living/M in hearers_list)
-			if (istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/human = M
-				var/clown_tally = human.clown_tally()
-				if (isalive(human) && (clown_tally>=2 || human.traitHolder.hasTrait("training_clown"))) //We only hate clowns
-					. += human
-		if (length(.))
-			if (!ON_COOLDOWN(src,"clown_charge_alert", 2 MINUTES))
-				src.visible_message(SPAN_ALERT("<b>[src]</b> notices a Clown and starts charging!"))
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/charge/charge = src.abilityHolder.getAbility(/datum/targetable/critter/charge)
@@ -606,11 +595,10 @@ proc/filter_carrier_pets(var/type)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_HEAD, "turtle_shell", 80)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_BODY, "turtle_shell", 80)
 
-		icon_state = "[base_icon_state]-shell"
 		if (costume_name)
 			src.UpdateOverlays(costume_shell, "costume")
 		density = TRUE
-		UpdateIcon()
+		src.UpdateIcon()
 		src.visible_message(SPAN_ALERT("<b>[src]</b> retreats into [his_or_her(src)] shell!"))
 		return 1
 
@@ -623,11 +611,10 @@ proc/filter_carrier_pets(var/type)
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_HEAD, "turtle_shell")
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_MELEEPROT_BODY, "turtle_shell")
 
-		icon_state = base_icon_state
 		if (costume_name)
 			src.UpdateOverlays(costume_alive, "costume")
 		density = FALSE
-		UpdateIcon()
+		src.UpdateIcon()
 		src.visible_message(SPAN_NOTICE("<b>[src]</b> comes out of [his_or_her(src)] shell!"))
 		return 1
 
@@ -646,7 +633,7 @@ proc/filter_carrier_pets(var/type)
 		user.drop_item()
 		hat.set_loc(src)
 		src.wearing_beret = hat
-		UpdateIcon()
+		src.UpdateIcon()
 		return 1
 
 	proc/take_beret(var/mob/M)
@@ -665,7 +652,7 @@ proc/filter_carrier_pets(var/type)
 						src.enter_shell()
 					return 0
 			src.wearing_beret = null
-			UpdateIcon()
+			src.UpdateIcon()
 			return 1
 		return 0
 
@@ -676,13 +663,26 @@ proc/filter_carrier_pets(var/type)
 	health_brute = 50
 	health_burn = 50
 	gender = MALE
+	player_can_spawn_with_pet = FALSE
 	#ifdef HALLOWEEN
 	costume_name = "sylv_costume_1"
 	#endif
 
+	seek_target(range)
+		. = list()
+		var/list/hearers_list = hearers(range, src)
+		for (var/mob/living/M in hearers_list)
+			if (istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/human = M
+				var/clown_tally = human.clown_tally()
+				if (isalive(human) && (clown_tally>=2 || human.traitHolder.hasTrait("training_clown"))) //We only hate clowns
+					. += human
+		if (length(.))
+			if (!ON_COOLDOWN(src,"clown_charge_alert", 2 MINUTES))
+				src.visible_message(SPAN_ALERT("<b>[src]</b> notices a Clown and starts charging!"))
+
 //Starts with the beret on!
 /mob/living/critter/small_animal/turtle/sylvester/HoS
-	icon_state = "turtle-beret"
 	beret_remove_job_needed = "Head of Security"
 
 	New()
@@ -696,10 +696,10 @@ proc/filter_carrier_pets(var/type)
 		beret.item_state = "hosberet"
 
 		wearing_beret = beret
+		src.UpdateIcon()
 
 /mob/living/critter/small_animal/turtle/sylvester/Commander
-	icon_state = "turtle-beret-com"
-	beret_remove_job_needed = "Nanotrasen Commander"
+	beret_remove_job_needed = "NanoTrasen Commander"
 
 	New()
 		..()
@@ -707,6 +707,7 @@ proc/filter_carrier_pets(var/type)
 		//fold it
 		beret.name = "Sylvester's Beret"
 		wearing_beret = beret
+		src.UpdateIcon()
 
 		START_TRACKING_CAT(TR_CAT_PW_PETS)
 
