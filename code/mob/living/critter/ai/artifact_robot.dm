@@ -219,7 +219,7 @@
 	name = "recycling objects"
 	weight = 1
 	distance_from_target = 0
-	max_dist = 5
+	max_dist = 7
 
 /datum/aiTask/sequence/goalbased/recycle_random_object/New(parentHolder, transTask) //goalbased aitasks have an inherent movement component
 	..(parentHolder, transTask)
@@ -233,7 +233,7 @@
 	if(!istype(art_datum))
 		return
 	for(var/obj/item/O in view(src.max_dist, src.holder.owner))
-		if(!istype(O, art_datum.item_type) && istype(O.loc, /turf))
+		if(!istype(O, art_datum.item_type) && istype(O.loc, /turf) && !O.anchored)
 			results += O
 	return results
 
@@ -266,10 +266,13 @@
 		holder.owner.visible_message(SPAN_NOTICE("[holder.owner] pulls \the [pickup] into itself"))
 	playsound(holder.owner, 'sound/items/mining_drill.ogg', 40, TRUE, 0, 0.8)
 
-/datum/aiTask/succeedable/actionbar/recycle_random_object/proc/produce_object(var/mob/living/critter/robotic/artifact/owner, var/obj/target)
+/datum/aiTask/succeedable/actionbar/recycle_random_object/proc/produce_object(var/mob/living/critter/robotic/artifact/owner, var/obj/item/target)
 	if(istype(owner) && istype(target))
 		var/datum/artifact/robot/art_datum = owner.parent_artifact?.artifact
 		if(istype(art_datum))
-			var/obj/item/thing = new art_datum.item_type(get_turf(owner)) //spawn item on turf
-			holder.owner.visible_message(SPAN_NOTICE("[holder.owner] drops \a [thing] on the floor"))
+			art_datum.absorbed_item_health += target.health*target.amount
+			if(art_datum.absorbed_item_health >= art_datum.item_cost)
+				var/obj/item/thing = new art_datum.item_type(get_turf(owner)) //spawn item on turf
+				holder.owner.visible_message(SPAN_NOTICE("[holder.owner] drops \a [thing] on the floor"))
+				art_datum.absorbed_item_health = 0
 			qdel(target) //delete the recycled one
