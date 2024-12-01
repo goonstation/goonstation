@@ -664,6 +664,7 @@ proc/filter_carrier_pets(var/type)
 	health_burn = 50
 	gender = MALE
 	player_can_spawn_with_pet = FALSE
+	is_pet = 2
 	#ifdef HALLOWEEN
 	costume_name = "sylv_costume_1"
 	#endif
