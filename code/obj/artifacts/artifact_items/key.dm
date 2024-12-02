@@ -26,7 +26,9 @@
 			return
 		if (!reach)
 			return
-		if (BOUNDS_DIST(user, target) > 0 || !iswall(target) || istype(get_area(target), /area/artifact_backroom) || user.z == Z_LEVEL_SECRET || user.z == Z_LEVEL_ADVENTURE)
+		if (!iswall(target))
+			return
+		if (BOUNDS_DIST(user, target) > 0 || istype(get_area(target), /area/artifact_backroom) || user.z == Z_LEVEL_SECRET || user.z == Z_LEVEL_ADVENTURE)
 			boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand. [src] probably doesn't work here"))
 			return
 
@@ -58,26 +60,34 @@
 				var/obj/cross_dummy/south/s = new (src.backroom_region.turf_at(15, 13), get_step(entrance, SOUTH))
 				src.south_dummies += n
 				src.south_dummies += s
+				var/obj/artifact_door/door = locate() in src.backroom_region.turf_at(15, 14)
+				door.outer_entrance_spawned = TRUE
 			if (NORTH_ENTRANCE)
 				var/obj/cross_dummy/south/s = new (entrance, src.backroom_region.turf_at(15, 24))
 				var/obj/cross_dummy/north/n = new (src.backroom_region.turf_at(15, 25), get_step(entrance, NORTH))
 				src.north_dummies += s
 				src.north_dummies += n
+				var/obj/artifact_door/door = locate() in src.backroom_region.turf_at(15, 24)
+				door.outer_entrance_spawned = TRUE
 			if (EAST_ENTRANCE)
 				var/obj/cross_dummy/west/w = new (entrance, src.backroom_region.turf_at(17, 19))
 				var/obj/cross_dummy/east/e = new (src.backroom_region.turf_at(18, 29), get_step(entrance, EAST))
 				src.east_dummies += w
 				src.east_dummies += e
+				var/obj/artifact_door/door = locate() in src.backroom_region.turf_at(17, 19)
+				door.outer_entrance_spawned = TRUE
 			if (WEST_ENTRANCE)
 				var/obj/cross_dummy/east/e = new (entrance, src.backroom_region.turf_at(13, 19))
 				var/obj/cross_dummy/west/w = new (src.backroom_region.turf_at(12, 19), get_step(entrance, WEST))
 				src.west_dummies += e
 				src.west_dummies += w
+				var/obj/artifact_door/door = locate() in src.backroom_region.turf_at(13, 19)
+				door.outer_entrance_spawned = TRUE
 
 		entrance.density = FALSE
 		var/obj/artifact_door/wooden_door = new(entrance)
 		wooden_door.set_dir(get_dir(wooden_door, user))
-		src.update_visual_mirrors(entrance)
+		src.update_visual_mirrors(entrance, entrance_dir)
 		entrance.icon = 'icons/turf/floors.dmi'
 		entrance.icon_state = "darkvoid"
 		entrance.opacity = TRUE
@@ -151,12 +161,17 @@
 	type_name = "Dimensional key"
 	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 200
-	validtypes = list("ancient","martian","wizard","eldritch","precursor")
-	react_xray = list(73, 90, 38, 4, "SEGMENTED")
+	validtypes = list("eldritch", "precursor")
+	react_xray = list(73, 90, 38, 4, "ANOMALOUS")
 	examine_hint = "It kinda looks like it's supposed to be inserted into something."
 
-
-
+	effect_activate(obj/O)
+		. = ..()
+		if (.)
+			return TRUE
+		var/obj/item/artifact/key/artkey = O
+		var/datum/mapPrefab/allocated/allocated = get_singleton(/datum/mapPrefab/allocated/artifact_backroom)
+		artkey.backroom_region = allocated.load()
 
 /****** Supporting items/atoms/etc. *******/
 
@@ -177,7 +192,7 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 		if (AM.dir == src.required_dir)
 			AM.set_loc(src.exit_turf)
 			var/obj/artifact_door/wooden_door = locate() in src.exit_turf
-			wooden_door.open()
+			wooden_door.open(FALSE)
 		else
 			return ..()
 
@@ -194,44 +209,78 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 		required_dir = WEST
 
 /obj/artifact_door
-	name = "Mysterious Wooden Door"
+	name = "mysterious wooden door"
 	desc = "A wooden door, but it emanates some aura. Something's not right about it."
 	icon = 'icons/obj/doors/door_wood.dmi'
 	icon_state = "door1"
 	opacity = TRUE
 	density = TRUE
+	anchored = ANCHORED_ALWAYS
+	/// open or closed
 	var/open = FALSE
+	/// whether this is a "fake" door or not
+	var/can_be_opened = TRUE
+	/// if a door as a part of the fissure, whether the corresponding outer entrance has been created or not
+	var/outer_entrance_spawned = FALSE
 
 	attack_hand(mob/user)
 		..()
+		if (!src.can_be_opened)
+			src.deny_open()
+			boutput(user, SPAN_NOTICE("[src] is locked. Perhaps a key will open it?"))
+			return
 		if (src.open)
 			src.close()
 		else if (!src.open && istype(get_area(user), /area/artifact_backroom))
-			src.open()
+			if (!src.outer_entrance_spawned)
+				boutput(user, SPAN_NOTICE("[src] doesn't seemed to be locked, but won't open either... strange."))
+			else
+				src.open()
 		else
+			src.deny_open()
 			boutput(user, SPAN_NOTICE("[src] is locked. Perhaps a key will open it?"))
 
 	attackby(obj/item/I, mob/user)
 		if (!istype(I, /obj/item/artifact/key) || !I.artifact.activated)
 			return ..()
+		if (!src.can_be_opened)
+			src.deny_open()
+			boutput(user, SPAN_NOTICE("Looks like [I] doesn't fit. Bummer."))
+			return
 		if (src.open)
 			src.close()
 		else
-			src.open()
+			if (!src.outer_entrance_spawned && istype(get_area(src), /area/artifact_backroom))
+				src.deny_open()
+				boutput(user, SPAN_NOTICE("[src] doesn't seemed to be locked, but won't open either... strange."))
+			else
+				src.open()
 
-	proc/open()
-		playsound(src, 'sound/machines/door_open.ogg', 50, TRUE)
-		src.icon = "door0"
-		flick("doorc0", src)
-		src.opacity = FALSE
+	Bumped(atom/movable/AM)
+		..()
+		var/mob/living/L = AM
+		if (!istype(L))
+			return
+		var/obj/item/equipped_item = L.equipped()
+		if (istype(equipped_item, /obj/item/artifact/key) && equipped_item.artifact.activated)
+			src.Attackby(equipped_item, L)
+		else
+			src.Attackhand(L)
+
+	proc/open(do_animation = TRUE)
+		src.icon_state = "door0"
+		if (do_animation)
+			playsound(src, 'sound/machines/door_open.ogg', 50, TRUE)
+			flick("doorc0", src)
+		src.set_opacity(FALSE)
 		src.density = FALSE
 		src.open = TRUE
 
 	proc/close()
 		playsound(src, 'sound/machines/door_close.ogg', 50, TRUE)
-		src.icon = "door1"
+		src.icon_state = "door1"
 		flick("doorc1", src)
-		src.opacity = TRUE
+		src.set_opacity(TRUE)
 		src.density = TRUE
 		src.open = FALSE
 
@@ -239,14 +288,10 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 		flick("door_deny", src)
 		if (ON_COOLDOWN(src, "deny_sound", 1 SECOND))
 			return
-		playsound(src, 'sound/machines/airlock_deny.ogg', 25, FALSE)
+		playsound(src, 'sound/machines/door_locked.ogg', 40, FALSE)
 
 	unopenable
-		attackby(obj/item/I, mob/user)
-			if (istype(I, /obj/item/artifact/key) && I.artifact.activated)
-				boutput(user, SPAN_NOTICE("Looks this isn't the right key. Bummer."))
-				return
-			return ..()
+		can_be_opened = FALSE
 
 /area/artifact_backroom
 	name = "Dimensional Fissure"
