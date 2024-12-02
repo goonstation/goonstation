@@ -1465,3 +1465,20 @@ TYPEINFO(/turf/simulated)
 				qdel(mover) // so the mob inside can GC in case references got freed up since qdel
 			else
 				mover.set_loc(null)
+
+/turf/simulated/swampgrass
+	name = "reedy grass"
+	desc = ""
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "swampgrass"
+
+	New()
+		..()
+		set_dir(pick(1,2,4,8))
+		return
+
+/turf/simulated/swampgrass_edging
+	name = "reedy grass"
+	desc = ""
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "swampgrass_edge"
