@@ -252,6 +252,10 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 	name = "Dimensional Fissure"
 	skip_sims = TRUE
 
+	Entered(atom/movable/AM, atom/oldloc)
+		..()
+		AM.setStatus("art_dim_corrosion", INFINITE_STATUS)
+
 /area/artifact_backroom/visual_mirror
 	name = "Artifact backroom visual mirror zone"
 	//ambient_light = "#ffffff"
