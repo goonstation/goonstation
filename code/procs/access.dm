@@ -243,7 +243,7 @@
 
 		// --------------------------- Security
 		if("Nanotrasen Security Consultant")
-			return get_access("Security Officer") + list(access_heads, access_maxsec, access_teleporter, access_eva)
+			return get_access("Security Officer") + list(access_heads, access_eva)
 		if("Security Officer")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_securitylockers, access_brig, access_maint_tunnels,
 			access_medical, access_morgue, access_research, access_cargo, access_engineering, access_engineering_control,
