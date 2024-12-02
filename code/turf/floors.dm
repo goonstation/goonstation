@@ -506,6 +506,27 @@
 /turf/simulated/floor/darkblue/checker/other
 	icon_state = "blue-dblue2"
 
+/turf/simulated/floor/darkblue/side
+	icon_state = "dblue"
+
+/turf/simulated/floor/darkblue/corner
+	icon_state = "dbluecorner"
+
+/turf/simulated/floor/darkblue/checker
+	icon_state = "dbluechecker"
+
+/turf/simulated/floor/darkblueblack
+	icon_state = "dblueblack"
+
+/turf/simulated/floor/darkblueblack/corner
+	icon_state = "dblueblackcorner"
+
+/turf/simulated/floor/darkbluewhite
+	icon_state = "dbluewhite"
+
+/turf/simulated/floor/darkbluewhite/corner
+	icon_state = "dbluewhitecorner"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/bluegreen
@@ -592,6 +613,21 @@
 /turf/simulated/floor/darkpurple/corner
 	icon_state = "dpurplecorner"
 
+/turf/simulated/floor/darkpurple/checker
+	icon_state = "dpurplechecker"
+
+/turf/simulated/floor/darkpurpleblack
+	icon_state = "dpurpleblack"
+
+/turf/simulated/floor/purpleblack/corner
+	icon_state = "dpurpleblackcorner"
+
+
+/turf/simulated/floor/darkpurplewhite
+	icon_state = "dpurplewhite"
+
+/turf/simulated/floor/darkpurplewhite/corner
+	icon_state = "dpurplewhitecorner"
 /////////////////////////////////////////
 
 /turf/simulated/floor/yellow
