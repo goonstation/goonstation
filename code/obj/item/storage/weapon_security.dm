@@ -130,6 +130,10 @@
 		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_AUTH, PROC_REF(unlock))
 		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_UNAUTH, PROC_REF(lock))
 
+		for_by_tcl(armory_computer, /obj/machinery/computer/riotgear)
+			if(armory_computer.authed)
+				src.unlock()
+
 	get_desc()
 		if(src.locked)
 			. += "It is locked."
