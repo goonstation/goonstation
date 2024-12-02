@@ -30,15 +30,15 @@ ABSTRACT_TYPE(/obj/item)
 	/*_______*/
 	/*Burning*/
 	/*‾‾‾‾‾‾‾*/
-	var/burn_possible = TRUE //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
-	var/burning = null
-	/// How long an item takes to burn (or be consumed by other means), based on the weight class if no value is set
-	var/health = null
-	var/burn_point = 15000  //this already exists but nothing uses it???
-	var/burn_output = 1500 //how hot should it burn
-	var/burn_type = 0 //0 = ash, 1 = melt
-	var/burning_last_process = 0
-	var/firesource = FALSE //TRUE or FALSE : dictates whether or not the item can be used as a valid source of fire
+
+	var/burn_possible = TRUE //!Is this item burnable
+	var/burning = null //!Are we currently burning
+	var/health = null //!How long an item takes to burn (or be consumed by other means), based on the weight class if no value is set
+	var/burn_point = 15000 KELVIN //!Ambient temperature at which the item may spontaneously ignite
+	var/burn_output = 1500 KELVIN //!How hot does the item burn once on fire
+	var/burn_remains = BURN_REMAINS_ASH	//!What is left when it's burnt up
+	var/burning_last_process = 0 //!Keep track of last burning state
+	var/firesource = FALSE //! Is this a valid source for lighting fires
 
 	/*______*/
 	/*Combat*/
@@ -283,9 +283,9 @@ ABSTRACT_TYPE(/obj/item)
 		if (istype(src.material))
 			burn_possible = src.material.getProperty("flammable") > 1 ? TRUE : FALSE
 			if (src.material.getMaterialFlags() & (MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_RUBBER))
-				burn_type = 1
+				burn_remains = BURN_REMAINS_MELT
 			else
-				burn_type = 0
+				burn_remains = BURN_REMAINS_ASH
 
 		if (src.material.countTriggers(TRIGGERS_ON_LIFE))
 			src.AddComponent(/datum/component/loctargeting/mat_triggersonlife)
@@ -345,6 +345,11 @@ ABSTRACT_TYPE(/obj/item)
 	// this should be fine in most cases but if there's any bugs from using usr or unique functionality wanted, this should be manually defined
 	if (storage_check && src.stored)
 		src.stored.transfer_stored_item(src, newloc)
+		return
+	if (src.storage)
+		..()
+		for (var/atom/A as anything in src.storage.get_all_contents())
+			A.parent_storage_loc_changed()
 		return
 	if (src.temp_flags & IS_LIMB_ITEM)
 		if (istype(newloc,/obj/item/parts/human_parts/arm/left/item) || istype(newloc,/obj/item/parts/human_parts/arm/right/item))
@@ -440,7 +445,7 @@ ABSTRACT_TYPE(/obj/item)
 		SPAN_NOTICE("You take a bite of [src]!"))
 
 //disgusting proc. merge with foods later. PLEASE
-/obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/by_matter_eater=FALSE)
+/obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/by_matter_eater=FALSE, var/force_edible = FALSE)
 	if (!iscarbon(M) && !ismobcritter(M))
 		return FALSE
 	if (M?.bioHolder && !M.bioHolder.HasEffect("mattereater"))
@@ -686,7 +691,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	return 1
 
 /obj/item/proc/split_stack(var/toRemove)
-	if(toRemove >= src.amount || toRemove < 1) return null
+	if(toRemove >= src.amount || toRemove < 1 || QDELETED(src)) return null
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)
@@ -743,7 +748,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	var/mob/user = usr
 
-	params = params2list(params)
+	if (!islist(params)) params = params2list(params)
 
 	if (ishuman(over_object) && ishuman(usr) && !src.storage)
 		var/mob/living/carbon/human/patient = over_object
@@ -963,10 +968,12 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 		if (src.health <= 0)
 			STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
-			if (burn_type == 1)
-				make_cleanable( /obj/decal/cleanable/molten_item,get_turf(src))
-			else
-				make_cleanable( /obj/decal/cleanable/ash,get_turf(src))
+			switch(src.burn_remains)
+				if(BURN_REMAINS_ASH)
+					make_cleanable(/obj/decal/cleanable/ash, get_turf(src))
+				if(BURN_REMAINS_MELT)
+					make_cleanable(/obj/decal/cleanable/molten_item, get_turf(src))
+
 
 			if (istype(src,/obj/item/parts/human_parts))
 				src:holder = null

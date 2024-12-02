@@ -2013,7 +2013,7 @@
 		return
 
 	if (istype(src.mob, /mob/dead/target_observer))
-		qdel(src.mob)
+		qdel(src.mob) // so we don't leave a bunch of these empty observers inside mobs
 
 	var/mob/dead/observer/O = src.mob
 	var/client/C
@@ -2030,6 +2030,8 @@
 			M = C.mob
 
 	O.insert_observer(M)
+	usr = src.mob // necessary so the get_desc() call works
+	boutput(src, SPAN_NOTICE("Now observing <b>[M] ([C])</b><br>") + M.get_desc())
 
 
 /client/proc/orp()
@@ -2787,9 +2789,9 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 			if("Yes")
 				for(var/turf/simulated/wall/W in world)
 					if (W.z != 1) continue
-					var/obj/machinery/crusher/O = locate() in W.contents //in case someone presses it again
+					var/obj/machinery/crusher/slow/O = locate() in W.contents //in case someone presses it again
 					if (O) continue
-					new /obj/machinery/crusher/wall(locate(W.x, W.y, W.z))
+					new /obj/machinery/crusher/slow/wall(locate(W.x, W.y, W.z))
 					W.set_density(0)
 
 				logTheThing(LOG_ADMIN, src, "has turned every wall into a crusher! God damn.")
@@ -2831,6 +2833,50 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				logTheThing(LOG_ADMIN, src, "set every light on the station to a random color.")
 				logTheThing(LOG_DIARY, src, "set every light on the station to a random color.", "admin")
 				message_admins("[key_name(src)] set every light on the station to a random color.")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+
+/client/proc/cmd_nukie_colour()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Recolor Syndicate"
+	set desc = "Recolor (most) syndicate gear, mostly nukie gear."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if(holder && src.holder.level >= LEVEL_ADMIN)
+		switch(tgui_alert(src,"Recolor syndicate gear?","Syndicate Recolor",list("Yes", "No","Reset"), theme = "syndicate"))
+			if("Yes")
+				var/list/inputted_color_matrix = nuke_op_color_matrix.Copy()
+				for (var/i in 1 to 3)
+					inputted_color_matrix[i] = input("Choose a color for syndicate","Syndicate Recolor", nuke_op_color_matrix[i]) as color
+				if (length(inputted_color_matrix) != 3)
+					boutput(src, "You must input 3 colors.")
+					return
+				nuke_op_camo_matrix = inputted_color_matrix
+				var/color_matrix = color_mapping_matrix(nuke_op_color_matrix, nuke_op_camo_matrix)
+				for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
+					A.color = color_matrix
+					var/obj/item/Item = A
+					if(istype(Item) && Item.equipped_in_slot)
+						var/mob/living/carbon/human/wearer = Item.loc
+						wearer.update_clothing()
+					LAGCHECK(LAG_LOW)
+				logTheThing(LOG_ADMIN, src, "changed the syndicate colour scheme.")
+				logTheThing(LOG_DIARY, src, "changed the syndicate colour scheme.", "admin")
+				message_admins("[key_name(src)] changed the syndicate colour scheme.")
+			if ("Reset")
+				for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
+					A.color = null
+					var/obj/item/Item = A
+					if(istype(Item) && Item.equipped_in_slot)
+						var/mob/living/carbon/human/wearer = Item.loc
+						wearer.update_clothing()
+					LAGCHECK(LAG_LOW)
+				logTheThing(LOG_ADMIN, src, "reset the syndicate colour scheme.")
+				logTheThing(LOG_DIARY, src, "reset the syndicate colour scheme.", "admin")
+				message_admins("[key_name(src)] reset the syndicate colour scheme.")
+			if("No")
+				return
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
 

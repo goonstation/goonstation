@@ -1201,6 +1201,9 @@
 
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
+			if(istype(budgun, /obj/item/gun/kinetic/pumpweapon))
+				var/obj/item/gun/kinetic/pumpweapon/pumpy = budgun
+				pumpy.rack(src)
 			if((BOUNDS_DIST(target, src) == 0))
 				budgun.ShootPointBlank(target, src)
 			else
@@ -1208,9 +1211,6 @@
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up
-			if(istype(budgun, /obj/item/gun/kinetic/pumpweapon/riotgun))
-				var/obj/item/gun/kinetic/pumpweapon/riotgun/RG = budgun
-				RG.rack(src)
 		ON_COOLDOWN(src, "buddy_refire_delay", src.gunfire_cooldown)
 		return 1
 
@@ -1234,7 +1234,10 @@
 		if(user.a_intent == "help" && !user.using_dialog_of(src) && (BOUNDS_DIST(user, src) == 0))
 			var/affection = pick("hug","cuddle","snuggle")
 			user.visible_message(SPAN_NOTICE("[user] [affection]s [src]!"),SPAN_NOTICE("You [affection] [src]!"), group="buddyhug")
-			src.task?.task_input("hugged")
+			if(user.traitHolder?.hasTrait("wasitsomethingisaid"))
+				src.task?.task_input("hugged_annoying")
+			else
+				src.task?.task_input("hugged")
 			return
 
 		if(BOUNDS_DIST(user, src) > 0)
@@ -1608,7 +1611,7 @@
 					SPAWN(3 SECONDS)
 						src.set_emotion("sad")		// Still kinda sad that someone would bully a defenseless little rectangle.
 			else if(src.tool && (src.tool.tool_id != "GUN"))
-				var/is_ranged = BOUNDS_DIST(src, target) > 0
+				var/is_ranged = BOUNDS_DIST(src, target)
 				src.tool.bot_attack(target, src, is_ranged, lethal)
 			return
 
@@ -2123,7 +2126,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 
 		// Fixed. Was completely non-functional (Convair880).
 		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
-			if(..() || !reagents || ranged) return
+			if(..() || !reagents || ranged > 64) return
 
 			if(src.last_use && world.time < src.last_use + 120)
 				return
@@ -2134,7 +2137,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 			else
 				src.reagents.add_reagent(stun_reagent, 15)
 
-			smoke_reaction(src.reagents, 3, get_turf(src))
+			classic_smoke_reaction(src.reagents, 3, get_turf(src))
 			user.visible_message(SPAN_ALERT("<b>[master] releases a cloud of gas!</b>"))
 
 			src.last_use = world.time
@@ -2346,6 +2349,8 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						if (prob(25))
 							master.visible_message(SPAN_NOTICE("[master.name] reciprocates the hug!"))
 				return 1
+			if(input == "hugged_annoying")
+				master.set_emotion("ugh")
 
 			return 0
 
@@ -2759,6 +2764,12 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							return
 
 						if(BOUNDS_DIST(master, hug_target) == 0)
+							if(hug_target.traitHolder?.hasTrait("wasitsomethingisaid"))
+								master.bot_attack(hug_target, TRUE) //betrayal!!
+								master.speak(pick("As if!", "You know what you did.", "Level [rand(32,80)] dork alert!"))
+								drop_hug_target()
+								master.moving = FALSE
+								return
 							master.visible_message("<b>[master]</b> hugs [hug_target]!")
 							if (hug_target.reagents)
 								hug_target.reagents.add_reagent("hugs", 10)
@@ -3035,7 +3046,10 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							last_cute_action = world.time
 							switch(rand(1,5))
 								if (1)
-									master.visible_message("<b>[master]</b> waves at [C.name].")
+									if(C.traitHolder?.hasTrait("wasitsomethingisaid"))
+										master.visible_message("<b>[master]</b> gestures rudely at [C.name].") //they can't really flip you off with two hooks so
+									else
+										master.visible_message("<b>[master]</b> waves at [C.name].")
 								if (2)
 									master.visible_message("<b>[master]</b> rotates slowly around in a circle.")
 								if (3,4)
@@ -3842,7 +3856,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							END_NEAT
 						return
 
-					if (!(src.neat_things & NT_DORK) && (H.client && H.client.IsByondMember() && prob(5)))// || (H.ckey in Dorks))) //If this is too mean to clarks, remove that part I guess
+					if (!(src.neat_things & NT_DORK) && (H.client && (H.client.IsByondMember() || H.traitHolder?.hasTrait("wasitsomethingisaid")) && prob(5)))// || (H.ckey in Dorks))) //If this is too mean to clarks, remove that part I guess
 						FOUND_NEAT(NT_DORK)
 							var/insult = pick("dork","nerd","weenie","doofus","loser","dingus","dorkus")
 							var/insultphrase = "And if you look to--[insult] alert!  [pick("Huge","Total","Mega","Complete")] [insult] detected! Alert! Alert! [capitalize(insult)]! "

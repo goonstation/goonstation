@@ -299,7 +299,7 @@
 /area/space)
 "abi" = (
 /turf/simulated/wall/auto/asteroid/dark,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abk" = (
 /obj/grille/catwalk{
 	dir = 9;
@@ -344,17 +344,17 @@
 /area/space)
 "abm" = (
 /turf/simulated/floor/plating/airless/asteroid/dark,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abq" = (
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
 	},
 /turf/simulated/floor/plating/airless/asteroid/dark,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abr" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abs" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
@@ -365,23 +365,23 @@
 	name = "Owlrey"
 	},
 /turf/simulated/floor/grey,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abt" = (
 /turf/simulated/floor/grey,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abu" = (
 /obj/machinery/r_door_control/podbay{
 	id = "habitat_bay"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abv" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	id = "habitat_bay";
 	name = "pod bay (habitat)"
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abw" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Owl Zone Access"
@@ -391,97 +391,97 @@
 	name = "Owlrey"
 	},
 /turf/simulated/floor/caution/north,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abx" = (
 /turf/simulated/wall/auto/jen/green,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "aby" = (
 /turf/simulated/floor/shuttlebay,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abz" = (
 /turf/simulated/floor/caution/west,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abA" = (
 /turf/simulated/floor,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abB" = (
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abC" = (
 /obj/shrub{
 	dir = 8
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abD" = (
 /obj/machinery/macrofab/emergency_pod{
 	dir = 1;
 	override_dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abE" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
 	name = "Owl Zone"
 	},
 /turf/simulated/floor,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abF" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
 	name = "Owl Zone"
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abH" = (
 /obj/shrub{
 	dir = 4
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abI" = (
 /obj/machinery/portableowl/attached{
 	name = "Hans Owlo"
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abJ" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/caution/north,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abK" = (
 /turf/simulated/floor/caution/north,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abL" = (
 /obj/item/space_thing,
 /turf/simulated/floor/caution/corner/misc{
 	dir = 9
 	},
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abM" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/machinery/light/small,
 /turf/simulated/floor,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abN" = (
 /obj/machinery/portableowl/attached{
 	name = "A Pretty Owl"
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abO" = (
 /obj/shrub{
 	dir = 1
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abP" = (
 /obj/shrub{
 	dir = 6
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abQ" = (
 /obj/table/auto,
 /obj/item/clothing/under/gimmick/owl,
@@ -491,36 +491,36 @@
 /obj/item/clothing/mask/owl_mask,
 /obj/item/clothing/mask/owl_mask,
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abR" = (
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abS" = (
 /obj/shrub,
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abT" = (
 /obj/machinery/portableowl/attached{
 	name = "Owl-iver"
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abU" = (
 /obj/machinery/portableowl/attached{
 	name = "Richelieu"
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abV" = (
 /obj/machinery/portableowl/attached{
 	name = "L. Ron Hootabembe"
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "abW" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -23458,10 +23458,10 @@
 /obj/item/raw_material/cotton,
 /obj/item/raw_material/cotton,
 /obj/item/raw_material/cotton,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -28974,7 +28974,7 @@
 /area/station/chapel/sanctuary)
 "cmt" = (
 /obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 4;
 	id = "Sleeper_Access";
 	name = "Listening Post"
@@ -29165,6 +29165,7 @@
 "cmZ" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
+	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
 /turf/unsimulated/floor/shuttle/red{
@@ -31177,7 +31178,7 @@
 "cZV" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid/dark,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "dae" = (
 /obj/decal/cleanable/dirt,
 /obj/item/raw_material/shard/glass,
@@ -33710,7 +33711,6 @@
 	pixel_x = 5;
 	pixel_y = -4
 	},
-/obj/rack,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -36047,7 +36047,7 @@
 "gsj" = (
 /obj/tree,
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "gsq" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/binary/valve{
@@ -48477,6 +48477,13 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
+"pvx" = (
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/machinery/info_map,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "pvP" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
@@ -49028,6 +49035,15 @@
 	dir = 1
 	},
 /area/station/hydroponics/bay)
+"pRS" = (
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/machinery/info_map,
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/station/hallway/primary/south)
 "pSg" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
@@ -50473,7 +50489,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "qVn" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
@@ -50675,6 +50691,16 @@
 	dir = 8
 	},
 /area/station/security/main)
+"raG" = (
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/machinery/info_map,
+/turf/simulated/floor/neutral/side{
+	dir = 4
+	},
+/area/station/hallway/primary/north)
 "raX" = (
 /obj/storage/closet/wardrobe/orange,
 /turf/simulated/floor/red/side,
@@ -52050,6 +52076,11 @@
 /turf/simulated/floor/blue/side{
 	dir = 8
 	},
+/area/station/hallway/primary/west)
+"rZZ" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/info_map,
+/turf/simulated/floor,
 /area/station/hallway/primary/west)
 "saq" = (
 /obj/machinery/power/apc/autoname_east,
@@ -101210,7 +101241,7 @@ aFJ
 aqA
 apv
 aqA
-arA
+rZZ
 asG
 xgi
 auH
@@ -103082,7 +103113,7 @@ xXb
 eFk
 pzZ
 sJN
-bCv
+pvx
 bDA
 bxm
 usF
@@ -117577,7 +117608,7 @@ pJk
 pJk
 riU
 boo
-tvw
+pRS
 bDA
 pdL
 bFO
@@ -120840,7 +120871,7 @@ age
 age
 age
 age
-aWX
+raG
 val
 aIK
 jzB

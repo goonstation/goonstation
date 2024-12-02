@@ -171,6 +171,17 @@ var/list/datum/bioEffect/mutini_effects = list()
 		..()
 		voicetype = RANDOM_HUMAN_VOICE
 
+	disposing()
+		owner = null
+		if(src.parentHolder)
+			if(src.parentHolder.mobAppearance == src)
+				src.parentHolder.mobAppearance = null
+			src.parentHolder = null
+		src.mutant_race = null
+		src.original_mutant_race = null
+		src.customizations = null
+		..()
+
 	proc/CopyOther(var/datum/appearanceHolder/toCopy, skip_update_colorful = FALSE)
 		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
 		mob_appearance_flags = toCopy.mob_appearance_flags
@@ -256,14 +267,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 			custom.style = customCopy.style
 			custom.offset_y = customCopy.offset_y
 
-	disposing()
-		owner = null
-		if(src.parentHolder)
-			if(src.parentHolder.mobAppearance == src)
-				src.parentHolder.mobAppearance = null
-			src.parentHolder = null
-		..()
-
 	// Disabling this for now as I have no idea how to fit it into hex strings
 	// I'm help -Spy
 	// I might have messed this up when introducting customizationHolders - Glamurio
@@ -321,7 +324,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			H.sound_fart = fartsounds[fartsound || "default"] || fartsounds["default"]
 			H.voice_type = voicetype || RANDOM_HUMAN_VOICE
 
-			if (H.mutantrace.voice_override)
+			if (H.mutantrace?.voice_override)
 				H.voice_type = H.mutantrace.voice_override
 
 			H.update_name_tag()

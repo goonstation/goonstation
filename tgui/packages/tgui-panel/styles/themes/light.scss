@@ -6,7 +6,7 @@
 @use 'sass:color';
 @use 'sass:meta';
 
-@use '~tgui/styles/colors.scss' with (
+@use '~tgui/styles/colors' with (
   $primary: #ffffff,
   $bg-lightness: -25%,
   $fg-lightness: -10%,
@@ -18,7 +18,7 @@
   // $fg-map-keys: (),
   // $bg-map-keys: (),
 );
-@use '~tgui/styles/base.scss' with (
+@use '~tgui/styles/base' with (
   $color-fg: #000000,
   $color-bg: #eeeeee,
   $color-bg-section: #ffffff,

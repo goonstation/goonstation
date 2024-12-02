@@ -200,6 +200,9 @@
 	animate(A, color="#808080", transform=pivot, time=30, easing=BOUNCE_EASING)
 	animate(color="#FFFFFF", alpha=0, transform=shrink, time=10, easing=SINE_EASING)
 
+
+// Attack & Sprint Particles
+
 /mob/New()
 	..()
 	src.attack_particle = new /obj/particle/attack //don't use pooling for these particles
@@ -209,45 +212,36 @@
 
 	src.sprint_particle = new /obj/particle/attack/sprint //don't use pooling for these particles
 
-/obj/particle/attack
-	var/belongs_to_mob = TRUE
-
-	disposing() //kinda slow but whatever, block that gc ok
-		if (!src.belongs_to_mob)
-			return
-		for (var/mob/M in mobs)
-			if (M.attack_particle == src)
-				M.attack_particle = null
-			if (M.sprint_particle == src)
-				M.sprint_particle = null
-		..()
-
-	sprint
-		icon = 'icons/mob/mob.dmi'
-		icon_state = "sprint_cloud"
-		layer = MOB_LAYER_BASE - 0.1
-		appearance_flags = TILE_BOUND | PIXEL_SCALE
-
-	muzzleflash
-		icon = 'icons/mob/mob.dmi'
-		alpha = 255
-		plane = PLANE_OVERLAY_EFFECTS
-		appearance_flags = TILE_BOUND | PIXEL_SCALE
-
-	bot_hit
-		icon = 'icons/mob/mob.dmi'
-		belongs_to_mob = FALSE
-
+/mob/disposing()
+	QDEL_NULL(src.attack_particle)
+	QDEL_NULL(src.sprint_particle)
+	. = ..()
 
 /mob/var/obj/particle/attack/attack_particle
 /mob/var/obj/particle/attack/sprint/sprint_particle
 
+/obj/particle/attack
 
+/obj/particle/attack/sprint
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "sprint_cloud"
+	layer = MOB_LAYER_BASE - 0.1
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
+
+/obj/particle/attack/muzzleflash
+	icon = 'icons/mob/mob.dmi'
+	alpha = 255
+	plane = PLANE_OVERLAY_EFFECTS
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
+
+/obj/particle/attack/bot_hit
+	icon = 'icons/mob/mob.dmi'
 
 
 ///obj/attackby(var/obj/item/I, mob/user)
 //	attack_particle(user,src)
 //	..()
+
 /proc/attack_particle(var/mob/M, var/atom/target)
 	if (!M || !target || !M.attack_particle) return
 	if(istype(M, /mob/dead))
@@ -578,9 +572,8 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		flick("sprint_cloud",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud"
 
-
 	SPAWN(0.6 SECONDS)
-		if (M.sprint_particle.loc == T)
+		if (M.sprint_particle?.loc == T)
 			M.sprint_particle.loc = null
 
 /proc/sprint_particle_small(var/mob/M, var/turf/T = null, var/direct = null)
@@ -612,7 +605,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	M.sprint_particle.icon_state = "sprint_cloud_tiny"
 
 	SPAWN(0.3 SECONDS)
-		if (M.sprint_particle.loc == T)
+		if (M.sprint_particle?.loc == T)
 			M.sprint_particle.loc = null
 
 /obj/particle/chemical_reaction
@@ -1972,5 +1965,14 @@ proc/animate_orbit(atom/orbiter, center_x = 0, center_y = 0, radius = 32, time=8
 	animate(spark, alpha = 255, time = 2 DECI SECONDS)
 	animate(pixel_y = -16, time = 0.4 SECONDS, easing = QUAD_EASING)
 	animate(spark, alpha = 0, time = 0.3 SECONDS, delay = 0.3 SECONDS)
+	SPAWN(0.6 SECONDS)
+		qdel(spark)
+
+/proc/animate_little_spark(atom/A)
+	var/obj/effects/little_sparks/lit/spark = new(get_turf(A))
+	spark.pixel_y = A.pixel_y + rand(-7, 7)
+	spark.pixel_x = A.pixel_x + rand(-8, 8)
+	spark.alpha = 0
+	animate(spark, alpha = 255, time = 2 DECI SECONDS)
 	SPAWN(0.6 SECONDS)
 		qdel(spark)

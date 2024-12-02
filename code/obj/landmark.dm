@@ -539,6 +539,16 @@ var/global/list/job_start_locations = list()
 /obj/landmark/lrt/watchfuleye
 	name = "Watchful-Eye Sensor"
 
+/obj/landmark/icemoon_medal
+	deleted_on_start = FALSE
+	add_to_landmarks = FALSE
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		var/mob/living/L = AM
+		if (istype(L) && !isintangible(L))
+			L.unlock_medal("Ice Cold", TRUE)
+
 /obj/landmark/character_preview_spawn
 	name = LANDMARK_CHARACTER_PREVIEW_SPAWN
 

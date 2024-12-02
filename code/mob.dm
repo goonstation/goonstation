@@ -405,6 +405,9 @@
 	if (src.buckled)
 		src.buckled.buckled_guy = null
 
+	for(var/obj/item/grab/G in src.grabbed_by)
+		qdel(G)
+
 	mobs.Remove(src)
 
 	if (src.ai)
@@ -1322,6 +1325,23 @@
 			return src.l_hand
 		else
 			return src.r_hand
+///Legally distinct from `equipped_list`, this gets all items from equipment slots and not hands!
+/mob/proc/equipment_list()
+	RETURN_TYPE(/list)
+	return list()
+
+/mob/living/critter/equipment_list()
+	. = list()
+	for (var/datum/equipmentHolder/holder as anything in src.equipment)
+		if (holder.item)
+			. += holder.item
+	return .
+
+/mob/living/carbon/human/equipment_list()
+	. = list()
+	for (var/obj/item/item in list(src.l_store, src.r_store, src.belt, src.back, src.wear_id, src.wear_mask, src.wear_suit, src.w_uniform, src.shoes, src.gloves, src.ears))
+		. += item //using byond type filtering this can't be null here
+	return .
 
 /mob/proc/equipped_list(check_for_magtractor = 1)
 	. = list()
@@ -1898,7 +1918,7 @@
 			for (var/obj/item/W in src)
 				if (istype(W, /obj/item/clothing))
 					var/obj/item/clothing/C = W
-					C.add_stain("singed")
+					C.add_stain(/datum/stain/singed)
 			unequip_all()
 
 	if (drop_equipment)
@@ -2831,6 +2851,7 @@
 			return
 		else
 			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
+			newname = remove_bad_name_characters(newname)
 			if (!length(newname) || copytext(newname,1,2) == " ")
 				src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
 				continue
@@ -2951,12 +2972,14 @@
 
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
-/mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!")
-	if (src.reagents?.get_reagent_amount("promethazine")) // Anti-emetics stop vomiting from occuring
-		return
+/mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!", var/selfMessage = null)
+	SHOULD_CALL_PARENT(TRUE)
+	. = TRUE
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT)) // Anti-emetics stop vomiting from occuring
+		return 0
 	SEND_SIGNAL(src, COMSIG_MOB_VOMIT, 1)
 	playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-	src.visible_message(flavorMessage)
+	src.visible_message(flavorMessage, selfMessage)
 	if(specialType)
 		if(!locate(specialType) in src.loc)
 			var/atom/A = new specialType(src.loc)

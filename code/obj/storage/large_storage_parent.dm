@@ -95,13 +95,20 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		var/i = 1
 		for (var/thing in src.spawn_contents)
 			var/amt = 1
-			if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
-				amt = abs(spawn_contents[thing])
-			do
-				var/atom/A = new thing(src)
-				A.layer += 0.00001 * i
-				i++
-			while (--amt > 0)
+			if(!istext(thing)) //cannot use ispath for reasons BYOND comprehension
+				if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
+					amt = abs(spawn_contents[thing])
+				do
+					var/atom/A = new thing(src)
+					A.layer += 0.00001 * i
+					i++
+				while (--amt > 0)
+			else if (thing in reagents_cache)
+				var/turf/T = get_turf(src)
+				var/vol = 1
+				if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
+					vol = abs(spawn_contents[thing])
+				T.fluid_react_single(thing, vol)
 
 	proc/get_welding_positions()
 		var/start

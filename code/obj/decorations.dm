@@ -692,6 +692,20 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		icon_state = "blindsH-R-o"
 		base_state = "blindsH-R"
 
+	closed
+		open = 0
+		opacity = 1
+		icon_state = "blindsH-c"
+		left
+			icon_state = "blindsH-L-c"
+			base_state = "blindsH-L"
+		middle
+			icon_state = "blindsH-M-c"
+			base_state = "blindsH-M"
+		right
+			icon_state = "blindsH-R-o"
+			base_state = "blindsH-R"
+
 	vertical
 		icon_state = "blindsV-o"
 		base_state = "blindsV"
@@ -706,6 +720,21 @@ TYPEINFO(/obj/shrub/syndicateplant)
 			icon_state = "blindsV-R-o"
 			base_state = "blindsV-R"
 
+		closed
+			open = 0
+			opacity = 1
+			icon_state = "blindsV-c"
+
+			left
+				icon_state = "blindsV-L-c"
+				base_state = "blindsV-L"
+			middle
+				icon_state = "blindsV-M-c"
+				base_state = "blindsV-M"
+			right
+				icon_state = "blindsV-R-c"
+				base_state = "blindsV-R"
+
 	cog2
 		icon_state = "blinds_cog2-o"
 		base_state = "blinds_cog2"
@@ -719,6 +748,21 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		right
 			icon_state = "blinds_cog2-R-o"
 			base_state = "blinds_cog2-R"
+
+		closed
+			open = 0
+			opacity = 1
+			icon_state = "blindsV-c"
+
+			left
+				icon_state = "blinds_cog2-L-o"
+				base_state = "blinds_cog2-L"
+			middle
+				icon_state = "blinds_cog2-M-o"
+				base_state = "blinds_cog2-M"
+			right
+				icon_state = "blinds_cog2-R-o"
+				base_state = "blinds_cog2-R"
 
 /obj/blind_switch
 	name = "blind switch"
@@ -781,20 +825,36 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	dir = NORTH
 	pixel_y = 24
 
+	on
+		on = 1
+		icon_state = "blind0"
+
 /obj/blind_switch/east
 	name = "E blind switch"
 	dir = EAST
 	pixel_x = 24
+
+	on
+		on = 1
+		icon_state = "blind0"
 
 /obj/blind_switch/south
 	name = "S blind switch"
 	dir = SOUTH
 	pixel_y = -24
 
+	on
+		on = 1
+		icon_state = "blind0"
+
 /obj/blind_switch/west
 	name = "W blind switch"
 	dir = WEST
 	pixel_x = -24
+
+	on
+		on = 1
+		icon_state = "blind0"
 
 // left in for existing map compatibility; subsequent update could unify blind and sign switches codewise, and eliminate this subtype
 /obj/blind_switch/area
@@ -804,20 +864,36 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	dir = NORTH
 	pixel_y = 24
 
+	on
+		on = 1
+		icon_state = "blind0"
+
 /obj/blind_switch/area/east
 	name = "E blind switch"
 	dir = EAST
 	pixel_x = 24
+
+	on
+		on = 1
+		icon_state = "blind0"
 
 /obj/blind_switch/area/south
 	name = "S blind switch"
 	dir = SOUTH
 	pixel_y = -24
 
+	on
+		on = 1
+		icon_state = "blind0"
+
 /obj/blind_switch/area/west
 	name = "W blind switch"
 	dir = WEST
 	pixel_x = -24
+
+	on
+		on = 1
+		icon_state = "blind0"
 
 /obj/sign_switch
 	name = "sign switch"
@@ -972,12 +1048,14 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	density = 0
 	layer = 6
 	var/on = 0
+	///List of dummy objects that contain the actual light overlays
+	var/list/light_overlay_dummies = list()
 	var/datum/light/point/light
 
 	New()
 		..()
 		light = new
-		light.set_brightness(1)
+		light.set_brightness(0.8)
 		light.set_color(2,2,2)
 		light.set_height(2.4)
 		light.attach(src)
@@ -985,16 +1063,51 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	attack_hand(mob/user)
 		src.toggle_on()
 
+	proc/add_lights()
+		SPAWN(0) //SDMM doesn't seem to understand waitfor sooo
+			for (var/i in 1 to 8)
+				var/type = prob(50) ? pick(concrete_typesof(/obj/overlay/simple_light/disco_lighting/rainbow/random_start)) : pick(concrete_typesof(/obj/overlay/simple_light/disco_lighting/oscillator))
+				var/obj/overlay/simple_light/disco_lighting/overlay = new type()
+				overlay.alpha = 0
+				animate(overlay, alpha = 255, time = 1 SECOND, flags = ANIMATION_PARALLEL)
+
+				var/obj/dummy/dummy = new() //byond's animation system sucks, the colour changing animations interfere with the orbit so we do THIS SHIT
+				dummy.mouse_opacity = FALSE
+				dummy.vis_contents += overlay
+				src.vis_contents += dummy
+				src.light_overlay_dummies += dummy
+				animate_orbit(dummy, radius = 64, time = 4 SECONDS)
+
+				sleep(0.5 SECONDS)
+				if (!src.on)
+					return
+
+	proc/remove_lights()
+		for (var/obj/dummy/overlay as anything in src.light_overlay_dummies)
+			src.light_overlay_dummies -= overlay
+			overlay.vis_contents = null
+			qdel(overlay)
+
 	proc/toggle_on()
+		if (!src.on && GET_COOLDOWN(src, "disco_ball_antispam")) //recently turned off, don't spam to stack overlays
+			return
 		src.on = !src.on
 		src.icon_state = "disco[src.on]"
 		if (src.on)
-			light.enable()
+			src.add_lights()
+			src.light.enable()
 			if (!particleMaster.CheckSystemExists(/datum/particleSystem/sparkles_disco, src))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparkles_disco(src))
 		else
-			light.disable()
+			ON_COOLDOWN(src, "disco_ball_antispam", 1 SECOND)
+			src.light.disable()
+			src.remove_lights()
 			particleMaster.RemoveSystem(/datum/particleSystem/sparkles_disco, src)
+
+	disposing()
+		if (src.on)
+			src.remove_lights()
+		..()
 
 /obj/admin_plaque
 	name = "Admin's Office"

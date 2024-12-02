@@ -281,6 +281,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	name = "\improper Research Director's locker"
 	req_access = list(access_research_director)
 	spawn_contents = list(/obj/item/plant/herb/cannabis/spawnable,
+	/obj/item/disk/data/floppy/manudrive/aiLaws,
 	/obj/item/device/light/zippo,
 	/obj/item/storage/box/clothing/research_director,
 	/obj/item/clothing/shoes/brown,
@@ -348,6 +349,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		/obj/item/storage/toolbox/mechanical/yellow_tools,
 		/obj/item/storage/box/misctools,
 		/obj/item/extinguisher,
+		/obj/item/pet_carrier,
 		/obj/item/device/pda2/chiefengineer,
 	#ifdef MAP_OVERRIDE_OSHAN
 		/obj/item/clothing/shoes/stomp_boots,
@@ -381,6 +383,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		/obj/item/extinguisher,
 		/obj/item/clothing/suit/space/light/engineer,
 		/obj/item/clothing/head/helmet/space/light/engineer,
+		/obj/item/device/pda2/chiefengineer
 	)
 
 /* ==================== */

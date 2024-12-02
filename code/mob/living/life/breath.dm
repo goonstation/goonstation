@@ -83,14 +83,15 @@
 						owner.show_submerged_image(4)
 
 			else if (T.active_airborne_liquid)
+				var/exception = ismiasmaimmune(owner) ? "miasma" : null
 				if (!issmokeimmune(owner))
 					//underwater = T.active_airborne_liquid
 					var/obj/fluid/F = T.active_airborne_liquid
-					F.force_mob_to_ingest(owner, mult)
+					F.force_mob_to_ingest(owner, mult, exception)
 				else
 					if (!owner.clothing_protects_from_chems())
 						var/obj/fluid/airborne/F = T.active_airborne_liquid
-						F.just_do_the_apply_thing(owner, mult, hasmask = 1)
+						F.just_do_the_apply_thing(owner, mult, hasmask = 1, exception = exception)
 
 		else if (islivingobject(owner.loc))
 			src.update_breath_hud(status_updates)
@@ -109,6 +110,8 @@
 
 		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING))
 			src.update_breath_hud(status_updates)
+			if(owner.losebreath)
+				owner.losebreath -= (1.3 * mult) // base losebreath recovery
 			return
 
 		// Changelings generally can't take OXY/LOSEBREATH damage...except when they do.

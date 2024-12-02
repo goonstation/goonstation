@@ -1,4 +1,11 @@
 var/list/bad_name_characters = list("_", "'", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\", "/")
+var/regex/emoji_regex = regex(@{"([^\u0020-\u8000]+)"})
+
+proc/remove_bad_name_characters(string)
+	for (var/char in bad_name_characters)
+		string = replacetext(string, char, "")
+	return emoji_regex.Replace_char(string, "")
+
 var/list/removed_jobs = list(
 	// jobs that have been removed or replaced (replaced -> new name, removed -> null)
 	"Barman" = "Bartender",
@@ -420,8 +427,7 @@ var/list/removed_jobs = list(
 				if (isnull(new_name))
 					return
 				new_name = trimtext(new_name)
-				for (var/c in bad_name_characters)
-					new_name = replacetext(new_name, c, "")
+				new_name = remove_bad_name_characters(new_name)
 				if (length(new_name) < NAME_CHAR_MIN)
 					tgui_alert(usr, "Your first name is too short. It must be at least [NAME_CHAR_MIN] characters long.", "Name too short")
 					return
@@ -447,8 +453,7 @@ var/list/removed_jobs = list(
 				if (isnull(new_name))
 					new_name = ""
 				new_name = trimtext(new_name)
-				for (var/c in bad_name_characters)
-					new_name = replacetext(new_name, c, "")
+				new_name = remove_bad_name_characters(new_name)
 				if (length(new_name) > NAME_CHAR_MAX)
 					tgui_alert(usr, "Your middle name is too long. It must be no more than [NAME_CHAR_MAX] characters long.", "Name too long")
 					return
@@ -464,8 +469,7 @@ var/list/removed_jobs = list(
 				if (isnull(new_name))
 					return
 				new_name = trimtext(new_name)
-				for (var/c in bad_name_characters)
-					new_name = replacetext(new_name, c, "")
+				new_name = remove_bad_name_characters(new_name)
 				if (length(new_name) < NAME_CHAR_MIN)
 					tgui_alert(usr, "Your last name is too short. It must be at least [NAME_CHAR_MIN] characters long.", "Name too short")
 					return
@@ -1107,15 +1111,14 @@ var/list/removed_jobs = list(
 		src.update_preview_icon()
 
 	proc/sanitize_name()
-		for (var/c in bad_name_characters)
-			src.name_first = replacetext(src.name_first, c, "")
-			src.name_middle = replacetext(src.name_middle, c, "")
-			src.name_last = replacetext(src.name_last, c, "")
+		src.name_first = remove_bad_name_characters(src.name_first)
+		src.name_middle = remove_bad_name_characters(src.name_middle)
+		src.name_last = remove_bad_name_characters(src.name_last)
 
 		if (length(src.name_first) < NAME_CHAR_MIN || length(src.name_first) > NAME_CHAR_MAX || is_blank_string(src.name_first) || !character_name_validation.Find(src.name_first))
 			src.randomize_name(1, 0, 0)
 
-		if (length(src.name_middle) > NAME_CHAR_MAX || is_blank_string(src.name_middle))
+		if (length(src.name_middle) > NAME_CHAR_MAX)
 			src.randomize_name(0, 1, 0)
 
 		if (length(src.name_last) < NAME_CHAR_MIN || length(src.name_last) > NAME_CHAR_MAX || is_blank_string(src.name_last) || !character_name_validation.Find(src.name_last))
@@ -1581,7 +1584,15 @@ var/list/removed_jobs = list(
 		var/datum/job/temp_job = find_job_in_controller_by_string(job,1)
 #endif
 		if (user.client && !temp_job.has_rounds_needed(user.client.player))
-			boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play <b>[temp_job.rounds_needed_to_play].</b>"))
+			var/played_rounds = user.client.player.get_rounds_participated()
+			var/needed_rounds = temp_job.rounds_needed_to_play
+			var/allowed_rounds = temp_job.rounds_allowed_to_play
+			var/reason_msg = ""
+			if (allowed_rounds && !needed_rounds)
+				reason_msg =  "You've already played </b>[played_rounds]</b> rounds, but this job has a cap of <b>[allowed_rounds] allowed rounds. You should be experienced enough!</b>"
+			else if (needed_rounds)
+				reason_msg =  "You've only played </b>[played_rounds]</b> rounds and need to play <b>[needed_rounds].</b>"
+			boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> [reason_msg]"))
 			if (occ != 4)
 				switch (occ)
 					if (1) src.job_favorite = null

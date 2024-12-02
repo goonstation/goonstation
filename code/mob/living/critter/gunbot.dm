@@ -140,7 +140,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 	critter_range_attack(var/mob/target)
 		src.set_a_intent(INTENT_HARM)
-		if (src.hand_attack(target))
+		if (src.hand_attack(target, new/list("left" = TRUE)))
 			return TRUE
 
 	seek_target(range)
@@ -412,6 +412,10 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/chainsaw)
 
 		src.UpdateOverlays(image(src.icon, "gunbot-saw"), "guns")
 
+	death(gibbed)
+		var/datum/handHolder/HH = hands[1]
+		qdel(HH.item)
+		. = ..()
 
 /obj/machinery/fabricator/gunbot
 	icon = 'icons/obj/large/64x64.dmi'

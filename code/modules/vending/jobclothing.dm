@@ -38,6 +38,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/device/radio/headset/security, 2, cost=PAY_TRADESMAN/1.5)
 		product_list += new/datum/data/vending_product(/obj/item/device/pda2/security, 2, cost=PAY_TRADESMAN/1.5)
 		product_list += new/datum/data/vending_product(/obj/item/device/pda2/forensic, 2, cost=PAY_TRADESMAN/1.5)
+		product_list += new/datum/data/vending_product(/obj/item/cloth/towel/security, 4, cost=PAY_TRADESMAN/2)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/security, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/security, 1)
 
@@ -243,7 +244,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic/april_fools, 2, hidden=1)
 
 #ifdef SEASON_WINTER
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/hi_vis, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/hi_vis/puffer, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/engi, 2)
 #endif
 
@@ -287,7 +288,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/constructioncone, 16)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer/april_fools, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic/april_fools, 2)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/hi_vis, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/hi_vis/puffer, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/engi, 2)
 
 /obj/machinery/vending/jobclothing/catering

@@ -138,12 +138,12 @@
 
 //////////// Research ////
 /obj/mapping_helper/access/tox
-	name = "tox access spawn"
+	name = "toxins access spawn"
 	req_access = list(access_tox)
 	color = TOXINS
 
 /obj/mapping_helper/access/tox_storage
-	name = "tox access spawn"
+	name = "toxins storage access spawn"
 	req_access = list(access_tox_storage)
 	color = TOXINS
 

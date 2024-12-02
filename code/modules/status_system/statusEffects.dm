@@ -350,6 +350,11 @@
 			onChange(optional=null)
 				. = ..(change)
 
+		talisman_artifact
+			id = "talisman_extra_hp"
+			unique = FALSE
+			visible = FALSE
+
 	simplehot //Simple heal over time.
 		id = "simplehot"
 		effect_quality = STATUS_QUALITY_POSITIVE
@@ -941,9 +946,13 @@
 
 		onAdd(optional=null)
 			.=..()
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
 			if (ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 				H.sustained_moves = 0
+		onRemove()
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
+			. = ..()
 
 	blocking
 		id = "blocking"
@@ -1631,7 +1640,7 @@
 	onUpdate()
 		if (H.blood_volume > 400 && H.blood_volume > 0)
 			H.blood_volume -= units
-		if (prob(5) && !H.reagents?.has_reagent("promethazine"))
+		if (prob(5) && !HAS_ATOM_PROPERTY(H, PROP_MOB_CANNOT_VOMIT))
 			var/damage = rand(1,5)
 			var/bleed = rand(3,5)
 			H.visible_message(SPAN_ALERT("[H] [damage > 3 ? "vomits" : "coughs up"] blood!"), SPAN_ALERT("You [damage > 3 ? "vomit" : "cough up"] blood!"))
@@ -2225,6 +2234,7 @@
 		. = ..()
 		if(ishuman(owner))
 			H = owner
+			H.add_stam_mod_max("stam_filthy", -5)
 
 	onUpdate(timePassed)
 		. = ..()
@@ -2235,6 +2245,7 @@
 		. = ..()
 		if (H.sims?.getValue("Hygiene") < SIMS_HYGIENE_THRESHOLD_FILTHY)
 			H.setStatus("rancid", null)
+			H.remove_stam_mod_max("stam_filthy")
 
 /datum/statusEffect/rancid
 	id = "rancid"
@@ -2248,6 +2259,7 @@
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder?.AddEffect("sims_stinky")
+			M.add_stam_mod_max("stam_rancid", -35)
 		OTHER_START_TRACKING_CAT(owner, TR_CAT_RANCID_STUFF)
 
 	onRemove()
@@ -2255,6 +2267,7 @@
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder?.RemoveEffect("sims_stinky")
+			M.remove_stam_mod_max("stam_rancid")
 		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_RANCID_STUFF)
 
 /datum/statusEffect/fragrant
@@ -2381,8 +2394,6 @@
 		. = ..()
 		owner.remove_filter("gnesis_tint")
 
-#define LAUNDERED_COLDPROT_AMOUNT 2 /// Amount of coldprot(%) given to each item of wearable clothing
-#define LAUNDERED_STAIN_TEXT "freshly-laundered" /// Name of the "stain" given to wearable clothing
 /datum/statusEffect/freshly_laundered
 	id = "freshly_laundered"
 	name = "Freshly Laundered"
@@ -2396,20 +2407,13 @@
 		. = ..()
 		if (istype(owner, /obj/item/clothing/))
 			var/obj/item/clothing/C = owner
-			C.add_stain(LAUNDERED_STAIN_TEXT) // we just cleaned them so this is cheeky...
-			C.setProperty("coldprot", C.getProperty("coldprot") + LAUNDERED_COLDPROT_AMOUNT)
+			C.add_stain(/datum/stain/laundered)
 
 	onRemove()
 		. = ..()
 		if (istype(owner, /obj/item/clothing/))
 			var/obj/item/clothing/C = owner
-			C.setProperty("coldprot", C.getProperty("coldprot") - LAUNDERED_COLDPROT_AMOUNT)
-			if (C.stains)
-				C.stains -= LAUNDERED_STAIN_TEXT
-				C.UpdateName()
-
-#undef LAUNDERED_COLDPROT_AMOUNT
-#undef LAUNDERED_STAIN_TEXT
+			C.remove_stain(/datum/stain/laundered)
 
 /datum/statusEffect/quickcharged
 	id = "quick_charged"
@@ -2888,3 +2892,86 @@
 
 	getTooltip()
 		return "You've [alpha == 0 ? "completely" : "partially"] faded from view! People can still hear you and see light from anything you're carrying."
+
+/datum/statusEffect/talisman_fortune
+	id = "art_talisman_fortune"
+	unique = FALSE
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_POSITIVE
+	var/time_passed = 0
+	var/time_threshold
+
+	preCheck(atom/A)
+		if (!ishuman(A))
+			return
+		return ..()
+
+	onAdd(optional)
+		..()
+		src.time_threshold = rand(60, 300) SECONDS
+
+	onUpdate(timePassed)
+		..()
+		src.time_passed += timePassed
+		if (src.time_passed < src.time_threshold)
+			return
+		src.time_passed = 0
+		src.time_threshold = rand(60, 300) SECONDS
+		var/obj/item/currency/spacecash/money = new
+		money.amount = rand(100, 500)
+		money.UpdateStackAppearance()
+		var/mob/living/carbon/human/H = src.owner
+		H.stow_in_available(money, FALSE)
+		if (prob(25)) // mostly so there's no spam of the same message for 30+ minutes
+			var/msg = pick(list("You feel slightly heavier...", "Is that the smell of money...?", "You feel like you won big.", \
+				"Luck is on your side... wait, what...?"))
+			boutput(H, SPAN_NOTICE(msg))
+
+/datum/statusEffect/talisman_held
+	id = "art_talisman_held"
+	unique = FALSE
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEUTRAL // still rolls a chance for art faults though
+	var/fault_time_passed = 0
+	var/fault_threshold
+	var/glimmer_time_passed = 0
+	var/glimmer_threshold
+	var/obj/item/artifact/talisman/art
+	var/obj/decal/ceshield/talisman/glimmer
+
+	preCheck(atom/A)
+		if (!ishuman(A))
+			return
+		return ..()
+
+	onAdd(optional)
+		..()
+		src.art = optional
+		src.glimmer = new
+		src.art.active_user.vis_contents += src.glimmer
+
+		src.fault_threshold = rand(1, 3) MINUTES
+		src.glimmer_threshold = rand(15, 30) SECONDS
+
+	onUpdate(timePassed)
+		..()
+		src.fault_time_passed += timePassed
+		src.glimmer_time_passed += timePassed
+
+		if (src.glimmer_time_passed >= src.glimmer_threshold)
+			src.glimmer_time_passed = 0
+			src.glimmer_threshold = rand(15, 30) SECONDS
+			src.glimmer.activate_glimmer()
+
+		if (src.fault_time_passed < src.fault_threshold)
+			return
+		src.fault_time_passed = 0
+		src.fault_threshold = rand(1, 3) MINUTES
+		src.art.ArtifactFaultUsed(src.owner, src.art)
+
+	onRemove()
+		src.art.active_user.vis_contents -= src.glimmer
+		..()
+		src.art = null
+		qdel(src.glimmer)
+		src.glimmer = null

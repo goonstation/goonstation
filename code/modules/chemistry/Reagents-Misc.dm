@@ -1225,23 +1225,22 @@ datum
 			fluid_flags = FLUID_BANNED
 
 			reaction_turf(var/turf/T, var/volume)
-				if (volume >= 5)
-					for (var/obj/decal/bloodtrace/B in T)
-						B.invisibility = INVIS_NONE
+				for (var/obj/decal/bloodtrace/B in T)
+					B.invisibility = INVIS_NONE
+					SPAWN(30 SECONDS)
+						B?.invisibility = INVIS_ALWAYS
+				for (var/obj/item/I in T)
+					if (I.get_forensic_trace("bDNA"))
+						var/image/blood_overlay = image('icons/obj/decals/blood/blood.dmi', "itemblood")
+						blood_overlay.appearance_flags = PIXEL_SCALE | RESET_COLOR
+						blood_overlay.color = "#3399FF"
+						blood_overlay.alpha = 100
+						blood_overlay.blend_mode = BLEND_INSET_OVERLAY
+						I.appearance_flags |= KEEP_TOGETHER
+						I.UpdateOverlays(blood_overlay, "blood_traces")
 						SPAWN(30 SECONDS)
-							B?.invisibility = INVIS_ALWAYS
-					for (var/obj/item/I in T)
-						if (I.get_forensic_trace("bDNA"))
-							var/image/blood_overlay = image('icons/obj/decals/blood/blood.dmi', "itemblood")
-							blood_overlay.appearance_flags = PIXEL_SCALE | RESET_COLOR
-							blood_overlay.color = "#3399FF"
-							blood_overlay.alpha = 100
-							blood_overlay.blend_mode = BLEND_INSET_OVERLAY
-							I.appearance_flags |= KEEP_TOGETHER
-							I.UpdateOverlays(blood_overlay, "blood_traces")
-							SPAWN(30 SECONDS)
-								I?.appearance_flags &= ~KEEP_TOGETHER
-								I?.UpdateOverlays(null, "blood_traces")
+							I?.appearance_flags &= ~KEEP_TOGETHER
+							I?.UpdateOverlays(null, "blood_traces")
 
 		oil
 			name = "oil"
@@ -1284,7 +1283,7 @@ datum
 							boutput(R, SPAN_NOTICE("Your joints and servos begin to run more smoothly."))
 						else if (ishuman(M))
 							var/mob/living/carbon/human/H = M
-							if (!H.mutantrace.aquaphobic)
+							if (!H.mutantrace?.aquaphobic)
 								boutput(M, "<span class='alert'>You feel greasy and gross.</span>")
 
 				return
@@ -1777,7 +1776,7 @@ datum
 					M.setStatusMin("knockdown", 2 SECONDS * mult)
 					M.visible_message(SPAN_ALERT("<b>[M.name]</b> tears at [his_or_her(M)] own skin!"),\
 					SPAN_ALERT("<b>OH [pick("SHIT", "FUCK", "GOD")] GET THEM OUT![pick("", "!", "!!", "!!!", "!!!!")]"))
-				else if (prob(10) && !M.reagents?.has_reagent("promethazine"))
+				else if (prob(10) && !HAS_ATOM_PROPERTY(M, PROP_MOB_CANNOT_VOMIT)) //doesn't just go thru mob/proc/vomit because we don't want to re-vomit if there are already spiders on the floor, to not spam spiderlings
 					if (!locate(/obj/decal/cleanable/vomit) in T)
 						M.vomit(0, /obj/decal/cleanable/vomit/spiders)
 						random_brute_damage(M, rand(4))

@@ -121,6 +121,7 @@
 		materiel_stock += new/datum/materiel/loadout/control
 		materiel_stock += new/datum/materiel/loadout/suppression
 		materiel_stock += new/datum/materiel/loadout/justabaton
+
 		materiel_stock += new/datum/materiel/utility/morphineinjectors
 		materiel_stock += new/datum/materiel/utility/donuts
 		materiel_stock += new/datum/materiel/utility/flashbangs
@@ -128,8 +129,10 @@
 		materiel_stock += new/datum/materiel/utility/nightvisionsechudgoggles
 		materiel_stock += new/datum/materiel/utility/markerrounds
 		materiel_stock += new/datum/materiel/utility/prisonerscanner
+
 		materiel_stock += new/datum/materiel/ammo/medium
 		materiel_stock += new/datum/materiel/ammo/self_charging
+
 		materiel_stock += new/datum/materiel/assistant/basic
 
 	vended(var/atom/A)
@@ -437,7 +440,7 @@
 	description = "A gun-belt containing a semi-automatic, 9mm caliber service pistol and four magazines."
 
 /datum/materiel/sidearm/revolver
-	name = "Predator Revolver"
+	name = "Kestrel Revolver"
 	path = /obj/item/storage/belt/gun/revolver
 	description = "A gun-belt containing a hefty combat revolver and three .357 caliber speedloaders."
 

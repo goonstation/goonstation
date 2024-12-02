@@ -32,7 +32,7 @@ interface MixingDeskData {
 export const MixingDesk = () => {
   const { act, data } = useBackend<MixingDeskData>();
   const { voices, selected_voice, say_popup } = data;
-  const [message, setMessage] = useSharedState<string | null>('message', null);
+  const [message, setMessage] = useSharedState('message', '');
 
   const sayPopup = () => (
     <Modal>
@@ -103,7 +103,7 @@ export const MixingDesk = () => {
         e.stopPropagation();
       }
     },
-    [act, say_popup],
+    [act, say_popup, setMessage],
   );
 
   return (
