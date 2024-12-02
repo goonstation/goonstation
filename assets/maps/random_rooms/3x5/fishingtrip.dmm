@@ -13,7 +13,7 @@
 	pixel_y = -11;
 	pixel_x = 8
 	},
-/turf/simulated/swampgrass,
+/turf/simulated/floor/swampgrass,
 /area/space)
 "h" = (
 /obj/machinery/light/incandescent,
@@ -26,7 +26,7 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
-/turf/simulated/swampgrass,
+/turf/simulated/floor/swampgrass,
 /area/space)
 "t" = (
 /obj/item/fishing_rod/basic{
@@ -56,20 +56,20 @@
 	pixel_y = 3;
 	pixel_x = 8
 	},
-/turf/simulated/swampgrass,
+/turf/simulated/floor/swampgrass,
 /area/space)
 "E" = (
-/turf/simulated/swampgrass,
+/turf/simulated/floor/swampgrass,
 /area/space)
 "I" = (
-/turf/simulated/swampgrass_edging,
+/turf/simulated/floor/swampgrass_edging,
 /area/space)
 "Q" = (
 /obj/storage/crate/freezer{
 	desc = "A cooler to keep your fresh catches in.";
 	name = "cooler"
 	},
-/turf/simulated/swampgrass,
+/turf/simulated/floor/swampgrass,
 /area/space)
 "R" = (
 /turf/simulated/floor/twotone/blue,
