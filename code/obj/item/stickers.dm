@@ -1,4 +1,10 @@
 
+/atom/movable/proc/transfer_stickers(atom/movable/target)
+	for (var/obj/item/sticker/sticker in src.contents)
+		if (sticker.attached == src) //you never know
+			sticker.fall_off()
+			sticker.stick_to(target, silent = TRUE)
+
 /obj/item/sticker
 	name = "sticker"
 	desc = "You stick it on something, then that thing is even better, because it has a little sparkly unicorn stuck to it, or whatever."
@@ -45,7 +51,7 @@
 		user.u_equip(src)
 		return 1
 
-	proc/stick_to(var/atom/A, var/pox, var/poy, user)
+	proc/stick_to(var/atom/A, var/pox, var/poy, user, silent = FALSE)
 		if(src.active)
 			CRASH("Sticker [src] attempted to attach to [A] [A?.type] but is already active with target [attached] [attached?.type]!")
 		if (!dont_make_an_overlay)
@@ -71,8 +77,8 @@
 		src.attached = A
 		src.active = TRUE
 		src.set_loc(A)
-
-		playsound(src, 'sound/items/sticker.ogg', 50, TRUE)
+		if (!silent)
+			playsound(src, 'sound/items/sticker.ogg', 50, TRUE)
 		add_fingerprint(user)
 		logTheThing(LOG_STATION, user, "puts a [src]:[src.icon_state] sticker on [A] at [log_loc(A)]")
 
@@ -86,8 +92,6 @@
 		if((temperature > T0C+120) && active)
 			qdel(src)
 
-	//Coded this for acetone, but then I realized that it would let people check if they were stuck with a spysticker or not.
-	//Going to leave this here just in case, but it's not used for anything right now.
 	proc/fall_off()
 		if (!active) return
 		if (istype(attached,/turf))
@@ -101,7 +105,6 @@
 		src.invisibility = INVIS_NONE
 		src.pixel_x = initial(pixel_x)
 		src.pixel_y = initial(pixel_y)
-		attached.visible_message(SPAN_ALERT("<b>[src]</b> un-sticks from [attached] and falls to the floor!"))
 		attached = null
 
 	disposing()
@@ -208,7 +211,7 @@
 			..()
 
 
-	stick_to(var/atom/A, var/pox, var/poy)
+	stick_to(var/atom/A, var/pox, var/poy, user, silent = FALSE)
 		..()
 
 		if (istype(src.attached, /mob) || istype(src.attached, /obj))
@@ -642,7 +645,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 		else
 			return ..()
 
-	stick_to(var/atom/A, var/pox, var/poy)
+	stick_to(var/atom/A, var/pox, var/poy, user, silent = FALSE)
 		..()
 		if (istype(src.attached, /mob) || istype(src.attached, /obj))
 			var/atom/movable/F = src.attached
@@ -730,7 +733,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 		. = ..()
 		. += "<br>It's currently set to [contraband_value ? "apply a contraband value of [contraband_value] to" : "remove the contraband value from"] the attached item."
 
-	stick_to(atom/A)
+	stick_to(var/atom/A, var/pox, var/poy, user, silent = FALSE)
 		. = ..()
 		APPLY_ATOM_PROPERTY(A, PROP_MOVABLE_CONTRABAND_OVERRIDE, src, contraband_value)
 		if(ismovable(A) && !A.GetComponent(/datum/component/contraband))

@@ -925,8 +925,8 @@
 		/// Returns for this proc can be found in defines/abilities.dm.
 		cast(atom/target)
 			SHOULD_CALL_PARENT(TRUE)
-			if(do_logs)
-				logTheThing(LOG_COMBAT, src.holder?.owner, "uses [src] on [constructTarget(target, "combat")] at [log_loc(target)]")
+			if (do_logs)
+				logCast(target)
 			if(interrupt_action_bars)
 				actions.interrupt(holder.owner, INTERRUPT_ACT)
 
@@ -991,6 +991,13 @@
 				localholder.locked = FALSE
 				if (!.)
 					localholder.deductPoints(pointCost)
+
+		logCast(atom/target)
+			if (src.targeted)
+				if (!isnull(target))
+					logTheThing(LOG_COMBAT, src.holder?.owner, "uses [src.name] on [constructTarget(target, "combat")] at [log_loc(target)]")
+			else
+				logTheThing(LOG_COMBAT, src.holder?.owner, "uses [src.name] at [log_loc(src.holder?.owner)]")
 
 		updateObject()
 			return

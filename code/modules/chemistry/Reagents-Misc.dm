@@ -1283,7 +1283,7 @@ datum
 							boutput(R, SPAN_NOTICE("Your joints and servos begin to run more smoothly."))
 						else if (ishuman(M))
 							var/mob/living/carbon/human/H = M
-							if (!H.mutantrace.aquaphobic)
+							if (!H.mutantrace?.aquaphobic)
 								boutput(M, "<span class='alert'>You feel greasy and gross.</span>")
 
 				return

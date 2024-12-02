@@ -60,7 +60,7 @@
 			. *= max(W.health/initial(W.health),0.1)
 
 		else if (istype(A, /turf/simulated/floor))
-			var/turf/simulated/floor/floor_turf
+			var/turf/simulated/floor/floor_turf = A
 #ifdef UNDERWATER_MAP
 			. = 45 SECONDS
 #else
