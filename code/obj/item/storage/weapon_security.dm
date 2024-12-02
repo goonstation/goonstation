@@ -51,15 +51,6 @@
 	/obj/item/ammo/bullets/a357 = 3,\
 	/obj/item/ammo/bullets/a357/AP = 2)
 
-/obj/item/storage/box/detectivegun
-	name = ".38 revolver box"
-	icon_state = "hard_case"
-	desc = "A box containing a .38 caliber revolver and ammunition."
-	// Reduced the amount of ammo. The detective had four lethal and five stun speedloaders total in his closet, perhaps a bit too much (Convair880).
-	spawn_contents = list(/obj/item/gun/kinetic/detectiverevolver,\
-	/obj/item/ammo/bullets/a38 = 2,\
-	/obj/item/ammo/bullets/a38/stun = 2)
-
 /obj/item/storage/box/akm // cogwerks, terrorism update
 	name = "AKM box"
 	icon_state = "hard_case"
@@ -125,6 +116,101 @@
 	/obj/item/ammo/bullets/pod_seeking_missile)
 	spawn_contents = list(/obj/item/gun/kinetic/missile_launcher,\
 	/obj/item/ammo/bullets/pod_seeking_missile = 4)
+
+/* -------------- Armory-locked boxes -------------- */
+/obj/item/storage/box/armory
+	name = "secure lockbox"
+	desc = "A locked box that will unlock when the station armory is authorized."
+	icon_state = "lockbox-locked"
+	var/locked = TRUE
+	var/emagged = FALSE
+
+	New()
+		..()
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_AUTH, PROC_REF(unlock))
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_UNAUTH, PROC_REF(lock))
+
+	get_desc()
+		if(src.locked)
+			. += "It is locked."
+		else
+			. += "It is unlocked"
+
+	attack_hand(mob/user)
+		if (src.loc == user && src.locked)
+			boutput(user, SPAN_ALERT("[src] is locked and cannot be opened!"))
+			return
+		return ..()
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if ((usr.is_in_hands(src) || over_object == usr) && src.locked)
+			boutput(usr, SPAN_ALERT("[src] is locked and cannot be opened!"))
+			return
+		return ..()
+
+	attack_self(mob/user)
+		if (src.locked)
+			boutput(usr, SPAN_ALERT("[src] is locked and cannot be opened!"))
+			return
+		return ..()
+
+	attack_ai(mob/user)
+		if (src.locked)
+			boutput(usr, SPAN_ALERT("[src] is locked and cannot be opened!"))
+			return
+		return ..()
+
+	emag_act(mob/user)
+		if(src.emagged)
+			return
+		src.unlock()
+		src.emagged = TRUE
+		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+		if (user)
+			boutput(user, SPAN_ALERT("You short out the lock on [src]."))
+		return 1
+
+	demag()
+		if(!src.emagged)
+			return
+		src.emagged = FALSE
+		src.lock()
+
+	attackby(obj/item/W, mob/user)
+		var/obj/item/card/id/id_card = get_id_card(W)
+		if (istype(id_card))
+			if(access_armory in id_card.access)
+				if (src.locked)
+					src.unlock()
+					boutput(user, SPAN_ALERT("You unlock the box."))
+				else
+					src.lock()
+					boutput(user, SPAN_ALERT("You lock the box."))
+			else boutput(user, SPAN_ALERT("Access denied."))
+			return
+		..()
+
+	proc/unlock()
+		if (src.emagged || !src.locked)
+			return
+		src.locked = FALSE
+		src.icon_state = "lockbox-unlock"
+		playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 50, 1)
+
+	proc/lock()
+		if (src.emagged || src.locked)
+			return
+		src.locked = TRUE
+		src.icon_state = "lockbox-lock"
+		playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 50, 1)
+
+/obj/item/storage/box/armory/detectivegun
+	name = ".38 revolver box"
+	desc = "A box containing a .38 caliber revolver and ammunition."
+	// Reduced the amount of ammo. The detective had four lethal and five stun speedloaders total in his closet, perhaps a bit too much (Convair880).
+	spawn_contents = list(/obj/item/gun/kinetic/detectiverevolver,\
+	/obj/item/ammo/bullets/a38 = 3,\
+	/obj/item/ammo/bullets/a38/stun = 3)
 
 /* -------------------- Grenades -------------------- */
 
