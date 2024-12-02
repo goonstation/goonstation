@@ -1385,3 +1385,35 @@ proc/spawn_kitchen_note()
 	<p>Spring came, <p> <br>
 	<p>spring came at last. <p> <br>
 	"}
+
+/obj/item/paper/packets
+	name = "Frequency reference sheet"
+	New()
+		..()
+		info = {"
+			<h2>Nanotrasen wireless technology data reference sheet 8.2</h2>
+			PDAs: [format_frequency(FREQ_PDA)]kHz<br>
+			Gas pumps: [format_frequency(FREQ_PUMP_CONTROL)]kHz<br>
+			Airlocks: [format_frequency(FREQ_AIRLOCK)]kHz<br>
+			Designated free frequency: [format_frequency(FREQ_FREE)]kHz<br>
+			Bot navbeacons: [format_frequency(FREQ_NAVBEACON)]kHz<br>
+			Secure storage: [format_frequency(FREQ_SECURE_STORAGE)]kHz<br>
+			Fire and air alarms: [format_frequency(FREQ_ALARM)]kHz<br>
+			Hydroponics trays: [format_frequency(FREQ_HYDRO)]kHz<br>
+			Harmonic siphon: [format_frequency(FREQ_HARMONIC_SIPHON)]kHz<br>
+			Transception interlink: [format_frequency(FREQ_TRANSCEPTION_SYS)]kHz<br>
+			Status displays: [format_frequency(FREQ_STATUS_DISPLAY)]kHz<br>
+			Bot control: [format_frequency(FREQ_BOT_CONTROL)]kHz<br>
+			GPS: [format_frequency(FREQ_GPS)]kHz<br>
+			Ruckingenur kit: [format_frequency(FREQ_RUCK)]kHz<br>
+			Guardbuddies: [format_frequency(FREQ_BUDDY)]kHz<br>
+			Tourbot navbeacons: [format_frequency(FREQ_TOUR_NAVBEACON)]kHz<br>
+			Signalers: [format_frequency(FREQ_SIGNALER)]kHz<br>
+			Pod door controls: [format_frequency(FREQ_DOOR_CONTROL)]kHz<br>
+			Mail chutes: [format_frequency(FREQ_MAIL_CHUTE)]kHz<br>
+			Air alarm control: [format_frequency(FREQ_AIR_ALARM_CONTROL)]kHz<br>
+			Tracking implants: [format_frequency(FREQ_TRACKING_IMPLANT)]kHz<br>
+			Power systems: [format_frequency(FREQ_POWER_SYSTEMS)]kHz<br>
+			<br><br>
+			<i>Intelligent data ordering system proprietary, copyright of Nanotrasen (2053)</i>
+		"}
