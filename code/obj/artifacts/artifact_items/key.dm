@@ -208,7 +208,13 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 		..()
 
 	Crossed(atom/movable/AM)
-		if (AM.dir == src.required_dir && !istype(AM, /obj/artifact_door) && !istype(AM, /obj/cross_dummy))
+		if (istype(AM, /obj/projectile))
+			var/obj/projectile/P = AM
+			var/obj/projectile/new_proj = initialize_projectile(src.exit_turf, P.proj_data, P.xo, P.yo, P.shooter)
+			new_proj.travelled = P.travelled
+			new_proj.launch()
+			P.die()
+		else if (AM.dir == src.required_dir && !istype(AM, /obj/artifact_door) && !istype(AM, /obj/cross_dummy))
 			AM.set_loc(src.exit_turf)
 		else
 			return ..()

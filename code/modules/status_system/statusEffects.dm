@@ -2989,7 +2989,8 @@
 
 	onAdd(optional)
 		..()
-		src.owner.visible_message(SPAN_ALERT("[src.owner] starts corroding!"))
+		var/turf/T = get_turf(src.owner)
+		T.visible_message(SPAN_ALERT("[src.owner] starts corroding!"))
 
 	onUpdate(timePassed)
 		..()
