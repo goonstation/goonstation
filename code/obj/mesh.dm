@@ -177,12 +177,12 @@ TYPEINFO(/obj/mesh)
 	if(..())
 		return
 	switch(reagent_id)
-		//todo: other acids
+		//todo: other acids?
 		if("acid")
 			src.damage_corrosive(volume / 2)
 		if("pacid")
 			src.damage_corrosive(volume)
-		//todo: thermite, kerosene
+		//todo: thermite, kerosene?
 		if("phlogiston")
 			src.damage_heat(volume)
 		if("infernite")
@@ -193,7 +193,26 @@ TYPEINFO(/obj/mesh)
 /obj/mesh/update_icon()
 	if (src.ruined)
 		return
+	src.icon_state = "[src.icon_state_prefix][src.get_icon_direction()][src.get_damage_icon_suffix()]"
 
+/obj/mesh/attackby(obj/item/I, mob/user)
+	user.lastattacked = src
+	attack_particle(user, src)
+	src.visible_message(SPAN_ALERT("<b>[user]</b> attacks [src] with [I]."))
+	playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
+
+	switch(I.hit_type)
+		if(DAMAGE_BURN)
+			damage_heat(I.force)
+		else
+			damage_blunt(I.force * 0.5)
+
+///Get the directional icon state piece.
+/obj/mesh/proc/get_icon_direction()
+	return ""
+
+/// Get the direct turf connection directions from neighbors. Uses typeinfo connects_to lists.
+/obj/mesh/proc/get_icon_connectdir()
 	var/connectdir = 0
 	if (src.auto_connect)
 		var/typeinfo/obj/mesh/typinfo = get_typeinfo()
@@ -214,12 +233,7 @@ TYPEINFO(/obj/mesh)
 					if (AM?.anchored)
 						connectdir |= dir
 						break
-
-	src.icon_state = "[src.icon_state_prefix][src.get_icon_direction(connectdir)][src.get_damage_icon_suffix()]"
-
-///Get the directional icon state piece.
-/obj/mesh/proc/get_icon_direction(connectdir)
-	return ""
+	return connectdir
 
 ///Check our damage percentage and return the appropriate suffix
 /obj/mesh/proc/get_damage_icon_suffix()
@@ -400,16 +414,7 @@ TYPEINFO_NEW(/obj/mesh/grille)
 		src.visible_message(SPAN_ALERT("<b>[user]</b> [src.anchored ? "fastens" : "unfastens"] [src]."))
 		return
 
-	user.lastattacked = src
-	attack_particle(user, src)
-	src.visible_message(SPAN_ALERT("<b>[user]</b> attacks [src] with [I]."))
-	playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
-
-	switch(I.hit_type)
-		if(DAMAGE_BURN)
-			damage_heat(I.force)
-		else
-			damage_blunt(I.force * 0.5)
+	..()
 
 /obj/mesh/grille/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	..()
@@ -424,7 +429,8 @@ TYPEINFO_NEW(/obj/mesh/grille)
 		if (O.throwforce)
 			src.damage_blunt((max(1, O.throwforce * (1 - (src.blunt_resist / 100)))) / 2) // we don't want people screaming right through these and you can still get through them by kicking/cutting/etc
 
-/obj/mesh/grille/get_icon_direction(connectdir)
+/obj/mesh/grille/get_icon_direction()
+	var/connectdir = src.get_icon_connectdir()
 	switch(connectdir) //many states share icons
 		if (0) //stand alone
 			connectdir = (NORTH) //1
@@ -513,24 +519,30 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		return
 
-	if(isturf(src.loc))
-		src.loc.Attackby(user.equipped(), user)
+	..()
+
 
 /obj/mesh/catwalk/special_update_icon(special_icon_state)
 	if(special_icon_state == "cut")
 		src.UpdateIcon()
 		return // no special sprites for cut catwalks
-	. = ..()
+	src.icon_state = "[src.icon_state_prefix][src.get_icon_direction()]-[special_icon_state]"
 
-
-/obj/mesh/catwalk/get_icon_direction(connectdir)
-	return connectdir
+/obj/mesh/catwalk/get_icon_direction()
+	return src.get_icon_connectdir()
 
 /obj/mesh/catwalk/jen // ^^ no i made my own because i am epic
 	name = "maintenance catwalk"
 	icon_state = "M0-0"
 	desc = "This looks marginally more safe than the ones outside, at least..."
 	icon_state_prefix = "M" // Short for "Maintenance"
+
+/obj/mesh/catwalk/jen/attackby(obj/item/I, mob/user)
+	if(issnippingtool(I))
+		..()
+
+	if(isturf(src.loc))
+		src.loc.Attackby(user.equipped(), user)
 
 /obj/mesh/catwalk/dubious
 	name = "rusty catwalk"
