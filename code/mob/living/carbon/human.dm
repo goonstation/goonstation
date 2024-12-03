@@ -735,6 +735,10 @@
 	if (!inafterlife(src) && current_state >= GAME_STATE_PLAYING) // prevent corpse spawners from reducing cheer; TODO: better fix
 		modify_christmas_cheer(-7)
 
+
+	if(src.traitHolder?.hasTrait("martyrdom") && (istype(src.equipped(), /obj/item/old_grenade) || istype(src.equipped(), /obj/item/chem_grenade)))
+		src.equipped():AttackSelf(src)
+
 	src.canmove = 0
 	src.lying = 1
 	src.last_sleep = 0
