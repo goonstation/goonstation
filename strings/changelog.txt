@@ -1,3 +1,9 @@
+
+(t)tue dec 03 24
+(u)glowbold
+(p)21527
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)In gang war, when vandalizing areas, you do not gain points for spraying over existing graffiti.
 (t)mon dec 02 24
 (u)LeahTheTech
 (+)Packet sniffers now come with a helpful frequency reference sheet.
