@@ -28,7 +28,7 @@
 		O.anchored = ANCHORED
 		var/turf/T = get_turf(O)
 		if (!src.sphere_type)
-			switch (3)
+			switch(rand(1,4))
 				if(1)
 					src.sphere_type = /obj/effect/status_area/slow_globe
 				if(2)
