@@ -163,7 +163,7 @@
 			if (set_null)
 				src.points = 0
 			else
-				src.points = max(src.points + change, 0)
+				src.points = clamp(src.points + change, 0, src.vamp_blood)
 
 			if (change > 0 && ishuman(src.owner))
 				var/mob/living/carbon/human/H = src.owner

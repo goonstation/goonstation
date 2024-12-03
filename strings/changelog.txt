@@ -1,5 +1,7 @@
 
 (t)tue dec 03 24
+(u)tarmunora
+(+)experimental: Vampires consuming 'blood' reagent outside of their powers only restores spent blood, does not count towards unlocks etc.
 (u)JORJ949
 (p)21488
 (e)🆕💡|C-Feature, A-Station-Systems
