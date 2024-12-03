@@ -59,35 +59,45 @@
 
 	proc/create_entrance(entrance_dir, turf/entrance, mob/user)
 		var/obj/artifact_door/inner_door
+		var/turf/backroom_entr
+		var/list/adj_entr_turfs
 		switch (entrance_dir)
 			if (SOUTH_ENTRANCE)
-				var/obj/cross_dummy/north/n = new (entrance, src.backroom_region.turf_at(15, 14))
+				backroom_entr = src.backroom_region.turf_at(15, 14)
+				var/obj/cross_dummy/north/n = new (entrance, backroom_entr)
 				var/obj/cross_dummy/south/s = new (src.backroom_region.turf_at(15, 13), get_step(entrance, SOUTH))
 				src.south_dummies += n
 				src.south_dummies += s
 				inner_door = locate() in src.backroom_region.turf_at(15, 14)
 				inner_door.outer_entrance_spawned = TRUE
+				adj_entr_turfs = block(entrance.x - 1, entrance.y - 1, entrance.z, entrance.x + 1, entrance.y - 1, entrance.z)
 			if (NORTH_ENTRANCE)
-				var/obj/cross_dummy/south/s = new (entrance, src.backroom_region.turf_at(15, 24))
+				backroom_entr = src.backroom_region.turf_at(15, 24)
+				var/obj/cross_dummy/south/s = new (entrance, backroom_entr)
 				var/obj/cross_dummy/north/n = new (src.backroom_region.turf_at(15, 25), get_step(entrance, NORTH))
 				src.north_dummies += s
 				src.north_dummies += n
 				inner_door = locate() in src.backroom_region.turf_at(15, 24)
 				inner_door.outer_entrance_spawned = TRUE
+				adj_entr_turfs = block(entrance.x - 1, entrance.y + 1, entrance.z, entrance.x + 1, entrance.y + 1, entrance.z)
 			if (EAST_ENTRANCE)
-				var/obj/cross_dummy/west/w = new (entrance, src.backroom_region.turf_at(17, 19))
+				backroom_entr = src.backroom_region.turf_at(17, 19)
+				var/obj/cross_dummy/west/w = new (entrance, backroom_entr)
 				var/obj/cross_dummy/east/e = new (src.backroom_region.turf_at(18, 19), get_step(entrance, EAST))
 				src.east_dummies += w
 				src.east_dummies += e
 				inner_door = locate() in src.backroom_region.turf_at(17, 19)
 				inner_door.outer_entrance_spawned = TRUE
+				adj_entr_turfs = block(entrance.x + 1, entrance.y - 1, entrance.z, entrance.x + 1, entrance.y + 1, entrance.z)
 			if (WEST_ENTRANCE)
-				var/obj/cross_dummy/east/e = new (entrance, src.backroom_region.turf_at(13, 19))
+				backroom_entr = src.backroom_region.turf_at(13, 19)
+				var/obj/cross_dummy/east/e = new (entrance, backroom_entr)
 				var/obj/cross_dummy/west/w = new (src.backroom_region.turf_at(12, 19), get_step(entrance, WEST))
 				src.west_dummies += e
 				src.west_dummies += w
 				inner_door = locate() in src.backroom_region.turf_at(13, 19)
 				inner_door.outer_entrance_spawned = TRUE
+				adj_entr_turfs = block(entrance.x - 1, entrance.y - 1, entrance.z, entrance.x - 1, entrance.y + 1, entrance.z)
 
 		entrance.density = FALSE
 		var/obj/artifact_door/outer_door = new(entrance)
@@ -95,6 +105,11 @@
 		outer_door.linked_door = inner_door
 		inner_door.set_dir(get_dir(outer_door, user))
 		inner_door.linked_door = outer_door
+		backroom_entr.reachable_turfs += adj_entr_turfs
+		for (var/turf/T as anything in backroom_entr.reachable_turfs)
+			if (!T.reachable_turfs)
+				T.reachable_turfs = list()
+			T.reachable_turfs += backroom_entr
 		src.update_visual_mirrors(entrance, entrance_dir)
 		entrance.icon = 'icons/turf/floors.dmi'
 		entrance.icon_state = "darkvoid"
@@ -151,6 +166,9 @@
 				T.vis_contents = null// clear previously assigned vis_contents
 				if (station_turf)
 					station_turf.appearance_flags |= KEEP_TOGETHER
+					if (!station_turf.listening_turfs)
+						station_turf.listening_turfs = list()
+					station_turf.listening_turfs += T
 					//RL_UPDATE_LIGHT(T)
 					//T.RL_AddOverlay()
 					//RL_APPLY_LIGHT(T, null, null, station_turf.RL_GetBrightness(), 0, 255, 255, 255)
@@ -187,6 +205,8 @@
 		var/obj/item/artifact/key/artkey = O
 		var/datum/mapPrefab/allocated/allocated = get_singleton(/datum/mapPrefab/allocated/artifact_backroom)
 		artkey.backroom_region = allocated.load()
+
+		mirrored_physical_zone_created = TRUE
 
 /****** Supporting items/atoms/etc. *******/
 
