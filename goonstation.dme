@@ -1946,6 +1946,7 @@
 #include "code\obj\artifacts\artifact_objects\power_giver.dm"
 #include "code\obj\artifacts\artifact_objects\prison.dm"
 #include "code\obj\artifacts\artifact_objects\recaller.dm"
+#include "code\obj\artifacts\artifact_objects\temporal_sphere.dm"
 #include "code\obj\artifacts\artifact_objects\timefield.dm"
 #include "code\obj\artifacts\artifact_objects\wish_granter.dm"
 #include "code\obj\critter\automaton.dm"

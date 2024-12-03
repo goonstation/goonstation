@@ -90,6 +90,7 @@
 	A.touch_descriptors |= appearance.touch_descriptors
 
 	src.icon_state = appearance.name + "-[rand(1,appearance.max_sprites)]"
+	A.origin_icon = src.icon_state
 	if (isitem(src))
 		var/obj/item/I = src
 		I.item_state = appearance.name
@@ -164,7 +165,7 @@
 		if (T) T.visible_message("<b>[src] [A.activ_text]</b>") //ZeWaka: Fix for null.visible_message()
 	A.activated = 1
 	if (A.nofx)
-		src.icon_state = src.icon_state + "-active"
+		src.icon_state = A.origin_icon + "-active"
 	else
 		A.show_fx(src)
 	A.effect_activate(src)
@@ -192,7 +193,7 @@
 		T.visible_message("<b>[src] [A.deact_text]</b>")
 	A.activated = 0
 	if (A.nofx)
-		src.icon_state = src.icon_state - "-active"
+		src.icon_state = A.origin_icon
 	else
 		A.hide_fx(src)
 	A.effect_deactivate(src)

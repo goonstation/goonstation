@@ -14,6 +14,8 @@ ABSTRACT_TYPE(/datum/artifact/)
 	var/type_size = ARTIFACT_SIZE_LARGE
 	/// the artifact origin (martian, eldritch, etc...)
 	var/datum/artifact_origin/artitype = null
+	/// Icon to keep track of "initial" appearance
+	var/origin_icon
 	/// the list of options for the origin from which to pick from
 	var/list/validtypes = list("ancient","martian","wizard","eldritch","precursor","clockwork")
 	// During setup, artitype will be set from a pick() from within the validtypes list.

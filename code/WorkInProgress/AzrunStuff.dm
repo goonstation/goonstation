@@ -1173,9 +1173,9 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	name = "status area"
 	layer = EFFECTS_LAYER_BASE
 	var/status_effect = "time_slowed"
-	var/mob/source
+	var/atom/source
 
-	New(turf/loc, mob/target)
+	New(turf/loc, atom/target)
 		. = ..()
 		if(target)
 			src.source = target
@@ -1205,18 +1205,26 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	bound_height = 160
 	status_effect = "time_slowed"
 	var/hue_shift = 0
+	var/radius_in_tiles = 2
 	var/sound = 'sound/effects/mag_forcewall.ogg'
 	var/pitch
 
-	New(turf/loc, mob/target)
+	New(turf/loc, atom/target, var/scale_mod = 1)
 		. = ..()
 		if(hue_shift)
 			color = hsv_transform_color_matrix(hue_shift)
-		SafeScale(0.1,0.1)
+		src.bound_x *= scale_mod
+		src.bound_y *= scale_mod
+		src.bound_width *= scale_mod
+		src.bound_height *= scale_mod
+		SafeScale(0.1 * scale_mod, 0.1 * scale_mod)
 		SafeScaleAnim((10/1.4), (10/1.4), anim_time=2 SECONDS, anim_easing=ELASTIC_EASING)
 		SPAWN(2 SECONDS)
 			animate_wave(src, waves=5)
 		playsound(get_turf(src), sound, 25, 1, -1, pitch)
+		// Apply effect immediately instead of waiting for them to walk in and out of the radius
+		for (var/mob/guy in view((src.radius_in_tiles * scale_mod), src.source))
+			src.Crossed(guy)
 
 	check_movable(atom/movable/AM, crossed)
 		if(crossed)
@@ -1231,18 +1239,22 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 
 	strong
 		status_effect = "time_slowed_plus"
-		hue_shift = 60
+		hue_shift = 30
 
 	reversed
 		status_effect = "time_hasted"
-		hue_shift = 90
+		hue_shift = 60
 		pitch = -1
 
+	reversed_strong
+		status_effect = "time_hasted_plus"
+		hue_shift = 90
+		pitch = -1
 
 /datum/statusEffect/time_slowed
 	id = "time_slowed"
 	name = "Slowed"
-	desc = "You are slowed by a temporal anomoly.<br>Movement speed and action speed is reduced."
+	desc = "You are slowed by a temporal anomaly.<br>Movement speed and action speed is reduced."
 	icon_state = "slowed"
 	unique = 1
 	var/howMuch = 10
@@ -1256,7 +1268,6 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		. = ..()
 		if(source)
 			status_source = source
-
 		var/atom/movable/AM = owner
 		var/scale_factor = (howMuch/2)
 		if(howMuch<0)
@@ -1264,13 +1275,12 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 
 		if (ismob(owner))
 			var/mob/M = owner
-			M.next_click = world.time + (0.5 SECONDS)
 			movement_modifier.additive_slowdown = howMuch
 
 		else if(istype(AM, /obj/projectile))
 			var/obj/projectile/B = AM
-			B.internal_speed = B.proj_data.projectile_speed / scale_factor
-			B.special_data["slowed"] = TRUE
+			B.internal_speed = B.proj_data?.projectile_speed / scale_factor
+			B.special_data[src.icon_state] = TRUE
 
 		if(istype(AM) && AM.throwing)
 			var/list/datum/thrown_thing/existing_throws = global.throwing_controller.throws_of_atom(AM)
@@ -1289,10 +1299,10 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 			var/mob/M = owner
 			var/atom/source = locate(/obj/effect/status_area/slow_globe) in obounds(M,0)
 			if(source)
-				M.changeStatus("time_slowed", 10 SECONDS, source)
+				M.changeStatus(src.id, 10 SECONDS, source)
 		else if(istype(AM, /obj/projectile))
 			var/obj/projectile/B = AM
-			if(B?.special_data && B.special_data["slowed"])
+			if(B?.special_data && B.special_data[src.icon_state])
 				B.internal_speed *= scale_factor
 
 		if(istype(AM) && AM.throwing)
@@ -1306,25 +1316,27 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		if(status_source && QDELETED(status_source))
 			owner.delStatus(id)
 
-		if (ismob(owner))
-			var/mob/M = owner
-			M.next_click = world.time + ((howMuch/20) SECONDS)
-
-	move_trigger(mob/user, ev)
-		if (ismob(owner))
-			var/mob/M = owner
-			M.next_click = world.time + ((howMuch/20) SECONDS)
-
 	extra
 		name = "Sloooowwwwed"
 		id = "time_slowed_plus"
+		desc = "You are severely slowed by a temporal anomaly.<br>Movement speed and action speed is reduced."
 		howMuch = 20
 
 	reversed
 		name = "Hastened"
+		desc = "You are sped up by a temporal anomaly.<br>Movement speed and action speed is increased."
 		id = "time_hasted"
-		howMuch = -5
+		icon_state = "hastened"
+		howMuch = -1
+		effect_quality = STATUS_QUALITY_POSITIVE
 
+	reversed_extra
+		name = "Hastened!!!!"
+		desc = "You are severely sped up by a temporal anomaly.<br>Movement speed and action speed is increased."
+		id = "time_hasted_plus"
+		icon_state = "hastened"
+		howMuch = -5
+		effect_quality = STATUS_QUALITY_POSITIVE
 
 
 /obj/storage/crate/exosuit
