@@ -147,7 +147,7 @@
 				T = src.backroom_region.turf_at(i, j)
 				station_turf = locate(station_reference.x + x_start_offset + i, station_reference.y + y_start_offset + j, station_reference.z)
 
-				T.vis_contents // clear previously assigned vis_contents
+				T.vis_contents = null// clear previously assigned vis_contents
 				if (station_turf)
 					station_turf.appearance_flags |= KEEP_TOGETHER
 					//RL_UPDATE_LIGHT(T)
