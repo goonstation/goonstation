@@ -501,14 +501,11 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 			ui = new(user, src, "GasMixer")
 			ui.open()
 
-	ui_static_data(mob/user)
+	ui_data(mob/user)
 		. = ..()
 		.["name"] = name
 		.["mixerid"] = mixerid
 		.["MAX_PRESSURE"] = MAX_PRESSURE
-
-	ui_data(mob/user)
-		. = ..()
 		.["mixer_information"] = mixer_information
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -516,11 +513,11 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 
 		if (!src.allowed(usr))
 			boutput(usr, SPAN_ALERT("Access denied!"))
-			return 0
+			return FALSE
 
 		var/datum/signal/signal = get_free_signal()
 		if (!signal || !istype(signal))
-			return 0
+			return FALSE
 
 		signal.transmission_method = 1 //radio
 		signal.source = src
@@ -543,14 +540,14 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 			if ("pressure_set")
 				var/target_pressure = params["target_pressure"]
 				if ((BOUNDS_DIST(src, usr) > 0 && !issilicon(usr)) || !isliving(usr) || iswraith(usr) || isintangible(usr))
-					return 0
+					return FALSE
 				if (is_incapacitated(usr) || usr.restrained())
-					return 0
+					return FALSE
 				if (!src.allowed(usr))
 					boutput(usr, SPAN_ALERT("Access denied!"))
-					return 0
+					return FALSE
 				if (!isnum_safe(target_pressure))
-					return 0
+					return FALSE
 
 				var/amount = clamp(target_pressure, 0, MAX_PRESSURE)
 

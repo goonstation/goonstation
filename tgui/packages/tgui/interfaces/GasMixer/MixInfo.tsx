@@ -15,12 +15,14 @@ interface MixInfoProps {
 }
 export const MixInfo = (props: MixInfoProps) => {
   const { mix } = props;
+
+  const shownGasses = mix.gasses.filter((gas) => gas.Ratio > 0);
+
   return (
     <LabeledList>
-      {mix.kpa && mix.temp ? (
+      {shownGasses.length > 0 ? (
         <>
           {mix.gasses
-            .filter((gas) => gas.Ratio > 0)
             .sort((gas1, gas2) => gas2.Ratio - gas1.Ratio)
             .map((gas) => (
               <LabeledList.Item
@@ -34,7 +36,7 @@ export const MixInfo = (props: MixInfoProps) => {
               </LabeledList.Item>
             ))}
           <LabeledList.Item label="Pressure">
-            {formatPressure(mix.kpa)}
+            {formatPressure(mix.kpa!)}
           </LabeledList.Item>
           <LabeledList.Item label="Temperature">{mix.temp} °C</LabeledList.Item>
         </>

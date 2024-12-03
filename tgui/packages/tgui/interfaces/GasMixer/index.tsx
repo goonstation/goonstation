@@ -14,11 +14,11 @@ import { Output } from './Output';
 import { Pump } from './Pump';
 import type { GasMixerData } from './types';
 
-export const GasMixer = (_props: unknown) => {
+export const GasMixer = () => {
   const { data, act } = useBackend<GasMixerData>();
   const { name, mixerid, mixer_information } = data;
   return (
-    <Window theme="ntos" title={name} width={350} height={525}>
+    <Window theme="ntos" title={name} width={350} height={510}>
       <Window.Content scrollable>
         {mixerid ? (
           mixer_information ? (
