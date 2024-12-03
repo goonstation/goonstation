@@ -459,14 +459,14 @@ TYPEINFO_NEW(/obj/mesh/grille)
 	if (!prob(probability))
 		return FALSE
 
-	var/net = src.get_connection() // find the powernet of the connected cable
+	var/net = src.get_connection()
 
-	if (!net)
-		return FALSE // cable is unpowered
+	if (!net) // cable is unpowered
+		return FALSE
 
 	return src.electrocute(user, probability, net, ignore_gloves)
 
-///When hit by an arcflash, transfer some wattage a connected pnet
+///When hit by an arcflash, transfer some wattage to a connected pnet
 /obj/mesh/grille/proc/on_arcflash(wattage)
 	if (!src.anchored)
 		return FALSE
@@ -475,8 +475,10 @@ TYPEINFO_NEW(/obj/mesh/grille)
 		return FALSE
 	if(src.material)
 		powernets[net].newavail += wattage / 100 * (100 - src.material.getProperty("electrical") * 5)
-	else
-		powernets[net].newavail += wattage / 7500
+		return TRUE
+
+	powernets[net].newavail += wattage / 7500
+	return TRUE
 
 ///Get the netnum of a stub cable at this grille loc, or 0 if none.
 /obj/mesh/grille/proc/get_connection()
