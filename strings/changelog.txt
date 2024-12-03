@@ -1,5 +1,9 @@
 
 (t)tue dec 03 24
+(u)JORJ949
+(p)21488
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)The NTSC now has access to EVA.
 (u)glowbold
 (p)21527
 (e)⚖🧛|C-Balance, A-Gamemodes
