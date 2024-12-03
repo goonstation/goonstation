@@ -1867,6 +1867,7 @@
 #include "code\obj\machinery.dm"
 #include "code\obj\map.dm"
 #include "code\obj\martian.dm"
+#include "code\obj\mesh.dm"
 #include "code\obj\mining.dm"
 #include "code\obj\mining_cloud_storage.dm"
 #include "code\obj\mopbucket.dm"
