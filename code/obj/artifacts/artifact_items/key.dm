@@ -284,6 +284,8 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 				src.deny_open()
 				boutput(user, SPAN_NOTICE("[src] doesn't seemed to be locked, but won't open either... strange."))
 			else
+				var/obj/item/artifact/key/key = I
+				key.ArtifactFaultUsed(user, key)
 				src.open()
 
 	Bumped(atom/movable/AM)
