@@ -1820,6 +1820,178 @@
 		icon_state = "[under_floor ? "u":""]comp_relay"
 		return
 
+#define FIFO_BUFFER 1
+#define FILO_BUFFER 2
+#define RANDOM_BUFFER 3
+#define RING_BUFFER 4 //When I say ring buffer what I really mean is..
+		//...FIFO queue with clobbering like an audio buffer
+
+/obj/item/mechanics/buffercomp
+	name = "Buffer Component"
+	desc = ""
+	icon_state = "comp_relay"
+	cooldown_time = 0.4 SECONDS
+	var/list/buffer = list()
+	var/buffer_size = 15
+	//I wanted to set this to the same limit as the selection component
+	//But the selection compoment doesn't actually have a limit in the additem() proc
+	//It kind of worries me
+	var/buffer_max_size = 200
+	//Ring reader ring writer
+	var/rr = 1
+	var/rw = 1
+
+	var/buffer_model = FIFO_BUFFER
+	var/buffer_string = "FIFO"
+	var/changesig = 0
+
+	get_desc()
+		. += "<br>[SPAN_NOTICE("Delay is [cooldown_time]. <br> Buffer size is [buffer_size]. <br> Buffer mode is [buffer_string].")]"
+
+	New()
+		..()
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"buffer", PROC_REF(buffer))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Delay",PROC_REF(setDelay))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Buffer Mode",PROC_REF(setModel))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Buffer Size",PROC_REF(setBufferSize))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Changing",PROC_REF(toggleDefault))
+
+
+
+	proc/setModel(obj/item/W as obj, mob/user as mob)
+		var/model = input("Set the buffer mode to what?", "Mode Selector",buffer_string) in list("FIFO","FILO","ring","random")
+		if(model == "FIFO")
+			buffer_model = FIFO_BUFFER
+		if(model == "FILO")
+			buffer_model = FILO_BUFFER
+		if(model == "ring")
+			buffer_model = RING_BUFFER
+		if(model == "random")
+			buffer_model = RANDOM_BUFFER
+		buffer_string = model
+		tooltip_rebuild = 1
+		buffer.RemoveAll()
+		return 1
+
+	//Thanks delay component
+	proc/setDelay(obj/item/W as obj, mob/user as mob)
+		var/inp = input(user, "Enter delay in 10ths of a second:", "Set delay", cooldown_time) as num
+		if(!in_interact_range(src, user) || user.stat)
+			return 0
+		inp = min(inp, 60)
+		inp = max(0, inp)
+		if(!isnull(inp))
+			cooldown_time = inp
+			tooltip_rebuild = 1
+			boutput(user, "Set delay to [inp]")
+			return 1
+		return 0
+
+
+	proc/setBufferSize(obj/item/W as obj, mob/user as mob)
+		var/inp = input(user,"Set size of signal buffer","Buffer size", buffer_size) as num
+		if(!in_interact_range(src, user) || user.stat)
+			return 0
+		inp = round(inp)
+		inp = min(inp, buffer_max_size)
+		if(inp == 0)
+			boutput(user,"Buffer size can't be zero.")
+			return
+		if(inp < 0)
+			boutput(user,"How could a buffer be negative? What are you doing here?")
+			return
+		buffer_size = inp
+		tooltip_rebuild = 1
+		boutput(user,"You set the buffer size to [inp]")
+		buffer.RemoveAll()
+		return
+
+
+	proc/toggleDefault(obj/item/W as obj, mob/user as mob)
+		changesig = !changesig
+		boutput(user, "Signal changing now [changesig ? "on":"off"]")
+		tooltip_rebuild = 1
+		return 1
+
+	proc/buffer(var/datum/mechanicsMessage/input)
+		var/bufl = length(buffer)
+		if(buffer_model == RING_BUFFER)
+			if(bufl >= rw)
+				buffer[rw] = input
+			else
+				buffer.Add(input)
+			//Round and round we go
+			//If the writer runs into the reader and the next item in the queue isn't null
+			//That means that item is the oldest, jump the reader to it
+			//Watch out for the edge
+			if(rr == rw)
+				if((rr + 1) > buffer_size && !isnull(buffer[1]) )
+					rr = 1
+				else if(bufl >= (rr + 1) &&!isnull(buffer[(rr + 1)]))
+					rr++
+			rw++
+			if(rw > buffer_size)
+				rw = 1
+			return
+
+		if(buffer_model == RANDOM_BUFFER)
+			if(bufl >= buffer_size)
+				buffer[rand(1,(bufl))] = input
+			else
+				buffer.Add(input)
+			return
+		if(bufl >= buffer_size)
+			return
+		if(buffer_model == FIFO_BUFFER || buffer_model == FILO_BUFFER)
+			buffer.Add(input)
+			return
+
+	process()
+		..()
+
+		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
+
+		var/bufl = (length(buffer))
+		var signal = null
+		if(bufl > 0)
+
+			if(buffer_model == FIFO_BUFFER)
+				signal = buffer[1]
+				buffer.Remove(buffer[1])
+			if(buffer_model == FILO_BUFFER)
+				signal = buffer[bufl]
+				buffer.Remove(buffer[bufl])
+			if(buffer_model == RING_BUFFER && bufl >= rr && !isnull(buffer[rr]) )
+//				if(rr == rw)
+//					rw ++
+				signal = buffer[rr]
+				buffer[rr] = null
+				rr++
+				if(rr > buffer_size)
+					rr = 1
+			if(buffer_model == RANDOM_BUFFER)
+				var ran = rand(1,bufl)
+				signal = buffer[ran]
+				buffer.Remove(buffer[ran])
+
+			if(isnull(signal)) return
+
+			var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
+			SPAWN(0) SEND_SIGNAL(src,transmissionStyle,signal)
+			LIGHT_UP_HOUSING
+			flick("[under_floor ? "u":""]comp_relay1", src)
+
+
+	update_icon()
+		icon_state = "[under_floor ? "u":""]comp_relay"
+		return
+
+#undef FIFO_BUFFER
+#undef FILO_BUFFER
+#undef RANDOM_BUFFER
+#undef RING_BUFFER
+
 /obj/item/mechanics/filecomp
 	name = "File Component"
 	desc = ""
