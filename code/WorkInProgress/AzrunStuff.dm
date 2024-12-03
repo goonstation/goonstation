@@ -1273,11 +1273,9 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		if(howMuch<0)
 			scale_factor = -1/scale_factor
 
-		if (ismob(owner))
-			var/mob/M = owner
-			movement_modifier.additive_slowdown = howMuch
+		movement_modifier.additive_slowdown = howMuch
 
-		else if(istype(AM, /obj/projectile))
+		if(istype(AM, /obj/projectile))
 			var/obj/projectile/B = AM
 			B.internal_speed = B.proj_data?.projectile_speed / scale_factor
 			B.special_data[src.icon_state] = TRUE

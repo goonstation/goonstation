@@ -7,7 +7,8 @@
 	type_name = "Temporal Sphere"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
-	validtriggers = list(/datum/artifact_trigger/carbon_touch)
+	validtriggers = list(/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/silicon_touch,
+	/datum/artifact_trigger/force, /datum/artifact_trigger/electric, /datum/artifact_trigger/heat)
 	validtypes = list("wizard", "clockwork")
 	react_xray = list(15,90,90,11,"NONE")
 	var/field_time = 0
@@ -27,7 +28,7 @@
 		O.anchored = ANCHORED
 		var/turf/T = get_turf(O)
 		if (!src.sphere_type)
-			switch (rand(1,4))
+			switch (3)
 				if(1)
 					src.sphere_type = /obj/effect/status_area/slow_globe
 				if(2)
