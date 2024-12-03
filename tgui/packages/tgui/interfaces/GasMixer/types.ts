@@ -5,11 +5,14 @@
  * @license MIT
  */
 
+import { BooleanLike } from 'common/react';
+
 export type GasMixerData = {
   name: string;
   mixerid: string;
   mixer_information: MixerInformation;
   MAX_PRESSURE: number;
+  allowed: BooleanLike;
 };
 
 type MixerInformation = {

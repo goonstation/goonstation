@@ -14,12 +14,17 @@ import {
   Stack,
 } from 'tgui-core/components';
 
+import { Dimmer } from '../../../tgui/components/Dimmer';
 import { useBackend } from '../../backend';
 import type { GasMixerData } from './types';
 
 export const Pump = () => {
+  const { data } = useBackend<GasMixerData>();
+  const { allowed } = data;
+
   return (
     <Section title="Pump">
+      {!allowed && <Dimmer fontSize={1.5}>Access denied</Dimmer>}
       <LabeledList>
         <GasInputRatio />
         <OutputTargetPressure />

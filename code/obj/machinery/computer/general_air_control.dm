@@ -507,6 +507,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 		.["mixerid"] = mixerid
 		.["MAX_PRESSURE"] = MAX_PRESSURE
 		.["mixer_information"] = mixer_information
+		.["allowed"] = src.allowed(user)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
@@ -570,11 +571,5 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 		if (signal)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 			. = TRUE
-
-	ui_status(mob/user, datum/ui_state/state)
-		. = ..()
-
-		if (!src.allowed(user) && . >= UI_UPDATE)
-			. = UI_UPDATE
 
 #undef MAX_PRESSURE
