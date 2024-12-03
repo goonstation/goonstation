@@ -7,6 +7,7 @@
 
 import {
   Button,
+  Dimmer,
   LabeledList,
   NumberInput,
   Section,
@@ -14,7 +15,6 @@ import {
   Stack,
 } from 'tgui-core/components';
 
-import { Dimmer } from '../../../tgui/components/Dimmer';
 import { useBackend } from '../../backend';
 import type { GasMixerData } from './types';
 
