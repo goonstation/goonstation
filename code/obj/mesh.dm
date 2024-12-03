@@ -558,7 +558,7 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 
 /obj/mesh/catwalk/dubious/Crossed(atom/movable/AM)
 	..()
-	if (ismob(AM))
+	if (isliving(AM) && !isintangible(AM))
 		src.collapse_counter++
 		SPAWN (1 SECOND)
 			src.collapse_timer()
