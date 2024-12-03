@@ -2,6 +2,7 @@
  * @file
  * @copyright 2024
  * @author cringe (https://github.com/Laboredih123)
+ * @author LeahTheTech (https://github.com/TobleroneSwordfish)
  * @license MIT
  */
 

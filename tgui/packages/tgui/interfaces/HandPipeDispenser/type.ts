@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author LeahTheTech (https://github.com/TobleroneSwordfish)
+ * @license MIT
+ */
+
 export type PipeData = {
   type: string;
   image: string; // base64
