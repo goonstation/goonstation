@@ -35,58 +35,65 @@
 		if (user.dir == NORTH)
 			if (!src.south_entr_placed)
 				src.create_entrance(SOUTH_ENTRANCE, target, user)
+				src.south_entr_placed = TRUE
 			else
 				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
 		else if (user.dir == SOUTH)
 			if (!src.north_entr_placed)
 				src.create_entrance(NORTH_ENTRANCE, target, user)
+				src.north_entr_placed = TRUE
 			else
 				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
 		else if (user.dir == EAST)
 			if (!src.west_entr_placed)
 				src.create_entrance(WEST_ENTRANCE, target, user)
+				src.west_entr_placed = TRUE
 			else
 				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
 		else if (user.dir == WEST)
 			if (!src.east_entr_placed)
 				src.create_entrance(EAST_ENTRANCE, target, user)
+				src.east_entr_placed = TRUE
 			else
 				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
 
 	proc/create_entrance(entrance_dir, turf/entrance, mob/user)
+		var/obj/artifact_door/inner_door
 		switch (entrance_dir)
 			if (SOUTH_ENTRANCE)
 				var/obj/cross_dummy/north/n = new (entrance, src.backroom_region.turf_at(15, 14))
 				var/obj/cross_dummy/south/s = new (src.backroom_region.turf_at(15, 13), get_step(entrance, SOUTH))
 				src.south_dummies += n
 				src.south_dummies += s
-				var/obj/artifact_door/door = locate() in src.backroom_region.turf_at(15, 14)
-				door.outer_entrance_spawned = TRUE
+				inner_door = locate() in src.backroom_region.turf_at(15, 14)
+				inner_door.outer_entrance_spawned = TRUE
 			if (NORTH_ENTRANCE)
 				var/obj/cross_dummy/south/s = new (entrance, src.backroom_region.turf_at(15, 24))
 				var/obj/cross_dummy/north/n = new (src.backroom_region.turf_at(15, 25), get_step(entrance, NORTH))
 				src.north_dummies += s
 				src.north_dummies += n
-				var/obj/artifact_door/door = locate() in src.backroom_region.turf_at(15, 24)
-				door.outer_entrance_spawned = TRUE
+				inner_door = locate() in src.backroom_region.turf_at(15, 24)
+				inner_door.outer_entrance_spawned = TRUE
 			if (EAST_ENTRANCE)
 				var/obj/cross_dummy/west/w = new (entrance, src.backroom_region.turf_at(17, 19))
 				var/obj/cross_dummy/east/e = new (src.backroom_region.turf_at(18, 29), get_step(entrance, EAST))
 				src.east_dummies += w
 				src.east_dummies += e
-				var/obj/artifact_door/door = locate() in src.backroom_region.turf_at(17, 19)
-				door.outer_entrance_spawned = TRUE
+				inner_door = locate() in src.backroom_region.turf_at(17, 19)
+				inner_door.outer_entrance_spawned = TRUE
 			if (WEST_ENTRANCE)
 				var/obj/cross_dummy/east/e = new (entrance, src.backroom_region.turf_at(13, 19))
 				var/obj/cross_dummy/west/w = new (src.backroom_region.turf_at(12, 19), get_step(entrance, WEST))
 				src.west_dummies += e
 				src.west_dummies += w
-				var/obj/artifact_door/door = locate() in src.backroom_region.turf_at(13, 19)
-				door.outer_entrance_spawned = TRUE
+				inner_door = locate() in src.backroom_region.turf_at(13, 19)
+				inner_door.outer_entrance_spawned = TRUE
 
 		entrance.density = FALSE
-		var/obj/artifact_door/wooden_door = new(entrance)
-		wooden_door.set_dir(get_dir(wooden_door, user))
+		var/obj/artifact_door/outer_door = new(entrance)
+		outer_door.set_dir(get_dir(outer_door, user))
+		inner_door.linked_door = outer_door
+		outer_door.linked_door = inner_door
 		src.update_visual_mirrors(entrance, entrance_dir)
 		entrance.icon = 'icons/turf/floors.dmi'
 		entrance.icon_state = "darkvoid"
@@ -140,9 +147,9 @@
 				T = src.backroom_region.turf_at(i, j)
 				station_turf = locate(station_reference.x + x_start_offset + i, station_reference.y + y_start_offset + j, station_reference.z)
 
+				T.vis_contents // clear previously assigned vis_contents
 				if (station_turf)
 					station_turf.appearance_flags |= KEEP_TOGETHER
-					T.vis_contents = null // clear previously assigned vis_contents
 					//RL_UPDATE_LIGHT(T)
 					//T.RL_AddOverlay()
 					//RL_APPLY_LIGHT(T, null, null, station_turf.RL_GetBrightness(), 0, 255, 255, 255)
@@ -154,7 +161,14 @@
 					T.icon = station_turf.icon
 					T.icon_state = station_turf.icon_state
 					//T.fullbright = TRUE
-					T.RL_Init()
+				else // past edge of map
+					T.icon = null
+					T.icon_state = null
+					T.density = TRUE
+					T.opacity = TRUE
+					T.name = ""
+					T.desc = ""
+				T.RL_Init()
 
 /datum/artifact/key
 	associated_object = /obj/item/artifact/key
@@ -188,11 +202,13 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 		..()
 		src.exit_turf = exit
 
+	disposing()
+		src.exit_turf = null
+		..()
+
 	Crossed(atom/movable/AM)
 		if (AM.dir == src.required_dir)
 			AM.set_loc(src.exit_turf)
-			var/obj/artifact_door/wooden_door = locate() in src.exit_turf
-			wooden_door.open(FALSE)
 		else
 			return ..()
 
@@ -222,6 +238,12 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 	var/can_be_opened = TRUE
 	/// if a door as a part of the fissure, whether the corresponding outer entrance has been created or not
 	var/outer_entrance_spawned = FALSE
+	/// associated door in/outside the fissure
+	var/obj/artifact_door/linked_door = null
+
+	disposing()
+		src.linked_door = null
+		..()
 
 	attack_hand(mob/user)
 		..()
@@ -233,6 +255,7 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 			src.close()
 		else if (!src.open && istype(get_area(user), /area/artifact_backroom))
 			if (!src.outer_entrance_spawned)
+				src.deny_open()
 				boutput(user, SPAN_NOTICE("[src] doesn't seemed to be locked, but won't open either... strange."))
 			else
 				src.open()
@@ -267,7 +290,7 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 		else
 			src.Attackhand(L)
 
-	proc/open(do_animation = TRUE)
+	proc/open(recursion_check = TRUE)
 		src.icon_state = "door0"
 		if (do_animation)
 			playsound(src, 'sound/machines/door_open.ogg', 50, TRUE)
@@ -275,14 +298,18 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 		src.set_opacity(FALSE)
 		src.density = FALSE
 		src.open = TRUE
+		if (recursion_check)
+			src.linked_door.open(FALSE)
 
-	proc/close()
+	proc/close(recursion_check = TRUE)
 		playsound(src, 'sound/machines/door_close.ogg', 50, TRUE)
 		src.icon_state = "door1"
 		flick("doorc1", src)
 		src.set_opacity(TRUE)
 		src.density = TRUE
 		src.open = FALSE
+		if (recursion_check)
+			src.linked_door.close(FALSE)
 
 	proc/deny_open()
 		flick("door_deny", src)
@@ -292,6 +319,14 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 
 	unopenable
 		can_be_opened = FALSE
+
+TYPEINFO(/turf/unsimulated/wall/auto/adventure/ancient/artifact_fissure)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/ancient/artifact_fissure)
+	. = ..()
+	src.connects_to[/obj/artifact_door] = TRUE
+	src.connects_to[/obj/artifact_door/unopenable] = TRUE
+	src.connects_with_overlay[/obj/artifact_door] = TRUE
+	src.connects_with_overlay[/obj/artifact_door/unopenable] = TRUE
 
 /area/artifact_backroom
 	name = "Dimensional Fissure"
