@@ -912,6 +912,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/nine_mm_surplus/mag_mor
 	icon_recoil_cap = 15
+	tooltip_flags = REBUILD_USER
 	get_desc(dist, mob/user)
 		if (user.get_gang() != null)
 			. += "For when you need MOR' DAKKA. Uses 9mm Surplus rounds."
@@ -2320,7 +2321,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	attack_self(mob/user as mob)
 
 		user.drop_item(src) //clear hands
-		boutput(user, SPAN_NOTICE("You rip apart the the [src]!"))
+		boutput(user, SPAN_NOTICE("You rip apart the [src]!"))
 		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 
 		// give an OPEN slamgun

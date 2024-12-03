@@ -186,9 +186,11 @@ var/datum/respawn_controls/respawn_controller
 		var/is_round_observer = FALSE
 		if (istype(usr, /mob/dead/observer))
 			var/mob/dead/observer/ghost = usr
+			ghost.last_ckey = null
 			is_round_observer = ghost.observe_round
 		else if (usr.ghost)	// ghost is on /mob
 			var/mob/dead/observer/ghost = usr.ghost
+			ghost.last_ckey = null
 			is_round_observer = ghost?.observe_round
 			if (isliving(usr) && inafterlife(usr))
 				var/mob/living/oldmob = usr

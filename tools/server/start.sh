@@ -9,7 +9,7 @@ cd /ss13_server
 # Global config values
 source buildByond.conf
 
-# Load any server-specific config values (wil overwrite any existing global values)
+# Load any server-specific config values (will overwrite any existing global values)
 if [[ -v SS13_ID ]]; then
 	SS13_ENV="tools/server/.env.$SS13_ID"
 	if [ -e "$SS13_ENV" ]; then
@@ -28,6 +28,7 @@ if [ -n "$(ls -A update)" ]; then
 		mv "$filename" ..
 	done
 	cd ..
+	find ./tools -type f -name "*.sh" -o -name "dc" -exec chmod +x {} \;
 fi
 
 # Update external libraries
@@ -41,5 +42,4 @@ export PATH=$BYONDDIR/bin:$PATH
 export LD_LIBRARY_PATH=$BYONDDIR/bin${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 
 echo "Starting server..."
-SS13_PORT="${SS13_PORT:-6969}"
 DreamDaemon "goonstation.dmb" $SS13_PORT -trusted -verbose >>"data/errors.log" 2>&1

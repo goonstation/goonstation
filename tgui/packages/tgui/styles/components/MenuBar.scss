@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use '../base.scss';
-@use '../functions.scss' as *;
+@use 'sass:color';
+@use '../base';
 
 $separator-color: base.$color-bg-section;
 $background-color: base.$color-bg !default;
@@ -22,7 +22,7 @@ $dropdown-z-index: 5;
 
 .MenuBar__hover {
   &:hover {
-    background-color: lighten($background-color, 30%);
+    background-color: color.adjust($background-color, $lightness: 30%);
     transition: background-color 0ms;
   }
 }

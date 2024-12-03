@@ -5,6 +5,7 @@
  * @license ISC (https://choosealicense.com/licenses/isc/)
  */
 
+import { memo, useCallback } from 'react';
 import { Stack, Tooltip } from 'tgui-core/components';
 
 import { truncate } from '../../../format';
@@ -12,22 +13,25 @@ import { ProductionCardStyle } from '../constant';
 import { ButtonWithBadge } from './ButtonWithBadge';
 import { CenteredText } from './CenteredText';
 
-export type ProductionCardProps = {
-  actionQueueRemove: (index: number) => void;
+interface ProductionCardProps {
+  onQueueRemove: (index: number) => void;
   img: string;
   index: number;
   mode: 'working' | 'halt' | 'ready';
   name: string;
-};
+}
 
 /*
   Card which shows the blueprint being produced/queued, and if currently being produced,
   a progressbar for how close it is to being done.
 */
-export const ProductionCard = (props: ProductionCardProps) => {
-  const { actionQueueRemove, img, index, mode, name } = props;
-
-  // dont display Weird things
+export const ProductionCard = memo((props: ProductionCardProps) => {
+  const { onQueueRemove, img, index, mode, name } = props;
+  const handleRemove = useCallback(
+    () => onQueueRemove(index),
+    [onQueueRemove, index],
+  );
+  // safety check to ensure not displaying weird items
   if (
     img === undefined ||
     index === undefined ||
@@ -38,10 +42,10 @@ export const ProductionCard = (props: ProductionCardProps) => {
   }
   return (
     <Stack.Item>
-      <Tooltip content={'Click to remove from queue.'}>
+      <Tooltip content="Click to remove from queue.">
         <ButtonWithBadge
           imagePath={img}
-          onClick={() => actionQueueRemove(index)}
+          onClick={handleRemove}
           width={ProductionCardStyle.Width}
           height={ProductionCardStyle.Height}
         >
@@ -53,4 +57,4 @@ export const ProductionCard = (props: ProductionCardProps) => {
       </Tooltip>
     </Stack.Item>
   );
-};
+});

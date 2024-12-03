@@ -959,7 +959,7 @@ toxic - poisons
 /datum/projectile/bullet/improvscrap
 	name = "fragments"
 	sname = "fragments"
-	icon_state = "trace"
+	icon_state = "metalproj"
 	dissipation_delay = 4
 	dissipation_rate = 1
 	implanted = /obj/item/implant/projectile/shrapnel
@@ -968,7 +968,7 @@ toxic - poisons
 /datum/projectile/bullet/improvbone
 	name = "bone"
 	sname = "bone"
-	icon_state = "trace"
+	icon_state = "boneproj"
 	dissipation_delay = 1
 	dissipation_rate = 3
 	damage_type = D_KINETIC

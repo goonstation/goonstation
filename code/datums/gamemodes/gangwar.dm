@@ -1055,6 +1055,7 @@ proc/broadcast_to_all_gangs(var/message)
 			return
 		if(!ishuman(user))
 			boutput(user, SPAN_ALERT("You don't have the dexterity to spray paint a gang tag!"))
+			return
 
 		return validLocation
 
@@ -1408,10 +1409,13 @@ proc/broadcast_to_all_gangs(var/message)
 		spraycan.charges -= targets
 		spraycan.UpdateIcon()
 		if (targets == 1)
+			var/vandalism_points = 0
+			if(!(locate(/obj/decal/cleanable/gang_graffiti) in spraycan.graffititargets[1]))
+				vandalism_points += GANG_VANDALISM_PER_GRAFFITI_TILE
 			var/obj/decal/cleanable/gang_graffiti/tag = new/obj/decal/cleanable/gang_graffiti(spraycan.graffititargets[1])
 			tag.icon_state = iconstate
 			tag.dir = spraycan.tagging_direction
-			gang?.do_vandalism(GANG_VANDALISM_PER_GRAFFITI_TILE, spraycan.graffititargets[1])
+			gang?.do_vandalism(vandalism_points, spraycan.graffititargets[1])
 		else
 			var/list/turf/turfs_ordered = new/list(length(spraycan.graffititargets))
 			var/spraydirection = dir_to_angle(spraycan.tagging_direction)
@@ -1429,11 +1433,12 @@ proc/broadcast_to_all_gangs(var/message)
 			var/vandal_score = 0
 			var/turf/chosenTurf
 			for (var/i = 1 to targets)
+				if(!(locate(/obj/decal/cleanable/gang_graffiti) in turfs_ordered[i]))
+					vandal_score += GANG_VANDALISM_PER_GRAFFITI_TILE
 				var/obj/decal/cleanable/gang_graffiti/tag = new/obj/decal/cleanable/gang_graffiti(turfs_ordered[i])
 				var/area = get_area(turfs_ordered[i])
 				tag.icon_state = "[iconstate][i]"
 				tag.dir = spraycan.tagging_direction
-				vandal_score += GANG_VANDALISM_PER_GRAFFITI_TILE
 
 				if (gang && !chosenTurf)
 					for (var/area/targetArea as anything in gang.vandalism_tracker)

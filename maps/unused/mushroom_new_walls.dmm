@@ -3891,6 +3891,12 @@
 /obj/disposalpipe/trunk/ejection{
 	dir = 1
 	},
+/obj/machinery/door_control{
+	id = "disp-vent";
+	name = "Disposal Vent Control";
+	pixel_x = 25;
+	pixel_y = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "avL" = (
@@ -3904,20 +3910,6 @@
 	dir = 4;
 	id = "Disposal Exit";
 	throw_speed = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
-"avP" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	dir = 4;
-	id = "disp-vent";
-	name = "Disposal Vents"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -4142,15 +4134,6 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "axd" = (
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
-"axe" = (
-/obj/machinery/door_control{
-	id = "disp-vent";
-	name = "Disposal Vent Control";
-	pixel_x = 25;
-	pixel_y = 5
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "axg" = (
@@ -5045,6 +5028,10 @@
 	},
 /obj/disposalpipe/trunk{
 	dir = 1
+	},
+/obj/machinery/conveyor/WE{
+	id = "garbage";
+	operating = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -17517,6 +17504,14 @@
 	dir = 6
 	},
 /area/station/chapel/sanctuary)
+"fSm" = (
+/obj/machinery/conveyor/NS{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "fSD" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -18253,6 +18248,9 @@
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "8-9"
+	},
+/obj/cable{
+	icon_state = "8-10"
 	},
 /turf/space,
 /area/station/engine/proto_gangway)
@@ -19307,6 +19305,7 @@
 /obj/stool/chair/green{
 	dir = 1
 	},
+/obj/landmark/start/job/rancher,
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
 "hsy" = (
@@ -20172,6 +20171,13 @@
 /obj/cable/yellow,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"inC" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
 "inG" = (
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
@@ -20548,10 +20554,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
-"iHG" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "iHP" = (
 /obj/stool/chair,
 /obj/machinery/portableowl/judgementowl,
@@ -21781,6 +21783,10 @@
 /obj/storage/secure/closet/command/medical_director,
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/crew_quarters/md)
+"jMp" = (
+/obj/landmark/spawner/artifact,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "jMC" = (
 /obj/cable{
 	icon_state = "4-9"
@@ -21990,6 +21996,20 @@
 	dir = 4
 	},
 /area/station/storage/primary)
+"jRC" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	dir = 4;
+	id = "Disposal Exit";
+	name = "Disposal Vents"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "jRG" = (
 /obj/item/device/radio/intercom/AI{
 	dir = 8
@@ -25331,10 +25351,6 @@
 	c_tag = "Waste Disposal";
 	dir = 9
 	},
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "mEf" = (
@@ -27400,7 +27416,13 @@
 /area/station/maintenance/southeast)
 "ojx" = (
 /obj/submachine/seed_manipulator,
-/obj/noticeboard/persistent/west,
+/obj/noticeboard/persistent{
+	name = "Botany persistent notice board";
+	persistent_id = "botany";
+	pixel_y = 0;
+	dir = 8;
+	pixel_x = -32
+	},
 /turf/simulated/floor/greenblack{
 	dir = 9
 	},
@@ -27821,6 +27843,13 @@
 	},
 /turf/space,
 /area/station/com_dish/comdish)
+"oDz" = (
+/obj/lattice,
+/obj/cable{
+	icon_state = "5-10"
+	},
+/turf/space,
+/area/station/engine/proto_gangway)
 "oDO" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
@@ -29206,6 +29235,17 @@
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
+"prA" = (
+/obj/strip_door{
+	dir = 4
+	},
+/obj/machinery/conveyor/WE{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "prL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -31592,7 +31632,10 @@
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/engine/engineering/ce)
 "raZ" = (
-/obj/noticeboard/persistent/north,
+/obj/noticeboard/persistent{
+	name = "Cargo persistent notice board";
+	persistent_id = "cargo"
+	},
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
@@ -32482,6 +32525,12 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
+"rFa" = (
+/obj/cable{
+	icon_state = "8-10"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto_gangway)
 "rFj" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light/incandescent{
@@ -34477,6 +34526,9 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
+/obj/cable{
+	icon_state = "5-8"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "tbT" = (
@@ -35003,6 +35055,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
+"ttr" = (
+/obj/cable{
+	icon_state = "1-6"
+	},
+/obj/cable{
+	icon_state = "4-5";
+	tag = null
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto_gangway)
 "ttC" = (
 /obj/lattice{
 	dir = 9;
@@ -38073,6 +38135,7 @@
 /obj/machinery/door/window/westleft{
 	name = "Chapel Mass Driver"
 	},
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 10
 	},
@@ -38827,6 +38890,7 @@
 	name = "Chapel Ejection Button";
 	pixel_y = 26
 	},
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
@@ -39660,6 +39724,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/qm)
+"xfl" = (
+/obj/machinery/conveyor/WE{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "xfu" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -39900,6 +39972,13 @@
 	icon_state = "fblue1"
 	},
 /area/station/bridge)
+"xnZ" = (
+/obj/machinery/light_switch{
+	name = "E light switch";
+	pixel_x = 24
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "xoy" = (
 /obj/storage/secure/closet/courtroom,
 /obj/machinery/light/incandescent,
@@ -89367,8 +89446,8 @@ ate
 atV
 auM
 avK
-axe
 axd
+xnZ
 mCS
 lyc
 aAP
@@ -89669,10 +89748,10 @@ atg
 atY
 arn
 auB
-auB
 xcn
 auB
 ayi
+auB
 auB
 auB
 aBS
@@ -89970,12 +90049,12 @@ aso
 ath
 aua
 arn
-avL
-kFU
+xfl
 axg
 azg
 hMM
 azg
+axg
 kFU
 axg
 aCs
@@ -90272,11 +90351,11 @@ ass
 ath
 auc
 arn
-avM
-auB
-iHG
+prA
+ayi
 auB
 ayi
+auB
 auB
 auB
 auB
@@ -90574,13 +90653,13 @@ gIB
 xDV
 arn
 arn
-avP
+fSm
+fSm
+fSm
+fSm
+fSm
+avL
 auB
-aaa
-aaB
-bcc
-bcc
-bcc
 abm
 bcc
 bcc
@@ -90875,14 +90954,14 @@ aaa
 asK
 atl
 bcc
-aLg
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+auB
+auB
+ayi
+ayi
+ayi
+auB
+avM
+ayi
 bqF
 aaa
 aaa
@@ -91182,9 +91261,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+auB
+jRC
+auB
 bqF
 aaa
 aaa
@@ -122217,7 +122296,7 @@ aaa
 aaa
 aaa
 acT
-abm
+jMp
 aaB
 aaa
 aaa
@@ -123132,7 +123211,7 @@ aaB
 aaa
 aaa
 hGD
-ezt
+inC
 oSy
 sBj
 fYS
@@ -123434,7 +123513,7 @@ aaa
 flC
 flC
 flC
-ezt
+oWj
 rgy
 ezt
 ezt
@@ -124036,8 +124115,8 @@ bob
 eek
 eDF
 ggg
-eDF
-amC
+ttr
+oDz
 aqA
 oKl
 lgj
@@ -124338,7 +124417,7 @@ bcf
 bcf
 bcf
 gAq
-bcf
+rFa
 oQi
 cKJ
 jij

@@ -346,6 +346,11 @@ ABSTRACT_TYPE(/obj/item)
 	if (storage_check && src.stored)
 		src.stored.transfer_stored_item(src, newloc)
 		return
+	if (src.storage)
+		..()
+		for (var/atom/A as anything in src.storage.get_all_contents())
+			A.parent_storage_loc_changed()
+		return
 	if (src.temp_flags & IS_LIMB_ITEM)
 		if (istype(newloc,/obj/item/parts/human_parts/arm/left/item) || istype(newloc,/obj/item/parts/human_parts/arm/right/item))
 			..()
@@ -686,7 +691,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	return 1
 
 /obj/item/proc/split_stack(var/toRemove)
-	if(toRemove >= src.amount || toRemove < 1) return null
+	if(toRemove >= src.amount || toRemove < 1 || QDELETED(src)) return null
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)
