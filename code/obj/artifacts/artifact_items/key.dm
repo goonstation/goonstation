@@ -92,8 +92,9 @@
 		entrance.density = FALSE
 		var/obj/artifact_door/outer_door = new(entrance)
 		outer_door.set_dir(get_dir(outer_door, user))
-		inner_door.linked_door = outer_door
 		outer_door.linked_door = inner_door
+		inner_door.set_dir(get_dir(outer_door, user))
+		inner_door.linked_door = outer_door
 		src.update_visual_mirrors(entrance, entrance_dir)
 		entrance.icon = 'icons/turf/floors.dmi'
 		entrance.icon_state = "darkvoid"
