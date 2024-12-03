@@ -209,7 +209,7 @@
 		if (rods)
 			rods.change_stack_amount(-1)
 
-		var/obj/grille/catwalk/catwalk = new
+		var/obj/mesh/catwalk/catwalk = new
 		catwalk.setMaterial(rods?.material)
 		catwalk.set_loc(src)
 

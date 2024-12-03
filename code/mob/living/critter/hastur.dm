@@ -305,7 +305,7 @@ var/HasturPresent = 0
 				for(var/obj/machinery/vehicle/A in src_turf)
 					if(A == O || A == user) continue
 					A.meteorhit(O)
-				for(var/obj/grille/A in src_turf)
+				for(var/obj/mesh/grille/A in src_turf)
 					if(A == O || A == user) continue
 					A.damage_blunt(10)
 				for(var/obj/window/A in src_turf)
@@ -372,7 +372,7 @@ var/HasturPresent = 0
 				for(var/obj/machinery/vehicle/A in src_turf)
 					if(A == O || A == user) continue
 					A.meteorhit(O)
-				for(var/obj/grille/A in src_turf)
+				for(var/obj/mesh/grille/A in src_turf)
 					if(A == O || A == user) continue
 					A.damage_blunt(10)
 				for(var/obj/window/A in src_turf)
