@@ -1420,6 +1420,7 @@ proc/spawn_kitchen_note()
 			<tr><td>Air alarm control</td><td>[format_frequency(FREQ_AIR_ALARM_CONTROL)]kHz</td></tr>
 			<tr><td>Tracking implants</td><td>[format_frequency(FREQ_TRACKING_IMPLANT)]kHz</td></tr>
 			<tr><td>Power systems</td><td>[format_frequency(FREQ_POWER_SYSTEMS)]kHz</td></tr>
+			<tr><td>Armory authorization \[RESTRICTED\]</td><td>[format_frequency(FREQ_ARMORY)]kHz</td></tr>
 			</table>
 			<br><br>
 			<i>Intelligent data ordering system proprietary, copyright of Nanotrasen (2053)</i>
