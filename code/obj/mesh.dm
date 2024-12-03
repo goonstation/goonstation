@@ -520,7 +520,9 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 		src.visible_message(SPAN_ALERT("<b>[user]</b> cuts apart the [src] with [I]."))
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		return
-
+	if (istype(I, /obj/item/cable_coil))
+		src.loc.Attackby(user.equipped(), user)
+		return
 	..()
 
 
@@ -542,7 +544,7 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 /obj/mesh/catwalk/jen/attackby(obj/item/I, mob/user)
 	if(issnippingtool(I))
 		..()
-
+		return
 	if(isturf(src.loc))
 		src.loc.Attackby(user.equipped(), user)
 
