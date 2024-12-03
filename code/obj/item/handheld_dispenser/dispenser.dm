@@ -31,6 +31,7 @@
 	var/selectedimage
 	var/direction = EAST
 	var/destroying = FALSE
+	var/resources = 20
 
 /obj/item/handheld_dispenser/attack_self(mob/user )
 	src.ui_interact(user)
@@ -50,8 +51,10 @@
 
 /obj/item/handheld_dispenser/ui_data(mob/user)
 	. = list(
-		"selectedimage" = (src.selectedimage || getBase64Img(selection)),
-		"mode" = src.destroying
+		"selectedimage" = (src.selectedimage || getBase64Img(selection, src.direction)),
+		"selectedcost" = 3, //TODO when datumized
+		"resources" = src.resources,
+		"destroying" = src.destroying,
 	)
 
 /obj/item/handheld_dispenser/ui_static_data(mob/user)
@@ -60,12 +63,14 @@
 	for (var/itemtype in atmospipesforcreation)
 		.["atmospipes"] += list(list(
 			"type" = itemtype,
-			"image" = getBase64Img(atmospipesforcreation[itemtype])
+			"image" = getBase64Img(atmospipesforcreation[itemtype]),
+			"cost" = 4, //TODO when datumized
 			))
 	for (var/itemtype in atmosmachinesforcreation)
 		.["atmosmachines"] += list(list(
 			"type" = itemtype,
-			"image" = getBase64Img(atmosmachinesforcreation[itemtype])
+			"image" = getBase64Img(atmosmachinesforcreation[itemtype]),
+			"cost" = 4,
 			))
 
 /obj/item/handheld_dispenser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -79,6 +84,12 @@
 			. = TRUE
 		if("changedir")
 			src.direction = text2num_safe(params["newdir"])
+			//invalidate the cached selected image
+			src.selectedimage = null
+			. = TRUE
+		if("toggle-destroying")
+			src.destroying = !src.destroying
+			. = TRUE
 
 /obj/item/handheld_dispenser/proc/getBase64Img(atom/object, direction = SOUTH)
 	. = src.cache["[object][direction]"]
