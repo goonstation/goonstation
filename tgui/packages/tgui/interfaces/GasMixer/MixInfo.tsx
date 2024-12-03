@@ -22,7 +22,7 @@ export const MixInfo = (props: MixInfoProps) => {
     <LabeledList>
       {shownGasses.length > 0 ? (
         <>
-          {mix.gasses
+          {shownGasses
             .sort((gas1, gas2) => gas2.Ratio - gas1.Ratio)
             .map((gas) => (
               <LabeledList.Item
