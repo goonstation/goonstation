@@ -76,7 +76,7 @@
 				inner_door.outer_entrance_spawned = TRUE
 			if (EAST_ENTRANCE)
 				var/obj/cross_dummy/west/w = new (entrance, src.backroom_region.turf_at(17, 19))
-				var/obj/cross_dummy/east/e = new (src.backroom_region.turf_at(18, 29), get_step(entrance, EAST))
+				var/obj/cross_dummy/east/e = new (src.backroom_region.turf_at(18, 19), get_step(entrance, EAST))
 				src.east_dummies += w
 				src.east_dummies += e
 				inner_door = locate() in src.backroom_region.turf_at(17, 19)
@@ -208,7 +208,7 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 		..()
 
 	Crossed(atom/movable/AM)
-		if (AM.dir == src.required_dir)
+		if (AM.dir == src.required_dir && !istype(AM, /obj/artifact_door) && !istype(AM, /obj/cross_dummy))
 			AM.set_loc(src.exit_turf)
 		else
 			return ..()
