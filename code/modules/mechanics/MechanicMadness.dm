@@ -1841,8 +1841,8 @@
 	var/rr = 1
 	var/rw = 1
 
-	var/buffer_model = FIFO_BUFFER
-	var/buffer_string = "FIFO"
+	var/buffer_model = RING_BUFFER
+	var/buffer_string = "ring"
 	var/changesig = 0
 
 	get_desc()
@@ -1870,8 +1870,10 @@
 		if(model == "random")
 			buffer_model = RANDOM_BUFFER
 		buffer_string = model
+		boutput(user, "You set the buffer mode to [model]")
 		tooltip_rebuild = 1
-		buffer.RemoveAll()
+		qdel(buffer)
+		buffer = list()
 		return 1
 
 	//Thanks delay component
@@ -1904,7 +1906,8 @@
 		buffer_size = inp
 		tooltip_rebuild = 1
 		boutput(user,"You set the buffer size to [inp]")
-		buffer.RemoveAll()
+		qdel(buffer)
+		buffer = list()
 		return
 
 
@@ -1963,8 +1966,6 @@
 				signal = buffer[bufl]
 				buffer.Remove(buffer[bufl])
 			if(buffer_model == RING_BUFFER && bufl >= rr && !isnull(buffer[rr]) )
-//				if(rr == rw)
-//					rw ++
 				signal = buffer[rr]
 				buffer[rr] = null
 				rr++
