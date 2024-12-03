@@ -14,7 +14,7 @@ import type { GeneTekData } from '../type';
 
 export const CombineGenesModal = () => {
   const { data, act } = useBackend<GeneTekData>();
-  const [isCombining, setIsCombining] = useSharedState('iscombining', false);
+  const [_isCombining, setIsCombining] = useSharedState('iscombining', false);
   const { savedMutations, combining = [] } = data;
   return (
     <Modal full width={20}>

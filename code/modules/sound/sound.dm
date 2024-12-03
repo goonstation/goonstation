@@ -453,7 +453,8 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 		S.volume = ourvolume
 
 		var/orig_freq = S.frequency
-		S.frequency *= (HAS_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) : 1)
+		if(C.mob)
+			S.frequency *= (HAS_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) : 1)
 
 		C << S
 
