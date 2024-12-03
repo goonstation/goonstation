@@ -21956,6 +21956,12 @@
 	pixel_y = 32
 	},
 /obj/decal/stripe_caution,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload_foyer)
 "bzz" = (
@@ -55177,12 +55183,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/command{
-	name = "AI Upload"
-	},
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/glass/command,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "qqS" = (
@@ -59385,14 +59389,6 @@
 "tzH" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	pixel_y = -20;
-	tag = ""
 	},
 /obj/machinery/light{
 	dir = 1;

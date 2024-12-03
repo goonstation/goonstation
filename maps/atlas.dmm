@@ -6092,7 +6092,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/mob/living/critter/small_animal/bat/doctor,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aHz" = (

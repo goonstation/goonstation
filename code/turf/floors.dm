@@ -2702,6 +2702,23 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 		if(prob(10))
 			src.icon_state = "snow_rough[rand(1,3)]"
 
+/turf/simulated/floor/swampgrass
+	name = "reedy grass"
+	desc = ""
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "swampgrass"
+
+	New()
+		..()
+		set_dir(pick(1,2,4,8))
+		return
+
+/turf/simulated/floor/swampgrass_edging
+	name = "reedy grass"
+	desc = ""
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "swampgrass_edge"
+
 TYPEINFO(/turf/simulated/floor/auto/glassblock)
 	mat_appearances_to_ignore = list("steel","synthrubber","glass")
 	connect_diagonal = 1
@@ -2848,9 +2865,11 @@ TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock/purple)
 DEFINE_FLOORS(mauxite,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "floor$$mauxite";\
-	default_material = "mauxite")
+	default_material = "mauxite";\
+	uses_default_material_appearance = TRUE)
 
 DEFINE_FLOORS(bamboo,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "floor$$bamboo";\
-	default_material = "bamboo")
+	default_material = "bamboo";\
+	uses_default_material_appearance = TRUE)

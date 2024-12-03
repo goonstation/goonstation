@@ -32,10 +32,28 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 		. = ..()
 		if (slot == SLOT_BACK)
 			src.wear_layer = max(src.wear_layer, MOB_BACK_SUIT_LAYER) // set to a higher layer, unless they're on an even higher layer
+		var/mob/living/carbon/human/H = user
+		if (src.hooded && istype(H) && H.head)
+			var/obj/ability_button/hood_toggle/toggle = locate() in src.ability_buttons
+			toggle?.execute_ability()
+
 
 	unequipped(mob/user)
 		. = ..()
 		src.wear_layer = initial(src.wear_layer)
+
+	/// if this item has a hood, returns if the hood can be worn
+	proc/can_wear_hood()
+		. = FALSE
+		var/mob/living/carbon/human/H = src.loc
+		if (!istype(H))
+			return
+		if ((H.wear_suit == src && !H.head) || !H.wear_suit)
+			return TRUE
+
+	/// what happens after the hood is toggled. override as needed
+	proc/on_toggle_hood()
+		return
 
 /obj/item/clothing/suit/hoodie
 	name = "hoodie"
@@ -1943,12 +1961,6 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "puffer-medsci"
 	item_state = "puffer-medsci"
 
-/obj/item/clothing/suit/puffer/hi_vis
-	name = "hi-vis puffer jacket"
-	desc = "A coat that makes you even more visible!"
-	icon_state = "puffer-hivis"
-	item_state = "puffer-hivis"
-
 /obj/item/clothing/suit/puffer/engi
 	name = "engineering puffer jacket"
 	desc = "A big comfy puffer jacket, perfect for the engine!"
@@ -2025,10 +2037,41 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	icon_state = "hi-vis"
 	item_state = "hi-vis"
 	body_parts_covered = TORSO
+	/// Hi-vis vests can reflect light, sorta
+	var/image/reflection
+
+	New()
+		..()
+		src.reflection = image(src.wear_image_icon, "[src.icon_state]-overlay")
+		src.reflection.plane = PLANE_SELFILLUM
+		src.reflection.color = rgb(255, 255, 255)
+		src.reflection.alpha = 200
+
+	equipped(mob/user, slot)
+		..()
+		user.UpdateOverlays(src.reflection, "reflection")
+
+	unequipped(mob/user)
+		. = ..()
+		user.ClearSpecificOverlays("reflection")
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 5)
+
+/obj/item/clothing/suit/hi_vis/puffer
+	name = "hi-vis puffer jacket"
+	desc = "A coat that makes you even more visible!"
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon_state = "puffer-hivis"
+	item_state = "puffer-hivis"
+	body_parts_covered = TORSO|LEGS|ARMS
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 30)
 
 /obj/item/clothing/suit/hitman
 	name = "black jacket"
@@ -2172,6 +2215,10 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_SHOES
 
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_hood, hood_style = "snowcoat")
+
 	setupProperties()
 		..()
 		setProperty("coldprot", 50)
@@ -2180,6 +2227,13 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 		setProperty("rangedprot", 0.5)
 		setProperty("movespeed", 0.5)
 		setProperty("disorient_resist", 15)
+
+	on_toggle_hood()
+		..()
+		if (src.hooded)
+			setProperty("coldprot", 70)
+		else
+			setProperty("coldprot", 50)
 
 /obj/item/clothing/suit/jean_jacket
 	name = "jean jacket"

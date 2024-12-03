@@ -31,7 +31,7 @@ export const ResearchLevel = {
 };
 
 export const haveDevice = (equipmentCooldown, name) => {
-  for (const { label, cooldown } of equipmentCooldown) {
+  for (const { label } of equipmentCooldown) {
     if (label === name) {
       return true;
     }
