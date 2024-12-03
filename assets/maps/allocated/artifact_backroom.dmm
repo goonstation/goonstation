@@ -35,7 +35,7 @@
 /turf/unsimulated/floor/marble/black,
 /area/artifact_backroom)
 "L" = (
-/turf/unsimulated/wall/auto/adventure/ancient,
+/turf/unsimulated/wall/auto/adventure/ancient/artifact_fissure,
 /area/artifact_backroom)
 "S" = (
 /obj/artifact_door{
