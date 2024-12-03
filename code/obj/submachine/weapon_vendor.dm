@@ -19,6 +19,7 @@
 #define WEAPON_VENDOR_CATEGORY_UTILITY "utility"
 #define WEAPON_VENDOR_CATEGORY_ASSISTANT "assistant"
 #define WEAPON_VENDOR_CATEGORY_FISHING "fishing"
+#define WEAPON_VENDOR_CATEGORY_MAIL "mail"
 
 /obj/submachine/weapon_vendor
 	name = "Weapons Vendor"
@@ -297,6 +298,36 @@
 		else
 			return ..()
 
+/obj/submachine/weapon_vendor/mail
+	name = "Courier Supplies Vendor"
+	desc = "An automated quartermaster service for obtaining and upgrading your courier gear."
+	icon_state = "mail"
+	credits = list(WEAPON_VENDOR_CATEGORY_MAIL = 0)
+	token_accepted = /obj/item/currency/mail
+	sound_token = 'sound/effects/insert_ticket.ogg'
+	log_purchase = FALSE
+	layer = 4
+
+	ex_act()
+		return
+
+	New()
+		materiel_stock += new/datum/materiel/mail_gear/crate
+		materiel_stock += new/datum/materiel/mail_gear/satchel
+		..()
+
+	accepted_token(var/obj/item/currency/mail/token)
+		if (istype(token, /obj/item/currency/mail))
+			src.credits[WEAPON_VENDOR_CATEGORY_MAIL]+=token.amount
+		..()
+
+	attack_ai(mob/user)
+		return ui_interact(user)
+
+	MouseDrop_T(var/obj/item/I, var/mob/user)
+
+		if (istype(I, /obj/item/currency/mail))
+			src.Attackby(I, user)
 // Materiel avaliable for purchase:
 
 /datum/materiel
@@ -633,6 +664,20 @@
 	description = "A Wall Mount to attach fish to and show it off."
 	cost = 10
 
+// MAIL
+
+/datum/materiel/mail_gear/crate
+	name = "Mail Crate"
+	path = /obj/storage/crate/mail
+	description = "A spare mail crate for thematic mail and miscellanea movement."\
+	cost = 1
+
+/datum/materiel/mail_gear/satchel
+	name = "Mail Satchel"
+	path = /obj/item/satchel/mail
+	description = "A spare mail satchel for easy mail carriage."\
+	cost = 3
+
 // Requisition tokens
 /obj/item/requisition_token
 	name = "requisition token"
@@ -672,3 +717,4 @@
 #undef WEAPON_VENDOR_CATEGORY_UTILITY
 #undef WEAPON_VENDOR_CATEGORY_ASSISTANT
 #undef WEAPON_VENDOR_CATEGORY_FISHING
+#undef WEAPON_VENDOR_CATEGORY_MAIL
