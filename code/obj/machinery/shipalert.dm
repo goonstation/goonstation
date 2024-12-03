@@ -22,8 +22,8 @@ TYPEINFO(/obj/machinery/shipalert)
 
 	var/usageState = 0 // 0 = glass cover, hammer. 1 = glass cover, no hammer. 2 = cover smashed
 	var/working = FALSE //processing loops
-	var/cooldownPeriod = 3 SECONDS //5 minutes, change according to player abuse
-	var/deactivateCooldown = 3 SECONDS // 30 seconds, no instantly taking it back
+	var/cooldownPeriod = 5 MINUTES //5 minutes, change according to player abuse
+	var/deactivateCooldown = 30 SECONDS // 30 seconds, no instantly taking it back
 	var/max_msg_length = 200 //half of a command alert
 
 	New()
