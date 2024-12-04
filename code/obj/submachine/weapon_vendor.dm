@@ -314,6 +314,8 @@
 	New()
 		materiel_stock += new/datum/materiel/mail_gear/crate
 		materiel_stock += new/datum/materiel/mail_gear/satchel
+		materiel_stock += new/datum/materiel/mail_gear/big_satchel
+		material_stock += new/datum/materiel/mail_gear/syndi_jumpsuit
 		..()
 
 	accepted_token(var/obj/item/currency/mail/token)
@@ -677,6 +679,18 @@
 	path = /obj/item/satchel/mail
 	description = "A spare mail satchel for easy mail carriage."\
 	cost = 3
+
+/datum/materiel/mail_gear/big_satchel
+	name = "Mail Satchel"
+	path = /obj/item/satchel/mail/large
+	description = "A spare mail satchel for easy mail carriage. This one's designed to carry more mail."\
+	cost = 10
+
+/datum/materiel/mail_gear/syndie_jumpsuit
+	name = "Authentic Mail Courier Jumpsuit"
+	path = /obj/item/clothing/under/misc/mail/syndicate
+	description = "A authentic mail courier jumpsuit, typically worn by those offically employed by Nanotransen. Now with less stolen Technology!"\
+	cost = 20
 
 // Requisition tokens
 /obj/item/requisition_token

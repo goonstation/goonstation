@@ -326,6 +326,12 @@
 			..()
 			allowed = list(/obj/item/random_mail)
 
+		large
+			name = "large mail satchel"
+			desc = "A leather bag for holding mail. This one's much larger then usual."
+			icon_state = "mailsatchel-large"
+			maxitems = 100
+
 	figurines
 		name = "figurine case"
 		desc = "A cool plastic case for storing little figurines!"
