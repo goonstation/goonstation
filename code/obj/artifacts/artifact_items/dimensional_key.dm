@@ -28,7 +28,7 @@
 			return
 		if (!iswall(target))
 			return
-		if (BOUNDS_DIST(user, target) > 0 || istype(get_area(target), /area/artifact_fissure) || user.z == Z_LEVEL_SECRET || user.z == Z_LEVEL_ADVENTURE)
+		if (BOUNDS_DIST(user, target) > 0 || isrestrictedz(get_z(target)))
 			boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand. [src] probably doesn't work here"))
 			return
 
