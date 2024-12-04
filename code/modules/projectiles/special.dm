@@ -1180,10 +1180,17 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		P.special_data["projcross"] = cross2
 
 	on_launch(obj/projectile/O)
+		var/new_color
 		if(length(O.special_data))
 			if(O.special_data["speed_mult"])
 				O.internal_speed = src.projectile_speed * O.special_data["speed_mult"]
-			src.color_icon = O.special_data["proj_color"]
+			if(O.special_data["proj_color"])
+				new_color = O.special_data["proj_color"]
+		if(!new_color)
+			var/datum/color/new_rgb = O.reagents.get_average_color()
+			new_color = rgb(new_rgb.r, new_rgb.g, new_rgb.b, new_rgb.a)
+		if(new_color)
+			src.color_icon = new_color
 		O.AddComponent(/datum/component/gaseous_projectile) // Pierce anything that doesn't block LoS - if you can see it you can burn it
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)

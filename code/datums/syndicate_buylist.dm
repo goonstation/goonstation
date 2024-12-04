@@ -1107,6 +1107,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
+/datum/syndicate_buylist/traitor/backtank
+	name = "GR1-Mk3 Dirt Dispenser"
+	items = list(/obj/item/reagent_containers/glass/backtank/syndicate, /obj/item/gun/sprayer/syndicate)
+	cost = 6
+	desc = "The GR1-Mk3 Dirt Dispenser, a must-have tool for those looking to turn pristine environments into disgusting hellscapes. Equipped with a high-efficiency spray nozzle, it spreads filth with devastating precision."
+	job = list("Janitor")
+	can_buy = UPLINK_TRAITOR
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)

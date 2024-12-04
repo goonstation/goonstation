@@ -1272,6 +1272,25 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		src.set_current_projectile(new /datum/projectile/special/shotchem/wave/wide/emagged)
 		src.projectiles = null
 
+	syndicate
+		name = "\improper GR1-Mk3 Dirt Dispenser"
+		desc = "The Grime Release, Version 1, Mark III Dirt Dispenser, absolute bane of cleanliness.<br>\
+			Must ONLY be used with one of many Syndicate licensed GR1-Mk3 back tanks."
+		contraband = 4
+		icon_state = "sprayer_s"
+		item_state = "janitor_sprayer_s"
+		var/image/syndicate_overlay
+
+		process_ammo(mob/user)
+			if (!src.canshoot(user))
+				boutput(user, SPAN_ALERT("[src] makes a sad little pffft noise."))
+				return FALSE
+			if (prob(2)) // small chance to clog up instead randomly
+				boutput(user, SPAN_ALERT("[src] sputters and clogs up!"))
+				src.clogged = TRUE
+				return FALSE
+			return TRUE
+
 //Why are all the sane reagent container behaviour on /glass?!!!?
 /obj/item/reagent_containers/glass/backtank
 	name = "\improper WA-V3 back tank"
@@ -1293,18 +1312,22 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 
 	New(loc, new_initial_reagents)
 		..()
+		src.setup_overlay()
+		src.create_storage(/datum/storage, max_wclass = W_CLASS_SMALL, slots = 3, opens_if_worn = TRUE)
 
+	proc/setup_overlay()
 		src.AddComponent(/datum/component/reagent_overlay/worn_overlay/janitor_tank, src.icon, src.icon_state,\
 			reagent_overlay_states = 6, reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, queue_updates = TRUE,\
 			worn_overlay_icon = src.wear_image_icon, worn_overlay_icon_state = src.icon_state, worn_overlay_states = 1)
-
-		src.create_storage(/datum/storage, max_wclass = W_CLASS_SMALL, slots = 3, opens_if_worn = TRUE)
 
 	is_open_container(input)
 		return input
 
 	on_reagent_change(add)
 		..()
+		src.blacklist_check()
+
+	proc/blacklist_check()
 		if (src.reagents.has_any(global.extinguisher_blacklist_melt) && !src.hasStatus("acid"))
 			src.setStatus("acid", 5 SECONDS)
 
@@ -1345,6 +1368,23 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 				src.reagents.clear_reagents()
 			return
 		. = ..()
+
+	syndicate
+		name = "\improper GR1-Mk3 back tank"
+		desc = "A little label on the side reads \"Now with corrosive substances support!\"."
+		icon_state = "janitor_tank_s"
+		item_state = "janitor_tank_s"
+		initial_volume = 500
+		initial_reagents = list("sewage" = 500)
+		contraband = 4
+
+		setup_overlay()
+			src.AddComponent(/datum/component/reagent_overlay/worn_overlay/janitor_tank, src.icon, "janitor_tank",\
+				reagent_overlay_states = 6, reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, queue_updates = TRUE,\
+				worn_overlay_icon = src.wear_image_icon, worn_overlay_icon_state = "janitor_tank", worn_overlay_states = 1)
+
+		blacklist_check()
+			return
 
 /datum/projectile/special/shotchem/wave
 	name = "chemicals"
