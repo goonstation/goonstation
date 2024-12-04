@@ -1218,7 +1218,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	proc/turf_effect(obj/projectile/O, turf/T)
 		src.emit_chems(T, O)
 		src.emit_gas(T, 0)
-		T.active_liquid?.try_connect_to_adjacent()
+		T?.active_liquid?.try_connect_to_adjacent()
 		if(O.reagents?.total_volume < 0.01)
 			O.die()
 

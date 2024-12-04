@@ -1110,8 +1110,8 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 /datum/syndicate_buylist/traitor/backtank
 	name = "GR1-Mk3 Dirt Dispenser"
 	items = list(/obj/item/reagent_containers/glass/backtank/syndicate, /obj/item/gun/sprayer/syndicate)
-	cost = 6
-	desc = "The GR1-Mk3 Dirt Dispenser, a must-have tool for those looking to turn pristine environments into disgusting hellscapes. Equipped with a high-efficiency spray nozzle, it spreads filth with devastating precision."
+	cost = 4
+	desc = "The GR1-Mk3 Dirt Dispenser, a must-have tool for those looking to turn pristine environments into disgusting hellscapes. Reinforced to spray ANY liquid without clogging or melting AND it comes pre-loaded with a gross mix of whatever we fished out of the garbage."
 	job = list("Janitor")
 	can_buy = UPLINK_TRAITOR
 

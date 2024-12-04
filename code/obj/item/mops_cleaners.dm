@@ -1285,10 +1285,6 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 			if (!src.canshoot(user))
 				boutput(user, SPAN_ALERT("[src] makes a sad little pffft noise."))
 				return FALSE
-			if (prob(2)) // small chance to clog up instead randomly
-				boutput(user, SPAN_ALERT("[src] sputters and clogs up!"))
-				src.clogged = TRUE
-				return FALSE
 			return TRUE
 
 //Why are all the sane reagent container behaviour on /glass?!!!?
@@ -1375,8 +1371,32 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		icon_state = "janitor_tank_s"
 		item_state = "janitor_tank_s"
 		initial_volume = 500
-		initial_reagents = list("sewage" = 500)
+		initial_reagents = list("sewage", "yuck", "badgrease", "oil", "toxic_slurry", "pizza", "space_drugs", "ants", "spiders", "miasma")
 		contraband = 4
+
+		New(loc, new_initial_reagents)
+			// Randomly fill up tank with junk
+			var/total_volume = src.initial_volume
+			var/list/reagent_pool = src.initial_reagents.Copy()
+			var/list/reagent_amounts = list()
+			while (total_volume > 0 && length(reagent_pool) > 0)
+				var/selected_reagent = pick(reagent_pool)
+				var/amt = 0
+				// Ensure the last reagent gets all remaining volume
+				if (length(reagent_pool) == 1)
+					amt = total_volume
+				else
+					// Dynamically adjust max and min to prevent underflow
+					var/max_amt = min(total_volume - (length(reagent_pool) - 1), max(10, total_volume / 5))
+					var/min_amt = min(10, max_amt)
+					amt = round(rand(min_amt, max_amt))
+
+				reagent_amounts[selected_reagent] = amt
+				total_volume -= amt
+				reagent_pool -= selected_reagent
+			src.initial_reagents = reagent_amounts
+
+			..()
 
 		setup_overlay()
 			src.AddComponent(/datum/component/reagent_overlay/worn_overlay/janitor_tank, src.icon, "janitor_tank",\
@@ -1389,7 +1409,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 /datum/projectile/special/shotchem/wave
 	name = "chemicals"
 	icon = 'icons/effects/96x96.dmi'
-	icon_state = "tsunami"
+	icon_state = "tsunami_grey"
 	cost = 20
 	sname = "wave"
 	projectile_speed = 16
