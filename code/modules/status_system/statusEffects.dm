@@ -2982,8 +2982,10 @@
 	var/corrosion_stacks = 0 // 1 stack per tick
 
 	preCheck(atom/A)
-		if (!isobj(A) || (!A.density && !istype(A, /obj/item)) || istype(A, /obj/item/artifact) || istype(A, /obj/artifact) || istype(A, /obj/machinery/artifact) || \
-				istype(A, /obj/artifact_fissure_door))
+		if (!isobj(A) || (!A.density && !istype(A, /obj/item)) || A.invisibility >= INVIS_ALWAYS_ISH)
+			return
+		var/obj/O = A
+		if (O.artifact || istype(A, /obj/artifact_fissure_door))
 			return
 		return ..()
 
