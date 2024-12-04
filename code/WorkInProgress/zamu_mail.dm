@@ -204,7 +204,6 @@
 	desc = "Some scraps of a mail package opened with joy and fervor."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "mail-1-b"
-	token_collectable = TRUE
 
 	New(loc, obj/item/random_mail/mail)
 		..()
@@ -225,7 +224,7 @@
 					H.show_text("The token in this mail is gone!", "red")
 				else
 					H.show_text("You collect the token from the mail.", "blue")
-					new /obj/item/cable_coil/cut/small(src.loc)
+					new /obj/item/currency/vendor_token/mail(src.loc)
 				src.sampled = 1
 			else
 				return ..()
@@ -234,7 +233,7 @@
 
 	fraud
 		desc = "Some scraps of a mail package opened improperly and messily."
-		token_collectable = FALSE
+		sampled = 1
 		New(loc, obj/item/random_mail/mail)
 			..()
 			if (mail)
