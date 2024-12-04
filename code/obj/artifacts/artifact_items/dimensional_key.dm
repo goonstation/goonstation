@@ -110,81 +110,15 @@
 			if (!T.reachable_turfs)
 				T.reachable_turfs = list()
 			T.reachable_turfs += fissure_entr
-		src.update_visual_mirrors(entrance, entrance_dir)
+		var/area/artifact_fissure/A = get_area(inner_door)
+		A.update_visual_mirrors(entrance, entrance_dir)
+		new /obj/art_fissure_mirror_updater_dummy(fissure_entr, entrance, entrance_dir)
 		entrance.icon = 'icons/turf/floors.dmi'
 		entrance.icon_state = "darkvoid"
 		entrance.opacity = TRUE
 		entrance.name = "Thick void mist"
 		entrance.desc = "Void mist thick enough that you can't see through it.. How did this get here?"
 		RL_UPDATE_LIGHT(entrance)
-
-	proc/update_visual_mirrors(turf/station_reference, entrance)
-		var/col_start
-		var/col_end
-		var/row_start
-		var/row_end
-		var/x_start_offset
-		var/y_start_offset
-
-		switch(entrance)
-			if (NORTH_ENTRANCE)
-				col_start = 1
-				col_end = 29
-				row_start = 25
-				row_end = 35
-				x_start_offset = -15
-				y_start_offset = -24
-			if (SOUTH_ENTRANCE)
-				col_start = 1
-				col_end = 29
-				row_start = 1
-				row_end = 13
-				x_start_offset = -15
-				y_start_offset = -14
-			if (EAST_ENTRANCE)
-				col_start = 18
-				col_end = 29
-				row_start = 1
-				row_end = 35
-				x_start_offset = -17
-				y_start_offset = -19
-			if (WEST_ENTRANCE)
-				col_start = 1
-				col_end = 12
-				row_start = 1
-				row_end = 35
-				x_start_offset = -13
-				y_start_offset = -19
-
-		var/turf/T
-		var/turf/station_turf
-		for (var/i = col_start to col_end)
-			for (var/j = row_start to row_end)
-				T = src.fissure_region.turf_at(i, j)
-				station_turf = locate(station_reference.x + x_start_offset + i, station_reference.y + y_start_offset + j, station_reference.z)
-
-				T.vis_contents = null// clear previously assigned vis_contents
-				if (station_turf)
-					station_turf.appearance_flags |= KEEP_TOGETHER
-					if (!station_turf.listening_turfs)
-						station_turf.listening_turfs = list()
-					station_turf.listening_turfs += T
-
-					T.vis_contents += station_turf
-					T.density = station_turf.density
-					T.opacity = station_turf.opacity
-					T.name = station_turf.name
-					T.desc = station_turf.desc
-					T.icon = station_turf.icon
-					T.icon_state = station_turf.icon_state
-				else // past edge of map
-					T.icon = null
-					T.icon_state = null
-					T.density = TRUE
-					T.opacity = TRUE
-					T.name = ""
-					T.desc = ""
-				T.RL_Init()
 
 /datum/artifact/dimensional_key
 	associated_object = /obj/item/artifact/dimensional_key
@@ -202,6 +136,9 @@
 		var/obj/item/artifact/dimensional_key/artkey = O
 		var/datum/mapPrefab/allocated/allocated = get_singleton(/datum/mapPrefab/allocated/artifact_fissure)
 		artkey.fissure_region = allocated.load()
+		var/turf/T = artkey.fissure_region.get_center()
+		var/area/artifact_fissure/fissure_area = get_area(T)
+		fissure_area.fissure_region = artkey.fissure_region
 
 		mirrored_physical_zone_created = TRUE
 
@@ -247,6 +184,30 @@ ABSTRACT_TYPE(/obj/art_fissure_cross_dummy)
 
 	west
 		required_dir = WEST
+
+/obj/art_fissure_mirror_updater_dummy
+	name = ""
+	desc = ""
+	invisibility = INVIS_ALWAYS
+	anchored = ANCHORED_ALWAYS
+	var/turf/station_ref
+	var/entrance_loc
+
+	New(newLoc, turf/station_ref, entrance_loc)
+		..()
+		src.station_ref = station_ref
+		src.entrance_loc = entrance_loc
+
+	disposing()
+		src.station_ref = null
+		..()
+
+	Crossed(atom/movable/AM)
+		if (isliving(AM) && !isintangible(AM))
+			var/area/artifact_fissure/fissure_area = get_area(src)
+			fissure_area.update_visual_mirrors(src.station_ref, src.entrance_loc)
+			return ..()
+		return ..()
 
 /obj/artifact_fissure_door
 	name = "mysterious wooden door"
@@ -356,10 +317,79 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/ancient/artifact_fissure)
 /area/artifact_fissure
 	name = "dimensional fissure"
 	skip_sims = TRUE
+	var/datum/allocated_region/fissure_region
 
 	Entered(atom/movable/AM, atom/oldloc)
 		..()
 		AM.setStatus("art_fissure_corrosion", INFINITE_STATUS)
+
+	proc/update_visual_mirrors(turf/station_ref, entrance_loc)
+		var/col_start
+		var/col_end
+		var/row_start
+		var/row_end
+		var/x_start_offset
+		var/y_start_offset
+
+		switch(entrance_loc)
+			if (NORTH_ENTRANCE)
+				col_start = 1
+				col_end = 29
+				row_start = 25
+				row_end = 35
+				x_start_offset = -15
+				y_start_offset = -24
+			if (SOUTH_ENTRANCE)
+				col_start = 1
+				col_end = 29
+				row_start = 1
+				row_end = 13
+				x_start_offset = -15
+				y_start_offset = -14
+			if (EAST_ENTRANCE)
+				col_start = 18
+				col_end = 29
+				row_start = 1
+				row_end = 35
+				x_start_offset = -17
+				y_start_offset = -19
+			if (WEST_ENTRANCE)
+				col_start = 1
+				col_end = 12
+				row_start = 1
+				row_end = 35
+				x_start_offset = -13
+				y_start_offset = -19
+
+		var/turf/T
+		var/turf/station_turf
+		for (var/i = col_start to col_end)
+			for (var/j = row_start to row_end)
+				T = src.fissure_region.turf_at(i, j)
+				station_turf = locate(station_ref.x + x_start_offset + i, station_ref.y + y_start_offset + j, station_ref.z)
+
+				T.vis_contents = null// clear previously assigned vis_contents
+				if (station_turf)
+					station_turf.appearance_flags |= KEEP_TOGETHER
+					if (!station_turf.listening_turfs)
+						station_turf.listening_turfs = list()
+					station_turf.listening_turfs += T
+
+					T.vis_contents += station_turf
+					T.density = station_turf.density
+					T.opacity = station_turf.opacity
+					T.name = station_turf.name
+					T.desc = station_turf.desc
+					T.icon = station_turf.icon
+					T.icon_state = station_turf.icon_state
+				else // past edge of map
+					T.icon = null
+					T.icon_state = null
+					T.density = TRUE
+					T.opacity = TRUE
+					T.name = ""
+					T.desc = ""
+				T.RL_Init()
 
 /area/artifact_fissure/visual_mirror
 	name = "artifact fissure visual mirror zone"
