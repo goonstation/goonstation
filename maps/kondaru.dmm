@@ -24828,6 +24828,7 @@
 /obj/machinery/optable{
 	name = "Autopsy Table"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "bVT" = (
@@ -27597,6 +27598,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "chX" = (
@@ -30134,10 +30136,6 @@
 	dir = 1
 	},
 /area/station/crew_quarters/quarters_south)
-"crq" = (
-/obj/machinery/drainage,
-/turf/simulated/floor/engine,
-/area/station/science/testchamber)
 "csd" = (
 /obj/machinery/disposal/morgue{
 	desc = "A pneumatic delivery chute for sending a prisoner's items to their release zone.";
@@ -30393,6 +30391,7 @@
 /obj/machinery/optable{
 	id = "robotics"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "czm" = (
@@ -30416,10 +30415,6 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
-"czV" = (
-/obj/machinery/drainage,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/robotics)
 "czW" = (
 /obj/disposalpipe/segment/transport,
 /turf/space,
@@ -48809,10 +48804,6 @@
 /obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/core)
-"pKT" = (
-/obj/machinery/drainage,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "pLb" = (
 /obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
@@ -53044,6 +53035,7 @@
 	pixel_y = -1;
 	rand_pos = 0
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "sMK" = (
@@ -87116,7 +87108,7 @@ abZ
 chw
 chB
 dnP
-crq
+chS
 qrw
 kQR
 chw
@@ -95541,7 +95533,7 @@ oGg
 axG
 baC
 bbC
-pKT
+bGb
 bGb
 qIt
 bfZ
@@ -95857,7 +95849,7 @@ bfZ
 rUu
 chN
 coo
-czV
+con
 czk
 boV
 bxK

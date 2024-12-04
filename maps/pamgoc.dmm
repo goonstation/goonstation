@@ -10895,7 +10895,6 @@
 /obj/cable{
 	icon_state = "6-9"
 	},
-/obj/machinery/drainage,
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
 "aya" = (
@@ -15597,6 +15596,7 @@
 /obj/machinery/optable{
 	id = "OR2"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "aKE" = (
@@ -23480,6 +23480,7 @@
 /obj/machinery/optable{
 	id = "OR1"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "beu" = (
@@ -31785,10 +31786,6 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
-"bDe" = (
-/obj/machinery/drainage,
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "bDf" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -31812,10 +31809,6 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
-"bDl" = (
-/obj/machinery/drainage,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "bDm" = (
 /obj/machinery/atmospherics/pipe/simple{
 	level = 2
@@ -33940,6 +33933,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -36644,6 +36638,7 @@
 /area/station/medical/medbay/surgery)
 "bNJ" = (
 /obj/machinery/optable,
+/obj/machinery/drainage,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -36652,6 +36647,7 @@
 /obj/machinery/optable{
 	id = "robotics"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "bNL" = (
@@ -36659,6 +36655,7 @@
 	name = "Autopsy Table"
 	},
 /obj/item/storage/box/body_bag,
+/obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "bNM" = (
@@ -52583,7 +52580,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment/morgue,
-/obj/machinery/drainage,
 /obj/machinery/computer/operating/small{
 	id = "OR2"
 	},
@@ -61784,7 +61780,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment/morgue,
-/obj/machinery/drainage,
 /obj/machinery/computer/operating/small{
 	id = "OR1"
 	},
@@ -113810,7 +113805,7 @@ aKv
 cCn
 chA
 cwU
-bDl
+cwU
 cwU
 aLi
 bbA
@@ -116825,7 +116820,7 @@ cCp
 cpX
 crp
 beo
-bDe
+crp
 bNK
 crp
 beB
