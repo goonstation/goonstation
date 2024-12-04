@@ -3,11 +3,11 @@
 #define SOUTH_ENTRANCE 3
 #define WEST_ENTRANCE 4
 
-/obj/item/artifact/key
+/obj/item/artifact/dimensional_key
 	name = "artifact key"
 	icon = 'icons/obj/artifacts/artifactsitemS.dmi'
-	associated_datum = /datum/artifact/key
-	var/datum/allocated_region/backroom_region
+	associated_datum = /datum/artifact/dimensional_key
+	var/datum/allocated_region/fissure_region
 
 	// var names here are in reference to inside the fissure - south means south entrance of the room
 	var/list/south_dummies = list()
@@ -28,7 +28,7 @@
 			return
 		if (!iswall(target))
 			return
-		if (BOUNDS_DIST(user, target) > 0 || istype(get_area(target), /area/artifact_backroom) || user.z == Z_LEVEL_SECRET || user.z == Z_LEVEL_ADVENTURE)
+		if (BOUNDS_DIST(user, target) > 0 || istype(get_area(target), /area/artifact_fissure) || user.z == Z_LEVEL_SECRET || user.z == Z_LEVEL_ADVENTURE)
 			boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand. [src] probably doesn't work here"))
 			return
 
@@ -58,58 +58,60 @@
 				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
 
 	proc/create_entrance(entrance_dir, turf/entrance, mob/user)
-		var/obj/artifact_door/inner_door
-		var/turf/backroom_entr
+		var/obj/artifact_fissure_door/inner_door
+		var/turf/fissure_entr
 		var/list/adj_entr_turfs
 		switch (entrance_dir)
 			if (SOUTH_ENTRANCE)
-				backroom_entr = src.backroom_region.turf_at(15, 14)
-				var/obj/cross_dummy/north/n = new (entrance, backroom_entr)
-				var/obj/cross_dummy/south/s = new (src.backroom_region.turf_at(15, 13), get_step(entrance, SOUTH))
+				fissure_entr = src.fissure_region.turf_at(15, 14)
+				var/obj/art_fissure_cross_dummy/north/n = new (entrance, fissure_entr)
+				var/obj/art_fissure_cross_dummy/south/s = new (src.fissure_region.turf_at(15, 13), get_step(entrance, SOUTH))
+				//var/obj/art_fissure_cross_dummy/north/n = new (get_step(entrance, SOUTH), src.fissure_region.turf_at(15, 13))
+				//var/obj/art_fissure_cross_dummy/south/s = new (src.fissure_region.turf_at(15, 12), get_step(get_step(entrance, SOUTH), SOUTH))
 				src.south_dummies += n
 				src.south_dummies += s
-				inner_door = locate() in src.backroom_region.turf_at(15, 14)
+				inner_door = locate() in src.fissure_region.turf_at(15, 14)
 				inner_door.outer_entrance_spawned = TRUE
 				adj_entr_turfs = block(entrance.x - 1, entrance.y - 1, entrance.z, entrance.x + 1, entrance.y - 1, entrance.z)
 			if (NORTH_ENTRANCE)
-				backroom_entr = src.backroom_region.turf_at(15, 24)
-				var/obj/cross_dummy/south/s = new (entrance, backroom_entr)
-				var/obj/cross_dummy/north/n = new (src.backroom_region.turf_at(15, 25), get_step(entrance, NORTH))
+				fissure_entr = src.fissure_region.turf_at(15, 24)
+				var/obj/art_fissure_cross_dummy/south/s = new (entrance, fissure_entr)
+				var/obj/art_fissure_cross_dummy/north/n = new (src.fissure_region.turf_at(15, 25), get_step(entrance, NORTH))
 				src.north_dummies += s
 				src.north_dummies += n
-				inner_door = locate() in src.backroom_region.turf_at(15, 24)
+				inner_door = locate() in src.fissure_region.turf_at(15, 24)
 				inner_door.outer_entrance_spawned = TRUE
 				adj_entr_turfs = block(entrance.x - 1, entrance.y + 1, entrance.z, entrance.x + 1, entrance.y + 1, entrance.z)
 			if (EAST_ENTRANCE)
-				backroom_entr = src.backroom_region.turf_at(17, 19)
-				var/obj/cross_dummy/west/w = new (entrance, backroom_entr)
-				var/obj/cross_dummy/east/e = new (src.backroom_region.turf_at(18, 19), get_step(entrance, EAST))
+				fissure_entr = src.fissure_region.turf_at(17, 19)
+				var/obj/art_fissure_cross_dummy/west/w = new (entrance, fissure_entr)
+				var/obj/art_fissure_cross_dummy/east/e = new (src.fissure_region.turf_at(18, 19), get_step(entrance, EAST))
 				src.east_dummies += w
 				src.east_dummies += e
-				inner_door = locate() in src.backroom_region.turf_at(17, 19)
+				inner_door = locate() in src.fissure_region.turf_at(17, 19)
 				inner_door.outer_entrance_spawned = TRUE
 				adj_entr_turfs = block(entrance.x + 1, entrance.y - 1, entrance.z, entrance.x + 1, entrance.y + 1, entrance.z)
 			if (WEST_ENTRANCE)
-				backroom_entr = src.backroom_region.turf_at(13, 19)
-				var/obj/cross_dummy/east/e = new (entrance, backroom_entr)
-				var/obj/cross_dummy/west/w = new (src.backroom_region.turf_at(12, 19), get_step(entrance, WEST))
+				fissure_entr = src.fissure_region.turf_at(13, 19)
+				var/obj/art_fissure_cross_dummy/east/e = new (entrance, fissure_entr)
+				var/obj/art_fissure_cross_dummy/west/w = new (src.fissure_region.turf_at(12, 19), get_step(entrance, WEST))
 				src.west_dummies += e
 				src.west_dummies += w
-				inner_door = locate() in src.backroom_region.turf_at(13, 19)
+				inner_door = locate() in src.fissure_region.turf_at(13, 19)
 				inner_door.outer_entrance_spawned = TRUE
 				adj_entr_turfs = block(entrance.x - 1, entrance.y - 1, entrance.z, entrance.x - 1, entrance.y + 1, entrance.z)
 
 		entrance.density = FALSE
-		var/obj/artifact_door/outer_door = new(entrance)
+		var/obj/artifact_fissure_door/outer_door = new(entrance)
 		outer_door.set_dir(get_dir(outer_door, user))
 		outer_door.linked_door = inner_door
 		inner_door.set_dir(get_dir(outer_door, user))
 		inner_door.linked_door = outer_door
-		backroom_entr.reachable_turfs += adj_entr_turfs
-		for (var/turf/T as anything in backroom_entr.reachable_turfs)
+		fissure_entr.reachable_turfs += adj_entr_turfs
+		for (var/turf/T as anything in fissure_entr.reachable_turfs)
 			if (!T.reachable_turfs)
 				T.reachable_turfs = list()
-			T.reachable_turfs += backroom_entr
+			T.reachable_turfs += fissure_entr
 		src.update_visual_mirrors(entrance, entrance_dir)
 		entrance.icon = 'icons/turf/floors.dmi'
 		entrance.icon_state = "darkvoid"
@@ -160,7 +162,7 @@
 		var/turf/station_turf
 		for (var/i = col_start to col_end)
 			for (var/j = row_start to row_end)
-				T = src.backroom_region.turf_at(i, j)
+				T = src.fissure_region.turf_at(i, j)
 				station_turf = locate(station_reference.x + x_start_offset + i, station_reference.y + y_start_offset + j, station_reference.z)
 
 				T.vis_contents = null// clear previously assigned vis_contents
@@ -189,8 +191,8 @@
 					T.desc = ""
 				T.RL_Init()
 
-/datum/artifact/key
-	associated_object = /obj/item/artifact/key
+/datum/artifact/dimensional_key
+	associated_object = /obj/item/artifact/dimensional_key
 	type_name = "Dimensional key"
 	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 200
@@ -202,16 +204,16 @@
 		. = ..()
 		if (.)
 			return TRUE
-		var/obj/item/artifact/key/artkey = O
-		var/datum/mapPrefab/allocated/allocated = get_singleton(/datum/mapPrefab/allocated/artifact_backroom)
-		artkey.backroom_region = allocated.load()
+		var/obj/item/artifact/dimensional_key/artkey = O
+		var/datum/mapPrefab/allocated/allocated = get_singleton(/datum/mapPrefab/allocated/artifact_fissure)
+		artkey.fissure_region = allocated.load()
 
 		mirrored_physical_zone_created = TRUE
 
 /****** Supporting items/atoms/etc. *******/
 
-ABSTRACT_TYPE(/obj/cross_dummy)
-/obj/cross_dummy
+ABSTRACT_TYPE(/obj/art_fissure_cross_dummy)
+/obj/art_fissure_cross_dummy
 	name = ""
 	desc = ""
 	invisibility = INVIS_ALWAYS
@@ -234,7 +236,7 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 			new_proj.travelled = P.travelled
 			new_proj.launch()
 			P.die()
-		else if (AM.dir == src.required_dir && !istype(AM, /obj/artifact_door) && !istype(AM, /obj/cross_dummy))
+		else if (AM.dir == src.required_dir && !istype(AM, /obj/artifact_fissure_door) && !istype(AM, /obj/art_fissure_cross_dummy))
 			AM.set_loc(src.exit_turf)
 		else
 			return ..()
@@ -251,7 +253,7 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 	west
 		required_dir = WEST
 
-/obj/artifact_door
+/obj/artifact_fissure_door
 	name = "mysterious wooden door"
 	desc = "A wooden door, but it emanates some aura. Something's not right about it."
 	icon = 'icons/obj/doors/door_wood.dmi'
@@ -266,7 +268,7 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 	/// if a door as a part of the fissure, whether the corresponding outer entrance has been created or not
 	var/outer_entrance_spawned = FALSE
 	/// associated door in/outside the fissure
-	var/obj/artifact_door/linked_door = null
+	var/obj/artifact_fissure_door/linked_door = null
 
 	disposing()
 		src.linked_door = null
@@ -280,7 +282,7 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 			return
 		if (src.open)
 			src.close()
-		else if (!src.open && istype(get_area(user), /area/artifact_backroom))
+		else if (!src.open && istype(get_area(user), /area/artifact_fissure))
 			if (!src.outer_entrance_spawned)
 				src.deny_open()
 				boutput(user, SPAN_NOTICE("[src] doesn't seemed to be locked, but won't open either... strange."))
@@ -291,7 +293,7 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 			boutput(user, SPAN_NOTICE("[src] is locked. Perhaps a key will open it?"))
 
 	attackby(obj/item/I, mob/user)
-		if (!istype(I, /obj/item/artifact/key) || !I.artifact.activated)
+		if (!istype(I, /obj/item/artifact/dimensional_key) || !I.artifact.activated)
 			return ..()
 		if (!src.can_be_opened)
 			src.deny_open()
@@ -300,11 +302,11 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 		if (src.open)
 			src.close()
 		else
-			if (!src.outer_entrance_spawned && istype(get_area(src), /area/artifact_backroom))
+			if (!src.outer_entrance_spawned && istype(get_area(src), /area/artifact_fissure))
 				src.deny_open()
 				boutput(user, SPAN_NOTICE("[src] doesn't seemed to be locked, but won't open either... strange."))
 			else
-				var/obj/item/artifact/key/key = I
+				var/obj/item/artifact/dimensional_key/key = I
 				key.ArtifactFaultUsed(user, key)
 				src.open()
 
@@ -314,7 +316,7 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 		if (!istype(L))
 			return
 		var/obj/item/equipped_item = L.equipped()
-		if (istype(equipped_item, /obj/item/artifact/key) && equipped_item.artifact.activated)
+		if (istype(equipped_item, /obj/item/artifact/dimensional_key) && equipped_item.artifact.activated)
 			src.Attackby(equipped_item, L)
 		else
 			src.Attackhand(L)
@@ -351,62 +353,22 @@ ABSTRACT_TYPE(/obj/cross_dummy)
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/ancient/artifact_fissure)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/ancient/artifact_fissure)
 	. = ..()
-	src.connects_to[/obj/artifact_door] = TRUE
-	src.connects_to[/obj/artifact_door/unopenable] = TRUE
-	src.connects_with_overlay[/obj/artifact_door] = TRUE
-	src.connects_with_overlay[/obj/artifact_door/unopenable] = TRUE
+	src.connects_to[/obj/artifact_fissure_door] = TRUE
+	src.connects_to[/obj/artifact_fissure_door/unopenable] = TRUE
+	src.connects_with_overlay[/obj/artifact_fissure_door] = TRUE
+	src.connects_with_overlay[/obj/artifact_fissure_door/unopenable] = TRUE
 
-/area/artifact_backroom
-	name = "Dimensional Fissure"
+/area/artifact_fissure
+	name = "dimensional fissure"
 	skip_sims = TRUE
 
 	Entered(atom/movable/AM, atom/oldloc)
 		..()
-		AM.setStatus("art_dim_corrosion", INFINITE_STATUS)
+		AM.setStatus("art_fissure_corrosion", INFINITE_STATUS)
 
-/area/artifact_backroom/visual_mirror
-	name = "Artifact backroom visual mirror zone"
-	//ambient_light = "#ffffff"
+/area/artifact_fissure/visual_mirror
+	name = "artifact fissure visual mirror zone"
 	force_fullbright = TRUE
-
-/*
-for (var/i = 1 to 8)
-					var/turf/Z = locate(T.x, T.y + i, T.z)
-					var/image/I = image('icons/turf/floors.dmi', Z, i % 2 == 0 ? "marble_black" : "marble_white", T.layer + 0.0001)
-					I.alpha = 200
-					Z.overlays += I
-
-					if (i % 2 == 0)
-						I = image('icons/obj/lighting.dmi', Z, "floor1", T.layer + 0.0001)
-						I.alpha = 200
-						Z.overlays += I
-
-					Z = locate(T.x - 1, T.y + i, T.z)
-					I = image('icons/turf/floors.dmi', Z, "marble_white", T.layer + 0.0001)
-					I.alpha = 200
-					Z.overlays += I
-
-					Z = locate(T.x + 1, T.y + i, T.z)
-					I = image('icons/turf/floors.dmi', Z, "marble_white", T.layer + 0.0001)
-					I.alpha = 200
-					Z.overlays += I
-
-					Z = locate(T.x - 2, T.y + i, T.z)
-					if (i % 2 == 0)
-						I = image('icons/obj/doors/door_wood.dmi', Z, "door1", T.layer + 0.0001)
-					else
-						I = image('icons/turf/walls.dmi', Z, "ancient", T.layer + 0.0001)
-					I.alpha = 200
-					Z.overlays += I
-
-					Z = locate(T.x + 2, T.y + i, T.z)
-					if (i % 2 == 0)
-						I = image('icons/obj/doors/door_wood.dmi', Z, "door1", T.layer + 0.0001)
-					else
-						I = image('icons/turf/walls.dmi', Z, "ancient", T.layer + 0.0001)
-					I.alpha = 200
-					Z.overlays += I
-					*/
 
 #undef NORTH_ENTRANCE
 #undef EAST_ENTRANCE

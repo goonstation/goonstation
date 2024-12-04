@@ -1,54 +1,54 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "c" = (
-/obj/artifact_door,
+/obj/artifact_fissure_door,
 /turf/unsimulated/floor/void,
-/area/artifact_backroom)
+/area/artifact_fissure)
 "e" = (
 /turf/unsimulated/floor/void,
-/area/artifact_backroom)
+/area/artifact_fissure)
 "g" = (
-/obj/artifact_door/unopenable{
+/obj/artifact_fissure_door/unopenable{
 	dir = 8
 	},
 /turf/unsimulated/floor/void,
-/area/artifact_backroom)
+/area/artifact_fissure)
 "v" = (
-/obj/artifact_door{
+/obj/artifact_fissure_door{
 	dir = 4
 	},
 /turf/unsimulated/floor/void,
-/area/artifact_backroom)
+/area/artifact_fissure)
 "w" = (
-/obj/artifact_door/unopenable{
+/obj/artifact_fissure_door/unopenable{
 	dir = 4
 	},
 /turf/unsimulated/floor/void,
-/area/artifact_backroom)
+/area/artifact_fissure)
 "y" = (
-/obj/artifact_door{
+/obj/artifact_fissure_door{
 	dir = 1
 	},
 /turf/unsimulated/floor/void,
-/area/artifact_backroom)
+/area/artifact_fissure)
 "H" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/marble/black,
-/area/artifact_backroom)
+/area/artifact_fissure)
 "L" = (
 /turf/unsimulated/wall/auto/adventure/ancient/artifact_fissure,
-/area/artifact_backroom)
+/area/artifact_fissure)
 "S" = (
-/obj/artifact_door{
+/obj/artifact_fissure_door{
 	dir = 8
 	},
 /turf/unsimulated/floor/void,
-/area/artifact_backroom)
+/area/artifact_fissure)
 "V" = (
 /turf/unsimulated/floor/marble,
-/area/artifact_backroom)
+/area/artifact_fissure)
 "Z" = (
 /turf/unsimulated/floor/void,
-/area/artifact_backroom/visual_mirror)
+/area/artifact_fissure/visual_mirror)
 
 (1,1,1) = {"
 Z

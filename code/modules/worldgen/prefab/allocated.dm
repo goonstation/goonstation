@@ -50,8 +50,8 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabSizeX = 5
 	prefabSizeY = 5
 
-/datum/mapPrefab/allocated/artifact_backroom
-	prefabPath = "assets/maps/allocated/artifact_backroom.dmm"
+/datum/mapPrefab/allocated/artifact_fissure
+	prefabPath = "assets/maps/allocated/artifact_fissure.dmm"
 	prefabSizeX = 29
 	prefabSizeY = 35
 
