@@ -58,14 +58,14 @@
 				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
 
 	proc/create_entrance(entrance_dir, turf/entrance, mob/user)
-		var/obj/artifact_fissure_door/inner_door
+		var/obj/art_fissure_objs/door/inner_door
 		var/turf/fissure_entr
 		var/list/adj_entr_turfs
 		switch (entrance_dir)
 			if (SOUTH_ENTRANCE)
 				fissure_entr = src.fissure_region.turf_at(15, 14)
-				var/obj/art_fissure_cross_dummy/north/n = new (entrance, fissure_entr)
-				var/obj/art_fissure_cross_dummy/south/s = new (src.fissure_region.turf_at(15, 13), get_step(entrance, SOUTH))
+				var/obj/art_fissure_objs/cross_dummy/north/n = new (entrance, fissure_entr)
+				var/obj/art_fissure_objs/cross_dummy/south/s = new (src.fissure_region.turf_at(15, 13), get_step(entrance, SOUTH))
 				src.south_dummies += n
 				src.south_dummies += s
 				inner_door = locate() in src.fissure_region.turf_at(15, 14)
@@ -73,8 +73,8 @@
 				adj_entr_turfs = block(entrance.x - 1, entrance.y - 1, entrance.z, entrance.x + 1, entrance.y - 1, entrance.z)
 			if (NORTH_ENTRANCE)
 				fissure_entr = src.fissure_region.turf_at(15, 24)
-				var/obj/art_fissure_cross_dummy/south/s = new (entrance, fissure_entr)
-				var/obj/art_fissure_cross_dummy/north/n = new (src.fissure_region.turf_at(15, 25), get_step(entrance, NORTH))
+				var/obj/art_fissure_objs/cross_dummy/south/s = new (entrance, fissure_entr)
+				var/obj/art_fissure_objs/cross_dummy/north/n = new (src.fissure_region.turf_at(15, 25), get_step(entrance, NORTH))
 				src.north_dummies += s
 				src.north_dummies += n
 				inner_door = locate() in src.fissure_region.turf_at(15, 24)
@@ -82,8 +82,8 @@
 				adj_entr_turfs = block(entrance.x - 1, entrance.y + 1, entrance.z, entrance.x + 1, entrance.y + 1, entrance.z)
 			if (EAST_ENTRANCE)
 				fissure_entr = src.fissure_region.turf_at(17, 19)
-				var/obj/art_fissure_cross_dummy/west/w = new (entrance, fissure_entr)
-				var/obj/art_fissure_cross_dummy/east/e = new (src.fissure_region.turf_at(18, 19), get_step(entrance, EAST))
+				var/obj/art_fissure_objs/cross_dummy/west/w = new (entrance, fissure_entr)
+				var/obj/art_fissure_objs/cross_dummy/east/e = new (src.fissure_region.turf_at(18, 19), get_step(entrance, EAST))
 				src.east_dummies += w
 				src.east_dummies += e
 				inner_door = locate() in src.fissure_region.turf_at(17, 19)
@@ -91,8 +91,8 @@
 				adj_entr_turfs = block(entrance.x + 1, entrance.y - 1, entrance.z, entrance.x + 1, entrance.y + 1, entrance.z)
 			if (WEST_ENTRANCE)
 				fissure_entr = src.fissure_region.turf_at(13, 19)
-				var/obj/art_fissure_cross_dummy/east/e = new (entrance, fissure_entr)
-				var/obj/art_fissure_cross_dummy/west/w = new (src.fissure_region.turf_at(12, 19), get_step(entrance, WEST))
+				var/obj/art_fissure_objs/cross_dummy/east/e = new (entrance, fissure_entr)
+				var/obj/art_fissure_objs/cross_dummy/west/w = new (src.fissure_region.turf_at(12, 19), get_step(entrance, WEST))
 				src.west_dummies += e
 				src.west_dummies += w
 				inner_door = locate() in src.fissure_region.turf_at(13, 19)
@@ -100,7 +100,7 @@
 				adj_entr_turfs = block(entrance.x - 1, entrance.y - 1, entrance.z, entrance.x - 1, entrance.y + 1, entrance.z)
 
 		entrance.density = FALSE
-		var/obj/artifact_fissure_door/outer_door = new(entrance)
+		var/obj/art_fissure_objs/door/outer_door = new(entrance)
 		outer_door.set_dir(get_dir(outer_door, user))
 		outer_door.linked_door = inner_door
 		inner_door.set_dir(get_dir(outer_door, user))
@@ -112,7 +112,7 @@
 			T.reachable_turfs += fissure_entr
 		var/area/artifact_fissure/A = get_area(inner_door)
 		A.update_visual_mirrors(entrance, entrance_dir)
-		new /obj/art_fissure_mirror_updater_dummy(fissure_entr, entrance, entrance_dir)
+		new /obj/art_fissure_objs/mirror_update_dummy(fissure_entr, entrance, entrance_dir)
 		entrance.icon = 'icons/turf/floors.dmi'
 		entrance.icon_state = "darkvoid"
 		entrance.opacity = TRUE
@@ -144,12 +144,15 @@
 
 /****** Supporting items/atoms/etc. *******/
 
-ABSTRACT_TYPE(/obj/art_fissure_cross_dummy)
-/obj/art_fissure_cross_dummy
+ABSTRACT_TYPE(/obj/art_fissure_objs)
+/obj/art_fissure_objs
 	name = ""
 	desc = ""
-	invisibility = INVIS_ALWAYS
 	anchored = ANCHORED_ALWAYS
+
+ABSTRACT_TYPE(/obj/art_fissure_objs/cross_dummy)
+/obj/art_fissure_objs/cross_dummy
+	invisibility = INVIS_ALWAYS
 	var/turf/exit_turf
 	var/required_dir
 
@@ -168,7 +171,7 @@ ABSTRACT_TYPE(/obj/art_fissure_cross_dummy)
 			new_proj.travelled = P.travelled
 			new_proj.launch()
 			P.die()
-		else if (AM.dir == src.required_dir && !istype(AM, /obj/artifact_fissure_door) && !istype(AM, /obj/art_fissure_cross_dummy))
+		else if (AM.dir == src.required_dir && !istype(AM, /obj/art_fissure_objs/door) && !istype(AM, /obj/art_fissure_objs/cross_dummy))
 			AM.set_loc(src.exit_turf)
 		else
 			return ..()
@@ -185,11 +188,8 @@ ABSTRACT_TYPE(/obj/art_fissure_cross_dummy)
 	west
 		required_dir = WEST
 
-/obj/art_fissure_mirror_updater_dummy
-	name = ""
-	desc = ""
+/obj/art_fissure_objs/mirror_update_dummy
 	invisibility = INVIS_ALWAYS
-	anchored = ANCHORED_ALWAYS
 	var/turf/station_ref
 	var/entrance_loc
 
@@ -209,14 +209,13 @@ ABSTRACT_TYPE(/obj/art_fissure_cross_dummy)
 			return ..()
 		return ..()
 
-/obj/artifact_fissure_door
+/obj/art_fissure_objs/door
 	name = "mysterious wooden door"
 	desc = "A wooden door, but it emanates some aura. Something's not right about it."
 	icon = 'icons/obj/doors/door_wood.dmi'
 	icon_state = "door1"
 	opacity = TRUE
 	density = TRUE
-	anchored = ANCHORED_ALWAYS
 	/// open or closed
 	var/open = FALSE
 	/// whether this is a "fake" door or not
@@ -224,7 +223,7 @@ ABSTRACT_TYPE(/obj/art_fissure_cross_dummy)
 	/// if a door as a part of the fissure, whether the corresponding outer entrance has been created or not
 	var/outer_entrance_spawned = FALSE
 	/// associated door in/outside the fissure
-	var/obj/artifact_fissure_door/linked_door = null
+	var/obj/art_fissure_objs/door/linked_door = null
 
 	disposing()
 		src.linked_door = null
@@ -309,10 +308,10 @@ ABSTRACT_TYPE(/obj/art_fissure_cross_dummy)
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/ancient/artifact_fissure)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/ancient/artifact_fissure)
 	. = ..()
-	src.connects_to[/obj/artifact_fissure_door] = TRUE
-	src.connects_to[/obj/artifact_fissure_door/unopenable] = TRUE
-	src.connects_with_overlay[/obj/artifact_fissure_door] = TRUE
-	src.connects_with_overlay[/obj/artifact_fissure_door/unopenable] = TRUE
+	src.connects_to[/obj/art_fissure_objs/door] = TRUE
+	src.connects_to[/obj/art_fissure_objs/door/unopenable] = TRUE
+	src.connects_with_overlay[/obj/art_fissure_objs/door] = TRUE
+	src.connects_with_overlay[/obj/art_fissure_objs/door/unopenable] = TRUE
 
 /area/artifact_fissure
 	name = "dimensional fissure"

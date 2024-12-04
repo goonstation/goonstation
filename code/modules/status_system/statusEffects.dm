@@ -2985,7 +2985,7 @@
 		if (!isobj(A) || (!A.density && !istype(A, /obj/item)) || A.invisibility >= INVIS_ALWAYS_ISH)
 			return
 		var/obj/O = A
-		if (O.artifact || istype(A, /obj/artifact_fissure_door))
+		if (O.artifact || istype(A, /obj/art_fissure_objs/door))
 			return
 		return ..()
 

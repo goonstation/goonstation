@@ -1,31 +1,31 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "c" = (
-/obj/artifact_fissure_door,
+/obj/art_fissure_objs/door,
 /turf/unsimulated/floor/void,
 /area/artifact_fissure)
 "e" = (
 /turf/unsimulated/floor/void,
 /area/artifact_fissure)
 "g" = (
-/obj/artifact_fissure_door/unopenable{
+/obj/art_fissure_objs/door/unopenable{
 	dir = 8
 	},
 /turf/unsimulated/floor/void,
 /area/artifact_fissure)
 "v" = (
-/obj/artifact_fissure_door{
+/obj/art_fissure_objs/door{
 	dir = 4
 	},
 /turf/unsimulated/floor/void,
 /area/artifact_fissure)
 "w" = (
-/obj/artifact_fissure_door/unopenable{
+/obj/art_fissure_objs/door/unopenable{
 	dir = 4
 	},
 /turf/unsimulated/floor/void,
 /area/artifact_fissure)
 "y" = (
-/obj/artifact_fissure_door{
+/obj/art_fissure_objs/door{
 	dir = 1
 	},
 /turf/unsimulated/floor/void,
@@ -38,7 +38,7 @@
 /turf/unsimulated/wall/auto/adventure/ancient/artifact_fissure,
 /area/artifact_fissure)
 "S" = (
-/obj/artifact_fissure_door{
+/obj/art_fissure_objs/door{
 	dir = 8
 	},
 /turf/unsimulated/floor/void,
