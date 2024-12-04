@@ -10,11 +10,6 @@
 	var/datum/allocated_region/fissure_region
 
 	// var names here are in reference to inside the fissure - south means south entrance of the room
-	var/list/south_dummies = list()
-	var/list/north_dummies = list()
-	var/list/east_dummies = list()
-	var/list/west_dummies = list()
-
 	var/south_entr_placed = FALSE
 	var/north_entr_placed = FALSE
 	var/east_entr_placed = FALSE
@@ -64,37 +59,29 @@
 		switch (entrance_dir)
 			if (SOUTH_ENTRANCE)
 				fissure_entr = src.fissure_region.turf_at(15, 14)
-				var/obj/art_fissure_objs/cross_dummy/north/n = new (entrance, fissure_entr)
-				var/obj/art_fissure_objs/cross_dummy/south/s = new (src.fissure_region.turf_at(15, 13), get_step(entrance, SOUTH))
-				src.south_dummies += n
-				src.south_dummies += s
+				new /obj/art_fissure_objs/cross_dummy/north(entrance, fissure_entr)
+				new /obj/art_fissure_objs/cross_dummy/south(src.fissure_region.turf_at(15, 13), get_step(entrance, SOUTH))
 				inner_door = locate() in src.fissure_region.turf_at(15, 14)
 				inner_door.outer_entrance_spawned = TRUE
 				adj_entr_turfs = block(entrance.x - 1, entrance.y - 1, entrance.z, entrance.x + 1, entrance.y - 1, entrance.z)
 			if (NORTH_ENTRANCE)
 				fissure_entr = src.fissure_region.turf_at(15, 24)
-				var/obj/art_fissure_objs/cross_dummy/south/s = new (entrance, fissure_entr)
-				var/obj/art_fissure_objs/cross_dummy/north/n = new (src.fissure_region.turf_at(15, 25), get_step(entrance, NORTH))
-				src.north_dummies += s
-				src.north_dummies += n
+				new /obj/art_fissure_objs/cross_dummy/south(entrance, fissure_entr)
+				new /obj/art_fissure_objs/cross_dummy/north(src.fissure_region.turf_at(15, 25), get_step(entrance, NORTH))
 				inner_door = locate() in src.fissure_region.turf_at(15, 24)
 				inner_door.outer_entrance_spawned = TRUE
 				adj_entr_turfs = block(entrance.x - 1, entrance.y + 1, entrance.z, entrance.x + 1, entrance.y + 1, entrance.z)
 			if (EAST_ENTRANCE)
 				fissure_entr = src.fissure_region.turf_at(17, 19)
-				var/obj/art_fissure_objs/cross_dummy/west/w = new (entrance, fissure_entr)
-				var/obj/art_fissure_objs/cross_dummy/east/e = new (src.fissure_region.turf_at(18, 19), get_step(entrance, EAST))
-				src.east_dummies += w
-				src.east_dummies += e
+				new /obj/art_fissure_objs/cross_dummy/west(entrance, fissure_entr)
+				new /obj/art_fissure_objs/cross_dummy/east(src.fissure_region.turf_at(18, 19), get_step(entrance, EAST))
 				inner_door = locate() in src.fissure_region.turf_at(17, 19)
 				inner_door.outer_entrance_spawned = TRUE
 				adj_entr_turfs = block(entrance.x + 1, entrance.y - 1, entrance.z, entrance.x + 1, entrance.y + 1, entrance.z)
 			if (WEST_ENTRANCE)
 				fissure_entr = src.fissure_region.turf_at(13, 19)
-				var/obj/art_fissure_objs/cross_dummy/east/e = new (entrance, fissure_entr)
-				var/obj/art_fissure_objs/cross_dummy/west/w = new (src.fissure_region.turf_at(12, 19), get_step(entrance, WEST))
-				src.west_dummies += e
-				src.west_dummies += w
+				new /obj/art_fissure_objs/cross_dummy/east(entrance, fissure_entr)
+				new /obj/art_fissure_objs/cross_dummy/west(src.fissure_region.turf_at(12, 19), get_step(entrance, WEST))
 				inner_door = locate() in src.fissure_region.turf_at(13, 19)
 				inner_door.outer_entrance_spawned = TRUE
 				adj_entr_turfs = block(entrance.x - 1, entrance.y - 1, entrance.z, entrance.x - 1, entrance.y + 1, entrance.z)
