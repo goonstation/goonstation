@@ -1,5 +1,9 @@
 
 (t)tue dec 03 24
+(u)JORJ949
+(p)21540
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Authorizing armory now activates red alert.
 (u)tarmunora
 (+)experimental: Vampires consuming 'blood' reagent outside of their powers only restores spent blood, does not count towards unlocks etc.
 (u)JORJ949
