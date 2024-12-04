@@ -273,8 +273,8 @@
 		materiel_stock += new/datum/materiel/fishing_gear/fish_mount
 		..()
 
-	accepted_token(var/obj/item/currency/fishing/token)
-		if (istype(token, /obj/item/currency/fishing))
+	accepted_token(var/obj/item/currency/vendor_token/fishing/token)
+		if (istype(token, /obj/item/currency/vendor_token/fishing))
 			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=token.amount
 		..()
 
@@ -283,7 +283,7 @@
 
 	MouseDrop_T(var/obj/item/I, var/mob/user)
 
-		if (istype(I, /obj/item/currency/fishing))
+		if (istype(I, /obj/item/currency/vendor_token/fishing))
 			src.Attackby(I, user)
 
 /obj/submachine/weapon_vendor/fishing/portable
@@ -318,8 +318,8 @@
 		materiel_stock += new/datum/materiel/mail_gear/syndie_jumpsuit
 		..()
 
-	accepted_token(var/obj/item/currency/mail/token)
-		if (istype(token, /obj/item/currency/mail))
+	accepted_token(var/obj/item/currency/vendor_token/mail/token)
+		if (istype(token, /obj/item/currency/vendor_token/mail))
 			src.credits[WEAPON_VENDOR_CATEGORY_MAIL]+=token.amount
 		..()
 
@@ -328,7 +328,7 @@
 
 	MouseDrop_T(var/obj/item/I, var/mob/user)
 
-		if (istype(I, /obj/item/currency/mail))
+		if (istype(I, /obj/item/currency/vendor_token/mail))
 			src.Attackby(I, user)
 // Materiel avaliable for purchase:
 

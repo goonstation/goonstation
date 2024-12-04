@@ -157,7 +157,7 @@
 		..()
 		owner.visible_message(SPAN_ALERT("[owner] disconnects \the [src.the_mail]'s DNA lock!"))
 		logTheThing(LOG_STATION, owner, "commits MAIL FRAUD by cutting open [src.the_mail]")
-		var/obj/decal/cleanable/mail_fraud/cleanable = new(get_turf(src.the_mail), src.the_mail)
+		var/obj/decal/cleanable/mail_mess/fraud/cleanable = new(get_turf(src.the_mail), src.the_mail)
 		cleanable.add_fingerprint(owner)
 		src.the_mail.open(owner, crime = TRUE)
 		playsound(src.the_mail, 'sound/items/Screwdriver2.ogg', 50, 1)
@@ -199,11 +199,12 @@
 				H.update_arrest_icon()
 
 
-/obj/decal/cleanable/mail_fraud
+/obj/decal/cleanable/mail_mess
 	name = "torn package"
-	desc = "Some scraps of a mail package opened improperly and messily."
+	desc = "Some scraps of a mail package opened with joy and fervor."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "mail-1-b"
+	token_collectable = TRUE
 
 	New(loc, obj/item/random_mail/mail)
 		..()
@@ -212,6 +213,35 @@
 			src.color = mail.color
 		src.pixel_x += rand(-5,5)
 		src.pixel_y += rand(-5,5)
+
+	attack_hand(var/mob/user)
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (H.job == "Mail Courier")
+				user.visible_message(SPAN_NOTICE("<b>[H]</b> starts rifling through \the [src] with their hands."),\
+				SPAN_NOTICE("You search through \the [src]."))
+				playsound(src.loc, 'sound/effects/sparks3.ogg', 50, 1)
+				if (src.sampled)
+					H.show_text("The token in this mail is gone!", "red")
+				else
+					H.show_text("You collect the token from the mail.", "blue")
+					new /obj/item/cable_coil/cut/small(src.loc)
+				src.sampled = 1
+			else
+				return ..()
+		else
+			return ..()
+
+	fraud
+		desc = "Some scraps of a mail package opened improperly and messily."
+		token_collectable = FALSE
+		New(loc, obj/item/random_mail/mail)
+			..()
+			if (mail)
+				src.icon_state = "[mail.icon_state]-c"
+				src.color = mail.color
+			src.pixel_x += rand(-5,5)
+			src.pixel_y += rand(-5,5)
 
 // Creates a bunch of random mail for crewmembers
 // Check shippingmarket.dm for the part that actually calls this.

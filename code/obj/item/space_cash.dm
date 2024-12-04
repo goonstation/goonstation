@@ -432,32 +432,16 @@ TYPEINFO(/obj/item/stamped_bullion)
 		default_min_amount = 1000000
 		default_max_amount = 1000000
 
-
-/obj/item/currency/fishing
-	name = "1 research ticket"
-	real_name = "research ticket"
-	icon_state = "fish_common"
+/obj/item/currency/vendor_token
+	name = "1 vendor token"
+	real_name = "vendor_token"
+	icon_state = "stone1"
 	layer = 4.5
-	desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor."
-	stack_type = /obj/item/currency/fishing // so all fishing tokens stack
+	desc = "Report how you got this to a coder!"
+	stack_type = /obj/item/currency/vendor_token
 	default_min_amount = 1
 	default_max_amount = 1
-	display_name = "research tickets"
-
-	_update_stack_appearance()
-		src.UpdateName()
-		src.inventory_counter.update_number(src.amount)
-		switch (src.amount)
-			if (-INFINITY to 1)
-				src.icon_state = "fish_common"
-			if (1 to 2)
-				src.icon_state = "fish_uncommon"
-			if (2 to 3)
-				src.icon_state = "fish_rare"
-			if (3 to 4)
-				src.icon_state = "fish_epic"
-			else
-				src.icon_state = "fish_legendary"
+	display_name = "vendor token"
 
 	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/currency/fishing) && src.amount < src.max_stack)
@@ -497,6 +481,31 @@ TYPEINFO(/obj/item/stamped_bullion)
 		else
 			..()
 
+/obj/item/currency/vendor_token/fishing
+	name = "1 research ticket"
+	real_name = "research ticket"
+	icon_state = "fish_common"
+	layer = 4.5
+	desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor."
+	stack_type = /obj/item/currency/vendor_token/fishing // so all fishing tokens stack
+	default_min_amount = 1
+	default_max_amount = 1
+	display_name = "research tickets"
+
+	_update_stack_appearance()
+		src.UpdateName()
+		src.inventory_counter.update_number(src.amount)
+		switch (src.amount)
+			if (-INFINITY to 1)
+				src.icon_state = "fish_common"
+			if (1 to 2)
+				src.icon_state = "fish_uncommon"
+			if (2 to 3)
+				src.icon_state = "fish_rare"
+			if (3 to 4)
+				src.icon_state = "fish_epic"
+			else
+				src.icon_state = "fish_legendary"
 
 	uncommon
 		name = "uncommon research ticket"
@@ -522,51 +531,13 @@ TYPEINFO(/obj/item/stamped_bullion)
 		default_min_amount = 5
 		default_max_amount = 5
 
-/obj/item/currency/mail
+/obj/item/currency/vendor_token/mail
 	name = "1 mail token"
 	real_name = "research ticket"
 	icon_state = "mail_token"
 	layer = 4.5
 	desc = "A Nanotrasen mail token for rewarding mail couriers for delivering mail."
-	stack_type = /obj/item/currency/mail
+	stack_type = /obj/item/currency/vendor_token/mail
 	default_min_amount = 1
 	default_max_amount = 1
 	display_name = "mail tokens"
-
-	attackby(var/obj/item/I, mob/user)
-		if (istype(I, /obj/item/currency/mail) && src.amount < src.max_stack)
-
-			user.visible_message(SPAN_NOTICE("[user] stacks some tokens."))
-			stack_item(I)
-		else
-			..(I, user)
-
-	mouse_drop(atom/over_object, src_location, over_location) //src dragged onto over_object
-		if (isobserver(usr))
-			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
-			return
-
-		if(!istype(over_object, /atom/movable/screen/hud))
-			if (BOUNDS_DIST(usr, src) > 0)
-				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
-				return
-			if (BOUNDS_DIST(usr, over_object) > 0)
-				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
-				return
-
-		if (istype(over_object,/obj/item/currency/mail) && isturf(over_object.loc)) //piece to piece only if on ground
-			var/obj/item/targetObject = over_object
-			if(targetObject.stack_item(src))
-				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
-		else if(isturf(over_object)) //piece to turf. piece loc doesnt matter.
-			if(isturf(src.loc))
-				src.set_loc(over_object)
-			for(var/obj/item/I in view(1,usr))
-				if (!I || I == src)
-					continue
-				if (!src.check_valid_stack(I))
-					continue
-				src.stack_item(I)
-			usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
-		else
-			..()
