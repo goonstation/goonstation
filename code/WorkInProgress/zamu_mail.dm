@@ -225,6 +225,7 @@
 				else
 					H.show_text("You collect the token from the mail.", "blue")
 					new /obj/item/currency/vendor_token/mail(src.loc)
+					src.icon_state = "[mail.icon_state]-c"
 				src.sampled = 1
 			else
 				return ..()
