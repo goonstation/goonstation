@@ -46,6 +46,7 @@
 			return
 
 		var/atom/movable/prize = src.open(M)
+		var/obj/decal/cleanable/mail_mess/cleanable = new(get_turf(src.loc), src.loc)
 		logTheThing(LOG_STATION, M, "opened their [src] and got \a [prize] ([src.spawn_type]).")
 		game_stats.Increment("mail_opened")
 		// 100 credits + 10 more for every successful delivery after the first,
@@ -59,6 +60,7 @@
 		. = prize
 		if (prize && istype(prize, /obj/item))
 			boutput(M, SPAN_NOTICE("You [crime ? "tear " : ""]open the package and pull out \a [prize]."))
+			var/obj/decal/cleanable/mail_mess/cleanable = new(get_turf(src.loc), src.loc)
 			var/obj/item/P = prize
 			M.u_equip(src)
 			M.put_in_hand_or_drop(P)
@@ -66,6 +68,7 @@
 		else if (prize)
 			boutput(M, SPAN_NOTICE("You somehow pull \a [prize] out of \the [src]!"))
 			prize.set_loc(get_turf(M))
+			var/obj/decal/cleanable/mail_mess/cleanable = new(get_turf(src.loc), src.loc)
 
 		else
 			boutput(M, SPAN_NOTICE("You have no idea what it is you did, but \the [src] collapses in on itself!"))
