@@ -46,7 +46,6 @@
 			return
 
 		var/atom/movable/prize = src.open(M)
-		var/obj/decal/cleanable/mail_mess/cleanable = new(get_turf(src.loc), src.loc)
 		logTheThing(LOG_STATION, M, "opened their [src] and got \a [prize] ([src.spawn_type]).")
 		game_stats.Increment("mail_opened")
 		// 100 credits + 10 more for every successful delivery after the first,
@@ -158,7 +157,7 @@
 
 	onEnd()
 		..()
-		owner.visible_message(SPAN_ALERT("[owner] disconnects \the [src.the_mail]'s DNA lock!"))
+		owner.visible_message(SPAN_ALERT("[owner] disconnects \the [src.the_mail]'s DNA lock, destroying the mail token hidden inside!"))
 		logTheThing(LOG_STATION, owner, "commits MAIL FRAUD by cutting open [src.the_mail]")
 		var/obj/decal/cleanable/mail_mess/fraud/cleanable = new(get_turf(src.the_mail), src.the_mail)
 		cleanable.add_fingerprint(owner)
