@@ -1888,7 +1888,7 @@
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		inp = min(inp, 60)
-		inp = max(0, inp)
+		inp = max(4, inp)
 		if(!isnull(inp))
 			cooldown_time = inp
 			tooltip_rebuild = 1
