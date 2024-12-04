@@ -1,5 +1,9 @@
 
 (t)tue dec 03 24
+(u)glowbold
+(p)21536
+(e)⚖🌠|C-Balance, A-Events
+(*)Solar flare events super-charge solar panels. Beware of hot-wires.
 (u)JORJ949
 (p)21540
 (e)🆕💡|C-Feature, A-Station-Systems
