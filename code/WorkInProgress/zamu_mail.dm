@@ -225,13 +225,12 @@
 				else
 					H.show_text("You collect the token from the mail.", "blue")
 					new /obj/item/currency/vendor_token/mail(src.loc)
-					New(src.loc, src)
-						if (mail)
-							src.icon_state = "[mail.icon_state]-c"
-							src.color = mail.color
-						src.pixel_x += rand(-5,5)
-						src.pixel_y += rand(-5,5)
-						src.sampled = 1
+					//if (mail)
+						//src.icon_state = "[mail.icon_state]-c"
+						//src.color = mail.color
+					//src.pixel_x += rand(-5,5)
+					//src.pixel_y += rand(-5,5)
+					src.sampled = 1
 			else
 				return ..()
 		else
