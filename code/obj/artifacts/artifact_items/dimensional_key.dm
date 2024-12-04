@@ -66,8 +66,6 @@
 				fissure_entr = src.fissure_region.turf_at(15, 14)
 				var/obj/art_fissure_cross_dummy/north/n = new (entrance, fissure_entr)
 				var/obj/art_fissure_cross_dummy/south/s = new (src.fissure_region.turf_at(15, 13), get_step(entrance, SOUTH))
-				//var/obj/art_fissure_cross_dummy/north/n = new (get_step(entrance, SOUTH), src.fissure_region.turf_at(15, 13))
-				//var/obj/art_fissure_cross_dummy/south/s = new (src.fissure_region.turf_at(15, 12), get_step(get_step(entrance, SOUTH), SOUTH))
 				src.south_dummies += n
 				src.south_dummies += s
 				inner_door = locate() in src.fissure_region.turf_at(15, 14)
@@ -171,9 +169,7 @@
 					if (!station_turf.listening_turfs)
 						station_turf.listening_turfs = list()
 					station_turf.listening_turfs += T
-					//RL_UPDATE_LIGHT(T)
-					//T.RL_AddOverlay()
-					//RL_APPLY_LIGHT(T, null, null, station_turf.RL_GetBrightness(), 0, 255, 255, 255)
+
 					T.vis_contents += station_turf
 					T.density = station_turf.density
 					T.opacity = station_turf.opacity
@@ -181,7 +177,6 @@
 					T.desc = station_turf.desc
 					T.icon = station_turf.icon
 					T.icon_state = station_turf.icon_state
-					//T.fullbright = TRUE
 				else // past edge of map
 					T.icon = null
 					T.icon_state = null
