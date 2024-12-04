@@ -323,6 +323,7 @@
 			var/obj/storage/crate/mail/mail_crate = new
 			mail_crate.name = "mail box"
 			mail_crate.desc = "Hopefully this mail gets delivered, or people might go postal."
+			mail_crate.delivery_destination = "Mail"
 			var/list/created_mail = create_random_mail(mail_crate, how_many = mail_amount)
 			if (length(created_mail) == 0)
 				logTheThing(LOG_STATION, null, "Mail: No mail created, welp")
