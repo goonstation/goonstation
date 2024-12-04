@@ -78,6 +78,6 @@ proc/get_radio_connection_by_id(atom/movable/AM, id)
 #define FREQ_TRACKING_IMPLANT 1451
 #define FREQ_MARIONETTE_IMPLANT 1153
 #define FREQ_POWER_SYSTEMS 1473 // for services that interface with power machinery
-
+#define FREQ_ARMORY 1461
 // Address Tags
 #define ADDRESS_TAG_POWER "POWER_CONTROL" // for syncing variables and data with power_checker

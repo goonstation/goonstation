@@ -117,21 +117,17 @@
 		animate_portal_tele(hostpda)
 
 		var/datum/antagonist/spy_thief/antag_role = user.mind?.get_antagonist(ROLE_SPY_THIEF)
-		if (reward.item)
-			var/obj/item = new reward.item(pda_turf)
-			logTheThing(LOG_DEBUG, user, "spy thief reward spawned: [item] at [log_loc(user)]")
-			user.show_text("Your PDA accepts the bounty and spits out [reward] in exchange.", "red")
-			reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
-			user.put_in_hand_or_drop(item)
+		if (length(reward.items) > 0)
+			for (var/reward_item in reward.items)
+				var/obj/item = new reward_item(pda_turf)
+				logTheThing(LOG_DEBUG, user, "spy thief reward spawned: [item] at [log_loc(user)]")
+				user.show_text("Your PDA accepts the bounty and spits out [reward] in exchange.", "red")
+				reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
 			if (!hostpda.uplink.purchase_log[reward.type])
 				hostpda.uplink.purchase_log[reward.type] = 0
 			hostpda.uplink.purchase_log[reward.type]++
 			if (istype(antag_role))
-				antag_role.redeemed_item_paths.Add(reward.type)
-		if (reward.item2)
-			new reward.item2(pda_turf)
-		if (reward.item3)
-			new reward.item3(pda_turf)
+				antag_role.redeemed_items.Add(reward)
 
 		for(var/obj/item/uplink/integrated/pda/spy/spy_uplink in game_mode.uplinks)
 			LAGCHECK(LAG_LOW)

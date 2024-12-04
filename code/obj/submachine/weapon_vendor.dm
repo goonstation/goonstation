@@ -473,7 +473,7 @@
 	description = "A gun-belt containing a semi-automatic, 9mm caliber service pistol and four magazines."
 
 /datum/materiel/sidearm/revolver
-	name = "Predator Revolver"
+	name = "Kestrel Revolver"
 	path = /obj/item/storage/belt/gun/revolver
 	description = "A gun-belt containing a hefty combat revolver and three .357 caliber speedloaders."
 

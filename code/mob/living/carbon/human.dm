@@ -735,6 +735,10 @@
 	if (!inafterlife(src) && current_state >= GAME_STATE_PLAYING) // prevent corpse spawners from reducing cheer; TODO: better fix
 		modify_christmas_cheer(-7)
 
+
+	if(src.traitHolder?.hasTrait("martyrdom") && (istype(src.equipped(), /obj/item/old_grenade) || istype(src.equipped(), /obj/item/chem_grenade)))
+		src.equipped():AttackSelf(src)
+
 	src.canmove = 0
 	src.lying = 1
 	src.last_sleep = 0
@@ -1494,7 +1498,7 @@
 	var/special = 0
 	if (src.stamina < STAMINA_WINDED_SPEAK_MIN)
 		special = "gasp_whisper"
-	if (src.oxyloss > 10)
+	if (src.oxyloss > 10 && !HAS_ATOM_PROPERTY(src, PROP_MOB_REBREATHING))
 		special = "gasp_whisper"
 
 	return ..(text, special, sayverb)
@@ -2223,6 +2227,8 @@
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in H.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return FALSE
+				else if (src.wear_suit?.hooded)
+					return FALSE
 				else
 					return TRUE
 		if (SLOT_SHOES)
@@ -2289,8 +2295,8 @@
 			src.drop_from_slot(current, get_turf(current))
 	src.force_equip(I, slot)
 	return TRUE
-///Tries to put an item in an available backpack, pocket, or hand slot; will delete the item if unable to place.
-/mob/living/carbon/human/proc/stow_in_available(obj/item/I)
+///Tries to put an item in an available backpack, pocket, or hand slot, default specified to delete the item if unsuccessful
+/mob/living/carbon/human/proc/stow_in_available(obj/item/I, delete_item = TRUE)
 	if (src.autoequip_slot(I, SLOT_IN_BACKPACK))
 		return
 	if (src.autoequip_slot(I, SLOT_IN_BELT))
@@ -2303,7 +2309,10 @@
 		return
 	if (src.autoequip_slot(I, SLOT_R_HAND))
 		return
-	qdel(I)
+	if (delete_item)
+		qdel(I)
+	else
+		I.set_loc(get_turf(src))
 
 /mob/living/carbon/human/swap_hand(var/specify=-1)
 	if(src.hand == specify)

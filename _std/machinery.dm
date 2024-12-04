@@ -48,6 +48,10 @@
 #define PROCESSING_TIER_MULTI(target) (1<<(target.current_processing_tier-1)) //! Scalar to behave as if it were running at full speed
 #define MACHINE_PROCS_PER_SEC (MACHINE_PROC_INTERVAL / (1 SECOND))
 
+// Previous SOLARGENRATE was 1500 WATTS processed every 3.3 SECONDS.  This provides 455 WATTS every second
+// Adjust accordingly based on machine proc rate
+#define DEFAULT_SOLARGENRATE (455 * MACHINE_PROCS_PER_SEC)
+
 #define PROCESSING_FULL      1
 #define PROCESSING_HALF      2
 #define PROCESSING_QUARTER   3

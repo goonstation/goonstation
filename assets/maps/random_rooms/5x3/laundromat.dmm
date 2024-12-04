@@ -6,7 +6,7 @@
 /area/dmm_suite/clear_area)
 "b" = (
 /obj/decal/cleanable/dirt/dirt3,
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "g" = (
 /obj/decal/cleanable/dirt/dirt2,
@@ -24,7 +24,7 @@
 /area/dmm_suite/clear_area)
 "L" = (
 /obj/decal/cleanable/dirt/dirt5,
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "M" = (
 /obj/fakeobject/lighttube_broken{
@@ -37,12 +37,12 @@
 	pixel_y = 3
 	},
 /obj/item/raw_material/scrap_metal,
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "R" = (
 /obj/submachine/laundry_machine,
 /obj/item/clothing/under/misc/bandshirt,
-/turf/simulated/floor/airless/black,
+/turf/simulated/floor/black,
 /area/dmm_suite/clear_area)
 "V" = (
 /obj/submachine/laundry_machine,
@@ -55,12 +55,12 @@
 /obj/machinery/light_switch/north{
 	pixel_x = 13
 	},
-/turf/simulated/floor/airless/black,
+/turf/simulated/floor/black,
 /area/dmm_suite/clear_area)
 "W" = (
 /obj/submachine/laundry_machine,
 /obj/decal/cleanable/cobweb,
-/turf/simulated/floor/airless/black,
+/turf/simulated/floor/black,
 /area/dmm_suite/clear_area)
 "X" = (
 /obj/item/cloth/towel/white{

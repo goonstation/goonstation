@@ -2692,8 +2692,8 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/implantcase/counterrev{
-	pixel_y = 6
+/obj/item/storage/box/revimp_kit{
+	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/security/hos)
@@ -6845,6 +6845,7 @@
 /obj/machinery/optable{
 	name = "Autopsy Table"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "bWY" = (
@@ -32111,10 +32112,6 @@
 /obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
-"jHF" = (
-/obj/machinery/drainage,
-/turf/simulated/floor/white,
-/area/station/medical/medbooth)
 "jHO" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 1;
@@ -37221,7 +37218,6 @@
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
 	},
-/obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "lmX" = (
@@ -47471,6 +47467,7 @@
 "ops" = (
 /obj/decal/stripe_caution,
 /obj/machinery/optable,
+/obj/machinery/drainage,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -58477,6 +58474,7 @@
 /obj/blind_switch/area/south{
 	pixel_x = 4
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "rGo" = (
@@ -60267,6 +60265,10 @@
 /obj/machinery/recharger/wall/sticky{
 	dir = 8;
 	pixel_x = -23
+	},
+/obj/item/storage/box/revimp_kit{
+	pixel_x = -6;
+	pixel_y = 17
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
@@ -71153,6 +71155,9 @@
 	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/item/storage/box/revimp_kit{
+	pixel_x = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -134986,7 +134991,7 @@ oyi
 gcu
 lNp
 lNp
-jHF
+lNp
 rGf
 wst
 rdj

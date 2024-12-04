@@ -126,12 +126,14 @@
 					HH.throw_at(T, 3, 1)
 
 
-			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""]throw wrestling move on [constructTarget(HH,"combat")] at [log_loc(M)].")
-
+			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""][name] wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
 		if (G && istype(G)) // Target was gibbed before we could throw them, who knows.
 			qdel(G)
 
 		return 0
+
+	logCast(atom/target)
+		return
 
 /datum/targetable/wrestler/throw/fake
 	fake = 1
