@@ -54308,6 +54308,7 @@
 	desc = "A precision instrument for biological research.";
 	name = "dissection knife"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/engine{
 	dir = 6;
 	icon_state = "engine_caution_misc"
@@ -69015,6 +69016,7 @@
 /obj/machinery/optable{
 	name = "Autopsy Table"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/morgue)
 "qVa" = (

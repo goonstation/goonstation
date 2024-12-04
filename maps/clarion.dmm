@@ -15859,6 +15859,7 @@
 	name = "Autopsy Table"
 	},
 /obj/landmark/start/job/medical_doctor,
+/obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "dHN" = (
@@ -24115,11 +24116,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
-"jZa" = (
-/obj/machinery/drainage,
-/obj/landmark/start/job/medical_doctor,
-/turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
 "jZr" = (
 /obj/table/auto,
 /obj/item/rods/steel{
@@ -24216,7 +24212,6 @@
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 8
 	},
-/obj/machinery/drainage,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -36092,6 +36087,7 @@
 /obj/machinery/optable{
 	id = "OR1"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -37787,6 +37783,7 @@
 /obj/machinery/ai_status_display{
 	pixel_y = 28
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/redwhite{
 	dir = 9
 	},
@@ -68094,7 +68091,7 @@ bsL
 lfY
 brX
 obg
-jZa
+pmh
 kVT
 fAz
 lLh

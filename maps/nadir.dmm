@@ -23011,6 +23011,7 @@
 /area/station/crew_quarters/pool)
 "jFB" = (
 /obj/machinery/optable,
+/obj/machinery/drainage,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "jFU" = (
@@ -26809,6 +26810,7 @@
 /obj/machinery/optable{
 	id = "robotics"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "lix" = (
@@ -30867,7 +30869,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "mNV" = (
-/obj/machinery/drainage,
 /obj/machinery/computer/operating/small{
 	id = "robotics"
 	},
