@@ -434,7 +434,7 @@ TYPEINFO(/obj/item/stamped_bullion)
 
 /obj/item/currency/vendor_token
 	name = "1 vendor token"
-	real_name = "vendor_token"
+	real_name = "vendor token"
 	icon_state = "stone1"
 	layer = 4.5
 	desc = "Report how you got this to a coder!"
@@ -444,7 +444,7 @@ TYPEINFO(/obj/item/stamped_bullion)
 	display_name = "vendor token"
 
 	attackby(var/obj/item/I, mob/user)
-		if (istype(I, /obj/item/currency/fishing) && src.amount < src.max_stack)
+		if (istype(I, /obj/item/currency/vendor_token) && src.amount < src.max_stack)
 
 			user.visible_message(SPAN_NOTICE("[user] stacks some tickets."))
 			stack_item(I)
@@ -464,7 +464,7 @@ TYPEINFO(/obj/item/stamped_bullion)
 				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
 
-		if (istype(over_object,/obj/item/currency/fishing) && isturf(over_object.loc)) //piece to piece only if on ground
+		if (istype(over_object,/obj/item/currency/vendor_token) && isturf(over_object.loc)) //piece to piece only if on ground
 			var/obj/item/targetObject = over_object
 			if(targetObject.stack_item(src))
 				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
