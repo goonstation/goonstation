@@ -222,7 +222,7 @@
 				playsound(src.loc, 'sound/effects/paper_crumple.ogg', 50, 1)
 				if (src.sampled)
 					H.show_text("The token in this mail is gone!", "red")
-				else
+				else if (mail)
 					H.show_text("You collect the token from the mail.", "blue")
 					new /obj/item/currency/vendor_token/mail(src.loc)
 					src.icon_state = "[mail.icon_state]-c"
