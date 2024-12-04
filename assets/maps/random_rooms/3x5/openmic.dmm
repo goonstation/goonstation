@@ -8,7 +8,7 @@
 /obj/item/reagent_containers/food/snacks/plant/tomato,
 /obj/item/reagent_containers/food/snacks/plant/tomato,
 /obj/item/kitchen/food_box/egg_box,
-/turf/simulated/floor/airless/damaged2,
+/turf/simulated/floor/damaged2,
 /area/dmm_suite/clear_area)
 "c" = (
 /obj/decal/cleanable/dirt/jen,

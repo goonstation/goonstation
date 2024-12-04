@@ -166,6 +166,7 @@ var/list/asteroid_blocked_turfs = list()
 	requires_power = 0
 	luminosity = 1
 	expandable = 0
+	do_not_irradiate = FALSE
 
 /obj/forcefield/mining
 	name = "magnetic forcefield"

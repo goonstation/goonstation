@@ -1,3 +1,15 @@
+
+(t)tue dec 03 24
+(u)tarmunora
+(+)experimental: Vampires consuming 'blood' reagent outside of their powers only restores spent blood, does not count towards unlocks etc.
+(u)JORJ949
+(p)21488
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)The NTSC now has access to EVA.
+(u)glowbold
+(p)21527
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)In gang war, when vandalizing areas, you do not gain points for spraying over existing graffiti.
 (t)mon dec 02 24
 (u)LeahTheTech
 (+)Packet sniffers now come with a helpful frequency reference sheet.
