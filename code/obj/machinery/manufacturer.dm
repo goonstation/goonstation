@@ -94,7 +94,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/list/cached_producibility_data = list() //! List which stores producibility data to be returned early in get_producibility_for_blueprints
 	// Because of how get_producibility_for_blueprints works it only updates if the materials changed in quantity or order, so this makes sure we have something for comparison
 	// The other option would be to manually set a trigger or flag whenever the contents are hard-coded to change but that would be unwarranted work onto future contributions
-	var/list/stored_previous_materials_data = list() //! List which stores the materials as they were last seen in get_producibility_for_blueprints
+	var/list/obj/item/material_piece/stored_previous_materials_data = list() //! List which stores the materials as they were last seen in get_producibility_for_blueprints
 	var/stored_previous_blueprint_data = "" //! JSON-encoded string of the blueprint data. used for comparisons in get_producibility_for_blueprints
 
 	/* Production options */
@@ -494,6 +494,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/ref in src.stored_previous_materials_data)
 			if (!(ref in refs_encountered))
 				src.stored_previous_materials_data.Remove(ref)
+				contents_changed = TRUE
 		// Do actual computation since contents changed
 		if (contents_changed)
 			return src.compute_producibility_for_blueprints()
