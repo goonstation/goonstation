@@ -11,7 +11,7 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/security)
 "ao" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/disposalpipe/segment/transport,
@@ -1381,7 +1381,7 @@
 /turf/simulated/floor/grime,
 /area/mining/comms)
 "rY" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/rail{
@@ -1474,7 +1474,7 @@
 /turf/space,
 /area/noGenerate)
 "sD" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -1483,7 +1483,7 @@
 	},
 /area/mining/mainasteroid)
 "sE" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/rail{
 	dir = 1;
 	layer = 3
@@ -1731,7 +1731,7 @@
 /turf/simulated/floor/caution/south,
 /area/mining/hangar)
 "uu" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -1794,7 +1794,7 @@
 	dir = 8;
 	layer = 3
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -1853,7 +1853,7 @@
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "vs" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/rail{
 	dir = 1;
 	layer = 3
@@ -1875,7 +1875,7 @@
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/chapel)
 "vz" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/cable{
@@ -1984,7 +1984,7 @@
 /turf/simulated/floor,
 /area/mining/manufacturing)
 "we" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -2000,13 +2000,13 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
 "wg" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
 /area/mining/mainasteroid)
 "wj" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -2031,7 +2031,7 @@
 	},
 /area/mining/power)
 "wt" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/cable{
@@ -2307,7 +2307,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/atmospherics)
 "xQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/cable{
@@ -2405,7 +2405,7 @@
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
 "yp" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -2525,7 +2525,7 @@
 	dir = 9;
 	layer = 3
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mining/mainasteroid)
 "zs" = (
@@ -2704,7 +2704,7 @@
 /area/mining/hangar)
 "AA" = (
 /obj/machinery/power/tracker/small_backup4,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable{
@@ -2928,7 +2928,7 @@
 	layer = 3
 	},
 /obj/disposalpipe/segment/transport,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -2939,7 +2939,7 @@
 	dir = 6;
 	layer = 3
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
@@ -3239,7 +3239,7 @@
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/security)
 "Ek" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mining/mainasteroid)
 "En" = (
@@ -3511,7 +3511,7 @@
 /turf/simulated/floor/red/side,
 /area/evilreaver/security)
 "FP" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -3520,7 +3520,7 @@
 	},
 /area/mining/mainasteroid)
 "FR" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -3584,7 +3584,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -3714,7 +3714,7 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/security)
 "GY" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mining/mainasteroid)
@@ -3745,7 +3745,7 @@
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "Hp" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/mainasteroid)
@@ -3966,7 +3966,7 @@
 /turf/simulated/floor/grime,
 /area/mining/dock)
 "IE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/simulated/floor/plating/airless/asteroid,
@@ -3976,7 +3976,7 @@
 /turf/simulated/floor/plating,
 /area/spyshack)
 "IG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/rail{
@@ -4125,7 +4125,7 @@
 /area/mining/hangar)
 "JJ" = (
 /obj/disposalpipe/segment/transport,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mining/mainasteroid)
 "JK" = (
@@ -4757,7 +4757,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "NQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -4765,7 +4765,7 @@
 	},
 /area/mining/mainasteroid)
 "NU" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -4939,7 +4939,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
 "Pl" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/station/solar/small_backup3)
 "Pm" = (
@@ -4959,7 +4959,7 @@
 /turf/simulated/floor/grime,
 /area/mining/power)
 "Py" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/cable{
@@ -5052,7 +5052,7 @@
 /turf/simulated/wall/auto/martian,
 /area/noGenerate)
 "Qm" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/rail{
@@ -5248,7 +5248,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/mining/miningoutpost)
 "Rz" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/machinery/magnet_chassis{
@@ -5363,7 +5363,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
 "Sw" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
@@ -5494,7 +5494,7 @@
 	},
 /area/noGenerate)
 "Tz" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/mainasteroid)
 "TC" = (
@@ -5537,7 +5537,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -6023,7 +6023,7 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
 "WY" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -6176,7 +6176,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/spyshack)
 "XX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -6473,7 +6473,7 @@
 	},
 /area/noGenerate)
 "ZT" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/simulated/floor/airless/plating/catwalk{

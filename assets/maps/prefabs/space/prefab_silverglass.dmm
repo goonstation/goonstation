@@ -154,7 +154,7 @@
 /turf/simulated/floor/airless/specialroom/cafeteria,
 /area/prefab/silverglass/eats)
 "fR" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-8"
@@ -463,7 +463,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/power/tracker/silverglass,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
@@ -550,7 +550,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
@@ -588,7 +588,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -659,7 +659,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/noGenerate)
 "wy" = (
@@ -1032,7 +1032,7 @@
 /turf/simulated/floor,
 /area/prefab/silverglass)
 "MB" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/prefab/silverglass/research)
 "MR" = (
@@ -1043,7 +1043,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross"
@@ -1060,7 +1060,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -1446,7 +1446,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -1477,7 +1477,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},

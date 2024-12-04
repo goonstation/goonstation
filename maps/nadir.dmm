@@ -736,7 +736,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "apM" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -2982,7 +2982,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
 "bru" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -3120,7 +3120,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bsC" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -3475,7 +3475,7 @@
 	name = "Security Overwatch"
 	})
 "byQ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
 	},
@@ -3730,7 +3730,7 @@
 	},
 /area/station/hallway/secondary/west)
 "bFd" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/blue{
 	icon_state = "4-8"
 	},
@@ -4218,7 +4218,7 @@
 /turf/space/fluid/acid/clear,
 /area/space)
 "bSU" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
@@ -5954,7 +5954,7 @@
 /turf/space/fluid/acid/clear,
 /area/space)
 "cJQ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -6934,7 +6934,7 @@
 /turf/simulated/floor/black/side,
 /area/station/crew_quarters/arcade)
 "ddM" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/black/grime,
@@ -8969,7 +8969,7 @@
 	name = "Extraction Nexus"
 	})
 "dZR" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -9342,7 +9342,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "ejL" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/stool/chair{
 	dir = 8;
 	icon_state = "chair"
@@ -10107,7 +10107,7 @@
 /area/station/janitor/supply)
 "eBk" = (
 /obj/decal/boxingrope,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -10210,7 +10210,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/pharmacy)
 "eDZ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade/dungeon)
 "eEm" = (
@@ -11552,7 +11552,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/ptl)
 "fhi" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -12805,7 +12805,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "fFt" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
@@ -14003,7 +14003,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
 "ghZ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -14366,7 +14366,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "goK" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/cable{
 	icon_state = "4-8"
@@ -15339,7 +15339,7 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -16469,7 +16469,7 @@
 	},
 /area/station/hallway/secondary/east)
 "hbx" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -22573,7 +22573,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/west)
 "jxl" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
@@ -23671,7 +23671,7 @@
 	},
 /area/station/hallway/primary/northwest)
 "jTn" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -24009,7 +24009,7 @@
 /turf/simulated/floor/engine/caution,
 /area/station/ai_monitored/armory)
 "kci" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -25864,7 +25864,7 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "kNa" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -26358,7 +26358,7 @@
 	name = "The Warrens"
 	})
 "kXF" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/cable{
 	icon_state = "1-2"
@@ -26848,7 +26848,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/storage/warehouse)
 "lja" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "ljy" = (
@@ -26979,7 +26979,7 @@
 	},
 /area/ghostdrone_factory)
 "llI" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -29188,7 +29188,7 @@
 	},
 /area/station/hallway/primary/northwest)
 "mcK" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/cable{
 	icon_state = "1-2"
@@ -33014,7 +33014,7 @@
 	},
 /area/pasiphae/sys)
 "nJe" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -33035,7 +33035,7 @@
 /turf/simulated/floor/stairs/wide,
 /area/listeningpost)
 "nJE" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/space/fluid/acid/clear,
 /area/space)
 "nJZ" = (
@@ -33104,7 +33104,7 @@
 	name = "The Warrens"
 	})
 "nLI" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -33157,7 +33157,7 @@
 	name = "Cargo Primary Endpoint"
 	})
 "nMK" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/plating/jen,
 /area/station/crew_quarters/quarters_east)
 "nMN" = (
@@ -33301,7 +33301,7 @@
 	name = "Bridge Reception"
 	})
 "nQG" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -33696,7 +33696,7 @@
 	name = "Extraction Nexus"
 	})
 "nYt" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
@@ -34726,7 +34726,7 @@
 /turf/space/fluid/acid,
 /area/space)
 "ozl" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space/fluid/acid/clear,
 /area/space)
 "ozw" = (
@@ -35960,7 +35960,7 @@
 	},
 /area/station/hydroponics/bay)
 "oZL" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -36706,7 +36706,7 @@
 	name = "The Warrens"
 	})
 "ppR" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -39691,7 +39691,7 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 5
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -40143,7 +40143,7 @@
 	},
 /area/station/science/bot_storage)
 "qSl" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/machinery/power/apc/autoname_north/nopoweralert,
 /obj/cable{
@@ -40470,7 +40470,7 @@
 	},
 /area/station/chapel/sanctuary)
 "rcy" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -40930,7 +40930,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "rnQ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/armory)
 "rnV" = (
@@ -43801,7 +43801,7 @@
 	name = "Nuclear Control Room"
 	})
 "sEL" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "sEM" = (
@@ -44561,7 +44561,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
 "sTM" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -45470,7 +45470,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
 "tnw" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/stool/chair{
 	dir = 8
 	},
@@ -45792,7 +45792,7 @@
 /turf/simulated/floor/black,
 /area/station/security/beepsky)
 "tvy" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -45835,7 +45835,7 @@
 	name = "Extraction Nexus"
 	})
 "twa" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -46093,7 +46093,7 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "tAU" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
@@ -46803,7 +46803,7 @@
 	name = "Northeast Breach Hull"
 	})
 "tQW" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/machinery/light/small{
 	dir = 4;
@@ -47872,7 +47872,7 @@
 	},
 /area/station/medical/morgue)
 "uod" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/light/small,
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
@@ -49206,7 +49206,7 @@
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/hallway/secondary/exit)
 "uWj" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -51654,7 +51654,7 @@
 /turf/simulated/floor/engine,
 /area/station/communications/centre)
 "vZf" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
 	},
@@ -56112,7 +56112,7 @@
 	},
 /area/station/engine/storage)
 "ycg" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/cleanable/leaves{
 	desc = "Maurice is getting restless."
 	},

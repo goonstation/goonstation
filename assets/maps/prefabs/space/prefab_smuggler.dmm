@@ -6,7 +6,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "ac" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/prefab/smuggler_den)
 "ad" = (
