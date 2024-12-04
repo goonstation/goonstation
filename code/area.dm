@@ -777,6 +777,9 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/john/diner
 	name = "John's Bus Diner Dock"
 	icon_state = "shuttle"
+	#ifdef UNDERWATER_MAP
+	ambient_light = OCEAN_LIGHT
+	#endif
 
 /area/shuttle/john/diner/nadir
 	name = "John's Bus Station Dock"
@@ -4015,6 +4018,7 @@ ABSTRACT_TYPE(/area/mining)
 /area/mining/magnet_control
 	name = "Mining Outpost Magnet Control"
 	icon_state = "miningp"
+	lightswitch = FALSE
 
 /area/mining/refinery
 	name = "Mining Outpost Refinery"

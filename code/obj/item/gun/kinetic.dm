@@ -912,6 +912,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/nine_mm_surplus/mag_mor
 	icon_recoil_cap = 15
+	tooltip_flags = REBUILD_USER
 	get_desc(dist, mob/user)
 		if (user.get_gang() != null)
 			. += "For when you need MOR' DAKKA. Uses 9mm Surplus rounds."

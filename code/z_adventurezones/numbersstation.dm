@@ -15,6 +15,7 @@ var/global/shut_up_about_the_fucking_numbers_station = 1
 /area/spyshack
 	name = "Space Shack"
 	icon_state = "yellow"
+	lightswitch = FALSE
 
 /obj/item/paper/mission_outline
 	name = "gibberish note"

@@ -83,7 +83,7 @@
 					else
 						message = "<B>[src]</B> makes a very loud noise."
 						m_type = 2
-					if (src.traitHolder && src.traitHolder.hasTrait("scaredshitless"))
+					if (src.traitHolder && src.traitHolder.hasTrait("scaredshitless") && !ON_COOLDOWN(src, "scaredshitless", 1 SECOND))
 						src.emote("fart") //We can still fart if we're muzzled.
 
 			if ("monsterscream")
@@ -147,7 +147,7 @@
 
 						var/fart_on_other = 0
 						for (var/atom/A as anything in src.loc)
-							if (A.event_handler_flags & IS_FARTABLE)
+							if (A.event_handler_flags & IS_FARTABLE && !ON_COOLDOWN(A, "\ref[src]fart", 0.1 SECONDS))
 								if (istype(A,/mob/living))
 									var/mob/living/M = A
 									if (M == src || !M.lying)

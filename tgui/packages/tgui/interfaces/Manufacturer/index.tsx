@@ -24,6 +24,7 @@ import { pluralize } from 'tgui-core/string';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { is_set } from '../common/bitflag';
+import { useHashedMemo } from '../common/hooks';
 import { BlueprintButton } from './components/BlueprintButton';
 import { CardInfo } from './components/CardInfo';
 import { CollapsibleWireMenu } from './components/CollapsibleWireMenu';
@@ -67,6 +68,7 @@ export const Manufacturer = () => {
     recipe_blueprints,
     repeat,
     resource_data,
+    producibility_data,
     rockboxes,
     speed,
     wire_bitflags,
@@ -131,6 +133,9 @@ export const Manufacturer = () => {
   const hasPower = !!indicators?.hasPower;
   const manudriveName = manudrive?.name ?? '';
   const manudriveLimit = manudrive?.limit;
+
+  // Only change producibility_data if it actually changes. Not doing this will cause issues for performance with blueprint buttons.
+  const diffedProducibilityData = useHashedMemo(producibility_data);
 
   // Converts the blueprints we get into one larger list sorted by category.
   // This is done here instead of sending one big list to reduce the amount of times we need to refresh static data.
@@ -224,7 +229,9 @@ export const Manufacturer = () => {
                             onVendProduct={staticActions.handleProductVend}
                             blueprintData={blueprint}
                             manufacturerSpeed={speed}
-                            materialData={resource_data}
+                            blueprintProducibilityData={
+                              diffedProducibilityData[blueprint.byondRef]
+                            }
                             deleteAllowed={
                               delete_allowed !== AccessLevels.DENIED
                             }

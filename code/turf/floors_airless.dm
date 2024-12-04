@@ -388,6 +388,26 @@
 /turf/simulated/floor/airless/darkblue/checker/other
 	icon_state = "blue-dblue2"
 
+/turf/simulated/floor/airless/darkblue/side
+	icon_state = "dblue"
+
+/turf/simulated/floor/airless/darkblue/corner
+	icon_state = "dbluecorner"
+
+/turf/simulated/floor/airless/darkblue/checker
+	icon_state = "dbluechecker"
+
+/turf/simulated/floor/airless/darkblueblack
+	icon_state = "dblueblack"
+
+/turf/simulated/floor/airless/darkblueblack/corner
+	icon_state = "dblueblackcorner"
+
+/turf/simulated/floor/airless/darkbluewhite
+	icon_state = "dbluewhite"
+
+/turf/simulated/floor/airless/darkbluewhite/corner
+	icon_state = "dbluewhitecorner"
 /////////////////////////////////////////
 
 /turf/simulated/floor/airless/bluegreen
