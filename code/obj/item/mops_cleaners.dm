@@ -1275,7 +1275,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	syndicate
 		name = "\improper GR1-Mk3 Dirt Dispenser"
 		desc = "The Grime Release, Version 1, Mark III Dirt Dispenser, absolute bane of cleanliness.<br>\
-			Must ONLY be used with one of many Syndicate licensed GR1-Mk3 back tanks."
+			Use alongside non-Syndicate licensed back tanks will void warranty."
 		contraband = 4
 		icon_state = "sprayer_s"
 		item_state = "janitor_sprayer_s"
