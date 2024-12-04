@@ -18,6 +18,10 @@
 	icon_state = "mail-1"
 	item_state = "gift"
 	pressure_resistance = 70
+	var/recipient = "You"
+	var/sender = "Me"
+	var/obj/item/paper/letter = null // A letter included in the package
+	var/no_letter = FALSE // For our letter-haters out here
 	var/random_icons = TRUE
 	var/spawn_type = null
 	var/tmp/target_dna = null
@@ -28,6 +32,8 @@
 		..()
 		if (src.random_icons)
 			src.icon_state = "mail-[rand(1,3)]"
+		if (!no_letter)
+			src.letter = new /obj/item/paper(src)
 
 	attack_self(mob/M as mob)
 		if (!ishuman(M))
@@ -54,23 +60,73 @@
 
 		return
 
+	proc/setup_stamp(var/stamp_png, var/icon_state)
+		if(!src.letter)
+			return
+		src.letter.stamp(rand(90,260), rand(150,390), rand(-20,20), stamp_png, icon_state)
+
+	proc/setup_letter_text(var/sender, var/list/context)
+		if(!src.letter)
+			return
+		src.sender = sender
+
+		var/beginning = ""
+		var/middle = ""
+		var/end = ""
+		if(length(context) == 0)
+			return
+
+		var/context_text = context["name"]
+		switch(context["id"])
+			if("trait")
+				beginning = pick("\"[context_text]\"... I know that means a lot to you.", "\"[context_text]\" is a big part of your life, yeah?", "You spend a lot of thinking about it, don't you?<br>\"[context_text]\".")
+				var/expression1 = pick("know what else to get you", "think that you would care", "bother thinking much about it", "spend much time picking this", "consider what you'd think")
+				var/expression2 = pick("I remembered you care about this", "it suddenly came to me", "I saw an ad on TV about this", "I had your friend remind me of this")
+				var/middle1 = pick("Didn't really [expression1]", "Honestly, I didn't [expression1]", "Frankly, I did not [expression1]")
+				var/middle2 = pick("but then [expression2]", "it might be weird that [expression2]", "however [expression2]")
+				middle = "[middle1], [middle2]."
+			if("job")
+				var/expression = pick("working really hard", "working your socks off", "pulling overtime", "doing excellent work", "doing a good job")
+				beginning = pick("Your efforts as [context_text] have not gone unnoticed.", "How long has it been you started working as [context_text]?", "Working as [context_text] isn't easy, I know that.")
+				middle = pick("Think I wouldn't notice you've been [expression]?", "I know you've been [expression] for me.", "Hate to say it, but you're [expression].")
+				sender += "<br>[context["sender_job"]]"
+			else
+				beginning = "Literally have no idea why I'm doing this."
+				middle = "Like, genuinely. I don't even know you. But anyway."
+		end = pick("Thought I'd send you a little something in appreciation.", "Hope you like this little gift from me.", "Here's something to celebrate your hard work.")
+		var/greeting = pick("Hey", "Hello", "Hi", "Salutations", "Greetings", "Yo", "Sup", "Hiya")
+		var/signature = pick("Signed", "Kind regards", "XOXO", "Stay safe", "Peace", "You owe me")
+		src.letter.info = {"[greeting] [src.recipient],<br><br>
+			[beginning]<br>
+			[middle]<br>
+			[end]<br><br>
+			[signature],<br>
+			[sender]"}
+
 	proc/open(mob/M, crime = FALSE)
 		var/atom/movable/prize = new src.spawn_type
 		. = prize
 		if (prize && istype(prize, /obj/item))
 			boutput(M, SPAN_NOTICE("You [crime ? "tear " : ""]open the package and pull out \a [prize]."))
 			var/obj/item/P = prize
+			P.name = "[recipient]'s [P.name]"
+			P.quality = rand(5,80)
 			M.u_equip(src)
 			M.put_in_hand_or_drop(P)
 
 		else if (prize)
 			boutput(M, SPAN_NOTICE("You somehow pull \a [prize] out of \the [src]!"))
+			prize.name = "[recipient]'s [prize.name]"
 			prize.set_loc(get_turf(M))
 
 		else
 			boutput(M, SPAN_NOTICE("You have no idea what it is you did, but \the [src] collapses in on itself!"))
 			logTheThing(LOG_STATION, M, "opened [src] but nothing was there, how the fuck did this happen? It was supposed to be \a [src.spawn_type]!.")
 
+		if (src.letter)
+			boutput(M, SPAN_NOTICE("Seems like there's a letter attached to \the [src]."))
+			src.letter.name = "[src.sender]'s letter"
+			M.put_in_hand_or_drop(src.letter)
 		qdel(src)
 
 	attackby(obj/item/I, mob/user)
@@ -217,7 +273,7 @@
 // Check shippingmarket.dm for the part that actually calls this.
 /proc/create_random_mail(where, how_many = 1)
 
-	// [mob] =  (name, rank, dna)
+	// [mob] =  (name, rank, dna, fav_color)
 	var/list/crew = list()
 
 	// get a list of all living, connected players
@@ -238,7 +294,8 @@
 			name = manifest_record.get_field("name"),
 			job = manifest_record.get_field("rank"),
 			dna = manifest_record.get_field("dna"),
-			)
+			fav_color = C.preferences.PDAcolor
+		)
 
 	// nobody here
 	if (crew.len == 0)
@@ -269,23 +326,100 @@
 
 		// make a gift for this person
 		var/obj/item/random_mail/package = null
-		var/package_color = "#FFFFFF"
+		var/package_color = recipient["fav_color"] ? recipient["fav_color"] : pick("#FFFFAA", "#FFBB88", "#FF8800", "#CCCCFF", "#FEFEFE")
+		var/stamp_id = "stamp-stain-[rand(1, 3)]"
+		var/sender = null
+		var/sender_title = null
+		var/list/context = list()
+
+		// high chance to find an appropriate mail based on the traits chosen
+		var/mob/living/carbon/human/H = picked
+		if (ishuman(picked))
+			H = picked
+		if (prob(75) && length(H?.traitHolder.traits) > 0)
+			if (!ishuman(picked))
+				logTheThing(LOG_STATION, H, "was thought to be human, but they weren't a human. Which is really weird!!")
+				break
+			var/list/possible_mail = list()
+			for (var/trait in mail_types_by_trait)
+				if (H?.traitHolder.hasTrait(trait))
+					var/random_pick = pick(mail_types_by_trait[trait])
+					if(trait == "picky_eater")
+						var/datum/trait/picky_eater/picky_trait = H?.traitHolder.getTrait(trait)
+						if(length(picky_trait.fav_foods) > 0)
+							random_pick = pick(picky_trait.fav_foods)
+					possible_mail[trait] = random_pick
+			if (length(possible_mail) > 0)
+				var/datum/trait/chosen = getTraitById(pick(possible_mail))
+				var/spawn_type = possible_mail[chosen.id]
+				package = new(where)
+				package.spawn_type = spawn_type
+				context["id"] = "trait"
+				context["name"] = chosen.name
 
 		// the probability here can go up as the number of items for jobs increases.
 		// right now the job pools are kind of small for some, so only use it sometimes.
-		if (prob(50) && length(mail_types_by_job[J.type]))
+		if (!package && prob(75) && length(mail_types_by_job[J.type]))
 			var/spawn_type = weighted_pick(mail_types_by_job[J.type])
 			package = new(where)
 			package.spawn_type = spawn_type
 			package_color = J.linkcolor ? J.linkcolor : "#FFFFFF"
-		else
+
+			var/sender_job = null
+			// Pick a cool stamp and random "official" sender based on job for flavor
+			switch(J.job_category)
+				if (JOB_COMMAND)
+					stamp_id = "stamp-centcom"
+					sender = "John NanoTrasen"
+					sender_job = "CEO"
+				if (JOB_SECURITY)
+					sender_title = pick("Pvt.","Sgt","Cpl.","Maj.","Cpt.","Col.","Gen.")
+					stamp_id = "stamp-hos"
+					sender_job = "NanoTrasen Security Services"
+				if (JOB_RESEARCH)
+					// Why do we still not separate medical doctors and scientists
+					sender_title = pick("Dr.", "Prof.", "Prof. Dr.")
+					if (J.type == /datum/job/research/scientist || J.type == /datum/job/research/research_assistant)
+						stamp_id = "stamp-rd"
+						sender_job = "NanoTrasen Research & Development"
+					else
+						stamp_id = "stamp-md"
+						sender = "NanoTrasen Medical Services"
+				if (JOB_ENGINEERING)
+					if (prob(50))
+						sender_title = pick("Dr.")
+					stamp_id = "stamp-ce"
+					sender_job = "NanoTrasen Engineering Services"
+				if (JOB_CIVILIAN)
+					if (J.type == /datum/job/civilian/clown)
+						stamp_id = "stamp-honk"
+						sender = "Geoff Honkington"
+						sender_job = "Ex-Clown"
+					else
+						stamp_id = "stamp-hop"
+						sender_job = "NanoTrasen Human Resources"
+				if (JOB_SPECIAL)
+					if (J.type == /datum/job/special/mime)
+						stamp_id = "stamp-mime"
+						sender = "Mimi Mimesworth"
+						sender_job = "Mime Lord"
+				else
+					stamp_id = "stamp-centcom"
+					sender = "John NanoTrasen"
+					sender_job = "CEO"
+			context["id"] = "job"
+			context["sender_job"] = sender_job
+			context["name"] = J.name
+		else if (!package)
 			// if there are no job specific items or we aren't doing job-specific ones,
 			// just throw some random crap in there, fuck it. who cares. not us
 			var/spawn_type = weighted_pick(mail_types_everyone)
 			package = new(where)
 			package.spawn_type = spawn_type
 			package.name = "mail for [recipient["name"]]"
-			package_color = pick("#FFFFAA", "#FFBB88", "#FF8800", "#CCCCFF", "#FEFEFE")
+
+			context["id"] = "normal"
+			context["name"] = ""
 
 		package.name = "mail for [recipient["name"]] ([recipient["job"]])"
 		var/list/color_list = rgb2num(package_color)
@@ -297,23 +431,17 @@
 
 		// packages are dna-locked so you can't just swipe everyone's mail like a jerk.
 		package.target_dna = recipient["dna"]
+		package.recipient = recipient["name"]
 		package.desc = "A package for [recipient["name"]]. It has a DNA-based lock, so only [recipient["name"]] can open it."
+
+		sender = sender ? sender : "[pick(pick_string_autokey("names/first_male.txt"), pick_string_autokey("names/first_female.txt"))] [pick_string_autokey("names/last.txt")]"
+		sender = sender_title ? "[sender_title] [sender]" : sender
+		package.setup_letter_text(sender, context)
+		package.setup_stamp("[stamp_id].png", stamp_id)
 
 		mail += package
 
 	return mail
-
-
-
-
-
-
-
-
-
-
-
-
 
 // =======================================================
 // Various random items jobs can get via the "mail" system
@@ -628,6 +756,46 @@ var/global/mail_types_by_job = list(
 		)
 	)
 
+// =========================================================================
+// Various items given out based on player trait choices, to make it more personal
+var/global/mail_types_by_trait = list(
+	"petasusaphilic" = filtered_concrete_typesof(/obj/item/clothing/head, /proc/filter_trait_hats),
+	"pawnstar" = trinket_safelist,
+	"petperson" = filtered_concrete_typesof(/mob/living/critter/small_animal/, GLOBAL_PROC_REF(filter_carrier_pets)),
+	"lunchbox" = childrentypesof(/obj/item/storage/lunchbox),
+	"loyalist" = list(/obj/item/clothing/head/NTberet, /obj/item/clothing/head/NTberet/commander),
+	"conspiracytheorist" = list(/obj/item/clothing/head/tinfoil_hat),
+	"beestfriend" = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy),
+	"bald" = list(/obj/item/reagent_containers/pill/hairgrownium, /obj/item/clothing/head/wig/spawnable),
+	"pilot" = concrete_typesof(/obj/item/pod/paintjob) + list(/obj/item/pod/frame_box),
+	"sleepy" = list(/obj/item/reagent_containers/ampoule/smelling_salts, /obj/item/clothing/suit/bedsheet/random, /obj/item/furniture_parts/bed),
+	"partyanimal" = concrete_typesof(/obj/item/reagent_containers/food/drinks/bottle) + list(/obj/item/clothing/head/party/random),
+	"jailbird" = list(/obj/item/paper/newspaper/rolled, /obj/item/clothing/mask/moustache, /obj/item/clothing/glasses/sunglasses),
+	"burning" = list(/obj/item/extinguisher, /obj/item/storage/firstaid/fire),
+	"carpenter" = concrete_typesof(/obj/item/furniture_parts),
+	"allears" = list(/obj/item/device/radio/headset/civilian, /obj/item/device/radio/headset/research, /obj/item/device/radio/headset/engineer),
+	"skeleton" = list(/obj/item/reagent_containers/food/drinks/milk, /obj/item/joint_wax),
+	"pug" = list(/obj/item/reagent_containers/food/snacks/cookie/dog),
+	"picky_eater" = list(/obj/item/reagent_containers/food/snacks), // Extra logic for determining favorite food
+	"deaf" = list(/obj/item/device/radio/headset/deaf),
+	"blind" = list(/obj/item/clothing/glasses/visor),
+	"shortsighted" = list(/obj/item/clothing/glasses/regular),
+	"nolegs" = list(/obj/item/furniture_parts/wheelchair, /obj/item/parts/robot_parts/leg/left/light, /obj/item/parts/robot_parts/leg/right/light),
+	"plasmalungs" = list(/obj/item/tank/mini_plasma),
+	"scottish" = list(/obj/item/instrument/bagpipe, /obj/item/clothing/under/gimmick/kilt,
+		/obj/item/reagent_containers/food/snacks/haggis, /obj/item/reagent_containers/food/snacks/scotch_egg
+	),
+	"french" = concrete_typesof(/obj/item/clothing/head/frenchberet) + list(/obj/item/baguette,
+		/obj/item/reagent_containers/food/snacks/ingredient/cheese, /obj/item/reagent_containers/food/snacks/croissant,
+		/obj/item/reagent_containers/food/snacks/painauchocolat
+	),
+	"german" = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chocolate, /obj/item/reagent_containers/food/snacks/danish_apple,
+		/obj/item/reagent_containers/food/snacks/danish_cherry, /obj/item/reagent_containers/food/snacks/danish_blueb
+	),
+	"elvis" = list(/obj/item/reagent_containers/food/snacks/breadloaf/elvis), // I'm sure the 1 guy using this trait will be happy about this
+	"swedish" = list(/obj/item/reagent_containers/food/snacks/swedish_fish, /obj/item/reagent_containers/food/snacks/swedishmeatball),
+	"allergy" = list(/obj/item/reagent_containers/emergency_injector/epinephrine)
+)
 
 // =========================================================================
 // Items given out to anyone, either when they have no job items or randomly
@@ -666,7 +834,6 @@ var/global/mail_types_everyone = list(
 	/obj/item/device/light/glowstick = 4,
 	/obj/item/clothing/glasses/vr/arcade = 2,
 	/obj/item/device/light/zippo = 4,
-	/obj/item/reagent_containers/emergency_injector/epinephrine = 6,
 
 	// mostly taken from gangwar as a "relatively safe list of random hats"
 	/obj/item/clothing/head/biker_cap = 1,
