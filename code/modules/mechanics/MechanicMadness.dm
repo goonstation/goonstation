@@ -1838,8 +1838,8 @@
 	//It kind of worries me
 	var/buffer_max_size = 200
 	//Ring reader ring writer
-	var/rr = 1
-	var/rw = 1
+	var/ring_reader = 1
+	var/ring_writer = 1
 
 	var/buffer_model = RING_BUFFER
 	var/buffer_string = "ring"
@@ -1880,7 +1880,6 @@
 		tooltip_rebuild = 1
 		qdel(buffer)
 		buffer = list()
-		return 1
 
 	//Thanks delay component
 	proc/setDelay(obj/item/W as obj, mob/user as mob)
@@ -1893,9 +1892,6 @@
 			cooldown_time = inp
 			tooltip_rebuild = 1
 			boutput(user, "Set delay to [inp]")
-			return 1
-		return 0
-
 
 	proc/setBufferSize(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Set size of signal buffer","Buffer size", buffer_size) as num
@@ -1914,34 +1910,31 @@
 		boutput(user,"You set the buffer size to [inp]")
 		qdel(buffer)
 		buffer = list()
-		return
-
 
 	proc/toggleDefault(obj/item/W as obj, mob/user as mob)
 		changesig = !changesig
 		boutput(user, "Signal changing now [changesig ? "on":"off"]")
 		tooltip_rebuild = 1
-		return 1
 
 	proc/buffer(var/datum/mechanicsMessage/input)
 		var/bufl = length(buffer)
 		if(buffer_model == RING_BUFFER)
-			if(bufl >= rw)
-				buffer[rw] = input
+			if(bufl >= ring_writer)
+				buffer[ring_writer] = input
 			else
 				buffer.Add(input)
 			//Round and round we go
 			//If the writer runs into the reader and the next item in the queue isn't null
 			//That means that item is the oldest, jump the reader to it
 			//Watch out for the edge
-			if(rr == rw)
-				if((rr + 1) > buffer_size && !isnull(buffer[1]) )
-					rr = 1
-				else if(bufl >= (rr + 1) && !isnull(buffer[(rr + 1)]))
-					rr++
-			rw++
-			if(rw > buffer_size)
-				rw = 1
+			if(ring_reader == ring_writer)
+				if((ring_reader + 1) > buffer_size && !isnull(buffer[1]) )
+					ring_reader = 1
+				else if(bufl >= (ring_reader + 1) && !isnull(buffer[(ring_reader + 1)]))
+					ring_reader++
+			ring_writer++
+			if(ring_writer > buffer_size)
+				ring_writer = 1
 			return
 
 		if(buffer_model == RANDOM_BUFFER)
@@ -1962,7 +1955,7 @@
 		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 
 		var/bufl = (length(buffer))
-		var signal = null
+		var/signal = null
 		if(bufl > 0)
 
 			if(buffer_model == FIFO_BUFFER)
@@ -1971,14 +1964,14 @@
 			if(buffer_model == FILO_BUFFER)
 				signal = buffer[bufl]
 				buffer.Remove(buffer[bufl])
-			if(buffer_model == RING_BUFFER && bufl >= rr && !isnull(buffer[rr]) )
-				signal = buffer[rr]
-				buffer[rr] = null
-				rr++
-				if(rr > buffer_size)
-					rr = 1
+			if(buffer_model == RING_BUFFER && bufl >= ring_reader && !isnull(buffer[ring_reader]) )
+				signal = buffer[ring_reader]
+				buffer[ring_reader] = null
+				ring_reader++
+				if(ring_reader > buffer_size)
+					ring_reader = 1
 			if(buffer_model == RANDOM_BUFFER)
-				var ran = rand(1,bufl)
+				var/ran = rand(1,bufl)
 				signal = buffer[ran]
 				buffer.Remove(buffer[ran])
 
@@ -1989,12 +1982,9 @@
 			var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
 			SPAWN(0) SEND_SIGNAL(src,transmissionStyle,signal)
 
-
-
-
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_buffer"
-		return
+
 
 #undef FIFO_BUFFER
 #undef FILO_BUFFER
