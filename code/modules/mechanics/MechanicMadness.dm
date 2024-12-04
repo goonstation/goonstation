@@ -1832,12 +1832,11 @@
 	icon_state = "comp_buffer"
 	cooldown_time = 0.4 SECONDS
 	var/list/buffer = list()
-	var/buffer_size = 15
+	var/buffer_size = 30
 	//I wanted to set this to the same limit as the selection component
 	//But the selection compoment doesn't actually have a limit in the additem() proc
 	//It kind of worries me
 	var/buffer_max_size = 200
-	//Ring reader ring writer
 	var/ring_reader = 1
 	var/ring_writer = 1
 
@@ -1862,7 +1861,10 @@
 
 
 	proc/setModel(obj/item/W as obj, mob/user as mob)
-		var/model = input("Set the buffer mode to what?", "Mode Selector",buffer_string) in list("FIFO","FILO","ring","random")
+		var/model = tgui_input_list(user, "Set the buffer mode to what?", "Mode Selector", list("FIFO","FILO","ring","random"), buffer_string)
+		if(!in_interact_range(src, user) || !can_act(user) || isnull(model))
+			return
+
 		if(model == "FIFO")
 			buffer_desc = "This mode outputs from oldest to newest, dropping signals when full."
 			buffer_model = FIFO_BUFFER
@@ -1875,6 +1877,7 @@
 		if(model == "random")
 			buffer_desc = "This mode outputs signals randomly, randomly overwriting previous signals when full."
 			buffer_model = RANDOM_BUFFER
+
 		buffer_string = model
 		boutput(user, "You set the buffer mode to [model]")
 		tooltip_rebuild = 1
@@ -1883,26 +1886,27 @@
 
 	//Thanks delay component
 	proc/setDelay(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user, "Enter delay in 10ths of a second:", "Set delay", cooldown_time) as num
-		if(!in_interact_range(src, user) || user.stat)
-			return 0
+		var/inp = tgui_input_number(user, "Enter delay in 10ths of a second:", "Set delay", cooldown_time, 60, 4)
+		if(!in_interact_range(src, user) || !can_act(user) || isnull(inp))
+			return
 		inp = min(inp, 60)
 		inp = max(4, inp)
-		if(!isnull(inp))
-			cooldown_time = inp
-			tooltip_rebuild = 1
-			boutput(user, "Set delay to [inp]")
+		cooldown_time = inp
+		tooltip_rebuild = 1
+		boutput(user, "Set delay to [inp]")
 
 	proc/setBufferSize(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Set size of signal buffer","Buffer size", buffer_size) as num
-		if(!in_interact_range(src, user) || user.stat)
-			return 0
+		var/inp = tgui_input_number(user,"Set size of signal buffer","Buffer size", buffer_size,buffer_max_size,-1)
+		if(!in_interact_range(src, user) || !can_act(user) || isnull(inp))
+			return
+
 		inp = round(inp)
 		inp = min(inp, buffer_max_size)
 		if(inp == 0)
 			boutput(user,"Buffer size can't be zero.")
 			return
 		if(inp < 0)
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50,1)
 			boutput(user,"How could a buffer be negative? What are you doing here?")
 			return
 		buffer_size = inp
