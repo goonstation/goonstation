@@ -315,7 +315,7 @@
 		materiel_stock += new/datum/materiel/mail_gear/crate
 		materiel_stock += new/datum/materiel/mail_gear/satchel
 		materiel_stock += new/datum/materiel/mail_gear/big_satchel
-		material_stock += new/datum/materiel/mail_gear/syndie_jumpsuit
+		materiel_stock += new/datum/materiel/mail_gear/syndie_jumpsuit
 		..()
 
 	accepted_token(var/obj/item/currency/mail/token)
