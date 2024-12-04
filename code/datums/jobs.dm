@@ -2546,6 +2546,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	unique = TRUE
 	wages = PAY_TRADESMAN
 	trait_list = list("training_security")
+	access_string = "Nanotrasen Security Consultant"
 	requires_whitelist = TRUE
 	requires_supervisor_job = "Head of Security"
 	counts_as = "Security Officer"
@@ -2573,11 +2574,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	wiki_link = "https://wiki.ss13.co/Nanotrasen_Security_Consultant"
 
 	faction = list(FACTION_NANOTRASEN)
-
-	New()
-		..()
-		src.access = get_access("Security Officer") + list(access_heads)
-		return
 
 /datum/job/special/headminer
 	name = "Head of Mining"
@@ -2797,12 +2793,13 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	name = "Pod_Wars"
 #ifdef MAP_OVERRIDE_POD_WARS
 	limit = -1
+	wages = 0 //Who needs cash when theres a battle to win
 #else
 	limit = 0
+	wages = PAY_IMPORTANT
 #endif
 	allow_traitors = FALSE
 	cant_spawn_as_rev = TRUE
-	wages = 0 //Who needs cash when theres a battle to win
 	var/team = 0 //1 = NT, 2 = SY
 	var/overlay_icon
 	wiki_link = "https://wiki.ss13.co/Game_Modes#Pod_Wars"
