@@ -255,7 +255,7 @@
 	desc = "An automated quartermaster service for obtaining and upgrading your fishing gear."
 	icon_state = "fishing"
 	credits = list(WEAPON_VENDOR_CATEGORY_FISHING = 0)
-	token_accepted = /obj/item/currency/fishing
+	token_accepted = /obj/item/currency/vendor_token/fishing
 	sound_token = 'sound/effects/insert_ticket.ogg'
 	log_purchase = FALSE
 	layer = 4
@@ -303,7 +303,7 @@
 	desc = "An automated quartermaster service for obtaining and upgrading your courier gear."
 	icon_state = "mail"
 	credits = list(WEAPON_VENDOR_CATEGORY_MAIL = 0)
-	token_accepted = /obj/item/currency/mail
+	token_accepted = /obj/item/currency/vendor_token/mail
 	sound_token = 'sound/effects/insert_ticket.ogg'
 	log_purchase = FALSE
 	layer = 4

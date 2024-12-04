@@ -219,7 +219,7 @@
 			if (H.job == "Mail Courier")
 				user.visible_message(SPAN_NOTICE("<b>[H]</b> starts rifling through \the [src] with their hands."),\
 				SPAN_NOTICE("You search through \the [src]."))
-				playsound(src.loc, 'sound/effects/sparks3.ogg', 50, 1)
+				playsound(src.loc, 'sound/effects/.ogg', 50, 1)
 				if (src.sampled)
 					H.show_text("The token in this mail is gone!", "red")
 				else
