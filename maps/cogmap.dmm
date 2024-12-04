@@ -10805,7 +10805,6 @@
 /obj/cable{
 	icon_state = "5-10"
 	},
-/obj/machinery/drainage,
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
 "aNk" = (
@@ -31216,6 +31215,7 @@
 /obj/machinery/optable{
 	id = "robotics"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "cil" = (
@@ -34771,6 +34771,7 @@
 /area/station/science/testchamber)
 "ctP" = (
 /obj/machinery/optable,
+/obj/machinery/drainage,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -34945,6 +34946,7 @@
 /obj/machinery/optable{
 	id = "OR1"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "cuo" = (
@@ -35471,6 +35473,7 @@
 /obj/machinery/optable{
 	id = "OR2"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "cwe" = (
@@ -37188,10 +37191,6 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery)
-"cCT" = (
-/obj/machinery/drainage,
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "cCV" = (
 /obj/window/reinforced{
 	dir = 2
@@ -46472,6 +46471,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/light_switch/east,
+/obj/machinery/drainage,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -46661,7 +46661,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment/morgue,
-/obj/machinery/drainage,
 /obj/machinery/computer/operating/small{
 	id = "OR1"
 	},
@@ -48520,7 +48519,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment/morgue,
-/obj/machinery/drainage,
 /obj/machinery/computer/operating/small{
 	id = "OR2"
 	},
@@ -105666,7 +105664,7 @@ cca
 cdl
 ceB
 dfG
-cCT
+ceB
 cik
 ceB
 dHk

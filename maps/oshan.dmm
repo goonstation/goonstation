@@ -2037,13 +2037,13 @@
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/scissors/surgical_scissors,
 /obj/item/scissors/surgical_scissors,
-/obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "agT" = (
 /obj/machinery/optable{
 	id = "robotics"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "agU" = (

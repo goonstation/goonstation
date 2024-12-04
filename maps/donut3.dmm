@@ -6864,6 +6864,7 @@
 /obj/machinery/optable{
 	name = "Autopsy Table"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "bWY" = (
@@ -32211,10 +32212,6 @@
 /obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
-"jHF" = (
-/obj/machinery/drainage,
-/turf/simulated/floor/white,
-/area/station/medical/medbooth)
 "jHO" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 1;
@@ -37329,7 +37326,6 @@
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
 	},
-/obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "lmX" = (
@@ -47618,6 +47614,7 @@
 "ops" = (
 /obj/decal/stripe_caution,
 /obj/machinery/optable,
+/obj/machinery/drainage,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -58659,6 +58656,7 @@
 /obj/blind_switch/area/south{
 	pixel_x = 4
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "rGo" = (
@@ -135288,7 +135286,7 @@ oyi
 gcu
 lNp
 lNp
-jHF
+lNp
 rGf
 wst
 rdj
