@@ -4251,6 +4251,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/optable,
+/obj/machinery/drainage,
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
 "bRL" = (
@@ -6233,6 +6234,7 @@
 	},
 /obj/machinery/optable,
 /obj/item/paper/book/from_file/medical_surgery_guide,
+/obj/machinery/drainage,
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/medical/medbay/surgery)
 "cND" = (
@@ -42889,6 +42891,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/optable,
+/obj/machinery/drainage,
 /turf/simulated/floor/blue,
 /area/station/medical/robotics)
 "sUb" = (
