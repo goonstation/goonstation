@@ -1829,7 +1829,7 @@
 /obj/item/mechanics/buffercomp
 	name = "Buffer Component"
 	desc = ""
-	icon_state = "comp_relay"
+	icon_state = "comp_buffer"
 	cooldown_time = 0.4 SECONDS
 	var/list/buffer = list()
 	var/buffer_size = 15
@@ -1843,10 +1843,12 @@
 
 	var/buffer_model = RING_BUFFER
 	var/buffer_string = "ring"
+	var/buffer_desc = "This mode outputs from oldest to newest, overwriting the oldest signal when full."
 	var/changesig = 0
 
 	get_desc()
-		. += "<br>[SPAN_NOTICE("Delay is [cooldown_time]. <br> Buffer size is [buffer_size]. <br> Buffer mode is [buffer_string].")]"
+		. += "<br>[SPAN_NOTICE("Delay is [cooldown_time] (in 10ths of a second). <br> Buffer size is [buffer_size].\
+		 <br> Buffer mode is [buffer_string].<br>[buffer_desc]")]"
 
 	New()
 		..()
@@ -1862,12 +1864,16 @@
 	proc/setModel(obj/item/W as obj, mob/user as mob)
 		var/model = input("Set the buffer mode to what?", "Mode Selector",buffer_string) in list("FIFO","FILO","ring","random")
 		if(model == "FIFO")
+			buffer_desc = "This mode outputs from oldest to newest, dropping signals when full."
 			buffer_model = FIFO_BUFFER
 		if(model == "FILO")
+			buffer_desc = "This mode outputs from newest to oldest, dropping signals when full."
 			buffer_model = FILO_BUFFER
 		if(model == "ring")
+			buffer_desc = "This mode outputs from oldest to newest, overwriting the oldest signal when full."
 			buffer_model = RING_BUFFER
 		if(model == "random")
+			buffer_desc = "This mode outputs signals randomly, randomly overwriting previous signals when full."
 			buffer_model = RANDOM_BUFFER
 		buffer_string = model
 		boutput(user, "You set the buffer mode to [model]")
@@ -1931,7 +1937,7 @@
 			if(rr == rw)
 				if((rr + 1) > buffer_size && !isnull(buffer[1]) )
 					rr = 1
-				else if(bufl >= (rr + 1) &&!isnull(buffer[(rr + 1)]))
+				else if(bufl >= (rr + 1) && !isnull(buffer[(rr + 1)]))
 					rr++
 			rw++
 			if(rw > buffer_size)
@@ -1978,14 +1984,16 @@
 
 			if(isnull(signal)) return
 
+			LIGHT_UP_HOUSING
+			flick("[under_floor ? "u":""]comp_buffer1", src)
 			var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
 			SPAWN(0) SEND_SIGNAL(src,transmissionStyle,signal)
-			LIGHT_UP_HOUSING
-			flick("[under_floor ? "u":""]comp_relay1", src)
+
+
 
 
 	update_icon()
-		icon_state = "[under_floor ? "u":""]comp_relay"
+		icon_state = "[under_floor ? "u":""]comp_buffer"
 		return
 
 #undef FIFO_BUFFER
