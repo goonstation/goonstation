@@ -1214,6 +1214,7 @@ TYPEINFO(/obj/disposalpipe/loafer)
 				if (istype(newIngredient, /obj/item/reagent_containers/food/snacks/prison_loaf))
 					var/obj/item/reagent_containers/food/snacks/prison_loaf/otherLoaf = newIngredient
 					newLoaf.loaf_factor += otherLoaf.loaf_factor * 1.2
+					newLoaf.loaf_dna_container = otherLoaf.loaf_dna_container
 					otherLoaf = null
 
 				else if (isliving(newIngredient))
@@ -1237,6 +1238,8 @@ TYPEINFO(/obj/disposalpipe/loafer)
 					if (M.mind || M.client)
 						M.ghostize()
 					M.death()
+					if (ishuman(M) && !M.bioHolder.HasEffect("husk"))
+						newLoaf.loaf_dna_container += new/datum/loaf_dna(M)
 				else if (isitem(newIngredient))
 					var/obj/item/I = newIngredient
 					newLoaf.loaf_factor += I.w_class * 5
@@ -1245,6 +1248,10 @@ TYPEINFO(/obj/disposalpipe/loafer)
 					newLoaf.loaf_factor++
 
 				qdel(newIngredient)
+
+			var/poor_bastards_count = length(newLoaf.loaf_dna_container)
+			newLoaf.bites_left = poor_bastards_count
+			newLoaf.uneaten_bites_left = poor_bastards_count
 
 			newLoaf.update()
 			newLoaf.set_loc(H)
@@ -1288,6 +1295,40 @@ TYPEINFO(/obj/disposalpipe/loafer)
 
 #define MAXIMUM_LOAF_STATE_VALUE 10
 
+/datum/loaf_dna
+	var/real_name
+	var/was_npc
+	var/dna_to_absorb
+	var/mob/dead/ghost
+	var/datum/bioHolder/originalBHolder
+
+	var/was_changeling
+	var/possessive_pronouns // Needed for 'absorbed a changeling' message
+	var/list/absorbed_dna
+	var/points
+	var/absorbtions
+	var/list/hivemind
+
+	New(var/mob/living/carbon/human/H)
+		real_name = H.real_name
+		was_npc = isnpc(H)
+		dna_to_absorb = H.dna_to_absorb
+		ghost = H.ghost // This will run immediately after ghostize() so it's fine
+		
+		originalBHolder = new/datum/bioHolder(H)
+		originalBHolder.CopyOther(H.bioHolder)
+
+		var/datum/abilityHolder/changeling/O = H.get_ability_holder(/datum/abilityHolder/changeling)
+		if (O)
+			was_changeling = 1
+			possessive_pronouns = his_or_her(H)
+			absorbed_dna = O.absorbed_dna
+			points = O.points
+			absorbtions = O.absorbtions
+			hivemind = O.hivemind
+		else
+			was_changeling = 0
+
 TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 	mat_appearances_to_ignore = list("negativematter")
 /obj/item/reagent_containers/food/snacks/einstein_loaf
@@ -1319,6 +1360,8 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 	var/loaf_factor = 1
 	var/processing = 0
 
+	var/list/loaf_dna_container = list()
+
 	New()
 		..()
 		src.reagents.add_reagent("gravy",10)
@@ -1331,6 +1374,52 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 	disposing()
 		. = ..()
 		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES) // only relevant if strangelet
+
+	take_a_bite(mob/eater)
+		..()
+		if (length(src.loaf_dna_container))
+			var/datum/loaf_dna/chomp = src.loaf_dna_container[length(src.loaf_dna_container)]
+			var/datum/abilityHolder/changeling/O = eater.get_ability_holder(/datum/abilityHolder/changeling)
+			if (O)
+				if (!O.absorbed_dna.Find(chomp.originalBHolder))
+					O.absorbed_dna[chomp.real_name] = chomp.originalBHolder
+					eater.show_message(SPAN_NOTICE("We can now transform into [chomp.real_name]."), 1)
+
+				if (!chomp.was_npc)
+					O.points += chomp.dna_to_absorb
+					O.absorbtions++
+					O.insert_into_hivemind(chomp.ghost)
+
+					logTheThing(LOG_COMBAT, eater, "absorbs [constructTarget(chomp.ghost,"combat")] as a changeling via prison loaf [src] [log_loc(eater)].")
+
+					boutput(eater, SPAN_NOTICE("We have absorbed [chomp.real_name]'s DNA from [src]."))
+
+				if (chomp.was_changeling && !chomp.was_npc) // npc changeling when lol
+					boutput(eater, SPAN_NOTICE("[chomp.real_name] was a changeling! We have absorbed [chomp.possessive_pronouns] entire genetic structure!"))
+
+					O.points += chomp.points
+					O.absorbtions += chomp.absorbtions
+
+					for (var/datum/bioHolder/newBHolder in chomp.absorbed_dna)
+						if (!O.absorbed_dna.Find(newBHolder))
+							O.absorbed_dna += newBHolder
+
+					for (var/mob/M in chomp.hivemind)
+						if (!O.hivemind.Find(M))
+							O.insert_into_hivemind(M)
+
+				if (prob(5))
+					playsound(eater.loc, 'sound/voice/burp_alien.ogg', 25)
+					
+			else if (istype(eater, /mob/living/critter/changeling/handspider) && !chomp.was_npc)
+				var/mob/living/critter/changeling/handspider/spooder = eater
+				spooder.absorbed_dna += chomp.dna_to_absorb
+				boutput(eater, SPAN_NOTICE("We gain [chomp.dna_to_absorb] DNA from [src], but our form is too weak to absorb a mind."))
+
+				if (prob(5))
+					playsound(eater.loc, 'sound/voice/burp_alien.ogg', 15, pitch = 2)
+
+			src.loaf_dna_container[length(src.loaf_dna_container)] = null
 
 	proc/update()
 		var/orderOfLoafitude = clamp(round(log(8, loaf_factor)), 0, MAXIMUM_LOAF_STATE_VALUE)
