@@ -13013,6 +13013,14 @@
 	dir = 8
 	},
 /area/station/engine/engineering)
+"gLc" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light,
+/obj/item/space_thing,
+/turf/space,
+/area/space)
 "gLA" = (
 /obj/item/sheet/steel/reinforced/fullstack,
 /obj/item/sheet/steel/fullstack,
@@ -86204,7 +86212,7 @@ aaa
 aaa
 aaa
 aaa
-aKX
+gLc
 aKY
 avp
 aaa
