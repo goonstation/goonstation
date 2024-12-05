@@ -1,5 +1,9 @@
 
 (t)wed dec 04 24
+(u)glowbold
+(p)21480
+(e)🆕🗺📦💡|C-Feature, A-Mapping, A-Game-Objects, A-Station-Systems
+(+)Most Nanotrasen stations and ships have been outfitted with Mining Intercoms.
 (u)Garash2k
 (p)21348
 (e)🆕📄|C-Feature, A-UI
