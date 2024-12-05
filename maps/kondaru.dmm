@@ -14949,11 +14949,8 @@
 	},
 /area/station/hallway/primary/west)
 "biM" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
 /obj/disposalpipe/segment/bent/east,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -17112,6 +17109,14 @@
 /obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment2)
+"brD" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/item/device/radio/intercom/mining,
+/turf/space,
+/area/station/mining/magnet)
 "brE" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/treatment2)
@@ -30858,11 +30863,8 @@
 	},
 /area/station/mining/magnet)
 "cQW" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
 /obj/disposalpipe/segment/bent/east,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -31161,6 +31163,9 @@
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/machinery/light/small,
+/obj/item/device/radio/intercom/mining{
+	dir = 4
+	},
 /turf/simulated/floor/circuit,
 /area/station/bridge)
 "cZU" = (
@@ -34042,11 +34047,8 @@
 	},
 /area/station/hallway/primary/south)
 "eVT" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
 /obj/disposalpipe/segment/bent/west,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -35446,13 +35448,10 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "fXT" = (
-/obj/grille/catwalk{
-	dir = 10;
-	icon_state = "catwalk_cross"
-	},
 /obj/machinery/computer/magnet{
 	dir = 4
 	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -38504,6 +38503,15 @@
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/caution/corner/nw,
 /area/station/engine/gas)
+"ilj" = (
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/item/device/radio/intercom/mining,
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
+/area/station/hallway/primary/south)
 "ill" = (
 /obj/machinery/light{
 	dir = 4;
@@ -55264,10 +55272,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "ury" = (
-/obj/grille/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -59246,6 +59251,9 @@
 	tag = ""
 	},
 /obj/machinery/manufacturer/mining,
+/obj/item/device/radio/intercom/mining{
+	dir = 8
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -60298,13 +60306,10 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/north)
 "xQB" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
 /obj/machinery/computer/telescope{
 	dir = 8
 	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -106729,7 +106734,7 @@ qnr
 bBt
 frY
 bmy
-bCq
+ilj
 bDA
 bFs
 bHT
@@ -107315,7 +107320,7 @@ aQJ
 aeV
 qoc
 mLb
-juf
+brD
 jpN
 umn
 umn

@@ -47519,6 +47519,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/device/radio/intercom/mining{
+	dir = 4
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -62320,6 +62323,12 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/science)
+"kcH" = (
+/obj/item/device/radio/intercom/mining{
+	dir = 1
+	},
+/turf/simulated/floor/yellow/side,
+/area/station/hallway/secondary/exit)
 "kcY" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
@@ -63761,6 +63770,13 @@
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
+"lyT" = (
+/obj/grille/catwalk{
+	dir = 6
+	},
+/obj/item/device/radio/intercom/mining,
+/turf/space,
+/area/station/mining/magnet)
 "lzj" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -133007,7 +133023,7 @@ cMR
 crl
 cEw
 cmk
-cHA
+kcH
 cIG
 cKh
 cLK
@@ -137852,7 +137868,7 @@ dqF
 jio
 jio
 dau
-ikQ
+lyT
 dau
 dbs
 dbs
