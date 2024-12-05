@@ -15367,6 +15367,13 @@
 /obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
+"eyT" = (
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/item/sacred_texts,
+/turf/simulated/floor/carpet/purple/decal/outercross,
+/area/station/chapel/sanctuary)
 "eyZ" = (
 /obj/item/reagent_containers/food/drinks/bottle/bojackson{
 	pixel_y = 16
@@ -35448,13 +35455,6 @@
 "kKW" = (
 /turf/simulated/floor/stairs/wide,
 /area/station/crew_quarters/market)
-"kLm" = (
-/obj/table/reinforced/bar/auto{
-	name = "table"
-	},
-/obj/item/sacred_texts,
-/turf/simulated/floor/carpet/purple/decal/outercross,
-/area/station/chapel/sanctuary)
 "kLp" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -117171,7 +117171,7 @@ qxz
 ctt
 fiu
 qrd
-kLm
+eyT
 cCa
 wyz
 bcu
