@@ -1405,13 +1405,19 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 							O.absorbed_dna += newBHolder
 
 					for (var/mob/M in chomp.hivemind)
-						if (!O.hivemind.Find(M)) // This caused issues in solo testing, it's extremely unlikely to actually happen
+						if (!O.hivemind.Find(M))
 							O.insert_into_hivemind(M)
+
+				if (prob(5))
+					playsound(eater.loc, 'sound/voice/burp_alien.ogg', 25)
 					
 			else if (istype(eater, /mob/living/critter/changeling/handspider) && !chomp.was_npc)
 				var/mob/living/critter/changeling/handspider/spooder = eater
 				spooder.absorbed_dna += chomp.dna_to_absorb
 				boutput(eater, SPAN_NOTICE("We gain [chomp.dna_to_absorb] DNA from [src], but our form is too weak to absorb a mind."))
+
+				if (prob(5))
+					playsound(eater.loc, 'sound/voice/burp_alien.ogg', 15, pitch = 2)
 
 			src.loaf_dna_container[length(src.loaf_dna_container)] = null
 
