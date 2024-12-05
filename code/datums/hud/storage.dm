@@ -142,7 +142,7 @@
 		var sy = num_contents + 1
 		var/turfd = 0
 
-		if (isturf(master.linked_item?.loc) && !istype(master.linked_item, /obj/item/sacred_texts)) // goddamn sacred_textsS (prevents conflicting positions within different sacred_textss)
+		if (isturf(master.linked_item?.loc) && !istype(master.linked_item, /obj/item/sacred_texts)) // goddamn sacred_texts (prevents conflicting positions within different sacred_textss)
 			x = 7
 			y = 8
 			sx = (num_contents + 1) / 2
