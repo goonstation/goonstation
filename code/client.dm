@@ -245,7 +245,7 @@
 	var/list/active_polls = global.poll_manager.get_active_poll_names()
 	if (length(active_polls))
 		boutput(src, "<h2 style='color: red'>There are polls running!</h2>")
-		boutput(src, SPAN_BOLD("Active polls: [english_list(active_polls)] - <a href='byond://winset?command=Player-Polls'>Click here to vote!</a>"))
+		boutput(src, SPAN_BOLD("🗳️Active polls: [english_list(active_polls)] - <a href='byond://winset?command=Player-Polls'>Click here to vote!</a>🗳️"))
 
 	if (IsGuestKey(src.key))
 		if(!(!src.address || src.address == world.host || src.address == "127.0.0.1")) // If you're a host or a developer locally, ignore this check.
