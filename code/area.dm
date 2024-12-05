@@ -4305,7 +4305,7 @@ ABSTRACT_TYPE(/area/mining)
 			source.RemoveComponentsOfType(/datum/component/minimap_marker/minimap)
 		else
 			alert_computer_signal.data["alert"] = ALERT_SEVERITY_PRIORITY
-			source.AddComponent(/datum/component/minimap_marker/minimap, MAP_ALARM, "alarm_power")
+			source.AddComponent(/datum/component/minimap_marker/minimap, MAP_ALARM, "alarm_power", name="[src] Power Alarm")
 		radio_controller.get_frequency(FREQ_ALARM).post_packet_without_source(alert_computer_signal)
 	return
 

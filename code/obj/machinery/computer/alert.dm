@@ -1,3 +1,5 @@
+var/global/obj/minimap/alert/alertmap
+
 /// Zone alert status
 /datum/zone_alert
 	var/zone = null //!Area Name
@@ -23,22 +25,31 @@
 	circuit_type = /obj/item/circuitboard/general_alert
 	base_icon_state = "alert"
 	var/list/datum/zone_alert/alerts = list()
-	var/obj/minimap/alert/alertmap
+	var/obj/minimap_controller/alertmap_controller
+	var/atom/movable/minimap_ui_handler/minimap_controller/alert_minimap_ui
 
 	var/receive_frequency = FREQ_ALARM
 	var/respond_frequency = FREQ_PDA
 
 /obj/machinery/computer/general_alert/New()
 	..()
-	src.alertmap = new()
-	src.alertmap.display = src
+	src.connect_to_minimap()
+
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "control", frequency)
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "respond", respond_frequency)
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "receive", receive_frequency)
 
+/obj/machinery/computer/general_alert/proc/connect_to_minimap()
+	if (!global.alertmap)
+		global.alertmap = new
+	if (!src.alertmap_controller)
+		src.alertmap_controller = new(global.alertmap)
+	if (!src.alert_minimap_ui)
+		src.alert_minimap_ui = new(src, "alert_map", src.alertmap_controller, "Alert Map", "ntos")
+
 /obj/machinery/computer/general_alert/initialize()
 	. = ..()
-	src.alertmap.initialise_minimap()
+	global.alertmap.initialise_minimap()
 
 /obj/machinery/computer/general_alert/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
@@ -97,42 +108,22 @@
 	src.alerts += new_zone
 	src.update_alert_icon()
 
-/obj/machinery/computer/general_alert/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "AlertComputer")
-		ui.open()
-
-/obj/machinery/computer/general_alert/ui_data(mob/user)
-	. = ..()
-	.["alerts"] = list()
-	for (var/datum/zone_alert/alert in src.alerts)
-		.["alerts"] += list(list(
-			"area_ckey" = ckey(alert.zone),
-			"zone" = alert.zone,
-			"atmos" = alert.atmos,
-			"fire" = alert.fire,
-			"power" = alert.power
-		))
-
 /obj/machinery/computer/general_alert/attack_hand(mob/user)
 	if(..())
 		return
-	var/datum/hud/hud = user.get_hud()
-	if (!hud)
-		return
-	hud.add_object(src.alertmap, HUD_LAYER, "CENTER,CENTER-3")
-	user.apply_color_matrix(COLOR_MATRIX_SHADE, COLOR_MATRIX_SHADE_LABEL)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(user_moved))
 
-/obj/machinery/computer/general_alert/proc/user_moved(mob/user, atom/previous_loc, direction)
-	if (BOUNDS_DIST(user, src) > 0)
-		src.alertmap.close(user)
+	if(!src.alertmap_controller || !src.alert_minimap_ui)
+		src.connect_to_minimap()
+
+	src.alert_minimap_ui.ui_interact(user)
+
 
 /obj/machinery/computer/general_alert/disposing()
 	. = ..()
-	qdel(src.alertmap)
-	src.alertmap = null
+	qdel(src.alertmap_controller)
+	src.alertmap_controller = null
+	qdel(src.alert_minimap_ui)
+	src.alert_minimap_ui = null
 
 ///Check the current maximum alert level
 /obj/machinery/computer/general_alert/proc/check_alert_level()

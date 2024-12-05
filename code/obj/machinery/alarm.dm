@@ -173,7 +173,7 @@
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.triggerAlarm("Atmosphere", get_area(src), cameras, src)
 		src.alertingAI = TRUE
-		src.AddComponent(/datum/component/minimap_marker/minimap, MAP_ALARM, "alarm_air")
+		src.AddComponent(/datum/component/minimap_marker/minimap, MAP_ALARM, "alarm_air", name="[get_area(src)] Air Alarm")
 
 	if(alarm_frequency)
 		post_alert(safe)
