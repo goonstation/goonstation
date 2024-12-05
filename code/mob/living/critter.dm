@@ -1087,7 +1087,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/emote(var/act, var/voluntary = 0)
 	..()
 	var/param = null
-
+	if (src.hasStatus("paralysis"))
+		return //aaaa
 	if (findtext(act, " ", 1, null))
 		var/t1 = findtext(act, " ", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)
