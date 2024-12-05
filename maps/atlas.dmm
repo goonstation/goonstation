@@ -12506,6 +12506,14 @@
 /obj/cable,
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/east)
+"ggb" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light,
+/obj/item/space_thing,
+/turf/space,
+/area/space)
 "ghb" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4
@@ -86210,7 +86218,7 @@ aaa
 aaa
 aaa
 aaa
-aKX
+ggb
 oCq
 avp
 aaa
