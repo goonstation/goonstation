@@ -120,7 +120,7 @@
 
 /mob/living/critter/robotic/scuttlebot/mail
 	name = "Carr1er P1g30n"
-	desc = "A pigeon that must've escaped from the ranch and been trained to deliver mail... wait why is 8G labeled on its leg?""
+	desc = "A pigeon that must've escaped from the ranch and been trained to deliver mail... wait why is 8G labeled on its leg?"
 	icon = 'icons/mob/critter/robotic/scuttlebot.dmi'
 	icon_state = "pigeon"
 	var/obj/item/clothing/overcoat/pigeon/linked_pigeon = null
