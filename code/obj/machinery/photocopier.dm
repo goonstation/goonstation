@@ -289,7 +289,7 @@ TYPEINFO(/obj/machinery/photocopier)
 				boutput(user, "There are no scans stored inside \the [src]'s memory banks.")
 			else
 				boutput(user, "You can only tell that the scanned data is marked as '[src.print_type]'.")
-	proc/faith_print(var/mob/user) // sacred_texts can print using faith instead of paper
+	proc/faith_print(var/mob/user) // sacred texts can print using faith instead of paper
 		var/chaplain = 0
 		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
 			chaplain = 1

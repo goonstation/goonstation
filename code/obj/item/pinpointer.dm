@@ -610,7 +610,7 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 	thing_name = "station vehicle"
 
 /obj/item/pinpointer/category/sacred_texts
-	name = "sacred_texts pinpointer"
+	name = "sacred texts pinpointer"
 	category = /obj/item/sacred_texts
 	thing_name = "sacred_texts"
 

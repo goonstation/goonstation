@@ -15367,13 +15367,6 @@
 /obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
-"eyT" = (
-/obj/table/reinforced/bar/auto{
-	name = "table"
-	},
-/obj/item/sacred_texts,
-/turf/simulated/floor/carpet/purple/decal/outercross,
-/area/station/chapel/sanctuary)
 "eyZ" = (
 /obj/item/reagent_containers/food/drinks/bottle/bojackson{
 	pixel_y = 16
@@ -54132,6 +54125,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
+/obj/item/sacred_texts,
 /turf/simulated/floor/carpet/purple/fancy,
 /area/station/chapel/sanctuary)
 "qsC" = (
@@ -117171,7 +117165,7 @@ qxz
 ctt
 fiu
 qrd
-eyT
+ujb
 cCa
 wyz
 bcu
