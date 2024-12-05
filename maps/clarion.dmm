@@ -2055,10 +2055,6 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/item/device/radio/intercom/bridge{
-	broadcasting = 0;
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -8000,6 +7996,9 @@
 	dir = 4
 	},
 /obj/machinery/disposal/mail/small/autoname/bridge/east,
+/obj/item/device/radio/intercom/mining{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bat" = (
@@ -8032,6 +8031,10 @@
 /obj/machinery/light/emergency{
 	dir = 4;
 	pixel_x = 10
+	},
+/obj/item/device/radio/intercom/bridge{
+	broadcasting = 0;
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -25957,6 +25960,9 @@
 /area/station/hallway/primary/north)
 "lqn" = (
 /obj/storage/secure/closet/engineering/cargo,
+/obj/item/device/radio/intercom/cargo{
+	dir = 8
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -30964,6 +30970,9 @@
 	name = "autoname  - SS13";
 	pixel_x = -10
 	},
+/obj/item/device/radio/intercom/mining{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "yellowblack"
@@ -33333,6 +33342,9 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/item/device/radio/intercom/mining{
+	dir = 8
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
