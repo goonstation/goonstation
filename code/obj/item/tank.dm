@@ -187,7 +187,7 @@ Contains:
 
 			if(src in sacred_texts_contents)
 				var/sacred_texts_count = length(by_type[/obj/item/sacred_texts])
-				range /= sqrt(sacred_texts_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of sacred_textss
+				range /= sqrt(sacred_texts_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of sacred_texts
 				for_by_tcl(B, /obj/item/sacred_texts)
 					var/turf/T = get_turf(B.loc)
 					if(T)
@@ -605,7 +605,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 		if(src in sacred_texts_contents)
 			strength = fuel_moles/20
 			var/sacred_texts_count = length(by_type[/obj/item/sacred_texts])
-			strength /= sqrt(sacred_texts_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of sacred_textss
+			strength /= sqrt(sacred_texts_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of sacred_texts
 			for_by_tcl(B, /obj/item/sacred_texts)//world)
 				var/turf/T = get_turf(B.loc)
 				if(T)
