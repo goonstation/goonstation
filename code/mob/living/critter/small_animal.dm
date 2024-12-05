@@ -508,7 +508,7 @@ proc/filter_carrier_pets(var/type)
 				boutput(M, SPAN_ALERT("You feel a wave of sadness wash over you, something terrible has happened."))
 		src.UpdateIcon()
 
-	updatehealth()
+	full_heal()
 		..()
 		src.UpdateIcon()
 
