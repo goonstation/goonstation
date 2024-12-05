@@ -1918,7 +1918,7 @@
 "kZ" = (
 /obj/table/wood/auto,
 /obj/item/ghostboard,
-/obj/item/bible{
+/obj/item/sacred_texts{
 	pixel_x = 2
 	},
 /turf/simulated/floor/specialroom/chapel,

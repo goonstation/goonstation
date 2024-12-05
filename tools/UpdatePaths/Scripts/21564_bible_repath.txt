@@ -1,0 +1,1 @@
+/obj/item/bible : /obj/item/sacred_texts{@OLD}

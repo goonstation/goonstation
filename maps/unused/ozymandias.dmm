@@ -47886,7 +47886,7 @@
 /area/station/garden/aviary)
 "mAx" = (
 /obj/table/wood/auto,
-/obj/item/bible,
+/obj/item/sacred_texts,
 /turf/simulated/floor/grey,
 /area/station/chapel/office)
 "mAy" = (
@@ -64192,7 +64192,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/item/bible,
+/obj/item/sacred_texts,
 /turf/simulated/floor/wood/two,
 /area/station/chapel/sanctuary)
 "qOH" = (
@@ -94428,7 +94428,7 @@
 /area/space)
 "ydH" = (
 /obj/table/wood/auto,
-/obj/item/bible,
+/obj/item/sacred_texts,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;

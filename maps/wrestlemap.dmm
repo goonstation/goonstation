@@ -13807,7 +13807,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "fXV" = (
-/obj/item/bible,
+/obj/item/sacred_texts,
 /obj/item/decoration/flower_vase{
 	pixel_x = 9;
 	pixel_y = 10
@@ -24859,7 +24859,7 @@
 /area/station/chapel/sanctuary)
 "kQY" = (
 /obj/table/wood/auto,
-/obj/item/bible,
+/obj/item/sacred_texts,
 /obj/item/reagent_containers/glass/bottle/holywater,
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)

@@ -1,4 +1,4 @@
-// rest in peace the_very_holy_global_sacred texts_list_amen (??? - 2020)
+// rest in peace the_very_holy_global_bible_list_amen (??? - 2020)
 
 /obj/item/sacred_texts
 	name = "sacred texts"
@@ -41,7 +41,7 @@
 			if (9 to 15)
 				target.visible_message(SPAN_ALERT("<B>[user] heals [target] with the power of the Spirits!</B>"))
 			if (16 to 24)
-				target.visible_message(SPAN_ALERT("<B>[user] heals [target] by the will of the the HOLY ONE!</B>"))
+				target.visible_message(SPAN_ALERT("<B>[user] heals [target] by the will of the HOLY ONE!</B>"))
 			if (25 to INFINITY)
 				target.visible_message(SPAN_ALERT("<B>[user] heals [target] in service of heaven!</B>"))
 
