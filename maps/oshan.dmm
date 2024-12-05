@@ -2954,13 +2954,6 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
-"akm" = (
-/obj/table/wood/auto,
-/obj/item/sacred_texts,
-/turf/simulated/floor/carpet{
-	icon_state = "fred2"
-	},
-/area/station/chapel/sanctuary)
 "akn" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
@@ -3683,18 +3676,6 @@
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred2"
-	},
-/area/station/chapel/office)
-"amJ" = (
-/obj/table/wood/auto,
-/obj/item/reagent_containers/glass/bottle/holywater,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/item/sacred_texts,
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred1"
 	},
 /area/station/chapel/office)
 "amK" = (
@@ -33442,6 +33423,18 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
+"eIj" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/glass/bottle/holywater,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/sacred_texts,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred1"
+	},
+/area/station/chapel/office)
 "eIE" = (
 /obj/item/seed/grass,
 /turf/simulated/floor/grass,
@@ -33765,6 +33758,13 @@
 /obj/landmark/pest,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"eYV" = (
+/obj/table/wood/auto,
+/obj/item/sacred_texts,
+/turf/simulated/floor/carpet{
+	icon_state = "fred2"
+	},
+/area/station/chapel/sanctuary)
 "eZC" = (
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/segment/mail,
@@ -34903,18 +34903,6 @@
 /obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
 /turf/simulated/floor/grime,
 /area/derelict_diner)
-"gxt" = (
-/obj/item/reagent_containers/pill/tox{
-	pixel_x = -8;
-	pixel_y = 16
-	},
-/obj/rack,
-/obj/item/clothing/under/misc/syndicate,
-/obj/item/clothing/shoes/black,
-/obj/item/clothing/gloves/swat,
-/obj/item/clothing/shoes/swat,
-/turf/unsimulated/floor/shuttle/red,
-/area/sunken_asteroid)
 "gxB" = (
 /obj/table/wood/round/auto,
 /obj/machinery/status_display{
@@ -42028,6 +42016,18 @@
 	name = "astroturf"
 	},
 /area/station/medical/dome)
+"pVT" = (
+/obj/item/reagent_containers/pill/tox{
+	pixel_x = -8;
+	pixel_y = 16
+	},
+/obj/rack,
+/obj/item/clothing/under/misc/syndicate,
+/obj/item/clothing/shoes/black,
+/obj/item/clothing/gloves/swat/syndicate,
+/obj/item/clothing/shoes/swat,
+/turf/unsimulated/floor/shuttle/red,
+/area/sunken_asteroid)
 "pWB" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail,
@@ -51903,7 +51903,7 @@ rSv
 vwh
 qwj
 oWf
-gxt
+pVT
 qwj
 vwh
 rSv
@@ -82362,7 +82362,7 @@ dEc
 ahu
 akX
 dJc
-amJ
+eIj
 anH
 ahY
 aps
@@ -85077,7 +85077,7 @@ ahw
 eiC
 aiL
 wFi
-akm
+eYV
 alb
 alY
 amU

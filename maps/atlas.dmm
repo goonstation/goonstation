@@ -2013,15 +2013,6 @@
 "ajF" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/cafeteria)
-"ajJ" = (
-/obj/table/wood/auto,
-/obj/item/device/microphone,
-/obj/item/sacred_texts,
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred2"
-	},
-/area/station/chapel/sanctuary)
 "ajN" = (
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -12506,6 +12497,14 @@
 /obj/cable,
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/east)
+"ggb" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light,
+/obj/item/space_thing,
+/turf/space,
+/area/space)
 "ghb" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4
@@ -16123,6 +16122,15 @@
 /obj/mapping_helper/access/cargo,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
+"luM" = (
+/obj/table/wood/auto,
+/obj/item/device/microphone,
+/obj/item/sacred_texts,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred2"
+	},
+/area/station/chapel/sanctuary)
 "lxS" = (
 /obj/rack,
 /obj/item/device/radio,
@@ -81918,7 +81926,7 @@ afO
 ahi
 gsT
 aiz
-ajJ
+luM
 aku
 akG
 act
@@ -86210,7 +86218,7 @@ aaa
 aaa
 aaa
 aaa
-aKX
+ggb
 oCq
 avp
 aaa

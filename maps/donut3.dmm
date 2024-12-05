@@ -24459,6 +24459,11 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"hqf" = (
+/obj/decal/poster/wallsign/hazard_rad,
+/obj/window/auto,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
 "hqp" = (
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/black,
@@ -53007,6 +53012,16 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/hangar/sec)
+"qaO" = (
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/item/sacred_texts,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fred2"
+	},
+/area/station/chapel/office)
 "qaQ" = (
 /obj/table/wood/round/auto,
 /obj/item/storage/box/nerd_kit{
@@ -54120,14 +54135,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/asylum/rec)
-"qsB" = (
-/obj/table/wood/auto,
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
-/obj/item/sacred_texts,
-/turf/simulated/floor/carpet/purple/fancy,
-/area/station/chapel/sanctuary)
 "qsC" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -56201,6 +56208,10 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
+"qYL" = (
+/obj/window/auto/crystal,
+/turf/simulated/floor/plating,
+/area/station/engine/singcore)
 "qYR" = (
 /obj/decal/stripe_caution,
 /obj/machinery/computer/magnet,
@@ -58095,6 +58106,14 @@
 	dir = 5
 	},
 /area/station/science/lobby)
+"rDT" = (
+/obj/table/wood/auto,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/obj/item/sacred_texts,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/station/chapel/sanctuary)
 "rEa" = (
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /obj/table/auto,
@@ -60316,16 +60335,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
-"smE" = (
-/obj/table/reinforced/bar/auto{
-	name = "table"
-	},
-/obj/item/sacred_texts,
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "fred2"
-	},
-/area/station/chapel/office)
 "smM" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -113233,7 +113242,7 @@ rdj
 pcq
 urz
 bLc
-smE
+qaO
 fYk
 aAj
 xIL
@@ -118068,7 +118077,7 @@ nOQ
 ioc
 igQ
 qxz
-qsB
+rDT
 jqa
 ply
 lEn
@@ -140474,13 +140483,13 @@ ocE
 ocE
 oWs
 aSs
-sXE
+hqf
 aSs
 lWj
 fgg
 lWj
 aSs
-sXE
+hqf
 aSs
 oWs
 vmV
@@ -141682,13 +141691,13 @@ rdj
 rdj
 rdj
 rYX
-rYX
+qYL
 rYX
 rYX
 brS
 rYX
 rYX
-rYX
+qYL
 rYX
 rdj
 rdj
@@ -144098,13 +144107,13 @@ rdj
 rdj
 rdj
 rYX
-rYX
+qYL
 rYX
 rYX
 brS
 rYX
 rYX
-rYX
+qYL
 rYX
 rdj
 rdj
@@ -145306,13 +145315,13 @@ ocE
 ocE
 oWs
 aSs
-sXE
+hqf
 aSs
 lWj
 fgg
 lWj
 aSs
-sXE
+hqf
 aSs
 oWs
 vOK
