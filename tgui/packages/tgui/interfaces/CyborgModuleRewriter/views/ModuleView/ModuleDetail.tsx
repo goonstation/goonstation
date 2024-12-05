@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, Section, Stack } from 'tgui-core/components';
 
 import type { ToolData } from '../../type/data';
@@ -46,23 +46,31 @@ interface ModuleProps {
   tools: ToolData[];
 }
 
-export const ModuleDetail = (props: ModuleProps, context: unknown) => {
+export const ModuleDetail = (props: ModuleProps) => {
   const { onMoveToolDown, onMoveToolUp, onRemoveTool, onResetModule, tools } =
     props;
   const [selectedToolRef, setSelectedToolRef] = useState<string | undefined>(
     undefined,
   );
-  const handleRemoveTool = (itemRef: string) => {
-    const toolIndex = tools.findIndex((tool) => tool.item_ref === itemRef);
-    setSelectedToolRef(tools[toolIndex + 1]?.item_ref);
-    onRemoveTool(itemRef);
-  };
-  const resolvedSelectedToolRef =
-    selectedToolRef &&
-    tools.find((tool) => tool.item_ref === selectedToolRef)?.item_ref;
-  if (selectedToolRef && !resolvedSelectedToolRef) {
-    setSelectedToolRef(undefined);
-  }
+  const handleRemoveTool = useCallback(
+    (itemRef: string) => {
+      const toolIndex = tools.findIndex((tool) => tool.item_ref === itemRef);
+      setSelectedToolRef(tools[toolIndex + 1]?.item_ref);
+      onRemoveTool(itemRef);
+    },
+    [onRemoveTool, tools],
+  );
+  const resolvedSelectedToolRef = useMemo(
+    () =>
+      selectedToolRef &&
+      tools.find((tool) => tool.item_ref === selectedToolRef)?.item_ref,
+    [selectedToolRef, tools],
+  );
+  useEffect(() => {
+    if (selectedToolRef && !resolvedSelectedToolRef) {
+      setSelectedToolRef(undefined);
+    }
+  }, [resolvedSelectedToolRef, selectedToolRef]);
   const toolsButtons = (
     <OrganizeButtons
       itemRef={resolvedSelectedToolRef}
@@ -108,9 +116,18 @@ interface OrganizeButtonsProps {
 const OrganizeButtons = (props: OrganizeButtonsProps) => {
   const { onMoveDown, onMoveUp, onRemove, itemRef } = props;
   const isItemSelected = !!itemRef;
-  const handleMoveUpClick = () => itemRef && onMoveUp(itemRef);
-  const handleMoveDownClick = () => itemRef && onMoveDown(itemRef);
-  const handleRemoveClick = () => itemRef && onRemove(itemRef);
+  const handleMoveUpClick = useCallback(
+    () => itemRef && onMoveUp(itemRef),
+    [itemRef, onMoveUp],
+  );
+  const handleMoveDownClick = useCallback(
+    () => itemRef && onMoveDown(itemRef),
+    [itemRef, onMoveDown],
+  );
+  const handleRemoveClick = useCallback(
+    () => itemRef && onRemove(itemRef),
+    [itemRef, onRemove],
+  );
   return (
     <>
       <Button

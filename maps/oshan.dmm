@@ -2024,28 +2024,6 @@
 /obj/machinery/recharge_station,
 /turf/simulated/floor/caution/corner/ne,
 /area/station/medical/robotics)
-"agS" = (
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
-	},
-/obj/item/scalpel,
-/obj/item/suture,
-/obj/item/hemostat,
-/obj/item/bandage,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/scissors/surgical_scissors,
-/obj/item/scissors/surgical_scissors,
-/obj/machinery/drainage,
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
-"agT" = (
-/obj/machinery/optable{
-	id = "robotics"
-	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "agU" = (
 /obj/cable{
 	icon_state = "5-10"
@@ -4780,10 +4758,6 @@
 /obj/item/storage/firstaid/regular,
 /turf/simulated/floor/red,
 /area/station/security/main)
-"aqm" = (
-/obj/grille/steel,
-/turf/simulated/floor/plating/airless,
-/area/listeningpost)
 "aqn" = (
 /turf/space/fluid,
 /area/space)
@@ -28216,10 +28190,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/south)
-"bYE" = (
-/obj/grille/steel,
-/turf/space/fluid,
-/area/station/com_dish/comdish)
 "bYF" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -30274,38 +30244,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"cge" = (
-/obj/grille/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/shuttle/sea_elevator/upper)
-"cgg" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/shuttle/sea_elevator/upper)
-"cgi" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/shuttle/sea_elevator/upper)
-"cgk" = (
-/obj/grille/catwalk{
-	dir = 10;
-	icon_state = "catwalk_cross"
-	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/shuttle/sea_elevator/upper)
 "cgl" = (
 /turf/space/fluid/warp_z5,
 /area/space)
@@ -34973,7 +34911,7 @@
 /obj/rack,
 /obj/item/clothing/under/misc/syndicate,
 /obj/item/clothing/shoes/black,
-/obj/item/clothing/gloves/swat,
+/obj/item/clothing/gloves/swat/syndicate,
 /obj/item/clothing/shoes/swat,
 /turf/unsimulated/floor/shuttle/red,
 /area/sunken_asteroid)
@@ -37457,6 +37395,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
+"jXW" = (
+/obj/mesh/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/shuttle/sea_elevator/upper)
 "jYh" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left,
@@ -39464,6 +39410,13 @@
 	},
 /turf/space/fluid,
 /area/evilreaver)
+"mFE" = (
+/obj/machinery/optable{
+	id = "robotics"
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "mGi" = (
 /obj/lattice,
 /turf/simulated/floor/martian,
@@ -40186,6 +40139,14 @@
 /obj/item/cigpacket/menthol,
 /turf/simulated/floor/damaged2,
 /area/derelict_diner)
+"nuD" = (
+/obj/mesh/catwalk{
+	dir = 10;
+	icon_state = "catwalk_cross"
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/shuttle/sea_elevator/upper)
 "nvs" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 8
@@ -41309,10 +41270,6 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"oUx" = (
-/obj/grille/steel,
-/turf/space/fluid,
-/area/station/com_dish/research_outpost)
 "oUP" = (
 /obj/table/wood/auto,
 /obj/item/storage/pill_bottle/hairgrownium,
@@ -42780,6 +42737,10 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
+"qRz" = (
+/obj/mesh/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/listeningpost)
 "qSK" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -43735,6 +43696,14 @@
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/yellow,
 /area/station/storage/emergency)
+"sup" = (
+/obj/mesh/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/shuttle/sea_elevator/upper)
 "svo" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
@@ -44377,6 +44346,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"tnD" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/shuttle/sea_elevator/upper)
 "tnS" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/morgue,
@@ -45643,6 +45620,10 @@
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
+"vyg" = (
+/obj/mesh/grille/steel,
+/turf/space/fluid,
+/area/station/com_dish/research_outpost)
 "vyM" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating/random,
@@ -47163,6 +47144,10 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space/fluid,
 /area/space)
+"xpt" = (
+/obj/mesh/grille/steel,
+/turf/space/fluid,
+/area/station/com_dish/comdish)
 "xpB" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 8;
@@ -47391,6 +47376,21 @@
 	},
 /turf/simulated/floor,
 /area/station/medical/medbay/restroom)
+"xJV" = (
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/scalpel,
+/obj/item/suture,
+/obj/item/hemostat,
+/obj/item/bandage,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/item/scissors/surgical_scissors,
+/obj/item/scissors/surgical_scissors,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "xKk" = (
 /obj/decal/aliencomputer{
 	pixel_x = -32
@@ -55386,9 +55386,9 @@ aqn
 aqn
 aqn
 aqn
-aqm
-aqm
-aqm
+qRz
+qRz
+qRz
 aPm
 aNo
 aNC
@@ -55688,7 +55688,7 @@ aqn
 aqn
 aqn
 aqn
-aqm
+qRz
 aup
 aMW
 aNp
@@ -55990,9 +55990,9 @@ aqn
 aqn
 aqn
 aqn
-aqm
-aqm
-aqm
+qRz
+qRz
+qRz
 aPm
 aPm
 aNF
@@ -89351,8 +89351,8 @@ aqn
 aqn
 aqn
 aLV
-cgg
-cgk
+tnD
+nuD
 aQK
 cfR
 ufV
@@ -89653,8 +89653,8 @@ aqn
 aqn
 aqn
 aLV
-cge
-cgi
+sup
+jXW
 nSn
 oEz
 lus
@@ -95943,7 +95943,7 @@ afq
 afx
 agi
 muF
-agS
+xJV
 tLW
 agU
 afx
@@ -96245,7 +96245,7 @@ afq
 shg
 agj
 muF
-agT
+mFE
 slV
 ahM
 yfG
@@ -104507,9 +104507,9 @@ aqn
 aqn
 aqn
 aqn
-bYE
-bYE
-bYE
+xpt
+xpt
+xpt
 aqn
 aqn
 aqn
@@ -104811,7 +104811,7 @@ bYj
 bYj
 bYF
 bYG
-bYE
+xpt
 aqn
 aqn
 aqn
@@ -105111,9 +105111,9 @@ aqn
 aqn
 aqn
 aqn
-bYE
-bYE
-bYE
+xpt
+xpt
+xpt
 aqn
 aqn
 aqn
@@ -130993,9 +130993,9 @@ hrN
 aqn
 aqn
 aqn
-oUx
-oUx
-oUx
+vyg
+vyg
+vyg
 aqn
 aqn
 aqn
@@ -131297,7 +131297,7 @@ gKC
 gKC
 eJX
 oWv
-oUx
+vyg
 aqn
 aqn
 aqn
@@ -131597,9 +131597,9 @@ hrN
 aqn
 aqn
 aqn
-oUx
-oUx
-oUx
+vyg
+vyg
+vyg
 aqn
 aqn
 aqn

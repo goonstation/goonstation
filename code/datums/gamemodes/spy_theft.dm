@@ -127,7 +127,7 @@
 				hostpda.uplink.purchase_log[reward.type] = 0
 			hostpda.uplink.purchase_log[reward.type]++
 			if (istype(antag_role))
-				antag_role.redeemed_item_paths.Add(reward.type)
+				antag_role.redeemed_items.Add(reward)
 
 		for(var/obj/item/uplink/integrated/pda/spy/spy_uplink in game_mode.uplinks)
 			LAGCHECK(LAG_LOW)

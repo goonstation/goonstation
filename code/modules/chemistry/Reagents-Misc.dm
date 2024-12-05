@@ -1283,7 +1283,7 @@ datum
 							boutput(R, SPAN_NOTICE("Your joints and servos begin to run more smoothly."))
 						else if (ishuman(M))
 							var/mob/living/carbon/human/H = M
-							if (!H.mutantrace.aquaphobic)
+							if (!H.mutantrace?.aquaphobic)
 								boutput(M, "<span class='alert'>You feel greasy and gross.</span>")
 
 				return
@@ -3252,7 +3252,6 @@ datum
 									boutput(M, SPAN_ALERT("Fresh blood would be better..."))
 								var/bloodget = volume_passed / 3
 								var/datum/bioHolder/unlinked/bioHolder = src.data
-								M.change_vampire_blood(bloodget, 1, victim = bioHolder?.weak_owner?.deref()) // vamp_blood
 								M.change_vampire_blood(bloodget, 0, victim = bioHolder?.weak_owner?.deref()) // vamp_blood_remaining
 								V.check_for_unlocks()
 								holder.del_reagent(src.id)
