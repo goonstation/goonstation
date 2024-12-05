@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "C4-0"
 	},
@@ -14,7 +14,7 @@
 	},
 /area/space)
 "ba" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "C12-0"
 	},
@@ -253,7 +253,7 @@
 /area/space)
 "jN" = (
 /obj/machinery/drainage/big,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "C9-0"
 	},
@@ -346,7 +346,7 @@
 /obj/machinery/recharger/wall{
 	pixel_y = 26
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "C12-0"
 	},
@@ -419,7 +419,7 @@
 /turf/unsimulated/floor/engine/glow/blue,
 /area/space)
 "ur" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "C0-0"
 	},
@@ -433,7 +433,7 @@
 	},
 /area/space)
 "vb" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "C11-0"
 	},
@@ -556,7 +556,7 @@
 /turf/unsimulated/floor/engine/glow/blue,
 /area/space)
 "Bq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "C14-0"
 	},
@@ -635,7 +635,7 @@
 /turf/unsimulated/floor/engine/glow/blue,
 /area/space)
 "Er" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "C0-0"
 	},
@@ -671,7 +671,7 @@
 /turf/unsimulated/floor/industrial,
 /area/space)
 "Fv" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "C7-0"
 	},
@@ -797,7 +797,7 @@
 /area/space)
 "JC" = (
 /obj/vehicle/tug,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "C5-0"
 	},
@@ -818,7 +818,7 @@
 /area/space)
 "Kh" = (
 /obj/machinery/drainage/big,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "C10-0"
 	},
@@ -957,7 +957,7 @@
 	},
 /area/space)
 "PN" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "C4-0"
 	},
@@ -1007,7 +1007,7 @@
 	},
 /area/space)
 "Rr" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "C0-0"
 	},
@@ -1022,7 +1022,7 @@
 /area/space)
 "Tc" = (
 /obj/machinery/drainage/big,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "C5-0"
 	},
@@ -1045,7 +1045,7 @@
 /turf/unsimulated/wall/setpieces/leadwall,
 /area/space)
 "Uu" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/dirt{
@@ -1096,7 +1096,7 @@
 /turf/unsimulated/floor/engine/glow/blue,
 /area/space)
 "Vd" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "C12-0"
 	},
@@ -1173,7 +1173,7 @@
 /area/space)
 "XV" = (
 /obj/vehicle/tug/security,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "C9-0"
 	},
@@ -1239,7 +1239,7 @@
 	},
 /area/space)
 "ZA" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "C6-0"
 	},

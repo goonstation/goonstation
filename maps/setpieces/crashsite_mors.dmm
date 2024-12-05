@@ -231,7 +231,7 @@
 /turf/unsimulated/floor/industrial,
 /area/space)
 "jF" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating/random,
 /area/space)
 "jZ" = (
