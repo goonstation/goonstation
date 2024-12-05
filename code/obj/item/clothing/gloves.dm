@@ -383,12 +383,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
-	setupProperties()
-		..()
-		setProperty("heatprot", 10)
-		setProperty("conductivity", 0.25)
-		setProperty("deflection", 20)
-
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
