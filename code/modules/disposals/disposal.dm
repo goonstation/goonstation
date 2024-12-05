@@ -1234,7 +1234,7 @@ TYPEINFO(/obj/disposalpipe/loafer)
 						newLoaf.loaf_factor += (newLoaf.loaf_factor / 10) + 50
 					if(!isdead(M))
 						M:emote("scream")
-					if (M.mind || M.client) // Swapped ghostize and death to keep changelings from headspider-ing from a qdel'd body
+					if (M.mind || M.client)
 						M.ghostize()
 					M.death()
 				else if (isitem(newIngredient))
