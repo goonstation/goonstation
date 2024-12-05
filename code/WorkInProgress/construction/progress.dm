@@ -184,7 +184,7 @@
 
 			var/dense = 0
 			for (var/obj/O in C)
-				if (istype(O, /obj/machinery/door) || istype(O, /obj/grille) || istype(O, /obj/window) || istype(O, /obj/table))
+				if (istype(O, /obj/machinery/door) || istype(O, /obj/mesh/grille) || istype(O, /obj/window) || istype(O, /obj/table))
 					dense = 1
 					break
 			if (dense)

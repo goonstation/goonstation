@@ -258,7 +258,7 @@
 				for(var/atom/A in T)
 					if(isliving(A))
 						affected_mobs.Add(A)
-					if(istype(A, /obj/window) || istype(A, /obj/grille))
+					if(istype(A, /obj/window) || istype(A, /obj/mesh/grille))
 						affected_objs.Add(A)
 					if(istype(A, /obj/blob))
 						affected_objs.Add(A)

@@ -14,7 +14,7 @@
 		if (!A)
 			continue
 		if(IS_SOLID_TO_FLUID(thing) && (thing.density || thing.flags & FLUID_DENSE_ALWAYS))
-			return 0 // && !istype(thing,/obj/grille) && !istype(thing,/obj/table) && !istype(thing,/obj/structure/girder)) return 0
+			return 0 // && !istype(thing,/obj/mesh/grille) && !istype(thing,/obj/table) && !istype(thing,/obj/structure/girder)) return 0
 	return 1
 
 turf/simulated/floor/plating/airless/ocean_canpass()

@@ -800,8 +800,8 @@
 			W.smash()
 			return TRUE
 
-		if (S == "grille" && istype(target, /obj/grille))
-			var/obj/grille/G = target
+		if (S == "grille" && istype(target, /obj/mesh/grille))
+			var/obj/mesh/grille/G = target
 			if (!G.shock(src, 70))
 				if (show_message)
 					G.visible_message(SPAN_ALERT("<b>[src]</b> violently slashes [G]!"))
