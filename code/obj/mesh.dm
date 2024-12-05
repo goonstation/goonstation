@@ -274,7 +274,7 @@ TYPEINFO_NEW(/obj/mesh/grille)
 	connects_to_turf = typecacheof(list(/turf/simulated/wall/auto, /turf/simulated/wall/auto/reinforced, /turf/simulated/shuttle/wall, /turf/unsimulated/wall))
 	connects_to_obj = typecacheof(list(/obj/indestructible/shuttle_corner, /obj/mesh/grille, /obj/machinery/door, /obj/window))
 /obj/mesh/grille
-	desc = "A metal mesh often built underneath windows to reinforce them. The holes let fluids, gasses, and energy beams through."
+	desc = "A metal mesh often built underneath windows to reinforce them. The holes let fluids and gasses through."
 	name = "grille"
 	icon = 'icons/obj/SL_windows_grilles.dmi'
 	icon_state = "grille0-0"
