@@ -13,6 +13,7 @@
 	var/printing = null
 	var/can_change_id = 0
 	var/payroll_rate_limit_time = 0 //for preventing coammand message spam
+	var/bonus_rate_limit_time = 0 //prevent bonus spam because these have an annoucement
 
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
@@ -95,6 +96,7 @@
 			<div class='c'>
 				<a href='?src=\ref[src];payroll=1'>[wagesystem.pay_active ? "Suspend Payroll" : "Resume Payroll"]</a>
 				- <a href='?src=\ref[src];transfer=1'>Transfer Funds Between Budgets</a>
+				- <a href='?src=\ref[src];bonus=1'>Issue Staff Bonus</a>
 			</div>
 			<hr>
 			Every payday cycle, Centcom distributes the <em>payroll stipend</em> into the station's budget, which is then paid out to crew accounts.
@@ -264,6 +266,35 @@
 					if (transto == "Payroll") wagesystem.station_budget += amount
 					if (transto == "Shipping") wagesystem.shipping_budget += amount
 					if (transto == "Research") wagesystem.research_budget += amount
+				else if(href_list["bonus"])
+					if(!(world.time >= src.bonus_rate_limit_time))
+						boutput(usr, SPAN_ALERT("NT Regulations forbid issuing multiple staff incentives within five minutes."))
+						return
+
+					var/amount = input(usr, "How many credits should we issue to each staff member?", "Issue Bonus", 100) as null|num
+					if(isnull(amount)) return
+
+					amount = ceil(clamp(amount, 1, 999999))
+					var/bonus_amt = (length(data_core.bank.records) * amount)
+					if ( bonus_amt > wagesystem.station_budget)
+						boutput(usr, SPAN_ALERT("Total bonus cost would be [bonus_amt][CREDIT_SIGN], payroll budget is only [wagesystem.station_budget][CREDIT_SIGN]!"))
+						return
+					var/message = input(usr, "What is the reason for this staff bonus?", "Bonus Reason") as text
+					if(isnull(message) || message == "")
+						boutput(usr, SPAN_ALERT("NT Regulations require that the reason for issuing a staff bonus be recorded."))
+						return
+
+					logTheThing(LOG_STATION, usr, "issued a bonus of [amount][CREDIT_SIGN] ([bonus_amt][CREDIT_SIGN] total) to the staff.")
+					src.bonus_rate_limit_time = world.time + (5 MINUTES)
+					command_announcement("[message]<br>Bonus of [amount][CREDIT_SIGN] issued to all staff.", "Payroll Annoucment by [scan.registered] ([scan.assignment])")
+					wagesystem.station_budget = wagesystem.station_budget - bonus_amt
+					for(var/datum/db_record/R as anything in data_core.bank.records)
+						if(R["job"] == "Clown")
+							//Tax the clown
+							R["current_money"] = (R["current_money"] + ceil((amount / 2)))
+							return
+						R["current_money"] = (R["current_money"] + amount)
+
 
 		src.add_fingerprint(usr)
 		src.updateUsrDialog()
