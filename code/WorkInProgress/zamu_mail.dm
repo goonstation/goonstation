@@ -336,7 +336,7 @@
 		var/mob/living/carbon/human/H = picked
 		if (ishuman(picked))
 			H = picked
-		if (prob(75) && length(H?.traitHolder.traits) > 0)
+		if (prob(50) && length(H?.traitHolder.traits) > 0)
 			if (!ishuman(picked))
 				logTheThing(LOG_STATION, H, "was thought to be human, but they weren't a human. Which is really weird!!")
 				break
@@ -446,7 +446,7 @@
 // =======================================================
 // Various random items jobs can get via the "mail" system
 
-var/global/mail_types_by_job = list(
+var/global/list/mail_types_by_job = list(
 	/datum/job/command/captain = list(
 		/obj/item/clothing/suit/bedsheet/captain = 2,
 		/obj/item/item_box/gold_star = 1,
@@ -758,28 +758,30 @@ var/global/mail_types_by_job = list(
 
 // =========================================================================
 // Various items given out based on player trait choices, to make it more personal
-var/global/mail_types_by_trait = list(
+var/global/list/mail_types_by_trait = list(
 	"petasusaphilic" = filtered_concrete_typesof(/obj/item/clothing/head, /proc/filter_trait_hats),
 	"pawnstar" = trinket_safelist,
-	"petperson" = filtered_concrete_typesof(/mob/living/critter/small_animal/, GLOBAL_PROC_REF(filter_carrier_pets)),
+	"petperson" = filtered_concrete_typesof(/mob/living/critter/small_animal/, GLOBAL_PROC_REF(filter_carrier_pets))\
+		+ list(/obj/item/pet_carrier),
 	"lunchbox" = childrentypesof(/obj/item/storage/lunchbox),
 	"loyalist" = list(/obj/item/clothing/head/NTberet, /obj/item/clothing/head/NTberet/commander),
 	"conspiracytheorist" = list(/obj/item/clothing/head/tinfoil_hat),
-	"beestfriend" = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy),
+	"beestfriend" = concrete_typesof(/obj/critter/domestic_bee)\
+		- list(/obj/critter/domestic_bee/heisenbee, /obj/critter/domestic_bee/heisenbee,
+		/obj/critter/domestic_bee/overbee, /obj/critter/domestic_bee/moon)\
+		+ list(/obj/item/reagent_containers/food/snacks/beefood),
 	"bald" = list(/obj/item/reagent_containers/pill/hairgrownium, /obj/item/clothing/head/wig/spawnable),
 	"pilot" = concrete_typesof(/obj/item/pod/paintjob) + list(/obj/item/pod/frame_box),
 	"sleepy" = list(/obj/item/reagent_containers/ampoule/smelling_salts, /obj/item/clothing/suit/bedsheet/random, /obj/item/furniture_parts/bed),
-	"partyanimal" = concrete_typesof(/obj/item/reagent_containers/food/drinks/bottle) + list(/obj/item/clothing/head/party/random),
-	"jailbird" = list(/obj/item/paper/newspaper/rolled, /obj/item/clothing/mask/moustache, /obj/item/clothing/glasses/sunglasses),
+	"partyanimal" = concrete_typesof(/obj/item/reagent_containers/food/drinks/bottle)\
+		- list(/obj/item/reagent_containers/food/drinks/bottle/beer/borg, /obj/item/reagent_containers/food/drinks/bottle/vodka/vr)\
+		+ list(/obj/item/clothing/head/party/random),
+	"jailbird" = list(/obj/item/paper/newspaper/rolled, /obj/item/clothing/mask/moustache, /obj/item/clothing/glasses/sunglasses/tanning),
 	"burning" = list(/obj/item/extinguisher, /obj/item/storage/firstaid/fire),
 	"carpenter" = concrete_typesof(/obj/item/furniture_parts),
-	"allears" = list(/obj/item/device/radio/headset/civilian, /obj/item/device/radio/headset/research, /obj/item/device/radio/headset/engineer),
 	"skeleton" = list(/obj/item/reagent_containers/food/drinks/milk, /obj/item/joint_wax),
 	"pug" = list(/obj/item/reagent_containers/food/snacks/cookie/dog),
 	"picky_eater" = list(/obj/item/reagent_containers/food/snacks), // Extra logic for determining favorite food
-	"deaf" = list(/obj/item/device/radio/headset/deaf),
-	"blind" = list(/obj/item/clothing/glasses/visor),
-	"shortsighted" = list(/obj/item/clothing/glasses/regular),
 	"nolegs" = list(/obj/item/furniture_parts/wheelchair, /obj/item/parts/robot_parts/leg/left/light, /obj/item/parts/robot_parts/leg/right/light),
 	"plasmalungs" = list(/obj/item/tank/mini_plasma),
 	"scottish" = list(/obj/item/instrument/bagpipe, /obj/item/clothing/under/gimmick/kilt,
@@ -799,7 +801,7 @@ var/global/mail_types_by_trait = list(
 
 // =========================================================================
 // Items given out to anyone, either when they have no job items or randomly
-var/global/mail_types_everyone = list(
+var/global/list/mail_types_everyone = list(
 #ifdef XMAS
     /obj/item/spacemas_card = 25,
 #endif
