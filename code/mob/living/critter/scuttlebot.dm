@@ -118,22 +118,6 @@
 
 	setup_hands()
 
-/mob/living/critter/robotic/scuttlebot/mail
-	name = "Carr1er P1g30n"
-	desc = "A pigeon that must've escaped from the ranch and been trained to deliver mail... wait why is 8G labeled on its leg?"
-	icon = 'icons/mob/critter/robotic/scuttlebot.dmi'
-	icon_state = "pigeon"
-	var/obj/item/clothing/overcoat/pigeon/linked_pigeon = null
-
-	setup_hands()
-		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/small_critter/med
-		HH.icon = 'icons/mob/critter_ui.dmi'
-		HH.icon_state = "handn"
-		HH.name = "claw"
-		HH.limb_name = "claws"
-
-	add_abilities = list(/datum/targetable/critter/control_owner)
 
 /mob/living/critter/robotic/scuttlebot/ghostplayable // admin gimmick ghost spawnable version
 
