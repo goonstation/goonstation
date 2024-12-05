@@ -202,7 +202,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 						var/price = input(usr, "Please enter price for [P.name].", "Gene Price", 0) as null|num
 						if(!isnum_safe(price))
 							return
-						price = max(price,0)
+						price = ceil(clamp(price, 0, 999999))
 						P.cost = price
 
 				if("lock")
