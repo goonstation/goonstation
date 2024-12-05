@@ -11066,6 +11066,14 @@
 /obj/cable,
 /turf/simulated/floor/purple/side,
 /area/station/science/storage)
+"dPc" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light,
+/obj/item/space_thing,
+/turf/space,
+/area/space)
 "dPt" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -86204,7 +86212,7 @@ aaa
 aaa
 aaa
 aaa
-aKX
+dPc
 aKY
 avp
 aaa
