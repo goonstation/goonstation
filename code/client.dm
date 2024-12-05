@@ -244,7 +244,7 @@
 	//this is a little spooky to be doing here because the poll list never gets cleared out but I don't think it'll be too bad and I blame Sov if it is
 	var/list/active_polls = global.poll_manager.get_active_poll_names()
 	if (length(active_polls))
-		boutput(src, "<h2>There are polls running!</h2>")
+		boutput(src, "<h2 style='color: red'>There are polls running!</h2>")
 		boutput(src, SPAN_BOLD("Active polls: [english_list(active_polls)] - <a href='byond://winset?command=Player-Polls'>Click here to vote!</a>"))
 
 	if (IsGuestKey(src.key))
