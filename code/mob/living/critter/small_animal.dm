@@ -353,9 +353,7 @@ proc/filter_carrier_pets(var/type)
 	health_burn = 20
 	stamina = 0 // Turtles are slow
 	hand_count = 2
-	ai_retaliate_patience = 2
-	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
-	ai_type = /datum/aiHolder/turtle
+	ai_retaliate_persistence = RETALIATE_ONCE
 	player_can_spawn_with_pet = TRUE
 	density = FALSE
 	drop_contents_on_death = FALSE
@@ -443,9 +441,6 @@ proc/filter_carrier_pets(var/type)
 		..()
 
 	attack_hand(mob/user)
-		if (isdead(src))
-			take_beret(user)
-			return
 		if (user.a_intent == INTENT_HARM && prob(80))
 			src.enter_shell()
 		.=..()
@@ -513,17 +508,9 @@ proc/filter_carrier_pets(var/type)
 				boutput(M, SPAN_ALERT("You feel a wave of sadness wash over you, something terrible has happened."))
 		src.UpdateIcon()
 
-	on_pet(mob/user)
-		if (..())
-			return 1
-		if (src.ai?.enabled && ishuman(user))
-			var/mob/living/carbon/human/human = user
-			var/clown_tally = human.clown_tally()
-			if (clown_tally>=2 || human.traitHolder.hasTrait("training_clown"))
-				src.ai.priority_tasks += src.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(src, src.ai.default_task))
-				src.ai.interrupt()
-				src.visible_message(SPAN_NOTICE("[src] notices a Clown and knocks [human] over!"))
-				human.setStatus("resting", duration = INFINITE_STATUS)
+	updatehealth()
+		..()
+		src.UpdateIcon()
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/charge/charge = src.abilityHolder.getAbility(/datum/targetable/critter/charge)
@@ -545,7 +532,7 @@ proc/filter_carrier_pets(var/type)
 		if(istype(target, /mob/living/critter/small_animal/mouse/weak/mentor) && prob(90))
 			src.visible_message(SPAN_COMBAT("<B>[src]</B> tries to bite [target] but \the [target] dodges [pick("nimbly", "effortlessly", "gracefully")]!"))
 			return FALSE
-		src.set_hand(1) //mouth
+		src.set_hand(2) //mouth
 		src.set_a_intent(INTENT_HARM)
 		src.hand_attack(target)
 		if (ishuman(target))
@@ -666,9 +653,24 @@ proc/filter_carrier_pets(var/type)
 	gender = MALE
 	player_can_spawn_with_pet = FALSE
 	is_pet = 2
+	ai_type = /datum/aiHolder/aggressive
+	ai_retaliate_patience = 1
+	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	#ifdef HALLOWEEN
 	costume_name = "sylv_costume_1"
 	#endif
+
+	on_pet(mob/user)
+		if (..())
+			return 1
+		if (src.ai?.enabled && ishuman(user))
+			var/mob/living/carbon/human/human = user
+			var/clown_tally = human.clown_tally()
+			if (clown_tally>=2 || human.traitHolder.hasTrait("training_clown"))
+				src.ai.priority_tasks += src.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(src, src.ai.default_task))
+				src.ai.interrupt()
+				src.visible_message(SPAN_ALERT("[src] knocks [human] over!"))
+				human.setStatus("resting", duration = INFINITE_STATUS)
 
 	seek_target(range)
 		. = list()

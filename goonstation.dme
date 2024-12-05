@@ -543,7 +543,6 @@
 #include "code\mob\living\critter\ai\shared.dm"
 #include "code\mob\living\critter\ai\sleeping.dm"
 #include "code\mob\living\critter\ai\spider.dm"
-#include "code\mob\living\critter\ai\turtle.dm"
 #include "code\mob\living\critter\ai\flock\flock_common.dm"
 #include "code\mob\living\critter\ai\flock\flockbit.dm"
 #include "code\mob\living\critter\ai\flock\flockdrone.dm"
