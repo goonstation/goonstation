@@ -648,7 +648,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/heavy_power_sword,
 		/obj/item/clothing/shoes/swat/knight,
-		/obj/item/clothing/gloves/swat/knight,
+		/obj/item/clothing/gloves/swat/syndicate/knight,
 		/obj/item/clothing/suit/space/syndicate/knight,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
 
