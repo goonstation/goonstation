@@ -201,6 +201,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		src.anchored = ANCHORED
 		if (src.z == Z_LEVEL_STATION && src.boom_size == "nuke")
 			src.change_status_display()
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_NUKE_PLANTED)
 		if (!src.image_light)
 			src.image_light = image(src.icon, "nblightc")
 			for(var/obj/bomb_or_decoy as anything in get_self_and_decoys())
