@@ -9,6 +9,7 @@ ABSTRACT_TYPE(/area/supply)
 
 	#ifdef UNDERWATER_MAP
 	color = OCEAN_COLOR
+	ambient_light = OCEAN_LIGHT
 	#endif
 
 /area/supply/delivery_point //the area supplies are fired at
@@ -18,6 +19,7 @@ ABSTRACT_TYPE(/area/supply)
 
 	#ifdef UNDERWATER_MAP
 	color = OCEAN_COLOR
+	ambient_light = OCEAN_LIGHT
 	#endif
 
 /area/supply/sell_point //the area where supplies move from the station z level
@@ -27,6 +29,7 @@ ABSTRACT_TYPE(/area/supply)
 
 	#ifdef UNDERWATER_MAP
 	color = OCEAN_COLOR
+	ambient_light = OCEAN_LIGHT
 	#endif
 
 	Entered(var/atom/movable/AM)

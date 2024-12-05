@@ -312,6 +312,7 @@ var/global
 
 	outpost_destroyed = 0
 	signal_loss = 0
+	solar_gen_rate = DEFAULT_SOLARGENRATE
 	fart_attack = 0
 	blowout = 0
 	farty_party = 0
