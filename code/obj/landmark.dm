@@ -549,6 +549,9 @@ var/global/list/job_start_locations = list()
 		if (istype(L) && !isintangible(L))
 			L.unlock_medal("Ice Cold", TRUE)
 
+/obj/landmark/lrt/fenrir
+	name = "Syndicate Research Facility Fenrir"
+
 /obj/landmark/character_preview_spawn
 	name = LANDMARK_CHARACTER_PREVIEW_SPAWN
 
