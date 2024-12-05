@@ -581,7 +581,7 @@ var/global/mail_types_by_job = list(
 		),
 
 	/datum/job/civilian/chaplain = list(
-		/obj/item/bible = 2,
+		/obj/item/sacred_texts = 2,
 		/obj/item/device/light/candle = 4,
 		/obj/item/device/light/candle/small = 5,
 		/obj/item/device/light/candle/spooky = 2,

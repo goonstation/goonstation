@@ -35448,6 +35448,13 @@
 "kKW" = (
 /turf/simulated/floor/stairs/wide,
 /area/station/crew_quarters/market)
+"kLm" = (
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/item/sacred_texts,
+/turf/simulated/floor/carpet/purple/decal/outercross,
+/area/station/chapel/sanctuary)
 "kLp" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -54122,7 +54129,6 @@
 /area/station/medical/asylum/rec)
 "qsB" = (
 /obj/table/wood/auto,
-/obj/item/bible,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
@@ -60320,7 +60326,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/bible,
+/obj/item/sacred_texts,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred2"
@@ -117165,7 +117171,7 @@ qxz
 ctt
 fiu
 qrd
-ujb
+kLm
 cCa
 wyz
 bcu

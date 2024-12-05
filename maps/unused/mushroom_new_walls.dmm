@@ -6672,6 +6672,7 @@
 	c_tag = "Chapel Office";
 	dir = 4
 	},
+/obj/item/sacred_texts,
 /turf/simulated/floor{
 	icon_state = "carpetW"
 	},
@@ -6859,7 +6860,6 @@
 /area/station/hallway/primary/south)
 "aMZ" = (
 /obj/table/wood/auto,
-/obj/item/bible,
 /turf/simulated/floor{
 	icon_state = "carpetSW"
 	},
@@ -31637,6 +31637,7 @@
 /area/station/quartermaster/office)
 "rbd" = (
 /obj/table/wood/auto,
+/obj/item/sacred_texts,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
@@ -37873,7 +37874,6 @@
 /obj/table/wood/auto,
 /obj/item/ghostboard,
 /obj/item/device/microphone,
-/obj/item/bible,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 9
 	},

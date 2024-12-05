@@ -100,7 +100,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			else if(istype(w, /obj/item/folder))
 				user.drop_item()
 				w.set_loc(get_turf(src))
-			else if(istype(w, /obj/item/bible))
+			else if(istype(w, /obj/item/sacred_texts))
 				faith_print(user)
 
 
@@ -289,7 +289,7 @@ TYPEINFO(/obj/machinery/photocopier)
 				boutput(user, "There are no scans stored inside \the [src]'s memory banks.")
 			else
 				boutput(user, "You can only tell that the scanned data is marked as '[src.print_type]'.")
-	proc/faith_print(var/mob/user) // Bible can print using faith instead of paper
+	proc/faith_print(var/mob/user) // sacred_texts can print using faith instead of paper
 		var/chaplain = 0
 		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
 			chaplain = 1

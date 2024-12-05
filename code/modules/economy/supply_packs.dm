@@ -980,7 +980,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/body_bag = 10,
 					/obj/item/reagent_containers/glass/bottle/formaldehyde,
 					/obj/item/reagent_containers/syringe,
-					/obj/item/bible)
+					/obj/item/sacred_texts)
 	cost = PAY_DOCTORATE*2
 	containertype = /obj/storage/closet/coffin
 	containername = "Morgue Supplies"

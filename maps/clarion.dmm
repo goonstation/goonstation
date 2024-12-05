@@ -2411,8 +2411,8 @@
 "auY" = (
 /obj/table/wood/auto,
 /obj/item/card_box/tarot,
-/obj/item/bible,
 /obj/item/reagent_containers/glass/bottle/holywater,
+/obj/item/sacred_texts,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{
 	name = "Chaplain's Office"
@@ -22980,6 +22980,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"jbv" = (
+/obj/decal/tile_edge/stripe,
+/obj/table/wood/auto,
+/obj/item/sacred_texts,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/chapel/sanctuary)
 "jbP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/research_director)
@@ -75029,7 +75037,7 @@ maL
 azm
 aAg
 azn
-aCb
+jbv
 aCZ
 aEk
 aFq

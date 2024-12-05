@@ -350,10 +350,10 @@
 						V.throw_at(target, 8, 3, throw_type = THROW_GUNIMPACT)
 				var/go2hell
 				src.transform = oldtransform
-				for (var/obj/item/bible/B in src.loc)
+				for (var/obj/item/sacred_texts/B in src.loc)
 					go2hell = 1
 					var/turf/oldloc = get_turf(src)
-					src.visible_message(SPAN_ALERT("[src] blasts its ass all over the bible.<br><b>A mysterious force <u>is not pleased</u>!</b>"))
+					src.visible_message(SPAN_ALERT("[src] blasts its ass all over the sacred_texts.<br><b>A mysterious force <u>is not pleased</u>!</b>"))
 					src.set_loc(pick(get_area_turfs(/area/afterlife/hell/hellspawn)))
 					B.burn_possible = FALSE // protect the book
 					SPAWN(1 SECOND)
@@ -394,8 +394,8 @@
 				fart_on_other = 1
 				src.fart_memory += A
 				break
-			else if(istype(A,/obj/item/bible))
-				src.visible_message(SPAN_ALERT("[src] farts on the bible.<br><b>A mysterious force smites [src]!</b>"))
+			else if(istype(A,/obj/item/sacred_texts))
+				src.visible_message(SPAN_ALERT("[src] farts on the sacred_texts.<br><b>A mysterious force smites [src]!</b>"))
 				fart_on_other = 1
 				src.fart_memory += A
 				src.gib()

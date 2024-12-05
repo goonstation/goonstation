@@ -13165,7 +13165,6 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/item/bible,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -13173,6 +13172,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/item/sacred_texts,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "fNY" = (
@@ -25943,6 +25943,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
+/obj/item/sacred_texts,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "kOC" = (

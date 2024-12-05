@@ -1189,7 +1189,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (!ismob(src.loc) || (src in mobloc.equipped_list())) //but don't skip if it's in their hand because that causes DUPE BUGS AAAA
 		while(checkloc && !istype(checkloc,/turf))
 			if(isliving(checkloc) && checkloc != user) // This heinous block is to make sure you're not swiping things from other people's backpacks
-				if(src in bible_contents) // Bibles share their contents globally, so magically taking stuff from them is fine
+				if(src in sacred_texts_contents) // sacred texts share their contents globally, so magically taking stuff from them is fine
 					break
 				else if(src in terminus_storage) // ditto
 					break

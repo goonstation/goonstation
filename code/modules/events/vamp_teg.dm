@@ -352,7 +352,7 @@ datum/teg_transformation/vampire
 	proc/attackby(obj/T, obj/item/I, mob/user)
 		user.lastattacked = src
 		var/force = I.force
-		if(istype(I,/obj/item/bible) && user.traitHolder.hasTrait("training_chaplain"))
+		if(istype(I,/obj/item/sacred_texts) && user.traitHolder.hasTrait("training_chaplain"))
 			force = 60
 
 		switch (force)

@@ -419,7 +419,7 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 // make sure to put more specific types first, else they'll be skipped over in the processing
 /var/list/flocklore = list(
 	/obj/item/book_kinginyellow = "flocklore_king_in_yellow",
-	/obj/item/bible = "flocklore_bible",
+	/obj/item/sacred_texts = "flocklore_sacred_texts",
 	/obj/item/space_thing = "flocklore_space_thing",
 	/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy = "flocklore_buddy_egg",
 	/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/moon = "flocklore_moon_egg",
@@ -445,7 +445,7 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 )
 // items that, instead of being flung aside, will gently be moved elsewhere
 /var/list/respected_items = list(
-	/obj/item/bible,
+	/obj/item/sacred_texts,
 	/obj/item/space_thing,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg/bee,
 	/obj/item/feather,

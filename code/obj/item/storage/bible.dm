@@ -1,12 +1,12 @@
-// rest in peace the_very_holy_global_bible_list_amen (??? - 2020)
+// rest in peace the_very_holy_global_sacred texts_list_amen (??? - 2020)
 
-/obj/item/bible
-	name = "bible"
+/obj/item/sacred_texts
+	name = "sacred texts"
 	desc = "A holy scripture of some sort or another. Someone seems to have hollowed it out for hiding things in."
 	icon = 'icons/obj/items/storage.dmi'
-	icon_state ="bible"
+	icon_state ="sactexts"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
-	item_state ="bible"
+	item_state ="sactext"
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -16,7 +16,7 @@
 
 	New()
 		..()
-		src.create_storage(/datum/storage/bible, max_wclass = W_CLASS_SMALL)
+		src.create_storage(/datum/storage/sacred_texts, max_wclass = W_CLASS_SMALL)
 		START_TRACKING
 		#ifdef SECRETS_ENABLED
 		ritualComponent = new/datum/ritualComponent/sanctus(src)
@@ -39,9 +39,9 @@
 			if (1 to 8)
 				target.visible_message(SPAN_ALERT("<B>[user] heals [target] mending [his_or_her(target)] wounds!</B>"))
 			if (9 to 15)
-				target.visible_message(SPAN_ALERT("<B>[user] heals [target] with the power of Christ!</B>"))
+				target.visible_message(SPAN_ALERT("<B>[user] heals [target] with the power of the Spirits!</B>"))
 			if (16 to 24)
-				target.visible_message(SPAN_ALERT("<B>[user] heals [target] by the will of the LORD!</B>"))
+				target.visible_message(SPAN_ALERT("<B>[user] heals [target] by the will of the the HOLY ONE!</B>"))
 			if (25 to INFINITY)
 				target.visible_message(SPAN_ALERT("<B>[user] heals [target] in service of heaven!</B>"))
 
@@ -88,7 +88,7 @@
 				JOB_XP(user, "Chaplain", 1)
 
 	attackby(var/obj/item/W, var/mob/user)
-		if (istype(W, /obj/item/bible))
+		if (istype(W, /obj/item/sacred_texts))
 			user.show_text("You try to put \the [W] in \the [src]. It doesn't work. You feel dumber.", "red")
 		else
 			..()
@@ -165,20 +165,20 @@
 		src.set_loc(user.loc)
 		return farty_heresy(user)
 
-	///Called when someone farts on a bible. Return TRUE if we killed them, FALSE otherwise.
+	///Called when someone farts on a sacred texts. Return TRUE if we killed them, FALSE otherwise.
 	proc/farty_heresy(mob/user)
 		if(!user || user.loc != src.loc)
 			return FALSE
 
 		if (farty_party)
-			user.visible_message(SPAN_ALERT("[user] farts on the bible.<br><b>The gods seem to approve.</b>"))
+			user.visible_message(SPAN_ALERT("[user] farts on the sacred texts.<br><b>The gods seem to approve.</b>"))
 			return FALSE
 
 		if (user.traitHolder?.hasTrait("atheist"))
-			user.visible_message(SPAN_ALERT("[user] farts on the bible with particular vindication.<br><b>Against all odds, [user] remains unharmed!</b>"))
+			user.visible_message(SPAN_ALERT("[user] farts on the sacred texts with particular vindication.<br><b>Against all odds, [user] remains unharmed!</b>"))
 			return FALSE
 		else if (ishuman(user) && user:unkillable)
-			user.visible_message(SPAN_ALERT("[user] farts on the bible."))
+			user.visible_message(SPAN_ALERT("[user] farts on the sacred texts."))
 			user:unkillable = 0
 			user.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 			heavenly_spawn(user)
@@ -189,12 +189,12 @@
 			return TRUE
 
 	proc/smite(mob/M)
-		M.visible_message(SPAN_ALERT("[M] farts on the bible.<br><b>A mysterious force smites [M]!</b>"))
+		M.visible_message(SPAN_ALERT("[M] farts on the sacred texts.<br><b>A mysterious force smites [M]!</b>"))
 		logTheThing(LOG_COMBAT, M, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
 		M.smite_gib()
 
-/obj/item/bible/evil
-	name = "frayed bible"
+/obj/item/sacred_texts/evil
+	name = "frayed sacred texts"
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 
 	Crossed(atom/movable/AM as mob)
@@ -203,11 +203,11 @@
 			var/mob/living/carbon/human/H = AM
 			H.emote("fart")
 
-/obj/item/bible/mini
+/obj/item/sacred_texts/mini
 	//Grif
-	name = "O.C. Bible"
+	name = "O.C. sacred texts"
 	desc = "For when you don't want the good book to take up too much space in your life."
-	icon_state = "minibible"
+	icon_state = "minisactexts"
 	item_state = null
 	w_class = W_CLASS_SMALL
 
@@ -218,13 +218,13 @@
 		if(..())
 			return TRUE
 
-		user.visible_message(SPAN_ALERT("[user] farts on the bible.<br><b>A mysterious force smites [user]!</b>"))
+		user.visible_message(SPAN_ALERT("[user] farts on the sacred texts.<br><b>A mysterious force smites [user]!</b>"))
 		logTheThing(LOG_COMBAT, user, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
 		smite(user)
 		return TRUE
 
-/obj/item/bible/hungry
-	name = "hungry bible"
+/obj/item/sacred_texts/hungry
+	name = "hungry sacred texts"
 	desc = "Huh."
 
 	custom_suicide = 1
@@ -235,9 +235,9 @@
 		if (!farting_allowed)
 			return 0
 		if (farty_party)
-			user.visible_message(SPAN_ALERT("[user] farts on the bible.<br><b>The gods seem to approve.</b>"))
+			user.visible_message(SPAN_ALERT("[user] farts on the sacred texts.<br><b>The gods seem to approve.</b>"))
 			return 0
-		user.visible_message(SPAN_ALERT("[user] farts on the bible.<br><b>A mysterious force smites [user]!</b>"))
+		user.visible_message(SPAN_ALERT("[user] farts on the sacred texts.<br><b>A mysterious force smites [user]!</b>"))
 		user.u_equip(src)
 		src.layer = initial(src.layer)
 		src.set_loc(user.loc)
@@ -255,9 +255,9 @@
 		return 1
 	farty_heresy(var/mob/user)
 		if (farty_party)
-			user.visible_message(SPAN_ALERT("[user] farts on the bible.<br><b>The gods seem to approve.</b>"))
+			user.visible_message(SPAN_ALERT("[user] farts on the sacred texts.<br><b>The gods seem to approve.</b>"))
 			return 0
-		user.visible_message(SPAN_ALERT("[user] farts on the bible.<br><b>A mysterious force smites [user]!</b>"))
+		user.visible_message(SPAN_ALERT("[user] farts on the sacred texts.<br><b>A mysterious force smites [user]!</b>"))
 		user.u_equip(src)
 		src.layer = initial(src.layer)
 		src.set_loc(user.loc)
@@ -273,7 +273,7 @@
 				sleep(0.3 SECONDS)
 		return 1
 
-/obj/item/bible/loaded
+/obj/item/sacred_texts/loaded
 
 	New()
 		..()

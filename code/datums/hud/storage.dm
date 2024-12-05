@@ -112,7 +112,7 @@
 			px = temp
 
 		//ddumb hack for offset storage
-		var/turfd = (isturf(master.linked_item.loc) && !istype(master.linked_item, /obj/item/bible))
+		var/turfd = (isturf(master.linked_item.loc) && !istype(master.linked_item, /obj/item/sacred_texts))
 
 		var/pixel_y_adjust = 0
 		if (user && user.client && user.client.tg_layout && !turfd)
@@ -142,7 +142,7 @@
 		var sy = num_contents + 1
 		var/turfd = 0
 
-		if (isturf(master.linked_item?.loc) && !istype(master.linked_item, /obj/item/bible)) // goddamn BIBLES (prevents conflicting positions within different bibles)
+		if (isturf(master.linked_item?.loc) && !istype(master.linked_item, /obj/item/sacred_texts)) // goddamn sacred_textsS (prevents conflicting positions within different sacred_textss)
 			x = 7
 			y = 8
 			sx = (num_contents + 1) / 2
@@ -156,7 +156,7 @@
 			sx = num_contents + 1
 			sy = 1
 
-			if (turfd) // goddamn BIBLES (prevents conflicting positions within different bibles)
+			if (turfd) // goddamn sacred_textsS (prevents conflicting positions within different sacred_textss)
 				x = 8
 				y = 8
 				sx = (num_contents + 1) / 2

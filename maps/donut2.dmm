@@ -6474,10 +6474,8 @@
 	name = "crematorium pipe"
 	},
 /obj/table/podium_wood,
-/obj/item/bible{
-	pixel_y = 7
-	},
 /obj/machinery/light/small/floor,
+/obj/item/sacred_texts,
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
 "aIa" = (
@@ -27097,10 +27095,6 @@
 	pixel_x = -7;
 	pixel_y = 5
 	},
-/obj/item/bible{
-	pixel_x = 17;
-	pixel_y = 4
-	},
 /obj/item/reagent_containers/glass/bottle/holywater{
 	pixel_x = 3;
 	pixel_y = 4
@@ -45330,6 +45324,7 @@
 /obj/item/pen/fancy{
 	pixel_y = 8
 	},
+/obj/item/sacred_texts,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
