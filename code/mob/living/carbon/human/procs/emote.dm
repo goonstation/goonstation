@@ -2249,7 +2249,7 @@
 							dab_id?.arm_count++
 						src.limbs.r_leg?.sever()
 						src.limbs.l_leg?.sever()
-						message = SPAN_ALERT("[src] does a sick dab on the sacred_texts!")
+						message = SPAN_ALERT("[src] does a sick dab on the sacred texts!")
 						src.visible_message(SPAN_ALERT("An unseen force smites [src]'s' limbs off</B>!"))
 						playsound(src.loc, 'sound/misc/deepfrieddabs.ogg', 25,0, channel=VOLUME_CHANNEL_EMOTE)
 				else
