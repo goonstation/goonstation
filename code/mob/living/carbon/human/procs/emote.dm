@@ -10,6 +10,9 @@
 	if(voluntary && !src.emote_allowed)
 		return
 
+	if (src.hasStatus("paralysis"))
+		return //pls stop emoting :((
+
 	if (src.bioHolder.HasEffect("revenant"))
 		src.visible_message(SPAN_ALERT("[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!"), group = "revenant_emote")
 		return

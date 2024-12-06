@@ -142,7 +142,11 @@
 		var sy = num_contents + 1
 		var/turfd = 0
 
+<<<<<<< HEAD
 		if (isturf(master.linked_item?.loc) && !istype(master.linked_item, /obj/item/sacred_tome)) // goddamm sacred tome (prevents conflicting positions within different sacred tome)
+=======
+		if (isturf(master.linked_item?.loc) && !istype(master.linked_item, /obj/item/sacred_texts)) // goddamn sacred_texts (prevents conflicting positions within different sacred_texts)
+>>>>>>> 37015c28160e17434cfbf1cccf0ad6adf4254b22
 			x = 7
 			y = 8
 			sx = (num_contents + 1) / 2
@@ -156,7 +160,11 @@
 			sx = num_contents + 1
 			sy = 1
 
+<<<<<<< HEAD
 			if (turfd) // goddamn sacred tomes (prevents conflicting positions within different sacred tomes)
+=======
+			if (turfd) // goddamn sacred texts (prevents conflicting positions within different sacred texts)
+>>>>>>> 37015c28160e17434cfbf1cccf0ad6adf4254b22
 				x = 8
 				y = 8
 				sx = (num_contents + 1) / 2

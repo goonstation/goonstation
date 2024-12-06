@@ -1,4 +1,13 @@
 
+(t)thu dec 05 24
+(u)JORJ949
+(p)21519
+(e)🆕🎩|C-Feature, A-Clothing
+(+)The syndicate have gotten into the christmas spirit! You can now buy santa space suits from the apparel vendor.
+(u)JORJ949
+(p)21565
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Added the disarmanomicon, break into the chaplain's vendor to get it!
 (t)wed dec 04 24
 (u)glowbold
 (p)21480
