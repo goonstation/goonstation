@@ -7,7 +7,7 @@
 	var/list/authorized
 	var/list/authorized_registered = null
 	var/net_id = null
-	var/control_frequency = "1461"
+	var/control_frequency = FREQ_ARMORY
 	var/radiorange = 3
 	/// Was the armory authorized via authdisk?
 	var/authdisk_authorized = FALSE

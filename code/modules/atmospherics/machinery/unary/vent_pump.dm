@@ -88,15 +88,12 @@
 	return TRUE
 
 /obj/machinery/atmospherics/unary/vent_pump/proc/broadcast_status()
-	if(!src.id)
-		return FALSE
-
 	var/datum/signal/signal = get_free_signal()
 	signal.transmission_method = TRANSMISSION_RADIO
 	signal.source = src
 
 	signal.data["tag"] = src.id
-	signal.data["netid"] = src.net_id
+	signal.data["sender"] = src.net_id
 	signal.data["device"] = "AVP"
 	signal.data["power"] = src.on ? "on": "off"
 	signal.data["direction"] = src.pump_direction ? "release" : "siphon"
@@ -113,7 +110,7 @@
 	UpdateIcon()
 
 /obj/machinery/atmospherics/unary/vent_pump/receive_signal(datum/signal/signal)
-	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["netid"] && (signal.data["netid"] == src.net_id))))
+	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["address_1"] == src.net_id)))
 		if(signal.data["command"] != "broadcast_status")
 			return FALSE
 

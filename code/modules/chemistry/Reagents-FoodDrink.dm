@@ -278,7 +278,7 @@ datum
 			fluid_g = 64
 			fluid_b = 27
 			transparency = 190
-			var/alch_strength = 0.07
+			var/alch_strength = 0.07  // ABV, with 1 being 100% ABV
 			bladder_value = -0.15
 			thirst_value = 0.4
 			viscosity = 0.2
@@ -286,7 +286,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.reagents.add_reagent("ethanol", alch_strength * src.calculate_depletion_rate(M, mult))
-				//Multiplying by depletion rate makes alch_strength describe ABV, with 1 being 100% ABV
+				//Multiplying by depletion rate to maintain alch_strength description of ABV, with 1 being 100% ABV
 				//This means that drinks ~15% ABV need a higher depletion rate so that the ethanol can accumulate
 				..()
 				return
