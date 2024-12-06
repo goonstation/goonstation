@@ -572,8 +572,8 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY
 
-/datum/syndicate_buylist/traitor/minisactexts
-	name = "Miniature Sacred Texts"
+/datum/syndicate_buylist/traitor/minisactome
+	name = "Miniature Sacred Tome"
 	items = list(/obj/item/sacred_tome/mini)
 	cost = 1
 	desc = "We understand it can be difficult to carry out some of our missions. Here is some spiritual counsel in a small package."
