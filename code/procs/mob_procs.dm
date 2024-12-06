@@ -235,6 +235,11 @@
 		if (G.allow_blind_sight)
 			return 1
 
+	if (isskeleton(src))
+		var/datum/mutantrace/skeleton/skele = src.mutantrace
+		if (skele.head_tracker?.glasses?.allow_blind_sight)
+			return 1
+
 	if ((src.bioHolder && src.bioHolder.HasEffect("blind")) || src.blinded || src.get_eye_damage(1) || (src.organHolder && !src.organHolder.left_eye && !src.organHolder.right_eye && !isskeleton(src)))
 		return 0
 
