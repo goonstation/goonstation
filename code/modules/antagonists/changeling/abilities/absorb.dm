@@ -177,7 +177,7 @@
 	onEnd()
 		..()
 
-		var/mob/ownerMob = owner
+		var/mob/living/ownerMob = owner
 		if(owner && ownerMob && target && BOUNDS_DIST(owner, target) == 0 && devour)
 			var/datum/abilityHolder/changeling/C = devour.holder
 			if (istype(C))
@@ -185,16 +185,24 @@
 			boutput(ownerMob, SPAN_NOTICE("We have absorbed [target]!"))
 			ownerMob.visible_message(SPAN_ALERT("<B>[ownerMob] sucks the fluids out of [target]!</B>"))
 			logTheThing(LOG_COMBAT, ownerMob, "absorbs [constructTarget(target,"combat")] as a changeling [log_loc(owner)].")
+			target.full_heal()
+			ownerMob.mind.transfer_to(target)
+			C.composite_owner.removeHolder(C.type)
+			if (!istype(target.abilityHolder, /datum/abilityHolder/composite))
+				C.transferOwnership(target)
+			else
+				var/datum/abilityHolder/composite/target_composite = target.abilityHolder
+				target_composite.removeHolder(C.type) //in case they're already a changeling
+				target_composite.addHolderInstance(C)
+			ownerMob.dna_to_absorb = 0
+			ownerMob.death(FALSE)
+			ownerMob.disfigured = TRUE
+			ownerMob.UpdateName()
+			ownerMob.bioHolder.AddEffect("husk")
+			ownerMob.bioHolder.mobAppearance.flavor_text = "A desiccated husk."
 
-			target.dna_to_absorb = 0
-			target.death(FALSE)
-			target.disfigured = TRUE
-			target.UpdateName()
-			target.bioHolder.AddEffect("husk")
-			target.bioHolder.mobAppearance.flavor_text = "A desiccated husk."
-
-			if (ishuman(ownerMob))
-				var/mob/living/carbon/human/H = ownerMob
+			if (ishuman(target))
+				var/mob/living/carbon/human/H = target
 				if (H.sims)
 					H.sims.affectMotive("Thirst", 10)
 					H.sims.affectMotive("Hunger", 10)
