@@ -137,20 +137,20 @@
 	},
 /area/space)
 "aw" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
 /turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "ax" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "ay" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -193,7 +193,7 @@
 /turf/space,
 /area/space)
 "aE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -201,7 +201,7 @@
 /turf/unsimulated/floor,
 /area/space)
 "aF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -209,7 +209,7 @@
 /turf/unsimulated/floor,
 /area/space)
 "aG" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "aH" = (
@@ -221,13 +221,13 @@
 /turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "aI" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "aJ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/simulated/floor/auto/elevator_shaft/biodome,
@@ -246,7 +246,7 @@
 	},
 /area/space)
 "aM" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -254,7 +254,7 @@
 /turf/unsimulated/floor,
 /area/space)
 "aN" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -307,7 +307,7 @@
 /turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "aU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/simulated/floor/auto/elevator_shaft/biodome,
@@ -437,7 +437,7 @@
 	},
 /area/space)
 "bm" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor,
 /area/space)
 "bn" = (
@@ -530,14 +530,14 @@
 /turf/unsimulated/outdoors/concrete,
 /area/space)
 "bz" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
 /turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "bA" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -645,7 +645,7 @@
 	},
 /area/space)
 "bJ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/fakeobject{
 	tag = "icon-conduit (EAST)";
 	name = "power conduit";
@@ -698,7 +698,7 @@
 	},
 /area/space)
 "bO" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/simulated/floor/auto/elevator_shaft/biodome,
@@ -767,7 +767,7 @@
 	},
 /area/space)
 "bU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	tag = "icon-catwalk_cross (NORTHEAST)";
 	icon_state = "catwalk_cross";
 	dir = 5
@@ -775,7 +775,7 @@
 /turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "bV" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/space,
@@ -793,7 +793,7 @@
 	tag = "icon-intact (EAST)";
 	dir = 4
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor,
 /area/space)
 "bY" = (
@@ -1086,7 +1086,7 @@
 	tag = "icon-intact (EAST)";
 	dir = 4
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor,
 /area/space)
 "cz" = (
@@ -1134,7 +1134,7 @@
 /turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "cD" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	tag = "icon-catwalk (SOUTHWEST)";
 	icon_state = "catwalk";
 	dir = 10
@@ -1142,7 +1142,7 @@
 /turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "cE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	tag = "icon-catwalk_cross (SOUTHEAST)";
 	icon_state = "catwalk_cross";
 	dir = 6
@@ -1180,7 +1180,7 @@
 /area/space)
 "cI" = (
 /obj/stomachacid,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /area/space)
 "cJ" = (

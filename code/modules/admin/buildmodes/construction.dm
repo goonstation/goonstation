@@ -34,7 +34,7 @@ change the direction of created objects.<br>
 			var/obj/window/reinforced/R = new /obj/window/reinforced(get_turf(object))
 			R.set_dir(holder.dir)
 		else if (shift)
-			new /obj/grille/steel(get_turf(object))
+			new /obj/mesh/grille/steel(get_turf(object))
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
 		if(istype(object,/turf/simulated/wall))

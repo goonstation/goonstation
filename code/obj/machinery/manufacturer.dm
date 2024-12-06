@@ -494,6 +494,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/ref in src.stored_previous_materials_data)
 			if (!(ref in refs_encountered))
 				src.stored_previous_materials_data.Remove(ref)
+				contents_changed = TRUE
 		// Do actual computation since contents changed
 		if (contents_changed)
 			return src.compute_producibility_for_blueprints()

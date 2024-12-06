@@ -2042,18 +2042,26 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 
 	New()
 		..()
-		src.reflection = image(src.wear_image_icon, "[src.icon_state]-overlay")
-		src.reflection.plane = PLANE_SELFILLUM
-		src.reflection.color = rgb(255, 255, 255)
-		src.reflection.alpha = 200
 
 	equipped(mob/user, slot)
 		..()
+		src.update_reflection(user)
 		user.UpdateOverlays(src.reflection, "reflection")
 
 	unequipped(mob/user)
 		. = ..()
 		user.ClearSpecificOverlays("reflection")
+
+	proc/update_reflection(var/mob/user)
+		if (!ishuman(user))
+			return
+		var/mob/living/carbon/human/H = user
+		var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
+		var/overlay_icon = typeinfo.clothing_icons["overcoats"] ? typeinfo.clothing_icons["overcoats"] : src.wear_image_icon
+		src.reflection = image(overlay_icon, "[src.icon_state]-overlay")
+		src.reflection.plane = PLANE_SELFILLUM
+		src.reflection.color = rgb(255, 255, 255)
+		src.reflection.alpha = 200
 
 	setupProperties()
 		..()
