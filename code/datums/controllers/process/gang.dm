@@ -259,7 +259,6 @@
 		var/list/broadcasts = list()
 		for(var/datum/gang/targetGang as anything in gamemode.gangs) //create loot bags for this gang (so they get pinged)
 			if (!gang_vandalism_list[targetGang] || gang_vandalism_list[targetGang] == 0) continue
-			var/target_gang = gang_vandalism_list[targetGang]
 			var/list/area_names = list()
 			for(var/area/station/chosen_area in gang_vandalism_list[targetGang])
 				area_names += initial(chosen_area.name)
