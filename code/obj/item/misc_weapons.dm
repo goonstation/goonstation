@@ -2179,6 +2179,7 @@ obj/item/whetstone
 			icon_state = "crashaxe-rev"
 			boutput(user, SPAN_NOTICE("You adjust your grip on [src], readying it to pry."))
 			src.setItemSpecial(/datum/item_special/tile_fling)
+			hit_type = DAMAGE_STAB
 
 		else
 			breakmode = TRUE
@@ -2186,6 +2187,7 @@ obj/item/whetstone
 			icon_state = "crashaxe"
 			boutput(user, SPAN_NOTICE("You adjust your grip on [src], readying it to break stuff."))
 			src.setItemSpecial(/datum/item_special/simple)
+			hit_type = DAMAGE_CUT
 
 /obj/item/swords/sord
 	name = "gross sord"
