@@ -112,7 +112,6 @@
 			boutput(M, SPAN_NOTICE("You [crime ? "tear " : ""]open the package and pull out \a [prize]."))
 			var/obj/item/P = prize
 			P.name = "[recipient]'s [P.name]"
-			P.quality = rand(5,80)
 			M.u_equip(src)
 			M.put_in_hand_or_drop(P)
 
@@ -427,7 +426,7 @@
 		package.recipient = recipient["name"]
 		package.desc = "A package for [recipient["name"]]. It has a DNA-based lock, so only [recipient["name"]] can open it."
 
-		// Chance to add a little letter
+		// Chance to add a little letterP.quality = rand(5,80)
 		if(prob(10))
 			sender = sender ? sender : "[pick(pick_string_autokey("names/first_male.txt"), pick_string_autokey("names/first_female.txt"))] [pick_string_autokey("names/last.txt")]"
 			sender = sender_title ? "[sender_title] [sender]" : sender
