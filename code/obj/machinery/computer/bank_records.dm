@@ -277,11 +277,18 @@
 					amount = ceil(clamp(amount, 1, 999999))
 					var/bonus_amt = (length(data_core.bank.records) * amount)
 					if ( bonus_amt > wagesystem.station_budget)
+						//Let the user know the budget is too small before they set the reason if we can
 						boutput(usr, SPAN_ALERT("Total bonus cost would be [bonus_amt][CREDIT_SIGN], payroll budget is only [wagesystem.station_budget][CREDIT_SIGN]!"))
 						return
 					var/message = input(usr, "What is the reason for this staff bonus?", "Bonus Reason") as text
 					if(isnull(message) || message == "")
 						boutput(usr, SPAN_ALERT("NT Regulations require that the reason for issuing a staff bonus be recorded."))
+						return
+
+					if(isnull(amount) || bonus_amt > wagesystem.station_budget)
+						//Something ain't right but it could be a coincidence
+						//Maybe someone stole the budget under our feet, or payroll was issued
+						boutput(usr, SPAN_ALERT("Total bonus cost would be [bonus_amt][CREDIT_SIGN], payroll budget is only [wagesystem.station_budget][CREDIT_SIGN]!"))
 						return
 
 					logTheThing(LOG_STATION, usr, "issued a bonus of [amount][CREDIT_SIGN] ([bonus_amt][CREDIT_SIGN] total) to the staff.")
