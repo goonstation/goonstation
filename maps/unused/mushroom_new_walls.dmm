@@ -6672,7 +6672,7 @@
 	c_tag = "Chapel Office";
 	dir = 4
 	},
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /turf/simulated/floor{
 	icon_state = "carpetW"
 	},
@@ -31637,7 +31637,7 @@
 /area/station/quartermaster/office)
 "rbd" = (
 /obj/table/wood/auto,
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},

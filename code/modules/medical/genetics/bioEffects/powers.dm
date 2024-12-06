@@ -1066,8 +1066,8 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				for (var/turf/T in range(owner,6))
 					animate_shake(T,5,rand(3,8),rand(3,8))
 
-			// Superfarted on the sacred texts? Off to hell.
-			for (var/obj/item/sacred_texts/B in owner.loc)
+			// Superfarted on the sacred tome? Off to hell.
+			for (var/obj/item/sacred_tome/B in owner.loc)
 				if(gib_user)
 					owner.mind.damned = TRUE
 				else
@@ -1800,7 +1800,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		for (var/mob/living/L in range(7,owner))
 			if (L.hearing_check(1))
 				if(count++ > (4 + src.linked_power.power * 3)) break
-				if(locate(/obj/item/sacred_texts) in get_turf(L))
+				if(locate(/obj/item/sacred_tome) in get_turf(L))
 					owner.visible_message(SPAN_ALERT("<b>A mysterious force smites [owner.name] for inciting blasphemy!</b>"))
 					owner.gib()
 				else

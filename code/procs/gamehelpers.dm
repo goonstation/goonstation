@@ -117,8 +117,8 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 		return TRUE
 	if(BOUNDS_DIST(source, user) == 0 || (IN_RANGE(source, user, 1))) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
 		return TRUE
-	else if (source in sacred_texts_contents)
-		for_by_tcl(B, /obj/item/sacred_texts) // o coder past, quieten your rage
+	else if (source in sacred_tome_contents)
+		for_by_tcl(B, /obj/item/sacred_tome) // o coder past, quieten your rage
 			if(IN_RANGE(user,B,1))
 				return TRUE
 	else if (source in terminus_storage)
@@ -204,9 +204,9 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 /proc/can_reach(mob/user, atom/target)
 	if(user.client?.holder?.ghost_interaction)
 		return TRUE
-	if (target in sacred_texts_contents)
+	if (target in sacred_tome_contents)
 		target = null
-		for_by_tcl(B, /obj/item/sacred_texts)
+		for_by_tcl(B, /obj/item/sacred_tome)
 			if(IN_RANGE(user,B,1))
 				target = B
 				break

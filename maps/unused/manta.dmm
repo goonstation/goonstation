@@ -37853,7 +37853,7 @@
 "nQe" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/glass/bottle/holywater,
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /obj/item/card_box/tarot,
 /obj/machinery/light/incandescent/harsh{
 	dir = 4;
@@ -39298,7 +39298,7 @@
 /area/station/crew_quarters/clown)
 "rkb" = (
 /obj/table/wood/auto,
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /obj/item/device/radio/intercom,
 /turf/simulated/floor/carpet{
 	icon_state = "purple1"

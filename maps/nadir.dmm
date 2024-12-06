@@ -13172,7 +13172,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "fNY" = (
@@ -25943,7 +25943,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "kOC" = (

@@ -574,7 +574,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/minisactexts
 	name = "Miniature Sacred Texts"
-	items = list(/obj/item/sacred_texts/mini)
+	items = list(/obj/item/sacred_tome/mini)
 	cost = 1
 	desc = "We understand it can be difficult to carry out some of our missions. Here is some spiritual counsel in a small package."
 	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant", "Chaplain", "Clown")

@@ -15,7 +15,7 @@
 			boutput(usr, SPAN_ALERT("You cannot force your consciousness into a body while corporeal."))
 			return 1
 
-		if (istype(target, /obj/item/sacred_texts))
+		if (istype(target, /obj/item/sacred_tome))
 			boutput(holder.owner, SPAN_ALERT("<b>You feel rebuffed by a holy force!</b>"))
 
 		if (!isitem(target))

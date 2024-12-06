@@ -54125,7 +54125,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /turf/simulated/floor/carpet/purple/fancy,
 /area/station/chapel/sanctuary)
 "qsC" = (
@@ -60320,7 +60320,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred2"

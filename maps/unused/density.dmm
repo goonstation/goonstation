@@ -4022,7 +4022,7 @@
 "jC" = (
 /obj/table/wood/auto,
 /obj/item/ghostboard,
-/obj/item/sacred_texts{
+/obj/item/sacred_tome{
 	pixel_x = 2
 	},
 /turf/simulated/floor/carpet{

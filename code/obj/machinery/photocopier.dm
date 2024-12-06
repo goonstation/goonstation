@@ -100,7 +100,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			else if(istype(w, /obj/item/folder))
 				user.drop_item()
 				w.set_loc(get_turf(src))
-			else if(istype(w, /obj/item/sacred_texts))
+			else if(istype(w, /obj/item/sacred_tome))
 				faith_print(user)
 
 

@@ -49,7 +49,7 @@ TYPEINFO(/obj/bookshelf)
 	src.UpdateIcon()
 
 /obj/bookshelf/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/sacred_texts))
+	if(istype(W, /obj/item/sacred_tome))
 		boutput(user, "\The [W] is too holy to be put on a shelf with non-holy books.")
 		return
 

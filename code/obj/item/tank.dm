@@ -185,10 +185,10 @@ Contains:
 				// Based off neutrons_to_emit in a way, but to be a multiplier value between 0 and 2
 				rad_damage_multiplier = 2 * clamp(neutrons_to_emit / 100, 0, 1)
 
-			if(src in sacred_texts_contents)
-				var/sacred_texts_count = length(by_type[/obj/item/sacred_texts])
-				range /= sqrt(sacred_texts_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of sacred_texts
-				for_by_tcl(B, /obj/item/sacred_texts)
+			if(src in sacred_tome_contents)
+				var/sacred_tome_count = length(by_type[/obj/item/sacred_tome])
+				range /= sqrt(sacred_tome_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of sacred tomes
+				for_by_tcl(B, /obj/item/sacred_tome)
 					var/turf/T = get_turf(B.loc)
 					if(T)
 						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
@@ -602,11 +602,11 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 		var/strength = 1
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 
-		if(src in sacred_texts_contents)
+		if(src in sacred_tome_contents)
 			strength = fuel_moles/20
-			var/sacred_texts_count = length(by_type[/obj/item/sacred_texts])
-			strength /= sqrt(sacred_texts_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of sacred_texts
-			for_by_tcl(B, /obj/item/sacred_texts)//world)
+			var/sacred_tome_count = length(by_type[/obj/item/sacred_tome])
+			strength /= sqrt(sacred_tome_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of sacred tomes
+			for_by_tcl(B, /obj/item/sacred_tome)//world)
 				var/turf/T = get_turf(B.loc)
 				if(T)
 					explosion(src, T, 0, strength, strength*2, strength*3)

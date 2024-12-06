@@ -13598,7 +13598,7 @@
 	icon_state = "2-4"
 	},
 /obj/table/wood/auto,
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /obj/item/reagent_containers/glass/bottle/holywater,
 /turf/space,
 /area/russian/radiation)
@@ -17101,7 +17101,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "Altar"
 	},
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /turf/simulated/floor/carpet/blue/fancy/edge/ne{
 	desc = " It is made of temp.";
 	opaque_atom_count = 1

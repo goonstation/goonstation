@@ -3442,7 +3442,7 @@
 /area/station/chapel/office)
 "alF" = (
 /obj/rack,
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /obj/item/pen/fancy,
 /obj/item/device/microphone,
 /obj/item/dice/magic8ball,
@@ -4925,7 +4925,7 @@
 /area/station/chapel/sanctuary)
 "aqp" = (
 /obj/stool,
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -6206,7 +6206,7 @@
 "aua" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/light/small/floor,
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fpurple1"

@@ -2282,7 +2282,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/chapel/sanctuary)
 "aiQ" = (
@@ -2600,7 +2600,7 @@
 	icon_state = "0-2"
 	},
 /obj/table/wood/auto,
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "ajL" = (

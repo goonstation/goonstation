@@ -6475,7 +6475,7 @@
 	},
 /obj/table/podium_wood,
 /obj/machinery/light/small/floor,
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
 "aIa" = (
@@ -45324,7 +45324,7 @@
 /obj/item/pen/fancy{
 	pixel_y = 8
 	},
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},

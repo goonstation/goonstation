@@ -10911,7 +10911,7 @@
 	pixel_x = -6;
 	pixel_y = 19
 	},
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred1"
@@ -13910,7 +13910,7 @@
 	pixel_x = 12;
 	pixel_y = 5
 	},
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred2"

@@ -1,7 +1,7 @@
 // rest in peace the_very_holy_global_bible_list_amen (??? - 2020)
 
-/obj/item/sacred_texts
-	name = "sacred texts"
+/obj/item/sacred_tome
+	name = "sacred tome"
 	desc = "A holy scripture of some sort or another. Someone seems to have hollowed it out for hiding things in."
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state ="sactexts"
@@ -16,7 +16,7 @@
 
 	New()
 		..()
-		src.create_storage(/datum/storage/sacred_texts, max_wclass = W_CLASS_SMALL)
+		src.create_storage(/datum/storage/sacred_tome, max_wclass = W_CLASS_SMALL)
 		START_TRACKING
 		#ifdef SECRETS_ENABLED
 		ritualComponent = new/datum/ritualComponent/sanctus(src)
@@ -88,7 +88,7 @@
 				JOB_XP(user, "Chaplain", 1)
 
 	attackby(var/obj/item/W, var/mob/user)
-		if (istype(W, /obj/item/sacred_texts))
+		if (istype(W, /obj/item/sacred_tome))
 			user.show_text("You try to put \the [W] in \the [src]. It doesn't work. You feel dumber.", "red")
 		else
 			..()
@@ -193,8 +193,8 @@
 		logTheThing(LOG_COMBAT, M, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
 		M.smite_gib()
 
-/obj/item/sacred_texts/evil
-	name = "frayed sacred texts"
+/obj/item/sacred_tome/evil
+	name = "frayed sacred tome"
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 
 	Crossed(atom/movable/AM as mob)
@@ -203,9 +203,9 @@
 			var/mob/living/carbon/human/H = AM
 			H.emote("fart")
 
-/obj/item/sacred_texts/mini
+/obj/item/sacred_tome/mini
 	//Grif
-	name = "O.C. sacred texts"
+	name = "O.C. sacred tome"
 	desc = "For when you don't want the good book to take up too much space in your life."
 	icon_state = "minisactexts"
 	item_state = null
@@ -218,12 +218,12 @@
 		if(..())
 			return TRUE
 
-		user.visible_message(SPAN_ALERT("[user] farts on the sacred texts.<br><b>A mysterious force smites [user]!</b>"))
+		user.visible_message(SPAN_ALERT("[user] farts on the sacred tome.<br><b>A mysterious force smites [user]!</b>"))
 		logTheThing(LOG_COMBAT, user, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
 		smite(user)
 		return TRUE
 
-/obj/item/sacred_texts/hungry
+/obj/item/sacred_tome/hungry
 	name = "hungry sacred texts"
 	desc = "Huh."
 
@@ -235,9 +235,9 @@
 		if (!farting_allowed)
 			return 0
 		if (farty_party)
-			user.visible_message(SPAN_ALERT("[user] farts on the sacred texts.<br><b>The gods seem to approve.</b>"))
+			user.visible_message(SPAN_ALERT("[user] farts on the sacred tome.<br><b>The gods seem to approve.</b>"))
 			return 0
-		user.visible_message(SPAN_ALERT("[user] farts on the sacred texts.<br><b>A mysterious force smites [user]!</b>"))
+		user.visible_message(SPAN_ALERT("[user] farts on the sacred tome.<br><b>A mysterious force smites [user]!</b>"))
 		user.u_equip(src)
 		src.layer = initial(src.layer)
 		src.set_loc(user.loc)
@@ -273,7 +273,7 @@
 				sleep(0.3 SECONDS)
 		return 1
 
-/obj/item/sacred_texts/loaded
+/obj/item/sacred_tome/loaded
 
 	New()
 		..()

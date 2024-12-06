@@ -2412,7 +2412,7 @@
 /obj/table/wood/auto,
 /obj/item/card_box/tarot,
 /obj/item/reagent_containers/glass/bottle/holywater,
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{
 	name = "Chaplain's Office"
@@ -22983,7 +22983,7 @@
 "jbv" = (
 /obj/decal/tile_edge/stripe,
 /obj/table/wood/auto,
-/obj/item/sacred_texts,
+/obj/item/sacred_tome,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},

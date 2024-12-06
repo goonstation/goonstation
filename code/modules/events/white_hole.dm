@@ -210,7 +210,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/datum/reagent/flockdrone_fluid = 3,
 		),
 		"chapel" = list(
-			/obj/item/sacred_texts = 2,
+			/obj/item/sacred_tome = 2,
 			/obj/item/device/light/candle = 10,
 			/obj/item/device/light/candle/small = 15,
 			/obj/item/device/light/candle/spooky = 2,

@@ -160,8 +160,8 @@
 											src.add_karma(10)
 									fart_on_other = 1
 									break
-								else if (istype(A,/obj/item/sacred_texts))
-									var/obj/item/sacred_texts/B = A
+								else if (istype(A,/obj/item/sacred_tome))
+									var/obj/item/sacred_tome/B = A
 									B.farty_heresy(src)
 									fart_on_other = 1
 									break
@@ -251,12 +251,12 @@
 							if (src.bioHolder.HasEffect("linkedfart"))
 								for(var/mob/living/H in mobs)
 									if (H.bioHolder && H.bioHolder.HasEffect("linkedfart")) continue
-									var/found_sacred_texts = 0
+									var/found_sacred_tome = 0
 									for (var/atom/A as anything in H.loc)
 										if (A.event_handler_flags & IS_FARTABLE)
-											if (istype(A,/obj/item/sacred_texts))
-												found_sacred_texts = 1
-									if (found_sacred_texts)
+											if (istype(A,/obj/item/sacred_tome))
+												found_sacred_tome = 1
+									if (found_sacred_tome)
 										src.visible_message(SPAN_ALERT("<b>A mysterious force smites [src.name] for inciting blasphemy!</b>"))
 										src.gib()
 									else
@@ -2240,7 +2240,7 @@
 						dab_id?.brain_damage_count += 10
 						if(src.get_brain_damage() > 60)
 							src.show_text(SPAN_ALERT("Your head hurts!"))
-					if(locate(/obj/item/sacred_texts) in src.loc)
+					if(locate(/obj/item/sacred_tome) in src.loc)
 						if(H.limbs.l_arm)
 							src.limbs.l_arm.sever()
 							dab_id?.arm_count++
