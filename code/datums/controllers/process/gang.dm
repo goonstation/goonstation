@@ -234,7 +234,7 @@
 		var/list/broadcasts = list()
 		for(var/datum/gang/targetGang as anything in gamemode.gangs) //create loot bags for this gang (so they get pinged)
 			var/list/datum/mind/gangChosenCivvies = list() //which civilians have been picked for this gang
-			if (!gang_duffle_list[targetGang] || gang_duffle_list[targetGang] == 0) continue
+			if (!gang_duffle_list[targetGang]) continue
 
 			for(var/i = 1 to gang_duffle_list[targetGang])
 				var/datum/mind/civvie = targetGang.get_random_civvie(civiliansAlreadyPinged)
@@ -258,7 +258,7 @@
 		var/datum/game_mode/gang/gamemode = ticker.mode
 		var/list/broadcasts = list()
 		for(var/datum/gang/targetGang as anything in gamemode.gangs) //create loot bags for this gang (so they get pinged)
-			if (!gang_vandalism_list[targetGang] || gang_vandalism_list[targetGang] == 0) continue
+			if (!gang_vandalism_list[targetGang]) continue
 			var/list/area_names = list()
 			for(var/area/station/chosen_area in gang_vandalism_list[targetGang])
 				area_names += initial(chosen_area.name)
