@@ -304,8 +304,8 @@
 						if(R["job"] == "Clown")
 							//Tax the clown
 							R["current_money"] = (R["current_money"] + ceil((bonus / 2)))
-							return
-						R["current_money"] = (R["current_money"] + bonus)
+						else
+							R["current_money"] = (R["current_money"] + bonus)
 
 
 		src.add_fingerprint(usr)
