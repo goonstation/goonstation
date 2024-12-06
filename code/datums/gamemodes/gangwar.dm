@@ -1150,15 +1150,15 @@ proc/broadcast_to_all_gangs(var/message)
 
 	proc/refresh_single_tags()
 		tags_single = list()
-		for (var/i=1 to 9)
+		for (var/i=1 to 16)
 			tags_single += i
 	proc/refresh_double_tags()
 		tags_double = list()
-		for (var/i=1 to 7)
+		for (var/i=1 to 13)
 			tags_double += i
 	proc/refresh_triple_tags()
 		tags_triple = list()
-		for (var/i=1 to 11)
+		for (var/i=1 to 17)
 			tags_triple += i
 
 	proc/do_graffiti(target, mob/user)
