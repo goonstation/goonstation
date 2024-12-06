@@ -2013,7 +2013,6 @@
 "ajF" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/cafeteria)
-<<<<<<< HEAD
 "ajJ" = (
 /obj/table/wood/auto,
 /obj/item/device/microphone,
@@ -2023,8 +2022,6 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
-=======
->>>>>>> 37015c28160e17434cfbf1cccf0ad6adf4254b22
 "ajN" = (
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -16134,15 +16131,6 @@
 /obj/mapping_helper/access/cargo,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
-"luM" = (
-/obj/table/wood/auto,
-/obj/item/device/microphone,
-/obj/item/sacred_texts,
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred2"
-	},
-/area/station/chapel/sanctuary)
 "lxS" = (
 /obj/rack,
 /obj/item/device/radio,
@@ -81938,7 +81926,7 @@ afO
 ahi
 gsT
 aiz
-luM
+ajJ
 aku
 akG
 act

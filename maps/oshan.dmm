@@ -2954,7 +2954,6 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
-<<<<<<< HEAD
 "akm" = (
 /obj/table/wood/auto,
 /obj/item/sacred_tome,
@@ -2962,8 +2961,6 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
-=======
->>>>>>> 37015c28160e17434cfbf1cccf0ad6adf4254b22
 "akn" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
@@ -3688,7 +3685,6 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/office)
-<<<<<<< HEAD
 "amJ" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/glass/bottle/holywater,
@@ -3701,8 +3697,6 @@
 	icon_state = "fred1"
 	},
 /area/station/chapel/office)
-=======
->>>>>>> 37015c28160e17434cfbf1cccf0ad6adf4254b22
 "amK" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin{
@@ -33448,18 +33442,6 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
-"eIj" = (
-/obj/table/wood/auto,
-/obj/item/reagent_containers/glass/bottle/holywater,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/item/sacred_texts,
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred1"
-	},
-/area/station/chapel/office)
 "eIE" = (
 /obj/item/seed/grass,
 /turf/simulated/floor/grass,
@@ -33783,13 +33765,6 @@
 /obj/landmark/pest,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"eYV" = (
-/obj/table/wood/auto,
-/obj/item/sacred_texts,
-/turf/simulated/floor/carpet{
-	icon_state = "fred2"
-	},
-/area/station/chapel/sanctuary)
 "eZC" = (
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/segment/mail,
@@ -82387,7 +82362,7 @@ dEc
 ahu
 akX
 dJc
-eIj
+amJ
 anH
 ahY
 aps
@@ -85102,7 +85077,7 @@ ahw
 eiC
 aiL
 wFi
-eYV
+akm
 alb
 alY
 amU

@@ -53012,16 +53012,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/hangar/sec)
-"qaO" = (
-/obj/table/reinforced/bar/auto{
-	name = "table"
-	},
-/obj/item/sacred_texts,
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "fred2"
-	},
-/area/station/chapel/office)
 "qaQ" = (
 /obj/table/wood/round/auto,
 /obj/item/storage/box/nerd_kit{
@@ -54135,7 +54125,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/asylum/rec)
-<<<<<<< HEAD
 "qsB" = (
 /obj/table/wood/auto,
 /obj/machinery/light/incandescent/netural{
@@ -54144,8 +54133,6 @@
 /obj/item/sacred_tome,
 /turf/simulated/floor/carpet/purple/fancy,
 /area/station/chapel/sanctuary)
-=======
->>>>>>> 37015c28160e17434cfbf1cccf0ad6adf4254b22
 "qsC" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -58117,14 +58104,6 @@
 	dir = 5
 	},
 /area/station/science/lobby)
-"rDT" = (
-/obj/table/wood/auto,
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
-/obj/item/sacred_texts,
-/turf/simulated/floor/carpet/purple/fancy,
-/area/station/chapel/sanctuary)
 "rEa" = (
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /obj/table/auto,
@@ -60346,7 +60325,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
-<<<<<<< HEAD
 "smE" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -60357,8 +60335,6 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/office)
-=======
->>>>>>> 37015c28160e17434cfbf1cccf0ad6adf4254b22
 "smM" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -113266,7 +113242,7 @@ rdj
 pcq
 urz
 bLc
-qaO
+smE
 fYk
 aAj
 xIL
@@ -118101,7 +118077,7 @@ nOQ
 ioc
 igQ
 qxz
-rDT
+qsB
 jqa
 ply
 lEn
