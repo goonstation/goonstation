@@ -212,7 +212,7 @@
 			//defer to duffle drops if all areas marked to be vandalised
 			duffle_list[targetGang] = GANG_LOOT_DROP_VOLUME_PER_GANG-vandal_targets
 			vandal_list[targetGang] = list()
-			for (var/i=0; i<vandal_targets; i++)
+			for (var/i in 1 to vandal_targets)
 				var/picked_area = pick(unvandalised_departments)
 				vandal_list[targetGang] += picked_area
 				unvandalised_departments -= picked_area

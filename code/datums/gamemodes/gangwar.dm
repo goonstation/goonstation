@@ -276,9 +276,9 @@ proc/broadcast_to_all_gangs(var/message)
 	/// Associative list between Gang members -> their points
 	var/gang_points = list()
 	/// Associative list of tracked vandalism zones to their required vandalism score.
-	var/vandalism_tracker_target = list()
+	var/list/vandalism_tracker_target = list()
 	/// Associative list of tracked vandalism zones to the amount of vandalism score accrued.
-	var/vandalism_tracker = list()
+	var/list/vandalism_tracker = list()
 
 #ifdef BONUS_POINTS
 	street_cred = 99999
