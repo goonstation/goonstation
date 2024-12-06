@@ -139,7 +139,7 @@ export const HandPipeDispenser = () => {
               {tab === Tab.AtmosPipes && (
                 <Section>
                   {atmospipes.map((atmospipe: PipeData) => {
-                    return <ItemRow {...atmospipe} key={atmospipe.type} />;
+                    return <ItemRow {...atmospipe} key={atmospipe.name} />;
                   })}
                 </Section>
               )}
@@ -147,7 +147,7 @@ export const HandPipeDispenser = () => {
                 <Section>
                   {atmosmachines.map((atmosmachine: PipeData) => {
                     return (
-                      <ItemRow key={atmosmachine.type} {...atmosmachine} />
+                      <ItemRow key={atmosmachine.name} {...atmosmachine} />
                     );
                   })}
                 </Section>
@@ -173,7 +173,7 @@ export const ItemRow = (item: PipeData) => {
         </Stack.Item>
       )}
       <Stack.Item grow>
-        {item.type}
+        {item.name}
         <br />
         {item.cost} <Icon name="boxes-stacked" />
       </Stack.Item>
@@ -191,7 +191,7 @@ export const ItemRow = (item: PipeData) => {
           width="70px"
           onClick={() =>
             act('select', {
-              type: item.type,
+              name: item.name,
             })
           }
         >

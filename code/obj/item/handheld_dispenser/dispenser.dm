@@ -6,32 +6,28 @@
 	flags = TABLEPASS | CONDUCT
 	var/dispenser_being_used = FALSE
 	var/dispenser_delay = 5 DECI SECONDS
-	var/static/list/atmospipesforcreation = list(
-		"Pipe" = /obj/machinery/atmospherics/pipe/simple/overfloor,
-		"Manifold" = /obj/machinery/atmospherics/pipe/manifold/overfloor,
-		"Quadway manifold" = /obj/machinery/atmospherics/pipe/quadway,
-		"Heat exchanging pipe" = /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
-		"HE junction" = /obj/machinery/atmospherics/pipe/simple/junction,
-	)
-	var/static/list/atmosmachinesforcreation = list(
-		"Passive vent" = /obj/machinery/atmospherics/unary/vent,
-		"Pressure tank" = /obj/machinery/atmospherics/unary/tank,
-		"Passive gate" = /obj/machinery/atmospherics/binary/passive_gate,
-		"Pressure pump" = /obj/machinery/atmospherics/binary/pump,
-		"Volume pump" = /obj/machinery/atmospherics/binary/volume_pump,
-		"Manual valve" = /obj/machinery/atmospherics/binary/valve,
-		"Digital valve" = /obj/machinery/atmospherics/binary/valve/digital,
-		"Outlet Injector" = /obj/machinery/atmospherics/unary/outlet_injector,
-		"Vent pump" = /obj/machinery/atmospherics/unary/vent_pump,
-		"Vent scrubber" = /obj/machinery/atmospherics/unary/vent_scrubber,
-	)
-
+	var/static/list/atmospipesforcreation = null
+	var/static/list/atmosmachinesforcreation = null
 	var/static/list/icon/cache = list()
-	var/selection = /obj/fluid_pipe/straight
+	var/datum/pipe_recipe/selection = null
 	var/selectedimage
 	var/direction = EAST
 	var/destroying = FALSE
 	var/resources = 20
+
+/obj/item/handheld_dispenser/New()
+	. = ..()
+	if (!src.atmospipesforcreation)
+		src.atmospipesforcreation = list()
+		for (var/datum/pipe_recipe/pipe/recipe as anything in concrete_typesof(/datum/pipe_recipe/pipe))
+			src.atmospipesforcreation[initial(recipe.name)] = new recipe
+
+	if (!src.atmosmachinesforcreation)
+		src.atmosmachinesforcreation = list()
+		for (var/datum/pipe_recipe/machine/recipe as anything in concrete_typesof(/datum/pipe_recipe/machine))
+			src.atmosmachinesforcreation[initial(recipe.name)] = new recipe
+
+	src.selection = src.atmospipesforcreation["Pipe"]
 
 /obj/item/handheld_dispenser/attack_self(mob/user )
 	src.ui_interact(user)
@@ -51,8 +47,8 @@
 
 /obj/item/handheld_dispenser/ui_data(mob/user)
 	. = list(
-		"selectedimage" = (src.selectedimage || getBase64Img(selection, src.direction)),
-		"selectedcost" = 3, //TODO when datumized
+		"selectedimage" = (src.selectedimage || getBase64Img(selection.path, src.direction)),
+		"selectedcost" = src.selection.cost,
 		"resources" = src.resources,
 		"destroying" = src.destroying,
 	)
@@ -60,17 +56,19 @@
 /obj/item/handheld_dispenser/ui_static_data(mob/user)
 	. = list(
 	)
-	for (var/itemtype in atmospipesforcreation)
+	for (var/name in atmospipesforcreation)
+		var/datum/pipe_recipe/pipe/recipe = src.atmospipesforcreation[name]
 		.["atmospipes"] += list(list(
-			"type" = itemtype,
-			"image" = getBase64Img(atmospipesforcreation[itemtype]),
-			"cost" = 4, //TODO when datumized
+			"name" = name,
+			"image" = getBase64Img(recipe.path),
+			"cost" = recipe.cost,
 			))
-	for (var/itemtype in atmosmachinesforcreation)
+	for (var/name in src.atmosmachinesforcreation)
+		var/datum/pipe_recipe/machine/recipe = src.atmosmachinesforcreation[name]
 		.["atmosmachines"] += list(list(
-			"type" = itemtype,
-			"image" = getBase64Img(atmosmachinesforcreation[itemtype]),
-			"cost" = 4,
+			"name" = name,
+			"image" = getBase64Img(recipe.path),
+			"cost" = recipe.cost,
 			))
 
 /obj/item/handheld_dispenser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -79,8 +77,8 @@
 		return
 	switch(action)
 		if("select")
-			src.selection = atmospipesforcreation[params["type"]] || atmosmachinesforcreation[params["type"]]
-			src.selectedimage = getBase64Img(src.selection, direction)
+			src.selection = atmospipesforcreation[params["name"]] || atmosmachinesforcreation[params["name"]]
+			src.selectedimage = getBase64Img(src.selection.path, direction)
 			. = TRUE
 		if("changedir")
 			src.direction = text2num_safe(params["newdir"])
@@ -97,3 +95,64 @@
 		return
 	. = icon2base64(icon = icon(icon = initial(object.icon), icon_state = initial(object.icon_state), dir = direction))
 	src.cache["[object][direction]"] = .
+
+/datum/pipe_recipe
+	var/path
+	var/cost = 2
+	var/name = "CALL 1800 CODER"
+
+ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
+/datum/pipe_recipe/pipe
+	simple
+		name = "Pipe"
+		path = /obj/machinery/atmospherics/pipe/simple/overfloor
+		cost = 1
+	manifold
+		name = "Manifold"
+		path = /obj/machinery/atmospherics/pipe/manifold/overfloor
+	quad_manifold
+		name = "Quadway manifold"
+		path = /obj/machinery/atmospherics/pipe/quadway
+		cost = 4 //quad
+	heat_pipe
+		name = "Heat exchanging pipe"
+		path = /obj/machinery/atmospherics/pipe/simple/heat_exchanging
+		cost = 3
+	heat_junction
+		name = "HE junction"
+		path = /obj/machinery/atmospherics/pipe/simple/junction
+
+ABSTRACT_TYPE(/datum/pipe_recipe/machine)
+/datum/pipe_recipe/machine
+	cost = 4
+	vent
+		name = "Passive vent"
+		path = /obj/machinery/atmospherics/unary/vent
+	tank
+		cost = 8
+		name = "Pressure tank"
+		path = /obj/machinery/atmospherics/unary/tank
+	gate
+		name = "Passive gate"
+		path = /obj/machinery/atmospherics/binary/passive_gate
+	pressure_pump
+		name = "Pressure pump"
+		path = /obj/machinery/atmospherics/binary/pump
+	volume_pump
+		name = "Volume pump"
+		path = /obj/machinery/atmospherics/binary/volume_pump
+	valve
+		name = "Manual valve"
+		path = /obj/machinery/atmospherics/binary/valve
+	digital_valve
+		name = "Digital valve"
+		path = /obj/machinery/atmospherics/binary/valve/digital
+	outlet_injector
+		name = "Outlet Injector"
+		path = /obj/machinery/atmospherics/unary/outlet_injector
+	vent_pump
+		name = "Vent pump"
+		path = /obj/machinery/atmospherics/unary/vent_pump
+	vent_scrubber
+		name = "Vent scrubber"
+		path = /obj/machinery/atmospherics/unary/vent_scrubber

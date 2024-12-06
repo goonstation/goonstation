@@ -6,7 +6,7 @@
  */
 
 export type PipeData = {
-  type: string;
+  name: string;
   image: string; // base64
   cost: number;
 };
