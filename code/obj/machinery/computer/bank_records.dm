@@ -289,6 +289,8 @@
 					//Something ain't right  if we enter either of these but it could be a coincidence
 					//Maybe someone stole the budget under our feet, or payroll was issued
 					if(isnull(bonus)|| isnull(bonus_total))
+						//No you really shouldn't be here
+						logTheThing(LOG_ADMIN, usr, "may have attempted href hacking. Do not take this as a guarantee.")
 						return
 					if(bonus_total > wagesystem.station_budget)
 						boutput(usr, SPAN_ALERT("Total bonus cost would be [bonus_total][CREDIT_SIGN], payroll budget is only [wagesystem.station_budget][CREDIT_SIGN]!"))
