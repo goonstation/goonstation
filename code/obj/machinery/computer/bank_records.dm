@@ -280,14 +280,17 @@
 						//Let the user know the budget is too small before they set the reason if we can
 						boutput(usr, SPAN_ALERT("Total bonus cost would be [bonus_total][CREDIT_SIGN], payroll budget is only [wagesystem.station_budget][CREDIT_SIGN]!"))
 						return
+
 					var/message = input(usr, "What is the reason for this staff bonus?", "Bonus Reason") as text
 					if(isnull(message) || message == "")
 						boutput(usr, SPAN_ALERT("NT Regulations require that the reason for issuing a staff bonus be recorded."))
 						return
 
-					if(isnull(bonus)|| isnull(bonus_total) || bonus_total > wagesystem.station_budget)
-						//Something ain't right but it could be a coincidence
-						//Maybe someone stole the budget under our feet, or payroll was issued
+					//Something ain't right  if we enter either of these but it could be a coincidence
+					//Maybe someone stole the budget under our feet, or payroll was issued
+					if(isnull(bonus)|| isnull(bonus_total))
+						return
+					if(bonus_total > wagesystem.station_budget)
 						boutput(usr, SPAN_ALERT("Total bonus cost would be [bonus_total][CREDIT_SIGN], payroll budget is only [wagesystem.station_budget][CREDIT_SIGN]!"))
 						return
 
