@@ -1,4 +1,5 @@
-//Unlockable traits? tied to achievements?
+/// Unlockable traits
+/// "var/const/list/mail_items" defines items being sent by the trait in mail via "create_random_mail"
 
 /proc/getTraitById(var/id)
 	. = traitList[id]
@@ -217,6 +218,8 @@
 					return T
 
 //Yes these are objs because grid control. Shut up. I don't like it either.
+TYPEINFO(/datum/trait)
+	var/list/mail_items = list()
 /datum/trait
 	var/name
 	var/desc
@@ -234,9 +237,11 @@
 	var/disability_name = "" //! Name of the disability for medical records
 	var/disability_desc = "" //! Description of the disability for medical records
 	var/spawn_delay = 0 // To avoid ugly hardcoded spawn delay
+	var/list/mail_items = list() // Items to be sent via mail, const values require declaration in New()
 
 	New()
 		ASSERT(src.name)
+		src.setMail(src.mail_items)
 		..()
 
 	proc/preventAddTrait(mob/owner, var/resolved_role)
@@ -261,6 +266,10 @@
 
 	proc/onMove(var/mob/owner)
 		return
+
+	proc/setMail(var/list/items)
+		var/typeinfo/datum/trait/typeinfo = src.get_typeinfo()
+		typeinfo.mail_items = items
 
 // BODY - Red Border
 
@@ -306,6 +315,11 @@
 	disability_type = TRAIT_DISABILITY_MAJOR
 	disability_name = "Legless"
 	disability_desc = "Legs have been severed"
+	mail_items = list(
+		/obj/item/furniture_parts/wheelchair,
+		/obj/item/parts/robot_parts/leg/left/light,
+		/obj/item/parts/robot_parts/leg/right/light
+	)
 
 /datum/trait/plasmalungs
 	name = "Plasma Lungs"
@@ -318,6 +332,7 @@
 	disability_type = TRAIT_DISABILITY_MAJOR
 	disability_name = "Plasma Lungs"
 	disability_desc = "Only capable of breathing plasma in a gaseous state"
+	mail_items = list(/obj/item/tank/mini_plasma)
 
 	onAdd(mob/living/carbon/human/owner)
 		if (!istype(owner))
@@ -393,6 +408,10 @@
 	icon_state = "swedenY"
 	points = 0
 	category = list("language")
+	mail_items = list(
+		/obj/item/reagent_containers/food/snacks/swedish_fish,
+	 	/obj/item/reagent_containers/food/snacks/swedishmeatball
+	)
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_swedish", 0, 0, 0, 1)
@@ -404,6 +423,15 @@
 	icon_state = "frY"
 	points = 0
 	category = list("language")
+	mail_items = list(/obj/item/baguette,
+		/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+		/obj/item/reagent_containers/food/snacks/croissant,
+		/obj/item/reagent_containers/food/snacks/painauchocolat
+	)
+
+	New()
+		src.mail_items += concrete_typesof(/obj/item/clothing/head/frenchberet)
+		..()
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_french", 0, 0, 0, 1)
@@ -415,6 +443,12 @@
 	icon_state = "scott"
 	points = 0
 	category = list("language")
+	mail_items = list(
+		/obj/item/instrument/bagpipe,
+		/obj/item/clothing/under/gimmick/kilt,
+		/obj/item/reagent_containers/food/snacks/haggis,
+		/obj/item/reagent_containers/food/snacks/scotch_egg
+	)
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_scots", 0, 0, 0, 1)
@@ -437,6 +471,8 @@
 	icon_state = "elvis"
 	points = 0
 	category = list("language")
+	// I'm sure the one guy using this trait will be happy about this
+	mail_items = list(/obj/item/reagent_containers/food/snacks/breadloaf/elvis)
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_elvis", 0, 0, 0, 1)
@@ -462,6 +498,12 @@
 	icon_state = "german"
 	points = 0
 	category =  list("language")
+	mail_items = list(
+		/obj/item/reagent_containers/food/snacks/ingredient/egg/chocolate,
+	 	/obj/item/reagent_containers/food/snacks/danish_apple,
+		/obj/item/reagent_containers/food/snacks/danish_cherry,
+		/obj/item/reagent_containers/food/snacks/danish_blueb
+	)
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_german")
@@ -612,6 +654,10 @@
 	icon_state = "beretP"
 	points = -1
 	category = list("trinkets")
+	mail_items = list(
+		/obj/item/clothing/head/NTberet,
+		/obj/item/clothing/head/NTberet/commander
+	)
 
 /datum/trait/petasusaphilic
 	name = "Petasusaphilic"
@@ -621,6 +667,10 @@
 	points = -1
 	category = list("trinkets")
 
+	New()
+		src.mail_items = filtered_concrete_typesof(/obj/item/clothing/head, /proc/filter_trait_hats)
+		..()
+
 /datum/trait/conspiracytheorist
 	name = "Conspiracy Theorist"
 	desc = "Start with a tin foil hat as your trinket."
@@ -628,6 +678,7 @@
 	icon_state = "conspP"
 	points = -1
 	category = list("trinkets")
+	mail_items = list(/obj/item/clothing/head/tinfoil_hat)
 
 /datum/trait/pawnstar
 	name = "Pawn Star"
@@ -637,6 +688,10 @@
 	points = 0
 	category = list("trinkets")
 
+	New()
+		src.mail_items = trinket_safelist
+		..()
+
 /datum/trait/beestfriend
 	name = "BEEst friend"
 	desc = "Start with a bee egg as your trinket."
@@ -644,6 +699,16 @@
 	icon_state = "bee"
 	points = -1
 	category = list("trinkets")
+	mail_items = list(/obj/item/reagent_containers/food/snacks/beefood)
+
+	New()
+		src.mail_items += concrete_typesof(/obj/critter/domestic_bee)
+		src.mail_items -= list(/obj/critter/domestic_bee/heisenbee,
+			/obj/critter/domestic_bee/heisenbee,
+			/obj/critter/domestic_bee/overbee,
+			/obj/critter/domestic_bee/moon
+		)
+		..()
 
 /datum/trait/petperson
 	name = "Pet Person"
@@ -652,6 +717,11 @@
 	icon_state = "petperson"
 	points = -1
 	category = list("trinkets")
+	mail_items = list(
+		/obj/item/pet_carrier,
+		/obj/item/reagent_containers/food/snacks/beefood,
+		/obj/item/reagent_containers/food/snacks/cookie/dog
+	)
 
 /datum/trait/lunchbox
 	name = "Lunchbox"
@@ -661,6 +731,10 @@
 	points = -1
 	category = list("trinkets")
 
+	New()
+		src.mail_items += childrentypesof(/obj/item/storage/lunchbox)
+		..()
+
 /datum/trait/bald
 	name = "Bald"
 	desc = "Start your shift with a wig instead of hair. I'm sure no one will be able to tell."
@@ -668,7 +742,10 @@
 	icon_state = "bald"
 	points = 0
 	category = list("trinkets", "nopug","nowig")
-
+	mail_items = list(
+		/obj/item/reagent_containers/pill/hairgrownium,
+		/obj/item/clothing/head/wig/spawnable/random
+	)
 
 // Skill - White Border
 
@@ -877,7 +954,11 @@ ABSTRACT_TYPE(/datum/trait/job)
 	icon_state = "pilot"
 	category = list("background")
 	points = 0
+	mail_items = list(/obj/item/pod/frame_box)
 
+	New()
+		src.mail_items += concrete_typesof(/obj/item/pod/paintjob)
+		..()
 
 /datum/trait/sleepy
 	name = "Heavy Sleeper"
@@ -887,6 +968,11 @@ ABSTRACT_TYPE(/datum/trait/job)
 	category = list("background")
 	points = 0
 	spawn_delay = 10 SECONDS
+	mail_items = list(
+		/obj/item/reagent_containers/ampoule/smelling_salts,
+		/obj/item/clothing/suit/bedsheet/random,
+		/obj/item/furniture_parts/bed
+	)
 
 TYPEINFO(/datum/trait/partyanimal)
 	var/list/allowed_items = list(
@@ -919,6 +1005,12 @@ TYPEINFO(/datum/trait/partyanimal)
 	category = list("background")
 	points = 0
 	spawn_delay = 3 SECONDS
+	mail_items = list(/obj/item/clothing/head/party/random)
+
+	New()
+		src.mail_items += concrete_typesof(/obj/item/reagent_containers/food/drinks/bottle)
+		src.mail_items -= list(/obj/item/reagent_containers/food/drinks/bottle/beer/borg, /obj/item/reagent_containers/food/drinks/bottle/vodka/vr)
+		..()
 
 // NO CATEGORY - Grey Border
 
@@ -1108,6 +1200,11 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "jailbird"
 	icon_state = "jail"
 	points = -1
+	mail_items = list(
+		/obj/item/paper/newspaper/rolled,
+		/obj/item/clothing/mask/moustache,
+		/obj/item/clothing/glasses/sunglasses/tanning
+	)
 
 /datum/trait/clericalerror
 	name = "Clerical Error"
@@ -1169,6 +1266,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "burning"
 	icon_state = "onfire"
 	points = 2
+	mail_items = list(/obj/item/extinguisher, /obj/item/storage/firstaid/fire)
 
 /datum/trait/spontaneous_combustion
 	name = "Spontaneous Combustion"
@@ -1176,6 +1274,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "spontaneous_combustion"
 	icon_state = "onfire"
 	points = 0
+	mail_items = list(/obj/item/extinguisher, /obj/item/storage/firstaid/fire)
 
 	onLife(mob/owner, mult)
 		. = ..()
@@ -1190,6 +1289,10 @@ TYPEINFO(/datum/trait/partyanimal)
 	icon_state = "carpenter"
 	id = "carpenter"
 	points = -1
+
+	New()
+		src.mail_items = concrete_typesof(/obj/item/furniture_parts)
+		..()
 
 /datum/trait/kleptomaniac
 	name = "Kleptomaniac"
@@ -1255,6 +1358,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	disability_type = TRAIT_DISABILITY_MINOR
 	disability_name = "Anaphylactic"
 	disability_desc = "Acute response to allergens"
+	mail_items = list(/obj/item/reagent_containers/emergency_injector/epinephrine)
 
 /datum/trait/allears
 	name="All ears"
@@ -1309,6 +1413,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	points = -1
 	category = list("species", "cloner_stuff", "nohair")
 	mutantRace = /datum/mutantrace/skeleton
+	mail_items = list(/obj/item/reagent_containers/food/drinks/milk, /obj/item/joint_wax)
 
 /datum/trait/roach
 	name = "Roach"
@@ -1327,6 +1432,10 @@ TYPEINFO(/datum/trait/partyanimal)
 	points = -4 //Subject to change- -3 feels too low as puritan is relatively common. Though Puritan Pug DOES make for a special sort of Hard Modes
 	category = list("species", "nopug", "nohair")
 	mutantRace = /datum/mutantrace/pug
+	mail_items = list(
+		/obj/item/reagent_containers/food/snacks/cookie/dog,
+		/obj/item/material_piece/bone
+	)
 
 /datum/trait/super_slips
 	name = "Slipping Hazard"
@@ -1341,6 +1450,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "picky_eater"
 	desc = "Your refined palate only tolerates a handful of foods."
 	points = 0
+	mail_items = list(/obj/item/reagent_containers/food/snacks)
 	var/list/fav_foods = list()
 	var/explanation_text = null
 
@@ -1366,6 +1476,7 @@ TYPEINFO(/datum/trait/partyanimal)
 				if (current_rolls > max_rolls)
 					stack_trace("Failed to generate a foodlist for picky eater [H]. Aborting.")
 					return
+			src.setMail(src.fav_foods)
 			explanation_text = "<b>Your favorite foods are : </b>"
 			for (var/ingredient in names)
 				if (ingredient != names[5])
