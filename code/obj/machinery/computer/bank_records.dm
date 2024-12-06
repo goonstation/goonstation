@@ -298,7 +298,7 @@
 
 					logTheThing(LOG_STATION, usr, "issued a bonus of [bonus][CREDIT_SIGN] ([bonus_total][CREDIT_SIGN] total) to the staff.")
 					src.bonus_rate_limit_time = world.time + (5 MINUTES)
-					command_announcement("[message]<br>Bonus of [bonus][CREDIT_SIGN] issued to all staff.", "Payroll Annoucment by [scan.registered] ([scan.assignment])")
+					command_announcement("[message]<br>Bonus of [bonus][CREDIT_SIGN] issued to all staff.", "Payroll Announcement by [scan.registered] ([scan.assignment])")
 					wagesystem.station_budget = wagesystem.station_budget - bonus_total
 					for(var/datum/db_record/R as anything in data_core.bank.records)
 						if(R["job"] == "Clown")
