@@ -129,7 +129,7 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "dr" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "tox_mix";
 	layer = 8;

@@ -872,7 +872,7 @@
 	icon_state = "line-broken1";
 	dir = 1
 	},
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /obj/cable/conduit,
@@ -917,7 +917,7 @@
 /turf/simulated/floor/concrete,
 /area/space)
 "hC" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /obj/decal/tile_edge/line/red{
@@ -1501,7 +1501,7 @@
 	name = "Caer Vedwyd"
 	})
 "ml" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /obj/decal/poster/wallsign/stencil/left/e{
@@ -1682,7 +1682,7 @@
 	name = "Caer Vedwyd"
 	})
 "nS" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille3-0"
 	},
 /obj/decal/tile_edge/line/red{
@@ -2220,7 +2220,7 @@
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/space)
 "rK" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /obj/decal/poster/wallsign/stencil/left/t{
@@ -2424,7 +2424,7 @@
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/space)
 "tr" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /obj/decal/tile_edge/line/red{
@@ -2471,7 +2471,7 @@
 	name = "Caer Vedwyd"
 	})
 "tz" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille3-0"
 	},
 /obj/decal/tile_edge/line/black{
@@ -2521,7 +2521,7 @@
 	name = "Caer Vedwyd"
 	})
 "tK" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /obj/decal/tile_edge/line/black{
@@ -3472,8 +3472,8 @@
 /obj/item/clothing/shoes/swat/heavy,
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
-/obj/item/clothing/gloves/swat,
-/obj/item/clothing/gloves/swat,
+/obj/item/clothing/gloves/swat/syndicate,
+/obj/item/clothing/gloves/swat/syndicate,
 /turf/unsimulated/floor/black,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -4061,8 +4061,8 @@
 /obj/item/clothing/shoes/swat/heavy,
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
-/obj/item/clothing/gloves/swat,
-/obj/item/clothing/gloves/swat,
+/obj/item/clothing/gloves/swat/syndicate,
+/obj/item/clothing/gloves/swat/syndicate,
 /obj/decal/poster/flag{
 	color = "red";
 	desc = "A simple banner in Syndicate red.";
@@ -4365,7 +4365,7 @@
 /turf/unsimulated/wall/setpieces/rootwall,
 /area/space)
 "Kr" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /obj/decal/poster/wallsign/stencil/left/a,
@@ -4842,8 +4842,8 @@
 /obj/item/clothing/shoes/swat/heavy,
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
-/obj/item/clothing/gloves/swat,
-/obj/item/clothing/gloves/swat,
+/obj/item/clothing/gloves/swat/syndicate,
+/obj/item/clothing/gloves/swat/syndicate,
 /obj/decal/poster/flag{
 	color = "red";
 	desc = "A simple banner in Syndicate red.";
@@ -5353,7 +5353,7 @@
 	icon_state = "line-broken1";
 	dir = 1
 	},
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /turf/simulated/floor/concrete,
@@ -5665,7 +5665,7 @@
 	},
 /area/space)
 "TJ" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /obj/decal/tile_edge/line/red{
@@ -5930,14 +5930,14 @@
 	pixel_y = 29;
 	rarity = 5
 	},
-/obj/item/clothing/gloves/swat/knight{
+/obj/item/clothing/gloves/swat/syndicate/knight{
 	pixel_y = 8
 	},
 /obj/item/clothing/shoes/swat/knight{
 	pixel_y = -17;
 	pixel_x = 7
 	},
-/obj/item/clothing/gloves/swat/knight,
+/obj/item/clothing/gloves/swat/syndicate/knight,
 /obj/item/clothing/shoes/swat/knight{
 	pixel_y = -17;
 	pixel_x = -7
@@ -5997,8 +5997,8 @@
 /obj/item/clothing/shoes/swat/heavy,
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
-/obj/item/clothing/gloves/swat,
-/obj/item/clothing/gloves/swat,
+/obj/item/clothing/gloves/swat/syndicate,
+/obj/item/clothing/gloves/swat/syndicate,
 /obj/item/device/radio/intercom/syndicate{
 	pixel_y = 20
 	},
