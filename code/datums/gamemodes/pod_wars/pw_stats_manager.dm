@@ -97,9 +97,9 @@
 		//calculate pet survival first.
 		var/pet_dat = "<h4>Pet Stats:</h4>"
 		for(var/pet in by_cat[TR_CAT_PW_PETS])
-			if(istype(pet, /obj/critter/turtle/sylvester/Commander))
-				var/obj/critter/P = pet
-				if(P.alive)
+			if(istype(pet, /mob/living/critter/small_animal/turtle/sylvester/Commander))
+				var/mob/living/critter/small_animal/turtle/sylvester/P = pet
+				if(isalive(P))
 					if (istype(get_area(P), /area/pod_wars/team1))
 						pet_dat += "[SPAN_NOTICE("Sylvester is safe and sound on the Pytheas! Good job NanoTrasen!")]<br>"
 					else if (istype(get_area(P), /area/pod_wars/team2))

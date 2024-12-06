@@ -2681,15 +2681,6 @@
 /area/station/wreckage{
 	name = "Restricted Area"
 	})
-"aKw" = (
-/obj/table/reinforced/bar/auto{
-	name = "table"
-	},
-/obj/item/storage/box/revimp_kit{
-	pixel_y = 8
-	},
-/turf/simulated/floor/carpet/red/fancy,
-/area/station/security/hos)
 "aKJ" = (
 /obj/machinery/light_switch/north{
 	pixel_x = -4
@@ -24459,6 +24450,11 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"hqf" = (
+/obj/decal/poster/wallsign/hazard_rad,
+/obj/window/auto,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
 "hqp" = (
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/black,
@@ -29266,6 +29262,26 @@
 	name = "reinforced plating"
 	},
 /area/station/science/chemistry)
+"iSV" = (
+/obj/table/reinforced/auto,
+/obj/item/chem_grenade/pepper{
+	pixel_x = -5;
+	pixel_y = 13
+	},
+/obj/disposalpipe/segment/ejection{
+	dir = 2
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/item/storage/box/revimp_kit{
+	pixel_x = 8
+	},
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "red2"
+	},
+/area/station/security/main)
 "iTn" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -46723,6 +46739,43 @@
 	dir = 1
 	},
 /area/station/engine/inner)
+"ohf" = (
+/obj/item/gun/kinetic/dart_rifle{
+	pixel_x = 2;
+	pixel_y = 10
+	},
+/obj/item/gun/kinetic/dart_rifle{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/item/ammo/bullets/tranq_darts/anti_mutant{
+	pixel_x = -10;
+	pixel_y = -6
+	},
+/obj/item/ammo/bullets/tranq_darts/anti_mutant{
+	pixel_x = -4;
+	pixel_y = -6
+	},
+/obj/item/ammo/bullets/tranq_darts/anti_mutant{
+	pixel_x = 9;
+	pixel_y = -6
+	},
+/obj/item/ammo/bullets/tranq_darts/anti_mutant{
+	pixel_x = 3;
+	pixel_y = -6
+	},
+/obj/table/reinforced/auto,
+/obj/decal/stripe_caution,
+/obj/machinery/recharger/wall/sticky{
+	dir = 8;
+	pixel_x = -23
+	},
+/obj/item/storage/box/revimp_kit{
+	pixel_x = -6;
+	pixel_y = 17
+	},
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/armory)
 "ohh" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/jen/yellow,
@@ -47946,6 +47999,15 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/main)
+"ozS" = (
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/item/storage/box/revimp_kit{
+	pixel_y = 8
+	},
+/turf/simulated/floor/carpet/red/fancy,
+/area/station/security/hos)
 "ozT" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -56201,6 +56263,10 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
+"qYL" = (
+/obj/window/auto/crystal,
+/turf/simulated/floor/plating,
+/area/station/engine/singcore)
 "qYR" = (
 /obj/decal/stripe_caution,
 /obj/machinery/computer/magnet,
@@ -60035,43 +60101,6 @@
 	icon_state = "wooden"
 	},
 /area/station/crew_quarters/sauna)
-"shu" = (
-/obj/item/gun/kinetic/dart_rifle{
-	pixel_x = 2;
-	pixel_y = 10
-	},
-/obj/item/gun/kinetic/dart_rifle{
-	pixel_x = 2;
-	pixel_y = 4
-	},
-/obj/item/ammo/bullets/tranq_darts/anti_mutant{
-	pixel_x = -10;
-	pixel_y = -6
-	},
-/obj/item/ammo/bullets/tranq_darts/anti_mutant{
-	pixel_x = -4;
-	pixel_y = -6
-	},
-/obj/item/ammo/bullets/tranq_darts/anti_mutant{
-	pixel_x = 9;
-	pixel_y = -6
-	},
-/obj/item/ammo/bullets/tranq_darts/anti_mutant{
-	pixel_x = 3;
-	pixel_y = -6
-	},
-/obj/table/reinforced/auto,
-/obj/decal/stripe_caution,
-/obj/machinery/recharger/wall/sticky{
-	dir = 8;
-	pixel_x = -23
-	},
-/obj/item/storage/box/revimp_kit{
-	pixel_x = -6;
-	pixel_y = 17
-	},
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
 "shD" = (
 /obj/shrub{
 	dir = 4;
@@ -71061,26 +71090,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
-"vxU" = (
-/obj/table/reinforced/auto,
-/obj/item/chem_grenade/pepper{
-	pixel_x = -5;
-	pixel_y = 13
-	},
-/obj/disposalpipe/segment/ejection{
-	dir = 2
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/item/storage/box/revimp_kit{
-	pixel_x = 8
-	},
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "red2"
-	},
-/area/station/security/main)
 "vxW" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -76306,7 +76315,7 @@
 	},
 /area/station/crew_quarters/hor)
 "wWM" = (
-/obj/critter/turtle/sylvester/HoS,
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 4
 	},
@@ -102708,7 +102717,7 @@ jJd
 jJd
 sBM
 ptc
-aKw
+ozS
 vSE
 loz
 ouw
@@ -102728,7 +102737,7 @@ jlv
 iDD
 wph
 ahQ
-vxU
+iSV
 mkw
 ajN
 xDb
@@ -103005,7 +103014,7 @@ vyq
 vxu
 qez
 nOz
-shu
+ohf
 pDb
 jJd
 dPb
@@ -140474,13 +140483,13 @@ ocE
 ocE
 oWs
 aSs
-sXE
+hqf
 aSs
 lWj
 fgg
 lWj
 aSs
-sXE
+hqf
 aSs
 oWs
 vmV
@@ -141682,13 +141691,13 @@ rdj
 rdj
 rdj
 rYX
-rYX
+qYL
 rYX
 rYX
 brS
 rYX
 rYX
-rYX
+qYL
 rYX
 rdj
 rdj
@@ -144098,13 +144107,13 @@ rdj
 rdj
 rdj
 rYX
-rYX
+qYL
 rYX
 rYX
 brS
 rYX
 rYX
-rYX
+qYL
 rYX
 rdj
 rdj
@@ -145306,13 +145315,13 @@ ocE
 ocE
 oWs
 aSs
-sXE
+hqf
 aSs
 lWj
 fgg
 lWj
 aSs
-sXE
+hqf
 aSs
 oWs
 vOK
