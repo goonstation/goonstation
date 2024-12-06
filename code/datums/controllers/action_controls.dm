@@ -216,14 +216,8 @@ var/datum/action_controller/actions
 		var/atom/movable/A = owner
 		if(owner != null)
 			// Slow / Speed up duration if we're under temporal influence
-			if(src.owner.hasStatus("time_slowed"))
-				duration *= 2
-			if(src.owner.hasStatus("time_slowed_plus"))
-				duration *= 4
-			if(src.owner.hasStatus("time_hasted"))
-				duration /= 2
-			if(src.owner.hasStatus("time_hasted_plus"))
-				duration /= 4
+			var/speed_multiplier = (HAS_ATOM_PROPERTY(owner, PROP_ATOM_TIME_SPEED_MULT) ? GET_ATOM_PROPERTY(owner, PROP_ATOM_TIME_SPEED_MULT) : 1)
+			duration *= speed_multiplier
 			bar = new /obj/actions/bar
 			border = new /obj/actions/border
 			border.set_icon_state(src.border_icon_state)

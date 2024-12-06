@@ -1234,8 +1234,9 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		else
 			if(ismob(AM) || AM.throwing || istype(AM, /obj/projectile))
 				if(!locate(/obj/effect/status_area/slow_globe) in obounds(AM,0))
+					REMOVE_ATOM_PROPERTY(AM, PROP_ATOM_TIME_SPEED_MULT, src)
+					REMOVE_ATOM_PROPERTY(AM, PROP_MOB_HEARD_PITCH, src)
 					. = TRUE
-
 
 	strong
 		status_effect = "time_slowed_plus"
@@ -1258,6 +1259,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	icon_state = "slowed"
 	unique = 1
 	var/howMuch = 10
+	var/time_mult = 2
 	exclusiveGroup = "temporal"
 	movement_modifier = new /datum/movement_modifier/status_slowed
 	effect_quality = STATUS_QUALITY_NEGATIVE
@@ -1270,10 +1272,16 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 			status_source = source
 		var/atom/movable/AM = owner
 		var/scale_factor = (howMuch/2)
+		var/base_speed = 1/time_mult
 		if(howMuch<0)
 			scale_factor = -1/scale_factor
+			base_speed = -1*time_mult
 
 		movement_modifier.additive_slowdown = howMuch
+
+		// Adjust perceived sound / time based on current speed
+		APPLY_ATOM_PROPERTY(owner, PROP_ATOM_TIME_SPEED_MULT, status_source, time_mult)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, status_source, base_speed)
 
 		if(istype(AM, /obj/projectile))
 			var/obj/projectile/B = AM
@@ -1298,6 +1306,9 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 			var/atom/source = locate(/obj/effect/status_area/slow_globe) in obounds(M,0)
 			if(source)
 				M.changeStatus(src.id, 10 SECONDS, source)
+			else
+				REMOVE_ATOM_PROPERTY(AM, PROP_ATOM_TIME_SPEED_MULT, status_source)
+				REMOVE_ATOM_PROPERTY(AM, PROP_MOB_HEARD_PITCH, status_source)
 		else if(istype(AM, /obj/projectile))
 			var/obj/projectile/B = AM
 			if(B?.special_data && B.special_data[src.icon_state])
@@ -1311,7 +1322,15 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 
 	onUpdate(timePassed)
 		. = ..()
-		if(status_source && QDELETED(status_source))
+		var/mob/M = null
+		if (ismob(owner))
+			M = owner
+		var/obj/item/artifact/A = null
+		if(istype(status_source, /obj/item/artifact))
+			A = status_source
+		if(status_source && QDELETED(status_source) || (A && !A.artifact.activated) || (M && isdead(M)))
+			REMOVE_ATOM_PROPERTY(owner, PROP_ATOM_TIME_SPEED_MULT, status_source)
+			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, status_source)
 			owner.delStatus(id)
 
 	extra
@@ -1319,6 +1338,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		id = "time_slowed_plus"
 		desc = "You are severely slowed by a temporal anomaly.<br>Movement speed and action speed is reduced."
 		howMuch = 20
+		time_mult = 4
 
 	reversed
 		name = "Hastened"
@@ -1326,6 +1346,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		id = "time_hasted"
 		icon_state = "hastened"
 		howMuch = -1
+		time_mult = -2
 		effect_quality = STATUS_QUALITY_POSITIVE
 
 	reversed_extra
@@ -1334,6 +1355,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		id = "time_hasted_plus"
 		icon_state = "hastened"
 		howMuch = -5
+		time_mult = -4
 		effect_quality = STATUS_QUALITY_POSITIVE
 
 

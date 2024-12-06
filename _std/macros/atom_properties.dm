@@ -320,6 +320,8 @@ To remove:
 #define PROP_ATOM_DO_LIQUID_CLICKS(x) x("do_liquid_clicks", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 ///for tracking if a borg/cyborg frame was a roundstart one, for stats purposes
 #define PROP_ATOM_ROUNDSTART_BORG(x) x("rounstart_borg", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+/// for adjusting temporal shenanigans
+#define PROP_ATOM_TIME_SPEED_MULT(x) x("time_speed", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
 
 
 // In lieu of comments, these are the indexes used for list access in the macros below.
