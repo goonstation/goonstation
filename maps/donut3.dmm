@@ -85,7 +85,7 @@
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
 "aaj" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -149,7 +149,7 @@
 /turf/simulated/wall/auto/jen/blue,
 /area/station/maintenance/inner/nw)
 "aaw" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -312,7 +312,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "abH" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -458,7 +458,7 @@
 /area/station/medical/medbay/treatment)
 "acC" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 1
 	},
@@ -604,7 +604,7 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -797,7 +797,7 @@
 /obj/cable{
 	icon_state = "6-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -1361,7 +1361,7 @@
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering)
 "aqE" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
@@ -1424,7 +1424,7 @@
 /area/station/science/gen_storage)
 "arQ" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-9"
 	},
@@ -1581,7 +1581,7 @@
 /obj/cable{
 	icon_state = "5-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
@@ -1805,7 +1805,7 @@
 	},
 /area/station/hallway/primary/west)
 "ayh" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -2557,7 +2557,7 @@
 /area/station/hallway/secondary/exit)
 "aIH" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport,
 /obj/cable{
 	icon_state = "2-9"
@@ -2704,7 +2704,7 @@
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/security/hos)
 "aKE" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
@@ -2759,7 +2759,7 @@
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -2825,7 +2825,7 @@
 	},
 /area/station/crew_quarters/quarters)
 "aMU" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
@@ -2953,7 +2953,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "aOX" = (
@@ -3032,7 +3032,7 @@
 /area/station/ranch)
 "aQr" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-6"
 	},
@@ -3109,7 +3109,7 @@
 /area/station/crew_quarters/hor)
 "aRA" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -3213,7 +3213,7 @@
 /obj/cable{
 	icon_state = "2-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/morgue{
 	dir = 8;
 	icon_state = "pipe-c";
@@ -3476,7 +3476,7 @@
 /obj/cable{
 	icon_state = "1-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
@@ -3499,7 +3499,7 @@
 	},
 /area/station/hallway/primary/west)
 "aWw" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
@@ -3558,7 +3558,7 @@
 /area/station/quartermaster/office)
 "aWR" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -3664,7 +3664,7 @@
 	name = "Genetic Research"
 	})
 "aYr" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/jen,
 /area/station/chapel/sanctuary)
 "aYw" = (
@@ -3719,7 +3719,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "aYM" = (
@@ -3884,7 +3884,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/sw)
 "bbb" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -3967,7 +3967,7 @@
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -4150,7 +4150,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -4186,7 +4186,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "bgn" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -4344,7 +4344,7 @@
 /obj/cable{
 	icon_state = "5-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "bjx" = (
@@ -4430,7 +4430,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
@@ -4471,7 +4471,7 @@
 /obj/cable{
 	icon_state = "1-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "5-10"
 	},
@@ -4481,7 +4481,7 @@
 /area/station/maintenance/outer/se)
 "blA" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -4572,7 +4572,7 @@
 /obj/cable{
 	icon_state = "6-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
@@ -4665,7 +4665,7 @@
 "boj" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "5-8"
 	},
@@ -4771,7 +4771,7 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
@@ -4830,7 +4830,7 @@
 /area/station/crew_quarters/arcade/dungeon)
 "brC" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -4993,7 +4993,7 @@
 /area/station/crew_quarters/quartersA)
 "btL" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/machinery/light/small/sticky{
 	dir = 8
 	},
@@ -5009,7 +5009,7 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/asylum/bathroom)
 "btN" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -5085,7 +5085,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport,
 /obj/cable{
 	icon_state = "1-10"
@@ -5498,7 +5498,7 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -5762,7 +5762,7 @@
 	icon_state = "2-10"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "bEf" = (
@@ -5882,7 +5882,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "bGn" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -6165,7 +6165,7 @@
 	},
 /area/station/chapel/sanctuary)
 "bKa" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/storage/auxillary{
@@ -6220,7 +6220,7 @@
 /obj/cable{
 	icon_state = "1-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -6367,7 +6367,7 @@
 /obj/cable{
 	icon_state = "2-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -6384,7 +6384,7 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -6428,7 +6428,7 @@
 /area/station/engine/engineering/ce)
 "bNZ" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/machinery/light/small/sticky,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
@@ -6520,7 +6520,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/engine/engineering/ce)
 "bPW" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "6-8"
@@ -6564,7 +6564,7 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -6706,7 +6706,7 @@
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "bTq" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -6743,7 +6743,7 @@
 	})
 "bTJ" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -6764,7 +6764,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -6863,7 +6863,7 @@
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/robotics)
 "bWg" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
@@ -6993,7 +6993,7 @@
 	},
 /area/station/medical/medbay/cloner)
 "bYQ" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/junction/right/west,
 /turf/simulated/floor/plating/jen,
@@ -7119,7 +7119,7 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "car" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/junction/middle/north,
 /turf/simulated/floor/plating/jen,
@@ -7318,7 +7318,7 @@
 	},
 /area/spacehabitat/owlery)
 "ccM" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-6"
 	},
@@ -7522,7 +7522,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "cgp" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/machinery/light/small/sticky,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
@@ -7758,7 +7758,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "cjq" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "1-8"
@@ -7808,7 +7808,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "cjH" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
@@ -8178,7 +8178,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
@@ -8207,7 +8207,7 @@
 /obj/cable{
 	icon_state = "1-5"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
@@ -8462,7 +8462,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "crt" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -8684,7 +8684,7 @@
 /obj/disposalpipe/segment{
 	dir = 8
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -9113,7 +9113,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -9122,7 +9122,7 @@
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -9216,7 +9216,7 @@
 	},
 /area/station/chapel/sanctuary)
 "cCc" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -9280,7 +9280,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "cCT" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -9376,7 +9376,7 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -9442,7 +9442,7 @@
 /area/station/bridge)
 "cFm" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "cFr" = (
@@ -9481,7 +9481,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/junction/left/north,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "cFP" = (
@@ -9565,7 +9565,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/outer/east)
 "cHH" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -9604,7 +9604,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "cIl" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-9"
 	},
@@ -9690,7 +9690,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
@@ -9786,7 +9786,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "cNq" = (
@@ -9811,7 +9811,7 @@
 /obj/cable{
 	icon_state = "5-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
@@ -10392,7 +10392,7 @@
 	},
 /area/station/science/lobby)
 "cXw" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/structure/woodwall,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
@@ -10406,7 +10406,7 @@
 "cXG" = (
 /obj/machinery/recharge_station,
 /obj/decal/stripe_caution,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk,
@@ -10557,7 +10557,7 @@
 /turf/simulated/floor/carpet/green/fancy/narrow/east,
 /area/station/crew_quarters/cafeteria)
 "cZT" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -10669,7 +10669,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "dbJ" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -10861,7 +10861,7 @@
 "deU" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/light/small/sticky,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "deW" = (
@@ -10920,7 +10920,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/asylum/main)
 "dgw" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-9"
 	},
@@ -11005,7 +11005,7 @@
 /area/station/security/main)
 "dhw" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-10"
 	},
@@ -11222,7 +11222,7 @@
 	},
 /area/station/bridge)
 "dkI" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -11234,7 +11234,7 @@
 	dir = 1;
 	pixel_y = 32
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -11509,7 +11509,7 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "doa" = (
@@ -11524,7 +11524,7 @@
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/crew_quarters/clown)
 "doh" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "2-8"
@@ -11608,7 +11608,7 @@
 /obj/cable{
 	icon_state = "1-5"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -11680,7 +11680,7 @@
 /area/station/maintenance/outer/west)
 "dql" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -11761,7 +11761,7 @@
 /turf/simulated/floor/wood/six,
 /area/station/library/reading1)
 "dst" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "2-4"
@@ -11909,7 +11909,7 @@
 /obj/cable{
 	icon_state = "2-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "dve" = (
@@ -12191,7 +12191,7 @@
 	icon_state = "6-8"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "dAv" = (
@@ -12498,7 +12498,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "dFX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -12540,7 +12540,7 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/medical/asylum/kitchen)
 "dGu" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
@@ -12606,7 +12606,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/chapel/sanctuary)
 "dHI" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/space,
@@ -12645,7 +12645,7 @@
 	},
 /area/station/engine/ptl)
 "dIt" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
@@ -12653,7 +12653,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -13031,7 +13031,7 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/food,
 /obj/disposalpipe/segment{
@@ -13191,7 +13191,7 @@
 /area/station/engine/inner)
 "dQB" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "5-10"
 	},
@@ -13279,7 +13279,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "dRD" = (
@@ -13595,7 +13595,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "dVW" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "4-5"
@@ -13607,7 +13607,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -13643,7 +13643,7 @@
 /obj/cable{
 	icon_state = "2-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/junction/right/east,
 /obj/cable{
@@ -13723,7 +13723,7 @@
 /area/station/security/checkpoint/arrivals)
 "dXc" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -14346,7 +14346,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "ehA" = (
@@ -14472,11 +14472,11 @@
 /turf/simulated/floor/white,
 /area/station/security/quarters)
 "ejn" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "ejB" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/light/small/sticky,
 /turf/simulated/floor/plating/jen,
@@ -14491,7 +14491,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "ekw" = (
@@ -14511,7 +14511,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "ekL" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -14520,7 +14520,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "ekM" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-6"
 	},
@@ -14540,7 +14540,7 @@
 /obj/cable{
 	icon_state = "1-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "ekZ" = (
@@ -14595,7 +14595,7 @@
 	})
 "elN" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-10"
 	},
@@ -14704,7 +14704,7 @@
 /obj/disposalpipe/segment{
 	dir = 1
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "enF" = (
@@ -14787,7 +14787,7 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "epf" = (
@@ -14875,7 +14875,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 8
@@ -14902,7 +14902,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/solar/small_backup1)
 "ere" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -14910,7 +14910,7 @@
 /area/station/solar/small_backup1)
 "erf" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "5-8"
 	},
@@ -14923,7 +14923,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade/dungeon)
 "erw" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -14956,7 +14956,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "erR" = (
@@ -15239,7 +15239,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "exv" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-8"
 	},
@@ -15320,7 +15320,7 @@
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
 "eyQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -15424,7 +15424,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "eAg" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "eAi" = (
@@ -15480,7 +15480,7 @@
 	name = "Restricted Area"
 	})
 "eBT" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/orange{
@@ -15498,7 +15498,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
@@ -15568,7 +15568,7 @@
 	},
 /area/station/hangar/main)
 "eCt" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -15657,7 +15657,7 @@
 /obj/cable{
 	icon_state = "5-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "eEs" = (
@@ -15703,7 +15703,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
@@ -15776,7 +15776,7 @@
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering)
 "eGX" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-8"
 	},
@@ -15886,7 +15886,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "eIu" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
@@ -15998,7 +15998,7 @@
 	},
 /area/station/hallway/primary/west)
 "eKm" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable/yellow,
@@ -16097,7 +16097,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
 "eNc" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/light/small/sticky,
 /obj/cable{
 	icon_state = "4-8"
@@ -16161,7 +16161,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/crew_quarters/quarters)
 "eNC" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating/jen,
@@ -16269,7 +16269,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/medbay/cloner)
 "ePq" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating/jen,
@@ -16325,7 +16325,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/testchamber/bombchamber)
 "ePS" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 8
@@ -16417,7 +16417,7 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 8
@@ -16428,7 +16428,7 @@
 /obj/railing/red{
 	dir = 8
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -16539,7 +16539,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "eTr" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-9"
 	},
@@ -16644,7 +16644,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -16851,7 +16851,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -16891,7 +16891,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/turret_protected/ai)
 "eYw" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/south)
@@ -17061,7 +17061,7 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
@@ -17085,7 +17085,7 @@
 /turf/simulated/floor/blueblack/corner,
 /area/station/bridge)
 "fat" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
@@ -17210,7 +17210,7 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/junction/left/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
@@ -17273,7 +17273,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/exit)
 "fep" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -17371,7 +17371,7 @@
 /area/station/science/lab)
 "fgu" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "5-8"
 	},
@@ -17438,7 +17438,7 @@
 /area/station/maintenance/inner/sw)
 "fhl" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/machinery/light/small/sticky{
 	dir = 8
 	},
@@ -17582,7 +17582,7 @@
 /area/station/turret_protected/ai)
 "fjm" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-5"
 	},
@@ -17661,7 +17661,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -17785,7 +17785,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "2-8"
@@ -17804,7 +17804,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "fmH" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/railing/red{
@@ -17845,7 +17845,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
@@ -17920,7 +17920,7 @@
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-6"
 	},
@@ -17928,7 +17928,7 @@
 /area/station/maintenance/inner/west)
 "fog" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -17954,7 +17954,7 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "foO" = (
@@ -18009,7 +18009,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/food,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -18029,7 +18029,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "fpD" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -18059,7 +18059,7 @@
 	},
 /area/station/crew_quarters/bar)
 "fqc" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "1-2"
@@ -18121,7 +18121,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "fqq" = (
@@ -18445,7 +18445,7 @@
 /area/station/crew_quarters/quarters)
 "fwn" = (
 /obj/machinery/light/small,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/south)
 "fwt" = (
@@ -18833,7 +18833,7 @@
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/storage/eva)
 "fCU" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "4-9"
@@ -18944,7 +18944,7 @@
 	})
 "fED" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 1
 	},
@@ -19282,7 +19282,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "fIL" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
@@ -19548,7 +19548,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/engineering)
 "fOa" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/space,
 /area/space)
 "fOn" = (
@@ -19669,7 +19669,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "fPw" = (
@@ -19719,7 +19719,7 @@
 /area/station/hallway/secondary/exit)
 "fPS" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
@@ -19849,7 +19849,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -20100,7 +20100,7 @@
 /obj/cable{
 	icon_state = "6-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "fWM" = (
@@ -20138,7 +20138,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
@@ -20169,7 +20169,7 @@
 /obj/cable{
 	icon_state = "2-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "fYC" = (
@@ -20353,7 +20353,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -20400,7 +20400,7 @@
 /obj/cable{
 	icon_state = "5-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
@@ -20498,7 +20498,7 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -20602,7 +20602,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/machinery/light/small/sticky{
 	dir = 8
 	},
@@ -20619,7 +20619,7 @@
 /obj/machinery/light/small/sticky{
 	dir = 4
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -20749,7 +20749,7 @@
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
@@ -20772,7 +20772,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "ghX" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "2-5"
@@ -20831,7 +20831,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "giZ" = (
@@ -20896,14 +20896,14 @@
 	dir = 4
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-5"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "gjF" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -20988,7 +20988,7 @@
 /obj/cable{
 	icon_state = "4-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -21017,7 +21017,7 @@
 /obj/cable{
 	icon_state = "2-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -21309,7 +21309,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "gpU" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 1
@@ -21904,7 +21904,7 @@
 /obj/cable{
 	icon_state = "5-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
@@ -21926,7 +21926,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	icon_state = "pipe-c"
 	},
@@ -21975,7 +21975,7 @@
 /turf/simulated/wall/auto/jen/red,
 /area/station/hallway/primary/west)
 "gAe" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "gAo" = (
@@ -22046,7 +22046,7 @@
 	},
 /area/station/science/lab)
 "gBe" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -22072,7 +22072,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small/sticky,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4;
 	level = -1
@@ -22218,7 +22218,7 @@
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/turret_protected/AIbaseoutside)
 "gDW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/railing/red,
@@ -22340,7 +22340,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "gFY" = (
@@ -22533,7 +22533,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "gIN" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -22614,7 +22614,7 @@
 	},
 /area/station/crew_quarters/quarters)
 "gKq" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/light/small/sticky{
 	dir = 4
@@ -22660,7 +22660,7 @@
 /area/station/crew_quarters/catering)
 "gKX" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -22758,7 +22758,7 @@
 /area/station/science/lobby)
 "gMo" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "gMu" = (
@@ -22840,7 +22840,7 @@
 /turf/simulated/floor/black,
 /area/station/storage/primary)
 "gNG" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-9"
 	},
@@ -22855,7 +22855,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -22870,7 +22870,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -22994,7 +22994,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -23031,7 +23031,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "gQu" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "9-10"
@@ -23061,7 +23061,7 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
@@ -23217,7 +23217,7 @@
 	},
 /area/station/hangar/main)
 "gTm" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -23383,7 +23383,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -23428,7 +23428,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "gWM" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "4-9"
@@ -23604,7 +23604,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/interrogation)
 "gZq" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-6"
 	},
@@ -23923,7 +23923,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -23960,7 +23960,7 @@
 	},
 /area/station/solar/east)
 "hfN" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable,
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -24073,7 +24073,7 @@
 /turf/space,
 /area/space)
 "hhm" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -24142,7 +24142,7 @@
 	},
 /area/station/crew_quarters/hor)
 "hiB" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk,
@@ -24228,7 +24228,7 @@
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "hjY" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
@@ -24342,7 +24342,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "hln" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/transport{
 	icon_state = "pipe-c"
@@ -24438,7 +24438,7 @@
 	icon_state = "2-6"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
@@ -24459,7 +24459,7 @@
 /area/station/hallway/primary/east)
 "hop" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-10"
 	},
@@ -24483,7 +24483,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "hoT" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -24537,7 +24537,7 @@
 "hpB" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "hpF" = (
@@ -24559,7 +24559,7 @@
 /area/station/hallway/primary/south)
 "hpV" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
@@ -24604,7 +24604,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
@@ -24916,11 +24916,11 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "htN" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
@@ -25098,7 +25098,7 @@
 /obj/cable{
 	icon_state = "8-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "1-2"
@@ -25114,7 +25114,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "hwA" = (
@@ -25124,7 +25124,7 @@
 	},
 /area/station/hangar/arrivals)
 "hwF" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -25231,7 +25231,7 @@
 	},
 /area/station/hallway/primary/west)
 "hyf" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment{
@@ -25282,7 +25282,7 @@
 	id = "tox_vent2";
 	name = "Exhaust Vent"
 	},
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	layer = 2.7
 	},
 /turf/simulated/floor/plating/airless,
@@ -25296,7 +25296,7 @@
 /area/station/quartermaster/office)
 "hyD" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -25465,7 +25465,7 @@
 	},
 /area/station/crew_quarters/quartersA)
 "hBq" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-10"
 	},
@@ -25490,7 +25490,7 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -25630,7 +25630,7 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "hER" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "1-6"
@@ -25681,7 +25681,7 @@
 /area/station/hallway/primary/west)
 "hFs" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-9"
 	},
@@ -25729,7 +25729,7 @@
 /area/station/maintenance/outer/sw)
 "hGl" = (
 /obj/lattice/auto,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "hGv" = (
@@ -25794,7 +25794,7 @@
 	},
 /area/station/medical/cdc)
 "hHA" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
@@ -26195,7 +26195,7 @@
 	},
 /area/station/maintenance/inner/sw)
 "hOB" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -26206,7 +26206,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/machinery/light/small/sticky{
 	dir = 4
 	},
@@ -26235,7 +26235,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "hPB" = (
@@ -26253,7 +26253,7 @@
 /area/station/crew_quarters/quartersA)
 "hPP" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -26310,7 +26310,7 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -26374,7 +26374,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "hSn" = (
@@ -26406,7 +26406,7 @@
 	},
 /area/station/science/testchamber)
 "hSI" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -26478,7 +26478,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -26500,7 +26500,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "hUJ" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -26556,7 +26556,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 8
@@ -26699,7 +26699,7 @@
 /area/station/maintenance/outer/ne)
 "hYD" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-9"
 	},
@@ -26907,7 +26907,7 @@
 	},
 /area/station/crew_quarters/hor)
 "icc" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -26964,7 +26964,7 @@
 	},
 /area/station/hangar/main)
 "idX" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4;
@@ -27226,7 +27226,7 @@
 /obj/cable{
 	icon_state = "1-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -27391,7 +27391,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -27453,7 +27453,7 @@
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "ilp" = (
@@ -27540,7 +27540,7 @@
 /area/station/science/storage)
 "imF" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -27647,7 +27647,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "iou" = (
@@ -27672,7 +27672,7 @@
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/bar)
 "ioV" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
@@ -27755,7 +27755,7 @@
 	dir = 1
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-10"
 	},
@@ -27813,7 +27813,7 @@
 /turf/simulated/floor/white,
 /area/spacehabitat/pool)
 "irW" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /obj/item/storage/wall/emergency{
@@ -27828,7 +27828,7 @@
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/armory)
 "ish" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -27859,7 +27859,7 @@
 /obj/disposalpipe/segment{
 	dir = 1
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-9"
 	},
@@ -27950,7 +27950,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -28034,7 +28034,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "iwh" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -28102,7 +28102,7 @@
 	},
 /area/station/engine/inner)
 "ixv" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow,
@@ -28194,7 +28194,7 @@
 /area/station/medical/medbay/treatment)
 "iyE" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-6"
 	},
@@ -28343,7 +28343,7 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "iAZ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/landmark/magnet_shield,
@@ -28394,7 +28394,7 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4;
 	level = -1
@@ -28541,7 +28541,7 @@
 /area/station/security/beepsky)
 "iDY" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
@@ -28557,7 +28557,7 @@
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
 "iEe" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/cable/yellow{
@@ -28594,7 +28594,7 @@
 /obj/cable{
 	icon_state = "1-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "iEs" = (
@@ -28602,7 +28602,7 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
@@ -28702,7 +28702,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
@@ -28861,7 +28861,7 @@
 /turf/simulated/floor/yellow/side,
 /area/station/hallway/primary/east)
 "iIL" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -28887,7 +28887,7 @@
 /obj/machinery/drone_recharger,
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/switch_junction/left/east{
 	mail_tag = "testchamber"
 	},
@@ -29048,7 +29048,7 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -29160,7 +29160,7 @@
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/quartersC)
 "iNE" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-9"
 	},
@@ -29234,7 +29234,7 @@
 /obj/cable{
 	icon_state = "8-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
@@ -29264,7 +29264,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/spacehabitat/owlery)
 "iPr" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/black,
 /area/station/medical/medbay)
 "iPt" = (
@@ -29456,7 +29456,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -29534,7 +29534,7 @@
 /area/listeningpost)
 "iTH" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
@@ -29622,7 +29622,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -29635,7 +29635,7 @@
 /turf/simulated/floor/plating,
 /area/station/crewquarters/fuq3)
 "iVl" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "4-10"
@@ -29646,7 +29646,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -29669,7 +29669,7 @@
 	},
 /area/station/hallway/primary/west)
 "iVX" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
@@ -29741,7 +29741,7 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "iXc" = (
@@ -29792,7 +29792,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/poster/wallsign/hazard_rad{
 	pixel_y = -32
@@ -29883,7 +29883,7 @@
 /area/station/hydroponics/bay)
 "iZi" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -29956,7 +29956,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -29989,7 +29989,7 @@
 	},
 /area/station/turret_protected/ai)
 "jad" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -30287,7 +30287,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -30386,7 +30386,7 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/transport{
 	icon_state = "pipe-c"
@@ -30394,7 +30394,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "jgQ" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 1
 	},
@@ -30471,7 +30471,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "jhO" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "1-4"
@@ -30875,14 +30875,14 @@
 /area/station/security/hos)
 "jnq" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "jny" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -30936,7 +30936,7 @@
 /obj/cable{
 	icon_state = "5-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "jnN" = (
@@ -30960,7 +30960,7 @@
 /turf/space,
 /area/space)
 "jof" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -31005,7 +31005,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
@@ -31074,7 +31074,7 @@
 /turf/simulated/floor/darkblue/checker,
 /area/station/ai_monitored/storage/eva)
 "jqD" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -31193,7 +31193,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -31230,7 +31230,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -31311,7 +31311,7 @@
 /area/station/medical/breakroom)
 "jum" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
@@ -31412,7 +31412,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -31530,7 +31530,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "1-4"
@@ -31920,7 +31920,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/inner/north)
 "jDV" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "jDX" = (
@@ -32185,7 +32185,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
@@ -32267,7 +32267,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-8"
@@ -32450,7 +32450,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "jLg" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "1-5"
@@ -32512,7 +32512,7 @@
 /area/station/security/brig/north_side)
 "jLK" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
@@ -33029,7 +33029,7 @@
 	icon_state = "4-8"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "jVj" = (
@@ -33208,7 +33208,7 @@
 /obj/cable{
 	icon_state = "1-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
@@ -33585,7 +33585,7 @@
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "kdX" = (
@@ -33753,7 +33753,7 @@
 /area/shuttle/asylum/medbay)
 "kgt" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -34170,7 +34170,7 @@
 /turf/simulated/floor/dojo/stone,
 /area/station/crew_quarters/captain)
 "knU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -34632,7 +34632,7 @@
 /turf/space,
 /area/space)
 "kuW" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
@@ -34651,7 +34651,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -34851,7 +34851,7 @@
 /area/station/hangar/arrivals)
 "kyq" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -34942,7 +34942,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
 "kzk" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating/jen,
@@ -35092,7 +35092,7 @@
 /turf/simulated/wall/auto/reinforced/jen/yellow,
 /area/station/quartermaster/office)
 "kBH" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/junction/right/north,
 /obj/cable{
@@ -35135,7 +35135,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/hangar/qm)
 "kBV" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "1-2"
@@ -35320,7 +35320,7 @@
 /obj/cable{
 	icon_state = "6-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -35341,11 +35341,11 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "kES" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -35399,7 +35399,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -35998,7 +35998,7 @@
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/security/hos)
 "kPJ" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-6"
 	},
@@ -36095,7 +36095,7 @@
 /area/station/security/main)
 "kRO" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -36125,7 +36125,7 @@
 	icon_state = "bdoormid1";
 	id = "tox_vent1"
 	},
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	layer = 2.7
 	},
 /turf/simulated/floor/plating/airless,
@@ -36138,7 +36138,7 @@
 /area/station/security/hos)
 "kSQ" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -36170,7 +36170,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "kTA" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -36248,7 +36248,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "kUD" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 1
 	},
@@ -36359,7 +36359,7 @@
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "kWr" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/red{
 	dir = 1
 	},
@@ -36578,7 +36578,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "kZN" = (
@@ -36589,7 +36589,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -36685,7 +36685,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "2-8"
@@ -36882,7 +36882,7 @@
 /area/station/crew_quarters/hor)
 "len" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
@@ -36890,7 +36890,7 @@
 	icon_state = "2-5"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
@@ -37024,7 +37024,7 @@
 	icon_state = "1-8"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "lhv" = (
@@ -37168,7 +37168,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "lkk" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable/yellow{
@@ -37253,7 +37253,7 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -37282,7 +37282,7 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -37303,7 +37303,7 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "lmX" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -37318,7 +37318,7 @@
 	icon_state = "4-10"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -37330,7 +37330,7 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/junction/middle/north,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -37516,7 +37516,7 @@
 /obj/railing/red{
 	dir = 4
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -37630,7 +37630,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "lrc" = (
@@ -38130,7 +38130,7 @@
 /obj/cable{
 	icon_state = "1-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
@@ -38207,7 +38207,7 @@
 /obj/cable{
 	icon_state = "2-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -38710,7 +38710,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
 "lFW" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/submachine/GTM{
 	pixel_y = 32
@@ -38879,13 +38879,13 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "lIv" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "6-8"
 	},
@@ -39098,7 +39098,7 @@
 /obj/cable{
 	icon_state = "5-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport,
 /obj/cable{
 	icon_state = "4-10"
@@ -39300,7 +39300,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "lOf" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 8;
@@ -39369,7 +39369,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "lPv" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -39422,7 +39422,7 @@
 /area/station/maintenance/outer/west)
 "lQe" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -39512,7 +39512,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
 "lRY" = (
@@ -39785,7 +39785,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "lUr" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /turf/space,
@@ -39854,7 +39854,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "lVd" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -39866,7 +39866,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
@@ -40019,7 +40019,7 @@
 /turf/simulated/floor/black,
 /area/station/security/visitation)
 "lXh" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
@@ -40075,7 +40075,7 @@
 	name = "Funeral Parlor"
 	})
 "lXE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -40187,7 +40187,7 @@
 	id = "tox_vent1";
 	name = "Exhaust Vent"
 	},
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	layer = 2.7
 	},
 /turf/simulated/floor/plating/airless,
@@ -40239,7 +40239,7 @@
 /area/station/hallway/primary/west)
 "lZP" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/junction/left/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
@@ -40296,7 +40296,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -40362,7 +40362,7 @@
 	},
 /area/station/bridge/customs)
 "mbR" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -40398,7 +40398,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "mcL" = (
@@ -40546,7 +40546,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 8
 	},
@@ -40606,7 +40606,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/south)
 "mfZ" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -40641,7 +40641,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "mgP" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -40667,7 +40667,7 @@
 /area/station/crew_quarters/cafeteria)
 "mhy" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
@@ -40870,7 +40870,7 @@
 /area/station/crew_quarters/courtroom)
 "mlu" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "mlD" = (
@@ -40909,7 +40909,7 @@
 /area/station/engine/engineering)
 "mmp" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "kitchen freezer pipe"
@@ -40979,7 +40979,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/food,
 /obj/disposalpipe/segment{
@@ -41007,7 +41007,7 @@
 /obj/machinery/light/small/sticky{
 	dir = 4
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "mof" = (
@@ -41226,7 +41226,7 @@
 /area/station/storage/primary)
 "mrV" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -41273,7 +41273,7 @@
 /obj/cable{
 	icon_state = "4-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -41318,7 +41318,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 8
@@ -41439,7 +41439,7 @@
 /obj/cable{
 	icon_state = "9-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/south)
 "mvH" = (
@@ -41525,7 +41525,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
 "mxs" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -41626,7 +41626,7 @@
 /obj/cable{
 	icon_state = "1-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
 "myM" = (
@@ -41676,7 +41676,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/storage/tech)
 "mzs" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "mzB" = (
@@ -41690,7 +41690,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
@@ -41801,7 +41801,7 @@
 "mBl" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "mBo" = (
@@ -41861,11 +41861,11 @@
 "mBY" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "mBZ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /turf/space,
@@ -41973,7 +41973,7 @@
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "mEh" = (
@@ -42104,7 +42104,7 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
@@ -42129,7 +42129,7 @@
 /obj/cable{
 	icon_state = "1-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
@@ -42202,7 +42202,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
@@ -42214,7 +42214,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
 "mHJ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -42413,7 +42413,7 @@
 /obj/machinery/light/small/sticky{
 	dir = 4
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "mLc" = (
@@ -42554,7 +42554,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "mOP" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -42669,7 +42669,7 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "mRt" = (
@@ -42695,7 +42695,7 @@
 /area/station/hallway/primary/west)
 "mRI" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -42786,7 +42786,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "mSx" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
@@ -42939,7 +42939,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "mUV" = (
@@ -43088,7 +43088,7 @@
 	icon_state = "bdoorright1";
 	id = "tox_vent1"
 	},
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	layer = 2.7
 	},
 /turf/simulated/floor/plating/airless,
@@ -43139,7 +43139,7 @@
 	},
 /area/station/crew_quarters/hor)
 "mXL" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/light/small/sticky{
 	dir = 8
@@ -43275,7 +43275,7 @@
 	},
 /area/station/hallway/primary/west)
 "mZE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -43287,7 +43287,7 @@
 /area/station/solar/small_backup1)
 "mZJ" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -43370,7 +43370,7 @@
 /area/station/hallway/primary/west)
 "nbW" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "5-6"
 	},
@@ -43601,7 +43601,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "nfj" = (
@@ -43642,7 +43642,7 @@
 /obj/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
@@ -43750,7 +43750,7 @@
 /obj/cable{
 	icon_state = "6-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "ngS" = (
@@ -43775,7 +43775,7 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "ngX" = (
@@ -43975,7 +43975,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "nkf" = (
@@ -44074,7 +44074,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -44331,7 +44331,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "npG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/landmark/magnet_shield,
@@ -44384,7 +44384,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -44443,7 +44443,7 @@
 "nrM" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -44565,7 +44565,7 @@
 /area/station/crew_quarters/hor)
 "nsX" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "ntc" = (
@@ -44628,7 +44628,7 @@
 /turf/simulated/floor/wood/five,
 /area/station/medical/asylum/main)
 "nur" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/machinery/light/small/sticky,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
@@ -44637,7 +44637,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
@@ -44871,7 +44871,7 @@
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "nyj" = (
@@ -44959,7 +44959,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -44983,7 +44983,7 @@
 /turf/simulated/floor/white/checker,
 /area/station/hallway/primary/south)
 "nzR" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 1
 	},
@@ -45110,7 +45110,7 @@
 /obj/disposalpipe/segment{
 	dir = 1
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "9-10"
 	},
@@ -45154,7 +45154,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/outer/east)
 "nCO" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow,
@@ -45226,7 +45226,7 @@
 	icon_state = "4-8"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "nDZ" = (
@@ -45261,7 +45261,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4;
 	level = -1
@@ -45370,7 +45370,7 @@
 /area/station/medical/medbay)
 "nGt" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/submachine/GTM{
 	pixel_y = 32
 	},
@@ -45444,7 +45444,7 @@
 	},
 /area/station/maintenance/outer/west)
 "nHF" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -45515,7 +45515,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "nIH" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-8"
 	},
@@ -45924,7 +45924,7 @@
 /area/station/bridge/captain)
 "nOH" = (
 /obj/disposalpipe/junction/left/west,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
@@ -46438,7 +46438,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "nYe" = (
@@ -46558,7 +46558,7 @@
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -46731,7 +46731,7 @@
 /area/station/crewquarters/fuq3)
 "ocI" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "odP" = (
@@ -46773,7 +46773,7 @@
 /obj/cable{
 	icon_state = "4-5"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -46872,7 +46872,7 @@
 /area/station/com_dish/comdish)
 "ogD" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "ogJ" = (
@@ -46981,7 +46981,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -47056,7 +47056,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -47081,7 +47081,7 @@
 	},
 /area/station/security/hos)
 "ojJ" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/machinery/light/small/sticky,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
@@ -47244,7 +47244,7 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -47379,7 +47379,7 @@
 /obj/cable{
 	icon_state = "8-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -47492,7 +47492,7 @@
 	icon_state = "2-9"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "opg" = (
@@ -47525,7 +47525,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
@@ -47593,7 +47593,7 @@
 /obj/cable{
 	icon_state = "2-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -47640,7 +47640,7 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "orq" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /obj/machinery/light/small/sticky{
@@ -47687,7 +47687,7 @@
 /area/station/maintenance/inner/sw)
 "orD" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-5"
 	},
@@ -47735,7 +47735,7 @@
 /obj/cable{
 	icon_state = "6-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -47836,7 +47836,7 @@
 /area/station/bridge)
 "our" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/machinery/light/small/sticky{
 	dir = 8
 	},
@@ -47937,7 +47937,7 @@
 /area/station/hallway/primary/south)
 "owD" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
@@ -48105,7 +48105,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "oyZ" = (
@@ -48171,7 +48171,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
 "oAc" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/junction/middle/south,
 /obj/cable{
 	icon_state = "1-2"
@@ -48222,7 +48222,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "oAG" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "5-10"
@@ -48234,7 +48234,7 @@
 /obj/disposalpipe/segment{
 	dir = 8
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "oBj" = (
@@ -48288,7 +48288,7 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -48467,7 +48467,7 @@
 /obj/cable{
 	icon_state = "5-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "oFh" = (
@@ -48914,7 +48914,7 @@
 	icon_state = "4-10"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "oLn" = (
@@ -49163,7 +49163,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/exit)
 "oPI" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/lattice,
 /turf/space,
 /area/station/science/lab)
@@ -49230,7 +49230,7 @@
 /area/station/crew_quarters/cafeteria)
 "oQP" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "oQW" = (
@@ -49241,7 +49241,7 @@
 /turf/simulated/floor/grey,
 /area/station/science/lab)
 "oQY" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
@@ -49263,7 +49263,7 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
@@ -49275,7 +49275,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
@@ -49294,7 +49294,7 @@
 /area/station/medical/medbooth)
 "oRK" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "8-10"
 	},
@@ -49424,7 +49424,7 @@
 	},
 /area/station/storage/primary)
 "oTq" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -49436,13 +49436,13 @@
 /obj/cable{
 	icon_state = "5-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "oTv" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "4-6"
@@ -49480,7 +49480,7 @@
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/lobby)
 "oUm" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -49653,7 +49653,7 @@
 	},
 /area/space)
 "oXv" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -49729,7 +49729,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "oYn" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/cable/yellow{
@@ -50210,7 +50210,7 @@
 	icon_state = "5-6"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
@@ -50227,7 +50227,7 @@
 /area/station/science/testchamber/bombchamber)
 "pgz" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -50693,7 +50693,7 @@
 /obj/cable{
 	icon_state = "6-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -50701,7 +50701,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "pnH" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk,
@@ -50736,7 +50736,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "pot" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -50772,7 +50772,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "poF" = (
@@ -50805,7 +50805,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
@@ -50848,7 +50848,7 @@
 /obj/machinery/light/small/sticky{
 	dir = 8
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "pqK" = (
@@ -50908,7 +50908,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -51521,13 +51521,13 @@
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
 /area/station/solar/west)
 "pBV" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
@@ -51564,7 +51564,7 @@
 /area/station/crew_quarters/garden)
 "pCi" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -51588,7 +51588,7 @@
 /area/station/hallway/primary/west)
 "pCw" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
@@ -51634,7 +51634,7 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -52104,7 +52104,7 @@
 /area/station/engine/singcore)
 "pJi" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "9-10"
 	},
@@ -52123,7 +52123,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -52262,7 +52262,7 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "pLQ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -52275,7 +52275,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "pLW" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /obj/machinery/light/small/sticky{
@@ -52291,13 +52291,13 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "pMd" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "pMg" = (
@@ -52399,7 +52399,7 @@
 /area/station/engine/ptl)
 "pNd" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-10"
 	},
@@ -52413,7 +52413,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "pNh" = (
@@ -52474,7 +52474,7 @@
 	dir = 1
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "pOk" = (
@@ -52611,7 +52611,7 @@
 	},
 /area/station/security/main)
 "pQS" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -52668,7 +52668,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/interrogation)
 "pRt" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 1
 	},
@@ -52868,7 +52868,7 @@
 /area/station/maintenance/outer/east)
 "pUh" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-10"
 	},
@@ -52967,7 +52967,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "pWo" = (
@@ -53153,7 +53153,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "qaA" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "0-2"
@@ -53260,7 +53260,7 @@
 /obj/cable{
 	icon_state = "9-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "qbV" = (
@@ -53283,7 +53283,7 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
@@ -53377,7 +53377,7 @@
 /obj/cable{
 	icon_state = "1-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -53550,7 +53550,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -53620,7 +53620,7 @@
 	},
 /area/station/hallway/primary/west)
 "qgi" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable/yellow{
@@ -53722,7 +53722,7 @@
 /area/station/bridge)
 "qhM" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "5-10"
 	},
@@ -53787,7 +53787,7 @@
 /obj/disposalpipe/segment{
 	dir = 8
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -53801,12 +53801,12 @@
 /turf/simulated/wall/auto/supernorn,
 /area/ghostdrone_factory)
 "qjp" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "qjA" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -53824,7 +53824,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "qkk" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable,
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/plating/jen,
@@ -53979,7 +53979,7 @@
 /turf/simulated/floor/darkblue/checker,
 /area/station/ai_monitored/storage/eva)
 "qmL" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 8
@@ -54058,7 +54058,7 @@
 /turf/simulated/floor/redwhite,
 /area/station/security/checkpoint/sec_foyer)
 "qnM" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable/yellow,
@@ -54158,7 +54158,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/medbay)
 "qoZ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -54243,7 +54243,7 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
@@ -54500,7 +54500,7 @@
 /area/station/hallway/primary/west)
 "quF" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -54746,7 +54746,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/hangar/arrivals)
 "qxX" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "1-2"
@@ -54903,7 +54903,7 @@
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering)
 "qBc" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -54911,7 +54911,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "qBq" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "2-10"
@@ -54983,7 +54983,7 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/captain)
 "qCA" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -55021,7 +55021,7 @@
 /area/station/engine/engineering)
 "qDz" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
@@ -55049,7 +55049,7 @@
 /obj/disposalpipe/segment{
 	dir = 1
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -55204,7 +55204,7 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -55222,7 +55222,7 @@
 /turf/simulated/floor/airless/engine/glow/blue,
 /area/station/engine/singcore)
 "qGU" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-10"
 	},
@@ -55328,7 +55328,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "qIa" = (
@@ -55349,7 +55349,7 @@
 /turf/simulated/floor/white,
 /area/station/security/quarters)
 "qIK" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	icon_state = "pipe-c"
 	},
@@ -55501,7 +55501,7 @@
 /area/station/maintenance/outer/west)
 "qKn" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport,
 /obj/cable{
 	icon_state = "1-2"
@@ -55588,7 +55588,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -55727,7 +55727,7 @@
 /turf/simulated/grass,
 /area/station/crew_quarters/garden)
 "qNq" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -56135,7 +56135,7 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
@@ -56216,7 +56216,7 @@
 "qUN" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/junction/middle/south,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "qUW" = (
@@ -56427,7 +56427,7 @@
 /area/station/medical/asylum/kitchen)
 "qYw" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "5-9"
 	},
@@ -56807,7 +56807,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "rel" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "1-9"
@@ -56869,7 +56869,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -56935,7 +56935,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/crew_quarters/kitchen)
 "rhm" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -56981,7 +56981,7 @@
 /area/station/medical/medbay/lobby)
 "rig" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "6-10"
 	},
@@ -57300,7 +57300,7 @@
 	dir = 4
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "rnG" = (
@@ -57339,7 +57339,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -57352,7 +57352,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "roJ" = (
@@ -57468,7 +57468,7 @@
 /obj/disposalpipe/segment{
 	dir = 8
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -57527,7 +57527,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "rrF" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
@@ -57540,7 +57540,7 @@
 	icon_state = "2-6"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
@@ -57631,7 +57631,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -57673,7 +57673,7 @@
 /area/station/science/teleporter)
 "rtO" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -57858,7 +57858,7 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "rxu" = (
@@ -57877,7 +57877,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
@@ -57916,7 +57916,7 @@
 "rye" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/storage/closet,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "ryx" = (
@@ -57950,7 +57950,7 @@
 /turf/simulated/floor/carpet/purple/fancy,
 /area/station/chapel/sanctuary)
 "ryF" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
@@ -58031,7 +58031,7 @@
 	})
 "rzB" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
@@ -58162,7 +58162,7 @@
 /area/station/maintenance/outer/se)
 "rBC" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "rCl" = (
@@ -58215,7 +58215,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
@@ -58332,7 +58332,7 @@
 /area/station/maintenance/outer/se)
 "rFx" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -58508,7 +58508,7 @@
 /obj/cable{
 	icon_state = "5-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -58658,7 +58658,7 @@
 /turf/simulated/floor/darkblue/checker,
 /area/station/ai_monitored/storage/eva)
 "rJY" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-9"
 	},
@@ -58697,7 +58697,7 @@
 /obj/cable{
 	icon_state = "5-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -58742,7 +58742,7 @@
 	},
 /area/station/security/main)
 "rLH" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 1
 	},
@@ -58757,14 +58757,14 @@
 /turf/simulated/floor/industrial,
 /area/station/quartermaster/refinery)
 "rLR" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-9"
 	},
 /obj/cable{
 	icon_state = "1-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "rLV" = (
@@ -58826,7 +58826,7 @@
 	icon_state = "4-8"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "rNi" = (
@@ -58868,7 +58868,7 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "rNw" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -59017,7 +59017,7 @@
 /area/station/chapel/sanctuary)
 "rOR" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -59131,7 +59131,7 @@
 	})
 "rQQ" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
@@ -59150,7 +59150,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/construction)
 "rRx" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -59226,7 +59226,7 @@
 /obj/cable{
 	icon_state = "9-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
@@ -59336,7 +59336,7 @@
 /obj/machinery/mining_magnet{
 	dir = 1
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -59490,7 +59490,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -59556,7 +59556,7 @@
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/maintenance/inner/east)
 "rXG" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -59875,7 +59875,7 @@
 /area/station/turret_protected/armory_outside)
 "scb" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
@@ -59965,7 +59965,7 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 1
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/black,
 /area/station/medical/medbay)
 "sdI" = (
@@ -60278,7 +60278,7 @@
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -60297,7 +60297,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
@@ -60380,7 +60380,7 @@
 	},
 /area/station/security/equipment)
 "skD" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -60486,7 +60486,7 @@
 	},
 /area/station/chapel/office)
 "smK" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/structure/woodwall,
 /obj/cable{
 	icon_state = "4-8"
@@ -60554,7 +60554,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "snM" = (
@@ -60966,7 +60966,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -60977,7 +60977,7 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -61115,7 +61115,7 @@
 /turf/simulated/floor/circuit,
 /area/station/bridge)
 "svK" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "2-9"
@@ -61343,7 +61343,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -61443,7 +61443,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/medbay)
 "sBa" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4;
 	level = -1
@@ -61537,7 +61537,7 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "sCn" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
@@ -61687,9 +61687,9 @@
 /turf/simulated/floor/white,
 /area/station/security/main)
 "sEP" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -61780,7 +61780,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
@@ -61804,7 +61804,7 @@
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -61912,7 +61912,7 @@
 /area/station/science/teleporter)
 "sJH" = (
 /obj/disposalpipe/segment/mail/bent/north,
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /obj/item/raw_material/shard/glass{
 	pixel_x = 8;
 	pixel_y = 9
@@ -62012,7 +62012,7 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -62170,7 +62170,7 @@
 /obj/disposalpipe/segment{
 	dir = 1
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-9"
 	},
@@ -62195,7 +62195,7 @@
 	},
 /area/station/engine/engineering)
 "sNQ" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-6"
 	},
@@ -62252,7 +62252,7 @@
 /area/station/ranch)
 "sOC" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -62263,7 +62263,7 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -62271,7 +62271,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "sOW" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/light/small/sticky/broken,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
@@ -62318,7 +62318,7 @@
 	},
 /area/station/chapel/sanctuary)
 "sQc" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "5-6"
 	},
@@ -62445,7 +62445,7 @@
 	},
 /area/shuttle/arrival/station)
 "sTc" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -62460,7 +62460,7 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -62593,7 +62593,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -62790,7 +62790,7 @@
 	icon_state = "4-5"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
@@ -62901,7 +62901,7 @@
 	icon_state = "6-8"
 	},
 /obj/machinery/light/small,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "tac" = (
@@ -62918,7 +62918,7 @@
 	icon_state = "4-8"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "tak" = (
@@ -63296,7 +63296,7 @@
 	},
 /area/station/medical/medbooth)
 "tgl" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/red,
 /turf/simulated/floor/airless/plating/catwalk{
 	icon_state = "catwalk_cross"
@@ -63444,7 +63444,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -63452,7 +63452,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "thQ" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -63549,10 +63549,10 @@
 /turf/simulated/wall/auto/reinforced/jen/yellow,
 /area/station/routing/depot)
 "tjf" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -63643,7 +63643,7 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -63839,7 +63839,7 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 8
@@ -63851,7 +63851,7 @@
 /area/station/security/visitation)
 "tnP" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -63859,7 +63859,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "toc" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "4-8"
@@ -63959,7 +63959,7 @@
 /area/station/hallway/secondary/exit)
 "tqe" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -64019,7 +64019,7 @@
 /area/station/maintenance/inner/sw)
 "trb" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "5-9"
 	},
@@ -64138,7 +64138,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/hor)
 "ttI" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
@@ -64192,7 +64192,7 @@
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
 "tuO" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 1
 	},
@@ -64424,7 +64424,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -64489,12 +64489,12 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "tzh" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
@@ -64517,7 +64517,7 @@
 "tzB" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/landmark/halloween,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "tAo" = (
@@ -64586,7 +64586,7 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -64623,7 +64623,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lobby)
 "tBB" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-9"
 	},
@@ -64853,7 +64853,7 @@
 	},
 /area/station/bridge)
 "tEH" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow,
@@ -65080,7 +65080,7 @@
 /area/station/hangar/sec)
 "tHf" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -65141,7 +65141,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -65266,7 +65266,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -65326,7 +65326,7 @@
 /area/station/hallway/primary/south)
 "tKj" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -65375,7 +65375,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
@@ -65458,7 +65458,7 @@
 /obj/cable{
 	icon_state = "1-5"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -65475,7 +65475,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -65526,7 +65526,7 @@
 /area/ghostdrone_factory)
 "tNL" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "6-8"
 	},
@@ -65590,7 +65590,7 @@
 	},
 /area/station/science/lobby)
 "tOp" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/light/small/sticky{
 	dir = 1
@@ -65775,7 +65775,7 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "tRn" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -65894,7 +65894,7 @@
 /obj/railing/orange{
 	dir = 1
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "tSy" = (
@@ -65958,7 +65958,7 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -65996,7 +65996,7 @@
 	icon_state = "1-6"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -66037,7 +66037,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -66054,7 +66054,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
@@ -66159,7 +66159,7 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
@@ -66187,7 +66187,7 @@
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "tWB" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -66213,7 +66213,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
@@ -66230,7 +66230,7 @@
 /obj/cable{
 	icon_state = "1-5"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -66247,7 +66247,7 @@
 	},
 /area/station/science/lobby)
 "tWU" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/red{
 	dir = 8
 	},
@@ -66285,7 +66285,7 @@
 /area/station/medical/breakroom)
 "tXn" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "5-8"
 	},
@@ -66367,7 +66367,7 @@
 /turf/simulated/floor/engine,
 /area/station/hangar/science)
 "tYH" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/red{
 	dir = 4
 	},
@@ -66567,7 +66567,7 @@
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
@@ -66687,7 +66687,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
@@ -66863,7 +66863,7 @@
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/storage/tech)
 "ukq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -67058,7 +67058,7 @@
 	icon_state = "6-10"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "unp" = (
@@ -67102,7 +67102,7 @@
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -67285,7 +67285,7 @@
 /area/station/bridge)
 "uso" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
@@ -67420,7 +67420,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -67431,7 +67431,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
@@ -67511,7 +67511,7 @@
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "uui" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-4"
@@ -67567,7 +67567,7 @@
 /obj/cable{
 	icon_state = "6-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -67581,7 +67581,7 @@
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/lobby)
 "uvF" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "1-2"
@@ -67635,7 +67635,7 @@
 /obj/cable{
 	icon_state = "6-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	icon_state = "pipe-c";
@@ -67756,7 +67756,7 @@
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "uxY" = (
@@ -67845,7 +67845,7 @@
 	},
 /area/station/hallway/primary/west)
 "uzx" = (
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /obj/item/raw_material/shard/glass{
 	pixel_x = 4;
 	pixel_y = 6
@@ -67857,7 +67857,7 @@
 /area/station/maintenance/inner/west)
 "uzB" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -67993,7 +67993,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -68449,7 +68449,7 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/south)
 "uHt" = (
@@ -68695,11 +68695,11 @@
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "uLh" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -68741,7 +68741,7 @@
 /area/shuttle/asylum/medbay)
 "uLV" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -68857,7 +68857,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "uOd" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -69548,7 +69548,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
@@ -69637,14 +69637,14 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "vaU" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -69686,7 +69686,7 @@
 	id = "tox_vent2";
 	name = "Exhaust Vent"
 	},
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	layer = 2.7
 	},
 /turf/simulated/floor/plating/airless,
@@ -69703,7 +69703,7 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "vbQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable/yellow{
@@ -69878,7 +69878,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "veI" = (
@@ -70100,7 +70100,7 @@
 /area/station/science/artifact)
 "vhr" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -70240,7 +70240,7 @@
 /area/station/crew_quarters/quarters)
 "vjw" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -70289,7 +70289,7 @@
 /area/station/crew_quarters/fitness)
 "vku" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -70331,7 +70331,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -70344,7 +70344,7 @@
 	},
 /area/station/bridge)
 "vls" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -70388,7 +70388,7 @@
 /obj/cable{
 	icon_state = "9-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
@@ -70449,7 +70449,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/singcore)
 "vmv" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
@@ -70511,7 +70511,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "vnD" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -70596,7 +70596,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/science/lobby)
 "vob" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -70852,7 +70852,7 @@
 /area/station/security/checkpoint/sec_foyer)
 "vrI" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -70927,7 +70927,7 @@
 /obj/cable{
 	icon_state = "6-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
@@ -70943,7 +70943,7 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
@@ -71112,7 +71112,7 @@
 /obj/cable{
 	icon_state = "9-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "vxj" = (
@@ -71485,7 +71485,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
 "vBD" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "5-8"
@@ -71516,7 +71516,7 @@
 /area/station/ai_monitored/storage/eva)
 "vBZ" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "9-10"
 	},
@@ -71714,7 +71714,7 @@
 /obj/cable{
 	icon_state = "6-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 1
@@ -71729,7 +71729,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "vFh" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -71789,7 +71789,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "vFX" = (
@@ -71808,7 +71808,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
 	icon_state = "1-2"
@@ -71921,7 +71921,7 @@
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "vHW" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -71953,7 +71953,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small/sticky,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -71982,7 +71982,7 @@
 /area/station/hallway/primary/east)
 "vIY" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -72008,7 +72008,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -72065,7 +72065,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "vLt" = (
@@ -72185,7 +72185,7 @@
 /area/station/bridge/customs)
 "vNd" = (
 /obj/disposalpipe/segment,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
@@ -72217,7 +72217,7 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
@@ -72461,7 +72461,7 @@
 	},
 /area/station/bridge)
 "vPp" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-5"
 	},
@@ -72470,7 +72470,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "vPw" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -72571,7 +72571,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/storage/closet,
 /obj/random_item_spawner/junk/maybe_few,
@@ -72581,7 +72581,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "vRE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -72770,7 +72770,7 @@
 /area/station/hangar/arrivals)
 "vUX" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -72881,13 +72881,13 @@
 /obj/cable{
 	icon_state = "5-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "vWz" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/light/small/sticky,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -72995,7 +72995,7 @@
 /area/station/medical/head)
 "vYj" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
@@ -73021,7 +73021,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "vYs" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -73195,7 +73195,7 @@
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/locker)
 "waS" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -73227,7 +73227,7 @@
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/barber_shop)
 "wbh" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/morgue{
 	name = "kitchen freezer pipe"
@@ -73262,7 +73262,7 @@
 /area/station/crew_quarters/garden)
 "wbK" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "5-6"
 	},
@@ -73377,7 +73377,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "wdp" = (
@@ -73409,7 +73409,7 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -73503,7 +73503,7 @@
 /area/station/crew_quarters/hor)
 "wft" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -73547,7 +73547,7 @@
 /area/station/crew_quarters/kitchen)
 "wgB" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "wgJ" = (
@@ -73719,7 +73719,7 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
@@ -73733,7 +73733,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "wjh" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "wjj" = (
@@ -73850,7 +73850,7 @@
 /turf/simulated/floor/red/side,
 /area/station/hallway/primary/west)
 "wlt" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable/yellow{
@@ -74022,7 +74022,7 @@
 	},
 /area/station/engine/monitoring)
 "wnQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow,
@@ -74096,7 +74096,7 @@
 /area/station/hallway/primary/west)
 "woM" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -74605,7 +74605,7 @@
 /area/station/crew_quarters/arcade)
 "wxD" = (
 /obj/lattice,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/space)
 "wxG" = (
@@ -74695,7 +74695,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -74729,7 +74729,7 @@
 	icon_state = "1-9"
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
@@ -75285,7 +75285,7 @@
 /area/station/bridge/captain)
 "wHm" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
@@ -75496,7 +75496,7 @@
 	id = "tox_vent2";
 	name = "Exhaust Vent"
 	},
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	layer = 2.7
 	},
 /turf/simulated/floor/plating/airless,
@@ -75621,7 +75621,7 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
@@ -75710,7 +75710,7 @@
 /area/station/medical/medbay/surgery/storage)
 "wMB" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "2-5"
 	},
@@ -75745,7 +75745,7 @@
 /area/station/medical/morgue)
 "wNd" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -75787,7 +75787,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/asylum/rec)
 "wNC" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -76098,7 +76098,7 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
@@ -76201,7 +76201,7 @@
 /turf/space,
 /area/space)
 "wUu" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -76250,7 +76250,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -76284,7 +76284,7 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
@@ -76312,7 +76312,7 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -76842,7 +76842,7 @@
 /area/station/hangar/main)
 "xcc" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -76957,7 +76957,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -77021,7 +77021,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
 "xeK" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "5-9"
 	},
@@ -77056,7 +77056,7 @@
 /turf/simulated/floor/black,
 /area/station/science/bot_storage)
 "xfb" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
@@ -77100,7 +77100,7 @@
 /area/station/maintenance/inner/se)
 "xfs" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1
 	},
@@ -77130,7 +77130,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "xgk" = (
@@ -77378,7 +77378,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery/storage)
 "xjx" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -77619,7 +77619,7 @@
 /area/station/hallway/primary/west)
 "xmK" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/cable{
 	icon_state = "1-10"
 	},
@@ -77650,7 +77650,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "xnn" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow,
@@ -77693,7 +77693,7 @@
 /turf/simulated/floor/black,
 /area/station/crewquarters/fuq3)
 "xnH" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "tox_mix";
 	layer = 8;
@@ -78020,7 +78020,7 @@
 /obj/cable{
 	icon_state = "1-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -78028,7 +78028,7 @@
 /obj/cable{
 	icon_state = "1-5"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -78068,7 +78068,7 @@
 /obj/cable{
 	icon_state = "5-6"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
@@ -78112,7 +78112,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 8
@@ -78266,8 +78266,8 @@
 /area/station/chapel/sanctuary)
 "xvH" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/grille/catwalk,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1
 	},
@@ -78797,7 +78797,7 @@
 /obj/cable{
 	icon_state = "6-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
@@ -78822,7 +78822,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "xEm" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/poster/wallsign/hazard_rad{
 	pixel_y = -32
@@ -78844,7 +78844,7 @@
 	},
 /area/station/engine/inner)
 "xEB" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -78940,7 +78940,7 @@
 /obj/machinery/light/small/sticky{
 	dir = 4
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "xFy" = (
@@ -79074,11 +79074,11 @@
 /obj/cable{
 	icon_state = "6-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "xJk" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -79122,7 +79122,7 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
@@ -79266,7 +79266,7 @@
 /turf/space,
 /area/space)
 "xLA" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
@@ -79367,7 +79367,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "xNp" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 1;
@@ -79379,7 +79379,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "xNs" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
 "xNv" = (
@@ -79565,7 +79565,7 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/morgue{
 	name = "kitchen freezer pipe"
 	},
@@ -79685,7 +79685,7 @@
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering)
 "xRJ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -79760,7 +79760,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
 "xSZ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -80037,7 +80037,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -80379,7 +80379,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "ybH" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-8"
@@ -80661,7 +80661,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "ygl" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/jen,
@@ -80712,7 +80712,7 @@
 /turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "ygT" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/south)
 "yhb" = (
@@ -81012,7 +81012,7 @@
 /area/station/bridge/captain)
 "ykE" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
@@ -81038,7 +81038,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
 	dir = 4
