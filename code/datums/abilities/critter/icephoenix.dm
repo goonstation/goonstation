@@ -24,3 +24,18 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		SETUP_GENERIC_ACTIONBAR(src.holder.owner, null, 3 SECONDS, /mob/living/critter/ice_phoenix/proc/on_sail, null, \
 			'icons/mob/critter/nonhuman/icephoenix.dmi', "icephoenix", null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 
+/datum/targetable/critter/ice_phoenix/return_to_station
+	name = "Return to Station Space"
+	desc = "Toggles if you will return to station space when traveling off the current Z level.<br><br>Currently toggled off."
+
+	cast()
+		..()
+		var/mob/living/critter/ice_phoenix/phoenix = src.holder.owner
+		phoenix.travel_back_to_station = !phoenix.travel_back_to_station
+		if (phoenix.travel_back_to_station)
+			boutput(phoenix, SPAN_NOTICE("You will now travel back to station space when traveling off the Z level"))
+		else
+			boutput(phoenix, SPAN_NOTICE("You will no longer travel back to station space when traveling off the Z level"))
+		src.object.desc = "Toggles if you will return to station space when traveling off the current Z level.<br><br>Currently toggled " + \
+			"[!phoenix.travel_back_to_station ? "off" : "on"]."
+

@@ -14,6 +14,9 @@
 
 	blood_id = "water" // maybe remove - this causes a lot of boiling if the phoenix is heated up
 
+	/// if traveling off z level will return you to the station z level
+	var/travel_back_to_station = FALSE
+
 	New()
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
@@ -22,7 +25,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/sail)
-		//abilityHolder.addAbility(/datum/targetable/critter/self_immolate)
+		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/return_to_station)
 		//abilityHolder.addAbility(/datum/targetable/critter/flamethrower/throwing)
 		//abilityHolder.addAbility(/datum/targetable/critter/fireball)
 		//abilityHolder.addAbility(/datum/targetable/critter/fire_sprint)
