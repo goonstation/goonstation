@@ -1,5 +1,7 @@
 
 (t)fri dec 06 24
+(u)tarmunora
+(+)Scuttlebots now have some internal storage for photos, which will pop out when the bot turns back into a hat (or otherwise dies)
 (u)LeahTheTech
 (+)Being deaf now mutes all sounds, exceptions made for OOC sound effects such as admin PMs.
 (u)JORJ949
