@@ -2976,7 +2976,6 @@
 		qdel(src.glimmer)
 		src.glimmer = null
 
-ABSTRACT_TYPE(/datum/statusEffect/ice_phoenix)
 /datum/statusEffect/ice_phoenix
 
 /datum/statusEffect/ice_phoenix/sail
