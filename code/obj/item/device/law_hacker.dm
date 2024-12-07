@@ -7,7 +7,7 @@ TYPEINFO(/obj/item/device/law_hacker)
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	force = 5
-	w_class = W_CLASS_SMALL
+	w_class = W_CLASS_NORMAL
 	throwforce = 5
 	throw_range = 15
 	throw_speed = 3
