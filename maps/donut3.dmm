@@ -12091,6 +12091,13 @@
 /area/station/hallway/primary/southeast)
 "dwM" = (
 /obj/storage/closet/emergency,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "mining_shutters";
+	name = "Mining Blast Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "dwQ" = (
@@ -44654,6 +44661,18 @@
 	icon_state = "fblue6"
 	},
 /area/station/bridge)
+"nvO" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "mining_shutters";
+	name = "Mining Blast Shutters";
+	opacity = 0;
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/mining/staff_room)
 "nvZ" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -54518,6 +54537,12 @@
 	dir = 9;
 	icon_state = "line2"
 	},
+/obj/machinery/door_control{
+	id = "mining_shutters";
+	name = "Mining Shutters";
+	pixel_x = 4;
+	pixel_y = 24
+	},
 /turf/simulated/floor/black/grime,
 /area/station/mining/staff_room)
 "qwp" = (
@@ -62880,6 +62905,17 @@
 /obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"sYq" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "mining_shutters";
+	name = "Mining Blast Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/mining/staff_room)
 "sYD" = (
 /obj/stool/chair/office/red{
 	dir = 1
@@ -131418,7 +131454,7 @@ yli
 yli
 oKW
 rdj
-fBA
+nvO
 sNw
 gPi
 ezf
@@ -131720,7 +131756,7 @@ yli
 yli
 wpL
 rdj
-fBA
+sYq
 joH
 fLf
 fLf
@@ -132626,7 +132662,7 @@ yli
 yli
 uzi
 rdj
-fBA
+sYq
 hwd
 psv
 uTt
@@ -132928,7 +132964,7 @@ yli
 yli
 uzi
 rdj
-fBA
+sYq
 hwd
 psv
 byF
