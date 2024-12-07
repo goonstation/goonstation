@@ -2865,6 +2865,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				logTheThing(LOG_DIARY, src, "changed the syndicate colour scheme.", "admin")
 				message_admins("[key_name(src)] changed the syndicate colour scheme.")
 			if ("Reset")
+				nuke_op_camo_matrix = null
 				for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
 					A.color = null
 					var/obj/item/Item = A
