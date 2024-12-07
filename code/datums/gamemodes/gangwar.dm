@@ -10,7 +10,11 @@
 	var/list/datum/gang/gangs = list()
 
 	var/const/setup_min_teams = 2
+#ifdef RP_MODE
+	var/const/setup_max_teams = 2
+#else
 	var/const/setup_max_teams = 3
+#endif
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
