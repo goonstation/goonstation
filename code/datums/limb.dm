@@ -377,6 +377,13 @@
 		cooldown = 4 SECONDS
 		reload_time = 4 SECONDS
 
+	ice_phoenix
+		proj = new/datum/projectile/bullet/ice_phoenix_icicle
+		shots = INFINITY
+		current_shots = 1
+		cooldown = 1 SECOND
+		reload_time = 0
+
 	syringe
 		proj = new/datum/projectile/syringefilled
 		shots = 1
@@ -1798,6 +1805,14 @@
 /datum/limb/small_critter/possum
 	dam_low = 0
 	dam_high = 0
+
+/datum/limb/small_critter/ice_phoenix
+	dam_low = 5
+	dam_high = 10
+	dmg_type = DAMAGE_CUT
+	actions = list("scratches", "slices", "claws")
+	can_gun_grab = FALSE
+	can_beat_up_robots = TRUE
 
 /datum/limb/small_critter/med/dash
 	dam_low = 3

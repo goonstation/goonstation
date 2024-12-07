@@ -1143,6 +1143,34 @@ toxic - poisons
 		else
 			fireflash(get_turf(hit) || get_turf(P), 0, chemfire = CHEM_FIRE_RED)
 
+/datum/projectile/bullet/ice_phoenix_icicle
+	name = "ice feather"
+	sname = "ice feather"
+	icon_state = "flare"
+	damage = 1.1 // unique effect per atom hit. set to non-zero to pass any damage >= 1 checks for message outputs, etc
+	damage_type = D_PIERCING
+	hit_type = DAMAGE_STAB
+	disruption = 5
+	shot_sound = 'sound/weapons/flaregun.ogg'
+	implanted = null // maybe have some implant if a feather is fired?
+	/*
+	collide(atom/A)
+		if (istype(A, /obj/window))
+			src.master.power = 0
+		else if (istype(A, /mob))
+			var/mob/M = hit
+			M.TakeDamage("All", 10, damage_type = src.damage_type)
+		else if (isvehicle(hit))
+			src.master.power = 35
+			var/mob/living/critter/ice_phoenix/phoenix = src.master.shooter
+			//if (!ON_COOLDOWN())
+		. = ..()
+	*/
+	on_hit(atom/hit, direction, obj/projectile/P)
+		if (istype(hit, /obj/window))
+			hit.visible_message("[src] uselessly clunks off [hit]!")
+		. = ..()
+
 /datum/projectile/bullet/flare/UFO
 	name = "heat beam"
 	window_pass = 1
@@ -1905,7 +1933,7 @@ datum/projectile/bullet/autocannon
 				boutput(M, pod.ship_message(message))
 
 	on_hit(atom/hit, angle, obj/projectile/O)
-		if (istype(hit, /obj/critter/gunbot/drone) || istype(hit, /obj/machinery/vehicle/miniputt) || istype(hit, /obj/machinery/vehicle/pod_smooth)|| istype(hit, /obj/machinery/vehicle/tank))
+		if (istype(hit, /obj/critter/gunbot/drone) || istype(hit, /obj/machinery/vehicle/miniputt) || istype(hit, /obj/machinery/vehicle/pod_smooth)|| istype(hit, /obj/machinery/vehicle/tank) || istype(hit, /mob/living/critter/ice_phoenix))
 			explosion_new(null, get_turf(O), 12)
 
 			if(istype(hit, /obj/machinery/vehicle))
