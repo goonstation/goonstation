@@ -166,6 +166,7 @@
 #include "code\datums\abilities\critter\frenzy.dm"
 #include "code\datums\abilities\critter\gibstare.dm"
 #include "code\datums\abilities\critter\grow.dm"
+#include "code\datums\abilities\critter\icephoenix.dm"
 #include "code\datums\abilities\critter\invisibility.dm"
 #include "code\datums\abilities\critter\maneater_devour.dm"
 #include "code\datums\abilities\critter\mark.dm"

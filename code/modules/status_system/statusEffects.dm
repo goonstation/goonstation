@@ -2975,3 +2975,19 @@
 		src.art = null
 		qdel(src.glimmer)
 		src.glimmer = null
+
+ABSTRACT_TYPE(/datum/statusEffect/ice_phoenix)
+/datum/statusEffect/ice_phoenix
+
+/datum/statusEffect/ice_phoenix/sail
+	id = "ice_phoenix_sail"
+	desc = "You are sailing the solar winds, giving you a large movespeed buff while in space."
+	icon_state = "mutiny"
+	effect_quality = STATUS_QUALITY_POSITIVE
+	movement_modifier = /datum/movement_modifier/ice_phoenix_sail
+	move_triggered = TRUE
+
+	move_trigger()
+		..()
+		if (!istype(get_turf(src.owner), /turf/space))
+			src.owner.delStatus(src)

@@ -21,7 +21,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
-		//abilityHolder.addAbility(/datum/targetable/critter/cauterize)
+		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/sail)
 		//abilityHolder.addAbility(/datum/targetable/critter/self_immolate)
 		//abilityHolder.addAbility(/datum/targetable/critter/flamethrower/throwing)
 		//abilityHolder.addAbility(/datum/targetable/critter/fireball)
@@ -91,3 +91,9 @@
 
 	is_spacefaring()
 		return TRUE
+
+	proc/on_sail()
+		src.setStatus("ice_phoenix_sail", 10 SECONDS)
+		var/datum/targetable/critter/ice_phoenix/sail/abil = src.abilityHolder.getAbility(/datum/targetable/critter/ice_phoenix/sail)
+		abil.afterAction()
+

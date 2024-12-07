@@ -567,6 +567,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	if (src.lying)
 		. += 14
 
+	var/turf/T = get_turf(src)
+	if (T?.turf_flags & CAN_BE_SPACE_SAMPLE)
+		. -= space_movement
+
 /mob/living/critter/Move(var/turf/NewLoc, direct)
 	if (!src.lying && isturf(NewLoc) && NewLoc.turf_flags & MOB_STEP)
 		if (NewLoc.active_liquid)
@@ -1654,6 +1658,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 /mob/living/critter/has_genetics()
 	return has_genes
+
+/mob/living/critter/deliver_move_trigger(ev)
+	for (var/datum/statusEffect/S as anything in statusEffects)
+		if (S?.move_triggered)
+			S.move_trigger(src, ev)
 
 ABSTRACT_TYPE(/mob/living/critter/robotic)
 /// Parent for robotic critters. Handles some traits that robots should have- damaged by EMPs, immune to fire and rads

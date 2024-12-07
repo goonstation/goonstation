@@ -96,6 +96,10 @@
 	modifiers(mob/user, move_target, running)
 		return list(0, 1 - GET_ATOM_PROPERTY(user, PROP_MOB_TALISMAN_SWIFTNESS))
 
+/datum/movement_modifier/ice_phoenix_sail
+	multiplicative_slowdown = 0.5
+	space_movement = 0.7
+
 // robot legs for humans
 /datum/movement_modifier/robotleg_right
 	health_deficiency_adjustment = -25
