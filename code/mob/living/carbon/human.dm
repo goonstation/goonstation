@@ -732,7 +732,7 @@
 	if (!HAS_ATOM_PROPERTY(src, PROP_MOB_SUPPRESS_DEATH_SOUND))
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
-	if (!inafterlife(src) && current_state >= GAME_STATE_PLAYING) // prevent corpse spawners from reducing cheer; TODO: better fix
+	if (!inafterlife(src) && !istestdummy(src) && !isvirtual(src) && current_state >= GAME_STATE_PLAYING) // prevent corpse spawners from reducing cheer; TODO: better fix
 		modify_christmas_cheer(-7)
 
 
@@ -2482,7 +2482,7 @@
 			src.u_equip(SH)
 			SH.set_loc(get_turf(src))
 			src.update_clothing()
-			src.show_text("You briefly shrink your legs to remove the shackles.", "blue")
+			src.show_text("We briefly shrink our legs to remove the shackles.", "blue")
 		else if (src.is_hulk() || ishunter(src) || iswerewolf(src))
 			src.visible_message(SPAN_ALERT("[src] rips apart the shackles with pure brute strength!</b>"), SPAN_NOTICE("You rip apart the shackles."))
 			var/obj/item/clothing/shoes/NEW = new SH.type
@@ -2513,7 +2513,7 @@
 	if (src.hasStatus("handcuffed"))
 		if (ishuman(src))
 			if (ischangeling(src))
-				boutput(src, SPAN_NOTICE("You briefly shrink your hands to remove your handcuffs."))
+				boutput(src, SPAN_NOTICE("We briefly shrink our hands to remove the handcuffs."))
 				src.handcuffs.drop_handcuffs(src)
 				return
 			if (ishunter(src))

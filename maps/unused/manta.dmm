@@ -509,7 +509,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/critter/turtle/sylvester/HoS,
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/station/security/hos)
 "abA" = (

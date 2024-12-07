@@ -28433,7 +28433,7 @@
 	},
 /area/station/hallway/primary/east)
 "bHq" = (
-/obj/critter/turtle/sylvester/HoS,
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
 /turf/simulated/floor{
 	icon_state = "carpet2"
 	},

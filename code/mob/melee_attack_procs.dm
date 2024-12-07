@@ -20,6 +20,9 @@
 		src.help_put_out_fire(M)
 	else if (src == M && src.getStatusDuration("burning"))
 		M.resist()
+	else if (src != M && M.hasStatus("paralysis")) // we "dead"
+		src.visible_message(SPAN_ALERT("<B>[src] tries to perform CPR, but it's too late for [M]!</B>"))
+		return
 	//If we use an empty hand on a cut up person, we might wanna rip out their organs by hand
 	else if (surgeryCheck(M, src) && M.organHolder?.chest?.op_stage >= 2 && ishuman(src))
 		if (M.organHolder.build_region_buttons())

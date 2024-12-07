@@ -1330,6 +1330,11 @@ datum
 						M.changeStatus("paralysis", 3 SECONDS * mult)
 						M.changeStatus("muted", 3 SECONDS * mult)
 				if (counter >= 19 && !fakedeathed)
+					#ifdef COMSIG_MOB_FAKE_DEATH
+					SEND_SIGNAL(M, COMSIG_MOB_FAKE_DEATH)
+					#endif
+					if (deathConfettiActive)
+						M.deathConfetti()
 					M.setStatusMin("paralysis", 3 SECONDS * mult)
 					M.setStatusMin("muted", 3 SECONDS * mult)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
@@ -1360,6 +1365,11 @@ datum
 					if (10 to 18)
 						M.setStatus("drowsy", 20 SECONDS)
 				if (counter >= 19 && !fakedeathed)
+					#ifdef COMSIG_MOB_FAKE_DEATH
+					SEND_SIGNAL(M, COMSIG_MOB_FAKE_DEATH)
+					#endif
+					if (deathConfettiActive)
+						M.deathConfetti()
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
 					playsound(M, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())

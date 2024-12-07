@@ -2470,7 +2470,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/critter/turtle/sylvester/HoS,
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
 /turf/simulated/floor/wood/six,
 /area/station/crew_quarters/hos)
 "bdH" = (

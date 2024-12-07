@@ -27620,7 +27620,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/critter/turtle/sylvester/HoS,
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "bWM" = (
@@ -34911,7 +34911,7 @@
 /obj/rack,
 /obj/item/clothing/under/misc/syndicate,
 /obj/item/clothing/shoes/black,
-/obj/item/clothing/gloves/swat,
+/obj/item/clothing/gloves/swat/syndicate,
 /obj/item/clothing/shoes/swat,
 /turf/unsimulated/floor/shuttle/red,
 /area/sunken_asteroid)

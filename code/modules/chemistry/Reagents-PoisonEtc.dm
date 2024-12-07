@@ -1591,7 +1591,7 @@ datum
 						M.make_dizzy(1 * mult)
 						M.change_eye_blurry(6, 6)
 						M.change_misstep_chance(20 * mult)
-						if(M.reagents?.has_reagent("capulettium") && M.hasStatus("knockdown"))
+						if(M.reagents?.has_reagent("capulettium") && is_incapacitated(M))
 							..()                      //will not cause emotes and puking if you are already downed by capulettium
 							return					  //for preserving the death diguise
 						if(probmult(15))

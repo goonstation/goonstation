@@ -619,7 +619,7 @@
 /turf/simulated/floor/darkpurpleblack
 	icon_state = "dpurpleblack"
 
-/turf/simulated/floor/purpleblack/corner
+/turf/simulated/floor/darkpurpleblack/corner
 	icon_state = "dpurpleblackcorner"
 
 

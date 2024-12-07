@@ -39944,7 +39944,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/critter/turtle/sylvester/HoS,
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "xnN" = (

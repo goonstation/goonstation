@@ -49886,7 +49886,7 @@
 	},
 /area/space)
 "iGK" = (
-/obj/critter/turtle/sylvester/HoS,
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
 /turf/simulated/floor/plating/random,
 /area/station/security/hos/horizon)
 "iGY" = (

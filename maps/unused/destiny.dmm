@@ -47737,7 +47737,7 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "rNq" = (
-/obj/critter/turtle/sylvester/HoS,
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},

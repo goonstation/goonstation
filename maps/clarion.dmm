@@ -21163,7 +21163,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "hQE" = (
-/obj/critter/turtle/sylvester/HoS,
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
 /obj/cable{
 	icon_state = "2-4"
 	},

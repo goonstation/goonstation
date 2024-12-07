@@ -12798,7 +12798,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aSZ" = (
-/obj/critter/turtle/sylvester/HoS,
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "aTc" = (
