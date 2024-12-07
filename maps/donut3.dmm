@@ -16642,6 +16642,15 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/quartersB)
+"eSq" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/item/device/radio/intercom/mining{
+	dir = 1
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/mining/staff_room)
 "eSI" = (
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating/jen,
@@ -58973,6 +58982,17 @@
 	},
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
+"rOQ" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/item/device/radio/intercom/mining,
+/turf/simulated/floor/black,
+/area/station/mining/staff_room)
 "rOT" = (
 /turf/simulated/wall/auto/reinforced/jen/purple,
 /area/station/science/artifact)
@@ -67134,6 +67154,7 @@
 	dir = 9;
 	icon_state = "line2"
 	},
+/obj/item/device/radio/intercom/mining,
 /turf/simulated/floor/black/grime,
 /area/station/quartermaster/refinery)
 "unT" = (
@@ -130798,7 +130819,7 @@ mYB
 vnS
 uBc
 mYB
-ltB
+rOQ
 kou
 vYX
 xie
@@ -131094,7 +131115,7 @@ yli
 yli
 yli
 uds
-aLS
+eSq
 mYB
 mYB
 qwb
