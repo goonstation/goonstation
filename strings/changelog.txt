@@ -1,5 +1,7 @@
 
 (t)fri dec 06 24
+(u)LeahTheTech
+(+)Being deaf now mutes all sounds, exceptions made for OOC sound effects such as admin PMs.
 (u)JORJ949
 (p)21580
 (e)🆕💡|C-Feature, A-Station-Systems
