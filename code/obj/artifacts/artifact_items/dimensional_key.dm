@@ -107,6 +107,8 @@
 		entrance.desc = "Void mist thick enough that you can't see through it.. How did this get here?"
 		RL_UPDATE_LIGHT(entrance)
 
+		logTheThing(LOG_STATION, src, "Dimensional key artifact door created at [log_loc(outer_door)] by [key_name(user)].")
+
 /datum/artifact/dimensional_key
 	associated_object = /obj/item/artifact/dimensional_key
 	type_name = "Dimensional key"

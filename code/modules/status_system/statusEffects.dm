@@ -3003,6 +3003,7 @@
 		if (src.corrosion_stacks >= 8)
 			src.owner.visible_message(SPAN_ALERT("[src.owner] fully corrodes and is destroyed!!"))
 			new /obj/decal/cleanable/molten_item(get_turf(src.owner))
+			logTheThing(LOG_STATION, src.owner, "[src.owner] destroyed by dimensional key artifact corrosion at [log_loc(src.owner)].")
 			qdel(src.owner)
 			src.owner.delStatus(src)
 		else
