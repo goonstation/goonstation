@@ -91,10 +91,13 @@
 				mind_to_be_transferred.remove_antagonist(antag)
 
 		// Remove any previous hivemind member roles, and add a new one.
-
-		mind_to_be_transferred.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
+		var/already_hivemind = FALSE
+		if (mind_to_be_transferred.get_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER))
+			already_hivemind = TRUE
+			mind_to_be_transferred.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER, silent = TRUE)
 		mind_to_be_transferred.add_subordinate_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER, master = src.owner.mind)
-		mind_to_be_transferred.current.show_antag_popup(ROLE_CHANGELING_HIVEMIND_MEMBER)
+		if (!already_hivemind)
+			mind_to_be_transferred.current.show_antag_popup(ROLE_CHANGELING_HIVEMIND_MEMBER)
 		return mind_to_be_transferred.current
 
 	proc/return_control_to_master()
