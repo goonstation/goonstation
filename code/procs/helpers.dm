@@ -1790,7 +1790,7 @@ proc/countJob(rank)
 					candidates |= M
 					continue
 				SPAWN(0) // Don't lock up the entire proc.
-					M.current.playsound_local(M.current, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE)
+					M.current.playsound_local(M.current, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 					boutput(M.current, text_chat_alert)
 					var/list/ghost_button_prompts = list("Yes", "No", "Stop these")
 					var/response = tgui_alert(M.current, text_alert, "Respawn", ghost_button_prompts, (ghost_timestamp + confirmation_spawn - TIME), autofocus = FALSE)
