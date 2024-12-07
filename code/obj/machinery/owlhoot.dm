@@ -66,7 +66,7 @@
 		if (prob(5)) // I stole this from the automaton because I am a dirty code frankenstein
 			var/list/mob/mobs_nearby = list()
 			for (var/mob/M as anything in viewers(7, src))
-				if (iswraith(M) || isintangible(M))
+				if (!isliving(M) || isintangible(M))
 					continue
 				mobs_nearby += M
 			if(length(mobs_nearby))
