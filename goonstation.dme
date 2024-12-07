@@ -2131,6 +2131,7 @@
 #include "code\obj\item\device\gps.dm"
 #include "code\obj\item\device\igniter.dm"
 #include "code\obj\item\device\infrared_stuff.dm"
+#include "code\obj\item\device\law_hacker.dm"
 #include "code\obj\item\device\lightbreaker.dm"
 #include "code\obj\item\device\lights.dm"
 #include "code\obj\item\device\megaphone.dm"
