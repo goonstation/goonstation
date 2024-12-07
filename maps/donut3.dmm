@@ -54122,7 +54122,7 @@
 /area/station/medical/asylum/rec)
 "qsB" = (
 /obj/table/wood/auto,
-/obj/item/bible,
+/obj/item/holy_texts,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
@@ -60320,7 +60320,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/bible,
+/obj/item/holy_texts,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred2"

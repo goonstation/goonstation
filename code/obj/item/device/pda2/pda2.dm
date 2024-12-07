@@ -1213,8 +1213,8 @@
 				boutput(src.loc, SPAN_ALERT("<b>ALERT:</b> An attempt to run malicious explosive code on your PDA has been blocked."))
 			return
 
-		if(src in bible_contents)
-			for_by_tcl(B, /obj/item/bible)
+		if(src in holy_texts_contents)
+			for_by_tcl(B, /obj/item/holy_texts)
 				var/turf/T = get_turf(B.loc)
 				if(T)
 					T.hotspot_expose(700,125)

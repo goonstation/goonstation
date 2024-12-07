@@ -185,10 +185,10 @@ Contains:
 				// Based off neutrons_to_emit in a way, but to be a multiplier value between 0 and 2
 				rad_damage_multiplier = 2 * clamp(neutrons_to_emit / 100, 0, 1)
 
-			if(src in bible_contents)
-				var/bible_count = length(by_type[/obj/item/bible])
-				range /= sqrt(bible_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of bibles
-				for_by_tcl(B, /obj/item/bible)
+			if(src in holy_texts_contents)
+				var/holy_texts_count = length(by_type[/obj/item/holy_texts])
+				range /= sqrt(holy_texts_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of holy texts
+				for_by_tcl(B, /obj/item/holy_texts)
 					var/turf/T = get_turf(B.loc)
 					if(T)
 						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
@@ -602,11 +602,11 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 		var/strength = 1
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 
-		if(src in bible_contents)
+		if(src in holy_texts_contents)
 			strength = fuel_moles/20
-			var/bible_count = length(by_type[/obj/item/bible])
-			strength /= sqrt(bible_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of bibles
-			for_by_tcl(B, /obj/item/bible)//world)
+			var/holy_texts_count = length(by_type[/obj/item/holy_texts])
+			strength /= sqrt(holy_texts_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of holy_textss
+			for_by_tcl(B, /obj/item/holy_texts)//world)
 				var/turf/T = get_turf(B.loc)
 				if(T)
 					explosion(src, T, 0, strength, strength*2, strength*3)

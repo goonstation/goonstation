@@ -6636,7 +6636,7 @@
 	icon_state = "woodentable";
 	dir = 10
 	},
-/obj/item/bible,
+/obj/item/holy_texts,
 /turf/simulated/floor{
 	icon_state = "carpetSW"
 	},

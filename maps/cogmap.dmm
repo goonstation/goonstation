@@ -10517,7 +10517,7 @@
 /area/station/chapel/sanctuary)
 "aMq" = (
 /obj/table/wood/auto,
-/obj/item/bible{
+/obj/item/holy_texts{
 	pixel_x = -4;
 	pixel_y = 3
 	},
@@ -13909,7 +13909,7 @@
 	pixel_x = -5;
 	pixel_y = 9
 	},
-/obj/item/bible{
+/obj/item/holy_texts{
 	pixel_x = -8;
 	pixel_y = 8
 	},

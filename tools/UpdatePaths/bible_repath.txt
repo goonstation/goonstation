@@ -1,0 +1,4 @@
+/obj/item/bible : /obj/item/holy_texts{@OLD}
+/obj/item/bible/mini : /obj/item/holy_texts/mini{@OLD}
+/obj/item/bible/hungry : /obj/item/holy_texts/hungry{@OLD}
+/obj/item/bible/loaded : /obj/item/holy_texts/loaded{@OLD}

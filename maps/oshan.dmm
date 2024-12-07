@@ -2956,7 +2956,7 @@
 /area/station/chapel/sanctuary)
 "akm" = (
 /obj/table/wood/auto,
-/obj/item/bible,
+/obj/item/holy_texts,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -3687,7 +3687,7 @@
 /area/station/chapel/office)
 "amJ" = (
 /obj/table/wood/auto,
-/obj/item/bible,
+/obj/item/holy_texts,
 /obj/item/reagent_containers/glass/bottle/holywater,
 /obj/cable{
 	icon_state = "4-8"

@@ -20330,7 +20330,7 @@
 /obj/item/storage/wall/random,
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
-/obj/item/bible/mini,
+/obj/item/holy_texts/mini,
 /turf/simulated/floor/carpet,
 /area/derelict_ai_sat)
 "oWB" = (

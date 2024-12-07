@@ -2411,7 +2411,7 @@
 "auY" = (
 /obj/table/wood/auto,
 /obj/item/card_box/tarot,
-/obj/item/bible,
+/obj/item/holy_texts,
 /obj/item/reagent_containers/glass/bottle/holywater,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{

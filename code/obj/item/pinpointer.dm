@@ -609,10 +609,10 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 	category = /obj/vehicle
 	thing_name = "station vehicle"
 
-/obj/item/pinpointer/category/bibles
-	name = "bible pinpointer"
-	category = /obj/item/bible
-	thing_name = "bible"
+/obj/item/pinpointer/category/holy_texts
+	name = "holy texts pinpointer"
+	category = /obj/item/holy_texts
+	thing_name = "holy texts"
 
 /obj/item/pinpointer/category/gps
 	name = "\improper GPS unit pinpointer"

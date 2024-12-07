@@ -6859,7 +6859,7 @@
 /area/station/hallway/primary/south)
 "aMZ" = (
 /obj/table/wood/auto,
-/obj/item/bible,
+/obj/item/holy_texts,
 /turf/simulated/floor{
 	icon_state = "carpetSW"
 	},
@@ -37873,7 +37873,7 @@
 /obj/table/wood/auto,
 /obj/item/ghostboard,
 /obj/item/device/microphone,
-/obj/item/bible,
+/obj/item/holy_texts,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 9
 	},

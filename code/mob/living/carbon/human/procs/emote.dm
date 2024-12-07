@@ -160,8 +160,8 @@
 											src.add_karma(10)
 									fart_on_other = 1
 									break
-								else if (istype(A,/obj/item/bible))
-									var/obj/item/bible/B = A
+								else if (istype(A,/obj/item/holy_texts))
+									var/obj/item/holy_texts/B = A
 									B.farty_heresy(src)
 									fart_on_other = 1
 									break
@@ -251,12 +251,12 @@
 							if (src.bioHolder.HasEffect("linkedfart"))
 								for(var/mob/living/H in mobs)
 									if (H.bioHolder && H.bioHolder.HasEffect("linkedfart")) continue
-									var/found_bible = 0
+									var/found_holy_texts = 0
 									for (var/atom/A as anything in H.loc)
 										if (A.event_handler_flags & IS_FARTABLE)
-											if (istype(A,/obj/item/bible))
-												found_bible = 1
-									if (found_bible)
+											if (istype(A,/obj/item/holy_texts))
+												found_holy_texts = 1
+									if (found_holy_texts)
 										src.visible_message(SPAN_ALERT("<b>A mysterious force smites [src.name] for inciting blasphemy!</b>"))
 										src.gib()
 									else
@@ -2240,7 +2240,7 @@
 						dab_id?.brain_damage_count += 10
 						if(src.get_brain_damage() > 60)
 							src.show_text(SPAN_ALERT("Your head hurts!"))
-					if(locate(/obj/item/bible) in src.loc)
+					if(locate(/obj/item/holy_texts) in src.loc)
 						if(H.limbs.l_arm)
 							src.limbs.l_arm.sever()
 							dab_id?.arm_count++
@@ -2249,7 +2249,7 @@
 							dab_id?.arm_count++
 						src.limbs.r_leg?.sever()
 						src.limbs.l_leg?.sever()
-						message = SPAN_ALERT("[src] does a sick dab on the bible!")
+						message = SPAN_ALERT("[src] does a sick dab on the holy texts!")
 						src.visible_message(SPAN_ALERT("An unseen force smites [src]'s' limbs off</B>!"))
 						playsound(src.loc, 'sound/misc/deepfrieddabs.ogg', 25,0, channel=VOLUME_CHANNEL_EMOTE)
 				else
