@@ -27,6 +27,11 @@
 		//abilityHolder.addAbility(/datum/targetable/critter/fireball)
 		//abilityHolder.addAbility(/datum/targetable/critter/fire_sprint)
 
+	Life()
+		. = ..()
+		if (istype(get_turf(src), /turf/space))
+			src.delStatus("burning")
+
 	setup_healths()
 		add_hh_flesh(100, 1)
 		add_hh_flesh_burn(100, 1)
