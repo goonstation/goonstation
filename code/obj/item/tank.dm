@@ -605,7 +605,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 		if(src in holy_texts_contents)
 			strength = fuel_moles/20
 			var/holy_texts_count = length(by_type[/obj/item/holy_texts])
-			strength /= sqrt(holy_texts_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of holy_textss
+			strength /= sqrt(holy_texts_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of holy texts
 			for_by_tcl(B, /obj/item/holy_texts)//world)
 				var/turf/T = get_turf(B.loc)
 				if(T)
