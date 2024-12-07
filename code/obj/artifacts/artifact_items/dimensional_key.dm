@@ -309,6 +309,10 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/ancient/artifact_fissure)
 		..()
 		AM.setStatus("art_fissure_corrosion", INFINITE_STATUS)
 
+	Exited(atom/movable/AM)
+		AM.delStatus("art_fissure_corrosion")
+		..()
+
 	proc/update_visual_mirrors(turf/station_ref, entrance_loc)
 		var/col_start
 		var/col_end

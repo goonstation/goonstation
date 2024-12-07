@@ -2993,6 +2993,7 @@
 		..()
 		var/turf/T = get_turf(src.owner)
 		T.visible_message(SPAN_ALERT("[src.owner] starts corroding!"))
+		src.corrosion_stacks = GET_ATOM_PROPERTY(src.owner, PROP_ATOM_ART_FISSURE_CORROSION_COUNT)
 
 	onUpdate(timePassed)
 		..()
@@ -3004,3 +3005,6 @@
 			new /obj/decal/cleanable/molten_item(get_turf(src.owner))
 			qdel(src.owner)
 			src.owner.delStatus(src)
+		else
+			APPLY_ATOM_PROPERTY(src.owner, PROP_ATOM_ART_FISSURE_CORROSION_COUNT, "art_fissure_corrosion", src.corrosion_stacks)
+
