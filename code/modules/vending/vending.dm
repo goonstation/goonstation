@@ -3408,3 +3408,4 @@ TYPEINFO(/obj/machinery/vending/janitor)
 
 		product_list += new/datum/data/vending_product(/obj/item/scripture/reddarkhb, 1, hidden=1 )
 		product_list += new/datum/data/vending_product(/obj/item/scripture/cluwnehb, 1, hidden=1,)
+		product_list += new/datum/data/vending_product(/obj/item/scripture/tidehb, 1, hidden=1 )
