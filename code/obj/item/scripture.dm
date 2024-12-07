@@ -28,6 +28,53 @@
 		icon_state = "[src.item_state_base]"
 		item_state = "[src.item_state_base]"
 
+
+/// IRL Religions
+
+/obj/item/scripture/bible
+	name = "Bible"
+	icon_state = "biblehb"
+	item_state = "biblehb"
+	desc = "The holy book of worshippers of God and the new testament."
+	item_state_base = "biblehb"
+
+/obj/item/scripture/quran
+	name = "Quran"
+	icon_state = "quranhb"
+	item_state = "quranhb"
+	desc = "The holy book of worshippers of Allah."
+	item_state_base = "quranhb"
+
+/obj/item/scripture/atheist
+	name = "Theory of Evolution"
+	icon_state = "nogodhb"
+	item_state = "nogodhb"
+	desc = "A book compiling proof that we evolved from monkeys instead of being directly made... Checkmate, Theists."
+	item_state_base = "nogodhb"
+
+/obj/item/scripture/tripitika
+	name = "Tripitika"
+	icon_state = "tripitikahb"
+	item_state = "tripitikahb"
+	desc = "The holy book of worshippers of Buddah."
+	item_state_base = "tripitikahb"
+
+/obj/item/scripture/torah
+	name = "Torah"
+	icon_state = "torahhb"
+	item_state = "torahhb"
+	desc = "The holy book of worshippers of God who solely believe in the old testament."
+	item_state_base = "torahhb"
+
+/obj/item/scripture/gurugranthsahibih
+	name = "Guru Granth Sahibih"
+	icon_state = "gurugranthsahibihhb"
+	item_state = "gurugranthsahibihhb"
+	desc = "The holy book of worshippers of Sikhisim."
+	item_state_base = "gurugranthsahibihhb"
+
+/// SS13 Religions
+
 /obj/item/scripture/eyehb
 	name = "guide to the skies"
 	icon_state = "eyehb"
