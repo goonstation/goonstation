@@ -270,6 +270,8 @@ proc/broadcast_to_all_gangs(var/message)
 	var/list/tags = list()
 	/// The minds of members of this gang who are currently on cooldown from redeeming their gear from the gang locker.
 	var/list/gear_cooldown = list()
+	/// List of antag datums who have obtained their free gun from the locker so far
+	var/list/free_gun_owners = list()
 	/// The gang locker of this gang.
 	var/obj/ganglocker/locker = null
 	/// The usable number of points that this gang has to spend with.
@@ -1883,6 +1885,17 @@ proc/broadcast_to_all_gangs(var/message)
 			if (headset.wiretap)
 				headset.remove_radio_upgrade()
 			headset.install_radio_upgrade(new /obj/item/device/radio_upgrade/gang(frequency = src.gang.gang_frequency))
+
+		var/datum/antagonist/antag_datum = user.mind.get_antagonist(ROLE_GANG_MEMBER) || user.mind.get_antagonist(ROLE_GANG_LEADER)
+		if (!(antag_datum in src.gang.free_gun_owners))
+			var/gun_type = pick(/obj/item/gun/kinetic/lopoint, /obj/item/gun/energy/lasergat)
+			user.stow_in_available(new gun_type(user.loc), FALSE)
+			if (antag_datum.id == ROLE_GANG_LEADER)
+				if (gun_type == /obj/item/gun/kinetic/lopoint)
+					user.stow_in_available(new /obj/item/ammo/bullets/bullet_9mm/lopoint)
+				else
+					user.stow_in_available(new /obj/item/ammo/power_cell/lasergat)
+			src.gang.free_gun_owners += antag_datum
 
 		if(user.mind.special_role == ROLE_GANG_LEADER && !src.gang.claimed_briefcase)
 			var/datum/game_mode/gang/gamemode = ticker.mode

@@ -72,13 +72,6 @@
 			else
 				H.put_in_hand_or_drop(src.headset)
 
-		var/gun_type = pick(/obj/item/gun/kinetic/lopoint, /obj/item/gun/energy/lasergat)
-		H.stow_in_available(new gun_type(H.loc), FALSE)
-		if (gun_type == /obj/item/gun/kinetic/lopoint)
-			H.stow_in_available(new /obj/item/ammo/bullets/bullet_9mm/lopoint)
-		else
-			H.stow_in_available(new /obj/item/ammo/power_cell/lasergat)
-
 		src.headset.install_radio_upgrade(new /obj/item/device/radio_upgrade/gang(frequency = src.gang.gang_frequency))
 
 	remove_equipment()
