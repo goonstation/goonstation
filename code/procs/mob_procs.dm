@@ -372,10 +372,10 @@
 		return 0
 	return 1
 
-/mob/proc/hearing_check(var/consciousness_check = 0)
+/mob/proc/hearing_check(var/consciousness_check = 0, for_audio = FALSE)
 	return 1
 
-/mob/living/carbon/human/hearing_check(var/consciousness_check = 0)
+/mob/living/carbon/human/hearing_check(var/consciousness_check = 0, for_audio = FALSE)
 	if (consciousness_check && (src.stat || src.getStatusDuration("unconscious") || src.sleeping))
 		// you may be physically capable of hearing it, but you're sure as hell not mentally able when you're out cold
 		.= 0
@@ -391,7 +391,7 @@
 		if (src.ear_disability || src.get_ear_damage(1))
 			.= 0
 
-/mob/living/silicon/hearing_check(var/consciousness_check = 0)
+/mob/living/silicon/hearing_check(var/consciousness_check = 0, for_audio = FALSE)
 	if (consciousness_check && (src.getStatusDuration("unconscious") || src.sleeping || src.stat))
 		return 0
 

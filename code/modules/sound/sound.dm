@@ -182,7 +182,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 		if (CLIENT_IGNORES_SOUND(C))
 			continue
 
-		if (!(flags & SOUND_IGNORE_DEAF) && !M.hearing_check(FALSE))
+		if (!(flags & SOUND_IGNORE_DEAF) && !M.hearing_check(FALSE, TRUE))
 			continue
 		Mloc = get_turf(M)
 
@@ -270,7 +270,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 	if(!src.client)
 		return
 
-	if (!(flags & SOUND_IGNORE_DEAF) && !src.hearing_check(FALSE))
+	if (!(flags & SOUND_IGNORE_DEAF) && !src.hearing_check(FALSE, TRUE))
 		return
 
 	var/turf/source_turf = get_turf(source)
@@ -353,7 +353,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 	if(!src.client)
 		return
 
-	if (!(flags & SOUND_IGNORE_DEAF) && !src.hearing_check(FALSE))
+	if (!(flags & SOUND_IGNORE_DEAF) && !src.hearing_check(FALSE, TRUE))
 		return
 
 	if (CLIENT_IGNORES_SOUND(src.client))
