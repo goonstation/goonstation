@@ -1,4 +1,11 @@
 
+(t)sat dec 07 24
+(u)LeahTheTech
+(p)21601
+(e)|
+(*)Every gang member now gets one FREE GUN from their locker.
+(+)The free gun is either a Lo-Point or Hafgan repeating laser. Gang leaders get a spare magazine too.
+(+)There will now only ever be two gangs on RP servers.
 (t)fri dec 06 24
 (u)tarmunora
 (+)Scuttlebots now have some internal storage for photos, which will pop out when the bot turns back into a hat (or otherwise dies)
