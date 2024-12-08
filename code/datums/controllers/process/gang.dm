@@ -271,7 +271,7 @@
 					targetGang.vandalism_tracker_target[chosen_area] = 2*GANG_VANDALISM_BASE_REQUIRED_SCORE/5
 			if (length(area_names) == 1)
 				broadcasts[targetGang] ="<span style='font-size:20px'> Cover [area_names[1]] in ProPaint tags, and smash it up for a bag!</span>"
-			else
+			else if (length(area_names) > 1)
 				broadcasts[targetGang] = "<span style='font-size:20px'> Cover [english_list(area_names)], in ProPaint tags, and smash them up for loot!</span>"
 		return broadcasts
 
