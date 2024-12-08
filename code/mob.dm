@@ -2515,6 +2515,7 @@
 	src.delStatus("radiation")
 	src.delStatus("critical_condition")
 	src.delStatus("recent_trauma")
+	src.delStatus("muted")
 	src.take_radiation_dose(-INFINITY)
 	src.change_eye_blurry(-INFINITY)
 	src.take_eye_damage(-INFINITY)
