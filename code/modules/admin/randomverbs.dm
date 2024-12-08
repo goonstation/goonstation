@@ -108,7 +108,7 @@
 	if (!msg)
 		return
 	if (src?.holder)
-		M.playsound_local_not_inworld('sound/misc/prayerchime.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS, channel = VOLUME_CHANNEL_MENTORPM)
+		M.playsound_local_not_inworld('sound/misc/prayerchime.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS | SOUND_IGNORE_DEAF, channel = VOLUME_CHANNEL_MENTORPM)
 		boutput(Mclient.mob, SPAN_NOTICE("You hear a voice in your head... <i>[msg]</i>"))
 
 	logTheThing(LOG_ADMIN, src.mob, "Subtle Messaged [constructTarget(Mclient.mob,"admin")]: [msg]")
@@ -2865,6 +2865,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				logTheThing(LOG_DIARY, src, "changed the syndicate colour scheme.", "admin")
 				message_admins("[key_name(src)] changed the syndicate colour scheme.")
 			if ("Reset")
+				nuke_op_camo_matrix = null
 				for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
 					A.color = null
 					var/obj/item/Item = A

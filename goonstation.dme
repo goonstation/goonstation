@@ -1958,7 +1958,6 @@
 #include "code\obj\critter\pets_small_animals.dm"
 #include "code\obj\critter\plants.dm"
 #include "code\obj\critter\sword.dm"
-#include "code\obj\critter\turtle.dm"
 #include "code\obj\decal\cleanable.dm"
 #include "code\obj\decal\flock.dm"
 #include "code\obj\decal\misc.dm"

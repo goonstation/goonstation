@@ -200,6 +200,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		src.armed = TRUE
 		src.anchored = ANCHORED
 		if (src.z == Z_LEVEL_STATION && src.boom_size == "nuke")
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_NUKE_PLANTED)
 			src.change_status_display()
 		if (!src.image_light)
 			src.image_light = image(src.icon, "nblightc")
