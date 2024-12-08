@@ -2920,10 +2920,10 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light,
 /obj/disposalpipe/segment/morgue{
 	name = "kitchen freezer pipe"
 	},
+/obj/machinery/light/traffic_light/medical_medbay,
 /turf/space,
 /area/space)
 "aOX" = (
@@ -3047,7 +3047,7 @@
 	dir = 4;
 	name = "kitchen freezer pipe"
 	},
-/obj/machinery/light/runway_light,
+/obj/machinery/light/traffic_light/medical_medbay,
 /turf/space,
 /area/space)
 "aRv" = (
@@ -5217,6 +5217,13 @@
 	icon_state = "fred2"
 	},
 /area/station/hallway/secondary/exit)
+"bxi" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/trader_right,
+/turf/space,
+/area/space)
 "bxq" = (
 /obj/railing/orange{
 	dir = 8
@@ -8365,10 +8372,10 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light,
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
+/obj/machinery/light/traffic_light/medical_medbay,
 /turf/space,
 /area/space)
 "crn" = (
@@ -14541,6 +14548,13 @@
 /obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/white,
 /area/station/security/quarters)
+"eji" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/medical_pathology/delay2,
+/turf/space,
+/area/space)
 "ejC" = (
 /obj/mesh/catwalk,
 /obj/cable{
@@ -15286,6 +15300,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"exq" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station,
+/turf/space,
+/area/space)
 "exy" = (
 /obj/machinery/disposal/small{
 	dir = 1;
@@ -20393,7 +20414,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/asylum/medbay)
 "gcR" = (
 /obj/disposalpipe/segment{
@@ -20842,6 +20863,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
+"gjQ" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay2,
+/turf/space,
+/area/space)
 "gjU" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio{
@@ -21408,7 +21437,7 @@
 /obj/item/storage/wall/medical{
 	pixel_y = 31
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/asylum/medbay)
 "gsH" = (
 /obj/cable{
@@ -23038,10 +23067,10 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay2,
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
+/obj/machinery/light/traffic_light/medical_medbay/delay2,
 /turf/space,
 /area/space)
 "gSY" = (
@@ -23189,6 +23218,14 @@
 	dir = 4
 	},
 /area/station/crew_quarters/hor)
+"gVn" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay2,
+/turf/space,
+/area/space)
 "gVv" = (
 /obj/decal/stripe_delivery,
 /obj/machinery/port_a_brig,
@@ -23545,13 +23582,12 @@
 /turf/simulated/wall/auto/jen/blue,
 /area/station/hallway/primary/southeast)
 "hbc" = (
-/obj/machinery/computer/airbr{
-	density = 0;
-	id = "asyshuttle_viro";
-	pixel_y = 33;
-	starts_established = 1
-	},
 /obj/decal/cleanable/dirt,
+/obj/machinery/computer/airbr/medical_pathology{
+	pixel_y = 33;
+	id = "medical_pathology";
+	density = 0
+	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "hbt" = (
@@ -26565,6 +26601,14 @@
 /obj/structure/woodwall,
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/east)
+"hZA" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/medical_medbay/delay2,
+/turf/space,
+/area/space)
 "hZS" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -26810,6 +26854,13 @@
 	},
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/clown)
+"icF" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay3,
+/turf/space,
+/area/space)
 "idR" = (
 /turf/simulated/floor/orangeblack/corner{
 	dir = 1
@@ -26897,7 +26948,7 @@
 	pixel_x = -1;
 	pixel_y = 31
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/asylum/medbay)
 "ieH" = (
 /turf/simulated/floor/stairs/wide{
@@ -28316,10 +28367,10 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay4,
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
+/obj/machinery/light/traffic_light/medical_medbay/delay4,
 /turf/space,
 /area/space)
 "iDB" = (
@@ -29599,6 +29650,13 @@
 /obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"iYr" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/medical_asylum/delay3,
+/turf/space,
+/area/space)
 "iYu" = (
 /obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -30888,6 +30946,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/lab)
+"jsb" = (
+/obj/airbridge_controller{
+	id = "medical_pathology";
+	tunnel_width = 2
+	},
+/turf/space,
+/area/space)
 "jso" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -31685,6 +31750,13 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
+"jEw" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay4,
+/turf/space,
+/area/space)
 "jED" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -32394,6 +32466,13 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
+"jNJ" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay4,
+/turf/space,
+/area/space)
 "jNS" = (
 /obj/railing/green{
 	dir = 4;
@@ -36639,14 +36718,21 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"ldF" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/medical_asylum/delay4,
+/turf/space,
+/area/space)
 "ldH" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay4,
 /obj/disposalpipe/segment/morgue{
 	name = "kitchen freezer pipe"
 	},
+/obj/machinery/light/traffic_light/medical_medbay/delay4,
 /turf/space,
 /area/space)
 "ldT" = (
@@ -39542,8 +39628,9 @@
 /area/station/medical/medbay/pharmacy)
 "lTt" = (
 /obj/airbridge_controller{
-	id = "asyshuttle_med";
-	tunnel_width = 2
+	id = "medical_medbay";
+	tunnel_width = 2;
+	primary_controller = 1
 	},
 /turf/space,
 /area/space)
@@ -40445,10 +40532,10 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay3,
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
+/obj/machinery/light/traffic_light/medical_medbay/delay3,
 /turf/space,
 /area/space)
 "mfC" = (
@@ -40620,6 +40707,14 @@
 /area/station/crew_quarters/bathroom{
 	name = "South Bathroom"
 	})
+"mjI" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/medical_medbay,
+/turf/space,
+/area/space)
 "mjK" = (
 /obj/lattice,
 /obj/disposalpipe/segment/transport,
@@ -41228,6 +41323,13 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/mining/staff_room)
+"muT" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay2,
+/turf/space,
+/area/space)
 "muV" = (
 /obj/cabinet/medicalmenders,
 /obj/disposalpipe/segment/morgue{
@@ -42299,8 +42401,9 @@
 /area/station/maintenance/outer/sw)
 "mLC" = (
 /obj/airbridge_controller{
-	id = "asyshuttle_viro";
-	tunnel_width = 2
+	id = "medical_pathology";
+	tunnel_width = 2;
+	primary_controller = 1
 	},
 /turf/space,
 /area/space)
@@ -42655,11 +42758,11 @@
 	dir = 6;
 	icon_state = "lattice-dir-b"
 	},
-/obj/machinery/light/runway_light/delay5,
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
 /obj/machinery/ai_status_display,
+/obj/machinery/light/traffic_light/medical_medbay/delay5,
 /turf/space,
 /area/space)
 "mTc" = (
@@ -43021,6 +43124,13 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
+"mYi" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay4,
+/turf/space,
+/area/space)
 "mYl" = (
 /obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
@@ -54972,7 +55082,7 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 8
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/asylum/medbay)
 "qGk" = (
 /obj/table/auto,
@@ -55762,11 +55872,11 @@
 	dir = 10;
 	icon_state = "lattice-dir-b"
 	},
-/obj/machinery/light/runway_light/delay5,
 /obj/disposalpipe/segment/morgue{
 	icon_state = "pipe-c";
 	name = "kitchen freezer pipe"
 	},
+/obj/machinery/light/traffic_light/medical_medbay/delay5,
 /turf/space,
 /area/space)
 "qRx" = (
@@ -58552,6 +58662,13 @@
 /obj/effects/background_objects/x3,
 /turf/space,
 /area/space)
+"rIZ" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/medical_pathology/delay4,
+/turf/space,
+/area/space)
 "rJi" = (
 /obj/rack,
 /obj/item/device/light/flashlight{
@@ -58847,6 +58964,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
+"rOn" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/medical_pathology/delay3,
+/turf/space,
+/area/space)
 "rOo" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -59534,6 +59658,13 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/engine/singcore)
+"rZa" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/medical_asylum/delay2,
+/turf/space,
+/area/space)
 "rZd" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -59838,6 +59969,13 @@
 	dir = 8
 	},
 /area/listeningpost)
+"scW" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/medical_pathology/delay5,
+/turf/space,
+/area/space)
 "sda" = (
 /obj/landmark/start/job/scientist,
 /obj/stool/chair/purple{
@@ -61753,7 +61891,7 @@
 /obj/machinery/door/airlock/pyro/medical/alt,
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/access/maint,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/asylum/medbay)
 "sIs" = (
 /obj/cable{
@@ -62746,6 +62884,13 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
+"sYx" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/medical_asylum,
+/turf/space,
+/area/space)
 "sYD" = (
 /obj/stool/chair/office/red{
 	dir = 1
@@ -63749,6 +63894,13 @@
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"tnH" = (
+/obj/airbridge_controller{
+	id = "medical_medbay";
+	tunnel_width = 2
+	},
+/turf/space,
+/area/space)
 "tnN" = (
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/visitation)
@@ -65968,6 +66120,13 @@
 /obj/iv_stand,
 /turf/simulated/floor/greenwhite,
 /area/station/medical/cdc)
+"tUl" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/trader_left,
+/turf/space,
+/area/space)
 "tUy" = (
 /obj/railing/orange{
 	dir = 4
@@ -67638,11 +67797,11 @@
 /turf/simulated/wall/auto/jen/blue,
 /area/station/medical/medbay/surgery/storage)
 "uxs" = (
-/obj/machinery/computer/airbr{
-	density = 0;
-	id = "asyshuttle_med";
+/obj/machinery/computer/airbr/medical_medbay{
 	pixel_y = 33;
-	starts_established = 1
+	id = "medical_medbay";
+	starts_established = 1;
+	density = 0
 	},
 /turf/simulated/floor/black,
 /area/station/medical/medbay)
@@ -67740,7 +67899,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/chapel/sanctuary)
 "uzl" = (
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/asylum/medbay)
 "uzm" = (
 /obj/cable{
@@ -72344,6 +72503,13 @@
 	icon_state = "fblue6"
 	},
 /area/station/bridge)
+"vPZ" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/medical_pathology,
+/turf/space,
+/area/space)
 "vQu" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
@@ -72695,12 +72861,8 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_x = -6;
-	pixel_y = 26
-	},
 /obj/disposalpipe/segment/transport,
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "vVK" = (
@@ -76692,10 +76854,10 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay2,
 /obj/disposalpipe/segment/morgue{
 	name = "kitchen freezer pipe"
 	},
+/obj/machinery/light/traffic_light/medical_medbay/delay2,
 /turf/space,
 /area/space)
 "xaV" = (
@@ -76714,6 +76876,13 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/ghostdrone_factory)
+"xaY" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay3,
+/turf/space,
+/area/space)
 "xbh" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left,
@@ -77422,6 +77591,14 @@
 	},
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/chapel/sanctuary)
+"xle" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/medical_asylum/delay5,
+/turf/space,
+/area/space)
 "xli" = (
 /obj/table/auto,
 /obj/item/device/camera_viewer/public,
@@ -80058,6 +80235,13 @@
 	dir = 8
 	},
 /area/station/bridge)
+"xXc" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay3,
+/turf/space,
+/area/space)
 "xXd" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -80734,10 +80918,10 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay3,
 /obj/disposalpipe/segment/morgue{
 	name = "kitchen freezer pipe"
 	},
+/obj/machinery/light/traffic_light/medical_medbay/delay3,
 /turf/space,
 /area/space)
 "ygs" = (
@@ -107006,17 +107190,17 @@ ieL
 ltH
 ieL
 cNV
-glP
+rIZ
 cNV
-ufk
 cNV
+rOn
 oeC
 eOr
 xMW
+eji
 cNV
-xVz
 cNV
-rQl
+vPZ
 xyx
 rdj
 rdj
@@ -107623,7 +107807,7 @@ dAv
 dAv
 muh
 cNV
-cNV
+scW
 cNV
 xyx
 rdj
@@ -108526,7 +108710,7 @@ dAv
 dAv
 dAv
 dAv
-mLC
+jsb
 rdj
 rdj
 rdj
@@ -110026,17 +110210,17 @@ snQ
 pnF
 pFp
 cNV
-glP
+rIZ
 cNV
-ufk
 cNV
+rOn
 oeC
 eOr
 xMW
+eji
 cNV
-xVz
 cNV
-rQl
+vPZ
 cNV
 pEb
 oKD
@@ -123880,7 +124064,7 @@ rwP
 rdj
 rdj
 ufx
-xLs
+mjI
 rdj
 rdj
 rdj
@@ -124484,7 +124668,7 @@ rwP
 rdj
 rdj
 rdj
-qJK
+hZA
 rdj
 rdj
 tIo
@@ -124797,7 +124981,7 @@ uzl
 uzl
 uzl
 sIh
-lTt
+tnH
 rdj
 rdj
 lTt
@@ -125088,7 +125272,7 @@ psF
 rdj
 rdj
 rdj
-qJK
+hZA
 rdj
 rdj
 tIo
@@ -126572,16 +126756,16 @@ xDj
 jBs
 yes
 cNV
-rQl
+exq
 cNV
 cNV
-xVz
+muT
 cNV
 cNV
-xVz
+xaY
 cNV
 cNV
-rQl
+jNJ
 cNV
 cNV
 cDt
@@ -128988,16 +129172,16 @@ nlB
 yes
 cNV
 cNV
-rQl
+exq
 nkb
 cNV
-xVz
+muT
 kzO
 kzO
-xVz
+xaY
 cNV
 cNV
-rQl
+jNJ
 cNV
 cNV
 cDt
@@ -144965,23 +145149,23 @@ fKu
 rdj
 rdj
 rdj
-rdj
-rdj
+tUl
+icF
 sdZ
 coS
 sdZ
+jEw
+gjQ
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
+bxi
+xXc
 sdZ
 coS
 sdZ
-rdj
-rdj
+mYi
+gVn
 rdj
 rdj
 rdj
@@ -153031,17 +153215,17 @@ rdj
 rdj
 rdj
 tKP
-ufk
+ldF
 cNV
-ufk
 cNV
+iYr
 ate
 bqd
 bAQ
+rZa
 cNV
-ufk
 cNV
-ufk
+sYx
 dgW
 xjf
 rGb
@@ -153332,7 +153516,7 @@ rdj
 rdj
 rdj
 rdj
-bkV
+vVp
 rdj
 rdj
 rdj
@@ -153634,7 +153818,7 @@ rdj
 rdj
 rdj
 rdj
-vVp
+xle
 rdj
 rdj
 iSG
@@ -153936,7 +154120,7 @@ rdj
 rdj
 rdj
 rdj
-bkV
+vVp
 rdj
 iSG
 iSG
@@ -154540,7 +154724,7 @@ rdj
 rdj
 rdj
 rdj
-bkV
+vVp
 iSG
 iSG
 iSG
@@ -155144,7 +155328,7 @@ rdj
 rdj
 rdj
 rdj
-bkV
+vVp
 rdj
 iSG
 iSG
@@ -155446,7 +155630,7 @@ rdj
 rdj
 rdj
 rdj
-vVp
+xle
 rdj
 rdj
 iSG
@@ -155748,7 +155932,7 @@ rdj
 rdj
 rdj
 rdj
-bkV
+vVp
 rdj
 rdj
 rdj
@@ -156051,17 +156235,17 @@ rdj
 rdj
 rdj
 muh
-ufk
+ldF
 cNV
-ufk
 cNV
+iYr
 ate
 bqd
 bAQ
+rZa
 cNV
-ufk
 cNV
-ufk
+sYx
 rvo
 dqQ
 dRD
