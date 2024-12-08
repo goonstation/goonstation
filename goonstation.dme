@@ -847,6 +847,7 @@
 #include "code\modules\antagonists\slasher\abilities\stagger.dm"
 #include "code\modules\antagonists\slasher\abilities\summon_machete.dm"
 #include "code\modules\antagonists\slasher\abilities\take_control.dm"
+#include "code\modules\antagonists\space_phoenix\space_phoenix.dm"
 #include "code\modules\antagonists\spy_thief\spy_thief.dm"
 #include "code\modules\antagonists\syndicate_cyborg\emagged_cyborg.dm"
 #include "code\modules\antagonists\syndicate_cyborg\syndicate_cyborg.dm"
