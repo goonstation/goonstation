@@ -489,6 +489,48 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		if(connected_scuttlebot != null)
 			connected_scuttlebot.return_to_owner()
 
+/obj/item/clothing/glasses/scuttlebot_vr/mail
+	name = "P1ge0n remote controller"
+	desc = "A pair of VR goggles connected to a remote scuttlebot. Use them on the scuttlebot to turn it back into a hat."
+	icon_state = "vr_scuttlebot"
+	item_state = "vr_scuttlebot"
+	var/mob/living/critter/robotic/scuttlebot/mail/connected_pigeon = null
+
+	equipped(var/mob/user, var/slot) //On equip, if there's a scuttlebot, control it
+		..()
+		var/mob/living/carbon/human/H = user
+		if(connected_pigeon != null)
+			if(connected_pigeon.mind)
+				boutput(user, SPAN_ALERT("The P1geon is already active somehow!"))
+			else if(!connected_pigeon.loc)
+				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The P1geon couldnt be found."))
+			else
+				H.network_device = src.connected_pigeon
+				connected_pigeon.controller = H
+				user.mind.transfer_to(connected_pigeon)
+		else
+			boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot is likely destroyed."))
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (istype(target, /mob/living/critter/robotic/scuttlebot/mail))
+			var/mob/living/critter/robotic/scuttlebot/mail/S = target
+			if (connected_pigeon != S)
+				boutput(user, "You try to put the goggles back into the hat but it grumps at you, not recognizing the goggles.")
+				return 1
+			if (S.linked_hat != null)
+				S.linked_hat.set_loc(get_turf(S))
+			boutput(user, "You stuff the goggles back into the P1ge0n. It powers down with a low whirr.")
+			S.drop_item()
+			qdel(S)
+			qdel(src)
+		else
+			..()
+
+	unequipped(var/mob/user) //Someone might have removed them from us. If we're inside the scuttlebot, we're forced out
+		..()
+		if(connected_scuttlebot != null)
+			connected_scuttlebot.return_to_owner()
+
 /obj/item/clothing/glasses/vr_fake //Only exist IN THE MATRIX.  Used to log out.
 	name = "\improper VR goggles"
 	desc = "A pair of VR goggles running a personal simulation.  You should know this, being IN the simulation and all."
