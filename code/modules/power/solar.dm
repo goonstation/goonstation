@@ -336,17 +336,31 @@ TYPEINFO(/obj/machinery/power/solar)
 		return
 
 	active = !active
-	if (active)
+	user.show_text("You [active ? "activate" : "deactivate"] [src]'s solar tracking.", "blue")
+	if (src.is_active_and_powered())
 		src.tracker_update(tracker.sun_angle)
-		src.icon_state = initial(src.icon_state)
-	else
-		src.icon_state = "solar0"
+
+	src.update_solar_icon()
 
 /obj/machinery/computer/solar_control/get_desc()
-	. = "<br />It is currently: [active ? "tracking the sun" : "disabled"]"
+	. = "<br />It is currently <em>[src.is_active_and_powered() ? "tracking the sun" : "disabled"]</em>"
 	. += "<br />Generated power: [round(lastgen)] W"
 	. += "<br />Current Orientation: [cdir]&deg; ([angle2text(cdir)])"
 	. += "<br />Sun Orientation: [tracker.sun_angle]&deg; ([angle2text(tracker.sun_angle)])"
+
+/obj/machinery/computer/solar_control/proc/is_active_and_powered()
+	. = active && !(status & (NOPOWER | BROKEN))
+
+/obj/machinery/computer/solar_control/proc/update_solar_icon()
+	if (src.is_active_and_powered())
+		src.icon_state = initial(src.icon_state)
+	else
+		src.icon_state = "solar0"
+	src.UpdateIcon()
+
+/obj/machinery/computer/solar_control/power_change()
+	..()
+	src.update_solar_icon()
 
 /obj/machinery/computer/solar_control/emag_act(var/mob/user)
 	. = ..()
