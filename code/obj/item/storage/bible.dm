@@ -309,7 +309,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state ="holytexts"
 
-	proc/do_heal_message(var/mob/user, var/mob/target, amount)
+	do_heal_message(var/mob/user, var/mob/target, amount)
 		switch(amount)
 			if (1 to 8)
 				target.visible_message(SPAN_ALERT("<B>[user] heals [target] mending [his_or_her(target)] wounds!</B>"))
