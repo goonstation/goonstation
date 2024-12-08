@@ -506,15 +506,17 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 			.+= "It isn't working right. You could use a multitool to reset it.<br>"
 		. +=  "It reads, \"<em>[src.realLawText]</em>\""
 
-	proc/activate()
+	proc/activate(mob/user)
 		if (src.lawText == src.realLawText)
 			return
-		src.name = initial(src.name)
-		src.lawText = src.realLawText
 		var/obj/machinery/lawrack/rack = src.loc
 		if(istype(rack))
 			rack.UpdateLaws()
 			tgui_process.update_uis(rack)
+		logTheThing(LOG_STATION, user, "[constructName(user)] activates disguised ai law turning [src.lawText] into [src.realLawText].")
+		message_admins("[key_name(user)] activates disguised ai law turning [src.lawText] into [src.realLawText].")
+		src.name = initial(src.name)
+		src.lawText = src.realLawText
 
 TYPEINFO(/obj/item/remote/disguised_module)
 	mats = list("conductive"=2)
@@ -532,7 +534,7 @@ TYPEINFO(/obj/item/remote/disguised_module)
 		if(!src.connected_law)
 			boutput(user, SPAN_ALERT("The remote emits a low buzzing indicating it has no connected law module!"))
 			return
-		src.connected_law.activate()
+		src.connected_law.activate(user)
 
 /******************** Hologram Expansions ********************/
 
