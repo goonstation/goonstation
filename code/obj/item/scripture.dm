@@ -127,8 +127,8 @@
 	item_state_base = "tidehb"
 
 /obj/item/scripture/atheist
-	name = ""
-	icon_state = "tidehb"
-	item_state = "tidehb"
-	desc = "A picture book teaching assistants right from wrong."
-	item_state_base = "tidehb"
+	name = "Origin of Species"
+	icon_state = "nogodhb"
+	item_state = "nogodhb"
+	desc = "A book compiling UNDENIABLE, ABSOLUTE, IRREFUTABLE proof that we evolved from monkeys instead of being directly made... Checkmate, Theists."
+	item_state_base = "nogodhb"
