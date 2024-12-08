@@ -4191,6 +4191,10 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
+			reaction_temperature(exposed_temperature, exposed_volume)
+				return // avoid renaming in parent
+
+
 		fooddrink/kombucha
 			name = "kombucha"
 			id = "kombucha"
