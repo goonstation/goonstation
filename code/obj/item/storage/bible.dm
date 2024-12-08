@@ -308,3 +308,14 @@
 	icon_state ="holytexts"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state ="holytexts"
+
+	proc/do_heal_message(var/mob/user, var/mob/target, amount)
+		switch(amount)
+			if (1 to 8)
+				target.visible_message(SPAN_ALERT("<B>[user] heals [target] mending [his_or_her(target)] wounds!</B>"))
+			if (9 to 15)
+				target.visible_message(SPAN_ALERT("<B>[user] heals [target] with the power of the Spirits!</B>"))
+			if (16 to 24)
+				target.visible_message(SPAN_ALERT("<B>[user] heals [target] by the will of the HOLY ONE!</B>"))
+			if (25 to INFINITY)
+				target.visible_message(SPAN_ALERT("<B>[user] heals [target] in service of heaven!</B>"))
