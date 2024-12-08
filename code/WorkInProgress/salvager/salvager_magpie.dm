@@ -539,7 +539,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 	omnitool
 		comname = "Omnitool"
 		desc = "Replacement omnitool.  No one wants to carry around each tool individually."
-		comtype = /obj/item/tool/omnitool
+		comtype = /obj/item/tool/omnitool/salvager
 		price = 100
 
 	comm_upgrade

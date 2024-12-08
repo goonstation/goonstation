@@ -11,7 +11,7 @@
 	custom_suicide = 1
 
 	///List of tool settings
-	var/list/modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING)
+	var/list/modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING, OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING, OMNI_MODE_WELDING)
 	///The current setting
 	var/mode = OMNI_MODE_PRYING
 
@@ -66,6 +66,18 @@
 				. += "cutting"
 			if(OMNI_MODE_WELDING)
 				. += "welding"
+			if(OMNI_MODE_PLANTING)
+				. += "planter"
+			if(OMNI_MODE_SHEARING)
+				. += "shearing"
+			if(OMNI_MODE_NEEDLING)
+				. += "needling"
+			if(OMNI_MODE_SPINDLING)
+				. += "spindling"
+			if(OMNI_MODE_MOPPING)
+				. += "mopping"
+			if(OMNI_MODE_SHAKING)
+				. += "shaking"
 		. += " mode."
 
 	suicide(var/mob/user)
@@ -270,7 +282,13 @@
 			return "Hit the omnitool on a piece of clothing to hide it. Retrieve the tool by using the <b>*flex</b> ([keybind]) emote."
 		else
 			return null
+/obj/item/tool/omnitool/salvager
+	///List of tool settings
+	var/list/modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING)
+	///The current setting
+	var/mode = OMNI_MODE_PRYING
 
+	var/list/datum/contextAction/contexts = list()
 
 /obj/item/tool/omnitool/syndicate
 	icon_state = "syndicate-omnitool-prying"
@@ -321,9 +339,9 @@
 	modes = listlist(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING, OMNI_MODE_WELDING)
 
 /obj/item/omnitool/hop
+	mode = OMNI_MODE_CUTTING
 	prefix = "hop-omnitool"
 	desc = "A multitool for the Head of Personnel to be able to work and rapidly switch between the various jobs in their department."
-	animated_changes = TRUE
 	prefix = "hop-omnitool"
 	modes = list(OMNI_MODE_CUTTING, OMNI_MODE_PLANTING, OMNI_MODE_SHEARING, OMNI_MODE_SPINDLING, OMNI_MODE_NEEDLING, OMNI_MODE_MOPPING, OMNI_MODE_SHAKING)
 
