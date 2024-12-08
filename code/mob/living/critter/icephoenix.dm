@@ -26,7 +26,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/sail)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/return_to_station)
-		//abilityHolder.addAbility(/datum/targetable/critter/flamethrower/throwing)
+		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/glacier)
 		//abilityHolder.addAbility(/datum/targetable/critter/fireball)
 		//abilityHolder.addAbility(/datum/targetable/critter/fire_sprint)
 

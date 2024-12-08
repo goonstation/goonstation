@@ -39,3 +39,154 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		src.object.desc = "Toggles if you will return to station space when traveling off the current Z level.<br><br>Currently toggled " + \
 			"[!phoenix.travel_back_to_station ? "off" : "on"]."
 
+/datum/targetable/critter/ice_phoenix/glacier
+	name = "Glacier"
+	desc = "Create a 5 tile wide compacted snow wall, perpendicular to the cast direction, or otherwise in a random direction. Can be destroyed by heat or force."
+	cooldown = 2 SECONDS // 20 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
+
+	cast(atom/target)
+		. = ..()
+		var/wall_style
+
+		var/turf/T = get_turf(target)
+		if (T == get_turf(src.holder.owner))
+			wall_style = pick("vertical", "horizontal")
+		else
+			var/angle = get_angle(src.holder.owner, T)
+			if ((angle > 45 && angle < 135) || (angle > -135 && angle < -45))
+				wall_style = "vertical"
+			else if ((angle > -45 && angle < 45) || (angle < -135 && angle > 135))
+				wall_style = "horizontal"
+			else
+				wall_style = pick("vertical", "horizontal")
+
+		src.create_ice_wall(T, wall_style)
+
+	proc/create_ice_wall(turf/center, spread_type)
+		var/turf/T
+		if (spread_type == "vertical")
+			if (!center.density)
+				new /obj/ice_phoenix_ice_wall/vertical_mid(center)
+			T = get_step(center, NORTH)
+			if (!T.density)
+				new /obj/ice_phoenix_ice_wall/vertical_mid(T)
+			T = get_step(T, NORTH)
+			if (!T.density)
+				new /obj/ice_phoenix_ice_wall/north(T)
+
+			T = get_step(center, SOUTH)
+			if (!T.density)
+				new /obj/ice_phoenix_ice_wall/vertical_mid(T)
+			T = get_step(T, SOUTH)
+			if (!T.density)
+				new /obj/ice_phoenix_ice_wall/south(T)
+			return
+		if (!center.density)
+			new /obj/ice_phoenix_ice_wall/horizontal_mid(center)
+		T = get_step(center, EAST)
+		if (!T.density)
+			new /obj/ice_phoenix_ice_wall/horizontal_mid(T)
+		T = get_step(T, EAST)
+		if (!T.density)
+			new /obj/ice_phoenix_ice_wall/east(T)
+
+		T = get_step(center, WEST)
+		if (!T.density)
+			new /obj/ice_phoenix_ice_wall/horizontal_mid(T)
+		T = get_step(T, WEST)
+		if (!T.density)
+			new /obj/ice_phoenix_ice_wall/west(T)
+
+ABSTRACT_TYPE(/obj/ice_phoenix_ice_wall)
+/obj/ice_phoenix_ice_wall
+	name = "compacted snow wall"
+	desc = "A wall of compacted snow and ice. An obstacle, yet, weak."
+	icon = 'icons/turf/walls/moon.dmi'
+	density = TRUE
+	anchored = ANCHORED_ALWAYS
+	default_material = "ice"
+	mat_changename = FALSE
+	var/hits_left = 3
+
+	horizontal_mid
+		icon_state = "moon-12"
+
+	east
+		icon_state = "moon-8"
+
+	west
+		icon_state = "moon-4"
+
+	vertical_mid
+		icon_state = "moon-3"
+
+	north
+		icon_state = "moon-2"
+
+	south
+		icon_state = "moon-1"
+
+	attack_hand(mob/user)
+		attack_particle(user, src)
+		user.lastattacked = src
+
+		if (istype(user, /mob/living/critter/ice_phoenix))
+			qdel(src)
+			return
+
+		boutput(user, SPAN_ALERT("Unfortunately, the snow is a little too compacted to be destroyed by hand."))
+
+	attackby(obj/item/I, mob/user)
+		attack_particle(user, src)
+		user.lastattacked = src
+
+		if (isweldingtool(I))
+			user.visible_message(SPAN_ALERT("[user] melts [src]!"), SPAN_ALERT("You melt [src]!"))
+			qdel(src)
+		else if (I.force)
+			if (I.force >= 20)
+				user.visible_message(SPAN_ALERT("[user] destroys [src]!"), SPAN_ALERT("You destroy [src]!"))
+				qdel(src)
+				return
+			src.hits_left--
+			if (src.hits_left > 0)
+				user.visible_message(SPAN_ALERT("[user] damages [src]!"), SPAN_ALERT("You damage [src]!"))
+			else
+				user.visible_message(SPAN_ALERT("[user] destroys [src]!"), SPAN_ALERT("You destroy [src]!"))
+				qdel(src)
+		else
+			..()
+
+	bullet_act(obj/projectile/P)
+		if (P.power >= 20)
+			qdel(src)
+		else
+			src.hits_left--
+			if (src.hits_left > 0)
+				qdel(src)
+			else
+				..()
+
+	hit_check(datum/thrown_thing/thr)
+
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		..()
+		if (AM.throwforce > 20)
+			qdel(src)
+		else
+			src.hits_left--
+			if (src.hits_left <= 0)
+				qdel(src)
+
+	ex_act()
+		qdel(src)
+
+	blob_act()
+		qdel(src)
+
+	// need snow particle effects for destroying the wall
+	disposing()
+		// create water here
+		..()
