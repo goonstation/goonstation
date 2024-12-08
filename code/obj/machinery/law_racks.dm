@@ -617,17 +617,22 @@
 		src.law_circuits[slotNum]=equipped
 		user.u_equip(equipped)
 		equipped.set_loc(src)
+		equipped.on_insert(slotNum)
 		playsound(src, 'sound/machines/law_insert.ogg', 80)
 		user.visible_message(SPAN_ALERT("[user] slides a module into the law rack"), SPAN_ALERT("You slide the module into the rack."))
 		tgui_process.update_uis(src)
+		var/extralog = null
 		if(istype(equipped,/obj/item/aiModule/hologram_expansion))
 			var/obj/item/aiModule/hologram_expansion/holo = equipped
 			src.holo_expansions |= holo.expansion
 		else if(istype(equipped,/obj/item/aiModule/ability_expansion))
 			var/obj/item/aiModule/ability_expansion/expansion = equipped
 			src.ai_abilities |= expansion.ai_abilities
-		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> an AI law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
-		message_admins("[key_name(user)] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]")
+		else if(istype(equipped,/obj/item/aiModule/disguised))
+			var/obj/item/aiModule/disguised/disguised = equipped
+			extralog = "(Disguised) Hidden law: [disguised.realLawText]"
+		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> an AI law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]. [extralog]")
+		message_admins("[key_name(user)] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]. [extralog]")
 		UpdateIcon()
 		UpdateLaws()
 
