@@ -301,3 +301,10 @@
 				user.show_text("You hide [W] in \the [src].", "blue")
 				return
 		..()
+
+/obj/item/bible/neutral
+	name = "holy texts"
+	icon = 'icons/obj/items/storage.dmi'
+	icon_state ="holytexts"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
+	item_state ="holytexts"

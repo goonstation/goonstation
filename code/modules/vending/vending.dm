@@ -3399,6 +3399,8 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		product_list += new/datum/data/vending_product(/obj/item/scripture/redwhitehb, 1 )
 		product_list += new/datum/data/vending_product(/obj/item/scripture/skeletonhb, 1 )
 		product_list += new/datum/data/vending_product(/obj/item/scripture/xhb, 1 )
+		product_list += new/datum/data/vending_product(/obj/item/scripture/atheist, 1 )
+		product_list += new/datum/data/vending_product(/obj/item/bible/neutral, 1 )
 
 		product_list += new/datum/data/vending_product(/obj/item/scripture/reddarkhb, 1, hidden=1 )
 		product_list += new/datum/data/vending_product(/obj/item/scripture/cluwnehb, 1, hidden=1,)
