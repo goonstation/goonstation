@@ -151,6 +151,7 @@
 		else
 			if(abs(src._last_rpm_icon_update - src.RPM) > 10)
 				src._last_rpm_icon_update = src.RPM
+				// reduce image flicker while clients download the generated icon
 				var/image/old_icon
 				if(src.icon_state == "turbine_spin_speed")
 					old_icon = src.SafeGetOverlayImage("old_icon", src.icon, "turbine_spin_speed", src.layer-0.1)
