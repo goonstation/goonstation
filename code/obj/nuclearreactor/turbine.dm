@@ -151,6 +151,11 @@
 		else
 			if(abs(src._last_rpm_icon_update - src.RPM) > 10)
 				src._last_rpm_icon_update = src.RPM
+				var/image/old_icon = src.SafeGetOverlayImage("old_icon", src.icon, "turbine_spin_speed", src.layer-0.1)
+				if(old_icon)
+					src.AddOverlays(old_icon, "old_icon")
+					SPAWN(0.5 SECONDS)
+						src.ClearSpecificOverlays("old_icon")
 				src.icon = src.generate_icon()
 				src.icon_state = "turbine_spin_speed"
 				UpdateIcon()
