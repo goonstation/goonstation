@@ -2979,6 +2979,11 @@
 /datum/statusEffect/ice_phoenix
 	icon_state = "mutiny"
 
+/datum/statusEffect/ice_phoenix/empowered_feather
+	id = "phoenix_empowered_feather"
+	desc = "Your next feather attack will deal an extra 10% of a pod's current life on hit, as well as gain a 25% disruption chance."
+	effect_quality = STATUS_QUALITY_POSITIVE
+
 /datum/statusEffect/ice_phoenix/sail
 	id = "ice_phoenix_sail"
 	desc = "You are sailing the solar winds, giving you a large movespeed buff while in space."

@@ -31,6 +31,8 @@
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/map)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/thermal_shock)
 
+		src.setStatus("phoenix_empowered_feather", INFINITE_STATUS)
+
 	Life()
 		. = ..()
 		if (istype(get_turf(src), /turf/space))
@@ -82,9 +84,6 @@
 	//		if ("scream")
 	//			return 2
 	//	return ..()
-
-	Life()
-		. = ..()
 
 	//get_disorient_protection_eye()
 	//	return(max(..(), 80))

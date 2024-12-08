@@ -1147,29 +1147,51 @@ toxic - poisons
 	name = "ice feather"
 	sname = "ice feather"
 	icon_state = "flare"
-	damage = 1.1 // unique effect per atom hit. set to non-zero to pass any damage >= 1 checks for message outputs, etc
+	damage = 0.0001 // unique effect per atom hit, but set to non-zero to bypass 0 power/damage checks
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
-	disruption = 5
+	disruption = 0
 	shot_sound = 'sound/weapons/flaregun.ogg'
 	implanted = null // maybe have some implant if a feather is fired?
-	/*
-	collide(atom/A)
-		if (istype(A, /obj/window))
-			src.master.power = 0
-		else if (istype(A, /mob))
+
+	on_pre_hit(atom/hit, angle, obj/projectile/P)
+		. = ..()
+		if (istype(hit, /mob))
 			var/mob/M = hit
 			M.TakeDamage("All", 10, damage_type = src.damage_type)
+			M.changeStatus("shivering", 3 SECONDS)
 		else if (isvehicle(hit))
-			src.master.power = 35
-			var/mob/living/critter/ice_phoenix/phoenix = src.master.shooter
-			//if (!ON_COOLDOWN())
-		. = ..()
-	*/
+			src.damage = 25
+			src.disruption = 5
+			var/turf/T = get_turf(hit)
+			if (!istype(T, /turf/space))
+				src.damage = 5
+				src.disruption = 0
+			else
+				if (P.shooter.hasStatus("phoenix_empowered_feather"))
+					var/obj/machinery/vehicle/vehicle = hit
+					if (istype(vehicle))
+						src.damage += vehicle.health * 0.1
+						src.disruption = 25
+		src.generate_stats()
+		P.initial_power = src.power
+
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if (istype(hit, /obj/window))
-			hit.visible_message("[src] uselessly clunks off [hit]!")
+			hit.visible_message(SPAN_ALERT("\the [src] uselessly clunks off [hit]!"))
 		. = ..()
+
+	on_end(obj/projectile/P)
+		if (P.shooter.hasStatus("phoenix_empowered_feather"))
+			P.shooter.delStatus("phoenix_empowered_feather")
+			SPAWN(10 SECONDS)
+				P.shooter.setStatus("phoenix_empowered_feather", INFINITE_STATUS)
+
+		src.damage = initial(src.damage)
+		src.disruption = initial(src.disruption)
+		src.generate_stats()
+		P.initial_power = src.power
+		..()
 
 /datum/projectile/bullet/flare/UFO
 	name = "heat beam"
