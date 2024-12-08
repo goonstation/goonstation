@@ -27,7 +27,7 @@
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/sail)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/return_to_station)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/glacier)
-		//abilityHolder.addAbility(/datum/targetable/critter/fireball)
+		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/map)
 		//abilityHolder.addAbility(/datum/targetable/critter/fire_sprint)
 
 	Life()

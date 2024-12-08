@@ -99,6 +99,24 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		if (!T.density)
 			new /obj/ice_phoenix_ice_wall/west(T)
 
+/datum/targetable/critter/ice_phoenix/map
+	name = "Show Map"
+	desc = "Shows a map of the space Z level."
+	var/obj/minimap/ice_phoenix/map_obj
+	var/atom/movable/minimap_ui_handler/station_map
+
+	New()
+		..()
+		src.map_obj = new
+
+	cast()
+		..()
+		if (!src.station_map)
+			src.station_map = new(src.holder.owner, "ice_phoenix_map", src.map_obj, "Space Map", "ntos")
+			src.map_obj.map.create_minimap_marker(src.holder.owner, 'icons/obj/minimap/minimap_markers.dmi', "pin")
+
+		station_map.ui_interact(src.holder.owner)
+
 ABSTRACT_TYPE(/obj/ice_phoenix_ice_wall)
 /obj/ice_phoenix_ice_wall
 	name = "compacted snow wall"
