@@ -78,7 +78,19 @@
 			burn /= 2
 			tox /= 2
 			src.delStatus("phoenix_ice_barrier")
+		src.setStatus("phoenix_radiating_cold", 30 SECONDS)
+		src.radiate_cold(get_turf(src))
 		..()
+
+
+	Move(turf/NewLoc, direct)
+		..()
+		if (!istype(get_area(NewLoc), /area/space))
+			src.setStatus("phoenix_radiating_cold", 30 SECONDS)
+
+		if (src.hasStatus("phoenix_radiating_cold"))
+			src.radiate_cold(NewLoc)
+
 
 	//specific_emote_type(var/act)
 	//	switch (act)
@@ -109,3 +121,29 @@
 		var/datum/targetable/critter/ice_phoenix/sail/abil = src.abilityHolder.getAbility(/datum/targetable/critter/ice_phoenix/sail)
 		abil.afterAction()
 
+	proc/radiate_cold(turf/center)
+		for (var/turf/T as anything in block(center.x - 1, center.y - 1, center.z, center.x + 1, center.y + 1, center.z))
+			if (istype(T, /turf/space))
+				var/obj/phoenix_snow_floor/floor = locate() in T
+				qdel(floor)
+				new /obj/phoenix_snow_floor(T)
+
+/obj/phoenix_snow_floor
+	name = "compacted snow floor"
+	desc = "A floating layer of compacted snow and ice in space. How is that even possible?"
+	icon = 'icons/turf/snow.dmi'
+	icon_state = "snow1"
+	layer = PLATING_LAYER
+	plane = PLANE_UNDERFLOOR
+	anchored = ANCHORED_ALWAYS
+	stops_space_move = TRUE
+	alpha = 160
+
+	New()
+		..()
+		src.icon_state = pick("snow1", "snow2", "snow_rough1")
+		src.set_dir(pick(cardinal))
+		SPAWN(5 SECONDS)
+		animate(src, 5 SECONDS, alpha = 80)
+		SPAWN(10 SECONDS) // 45 SECONDS
+			qdel(src)
