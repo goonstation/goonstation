@@ -1231,12 +1231,12 @@
 /mob/proc/restrained()
 	. = src.hasStatus("handcuffed")
 
-/mob/proc/drop_from_slot(obj/item/item, turf/T)
+/mob/proc/drop_from_slot(obj/item/item, turf/T, force_drop=FALSE)
 	if (!item)
 		return
 	if (!(item in src.contents))
 		return
-	if (item.cant_drop)
+	if (item.cant_drop && !force_drop)
 		return
 	if (item.cant_self_remove && src.l_hand != item && src.r_hand != item)
 		return

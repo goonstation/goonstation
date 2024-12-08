@@ -1,4 +1,24 @@
 
+(t)sat dec 07 24
+(u)LeahTheTech
+(p)21601
+(e)|
+(*)Every gang member now gets one FREE GUN from their locker.
+(+)The free gun is either a Lo-Point or Hafgan repeating laser. Gang leaders get a spare magazine too.
+(+)There will now only ever be two gangs on RP servers.
+(t)fri dec 06 24
+(u)tarmunora
+(+)Scuttlebots now have some internal storage for photos, which will pop out when the bot turns back into a hat (or otherwise dies)
+(u)LeahTheTech
+(+)Being deaf now mutes all sounds, exceptions made for OOC sound effects such as admin PMs.
+(u)JORJ949
+(p)21580
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Full-size Nuclear Bombs being planted cause red alert.
+(u)JORJ949
+(p)21321
+(e)🗺🔧🔎⚙|A-Mapping, A-Tooling, C-Code-Quality, A-Internal
+(+)Turtles are now mobs, you can put them in pet carriers!
 (t)thu dec 05 24
 (u)JORJ949
 (p)21519
