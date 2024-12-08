@@ -29,7 +29,7 @@
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/ice_barrier)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/glacier)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/map)
-		//abilityHolder.addAbility(/datum/targetable/critter/fire_sprint)
+		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/thermal_shock)
 
 	Life()
 		. = ..()

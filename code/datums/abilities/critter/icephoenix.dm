@@ -108,6 +108,24 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		if (!T.density)
 			new /obj/ice_phoenix_ice_wall/west(T)
 
+/datum/targetable/critter/ice_phoenix/thermal_shock
+	name = "Thermal Shock"
+	desc = "Creates an atmospheric-blocking tunnel that allows travel through by anyone. Can only be cast on walls."
+	cooldown = 2 SECONDS // 20 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
+
+	tryCast(atom/target, params)
+		if (!iswall(target))
+			boutput(src.holder.owner, SPAN_ALERT("You can only cast this ability on walls!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		return ..()
+
+	cast(atom/target)
+		..()
+		var/turf/T = target
+		new /turf/simulated/ice_phoenix_ice_tunnel(T, get_dir(src.holder.owner, T))
+
 /datum/targetable/critter/ice_phoenix/map
 	name = "Show Map"
 	desc = "Shows a map of the space Z level."
@@ -217,3 +235,23 @@ ABSTRACT_TYPE(/obj/ice_phoenix_ice_wall)
 	disposing()
 		// create water here
 		..()
+
+/turf/simulated/ice_phoenix_ice_tunnel
+	icon = 'icons/mob/critter/nonhuman/icephoenix.dmi'
+	icon_state = "ice_tunnel"
+	density = FALSE
+	opacity = FALSE
+	name = "ice tunnel"
+	desc = "A narrow ice tunnel that seems to prevent passage of air by a thick, icy mist. Interesting."
+	gas_impermeable = TRUE
+
+	New(newLoc, direct)
+		..()
+		if (istype(get_step(src, NORTH), /turf/space) || istype(get_step(src, SOUTH), /turf/space))
+			src.dir = SOUTH
+		else if (istype(get_step(src, EAST), /turf/space))
+			src.dir = WEST
+		else if (istype(get_step(src, WEST), /turf/space))
+			src.dir = EAST
+		else
+			src.dir = direct
