@@ -148,6 +148,46 @@
 				else
 					set_icon_state("[prefix]-weldingtool-off")
 					welding = FALSE
+			if (OMNI_MODE_PLANTING)
+				set_icon_state("[prefix]-planting")
+				src.setItemSpecial(/datum/item_special/simple)
+
+				if(src.animated_changes)
+					flick(("[prefix]-swap-planting"), src)
+
+			if (OMNI_MODE_SHEARING)
+				set_icon_state("[prefix]-shearing")
+				src.setItemSpecial(/datum/item_special/double)
+
+				if(src.animated_changes)
+					flick(("[prefix]-swap-shearing"), src)
+
+			if (OMNI_MODE_SPINDLING)
+				set_icon_state("[prefix]-spindling")
+				src.setItemSpecial(/datum/item_special/simple)
+
+				if(src.animated_changes)
+					flick(("[prefix]-swap-spindling"), src)
+
+			if (OMNI_MODE_NEEDLING)
+				set_icon_state("[prefix]-needling")
+				src.setItemSpecial(/datum/item_special/simple)
+
+				if(src.animated_changes)
+					flick(("[prefix]-swap-needling"), src)
+
+			if (OMNI_MODE_MOPPING)
+				set_icon_state("[prefix]-mopping")
+				src.setItemSpecial(/datum/item_special/simple)
+
+				if(src.animated_changes)
+					flick(("[prefix]-swap-mopping"), src)
+			if (OMNI_MODE_SHAKING)
+				set_icon_state("[prefix]-shaking")
+				src.setItemSpecial(/datum/item_special/simple)
+
+				if(src.animated_changes)
+					flick(("[prefix]-swap-shaking"), src)
 		if (holder)
 			holder.update_inhands()
 
@@ -277,6 +317,15 @@
 	prefix = "silicon-omnitool"
 	desc = "A set of tools on telescopic arms. It's the robotic future!"
 	animated_changes = TRUE
+	prefix = "silicon-omnitool"
+	modes = listlist(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING, OMNI_MODE_WELDING)
+
+/obj/item/omnitool/hop
+	prefix = "hop-omnitool"
+	desc = "A multitool for the Head of Personnel to be able to work and rapidly switch between the various jobs in their department."
+	animated_changes = TRUE
+	prefix = "hop-omnitool"
+	modes = list(OMNI_MODE_CUTTING, OMNI_MODE_PLANTING, OMNI_MODE_SHEARING, OMNI_MODE_SPINDLING, OMNI_MODE_NEEDLING, OMNI_MODE_MOPPING, OMNI_MODE_SHAKING)
 
 /// Omnitool context action
 /datum/contextAction/omnitool
@@ -333,3 +382,33 @@
 		icon_state = "weld"
 		mode = OMNI_MODE_WELDING
 		typepath = /obj/item/weldingtool
+	planting
+		name = "Seed Fabricator"
+		icon_state = "plant"
+		mode = OMNI_MODE_PLANTING
+		typepath = /obj/item/seedplanter
+	shearing
+		name = "Shears"
+		icon_state = "shear"
+		mode = OMNI_MODE_SHEARING
+		typepath = /obj/item/scissors/surgical_scissors/shears
+	spindleing
+		name = "Spindle"
+		icon_state = "spindle"
+		mode = OMNI_MODE_SPINDLING
+		typepath = /obj/item/drop_spindle
+	needleing
+		name = "Knitting Needles"
+		icon_state = "needle"
+		mode = OMNI_MODE_NEEDLING
+		typepath = /obj/item/knitting_needles
+	mopping
+		name = "Mop"
+		icon_state = "mop"
+		mode = OMNI_MODE_MOPPING
+		typepath = /obj/item/mop
+	shaking
+		name = "Cocktail Shaker"
+		icon_state = "shaker"
+		mode = OMNI_MODE_SHAKING
+		typepath = /obj/item/reagent_containers/food/drinks/cocktailshaker
