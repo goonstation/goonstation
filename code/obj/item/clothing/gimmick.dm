@@ -2050,6 +2050,26 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
+/obj/item/clothing/suit/pigeon
+	name = "Carrier Pigeon"
+	desc = "A motionless pigeon plushie that attaches to shoulders. It looks like something is sticking out of it."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "pigeon"
+	item_state = "pigeon"
+
+	attack_self (mob/user as mob)
+		if(!(src in user.equipped_list())) //lagspikes can allow a doubleinput here. or something
+			return
+		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] on the pigeon using a hidden switch!</b>"))
+		var/mob/living/critter/robotic/scuttlebot/mail/S = new /mob/living/critter/robotic/scuttlebot/mail(get_turf(src))
+		S.linked_pigeon = src
+		user.drop_item()
+		src.set_loc(S)
+		user.update_inhands()
+		return
+
+
 // Goku
 
 /obj/item/clothing/under/gimmick/goku

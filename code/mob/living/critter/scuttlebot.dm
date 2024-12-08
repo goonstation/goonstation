@@ -123,17 +123,20 @@
 	desc = "A pigeon that must've escaped from the ranch and been trained to deliver mail... wait why is 8G labeled on its leg?"
 	icon = 'icons/mob/critter/robotic/scuttlebot.dmi'
 	icon_state = "pigeon"
-	var/obj/item/clothing/overcoat/pigeon/linked_pigeon = null
+	speechverb_say = "tweets"
+	speechverb_exclaim = "twoots"
+	speechverb_ask = "tweets curiously"
+	var/obj/item/clothing/suit/pigeon/linked_pigeon = null
 
+	add_abilities = list(/datum/targetable/critter/control_owner)
 	setup_hands()
+		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/small_critter/med
+		HH.limb = new /datum/limb/small_critter/strong
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handn"
 		HH.name = "claw"
 		HH.limb_name = "claws"
-
-	add_abilities = list(/datum/targetable/critter/control_owner)
 
 /mob/living/critter/robotic/scuttlebot/ghostplayable // admin gimmick ghost spawnable version
 
