@@ -360,7 +360,8 @@ TYPEINFO(/obj/machinery/power/solar)
 
 /obj/machinery/computer/solar_control/power_change()
 	..()
-	src.update_solar_icon()
+	if (!(src.status & (NOPOWER | BROKEN)))
+		src.update_solar_icon()
 
 /obj/machinery/computer/solar_control/emag_act(var/mob/user)
 	. = ..()
