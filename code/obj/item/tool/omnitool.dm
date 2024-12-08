@@ -283,12 +283,9 @@
 		else
 			return null
 /obj/item/tool/omnitool/salvager
-	///List of tool settings
-	var/list/modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING)
-	///The current setting
-	var/mode = OMNI_MODE_PRYING
+	modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING)
 
-	var/list/datum/contextAction/contexts = list()
+
 
 /obj/item/tool/omnitool/syndicate
 	icon_state = "syndicate-omnitool-prying"
@@ -336,14 +333,15 @@
 	desc = "A set of tools on telescopic arms. It's the robotic future!"
 	animated_changes = TRUE
 	prefix = "silicon-omnitool"
-	modes = listlist(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING, OMNI_MODE_WELDING)
+	modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING, OMNI_MODE_WELDING)
 
-/obj/item/omnitool/hop
-	mode = OMNI_MODE_CUTTING
+/obj/item/tool/omnitool/hop
+	name = "CivALLised Service Tool"
 	prefix = "hop-omnitool"
 	desc = "A multitool for the Head of Personnel to be able to work and rapidly switch between the various jobs in their department."
 	prefix = "hop-omnitool"
 	modes = list(OMNI_MODE_CUTTING, OMNI_MODE_PLANTING, OMNI_MODE_SHEARING, OMNI_MODE_SPINDLING, OMNI_MODE_NEEDLING, OMNI_MODE_MOPPING, OMNI_MODE_SHAKING)
+	mode = OMNI_MODE_CUTTING
 
 /// Omnitool context action
 /datum/contextAction/omnitool
