@@ -3006,3 +3006,8 @@
 	id = "phoenix_radiating_cold"
 	desc = "You've recently been in combat, or traveled to the station, causing you to radiate cold. This will cause walkable snow to appear in space."
 	effect_quality = STATUS_QUALITY_NEUTRAL
+
+/datum/statusEffect/ice_phoenix/regeneration_prevented
+	id = "phoenix_regen_prevented"
+	desc = "Youve recently been in combat, or traveled to the station, causing your natural regeneration to be halted."
+	effect_quality = STATUS_EFFECT_NEUTRAL
