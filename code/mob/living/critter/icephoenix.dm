@@ -26,6 +26,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/sail)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/return_to_station)
+		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/ice_barrier)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/glacier)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/map)
 		//abilityHolder.addAbility(/datum/targetable/critter/fire_sprint)
@@ -67,6 +68,14 @@
 				return SPAN_ALERT("[src] proudly shows off its wings")
 
 		return ..()
+
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
+		if (src.hasStatus("phoenix_ice_barrier"))
+			brute /= 2
+			burn /= 2
+			tox /= 2
+			src.delStatus("phoenix_ice_barrier")
+		..()
 
 	//specific_emote_type(var/act)
 	//	switch (act)

@@ -2977,11 +2977,11 @@
 		src.glimmer = null
 
 /datum/statusEffect/ice_phoenix
+	icon_state = "mutiny"
 
 /datum/statusEffect/ice_phoenix/sail
 	id = "ice_phoenix_sail"
 	desc = "You are sailing the solar winds, giving you a large movespeed buff while in space."
-	icon_state = "mutiny"
 	effect_quality = STATUS_QUALITY_POSITIVE
 	movement_modifier = /datum/movement_modifier/ice_phoenix_sail
 	move_triggered = TRUE
@@ -2990,3 +2990,9 @@
 		..()
 		if (!istype(get_turf(src.owner), /turf/space))
 			src.owner.delStatus(src)
+
+/datum/statusEffect/ice_phoenix/ice_barrier
+	id = "phoenix_ice_barrier"
+	desc = "The next attack against you will have its damage reduced by 50%."
+	effect_quality = STATUS_QUALITY_POSITIVE
+	// need to modify the sprite of the phoenix a little to show this

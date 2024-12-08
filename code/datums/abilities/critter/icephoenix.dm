@@ -39,6 +39,15 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		src.object.desc = "Toggles if you will return to station space when traveling off the current Z level.<br><br>Currently toggled " + \
 			"[!phoenix.travel_back_to_station ? "off" : "on"]."
 
+/datum/targetable/critter/ice_phoenix/ice_barrier
+	name = "Ice Barrier"
+	desc = "Gives yourself a hardened ice barrier, reducing the damage of the next attack against you by 50%."
+	cooldown = 2 SECONDS // 20 SECONDS
+
+	cast(atom/target)
+		. = ..()
+		src.holder.owner.setStatus("phoenix_ice_barrier", 7 SECONDS)
+
 /datum/targetable/critter/ice_phoenix/glacier
 	name = "Glacier"
 	desc = "Create a 5 tile wide compacted snow wall, perpendicular to the cast direction, or otherwise in a random direction. Can be destroyed by heat or force."
