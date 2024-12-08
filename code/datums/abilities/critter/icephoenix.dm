@@ -126,6 +126,20 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		var/turf/T = target
 		new /turf/simulated/ice_phoenix_ice_tunnel(T, get_dir(src.holder.owner, T))
 
+/datum/targetable/critter/ice_phoenix/wind_chill
+	name = "Wind chill"
+	desc = "Create a freezing aura at the targeted location, inflicting cold on those within 5 tiles nearby, or freezing them if their body temperature is low enough."
+	cooldown = 2 SECONDS // 30 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
+
+	cast(atom/target)
+		..()
+		var/turf/T = get_turf(target)
+		for (var/mob/living/L in range(5, T))
+			L.changeStatus("shivering", 10 SECONDS)
+			// also do ice cube
+
 /datum/targetable/critter/ice_phoenix/map
 	name = "Show Map"
 	desc = "Shows a map of the space Z level."
