@@ -129,6 +129,12 @@
 	var/obj/item/clothing/suit/pigeon/linked_pigeon = null
 
 	add_abilities = list(/datum/targetable/critter/control_owner)
+	New()
+		..()
+		//Comes with the goggles
+		var/obj/item/clothing/glasses/scuttlebot_vr/mail/R = new /obj/item/clothing/glasses/scuttlebot_vr/mail(src.loc)
+		R.connected_pigeon = src
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
