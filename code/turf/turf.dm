@@ -1311,6 +1311,10 @@ TYPEINFO(/turf/simulated)
 			if(target_turf)
 				zlevel = target_turf.z
 			V.going_home = 0
+	else if (istype(A, /mob/living/critter/ice_phoenix))
+		var/mob/living/critter/ice_phoenix/phoenix = A
+		if (phoenix.travel_back_to_station)
+			zlevel = 1
 	if (istype(A, /obj/newmeteor))
 		qdel(A)
 		return
