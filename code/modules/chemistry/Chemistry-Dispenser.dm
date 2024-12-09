@@ -46,7 +46,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 		if(!starting_groups && current_state <= GAME_STATE_PREGAME)
 			var/area/A = get_area(src)
-			if(istype(A,/area/station/medical))
+			if(istype(A,/area/station/medical) && !istype(A, /area/station/medical/asylum))
 				starting_groups = list(/datum/reagent_group/default/potassium_iodide,
 									   /datum/reagent_group/default/styptic,
 								       /datum/reagent_group/default/silver_sulfadiazine)

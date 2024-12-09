@@ -531,6 +531,8 @@
 	var/datum/artifact_trigger/language/trigger = locate(/datum/artifact_trigger/language) in src.artifact.triggers
 	if (!trigger || GET_DIST(M, src) > 2)
 		return
+	if (isghostcritter(M))
+		return
 	if (ON_COOLDOWN(src, "speech_act_cd", 2 SECONDS))
 		return
 	var/result = trigger.speech_act(text)
