@@ -365,7 +365,7 @@ var/datum/signal_holder/global_signal_holder
   */
 /datum/proc/_SendSignal(sigtype, list/arguments)
 	var/target = comp_lookup[sigtype]
-	if(!length(target))
+	if(!islist(target) || !length(target))
 		var/datum/listening_datum = target
 		return 0 | call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
 	. = 0
