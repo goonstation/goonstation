@@ -67,6 +67,8 @@
 
 	New()
 		..()
+		if((current_state > GAME_STATE_MAP_LOAD) && (in_replace_with == 0) && !issimulatedturf(src) && (src in air_master?.tiles_to_update))
+			stack_trace("Turf bug at new caught. x: [src.x], y: [src.y], z: [src.z]. Turf is of type [src.type].")
 		src.path_old = src.type
 		if(global.dont_init_space)
 			return
@@ -247,16 +249,6 @@
 		SHOULD_CALL_PARENT(FALSE)
 		return FALSE
 
-/obj/overlay/tile_gas_effect
-	name = ""
-	anchored = ANCHORED
-	density = 0
-	mouse_opacity = 0
-
-	Move()
-		SHOULD_CALL_PARENT(FALSE)
-		return FALSE
-
 /turf/unsimulated
 	pass_unstable = FALSE
 	event_handler_flags = IMMUNE_SINGULARITY
@@ -293,7 +285,6 @@
 	var/static/image/starlight
 
 	flags = FLUID_DENSE
-	turf_flags = CAN_BE_SPACE_SAMPLE
 	event_handler_flags = IMMUNE_SINGULARITY
 	can_build = TRUE
 	dense
@@ -319,7 +310,7 @@
 		toxins = ONE_ATMOSPHERE/3
 		New()
 			..()
-			var/obj/overlay/tile_gas_effect/gas_icon_overlay = new
+			var/atom/movable/tile_gas_effect/gas_icon_overlay = new
 			gas_icon_overlay.icon = 'icons/effects/tile_effects.dmi'
 			gas_icon_overlay.icon_state = "plasma-alpha"
 			gas_icon_overlay.dir = pick(cardinal)
@@ -456,7 +447,7 @@ proc/generate_space_color()
 
 /turf/simulated/delay_space_conversion()
 	if(air_master?.is_busy)
-		air_master.tiles_to_space |= src
+		air_master.tiles_to_space[src] = null
 		return TRUE
 
 /turf/cordon
@@ -630,9 +621,7 @@ proc/generate_space_color()
 		return ..(what, keep_old_material = keep_old_material, handle_air = handle_air)
 	return
 
-#ifdef CHECK_MORE_RUNTIMES
 var/global/in_replace_with = 0
-#endif
 
 /turf/proc/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
 	var/new_type = ispath(what) ? what : text2path(what)
@@ -645,9 +634,7 @@ var/global/in_replace_with = 0
 
 	SEND_SIGNAL(src, COMSIG_TURF_REPLACED, what)
 
-	#ifdef CHECK_MORE_RUNTIMES
 	in_replace_with++
-	#endif
 
 	var/turf/simulated/new_turf
 	var/old_dir = dir
@@ -658,7 +645,7 @@ var/global/in_replace_with = 0
 
 	var/datum/gas_mixture/oldair = null //Set if old turf is simulated and has air on it.
 	var/datum/air_group/oldparent = null //Ditto.
-	var/zero_new_turf_air = (turf_flags & CAN_BE_SPACE_SAMPLE)
+	var/zero_new_turf_air = istype(src, /turf/space)
 
 	//For unsimulated static air tiles such as ice moon surface.
 	var/temp_old = null
@@ -731,15 +718,11 @@ var/global/in_replace_with = 0
 		new_turf = new new_type(src)
 		if (!isturf(new_turf))
 			if (delay_space_conversion())
-				#ifdef CHECK_MORE_RUNTIMES
 				in_replace_with--
-				#endif
 				return
 			new_turf = new /turf/space(src)
 		if(!istype(new_turf, new_type))
-			#ifdef CHECK_MORE_RUNTIMES
 			in_replace_with--
-			#endif
 			return new_turf
 			// New() replaced the turf with something else, its ReplaceWith handled everything for us already (otherwise we'd screw up lighting)
 
@@ -773,9 +756,7 @@ var/global/in_replace_with = 0
 			new_turf = new /turf/unsimulated/floor(src)
 		else
 			if (delay_space_conversion())
-				#ifdef CHECK_MORE_RUNTIMES
 				in_replace_with--
-				#endif
 				return
 			if(station_repair.station_generator && src.z == Z_LEVEL_STATION)
 				station_repair.repair_turfs(list(src), clear=TRUE)
@@ -886,24 +867,20 @@ var/global/in_replace_with = 0
 				N.update_visuals(N.air)
 			// tell atmos to update this tile's air settings
 			if (air_master)
-				air_master.tiles_to_update |= N
+				air_master.tiles_to_update[N] = null
 		else if (air_master)
-			air_master.high_pressure_delta -= src //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
-			air_master.active_singletons -= src
-			if (length(air_master.tiles_to_update))
-				air_master.tiles_to_update -= src
+			air_master.high_pressure_delta.Remove(src) //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
+			air_master.active_singletons.Remove(src)
+			air_master.tiles_to_update.Remove(src)
 
 		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
-			air_master.groups_to_rebuild |= oldparent //Puts the oldparent into a queue to update the members.
+			air_master.groups_to_rebuild[oldparent] = null //Puts the oldparent into a queue to update the members.
 			oldparent.members -= src //can we like not have space in these lists pleaseeee :) -cringe
 			oldparent.borders?.Remove(src)
 
-
 	new_turf.update_nearby_tiles(1)
 
-	#ifdef CHECK_MORE_RUNTIMES
 	in_replace_with--
-	#endif
 	return new_turf
 
 
@@ -1060,8 +1037,6 @@ TYPEINFO(/turf/simulated)
 
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
-
-	turf_flags = IS_TYPE_SIMULATED
 
 	attackby(var/obj/item/W, var/mob/user, params)
 		if (istype(W, /obj/item/pen))
