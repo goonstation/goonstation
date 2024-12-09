@@ -1322,7 +1322,7 @@ proc/broadcast_to_all_gangs(var/message)
 		spraycan.icon_state = "spraycan_crushed_gang"
 		spraycan.setItemSpecial(/datum/item_special/simple)
 		spraycan.tooltip_rebuild = 1
-		gang.add_points(round(100), M, showText = TRUE)
+		gang.add_points(GANG_SPRAYPAINT_INSTANT_SCORE, M, showText = TRUE)
 		if(sprayOver)
 			logTheThing(LOG_GAMEMODE, owner, "[owner] has successfully tagged the [target_area], spraying over another tag.")
 		else

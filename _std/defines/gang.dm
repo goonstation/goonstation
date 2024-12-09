@@ -43,6 +43,8 @@
 #define GANG_SPRAYPAINT_TAG_TIME 3 SECONDS
 /// time to spray over an existing gang member's tag
 #define GANG_SPRAYPAINT_TAG_REPLACE_TIME 15 SECONDS
+/// score granted immediately on finishing a tag
+#define GANG_SPRAYPAINT_INSTANT_SCORE 50
 
 /// Drug points:
 
