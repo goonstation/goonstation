@@ -18628,6 +18628,7 @@
 /obj/storage/crate{
 	name = "footlocker"
 	},
+/obj/item/paper/manufacturer_blueprint/alastor,
 /obj/item/clothing/suit/space/nanotrasen,
 /obj/item/clothing/head/NTberet{
 	pixel_y = 4;
@@ -63818,11 +63819,12 @@
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "kNF" = (
+/obj/table/wood/auto,
 /obj/machinery/light/lamp/black{
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/table/wood/auto,
+/obj/item/paper/manufacturer_blueprint/thrusters,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_fenrir)
 "kNP" = (
