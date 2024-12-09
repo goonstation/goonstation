@@ -318,4 +318,4 @@
 			if (16 to 24)
 				target.visible_message(SPAN_ALERT("<B>[user] heals [target] by the will of the HOLY ONE!</B>"))
 			if (25 to INFINITY)
-				target.visible_message(SPAN_ALERT("<B>[user] heals [target] in service of heaven!</B>"))
+				target.visible_message(SPAN_ALERT("<B>[user] heals [target] in service of the divine!</B>"))
