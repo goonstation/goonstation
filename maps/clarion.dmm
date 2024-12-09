@@ -2327,16 +2327,20 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "auK" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
+/obj/storage/crate,
+/obj/item/storage/box/beakerbox,
+/obj/item/reagent_containers/dropper/mechanical,
+/obj/item/clothing/glasses/spectro,
+/obj/item/device/reagentscanner,
+/turf/simulated/floor/green/side{
+	dir = 1
 	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
+/area/station/hydroponics/bay)
 "auL" = (
+/obj/machinery/disposal/mail/small/autoname/security/detective/west,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
-/obj/machinery/disposal/mail/small/autoname/security/detective/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "auM" = (
@@ -2498,26 +2502,25 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "avs" = (
-/obj/table/wood/auto,
-/obj/item/decoration/ashtray{
-	butts = 5;
-	name = "grubby old ashtray"
+/obj/storage/closet/office,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -15
 	},
-/obj/item/device/light/zippo{
-	pixel_x = -3;
-	pixel_y = -2
+/obj/machinery/light_switch/north{
+	pixel_y = 28
 	},
-/obj/item/cigbutt,
-/turf/simulated/floor/carpet/grime,
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
 /area/station/security/detectives_office)
 "avt" = (
-/obj/machinery/disposal/small{
-	dir = 8
-	},
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/storage/cart/forensic/detective,
+/obj/machinery/disposal/small{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "avv" = (
@@ -2675,23 +2678,11 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_west)
 "awb" = (
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/machinery/hydro_mister,
-/obj/disposalpipe/segment/produce,
-/turf/simulated/floor/green/side{
-	dir = 4
-	},
+/turf/simulated/floor,
 /area/station/hydroponics/bay)
 "awg" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
+/obj/machinery/firealarm/south,
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "awh" = (
@@ -3002,14 +2993,10 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "axA" = (
-/obj/submachine/chem_extractor{
-	dir = 8
+/obj/cable{
+	icon_state = "2-8"
 	},
-/obj/disposalpipe/segment/produce,
-/obj/machinery/firealarm/east,
-/turf/simulated/floor/green/side{
-	dir = 4
-	},
+/turf/simulated/floor,
 /area/station/hydroponics/bay)
 "axB" = (
 /turf/simulated/wall/auto/supernorn,
@@ -3022,12 +3009,26 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "axH" = (
-/obj/machinery/light_switch/north{
-	pixel_y = 28
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
-/turf/simulated/floor/redblack{
-	dir = 1
+/obj/table/wood/auto,
+/obj/item/device/camera_viewer{
+	pixel_x = -13
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/decoration/ashtray{
+	butts = 5;
+	name = "grubby old ashtray"
+	},
+/obj/item/cigbutt,
+/obj/item/device/light/zippo{
+	pixel_x = 9;
+	pixel_y = 6
+	},
+/turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "axI" = (
 /turf/simulated/floor/redblack{
@@ -3122,15 +3123,10 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
 "ayo" = (
-/obj/reagent_dispensers/still,
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/disposalpipe/segment/produce,
-/turf/simulated/floor/green/side{
-	dir = 6
-	},
+/obj/machinery/computer/ordercomp,
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
 "ays" = (
 /obj/machinery/light{
@@ -14000,7 +13996,7 @@
 /obj/cable,
 /obj/machinery/power/apc/autoname_west,
 /obj/submachine/seed_manipulator{
-	dir = 4
+	dir = 1
 	},
 /turf/simulated/floor/green/side{
 	dir = 10
@@ -14469,7 +14465,6 @@
 /obj/machinery/firealarm/north,
 /obj/submachine/chef_oven,
 /obj/machinery/firealarm/north,
-/obj/disposalpipe/segment/produce,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "cGA" = (
@@ -17058,12 +17053,15 @@
 	},
 /area/listeningpost/solars)
 "eOI" = (
-/obj/disposalpipe/segment/produce,
-/obj/cable{
-	icon_state = "4-8"
+/obj/item/device/radio/intercom/catering{
+	dir = 8
 	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
+/obj/disposalpipe/segment/produce,
+/obj/storage/secure/closet/civilian/hydro,
+/turf/simulated/floor/green/side{
+	dir = 4
+	},
+/area/station/hydroponics/bay)
 "eOQ" = (
 /obj/airbridge_controller{
 	id = "escape2";
@@ -17734,8 +17732,7 @@
 /area/station/engine/core/nuclear)
 "frj" = (
 /obj/disposalpipe/segment/produce{
-	dir = 2;
-	icon_state = "pipe-c"
+	dir = 4
 	},
 /turf/simulated/floor/greenblack/corner{
 	dir = 4
@@ -18250,16 +18247,16 @@
 	},
 /area/station/science/lab)
 "fJt" = (
-/obj/disposalpipe/segment/mail{
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/disposalpipe/segment/produce,
+/obj/storage/secure/closet/civilian/hydro,
+/turf/simulated/floor/green/side{
 	dir = 4
 	},
-/obj/table/wood/auto,
-/obj/item/device/camera_viewer,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
+/area/station/hydroponics/bay)
 "fJR" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -18334,6 +18331,10 @@
 /area/space)
 "fMM" = (
 /obj/machinery/vending/cigarette,
+/obj/disposalpipe/segment/produce{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/redblack/corner,
 /area/station/hallway/primary/east)
 "fMP" = (
@@ -18850,21 +18851,15 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "ged" = (
-/obj/machinery/computer/ordercomp{
-	dir = 8
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
-/obj/machinery/power/data_terminal,
 /obj/cable{
-	icon_state = "0-8"
+	icon_state = "1-2"
 	},
-/obj/item/device/radio/intercom/catering{
-	dir = 8
-	},
-/obj/disposalpipe/segment/produce,
-/turf/simulated/floor/green/side{
-	dir = 4
-	},
-/area/station/hydroponics/bay)
+/turf/simulated/floor/redblack,
+/area/station/hallway/primary/east)
 "get" = (
 /obj/landmark/start/job/quartermaster,
 /turf/simulated/floor/yellow/corner{
@@ -19472,6 +19467,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/produce,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "gAY" = (
@@ -21643,9 +21639,9 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_west)
 "iju" = (
-/obj/disposalpipe/segment/mail,
-/obj/cable{
-	icon_state = "1-2"
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/redblack,
 /area/station/hallway/primary/east)
@@ -21855,12 +21851,6 @@
 /obj/disposalpipe/segment/mail{
 	dir = 8;
 	icon_state = "pipe-c"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "2-4"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -23083,6 +23073,9 @@
 "jgt" = (
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
@@ -25929,6 +25922,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "lsA" = (
@@ -26570,7 +26566,6 @@
 /obj/machinery/door/airlock/pyro/security/alt{
 	name = "Detective's Office"
 	},
-/obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/forensics,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -26861,9 +26856,18 @@
 	},
 /area/station/chapel/sanctuary)
 "maT" = (
-/obj/machinery/firealarm/north,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/disposalpipe/segment/produce,
+/obj/submachine/chem_extractor{
+	dir = 8
+	},
+/turf/simulated/floor/green/side{
+	dir = 6
+	},
+/area/station/hydroponics/bay)
 "maV" = (
 /obj/storage/crate,
 /obj/item/device/light/glowstick,
@@ -30464,6 +30468,18 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
+"oJN" = (
+/obj/disposalpipe/segment/produce,
+/obj/machinery/disposal/mail/small/autoname/hydroponics/west,
+/obj/disposalpipe/trunk/mail{
+	dir = 8
+	},
+/obj/machinery/light_switch/east,
+/obj/machinery/hydro_mister,
+/turf/simulated/floor/green/side{
+	dir = 4
+	},
+/area/station/hydroponics/bay)
 "oJQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -35306,6 +35322,12 @@
 /turf/simulated/floor/plating,
 /area/station/chapel/funeral_parlor)
 "stb" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 15
@@ -35637,15 +35659,13 @@
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/science/teleporter)
 "sKD" = (
-/obj/storage/closet/office,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -15
+/obj/disposalpipe/segment/produce,
+/obj/machinery/firealarm/east,
+/obj/reagent_dispensers/still,
+/turf/simulated/floor/green/side{
+	dir = 4
 	},
-/turf/simulated/floor/redblack{
-	dir = 9
-	},
-/area/station/security/detectives_office)
+/area/station/hydroponics/bay)
 "sLd" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -36098,20 +36118,10 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "sZG" = (
-/obj/storage/crate,
-/obj/item/storage/box/beakerbox,
-/obj/item/device/reagentscanner,
-/obj/item/clothing/glasses/spectro,
-/obj/item/reagent_containers/dropper/mechanical,
-/obj/disposalpipe/segment/produce,
-/obj/machinery/disposal/mail/small/autoname/hydroponics/west,
-/obj/disposalpipe/trunk/mail{
-	dir = 8
-	},
-/obj/machinery/light_switch/east,
-/turf/simulated/floor/green/side{
+/obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/turf/simulated/floor,
 /area/station/hydroponics/bay)
 "sZH" = (
 /obj/machinery/firealarm/west,
@@ -36222,6 +36232,7 @@
 	pixel_x = -2;
 	pixel_y = 9
 	},
+/obj/disposalpipe/segment/produce,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "tfJ" = (
@@ -36351,9 +36362,6 @@
 /obj/disposalpipe/segment/mail{
 	dir = 2;
 	icon_state = "pipe-c"
-	},
-/obj/cable{
-	icon_state = "2-8"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -86191,18 +86199,18 @@ dhE
 nWU
 iAY
 frj
-anI
-nTK
+aym
+auK
 sZG
-avm
 awb
-ged
+awb
+awb
 axA
 ayo
-abb
+ayX
 cFY
-eOI
-abf
+sSe
+aAC
 aAC
 apH
 nGA
@@ -86493,18 +86501,18 @@ nfy
 nWU
 iAY
 fMM
-aym
-aym
-aym
-aym
-aym
-aym
-aym
-aym
-ayX
+anI
+nTK
+oJN
+avm
+fJt
+eOI
+sKD
+maT
+abb
 teN
 gAH
-abk
+abf
 aAC
 aDB
 eQI
@@ -86795,14 +86803,14 @@ uDT
 arx
 tjP
 iju
-mES
-atW
-auH
-avq
-hCw
 asN
-sKD
-ays
+asN
+asN
+asN
+asN
+asN
+asN
+asN
 ayX
 wEk
 xbP
@@ -87096,15 +87104,15 @@ aqA
 uDT
 ary
 lsu
-cxb
-vFK
-atX
-fJt
-uWj
-ato
+ged
+mES
+atW
+auH
+avq
+hCw
 asN
-pwy
-pMB
+avs
+ays
 ayX
 vVW
 sSe
@@ -87400,13 +87408,13 @@ aqu
 oTr
 cxb
 vFK
-ato
-lgy
-avs
+atX
+axH
+uWj
 awg
 asN
-axH
-ayu
+pwy
+pMB
 ayX
 qVa
 abm
@@ -87702,13 +87710,13 @@ aqu
 lmo
 aqu
 asN
-maT
-auK
+ato
+lgy
 ato
 stb
 lMM
 axI
-uBt
+ayu
 eFl
 eFl
 abn
@@ -88010,7 +88018,7 @@ avt
 asN
 asN
 axJ
-ayw
+uBt
 eFl
 qmr
 abp
