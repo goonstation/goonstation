@@ -2975,3 +2975,60 @@
 		src.art = null
 		qdel(src.glimmer)
 		src.glimmer = null
+
+/datum/statusEffect/ice_phoenix
+	icon_state = "mutiny"
+
+/datum/statusEffect/ice_phoenix/empowered_feather
+	id = "phoenix_empowered_feather"
+	desc = "Your next feather attack will deal an extra 10% of a pod's current life on hit, as well as gain a 25% disruption chance."
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+/datum/statusEffect/ice_phoenix/sail
+	id = "ice_phoenix_sail"
+	desc = "You are sailing the solar winds, giving you a large movespeed buff while in space."
+	effect_quality = STATUS_QUALITY_POSITIVE
+	movement_modifier = /datum/movement_modifier/ice_phoenix_sail
+	move_triggered = TRUE
+
+	move_trigger()
+		..()
+		if (!istype(get_turf(src.owner), /turf/space))
+			src.owner.delStatus(src)
+
+/datum/statusEffect/ice_phoenix/ice_barrier
+	id = "phoenix_ice_barrier"
+	desc = "The next attack against you will have its damage reduced by 50%."
+	effect_quality = STATUS_QUALITY_POSITIVE
+	// need to modify the sprite of the phoenix a little to show this
+
+/datum/statusEffect/ice_phoenix/radiating_cold
+	id = "phoenix_radiating_cold"
+	desc = "You've recently been in combat, or traveled to the station, causing you to radiate cold. This will cause walkable snow to appear in space."
+	effect_quality = STATUS_QUALITY_NEUTRAL
+
+/datum/statusEffect/ice_phoenix/regeneration_prevented
+	id = "phoenix_regen_prevented"
+	desc = "Youve recently been in combat, or traveled to the station, causing your natural regeneration to be halted."
+	effect_quality = STATUS_QUALITY_NEUTRAL
+
+/datum/statusEffect/ice_phoenix/warmth_counter
+	id = "phoenix_warmth_counter"
+	effect_quality = STATUS_QUALITY_NEUTRAL
+	var/time_passed = 0
+
+	onUpdate(timePassed)
+		..()
+		var/mult = max(LIFE_PROCESS_TICK_SPACING, src.time_passed) / LIFE_PROCESS_TICK_SPACING
+		if (!istype(get_area(src.owner), /area/space)) // check for permafrost too once implemented
+			src.time_passed = min(src.time_passed + timePassed, 30 SECONDS)
+			if (src.time_passed >= 30 SECONDS)
+				var/mob/living/critter/ice_phoenix/phoenix = src.owner
+				phoenix.TakeDamage("All", burn = 2 * mult)
+		else
+			src.time_passed -= timePassed
+			if (src.time_passed <= 0)
+				src.owner.delStatus(src)
+
+	getTooltip()
+		return "Being on the station increases your warmth, staying over 30 seconds and you'll start to take damage.<br><br>Current time spent: [round(src.time_passed / 10, 1)] seconds"
