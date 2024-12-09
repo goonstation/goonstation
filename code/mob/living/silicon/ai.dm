@@ -88,6 +88,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	density = 1
 	emaggable = 0 // Can't be emagged...
 	syndicate_possible = 1 // ...but we can become a rogue computer.
+	see_invisible = INVIS_CLOAK
 	var/default_hat_y = 14
 	var/datum/hud/silicon/ai/hud
 	var/last_notice = 0//attack notices

@@ -928,6 +928,7 @@ Frequency:
 	icon_state = "eyebot"
 	health = 25
 	do_hurt_slowdown = FALSE
+	see_invisible = INVIS_CLOAK
 	jetpack = 1 //ZeWaka: I concur with ghostdrone commenter, fuck whoever made this. See spacemove.
 
 	New()
