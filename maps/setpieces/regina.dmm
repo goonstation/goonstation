@@ -40,7 +40,7 @@
 /turf/simulated/drawbridge/floor,
 /area/regina)
 "aL" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -137,7 +137,7 @@
 /turf/simulated/floor/airless/engine,
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "dY" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating,
 /area/regina)
 "ek" = (
@@ -759,7 +759,7 @@
 /turf/unsimulated/floor/minitiles/black,
 /area/regina)
 "oq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating,
@@ -969,7 +969,7 @@
 	},
 /area/regina)
 "rw" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating,
@@ -2498,7 +2498,7 @@
 /turf/simulated/floor/airless/engine,
 /area/space)
 "WM" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/engine/vacuum,
@@ -2585,7 +2585,7 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
 "XU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{

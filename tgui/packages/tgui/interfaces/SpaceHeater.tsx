@@ -65,7 +65,7 @@ interface SpaceHeaterData {
 
 export const SpaceHeater = () => {
   const { data } = useBackend<SpaceHeaterData>();
-  const { emagged, on, set_temperature } = data;
+  const { emagged } = data;
   return (
     <Window
       title={emagged ? Glitch_Text(emagged, 'Space HVAC', 1) : null} // null lets us use the src.name at the time of ui_interact
@@ -124,7 +124,7 @@ const BatteryStatus = () => {
 
 const TemperatureRegulator = () => {
   const { data, act } = useBackend<SpaceHeaterData>();
-  const { emagged, on, min, max, set_temperature } = data;
+  const { emagged, min, max, set_temperature } = data;
   return (
     <Section title={Glitch_Text(emagged, 'Temperature regulator', 3)}>
       <Stack justify="center" align="center">

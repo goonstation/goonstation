@@ -77,7 +77,7 @@
 	MouseDrop_T(obj/item/W, mob/user)
 		if (!in_interact_range(src, user)  || BOUNDS_DIST(W, user) > 0 || !can_act(user))
 			return
-		else
+		else if(isitem(W))
 			if (!W.cant_drop && (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece)))
 				boutput(user, SPAN_NOTICE("You insert [W] into the machine."))
 				W.set_loc(src)
@@ -491,7 +491,8 @@
 // whitelists/blacklists applied during both saving and loading, so it's functionally retroactive
 #define WHITELIST_OBJECTS list( \
 	/obj/stool, \
-	/obj/grille, \
+	/obj/mesh/catwalk, \
+	/obj/mesh/grille, \
 	/obj/lattice, \
 	/obj/window, \
 	/obj/machinery/door, \

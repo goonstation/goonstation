@@ -145,7 +145,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 						for (var/mob/C in oviewers(src))
 							shake_camera(C, 8, 24)
 							C.show_message(SPAN_ALERT("<B>[src] crashes into [O]!</B>"), 1)
-						if ((istype(O, /obj/window) && !istype(O, /obj/window/auto/reinforced/indestructible)) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
+						if ((istype(O, /obj/window) && !istype(O, /obj/window/auto/reinforced/indestructible)) || istype(O, /obj/mesh/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 							qdel(O)
 						else
 							var/turf/target = get_edge_target_turf(src, src.dir)

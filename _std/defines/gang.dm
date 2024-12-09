@@ -145,19 +145,19 @@
 // They must deface departments enough to recieve a duffle bag on their location.
 
 /// The total vandalism 'score' required to complete the objective.
-#define GANG_VANDALISM_REQUIRED_SCORE 500
+#define GANG_VANDALISM_BASE_REQUIRED_SCORE 500
 /// How much graffiti is worth, per tile
-#define GANG_VANDALISM_PER_GRAFFITI_TILE 20
+#define GANG_VANDALISM_PER_GRAFFITI_TILE 15
 /// How many tiles of graffiti spawns in graffiti bottles
-#define GANG_VANDALISM_GRAFFITI_MAX 20
+#define GANG_VANDALISM_GRAFFITI_MAX 30
 /// How many points light breaks are worth
-#define GANG_VANDALISM_LIGHT_BREAK_POINTS 10
+#define GANG_VANDALISM_LIGHT_BREAK_POINTS 35
 /// How many points throwing a person into a vending machine is worth
-#define GANG_VANDALISM_VENDOR_KO 10
+#define GANG_VANDALISM_VENDOR_KO 20
 /// How many points throwing a person into a glass table
-#define GANG_VANDALISM_TABLING 10
+#define GANG_VANDALISM_TABLING 40
 /// How many points ripped up floor tiles are worth
-#define GANG_VANDALISM_FLOORTILE_POINTS 2
+#define GANG_VANDALISM_FLOORTILE_POINTS 5
 /// How many points each point of damage is worth, for violence
 #define GANG_VANDALISM_VIOLENCE_NPC_MULTIPLIER 0.5
 /// How many points each point of damage is worth, for violence
