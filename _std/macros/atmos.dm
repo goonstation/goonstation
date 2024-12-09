@@ -291,7 +291,6 @@ proc/gas_text_color(gas_id)
 #define ATMOS_EPSILON 0.0001
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define MINIMUM_REACT_QUANTITY MINIMUM_HEAT_CAPACITY
-#define QUANTIZE(variable)		(round(variable, ATMOS_EPSILON))
 
 // Zeroing gases
 #define _ZERO_GAS(GAS, _, _, MIXTURE) (MIXTURE).GAS = 0;
@@ -351,7 +350,8 @@ proc/gas_text_color(gas_id)
 		pipe_underlay_cache["[pipe_state]_[DIR]_[SIZE]"] = pipe_cached; \
 		} \
 	var/image/pipe_image = mutable_appearance(pipe_cached); \
-	pipe_image.color = COLOUR ? COLOUR : "#B4B4B4"; \
+	pipe_image.color = COLOUR ? COLOUR : "
+	"; \
 	pipe_image.layer = src.layer - 0.001; \
 	pipe_image.appearance_flags |= RESET_TRANSFORM | RESET_COLOR | KEEP_APART; \
 	src.AddOverlays(pipe_image, "[DIR]"); \
