@@ -6,6 +6,8 @@
 
 	hand_count = 2
 
+	custom_hud_type = /datum/hud/critter/ice_phoenix
+
 	speechverb_say = "screeches"
 	speechverb_gasp = "screeches"
 	speechverb_stammer = "screeches"
@@ -17,6 +19,9 @@
 	/// if traveling off z level will return you to the station z level
 	var/travel_back_to_station = FALSE
 
+	var/obj/minimap/ice_phoenix/map_obj
+	var/atom/movable/minimap_ui_handler/station_map
+
 	New()
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
@@ -25,10 +30,8 @@
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/sail)
-		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/return_to_station)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/ice_barrier)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/glacier)
-		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/map)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/thermal_shock)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/wind_chill)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/touch_of_death)
@@ -133,6 +136,23 @@
 		src.setStatus("ice_phoenix_sail", 10 SECONDS)
 		var/datum/targetable/critter/ice_phoenix/sail/abil = src.abilityHolder.getAbility(/datum/targetable/critter/ice_phoenix/sail)
 		abil.afterAction()
+
+	proc/show_map()
+		if (!src.map_obj)
+			src.map_obj = new
+
+		if (!src.station_map)
+			src.station_map = new(src, "ice_phoenix_map", src.map_obj, "Space Map", "ntos")
+			src.map_obj.map.create_minimap_marker(src, 'icons/obj/minimap/minimap_markers.dmi', "pin")
+
+		src.station_map.ui_interact(src)
+
+	proc/toggle_return_to_station()
+		src.travel_back_to_station = !src.travel_back_to_station
+		if (src.travel_back_to_station)
+			boutput(src, SPAN_NOTICE("You will now travel back to station space when traveling off the Z level"))
+		else
+			boutput(src, SPAN_NOTICE("You will no longer travel back to station space when traveling off the Z level"))
 
 	proc/radiate_cold(turf/center)
 		for (var/turf/T as anything in block(center.x - 1, center.y - 1, center.z, center.x + 1, center.y + 1, center.z))

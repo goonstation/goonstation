@@ -24,21 +24,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		SETUP_GENERIC_ACTIONBAR(src.holder.owner, null, 3 SECONDS, /mob/living/critter/ice_phoenix/proc/on_sail, null, \
 			'icons/mob/critter/nonhuman/icephoenix.dmi', "icephoenix", null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 
-/datum/targetable/critter/ice_phoenix/return_to_station
-	name = "Return to Station Space"
-	desc = "Toggles if you will return to station space when traveling off the current Z level.<br><br>Currently toggled off."
-
-	cast()
-		..()
-		var/mob/living/critter/ice_phoenix/phoenix = src.holder.owner
-		phoenix.travel_back_to_station = !phoenix.travel_back_to_station
-		if (phoenix.travel_back_to_station)
-			boutput(phoenix, SPAN_NOTICE("You will now travel back to station space when traveling off the Z level"))
-		else
-			boutput(phoenix, SPAN_NOTICE("You will no longer travel back to station space when traveling off the Z level"))
-		src.object.desc = "Toggles if you will return to station space when traveling off the current Z level.<br><br>Currently toggled " + \
-			"[!phoenix.travel_back_to_station ? "off" : "on"]."
-
 /datum/targetable/critter/ice_phoenix/ice_barrier
 	name = "Ice Barrier"
 	desc = "Gives yourself a hardened ice barrier, reducing the damage of the next attack against you by 50%."
@@ -177,24 +162,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 	cast(atom/target)
 		..()
 		actions.start(new /datum/action/bar/permafrost(target), src.holder.owner)
-
-/datum/targetable/critter/ice_phoenix/map
-	name = "Show Map"
-	desc = "Shows a map of the space Z level."
-	var/obj/minimap/ice_phoenix/map_obj
-	var/atom/movable/minimap_ui_handler/station_map
-
-	New()
-		..()
-		src.map_obj = new
-
-	cast()
-		..()
-		if (!src.station_map)
-			src.station_map = new(src.holder.owner, "ice_phoenix_map", src.map_obj, "Space Map", "ntos")
-			src.map_obj.map.create_minimap_marker(src.holder.owner, 'icons/obj/minimap/minimap_markers.dmi', "pin")
-
-		station_map.ui_interact(src.holder.owner)
 
 /datum/action/bar/touch_of_death
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED

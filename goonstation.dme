@@ -427,6 +427,7 @@
 #include "code\datums\hud\ghost_observer.dm"
 #include "code\datums\hud\ghostdrone.dm"
 #include "code\datums\hud\human.dm"
+#include "code\datums\hud\ice_phoenix.dm"
 #include "code\datums\hud\nukewires.dm"
 #include "code\datums\hud\object.dm"
 #include "code\datums\hud\pod.dm"
