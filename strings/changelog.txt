@@ -1,5 +1,7 @@
 
 (t)sun dec 08 24
+(u)tarmunora
+(+)New client setting under "Effects" to toggle the screen-flash effect to black instead of white.
 (u)RubiCubie
 (p)21605
 (e)🎨📦|C-Sprites, A-Game-Objects
