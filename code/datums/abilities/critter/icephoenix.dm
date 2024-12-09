@@ -140,6 +140,22 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 			L.changeStatus("shivering", 10 SECONDS)
 			// also do ice cube
 
+/datum/targetable/critter/ice_phoenix/touch_of_death
+	name = "Touch of Death"
+	desc = "Delivers constant chills to an adjacent target. If their body temperature is low enough, it will deal rapid burn damage. If recently frozen by an ice cube, they will be unable to move."
+	cooldown = 2 SECONDS // 60 SECONDS
+
+	tryCast(atom/target, params)
+		if (!ishuman(target))
+			boutput(src.holder.owner, SPAN_ALERT("You can only cast this ability on humans!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// temperature check
+		return ..()
+
+	cast(atom/target)
+		..()
+		actions.start(new /datum/action/bar/touch_of_death(target), src.holder.owner)
+
 /datum/targetable/critter/ice_phoenix/map
 	name = "Show Map"
 	desc = "Shows a map of the space Z level."
@@ -157,6 +173,47 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 			src.map_obj.map.create_minimap_marker(src.holder.owner, 'icons/obj/minimap/minimap_markers.dmi', "pin")
 
 		station_map.ui_interact(src.holder.owner)
+
+/datum/action/bar/touch_of_death
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED
+	duration = 1 SECOND
+	//resumable = FALSE
+	color_success = "#4444FF"
+
+	var/mob/target
+
+	New(atom/target)
+		..()
+		src.target = target
+
+	onUpdate()
+		..()
+		if (src.check_for_interrupt())
+			interrupt(INTERRUPT_ALWAYS)
+
+	onStart()
+		..()
+		if(src.check_for_interrupt())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		src.owner.visible_message(SPAN_ALERT("[src.owner] grips [src.target] with its talons!"), SPAN_ALERT("You begin channeling cold into [src.target]."))
+
+	onEnd()
+		..()
+		if(src.check_for_interrupt())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		src.target.changeStatus("shivering", 2 SECONDS)
+		// need to do a temperature check
+		src.target.TakeDamage("All", burn = 10)
+
+		src.onRestart()
+
+	// need to do temperature check
+	proc/check_for_interrupt()
+		var/mob/living/critter/ice_phoenix/phoenix = src.owner
+		return QDELETED(phoenix) || QDELETED(src.target) || isdead(phoenix) || isdead(src.target) || BOUNDS_DIST(src.target, phoenix) > 0
 
 ABSTRACT_TYPE(/obj/ice_phoenix_ice_wall)
 /obj/ice_phoenix_ice_wall

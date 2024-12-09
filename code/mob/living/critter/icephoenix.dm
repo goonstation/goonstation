@@ -31,6 +31,7 @@
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/map)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/thermal_shock)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/wind_chill)
+		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/touch_of_death)
 
 		src.setStatus("phoenix_empowered_feather", INFINITE_STATUS)
 
