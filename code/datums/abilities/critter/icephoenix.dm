@@ -1,7 +1,6 @@
 ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 /datum/targetable/critter/ice_phoenix
 
-// movement modifiers don't work in space it seems, needs to be fixed before this ability works
 /datum/targetable/critter/ice_phoenix/sail
 	name = "Sail"
 	desc = "Channel to gain a large movement speed buff while in space for 10 seconds"

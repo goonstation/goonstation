@@ -2986,9 +2986,8 @@
 
 /datum/statusEffect/ice_phoenix/sail
 	id = "ice_phoenix_sail"
-	desc = "You are sailing the solar winds, giving you a large movespeed buff while in space."
+	desc = "You are sailing the solar winds, grating a large movement speed buff while in space."
 	effect_quality = STATUS_QUALITY_POSITIVE
-	movement_modifier = /datum/movement_modifier/ice_phoenix_sail
 	move_triggered = TRUE
 
 	move_trigger()
