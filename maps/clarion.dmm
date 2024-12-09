@@ -9764,6 +9764,14 @@
 "bob" = (
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"bod" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross";
+	layer = 2
+	},
+/area/space)
 "bog" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -11608,7 +11616,7 @@
 /area/station/hangar/science)
 "byB" = (
 /obj/airbridge_controller{
-	id = "mining_shuttle"
+	id = "mining_station"
 	},
 /turf/space,
 /area/space)
@@ -11623,14 +11631,12 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/airbr/emergency_shuttle{
-	density = 0;
+/obj/machinery/computer/airbr/mining_station{
 	dir = 8;
-	emergency = 0;
-	id = "mining_shuttle";
-	pixel_x = 32;
-	pixel_y = 10;
-	req_access_txt = ""
+	pixel_y = 5;
+	pixel_x = 33;
+	id = "mining_station";
+	density = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
@@ -20965,6 +20971,14 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
+"hLp" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left,
+/turf/space,
+/area/space)
 "hLx" = (
 /obj/machinery/firealarm/east,
 /obj/machinery/computer/announcement/station/captain{
@@ -22211,6 +22225,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
+"iBt" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay2,
+/turf/space,
+/area/space)
 "iBu" = (
 /obj/table/reinforced/auto,
 /obj/machinery/disposal/small{
@@ -23893,6 +23915,13 @@
 /obj/machinery/vending/standard,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
+"jOo" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "jOq" = (
 /obj/machinery/shower{
 	dir = 1;
@@ -24712,7 +24741,7 @@
 /area/station/security/checkpoint/escape)
 "kyE" = (
 /obj/airbridge_controller{
-	id = "mining_shuttle";
+	id = "mining_station";
 	primary_controller = 1
 	},
 /turf/space,
@@ -26725,6 +26754,14 @@
 	dir = 5
 	},
 /area/station/hallway/secondary/exit)
+"lUz" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay2,
+/turf/space,
+/area/space)
 "lUF" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -27355,7 +27392,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
+	dir = 5;
 	icon_state = "catwalk_cross"
 	},
 /area/space)
@@ -27541,6 +27578,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
+"myW" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station,
+/turf/space,
+/area/space)
 "mzf" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -30636,6 +30681,14 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
+"oOV" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay3,
+/turf/space,
+/area/space)
 "oOZ" = (
 /obj/table/auto,
 /obj/machinery/cell_charger{
@@ -37326,6 +37379,14 @@
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
+"tRi" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay3,
+/turf/space,
+/area/space)
 "tRp" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -37631,6 +37692,13 @@
 	icon_state = "fblue2"
 	},
 /area/station/medical/head)
+"uai" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay3,
+/turf/space,
+/area/space)
 "uaA" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -39355,6 +39423,14 @@
 	dir = 1
 	},
 /area/station/security/secwing)
+"vfU" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay4,
+/turf/space,
+/area/space)
 "vgp" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor,
@@ -41316,6 +41392,14 @@
 	},
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/funeral_parlor)
+"wSN" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay2,
+/turf/space,
+/area/space)
 "wTc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42070,6 +42154,14 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/garden/aviary)
+"xzp" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right,
+/turf/space,
+/area/space)
 "xAb" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -67214,9 +67306,9 @@ bpC
 bqE
 blN
 fyJ
-aaa
-aaa
-aaa
+uai
+agJ
+wSN
 aaa
 byB
 aaa
@@ -67518,7 +67610,7 @@ blN
 fyJ
 aaa
 aaa
-aaa
+dhY
 aaa
 aaa
 aaa
@@ -67820,7 +67912,7 @@ blN
 fyJ
 bDp
 aaa
-aaa
+myW
 aaa
 aaa
 aaa
@@ -68122,7 +68214,7 @@ blN
 kZc
 cBq
 xBv
-bDp
+bDq
 aaa
 kyE
 aaa
@@ -87063,7 +87155,7 @@ aaa
 aaa
 aaa
 aaa
-mrj
+jOo
 riP
 npu
 aml
@@ -87365,7 +87457,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+dhY
 mrj
 frO
 aml
@@ -87667,7 +87759,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+vfU
 aaa
 aaa
 aml
@@ -87683,7 +87775,7 @@ lJj
 aml
 frO
 frO
-frO
+bod
 frO
 riP
 abF
@@ -87969,15 +88061,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aml
-aaj
-aml
-aaa
-aaa
-aaa
+dhY
 aaa
 aaa
 aml
@@ -87986,6 +88070,14 @@ aml
 aaa
 aaa
 aaa
+aaa
+aaa
+aml
+aaj
+aml
+aaa
+aaa
+dhY
 aaa
 cQJ
 abF
@@ -88271,7 +88363,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+oOV
 uRw
 uRw
 uRw
@@ -88287,7 +88379,7 @@ ahb
 ahb
 ahb
 ahb
-aaa
+tRi
 aaa
 mrj
 frO
@@ -88573,7 +88665,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+dhY
 uRw
 uRw
 uRw
@@ -88589,7 +88681,7 @@ ahb
 ahb
 ahb
 ahb
-aaa
+dhY
 aaa
 aaa
 aaa
@@ -88875,7 +88967,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+lUz
 uRw
 uRw
 uRw
@@ -88891,7 +88983,7 @@ ahb
 ahb
 ahb
 ahb
-aaa
+iBt
 aaa
 aaa
 aaa
@@ -89177,7 +89269,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+dhY
 uRw
 uRw
 uRw
@@ -89193,7 +89285,7 @@ ahb
 ahb
 ahb
 ahb
-aaa
+dhY
 aaa
 aaa
 aaa
@@ -89479,7 +89571,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+hLp
 uRw
 uRw
 uRw
@@ -89495,7 +89587,7 @@ ahb
 ahb
 ahb
 ahb
-aaa
+xzp
 aaa
 aaa
 aaa
