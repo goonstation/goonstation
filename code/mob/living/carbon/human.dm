@@ -2436,7 +2436,6 @@
 				I.set_loc(get_turf(src))
 				continue
 
-	update_body()
 	update_face()
 	return
 
