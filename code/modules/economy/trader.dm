@@ -740,6 +740,8 @@ ABSTRACT_TYPE(/obj/npc/trader/random)
 			if(buyitem.comtype != null)
 				src.goods_buy += buyitem
 
+		src.AddComponent(/datum/component/minimap_marker/minimap, MAP_INFO, "trader")
+
 	activatesecurity()
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<B>[src.name]</B> yells, \"Get 'em boys!\"")

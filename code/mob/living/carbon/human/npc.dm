@@ -954,8 +954,8 @@
 			W.Attackby(src.r_hand, src)
 			acted = 1
 
-		if((locate(/obj/grille) in get_step(src,dir))  && !acted)
-			var/obj/grille/G = (locate(/obj/grille) in get_step(src,dir))
+		if((locate(/obj/mesh/grille) in get_step(src,dir))  && !acted)
+			var/obj/mesh/grille/G = (locate(/obj/mesh/grille) in get_step(src,dir))
 			if(!G.ruined)
 				G.Attackby(src.r_hand, src)
 				acted = 1

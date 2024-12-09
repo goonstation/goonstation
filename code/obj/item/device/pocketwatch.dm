@@ -174,5 +174,9 @@
 			emagged = TRUE
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		user.visible_message("[user] dangles the [src] in front of [target]'s face hypnotically! [pick("How silly!", "How goofy!", "How strange!")]")
+		if (!ON_COOLDOWN(target, "watch_hypnosis", 3 SECONDS))
+			target.visible_message("[user] dangles the [src] in front of [target]'s face hypnotically! [pick("How silly!", "How goofy!", "How strange!")]", "[user] waves \the [src] in front of your face, you feel sluggish...")
+			target.setStatusMin("slowed", 2 SECONDS)
+		else
+			target.visible_message("[user] dangles the [src] in front of [target]'s face hypnotically! [pick("How silly!", "How goofy!", "How strange!")]")
 		return

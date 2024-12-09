@@ -1450,8 +1450,8 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 					if (prob(max(0, 100 - (window.health / 3))))
 						window.smash()
 					continue
-				if (istype(O, /obj/grille))
-					var/obj/grille/grille = O
+				if (istype(O, /obj/mesh/grille))
+					var/obj/mesh/grille/grille = O
 					if (!grille.ruined)
 						grille.ex_act(2)
 					continue
@@ -1585,8 +1585,8 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 					if (prob(max(0, 100 - (window.health / 3))))
 						window.damage_heat(500)
 					continue
-				if (istype(O, /obj/grille))
-					var/obj/grille/grille = O
+				if (istype(O, /obj/mesh/grille))
+					var/obj/mesh/grille/grille = O
 					if (!grille.ruined)
 						grille.damage_heat(500)
 					continue
@@ -2100,7 +2100,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 				if (rcd > 1)
 					for (var/turf/T in view(3,src.loc))
 						if (prob(rcd * 10))
-							new /obj/grille/steel(T)
+							new /obj/mesh/grille/steel(T)
 
 			if (plasma)
 				for (var/turf/simulated/floor/target in range(1,src.loc))

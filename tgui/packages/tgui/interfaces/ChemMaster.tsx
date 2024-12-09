@@ -34,6 +34,7 @@ interface ChemMasterData {
   default_name;
   patch_icons;
   pill_icons;
+  name_max_len;
 }
 
 export const ReagentDisplay = (props) => {
@@ -561,7 +562,7 @@ export const MakePatches = (props) => {
 
 export const OperationsSection = (props) => {
   const { placeholder, item_name, set_item_name, max_volume } = props;
-
+  const { data } = useBackend<ChemMasterData>();
   const operation_height = 3;
   const margin_bottom = -0.5;
 
@@ -577,6 +578,7 @@ export const OperationsSection = (props) => {
             onChange={(e, value) => {
               set_item_name(value);
             }}
+            maxLength={data.name_max_len}
           />
         </Box>
       }

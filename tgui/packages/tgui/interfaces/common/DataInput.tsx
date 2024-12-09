@@ -185,7 +185,7 @@ const DataInputIntegerEntry = (props) => {
   return (
     <Tooltip position="bottom" content={tooltip}>
       <NumberInput
-        value={value ?? a}
+        value={value ?? a ?? 0}
         minValue={a ?? 0}
         maxValue={b ?? 100}
         stepPixelSize={5}
