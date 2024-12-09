@@ -433,7 +433,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
 
 
-		molitz.setProperty("molitz_bubbles", iterations-1)
+		owner.material.setProperty("molitz_bubbles", iterations-1)
 
 
 /datum/materialProc/molitz_temp/agent_b

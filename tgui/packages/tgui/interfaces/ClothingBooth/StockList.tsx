@@ -80,7 +80,7 @@ const useProcessCatalogue = (
             (catalogueGrouping) => cashAvailable >= catalogueGrouping.cost_min,
           )
         : catalogueItems,
-    [cashAvailable, catalogueItems, hideUnaffordable],
+    [cashAvailable, catalogueItems, everythingIsFree, hideUnaffordable],
   );
   const hasSlotFiltersApplied = useMemo(
     () => Object.values(slotFilters).some((filter) => filter),

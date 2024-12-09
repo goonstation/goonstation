@@ -15,6 +15,11 @@
 	var/list/packet_data = list()
 	var/max_logs = 8
 
+	New()
+		..()
+		if (global.current_state < GAME_STATE_PLAYING)
+			new /obj/item/paper/packets(src.loc)
+
 	attack_ai(mob/user as mob)
 		if(mode)
 			src.interacted(user)

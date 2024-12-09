@@ -17,7 +17,7 @@
 	// Handle breath modifiers.
 	if (iscarbon(speaker))
 		var/mob/living/carbon/C = speaker
-		if (((C.stamina < STAMINA_WINDED_SPEAK_MIN) && !(message.flags & SAYFLAG_IGNORE_STAMINA)) || (C.oxyloss > 10) || (C.losebreath >= 4) || C.hasStatus("muted") || (C.reagents?.has_reagent("capulettium_plus") && C.hasStatus("resting")))
+		if (((C.stamina < STAMINA_WINDED_SPEAK_MIN) && !(message.flags & SAYFLAG_IGNORE_STAMINA)) || ((C.oxyloss > 10) && !HAS_ATOM_PROPERTY(C, PROP_MOB_REBREATHING)) || (C.losebreath >= 4) || C.hasStatus("muted") || (C.reagents?.has_reagent("capulettium_plus") && C.hasStatus("resting")))
 			message.flags |= SAYFLAG_WHISPER
 			message.whisper_verb = message.speaker.speech_verb_gasp
 			message.loudness -= 1

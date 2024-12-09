@@ -182,6 +182,16 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	initialize()
 		set_frequency(frequency)
 
+/obj/item/device/radio/intercom/mining
+	name = "Mining Intercom"
+	frequency = R_FREQ_INTERCOM_MINING
+	broadcasting = FALSE
+	device_color = "#6b4e0b"
+
+	initialize(player_caused_init)
+		. = ..()
+		src.set_frequency(frequency)
+
 /obj/item/device/radio/intercom/catering
 	name = "Catering Intercom"
 	frequency = R_FREQ_INTERCOM_CATERING

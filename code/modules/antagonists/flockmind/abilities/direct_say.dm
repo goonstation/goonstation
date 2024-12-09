@@ -53,3 +53,6 @@
 
 	logTheThing(LOG_SAY, usr, "Narrowbeam Transmission to [constructTarget(target, "say")]: [message]")
 	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts narrowbeam transmission on radio [constructTarget(radio)][ismob(target) ? " worn by [constructTarget(target)]" : ""] with message [message] at [log_loc(src.holder.owner)].")
+
+/datum/targetable/flockmindAbility/directSay/logCast(atom/target)
+	return

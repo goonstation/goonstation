@@ -210,7 +210,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 
 			var/mob/living/carbon/human/john/newbody = new()
 			newbody.set_loc(target_turf)
-			newbody.overlays += image('icons/misc/32x64.dmi',"halo")
+			newbody.setStatus("in_afterlife", INFINITE_STATUS, newbody)
 			if(inafterlifebar(src))
 				qdel(src)
 			return

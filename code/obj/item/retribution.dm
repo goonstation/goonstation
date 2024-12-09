@@ -153,7 +153,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 			else if (istype(scan_target, /obj/structure/girder))
 				create_scan_decal = TRUE
 				scan_target.ex_act(1)
-			else if (istype(scan_target, /obj/grille))
+			else if (istype(scan_target, /obj/mesh/grille))
 				create_scan_decal = TRUE
 				window_step++
 				scan_target.ex_act(1)

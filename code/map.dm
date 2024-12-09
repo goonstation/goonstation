@@ -1050,6 +1050,9 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 	escape_dir = EAST
 
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
 /datum/map_settings/trunkmap
 	name = "TRUNKMAP"
 	goonhub_map = "/maps/trunkmap"

@@ -132,8 +132,9 @@ TYPEINFO(/mob/living/critter/flock)
 	src.ai?.die()
 	actions.stop_all(src)
 	src.is_npc = FALSE
-	src.flock_name_tag.set_name(src.name)
-	src.flock_name_tag.set_info_tag(he_or_she(src))
+	if(src.flock_name_tag)
+		src.flock_name_tag.set_name(src.name)
+		src.flock_name_tag.set_info_tag(he_or_she(src))
 	if (!src.flock)
 		return
 
@@ -283,7 +284,7 @@ TYPEINFO(/mob/living/critter/flock)
 		if(istype(target, /turf/space))
 			var/make_floor = FALSE
 			for (var/obj/O in target)
-				if (istype(O, /obj/lattice) || istype(O, /obj/grille/catwalk))
+				if (istype(O, /obj/lattice) || istype(O, /obj/mesh/catwalk))
 					make_floor = TRUE
 					src.decal = new /obj/decal/flock_build_floor
 					flick_anim = "spawn-floor"
@@ -337,7 +338,7 @@ TYPEINFO(/mob/living/critter/flock)
 
 	var/turf/simulated/target
 	var/obj/decal/decal
-	var/obj/structurepath = /obj/grille/flock
+	var/obj/structurepath = /obj/mesh/flock/barricade
 
 
 	New(var/turf/simulated/ntarg, var/structurepath_i, var/duration_i)
@@ -532,8 +533,8 @@ TYPEINFO(/mob/living/critter/flock)
 					var/obj/window/auto/feather/window = target
 					F.pay_resources(window.repair(F.resources))
 					keep_repairing = window.health < window.health_max
-				if (/obj/grille/flock)
-					var/obj/grille/flock/barricade = target
+				if (/obj/mesh/flock/barricade)
+					var/obj/mesh/flock/barricade/barricade = target
 					F.pay_resources(barricade.repair(F.resources))
 					keep_repairing = barricade.health < barricade.health_max
 				if (/obj/storage/closet/flock)
@@ -671,7 +672,7 @@ TYPEINFO(/mob/living/critter/flock)
 			l.deconstruct()
 		else if(istype(target, /obj/lattice/flock))
 			qdel(target)
-		else if(istype(target, /obj/grille/flock))
+		else if(istype(target, /obj/mesh/flock/barricade))
 			qdel(target)
 		else if(istype(target, /obj/window/feather) || istype(target, /obj/window/auto/feather))
 			var/obj/window/the_window = target

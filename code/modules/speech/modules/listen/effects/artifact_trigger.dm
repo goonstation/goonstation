@@ -6,6 +6,9 @@
 	if (!istype(O) || O.artifact.activated)
 		return
 
+	if (isghostcritter(message.original_speaker))
+		return
+
 	var/datum/artifact_trigger/language/trigger = locate(/datum/artifact_trigger/language) in O.artifact.triggers
 	if (!trigger || ON_COOLDOWN(O, "speech_act_cd", 2 SECONDS))
 		return

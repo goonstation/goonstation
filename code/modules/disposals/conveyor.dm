@@ -320,11 +320,11 @@ TYPEINFO(/obj/machinery/conveyor) {
 		operating = CONVEYOR_STOPPED
 	if(!operating || (status & NOPOWER))
 		power_usage = 0
-		for(var/atom/movable/A in loc.contents)
+		for(var/atom/movable/A in loc?.contents)
 			walk(A, 0)
 	else
 		power_usage = 100
-		for(var/atom/movable/A in loc.contents)
+		for(var/atom/movable/A in loc?.contents)
 			move_thing(A)
 
 	var/new_icon = "conveyor-"

@@ -100,6 +100,14 @@
 		. = ..()
 		user.lastattacked = src
 
+/obj/forcefield/autoexpire
+	var/duration = 30 SECONDS
+	New()
+		. = ..()
+		SPAWN(src.duration)
+			if (!QDELETED(src))
+				qdel(src)
+
 /obj/forcefield/artifact
 	var/obj/artifact/forcefield_generator/source = null
 

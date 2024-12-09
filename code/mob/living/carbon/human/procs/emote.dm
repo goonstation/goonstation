@@ -10,6 +10,9 @@
 	if(voluntary && !src.emote_allowed)
 		return
 
+	if (src.hasStatus("paralysis"))
+		return //pls stop emoting :((
+
 	if (src.bioHolder.HasEffect("revenant"))
 		src.visible_message(SPAN_ALERT("[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!"), group = "revenant_emote")
 		return
@@ -86,7 +89,7 @@
 					else
 						message = "<B>[src]</B> makes a very loud noise."
 						m_type = 2
-					if (src.traitHolder && src.traitHolder.hasTrait("scaredshitless"))
+					if (src.traitHolder && src.traitHolder.hasTrait("scaredshitless") && !ON_COOLDOWN(src, "scaredshitless", 1 SECOND))
 						src.emote("fart") //We can still fart if we're muzzled.
 
 			if ("monsterscream")
@@ -150,7 +153,7 @@
 
 						var/fart_on_other = 0
 						for (var/atom/A as anything in src.loc)
-							if (A.event_handler_flags & IS_FARTABLE)
+							if (A.event_handler_flags & IS_FARTABLE && !ON_COOLDOWN(A, "\ref[src]fart", 0.1 SECONDS))
 								if (istype(A,/mob/living))
 									var/mob/living/M = A
 									if (M == src || !M.lying)
@@ -2336,7 +2339,7 @@
 		gas.farts = 1.69
 	else
 		gas.farts = 0.69
-	if(src.bioHolder.HasEffect("radioactive_farts"))
+	if(src.bioHolder?.HasEffect("radioactive_farts"))
 		gas.radgas = 2
 	gas.temperature = T20C
 	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000

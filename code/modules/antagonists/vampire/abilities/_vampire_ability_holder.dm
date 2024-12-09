@@ -144,7 +144,7 @@
 			if (src.last_victim != victim)
 				src.last_victim = victim
 				var/datum/targetable/vampire/blood_tracking/tracker = src.getAbility(/datum/targetable/vampire/blood_tracking)
-				tracker.update_target(victim)
+				tracker?.update_target(victim)
 		if (total_blood)
 			if (src.vamp_blood < 0)
 				src.vamp_blood = 0
@@ -163,7 +163,7 @@
 			if (set_null)
 				src.points = 0
 			else
-				src.points = max(src.points + change, 0)
+				src.points = clamp(src.points + change, 0, src.vamp_blood)
 
 			if (change > 0 && ishuman(src.owner))
 				var/mob/living/carbon/human/H = src.owner

@@ -1227,12 +1227,12 @@
 /mob/proc/restrained()
 	. = src.hasStatus("handcuffed")
 
-/mob/proc/drop_from_slot(obj/item/item, turf/T)
+/mob/proc/drop_from_slot(obj/item/item, turf/T, force_drop=FALSE)
 	if (!item)
 		return
 	if (!(item in src.contents))
 		return
-	if (item.cant_drop)
+	if (item.cant_drop && !force_drop)
 		return
 	if (item.cant_self_remove && src.l_hand != item && src.r_hand != item)
 		return
@@ -2511,6 +2511,7 @@
 	src.delStatus("radiation")
 	src.delStatus("critical_condition")
 	src.delStatus("recent_trauma")
+	src.delStatus("muted")
 	src.take_radiation_dose(-INFINITY)
 	src.change_eye_blurry(-INFINITY)
 	src.take_eye_damage(-INFINITY)
@@ -2528,6 +2529,7 @@
 	src.bodytemperature = src.base_body_temp
 	if (isdead(src))
 		setalive(src)
+	src.update_body()
 
 /mob/proc/shock(var/atom/origin, var/wattage, var/zone, var/stun_multiplier = 1, var/ignore_gloves = 0)
 	return 0
@@ -2847,6 +2849,7 @@
 			return
 		else
 			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
+			newname = remove_bad_name_characters(newname)
 			if (!length(newname) || copytext(newname,1,2) == " ")
 				src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
 				continue
