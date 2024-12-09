@@ -1149,6 +1149,8 @@
 					var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
 					if (raw == "Yes")
 						src.set_law_rack(linker.linked_rack, user)
+						if(istype(linker.linked_rack, /obj/machinery/lawrack/syndicate))
+							src.make_syndicate("linked to syndicate rack by [user]")
 			else
 				boutput(user,"Linker lost connection to the stored law rack!")
 			return
