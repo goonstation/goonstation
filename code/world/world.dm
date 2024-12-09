@@ -146,11 +146,15 @@
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)
 		return src.maxz
 	for (var/zlevel = world.maxz+1; zlevel <= new_maxz; zlevel++)
+		#ifdef CHECK_MORE_RUNTIMES
 		in_replace_with++
 		// technically we are not in ReplaceWith but for the new turfs created here we don't want to emit the warnings because they are not replacing
 		// anything, they are just being created
+		#endif
 		src.maxz++
+		#ifdef CHECK_MORE_RUNTIMES
 		in_replace_with--
+		#endif
 		src.setupZLevel(zlevel)
 	return src.maxz
 
