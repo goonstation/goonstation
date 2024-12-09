@@ -4,7 +4,6 @@
 	mob_path = /mob/living/critter/ice_phoenix
 	mutually_exclusive = TRUE
 	assigned_by = ANTAGONIST_SOURCE_RANDOM_EVENT
-	has_info_popup = FALSE
 	var/map_edge_margin = 35
 
 	relocate()
