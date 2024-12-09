@@ -236,6 +236,35 @@
 		. = ..()
 		holder.owner.show_credits()
 
+/datum/targetable/toggle_gang_victory_hud
+	name = "Hide/show Winning Gang"
+	desc = "Gang gang."
+	icon = 'icons/mob/ghost_observer_abilities.dmi'
+	icon_state = "gang-victory"
+	targeted = FALSE
+	cooldown = 1 SECOND
+	do_logs = FALSE
+
+	cast(atom/target)
+		. = ..()
+		if (holder.owner.client in victory_hud.clients)
+			victory_hud.remove_client(holder.owner.client)
+		else
+			victory_hud.add_client(holder.owner.client)
+
+/datum/targetable/inspector_report
+	name = "Inspector's Report"
+	desc = "Re-open the inspector's report."
+	icon = 'icons/mob/ghost_observer_abilities.dmi'
+	icon_state = "inspector-report"
+	targeted = FALSE
+	cooldown = 1 SECOND
+	do_logs = FALSE
+
+	cast(atom/target)
+		. = ..()
+		holder.owner.show_inspector_report()
+
 /datum/targetable/juggle
 	name = "Juggle"
 	desc = "Juggle anything."
