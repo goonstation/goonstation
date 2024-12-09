@@ -2754,9 +2754,9 @@
 	W.icon_state = "bald" // Let's give the actual hair a chance to shine
 
 	var/hair_list = list()
-	hair_list[src.bioHolder.mobAppearance.customizations["hair_bottom"].style.id] = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
-	hair_list[src.bioHolder.mobAppearance.customizations["hair_middle"].style.id] = src.bioHolder.mobAppearance.customizations["hair_middle"].color
-	hair_list[src.bioHolder.mobAppearance.customizations["hair_top"].style.id] = src.bioHolder.mobAppearance.customizations["hair_top"].color
+	hair_list[src.bioHolder.mobAppearance.customizations["hair_bottom"].style.id] = src.bioHolder.mobAppearance.customizations["hair_bottom"].get_color_or_dye()
+	hair_list[src.bioHolder.mobAppearance.customizations["hair_middle"].style.id] = src.bioHolder.mobAppearance.customizations["hair_middle"].get_color_or_dye()
+	hair_list[src.bioHolder.mobAppearance.customizations["hair_top"].style.id] = src.bioHolder.mobAppearance.customizations["hair_top"].get_color_or_dye()
 
 	W.setup_wig(hair_list)
 
@@ -2764,6 +2764,10 @@
 		src.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
 		src.bioHolder.mobAppearance.customizations["hair_middle"].style = new /datum/customization_style/none
 		src.bioHolder.mobAppearance.customizations["hair_top"].style = new /datum/customization_style/none
+
+		src.bioHolder.mobAppearance.customizations["hair_bottom"].dye = null
+		src.bioHolder.mobAppearance.customizations["hair_middle"].dye = null
+		src.bioHolder.mobAppearance.customizations["hair_top"].dye = null
 		src.update_colorful_parts()
 	return W
 
