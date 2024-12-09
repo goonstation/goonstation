@@ -36,12 +36,19 @@
 
 	Life()
 		. = ..()
-		if (istype(get_turf(src), /turf/space))
+		if (istype(get_area(src), /area/space))
 			src.delStatus("burning")
 
 			if (!src.hasStatus("phoenix_regen_prevented"))
 				var/mult = max(src.tick_spacing, TIME - src.last_life_tick) / src.tick_spacing
 				src.HealDamage("All", 2 * mult, 2 * mult)
+		else
+			src.setStatus("phoenix_radiating_cold", 30 SECONDS)
+			src.setStatus("phoenix_regen_prevented", 30 SECONDS)
+
+			if (!src.hasStatus("phoenix_warmth_counter"))
+				src.setStatus("phoenix_warmth_counter", INFINITE_STATUS)
+
 
 	setup_healths()
 		add_hh_flesh(100, 1)
@@ -77,6 +84,8 @@
 		return ..()
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
+		if (brute <= 0 && burn <= 0 && tox <= 0)
+			return ..()
 		if (src.hasStatus("phoenix_ice_barrier"))
 			brute /= 2
 			burn /= 2
@@ -90,10 +99,6 @@
 
 	Move(turf/NewLoc, direct)
 		..()
-		if (!istype(get_area(NewLoc), /area/space))
-			src.setStatus("phoenix_radiating_cold", 30 SECONDS)
-			src.setStatus("phoenix_regen_prevented", 30 SECONDS)
-
 		if (src.hasStatus("phoenix_radiating_cold"))
 			src.radiate_cold(NewLoc)
 

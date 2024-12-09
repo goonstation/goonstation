@@ -3010,4 +3010,25 @@
 /datum/statusEffect/ice_phoenix/regeneration_prevented
 	id = "phoenix_regen_prevented"
 	desc = "Youve recently been in combat, or traveled to the station, causing your natural regeneration to be halted."
-	effect_quality = STATUS_EFFECT_NEUTRAL
+	effect_quality = STATUS_QUALITY_NEUTRAL
+
+/datum/statusEffect/ice_phoenix/warmth_counter
+	id = "phoenix_warmth_counter"
+	effect_quality = STATUS_QUALITY_NEUTRAL
+	var/time_passed = 0
+
+	onUpdate(timePassed)
+		..()
+		var/mult = max(LIFE_PROCESS_TICK_SPACING, src.time_passed) / LIFE_PROCESS_TICK_SPACING
+		if (!istype(get_area(src.owner), /area/space)) // check for permafrost too once implemented
+			src.time_passed = min(src.time_passed + timePassed, 30 SECONDS)
+			if (src.time_passed >= 30 SECONDS)
+				var/mob/living/critter/ice_phoenix/phoenix = src.owner
+				phoenix.TakeDamage("All", burn = 2 * mult)
+		else
+			src.time_passed -= timePassed
+			if (src.time_passed <= 0)
+				src.owner.delStatus(src)
+
+	getTooltip()
+		return "Being on the station increases your warmth, staying over 30 seconds and you'll start to take damage.<br><br>Current time spent: [round(src.time_passed / 10, 1)] seconds"
