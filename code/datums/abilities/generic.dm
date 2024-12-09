@@ -236,6 +236,20 @@
 		. = ..()
 		holder.owner.show_credits()
 
+/datum/targetable/personal_summary
+	name = "Personal summary"
+	desc = "Re-open the personal summary window."
+	icon = 'icons/mob/ghost_observer_abilities.dmi'
+	icon_state = "personal-summary"
+	targeted = FALSE
+	cooldown = 1 SECOND
+	do_logs = FALSE
+
+	cast(atom/target)
+		. = ..()
+		if (holder.owner.key in personal_summary_by_client)
+			personal_summary_by_client[holder.owner.key].ui_interact(holder.owner)
+
 /datum/targetable/juggle
 	name = "Juggle"
 	desc = "Juggle anything."
