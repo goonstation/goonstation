@@ -20,7 +20,7 @@
 	type_name = "Melee Weapon"
 	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 350
-	validtypes = list("ancient","martian","wizard","eldritch","precursor")
+	validtypes = list("ancient","martian","wizard","eldritch","precursor","clockwork")
 	react_xray = list(14,95,95,7,"DENSE")
 	var/damtype = "brute"
 	var/dmg_amount = 5
