@@ -101,9 +101,6 @@ TYPEINFO(/obj/item/aiModule)
 			src.lawText = list(src.lawText, lawtext_replace)
 		tooltip_rebuild = 1
 
-	proc/on_insert(slotNum) // Used for the disguised module
-		return
-
 	attackby(obj/item/W, mob/user)
 		if(ispulsingtool(W))
 			boutput(user, "You hold down the reset button...")
@@ -464,6 +461,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	lawText = "Make a funny beeping noise every few minutes."
 	var/realLawText = "Do crime."
 	var/obj/item/remote/disguised_module/connected_remote = null
+	tooltip_flags = REBUILD_USER
 
 	New()
 		..()
@@ -474,6 +472,12 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		src.realLawText = lawTarget ? lawTarget : "Do crime."
 		return ..()
 
+	attackby(obj/item/W, mob/user)
+		if(istype(W,/obj/item/aiModule))
+			src.disguise(W, user)
+			return
+		..()
+
 	attack_self(mob/user)
 		var/lawTarget = input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", src.realLawText)
 		if(lawTarget)
@@ -482,41 +486,48 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 				phrase_log.log_phrase("ailaw", src.get_law_text(allow_list=FALSE), no_duplicates=TRUE)
 		return
 
-	on_insert(var/slotNum)
-		switch (slotNum)
-			if (1)
-				src.name = /obj/item/aiModule/asimov1::name
-				src.lawText = /obj/item/aiModule/asimov1::lawText
-			if (2)
-				src.name = /obj/item/aiModule/asimov2::name
-				src.lawText = /obj/item/aiModule/asimov2::lawText
-			if (3)
-				src.name = /obj/item/aiModule/asimov3::name
-				src.lawText = /obj/item/aiModule/asimov3::lawText
-			else
-				src.name = initial(src.name)
-				src.lawText = src.realLawText
-
 	emag_act(mob/user, obj/item/card/emag/E)
 		return
 
-	get_desc()
+	get_desc(dist, mob/user)
 		. = ""
 		if(src.glitched)
 			.+= "It isn't working right. You could use a multitool to reset it.<br>"
-		. +=  "It reads, \"<em>[src.realLawText]</em>\""
+		. +=  "It reads, \"<em>[src.lawText]</em>\"<br>"
+		if(istraitor(user) && (src.lawText != src.realLawText)) //Syndicate training or whatever
+			. +=  "The hidden law reads, \"<em>[src.realLawText]</em>\""
+
+	proc/disguise(obj/item/aiModule/module, mob/user)
+		if(!istype(module))
+			return
+		logTheThing(LOG_STATION, user, "[constructName(user)] disguises AI Law \"<em>[src.realLawText]</em>\" as \"<em>[src.lawText]</em>\".")
+		message_admins("[key_name(user)] disguises AI Law \"<em>[src.realLawText]</em>\" as \"<em>[src.lawText]</em>\".")
+		src.name = module.name
+		src.lawText = module.lawText
+		src.color = module.color
+		src.highlight_color = module.highlight_color
+		boutput(user, SPAN_NOTICE("The module's stealth circuit activates and disguises itself as [module]!"))
+		src.UpdateIcon()
+		tooltip_rebuild = TRUE
+		var/obj/machinery/lawrack/rack = src.loc
+		if(istype(rack))
+			rack.UpdateIcon()
+			rack.UpdateLaws()
+			tgui_process.update_uis(rack)
 
 	proc/activate(mob/user)
 		if (src.lawText == src.realLawText)
 			return
+		logTheThing(LOG_STATION, user, "[constructName(user)] activates disguised AI Law turning \"<em>[src.lawText]</em>\" into \"<em>[src.realLawText]</em>\".")
+		message_admins("[key_name(user)] activates disguised AI Law turning \"<em>[src.lawText]</em>\" into \"<em>[src.realLawText]</em>\".")
+		src.name = initial(src.name)
+		src.lawText = src.realLawText
+		src.UpdateIcon()
+		tooltip_rebuild = TRUE
 		var/obj/machinery/lawrack/rack = src.loc
 		if(istype(rack))
 			rack.UpdateLaws()
 			tgui_process.update_uis(rack)
-		logTheThing(LOG_STATION, user, "[constructName(user)] activates disguised ai law turning [src.lawText] into [src.realLawText].")
-		message_admins("[key_name(user)] activates disguised ai law turning [src.lawText] into [src.realLawText].")
-		src.name = initial(src.name)
-		src.lawText = src.realLawText
 
 TYPEINFO(/obj/item/remote/disguised_module)
 	mats = list("conductive"=2)
