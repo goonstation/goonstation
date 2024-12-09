@@ -167,6 +167,11 @@
 
 	var/datum/humanInventory/inventory = null
 
+	/// last item that the human stored in their belt storage
+	var/obj/item/last_stored_belt = null
+	/// last item that the human stored in their backpack storage
+	var/obj/item/last_stored_backpack = null
+
 	var/default_mutantrace = /datum/mutantrace/human
 
 /mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE, role_for_traits)
@@ -962,6 +967,10 @@
 			src.set_a_intent(INTENT_HARM)
 		if ("drop")
 			src.drop_item(null, TRUE)
+		if ("autostore_belt")
+			src.auto_store_unstore_belt()
+		if ("autostore_backpack")
+			src.auto_store_unstore_backpack()
 		if ("swaphand")
 			src.swap_hand()
 		if ("attackself")
@@ -3673,3 +3682,39 @@ mob/living/carbon/human/has_genetics()
 			return hand_color
 
 	. = ..()
+
+/// handles hotkey action for storing/unstoring item to/from belt storage
+/mob/living/carbon/human/proc/auto_store_unstore_belt()
+	if (!src.belt || !src.belt.storage)
+		return
+	var/obj/item/I = src.equipped()
+	var/list/belt_contents = src.belt.storage.get_contents()
+	if (I)
+		if (GET_COOLDOWN(src, "auto_store_hotkey"))
+			return
+		src.belt.Attackby(I, src)
+		if (I in belt_contents)
+			src.last_stored_belt = I
+			ON_COOLDOWN(src, "auto_unstore_hotkey", COMBAT_CLICK_DELAY)
+	else if (src.last_stored_belt && !GET_COOLDOWN(src, "auto_unstore_hotkey"))
+		if (!QDELETED(src.last_stored_belt) && (src.last_stored_belt in belt_contents))
+			src.last_stored_belt.Attackhand(src)
+			ON_COOLDOWN(src, "auto_store_hotkey", COMBAT_CLICK_DELAY)
+
+/// handles hotkey action for storing/unstoring item to/from backpack storage
+/mob/living/carbon/human/proc/auto_store_unstore_backpack()
+	if (!src.back || !src.back.storage)
+		return
+	var/obj/item/I = src.equipped()
+	var/list/backpack_contents = src.back.storage.get_contents()
+	if (I)
+		if (GET_COOLDOWN(src, "auto_store_hotkey"))
+			return
+		src.back.Attackby(I, src)
+		if (I in backpack_contents)
+			src.last_stored_backpack = I
+			ON_COOLDOWN(src, "auto_unstore_hotkey", COMBAT_CLICK_DELAY)
+	else if (src.last_stored_backpack && !GET_COOLDOWN(src, "auto_unstore_hotkey"))
+		if (!QDELETED(src.last_stored_backpack) && (src.last_stored_backpack in backpack_contents))
+			src.last_stored_backpack.Attackhand(src)
+			ON_COOLDOWN(src, "auto_store_hotkey", COMBAT_CLICK_DELAY)
