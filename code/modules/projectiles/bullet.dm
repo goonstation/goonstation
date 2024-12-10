@@ -1152,7 +1152,7 @@ toxic - poisons
 	hit_type = DAMAGE_STAB
 	disruption = 0
 	shot_sound = 'sound/weapons/flaregun.ogg'
-	implanted = null // maybe have some implant if a feather is fired?
+	implanted = /obj/item/implant/projectile/ice_feather
 
 	on_pre_hit(atom/hit, angle, obj/projectile/P)
 		. = ..()
