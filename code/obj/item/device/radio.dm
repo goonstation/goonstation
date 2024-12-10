@@ -717,7 +717,7 @@ TYPEINFO(/obj/item/radiojammer)
 		..()
 
 /obj/item/device/radio/hall_monitor
-	name = "Hall monitor's bootleg radio"
+	name = "Hall monitor's radio"
 	desc = "So you can listen to(eavesdrop on) station security(drama)."
 	icon_state = "radio"
 	has_microphone = FALSE
