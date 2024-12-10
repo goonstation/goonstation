@@ -17297,7 +17297,7 @@
 /obj/table/wood/auto,
 /obj/item/storage/toolbox/artistic,
 /obj/item/card_box/tarot,
-/obj/item/bible,
+/obj/item/holy_texts,
 /obj/item/reagent_containers/glass/bottle/holywater,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -43679,7 +43679,7 @@
 /area/station/maintenance/south)
 "pGB" = (
 /obj/table/wood/auto,
-/obj/item/bible,
+/obj/item/holy_texts,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
