@@ -166,6 +166,8 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"=" = "rest",
 		"V" = "equip",
 		"Q" = "drop",
+		"H" = "autostore_belt",
+		"N" = "autostore_backpack",
 		"E" = "swaphand",
 		"C" = "attackself",
 		"DELETE" = "togglethrow"

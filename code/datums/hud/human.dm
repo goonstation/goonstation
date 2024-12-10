@@ -324,11 +324,15 @@
 					if (!master.belt?.storage || I.storage) // belt BEFORE trying storages, and only swap if its not a storage swap
 						master.autoequip_slot(I, SLOT_BELT)
 						if (master.equipped() != I)
+
 							return
 
 					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
+						if ((S.master == src.master.belt?.storage || S.master == src.master.back?.storage) && GET_COOLDOWN(src.master, "auto_store_hotkey"))
+							return
 						S.master.add_contents_safe(I, user)
 						if (master.equipped() != I)
+							ON_COOLDOWN(src.master, "auto_unstore_hotkey", COMBAT_CLICK_DELAY)
 							return
 
 					//ONLY do these if theyre actually empty, we dont want to pocket swap.
@@ -383,11 +387,15 @@
 					if (!master.belt?.storage || I.storage) // belt BEFORE trying storages, and only swap if its not a storage swap
 						master.autoequip_slot(I, SLOT_BELT)
 						if (master.equipped() != I)
+
 							return
 
 					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
+						if ((S.master == src.master.belt?.storage || S.master == src.master.back?.storage) && GET_COOLDOWN(src.master, "auto_store_hotkey"))
+							return
 						S.master.add_contents_safe(I, user)
 						if (master.equipped() != I)
+							ON_COOLDOWN(src.master, "auto_unstore_hotkey", COMBAT_CLICK_DELAY)
 							return
 
 					//ONLY do these if theyre actually empty, we dont want to pocket swap.
@@ -547,13 +555,19 @@
 
 			#define clicked_slot(slot) var/obj/item/W = master.get_slot(slot); if (W) { master.click(W, params); } else { var/obj/item/I = master.equipped(); if (!I || !master.can_equip(I, slot) || istype(I.loc, /obj/item/parts/)) { return; } master.u_equip(I); master.force_equip(I, slot); }
 			if("belt")
+				var/obj/item/item = src.master.equipped()
 				clicked_slot(SLOT_BELT)
+				if (item && !src.master.equipped())
+					src.master.last_stored_belt = item
 			if("storage1")
 				clicked_slot(SLOT_L_STORE)
 			if("storage2")
 				clicked_slot(SLOT_R_STORE)
 			if("back")
+				var/obj/item/item = src.master.equipped()
 				clicked_slot(SLOT_BACK)
+				if (item && !src.master.equipped())
+					src.master.last_stored_backpack = item
 			if("shoes")
 				clicked_slot(SLOT_SHOES)
 			if("gloves")
