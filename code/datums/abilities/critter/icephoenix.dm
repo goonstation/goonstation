@@ -94,12 +94,16 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 
 /datum/targetable/critter/ice_phoenix/thermal_shock
 	name = "Thermal Shock"
-	desc = "Creates an atmospheric-blocking tunnel that allows travel through by anyone. Can only be cast on walls."
+	desc = "Channel to create an atmospheric-blocking tunnel that allows travel through by anyone. Can only be cast on walls."
 	cooldown = 2 SECONDS // 20 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
+	cooldown_after_action = TRUE
 
 	tryCast(atom/target, params)
+		if (BOUNDS_DIST(src.holder.owner, target) > 0)
+			boutput(src.holder.owner, SPAN_ALERT("You need to be adjacent to the target!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (!iswall(target))
 			boutput(src.holder.owner, SPAN_ALERT("You can only cast this ability on walls!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
@@ -107,33 +111,44 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 
 	cast(atom/target)
 		..()
-		var/turf/T = target
-		new /turf/simulated/ice_phoenix_ice_tunnel(T, get_dir(src.holder.owner, T))
+		SETUP_GENERIC_ACTIONBAR(src.holder.owner, null, 5 SECONDS, /mob/living/critter/ice_phoenix/proc/create_ice_tunnel, list(target), \
+			'icons/mob/critter/nonhuman/icephoenix.dmi', "icephoenix", null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 
 /datum/targetable/critter/ice_phoenix/wind_chill
 	name = "Wind chill"
-	desc = "Create a freezing aura at the targeted location, inflicting cold on those within 5 tiles nearby, or freezing them if their body temperature is low enough."
+	desc = "Create a freezing aura at the targeted location, inflicting cold on those within 5 tiles nearby, and freezing them solid if their body temperature is low enough."
 	cooldown = 2 SECONDS // 30 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 
 	cast(atom/target)
 		..()
-		var/turf/T = get_turf(target)
-		for (var/mob/living/L in range(5, T))
-			L.changeStatus("shivering", 10 SECONDS)
-			// also do ice cube
+		var/turf/center = get_turf(target)
+		var/obj/particle/cryo_sparkle/sparkle
+		for (var/turf/T as anything in block(center.x - 2, center.y - 2, center.z, center.x + 2, center.y + 2, center.z))
+			sparkle = new /obj/particle/cryo_sparkle(T)
+			sparkle.alpha = rand(180, 255)
+			for (var/mob/living/L in T)
+				L.changeStatus("shivering", 10 SECONDS)
+				L.bodytemperature -= 10
+				if (L.bodytemperature <= 255.372) // 0 degrees fahrenheit
+					new /obj/icecube(L.loc, L)
+			SPAWN(2 SECONDS)
+				qdel(sparkle)
 
 /datum/targetable/critter/ice_phoenix/touch_of_death
 	name = "Touch of Death"
 	desc = "Delivers constant chills to an adjacent target. If their body temperature is low enough, it will deal rapid burn damage. If recently frozen by an ice cube, they will be unable to move."
 	cooldown = 2 SECONDS // 60 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 
 	tryCast(atom/target, params)
+		if (BOUNDS_DIST(src.holder.owner, target) > 0)
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (!ishuman(target))
 			boutput(src.holder.owner, SPAN_ALERT("You can only cast this ability on humans!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		// temperature check
 		return ..()
 
 	cast(atom/target)
@@ -184,7 +199,10 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		if(src.check_for_interrupt())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		src.owner.visible_message(SPAN_ALERT("[src.owner] grips [src.target] with its talons!"), SPAN_ALERT("You begin channeling cold into [src.target]."))
+		src.owner.visible_message(SPAN_ALERT("[src.owner] grips [src.target] with its talons!"), SPAN_ALERT("You begin channeling your cold into [src.target]."))
+		if (TIME - src.target.last_cubed < 10 SECONDS)
+			APPLY_ATOM_PROPERTY(src.target, PROP_MOB_CANTMOVE, "phoenix_touch_of_death")
+			src.target.last_cubed = TIME
 
 	onEnd()
 		..()
@@ -193,10 +211,15 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 			return
 
 		src.target.changeStatus("shivering", 2 SECONDS)
-		// need to do a temperature check
-		src.target.TakeDamage("All", burn = 10)
+		src.target.bodytemperature -= 15
+		if (src.target.bodytemperature <= 255.372) // 0 degrees fahrenheit
+			src.target.TakeDamage("All", burn = 10)
 
 		src.onRestart()
+
+	onInterrupt()
+		..()
+		REMOVE_ATOM_PROPERTY(src.target, PROP_MOB_CANTMOVE, "phoenix_touch_of_death")
 
 	// need to do temperature check
 	proc/check_for_interrupt()
@@ -274,13 +297,23 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 ABSTRACT_TYPE(/obj/ice_phoenix_ice_wall)
 /obj/ice_phoenix_ice_wall
 	name = "compacted snow wall"
-	desc = "A wall of compacted snow and ice. An obstacle, yet, weak."
+	desc = "A wall of compacted snow and ice. An obstacle that can be destroyed, best by heat."
 	icon = 'icons/turf/walls/moon.dmi'
 	density = TRUE
 	anchored = ANCHORED_ALWAYS
+	layer = TURF_LAYER
 	default_material = "ice"
 	mat_changename = FALSE
 	var/hits_left = 3
+
+	New()
+		..()
+		//src.reagents = new /datum/reagent(25)
+		//src.reagents.my_atom = src
+		//src.reagents.add_reagent("water", 25)
+
+		SPAWN(1 MINUTE)
+			qdel(src)
 
 	horizontal_mid
 		icon_state = "moon-12"
@@ -314,7 +347,7 @@ ABSTRACT_TYPE(/obj/ice_phoenix_ice_wall)
 		attack_particle(user, src)
 		user.lastattacked = src
 
-		if (isweldingtool(I))
+		if (isweldingtool(I) && I:welding)
 			user.visible_message(SPAN_ALERT("[user] melts [src]!"), SPAN_ALERT("You melt [src]!"))
 			qdel(src)
 		else if (I.force)
@@ -330,27 +363,36 @@ ABSTRACT_TYPE(/obj/ice_phoenix_ice_wall)
 				qdel(src)
 		else
 			..()
+			boutput(user, SPAN_ALERT("Unfortunately, [I] is too weak to damage [src]."))
 
 	bullet_act(obj/projectile/P)
 		if (P.power >= 20)
+			src.visible_message(SPAN_ALERT("[src] is destroyed by [P]!"))
 			qdel(src)
-		else
+		else if (P.power)
 			src.hits_left--
 			if (src.hits_left > 0)
+				src.visible_message(SPAN_ALERT("[src] is destroyed by [P]!"))
 				qdel(src)
 			else
 				..()
 
-	hit_check(datum/thrown_thing/thr)
-
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
-		if (AM.throwforce > 20)
+		if (AM.throwforce >= 20)
+			src.visible_message(SPAN_ALERT("[src] is destroyed by [AM]!"))
 			qdel(src)
 		else
 			src.hits_left--
 			if (src.hits_left <= 0)
+				src.visible_message(SPAN_ALERT("[src] is destroyed by [AM]!"))
 				qdel(src)
+
+	Bumped(atom/A)
+		if (istype(A, /obj/machinery/vehicle))
+			qdel(src)
+			return
+		return ..()
 
 	ex_act()
 		qdel(src)
@@ -361,24 +403,5 @@ ABSTRACT_TYPE(/obj/ice_phoenix_ice_wall)
 	// need snow particle effects for destroying the wall
 	disposing()
 		// create water here
+		//src.reagents.trans_to(get_turf(src), 25)
 		..()
-
-/turf/simulated/ice_phoenix_ice_tunnel
-	icon = 'icons/mob/critter/nonhuman/icephoenix.dmi'
-	icon_state = "ice_tunnel"
-	density = FALSE
-	opacity = FALSE
-	name = "ice tunnel"
-	desc = "A narrow ice tunnel that seems to prevent passage of air by a thick, icy mist. Interesting."
-	gas_impermeable = TRUE
-
-	New(newLoc, direct)
-		..()
-		if (istype(get_step(src, NORTH), /turf/space) || istype(get_step(src, SOUTH), /turf/space))
-			src.dir = SOUTH
-		else if (istype(get_step(src, EAST), /turf/space))
-			src.dir = WEST
-		else if (istype(get_step(src, WEST), /turf/space))
-			src.dir = EAST
-		else
-			src.dir = direct

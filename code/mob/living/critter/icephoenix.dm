@@ -29,10 +29,11 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
+
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/sail)
+		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/thermal_shock)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/ice_barrier)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/glacier)
-		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/thermal_shock)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/wind_chill)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/touch_of_death)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/permafrost)
@@ -53,7 +54,6 @@
 
 			if (!src.hasStatus("phoenix_warmth_counter"))
 				src.setStatus("phoenix_warmth_counter", INFINITE_STATUS)
-
 
 	setup_healths()
 		add_hh_flesh(100, 1)
@@ -103,10 +103,23 @@
 
 
 	Move(turf/NewLoc, direct)
+		if (istype(get_turf(src), /turf/space))
+			var/obj/effects/ion_trails/I = new(get_turf(src))
+			I.set_dir(src.dir)
+			flick("ion_fade", I)
+			I.icon_state = "blank"
+			I.pixel_x = src.pixel_x
+			I.pixel_y = src.pixel_y
+			SPAWN(2 SECONDS)
+				qdel(I)
 		..()
 		if (src.hasStatus("phoenix_radiating_cold"))
 			src.radiate_cold(NewLoc)
 
+	movement_delay()
+		. = ..()
+		if (src.hasStatus("ice_phoenix_sail") && istype(get_turf(src), /turf/space))
+			return . / 2
 
 	//specific_emote_type(var/act)
 	//	switch (act)
@@ -135,6 +148,11 @@
 	proc/on_sail()
 		src.setStatus("ice_phoenix_sail", 10 SECONDS)
 		var/datum/targetable/critter/ice_phoenix/sail/abil = src.abilityHolder.getAbility(/datum/targetable/critter/ice_phoenix/sail)
+		abil.afterAction()
+
+	proc/create_ice_tunnel(turf/T)
+		new /turf/simulated/ice_phoenix_ice_tunnel(T, get_dir(src, T))
+		var/datum/targetable/critter/ice_phoenix/thermal_shock/abil = src.abilityHolder.getAbility(/datum/targetable/critter/ice_phoenix/thermal_shock)
 		abil.afterAction()
 
 	proc/show_map()
@@ -180,3 +198,23 @@
 		animate(src, 5 SECONDS, alpha = 80)
 		SPAWN(10 SECONDS) // 45 SECONDS
 			qdel(src)
+
+/turf/simulated/ice_phoenix_ice_tunnel
+	icon = 'icons/mob/critter/nonhuman/icephoenix.dmi'
+	icon_state = "ice_tunnel"
+	density = FALSE
+	opacity = FALSE
+	name = "ice tunnel"
+	desc = "A narrow ice tunnel that seems to prevent passage of air by a thick, icy mist. Interesting."
+	gas_impermeable = TRUE
+
+	New(newLoc, direct)
+		src.dir = direct
+		if (src.dir == NORTH)
+			src.dir = SOUTH
+
+		if (src.dir == NORTH || src.dir == SOUTH)
+			src.blocked_dirs = EAST | WEST
+		else
+			src.blocked_dirs = NORTH | SOUTH
+		..()

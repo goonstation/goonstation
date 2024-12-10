@@ -2999,7 +2999,14 @@
 	id = "phoenix_ice_barrier"
 	desc = "The next attack against you will have its damage reduced by 50%."
 	effect_quality = STATUS_QUALITY_POSITIVE
-	// need to modify the sprite of the phoenix a little to show this
+
+	onAdd()
+		..()
+		src.owner.add_filter("phoenix_barrier_outline", 1, outline_filter(1, "#09e5f5"))
+
+	onRemove()
+		..()
+		src.owner.remove_filter("phoenix_barrier_outline")
 
 /datum/statusEffect/ice_phoenix/radiating_cold
 	id = "phoenix_radiating_cold"

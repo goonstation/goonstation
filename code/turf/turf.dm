@@ -1314,7 +1314,7 @@ TYPEINFO(/turf/simulated)
 	else if (istype(A, /mob/living/critter/ice_phoenix))
 		var/mob/living/critter/ice_phoenix/phoenix = A
 		if (phoenix.travel_back_to_station)
-			zlevel = 1
+			zlevel = Z_LEVEL_STATION
 	if (istype(A, /obj/newmeteor))
 		qdel(A)
 		return
