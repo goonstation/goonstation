@@ -2982,18 +2982,19 @@
 		src.glimmer = null
 
 /datum/statusEffect/ice_phoenix
-	icon_state = "mutiny"
 
 /datum/statusEffect/ice_phoenix/empowered_feather
 	id = "phoenix_empowered_feather"
 	name = "Empowered Feather"
 	desc = "Your next feather attack will deal an extra 10% of a pod's current life on hit, as well as gain a 25% disruption chance."
+	icon_state = "phoenix_feather_emp"
 	effect_quality = STATUS_QUALITY_POSITIVE
 
 /datum/statusEffect/ice_phoenix/sail
 	id = "ice_phoenix_sail"
 	name = "Sailing"
 	desc = "You are sailing the solar winds, grating a large movement speed buff while in space."
+	icon_state = "phoenix_sail"
 	effect_quality = STATUS_QUALITY_POSITIVE
 	move_triggered = TRUE
 
@@ -3006,6 +3007,7 @@
 	id = "phoenix_ice_barrier"
 	name = "Ice Barrier"
 	desc = "The next attack against you will have its damage reduced by 50%."
+	icon_state = "phoenix_barrier"
 	effect_quality = STATUS_QUALITY_POSITIVE
 
 	onAdd()
@@ -3020,12 +3022,14 @@
 	id = "phoenix_vulnerable"
 	name = "Vulnerable"
 	desc = "You've been made vulnerable, causing you to radiate ice and have halted health regeneration."
-	effect_quality = STATUS_QUALITY_NEUTRAL
+	icon_state = "phoenix_vulnerable"
+	effect_quality = STATUS_QUALITY_NEGATIVE
 
 /datum/statusEffect/ice_phoenix/warmth_counter
 	id = "phoenix_warmth_counter"
 	name = "Station Warming"
-	effect_quality = STATUS_QUALITY_NEUTRAL
+	icon_state = "phoenix_warmth"
+	effect_quality = STATUS_QUALITY_NEGATIVE
 	var/time_passed = 0
 
 	onUpdate(timePassed)
