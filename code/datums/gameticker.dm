@@ -912,8 +912,10 @@ var/global/current_state = GAME_STATE_INVALID
 				else if (E.client.preferences.view_tickets && (length(creds.citation_tab_data[CITATION_TAB_SECTION_TICKETS]) || length(creds.citation_tab_data[CITATION_TAB_SECTION_FINES])))
 					creds.ui_interact(E)
 				E.show_inspector_report()
-				personal_summary_by_client[E.key].generate_xp(E.key, E)
-				E.addAbility(/datum/targetable/personal_summary)
+				SPAWN(0)
+					personal_summary_by_client[E.key].generate_xp(E.key)
+					personal_summary_by_client[E.key].ui_interact(E)
+					E.addAbility(/datum/targetable/personal_summary)
 	logTheThing(LOG_DEBUG, null, "Did credits")
 
 	if(global.lag_detection_process.automatic_profiling_on)

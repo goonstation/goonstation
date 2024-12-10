@@ -43,27 +43,24 @@ var/global/list/datum/personal_summary/personal_summary_by_client = list()
 		ui.open()
 
 /datum/personal_summary/proc/generate_xp(key, mob/M)
-	SPAWN(0)
-		if(key in xp_archive)
-			var/list/keyList = xp_archive[key]
-			var/hasEntries = 0
-			for(var/job in keyList)
-				hasEntries = 1
-				src.exp_earned = TRUE
-				src.current_job = job
-				src.earned_exp = keyList[job]
-				src.total_exp = get_xp(key, job)
+	if(key in xp_archive)
+		var/list/keyList = xp_archive[key]
+		var/hasEntries = 0
+		for(var/job in keyList)
+			hasEntries = 1
+			src.exp_earned = TRUE
+			src.current_job = job
+			src.earned_exp = keyList[job]
+			src.total_exp = get_xp(key, job)
 
-				if (isnull(src.total_exp))
-					src.total_exp = src.earned_exp // for local dev servers where get_xp will always return null
-				src.current_level = LEVEL_FOR_XP(src.total_exp)
-				src.level_exp = src.total_exp - XP_FOR_LEVEL(src.current_level)
-				src.next_level_exp = XP_FOR_LEVEL(src.current_level  + 1) - XP_FOR_LEVEL(src.current_level)
+			if (isnull(src.total_exp))
+				src.total_exp = src.earned_exp // for local dev servers where get_xp will always return null
+			src.current_level = LEVEL_FOR_XP(src.total_exp)
+			src.level_exp = src.total_exp - XP_FOR_LEVEL(src.current_level)
+			src.next_level_exp = XP_FOR_LEVEL(src.current_level  + 1) - XP_FOR_LEVEL(src.current_level)
 
-			if(!hasEntries)
-				src.exp_earned = FALSE
-
-		src.ui_interact(M)
+		if(!hasEntries)
+			src.exp_earned = FALSE
 
 /datum/personal_summary/proc/generate_output_data()
 	src.personal_summary_data = list()
