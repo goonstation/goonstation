@@ -721,6 +721,8 @@ TYPEINFO(/obj/item/radiojammer)
 	desc = "So you can listen to(eavesdrop on) station security(drama)."
 	icon_state = "radio"
 	has_microphone = FALSE
+	frequency = R_FREQ_SECURITY
+	locked_frequency = TRUE
 	secure_frequencies = list("g" = R_FREQ_SECURITY)
 	secure_classes = list("g" = RADIOCL_SECURITY)
 
