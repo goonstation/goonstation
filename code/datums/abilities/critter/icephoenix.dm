@@ -44,6 +44,15 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 	targeted = TRUE
 	target_anything = TRUE
 
+	tryCast(atom/target)
+		if (GET_DIST(src.holder.owner, target) > 7)
+			boutput(src.holder.owner, SPAN_ALERT("That tile is too far away!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (!(target in view(7, src.holder.owner)))
+			boutput(src.holder.owner, SPAN_ALERT("That tile is out of sight!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		return ..()
+
 	cast(atom/target)
 		. = ..()
 		var/wall_style
@@ -128,6 +137,15 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 	targeted = TRUE
 	target_anything = TRUE
 
+	tryCast(atom/target)
+		if (GET_DIST(src.holder.owner, target) > 7)
+			boutput(src.holder.owner, SPAN_ALERT("That tile is too far away!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (!(target in view(7, src.holder.owner)))
+			boutput(src.holder.owner, SPAN_ALERT("That tile is out of sight!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		return ..()
+
 	cast(atom/target)
 		..()
 		var/turf/center = get_turf(target)
@@ -165,21 +183,38 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 
 /datum/targetable/critter/ice_phoenix/permafrost
 	name = "Permafrost"
-	desc = "Target a station turf to channel a powerful ice beam that makes the station area habitable to you at the end."
+	desc = "Target an empty station floor to channel a powerful ice beam that makes the station area habitable to you at the end, guarded by a totem."
 	icon_state = "permafrost"
 	cooldown = 2 SECONDS // 60 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 
 	tryCast(atom/target, params)
-		if (!istype(get_area(target), /area/station))
+		if (GET_DIST(src.holder.owner, target) > 7)
+			boutput(src.holder.owner, SPAN_ALERT("That tile is too far away!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (!(target in view(7, src.holder.owner)))
+			boutput(src.holder.owner, SPAN_ALERT("That tile is out of sight!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		var/area/A = get_area(target)
+		if (!istype(A, /area/station))
 			boutput(src.holder.owner, SPAN_ALERT("You can only cast this ability on a station turf!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (A.permafrosted)
+			boutput(src.holder.owner, SPAN_ALERT("You've already used Permafrost in this area!'"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		var/turf/T = get_turf(target)
+		if (iswall(T))
+			boutput(src.holder.owner, SPAN_ALERT("You can't cast this ability on a wall!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		var/turf/phoenix_turf = get_turf(src.holder.owner)
 		if (T == phoenix_turf)
 			boutput(src.holder.owner, SPAN_ALERT("You can't cast this ability on the same turf you're on!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		for (var/atom/atom as anything in T)
+			if (atom.density)
+				boutput(src.holder.owner, SPAN_ALERT("This turf has a blocking object on it!"))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		return ..()
 
 	cast(atom/target)
@@ -243,7 +278,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 
 	var/turf/target
 	var/obj/beam_dummy/dummy
-	var/list/turfs_in_area = list()
 
 	New(atom/target)
 		..()
@@ -257,18 +291,15 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		EndSpacePush(src.owner)
 		src.owner.set_dir(get_dir(src.owner, target))
 		src.owner.visible_message(SPAN_ALERT("[src.owner] begins channeling a beam of ice!"), SPAN_ALERT("You begin channeling your ice power."))
-		//var/list/turfs/affected = DrawLine(get_step(src.owner, src.owner.dir), src.target, /obj/ice_phoenix_ice_wall/east)
 		src.dummy = showLine(src.owner, target, "zigzag")
 		src.dummy.color = "#2e2af1"
-
-		for (var/turf/T in get_area(target))
-			src.turfs_in_area += T
 
 	onUpdate()
 		..()
 		if (src.check_for_interrupt())
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		/*
 		var/area/A = get_area(src.target)
 		var/mob/living/M
 		for (var/datum/mind/mind as anything in A.population)
@@ -277,6 +308,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 			if (!ON_COOLDOWN(M, "ice_phoenix_permafrost_chill", 1 SECOND))
 				M.TakeDamage("All", burn = 1)
 			// body temp decrease
+		*/
 
 	onEnd()
 		..()
@@ -284,19 +316,15 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		for (var/turf/simulated/floor/T in src.turfs_in_area)
-			if (T.intact && !istype(T, /turf/simulated/floor/glassblock))
-				T.ReplaceWith(/turf/simulated/floor/snow/snowball)
-				T.icon = 'icons/turf/snow.dmi'
-				T.icon_state = "snow[pick(1, 2, 3)]"
-				T.set_dir(pick(cardinal))
-			else
-				T.icon = 'icons/turf/floors.dmi'
-				T.icon_state = "snow[pick(null, 1, 2, 3, 4)]"
-				T.set_dir(pick(cardinal))
 
-			new /obj/effects/precipitation/snow/grey/tile/light(T)
+		var/area/A = get_area(target)
+		A.add_permafrost()
+		new /obj/ice_phoenix_statue(target)
 
+		QDEL_NULL(src.dummy)
+
+	onInterrupt()
+		..()
 		QDEL_NULL(src.dummy)
 
 	proc/check_for_interrupt()

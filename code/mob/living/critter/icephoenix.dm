@@ -49,7 +49,8 @@
 				var/mult = max(src.tick_spacing, TIME - src.last_life_tick) / src.tick_spacing
 				src.HealDamage("All", 2 * mult, 2 * mult)
 
-		if (istype(get_area(src), /area/station))
+		var/area/A = get_area(src)
+		if (istype(A, /area/station) && !A.permafrosted)
 			src.setStatus("phoenix_vulnerable", 30 SECONDS)
 
 			if (!src.hasStatus("phoenix_warmth_counter"))
@@ -177,10 +178,20 @@
 			boutput(src, SPAN_NOTICE("You will no longer travel back to station space when traveling off the Z level"))
 
 	proc/radiate_cold(turf/center)
+		var/obj/phoenix_snow_floor/floor
+		var/icon_s
+		var/direct
 		for (var/turf/space/T in block(center.x - 1, center.y - 1, center.z, center.x + 1, center.y + 1, center.z))
-			var/obj/phoenix_snow_floor/floor = locate() in T
-			qdel(floor)
-			new /obj/phoenix_snow_floor(T)
+			floor = locate() in T
+
+			if (floor)
+				icon_s = floor.icon_state
+				direct = floor.dir
+				qdel(floor)
+			floor = new /obj/phoenix_snow_floor(T)
+			if (icon_s)
+				floor.icon_state = icon_s
+				floor.set_dir(direct)
 
 /obj/phoenix_snow_floor
 	name = "compacted snow floor"
@@ -220,4 +231,58 @@
 			src.blocked_dirs = EAST | WEST
 		else
 			src.blocked_dirs = NORTH | SOUTH
+		..()
+
+/obj/ice_phoenix_statue
+	icon = 'icons/mob/critter/nonhuman/icephoenix.dmi'
+	icon_state = "icephoenix"
+	name = "ice statue"
+	desc = "Some sort of ice statue resembling a phoenix. It's emanating an aura."
+	density = TRUE
+	anchored = ANCHORED_ALWAYS
+	color = "#0400da"
+	var/health = 100
+
+	attack_hand(mob/user)
+		attack_particle(user, src)
+		user.lastattacked = src
+		boutput(user, SPAN_NOTICE("It's really cold!"))
+		..()
+
+	attackby(obj/item/I, mob/user)
+		..()
+		attack_particle(user, src)
+		user.lastattacked = src
+
+		if (!I.force)
+			return
+
+		hit_twitch(src)
+		src.health -= I.force
+		if (src.health <= 0)
+			qdel(src)
+			return
+
+	bullet_act(obj/projectile/P)
+		if (P.proj_data.ks_ratio >= 1)
+			hit_twitch(src)
+			src.health -= P.power
+			if (src.health <= 0)
+				qdel(src)
+				return
+		..()
+
+	blob_act()
+		src.health -= 25
+		if (src.health <= 0)
+			qdel(src)
+			return
+
+	ex_act()
+		qdel(src)
+
+	disposing()
+		src.visible_message(SPAN_ALERT("[src] shatters!"))
+		var/area/A = get_area(src)
+		A.remove_permafrost()
 		..()
