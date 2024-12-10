@@ -4,9 +4,6 @@
  * @author FlameArrow57
  * @license ISC
  */
-import { Image } from 'tgui-core/components';
-
-import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -14,22 +11,39 @@ export const acw: AlertContentWindow = {
   content: (
     <div className="traitor-tips">
       <h1 className="center">You are a Space Phoenix!</h1>
-      <Image
-        src={resource('images/antagTips/flockmind.gif')}
-        className="center"
-        width="64"
-        height="64"
-      />
-      <p>1. ...</p>
-      <p>2. ...</p>
-      <p>3. ...</p>
-      <p>4. ...</p>
-      <p>5. ...</p>
-      <p>6. ...</p>
+      <p>
+        1. You are a spacefaring creature. Use your Map and Return to Station
+        abilities at the bottom right to navigate the station Z level, and
+        toggle returning to the station Z level upon exiting the current Z
+        level.
+      </p>
+      <p>
+        2. Your main attack is firing ice feathers. Use this to damage and chill
+        attackers.
+      </p>
+      <p>
+        3. The station is harmful to you. If you stay longer than 30 seconds on
+        the station in an area that is not permafrosted, you will begin to take
+        damage.
+      </p>
+      <p>
+        4. Use your Permafrost ability to make areas of the station habitable to
+        you, and less habitable to its residents.
+      </p>
+      <p>
+        4. Your Windchill and Touch of Death abilities have special effects
+        against targets who have low body temperature (see their descriptions).
+        Use this to your advantage!
+      </p>
+      <p>5. You naturally regen health in space when out of combat.</p>
+      <p>
+        6. Entering combat or traveling to the station will make you vulnerable,
+        causing you to radiate walkable ice when space traveling.
+      </p>
 
       <p>
-        For more information, please consult{' '}
-        <a href="https://wiki.ss13.co/index.php?search=Flockmind">the wiki</a>
+        This antag is currently in development and will not be found on the
+        wiki.
       </p>
     </div>
   ),
