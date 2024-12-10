@@ -1146,7 +1146,7 @@ toxic - poisons
 /datum/projectile/bullet/ice_phoenix_icicle
 	name = "ice feather"
 	sname = "ice feather"
-	icon_state = "flare"
+	icon_state = "laser_anim_blue"
 	damage = 0.0001 // unique effect per atom hit, but set to non-zero to bypass 0 power/damage checks
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB

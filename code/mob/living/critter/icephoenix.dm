@@ -76,7 +76,7 @@
 		HH = hands[2]
 		HH.name = "ice feather"
 		HH.limb = new /datum/limb/gun/kinetic/ice_phoenix
-		HH.icon_state = "fire_essence"
+		HH.icon_state = "feather"
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.limb_name = "ice feather"
 		HH.can_hold_items = FALSE
