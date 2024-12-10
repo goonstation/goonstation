@@ -1168,6 +1168,7 @@ toxic - poisons
 			if (!istype(T, /turf/space))
 				src.damage = 5
 				src.disruption = 0
+				hit.visisble_message(SPAN_ALERT("[src] hits [hit] with almost no effect!"))
 			else
 				if (P.shooter.hasStatus("phoenix_empowered_feather"))
 					var/obj/machinery/vehicle/vehicle = hit

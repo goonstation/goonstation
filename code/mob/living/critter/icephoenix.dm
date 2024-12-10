@@ -256,7 +256,7 @@
 	density = TRUE
 	anchored = ANCHORED_ALWAYS
 	color = "#0400da"
-	var/health = 100
+	var/health = 200
 
 	attack_hand(mob/user)
 		attack_particle(user, src)
