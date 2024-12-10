@@ -717,9 +717,8 @@ var/global/current_state = GAME_STATE_INVALID
 	for(var/mob/player in mobs)
 		if (player?.client && player.mind && !player.mind.get_player()?.joined_observer && !istype(player,/mob/new_player))
 			logTheThing(LOG_DEBUG, null, "Iterating on [player.client]")
+			personal_summary_by_client[player.key] = new /datum/personal_summary
 			//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] spacebux calc start: [player.mind.ckey]")
-
-			var/chui/window/earn_spacebux/bank_earnings = new
 
 			//get base wage + initial earnings calculation
 			var/job_wage = 100
@@ -758,12 +757,11 @@ var/global/current_state = GAME_STATE_INVALID
 			if (player.mind.join_time > LATEJOIN_FULL_WAGE_GRACE_PERIOD) //grace period of 9 mins after roundstart to be a full-time employee
 				var/lossRatio = ((game_end_time - player.mind.join_time) / game_end_time)
 				job_wage = job_wage * lossRatio
-				bank_earnings.part_time = 1
+				personal_summary_by_client[player.key].is_part_time = TRUE
 
 			var/earnings = final_score/100 * job_wage * 2 //TODO ECNONMY_REBALANCE: remove the *2
-
-			bank_earnings.wage_base = round(job_wage * 2) //TODO ECNONMY_REBALANCE: remove the *2
-			bank_earnings.wage_after_score = round(earnings)
+			personal_summary_by_client[player.key].base_wage = round(job_wage * 2)  //TODO ECNONMY_REBALANCE: remove the *2
+			personal_summary_by_client[player.key].score_adjusted_wage = round(earnings)
 
 			//check if escaped
 			//if we are dead - get the location of our corpse
@@ -800,30 +798,30 @@ var/global/current_state = GAME_STATE_INVALID
 					player_loses_held_item = 0
 
 			if (player_body_escaped)
-				bank_earnings.escaped = 1
+				personal_summary_by_client[player.key].is_escaped = TRUE
 			else
 				earnings = (earnings/4)
-				bank_earnings.escaped = 0
+				personal_summary_by_client[player.key].is_escaped = FALSE
 				player_loses_held_item = 1
 
 			//handle traitors
 			if (player.mind && (player.mind in ticker.mode.traitors)) // Roundstart people get the full bonus
 				earnings = job_wage
-				bank_earnings.badguy = 1
+				personal_summary_by_client[player.key].is_antagonist = TRUE
 				player_loses_held_item = 0
 			else if (istype(player.loc, /obj/cryotron) || player.mind && (player.mind in all_the_baddies)) // Cryo'd or was a baddie at any point? Keep your shit, but you don't get the extra bux
 				player_loses_held_item = 0
 			//some might not actually have a wage
 			if (!isvirtual(player) && ((isnukeop(player) || isnukeopgunbot(player)) ||  (isblob(player) && (player.mind && player.mind.special_role == ROLE_BLOB)) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == ROLE_WIZARD)) ))
-				bank_earnings.wage_base = 0 //only effects the end of round display
+				personal_summary_by_client[player.key].base_wage = 0 //only effects the end of round display
 				earnings = 800
 
 			if (player.mind.completed_objs > 0)
 				earnings += (player.mind.completed_objs * 50) // CREW OBJECTIVE SBUX, ONE OBJECTIVE
-				bank_earnings.completed_objs = (player.mind.completed_objs * 50)
+				personal_summary_by_client[player.key].objective_completed_bonus = (player.mind.completed_objs * 50)
 				if (player.mind.all_objs)
 					earnings += 100; // ALL CREW OBJECTIVE SBUX BONUS
-					bank_earnings.all_objs = 100
+					personal_summary_by_client[player.key].all_objectives_bonus = 100
 
 
 			//pilot's bonus check and reward
@@ -831,7 +829,7 @@ var/global/current_state = GAME_STATE_INVALID
 			if(!isdead(player) && in_centcom(player))
 				if (player.buckled)
 					if (istype(player.buckled,/obj/stool/chair/comfy/shuttle/pilot))
-						bank_earnings.pilot = 1
+						personal_summary_by_client[player.key].is_pilot = TRUE
 						earnings += pilot_bonus
 				else if (isAI(player))
 					var/mob/living/silicon/ai/M = null
@@ -841,7 +839,7 @@ var/global/current_state = GAME_STATE_INVALID
 						M = player
 					var/obj/stool/chair/comfy/shuttle/pilot/O = locate() in M.loc
 					if (O && !O.buckled_guy) //no double piloting
-						bank_earnings.pilot = 1
+						personal_summary_by_client[player.key].is_pilot = TRUE
 						earnings += pilot_bonus
 
 			//add_to_bank and show earnings receipt
@@ -867,13 +865,13 @@ var/global/current_state = GAME_STATE_INVALID
 					)
 
 				SPAWN(0)
-					bank_earnings.pilot_bonus = pilot_bonus
-					bank_earnings.final_payout = earnings
+					personal_summary_by_client[player.key].pilot_bonus = pilot_bonus
+					personal_summary_by_client[player.key].earned_spacebux = earnings
 					if (player.client) // client shit
-						bank_earnings.held_item = player.client.persistent_bank_item
+						personal_summary_by_client[player.key].held_item = player.client.persistent_bank_item
 					if (player.client)
-						bank_earnings.new_balance = player.client.persistent_bank + earnings
-					bank_earnings.Subscribe(player.client)
+						personal_summary_by_client[player.key].total_spacebux = player.client.persistent_bank + earnings
+
 
 	//do bulk commit
 	SPAWN(0)
@@ -914,7 +912,8 @@ var/global/current_state = GAME_STATE_INVALID
 				else if (E.client.preferences.view_tickets && (length(creds.citation_tab_data[CITATION_TAB_SECTION_TICKETS]) || length(creds.citation_tab_data[CITATION_TAB_SECTION_FINES])))
 					creds.ui_interact(E)
 				E.show_inspector_report()
-				SPAWN(0) show_xp_summary(E.key, E)
+				personal_summary_by_client[E.key].generate_xp(E.key, E)
+				E.addAbility(/datum/targetable/personal_summary)
 	logTheThing(LOG_DEBUG, null, "Did credits")
 
 	if(global.lag_detection_process.automatic_profiling_on)
