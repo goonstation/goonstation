@@ -78,7 +78,7 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 
 		working = 1
 
-		SPAWN(5 SECONDS)
+		SPAWN(2 SECONDS)
 			for(var/turf/simulated/T in maintaining_turfs)
 				if(!T.air && T.density)
 					continue
@@ -485,6 +485,15 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 
 /obj/machinery/computer/airbr/trader_right
 	connected_dock = COMSIG_DOCK_TRADER_EAST
+
+/obj/machinery/computer/airbr/medical_medbay
+	connected_dock = COMSIG_DOCK_MEDICAL_MEDBAY
+
+/obj/machinery/computer/airbr/medical_pathology
+	connected_dock = COMSIG_DOCK_MEDICAL_PATHOLOGY
+
+/obj/machinery/computer/airbr/mining_station
+	connected_dock = COMSIG_DOCK_MINING_STATION
 
 /* -------------------- Button -------------------- */
 /obj/machinery/airbr_test_button

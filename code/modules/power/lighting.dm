@@ -555,13 +555,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 /obj/machinery/light/traffic_light
 	name = "warning light"
-	desc = "A small light used to warn when shuttle traffic is expected."
+	desc = "A small, hardened light used to warn when shuttle traffic is expected."
 	icon_state = "runway10"
 	base_state = "runway1"
 	fitting = "bulb"
 	brightness = 0.5
-	light_type = /obj/item/light/bulb
-	allowed_type = /obj/item/light/bulb
+	light_type = /obj/item/light/bulb/runway/traffic
+	allowed_type = /obj/item/light/bulb/runway/traffic
 	plane = PLANE_NOSHADOW_BELOW
 	on = 0
 	wallmounted = 0
@@ -575,6 +575,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		if(src.connected_dock)
 			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, PROC_REF(dock_signal_handler))
 
+	ex_act(severity)
+		if(severity == 1)
+			..()
+
 	proc/dock_signal_handler(datum/holder, var/signal)
 		switch(signal)
 			if(DOCK_EVENT_INCOMING)
@@ -587,18 +591,32 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 				src.deactivate()
 
 	proc/activate()
-		color = warning_color
-		on = 1
-		update()
+		src.color = warning_color
+		src.on = TRUE
+		src.update()
 
 	proc/deactivate()
-		color = null
-		on = 0
-		update()
+		src.color = null
+		src.on = FALSE
+		src.update()
 
-	trader_left // matching mapping area convensions
+	// matching mapping area conventions
+	trader_left
 		connected_dock = COMSIG_DOCK_TRADER_WEST
-
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+	trader_right
+		connected_dock = COMSIG_DOCK_TRADER_EAST
 		delay2
 			icon_state = "runway20"
 			base_state = "runway2"
@@ -612,8 +630,164 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			icon_state = "runway50"
 			base_state = "runway5"
 
-	trader_right
-		connected_dock = COMSIG_DOCK_TRADER_EAST
+	trader_diner
+		connected_dock = COMSIG_DOCK_TRADER_DINER
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+
+	mining_station
+		connected_dock = COMSIG_DOCK_MINING_STATION
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+
+	mining_diner
+		connected_dock = COMSIG_DOCK_MINING_DINER
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+	mining_outpost
+		connected_dock = COMSIG_DOCK_MINING_OUTPOST
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+	john_owlery
+		connected_dock = COMSIG_DOCK_JOHN_OWLERY
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+	john_diner
+		connected_dock = COMSIG_DOCK_JOHN_DINER
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+	john_outpost
+		connected_dock = COMSIG_DOCK_JOHN_OUTPOST
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+	research_station
+		connected_dock = COMSIG_DOCK_RESEARCH_STATION
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+	research_outpost
+		connected_dock = COMSIG_DOCK_RESEARCH_OUTPOST
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+	medical_asylum
+		connected_dock = COMSIG_DOCK_MEDICAL_ASYLUM
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+	medical_medbay
+		connected_dock = COMSIG_DOCK_MEDICAL_MEDBAY
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+	medical_pathology
+		connected_dock = COMSIG_DOCK_MEDICAL_PATHOLOGY
 		delay2
 			icon_state = "runway20"
 			base_state = "runway2"
@@ -1658,6 +1832,12 @@ TYPEINFO(/obj/item/light)
 
 	runway
 		burnprob = 0
+
+		traffic
+			color_r = 1
+			color_g = 0.67
+			color_b = 0.67
+
 
 /obj/item/light/big_bulb
 	name = "beacon bulb"
