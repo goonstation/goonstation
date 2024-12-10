@@ -131,6 +131,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 					return NORTH|SOUTH
 				if(EAST, WEST)
 					return EAST|WEST
+	/*
 	bent
 		name = "Bent pipe"
 		path = /obj/machinery/atmospherics/pipe/simple/overfloor
@@ -147,7 +148,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 					return NORTH|EAST
 				if(WEST)
 					return SOUTH|WEST
-
+	*/
 	manifold
 		name = "Manifold"
 		path = /obj/machinery/atmospherics/pipe/manifold/overfloor
@@ -185,7 +186,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 					return NORTH|SOUTH
 				if(EAST, WEST)
 					return EAST|WEST
-
+	/*
 	bent_heat_pipe
 		name = "Bent Heat exchanging pipe"
 		path = /obj/machinery/atmospherics/pipe/simple/heat_exchanging
@@ -202,7 +203,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 					return NORTH|EAST
 				if(WEST)
 					return SOUTH|WEST
-
+	*/
 	heat_junction
 		name = "HE junction"
 		path = /obj/machinery/atmospherics/pipe/simple/junction
