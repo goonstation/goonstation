@@ -907,7 +907,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 		if(!signal || signal.encryption)
 			return
 
-		if((src.secondsMainPowerLost && src.secondsBackupPowerLost) || !src.powered())
+		if((!src.arePowerSystemsOn()) || (src.status & NOPOWER))
 			return
 
 		if(lowertext(signal.data["sender"]) == src.net_id)
