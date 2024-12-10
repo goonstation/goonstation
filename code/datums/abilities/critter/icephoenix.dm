@@ -1,9 +1,12 @@
 ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 /datum/targetable/critter/ice_phoenix
+	icon = 'icons/mob/critter/nonhuman/icephoenix.dmi'
+	icon_state = "template"
 
 /datum/targetable/critter/ice_phoenix/sail
 	name = "Sail"
 	desc = "Channel to gain a large movement speed buff while in space for 10 seconds"
+	icon_state = "sail"
 	cooldown = 10 SECONDS // 120 seconds
 	cooldown_after_action = TRUE
 
@@ -26,6 +29,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 /datum/targetable/critter/ice_phoenix/ice_barrier
 	name = "Ice Barrier"
 	desc = "Gives yourself a hardened ice barrier, reducing the damage of the next attack against you by 50%."
+	icon_state = "ice_barrier"
 	cooldown = 2 SECONDS // 20 SECONDS
 
 	cast(atom/target)
@@ -35,6 +39,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 /datum/targetable/critter/ice_phoenix/glacier
 	name = "Glacier"
 	desc = "Create a 5 tile wide compacted snow wall, perpendicular to the cast direction, or otherwise in a random direction. Can be destroyed by heat or force."
+	icon_state = "ice_wall"
 	cooldown = 2 SECONDS // 20 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
@@ -95,6 +100,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 /datum/targetable/critter/ice_phoenix/thermal_shock
 	name = "Thermal Shock"
 	desc = "Channel to create an atmospheric-blocking tunnel that allows travel through by anyone. Can only be cast on walls."
+	icon_state = "thermal_shock"
 	cooldown = 2 SECONDS // 20 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
@@ -117,6 +123,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 /datum/targetable/critter/ice_phoenix/wind_chill
 	name = "Wind chill"
 	desc = "Create a freezing aura at the targeted location, inflicting cold on those within 5 tiles nearby, and freezing them solid if their body temperature is low enough."
+	icon_state = "windchill"
 	cooldown = 2 SECONDS // 30 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
@@ -139,6 +146,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 /datum/targetable/critter/ice_phoenix/touch_of_death
 	name = "Touch of Death"
 	desc = "Delivers constant chills to an adjacent target. If their body temperature is low enough, it will deal rapid burn damage. If recently frozen by an ice cube, they will be unable to move."
+	icon_state = "touch_of_death"
 	cooldown = 2 SECONDS // 60 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
@@ -158,6 +166,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 /datum/targetable/critter/ice_phoenix/permafrost
 	name = "Permafrost"
 	desc = "Target a station turf to channel a powerful ice beam that makes the station area habitable to you at the end."
+	icon_state = "permafrost"
 	cooldown = 2 SECONDS // 60 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
