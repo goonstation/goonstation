@@ -181,6 +181,7 @@
 #include "machinery.dm"
 #include "map.dm"
 #include "math.dm"
+#include "macros\luck.dm"
 #include "matrix.dm"
 #include "parallax.dm"
 #include "pathfinding.dm"

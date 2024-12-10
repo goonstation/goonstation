@@ -1,4 +1,90 @@
 
+(t)mon dec 09 24
+(u)Egregorious
+(p)21364
+(e)🪲⚖🌱|C-Bug, C-Balance, A-Hydroponics
+(+)Revamped the botany-associated requisitions.
+(t)sun dec 08 24
+(u)TDHooligan
+(p)21579
+(e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
+(*)Gangs will now receive Vandalism objectives over duffle bags.
+(*)Vandalism objectives now scale in points required, based on the room.
+(*)New graffiti sprites, courtesy of Lyy, Paco, AmyLizzle and Flaborized.
+(+)Spraycans carry 50% more graffiti
+(+)Vandalism scores have been rebalanced.
+(u)LeahTheTech
+(+)Cats can now wear hairbows as bowties.
+(u)tarmunora
+(+)New client setting under "Effects" to toggle the screen-flash effect to black instead of white.
+(u)RubiCubie
+(p)21605
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited the espresso machine and its mug.
+(t)sat dec 07 24
+(u)LeahTheTech
+(p)21601
+(e)|
+(*)Every gang member now gets one FREE GUN from their locker.
+(+)The free gun is either a Lo-Point or Hafgan repeating laser. Gang leaders get a spare magazine too.
+(+)There will now only ever be two gangs on RP servers.
+(t)fri dec 06 24
+(u)tarmunora
+(+)Scuttlebots now have some internal storage for photos, which will pop out when the bot turns back into a hat (or otherwise dies)
+(u)LeahTheTech
+(+)Being deaf now mutes all sounds, exceptions made for OOC sound effects such as admin PMs.
+(u)JORJ949
+(p)21580
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Full-size Nuclear Bombs being planted cause red alert.
+(u)JORJ949
+(p)21321
+(e)🗺🔧🔎⚙|A-Mapping, A-Tooling, C-Code-Quality, A-Internal
+(+)Turtles are now mobs, you can put them in pet carriers!
+(t)thu dec 05 24
+(u)JORJ949
+(p)21519
+(e)🆕🎩|C-Feature, A-Clothing
+(+)The syndicate have gotten into the christmas spirit! You can now buy santa space suits from the apparel vendor.
+(u)JORJ949
+(p)21565
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Added the disarmanomicon, break into the chaplain's vendor to get it!
+(t)wed dec 04 24
+(u)glowbold
+(p)21480
+(e)🆕🗺📦💡|C-Feature, A-Mapping, A-Game-Objects, A-Station-Systems
+(+)Most Nanotrasen stations and ships have been outfitted with Mining Intercoms.
+(u)Garash2k
+(p)21348
+(e)🆕📄|C-Feature, A-UI
+(+)New UI for the Gas Mixer Control, overheat your local station 2day!
+(u)cringe
+(p)21494
+(e)💨|A-Atmospherics
+(+)The netid field on packets was changed to address_1 and sender for atmospheric devices.
+(t)tue dec 03 24
+(u)glowbold
+(p)21536
+(e)⚖🌠|C-Balance, A-Events
+(*)Solar flare events super-charge solar panels. Beware of hot-wires.
+(u)JORJ949
+(p)21540
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Authorizing armory now activates red alert.
+(u)tarmunora
+(+)experimental: Vampires consuming 'blood' reagent outside of their powers only restores spent blood, does not count towards unlocks etc.
+(u)JORJ949
+(p)21488
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)The NTSC now has access to EVA.
+(u)glowbold
+(p)21527
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)In gang war, when vandalizing areas, you do not gain points for spraying over existing graffiti.
+(t)mon dec 02 24
+(u)LeahTheTech
+(+)Packet sniffers now come with a helpful frequency reference sheet.
 (t)sun dec 01 24
 (u)FlameArrow57
 (p)21477

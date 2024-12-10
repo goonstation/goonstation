@@ -40,7 +40,7 @@
 
 		H.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(H), SLOT_W_UNIFORM)
 		H.equip_if_possible(new /obj/item/clothing/shoes/swat/noslip(H), SLOT_SHOES)
-		H.equip_if_possible(new /obj/item/clothing/gloves/swat(H), SLOT_GLOVES)
+		H.equip_if_possible(new /obj/item/clothing/gloves/swat/syndicate(H), SLOT_GLOVES)
 		H.equip_if_possible(new /obj/item/storage/backpack/syndie/tactical(H), SLOT_BACK)
 		H.equip_if_possible(new /obj/item/clothing/mask/gas/swat/syndicate(H), SLOT_WEAR_MASK)
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(H), SLOT_GLASSES)
