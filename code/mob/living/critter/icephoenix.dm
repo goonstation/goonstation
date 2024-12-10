@@ -118,6 +118,16 @@
 		..()
 		if (istype(NewLoc, /turf/space))
 			EndSpacePush(src)
+		var/area/A = get_area(src)
+		if (istype(A, /area/station) && !A.permafrosted)
+			src.setStatus("phoenix_vulnerable", 30 SECONDS)
+
+			if (!src.hasStatus("phoenix_warmth_counter"))
+				src.setStatus("phoenix_warmth_counter", INFINITE_STATUS)
+
+		if (src.hasStatus("phoenix_vulnerable"))
+			src.radiate_cold(get_turf(src))
+
 		if (src.hasStatus("phoenix_vulnerable"))
 			src.radiate_cold(NewLoc)
 
