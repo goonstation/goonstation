@@ -908,9 +908,6 @@ TYPEINFO(/obj/machinery/door/airlock)
 			return
 
 		if((src.secondsMainPowerLost && src.secondsBackupPowerLost) || !src.powered())
-			SPAWN(0)
-				sleep(src.operation_time)
-				send_status(,senderid)
 			return
 
 		if(lowertext(signal.data["sender"]) == src.net_id)
