@@ -1151,7 +1151,8 @@ toxic - poisons
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
 	disruption = 0
-	shot_sound = 'sound/weapons/flaregun.ogg'
+	shot_sound = 'sound/effects/swoosh2.ogg'
+	shot_volume = 50
 	implanted = /obj/item/implant/projectile/ice_feather
 
 	on_pre_hit(atom/hit, angle, obj/projectile/P)
@@ -1168,7 +1169,7 @@ toxic - poisons
 			if (!istype(T, /turf/space))
 				src.damage = 5
 				src.disruption = 0
-				hit.visisble_message(SPAN_ALERT("[src] hits [hit] with almost no effect!"))
+				hit.visible_message(SPAN_ALERT("[P] hits [hit] with almost no effect!"))
 			else
 				if (P.shooter.hasStatus("phoenix_empowered_feather"))
 					var/obj/machinery/vehicle/vehicle = hit
@@ -1180,7 +1181,8 @@ toxic - poisons
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if (istype(hit, /obj/window))
-			hit.visible_message(SPAN_ALERT("\the [src] uselessly clunks off [hit]!"))
+			hit.visible_message(SPAN_ALERT("[P] uselessly clunks off [hit]!"))
+			playsound(hit, 'sound/impact_sounds/Glass_Hit_1.ogg', 75, TRUE)
 		. = ..()
 
 	on_end(obj/projectile/P)

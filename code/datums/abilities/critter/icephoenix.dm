@@ -258,6 +258,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		src.target.bodytemperature -= 15
 		if (src.target.bodytemperature <= 255.372) // 0 degrees fahrenheit
 			src.target.TakeDamage("All", burn = 10)
+		playsound(target, 'sound/impact_sounds/burn_sizzle.ogg', 100, TRUE)
 
 		src.onRestart()
 

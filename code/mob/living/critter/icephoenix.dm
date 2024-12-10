@@ -172,6 +172,7 @@
 
 	proc/create_ice_tunnel(turf/T)
 		new /turf/simulated/ice_phoenix_ice_tunnel(T, get_dir(src, T))
+		playsound(T, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, TRUE)
 		var/datum/targetable/critter/ice_phoenix/thermal_shock/abil = src.abilityHolder.getAbility(/datum/targetable/critter/ice_phoenix/thermal_shock)
 		abil.afterAction()
 
@@ -298,6 +299,7 @@
 
 	disposing()
 		src.visible_message(SPAN_ALERT("[src] shatters!"))
+		playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_[pick(1, 2, 3)]", 75, TRUE)
 		var/area/A = get_area(src)
 		A.remove_permafrost()
 		..()
