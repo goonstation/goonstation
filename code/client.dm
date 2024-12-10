@@ -112,6 +112,8 @@
 
 	var/hand_ghosts = 1 //pickup ghosts inhand
 
+	var/dark_screenflash = FALSE
+
 /client/proc/audit(var/category, var/message, var/target)
 	if(src.holder && (src.holder.audit & category))
 		logTheThing(LOG_AUDIT, src, message)
@@ -658,6 +660,8 @@
 
 	// Set view tint
 	view_tint = winget( src, "menu.set_tint", "is-checked" ) == "true"
+
+	dark_screenflash = winget( src, "menu.toggle_dark_screenflashes", "is-checked") == "true"
 
 /client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE, only_if_first=FALSE, message_who=null)
 	var/static/list/list/ip_to_ckeys = list()
@@ -1226,6 +1230,12 @@ var/global/curr_day = null
 	if (src.mob?.respect_view_tint_settings)
 		src.set_color(length(src.mob.active_color_matrix) ? src.mob.active_color_matrix : COLOR_MATRIX_IDENTITY, src.mob.respect_view_tint_settings)
 
+/client/verb/toggle_dark_screenflashes()
+	set hidden = 1
+	set name = "toggle-dark-screenflashes"
+
+	dark_screenflash = !dark_screenflash
+
 /client/verb/adjust_saturation()
 	set hidden = TRUE
 	set name = "adjust-saturation"
@@ -1249,6 +1259,8 @@ var/global/curr_day = null
 
 	else
 		src.recoil_controller?.disable()
+
+
 
 /client/proc/set_view_size(var/x, var/y)
 	//These maximum values make for a near-fullscreen game view at 32x32 tile size, 1920x1080 monitor resolution.

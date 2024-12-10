@@ -750,6 +750,9 @@ proc/filter_carrier_pets(var/type)
 	var/catnip = 0
 	var/is_annoying = FALSE
 	var/attack_damage = 3
+	var/obj/item/clothing/head/hairbow/bow = null
+	///if set, only accept bows of this type
+	var/bow_type = null
 
 	New()
 		..()
@@ -762,6 +765,17 @@ proc/filter_carrier_pets(var/type)
 			src.icon_state = "cat[cattype]"
 			src.icon_state_alive = src.icon_state
 			src.icon_state_dead = "cat[cattype]-dead"
+
+
+	update_body(...)
+		. = ..()
+		if (src.bow)
+			src.UpdateOverlays(image('icons/misc/critterbowtie.dmi', src.bow_icon_state()), "bowtie")
+		else
+			src.ClearSpecificOverlays("bowtie")
+
+	proc/bow_icon_state()
+		return "[replacetext(src.bow.icon_state, "hbow", "bowtie")][isdead(src) ? "-dead" : ""]"
 
 	setup_hands()
 		..()
@@ -787,6 +801,19 @@ proc/filter_carrier_pets(var/type)
 			src.catnip_effect()
 			user.u_equip(W)
 			qdel(W)
+		else if (istype(W, /obj/item/clothing/head/hairbow))
+			if (src.bow_type && !istype(W, src.bow_type))
+				boutput(user, "[src] gives you a withering look and refuses the bow. Perhaps they'd prefer a different color?")
+				return
+			var/oldbow = src.bow
+
+			user.drop_item(W)
+			src.bow = W
+			W.set_loc(src)
+			src.update_body()
+
+			if (oldbow)
+				user.put_in_hand_or_drop(oldbow)
 		else
 			..()
 
