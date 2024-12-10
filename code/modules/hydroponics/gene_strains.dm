@@ -330,6 +330,10 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 		growth_tick.growtime_bonus += 0.1
 		growth_tick.harvtime_bonus += 0.1
 
+/datum/plant_gene_strain/rooted
+	name = "Rooted"
+	desc = "A very rare mutation which allows typically single harvest plants to continue living after a harvest."
+
 /datum/plant_gene_strain/photosynthesis
 	name = "Advanced Photosynthesis"
 	desc = "A chlorophyll mutation causing the plant to respond very well to high amounts of light."

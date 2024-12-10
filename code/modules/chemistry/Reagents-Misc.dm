@@ -3195,6 +3195,18 @@ datum
 				if (DNA.cropsize > 1)
 					growth_tick.cropsize_bonus -= 0.24
 
+		bonemeal
+			name = "bonemeal"
+			id = "bonemeal"
+			description = "Crushed up bones, used as a primitive fertilizer that can increase the lifespan of a plant."
+			reagent_state = SOLID
+			fluid_r = 210
+			fluid_g = 210
+			fluid_b = 210
+
+			on_plant_life(var/obj/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.harvests_bonus += 0.6
+
 		///////////////////////////
 		/// BODILY FLUIDS /////////
 		///////////////////////////

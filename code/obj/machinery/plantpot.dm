@@ -1169,6 +1169,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			I.add_fingerprint(user)
 
 
+
 	// Now we determine the harvests remaining or grant extra ones.
 	if(!HYPCheckCommut(DNA,/datum/plant_gene_strain/immortal))
 		// Immortal is a gene strain that means infinite harvests as long as the plant
@@ -1194,7 +1195,8 @@ TYPEINFO(/obj/machinery/plantpot)
 	if(growing.isgrass || src.harvests <= 0)
 		// Vegetable-style plants always die after one harvest irregardless of harvests
 		// remaining, though they do get bonuses for having a good harvests gene.
-		HYPkillplant()
+		if(!HYPCheckCommut(DNA, /datum/plant_gene_strain/rooted) || src.harvests <= 0)
+			HYPkillplant()
 
 	//do we have to run the next life tick manually? maybe
 	playsound(src.loc, "rustle", 50, 1, -5, 2)
