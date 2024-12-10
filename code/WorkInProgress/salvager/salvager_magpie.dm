@@ -347,6 +347,12 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		comtype = /obj/item/weldingtool/arcwelder
 		price = 500
 
+	caxe
+		comname = "Crash axe"
+		desc = "A light utility axe that can be serviced as a vicious weapon."
+		comtype = /obj/item/crashaxe
+		price = 400
+
 	sledgehammer
 		comname = "Sledgehammer"
 		desc = "A classic means of manual demolition."
