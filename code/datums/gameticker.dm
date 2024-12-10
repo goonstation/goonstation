@@ -902,6 +902,8 @@ var/global/current_state = GAME_STATE_INVALID
 	if(ptl_cash)
 		logTheThing(LOG_DEBUG, null, "PTL Cash: [ptl_cash]")
 
+	var/is_inspector_report = (length(score_tracker.inspector_report) > 0)
+	var/is_tickets_or_fines = (length(creds.citation_tab_data[CITATION_TAB_SECTION_TICKETS]) || length(creds.citation_tab_data[CITATION_TAB_SECTION_FINES]))
 
 	SPAWN(0)
 		for(var/mob/E in mobs)
@@ -911,9 +913,11 @@ var/global/current_state = GAME_STATE_INVALID
 				E.addAbility(/datum/targetable/crew_credits)
 				if (E.client.preferences.view_score)
 					creds.ui_interact(E)
-				else if (E.client.preferences.view_tickets && (length(creds.citation_tab_data[CITATION_TAB_SECTION_TICKETS]) || length(creds.citation_tab_data[CITATION_TAB_SECTION_FINES])))
+				else if (E.client.preferences.view_tickets && is_tickets_or_fines)
 					creds.ui_interact(E)
-				E.show_inspector_report()
+				if(is_inspector_report)
+					E.show_inspector_report()
+					E.addAbility(/datum/targetable/inspector_report)
 				SPAWN(0) show_xp_summary(E.key, E)
 	logTheThing(LOG_DEBUG, null, "Did credits")
 
