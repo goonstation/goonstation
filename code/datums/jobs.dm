@@ -934,8 +934,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_lhan = list(/obj/item/bible/loaded)
-	if(owner.traitHolder?.hasTrait("atheist"))
-		slot_rhan = list(/obj/item/scripture/atheist)
 	wiki_link = "https://wiki.ss13.co/Chaplain"
 
 	special_setup(var/mob/living/carbon/human/M)
