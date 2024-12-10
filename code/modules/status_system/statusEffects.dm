@@ -1731,6 +1731,11 @@
 	effect_quality = STATUS_QUALITY_NEGATIVE
 	movement_modifier = /datum/movement_modifier/shiver
 
+	preCheck(atom/A)
+		. = ..()
+		if (istype(A, /mob/living/critter/ice_phoenix))
+			. = FALSE
+
 	onAdd(optional=null)
 		var/mob/M = owner
 		if(istype(M))
@@ -2981,11 +2986,13 @@
 
 /datum/statusEffect/ice_phoenix/empowered_feather
 	id = "phoenix_empowered_feather"
+	name = "Empowered Feather"
 	desc = "Your next feather attack will deal an extra 10% of a pod's current life on hit, as well as gain a 25% disruption chance."
 	effect_quality = STATUS_QUALITY_POSITIVE
 
 /datum/statusEffect/ice_phoenix/sail
 	id = "ice_phoenix_sail"
+	name = "Sailing"
 	desc = "You are sailing the solar winds, grating a large movement speed buff while in space."
 	effect_quality = STATUS_QUALITY_POSITIVE
 	move_triggered = TRUE
@@ -2997,6 +3004,7 @@
 
 /datum/statusEffect/ice_phoenix/ice_barrier
 	id = "phoenix_ice_barrier"
+	name = "Ice Barrier"
 	desc = "The next attack against you will have its damage reduced by 50%."
 	effect_quality = STATUS_QUALITY_POSITIVE
 
@@ -3008,29 +3016,28 @@
 		..()
 		src.owner.remove_filter("phoenix_barrier_outline")
 
-/datum/statusEffect/ice_phoenix/radiating_cold
-	id = "phoenix_radiating_cold"
-	desc = "You've recently been in combat, or traveled to the station, causing you to radiate cold. This will cause walkable snow to appear in space."
-	effect_quality = STATUS_QUALITY_NEUTRAL
-
-/datum/statusEffect/ice_phoenix/regeneration_prevented
-	id = "phoenix_regen_prevented"
-	desc = "Youve recently been in combat, or traveled to the station, causing your natural regeneration to be halted."
+/datum/statusEffect/ice_phoenix/vulnerable
+	id = "phoenix_vulnerable"
+	name = "Vulnerable"
+	desc = "You've been made vulnerable, causing you to radiate ice and have halted health regeneration."
 	effect_quality = STATUS_QUALITY_NEUTRAL
 
 /datum/statusEffect/ice_phoenix/warmth_counter
 	id = "phoenix_warmth_counter"
+	name = "Station Warming"
 	effect_quality = STATUS_QUALITY_NEUTRAL
 	var/time_passed = 0
 
 	onUpdate(timePassed)
 		..()
-		var/mult = max(LIFE_PROCESS_TICK_SPACING, src.time_passed) / LIFE_PROCESS_TICK_SPACING
-		if (!istype(get_area(src.owner), /area/space)) // check for permafrost too once implemented
+		var/area/A = get_area(src.owner)
+		if (istype(A, /area/station) && !A.permafrosted)
 			src.time_passed = min(src.time_passed + timePassed, 30 SECONDS)
 			if (src.time_passed >= 30 SECONDS)
 				var/mob/living/critter/ice_phoenix/phoenix = src.owner
-				phoenix.TakeDamage("All", burn = 2 * mult)
+				if (!ON_COOLDOWN(phoenix, "warmth_damage", 1 SECOND))
+					var/mult = max(LIFE_PROCESS_TICK_SPACING, timePassed) / LIFE_PROCESS_TICK_SPACING
+					phoenix.TakeDamage("All", burn = 4 * mult)
 		else
 			src.time_passed -= timePassed
 			if (src.time_passed <= 0)

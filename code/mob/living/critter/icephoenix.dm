@@ -42,18 +42,21 @@
 
 	Life()
 		. = ..()
-		if (istype(get_area(src), /area/space))
+		if (istype(get_turf(src), /turf/space))
 			src.delStatus("burning")
 
-			if (!src.hasStatus("phoenix_regen_prevented"))
+			if (!src.hasStatus("phoenix_vulnerable") && !istype(get_area(src), /area/station))
 				var/mult = max(src.tick_spacing, TIME - src.last_life_tick) / src.tick_spacing
 				src.HealDamage("All", 2 * mult, 2 * mult)
-		else
-			src.setStatus("phoenix_radiating_cold", 30 SECONDS)
-			src.setStatus("phoenix_regen_prevented", 30 SECONDS)
+
+		if (istype(get_area(src), /area/station))
+			src.setStatus("phoenix_vulnerable", 30 SECONDS)
 
 			if (!src.hasStatus("phoenix_warmth_counter"))
 				src.setStatus("phoenix_warmth_counter", INFINITE_STATUS)
+
+		if (src.hasStatus("phoenix_vulnerable"))
+			src.radiate_cold(get_turf(src))
 
 	setup_healths()
 		add_hh_flesh(100, 1)
@@ -96,9 +99,8 @@
 			burn /= 2
 			tox /= 2
 			src.delStatus("phoenix_ice_barrier")
-		src.setStatus("phoenix_radiating_cold", 30 SECONDS)
+		src.setStatus("phoenix_vulnerable", 30 SECONDS)
 		src.radiate_cold(get_turf(src))
-		src.setStatus("phoenix_regen_prevented", 30 SECONDS)
 		..()
 
 
@@ -113,7 +115,9 @@
 			SPAWN(2 SECONDS)
 				qdel(I)
 		..()
-		if (src.hasStatus("phoenix_radiating_cold"))
+		if (istype(NewLoc, /turf/space))
+			EndSpacePush(src)
+		if (src.hasStatus("phoenix_vulnerable"))
 			src.radiate_cold(NewLoc)
 
 	movement_delay()
@@ -173,11 +177,10 @@
 			boutput(src, SPAN_NOTICE("You will no longer travel back to station space when traveling off the Z level"))
 
 	proc/radiate_cold(turf/center)
-		for (var/turf/T as anything in block(center.x - 1, center.y - 1, center.z, center.x + 1, center.y + 1, center.z))
-			if (istype(T, /turf/space))
-				var/obj/phoenix_snow_floor/floor = locate() in T
-				qdel(floor)
-				new /obj/phoenix_snow_floor(T)
+		for (var/turf/space/T in block(center.x - 1, center.y - 1, center.z, center.x + 1, center.y + 1, center.z))
+			var/obj/phoenix_snow_floor/floor = locate() in T
+			qdel(floor)
+			new /obj/phoenix_snow_floor(T)
 
 /obj/phoenix_snow_floor
 	name = "compacted snow floor"
