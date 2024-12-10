@@ -702,8 +702,8 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		src.put_in_hand_or_drop(new /obj/item/joint_wax)
 
 	// Atheist Chaplains get a special scripture
-	if (src.traitHolder && src.traitHolder.hasTrait("atheist") && src.traitHolder.hasTrait("training_chaplain"))
-		src.put_in_hand_or_drop(new /obj/item/scripture/atheist)
+	if (src.traitHolder && src.traitHolder.hasTrait("atheist") && src.mind.assigned_role == "Chaplain")
+		src.put_in_hand_or_drop(new /obj/item/scripture/atheist(src))
 
 	src.equip_sensory_items()
 
