@@ -882,6 +882,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			src.visible_message(SPAN_ALERT("<b>[src]</b> dies!"))
 		setdead(src)
 		icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead"
+		src.update_body()
 	empty_hands()
 	if (do_drop_equipment)
 		drop_equipment()
