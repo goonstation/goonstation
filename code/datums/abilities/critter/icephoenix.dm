@@ -154,7 +154,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 			sparkle = new /obj/particle/cryo_sparkle(T)
 			sparkle.alpha = rand(180, 255)
 			for (var/mob/living/L in T)
-				L.changeStatus("shivering", 10 SECONDS)
+				L.changeStatus("shivering", 10 SECONDS * (1 - 0.75 * L.get_cold_protection() / 100), TRUE)
 				L.bodytemperature -= 10
 				if (L.bodytemperature <= 255.372) // 0 degrees fahrenheit
 					new /obj/icecube(L.loc, L)
@@ -227,7 +227,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 	//resumable = FALSE
 	color_success = "#4444FF"
 
-	var/mob/target
+	var/mob/living/target
 
 	New(atom/target)
 		..()
@@ -254,7 +254,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		src.target.changeStatus("shivering", 2 SECONDS)
+		src.target.changeStatus("shivering", 2 SECONDS * (1 - 0.75 * target.get_cold_protection() / 100), TRUE)
 		src.target.bodytemperature -= 15
 		if (src.target.bodytemperature <= 255.372) // 0 degrees fahrenheit
 			src.target.TakeDamage("All", burn = 10)
@@ -304,7 +304,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		var/mob/living/M
 		for (var/datum/mind/mind as anything in A.population)
 			M = mind.current
-			M.changeStatus("shivering", 1 SECOND)
+			M.changeStatus("shivering", 1 SECOND * (1 - 0.75 * L.get_cold_protection() / 100), TRUE)
 			if (!ON_COOLDOWN(M, "ice_phoenix_permafrost_chill", 1 SECOND))
 				M.TakeDamage("All", burn = 1)
 			// body temp decrease

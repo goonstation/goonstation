@@ -1156,10 +1156,11 @@ toxic - poisons
 
 	on_pre_hit(atom/hit, angle, obj/projectile/P)
 		. = ..()
-		if (istype(hit, /mob))
-			var/mob/M = hit
-			M.TakeDamage("All", 10, damage_type = src.damage_type)
-			M.changeStatus("shivering", 3 SECONDS)
+		if (istype(hit, /mob/living))
+			var/mob/living/L = hit
+			L.TakeDamage("All", 5, 5, damage_type = src.damage_type)
+			L.bodytemperature -= 5
+			L.changeStatus("shivering", 3 SECONDS * (1 - 0.75 * L.get_cold_protection() / 100), TRUE)
 		else if (isvehicle(hit))
 			src.damage = 25
 			src.disruption = 5

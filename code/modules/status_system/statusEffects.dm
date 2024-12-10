@@ -1730,24 +1730,35 @@
 	visible = TRUE
 	effect_quality = STATUS_QUALITY_NEGATIVE
 	movement_modifier = /datum/movement_modifier/shiver
+	/// chilled by an ice phoenix
+	var/phoenix_chill = FALSE
 
 	preCheck(atom/A)
 		. = ..()
 		if (istype(A, /mob/living/critter/ice_phoenix))
 			. = FALSE
 
-	onAdd(optional=null)
+	onAdd(optional)
+		src.phoenix_chill = optional
 		var/mob/M = owner
 		if(istype(M))
 			M.emote("shiver")
-			M.thermoregulation_mult *= 3
+			M.thermoregulation_mult *= (src.phoenix_chill ? 3 : 1.5)
+		. = ..()
+
+	onChange(optional)
+		if (optional && !src.phoenix_chill)
+			var/mob/M = owner
+			if (istype(M))
+				M.thermoregulation_mult /= 2
+			src.phoenix_chill = TRUE
 		. = ..()
 
 	onRemove()
 		. = ..()
 		var/mob/M = owner
 		if(istype(M))
-			M.thermoregulation_mult /= 3
+			M.thermoregulation_mult /= (src.phoenix_chill ? 3 : 1.5)
 
 /datum/statusEffect/miasma
 	id = "miasma"
