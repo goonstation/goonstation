@@ -173,6 +173,8 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 	desc = "His Grace."
 	icon_state = "green"
 	item_state = "toolbox-green"
+	start_listen_effects = list(LISTEN_EFFECT_MEMETIC_TOOLBOX)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
 	var/list/servantlinks = list()
 	var/hunger = 0
 	var/hunger_message_level = 0
@@ -289,19 +291,6 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 		playsound(src.loc, 'sound/effects/screech.ogg', 50, 1)
 
 		..()
-		return
-
-	hear_talk(var/mob/living/carbon/speaker, messages, real_name, lang_id)
-		if(!speaker || !messages)
-			return
-		if(src.loc != speaker) return
-		for(var/datum/ailment_data/A in src.servantlinks)
-			var/mob/living/M = A.affected_mob
-			if(!M || M == speaker)
-				continue
-
-			boutput(M, "<i><b><font color=blue face = Tempus Sans ITC>[messages[1]]</font></b></i>")
-
 		return
 
 /mob/living/proc/contract_memetic_madness(var/obj/item/storage/toolbox/memetic/newprogenitor)
