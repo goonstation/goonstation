@@ -701,6 +701,10 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
 		src.put_in_hand_or_drop(new /obj/item/joint_wax)
 
+	// Atheist Chaplains get a special scripture
+	if (src.traitHolder && src.traitHolder.hasTrait("atheist") && src.traitHolder.hasTrait("training_chaplain"))
+		src.put_in_hand_or_drop(new /obj/item/scripture/atheist)
+
 	src.equip_sensory_items()
 
 /mob/living/carbon/human/proc/spawnId(var/datum/job/JOB)
