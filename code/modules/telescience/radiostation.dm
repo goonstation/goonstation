@@ -698,6 +698,14 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon_state = "record_fruit"
 	song = 'sound/radio_station/music/honkmas.ogg'
 
+/obj/item/record/spacecult_collection // By WaxTerk
+	add_overlay = 0
+	icon_state = "record_spacecult"
+
+	hoshizora
+		song = 'sound/radio_station/music/spacecult/hoshizora.ogg'
+		record_name = "Starry Skies"
+
 /obj/item/record/clown_collection // By Arborinus. Honk!
 	add_overlay = 0
 	icon_state = "record_yellow"
@@ -835,6 +843,11 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 /obj/item/storage/box/record/radio/host
 	desc = "A sleeve of exclusive radio station songs."
+
+/obj/item/storage/box/record/spacecult
+	icon_state = "sleeve_spacecult"
+	desc = "It has indecipherable scribbles on it. Some kind of martian music?"
+	spawn_contents = list(/obj/item/record/spacecult_collection/hoshizora)
 
 /obj/item/storage/box/record/radio/host/make_my_stuff()
 	..()
