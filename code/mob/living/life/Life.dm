@@ -10,6 +10,7 @@
 	var/mob/living/carbon/human/human_owner = null
 	var/mob/living/silicon/hivebot/hivebot_owner = null
 	var/mob/living/silicon/robot/robot_owner = null
+	var/mob/living/silicon/ai/ai_mainframe_owner = null
 	var/mob/living/critter/critter_owner = null
 
 	New(new_owner,arguments)
@@ -23,6 +24,8 @@
 			hivebot_owner = owner
 		if (istype(owner,/mob/living/silicon/robot))
 			robot_owner = owner
+		if (istype(owner,/mob/living/silicon/ai))
+			ai_mainframe_owner = owner
 		if (istype(owner,/mob/living/critter))
 			critter_owner = owner
 
@@ -32,6 +35,7 @@
 		human_owner = null
 		hivebot_owner = null
 		robot_owner = null
+		ai_mainframe_owner = null
 		critter_owner = null
 
 	proc/Process(datum/gas_mixture/environment)
