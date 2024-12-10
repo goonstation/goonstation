@@ -48,6 +48,7 @@
 			if (!src.hasStatus("phoenix_vulnerable") && !istype(get_area(src), /area/station))
 				var/mult = max(src.tick_spacing, TIME - src.last_life_tick) / src.tick_spacing
 				src.HealDamage("All", 2 * mult, 2 * mult)
+				src.HealBleeding(0.1)
 
 		var/area/A = get_area(src)
 		if (istype(A, /area/station) && !A.permafrosted)
@@ -104,7 +105,6 @@
 		src.radiate_cold(get_turf(src))
 		..()
 
-
 	Move(turf/NewLoc, direct)
 		if (istype(get_turf(src), /turf/space))
 			var/obj/effects/ion_trails/I = new(get_turf(src))
@@ -159,6 +159,11 @@
 
 	is_spacefaring()
 		return TRUE
+
+	understands_language(langname)
+		if (langname == src.say_language || langname == "feather" || langname == "english") // understands but can't speak flock
+			return TRUE
+		return FALSE
 
 	proc/on_sail()
 		src.setStatus("ice_phoenix_sail", 10 SECONDS)
