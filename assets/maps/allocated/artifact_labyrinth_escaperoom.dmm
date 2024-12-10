@@ -1,0 +1,78 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/floor/artmaze_icefloor,
+/area/crunch/art_labyrinth)
+"z" = (
+/obj/decal/icefloor,
+/turf/unsimulated/floor/auto/arctic_lake,
+/area/crunch/art_labyrinth)
+"T" = (
+/obj/decal/icefloor,
+/obj/art_labyrinth_escapedoor,
+/obj/map/light/cyan,
+/turf/unsimulated/floor/auto/arctic_lake,
+/area/crunch/art_labyrinth)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+z
+z
+z
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+z
+T
+z
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+z
+z
+z
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+"}
