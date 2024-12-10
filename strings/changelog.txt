@@ -1,5 +1,15 @@
 
 (t)sun dec 08 24
+(u)TDHooligan
+(p)21579
+(e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
+(*)Gangs will now receive Vandalism objectives over duffle bags.
+(*)Vandalism objectives now scale in points required, based on the room.
+(*)New graffiti sprites, courtesy of Lyy, Paco, AmyLizzle and Flaborized.
+(+)Spraycans carry 50% more graffiti
+(+)Vandalism scores have been rebalanced.
+(u)LeahTheTech
+(+)Cats can now wear hairbows as bowties.
 (u)tarmunora
 (+)New client setting under "Effects" to toggle the screen-flash effect to black instead of white.
 (u)RubiCubie
