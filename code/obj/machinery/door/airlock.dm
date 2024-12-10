@@ -907,6 +907,12 @@ TYPEINFO(/obj/machinery/door/airlock)
 		if(!signal || signal.encryption)
 			return
 
+		if((src.secondsMainPowerLost && src.secondsBackupPowerLost) || !src.powered())
+			SPAWN(0)
+				sleep(src.operation_time)
+				send_status(,senderid)
+			return
+
 		if(lowertext(signal.data["sender"]) == src.net_id)
 			return
 
@@ -983,11 +989,19 @@ TYPEINFO(/obj/machinery/door/airlock)
 		switch( lowertext(signal.data["command"]) )
 			if("open")
 				SPAWN(0)
+					if(src.locked)
+						sleep(src.operation_time)
+						send_status(,senderid)
+						return
 					src.open(1)
 					src.send_status(,senderid)
 
 			if("close")
 				SPAWN(0)
+					if(src.locked)
+						sleep(src.operation_time)
+						send_status(,senderid)
+						return
 					src.close(1)
 					src.send_status(,senderid)
 
