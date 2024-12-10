@@ -68,12 +68,12 @@
 		src.unique_id = 0
 		..()
 
-	proc/bump_up(how_much = 8, invis = 0)
+	proc/bump_up(how_much = 8, invis = 0, time = 4)
 		src.bumped++
 		if(invis)
-			animate(src, alpha = 0, maptext_y = src.maptext_y + how_much, time = 4)
+			animate(src, alpha = 0, maptext_y = src.maptext_y + how_much, time = time)
 		else
-			animate(src, maptext_y = src.maptext_y + how_much, time = 4)
+			animate(src, maptext_y = src.maptext_y + how_much, time = time)
 
 	proc/show_to(var/client/who)
 		if(!istype(who))
@@ -124,12 +124,13 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0, tim
 
 		holder.notify_nonempty()
 
-	animate(text, alpha = alpha, maptext_y = 34, time = 4, flags = ANIMATION_END_NOW)
+	var/speed_multiplier = (HAS_ATOM_PROPERTY(target, PROP_ATOM_TIME_SPEED_MULT) ? GET_ATOM_PROPERTY(target, PROP_ATOM_TIME_SPEED_MULT) : 1)
+	animate(text, alpha = alpha, maptext_y = 34, time = 4 * speed_multiplier, flags = ANIMATION_END_NOW)
 	var/text_id = text.unique_id
-	SPAWN(time)
+	SPAWN(time * speed_multiplier)
 		if(text_id == text.unique_id)
-			text.bump_up(invis=1)
-			sleep(0.5 SECONDS)
+			text.bump_up(invis=1, time = 4 * speed_multiplier)
+			sleep(0.5 SECONDS * speed_multiplier)
 			qdel(text)
 			if (holder && !length(holder.lines))
 				holder.notify_empty()

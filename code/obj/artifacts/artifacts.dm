@@ -10,6 +10,7 @@
 	artifact = 1
 	mat_changename = 0
 	mat_changedesc = 0
+	HELP_MESSAGE_OVERRIDE(null)
 	var/associated_datum = /datum/artifact/art
 
 	New(var/loc, var/forceartiorigin)

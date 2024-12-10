@@ -7,7 +7,7 @@
 	type_name = "Container"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 450
-	validtypes = list("ancient","martian","wizard","eldritch","precursor")
+	validtypes = list("ancient","martian","wizard","eldritch","precursor","clockwork")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch, /datum/artifact_trigger/language)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
