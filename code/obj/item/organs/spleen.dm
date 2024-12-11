@@ -12,6 +12,8 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
+		if (!src.donor.regens_blood)
+			return
 		if (donor.blood_volume < 500 && donor.blood_volume > 0) // if we're full or empty, don't bother v
 			if (prob(66))
 				donor.blood_volume += 1 * mult // maybe get a little blood back ^
