@@ -5,9 +5,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 
 /datum/targetable/critter/ice_phoenix/sail
 	name = "Sail"
-	desc = "Channel to gain a large movement speed buff while in space for 10 seconds"
+	desc = "Channel to gain a large movement speed buff while in space for 20 seconds"
 	icon_state = "sail"
-	cooldown = 10 SECONDS // 120 seconds
+	cooldown = 60 SECONDS
 	cooldown_after_action = TRUE
 
 	tryCast()
@@ -22,15 +22,15 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		if (L.throwing)
 			return
 		EndSpacePush(L)
-		// 10 seconds below
-		SETUP_GENERIC_ACTIONBAR(src.holder.owner, null, 3 SECONDS, /mob/living/critter/ice_phoenix/proc/on_sail, null, \
-			'icons/mob/critter/nonhuman/icephoenix.dmi', "icephoenix", null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
+
+		SETUP_GENERIC_ACTIONBAR(src.holder.owner, null, 10 SECONDS, /mob/living/critter/ice_phoenix/proc/on_sail, null, \
+			null, null, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 
 /datum/targetable/critter/ice_phoenix/ice_barrier
 	name = "Ice Barrier"
 	desc = "Gives yourself a hardened ice barrier, reducing the damage of the next attack against you by 50%."
 	icon_state = "ice_barrier"
-	cooldown = 2 SECONDS // 20 SECONDS
+	cooldown = 20 SECONDS
 
 	cast(atom/target)
 		. = ..()
@@ -40,7 +40,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 	name = "Glacier"
 	desc = "Create a 5 tile wide compacted snow wall, perpendicular to the cast direction, or otherwise in a random direction. Can be destroyed by heat or force."
 	icon_state = "ice_wall"
-	cooldown = 2 SECONDS // 20 SECONDS
+	cooldown = 20 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 
@@ -110,7 +110,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 	name = "Thermal Shock"
 	desc = "Channel to create an atmospheric-blocking tunnel that allows travel through by anyone. Can only be cast on walls."
 	icon_state = "thermal_shock"
-	cooldown = 2 SECONDS // 20 SECONDS
+	cooldown = 60 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 	cooldown_after_action = TRUE
@@ -127,13 +127,13 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 	cast(atom/target)
 		..()
 		SETUP_GENERIC_ACTIONBAR(src.holder.owner, null, 5 SECONDS, /mob/living/critter/ice_phoenix/proc/create_ice_tunnel, list(target), \
-			'icons/mob/critter/nonhuman/icephoenix.dmi', "icephoenix", null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
+			null, null, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 
 /datum/targetable/critter/ice_phoenix/wind_chill
 	name = "Wind chill"
 	desc = "Create a freezing aura at the targeted location, inflicting cold on those within 5 tiles nearby, and freezing them solid if their body temperature is low enough."
 	icon_state = "windchill"
-	cooldown = 2 SECONDS // 30 SECONDS
+	cooldown = 30 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 
@@ -165,7 +165,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 	name = "Touch of Death"
 	desc = "Delivers constant chills to an adjacent target. If their body temperature is low enough, it will deal rapid burn damage. If recently frozen by an ice cube, they will be unable to move."
 	icon_state = "touch_of_death"
-	cooldown = 2 SECONDS // 60 SECONDS
+	cooldown = 60 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 
@@ -185,12 +185,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 	name = "Permafrost"
 	desc = "Target an empty station floor to channel a powerful ice beam that makes the station area habitable to you at the end, guarded by a totem."
 	icon_state = "permafrost"
-	cooldown = 2 SECONDS // 60 SECONDS
+	cooldown = 60 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 
 	tryCast(atom/target, params)
-		if (GET_DIST(src.holder.owner, target) > 7)
+		if (GET_DIST(src.holder.owner, target) > 9)
 			boutput(src.holder.owner, SPAN_ALERT("That tile is too far away!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (!(target in view(7, src.holder.owner)))
@@ -224,7 +224,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 /datum/action/bar/touch_of_death
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED
 	duration = 1 SECOND
-	//resumable = FALSE
 	color_success = "#4444FF"
 
 	var/mob/living/target
@@ -266,15 +265,13 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		..()
 		REMOVE_ATOM_PROPERTY(src.target, PROP_MOB_CANTMOVE, "phoenix_touch_of_death")
 
-	// need to do temperature check
 	proc/check_for_interrupt()
 		var/mob/living/critter/ice_phoenix/phoenix = src.owner
 		return QDELETED(phoenix) || QDELETED(src.target) || isdead(phoenix) || isdead(src.target) || BOUNDS_DIST(src.target, phoenix) > 0
 
 /datum/action/bar/permafrost
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED
-	duration = 10 SECONDS //30 SECONDS
-	//resumable = FALSE
+	duration = 20 SECONDS
 	color_success = "#4444FF"
 
 	var/turf/target
@@ -316,7 +313,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		if(src.check_for_interrupt())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-
 
 		var/area/A = get_area(target)
 		A.add_permafrost()

@@ -1151,6 +1151,7 @@ toxic - poisons
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
 	disruption = 0
+	dissipation_delay = 8
 	shot_sound = 'sound/effects/swoosh2.ogg'
 	shot_volume = 50
 	implanted = /obj/item/implant/projectile/ice_feather

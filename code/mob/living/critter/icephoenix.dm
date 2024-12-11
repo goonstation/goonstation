@@ -3,6 +3,7 @@
 	desc = "A majestic bird from outer space, sailing the solar winds. Until Space Station 13 came along, that is."
 	icon = 'icons/mob/critter/nonhuman/icephoenix.dmi'
 	icon_state = "icephoenix"
+	icon_state_dead = "icephoenix"
 
 	hand_count = 2
 
@@ -59,6 +60,10 @@
 
 		if (src.hasStatus("phoenix_vulnerable"))
 			src.radiate_cold(get_turf(src))
+
+	death()
+		..()
+		qdel(src)
 
 	setup_healths()
 		add_hh_flesh(100, 1)
