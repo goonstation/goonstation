@@ -31,13 +31,13 @@ export const acw: AlertContentWindow = {
         you, and less habitable to its residents.
       </p>
       <p>
-        4. Your Windchill and Touch of Death abilities have special effects
+        5. Your Windchill and Touch of Death abilities have special effects
         against targets who have low body temperature (see their descriptions).
         Use this to your advantage!
       </p>
-      <p>5. You naturally regen health in space when out of combat.</p>
+      <p>6. You naturally regen health in space when out of combat.</p>
       <p>
-        6. Entering combat or traveling to the station will make you vulnerable,
+        7. Entering combat or traveling to the station will make you vulnerable,
         causing you to radiate walkable ice when space traveling.
       </p>
 
