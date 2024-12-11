@@ -90,6 +90,7 @@
 	A.touch_descriptors |= appearance.touch_descriptors
 
 	src.icon_state = appearance.name + "-[rand(1,appearance.max_sprites)]"
+	A.origin_icon = src.icon_state
 	if (isitem(src))
 		var/obj/item/I = src
 		I.item_state = appearance.name
@@ -133,7 +134,13 @@
 		selection = pick(valid_triggers)
 		if (ispath(selection))
 			var/datum/artifact_trigger/AT = new selection
-			A.triggers += AT
+			if(istype(AT, /datum/artifact_trigger/repair))
+				var/datum/artifact_trigger/repair/R = AT
+				R.artifact = A
+				R.artifact.examine_hint = R.get_desc()
+				A.triggers += R
+			else
+				A.triggers += AT
 			valid_triggers -= selection
 
 	artifact_controls.artifacts += src
@@ -158,7 +165,7 @@
 		if (T) T.visible_message("<b>[src] [A.activ_text]</b>") //ZeWaka: Fix for null.visible_message()
 	A.activated = 1
 	if (A.nofx)
-		src.icon_state = src.icon_state + "fx"
+		src.icon_state = A.origin_icon + "-active"
 	else
 		A.show_fx(src)
 	A.effect_activate(src)
@@ -186,7 +193,7 @@
 		T.visible_message("<b>[src] [A.deact_text]</b>")
 	A.activated = 0
 	if (A.nofx)
-		src.icon_state = src.icon_state - "fx"
+		src.icon_state = A.origin_icon
 	else
 		A.hide_fx(src)
 	A.effect_deactivate(src)
@@ -281,10 +288,21 @@
 						return
 					src.ArtifactDeactivated()
 
-	if (isweldingtool(W))
-		if (W:try_weld(user,0,-1,0,1))
-			src.ArtifactStimulus("heat", 800)
-			src.visible_message(SPAN_ALERT("[user.name] burns the artifact with [W]!"))
+	if(istool(W, TOOL_SNIPPING | TOOL_PRYING | TOOL_SCREWING | TOOL_WELDING | TOOL_WRENCHING | TOOL_PULSING))
+		var/datum/artifact_trigger/repair/trigger = locate(/datum/artifact_trigger/repair) in src.artifact.triggers
+		if (trigger)
+			trigger.parse_tool(W, user, src.artifact)
+			return 0
+
+		if (isweldingtool(W))
+			if (W:try_weld(user,0,-1,0,1))
+				src.ArtifactStimulus("heat", 800)
+				src.visible_message(SPAN_ALERT("[user.name] burns the artifact with [W]!"))
+				return 0
+
+		if(ispulsingtool(W))
+			src.ArtifactStimulus("elec", 1000)
+			src.visible_message(SPAN_ALERT("[user.name] shocks \the [src] with \the [W]!"))
 			return 0
 
 	if (istype(W,/obj/item/device/light/zippo))
@@ -321,11 +339,6 @@
 		var/obj/item/device/flyswatter/swatter = W
 		src.ArtifactStimulus("elec", 1500)
 		src.visible_message(SPAN_ALERT("[user.name] shocks \the [src] with \the [swatter]!"))
-		return 0
-
-	if(ispulsingtool(W))
-		src.ArtifactStimulus("elec", 1000)
-		src.visible_message(SPAN_ALERT("[user.name] shocks \the [src] with \the [W]!"))
 		return 0
 
 	if (istype(W,/obj/item/parts/robot_parts))
@@ -580,6 +593,8 @@
 				T.visible_message(SPAN_ALERT("<B>[src] warps in on itself and vanishes!</B>"))
 			if("precursor")
 				T.visible_message(SPAN_ALERT("<B>[src] implodes, crushing itself into dust!</B>"))
+			if("clockwork")
+				T.visible_message(SPAN_ALERT("<B>[src] creaks, corrodes and crumbles into pieces!</B>"))
 
 	src.remove_artifact_forms()
 
