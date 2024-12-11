@@ -1107,6 +1107,16 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
+/datum/syndicate_buylist/traitor/law_hacker
+	name = "AI Law Module Hacker"
+	items = list(/obj/item/device/law_hacker)
+	cost = 3
+	vr_allowed = FALSE
+	not_in_crates = TRUE
+	desc = "A device made to take advantage of a vulnurability in AI law modules allowing any law to be written onto them."
+	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
+	can_buy = UPLINK_TRAITOR
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
