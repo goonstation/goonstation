@@ -8528,6 +8528,13 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
+"aWA" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay3,
+/turf/space,
+/area/space)
 "aWC" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -10117,6 +10124,14 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
+"cQs" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay5,
+/turf/space,
+/area/space)
 "cQC" = (
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4;
@@ -10586,6 +10601,13 @@
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/ghostdrone_factory)
+"dwV" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay4,
+/turf/space,
+/area/space)
 "dwY" = (
 /obj/mesh/catwalk{
 	dir = 6
@@ -12497,6 +12519,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
+"gcU" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay5,
+/turf/space,
+/area/space)
 "gem" = (
 /obj/machinery/power/smes{
 	chargelevel = 15000;
@@ -13669,6 +13699,13 @@
 /obj/table/auto,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
+"icc" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/trader_left,
+/turf/space,
+/area/space)
 "ick" = (
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -17103,6 +17140,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/main)
+"mJp" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay2,
+/turf/space,
+/area/space)
 "mJG" = (
 /obj/cable/blue{
 	icon_state = "4-8"
@@ -18156,6 +18200,14 @@
 /obj/machinery/vending/air_vendor,
 /turf/simulated/floor/yellow,
 /area/station/hangar/engine)
+"ocz" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/trader_right,
+/turf/space,
+/area/space)
 "odk" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -19128,6 +19180,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
+"pKJ" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay2,
+/turf/space,
+/area/space)
 "pLH" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -19283,6 +19342,13 @@
 	desc = "The Regional Director wouldn't stop raving about the great price they got for this carpet. Looking at it makes you uneasy."
 	},
 /area/station/crew_quarters/cafeteria)
+"pYM" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay3,
+/turf/space,
+/area/space)
 "pYQ" = (
 /obj/stool/chair/comfy/purple{
 	dir = 4
@@ -20786,6 +20852,13 @@
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/south,
 /area/station/science/research_director)
+"sBe" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay3,
+/turf/space,
+/area/space)
 "sBh" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/supernorn,
@@ -22254,6 +22327,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
+"uzv" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay4,
+/turf/space,
+/area/space)
 "uzK" = (
 /obj/machinery/computer/ordercomp{
 	dir = 8
@@ -23154,6 +23234,14 @@
 	},
 /turf/simulated/floor,
 /area/station/ranch)
+"vOw" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/turf/space,
+/area/space)
 "vPa" = (
 /obj/machinery/atmospherics/unary/vent{
 	dir = 1
@@ -23311,6 +23399,13 @@
 /obj/machinery/atmospherics/unary/tank,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"vZJ" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay4,
+/turf/space,
+/area/space)
 "wab" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -23660,6 +23755,21 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
+"wyE" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay2,
+/turf/space,
+/area/space)
+"wzj" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/mining_station,
+/turf/space,
+/area/space)
 "wzv" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
@@ -62271,12 +62381,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+icc
+aaC
+wyE
+aaC
+pYM
+aaC
 aFe
 aFe
 bxD
@@ -62340,12 +62450,12 @@ hRo
 uvc
 cpN
 cpN
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaC
+sBe
+aaC
+mJp
+aaC
+ocz
 aaa
 aaa
 aaa
@@ -63844,11 +63954,11 @@ aaa
 aaa
 aaa
 aaa
-wPV
+vmf
 wPV
 uiU
 wPV
-wPV
+vmf
 aaE
 aaE
 aaE
@@ -64083,14 +64193,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+icc
+aaC
+wyE
+aaC
+pYM
+aaC
+vZJ
+aJe
 rXQ
 pSr
 rXQ
@@ -64150,14 +64260,14 @@ aaa
 wPV
 top
 wPV
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+acl
+dwV
+aaC
+sBe
+aaC
+mJp
+aaC
+ocz
 aaa
 aaa
 aaa
@@ -78037,15 +78147,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+gcU
+aaC
+uzv
+aaC
+aWA
+aaC
+pKJ
+aaC
+wzj
 aaa
 aaa
 aaa
@@ -78339,7 +78449,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+vOw
 aWU
 aWU
 aWU
@@ -78641,7 +78751,7 @@ aJd
 aJd
 aJc
 aaa
-aaa
+vOw
 aWU
 aWU
 aWU
@@ -80151,7 +80261,7 @@ aJd
 aJd
 aJe
 aaa
-aaa
+vOw
 aWU
 aWU
 aWU
@@ -80453,15 +80563,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cQs
+aaC
+uzv
+aaC
+aWA
+aaC
+pKJ
+aaC
+wzj
 aaa
 aaa
 aaa
