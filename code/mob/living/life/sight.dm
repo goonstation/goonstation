@@ -66,6 +66,10 @@
 
 				robot_owner.sight &= ~SEE_OBJS
 				robot_owner.see_in_dark = SEE_DARK_FULL
+			if(hivebot_owner)
+				hivebot_owner.see_invisible = INVIS_CLOAK
+			if(ai_mainframe_owner)
+				ai_mainframe_owner.see_invisible = INVIS_CLOAK
 ////Ship sight
 		if (istype(owner.loc, /obj/machinery/vehicle))
 			var/obj/machinery/vehicle/ship = owner.loc
