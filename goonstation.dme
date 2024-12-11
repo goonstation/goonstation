@@ -1851,6 +1851,7 @@
 #include "code\obj\effect.dm"
 #include "code\obj\effects.dm"
 #include "code\obj\electric_chair.dm"
+#include "code\obj\eva_spawner.dm"
 #include "code\obj\fakedoor.dm"
 #include "code\obj\fakeobject.dm"
 #include "code\obj\false_wall.dm"
