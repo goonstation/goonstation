@@ -164,6 +164,7 @@
 			for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 				aiPlayer.cancelAlarm("Atmosphere", get_area(src), src)
 			src.alertingAI = FALSE
+		src.RemoveComponentsOfType(/datum/component/minimap_marker/minimap)
 	else
 		var/list/cameras = list()
 		for_by_tcl(C, /obj/machinery/camera)
@@ -172,6 +173,7 @@
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.triggerAlarm("Atmosphere", get_area(src), cameras, src)
 		src.alertingAI = TRUE
+		src.AddComponent(/datum/component/minimap_marker/minimap, MAP_ALARM, "alarm_air", name="[get_area(src)] Air Alarm")
 
 	if(alarm_frequency)
 		post_alert(safe)
@@ -182,16 +184,17 @@
 	var/datum/signal/alert_signal = get_free_signal()
 	alert_signal.source = src
 	alert_signal.transmission_method = 1
+	alert_signal.data["command"] = "update_alert"
 	alert_signal.data["zone"] = alarm_zone
-	alert_signal.data["type"] = "Atmospheric"
+	alert_signal.data["type"] = ALERT_KIND_ATMOS
 
 	switch (alert_level)
 		if (ALARM_SEVERE)
-			alert_signal.data["alert"] = "severe"
+			alert_signal.data["alert"] = ALERT_SEVERITY_PRIORITY
 		if (ALARM_MINOR)
-			alert_signal.data["alert"] = "minor"
+			alert_signal.data["alert"] = ALERT_SEVERITY_MINOR
 		if (ALARM_GOOD)
-			alert_signal.data["alert"] = "reset"
+			alert_signal.data["alert"] = ALERT_SEVERITY_RESET
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, alert_signal, null, "alarm")
 
