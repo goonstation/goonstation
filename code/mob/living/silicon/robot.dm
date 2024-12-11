@@ -1391,6 +1391,7 @@
 						REMOVE_MOVEMENT_MODIFIER(src, src.part_chest.robot_movement_modifier, src.part_chest.type)
 					src.part_chest.cell = src.cell
 					src.cell.set_loc(src.part_chest)
+					src.part_chest.set_loc(src.loc)
 					src.part_chest.holder = null
 					src.part_chest = null
 					update_bodypart("chest")
