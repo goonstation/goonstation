@@ -293,6 +293,7 @@
 					chest.wires = 1
 					if (src.cell)
 						chest.cell = src.cell
+						src.cell.set_loc(chest)
 
 			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
 			frame.setMaterial(src.frame_material)
@@ -1388,7 +1389,8 @@
 				if("Remove Chest")
 					if(src.part_chest.robot_movement_modifier)
 						REMOVE_MOVEMENT_MODIFIER(src, src.part_chest.robot_movement_modifier, src.part_chest.type)
-					src.part_chest.set_loc(src.loc)
+					src.part_chest.cell = src.cell
+					src.cell.set_loc(src.part_chest)
 					src.part_chest.holder = null
 					src.part_chest = null
 					update_bodypart("chest")
