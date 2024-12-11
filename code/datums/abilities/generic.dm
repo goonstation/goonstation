@@ -247,8 +247,7 @@
 
 	cast(atom/target)
 		. = ..()
-		if (holder.owner.key in personal_summary_by_client)
-			personal_summary_by_client[holder.owner.key].ui_interact(holder.owner)
+		holder.owner.mind.personal_summary?.ui_interact(holder.owner)
 
 /datum/targetable/juggle
 	name = "Juggle"

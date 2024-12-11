@@ -1,6 +1,3 @@
-///Global list of personal summaries by client key
-var/global/list/datum/personal_summary/personal_summary_by_client = list()
-
 ///Combination of personal metacurrency windows, shown end-of-round
 /datum/personal_summary
 	// jobxp
