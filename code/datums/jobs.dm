@@ -1199,9 +1199,10 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_jump = list(/obj/item/clothing/under/color/red)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_ears = list(/obj/item/device/radio/headset/hall_monitor)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_head = list(/obj/item/clothing/head/basecap/red)
 	slot_poc1 = list(/obj/item/pen/pencil)
+	slot_poc2 = list(/obj/item/device/radio/hall_monitor)
 	items_in_backpack = list(/obj/item/instrument/whistle,/obj/item/device/ticket_writer/crust)
 
 
