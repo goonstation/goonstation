@@ -1,4 +1,9 @@
 
+(t)wed dec 11 24
+(u)patricia
+(p)21647
+(e)🪲|C-Bug
+(+)Mail now stacks by person in player built vending machines
 (t)tue dec 10 24
 (u)NightmarechaMillian, sprite help by DisturbHerb
 (p)21354
