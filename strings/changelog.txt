@@ -1,5 +1,9 @@
 
 (t)wed dec 11 24
+(u)glowbold
+(p)21638
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Hall monitors recieve a pocket radio that can only listen to security's frequency.
 (u)patricia
 (p)21647
 (e)🪲|C-Bug
