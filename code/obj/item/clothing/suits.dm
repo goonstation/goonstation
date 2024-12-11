@@ -2222,10 +2222,11 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	item_state = "snowcoat"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_SHOES
+	var/style = "snowcoat"
 
 	New()
 		..()
-		src.AddComponent(/datum/component/toggle_hood, hood_style = "snowcoat")
+		src.AddComponent(/datum/component/toggle_hood, hood_style = src.style)
 
 	setupProperties()
 		..()
@@ -2242,6 +2243,10 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 			setProperty("coldprot", 70)
 		else
 			setProperty("coldprot", 50)
+
+/obj/item/clothing/suit/snow/grey
+	icon_state = "snowcoat-grey"
+	style = "snowcoat-grey"
 
 /obj/item/clothing/suit/jean_jacket
 	name = "jean jacket"
