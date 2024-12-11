@@ -14,7 +14,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/barrettes)
 
 	blue
 		name = "Blue"
-		swatch_background_color = "#10a789"
+		swatch_background_color = "#3d92f4"
 		item_path = /obj/item/clothing/head/barrette/blue
 
 	gold
