@@ -43,7 +43,7 @@
 		var/directs = selection.get_directions(direction)
 		for(var/obj/machinery/atmospherics/device in get_turf(target))
 			if(device.initialize_directions & directs)
-				boutput(user, SPAN_ALERT("NOOOOOO"))
+				boutput(user, SPAN_ALERT("Something is occupying that direction!"))
 				return
 		new /dmm_suite/preloader(get_turf(target), list("dir" = direction))
 		var/obj/machinery/atmospherics/device = new selection.path(get_turf(target))
@@ -167,7 +167,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 
 	quad_manifold
 		name = "Quadway manifold"
-		path = /obj/machinery/atmospherics/pipe/quadway
+		path = /obj/machinery/atmospherics/pipe/quadway/overfloor
 		cost = 4 //quad
 		icon_state = "4way"
 
