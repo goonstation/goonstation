@@ -340,7 +340,7 @@ TYPEINFO(/obj/machinery/power/solar)
 	if (src.is_active_and_powered())
 		src.tracker_update(tracker.sun_angle)
 
-	src.update_solar_icon()
+	src.UpdateIcon()
 
 /obj/machinery/computer/solar_control/get_desc()
 	. = "<br />It is currently <em>[src.is_active_and_powered() ? "tracking the sun" : "disabled"]</em>"
@@ -351,17 +351,17 @@ TYPEINFO(/obj/machinery/power/solar)
 /obj/machinery/computer/solar_control/proc/is_active_and_powered()
 	. = active && !(status & (NOPOWER | BROKEN))
 
-/obj/machinery/computer/solar_control/proc/update_solar_icon()
+/obj/machinery/computer/solar_control/update_icon()
+	. = ..()
 	if (src.is_active_and_powered())
 		src.icon_state = initial(src.icon_state)
 	else
 		src.icon_state = "solar0"
-	src.UpdateIcon()
 
 /obj/machinery/computer/solar_control/power_change()
 	..()
 	if (!(src.status & (NOPOWER | BROKEN)))
-		src.update_solar_icon()
+		src.UpdateIcon()
 
 /obj/machinery/computer/solar_control/emag_act(var/mob/user)
 	. = ..()
