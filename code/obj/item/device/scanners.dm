@@ -1059,7 +1059,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 /obj/item/device/ticket_writer/crust
 	name = "crusty old security TicketWriter 1000"
 	desc = "An old TicketWriter model held together by hopes and dreams alone."
-	required_access = access_maint_tunnels
+	required_access = access_fuck_all
 	paper_icon_state = "paper_burned"
 
 TYPEINFO(/obj/item/device/appraisal)
