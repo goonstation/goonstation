@@ -244,7 +244,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	desc = "Nuclear preperations closet."
 	spawn_contents = list(/obj/item/storage/box/handcuff_kit,
 	/obj/item/storage/box/flashbang_kit,
-	/obj/item/pinpointer/nuke = 5,
+	/obj/item/pinpointer/syndicate = 5,
 	/obj/item/device/pda2/syndicate/nuclear)
 
 /obj/storage/closet/syndicate/malf

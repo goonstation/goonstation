@@ -223,6 +223,33 @@ TYPEINFO(/obj/item/pinpointer)
 	hudarrow_color = "#14ad00"
 	target_criteria = /obj/item/disk/data/floppy/read_only/authentication
 
+/obj/item/pinpointer/syndicate
+	name = "syndicate pinpointer"
+	desc = "Points in the direction of the authentication disk or nuclear bomb."
+	icon_state = "syndie_pinoff"
+	icon_type = "syndie"
+	hudarrow_color = "#b22c20"
+	target_criteria = /obj/machinery/nuclearbomb
+	var/tracking_nuke = TRUE
+
+	attack_self(mob/user)
+		if(!src.active)
+			src.turn_on()
+		if(src.tracking_nuke)
+			src.target_criteria = /obj/item/disk/data/floppy/read_only/authentication
+			src.target = locate(src.target_criteria)
+			src.tracking_nuke = FALSE
+			src.turn_off()
+			src.turn_on()
+			boutput(user, SPAN_NOTICE("You switch \the [src] to track the disk!"))
+		else
+			src.target_criteria = /obj/machinery/nuclearbomb
+			src.target = locate(src.target_criteria)
+			src.tracking_nuke = TRUE
+			src.turn_off()
+			src.turn_on()
+			boutput(user, SPAN_NOTICE("You switch \the [src] to track the nuke!"))
+
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
