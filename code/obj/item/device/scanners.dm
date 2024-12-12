@@ -998,7 +998,6 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
-	var/list/required_access = access_security
 	var/paper_icon_state = "paper_caution"
 
 	attack_self(mob/user)
@@ -1018,7 +1017,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		else if (issilicon(user))
 			var/mob/living/silicon/S = user
 			I = S.botcard
-		if (!I || !(src.required_access in I.access))
+		if (!I || !(access_ticket in I.access))
 			boutput(user, SPAN_ALERT("Insufficient access."))
 			return
 		playsound(src, 'sound/machines/keyboard3.ogg', 30, TRUE)
@@ -1059,7 +1058,6 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 /obj/item/device/ticket_writer/crust
 	name = "crusty old security TicketWriter 1000"
 	desc = "An old TicketWriter model held together by hopes and dreams alone."
-	required_access = access_fuck_all
 	paper_icon_state = "paper_burned"
 
 TYPEINFO(/obj/item/device/appraisal)
