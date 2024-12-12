@@ -4366,11 +4366,18 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	New()
 		..()
-		src.real_name = "[pick_string("mentor_mice_prefixes.txt", "mentor_mouse_prefix")] [src.name]"
+		if(rand(1,4096) == 1) //Full odds
+			src.real_name = "shiny [src.name]"
+			src.fur_color = "#aec245"
+			src.icon_state = "mouse-mentor-shiny"
+			src.icon_state_dead = "mouse-mentor-shiny-dead"
+			src.icon_state_exclaim = "mouse-mentor-shiny-exclaim"
+		else
+			src.real_name = "[pick_string("mentor_mice_prefixes.txt", "mentor_mouse_prefix")] [src.name]"
+			src.fur_color = "#a175cf"
 		src.name = src.real_name
 		abilityHolder.addAbility(/datum/targetable/critter/mentordisappear)
 		abilityHolder.addAbility(/datum/targetable/critter/mentortoggle)
-		src.fur_color = "#a175cf"
 
 	setup_overlays()
 		if(!src.colorkey_overlays)
