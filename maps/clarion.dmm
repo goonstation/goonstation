@@ -2994,7 +2994,7 @@
 /area/station/hydroponics/bay)
 "axA" = (
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
@@ -3123,9 +3123,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
 "ayo" = (
-/obj/machinery/computer/ordercomp,
-/obj/machinery/power/data_terminal,
-/obj/cable,
+/obj/reagent_dispensers/still,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
 "ays" = (
@@ -13996,7 +13994,7 @@
 /obj/cable,
 /obj/machinery/power/apc/autoname_west,
 /obj/submachine/seed_manipulator{
-	dir = 1
+	dir = 4
 	},
 /turf/simulated/floor/green/side{
 	dir = 10
@@ -26861,9 +26859,11 @@
 	pixel_x = 10
 	},
 /obj/disposalpipe/segment/produce,
-/obj/submachine/chem_extractor{
+/obj/machinery/computer/ordercomp{
 	dir = 8
 	},
+/obj/machinery/power/data_terminal,
+/obj/cable,
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
@@ -35661,7 +35661,16 @@
 "sKD" = (
 /obj/disposalpipe/segment/produce,
 /obj/machinery/firealarm/east,
-/obj/reagent_dispensers/still,
+/obj/submachine/chem_extractor{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
@@ -85904,7 +85913,7 @@ tXY
 bUt
 iox
 jgt
-oKd
+ayo
 ayX
 jGn
 aAB
@@ -86206,7 +86215,7 @@ awb
 awb
 awb
 axA
-ayo
+oKd
 ayX
 cFY
 sSe
