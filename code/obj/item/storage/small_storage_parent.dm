@@ -251,6 +251,7 @@
 		. = ..()
 		if(istype_exact(src, /obj/item/storage/briefcase) && src.material.getID() == "leather")
 			src.desc = "A fancy natural leather-bound briefcase, capable of holding a number of small objects, with exquisite style."
+			src.tooltip_rebuild = TRUE
 
 /obj/item/storage/briefcase/toxins
 	name = "toxins research briefcase"
