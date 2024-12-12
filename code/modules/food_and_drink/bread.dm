@@ -245,8 +245,6 @@
 		real_name = "french bread"
 		food_color = "#C78000"
 
-#ifdef XMAS
-
 	fruit_cake
 		name = "slice of fruit cake"
 		desc = "The most despicable dessert ever sliced. According to legend, a vengeful deity invented sliced bread solely to allow the distribution of these miniature monstrosities to unsuspecting crewmembers."
@@ -262,8 +260,6 @@
 			..()
 			eater.show_text("It’s so rock-solid it chips a tooth, and the taste is horrendous! What were you thinking cutting it into six slices?","red")
 			random_brute_damage(eater, 1)
-
-#endif
 
 	New()
 		..()
