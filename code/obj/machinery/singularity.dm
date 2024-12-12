@@ -568,6 +568,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	density = 1
 	req_access = list(access_engineering_engine)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
+	appearance_flags = KEEP_TOGETHER
 	var/Varedit_start = 0
 	var/Varpower = 0
 	var/active = 0
@@ -684,6 +685,7 @@ TYPEINFO(/obj/machinery/field_generator)
 		if(Varpower == 0)
 			if(src.power <= 0)
 				src.visible_message(SPAN_ALERT("The [src.name] shuts down due to lack of power!"))
+				playsound(src, 'sound/machines/shielddown.ogg', 50, TRUE)
 				icon_state = "Field_Gen"
 				src.set_active(0)
 				src.cleanup(NORTH)
@@ -693,6 +695,16 @@ TYPEINFO(/obj/machinery/field_generator)
 				for(var/dir in cardinal)
 					src.UpdateOverlays(null, "field_start_[dir]")
 					src.UpdateOverlays(null, "field_end_[dir]")
+				return
+
+	if (src.active >= 1 && src.power <= 40)
+		if (!ON_COOLDOWN(src, "power_alarm", 20 SECONDS + rand(-5 SECONDS, 5 SECONDS))) //stupid rand just to make the alarms go off at slightly different times and not stack up
+			playsound(src, 'sound/machines/pod_alarm.ogg', 50, FALSE, pitch = 0.6 + (power/40) * 0.4)
+			src.visible_message(SPAN_ALERT("The [src.name] emits a low power warning alarm!"))
+		if (!src.GetOverlayImage("amber"))
+			src.UpdateOverlays(image(src.icon, "FieldGen_amber", FLOAT_LAYER - 1), "amber")
+	else
+		src.UpdateOverlays(null, "amber")
 
 /obj/machinery/field_generator/proc/setup_field(var/NSEW = 0)
 	var/turf/T = src.loc

@@ -1190,10 +1190,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/special/hall_monitor
 	name = "Hall Monitor"
-	linkcolor = "#FF0000"
 	limit = 2
 	wages = PAY_UNTRAINED
-	access_string = "Security Assistant"
+	access_string = "Hall Monitor"
 	cant_spawn_as_rev = TRUE
 	receives_badge = /obj/item/clothing/suit/security_badge/paper
 	slot_belt = list(/obj/item/device/pda2)
