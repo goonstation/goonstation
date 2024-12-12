@@ -1,4 +1,20 @@
 
+(t)wed dec 11 24
+(u)glowbold
+(p)21638
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Hall monitors recieve a pocket radio that can only listen to security's frequency.
+(u)patricia
+(p)21647
+(e)🪲|C-Bug
+(+)Mail now stacks by person in player built vending machines
+(t)tue dec 10 24
+(u)NightmarechaMillian, sprite help by DisturbHerb
+(p)21354
+(e)🆕🎨🧛|C-Feature, C-Sprites, A-Gamemodes
+(*)The M4GP13 now stocks a new tool/weapon: the crash axe! See minor changes for details
+(+)Crash axes are pocket sized and act as chopping and prying tools, toggleable by using them inhand.
+(+)In combat, they deal 13 damage, 21 on thrown, and have a short, 2-second thrown stun.
 (t)mon dec 09 24
 (u)Egregorious
 (p)21364
