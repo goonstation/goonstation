@@ -1,5 +1,8 @@
 
 (t)wed dec 11 24
+(u)LeahTheTech
+(*)Singularity containment field generators now have an ANNOYING ALARM SOUND and corresponding flashing light when they're running out of power. The alarm gets progressively lower pitched and sadder as they power down.
+(+)Added a sound effect when field generators power down.
 (u)glowbold
 (p)21638
 (e)⚖📦|C-Balance, A-Game-Objects
