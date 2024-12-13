@@ -14,3 +14,5 @@
 	signal.data["address_1"] = handset.parent.linked.net_id
 
 	SEND_SIGNAL(handset.parent, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, handset.parent.frequency)
+
+	handset.last_talk = TIME

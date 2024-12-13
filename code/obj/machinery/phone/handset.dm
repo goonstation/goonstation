@@ -14,6 +14,7 @@
 
 	var/obj/machinery/phone/parent = null
 	var/icon/handset_icon = null
+	var/last_talk = 0
 
 /obj/item/phone_handset/New(obj/machinery/phone/parent_phone, mob/living/picker_upper)
 	if (!parent_phone)
