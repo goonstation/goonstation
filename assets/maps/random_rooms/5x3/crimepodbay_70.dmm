@@ -6,7 +6,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
-/turf/simulated/floor/airless/caution/south,
+/turf/simulated/floor/caution/south,
 /area/dmm_suite/clear_area)
 "d" = (
 /obj/cable/black{

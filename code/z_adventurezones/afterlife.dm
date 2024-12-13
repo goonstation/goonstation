@@ -124,3 +124,18 @@ proc/announce_ghost_afterlife(var/ckey, var/text)
 // belongs in the center of pool
 /obj/landmark/scryingpool/afterlifebar
 	name = "afterlifebar-scrying-pool"
+
+/datum/statusEffect/in_afterlife
+	id = "in_afterlife"
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEUTRAL
+
+	preCheck(atom/A)
+		if(!ishuman(A))
+			return
+		return ..()
+
+	onAdd(optional)
+		. = ..()
+		var/mob/living/carbon/human/H = optional
+		H.UpdateOverlays(H.SafeGetOverlayImage("halo", 'icons/misc/32x64.dmi', "halo"), "halo")
