@@ -47912,7 +47912,6 @@
 "kYD" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 9
 	},
 /obj/cable{
@@ -60143,7 +60142,6 @@
 /area/station/maintenance/west)
 "ukb" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 9
 	},
 /obj/machinery/light/emergency,
@@ -60236,7 +60234,8 @@
 /area/station/crew_quarters/fitness)
 "ume" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
+	dir = 4;
+	can_rupture = 0
 	},
 /obj/cable,
 /obj/cable{
