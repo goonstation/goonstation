@@ -1,5 +1,9 @@
 
 (t)fri dec 13 24
+(u)NightmarechaMillian
+(p)21538
+(e)💡|A-Station-Systems
+(+)Stocks now fluctuate 10 times harder, events are shorter.
 (u)glowbold
 (p)21635
 (e)🆕🎨📄|C-Feature, C-Sprites, A-UI
