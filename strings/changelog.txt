@@ -1,5 +1,9 @@
 
 (t)fri dec 13 24
+(u)JORJ949
+(p)21676
+(e)🗺|A-Mapping
+(+)That one pipe under the cog1 engine window can no longer burst.
 (u)FlameArrow57
 (p)21674
 (e)💅📄|C-QoL, A-UI
