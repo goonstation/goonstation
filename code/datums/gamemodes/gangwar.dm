@@ -281,8 +281,10 @@ proc/broadcast_to_all_gangs(var/message)
 	var/tiles_controlled = 0
 	/// Associative list between Gang members -> their points
 	var/gang_points = list()
-	/// Associative list of tracked vandalism zones to the remaining score needed.
-	var/vandalism_tracker = list()
+	/// Associative list of tracked vandalism zones to their required vandalism score.
+	var/list/vandalism_tracker_target = list()
+	/// Associative list of tracked vandalism zones to the amount of vandalism score accrued.
+	var/list/vandalism_tracker = list()
 
 #ifdef BONUS_POINTS
 	street_cred = 99999
@@ -639,7 +641,7 @@ proc/broadcast_to_all_gangs(var/message)
 		if (!notable)
 			chat_text = make_chat_maptext(location, "<span class='ol c pixel' style='color: #e60000;'>+[score]</span>", alpha = 180, time = 0.5 SECONDS)
 		else
-			chat_text = make_chat_maptext(location, "<span class='ol c pixel' style='color: #e60000;'>+[score]\n [GANG_VANDALISM_REQUIRED_SCORE-vandalism_tracker[targetArea]]/[GANG_VANDALISM_REQUIRED_SCORE]</span>", alpha = 180, time = 2 SECONDS)
+			chat_text = make_chat_maptext(location, "<span class='ol c pixel' style='color: #e60000;'>+[score]\n [vandalism_tracker[targetArea]]/[vandalism_tracker_target[targetArea]]</span>", alpha = 180, time = 2 SECONDS)
 		chat_text.show_to(src.leader?.current.client)
 		for (var/datum/mind/userMind as anything in src.members)
 			var/client/userClient = userMind.current.client
@@ -653,14 +655,15 @@ proc/broadcast_to_all_gangs(var/message)
 		for (var/area/targetArea as anything in vandalism_tracker)
 			if (istype(area,targetArea))
 				var/notable_value_prior = vandalism_tracker[targetArea]
-				vandalism_tracker[targetArea] -= amount
-				var/notable_value_steps = round(notable_value_prior/50)-round(vandalism_tracker[targetArea]/50)
+				vandalism_tracker[targetArea] += amount
+				//show a recap tracker every 50 points for minor things like tile breaking
+				var/notable_value_steps = round(notable_value_prior/50)-round(vandalism_tracker_target[targetArea]/10)
 				if (amount >= 10 || notable_value_steps > 0 )
 					show_vandal_maptext(amount, targetArea, location, TRUE)
 				else
 					show_vandal_maptext(amount, targetArea, location, FALSE)
 
-				if (vandalism_tracker[targetArea] <= 0)
+				if (vandalism_tracker[targetArea] >= vandalism_tracker_target[targetArea])
 					src.broadcast_to_gang("You've successfully ruined \the [targetArea.name]! The duffle bag has been delivered to where the last act of vandalism occurred.")
 					var/obj/item/loot = new/obj/item/gang_loot/guns_and_gear(location)
 					showswirl(loot)
@@ -1153,15 +1156,15 @@ proc/broadcast_to_all_gangs(var/message)
 
 	proc/refresh_single_tags()
 		tags_single = list()
-		for (var/i=1 to 9)
+		for (var/i=1 to 16)
 			tags_single += i
 	proc/refresh_double_tags()
 		tags_double = list()
-		for (var/i=1 to 7)
+		for (var/i=1 to 13)
 			tags_double += i
 	proc/refresh_triple_tags()
 		tags_triple = list()
-		for (var/i=1 to 11)
+		for (var/i=1 to 17)
 			tags_triple += i
 
 	proc/do_graffiti(target, mob/user)
@@ -1365,11 +1368,11 @@ proc/broadcast_to_all_gangs(var/message)
 		var/new_duration = duration
 		switch (length(spraycan.graffititargets))
 			if (1)
-				new_duration = 4 SECONDS
+				new_duration = 2 SECONDS
 			if (2)
-				new_duration = 6 SECONDS
+				new_duration = 4 SECONDS
 			if (3)
-				new_duration = 8 SECONDS
+				new_duration = 6 SECONDS
 		if (new_duration != duration)
 			duration = new_duration
 			updateBar()

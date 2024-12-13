@@ -2593,25 +2593,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"anU" = (
-/obj/rack,
-/obj/item/clothing/suit/space,
-/obj/item/clothing/head/helmet/space,
-/obj/item/clothing/mask/breath,
-/turf/simulated/floor/orangeblack,
-/area/station/storage/eva)
-"anV" = (
-/obj/rack,
-/obj/item/clothing/suit/space,
-/obj/item/clothing/head/helmet/space,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/item/clothing/mask/breath,
-/turf/simulated/floor/orangeblack,
-/area/station/storage/eva)
 "anZ" = (
 /obj/machinery/computer/teleporter,
 /turf/simulated/floor/purple,
@@ -12344,14 +12325,6 @@
 	dir = 8
 	},
 /area/station/hangar/main)
-"fRY" = (
-/obj/rack,
-/obj/item/clothing/suit/space,
-/obj/item/clothing/head/helmet/space,
-/obj/item/clothing/mask/breath,
-/obj/machinery/firealarm/north,
-/turf/simulated/floor/orangeblack,
-/area/station/storage/eva)
 "fSQ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -13147,6 +13120,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/tools)
+"hpl" = (
+/obj/eva_suit_spawner,
+/obj/rack,
+/obj/item/clothing/mask/breath,
+/turf/simulated/floor/orangeblack,
+/area/station/storage/eva)
 "hpu" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -13749,19 +13728,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
-"ieQ" = (
-/obj/rack,
-/obj/item/clothing/suit/space,
-/obj/item/clothing/head/helmet/space,
-/obj/item/clothing/mask/breath,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/storage/eva)
 "ife" = (
 /turf/space,
 /area/station/science/lab)
@@ -16417,6 +16383,18 @@
 /obj/storage/crate/furnacefuel,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"lPg" = (
+/obj/eva_suit_spawner,
+/obj/rack,
+/obj/item/clothing/mask/breath,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/storage/eva)
 "lQw" = (
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engineering";
@@ -17928,16 +17906,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
-"nOy" = (
-/obj/rack,
-/obj/item/clothing/suit/space,
-/obj/item/clothing/head/helmet/space,
-/obj/item/clothing/mask/breath,
-/obj/machinery/alarm{
-	pixel_y = 25
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/storage/eva)
 "nOZ" = (
 /obj/machinery/atmospherics/unary/tank,
 /obj/cable/orange{
@@ -21012,6 +20980,15 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/listeningpost)
+"sRh" = (
+/obj/rack,
+/obj/machinery/alarm{
+	pixel_y = 25
+	},
+/obj/eva_suit_spawner,
+/obj/item/clothing/mask/breath,
+/turf/simulated/floor/orangeblack,
+/area/station/storage/eva)
 "sSu" = (
 /obj/machinery/light{
 	layer = 3
@@ -22934,6 +22911,12 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
+"vsP" = (
+/obj/rack,
+/obj/item/clothing/mask/breath,
+/obj/eva_suit_spawner,
+/turf/simulated/floor/orangeblack,
+/area/station/storage/eva)
 "vtx" = (
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor,
@@ -24544,6 +24527,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/power)
+"xLg" = (
+/obj/rack,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/eva_suit_spawner,
+/obj/item/clothing/mask/breath,
+/turf/simulated/floor/orangeblack,
+/area/station/storage/eva)
 "xMM" = (
 /obj/machinery/light{
 	dir = 1;
@@ -24721,6 +24715,13 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
+"ybu" = (
+/obj/rack,
+/obj/machinery/firealarm/north,
+/obj/eva_suit_spawner,
+/obj/item/clothing/mask/breath,
+/turf/simulated/floor/orangeblack,
+/area/station/storage/eva)
 "ybM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -80230,10 +80231,10 @@ jor
 act
 jGe
 act
-nOy
-anU
-anU
-ieQ
+sRh
+vsP
+hpl
+lPg
 avc
 ahV
 nSr
@@ -80532,7 +80533,7 @@ oph
 act
 aqC
 act
-anV
+xLg
 aoL
 aSM
 apE
@@ -80834,7 +80835,7 @@ akG
 act
 ank
 act
-fRY
+ybu
 aoL
 aoL
 vIO

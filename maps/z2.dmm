@@ -57232,6 +57232,13 @@
 /mob/living/critter/skeleton,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
+"fXX" = (
+/obj/stool/chair/comfy,
+/obj/landmark/spawner/random_trader/diner,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/diner_centcom)
 "fZb" = (
 /obj/mesh/catwalk,
 /obj/machinery/camera{
@@ -58535,13 +58542,6 @@
 	opacity = 0
 	},
 /area/centcom/lounge)
-"gZG" = (
-/obj/stool/chair/comfy,
-/obj/landmark/spawner/random_trader,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/diner_centcom)
 "gZQ" = (
 /turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
@@ -132274,7 +132274,7 @@ aES
 aES
 tRB
 hjf
-gZG
+fXX
 xBV
 mrd
 usM

@@ -2100,7 +2100,7 @@
 		logTheThing(LOG_COMBAT, src, "is taken by the floor cluwne at [log_loc(src)].")
 		src.transforming = 1
 		src.canmove = 0
-		src.anchored = ANCHORED
+		src.anchored = ANCHORED_ALWAYS
 		src.mouse_opacity = 0
 
 		var/mob/living/carbon/human/cluwne/floor/floorcluwne = null
@@ -2515,6 +2515,7 @@
 	src.delStatus("radiation")
 	src.delStatus("critical_condition")
 	src.delStatus("recent_trauma")
+	src.delStatus("muted")
 	src.take_radiation_dose(-INFINITY)
 	src.change_eye_blurry(-INFINITY)
 	src.take_eye_damage(-INFINITY)
@@ -2532,6 +2533,7 @@
 	src.bodytemperature = src.base_body_temp
 	if (isdead(src))
 		setalive(src)
+	src.update_body()
 
 /mob/proc/shock(var/atom/origin, var/wattage, var/zone, var/stun_multiplier = 1, var/ignore_gloves = 0)
 	return 0
@@ -3046,7 +3048,7 @@
 	SPAWN(0.7 SECONDS) //Length of animation.
 		newbody.set_loc(animation.loc)
 		qdel(animation)
-		newbody.anchored = ANCHORED // Stop running into the lava every half second jeez!
+		newbody.anchored = ANCHORED_ALWAYS // Stop running into the lava every half second jeez!
 		sleep(4 SECONDS)
 		reset_anchored(newbody)
 
@@ -3061,7 +3063,7 @@
 		logTheThing(LOG_COMBAT, src, "is damned to hell from [log_loc(src)].")
 		src.transforming = 1
 		src.canmove = 0
-		src.anchored = ANCHORED
+		src.anchored = ANCHORED_ALWAYS
 		src.mouse_opacity = 0
 
 		var/mob/living/carbon/human/satan/satan = new /mob/living/carbon/human/satan
