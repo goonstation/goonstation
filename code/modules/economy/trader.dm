@@ -650,11 +650,7 @@
 
 /obj/landmark/spawner/random_trader
 	spawn_the_thing()
-#ifdef RP_MODE
 		var/type = pick(concrete_typesof(/obj/npc/trader/random) - /obj/npc/trader/random/contraband)
-#else
-		var/type = pick(concrete_typesof(/obj/npc/trader/random))
-#endif
 		new type(src.loc)
 		qdel(src)
 
