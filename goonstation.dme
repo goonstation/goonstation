@@ -115,6 +115,7 @@
 #include "code\datums\part_customization.dm"
 #include "code\datums\participation_recorder.dm"
 #include "code\datums\pda_ringtones.dm"
+#include "code\datums\personal_summary.dm"
 #include "code\datums\powernet_data.dm"
 #include "code\datums\pronouns.dm"
 #include "code\datums\rand.dm"
