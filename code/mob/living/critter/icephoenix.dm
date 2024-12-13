@@ -285,6 +285,8 @@
 			return
 
 	bullet_act(obj/projectile/P)
+		if (istype(P.proj_data, /datum/projectile/bullet/ice_phoenix_icicle))
+			return
 		if (P.proj_data.ks_ratio >= 1)
 			hit_twitch(src)
 			src.health -= P.power

@@ -23,7 +23,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 			return
 		EndSpacePush(L)
 
-		SETUP_GENERIC_ACTIONBAR(src.holder.owner, null, 10 SECONDS, /mob/living/critter/ice_phoenix/proc/on_sail, null, \
+		SETUP_GENERIC_ACTIONBAR(src.holder.owner, null, 20 SECONDS, /mob/living/critter/ice_phoenix/proc/on_sail, null, \
 			null, null, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 
 /datum/targetable/critter/ice_phoenix/ice_barrier
@@ -220,9 +220,10 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 	cast(atom/target)
 		..()
 		actions.start(new /datum/action/bar/permafrost(target), src.holder.owner)
+		playsound(target, "sound/effects/magic[pick(3, 4)].ogg", 50, TRUE)
 
 /datum/action/bar/touch_of_death
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 1 SECOND
 	color_success = "#4444FF"
 
@@ -245,6 +246,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		src.owner.visible_message(SPAN_ALERT("[src.owner] grips [src.target] with its talons!"), SPAN_ALERT("You begin channeling your cold into [src.target]."))
 		if (TIME - src.target.last_cubed < 10 SECONDS)
 			APPLY_ATOM_PROPERTY(src.target, PROP_MOB_CANTMOVE, "phoenix_touch_of_death")
+			src.target.changeStatus("paralysis", 1.1 SECONDS)
 			src.target.last_cubed = TIME
 
 	onEnd()

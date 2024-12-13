@@ -1462,10 +1462,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		icon = 'icons/obj/items/items.dmi'
 		icon_state = "ice_feather"
 		burn_possible = FALSE
-		default_material = "ice"
-		mat_changename = FALSE
-		mat_changedesc = FALSE
-		mat_changeappearance = FALSE
 
 	body_visible
 		bleed_time = 0

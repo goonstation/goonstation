@@ -12,10 +12,10 @@ export const acw: AlertContentWindow = {
     <div className="traitor-tips">
       <h1 className="center">You are a Space Phoenix!</h1>
       <p>
-        1. You are a spacefaring creature. Use your Map and Return to Station
-        abilities at the bottom right to navigate the station Z level, and
-        toggle returning to the station Z level upon exiting the current Z
-        level.
+        1. You are a spacefaring creature, given the innate ability to fly
+        freely in space. Use your Map and Return to Station abilities at the
+        bottom right to navigate the station Z level, and toggle returning to
+        the station Z level upon exiting the current Z level.
       </p>
       <p>
         2. Your main attack is firing ice feathers. Use this to damage and chill

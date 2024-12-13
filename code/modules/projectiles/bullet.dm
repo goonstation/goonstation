@@ -1151,16 +1151,16 @@ toxic - poisons
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
 	disruption = 0
-	dissipation_delay = 8
+	dissipation_delay = 6
 	shot_sound = 'sound/effects/swoosh2.ogg'
 	shot_volume = 50
 	implanted = /obj/item/implant/projectile/ice_feather
 
 	on_pre_hit(atom/hit, angle, obj/projectile/P)
 		. = ..()
-		if (istype(hit, /mob/living))
+		if (istype(hit, /mob/living) && !istype(hit, /mob/living/critter/ice_phoenix))
 			var/mob/living/L = hit
-			L.TakeDamage("All", 5, 5, damage_type = src.damage_type)
+			L.TakeDamage("All", 2.5, 5, damage_type = src.damage_type)
 			L.bodytemperature -= 5
 			L.changeStatus("shivering", 3 SECONDS * (1 - 0.75 * L.get_cold_protection() / 100), TRUE)
 		else if (isvehicle(hit))
