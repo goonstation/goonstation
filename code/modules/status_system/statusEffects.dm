@@ -2670,6 +2670,10 @@
 		..()
 		var/mob/M = owner
 		if (ismobcritter(M) && isalive(M))
+			var/mob/living/critter/C = M
+			C.empty_hands()
+			C.drop_equipment()
+
 			original.set_loc(M.loc)
 			original.hibernating = FALSE
 			M.mind?.transfer_to(original)

@@ -7,7 +7,7 @@
 	density = TRUE
 	speech_verb_say = "oinks"
 	speech_verb_exclaim = "squeals"
-	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	name_the_meat = FALSE
 	var/feral = FALSE
 

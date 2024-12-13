@@ -429,6 +429,16 @@
 	icon_override = "ghost_buster"
 	icon_tooltip = "Ghost Buster"
 
+/obj/item/device/radio/hall_monitor
+	name = "Hall monitor's radio"
+	desc = "So you can listen to(eavesdrop on) station security(drama)."
+	icon_state = "radio"
+	has_microphone = FALSE
+	frequency = R_FREQ_SECURITY
+	locked_frequency = TRUE
+	secure_frequencies = list("g" = R_FREQ_SECURITY)
+	secure_classes = list("g" = RADIOCL_SECURITY)
+
 /obj/item/device/radio/commentator
 	name = "commentator radio"
 	icon_state = "radio"
@@ -445,18 +455,6 @@
 	icon_tooltip = "Commentator"
 	secure_frequencies = list("z" = 555)
 	secure_classes = list("z" = RADIOCL_SYNDICATE)
-
-/obj/item/device/radio/headset/hall_monitor
-	name = "Hall monitor's headset"
-	desc = "So you can listen to(evesdrop on) station security(drama)."
-	icon_state = "sec headset"
-	secure_frequencies = list("g" = R_FREQ_SECURITY, "c" = R_FREQ_CIVILIAN)
-	secure_classes = list(
-		"g" = RADIOCL_SECURITY,
-		"c" = RADIOCL_CIVILIAN,
-		)
-	icon_override = "civ"
-	icon_tooltip = "Hall Monitor"
 
 /obj/item/device/radio/headset/command/nt/commander
 	name = "\improper NT Commander's headset"

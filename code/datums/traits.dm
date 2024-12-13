@@ -1190,6 +1190,7 @@ TYPEINFO(/datum/trait/partyanimal)
 		if(probmult(0.01))
 			owner.setStatus("burning", 100 SECONDS, 60 SECONDS)
 			playsound(owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+			logTheThing(LOG_COMBAT, owner, "gets set on fire by their spontaneous combustion trait")
 			owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> suddenly bursts into flames!"))
 
 /datum/trait/carpenter

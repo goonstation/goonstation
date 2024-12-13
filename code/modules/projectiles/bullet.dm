@@ -1689,6 +1689,8 @@ datum/projectile/bullet/autocannon
 	on_hit(atom/hit, angle, obj/projectile/O)
 		var/turf/T = get_turf(hit)
 		if (T)
+			if (T.density) // hit previous (non-dense) turf to spread chems/effects better
+				T = get_turf(get_step(T, turn(angle, 180)))
 			src.det(T)
 		else if (O)
 			var/turf/pT = get_turf(O)
