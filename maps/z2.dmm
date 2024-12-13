@@ -58521,7 +58521,7 @@
 /area/centcom/lounge)
 "gZG" = (
 /obj/stool/chair/comfy,
-/obj/landmark/spawner/random_trader,
+/obj/landmark/spawner/random_trader/diner,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},

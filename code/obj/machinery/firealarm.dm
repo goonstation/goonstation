@@ -237,6 +237,20 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 	alert_computer_signal.data["type"] = ALERT_KIND_FIRE
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, alert_computer_signal)
 
+/// Reply with current status
+/obj/machinery/firealarm/proc/reply_status(sender, command)
+	var/datum/signal/reply = new
+	reply.source = src
+	reply.data["address_1"] = sender
+	reply.data["command"] = command
+	reply.data["device"] = "WNET_FIREALARM"
+	reply.data["netid"] = src.net_id
+	reply.data["alert"] = src.alarm_active ? ALERT_SEVERITY_MINOR : ALERT_SEVERITY_RESET
+	reply.data["zone"] = src.alarm_zone
+	reply.data["type"] = ALERT_KIND_FIRE
+
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply)
+
 /obj/machinery/firealarm/receive_signal(datum/signal/signal)
 	if(status & NOPOWER)
 		return
@@ -248,24 +262,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 	if (signal.data["address_1"] == src.net_id)
 		switch (lowertext(signal.data["command"]))
 			if ("status")
-				post_alert(!alarm_active, sender)
+				src.reply_status(sender, "status_reply")
 			if ("trigger")
 				src.alarm()
 			if ("reset")
 				src.reset()
 
 	else if(signal.data["address_1"] == "ping")
-		var/datum/signal/reply = new
-		reply.source = src
-		reply.data["address_1"] = sender
-		reply.data["command"] = "ping_reply"
-		reply.data["device"] = "WNET_FIREALARM"
-		reply.data["netid"] = src.net_id
-		reply.data["alert"] = !alarm_active ? ALERT_SEVERITY_RESET : ALERT_SEVERITY_MINOR
-		reply.data["zone"] = alarm_zone
-		reply.data["type"] = ALERT_KIND_FIRE
 		SPAWN(0.5 SECONDS)
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply)
+			src.reply_status(sender, "ping_reply")
 
 // these seem kind of inverted but it's because an alarm on a wall to the north faces south and etc
 /obj/machinery/firealarm/north

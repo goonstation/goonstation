@@ -23255,7 +23255,7 @@
 	},
 /area/listeningpost)
 "jNu" = (
-/obj/critter/turtle/sylvester/HoS,
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/station/security/hos)
 "jOe" = (
@@ -56240,6 +56240,10 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
+"yhi" = (
+/mob/living/carbon/human/npc/monkey/krimpus,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "yhq" = (
 /obj/item/furniture_parts/table/flock,
 /obj/table/flock/auto,
@@ -92257,7 +92261,7 @@ fLE
 jdV
 jdV
 jdV
-jdV
+yhi
 jdV
 jdV
 fLE

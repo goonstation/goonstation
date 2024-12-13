@@ -408,7 +408,7 @@
 	description = "One case of 40mm Paint Marker Rounds, totalling 5 rounds, for the Riot Launcher."
 
 /datum/materiel/utility/prisonerscanner
-	name = "RecordTrak Scannner"
+	name = "RecordTrak Scanner"
 	path = /obj/item/device/prisoner_scanner
 	description = "A device used to scan in prisoners and update their security records."
 

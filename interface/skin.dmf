@@ -296,6 +296,13 @@ menu "menu"
 		is-checked = true
 		can-check = true
 		saved-params = "is-checked"
+	elem "toggle_dark_screenflashes"
+		name = "&Toggle Dark Screenflashes"
+		command = "toggle-dark-screenflashes"
+		category = "&Effects"
+		is-checked = false
+		can-check = true
+		saved-params = "is-checked"
 	elem
 		name = "&Interface"
 		command = ""

@@ -33,7 +33,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 		src.digest_count += process_rate
 		if (owner && src.reagents?.total_volume > 0)
 			if (!src.did_stomach_react)
-				src.reagents.reaction(owner, INGEST, src.reagents.total_volume)
+				src.reagents.reaction(owner, INGEST, src.reagents.total_volume, paramslist = list("digestion" = TRUE))
 				src.did_stomach_react = 1
 
 			src.reagents.trans_to(owner, process_rate, HAS_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) ? GET_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) : 1)
@@ -409,7 +409,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		src.heal(consumer)
 		playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 		on_bite(consumer, feeder, ethereal_eater)
-		if (src.festivity && !ethereal_eater)
+		if (src.festivity && !ethereal_eater && !inafterlife(consumer))
 			modify_christmas_cheer(src.festivity)
 		if (!src.bites_left)
 			if (istype(src, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
