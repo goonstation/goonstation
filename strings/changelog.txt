@@ -1,4 +1,9 @@
 
+(t)fri dec 13 24
+(u)glowbold
+(p)21672
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)You must be in grab intent to make a snowball.
 (t)wed dec 11 24
 (u)LeahTheTech
 (*)Singularity containment field generators now have an ANNOYING ALARM SOUND and corresponding flashing light when they're running out of power. The alarm gets progressively lower pitched and sadder as they power down.
