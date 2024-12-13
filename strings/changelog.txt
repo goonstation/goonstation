@@ -1,5 +1,9 @@
 
 (t)fri dec 13 24
+(u)glowbold
+(p)21635
+(e)🆕🎨📄|C-Feature, C-Sprites, A-UI
+(+)The Spacebux and JobXP windows at round-end now show in a single unified "Personal Summary" window.
 (u)Garash2k
 (p)21625
 (e)🆕💅📄|C-Feature, C-QoL, A-UI
