@@ -26096,12 +26096,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "iim" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname  - SS13";
-	tag = ""
-	},
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
@@ -26625,10 +26619,6 @@
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "iAq" = (
-/obj/machinery/camera{
-	c_tag = "Custodial Closet";
-	dir = 1
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -81325,7 +81315,7 @@ bCG
 bCG
 nPR
 bCG
-bCG
+kLL
 iim
 apC
 hBd
