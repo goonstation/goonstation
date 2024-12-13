@@ -13,7 +13,20 @@
 	var/printing = null
 	var/can_change_id = 0
 	var/payroll_rate_limit_time = 0 //for preventing coammand message spam
-	var/bonus_rate_limit_time = 0 //prevent bonus spam because these have an annoucement
+	var/static/bonus_rate_limit_time = 0 //prevent bonus spam because these have an annoucement
+	///I know we already have department job lists but they suck and are brittle and way too general so I made my own here
+	var/static/list/departments = list(
+		"Genetics" = list(/datum/job/research/geneticist),
+		"Robotics" = list(/datum/job/research/roboticist),
+		"Cargo" = list(/datum/job/engineering/quartermaster, /datum/job/civilian/mail_courier),
+		"Mining" = list(/datum/job/engineering/miner),
+		"Engineering" = list(/datum/job/engineering/engineer, /datum/job/engineering/technical_assistant),
+		"Research" = list(/datum/job/research/scientist, /datum/job/research/research_assistant),
+		"Catering" = list(/datum/job/civilian/chef, /datum/job/civilian/bartender, /datum/job/special/souschef, /datum/job/daily/waiter),
+		"Hydroponics" = list(/datum/job/civilian/botanist, /datum/job/civilian/rancher),
+		"Security" = list(/datum/job/security),
+		"Medical" = list(/datum/job/research/medical_doctor, /datum/job/research/medical_assistant)
+	)
 
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
@@ -270,12 +283,24 @@
 					if(!(world.time >= src.bonus_rate_limit_time))
 						boutput(usr, SPAN_ALERT("NT Regulations forbid issuing multiple staff incentives within five minutes."))
 						return
+					var/department = input(usr, "Which department should receive the bonus?", "Choose department") in src.departments | null
+					if (!department)
+						return
 
 					var/bonus = input(usr, "How many credits should we issue to each staff member?", "Issue Bonus", 100) as null|num
 					if(isnull(bonus)) return
-
 					bonus = ceil(clamp(bonus, 1, 999999))
-					var/bonus_total = (length(data_core.bank.records) * bonus)
+
+					var/list/datum/db_record/lucky_crew = list()
+					for (var/datum/db_record/record in data_core.bank.records)
+						for (var/job_type in src.departments[department])
+							for (var/datum/job/child_type as anything in concrete_typesof(job_type))
+								if (record["job"] == child_type::name)
+									lucky_crew += record
+									goto next_record //actually almost good goto use case?? (byond doesn't have outer loop break syntax)
+						next_record:
+
+					var/bonus_total = (length(lucky_crew) * bonus)
 					if ( bonus_total > wagesystem.station_budget)
 						//Let the user know the budget is too small before they set the reason if we can
 						boutput(usr, SPAN_ALERT("Total bonus cost would be [bonus_total][CREDIT_SIGN], payroll budget is only [wagesystem.station_budget][CREDIT_SIGN]!"))
@@ -295,11 +320,11 @@
 						boutput(usr, SPAN_ALERT("Total bonus cost would be [bonus_total][CREDIT_SIGN], payroll budget is only [wagesystem.station_budget][CREDIT_SIGN]!"))
 						return
 
-					logTheThing(LOG_STATION, usr, "issued a bonus of [bonus][CREDIT_SIGN] ([bonus_total][CREDIT_SIGN] total) to the staff.")
+					logTheThing(LOG_STATION, usr, "issued a bonus of [bonus][CREDIT_SIGN] ([bonus_total][CREDIT_SIGN] total) to department [department].")
 					src.bonus_rate_limit_time = world.time + (5 MINUTES)
-					command_announcement("[message]<br>Bonus of [bonus][CREDIT_SIGN] issued to all staff.", "Payroll Announcement by [scan.registered] ([scan.assignment])")
+					command_announcement("[message]<br>Bonus of [bonus][CREDIT_SIGN] issued to all [department] staff.", "Payroll Announcement by [scan.registered] ([scan.assignment])")
 					wagesystem.station_budget = wagesystem.station_budget - bonus_total
-					for(var/datum/db_record/R as anything in data_core.bank.records)
+					for(var/datum/db_record/R as anything in lucky_crew)
 						if(R["job"] == "Clown")
 							//Tax the clown
 							R["current_money"] = (R["current_money"] + ceil((bonus / 2)))
