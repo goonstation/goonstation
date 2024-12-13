@@ -1,5 +1,9 @@
 
 (t)fri dec 13 24
+(u)glowbold
+(p)21514
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Dount3's mining magnet area has been expanded to standard station size.
 (u)NightmarechaMillian
 (p)21538
 (e)💡|A-Station-Systems
