@@ -1,5 +1,9 @@
 
 (t)fri dec 13 24
+(u)FlameArrow57
+(p)21674
+(e)💅📄|C-QoL, A-UI
+(*)Added colorblind accessibility options for protanopia, deuteranopia, and tritanopia colorblindness under Game -> Accessibility
 (u)glowbold
 (p)21514
 (e)🆕🗺|C-Feature, A-Mapping
