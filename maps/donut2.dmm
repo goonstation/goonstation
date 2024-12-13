@@ -13575,9 +13575,6 @@
 	pixel_x = 24;
 	pixel_y = 4
 	},
-/obj/item/device/radio/intercom{
-	dir = 8
-	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "bwc" = (
@@ -13720,6 +13717,9 @@
 /area/station/hallway/primary/south)
 "bxm" = (
 /obj/storage/secure/closet/civilian/janitor,
+/obj/item/device/radio/intercom{
+	dir = 8
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "bxq" = (
@@ -20497,6 +20497,12 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"eNC" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
 "eNH" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -21617,6 +21623,9 @@
 /obj/disposalpipe/segment,
 /obj/landmark/start/job/rancher,
 /obj/machinery/light/incandescent,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "fvW" = (
@@ -28744,15 +28753,10 @@
 	id = "ranch_flusher";
 	name = "Kitchen Chute"
 	},
-/obj/machinery/activation_button/flusher_button{
-	id = "ranch_flusher";
-	name = "Kitchen Chute Activation Button";
-	pixel_x = -7;
-	pixel_y = 31
-	},
 /obj/disposalpipe/trunk/produce{
 	dir = 8
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "jSB" = (
@@ -29107,7 +29111,7 @@
 	dir = 1
 	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -29492,8 +29496,6 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/obj/machinery/light/incandescent,
-/obj/machinery/power/apc/autoname_north,
 /obj/railing/orange/reinforced{
 	dir = 4
 	},
@@ -29501,8 +29503,10 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/cable{
-	icon_state = "0-2"
+/obj/machinery/activation_button/flusher_button{
+	id = "ranch_flusher";
+	name = "Kitchen Chute Activation Button";
+	pixel_y = 31
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 8
@@ -31823,6 +31827,16 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hallway/secondary/exit)
+"lHD" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
 "lHQ" = (
 /mob/living/carbon/human/npc/monkey/stirstir,
 /turf/simulated/floor/grime,
@@ -41305,6 +41319,9 @@
 /area/station/maintenance/west)
 "reb" = (
 /obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "ree" = (
@@ -42483,6 +42500,9 @@
 "rRw" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 4
@@ -48165,6 +48185,9 @@
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 6
 	},
@@ -49981,9 +50004,6 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment/produce,
-/obj/cable{
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/grasstodirt{
 	dir = 8
 	},
@@ -72340,7 +72360,7 @@ olI
 etx
 etx
 bGd
-teU
+eNC
 teU
 taR
 bGd
@@ -72642,7 +72662,7 @@ jft
 wrd
 eXL
 bGd
-qEO
+lHD
 fWX
 qEO
 bGd
