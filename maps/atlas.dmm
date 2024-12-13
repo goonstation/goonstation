@@ -2594,21 +2594,19 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "anU" = (
+/obj/eva_suit_spawner,
 /obj/rack,
-/obj/item/clothing/suit/space,
-/obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/eva)
 "anV" = (
 /obj/rack,
-/obj/item/clothing/suit/space,
-/obj/item/clothing/head/helmet/space,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/eva_suit_spawner,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/eva)
@@ -12324,10 +12322,9 @@
 /area/station/hangar/main)
 "fRY" = (
 /obj/rack,
-/obj/item/clothing/suit/space,
-/obj/item/clothing/head/helmet/space,
-/obj/item/clothing/mask/breath,
 /obj/machinery/firealarm/north,
+/obj/eva_suit_spawner,
+/obj/item/clothing/mask/breath,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/eva)
 "fSQ" = (
@@ -13713,9 +13710,8 @@
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "ieQ" = (
+/obj/eva_suit_spawner,
 /obj/rack,
-/obj/item/clothing/suit/space,
-/obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
 /obj/cable{
 	icon_state = "4-8"
@@ -17886,12 +17882,11 @@
 /area/station/hangar/engine)
 "nOy" = (
 /obj/rack,
-/obj/item/clothing/suit/space,
-/obj/item/clothing/head/helmet/space,
-/obj/item/clothing/mask/breath,
 /obj/machinery/alarm{
 	pixel_y = 25
 	},
+/obj/eva_suit_spawner,
+/obj/item/clothing/mask/breath,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/eva)
 "nOZ" = (
@@ -22854,6 +22849,12 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
+"vsP" = (
+/obj/rack,
+/obj/item/clothing/mask/breath,
+/obj/eva_suit_spawner,
+/turf/simulated/floor/orangeblack,
+/area/station/storage/eva)
 "vtx" = (
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor,
@@ -80121,7 +80122,7 @@ act
 jGe
 act
 nOy
-anU
+vsP
 anU
 ieQ
 avc
