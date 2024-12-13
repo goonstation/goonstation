@@ -260,6 +260,7 @@
 
 	cast(atom/target)
 		. = ..()
+		var/datum/hud/gang_victory/victory_hud = get_singleton(/datum/hud/gang_victory)
 		if (holder.owner.client in victory_hud.clients)
 			victory_hud.remove_client(holder.owner.client)
 		else

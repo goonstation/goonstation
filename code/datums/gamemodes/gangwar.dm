@@ -1,5 +1,3 @@
-var/global/datum/hud/gang_victory/victory_hud
-
 /datum/game_mode/gang
 	name = "Gang War (Beta)"
 	config_tag = "gang"
@@ -183,7 +181,8 @@ var/global/datum/hud/gang_victory/victory_hud
 		if (istype(winner))
 			boutput(world, "<h2><b>[winner.gang_name], led by [winner.leader.current.real_name], won the round!</b></h2>")
 
-			victory_hud = new(winner)
+			var/datum/hud/gang_victory/victory_hud = get_singleton(/datum/hud/gang_victory)
+			victory_hud.set_winner(winner)
 			for (var/client/C in clients)
 				victory_hud.add_client(C)
 				C.mob.addAbility(/datum/targetable/toggle_gang_victory_hud)
