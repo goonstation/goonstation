@@ -1,5 +1,9 @@
 
 (t)fri dec 13 24
+(u)Garash2k
+(p)21625
+(e)🆕💅📄|C-Feature, C-QoL, A-UI
+(+)The solar panel controller is now easier to mess with, it can now only be turned on or off... Or emagged! Examine text has all the info it's old UI used to have.
 (u)glowbold
 (p)21672
 (e)💅🔨|C-QoL, A-Player-Actions
