@@ -342,7 +342,7 @@
 
 		if (findtext(addr, ":")) // remove port if present
 			addr = splittext(addr, ":")[1]
-		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip)
+		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip && addr != config.goonhub_ci_ip)
 			return 0 //ip filtering
 
 		var/list/plist = params2list(T)

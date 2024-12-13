@@ -34,15 +34,7 @@ ABSTRACT_TYPE(/datum/req_contract/special)
 		. = "<ul>"
 		for(var/datum/rc_entry/rce in src.rc_entries)
 			if(rce.name)
-				switch(rce.entryclass)
-					if(1) //item by path
-						. += "<li>[rce.count]x [rce.name]</li>"
-					if(2) //reagent
-						. += "<li>[rce.count]+ unit[s_es(rce.count)] of [rce.name]</li>"
-					if(3) //item stacks
-						. += "<li>[rce.count]+ [rce.name]</li>"
-					else //something else entirely custom
-						. += "<li>[rce.name]</li>"
+				. += rce.shoppinglist_description()
 		. += "</ul>"
 		return
 
