@@ -1,4 +1,12 @@
 
+(t)sat dec 14 24
+(u)TDHooligan
+(p)21623
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Gangs tag way faster over unclaimed areas.
+(*)Gangs start with more tags, and restock more tags less frequently.
+(+)Gang loot events have more spacing between them.
+(+)Gangs can now see the next restock time for graffiti.
 (t)fri dec 13 24
 (u)glowbold
 (p)21614
