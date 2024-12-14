@@ -79,11 +79,17 @@
 	if (src.powered())
 		src.status &= ~NOPOWER
 		src.ambient_light.enable()
+		src.icon_state = "clothingbooth-open"
 	else
 		src.status |= NOPOWER
 		src.ambient_light.disable()
+		src.remove_occupant()
+		SPAWN(2 SECONDS) // allow remove_occupant to finish animating
+			src.icon_state = "clothingbooth-off"
 
 /obj/machinery/clothingbooth/attackby(obj/item/W, mob/user)
+	if (src.status & NOPOWER)
+		return
 	var/obj/item/card/id/id_card = get_id_card(W)
 	if (istype(id_card))
 		src.process_card(user, id_card)
@@ -107,6 +113,8 @@
 	..()
 
 /obj/machinery/clothingbooth/attack_hand(mob/user)
+	if (status & NOPOWER)
+		return
 	if (!ishuman(user))
 		boutput(user, SPAN_ALERT("Human clothes don't fit you!"))
 		return
