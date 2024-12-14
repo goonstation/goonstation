@@ -1,5 +1,9 @@
 
 (t)fri dec 13 24
+(u)glowbold
+(p)21614
+(e)🆕🗺💡🌠|C-Feature, A-Mapping, A-Station-Systems, A-Events
+(+)Space OSHA has installed traffic warning lights to indicate incoming and outgoing shuttles. No excuses for getting squished.
 (u)JORJ949
 (p)21676
 (e)🗺|A-Mapping
