@@ -3525,7 +3525,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay5,
+/obj/machinery/light/traffic_light/john_diner/delay5,
 /turf/space,
 /area/space)
 "aqB" = (
@@ -3617,7 +3617,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay4,
+/obj/machinery/light/traffic_light/john_diner/delay4,
 /turf/space,
 /area/space)
 "aqQ" = (
@@ -16825,11 +16825,6 @@
 	dir = 8
 	},
 /area/diner/hangar)
-"ffO" = (
-/obj/lattice,
-/obj/machinery/light/runway_light,
-/turf/space,
-/area/space)
 "fgb" = (
 /turf/simulated/wall/auto/asteroid{
 	dir = 1
@@ -16963,6 +16958,14 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/diner/jucer_trader)
+"fEX" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_diner,
+/turf/space,
+/area/space)
 "fFQ" = (
 /obj/table/auto,
 /obj/machinery/light/incandescent/warm{
@@ -18323,6 +18326,14 @@
 	},
 /turf/space,
 /area/diner/tug)
+"jiG" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_diner,
+/turf/space,
+/area/space)
 "jiP" = (
 /obj/npc/trader/robot/robuddy/drugs,
 /turf/simulated/floor/grime,
@@ -18379,7 +18390,7 @@
 /area/abandonedmedicalship)
 "jru" = (
 /obj/lattice,
-/obj/machinery/light/runway_light/delay5,
+/obj/machinery/light/traffic_light/trader_diner/delay5,
 /turf/space,
 /area/space)
 "jsq" = (
@@ -18569,6 +18580,13 @@
 	icon_state = "red2"
 	},
 /area/diner/dining)
+"jUK" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_diner/delay3,
+/turf/space,
+/area/space)
 "jVh" = (
 /obj/machinery/r_door_control/podbay/diner2,
 /turf/simulated/wall/auto/reinforced/old,
@@ -18956,6 +18974,14 @@
 	icon_state = "floor2"
 	},
 /area/diner/tug)
+"ldO" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/john_diner,
+/turf/space,
+/area/space)
 "lgw" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -19223,6 +19249,13 @@
 	},
 /turf/simulated/floor/carpet/green/fancy,
 /area/diner/motel/observatory)
+"lMQ" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_diner/delay2,
+/turf/space,
+/area/space)
 "lNV" = (
 /obj/stool,
 /obj/machinery/light/incandescent/netural{
@@ -19431,6 +19464,14 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hangar)
+"mip" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/john_diner,
+/turf/space,
+/area/space)
 "miz" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/timewarp/ship)
@@ -20742,7 +20783,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay2,
+/obj/machinery/light/traffic_light/john_diner/delay2,
 /turf/space,
 /area/space)
 "pTb" = (
@@ -21007,6 +21048,14 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/mining/diner)
+"qEt" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_diner/delay2,
+/turf/space,
+/area/space)
 "qEL" = (
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 8
@@ -21428,7 +21477,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay3,
+/obj/machinery/light/traffic_light/john_diner/delay3,
 /turf/space,
 /area/space)
 "rOu" = (
@@ -22577,8 +22626,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay5,
-/obj/machinery/light/runway_light/delay4,
+/obj/machinery/light/traffic_light/trader_diner/delay4,
 /turf/space,
 /area/space)
 "uIh" = (
@@ -22865,6 +22913,14 @@
 /obj/map/light/yellow,
 /turf/space,
 /area/diner/jucer_trader)
+"vub" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_diner/delay3,
+/turf/space,
+/area/space)
 "vue" = (
 /turf/unsimulated/floor/white/grime,
 /area/timewarp/ship)
@@ -23574,15 +23630,6 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/helldrone/core)
-"xtM" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/light/runway_light/delay3,
-/obj/machinery/light/runway_light/delay4,
-/turf/space,
-/area/space)
 "xvp" = (
 /obj/table/endtable_honey,
 /obj/item/decoration/flower_vase{
@@ -23608,6 +23655,14 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/mining/diner)
+"xwc" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_diner,
+/turf/space,
+/area/space)
 "xws" = (
 /turf/simulated/floor/plating/damaged1,
 /area/diner/hangar)
@@ -23815,6 +23870,13 @@
 "ygK" = (
 /turf/space,
 /area/diner/tug)
+"yhm" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_diner/delay4,
+/turf/space,
+/area/space)
 "yiv" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/diner/motel)
@@ -67070,14 +67132,14 @@ aaa
 aaa
 aaa
 aaa
-eha
+xwc
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-eha
+xwc
 aaa
 eha
 aaa
@@ -67674,14 +67736,14 @@ aaa
 aaa
 aaa
 aaa
-jtl
+qEt
 aaa
 bHv
 bHv
 bHv
 bHv
 aaa
-jtl
+qEt
 aaa
 luF
 aaa
@@ -68013,7 +68075,7 @@ aaa
 aaa
 aaa
 aaa
-eha
+ldO
 aaa
 aaa
 aaa
@@ -68278,14 +68340,14 @@ aaa
 aaa
 aaa
 aaa
-wsK
+vub
 bHv
 bHv
 bHv
 bHv
 bHv
 bHv
-wsK
+vub
 aaa
 anD
 rfM
@@ -68617,7 +68679,7 @@ avE
 avE
 avE
 aaa
-bjI
+mip
 aaa
 aaa
 aaa
@@ -68882,7 +68944,7 @@ aaa
 aaa
 aaa
 aaa
-xtM
+uGN
 bHv
 bHv
 bHv
@@ -70090,7 +70152,7 @@ aaa
 aaa
 aaa
 afs
-ffO
+aan
 aaK
 aCC
 ofQ
@@ -70694,7 +70756,7 @@ aaa
 aaa
 aaa
 aaa
-jtl
+aao
 aaa
 aCC
 ofQ
@@ -71637,7 +71699,7 @@ avE
 avE
 avE
 aaa
-eha
+ldO
 aaa
 aaa
 aaa
@@ -72241,7 +72303,7 @@ aaa
 aaa
 aaa
 aaa
-bjI
+mip
 aaa
 aaa
 aaa
@@ -76761,7 +76823,7 @@ aaa
 aaa
 aaa
 aaa
-eha
+fEX
 aaa
 aaa
 aaa
@@ -77058,11 +77120,11 @@ pMZ
 bxI
 apU
 aan
+yhm
 aaK
-aaK
-aaK
+jUK
 aan
-aaK
+lMQ
 weF
 aaa
 aaa
@@ -77365,7 +77427,7 @@ qBN
 qBN
 ejg
 udQ
-bjI
+jiG
 aaa
 aaa
 aaa
@@ -80076,7 +80138,7 @@ aan
 aaK
 aaK
 pPj
-aaK
+aaa
 aaa
 aaa
 aaa
