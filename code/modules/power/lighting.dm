@@ -553,6 +553,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 				icon_state = "floor-broken"
 				on = 0
 
+///This type hell is already baked into a lot of maps so this macro exists to make it less insane
+#define DEFINE_DELAYS(_PATH)\
+_PATH/delay2{icon_state = "runway20"; base_state = "runway2"}\
+_PATH/delay3{icon_state = "runway30"; base_state = "runway3"}\
+_PATH/delay4{icon_state = "runway40"; base_state = "runway4"}\
+_PATH/delay5{icon_state = "runway50"; base_state = "runway5"}
+
 /obj/machinery/light/traffic_light
 	name = "warning light"
 	desc = "A small, hardened light used to warn when shuttle traffic is expected."
@@ -601,205 +608,54 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		src.update()
 
 	// matching mapping area conventions
-	trader_left
-		connected_dock = COMSIG_DOCK_TRADER_WEST
-		delay2
-			icon_state = "runway20"
-			base_state = "runway2"
-		delay3
-			icon_state = "runway30"
-			base_state = "runway3"
-		delay4
-			icon_state = "runway40"
-			base_state = "runway4"
-		delay5
-			icon_state = "runway50"
-			base_state = "runway5"
-	trader_right
-		connected_dock = COMSIG_DOCK_TRADER_EAST
-		delay2
-			icon_state = "runway20"
-			base_state = "runway2"
-		delay3
-			icon_state = "runway30"
-			base_state = "runway3"
-		delay4
-			icon_state = "runway40"
-			base_state = "runway4"
-		delay5
-			icon_state = "runway50"
-			base_state = "runway5"
+/obj/machinery/light/traffic_light/trader_left
+	connected_dock = COMSIG_DOCK_TRADER_WEST
+DEFINE_DELAYS(/obj/machinery/light/traffic_light/trader_left)
 
-	trader_diner
-		connected_dock = COMSIG_DOCK_TRADER_DINER
-		delay2
-			icon_state = "runway20"
-			base_state = "runway2"
-		delay3
-			icon_state = "runway30"
-			base_state = "runway3"
-		delay4
-			icon_state = "runway40"
-			base_state = "runway4"
-		delay5
-			icon_state = "runway50"
-			base_state = "runway5"
+/obj/machinery/light/traffic_light/trader_right
+	connected_dock = COMSIG_DOCK_TRADER_EAST
+DEFINE_DELAYS(/obj/machinery/light/traffic_light/trader_right)
 
-	mining_station
-		connected_dock = COMSIG_DOCK_MINING_STATION
-		delay2
-			icon_state = "runway20"
-			base_state = "runway2"
-		delay3
-			icon_state = "runway30"
-			base_state = "runway3"
-		delay4
-			icon_state = "runway40"
-			base_state = "runway4"
-		delay5
-			icon_state = "runway50"
-			base_state = "runway5"
+/obj/machinery/light/traffic_light/trader_diner
+	connected_dock = COMSIG_DOCK_TRADER_DINER
+DEFINE_DELAYS(/obj/machinery/light/traffic_light/trader_diner)
 
-	mining_diner
-		connected_dock = COMSIG_DOCK_MINING_DINER
-		delay2
-			icon_state = "runway20"
-			base_state = "runway2"
-		delay3
-			icon_state = "runway30"
-			base_state = "runway3"
-		delay4
-			icon_state = "runway40"
-			base_state = "runway4"
-		delay5
-			icon_state = "runway50"
-			base_state = "runway5"
-	mining_outpost
-		connected_dock = COMSIG_DOCK_MINING_OUTPOST
-		delay2
-			icon_state = "runway20"
-			base_state = "runway2"
-		delay3
-			icon_state = "runway30"
-			base_state = "runway3"
-		delay4
-			icon_state = "runway40"
-			base_state = "runway4"
-		delay5
-			icon_state = "runway50"
-			base_state = "runway5"
-	john_owlery
-		connected_dock = COMSIG_DOCK_JOHN_OWLERY
-		delay2
-			icon_state = "runway20"
-			base_state = "runway2"
-		delay3
-			icon_state = "runway30"
-			base_state = "runway3"
-		delay4
-			icon_state = "runway40"
-			base_state = "runway4"
-		delay5
-			icon_state = "runway50"
-			base_state = "runway5"
-	john_diner
-		connected_dock = COMSIG_DOCK_JOHN_DINER
-		delay2
-			icon_state = "runway20"
-			base_state = "runway2"
-		delay3
-			icon_state = "runway30"
-			base_state = "runway3"
-		delay4
-			icon_state = "runway40"
-			base_state = "runway4"
-		delay5
-			icon_state = "runway50"
-			base_state = "runway5"
-	john_outpost
-		connected_dock = COMSIG_DOCK_JOHN_OUTPOST
-		delay2
-			icon_state = "runway20"
-			base_state = "runway2"
-		delay3
-			icon_state = "runway30"
-			base_state = "runway3"
-		delay4
-			icon_state = "runway40"
-			base_state = "runway4"
-		delay5
-			icon_state = "runway50"
-			base_state = "runway5"
-	research_station
-		connected_dock = COMSIG_DOCK_RESEARCH_STATION
-		delay2
-			icon_state = "runway20"
-			base_state = "runway2"
-		delay3
-			icon_state = "runway30"
-			base_state = "runway3"
-		delay4
-			icon_state = "runway40"
-			base_state = "runway4"
-		delay5
-			icon_state = "runway50"
-			base_state = "runway5"
-	research_outpost
-		connected_dock = COMSIG_DOCK_RESEARCH_OUTPOST
-		delay2
-			icon_state = "runway20"
-			base_state = "runway2"
-		delay3
-			icon_state = "runway30"
-			base_state = "runway3"
-		delay4
-			icon_state = "runway40"
-			base_state = "runway4"
-		delay5
-			icon_state = "runway50"
-			base_state = "runway5"
-	medical_asylum
-		connected_dock = COMSIG_DOCK_MEDICAL_ASYLUM
-		delay2
-			icon_state = "runway20"
-			base_state = "runway2"
-		delay3
-			icon_state = "runway30"
-			base_state = "runway3"
-		delay4
-			icon_state = "runway40"
-			base_state = "runway4"
-		delay5
-			icon_state = "runway50"
-			base_state = "runway5"
-	medical_medbay
-		connected_dock = COMSIG_DOCK_MEDICAL_MEDBAY
-		delay2
-			icon_state = "runway20"
-			base_state = "runway2"
-		delay3
-			icon_state = "runway30"
-			base_state = "runway3"
-		delay4
-			icon_state = "runway40"
-			base_state = "runway4"
-		delay5
-			icon_state = "runway50"
-			base_state = "runway5"
-	medical_pathology
-		connected_dock = COMSIG_DOCK_MEDICAL_PATHOLOGY
-		delay2
-			icon_state = "runway20"
-			base_state = "runway2"
-		delay3
-			icon_state = "runway30"
-			base_state = "runway3"
-		delay4
-			icon_state = "runway40"
-			base_state = "runway4"
-		delay5
-			icon_state = "runway50"
-			base_state = "runway5"
+/obj/machinery/light/traffic_light/mining_station
+	connected_dock = COMSIG_DOCK_MINING_STATION
+DEFINE_DELAYS(/obj/machinery/light/traffic_light/mining_station)
+
+/obj/machinery/light/traffic_light/mining_diner
+	connected_dock = COMSIG_DOCK_MINING_DINER
+DEFINE_DELAYS(/obj/machinery/light/traffic_light/mining_diner)
+/obj/machinery/light/traffic_light/mining_outpost
+	connected_dock = COMSIG_DOCK_MINING_OUTPOST
+DEFINE_DELAYS(/obj/machinery/light/traffic_light/mining_outpost)
+/obj/machinery/light/traffic_light/john_owlery
+	connected_dock = COMSIG_DOCK_JOHN_OWLERY
+DEFINE_DELAYS(/obj/machinery/light/traffic_light/john_owlery)
+/obj/machinery/light/traffic_light/john_diner
+	connected_dock = COMSIG_DOCK_JOHN_DINER
+DEFINE_DELAYS(/obj/machinery/light/traffic_light/john_diner)
+/obj/machinery/light/traffic_light/john_outpost
+	connected_dock = COMSIG_DOCK_JOHN_OUTPOST
+DEFINE_DELAYS(/obj/machinery/light/traffic_light/john_outpost)
+/obj/machinery/light/traffic_light/research_station
+	connected_dock = COMSIG_DOCK_RESEARCH_STATION
+DEFINE_DELAYS(/obj/machinery/light/traffic_light/research_station)
+/obj/machinery/light/traffic_light/research_outpost
+	connected_dock = COMSIG_DOCK_RESEARCH_OUTPOST
+DEFINE_DELAYS(/obj/machinery/light/traffic_light/research_outpost)
+/obj/machinery/light/traffic_light/medical_asylum
+	connected_dock = COMSIG_DOCK_MEDICAL_ASYLUM
+DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_asylum)
+/obj/machinery/light/traffic_light/medical_medbay
+	connected_dock = COMSIG_DOCK_MEDICAL_MEDBAY
+DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_medbay)
+/obj/machinery/light/traffic_light/medical_pathology
+	connected_dock = COMSIG_DOCK_MEDICAL_PATHOLOGY
+DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
+
+#undef DEFINE_DELAYS
 
 // Traffic lights on/off is signal controlled; light switches should not affect us.
 /obj/machinery/light/traffic_light/power_change()
