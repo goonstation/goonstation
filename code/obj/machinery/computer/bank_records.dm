@@ -16,7 +16,7 @@
 	var/static/bonus_rate_limit_time = 0 //prevent bonus spam because these have an annoucement
 	///I know we already have department job lists but they suck and are brittle and way too general so I made my own here
 	var/static/list/departments = list(
-		"Stationwide" = list(/datum/job/), //hacky, yet generic
+		"Stationwide" = list(),
 		"Genetics" = list(/datum/job/research/geneticist),
 		"Robotics" = list(/datum/job/research/roboticist),
 		"Cargo" = list(/datum/job/engineering/quartermaster, /datum/job/civilian/mail_courier),
@@ -294,6 +294,9 @@
 
 					var/list/datum/db_record/lucky_crew = list()
 					for (var/datum/db_record/record in data_core.bank.records)
+						if(department == "Stationwide")
+							lucky_crew += record
+							continue
 						for (var/job_type in src.departments[department])
 							for (var/datum/job/child_type as anything in concrete_typesof(job_type))
 								if (record["job"] == child_type::name)
