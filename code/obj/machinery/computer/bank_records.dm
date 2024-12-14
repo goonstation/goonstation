@@ -16,16 +16,17 @@
 	var/static/bonus_rate_limit_time = 0 //prevent bonus spam because these have an annoucement
 	///I know we already have department job lists but they suck and are brittle and way too general so I made my own here
 	var/static/list/departments = list(
+		"Stationwide" = list(/datum/job/), //hacky, yet generic
 		"Genetics" = list(/datum/job/research/geneticist),
 		"Robotics" = list(/datum/job/research/roboticist),
 		"Cargo" = list(/datum/job/engineering/quartermaster, /datum/job/civilian/mail_courier),
 		"Mining" = list(/datum/job/engineering/miner),
-		"Engineering" = list(/datum/job/engineering/engineer, /datum/job/engineering/technical_assistant),
-		"Research" = list(/datum/job/research/scientist, /datum/job/research/research_assistant),
+		"Engineering" = list(/datum/job/engineering/engineer, /datum/job/engineering/technical_assistant, /datum/job/command/chief_engineer),
+		"Research" = list(/datum/job/research/scientist, /datum/job/research/research_assistant, /datum/job/command/research_director),
 		"Catering" = list(/datum/job/civilian/chef, /datum/job/civilian/bartender, /datum/job/special/souschef, /datum/job/daily/waiter),
 		"Hydroponics" = list(/datum/job/civilian/botanist, /datum/job/civilian/rancher),
-		"Security" = list(/datum/job/security),
-		"Medical" = list(/datum/job/research/medical_doctor, /datum/job/research/medical_assistant)
+		"Security" = list(/datum/job/security, /datum/job/command/head_of_security),
+		"Medical" = list(/datum/job/research/medical_doctor, /datum/job/research/medical_assistant, /datum/job/command/medical_director)
 	)
 
 	attack_ai(mob/user as mob)
@@ -287,10 +288,6 @@
 					if (!department)
 						return
 
-					var/bonus = input(usr, "How many credits should we issue to each staff member?", "Issue Bonus", 100) as null|num
-					if(isnull(bonus)) return
-					bonus = ceil(clamp(bonus, 1, 999999))
-
 					var/list/datum/db_record/lucky_crew = list()
 					for (var/datum/db_record/record in data_core.bank.records)
 						for (var/job_type in src.departments[department])
@@ -299,6 +296,14 @@
 									lucky_crew += record
 									goto next_record //actually almost good goto use case?? (byond doesn't have outer loop break syntax)
 						next_record:
+
+					if(length(lucky_crew) == 0)
+						boutput(usr, SPAN_ALERT("There are no eligble crew in this department."))
+						return
+
+					var/bonus = input(usr, "How many credits should we issue to each staff member?", "Issue Bonus", 100) as null|num
+					if(isnull(bonus)) return
+					bonus = ceil(clamp(bonus, 1, 999999))
 
 					var/bonus_total = (length(lucky_crew) * bonus)
 					if ( bonus_total > wagesystem.station_budget)
@@ -313,7 +318,7 @@
 
 					//Something ain't right  if we enter either of these but it could be a coincidence
 					//Maybe someone stole the budget under our feet, or payroll was issued
-					if(isnull(bonus)|| isnull(bonus_total))
+					if(isnull(bonus) || isnull(bonus_total))
 						//No you really shouldn't be here
 						return
 					if(bonus_total > wagesystem.station_budget)
@@ -322,7 +327,9 @@
 
 					logTheThing(LOG_STATION, usr, "issued a bonus of [bonus][CREDIT_SIGN] ([bonus_total][CREDIT_SIGN] total) to department [department].")
 					src.bonus_rate_limit_time = world.time + (5 MINUTES)
-					command_announcement("[message]<br>Bonus of [bonus][CREDIT_SIGN] issued to all [department] staff.", "Payroll Announcement by [scan.registered] ([scan.assignment])")
+					if(department == "Stationwide")
+						department = "eligible"
+					command_announcement("[message]<br>Bonus of [bonus][CREDIT_SIGN] issued to all [lowertext(department)] staff.", "Payroll Announcement by [scan.registered] ([scan.assignment])")
 					wagesystem.station_budget = wagesystem.station_budget - bonus_total
 					for(var/datum/db_record/R as anything in lucky_crew)
 						if(R["job"] == "Clown")
