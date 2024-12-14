@@ -6,12 +6,12 @@
  */
 
 import {
-  Box,
   Button,
   Input,
   LabeledList,
   NoticeBox,
   Section,
+  Stack,
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
@@ -24,39 +24,43 @@ export const Keybinds = () => {
   return (
     <Window width={330} height={590}>
       <Window.Content>
-        <Section scrollable>
-          <Box maxHeight="500px">
-            <NoticeBox info>
-              You can only rebind keys you have access to when opening the
-              window.
-              <br />
-              Ex: You can only change human hotkeys if you are currently human.
-            </NoticeBox>
-            <LabeledList>
-              <LabeledList.Item label="Action">
-                Corresponding Keybind
-              </LabeledList.Item>
-              {keys.map((k) => (
-                <LabeledList.Item key={k.key} label={k.action}>
-                  <Input
-                    value={k.unparse}
-                    onChange={(_e, value) =>
-                      act('changed_key', { action: k.key + '', key: value })
-                    }
-                  />
+        <Stack vertical fill>
+          <Stack.Item grow>
+            <Section scrollable fill>
+              <NoticeBox info>
+                You can only rebind keys you have access to when opening the
+                window.
+                <br />
+                Ex: You can only change human hotkeys if you are currently
+                human.
+              </NoticeBox>
+              <LabeledList>
+                <LabeledList.Item label="Action">
+                  Corresponding Keybind
                 </LabeledList.Item>
-              ))}
-            </LabeledList>
-          </Box>
-        </Section>
-
-        <Button onClick={() => act('confirm')} color="good" icon="save">
-          Confirm
-        </Button>
-        <Button onClick={() => act('reset')} color="bad" icon="trash">
-          Reset All Keybinding Data
-        </Button>
-        <Button onClick={() => act('cancel')}>Cancel</Button>
+                {keys.map((k) => (
+                  <LabeledList.Item key={k.key} label={k.action}>
+                    <Input
+                      value={k.unparse}
+                      onChange={(_e, value) =>
+                        act('changed_key', { action: k.key + '', key: value })
+                      }
+                    />
+                  </LabeledList.Item>
+                ))}
+              </LabeledList>
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Button onClick={() => act('confirm')} color="good" icon="save">
+              Confirm
+            </Button>
+            <Button onClick={() => act('reset')} color="bad" icon="trash">
+              Reset All Keybinding Data
+            </Button>
+            <Button onClick={() => act('cancel')}>Cancel</Button>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
