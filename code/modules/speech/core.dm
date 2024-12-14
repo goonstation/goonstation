@@ -7,7 +7,7 @@
 /// The listen inputs that this atom *starts* with. It will not be updated nor used again after initialisation.
 /atom/var/list/start_listen_inputs = null
 /// The listen languages that this atom *starts* with. It will not be updated nor used again after initialisation. Note that this is the languages that the atom understands when heard.
-/atom/var/list/start_listen_languages = null
+/atom/var/list/start_listen_languages = list(LANGUAGE_ALL)
 
 /atom/New()
 	if (length(src.start_listen_inputs))
