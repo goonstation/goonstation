@@ -446,8 +446,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 /obj/machinery/conveyor/get_desc()
 	if (src.deconstructable)
-		. += " [SPAN_NOTICE("It's cover seems to be open.")]"
-
+		. += " [SPAN_NOTICE("Its cover seems to be open.")]"
 
 /obj/machinery/conveyor/mouse_drop(over_object, src_location, over_location)
 	if (!usr)
