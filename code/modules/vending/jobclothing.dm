@@ -467,6 +467,10 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/syndicate, 4)
+#ifdef XMAS
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/space/santahat/noslow, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/space/santa/noslow, 2)
+#endif
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/space/syndicate, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/space/syndicate, 2)
 		product_list += new/datum/data/vending_product(/obj/item/tank/jetpack/syndicate, 2)
@@ -478,4 +482,3 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/syndie, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/syndie, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/fanny/syndie, 1)
-

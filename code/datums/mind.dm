@@ -57,6 +57,8 @@ datum/mind
 	var/const/karma_max = 69
 	var/damned = 0 //! If 1, they go to hell when are die
 
+	var/datum/personal_summary/personal_summary
+
 	var/show_respawn_prompts = TRUE
 
 	New(mob/M)
@@ -253,6 +255,17 @@ datum/mind
 			if (A.id == role_id)
 				return A
 		return null
+
+	///Returns a human readable english list of all antagonsit roles this person has
+	proc/list_antagonist_roles(include_pseudo = FALSE)
+		var/list/valid_antags = list()
+		for (var/datum/antagonist/antag as anything in src.antagonists)
+			if (!include_pseudo && antag.pseudo)
+				continue
+			valid_antags += antag.display_name
+		if (!length(valid_antags))
+			return null
+		return english_list(valid_antags)
 
 	/// Attempts to add the antagonist datum of ID role_id to this mind.
 	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_OTHER, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE)

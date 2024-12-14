@@ -58,7 +58,7 @@
 	signal.source = src
 
 	signal.data["tag"] = src.id
-	signal.data["netid"] = src.net_id
+	signal.data["sender"] = src.net_id
 	signal.data["device"] = "APV"
 	signal.data["power"] = src.on
 	signal.data["transfer_rate"] = src.transfer_rate
@@ -72,7 +72,7 @@
 	src.ui = new/datum/pump_ui/volume_pump_ui(src)
 
 /obj/machinery/atmospherics/binary/volume_pump/receive_signal(datum/signal/signal)
-	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["netid"] && (signal.data["netid"] == src.net_id))))
+	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["address_1"] == src.net_id)))
 		if(signal.data["command"] != "broadcast_status")
 			return FALSE
 
