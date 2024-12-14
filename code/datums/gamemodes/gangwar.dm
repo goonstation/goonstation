@@ -149,6 +149,8 @@
 		if (islist(G.members))
 			for (var/datum/mind/M as anything in G.members)
 				var/mob/living/carbon/human/H = M.current
+				if (!H)
+					return
 				var/turf/sourceturf = get_turf(H)
 				var/gearworn = G.gear_worn(H)
 
@@ -2814,10 +2816,13 @@ proc/broadcast_to_all_gangs(var/message)
 
 	/// Makes this tag inert, so it no longer provides points.
 	proc/disable()
+		if (!active)
+			return
 		active = FALSE
 		src.owners?.unclaim_tiles(get_turf(src), GANG_TAG_INFLUENCE, GANG_TAG_SIGHT_RANGE)
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
-		imgroup.remove_image(heatTracker)
+		if (src.heatTracker)
+			imgroup.remove_image(heatTracker)
 		src.heatTracker = null
 		qdel(heatTracker)
 
