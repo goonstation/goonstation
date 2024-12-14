@@ -2,15 +2,12 @@
 /datum/keybind_menu
 	var/client/owner
 	var/list/changed_keys //so we can keep track of what keys the user changes then merge later
-	var/datum/keymap/current_keymap
 
 	New(client/my_client)
 		..()
 		owner = my_client
-		current_keymap = owner.keymap
 
 	ui_interact(mob/user, datum/tgui/ui)
-		current_keymap = owner.keymap //Need to refresh this since it's not a proper pointer?
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
 			ui = new(user, src, "Keybinds", "Keybinding Customization")
@@ -18,7 +15,7 @@
 
 	ui_data(mob/user)
 		. = ..()
-		current_keymap = owner.keymap //Need to refresh this since it's not a proper pointer?
+		var/datum/keymap/current_keymap = owner.keymap
 		var/list/keys = list()
 
 		for (var/key in current_keymap.keys)
@@ -35,6 +32,8 @@
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
+
+		var/datum/keymap/current_keymap = owner.keymap
 
 		switch (action)
 			if ("changed_key")
