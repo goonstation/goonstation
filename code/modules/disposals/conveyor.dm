@@ -427,8 +427,6 @@ TYPEINFO(/obj/machinery/conveyor) {
 		return
 	if(!loc)
 		return
-	if (!can_convey(AM))
-		return
 
 	if(src.next_conveyor && src.next_conveyor.loc == AM.loc)
 		//Ok, they will soon walk() according to the new conveyor
