@@ -266,7 +266,10 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/unary)
 		name = "Pressure tank"
 		path = /obj/machinery/atmospherics/unary/tank
 		icon_state = "tank"
-
+	connector
+		name = "Portable Connector"
+		path = /obj/machinery/atmospherics/unary/portables_connector
+		icon_state = "connector"
 	outlet_injector
 		name = "Outlet Injector"
 		path = /obj/machinery/atmospherics/unary/outlet_injector/overfloor
