@@ -1927,7 +1927,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	recoil_strength = 18
 	recoil_max = 40
 	max_move_amount = 1
-	rack_delay = 4
+	rack_delay = 5
 	pumpsound = 'sound/weapons/kuvalda_pull2.ogg'
 	pushsound = 'sound/weapons/kuvalda_push2.ogg'
 	empty
