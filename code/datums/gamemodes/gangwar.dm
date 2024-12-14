@@ -149,6 +149,8 @@
 		if (islist(G.members))
 			for (var/datum/mind/M as anything in G.members)
 				var/mob/living/carbon/human/H = M.current
+				if (!H)
+					return
 				var/turf/sourceturf = get_turf(H)
 				var/gearworn = G.gear_worn(H)
 
@@ -2434,7 +2436,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /obj/item/tool/quickhack
 	name = "QuickHack"
-	desc = "A highly illegal, disposable device that can fake an AI's 'open' signal to a door a few times."
+	desc = "A highly illegal, disposable device that open doors like an AI."
 	icon = 'icons/obj/items/gang.dmi'
 	icon_state = "quickhack"
 	object_flags = NO_GHOSTCRITTER
@@ -2754,7 +2756,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /datum/gang_item/consumable/quickhack
 	name = "Quickhack"
-	desc = "An illegal, home-made tool able to fake up to 5 AI 'open' signals to unbolted doors."
+	desc = "Quickly opens unbolted doors you lack access to like an AI. 5 uses."
 	class2 = "Tools"
 	price = 800
 	item_path = /obj/item/tool/quickhack
@@ -2833,10 +2835,13 @@ proc/broadcast_to_all_gangs(var/message)
 
 	/// Makes this tag inert, so it no longer provides points.
 	proc/disable()
+		if (!active)
+			return
 		active = FALSE
 		src.owners?.unclaim_tiles(get_turf(src), GANG_TAG_INFLUENCE, GANG_TAG_SIGHT_RANGE)
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
-		imgroup.remove_image(heatTracker)
+		if (src.heatTracker)
+			imgroup.remove_image(heatTracker)
 		src.heatTracker = null
 		qdel(heatTracker)
 
