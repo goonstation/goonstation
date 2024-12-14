@@ -1910,6 +1910,7 @@
 #include "code\obj\artifacts\triggers.dm"
 #include "code\obj\artifacts\artifact_items\activator_key.dm"
 #include "code\obj\artifacts\artifact_items\attack_wand.dm"
+#include "code\obj\artifacts\artifact_items\dimensional_key.dm"
 #include "code\obj\artifacts\artifact_items\energy_gun.dm"
 #include "code\obj\artifacts\artifact_items\gun_cell.dm"
 #include "code\obj\artifacts\artifact_items\handheld_storage.dm"
