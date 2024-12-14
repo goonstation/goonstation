@@ -370,6 +370,10 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/ancient/artifact_fissure)
 					T.vis_contents += station_turf
 					T.density = station_turf.density
 					T.opacity = station_turf.opacity
+					for (var/atom/A as anything in station_turf)
+						if (A.opacity)
+							T.opacity = TRUE
+							break
 					T.name = station_turf.name
 					T.desc = station_turf.desc
 					T.icon = station_turf.icon
