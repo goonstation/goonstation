@@ -5,7 +5,7 @@
 	icon_state = "hpd"
 	flags = TABLEPASS | CONDUCT
 	var/dispenser_being_used = FALSE
-	var/dispenser_delay = 1 DECI SECONDS
+	var/dispenser_delay = 5 DECI SECONDS
 	var/static/list/atmospipesforcreation = null
 	var/static/list/atmosmachinesforcreation = null
 	var/static/list/icon/cache = list()
@@ -36,18 +36,48 @@
 	if (!can_reach(user, target))
 		return
 	if(destroying)
-		if(istype(target, /obj/machinery/atmospherics))
-			qdel(target)
+		if(istype(target, /obj/machinery/atmospherics)) //hilarium
+			SETUP_GENERIC_ACTIONBAR(target, src, src.dispenser_delay, PROC_REF(destroy_item), list(user, target),\
+			 null, null, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED)
 
 	else
+		if(!isturf(target))
+			return
 		var/directs = selection.get_directions(direction)
-		for(var/obj/machinery/atmospherics/device in get_turf(target))
+		for(var/obj/machinery/atmospherics/device in target)
 			if(device.initialize_directions & directs)
 				boutput(user, SPAN_ALERT("Something is occupying that direction!"))
 				return
-		new /dmm_suite/preloader(get_turf(target), list("dir" = direction))
-		var/obj/machinery/atmospherics/device = new selection.path(get_turf(target))
-		device.initialize(TRUE)
+		if(src.resources < selection.cost)
+			boutput(user, SPAN_ALERT("Not enough resources to make a [selection.name]!"))
+		SETUP_GENERIC_ACTIONBAR(target, src, src.dispenser_delay, PROC_REF(create_item), list(target, user, selection, direction),\
+			 selection.icon, selection.icon_state, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED)
+
+/obj/item/places_pipes/proc/create_item(turf/target, mob/user, datum/pipe_recipe/recipe, direction)
+	if(!(user && can_reach(user, target)))
+		boutput(user, SPAN_ALERT("Can't reach there!"))
+		return
+	if(src.resources < selection.cost)
+		boutput(user, SPAN_ALERT("Not enough resources to make a [recipe.name]!"))
+	var/directs = recipe.get_directions(direction)
+	for(var/obj/machinery/atmospherics/device in target)
+		if(device.initialize_directions & directs)
+			boutput(user, SPAN_ALERT("Something is occupying that direction!"))
+			return
+	src.resources -= recipe.cost
+	user.visible_message(SPAN_NOTICE("[user] places a [recipe.name]."))
+	new /dmm_suite/preloader(target, list("dir" = (recipe.bent ? turn(direction, 45) : direction)))
+	var/obj/machinery/atmospherics/device = new recipe.path(target)
+	device.initialize(TRUE)
+
+/obj/item/places_pipes/proc/destroy_item(mob/user, obj/machinery/atmospherics/target)
+	if(!src.resources)
+		boutput(user, SPAN_ALERT("Not enough resources to destroy that!"))
+		return
+	boutput(user, SPAN_NOTICE("The [src] destroys the [target]!"))
+	resources -= 1
+	qdel(target)
+
 /obj/item/places_pipes/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
@@ -113,6 +143,7 @@
 	var/path
 	var/cost = 2
 	var/name = "CALL 1800 CODER"
+	var/bent = FALSE // not a big fan, but its a shrimple solution to bent pipes
 
 	proc/get_directions(dir)
 		return 0
@@ -131,12 +162,13 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 					return NORTH|SOUTH
 				if(EAST, WEST)
 					return EAST|WEST
-	/*
+
 	bent
 		name = "Bent pipe"
 		path = /obj/machinery/atmospherics/pipe/simple/overfloor
 		cost = 1
 		icon_state = "pipebent"
+		bent = TRUE
 
 		get_directions(dir)
 			switch(dir)
@@ -148,7 +180,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 					return NORTH|EAST
 				if(WEST)
 					return SOUTH|WEST
-	*/
+
 	manifold
 		name = "Manifold"
 		path = /obj/machinery/atmospherics/pipe/manifold/overfloor
@@ -186,12 +218,13 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 					return NORTH|SOUTH
 				if(EAST, WEST)
 					return EAST|WEST
-	/*
+
 	bent_heat_pipe
 		name = "Bent Heat exchanging pipe"
 		path = /obj/machinery/atmospherics/pipe/simple/heat_exchanging
 		cost = 3
 		icon_state = "heatpipebent"
+		bent = TRUE
 
 		get_directions(dir)
 			switch(dir)
@@ -203,7 +236,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 					return NORTH|EAST
 				if(WEST)
 					return SOUTH|WEST
-	*/
+
 	heat_junction
 		name = "HE junction"
 		path = /obj/machinery/atmospherics/pipe/simple/junction
