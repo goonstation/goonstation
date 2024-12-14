@@ -39,11 +39,11 @@ export const Keybinds = () => {
                   Corresponding Keybind
                 </LabeledList.Item>
                 {keys.map((k) => (
-                  <LabeledList.Item key={k.key} label={k.action}>
+                  <LabeledList.Item key={k.id} label={k.label}>
                     <Input
-                      value={k.unparse}
+                      value={k.changedValue || k.savedValue}
                       onChange={(_e, value) =>
-                        act('changed_key', { action: k.key + '', key: value })
+                        act('changed_key', { id: k.id, value })
                       }
                     />
                   </LabeledList.Item>

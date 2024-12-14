@@ -25,9 +25,10 @@
 			if (key == "0NORTH" || key == "0SOUTH" || key == "0EAST" || key == "0WEST") continue //ignore arrow keys, fuck you for making obscure-ass names lummox
 
 			keys.Add(list(list(
-				action = current_keymap.parse_action(current_keymap.keys[key]),
-				key = current_keymap.keys[key],
-				unparse = changed_keys["[current_keymap.keys[key]]"] || current_keymap.unparse_keybind(key),
+				label = current_keymap.parse_action(current_keymap.keys[key]),
+				id = "[current_keymap.keys[key]]",
+				savedValue = current_keymap.unparse_keybind(key),
+				changedValue = changed_keys["[current_keymap.keys[key]]"]
 			)))
 
 		.["keys"] = keys
@@ -37,8 +38,8 @@
 
 		switch (action)
 			if ("changed_key")
-				if (params["action"] && params["key"])
-					add_to_changed(params["action"], uppertext(params["key"]) )
+				if (params["id"] && params["value"])
+					add_to_changed(params["id"], uppertext(params["value"]) )
 
 			if ("confirm")
 				if (changed_keys.len)
@@ -62,8 +63,8 @@
 			if ("cancel")
 				tgui_process.close_uis(src)
 
-	proc/add_to_changed(action, key)
-		changed_keys[action] = uppertext(key) //keys are always uppertext
+	proc/add_to_changed(id, value)
+		changed_keys[id] = uppertext(value) //keys are always uppertext
 
 
 	ui_status(mob/user, datum/ui_state/state)

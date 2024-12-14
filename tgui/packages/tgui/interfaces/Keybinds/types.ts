@@ -10,7 +10,8 @@ export interface KeybindsData {
 }
 
 interface KeybindData {
-  action: string;
-  key: string;
-  unparse: string;
+  label: string;
+  id: string;
+  savedValue: string;
+  changedValue: string;
 }
