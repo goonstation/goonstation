@@ -1,5 +1,10 @@
 
 (t)sat dec 14 24
+(u)TDHooligan
+(p)21688
+(e)🪲🎨⚖🧛|C-Bug, C-Sprites, C-Balance, A-Gamemodes
+(+)Gang crates now spawn in saner locations.
+(+)Razorbill now fires an even angrier swarm of bees. Kuvalda spawns loaded.
 (u)FlameArrow57
 (p)21501
 (e)🆕🗺🔬|C-Feature, A-Mapping, A-Science
