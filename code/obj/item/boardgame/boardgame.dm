@@ -29,6 +29,9 @@
  * # Boardgame
  */
 
+TYPEINFO(/obj/item/boardgame)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 /obj/item/boardgame
 	name = "board game"
 	desc = "A generic board game?"
@@ -42,7 +45,6 @@
 	stamina_cost = 20
 
 	speech_verb_say = "states"
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 	var/list/sounds = list(
 		SOUND_MOVE = 'sound/impact_sounds/Wood_Tap.ogg',

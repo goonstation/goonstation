@@ -2,6 +2,10 @@
 #define CONTROLMODE_BOLT 2
 #define CONTROLMODE_ACCESS 4
 ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
+TYPEINFO(/obj/machinery/door_control)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MACHINERY, SPEECH_MODIFIER_DOOR_CONTROL)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 /obj/machinery/door_control
 	name = "Remote Door Control"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -24,11 +28,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	///colour value for speak proc
 	var/welcome_text_color = "#FF0100"
 	var/controlmode = 1 // 1 = open/close doors, 2 = toggle bolts (will close if open), 3 = nulls access (non-reversable!) - Does not change behavior for poddoors or conveyors
-
 	speech_verb_say = "beeps"
-	start_speech_modifiers = list(SPEECH_MODIFIER_MACHINERY, SPEECH_MODIFIER_DOOR_CONTROL)
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
-
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/machinery/r_door_control (door_control.dm)

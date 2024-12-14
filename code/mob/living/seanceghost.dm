@@ -1,4 +1,11 @@
 // TODO make this mob/living/intangible. the fuck is it doing here?
+TYPEINFO(/mob/living/intangible/seanceghost)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 /mob/living/intangible/seanceghost
 	name = "seance ghost"
 	desc = "Ominous hooded figure!"
@@ -11,12 +18,6 @@
 	anchored = ANCHORED
 	alpha = 180
 	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
-
-	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT)
-	start_listen_languages = list(LANGUAGE_ALL)
-	start_speech_modifiers = null
-	start_speech_outputs = null
 	default_speech_output_channel = null
 	can_use_say = FALSE
 

@@ -426,6 +426,9 @@
 	mat_changedesc = 0
 
 
+TYPEINFO(/obj/machinery/bot/guardbot/soviet)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_SOVIET, SPEECH_MODIFIER_ACCENT_RUSSIAN)
+
 /obj/machinery/bot/guardbot/soviet
 	name = "Evgeny-12"
 	desc = "A &#x411;&#x420;-86 (&#x411;&#x44b;&#x442;&#x43e;&#x432;&#x43e;&#x439; &#x420;&#x43e&#x431;&#x43e;&#x442;-86), one of the latest in a series of robuddy clones produced in the Eastern Bloc.  They copied the general frame of the PR-3 and never really changed from that, I guess."
@@ -442,8 +445,6 @@
 
 	beacon_freq = 1440
 	control_freq = FREQ_AINLEY_BUDDY
-
-	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_SOVIET, SPEECH_MODIFIER_ACCENT_RUSSIAN)
 
 	New()
 		..()

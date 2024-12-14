@@ -697,6 +697,10 @@
 			name = "Not so Disabled Animatronic Owl"
 			src.flash()
 
+TYPEINFO(/obj/critter/owl_presentor)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/critter/owl_presentor
 	name = "Professor Hootens"
 	desc = "It's Professor Hootens! The leading expert on Space Owls, if it was the real Hootens of course. This is just an animatronic stand-in."
@@ -716,11 +720,7 @@
 	death_text = "%src% tips over, its joints seizing and locking up.  It does not move again."
 	angertext = "seems to stare at"
 	is_pet = 0
-
-	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
-
 	var/does_creepy_stuff = 1
 	var/typeName = "Generic"
 
@@ -1429,18 +1429,18 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 
 		pickupdialoguefailure = "I don't believe you have added anything to your virtu-cart."
 
+TYPEINFO(/obj/item/lilgreg)
+	start_listen_effects = list(LISTEN_EFFECT_LIL_GREG)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/item/lilgreg
 	name = "Greg Jr"
 	desc = "Gregs adopted son! He seems to have gotten caught up with a bad crowd."
 	icon = 'icons/misc/owlzone.dmi'
 	icon_state = "gregjr"
-
-	start_listen_effects = list(LISTEN_EFFECT_LIL_GREG)
-	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
-	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
-
 	var/seensol = 0
 	var/cantalk = 1
 

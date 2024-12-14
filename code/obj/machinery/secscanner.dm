@@ -1,5 +1,7 @@
 TYPEINFO(/obj/machinery/secscanner)
 	mats = 18
+	start_speech_modifiers = list(SPEECH_MODIFIER_MACHINERY)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/machinery/secscanner
 	name = "security scanner"
@@ -13,11 +15,7 @@ TYPEINFO(/obj/machinery/secscanner)
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	power_usage = 5
-
 	speech_verb_say = "beeps"
-
-	start_speech_modifiers = list(SPEECH_MODIFIER_MACHINERY)
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	var/timeBetweenUses = 20//I can see this being fun

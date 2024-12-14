@@ -4805,6 +4805,9 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 		src.updateUsrDialog()
 		return
 
+TYPEINFO(/obj/machinery/bot/guardbot/old)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_OLD)
+
 /obj/machinery/bot/guardbot/old
 	name = "Robuddy"
 	desc = "A PR-4 Robuddy. That's two models back by now! You didn't know any of these were still around."
@@ -4816,8 +4819,6 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 	no_camera = 1
 	setup_charge_maximum = 800
 	setup_default_tool_path = /obj/item/device/guardbot_tool/flash
-
-	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_OLD)
 
 	interacted(mob/user as mob)
 		var/dat = "<tt><B>PR-4 Robuddy v0.8</B></tt><br><br>"

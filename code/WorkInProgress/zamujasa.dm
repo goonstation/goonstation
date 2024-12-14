@@ -23,14 +23,16 @@
 
 
 
+TYPEINFO(/obj/item/device/speechtotext)
+	start_listen_effects = list(LISTEN_EFFECT_PROTOTYPE_MAPTEXT)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_1)
+
 /obj/item/device/speechtotext
 	name = "prototype flying chat device"
 	desc = "This is a microphone that was a prototype of the floating chat that pali added. It doesn't work that great, but hey."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "mic"
 	item_state = "mic"
-	start_listen_effects = list(LISTEN_EFFECT_PROTOTYPE_MAPTEXT)
-	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_1)
 
 /obj/maptext_junk
 	mouse_opacity = 0

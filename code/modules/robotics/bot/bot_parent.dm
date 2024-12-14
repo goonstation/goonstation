@@ -1,5 +1,9 @@
 // AI (i.e. game AI, not the AI player) controlled bots
 
+TYPEINFO(/obj/machinery/bot)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/machinery/bot
 	icon = 'icons/obj/bots/aibots.dmi'
 	layer = MOB_LAYER
@@ -62,9 +66,6 @@
 	use_speech_bubble = TRUE
 
 	speech_verb_say = list("beeps", "boops")
-
-	start_speech_modifiers = list(SPEECH_MODIFIER_BOT)
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	power_change()

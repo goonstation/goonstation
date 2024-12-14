@@ -143,12 +143,13 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	return
 
 // Grandma, no! you picked the wrong one!
+TYPEINFO(/obj/machinery/bot/guardbot/bootleg)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_BOOTLEG)
+
 /obj/machinery/bot/guardbot/bootleg
 	name = "Super Protector Friend III"
 	desc = "The label on the back reads 'New technology! Blinking light action!'."
 	icon = 'icons/obj/bots/robuddy/super-protector-friend.dmi'
-
-	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_BOOTLEG)
 
 	Move()
 		if(..())
@@ -160,13 +161,14 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				SPAWN(2 SECONDS) if (sparks) qdel(sparks)
 			return TRUE
 
+TYPEINFO(/obj/machinery/bot/guardbot/xmas)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_XMAS)
+
 /obj/machinery/bot/guardbot/xmas
 	name = "Jinglebuddy"
 	desc = "Festive!"
 	skin_icon_state = "xmasbuddy"
 	setup_default_tool_path = /obj/item/device/guardbot_tool/xmas
-
-	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_XMAS)
 
 	explode()
 		if(src.exploding) return

@@ -2,6 +2,9 @@
 #define WIRE_RECEIVE 2
 #define WIRE_TRANSMIT 4
 
+TYPEINFO(/obj/item/device/radio/electropack)
+	start_listen_effects = null
+
 /obj/item/device/radio/electropack
 	name = "\improper Electropack"
 	desc = "A device that, when signaled on the correct frequency, causes a disabling electric shock to be sent to the animal (or human) wearing it."
@@ -16,7 +19,6 @@
 	c_flags = ONBACK
 	item_state = "electropack"
 	cant_self_remove = TRUE
-	start_listen_effects = null
 
 	var/code = 2
 	var/on = FALSE

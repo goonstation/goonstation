@@ -329,15 +329,15 @@ proc/filter_trait_hats(var/type)
 		src.icon_state = "inspector"
 
 //THE ONE AND ONLY.... GO GO GADGET DETECTIVE HAT!!!
-/obj/item/clothing/head/det_hat/gadget
-	name = "DetGadget hat"
-	desc = "Detective's special hat you can outfit with various items for easy retrieval!"
-
+TYPEINFO(/obj/item/clothing/head/det_hat/gadget)
 	start_listen_effects = list(LISTEN_EFFECT_DETGADGET)
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED)
 	start_listen_modifiers = null
 	start_listen_languages = list(LANGUAGE_ENGLISH)
 
+/obj/item/clothing/head/det_hat/gadget
+	name = "DetGadget hat"
+	desc = "Detective's special hat you can outfit with various items for easy retrieval!"
 	var/phrase = "go go gadget"
 	var/list/items
 	var/max_cigs = 15

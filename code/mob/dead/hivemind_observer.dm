@@ -1,3 +1,10 @@
+TYPEINFO(/mob/dead/target_observer/hivemind_observer)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_EARS)
+	start_listen_languages = list(LANGUAGE_ENGLISH)
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 /mob/dead/target_observer/hivemind_observer
 	is_respawnable = FALSE
 	locked = TRUE
@@ -7,12 +14,6 @@
 	/// Hivemind pointing uses an image rather than a decal
 	var/static/point_img = null
 
-	//new speech vars
-	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_EARS)
-	start_listen_languages = list(LANGUAGE_ENGLISH)
-	start_speech_modifiers = null
-	start_speech_outputs = null
 	default_speech_output_channel = null
 
 	New()

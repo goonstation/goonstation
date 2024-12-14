@@ -1,6 +1,13 @@
 /* If anyone wants to make the martian gamemode again add subtypes for player martians which are beefier
 	could also possibly use the martian mutantrace */
 
+TYPEINFO(/mob/living/critter/martian)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_MARTIAN, LISTEN_INPUT_EARS, LISTEN_INPUT_GHOSTLY_WHISPER)
+	start_listen_languages = list(LANGUAGE_MARTIAN)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_MARTIAN)
+
 /mob/living/critter/martian
 	name = "martian"
 	real_name = "martian"
@@ -28,12 +35,6 @@
 	speech_verb_ask = "warbles"
 	speech_verb_gasp = "gurgles"
 	speech_verb_stammer = "crackles"
-
-	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_MARTIAN, LISTEN_INPUT_EARS, LISTEN_INPUT_GHOSTLY_WHISPER)
-	start_listen_languages = list(LANGUAGE_MARTIAN)
-	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_MARTIAN)
 	default_speech_output_channel = SAY_CHANNEL_MARTIAN
 	say_language = LANGUAGE_MARTIAN
 
@@ -262,6 +263,9 @@
 		abilityHolder.addAbility(/datum/targetable/critter/bury_hide)
 
 
+TYPEINFO(/mob/living/critter/martian/overseer)
+	start_speech_outputs = list(SPEECH_OUTPUT_MARTIAN_LEADER, SPEECH_OUTPUT_EQUIPPED)
+
 /mob/living/critter/martian/overseer
 	name = "martian overseer"
 	real_name = "martian overseer"
@@ -272,8 +276,6 @@
 	health_burn = 200
 	leader = TRUE
 	//is_npc = FALSE
-
-	start_speech_outputs = list(SPEECH_OUTPUT_MARTIAN_LEADER, SPEECH_OUTPUT_EQUIPPED)
 
 	New()
 		..()
@@ -316,6 +318,9 @@
 				if (!(src.mind in ticker.mode.Agimmicks))
 					ticker.mode.Agimmicks += src.mind
 
+TYPEINFO(/mob/living/critter/martian/infiltrator/specialist)
+	start_speech_outputs = list(SPEECH_OUTPUT_MARTIAN_LEADER, SPEECH_OUTPUT_EQUIPPED)
+
 /mob/living/critter/martian/infiltrator/specialist
 	name = "martian specialist"
 	real_name = "martian specialist"
@@ -324,8 +329,6 @@
 	icon_state_dead = "martianST-dead"
 	leader = TRUE
 	is_npc = FALSE
-
-	start_speech_outputs = list(SPEECH_OUTPUT_MARTIAN_LEADER, SPEECH_OUTPUT_EQUIPPED)
 
 	New()
 		..()

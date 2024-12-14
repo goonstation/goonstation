@@ -1,5 +1,7 @@
-/atom/movable/abstract_say_source/flock_system
+TYPEINFO(/atom/movable/abstract_say_source/flock_system)
 	start_speech_outputs = null
+
+/atom/movable/abstract_say_source/flock_system
 	default_speech_output_channel = SAY_CHANNEL_FLOCK
 	say_language = LANGUAGE_FEATHER
 

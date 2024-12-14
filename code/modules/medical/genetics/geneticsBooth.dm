@@ -34,6 +34,8 @@
 
 TYPEINFO(/obj/machinery/genetics_booth)
 	mats = 40
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/machinery/genetics_booth
 	name = "gene booth"
@@ -47,11 +49,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 	event_handler_flags = USE_FLUID_ENTER
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | LONG_GLIDE
 	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_medical_director)
-
 	speech_verb_say = "beeps"
-
-	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	var/letgo_hp = 50

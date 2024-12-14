@@ -5,6 +5,12 @@
 
 TYPEINFO(/obj/item/device/radio)
 	mats = 3
+	start_listen_effects = list(LISTEN_EFFECT_RADIO)
+	start_listen_modifiers = list(LISTEN_MODIFIER_RADIO)
+	start_listen_inputs = list(LISTEN_INPUT_EQUIPPED)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = list(SPEECH_MODIFIER_RADIO)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_RADIO, SPEECH_OUTPUT_RADIO_GLOBAL, SPEECH_OUTPUT_RADIO_GLOBAL_DEFAULT_ONLY, SPEECH_OUTPUT_RADIO_GLOBAL_UNPROTECTED_ONLY)
 
 /obj/item/device/radio
 	name = "station bounced radio"
@@ -17,13 +23,6 @@ TYPEINFO(/obj/item/device/radio)
 	throw_speed = 2
 	throw_range = 9
 	w_class = W_CLASS_SMALL
-
-	start_listen_effects = list(LISTEN_EFFECT_RADIO)
-	start_listen_modifiers = list(LISTEN_MODIFIER_RADIO)
-	start_listen_inputs = list(LISTEN_INPUT_EQUIPPED)
-	start_listen_languages = list(LANGUAGE_ALL)
-	start_speech_modifiers = list(SPEECH_MODIFIER_RADIO)
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_RADIO, SPEECH_OUTPUT_RADIO_GLOBAL, SPEECH_OUTPUT_RADIO_GLOBAL_DEFAULT_ONLY, SPEECH_OUTPUT_RADIO_GLOBAL_UNPROTECTED_ONLY)
 	say_language = LANGUAGE_ENGLISH
 
 	// Primary Channel Variables:

@@ -1,3 +1,6 @@
+TYPEINFO(/mob/living/intangible/brainmob)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_EQUIPPED)
+
 /mob/living/intangible/brainmob
 	//Sort of like a holder mob for brain-triggered assemblies
 	name = "brain thing"
@@ -12,8 +15,6 @@
 	speech_verb_say = "warbles"
 	speech_verb_ask = "wonks"
 	speech_verb_exclaim = "screeches"
-
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_EQUIPPED)
 
 	ghostize()
 		var/mob/dead/observer/O = ..()

@@ -1,5 +1,6 @@
 TYPEINFO(/obj/item/device/radio/intercom)
 	mats = 3
+	start_speech_modifiers = list(SPEECH_MODIFIER_INTERCOM)
 
 /obj/item/device/radio/intercom
 	name = "Station Intercom (Radio)"
@@ -16,9 +17,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	rand_pos = 0
 	desc = "A wall-mounted radio intercom, used to communicate with the specified frequency. Usually turned off except during emergencies."
 	hardened = 0
-
 	use_speech_bubble = TRUE
-	start_speech_modifiers = list(SPEECH_MODIFIER_INTERCOM)
 
 /obj/item/device/radio/intercom/proc/update_pixel_offset_dir(obj/item/AM, old_dir, new_dir)
 	src.pixel_x = 0

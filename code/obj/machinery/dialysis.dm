@@ -2,6 +2,9 @@ TYPEINFO(/obj/machinery/dialysis)
 	mats = list("metal" = 20,
 				"crystal" = 5,
 				"conductive_high" = 5)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 /obj/machinery/dialysis
 	name = "dialysis machine"
 	desc = "A machine which continuously draws blood from a patient, removes excess chemicals from it, and re-infuses it into the patient."
@@ -12,11 +15,7 @@ TYPEINFO(/obj/machinery/dialysis)
 	icon_state = "dialysis-base"
 #endif
 	density = 1
-
 	speech_verb_say = "beeps"
-
-	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	var/mob/living/carbon/patient

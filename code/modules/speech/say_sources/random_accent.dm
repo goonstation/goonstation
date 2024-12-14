@@ -1,7 +1,9 @@
 var/atom/movable/abstract_say_source/random_accent/random_accent_source = new()
 
-/atom/movable/abstract_say_source/random_accent
+TYPEINFO(/atom/movable/abstract_say_source/random_accent)
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
+
+/atom/movable/abstract_say_source/random_accent
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 	say_language = LANGUAGE_ENGLISH
 

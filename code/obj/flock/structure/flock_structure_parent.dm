@@ -3,6 +3,9 @@ ABSTRACT_TYPE(/obj/flock_structure)
 TYPEINFO(/obj/flock_structure)
 	var/cancellable = TRUE
 	mat_appearances_to_ignore = list("gnesis")
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 /obj/flock_structure
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "egg"
@@ -21,9 +24,6 @@ TYPEINFO(/obj/flock_structure)
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	default_material = "gnesis"
-
-	start_speech_modifiers = null
-	start_speech_outputs = null
 	default_speech_output_channel = SAY_CHANNEL_FLOCK
 	say_language = LANGUAGE_FEATHER
 

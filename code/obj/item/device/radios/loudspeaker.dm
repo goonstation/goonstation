@@ -1,5 +1,6 @@
 TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 	mats = 0
+	start_listen_inputs = null
 
 /obj/item/device/radio/intercom/loudspeaker
 	name = "Loudspeaker Transmitter"
@@ -9,7 +10,6 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 	speaker_range = 1
 	chat_class = RADIOCL_INTERCOM
 	locked_frequency = TRUE
-	start_listen_inputs = null
 	microphone_listen_input = LISTEN_INPUT_OUTLOUD_RANGE_1
 	initial_microphone_enabled = FALSE
 	initial_speaker_enabled = TRUE
@@ -44,6 +44,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 
 TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 	mats = 0
+	start_listen_effects = null
 
 /obj/item/device/radio/intercom/loudspeaker/speaker
 	name = "Loudspeaker"
@@ -59,7 +60,6 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 	rand_pos = 0
 	density = 0
 	desc = "A Loudspeaker."
-	start_listen_effects = null
 
 /obj/item/device/radio/intercom/loudspeaker/speaker/New()
 	. = ..()

@@ -1,5 +1,12 @@
 // Wraith
 
+TYPEINFO(/mob/living/intangible/wraith)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_DEADCHAT)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT_WRAITH)
+
 /mob/living/intangible/wraith
 	name = "wraith"
 	real_name = "wraith"
@@ -15,12 +22,6 @@
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	alpha = 180
 	plane = PLANE_NOSHADOW_ABOVE
-
-	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_DEADCHAT)
-	start_listen_languages = list(LANGUAGE_ALL)
-	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT_WRAITH)
 	default_speech_output_channel = SAY_CHANNEL_DEAD
 
 	var/deaths = 0

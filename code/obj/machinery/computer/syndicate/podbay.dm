@@ -1,15 +1,14 @@
 // Riot computer but reflavored for the Cairngorm
+TYPEINFO(/obj/machinery/computer/battlecruiser_podbay)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/machinery/computer/battlecruiser_podbay
 	name = "podbay authorization"
 	icon_state = "drawbr"
 	desc = "Controls access to the podbay. Use this when your team is ready to go."
 	density = FALSE
-
 	speech_verb_say = "beeps"
-
-	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	/// How many authentications are needed to release the shielding on the podbay. Set the first time someone clicks this.

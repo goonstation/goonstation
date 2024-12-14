@@ -7,6 +7,9 @@ var/datum/magpie_manager/magpie_man = new
 		src.magpie = locate("M4GP13")
 
 
+TYPEINFO(/obj/npc/trader/salvager)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
+
 /obj/npc/trader/salvager
 	name = "M4GP13 Salvage and Barter System"
 	icon = 'icons/obj/trader.dmi'
@@ -16,10 +19,7 @@ var/datum/magpie_manager/magpie_man = new
 	whotext = "I am the salvage reclamation and supply commissary.  In short I will provide goods in exchange for reclaimed materials and equipment."
 	barter = TRUE
 	currency = "Salvage Points"
-
 	speech_verb_say = "beeps"
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
-
 	use_speech_bubble = TRUE
 	voice_sound_override = 'sound/misc/talk/bottalk_1.ogg'
 

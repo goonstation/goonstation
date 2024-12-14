@@ -10,6 +10,9 @@
 /// The relay either transmitted the Signal, or was otherwise destroyed
 #define STAGE_DESTROYED 3
 
+TYPEINFO(/mob/living/intangible/flock)
+	start_listen_languages = list(LANGUAGE_ALL)
+
 /mob/living/intangible/flock
 	name = "caw"
 	desc = "please report this to a coder you shouldn't see this"
@@ -24,9 +27,7 @@
 	use_stamina = 0//no puff tomfuckery
 	respect_view_tint_settings = TRUE
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-
 	speech_verb_say = list("sings", "clicks", "whistles", "intones", "transmits", "submits", "uploads")
-	start_listen_languages = list(LANGUAGE_ALL)
 
 	var/compute = 0
 	var/tmp/datum/flock/flock = null

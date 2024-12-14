@@ -300,6 +300,10 @@
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
 	see_face = TRUE
 
+TYPEINFO(/obj/critter/marsrobot)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/critter/marsrobot
 	name = "Inactive Robot"
 	desc = "It looks like it hasn't been in service for decades."
@@ -316,11 +320,7 @@
 	atksilicon = 1
 	firevuln = 1
 	brutevuln = 1
-
 	speech_verb_say = "beeps"
-
-	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	var/active = 0
@@ -644,17 +644,17 @@ TYPEINFO(/obj/vehicle/marsrover)
 	name = "Abandoned Vault"
 	icon_state = "red"
 
+TYPEINFO(/obj/critter/gunbot/heavy)
+	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_ERROR)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/critter/gunbot/heavy
 	name = "security robot"
 	desc = "A 2030's-era security robot. Uh oh."
 	icon_state = "gunbot"
 	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atksilicon = 1
-
 	speech_verb_say = "blares"
-
-	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_ERROR)
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	var/overheat = 0

@@ -52,6 +52,8 @@
 
 TYPEINFO(/obj/machinery/vending)
 	mats = 20
+	start_speech_modifiers = list(SPEECH_MODIFIER_MACHINERY, SPEECH_MODIFIER_VENDING_MACHINE)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 /obj/machinery/vending
@@ -64,10 +66,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	layer = OBJ_LAYER - 0.1 // so items get spawned at 3, don't @ me
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-
 	speech_verb_say = "beeps"
-	start_speech_modifiers = list(SPEECH_MODIFIER_MACHINERY, SPEECH_MODIFIER_VENDING_MACHINE)
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 	var/freestuff = 0
 	var/obj/item/card/id/scan = null
@@ -2857,6 +2856,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 
 TYPEINFO(/obj/machinery/vending/chem)
 	mats = null
+	start_speech_modifiers = list(SPEECH_MODIFIER_VENDING_MACHINE, SPEECH_MODIFIER_ACCENT_VOID)
 
 /obj/machinery/vending/chem
 	name = "ChemDepot"
@@ -2868,7 +2868,6 @@ TYPEINFO(/obj/machinery/vending/chem)
 	icon_fallen = "standard-fallen"
 	pay = 1
 	acceptcard = 1
-	start_speech_modifiers = list(SPEECH_MODIFIER_VENDING_MACHINE, SPEECH_MODIFIER_ACCENT_VOID)
 	slogan_list = list("Hello!",
 	"Please state the item you wish to purchase.",
 	"Many goods at reasonable prices.",

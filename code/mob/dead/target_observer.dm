@@ -139,16 +139,17 @@
 			qdel(src) //lol
 
 
-/mob/dead/target_observer/slasher_ghost
-	name = "spooky not-quite ghost"
-	is_respawnable = FALSE
-	locked = TRUE
-
+TYPEINFO(/mob/dead/target_observer/slasher_ghost)
 	start_listen_modifiers = null
 	start_listen_inputs = list(LISTEN_INPUT_EARS)
 	start_listen_languages = list(LANGUAGE_ENGLISH)
 	start_speech_modifiers = null
 	start_speech_outputs = null
+
+/mob/dead/target_observer/slasher_ghost
+	name = "spooky not-quite ghost"
+	is_respawnable = FALSE
+	locked = TRUE
 	default_speech_output_channel = null
 
 	var/start_time

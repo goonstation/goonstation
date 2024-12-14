@@ -1,6 +1,9 @@
 //A robuddy that has gone mad. plum loco. unhinged. cabin crazy - from halloween.dm
 
 //A spooky outer-space EVIL robuddy.  I guess that makes it...a roBADDY!
+TYPEINFO(/obj/machinery/bot/guardbot/bad)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_BAD)
+
 /obj/machinery/bot/guardbot/bad
 	name = "Secbuddy"
 	desc = "An early sub-model of the popular PR-6S Guardbuddy line. It seems to be in rather poor shape."
@@ -21,5 +24,3 @@
 	no_camera = 1
 	req_access_txt = "8088"
 	object_flags = 0
-
-	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_BAD)

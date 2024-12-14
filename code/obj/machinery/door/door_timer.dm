@@ -1,3 +1,5 @@
+TYPEINFO(/obj/machinery/door_timer)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/machinery/door_timer
 	name = "Door Timer"
@@ -6,9 +8,7 @@
 	desc = "A remote control switch for a door."
 	req_access = list(access_security)
 	anchored = ANCHORED
-
 	speech_verb_say = "beeps"
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 	var/id = null
 	var/time = 30

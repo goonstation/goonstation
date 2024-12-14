@@ -1,12 +1,13 @@
+TYPEINFO(/mob/living/carbon/human/virtual)
+	start_listen_inputs = list(LISTEN_INPUT_EARS)
+	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT, SPEECH_OUTPUT_EQUIPPED)
+
 /mob/living/carbon/human/virtual
 	real_name = "Virtual Human"
+	default_speech_output_channel = SAY_CHANNEL_DEAD
 	var/mob/body = null
 	var/isghost = 0 //Should contain a string of the original ghosts real_name
 	var/escape_vr = 0
-
-	start_listen_inputs = list(LISTEN_INPUT_EARS)
-	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT, SPEECH_OUTPUT_EQUIPPED)
-	default_speech_output_channel = SAY_CHANNEL_DEAD
 
 	New(newLoc, is_ghost)
 		..()

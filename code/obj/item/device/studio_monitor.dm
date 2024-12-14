@@ -1,5 +1,6 @@
 TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	mats = 0
+	start_listen_inputs = null
 
 /obj/item/device/radio/nukie_studio_monitor
 	name = "Studio Monitor"
@@ -7,10 +8,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	icon = 'icons/obj/loudspeakers.dmi'
 	icon_state = "amp_stack"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-
 	use_speech_bubble = TRUE
-	start_listen_inputs = null
-
 	anchored = UNANCHORED
 	speaker_range = 7
 	initial_microphone_enabled = FALSE

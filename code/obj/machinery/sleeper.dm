@@ -236,6 +236,8 @@ TYPEINFO(/obj/machinery/sleep_console)
 
 TYPEINFO(/obj/machinery/sleeper)
 	mats = 25
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/machinery/sleeper
 	name = "sleeper"
@@ -246,11 +248,7 @@ TYPEINFO(/obj/machinery/sleeper)
 	anchored = ANCHORED
 	deconstruct_flags = DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
 	event_handler_flags = USE_FLUID_ENTER
-
 	speech_verb_say = "beeps"
-
-	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	var/mob/occupant = null

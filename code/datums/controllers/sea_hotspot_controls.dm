@@ -468,6 +468,9 @@
 
 
 
+TYPEINFO(/obj/item/heat_dowsing)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 /obj/item/heat_dowsing
 	name = "dowsing rod"
 	icon = 'icons/obj/sealab_power.dmi'
@@ -486,7 +489,6 @@
 	stamina_crit_chance = 1
 
 	speech_verb_say = "beeps"
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 	use_speech_bubble = TRUE
 	speech_bubble_icon_say = "20"
@@ -856,6 +858,8 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 
 TYPEINFO(/obj/machinery/power/stomper)
 	mats = 8
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/machinery/power/stomper
 	name = "stomper unit"
@@ -866,11 +870,8 @@ TYPEINFO(/obj/machinery/power/stomper)
 	anchored = UNANCHORED
 	status = REQ_PHYSICAL_ACCESS
 
-	speech_verb_say = "beeps"
-
-	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	speech_verb_say = "beeps"
 
 	var/power_up_realtime = 30
 	var/const/power_cell_usage = 4

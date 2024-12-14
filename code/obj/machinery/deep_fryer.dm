@@ -1,5 +1,6 @@
 TYPEINFO(/obj/machinery/deep_fryer)
 	mats = 20
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_DEVICE)
 
 /obj/machinery/deep_fryer
 	name = "Deep Fryer"
@@ -11,8 +12,6 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	flags = NOSPLASH
 	status = REQ_PHYSICAL_ACCESS
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
-
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_DEVICE)
 
 	var/atom/movable/fryitem = null
 	var/cooktime = 0

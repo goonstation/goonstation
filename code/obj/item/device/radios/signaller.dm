@@ -3,6 +3,9 @@
 #define WIRE_TRANSMIT 4
 #define TRANSMISSION_DELAY 5
 
+TYPEINFO(/obj/item/device/radio/signaler)
+	start_listen_effects = null
+
 /obj/item/device/radio/signaler
 	name = "remote signaler"
 	desc = "A device used to send a coded signal over a specified frequency, with the effect depending on the device that receives the signal."
@@ -11,7 +14,6 @@
 	w_class = W_CLASS_TINY
 	frequency = FREQ_SIGNALER
 	has_microphone = FALSE
-	start_listen_effects = null
 	var/code = 30
 	var/delay = 0
 	var/airlock_wire = null

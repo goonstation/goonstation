@@ -1,5 +1,8 @@
 var/HasturPresent = 0
 
+TYPEINFO(/mob/living/critter/hastur)
+	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_VOID)
+
 /mob/living/critter/hastur
 	name = "????"
 	real_name = "????"
@@ -21,7 +24,6 @@ var/HasturPresent = 0
 	speech_verb_ask = "inquires"
 	bound_height = 32
 	bound_width = 32
-	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_VOID)
 	layer = 40
 	var/icon/northsouth = null
 	var/icon/eastwest = null

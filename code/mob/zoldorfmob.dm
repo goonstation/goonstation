@@ -1,3 +1,10 @@
+TYPEINFO(/mob/zoldorf)
+	start_listen_modifiers = null
+	start_listen_inputs = null
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 //Zoldorf Player Mob
 /mob/zoldorf
 	name = "Zoldorf"
@@ -11,12 +18,6 @@
 	blinded = 0
 	anchored = ANCHORED
 	alpha = 180
-
-	start_listen_modifiers = null
-	start_listen_inputs = null
-	start_listen_languages = list(LANGUAGE_ALL)
-	start_speech_modifiers = null
-	start_speech_outputs = null
 	default_speech_output_channel = null
 	can_use_say = FALSE
 

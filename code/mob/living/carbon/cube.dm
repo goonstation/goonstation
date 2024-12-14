@@ -1,6 +1,9 @@
 // cube refactoring courtesy of cirrial
 // all blames acknowledged 2017
 
+TYPEINFO(/mob/living/carbon/cube)
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_CUBIC)
+
 /mob/living/carbon/cube
 	name = "cube"
 	real_name = "cube"
@@ -15,8 +18,6 @@
 	opacity = 0
 	sound_scream = 'sound/voice/screams/male_scream.ogg'
 	use_stamina = 0
-
-	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_CUBIC)
 	say_language = LANGUAGE_CUBIC
 
 	var/life_timer = 10

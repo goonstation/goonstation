@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/radio/beacon)
+	start_listen_effects = null
+
 /obj/item/device/radio/beacon
 	name = "tracking beacon"
 	icon_state = "beacon"
@@ -5,7 +8,6 @@
 	desc = "A small beacon that is tracked by the Teleporter Computer, allowing things to be sent to its general location."
 	burn_possible = FALSE
 	anchored = ANCHORED
-	start_listen_effects = null
 
 	var/list/obj/portals_pointed_at_us
 

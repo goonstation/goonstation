@@ -243,9 +243,10 @@
 	var/hat = null
 
 
-/obj/machinery/bot/secbot
+TYPEINFO(/obj/machinery/bot/secbot)
 	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_SECURITY)
 
+/obj/machinery/bot/secbot
 	New()
 		..()
 		src.icon_state = "secbot[src.on]"

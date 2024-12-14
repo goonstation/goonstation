@@ -1,3 +1,10 @@
+TYPEINFO(/mob/living/intangible/blob_overmind)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_BLOBCHAT)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_BLOBCHAT)
+
 /mob/living/intangible/blob_overmind
 	name = "blob overmind"
 	real_name = "blob overmind"
@@ -10,14 +17,7 @@
 	blinded = 0
 	anchored = ANCHORED
 	use_stamina = 0
-
 	speech_verb_say = list("wobbles", "wibbles", "jiggles", "wiggles", "undulates", "fidgets", "joggles", "twitches", "waggles", "trembles", "quivers")
-
-	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_BLOBCHAT)
-	start_listen_languages = list(LANGUAGE_ALL)
-	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_BLOBCHAT)
 	default_speech_output_channel = SAY_CHANNEL_BLOB
 
 	var/datum/tutorial_base/regional/blob/tutorial

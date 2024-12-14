@@ -220,6 +220,9 @@
 				src.chest_item = idk
 				src.chest_item_sewn = 1
 
+TYPEINFO(/mob/living/carbon/human/npc/monkey)
+	start_listen_effects = list(LISTEN_EFFECT_MONKEY)
+
 /mob/living/carbon/human/npc/monkey // :getin:
 	name = "monkey"
 	real_name = "monkey"
@@ -235,8 +238,6 @@
 	var/ai_poke_thing_chance = 1
 	var/ai_delay_move = FALSE //! Delays the AI from moving a single time if set
 	default_mutantrace = /datum/mutantrace/monkey
-
-	start_listen_effects = list(LISTEN_EFFECT_MONKEY)
 
 	New()
 		..()

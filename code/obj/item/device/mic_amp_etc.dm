@@ -1,13 +1,13 @@
+TYPEINFO(/obj/item/device/microphone)
+	start_listen_effects = list(LISTEN_EFFECT_MICROPHONE)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_1)
+	start_listen_languages = list(LANGUAGE_ALL)
 
 /obj/item/device/microphone
 	name = "microphone"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "mic"
 	item_state = "mic"
-
-	start_listen_effects = list(LISTEN_EFFECT_MICROPHONE)
-	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_1)
-	start_listen_languages = list(LANGUAGE_ALL)
 
 	var/max_font = 8
 	var/font_amp = 4

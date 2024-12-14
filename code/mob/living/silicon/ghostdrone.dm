@@ -1,5 +1,12 @@
 #define DRONE_LUM 2
 
+TYPEINFO(/mob/living/silicon/ghostdrone)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_GHOSTDRONE, LISTEN_INPUT_EARS_GHOSTDRONE, LISTEN_INPUT_DEADCHAT)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_MONOSPACE_DECORATOR)
+	start_speech_outputs = list(SPEECH_OUTPUT_GHOSTDRONE, SPEECH_OUTPUT_DEADCHAT)
+
 /mob/living/silicon/ghostdrone
 	icon = 'icons/mob/ghost_drone.dmi'
 	icon_state = "drone-dead"
@@ -10,12 +17,6 @@
 	speech_verb_say = list("beeps", "boops", "buzzes", "bloops", "transmits")
 	speech_verb_ask = null
 	speech_verb_exclaim = null
-
-	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_GHOSTDRONE, LISTEN_INPUT_EARS_GHOSTDRONE, LISTEN_INPUT_DEADCHAT)
-	start_listen_languages = list(LANGUAGE_ALL)
-	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_MONOSPACE_DECORATOR)
-	start_speech_outputs = list(SPEECH_OUTPUT_GHOSTDRONE, SPEECH_OUTPUT_DEADCHAT)
 	default_speech_output_channel = SAY_CHANNEL_GHOSTDRONE
 
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
@@ -1179,10 +1180,11 @@
 
 // Dumb gimmick ghostdrone with no vis/hear restrictions + construction tools.
 // Same laws, same crap HP, but more useful for just buildin' shit
-/mob/living/silicon/ghostdrone/deluxe
+TYPEINFO(/mob/living/silicon/ghostdrone/deluxe)
 	start_listen_inputs = list(LISTEN_INPUT_GHOSTDRONE, LISTEN_INPUT_EARS, LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_SILICONCHAT)
 	start_speech_outputs = list(SPEECH_OUTPUT_GHOSTDRONE, SPEECH_OUTPUT_DEADCHAT, SPEECH_OUTPUT_SILICONCHAT)
 
+/mob/living/silicon/ghostdrone/deluxe
 	sees_static = FALSE
 
 	New()

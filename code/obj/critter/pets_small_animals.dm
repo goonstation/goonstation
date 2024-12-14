@@ -57,6 +57,12 @@
 #define PARROT_MAX_WORDS 64		// may as well try and be careful I guess
 #define PARROT_MAX_PHRASES 32	// doesn't hurt, does it?
 
+TYPEINFO(/obj/critter/parrot)
+	start_listen_effects = list(LISTEN_EFFECT_PARROT)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
+
 /obj/critter/parrot // if you didn't want me to make a billion dumb parrot things you shouldn't have let me anywhere near the code so this is YOUR FAULT NOT MINE - Haine
 	name = "space parrot"
 	desc = "A spacefaring species of parrot."
@@ -83,11 +89,6 @@
 	flags = CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE
 
 	speech_verb_say = list("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles")
-
-	start_listen_effects = list(LISTEN_EFFECT_PARROT)
-	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
-	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	var/species = "parrot"						// the species, used to update icon

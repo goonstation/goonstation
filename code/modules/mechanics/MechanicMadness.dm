@@ -350,6 +350,9 @@
 	secured = 2
 	icon_state = "dbox"
 
+TYPEINFO(/obj/item/mechanics)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_DEVICE)
+
 /obj/item/mechanics
 	name = "testhing"
 	icon = 'icons/misc/mechanicsExpansion.dmi'
@@ -362,8 +365,6 @@
 	level = 2
 
 	speech_verb_say = list("squawks", "beeps", "boops", "says", "screeches")
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_DEVICE)
-
 	voice_sound_override = 'sound/machines/reprog.ogg'
 
 	/// whether or not this component is prevented from being anchored in cabinets
@@ -2579,15 +2580,15 @@
 		icon_state = "[under_floor ? "u":""]comp_led"
 		return
 
-/obj/item/mechanics/miccomp
-	name = "Microphone Component"
-	desc = ""
-	icon_state = "comp_mic"
-
+TYPEINFO(/obj/item/mechanics/miccomp)
 	start_listen_effects = list(LISTEN_EFFECT_MICROPHONE_COMPONENT)
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
 	start_listen_languages = list(LANGUAGE_ALL)
 
+/obj/item/mechanics/miccomp
+	name = "Microphone Component"
+	desc = ""
+	icon_state = "comp_mic"
 	var/add_sender = FALSE
 
 	New()

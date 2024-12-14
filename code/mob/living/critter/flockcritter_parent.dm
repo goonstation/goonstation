@@ -1,5 +1,11 @@
 TYPEINFO(/mob/living/critter/flock)
 	mat_appearances_to_ignore = list("gnesis")
+	start_listen_modifiers = null
+	start_listen_inputs = null
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_FEATHER)
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 /mob/living/critter/flock
 	var/resources = 0
 	name = "concept of a bird machine"
@@ -17,12 +23,6 @@ TYPEINFO(/mob/living/critter/flock)
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	see_invisible = INVIS_FLOCK
-
-	start_listen_modifiers = null
-	start_listen_inputs = null
-	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_FEATHER)
-	start_speech_modifiers = null
-	start_speech_outputs = null
 	default_speech_output_channel = SAY_CHANNEL_FLOCK
 	say_language = LANGUAGE_FEATHER
 

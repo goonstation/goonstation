@@ -1,11 +1,12 @@
+TYPEINFO(/mob/living/critter/small_animal/plush/cryptid)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_CRYPTID_PLUSHIE)
+
 /mob/living/critter/small_animal/plush/cryptid
 	hand_count = 0
 	pull_w_class = W_CLASS_TINY
 	ghost_spawned = 1
 	health_brute = 40
 	health_burn = 40
-
-	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_CRYPTID_PLUSHIE)
 	can_use_say = FALSE
 
 	use_stunned_icon = FALSE

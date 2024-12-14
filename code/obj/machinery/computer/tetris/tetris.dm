@@ -29,6 +29,9 @@
 	return result
 */
 
+TYPEINFO(/obj/machinery/computer/tetris)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 /obj/machinery/computer/tetris
 	name = "Robustris Pro cabinet"
 	icon = 'icons/obj/computer.dmi'
@@ -36,10 +39,7 @@
 	desc = "Instructions:<ul style='margin: 0;'><li>Left/Right Arrows: Move</li><li>Up Arrow/Space: Hard Drop</li><li>Down Arrow/S: Soft Drop</li><li>W/E/R: Rotate CW</li><li>Q/Z: Rotate CCW</li></ul>"
 	machine_registry_idx = MACHINES_MISC
 	circuit_type = /obj/item/circuitboard/tetris
-
 	speech_verb_say = "beeps"
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
-
 	var/datum/game/tetris/tetris
 
 /obj/machinery/computer/tetris/New()

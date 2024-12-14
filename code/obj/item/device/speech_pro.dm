@@ -1,5 +1,6 @@
 TYPEINFO(/obj/item/device/speech_pro)
 	mats = 14
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_DEVICE)
 
 /obj/item/device/speech_pro
 	name = "Speech Pro"
@@ -11,9 +12,7 @@ TYPEINFO(/obj/item/device/speech_pro)
 	rand_pos = 0
 	c_flags = ONBELT
 	contextLayout = new /datum/contextLayout/experimentalcircle
-
 	speech_verb_say = list("squawks", "beeps", "boops", "says", "screeches")
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_DEVICE)
 
 	///Custom contextActions list so we can handle opening them ourselves
 	var/list/datum/contextAction/contexts = list()

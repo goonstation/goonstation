@@ -1,9 +1,10 @@
+TYPEINFO(/obj/item/device/radio/intercom/ship)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_RADIO)
+
 /obj/item/device/radio/intercom/ship
 	name = "Communication Panel"
 	anchored = ANCHORED
-
 	speaker_range = 0
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_RADIO)
 
 /obj/item/shipcomponent/communications
 	power_used = 10

@@ -1,5 +1,7 @@
-
 ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
+TYPEINFO(/obj/critter/domestic_bee)
+	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_COMIC)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/critter/domestic_bee
 	name = "greater domestic space-bee"
@@ -22,11 +24,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 	flying = 1
 	min_quality = -60
 	p_class = 2
-
 	speech_verb_say = "buzzes"
-
-	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_COMIC)
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 	var/honey_production_amount = 50
 	var/nectar_check = 10

@@ -1,12 +1,16 @@
 #define BLACK FALSE
 #define WHITE TRUE
 
+TYPEINFO(/obj/item/gameclock)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 /obj/item/gameclock
 	name = "game clock"
 	desc = "A set of clocks used to track time for two player board games. Fancy!"
 	icon = 'icons/obj/items/boardgame.dmi'
 	icon_state = "chessclock"
 	flags = TGUI_INTERACTIVE
+	speech_verb_say = "dings"
 	var/timing = FALSE
 	var/turn = WHITE
 	var/defaultTime = 5 MINUTES
@@ -15,9 +19,6 @@
 	var/lastTick = 0
 	var/const/maxTime = 1 HOUR
 	var/const/minTime = 0
-
-	speech_verb_say = "dings"
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 	proc/buttonState()
 		if (src.turn) // Apparently White is always gonna be on the left. Huh.

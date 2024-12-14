@@ -1,13 +1,14 @@
+
+TYPEINFO(/obj/machinery/computer/riotgear)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 /obj/machinery/computer/riotgear
 	name = "Armory Authorization"
 	icon_state = "drawbr"
 	density = 0
 	glow_in_dark_screen = TRUE
-
 	speech_verb_say = "beeps"
-
-	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	var/auth_need = 3

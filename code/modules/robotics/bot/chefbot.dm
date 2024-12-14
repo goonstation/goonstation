@@ -1,4 +1,7 @@
 #define CHEFBOT_MOVE_SPEED 8
+TYPEINFO(/obj/machinery/bot/chefbot)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_CHEF)
+
 /obj/machinery/bot/chefbot
 	name = "Dramatic Chef"
 	desc = "Who let this guy in the kitchen? Does he even know how to cook, or is he just there to criticize?"
@@ -12,8 +15,6 @@
 	no_camera = 1
 	/// Doesn't feel right to have this guy *constantly* flipping its lid like a methed up graytider
 	dynamic_processing = 0
-
-	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_CHEF)
 
 /obj/machinery/bot/chefbot/process()
 	. = ..()

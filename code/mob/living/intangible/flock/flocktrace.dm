@@ -1,20 +1,20 @@
 /////////////////
 // FLOCKTRACE
 /////////////////
+TYPEINFO(/mob/living/intangible/flock/trace)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_RADIO_DISTORTED, LISTEN_INPUT_SILICONCHAT_DISTORTED, LISTEN_INPUT_GHOSTLY_WHISPER)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 /mob/living/intangible/flock/trace
 	name = "Flocktrace"
 	real_name = "Flocktrace"
 	desc = "The representation of a partition of the will of the flockmind."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "flocktrace"
-
 	compute = -FLOCKTRACE_COMPUTE_COST //it is expensive to run more threads
-
-	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_RADIO_DISTORTED, LISTEN_INPUT_SILICONCHAT_DISTORTED, LISTEN_INPUT_GHOSTLY_WHISPER)
-	start_listen_languages = list(LANGUAGE_ALL)
-	start_speech_modifiers = null
-	start_speech_outputs = null
 	default_speech_output_channel = SAY_CHANNEL_FLOCK
 	say_language = LANGUAGE_FEATHER
 

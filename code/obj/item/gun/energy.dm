@@ -1377,6 +1377,11 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	mats = list("metal" = 15,
 				"conductive_high" = 5,
 				"energy_high" = 5)
+	start_listen_effects = list(LISTEN_EFFECT_LAWBRINGER)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED)
+	start_listen_languages = list(LANGUAGE_ENGLISH)
+
 /obj/item/gun/energy/lawbringer
 	name = "\improper Lawbringer"
 	item_state = "lawg-detain"
@@ -1393,11 +1398,6 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	can_swap_cell = 0
 	muzzle_flash = "muzzle_flash_elec"
 	var/emagged = FALSE
-
-	start_listen_effects = list(LISTEN_EFFECT_LAWBRINGER)
-	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED)
-	start_listen_languages = list(LANGUAGE_ENGLISH)
 
 	New(var/mob/M)
 		set_current_projectile(new/datum/projectile/energy_bolt/aoe)

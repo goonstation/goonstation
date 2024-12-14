@@ -1,3 +1,10 @@
+TYPEINFO(/mob)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_EARS)
+	start_listen_languages = list(LANGUAGE_ENGLISH)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
+
 /mob
 	density = 1
 	layer = MOB_LAYER
@@ -225,11 +232,6 @@
 	speech_verb_stammer = "stammers"
 	speech_verb_gasp = "gasps"
 
-	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_EARS)
-	start_listen_languages = list(LANGUAGE_ENGLISH)
-	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand

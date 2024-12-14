@@ -1217,6 +1217,9 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 
 /* -------------------- Reverse Pug -------------------- */
 // the people demanded it
+TYPEINFO(/mob/living/critter/small_animal/dog/reverse)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_INVERTED_SPEECH)
+
 /mob/living/critter/small_animal/dog/reverse
 	name = "god ecaps"
 	real_name = "god ecaps"
@@ -1230,8 +1233,6 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	speech_verb_ask = "spiy"
 	speech_verb_stammer = "sremmats"
 	speech_verb_gasp = "spsag"
-
-	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_INVERTED_SPEECH)
 
 	visible_message(var/message, var/self_message, var/blind_message, var/group)
 		message = "<span style='-ms-transform: rotate(180deg)'>[message]</span>"
@@ -4509,6 +4510,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	incapacitationCheck()
 		return FALSE
 
+TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_ANIMAL)
+
 /mob/living/critter/small_animal/mouse/weak/mentor/admin
 	name = "admin mouse"
 	real_name = "admin mouse"
@@ -4522,8 +4526,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	is_npc = FALSE
 	use_custom_color = FALSE
 	player_can_spawn_with_pet = FALSE
-
-	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_ANIMAL)
 	say_language = LANGUAGE_ENGLISH
 
 	New()

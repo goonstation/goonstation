@@ -87,15 +87,15 @@
 		else
 			..()
 
+TYPEINFO(/obj/item/clothing/suit/cardboard_box/head_surgeon)
+	start_speech_modifiers = list(SPEECH_MODIFIER_DECTALK_HEAD_SURGEON)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/item/clothing/suit/cardboard_box/head_surgeon
 	name = "cardboard box - 'Head Surgeon'"
 	desc = "The HS looks a lot different today!"
 	face = "HS"
-
 	speech_verb_say = list("rustles", "folds", "womps", "boxes", "foffs", "flaps")
-
-	start_speech_modifiers = list(SPEECH_MODIFIER_DECTALK_HEAD_SURGEON)
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	var/text2speech = 1

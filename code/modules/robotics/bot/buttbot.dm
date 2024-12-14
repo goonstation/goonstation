@@ -4,6 +4,12 @@
 #define BUTT_PLANT "Botanical"
 #define BUTT_BROKE "Buggy" // Fallback in case it gets a weird-ass butt
 #define BUTTBOT_MOVE_SPEED 10
+
+TYPEINFO(/obj/machinery/bot/buttbot)
+	start_listen_effects = list(LISTEN_EFFECT_BUTTBOT)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT, SPEECH_MODIFIER_ACCENT_BUTT)
+
 /obj/machinery/bot/buttbot
 	name = "buttbot"
 	desc = "Well I... uh... huh."
@@ -22,11 +28,7 @@
 	PT_idle = PROCESSING_SIXTEENTH
 
 	voice_sound_override = 'sound/misc/talk/bottalk_2.ogg'
-
 	speech_verb_say = list("farts", "toots", "honks", "parps")
-	start_listen_effects = list(LISTEN_EFFECT_BUTTBOT)
-	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
-	start_speech_modifiers = list(SPEECH_MODIFIER_BOT, SPEECH_MODIFIER_ACCENT_BUTT)
 
 	/// Can this wretched thing *move*?
 	var/buttmobile = TRUE

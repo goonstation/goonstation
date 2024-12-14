@@ -11,6 +11,13 @@
 //Observables /obj/observable  X
 //Cyborgs /mob/living/silicon/robot  X
 
+TYPEINFO(/mob/living/intangible/aieye)
+	start_listen_modifiers = null
+	start_listen_inputs = null
+	start_listen_languages = null
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 /mob/living/intangible/aieye
 	name = "\improper AI eye"
 	icon = 'icons/mob/ai.dmi'
@@ -30,14 +37,7 @@
 	speech_verb_say = "states"
 	speech_verb_ask = "queries"
 	speech_verb_exclaim = "declares"
-
-	start_listen_modifiers = null
-	start_listen_inputs = null
-	start_listen_languages = null
-	start_speech_modifiers = null
-	start_speech_outputs = null
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
-
 	speech_bubble_icon_sing = "noterobot"
 	speech_bubble_icon_sing_bad = "noterobot"
 

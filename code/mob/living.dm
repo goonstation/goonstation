@@ -1,5 +1,13 @@
 // living
 
+TYPEINFO(/mob/living)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_GHOSTLY_WHISPER)
+	start_listen_languages = list(LANGUAGE_ENGLISH)
+	start_speech_prefixes = list(SPEECH_PREFIX_INTERCOM, SPEECH_PREFIX_RADIO_GENERAL, SPEECH_PREFIX_RADIO, SPEECH_PREFIX_LEFT_HAND, SPEECH_PREFIX_RIGHT_HAND)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_EQUIPPED)
+
 /mob/living
 	event_handler_flags = USE_FLUID_ENTER  | IS_FARTABLE
 	/// Tracks status of soalguard respawn on mob. SOULGUARD_INACTIVE, SOULGUARD_SPELL when from wizard ability, SOULGUARD_RING when from wizard ring.
@@ -118,13 +126,6 @@
 
 	voice_type = "1"
 	use_speech_bubble = TRUE
-
-	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_GHOSTLY_WHISPER)
-	start_listen_languages = list(LANGUAGE_ENGLISH)
-	start_speech_prefixes = list(SPEECH_PREFIX_INTERCOM, SPEECH_PREFIX_RADIO_GENERAL, SPEECH_PREFIX_RADIO, SPEECH_PREFIX_LEFT_HAND, SPEECH_PREFIX_RIGHT_HAND)
-	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS)
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_EQUIPPED)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	var/void_mindswappable = FALSE //! are we compatible with the void mindswapper?

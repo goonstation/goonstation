@@ -2,6 +2,9 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	mats = list("metal_dense" = 12,
 				"conductive_high" = 12,
 				"dense" = 6)
+	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_ERROR)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /mob/living/critter/robotic/gunbot
 	name = "robot"
 	real_name = "robot"
@@ -31,9 +34,6 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	is_npc = TRUE
 
 	speech_verb_say = "blares"
-
-	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_ERROR)
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	var/speak_lines = TRUE

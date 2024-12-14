@@ -1144,16 +1144,16 @@ TYPEINFO(/obj/item/peripheral)
 		src.host.updateUsrDialog()
 		return
 
+TYPEINFO(/obj/item/peripheral/sound_card)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SOUND_CARD)
+
 /obj/item/peripheral/sound_card
 	name = "Sound synthesizer module"
 	desc = "A computer module designed to synthesize voice and sound."
 	icon_state = "std_mod"
 	func_tag = "LAR_SOUND"
-
 	speech_verb_say = "beeps"
-
-	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SOUND_CARD)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	receive_command(obj/source,command, datum/signal/signal)

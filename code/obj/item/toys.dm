@@ -171,15 +171,16 @@
 /obj/item/toy/gooncode/attack()
 	return
 
+TYPEINFO(/obj/item/toy/cellphone)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 /obj/item/toy/cellphone
 	name = "flip phone"
 	desc = "Wow! You've always wanted one of these charmingly clunky doodads!"
 	icon = 'icons/obj/cellphone.dmi'
 	icon_state = "cellphone-on"
 	w_class = W_CLASS_SMALL
-
 	speech_verb_say = "beeps"
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 	var/datum/game/tetris
 	var/datum/mail
@@ -205,15 +206,14 @@
 
 TYPEINFO(/obj/item/toy/handheld)
 	mats = 2
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/item/toy/handheld
 	name = "arcade toy"
 	desc = "These high tech gadgets compress the full arcade experience into a large, clunky handheld!"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "arcade-generic"
-
 	speech_verb_say = "beeps"
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 	var/arcademode = FALSE
 	//The arcade machine will typecheck if we're this type

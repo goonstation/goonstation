@@ -262,6 +262,14 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 #define MEATHEAD_MAX_CUSTOM_UTTERANCES 32
 
+TYPEINFO(/obj/critter/monster_door/meat_head)
+	start_listen_effects = list(LISTEN_EFFECT_MEAT_HEAD)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/critter/monster_door/meat_head //Clash at Meathead
 	name = "Something"
 	desc = "jesus fuck"
@@ -278,13 +286,6 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	angertext = "shakes and wobbles furiously at"
 
 	speech_verb_say = list("mutters", "gurgles", "whimpers")
-
-	start_listen_effects = list(LISTEN_EFFECT_MEAT_HEAD)
-	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
-	start_listen_languages = list(LANGUAGE_ALL)
-	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 	say_language = LANGUAGE_ENGLISH
 

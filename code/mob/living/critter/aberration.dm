@@ -1,4 +1,7 @@
 // A terrible post-human cloud of murder.
+TYPEINFO(/mob/living/critter/aberration)
+	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_VOID)
+
 /mob/living/critter/aberration
 	name = "transposed particle field"
 	desc = {"A cloud of particles transposed by some manner of dangerous science, echoing some mannerisms of their previous configuration. In layman's
@@ -17,8 +20,6 @@
 	speech_verb_exclaim = "forces"
 	speech_verb_stammer = "creates"
 	speech_verb_gasp = "rasps"
-
-	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_VOID)
 
 	can_burn = FALSE
 	can_implant = FALSE

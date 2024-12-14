@@ -1,10 +1,12 @@
+TYPEINFO(/mob/living/intangible/wraith/poltergeist)
+	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT_POLTERGEIST)
+
 /mob/living/intangible/wraith/poltergeist
 	name = "Poltergeist"
 	real_name = "Poltergeist"
 	desc = "Jesus Christ, how spooky."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "poltergeist"
-	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT_POLTERGEIST)
 	deaths = 1					//only 1 life
 	hud_path = /datum/hud/wraith/poltergeist
 	var/mob/living/intangible/wraith/master = null

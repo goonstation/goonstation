@@ -323,6 +323,7 @@ CONTAINS:
 
 TYPEINFO(/obj/item/robodefibrillator)
 	mats = 10
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/item/robodefibrillator
 	name = "defibrillator"
@@ -333,9 +334,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 	icon_state = "defib-off"
 	item_state = "defib"
 	pickup_sfx = 'sound/items/pickup_defib.ogg'
-
 	speech_verb_say = "beeps"
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 	var/icon_base = "defib"
 	var/charge_time = 100

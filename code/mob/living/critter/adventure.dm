@@ -8,6 +8,9 @@
 	- Blob men
 */
 /////////////// Transposed scientist ////////////////
+TYPEINFO(/mob/living/critter/crunched)
+	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_VOID)
+
 /mob/living/critter/crunched
 	name = "transposed scientist"
 	real_name = "transposed scientist"
@@ -24,7 +27,6 @@
 	health_brute_vuln = 1
 	health_burn = 25
 	health_burn_vuln = 1
-	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_VOID)
 	faction = list(FACTION_DERELICT)
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 3
@@ -110,6 +112,9 @@
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
 
 ////////////// Shades ////////////////
+TYPEINFO(/mob/living/critter/shade)
+	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_VOID)
+
 /mob/living/critter/shade
 	name = "darkness"
 	real_name = "darkness"
@@ -133,9 +138,7 @@
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
-
 	voice_sound_override = list('sound/voice/creepywhisper_1.ogg', 'sound/voice/creepywhisper_2.ogg', 'sound/voice/creepywhisper_3.ogg')
-	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_VOID)
 
 	setup_hands()
 		..()
@@ -267,6 +270,9 @@
 			return 1.5
 
 ////////////// Repair bots ////////////////
+TYPEINFO(/mob/living/critter/robotic/repairbot)
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_SILICON, LANGUAGE_BINARY)
+
 /mob/living/critter/robotic/repairbot
 	name = "strange robot"
 	real_name = "strange robot"
@@ -297,8 +303,6 @@
 	speech_verb_stammer = "beeps"
 	speech_verb_exclaim = "beeps"
 	speech_verb_ask = "beeps"
-
-	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_SILICON, LANGUAGE_BINARY)
 	say_language = LANGUAGE_BINARY
 
 	nice

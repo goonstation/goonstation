@@ -75,6 +75,10 @@ TYPEINFO(/obj/item/audio_tape)
 
 TYPEINFO(/obj/item/device/audio_log)
 	mats = 4
+	start_listen_effects = list(LISTEN_EFFECT_AUDIO_LOG)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_AUDIO_LOG)
 
 /obj/item/device/audio_log
 	name = "audio log"
@@ -83,11 +87,6 @@ TYPEINFO(/obj/item/device/audio_log)
 	icon_state = "audiolog_newSmall"
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
-
-	start_listen_effects = list(LISTEN_EFFECT_AUDIO_LOG)
-	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
-	start_listen_languages = list(LANGUAGE_ALL)
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_AUDIO_LOG)
 
 	var/obj/item/audio_tape/tape = null
 	var/mode = MODE_OFF

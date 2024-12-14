@@ -1,3 +1,6 @@
+TYPEINFO(/mob/living/intangible)
+	start_listen_languages = list(LANGUAGE_ALL)
+
 /mob/living/intangible
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
@@ -10,8 +13,6 @@
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP | MOVE_NOCLIP
 	canbegrabbed = FALSE
 	can_lie = FALSE
-
-	start_listen_languages = list(LANGUAGE_ALL)
 
 	New()
 		. = ..()
