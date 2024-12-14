@@ -1,5 +1,41 @@
 
+(t)sat dec 14 24
+(u)TDHooligan
+(p)21623
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Gangs tag way faster over unclaimed areas.
+(*)Gangs start with more tags, and restock more tags less frequently.
+(+)Gang loot events have more spacing between them.
+(+)Gangs can now see the next restock time for graffiti.
 (t)fri dec 13 24
+(u)glowbold
+(p)21614
+(e)🆕🗺💡🌠|C-Feature, A-Mapping, A-Station-Systems, A-Events
+(+)Space OSHA has installed traffic warning lights to indicate incoming and outgoing shuttles. No excuses for getting squished.
+(u)JORJ949
+(p)21676
+(e)🗺|A-Mapping
+(+)That one pipe under the cog1 engine window can no longer burst.
+(u)FlameArrow57
+(p)21674
+(e)💅📄|C-QoL, A-UI
+(*)Added colorblind accessibility options for protanopia, deuteranopia, and tritanopia colorblindness under Game -> Accessibility
+(u)glowbold
+(p)21514
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Dount3's mining magnet area has been expanded to standard station size.
+(u)NightmarechaMillian
+(p)21538
+(e)💡|A-Station-Systems
+(+)Stocks now fluctuate 10 times harder, events are shorter.
+(u)glowbold
+(p)21635
+(e)🆕🎨📄|C-Feature, C-Sprites, A-UI
+(+)The Spacebux and JobXP windows at round-end now show in a single unified "Personal Summary" window.
+(u)Garash2k
+(p)21625
+(e)🆕💅📄|C-Feature, C-QoL, A-UI
+(+)The solar panel controller is now easier to mess with, it can now only be turned on or off... Or emagged! Examine text has all the info it's old UI used to have.
 (u)glowbold
 (p)21672
 (e)💅🔨|C-QoL, A-Player-Actions
