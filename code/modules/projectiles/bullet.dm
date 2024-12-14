@@ -90,7 +90,7 @@ toxic - poisons
 	a180
 		fullauto_valid = 1
 		shot_number = 1
-		damage = 20
+		damage = 18
 		cost = 1
 		shot_volume = 20
 		sname = "full auto"
