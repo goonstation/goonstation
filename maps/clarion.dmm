@@ -1463,7 +1463,7 @@
 /area/station/hallway/primary/west)
 "apr" = (
 /turf/simulated/floor/stairs{
-	dir = 5;
+	dir = 4;
 	icon_state = "quiltystair2"
 	},
 /area/station/hallway/primary/west)
@@ -25217,8 +25217,8 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/stairs{
-	dir = 8;
-	icon_state = "quiltystair2"
+	dir = 9;
+	icon_state = "quiltystair"
 	},
 /area/station/hallway/primary/east)
 "kXh" = (
@@ -43096,7 +43096,7 @@
 	},
 /turf/simulated/floor/stairs{
 	dir = 5;
-	icon_state = "quiltystair2"
+	icon_state = "quiltystair"
 	},
 /area/station/hallway/primary/west)
 "ygj" = (
