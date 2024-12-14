@@ -20,30 +20,30 @@
 		if(selection)
 			src.event_effect(selection)
 
-	event_effect(shuttle_dock)
+	event_effect(shuttle)
 		..()
 		if(active)
 			return //This is to prevent admins from fucking up the shuttle arrival/departures by spamming this event.
 		active = TRUE
 		map_turf = map_settings.shuttle_map_turf
-		if(!shuttle_dock)
-			shuttle_dock = pick("left","right","left","right","diner"); // just making the diner docking a little less common.
+		if(!shuttle)
+			shuttle = pick("left","right","left","right","diner"); // just making the diner docking a little less common.
 #if defined(MAP_OVERRIDE_OSHAN)
-		var/docked_where = shuttle_dock == "diner" ? "sea diner" : "station";
+		var/docked_where = shuttle == "diner" ? "sea diner" : "station";
 #elif defined(MAP_OVERRIDE_MANTA)
-		var/docked_where = shuttle_dock == "diner" ? "sea diner" : "station";
+		var/docked_where = shuttle == "diner" ? "sea diner" : "station";
 #elif defined(MAP_OVERRIDE_NADIR)
-		var/docked_where = shuttle_dock == "diner" ? "underdiner" : "station";
+		var/docked_where = shuttle == "diner" ? "underdiner" : "station";
 #else
-		var/docked_where = shuttle_dock == "diner" ? "space diner" : "station";
+		var/docked_where = shuttle == "diner" ? "space diner" : "station";
 #endif
 
 		var/loc_string = ""
-		if(shuttle_dock == "diner")
+		if(shuttle == "diner")
 			start_location = locate(/area/shuttle/merchant_shuttle/diner_centcom)
 			end_location = locate(/area/shuttle/merchant_shuttle/diner_station)
 		else
-			if(shuttle_dock == "left")
+			if(shuttle == "left")
 				start_location = locate(map_settings ? map_settings.merchant_left_centcom : /area/shuttle/merchant_shuttle/left_centcom)
 				end_location = locate(map_settings ? map_settings.merchant_left_station : /area/shuttle/merchant_shuttle/left_station)
 			else
@@ -55,7 +55,7 @@
 		if (!trader_npc)
 			CRASH("Trader NPC missing in [start_location.name] during trader random event. Guh?")
 		command_alert("\An [pick(trader_npc.descriptions)] merchant shuttle will dock with the [docked_where][loc_string] shortly.", "Commerce and Customs Alert")
-		signal_dock(shuttle_dock, DOCK_EVENT_INCOMING)
+		signal_dock(shuttle, DOCK_EVENT_INCOMING)
 		for(var/client/C in clients)
 			if(C.mob && (C.mob.z == Z_LEVEL_STATION))
 				C.mob.playsound_local(C.mob, 'sound/misc/announcement_chime.ogg', 30, 0)
@@ -63,21 +63,21 @@
 		SPAWN(30 SECONDS)
 
 			var/list/dest_turfs = src.arrive()
-			signal_dock(shuttle_dock, DOCK_EVENT_ARRIVED)
+			signal_dock(shuttle, DOCK_EVENT_ARRIVED)
 
 			SPAWN(rand(5 MINUTES, 10 MINUTES))
 				command_alert("The merchant shuttle is preparing to undock, please stand clear.", "Merchant Departure Alert")
 
-				signal_dock(shuttle_dock, DOCK_EVENT_OUTGOING)
+				signal_dock(shuttle, DOCK_EVENT_OUTGOING)
 				sleep(30 SECONDS)
 
 				src.depart(dest_turfs)
-				signal_dock(shuttle_dock, DOCK_EVENT_DEPARTED)
+				signal_dock(shuttle, DOCK_EVENT_DEPARTED)
 				active = FALSE
 
 	/// Send signal to related trading dock
-	proc/signal_dock(shuttle_dock, event)
-		switch(shuttle_dock)
+	proc/signal_dock(shuttle, event)
+		switch(shuttle)
 			if("diner")
 				SEND_GLOBAL_SIGNAL(COMSIG_DOCK_TRADER_DINER, event)
 			if("left")
