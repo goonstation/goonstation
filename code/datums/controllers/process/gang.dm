@@ -85,6 +85,9 @@
 		for(var/area_name in areas)
 			if(istype(areas[area_name], /area/station/security) || areas[area_name].teleport_blocked || istype(areas[area_name], /area/station/turret_protected))
 				continue
+			var/typeinfo/area/typeinfo = areas[area_name].get_typeinfo()
+			if (!typeinfo.valid_bounty_area)
+				continue
 			potential_hot_zones += areas[area_name]
 	doWork()
 		if (!istype(ticker.mode, /datum/game_mode/gang))
