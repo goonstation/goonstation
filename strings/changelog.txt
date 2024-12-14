@@ -1,5 +1,11 @@
 
 (t)sat dec 14 24
+(u)FlameArrow57
+(p)21501
+(e)🆕🗺🔬|C-Feature, A-Mapping, A-Science
+(*)Added a new tiny-sized Dimensional Key artifact! See minor changelog for details
+(+)The dimensional key acts as a key that can be used once per cardinal direction on a wall to create a doorway to a dimensional fissure, which can be accessed through any of the doors, and exited to any of the doors
+(+)Things that enter the fissure that aren't secured on you will corrode and be destroyed over a few seconds
 (u)TDHooligan
 (p)21623
 (e)⚖🧛|C-Balance, A-Gamemodes
