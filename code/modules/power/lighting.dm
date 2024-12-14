@@ -627,30 +627,39 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/mining_station)
 /obj/machinery/light/traffic_light/mining_diner
 	connected_dock = COMSIG_DOCK_MINING_DINER
 DEFINE_DELAYS(/obj/machinery/light/traffic_light/mining_diner)
+
 /obj/machinery/light/traffic_light/mining_outpost
 	connected_dock = COMSIG_DOCK_MINING_OUTPOST
 DEFINE_DELAYS(/obj/machinery/light/traffic_light/mining_outpost)
+
 /obj/machinery/light/traffic_light/john_owlery
 	connected_dock = COMSIG_DOCK_JOHN_OWLERY
 DEFINE_DELAYS(/obj/machinery/light/traffic_light/john_owlery)
+
 /obj/machinery/light/traffic_light/john_diner
 	connected_dock = COMSIG_DOCK_JOHN_DINER
 DEFINE_DELAYS(/obj/machinery/light/traffic_light/john_diner)
+
 /obj/machinery/light/traffic_light/john_outpost
 	connected_dock = COMSIG_DOCK_JOHN_OUTPOST
 DEFINE_DELAYS(/obj/machinery/light/traffic_light/john_outpost)
+
 /obj/machinery/light/traffic_light/research_station
 	connected_dock = COMSIG_DOCK_RESEARCH_STATION
 DEFINE_DELAYS(/obj/machinery/light/traffic_light/research_station)
+
 /obj/machinery/light/traffic_light/research_outpost
 	connected_dock = COMSIG_DOCK_RESEARCH_OUTPOST
 DEFINE_DELAYS(/obj/machinery/light/traffic_light/research_outpost)
+
 /obj/machinery/light/traffic_light/medical_asylum
 	connected_dock = COMSIG_DOCK_MEDICAL_ASYLUM
 DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_asylum)
+
 /obj/machinery/light/traffic_light/medical_medbay
 	connected_dock = COMSIG_DOCK_MEDICAL_MEDBAY
 DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_medbay)
+
 /obj/machinery/light/traffic_light/medical_pathology
 	connected_dock = COMSIG_DOCK_MEDICAL_PATHOLOGY
 DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
