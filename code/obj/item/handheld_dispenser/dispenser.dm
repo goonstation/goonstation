@@ -9,7 +9,7 @@
 	var/static/list/atmospipesforcreation = null
 	var/static/list/atmosmachinesforcreation = null
 	var/static/list/icon/cache = list()
-	var/datum/pipe_recipe/selection = null
+	var/datum/pipe_recipe/selection = /datum/pipe_recipe/pipe/simple
 	var/selectedimage
 	var/direction = EAST
 	var/destroying = FALSE
@@ -32,6 +32,22 @@
 /obj/item/places_pipes/attack_self(mob/user )
 	src.ui_interact(user)
 
+/obj/item/places_pipes/get_desc()
+	. += "<br>It holds [src.resources] units. It is currently set to make a [selection.name]."
+
+/obj/item/places_pipes/attackby(obj/item/W, mob/user)
+	if (istype(W, /obj/item/rcd_ammo))
+		var/obj/item/rcd_ammo/R = W
+		if (!R.matter)
+			return
+		src.resources += R.matter
+		R.matter = 0
+		qdel(R)
+		R.tooltip_rebuild = 1
+		src.UpdateIcon()
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+		boutput(user, "\The [src] now holds [src.resources] matter-units.")
+
 /obj/item/places_pipes/afterattack(atom/target, mob/user)
 	if (!can_reach(user, target))
 		return
@@ -50,6 +66,7 @@
 				return
 		if(src.resources < selection.cost)
 			boutput(user, SPAN_ALERT("Not enough resources to make a [selection.name]!"))
+			return
 		SETUP_GENERIC_ACTIONBAR(target, src, src.dispenser_delay, PROC_REF(create_item), list(target, user, selection, direction),\
 			 selection.icon, selection.icon_state, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED)
 
@@ -69,6 +86,7 @@
 	new /dmm_suite/preloader(target, list("dir" = (recipe.bent ? turn(direction, 45) : direction)))
 	var/obj/machinery/atmospherics/device = new recipe.path(target)
 	device.initialize(TRUE)
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/places_pipes/proc/destroy_item(mob/user, obj/machinery/atmospherics/target)
 	if(!src.resources)
@@ -77,6 +95,7 @@
 	boutput(user, SPAN_NOTICE("The [src] destroys the [target]!"))
 	resources -= 1
 	qdel(target)
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/places_pipes/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
