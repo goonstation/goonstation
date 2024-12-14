@@ -38,7 +38,7 @@ export const Keybinds = () => {
                 <LabeledList.Item label="Action">
                   Corresponding Keybind
                 </LabeledList.Item>
-                {keys.map((k) => (
+                {keys.sort(sortKeys).map((k) => (
                   <LabeledList.Item key={k.id} label={k.label}>
                     <Input
                       value={k.changedValue || k.savedValue}
@@ -64,4 +64,18 @@ export const Keybinds = () => {
       </Window.Content>
     </Window>
   );
+};
+
+// Default list order, before it gets shuffled around DM side, is number keys first, then string keys.
+//  This function recovers that order
+const sortKeys = (k1, k2) => {
+  if (Number(k1.id) && Number(k2.id)) {
+    return Number(k1.id) - Number(k2.id);
+  } else if (Number(k1.id)) {
+    return -1;
+  } else if (Number(k2.id)) {
+    return 1;
+  } else {
+    return k1.id.localeCompare(k2.id);
+  }
 };
