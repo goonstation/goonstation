@@ -16,8 +16,8 @@
 	. = ..()
 
 /atom/disposing()
-	qdel(src.listen_tree)
-	qdel(src.speech_tree)
+	QDEL_NULL(src.listen_tree)
+	QDEL_NULL(src.speech_tree)
 
 	. = ..()
 
