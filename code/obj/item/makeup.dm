@@ -10,12 +10,6 @@
 		src.ColorOverride()
 		src.IconOverride()
 
-	proc/ColorOverride()
-		src.font_color = "#000fdd"
-		src.color_name = hex2color_name(src.font_color)
-		src.name = "lipstick"
-		return
-
 	attack_self(var/mob/user)
 		src.open = !src.open
 		src.IconOverride()
@@ -23,6 +17,12 @@
 			src.deactivate(user)
 		else
 			src.activate(user)
+		return
+
+	proc/ColorOverride()
+		src.font_color = "#000fdd"
+		src.color_name = hex2color_name(src.font_color)
+		src.name = "lipstick"
 		return
 
 	proc/IconOverride()

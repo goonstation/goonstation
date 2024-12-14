@@ -1327,6 +1327,9 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 		src.UpdateIcon()
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!src.open)
+			user.show_text("You should probably open it first.", "red")
+			return
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if (H.makeup == 2) // it's messed up
@@ -1336,6 +1339,12 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 				actions.start(new /datum/action/bar/icon/apply_makeup(target, src, target == user ? 40 : 60), user)
 		else
 			return ..()
+
+	write_on_turf(mob/user)
+		if (!src.open)
+			return
+		else
+			..()
 
 /datum/action/bar/icon/apply_makeup // yee
 	duration = 40
