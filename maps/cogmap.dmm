@@ -38294,6 +38294,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"dJZ" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay4,
+/turf/space,
+/area/space)
 "dKY" = (
 /obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
@@ -40989,6 +40997,14 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
+"fyq" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay2,
+/turf/space,
+/area/space)
 "fyN" = (
 /obj/landmark/random_room/size3x3,
 /turf/simulated/floor/plating,
@@ -41393,6 +41409,14 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
+"fOX" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right,
+/turf/space,
+/area/space)
 "fPv" = (
 /obj/table/auto,
 /obj/item/reagent_containers/glass/beaker/large/antitox{
@@ -42246,6 +42270,14 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
+/area/space)
+"gCr" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay3,
+/turf/space,
 /area/space)
 "gDx" = (
 /obj/cable,
@@ -44734,6 +44766,13 @@
 /obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"iul" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay5,
+/turf/space,
+/area/space)
 "iuu" = (
 /obj/submachine/ATM,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -45074,6 +45113,14 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
+"iNs" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left,
+/turf/space,
+/area/space)
 "iNx" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
@@ -45796,6 +45843,13 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
+"jsl" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay4,
+/turf/space,
+/area/space)
 "jst" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -49644,6 +49698,14 @@
 	},
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
+"mxZ" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station,
+/turf/space,
+/area/space)
 "myb" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/grass{
@@ -50477,6 +50539,14 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)
+"ngd" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay2,
+/turf/space,
+/area/space)
 "ngk" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -51169,6 +51239,11 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
+"nAC" = (
+/obj/lattice,
+/obj/machinery/light/traffic_light/mining_station/delay3,
+/turf/space,
+/area/space)
 "nAE" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -57476,6 +57551,10 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
+"skX" = (
+/obj/machinery/light/traffic_light/mining_station/delay5,
+/turf/space,
+/area/space)
 "slD" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -61754,6 +61833,13 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"vsc" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station,
+/turf/space,
+/area/space)
 "vsM" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -62754,6 +62840,14 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"wjn" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay3,
+/turf/space,
+/area/space)
 "wjO" = (
 /obj/machinery/conveyor/NS{
 	operating = 1
@@ -63497,6 +63591,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
+"wJI" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay3,
+/turf/space,
+/area/space)
 "wJN" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -64679,6 +64781,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/engine/power)
+"xEZ" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay3,
+/turf/space,
+/area/space)
 "xFh" = (
 /obj/mesh/grille/steel,
 /obj/disposalpipe/segment/morgue{
@@ -74855,7 +74965,7 @@ adC
 adC
 adC
 adC
-adC
+skX
 adC
 adC
 adC
@@ -93469,7 +93579,7 @@ jsk
 bhs
 biz
 jsk
-aah
+iNs
 adC
 blx
 blx
@@ -93479,7 +93589,7 @@ blx
 blx
 blx
 adC
-aah
+xEZ
 jsk
 brL
 biz
@@ -94677,7 +94787,7 @@ jsk
 bgL
 bgL
 jsk
-aah
+xEZ
 adC
 blx
 blx
@@ -94687,7 +94797,7 @@ blx
 blx
 blx
 adC
-aah
+iNs
 jsk
 brM
 bgL
@@ -95281,7 +95391,7 @@ jsk
 bgL
 bgL
 jsk
-aah
+fOX
 adC
 bly
 bly
@@ -95291,7 +95401,7 @@ bly
 bly
 bly
 adC
-aah
+wJI
 jsk
 bgL
 bgL
@@ -96489,7 +96599,7 @@ bgL
 bgL
 bgL
 jsk
-aah
+wJI
 adC
 bly
 bly
@@ -96499,7 +96609,7 @@ bly
 bly
 bly
 adC
-aah
+fOX
 jsk
 bgL
 pcV
@@ -124337,11 +124447,11 @@ bUZ
 vma
 vma
 bUZ
+iul
 aar
+jsl
 aar
-aar
-aar
-aap
+nAC
 fsx
 aaG
 adC
@@ -124934,7 +125044,7 @@ bUZ
 vVW
 cnZ
 dIU
-aaG
+wjn
 adC
 csk
 csk
@@ -124945,7 +125055,7 @@ csk
 csk
 adC
 adC
-aah
+ngd
 aaj
 aah
 adC
@@ -125538,7 +125648,7 @@ bUZ
 adC
 adC
 adC
-aah
+dJZ
 adC
 csk
 csk
@@ -125549,7 +125659,7 @@ csk
 csk
 csk
 adC
-aah
+mxZ
 adC
 aah
 adC
@@ -126142,7 +126252,7 @@ aaG
 adC
 adC
 adC
-aah
+gCr
 adC
 csk
 csk
@@ -126153,7 +126263,7 @@ csk
 csk
 adC
 adC
-aah
+ngd
 adC
 aah
 adC
@@ -126746,18 +126856,18 @@ aaG
 adC
 adC
 adC
-aam
+fyq
 aar
-aar
+vsc
 aar
 aai
 aai
 aar
+iul
 aar
+jsl
 aar
-aar
-aar
-aaG
+wjn
 adC
 aah
 adC
