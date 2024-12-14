@@ -82,7 +82,7 @@
 	type_name = "Large power cell"
 	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 350
-	validtypes = list("ancient","martian","wizard","precursor")
+	validtypes = list("ancient","martian","wizard","precursor","clockwork")
 	automatic_activation = 0
 	react_elec = list("equal",0,10)
 	react_xray = list(10,80,95,11,"SEGMENTED")
@@ -110,6 +110,10 @@
 				O.noise = pick('sound/weapons/airzooka.ogg', 'sound/misc/chair/glass/scoot5.ogg', 'sound/misc/chair/glass/scoot2.ogg')
 			if ("precursor") // what does precursor stuff even sound like???
 				O.noise = pick('sound/effects/singsuck.ogg', 'sound/effects/screech_tone.ogg')
+			if ("clockwork")
+				O.noise = pick('sound/misc/automaton_scratch.ogg', 'sound/misc/automaton_ratchet.ogg')
+			else
+				O.noise = 'sound/effects/electric_shock_short.ogg'
 
 		if(prob(O.chargeCap/1000)) 			// the more charge the bigger the chance it does dumb stuff
 			switch(src.artitype.name) 		// leakage
@@ -121,6 +125,10 @@
 					O.leakChem = pick("glitter","sakuride","grassgro","sparkles","mirabilis", "mugwort", "carpet")
 				if ("precursor")
 					O.leakChem = pick(all_functional_reagent_ids) // no way this goes wrong
+				if ("clockwork")
+					O.leakChem = pick("oil", "copper_nitrate", "mercury", "copper", "aluminium", "iron", "nickel", "silver", "iron_oxide")
+				else
+					O.leakChem = "oil"
 			if(prob(10))
 				O.smoky = TRUE
 			O.create_reagents(rand(5,20))

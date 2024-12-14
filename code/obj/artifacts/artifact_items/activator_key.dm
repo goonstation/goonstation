@@ -8,7 +8,7 @@
 	type_name = "Activator Key"
 	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 200
-	validtypes = list("ancient","martian","wizard","eldritch","precursor")
+	validtypes = list("ancient","martian","wizard","eldritch","precursor","clockwork")
 	automatic_activation = 1
 	react_xray = list(12,80,95,8,"COMPLEX")
 	examine_hint = "It kinda looks like it's supposed to be inserted into something."
