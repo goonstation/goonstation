@@ -161,7 +161,19 @@ ABSTRACT_TYPE(/obj/art_fissure_objs/cross_dummy)
 			new_proj.launch()
 			P.die()
 		else if (AM.dir == src.required_dir && !istype(AM, /obj/art_fissure_objs/door) && !istype(AM, /obj/art_fissure_objs/cross_dummy))
-			AM.set_loc(src.exit_turf)
+			// makes it look like an animation glide
+			switch (src.required_dir)
+				if (NORTH)
+					AM.set_loc(get_step(src.exit_turf, SOUTH))
+				if (EAST)
+					AM.set_loc(get_step(src.exit_turf, WEST))
+				if (WEST)
+					AM.set_loc(get_step(src.exit_turf, EAST))
+				if (SOUTH)
+					AM.set_loc(get_step(src.exit_turf, NORTH))
+			SPAWN(0.001) // just a really low value
+				AM.set_loc(src.exit_turf)
+
 		else
 			return ..()
 
