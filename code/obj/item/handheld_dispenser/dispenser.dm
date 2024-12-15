@@ -44,7 +44,7 @@
 		R.matter = 0
 		qdel(R)
 		R.tooltip_rebuild = 1
-		src.UpdateIcon()
+		src.tooltip_rebuild = 1
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		boutput(user, "\The [src] now holds [src.resources] matter-units.")
 
@@ -82,6 +82,7 @@
 			boutput(user, SPAN_ALERT("Something is occupying that direction!"))
 			return
 	src.resources -= recipe.cost
+	src.tooltip_rebuild = 1
 	user.visible_message(SPAN_NOTICE("[user] places a [recipe.name]."))
 	new /dmm_suite/preloader(target, list("dir" = (recipe.bent ? turn(direction, 45) : direction)))
 	var/obj/machinery/atmospherics/device = new recipe.path(target)
@@ -94,6 +95,7 @@
 		return
 	boutput(user, SPAN_NOTICE("The [src] destroys the [target]!"))
 	resources -= 1
+	src.tooltip_rebuild = 1
 	qdel(target)
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
@@ -137,6 +139,7 @@
 		if("select")
 			src.selection = atmospipesforcreation[params["name"]] || atmosmachinesforcreation[params["name"]]
 			src.selectedimage = getBase64Img(src.selection, direction)
+			src.tooltip_rebuild = 1
 			. = TRUE
 		if("changedir")
 			src.direction = text2num_safe(params["newdir"])
