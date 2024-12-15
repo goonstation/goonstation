@@ -13,9 +13,9 @@
 		distribution_check(/datum/xor_rand_generator/proc/xor_rand, list(),1000)
 
 	for(var/i in 1 to 4)
-		deterministic_check(/datum/xor_rand_generator/proc/xor_rand, list(0,100), 95, 3, 0xBEEF)
-		deterministic_check(/datum/xor_rand_generator/proc/xor_randf, list(0,100), 95, 3, 0xB00)
-		deterministic_check(/datum/xor_rand_generator/proc/xor_rand, list(0,100), 95, 3, 0xDEADC0DE)
+		deterministic_check(/datum/xor_rand_generator/proc/xor_rand, list(0,100), 100, 3, 0xBEEF)
+		deterministic_check(/datum/xor_rand_generator/proc/xor_randf, list(0,100), 100, 3, 0xB00)
+		deterministic_check(/datum/xor_rand_generator/proc/xor_rand, list(0,100), 100, 3, 0xDEAD)
 
 /datum/unit_test/xor_rand/proc/distribution_check(delegate, args, iterations)
 	var/result
