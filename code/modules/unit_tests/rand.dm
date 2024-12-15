@@ -12,6 +12,11 @@
 		distribution_check(/datum/xor_rand_generator/proc/xor_rand, list(),1000)
 		distribution_check(/datum/xor_rand_generator/proc/xor_rand, list(),1000)
 
+	for(var/i in 1 to 4)
+		deterministic_check(/datum/xor_rand_generator/proc/xor_rand, list(0,100), 100, 3, 0xBEEF)
+		deterministic_check(/datum/xor_rand_generator/proc/xor_randf, list(0,100), 100, 3, 0xB00)
+		deterministic_check(/datum/xor_rand_generator/proc/xor_rand, list(0,100), 100, 3, 0xDEAD)
+
 /datum/unit_test/xor_rand/proc/distribution_check(delegate, args, iterations)
 	var/result
 	var/sum
@@ -56,13 +61,27 @@
 	TEST_ASSERT(cv >= 0.51, "Test Coefficient of variation is within tolerance. [delegate] [cv] >= 0.51")
 	TEST_ASSERT(cv <= 0.65, "Test Coefficient of variation is within tolerance. [delegate] [cv] <= 0.65")
 
+/datum/unit_test/xor_rand/proc/deterministic_check(delegate, args, iterations, attempts, seed)
+	var/list/first_iteration = list()
+	var/list/this_result
 
-/datum/unit_test/rand_distrobutions
+	for(var/i in 1 to attempts)
+		R.mangled_rand = null
+		R.seed = seed
+		for(var/j in 1 to iterations)
+			if(i == 1)
+				first_iteration += call(R, delegate)(arglist(args))
+			else
+				this_result = call(R, delegate)(arglist(args))
+				TEST_ASSERT(first_iteration[j] == this_result, "Test calculations is the same. Index:[j] [first_iteration[j]] == [this_result]")
+
+
+/datum/unit_test/rand_distributions
 	var/list/buckets
 	var/iterations = 10000
 	var/sum
 
-/datum/unit_test/rand_distrobutions/Run()
+/datum/unit_test/rand_distributions/Run()
 	rand_seed(0xFEED)
 	for(var/repeat in 1 to 3)
 		//Standard
@@ -89,17 +108,17 @@
 			add_point( rand_half_pyramid(1, 99) )
 		distribution_check("rand_half_pyramid() #[repeat]", list(0.02,0.06,0.10,0.15,0.15,0.15,0.15,0.10,0.06,0.02), 0.03)
 
-/datum/unit_test/rand_distrobutions/proc/add_point(value)
+/datum/unit_test/rand_distributions/proc/add_point(value)
 		src.buckets[round(value/10)+1] += value
 		src.sum += value
 
-/datum/unit_test/rand_distrobutions/proc/clear_buckets()
+/datum/unit_test/rand_distributions/proc/clear_buckets()
 	src.buckets = new/list(10)
 	src.sum = 0
 	for(var/i in 1 to 10)
 		buckets[i] = list()
 
-/datum/unit_test/rand_distrobutions/proc/distribution_check(type, list/expected, tolerance)
+/datum/unit_test/rand_distributions/proc/distribution_check(type, list/expected, tolerance)
 	var/average = src.sum / src.iterations
 	var/distro
 
@@ -114,5 +133,5 @@
 
 		distro = length(src.buckets[i])/src.iterations
 
-		TEST_ASSERT(distro >= minima, "Test distrobution is within tolerance. [type]:([i]) [distro] >= [minima] (Expected:[expected[i]])")
-		TEST_ASSERT(distro <= maxima, "Test distrobution is within tolerance. [type]:([i]) [distro] <= [maxima] (Expected:[expected[i]])")
+		TEST_ASSERT(distro >= minima, "Test distribution is within tolerance. [type]:([i]) [distro] >= [minima] (Expected:[expected[i]])")
+		TEST_ASSERT(distro <= maxima, "Test distribution is within tolerance. [type]:([i]) [distro] <= [maxima] (Expected:[expected[i]])")
