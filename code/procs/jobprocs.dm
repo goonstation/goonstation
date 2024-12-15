@@ -535,11 +535,11 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	if (JOB.slot_back)
 		if (src.back?.storage)
 			if(JOB.receives_disk)
-				var/obj/item/disk/data/floppy/read_only/D
+				var/obj/item/disk/data/floppy/D
 				if(ispath(JOB.receives_disk))
 					D = new JOB.receives_disk(src)
 				else
-					D = new /obj/item/disk/data/floppy/read_only(src)
+					D = new /obj/item/disk/data/floppy(src)
 				src.equip_if_possible(D, SLOT_IN_BACKPACK)
 				var/datum/computer/file/clone/R = new
 				R.fields["ckey"] = ckey(src.key)
