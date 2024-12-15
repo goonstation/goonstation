@@ -84,8 +84,9 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 						A.set_loc(src)
 
 	disposing()
-		src.vis_controller = null
-		qdel(vis_controller)
+		if(src.vis_controller)
+			qdel(src.vis_controller)
+			src.vis_controller = null
 		STOP_TRACKING
 		..()
 
