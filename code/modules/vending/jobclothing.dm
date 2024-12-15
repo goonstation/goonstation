@@ -1,16 +1,17 @@
 
 ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
+/obj/machinery/vending/jobclothing
+	pay = 1
+	acceptcard = 1
+	icon_panel = "snack-panel"
 
 /obj/machinery/vending/jobclothing/security
 	name = "Security Apparel"
 	desc = "A vending machine that vends Security clothing."
 	icon_state = "secclothing"
-	icon_panel = "snack-panel"
 	icon_off = "secclothing-off"
 	icon_broken = "secclothing-broken"
 	icon_fallen = "secclothing-fallen"
-	pay = 1
-	acceptcard = 1
 	req_access = list(access_security)
 
 	create_products(restocked)
@@ -52,12 +53,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	name = "Security Apparel"
 	desc = "A vending machine that vends Security clothing."
 	icon_state = "secclothing"
-	icon_panel = "snack-panel"
 	icon_off = "secclothing-off"
 	icon_broken = "secclothing-broken"
 	icon_fallen = "secclothing-fallen"
-	pay = 1
-	acceptcard = 1
 	req_access = null
 
 	create_products(restocked)
@@ -91,12 +89,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	name = "Medical Apparel"
 	desc = "A vending machine that vends Medical clothing."
 	icon_state = "medclothing"
-	icon_panel = "snack-panel"
 	icon_off = "medclothing-off"
 	icon_broken = "medclothing-broken"
 	icon_fallen = "medclothing-fallen"
-	pay = 1
-	acceptcard = 1
 	req_access = list(access_medical)
 
 	create_products(restocked)
@@ -150,12 +145,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	name = "Medical Apparel"
 	desc = "A vending machine that vends Medical clothing."
 	icon_state = "medclothing"
-	icon_panel = "snack-panel"
 	icon_off = "medclothing-off"
 	icon_broken = "medclothing-broken"
 	icon_fallen = "medclothing-fallen"
-	pay = 1
-	acceptcard = 1
 	req_access = null
 
 	create_products(restocked)
@@ -201,12 +193,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	name = "Engineering Apparel"
 	desc = "A vending machine that vends Engineering clothing."
 	icon_state = "engclothing"
-	icon_panel = "snack-panel"
 	icon_off = "engclothing-off"
 	icon_broken = "engclothing-broken"
 	icon_fallen = "engclothing-fallen"
-	pay = 1
-	acceptcard = 1
 	req_access = list(access_engineering)
 
 	create_products(restocked)
@@ -252,12 +241,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	name = "Engineering Apparel"
 	desc = "A vending machine that vends Engineering clothing."
 	icon_state = "engclothing"
-	icon_panel = "snack-panel"
 	icon_off = "engclothing-off"
 	icon_broken = "engclothing-broken"
 	icon_fallen = "engclothing-fallen"
-	pay = 1
-	acceptcard = 1
 	req_access = null
 
 	create_products(restocked)
@@ -295,12 +281,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	name = "Catering Apparel"
 	desc = "A vending machine that vends Catering clothing."
 	icon_state = "catclothing" //At first it was static on the bartender outfit, but it made it feel like it was only a bartender vendor, so I made it animated to switch between chef and bartender clothing.
-	icon_panel = "snack-panel"
 	icon_off = "catclothing-off"
 	icon_broken = "catclothing-broken"
 	icon_fallen = "catclothing-fallen"
-	pay = 1
-	acceptcard = 1
 	req_access = list(access_bar, access_kitchen)
 
 	create_products(restocked)
@@ -337,12 +320,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	name = "Catering Apparel"
 	desc = "A vending machine that vends Catering clothing."
 	icon_state = "catclothing"
-	icon_panel = "snack-panel"
 	icon_off = "catclothing-off"
 	icon_broken = "catclothing-broken"
 	icon_fallen = "catclothing-fallen"
-	pay = 1
-	acceptcard = 1
 	req_access = null
 
 	create_products(restocked)
@@ -376,12 +356,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	name = "Research Apparel"
 	desc = "A vending machine that vends Research clothing."
 	icon_state = "sciclothing"
-	icon_panel = "snack-panel"
 	icon_off = "sciclothing-off"
 	icon_broken = "sciclothing-broken"
 	icon_fallen = "sciclothing-fallen"
-	pay = 1
-	acceptcard = 1
 	req_access = list(access_research)
 
 	create_products(restocked)
@@ -419,12 +396,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	name = "Research Apparel"
 	desc = "A vending machine that vends Research clothing."
 	icon_state = "sciclothing"
-	icon_panel = "snack-panel"
 	icon_off = "sciclothing-off"
 	icon_broken = "sciclothing-broken"
 	icon_fallen = "sciclothing-fallen"
-	pay = 1
-	acceptcard = 1
 	req_access = null
 
 	create_products(restocked)
@@ -456,12 +430,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	name = "Syndicate Apparel"
 	desc = "A vending machine that vends Syndicate clothing."
 	icon_state = "syndieclothing"
-	icon_panel = "snack-panel"
 	icon_off = "syndieclothing-off"
 	icon_broken = "syndieclothing-broken"
 	icon_fallen = "syndieclothing-fallen"
-	pay = 1
-	acceptcard = 1
 	req_access = list()
 
 	create_products(restocked)
@@ -482,3 +453,60 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/syndie, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/syndie, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/fanny/syndie, 1)
+
+/obj/machinery/vending/jobclothing/command
+	name = "Command Apparel"
+	desc = "A vending machine that vends Command clothing."
+	icon_state = "comclothing"
+	icon_off = "comclothing-off"
+	icon_broken = "comlothing-broken"
+	icon_fallen = "comclothing-fallen"
+	req_access = list(access_heads)
+
+	create_products(restocked)
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/blue, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/NT, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/suit/black, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/suit/black/dress, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/lawyer/blue, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/command, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/black, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/brown, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/fancy/rank, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/NTberet, 3)
+		product_list += new/datum/data/vending_product(/obj/item/device/radio/headset/command, 2, cost=PAY_TRADESMAN/1.5)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/heads, 2, cost=PAY_TRADESMAN/1.5)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/NT, 1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/NT, 1)
+
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/comm_officer, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/ntofficial, 2, hidden=1, cost=PAY_TRADESMAN)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/clown_hat/blue, 1, hidden=1) // because command are clowns :)
+
+/obj/machinery/vending/jobclothing/afterlife/command
+	name = "Command Apparel"
+	desc = "A vending machine that vends Command clothing."
+	icon_state = "comclothing"
+	icon_off = "comclothing-off"
+	icon_broken = "comlothing-broken"
+	icon_fallen = "comclothing-fallen"
+	req_access = null
+
+	create_products(restocked)
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/blue, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/NT, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/suit/black, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/suit/black/dress, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/lawyer/blue, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/command, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/black, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/brown, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/fancy/rank, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/NTberet, 3)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/NT, 1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/NT, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/comm_officer, 2)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/ntofficial, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/clown_hat/blue, 1)

@@ -34018,6 +34018,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/machinery/vending/jobclothing/command,
 /turf/simulated/floor/minitiles/black,
 /area/station/bridge)
 "ogK" = (

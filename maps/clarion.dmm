@@ -18568,6 +18568,10 @@
 /area/station/crew_quarters/heads{
 	name = "Head of Personnel's Quarters"
 	})
+"fYw" = (
+/obj/machinery/vending/jobclothing/command,
+/turf/simulated/floor/black,
+/area/station/bridge)
 "fYA" = (
 /obj/machinery/door/airlock/pyro/glass/med,
 /obj/mapping_helper/firedoor_spawn,
@@ -32440,7 +32444,6 @@
 	},
 /area/station/security/main)
 "qko" = (
-/obj/machinery/light,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -37044,6 +37047,13 @@
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
+"tHe" = (
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
 "tHq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -79995,9 +80005,9 @@ bbG
 vSO
 mNS
 tCF
-jtY
-jtY
-jtY
+boN
+boN
+boN
 bpf
 naa
 bpf
@@ -80298,7 +80308,7 @@ bcW
 aQY
 jtY
 jtY
-qAY
+jtY
 jtY
 boN
 boN
@@ -81506,7 +81516,7 @@ bda
 iwR
 jtY
 jtY
-qAY
+jtY
 jtY
 boN
 boN
@@ -81807,9 +81817,9 @@ wVP
 bdb
 gRL
 qko
-jtY
-jtY
-jtY
+tHe
+fYw
+aQY
 bpf
 bpf
 bpf

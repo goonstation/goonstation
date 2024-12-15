@@ -46204,12 +46204,8 @@
 /turf/simulated/floor/caution/corner/sw,
 /area/station/engine/hotloop)
 "nVl" = (
-/obj/shrub{
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
 /obj/machinery/light/emergency,
+/obj/machinery/vending/jobclothing/command,
 /turf/simulated/floor/black/side{
 	dir = 5
 	},

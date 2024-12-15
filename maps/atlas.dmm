@@ -21884,6 +21884,7 @@
 /area/station/solar/south)
 "tQm" = (
 /obj/machinery/light,
+/obj/machinery/vending/jobclothing/command,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
 	},

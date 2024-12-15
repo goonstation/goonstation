@@ -71678,6 +71678,11 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"rDs" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/dressup/lots,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "rEI" = (
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
@@ -77537,9 +77542,7 @@
 	},
 /area/shuttle/john/owlery)
 "wyy" = (
-/obj/storage/crate/packing,
-/obj/random_item_spawner/dressup/lots,
-/obj/map/light/brighterwhite,
+/obj/machinery/vending/jobclothing/command,
 /turf/unsimulated/floor/carpet/blue/fancy/narrow/eastwest,
 /area/afterlife/bar/sanctuary)
 "wyH" = (
@@ -105267,9 +105270,9 @@ cog
 cog
 cog
 cog
-cog
-cog
-cog
+aaa
+aaa
+aaa
 aaa
 dcp
 xzs
@@ -105570,9 +105573,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+dcp
+dcp
+dcp
 xZn
 bVp
 daP
@@ -105873,7 +105876,7 @@ dcp
 dcp
 dcp
 dcp
-dcp
+wyy
 tRD
 dcp
 dcp
@@ -106175,7 +106178,7 @@ dcp
 ddE
 daP
 eZl
-wyy
+kxB
 tVj
 eZl
 daP
@@ -106476,7 +106479,7 @@ aaa
 dcp
 eZl
 iGw
-daP
+rDs
 kxB
 xzs
 daP

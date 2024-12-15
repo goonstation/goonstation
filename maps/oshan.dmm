@@ -22797,11 +22797,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bFE" = (
-/obj/shrub{
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
+/obj/machinery/vending/jobclothing/command,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bFF" = (

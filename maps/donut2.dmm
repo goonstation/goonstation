@@ -9605,6 +9605,10 @@
 	icon_state = "fred2"
 	},
 /area/station/bridge)
+"aYU" = (
+/obj/machinery/vending/jobclothing/command,
+/turf/simulated/floor/black,
+/area/station/bridge)
 "aYW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -96636,7 +96640,7 @@ aTQ
 rWN
 aTR
 sjh
-aVb
+aYU
 aUX
 aVO
 aXk
