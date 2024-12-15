@@ -39,6 +39,7 @@
 			if ("changed_key")
 				if (params["id"] && params["value"])
 					add_to_changed(params["id"], uppertext(params["value"]) )
+					. = TRUE
 
 			if ("confirm")
 				if (changed_keys.len)
@@ -52,6 +53,7 @@
 					current_keymap.on_update(owner)
 					owner.player.cloudSaves.putData("custom_keybind_data", json_encode(changed_keys_rev))
 					boutput(owner, SPAN_NOTICE("Your custom keybinding data has been saved."))
+					. = TRUE
 			if ("reset")
 				changed_keys = new/list()
 				owner.player.cloudSaves.deleteData("custom_keybind_data")

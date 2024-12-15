@@ -5,9 +5,9 @@
  * @license MIT
  */
 
+import { useState } from 'react';
 import {
   Button,
-  Input,
   LabeledList,
   NoticeBox,
   Section,
@@ -16,11 +16,19 @@ import {
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import {
+  formatKeyboardEvent,
+  isEscape,
+  isStandardKey,
+} from './formatKeyboardEvent';
 import { KeybindsData } from './types';
 
 export const Keybinds = () => {
   const { data, act } = useBackend<KeybindsData>();
   const { keys } = data;
+
+  const [focusedKey, setFocusedKey] = useState('');
+
   return (
     <Window width={330} height={590}>
       <Window.Content>
@@ -40,12 +48,27 @@ export const Keybinds = () => {
                 </LabeledList.Item>
                 {keys.sort(sortKeys).map((k) => (
                   <LabeledList.Item key={k.id} label={k.label}>
-                    <Input
-                      value={k.changedValue || k.savedValue}
-                      onChange={(_e, value) =>
-                        act('changed_key', { id: k.id, value })
-                      }
-                    />
+                    <Button
+                      onKeyDown={(event) => {
+                        if (isEscape(event.key)) {
+                          setFocusedKey('');
+                        }
+                        if (!isStandardKey(event)) {
+                          return;
+                        }
+                        setFocusedKey('');
+                        const value = formatKeyboardEvent(event);
+                        return act('changed_key', { id: k.id, value });
+                      }}
+                      onClick={() => {
+                        setFocusedKey(k.id);
+                      }}
+                      color={k.id === focusedKey ? 'good' : null}
+                    >
+                      {k.id === focusedKey
+                        ? '...'
+                        : k.changedValue || k.savedValue}
+                    </Button>
                   </LabeledList.Item>
                 ))}
               </LabeledList>
