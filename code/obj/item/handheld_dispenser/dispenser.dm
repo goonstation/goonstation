@@ -185,6 +185,12 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 				if(EAST, WEST)
 					return EAST|WEST
 
+		insulated
+			name = "Insulated pipe"
+			path = /obj/machinery/atmospherics/pipe/simple/insulated
+			cost = 2
+			icon_state = "insulatedpipe"
+
 	bent
 		name = "Bent pipe"
 		path = /obj/machinery/atmospherics/pipe/simple/overfloor
@@ -202,6 +208,12 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 					return NORTH|EAST
 				if(WEST)
 					return SOUTH|WEST
+
+		insulated
+			name = "Bent insulated pipe"
+			path = /obj/machinery/atmospherics/pipe/simple/insulated
+			cost = 2
+			icon_state = "insulatedpipebent"
 
 	manifold
 		name = "Manifold"
