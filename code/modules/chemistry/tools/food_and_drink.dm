@@ -33,7 +33,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 		src.digest_count += process_rate
 		if (owner && src.reagents?.total_volume > 0)
 			if (!src.did_stomach_react)
-				src.reagents.reaction(owner, INGEST, src.reagents.total_volume)
+				src.reagents.reaction(owner, INGEST, src.reagents.total_volume, paramslist = list("digestion" = TRUE))
 				src.did_stomach_react = 1
 
 			src.reagents.trans_to(owner, process_rate, HAS_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) ? GET_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) : 1)

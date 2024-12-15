@@ -1,4 +1,75 @@
 
+(t)sat dec 14 24
+(u)TDHooligan
+(p)21688
+(e)🪲🎨⚖🧛|C-Bug, C-Sprites, C-Balance, A-Gamemodes
+(+)Gang crates now spawn in saner locations.
+(+)Razorbill now fires an even angrier swarm of bees. Kuvalda spawns loaded.
+(u)FlameArrow57
+(p)21501
+(e)🆕🗺🔬|C-Feature, A-Mapping, A-Science
+(*)Added a new tiny-sized Dimensional Key artifact! See minor changelog for details
+(+)The dimensional key acts as a key that can be used once per cardinal direction on a wall to create a doorway to a dimensional fissure, which can be accessed through any of the doors, and exited to any of the doors
+(+)Things that enter the fissure that aren't secured on you will corrode and be destroyed over a few seconds
+(u)TDHooligan
+(p)21623
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Gangs tag way faster over unclaimed areas.
+(*)Gangs start with more tags, and restock more tags less frequently.
+(+)Gang loot events have more spacing between them.
+(+)Gangs can now see the next restock time for graffiti.
+(t)fri dec 13 24
+(u)glowbold
+(p)21614
+(e)🆕🗺💡🌠|C-Feature, A-Mapping, A-Station-Systems, A-Events
+(+)Space OSHA has installed traffic warning lights to indicate incoming and outgoing shuttles. No excuses for getting squished.
+(u)JORJ949
+(p)21676
+(e)🗺|A-Mapping
+(+)That one pipe under the cog1 engine window can no longer burst.
+(u)FlameArrow57
+(p)21674
+(e)💅📄|C-QoL, A-UI
+(*)Added colorblind accessibility options for protanopia, deuteranopia, and tritanopia colorblindness under Game -> Accessibility
+(u)glowbold
+(p)21514
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Dount3's mining magnet area has been expanded to standard station size.
+(u)NightmarechaMillian
+(p)21538
+(e)💡|A-Station-Systems
+(+)Stocks now fluctuate 10 times harder, events are shorter.
+(u)glowbold
+(p)21635
+(e)🆕🎨📄|C-Feature, C-Sprites, A-UI
+(+)The Spacebux and JobXP windows at round-end now show in a single unified "Personal Summary" window.
+(u)Garash2k
+(p)21625
+(e)🆕💅📄|C-Feature, C-QoL, A-UI
+(+)The solar panel controller is now easier to mess with, it can now only be turned on or off... Or emagged! Examine text has all the info it's old UI used to have.
+(u)glowbold
+(p)21672
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)You must be in grab intent to make a snowball.
+(t)wed dec 11 24
+(u)LeahTheTech
+(*)Singularity containment field generators now have an ANNOYING ALARM SOUND and corresponding flashing light when they're running out of power. The alarm gets progressively lower pitched and sadder as they power down.
+(+)Added a sound effect when field generators power down.
+(u)glowbold
+(p)21638
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Hall monitors recieve a pocket radio that can only listen to security's frequency.
+(u)patricia
+(p)21647
+(e)🪲|C-Bug
+(+)Mail now stacks by person in player built vending machines
+(t)tue dec 10 24
+(u)NightmarechaMillian, sprite help by DisturbHerb
+(p)21354
+(e)🆕🎨🧛|C-Feature, C-Sprites, A-Gamemodes
+(*)The M4GP13 now stocks a new tool/weapon: the crash axe! See minor changes for details
+(+)Crash axes are pocket sized and act as chopping and prying tools, toggleable by using them inhand.
+(+)In combat, they deal 13 damage, 21 on thrown, and have a short, 2-second thrown stun.
 (t)mon dec 09 24
 (u)Egregorious
 (p)21364
