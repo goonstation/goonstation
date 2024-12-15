@@ -9,7 +9,7 @@ import { LabeledList, NoticeBox } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Keybind } from './Keybind';
-import { KeybindsData } from './types';
+import { KeybindData, KeybindsData } from './types';
 
 export const KeybindList = () => {
   const { data } = useBackend<KeybindsData>();
@@ -43,7 +43,7 @@ export const KeybindList = () => {
 
 // Default list order, before it gets shuffled around DM side, is number keys first, then string keys.
 //  This function recovers that order
-const sortKeys = (k1, k2) => {
+const sortKeys = (k1: KeybindData, k2: KeybindData) => {
   if (Number(k1.id) && Number(k2.id)) {
     return Number(k1.id) - Number(k2.id);
   } else if (Number(k1.id)) {
