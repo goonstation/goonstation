@@ -14,75 +14,105 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { isEscape } from 'tgui-core/keys';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { formatKeyboardEvent, isStandardKey } from './formatKeyboardEvent';
-import { KeybindsData } from './types';
+import { KeybindData, KeybindsData } from './types';
 
 export const Keybinds = () => {
-  const { data, act } = useBackend<KeybindsData>();
-  const { keys } = data;
-
-  const [focusedKey, setFocusedKey] = useState('');
-
   return (
     <Window width={330} height={590}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>
-            <Section scrollable fill>
-              <NoticeBox info>
-                You can only rebind keys you have access to when opening the
-                window.
-                <br />
-                Ex: You can only change human hotkeys if you are currently
-                human.
-              </NoticeBox>
-              <LabeledList>
-                <LabeledList.Item label="Action">
-                  Corresponding Keybind
-                </LabeledList.Item>
-                {keys.sort(sortKeys).map((k) => (
-                  <LabeledList.Item key={k.id} label={k.label}>
-                    <Button
-                      onKeyDown={(event) => {
-                        if (isEscape(event.key)) {
-                          setFocusedKey('');
-                        }
-                        if (!isStandardKey(event)) {
-                          return;
-                        }
-                        setFocusedKey('');
-                        const value = formatKeyboardEvent(event);
-                        return act('changed_key', { id: k.id, value });
-                      }}
-                      onClick={() => {
-                        setFocusedKey(k.id);
-                      }}
-                      color={k.id === focusedKey ? 'good' : null}
-                    >
-                      {k.id === focusedKey
-                        ? '...'
-                        : k.changedValue || k.savedValue}
-                    </Button>
-                  </LabeledList.Item>
-                ))}
-              </LabeledList>
-            </Section>
+            <KeybindList />
           </Stack.Item>
           <Stack.Item>
-            <Button onClick={() => act('confirm')} color="good" icon="save">
-              Confirm
-            </Button>
-            <Button onClick={() => act('reset')} color="bad" icon="trash">
-              Reset All Keybinding Data
-            </Button>
-            <Button onClick={() => act('cancel')}>Cancel</Button>
+            <Footer />
           </Stack.Item>
         </Stack>
       </Window.Content>
     </Window>
+  );
+};
+
+const KeybindList = () => {
+  const { data } = useBackend<KeybindsData>();
+  const { keys } = data;
+
+  const [focusedKey, setFocusedKey] = useState('');
+
+  return (
+    <Section scrollable fill>
+      <NoticeBox info>
+        You can only rebind keys you have access to when opening the window.
+        <br />
+        Ex: You can only change human hotkeys if you are currently human.
+      </NoticeBox>
+      <LabeledList>
+        <LabeledList.Item label="Action">
+          Corresponding Keybind
+        </LabeledList.Item>
+        {keys.sort(sortKeys).map((k) => (
+          <Keybind
+            key={k.id}
+            keybind={k}
+            isFocused={k.id === focusedKey}
+            setFocusedKey={setFocusedKey}
+          />
+        ))}
+      </LabeledList>
+    </Section>
+  );
+};
+
+interface KeybindProps {
+  keybind: KeybindData;
+  isFocused: BooleanLike;
+  setFocusedKey: (string) => void;
+}
+const Keybind = (props: KeybindProps) => {
+  const { act } = useBackend<KeybindsData>();
+  const { keybind, isFocused, setFocusedKey } = props;
+  return (
+    <LabeledList.Item label={keybind.label}>
+      <Button
+        onKeyDown={(event) => {
+          if (isEscape(event.key)) {
+            setFocusedKey('');
+          }
+          if (!isStandardKey(event)) {
+            return;
+          }
+          setFocusedKey('');
+          const value = formatKeyboardEvent(event);
+          return act('changed_key', { id: keybind.id, value });
+        }}
+        onClick={() => {
+          setFocusedKey(keybind.id);
+        }}
+        color={isFocused ? 'good' : null}
+      >
+        {isFocused ? '...' : keybind.changedValue || keybind.savedValue}
+      </Button>
+    </LabeledList.Item>
+  );
+};
+
+const Footer = () => {
+  const { act } = useBackend<KeybindsData>();
+  return (
+    <>
+      <Button onClick={() => act('confirm')} color="good" icon="save">
+        Confirm
+      </Button>
+      <Button onClick={() => act('reset')} color="bad" icon="trash">
+        Reset All Keybinding Data
+      </Button>
+      <Button onClick={() => act('cancel')}>Cancel</Button>
+    </>
   );
 };
 

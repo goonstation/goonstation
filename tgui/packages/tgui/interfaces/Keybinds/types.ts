@@ -9,7 +9,7 @@ export interface KeybindsData {
   keys: Array<KeybindData>;
 }
 
-interface KeybindData {
+export interface KeybindData {
   label: string;
   id: string;
   savedValue: string;
