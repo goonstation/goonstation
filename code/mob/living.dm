@@ -203,6 +203,8 @@
 	src.remove_ailments()
 	src.lastgasp(allow_dead = TRUE)
 	if (src.ai) src.ai.disable()
+	if (src.isFlying)
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 	if (src.key && VALID_MOB(src))
 		var/datum/eventRecord/Death/deathEvent = new
 		deathEvent.buildAndSend(src, gibbed)
