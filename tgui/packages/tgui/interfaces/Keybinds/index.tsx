@@ -13,14 +13,11 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { isEscape } from 'tgui-core/keys';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import {
-  formatKeyboardEvent,
-  isEscape,
-  isStandardKey,
-} from './formatKeyboardEvent';
+import { formatKeyboardEvent, isStandardKey } from './formatKeyboardEvent';
 import { KeybindsData } from './types';
 
 export const Keybinds = () => {

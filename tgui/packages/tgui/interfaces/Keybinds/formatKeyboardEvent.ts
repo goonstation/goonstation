@@ -1,3 +1,5 @@
+import { isEscape, KEY } from 'tgui-core/keys';
+
 const DOM_KEY_LOCATION_NUMPAD = 3;
 const KEY_CODE_TO_BYOND: Record<string, string> = {
   DEL: 'Delete',
@@ -12,30 +14,6 @@ const KEY_CODE_TO_BYOND: Record<string, string> = {
   SPACEBAR: 'Space',
   UP: 'North',
 };
-enum KEY {
-  Alt = 'Alt',
-  Backspace = 'Backspace',
-  Control = 'Control',
-  Delete = 'Delete',
-  Down = 'ArrowDown',
-  End = 'End',
-  Enter = 'Enter',
-  Esc = 'Esc',
-  Escape = 'Escape',
-  Home = 'Home',
-  Insert = 'Insert',
-  Left = 'ArrowLeft',
-  PageDown = 'PageDown',
-  PageUp = 'PageUp',
-  Right = 'ArrowRight',
-  Shift = 'Shift',
-  Space = ' ',
-  Tab = 'Tab',
-  Up = 'ArrowUp',
-}
-export function isEscape(key: string): boolean {
-  return key === KEY.Esc || key === KEY.Escape;
-}
 export const isStandardKey = (event: React.KeyboardEvent): boolean => {
   return (
     event.key !== KEY.Alt &&
