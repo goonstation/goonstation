@@ -2147,7 +2147,7 @@ or don't if it uses a custom topopen overlay
 	if (isdead(src) || C.network != src.network)
 		return 0
 
-	if(!C.loc || qdeled(C))
+	if(!C.loc || C.qdeled)
 		return 0
 	// ok, we're alive, camera is acceptable and in our network...
 	camera_overlay_check(C) //Add static if the camera is disabled
