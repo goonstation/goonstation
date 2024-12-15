@@ -4,7 +4,7 @@
  * @author Garash2k (https://github.com/garash2k)
  * @license MIT
  */
-import { Stack } from 'tgui-core/components';
+import { Section, Stack } from 'tgui-core/components';
 
 import { Window } from '../../layouts';
 import { Footer } from './Footer';
@@ -16,7 +16,9 @@ export const Keybinds = () => {
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>
-            <KeybindList />
+            <Section scrollable fill>
+              <KeybindList />
+            </Section>
           </Stack.Item>
           <Stack.Item>
             <Footer />

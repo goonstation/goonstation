@@ -5,7 +5,7 @@
  * @license MIT
  */
 import { useState } from 'react';
-import { LabeledList, NoticeBox, Section } from 'tgui-core/components';
+import { LabeledList, NoticeBox } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Keybind } from './Keybind';
@@ -18,7 +18,7 @@ export const KeybindList = () => {
   const [focusedKey, setFocusedKey] = useState('');
 
   return (
-    <Section scrollable fill>
+    <>
       <NoticeBox info>
         You can only rebind keys you have access to when opening the window.
         <br />
@@ -37,7 +37,7 @@ export const KeybindList = () => {
           />
         ))}
       </LabeledList>
-    </Section>
+    </>
   );
 };
 
