@@ -205,6 +205,7 @@
 
 /obj/item/disk/data/floppy/security
 	icon_state = "datadiskmed" //yeah its "med" but its not used anywhere
+	random_color = FALSE
 	New()
 		..()
 		var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "SECAUTH";} (src)
@@ -224,7 +225,6 @@
 
 /obj/item/disk/data/floppy/computer3boot
 	name = "data disk-'ThinkDOS'"
-	random_color = FALSE
 
 	New()
 		. = ..()
