@@ -642,6 +642,10 @@ var/global/list/job_start_locations = list()
 	warptarget_modifier = LANDMARK_VM_WARP_NONE
 /// target turf for projecting its contents elsewhere
 /turf/var/turf/vistarget = null
+/// turfs to project speech to (overlaps with vistarget speech)
+/turf/var/list/listening_turfs = null
+/// turfs to project reachability of objects to  (overlaps somewhat with vistarget)
+/turf/var/list/reachable_turfs = null
 /// target turf for teleporting its contents elsewhere
 /turf/var/turf/warptarget = null
 /// control who gets warped to warptarget

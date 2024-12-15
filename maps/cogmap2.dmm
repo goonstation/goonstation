@@ -3996,7 +3996,7 @@
 	dir = 8;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/traffic_light/trader_left/delay3,
+/obj/machinery/light/traffic_light/trader_left/delay2,
 /turf/space,
 /area/space)
 "anm" = (
@@ -50879,6 +50879,7 @@
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
+/obj/machinery/light/traffic_light/trader_left/delay2,
 /turf/space,
 /area/space)
 "cZv" = (
@@ -55456,6 +55457,13 @@
 	dir = 1
 	},
 /area/station/crew_quarters/garden)
+"dHL" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay2,
+/turf/space,
+/area/space)
 "dHM" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -56101,7 +56109,7 @@
 	dir = 1;
 	icon_state = "lattice-dir-b"
 	},
-/obj/machinery/light/runway_light,
+/obj/machinery/light/traffic_light/research_outpost,
 /turf/space,
 /area/space)
 "eue" = (
@@ -56721,6 +56729,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"eYR" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/research_station/delay2,
+/turf/space,
+/area/space)
 "eZn" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -57758,6 +57773,14 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/maintenance/central)
+"gjN" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station,
+/turf/space,
+/area/space)
 "gke" = (
 /obj/stool/chair{
 	dir = 8
@@ -58687,7 +58710,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay2,
+/obj/machinery/light/traffic_light/research_outpost/delay4,
 /turf/space,
 /area/space)
 "hgc" = (
@@ -60080,6 +60103,14 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/small_backup2)
+"iqY" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay4,
+/turf/space,
+/area/space)
 "irn" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -60474,6 +60505,13 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
+"iLj" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/research_station/delay3,
+/turf/space,
+/area/space)
 "iMi" = (
 /obj/mesh/catwalk,
 /obj/cable/yellow{
@@ -61145,6 +61183,14 @@
 	},
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
+"jps" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left,
+/turf/space,
+/area/space)
 "jpw" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
@@ -64130,14 +64176,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/south)
-"mey" = (
-/obj/machinery/light/runway_light/delay3,
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/space)
 "meY" = (
 /mob/living/critter/small_animal/bird/owl,
 /obj/machinery/firealarm/north,
@@ -65972,6 +66010,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
+"nTc" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/research_station/delay4,
+/turf/space,
+/area/space)
 "nTk" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -66113,6 +66158,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"oaH" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/mining_station,
+/turf/space,
+/area/space)
 "oaJ" = (
 /obj/machinery/firealarm/west,
 /obj/machinery/camera{
@@ -68322,6 +68375,14 @@
 /obj/disposalpipe/segment/produce,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"qnz" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay5,
+/turf/space,
+/area/space)
 "qoF" = (
 /obj/machinery/chem_heater/chemistry,
 /obj/machinery/firealarm/east,
@@ -68599,6 +68660,13 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/tech)
+"qBN" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/research_outpost/delay3,
+/turf/space,
+/area/space)
 "qCO" = (
 /obj/decal/poster/wallsign/testsubject,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -69726,6 +69794,14 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/gas)
+"rCq" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay2,
+/turf/space,
+/area/space)
 "rDA" = (
 /obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /turf/simulated/floor,
@@ -71342,7 +71418,7 @@
 /area/station/maintenance/central)
 "tnE" = (
 /obj/lattice,
-/obj/machinery/light/runway_light/delay4,
+/obj/machinery/light/traffic_light/research_station/delay5,
 /turf/space,
 /area/space)
 "tnF" = (
@@ -72363,6 +72439,14 @@
 /obj/random_item_spawner/organs/one_to_three,
 /turf/simulated/floor/grime,
 /area/station/medical/maintenance)
+"uoZ" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay3,
+/turf/space,
+/area/space)
 "uqA" = (
 /obj/machinery/light,
 /turf/simulated/floor/purple/side,
@@ -72851,6 +72935,13 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
+"uPr" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/research_outpost/delay2,
+/turf/space,
+/area/space)
 "uPO" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
@@ -74965,6 +75056,14 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/maintenance/disposal)
+"xpc" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay2,
+/turf/space,
+/area/space)
 "xpe" = (
 /obj/machinery/crusher/slow,
 /obj/machinery/conveyor/NS{
@@ -75112,6 +75211,11 @@
 "xwY" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south,
 /area/station/medical/head)
+"xxn" = (
+/obj/lattice,
+/obj/machinery/light/traffic_light/research_outpost/delay5,
+/turf/space,
+/area/space)
 "xxx" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -75538,6 +75642,14 @@
 	icon_state = "fgreen4"
 	},
 /area/station/hydroponics/bay)
+"xSG" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/research_station,
+/turf/space,
+/area/space)
 "xSL" = (
 /obj/machinery/firealarm/north,
 /obj/machinery/light{
@@ -84696,13 +84808,13 @@ htk
 dii
 dii
 aab
-mey
+aaS
 hfj
-dhc
-dhv
-aef
-adw
-hfj
+aah
+qBN
+aah
+uPr
+aah
 etY
 aaa
 aaa
@@ -84997,7 +85109,7 @@ dmn
 eMD
 dmm
 dii
-aaF
+xxn
 qDX
 kOo
 dRS
@@ -86205,7 +86317,7 @@ diT
 qTr
 pJc
 dii
-aaF
+xxn
 qDX
 qOn
 otl
@@ -86508,13 +86620,13 @@ tKc
 fcI
 dii
 aab
-bpt
+aaF
 hfj
-dhc
-dhv
-aef
-adw
-hfj
+aah
+qBN
+aah
+uPr
+aah
 etY
 aaa
 aaa
@@ -98718,14 +98830,14 @@ aaa
 aaa
 aaa
 aaa
-aao
+agE
 ahg
 ahg
 ahg
 ahg
 ahg
 ahg
-aao
+agE
 aaa
 aaa
 aaa
@@ -99020,14 +99132,14 @@ aaa
 aaa
 aaa
 aaa
-agE
+aao
 ahg
 ahg
 ahg
 ahg
 ahg
 ahg
-agE
+aao
 aaa
 aaa
 aaa
@@ -99322,14 +99434,14 @@ aaa
 aaa
 aaa
 aaa
-aao
+lqm
 ahg
 ahg
 ahg
 ahg
 ahg
 ahg
-aao
+lqm
 aaa
 aaa
 aaa
@@ -99926,7 +100038,7 @@ aaa
 aaa
 aaa
 aaa
-lqm
+rCq
 aaa
 afI
 aiE
@@ -100050,7 +100162,7 @@ dcj
 dcj
 dbu
 aaa
-aao
+rCq
 aaa
 aaa
 aaa
@@ -100531,12 +100643,12 @@ aaa
 aaa
 aaa
 aam
-aaS
+jps
 afE
 jep
 jep
 afE
-aaS
+jps
 ann
 amc
 aps
@@ -101563,14 +101675,14 @@ idD
 kwQ
 prn
 tnE
-adw
-hfj
-dhc
-dhv
-aef
-adw
-hfj
-etY
+aah
+nTc
+aah
+iLj
+aah
+eYR
+aah
+xSG
 aaa
 aaa
 aaa
@@ -103375,14 +103487,14 @@ den
 dfw
 dfO
 tnE
-adw
-hfj
-dhc
-dhv
-aef
-adw
-hfj
-etY
+aah
+nTc
+aah
+iLj
+aah
+eYR
+aah
+xSG
 aaa
 aaa
 aaa
@@ -128133,10 +128245,10 @@ cea
 cea
 cea
 cea
-aaa
-aaa
-aaa
-aaa
+dHL
+aah
+aah
+oaH
 aaa
 aaa
 aaa
@@ -128729,7 +128841,7 @@ ceb
 cOv
 cOv
 ceb
-aaI
+qnz
 aaa
 cYt
 cYt
@@ -130541,7 +130653,7 @@ ceb
 cOv
 cOv
 jYf
-aaI
+qnz
 aaa
 cYt
 cYt
@@ -130845,16 +130957,16 @@ cOv
 kkQ
 aaF
 aaS
+iqY
 aaS
 aaS
+uoZ
 aaS
 aaS
+xpc
 aaS
 aaS
-aaS
-aaS
-aaS
-aaS
+gjN
 aaS
 aaS
 aaS

@@ -20291,6 +20291,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/main)
+"bGF" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay3,
+/turf/space,
+/area/space)
 "bGG" = (
 /obj/disposalpipe/segment/mail/bent/west,
 /obj/landmark/gps_waypoint,
@@ -31178,6 +31186,14 @@
 /obj/landmark/halloween,
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/hallway/primary/west)
+"drB" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/trader_left,
+/turf/space,
+/area/space)
 "drG" = (
 /turf/simulated/floor/yellow/side,
 /area/station/engine/monitoring)
@@ -35676,6 +35692,13 @@
 	icon_state = "bluechecker"
 	},
 /area/station/crew_quarters/pool)
+"gvP" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay4,
+/turf/space,
+/area/space)
 "gvQ" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
@@ -36169,6 +36192,13 @@
 /obj/cable,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
+"gNv" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay3,
+/turf/space,
+/area/space)
 "gNw" = (
 /obj/stool/bench/red,
 /obj/machinery/light/small{
@@ -37197,6 +37227,13 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/exit)
+"huG" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay4,
+/turf/space,
+/area/space)
 "hvn" = (
 /obj/mesh/grille/steel,
 /obj/disposalpipe/segment/food{
@@ -39271,6 +39308,13 @@
 	id = "sw_router_east"
 	},
 /turf/simulated/floor/airless/plating,
+/area/space)
+"iVZ" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay2,
+/turf/space,
 /area/space)
 "iWG" = (
 /obj/table/wood/round/auto,
@@ -44138,6 +44182,13 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
+"muN" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay3,
+/turf/space,
+/area/space)
 "mvj" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/glass/beaker/large/epinephrine,
@@ -46441,6 +46492,14 @@
 	dir = 8
 	},
 /area/station/security/main)
+"ohG" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay2,
+/turf/space,
+/area/space)
 "ohR" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
@@ -47282,6 +47341,13 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/grey,
 /area/station/medical/robotics)
+"oOQ" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay2,
+/turf/space,
+/area/space)
 "oOS" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
@@ -47855,6 +47921,14 @@
 /obj/item/cell/supercell/charged,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
+"pmE" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station,
+/turf/space,
+/area/space)
 "pmK" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -48394,6 +48468,14 @@
 /obj/decal/tile_edge/floorguide/arrow_e,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"pHq" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/trader_right,
+/turf/space,
+/area/space)
 "pHx" = (
 /obj/machinery/r_door_control/podbay/security,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -59875,6 +59957,14 @@
 /obj/machinery/navbeacon/mule/news_office/west,
 /turf/simulated/floor/carpet/red/standard/edge/south,
 /area/station/crew_quarters/radio/news_office)
+"xGF" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay4,
+/turf/space,
+/area/space)
 "xGH" = (
 /obj/table/auto,
 /obj/item/storage/belt/utility,
@@ -92427,17 +92517,17 @@ aaa
 aaa
 aaa
 aaa
+pmE
+aaa
+ast
+ast
+ast
+ast
+ast
+ast
 aaa
 aaa
-ast
-ast
-ast
-ast
-ast
-ast
-aaa
-aaa
-aaa
+pmE
 aaa
 aaa
 aaa
@@ -92729,8 +92819,8 @@ aaa
 aaa
 aaa
 aaa
+aci
 aaa
-aaa
 ast
 ast
 ast
@@ -92739,7 +92829,7 @@ ast
 ast
 ast
 aaa
-aaa
+aci
 aaa
 aaa
 aaa
@@ -93031,8 +93121,8 @@ aaa
 aaa
 aaa
 aaa
+ohG
 aaa
-aaa
 ast
 ast
 ast
@@ -93041,7 +93131,7 @@ ast
 ast
 ast
 ast
-aaa
+ohG
 aaa
 aaa
 aaa
@@ -93333,8 +93423,8 @@ aaa
 aaa
 aaa
 aaa
+aci
 aaa
-aaa
 ast
 ast
 ast
@@ -93343,7 +93433,7 @@ ast
 ast
 ast
 ast
-aaa
+aci
 aaa
 aaa
 aaa
@@ -93635,8 +93725,8 @@ aaa
 aaa
 aaa
 aaa
+bGF
 aaa
-aaa
 ast
 ast
 ast
@@ -93645,7 +93735,7 @@ ast
 ast
 ast
 ast
-aaa
+bGF
 aaa
 aaa
 aaa
@@ -93937,8 +94027,8 @@ aaa
 aaa
 aaa
 aaa
+aci
 aaa
-aaa
 ast
 ast
 ast
@@ -93947,7 +94037,7 @@ ast
 ast
 ast
 aaa
-aaa
+aci
 aaa
 aaa
 aaa
@@ -94237,10 +94327,10 @@ aaa
 aaa
 aaa
 aaa
-abX
-aaa
 aNQ
 aaa
+xGF
+aaa
 ast
 ast
 ast
@@ -94249,7 +94339,7 @@ ast
 ast
 aaa
 aaa
-aaa
+xGF
 aaa
 aaa
 aaa
@@ -94548,10 +94638,10 @@ atH
 jVF
 eaN
 atH
-aPh
-aaa
-aaa
-aaa
+abZ
+abZ
+abZ
+acO
 aaa
 aaa
 aaa
@@ -94853,7 +94943,7 @@ aeL
 aaa
 aaa
 aaa
-aaa
+aci
 aaa
 aaa
 aaa
@@ -95155,7 +95245,7 @@ aeK
 aeK
 aaa
 aaa
-abX
+aci
 aaa
 aaa
 aaa
@@ -100067,13 +100157,13 @@ cfa
 cdZ
 mpl
 aad
-aPh
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+gvP
+abZ
+muN
+abZ
+iVZ
+abZ
+drB
 aaa
 aaa
 aaa
@@ -103389,13 +103479,13 @@ bZJ
 bZJ
 aaf
 abZ
-aPh
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+huG
+abZ
+gNv
+abZ
+oOQ
+abZ
+pHq
 aaa
 aaa
 aaa

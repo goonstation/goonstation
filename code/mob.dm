@@ -1885,12 +1885,16 @@
 			light.enable()
 			SPAWN(1 SECOND)
 				qdel(light)
+	else if(src.custom_gib_handler)
+		call(src.custom_gib_handler)(src.loc)
+	else if(issilicon(src) || isrobocritter(src))
+		robogibs(src.loc)
+	else
+		gibs(src.loc)
+
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
-
-	if (!iscarbon(src))
-		robogibs(src.loc)
 
 	if (animation)
 		animation.delaydispose()
