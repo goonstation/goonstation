@@ -67,8 +67,12 @@
 		if(src.resources < selection.cost)
 			boutput(user, SPAN_ALERT("Not enough resources to make a [selection.name]!"))
 			return
-		SETUP_GENERIC_ACTIONBAR(target, src, src.dispenser_delay, PROC_REF(create_item), list(target, user, selection, direction),\
-			 selection.icon, selection.icon_state, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED)
+		var/icon/rotated_icon = icon(selection.icon, selection.icon_state, src.direction)
+		var/datum/action/bar/icon/callback/actionbar = new (\
+			target, src, src.dispenser_delay, PROC_REF(create_item), list(target, user, selection, direction),\
+			rotated_icon, null, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+		)
+		actions.start(actionbar, user)
 
 /obj/item/places_pipes/proc/create_item(turf/target, mob/user, datum/pipe_recipe/recipe, direction)
 	if(!(user && can_reach(user, target)))
