@@ -80,6 +80,7 @@
 		return
 	if(src.resources < selection.cost)
 		boutput(user, SPAN_ALERT("Not enough resources to make a [recipe.name]!"))
+		return
 	var/directs = recipe.get_directions(direction)
 	for(var/obj/machinery/atmospherics/device in target)
 		if(device.initialize_directions & directs)
