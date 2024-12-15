@@ -788,7 +788,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		for (var/mob/M in src)
 			M.set_loc(newloc)
 
-	proc/drop_vis_contents()
+	proc/dump_vis_contents()
 		if (src.vis_controller && length(src.vis_controller.vis_items))
 			for (var/atom/movable/AM in src.vis_controller.vis_items)
 				AM.set_loc(src.loc)
@@ -796,7 +796,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 	proc/dump_contents(mob/user)
 		src.dump_direct_contents(user)
-		src.drop_vis_contents()
+		src.dump_vis_contents()
 
 	proc/toggle(var/mob/user)
 		if (src.open)
