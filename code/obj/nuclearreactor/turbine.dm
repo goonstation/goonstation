@@ -38,6 +38,8 @@
 	var/flow_rate = 200
 	/// Maximum volume of gas to process per tick
 	var/flow_rate_max = 1000
+	/// Health of the turbine - basically how many times it can grump before it explodes
+	var/health = 15
 
 	var/static/sound_stall = 'sound/machines/tractor_running.ogg'
 	var/static/list/grump_sound_list = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg', 'sound/impact_sounds/Metal_Clang_1.ogg', 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg')
@@ -233,6 +235,7 @@
 			if(overspeed && prob(40))
 				hit_twitch(src)
 				playsound(src, pick(src.grump_sound_list), 40, 2*rand())
+				src.health--;
 
 			src.air2.merge(air_contents)
 			src.terminal.add_avail(src.lastgen)
@@ -243,6 +246,8 @@
 			src.network1?.update = TRUE
 			src.network2?.update = TRUE
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "rpm=[src.RPM]&stator=[src.stator_load]&power=[src.lastgen]&powerfmt=[engineering_notation(src.lastgen)]W")
+		if(src.health <= 0)
+			src.ExplodeViolently()
 
 	suicide(mob/user)
 		user.visible_message(SPAN_ALERT("<b>[user] puts their head into blades of \the [src]!</b>"))
@@ -310,3 +315,14 @@
 				var/x = params["newVal"]
 				src.flow_rate = min(max(x,1),10e5)
 				logTheThing(LOG_STATION, src, "[src] flow rate configured to [x] by [ui.user]")
+
+	proc/ExplodeViolently()
+		//explode
+		explosion_new(src, get_turf(src), 10, TRUE, 0, 360, TRUE)
+		playsound(get_turf(src), 'sound/impact_sounds/Machinery_Break_1.ogg', 50, TRUE)
+		src.visible_message(SPAN_ALERT("[src] tears itself apart!"))
+		//shoot turbine blades out everywhere
+		for(var/i = 1 to rand(5,20))
+			shoot_projectile_XY(src, new /datum/projectile/bullet/shrapnel/shrapnel_implant(), rand(-10,10), rand(-10,10))
+		//destroy the turbine
+		qdel(src)
