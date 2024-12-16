@@ -77,6 +77,7 @@
 			"load" = turbine_handle?.stator_load,
 			"power" = turbine_handle?.lastgen,
 			"volume" = turbine_handle?.flow_rate,
+			"volume_max" = turbine_handle?.flow_rate_max,
 			"history" = src.history,
 			"overspeed" = turbine_handle?.overspeed,
 			"overtemp" = turbine_handle?.overtemp,
