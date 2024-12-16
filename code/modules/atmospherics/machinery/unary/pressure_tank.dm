@@ -8,6 +8,7 @@
 
 /obj/machinery/atmospherics/unary/tank/New()
 	..()
+	src.AddComponent(/datum/component/obj_projectile_damage)
 	src.air_contents.volume = src.volume
 	src.air_contents.temperature = T20C
 
