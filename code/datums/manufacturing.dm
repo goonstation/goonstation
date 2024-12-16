@@ -3189,7 +3189,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/lanyard
 	name = "Lanyard"
 	item_requirements = list("cloth" = 1)
-	item_outputs = list(obj/item/clothing/lanyard)
+	item_outputs = list(/obj/item/clothing/lanyard)
 	create = 1
 	time = 5 SECONDS
 	category = "Clothing"
