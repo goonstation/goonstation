@@ -9,7 +9,6 @@
 	icon = 'icons/mob/mobile_ai.dmi'
 	voice_name = "synthesized voice"
 	icon_state = "ai"
-	network = "SS13"
 	pixel_y = 15
 	layer = MOB_LAYER
 	classic_move = 0
