@@ -309,6 +309,10 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	can_make_injector = 0
 	reclaim_fail = 100
 
+	OnAdd()
+		. = ..()
+		ability?.doCooldown()
+
 /datum/targetable/geneticsAbility/jumpy
 	name = "Jumpy"
 	desc = "Take a big leap forward."

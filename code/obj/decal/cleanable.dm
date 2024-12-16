@@ -1301,6 +1301,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 /obj/decal/cleanable/oil/streak
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")
+	sample_amt = 5
 
 /obj/decal/cleanable/paint
 	name = "marker paint"
