@@ -2126,7 +2126,7 @@ or don't if it uses a custom topopen overlay
 	if (!C)
 		src.set_eye(null)
 		return 0
-	if (isdead(src) || !(C.network in src.camera_networks))
+	if (isdead(src) || !(C.network in src.camera_networks) || get_z(C) != Z_LEVEL_STATION)
 		return 0
 
 	if(isnull(C.loc) || QDELETED(C))

@@ -119,7 +119,7 @@
 	var/list/D = list()
 	var/counter = 1
 	for (var/obj/machinery/camera/C in L)
-		if (C.network in src.camera_networks)
+		if ((C.network in src.camera_networks) && get_z(C) == Z_LEVEL_STATION)
 			var/T = text("[][]", C.c_tag, (C.camera_status ? null : " (Deactivated)"))
 			if(D[T])
 				D["[T] #[counter++]"] = C
