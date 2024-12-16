@@ -3186,6 +3186,13 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 
 /******************** HOP *******************/
+/datum/manufacture/lanyard
+	name = "Lanyard"
+	item_requirements = list("cloth" = 1)
+	item_outputs = list(obj/item/clothing/lanyard)
+	create = 1
+	time = 5 SECONDS
+	category = "Clothing"
 
 /datum/manufacture/id_card
 	name = "ID card"

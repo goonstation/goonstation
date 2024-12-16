@@ -450,6 +450,7 @@
 		/datum/manufacture/satchel_red,
 		/datum/manufacture/satchel_green,
 		/datum/manufacture/satchel_blue,
+		/datum/manufacture/lanyard,
 		/datum/manufacture/handkerchief)
 
 	hidden = list(/datum/manufacture/breathmask,
@@ -493,8 +494,9 @@
 	icon_base = "access"
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
+		/obj/item/material_piece/cloth/cottonfabric = 5,
 		/obj/item/material_piece/glass = 2)
-	available = list(/datum/manufacture/id_card, /datum/manufacture/implant_access,	/datum/manufacture/implanter)
+	available = list(/datum/manufacture/id_card,/datum/manufacture/lanyard, /datum/manufacture/implant_access,	/datum/manufacture/implanter)
 	hidden = list(/datum/manufacture/id_card_gold, /datum/manufacture/implant_access_infinite)
 
 //combine personnel + uniform manufactuer here. this is 'cause destiny doesn't have enough room! arrg!
@@ -550,6 +552,7 @@
 		/datum/manufacture/hat_blue,
 		/datum/manufacture/hat_purple,
 		/datum/manufacture/hat_tophat,
+		/datum/manufacture/lanyard,
 		/datum/manufacture/handkerchief,)
 
 	hidden = list(/datum/manufacture/id_card_gold,
