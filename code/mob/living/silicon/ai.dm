@@ -2592,6 +2592,10 @@ proc/get_mobs_trackable_by_AI()
 		src.real_name = default_name
 
 	src.UpdateName()
+
+/mob/living/silicon/ai/UpdateName()
+	. = ..()
+	src.camera.c_tag = src.real_name
 	src.eyecam.UpdateName()
 	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
