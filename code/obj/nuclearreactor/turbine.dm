@@ -36,6 +36,8 @@
 	var/best_RPM = 600
 	/// Volume of gas to process per tick for power generation
 	var/flow_rate = 200
+	/// Maximum volume of gas to process per tick
+	var/flow_rate_max = 1000
 
 	var/static/sound_stall = 'sound/machines/tractor_running.ogg'
 	var/static/list/grump_sound_list = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg', 'sound/impact_sounds/Metal_Clang_1.ogg', 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg')
@@ -99,6 +101,7 @@
 		if(!length(inp.signal)) return
 		var/newflow = text2num(inp.signal)
 		if(newflow != src.flow_rate && isnum_safe(newflow) && newflow > 0)
+			newflow = min(newflow, src.flow_rate_max)
 			src.flow_rate = newflow
 			logTheThing(LOG_STATION, src, "set flow rate to [newflow] using mechcomp.")
 
