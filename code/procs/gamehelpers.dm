@@ -162,6 +162,9 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 			if(BOUNDS_DIST(T.vistarget, user) == 0 || BOUNDS_DIST(T.vistarget, user) == 0)
 				return TRUE
 
+		for (var/turf/reachable as anything in T.reachable_turfs)
+			if (user in reachable)
+				return TRUE
 
 /proc/test_click(turf/from, turf/target, actually_test_entering=FALSE)
 	var/obj/item/dummy/click_dummy = get_singleton(/obj/item/dummy)
