@@ -1,5 +1,7 @@
 
 (t)sun dec 15 24
+(u)LeahTheTech
+(+)Static pressure tanks can now be broken by smashing them, the same as canisters.
 (u)patricia
 (p)21569
 (e)🆕💡|C-Feature, A-Station-Systems
