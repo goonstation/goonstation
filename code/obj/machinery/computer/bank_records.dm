@@ -8,7 +8,6 @@
 	var/authenticated = null
 	var/rank = null
 	var/screen = null
-	var/a_id = null
 	var/temp = null
 	var/printing = null
 	var/can_change_id = 0
@@ -178,7 +177,7 @@
 				else
 					if (href_list["login"])
 						if (usr_is_robot && !isghostdrone(usr))
-							src.authenticated = 1
+							src.authenticated = usr.real_name
 							src.rank = "AI"
 							src.screen = 1
 						if (istype(src.scan, /obj/item/card/id))
@@ -336,7 +335,7 @@
 					src.bonus_rate_limit_time = world.time + (5 MINUTES)
 					if(department == "Stationwide")
 						department = "eligible"
-					command_announcement("[message]<br>Bonus of [bonus][CREDIT_SIGN] issued to all [lowertext(department)] staff.", "Payroll Announcement by [scan.registered] ([scan.assignment])")
+					command_announcement("[message]<br>Bonus of [bonus][CREDIT_SIGN] issued to all [lowertext(department)] staff.", "Payroll Announcement by [src.authenticated] ([src.rank])")
 					wagesystem.station_budget = wagesystem.station_budget - bonus_total
 					for(var/datum/db_record/R as anything in lucky_crew)
 						if(R["job"] == "Clown")
