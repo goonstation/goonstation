@@ -10,18 +10,10 @@ import {
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { capitalize } from './common/stringUtils';
-
-interface GeneralAlertData {
-  title: string;
-  theme: string;
-  minimap_id: string;
-  placable_marker_states;
-  placable_marker_images;
-  minimap_markers;
-}
+import { MinimapControllerData } from './MinimapController';
 
 export const GeneralAlert = () => {
-  const { data, act } = useBackend<GeneralAlertData>();
+  const { data, act } = useBackend<MinimapControllerData>();
   const {
     title,
     theme,
