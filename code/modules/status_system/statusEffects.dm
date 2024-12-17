@@ -1730,19 +1730,35 @@
 	visible = TRUE
 	effect_quality = STATUS_QUALITY_NEGATIVE
 	movement_modifier = /datum/movement_modifier/shiver
+	/// chilled by an ice phoenix
+	var/phoenix_chill = FALSE
 
-	onAdd(optional=null)
+	preCheck(atom/A)
+		. = ..()
+		if (istype(A, /mob/living/critter/ice_phoenix))
+			. = FALSE
+
+	onAdd(optional)
+		src.phoenix_chill = optional
 		var/mob/M = owner
 		if(istype(M))
 			M.emote("shiver")
-			M.thermoregulation_mult *= 3
+			M.thermoregulation_mult *= (src.phoenix_chill ? 3 : 1.5)
+		. = ..()
+
+	onChange(optional)
+		if (optional && !src.phoenix_chill)
+			var/mob/M = owner
+			if (istype(M))
+				M.thermoregulation_mult /= 2
+			src.phoenix_chill = TRUE
 		. = ..()
 
 	onRemove()
 		. = ..()
 		var/mob/M = owner
 		if(istype(M))
-			M.thermoregulation_mult /= 3
+			M.thermoregulation_mult /= (src.phoenix_chill ? 3 : 1.5)
 
 /datum/statusEffect/miasma
 	id = "miasma"
@@ -3013,3 +3029,72 @@
 		else
 			APPLY_ATOM_PROPERTY(src.owner, PROP_ATOM_ART_FISSURE_CORROSION_COUNT, "art_fissure_corrosion", src.corrosion_stacks)
 
+
+/datum/statusEffect/ice_phoenix
+
+/datum/statusEffect/ice_phoenix/empowered_feather
+	id = "phoenix_empowered_feather"
+	name = "Empowered Feather"
+	desc = "Your next feather attack will deal an extra 10% of a pod's current life on hit, as well as gain a 25% disruption chance."
+	icon_state = "phoenix_feather_emp"
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+/datum/statusEffect/ice_phoenix/sail
+	id = "ice_phoenix_sail"
+	name = "Sailing"
+	desc = "You are sailing the solar winds, grating a large movement speed buff while in space."
+	icon_state = "phoenix_sail"
+	effect_quality = STATUS_QUALITY_POSITIVE
+	move_triggered = TRUE
+
+	move_trigger()
+		..()
+		if (!istype(get_turf(src.owner), /turf/space))
+			src.owner.delStatus(src)
+
+/datum/statusEffect/ice_phoenix/ice_barrier
+	id = "phoenix_ice_barrier"
+	name = "Ice Barrier"
+	desc = "The next attack against you will have its damage reduced by 50%."
+	icon_state = "phoenix_barrier"
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+	onAdd()
+		..()
+		src.owner.add_filter("phoenix_barrier_outline", 1, outline_filter(1, "#09e5f5"))
+
+	onRemove()
+		..()
+		src.owner.remove_filter("phoenix_barrier_outline")
+
+/datum/statusEffect/ice_phoenix/vulnerable
+	id = "phoenix_vulnerable"
+	name = "Vulnerable"
+	desc = "You've been made vulnerable, causing you to radiate ice and have halted health regeneration."
+	icon_state = "phoenix_vulnerable"
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+/datum/statusEffect/ice_phoenix/warmth_counter
+	id = "phoenix_warmth_counter"
+	name = "Station Warming"
+	icon_state = "phoenix_warmth"
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/time_passed = 0
+
+	onUpdate(timePassed)
+		..()
+		var/area/A = get_area(src.owner)
+		if (istype(A, /area/station) && !A.permafrosted)
+			src.time_passed = min(src.time_passed + timePassed, 30 SECONDS)
+			if (src.time_passed >= 30 SECONDS)
+				var/mob/living/critter/ice_phoenix/phoenix = src.owner
+				if (!ON_COOLDOWN(phoenix, "warmth_damage", 1 SECOND))
+					var/mult = max(LIFE_PROCESS_TICK_SPACING, timePassed) / LIFE_PROCESS_TICK_SPACING
+					phoenix.TakeDamage("All", burn = 4 * mult)
+		else
+			src.time_passed -= timePassed
+			if (src.time_passed <= 0)
+				src.owner.delStatus(src)
+
+	getTooltip()
+		return "Being on the station increases your warmth, staying over 30 seconds and you'll start to take damage.<br><br>Current time spent: [round(src.time_passed / 10, 1)] seconds"
