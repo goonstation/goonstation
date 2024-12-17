@@ -2440,7 +2440,8 @@
 		src.activate(input, TRUE)
 
 	proc/activate(var/datum/mechanicsMessage/input, use_signal_id = null)
-		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
+		var/turf/myTurf = get_turf(src)
+		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time) || isrestrictedz(myTurf.z)) return
 		LIGHT_UP_HOUSING
 		flick("[under_floor ? "u":""]comp_tele1", src)
 		var/list/destinations = new/list()
