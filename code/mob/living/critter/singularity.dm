@@ -31,9 +31,9 @@
   can_throw = 1
   can_grab = 1
   can_disarm = 1
-  speechverb_say = "sucks"
-  speechverb_exclaim = "roars"
-  speechverb_ask = "pulls"
+  speech_verb_say = "sucks"
+  speech_verb_exclaim = "roars"
+  speech_verb_ask = "pulls"
   blood_id = "ldmatter"
   metabolizes = 0
   add_abilities = list(/datum/targetable/critter/zzzap, /datum/targetable/critter/bholerip, /datum/targetable/critter/toxmob, /datum/targetable/critter/mezzer)
