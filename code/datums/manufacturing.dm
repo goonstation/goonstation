@@ -3188,7 +3188,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /******************** HOP *******************/
 /datum/manufacture/lanyard
 	name = "Lanyard"
-	item_requirements = list("cloth" = 1)
+	item_requirements = list("fabric" = 1)
 	item_outputs = list(/obj/item/clothing/lanyard)
 	create = 1
 	time = 5 SECONDS
