@@ -126,6 +126,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/black,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -191,6 +192,7 @@
 	name = "HAFGAN security airlock"
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -618,6 +620,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/concrete,
 /area/space)
 "fv" = (
@@ -665,6 +668,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/carpet/red/standard/edge{
 	dir = 8
 	},
@@ -999,6 +1003,7 @@
 	dir = 1
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/stairs/dark{
 	dir = 6
 	},
@@ -1530,6 +1535,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/industrial,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -1620,6 +1626,7 @@
 	name = "HAFGAN security airlock"
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/space)
 "nq" = (
@@ -1654,6 +1661,7 @@
 	name = "HAFGAN security airlock"
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/concrete,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -1756,6 +1764,7 @@
 /obj/machinery/door/poddoor/blast/single{
 	id = "vedwyd_armory"
 	},
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/engine/glow,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -1847,6 +1856,7 @@
 "pj" = (
 /obj/machinery/door/airlock/pyro/classic,
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/concrete,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -1906,6 +1916,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/carpet/grime,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -1971,6 +1982,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/redblack,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -2087,6 +2099,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/concrete,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -2897,6 +2910,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/space,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -3144,6 +3158,7 @@
 /obj/machinery/door/poddoor/blast/single{
 	id = "vedwyd_armory"
 	},
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/engine/glow,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -4080,6 +4095,7 @@
 "HN" = (
 /obj/machinery/door/airlock/pyro/classic,
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/carpet/grime,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -4467,6 +4483,7 @@
 	name = "HAFGAN warehouse"
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/industrial,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -4632,6 +4649,7 @@
 "MD" = (
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/industrial,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -5126,6 +5144,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/black,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -5163,6 +5182,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/black,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -5335,6 +5355,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/sanitary/white,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -5591,6 +5612,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/black,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -5709,6 +5731,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/redblack{
 	dir = 1
 	},
@@ -5985,6 +6008,7 @@
 "Wi" = (
 /obj/machinery/door/airlock/pyro/classic,
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/black,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -6300,6 +6324,7 @@
 "Zi" = (
 /obj/machinery/door/airlock/pyro/glass/reinforced,
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/stairs/dark{
 	dir = 6
 	},
@@ -6368,6 +6393,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/industrial,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
