@@ -499,7 +499,6 @@
 
 	var/approved = FALSE
 	var/approver = null
-	var/approver_job = null
 	var/approver_byond_key = null
 
 	var/sound_to_play = 'sound/misc/bingbong.ogg'
@@ -509,12 +508,10 @@
 		..()
 		generate_ID()
 
-/datum/announcement_request/proc/approve(var/approved_by,var/their_job)
+/datum/announcement_request/proc/approve(var/approved_by)
 	src.approver = approved_by
-	src.approver_job = their_job
 	src.approver_byond_key = get_byond_key(approver)
 	src.approved = TRUE
-	logTheThing(LOG_ADMIN, usr, "approved an announcement from [src.requester]([src.requester_job]) using [src.approver]([src.approver_job])'s PDA. It reads [src.content].")
 	var/header = "PDA Requested Announcement by [src.requester] ([src.requester_job])"
 	command_announcement(src.content, header, src.sound_to_play, volume = src.sound_volume)
 	return TRUE

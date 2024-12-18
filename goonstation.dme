@@ -1544,6 +1544,7 @@
 #include "code\modules\mining\mining_encounters.dm"
 #include "code\modules\mining\ore.dm"
 #include "code\modules\mining\tile_events.dm"
+#include "code\modules\networks\computer3\announcement_request.dm"
 #include "code\modules\networks\computer3\base_os.dm"
 #include "code\modules\networks\computer3\base_program.dm"
 #include "code\modules\networks\computer3\buildandrepair.dm"

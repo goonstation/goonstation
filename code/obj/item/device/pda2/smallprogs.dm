@@ -1239,8 +1239,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 					for (var/datum/announcement_request/request in data_core.announcement_requests)
 						if(!request.approved)
-							dat += "'[request.content]'<br>Requested by: [request.requester] - [request.requester_job]"
-							if(access_change_ids in src.master.access) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[request]'>Approve Announcement</a>"
+							dat += "\"[request.content]\"<br>Requested by: [request.requester] - [request.requester_job]"
 							dat += "<br><br>"
 
 				if(2) //approved announcements
@@ -1250,7 +1249,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 					for (var/datum/announcement_request/request in data_core.announcement_requests)
 						if(request.approved)
-							dat += "'[request.content]'<br>[request.requester != request.approver ? "Requested by: [request.requester] - [request.requester_job]<br>Approved by: [request.approver] - [request.approver_job]" : "Created by: [request.approver] - [request.approver_job]"]<br><br>"
+							dat += "\"[request.content]\"<br>Requested by: [request.requester] ([request.requester_job])<br>Approved by: [request.approver]<br><br>"
 		else
 			dat += "<br><br>[message]<br><br>"
 			dat += "<a href='byond://?src=\ref[src];ok=1'>Ok</a>"
@@ -1277,26 +1276,11 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				request.requester_byond_key = usr.key
 				data_core.announcement_requests += request
 
-				logTheThing(LOG_ADMIN, usr, "requested an announcement using [IDowner]([IDownerjob])'s ID. It reads [announcement_content].")
-				if(access_change_ids in src.master.access)
-					request.approve(IDowner, IDownerjob)
-				else
-					src.message = "Announcement request created, awaiting approval."
+				logTheThing(LOG_SAY, usr, "requested an announcement using [IDowner]([IDownerjob])'s ID. It reads \"[announcement_content]\".")
+				logTheThing(LOG_DIARY, usr, "requested an announcement using [IDowner]([IDownerjob])'s ID. It reads \"[announcement_content]\".", "say")
+				src.message = "Announcement request created, awaiting approval."
 			else
 				src.message = "You have made a request too recently, please wait."
-
-		else if(href_list["approve"])
-			if (!src.master.ID_card)
-				src.message = "Please insert ID card to approve announcements."
-			else
-				var/IDowner = src.master.registered
-				var/IDownerjob = src.master.assignment
-
-				if (access_change_ids in src.master.access)
-					var/datum/announcement_request/request = locate(href_list["approve"])
-					request.approve(IDowner,IDownerjob)
-				else
-					message = "You do not have access to authorize announcements."
 
 		else if(href_list["back"])
 			mode = 0
