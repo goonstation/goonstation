@@ -14,6 +14,7 @@
 	var/direction = EAST
 	var/destroying = FALSE
 	var/resources = 50
+	var/max_resources = 50
 
 /obj/item/places_pipes/New()
 	. = ..()
@@ -37,16 +38,28 @@
 
 /obj/item/places_pipes/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/rcd_ammo))
-		var/obj/item/rcd_ammo/R = W
-		if (!R.matter)
-			return
-		src.resources += R.matter
-		R.matter = 0
-		qdel(R)
-		R.tooltip_rebuild = 1
-		src.tooltip_rebuild = 1
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-		boutput(user, "\The [src] now holds [src.resources] matter-units.")
+		src.load_ammo(user, W)
+		return
+	. = ..()
+
+/obj/item/places_pipes/proc/load_ammo(mob/user, obj/item/rcd_ammo/ammo)
+	if (!ammo.matter)
+		return
+	if (src.resources == src.max_resources)
+		boutput(user, "\The [src] can't hold any more matter.")
+		return
+	if (src.resources + ammo.matter > src.max_resources)
+		ammo.matter -= (src.max_resources - src.resources)
+		boutput(user, "The cartridge now contains [ammo.matter] units of matter.")
+		src.resources = src.max_resources
+		ammo.tooltip_rebuild = 1
+	else
+		src.resources += ammo.matter
+		ammo.matter = 0
+		qdel(ammo)
+	src.tooltip_rebuild = 1
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	boutput(user, "\The [src] now holds [src.resources] matter-units.")
 
 /obj/item/places_pipes/afterattack(atom/target, mob/user)
 	if (!can_reach(user, target))
