@@ -89,6 +89,7 @@
 	src.resources -= recipe.cost
 	src.tooltip_rebuild = 1
 	user.visible_message(SPAN_NOTICE("[user] places a [recipe.name]."))
+	logTheThing(LOG_STATION, user, "places a [recipe.name] at [log_loc(target)] with an HPD")
 	new /dmm_suite/preloader(target, list("dir" = (recipe.bent ? turn(direction, 45) : direction)))
 	var/obj/machinery/atmospherics/device = new recipe.path(target)
 	device.initialize(TRUE)
@@ -99,6 +100,7 @@
 		boutput(user, SPAN_ALERT("Not enough resources to destroy that!"))
 		return
 	boutput(user, SPAN_NOTICE("The [src] destroys the [target]!"))
+	logTheThing(LOG_STATION, user, "destroys a [target] at [log_loc(target)] with an HPD")
 	resources -= 1
 	src.tooltip_rebuild = 1
 	qdel(target)
