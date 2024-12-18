@@ -481,7 +481,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 	provides_sight = FALSE
 	var/obj/item/device/camera_viewer/viewer = null
 
-	HELP_MESSAGE_OVERRIDE("You can replace the installed camera monitor by clicking the eye with the monitor in-hand.")
+	HELP_MESSAGE_OVERRIDE("You can replace the installed camera monitor by clicking the eye with a monitor in-hand.")
 
 	New()
 		. = ..()
