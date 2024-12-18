@@ -390,6 +390,10 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		. = ..()
 		src.name = "AI Law Module - '"+newname+"'"
 		src.lawText = newtext
+		if(newname = "Centcom Law Module")
+			src.highlight_color = rgb(26, 55, 141, 255)
+			src.desc += "This one was uploaded directly by Central Command, uh oh."
+			src.UpdateIcon()
 
 /********************* EXPERIMENTAL LAWS *********************/
 //at the time of programming this, these experimental laws are *intended* to be spawned by an item spawner
