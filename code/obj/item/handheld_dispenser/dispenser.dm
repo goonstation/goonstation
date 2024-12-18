@@ -77,7 +77,7 @@
 			return
 		var/directs = selection.get_directions(direction)
 		for(var/obj/machinery/atmospherics/device in target)
-			if(device.initialize_directions & directs)
+			if((device.initialize_directions & directs) || selection.exclusionary)
 				boutput(user, SPAN_ALERT("Something is occupying that direction!"))
 				return
 		if(src.resources < selection.cost)
@@ -99,7 +99,7 @@
 		return
 	var/directs = recipe.get_directions(direction)
 	for(var/obj/machinery/atmospherics/device in target)
-		if(device.initialize_directions & directs)
+		if((device.initialize_directions & directs) || selection.exclusionary)
 			boutput(user, SPAN_ALERT("Something is occupying that direction!"))
 			return
 	src.resources -= recipe.cost
@@ -191,6 +191,8 @@
 	var/cost = 2
 	var/name = "CALL 1800 CODER"
 	var/bent = FALSE // not a big fan, but its a shrimple solution to bent pipes
+	/// Only one of these per turf, regardless of direction
+	var/exclusionary = FALSE
 
 	proc/get_directions(dir)
 		return 0
@@ -314,6 +316,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine)
 
 ABSTRACT_TYPE(/datum/pipe_recipe/machine/unary)
 /datum/pipe_recipe/machine/unary
+	exclusionary = TRUE
 	get_directions(dir)
 		return dir
 	vent
