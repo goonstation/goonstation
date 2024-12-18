@@ -473,7 +473,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 /obj/item/organ/eye/cyber/monitor
 	name = "monitor cybereye"
 	organ_name = "monitor cybereye"
-	desc = "A tiny screen to replace an eye. You can't use it to see, but it can view public camera networks."
+	desc = "A tiny screen to replace an eye. You can't use it to see, but it can view camera networks from the installed monitor."
 	organ_abilities = list(/datum/targetable/organAbility/view_camera) // side subtype chosen in add_ability
 	default_material = "pharosium"
 	iris_color = "#0d0508"
@@ -481,9 +481,11 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 	provides_sight = FALSE
 	var/obj/item/device/camera_viewer/viewer = null
 
+	HELP_MESSAGE_OVERRIDE("You can replace the installed camera monitor by clicking the eye with the monitor in-hand.")
+
 	New()
 		. = ..()
-		src.viewer = new(src)
+		src.viewer = new /obj/item/device/camera_viewer/public(src)
 		src.viewer.network = list("public", "telesci")
 
 	disposing()
@@ -491,10 +493,24 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 		qdel(src.viewer)
 		src.viewer = null
 
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/device/camera_viewer))
+			if(src.emagged)
+				boutput(user, "The camera monitor is fused into the eye and can't be swapped!")
+				return
+			user.u_equip(W)
+			W.set_loc(src)
+			boutput(user, "You install [W] into [src].")
+			user.put_in_hand_or_drop(src.viewer)
+			src.viewer = W
+			return
+		..()
+
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (!src.emagged)
-			boutput(user, SPAN_ALERT("The network limiter on [src] overloads!"))
-			src.viewer.network.Add("SS13", "ranch", "Robots", "Mining", "Zeta")
+			if(user)
+				boutput(user, SPAN_ALERT("The network limiter on [src.viewer] overloads and fuses to [src]!"))
+			src.viewer.network.Add("public", "telesci", "SS13", "ranch", "Robots", "Mining", "Zeta")
 		. = ..()
 
 	add_ability(datum/abilityHolder/aholder, abil)
