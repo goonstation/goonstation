@@ -4,6 +4,7 @@
 	icon = 'icons/obj/items/hpd.dmi'
 	icon_state = "hpd"
 	flags = TABLEPASS | CONDUCT
+	inventory_counter_enabled = 1
 	var/dispenser_being_used = FALSE
 	var/dispenser_delay = 5 DECI SECONDS
 	var/static/list/atmospipesforcreation = null
@@ -18,6 +19,7 @@
 
 /obj/item/places_pipes/New()
 	. = ..()
+	src.inventory_counter.update_number(src.resources)
 	if (!src.atmospipesforcreation)
 		src.atmospipesforcreation = list()
 		for (var/datum/pipe_recipe/pipe/recipe as anything in concrete_typesof(/datum/pipe_recipe/pipe))
@@ -58,6 +60,7 @@
 		ammo.matter = 0
 		qdel(ammo)
 	src.tooltip_rebuild = 1
+	src.inventory_counter.update_number(src.resources)
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	boutput(user, "\The [src] now holds [src.resources] matter-units.")
 
@@ -101,6 +104,7 @@
 			return
 	src.resources -= recipe.cost
 	src.tooltip_rebuild = 1
+	src.inventory_counter.update_number(src.resources)
 	user.visible_message(SPAN_NOTICE("[user] places a [recipe.name]."))
 	logTheThing(LOG_STATION, user, "places a [recipe.name] at [log_loc(target)] with an HPD")
 	new /dmm_suite/preloader(target, list("dir" = (recipe.bent ? turn(direction, 45) : direction)))
@@ -116,6 +120,7 @@
 	logTheThing(LOG_STATION, user, "destroys a [target] at [log_loc(target)] with an HPD")
 	resources -= 1
 	src.tooltip_rebuild = 1
+	src.inventory_counter.update_number(src.resources)
 	qdel(target)
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
