@@ -1,4 +1,7 @@
 
+(t)tue dec 17 24
+(u)tarmunora
+(+)Planting a kudzu seed now allows you to slip through dense kudzu, and (very) slowly heal while on kudzu. Still blocks vision though.
 (t)sun dec 15 24
 (u)LeahTheTech
 (+)Static pressure tanks can now be broken by smashing them, the same as canisters.
