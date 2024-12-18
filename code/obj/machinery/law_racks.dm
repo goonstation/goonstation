@@ -728,7 +728,10 @@
 	 * Intended for Admemery
 	 */
 	proc/SetLawCustom(lawName, lawText, slot = 1, screwed_in = FALSE, welded_in = FALSE)
-		var/mod = new /obj/item/aiModule/custom(lawName,lawText)
+		var/path = /obj/item/aiModule/custom
+		if(lawName == "Centcom Law Module")
+			path = /obj/item/aiModule/custom/centcom
+		var/mod = new path(lawName,lawText)
 		return src.SetLaw(mod,slot,screwed_in,welded_in)
 
 	/// Deletes a law in an abritrary slot. Does not call UpdateLaws()
