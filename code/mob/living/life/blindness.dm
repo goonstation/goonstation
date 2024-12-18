@@ -27,9 +27,9 @@
 					else // get organs normally
 						left_eye = human_owner.get_organ("left_eye")
 						right_eye = human_owner.get_organ("right_eye")
-					if (!left_eye)
+					if (!left_eye || !left_eye.provides_sight)
 						eyes_blinded |= EYEBLIND_L
-					if (!right_eye)
+					if (!right_eye || !right_eye.provides_sight)
 						eyes_blinded |= EYEBLIND_R
 					if (istype(human_owner.glasses))
 						if (human_owner.glasses.block_eye)

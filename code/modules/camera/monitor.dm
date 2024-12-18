@@ -15,12 +15,10 @@ TYPEINFO(/obj/item/device/camera_viewer)
 	var/can_view_ai = FALSE
 
 	disposing()
-		src.current?.disconnect_viewer(src.last_viewer)
-		src.last_viewer = null
-		src.current = null
+		src.disconnect_user(src.last_viewer)
 		..()
 
-	attack_self(var/mob/user)
+	attack_self(mob/user)
 		user.unlock_medal("I Spy", 1)
 
 		var/list/cameras = list()
@@ -40,17 +38,13 @@ TYPEINFO(/obj/item/device/camera_viewer)
 		var/selected_camera = tgui_input_list(user, "Which camera should you change to?", "Camera Selection", sortList(displayed_cameras, /proc/cmp_text_asc))
 
 		if (!selected_camera)
-			src.current?.disconnect_viewer(user)
-			src.current = null
-			src.last_viewer = null
+			src.disconnect_user(user)
 			return FALSE
 
 		var/obj/machinery/camera/C = displayed_cameras[selected_camera]
 
-		if ((!(src in user.contents) || !can_act(user) || !user.sight_check(1) || !(C.camera_status)) && (!issilicon(user)))
-			src.current?.disconnect_viewer(user)
-			src.current = null
-			src.last_viewer = null
+		if ((!(user.contains(src)) || !can_act(user) || !user.sight_check(1) || !(C.camera_status)) && (!issilicon(user)))
+			src.disconnect_user(user)
 			return FALSE
 		else if (src.current)
 			src.current.move_viewer_to(user, C)
@@ -60,8 +54,11 @@ TYPEINFO(/obj/item/device/camera_viewer)
 		src.last_viewer = user
 		return TRUE
 
-	dropped(var/mob/user)
+	dropped(mob/user)
 		..()
+		src.disconnect_user(user)
+
+	proc/disconnect_user(mob/user)
 		src.current?.disconnect_viewer(user)
 		src.last_viewer = null
 		src.current = null

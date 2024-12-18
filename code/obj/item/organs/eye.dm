@@ -15,7 +15,10 @@
 	var/color_r = 1 // same as glasses/helmets/masks/etc, used for vision color modifications, see human/handle_regular_hud_updates()
 	var/color_g = 1
 	var/color_b = 1
-	var/show_on_examine = FALSE // do we get mentioned when our donor is examined?
+	///do we get mentioned when our donor is examined?
+	var/show_on_examine = FALSE
+	///provides sight for blindness checks
+	var/provides_sight = TRUE
 
 	New()
 		..()
@@ -464,12 +467,42 @@ TYPEINFO(/obj/item/organ/eye/cyber/laser)
 		else // just us!
 			aholder.removeAbility(abil)
 
+TYPEINFO(/obj/item/organ/eye/cyber/monitor)
+	mats = 7
+
+/obj/item/organ/eye/cyber/monitor
+	name = "monitor cybereye"
+	organ_name = "monitor cybereye"
+	desc = "A tiny screen to replace an eye. You can't use it to see, but it can view some camera networks."
+	organ_abilities = list(/datum/targetable/organAbility/view_camera)
+	default_material = "pharosium"
+	iris_color = "#0d0508"
+	icon_state = "eye-monitor"
+	provides_sight = FALSE
+	var/obj/item/device/camera_viewer/viewer = null
+
+	New()
+		. = ..()
+		src.viewer = new(src)
+		src.viewer.network = list("public", "Robots", "telesci")
+
+	disposing()
+		. = ..()
+		qdel(src.viewer)
+		src.viewer = null
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		if (!src.emagged)
+			boutput(user, "The network limiter on [src] overloads!")
+			src.viewer.network += list("SS13", "ranch", "Mining", "Zeta")
+
 /obj/item/organ/eye/lizard
 	name = "slit eye"
 	desc = "I guess its owner is just a lzard now. Ugh that pun was terrible. Not worth losing an eye over."
 	icon_state = "eye-lizard"
 
-obj/item/organ/eye/skeleton
+/obj/item/organ/eye/skeleton
 	name = "boney eye"
 	desc = "Yes it also has eye sockets. How this works is unknown."
 	icon_state = "eye-bone"
