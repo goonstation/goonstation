@@ -21,27 +21,10 @@ TYPEINFO(/obj/item/device/camera_viewer)
 	attack_self(mob/user)
 		user.unlock_medal("I Spy", 1)
 
-		var/list/cameras = list()
-		for_by_tcl(C, /obj/machinery/camera)
-			cameras.Add(C)
-
-		cameras = camera_sort(cameras)
-
-		var/list/displayed_cameras = list()
-
-		for (var/obj/machinery/camera/camera as anything in cameras)
-			if (camera.network in src.network)
-				if (camera.ai_only && !src.can_view_ai)
-					continue
-				displayed_cameras[text("[][]", camera.c_tag, (camera.camera_status ? null : " (Deactivated)"))] = camera
-
-		var/selected_camera = tgui_input_list(user, "Which camera should you change to?", "Camera Selection", sortList(displayed_cameras, /proc/cmp_text_asc))
-
-		if (!selected_camera)
+		var/obj/machinery/camera/C = src.select_camera(user)
+		if(!istype(C))
 			src.disconnect_user(user)
 			return FALSE
-
-		var/obj/machinery/camera/C = displayed_cameras[selected_camera]
 
 		if ((!(user.contains(src)) || !can_act(user) || !user.sight_check(1) || !(C.camera_status)) && (!issilicon(user)))
 			src.disconnect_user(user)
@@ -62,6 +45,28 @@ TYPEINFO(/obj/item/device/camera_viewer)
 		src.current?.disconnect_viewer(user)
 		src.last_viewer = null
 		src.current = null
+
+	proc/select_camera(mob/user)
+		var/list/cameras = list()
+		for_by_tcl(C, /obj/machinery/camera)
+			cameras.Add(C)
+
+		cameras = camera_sort(cameras)
+
+		var/list/displayed_cameras = list()
+
+		for (var/obj/machinery/camera/camera as anything in cameras)
+			if (camera.network in src.network)
+				if (camera.ai_only && !src.can_view_ai)
+					continue
+				displayed_cameras[text("[][]", camera.c_tag, (camera.camera_status ? null : " (Deactivated)"))] = camera
+
+		var/selected_camera = tgui_input_list(user, "Which camera should you change to?", "Camera Selection", sortList(displayed_cameras, /proc/cmp_text_asc))
+
+		if (!selected_camera)
+			return FALSE
+
+		return displayed_cameras[selected_camera]
 
 /obj/item/device/camera_viewer/public
 	desc = "A portable video monitor, connected to the public camera network."

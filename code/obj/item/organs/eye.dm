@@ -473,8 +473,8 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 /obj/item/organ/eye/cyber/monitor
 	name = "monitor cybereye"
 	organ_name = "monitor cybereye"
-	desc = "A tiny screen to replace an eye. You can't use it to see, but it can view some camera networks."
-	organ_abilities = list(/datum/targetable/organAbility/view_camera)
+	desc = "A tiny screen to replace an eye. You can't use it to see, but it can view public camera networks."
+	organ_abilities = list(/datum/targetable/organAbility/view_camera) // side subtype chosen in add_ability
 	default_material = "pharosium"
 	iris_color = "#0d0508"
 	icon_state = "eye-monitor"
@@ -484,7 +484,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 	New()
 		. = ..()
 		src.viewer = new(src)
-		src.viewer.network = list("public", "Robots", "telesci")
+		src.viewer.network = list("public", "telesci")
 
 	disposing()
 		. = ..()
@@ -492,10 +492,35 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 		src.viewer = null
 
 	emag_act(mob/user, obj/item/card/emag/E)
-		. = ..()
 		if (!src.emagged)
-			boutput(user, "The network limiter on [src] overloads!")
-			src.viewer.network += list("SS13", "ranch", "Mining", "Zeta")
+			boutput(user, SPAN_ALERT("The network limiter on [src] overloads!"))
+			src.viewer.network.Add("SS13", "ranch", "Robots", "Mining", "Zeta")
+		. = ..()
+
+	add_ability(datum/abilityHolder/aholder, abil)
+		if (!ispath(abil, /datum/targetable/organAbility/view_camera) || !aholder)
+			return ..()
+		var/datum/targetable/organAbility/view_camera/OA
+		if(src.body_side == L_ORGAN)
+			aholder.addAbility(/datum/targetable/organAbility/view_camera/left)
+			OA = aholder.getAbility(/datum/targetable/organAbility/view_camera/left)
+		else
+			aholder.addAbility(/datum/targetable/organAbility/view_camera/right)
+			OA = aholder.getAbility(/datum/targetable/organAbility/view_camera/right)
+		if(istype(OA))
+			OA.linked_organ = src
+
+
+	remove_ability(datum/abilityHolder/aholder, abil)
+		if (!ispath(abil, /datum/targetable/organAbility/view_camera) || !aholder)
+			return ..()
+		if(src.body_side == L_ORGAN)
+			aholder.removeAbility(/datum/targetable/organAbility/view_camera/left)
+			src.donor?.client?.clearViewportsByType("left monitor cybereye")
+		else
+			aholder.removeAbility(/datum/targetable/organAbility/view_camera/right)
+			src.donor?.client?.clearViewportsByType("right monitor cybereye")
+
 
 /obj/item/organ/eye/lizard
 	name = "slit eye"
