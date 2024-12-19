@@ -559,9 +559,6 @@
 			for (var/mob/x in src.observers)
 				if (x.client)
 					src.updateOverlaysClient(x.client)
-		if (istype(src.loc, /obj/vehicle))
-			var/obj/vehicle/riding = src.loc
-			riding.eject_rider()
 
 
 	handle_stamina_updates()
