@@ -77,8 +77,11 @@
 			return
 		var/directs = selection.get_directions(direction)
 		for(var/obj/machinery/atmospherics/device in target)
-			if((device.initialize_directions & directs) || selection.exclusionary)
+			if((device.initialize_directions & directs))
 				boutput(user, SPAN_ALERT("Something is occupying that direction!"))
+				return
+			if(selection.exclusionary && device.exclusionary)
+				boutput(user, SPAN_ALERT("Something is occupying that space!"))
 				return
 		if(src.resources < selection.cost)
 			boutput(user, SPAN_ALERT("Not enough resources to make a [selection.name]!"))
@@ -99,8 +102,11 @@
 		return
 	var/directs = recipe.get_directions(direction)
 	for(var/obj/machinery/atmospherics/device in target)
-		if((device.initialize_directions & directs) || selection.exclusionary)
+		if((device.initialize_directions & directs))
 			boutput(user, SPAN_ALERT("Something is occupying that direction!"))
+			return
+		if(selection.exclusionary && device.exclusionary)
+			boutput(user, SPAN_ALERT("Something is occupying that space!"))
 			return
 	src.resources -= recipe.cost
 	src.tooltip_rebuild = 1
@@ -191,7 +197,7 @@
 	var/cost = 2
 	var/name = "CALL 1800 CODER"
 	var/bent = FALSE // not a big fan, but its a shrimple solution to bent pipes
-	/// Only one of these per turf, regardless of direction
+	/// Does not share space with another exclusionary object.
 	var/exclusionary = FALSE
 
 	proc/get_directions(dir)
