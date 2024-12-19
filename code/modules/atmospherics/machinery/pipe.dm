@@ -375,7 +375,6 @@
 /obj/machinery/atmospherics/pipe/simple/disposing()
 	node1?.disconnect(src)
 	node2?.disconnect(src)
-	parent = null
 	..()
 
 /obj/machinery/atmospherics/pipe/simple/pipeline_expansion()
