@@ -106,7 +106,9 @@
 		communications
 			name = "Communications Console"
 			icon_state = "comm"
-			setup_starting_program = list(/datum/computer/file/terminal_program/communications, /datum/computer/file/terminal_program/job_controls)
+			setup_starting_program = list(/datum/computer/file/terminal_program/communications,
+										/datum/computer/file/terminal_program/job_controls,
+										/datum/computer/file/terminal_program/announcer)
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
 			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/status
 			setup_drive_size = 80

@@ -16,6 +16,7 @@
 //Old-style detomatix program
 //Detomatix Detomanual
 //Ticket writer
+//Announcement request
 //Cargo request
 //Station Namer
 //Revhead tracker
@@ -1201,6 +1202,94 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 		else if(href_list["viewpaidfines"])
 			mode = 4
+
+		else if(href_list["ok"])
+			message = null
+
+		src.master.add_fingerprint(usr)
+		src.master.updateSelfDialog()
+		return
+
+/datum/computer/file/pda_program/announcement_request
+	name = "Announcer"
+	size = 4
+	var/mode = 0
+	var/message = null
+	var/announcement_delay = 1200
+
+	return_text()
+		if(..())
+			return
+
+		var/dat = src.return_text_header()
+
+		if(!src.message)
+			if (!src.master.ID_card)
+				dat += "<br><br>You must insert an ID to use this program.<br><br>"
+				return dat
+			switch(src.mode)
+				if(0) //menu
+					dat += "<br><br>\[ <a href='byond://?src=\ref[src];announcement=1'>Request Announcement</a> \]<br>"
+					dat += "View Announcements: \[ <a href='byond://?src=\ref[src];viewannouncementrequests=1'>Requested</a> | <a href='byond://?src=\ref[src];viewapprovedannouncements=1'>Approved</a> \]<br>"
+
+				if(1) //requests
+					dat += "<br><br><a href='byond://?src=\ref[src];back=1'>Back</a>"
+
+					dat += "<h4>Announcement Requests</h4>"
+
+					for (var/datum/announcement_request/request in data_core.announcement_requests)
+						if(!request.approved)
+							dat += "\"[request.content]\"<br>Requested by: [request.requester] - [request.requester_job]"
+							dat += "<br><br>"
+
+				if(2) //approved announcements
+					dat += "<br><br><a href='byond://?src=\ref[src];back=1'>Back</a>"
+
+					dat += "<h4>Approved Announcements List</h4>"
+
+					for (var/datum/announcement_request/request in data_core.announcement_requests)
+						if(request.approved)
+							dat += "\"[request.content]\"<br>Requested by: [request.requester] ([request.requester_job])<br>Approved by: [request.approver]<br><br>"
+		else
+			dat += "<br><br>[message]<br><br>"
+			dat += "<a href='byond://?src=\ref[src];ok=1'>Ok</a>"
+
+		return dat
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if(href_list["announcement"])
+			if (!ON_COOLDOWN(src.master,"announcement_request", announcement_delay))
+				var/IDowner = src.master.registered
+				var/IDownerjob = src.master.assignment
+
+				var/announcement_content = input(usr, "Announcement:",src.name) as text | null
+				if(!announcement_content) return
+				announcement_content = copytext(sanitize(html_encode(announcement_content)), 1, MAX_MESSAGE_LEN)
+
+				var/datum/announcement_request/request = new /datum/announcement_request()
+				request.content = announcement_content
+				request.requester = IDowner
+				request.requester_job = IDownerjob
+				request.requester_byond_key = usr.key
+				data_core.announcement_requests += request
+
+				logTheThing(LOG_SAY, usr, "requested an announcement using [IDowner]([IDownerjob])'s ID. It reads \"[announcement_content]\".")
+				logTheThing(LOG_DIARY, usr, "requested an announcement using [IDowner]([IDownerjob])'s ID. It reads \"[announcement_content]\".", "say")
+				src.message = "Announcement request created, awaiting approval."
+			else
+				src.message = "You have made a request too recently, please wait."
+
+		else if(href_list["back"])
+			mode = 0
+
+		else if(href_list["viewannouncementrequests"])
+			mode = 1
+
+		else if(href_list["viewapprovedannouncements"])
+			mode = 2
 
 		else if(href_list["ok"])
 			message = null
