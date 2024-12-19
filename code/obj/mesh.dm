@@ -467,7 +467,7 @@ TYPEINFO_NEW(/obj/mesh/grille)
 	return src.electrocute(user, probability, net, ignore_gloves)
 
 ///When hit by an arcflash, transfer some wattage to a connected pnet
-/obj/mesh/grille/proc/on_arcflash(wattage)
+/obj/mesh/grille/on_arcflash(wattage)
 	if (!src.anchored)
 		return FALSE
 	var/net = src.get_connection()
