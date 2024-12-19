@@ -608,7 +608,7 @@
 				return
 			genResearch.researchMaterial -= price
 			var/booth_effect_cost = text2num_safe(params["price"])
-			booth_effect_cost = clamp(booth_effect_cost, 0, 999999)
+			booth_effect_cost = ceil(clamp(booth_effect_cost, 0, 999999))
 			var/booth_effect_desc = params["desc"]
 			booth_effect_desc = strip_html(booth_effect_desc, 280)
 			for_by_tcl(GB, /obj/machinery/genetics_booth)

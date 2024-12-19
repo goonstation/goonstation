@@ -5,6 +5,7 @@
 	faction = list(FACTION_WRAITH)
 	mob_path = /mob/living/intangible/wraith
 	uses_pref_name = FALSE
+	has_info_popup = FALSE
 
 	assign_objectives()
 		switch (rand(1, 3))

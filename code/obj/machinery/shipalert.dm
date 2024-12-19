@@ -23,13 +23,18 @@ TYPEINFO(/obj/machinery/shipalert)
 	var/usageState = 0 // 0 = glass cover, hammer. 1 = glass cover, no hammer. 2 = cover smashed
 	var/working = FALSE //processing loops
 	var/cooldownPeriod = 5 MINUTES //5 minutes, change according to player abuse
-	var/deactivateCooldown = 30 SECONDS //no instantly taking it back
+	var/deactivateCooldown = 30 SECONDS // 30 seconds, no instantly taking it back
 	var/max_msg_length = 200 //half of a command alert
 
 	New()
 		..()
 		src.name = "[capitalize(station_or_ship())] Alert Button"
 		UnsubscribeProcess()
+
+		// Global signals that declare red alert automatically
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_NUKE_PLANTED, PROC_REF(activate))
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_AUTH, PROC_REF(activate))
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_UNAUTH, PROC_REF(deactivate))
 
 /obj/machinery/shipalert/attack_hand(mob/user)
 	if (user.stat || isghostdrone(user) || !isliving(user) || isintangible(user))
@@ -98,35 +103,12 @@ TYPEINFO(/obj/machinery/shipalert)
 			boutput(user, SPAN_ALERT("The alert coils are still in high-power mode, please wait to lift alert."))
 			src.working = FALSE
 			return FALSE
-		else
-			//centcom alert
-			command_alert("The emergency is over. Return to your regular duties.", "Alert - All Clear", alert_origin = ALERT_STATION)
-
-			//toggle off
-			shipAlertState = SHIP_ALERT_GOOD
-
-			// set status displays to default
-			var/datum/signal/status_signal = get_free_signal()
-			status_signal.data["sender"] = "00000000"
-			status_signal.data["command"] = STATUS_DISPLAY_PACKET_MODE_DISPLAY_DEFAULT
-			status_signal.data["address_tag"] = "STATDISPLAY"
-			radio_controller.get_frequency(FREQ_STATUS_DISPLAY).post_packet_without_source(status_signal)
-
-			src.update_lights()
-
-			ON_COOLDOWN(src, "alert_cooldown", src.cooldownPeriod)
-			. = TRUE
-
+		. = src.deactivate(user, TRUE)
 	else
 		if (GET_COOLDOWN(src, "alert_cooldown"))
 			boutput(user, SPAN_ALERT("The alert coils are still priming themselves."))
 			src.working = FALSE
 			return FALSE
-
-		//alert and siren
-#ifdef MAP_OVERRIDE_MANTA
-		command_alert("This is not a drill. This is not a drill. General Quarters, General Quarters. All hands man your battle stations. Crew without military training shelter in place. Set material condition '[rand(1, 100)]-[pick_string("station_name.txt", "militaryLetters")]' throughout the ship. The route of travel is forward and up to starboard, down and aft to port. Prepare for hostile contact.", "NSS Manta - General Quarters")
-#else //frick manta, no reason for you
 		var/reason
 		// no flockdrones, critters, etc
 		if(!ishuman(user))
@@ -137,25 +119,7 @@ TYPEINFO(/obj/machinery/shipalert)
 			src.working = FALSE
 			return FALSE
 		reason = sanitize(adminscrub(reason, src.max_msg_length))
-		command_alert("All personnel, this is not a test. There is a confirmed, hostile threat on-board and/or near the station: [reason]. Report to your stations. Prepare for the worst.", "Alert - Condition Red", alert_origin = ALERT_STATION)
-#endif
-		playsound_global(world, soundGeneralQuarters, 100, pitch = 0.9) //lower pitch = more serious or something idk
-		//toggle on
-		shipAlertState = SHIP_ALERT_BAD
-
-		// status display red alert
-		var/datum/signal/status_signal = get_free_signal()
-		status_signal.data["sender"] = "00000000"
-		status_signal.data["command"] = STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT
-		status_signal.data["address_tag"] = "STATDISPLAY"
-		status_signal.data["picture_state"] = STATUS_DISPLAY_PACKET_ALERT_REDALERT
-		radio_controller.get_frequency(FREQ_STATUS_DISPLAY).post_packet_without_source(status_signal)
-
-		ON_COOLDOWN(src, "deactivate_cooldown", src.deactivateCooldown)
-		src.update_lights()
-		src.do_lockdown(user)
-		. = TRUE
-
+		. = src.activate(user, reason, TRUE)
 	//alertWord stuff would go in a dedicated proc for extension
 	var/alertWord = "green"
 	if (shipAlertState == SHIP_ALERT_BAD)
@@ -164,6 +128,55 @@ TYPEINFO(/obj/machinery/shipalert)
 	logTheThing(LOG_STATION, user, "toggled the ship alert to \"[alertWord]\"")
 	message_admins("[user] toggled the ship alert to \"[alertWord]\"")
 	src.working = FALSE
+
+/obj/machinery/shipalert/proc/activate(mob/user, var/reason, var/announce = FALSE)
+	if (shipAlertState == SHIP_ALERT_BAD)
+		return FALSE
+	//alert and siren
+	if (announce)
+#ifdef MAP_OVERRIDE_MANTA
+		command_alert("This is not a drill. This is not a drill. General Quarters, General Quarters. All hands man your battle stations. Crew without military training shelter in place. Set material condition '[rand(1, 100)]-[pick_string("station_name.txt", "militaryLetters")]' throughout the ship. The route of travel is forward and up to starboard, down and aft to port. Prepare for hostile contact.", "NSS Manta - General Quarters")
+#else
+		command_alert("All personnel, this is not a test. There is a confirmed, hostile threat on-board and/or near the station: [reason]. Report to your stations. Prepare for the worst.", "Alert - Condition Red", alert_origin = ALERT_STATION)
+#endif
+		playsound_global(world, soundGeneralQuarters, 100, pitch = 0.9) //lower pitch = more serious or something idk
+	//toggle on
+	shipAlertState = SHIP_ALERT_BAD
+
+	// status display red alert
+	var/datum/signal/status_signal = get_free_signal()
+	status_signal.data["sender"] = "00000000"
+	status_signal.data["command"] = STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT
+	status_signal.data["address_tag"] = "STATDISPLAY"
+	status_signal.data["picture_state"] = STATUS_DISPLAY_PACKET_ALERT_REDALERT
+	radio_controller.get_frequency(FREQ_STATUS_DISPLAY).post_packet_without_source(status_signal)
+
+	ON_COOLDOWN(src, "deactivate_cooldown", src.deactivateCooldown)
+	src.update_lights()
+	src.do_lockdown(user)
+	. = TRUE
+
+/obj/machinery/shipalert/proc/deactivate(mob/user,var/announce = FALSE)
+	if (shipAlertState == SHIP_ALERT_GOOD)
+		return FALSE
+	//centcom alert
+	if (announce)
+		command_alert("The emergency is over. Return to your regular duties.", "Alert - All Clear", alert_origin = ALERT_STATION)
+
+	//toggle off
+	shipAlertState = SHIP_ALERT_GOOD
+
+	// set status displays to default
+	var/datum/signal/status_signal = get_free_signal()
+	status_signal.data["sender"] = "00000000"
+	status_signal.data["command"] = STATUS_DISPLAY_PACKET_MODE_DISPLAY_DEFAULT
+	status_signal.data["address_tag"] = "STATDISPLAY"
+	radio_controller.get_frequency(FREQ_STATUS_DISPLAY).post_packet_without_source(status_signal)
+
+	src.update_lights()
+
+	ON_COOLDOWN(src, "alert_cooldown", src.cooldownPeriod)
+	. = TRUE
 
 /obj/machinery/shipalert/proc/update_lights()
 	for(var/obj/machinery/light/emergency/light in by_cat[TR_CAT_STATION_EMERGENCY_LIGHTS])

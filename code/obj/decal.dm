@@ -64,10 +64,18 @@
 	mouse_opacity = 0
 	blend_mode = 2
 	plane = PLANE_NOSHADOW_ABOVE
+	var/y_blur = 3
 
 	New()
-		add_filter("motion blur", 1, motion_blur_filter(x=0, y=3))
+		add_filter("motion blur", 1, motion_blur_filter(x=0, y=src.y_blur))
 		..()
+
+	talisman
+		icon_state = null
+		y_blur = 2
+
+		proc/activate_glimmer()
+			flick("glimmer", src)
 
 /obj/decal/floatingtiles
 	name = "floating tiles"

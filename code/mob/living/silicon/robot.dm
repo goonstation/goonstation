@@ -260,7 +260,7 @@
 				src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 				src.update_name_tag()
 			if (src.syndicate)
-				src.show_antag_popup("syndieborg")
+				src.show_antag_popup(ROLE_SYNDICATE_ROBOT)
 
 		if (prob(50))
 			src.sound_scream = 'sound/voice/screams/Robot_Scream_2.ogg'
@@ -293,6 +293,8 @@
 					chest.wires = 1
 					if (src.cell)
 						chest.cell = src.cell
+						src.cell = null
+						chest.cell.set_loc(chest)
 
 			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
 			frame.setMaterial(src.frame_material)
@@ -815,7 +817,7 @@
 
 		if (src.shell && src.mainframe)
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
-			src.real_name = "SHELL/[src.mainframe]"
+			src.real_name = "SHELL/[src.mainframe.name]"
 			src.UpdateName()
 			src.update_name_tag()
 
@@ -1388,6 +1390,9 @@
 				if("Remove Chest")
 					if(src.part_chest.robot_movement_modifier)
 						REMOVE_MOVEMENT_MODIFIER(src, src.part_chest.robot_movement_modifier, src.part_chest.type)
+					src.part_chest.cell = src.cell
+					src.cell = null
+					src.part_chest.cell.set_loc(src.part_chest)
 					src.part_chest.set_loc(src.loc)
 					src.part_chest.holder = null
 					src.part_chest = null

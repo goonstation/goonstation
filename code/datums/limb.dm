@@ -824,8 +824,8 @@
 				playsound(user.loc, O.hitsound, 50, 1, pitch = 1.6)
 				O.take_damage(20, user) //Like 30ish hits to break a normal airlock?
 				hit = TRUE
-			else if(istype(target, /obj/grille))
-				var/obj/grille/O = target
+			else if(istype(target, /obj/mesh/grille))
+				var/obj/mesh/grille/O = target
 				if (!O.shock(user, 70))
 					O.visible_message(SPAN_COMBAT("<b>[user]</b> violently slashes [O]!"))
 					playsound(O.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)

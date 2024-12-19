@@ -25,6 +25,7 @@
 	can_bleed = FALSE
 	metabolizes = FALSE
 	blood_id = null
+	use_stamina = FALSE // floating ghostly eyes dont get tired
 
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0
@@ -283,7 +284,9 @@
 		if (mainframe)
 			mainframe.emote(act, voluntary)
 
-	hearing_check(var/consciousness_check = 0) //can't hear SHIT - everything is passed from the AI mob through send_message and whatever
+	hearing_check(var/consciousness_check = 0, for_audio = FALSE) //can't hear SHIT - everything is passed from the AI mob through send_message and whatever
+		if (for_audio)
+			return TRUE
 		return 0
 
 	resist()
