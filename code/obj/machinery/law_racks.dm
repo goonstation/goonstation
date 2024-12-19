@@ -727,10 +727,9 @@
 	 * Does not call UpdateLaws()
 	 * Intended for Admemery
 	 */
-	proc/SetLawCustom(lawName, lawText, slot = 1, screwed_in = FALSE, welded_in = FALSE)
-		var/path = /obj/item/aiModule/custom
-		if(lawName == "Centcom Law Module")
-			path = /obj/item/aiModule/custom/centcom
+	proc/SetLawCustom(lawName, lawText, slot = 1, screwed_in = FALSE, welded_in = FALSE, path)
+		if(!path || !ispath(path))
+			path = /obj/item/aiModule/custom
 		var/mod = new path(lawName,lawText)
 		return src.SetLaw(mod,slot,screwed_in,welded_in)
 
