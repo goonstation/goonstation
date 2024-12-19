@@ -28557,7 +28557,6 @@
 /turf/simulated/floor/black,
 /area/diner/dining)
 "cac" = (
-/obj/machinery/computer/arcade,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/black,
 /area/diner/dining)
@@ -28577,8 +28576,10 @@
 /turf/simulated/floor/carpet/green/standard/edge/ne,
 /area/diner/dining)
 "cai" = (
-/obj/stool/bench/wooden,
 /obj/decal/cleanable/dirt,
+/obj/item/storage/secure/ssafe/diner_arcade{
+	pixel_x = -30
+	},
 /turf/simulated/floor/black,
 /area/diner/dining)
 "caj" = (
@@ -28611,9 +28612,6 @@
 /turf/simulated/floor/black,
 /area/diner/dining)
 "caq" = (
-/obj/machinery/door/unpowered/wood/pyro{
-	dir = 4
-	},
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8
 	},
@@ -31499,12 +31497,6 @@
 	},
 /turf/simulated/floor/red,
 /area/research_outpost/toxins)
-"cwj" = (
-/obj/item/storage/secure/ssafe/diner_arcade{
-	pixel_x = -30
-	},
-/turf/simulated/floor/black,
-/area/diner/dining)
 "cwz" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -32445,6 +32437,12 @@
 	},
 /turf/simulated/shuttle/wall/flock,
 /area/space)
+"dDa" = (
+/obj/machinery/light/incandescent/warm/very{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/diner/dining)
 "dDM" = (
 /obj/machinery/light/incandescent/netural,
 /obj/table/reinforced/chemistry/auto,
@@ -33964,10 +33962,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"flb" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating/random,
-/area/diner/dining)
 "flf" = (
 /obj/stool/chair/yellow,
 /obj/landmark/start/job/technical_trainee,
@@ -41052,6 +41046,10 @@
 	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
+"oEW" = (
+/obj/machinery/computer/arcade,
+/turf/simulated/floor/black,
+/area/diner/dining)
 "oFv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/disposalpipe/segment/mail{
@@ -42319,6 +42317,9 @@
 /obj/machinery/firealarm/north,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"qqE" = (
+/turf/space/fluid,
+/area/shuttle/merchant_shuttle/diner_station)
 "qqR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -43042,7 +43043,7 @@
 /area/evilreaver/storage/tools)
 "rqY" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/diner/dining)
 "rrj" = (
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
@@ -44617,6 +44618,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
+"tIV" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/diner/dining)
 "tJG" = (
 /obj/critter/gunbot/drone,
 /turf/unsimulated/floor/shuttle/red,
@@ -45217,6 +45227,14 @@
 	dir = 1
 	},
 /area/station/medical/medbay/surgery/storage)
+"uFY" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_diner,
+/turf/space/fluid,
+/area/space)
 "uHb" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -45965,6 +45983,14 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/toilets)
+"vWs" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_diner/delay2,
+/turf/space/fluid,
+/area/space)
 "vWv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
@@ -46353,6 +46379,14 @@
 	},
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
+"wAI" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/trader_diner/delay4,
+/turf/space/fluid,
+/area/space)
 "wBk" = (
 /obj/machinery/atmospherics/unary/tank{
 	dir = 8
@@ -47428,6 +47462,14 @@
 /obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
+"xNT" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_diner/delay3,
+/turf/space/fluid,
+/area/space)
 "xOk" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/creamer{
@@ -47829,6 +47871,14 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
+"ylL" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_diner/delay5,
+/turf/space/fluid,
+/area/space)
 
 (1,1,1) = {"
 cer
@@ -119351,10 +119401,10 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
+qqE
+qqE
+qqE
+qqE
 aqn
 aqn
 aqn
@@ -119651,14 +119701,14 @@ aqn
 aqn
 aqn
 aqn
+uFY
 aqn
+qqE
+qqE
+qqE
+qqE
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+uFY
 aqn
 aqn
 aqn
@@ -119953,14 +120003,14 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+aBF
+qqE
+qqE
+qqE
+qqE
+qqE
+qqE
+aBF
 aqn
 aqn
 aqn
@@ -120255,14 +120305,14 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+vWs
+qqE
+qqE
+qqE
+qqE
+qqE
+qqE
+xNT
 cax
 cax
 cax
@@ -120557,14 +120607,14 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+aBF
+qqE
+qqE
+qqE
+qqE
+qqE
+qqE
+aBF
 cax
 caD
 caR
@@ -120859,14 +120909,14 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+xNT
+qqE
+qqE
+qqE
+qqE
+qqE
+qqE
+ylL
 cax
 caE
 caS
@@ -121161,14 +121211,14 @@ aqn
 aqn
 aqn
 aqn
+aBF
 aqn
+aPB
+tIV
+tIV
+aPB
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+aBF
 cax
 caF
 caT
@@ -121463,13 +121513,13 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
+wAI
 aPB
 aPB
-flb
+cao
+cao
+aPB
+aPB
 aPB
 cax
 cax
@@ -121766,13 +121816,13 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aPB
+rqY
 cab
+caj
+cao
+cao
 cai
-cwj
+cao
 aPB
 kJY
 caJ
@@ -122068,12 +122118,12 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aPB
+rqY
 cab
 caj
+cao
+cao
+cao
 cap
 aPB
 caH
@@ -122370,12 +122420,12 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aPB
-cac
+rqY
+oEW
 caj
+dDa
+cac
+cao
 cao
 aPB
 sCW
@@ -122672,8 +122722,8 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
+aPB
+aPB
 aPB
 aPB
 aPB
