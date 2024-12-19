@@ -164,6 +164,7 @@
 			for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 				aiPlayer.cancelAlarm("Atmosphere", get_area(src), src)
 			src.alertingAI = FALSE
+		src.RemoveComponentsOfType(/datum/component/minimap_marker/minimap)
 	else
 		var/list/cameras = list()
 		for_by_tcl(C, /obj/machinery/camera)
@@ -172,6 +173,7 @@
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.triggerAlarm("Atmosphere", get_area(src), cameras, src)
 		src.alertingAI = TRUE
+		src.AddComponent(/datum/component/minimap_marker/minimap, MAP_ALERTS, "alarm_air", name="[get_area(src)] Air Alarm")
 
 	if(alarm_frequency)
 		post_alert(safe)
