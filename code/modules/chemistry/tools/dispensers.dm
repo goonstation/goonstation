@@ -514,7 +514,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			return
 
 		if (src.is_open_container() &&\
-			istypes(W, list(/obj/item/sheet, /obj/item/nature/wood, /obj/item/material_piece)) &&\
+			istypes(W, list(/obj/item/sheet, /obj/item/material_piece)) &&\
 			(W.material?.isSameMaterial(getMaterial("wood")) || W.material?.isSameMaterial(getMaterial("bamboo")))
 		)
 			if (W.amount < 5)
