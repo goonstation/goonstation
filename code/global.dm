@@ -275,8 +275,6 @@ var/global
 	game_start_delayed = 0
 	game_end_delayed = 0
 	game_end_delayer = null
-	ooc_allowed = 1
-	looc_allowed = 0
 	dooc_allowed = 1
 	player_capa = 0
 	player_cap = 55
@@ -284,7 +282,6 @@ var/global
 	/// specifies if pcap kick messages show display to admins in chat
 	pcap_kick_messages = TRUE
 	traitor_scaling = 1
-	deadchat_allowed = 1
 	debug_mixed_forced_wraith = 0
 	debug_mixed_forced_blob = 0
 	debug_mixed_forced_flock = 0
