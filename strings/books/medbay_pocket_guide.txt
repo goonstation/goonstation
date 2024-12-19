@@ -34,9 +34,10 @@
     <li>Treating Your Patients<ol>
             <li>John Pubbie Fought a Monkey</li>
             <li>Brute and Burn Damage</li>
-            <li>Toxin Damage, Poisons, and Bleeding</li>
+            <li>Toxin Damage and Poisons</li>
             <li>Suffocation Damage and Critical Condition</li>
             <li>Death and Cloning</li>
+            <li>Bleeding and Blood Loss</li>
             <li>Radiation and Brain Damage</li>
             <li>Organ Damage and Other Ailments</li>
         </ol>
@@ -94,7 +95,7 @@
 <p>All better! You send them back into the world, ready to face whatever life throws at them- and they're back again. Wow, that's a lot of blood!</p>
 <h3>Toxin Damage and Poisons</h3>
 <div style="font-size:14px;" id="messages">
-    <div class="entry misc"><br>Analyzing Results for <span class="notice">Devin Carr</span>:<br>  Overall Status: <span style="color:rgb(19,128,21);">73</span>% healthy<br>  Damage Specifics: <span style="color:rgb(31,117,209);">0</span> - <span style="color:rgb(19,128,21);">26.2</span> - <span style="color:rgb(204,122,29);">0</span> - <span style="color:rgb(230,14,78);">0</span><br>  Key: <span style="color:rgb(31,117,209);">Suffocation</span>/<span style="color:rgb(19,128,21);">Toxin</span>/<span style="color:rgb(204,122,29);">Burns</span>/<span style="color:rgb(230,14,78);">Brute</span><br>Body Temperature: 24.14°C (75.46°F)<br>Blood Pressure: <span style="color:rgb(204,122,29);">94/64 (HYPOTENSIVE)</span></div>
+    <div class="entry misc">Analyzing Results for <span class="notice">Devin Carr</span>:<br>  Overall Status: <span style="color:rgb(19,128,21);">73</span>% healthy<br>  Damage Specifics: <span style="color:rgb(31,117,209);">0</span> - <span style="color:rgb(19,128,21);">26.2</span> - <span style="color:rgb(204,122,29);">0</span> - <span style="color:rgb(230,14,78);">0</span><br>  Key: <span style="color:rgb(31,117,209);">Suffocation</span>/<span style="color:rgb(19,128,21);">Toxin</span>/<span style="color:rgb(204,122,29);">Burns</span>/<span style="color:rgb(230,14,78);">Brute</span><br>Body Temperature: 24.14°C (75.46°F)<br>Blood Pressure: <span style="color:rgb(204,122,29);">94/64 (HYPOTENSIVE)</span></div>
 </div>
 <p>&nbsp;</p>
 <p>Looks like they've taken some toxin damage, AKA tox. And it's steadily increasing! Your handheld health analyzer can scan for chemicals in a person's blood, so now would be a good time to check:</p>
@@ -144,13 +145,12 @@
 <p>As for the blood loss, a blood pack can be attached to give the patient some more blood. Filgrastim or saline-glucose solution can also be injected to stimulate blood production.</p>
 <h3>Radiation and Brain Damage</h3>
 <div style="font-size:14px;" id="messages">
-    <div class="entry misc"><br>Analyzing Results for <span class="notice">Devin Carr</span>:<br>  Overall Status: <span style="color:rgb(19,128,21);">96</span>% healthy<br>  Damage Specifics: <span style="color:rgb(31,117,209);">0</span> - <span style="color:rgb(19,128,21);">2.27</span> - <span style="color:rgb(204,122,29);">1.69</span> - <span style="color:rgb(230,14,78);">0</span><br>  Key: <span style="color:rgb(31,117,209);">Suffocation</span>/<span style="color:rgb(19,128,21);">Toxin</span>/<span style="color:rgb(204,122,29);">Burns</span>/<span style="color:rgb(230,14,78);">Brute</span><br>Body Temperature: 37°C (98.6°F)<br> <span class="alert">The subject is barely irradiated. Dose: 0.494814 Sv</span><br>Blood Pressure: <span style="color:rgb(19,128,21);">121/81 (NORMAL)</span> | Blood level: <span style="color:rgb(19,128,21);">502 units</span><br><span class="alert">Significant brain damage detected. Subject may have had a concussion.</span></div>
+    <div class="entry misc">Analyzing Results for <span class="notice">Devin Carr</span>:<br>  Overall Status: <span style="color:rgb(19,128,21);">96</span>% healthy<br>  Damage Specifics: <span style="color:rgb(31,117,209);">0</span> - <span style="color:rgb(19,128,21);">2.27</span> - <span style="color:rgb(204,122,29);">1.69</span> - <span style="color:rgb(230,14,78);">0</span><br>  Key: <span style="color:rgb(31,117,209);">Suffocation</span>/<span style="color:rgb(19,128,21);">Toxin</span>/<span style="color:rgb(204,122,29);">Burns</span>/<span style="color:rgb(230,14,78);">Brute</span><br>Body Temperature: 37°C (98.6°F)<br> <span class="alert">The subject is barely irradiated. Dose: 0.494814 Sv</span><br>Blood Pressure: <span style="color:rgb(19,128,21);">121/81 (NORMAL)</span> | Blood level: <span style="color:rgb(19,128,21);">502 units</span><br><span class="alert">Significant brain damage detected. Subject may have had a concussion.</span></div>
 </div>
 <p>&nbsp;</p>
 <p>Radiation causes tox and burn damage, but it's fairly simple to heal. Just inject potassium iodide from the NanoMed, and keep up with the escalating damage.</p>
 <p>Brain damage can be fatal: accumulate too much, and the patient will drop dead. However, mannitol, available in pills from the NanoMed, can easily heal brain damage.</p>
 <h3>Organ Damage and Other Ailments</h3>
-<p>&nbsp;</p>
 <div style="font-size:14px;" id="messages">
     <div class="entry misc">Analyzing Results for <span class="notice">Devin Carr</span>:<br>  Overall Status: <span style="color:rgb(19,128,21);">100</span>% healthy<br>  Damage Specifics: <span style="color:rgb(31,117,209);">0</span> - <span style="color:rgb(19,128,21);">0</span> - <span style="color:rgb(204,122,29);">0</span> - <span style="color:rgb(230,14,78);">0</span><br>  Key: <span style="color:rgb(31,117,209);">Suffocation</span>/<span style="color:rgb(19,128,21);">Toxin</span>/<span style="color:rgb(204,122,29);">Burns</span>/<span style="color:rgb(230,14,78);">Brute</span><br>Body Temperature: 37°C (98.6°F)<br>Blood Pressure: <span style="color:rgb(19,128,21);">117/81 (NORMAL)</span> | Blood level: <span style="color:rgb(19,128,21);">500 units</span><br><span style="color:purple;"><strong>Internal Injuries:</strong></span><br><span style="color:purple;"><strong>Devin Carr's left kidney</strong> - Minor</span><br><span style="color:purple;"><strong>Devin Carr's right kidney</strong> - Minor</span><br><span style="color:purple;"><strong>Devin Carr's liver</strong> - Minor</span><br><b class="notice"><strong>No active chemical agents found in Devin Carr.</strong></b><br><span class="alert"><strong>Active Virus: The Flu</strong> </span><small><span class="alert">(Stage 3/3)</span></small><br><small><span class="alert">Spread: Airborne</span></small><br><small><span class="alert">Suggested Remedy: Sleep</span></small></div>
 </div>
@@ -170,6 +170,6 @@
 <p><a target="_blank" rel="noopener noreferrer" href="https://wiki.ss13.co/Chemicals#Medical_Chems">Medical Chemicals</a></p>
 <hr>
 <p>&nbsp;</p>
-<p><sup>First Edition authored by the S.P.A.R.K. unit</sup></p>
+<p><sup>First edition authored by the S.P.A.R.K. unit</sup></p>
 <p><sup>Second edition authored by the counterfeit borgo</sup></p>
 <p><sup>We hope to see you succeed!</sup></p>
