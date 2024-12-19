@@ -13215,7 +13215,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/item/bible,
+/obj/item/holy_texts,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;

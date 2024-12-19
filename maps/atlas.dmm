@@ -2015,7 +2015,7 @@
 /area/station/crew_quarters/cafeteria)
 "ajJ" = (
 /obj/table/wood/auto,
-/obj/item/bible,
+/obj/item/holy_texts,
 /obj/item/device/microphone,
 /turf/simulated/floor/carpet{
 	dir = 8;
