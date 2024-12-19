@@ -445,6 +445,9 @@ proc/equip_battler(mob/living/carbon/human/battler)
 
 	battler.equip_if_possible(new /obj/item/device/radio/headset(battler), SLOT_EARS)
 
+	battler.equip_sensory_items()
+	battler.equip_body_traits()
+
 	// Battle royale crewmembers are rainbow flavored
 	var/obj/item/clothing/under/jumpsuit = null
 	var/suit_type = pick(

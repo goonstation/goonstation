@@ -3085,7 +3085,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				if(next_destination)
 					set_destination(next_destination)
 					if(!master.moving && target && (target != master.loc))
-						master.navigate_to(target, max_dist=40)
+						master.navigate_to(target, max_dist=80)
 					return
 				else
 					find_nearest_beacon()
@@ -3642,7 +3642,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							return
 
 						if (current_beacon_loc != master.loc)
-							master.navigate_to(current_beacon_loc, max_dist=30)
+							master.navigate_to(current_beacon_loc, max_dist=60)
 						else
 							state = STATE_AT_BEACON
 					return

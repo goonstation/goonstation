@@ -1887,7 +1887,19 @@
 	/obj/item/gun/kinetic/makarov,
 	/obj/item/gun/kinetic/single_action/mts_255,
 	/obj/item/gun/kinetic/survival_rifle,
-	/obj/item/gun/kinetic/survival_rifle)
+	/obj/item/gun/kinetic/survival_rifle,
+	/obj/item/gun/kinetic/m16,
+	/obj/item/gun/kinetic/m16,
+	/obj/item/gun/kinetic/pumpweapon/ks23,
+	/obj/item/gun/kinetic/striker,
+	/obj/item/gun/kinetic/striker,
+	/obj/item/gun/kinetic/webley,
+	/obj/item/gun/kinetic/lopoint,
+	/obj/item/gun/kinetic/uzi,
+	/obj/item/gun/kinetic/uzi,
+	/obj/item/gun/kinetic/greasegun,
+	/obj/item/gun/kinetic/greasegun
+	)
 
 	one
 		amt2spawn = 1
@@ -2043,6 +2055,94 @@
 		new /obj/item/ammo/bullets/breach_flashbang{
 			pixel_x = -4;
 			pixel_y = 3
+		}(src.loc)
+
+/obj/random_item_spawner/armory_armor_supplies //"random"
+	name = "armory armor supplies"
+	icon_state = "armorspawn"
+	spawn_items()
+		new /obj/rack(src.loc)
+		new /obj/item/clothing/head/helmet/EOD{
+			pixel_x = 4;
+			pixel_y = 8
+		}(src.loc)
+		new /obj/item/clothing/head/helmet/EOD{
+			pixel_x = 12;
+			pixel_y = 8
+		}(src.loc)
+		new /obj/item/clothing/suit/armor/EOD{
+			pixel_x = 1
+		}(src.loc)
+		new /obj/item/clothing/suit/armor/EOD{
+			pixel_x = 9
+		}(src.loc)
+		new /obj/item/clothing/head/helmet/riot{
+			pixel_x = -13;
+			pixel_y = 12
+		}(src.loc)
+		new /obj/item/clothing/head/helmet/riot{
+			pixel_x = -4;
+			pixel_y = 12
+		}(src.loc)
+		new /obj/item/clothing/suit/armor/heavy{
+			pixel_x = -5
+		}(src.loc)
+		new /obj/item/clothing/suit/armor/heavy{
+			pixel_x = -13
+		}(src.loc)
+
+/obj/random_item_spawner/armory_goggle_supplies //"random"
+	name = "armory goggle supplies"
+	icon_state = "gogglespawn"
+	spawn_items()
+		new /obj/rack(src.loc)
+		new /obj/item/clothing/mask/gas/emergency{
+			pixel_x = -9;
+			pixel_y = 11
+		}(src.loc)
+		new /obj/item/clothing/mask/gas/emergency{
+			pixel_x = -3;
+			pixel_y = 11
+		}(src.loc)
+		new /obj/item/clothing/mask/gas/emergency{
+			pixel_x = 3;
+			pixel_y = 11
+		}(src.loc)
+		new /obj/item/clothing/mask/gas/emergency{
+			pixel_x = 9;
+			pixel_y = 11
+		}(src.loc)
+		new /obj/item/clothing/glasses/nightvision{
+			pixel_x = -8;
+			pixel_y = -8
+		}(src.loc)
+		new /obj/item/clothing/glasses/nightvision{
+			pixel_x = -7;
+			pixel_y = -3
+		}(src.loc)
+		new /obj/item/clothing/glasses/nightvision{
+			pixel_x = -6;
+			pixel_y = 2
+		}(src.loc)
+		new /obj/item/clothing/glasses/nightvision{
+			pixel_x = -5;
+			pixel_y = 7
+		}(src.loc)
+		new /obj/item/clothing/glasses/thermal{
+			pixel_x = 6;
+			pixel_y = -10
+		}(src.loc)
+		new /obj/item/clothing/glasses/thermal{
+			pixel_x = 7;
+			pixel_y = -5
+		}(src.loc)
+		new /obj/item/clothing/glasses/thermal{
+			pixel_x = 8;
+			pixel_y = 0
+		}(src.loc)
+		new /obj/item/clothing/glasses/thermal{
+			pixel_x = 9;
+			pixel_y = 5
 		}(src.loc)
 
 /obj/random_item_spawner/fruits

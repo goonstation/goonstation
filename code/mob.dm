@@ -1883,12 +1883,16 @@ TYPEINFO(/mob)
 			light.enable()
 			SPAWN(1 SECOND)
 				qdel(light)
+	else if(src.custom_gib_handler)
+		call(src.custom_gib_handler)(src.loc)
+	else if(issilicon(src) || isrobocritter(src))
+		robogibs(src.loc)
+	else
+		gibs(src.loc)
+
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
-
-	if (!iscarbon(src))
-		robogibs(src.loc)
 
 	if (animation)
 		animation.delaydispose()
@@ -2926,6 +2930,9 @@ TYPEINFO(/mob)
 
 	if (source && source != src) //we were moved by something that wasnt us
 		last_pulled_time = world.time
+		if ((istype(src.loc, /turf/space) || src.no_gravity) && ismob(source))
+			var/mob/M = source
+			src.inertia_dir = M.inertia_dir
 	else
 		if(src.pulled_by)
 			src.pulled_by.remove_pulling()

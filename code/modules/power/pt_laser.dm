@@ -46,6 +46,8 @@
 
 	cheat
 		charge = INFINITY
+		can_fire()
+			return TRUE
 
 /obj/machinery/power/pt_laser/New()
 	..()

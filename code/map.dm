@@ -685,6 +685,8 @@ var/global/list/mapNames = list(
 	if(!station_repair.station_generator && prob(66))
 		if( !mapSwitcher.thisMapWasVotedFor )
 			logTheThing(LOG_DEBUG, null, "Automatic Atlas Terrainify skipped due to unvoted map change")
+			for_by_tcl(spawner, /obj/eva_suit_spawner)
+				spawner.spawn_gear()
 			return
 
 		var/list/terrainify_options = list(/datum/terrainify/caveify,
@@ -710,6 +712,9 @@ var/global/list/mapNames = list(
 #if defined(LIVE_SERVER)
 		T.perform_terrainify(terrain_params, src)
 #endif
+	else
+		for_by_tcl(spawner, /obj/eva_suit_spawner)
+			spawner.spawn_gear()
 
 
 /datum/map_settings/destiny
