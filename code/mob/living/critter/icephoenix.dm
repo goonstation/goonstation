@@ -229,9 +229,8 @@
 		..()
 		src.icon_state = pick("snow1", "snow2", "snow_rough1")
 		src.set_dir(pick(cardinal))
-		SPAWN(5 SECONDS)
 		animate(src, 5 SECONDS, alpha = 80)
-		SPAWN(10 SECONDS) // 45 SECONDS
+		SPAWN(12 SECONDS) // 45 SECONDS
 			qdel(src)
 
 /turf/simulated/ice_phoenix_ice_tunnel
