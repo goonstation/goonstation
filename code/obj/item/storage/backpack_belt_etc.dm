@@ -1118,14 +1118,7 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 	desc = "The Head of Security's prized wrestling belt."
 	contraband = 6
 
-	can_hold = list(/obj/item/baton, // Only include the things the HoS will be keeping on them.
-	/obj/item/gun/energy/taser_gun,
-	/obj/item/gun/energy/egun,
-	/obj/item/gun/energy/lawbringer,
-	/obj/item/gun/energy/wavegun,
-	/obj/item/gun/energy/tasersmg,
-	/obj/item/gun/energy/tasershotgun,
-	/obj/item/device/prisoner_scanner)
+	can_hold = /obj/item/storage/belt/security::can_hold
 	check_wclass = 1
 
 // I dunno where else to put these vOv
