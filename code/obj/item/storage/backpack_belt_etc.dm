@@ -1118,8 +1118,12 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 	desc = "The Head of Security's prized wrestling belt."
 	contraband = 6
 
-	can_hold = /obj/item/storage/belt/security::can_hold
-	check_wclass = 1
+	New()
+		..()
+		var/list/holdable = /obj/item/storage/belt/security::can_hold
+		holdable += /obj/item/gun/energy/tasershotgun
+		src.can_hold = holdable
+		src.check_wclass = 1
 
 // I dunno where else to put these vOv
 TYPEINFO(/obj/item/inner_tube)
