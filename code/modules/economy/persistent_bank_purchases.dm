@@ -355,6 +355,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					if (ispath(origin))
 						H.wear_suit.icon_state = origin.icon_state
 						H.wear_suit.item_state = origin.item_state
+						H.wear_suit.wear_state = origin.wear_state
 						H.wear_suit.desc = initial(origin.desc)
 						if (istype(H.wear_suit, /obj/item/clothing/suit/labcoat))
 							H.wear_suit.coat_style = origin.coat_style
