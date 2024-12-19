@@ -101,7 +101,7 @@ proc/debug_map_apc_count(delim,zlim)
 				active_tiles += length(group.members)
 
 		var/hotspots = 0
-		for(var/obj/hotspot/hotspot in world)
+		for(var/atom/movable/hotspot/hotspot in world)
 			hotspots++
 			LAGCHECK(LAG_LOW)
 
