@@ -951,7 +951,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	/// returns text description of reagent(s)
 	/// plus exact text of reagents if using correct equipment
 	proc/get_description(mob/user, rc_flags=0)
-		if (rc_flags == 0)	// Report nothing about the reagents in this case
+		if (rc_flags == 0 || !user.sight_check(1))	// Report nothing about the reagents in this case
 			return null
 
 		if (length(reagent_list))
