@@ -250,8 +250,8 @@
 	actions.stop(runningAction, src)
 	runningAction = null
 
+	src.vis_contents -= rider
 	rider = null
-	overlays = null
 
 	adjustSickness(-sickness)
 	update()
@@ -284,7 +284,7 @@
 	rider.pixel_x = 0
 	rider.pixel_y = 4
 
-	overlays += rider
+	src.vis_contents += rider
 
 	adjustSickness(-sickness)
 	update()
