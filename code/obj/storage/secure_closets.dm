@@ -253,7 +253,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/head/helmet/hardhat/security/hos,
 	/obj/item/clothing/glasses/sunglasses/sechud,
 #ifdef MAP_OVERRIDE_WRESTLEMAP
-	/obj/item/storage/belt/wrestling/hos
+	/obj/item/storage/belt/wrestling/hos,
 #else
 	/obj/item/gun/energy/egun/head_of_security,
 #endif
