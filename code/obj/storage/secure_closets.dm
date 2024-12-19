@@ -235,7 +235,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/swat,
 	/obj/item/clothing/glasses/sunglasses,
-	/obj/item/device/radio/headset/command/captain)
+	/obj/item/device/radio/headset/command/captain)d
 
 
 /obj/storage/secure/closet/command/hos
@@ -252,7 +252,11 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security/hos,
 	/obj/item/clothing/glasses/sunglasses/sechud,
+#ifdef MAP_OVERRIDE_WRESTLEMAP
+	/obj/item/clothing/belt/wrestling/hos
+#else
 	/obj/item/gun/energy/egun/head_of_security,
+#endif
 	/obj/item/device/radio/headset/security,
 	/obj/item/clothing/glasses/thermal,
 	/obj/item/stamp/hos,

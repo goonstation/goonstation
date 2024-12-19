@@ -1113,6 +1113,21 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 	is_syndicate = 0
 	fake = 1
 
+/obj/item/storage/belt/wrestling/hos
+	name = "Head of Security's championship belt"
+	desc = "The Head of Security's prized wrestling belt."
+	contraband = 6
+
+	can_hold = list(/obj/item/baton, // Only include the things the HoS will be keeping on them.
+	/obj/item/gun/energy/taser_gun,
+	/obj/item/gun/energy/egun,
+	/obj/item/gun/energy/lawbringer,
+	/obj/item/gun/energy/wavegun,
+	/obj/item/gun/energy/tasersmg,
+	/obj/item/gun/energy/tasershotgun,
+	/obj/item/device/prisoner_scanner)
+	check_wclass = 1
+
 // I dunno where else to put these vOv
 TYPEINFO(/obj/item/inner_tube)
 	mats = 5 // I dunno???
