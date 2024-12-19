@@ -3326,7 +3326,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	proc/compSetMode(var/datum/mechanicsMessage/input)
 		LIGHT_UP_HOUSING
 		tooltip_rebuild = 1
-		if(input.signal in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte"))
+		if(input.signal in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte","min","max"))
 			mode = input.signal
 	proc/evaluate()
 		switch(mode)
@@ -3359,6 +3359,10 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				. = A == B
 			if("neq")
 				. = A != B
+			if("min")
+				. = min(A, B)
+			if("max")
+				. = max(A, B)
 			else
 				return
 
