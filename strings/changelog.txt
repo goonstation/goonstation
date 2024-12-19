@@ -1,4 +1,6 @@
-
+(t)thu dec 19 24
+(u)LeahTheTech
+(+)BARREL UPDATE. Chemical barrels can now have wood shoved in them and set on fire to make a burning barrel. Burning barrels now emit heat, can be extinguished with a fire extinguisher, and can be wrenched/unwrenched from the floor.
 (t)tue dec 17 24
 (u)tarmunora
 (+)Planting a kudzu seed now allows you to slip through dense kudzu, and (very) slowly heal while on kudzu. Still blocks vision though.
