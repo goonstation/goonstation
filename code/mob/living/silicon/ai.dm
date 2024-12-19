@@ -91,7 +91,8 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/default_hat_y = 14
 	var/datum/hud/silicon/ai/hud
 	var/last_notice = 0//attack notices
-	var/network = "SS13"
+	/// Camera networks we can connect to
+	var/list/camera_networks = list("SS13", "Robots", "Zeta", "ranch", "telesci", "public")
 	var/classic_move = 1 //Ordinary AI camera movement
 	var/obj/machinery/camera/current = null
 	var/obj/machinery/camera/camera = null //Our internal camera for seeing from core while in eye
@@ -387,7 +388,7 @@ or don't if it uses a custom topopen overlay
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 			src.update_name_tag()
 
-		src.camera = new /obj/machinery/camera(src)
+		src.camera = new /obj/machinery/camera/auto/AI(src)
 		src.camera.c_tag = src.real_name
 		src.camera.network = "Robots"
 
@@ -1789,27 +1790,8 @@ or don't if it uses a custom topopen overlay
 	set category = "AI Commands"
 	set name = "Cancel Camera View"
 
-	//src.set_eye(null)
-	//src:cameraFollow = null
 	src.tracker.cease_track()
 	src.current = null
-
-/mob/living/silicon/ai/verb/change_network()
-	set category = "AI Commands"
-	set name = "Change Camera Network"
-	src.set_eye(null)
-	src.remove_dialogs()
-	//src:cameraFollow = null
-	tracker.cease_track()
-	if (src.network == "SS13")
-		src.network = "Robots"
-	else if (src.network == "Robots")
-		src.network = "Mining"
-	else
-		src.network = "SS13"
-	boutput(src, SPAN_NOTICE("Switched to [src.network] camera network."))
-	if (camnets.len && camnets[network])
-		switchCamera(pick(camnets[network]))
 
 /mob/living/silicon/ai/verb/deploy_to()
 	set category = "AI Commands"
@@ -2144,7 +2126,7 @@ or don't if it uses a custom topopen overlay
 	if (!C)
 		src.set_eye(null)
 		return 0
-	if (isdead(src) || C.network != src.network)
+	if (isdead(src) || !(C.network in src.camera_networks) || get_z(C) != Z_LEVEL_STATION)
 		return 0
 
 	if(isnull(C.loc) || QDELETED(C))
@@ -2610,6 +2592,10 @@ proc/get_mobs_trackable_by_AI()
 		src.real_name = default_name
 
 	src.UpdateName()
+
+/mob/living/silicon/ai/UpdateName()
+	. = ..()
+	src.camera.c_tag = src.real_name
 	src.eyecam.UpdateName()
 	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
