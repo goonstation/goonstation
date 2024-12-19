@@ -18,6 +18,7 @@
     <li><strong>Foreign object detected</strong> - Likely bullets or shrapnel. Drag patient onto operating table, and use a scalpel while targeting the chest and on help intent. Repeat until foreign objects are no longer detected.</li>
     <li><strong>Poisons in the blood</strong> - Drag patient to dialysis machine. Click+drag the dialysis machine onto patient to remove non-medical chemicals.</li>
     <li><strong>Organ damage</strong> - Anti-tox drugs for kidneys and digestive organs. Anti-oxy drugs for spleen and lungs. Cryo tube or omnizine for all organs.</li>
+    <li><strong>Blindness and Deafness</strong> - Inject or splash oculine. Alternatively, use a VISOR prosthesis / auditory headset.</li>
     <li><strong>Organ death</strong> - Replace the dead organ. Surgery required.</li>
     <li><strong>Death</strong> - Clone the patient. Take puritans to robotics instead. A morgue tray or embalming fluid will prevent rotting.</li>
 </ul>
@@ -156,6 +157,8 @@
 </div>
 <p>&nbsp;</p>
 <p>Here, we see the patient has some organ damage, as well as the flu. Organ damage can be healed by specific drugs. Cryoxadone from the cryo tubes and omnizine can heal all organs, but these aren't always necessary. The kidneys and digestive organs can be healed by any anti-tox drugs, such as charcoal. The lungs and spleen can be healed with anti-oxy drugs, such as salbutamol.</p>
+<p>&nbsp;</p>
+<p>For patients who have become blind or deaf, you can apply oculine, which can either be injected or applied to the skin. Additionally, you could use a VISOR prosthesis for blindness, and an auditory headset for deafness.</p>
 <p>&nbsp;</p>
 <p>As for the flu, most ailments will have a cure listed. However, there is one set of ailments that we should take special note of: Shock, cardiac failure, and cardiac arrest. Shock is caused by blood loss or severe injury, and can be treated with saline-glucose solution. Left untreated, it becomes cardiac failure, which can be treated with epinephrine. However, it will eventually become cardiac arrest, where the heart stops beating entirely. This predictably and rapidly causes massive oxy damage, and will kill in short order if the heart is not restarted by a defibrillator.</p>
 <p>&nbsp;</p>
