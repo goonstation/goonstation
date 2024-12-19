@@ -152,7 +152,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	proc/eject_rider(var/crashed, var/selfdismount, var/ejectall = TRUE)
 		if(src.rider)
 			MOVE_OUT_TO_TURF_SAFE(src.rider, src)
-			src.vis_contents -= rider
+			src.vis_contents -= src.rider
 			ClearSpecificOverlays("booster_image")
 			handle_button_removal()
 			src.rider = null
@@ -195,17 +195,10 @@ ABSTRACT_TYPE(/obj/vehicle)
 	// This handles the code that USED to be defined individually in each vehicle's relaymove() proc
 	// all non-machinery vehicles except forklifts and skateboards use this now
 	relaymove(mob/user as mob, dir)
-		// we reset the overlays to null in case the relaymove() call was initiated by a
-		// passenger rather than the driver (we shouldn't have a rider overlay if there is no rider!)
-		src.vis_contents -= rider
-
 		if(!src.rider || user != src.rider)
 			return
 
 		var/td = max(src.delay, MINIMUM_EFFECTIVE_DELAY)
-
-		if(src.rider_visible)
-			src.vis_contents += rider
 
 		// You can't move in space without the booster upgrade
 		if (src.booster_upgrade)
@@ -344,7 +337,7 @@ TYPEINFO(/obj/vehicle/segway)
 		src.underlays += src.image_under
 	else
 		src.icon_state = src.icon_base
-		src.vis_contents -= rider
+		src.vis_contents -= src.rider
 		src.underlays = null
 
 /obj/vehicle/segway/bump(atom/AM as mob|obj|turf)
@@ -562,7 +555,7 @@ TYPEINFO(/obj/vehicle/segway)
 		handle_button_addition()
 	rider.pixel_x = 0
 	rider.pixel_y = 5
-	src.vis_contents += rider
+	src.vis_contents += src.rider
 
 	for (var/mob/C in AIviewers(src))
 		if(C == user)
@@ -701,7 +694,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 		src.underlays += src.image_under
 	else
 		src.icon_state = src.icon_base
-		src.vis_contents -= rider
+		src.vis_contents -= src.rider
 		src.underlays = null
 
 /obj/vehicle/floorbuffer/Move()
