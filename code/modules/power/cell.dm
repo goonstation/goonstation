@@ -224,8 +224,8 @@
 		return ..()
 
 /obj/item/cell/proc/explode()
-	if(src in bible_contents)
-		for_by_tcl(B, /obj/item/bible)
+	if(src in holy_texts_contents)
+		for_by_tcl(B, /obj/item/holy_texts)
 			var/turf/T = get_turf(B.loc)
 			if(T)
 				T.hotspot_expose(700,125)
