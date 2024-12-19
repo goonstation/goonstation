@@ -352,6 +352,7 @@ TYPEINFO(/obj/structure/woodwall)
 	projectile_passthrough_chance = 30
 	_health = 30
 	_max_health = 30
+	flags = ON_BORDER
 	var/builtby = null
 	var/anti_z = 0
 	// for projectile damage component
