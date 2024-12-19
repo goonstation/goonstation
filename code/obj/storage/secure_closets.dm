@@ -235,7 +235,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/swat,
 	/obj/item/clothing/glasses/sunglasses,
-	/obj/item/device/radio/headset/command/captain)d
+	/obj/item/device/radio/headset/command/captain)
 
 
 /obj/storage/secure/closet/command/hos
