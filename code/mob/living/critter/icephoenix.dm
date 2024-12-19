@@ -229,7 +229,8 @@
 		..()
 		src.icon_state = pick("snow1", "snow2", "snow_rough1")
 		src.set_dir(pick(cardinal))
-		animate(src, 5 SECONDS, alpha = 80)
+		SPAWN(6 SECONDS)
+			animate(src, 6 SECONDS, alpha = 80)
 		SPAWN(12 SECONDS) // 45 SECONDS
 			qdel(src)
 
