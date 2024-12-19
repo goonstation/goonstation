@@ -685,7 +685,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_poc1 = list(/obj/item/device/pda2/medical)
-	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/medical)
+	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/medical_two)
 	items_in_backpack = list(/obj/item/crowbar/blue) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
 	// 2018: guaranteed air tanks now spawn in boxes (depending on backpack type) to save room
 	wiki_link = "https://wiki.ss13.co/Medical_Doctor"
@@ -720,7 +720,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_foot = list(/obj/item/clothing/shoes/red)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	slot_poc1 = list(/obj/item/device/pda2/medical)
-	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/medical)
+	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/medical_two)
 	slot_jump = list(/obj/item/clothing/under/scrub = 30,/obj/item/clothing/under/scrub/teal = 14,/obj/item/clothing/under/scrub/blue = 14,/obj/item/clothing/under/scrub/purple = 14,/obj/item/clothing/under/scrub/orange = 14,/obj/item/clothing/under/scrub/pink = 14)
 	wiki_link = "https://wiki.ss13.co/Medical_Assistant"
 
