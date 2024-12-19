@@ -6,6 +6,7 @@
 	var/datum/record_database/bank = new(list("name", "id"))
 	var/list/datum/fine/fines = list()
 	var/list/datum/ticket/tickets = list()
+	var/list/datum/announcement_request/announcement_requests = list()
 	var/obj/machinery/networked/mainframe/mainframe = null
 
 /datum/datacore/proc/addManifest(mob/living/carbon/human/H as mob, sec_note = "", med_note = "", pda_net_id = null, synd_int_note = "")
@@ -487,3 +488,33 @@
 
 /datum/fine/proc/generate_ID()
 	if(!ID) ID = (data_core.fines.len + 1)
+
+/datum/announcement_request
+	var/ID = null
+	var/name = "announcement"
+	var/content = null
+	var/requester = null
+	var/requester_job = null
+	var/requester_byond_key = null
+
+	var/approved = FALSE
+	var/approver = null
+	var/approver_byond_key = null
+
+	var/sound_to_play = 'sound/misc/bingbong.ogg'
+	var/sound_volume = 70
+
+	New()
+		..()
+		generate_ID()
+
+/datum/announcement_request/proc/approve(var/approved_by)
+	src.approver = approved_by
+	src.approver_byond_key = get_byond_key(approver)
+	src.approved = TRUE
+	var/header = "PDA Requested Announcement by [src.requester] ([src.requester_job])"
+	command_announcement(src.content, header, src.sound_to_play, volume = src.sound_volume)
+	return TRUE
+
+/datum/announcement_request/proc/generate_ID()
+	if(!ID) ID = (data_core.announcement_requests.len + 1)
