@@ -142,9 +142,8 @@ var/global/obj/fuckyou/flashDummy
 	if(wattage && isliving(target)) //Probably unsafe.
 		target:shock(from, wattage, "chest", stun_coeff, 1)
 	if (isobj(target))
-		if(wattage && istype(target, /obj/mesh/grille))
-			var/obj/mesh/grille/G = target
-			G.on_arcflash(wattage)
+		var/obj/O = target
+		O.on_arcflash(wattage)
 	var/elecflashpower = 0
 	if (wattage > 12000)
 		elecflashpower = 6
