@@ -69,7 +69,7 @@ Custom Books
 	desc = "A condensed guide of job responsibilities and tips for new crewmembers."
 
 	medical
-		name = "Medbay Pocket Guide, Second Edition"
+		name = "Medbay Pocket Guide"
 		desc = "A condensed guide of job responsibilities and tips for new crewmembers. It looks a bit outdated."
 		icon_state = "mediguide"
 		file_path = "strings/books/medbay_pocket_guide.txt"
