@@ -14,6 +14,11 @@
 
 		var/mult = get_multiplier()
 
+		// early return for a majority this proc is ran
+		if (src.owner.blood_volume == 500 && src.last_tick_regular_blood_range && src.owner.reagents?.total_volume <= 0)
+			src.calc_bloodpressure(500)
+			return
+
 		var/anticoag_amt = 0
 		var/coag_amt = 0
 		if (owner.reagents?.total_volume > 0)
@@ -104,13 +109,7 @@
 		// high (stage 1) (140/90 or higher) (>585u)
 		// very high (stage 2) (160/100 or higher) (>666u)
 		// dangerously high (urgency) (180/110 or higher) (>750u)
-		var/current_systolic = round((current_blood_amt * 0.24), 1)
-		var/current_diastolic = round((current_blood_amt * 0.16), 1)
-		owner.blood_pressure["systolic"] = current_systolic
-		owner.blood_pressure["diastolic"] = current_diastolic
-		owner.blood_pressure["rendered"] = "[max(rand(current_systolic-5,current_systolic+5), 0)]/[max(rand(current_diastolic-2,current_diastolic+2), 0)]"
-		owner.blood_pressure["total"] = current_blood_amt
-		owner.blood_pressure["status"] = (current_blood_amt < 415) ? "HYPOTENSIVE" : (current_blood_amt > 584) ? "HYPERTENSIVE" : "NORMAL"
+		src.calc_bloodpressure(current_blood_amt)
 
 		if (ischangeling(owner))
 			return ..()
@@ -346,3 +345,12 @@
 					owner.add_stam_mod_max("hypertension", -15)
 
 		..()
+
+	proc/calc_bloodpressure(current_blood_amt)
+		var/current_systolic = round((current_blood_amt * 0.24), 1)
+		var/current_diastolic = round((current_blood_amt * 0.16), 1)
+		owner.blood_pressure["systolic"] = current_systolic
+		owner.blood_pressure["diastolic"] = current_diastolic
+		owner.blood_pressure["rendered"] = "[max(rand(current_systolic - 5,current_systolic + 5), 0)]/[max(rand(current_diastolic - 2,current_diastolic + 2), 0)]"
+		owner.blood_pressure["total"] = current_blood_amt
+		owner.blood_pressure["status"] = (current_blood_amt < 415) ? "HYPOTENSIVE" : (current_blood_amt > 584) ? "HYPERTENSIVE" : "NORMAL"
