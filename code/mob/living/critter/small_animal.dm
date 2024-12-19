@@ -4606,7 +4606,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_exclaim = "snaps"
 	health_brute = 15
 	health_burn = 15
-	pet_text = list("gently pets", "rubs", "cuddles, coddles")
+	pet_text = list("gently pets", "rubs", "cuddles", "coddles")
 	player_can_spawn_with_pet = TRUE
 	var/can_hat = TRUE
 
