@@ -984,6 +984,15 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			return
 		. = ..()
 
+/obj/item/clothing/head/beret/syndicate
+	name = "syndicate beret"
+	desc = "A dastardly beret for only the most cunning of operatives."
+	icon_state = "syndieberet"
+
+	New()
+		..()
+		src.color = null
+
 /obj/item/clothing/head/bandana
 	name = "bandana"
 	desc = "A bandana. You've seen space action stars wear these things."
