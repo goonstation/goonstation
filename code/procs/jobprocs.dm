@@ -558,7 +558,11 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	if (JOB.slot_back)
 		if (src.back?.storage)
 			if(JOB.receives_disk)
-				var/obj/item/disk/data/floppy/read_only/D = new /obj/item/disk/data/floppy/read_only(src)
+				var/obj/item/disk/data/floppy/D
+				if(ispath(JOB.receives_disk))
+					D = new JOB.receives_disk(src)
+				else
+					D = new /obj/item/disk/data/floppy(src)
 				src.equip_if_possible(D, SLOT_IN_BACKPACK)
 				var/datum/computer/file/clone/R = new
 				R.fields["ckey"] = ckey(src.key)
@@ -584,12 +588,6 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				R.fields["imp"] = null
 				R.fields["mind"] = src.mind
 				D.root.add_file(R)
-
-				if (JOB.receives_security_disk)
-					var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "SECAUTH";} (src)
-					authrec.fields = list("SEC"="[netpass_security]")
-					D.root.add_file( authrec )
-					D.read_only = 1
 
 				D.name = "data disk - '[src.real_name]'"
 
