@@ -286,9 +286,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/atom/last = src
 
 	var/list/starts = new/list()
+
+	for(var/obj/machinery/interdictor/interdictor in oview(5, src))
+		if (interdictor.canInterdict)
+			starts.Add(interdictor)
+
 	for(var/mob/living/M in oview(5, src))
 		if(M.invisibility) continue
-		if(istype(M, /mob/living/critter/small_animal) && prob(75)) continue
+		if(M.has_status("spatial_protection")) continue
 		starts.Add(M)
 
 	if(!starts.len) return 0

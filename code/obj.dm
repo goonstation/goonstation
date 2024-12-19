@@ -495,3 +495,7 @@ ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
 		for(var/i = 1 to 10) // 20 characters are way too fuckin' long for anyone to care about
 			. += "[pick(numbersAndLetters)]"
 	while(. in forensic_IDs)
+
+/// objects can react to arcflashes
+/obj/proc/on_arcflash(wattage)
+	return
