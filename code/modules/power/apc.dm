@@ -293,7 +293,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 	for(var/mob/living/M in oview(5, src))
 		if(M.invisibility) continue
-		if(M.has_status("spatial_protection")) continue
+		if(M.hasStatus("spatial_protection")) continue
 		starts.Add(M)
 
 	if(!starts.len) return 0
