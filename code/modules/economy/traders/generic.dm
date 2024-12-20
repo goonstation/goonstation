@@ -186,7 +186,7 @@
 	possible_names = list("We need some more furniture to spice up our ship.",
 	"We're building a new lounge, and we need whatever furniture you have.")
 
-/datum/commodity/trader/generic/instrument
+/datum/commodity/trader/generic/instruments
 	comname = "Instruments"
 	comtype = /obj/item/instrument
 	price_boundary = list(PAY_UNTRAINED/2, PAY_UNTRAINED)
