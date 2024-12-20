@@ -189,7 +189,7 @@
 /datum/commodity/trader/generic/instrument
 	comname = "Instruments"
 	comtype = /obj/item/instrument
-	price_boundary = list(PAY_UNTRAINED, PAY_TRADESMAN)
+	price_boundary = list(PAY_UNTRAINED/2, PAY_UNTRAINED)
 	possible_names = list("We need some instruments to 'increase' staff morale.",
 	"The captain's latest team-building exercise requires a large number of instruments.")
 
