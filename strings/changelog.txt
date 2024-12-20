@@ -1,4 +1,9 @@
 
+(t)fri dec 20 24
+(u)Cheekybrdy
+(p)21736
+(e)⚖|C-Balance
+(+)All fishing rods can be held in a rancher's belt, including the Glaucus.
 (t)thu dec 19 24
 (u)AnomalousPotato
 (p)21721
