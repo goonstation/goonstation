@@ -246,6 +246,8 @@
 				continue
 			if (I.anchored || I.density)
 				continue
+			if(I.w_class >= W_CLASS_GIGANTIC || IS_NPC_ILLEGAL_ITEM(I))
+				continue
 			stuff_near_me += I
 		if (stuff_near_me.len)
 			src.new_treasure = pick(stuff_near_me)

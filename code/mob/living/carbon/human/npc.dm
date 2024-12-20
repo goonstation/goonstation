@@ -5,11 +5,6 @@
 		x:block_vision \
 	)
 
-//Put any items that NPCs physically cannot pickup here
-#define IS_NPC_ILLEGAL_ITEM(x) ( \
-		istype(x, /obj/item/body_bag) && x.w_class >= W_CLASS_BULKY \
-	)
-
 #define IS_NPC_CLOTHING(x) ( \
 		( \
 			istype(x, /obj/item/clothing) || \
@@ -985,4 +980,3 @@
 
 #undef IS_NPC_HATED_ITEM
 #undef IS_NPC_CLOTHING
-#undef IS_NPC_ILLEGAL_ITEM
