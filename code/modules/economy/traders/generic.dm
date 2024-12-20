@@ -186,13 +186,6 @@
 	possible_names = list("We need some more furniture to spice up our ship.",
 	"We're building a new lounge, and we need whatever furniture you have.")
 
-/datum/commodity/trader/generic/pens
-	comname = "Writing Utensils"
-	comtype = /obj/item/pen
-	price_boundary = list(PAY_UNTRAINED/3,PAY_TRADESMAN)
-	possible_names = list("We can't take notes! Send us something to write with, and make it snappy.",
-	"Our crew's been really starved creatively. Give us something we can doodle with.")
-
 /datum/commodity/trader/generic/instrument
 	comname = "Instruments"
 	comtype = /obj/item/instrument
