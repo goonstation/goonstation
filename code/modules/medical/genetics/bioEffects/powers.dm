@@ -337,7 +337,8 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			playsound(owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 			var/prevLayer = owner.layer
 			owner.layer = EFFECTS_LAYER_BASE
-			owner.inertia_dir = owner.dir
+			if ((istype(owner.loc, /turf/space) || owner.no_gravity))
+				owner.inertia_dir = owner.dir
 
 			animate(owner,
 				pixel_y = pixel_move * jump_tiles / 2,
@@ -386,7 +387,8 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			playsound(owner.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
 			var/prevLayer = owner.layer
 			owner.layer = EFFECTS_LAYER_BASE
-			owner.inertia_dir = owner.dir
+			if ((istype(owner.loc, /turf/space) || owner.no_gravity))
+				owner.inertia_dir = owner.dir
 			owner.changeStatus("knockdown", 10 SECONDS)
 			owner.changeStatus("stunned", 5 SECONDS)
 
