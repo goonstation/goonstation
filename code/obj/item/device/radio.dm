@@ -1080,6 +1080,8 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 	density = 0
 	desc = "A Loudspeaker."
 
+	HELP_MESSAGE_OVERRIDE("")
+
 	New()
 		..()
 		if(src.pixel_x == 0 && src.pixel_y == 0)

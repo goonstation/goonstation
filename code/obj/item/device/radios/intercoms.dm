@@ -17,6 +17,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	desc = "A wall-mounted radio intercom, used to communicate with the specified frequency. Usually turned off except during emergencies."
 	hardened = 0
 
+	HELP_MESSAGE_OVERRIDE("Stand next to an intercom and use the prefix <B> :in </B> to speak directly into it.")
+
 /obj/item/device/radio/intercom/proc/update_pixel_offset_dir(obj/item/AM, old_dir, new_dir)
 	src.pixel_x = 0
 	src.pixel_y = 0
