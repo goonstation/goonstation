@@ -2434,7 +2434,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /obj/item/tool/quickhack
 	name = "QuickHack"
-	desc = "A highly illegal, disposable device that open doors like an AI."
+	desc = "A highly illegal, disposable device that can fake an AI's 'open' signal to a door a few times."
 	icon = 'icons/obj/items/gang.dmi'
 	icon_state = "quickhack"
 	object_flags = NO_GHOSTCRITTER
@@ -2754,7 +2754,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /datum/gang_item/consumable/quickhack
 	name = "Quickhack"
-	desc = "Quickly opens unbolted doors you lack access to like an AI. 5 uses."
+	desc = "An illegal, home-made tool able to fake up to 5 AI 'open' signals to unbolted doors."
 	class2 = "Tools"
 	price = 800
 	item_path = /obj/item/tool/quickhack

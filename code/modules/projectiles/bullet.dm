@@ -90,14 +90,13 @@ toxic - poisons
 	a180
 		fullauto_valid = 1
 		shot_number = 1
-		damage = 20
+		damage = 15 //less accurate, hitting random parts instead of centre mass
 		cost = 1
-		shot_volume = 20
+		shot_volume = 30
 		sname = "full auto"
-		casing = null
 		on_pre_hit(atom/hit, angle, var/obj/projectile/O)
 			if (isliving(hit))
-				if (ON_COOLDOWN(hit, "american180_miss", 3 DECI SECONDS))
+				if (ON_COOLDOWN(hit, "american180_miss", 4 DECI SECONDS))
 					return TRUE
 				else
 					return FALSE
@@ -105,7 +104,7 @@ toxic - poisons
 		get_power(obj/projectile/P, atom/A)
 			var/standard_damage = P.initial_power - max(0, (P.travelled/32 - src.dissipation_delay))*src.dissipation_rate
 			if (isliving(A))
-				return rand(standard_damage-5,standard_damage) //less accurate, hitting random parts instead of centre mass
+				return rand(standard_damage/2,standard_damage) //dont kill dudes as hard
 			else
 				return min(2,standard_damage) // dont break shit as hard
 
