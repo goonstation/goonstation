@@ -494,9 +494,9 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 /obj/item/reagent_containers/bone_fragments
 	name = "bone fragments"
 	desc = "Little crushed up bits of bone that can fit in the reagent extractor."
-	icon = "icons/obj/items/items.dmi"
-	item_state = "bone_fragments"
-	icon_state = "bone_fragments"
+	icon = 'icons/obj/materials.dmi'
+	item_state = "shard"
+	icon_state = "shard"
 	initial_volume = 10
 	initial_reagents = "bonemeal"
 
