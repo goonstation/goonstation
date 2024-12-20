@@ -1476,6 +1476,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	april_fools
 		icon_state = "espace-alt"
 		item_state = "es_suit-alt"
+		wear_state = "espace-alt"
 
 /obj/item/clothing/suit/space/neon
 	name = "neon space suit"
