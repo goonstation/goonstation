@@ -287,13 +287,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 	var/list/starts = new/list()
 
-	for(var/obj/machinery/interdictor/interdictor in oview(5, src))
-		if (interdictor.canInterdict)
-			starts.Add(interdictor)
+	for_by_tcl(IX, /obj/machinery/interdictor)
+		if (IX.expend_interdict(500, src))
+			return 1
 
 	for(var/mob/living/M in oview(5, src))
 		if(M.invisibility) continue
-		if(M.hasStatus("spatial_protection")) continue
 		starts.Add(M)
 
 	if(!starts.len) return 0

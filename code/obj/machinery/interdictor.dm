@@ -401,8 +401,6 @@
 	playsound(src.loc, src.sound_interdict_off, 40, 1)
 	src.UpdateIcon()
 
-/obj/machinery/interdictor/on_arcflash(wattage)
-	src.expend_interdict(wattage/1000)
 
 /obj/interdict_edge
 	name = "interdiction barrier"
