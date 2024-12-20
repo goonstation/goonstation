@@ -1138,7 +1138,7 @@ proc/ui_describe_reagents(atom/A)
 			processing_items -= src
 			running = FALSE
 			fabrication_tick = 0
-		else if(desired_state && !running)
+		else if(desired_state && !running && reagent_to_fabricate)
 			processing_items |= src
 			running = TRUE
 		update_visuals()
