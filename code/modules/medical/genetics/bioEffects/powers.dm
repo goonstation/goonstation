@@ -333,12 +333,13 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/sleep_time = 1 / linked_power.power
 
 		if (istype(owner.loc,/turf/))
+			if (istype_exact(owner.loc, /turf/space))
+				boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
+				return TRUE
 			usr.visible_message(SPAN_ALERT("<b>[owner]</b> takes a huge leap!"))
 			playsound(owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 			var/prevLayer = owner.layer
 			owner.layer = EFFECTS_LAYER_BASE
-			if (istype(owner.loc, /turf/space) || owner.no_gravity)
-				owner.inertia_dir = owner.dir
 
 			animate(owner,
 				pixel_y = pixel_move * jump_tiles / 2,
@@ -382,13 +383,14 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/sleep_time = 0.5 / linked_power.power
 
 		if (istype(owner.loc,/turf/))
+			if (istype_exact(owner.loc, /turf/space))
+				boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
+				return TRUE
 			usr.visible_message(SPAN_ALERT("<b>[owner]</b> leaps far too high and comes crashing down hard!"))
 			playsound(owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 			playsound(owner.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
 			var/prevLayer = owner.layer
 			owner.layer = EFFECTS_LAYER_BASE
-			if (istype(owner.loc, /turf/space) || owner.no_gravity)
-				owner.inertia_dir = owner.dir
 			owner.changeStatus("knockdown", 10 SECONDS)
 			owner.changeStatus("stunned", 5 SECONDS)
 
