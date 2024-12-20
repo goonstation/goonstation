@@ -68,7 +68,7 @@
 	if (!can_reach(user, target))
 		return
 	if(destroying)
-		if(istype(target, /obj/machinery/atmospherics)) //hilarium
+		if(istype(target, /obj/machinery/atmospherics) && !istypes(target, list(/obj/machinery/atmospherics/binary/circulatorTemp, /obj/machinery/atmospherics/binary/nuclear_reactor))) //hilarium
 			SETUP_GENERIC_ACTIONBAR(target, src, src.dispenser_delay, PROC_REF(destroy_item), list(user, target),\
 			 null, null, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED)
 
