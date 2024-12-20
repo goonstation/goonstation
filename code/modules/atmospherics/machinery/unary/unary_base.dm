@@ -5,6 +5,7 @@
 	var/obj/machinery/atmospherics/node
 	/// The pipe network we belong to.
 	var/datum/pipe_network/network
+	exclusionary = TRUE
 
 /obj/machinery/atmospherics/unary/New()
 	..()
