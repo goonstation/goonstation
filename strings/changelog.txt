@@ -1,4 +1,11 @@
 
+(t)thu dec 19 24
+(u)AnomalousPotato
+(p)21721
+(e)🪲🆕💅💊📦|C-Bug, C-Feature, C-QoL, A-Medical, A-Game-Objects
+(*)Skeleton people can now be clone scanned with the necroscan upgrade
+(u)LeahTheTech
+(+)BARREL UPDATE. Chemical barrels can now have wood shoved in them and set on fire to make a burning barrel. Burning barrels now emit heat, can be extinguished with a fire extinguisher, and can be wrenched/unwrenched from the floor.
 (t)tue dec 17 24
 (u)tarmunora
 (+)Planting a kudzu seed now allows you to slip through dense kudzu, and (very) slowly heal while on kudzu. Still blocks vision though.
