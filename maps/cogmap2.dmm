@@ -71842,6 +71842,12 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple,
 /area/station/teleporter)
+"tGt" = (
+/obj/machinery/vending/jobclothing/command,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/bridge)
 "tGv" = (
 /obj/machinery/light{
 	dir = 4;
@@ -143282,7 +143288,7 @@ cOw
 buN
 byC
 bAc
-bBM
+tGt
 bDJ
 bFF
 jFX
