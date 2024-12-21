@@ -2,7 +2,7 @@
 	name = "handheld pipe dispenser"
 	desc = "A neat tool to quickly lay down pipes onto the floor."
 	icon = 'icons/obj/items/hpd.dmi'
-	icon_state = "hpd"
+	icon_state = "hpd-place"
 	flags = TABLEPASS | CONDUCT
 	inventory_counter_enabled = 1
 	var/dispenser_being_used = FALSE
@@ -31,6 +31,19 @@
 			src.atmosmachinesforcreation[initial(recipe.name)] = new recipe
 
 	src.selection = src.atmospipesforcreation["Pipe"]
+	src.UpdateIcon()
+
+/obj/item/places_pipes/update_icon(...)
+	if (src.destroying)
+		src.icon_state = "hpd-destroy"
+	else
+		src.icon_state = "hpd-place"
+
+	var/fullness = round(src.resources/src.max_resources * 100, 25)
+	if (fullness <= 0)
+		src.UpdateOverlays(null, "ammo")
+	else
+		src.UpdateOverlays(image(src.icon, "ammo-[fullness]"), "ammo")
 
 /obj/item/places_pipes/attack_self(mob/user )
 	src.ui_interact(user)
@@ -61,6 +74,7 @@
 		qdel(ammo)
 	src.tooltip_rebuild = 1
 	src.inventory_counter.update_number(src.resources)
+	src.UpdateIcon()
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	boutput(user, "\The [src] now holds [src.resources] matter-units.")
 
@@ -116,6 +130,7 @@
 	new /dmm_suite/preloader(target, list("dir" = (recipe.bent ? turn(direction, 45) : direction)))
 	var/obj/machinery/atmospherics/device = new recipe.path(target)
 	device.initialize(TRUE)
+	src.UpdateIcon()
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/places_pipes/proc/destroy_item(mob/user, obj/machinery/atmospherics/target)
@@ -128,6 +143,7 @@
 	src.tooltip_rebuild = 1
 	src.inventory_counter.update_number(src.resources)
 	qdel(target)
+	src.UpdateIcon()
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/places_pipes/ui_interact(mob/user, datum/tgui/ui)
@@ -179,6 +195,7 @@
 			. = TRUE
 		if("toggle-destroying")
 			src.destroying = !src.destroying
+			src.UpdateIcon()
 			. = TRUE
 
 /obj/item/places_pipes/proc/getBase64Img(datum/pipe_recipe/recipe, direction = SOUTH)
