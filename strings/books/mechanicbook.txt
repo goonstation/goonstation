@@ -51,13 +51,13 @@
 	The following are the modes you can set the component to. Results are passed along as a signal,
 	either when setting a variable with a signal, or when an evaluate signal is recieved.
 	<ul>
-		<li>Add: finds the sum of A and B</li>
-		<li>Sub: subtracts B from A</li>
-		<li>Div: divides A by B, errors if B is zero</li>
-		<li>Mul: multiplies A and B</li>
-		<li>Mod: finds the modulus (remainder) of A divided by B</li>
-		<li>Pow: Power. Gets the result of A to exponent B</li>
-		<li>Rng: Gets a random number between A and B</li>
+		<li>Add: Finds the sum of A and B.</li>
+		<li>Sub: Subtracts B from A.</li>
+		<li>Div: Divides A by B, errors if B is zero.</li>
+		<li>Mul: Multiplies A and B.</li>
+		<li>Mod: Finds the modulus (remainder) of A divided by B.</li>
+		<li>Pow: Power. Gets the result of A to exponent B.</li>
+		<li>Rng: Gets a random number between A and B.</li>
 		<li>Gt/lt: Greater than, less than. Returns 1 if A is greater than or less than B, respectively. Otherwise returns 0.
 			<br>You'll need a signal check component after this.</li>
 		<li>Gte/lte: Greater than or equal/less than or equal. Same as above but also triggers on equality.</li>
