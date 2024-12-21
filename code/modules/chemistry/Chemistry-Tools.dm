@@ -957,7 +957,7 @@ proc/ui_describe_reagents(atom/A)
 	mouse_drop(atom/over_object, src_location, over_location)
 		if (ismob(over_object))
 			var/mob/user = over_object
-			if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
+			if (user == usr && !user.restrained() && !is_incapacitated(user) && in_interact_range(src, user))
 				if (!user.put_in_hand(src))
 					return ..()
 		else
@@ -1056,7 +1056,7 @@ proc/ui_describe_reagents(atom/A)
 	mouse_drop(atom/over_object, src_location, over_location)
 		if (ismob(over_object))
 			var/mob/user = over_object
-			if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
+			if (user == usr && !user.restrained() && !is_incapacitated(user) && in_interact_range(src, user))
 				if (!user.put_in_hand(src))
 					return ..()
 		else
@@ -1125,6 +1125,8 @@ proc/ui_describe_reagents(atom/A)
 
 	proc/adjust_flow_rate(mob/user)
 		var/reagent = tgui_input_list(user,"Set desired reagent", "Set reagent", basic_elements, reagent_to_fabricate)
+		if (reagent == null)
+			return
 		var/number = tgui_input_number(user,"Set fabrication volume, in units", "Set fabrication rate (1-5)",flow_rate,5,1,FALSE,TRUE)
 		if (reagent && (reagent in basic_elements) && reagent_to_fabricate != reagent)
 			reagent_to_fabricate = reagent
