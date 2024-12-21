@@ -161,8 +161,8 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				if (istype(A, mattereater.target_path))
 					items += A
 
-		for(var/atom/item in items) // augh body bags
-			if(istype(item, /obj/item/body_bag) && item:w_class >= W_CLASS_BULKY)
+		for(var/obj/item/item as anything in items) // augh body bags
+			if(istype(item, /obj/item/body_bag) && item.w_class >= W_CLASS_BULKY)
 				items -= item
 
 		if (linked_power.power > 1)
