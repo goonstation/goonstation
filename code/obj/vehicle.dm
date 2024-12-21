@@ -198,6 +198,8 @@ ABSTRACT_TYPE(/obj/vehicle)
 		if(!src.rider || user != src.rider)
 			return
 
+		src.dir = user.dir
+
 		var/td = max(src.delay, MINIMUM_EFFECTIVE_DELAY)
 
 		// You can't move in space without the booster upgrade
