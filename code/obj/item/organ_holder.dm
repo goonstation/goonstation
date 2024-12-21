@@ -1873,3 +1873,37 @@
 			src.icon_state = initial(src.icon_state)
 		else
 			src.icon_state = "[initial(src.icon_state)]_cd"
+
+/datum/targetable/organAbility/view_camera
+	name = "View Monitor"
+	desc = "Look through a camera via your monitor eye."
+	icon_state = "eye-monitor"
+	targeted = FALSE
+	var/eye_side
+
+	cast(atom/target)
+		if (..())
+			return 1
+		var/obj/item/organ/eye/cyber/monitor/linked_eye = linked_organ
+		var/obj/machinery/camera/selected_camera = linked_eye.viewer.select_camera(holder.owner)
+
+		if(istype(selected_camera) && holder.owner.client)
+			var/list/viewports = holder.owner.client.getViewportsByType("[eye_side] monitor cybereye")
+			var/datum/viewport/vp
+			if(length(viewports))
+				vp = holder.owner.client.getViewportsByType("[eye_side] monitor cybereye")[1]
+			else
+				vp = new(holder.owner.client, "[eye_side] monitor cybereye")
+			var/turf/T = get_turf(selected_camera)
+			var/turf/closestPos = null
+			for(var/i = 4, i >= 0 || !closestPos, i--)
+				closestPos = locate(T.x - i, T.y + i, T.z)
+				if(closestPos) break
+			vp.SetViewport(closestPos, 8, 8)
+			vp.start_following(selected_camera)
+
+/datum/targetable/organAbility/view_camera/left
+	eye_side = "left"
+
+/datum/targetable/organAbility/view_camera/right
+	eye_side = "right"

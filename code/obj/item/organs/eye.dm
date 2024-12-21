@@ -15,7 +15,10 @@
 	var/color_r = 1 // same as glasses/helmets/masks/etc, used for vision color modifications, see human/handle_regular_hud_updates()
 	var/color_g = 1
 	var/color_b = 1
-	var/show_on_examine = FALSE // do we get mentioned when our donor is examined?
+	///do we get mentioned when our donor is examined?
+	var/show_on_examine = FALSE
+	///provides sight for blindness checks
+	var/provides_sight = TRUE
 
 	New()
 		..()
@@ -464,12 +467,83 @@ TYPEINFO(/obj/item/organ/eye/cyber/laser)
 		else // just us!
 			aholder.removeAbility(abil)
 
+TYPEINFO(/obj/item/organ/eye/cyber/monitor)
+	mats = 7
+
+/obj/item/organ/eye/cyber/monitor
+	name = "monitor cybereye"
+	organ_name = "monitor cybereye"
+	desc = "A tiny screen to replace an eye. You can't use it to see, but it can view camera networks from the installed monitor."
+	organ_abilities = list(/datum/targetable/organAbility/view_camera) // side subtype chosen in add_ability
+	default_material = "pharosium"
+	iris_color = "#0d0508"
+	icon_state = "eye-monitor"
+	provides_sight = FALSE
+	var/obj/item/device/camera_viewer/viewer = null
+
+	HELP_MESSAGE_OVERRIDE("You can replace the installed camera monitor by clicking the eye with a monitor in-hand.")
+
+	New()
+		. = ..()
+		src.viewer = new /obj/item/device/camera_viewer/public(src)
+		src.viewer.network = list("public", "telesci")
+
+	disposing()
+		. = ..()
+		qdel(src.viewer)
+		src.viewer = null
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/device/camera_viewer))
+			if(src.emagged)
+				boutput(user, "The camera monitor is fused into the eye and can't be swapped!")
+				return
+			user.u_equip(W)
+			W.set_loc(src)
+			boutput(user, "You install [W] into [src].")
+			user.put_in_hand_or_drop(src.viewer)
+			src.viewer = W
+			return
+		..()
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (!src.emagged)
+			if(user)
+				boutput(user, SPAN_ALERT("The network limiter on [src.viewer] overloads and fuses to [src]!"))
+			src.viewer.network.Add("public", "telesci", "SS13", "ranch", "Robots", "Mining", "Zeta")
+		. = ..()
+
+	add_ability(datum/abilityHolder/aholder, abil)
+		if (!ispath(abil, /datum/targetable/organAbility/view_camera) || !aholder)
+			return ..()
+		var/datum/targetable/organAbility/view_camera/OA
+		if(src.body_side == L_ORGAN)
+			aholder.addAbility(/datum/targetable/organAbility/view_camera/left)
+			OA = aholder.getAbility(/datum/targetable/organAbility/view_camera/left)
+		else
+			aholder.addAbility(/datum/targetable/organAbility/view_camera/right)
+			OA = aholder.getAbility(/datum/targetable/organAbility/view_camera/right)
+		if(istype(OA))
+			OA.linked_organ = src
+
+
+	remove_ability(datum/abilityHolder/aholder, abil)
+		if (!ispath(abil, /datum/targetable/organAbility/view_camera) || !aholder)
+			return ..()
+		if(src.body_side == L_ORGAN)
+			aholder.removeAbility(/datum/targetable/organAbility/view_camera/left)
+			src.donor?.client?.clearViewportsByType("left monitor cybereye")
+		else
+			aholder.removeAbility(/datum/targetable/organAbility/view_camera/right)
+			src.donor?.client?.clearViewportsByType("right monitor cybereye")
+
+
 /obj/item/organ/eye/lizard
 	name = "slit eye"
 	desc = "I guess its owner is just a lzard now. Ugh that pun was terrible. Not worth losing an eye over."
 	icon_state = "eye-lizard"
 
-obj/item/organ/eye/skeleton
+/obj/item/organ/eye/skeleton
 	name = "boney eye"
 	desc = "Yes it also has eye sockets. How this works is unknown."
 	icon_state = "eye-bone"
