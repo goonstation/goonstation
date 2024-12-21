@@ -289,6 +289,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 	for_by_tcl(IX, /obj/machinery/interdictor)
 		if (IX.expend_interdict(500, src))
+			arcFlash(last, IX, 500000)
 			return 1
 
 	for(var/mob/living/M in oview(5, src))
