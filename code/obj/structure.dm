@@ -359,7 +359,7 @@ TYPEINFO(/obj/structure/woodwall)
 	var/projectile_gib_streak = FALSE
 
 	New()
-		src.AddComponent(/datum/component/obj_projectile_damage, src.type, src.projectile_gib, src.projectile_gib_streak)
+		src.AddComponent(/datum/component/obj_projectile_damage, /obj/decal/cleanable/wood_debris, src.projectile_gib, src.projectile_gib_streak)
 		. = ..()
 
 	virtual
