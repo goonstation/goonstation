@@ -79,16 +79,16 @@
 		desc = "Transfer neurodepressant into your target. Good for escaping chases and disorienting targets."
 		icon_state = "stingdepres"
 		venom_id = "neurodepressant"
-		inject_amount = 10
-		cooldown = 350
+		inject_amount = 5
+		cooldown = 20
 
 	hemotoxin
 		name = "Hemotoxin Sting"
 		desc = "Transfer hemotoxin into your target. Drains target's blood, may need multiple stings to be lethal."
 		icon_state = "stinghemot"
 		venom_id = "hemotoxin"
-		inject_amount = 12
-		cooldown = 350
+		inject_amount = 9
+		cooldown = 300
 
 	tetrodotoxin
 		name = "Tetrodotoxin Sting"
