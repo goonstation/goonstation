@@ -444,6 +444,12 @@ TYPEINFO(/obj/structure/woodwall)
 		hit_twitch(src)
 		return
 
+	disposing()
+		var/turf/T = src.loc
+		. = ..()
+		for (var/turf/simulated/wall/auto/asteroid/A in orange(T,1))
+			A.UpdateIcon()
+
 /obj/structure/woodwall/Cross(obj/projectile/mover)
 	if (istype(mover) && !mover.proj_data.always_hits_structures && prob(src.projectile_passthrough_chance))
 		return TRUE
@@ -469,12 +475,6 @@ TYPEINFO(/obj/structure/woodwall)
 		if (_health <= 0)
 			src.visible_message(SPAN_ALERT("<b>[src] collapses!</b>"))
 			src.onDestroy()
-
-	disposing()
-		var/turf/T = src.loc
-		. = ..()
-		for (var/turf/simulated/wall/auto/asteroid/A in orange(T,1))
-			A.UpdateIcon()
 
 /obj/structure/woodwall/fake_asteroid/left_edge
 	icon_state = "asteroid-55"
