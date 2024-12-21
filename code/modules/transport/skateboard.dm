@@ -263,6 +263,7 @@
 	if(rider)
 		if(istype(src.loc, /turf/space))
 			return
+		src.dir = user.dir
 		walk(src, dir, speed_delay)
 	else
 		for(var/mob/M in src.contents)

@@ -2342,6 +2342,7 @@ TYPEINFO(/obj/vehicle/forklift)
 
 	//forklift
 	if(src.rider && user == src.rider)
+		src.dir = user.dir
 		var/td = max(src.delay, MINIMUM_EFFECTIVE_DELAY)
 		if (!src.booster_upgrade)
 			if(T.throw_unlimited && istype(T, /turf/space))
