@@ -158,6 +158,7 @@
 		"selectedcost" = src.selection.cost,
 		"resources" = src.resources,
 		"destroying" = src.destroying,
+		"selecteddesc" = src.selection.desc,
 	)
 
 /obj/item/places_pipes/ui_static_data(mob/user)
@@ -216,6 +217,7 @@
 	var/bent = FALSE // not a big fan, but its a shrimple solution to bent pipes
 	/// Does not share space with another exclusionary object.
 	var/exclusionary = FALSE
+	var/desc = "This is a pipe which does like things idk."
 
 	proc/get_directions(dir)
 		return 0
@@ -227,6 +229,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 		path = /obj/machinery/atmospherics/pipe/simple/overfloor
 		cost = 1
 		icon_state = "pipe"
+		desc = "A simple uninsulated pipe. Conducts heat to and from its surroundings."
 
 		get_directions(dir)
 			switch(dir)
@@ -240,6 +243,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 			path = /obj/machinery/atmospherics/pipe/simple/insulated
 			cost = 2
 			icon_state = "insulatedpipe"
+			desc = "A simple insulated pipe. Does not conduct heat to and from its surroundings."
 
 	bent
 		name = "Bent pipe"
@@ -247,6 +251,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 		cost = 1
 		icon_state = "pipebent"
 		bent = TRUE
+		desc = "A simple uninsulated pipe. Conducts heat to and from its surroundings."
 
 		get_directions(dir)
 			switch(dir)
@@ -264,11 +269,13 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 			path = /obj/machinery/atmospherics/pipe/simple/insulated
 			cost = 2
 			icon_state = "insulatedpipebent"
+			desc = "A simple insulated pipe. Does not conduct heat to and from its surroundings."
 
 	manifold
 		name = "Manifold"
 		path = /obj/machinery/atmospherics/pipe/manifold/overfloor
 		icon_state = "manifold"
+		desc = "A three way manifold."
 
 		get_directions(dir)
 			switch(dir)
@@ -286,6 +293,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 		path = /obj/machinery/atmospherics/pipe/quadway/overfloor
 		cost = 4 //quad
 		icon_state = "4way"
+		desc = "A four way manifold."
 
 		get_directions(dir)
 			return NORTH|SOUTH|EAST|WEST
@@ -295,6 +303,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 		path = /obj/machinery/atmospherics/pipe/simple/heat_exchanging
 		cost = 3
 		icon_state = "heatpipe"
+		desc = "A heat exchanging pipe. Conducts heat very well to and from its surroundings."
 
 		get_directions(dir)
 			switch(dir)
@@ -309,6 +318,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 		cost = 3
 		icon_state = "heatpipebent"
 		bent = TRUE
+		desc = "A heat exchanging pipe. Conducts heat very well to and from its surroundings."
 
 		get_directions(dir)
 			switch(dir)
@@ -325,6 +335,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 		name = "HE junction"
 		path = /obj/machinery/atmospherics/pipe/simple/junction
 		icon_state = "junction"
+		desc = "For connecting heat exchanging pipes to regular ones."
 
 		get_directions(dir)
 			switch(dir)
@@ -346,27 +357,34 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/unary)
 		name = "Passive vent"
 		path = /obj/machinery/atmospherics/unary/vent
 		icon_state = "vent"
+		desc = "Passively vents connected gases to the surrounding air."
 	tank
 		cost = 8
 		name = "Pressure tank"
 		path = /obj/machinery/atmospherics/unary/tank
 		icon_state = "tank"
+		desc = "A 1620 litre pressurized storage tank."
 	connector
 		name = "Portable Connector"
 		path = /obj/machinery/atmospherics/unary/portables_connector
 		icon_state = "connector"
+		desc = "For connecting canisters, scrubbers, pumps and other portable machinery."
 	outlet_injector
 		name = "Outlet Injector"
 		path = /obj/machinery/atmospherics/unary/outlet_injector/overfloor
 		icon_state = "injector"
+		desc = "A packet controlled injector that injects a set volume of gas into the surrounding air."
 	vent_pump
 		name = "Vent pump"
 		path = /obj/machinery/atmospherics/unary/vent_pump/overfloor/inactive
 		icon_state = "ventpump"
+		desc = "A packet controlled pump that pumps gas in or out of a pipe up to a set external or internal pressure."
 	vent_scrubber
 		name = "Vent scrubber"
 		path = /obj/machinery/atmospherics/unary/vent_scrubber/overfloor/inactive
 		icon_state = "ventscrubber"
+		desc = "A packet controlled static scrubber that can filter specific gases out of the surrounding air."
+
 ABSTRACT_TYPE(/datum/pipe_recipe/machine/binary)
 /datum/pipe_recipe/machine/binary
 	get_directions(dir)
@@ -379,19 +397,24 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/binary)
 		name = "Passive gate"
 		path = /obj/machinery/atmospherics/binary/passive_gate
 		icon_state = "passivegate"
+		desc = "A one-way passive air valve. Tries to achieve a target pressure at output (like a normal pump), but without any actual pumping power. Use a multitool to configure."
 	pressure_pump
 		name = "Pressure pump"
 		path = /obj/machinery/atmospherics/binary/pump
 		icon_state = "pump"
+		desc = "An inline pump that tries to achieve a target pressure on the output side. Can be configured with a wrench."
 	volume_pump
 		name = "Volume pump"
 		path = /obj/machinery/atmospherics/binary/volume_pump
 		icon_state = "volumepump"
+		desc = "An inline pump that moves a set volume of gas over time, regardless of pressure."
 	valve
 		name = "Manual valve"
 		path = /obj/machinery/atmospherics/binary/valve
 		icon_state = "valve"
+		desc = "A simple manual valve."
 	digital_valve
 		name = "Digital valve"
 		path = /obj/machinery/atmospherics/binary/valve/digital
 		icon_state = "digitalvalve"
+		desc = "A digital valve that can be controlled by silicons or by hitting it with a wrench."

@@ -18,6 +18,7 @@ export type HandPipeDispenserData = {
   destroying: boolean;
   selectedcost: number;
   resources: number;
+  selecteddesc: string;
 };
 
 // I feel like this should be common somewhere but :iiam:

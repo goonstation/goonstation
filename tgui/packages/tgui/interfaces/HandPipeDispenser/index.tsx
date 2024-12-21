@@ -23,8 +23,14 @@ import { ByondDir, HandPipeDispenserData, PipeData, Tab } from './type';
 
 export const HandPipeDispenser = () => {
   const { act, data } = useBackend<HandPipeDispenserData>();
-  const { atmospipes, atmosmachines, selectedimage, selectedcost, resources } =
-    data;
+  const {
+    atmospipes,
+    atmosmachines,
+    selectedimage,
+    selectedcost,
+    resources,
+    selecteddesc,
+  } = data;
   const [tab, setTab] = useSharedState('tab', Tab.AtmosPipes);
   return (
     <Window width={450} height={350}>
@@ -115,6 +121,16 @@ export const HandPipeDispenser = () => {
                     Placing
                   </Button>
                 )}
+              </Stack.Item>
+              <Stack.Item width="13em">
+                <Box
+                  style={{
+                    border: '1px solid grey',
+                    padding: '2px',
+                  }}
+                >
+                  {selecteddesc}
+                </Box>
               </Stack.Item>
             </Stack>
           </Section>
