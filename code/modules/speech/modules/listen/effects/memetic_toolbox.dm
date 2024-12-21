@@ -6,9 +6,9 @@
 	if (!istype(toolbox) || (toolbox.loc != message.speaker))
 		return
 
-	for(var/datum/ailment_data/A in toolbox.servantlinks)
+	for (var/datum/ailment_data/A in toolbox.servantlinks)
 		var/mob/living/M = A.affected_mob
-		if(!M || (M == message.speaker))
+		if (!M || (M == message.speaker))
 			continue
 
 		boutput(M, "<i><b><font color=blue face=Tempus Sans ITC>[message.content]</font></b></i>")

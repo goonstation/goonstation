@@ -36,7 +36,7 @@
 		subaddress++
 
 	/// Sort the proc list into alphabetical order.
-	for(var/type in src.procs_by_type)
+	for (var/type in src.procs_by_type)
 		sortList(src.procs_by_type[type], /proc/cmp_text_asc)
 
 /// Returns the reference to most recent definition of the specified proc name on the specified type.

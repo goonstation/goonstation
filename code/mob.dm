@@ -2975,6 +2975,8 @@ TYPEINFO(/mob)
 	equipment_proxy.aquatic_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
 	if(equipment_proxy.aquatic_movement > 0)
 		equipment_proxy.aquatic_movement *= modifier
+		if(modifier == 0) // aquatic_movement requires a positive value to skip added fluid turf delay
+			equipment_proxy.aquatic_movement += 0.01
 
 
 

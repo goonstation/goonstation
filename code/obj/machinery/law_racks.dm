@@ -727,8 +727,10 @@
 	 * Does not call UpdateLaws()
 	 * Intended for Admemery
 	 */
-	proc/SetLawCustom(lawName, lawText, slot = 1, screwed_in = FALSE, welded_in = FALSE)
-		var/mod = new /obj/item/aiModule/custom(lawName,lawText)
+	proc/SetLawCustom(lawName, lawText, slot = 1, screwed_in = FALSE, welded_in = FALSE, path)
+		if(!path || !ispath(path))
+			path = /obj/item/aiModule/custom
+		var/mod = new path(lawName,lawText)
 		return src.SetLaw(mod,slot,screwed_in,welded_in)
 
 	/// Deletes a law in an abritrary slot. Does not call UpdateLaws()

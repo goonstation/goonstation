@@ -19,6 +19,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	hardened = 0
 	use_speech_bubble = TRUE
 
+	HELP_MESSAGE_OVERRIDE("Stand next to an intercom and use the prefix <B> :in </B> to speak directly into it.")
+
 /obj/item/device/radio/intercom/proc/update_pixel_offset_dir(obj/item/AM, old_dir, new_dir)
 	src.pixel_x = 0
 	src.pixel_y = 0

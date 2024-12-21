@@ -60,6 +60,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 	rand_pos = 0
 	density = 0
 	desc = "A Loudspeaker."
+	HELP_MESSAGE_OVERRIDE("")
 
 /obj/item/device/radio/intercom/loudspeaker/speaker/New()
 	. = ..()
