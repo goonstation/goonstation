@@ -49,7 +49,7 @@
 	</ul>
 
 	The following are the modes you can set the component to. Results are passed along as a signal,
-	<br>either when setting a variable with a signal, or when an evaluate signal is recieved.
+	either when setting a variable with a signal, or when an evaluate signal is recieved.
 	<ul>
 		<li>Add: sends the sum of A and B</li>
 		<li>Sub: subtracts B from A</li>
