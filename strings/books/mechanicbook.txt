@@ -51,10 +51,10 @@
 	The following are the modes you can set the component to. Results are passed along as a signal,
 	either when setting a variable with a signal, or when an evaluate signal is recieved.
 	<ul>
-		<li>Add: sends the sum of A and B</li>
+		<li>Add: finds the sum of A and B</li>
 		<li>Sub: subtracts B from A</li>
 		<li>Div: divides A by B, errors if B is zero</li>
-		<li>Mul: multiplies A and b</li>
+		<li>Mul: multiplies A and B</li>
 		<li>Mod: finds the modulus (remainder) of A divided by B</li>
 		<li>Pow: Power. Gets the result of A to exponent B</li>
 		<li>Rng: Gets a random number between A and B</li>
