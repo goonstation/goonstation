@@ -35,7 +35,7 @@
 	<br>
 	<br>
 	<br><B>Arithmetic Component:</B>
-	<br>Stores numbers received in signals to variable A or B. By default it will compute the result immediately, then send it on as a signal.
+	<br>Stores numbers received in signals to variable A or B, then do mathematical operations on them. By default it will compute the result immediately, then send it on as a signal.
 	<br>Conveniently strips off trailing letters when setting variables.
 	<br>
 	<br>There are several options and inputs.
