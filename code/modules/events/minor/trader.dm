@@ -1,5 +1,6 @@
 /datum/random_event/minor/trader
 	name = "Travelling Trader"
+	customization_available = TRUE
 	//moved centcom headline and message down to the event_effect to change it depending on where the shuttle docks, preserving just in case, feel free to remove if you feel it's unnecessary
 	//centcom_headline = "Commerce and Customs Alert"
 	//centcom_message = "A merchant shuttle has docked with the station."
@@ -12,18 +13,31 @@
 	/// Station area the shuttle goes to
 	var/area/shuttle/merchant_shuttle/end_location = null
 
-	event_effect()
+	admin_call(source)
+		if(..())
+			return
+		var/selection = tgui_input_list(usr, "Which trader dock should be used?", "Dock Selection", list("left", "right", "diner"))
+		if(selection)
+			src.event_effect(selection)
+
+	event_effect(shuttle)
 		..()
 		if(active)
 			return //This is to prevent admins from fucking up the shuttle arrival/departures by spamming this event.
 		active = TRUE
 		map_turf = map_settings.shuttle_map_turf
-#ifdef UNDERWATER_MAP // bodge fix for oshan
-		var/shuttle = pick("left","right");
+		if(!shuttle)
+			shuttle = pick("left","right","left","right","diner"); // just making the diner docking a little less common.
+#if defined(MAP_OVERRIDE_OSHAN)
+		var/docked_where = shuttle == "diner" ? "sea diner" : "station";
+#elif defined(MAP_OVERRIDE_MANTA)
+		var/docked_where = shuttle == "diner" ? "sea diner" : "station";
+#elif defined(MAP_OVERRIDE_NADIR)
+		var/docked_where = shuttle == "diner" ? "underdiner" : "station";
 #else
-		var/shuttle = pick("left","right","left","right","diner"); // just making the diner docking a little less common.
-#endif
 		var/docked_where = shuttle == "diner" ? "space diner" : "station";
+#endif
+
 		var/loc_string = ""
 		if(shuttle == "diner")
 			start_location = locate(/area/shuttle/merchant_shuttle/diner_centcom)
@@ -61,8 +75,9 @@
 				signal_dock(shuttle, DOCK_EVENT_DEPARTED)
 				active = FALSE
 
-	proc/signal_dock(var/dock, var/event)
-		switch(dock)
+	/// Send signal to related trading dock
+	proc/signal_dock(shuttle, event)
+		switch(shuttle)
 			if("diner")
 				SEND_GLOBAL_SIGNAL(COMSIG_DOCK_TRADER_DINER, event)
 			if("left")
