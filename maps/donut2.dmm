@@ -6454,7 +6454,7 @@
 	name = "crematorium pipe"
 	},
 /obj/table/podium_wood,
-/obj/item/bible{
+/obj/item/holy_texts{
 	pixel_y = 7
 	},
 /obj/machinery/light/small/floor,
@@ -27146,7 +27146,7 @@
 	pixel_x = -7;
 	pixel_y = 5
 	},
-/obj/item/bible{
+/obj/item/holy_texts{
 	pixel_x = 17;
 	pixel_y = 4
 	},
