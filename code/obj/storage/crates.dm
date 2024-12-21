@@ -559,7 +559,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/gun/kinetic/tranq_pistol,
 		/obj/item/storage/pouch/tranq_pistol_dart,
-		/obj/item/pinpointer/disk,
+		/obj/item/pinpointer/syndicate,
 		/obj/item/dna_scrambler,
 		/obj/item/voice_changer,
 		/obj/item/card/emag,
@@ -574,7 +574,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		spawn_contents = list(/obj/item/gun/kinetic/smg,
 		/obj/item/storage/pouch/bullet_9mm/smg,
 		/obj/item/clothing/glasses/nightvision,
-		/obj/item/pinpointer/disk,
+		/obj/item/pinpointer/syndicate,
 		/obj/item/cloaking_device,
 		/obj/item/card/emag,
 		/obj/item/lightbreaker,
