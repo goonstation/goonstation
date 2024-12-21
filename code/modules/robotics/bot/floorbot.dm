@@ -331,7 +331,7 @@
 		while(!isnull(A) && !istype(A.loc, /turf) && !ishuman(A.loc))
 			A = A.loc
 		if (ishuman(A?.loc) && prob(30))
-			speak(pick(src.chase_lines))
+			src.say(pick(src.chase_lines))
 		src.doing_something = 1
 		src.search_range = 1
 	else
