@@ -20,6 +20,10 @@
 	qdel(src.storage)
 	src.storage = null
 
+/// override as necessary, used to affect an atom stored in any nested level of storage when any higher parent storage changes location
+/atom/proc/parent_storage_loc_changed()
+	return
+
 /// a datum for atoms that allows holdable storage of items in a hud
 /datum/storage
 	/// Types that can be held
@@ -131,7 +135,8 @@
 		logTheThing(LOG_DEBUG, null, "STORAGE ITEM: [log_object(src.linked_item)] has more than [slots] items in it!")
 
 /// when clicking the storage item with an object
-/datum/storage/proc/storage_item_attack_by(obj/item/W, mob/user)
+/// `visible` is for when the click is fake and we're actually calling it from a safe store chain
+/datum/storage/proc/storage_item_attack_by(obj/item/W, mob/user, visible = TRUE)
 	. = TRUE
 	// check if item is the storage item
 	if (W == src.linked_item)
@@ -182,7 +187,7 @@
 		checkloc = checkloc.loc
 
 	// add item to storage
-	src.add_contents(W, user)
+	src.add_contents(W, user, visible)
 
 /// when clicking the storage item with an empty hand
 /datum/storage/proc/storage_item_attack_hand(mob/user)
@@ -419,7 +424,7 @@
 
 /// use this versus add_contents() if you also want extra safety checks
 /datum/storage/proc/add_contents_safe(obj/item/I, mob/user = null, visible = TRUE)
-	src.storage_item_attack_by(I, user)
+	src.storage_item_attack_by(I, user, visible)
 
 /// when transfering something in the storage out
 /datum/storage/proc/transfer_stored_item(obj/item/I, atom/location, add_to_storage = FALSE, mob/user = null)

@@ -127,6 +127,11 @@ TYPEINFO(/obj/machinery/power/data_terminal)
 			if(!src.powernet || !signal)
 				return
 
+			var/sender = signal.data["sender"]
+			//block any packet asking every device to send a ping back, trivial amplification attack that can seriously lag the server
+			if (sender == "ping")
+				return
+
 			if(source != src.master || !DATA_TERMINAL_IS_VALID_MASTER(src, src.master))
 				return
 

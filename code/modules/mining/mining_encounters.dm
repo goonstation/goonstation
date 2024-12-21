@@ -921,7 +921,7 @@
 							if(5)
 								make_cleanable(/obj/decal/cleanable/machine_debris, locate(S.x, S.y, S.z),0)
 							if(6)
-								new /obj/grille/steel/broken(locate(S.x, S.y, S.z),0)
+								new /obj/mesh/grille/steel/broken(locate(S.x, S.y, S.z),0)
 							else
 								var/obj/lattice/lattice = new /obj/lattice/auto/turf_attaching(locate(S.x, S.y, S.z))
 								var/dirmask = lattice.dirmask | rand(0, 1 | 2 | 4 | 8) // randomly add some directions to the lattice to make it look more broken

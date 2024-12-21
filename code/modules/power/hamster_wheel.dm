@@ -51,7 +51,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 			occupant.Attackhand(user)
 			if(user.a_intent == INTENT_DISARM || user.a_intent == INTENT_GRAB)
 				eject_occupant()
-			user.lastattacked = occupant
+			user.lastattacked = src
 		else
 			. = ..()
 

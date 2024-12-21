@@ -1048,12 +1048,14 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	density = 0
 	layer = 6
 	var/on = 0
+	///List of dummy objects that contain the actual light overlays
+	var/list/light_overlay_dummies = list()
 	var/datum/light/point/light
 
 	New()
 		..()
 		light = new
-		light.set_brightness(1)
+		light.set_brightness(0.8)
 		light.set_color(2,2,2)
 		light.set_height(2.4)
 		light.attach(src)
@@ -1061,16 +1063,51 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	attack_hand(mob/user)
 		src.toggle_on()
 
+	proc/add_lights()
+		SPAWN(0) //SDMM doesn't seem to understand waitfor sooo
+			for (var/i in 1 to 8)
+				var/type = prob(50) ? pick(concrete_typesof(/obj/overlay/simple_light/disco_lighting/rainbow/random_start)) : pick(concrete_typesof(/obj/overlay/simple_light/disco_lighting/oscillator))
+				var/obj/overlay/simple_light/disco_lighting/overlay = new type()
+				overlay.alpha = 0
+				animate(overlay, alpha = 255, time = 1 SECOND, flags = ANIMATION_PARALLEL)
+
+				var/obj/dummy/dummy = new() //byond's animation system sucks, the colour changing animations interfere with the orbit so we do THIS SHIT
+				dummy.mouse_opacity = FALSE
+				dummy.vis_contents += overlay
+				src.vis_contents += dummy
+				src.light_overlay_dummies += dummy
+				animate_orbit(dummy, radius = 64, time = 4 SECONDS)
+
+				sleep(0.5 SECONDS)
+				if (!src.on)
+					return
+
+	proc/remove_lights()
+		for (var/obj/dummy/overlay as anything in src.light_overlay_dummies)
+			src.light_overlay_dummies -= overlay
+			overlay.vis_contents = null
+			qdel(overlay)
+
 	proc/toggle_on()
+		if (!src.on && GET_COOLDOWN(src, "disco_ball_antispam")) //recently turned off, don't spam to stack overlays
+			return
 		src.on = !src.on
 		src.icon_state = "disco[src.on]"
 		if (src.on)
-			light.enable()
+			src.add_lights()
+			src.light.enable()
 			if (!particleMaster.CheckSystemExists(/datum/particleSystem/sparkles_disco, src))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparkles_disco(src))
 		else
-			light.disable()
+			ON_COOLDOWN(src, "disco_ball_antispam", 1 SECOND)
+			src.light.disable()
+			src.remove_lights()
 			particleMaster.RemoveSystem(/datum/particleSystem/sparkles_disco, src)
+
+	disposing()
+		if (src.on)
+			src.remove_lights()
+		..()
 
 /obj/admin_plaque
 	name = "Admin's Office"
@@ -1811,18 +1848,53 @@ obj/decoration/pottedfern
 	density = 1
 	anchored = ANCHORED
 	opacity = 0
-
+	var/on = TRUE
 	var/datum/light/light
+	var/movable = TRUE
+	var/extinguishable = TRUE
 
 	New()
-		UpdateParticles(new/particles/barrel_embers, "embers")
-		UpdateParticles(new/particles/barrel_smoke, "smoke")
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(1)
 		light.set_color(0.5, 0.3, 0)
-		light.enable()
+		src.set_on(src.on, TRUE)
 		..()
+
+	get_help_message(dist, mob/user)
+		return "You can use a <b>wrench</b> to [src.anchored ? "unbolt it" : "bolt it down"]."
+
+	proc/set_on(on, quiet = FALSE)
+		if (on)
+			src.UpdateParticles(new/particles/barrel_embers, "embers")
+			src.UpdateParticles(new/particles/barrel_smoke, "smoke")
+			src.light.enable()
+			src.on = TRUE
+			name = initial(name)
+			desc = initial(desc)
+			if (!quiet)
+				playsound(src, 'sound/effects/lit.ogg', 80, 0, 1)
+			global.processing_items |= src //shut up
+		else
+			src.light.disable()
+			src.ClearAllParticles()
+			src.on = FALSE
+			src.name = "crusty barrel"
+			src.desc = "A grody old barrel full of flammable looking wood."
+			global.processing_items -= src
+		src.UpdateIcon()
+
+	proc/process()
+		var/turf/T = get_turf(src)
+		if (!T)
+			return
+		T.hotspot_expose(T0C + 300, 100, TRUE, FALSE)
+
+	update_icon(...)
+		if (src.on)
+			src.icon_state = "barrel1"
+		else
+			src.icon_state = "barrel-planks"
 
 	disposing()
 		light.disable()
@@ -1833,8 +1905,28 @@ obj/decoration/pottedfern
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/clothing/mask/cigarette))
 			var/obj/item/clothing/mask/cigarette/C = W
-			if(!C.on)
+			if(!C.on && src.on)
 				C.light(user, SPAN_ALERT("[user] lights the [C] with [src]. That seems appropriate."))
+			return
+		if (src.movable && (isscrewingtool(W) || iswrenchingtool(W)))
+			if (istype(src.loc, /turf/space))
+				boutput(user, SPAN_ALERT("There's nothing to bolt it to!"))
+				return
+			src.anchored = !src.anchored
+			src.visible_message(SPAN_NOTICE("[user] [src.anchored ? "bolts down" : "unbolts"] [src]"))
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, TRUE)
+			return
+		if (W.firesource && !src.on)
+			src.set_on(TRUE)
+			W.firesource_interact()
+			return
+		. = ..()
+
+	reagent_act(reagent_id, volume, datum/reagentsholder_reagents)
+		if (..() || !src.extinguishable)
+			return
+		if (reagent_id == "ff-foam" || reagent_id == "water" && volume >= 20)
+			src.set_on(FALSE)
 
 /obj/fireworksbox
 	name = "Box of Fireworks"

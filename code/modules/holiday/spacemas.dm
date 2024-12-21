@@ -883,7 +883,7 @@ proc/compare_ornament_score(list/a, list/b)
 					for (var/mob/C in viewers(src))
 						shake_camera(C, 8, 16)
 						C.show_message(SPAN_ALERT("<B>[src] [attack_text] on [O]!</B>"), 1)
-					if(istype(O, /obj/window) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
+					if(istype(O, /obj/window) || istype(O, /obj/mesh/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 						qdel(O)
 					else
 						O.ex_act(attack_strength)

@@ -162,6 +162,16 @@
 	else
 		A.show_fx(src)
 	A.effect_activate(src)
+	for (var/mob/living/L in range(5, src))
+		for(var/datum/objective/objective in L.mind?.objectives)
+			if (istype(objective, /datum/objective/crew/scientist/artifact))
+				var/datum/objective/crew/scientist/artifact/art_obj = objective
+				art_obj.artifacts_activated++
+				break
+			if (istype(objective, /datum/objective/crew/researchdirector/artifact))
+				var/datum/objective/crew/researchdirector/artifact/art_obj = objective
+				art_obj.artifacts_activated++
+				break
 
 /obj/proc/ArtifactDeactivated()
 	if (!src.ArtifactSanityCheck())
@@ -514,6 +524,28 @@
 	if (A.health <= 0)
 		src.ArtifactDestroyed()
 	return
+
+/obj/hear_talk(mob/M, text, real_name, lang_id)
+	if (!src.artifact || src.artifact.activated)
+		return ..()
+	var/datum/artifact_trigger/language/trigger = locate(/datum/artifact_trigger/language) in src.artifact.triggers
+	if (!trigger || GET_DIST(M, src) > 2)
+		return
+	if (isghostcritter(M))
+		return
+	if (ON_COOLDOWN(src, "speech_act_cd", 2 SECONDS))
+		return
+	var/result = trigger.speech_act(text)
+	if (!result)
+		return
+	if (result == "error")
+		src.visible_message("[src] gives a <b>dull</b> chime.", "[src] gives a <b>dull</b> chime.")
+	else if (result == "hint")
+		src.visible_message("<b>[src]</b> [src.artifact.hint_text]", "<b>[src]</b> [src.artifact.hint_text]")
+	else if (result == "correct")
+		src.ArtifactStimulus("language", 1)
+	else
+		src.visible_message("[src] [result]", "[src] [result]")
 
 /// Removes all artifact forms attached to this and makes them fall to the floor
 /// Because artifacts often like to disappear in mysterious ways

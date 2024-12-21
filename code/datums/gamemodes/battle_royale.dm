@@ -315,10 +315,12 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	var/list/obj/murder_supplies = list()
 
 	for(var/datum/syndicate_buylist/D in syndi_buylist_cache)
-		if(D.item)
-			if(!D.br_allowed)
-				continue
-			murder_supplies.Add(D.item)
+		if(length(D.items) == 0)
+			continue
+		if(!D.br_allowed)
+			continue
+		for (var/item in D.items)
+			murder_supplies.Add(item)
 
 	var/list/weapon_supplies = list()
 	// Feel free to add more!
@@ -336,11 +338,8 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/gun/kinetic/gyrojet)
 	weapon_supplies.Add(/obj/item/gun/energy/phaser_small)
 	weapon_supplies.Add(/obj/item/gun/energy/phaser_huge)
-	weapon_supplies.Add(/obj/item/gun/energy/optio1)
-	weapon_supplies.Add(/obj/item/gun/energy/blaster_pistol)
 	weapon_supplies.Add(/obj/item/gun/energy/alastor)
 	weapon_supplies.Add(/obj/item/gun/energy/heavyion)
-	weapon_supplies.Add(/obj/item/gun/energy/pulse_rifle)
 	weapon_supplies.Add(/obj/item/bat)
 	weapon_supplies.Add(/obj/item/ratstick)
 	weapon_supplies.Add(/obj/item/saw)
@@ -445,6 +444,9 @@ proc/equip_battler(mob/living/carbon/human/battler)
 		return
 
 	battler.equip_if_possible(new /obj/item/device/radio/headset(battler), SLOT_EARS)
+
+	battler.equip_sensory_items()
+	battler.equip_body_traits()
 
 	// Battle royale crewmembers are rainbow flavored
 	var/obj/item/clothing/under/jumpsuit = null

@@ -124,11 +124,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 				icon_closed = "lootcrime"
 
 	update_icon()
-		if (open)
-			icon_state = icon_opened
-		else
-			icon_state = icon_closed
-
+		..()
 		if (src.locked)
 			light.color = "#FF0000"
 		else

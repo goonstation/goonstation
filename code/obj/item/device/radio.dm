@@ -716,6 +716,17 @@ TYPEINFO(/obj/item/radiojammer)
 			STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
 		..()
 
+/obj/item/device/radio/hall_monitor
+	name = "Hall monitor's radio"
+	desc = "So you can listen to(eavesdrop on) station security(drama)."
+	icon_state = "radio"
+	has_microphone = FALSE
+	frequency = R_FREQ_SECURITY
+	locked_frequency = TRUE
+	speaker_range = 0
+	secure_frequencies = list("g" = R_FREQ_SECURITY)
+	secure_classes = list("g" = RADIOCL_SECURITY)
+
 /obj/item/device/radio/beacon
 	name = "tracking beacon"
 	icon_state = "beacon"
@@ -1068,6 +1079,8 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 	rand_pos = 0
 	density = 0
 	desc = "A Loudspeaker."
+
+	HELP_MESSAGE_OVERRIDE("")
 
 	New()
 		..()

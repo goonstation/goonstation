@@ -408,7 +408,7 @@
 	description = "One case of 40mm Paint Marker Rounds, totalling 5 rounds, for the Riot Launcher."
 
 /datum/materiel/utility/prisonerscanner
-	name = "RecordTrak Scannner"
+	name = "RecordTrak Scanner"
 	path = /obj/item/device/prisoner_scanner
 	description = "A device used to scan in prisoners and update their security records."
 
@@ -440,7 +440,7 @@
 	description = "A gun-belt containing a semi-automatic, 9mm caliber service pistol and four magazines."
 
 /datum/materiel/sidearm/revolver
-	name = "Predator Revolver"
+	name = "Kestrel Revolver"
 	path = /obj/item/storage/belt/gun/revolver
 	description = "A gun-belt containing a hefty combat revolver and three .357 caliber speedloaders."
 

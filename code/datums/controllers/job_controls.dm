@@ -12,7 +12,7 @@ var/datum/job_controller/job_controls
 
 	New()
 		..()
-		if (world.load_intra_round_value("solarium_complete") == 1 || derelict_mode)
+		if (world.load_intra_round_value("solarium_complete") == 1 || derelict_mode || global.master_mode == "disaster")
 			src.staple_jobs = list(new /datum/job/command/captain/derelict {limit = 1;name = "NT-SO Commander";} (),
 			new /datum/job/command/head_of_security/derelict {limit = 1; name = "NT-SO Special Operative";} (),
 			new /datum/job/command/chief_engineer/derelict {limit = 1; name = "Salvage Chief";} (),

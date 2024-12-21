@@ -138,7 +138,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 				update()
 
 			if (isliving(AM))
-				if (AM:anchored) return
+				if (AM:anchored >= ANCHORED_ALWAYS) return
 				if (isintangible(AM)) // STOP EATING BLOB OVERMINDS ALSO
 					return
 				var/mob/living/M = AM

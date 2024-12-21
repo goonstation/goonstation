@@ -517,6 +517,22 @@
 					src.temp = "<B>Cost:</B> [H.price] [currency]<BR>"
 					src.temp += src.errormsgs[4]
 					return
+		//check if we're trying to scam a trader that is, for whatever reason, buying and selling the exact same commodity
+		if(buying == 1)
+			for(var/datum/commodity/arbitrage in src.goods_buy)
+				if(arbitrage.type == H.type && askingprice < arbitrage.price)
+					src.temp = "<B>Cost:</B> [H.price] [currency]<BR>"
+					src.temp += src.errormsgs[5]
+					H.haggleattempts++
+					return
+		else
+			for(var/datum/commodity/arbitrage in src.goods_sell)
+				if(arbitrage.type == H.type && askingprice > arbitrage.price)
+					src.temp = "<B>Cost:</B> [H.price] [currency]<BR>"
+					src.temp += src.errormsgs[5]
+					H.haggleattempts++
+					return
+
 		// check if the price increase % of the haggle is more than this trader will tolerate
 		var/hikeperc = askingprice - H.price
 		hikeperc = (hikeperc / H.price) * 100
@@ -634,6 +650,12 @@
 
 /obj/landmark/spawner/random_trader
 	spawn_the_thing()
+		var/type = pick(concrete_typesof(/obj/npc/trader/random) - /obj/npc/trader/random/contraband)
+		new type(src.loc)
+		qdel(src)
+
+/obj/landmark/spawner/random_trader/diner
+	spawn_the_thing()
 		var/type = pick(concrete_typesof(/obj/npc/trader/random))
 		new type(src.loc)
 		qdel(src)
@@ -723,6 +745,8 @@ ABSTRACT_TYPE(/obj/npc/trader/random)
 			buytypes -= pickedbuytype
 			if(buyitem.comtype != null)
 				src.goods_buy += buyitem
+
+		src.AddComponent(/datum/component/minimap_marker/minimap, MAP_INFO, "trader")
 
 	activatesecurity()
 		for(var/mob/M in AIviewers(src))

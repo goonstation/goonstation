@@ -295,6 +295,7 @@ or don't if it uses a custom topopen overlay
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 
 	ai_station_map = new /obj/minimap/ai
+	ai_station_map.initialise_minimap()
 	AddComponent(/datum/component/minimap_marker/minimap, MAP_AI | MAP_SYNDICATE, "ai")
 	SPAWN(0)
 		if (bought_hat || prob(5))
@@ -1669,8 +1670,10 @@ or don't if it uses a custom topopen overlay
 	if(get_z(src) != Z_LEVEL_STATION)
 		src.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
-
-	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]</tt></body>", "window=aimanifest")
+	var/target = src
+	if(src.deployed_to_eyecam)
+		target = src.eyecam
+	tgui_message(target, "<b>Crew Manifest:</b><hr>[get_manifest()]", "Crew Manifest")
 
 
 /mob/living/silicon/ai/proc/show_laws_verb()
@@ -2141,8 +2144,11 @@ or don't if it uses a custom topopen overlay
 	if (!C)
 		src.set_eye(null)
 		return 0
-	if (isdead(src) || C.network != src.network) return 0
+	if (isdead(src) || C.network != src.network)
+		return 0
 
+	if(isnull(C.loc) || QDELETED(C))
+		return 0
 	// ok, we're alive, camera is acceptable and in our network...
 	camera_overlay_check(C) //Add static if the camera is disabled
 
@@ -2575,6 +2581,7 @@ proc/get_mobs_trackable_by_AI()
 			newname = default_name
 		else
 			newname = tgui_input_text(renaming_mob || src, "You are an AI. Would you like to change your name to something else?", "Name Change", client?.preferences?.robot_name || default_name)
+			newname = remove_bad_name_characters(newname)
 			if(newname && newname != default_name)
 				phrase_log.log_phrase("name-ai", newname, no_duplicates=TRUE)
 		if (src.brain.owner != brain_owner)

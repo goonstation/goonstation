@@ -2,7 +2,7 @@
 ->The sawfly, by NightmareChamillian
 This file is the critter itself, and all the custom procs it needs in order to function.
 
--For the AI, check the critter/AI folder, it should be in sawflyai.dm
+-For the AI, sawflies use a mostly generic critter AI with some localized baked-in changes
 -For the grenade and controller, check code/obj/sawflymisc.dm
 */
 /mob/living/critter/robotic/sawfly
@@ -15,6 +15,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
 	var/static/list/priority_target_jobs = list("Head of Security", "Security Officer", "Nanotrasen Security Consultant")
+	var/datum/weakref/master = null //first friendly they imprint upon for /datum/aiTask/timed/targeted/follower
 	var/obj/item/old_grenade/sawfly/ourgrenade = null
 
 	speechverb_say = "whirrs"
@@ -24,6 +25,8 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	var/beeps = list('sound/machines/sawfly1.ogg','sound/machines/sawfly2.ogg','sound/machines/sawfly3.ogg')
 	var/retaliate = FALSE
 	misstep_chance = 40 //makes them behave more like drones, and harder to kite into a straightaway then shoot
+
+	HELP_MESSAGE_OVERRIDE({"Syndicate only: can be walked through if your intent is set to <span class='help'>help</span>. To deactivate, use the remote or (syndicate only) click on the sawfly with <span class='help'>help</span> or <span class='grab'>grab</span> intent."})
 
 	//mob variables
 	isFlying = 1
@@ -50,7 +53,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			name = "sawfly [pick(sawflynames)]-[rand(1,999)]"
 
 		animate_bumble(src) // gotta get the float goin' on
-		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable but it works
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity") //prevents them from having movespeed slowdown when injured
 		START_TRACKING
 
@@ -94,19 +96,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			N.heldfly = src
 			src.set_loc(N)
 
-
-	proc/communalbeep() // distributes the beepchance among the number of sawflies nearby
-		var/fliesnearby = 1 //for rolling chance to beep
-		for_by_tcl(E, /mob/living/critter/robotic/sawfly)
-			if(!isdead(E) && IN_RANGE(src, E, 16)) //counts all of them within more or less earshot
-				fliesnearby += 1 //that's your buddies!
-		var/beepchance = (1 / fliesnearby) * 100 //if two sawflies, give 50% chance that any one will beep
-		if(fliesnearby<3) beepchance -=20 //heavily reduce chance of beep in swarm
-		if(prob(beepchance))
-			if(!isdead(src))
-				playsound(src, pick(src.beeps), 40, 1)
-				src.visible_message("<b>[src] [pick(list("beeps",  "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs", "thrums"))].</b>")
-
 	emp_act() // allows armory's pulse rifles to wreck their shit
 		if(prob(80))
 			src.visible_message(SPAN_COMBAT("[src] buzzes oddly and starts to spiral out of control!"))
@@ -115,9 +104,20 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		else
 			src.foldself()
 
-	Cross(atom/movable/mover) //code that ensures projectiles hit them when they're alive, but won't when they're dead
-		if(istype(mover, /obj/projectile))
+	Cross(atom/movable/mover)
+
+		//since sawflies have a density of 1 and will auto-set intent to harm, we have to recode tile-sharing
+		if(istype(mover, /mob/living))
+			var/mob/living/movingmob = mover
+			if((issawflybuddy(movingmob)) && (movingmob.a_intent == INTENT_HELP))
+				return TRUE
+			else
+				return ..() //default behavior
+
+		//code that ensures projectiles hit them when they're alive, but won't when they're dead
+		if(istype(mover, /obj/projectile)) //hardcoding for bullets going over dead bodies
 			return isdead(src)
+
 		return ..()
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
@@ -144,9 +144,8 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			animate(src) //no more float animation
 			src.anchored = UNANCHORED
 			desc = "A folding antipersonnel drone, made by Ranodyne LLC. It's totally wrecked."
-			if (prob(20))
-				new /obj/item/device/prox_sensor(src.loc)
-				return
+
+			//time to roll for death effects
 			if(prob(60))
 				elecflash(src, 1, 3)
 
@@ -199,10 +198,16 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			do_retaliate(user)
 		..()
 
+	proc/dobeep()
+		if(isturf(src.loc) && !isdead(src))
+			playsound(src, pick(src.beeps), 40, 1)
+			src.visible_message("<b>[src] [pick(list("beeps",  "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs", "thrums"))].</b>")
+
 	Life()
 		..()
-		if(prob(8) && isturf(src.loc)) communalbeep() //beep only when not in a grenade
 
+		if(prob(5)) //roll chance to beep
+			dobeep()
 
 	seek_target(range) //ai mob critter targetting behaviour - returns a list of acceptable targets
 		if(src.lastattacker && src.retaliate && GET_DIST(src, src.lastattacker) <= range)
@@ -218,13 +223,17 @@ This file is the critter itself, and all the custom procs it needs in order to f
 				continue
 			if(C.mind?.special_role && issawflybuddy(C))
 				if(!(C.weakref in src.friends))
-					boutput(C, SPAN_ALERT("[src]'s IFF system silently flags you as an ally! "))
 					src.friends += get_weakref(C)
+					if(src.master == null)
+						src.master = get_weakref(C) //assign only one master
+						boutput(C, SPAN_ALERT("[src]'s IFF system silently flags you as its master!"))
+					else
+						boutput(C, SPAN_ALERT("[src]'s IFF system silently flags you as an ally!"))
 				continue
 			if(C.job in priority_target_jobs)
 				. = list(C) //go get em, tiger
 				return
-			. += C //you passed all the checks it, now you get added to the list for consideration
+			. += C //you passed all the checks, now you get added to the list for consideration
 
 			targetcount++
 			if(targetcount >= 8) //prevents them from getting too hung up on finding folks

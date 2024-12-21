@@ -98,7 +98,7 @@
 		photo.icon = photo_icon
 
 		var/obj/item/photo/P
-		P = new/obj/item/photo(get_turf(holder.owner), photo, photo_icon, finished_title, finished_detail)
+		P = new/obj/item/photo((length(holder.owner?.contents) < 15 ? holder.owner : get_turf(holder.owner)), photo, photo_icon, finished_title, finished_detail)
 		return isnull(P)
 
 /datum/targetable/critter/flash
@@ -123,6 +123,7 @@
 	name = "Return to body"
 	desc = "Leave the scuttlebot and return to your body"
 	icon_state = "shutdown"
+	needs_turf = FALSE
 	cast(atom/target)
 		if (..())
 			return 1

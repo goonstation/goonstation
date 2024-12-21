@@ -46,6 +46,8 @@
 
 	cheat
 		charge = INFINITY
+		can_fire()
+			return TRUE
 
 /obj/machinery/power/pt_laser/New()
 	..()
@@ -444,7 +446,7 @@
 	return src.terminal?.surplus() + src.load_last_tick //otherwise the charge used by this machine last tick is counted against the charge available to it this tick aaaaaaaaaaaaaa
 
 /obj/machinery/power/pt_laser/proc/get_available_input_power()
-		return src.charging * min(src.chargelevel, src.get_available_terminal_power())
+	return src.charging * min(src.chargelevel, src.get_available_terminal_power())
 
 /obj/machinery/power/pt_laser/proc/can_fire()
 	return (abs(src.output) <= src.charge + src.get_available_input_power()) & (abs(src.output) >= PTLMINOUTPUT)
@@ -616,8 +618,8 @@
 			L.TakeDamage("chest", 0, power/(1 MEGA WATT)) //ow
 			if(ishuman(L) && prob(min(power/(1 MEGA WATT),50)))
 				var/limb = pick("l_arm","r_arm","l_leg","r_leg")
-				L:sever_limb(limb)
-				L.visible_message("<b>The [src.name] slices off one of [L.name]'s limbs!</b>")
+				if(L:sever_limb(limb))
+					L.visible_message("<b>The [src.name] slices off one of [L.name]'s limbs!</b>")
 		if(200 MEGA WATTS + 1 to 5 GIGA WATTS) //you really fucked up this time buddy
 			make_cleanable( /obj/decal/cleanable/ash,src.loc)
 			L.unlock_medal("For Your Ohm Good", 1)

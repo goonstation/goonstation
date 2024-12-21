@@ -513,6 +513,9 @@ TYPEINFO(/obj/item/device/reagentscanner)
 		return
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
+		if(istype(A, /obj/machinery/photocopier))
+			return // Upload scan results to the photocopier without scanning the photocopier itself
+
 		user.visible_message(SPAN_NOTICE("<b>[user]</b> scans [A] with [src]!"),\
 		SPAN_NOTICE("You scan [A] with [src]!"))
 
@@ -995,6 +998,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
+	var/paper_icon_state = "paper_caution"
 
 	attack_self(mob/user)
 		var/menuchoice = tgui_alert(user, "What would you like to do?", "Ticket writer", list("Ticket", "Nothing"))
@@ -1013,7 +1017,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		else if (issilicon(user))
 			var/mob/living/silicon/S = user
 			I = S.botcard
-		if (!I || !(access_security in I.access))
+		if (!I || !(access_ticket in I.access))
 			boutput(user, SPAN_ALERT("Insufficient access."))
 			return
 		playsound(src, 'sound/machines/keyboard3.ogg', 30, TRUE)
@@ -1047,12 +1051,14 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			user.put_in_hand_or_drop(p)
 			p.name = "Official Caution - [ticket_target]"
 			p.info = ticket_text
-			p.icon_state = "paper_caution"
+			p.icon_state = src.paper_icon_state
 
 		return T.target_byond_key
 
-
-
+/obj/item/device/ticket_writer/crust
+	name = "crusty old security TicketWriter 1000"
+	desc = "An old TicketWriter model held together by hopes and dreams alone."
+	paper_icon_state = "paper_burned"
 
 TYPEINFO(/obj/item/device/appraisal)
 	mats = 5

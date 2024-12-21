@@ -209,7 +209,7 @@
 		if (rods)
 			rods.change_stack_amount(-1)
 
-		var/obj/grille/catwalk/catwalk = new
+		var/obj/mesh/catwalk/catwalk = new
 		catwalk.setMaterial(rods?.material)
 		catwalk.set_loc(src)
 
@@ -334,9 +334,9 @@
 		return
 	switch(icon_state)
 		if ("placeholder", "dplaceholder")
-			icon_state = "[((x + y) ^ ~(x * y) + z) % 25]" // rand(1,25)
+			icon_state = "[(((x + y) ^ ~(x * y) + z) % 25)+1]" // rand(1,25)
 		if ("aplaceholder")
-			icon_state = "a[((x + y) ^ ~(x * y) + z) % 10]" // rand(1,10)
+			icon_state = "a[(((x + y) ^ ~(x * y) + z) % 10)+1]" // rand(1,10)
 
 	if (derelict_mode == 1)
 		icon = 'icons/turf/floors.dmi'
@@ -429,11 +429,15 @@ proc/generate_space_color()
 			starlight.layer = LIGHTING_LAYER_BASE
 			starlight.plane = PLANE_LIGHTING
 			starlight.blend_mode = BLEND_ADD
-			starlight.color = starlight_color_override ? starlight_color_override : src.color
-			if(!isnull(starlight_alpha))
-				starlight.alpha = starlight_alpha
 
-		src.underlays += starlight
+		if(!isnull(starlight_alpha))
+			starlight.alpha = starlight_alpha
+		starlight.color = starlight_color_override ? starlight_color_override : src.color
+
+		if(length(src.underlays))
+			src.underlays = list(starlight)
+		else
+			src.underlays += starlight
 	else
 		src.underlays = list()
 	#endif

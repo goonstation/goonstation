@@ -866,8 +866,9 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 				/obj/item/reagent_containers/dropper/mechanical,
 				/obj/item/storage/box/lglo_kit,
 				/obj/item/storage/box/beaker_lids,
-				/obj/item/reagent_containers/glass/condenser = 3,
-				/obj/item/reagent_containers/glass/condenser/fractional = 1)
+				/obj/item/reagent_containers/glass/plumbing/condenser = 3,
+				/obj/item/reagent_containers/glass/plumbing/condenser/fractional = 1,
+				/obj/item/reagent_containers/glass/plumbing/dropper = 2)
 
 
 
@@ -1112,14 +1113,15 @@ TYPEINFO(/obj/table/glass)
 		if (src.glass_broken == GLASS_BROKEN)
 			if (istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
+				var/datum/material/mat = S.material //hold a ref to this in case the sheet stack gets disposed by using the last sheet
 				if (!S.material || !(S.material.getMaterialFlags() & MATERIAL_CRYSTAL))
 					boutput(user, SPAN_ALERT("You have to use glass or another crystalline material to repair [src]!"))
-				else if (S.change_stack_amount(-1))
+				else if (S.change_stack_amount(-2))
 					boutput(user, SPAN_NOTICE("You add glass to [src]!"))
 					if (S.reinforcement)
 						src.reinforced = 1
-					if (S.material)
-						src.setMaterial(S.material)
+					if (mat)
+						src.setMaterial(mat)
 					src.repair()
 				return
 			else

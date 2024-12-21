@@ -36,11 +36,14 @@ type AlertModalData = {
   content_window: string;
   timeout: number;
   title: string;
-  theme: string;
+  theme: string | null;
 };
 
 const KEY_DECREMENT = -1;
 const KEY_INCREMENT = 1;
+
+const DEFAULT_CONTENT_WINDOW_WIDTH = 600;
+const DEFAULT_CONTENT_WINDOW_HEIGHT = 480;
 
 export const AlertModal = () => {
   const { act, data } = useBackend<AlertModalData>();
@@ -61,10 +64,10 @@ export const AlertModal = () => {
 
   // Dynamically sets window dimensions
   const windowHeight = typedContentWindow
-    ? typedContentWindow.height
+    ? typedContentWindow.height || DEFAULT_CONTENT_WINDOW_HEIGHT
     : 115 + (message.length > 30 ? Math.ceil(message.length / 4) : 0);
   const windowWidth = typedContentWindow
-    ? typedContentWindow.width
+    ? typedContentWindow.width || DEFAULT_CONTENT_WINDOW_WIDTH
     : 325 + (items.length > 2 ? 55 : 0);
 
   const onKey = (direction: number) => {
@@ -80,9 +83,13 @@ export const AlertModal = () => {
   return (
     <Window
       height={windowHeight}
-      title={typedContentWindow ? typedContentWindow.title : title}
+      title={
+        typedContentWindow
+          ? (typedContentWindow.title ?? 'Antagonist Tips')
+          : title
+      }
       width={windowWidth}
-      theme={theme || 'nanotrasen'}
+      theme={typedContentWindow?.theme ?? theme ?? 'nanotrasen'}
     >
       {!!timeout && <Loader value={timeout} />}
       <Window.Content
