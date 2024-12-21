@@ -16060,12 +16060,8 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "cdZ" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	network = "Armory Perimeter";
-	tag = ""
+/obj/machinery/camera/auto{
+	dir = 10
 	},
 /turf/space,
 /area/space)
@@ -28574,14 +28570,10 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "jJj" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	network = "autoname - SS13"
-	},
 /obj/item/device/radio/intercom/security{
 	dir = 8
 	},
+/obj/machinery/camera/auto,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "jJu" = (

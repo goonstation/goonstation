@@ -20304,16 +20304,6 @@
 /obj/disposalpipe/junction/left/west,
 /turf/simulated/floor/bluewhite/corner,
 /area/station/medical/medbay/treatment)
-"fZQ" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	network = "Armory Perimeter";
-	tag = ""
-	},
-/turf/space,
-/area/station/turret_protected/armory_outside)
 "fZS" = (
 /mob/living/critter/rockworm,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -59757,15 +59747,7 @@
 /turf/simulated/floor/white/checker,
 /area/station/hallway/primary/south)
 "sbY" = (
-/obj/machinery/camera{
-	c_tag = "Armory Perimeter - West ";
-	dir = 8;
-	name = "autoname  - SS13";
-	network = "Armory Perimeter";
-	pixel_x = 4;
-	pixel_y = -3;
-	tag = ""
-	},
+/obj/machinery/camera/auto,
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "sck" = (
@@ -70504,6 +70486,10 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"vnQ" = (
+/obj/machinery/camera/auto,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
 "vnS" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -75888,16 +75874,6 @@
 /area/station/wreckage{
 	name = "Restricted Area"
 	})
-"wPD" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	network = "Armory Perimeter";
-	tag = ""
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/stockex)
 "wPR" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -100344,7 +100320,7 @@ sIK
 sIK
 sIK
 gYc
-fZQ
+sbY
 jhw
 jhw
 jhw
@@ -111805,7 +111781,7 @@ vyo
 jOl
 gKJ
 dDb
-wPD
+vSe
 lOJ
 tGy
 mkV
@@ -112107,7 +112083,7 @@ waP
 waP
 gKJ
 nHd
-vSe
+vnQ
 lOJ
 lOJ
 lOJ

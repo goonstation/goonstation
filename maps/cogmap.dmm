@@ -64182,14 +64182,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 5;
-	name = "autoname - Mining";
-	network = "Mining";
-	tag = ""
-	},
 /obj/machinery/power/apc/autoname_south,
+/obj/machinery/camera/auto,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
