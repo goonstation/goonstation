@@ -58,6 +58,10 @@ TYPEINFO(/obj/machinery/door/firedoor)
 			FALSE \
 		)
 
+		var/obj/machinery/door/airlock/pyro/glass/windoor/mydoor = locate(/obj/machinery/door/airlock/pyro/glass/windoor) in src.loc
+		if(istype(mydoor))
+			src.layer = EFFECTS_LAYER_UNDER_3 // windoors have altered layers
+
 /obj/machinery/door/firedoor/proc/set_open()
 	if(!blocked)
 		if(operating)
