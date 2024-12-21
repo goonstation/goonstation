@@ -1113,6 +1113,17 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 	is_syndicate = 0
 	fake = 1
 
+/obj/item/storage/belt/wrestling/hos
+	name = "Head of Security's championship belt"
+	desc = "The Head of Security's prized wrestling belt."
+	contraband = 6
+	can_hold = /obj/item/storage/belt/security::can_hold
+	check_wclass = 1
+
+	New()
+		..()
+		src.can_hold += /obj/item/gun/energy/tasershotgun
+
 // I dunno where else to put these vOv
 TYPEINFO(/obj/item/inner_tube)
 	mats = 5 // I dunno???
