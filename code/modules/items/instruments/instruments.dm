@@ -227,6 +227,20 @@
 		else
 			src.play(user)
 
+	attack_ai(mob/user as mob)
+		..()
+		if (!in_interact_range(src, user)) // Instruments are not wireless
+			return
+
+		if (isAI(user))
+			var/mob/living/silicon/ai/borgo = user
+			if (borgo.deployed_to_eyecam)
+				return
+
+		if(use_new_interface)
+			ui_interact(user)
+		else
+			src.play(user)
 
 
 /* -------------------- Large Instruments -------------------- */
