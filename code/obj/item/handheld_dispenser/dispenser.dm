@@ -134,7 +134,7 @@
 	src.tooltip_rebuild = 1
 	src.inventory_counter.update_number(src.resources)
 	user.visible_message(SPAN_NOTICE("[user] places a [recipe.name]."))
-	logTheThing(LOG_STATION, user, "places a [recipe.name] at [log_loc(target)] with an HPD")
+	logTheThing(LOG_STATION, user, "places a [recipe.name] at [log_loc(target)] with dir: [target.dir] with an HPD")
 	new /dmm_suite/preloader(target, list("dir" = (recipe.bent ? turn(direction, 45) : direction)))
 	var/obj/machinery/atmospherics/device = new recipe.path(target)
 	device.initialize(TRUE)
@@ -146,7 +146,11 @@
 		boutput(user, SPAN_ALERT("Not enough resources to destroy that!"))
 		return
 	boutput(user, SPAN_NOTICE("The [src] destroys the [target]!"))
-	logTheThing(LOG_STATION, user, "destroys a [target] at [log_loc(target)] with an HPD")
+	logTheThing(LOG_STATION, user, "destroys a [target] at [log_loc(target)] with dir: [target.dir] with an HPD")
+	if(istype(target, /obj/machinery/atmospherics/binary/valve))
+		var/obj/machinery/atmospherics/binary/valve/O = target
+		if(O.high_risk)
+			message_admins("[key_name(user)] has destroyed the high-risk valve: [target] at [log_loc(src)]")
 	resources -= 1
 	src.tooltip_rebuild = 1
 	src.inventory_counter.update_number(src.resources)
@@ -386,7 +390,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/unary)
 		name = "Vent pump"
 		path = /obj/machinery/atmospherics/unary/vent_pump/overfloor/inactive
 		icon_state = "ventpump"
-		desc = "A packet controlled pump that pumps gas in or out of a pipe up to a set external or internal pressure."
+		desc = "A packet controlled pump that pumps gas in or out of a pipe up to and/or down to a set external or internal pressure."
 	vent_scrubber
 		name = "Vent scrubber"
 		path = /obj/machinery/atmospherics/unary/vent_scrubber/overfloor/inactive
@@ -425,4 +429,4 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/binary)
 		name = "Digital valve"
 		path = /obj/machinery/atmospherics/binary/valve/digital
 		icon_state = "digitalvalve"
-		desc = "A digital valve that can be controlled by silicons or by hitting it with a wrench."
+		desc = "A digital valve that can be controlled by silicons, packet-controlled, or by hitting it with a wrench."

@@ -141,16 +141,19 @@
 	desc = "A digitally controlled valve."
 	icon = 'icons/obj/atmospherics/digital_valve.dmi'
 
-	var/frequency = 0
-	var/id = null
+	var/frequency = FREQ_FREE
+	var/net_id = null
 
 /obj/machinery/atmospherics/binary/valve/digital/New()
 	..()
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, null, frequency)
+	if(src.frequency)
+		src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 /obj/machinery/atmospherics/binary/valve/digital/receive_signal(datum/signal/signal)
-	if(signal.data["tag"] && (signal.data["tag"] != id))
-		return FALSE
+	if(!(signal.data["address_1"] == src.net_id))
+		if(signal.data["command"] != "broadcast_status")
+			return FALSE
 
 	switch(signal.data["command"])
 		if("valve_open")
@@ -166,6 +169,17 @@
 				close()
 			else
 				open()
+		if("broadcast_status")
+			SPAWN(0.5 SECONDS) src.broadcast_status()
+
+/obj/machinery/atmospherics/binary/valve/digital/proc/broadcast_status()
+	var/datum/signal/signal = get_free_signal()
+	signal.transmission_method = TRANSMISSION_RADIO
+	signal.source = src
+	signal.data["sender"] = src.net_id
+	signal.data["valve_status"] = src.open ? "open": "closed"
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+	return TRUE
 
 /obj/machinery/atmospherics/binary/valve/digital/attack_ai(mob/user)
 	return src.Attackhand(user)
