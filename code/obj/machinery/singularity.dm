@@ -283,7 +283,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		return
 
 	if (selfmove)
+		var/list/vector = src.calc_direction()
 		var/dir = pick(cardinal)
+		var/vector_length = (vector[1] ** 2 + vector[2] ** 2) ** (1/2)
+		if (prob(vector_length * 400)) //scale the chance to move in the direction of resultant force by the strength of that force
+			var/angle = arctan(vector[2], vector[1])
+			dir = angle2dir(angle)
 
 		for (var/dist = max(0,radius-1), dist <= radius+1, dist++)
 			var/turf/checkloc = get_ranged_target_turf(src.get_center(), dir, dist)
@@ -292,6 +297,27 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		step(src, dir)
 
+///Returns a 2D vector representing the resultant force acting on the singulo by all gravity wells, scaled by their distance
+/obj/machinery/the_singularity/proc/calc_direction()
+	var/list/total_vector = list(0,0) //if only we had vector primitives...
+	for_by_tcl(artifact, /obj/machinery/artifact/gravity_well_generator)
+		if (artifact.z != src.z)
+			continue
+		var/datum/artifact/gravity_well_generator/artifact_datum = artifact.artifact //parallel inheritence moment
+		if (!artifact_datum.activated)
+			continue
+		//pushing or pulling
+		var/sign = artifact_datum.gravity_type ? 1 : -1
+		//our actual offset from this artifact
+		var/list/vector = list(0,0)
+		vector[1] = ((src.x - artifact.x) * sign)
+		vector[2] = ((src.y - artifact.y) * sign)
+		//no need to root, we can reuse the squared value (I'm basically a doom programmer)
+		var/length_squared = (vector[1] ** 2) + (vector[2] ** 2)
+		//inverse square law I guess? gravity is radial
+		total_vector[1] += vector[1] * 1/length_squared
+		total_vector[2] += vector[2] * 1/length_squared
+	return total_vector
 
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
 	if (severity == 1 && prob(power * 5)) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
