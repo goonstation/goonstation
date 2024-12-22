@@ -478,6 +478,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy)
 		else
 			..()
 
+	ant_safe()
+		if(!src.unwrapped)
+			return TRUE
+		. = ..()
+
 	proc/unwrap_candy(mob/user)
 		unwrapped = 1
 		user.visible_message(SPAN_EMOTE("[user] unwraps [src]."), "You unwrap [src].")
