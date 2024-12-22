@@ -32,11 +32,14 @@ TYPEINFO(/obj/item/baton)
 	var/flick_baton_active = "baton_active"
 	var/wait_cycle = 0 // Update sprite periodically if we're using a self-charging cell.
 
+	var/no_autodepower = FALSE //! for special batons that should not depower (beepsky)
+	var/depower_time = 5 SECONDS //! the time when the baton will depower after dropped/stored
+
 	var/cell_type = /obj/item/ammo/power_cell/med_power // Type of cell to spawn by default.
 	var/from_frame_cell_type = /obj/item/ammo/power_cell //type of cell to spawn when mechscanned
 	var/cost_normal = 25 // Cost in PU. Doesn't apply to cyborgs.
 	var/cost_cyborg = 500 // Battery charge to drain when user is a cyborg.
-	var/is_active = TRUE
+	var/is_active = FALSE
 
 	var/stun_normal_knockdown = 15
 
@@ -56,6 +59,9 @@ TYPEINFO(/obj/item/baton)
 			cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, rechargable, INFINITY, can_swap_cell)
 		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
+		if (!src.no_autodepower)
+			// On dropping (in stashes/ground) or equipping (out of hands in e.g. belt) we want to start the depowering status
+			src.RegisterSignal(src, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED), PROC_REF(on_unequipped))
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		processing_items |= src
 		src.UpdateIcon()
@@ -75,6 +81,9 @@ TYPEINFO(/obj/item/baton)
 	disposing()
 		processing_items -= src
 		..()
+
+	proc/on_unequipped()
+		src.setStatus("baton_decharging", src.depower_time)
 
 	examine()
 		. = ..()
@@ -236,6 +245,14 @@ TYPEINFO(/obj/item/baton)
 			boutput(user, SPAN_ALERT("The [src.name] doesn't have enough power to be turned on."))
 			return
 
+		if(src.no_autodepower || src.is_active)
+			src.switch_status(user)
+		else
+			user.visible_message(SPAN_ALERT("[user] activates their [src.name]."), SPAN_NOTICE("You activate your [src.name]."))
+			SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECONDS, PROC_REF(switch_status), user, src.icon, src.flick_baton_active, null, INTERRUPT_NONE)
+
+
+	proc/switch_status(mob/user)
 		src.is_active = !src.is_active
 
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -252,8 +269,8 @@ TYPEINFO(/obj/item/baton)
 
 		src.UpdateIcon()
 		user.update_inhands()
-
 		return
+
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		src.add_fingerprint(user)
@@ -339,6 +356,8 @@ TYPEINFO(/obj/item/baton)
 
 /obj/item/baton/secbot
 	cost_normal = 0
+	no_autodepower = TRUE
+	is_active = TRUE
 
 TYPEINFO(/obj/item/baton/beepsky)
 	mats = 0 //no
@@ -349,6 +368,8 @@ TYPEINFO(/obj/item/baton/beepsky)
 	can_swap_cell = 0
 	rechargable = 0
 	cell_type = /obj/item/ammo/power_cell
+	no_autodepower = TRUE
+	is_active = TRUE
 
 TYPEINFO(/obj/item/baton/cane)
 	mats = list("metal_superdense" = 10,
@@ -385,6 +406,8 @@ TYPEINFO(/obj/item/baton/classic)
 	stamina_cost = 25
 	cost_normal = 0
 	can_swap_cell = 0
+	no_autodepower = TRUE
+	is_active = TRUE
 
 	New()
 		..()
@@ -421,6 +444,7 @@ TYPEINFO(/obj/item/baton/ntso)
 	w_class = W_CLASS_NORMAL	//2 when closed, 4 when extended
 	can_swap_cell = 0
 	rechargable = 0
+	no_autodepower = TRUE
 	is_active = TRUE
 	// stamina_based_stun_amount = 110
 	cost_normal = 25 // Cost in PU. Doesn't apply to cyborgs.
