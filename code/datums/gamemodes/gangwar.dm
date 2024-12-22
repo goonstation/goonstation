@@ -2349,8 +2349,8 @@ proc/broadcast_to_all_gangs(var/message)
 	force = 1
 	w_class = W_CLASS_TINY
 	object_flags = NO_GHOSTCRITTER
-	HELP_MESSAGE_OVERRIDE({"Hitting a dead, non-rotten gang member's corpse with this item will start a short action bar.\n
-	On completion, if the syringe is not promptly removed from the corpse, it will come back to life, disoriented, at low health."})
+	HELP_MESSAGE_OVERRIDE({"Using this on a dying gang member, or their unrotten corpse, will start a short action bar.\n
+	On completion, if the syringe is not promptly removed, they will come back to life, disoriented, at low health."})
 
 	attack(mob/O, mob/user)
 		if (istype(O, /mob/living/carbon/human))
