@@ -425,83 +425,116 @@
 	desc = "Illegal drugs."
 	onmarket = 0
 
-/// these are things that you can sell to the traders
+// these have two separate subtypes because herbs need separate spawnable types for reagents
 
-/datum/commodity/drugs/poppies
+// traders buy these from players
+
+/datum/commodity/drugs/buy/poppies
 	comname = "Poppies"
 	comtype = /obj/item/plant/herb/poppy
 	price = PAY_UNTRAINED
 
-/datum/commodity/drugs/shrooms
+/datum/commodity/drugs/buy/shrooms
 	comname = "Psilocybin"
 	comtype = /obj/item/reagent_containers/food/snacks/mushroom/psilocybin
 	price = PAY_UNTRAINED
 
-/datum/commodity/drugs/cannabis
+/datum/commodity/drugs/buy/cannabis
 	comname = "Cannabis"
 	comtype = /obj/item/plant/herb/cannabis
 	price = PAY_UNTRAINED/2
 
-/datum/commodity/drugs/cannabis_mega
+/datum/commodity/drugs/buy/cannabis_mega
 	comname = "Rainbow Cannabis"
 	comtype = /obj/item/plant/herb/cannabis/mega
 	price = PAY_UNTRAINED
 
-/datum/commodity/drugs/cannabis_white
+/datum/commodity/drugs/buy/cannabis_white
 	comname = "White Cannabis"
 	comtype = /obj/item/plant/herb/cannabis/white
 	price = PAY_UNTRAINED
 
-/datum/commodity/drugs/cannabis_omega
+/datum/commodity/drugs/buy/cannabis_omega
 	comname = "Omega Cannabis"
 	comtype = /obj/item/plant/herb/cannabis/omega
 	price = PAY_TRADESMAN
 
-///// things you can buy from the traders
+// traders sell these to players
 
-/datum/commodity/drugs/methamphetamine
+
+/datum/commodity/drugs/sell/cannabis_omega
+	comname = "Omega Cannabis"
+	comtype = /obj/item/plant/herb/cannabis/omega/spawnable
+	price = PAY_TRADESMAN
+
+datum/commodity/drugs/sell/poppies
+	comname = "Poppies"
+	comtype = /obj/item/plant/herb/poppy/spawnable
+	price = PAY_UNTRAINED
+
+/datum/commodity/drugs/sell/shrooms
+	comname = "Psilocybin"
+	comtype = /obj/item/reagent_containers/food/snacks/mushroom/psilocybin/spawnable
+	price = PAY_UNTRAINED
+
+/datum/commodity/drugs/sell/cannabis
+	comname = "Cannabis"
+	comtype = /obj/item/plant/herb/cannabis/spawnable
+	price = PAY_UNTRAINED/2
+
+/datum/commodity/drugs/sell/cannabis_mega
+	comname = "Rainbow Cannabis"
+	comtype = /obj/item/plant/herb/cannabis/mega/spawnable
+	price = PAY_UNTRAINED
+
+/datum/commodity/drugs/sell/cannabis_white
+	comname = "White Cannabis"
+	comtype = /obj/item/plant/herb/cannabis/white/spawnable
+	price = PAY_UNTRAINED
+
+/datum/commodity/drugs/sell/methamphetamine
 	comname = "Methamphetamine (5x pills)"
 	comtype = /obj/item/storage/pill_bottle/methamphetamine
 	desc = "Methamphetamine is a highly effective and dangerous stimulant drug."
 	price = PAY_DOCTORATE*2
 
-/datum/commodity/drugs/crank
+/datum/commodity/drugs/sell/crank
 	comname = "Crank (5x pills)"
 	comtype = /obj/item/storage/pill_bottle/crank
 	desc = "A cheap and dirty stimulant drug, commonly used by space biker gangs."
 	price = PAY_DOCTORATE
 
-/datum/commodity/drugs/bathsalts
+/datum/commodity/drugs/sell/bathsalts
 	comname = "Bath Salts (5x pills)"
 	comtype = /obj/item/storage/pill_bottle/bathsalts
 	desc = "Sometimes packaged as a refreshing bathwater additive, these crystals are definitely not for human consumption."
 	price = PAY_EXECUTIVE*2
 
-/datum/commodity/drugs/catdrugs
+/datum/commodity/drugs/sell/catdrugs
 	comname = "Cat Drugs (5x pills)"
 	comtype = /obj/item/storage/pill_bottle/catdrugs
 	desc = "Uhh..."
 	price = PAY_DOCTORATE
 
-/datum/commodity/drugs/morphine
+/datum/commodity/drugs/sell/morphine
 	comname = "Morphine (1x syringe)"
 	comtype = /obj/item/reagent_containers/syringe/morphine
 	desc = "A strong but highly addictive opiate painkiller with sedative side effects."
 	price = PAY_DOCTORATE
 
-/datum/commodity/drugs/krokodil
+/datum/commodity/drugs/sell/krokodil
 	comname = "Krokodil (1x syringe)"
 	comtype = /obj/item/reagent_containers/syringe/krokodil
 	desc = "A sketchy homemade opiate often used by disgruntled Cosmonauts."
 	price = PAY_UNTRAINED
 
-/datum/commodity/drugs/lsd
+/datum/commodity/drugs/sell/lsd
 	comname = "LSD (1x patch)"
 	comtype = /obj/item/reagent_containers/patch/LSD
 	desc = "A highly potent hallucinogenic substance. Far out, maaaan."
 	price = PAY_UNTRAINED
 
-/datum/commodity/drug/lsd_bee
+/datum/commodity/drugs/sell/lsd_bee
 	comname = "LSBee (1x patch)"
 	comtype = /obj/item/reagent_containers/patch/lsd_bee
 	desc = "A highly potent hallucinogenic substance. It smells like honey."
@@ -513,7 +546,7 @@
 	desc = "A nugget of weapons grade uranium. Label says it's roughly 'size 5'."
 	price = PAY_IMPORTANT
 
-/datum/commodity/drugs/cyberpunk
+/datum/commodity/drugs/sell/cyberpunk
 	comname = "Designer Drugs (5x pills)"
 	comtype = /obj/item/storage/pill_bottle/cyberpunk
 	desc = "Who knows what you might get."
@@ -1950,7 +1983,7 @@
 /datum/commodity/drugs/poppies/greg
 	comname = "Poppies"
 	desc = "In respect of those lost during the colonization of the frontier, we are now offering poppies."
-	comtype = /obj/item/plant/herb/poppy
+	comtype = /obj/item/plant/herb/poppy/spawnable
 	onmarket = 0
 	price = PAY_UNTRAINED
 

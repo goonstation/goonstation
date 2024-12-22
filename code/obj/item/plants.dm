@@ -402,6 +402,11 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	desc = "A distinctive red flower."
 	icon_state = "poppy"
 
+/obj/item/plant/herb/poppy/spawnable
+	make_reagents()
+		src.create_reagents(85)
+		reagents.add_reagent("morphine", 40)
+
 /obj/item/plant/herb/tea
 	name = "tea leaves"
 	crop_suffix = " leaves"

@@ -428,7 +428,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/item/cannabis
 	name = "cannabis"
-	commodity = /datum/commodity/drugs/cannabis
+	commodity = /datum/commodity/drugs/buy/cannabis
 	feemod = 420
 
 /datum/rc_entry/reagent/glitter
