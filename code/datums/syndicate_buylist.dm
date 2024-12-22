@@ -415,6 +415,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	items = list(/obj/item/implanter/uplink_microbomb)
 	cost = 1
 	vr_allowed = FALSE
+	max_buy = 3
 	desc = "This miniaturized explosive packs a decent punch and will detonate upon the unintentional death of the host. Do not swallow and keep out of reach of children."
 
 /datum/syndicate_buylist/traitor/lightbreaker
