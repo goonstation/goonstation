@@ -249,10 +249,13 @@ TYPEINFO(/obj/item/baton)
 			src.switch_status(user)
 		else
 			user.visible_message(SPAN_ALERT("[user] activates their [src.name]."), SPAN_NOTICE("You activate your [src.name]."))
-			SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECONDS, PROC_REF(switch_status), user, src.icon, src.flick_baton_active, null, INTERRUPT_NONE)
+			SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECONDS, PROC_REF(switch_status), user, src.icon, src.flick_baton_active, null, INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ACT)
 
 
 	proc/switch_status(mob/user)
+		if(!(src in user.equipped_list()))
+			return
+
 		src.is_active = !src.is_active
 
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
