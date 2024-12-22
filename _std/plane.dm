@@ -23,6 +23,7 @@
 #define PLANE_OVERLAY_EFFECTS 25
 #define PLANE_MUL_OVERLAY_EFFECTS 26 //! Multiplicative blend mode
 #define PLANE_HUD 30
+#define PLANE_ANTAG_ICONS 31
 #define PLANE_SCREEN_OVERLAYS 40
 
 /atom/movable/screen/plane_parent
@@ -113,6 +114,7 @@ client
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_OVERLAY_EFFECTS, mouse_opacity = 0, name = "overlay_effects_plane", is_screen = 1, distort = FALSE))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_MUL_OVERLAY_EFFECTS, mouse_opacity = 0, name = "mul_overlay_effects_plane", is_screen = 1, distort = FALSE, blend_mode = BLEND_MULTIPLY))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_HUD, appearance_flags = NO_CLIENT_COLOR, name = "hud_plane", is_screen = 1, distort = FALSE))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_ANTAG_ICONS, appearance_flags = NO_CLIENT_COLOR, name = "antag_icons_plane", is_screen = 1, distort = FALSE))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SCREEN_OVERLAYS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "screen_overlays_plane", is_screen = 1, distort = FALSE))
 
 		var/atom/movable/screen/plane_parent/occlusion_plane = src.get_plane(PLANE_FOREGROUND_PARALLAX_OCCLUSION)

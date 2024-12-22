@@ -352,6 +352,7 @@ TYPEINFO(/obj/structure/woodwall)
 	projectile_passthrough_chance = 30
 	_health = 30
 	_max_health = 30
+	flags = ON_BORDER
 	var/builtby = null
 	var/anti_z = 0
 	// for projectile damage component
@@ -359,7 +360,7 @@ TYPEINFO(/obj/structure/woodwall)
 	var/projectile_gib_streak = FALSE
 
 	New()
-		src.AddComponent(/datum/component/obj_projectile_damage, src.type, src.projectile_gib, src.projectile_gib_streak)
+		src.AddComponent(/datum/component/obj_projectile_damage, /obj/decal/cleanable/wood_debris, src.projectile_gib, src.projectile_gib_streak)
 		. = ..()
 
 	virtual

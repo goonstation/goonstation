@@ -123,6 +123,7 @@
 	name = "Return to body"
 	desc = "Leave the scuttlebot and return to your body"
 	icon_state = "shutdown"
+	needs_turf = FALSE
 	cast(atom/target)
 		if (..())
 			return 1

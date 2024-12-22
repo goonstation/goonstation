@@ -129,7 +129,7 @@ TYPEINFO(/obj/machinery/power/data_terminal)
 
 			var/sender = signal.data["sender"]
 			//block any packet asking every device to send a ping back, trivial amplification attack that can seriously lag the server
-			if (sender == "ping" || sender == "00000000")
+			if (sender == "ping")
 				return
 
 			if(source != src.master || !DATA_TERMINAL_IS_VALID_MASTER(src, src.master))

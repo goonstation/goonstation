@@ -1,4 +1,14 @@
 
+(t)sat dec 21 24
+(u)TDHooligan, Flaborized
+(p)21770
+(e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
+(*)The portable chemical dispenser has been added, for automating your glassware setups! Find it in the science manufacturer.
+(t)fri dec 20 24
+(u)Cheekybrdy
+(p)21736
+(e)⚖|C-Balance
+(+)All fishing rods can be held in a rancher's belt, including the Glaucus.
 (t)thu dec 19 24
 (u)AnomalousPotato
 (p)21721
