@@ -1,5 +1,9 @@
 
 (t)mon dec 23 24
+(u)glowbold
+(p)21761
+(e)🧫🔄📦|C-Experimental, C-Rework, A-Game-Objects
+(+)Rideable vehicles update the rider's appearance in realtime.
 (u)cringe, LeahTheTech
 (p)21509
 (e)🆕🎨📄💨|C-Feature, C-Sprites, A-UI, A-Atmospherics
