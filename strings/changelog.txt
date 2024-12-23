@@ -1,6 +1,10 @@
 
 (t)mon dec 23 24
 (u)glowbold
+(p)21738
+(e)⚖💡|C-Balance, A-Station-Systems
+(+)Spatial Interdictors can nullify APC overcharge zaps. Ranchers, take note.
+(u)glowbold
 (p)21761
 (e)🧫🔄📦|C-Experimental, C-Rework, A-Game-Objects
 (+)Rideable vehicles update the rider's appearance in realtime.
