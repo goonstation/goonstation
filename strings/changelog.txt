@@ -1,5 +1,9 @@
 
 (t)mon dec 23 24
+(u)cringe, LeahTheTech
+(p)21509
+(e)🆕🎨📄💨|C-Feature, C-Sprites, A-UI, A-Atmospherics
+(*)Constructible atmos, no longer a week away. Find the HPD in the CE's RCD crate, or in the RD locker along with a big RCD ammo charge.
 (u)LeahTheTech
 (p)21798
 (e)🆕📦|C-Feature, A-Game-Objects
