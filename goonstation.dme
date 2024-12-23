@@ -2174,6 +2174,8 @@
 #include "code\obj\item\gun\kinetic.dm"
 #include "code\obj\item\gun\reagent.dm"
 #include "code\obj\item\gun\russian.dm"
+#include "code\obj\item\handheld_dispenser\dispenser.dm"
+#include "code\obj\item\handheld_dispenser\dispenser_action_bar.dm"
 #include "code\obj\item\mob_parts\artifact_parts.dm"
 #include "code\obj\item\mob_parts\human_parts.dm"
 #include "code\obj\item\mob_parts\robot_parts.dm"
