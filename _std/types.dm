@@ -205,6 +205,7 @@ var/list/list/by_cat = list()
 #define TR_CAT_STAMINA_MOBS "stamina_mobs"
 #define TR_CAT_BUGS "bugs"
 #define TR_CAT_POSSIBLE_DEAD_DROP "dead_drops"
+#define TR_CAT_SINGULO_MAGNETS "singulo_magnets"
 // powernets? processing_items?
 // mobs? ai-mobs?
 

@@ -161,6 +161,10 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				if (istype(A, mattereater.target_path))
 					items += A
 
+		for(var/obj/item/item as anything in items) // augh body bags
+			if(istype(item, /obj/item/body_bag) && item.w_class >= W_CLASS_BULKY)
+				items -= item
+
 		if (linked_power.power > 1)
 			items += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
 			//So people can still get the meat ending
