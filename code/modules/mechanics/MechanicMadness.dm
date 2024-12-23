@@ -1852,37 +1852,51 @@
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"buffer", PROC_REF(buffer))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set buffer mode", PROC_REF(compSetModel))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Delay",PROC_REF(setDelay))
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Buffer Mode",PROC_REF(setModel))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Buffer Mode",PROC_REF(userSetModel))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Buffer Size",PROC_REF(setBufferSize))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Changing",PROC_REF(toggleDefault))
 
-
-
-	proc/setModel(obj/item/W as obj, mob/user as mob)
-		var/model = tgui_input_list(user, "Set the buffer mode to what?", "Mode Selector", list("FIFO","FILO","ring","random"), buffer_string)
-		if(!in_interact_range(src, user) || !can_act(user) || isnull(model))
-			return
-
+	proc/setModel(var/model)
+		//Uppercase everything so signal input can be case insensitive
+		model = uppertext(model)
 		if(model == "FIFO")
 			buffer_desc = "This mode outputs from oldest to newest, dropping signals when full."
 			buffer_model = FIFO_BUFFER
-		if(model == "FILO")
+		else if(model == "FILO")
 			buffer_desc = "This mode outputs from newest to oldest, dropping signals when full."
 			buffer_model = FILO_BUFFER
-		if(model == "ring")
+		else if(model == "RING")
+			model = "ring"
 			buffer_desc = "This mode outputs from oldest to newest, overwriting the oldest signal when full."
 			buffer_model = RING_BUFFER
-		if(model == "random")
+		else if(model == "RANDOM")
+			model = "random"
 			buffer_desc = "This mode outputs signals randomly, randomly overwriting previous signals when full."
 			buffer_model = RANDOM_BUFFER
+		else
+			return FALSE
 
 		buffer_string = model
-		boutput(user, "You set the buffer mode to [model]")
 		tooltip_rebuild = 1
 		qdel(buffer)
 		buffer = list()
+		return TRUE
+
+	proc/compSetModel(var/datum/mechanicsMessage/input)
+		if(setModel(input.signal))
+			LIGHT_UP_HOUSING
+
+	proc/userSetModel(obj/item/W as obj, mob/user as mob)
+		var/model = tgui_input_list(user, "Set the buffer mode to what?", "Mode Selector", list("FIFO","FILO","ring","random"), buffer_string)
+		if(!in_interact_range(src, user) || !can_act(user) || isnull(model))
+			return
+		setModel(model)
+		boutput(user, "You set the buffer mode to [model]")
+
+
 
 	//Thanks delay component
 	proc/setDelay(obj/item/W as obj, mob/user as mob)
