@@ -20,6 +20,9 @@
 (p)21798
 (e)🆕📦|C-Feature, A-Game-Objects
 (*)Loose singularities now gravitate towards or away from active gravity well artifacts and gravity generators.
+(u)Flappybat
+(e)⚖|C-Balance
+(+)Cooldown on Jumpy raised from 3 seconds to 10 seconds.
 (t)sat dec 21 24
 (u)TDHooligan, Flaborized
 (p)21770

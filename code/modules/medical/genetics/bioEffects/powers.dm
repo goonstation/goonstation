@@ -294,7 +294,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	id = "jumpy"
 	msgGain = "Your leg muscles feel taut and strong."
 	msgLose = "Your leg muscles shrink back to normal."
-	cooldown = 30
+	cooldown = 100
 	probability = 99
 	blockCount = 4
 	blockGaps = 2
