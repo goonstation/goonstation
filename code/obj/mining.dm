@@ -372,6 +372,7 @@
 	opacity = 0
 	density = 0 // collision is dealt with by the chassis
 	anchored = ANCHORED_ALWAYS
+	req_access = list(access_mining, access_mining_outpost)
 	var/obj/machinery/magnet_chassis/linked_chassis = null
 	var/health = 100
 	var/attract_time = 300
@@ -747,7 +748,7 @@
 				else
 					var/mob/living/carbon/human/H = usr
 					if(!src.allowed(H))
-						boutput(usr, SPAN_ALERT("Access denied. Please contact the Chief Engineer or Captain to access the override."))
+						boutput(usr, SPAN_ALERT("Access denied."))
 					else
 						src.cooldown_override = !src.cooldown_override
 					. = TRUE
