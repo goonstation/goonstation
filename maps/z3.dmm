@@ -10365,11 +10365,7 @@
 /turf/space,
 /area/h7/asteroid)
 "aUY" = (
-/obj/structure/woodwall{
-	color = "#CCCCCC";
-	name = "odd asteroid wall";
-	plane = -105
-	},
+/obj/structure/woodwall/fake_asteroid/left_edge,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aUZ" = (
@@ -15444,6 +15440,10 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/jucer_trader)
+"bud" = (
+/obj/structure/woodwall/fake_asteroid/right_edge,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "buU" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 6;
@@ -102123,7 +102123,7 @@ aab
 aab
 aab
 aab
-aUY
+bud
 aab
 aab
 aab
