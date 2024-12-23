@@ -93,7 +93,7 @@
 	var/resourcesLoaded = 0 //Has this client done the mass resource downloading yet?
 	var/datum/tooltipHolder/tooltipHolder = null
 
-	var/chui/window/keybind_menu/keybind_menu = null
+	var/datum/keybind_menu/keybind_menu = null
 
 	var/delete_state = DELETE_STOP
 
