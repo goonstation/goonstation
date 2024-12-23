@@ -1,4 +1,55 @@
 
+(t)mon dec 23 24
+(u)LeahTheTech
+(p)21798
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Loose singularities now gravitate towards or away from active gravity well artifacts and gravity generators.
+(t)sat dec 21 24
+(u)TDHooligan, Flaborized
+(p)21770
+(e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
+(*)The portable chemical dispenser has been added, for automating your glassware setups! Find it in the science manufacturer.
+(t)fri dec 20 24
+(u)Cheekybrdy
+(p)21736
+(e)⚖|C-Balance
+(+)All fishing rods can be held in a rancher's belt, including the Glaucus.
+(t)thu dec 19 24
+(u)AnomalousPotato
+(p)21721
+(e)🪲🆕💅💊📦|C-Bug, C-Feature, C-QoL, A-Medical, A-Game-Objects
+(*)Skeleton people can now be clone scanned with the necroscan upgrade
+(u)LeahTheTech
+(+)BARREL UPDATE. Chemical barrels can now have wood shoved in them and set on fire to make a burning barrel. Burning barrels now emit heat, can be extinguished with a fire extinguisher, and can be wrenched/unwrenched from the floor.
+(t)tue dec 17 24
+(u)tarmunora
+(+)Planting a kudzu seed now allows you to slip through dense kudzu, and (very) slowly heal while on kudzu. Still blocks vision though.
+(t)sun dec 15 24
+(u)LeahTheTech
+(+)Static pressure tanks can now be broken by smashing them, the same as canisters.
+(u)patricia
+(p)21569
+(e)🆕💡|C-Feature, A-Station-Systems
+(*)The HoP bank computer can now issue bonuses to department staff, or stationwide!
+(t)sat dec 14 24
+(u)TDHooligan
+(p)21688
+(e)🪲🎨⚖🧛|C-Bug, C-Sprites, C-Balance, A-Gamemodes
+(+)Gang crates now spawn in saner locations.
+(+)Razorbill now fires an even angrier swarm of bees. Kuvalda spawns loaded.
+(u)FlameArrow57
+(p)21501
+(e)🆕🗺🔬|C-Feature, A-Mapping, A-Science
+(*)Added a new tiny-sized Dimensional Key artifact! See minor changelog for details
+(+)The dimensional key acts as a key that can be used once per cardinal direction on a wall to create a doorway to a dimensional fissure, which can be accessed through any of the doors, and exited to any of the doors
+(+)Things that enter the fissure that aren't secured on you will corrode and be destroyed over a few seconds
+(u)TDHooligan
+(p)21623
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Gangs tag way faster over unclaimed areas.
+(*)Gangs start with more tags, and restock more tags less frequently.
+(+)Gang loot events have more spacing between them.
+(+)Gangs can now see the next restock time for graffiti.
 (t)fri dec 13 24
 (u)glowbold
 (p)21614

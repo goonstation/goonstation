@@ -34,12 +34,17 @@
 #define GANG_STARTING_POINTS 1500
 
 /// number of spray bottles gangs start with in their locker, excluding the 2 in the recruitment briefcase
-#define GANG_STARTING_SPRAYPAINT 0
+#define GANG_STARTING_SPRAYPAINT 10
 /// time in seconds between gangs gaining spray bottles
-#define GANG_SPRAYPAINT_REGEN 7.5 MINUTES
+#define GANG_SPRAYPAINT_REGEN 30 MINUTES
 /// number of spray paints that are granted in this interval
-#define GANG_SPRAYPAINT_REGEN_QUANTITY 3
-
+#define GANG_SPRAYPAINT_REGEN_QUANTITY 5
+/// time to tag on an unclaimed tile
+#define GANG_SPRAYPAINT_TAG_TIME 3 SECONDS
+/// time to spray over an existing gang member's tag
+#define GANG_SPRAYPAINT_TAG_REPLACE_TIME 15 SECONDS
+/// score granted immediately on finishing a tag
+#define GANG_SPRAYPAINT_INSTANT_SCORE 50
 
 /// Drug points:
 
@@ -84,11 +89,11 @@
 
 
 #ifdef RP_MODE
-#define GANG_LOOT_INITIAL_DROP 10 MINUTES //! when the first gang duffel bag spawns on RP
-#define GANG_LOOT_DROP_FREQUENCY 15 MINUTES //! how often gang duffel bags are dropped on RP
+#define GANG_LOOT_INITIAL_DROP 15 MINUTES //! when the first vandalism objectives are assigned on RP
+#define GANG_LOOT_DROP_FREQUENCY 30 MINUTES //! how often vandalism objectives are assigned on RP
 #else
-#define GANG_LOOT_INITIAL_DROP 5 MINUTES //! when the first gang duffel bag spawns on classic
-#define GANG_LOOT_DROP_FREQUENCY 15 MINUTES //! how often gang duffel bags are dropped on classic
+#define GANG_LOOT_INITIAL_DROP 8 MINUTES //! when the first vandalism objectives are assigned on classic
+#define GANG_LOOT_DROP_FREQUENCY 20 MINUTES //! how often vandalism objectives are assigned on classic
 #endif
 #define GANG_LOOT_DROP_VOLUME_PER_GANG 2 //! how many duffel bags spawn, per gang
 
@@ -186,6 +191,11 @@
 	#define GANG_TAG_SIGHT_RANGE 6
 #endif
 
+
+// code-related stuff
+#define GANG_CLAIM_INVALID 0
+#define GANG_CLAIM_VALID 1 /// spraying in a valid zone
+#define GANG_CLAIM_TAKEOVER 2 /// spraying over another tag
 // shorthands for range calcs
 #define GANG_TAG_INFLUENCE_SQUARED GANG_TAG_INFLUENCE*GANG_TAG_INFLUENCE
 #define GANG_TAG_SIGHT_RANGE_SQUARED GANG_TAG_SIGHT_RANGE*GANG_TAG_SIGHT_RANGE

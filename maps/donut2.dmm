@@ -69,35 +69,15 @@
 /turf/space,
 /area/space)
 "aat" = (
-/obj/rack,
-/obj/item/clothing/mask/gas{
-	pixel_x = 8;
-	pixel_y = 5
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = -7;
-	pixel_y = 5
-	},
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = -8;
-	pixel_y = -5
-	},
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = 8;
-	pixel_y = -5
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = -7;
-	pixel_y = 11
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = 9;
-	pixel_y = 11
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/light/incandescent,
+/obj/table/reinforced/industrial/auto,
+/obj/item/reagent_containers/food/snacks/donut/custom/cinnamon{
+	pixel_y = 4;
+	name = "station blueprints"
+	},
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "aau" = (
@@ -16080,12 +16060,8 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "cdZ" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	network = "Armory Perimeter";
-	tag = ""
+/obj/machinery/camera/auto{
+	dir = 10
 	},
 /turf/space,
 /area/space)
@@ -28594,14 +28570,10 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "jJj" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	network = "autoname - SS13"
-	},
 /obj/item/device/radio/intercom/security{
 	dir = 8
 	},
+/obj/machinery/camera/auto,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "jJu" = (
@@ -35679,38 +35651,7 @@
 /area/station/crew_quarters/stockex)
 "nSZ" = (
 /obj/rack,
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = -2
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = 1;
-	pixel_y = -3
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = 4;
-	pixel_y = -6
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = -4;
-	pixel_y = 5
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = -1;
-	pixel_y = 2
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = 2;
-	pixel_y = -1
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = 5;
-	pixel_y = -4
-	},
-/obj/rack,
+/obj/random_item_spawner/armory_goggle_supplies,
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
@@ -44487,31 +44428,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "sST" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = -10;
-	pixel_y = -1
-	},
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = 4;
-	pixel_y = -1
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = -7;
-	pixel_y = 10
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = 7;
-	pixel_y = 10
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = -7;
-	pixel_y = 9
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = 7;
-	pixel_y = 9
-	},
+/obj/random_item_spawner/armory_armor_supplies,
 /turf/simulated/floor/redblack{
 	dir = 10
 	},

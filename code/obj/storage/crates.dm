@@ -856,7 +856,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		var/datum/loot_generator/shotgun_gen
 		src.vis_controller = new(src)
 		shotgun_gen =  new /datum/loot_generator(4,3)
-		shotgun_gen.place_loot_instance(src,1,2, new /obj/loot_spawner/xlong_tall/ks23_empty)
+		shotgun_gen.place_loot_instance(src,1,2, new /obj/loot_spawner/xlong_tall/ks23)
 		shotgun_gen.place_loot_instance(src,1,1, new /obj/loot_spawner/medium/ks23_shrapnel)
 		shotgun_gen.place_loot_instance(src,3,1, new /obj/loot_spawner/medium/ks23_slug)
 		..()
