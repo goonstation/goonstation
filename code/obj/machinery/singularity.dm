@@ -300,8 +300,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 ///Returns a 2D vector representing the resultant force acting on the singulo by all gravity wells, scaled by their distance
 /obj/machinery/the_singularity/proc/calc_direction()
 	var/list/total_vector = list(0,0) //if only we had vector primitives...
+	var/turf/singulo_turf = get_turf(src)
 	for_by_tcl(artifact, /obj/machinery/artifact/gravity_well_generator)
-		if (artifact.z != src.z)
+		var/turf/artifact_turf = get_turf(artifact)
+		if (artifact_turf.z != singulo_turf.z)
 			continue
 		var/datum/artifact/gravity_well_generator/artifact_datum = artifact.artifact //parallel inheritence moment
 		if (!artifact_datum.activated)
@@ -310,8 +312,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		var/sign = artifact_datum.gravity_type ? 1 : -1
 		//our actual offset from this artifact
 		var/list/vector = list(0,0)
-		vector[1] = ((src.x - artifact.x) * sign)
-		vector[2] = ((src.y - artifact.y) * sign)
+		vector[1] = ((singulo_turf.x - artifact_turf.x) * sign)
+		vector[2] = ((singulo_turf.y - artifact_turf.y) * sign)
 		//no need to root, we can reuse the squared value (I'm basically a doom programmer)
 		var/length_squared = (vector[1] ** 2) + (vector[2] ** 2)
 		//inverse square law I guess? gravity is radial
