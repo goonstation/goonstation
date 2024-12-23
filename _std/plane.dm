@@ -162,8 +162,10 @@ client
 
 	proc/add_plane(var/atom/movable/screen/plane_parent/plane)
 		RETURN_TYPE(/atom/movable/screen/plane_parent)
+#ifdef CHECK_MORE_RUNTIMES
 		if (src.plane_parents["[plane.plane]"])
 			CRASH("Attempting to add plane parent with id [plane.plane] that is already taken by another plane!")
+#endif
 		src.plane_parents["[plane.plane]"] = plane
 		return plane
 
