@@ -36,7 +36,7 @@
 	<br>
 	<br><B>Buffer Component:</B>
 	<br>Collects signals in a buffer of a congfigurable size and outputs them with a delay, also configurable.
-	<br>There are several buffer modes that can be set.
+	<br>There are several buffer modes that can be set, either with a multitool or a component input.
 	<br><ul>
 	<li> FIFO(First in First Out) outputs the oldest signals first, dropping new signals when the buffer is full. </li>
 	<li> FILO(First in Last Out) outputs the newest signals first, dropping new signals when the buffer is full. </li>
