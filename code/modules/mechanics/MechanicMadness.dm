@@ -1836,7 +1836,7 @@
 	//I wanted to set this to the same limit as the selection component
 	//But the selection compoment doesn't actually have a limit in the additem() proc
 	//It kind of worries me
-	var/buffer_max_size = 200
+	var/buffer_max_size = 512
 	var/ring_reader = 1
 	var/ring_writer = 1
 
