@@ -6,7 +6,14 @@
  * @license MIT
  */
 
-import { BooleanLike } from 'common/react';
+import { BooleanLike } from 'tgui-core/react';
+
+export enum CrewCreditsTabKeys {
+  Crew,
+  Antagonists,
+  Score,
+  Citations,
+}
 
 export interface CrewTabData {
   groups: GroupBlockProps[];
@@ -22,14 +29,13 @@ export interface CrewMemberProps {
   dead: BooleanLike;
   player: string;
   role: string;
-  head?: BooleanLike;
+  head?: boolean;
 }
-
 
 export interface AntagonistTabData {
   game_mode: string;
-  verbose_antagonist_data: VerboseAntagonistProps[]
-  succinct_antagonist_data: SuccinctAntagonistProps[]
+  verbose_antagonist_data: VerboseAntagonistProps[];
+  succinct_antagonist_data: SuccinctAntagonistProps[];
 }
 
 export interface VerboseAntagonistProps {
@@ -39,10 +45,10 @@ export interface VerboseAntagonistProps {
   job_role: string;
   status: string;
 
-  objectives: ObjectiveProps[]
-  antagonist_statistics: AntagonistStatisticsProps[]
+  objectives: ObjectiveProps[];
+  antagonist_statistics: AntagonistStatisticsProps[];
 
-  subordinate_antagonists: SuccinctAntagonistProps[]
+  subordinate_antagonists: SuccinctAntagonistProps[];
 }
 
 export interface ObjectiveProps {
@@ -63,7 +69,6 @@ export interface SuccinctAntagonistProps {
   dead: BooleanLike;
 }
 
-
 export interface ScoreTabData {
   victory_headline: string;
   victory_body: string;
@@ -82,8 +87,36 @@ export interface ScoreItemProps {
   value: string;
 }
 
-export enum CrewCreditsTabKeys {
-  General,
-  Antagonists,
-  Score,
+export interface CitationTabData {
+  tickets: CitationsByTargetData[];
+  fines: CitationsByTargetData[];
 }
+
+export interface CitationByTargetListProps {
+  title: string;
+  citation_targets: CitationsByTargetData[];
+}
+
+export interface CitationsByTargetData {
+  name: string;
+  citations: CitationData[];
+}
+
+export interface TicketData {
+  reason: string;
+  issuer: string;
+  issuer_job: string;
+}
+
+export interface FineData extends TicketData {
+  amount: number;
+  approver: string;
+  approver_job: string;
+  paid_amount: number;
+  paid: BooleanLike;
+}
+
+export type CitationData = TicketData | FineData;
+
+export const isFineData = (value: CitationData): value is FineData =>
+  'amount' in value;

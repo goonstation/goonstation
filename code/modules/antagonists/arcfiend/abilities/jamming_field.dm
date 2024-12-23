@@ -5,7 +5,6 @@
 	icon_state = "jamming_field"
 	cooldown = 2 MINUTES
 	pointCost = 150
-	container_safety_bypass = TRUE
 	var/duration = 30 SECONDS
 
 	cast(atom/target)
@@ -31,7 +30,7 @@
 		. = ..()
 		if (!(src.owner in by_cat[TR_CAT_RADIO_JAMMERS]))
 			OTHER_START_TRACKING_CAT(src.owner, TR_CAT_RADIO_JAMMERS)
-		src.owner.UpdateOverlays(src.aura, "jamming_field_aura")
+		src.owner.AddOverlays(src.aura, "jamming_field_aura")
 
 	onRemove()
 		. = ..()

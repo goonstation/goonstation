@@ -44,7 +44,7 @@
 
 /obj/machinery/bot/duckbot/New()
 	. = ..()
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "pda", FREQ_PDA)
 
 /// Makes the duckbot mill around aimlessly, or chase people if emagged
 /obj/machinery/bot/duckbot/proc/wakka_wakka()
@@ -147,7 +147,7 @@
 		return
 	if (href_list["on"])
 		on = !on
-	attack_hand(usr)
+	src.Attackhand(usr)
 
 /obj/machinery/bot/duckbot/attack_hand(mob/user)
 	var/dat

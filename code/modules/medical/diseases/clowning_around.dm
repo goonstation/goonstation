@@ -15,7 +15,7 @@
 	associated_reagent = "rainbow fluid"
 	affected_species = list("Human")
 
-/datum/ailment/disease/clowning_around/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
+/datum/ailment/disease/clowning_around/stage_act(mob/living/affected_mob, datum/ailment_data/D, mult)
 	if (..())
 		return
 	if(affected_mob.job == "Clown")
@@ -26,6 +26,9 @@
 		return
 	if(isdead(affected_mob))
 		return
+	var/mob/living/carbon/human/H = null
+	if (istype(H, /mob/living/carbon/human))
+		H = affected_mob
 	switch(D.stage)
 		if(1, 2)
 			if(probmult(8))
@@ -66,25 +69,25 @@
 							if (DS2 == 0 && !T2.density && !isrestrictedz(T2.z))
 								affected_mob.set_loc(T2)
 								affected_mob.changeStatus("stunned", 2 SECONDS)
-								affected_mob.changeStatus("weakened", 2 SECONDS)
+								affected_mob.changeStatus("knockdown", 2 SECONDS)
 								boutput(affected_mob, SPAN_ALERT("You feel clumsy and suddenly slip!"))
 
 			if(probmult(10))
 				playsound(affected_mob.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
 
-			if(probmult(10))
-				if(!affected_mob:wear_mask || ((affected_mob:wear_mask != null) && !istype(affected_mob:wear_mask, /obj/item/clothing/mask/clown_hat)))
-					var/c = affected_mob:wear_mask
-					if((affected_mob:wear_mask != null) && !istype(affected_mob:wear_mask, /obj/item/clothing/mask/clown_hat))
-						affected_mob.u_equip(c)
-						if(c)
-							c:set_loc(affected_mob.loc)
-							c:dropped(affected_mob)
-							c:layer = initial(c:layer)
+			if(H && probmult(10))
+				if(!H.wear_mask || ((H.wear_mask != null) && !istype(H.wear_mask, /obj/item/clothing/mask/clown_hat)))
+					var/obj/item/clothing/mask/old_mask = H.wear_mask
+					if((H.wear_mask != null) && !istype(H.wear_mask, /obj/item/clothing/mask/clown_hat))
+						affected_mob.u_equip(old_mask)
+						if(old_mask)
+							old_mask.set_loc(affected_mob.loc)
+							old_mask.dropped(affected_mob)
+							old_mask.layer = initial(old_mask.layer)
 
 					var/obj/item/clothing/mask/clown_hat/clownmask = new /obj/item/clothing/mask/clown_hat(affected_mob)
 					//clownmask.cursed = 1
-					affected_mob:equip_if_possible( clownmask, SLOT_WEAR_MASK) //Hope you like your new mask sucka!!!!!
+					H.equip_if_possible( clownmask, SLOT_WEAR_MASK) //Hope you like your new mask sucka!!!!!
 		if(4)
 #ifdef HALLOWEEN
 			if(probmult(1))
@@ -93,54 +96,54 @@
 					for(var/mob/O in viewers(affected_mob, null))
 						O.show_message(SPAN_ALERT("<B>[affected_mob]</B> starts convulsing violently!"), 1)
 					// affected_mob.weakened = max(15, affected_mob.weakened)
-					affected_mob.changeStatus("weakened", 2 SECONDS)
+					affected_mob.changeStatus("knockdown", 2 SECONDS)
 					affected_mob.make_jittery(1000)
 					SPAWN(rand(20, 100))
 						affected_mob.partygib()
 					return
 #endif
-			if(probmult(10))
-				if(!affected_mob:wear_mask || ((affected_mob:wear_mask != null) && !istype(affected_mob:wear_mask, /obj/item/clothing/mask/clown_hat)))
-					var/c = affected_mob:wear_mask
-					if((affected_mob:wear_mask != null) && !istype(affected_mob:wear_mask, /obj/item/clothing/mask/clown_hat))
-						affected_mob.u_equip(c)
-						if(c)
-							c:set_loc(affected_mob.loc)
-							c:dropped(affected_mob)
-							c:layer = initial(c:layer)
+			if(H && probmult(10))
+				if(!H.wear_mask || ((H.wear_mask != null) && !istype(H.wear_mask, /obj/item/clothing/mask/clown_hat)))
+					var/obj/item/clothing/mask/old_mask = H.wear_mask
+					if((H.wear_mask != null) && !istype(H.wear_mask, /obj/item/clothing/mask/clown_hat))
+						affected_mob.u_equip(old_mask)
+						if(old_mask)
+							old_mask.set_loc(affected_mob.loc)
+							old_mask.dropped(affected_mob)
+							old_mask.layer = initial(old_mask.layer)
 
 					var/obj/item/clothing/mask/clown_hat/clownmask = new /obj/item/clothing/mask/clown_hat(affected_mob)
 					//clownmask.cursed = 1
-					affected_mob:equip_if_possible( clownmask, SLOT_WEAR_MASK)
+					H.equip_if_possible( clownmask, SLOT_WEAR_MASK)
 
-			if(probmult(10))
-				if(!affected_mob:w_uniform || ((affected_mob:w_uniform != null) && !istype(affected_mob:w_uniform, /obj/item/clothing/under/misc/clown)))
-					var/c = affected_mob:w_uniform
+			if(H && probmult(10))
+				if(!H.w_uniform || ((H.w_uniform != null) && !istype(H.w_uniform, /obj/item/clothing/under/misc/clown)))
+					var/obj/item/clothing/under/olduni = H.w_uniform
 
-					if((affected_mob:w_uniform != null) && !istype(affected_mob:w_uniform, /obj/item/clothing/under/misc/clown))
-						affected_mob.u_equip(c)
-						if(c)
-							c:set_loc(affected_mob.loc)
-							c:dropped(affected_mob)
-							c:layer = initial(c:layer)
+					if((H.w_uniform != null) && !istype(H.w_uniform, /obj/item/clothing/under/misc/clown))
+						H.u_equip(olduni)
+						if(olduni)
+							olduni.set_loc(H.loc)
+							olduni.dropped(H)
+							olduni.layer = initial(olduni.layer)
 
 					var/obj/item/clothing/under/misc/clown/clownsuit = new /obj/item/clothing/under/misc/clown(affected_mob)
 					//clownsuit.cursed = 1
-					affected_mob:equip_if_possible( clownsuit, SLOT_W_UNIFORM)
+					H.equip_if_possible( clownsuit, SLOT_W_UNIFORM)
 
-			if(probmult(10))
-				if(!affected_mob:shoes || ((affected_mob:shoes != null) && !istype(affected_mob:shoes, /obj/item/clothing/shoes/clown_shoes)))
-					var/c = affected_mob:shoes
-					if((affected_mob:shoes != null) && !istype(affected_mob:shoes, /obj/item/clothing/shoes/clown_shoes))
-						affected_mob.u_equip(c)
-						if(c)
-							c:set_loc(affected_mob.loc)
-							c:dropped(affected_mob)
-							c:layer = initial(c:layer)
+			if(H && probmult(10))
+				if(!H.shoes || ((H.shoes != null) && !istype(H.shoes, /obj/item/clothing/shoes/clown_shoes)))
+					var/obj/item/clothing/shoes/oldshoes = H.shoes
+					if((H.shoes != null) && !istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
+						H.u_equip(oldshoes)
+						if(oldshoes)
+							oldshoes.set_loc(H.loc)
+							oldshoes.dropped(H)
+							oldshoes.layer = initial(oldshoes.layer)
 
-					var/obj/item/clothing/shoes/clown_shoes/clownshoes = new /obj/item/clothing/shoes/clown_shoes(affected_mob)
+					var/obj/item/clothing/shoes/clown_shoes/clownshoes = new /obj/item/clothing/shoes/clown_shoes(H)
 					//clownshoes.cursed = 1
-					affected_mob:equip_if_possible( clownshoes, SLOT_SHOES)
+					H.equip_if_possible( clownshoes, SLOT_SHOES)
 
 			if(probmult(8))
 				playsound(affected_mob.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
@@ -170,5 +173,5 @@
 							if (DS2 == 0 && !T2.density && !isrestrictedz(T2.z))
 								affected_mob.set_loc(T2)
 								affected_mob.changeStatus("stunned", 2 SECONDS)
-								affected_mob.changeStatus("weakened", 2 SECONDS)
+								affected_mob.changeStatus("knockdown", 2 SECONDS)
 								boutput(affected_mob, SPAN_ALERT("You feel clumsy and suddenly slip!"))

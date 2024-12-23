@@ -40,7 +40,9 @@ ABSTRACT_TYPE(/datum/antagonist)
 	/// The objectives assigned to the player by this specific antagonist role.
 	var/list/datum/objective/objectives = list()
 	/// The faction given to the player by this antagonist role for AI targeting purposes.
-	var/faction = 0
+	var/faction = list()
+	/// Used in lieu of the id for antag_popups.dm
+	var/popup_name_override
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
 		. = ..()
@@ -77,6 +79,22 @@ ABSTRACT_TYPE(/datum/antagonist)
 		RegisterSignal(src.owner, COMSIG_MIND_ATTACH_TO_MOB, PROC_REF(mind_attach))
 		RegisterSignal(src.owner, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(mind_detach))
 		src.owner.antagonists.Add(src)
+
+	proc/transfer_to(datum/mind/target, take_gear, source, silent = FALSE)
+		remove_self(take_gear, source)
+		owner.former_antagonist_roles.Add(owner.special_role)
+
+		owner.special_role = null // this isn't ideal, since the system should support multiple antagonists. once special_role is worked around, this won't be an issue
+		UnregisterSignal(src.owner, COMSIG_MIND_ATTACH_TO_MOB)
+		UnregisterSignal(src.owner, COMSIG_MIND_DETACH_FROM_MOB)
+
+		src.owner = target
+		src.owner.special_role = id
+		src.setup_antagonist(FALSE, FALSE, FALSE, silent, source, FALSE)
+		src.owner.antagonists.Add(src)
+		RegisterSignal(src.owner, COMSIG_MIND_ATTACH_TO_MOB, PROC_REF(mind_attach))
+		RegisterSignal(src.owner, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(mind_detach))
+
 
 	disposing()
 		if (owner && !src.pseudo)
@@ -145,7 +163,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		src.add_to_image_groups()
 
 		if (src.faction)
-			src.owner.current?.faction |= src.faction
+			LAZYLISTADDUNIQUE(src.owner.current?.faction, src.faction)
 
 		if (!src.silent)
 			src.announce()
@@ -208,6 +226,13 @@ ABSTRACT_TYPE(/datum/antagonist)
 	proc/assign_objectives()
 		return
 
+	/// Handle this antagonist entering cryogenic storage, possibly temporarily.
+	proc/handle_cryo()
+		return
+	/// Handle this antagonist entering cryogenic storage permanently
+	proc/handle_perma_cryo()
+		return
+
 	/// Remove objectives from the antagonist and the mind.
 	proc/remove_objectives()
 		for (var/datum/objective/objective in src.objectives)
@@ -231,9 +256,9 @@ ABSTRACT_TYPE(/datum/antagonist)
 		boutput(owner.current, SPAN_ALERT("<h3>You are no longer \a [src.display_name]!</h3>"))
 
 	/// Show a popup window for this antagonist. Defaults to using the same ID as the antagonist itself.
-	proc/do_popup(override)
-		if (has_info_popup || override)
-			owner.current.show_antag_popup(!override ? id : override)
+	proc/do_popup()
+		if (has_info_popup || popup_name_override)
+			owner.current.show_antag_popup(popup_name_override ? popup_name_override : id)
 
 	/// Returns whether or not this antagonist is considered to have succeeded. By default, this checks all antagonist-specific objectives.
 	proc/check_success()

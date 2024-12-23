@@ -34,31 +34,50 @@
 	var/list/statsus = list()
 
 	if (config?.server_name)
-		statsus += "<b><a href=\"https://goonhub.com\">[config.server_name]</a></b> &#8212; "
+		statsus += "<b><a href=\"[config.goonhub_url]\">[config.server_name]</a></b>"
 	else
-		statsus += "<b>SERVER NAME HERE</b> &#8212; "
+		statsus += "<b>SERVER NAME HERE</b>"
 
-	statsus += "The classic SS13 experience. &#8212; (<a href=\"http://bit.ly/gndscd\">Discord</a>)<br>"
+	statsus += " — The classic SS13 experience. — (<a href=\"http://bit.ly/gndscd\">Discord</a>)<br>"
 
 	if(ticker?.round_elapsed_ticks > 0 && current_state == GAME_STATE_PLAYING)
-		statsus += "Time: <b>[round(ticker.round_elapsed_ticks / 36000)]:[add_zero(num2text(ticker.round_elapsed_ticks / 600 % 60), 2)]</b><br>"
+		statsus += "Time: <b>[round(ticker.round_elapsed_ticks / 36000)]:[add_zero(num2text(ticker.round_elapsed_ticks / 600 % 60), 2)]</b>"
 	else if (current_state == GAME_STATE_FINISHED)
-		statsus += "Time: <b>RESTARTING</b><br>"
+		statsus += "<b>RESTARTING</b>"
 	else if(!ticker)
-		statsus += "Time: <b>STARTING</b><br>"
+		statsus += "<b>STARTING</b>"
+	else if(ticker?.pregame_timeleft && current_state <= GAME_STATE_PREGAME)
+		statsus += "Starting: <b>[ticker.pregame_timeleft]</b>"
+
+	if(emergency_shuttle?.online && emergency_shuttle.location < SHUTTLE_LOC_RETURNED)
+		var/timeleft = emergency_shuttle.timeleft()
+		if(timeleft)
+			var/locstr
+			if(emergency_shuttle.location == SHUTTLE_LOC_STATION)
+				locstr = "ETD"
+			else if(emergency_shuttle.location == SHUTTLE_LOC_TRANSIT)
+				locstr = "ESC"
+			else if(emergency_shuttle.direction == SHUTTLE_DIRECTION_TO_CENTCOMM)
+				locstr = "RCL"
+			else
+				locstr = "ETA"
+			statsus += " | Shuttle: <b>[locstr] [(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</b><br>"
+	else
+		statsus += "<br>"
 
 	if (map_settings)
-		var/map_name = istext(map_settings.display_name) ? "[map_settings.display_name]" : "[map_settings.name]"
+		var/map_name = istext(map_settings.display_name) ? "[map_settings.display_name]" : "[getMapNameFromID(map_setting)]"
 		//var/map_link_str = map_settings.goonhub_map ? "<a href=\"[map_settings.goonhub_map]\">[map_name]</a>" : "[map_name]"
-		statsus += "Map: <b>[map_name]</b><br>"
+		statsus += "Map: <b>[map_name]</b>"
+		if(mapSwitcher?.next)
+			statsus += " | Next: <b>[mapSwitcher.next]</b><br>"
+		else
+			statsus += "<br>"
 
 	var/list/features = list()
 
-	if(ticker && master_mode)
-		if (ticker.hide_mode)
-			features += "Mode: <b>secret</b>"
-		else
-			features += "Mode: <b>[master_mode]</b>"
+	//if(ticker && master_mode && !ticker.hide_mode)
+	//	features += "Mode: <b>[master_mode]</b>"
 
 	if (!enter_allowed)
 		features += "closed"

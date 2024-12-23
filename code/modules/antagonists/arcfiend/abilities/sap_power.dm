@@ -35,7 +35,6 @@
 			SPAN_ALERT("You place your hand onto [target] and start draining [ismob(target) ? him_or_her(target) : "it"] of energy."),
 			SPAN_ALERT("[src.holder.owner] places [his_or_her(src.holder.owner)] hand onto you."))
 		actions.start(new/datum/action/bar/private/icon/sap_power(src.holder.owner, target, holder), src.holder.owner)
-		logTheThing(LOG_COMBAT, src.holder.owner, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
 
 	castcheck()
 		. = ..()
@@ -63,7 +62,6 @@
 /datum/action/bar/private/icon/sap_power
 	duration = 1 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION | INTERRUPT_ACT
-	id = "sap_power"
 	icon = 'icons/mob/arcfiend.dmi'
 	icon_state = "sap_icon"
 
@@ -117,7 +115,7 @@
 				H.visible_message(SPAN_ALERT("[H] spasms violently!"), SPAN_ALERT("Sharp pains start wracking your chest!"))
 				src.scary_message = TRUE
 			H.TakeDamage("All", 0, 5)
-			H.do_disorient(stamina_damage = 50, weakened = 1 SECONDS, disorient = 2 SECOND)
+			H.do_disorient(stamina_damage = 50, knockdown = 1 SECONDS, disorient = 2 SECOND)
 			holder.addPoints(SAP_LIMIT_MOB)
 
 		else if (issilicon(src.target))
@@ -132,7 +130,7 @@
 			S.TakeDamage("chest", 3, 0, DAMAGE_BURN)
 			S.cell.use(POWER_CELL_DRAIN_RATE)
 			holder.addPoints(SAP_LIMIT_MOB)
-			S.do_disorient(stamina_damage = 50, weakened = 1 SECONDS, disorient = 2 SECOND)
+			S.do_disorient(stamina_damage = 50, knockdown = 1 SECONDS, disorient = 2 SECOND)
 
 		else if (istype(src.target, /obj/machinery))
 			var/area/A = get_area(src.target)

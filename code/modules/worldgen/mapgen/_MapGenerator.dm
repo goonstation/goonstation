@@ -28,8 +28,14 @@ proc/initialize_biomes()
 	if(length(seed_list))
 		seeds = seed_list
 
-ABSTRACT_TYPE(area/map_gen)
-area/map_gen
+/datum/map_generator/proc/lag_check()
+	if (current_state >= GAME_STATE_PLAYING)
+		LAGCHECK(LAG_LOW)
+	else
+		LAGCHECK(LAG_HIGH)
+
+ABSTRACT_TYPE(/area/map_gen)
+/area/map_gen
 	name = "map gen"
 	icon = 'icons/turf/map_gen.dmi'
 	icon_state = "genarea"

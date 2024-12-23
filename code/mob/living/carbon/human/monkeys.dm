@@ -2,6 +2,7 @@
 #define IS_NPC_HATED_ITEM(x) ( \
 		istype(x, /obj/item/handcuffs) || \
 		istype(x, /obj/item/device/radio/electropack) || \
+		istype(x, /obj/item/reagent_containers/balloon) || \
 		x:block_vision \
 	)
 
@@ -210,6 +211,9 @@
 		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/misc/prisoner, SLOT_W_UNIFORM)
 			src.equip_new_if_possible(/obj/item/clothing/head/beret/prisoner, SLOT_HEAD)
+			if(prob(10))
+				// he can have a little treat
+				src.equip_new_if_possible(/obj/item/reagent_containers/food/snacks/candy/swirl_lollipop, SLOT_R_HAND)
 			if(prob(80)) // couldnt figure out how to hide it in the debris field, so i just chucked it in a monkey
 				var/obj/item/disk/data/cartridge/ringtone_numbers/idk = new
 				idk.set_loc(src)
@@ -229,13 +233,14 @@
 	var/list/shitlist = list()
 	var/ai_aggression_timeout = 600
 	var/ai_poke_thing_chance = 1
+	var/ai_delay_move = FALSE //! Delays the AI from moving a single time if set
 	default_mutantrace = /datum/mutantrace/monkey
 
 	New()
 		..()
 		START_TRACKING
 		if (!src.disposed)
-			src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+			src.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
 			if (src.name == "monkey" || !src.name)
 				src.name = pick_string_autokey("names/monkey.txt")
 			src.real_name = src.name
@@ -258,6 +263,15 @@
 			return
 		..()
 		if (src.ai_state == 0)
+			if (istype(src.equipped(),/obj/item/implant/projectile/body_visible/dart/bardart))
+				for (var/obj/item/reagent_containers/balloon/balloon in view(7, src))
+					src.throw_item(balloon, list("npc_throw"))
+					src.ai_delay_move = TRUE
+					break
+			else if (!src.equipped())
+				for (var/obj/item/implant/projectile/body_visible/dart/bardart/dart in view(1, src))
+					src.hand_attack(dart)
+					break
 			if (prob(50))
 				src.ai_pickpocket(priority_only=prob(80))
 			else if (prob(50))
@@ -432,7 +446,7 @@
 			return 0
 
 	proc/ai_pickpocket(priority_only=FALSE)
-		if (src.getStatusDuration("weakened") || src.getStatusDuration("stunned") || src.getStatusDuration("paralysis") || src.stat || src.ai_picking_pocket)
+		if (src.getStatusDuration("knockdown") || src.getStatusDuration("stunned") || src.getStatusDuration("unconscious") || src.stat || src.ai_picking_pocket)
 			return
 		var/list/possible_targets = list()
 		var/list/priority_targets = list()
@@ -477,18 +491,15 @@
 				if(!length(choices))
 					return
 				thingy = pick(choices)
-				slot = thingy.equipped_in_slot
 			else if (theft_target.l_store && theft_target.r_store)
 				thingy = pick(theft_target.l_store, theft_target.r_store)
-				if (thingy == theft_target.r_store)
-					slot = 16
 			else if (theft_target.l_store)
 				thingy = theft_target.l_store
 			else if (theft_target.r_store)
 				thingy = theft_target.r_store
-				slot = 16
 			else // ???
 				return
+		slot = theft_target.get_slot_from_item(thingy)
 		walk_towards(src, null)
 		if(ismonkey(theft_target))
 			src.say("I help!")
@@ -499,10 +510,13 @@
 	ai_move()
 		if(src.ai_picking_pocket)
 			return
+		if(src.ai_delay_move)
+			src.ai_delay_move = FALSE
+			return
 		. = ..()
 
 	proc/ai_knock_from_hand(priority_only=FALSE)
-		if (src.getStatusDuration("weakened") || src.getStatusDuration("stunned") || src.getStatusDuration("paralysis") || src.stat || src.ai_picking_pocket || src.r_hand)
+		if (src.getStatusDuration("knockdown") || src.getStatusDuration("stunned") || src.getStatusDuration("unconscious") || src.stat || src.ai_picking_pocket || src.r_hand)
 			return
 		var/list/possible_targets = list()
 		var/list/priority_targets = list()
@@ -561,14 +575,16 @@
 		src.target = AM
 
 /datum/action/bar/icon/filthyPickpocket
-	id = "pickpocket"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 
-	var/mob/living/carbon/human/npc/source  //The npc doing the action
-	var/mob/living/carbon/human/target  	//The target of the action
-	var/slot						    	//The slot number
+	/// NPC who is pickpocketing
+	var/mob/living/carbon/human/npc/source
+	/// The pick-pocketing victim
+	var/mob/living/carbon/human/target
+	/// The SLOT_* define (i.e. SLOT_BACK)
+	var/slot
 
 	New(var/Source, var/Target, var/Slot)
 		source = Source

@@ -24,7 +24,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	health_burn = 10
 	health_burn_vuln = 2
 
-	faction = FACTION_AQUATIC
+	faction = list(FACTION_AQUATIC)
 
 	var/out_of_water_debuff = 1 // debuff amount for being out of water
 	var/in_water_buff = 1 // buff amount for being in water
@@ -461,8 +461,8 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 			var/obj/window/W = AM
 			W.health = 0
 			W.smash()
-		else if(istype(AM, /obj/grille))
-			var/obj/grille/G = AM
+		else if(istype(AM, /obj/mesh/grille))
+			var/obj/mesh/grille/G = AM
 			G.damage_blunt(30)
 		else if(istype(AM, /obj/machinery/vehicle/tank) || istype(AM, /obj/table))
 			AM.meteorhit()
@@ -496,13 +496,13 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 					sleep(0.2 SECONDS)
 				SPAWN(5 SECONDS)
 				for (var/mob/living/M in oview(src, 7))
-					M.reagents.add_reagent(pick("cyanide","neurotoxin","venom","histamine","jenkem","lsd"), 5)
+					M.reagents.add_reagent(pick("cyanide","neurotoxin","cytotoxin","histamine","lsd"), 5)
 				return SPAN_ALERT("<b>[src]</b> does a sinister dance.")
 		if ("snap")
 			if (src.emote_check(voluntary, 300))
-				src.changeStatus("paralysis", -30 SECONDS)
+				src.changeStatus("unconscious", -30 SECONDS)
 				src.changeStatus("stunned", -30 SECONDS)
-				src.changeStatus("weakened", -30 SECONDS)
+				src.changeStatus("knockdown", -30 SECONDS)
 				return SPAN_ALERT("<b>[src]</b> clacks menacingly.")
 		if ("flex")
 			if (src.emote_check(voluntary, 300))
@@ -603,7 +603,8 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		. = ..()
 
 		if (length(.) && prob(10))
-			playsound(src.loc, 'sound/misc/jaws.ogg', 50, 0)
+			if (!ON_COOLDOWN(src, "jaws_sound", 50 SECONDS))
+				playsound(src.loc, 'sound/misc/jaws.ogg', 50, 0, 0, 1)
 
 	critter_scavenge(var/mob/target)
 		src.visible_message(SPAN_COMBAT("<B>[src]</B> gibs [target] in one bite!"))

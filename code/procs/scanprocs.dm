@@ -66,7 +66,6 @@
 	var/brain_data = null
 	// var/heart_data = null		//Moving this to organ_data for now. -kyle
 	var/reagent_data = null
-	var/pathogen_data = null
 	var/disease_data = null
 	var/implant_data = null
 	var/organ_data = null
@@ -148,13 +147,6 @@
 
 		if (ishuman)
 			var/mob/living/carbon/human/H = M
-			if (H.pathogens.len)
-				pathogen_data = SPAN_ALERT("Scans indicate the presence of [length(H.pathogens) > 1 ? "[H.pathogens.len] " : null]pathogenic bodies.")
-				for (var/uid in H.pathogens)
-					var/datum/pathogen/P = H.pathogens[uid]
-					pathogen_data += "<br>&emsp;[SPAN_ALERT("Strain [P.name] seems to be in stage [P.stage]. Suggested suppressant: [P.suppressant.therapy].")]."
-					if (P.in_remission)
-						pathogen_data += "<br>&emsp;&emsp;[SPAN_ALERT("It appears to be in remission.")]."
 
 			if (H.get_organ("brain"))
 				if (H.get_brain_damage() >= 100)
@@ -248,7 +240,6 @@
 	[implant_data ? "<br>[implant_data]" : null]\
 	[organ_data ? "<br>[organ_data]" : null]\
 	[reagent_data ? "<br>[reagent_data]" : null]\
-	[pathogen_data ? "<br>[pathogen_data]" : null]\
 	[disease_data ? "[disease_data]" : null]\
 	[interesting_data ? "<br><i>Historical analysis:</i>[SPAN_NOTICE(" [interesting_data]")]" : null]\
 	"
@@ -341,7 +332,7 @@
 		return "<b class='alert'>ERROR: NO SUBJECT DETECTED</b>"
 	if (visible)
 		animate_scanning(M, "#9eee80")
-	if (!ishuman(M))
+	if (!M.has_genetics())
 		return "<b class='alert'>ERROR: UNABLE TO ANALYZE GENETIC STRUCTURE</b>"
 	var/mob/living/carbon/human/H = M
 	var/list/data = list()
@@ -372,42 +363,52 @@
 	else if (!length(GP.activeDnaKnown))
 		data += "-- None --"
 
-	if (length(H.cloner_defects.active_cloner_defects))
-		data += "<b class='alert'>Detected Cloning-Related Defects:</b>"
-		for(var/datum/cloner_defect/defect as anything in H.cloner_defects.active_cloner_defects)
-			data += "<b class='alert'>[defect.name]</b>"
-			data += "<i class='alert'>[defect.desc]</i>"
+	if(istype(H))
+		if (length(H.cloner_defects.active_cloner_defects))
+			data += "<b class='alert'>Detected Cloning-Related Defects:</b>"
+			for(var/datum/cloner_defect/defect as anything in H.cloner_defects.active_cloner_defects)
+				data += "<b class='alert'>[defect.name]</b>"
+				data += "<i class='alert'>[defect.desc]</i>"
 	return data.Join("<br>")
 
+/// Returns the datacore general record, or null if none found
+/proc/get_general_record(mob/living/carbon/human/H)
+	if (!istype(H))
+		return null
+	var/patientname = H.name
+	if (H:wear_id && H:wear_id:registered)
+		patientname = H.wear_id:registered
+	return data_core.general.find_record("name", patientname)
+
 /proc/update_medical_record(var/mob/living/carbon/human/M)
-	if (!M || !ishuman(M))
+	var/datum/db_record/E = get_general_record(M)
+	if(!istype(E))
 		return
 
-	var/patientname = M.name
-	if (M:wear_id && M:wear_id:registered)
-		patientname = M.wear_id:registered
-
-	var/datum/db_record/E = data_core.general.find_record("name", patientname)
-	if(E)
-		switch (M.stat)
-			if (0)
-				if (M.bioHolder && M.bioHolder.HasEffect("strong"))
-					E["p_stat"] = "Very Active"
-				else
-					E["p_stat"] = "Active"
-			if (1)
-				E["p_stat"] = "*Unconscious*"
-			if (2)
-				E["p_stat"] = "*Deceased*"
-		var/datum/db_record/R = data_core.medical.find_record("id", E["id"])
-		if(R)
-			R["bioHolder.bloodType"] = M.bioHolder.bloodType
-			R["cdi"] = english_list(M.ailments, "No diseases have been diagnosed at the moment.")
-			if (M.ailments.len)
-				R["cdi_d"] = "Diseases detected at [time2text(world.realtime,"hh:mm")]."
+	switch (M.stat)
+		if (STAT_ALIVE)
+			if (M.bioHolder && M.bioHolder.HasEffect("strong"))
+				E["p_stat"] = "Very Active"
 			else
-				R["cdi_d"] = "No notes."
-	return
+				E["p_stat"] = "Active"
+		if (STAT_UNCONSCIOUS)
+			E["p_stat"] = "*Unconscious*"
+		if (STAT_DEAD)
+			E["p_stat"] = "*Deceased*"
+
+	var/datum/db_record/R = data_core.medical.find_record("id", E["id"])
+	if(!R)
+		return
+
+	R["bioHolder.bloodType"] = M.bioHolder.bloodType
+	R["cdi_d"] = english_list(M.ailments, MEDREC_DISEASE_DEFAULT)
+	if (M.ailments.len)
+		R["cdi_d"] = "Diseases detected at [time2text(world.realtime,"hh:mm")]."
+	else
+		R["cdi_d"] = "No notes."
+
+	record_cloner_defects(M)
+
 
 /proc/scan_health_generate_text(var/mob/M)
 	var/h_pct = M.max_health ? round(100 * M.health / M.max_health) : M.health
@@ -521,6 +522,23 @@
 
 	return data
 
+/proc/get_ethanol_equivalent(mob/user, datum/reagents/R)
+	var/eth_eq = 0
+	var/should_we_output = FALSE //looks bad if we output this when it's just ethanol in there
+	if(!istype(R))
+		return
+	for (var/current_id in R.reagent_list)
+		var/datum/reagent/current_reagent = R.reagent_list[current_id]
+		if (istype(current_reagent, /datum/reagent/fooddrink/alcoholic))
+			var/datum/reagent/fooddrink/alcoholic/alch_reagent = current_reagent
+			eth_eq += alch_reagent.alch_strength * alch_reagent.volume
+			should_we_output = TRUE
+		if (current_reagent.id == "ethanol")
+			eth_eq += current_reagent.volume
+	if (should_we_output == FALSE)
+		eth_eq = 0
+	return eth_eq
+
 // Should make it easier to maintain the detective's scanner and PDA program (Convair880).
 /proc/scan_forensic(var/atom/A as turf|obj|mob, visible = 0)
 	if (istype(A, /obj/ability_button)) // STOP THAT
@@ -543,7 +561,7 @@
 
 		if (!isnull(H.gloves))
 			var/obj/item/clothing/gloves/WG = H.gloves
-			if (WG.glove_ID)
+			if (WG.glove_ID && !(WG.no_prints))
 				glove_data += "[WG.glove_ID] ([SPAN_NOTICE("[H]'s worn [WG.name]")])"
 			if (!WG.hide_prints)
 				fingerprint_data += "<br>[SPAN_NOTICE("[H]'s fingerprints:")] [H.bioHolder.fingerprints]"
@@ -661,31 +679,19 @@
 
 		if (isitem(A))
 			var/obj/item/I = A
-			var/list/contraband_returned = list()
-			if (SEND_SIGNAL(I, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
-				var/contra = max(contraband_returned)
-				if (contra)
-					contraband_data = SPAN_ALERT("(CONTRABAND: LEVEL [contra])")
+			var/contra = GET_ATOM_PROPERTY(I,PROP_MOVABLE_VISIBLE_CONTRABAND) + GET_ATOM_PROPERTY(I,PROP_MOVABLE_VISIBLE_GUNS)
+			if (contra)
+				contraband_data = SPAN_ALERT("(CONTRABAND: LEVEL [contra])")
 
 		if (istype(A, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/G = A
 			if (G.glove_ID)
 				glove_data += "[G.glove_ID] [G.material_prints ? "([G.material_prints])" : null]"
 
-		if (istype(A, /obj/item/casing/))
-			var/obj/item/casing/C = A
-			if(C.forensic_ID)
-				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [C]:")] [C.forensic_ID]"
-
-		if (istype(A, /obj/item/implant/projectile))
-			var/obj/item/implant/projectile/P = A
-			if(P.forensic_ID)
-				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [P]:")] [P.forensic_ID]"
-
-		if (istype(A, /obj/item/gun))
-			var/obj/item/gun/G = A
-			if(G.forensic_ID)
-				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [G]:")] [G.forensic_ID]"
+		if (istype(A, /obj))
+			var/obj/O = A
+			if(O.forensic_ID)
+				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [O]:")] [O.forensic_ID]"
 
 		if (istype(A, /turf/simulated/wall))
 			var/turf/simulated/wall/W = A
@@ -735,7 +741,7 @@
 	if(visible)
 		animate_scanning(A, "#00a0ff", alpha_hex = "32")
 
-	var/datum/gas_mixture/check_me = A.return_air()
+	var/datum/gas_mixture/check_me = A.return_air(direct = TRUE)
 	var/pressure = null
 	var/total_moles = null
 

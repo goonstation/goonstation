@@ -218,18 +218,14 @@
 			luminant_img.layer = LIGHTING_LAYER_BASE
 			luminant_img.color = src.color
 			luminant_img.dir = src.dir
-			src.UpdateOverlays(luminant_img, "luminant_img")
+			src.AddOverlays(luminant_img, "luminant_img")
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/mining_tool))
 			if(!ON_COOLDOWN(user, "mine_a_doodad", 1.1 SECONDS))
-				var/obj/item/mining_tool/T = W
-				var/digstr = T.dig_strength
-				if (T.status)
-					T.process_charges(T.digcost)
-					playsound(user.loc, T.hitsound_charged, 50, 1)
-				else
-					playsound(user.loc, T.hitsound_uncharged, 50, 1)
+				var/obj/item/mining_tool/mining_tool = W
+				var/digstr = mining_tool.get_dig_strength()
+				playsound(user.loc, mining_tool.get_mining_sound(), 50, 1)
 				src.dig_hp -= digstr
 				if(src.dig_hp <= 0)
 					src.visible_message(SPAN_ALERT("[src] breaks apart."))

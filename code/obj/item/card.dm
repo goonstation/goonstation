@@ -13,7 +13,7 @@ GAUNTLET CARDS
 	wear_image_icon = 'icons/mob/clothing/card.dmi'
 	w_class = W_CLASS_TINY
 	object_flags = NO_GHOSTCRITTER
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	stamina_damage = 0
 	stamina_cost = 0
 	var/list/files = list("tools" = 1)
@@ -33,7 +33,7 @@ TYPEINFO(/obj/item/card/emag)
 	name = "Electromagnetic Card"
 	icon_state = "emag"
 	item_state = "card-id"
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	layer = 6.0 // TODO fix layer
 	is_syndicate = 1
 	contraband = 6
@@ -46,11 +46,17 @@ TYPEINFO(/obj/item/card/emag)
 	attack()	//Fucking attack messages up in this joint.
 		return
 
+/obj/item/card/emag/attack_self(mob/user as mob)
+	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+		return
+	playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, FALSE, pitch=1.1)
+	actions.start(new /datum/action/show_item(user, src, "id", 5, 3), user)
+
 /obj/item/card/emag/fake
 //delicious fake emag
 	attack_hand(mob/user)
 		boutput(user, SPAN_COMBAT("Turns out that card was actually a kind of [pick("deadly chameleon","spiny anteater","Discount Dan's latest product prototype","Syndicate Top Trumps Card","bag of neckbeard shavings")] in disguise! It stabs you!"))
-		user.changeStatus("paralysis", 10 SECONDS)
+		user.changeStatus("unconscious", 10 SECONDS)
 		SPAWN(1 SECOND)
 			var/obj/storage/closet/C = new/obj/storage/closet(get_turf(user))
 			user.set_loc(C)
@@ -73,7 +79,7 @@ TYPEINFO(/obj/item/card/emag)
 	icon_state = "id"
 	item_state = "card-id"
 	desc = "A standardized NanoTrasen microchipped identification card that contains data that is scanned when attempting to access various doors and computers."
-	flags = FPRINT | TABLEPASS | ATTACK_SELF_DELAY
+	flags = TABLEPASS | ATTACK_SELF_DELAY
 	click_delay = 0.4 SECONDS
 	wear_layer = MOB_BELT_LAYER
 	var/datum/pronouns/pronouns = null
@@ -107,7 +113,7 @@ TYPEINFO(/obj/item/card/emag)
 
 /obj/item/card/id/New()
 	..()
-	src.pin = rand(1000,9999)
+	src.pin = rand(PIN_MIN, PIN_MAX)
 	START_TRACKING
 
 /obj/item/card/id/disposing()
@@ -166,6 +172,15 @@ TYPEINFO(/obj/item/card/emag)
 	icon_state = "polaris"
 	keep_icon = TRUE
 
+/obj/item/card/id/pirate
+	access = list(access_maint_tunnels, access_pirate)
+	assignment = "Space Pirate"
+
+	first_mate
+		assignment = "Space Pirate First Mate"
+	captain
+		assignment = "Space Pirate Captain"
+
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
 	desc = "An ID card to help open doors, lock pods, and identify your body."
@@ -209,6 +224,7 @@ TYPEINFO(/obj/item/card/emag)
 			assignment = "Syndicate Commander"
 			access = list(access_syndicate_shuttle, access_syndicate_commander)
 
+
 /obj/item/card/id/dabbing_license
 	name = "Dabbing License"
 	icon_state = "id_dab"
@@ -232,10 +248,12 @@ TYPEINFO(/obj/item/card/emag)
 		People dabbed on: [dabbed_on_count]<br/>"}
 
 /obj/item/card/id/dabbing_license/attack_self(mob/user as mob)
+	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+		return
 	user.visible_message("[user] shows you: [bicon(src)] [src.name]: [get_desc(0, user)]")
-
 	src.add_fingerprint(user)
-	return
+	playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, FALSE, pitch=0.9)
+	actions.start(new /datum/action/show_item(user, src, "id", 5, 3), user)
 
 /obj/item/card/id/captains_spare/explosive
 	pickup(mob/user)
@@ -254,10 +272,11 @@ TYPEINFO(/obj/item/card/emag)
 		user.gib()
 
 /obj/item/card/id/attack_self(mob/user as mob)
+	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+		return
 	user.visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]", "You show off your card: [bicon(src)] [src.name]: assignment: [src.assignment]")
-
 	src.add_fingerprint(user)
-	return
+	actions.start(new /datum/action/show_item(user, src, "id", 5, 3), user)
 
 /obj/item/card/id/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (src.emagged)
@@ -272,6 +291,8 @@ TYPEINFO(/obj/item/card/emag)
 		all_accesses -= new_access
 		if (istype(src, /obj/item/card/id/syndicate)) // Nuke ops unable to exit their station (Convair880).
 			src.access += access_syndicate_shuttle
+		if (istype(src, /obj/item/card/id/syndicate/commander)) // Commander unable to play their cool tunes
+			src.access += access_syndicate_commander
 		DEBUG_MESSAGE("[get_access_desc(new_access)] added to [src]")
 	user?.show_text("You run [E] over [src], scrambling its access.", "red")
 	logTheThing(LOG_STATION, user || usr, "emagged [src], scrambling its access and granting random access at [log_loc(user || usr)].")
@@ -285,7 +306,6 @@ TYPEINFO(/obj/item/card/emag)
 	boutput(usr, "[bicon(src)] [src.name]: The current assignment on the card is [src.assignment].")
 	return
 */
-
 /obj/item/card/id/syndicate
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate_shuttle)
@@ -295,7 +315,7 @@ TYPEINFO(/obj/item/card/emag)
 	if(!src.registered)
 		var/reg = copytext(src.sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)), 1, 100)
 		var/ass = copytext(src.sanitize_name(input(user, "What occupation would you like to put on this card?\n Note: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Staff Assistant"), 1), 1, 100)
-		var/color = input(user, "What color should the ID's color band be?\nClick cancel to abort the forging process.") as null|anything in list("clown","golden","blue","red","green","purple","yellow","No band")
+		var/color = input(user, "What color should the ID's color band be?\nClick cancel to abort the forging process.") as null|anything in list("clown","golden","blue","red","green","purple","yellow","nanotrasen","syndicate","No band")
 		var/datum/pronouns/pronouns = choose_pronouns(user, "What pronouns would you like to put on this card?", "Pronouns")
 		src.pronouns = pronouns
 		switch (color)
@@ -315,6 +335,10 @@ TYPEINFO(/obj/item/card/emag)
 				src.icon_state = "id_res"
 			if ("yellow")
 				src.icon_state = "id_eng"
+			if ("nanotrasen")
+				src.icon_state = "polaris"
+			if ("syndicate")
+				src.icon_state = "id_syndie"
 			else
 				return // Abort process.
 		src.registered = reg
@@ -344,11 +368,7 @@ TYPEINFO(/obj/item/card/emag)
 	input = strip_html(input, MAX_MESSAGE_LEN, 1)
 	if (strip_bad_stuff_only)
 		return input
-	var/list/namecheck = splittext(trim(input), " ")
-	for(var/i = 1, i <= namecheck.len, i++)
-		namecheck[i] = capitalize(namecheck[i])
-	input = jointext(namecheck, " ")
-	return input
+	return trimtext(input)
 
 /obj/item/card/id/syndicate/get_help_message(dist, mob/user)
 	if (src.name == "agent card") //It's probably unmodified, should be fine to show the help message
@@ -407,7 +427,7 @@ TYPEINFO(/obj/item/card/emag)
 			else
 				assignment = "loading arena matches..."
 				tag = "gauntlet-id-[user.client.key]"
-				queryGauntletMatches(1, user.client.key)
+				queryGauntletMatches(user.client.key)
 		name = "[registered]'s ID Card ([assignment])"
 
 	proc/SetMatchCount(var/matches)

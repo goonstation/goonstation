@@ -1,4 +1,5 @@
 
+#define MAX_INPUT_HISTORY_LENGTH 100 //! Maximum amount of things some nerd can put in here until we've had enough
 
 /obj/machinery/computer3
 	name = "computer"
@@ -25,7 +26,7 @@
 	var/setup_drive_size = 64
 	var/setup_drive_type = null //Use this path for the hd
 	var/setup_frame_type = /obj/computer3frame //What kind of frame does it spawn while disassembled.  This better be a type of /obj/compute3frame !!
-	var/setup_starting_program = null //This program will start out installed on the drive
+	var/setup_starting_program = null //This program will start out installed on the drive (can be a path or a list of paths)
 	var/setup_starting_os = null //This program will start out installed AND AS ACTIVE PROGRAM
 	var/setup_starting_peripheral1 = null //Please note that the user cannot install more than 3.
 	var/setup_starting_peripheral2 = null //And the os tends to need that third one for the card reader
@@ -35,6 +36,11 @@
 	/// does it have a glow in the dark screen? see computer_screens.dmi
 	var/glow_in_dark_screen = TRUE
 	var/image/screen_image
+
+	// Vars for command history
+	var/list/list/tgui_input_history //! (Keyed by CKEY) A list of strings representing the terminal's command execution history. New history is appended as commands are executed
+	var/list/tgui_input_index //! (Keyed by CKEY)  An index pointing to the position in tgui_input_history to update tgui_last_accessed with
+	var/list/tgui_last_accessed //! (Keyed by CKEY)  The most recently accessed command from the console
 
 	power_usage = 250
 
@@ -100,7 +106,7 @@
 		communications
 			name = "Communications Console"
 			icon_state = "comm"
-			setup_starting_program = /datum/computer/file/terminal_program/communications
+			setup_starting_program = list(/datum/computer/file/terminal_program/communications, /datum/computer/file/terminal_program/job_controls)
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
 			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/status
 			setup_drive_size = 80
@@ -276,6 +282,9 @@
 	light.attach(src)
 
 	src.base_icon_state = src.icon_state
+	src.tgui_input_history = list()
+	src.tgui_input_index = list()
+	src.tgui_last_accessed = list()
 
 	if(glow_in_dark_screen)
 		src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
@@ -283,7 +292,7 @@
 		screen_image.blend_mode = BLEND_ADD
 		screen_image.layer = LIGHTING_LAYER_BASE
 		screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-		src.UpdateOverlays(screen_image, "screen_image")
+		src.AddOverlays(screen_image, "screen_image")
 
 	SPAWN(0.4 SECONDS)
 		if(!length(src.peripherals)) // make sure this is the first time we're initializing this computer
@@ -305,13 +314,13 @@
 					src.hd = new /obj/item/disk/data/fixed_disk(src)
 				src.hd.file_amount = src.setup_drive_size
 
-			if(ispath(src.setup_starting_program))
-				var/datum/computer/file/terminal_program/starting = new src.setup_starting_program
+			for (var/program_path in (list() + src.setup_starting_program)) //neat hack to make it work with lists or a single path
+				if(ispath(program_path))
+					var/datum/computer/file/terminal_program/starting = new program_path
 
-				src.hd.file_amount = max(src.hd.file_amount, starting.size)
+					src.hd.file_amount = max(src.hd.file_amount, starting.size)
 
-				starting.transfer_holder(src.hd)
-				//src.processing_programs += src.active_program
+					starting.transfer_holder(src.hd)
 
 			if(ispath(src.setup_starting_os) && src.hd)
 				var/datum/computer/file/terminal_program/os/os = new src.setup_starting_os
@@ -345,19 +354,21 @@
 		ui.open()
 
 /obj/machinery/computer3/ui_static_data(mob/user)
-	. = list()
+	. = list(
+		"ckey" = user.ckey,
+	)
 	if(src.setup_has_internal_disk) // the magic internal floppy drive is in here
 		. += list("peripherals" = list(list(
 		"icon" = "save",
 		"card" = "internal",
 		"color" = src.diskette,
 		"contents" = src.diskette,
-		"label" = "Disk"
+		"label" = "Disk",
 		)))
 	for (var/i in 1 to length(src.peripherals)) // originally i had all this stuff in static data, but the buttons didnt update.
 		var/obj/item/peripheral/periph = src.peripherals[i]
 		if(periph.setup_has_badge)
-			var/pdata = periph.return_badge() // reduces copy pasting
+			var/list/pdata = periph.return_badge() // reduces copy pasting
 			pdata["index"] = i
 			if(pdata)
 				var/bcolor = pdata["contents"]
@@ -365,6 +376,7 @@
 				.["peripherals"] += list(pdata)
 
 /obj/machinery/computer3/ui_data(mob/user)
+	src.tgui_last_accessed[user.ckey] ||= ""
 	. = list(
 		"displayHTML" = src.temp, // display data
 		"TermActive" = src.active_program, // is the terminal running or restarting
@@ -373,7 +385,44 @@
 		"user" = user,
 		"fontColor" = src.setup_font_color, // display monochrome values
 		"bgColor" = src.setup_bg_color,
+		"inputValue" = src.tgui_last_accessed[user.ckey],
 	)
+
+/// Get the history entry at a certain index. Returns null if the index is out of bounds or the ckey is null. Will return an empty string for length+1
+/obj/machinery/computer3/proc/get_history(ckey, index)
+	if (isnull(ckey))
+		return
+	// Allow length+1 to simulate hitting the 'end' of the history and ending up on an empty line
+	if (index == length(src.tgui_input_history[ckey]) + 1)
+		return ""
+	// Ensure index with key exists
+	src.tgui_input_history[ckey] ||= list()
+	// Ensure we can return a value
+	if (index < 1 || length(src.tgui_input_history[ckey]) < index)
+		return
+	return src.tgui_input_history[ckey][index]
+
+/obj/machinery/computer3/proc/add_history(ckey, new_history)
+	// Ensure index with key exists
+	src.tgui_input_history[ckey] ||= list()
+	src.tgui_input_history[ckey].Add(new_history)
+	// Ensure not over limit after adding new entry
+	if (length(src.tgui_input_history) > MAX_INPUT_HISTORY_LENGTH)
+		src.tgui_input_history[ckey].Remove(src.tgui_input_history[ckey][1])
+	// After typing something else in the console, history is always most recent entry
+	src.tgui_input_index[ckey] = length(src.tgui_input_history[ckey])
+
+/// Traverse the current history by some amount. Returns true if different history was accessed, false otherwise (usually if new index OOB)
+/obj/machinery/computer3/proc/traverse_history(ckey, amount)
+	// Most recent entry in history if first time accessing
+	src.tgui_input_index[ckey] ||= length(src.tgui_input_history[ckey])
+	// Ensure previous history exists
+	var/result = src.get_history(ckey, src.tgui_input_index[ckey] + amount)
+	if (isnull(result))
+		return FALSE
+	src.tgui_input_index[ckey] = src.tgui_input_index[ckey] + amount
+	src.tgui_last_accessed[ckey] = result
+	return TRUE
 
 /obj/machinery/computer3/ui_act(action, params)
 	. = ..()
@@ -383,12 +432,18 @@
 		if("restart")
 			src.restart()
 			src.updateUsrDialog()
+		if("history")
+			if (params["direction"] == "prev")
+				return src.traverse_history(params["ckey"], -1)
+			if (params["direction"] == "next")
+				return src.traverse_history(params["ckey"],  1)
 		if("text")
 			if(src.active_program && params["value"]) // haha it fucking works WOOOOOO
 				if(params["value"] == "term_clear")
 					src.temp = "Cleared\n"
 					return
 				src.active_program.input_text(params["value"])
+				src.add_history(params["ckey"], params["value"])
 				playsound(src.loc, "keyboard", 50, 1, -15)
 				src.updateUsrDialog()
 		if("buttonPressed")
@@ -433,6 +488,39 @@
 						I.loc = src
 						dv.disk = I
 					update_static_data(usr)
+				else if (findtext(params["card"], "/obj/item/peripheral/cheget_key"))
+					var/obj/item/peripheral/cheget_key/cheget_key = src.peripherals[params["index"]]
+					if (cheget_key.inserted_key)
+						usr.put_in_hand_or_eject(cheget_key.inserted_key)
+						cheget_key.inserted_key = null
+						boutput(usr, SPAN_NOTICE("You turn the key and pull it out of the lock. The green light turns off."))
+						playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
+						SPAWN(1 SECOND)
+							if(!cheget_key.inserted_key)
+								src.visible_message(SPAN_ALERT("[src] emits a dour boop and a small red light flickers on."))
+								playsound(src.loc, 'sound/machines/cheget_sadbloop.ogg', 30, 1)
+								var/datum/signal/deauthSignal = get_free_signal()
+								deauthSignal.data = list("authcode"="\ref[src]")
+								cheget_key.send_command("key_deauth", deauthSignal)
+
+					else if(istype(I, /obj/item/device/key/cheget))
+						usr.drop_item()
+						I.loc = src
+						cheget_key.inserted_key = I
+						boutput(usr, SPAN_NOTICE("You insert the key and turn it."))
+						playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
+						SPAWN(1 SECOND)
+							if(cheget_key.inserted_key)
+								src.visible_message(SPAN_ALERT("[src] emits a satisfied boop and a little green light comes on."))
+								playsound(src.loc, 'sound/machines/cheget_goodbloop.ogg', 30, 1)
+								var/datum/signal/authSignal = get_free_signal()
+								authSignal.data = list("authcode"="\ref[I]")
+								cheget_key.send_command("key_auth", authSignal)
+					else if(istype(I, /obj/item/device/key))
+						boutput(usr, SPAN_ALERT("It doesn't fit.  Must be the wrong key."))
+						src.visible_message(SPAN_ALERT("[src] emits a grumpy boop."))
+						playsound(src.loc, 'sound/machines/cheget_grumpbloop.ogg', 30, 1)
+					update_static_data(usr)
 	. = TRUE
 
 /obj/machinery/computer3/updateUsrDialog()
@@ -466,7 +554,7 @@
 		status &= ~NOPOWER
 		light.enable()
 		if(glow_in_dark_screen)
-			src.UpdateOverlays(screen_image, "screen_image")
+			src.AddOverlays(screen_image, "screen_image")
 	else
 		SPAWN(rand(0, 15))
 			icon_state = src.base_icon_state
@@ -532,13 +620,13 @@
 	A.created_icon_state = src.base_icon_state
 	A.set_dir(src.dir)
 	if (src.status & BROKEN)
-		boutput(user, SPAN_NOTICE("The broken glass falls out."))
+		user?.show_text("The broken glass falls out.", "blue")
 		var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 		G.set_loc( src.loc )
 		A.state = 3
 		A.icon_state = "3"
 	else
-		boutput(user, SPAN_NOTICE("You disconnect the monitor."))
+		user?.show_text("You disconnect the monitor.", "blue")
 		A.state = 4
 		A.icon_state = "4"
 
@@ -599,6 +687,17 @@
 		set_broken()
 		src.set_density(0)
 
+/obj/machinery/computer3/bullet_act(obj/projectile/P)
+	. = ..()
+	switch (P.proj_data.damage_type)
+		if (D_KINETIC, D_PIERCING, D_SLASHING)
+			if (prob(P.power))
+				if (status & BROKEN)
+					playsound(src, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 50, TRUE)
+					src.unscrew_monitor()
+				else
+					src.set_broken()
+
 /obj/machinery/computer3/disposing()
 	if (hd)
 		if (hd.loc == src)
@@ -621,6 +720,8 @@
 	if (processing_programs)
 		src.processing_programs.len = 0
 		src.processing_programs = null
+
+	tgui_input_history = null
 
 	active_program = null
 	host_program = null
@@ -718,6 +819,8 @@
 		src.processing_programs = new
 		src.temp = ""
 		src.temp_add = "Restarting system...<br>"
+		src.tgui_input_history = list()
+		src.tgui_input_index = list()
 		src.updateUsrDialog()
 		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 		SPAWN(2 SECONDS)
@@ -809,7 +912,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
 	desc = "A common item to find in an office.  Is that an antenna?"
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
+	flags = TABLEPASS| CONDUCT | NOSPLASH
 	force = 8
 	throw_speed = 1
 	throw_range = 4
@@ -854,6 +957,7 @@
 
 		if (src.loc == user)
 			user.drop_item()
+			user.u_equip(src)
 		src.luggable.set_loc(T)
 		src.luggable.case = src
 		src.luggable.deployed = 1
@@ -1003,3 +1107,5 @@
 		src.set_loc(src.case)
 		src.deployed = 0
 		return
+
+#undef MAX_INPUT_HISTORY_LENGTH

@@ -1,7 +1,5 @@
 # Goonstation Spriting Guidelines
 
-{%hackmd @ZeWaka/dark-theme %}
-
 ## Spriting for Goonstation 🐝
 
 So, you want to contribute sprite art to Goonstation. Great! This set of guidelines details what's generally expected out of sprite contributions for Goonstation, and aims to provide helpful advice on the implementation and creation of sprites. As a disclaimer, this isn't a guide on 'How All Good Pixel Art Should Be Drawn', it's how sprites contributed specifically to Goonstation should be drawn.
@@ -13,7 +11,7 @@ So, you want to contribute sprite art to Goonstation. Great! This set of guideli
 * The Byond sprite editor is usable but doesn't have layers and can be pretty clunky. Some free editors include piskel, paint.net, and GIMP. Aseprite is also good and free if compiled yourself, it otherwise costs money. Even photoshop can be used if you're already comfortable with it. 
 
 ## Human Base 🧍
-![](https://cdn.discordapp.com/attachments/659599207946256416/873919587761156106/unknown.png)
+![](https://i.imgur.com/L1qXFuB.png)
 
 * The above human base is useful for drawing clothing items or in-hands by layering them over the base to ensure sprites line-up.
 # Basic Style 😎
@@ -22,7 +20,7 @@ So, you want to contribute sprite art to Goonstation. Great! This set of guideli
 
 * Sprites should generally be in three-quarter perspective (3/4 perspective for short), with few exceptions. 3/4 perspective essentially means that objects have one face and the top visible, facing head on. This includes item sprites for most cases.
 
-![](https://cdn.discordapp.com/attachments/799118122899996754/872975960058781726/perspective.png)
+![](https://i.imgur.com/8TEclNH.png)
 
 * Avoid cabinet projection, where sprites are tilted, with their side visible.
 
@@ -32,7 +30,7 @@ So, you want to contribute sprite art to Goonstation. Great! This set of guideli
 
 * Keep color palettes small and generally higher-contrast when possible. If an existing item is similar to your sprite, for example if it contains matching departmental colors, pull palettes from existing sprites to maintain consistency.
 
-![](https://cdn.discordapp.com/attachments/799118122899996754/872975810485710899/colors.png)
+![](https://i.imgur.com/MquHC45.png)
 
 * Avoid low contrast palettes or palettes with unnecessarily large amounts of colors, they make sprites look muddier and less clean. A lot can be done with a little if you use a good color palette.
 
@@ -42,13 +40,13 @@ So, you want to contribute sprite art to Goonstation. Great! This set of guideli
 
 * Consider using the palette provided here if you're having trouble creating a palette: 
 
-![](https://cdn.discordapp.com/attachments/585526776550391819/814227015875428372/unknown.png)
+![](https://i.imgur.com/oHMg5gg.png)
 
 ## Outlines 🖋
 
 * All sprites should make use of colored outlines. This means that sprites should have outlines consisting of darker shades of the colors it connects to, instead of having a single color outline. 
 
-![](https://cdn.discordapp.com/attachments/659599207946256416/882768492942737438/whiteboard.png)
+![](https://i.imgur.com/ymhWAP2.png)
 
 * Outlines should also be subject to the shading on the sprite, getting darker in darker parts of the sprites and lighter when outlining lighter parts.
 
@@ -58,11 +56,11 @@ So, you want to contribute sprite art to Goonstation. Great! This set of guideli
 
 * For one-handed items, you'll need 8 total in-hand sprites, four for each cardinal direction for both hands. For two-handed items, you'll only need four. An example of in-hand sprites overlaid on the human sprite:
 
-![](https://cdn.discordapp.com/attachments/799118122899996754/873221988531974224/unknown.png)
+![](https://i.imgur.com/3HMGXsN.png)
 
 * The finished sprites should just be on their own though, so they're more like this:
 
-![](https://cdn.discordapp.com/attachments/799118122899996754/873222059453480970/unknown.png)
+![](https://i.imgur.com/450lqQX.png)
 
 ## Other Details 👁️
 
@@ -81,13 +79,13 @@ So, you want to contribute sprite art to Goonstation. Great! This set of guideli
 
 * These files are made up of various named sprites called 'icon_states'. These names are used in code, and should be kept simple but descriptive.
 
-![](https://cdn.discordapp.com/attachments/799118122899996754/873218644199493642/unknown.png)
+![](https://i.imgur.com/dlRyBOZ.png)
 
 * If an existing .dmi file is suitable for your sprite, use that instead of making a new one.
 
 * For sprites larger than 32x32, use the designated `widthXheight` files (ex: 120x120).
 
-![](https://cdn.discordapp.com/attachments/799118122899996754/873220172817760256/unknown.png)
+![](https://i.imgur.com/QeOiR96.png)
 
 
 # Meta :left_speech_bubble: 

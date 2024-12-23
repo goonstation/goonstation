@@ -169,7 +169,7 @@ TYPEINFO(/obj/item/disk)
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "electronic"
-	flags = FPRINT|TABLEPASS|CONDUCT
+	flags = TABLEPASS|CONDUCT
 	var/mtype = 1						// 1=electronic 2=hardware
 
 /obj/item/module/card_reader
@@ -204,12 +204,49 @@ TYPEINFO(/obj/item/disk)
 	icon_state = "brick"
 	item_state = "brick"
 	force = 8
-	w_class = W_CLASS_TINY
-	throwforce = 10
+	w_class = W_CLASS_SMALL
+	throwforce = 15
 	rand_pos = 1
 	stamina_damage = 40
 	stamina_cost = 20
 	stamina_crit_chance = 5
+	custom_suicide = TRUE
+
+	throw_impact(obj/window/window)
+		if (istype(window) && window.health <= (/obj/window/auto::health * /obj/window/auto::health_multiplier))
+			window.smash()
+			return
+		..()
+
+	suicide(var/mob/user as mob)
+		if (!src.user_can_suicide(user))
+			return 0
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "brick_suicide")
+		user.visible_message(SPAN_ALERT("<b>[user] throws [src] into the air!</b>"))
+
+		src.set_loc(get_turf(user))
+		src.pixel_x = 0
+		src.pixel_y = 0
+		src.anchored = ANCHORED_ALWAYS
+		src.layer += 4
+		animate(src, pixel_y = 80, easing = EASE_OUT | QUAD_EASING, time = 0.7 SECONDS)
+		playsound(get_turf(src), 'sound/effects/throw.ogg', 50, FALSE)
+		SPAWN(0.7 SECONDS)
+			animate(src, pixel_y = 15, easing = EASE_IN | QUAD_EASING, time = 0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
+				playsound(get_turf(src), 'sound/impact_sounds/Flesh_Break_1.ogg', 50, FALSE)
+				user.take_brain_damage(999)
+				user.TakeDamage("Head", 999, 0, 0, DAMAGE_CRUSH, TRUE)
+				REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "brick_suicide")
+				SPAWN(0.2 SECONDS)
+					animate(src, pixel_y = 0, easing = EASE_OUT | BOUNCE_EASING, time = 0.5 SECOND)
+					SPAWN(0.5 SECONDS)
+						src.anchored = UNANCHORED
+						src.layer -= 4
+		SPAWN(50 SECONDS)
+			if (user && !isdead(user))
+				user.suiciding = 0
+		return 1
 
 /obj/item/emeter
 	name = "E-Meter"
@@ -255,7 +292,6 @@ TYPEINFO(/obj/item/disk)
 	desc = "Looks like one of those fair toys."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "rubber_hammer"
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	force = 0
 
@@ -292,7 +328,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	initial_reagents = "nicotine"
 	item_state = "ecig"
 	icon_state = "ecig"
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH
+	flags = TABLEPASS | OPENCONTAINER | NOSPLASH
 	c_flags = ONBELT
 	var/emagged = 0
 	var/last_used = 0
@@ -436,7 +472,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	initial_reagents = "nicotine"
 	item_state = "ecigrefill"
 	icon_state = "ecigrefill"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 
 /obj/item/wrestlingbell
 	name = "Wrestling bell"
@@ -616,16 +652,21 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	icon = 'icons/misc/reactorcomponents.dmi'
 	icon_state = "waste"
 	default_material = "slag"
+	var/datum/gas_mixture/leak_gas = new
 
 	New()
 		. = ..()
-		src.AddComponent(/datum/component/radioactive, 20, FALSE, FALSE, 1)
+		src.AddComponent(/datum/component/radioactive, 40, FALSE, FALSE, 1)
+		leak_gas.radgas = 100
+		leak_gas.temperature = T20C
+		leak_gas.volume = 200 //I guess??
+
+	return_air(direct = FALSE)
+		return src.leak_gas
 
 	ex_act(severity) //blowing up nuclear waste is always a good idea
 		var/turf/current_loc = get_turf(src)
-		var/datum/gas_mixture/leak_gas = new/datum/gas_mixture()
-		leak_gas.radgas += 100
-		current_loc.assume_air(leak_gas)
+		current_loc.assume_air(src.leak_gas)
 		qdel(src)
 
 /obj/tombstone/nuclear_warning
@@ -642,6 +683,16 @@ TYPEINFO(/obj/item/reagent_containers/vape)
     The danger is unleashed only if you substantially disturb this place physically. This place is best shunned and left uninhabited.<br>
 	<br>
 	...spooky!"}
+
+	ex_act(severity)
+		// we look for the nearest floor because the jerks are probably gonna blow up a hole under the stone or something, rude
+		for(var/turf/simulated/floor/floor in range(3, get_turf(src)))
+			if(floor.parent?.spaced)
+				continue
+			var/datum/gas_mixture/gas = new
+			gas.radgas = 10 * 2 ** (3 - severity)
+			floor.assume_air(gas)
+			break // only the first floor we found
 
 /obj/item/boarvessel
 	name = "\improper Boar Vessel, 600-500 BC, Etruscan, ceramic"

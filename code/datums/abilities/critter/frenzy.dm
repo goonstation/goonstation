@@ -13,7 +13,7 @@
 	var/frenzy_high = 10 // max number of frenzies
 	var/frenzy_damage = 6
 
-	var/weakened_dur = 1 SECONDS
+	var/knockdown_dur = 1 SECONDS
 	var/bleed_prob = 20
 	var/bleed_damage = 5
 	var/bleed_amount = 5
@@ -52,7 +52,7 @@
 			var/frenz = rand(frenzy_low, frenzy_high)
 			APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_CANTMOVE, "frenzy")
 			while (frenz > 0 && MT && !MT.disposed)
-				MT.changeStatus("weakened", weakened_dur)
+				MT.changeStatus("knockdown", knockdown_dur)
 				APPLY_ATOM_PROPERTY(MT, PROP_MOB_CANTMOVE, "frenzy")
 				if (MT.loc)
 					holder.owner.set_loc(MT.loc)
@@ -86,7 +86,7 @@
 	frenzy_high = 10
 	frenzy_damage = 9
 
-	weakened_dur = 2 SECONDS
+	knockdown_dur = 2 SECONDS
 	bleed_prob = 33
 	bleed_damage = 8
 	bleed_amount = 6
@@ -101,7 +101,7 @@
 	frenzy_high = 20
 	frenzy_damage = 4
 
-	weakened_dur = 1 SECOND
+	knockdown_dur = 1 SECOND
 	bleed_prob = 20
 	bleed_damage = 3
 	bleed_amount = 2
@@ -122,7 +122,7 @@
 	frenzy_high = 5
 	frenzy_damage = 7
 
-	weakened_dur = 1.5 SECONDS
+	knockdown_dur = 1.5 SECONDS
 	bleed_prob = 33
 	bleed_damage = 15
 	bleed_amount = 5

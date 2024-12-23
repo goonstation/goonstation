@@ -6,7 +6,7 @@
 
 [<img src=".github/assets/setup.png" alt="Setup" width="150" align="left">](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fdev)
 
-Want to get the code up and running to test changes? This guide is the place to go. 
+Want to get the code up and running to test changes or play around? This guide is the place to go. 
 <br>***Be sure to follow it exactly!*** If you need help, visit the #imcoder channel on our Discord.
 
 ## COMMUNITY
@@ -18,10 +18,10 @@ Discord is the place to talk to fellow players, admins, and devs in realtime. Th
 The forums are where we get most of our player feedback/suggestions and talk about things in a more longform format. This is also the place to appeal any bans or give admin feedback.
 
 [<img src=".github/assets/wiki.png" alt="Goonhub" width="150" align="left">](https://wiki.ss13.co)
-Our wiki is the place to go for any information you seek on the various constructions, items, game modes, and more in-game. There's also guides for various jobs on station!
+Our wiki is the place to go for any information you seek on the various constructions, items, game modes, and really just anything in-game. There's also guides for the various jobs you can play!
 
 [<img src=".github/assets/goonhub.png" alt="Goonhub" width="150" align="left">](https://goonhub.com)
-Goonhub is the premier place for locating statistics, data about rounds, detailed game maps, and all other links pertaining to Goonstation!
+Goonhub is the premier place for locating statistics, data about rounds (like funny last words), detailed game maps, and all other links pertaining to Goonstation!
 
 ## CONTRIBUTING
 
@@ -43,16 +43,11 @@ To contribute audio to the game, please follow our audio guidelines! It details 
 [<img src=".github/assets/maps.png" alt="Mapping Guidelines" width="150" align="left">](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fmaps)
 To contribute maps to the game, please follow our mapping guidelines! It details the **required** pieces for a map submission. There are also guides on how to map included.
 
-## FAQ (Frequently Asked Question)
-
-#### Q: I'm getting a compilation error like `unable to open +secret\__secret.dme`.
-
-You’ll need to create a file named `__secret.dme` in the +secret subdirectory. It should be blank and have no contents. You can run the `initial_setup.bat` file to create it automatically. Read the [Goonstation Development Guide](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fdev) for additional details.
-
-
 ## LICENSE
 [![license-badge](https://shields.io/badge/license-CC--BY--NC--SA-lightgrey?style=for-the-badge)](https://creativecommons.org/licenses/by-nc-sa/3.0/)
 
 All Goonstation contributions are licensed under [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/3.0/). See LICENSE for more details.
+
+Contributions made under the `tgui` folder are licensed under [MIT](https://choosealicense.com/licenses/mit/) unless otherwise specified.
 
 **Important:** This means that code from Goonstation cannot be ported to codebases such as /tg/station. If you wish to port a specific feature, you must get the developer(s) to sublicense it to you under a license like AGPLv3. This also applies in the opposite direction for features ported from other codebases.

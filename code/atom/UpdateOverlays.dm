@@ -37,6 +37,28 @@ A.UpdateOverlays(null, "hat",0,1) 	//Removes the overlay in the "hat" slot, but 
 -------------------------------------------------------
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Usage:	AddOverlays(var/image/I, var/key, var/force=0)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Handles updating existing overlays and adding new overlays.
+
+I		=	image that you want to add to the atom's overlays (assumed to not be null)
+key		=	which "slot" do you want the image to go in
+force	=	Don't care if there is an existing image with the same details, update anyway. Can be useful if the image to be added is a composite with several overlays of its own.
+
+Returns 1 on updating an overlay, 0 otherwise
+
+------------------------------------------------------
+//Ex.
+
+var/atom/A = new
+var/image/ass = image('butt.dmi', "posterior")
+
+A.AddOverlays(ass, "hat") 		//Puts the 'ass' image in the slot defined as "hat".
+A.AddOverlays(ass, "hat") 		//This will check the existing overlay in the "hat" slot and reject the update.
+ass.icon_state = "hindquarters" 	//Icon state change.
+A.AddOverlays(ass, "hat") 		//This will detect the change and update the overlay accordingly.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Usage:	ClearAllOverlays(var/retain_cache=0)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Removes all overlays on an atom
@@ -118,8 +140,7 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 /atom/proc/UpdateOverlays(var/image/I, var/key, var/force=0, var/retain_cache = 0)
 	if(!key)
 		CRASH("UpdateOverlays called without a key.")
-	if (!src.overlay_refs)
-		src.overlay_refs = list()
+	LAZYLISTINIT(src.overlay_refs)
 
 	var/list/prev_data
 	//List to store info about the last state of the icon
@@ -134,68 +155,118 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 	if(!force && (prev_overlay == I) && hash == prev_data[P_ISTATE] ) //If it's the same image as the other one and the appearances match then do not update
 		return 0
 
-	// remove once https://www.byond.com/forum/post/2888142 is fixed
-	#if DM_VERSION >= 515 && !defined(SPACEMAN_DMM)
-	#warn "remove the below"
-	#endif
-	if(I)
-		for(var/ikey in overlay_refs)
-			if(ikey != key && overlay_refs[ikey][P_INDEX] > 0 && overlay_refs[ikey][P_ISTATE] == ref(I.appearance))
-				// logTheThing(LOG_DEBUG, null, "Attempt to add duplicate overlay appearances on [identify_object(src)] with keys [key] and [ikey].")
-				I.layer += 0.0000001 * rand()
-
 	var/index = prev_data[P_INDEX]
-	if(index > 0) //There is an existing overlay in place in this slot, remove it
+	if(index) //There is an existing overlay in place in this slot, remove it
 		if(index <= length(src.overlays))
 			src.overlays.Cut(index, index+1) //Fuck yoooou byond (this gotta be by index or it'll fail if the same thing's in overlays several times)
 		else
 			stack_trace("Overlays on [identify_object(src)] were modified by non-UpdateOverlays method.")
 
-		prev_data[P_INDEX] = 0
 		for(var/ikey in overlay_refs) //Because we're storing the position of each overlay in the list we need to shift our indices down to stay synched
 			var/list/L = overlay_refs[ikey]
-			if(L?.len > 0 && L[P_INDEX] >= index)
+			if(L?[P_INDEX] >= index)
 				L[P_INDEX]--
 
 	if(I)
 		src.overlays += I
-		index = length(src.overlays)
-		prev_data[P_INDEX] = index
+		prev_data[P_INDEX] = length(src.overlays)
 
 		prev_data[P_IMAGE] = I
-		prev_data[P_ISTATE] = "\ref[I.appearance]"
+		prev_data[P_ISTATE] = hash
 
 		overlay_refs[key] = prev_data
 	else
 		if(retain_cache) //Keep the cached image available?
 			prev_data[P_INDEX] = 0	//Clear the index
-			prev_data[P_ISTATE] = 0	//Clear the ref
+			prev_data[P_ISTATE] = null	//Clear the ref
 		else
 			overlay_refs -= key
 	return 1
 
+/atom/proc/AddOverlays(var/image/I, var/key, var/force=0)
+	if(isnull(key))
+		CRASH("AddOverlays called without a key.")
+	LAZYLISTINIT(src.overlay_refs)
+	#ifdef CHECK_MORE_RUNTIMES //asserts can be somewhat slow in a proc as often as this.
+	ASSERT(I)
+	#endif
+	var/list/prev_data
+	//List to store info about the last state of the icon
+	prev_data = overlay_refs[key]
+	if(isnull(prev_data)) //Ok, we don't have previous data, but we will add an overlay
+		prev_data = new /list(P_ILEN)
+
+	var/hash = ref(I.appearance)
+	var/image/prev_overlay = prev_data[P_IMAGE] //overlay_refs[key]
+	if(!force && (prev_overlay == I) && hash == prev_data[P_ISTATE]) //If it's the same image as the other one and the appearances match then do not update
+		return 0
+
+	var/index = prev_data[P_INDEX]
+	if(index) //There is an existing overlay in place in this slot, remove it
+		if(index <= length(src.overlays))
+			src.overlays.Cut(index, index+1) //Fuck yoooou byond (this gotta be by index or it'll fail if the same thing's in overlays several times)
+		else
+			stack_trace("Overlays on [identify_object(src)] were modified by non-UpdateOverlays method.")
+
+		for(var/ikey in overlay_refs) //Because we're storing the position of each overlay in the list we need to shift our indices down to stay synched
+			var/list/L = overlay_refs[ikey]
+			if(L?[P_INDEX] >= index)
+				L[P_INDEX]--
+
+	src.overlays += I
+	prev_data[P_INDEX] = length(src.overlays)
+
+	prev_data[P_IMAGE] = I
+	prev_data[P_ISTATE] = hash
+
+	overlay_refs[key] = prev_data
+	return 1
+
 /atom/proc/ClearAllOverlays(retain_cache = FALSE) //Some men just want to watch the world burn
 	if(length(src.overlays))
-		if (!src.overlay_refs)
-			src.overlay_refs = list()
-		src.overlays.Cut()
+		LAZYLISTINIT(src.overlay_refs)
+		src.overlays.len = 0
 		if(retain_cache)
 			for(var/key in src.overlay_refs)
 				var/list/pd = overlay_refs[key]
 				pd[P_INDEX] = 0
-				pd[P_ISTATE] = 0
+				pd[P_ISTATE] = null
 				overlay_refs[key] = pd
 		else
-			src.overlay_refs.Cut()
+			src.overlay_refs.len = 0
 		return 1
 
-/atom/proc/ClearSpecificOverlays(var/retain_cache=0)
-	var/tally = 0
+/atom/proc/ClearSpecificOverlays(var/retain_cache = FALSE)
+	LAZYLISTINIT(src.overlay_refs)
 	var/keep_cache = isnum(retain_cache) && retain_cache //Maybe someone forgets to include this argument and goes straight for the list, let's handle that case
 	for(var/key in args)
 		if(istext(key)) //The retain_cache value will be here as well, so skip it
-			tally += src.UpdateOverlays(null, key, 0, keep_cache)
-	return tally
+			//List to store info about the last state of the icon
+			var/list/prev_data = overlay_refs[key]
+			if(!prev_data) //We don't have data
+				continue
+
+			var/image/prev_overlay = prev_data[P_IMAGE] //overlay_refs[key]
+			if(isnull(prev_overlay) && isnull(prev_data[P_ISTATE])) //If it's the same image as the other one and the appearances match then do not update
+				continue
+
+			var/index = prev_data[P_INDEX]
+			if(index) //There is an existing overlay in place in this slot, remove it
+				if(index <= length(src.overlays))
+					src.overlays.Cut(index, index+1) //Fuck yoooou byond (this gotta be by index or it'll fail if the same thing's in overlays several times)
+				else
+					stack_trace("Overlays on [identify_object(src)] were modified by non-UpdateOverlays method.")
+
+				for(var/ikey in overlay_refs) //Because we're storing the position of each overlay in the list we need to shift our indices down to stay synched
+					var/list/L = overlay_refs[ikey]
+					if(L?[P_INDEX] >= index)
+						L[P_INDEX]--
+
+			if(keep_cache) //Keep the cached image available?
+				prev_data[P_INDEX] = 0	//Clear the index
+				prev_data[P_ISTATE] = null	//Clear the ref
+			else
+				overlay_refs -= key
 
 
 /atom/proc/GetOverlayImage(var/key)

@@ -1,0 +1,45 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author ZeWaka (https://github.com/ZeWaka)
+ * @license MIT
+ */
+
+@use '../colors';
+
+.PINInput {
+  display: flex;
+  justify-content: center;
+
+  .PINInput__button {
+    display: flex;
+    justify-content: center;
+    font-size: 1.7rem;
+
+    // Center icon buttons
+    i {
+      margin-left: -0.1em;
+    }
+  }
+}
+
+// Style each individual digit into a box
+.PINInput__digit {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7rem;
+  border: 1px solid colors.$label;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  padding: 0.4rem;
+  margin: 0.3rem;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}

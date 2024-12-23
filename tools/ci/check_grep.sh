@@ -48,4 +48,24 @@ if grep -P 'rand\([^)]*[0-9]\.' */**/*.dm;	then
     st=1
 fi;
 
+if grep -P 'istype\([^,)]*\.type' */**/*.dm;	then
+    echo "ERROR: you probably meant to use istype(foo, sometype) instead of istype(foo.type, sometype)."
+    st=1
+fi;
+
+if grep -P '^ABSTRACT_TYPE\([^/]' */**/*.dm;	then
+    echo "ERROR: You need to include the slash before the area type name in ABSTRACT_TYPE."
+    st=1
+fi;
+
+if grep -P '^ABSTRACT_TYPE\([^/]' */**/*.dm;	then
+    echo "ERROR: You need to include the slash before the area type name in ABSTRACT_TYPE."
+    st=1
+fi;
+
+if grep -P 'as anything in o?(range|hearers)' */**/*.dm;	then
+    echo "ERROR: Don't include 'as anything' before o?range|hearers, it disables optimizations."
+    st=1
+fi;
+
 exit $st

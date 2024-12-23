@@ -99,6 +99,9 @@
 		return
 	var/discomfort = min(abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1)
 
+	if (discomfort * mult < 0.1) //stop corpses eternally twitching
+		return
+
 	switch(body_part)
 		if (HEAD)
 			TakeDamage("head", 0, 2.5*discomfort*mult, 0, DAMAGE_BURN)

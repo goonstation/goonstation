@@ -1,8 +1,12 @@
 // conveyor belt
 
+#define CONVEYOR_SWITCH_COOLDOWN 0.5 SECONDS
+
 // moves items/mobs/movables in set direction every ptick
 TYPEINFO(/obj/machinery/conveyor) {
-	mats = list("MET-1" = 1, "CON-1" = 1, "CRY-1" = 1)
+	mats = list("metal" = 1,
+				"conductive" = 1,
+				"crystal" = 1)
 }
 
 /obj/machinery/conveyor
@@ -48,6 +52,12 @@ TYPEINFO(/obj/machinery/conveyor) {
 	event_handler_flags = USE_FLUID_ENTER
 	/// list of conveyor_switches that have us in their conveyors list
 	var/list/linked_switches
+	/// Stored operating direction for conveyors without linked switches
+	var/stored_operating
+
+	New()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_DO_LIQUID_CLICKS, src)
 
 // for all your mapping needs!
 /obj/machinery/conveyor/NE
@@ -312,11 +322,11 @@ TYPEINFO(/obj/machinery/conveyor) {
 		operating = CONVEYOR_STOPPED
 	if(!operating || (status & NOPOWER))
 		power_usage = 0
-		for(var/atom/movable/A in loc.contents)
+		for(var/atom/movable/A in loc?.contents)
 			walk(A, 0)
 	else
 		power_usage = 100
-		for(var/atom/movable/A in loc.contents)
+		for(var/atom/movable/A in loc?.contents)
 			move_thing(A)
 
 	var/new_icon = "conveyor-"
@@ -417,7 +427,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 		return
 	if(!loc)
 		return
-	if (!can_convey(AM))
+	if(!can_convey(AM))
+		walk(AM, 0)
 		return
 
 	if(src.next_conveyor && src.next_conveyor.loc == AM.loc)
@@ -438,8 +449,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 /obj/machinery/conveyor/get_desc()
 	if (src.deconstructable)
-		. += " [SPAN_NOTICE("It's cover seems to be open.")]"
-
+		. += " [SPAN_NOTICE("Its cover seems to be open.")]"
 
 /obj/machinery/conveyor/mouse_drop(over_object, src_location, over_location)
 	if (!usr)
@@ -601,6 +611,10 @@ TYPEINFO(/obj/machinery/conveyor) {
 			var/obj/machinery/conveyor_switch/connected_switch = src.linked_switches[1]
 			src.operating = connected_switch.position
 			src.setdir()
+		else
+			src.operating = src.stored_operating
+			src.stored_operating = null
+			src.set_dir()
 		src.update()
 		return 1
 
@@ -609,6 +623,10 @@ TYPEINFO(/obj/machinery/conveyor) {
 		src.deconstructable = TRUE
 		M.show_text("You finish opening \the [src]'s panel.", "blue")
 		if (length(src.linked_switches))
+			src.operating = CONVEYOR_STOPPED
+			src.setdir()
+		else
+			src.stored_operating = src.operating
 			src.operating = CONVEYOR_STOPPED
 			src.setdir()
 		src.update()
@@ -873,14 +891,17 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 
 
-ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
-
-TYPEINFO(/obj/machinery/conveyor_switch) {
-	mats = list("MET-1" = 10, "CON-1" = 10, "CRY-1" = 10)
-}
 
 
 #define CALC_DELAY(C) max(initial(C.move_lag) - src.speedup + src.slowdown, 0.1)
+
+ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
+TYPEINFO(/obj/machinery/conveyor_switch) {
+	mats = list("metal" = 10,
+				"conductive" = 10,
+				"crystal" = 10)
+}
+
 /// the conveyor control switch
 /obj/machinery/conveyor_switch
 	name = "conveyor switch"
@@ -898,12 +919,12 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	/// the list of converyors that are controlled by this switch
 	var/list/conveyors
 	anchored = ANCHORED
-	/// time last used
-	var/last_used = 0
 	///How much this switch is configured to manually slow down by
 	VAR_PROTECTED/slowdown = 0
 	///How much speed boost this switch is getting
 	VAR_PROTECTED/speedup = 0
+
+	HELP_MESSAGE_OVERRIDE("Click to cycle between forward, stop, and reverse.<br>Click-drag right or left to set the direction forward or reverse.")
 
 	New()
 		. = ..()
@@ -938,7 +959,7 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 				C.linked_switches |= src
 
 	proc/trigger(var/inp)
-		attack_hand(usr) //bit of a hack but hey.
+		src.Attackhand(usr) //bit of a hack but hey.
 		return
 
 	proc/set_speed(datum/mechanicsMessage/msg)
@@ -972,34 +993,64 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 
 	// attack with hand, switch position
 	attack_hand(mob/user)
-		if (TIME < (last_used + 0.5 SECONDS))
+		if(ON_COOLDOWN(src, "switch", CONVEYOR_SWITCH_COOLDOWN))
 			return
-		last_used = TIME
+		src.add_fingerprint(user)
 		if(position == CONVEYOR_STOPPED)
 			if (last_pos == CONVEYOR_REVERSE)
-				position = CONVEYOR_FORWARD
-				last_pos = CONVEYOR_STOPPED
+				src.go_forward()
 			else
-				position = CONVEYOR_REVERSE
-				last_pos = CONVEYOR_STOPPED
+				src.go_reverse()
 			logTheThing(LOG_STATION, user, "turns the conveyor switch on in [last_pos == CONVEYOR_REVERSE ? "forward" : "reverse"] mode at [log_loc(src)].")
 		else
-			last_pos = position
-			position = CONVEYOR_STOPPED
+			src.stop()
 			logTheThing(LOG_STATION, user, "turns the conveyor switch off at [log_loc(src)].")
-		UpdateIcon()
+		src.UpdateIcon()
+		src.update_others()
 
-		// find any switches with same id as this one, and set their positions to match us
+	// click-drag to set direction left/right
+	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
+		if (!isliving(usr)) return
+		if (!can_act(usr) || !can_reach(usr, src)) return
+		var/mob/M = usr
+		if (ispulsingtool(M.equipped()) && istype(over_object, /obj/machinery/conveyor)) return // linking handled in conveyor MouseDrop_T
+		if (ON_COOLDOWN(src, "switch", CONVEYOR_SWITCH_COOLDOWN)) return
+		src.add_fingerprint(usr)
+		switch (over_location:x - src_location:x)
+			if (0)
+				return
+			if (1 to INFINITY)
+				src.go_forward()
+			if (-INFINITY to -1)
+				src.go_reverse()
+		logTheThing(LOG_STATION, usr, "turns the conveyor switch to [src.position == CONVEYOR_REVERSE ? "forward" : "reverse"] mode at [log_loc(src)].")
+		src.UpdateIcon()
+		src.update_others()
+
+	proc/go_forward()
+		src.last_pos = src.position
+		src.position = CONVEYOR_FORWARD
+
+	proc/go_reverse()
+		src.last_pos = src.position
+		src.position = CONVEYOR_REVERSE
+
+	proc/stop()
+		src.last_pos = src.position
+		src.position = CONVEYOR_STOPPED
+
+	/// Update matching switches and conveyors to our position
+	proc/update_others()
 		for_by_tcl(S, /obj/machinery/conveyor_switch)
 			if (S == src) continue
-			if(S.id == src.id)
-				S.position = position
+			if (S.id == src.id)
+				S.position = src.position
 				S.UpdateIcon()
 			LAGCHECK(LAG_MED)
 
 		for (var/obj/machinery/conveyor/C as anything in conveyors)
 			if (C.id == src.id)
-				C.operating = position
+				C.operating = src.position
 				C.setdir()
 				C.move_lag = CALC_DELAY(C)
 
@@ -1171,3 +1222,5 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 		if (!src.activation_area.active)
 			return
 		. = ..()
+
+#undef CONVEYOR_SWITCH_COOLDOWN

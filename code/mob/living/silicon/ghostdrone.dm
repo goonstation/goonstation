@@ -14,6 +14,8 @@
 	punchMessage = "whaps"
 	kickMessage = "bonks"
 
+	var/default_hat_y = 7
+
 	var/datum/hud/ghostdrone/hud
 	var/obj/item/device/radio/radio = null
 
@@ -25,17 +27,16 @@
 	var/faceType
 	var/charging = 0
 	var/newDrone = 0
-
 	var/jetpack = 1 //fuck whoever made this
 
 	var/sees_static = TRUE
 
 	//gimmicky things
-	var/obj/item/clothing/head/hat = null
 	var/obj/item/clothing/suit/bedsheet/bedsheet = null
 
 	New()
 		..()
+		AddComponent(/datum/component/hattable, TRUE, FALSE, default_hat_y, 0, 0.75)
 		remove_lifeprocess(/datum/lifeprocess/radiation)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		START_TRACKING
@@ -66,7 +67,7 @@
 
 
 		src.health = src.max_health
-		src.botcard.access = list(access_maint_tunnels, access_ghostdrone, access_engineering,access_external_airlocks,
+		src.botcard.access = list(access_maint_tunnels, access_ghostdrone, access_engineering,
 						access_engineering_storage, access_engineering_atmos, access_engineering_engine, access_engineering_power)
 		src.radio = new /obj/item/device/radio(src)
 		src.ears = src.radio
@@ -163,7 +164,6 @@
 			src.visible_message(SPAN_COMBAT("[src.name] explodes in a shower of lost hopes and dreams."))
 			var/turf/T = get_ranged_target_turf(src, pick(alldirs), 3)
 			if (magHeld) magHeld.throw_at(T, 3, 1) //flying...anything
-			if (src.hat) src.takeoffHat(pick(alldirs)) //flying hats
 			if (src.bedsheet) //flying bedsheets
 				bedsheet.set_loc(get_turf(src))
 				bedsheet.throw_at(T, 3, 1)
@@ -180,7 +180,6 @@
 					msg = "[src.name]'s scream's gain echo and lose their electronic modulation as its soul is ripped monstrously from the cold metal body it once inhabited."
 
 			src.visible_message(SPAN_COMBAT("[msg]"))
-			if (src.hat) src.takeoffHat()
 			src.updateSprite()
 			..()
 
@@ -425,38 +424,7 @@
 				step(AM, t)
 			src.now_pushing = null
 
-	//Four very important procs follow
-	proc/putonHat(obj/item/clothing/head/W as obj, mob/user as mob)
-		src.hat = W
-		W.set_loc(src)
-		var/image/hatImage = null
-		// Treat wigs differently as their icon_state is always bald
-		if (istype(W, /obj/item/clothing/head/wig))
-			hatImage = W.wear_image
-			hatImage.layer = src.layer+0.1
-			hatImage.pixel_y = -7
-		else
-			hatImage = image(icon = W.icon, icon_state = W.icon_state, layer = src.layer+0.1)
-			hatImage.pixel_y = 5
-			hatImage.transform *= 0.9
-		UpdateOverlays(hatImage, "hat")
-		return 1
-
-	proc/takeoffHat(forcedDir = null)
-		UpdateOverlays(null, "hat")
-		src.hat.set_loc(get_turf(src))
-
-		var/turf/T
-		if (isnum(forcedDir))
-			T = get_ranged_target_turf(src, forcedDir, 3)
-		if (isturf(forcedDir))
-			T = forcedDir
-		if (isturf(T))
-			src.hat.throw_at(T, 3, 1)
-
-		src.hat = null
-		return 1
-
+	// Two important procs follow
 	proc/putonSheet(obj/item/clothing/suit/bedsheet/W as obj, mob/user as mob)
 		W.set_loc(src)
 		src.bedsheet = W
@@ -517,16 +485,6 @@
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if (src.health >= 25)
 				boutput(user, SPAN_NOTICE("The wiring is fully repaired. Now you need to weld the external plating."))
-
-		else if (istype(W, /obj/item/clothing/head))
-			if(src.hat)
-				boutput(user, SPAN_ALERT("[src] is already wearing a hat!"))
-				return
-
-			user.drop_item()
-			src.putonHat(W, user)
-			if (user != src)
-				user.visible_message("<b>[user]</b> gently places a hat on [src]!", "You gently place a hat on [src]!")
 			return
 
 		else if (istype(W, /obj/item/clothing/suit/bedsheet))
@@ -551,10 +509,7 @@
 				if(INTENT_DISARM) //Shove
 					SPAWN(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
 					user.visible_message(SPAN_ALERT("<B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B>"))
-					if (src.hat)
-						user.visible_message("<b>[user]</b> knocks \the [src.hat] off [src]!", "You knock the hat off [src]!")
-						src.takeoffHat()
-					else if (src.bedsheet)
+					if (src.bedsheet)
 						user.visible_message("<b>[user]</b> pulls the sheet off [src]!", "You pull the sheet off [src]!")
 						src.takeoffSheet()
 				if(INTENT_GRAB) //Shake
@@ -608,13 +563,13 @@
 				if (mag.holding)
 					// drop the item that's being held first,
 					// so we can pick up things immediately without having to re-equip
-					actions.stopId("magpickerhold", src)
+					actions.stopId(/datum/action/magPickerHold, src)
 					hud.update_tools()
 					hud.update_equipment()
 					return
 
 				else
-					actions.stopId("magpicker", src)
+					actions.stopId(/datum/action/bar/private/icon/magPicker, src)
 			if (isitem(src.active_tool))
 				src.active_tool.dropped(src) // Handle light datums and the like.
 		src.active_tool = null
@@ -970,7 +925,7 @@
 				continue
 			var/mob/M = C.mob
 
-			if ((M in hearers(src) || M.client.holder))
+			if (((M in hearers(src)) || M.client.holder))
 				var/thisR = rendered
 				if (isghostdrone(M) || M.client.holder)
 					if ((istype(M, /mob/dead/observer)||M.client.holder)&& src.mind)
@@ -1006,16 +961,16 @@
 				M.show_message(thisR, 2)
 
 	say(message = "")
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 		if (!message)
 			return
 
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")
 			return
-
+		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 		if (dd_hasprefix(message, ";"))
-			message = trim(copytext(message, 2, MAX_MESSAGE_LEN))
+			message = trimtext(copytext(message, 2, MAX_MESSAGE_LEN))
 			return src.say_dead(message)
 
 		// emotes
@@ -1030,7 +985,7 @@
 		var/broadcast = 0
 		if (length(message) >= 2)
 			if (dd_hasprefix(message, ";"))
-				message = trim(copytext(message, 2, MAX_MESSAGE_LEN))
+				message = trimtext(copytext(message, 2, MAX_MESSAGE_LEN))
 				broadcast = 1
 		if (broadcast)
 			return src.drone_broadcast(message)
@@ -1079,17 +1034,6 @@
 		var/stun = round((P.power*(1.0-P.proj_data.ks_ratio)), 1.0)
 
 		src.changeStatus("stunned", stun SECONDS)
-
-		if (src.hat) //For hats getting shot off
-			UpdateOverlays(null, "hat")
-			src.hat.set_loc(get_turf(src))
-			//get target turf
-			var/x = round(P.xo * 4)
-			var/y = round(P.yo * 4)
-			var/turf/target = get_offset_target_turf(src, x, y)
-
-			src.visible_message(SPAN_COMBAT("[src]'s [src.hat] goes flying!"))
-			src.takeoffHat(target)
 
 		if (damage < 1)
 			return
@@ -1239,6 +1183,11 @@
 			C.apply_keybind("drone_azerty")
 		if (C.tg_controls)
 			C.apply_keybind("drone_tg")
+
+	projCanHit(datum/projectile/P)
+		. = ..()
+		if(isdead(src))
+			return FALSE
 
 /proc/droneize(target = null, pickNew = 1)
 	if (!target) return 0

@@ -27,6 +27,21 @@ ABSTRACT_TYPE(/datum/objective)
 	proc/set_up()
 		return
 
+	/// Checks if a mind is not considered alive for objectives.
+	/// Being a silicon (cyborg or AI) does not count.
+	proc/is_target_eliminated(datum/mind/M)
+		if (!M?.current)
+			return TRUE
+		if(isdead(M.current))
+			return TRUE
+		if(inafterlife(M.current))
+			return TRUE
+		if(isVRghost(M.current))
+			return TRUE
+		if(isghostcritter(M.current) || isghostdrone(M.current) || issilicon(M.current))
+			return TRUE
+		return FALSE
+
 ///////////////////////////////////////////////////
 // Regular objectives active in current gameplay //
 ///////////////////////////////////////////////////
@@ -72,19 +87,14 @@ ABSTRACT_TYPE(/datum/objective)
 		return target
 
 	check_completion()
-		if(target?.current)
-			if(isdead(target.current) || !iscarbon(target.current) || inafterlife(target.current))
-				return 1
-			else
-				return 0
-		else
-			return 1
+		return src.is_target_eliminated(target)
+
 	proc/create_objective_string(datum/mind/target)
 		if(!(target?.current))
 			explanation_text = "Be dastardly as heck!"
 			return
 		var/objective_text = "Assassinate [target.current.real_name], the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role]"
-		objective_text += " [create_fluff(target)]. It doesn't count if they get revived unless it's as a cyborg/AI."
+		objective_text += " [create_fluff(target)]. It doesn't count if [he_or_she(target.current)] get[blank_or_s(target.current)] revived unless it's as a cyborg/AI."
 
 		explanation_text = objective_text
 		targetname = target.current.real_name
@@ -160,6 +170,8 @@ proc/create_fluff(datum/mind/target)
 			items.Remove("Head of Security\'s beret")
 		if(!countJob("Captain"))
 			items.Remove("authentication disk")
+		if(!countJob("Chief Engineer"))
+			items.Remove("aurora MKII utility belt")
 
 		target_name = pick(items)
 		switch(target_name)
@@ -202,6 +214,8 @@ proc/create_fluff(datum/mind/target)
 			items.Remove("Head of Security\'s beret")
 		if(!countJob("Captain"))
 			items.Remove("authentication disk")
+		if(!countJob("Chief Engineer"))
+			items.Remove("aurora MKII utility belt")
 
 		target_name = pick(items)
 		switch(target_name)
@@ -244,93 +258,100 @@ proc/create_fluff(datum/mind/target)
 /datum/objective/regular/multigrab
 	var/obj/item/multigrab_target
 	var/multigrab_num
-	var/target_name
 
 	set_up()
-		var/list/items = list(
-		"tasers",\
-		"phasers",\
-		"eguns",\
-		"riot shotguns",\
-		"identification cards",\
-		"insulated gloves",\
-		"stun batons",\
-		"pairs of sunglasses",\
-		"security helmets",\
-		"flashes",\
-		"barriers",\
-		"space helmets",\
-		"defibrillators",\
-		"limbs",\
-		"butts",\
-		"hearts")
-
-		target_name = pick(items)
-		switch (target_name)
-			if ("tasers")
-				multigrab_target = /obj/item/gun/energy/taser_gun
-				multigrab_num = rand(2, 5)
-			if ("phasers")
-				multigrab_target = /obj/item/gun/energy/phaser_gun
-				multigrab_num = rand(2, 5)
-			if ("eguns")
-				multigrab_target = /obj/item/gun/energy/egun
-				multigrab_num = rand(2, 5)
-			if ("riot shotguns")
-				multigrab_target = /obj/item/gun/kinetic/riotgun
-				multigrab_num = rand(2, 3)
-			if ("identification cards")
-				multigrab_target = /obj/item/card/id
-				multigrab_num = rand(5, 10)
-			if ("insulated gloves")
-				multigrab_target = /obj/item/clothing/gloves/yellow
-				multigrab_num = rand(3, 8)
-			if ("stun batons")
-				multigrab_target = /obj/item/baton
-				multigrab_num = rand(2, 5)
-			if ("pairs of sunglasses")
-				multigrab_target = /obj/item/clothing/glasses/sunglasses
-				multigrab_num = rand(3, 10)
-			if ("security helmets")
-				multigrab_target = /obj/item/clothing/head/helmet
-				multigrab_num = rand(2, 5)
-			if ("space helmets")
-				multigrab_target = /obj/item/clothing/head/helmet/space
-				multigrab_num = rand(2, 4)
-			if ("flashes")
-				multigrab_target = /obj/item/device/flash
-				multigrab_num = rand(3, 12)
-			if ("barriers")
-				multigrab_target = /obj/item/barrier
-				multigrab_num = rand(3, 5)
-			if ("defibrillators")
-				multigrab_target = /obj/item/robodefibrillator
-				multigrab_num = rand(3, 5)
-			if ("limbs")
-				multigrab_target = /obj/item/parts/human_parts
-				multigrab_num = rand(5, 10)
-			if ("butts")
-				multigrab_target = /obj/item/clothing/head/butt
-				multigrab_num = rand(5, 10)
-			if ("hearts")
-				multigrab_target = /obj/item/organ/heart
-				multigrab_num = rand(2, 5)
-
-		if (target_name == "hearts")
-			explanation_text = "You're a real Romeo! Steal the hearts of [multigrab_num] crewmembers and have them all anywhere on you at the end of the shift."
-		else
-			explanation_text = "Steal [multigrab_num] [target_name] and have them all anywhere on you at the end of the shift."
+		var/datum/multigrab_target/target = pick(concrete_typesof(/datum/multigrab_target))
+		src.multigrab_num = rand(initial(target.amt_low), initial(target.amt_high))
+		src.multigrab_target = initial(target.path)
+		explanation_text = "Steal [multigrab_num] [initial(target.text)] and have them all anywhere on you at the end of the shift."
 
 		return multigrab_target
 
 	check_completion()
 		if (multigrab_target)
-			if (owner.current.check_contents_for_num(multigrab_target, multigrab_num, 1))
+			if (owner.current.check_contents_for_num(multigrab_target, multigrab_num, TRUE))
 				return 1
 			else
 				return 0
 		else
 			return 0
+
+ABSTRACT_TYPE(/datum/multigrab_target)
+/datum/multigrab_target
+	var/path = null
+	var/amt_low = 1
+	var/amt_high = 1
+	var/text = ""
+
+	tasers
+		text = "tasers"
+		path = /obj/item/gun/energy/taser_gun
+		amt_high = 2
+
+	phasers
+		text = "phasers of any size"
+		path = /obj/item/gun/energy/phaser_gun
+		amt_low = 2
+		amt_high = 3
+
+	eguns
+		text = "energy guns"
+		path = /obj/item/gun/energy/egun
+
+	riot_shotguns
+		text = "riot shotguns"
+		path = /obj/item/gun/kinetic/pumpweapon/riotgun
+		amt_high = 3
+	cards
+		text = "ID cards"
+		path = /obj/item/card/id
+		amt_low = 5
+		amt_high = 7
+	insuls
+		text = "pairs of insulated gloves"
+		path = /obj/item/clothing/gloves/yellow
+		amt_low = 2
+		amt_high = 4
+	batons
+		text = "stun batons"
+		path = /obj/item/baton
+		amt_high = 2
+	sec_helmets
+		text = "security helmets"
+		path = /obj/item/clothing/head/helmet
+		amt_low = 2
+		amt_high = 3
+	flashes
+		text = "flashes"
+		path = /obj/item/device/flash
+		amt_low = 3
+		amt_high = 5
+	barriers
+		text = "security barriers"
+		path = /obj/item/barrier
+		amt_low = 2
+		amt_high = 3
+	defibs
+		text = "defibrilators"
+		path = /obj/item/robodefibrillator
+		amt_low = 3
+		amt_high = 4
+	limbs
+		text = "human limbs"
+		path = /obj/item/parts/human_parts
+		amt_low = 4
+		amt_high = 7
+	butts
+		text = "butts"
+		path = /obj/item/clothing/head/butt
+		amt_low = 3
+		amt_high = 5
+	hearts
+		text = "hearts"
+		path = /obj/item/organ/heart
+		amt_low = 2
+		amt_high = 4
+
 
 /datum/objective/regular/gimmick
 	explanation_text = "Be dastardly as heck!"
@@ -385,10 +406,9 @@ proc/create_fluff(datum/mind/target)
 		if(ticker.mode.traitors.len + length(ticker.mode.Agimmicks) <= 1)
 			return 1 // Because apparently you can get this as a solo traitor aaaaaa
 		for (var/datum/mind/M in ticker.mode.traitors + ticker.mode.Agimmicks)
-			if (!M.current)
+			if(M != src.owner && src.is_target_eliminated(M))
 				continue
-			if (!isdead(M.current) && iscarbon(M.current))
-				return 0
+			return 0
 
 		return 1
 
@@ -668,26 +688,6 @@ proc/create_fluff(datum/mind/target)
 				return 1
 		return 0
 
-/datum/objective/specialist/conspiracy
-	explanation_text = "Identify and eliminate any competing syndicate operatives on the station. Be careful not to be too obvious yourself, or they'll come after you!"
-
-	check_completion()
-		if (!owner.current || isdead(owner.current))
-			return 0
-
-		if (!istype(ticker.mode, /datum/game_mode/spy))
-			return 0
-
-		var/datum/game_mode/spy/spymode = ticker.mode
-		for (var/datum/mind/mindCheck in spymode.leaders)
-			if (mindCheck == owner)
-				continue
-
-			if (mindCheck?.current && !isdead(mindCheck.current))
-				return 0
-
-		return 1
-
 /datum/objective/specialist/absorb
 	medal_name = "Many names, many faces"
 	var/absorb_count
@@ -728,10 +728,8 @@ proc/create_fluff(datum/mind/target)
 		explanation_text = "Accumulate at least [bloodcount] units of blood in total."
 
 	check_completion()
-		if (owner.current && owner.current.get_vampire_blood(1) >= bloodcount)
-			return 1
-		else
-			return 0
+		var/datum/antagonist/vampire/antag_datum = owner.get_antagonist(ROLE_VAMPIRE)
+		return (antag_datum?.ability_holder?.get_vampire_blood(TRUE) >= bloodcount)
 
 /datum/objective/specialist/hunter/trophy
 	medal_name = "Dangerous Game"
@@ -756,20 +754,19 @@ proc/create_fluff(datum/mind/target)
 
 
 /datum/objective/specialist/gang
-	explanation_text = "Kill the leaders of every other gang without being killed yourself."
+	explanation_text = "Become the biggest, baddest gang on the station!"
 
 	check_completion()
-		if (!owner.current || isdead(owner.current))
-			return FALSE
-
-		for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists(ROLE_GANG_LEADER))
+		var/our_score = 0
+		var/highest_score = 0
+		for (var/datum/antagonist/gang_leader/antagonist_role as anything in get_all_antagonists(ROLE_GANG_LEADER))
 			if (antagonist_role.owner == owner)
-				continue
+				our_score = antagonist_role.gang.gang_score()
 
-			if (antagonist_role.owner.current && !isdead(antagonist_role.owner.current))
-				return FALSE
+			else if (antagonist_role.gang)
+				highest_score = max(highest_score, antagonist_role.gang.gang_score())
 
-		return TRUE
+		return (our_score >= highest_score)
 
 /datum/objective/specialist/gang/member
 	explanation_text = "Protect your boss, recruit new members, tag up the station, and beware the other gangs!."
@@ -1093,65 +1090,22 @@ proc/create_fluff(datum/mind/target)
 		if(emergency_shuttle.location<SHUTTLE_LOC_RETURNED)
 			return FALSE
 
-		if(!owner.current || isdead(owner.current))
-			return FALSE
-
-		if(isghostcritter(owner.current))
+		if(src.is_target_eliminated(owner))
 			return FALSE
 
 		return in_centcom(src.owner.current)
-
-/datum/objective/escape/hijack
-	explanation_text = "Hijack the emergency shuttle by escaping alone. If someone else does sneak on, make sure they're dead before reaching Centcom."
-#ifdef RP_MODE
-	enabled = FALSE
-#endif
-
-	check_completion()
-		if(emergency_shuttle.location<SHUTTLE_LOC_RETURNED)
-			return FALSE
-
-		if(!owner.current || isdead(owner.current))
-			return FALSE
-
-		if(isghostcritter(owner.current))
-			return FALSE
-
-		var/area/shuttle = locate(map_settings.escape_centcom)
-
-		for(var/mob/living/player in mobs)
-			if (isblob(player))
-				for (var/obj/blob/B in shuttle.contents)
-					return FALSE
-			else if (player.mind && (player.mind != owner))
-				if (!isdead(player) && !isghostcritter(player)) //they're not dead
-					if (in_centcom(player))
-						return FALSE
-
-		return TRUE
 
 /datum/objective/escape/survive
 	explanation_text = "Stay alive until the end of the shift. It doesn't matter whether you're on station or not."
 
 	check_completion()
-		if(!owner.current || isdead(owner.current))
-			return 0
-		if(isghostcritter(owner.current))
-			return 0
-
-		return 1
+		return !src.is_target_eliminated(owner)
 
 /datum/objective/escape/kamikaze
 	explanation_text = "Die a glorious death."
 
 	check_completion()
-		if(isghostdrone(owner.current))
-			return 1
-
-		if(!owner.current || isdead(owner.current) || isVRghost(owner.current) || inafterlifebar(owner.current))
-			return 1
-
-		return 0
+		return src.is_target_eliminated(owner)
 
 /datum/objective/escape/stirstir
 	explanation_text = "Rescue Monsieur Stirstir from the brig and ensure his safety all the way to Centcom."
@@ -1191,9 +1145,9 @@ proc/create_fluff(datum/mind/target)
 		targetname = target.current.real_name
 
 	check_completion()
-		if(target?.current && !isdead(target.current) && ishuman(target.current) && in_centcom(target.current))
-			return 1
-		return 0
+		if(src.is_target_eliminated(target))
+			return FALSE
+		return in_centcom(target.current)
 
 /datum/objective/escape/hijack_group
 	explanation_text = "Hijack the emergency shuttle by escaping alone or with your accomplices. Anyone else who snuck on needs to die before you reach Centcom."
@@ -1206,16 +1160,32 @@ proc/create_fluff(datum/mind/target)
 		if(!owner.current || isdead(owner.current))
 			return FALSE
 
-		if(isghostcritter(owner.current))
+		if(isghostcritter(owner.current) || isghostdrone(owner.current))
 			return FALSE
 
 		for(var/mob/living/player in mobs)
 			if (player.mind && (player.mind != owner) && !(player.mind in accomplices))
-				if (!isdead(player)) //they're not dead
-					if (in_centcom(player))
-						return FALSE
+				if (!src.is_target_eliminated(player.mind) && in_centcom(player))
+					return FALSE
 
 		return TRUE
+
+/datum/objective/escape/hijack_group/vampire
+	explanation_text = "Hijack the emergency shuttle by ensuring all other living creatures on board are your thralls by the time it reaches Centcom."
+
+	check_completion()
+		var/datum/abilityHolder/vampire/vampholder = owner.current?.get_ability_holder(/datum/abilityHolder/vampire)
+		for (var/mob/M in vampholder?.thralls)
+			src.accomplices |= M.mind
+		. = ..()
+
+/datum/objective/escape/hijack_group/changeling
+	explanation_text = "Hijack the emergency shuttle by ensuring only you and your... body parts remain alive by the time it reaches Centcom."
+	check_completion()
+		var/datum/abilityHolder/changeling/lingholder = owner.current?.get_ability_holder(/datum/abilityHolder/changeling)
+		for (var/mob/M in lingholder?.hivemind)
+			src.accomplices |= M.mind
+		. = ..()
 
 /////////////////////////////////////////////////////////
 // Conspirator objectives                              //
@@ -1452,17 +1422,9 @@ proc/create_fluff(datum/mind/target)
 		for (var/datum/mind/M in ticker.mode.traitors)
 			if (owner == M)
 				continue
-			if (!M.current)
-				continue
-			if(isghostcritter(M.current))
-				continue
-			if (isrobot(M.current))
-				continue
-			if (!isdead(M.current))
-				return 0
-
-
-		return 1
+			if (!src.is_target_eliminated(M))
+				return FALSE
+		return TRUE
 
 /////////////////////////////////////////////////////////
 // Battle Royale objective                             //
@@ -1475,17 +1437,9 @@ proc/create_fluff(datum/mind/target)
 		for (var/datum/mind/M in ticker.mode.traitors)
 			if (owner == M)
 				continue
-			if (!M.current)
-				continue
-			if(isghostcritter(M.current))
-				continue
-			if (isrobot(M.current))
-				continue
-			if (!isdead(M.current))
-				return 0
-
-
-		return 1
+			if(!src.is_target_eliminated(M))
+				return FALSE
+		return TRUE
 
 /////////////////////////////////////////////////////////
 // Arcfiend Objectives                                 //
@@ -1503,8 +1457,8 @@ proc/create_fluff(datum/mind/target)
 		explanation_text = "Accumulate at least [powergoal] units of charge in total."
 
 	check_completion()
-		var/datum/abilityHolder/arcfiend/AH = owner.current?.get_ability_holder(/datum/abilityHolder/arcfiend)
-		return (AH?.lifetime_energy >= powergoal)
+		var/datum/antagonist/arcfiend/antag_datum = owner.get_antagonist(ROLE_ARCFIEND)
+		return (antag_datum?.ability_holder?.lifetime_energy >= powergoal)
 
 /////////////////////////////////////////////////////////
 // Neatly packaged objective sets for your convenience //
@@ -1514,7 +1468,6 @@ proc/create_fluff(datum/mind/target)
 	var/list/objective_list = list(/datum/objective/regular/gimmick)
 	var/list/escape_choices = list(/datum/objective/escape,
 	/datum/objective/escape/survive,
-	/datum/objective/escape/hijack,
 	/datum/objective/escape/kamikaze)
 
 	New(datum/mind/enemy, datum/antagonist/antag_role)
@@ -1553,19 +1506,26 @@ proc/create_fluff(datum/mind/target)
 
 /datum/objective_set/changeling
 	objective_list = list(/datum/objective/specialist/absorb)
-	escape_choices = list(/datum/objective/escape,
-	/datum/objective/escape/hijack)
+	escape_choices = list(
+		/datum/objective/escape,
+#ifndef RP_MODE
+		/datum/objective/escape/hijack_group/changeling
+#endif
+	)
 
 /datum/objective_set/vampire
 	objective_list = list(/datum/objective/specialist/drinkblood)
-	escape_choices = list(/datum/objective/escape,
-	/datum/objective/escape/hijack)
+	escape_choices = list(
+		/datum/objective/escape,
+#ifndef RP_MODE
+		/datum/objective/escape/hijack_group/vampire
+#endif
+	)
 
 /datum/objective_set/grinch
 	objective_list = list(/datum/objective/specialist/ruin_xmas)
 	escape_choices = list(/datum/objective/escape,
 	/datum/objective/escape/survive,
-	/datum/objective/escape/hijack,
 	/datum/objective/escape/kamikaze)
 
 /datum/objective_set/hunter
@@ -1582,8 +1542,7 @@ proc/create_fluff(datum/mind/target)
 
 /datum/objective_set/arcfiend
 	objective_list = list(/datum/objective/specialist/powerdrain)
-	escape_choices = list(/datum/objective/escape,
-	/datum/objective/escape/hijack)
+	escape_choices = list(/datum/objective/escape)
 
 /datum/objective_set/salvager
 	objective_list = list(/datum/objective/specialist/salvager/machinery, /datum/objective/specialist/salvager/steal)
@@ -1600,29 +1559,15 @@ proc/create_fluff(datum/mind/target)
 	escape_choices = list(/datum/objective/escape,
 	/datum/objective/escape/survive)
 
-/datum/objective_set/traitor/massacre
-	objective_list = list(/datum/objective/regular/assassinate,
-	/datum/objective/regular/assassinate,
-	/datum/objective/regular/assassinate,
-	/datum/objective/regular/assassinate,
-	/datum/objective/regular/assassinate,
-	/datum/objective/regular/assassinate)
-	escape_choices = list(/datum/objective/escape/kamikaze)
-
 /datum/objective_set/traitor/assassinate_even_stirstir
 	objective_list = list(/datum/objective/regular/killstirstir,
-	/datum/objective/regular/assassinate,
 	/datum/objective/regular/assassinate)
 	escape_choices = list(/datum/objective/escape,
 	/datum/objective/escape/survive)
 
-/datum/objective_set/traitor/supremacy_and_hijack
+/datum/objective_set/traitor/supremacy
 	objective_list = list(/datum/objective/regular/traitor_supremacy)
-	escape_choices = list(/datum/objective/escape/hijack)
-
-/datum/objective_set/traitor/steal_and_hijack
-	objective_list = list(/datum/objective/regular/steal)
-	escape_choices = list(/datum/objective/escape/hijack)
+	escape_choices = list(/datum/objective/escape, /datum/objective/escape/kamikaze)
 
 /datum/objective_set/traitor/rp_friendly/steal_a_bunch
 	objective_list = list(/datum/objective/regular/steal,
@@ -1634,10 +1579,6 @@ proc/create_fluff(datum/mind/target)
 	objective_list = list(/datum/objective/regular/gimmick)
 	escape_choices = list(/datum/objective/escape,
 	/datum/objective/escape/survive)
-
-/datum/objective_set/traitor/rp_friendly/gimmick_and_death
-	objective_list = list(/datum/objective/regular/gimmick)
-	escape_choices = list(/datum/objective/escape/kamikaze)
 
 /datum/objective_set/traitor/rp_friendly/gimmick_and_steal
 	objective_list = list(/datum/objective/regular/gimmick,
@@ -1671,163 +1612,20 @@ proc/create_fluff(datum/mind/target)
 	escape_choices = list(/datum/objective/escape,
 	/datum/objective/escape/survive)
 
-/*/datum/objective_set/traitor/easy/triple_assassinate
-	objective_list = list(/datum/objective/regular/assassinate,
-	/datum/objective/regular/assassinate,
-	/datum/objective/regular/assassinate)
-	escape_choices = list(/datum/objective/escape,
-	/datum/objective/escape/survive)
-
-/datum/objective_set/traitor/easy/genocide
-	objective_list = list(/datum/objective/regular/job_genocide)
-	escape_choices = list(/datum/objective/escape,
-	/datum/objective/escape/survive)
-
-/datum/objective_set/traitor/easy/massacre
-	objective_list = list(/datum/objective/regular/assassinate,
-	/datum/objective/regular/assassinate,
-	/datum/objective/regular/assassinate,
-	/datum/objective/regular/assassinate,
-	/datum/objective/regular/assassinate,
-	/datum/objective/regular/assassinate)
-	escape_choices = list(/datum/objective/escape/kamikaze)
-
-/datum/objective_set/traitor/easy/kill_heads
-	objective_list = list(/datum/objective/regular/kill_heads)
-	escape_choices = list(/datum/objective/escape/kamikaze,
-	/datum/objective/escape/survive)
-
-/datum/objective_set/traitor/easy/sabotage
-	objective_list = list(/datum/objective/regular/damage_area,
-	/datum/objective/regular/destroy_equipment)
-	escape_choices = list(/datum/objective/escape)
-
-/datum/objective_set/traitor/easy/havoc
-	objective_list = list(/datum/objective/regular/damage_area,
-	/datum/objective/regular/destroy_equipment,
-	/datum/objective/regular/job_genocide)
-	escape_choices = list(/datum/objective/escape/survive,
-	/datum/objective/escape/kamikaze)
-
-/datum/objective_set/traitor/easy/supremacy_and_hijack
-	objective_list = list(/datum/objective/regular/traitor_supremacy)
-	escape_choices = list(/datum/objective/escape/hijack)
-
-/datum/objective_set/traitor/easy/damage_and_hijack
-	objective_list = list(/datum/objective/regular/damage_area)
-	escape_choices = list(/datum/objective/escape/hijack)
-
-/datum/objective_set/traitor/easy/steal_and_hijack
-	objective_list = list(/datum/objective/regular/steal)
-	escape_choices = list(/datum/objective/escape/hijack)
-
-/datum/objective_set/traitor/easy/noclones_and_hijack
-	objective_list = list(/datum/objective/regular/no_clones)
-	escape_choices = list(/datum/objective/escape/hijack)
-
-
-/datum/objective_set/traitor/easy/steal_ai_brain
-	objective_list = list(/datum/objective/regular/aikill)
-	escape_choices = list(/datum/objective/escape)
-
-/datum/objective_set/traitor/easy/borg_death
-	objective_list = list(/datum/objective/regular/borgdeath)
-	escape_choices = list(/datum/objective/escape)
-
-
-/datum/objective_set/traitor/easy/dead_means_dead
-	objective_list = list(/datum/objective/regular/borgdeath,
-	/datum/objective/regular/no_clones)
-	escape_choices = list(/datum/objective/escape/survive,
-	/datum/objective/escape)
-
-/datum/objective_set/traitor/easy/kill_all_silicons
-	objective_list = list(/datum/objective/regular/aikill,
-	/datum/objective/regular/borgdeath)
-	escape_choices = list(/datum/objective/escape/survive)
-
-/datum/objective_set/traitor/easy/bonsai_tree
-	objective_list = list(/datum/objective/regular/bonsaitree,
-	/datum/objective/regular/gimmick)
-	escape_choices = list(/datum/objective/escape,
-	/datum/objective/escape/survive)
-
-/datum/objective_set/traitor/easy/kill_even_monkeys
-	objective_list = list(/datum/objective/regular/killstirstir,
-	/datum/objective/regular/assassinate,
-	/datum/objective/regular/assassinate)
-	escape_choices = list(/datum/objective/escape/survive)
-
-/*
-/datum/objective_set/traitor/easy/kill_borgs_and_monkeys
-	objective_list = list(/datum/objective/regular/borgdeath,
-	/datum/objective/regular/killstirstir)
-	escape_choices = list(/datum/objective/escape)
-	*/
-
-// More difficult traitor objectives
-
-/datum/objective_set/traitor/hard
-	objective_list = list(/datum/objective/regular/assassinate,
-	/datum/objective/regular/gimmick)
-	escape_choices = list(/datum/objective/escape)
-
-/datum/objective_set/traitor/hard/triple_assassinate_and_hijack
-	objective_list = list(/datum/objective/regular/assassinate,
-	/datum/objective/regular/assassinate,
-	/datum/objective/regular/assassinate,
-	/datum/objective/regular/no_clones)
-	escape_choices = list(/datum/objective/escape/hijack)
-
-/datum/objective_set/traitor/hard/double_genocide
-	objective_list = list(/datum/objective/regular/job_genocide,
-	/datum/objective/regular/job_genocide)
-	escape_choices = list(/datum/objective/escape)
-
-/*
-/datum/objective_set/traitor/hard/kill_all_silicons
-	objective_list = list(/datum/objective/regular/aikill,
-	/datum/objective/regular/borgdeath)
-	escape_choices = list(/datum/objective/escape)
-*/
-
-/datum/objective_set/traitor/hard/rampage
-	objective_list = list(/datum/objective/regular/assassinate,
-	/datum/objective/regular/damage_area,
-	/datum/objective/regular/damage_area,
-	/datum/objective/regular/destroy_equipment,
-	/datum/objective/regular/destroy_equipment)
-	escape_choices = list(/datum/objective/escape)
-
-/datum/objective_set/traitor/hard/escape_ape
-	objective_list = list(/datum/objective/regular/rescuestirstir,
-	/datum/objective/regular/assassinate,
-	/datum/objective/regular/assassinate)
-	escape_choices = list(/datum/objective/escape)
-*/
-
-///datum/objective_set/spy_theft
-//	objective_list = list(/datum/objective/regular/gimmick)
-//	escape_choices = list(/datum/objective/escape)
-
-///datum/objective_set/spy_theft/vigilante
-//	objective_list = list(/datum/objective/spy_theft/assasinate)
-//	escape_choices = list(/datum/objective/escape/survive)
-
 /datum/objective_set/spy_theft/bodyguard_gimmick
 	objective_list = list(/datum/objective/regular/assassinate/bodyguard,/datum/objective/regular/assassinate/bodyguard,/datum/objective/regular/gimmick)
 	escape_choices = list(/datum/objective/escape/survive)
 
 /datum/objective_set/spy_theft/bodyguard_steal
-	objective_list = list(/datum/objective/regular/assassinate/bodyguard,/datum/objective/regular/assassinate/bodyguard,/datum/objective/regular/steal)
+	objective_list = list(/datum/objective/regular/assassinate/bodyguard,/datum/objective/regular/steal)
 	escape_choices = list(/datum/objective/escape)
 
 /datum/objective_set/spy_theft/bodyguard_and_kill
-	objective_list = list(/datum/objective/regular/assassinate/bodyguard,/datum/objective/regular/assassinate,/datum/objective/regular/assassinate)
+	objective_list = list(/datum/objective/regular/assassinate/bodyguard,/datum/objective/regular/assassinate)
 	escape_choices = list(/datum/objective/escape)
 
 /datum/objective_set/spy_theft/assassin
-	objective_list = list(/datum/objective/regular/assassinate,/datum/objective/regular/assassinate,/datum/objective/regular/assassinate,/datum/objective/regular/assassinate)
+	objective_list = list(/datum/objective/regular/assassinate,/datum/objective/regular/assassinate,/datum/objective/regular/assassinate)
 	escape_choices = list(/datum/objective/escape)
 
 /datum/objective_set/spy_theft/stealy

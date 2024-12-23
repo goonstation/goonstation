@@ -24,8 +24,11 @@
 		curse_icon.pixel_y = 28
 		curse_icon.alpha = 170
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(curse_icon)
+		. = ..()
 
 	OnLife(mult)
+		if (..())
+			return
 		if (probmult(5))
 			owner.emote("cough")
 			var/turf/T = get_turf(owner)
@@ -66,6 +69,8 @@
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(curse_icon)
 
 	OnLife(mult)
+		if (..())
+			return
 		if (probmult(8) && ishuman(owner))
 			owner.eye_damage += 10
 			if (owner.eye_damage > 90)
@@ -105,8 +110,11 @@
 		curse_icon.pixel_y = 28
 		curse_icon.alpha = 170
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(curse_icon)
+		. = ..()
 
 	OnLife(mult)
+		if (..())
+			return
 		if (probmult(5))
 			boutput(owner, SPAN_NOTICE("You suddenly feel very [pick("winded", "tired")]."))
 			owner.changeStatus("slowed", 10 SECONDS)
@@ -146,8 +154,11 @@
 			curse_icon.pixel_y = 26
 			curse_icon.alpha = 170
 			get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(curse_icon)
+		. = ..()
 
 	OnLife(mult)
+		if (..())
+			return
 		if (probmult(5))
 			var/vomit_message = SPAN_ALERT("[owner] suddenly vomits on the floor!")
 			owner.vomit(rand(3,5), null, vomit_message)

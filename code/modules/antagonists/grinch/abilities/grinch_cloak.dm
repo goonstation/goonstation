@@ -21,7 +21,7 @@
 
 		if (!M)
 			return 1
-
+		. = ..()
 		if (ismobcritter(M)) // Placeholder because only humans use bioeffects at the moment.
 			if (M.invisibility != INVIS_NONE)
 				boutput(M, SPAN_ALERT("You are already invisible."))

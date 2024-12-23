@@ -2,9 +2,16 @@
 // can have multiple per area
 // can also operate on non-loc area through "otherarea" var
 
-TYPEINFO(/obj/machinery/light_switch)
-	mats = list("MET-1"=10,"CON-1"=15)
+/// Amount of time before a light switch resets its spam cooldown counter
+#define SWITCH_SPAM_TIMEOUT 15 SECONDS
+/// Number of manual toggles before the light switch begins shocking people
+#define SWITCH_SPAM_START_THRESHOLD 10
+/// Number of manual toggles before light switches start really hurting people
+#define SWITCH_SPAM_MAJOR_THRESHOLD 50
 
+TYPEINFO(/obj/machinery/light_switch)
+	mats = list("metal" = 10,
+				"conductive" = 15)
 ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 /obj/machinery/light_switch
 	desc = "A light switch"
@@ -12,6 +19,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
 	anchored = ANCHORED
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_MULTITOOL | DECON_WIRECUTTERS
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
 	var/on = 1
@@ -20,7 +28,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 	var/id = null
 	//	luminosity = 1
 	var/datum/light/light
-
+	var/toggled_count = 0 //! How many times has this been toggled
+	HELP_MESSAGE_OVERRIDE("You can use a <b>screwing tool</b> to tighten the wiring contacts.")
 
 /obj/machinery/light_switch/New()
 	..()
@@ -89,7 +98,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 
 /obj/machinery/light_switch/was_deconstructed_to_frame(mob/user)
 	. = ..()
-	area.machines -= src
+	// Might be the last light switch in the area, ensure lights stay on
+	if (!src.on)
+		src.on = TRUE
+		src.area.lightswitch = TRUE
+		src.area.power_change()
+	src.area.machines -= src
 	REMOVE_SWITCHED_OBJ(SWOB_LIGHTS)
 
 /obj/machinery/light_switch/update_icon()
@@ -113,12 +127,24 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 
 /obj/machinery/light_switch/get_desc(dist, mob/user)
 	. = ..()
-	. += "A light switch. It is [on? "on" : "off"]."
+	. += " It is [on? "on" : "off"]."
+	switch(toggled_count)
+		if(SWITCH_SPAM_START_THRESHOLD to SWITCH_SPAM_MAJOR_THRESHOLD)
+			. += " It looks a bit loose."
+		if(SWITCH_SPAM_MAJOR_THRESHOLD to INFINITY)
+			. += " It's practically falling out of the wall."
 
 /obj/machinery/light_switch/attack_hand(mob/user)
 	. = ..()
 	if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
 		toggle_group(user)
+		toggled_count += 1
+		if (toggled_count < SWITCH_SPAM_START_THRESHOLD)
+			return
+		if(ON_COOLDOWN(src, "spam", SWITCH_SPAM_TIMEOUT))
+			user.shock(src, toggled_count)
+			if (toggled_count >= SWITCH_SPAM_MAJOR_THRESHOLD)
+				elecflash(user.loc)
 
 /obj/machinery/light_switch/proc/toggle_group(mob/user=null) //flip *this* switch, update target area, then prompt the group to refresh accordingly
 	on = !on
@@ -139,13 +165,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 	switched_obj_toggle(SWOB_LIGHTS,src.id,src.on) //the bit that handles visual and switch state updates for the group, via the toggle proc below
 
 	if(on && !ON_COOLDOWN(src, "turtlesplode", 10 SECONDS))
-		for_by_tcl(S, /obj/critter/turtle)
+		for_by_tcl(S, /mob/living/critter/small_animal/turtle)
 			if(get_area(S) == src.area && S.rigged)
 				S.explode()
 
 /obj/machinery/light_switch/proc/toggle(var/on_signal)
 	src.on = on_signal
 	src.UpdateIcon()
+
+/obj/machinery/light_switch/attackby(obj/item/I, mob/user)
+	if (isscrewingtool(I))
+		if (!(status & NOPOWER) && src.on)
+			user.shock(src, 100)
+		src.toggled_count = 0
+		src.visible_message(SPAN_NOTICE("[user] tightens the contacts on [src]."))
+		return
+	. = ..()
 
 /obj/machinery/light_switch/power_change()
 
@@ -159,18 +194,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 
 /obj/machinery/light_switch/north
 	name = "N light switch"
+	dir = NORTH
 	pixel_y = 24
 
 /obj/machinery/light_switch/east
 	name = "E light switch"
+	dir = EAST
 	pixel_x = 24
 
 /obj/machinery/light_switch/south
 	name = "S light switch"
+	dir = SOUTH
 	pixel_y = -24
 
 /obj/machinery/light_switch/west
 	name = "W light switch"
+	dir = WEST
 	pixel_x = -24
 
 /obj/machinery/light_switch/auto
@@ -180,3 +219,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 		SPAWN(1 DECI SECOND)
 			src.autoposition()
 		..()
+
+#undef SWITCH_SPAM_TIMEOUT
+#undef SWITCH_SPAM_START_THRESHOLD
+#undef SWITCH_SPAM_MAJOR_THRESHOLD

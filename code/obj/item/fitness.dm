@@ -51,6 +51,12 @@
 	deconstruct_flags = DECON_WRENCH
 	var/in_use = 0
 
+	MouseDrop_T(mob/M, mob/user)
+		// Do not attempt to distantly pump iron.
+		if (M != user || !can_reach(user, src) || !can_reach(user, M))
+			return
+		src.attack_hand(M)
+
 	attack_hand(mob/user)
 		if(in_use)
 			boutput(user, SPAN_ALERT("Its already in use - wait a bit."))
@@ -99,6 +105,12 @@
 	deconstruct_flags = DECON_WRENCH
 	var/in_use = 0
 
+	MouseDrop_T(mob/M, mob/user)
+		// Do not attempt to distantly pump iron.
+		if (M != user || !can_reach(user, src) || !can_reach(user, M))
+			return
+		src.attack_hand(M)
+
 	attack_hand(mob/user)
 		if(in_use)
 			boutput(user, SPAN_ALERT("Its already in use - wait a bit."))
@@ -112,12 +124,8 @@
 			APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "fitness_machine")
 			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
-			var/obj/decal/W = new /obj/decal
-			W.icon = 'icons/obj/stationobjs.dmi'
-			W.icon_state = "fitnessweight-w"
-			W.set_loc(loc)
-			W.anchored = ANCHORED
-			W.layer = MOB_LAYER_BASE+1
+			var/image/new_overlay = src.SafeGetOverlayImage("barbell", 'icons/obj/stationobjs.dmi', "fitnessweight-w", MOB_LAYER + 1)
+			src.UpdateOverlays(new_overlay, "barbell")
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 			user.visible_message(SPAN_ALERT("<B>[user] is [bragmessage]!</B>"))
 			var/reps = 0
@@ -146,6 +154,6 @@
 					H.sims.affectMotive("fun", 4)
 			var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 			icon_state = "fitnessweight"
-			qdel(W)
+			src.UpdateOverlays(null, "barbell")
 			boutput(user, SPAN_NOTICE("[finishmessage]"))
 			user.changeStatus("fitness_stam_max", 100 SECONDS)

@@ -8,7 +8,7 @@
  */
 #define ENGIVAC_MISC_ITEM_LIMIT 2 //How much non-listed crap a toolbox can have before the engivac rejects it.
 
-obj/item/engivac
+/obj/item/engivac
 	name = "engineering material vacuum"
 	desc = "A tool that sucks up debris and building materials into an inserted toolbox. It is also capable of automatically laying floor tiles on plating."
 	icon = 'icons/obj/items/device.dmi'
@@ -41,7 +41,7 @@ obj/item/engivac
 ///				SPRITE-ALTERING PROCS
 ///
 
-obj/item/engivac/update_icon(mob/M = null)
+/obj/item/engivac/update_icon(mob/M = null)
 	item_state = "engivac_" + (held_toolbox ? held_toolbox.icon_state : "")
 	wear_state = item_state
 	underlays = null
@@ -53,8 +53,9 @@ obj/item/engivac/update_icon(mob/M = null)
 
 
 ///Change worn sprite depending on slot
-obj/item/engivac/equipped(var/mob/user, var/slot)
+/obj/item/engivac/equipped(var/mob/user, var/slot)
 	..()
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	if (slot == SLOT_BACK)
 		wear_image = image('icons/mob/clothing/back.dmi')
@@ -67,7 +68,7 @@ obj/item/engivac/equipped(var/mob/user, var/slot)
 ///				OVERRIDES FOR COMMON PROCS
 ///
 
-obj/item/engivac/New(var/spawnbox = null)
+/obj/item/engivac/New(loc, var/spawnbox = null)
 	..()
 	toolbox_img = image('icons/obj/items/storage.dmi', "") //where the toolbox sprites are
 	if (ispath(spawnbox, /obj/item/storage/toolbox))
@@ -75,8 +76,10 @@ obj/item/engivac/New(var/spawnbox = null)
 		UpdateIcon()
 	rebuild_collection_list()
 
+/obj/item/engivac/complete/New(loc, spawnbox)
+	..(loc, spawnbox || /obj/item/storage/toolbox/mechanical/empty)
 
-obj/item/engivac/disposing()
+/obj/item/engivac/disposing()
 	if (held_toolbox)
 		held_toolbox.set_loc(get_turf(src))
 		held_toolbox = null
@@ -85,20 +88,20 @@ obj/item/engivac/disposing()
 	underlays = null
 	..()
 
-obj/item/engivac/dropped(var/mob/user)
+/obj/item/engivac/dropped(var/mob/user)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	..()
 
 
 
 //Manually cleaning up turfs (for corners you can't walk into)
-obj/item/engivac/afterattack(atom/target)
+/obj/item/engivac/afterattack(atom/target)
 	if (!target)
 		return
 	find_crud_on_turf(isturf(target) ? target : get_turf(target))
 
 
-obj/item/engivac/attackby(obj/item/I, mob/user)
+/obj/item/engivac/attackby(obj/item/I, mob/user)
 	if (istype(I, /obj/item/storage/toolbox) && !held_toolbox)
 		if (!toolbox_contents_check(I))
 			if(!ON_COOLDOWN(src, "rejectsound", 2 SECONDS))
@@ -110,10 +113,18 @@ obj/item/engivac/attackby(obj/item/I, mob/user)
 		I.set_loc(src)
 		UpdateIcon(user)
 		return
+	if (istype(I, /obj/item/toolbox_tiles) && !held_toolbox)
+		for(var/obj/item/storage/toolbox/T in I.contents)
+			user.u_equip(I)
+			src.held_toolbox = T
+			T.set_loc(src)
+			UpdateIcon(user)
+			qdel(I)
+		return
 	..()
 
 
-obj/item/engivac/attack_hand(mob/living/user)
+/obj/item/engivac/attack_hand(mob/living/user)
 	if (user.find_in_hand(src) && held_toolbox)
 		if (user.put_in_hand(held_toolbox))
 			held_toolbox = null
@@ -133,7 +144,7 @@ obj/item/engivac/attack_hand(mob/living/user)
 			user.move_laying = list(src)
 
 
-obj/item/engivac/attack_self(mob/user)
+/obj/item/engivac/attack_self(mob/user)
 	..()
 	var/list/options = list("Toggle collecting building materials", "Toggle collecting debris",held_toolbox ? "Toggle floor tile auto-placement" : null, held_toolbox ? "Remove Toolbox" : null)
 	var/input = input(user,"Select option:","Option") in options
@@ -164,7 +175,7 @@ obj/item/engivac/attack_self(mob/user)
 			UpdateIcon(user)
 
 
-obj/item/engivac/proc/on_move(mob/M, turf/source, dir)
+/obj/item/engivac/proc/on_move(mob/M, turf/source, dir)
 	var/turf/target = (get_step(source,dir))
 	//I'm here to collect stuff
 	find_crud_on_turf(target)
@@ -191,7 +202,7 @@ obj/item/engivac/proc/on_move(mob/M, turf/source, dir)
 			current_stack = null
 
 
-obj/item/engivac/get_desc(dist)
+/obj/item/engivac/get_desc(dist)
 	if(held_toolbox)
 		. += "<br>There's \a [held_toolbox] loaded in it."
 	else
@@ -206,7 +217,7 @@ obj/item/engivac/get_desc(dist)
 ///
 
 ///Find stuff on a turf and try to grab it. Returns TRUE if it manages to find and collect at least 1 thing
-obj/item/engivac/proc/find_crud_on_turf(turf/target_turf)
+/obj/item/engivac/proc/find_crud_on_turf(turf/target_turf)
 	if (!islist(currently_collecting)) //both categories toggled off
 		return FALSE
 	if (!held_toolbox) //lol
@@ -223,7 +234,7 @@ obj/item/engivac/proc/find_crud_on_turf(turf/target_turf)
 
 
 ///Returns TRUE if we fit the target thing (or some of the thing if it's a stack of stuff) into the toolbox.
-obj/item/engivac/proc/attempt_fill(obj/item/target)
+/obj/item/engivac/proc/attempt_fill(obj/item/target)
 	if (!target)
 		return FALSE
 	if (BOUNDS_DIST(target, src) > 0) //I'm sure smartasses will find a way
@@ -247,7 +258,7 @@ obj/item/engivac/proc/attempt_fill(obj/item/target)
 
 
 ///Sets current_stack to the first stack of floortiles we find in the toolbox, or null otherwise. Returns TRUE or FALSE respectively.
-obj/item/engivac/proc/scan_for_floortiles()
+/obj/item/engivac/proc/scan_for_floortiles()
 	if (!held_toolbox) //lol
 		return FALSE
 	var/list/toolbox_contents = held_toolbox.storage.get_contents()
@@ -261,7 +272,7 @@ obj/item/engivac/proc/scan_for_floortiles()
 	return FALSE
 
 
-obj/item/engivac/proc/rebuild_collection_list()
+/obj/item/engivac/proc/rebuild_collection_list()
 	currently_collecting = null
 	if (collect_buildmats)
 		currently_collecting += buildmats_2_collect
@@ -269,7 +280,7 @@ obj/item/engivac/proc/rebuild_collection_list()
 		currently_collecting += debris_2_collect
 
 ///Returns TRUE if the toolbox should be accepted and FALSE if it should not
-obj/item/engivac/proc/toolbox_contents_check(obj/item/storage/toolbox/tocheck)
+/obj/item/engivac/proc/toolbox_contents_check(obj/item/storage/toolbox/tocheck)
 	if (!istype(tocheck))
 		return FALSE
 	var/list/toolbox_contents = tocheck.storage.get_contents()

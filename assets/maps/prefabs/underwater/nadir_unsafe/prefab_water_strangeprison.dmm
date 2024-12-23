@@ -264,7 +264,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/sea_prison)
 "aW" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/implantcase/robust,
 /turf/simulated/floor,
 /area/prefab/sea_prison)

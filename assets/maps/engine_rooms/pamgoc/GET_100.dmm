@@ -6,8 +6,6 @@
 /area/station/engine/core)
 "ab" = (
 /obj/cable/orange{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light{
@@ -19,8 +17,6 @@
 /area/station/engine/core)
 "ac" = (
 /obj/cable/orange{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -28,8 +24,6 @@
 /area/station/engine/core)
 "ad" = (
 /obj/cable/orange{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/storage/crate/furnacefuel,
@@ -37,54 +31,38 @@
 /area/station/engine/core)
 "ae" = (
 /obj/cable/orange{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "af" = (
 /obj/cable{
-	d1 = 0;
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d1 = 0;
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	d1 = 0;
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/core)
 "ag" = (
 /obj/cable{
-	d1 = 0;
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d1 = 0;
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	d1 = 0;
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/core)
 "ah" = (
 /obj/cable{
-	d1 = 0;
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -92,23 +70,17 @@
 /area/station/engine/core)
 "ai" = (
 /obj/cable{
-	d1 = 0;
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	d1 = 0;
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/core)
 "aj" = (
 /obj/cable{
-	d1 = 0;
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -116,23 +88,17 @@
 /area/station/engine/core)
 "ak" = (
 /obj/cable{
-	d1 = 0;
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	d1 = 0;
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/core)
 "al" = (
 /obj/cable{
-	d1 = 0;
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -140,8 +106,6 @@
 /area/station/engine/core)
 "am" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small/floor/warm,
@@ -149,47 +113,33 @@
 /area/station/engine/core)
 "an" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "ao" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "ap" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aq" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/engine,
@@ -200,8 +150,6 @@
 	dir = 1
 	},
 /obj/cable/orange{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/landmark/start{
@@ -223,8 +171,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/engine,
@@ -234,8 +180,6 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/decal/stripe_delivery,
 /obj/cable/orange{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/engine,
@@ -322,8 +266,6 @@
 	name = "outlet purge valve"
 	},
 /obj/cable/orange{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grey,
@@ -340,8 +282,6 @@
 	level = 2
 	},
 /obj/cable/orange{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -355,8 +295,6 @@
 	pixel_y = 1
 	},
 /obj/cable/orange{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -398,8 +336,6 @@
 	tag = "Hot Loop Outlet Meter"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
@@ -421,13 +357,9 @@
 	tag = "Cold Loop Outlet Meter"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable/orange{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -454,8 +386,6 @@
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable/orange{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/decal/stripe_delivery,
@@ -466,8 +396,6 @@
 	dir = 8
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -483,13 +411,9 @@
 	dir = 9
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
@@ -512,13 +436,9 @@
 	dir = 5
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/engine,
@@ -552,8 +472,6 @@
 	dir = 8
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -569,8 +487,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
@@ -587,8 +503,6 @@
 	},
 /obj/machinery/power/furnace/thermo,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
@@ -608,8 +522,6 @@
 	dir = 1
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/engine,
@@ -626,8 +538,6 @@
 	dir = 6
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
@@ -663,8 +573,6 @@
 	name = "cold loop inlet valve"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/engine,
@@ -672,8 +580,6 @@
 "bk" = (
 /obj/machinery/light,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -706,8 +612,6 @@
 	pixel_y = 21
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grey,
@@ -732,8 +636,6 @@
 	dir = 10
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
@@ -756,13 +658,9 @@
 	name = "hot loop inlet valve"
 	},
 /obj/cable{
-	d1 = 0;
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d1 = 0;
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/engine,
@@ -772,8 +670,6 @@
 /obj/item/paper/engine,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/cable/orange{
-	d1 = 0;
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/cable/orange,
@@ -786,8 +682,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
 /obj/cable{
-	d1 = 0;
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
@@ -796,8 +690,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
 /obj/cable{
-	d1 = 0;
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
@@ -805,8 +697,6 @@
 "bw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	d1 = 0;
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/cable,
@@ -815,8 +705,6 @@
 "bx" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	d1 = 0;
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
@@ -824,8 +712,6 @@
 "by" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	d1 = 0;
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable,

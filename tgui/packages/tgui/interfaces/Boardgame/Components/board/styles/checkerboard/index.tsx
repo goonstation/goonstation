@@ -1,4 +1,5 @@
-import { createRef } from 'inferno';
+import { useRef } from 'react';
+
 import { useBackend } from '../../../../../../backend';
 import { useActions, useStates } from '../../../../utils';
 import { BoardgameData } from '../../../../utils';
@@ -6,21 +7,21 @@ import GridGuideRenderer from '../../common/GridGuideRenderer';
 import GridPieceRenderer from '../../common/GridPieceRenderer';
 import CheckerBoardPattern from './CheckerBoardPattern';
 
-export const CheckerBoard = (props, context) => {
-  const { act, data } = useBackend<BoardgameData>(context);
+export const CheckerBoard = () => {
+  const { act, data } = useBackend<BoardgameData>();
   const { pieces, currentUser } = data;
   const { tileColor2 } = data.styling;
-  const { tileSize, isFlipped, mouseCoords } = useStates(context);
+  const { tileSize, isFlipped, mouseCoords } = useStates();
   const { width, height } = tileSize;
   const { piecePlace } = useActions(act);
 
-  const boardRef = createRef<HTMLDivElement>();
+  const boardRef = useRef<HTMLDivElement>(null);
 
   const boardPos = () => {
     const { x, y } = mouseCoords;
 
     // Out of bounds cancels the placement
-    if (!boardRef) return [-1, -1];
+    if (!boardRef?.current) return [-1, -1];
 
     const rect = boardRef.current.getBoundingClientRect();
 
@@ -44,7 +45,7 @@ export const CheckerBoard = (props, context) => {
   return (
     <div
       style={{
-        'background-color': tileColor2,
+        backgroundColor: tileColor2,
       }}
       ref={boardRef}
       className="boardgame__board-checkerboard"
@@ -74,7 +75,8 @@ export const CheckerBoard = (props, context) => {
             // Check if the position is same as the piece's current position, if it's not, place it
           }
         }
-      }}>
+      }}
+    >
       <CheckerBoardPattern />
       <GridGuideRenderer />
       <GridPieceRenderer pieces={pieces} />

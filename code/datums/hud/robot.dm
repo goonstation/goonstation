@@ -1,10 +1,18 @@
 /atom/movable/screen/hud/robotstorage
 	MouseEntered(location, control, params)
+		// there is no reason for master to ever be something other than /datum/hud/silicon here
+		// and yet
+		if(istype(src.master, /datum/hud/silicon/robot))
+			var/datum/hud/silicon/robot/hud = src.master
+			if(usr != hud.silicon) return
 		if (src.name)
 			src.maptext_x = 34
 			src.maptext_width = 128
 			src.maptext = "<span class='vm l pixel sh'>[src.name]</span>"
 	MouseExited(location, control, params)
+		if(istype(src.master, /datum/hud/silicon/robot))
+			var/datum/hud/silicon/robot/hud = src.master
+			if(usr != hud.silicon) return
 		src.maptext = null
 
 /datum/hud/silicon/robot
@@ -170,31 +178,19 @@
 			if(!O || O.loc != master.module)
 				return
 			if(!master.module_states[1] && istype(master.part_arm_l,/obj/item/parts/robot_parts/arm/))
-				master.module_states[1] = O
-				O.set_loc(master)
-				O.pickup(master) // Handle light datums and the like.
+				master.equip_slot(1, O)
 			else if(!master.module_states[2])
-				master.module_states[2] = O
-				O.set_loc(master)
-				O.pickup(master)
+				master.equip_slot(2, O)
 			else if(!master.module_states[3] && istype(master.part_arm_r,/obj/item/parts/robot_parts/arm/))
-				master.module_states[3] = O
-				O.set_loc(master)
-				O.pickup(master)
+				master.equip_slot(3, O)
 			else
 				master.uneq_active()
 				if(!master.module_states[1] && istype(master.part_arm_l,/obj/item/parts/robot_parts/arm/))
-					master.module_states[1] = O
-					O.set_loc(master)
-					O.pickup(master)
+					master.equip_slot(1, O)
 				else if(!master.module_states[2])
-					master.module_states[2] = O
-					O.set_loc(master)
-					O.pickup(master)
+					master.equip_slot(2, O)
 				else if(!master.module_states[3] && istype(master.part_arm_r,/obj/item/parts/robot_parts/arm/))
-					master.module_states[3] = O
-					O.set_loc(master)
-					O.pickup(master)
+					master.equip_slot(3, O)
 			update_equipment()
 			update_tools()
 
@@ -564,7 +560,7 @@
 
 			var/dmg = part.dmg_blunt + part.dmg_burns
 			var/pct = 100 - clamp(dmg / part.max_health * 100, 0, 100)
-			return "<span style='color: [rgb(255 * clamp((100 - pct) / 50, 0, 1), 255 * clamp(pct / 50, 1, 0), 0)];'>[!mini_health ? "[add_lspace(round(pct), 3)]%" : "[add_lspace(round(part.max_health - dmg), 3)]</span>/<span style='color: #ffffff;'>[add_lspace(round(part.max_health), 3)]"]</span>"
+			return "<span style='color: [rgb(255 * clamp((100 - pct) / 50, 0, 1), 255 * clamp(pct / 50, 1, 0), 0)];'>[!mini_health ? "[pad_leading(round(pct), 3)]%" : "[pad_leading(round(part.max_health - dmg), 3)]</span>/<span style='color: #ffffff;'>[pad_leading(round(part.max_health), 3)]"]</span>"
 
 
 		update_pulling()

@@ -132,6 +132,8 @@ var/HasturPresent = 0
 
 
 //DEVOUR ABILITY// - Pretty much just a changeling re-do
+/datum/targetable/hastur
+	interrupt_action_bars = FALSE
 
 /datum/targetable/hastur/devour
 	name = "Devour"
@@ -159,7 +161,7 @@ var/HasturPresent = 0
 		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return 1
-
+		. = ..()
 		M.visible_message(pick(SPAN_ALERT("<B>[M] reveals their true form for a moment and -COMPLETELY- devours [target]!</B>"),SPAN_ALERT("<B>Huge mouth emerges underneath [M]'s robes and DEVOURS [target]!</B>"),SPAN_ALERT("<B>[M] growls angrily as they reveal their true form, completely devouring [target]!</B>")))
 		playsound(M.loc, pick('sound/misc/hastur/devour1.ogg','sound/misc/hastur/devour2.ogg','sound/misc/hastur/devour3.ogg','sound/misc/hastur/devour4.ogg'), 90,1)
 		flick("hastur-devour", M)
@@ -180,6 +182,7 @@ var/HasturPresent = 0
 	cooldown = 500
 
 	cast()
+		. = ..()
 		for(var/mob/living/M in orange(300))
 			M.addOverlayComposition(/datum/overlayComposition/insanity)
 			M.updateOverlaysClient(M.client)
@@ -202,14 +205,15 @@ var/HasturPresent = 0
 	cooldown = 2
 
 	cast()
+		. = ..()
 		var/msg = input("Message:", text("What would you like to whisper to everyone?")) as null|text
-		msg = voidSpeak(trim(copytext(sanitize(msg), 1, 255)))
+		msg = voidSpeak(trimtext(copytext(sanitize(msg), 1, 255)))
 		if (!msg)
 			return
 
 		if (usr.client && usr.client.holder)
 			boutput(world, "<font color=purple><b>An otherwordly voice whispers into your ears... [msg]</b></font>")
-			//msg = voidSpeak(trim(copytext(sanitize(msg), 1, 255)))
+			//msg = voidSpeak(trimtext(copytext(sanitize(msg), 1, 255)))
 			//boutput(usr, "<b>You whisper to everyone:</b> [message]")
 
 
@@ -226,6 +230,7 @@ var/HasturPresent = 0
 
 	cast()
 		var/mob/living/critter/hastur/H = src.holder.owner
+		. = ..()
 		if (stage == 1)
 			H.set_density(1)
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_INVISIBILITY, src)
@@ -300,7 +305,7 @@ var/HasturPresent = 0
 				for(var/obj/machinery/vehicle/A in src_turf)
 					if(A == O || A == user) continue
 					A.meteorhit(O)
-				for(var/obj/grille/A in src_turf)
+				for(var/obj/mesh/grille/A in src_turf)
 					if(A == O || A == user) continue
 					A.damage_blunt(10)
 				for(var/obj/window/A in src_turf)
@@ -367,7 +372,7 @@ var/HasturPresent = 0
 				for(var/obj/machinery/vehicle/A in src_turf)
 					if(A == O || A == user) continue
 					A.meteorhit(O)
-				for(var/obj/grille/A in src_turf)
+				for(var/obj/mesh/grille/A in src_turf)
 					if(A == O || A == user) continue
 					A.damage_blunt(10)
 				for(var/obj/window/A in src_turf)
@@ -379,7 +384,7 @@ var/HasturPresent = 0
 					if (destination)
 						do_teleport(M, destination, 1, sparks=0) ///You will appear adjacent to Hastur.
 						playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
-						M.changeStatus("paralysis", 2 SECONDS)
+						M.changeStatus("unconscious", 2 SECONDS)
 						M.visible_message(SPAN_ALERT("[M] gets grabbed by a tentacle and dragged!"))
 
 

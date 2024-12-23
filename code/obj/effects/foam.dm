@@ -148,7 +148,7 @@
 
 // foam disolves when heated
 // except metal foams
-/obj/effects/foam/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/effects/foam/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 	if(!metal && prob(max(0, exposed_temperature - 475)))
 		flick("foam-disolve", src)
 
@@ -174,7 +174,7 @@
 					if (1) //lube
 						M.throw_at(target, 12, 1, throw_type = THROW_SLIP)
 					if (2) //harmlube
-						M.changeStatus("weakened", 3.5 SECONDS)
+						M.changeStatus("knockdown", 3.5 SECONDS)
 						M.throw_at(target, 30, 1, throw_type = THROW_SLIP)
 						random_brute_damage(M, 10)
 			if(M.throwing)

@@ -85,6 +85,42 @@
 	icon_state = "peck_crow"
 	take_eyes = 1
 
+/datum/targetable/critter/charge
+	name = "Charge"
+	desc = "Charge at a mob, causing a short stun."
+	cooldown = 3 SECONDS
+	icon_state = "slam_polymorph"
+	targeted = TRUE
+	target_anything = TRUE
+
+	cast(atom/target)
+		if (..())
+			return 1
+		if (isobj(target))
+			target = get_turf(target)
+		if (isturf(target))
+			target = locate(/mob/living) in target
+			if (!target)
+				boutput(holder.owner, SPAN_ALERT("Nothing to charge at there."))
+				return 1
+		if (target == holder.owner)
+			return 1
+		if (BOUNDS_DIST(holder.owner, target) > 0)
+			boutput(holder.owner, SPAN_ALERT("That is too far away to charge at"))
+			return 1
+		var/mob/MT = target
+		playsound(MT.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 20, 1, -1)
+		MT.changeStatus("stunned", 3 SECONDS)
+		if (prob(25))
+			holder.owner.visible_message(SPAN_COMBAT("<B>[holder.owner]</B>'s charge knock's [MT] over!"),\
+			SPAN_COMBAT("Your charge knocks [MT] over!"))
+			MT.changeStatus("knockdown", 2 SECONDS)
+			return 0
+		else
+			holder.owner.visible_message(SPAN_COMBAT("<B>[holder.owner]</B> charges at [MT]!"),\
+			SPAN_COMBAT("You charge at [MT]!"))
+			return 0
+
 /datum/targetable/critter/pounce
 	name = "Pounce"
 	desc = "Pounce on a mob, causing a short stun."
@@ -111,11 +147,11 @@
 		var/mob/MT = target
 		playsound(target, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, TRUE, -1)
 		MT.changeStatus("stunned", 2 SECONDS)
-		MT.changeStatus("weakened", 2 SECONDS)
+		MT.changeStatus("knockdown", 2 SECONDS)
 		if (prob(25))
 			holder.owner.visible_message(SPAN_COMBAT("<B>[holder.owner]</B> weaves around [MT]'s legs and trips [him_or_her(MT)]!"),\
 			SPAN_COMBAT("You weave around [MT]'s legs and trip [him_or_her(MT)]!"))
-			MT.changeStatus("weakened", 2 SECONDS)
+			MT.changeStatus("knockdown", 2 SECONDS)
 			return 0
 		else
 			holder.owner.visible_message(SPAN_COMBAT("<B>[holder.owner]</B> pounces on [MT]!"),\
@@ -149,7 +185,7 @@
 		var/tostun = rand(0,3)
 		var/toweak = rand(0,3)
 		MT.changeStatus("stunned", tostun SECONDS)
-		MT.changeStatus("weakened", toweak SECONDS)
+		MT.changeStatus("knockdown", toweak SECONDS)
 		holder.owner.visible_message(SPAN_COMBAT("<B>[holder.owner]</B> weaves around [MT]'s legs!"),\
 		SPAN_COMBAT("You weave around [MT]'s legs!"))
 		if (toweak)
@@ -207,9 +243,9 @@
 		name = "Bite"
 		desc = "Bite a mob, injecting them with venom."
 		icon_state = "snake_bite"
-		cooldown = 12 SECONDS
+		cooldown = 8 SECONDS
 		attack_verb = "bite"
-		venom1 = "viper_venom"
+		venom1 = "hemotoxin"
 		amt1 = 12
 		amt2 = 0
 

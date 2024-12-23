@@ -7,8 +7,6 @@ names@=
 	Morgan le Fay
 	Circe
 	Maleficent
-	Hermione
-	Umbridge
 	The Worst Witch
 	Sabrina
 	Morrigan

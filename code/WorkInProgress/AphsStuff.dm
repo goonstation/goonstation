@@ -140,7 +140,7 @@
 		if (!src.on || !message)
 			return
 		if(dectalk)
-			var/list/audio = dectalk("\[_<500,1>\][message]")
+			var/list/audio = dectalk("\[_<500,1>\][message]", BOTTALK_VOLUME)
 			for (var/mob/O in hearers(src, null))
 				if (!O.client)
 					continue
@@ -396,7 +396,7 @@
 	appearanceString = "servo"
 	max_health = 40
 	handlistPart = "armR-light"
-	robot_movement_modifier = /datum/movement_modifier/robot_part/head
+	robot_movement_modifier = /datum/movement_modifier/robot_part/light_head
 
 /obj/item/parts/robot_parts/arm/left/servotron
 	name = "servotron left arm"
@@ -405,7 +405,7 @@
 	appearanceString = "servo"
 	max_health = 40
 	handlistPart = "armL-light"
-	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_left
+	robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_left
 
 /obj/item/parts/robot_parts/head/servotron
 	name = "servotron head"
@@ -413,7 +413,7 @@
 	icon_state = "head-servo"
 	appearanceString = "servo"
 	max_health = 87
-	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_right
+	robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_right
 
 /obj/item/parts/robot_parts/chest/servotron
 	name = "servotron chest"

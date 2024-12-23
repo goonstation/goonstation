@@ -6,16 +6,16 @@
  * @license MIT
  */
 
-import { SFC } from 'inferno';
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../../backend';
 import {
   Box,
   Button,
   Divider,
   LabeledList,
   Section,
-} from '../../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../../backend';
 import { CellDisplay } from './CellDisplay';
 import type { ApcData } from './types';
 import { getHasPermission, getIsLocalAccess } from './util';
@@ -41,38 +41,39 @@ interface ExternalPowerListItemProps {
   mainStatus: MainStatus;
 }
 
-const ExternalPowerListItem: SFC<ExternalPowerListItemProps> = (props) => {
+const ExternalPowerListItem = (props: ExternalPowerListItemProps) => {
   const { mainStatus } = props;
   const mainStatusConfig = mainStatusConfigLookup[mainStatus];
   return (
-    <LabeledList.Item label="External Power" color={mainStatusConfig.color} textAlign="right">
+    <LabeledList.Item
+      label="External Power"
+      color={mainStatusConfig.color}
+      textAlign="right"
+    >
       {mainStatusConfig.name}
     </LabeledList.Item>
   );
 };
 
 export const MainSection = (_props, context) => {
-  const { act, data } = useBackend<ApcData>(context);
-  const {
-    area_name,
-    host_id,
-    locked,
-    main_status,
-    operating,
-  } = data;
+  const { act, data } = useBackend<ApcData>();
+  const { area_name, host_id, locked, main_status, operating } = data;
 
   const hasPermission = getHasPermission(data);
   const isLocalAccess = getIsLocalAccess(data);
 
   // #region event handlers
-  const handleOperatingChange = (operating: BooleanLike) => act('onOperatingChange', { operating });
+  const handleOperatingChange = (operating: BooleanLike) =>
+    act('onOperatingChange', { operating });
   // #endregion
 
   return (
     <Section title={area_name}>
       {isLocalAccess && (
         <>
-          <Box align="center" bold fill>Swipe ID card to {locked ? 'unlock' : 'lock'} interface</Box>
+          <Box align="center" bold>
+            Swipe ID card to {locked ? 'unlock' : 'lock'} interface
+          </Box>
           <Divider />
         </>
       )}
@@ -101,7 +102,11 @@ export const MainSection = (_props, context) => {
         <CellDisplay />
         <ExternalPowerListItem mainStatus={main_status} />
         {isLocalAccess && (
-          <LabeledList.Item label="Host Connection" color={host_id ? 'green' : 'red'} textAlign="right">
+          <LabeledList.Item
+            label="Host Connection"
+            color={host_id ? 'green' : 'red'}
+            textAlign="right"
+          >
             {host_id ? 'OK' : 'NONE'}
           </LabeledList.Item>
         )}

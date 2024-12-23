@@ -2,6 +2,7 @@
 #define CLEANBOT_MOVE_SPEED 10
 #define CLEANBOT_CLEARTARGET_COOLDOWN "cleanbotclearinvalidtargetslist"
 #define CLEANBOT_CLEAN_COOLDOWN "slackbotidle"
+#define CLEANBOT_ACQUIRE_TARGET_COOLDOWN "cleanbotacquiretarget"
 ////////////////////////////////////////////// Cleanbot assembly ///////////////////////////////////////
 /obj/item/bucket_sensor
 	desc = "It's a bucket. With a sensor attached."
@@ -182,7 +183,7 @@
 
 	Topic(href, href_list)
 		if (..()) return
-		if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat || usr.restrained()) return
+		if (usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown") || usr.stat || usr.restrained()) return
 		if (!issilicon(usr) && !in_interact_range(src, usr)) return
 
 		src.add_fingerprint(usr)
@@ -223,7 +224,7 @@
 			src.targets_invalid = list()
 			src.cleanbottargets = list() // if 5 minutes have gone by and jim still hasnt cleaned up the floor, I dont think they're gonna
 
-		if (!src.target)
+		if (!src.target && !GET_COOLDOWN(src, CLEANBOT_ACQUIRE_TARGET_COOLDOWN))
 			if(!src.scan_origin || !isturf(src.scan_origin))
 				src.scan_origin = get_turf(src)
 			src.target = src.find_target()
@@ -290,7 +291,7 @@
 					src.targets_invalid += coords
 				return 1
 
-	KillPathAndGiveUp(var/give_up)
+	KillPathAndGiveUp(var/give_up, var/apply_target_cooldown = FALSE)
 		. = ..()
 		var/coords = turf2coordinates(get_turf(src.target))
 		if(give_up)
@@ -298,6 +299,8 @@
 				src.targets_invalid += coords
 			src.search_range = 1
 			src.scan_origin = null
+		if(apply_target_cooldown)
+			ON_COOLDOWN(src, CLEANBOT_ACQUIRE_TARGET_COOLDOWN, 5 SECONDS)
 		src.cleaning = 0
 		src.icon_state = "[src.icon_state_base][src.on]"
 		src.cleanbottargets -= coords
@@ -351,6 +354,17 @@
 	is_open_container()
 		return TRUE
 
+	Crossed(atom/movable/M as mob)
+		..()
+		if(!src.on) //can't move our mop in the way of they legs if we're damn off
+			return
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.traitHolder.hasTrait("wasitsomethingisaid") && prob(7)) //not too common... but not too uncommon
+				src.visible_message(SPAN_COMBAT("[src] [pick("sneakily","slyly","guilefully","deviously","rudely","devilishly","cleanly","delightfully devilishly","duplicitously","dastardly","connivingly","fucking rudely")] trips [M.name] with their mop!"))
+				H.setStatus("resting", duration = INFINITE_STATUS)
+				H.force_laydown_standup()
+
 	red
 		icon_state = "cleanbot-red0"
 		idle_delay = 175 // DA RED WUNZ GO FASTA
@@ -366,8 +380,7 @@
 
 /datum/action/bar/icon/cleanbotclean
 	duration = 1 SECOND
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "cleanbot_clean"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACT | INTERRUPT_ACTION
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop"
 	var/obj/machinery/bot/cleanbot/master

@@ -1,5 +1,5 @@
 /proc/vegetablegibs(turf/T, list/ejectables, bdna, btype)
-	var/list/vegetables = list(/obj/item/reagent_containers/food/snacks/plant/soylent, \
+	var/list/vegetables = list(/obj/item/reagent_containers/food/snacks/plant/soy/soylent, \
 		                       /obj/item/reagent_containers/food/snacks/plant/lettuce, \
 		                       /obj/item/reagent_containers/food/snacks/plant/cucumber, \
 		                       /obj/item/reagent_containers/food/snacks/plant/carrot, \
@@ -52,9 +52,11 @@
 	ai_retaliate_persistence = RETALIATE_ONCE
 	add_abilities = list(/datum/targetable/critter/maneater_devour)
 	planttype = /datum/plant/maneater
+	can_bleed = FALSE
 	var/baseline_health = 120 //! how much health the maneater should get normally and at 0 endurance
 	var/scaleable_limb = null //! used for scaling the values on one of the critters limbs
 	var/list/devoured_items = null
+	var/list/preferred_spices = list("mustard", "soysauce", "msg", "salt", "enriched_msg", "ketchup", "pepper", "butter") //! a list of chems the maneater enjoys in its food (humans)
 
 /mob/living/critter/plant/maneater/New()
 	src.devoured_items = list()
@@ -119,7 +121,7 @@
 	// now, we set the arm injection up
 	if (length(origin_plant.assoc_reagents) > 0)
 		var/datum/limb/mouth/maneater/manipulated_limb = src.scaleable_limb
-		manipulated_limb.amount_to_inject = clamp(round(baseline_injection + injection_amount_per_yield * passed_genes?.get_effective_value("cropsize")), 1, maxcap_injection )
+		manipulated_limb.amount_to_inject = clamp(round(baseline_injection + injection_amount_per_yield * HYPchem_scaling(passed_genes?.get_effective_value("cropsize")) * passed_genes?.get_effective_value("cropsize")), 1, maxcap_injection )
 		manipulated_limb.chems_to_inject |= HYPget_assoc_reagents(origin_plant, passed_genes)
 	..()
 	return src
@@ -279,7 +281,7 @@
 		var/list/potential_caretakers = list()
 		for(var/mob/living/carbon/human/checked_human in hearers(5, src))
 			//botanists or people who contributed to the plant can be caretakers and be talked to
-			if ((checked_human.faction & src.faction) || (checked_human in src.growers))
+			if (length(checked_human.faction & src.faction) || (checked_human in src.growers))
 				potential_caretakers += checked_human
 		//we only talk to people we actually want to talk to
 		if (length(potential_caretakers) > 0)
@@ -299,15 +301,13 @@
 				return SPAN_ALERT("<b>[src] snarls!</b>")
 	return ..()
 
-/mob/living/critter/plant/maneater/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!")
-	if (src.reagents?.get_reagent_amount("promethazine")) // Anti-emetics stop vomiting from occuring
-		return
+/mob/living/critter/plant/maneater/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!", var/selfMessage = null)
 	//We vomit out an item, if we have eaten some.
-	if(length(src.devoured_items) > 0)
+	. = ..()
+	if(. && length(src.devoured_items) > 0)
 		var/obj/item/handled_item = pick(src.devoured_items)
 		handled_item.set_loc(get_turf(src))
 		src.devoured_items -= handled_item
-	..()
 
 /mob/living/critter/plant/maneater/polymorph
 	name = "man-eating plant"

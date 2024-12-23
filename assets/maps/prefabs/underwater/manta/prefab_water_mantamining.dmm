@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	color = "b4b4b4"
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/map/light/dimreddish,
 /turf/variableTurf/clear,
 /area/noGenerate)
@@ -12,7 +12,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "ac" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	tag = "icon-intact (NORTHEAST)";
 	color = "b4b4b4"
@@ -20,29 +20,29 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "ad" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
 "ae" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	desc = "A robotic claw, it might still work.";
 	name = "robotic claw"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
 "af" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -52,18 +52,18 @@
 /turf/variableTurf/clear,
 /area/prefab/tunnelsnake)
 "ah" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	color = "b4b4b4"
 	},
 /turf/variableTurf/clear,
 /area/prefab/tunnelsnake)
 "ai" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	tag = "icon-intact-f (EAST)";
 	color = "b4b4b4"
@@ -71,11 +71,11 @@
 /turf/variableTurf/clear,
 /area/prefab/tunnelsnake)
 "aj" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	tag = "icon-intact-f (EAST)";
 	color = "b4b4b4"
@@ -83,7 +83,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "ak" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	tag = "icon-intact (NORTHWEST)";
 	color = "b4b4b4"
@@ -121,7 +121,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/tunnelsnake)
 "av" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	tag = "icon-intact (NORTHWEST)";
 	color = "b4b4b4"
@@ -129,7 +129,7 @@
 /turf/variableTurf/clear,
 /area/prefab/tunnelsnake)
 "ax" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "";
 	icon = 'icons/obj/disposal.dmi';
 	icon_state = "pipe-s";
@@ -553,7 +553,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/prefab/tunnelsnake)
 "cj" = (
-/obj/machinery/processor,
+/obj/machinery/sheet_extruder,
 /turf/simulated/floor,
 /area/prefab/tunnelsnake)
 "ck" = (
@@ -868,19 +868,19 @@
 /turf/simulated/floor/plating,
 /area/noGenerate)
 "Sj" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	icon_state = "alt_propulsion"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
 "SJ" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-R"
 	},
 /turf/simulated/floor/plating,
 /area/noGenerate)
 "Uc" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-L"
 	},
 /turf/simulated/floor/plating,

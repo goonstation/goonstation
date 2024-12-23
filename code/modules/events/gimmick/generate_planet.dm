@@ -73,7 +73,12 @@ TYPEINFO(/datum/random_event/major/find_planet)
 										/datum/map_generator/mars_generator,
 										/datum/map_generator/void_generator,
 										/datum/map_generator/asteroids,
-										/datum/map_generator/sea_caves)
+										/datum/map_generator/sea_caves,
+										/datum/map_generator/storehouse_generator,
+										/datum/map_generator/storehouse_generator/meaty,
+										/datum/map_generator/room_maze_generator,
+										/datum/map_generator/room_maze_generator/random,
+										/datum/map_generator/room_maze_generator/spatial)
 
 		if(isnull(generator))
 			generator = pick(childrentypesof(/datum/map_generator)-blacklist_generators)
@@ -146,7 +151,7 @@ TYPEINFO(/datum/random_event/major/find_planet)
 		"We have received approval to explore [planet_name], this group of asteroids if of great interest to us.  This is a highly secretive and sensitive mission, and I trust that all employees will maintain strict confidentiality.")
 
 		var/command_report = pick(reports)
-		command_report += "\n\nTarget data sent to Long Range Teleporter."
+		command_report += "\n\nTarget data sent to the teleport computer."
 		command_announcement(replacetext(command_report, "\n", "<br>"), title, sound_to_play, do_sanitize=0);
 
 		post_event()

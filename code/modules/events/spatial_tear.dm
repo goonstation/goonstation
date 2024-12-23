@@ -34,7 +34,7 @@
 	opacity = 1
 	density = 1
 	var/stabilized = 0
-	layer = NOLIGHT_EFFECTS_LAYER_BASE
+	plane = PLANE_ABOVE_LIGHTING
 
 	New(var/loc,var/duration)
 		..()
@@ -83,7 +83,6 @@
 /datum/action/bar/icon/push_through_tear
 	duration = 2 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "push_through_tear"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "tear_push"
 	var/mob/ownerMob
@@ -147,8 +146,8 @@
 		if(no_no_zone)
 			// turns out trying to phase into a solid object is an EXTRA bad idea
 			if (istype(ownerMob, /mob/living))
-				if (!ownerMob.hasStatus("weakened"))
-					ownerMob.changeStatus("weakened", 4 SECONDS)
+				if (!ownerMob.hasStatus("knockdown"))
+					ownerMob.changeStatus("knockdown", 4 SECONDS)
 				ownerMob.TakeDamage("All", rand(24,30), 0, 0, DAMAGE_BLUNT)
 				playsound(spatialtear, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, TRUE, -1)
 				for(var/mob/O in AIviewers(ownerMob))

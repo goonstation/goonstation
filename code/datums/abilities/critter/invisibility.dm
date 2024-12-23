@@ -3,7 +3,6 @@
 // ----------------------
 /datum/action/invisibility
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "invisibility"
 	var/icon = 'icons/mob/critter_ui.dmi'
 	var/icon_state = "invisible_over"
 	var/obj/overlay/iicon = null
@@ -84,13 +83,14 @@
 		else
 			animate(holder.owner, alpha=64, time=5)
 		SPAWN(wait)
-			APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_INVISIBILITY, src, inv_level)
-			holder.owner.alpha = 64
-			actions.start(I, holder.owner)
+			if(holder?.owner)
+				APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_INVISIBILITY, src, inv_level)
+				holder.owner.alpha = 64
+				actions.start(I, holder.owner)
 		return 0
 
 	proc/fade_in()
-		if (holder.owner)
+		if (holder?.owner)
 			boutput(holder.owner, SPAN_ALERT("You fade back into sight!"))
 			disabled = 0
 			doCooldown()

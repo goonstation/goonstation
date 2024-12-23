@@ -6,7 +6,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "ac" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/prefab/smuggler_den)
 "ad" = (
@@ -99,13 +99,13 @@
 /area/prefab/smuggler_den)
 "ar" = (
 /obj/machinery/manufacturer/general{
-	free_resource_amt = 10
+	free_resources = list(/obj/item/material_piece/steel = 10, /obj/item/material_piece/copper = 10, /obj/item/material_piece/glass = 10)
 	},
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "A small, high quality camera with thermal, light-amplification, and diffused laser imaging to see through walls. It is tied into a computer system, allowing those with access to watch what occurs around it.";
 	dir = 6;
 	icon = 'icons/obj/monitors.dmi';
@@ -146,7 +146,7 @@
 	desc = "The bottom of the pad has a bunch of wire coil and electrical insulation sticking out the sides haphazardly - cutting-edge signature masking tech.";
 	name = "Auxiliary Cargo Pad"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "A small, high quality camera with thermal, light-amplification, and diffused laser imaging to see through walls. It is tied into a computer system, allowing those with access to watch what occurs around it.";
 	dir = 6;
 	icon = 'icons/obj/monitors.dmi';
@@ -287,7 +287,7 @@
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /obj/item/instrument/harmonica,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "A small, high quality camera with thermal, light-amplification, and diffused laser imaging to see through walls. It is tied into a computer system, allowing those with access to watch what occurs around it.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
@@ -383,7 +383,7 @@
 	},
 /obj/item/plantanalyzer,
 /obj/item/satchel/hydro,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "A small, high quality camera with thermal, light-amplification, and diffused laser imaging to see through walls. It is tied into a computer system, allowing those with access to watch what occurs around it.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';

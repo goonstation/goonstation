@@ -12,7 +12,7 @@
 	failure_disease = /datum/ailment/disease/respiratory_failure
 	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING | SURGERY_SAWING
 	region = RIBS
-	var/temp_tolerance = T0C+66
+	var/temp_tolerance = DEFAULT_LUNG_AIR_TEMP_TOLERANCE_MAX
 
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 	var/safe_co2_max = 9 // Yes it's an arbitrary value who cares?
@@ -24,6 +24,11 @@
 	var/fart_choke_min = 16.9
 	var/rad_immune = FALSE
 	var/breaths_oxygen = TRUE
+
+	attach_organ(mob/living/carbon/M, mob/user)
+		. = ..()
+		if (M.traitHolder?.hasTrait("plasmalungs") && src.breaths_oxygen)
+			src.broken = TRUE
 
 	on_life(var/mult = 1)
 		if (!..())
@@ -45,7 +50,7 @@
 	// 			donor.contract_disease(failure_disease,null,null,1)
 
 	///Return value indicates whether we have enough oxygen to breathe
-	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
+	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ_status/lung/update)
 		. = FALSE
 		var/breath_moles = TOTAL_MOLES(breath)
 		if(breath_moles == 0)
@@ -87,7 +92,7 @@
 			if (!donor.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 				donor.co2overloadtime = world.time
 			else if (world.time - donor.co2overloadtime > 12 SECONDS)
-				donor.changeStatus("paralysis", 4 SECONDS * mult/LUNG_COUNT)
+				donor.changeStatus("unconscious", 4 SECONDS * mult/LUNG_COUNT)
 				donor.take_oxygen_deprivation(1.8 * mult/LUNG_COUNT) // Lets hurt em a little, let them know we mean business
 				if (world.time - donor.co2overloadtime > 30 SECONDS) // They've been in here 30s now, lets start to kill them for their own good!
 					donor.take_oxygen_deprivation(7 * mult/LUNG_COUNT)
@@ -107,7 +112,7 @@
 
 		var/N2O_pp = (breath.nitrous_oxide/breath_moles)*breath_pressure
 		if (N2O_pp > n2o_para_min) // Enough to make us paralysed for a bit
-			donor.changeStatus("paralysis", 5 SECONDS/LUNG_COUNT)
+			donor.changeStatus("unconscious", 5 SECONDS/LUNG_COUNT)
 			if (N2O_pp > n2o_sleep_min) // Enough to make us sleep as well
 				donor.sleeping = max(donor.sleeping, 2)
 		else if (N2O_pp > 0.5)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
@@ -243,18 +248,28 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream."
 	synthetic = 1
 	failure_disease = /datum/ailment/disease/respiratory_failure
+	safe_co2_max = INFINITY
 
 	New()
 		..()
 		src.icon_state = pick("plant_lung_t", "plant_lung_t_bloom")
+
+	breathe(datum/gas_mixture/breath, underwater, mult, datum/organ_status/lung/update)
+		breath.carbon_dioxide /= 2
+		breath.oxygen += breath.carbon_dioxide
+		. = ..()
+		breath.oxygen += breath.carbon_dioxide
+		breath.carbon_dioxide = 0
 
 /obj/item/organ/lung/synth/left
 	name = "left lung"
 	organ_name = "synthlung_L"
 	icon_state = "plant"
 	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream. This is a left lung, since it has three lobes. Hopefully whoever used to have this one doesn't need it anymore."
+	organ_holder_name = "left_lung"
+	body_side = L_ORGAN
 	synthetic = 1
-	failure_disease = /datum/ailment/disease/respiratory_failure
+	failure_disease = /datum/ailment/disease/respiratory_failure/left
 	New()
 		..()
 		src.icon_state = pick("plant_lung_L", "plant_lung_L_bloom")
@@ -264,8 +279,10 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	organ_name = "synthlung_R"
 	icon_state = "plant"
 	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream. This is a right lung, since it has two lobes and a cardiac notch, where the heart would be. Hopefully whoever used to have this one doesn't need it anymore."
+	organ_holder_name = "right_lung"
+	body_side = R_ORGAN
 	synthetic = 1
-	failure_disease = /datum/ailment/disease/respiratory_failure
+	failure_disease = /datum/ailment/disease/respiratory_failure/right
 	New()
 		..()
 		src.icon_state = pick("plant_lung_R", "plant_lung_R_bloom")
@@ -293,7 +310,7 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	breaths_oxygen = FALSE
 	safe_toxins_max = INFINITY
 
-	breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
+	breathe(datum/gas_mixture/breath, underwater, mult, datum/organ_status/lung/update)
 		. = ..()
 		var/safe_oxygen_max = 0.4
 
@@ -349,7 +366,7 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	failure_disease = /datum/ailment/disease/respiratory_failure/right
 
 
-/datum/organ/lung/status
+/datum/organ_status/lung
 	var/show_oxy_indicator = FALSE
 	var/show_tox_indicator = FALSE
 	var/show_fire_indicator = FALSE

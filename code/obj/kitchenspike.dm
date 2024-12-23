@@ -12,10 +12,15 @@ TYPEINFO(/obj/kitchenspike)
 	var/occupied = FALSE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
 
-/obj/kitchenspike/attackby(obj/item/grab/G, mob/user)
-	if(!istype(G))
+/obj/kitchenspike/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/grab))
+		var/obj/item/grab/G = W
+		if(!src.spike(user, G.affecting))
+			return ..()
+	if(iscuttingtool(W))
+		src.get_meat(user)
 		return
-	spike(user, G.affecting)
+	. = ..()
 
 /obj/kitchenspike/hitby(atom/movable/A, datum/thrown_thing/thr)
 	if (!src.spike(null, A))
@@ -46,14 +51,17 @@ TYPEINFO(/obj/kitchenspike)
 
 /obj/kitchenspike/attack_hand(mob/user)
 	. = ..()
-	if(src.occupied)
-		if(src.meat > 1)
-			src.meat--
-			new /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat( src.loc )
+	src.get_meat(user)
+
+/obj/kitchenspike/proc/get_meat(mob/user)
+	if(!src.occupied)
+		return
+	if(src.meat >= 1)
+		src.meat--
+		new /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat(src.loc)
+		if (src.meat >= 1)
 			boutput(user, "You remove some meat from the monkey.")
-		else if(src.meat == 1)
-			src.meat--
-			new /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat(src.loc)
+		else
 			boutput(user, "You remove the last piece of meat from the monkey!")
 			src.occupied = FALSE
 			src.UpdateIcon()

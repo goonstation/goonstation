@@ -14,7 +14,6 @@
 	var/use_bloodoverlay = 1
 	var/stapled = 0
 	var/allow_staple = 1
-	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 
 	New()
 		..()
@@ -48,6 +47,9 @@
 			return
 	else if (issnippingtool(W))
 		if (src.vchange)
+			if (src.vchange.permanent)
+				user.show_text("[src]'s [src.vchange.name] cannot be removed!", "red")
+				return
 			user.show_text("You begin removing [src.vchange] from [src].", "blue")
 			if (!do_after(user, 2 SECONDS))
 				user.show_text("You were interrupted!", "red")
@@ -94,7 +96,7 @@
 		playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE) //head,
 		target.emote("scream") 									//FUCKING
 		target.TakeDamage("head", rand(12, 18), 0) 				//OW!
-		target.changeStatus("weakened", 4 SECONDS)
+		target.changeStatus("knockdown", 4 SECONDS)
 
 		logTheThing(LOG_COMBAT, source, "rips out the staples on [constructTarget(target,"combat")]'s [src]") //Crime
 
@@ -109,7 +111,6 @@
 	color_r = 0.8 // green tint
 	color_g = 1
 	color_b = 0.8
-	path_prot = 0
 
 	setupProperties()
 		..()
@@ -220,9 +221,13 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	color_g = 0.8
 	color_b = 0.8
 
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
+
 	syndicate
 		name = "syndicate field protective mask"
-		desc = "A tight-fitting mask designed to protect syndicate operatives from all manner of toxic inhalants. Worn with a buckle around the back of the head."
+		desc = "A tight-fitting mask designed to protect syndicate operatives from all manner of toxic inhalants. Has a built-in voice changer."
 		icon_state = "gas_mask_syndicate"
 		item_state = "gas_mask_syndicate"
 		color_r = 0.8 //this one's also green
@@ -231,8 +236,9 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		item_function_flags = IMMUNE_TO_ACID
 
 		New()
-			..()
 			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+			..()
+			src.vchange = new /obj/item/voice_changer/permanent(src)
 
 		disposing()
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -270,7 +276,11 @@ TYPEINFO(/obj/item/voice_changer)
 	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discretely fits inside most masks, and can be removed with wirecutters."
 	icon_state = "voicechanger"
 	is_syndicate = 1
+	var/permanent = FALSE
 	HELP_MESSAGE_OVERRIDE({"Use the voice changer on a face-concealing mask to fit it inside. You will speak as and appear in chat as the name of your worn ID, or as "unknown" if you aren't wearing your ID. Use wirecutters on the mask to remove the voice changer."})
+
+/obj/item/voice_changer/permanent
+	permanent = TRUE
 
 TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	mats = 12	// 2x voice changer cost. It's complicated ok
@@ -344,6 +354,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	icon_state = "clown"
 	item_state = "clown_hat"
 	see_face = FALSE
+	var/base_icon_state = "clown"
 
 	var/spam_flag = 0
 	var/spam_timer = 100
@@ -369,14 +380,14 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 			src.mask_bald = TRUE
 			src.name = "wigless clown mask"
 			src.desc = bald_desc_state
-			src.icon_state = "[src.icon_state]_bald"
+			src.icon_state = "[src.base_icon_state]_bald"
 			src.item_state = "clown_bald"
 			user.show_text("You tuck back the wig on the [src].")
 		else
 			src.mask_bald = FALSE
 			src.name = initial(src.name)
 			src.desc = initial(src.desc)
-			src.icon_state = initial(src.icon_state)
+			src.icon_state = src.base_icon_state
 			src.item_state = "clown_hat"
 			user.show_text("You untuck the wig from the [src].")
 
@@ -385,12 +396,14 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		desc = "A special clown mask made to celebrate Autumn. Orange you glad you have it!!"
 		icon_state = "clown_autumn"
 		item_state = "clown_autumn"
+		base_icon_state = "clown_autumn"
 
 	winter
 		name = "winter clown wig and mask"
 		desc = "A special clown mask made to celebrate Winter. You'd be blue without it!! Like cold things? Blue? Get it?"
 		icon_state = "clown_winter"
 		item_state = "clown_winter"
+		base_icon_state = "clown_winter"
 
 /obj/item/clothing/mask/gas/syndie_clown
 	name = "clown wig and mask"
@@ -489,8 +502,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	icon_state = "sterile"
 	item_state = "s_mask"
 	w_class = W_CLASS_TINY
-	c_flags = COVERSMOUTH
-	path_prot = 0
+	c_flags = COVERSMOUTH | BLOCKMIASMA
 
 	setupProperties()
 		..()
@@ -629,6 +641,48 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	item_state = "anime"
 	see_face = FALSE
 
+/obj/item/clothing/mask/steel
+	name = "sheet welded mask"
+	desc = "A crudely welded mask made by attaching bent sheets. Highly protective at the cost of visibility"
+	icon_state = "steel"
+	item_state = "steel"
+	see_face = FALSE
+	allow_staple = 0
+	var/low_visibility = TRUE
+	material_amt = 0.5
+
+	attackby(obj/item/W, mob/user) // Allows the mask be modified, if one only wants the fashion
+		if (isweldingtool(W) && low_visibility)
+			if(!W:try_weld(user, 1))
+				return
+			user.visible_message(SPAN_ALERT("<B>[user]</B> melts the mask's eye slits to be larger."))
+			if(src in user.get_equipped_items())
+				user.removeOverlayComposition(/datum/overlayComposition/steelmask)
+				user.updateOverlaysClient(user.client)
+			setProperty("meleeprot_head", 3)
+			delProperty("disorient_resist_eye")
+			src.low_visibility = FALSE
+			src.desc = "A crudely welded mask made by attaching bent sheets. It's had it's eye slits widened for better visibility."
+		else
+			..()
+
+	setupProperties()
+		..() // Has some level of protection, at the cost of visibility
+		setProperty("meleeprot_head", 5)
+		setProperty("disorient_resist_eye", 35)
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (low_visibility)
+			user.addOverlayComposition(/datum/overlayComposition/steelmask)
+			user.updateOverlaysClient(user.client)
+
+	unequipped(mob/user)
+		. = ..()
+		if (low_visibility)
+			user.removeOverlayComposition(/datum/overlayComposition/steelmask)
+			user.updateOverlaysClient(user.client)
+
 /obj/item/clothing/mask/gas/plague
 	name = "plague doctor mask"
 	desc = "A beak-shaped mask filled with pleasant-smelling herbs to help protect you from miasma, the leading cause of the spread of disease*.<br><small><i>*This information may be slightly outdated, please use caution if using mask later than the 17th century.</i></small>"
@@ -637,7 +691,6 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	color_r = 0.95 // darken just a little
 	color_g = 0.95
 	color_b = 0.95
-	path_prot = 0
 
 /obj/item/clothing/mask/chicken
 	name = "chicken mask"
@@ -784,4 +837,21 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	desc = "Traditionally thought to repel evil spirits, thanks to the tengu's alarming face. Maybe it works on staffies, too."
 	item_state = "tengu"
 	icon_state = "tengu"
+	see_face = FALSE
+
+// New chaplain stuff
+
+/obj/item/clothing/mask/greencultmask
+	name = "lost horror veil"
+	desc = "A dark green shroud with loose fabric tendrils at the end of the face You feel dizzy and lost just gazing into the visage."
+	item_state = "greencultmask"
+	icon_state = "greencultmask"
+	wear_layer = MOB_OVER_TOP_LAYER
+	see_face = FALSE
+/obj/item/clothing/mask/burnedcultmask
+	name = "incendiary mask"
+	desc = "A face mask designed to look like a burning candle's flame. It smells of smoke when worn."
+	item_state = "burnedcultmask"
+	icon_state = "burnedcultmask"
+	wear_layer = MOB_OVER_TOP_LAYER
 	see_face = FALSE

@@ -13,6 +13,17 @@
 	always_display_locks = 1
 	throwforce = 50
 	can_flip_bust = 1
+	is_short = TRUE
+
+	Cross(atom/movable/mover) //copy pasted from actual crates because this pathing is AGONY
+		if(istype(mover, /obj/projectile))
+			return 1
+		if(src.is_short && src.open && isliving(mover)) // let people climb onto the crate if the crate is open and against a wall basically
+			var/move_dir = get_dir(mover, src)
+			var/turf/next_turf = get_step(src, move_dir)
+			if(next_turf && !total_cross(next_turf, src))
+				return TRUE
+		return ..()
 
 /obj/storage/secure/crate/weapon
 	desc = "A secure weapons crate."
@@ -29,7 +40,7 @@
 
 	armory
 		name = "secure weapons crate"
-		req_access = list(access_maxsec)
+		req_access = list(access_armory)
 
 		tranquilizer
 			name = "tranquilizer crate"
@@ -43,7 +54,7 @@
 
 		shotgun
 			name = "shotgun crate"
-			spawn_contents = list(/obj/item/gun/kinetic/riotgun = 4,\
+			spawn_contents = list(/obj/item/gun/kinetic/pumpweapon/riotgun = 4,\
 			/obj/item/ammo/bullets/abg = 4)
 
 		pod_weapons
@@ -62,7 +73,7 @@
 
 	armory
 		name = "secure weapons crate"
-		req_access = list(access_maxsec)
+		req_access = list(access_armory)
 
 		anti_biological
 			name = "anti-biological crate"
@@ -85,7 +96,7 @@
 
 /obj/storage/secure/crate/gear/armory
 	name = "secure weapons crate"
-	req_access = list(access_maxsec)
+	req_access = list(access_armory)
 
 /obj/storage/secure/crate/gear/armory/grenades
 	name = "special grenades crate"
@@ -106,6 +117,18 @@
 	/obj/item/reagent_containers/food/drinks/drinkingglass/random_style = 4,\
 	/obj/item/reagent_containers/food/drinks/bottle/vodka = 3,\
 	/obj/item/reagent_containers/food/drinks/curacao)
+
+/obj/storage/secure/crate/gear/armory/equipment
+	name = "\improper Special Equipment crate"
+	spawn_contents = list(/obj/item/requisition_token/security = 2,
+	/obj/item/requisition_token/security/assistant = 2,
+	/obj/item/turret_deployer/riot = 2)
+
+/obj/storage/secure/crate/gear/armory/equipment/looted
+	spawn_contents = list()
+	locked = 0
+	open = 1
+	emagged = 1
 
 /obj/storage/secure/crate/bee
 	name = "Secure Bee crate"
@@ -167,6 +190,11 @@
 				var/obj/item/paper/book/from_file/interdictor_guide/B5 = new(src)
 				B5.pixel_y = 1
 				return 1
+
+	nuclearfuel
+		name = "Fissile Materials Crate"
+		desc = "Contains the resources required to construct nuclear fuel rods."
+		spawn_contents = list(/obj/item/raw_material/cerenkite = 6)
 
 /obj/storage/secure/crate/medical
 	desc = "A secure medical crate."

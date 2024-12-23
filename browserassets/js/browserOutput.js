@@ -26,7 +26,7 @@ var opts = {
     'volume': 0.5,
     'lastMessage': '', //the last message sent to chatks
     'maxStreakGrowth': 20, //at what streak point should we stop growing the last entry?
-	'messageClasses': ['admin','combat','radio','say','ooc','internal'],
+    'messageClasses': ['admin','combat','radio','say','ooc','internal'],
     'msgOdd': false, //Is the last message odd or even?
 
     //Options menu
@@ -37,7 +37,7 @@ var opts = {
     'highlightColor': '#FFFF00', //The color of the highlighted message
     'pingDisabled': false, //Has the user disabled the ping counter
     'messageLimitEnabled': true, // whether old messages get deleted
-	'oddMsgHighlight': false, // whether odd messages get highlighted
+    'oddMsgHighlight': false, // whether odd messages get highlighted
 
     //Ping display
     'pingCounter': 0, //seconds counter
@@ -162,8 +162,8 @@ function handleStreakCounter($el) {
 
 // Wrap all emojis in an element so we can enforce styles
 function parseEmojis(message) {
-	var pattern = /((?:\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])+)/g;
-	return message.replace(pattern, '<span class="emoji">$1</span>');
+    var pattern = /((?:\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])+)/g;
+    return message.replace(pattern, '<span class="emoji">$1</span>');
 }
 
 //Send a message to the client
@@ -210,11 +210,6 @@ function output(message, group, skipNonEssential, forceScroll) {
             }
         }
     }
-
-    //Url stuff
-    // if (message.length && flag != 'preventLink') {
-    //  message = anchorme(message);
-    // }
 
     opts.messageCount++;
 
@@ -263,27 +258,27 @@ function output(message, group, skipNonEssential, forceScroll) {
             if (group) {
                 entry.className += ' hasGroup';
                 entry.setAttribute('data-group', group);
-			}
+            }
 
-			//get classes from messages, compare if its in messageclasses, and if so, add to entry
-			let addedClass = false;
-			let $message = $('<span>'+message+'</span>');
-			$.each(opts.messageClasses, function (key, value) {
-				if ($message.find("." + value).length !== 0 || $message.hasClass(value)) {
-					entry.className += ' ' + value;
-					addedClass = true;
-				}
-			});
-			// fallback, if no class found in the classlist
-			if (!addedClass) {
-				entry.className += ' misc';
-			}
+            //get classes from messages, compare if its in messageclasses, and if so, add to entry
+            let addedClass = false;
+            let $message = $('<span>'+message+'</span>');
+            $.each(opts.messageClasses, function (key, value) {
+                if ($message.find("." + value).length !== 0 || $message.hasClass(value)) {
+                    entry.className += ' ' + value;
+                    addedClass = true;
+                }
+            });
+            // fallback, if no class found in the classlist
+            if (!addedClass) {
+                entry.className += ' misc';
+            }
 
-			if (opts.msgOdd && opts.oddMsgHighlight) {
-				entry.className += ' odd-highlight';
-			}
+            if (opts.msgOdd && opts.oddMsgHighlight) {
+                entry.className += ' odd-highlight';
+            }
 
-			opts.msgOdd = !opts.msgOdd;
+            opts.msgOdd = !opts.msgOdd;
 
             entry.innerHTML = message;
             $lastEntry = $($messages[0].appendChild(entry));
@@ -486,18 +481,54 @@ function ehjaxCallback(data) {
         } else if (data.playMusic) {
             if (window.HTMLAudioElement) {
                 try {
-                    if (typeof data.volume !== 'number' || data.volume < 0 || data.volume > 1) {
+                    if (
+                        typeof data.volume !== "number" ||
+                        data.volume < 0 ||
+                        data.volume > 1
+                    ) {
                         data.volume = opts.volume;
                     }
 
-                    $playMusic.attr('src', data.playMusic);
-                    var music = $playMusic.get(0);
-                    music.volume = data.volume * 0.5; /*   Added the multiplier here because youtube is consistently   */
-                    if (music.paused) {                /* louder than admin music, which makes people lower the volume. */
-                        music.play();
+                    var fromTopic = data.fromTopic;
+                    if (fromTopic) {
+                        // Play youtube-dl style
+                        $playMusic.attr("src", data.playMusic);
+                        $playMusic.attr("youtube", true);
+                        var music = $playMusic.get(0);
+                        /* Added the multiplier here because youtube is consistently louder than admin music, which makes people lower the volume. */
+                        music.volume = data.volume * 0.4;
+                        if (music.paused) {
+                            music.play();
+                        }
+                    } else {
+                        // Play cobalt-tools style
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("GET", data.playMusic, true);
+                        xhr.responseType = "blob";
+
+                        xhr.onload = function () {
+                            if (xhr.status === 200) {
+                                var blob = xhr.response;
+                                var url = URL.createObjectURL(blob);
+                                $playMusic.attr("src", url);
+                                $playMusic.attr("youtube", true);
+                                var music = $playMusic.get(0);
+                                /* Added the multiplier here because youtube is consistently louder than admin music, which makes people lower the volume. */
+                                music.volume = data.volume * 0.4;
+                                if (music.paused) {
+                                    music.play();
+                                }
+                            } else {
+                                triggerError("PlayMusic: Failed to download music. Status: " + xhr.status);
+                            }
+                        };
+                        xhr.onerror = function () {
+                            triggerError("PlayMusic: Network error.");
+                        };
+                        xhr.send();
                     }
                 } catch (e) {
-                    triggerError('PlayMusic: '+e+'. '+JSON.stringify(data));
+                    triggerError("PlayMusic: " + e + ". " + JSON.stringify(data));
                 }
             } else {
                 output('<span class="internal boldnshit">Your IE version is too old for this music. Please upgrade to IE 9+.</span>');
@@ -512,7 +543,13 @@ function ehjaxCallback(data) {
             // set volume of any music currently playing
             if (window.HTMLAudioElement) {
                 var audio = $playMusic.get(0);
-                audio.volume = data.adjustVolume;
+                // If the youtube attribute is on the playmusic element, it's a youtube video
+                // and thus we need to adjust the volume differently
+                if ($playMusic.attr('youtube')) {
+                    audio.volume = data.adjustVolume * 0.4;
+                } else {
+                    audio.volume = data.adjustVolume;
+                }
                 $('.dectalk').each(function(i, el) {
                     el.volume = data.adjustVolume;
                 });
@@ -603,7 +640,7 @@ $(function() {
         'shighlightColor': getCookie('highlightcolor'),
         'stheme': getCookie('theme'),
         'smessageLimitEnabled': getCookie('messageLimitEnabled'),
-		'soddMsgHighlight': getCookie('oddMsgHighlight')
+        'soddMsgHighlight': getCookie('oddMsgHighlight')
     };
 
     if (savedConfig.sfontSize) {
@@ -645,13 +682,13 @@ $(function() {
     if (savedConfig.smessageLimitEnabled) {
       opts.messageLimitEnabled = savedConfig.smessageLimitEnabled;
     }
-	if (savedConfig.soddMsgHighlight) {
-		if (savedConfig.soddMsgHighlight == 'true') {
-			opts.oddMsgHighlight = true;
-		} else if (savedConfig.soddMsgHighlight == 'false') {
-			opts.oddMsgHighlight = false;
-		}
-	}
+    if (savedConfig.soddMsgHighlight) {
+        if (savedConfig.soddMsgHighlight == 'true') {
+            opts.oddMsgHighlight = true;
+        } else if (savedConfig.soddMsgHighlight == 'false') {
+            opts.oddMsgHighlight = false;
+        }
+    }
 
     (function() {
         var dataCookie = getCookie('connData');
@@ -900,11 +937,11 @@ $(function() {
         output('<span class="internal boldnshit">'+(opts.messageLimitEnabled ? 'Old messages will get deleted.' : 'Old messages no longer get deleted. This might cause performance issues.')+'</span>');
     });
 
-	$('#toggleOddMsgHighlight').click(function(e) {
-		opts.oddMsgHighlight = !opts.oddMsgHighlight;
-		setCookie('oddMsgHighlight', opts.oddMsgHighlight, 365);
-		output('<span class="internal boldnshit">'+(opts.oddMsgHighlight ? 'Odd messages will be highlighted.' : 'Odd messages will no longer be highlighted.')+'</span>');
-	});
+    $('#toggleOddMsgHighlight').click(function(e) {
+        opts.oddMsgHighlight = !opts.oddMsgHighlight;
+        setCookie('oddMsgHighlight', opts.oddMsgHighlight, 365);
+        output('<span class="internal boldnshit">'+(opts.oddMsgHighlight ? 'Odd messages will be highlighted.' : 'Odd messages will no longer be highlighted.')+'</span>');
+    });
 
     $('#saveLog').click(function(e) {
         var saved = '';
@@ -1008,7 +1045,7 @@ $(function() {
             '</div>');
     }
 
-    runByond('?action=ehjax&type=datum&datum=chatOutput&proc=doneLoading&param[ua]='+escaper(navigator.userAgent));
+    runByond('?action=ehjax&type=datum&datum=chatOutput&proc=doneLoading');
     if ($('#loading').is(':visible')) {
         $('#loading').remove();
     }

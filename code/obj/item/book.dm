@@ -275,8 +275,8 @@ Custom Books
 				user.visible_message(SPAN_ALERT("<B>[user] fumbles the catch and is clonked on the head!</B>"))
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				user.changeStatus("stunned", 2 SECONDS)
-				user.changeStatus("weakened", 2 SECONDS)
-				user.changeStatus("paralysis", 2 SECONDS)
+				user.changeStatus("knockdown", 2 SECONDS)
+				user.changeStatus("unconscious", 2 SECONDS)
 				user.force_laydown_standup()
 			else
 				src.Attackhand(usr)
@@ -348,13 +348,16 @@ Custom Books
 	examine(mob/user)
 		if (!issilicon(user))
 			. = list("What...what is this? It's written entirely in barcodes or something, cripes. You can't make out ANY of this.")
-			var/mob/living/carbon/jerk = user
+			var/mob/living/carbon/human/jerk = user
 			if (!istype(jerk))
 				return
 
+			jerk.traitHolder?.addTrait("wasitsomethingisaid")
+
 			var/datum/db_record/S = data_core.security.find_record("id", jerk.datacore_id)
-			S?["criminal"] = "*Arrest*"
+			S?["criminal"] = ARREST_STATE_ARREST
 			S?["mi_crim"] = "Reading highly-confidential private information."
+			jerk.update_arrest_icon()
 		else
 			return list("It appears to be heavily encrypted information.")
 
@@ -451,8 +454,8 @@ Custom Books
 	file_path = "strings/books/syndies_guide.txt"
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -546,7 +549,8 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 			else if (!src.book_cover)
 				src.book_cover = "book0"
 			src.icon_state = src.book_cover
-		src.info = "<span style=\"color:[src.ink_color]\">[src.info]</span>"
+		if(!findtext(src.info, "<span style=\"color:[src.ink_color]\">", 1, 50))
+			src.info = "<span style=\"color:[src.ink_color]\">[src.info]</span>"
 
 /obj/item/paper/spaceodyssey
 	name = "strange printout"

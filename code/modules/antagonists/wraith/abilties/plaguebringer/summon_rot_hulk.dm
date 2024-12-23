@@ -11,7 +11,6 @@
 	var/list/decal_list = list(/obj/decal/cleanable/blood,
 	/obj/decal/cleanable/ketchup,
 	/obj/decal/cleanable/rust,
-	/obj/decal/cleanable/urine,
 	/obj/decal/cleanable/vomit,
 	/obj/decal/cleanable/greenpuke,
 	/obj/decal/cleanable/slime,

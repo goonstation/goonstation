@@ -250,6 +250,7 @@
 		var/turf/startTurf = get_turf(owner)
 		var/obj/blob/nucleus/C = new /obj/blob/nucleus(startTurf)
 		logTheThing(LOG_GAMEMODE, owner, "plants their start nucleus at [log_loc(startTurf)].")
+		message_ghosts("<b>A Blob</b> has just deployed at [log_loc(startTurf, ghostjump=TRUE)].")
 		C.layer++
 		owner.total_placed++
 		C.setOvermind(owner)
@@ -343,7 +344,7 @@
 		if (!T)
 			T = get_turf(owner)
 
-		if (istype(T, /turf/space))
+		if (istype(T, /turf/space) || (istype(T, /turf/unsimulated) && T.can_build))
 			var/datum/blob_ability/bridge/B = owner.get_ability(/datum/blob_ability/bridge)
 
 			if (B)
@@ -533,6 +534,9 @@
 		var/obj/blob/B = T.get_blob_on_this_turf()
 
 		if (B)
+			if (B.health >= B.health_max)
+				boutput(owner, SPAN_ALERT("That blob tile is already at full health."))
+				return
 			if(ON_COOLDOWN(B, "manual_blob_heal", 6 SECONDS))
 				boutput(owner, SPAN_ALERT("That blob tile needs time before it can be repaired again."))
 				return
@@ -606,7 +610,6 @@
 	duration = 10 SECONDS
 
 	interrupt_flags = 0
-	id = "blobabsorb"
 	var/mob/living/target
 	var/mob/living/intangible/blob_overmind/blob_o
 
@@ -700,7 +703,7 @@
 		if (!T)
 			T = get_turf(owner)
 
-		if (!istype(T, /turf/space))
+		if (!istype(T, /turf/space) && !T.can_build)
 			boutput(owner, SPAN_ALERT("Bridges must be placed on space tiles."))
 			return 1
 
@@ -953,6 +956,7 @@
 	var/mob/living/intangible/blob_overmind/owner
 	var/atom/movable/screen/blob/button
 	var/upgradename = "upgrade"
+	var/purchased_times = 0 // For crew credits
 
 	New()
 		..()
@@ -1024,6 +1028,7 @@
 		else
 			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup3.ogg', 50, 1)
 
+		purchased_times++
 		owner.update_buttons()
 
 	proc/tutorial_check()

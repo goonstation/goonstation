@@ -44,7 +44,7 @@
 	regenRate = 0
 	tabName = "kudzu"
 	// notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
-	points = 0
+	points = 50
 	pointName = "nutrients"
 	var/stealthed = 0
 	var/atom/movable/screen/kudzu/meter/nutrients_meter = null
@@ -78,7 +78,7 @@
 			//unstealth
 			if (stealthed)
 				src.stealthed = 0
-				owner.changeStatus("weakened", 6 SECONDS)
+				owner.changeStatus("knockdown", 6 SECONDS)
 				animate(owner, alpha=255, time=3 SECONDS)
 
 				boutput(owner, "<b class='hint'>You reappear.</b>")
@@ -176,11 +176,12 @@
 	icon_state = "guide"
 	targeted = 1
 	target_anything = 1
-	cooldown = 1 SECOND
+	cooldown = 0
 	pointCost = 2
 	max_range = 2
 
 	cast(atom/tar)
+		. = ..()
 		var/turf/T = get_turf(tar)
 		if (isturf(T))
 			//if there's already a marker here, remove it
@@ -263,6 +264,7 @@
 	pointCost = 1
 
 	cast(atom/T)
+		. = ..()
 		var/datum/abilityHolder/kudzu/HK = holder
 		if (!HK.stealthed)
 			HK.stealthed = 1
@@ -320,7 +322,7 @@
 			if (istype(H) && istype(H.mutantrace, /datum/mutantrace/kudzu) && istype(H.abilityHolder, /datum/abilityHolder/kudzu))
 				var/datum/abilityHolder/kudzu/KAH = H.abilityHolder
 				H.abilityHolder.points = min(KAH.MAX_POINTS, KAH.points + 20)
-				H.changeStatus("weakened", -3 SECONDS)
+				H.changeStatus("knockdown", -3 SECONDS)
 		return
 
 /datum/targetable/kudzu/kudzusay
@@ -356,6 +358,7 @@
 
 	//This is basically all stolen from the seedplanter item.
 	cast(atom/T)
+		. = ..()
 		var/datum/controller/process/kudzu/K = get_master_kudzu_controller()
 		var/power = 1
 		if (istype(K))
@@ -451,6 +454,7 @@
 	max_range = 1
 
 	cast(atom/target)
+		. = ..()
 		//For giving nutrients to plantpots
 		if (istype(target, /obj/machinery/plantpot) && target.reagents)
 			//replace with kudzu_nutrients when I make it. should be a good thing for plants, maybe kinda good for man.
@@ -508,6 +512,7 @@
 		vine = new/obj/item/kudzu/kudzumen_vine(holder?.owner)		//make the vine item in
 
 	cast()
+		. = ..()
 		var/mob/owner = holder?.owner
 		if (!istype(owner))
 			logTheThing(LOG_DEBUG, null, "no owner for this kudzu ability. [src]")
@@ -576,6 +581,7 @@
 	var/theme = null // for wire's tooltips, it's about time this got varized
 	var/cur_meter_location = 0
 	var/last_meter_location = 0			//the amount of points at the last update. Used for deciding when to redraw the sprite to have less progress
+
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
@@ -675,7 +681,7 @@
 	throwforce = 5
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	stamina_damage = 30
 	stamina_cost = 15
 	stamina_crit_chance = 50
@@ -724,7 +730,6 @@
 /datum/action/bar/icon/kudzu_shaping
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "kudzu_shaping"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "kudzu_shaping"
 	var/obj/item/kudzu/kudzumen_vine/vine_arm

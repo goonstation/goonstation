@@ -146,19 +146,15 @@
 /obj/machinery/bot/floorbot/attackby(var/obj/item/W , mob/user as mob)
 	if (istype(W, /obj/item/tile))
 		var/obj/item/tile/T = W
-		if (src.amount >= max_tiles)
+		var/space_left = src.max_tiles - src.amount
+		if (space_left < 1)
 			return
-		var/loaded = 0
-		if (src.amount + T.amount > max_tiles)
-			var/i = max_tiles - src.amount
-			src.amount += i
-			T.amount -= i
-			loaded = i
-		else
-			src.amount += T.amount
-			loaded = T.amount
-			qdel(T)
-		boutput(user, SPAN_ALERT("You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!"))
+		var/moving_tiles = space_left
+		if (space_left > T.amount)
+			moving_tiles = T.amount
+		T.change_stack_amount(moving_tiles * -1)
+		src.amount += moving_tiles
+		boutput(user, SPAN_ALERT("You load [moving_tiles] tiles into the floorbot. It now contains [src.amount] tiles!"))
 		src.UpdateIcon()
 	//Regular ID
 	else
@@ -357,7 +353,7 @@
 
 /obj/machinery/bot/floorbot/proc/do_the_thing()
 	// we are there, hooray
-	if (prob(80))
+	if(!ON_COOLDOWN(src, "floorbeep", 30 SECONDS))
 		src.visible_message("[src] makes an excited booping beeping sound!")
 	if (istype(src.target, /obj/item/tile))
 		src.eattile(src.target)
@@ -390,6 +386,9 @@
 		src.target = null
 		src.repairing = 0
 		return
+	if (ismob(T.loc))
+		var/mob/M = T.loc
+		M.drop_item(T, FALSE)
 	if (src.amount + T.amount > max_tiles)
 		var/i = max_tiles - src.amount
 		src.amount += i
@@ -440,6 +439,9 @@
 /obj/machinery/bot/floorbot/active
 	on = TRUE
 
+/obj/machinery/bot/floorbot/active/improvefloors
+	improvefloors = TRUE
+
 /////////////////////////////////
 //////Floorbot Construction//////
 /////////////////////////////////
@@ -474,10 +476,7 @@
 	if(src.color_overlay)
 		A.UpdateOverlays(image(A.icon, icon_state = src.color_overlay), "coloroverlay")
 		A.color_overlay = src.color_overlay
-	if (user.r_hand == src || user.l_hand == src)
-		A.set_loc(user.loc)
-	else
-		A.set_loc(src.loc)
+	A.set_loc(get_turf(src))
 	A.on = 1 // let's just pretend they flipped the switch
 	A.update_power_overlay()
 	boutput(user, "You add the robot arm to the odd looking toolbox assembly! Boop beep!")
@@ -500,7 +499,6 @@
 /datum/action/bar/icon/floorbot_repair
 	duration = 10
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "floorbot_build"
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "tile"
 	var/obj/machinery/bot/floorbot/master
@@ -575,7 +573,6 @@
 /datum/action/bar/icon/floorbot_disrepair
 	duration = 10
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "floorbot_ripup"
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "tile"
 	var/obj/machinery/bot/floorbot/master

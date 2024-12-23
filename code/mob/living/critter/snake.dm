@@ -33,14 +33,16 @@
 	var/atom/movable/my_stick = null
 
 	//note: this is not the best way to do this, but I'm showing it here as an example. It is better to create a peaceful AI holder with no attack tasks and use that.
-	var/aggressive = TRUE
+	aggressive = TRUE
 
-	faction = FACTION_WIZARD
+	faction = list(FACTION_WIZARD)
 
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/mouth	// if not null, the special limb to use when attack_handing
+		var/datum/limb/mouth/M = HH.limb
+		M.stam_damage_mult = 0.5
 		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
 		HH.name = "mouth"						// designation of the hand - purely for show

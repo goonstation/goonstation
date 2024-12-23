@@ -2,6 +2,7 @@
 	name = "disruptor"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "disrupt"
+	damage = 10
 //How much of a punch this has, tends to be seconds/damage before any resist
 	power = 12.5
 	stun = 12.5
@@ -42,13 +43,6 @@ toxic - poisons
 	color_green = 0.2
 	color_blue = 1
 
-//Any special things when it hits shit?
-	on_hit(atom/hit)
-		if(istype(hit,/obj/window))
-			if(prob(80))
-				hit:smash()
-		return
-
 /datum/projectile/disruptor/burst
 	icon_state = "disrupt"
 	shot_sound = 'sound/weapons/rocket.ogg'
@@ -70,4 +64,10 @@ toxic - poisons
 	sname = "disruptor"
 
 	disruption = 20
+
+	on_hit(atom/hit)
+		if(istype(hit, /obj/window))
+			if(prob(80))
+				var/obj/window/win = hit
+				win.smash()
 

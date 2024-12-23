@@ -1,5 +1,5 @@
 /obj/machinery/computer/security
-	name = "Security Cameras"
+	name = "security cameras"
 	icon_state = "security"
 	circuit_type = /obj/item/circuitboard/security
 	var/obj/machinery/camera/current = null
@@ -109,12 +109,11 @@
 	icon_state = "cameras2"
 
 /obj/machinery/computer/security/wooden_tv
-	name = "Security Cameras"
 	icon_state = "security_det"
 	circuit_type = /obj/item/circuitboard/security_tv
 
 /obj/machinery/computer/security/wooden_tv/small
-	name = "Television"
+	name = "television"
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?"
 	network = "public"
 	icon_state = "security_tv"

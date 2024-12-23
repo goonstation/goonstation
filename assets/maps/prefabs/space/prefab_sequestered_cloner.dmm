@@ -49,7 +49,7 @@
 /turf/simulated/floor/purple/side,
 /area/prefab/sequestered_cloner)
 "er" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -95,7 +95,7 @@
 /turf/simulated/floor/purple/side,
 /area/prefab/sequestered_cloner)
 "hw" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "hB" = (
@@ -165,7 +165,7 @@
 /turf/simulated/floor/scorched2,
 /area/prefab/sequestered_cloner)
 "oU" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large video server. Garish branding reads Subliminal Mission Implanter Mk.2! Now with fewer seizures!";
@@ -224,7 +224,7 @@
 	pixel_x = 7;
 	pixel_y = 2
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -267,6 +267,9 @@
 "rW" = (
 /obj/item_dispenser/idcarddispenser{
 	pixel_x = 7
+	},
+/obj/storage/secure/closet/command/chief_engineer/puzzle{
+	pixel_x = -8
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -367,6 +370,14 @@
 /turf/simulated/floor/red/redblackchecker,
 /area/prefab/sequestered_cloner)
 "xI" = (
+/obj/machinery/power/apc/puzzle_apc{
+	autoname_on_spawn = 0;
+	desc = "A note is attached: To leave, power this APC and press the neighboring button. The APC can be a little slow.";
+	name = "Engine Test APC";
+	pixel_x = -24;
+	pixel_y = -2;
+	start_charge = 0
+	},
 /obj/cable,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/yellow,
@@ -445,7 +456,7 @@
 /turf/simulated/floor/yellow/corner,
 /area/prefab/sequestered_cloner)
 "zf" = (
-/obj/decal/fakeobjects/creepytv{
+/obj/fakeobject/creepytv{
 	desc = "It's a looping video. Instructions on how to set up a T.E.G. and iconography of the Syndicate are interlaced with happy sounds. Then it turns to cruel images interlaced with NT logos...";
 	name = "educational television"
 	},
@@ -494,7 +505,7 @@
 /turf/simulated/floor,
 /area/prefab/sequestered_cloner)
 "Bz" = (
-/obj/decal/fakeobjects/tallsmes,
+/obj/fakeobject/tallsmes,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -517,7 +528,7 @@
 /turf/simulated/floor/purple/checker,
 /area/prefab/sequestered_cloner)
 "Cw" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -963,7 +974,7 @@
 /turf/simulated/floor/plating,
 /area/prefab/sequestered_cloner)
 "VK" = (
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /obj/machinery/door/window{
 	dir = 1
 	},

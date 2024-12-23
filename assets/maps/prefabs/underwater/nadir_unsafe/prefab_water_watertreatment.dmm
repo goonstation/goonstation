@@ -30,8 +30,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/water_treatment)
 "aj" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
+/obj/fakeobject/skeleton,
 /obj/decal/cleanable/blood/drip/high,
 /obj/item/toy/sponge_capsule/syndicate{
 	pixel_y = 9;
@@ -134,7 +134,7 @@
 	},
 /area/prefab/water_treatment)
 "aF" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
@@ -253,7 +253,7 @@
 /area/prefab/water_treatment)
 "bi" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/simulated/floor/redblack{
 	icon_state = "redblack";
 	dir = 10
@@ -342,7 +342,7 @@
 /turf/simulated/floor/plating,
 /area/prefab/water_treatment)
 "bH" = (
-/obj/decal/fakeobjects/cpucontroller,
+/obj/fakeobject/cpucontroller,
 /obj/map/light/dimred,
 /turf/simulated/floor/circuit/red,
 /area/prefab/water_treatment)
@@ -355,7 +355,7 @@
 	},
 /area/prefab/water_treatment)
 "dp" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -387,14 +387,14 @@
 	},
 /obj/fluid_spawner{
 	amount = 5000;
-	reagent_id = "urine"
+	reagent_id = "water"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
 /area/prefab/water_treatment)
 "hn" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -411,7 +411,7 @@
 /turf/simulated/wall/false_wall,
 /area/prefab/water_treatment)
 "jR" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -429,7 +429,7 @@
 	},
 /area/prefab/water_treatment)
 "mH" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -465,7 +465,7 @@
 	},
 /area/prefab/water_treatment)
 "qY" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -474,7 +474,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	name = "power conduit";
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -521,7 +521,7 @@
 /turf/simulated/floor/plating,
 /area/prefab/water_treatment)
 "wm" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -615,11 +615,11 @@
 /turf/simulated/floor/purple/side,
 /area/prefab/water_treatment)
 "Bz" = (
-/obj/decal/fakeobjects/tapedeck,
+/obj/fakeobject/tapedeck,
 /turf/simulated/floor/circuit/red,
 /area/prefab/water_treatment)
 "BW" = (
-/obj/decal/fakeobjects/tapedeck,
+/obj/fakeobject/tapedeck,
 /obj/map/light/dimred,
 /turf/simulated/floor/circuit/red,
 /area/prefab/water_treatment)
@@ -629,7 +629,7 @@
 /area/prefab/water_treatment)
 "Ef" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -770,7 +770,7 @@
 /turf/simulated/floor/purple,
 /area/prefab/water_treatment)
 "Pm" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
@@ -786,7 +786,7 @@
 /turf/simulated/floor/orangeblack,
 /area/prefab/water_treatment)
 "QW" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	name = "power conduit";
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -797,7 +797,7 @@
 /turf/simulated/floor/plating,
 /area/prefab/water_treatment)
 "Ro" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -882,7 +882,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/prefab/water_treatment)
 "Xq" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	name = "power conduit";
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -915,7 +915,7 @@
 "ZL" = (
 /obj/item/sponge,
 /obj/decal/cleanable/blood/drip/high,
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/blood/drip/high{
 	icon_state = "gibdown1"

@@ -138,7 +138,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 				update()
 
 			if (isliving(AM))
-				if (AM:anchored) return
+				if (AM:anchored >= ANCHORED_ALWAYS) return
 				if (isintangible(AM)) // STOP EATING BLOB OVERMINDS ALSO
 					return
 				var/mob/living/M = AM
@@ -242,9 +242,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 					// it will take into account your actual name (John Smith) and still work, instead of searching for a "John Smith (as Someone Else)" in the records
 					// unless your face is obstructed, then it works normally by taking your visible name, with intended or unintended results
 					nameToCheck = H.face_visible() ? H.real_name : H.name
-				var/datum/db_record/R = data_core.security.find_record("name", nameToCheck)
-				if(!isnull(R) && ((R["criminal"] == "Incarcerated") || (R["criminal"] == "*Arrest*")))
-					R["criminal"] = "Released"
+					var/datum/db_record/R = data_core.security.find_record("name", nameToCheck)
+					if(!isnull(R) && ((R["criminal"] == ARREST_STATE_INCARCERATED) || (R["criminal"] == ARREST_STATE_ARREST) || (R["criminal"] == ARREST_STATE_DETAIN)))
+						R["criminal"] = ARREST_STATE_RELEASED
+						H.update_arrest_icon()
 
 	// timed process
 	// charge the gas reservoir and perform flush if ready
@@ -350,7 +351,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 		AM.pipe_eject(0)
 		AM?.throw_at(target, 5, 1)
 
-	return_air()
+	return_air(direct = FALSE)
 		return air_contents
 
 /obj/machinery/floorflusher/industrial

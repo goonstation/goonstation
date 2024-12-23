@@ -121,7 +121,6 @@ For fruit DynAssemblies see: fruithat.dm
 /datum/action/bar/icon/dynassemblySecure //This is used when you are securing a dynassembly.
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "dynassSecure"
 	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/item/dynassembly/assembly
@@ -153,7 +152,6 @@ For fruit DynAssemblies see: fruithat.dm
 /datum/action/bar/icon/dynassemblyUnsecure //This is used when you are unsecuring a dynassembly.
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "dynassUnsecure"
 	icon = 'icons/obj/items/tools/wrench.dmi'
 	icon_state = "wrench"
 	var/obj/item/dynassembly/assembly

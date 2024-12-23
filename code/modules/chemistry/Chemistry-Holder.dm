@@ -85,10 +85,12 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	proc/play_mix_sound(var/mix_sound)
 		playsound(my_atom, mix_sound, 80, TRUE, 3)
 
-	proc/copy_to(var/datum/reagents/target, var/multiplier = 1, var/do_not_react = 0, var/copy_temperature = 0)
+	proc/copy_to(var/datum/reagents/target, var/multiplier = 1, var/do_not_react = 0, var/copy_temperature = 0, var/exception = null)
 		if(!target || target == src) return
 		var/newtemp = copy_temperature ? src.total_temperature : T20C
 		for(var/reagent_id in reagent_list)
+			if (reagent_id == exception)
+				continue
 			var/datum/reagent/current_reagent = reagent_list[reagent_id]
 			if(current_reagent)
 				target.add_reagent(reagent=reagent_id, amount=max(current_reagent.volume * multiplier, 0.001),donotreact=do_not_react, temp_new = newtemp, sdata=current_reagent.data) //mbc : fixed reagent duplication bug by changing max(x,1) to max(x,0.001). Still technically possible to dupe, but not realistically doable.
@@ -99,7 +101,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	proc/set_reagent_temp(var/new_temp = T0C, var/react = 0)
 		src.last_temp = total_temperature
-		src.total_temperature = new_temp
+		src.total_temperature = max(new_temp, 0)
 		if (react)
 			temperature_react()
 			handle_reactions()
@@ -152,6 +154,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		total_temperature += change
 
 		total_temperature = clamp(total_temperature, temperature_min, temperature_cap) //Cap for the moment.
+
+		reagents_changed()
 
 		update_total()
 
@@ -288,13 +292,13 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		return opacity_to_return
 
 	/// index = which reagent to transfer (0 = all)
-	proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/do_fluid_react=1, var/index=0)
+	proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/do_fluid_react=1, var/index=0, var/exception=0)
 		if(amount > total_volume) amount = total_volume
 		if(amount <= 0) return
 		if(!target) return
 
 		if (isnull(target.reagents))
-			target.reagents = new
+			target.create_reagents()
 
 		var/datum/reagents/target_reagents = target.reagents
 		amount = min(amount, target_reagents.maximum_volume - target_reagents.total_volume)
@@ -304,19 +308,21 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			var/turf/simulated/T = target
 			return T.fluid_react(src, amount, index = index)
 
-		return trans_to_direct(target_reagents, amount, multiplier, index = index)
+		return trans_to_direct(target_reagents, amount, multiplier, index = index, exception = exception)
 
 	// MBC note : I added update_target_reagents and update_self_reagents vars for fluid handling. y'see, there are a ton of transfer operations involving fluids that don't need to update reagents immediately as they happen.
 	// we would rather perform all the transfers, and then batch update the reagents when necessary. Saves us from some lag, and avoids some *buggy shit*!
-	proc/trans_to_direct(var/datum/reagents/target_reagents, var/amount=1, var/multiplier=1, var/update_target_reagents = 1, var/update_self_reagents = 1, var/index = 0)
+	proc/trans_to_direct(var/datum/reagents/target_reagents, var/amount=1, var/multiplier=1, var/update_target_reagents = 1, var/update_self_reagents = 1, var/index = 0, var/exception = null)
 		if (!target_reagents || !total_volume) //Wire & ZeWaka: Fix for Division by zero
 			return
 		var/transfer_ratio = amount/total_volume
 
 		if(!index)
 			for(var/reagent_id in reagent_list)
-				var/datum/reagent/current_reagent = reagent_list[reagent_id]
+				if (reagent_id == exception)
+					continue
 
+				var/datum/reagent/current_reagent = reagent_list[reagent_id]
 				if (isnull(current_reagent) || current_reagent.volume == 0)
 					continue
 
@@ -334,6 +340,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		else //Only transfer one reagent
 			var/CI = 1
 			for(var/reagent_id in reagent_list)
+				if (reagent_id == exception)
+					continue
 				if ( CI++ == index )
 					var/datum/reagent/current_reagent = reagent_list[reagent_id]
 					if (isnull(current_reagent) || current_reagent.volume == 0)
@@ -360,19 +368,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		reagents_transferred()
 		return amount
-
-	proc/aggregate_pathogens()
-		var/list/ret = list()
-		for (var/reagent_id in pathogen_controller.pathogen_affected_reagents)
-			if (src.has_reagent(reagent_id))
-				var/datum/reagent/blood/B = src.get_reagent(reagent_id)
-				if (!istype(B))
-					continue
-				for (var/uid in B.pathogens)
-					if (!(uid in ret))
-						ret += uid
-						ret[uid] = B.pathogens[uid]
-		return ret
 
 	/// multiplier is used to handle realtime metabolizations over byond time
 	proc/metabolize(var/mob/target, var/multiplier = 1)
@@ -540,7 +535,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				continue
 			if(C.temperature_change)
 				src.set_reagent_temp(src.total_temperature += C.temperature_change, react = TRUE)
-			var/speed = C.reaction_speed
+			var/speed = C.reaction_speed * C.get_reaction_speed_multiplicator(src)
 			for (var/reagent in C.required_reagents)
 				var/required_amount = C.required_reagents[reagent] * speed / C.result_amount
 
@@ -647,7 +642,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			R.grenade_effects(grenade, A)
 
 	///	paramslist thingy can override the can_burn oh god im sorry.	paramslist only used for mobs for now, feeel free to paste in for turfs objs
-	proc/reaction(var/atom/A, var/method=TOUCH, var/react_volume, var/can_spawn_fluid = 1, var/minimum_react = 0.01, var/can_burn = 1, var/list/paramslist = 0)
+	proc/reaction(var/atom/A, var/method=TOUCH, var/react_volume, var/can_spawn_fluid = 1, var/minimum_react = 0.01, var/can_burn = 1, var/list/paramslist = 0, var/exception = null)
 		if (src.total_volume <= 0)
 			return
 		if (isintangible(A))
@@ -701,6 +696,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 							H.bodytemperature -= clamp((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5, 500)
 
 				for(var/current_id in reagent_list)
+					if (current_id == exception)
+						continue
 					var/datum/reagent/current_reagent = reagent_list[current_id]
 					var/turf_reaction_success = 0
 					// drsingh attempted fix for Cannot read null.volume, but this one makes no sense. should have been protected already
@@ -714,6 +711,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 								turf_reaction_success = 1
 								.+= current_id
 						if(isobj(A))
+
+							if (istype(A, /obj/overlay))
+								continue
 							// use current_reagent.reaction_obj for stuff that affects all objects
 							// and reagent_act for stuff that affects specific objects
 							if (!current_reagent.reaction_obj(A, current_reagent.volume*volume_fraction))
@@ -756,13 +756,15 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				// I didn't come across problems in local testing, I've commented them out as an experiment. If you've come
 				// here while investigating INGEST-related bugs, feel free to revert my change (Convair880).
 				for(var/current_id in reagent_list)
+					if (current_id == exception)
+						continue
 					var/datum/reagent/current_reagent = reagent_list[current_id]
 					var/turf_reaction_success = 0
 					if(current_reagent && current_reagent.volume > minimum_react)
 						if(ismob(A) && !isobserver(A))
 							//SPAWN(0)
 								//if (current_reagent) //This is in a spawn. Between our first check and the execution, this may be bad.
-							if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction, paramslist))
+							if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction, paramslist, current_reagent.volume*volume_fraction))
 								.+= current_id
 						if(isturf(A))
 							//SPAWN(0)
@@ -785,8 +787,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			fluid_turf.fluid_react(temp_fluid_reagents, temp_fluid_reagents.total_volume)
 
 	proc/add_reagent(var/reagent, var/amount, var/sdata, var/temp_new=T20C, var/donotreact = 0, var/donotupdate = 0, var/chemical_reaction = FALSE, var/chem_reaction_priority = 1)
-		if(istype(my_atom, /obj/item/reagent_containers/glass/condenser) && chemical_reaction)
-			var/obj/item/reagent_containers/glass/condenser/condenser = my_atom
+		if(istype(my_atom, /obj/item/reagent_containers/glass/plumbing) && chemical_reaction)
+			var/obj/item/reagent_containers/glass/plumbing/condenser/condenser = my_atom
 			condenser.try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate, chem_reaction_priority)
 			return
 		if(!isnum(amount) || amount <= 0 || src.disposed)
@@ -849,7 +851,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if (!donotupdate)
 			reagents_changed(1)
 
-		if((added_new || check_reactions) && !current_reagent.disposed)
+		if((added_new || check_reactions) && !QDELETED(current_reagent))
 			append_possible_reactions(current_reagent.id) //Experimental reaction possibilities
 			if (!donotreact)
 				src.handle_reactions()
@@ -882,6 +884,12 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	proc/has_reagent(var/reagent, var/amount=0)
 		var/datum/reagent/current_reagent = reagent_list[reagent]
 		return current_reagent && current_reagent.volume >= amount
+
+	proc/has_any(list/reagents, amount)
+		for (var/reagent_id in reagents)
+			if (src.has_reagent(reagent_id, amount))
+				return TRUE
+		return FALSE
 
 	proc/has_active_reaction(var/reaction_id, var/amount=0)
 		for(var/datum/chemical_reaction/C in src.active_reactions)
@@ -975,6 +983,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			for(var/current_id in reagent_list)
 				var/datum/reagent/current_reagent = reagent_list[current_id]
 				. += "<br>[SPAN_ALERT("[current_reagent.volume] units of [current_reagent.name]")]"
+
+			if (user.traitHolder.hasTrait("training_bartender"))
+				var/eth_eq = get_ethanol_equivalent(user, src)
+				if (eth_eq)
+					. += "<br> [SPAN_REGULAR("You estimate there's the equivalent of <b>[eth_eq] units of ethanol</b> here.")]"
 		return
 
 	proc/get_reagents_fullness()
@@ -1043,7 +1056,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 			// weigh contribution of each reagent to the average color by amount present and it's transparency
 
-			var/weight = current_reagent.volume * current_reagent.transparency / 255
+			var/weight = min(current_reagent.volume * current_reagent.transparency / 255, 1e24) //infinity breaks things real badly here
 			total_weight += weight
 
 			average.r += weight * current_reagent.fluid_r
@@ -1102,27 +1115,29 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	/// Gets a string of what something tastes like (as shown to the drinker/eater/whatever)
 	proc/get_taste_string(mob/taster)
-		if (iscarbon(taster) || ismobcritter(taster))
-			if (taster.mind && taster.mind.assigned_role == "Bartender")
-				var/reag_list = ""
-				for (var/current_id in src.reagent_list)
-					var/datum/reagent/current_reagent = src.reagent_list[current_id]
-					if (length(src.reagent_list) > 1 && src.reagent_list[src.reagent_list.len] == current_id)
-						reag_list += " and [current_reagent.name]"
-						continue
-					reag_list += ", [current_reagent.name]"
-				reag_list = copytext(reag_list, 3)
-				. = "Tastes like there might be some [reag_list] in this. "
-			var/tastes = src.get_prevalent_tastes(3)
-			switch (length(tastes))
-				if (0)
-					. += "Tastes pretty bland."
-				if (1)
-					. += "Tastes kind of [tastes[1]]."
-				if (2)
-					. += "Tastes kind of [tastes[1]] and [tastes[2]]."
-				else
-					. += "Tastes kind of [tastes[1]], [tastes[2]], and a little bit [tastes[3]]."
+		if (taster.traitHolder.hasTrait("training_bartender"))
+			var/reag_list = ""
+			var/eth_eq = get_ethanol_equivalent(taster, src)
+			for (var/current_id in src.reagent_list)
+				var/datum/reagent/current_reagent = src.reagent_list[current_id]
+				if (length(src.reagent_list) > 1 && src.reagent_list[src.reagent_list.len] == current_id)
+					reag_list += " and [current_reagent.name]"
+					continue
+				reag_list += ", [current_reagent.name]"
+			reag_list = copytext(reag_list, 3)
+			. = "Tastes like there might be some [reag_list] in this. "
+			if (eth_eq)
+				. += "[SPAN_REGULAR("This should be about <b>[eth_eq / src.total_volume * 100]% ethanol by volume.</b> <br>")]"
+		var/tastes = src.get_prevalent_tastes(3)
+		switch (length(tastes))
+			if (0)
+				. += "Tastes pretty bland."
+			if (1)
+				. += "Tastes kind of [tastes[1]]."
+			if (2)
+				. += "Tastes kind of [tastes[1]] and [tastes[2]]."
+			else
+				. += "Tastes kind of [tastes[1]], [tastes[2]], and a little bit [tastes[3]]."
 
 	/// returns whether reagents are solid, liquid, gas, or mixture
 	proc/get_state_description()
@@ -1220,6 +1235,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 /// Convenience proc to create a reagents holder for an atom
 /// Max vol is maximum volume of holder
-atom/proc/create_reagents(var/max_vol)
+atom/proc/create_reagents(var/max_vol = 100)
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src

@@ -255,12 +255,15 @@
 
 	for(var/turf/T in turfs) //Go through all the turfs and generate them
 		assign_turf(T, flags)
-		LAGCHECK(LAG_MED)
+		src.lag_check()
 
 /datum/map_generator/storehouse_generator/proc/assign_turf(turf/T, flags)
 	var/cell_value = cell_grid[T.x][T.y]
 
 	var/generate_stuff = !(flags & (MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA))
+
+	if(flags & MAPGEN_FLOOR_ONLY)
+		cell_value = FLOOR_ONLY
 
 	switch(cell_value)
 		if(FLOOR)
@@ -321,9 +324,10 @@
 			meaty = text2num(meatier[T.x * world.maxx + T.y])
 		if(index <= length(stomach))
 			stomach_goop = text2num(stomach[T.x * world.maxx + T.y])
+		if(flags & MAPGEN_FLOOR_ONLY)
+			cell_value = FLOOR_ONLY
 
 		var/datum/biome/selected_biome
-
 		switch(cell_value)
 			if(FLOOR)
 				if(meaty && stomach_goop)
@@ -411,7 +415,7 @@
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
 			edge_overlay.plane = PLANE_FLOOR
-			T.UpdateOverlays(edge_overlay, "edge_[edge_direction]")
+			T.AddOverlays(edge_overlay, "edge_[edge_direction]")
 
 
 /datum/biome/meat

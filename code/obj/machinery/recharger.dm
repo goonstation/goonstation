@@ -43,10 +43,10 @@ TYPEINFO(/obj/machinery/recharger)
 	var/accepted_types = list( /obj/item/gun/energy, \
 								/obj/item/baton, \
 								/obj/item/cargotele, \
-								/obj/item/mining_tool/power_pick, \
-								/obj/item/mining_tool/powerhammer, \
+								/obj/item/mining_tool/powered/pickaxe, \
+								/obj/item/mining_tool/powered/hammer, \
 								/obj/item/ammo/power_cell, \
-								/obj/item/mining_tool/power_shovel
+								/obj/item/mining_tool/powered/shovel
 								)
 
 	var/obj/item/charging = null
@@ -165,6 +165,7 @@ TYPEINFO(/obj/machinery/recharger)
 /obj/machinery/recharger/process(mult)
 	if(status & NOPOWER)
 		src.icon_state = sprite_empty
+		src.remove_charging()
 		UpdateIcon()
 		return
 

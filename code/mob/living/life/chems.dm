@@ -7,7 +7,7 @@
 		if (owner.nodamage)
 			return ..()
 
-		if (owner.reagents)
+		if (owner.reagents?.total_volume > 0)
 			var/reagent_time_multiplier = get_multiplier()
 
 			owner.reagents.temperature_reagents(owner.bodytemperature, 100*reagent_time_multiplier, 100, 15*reagent_time_multiplier)

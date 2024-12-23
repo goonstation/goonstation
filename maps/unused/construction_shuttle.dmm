@@ -41,7 +41,7 @@
 "ah" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "ai" = (
@@ -61,7 +61,7 @@
 "ak" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "al" = (
@@ -76,7 +76,7 @@
 /area/shuttle/arrival/station)
 "am" = (
 /obj/rack,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
@@ -140,9 +140,9 @@
 /area/shuttle/arrival/station)
 "ax" = (
 /turf/simulated/shuttle/wall/cockpit/window{
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window";
-	tag = "icon-wall_space"
+	tag = "icon-wall_trans"
 	},
 /area/shuttle/arrival/station)
 "ay" = (
@@ -162,9 +162,9 @@
 /area/shuttle/arrival/station)
 "aB" = (
 /turf/simulated/shuttle/wall/cockpit/window{
-	tag = "icon-wall_space (EAST)";
+	tag = "icon-wall_trans (EAST)";
 	name = "window";
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	dir = 4
 	},
 /area/shuttle/arrival/station)
@@ -208,7 +208,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aI" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -250,10 +250,10 @@
 /obj/table/reinforced/auto,
 /obj/item/oreprospector,
 /obj/item/oreprospector,
-/obj/item/mining_tool/power_pick{
+/obj/item/mining_tool/powered/pickaxe{
 	pixel_x = 7
 	},
-/obj/item/mining_tool/power_pick{
+/obj/item/mining_tool/powered/pickaxe{
 	pixel_x = 7
 	},
 /turf/simulated/floor/shuttle,
@@ -561,7 +561,7 @@
 /area/space)
 "bE" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "bF" = (
@@ -571,7 +571,7 @@
 "bG" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "bH" = (

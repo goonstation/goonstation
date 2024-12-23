@@ -5,6 +5,7 @@
 	canspeak = 0
 	health_brute = 40
 	health_burn = 40
+	use_stunned_icon = FALSE
 	var/being_seen = FALSE
 	var/mob/last_witness
 	var/icon_states_with_supported_eyes = list("bee", "buddy", "kitten", "monkey", "possum", "brullbar", "bunny", "penguin")
@@ -85,7 +86,7 @@
 			if (tgui_alert(ghost_mob, "You have fallen, but the curse is not lifted this easily. Do you wish to return to the physical realm?", "Resurrection",
 				list("Yes", "No"), timeout = 60 SECOND) == "Yes")
 				// get a random not locked station container
-				var/obj/storage/spawn_target = get_a_random_station_unlocked_container_with_no_others_on_the_turf()
+				var/obj/storage/spawn_target = pick(get_random_station_storage_list(no_others=TRUE))
 				if(isnull(spawn_target))
 					boutput(ghost_mob, SPAN_ALERT("<h3>Couldn't find a suitable location to respawn. Resurrection impossible.</h3>"))
 					return
@@ -134,14 +135,14 @@
 	Login()
 		..()
 		boutput(src, {"<h1>[SPAN_ALERT("You are NOT an antagonist unless stated otherwise through an obvious popup/message.")]</h1>
-			[SPAN_NOTICE("You can't move when being watched.")]
-			<br>[SPAN_NOTICE("Use your Plushie Talk ability to communicate.")]
-			<br>[SPAN_NOTICE("Your override sensors ability lets you temporarily move a few steps even if being watched.")]
-			<br>[SPAN_NOTICE("Your blink ability lets you teleport when you're not being watched.")]
-			<br>[SPAN_NOTICE("Your teleport away ability lets you teleport away and hide in a random station container.")]
-			<br>[SPAN_NOTICE("Your vengeful retreat will stun your recent attacker and teleport you away.")]
-			<br>[SPAN_NOTICE("Your toggle glowing eyes ability lets you toggle your eyes glowing at will.")]
-			<br>[SPAN_NOTICE("Your set glowing eyes color ability lets you set your eyes' glowing color.")]
+			[SPAN_NOTICE("You can't move when being watched. As a plush, you have the following abilities:")]
+			<br>[SPAN_NOTICE("Plushie Talk allows you to communicate.")]
+			<br>[SPAN_NOTICE("Override Sensors lets you temporarily move a few steps, even if being watched.")]
+			<br>[SPAN_NOTICE("Teleport lets you jump to the targeted location, when you're not being watched.")]
+			<br>[SPAN_NOTICE("Disappear teleports you to a random station container.")]
+			<br>[SPAN_NOTICE("Vengeful Retreat will stun your recent attacker and teleport you away.")]
+			<br>[SPAN_NOTICE("Toggle Glowing Eyes will toggle your eyes glowing at will.")]
+			<br>[SPAN_NOTICE("Set Glowing Eyes Color lets you set your eyes' glowing color.")]
 			<br>[SPAN_NOTICE("Access special emotes through *scream, *dance and *snap.")]"})
 
 	proc/plushie_speech(var/text_to_say)
@@ -412,7 +413,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleportation)
 	var/animation_waves = 3
 
 	proc/get_a_random_station_unlocked_container()
-		return get_a_random_station_unlocked_container_with_no_others_on_the_turf()
+		return pick(get_random_station_storage_list(no_others=TRUE))
 
 	proc/teleport_to_a_target(var/teleportation_target = null, var/target_a_random_container = FALSE)
 		playsound(get_turf(holder.owner), 'sound/effects/ghostbreath.ogg', 75, 1)
@@ -493,6 +494,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleportation)
 	cooldown = 600
 	targeted = 0
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
+	needs_turf = FALSE
 
 	cast(atom/target)
 		if (..())

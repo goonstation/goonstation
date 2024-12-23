@@ -47,7 +47,6 @@ MATERIAL
 	//Used to determine the right icon_state: combined with suffixes for material/reinforcement in update_appearance and one for amount in change_stack_appearance
 	var/icon_state_base = "sheet"
 	desc = "Thin sheets of building material. Can be used to build many things."
-	flags = FPRINT | TABLEPASS
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 4
@@ -194,7 +193,7 @@ MATERIAL
 				if(isrobot(user))
 					boutput(user, SPAN_NOTICE("You add [success] sheets to the stack. It now has [S.amount] sheets."))
 				else
-					boutput(user, SPAN_NOTICE("You add [success] sheets to the stack. It now has [src.amount] sheets."))
+					boutput(user, SPAN_NOTICE("You add [src.amount - success] sheets to the stack. It now has [src.amount] sheets."))
 				tgui_process.update_uis(src)
 			return
 
@@ -227,6 +226,32 @@ MATERIAL
 			else
 				boutput(user, SPAN_ALERT("You may only reinforce metal or crystal sheets."))
 				return
+
+		else if (isweldingtool(W) && (src.material.getMaterialFlags() & MATERIAL_METAL))
+			if(src.amount < 5)
+				boutput(user, SPAN_ALERT("You need at least five sheets to make a mask."))
+				return
+			if (!istype(src.loc,/turf/))
+				if (issilicon(user))
+					boutput(user, SPAN_ALERT("Hardcore as it sounds, smelting parts of yourself off isn't big or clever."))
+				else
+					boutput(user, SPAN_ALERT("You should probably put the sheets down first."))
+				return
+			if(!W:try_weld(user, 1))
+				return
+
+			var/obj/item/clothing/mask/steel/M = new /obj/item/clothing/mask/steel(user.loc)
+			if(src.material) M.setMaterial(src.material)
+			src.change_stack_amount(-5)
+
+			user.visible_message(SPAN_ALERT("<B>[user]</B> welds the sheets together into a mask."))
+			UpdateStackAppearance()
+			return
+
+		else if (iscuttingtool(W) && (src.material?.isSameMaterial(getMaterial("wood")) || src.material.isSameMaterial(getMaterial("bamboo"))))
+			boutput(user, SPAN_NOTICE("You whittle [src] down to make a useful stick."))
+			new /obj/item/stick(get_turf(src))
+			src.change_stack_amount(-1)
 		else
 			..()
 		return
@@ -392,8 +417,7 @@ MATERIAL
 
 				if ("barricade","zbarricade")
 					var/turf/T = get_turf(usr)
-					var/obj/item/sheet/wood/W = src
-					if (!istype(T, /turf/simulated/floor) || locate(W.wall_type) in T.contents)
+					if (!istype(T, /turf/simulated/floor) || locate(/obj/structure/woodwall) in T.contents)
 						boutput(usr,SPAN_ALERT("You can't build that here."))
 						return
 					if (params["recipeID"] == "barricade")
@@ -553,7 +577,7 @@ MATERIAL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rods_5"
 	item_state = "rods"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	w_class = W_CLASS_NORMAL
 	force = 4
 	throwforce = 8
@@ -598,7 +622,7 @@ MATERIAL
 			icon_state = "rods_4"
 		else
 			icon_state = "rods_5"
-		src.inventory_counter.update_number(amount)
+		src.inventory_counter?.update_number(amount)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message(SPAN_NOTICE("[user] begins gathering up [src]!"))
@@ -678,7 +702,7 @@ MATERIAL
 				if(isrobot(user))
 					boutput(user, SPAN_NOTICE("You add [success] rods to the stack. It now has [W.amount] rods."))
 				else
-					boutput(user, SPAN_NOTICE("You add [success] rods to the stack. It now has [src.amount] rods."))
+					boutput(user, SPAN_NOTICE("You add [src.amount - success] rods to the stack. It now has [src.amount] rods."))
 			return
 
 		if (istype(W, /obj/item/organ/head))
@@ -693,7 +717,7 @@ MATERIAL
 		return
 
 	attack_self(mob/user as mob)
-		if (user.getStatusDuration("weakened") | user.getStatusDuration("stunned"))
+		if (user.getStatusDuration("knockdown") | user.getStatusDuration("stunned"))
 			return
 		if (istype(user.loc, /obj/vehicle/segway))
 			var/obj/vehicle/segway/S = user.loc
@@ -703,12 +727,12 @@ MATERIAL
 			else // Lances up!
 				user.visible_message("[user] raises a rod as a lance!", "You raise the rod into jousting position.")
 				S.joustingTool = src
-		else if (locate(/obj/grille, user.loc))
-			for(var/obj/grille/G in user.loc)
+		else if (locate(/obj/mesh/grille, user.loc))
+			for(var/obj/mesh/grille/G in user.loc)
 				if (G.ruined)
 					G.health = G.health_max
-					G.set_density(1)
-					G.ruined = 0
+					G.set_density(TRUE)
+					G.ruined = FALSE
 					G.UpdateIcon()
 					if(src.material)
 						G.setMaterial(src.material)
@@ -728,7 +752,7 @@ MATERIAL
 
 	proc/build_grille(mob/user)
 		if (src.amount >= 2)
-			var/atom/A = new /obj/grille(user.loc)
+			var/atom/A = new /obj/mesh/grille(user.loc)
 			A.setMaterial(src.material)
 			src.change_stack_amount(-2)
 			logTheThing(LOG_STATION, user, "builds a grille (<b>Material:</b> [A.material?.getID() || "*UNKNOWN*"]) at [log_loc(user)].")
@@ -1026,7 +1050,7 @@ MATERIAL
 		if(issilicon(user))
 			boutput(user, SPAN_NOTICE("You add [success] tiles to the stack. It now has [W.amount] tiles."))
 		else
-			boutput(user, SPAN_NOTICE("You add [success] tiles to the stack. It now has [src.amount] tiles."))
+			boutput(user, SPAN_NOTICE("You add [src.amount - success] tiles to the stack. It now has [src.amount] tiles."))
 		tooltip_rebuild = 1
 		if (!W.disposed)
 			W.add_fingerprint(user)

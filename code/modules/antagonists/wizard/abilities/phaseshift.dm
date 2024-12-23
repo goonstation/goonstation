@@ -37,7 +37,7 @@
 	if (!isturf(H.loc))
 		H.show_text("You can't seem to turn incorporeal here.", "red")
 		return
-	if (H.stat || H.getStatusDuration("paralysis") > 0)
+	if (H.stat || H.getStatusDuration("unconscious") > 0)
 		H.show_text("You can't turn incorporeal when you are incapacitated.", "red")
 		return
 
@@ -113,27 +113,16 @@
 /obj/dummy/spell_invis/relaymove(var/mob/user, direction, delay)
 	if (!src.canmove || src.movecd)
 		return
-	switch(direction)
-		if(NORTH)
-			src.y++
-		if(SOUTH)
-			src.y--
-		if(EAST)
-			src.x++
-		if(WEST)
-			src.x--
-		if(NORTHEAST)
-			src.y++
-			src.x++
-		if(NORTHWEST)
-			src.y++
-			src.x--
-		if(SOUTHEAST)
-			src.y--
-			src.x++
-		if(SOUTHWEST)
-			src.y--
-			src.x--
+
+	if(direction & NORTH)
+		src.y = min(src.y+1, world.maxy)
+	if(direction & SOUTH)
+		src.y = max(src.y-1, 1)
+	if(direction & EAST)
+		src.x = min(src.x+1, world.maxx)
+	if(direction & WEST)
+		src.x = max(src.x-1, 1)
+
 	src.movecd = 1
 	SPAWN(0.2 SECONDS) src.movecd = 0
 
@@ -143,47 +132,25 @@
 /obj/dummy/spell_invis/bullet_act(obj/projectile/P)
 	return
 
+/obj/dummy/spell_invis/dimshift
+	var/mob/living/carbon/human/owner
+	var/datum/bioEffect/power/dimension_shift/P
 
-
-/proc/spell_batpoof(var/mob/H, var/cloak = 0)
-	if (!H || !ismob(H))
-		return
-	if (!isturf(H.loc))
-		H.show_text("You can't seem to transform in here.", "red")
-		return
-	if (isdead(H))
-		return
-	if (!H.canmove)
-		return
-	if(isrestrictedz(H.loc.z))
-		return
-
-	if (isliving(H))
-		var/mob/living/owner = H
-		if (owner.stamina < STAMINA_SPRINT)
-			return
-
-
-	//usecloak == check abilityholder
-	new /obj/dummy/spell_batpoof( get_turf(H), H , cloak)
-
-/proc/spell_firepoof(var/mob/H)
-	if (!H || !ismob(H))
-		return
-	if (!isturf(H.loc))
-		H.show_text("You can't seem to transform in here.", "red")
-		return
-	if (isdead(H))
-		return
-	if (!H.canmove)
-		return
-
-	if (isliving(H))
-		var/mob/living/owner = H
-		if (owner.stamina < STAMINA_SPRINT)
-			return
-
-	new /obj/dummy/spell_batpoof/firepoof( get_turf(H), H , 0)
+/obj/dummy/spell_invis/dimshift/New(loc, owner, power)
+	. = ..()
+	src.owner = owner
+	src.P = power
+/obj/dummy/spell_invis/dimshift/Exited(Obj, newloc)
+	. = ..()
+	if(Obj == owner)
+		owner.visible_message(SPAN_ALERT("<b>[owner] appears in a burst of blue light!</b>"))
+		playsound(owner.loc, 'sound/effects/ghost2.ogg', 50, 0)
+		SPAWN(0.7 SECONDS)
+			animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
+			animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
+			P.active = FALSE
+			P.processing = FALSE
+		qdel(src)
 
 /obj/dummy/spell_batpoof
 	name = "bat"
@@ -363,7 +330,7 @@
 
 		relaymove()
 			..()
-			fireflash(get_turf(owner), 0, 100)
+			fireflash(get_turf(owner), 0, 100, chemfire = CHEM_FIRE_RED)
 
 
 		dispel()

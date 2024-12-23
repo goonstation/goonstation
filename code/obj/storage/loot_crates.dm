@@ -52,7 +52,7 @@
 		/obj/item/clothing/gloves/psylink_bracelet = 10,\
 		/obj/item/device/voltron = 5,\
 		/obj/item/injector_belt = 20,\
-		/obj/item/clothing/mask/gas/injector_mask = 10,\
+		/obj/item/clothing/mask/injector_mask = 10,\
 		/obj/item/ammo/power_cell/self_charging/pod_wars_standard = 20,\
 		/obj/item/clothing/gloves/ring/titanium = 20,\
 		/obj/item/gun/energy/phaser_gun = 20,\
@@ -60,7 +60,9 @@
 		/obj/item/gun/energy/phaser_huge = 10,\
 		/obj/item/clothing/ears/earmuffs/yeti = 20,\
 		/obj/item/clothing/lanyard = 20,\
-		/obj/item/kitchen/utensil/knife/tracker = 10,
+		/obj/item/kitchen/utensil/knife/tracker = 10,\
+		/obj/item/disk/data/floppy/manudrive/pocketoxyex/singleuse = 25,\
+		/obj/item/disk/data/floppy/manudrive/pocketoxyex/threeuse = 5,
 	// fun
 		/obj/item/gun/bling_blaster = 20,\
 		/obj/item/clothing/under/gimmick/frog = 20,\
@@ -69,7 +71,8 @@
 		/mob/living/critter/bear = 20,\
 		/obj/item/clothing/shoes/jetpack = 20,\
 		/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider = 20, \
-		/obj/item/gun/kinetic/foamdartshotgun = 20,
+		/obj/item/gun/kinetic/foamdartshotgun = 20, \
+		/obj/item/device/speech_pro = 20
 	)
 
 var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_manager
@@ -121,11 +124,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 				icon_closed = "lootcrime"
 
 	update_icon()
-		if (open)
-			icon_state = icon_opened
-		else
-			icon_state = icon_closed
-
+		..()
 		if (src.locked)
 			light.color = "#FF0000"
 		else
@@ -207,6 +206,8 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 	var/primary = TRUE
 	var/image/gemstone = null
 	var/obj/item/clothing/gloves/psylink_bracelet/twin
+	which_hands = null
+
 	setupProperties()
 		..()
 		setProperty("conductivity", 1)

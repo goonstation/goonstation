@@ -5,40 +5,53 @@
  * @license ISC
  */
 
-import { Loader } from './common/Loader';
-import { InputButtons } from './common/InputButtons';
+import {
+  Box,
+  Button,
+  RestrictedInput,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+
 import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
+import { InputButtons } from './common/InputButtons';
+import { Loader } from './common/Loader';
 
- type NumberInputData = {
-   max_value: number | null;
-   message: string;
-   min_value: number | null;
-   init_value: number;
-   timeout: number;
-   round_input: boolean;
-   title: string;
-   theme: string;
- };
+type NumberInputData = {
+  max_value: number | null;
+  message: string;
+  min_value: number | null;
+  init_value: number;
+  timeout: number;
+  round_input: boolean;
+  title: string;
+  theme: string;
+};
 
-export const NumberInputModal = (_, context) => {
-  const { act, data } = useBackend<NumberInputData>(context);
-  const { message, init_value, round_input, timeout, title, theme } = data;
-  const [input, setInput] = useLocalState(context, 'input', init_value);
-  const onChange = (value: number) => {
-    setInput(round_input ? Math.round(value) : value);
+export const NumberInputModal = () => {
+  const { act, data } = useBackend<NumberInputData>();
+  const { message, init_value, timeout, title, theme } = data;
+  const [input, setInput] = useLocalState('input', init_value);
+
+  const setValue = (value: number) => {
+    if (value === input) {
+      return;
+    }
+    setInput(value);
   };
-  const onClick = (value: number) => {
-    setInput(round_input ? Math.round(value) : value);
-  };
+
   // Dynamically changes the window height based on the message.
-  const windowHeight
-     = 125 + Math.ceil(message?.length / 3);
+  const windowHeight = 125 + Math.ceil(message?.length / 3);
 
   return (
-    <Window title={title} width={270} height={windowHeight} theme={theme || 'nanotrasen'}>
+    <Window
+      title={title}
+      width={270}
+      height={windowHeight}
+      theme={theme || 'nanotrasen'}
+    >
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(event) => {
@@ -49,14 +62,20 @@ export const NumberInputModal = (_, context) => {
           if (keyCode === KEY_ESCAPE) {
             act('cancel');
           }
-        }}>
+        }}
+      >
         <Section fill>
           <Stack fill vertical>
             <Stack.Item>
               <Box color="label">{message}</Box>
             </Stack.Item>
             <Stack.Item>
-              <InputArea input={input} onClick={onClick} onChange={onChange} />
+              <InputArea
+                input={input}
+                onClick={setValue}
+                onChange={setValue}
+                onBlur={setValue}
+              />
             </Stack.Item>
             <Stack.Item pl={4} pr={4}>
               <InputButtons input={input} />
@@ -69,10 +88,10 @@ export const NumberInputModal = (_, context) => {
 };
 
 /** Gets the user input and invalidates if there's a constraint. */
-const InputArea = (props, context) => {
-  const { data } = useBackend<NumberInputData>(context);
-  const { min_value, max_value, init_value } = data;
-  const { input, onClick, onChange } = props;
+const InputArea = (props) => {
+  const { act, data } = useBackend<NumberInputData>();
+  const { min_value, max_value, init_value, round_input } = data;
+  const { input, onClick, onChange, onBlur } = props;
 
   return (
     <Stack fill>
@@ -84,15 +103,17 @@ const InputArea = (props, context) => {
         />
       </Stack.Item>
       <Stack.Item grow>
-        <NumberInput
+        <RestrictedInput
           autoFocus
           autoSelect
           fluid
+          allowFloats={!round_input}
           minValue={min_value}
           maxValue={max_value}
           onChange={(_, value) => onChange(value)}
-          onDrag={(_, value) => onChange(value)}
-          value={input !== null ? input : init_value}
+          onBlur={(_, value) => onBlur(value)}
+          onEnter={(_, value) => act('submit', { entry: value })}
+          value={input}
         />
       </Stack.Item>
       <Stack.Item>

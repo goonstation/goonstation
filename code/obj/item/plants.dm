@@ -223,7 +223,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	name = "steelwheat"
 	desc = "Never eat iron filings."
 	icon_state = "metalwheat"
-	brew_result = list("beer"=20, "iron"=20)
+	brew_result = list("ironbrew"=20)
 
 	make_reagents()
 		..()
@@ -388,7 +388,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 			return
 		boutput(user, SPAN_ALERT("Your hands itch from touching [src]!"))
 		random_brute_damage(user, 1)
-		H.changeStatus("weakened", 1 SECONDS)
+		H.changeStatus("knockdown", 1 SECONDS)
 
 /obj/item/plant/herb/nettle/smooth
 	name = "smooth nettle leaves"
@@ -427,7 +427,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	// module_research_type = /obj/item/plant/herb/cannabis
 	attack_hand(var/mob/user)
 		if (iswerewolf(user))
-			user.changeStatus("weakened", 4 SECONDS)
+			user.changeStatus("knockdown", 4 SECONDS)
 			user.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
 			boutput(user, SPAN_ALERT("You try to pick up [src], but it hurts and you fall over!"))
 			return
@@ -438,7 +438,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 		if(iswerewolf(M))
 			var/stun_duration
 			if (!GET_COOLDOWN(M, "aconite_stun"))
-				var/datum/statusEffect/stun_effect = M.changeStatus("weakened", 4 SECONDS)
+				var/datum/statusEffect/stun_effect = M.changeStatus("knockdown", 4 SECONDS)
 				M.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
 				M.visible_message(SPAN_ALERT("The [M] steps too close to [src] and falls down!"))
 				if (stun_effect)
@@ -541,7 +541,7 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 			return TRUE
 
 	proc/prick(mob/M)
-		boutput(M, SPAN_ALERT("You prick yourself on [src]'s thorns trying to pick it up!"))
+		boutput(M, SPAN_ALERT("YOWCH! You prick yourself on [src]'s thorns trying to pick it up! Maybe you should've used gloves..."))
 		random_brute_damage(M, 3)
 		take_bleeding_damage(M, null, 3, DAMAGE_STAB)
 
@@ -604,6 +604,58 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 		for(var/mob/living/silicon/M in mobs)
 			possible_names += M
 		return possible_names
+
+/obj/item/plant/flower/sunflower
+	name = "sunflower"
+	desc = "A rather large sunflower.  Legends speak of the tasty seeds."
+	icon_state = "sunflower"
+	var/initial_seed_count = 0 //! how many seeds the flower started with
+	var/current_seed_count = 0 //! how many seeds the flower has left
+
+	attack_self(mob/user)
+		. = ..()
+		disperse_seeds(user,user)
+
+	attackby(var/obj/item/W, mob/user)
+		. = ..()
+		disperse_seeds(src,user)
+
+	afterattack(var/atom/target, var/mob/user)
+		. = ..()
+		disperse_seeds(target,user)
+
+	proc/disperse_seeds(var/atom/target, var/mob/user)
+		var/obj/item/reagent_containers/food/snacks/plant/seeds = locate() in src
+		if(seeds)
+			boutput(user, SPAN_NOTICE("You notice some [seeds] fall out of [src]!"))
+			seeds.set_loc(get_turf(target))
+			// that's the result if you want to keep 50% of the initial chems in the sunflower at the end.
+			// This accomodates partially for chems injected in the sunflower if some seeds are already missing
+			var/chem_amount = src.reagents.total_volume / (current_seed_count + initial_seed_count)
+			seeds.reagents.maximum_volume = max(chem_amount, seeds.reagents.maximum_volume)
+			src.reagents.trans_to(seeds, chem_amount)
+			src.current_seed_count -= 1
+
+
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		. = ..()
+		var/seed_count = 1
+		switch(quality_status)
+			if("jumbo")
+				seed_count += 3
+			if("rotten")
+				seed_count = rand(0,1)
+			if("malformed")
+				seed_count += rand(-1,2)
+		if(seed_count < 0)
+			seed_count = 0
+
+		for(var/seed_num in 1 to seed_count)
+			var/obj/item/reagent_containers/food/snacks/plant/sunflower/P = new(src)
+			P.HYPsetup_DNA(passed_genes, harvested_plantpot, origin_plant, quality_status)
+			P.reagents.clear_reagents() //no chem duping by getting seeds out of sunflowers. We will transfer the chems from the flower onto the seeds in disperse_seeds.
+			src.initial_seed_count += 1
+			src.current_seed_count += 1
 
 /obj/item/plant/herb/hcordata
 	name = "houttuynia cordata"

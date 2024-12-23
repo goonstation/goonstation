@@ -16,6 +16,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	var/initial_proj = /datum/projectile/laser/blaster
 	var/team_num = 0	//1 is NT, 2 is Syndicate
 
+#if defined(MAP_OVERRIDE_POD_WARS)
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user))
 			if (team_num)
@@ -41,6 +42,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 					return
 			else
 				return ..(target, user, second_shot)
+#endif
 
 	disposing()
 		indicator_display = null
@@ -65,7 +67,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 			ratio = round(ratio, 0.25) * 100
 			if (ratio == 0)
 				return
-			indicator_display.icon_state = "pw_pistol_power-[ratio]"
+			indicator_display.icon_state = "[icon_state]_power-[ratio]" //using icon_state to set the charge icon? probably fine.
 			indicator_display.color = display_color
 			UpdateOverlays(indicator_display, "ind_dis")
 
@@ -90,6 +92,64 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 		display_color =	"#ff4043"
 		item_state = "pw_pistol_sy"
 		initial_proj = /datum/projectile/laser/blaster/pod_pilot/red_SY
+		team_num = 2
+
+/obj/item/gun/energy/blaster_pod_wars/smg
+	name = "blaster smg"
+	desc = "A dangerous-looking blaster smg. It's self-charging by a radioactive power cell."
+	icon_state = "pw_smg"
+	item_state = "pw_smg"
+	w_class = W_CLASS_NORMAL
+	force = 12
+	cell_type = /obj/item/ammo/power_cell/self_charging/pod_wars_basic
+	initial_proj = /datum/projectile/laser/blaster/pod_pilot/blue_NT/smg
+	spread_angle = 10
+
+	New()
+		AddComponent(/datum/component/holdertargeting/fullauto, 2)
+		..()
+	nanotrasen
+		muzzle_flash = "muzzle_flash_plaser"
+		display_color =	"#3d9cff"
+		item_state = "pw_smg_nt"
+		initial_proj = /datum/projectile/laser/blaster/pod_pilot/blue_NT/smg
+		team_num = 1
+
+
+	syndicate
+		muzzle_flash = "muzzle_flash_laser"
+		display_color =	"#ff4043"
+		item_state = "pw_smg_sy"
+		initial_proj = /datum/projectile/laser/blaster/pod_pilot/red_SY/smg
+		team_num = 2
+
+
+
+/obj/item/gun/energy/blaster_pod_wars/shotgun
+	name = "blaster shotgun"
+	desc = "A dangerous-looking blaster shotgun. It's self-charging by a radioactive power cell."
+	icon_state = "pw_shotgun"
+	item_state = "pw_shotgun"
+	w_class = W_CLASS_NORMAL
+	force = 12
+	initial_proj = /datum/projectile/special/spreader/pwshotgunspread
+	cell_type = /obj/item/ammo/power_cell/self_charging/pod_wars_basic
+	two_handed = 1
+	can_dual_wield = 0
+	shoot_delay = 8 DECI SECONDS
+
+	nanotrasen
+		muzzle_flash = "muzzle_flash_plaser"
+		display_color =	"#3d9cff"
+		item_state = "pw_shotgun_nt"
+		initial_proj = /datum/projectile/special/spreader/pwshotgunspread/NT
+		team_num = 1
+
+	syndicate
+		muzzle_flash = "muzzle_flash_laser"
+		display_color =	"#ff4043"
+		item_state = "pw_shotgun_sy"
+		initial_proj = /datum/projectile/special/spreader/pwshotgunspread/SY
 		team_num = 2
 
 /obj/item/ammo/power_cell/higher_power
@@ -143,9 +203,9 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	throw_range = 5
 	hit_type = DAMAGE_STAB
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	stamina_damage = 25
 	stamina_cost = 10
 	stamina_crit_chance = 40
@@ -231,7 +291,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 			//if you're on the tile directly.
 			var/mob/living/L = locate(/mob/living) in get_turf(src)
 			if (istype(L))
-				L.do_disorient(stamina_damage = 120, weakened = 60, stunned = 0, disorient = 0, remove_stamina_below_zero = 0)
+				L.do_disorient(stamina_damage = 120, knockdown = 60, stunned = 0, disorient = 0, remove_stamina_below_zero = 0)
 				L.TakeDamage("chest", rand(20, 40)/max(1, L.get_melee_protection()), 0, 0, DAMAGE_BLUNT)
 				L.emote("twitch_v")
 			else
@@ -241,7 +301,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 					//eh, another typecheck, no way around it I don't think. unless we wanna apply the status effect directly? idk.
 					if (isliving(A))
 						var/mob/living/M = A
-						M.do_disorient(stamina_damage = 60, weakened = 30, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
+						M.do_disorient(stamina_damage = 60, knockdown = 30, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
 					if (target)
 						A.throw_at(target, 10 - GET_DIST(src, A)*2, 1)		//throw things farther if they are closer to the epicenter.
 

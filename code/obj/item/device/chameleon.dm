@@ -71,7 +71,7 @@ TYPEINFO(/obj/item/device/chameleon)
 /obj/item/device/chameleon
 	name = "chameleon-projector"
 	icon_state = "shield0"
-	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY | SUPPRESSATTACK
+	flags = TABLEPASS | CONDUCT | EXTRADELAY | SUPPRESSATTACK
 	c_flags = ONBELT
 	item_state = "electronic"
 	throwforce = 5
@@ -81,6 +81,7 @@ TYPEINFO(/obj/item/device/chameleon)
 	var/can_use = 0
 	var/obj/overlay/anim = null //The toggle animation overlay will also be retained
 	var/obj/dummy/chameleon/cham = null //No sense creating / destroying this
+	var/disrupt_on_drop = TRUE //TODO: refactor this
 	var/active = 0
 	tooltip_flags = REBUILD_DIST
 	HELP_MESSAGE_OVERRIDE({"Use the chameleon projector on any object to copy it's appearance. Use it in hand to appear as that object indefinitely. The disguise will be removed if you interact with anything else or are hit."})
@@ -95,7 +96,9 @@ TYPEINFO(/obj/item/device/chameleon)
 		src.cham.master = src
 
 	dropped()
-		disrupt()
+		. = ..()
+		if(disrupt_on_drop)
+			disrupt()
 
 	attack_self()
 		toggle()
@@ -126,7 +129,9 @@ TYPEINFO(/obj/item/device/chameleon)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
 			return
-		if (target.plane == PLANE_HUD || isgrab(target)) //just don't scan hud stuff or grabs
+		if (isgrab(target)) //don't scan grabs
+			return
+		if (target.plane == PLANE_HUD && !isitem(target)) //don't grab hud stuff _unless_ it's an item. Grabs are the only exception I know
 			return
 		//Okay, enough scanning shit without actual icons yo.
 		if ((target.icon && target.icon_state || length(target.overlays) || length(target.underlays)) && isobj(target))
@@ -173,8 +178,8 @@ TYPEINFO(/obj/item/device/chameleon)
 			playsound(src, 'sound/effects/pop.ogg', 100, TRUE, 1)
 			cham.master = src
 			cham.set_loc(get_turf(src))
-			usr.set_loc(cham)
 			src.active = 1
+			usr.set_loc(cham)
 
 			boutput(usr, SPAN_NOTICE("You activate the [src]."))
 			anim.set_loc(get_turf(src))
@@ -200,6 +205,7 @@ TYPEINFO(/obj/item/device/chameleon)
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "cham_bomb"
 	burn_possible = FALSE
+	disrupt_on_drop = FALSE
 	HELP_MESSAGE_OVERRIDE(null)
 	var/strength = 12
 
@@ -208,9 +214,6 @@ TYPEINFO(/obj/item/device/chameleon)
 			return "Hit the bomb on any object to disguise it as that object. Use the bomb in hand to arm/disarm it. The bomb will explode when anyone tries to pick up the armed bomb."
 		else
 			return null
-
-	dropped()
-		return
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -249,7 +252,9 @@ TYPEINFO(/obj/item/device/chameleon)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
 			return
-		if (target.plane == PLANE_HUD  || isgrab(target)) //just don't scan hud stuff and grabs
+		if (isgrab(target)) //don't scan grabs
+			return
+		if (target.plane == PLANE_HUD && !isitem(target)) //don't grab hud stuff _unless_ it's an item. Grabs are the only exception I know
 			return
 		if ((target.icon && target.icon_state || length(target.overlays) || length(target.underlays)) && (isitem(target) || istype(target, /obj/shrub) || istype(target, /obj/critter) || istype(target, /obj/machinery/bot))) // cogwerks - added more fun
 			playsound(src, 'sound/weapons/flash.ogg', 100, TRUE, 1)

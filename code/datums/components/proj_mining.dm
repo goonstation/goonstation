@@ -16,7 +16,7 @@ TYPEINFO(/datum/component/proj_mining)
 		src.power_ratio = power_ratio
 	if (power_loss)
 		src.power_loss = power_loss
-	RegisterSignal(parent, COMSIG_OBJ_PROJ_COLLIDE, .proc/mine)
+	RegisterSignal(parent, COMSIG_OBJ_PROJ_COLLIDE, PROC_REF(mine))
 
 /datum/component/proj_mining/proc/mine(var/obj/projectile/P, var/atom/hit)
 	if(istype(hit, /turf/simulated/wall/auto/asteroid))

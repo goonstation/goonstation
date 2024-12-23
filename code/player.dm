@@ -1,5 +1,7 @@
 /// for client variables and stuff that has to persist between connections
 /datum/player
+	/// the ID of the player as provided by the Goonhub API
+	var/id = 0
 	/// the key of the client object that this datum is attached to
 	var/key
 	/// the ckey of the client object that this datum is attached to
@@ -13,13 +15,13 @@
 	/// to make sure that they cant escape being shamecubed by just reconnecting
 	var/shamecubed = 0
 	/// how many rounds (total) theyve declared ready and joined, null with to differentiate between not set and no participation
-	var/rounds_participated = null
+	VAR_PRIVATE/rounds_participated = null
 	/// how many rounds (rp only) theyve declared ready and joined, null with to differentiate between not set and no participation
-	var/rounds_participated_rp = null
+	VAR_PRIVATE/rounds_participated_rp = null
 	/// how many rounds (total) theyve joined to at least the lobby in, null to differentiate between not set and not seen
-	var/rounds_seen = null
+	VAR_PRIVATE/rounds_seen = null
 	/// how many rounds (rp only) theyve joined to at least the lobby in, null to differentiate between not set and not seen
-	var/rounds_seen_rp = null
+	VAR_PRIVATE/rounds_seen_rp = null
 	/// timestamp of when they were last seen
 	var/last_seen = null
 	/// a list of cooldowns that has to persist between connections
@@ -34,10 +36,8 @@
 	var/current_playtime = null
 	/// Cache jobbans here to speed things up massively
 	var/list/cached_jobbans = null
-	/// saved profiles from the cloud
-	var/list/cloudsaves = null
-	/// saved data from the cloud (spacebux, volume settings, ...)
-	var/list/clouddata = null
+	/// Manager for cloud data and saves
+	var/datum/cloudSaves/cloudSaves = null
 	/// buildmode holder of our client so it doesn't need to get rebuilt every time we reconnect
 	var/datum/buildmode_holder/buildmode = null
 	/// whether this person is a temporary admin (this round only)
@@ -62,6 +62,7 @@
 		src.key = key
 		src.ckey = ckey(key)
 		src.tag = "player-[src.ckey]"
+		src.cloudSaves = new /datum/cloudSaves(src)
 
 		if (ckey(src.key) in mentors)
 			src.mentor = 1
@@ -78,6 +79,30 @@
 			src.client = null
 		..()
 
+	/// Record a player login via the API. Sets player ID field for future API use
+	proc/record_login()
+		if (!roundId || !src.client || src.id) return
+		var/datum/apiModel/Tracked/PlayerResource/playerResponse
+		try
+			var/datum/apiRoute/players/login/playerLogin = new
+			playerLogin.buildBody(
+				src.client.ckey,
+				src.client.key,
+				src.client.address ? src.client.address : "127.0.0.1", // fallback for local dev
+				src.client.computer_id,
+				src.client.byond_version,
+				src.client.byond_build,
+				roundId
+			)
+			playerResponse = apiHandler.queryAPI(playerLogin)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "Failed to record a player login for [src.client.ckey] because: [error.message]")
+			logTheThing(LOG_DIARY, null, "Failed to record a player login for [src.client.ckey] because: [error.message]", "admin")
+			return
+
+		src.id = playerResponse.id
+
 	/// queries api to cache stats so its only done once per player per round
 	proc/cache_round_stats()
 		set waitfor = FALSE
@@ -85,44 +110,41 @@
 
 	/// blocking version of cache_round_stats, queries api to cache stats so its only done once per player per round (please update this proc when adding more player stat vars)
 	proc/cache_round_stats_blocking()
-		var/list/response = null
+		var/datum/apiModel/Tracked/PlayerStatsResource/playerStats
 		try
-			response = apiHandler?.queryAPI("playerInfo/get", list("ckey" = src.ckey), forceResponse = 1)
+			var/datum/apiRoute/players/stats/get/getPlayerStats = new
+			getPlayerStats.queryParams = list("ckey" = src.ckey)
+			playerStats = apiHandler.queryAPI(getPlayerStats)
 		catch
-			return 0
-		if (!response)
-			return 0
-		src.rounds_participated = text2num(response["participated"])
-		src.rounds_participated_rp= text2num(response["participated_rp"])
-		src.rounds_seen = text2num(response["seen"])
-		src.rounds_seen_rp = text2num(response["seen_rp"])
-		src.last_seen = response["last_seen"]
-		return 1
+			return FALSE
+
+		src.rounds_participated_rp = text2num(playerStats.played_rp)
+		src.rounds_participated = text2num(playerStats.played) + src.rounds_participated_rp //the API counts these separately, but we want a combined number
+		src.rounds_seen_rp = text2num(playerStats.connected_rp)
+		src.rounds_seen = text2num(playerStats.connected) + src.rounds_seen_rp //the API counts these separately, but we want a combined number
+		src.last_seen = playerStats.latest_connection.created_at
+		return TRUE
 
 	proc/load_antag_tokens()
 		PRIVATE_PROC(TRUE) //call get_antag_tokens
 		. = TRUE
 		var/savefile/AT = LoadSavefile("data/AntagTokens.sav")
 		if (!AT)
-			if( cloud_available() )
-				antag_tokens = cloud_get( "antag_tokens" ) ? text2num(cloud_get( "antag_tokens" )) : 0
+			antag_tokens = src.cloudSaves.getData( "antag_tokens" )
+			antag_tokens = antag_tokens ? text2num(antag_tokens) : 0
 			return
 
 		var/ATtoken
 		AT[ckey] >> ATtoken
 		if (!ATtoken)
-			antag_tokens = cloud_get( "antag_tokens" ) ? text2num(cloud_get( "antag_tokens" )) : 0
+			antag_tokens = src.cloudSaves.getData( "antag_tokens" )
+			antag_tokens = antag_tokens ? text2num(antag_tokens) : 0
 			return
 		else
 			antag_tokens = ATtoken
-		if( cloud_available() )
-			antag_tokens += text2num( cloud_get( "antag_tokens" ) || "0" )
-			var/failed = cloud_put( "antag_tokens", antag_tokens )
-			if( failed )
-				logTheThing(LOG_DEBUG, src, "Failed to store antag tokens in the ~cloud~: [failed]")
-				return FALSE
-			else
-				AT[ckey] << null
+		antag_tokens += text2num( src.cloudSaves.getData( "antag_tokens" ) || "0" )
+		if (src.cloudSaves.putData( "antag_tokens", antag_tokens ))
+			AT[ckey] << null
 
 	/// returns an assoc list of cached player stats (please update this proc when adding more player stat vars)
 	proc/get_round_stats(allow_blocking = FALSE)
@@ -138,20 +160,20 @@
 	/// returns the number of rounds that the player has played by joining in at roundstart
 	proc/get_rounds_participated()
 		if (isnull(src.rounds_participated)) //if the stats havent been cached yet
-			if (!src.cache_round_stats()) //if trying to set them fails
+			if (!src.cache_round_stats_blocking()) //if trying to set them fails
 				return null
 		return src.rounds_participated
 
 	proc/get_rounds_participated_rp()
 		if (isnull(src.rounds_participated_rp)) //if the stats havent been cached yet
-			if (!src.cache_round_stats()) //if trying to set them fails
+			if (!src.cache_round_stats_blocking()) //if trying to set them fails
 				return null
 		return src.rounds_participated_rp
 
 	/// returns the number of rounds that the player has at least joined the lobby in
 	proc/get_rounds_seen()
 		if (isnull(src.rounds_seen)) //if the stats havent been cached yet
-			if (!src.cache_round_stats()) //if trying to set them fails
+			if (!src.cache_round_stats_blocking()) //if trying to set them fails
 				return null
 		return src.rounds_seen
 
@@ -163,9 +185,9 @@
 
 	proc/set_antag_tokens(amt as num)
 		src.antag_tokens = amt
-		if( cloud_available() )
-			cloud_put( "antag_tokens", amt )
-			return TRUE
+		src.client?.antag_tokens = amt //blegh, this var should be killed but I am sleepy so it lives for now
+		src.cloudSaves.putData( "antag_tokens", amt )
+		. = TRUE
 
 	/// sets the join time to the current server time, in 1/10ths of a second
 	proc/log_join_time()
@@ -184,204 +206,11 @@
 		src.round_leave_time = null //reset this - null value is important
 		src.round_join_time = null //reset this - null value is important
 
-	/// Sets a cloud key value pair and sends it to goonhub
-	proc/cloud_put(key, value)
-		if(!clouddata)
-			return FALSE
-		clouddata[key] = "[value]"
-
-#ifdef LIVE_SERVER
-		// Via rust-g HTTP
-		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]", "", "")
-		request.begin_async()
-#else
-		var/json = null
-		var/list/decoded_json
-		if (fexists("data/simulated_cloud.json"))
-			json = file2text("data/simulated_cloud.json")
-			decoded_json = json_decode(json)
-		else
-			decoded_json = list()
-
-		decoded_json["[ckey(ckey)]"] = clouddata
-		rustg_file_write(json_encode(decoded_json),"data/simulated_cloud.json")
-#endif
-		return TRUE // I guess
-
-	/// Sets a cloud key value pair and sends it to goonhub for a target ckey
-	proc/cloud_put_target(target, key, value)
-		var/list/data = cloud_fetch_target_ckey(target)
-		if(!data)
-			return FALSE
-		data[key] = "[value]"
-
-#ifdef LIVE_SERVER
-		// Via rust-g HTTP
-		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[ckey(target)]&key=[url_encode(key)]&value=[url_encode(data[key])]", "", "")
-		request.begin_async()
-#else
-		var/json = null
-		var/list/decoded_json
-		if (fexists("data/simulated_cloud.json"))
-			json = file2text("data/simulated_cloud.json")
-			decoded_json = json_decode(json)
-		else
-			decoded_json = list()
-		decoded_json["[ckey(target)]"] = data
-		rustg_file_write(json_encode(decoded_json),"data/simulated_cloud.json")
-#endif
-		return TRUE // I guess
-
-	/// Returns some cloud data on the client
-	proc/cloud_get( var/key )
-		return clouddata ? clouddata[key] : null
-
-	/// Returns some cloud data on the provided target ckey
-	proc/cloud_get_target(target, key)
-		var/list/data = cloud_fetch_target_data_only(target)
-		return data ? data[key] : null
-
-	/// Returns 1 if you can set or retrieve cloud data on the client
-	proc/cloud_available()
-		return !!clouddata
-
-	/// Downloads cloud data from goonhub
-	proc/cloud_fetch()
-		var/list/data = cloud_fetch_target_ckey(src.ckey)
-		if (data)
-#ifdef LIVE_SERVER
-			cloudsaves = data["saves"]
-			clouddata = data["cdata"]
-#else
-			clouddata = data
-#endif
-			return TRUE
-
-	/// Gives this player a medal. Will not sleep, but does not have a return value. Use unlock_medal_sync if you need to know if it worked
-	proc/unlock_medal(medal_name, announce=FALSE)
-		set waitfor = 0
-		src.unlock_medal_sync(medal_name, announce)
-
-	/// Gives this player a medal. Will sleep, make sure the proc calling this is in a spawn etc
-	proc/unlock_medal_sync(medal_name, announce=FALSE)
-		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
-			return FALSE
-
-		var/key = src.key
-		var/displayed_key = src.client?.mob?.mind?.displayed_key || src.key
-		var/result = world.SetMedal(medal_name, key, config.medal_hub, config.medal_password)
-		if(!result)
-			return FALSE
-		. = TRUE
-
-		var/list/unlocks = list()
-		for(var/A in rewardDB)
-			var/datum/achievementReward/D = rewardDB[A]
-			if (D.required_medal == medal_name)
-				unlocks.Add(D)
-
-		if (announce)
-			boutput(world, SPAN_MEDAL("[displayed_key] earned the [medal_name] medal!"))
-		else if (src.client)
-			boutput(src.client, SPAN_MEDAL("You earned the [medal_name] medal!"))
-
-		if (length(unlocks))
-			for(var/datum/achievementReward/B in unlocks)
-				boutput(src.client, SPAN_MEDAL("<FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT>"))
-
-	/// Removes a medal from this player. Will sleep, make sure the proc calling this is in a spawn etc
-	proc/clear_medal(medal_name)
-		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
-			return null
-		return world.ClearMedal(medal_name, src.key, config.medal_hub, config.medal_password)
-
-	/// Checks if this player has a medal. Will sleep, make sure the proc calling this is in a spawn etc
-	proc/has_medal(medal_name)
-		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
-			return
-		return world.GetMedal(medal_name, src.key, config.medal_hub, config.medal_password)
-
-	/// Returns a list of all medals of this player. Will sleep, make sure the proc calling this is in a spawn etc
-	proc/get_all_medals()
-		RETURN_TYPE(/list)
-		if (!config || !config.medal_hub || !config.medal_password)
-			return
-		. = world.GetMedal("", src.key, config.medal_hub, config.medal_password)
-		if(isnull(.))
-			return
-		. = params2list(.)
-
-	/// Refreshes clouddata
-	proc/cloud_fetch_data_only()
-		var/list/data = cloud_fetch_target_data_only(src.ckey)
-		if (data)
-			clouddata = data
-			return TRUE
-
-	/// returns the clouddata of a target ckey in list form
-	proc/cloud_fetch_target_data_only(target)
-		var/list/data = cloud_fetch_target_ckey(target)
-		if (data)
-			return data["cdata"]
-
-	/// returns the cloudsaves of a target ckey in list form
-	proc/cloud_fetch_target_saves_only(target)
-		var/list/data = cloud_fetch_target_ckey(target)
-		if (data)
-			return data["saves"]
-
-	/// Returns cloud data and saves from goonhub for the target ckey in list form
-	proc/cloud_fetch_target_ckey(target)
-#ifdef LIVE_SERVER
-		if(!cdn) return
-		target = ckey(target)
-		if (!target) return
-
-		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?list&ckey=[target]&api_key=[config.spacebee_api_key]", "", "")
-		request.begin_async()
-		UNTIL(request.is_complete())
-		var/datum/http_response/response = request.into_response()
-
-		if (response.errored || !response.body)
-			logTheThing(LOG_DEBUG, target, "failed to have their cloud data loaded: Couldn't reach Goonhub")
-			return
-
-		var/list/ret = json_decode(response.body)
-		if(ret["status"] == "error")
-			logTheThing(LOG_DEBUG, target, "failed to have their cloud data loaded: [ret["error"]["error"]]")
-			return
-		else
-			return ret
-#else
-		if (!target) return
-		/// holds our json string
-		var/json
-		/// holds our list made from decoding json
-		var/list/decoded_json
-		// make sure the files actually exists before we try to read it, if it doesn't then just return a blank list to work with
-		if (fexists("data/simulated_cloud.json"))
-			// file was found, lets decode it
-			json = file2text("data/simulated_cloud.json")
-			decoded_json = json_decode(json)
-		else
-			decoded_json = list()
-
-		// do we have an entry for the target ckey?
-		if (decoded_json[target])
-			return decoded_json[target]
-		else
-			// we need to return a list with a list in the cdata index or it causes a deadlock where we can't save
-			return list(cdata = list())
-#endif
-
 	proc/get_buildmode()
 		RETURN_TYPE(/datum/buildmode_holder)
 		if(src.buildmode)
 			return src.buildmode
-		var/saved_buildmode = src.cloud_get("buildmode")
+		var/saved_buildmode = src.cloudSaves.getData("buildmode")
 		if(!saved_buildmode)
 			src.buildmode = new /datum/buildmode_holder(src.client)
 		else
@@ -406,7 +235,105 @@
 		if(src.buildmode)
 			var/savefile/S = new
 			S["buildmode"] << buildmode
-			src.cloud_put("buildmode", S.ExportText())
+			src.cloudSaves.putData("buildmode", S.ExportText())
+
+	/// Gives this player a medal. Will not sleep, but does not have a return value. Use unlock_medal_sync if you need to know if it worked
+	proc/unlock_medal(medal_name, announce=FALSE)
+		set waitfor = 0
+		src.unlock_medal_sync(medal_name, announce)
+
+	/// Gives this player a medal. Will sleep, make sure the proc calling this is in a spawn etc
+	proc/unlock_medal_sync(medal_name, announce=FALSE)
+		var/displayed_key = src.client?.mob?.mind?.displayed_key || src.key
+
+		try
+			var/datum/apiRoute/players/medals/add/addMedal = new
+			addMedal.buildBody(src.id || null, src.ckey, medal_name, roundId)
+			apiHandler.queryAPI(addMedal)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			if (error.status_code == 409)
+				// player already has that medal
+				return FALSE
+			logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>unlock_medal</b> for <b>[medal_name]</b>: [error.message]")
+			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in unlock_medal for [medal_name]: [error.message]", "debug")
+			return FALSE
+
+		var/list/unlocks = list()
+		for(var/A in rewardDB)
+			var/datum/achievementReward/D = rewardDB[A]
+			if (D.required_medal == medal_name)
+				unlocks.Add(D)
+
+		if (announce)
+			boutput(world, SPAN_MEDAL("[displayed_key] earned the [medal_name] medal!"))
+		else if (src.client)
+			boutput(src.client, SPAN_MEDAL("You earned the [medal_name] medal!"))
+
+		if (length(unlocks))
+			for(var/datum/achievementReward/B in unlocks)
+				boutput(src.client, SPAN_MEDAL("<FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT>"))
+
+		return TRUE
+
+	/// Removes a medal from this player. Will sleep, make sure the proc calling this is in a spawn etc
+	proc/clear_medal(medal_name)
+		var/datum/apiRoute/players/medals/delete/deleteMedal = new
+		deleteMedal.buildBody(src.id ? src.id : null, src.ckey, medal_name)
+
+		try
+			apiHandler.queryAPI(deleteMedal)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>clear_medal</b> for <b>[medal_name]</b>: [error.message]")
+			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in clear_medal for [medal_name]: [error.message]", "debug")
+			return FALSE
+
+		return TRUE
+
+	/// Checks if this player has a medal. Will sleep, make sure the proc calling this is in a spawn etc
+	proc/has_medal(medal_name)
+		if (!medal_name) return FALSE
+		var/datum/apiRoute/players/medals/has/hasMedals = new
+		hasMedals.routeParams = list(src.id ? src.id : src.ckey)
+		hasMedals.queryParams = list("medal" = medal_name)
+		var/datum/apiModel/HasMedalResource/hasMedal
+
+		try
+			hasMedal = apiHandler.queryAPI(hasMedals)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>has_medal</b> for <b>[medal_name]</b>: [error.message]")
+			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in has_medal for [medal_name]: [error.message]", "debug")
+			return FALSE
+
+		return hasMedal.has_medal
+
+	/// Returns a list of all medals of this player. Will sleep, make sure the proc calling this is in a spawn etc
+	proc/get_all_medals()
+		RETURN_TYPE(/list)
+
+		var/datum/apiRoute/players/medals/get/getMedals = new
+		var/list/filters = list()
+		if (src.id) filters["player_id"] = src.id
+		else filters["ckey"] = src.ckey
+		getMedals.queryParams = list(
+			"filters" = filters,
+			"sort_by" = "medal_title",
+			"descending" = FALSE,
+			"per_page" = 9999
+		)
+		var/datum/apiModel/Paginated/PlayerMedalResourceList/medals
+
+		try
+			medals = apiHandler.queryAPI(getMedals)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>get_all_medals</b> for <b>[src.ckey] ([src.id])</b>: [error.message]")
+			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in get_all_medals for [src.ckey] ([src.id]): [error.message]", "debug")
+			return null
+
+		return medals.ToList()
 
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)
@@ -422,85 +349,25 @@
 		player = new(key)
 	return player
 
-/** Bulk cloud save for saving many key value pairs and/or many ckeys in a single api call
- * example input (formatted for readability)
- *  command add adds a number onto the current value (record must exist in the cloud to update or it won't do anything)
- *  command replace overwrites the existing record
- * 	{
- * 		"some_ckey":{
- * 			"persistent_bank":{
- * 				"command":"add",
- * 				"value":42069
- * 			},
- * 			"persistent_bank_item":{
- * 				"command":"replace",
- * 				"value":"none"
- * 			}
- * 		},
- * 		"some_other_ckey":{
- * 			"persistent_bank":{
- * 				"command":"add",
- * 				"value":1337
- * 			},
- * 			"persistent_bank_item":{
- * 				"command":"replace",
- * 				"value":"rubber_ducky"
- * 			}
- * 		}
- * 	}
-**/
-proc/cloud_put_bulk(json)
-	if (!rustg_json_is_valid(json))
-		stack_trace("cloud_put_bulk received an invalid json object.")
-		return FALSE
-	var/list/decoded_json = json_decode(json)
-	var/list/sanitized = list()
-	for (var/json_ckey in decoded_json)
-		var/clean_ckey = ckey(json_ckey)
-		if (!length(decoded_json[json_ckey]))
-			stack_trace("cloud_put_bulk received ckey \"[clean_ckey]\" without any key pairs to save.")
+/proc/record_player_playtime()
+	var/count = 1
+	var/list/recorded = list()
+	var/list/playtimes = list() //associative list with the format list("[index]" = list("id" = player_id, "seconds_played" = playtime_in_seconds))
+	for_by_tcl(P, /datum/player)
+		if (!P.id || (P.id in recorded))
 			continue
-		sanitized[clean_ckey] = list()
-		for (var/json_key in decoded_json[json_ckey])
-			var/value = decoded_json[json_ckey][json_key]["value"]
-			if (isnull(value))
-				value = "" //api wants empty strings, not nulls
-			sanitized[clean_ckey][json_key] = list ("command" = decoded_json[json_ckey][json_key]["command"], "value" = value)
-#ifdef LIVE_SERVER
-	var/sanitized_json = json_encode(sanitized)
-	// Via rust-g HTTP
-	var/datum/http_request/request = new()
-	var/list/headers = list(
-		"Authorization" = "[config.spacebee_api_key]",
-		"Content-Type" = "application/json",
-		"Command" = "dataput_bulk"
-	)
-	request.prepare(RUSTG_HTTP_METHOD_POST, "[config.spacebee_api_url]/api/cloudsave", sanitized_json, headers)
-	request.begin_async()
-#else
-	var/save_json
-	var/list/decoded_save
-	if (fexists("data/simulated_cloud.json"))
-		save_json = file2text("data/simulated_cloud.json")
-		decoded_save = json_decode(save_json)
-	else
-		decoded_save = list()
+		P.log_leave_time() //get our final playtime for the round (wont cause errors with people who already d/ced bc of smart code)
+		if (!P.current_playtime)
+			continue
+		playtimes["[count]"] = list("id" = P.id, "seconds_played" = round((P.current_playtime / (1 SECOND)))) //rounds 1/10th seconds to seconds
+		recorded += P.id
+		count++
 
-	for (var/sani_ckey in sanitized)
-		if (!decoded_save[sani_ckey])
-			decoded_save[sani_ckey] = list(cdata = list())
-		for (var/data_key in sanitized[sani_ckey])
-			var/value = sanitized[sani_ckey][data_key]["value"]
-			var/command = sanitized[sani_ckey][data_key]["command"]
-			switch(command)
-				if("add")
-					if (data_key in decoded_save[sani_ckey])
-						decoded_save[sani_ckey][data_key] = "[text2num(decoded_save[sani_ckey][data_key]) + value]"
-					else
-						decoded_save[sani_ckey][data_key] = "[value]"
-				if("replace")
-					decoded_save[sani_ckey][data_key] = "[value]"
-
-	rustg_file_write(json_encode(decoded_save),"data/simulated_cloud.json")
-#endif
-	return TRUE
+	try
+		var/datum/apiRoute/players/playtime/addPlaytime = new
+		addPlaytime.buildBody(config.server_id, playtimes)
+		apiHandler.queryAPI(addPlaytime)
+	catch (var/exception/e)
+		var/datum/apiModel/Error/error = e.name
+		logTheThing(LOG_DEBUG, null, "playtime was unable to be logged because of: [error.message]")
+		logTheThing(LOG_DIARY, null, "playtime was unable to be logged because of: [error.message]", "debug")

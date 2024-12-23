@@ -1,11 +1,86 @@
-//scroll used to take on zoldorf's curse
-/obj/item/zolscroll //the contract people sign to become zoldorf. stores the name of the signer so players cant sell someone elses soul in a forced zoldorfing
+#define SIGNING_DURATION 4.6 SECONDS
+#define UNSIGNED 1
+#define SIGNING 2
+#define SIGNED 3
+
+/datum/action/bar/icon/signing_burrito
+
+	var/obj/item/zolscroll/burrito = null
+	var/mob/signer = null
+	var/obj/item/pen/pen
+
+	New(obj/item/zolscroll/B, mob/M, var/dur, var/obj/item/pen/P)
+		..()
+		if (istype(B) && istype(M) && istype(P))
+			src.burrito = B
+			src.signer = M
+			src.duration = dur
+			src.icon = src.burrito.icon
+			src.icon_state = src.burrito.icon_state
+			src.pen = P
+
+	onInterrupt(flag)
+		. = ..(flag)
+
+		if (istype(src.burrito))
+			src.burrito.icon_state = "scrollopen"
+			src.burrito.signing_state = UNSIGNED
+			src.burrito.UpdateIcon()
+
+	onStart()
+		..()
+
+		if (src.burrito == null || src.signer == null || src.pen == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		src.signer.visible_message(
+			SPAN_ALERT("<b>[src.signer.name] stabs [himself_or_herself(src.signer)] with the [src.pen] and starts signing the contract in blood!</b>"),
+			SPAN_ALERT("<b>You stab yourself with the [src.pen] and start signing the contract in blood!</b>"))
+		src.burrito.signing_state = SIGNING
+		playsound(src.signer, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
+		take_bleeding_damage(src.signer, null, 10, DAMAGE_STAB)
+		src.burrito.icon_state = "signing"
+		src.burrito.UpdateIcon()
+
+	onUpdate()
+		..()
+
+		if (src.burrito == null || src.signer == null || src.pen == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if (BOUNDS_DIST(src.owner, src.burrito) > 0)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if (BOUNDS_DIST(src.owner, src.pen) > 0)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if (src.signer.equipped() != src.pen)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+	onEnd()
+		..()
+		src.burrito.signer = src.signer.real_name
+		src.burrito.name = "[src.signer.real_name]'s signed demonic contract"
+		src.burrito.icon_state = "signed"
+		src.burrito.UpdateIcon()
+		src.burrito.signing_state = SIGNED
+
+
+/// Scroll used to take on zoldorf's curse
+/// The contract people sign to become zoldorf.
+/// Stores the name of the signer so players can't sell someone elses soul in a forced zoldorfing.
+/obj/item/zolscroll
 	name = "weird burrito"
 	desc = "Hmmm...It's a burrito with no filling and the texture of old parchment."
 	icon = 'icons/obj/zoldorf.dmi'
 	inhand_image_icon = 'icons/obj/zoldorf.dmi'
 	icon_state = "scrollclosed"
 	item_state = "scroll"
+	var/signing_state = UNSIGNED
 	var/signer
 
 	attack_self(mob/user as mob)
@@ -15,18 +90,10 @@
 			src.desc = "This is one WEIRD burrito..."
 
 	attackby(obj/item/weapon, mob/user)
-		if(istype(weapon, /obj/item/pen) && src.icon_state=="scrollopen")
-			user.visible_message(SPAN_ALERT("<b>[user.name] stabs themself with the [weapon] and starts signing the contract in blood!</b>"),SPAN_ALERT("<b>You stab yourself with the [weapon] and start signing the contract in blood!</b>"))
-			playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
-			take_bleeding_damage(user, null, 10, DAMAGE_STAB)
-			src.icon_state = "signing"
-			if (do_after(user, 4.6 SECONDS))
-				user.visible_message(SPAN_ALERT("<b>[user.name] finishes signing the contract in blood!</b>"),SPAN_ALERT("<b>You finish signing the contract in blood!</b>"))
-				src.signer = user.real_name
-				src.name = "[user.real_name]'s signed demonic contract"
-				src.icon_state = "signed"
-			else
-				src.icon_state = "scrollopen"
+		if (!istype(weapon, /obj/item/pen) || src.signing_state != UNSIGNED)
+			return
+		var/actionBar = new /datum/action/bar/icon/signing_burrito(src, user, SIGNING_DURATION, weapon)
+		actions.start(actionBar, user)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if((user == target)&&(src.icon_state == "scrollclosed"))
@@ -58,7 +125,7 @@
 			else if (istype(src.referencedorf,/obj/machinery/playerzoldorf) && (istype(usr,/mob/zoldorf)))
 				. += SPAN_SUCCESS("<b>This fortune is branded!</b>")
 
-//Totally Normal Deck of Cards (TM)
+/// Totally Normal Deck of Cards (TM)
 /obj/item/zoldorfdeck //deck of many things code is a bit messy, but the deck stores the card information and player interaction, the card item stores the effects passed to them by the deck
 	name = "Deck of Cards"
 	desc = "Wow. These look creepy..."
@@ -215,7 +282,7 @@
 					deck.inuse = 0
 					user.u_equip(deck)
 					deck.set_loc(get_turf(user))
-					h.become_statue_ice()
+					h.become_statue("ice")
 				else
 					user.reagents.add_reagent("cryostylane", 50)
 			if("Security")
@@ -283,10 +350,11 @@
 				var/list/buylist = concrete_typesof(/datum/syndicate_buylist)
 				var/datum/syndicate_buylist/thing = pick(buylist)
 				var/datum/syndicate_buylist/thing2 = new thing
-				if(thing2.item != null)
-					user.put_in_hand_or_drop(new thing2.item)
+				if(length(thing2.items) > 0)
+					for(var/item in thing2.items)
+						user.put_in_hand_or_drop(new item)
 				else
-					boutput(user,SPAN_ALERT("Hmmm...The card seems to have shorted out."))
+					boutput(user,SPAN_ALERT("Hmmm... The card seems to have shorted out."))
 				qdel(thing2)
 			if("Roboticist")
 				user.contract_disease(/datum/ailment/disease/robotic_transformation,null,null,1)
@@ -501,3 +569,8 @@
 /obj/item/zspellscroll/hat
 	icon_state = "scrollpurple"
 	scrolltype = "hat"
+
+#undef SIGNING_DURATION
+#undef UNSIGNED
+#undef SIGNING
+#undef SIGNED

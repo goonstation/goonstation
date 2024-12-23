@@ -13,14 +13,14 @@
 
 			owner.see_in_dark = SEE_DARK_HUMAN
 			owner.see_invisible = INVIS_NONE
-			if (human_owner?.mutantrace)
-				human_owner.mutantrace.sight_modifier()
 
 			if (owner.client)
 				if((owner.traitHolder && owner.traitHolder.hasTrait("cateyes")) || (owner.getStatusDuration("food_cateyes")))
 					owner.render_special.set_centerlight_icon("cateyes")
 				else
 					owner.render_special.set_centerlight_icon("default")
+			if (human_owner?.mutantrace)
+				human_owner.mutantrace.sight_modifier()
 
 			if (human_owner && isvampire(human_owner))
 				if (human_owner.check_vampire_power(1) == 1 && !isrestrictedz(human_owner.z))
@@ -47,27 +47,13 @@
 		else
 			if (robot_owner)
 				//var/sight_therm = 0 //todo fix this
-				var/sight_meson = 0
 				var/sight_constr = 0
 				for (var/obj/item/roboupgrade/R in robot_owner.upgrades)
 					if (R && istype(R, /obj/item/roboupgrade/visualizer) && R.activated && (T && !isrestrictedz(T.z)))
 						sight_constr = 1
-					if (R && istype(R, /obj/item/roboupgrade/opticmeson) && R.activated && (T && !isrestrictedz(T.z)))
-						sight_meson = 1
 					//if (R && istype(R, /obj/item/roboupgrade/opticthermal) && R.activated)
 					//	sight_therm = 1
 
-				if (sight_meson)
-					robot_owner.sight &= ~SEE_BLACKNESS
-					robot_owner.sight |= SEE_TURFS
-					robot_owner.render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (owner.client?.widescreen))
-					robot_owner.vision.set_scan(1)
-					robot_owner.client.set_color(normalize_color_to_matrix("#c2ffc2"))
-				else
-					robot_owner.sight |= SEE_BLACKNESS
-					robot_owner.sight &= ~SEE_TURFS
-					robot_owner.client.set_color()
-					robot_owner.vision.set_scan(0)
 				//if (sight_therm)
 				//	src.sight |= SEE_MOBS //todo make borg thermals have a purpose again
 				//else
@@ -80,6 +66,10 @@
 
 				robot_owner.sight &= ~SEE_OBJS
 				robot_owner.see_in_dark = SEE_DARK_FULL
+			if(hivebot_owner)
+				hivebot_owner.see_invisible = INVIS_CLOAK
+			if(ai_mainframe_owner)
+				ai_mainframe_owner.see_invisible = INVIS_CLOAK
 ////Ship sight
 		if (istype(owner.loc, /obj/machinery/vehicle))
 			var/obj/machinery/vehicle/ship = owner.loc

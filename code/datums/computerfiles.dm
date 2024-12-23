@@ -285,6 +285,22 @@
 		fields = null
 		. = ..()
 
+/datum/computer/file/lrt_data
+	name = "Galactic Position Record"
+	extension = "GPR"
+	size = 8
+	var/place_name
+	var/md5_value
+
+	asText()
+		if(!md5_value)
+			md5_value = md5(place_name)
+		return "[copytext(md5_value, 1,16)]l[copytext(md5_value, 17,32)]b|n"
+
+	disposing()
+		place_name = null
+		. = ..()
+
 
 /datum/computer/folder/link
 	name = "symlink"

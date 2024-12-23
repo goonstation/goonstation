@@ -2,21 +2,29 @@
 // Alarm
 //
 
+#define ALARM_SEVERE 0
+#define ALARM_MINOR 1
+#define ALARM_GOOD 2
+#define ALARM_BROKEN 3
+#define ALARM_NOPOWER 4
+
 /obj/machinery/alarm
-	name = "air Monitor"
+	name = "air monitor"
 	icon = 'icons/obj/monitors.dmi'
-	icon_state = "alarm_unpowered"
+	icon_state = "alarm"
 	power_usage = 5
 	power_channel = ENVIRON
 	anchored = ANCHORED
+	plane = PLANE_NOSHADOW_ABOVE
 	/// save some CPU by only checking every tick when something is amiss
 	var/skipprocess = 0
 	var/alarm_frequency = FREQ_ALARM
 	var/alarm_zone = null
 	var/control_frequency = FREQ_AIR_ALARM_CONTROL
 	/// keeps track of last alarm status
-	var/last_safe = 2
+	var/last_safe = ALARM_NOPOWER
 	var/datum/gas_mixture/environment
+	var/alertingAI = FALSE // Does this alarm currently have an AI alarm active
 
 	/// this is a list of safe & good partial pressures of each gas. If all gasses are in the good range, the alarm will show green. If any gas is outside the safe range, the alarm will show alert. Otherwise caution.
 	/// most of these values are taken from lung.dm
@@ -31,14 +39,14 @@
 	//	list(varname = "oxygen_agent_b", friend_name = "Unknown", safe_min=0, safe_max=INFINITY, good_min=0, good_max=INFINITY),
 	)
 	var/const/temp_safe_min = T0C-15
-	var/const/temp_safe_max = T0C+66
+	var/const/temp_safe_max = DEFAULT_LUNG_AIR_TEMP_TOLERANCE_MAX
 	var/const/temp_good_min = T0C
 	var/const/temp_good_max = T20C+20
 
 /obj/machinery/alarm/New()
 	..()
-	MAKE_SENDER_RADIO_PACKET_COMPONENT("alarm", alarm_frequency)
-	MAKE_SENDER_RADIO_PACKET_COMPONENT("control", control_frequency) // seems to be unused?
+	MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "alarm", alarm_frequency)
+	MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "control", control_frequency) // seems to be unused?
 
 	if(!alarm_zone)
 		var/area/A = get_area(loc)
@@ -54,11 +62,11 @@
 		return
 
 	switch(last_safe)
-		if(0)
+		if(ALARM_SEVERE)
 			. += "It is showing an alert status. Maybe you should hold your breath."
-		if(1)
+		if(ALARM_MINOR)
 			. += "It is showing a caution alarm. Something isn't right, but you can still breathe."
-		if(2)
+		if(ALARM_GOOD)
 			. += "It is showing optimal status. Take a deep breath of fresh-ish air!"
 
 /obj/machinery/alarm/ui_interact(mob/user, datum/tgui/ui)
@@ -88,16 +96,18 @@
 /obj/machinery/alarm/process()
 	.=..()
 
-	//good = 2
-	//breatheable = 1
-	//unsafe = 0
-	var/safe = 2
+	var/safe = ALARM_GOOD
 
 	if(status & NOPOWER)
-		icon_state = "alarm_unpowered"
+		if (src.last_safe != ALARM_NOPOWER)
+			src.UpdateOverlays(null, "light")
+			src.last_safe = ALARM_NOPOWER
 		return
 	if(status & BROKEN)
-		icon_state = "alarm_broken"
+		src.icon_state = "alarm_broken"
+		if (src.last_safe != ALARM_BROKEN)
+			src.UpdateOverlays(null, "light")
+			src.last_safe = ALARM_BROKEN
 		return
 
 	if (src.skipprocess)
@@ -111,37 +121,59 @@
 	environment = location.return_air()
 	environment.check_if_dangerous()
 	if (!istype(environment))
-		safe = 0
+		safe = ALARM_SEVERE
 	else
 		var/env_moles = TOTAL_MOLES(environment)
 		if(env_moles == 0)
-			safe = 0 //it's a vacuum, you can't breathe that
+			safe = ALARM_SEVERE //it's a vacuum, you can't breathe that
 		else if (environment.temperature > temp_safe_max || environment.temperature < temp_safe_min)
-			safe = 0 //dangerously hot or cold
+			safe = ALARM_SEVERE //dangerously hot or cold
 		else
 			if (environment.temperature > temp_good_max || environment.temperature < temp_good_min)
-				safe = 1 //uncomfortably hot or cold
+				safe = ALARM_MINOR //uncomfortably hot or cold
 			var/env_pressure = (env_moles*R_IDEAL_GAS_EQUATION*environment.temperature)/environment.volume
 			for(var/list/entry as anything in gas_safety_levels)
 				var/partial_pressure = (environment.vars[entry["varname"]]/env_moles)*env_pressure
 				if(partial_pressure > entry["safe_max"] || partial_pressure < entry["safe_min"])
-					safe = 0
+					safe = ALARM_SEVERE
 					break //no point doing further checks
 				if(partial_pressure > entry["good_max"] || partial_pressure < entry["good_min"])
-					safe = 1
+					safe = ALARM_MINOR
 
-	switch(safe)
-		if(0)
-			src.icon_state = "alarm_alert"
-		if(1)
-			src.icon_state = "alarm_safe"
-		if(2)
-			src.icon_state = "alarm_good"
-
-	if(safe == 2)
+	if(safe == ALARM_GOOD)
 		src.skipprocess = 2
 
-	if(alarm_frequency && last_safe != safe)
+	if (src.last_safe == safe) //no change, no icon update/alert
+		return
+
+	var/overlay_icon_state = null
+	switch(safe)
+		if(ALARM_SEVERE)
+			overlay_icon_state = "alarm_alert"
+		if(ALARM_MINOR)
+			overlay_icon_state = "alarm_safe"
+		if(ALARM_GOOD)
+			overlay_icon_state = "alarm_good"
+
+	var/mutable_appearance/light_ov = mutable_appearance(src.icon, overlay_icon_state)
+	light_ov.plane = PLANE_SELFILLUM
+	src.UpdateOverlays(light_ov, "light")
+
+	if (safe == ALARM_GOOD)
+		if (src.alertingAI)
+			for_by_tcl(aiPlayer, /mob/living/silicon/ai)
+				aiPlayer.cancelAlarm("Atmosphere", get_area(src), src)
+			src.alertingAI = FALSE
+	else
+		var/list/cameras = list()
+		for_by_tcl(C, /obj/machinery/camera)
+			if(get_area(C) == get_area(src))
+				cameras += C
+		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
+			aiPlayer.triggerAlarm("Atmosphere", get_area(src), cameras, src)
+		src.alertingAI = TRUE
+
+	if(alarm_frequency)
 		post_alert(safe)
 		last_safe = safe
 
@@ -154,11 +186,11 @@
 	alert_signal.data["type"] = "Atmospheric"
 
 	switch (alert_level)
-		if (2)
+		if (ALARM_SEVERE)
 			alert_signal.data["alert"] = "severe"
-		if (1)
+		if (ALARM_MINOR)
 			alert_signal.data["alert"] = "minor"
-		if (0)
+		if (ALARM_GOOD)
 			alert_signal.data["alert"] = "reset"
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, alert_signal, null, "alarm")
@@ -224,3 +256,7 @@
 	signal.data["command"] = "end_purge"
 
 	frequency.post_signal(src, signal) */
+
+#undef ALARM_GOOD
+#undef ALARM_MINOR
+#undef ALARM_SEVERE

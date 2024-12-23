@@ -15,11 +15,11 @@
 
 	src.fakedead = 1
 	boutput(src, "<B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...")
-	src.changeStatus("weakened", 5 SECONDS)
+	src.changeStatus("knockdown", 5 SECONDS)
 
 	SPAWN(seconds * 10)
 		src.fakedead = 0
-		src.delStatus("weakened")
+		src.delStatus("knockdown")
 
 /proc/get_mobs_of_type_at_point_blank(var/atom/object,var/mob_path)
 	var/list/returning_list = list()
@@ -257,7 +257,7 @@
 
 			for_by_tcl(G, /mob/living/critter/small_animal/dog/george)
 				G.visible_message(SPAN_ALERT("<b>[G]</b> pees on the floor. Bad dog!"))
-				make_cleanable( /obj/decal/cleanable/urine ,get_turf(G))
+				make_cleanable( /obj/decal/cleanable/water ,get_turf(G))
 		return
 
 	attackby(obj/item/W, mob/user)

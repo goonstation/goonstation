@@ -7,6 +7,7 @@ TYPEINFO(/obj/item/device/camera_viewer)
 	icon_state = "monitor"
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
+	abilities = list(/obj/ability_button/reset_view)
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
 	// Sin but we need to know for disposing to clear viewer list on current

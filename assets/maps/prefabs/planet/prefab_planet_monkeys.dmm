@@ -7,7 +7,7 @@
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "D" = (
-/obj/decal/fakeobjects/skeleton/decomposed_corpse{
+/obj/fakeobject/skeleton/decomposed_corpse{
 	icon_state = "body5"
 	},
 /obj/item/device/radio/signaler{

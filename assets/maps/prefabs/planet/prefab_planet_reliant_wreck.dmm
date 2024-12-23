@@ -364,7 +364,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "DF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/space,
@@ -429,7 +429,7 @@
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "HT" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "It seems to be locked";
 	dir = 4;
 	icon = 'icons/obj/computerpanel.dmi';
@@ -634,7 +634,7 @@
 /turf/variableTurf/clear,
 /area/pod_wars/spacejunk/reliant)
 "Yv" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "It seems to be locked";
 	dir = 4;
 	icon = 'icons/obj/computerpanel.dmi';

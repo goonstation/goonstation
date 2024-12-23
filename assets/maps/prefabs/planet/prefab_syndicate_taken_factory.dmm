@@ -1,0 +1,702 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decoration/junctionbox/junctionbox3{
+	pixel_y = 30
+	},
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"b" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "line-broken1";
+	dir = 4
+	},
+/obj/barricade/barbed/wire{
+	dir = 8
+	},
+/obj/barricade{
+	layer = 2.89
+	},
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"d" = (
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"g" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_y = 7;
+	pixel_x = 6
+	},
+/obj/item/weldingtool/yellow{
+	pixel_y = 3
+	},
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"i" = (
+/obj/decoration/vent/vent3{
+	pixel_y = 35
+	},
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"j" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "line-broken1";
+	dir = 8
+	},
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"k" = (
+/obj/fakeobject{
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "broken machine"
+	},
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"l" = (
+/obj/decal/nav_danger,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"m" = (
+/obj/barricade/barbed/wire,
+/obj/barricade{
+	layer = 2.89
+	},
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"n" = (
+/mob/living/critter/human/syndicate/rifle,
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"o" = (
+/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/area/noGenerate)
+"p" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "line-broken1";
+	dir = 4
+	},
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"q" = (
+/obj/decal/nav_danger{
+	layer = 2.98
+	},
+/obj/barricade/barbed/wire{
+	dir = 8
+	},
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"r" = (
+/obj/barricade/barbed/wire{
+	dir = 10
+	},
+/obj/barricade{
+	layer = 2.89
+	},
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"s" = (
+/obj/window/cubicle/railing{
+	dir = 2
+	},
+/obj/storage/cart/trash,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"u" = (
+/mob/living/critter/human/syndicate/knife,
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"w" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"x" = (
+/obj/machinery/light/incandescent/cool,
+/obj/storage/crate/wooden{
+	icon_state = "packingcrate12"
+	},
+/obj/item/gun/kinetic/makarov,
+/obj/item/ammo/bullets/nine_mm_soviet,
+/obj/item/ammo/bullets/nine_mm_soviet,
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"z" = (
+/obj/window/cubicle/railing{
+	dir = 2
+	},
+/obj/decoration/vent/vent3{
+	pixel_y = 35
+	},
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"A" = (
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"C" = (
+/obj/storage/crate/wooden,
+/obj/item/item_box/medical_patches/styptic,
+/obj/item/item_box/medical_patches/silver_sulf,
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"D" = (
+/obj/machinery/drainage,
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"F" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"G" = (
+/obj/stool/chair/moveable{
+	dir = 8
+	},
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"H" = (
+/obj/stool/bed,
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"I" = (
+/obj/machinery/light/incandescent/cool{
+	dir = 1
+	},
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"J" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/reagent_containers/food/drinks/bowl{
+	pixel_y = 8
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 8
+	},
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"N" = (
+/obj/window/cubicle/railing{
+	dir = 2
+	},
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"Q" = (
+/obj/barricade/barbed/wire{
+	dir = 6
+	},
+/obj/barricade{
+	layer = 2.89
+	},
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"R" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "line-broken1";
+	dir = 8
+	},
+/obj/barricade/barbed/wire{
+	dir = 8
+	},
+/obj/barricade{
+	layer = 2.89
+	},
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"T" = (
+/obj/stool/chair/moveable{
+	dir = 8
+	},
+/mob/living/critter/human/syndicate/knife,
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"U" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "A large rack of server modules.  It doesn't seem to be in service.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "tapedrive-p";
+	name = "downed server"
+	},
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"V" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/reagent_containers/food/snacks/cereal_box/syndie{
+	pixel_y = 11;
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/food/drinks/milk{
+	pixel_y = 17;
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/food/drinks/bowl{
+	pixel_y = 2;
+	layer = 3.1
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 8;
+	pixel_y = -4;
+	layer = 3.2
+	},
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"X" = (
+/obj/decal/nav_danger{
+	layer = 2.98
+	},
+/obj/storage/crate/trench_loot/drug,
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"Y" = (
+/obj/decal/poster/wallsign/chsc{
+	pixel_y = -32
+	},
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+"Z" = (
+/obj/fireworksbox,
+/turf/simulated/floor/concrete,
+/area/noGenerate)
+
+(1,1,1) = {"
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+"}
+(2,1,1) = {"
+F
+o
+o
+o
+o
+o
+o
+o
+o
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+"}
+(3,1,1) = {"
+F
+o
+k
+u
+A
+A
+A
+A
+o
+m
+r
+F
+F
+d
+d
+d
+d
+d
+d
+d
+"}
+(4,1,1) = {"
+F
+o
+I
+A
+H
+H
+A
+x
+o
+N
+R
+j
+j
+d
+d
+d
+d
+d
+d
+d
+"}
+(5,1,1) = {"
+F
+o
+u
+A
+w
+w
+A
+A
+o
+z
+b
+p
+p
+d
+d
+F
+F
+F
+F
+F
+"}
+(6,1,1) = {"
+F
+o
+Z
+A
+H
+H
+A
+A
+o
+a
+q
+l
+d
+d
+d
+F
+F
+F
+F
+F
+"}
+(7,1,1) = {"
+F
+o
+U
+A
+w
+w
+A
+A
+D
+N
+R
+j
+j
+d
+d
+F
+F
+F
+F
+F
+"}
+(8,1,1) = {"
+F
+o
+A
+A
+V
+J
+A
+A
+D
+N
+b
+p
+p
+d
+d
+F
+F
+F
+F
+F
+"}
+(9,1,1) = {"
+F
+o
+X
+A
+G
+G
+A
+g
+o
+i
+q
+l
+d
+d
+d
+F
+F
+F
+F
+F
+"}
+(10,1,1) = {"
+F
+o
+X
+C
+A
+n
+A
+T
+o
+s
+R
+j
+j
+d
+d
+F
+F
+F
+F
+F
+"}
+(11,1,1) = {"
+F
+o
+I
+A
+A
+A
+A
+Y
+o
+s
+b
+p
+p
+d
+d
+F
+F
+F
+F
+F
+"}
+(12,1,1) = {"
+F
+o
+A
+u
+A
+A
+A
+A
+o
+m
+Q
+F
+F
+d
+d
+F
+F
+F
+F
+F
+"}
+(13,1,1) = {"
+F
+o
+o
+o
+o
+o
+o
+o
+o
+F
+F
+F
+F
+d
+d
+F
+F
+F
+F
+F
+"}
+(14,1,1) = {"
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+d
+d
+F
+F
+F
+F
+F
+"}
+(15,1,1) = {"
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+d
+d
+F
+F
+F
+F
+F
+"}
+(16,1,1) = {"
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+d
+d
+F
+F
+F
+F
+F
+"}
+(17,1,1) = {"
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+d
+d
+F
+F
+F
+F
+F
+"}
+(18,1,1) = {"
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+d
+d
+F
+F
+F
+F
+F
+"}
+(19,1,1) = {"
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+d
+d
+F
+F
+F
+F
+F
+"}
+(20,1,1) = {"
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+F
+d
+d
+F
+F
+F
+F
+F
+"}

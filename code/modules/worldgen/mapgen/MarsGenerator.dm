@@ -1,19 +1,24 @@
 //the random offset applied to square coordinates, causes intermingling at biome borders
  #define MARS_BIOME_RANDOM_SQUARE_DRIFT 2
 
-/datum/biome/mars/duststorm
-	turf_type = /turf/unsimulated/floor/setpieces/martian/station_duststorm
+
+/datum/biome/mars
+	turf_type = /turf/unsimulated/floor/setpieces/martian
 
 	flora_types = list(/obj/machinery/light/beacon=10)
 	flora_density = 2
-	minimum_flora_distance = 10
+	minimum_flora_distance = 14
 
-/datum/biome/mars/martian_area
+/datum/biome/mars/duststorm
 	turf_type = /turf/unsimulated/floor/setpieces/martian/station_duststorm
 
+/datum/biome/mars/martian_area
 	fauna_types = list(/mob/living/critter/martian=50, /mob/living/critter/martian/soldier=10, /mob/living/critter/martian/mutant=1, /mob/living/critter/martian/initiate=5, /mob/living/critter/martian/warrior=10)
 	fauna_density = 1
 	minimum_fauna_distance = 3
+
+/datum/biome/mars/martian_area/duststorm
+	turf_type = /turf/unsimulated/floor/setpieces/martian/station_duststorm
 
 /datum/biome/mars/martian_rock
 	turf_type = /turf/unsimulated/wall/setpieces/martian/auto
@@ -26,6 +31,40 @@
 	var/list/possible_biomes = list(
 	BIOME_LOW_HEAT = list(
 		BIOME_LOW_HUMIDITY = /datum/biome/mars/martian_area,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mars/martian_rock,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mars,
+		BIOME_HIGH_HUMIDITY = /datum/biome/mars
+		),
+	BIOME_LOWMEDIUM_HEAT = list(
+		BIOME_LOW_HUMIDITY = /datum/biome/mars,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mars/martian_rock,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mars/martian_rock,
+		BIOME_HIGH_HUMIDITY = /datum/biome/mars
+		),
+	BIOME_HIGHMEDIUM_HEAT = list(
+		BIOME_LOW_HUMIDITY = /datum/biome/mars,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mars,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mars/martian_rock,
+		BIOME_HIGH_HUMIDITY = /datum/biome/mars
+		),
+	BIOME_HIGH_HEAT = list(
+		BIOME_LOW_HUMIDITY = /datum/biome/mars,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mars,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mars,
+		BIOME_HIGH_HUMIDITY = /datum/biome/mars/martian_area
+		)
+	)
+	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
+	var/perlin_zoom = 65
+	var/floor_only_biome = /datum/biome/mars
+	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mars
+	floor_turf_type = /turf/unsimulated/floor/plating/asteroid/mars
+
+/datum/map_generator/mars_generator/duststorm
+	///2D list of all biomes based on heat and humidity combos.
+	possible_biomes = list(
+	BIOME_LOW_HEAT = list(
+		BIOME_LOW_HUMIDITY = /datum/biome/mars/martian_area/duststorm,
 		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mars/martian_rock,
 		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mars/duststorm,
 		BIOME_HIGH_HUMIDITY = /datum/biome/mars/duststorm
@@ -46,13 +85,11 @@
 		BIOME_LOW_HUMIDITY = /datum/biome/mars/duststorm,
 		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mars/duststorm,
 		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mars/duststorm,
-		BIOME_HIGH_HUMIDITY = /datum/biome/mars/martian_area
+		BIOME_HIGH_HUMIDITY = /datum/biome/mars/martian_area/duststorm
 		)
 	)
-	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
-	var/perlin_zoom = 65
-	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mars
-	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/mars
+	floor_only_biome = /datum/biome/mars/duststorm
+	floor_turf_type = /turf/unsimulated/floor/setpieces/martian/station_duststorm
 
  ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/mars_generator/generate_terrain(list/turfs, reuse_seed, flags)
@@ -69,7 +106,9 @@
 		var/height = text2num(rustg_noise_get_at_coordinates("[height_seed]", "[drift_x]", "[drift_y]"))
 
 		var/datum/biome/selected_biome
-		if(height <= 0.85) //If height is less than 0.85, we generate biomes based on the heat and humidity of the area.
+		if(flags & MAPGEN_FLOOR_ONLY)
+			selected_biome = floor_only_biome
+		else if(height <= 0.85) //If height is less than 0.85, we generate biomes based on the heat and humidity of the area.
 			var/humidity = text2num(rustg_noise_get_at_coordinates("[humidity_seed]", "[drift_x]", "[drift_y]"))
 			var/heat = text2num(rustg_noise_get_at_coordinates("[heat_seed]", "[drift_x]", "[drift_y]"))
 			var/heat_level //Type of heat zone we're in LOW-MEDIUM-HIGH
@@ -99,10 +138,7 @@
 		selected_biome = biomes[selected_biome]
 		selected_biome.generate_turf(gen_turf, flags)
 
-		if (current_state >= GAME_STATE_PLAYING)
-			LAGCHECK(LAG_LOW)
-		else
-			LAGCHECK(LAG_HIGH)
+		src.lag_check()
 
 /turf/unsimulated/floor/setpieces/martian/station_duststorm
 
@@ -121,13 +157,12 @@
 					if(jerk.protected_from_space()) // Be kind around station...
 						return
 					random_brute_damage(jerk, 20, checkarmor=TRUE) // Allow armor to resist
-					jerk.do_disorient(stamina_damage = 100, weakened = 3 SECONDS, disorient = 5 SECOND)
+					jerk.do_disorient(stamina_damage = 100, knockdown = 3 SECONDS, disorient = 5 SECOND)
 					if(prob(50))
 						playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 50, TRUE)
 						boutput(jerk, pick("Dust gets caught in your eyes!","The wind blows you off course!","Debris pierces through your skin!"))
 
-
-/turf/simulated/floor/plating/airless/asteroid/mars
+/turf/unsimulated/floor/plating/asteroid/mars
 	stone_color = "#c96433"
 	color = "#c96433"
 	carbon_dioxide = 500
@@ -143,7 +178,7 @@
 	fullbright = 0
 	color = "#c96433"
 	stone_color = "#c96433"
-	replace_type = /turf/simulated/floor/plating/airless/asteroid/mars
+	replace_type = /turf/unsimulated/floor/plating/asteroid/mars
 
 	destroy_asteroid(var/dropOre=1)
 		var/image/ambient_light = src.GetOverlayImage("ambient")

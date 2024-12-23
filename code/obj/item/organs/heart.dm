@@ -84,7 +84,7 @@
 				src.donor.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.total_volume)
 
 			if (!ischangeling(donor) && !donor.nodamage)
-				donor.changeStatus("weakened", 8 SECONDS)
+				donor.changeStatus("knockdown", 8 SECONDS)
 				donor.losebreath += 20
 				donor.take_oxygen_deprivation(20)
 

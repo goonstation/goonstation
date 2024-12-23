@@ -354,18 +354,11 @@
 	heal_amt = 1
 	initial_volume = 15
 	initial_reagents = null
-	var/roundstart_pathogens = 1
-
-	New()
-		..()
-		if(roundstart_pathogens)
-			wrap_pathogen(reagents, generate_random_pathogen(), 15)
 
 	fishstick
-		roundstart_pathogens = 0
 		pickup(mob/user)
 			if(isadmin(user) || current_state == GAME_STATE_FINISHED)
-				wrap_pathogen(reagents, generate_random_pathogen(), 15)
+				src.reagents.add_reagent("mycobacterium leprae", 15)
 			else
 				boutput(user, SPAN_NOTICE("You feel that it was too soon for this..."))
 			. = ..()
@@ -425,7 +418,7 @@
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 	heal(var/mob/M)
-		if(prob(20))
+		if(prob(20) && !(isghostcritter(M) && ON_COOLDOWN(src, "critter_gibs_\ref[M]", INFINITY)))
 			var/obj/decal/cleanable/blood/gibs/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(src) )
 			gib.streak_cleanable(M.dir)
 			boutput(M, SPAN_ALERT("You drip some meat on the floor"))
@@ -549,7 +542,7 @@
 	take_a_bite(mob/consumer, mob/feeder)
 		if (prob(50))
 			consumer.visible_message(SPAN_ALERT("[consumer] tries to take a bite of [src], but [src] takes a bite of [consumer] instead!"),
-				SPAN_ALERT("You tries to take a bite of [src], but [src] takes a bite of you instead!"),
+				SPAN_ALERT("You try to take a bite of [src], but [src] takes a bite of you instead!"),
 				SPAN_ALERT("You hear something bite down."))
 			playsound(get_turf(feeder), pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
 			random_brute_damage(consumer, rand(5, 15), FALSE)
@@ -557,6 +550,38 @@
 			hit_twitch(consumer)
 		else
 			return ..()
+
+/obj/item/reagent_containers/food/snacks/burger/burgle
+	name = "burgle"
+	desc = "Reeks of crime."
+	icon_state = "burgle"
+	food_effects = list("food_cateyes", "food_energized_big")
+	contraband = 3 //ILLEGAL
+
+	take_a_bite(mob/consumer, mob/feeder)
+		if (prob(35))
+			var/list/stealable_things = consumer.equipment_list()
+			if (!length(stealable_things)) //naked burger eaters smh
+				return ..()
+			var/obj/item/stolen = pick(stealable_things)
+			consumer.drop_from_slot(stolen)
+			consumer.drop_from_slot(src)
+			playsound(get_turf(consumer), /obj/item/crowbar::hitsound, 50, TRUE)
+			random_brute_damage(consumer, 5)
+			consumer.changeStatus("knockdown", 4 SECONDS)
+			consumer.visible_message(SPAN_ALERT("[consumer] goes to take a bite of [src], but [src] has already burgled their [stolen.name] and made off with it!"),
+				SPAN_ALERT("You go to take a bite of [src], but [src] has already burgled your [stolen.name] and made off with it!"),
+				SPAN_ALERT("You hear a clonk!")
+			)
+			var/turf/T = get_turf(pick(view(10, consumer)))
+			walk_towards(src, T, 3)
+			walk_towards(stolen, T, 3)
+			SPAWN(3 SECONDS)
+				walk(src, 0)
+				walk(stolen, 0)
+			return
+		consumer.reagents?.add_reagent("methamphetamine", 5)
+		return ..()
 
 /obj/item/reagent_containers/food/snacks/burger/vr
 	icon = 'icons/effects/VR.dmi'
@@ -580,10 +605,19 @@
 	icon_state = "chilifries"
 	bites_left = 6
 	heal_amt = 2
-	initial_volume = 5
-	initial_reagents = list("cholesterol"=1, "capsaicin"=10, "cheese"= 10)
+	initial_volume = 25
+	initial_reagents = list("cholesterol"=1, "capsaicin"=10, "cheese"=10)
 	food_effects = list("food_hp_up")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_SNACK
+
+	poutine
+		name = "poutine"
+		desc = "Lightly salted potato fingers, topped with gravy and cheese curds. Oh Canada!"
+		icon_state = "poutine"
+		bites_left = 6
+		heal_amt = 2
+		initial_volume = 25
+		initial_reagents = list("cholesterol"=1, "cheese"=10, "gravy"=10)
 
 /obj/item/reagent_containers/food/snacks/macguffin
 	name = "sausage macguffin"

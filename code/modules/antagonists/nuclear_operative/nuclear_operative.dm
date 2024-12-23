@@ -3,11 +3,13 @@
 	display_name = "\improper Syndicate Operative"
 	antagonist_icon = "syndicate"
 	antagonist_panel_tab_type = /datum/antagonist_panel_tab/bundled/nuclear_operative
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 	uses_pref_name = FALSE
 
 	var/static/commander_title
 	var/static/available_callsigns
+	var/list/datum/materiel/purchased_items = list() //Used for adding a nukie's vendor purchases to crew credits. Items are tracked by whoever interacts with the vendor, so if the whole team gives their credits to the commander, the commander will have multiple entries in the crew credits!
+	var/list/datum/syndicate_buylist/uplink_items = list() // Same but for custom uplinks and the commander uplink
 
 	New(datum/mind/new_owner)
 		if (!src.commander_title)
@@ -38,12 +40,16 @@
 
 		H.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(H), SLOT_W_UNIFORM)
 		H.equip_if_possible(new /obj/item/clothing/shoes/swat/noslip(H), SLOT_SHOES)
-		H.equip_if_possible(new /obj/item/clothing/gloves/swat(H), SLOT_GLOVES)
+		H.equip_if_possible(new /obj/item/clothing/gloves/swat/syndicate(H), SLOT_GLOVES)
 		H.equip_if_possible(new /obj/item/storage/backpack/syndie/tactical(H), SLOT_BACK)
 		H.equip_if_possible(new /obj/item/clothing/mask/gas/swat/syndicate(H), SLOT_WEAR_MASK)
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(H), SLOT_GLASSES)
 		H.equip_if_possible(new /obj/item/requisition_token/syndicate(H), SLOT_R_STORE)
-		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), SLOT_L_STORE)
+
+		if("plasmalungs" in src.owner.current.client?.preferences.traitPreferences.traits_selected) //sigh
+			H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended/plasma(H), SLOT_L_STORE)
+		else
+			H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), SLOT_L_STORE)
 
 		if(src.id == ROLE_NUKEOP_COMMANDER)
 			H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/commissar_cap(H), SLOT_HEAD)
@@ -86,7 +92,17 @@
 		if (src.id == ROLE_NUKEOP_COMMANDER)
 			M.set_loc(pick_landmark(LANDMARK_SYNDICATE_BOSS))
 		else
-			M.set_loc(pick_landmark(LANDMARK_SYNDICATE))
+			//copied from /mob/living/proc/Equip_Rank - try to find an unoccupied chair but not for too long.
+			var/tries = 8
+			var/turf/T
+			do
+				T = pick_landmark(LANDMARK_SYNDICATE)
+			while((locate(/mob) in T) && tries--)
+			M.set_loc(T)
+			//for completeness' sake, make em sit properly
+			var/obj/stool/an_chair = locate() in T
+			if(an_chair)
+				M.set_dir(an_chair.dir)
 
 	assign_objectives()
 		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/nuclear, src)
@@ -99,24 +115,49 @@
 
 		. = ..()
 
+	get_statistics()
+		var/list/purchases = list()
+		// Add items purchased from the nukies weapon vendor
+		for (var/datum/materiel/purchased_item in src.purchased_items)
+			var/obj/item_type = initial(purchased_item.path)
+			purchases += list(
+				list(
+					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+					"name" = "[purchased_item]",
+				)
+			)
+
+		// Add items from custom uplinks and the commander's special uplink
+		for (var/datum/syndicate_buylist/purchased_item in src.uplink_items)
+			if(length(purchased_item.items) > 0)
+				var/obj/item_type = initial(purchased_item.items[1])
+				purchases += list(
+					list(
+						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+						"name" = "[purchased_item[1].name]", // Dont include TC cost bc commander uplink doesnt use TC
+					)
+				)
+
+		. = list(
+			list(
+				"name" = "Purchased Items",
+				"type" = "itemList",
+				"value" = purchases,
+			)
+		)
+
+
 	proc/assign_name()
-		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-			if (src.id == ROLE_NUKEOP_COMMANDER)
-				src.owner.current.real_name = "[syndicate_name()] [src.commander_title]"
-			else
-				var/callsign = pick(src.available_callsigns)
-				src.available_callsigns -= callsign
-				src.owner.current.real_name = "[syndicate_name()] Operative [callsign]"
-
-				// Assign a headset icon to the Operative matching the first letter of their callsign.
-				var/obj/item/device/radio/headset/syndicate/headset = src.owner.current.ears
-				headset.icon_override = "syndie_letters/[copytext(callsign, 1, 2)]"
-
+		if (src.id == ROLE_NUKEOP_COMMANDER)
+			src.owner.current.real_name = "[syndicate_name()] [src.commander_title]"
 		else
-			if (src.id == ROLE_NUKEOP_COMMANDER)
-				src.owner.current.real_name = "Syndicate Commander [src.owner.current.real_name]"
-			else
-				src.owner.current.real_name = "Syndicate Operative [src.owner.current.real_name]"
+			var/callsign = pick(src.available_callsigns)
+			src.available_callsigns -= callsign
+			src.owner.current.real_name = "[syndicate_name()] Operative [callsign]"
+
+			// Assign a headset icon to the Operative matching the first letter of their callsign.
+			var/obj/item/device/radio/headset/syndicate/headset = src.owner.current.ears
+			headset.icon_override = "syndie_letters/[copytext(callsign, 1, 2)]"
 
 /datum/antagonist/nuclear_operative/commander
 	id = ROLE_NUKEOP_COMMANDER

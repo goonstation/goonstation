@@ -24,7 +24,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
 			genescanner_addresses += src.net_id
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 	disposing()
 		if (src.net_id)
@@ -54,11 +54,13 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 			user.show_text(SPAN_ALERT("[src] [pick("cracks","bends","shakes","groans")]."))
 			src.togglelock(1)
 
-
-
 	relaymove(mob/user as mob, dir)
-		eject_occupant(user)
+		if(!ismobcritter(user) || user.client)
+			eject_occupant(user)
 
+	Click(location, control, params)
+		if(!src.ghost_observe_occupant(usr, src.occupant))
+			. = ..()
 
 	MouseDrop_T(mob/living/target, mob/user)
 		if (!istype(target) || isAI(user))
@@ -86,15 +88,19 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 			return 0
 		if (BOUNDS_DIST(src, M) > 0)
 			return 0
-		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
+		if (M.getStatusDuration("unconscious") || M.getStatusDuration("stunned") || M.getStatusDuration("knockdown"))
 			return 0
 		if (src.occupant)
 			boutput(M, SPAN_NOTICE("<B>The scanner is already occupied!</B>"))
 			return 0
 		if(ismobcritter(target))
-			boutput(M, SPAN_ALERT("<B>The scanner doesn't support this body type.</B>"))
-			return 0
-		if(!iscarbon(target) )
+			if(!genResearch.isResearched(/datum/geneticsResearchEntry/critter_scanner))
+				boutput(M, SPAN_ALERT("<B>The scanner doesn't support this body type.</B>"))
+				return 0
+			if(!target.has_genetics())
+				boutput(M, SPAN_ALERT("<B>The scanner doesn't support this genetic structure.</B>"))
+				return 0
+		else if(!iscarbon(target) )
 			boutput(M, SPAN_ALERT("<B>The scanner supports only carbon based lifeforms.</B>"))
 			return 0
 		if (src.occupant)
@@ -143,7 +149,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user) || iswraith(user))
+		if (!src.can_eject_occupant(user))
 			return
 		if (src.locked)
 			boutput(user, SPAN_ALERT("<b>The scanner door is locked!</b>"))
@@ -156,16 +162,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 		if (!istype(G))
 			return
 
-		if (src.occupant)
-			boutput(user, SPAN_ALERT("<B>The scanner is already occupied!</B>"))
-			return
-
-		if (src.locked)
-			boutput(usr, SPAN_ALERT("<B>You need to unlock the scanner first.</B>"))
-			return
-
-		if(!iscarbon(G.affecting))
-			boutput(user, SPAN_NOTICE("<B>The scanner supports only carbon based lifeforms.</B>"))
+		if(!can_operate(user, G.affecting))
 			return
 
 		var/mob/living/L = user
@@ -272,9 +269,9 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 	var/mob/living/carbon/human/target_mob = null
 	var/direction = SOUTH
 
-	var/datum/customization_style/customization_first = new /datum/customization_style/hair/short/short
-	var/datum/customization_style/customization_second = new /datum/customization_style/none
-	var/datum/customization_style/customization_third = new /datum/customization_style/none
+	var/datum/customization_style/customization_first_style = new /datum/customization_style/hair/short/short
+	var/datum/customization_style/customization_second_style = new /datum/customization_style/none
+	var/datum/customization_style/customization_third_style = new /datum/customization_style/none
 
 	var/customization_first_color = "#FFFFFF"
 	var/customization_second_color = "#FFFFFF"
@@ -320,11 +317,11 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 				if (params["color3"])
 					src.customization_third_color = sanitize_color(params["color3"], fixColors)
 				if (params["style1"])
-					src.customization_first = find_style_by_name(params["style1"], usr.client)
+					src.customization_first_style = find_style_by_name(params["style1"], usr.client)
 				if (params["style2"])
-					src.customization_second = find_style_by_name(params["style2"], usr.client)
+					src.customization_second_style = find_style_by_name(params["style2"], usr.client)
 				if (params["style3"])
-					src.customization_third = find_style_by_name(params["style3"], usr.client)
+					src.customization_third_style = find_style_by_name(params["style3"], usr.client)
 				if (params["apply"] || params["cancel"])
 					if (params["apply"])
 						src.copy_to_target()
@@ -357,9 +354,9 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 			"color1" = src.customization_first_color,
 			"color2" = src.customization_second_color,
 			"color3" = src.customization_third_color,
-			"style1" = src.customization_first.name,
-			"style2" = src.customization_second.name,
-			"style3" = src.customization_third.name,
+			"style1" = src.customization_first_style.name,
+			"style2" = src.customization_second_style.name,
+			"style3" = src.customization_third_style.name,
 			"fixColors" = fixColors,
 			"hasEyes" = hasHumanEyes,
 			"hasSkin" = hasHumanSkintone,
@@ -379,23 +376,23 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 
 			src.s_tone = H.bioHolder.mobAppearance.s_tone
 
-			src.customization_first = H.bioHolder.mobAppearance.customization_first
-			src.customization_first_color = H.bioHolder.mobAppearance.customization_first_color
+			src.customization_first_style = H.bioHolder.mobAppearance.customizations["hair_bottom"].style
+			src.customization_first_color = H.bioHolder.mobAppearance.customizations["hair_bottom"].color
 
-			src.customization_second = H.bioHolder.mobAppearance.customization_second
-			src.customization_second_color = H.bioHolder.mobAppearance.customization_second_color
+			src.customization_second_style = H.bioHolder.mobAppearance.customizations["hair_middle"].style
+			src.customization_second_color = H.bioHolder.mobAppearance.customizations["hair_middle"].color
 
-			src.customization_third = H.bioHolder.mobAppearance.customization_third
-			src.customization_third_color = H.bioHolder.mobAppearance.customization_third_color
+			src.customization_third_style = H.bioHolder.mobAppearance.customizations["hair_top"].style
+			src.customization_third_color = H.bioHolder.mobAppearance.customizations["hair_top"].color
 
-			if(!istype(src.customization_first,/datum/customization_style))
-				src.customization_first = new /datum/customization_style/none
+			if(!istype(src.customization_first_style, /datum/customization_style))
+				src.customization_first_style = new /datum/customization_style/none
 
-			if(!istype(src.customization_second,/datum/customization_style))
-				src.customization_second = new /datum/customization_style/none
+			if(!istype(src.customization_second_style, /datum/customization_style))
+				src.customization_second_style = new /datum/customization_style/none
 
-			if(!istype(src.customization_third,/datum/customization_style))
-				src.customization_third = new /datum/customization_style/none
+			if(!istype(src.customization_third_style, /datum/customization_style))
+				src.customization_third_style = new /datum/customization_style/none
 
 			src.e_color = H.bioHolder.mobAppearance.e_color
 
@@ -408,24 +405,24 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 			sanitize_null_values()
 			target_mob.bioHolder.mobAppearance.e_color = e_color
 			target_mob.bioHolder.mobAppearance.e_color_original = e_color
-			target_mob.bioHolder.mobAppearance.customization_first_color = customization_first_color
-			target_mob.bioHolder.mobAppearance.customization_first_color_original = customization_first_color
-			target_mob.bioHolder.mobAppearance.customization_second_color = customization_second_color
-			target_mob.bioHolder.mobAppearance.customization_second_color_original = customization_second_color
-			target_mob.bioHolder.mobAppearance.customization_third_color = customization_third_color
-			target_mob.bioHolder.mobAppearance.customization_third_color_original = customization_third_color
+			target_mob.bioHolder.mobAppearance.customizations["hair_bottom"].color = customization_first_color
+			target_mob.bioHolder.mobAppearance.customizations["hair_bottom"].color_original = customization_first_color
+			target_mob.bioHolder.mobAppearance.customizations["hair_middle"].color = customization_second_color
+			target_mob.bioHolder.mobAppearance.customizations["hair_middle"].color_original = customization_second_color
+			target_mob.bioHolder.mobAppearance.customizations["hair_top"].color = customization_third_color
+			target_mob.bioHolder.mobAppearance.customizations["hair_top"].color_original = customization_third_color
 
 			target_mob.bioHolder.mobAppearance.s_tone = s_tone
 			target_mob.bioHolder.mobAppearance.s_tone_original = s_tone
 			if (target_mob.limbs)
 				target_mob.limbs.reset_stone()
 
-			target_mob.bioHolder.mobAppearance.customization_first = customization_first
-			target_mob.bioHolder.mobAppearance.customization_first_original = customization_first
-			target_mob.bioHolder.mobAppearance.customization_second = customization_second
-			target_mob.bioHolder.mobAppearance.customization_second_original = customization_second
-			target_mob.bioHolder.mobAppearance.customization_third = customization_third
-			target_mob.bioHolder.mobAppearance.customization_third_original = customization_third
+			target_mob.bioHolder.mobAppearance.customizations["hair_bottom"].style = customization_first_style
+			target_mob.bioHolder.mobAppearance.customizations["hair_bottom"].style_original = customization_first_style
+			target_mob.bioHolder.mobAppearance.customizations["hair_middle"].style = customization_second_style
+			target_mob.bioHolder.mobAppearance.customizations["hair_middle"].style_original = customization_second_style
+			target_mob.bioHolder.mobAppearance.customizations["hair_top"].style = customization_third_style
+			target_mob.bioHolder.mobAppearance.customizations["hair_top"].style_original = customization_third_style
 
 			target_mob.update_colorful_parts()
 			target_mob.set_face_icon_dirty()
@@ -441,16 +438,16 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 		sanitize_null_values()
 			if (customization_first_color == null)
 				customization_first_color = "#101010"
-			if (customization_first == null)
-				customization_first = new /datum/customization_style/none
+			if (customization_first_style == null)
+				customization_first_style = new /datum/customization_style/none
 			if (customization_second_color == null)
 				customization_second_color = "#101010"
-			if (customization_second == null)
-				customization_second = new /datum/customization_style/none
+			if (customization_second_style == null)
+				customization_second_style = new /datum/customization_style/none
 			if (customization_third_color == null)
 				customization_third_color = "#101010"
-			if (customization_third == null)
-				customization_third = new /datum/customization_style/none
+			if (customization_third_style == null)
+				customization_third_style = new /datum/customization_style/none
 			if (e_color == null)
 				e_color = "#101010"
 			if (s_tone == null || s_tone == "#ffffff")
@@ -458,23 +455,26 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 
 		update_preview_icon()
 			var/datum/appearanceHolder/AH = new()
+			var/datum/customizationHolder/customization_first = AH.customizations["hair_bottom"]
+			var/datum/customizationHolder/customization_second = AH.customizations["hair_middle"]
+			var/datum/customizationHolder/customization_third = AH.customizations["hair_top"]
 
 			AH.CopyOther(src.target_mob.bioHolder.mobAppearance)
 			AH.e_color = src.e_color
 			AH.e_color_original = src.e_color
-			AH.customization_first_color = src.customization_first_color
-			AH.customization_first_color_original = src.customization_first_color
-			AH.customization_second_color = src.customization_second_color
-			AH.customization_second_color_original = src.customization_second_color
-			AH.customization_third_color = src.customization_third_color
-			AH.customization_third_color_original = src.customization_third_color
+			customization_first.color = src.customization_first_color
+			customization_first.color_original = src.customization_first_color
+			customization_second.color = src.customization_second_color
+			customization_second.color_original = src.customization_second_color
+			customization_third.color = src.customization_third_color
+			customization_third.color_original = src.customization_third_color
 			AH.s_tone = src.s_tone
 			AH.s_tone_original = src.s_tone
-			AH.customization_first = src.customization_first
-			AH.customization_first_original = src.customization_first
-			AH.customization_second = src.customization_second
-			AH.customization_second_original = src.customization_second
-			AH.customization_third = src.customization_third
-			AH.customization_third_original = src.customization_third
+			customization_first.style = src.customization_first_style
+			customization_first.style_original = src.customization_first_style
+			customization_second.style = src.customization_second_style
+			customization_second.style_original = src.customization_second_style
+			customization_third.style = src.customization_third_style
+			customization_third.style_original = src.customization_third_style
 
 			src.preview.update_appearance(AH, src.target_mob.mutantrace, src.direction)

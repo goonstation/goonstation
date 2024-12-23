@@ -333,8 +333,6 @@ var tooltip = {
 	},
 
 	changeContent: function(title, content) {
-		title = htmlDecode(title);
-		content = htmlDecode(content);
 		tooltip.options.title = title;
 		tooltip.options.content = content;
 

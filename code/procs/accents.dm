@@ -823,19 +823,56 @@ proc/random_accent()
 	P.string = upper ? uppertext(new_string) : new_string
 	P.chars_used = used
 	return P
-/* nnnoooooope!
-/proc/wonk_parse(var/string)
-	string = lowertext(string)
-	if(prob(1))
-		return pick("yiff yiff mrr", "fuckable owwwwwwls")
 
-	var/list/broken_string = splittext(string, " ")
-	for(var/i = 1; i <= broken_string.len;i++)
-		if(prob(20))
-			broken_string[i] = pick("actually most of this is really gross and isn't appropriate for any player to be saying, so here it is gone!")
+/proc/german_parse(var/datum/text_roamer/R)
+	var/S = R.curr_char
+	var/new_string = S
+	var/used = 1
+	// Case insensitivity
+	var/upper = S == uppertext(S)
+	S = lowertext(S)
+	switch(S)
 
-	return kText.list2text(broken_string)
-*/
+		if("w") //germans pronounce W like V, but generally keep the "ow" sound at the end of words and such.
+			if (!is_null_or_space(lowertext(R.next_char)))
+				new_string = "v"
+				used = 1
+		if("t") //unlinke the stereotypical zat- it's more like dat, because both the t and the h are pronounced in german. Of course, the Z still does happen quite often.
+			if(lowertext(R.next_char) == "h")
+				if(prob(50))
+					new_string = "d"
+					used = 2
+				else
+					new_string = "z"
+					used = 2
+
+		if("q")//qu is pronounced like kv, like in quatsch - kvahtch
+			if(lowertext(R.next_char) == "u")
+				new_string = "kv"
+				used = 2
+
+		if("r")
+			if(lowertext(R.prev_char) == " "  || lowertext(R.prev_char) == ""|| isVowel(lowertext(R.next_char)) || !isVowel(lowertext(R.next_char) && lowertext(R.next_char) != "r" && R.prev_char != ":")) //tries to emulate the rolling of the R or the gutteral R
+				new_string = "rr"
+				used = 1
+
+		if("e")
+			if(lowertext(R.next_char) == "" || lowertext(R.next_char) == " " && prob(10))
+				new_string = "eh"
+			if(lowertext(R.prev_char) == "u")
+				new_string = "ee"
+				used = 1
+
+		if("s")
+			if(isVowel(lowertext(R.next_char)))
+				new_string = "z"
+				used = 1
+
+	var/datum/parse_result/P = new
+	P.string = upper ? uppertext(new_string) : new_string
+	P.chars_used = used
+	return P
+
 /proc/russify(var/string)
 	var/modded = ""
 	var/datum/text_roamer/T = new/datum/text_roamer(string)
@@ -867,6 +904,76 @@ proc/random_accent()
 		T.curr_char_pos = T.curr_char_pos + P.chars_used
 		T.update()
 	return modded
+
+/proc/germify(var/string) // pretty much the same thing as scots and tyke, but instead with some common cognates between english and german. The list is significantly smaller, as scots and english are mutually intelligible while english and german are not.
+
+	var/list/phrase = list(
+		"excuse me" = "entschuldigung",
+		"yes sir" = "jawohl",
+		"yes maam" = "jawohl",
+		"yes ma'am" = "jawohl",
+		"good morning" = "guten morgen",
+		"good day" = "guten tag",
+		"good afternoon" = "guten tag",
+		"good evening" = "guten abend",
+		"good night" = "guten nacht",
+		"thank you" = "danke",
+		"that's too bad" = "schade",
+		"thats too bad" = "schade",
+		"too bad" = "schade",
+		"no problem" = "kein problem"
+	) //this list is seperate from the text document, as the current accent system does not support multi word phrases. This could use reworking.
+
+	var/substitute = null
+	for(var/i=1,i <= length(phrase),i++)
+		substitute = phrase[i]
+		string = replacetext(string, substitute, phrase[substitute])
+
+	var/list/tokens = splittext(string, " ")
+	var/list/modded_tokens = list()
+
+	var/regex/punct_check = regex("\\W+\\Z", "i")
+	for(var/token in tokens)
+
+		var/modified_token = ""
+		var/original_word = ""
+		var/punct = ""
+		var/punct_index = findtext(token, punct_check)
+		if(punct_index)
+			punct = copytext(token, punct_index)
+			original_word = copytext(token, 1, punct_index)
+		else
+			original_word = token
+
+		var/matching_token = strings("language/german.txt", lowertext(original_word), 1)
+		if(matching_token)
+			var/pre_parse_modified_token = replacetext(original_word, lowertext(original_word), matching_token)//grab the cognates, replace them, and then feed them into the parser for consistency
+			var/datum/text_roamer/T = new/datum/text_roamer(pre_parse_modified_token)
+			for(var/i = 0, i < length(pre_parse_modified_token), i=i)
+				var/datum/parse_result/P = german_parse(T)
+				modified_token += P.string
+				i += P.chars_used
+				T.curr_char_pos = T.curr_char_pos + P.chars_used
+				T.update() //This runs the text through the cognate list first, then runs it through the parser to remain consistent.
+		else
+			var/datum/text_roamer/T = new/datum/text_roamer(original_word)
+			for(var/i = 0, i < length(original_word), i=i)
+				var/datum/parse_result/P = german_parse(T)
+				modified_token += P.string
+				i += P.chars_used
+				T.curr_char_pos = T.curr_char_pos + P.chars_used
+				T.update()
+
+		modified_token += punct
+		modded_tokens += modified_token
+
+	var/modded = jointext(modded_tokens, " ")
+
+	return modded
+
+
+
+
 
 /proc/tommify(var/string)
 	var/modded = ""
@@ -929,8 +1036,13 @@ proc/random_accent()
 /proc/say_drunk(var/string)
 	var/modded = ""
 	var/datum/text_roamer/T = new/datum/text_roamer(string)
-
 	for(var/i = 0, i < length(string), i++)
+		var/digit_value = text2num(T.curr_char)
+		if (digit_value && prob(50))
+			modded += "[digit_value + rand(-1, 1)]"
+			T.curr_char_pos++
+			T.update()
+			continue
 		switch(T.curr_char)
 			if("k")
 				if(lowertext(T.prev_char) == "n" || lowertext(T.prev_char) == "c")
@@ -1485,7 +1597,7 @@ var/list/zalgo_mid = list(
 
 // this list got too big to maintain as a list literal, so now it lives in strings/language/scots.txt
 
-/proc/scotify(var/string) // plays scottish music on demand, harr harr i crack me up (shoot me)
+/proc/scotify(var/string) // plays scottish music on demand, harr harr i crack me up (shoot me)scot
 	var/list/tokens = splittext(string, " ")
 	var/list/modded_tokens = list()
 
@@ -1520,6 +1632,9 @@ var/list/zalgo_mid = list(
 	var/modded = jointext(modded_tokens, " ")
 
 	return modded
+
+
+
 
 /proc/owo_parse(var/datum/text_roamer/R)
     var/new_string = ""
@@ -2499,3 +2614,14 @@ proc/leetspeakify(string, chance=100)
 			letter = leetspeak_translation[lowertext(letter)]
 		letters += letter
 	return jointext(letters, "")
+
+/proc/bingus_parse(var/string)
+	var/bingus_list = list(
+		@{"\bbingus\b"} = "bingus my beloved",
+		@{"\bantag\b"} = "floppa",
+		@{"\bantagonist\b"} = "big floppa",
+		@{"\bI love [a-zA-Z]+"} = "I love bingus"
+	)
+	for (var/pattern in bingus_list)
+		string = replacetext(string, regex(pattern, "i"), bingus_list[pattern])
+	return string

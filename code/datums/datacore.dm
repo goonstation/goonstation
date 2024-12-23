@@ -70,15 +70,16 @@
 
 	M["bioHolder.bloodType"] = "[H.bioHolder.bloodType]"
 	M["mi_dis"] = "None"
-	M["mi_dis_d"] = "No minor disabilities have been declared."
+	M["mi_dis_d"] = MEDREC_DISABILITY_MINOR_DEFAULT
 	M["ma_dis"] = "None"
-	M["ma_dis_d"] = "No major disabilities have been diagnosed."
+	M["ma_dis_d"] = MEDREC_DISABILITY_MAJOR_DEFAULT
 	M["alg"] = "None"
-	M["alg_d"] = "No allergies have been detected in this patient."
+	M["alg_d"] = MEDREC_ALLERGY_DEFAULT
 	M["cdi"] = "None"
-	M["cdi_d"] = "No diseases have been diagnosed at the moment."
-
-	M["h_imp"] = "No health implant detected."
+	M["cdi_d"] = MEDREC_DISEASE_DEFAULT
+	M["cl_def"] = MEDREC_CLONE_DEFECT_DEFAULT
+	M["cl_def_d"] = "None"
+	M["h_imp"] = MEDREC_NO_IMPLANT
 
 	if(!length(med_note))
 		M["notes"] = "No notes."
@@ -87,12 +88,15 @@
 
 	M["dnasample"] = create_new_dna_sample_file(H)
 
-	var/traitStr = ""
+	var/list/minorDisabilities = list()
+	var/list/minorDisabilityDesc = list()
+	var/list/majorDisabilities = list()
+	var/list/majorDisabilityDesc = list()
+
 	if(H.traitHolder)
 		for(var/id in H.traitHolder.traits)
 			var/datum/trait/T = H.traitHolder.traits[id]
-			if(length(traitStr)) traitStr += " | [T.name]"
-			else traitStr = T.name
+
 			if (istype(T, /datum/trait/random_allergy))
 				var/datum/trait/random_allergy/AT = T
 				if (M["alg"] == "None") //is it in its default state?
@@ -100,8 +104,22 @@
 					M["alg_d"] = "Allergy information imported from CentCom database."
 				else
 					M["alg"] += ", [reagent_id_to_name(AT.allergen)]"
+				continue
 
-	M["traits"] = traitStr
+			switch(T.disability_type)
+				if (TRAIT_DISABILITY_MAJOR)
+					majorDisabilities.Add(T.disability_name)
+					majorDisabilityDesc.Add(T.disability_desc)
+				if (TRAIT_DISABILITY_MINOR)
+					minorDisabilities.Add(T.disability_name)
+					minorDisabilityDesc.Add(T.disability_desc)
+
+	if(length(minorDisabilities))
+		M["mi_dis"] = jointext(minorDisabilities, ", ")
+		M["mi_dis_d"] = jointext(minorDisabilityDesc, ". ")
+	if(length(majorDisabilities))
+		M["ma_dis"] = jointext(majorDisabilities, ", ")
+		M["ma_dis_d"] = jointext(majorDisabilityDesc, ". ")
 
 	if(!length(sec_note))
 		S["notes"] = "No notes."
@@ -109,7 +127,7 @@
 		S["notes"] = sec_note
 
 	if(H.traitHolder.hasTrait("jailbird"))
-		S["criminal"] = "*Arrest*"
+		S["criminal"] = ARREST_STATE_ARREST
 		S["mi_crim"] = pick(\
 								"Public urination.",\
 								"Reading highly confidential private information.",\
@@ -179,6 +197,7 @@
 								"Refusing to share their meth.",\
 								"Grand larceny.")
 		S["ma_crim_d"] = "No details provided."
+		H.update_arrest_icon()
 
 
 		var/randomNote = pick("Huge nerd.", "Total jerkface.", "Absolute dingus.", "Insanely endearing.", "Worse than clown.", "Massive crapstain.");
@@ -196,10 +215,11 @@
 		H.mind.store_memory("- [S["ma_crim"]]")
 	else
 		if (H.mind?.assigned_role == "Clown")
-			S["criminal"] = "Clown"
+			S["criminal"] = ARREST_STATE_CLOWN
 			S["mi_crim"] = "Clown"
+			H.update_arrest_icon()
 		else
-			S["criminal"] = "None"
+			S["criminal"] = ARREST_STATE_NONE
 			S["mi_crim"] = "None"
 
 		S["mi_crim_d"] = "No minor crime convictions."
@@ -219,21 +239,21 @@
 	if(H.traitHolder.hasTrait("unionized"))
 		wageMult = 1.5
 
-	if(wagesystem.jobs[H.job])
-		B["wage"] = round(wagesystem.jobs[H.job] * wageMult)
-	// Otherwise give them a default wage
+	var/datum/job/J
+	if (H.job != null && istext(H.job))
+		J = find_job_in_controller_by_string(H.job)
 	else
-		var/datum/job/J = find_job_in_controller_by_string(G["rank"])
-		if (J?.wages)
-			B["wage"] = round(J.wages * wageMult)
-		else
-			B["wage"] = 0
+		J = find_job_in_controller_by_string(H.mind.assigned_role)
+	if (J?.wages)
+		B["wage"] = round(J.wages * wageMult)
+	else
+		B["wage"] = 0
 
 	src.general.add_record(G)
 	src.medical.add_record(M)
 	src.security.add_record(S)
 	src.bank.add_record(B)
-	wagesystem.payroll_stipend += B["wage"]
+	wagesystem.payroll_stipend += B["wage"] * 1.1
 
 	//Add email group
 	if ("[H.mind.assigned_role]" in job_mailgroup_list)
@@ -397,7 +417,9 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			statlog_ticket(src, usr)
+			var/datum/eventRecord/Ticket/ticketEvent = new()
+			ticketEvent.buildAndSend(src, usr)
+
 
 /datum/fine
 	var/ID = null
@@ -422,32 +444,44 @@
 		SPAWN(1 SECOND)
 			bank_record = data_core.bank.find_record("name", target)
 			if(!bank_record) qdel(src)
-			statlog_fine(src, usr)
+			var/datum/eventRecord/Fine/fineEvent = new()
+			fineEvent.buildAndSend(src, usr)
 
 /datum/fine/proc/approve(var/approved_by,var/their_job)
 	if(approver || paid) return
-	if(!(their_job in list("Captain","Head of Security","Head of Personnel"))) return
+	if (amount > MAX_FINE_NO_APPROVAL && !(JOBS_CAN_TICKET_BIG)) return
+	if (!(their_job in JOBS_CAN_TICKET_SMALL)) return
 
 	approver = approved_by
 	approver_job = their_job
 	approver_byond_key = get_byond_key(approver)
+	logTheThing(LOG_ADMIN, usr, "approved a fine using [approver]([their_job])'s PDA. It is a [amount] credit fine on <b>[target]</b> with the reason: [reason].")
+
+	if (bank_record["pda_net_id"])
+		var/datum/signal/pdaSignal = get_free_signal()
+		pdaSignal.data = list("address_1"=bank_record["pda_net_id"], "command"="text_message", "sender_name"="FINE-MAILBOT", "sender"="00000000", "message"="Notification: You have been fined [amount] credits by [issuer] for [reason].")
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 	if(bank_record["current_money"] >= amount)
 		bank_record["current_money"] -= amount
+		wagesystem.station_budget += amount
 		paid = 1
 		paid_amount = amount
 	else
 		paid_amount += bank_record["current_money"]
+		wagesystem.station_budget += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
 
 /datum/fine/proc/process_payment()
 	if(bank_record["current_money"] >= (amount-paid_amount))
 		bank_record["current_money"] -= (amount-paid_amount)
+		wagesystem.station_budget += (amount-paid_amount)
 		paid = 1
 		paid_amount = amount
 	else
 		paid_amount += bank_record["current_money"]
+		wagesystem.station_budget += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
 

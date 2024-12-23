@@ -10,10 +10,9 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
-	flags = FPRINT | TABLEPASS | NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 	var/mob/affecting = null
-	var/heal_amt = 10
+	var/heal_amt = 5
 
 	New()
 		..()
@@ -29,13 +28,30 @@
 		..()
 		STOP_TRACKING
 
+	proc/do_heal_amt(mob/user) // also handles using faith
+		var/faith = get_chaplain_faith(user)
+		var/used_faith = min(faith * FAITH_HEAL_USE_FRACTION, FAITH_HEAL_CAP)
+		modify_chaplain_faith(user, -used_faith)
+		return heal_amt + used_faith * FAITH_HEAL_BONUS + rand(-3, 3)
+
+	proc/do_heal_message(var/mob/user, var/mob/target, amount)
+		switch(amount)
+			if (1 to 8)
+				target.visible_message(SPAN_ALERT("<B>[user] heals [target] mending [his_or_her(target)] wounds!</B>"))
+			if (9 to 15)
+				target.visible_message(SPAN_ALERT("<B>[user] heals [target] with the power of Christ!</B>"))
+			if (16 to 24)
+				target.visible_message(SPAN_ALERT("<B>[user] heals [target] by the will of the LORD!</B>"))
+			if (25 to INFINITY)
+				target.visible_message(SPAN_ALERT("<B>[user] heals [target] in service of heaven!</B>"))
+
 	proc/bless(mob/M as mob, var/mob/user)
 		if (isvampire(M) || isvampiricthrall(M) || iswraith(M) || M.bioHolder.HasEffect("revenant"))
 			M.visible_message(SPAN_ALERT("<B>[M] burns!"))
 			var/zone = "chest"
 			if (user.zone_sel)
 				zone = user.zone_sel.selecting
-			M.TakeDamage(zone, 0, heal_amt)
+			M.TakeDamage(zone, 0, do_heal_amt(user))
 			JOB_XP(user, "Chaplain", 2)
 		else
 			var/mob/living/H = M
@@ -62,8 +78,13 @@
 							if (S)
 								S.set_up(5, 0, T, null, "#000000")
 								S.start()
-			M.HealDamage("All", heal_amt, heal_amt)
-			if(prob(40))
+			var/heal = do_heal_amt(user)
+			M.HealDamage("All", heal, heal)
+			do_heal_message(user, M, heal)
+			if (!ON_COOLDOWN(src, "faith_sound", 1.5 SECONDS))
+				SPAWN(1 DECI SECOND)
+					playsound(src.loc, 'sound/effects/faithbiblewhack.ogg', 10, FALSE, -1, (rand(94,108)/100))
+			if(prob(30 + heal))
 				JOB_XP(user, "Chaplain", 1)
 
 	attackby(var/obj/item/W, var/mob/user)
@@ -80,6 +101,7 @@
 			boutput(user, SPAN_ALERT("The book sizzles in your hands."))
 			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, 10)
 			return
+		var/faith = get_chaplain_faith(user)
 		if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles and drops [src] on [his_or_her(user)] foot."))
 			random_brute_damage(user, 10)
@@ -97,9 +119,8 @@
 			// ******* Check
 			var/is_undead = isvampire(target) || iswraith(target) || target.bioHolder.HasEffect("revenant")
 			var/is_atheist = target.traitHolder?.hasTrait("atheist")
-			if (ishuman(target) && prob(60) && !(is_atheist && !is_undead))
+			if (ishuman(target) && prob(FAITH_HEAL_CHANCE + faith * FAITH_HEAL_CHANCE_MOD) && !(is_atheist && !is_undead))
 				bless(target, user)
-				target.visible_message(SPAN_ALERT("<B>[user] heals [target] with the power of Christ!</B>"))
 				var/deity = is_atheist ? "a god you don't believe in" : "Christ"
 				boutput(target, SPAN_ALERT("May the power of [deity] compel you to be healed!"))
 				var/healed = is_undead ? "damaged undead" : "healed"
@@ -127,7 +148,7 @@
 			user.visible_message(SPAN_ALERT("<B>[user] tries to take the [src], but their hand bursts into flames!</B>"), SPAN_ALERT("<b>Your hand bursts into flames as you try to take the [src]! It burns!</b>"))
 			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, 25)
 			user.changeStatus("stunned", 15 SECONDS)
-			user.changeStatus("weakened", 15 SECONDS)
+			user.changeStatus("knockdown", 15 SECONDS)
 			return
 		return ..()
 

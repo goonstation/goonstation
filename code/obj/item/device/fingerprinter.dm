@@ -54,7 +54,7 @@
 		src.update_text()
 
 	proc/plant_print(mob/user, atom/target)
-		if (!(target.flags & FPRINT))
+		if (target.flags & NOFPRINT)
 			boutput(user, SPAN_ALERT("You can't plant a fingerprint onto that."))
 			return
 		if (!length(current_prints))
@@ -78,7 +78,7 @@
 	// TODO maybe handle dupe glove prints more gracefully? if we see the same glove ID on 2 different people, list both names? idk
 	proc/read_prints(mob/user, atom/target)
 		// Yes, this currently lets you get the name of people through glove IDs. It's a traitor item so I think it's fine. Gnarly if sec finds one though.
-		if (!(target.flags & FPRINT))
+		if (target.flags & NOFPRINT)
 			boutput(user, SPAN_ALERT("That doesn't look like something you can read prints off of."))
 			return
 		if (!target.fingerprints && !ishuman(target))

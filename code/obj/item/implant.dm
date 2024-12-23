@@ -1,3 +1,14 @@
+#define MARIONETTE_IMPLANT_STATUS_IDLE "IDLE"
+#define MARIONETTE_IMPLANT_STATUS_ACTIVE "ACTIVE"
+#define MARIONETTE_IMPLANT_STATUS_DANGER "DANGER"
+#define MARIONETTE_IMPLANT_STATUS_WAITING "WAITING..."
+#define MARIONETTE_IMPLANT_STATUS_NO_RESPONSE "NO RESPONSE"
+#define MARIONETTE_IMPLANT_STATUS_BURNED_OUT "BURNED OUT"
+#define MARIONETTE_IMPLANT_ERROR_NO_TARGET "TARG_NULL"
+#define MARIONETTE_IMPLANT_ERROR_DEAD_TARGET "TARG_DEAD"
+#define MARIONETTE_IMPLANT_ERROR_BAD_PASSKEY "BADPASS"
+#define MARIONETTE_IMPLANT_ERROR_INVALID "INVALID"
+
 /*
 CONTAINS:
 
@@ -41,7 +52,7 @@ THROWING DARTS
 		if (uses_radio)
 			if (!src.net_id)
 				src.net_id = generate_net_id(src)
-			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, pda_alert_frequency)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, pda_alert_frequency)
 		if (ismob(src.loc))
 			src.implanted(src.loc)
 
@@ -51,7 +62,7 @@ THROWING DARTS
 		owner = null
 		former_implantee = null
 		if (uses_radio)
-			mailgroups.Cut()
+			mailgroups?.Cut()
 		. = ..()
 
 	proc/can_implant(mob/target, mob/user)
@@ -67,10 +78,13 @@ THROWING DARTS
 		owner = M
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.implant.Add(src)
+			H.implant?.Add(src)
+			if (src.scan_category == "other" || src.scan_category == "unknown")
+				var/image/img = H.prodoc_icons["other"]
+				img.icon_state = "implant-other"
 		else if (ismobcritter(M))
 			var/mob/living/critter/C = M
-			C.implants.Add(src)
+			C.implants?.Add(src)
 		if (implant_overlay)
 			M.update_clothing()
 		activate()
@@ -83,6 +97,14 @@ THROWING DARTS
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.implant -= src
+			var/has_other_imp = FALSE
+			for (var/obj/item/implant/I as anything in H.implant)
+				if (I.scan_category == "other" || I.scan_category == "unknown")
+					has_other_imp = TRUE
+					break
+			if (!has_other_imp)
+				var/image/I = H.prodoc_icons["other"]
+				I.icon_state = null
 		if (ismobcritter(M))
 			var/mob/living/critter/C = M
 			C.implants?.Remove(src)
@@ -236,6 +258,29 @@ THROWING DARTS
 		..()
 		src.scanned_here = get_area(src)
 
+	implanted(mob/M, mob/I)
+		..()
+		if (!istype(M, /mob/living/carbon/human))
+			return
+		var/mob/living/carbon/human/H = M
+		if (!H.prodoc_icons)
+			return
+		var/image/img = H.prodoc_icons["cloner"]
+		img.icon_state = "implant-cloner"
+
+	on_remove(mob/M)
+		..()
+		if (!istype(M, /mob/living/carbon/human))
+			return
+		var/mob/living/carbon/human/H = M
+		if (!H.prodoc_icons)
+			return
+		for (var/obj/item/implant/I as anything in H.implant)
+			if (istype(I, /obj/item/implant/cloner))
+				return
+		var/image/I = H.prodoc_icons["cloner"]
+		I.icon_state = null
+
 	proc/getHealthList()
 		var/healthlist = list()
 		if (!src.implanted)
@@ -267,6 +312,25 @@ THROWING DARTS
 		..()
 		if (!isdead(M) && M.client)
 			JOB_XP(I, "Medical Doctor", 5)
+		if (istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if (!H.prodoc_icons)
+				return
+			var/image/img = H.prodoc_icons["health"]
+			img.icon_state = "implant-health"
+
+	on_remove(mob/M)
+		..()
+		if (!istype(M, /mob/living/carbon/human))
+			return
+		var/mob/living/carbon/human/H = M
+		if (!H.prodoc_icons)
+			return
+		for (var/obj/item/implant/I as anything in H.implant)
+			if (istype(I, /obj/item/implant/health))
+				return
+		var/image/img = H.prodoc_icons["health"]
+		img.icon_state = null
 
 	proc/sensehealth()
 		if (!src.implanted)
@@ -458,8 +522,8 @@ THROWING DARTS
 
 	deactivate()
 		. = ..()
-		var/datum/component/C = src.owner.GetComponent(/datum/component/minimap_marker)
-		C?.RemoveComponent(/datum/component/minimap_marker)
+		var/datum/component/C = src.owner.GetComponent(/datum/component/minimap_marker/minimap)
+		C?.RemoveComponent(/datum/component/minimap_marker/minimap)
 
 	on_death()
 		src.deactivate()
@@ -468,13 +532,13 @@ THROWING DARTS
 
 	activate()
 		. = ..()
-		src.owner.AddComponent(/datum/component/minimap_marker, MAP_POD_WARS_NANOTRASEN, "blue_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
+		src.owner.AddComponent(/datum/component/minimap_marker/minimap, MAP_POD_WARS_NANOTRASEN, "blue_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
 
 /obj/item/implant/pod_wars/syndicate
 
 	activate()
 		. = ..()
-		src.owner.AddComponent(/datum/component/minimap_marker, MAP_POD_WARS_SYNDICATE, "red_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
+		src.owner.AddComponent(/datum/component/minimap_marker/minimap, MAP_POD_WARS_SYNDICATE, "red_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
 
 
 /** Deprecated **/
@@ -527,17 +591,19 @@ THROWING DARTS
 
 		if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
 			H.visible_message(SPAN_ALERT("<b>[H] resists the counter-revolutionary implant!</b>"))
-			H.changeStatus("weakened", 1 SECOND)
+			H.changeStatus("knockdown", 1 SECOND)
 			H.force_laydown_standup()
 			playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 2.4)
+			H.update_arrest_icon()
 
 		else if (H.mind?.get_antagonist(ROLE_REVOLUTIONARY))
 			H.TakeDamage("chest", 1, 1, 0)
-			H.changeStatus("weakened", 1 SECOND)
+			H.changeStatus("knockdown", 1 SECOND)
 			H.setStatus("derevving")
 			H.force_laydown_standup()
 			H.emote("scream")
 			playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 1.6)
+			H.update_arrest_icon()
 
 	do_process(var/mult = 1)
 		if (!ishuman(src.owner))
@@ -546,7 +612,7 @@ THROWING DARTS
 		if (H.mind?.get_antagonist(ROLE_REVOLUTIONARY))
 			H.TakeDamage("chest", 1.5*mult, 1.5*mult, 0)
 			if (H.health < 0)
-				H.changeStatus("paralysis", 5 SECONDS)
+				H.changeStatus("unconscious", 5 SECONDS)
 				H.changeStatus("newcause", 5 SECONDS)
 				H.delStatus("derevving")
 				H.force_laydown_standup()
@@ -568,6 +634,9 @@ THROWING DARTS
 	on_remove(var/mob/M)
 		M.delStatus("derevving")
 		. = ..()
+		if (istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			H.update_arrest_icon()
 
 
 // dumb joke
@@ -632,7 +701,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	/// You probably want to call this parent after exploding or whatever
 	proc/do_effect(power)
 		SHOULD_CALL_PARENT(TRUE)
-		if (. >= 6)
+		if (power >= 6)
 			src.owner.visible_message(SPAN_ALERT("<b>[src.owner][big_message]!</b>"))
 		else
 			src.owner.visible_message("[src.owner][small_message].")
@@ -668,7 +737,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 		SPAWN(1)
 			T.hotspot_expose(800,125)
-			explosion_new(src, T, 7 * power, 1) //The . is the tally of explosionPower in this poor slob.
+			explosion_new(src, T, 7 * power, 1) //power is the tally of explosionPower in this poor slob.
 			if (ishuman(src.owner))
 				var/mob/living/carbon/human/H = src.owner
 				H.dump_contents_chance = 80 //hee hee
@@ -712,15 +781,15 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	small_message = "buzzes loudly, uh oh!"
 	power = 8
 
-	implanted(var/mob/M, mob/I)
+	implanted(mob/M, mob/I)
 		..()
 		if (istype(M))
-			M.faction |= FACTION_BOTANY
+			LAZYLISTADDUNIQUE(M.faction, FACTION_BOTANY)
 
-	on_remove(var/mob/M)
+	on_remove(mob/M)
 		..()
 		if (istype(M))
-			M.faction &= ~FACTION_BOTANY
+			LAZYLISTREMOVE(M.faction, FACTION_BOTANY)
 
 	do_effect(power)
 		// enjoy your wasps
@@ -808,7 +877,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 		boutput(M, SPAN_ALERT("A stunning pain shoots through your brain!"))
 		M.changeStatus("stunned", 10 SECONDS)
-		M.changeStatus("weakened", 10 SECONDS)
+		M.changeStatus("knockdown", 10 SECONDS)
 
 		if(M == I)
 			boutput(M, SPAN_ALERT("You feel utterly strengthened in your resolve! You are the most important person in the universe!"))
@@ -832,6 +901,426 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (!(copytext(src.custom_orders, -1) in list(".", "?", "!")))
 			src.custom_orders += "!"
 
+/obj/item/implant/marionette
+	name = "marionette implant"
+	desc = "This thing looks really complicated."
+	icon_state = "implant-mh"
+	impcolor = "r"
+	scan_category = "syndicate"
+	pda_alert_frequency = FREQ_MARIONETTE_IMPLANT
+
+	/// A network address that this implant is linked to. Can be null.
+	/// Packets sent by this address skip the passkey requirement, and if the implant burns out,
+	/// it will send a signal to this address to alert it.
+	var/linked_address = null
+	/// A string that's (usually) unique to each implant. Signals must provide the correct passkey to issue commands to the implant.
+	var/passkey = null
+	/// If TRUE, this implant is burned out and permanently unusable.
+	var/burned_out = FALSE
+	/// The implant's heat level, increased by various actions. Slowly reduces over time.
+	var/heat = 0
+	/// The implant's previous heat level, set after it's adjusted.
+	/// This is used so that the implant can send an alert signal when it enters the danger zone for the first time.
+	var/prev_heat = 0
+	/// The implant's heat dissipation. `heat` is reduced by this value every processing tick.
+	/// The value slowly ramps up over time, but is reset upon being activated. This makes short-term overuse very punishing,
+	/// but allows it to recover decently quickly if given time to rest.
+	var/heat_dissipation = 1
+	/// If `heat` is above this value, each activation has a chance to break the implant permanently.
+	var/const/heat_danger_zone = 100
+	/// This is some messy code, but emotes are like that. Anything in this list will not be triggered by the force-emote function.
+	var/list/emote_blacklist = list(
+		"custom", "customv", "customh", "me", "give", "help", "listbasic", "listtarget", "list", "suicide", "uguu", "juggle", "airquote", "airquotes",
+		"faint", "deathgasp", "collapse", "trip", "monologue", "miranda", "birdwell"
+	)
+
+	New()
+		. = ..()
+		var/datum/reagent/R = pick(concrete_typesof(/datum/reagent/fooddrink/alcoholic))
+		src.passkey = lowertext(replacetext(replacetext(R.name, " ", "_"), "'", ""))
+		if (!src.passkey)
+			src.passkey = "IMP-[rand(111, 999)]"
+		// The `uses_radio` variable only adds a sender component, not a two-way one. So we have to do that manually!
+		if (!src.net_id)
+			src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.pda_alert_frequency)
+		processing_items.Add(src)
+
+	disposing()
+		processing_items.Remove(src)
+		..()
+
+	deactivate()
+		..()
+		processing_items.Remove(src)
+
+	process()
+		src.adjust_heat(-src.heat_dissipation)
+		src.heat_dissipation = min(3, src.heat_dissipation + 0.05)
+
+	can_implant(mob/target, mob/user)
+		if (istype(target, /mob/living/critter/wraith/trickster_puppet))
+			boutput(user, SPAN_ALERT("The implanter shows an error: \"TARGET IS SECRETLY A GHOST\". Huh. You didn't know it even checked for that!"))
+			return
+		return ..()
+
+	implanted(mob/M, mob/I)
+		. = ..()
+		if (!src.burned_out)
+			// this is an anti-frustration feature with the goal of both making it easier to reference chat logs to know who is implanted with what,
+			// as well as to make sure players can still use packets if they forget to scan it onto their remote and didn't write down the network data
+			boutput(I, SPAN_NOTICE("You make a mental note that this implant's network ID is <b>[src.net_id]</b> and its passkey is <b>[src.passkey]</b>."))
+
+	receive_signal(datum/signal/signal)
+		// Note the lack of a src.burned_out check here -- this is because burning out removes the implant's radio component,
+		// meaning that it can't send or receive signals to begin with
+		if (ON_COOLDOWN(src, "activate", 1 SECOND))
+			return
+		if (!signal || signal.encryption)
+			return
+		if (signal.data["address_1"] != src.net_id)
+			return
+		if (signal.data["sender"] == src.net_id)
+			return
+
+		var/command = signal.data["command"]
+		if (command == "ping")
+			src.send_ping(signal.data["sender"])
+			return
+
+		if (command == "unlink")
+			if (signal.data["sender"] == src.linked_address)
+				src.linked_address = null
+			return
+
+		if (src.passkey && src.passkey != signal.data["passkey"])
+			if (signal.data["sender"] != src.linked_address)
+				src.send_activation_reply(signal.data["sender"], MARIONETTE_IMPLANT_ERROR_BAD_PASSKEY)
+				return
+
+		src.heat_dissipation = initial(src.heat_dissipation)
+
+		var/fail_reason
+		if (!ismob(src.owner))
+			fail_reason = MARIONETTE_IMPLANT_ERROR_NO_TARGET
+			src.send_activation_reply(signal.data["sender"], fail_reason)
+			return
+
+		var/mob/living/carbon/human/H = src.owner
+		if (istype(H) && H.decomp_stage != DECOMP_STAGE_NO_ROT)
+			fail_reason = MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
+			src.send_activation_reply(signal.data["sender"], fail_reason)
+			return
+
+		var/data = signal.data["data"]
+		switch (command)
+			if ("say", "speak")
+				if (!isdead(src.owner))
+					logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to say \"[data]\" at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
+					data = copytext(strip_prefix(data, "*"), 1, 46) // Trim starting asterisks to prevent force-emoting
+					src.owner.being_controlled = TRUE
+					try
+						src.owner.say(data)
+					catch (var/exception/e)
+						logTheThing(LOG_DEBUG, src, "Exception [e] occurred while processing marionette implant say stack for mob [src.owner]")
+					src.owner.being_controlled = FALSE
+				else
+					fail_reason = MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
+				src.adjust_heat(15)
+			if ("emote")
+				data = lowertext(data)
+				if (!isdead(src.owner))
+					if (data in src.emote_blacklist)
+						fail_reason = MARIONETTE_IMPLANT_ERROR_INVALID
+					else
+						logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to emote \"[data]\" at [log_loc(src.owner)] by (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
+						src.owner.emote(data)
+				else
+					fail_reason = MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
+				src.adjust_heat(15)
+			if ("move", "step", "bump")
+				logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to step to the [lowertext(data)] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
+				var/step_dir = text2dir(uppertext(data))
+				if (step_dir && (step_dir in cardinal))
+					step(src.owner, step_dir)
+				else
+					fail_reason = MARIONETTE_IMPLANT_ERROR_INVALID
+				src.adjust_heat(5)
+			if ("shock", "zap")
+				// Note the lack of immunity from the elec_resist mutation here here
+				// This is intentional; in this case, it's moreso overstimulating the nervous system than actually causing electrical shocks!
+				logTheThing(LOG_COMBAT, src.owner, "was shocked by \a [src] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
+				boutput(src.owner, SPAN_ALERT("You feel a shock from inside your body!"))
+				src.owner.do_disorient(90, knockdown = 7 SECONDS, disorient = 3 SECONDS)
+				src.owner.changeStatus("defibbed", 3 SECONDS)
+				playsound(src.owner, 'sound/impact_sounds/Energy_Hit_3.ogg', 20, TRUE, -1)
+				src.adjust_heat(50)
+			if ("drop", "release")
+				if (!isdead(src.owner))
+					var/obj/item/I = src.owner.equipped()
+					if (istype(I))
+						logTheThing(LOG_COMBAT, src.owner, "was forced to drop \the [I] by \a [src] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
+						boutput(src.owner, SPAN_ALERT("Your grip on \the [I] suddenly relaxes!"))
+						H.drop_item()
+					else
+						fail_reason = MARIONETTE_IMPLANT_ERROR_INVALID
+					src.adjust_heat(60)
+				else
+					fail_reason = MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
+			if ("use", "activate")
+				if (!isdead(src.owner))
+					var/obj/item/I = src.owner.equipped()
+					if (istype(I))
+						logTheThing(LOG_COMBAT, src.owner, "was forced to activate \the [I] by \a [src] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
+						boutput(src.owner, SPAN_ALERT("Your hand involuntarily jerks."))
+						src.owner.click(I, list())
+					else
+						fail_reason = MARIONETTE_IMPLANT_ERROR_INVALID
+					src.adjust_heat(35)
+				else
+					fail_reason = MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
+			else
+				fail_reason = MARIONETTE_IMPLANT_ERROR_INVALID
+		src.send_activation_reply(signal.data["sender"], fail_reason)
+
+	/// Sends a ping packet to the provided address, containing information about the implant's status.
+	/// If `special` is non-null, it will be provided in the `special` parameter;
+	/// this is currently used to indicate when an implant goes above the danger zone when it was previously safe.
+	proc/send_ping(sender_address, special = null)
+		var/datum/signal/ping_reply = get_free_signal()
+		ping_reply.source = src
+		ping_reply.data["device"] = "IMP_MARIONETTE"
+		ping_reply.data["sender"] = src.net_id
+		ping_reply.data["address_1"] = sender_address
+		ping_reply.data["command"] = "ping_reply"
+		ping_reply.data["status"] = src.burned_out ? MARIONETTE_IMPLANT_STATUS_BURNED_OUT : \
+			src.heat > src.heat_danger_zone ? MARIONETTE_IMPLANT_STATUS_DANGER : \
+			ismob(src.owner) ? MARIONETTE_IMPLANT_STATUS_ACTIVE : MARIONETTE_IMPLANT_STATUS_IDLE
+		if (special)
+			ping_reply.data["special"] = special
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, ping_reply)
+
+	/// Sends an activation reply to the provided address. Any activation with a non-null `fail_reason` is considered a fail.
+	proc/send_activation_reply(sender_address, fail_reason)
+		var/datum/signal/activation_signal = get_free_signal()
+		activation_signal.source = src
+		activation_signal.data["device"] = "IMP_MARIONETTE"
+		activation_signal.data["sender"] = src.net_id
+		activation_signal.data["address_1"] = sender_address
+		activation_signal.data["command"] = "activate"
+		if (fail_reason)
+			activation_signal.data["stack"] = fail_reason
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, activation_signal)
+
+	/// Adjusts `heat` by `to_heat`. Also handles potentially burning out when overheating, and alerting a linked address if we enter the danger zone.
+	proc/adjust_heat(to_heat)
+		if (src.heat > src.heat_danger_zone && prob(20) && to_heat > 0)
+			SPAWN (0.25 SECONDS) // Give the implant time to send the activation reply
+				src.burn_out()
+		src.heat = max(0, src.heat + to_heat)
+		if (src.heat > src.heat_danger_zone && src.prev_heat <= src.heat_danger_zone && src.linked_address)
+			src.send_ping(src.linked_address, TRUE)
+		src.prev_heat = src.heat
+
+	/// Burns out the implant and makes it permanently unusable.
+	proc/burn_out()
+		if (ismob(src.owner))
+			logTheThing(LOG_COMBAT, src.owner, "had their [src.name] burn out and become useless.")
+			boutput(src.owner, SPAN_ALERT("You feel a painful burning, like there's a something hot inside your body."))
+			src.owner.TakeDamage("All", burn = 7, damage_type = DAMAGE_BURN)
+		src.name = "melted [src.name]" // Specifically change the name here instead of using prefix, so that it appears in the removed implant item
+		src.desc = "Charred and most definitely broken. This thing must have been pushed really hard."
+		src.burned_out = TRUE
+		src.deactivate()
+		if (src.linked_address)
+			src.send_ping(src.linked_address)
+		// goodbye my sweet son
+		src.RemoveComponentsOfType(/datum/component/packet_connected/radio)
+
+
+/obj/item/remote/marionette_implant
+	name = "marionette implant remote"
+	desc = "A remote control that allows the sending and receiving of data from linked marionette implants."
+	icon = 'icons/obj/porters.dmi'
+	icon_state = "remote"
+
+	flags = TABLEPASS | TGUI_INTERACTIVE
+	object_flags = NO_GHOSTCRITTER
+	w_class = W_CLASS_SMALL
+
+	HELP_MESSAGE_OVERRIDE({"Can track and control any number of marionette implants. To link an implant, simply use the remote on an implanter, implant case, \
+	or implant. Vice-versa also works."})
+
+	/// The network ID of the remote. Communicated to tracked implants when pinging.
+	var/net_id
+	/// Data entered by the user. Its contents will be provided as the `data` field in packets sent to implants.
+	var/entered_data
+	/// The current selected command that implants will be sent.
+	var/selected_command = "say"
+	/// An associative list of tracked implants, where keys are network IDs of implants and values are the last ping result from those addresses.
+	var/list/implant_status = list()
+
+	New()
+		. = ..()
+		if (!src.net_id)
+			src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, FREQ_MARIONETTE_IMPLANT)
+
+	get_desc()
+		. = ..()
+		. += SPAN_NOTICE("<br>Its network address is [net_id].")
+
+	attack_self(mob/user)
+		src.ui_interact(user)
+
+	attackby(obj/item/W, mob/user, params)
+		if (src.link_with(W, user))
+			return
+		return ..()
+
+	afterattack(atom/target, mob/user, reach, params)
+		if (istype(target, /obj/item/implanter) || istype(target, /obj/item/implantcase) || istype(target, /obj/item/implant))
+			src.link_with(target, user)
+		else
+			return ..()
+
+	receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
+		if (!signal || signal.encryption)
+			return
+
+		if (lowertext(signal.data["address_1"]) != src.net_id)
+			return
+
+		var/sender_address = lowertext(signal.data["sender"])
+		if (sender_address == src.net_id)
+			return
+
+		if (sender_address in src.implant_status)
+			if (signal.data["command"] == "ping_reply")
+				if (signal.data["status"] == MARIONETTE_IMPLANT_STATUS_BURNED_OUT && src.implant_status[sender_address] != MARIONETTE_IMPLANT_STATUS_BURNED_OUT)
+					for (var/mob/M in get_turf(src))
+						boutput(M, SPAN_ALERT("Your [src.name] alerts you that a tracked implant has burned out and is no longer usable."))
+						M.playsound_local(src, "sound/machines/twobeep.ogg", 50)
+				else if (signal.data["status"] == MARIONETTE_IMPLANT_STATUS_DANGER && signal.data["special"])
+					for (var/mob/M in get_turf(src))
+						boutput(M, SPAN_ALERT("Your [src.name] alerts you that a tracked implant is dangerously hot."))
+						M.playsound_local(src, "sound/machines/twobeep.ogg", 50)
+				src.implant_status[sender_address] = signal.data["status"]
+			if (signal.data["command"] == "activate")
+				for (var/mob/M in get_turf(src))
+					M.playsound_local(src, !signal.data["stack"] ? "sound/machines/claw_machine_success.ogg" : "sound/machines/claw_machine_fail.ogg", 10, TRUE)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "MarionetteRemote", name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = ..()
+		var/list/implant_entries = list()
+		for (var/address in src.implant_status)
+			implant_entries += list(list(
+				"address" = address,
+				"status" = src.implant_status[address]
+			))
+		.["entered_data"] = src.entered_data
+		.["selected_command"] = src.selected_command
+		.["implants"] = implant_entries
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if (.)
+			return
+		if (action == "set_data")
+			var/new_data = params["new_data"]
+			if (!istext(new_data))
+				return
+			new_data = copytext(new_data, 1, 46)
+			src.entered_data = new_data
+			playsound(src.loc, "keyboard", 25, TRUE, -(MAX_SOUND_RANGE - 5))
+			. = TRUE
+		else if (action == "set_command")
+			src.selected_command = params["new_command"]
+			playsound(src.loc, 'sound/machines/keypress.ogg', 25, TRUE, -(MAX_SOUND_RANGE - 5))
+			. = TRUE
+		else if (action == "remove_from_list")
+			src.implant_status.Remove(params["address"])
+			boutput(usr, SPAN_NOTICE("Implant removed from tracking list."))
+			playsound(src.loc, 'sound/machines/keypress.ogg', 25, TRUE, -(MAX_SOUND_RANGE - 5))
+			var/datum/signal/unlink_packet = get_free_signal()
+			unlink_packet.source = src
+			unlink_packet.data["device"] = "IMP_MARIONETTE_REMOTE"
+			unlink_packet.data["sender"] = src.net_id
+			unlink_packet.data["address_1"] = params["address"]
+			unlink_packet.data["command"] = "unlink"
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, unlink_packet)
+			. = TRUE
+		else
+			var/address = params["address"]
+			var/command = params["packet_command"]
+			var/data = params["packet_data"]
+			if (action == "activate")
+				var/datum/signal/activation_packet = get_free_signal()
+				activation_packet.source = src
+				activation_packet.data["device"] = "IMP_MARIONETTE_REMOTE"
+				activation_packet.data["sender"] = src.net_id
+				activation_packet.data["address_1"] = address
+				activation_packet.data["command"] = command
+				activation_packet.data["data"] = data
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, activation_packet)
+				playsound(src.loc, 'sound/machines/keypress.ogg', 25, TRUE, -(MAX_SOUND_RANGE - 5))
+				. = TRUE
+			else if ((action == "ping" || action == "ping_all") && !ON_COOLDOWN(src, "do_ping", 2 SECONDS))
+				var/list/to_ping = action == "ping" ? list(address) : src.implant_status
+				for (var/implant_to_ping in to_ping)
+					if (src.implant_status[implant_to_ping] == MARIONETTE_IMPLANT_STATUS_BURNED_OUT)
+						continue
+					var/datum/signal/ping = get_free_signal()
+					ping.source = src
+					ping.data["device"] = "IMP_MARIONETTE_REMOTE"
+					ping.data["sender"] = src.net_id
+					ping.data["address_1"] = implant_to_ping
+					ping.data["command"] = "ping"
+					src.implant_status[implant_to_ping] = MARIONETTE_IMPLANT_STATUS_WAITING
+					// Slightly delay the actual ping, as otherwise the text could be immediately overwritten with unlucky timing
+					// This way it's clear to the player that the ping did actually happen!
+					SPAWN (0.4 SECONDS)
+						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, ping)
+						SPAWN (2 SECONDS)
+							if (src.implant_status[implant_to_ping] == MARIONETTE_IMPLANT_STATUS_WAITING)
+								src.implant_status[implant_to_ping] = MARIONETTE_IMPLANT_STATUS_NO_RESPONSE
+				playsound(src.loc, 'sound/machines/keypress.ogg', 25, TRUE, -(MAX_SOUND_RANGE - 5))
+				. = TRUE
+
+	proc/link_with(obj/item/W, mob/living/user)
+		var/obj/item/implant/marionette/M
+		if (istype(W, /obj/item/implanter))
+			var/obj/item/implanter/I = W
+			if (!istype(I.imp, /obj/item/implant/marionette))
+				boutput(user, SPAN_ALERT("\The [W] doesn't have a compatible implant."))
+				return TRUE
+			M = I.imp
+		else if (istype(W, /obj/item/implantcase))
+			var/obj/item/implantcase/IC = W
+			if (!istype(IC.imp, /obj/item/implant/marionette))
+				boutput(user, SPAN_ALERT("\The [W] doesn't have a compatible implant."))
+				return TRUE
+			M = IC.imp
+		else if (istype(W, /obj/item/implant))
+			M = W
+		if (istype(M))
+			if (M.burned_out)
+				boutput(user, SPAN_ALERT("The implant is burned out and permanently unusable."))
+			else if (M.net_id in src.implant_status)
+				boutput(user, SPAN_NOTICE("This implant is already in the remote's tracking list."))
+			else
+				boutput(user, SPAN_NOTICE("You scan the implant into \the [src]'s database."))
+				src.implant_status[M.net_id] = "UNKNOWN"
+				M.linked_address = src.net_id
+				user.playsound_local(user, "sound/machines/tone_beep.ogg", 30)
+			return TRUE
+
 /obj/item/implant/mindhack/super
 	name = "mindhack DELUXE implant"
 	expire = 0
@@ -845,7 +1334,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	scan_category = "not_shown"
 	var/bleed_time = 60
 	var/bleed_timer = 0
-	var/forensic_ID = null // match a bullet to a gun holy heckkkkk
 	var/leaves_wound = TRUE
 
 	New()
@@ -876,7 +1364,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	bullet_9mm
 		name = "9mm round"
 		desc = "An extremely common bullet fired by a myriad of different cartridges."
-
+	bullet_455
+		name = ".455 round"
+		desc = "A powerful, old-timey revolver bullet, likely of criminal origin."
 	ninemmplastic
 		name = "9mm Plastic round"
 		icon_state = "bulletplastic"
@@ -914,6 +1404,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		New()
 			..()
 			implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "buckshot_wound-[rand(0, 1)]", layer = MOB_EFFECT_LAYER)
+		bird
+			name = "birdshot"
+			desc = "A large collection of birdshot rounds, a less-lethal load for shotguns."
+
 	staple
 		name = "staple"
 		icon_state = "staple"
@@ -969,10 +1463,24 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		var/barbed = FALSE
 		var/pull_out_name = ""
 
+		proc/on_pull_out(mob/living/puller)
+			return
+
 		on_life(mult)
 			. = ..()
 			if (src.reagents?.total_volume)
 				src.reagents.trans_to(owner, 1 * mult)
+
+		blowdart
+			name = "blowdart"
+			desc = "a sharp little dart with a little poison reservoir."
+			icon_state = "blowdart"
+			leaves_wound = FALSE
+			barbed = TRUE
+
+			New()
+				..()
+				implant_overlay = null
 
 		dart
 			name = "dart"
@@ -1042,15 +1550,38 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				icon_state = "syringeproj_barbed"
 				barbed = TRUE
 
-	blowdart
-		name = "blowdart"
-		desc = "a sharp little dart with a little poison reservoir."
-		icon_state = "blowdart"
-		leaves_wound = FALSE
+		janktanktwo
+			name = "spent JankTank II"
+			pull_out_name = "syringe"
+			desc = "A large syringe ripped straight out of some poor, presumably dead gang member!"
+			icon = 'icons/obj/syringe.dmi'
+			icon_state = "dna_scrambler_2"
+			var/obj/item/tool/janktanktwo/syringe
+			var/full = TRUE
 
-		New()
-			..()
-			implant_overlay = null
+			New()
+				..()
+				implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "syringe_stick_1", layer = MOB_EFFECT_LAYER)
+			implanted(mob/M, mob/I)
+				..()
+				if (!full)
+					return
+				SPAWN(JANKTANK2_PAUSE_TIME - 0.5 SECONDS)
+					playsound(M.loc, 'sound/items/hypo.ogg', 50, 0)
+
+				SPAWN(JANKTANK2_PAUSE_TIME)
+					if (!ishuman(M))
+						return
+					full = FALSE
+					icon_state = "dna_scrambler_3"
+					desc = "A large, empty syringe. Whatever awfulness it contained is probably in somebody's heart. Eugh."
+					if (!src.owner)
+						src.visible_message("<span class='alert'>[src] sprays its' volatile contents everywhere, [prob(10) ? "it smells like bacon? <b><i>WHY?!?</i></b>" : "gross!"]</span>")
+						return
+
+					syringe.do_heal(src.owner)
+			proc/set_owner(obj/item/tool/janktanktwo/injector)
+				src.syringe = injector
 
 	flintlock
 		name= "flintlock round"
@@ -1173,6 +1704,17 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			New()
 				..()
 				access.access = get_access("Captain")
+
+		chef
+			New()
+				..()
+				access.access = get_access("Chef")
+
+		admin_mouse
+			New()
+				..()
+				access.access = get_access("Admin")
+
 
 /* ============================================================ */
 /* --------------------- Artifact Implants -------------------- */
@@ -1340,7 +1882,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				sleep(3 SECONDS)
 				if (H && src)
 					H.emote("faint")
-					H.changeStatus("paralysis", 10 SECONDS)
+					H.changeStatus("unconscious", 10 SECONDS)
 					H.losebreath += 5
 					playsound(H.loc, pick_string("chemistry_reagent_messages.txt", "strychnine_deadly_noises"), 50, 1)
 
@@ -1485,7 +2027,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /obj/item/implant/artifact/wizard/wizard_gimmick
 	var/static/list/possible_mutantraces = list(null, /datum/mutantrace/lizard, /datum/mutantrace/skeleton, /datum/mutantrace/ithillid,
 												/datum/mutantrace/monkey, /datum/mutantrace/roach, /datum/mutantrace/cow,
-										 		/datum/mutantrace/pug)
+										 		/datum/mutantrace/pug, /datum/mutantrace/cat/bingus)
 
 	do_process(var/mult = 1)
 		if (ishuman(src.owner) && !active)
@@ -1552,7 +2094,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				H.firegib(FALSE)
 			else
 				playsound(get_turf(H), 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, TRUE)
-				H.become_statue(getMaterial("ice"), "Someone completely frozen in ice. How this happened, you have no clue!")
+				H.become_statue("ice", "Someone completely frozen in ice. How this happened, you have no clue!")
 
 		..()
 
@@ -1680,7 +2222,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /datum/action/bar/icon/implanter
 	duration = 20
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
-	id = "implanter"
 	icon = 'icons/obj/surgery.dmi' //In these two vars you can define an icon you want to have on your little progress bar.
 	icon_state = "implanter1-g"
 	var/mob/living/target
@@ -1780,6 +2321,29 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	New()
 		src.imp = new /obj/item/implant/revenge/wasp(src)
 		..()
+
+/obj/item/implanter/marionette
+	icon_state = "implanter1-g"
+	sneaky = TRUE
+	HELP_MESSAGE_OVERRIDE({"Allows remote signals to exert limited control over the implanted target. Compatible with packets. \
+	You can hit this implanter with a marionette implant remote to scan it, causing the contained implant to send status updates to it."})
+
+	New()
+		src.imp = new /obj/item/implant/marionette(src)
+		..()
+
+	get_desc(dist)
+		. = ..()
+		var/obj/item/implant/marionette/P = src.imp
+		if (istype(P))
+			if (P.burned_out)
+				. += "<br>[SPAN_ALERT("The implant is completely melted and will not function.")]"
+			else
+				if (P.linked_address)
+					. += "<br>[SPAN_NOTICE("This implant is linked to a remote of network address [P.linked_address].")]"
+				. += "<br>[SPAN_NOTICE("Frequency: [P.pda_alert_frequency]")]"
+				. += "<br>[SPAN_NOTICE("Network address: [P.net_id]")]"
+				. += "<br>[SPAN_NOTICE("Passkey: [P.passkey]")]"
 
 /* ================================================================ */
 /* ------------------------- Implant Case ------------------------- */
@@ -1973,6 +2537,7 @@ TYPEINFO(/obj/item/gun/implanter)
 	icon_state = "implant"
 	contraband = 1
 	var/obj/item/implant/my_implant = null
+	recoil_strength = 1
 
 	New()
 		set_current_projectile(new/datum/projectile/implanter)
@@ -2055,7 +2620,7 @@ TYPEINFO(/obj/item/gun/implanter)
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB
 	casing = /obj/item/casing/small
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 	shot_number = 1
 	//silentshot = 1
 	var/obj/item/implant/my_implant = null
@@ -2099,15 +2664,19 @@ TYPEINFO(/obj/item/gun/implanter)
 		..()
 		implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "dart_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
 
-	throw_impact(atom/M, datum/thrown_thing/thr)
+	throw_impact(atom/hit_thing, datum/thrown_thing/thr)
 		..()
-		if (ishuman(M) && prob(5))
-			var/mob/living/carbon/human/H = M
+		if (istype(hit_thing, /obj/item/reagent_containers/balloon))
+			var/obj/item/reagent_containers/balloon/balloon = hit_thing
+			balloon.smash()
+
+		else if (ishuman(hit_thing) && prob(5))
+			var/mob/living/carbon/human/H = hit_thing
 			H.implant.Add(src)
-			src.visible_message(SPAN_ALERT("[src] gets embedded in [M]!"))
+			src.visible_message(SPAN_ALERT("[src] gets embedded in [H]!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
-			random_brute_damage(M, 1)
-			src.implanted(M)
+			random_brute_damage(H, 1)
+			src.implanted(H)
 
 	attack_hand(mob/user)
 		src.pixel_x = 0
@@ -2127,14 +2696,25 @@ TYPEINFO(/obj/item/gun/implanter)
 		..()
 		implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "dart_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
 
-	throw_impact(atom/M, datum/thrown_thing/thr)
+	throw_impact(atom/hit_thing, datum/thrown_thing/thr)
 		..()
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (ishuman(hit_thing))
+			var/mob/living/carbon/human/H = hit_thing
 			H.implant.Add(src)
-			src.visible_message(SPAN_ALERT("[src] gets embedded in [M]!"))
+			src.visible_message(SPAN_ALERT("[src] gets embedded in [H]!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
-			H.changeStatus("weakened", 2 SECONDS)
-			random_brute_damage(M, 20)//if it can get in you, it probably doesn't give a damn about your armor
-			take_bleeding_damage(M, null, 10, DAMAGE_CUT)
-			src.implanted(M)
+			H.changeStatus("knockdown", 2 SECONDS)
+			random_brute_damage(H, 20)//if it can get in you, it probably doesn't give a damn about your armor
+			take_bleeding_damage(H, null, 10, DAMAGE_CUT)
+			src.implanted(H)
+
+#undef MARIONETTE_IMPLANT_STATUS_IDLE
+#undef MARIONETTE_IMPLANT_STATUS_ACTIVE
+#undef MARIONETTE_IMPLANT_STATUS_DANGER
+#undef MARIONETTE_IMPLANT_STATUS_WAITING
+#undef MARIONETTE_IMPLANT_STATUS_NO_RESPONSE
+#undef MARIONETTE_IMPLANT_STATUS_BURNED_OUT
+#undef MARIONETTE_IMPLANT_ERROR_NO_TARGET
+#undef MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
+#undef MARIONETTE_IMPLANT_ERROR_BAD_PASSKEY
+#undef MARIONETTE_IMPLANT_ERROR_INVALID

@@ -163,7 +163,7 @@
 /turf/simulated/floor/plating,
 /area/prefab/zoo)
 "X" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/clothing/shoes/clown_shoes/blue,
 /obj/item/clothing/under/misc/clown/blue,
 /obj/item/clothing/mask/clown_hat/blue,

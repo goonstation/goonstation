@@ -46,7 +46,7 @@
 
 	explode()
 		new/obj/effect/supplyexplosion(src.loc)
-		fireflash(src, 8, 9800)
+		fireflash(src, 8, 9800, chemfire = CHEM_FIRE_RED)
 		qdel(src)
 		return
 
@@ -663,6 +663,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/torpedo_tube, proc/launch)
 		changeIcon()
 
 	proc/launch(var/atom/target)
+		src.event_handler_flags |= IMMUNE_TRENCH_WARP
 		target_turf = get_turf(target)
 		if(launched) return
 		else launched = 1

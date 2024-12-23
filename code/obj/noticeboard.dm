@@ -3,14 +3,24 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nboard00"
 	pixel_y = 32
-	flags = FPRINT
 	plane = PLANE_NOSHADOW_BELOW
 	desc = "A board for pinning important notices upon."
 	density = 0
 	anchored = ANCHORED
 	var/notices = 0
 
+/obj/noticeboard/north
+	pixel_y = 32
 
+/obj/noticeboard/east
+	dir = EAST
+	pixel_x = 32
+	pixel_y = 0
+
+/obj/noticeboard/west
+	dir = WEST
+	pixel_x = -32
+	pixel_y = 0
 /obj/noticeboard/ex_act()
 	qdel(src)
 
@@ -43,7 +53,7 @@
 	onclose(user, "noticeboard")
 
 /obj/noticeboard/attack_ai(mob/user)
-	src.attack_hand(user)
+	src.Attackhand(user)
 
 /obj/noticeboard/Topic(href, href_list)
 	if (BOUNDS_DIST(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
@@ -82,6 +92,19 @@
 	var/static/file_name = "data/persistent_noticeboards.json"
 	var/static/data = null
 	var/persistent_id = null
+
+/obj/noticeboard/persistent/north
+	pixel_y = 32
+
+/obj/noticeboard/persistent/east
+	dir = EAST
+	pixel_x = 32
+	pixel_y = 0
+
+/obj/noticeboard/persistent/west
+	dir = WEST
+	pixel_x = -32
+	pixel_y = 0
 
 /obj/noticeboard/persistent/New()
 	. = ..()
@@ -166,5 +189,6 @@ proc/save_noticeboards()
 		logTheThing(LOG_DEBUG, null, "No persistent noticeboards to save.")
 		return
 	rustg_file_write(json_encode(some_board.data), some_board.file_name)
+
 
 #undef PERSISTENT_NOTICEBOARD_VERSION

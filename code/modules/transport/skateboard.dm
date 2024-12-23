@@ -167,7 +167,7 @@
 	if(length(bumped_queue) >= 9)
 		bumped_queue.Cut(1,2)
 
-	if(isturf(AM) || istype(AM, /obj/window) || istype(AM, /obj/grille))
+	if(isturf(AM) || istype(AM, /obj/window) || istype(AM, /obj/mesh/grille))
 		if(sickness < 100 || z == 2 || z == 4)
 			src.messageNearby(SPAN_ALERT("<B>You crash into the [AM]!</B>"), SPAN_ALERT("<B>[rider] crashes into the [AM] with the [src]!</B>"))
 			playsound(src, pick(sb_fails), 55, 1)
@@ -198,8 +198,7 @@
 				input_lockout -= 1
 
 	else if(isobj(AM))
-		var/trick = trickName()
-		src.messageNearby(SPAN_ALERT("<B>You do a [trick] on the [AM]!</B>"), SPAN_ALERT("<B>[rider] does a [trick] on the [AM]!</B>"))
+		//chat message removed due to extreme amounts of spam
 		if(give_points)
 			adjustSickness(4)
 		trickAnimate()
@@ -240,7 +239,7 @@
 		src.messageNearby(SPAN_ALERT("<B>You are flung off the [src]!</B>"), SPAN_ALERT("<B>[rider] is flung off the [src]!</B>"))
 
 		rider.changeStatus("stunned", 2 SECONDS)
-		rider.changeStatus("weakened", 2 SECONDS)
+		rider.changeStatus("knockdown", 2 SECONDS)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
 		rider.TakeDamageAccountArmor("All", round(sickness / 4), round(sickness / 4), 0, DAMAGE_BLUNT)
@@ -299,7 +298,7 @@
 	if(usr != rider)
 		..()
 		return
-	if(!(usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat))
+	if(!(usr.getStatusDuration("unconscious") || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown") || usr.stat))
 		eject_rider(0, 1)
 	return
 

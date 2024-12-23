@@ -7,6 +7,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Stop Atom Verbs"
 	set desc = "For when someone's used an atom verb and you've found yourself yelling \"Oh god the server is dying STOP SPINNING THINGS AAAAA STOP PLEASE I BEG YOU\""
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (!atom_emergency_stop)
 		atom_emergency_stop = 1
@@ -28,6 +29,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Transmute Type"
 	set desc = "Transmute all things under the path you specify."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to transmute everything of a type?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -90,6 +92,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Emag All"
 	set desc = "Emags every atom. Every single one."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to emag every fucking atom?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -134,6 +137,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Emag Type"
 	set desc = "Emag all things under the path you specify."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to emag everything of a type?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -209,6 +213,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Scale All"
 	set desc = "Scales every atom. Every single one."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to scale every fucking atom?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -259,6 +264,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Scale Type"
 	set desc = "Scales all things under the path you specify."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to scale everything of a type?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -344,6 +350,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Rotate All Atoms"
 	set desc = "Rotates every atom. Every single one."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to rotate every fucking atom?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -391,6 +398,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Rotate Type"
 	set desc = "Rotates all things under the path you specify."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to rotate everything of a type?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -470,6 +478,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Spin All"
 	set desc = "Spins every atom. Every single one."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to spin every fucking atom?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -528,6 +537,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Spin Type"
 	set desc = "Spins all things under the path you specify."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to spin everything of a type?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -629,6 +639,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Get All"
 	set desc = "Gets every object and mob. Every single one. Oh god no."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to get fucking object and mob and bring it to your tile?", "YOU WILL REGRET THIS", "Yes", "No") == "Yes")
 
@@ -678,6 +689,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Get Type"
 	set desc = "Get all things under the path you specify. Don't give this /turf or /area stuff, it's not going to work."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to teleport everything of a type to your tile?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -736,6 +748,7 @@ var/global/atom_emergency_stop = 0
 	set desc = "Adds a component to all atoms of a type."
 	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/pathpart = input("Part of component path.", "Part of component path.", "") as null|text
 	if(!pathpart)
@@ -795,6 +808,7 @@ var/global/atom_emergency_stop = 0
 	set desc = "Removes a component from all atoms of a type."
 	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/pathpart = input("Part of component path.", "Part of component path.", "") as null|text
 	if(!pathpart)
@@ -851,6 +865,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Replace Type"
 	set desc = "Replace all things of one type with another."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(isnull(typ_part))
 		typ_part = input("Enter path of the things you want to replace", "Enter path", "") as null|text

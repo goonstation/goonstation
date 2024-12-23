@@ -33,6 +33,7 @@
 			M.visible_message(SPAN_ALERT("You seem to attack [target]!"))
 			return 1
 
+		. = ..()
 		SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		var/turf/T = get_turf(M)
@@ -54,17 +55,19 @@
 
 			if (!fake)
 				random_brute_damage(target, 15, 1)
-				target.changeStatus("paralysis", 2 SECONDS)
-				target.changeStatus("weakened", 3 SECONDS)
+				target.changeStatus("unconscious", 2 SECONDS)
+				target.changeStatus("knockdown", 3 SECONDS)
 				target.force_laydown_standup()
 				target.change_misstep_chance(25)
 
-			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""]strike wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
-
+			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""][name] wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
 		else
 			boutput(M, SPAN_ALERT("You can't wrestle the target here!"))
 
 		return 0
+
+	logCast(atom/target)
+		return
 
 /datum/targetable/wrestler/strike/fake
 	fake = 1

@@ -14,7 +14,7 @@ TYPEINFO(/turf/simulated/wall)
 	density = 1
 	gas_impermeable = 1
 	pathable = 1
-	flags = ALWAYS_SOLID_FLUID
+	flags = FLUID_DENSE
 	text = "<font color=#aaa>#"
 	HELP_MESSAGE_OVERRIDE("You can use a <b>welding tool</b> to begin to disassemble it.")
 	default_material = "steel"
@@ -236,7 +236,7 @@ TYPEINFO(/turf/simulated/wall)
 	return
 
 /turf/simulated/wall/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/spray_paint) || istype(W, /obj/item/gang_flyer))
+	if(istype(W, /obj/item/spray_paint_gang) || istype(W, /obj/item/spray_paint_graffiti)  || istype(W, /obj/item/gang_flyer))
 		return
 
 	if (istype(W, /obj/item/pen))
@@ -278,7 +278,7 @@ TYPEINFO(/turf/simulated/wall)
 	else
 		src.material_trigger_when_attacked(W, user, 1)
 		src.visible_message(SPAN_ALERT("[usr ? usr : "Someone"] uselessly hits [src] with [W]."), SPAN_ALERT("You uselessly hit [src] with [W]."))
-		//return attack_hand(user)
+		//return src.Attackhand(user)
 
 /turf/simulated/wall/proc/weld_action(obj/item/W, mob/user)
 	logTheThing(LOG_STATION, user, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([log_loc(user)])")
@@ -335,7 +335,7 @@ TYPEINFO(/turf/simulated/wall)
 		return
 
 /turf/simulated/wall/r_wall/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/spray_paint) || istype(W, /obj/item/gang_flyer))
+	if(istype(W, /obj/item/spray_paint_gang) || istype(W, /obj/item/spray_paint_graffiti) || istype(W, /obj/item/gang_flyer))
 		return
 
 	if (istype(W, /obj/item/pen))
@@ -484,7 +484,7 @@ TYPEINFO(/turf/simulated/wall)
 	src.material_trigger_when_attacked(W, user, 1)
 
 	src.visible_message(SPAN_ALERT("[usr ? usr : "Someone"] uselessly hits [src] with [W]."), SPAN_ALERT("You uselessly hit [src] with [W]."))
-	//return attack_hand(user)
+	//return src.Attackhand(user)
 
 
 /turf/simulated/wall/meteorhit(obj/M as obj)

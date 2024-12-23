@@ -10,8 +10,7 @@ var/list/dangerousVerbs = list(\
 
 //No banning for you
 /client/proc/warn,\
-/client/proc/openBanPanel,\
-/client/proc/cmd_admin_addban,\
+/client/proc/ban_panel,\
 /client/proc/banooc,\
 /client/proc/sharkban,\
 
@@ -35,7 +34,6 @@ var/list/dangerousVerbs = list(\
 /client/proc/cmd_modify_market_variables,\
 /client/proc/BK_finance_debug,\
 /client/proc/BK_alter_funds,\
-/client/proc/debug_pools,\
 /client/proc/debug_variables,\
 /client/proc/debug_global_variable,\
 /client/proc/call_proc,\
@@ -84,6 +82,7 @@ var/list/dangerousVerbs = list(\
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert("Enable drunk mode for yourself?", "Confirmation", "Yes", "No") == "Yes")
 		var/not_drunk_but_high = (alert("Are you boozin' or weedin'", "drugs", "Drunk", "High") == "High")
@@ -101,6 +100,7 @@ var/list/dangerousVerbs = list(\
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	//Puzzle goes here
 	var/message = "Hello! You are drunk! Think you're not? Solve this simple puzzle then.\n\n"
@@ -135,6 +135,7 @@ var/list/dangerousVerbs = list(\
 	if (!C) return
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	//Apparently if the onlineAdmins list contains only one entry, it just picks it by default without giving any input
 	if (src == C)

@@ -1,11 +1,11 @@
 #define VALID_WHITE_HOLE_LOCATIONS list("artlab", "teg", "flock", "chapel", "trench", "asteroid", \
 	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", \
-	"medbay", "security", "cargo", "nuclear", "janitorial")
+	"medbay", "security", "cargo", "nuclear", "janitorial", "wizard", "spacemas")
 
 TYPEINFO(/datum/random_event/major/white_hole)
 	initialization_args = list(
 		EVENT_INFO("target_turf", DATA_INPUT_REFPICKER, "Pick location"),
-		EVENT_INFO_EXT("grow_duration", DATA_INPUT_TEXT, "White Hole Growth Time", 0, 1 HOUR),
+		EVENT_INFO_EXT("grow_duration", DATA_INPUT_NUM, "White Hole Growth Time", 0, 1 HOUR),
 		EVENT_INFO_EXT("duration", DATA_INPUT_NUM, "White Hole Duration", 0, 1 HOUR),
 		EVENT_INFO_EXT("activity_modifier", DATA_INPUT_NUM, "White Hole Activity Modifier", 0, 250),
 		EVENT_INFO_EXT("source_location", DATA_INPUT_LIST_PROVIDED, "Pick source location", VALID_WHITE_HOLE_LOCATIONS)
@@ -88,8 +88,16 @@ TYPEINFO(/datum/random_event/major/white_hole)
 		var/obj/whitehole/whitehole = new (T, grow_duration, duration, source_location, TRUE)
 		whitehole.activity_modifier = activity_modifier
 		message_admins("White Hole anomaly with origin [whitehole.source_location] spawning in [log_loc(T)]")
+		message_ghosts("<b>\A [whitehole.source_location] white hole</b> is spawning at [log_loc(T, ghostjump=TRUE)].")
 		logTheThing(LOG_ADMIN, usr, "Spawned a white hole anomaly with origin [whitehole.source_location] at [log_loc(T)]")
+		src.cleanup()
 
+	cleanup()
+		src.target_turf = initial(src.target_turf)
+		src.grow_duration = initial(src.grow_duration)
+		src.duration = initial(src.duration)
+		src.source_location = initial(src.source_location)
+		src.activity_modifier = initial(src.activity_modifier)
 
 
 ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
@@ -138,7 +146,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			#endif
 		),
 		"teg" = list(
-			/obj/hotspot = 90,
+			/obj/hotspot/gasfire = 90,
 			"plasma" = 50,
 			"arcflash" = 30,
 			/obj/item/wrench/yellow = 10,
@@ -192,8 +200,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/device/flockblocker = 3,
 			/obj/item/paper/flockstatsnote = 1,
 			/obj/window/feather = 1,
-			/obj/grille/flock = 1,
-			/obj/decal/fakeobjects/flock/antenna/not_dense = 1,
+			/obj/mesh/flock/barricade = 1,
+			/obj/fakeobject/flock/antenna/not_dense = 1,
 			/obj/decal/cleanable/flockdrone_debris = 1,
 			/obj/decal/cleanable/flockdrone_debris/fluid = 1,
 			/obj/item/gun/energy/flock = 0.05,
@@ -301,10 +309,10 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/mob/living/carbon/human/normal/miner = 0.1,
 			/obj/item/raw_material/scrap_metal = 4,
 			/obj/machinery/portable_reclaimer = 1,
-			/obj/item/mining_tool/drill = 0.5,
-			/obj/item/mining_tool/power_pick = 0.5,
-			/obj/item/mining_tool/power_shovel = 0.5,
-			/obj/item/mining_tool/powerhammer = 0.5,
+			/obj/item/mining_tool/powered/drill = 0.5,
+			/obj/item/mining_tool/powered/pickaxe = 0.5,
+			/obj/item/mining_tool/powered/shovel = 0.5,
+			/obj/item/mining_tool/powered/hammer = 0.5,
 
 			/obj/critter/gunbot/drone = 0.5,
 			/obj/critter/gunbot/drone/heavydrone = 0.1,
@@ -360,7 +368,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/datum/projectile/laser/heavy = 5,
 			/obj/item/tile/steel = 10,
 			/obj/item/rods/steel = 10,
-			/obj/grille/steel = 2,
+			/obj/mesh/grille/steel = 2,
 			/obj/window = 2,
 			/obj/machinery/emitter = 0.3,
 			/obj/item/toy/plush/small/singuloose = 0.1,
@@ -408,10 +416,11 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/mob/living/critter/robotic/sawfly = 2,
 			/obj/item/reagent_containers/food/snacks/donkpocket_w = 1,
 			/obj/bomb_decoy = 0.4,
+			/obj/machinery/nuclearbomb/event/micronuke = 0.05,
 		),
 		"hell" = list(
 			"fireflash" = 15,
-			/obj/hotspot = 10,
+			/obj/hotspot/gasfire = 10,
 			/mob/living/critter/small_animal/crab/lava = 5,
 			/obj/submachine/slot_machine = 5,
 			#ifdef SECRETS_ENABLED
@@ -456,6 +465,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/critter/killertomato = 0.5,
 			/mob/living/critter/small_animal/cat/synth = 1,
 			/mob/living/critter/plant/maneater = 0.3,
+			/obj/item/plant/tumbling_creeper = 3,
 		),
 		"maint" = list(
 			/obj/decal/cleanable/rust = 10,
@@ -528,6 +538,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/paper = 2,
 			/obj/item/clothing/suit/cardboard_box/ai = 1,
 			/obj/item/disk/data/floppy/manudrive/ai = 1,
+			/obj/item/aiModule/ability_expansion/doctor_vision = 0.5,
+			/obj/item/aiModule/ability_expansion/proto_teleman = 0.2
 		),
 		"bridge" = list(
 			/obj/item/reagent_containers/food/drinks/drinkingglass/flute = 10,
@@ -733,7 +745,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/storage/closet/radiation = 10,
 			/obj/item/reagent_containers/pill/antirad = 10,
 			/obj/item/clothing/mask/gas = 5,
-			/obj/item/clothing/suit/rad = 5,
+			/obj/item/clothing/suit/hazard/rad = 5,
 			/obj/item/clothing/gloves/yellow = 5,
 			/obj/item/clothing/head/rad_hood = 5,
 			/obj/item/wrench/yellow = 10,
@@ -777,7 +789,73 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/reagent_containers/glass/bucket = 4,
 			/obj/vehicle/floorbuffer = 1,
 			/obj/item/handheld_vacuum = 1
-		)
+		),
+		"wizard" = list(
+			/obj/item/reagent_containers/food/drinks/tea/mugwort = 10,
+			/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor = 30,
+			/obj/item/kitchen/everyflavor_box = 3,
+			/obj/item/staff = 10,
+			/obj/item/staff/crystal = 5,
+			/obj/item/staff/monkey_staff = 0.05,
+			/obj/item/clothing/head/wizard = 5,
+			/obj/item/clothing/head/wizard/purple = 5,
+			/obj/item/clothing/head/wizard/red = 5,
+			/obj/item/clothing/head/wizard/green = 5,
+			/obj/item/clothing/head/wizard/witch = 5,
+			/obj/item/clothing/head/wizard/necro = 2,
+			/obj/item/clothing/suit/wizrobe = 3,
+			/obj/item/clothing/suit/wizrobe/purple = 3,
+			/obj/item/clothing/suit/wizrobe/green = 3,
+			/obj/item/clothing/suit/wizrobe/red = 3,
+			/obj/item/clothing/suit/wizrobe/necro = 1,
+			/obj/item/clothing/suit/bathrobe = 1,
+			/obj/item/clothing/head/apprentice = 1,
+			/obj/item/toy/plush/small/kitten/wizard = 1,
+			/obj/item/paper/Wizardry101 = 10,
+			/obj/item/paper/businesscard/cosmicacres = 2,
+			/datum/projectile/fireball = 5,
+			/datum/projectile/special/homing/magicmissile/weak = 20,
+			/datum/projectile/special/homing/magicmissile = 15,
+			/datum/projectile/artifact/prismatic_projectile = 20,
+			"snake" = 10,
+			/obj/forcefield/autoexpire = 4,
+			/obj/decal/icefloor = 10,
+			/obj/lightning_target = 10,
+			/obj/item/clothing/gloves/ring/wizard/blink = 0.1,
+			/obj/item/clothing/gloves/ring/wizard/forcewall = 0.1,
+			/obj/item/enchantment_scroll = 0.5,
+			"wizard crystal" = 1
+		),
+		"spacemas" = list(
+			"present" = 25,
+			/obj/item/reagent_containers/food/snacks/breadloaf/fruit_cake = 4,
+			/obj/item/reagent_containers/food/snacks/breadslice/fruit_cake = 7,
+			/obj/item/reagent_containers/food/snacks/turkey = 5,
+			/mob/living/critter/small_animal/bird/turkey = 1,
+			/obj/item/reagent_containers/food/snacks/candy/candy_cane = 5,
+			/obj/item/reagent_containers/food/snacks/candy/nougat = 3,
+			/obj/item/reagent_containers/food/snacks/candy/negativeonebar = 3,
+			/obj/item/reagent_containers/food/snacks/candy/chocolate = 3,
+			/obj/item/reagent_containers/food/snacks/candy/pbcup = 2,
+			/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/cherry = 2,
+			/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch = 1,
+			/obj/item/reagent_containers/food/drinks/eggnog = 5,
+			/obj/item/reagent_containers/food/drinks/bottle/soda/xmas = 5,
+			/obj/item/reagent_containers/food/snacks/plant/orange = 3,
+			/obj/item/reagent_containers/food/snacks/snowball = 15,
+			/obj/decal/wreath = 1,
+			/mob/living/critter/small_animal/bunny/hare = 1,
+			/obj/item/raw_material/char = 3,
+			/obj/critter/domestic_bee/reindeer = 1,
+			/obj/critter/domestic_bee/santa = 1,
+			/obj/item/material_piece/organic/wood = 3,
+			/obj/item/clothing/head/helmet/space/santahat = 3,
+			/obj/item/clothing/suit/space/santa = 2,
+#ifdef XMAS
+			/datum/figure_info/santa = 1,
+#endif
+			/datum/reagent/fooddrink/alcoholic/mulled_wine = 2,
+		),
 	)
 
 	New(var/loc, grow_duration = 0, active_duration = null, source_location = null, triggered_by_event = FALSE)
@@ -798,7 +876,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		illum.plane = PLANE_LIGHTING
 		illum.blend_mode = BLEND_ADD
 		illum.alpha = 100
-		src.UpdateOverlays(illum, "illum")
+		src.AddOverlays(illum, "illum")
 
 		light = new /datum/light/point
 		light.set_brightness(0.7)
@@ -809,7 +887,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		location_image.alpha = 160
 		location_image.pixel_x = 32
 		location_image.pixel_y = 32
-		src.UpdateOverlays(location_image, "source_location")
+		src.AddOverlays(location_image, "source_location")
 
 		src.transform = matrix(32 / 160, MATRIX_SCALE)
 
@@ -836,7 +914,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 	Bumped(atom/movable/A)
 		if(QDELETED(A) || A.throwing || istype(A, /obj/projectile))
 			return
-		if(prob(90)) // the 10% probability not to is there mostly just to prevent very rare infinite loops
+		if(!ON_COOLDOWN(A, "white_hole_bump", 0.2 SECONDS)) //okay this will REALLY prevent infinite loops (hopefully)
 			step_away(A, src)
 
 	attackby(obj/item/I, mob/user)
@@ -956,7 +1034,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 
 		// if we roll hotspot or plasma in an "inner" call (for example for flockification or deep frying)
 		// we get one reroll to get something else
-		if((spawn_type in list(/obj/hotspot, "plasma")) && source_location != src.source_location)
+		if((spawn_type in list(/obj/hotspot/gasfire, "plasma")) && source_location != src.source_location)
 			spawn_type = weighted_pick(src.spawn_probs[source_location])
 
 		if(ispath(spawn_type, /atom/movable))
@@ -1108,6 +1186,22 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			if ("sticker")
 				spawn_type = pick(concrete_typesof(/obj/item/sticker))
 				. = new spawn_type(src.loc)
+			if ("snake")
+				. = generate_thing("wizard")
+				var/atom/movable/AM = .
+				if (istype(AM) && !QDELETED(AM) && !istype(AM, /obj/projectile))
+					var/mob/living/critter/small_animal/snake/snake = new(src.loc, .)
+					snake.start_expiration(2 MINUTES)
+			if ("wizard crystal")
+				spawn_type = pick(concrete_typesof(/obj/item/wizard_crystal))
+				. = new spawn_type(src.loc)
+			if ("present")
+				var/atom/movable/thing = generate_thing(pick(valid_locations))
+				if (istype(thing, /obj/projectile))
+					qdel(thing)
+					. = new /obj/item/a_gift/festive(src.loc)
+				else
+					. = thing?.gift_wrap(xmas_style = TRUE)
 			else
 				CRASH("Unknown spawn type: [spawn_type]")
 
@@ -1142,8 +1236,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 								H.say(phrase_log.random_phrase("say"))
 							else
 								H.emote("me", TRUE, phrase_log.random_phrase("emote"))
-		else if(istype(., /obj/hotspot))
-			var/obj/hotspot/hotspot = .
+		else if(istype(., /obj/hotspot/gasfire))
+			var/obj/hotspot/gasfire/hotspot = .
 			hotspot.temperature = rand(FIRE_MINIMUM_TEMPERATURE_TO_EXIST, 6000)
 			hotspot.set_real_color()
 			SPAWN(rand(10 SECONDS, 2 MINUTES))
@@ -1317,7 +1411,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			illum.plane = PLANE_LIGHTING
 			illum.blend_mode = BLEND_ADD
 			illum.alpha = 6
-			par.UpdateOverlays(illum, "illum")
+			par.AddOverlays(illum, "illum")
 
 			first.Scale(0.1,0.1)
 			par.transform = first

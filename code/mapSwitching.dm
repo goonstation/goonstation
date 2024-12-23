@@ -10,6 +10,14 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 	var/active = 0 //set to 1 if the datum initializes correctly
 	var/current = null //the human-readable name of the current map
 	var/next = null //the human-readable name of the next map, if set
+	var/nextPrior = null //the human-readable name of the previous next map, if that makes any sense at all
+	var/locked = 0 //set to 1 during a map-switch build
+
+	//reboot delay handling
+	var/holdingReboot = 0 //1 if a server reboot was called but we were compiling a new map
+	var/rebootRetryDelay = 30 SECONDS //time to wait between attempting another reboot
+	var/currentRebootAttempt = 0 //how many times have we attempted a reboot
+	var/rebootLimit = 4 //how many times should we attempt a restart before just doing it anyway
 
 	//player vote stuff
 	var/votingAllowed = 1 //is map voting allowed?
@@ -18,18 +26,22 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 	var/autoVoteDelay = 30 SECONDS //how long should we wait after round start to trigger to automatic map vote?
 	var/autoVoteDuration = 7 MINUTES //how long (in byond deciseconds) the automatic map vote should last (1200 = 2 mins)
 	var/voteCurrentDuration = 0 //how long is the current vote set to last?
+	var/queuedVoteCompile = 0 //is a player map vote scheduled for after the current compilation?
 	var/voteChosenMap = "" //the map that the players voted to switch to
 	var/nextMapIsVotedFor = 0 //is the next map a result of player voting?
+	var/nextMapIsVotedForPrior = 0 //we save the voted map state in the event of a failed compile, so we can restore
 	var/voteIndex = 0 //a count of votes
 	var/list/playerPickable = list() //list of maps players are allowed to pick
 	var/list/passiveVotes = list() //list of passive map votes
 	var/list/previousVotes = list() //a list of how people voted for every vote
 
+	//cause of switch to this map
+	var/thisMapWasVotedFor
 
 	New()
 		..()
 		src.setupPickableList()
-
+		thisMapWasVotedFor = world.load_intra_round_value("voted_map")
 
 	proc/setupPickableList()
 		//map_setting set by code/map.dm
@@ -40,6 +52,10 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				src.setCurrentMap(map)
 
 			if (mapNames[map]["playerPickable"])
+				if (BUILD_TIME_MONTH == 6 && IS_IT_FRIDAY && BUILD_TIME_DAY <= 7) //the first friday of every june is donut day
+					if (findtext(map, "donut")) //all we care about today is donut
+						src.playerPickable[map] += mapNames[map]
+					continue
 				if (mapNames[map]["MinPlayersAllowed"])
 					if (total_clients() < mapNames[map]["MinPlayersAllowed"])
 						continue
@@ -56,6 +72,67 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 			return
 
 
+	proc/lock(mapID)
+		src.locked = 1
+
+
+	proc/unlock(mapID)
+		//we attempted to compile a custom map, but it failed for some reason
+		if (mapID == "FAILED")
+			src.locked = 0
+			src.next = src.nextPrior ? src.nextPrior : null
+			src.nextPrior = null
+
+			//we tried to switch away from a voted map, but it failed, so restore state
+			if (src.nextMapIsVotedForPrior)
+				src.nextMapIsVotedFor = 1
+				src.nextMapIsVotedForPrior = 0
+
+
+		//the custom map actually compiled whoa
+		else
+			/*
+			handle weird fucked up cases :v
+			1. got...nothing?
+			2. no next map set and the current map ISNT the mapID we were just given
+			3. next map set, but it doesn't match the mapID we were just given
+			*/
+			/*
+			if (!mapID || \
+				(!src.next && mapNames[src.current]["id"] != mapID) || \
+				(src.next && mapNames[src.next]["id"] != mapID))
+				src.locked = 0
+			else
+				src.locked = 0
+				src.nextPrior = null
+			*/
+
+			src.locked = 0
+			src.nextPrior = null
+
+			//we switched away from a voted map and it succeeded, forget all about that vote
+			if (src.nextMapIsVotedForPrior)
+				src.nextMapIsVotedForPrior = 0
+
+
+		//aaaa we were holding up a reboot, go go go!
+		if (src.holdingReboot)
+			if (mapID == "FAILED")
+				boutput(world, "<span class='bold notice'>Map switch failed, continuing restart. Shed a tear for the map that was never to be.</span>")
+			else
+				boutput(world, "<span class='bold notice'>Map switch complete, continuing restart</span>")
+
+			Reboot_server()
+		else if (src.queuedVoteCompile)
+			//ok we're not holding up a reboot and there's a queued player vote map, so let's trigger it
+			src.queuedVoteCompile = 0
+			try
+				src.setNextMap("Player Vote", mapName = src.voteChosenMap)
+			catch (var/exception/e)
+				logTheThing("admin", null, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]")
+				logTheThing("diary", null, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]", "debug")
+
+
 	proc/setCurrentMap(map)
 		if (!src.active || !map)
 			return
@@ -63,12 +140,15 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		src.current = map
 
 
-	proc/setNextMap(trigger, mapName = "", mapID = "")
+	proc/setNextMap(trigger, mapName = "", mapID = "", votes = 0)
 		if (!mapName && !mapID)
 			throw EXCEPTION("No map identifier given")
 
 		if (mapName && mapID)
 			throw EXCEPTION("Too many map identifiers given")
+
+		if (src.locked)
+			throw EXCEPTION("Map switcher is locked")
 
 		if (!src.active)
 			throw EXCEPTION("Map switcher is currently inactive")
@@ -81,27 +161,51 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		else
 			mapName = getMapNameFromID(mapID)
 
-		//compile with a new map
-		var/list/params = list(
-			"map" = mapID,
-			"votedFor" = trigger == "Player Vote"
-		)
-		var/data[] = apiHandler.queryAPI("map-switcher/switch", params, 1)
+		var/datum/apiModel/MapSwitch/mapSwitchRes
+		try
+			var/datum/apiRoute/mapswitch/mapSwitch = new
+			mapSwitch.buildBody(
+				trigger == "Player Vote" ? null : trigger, // trigger should be a ckey if not a vote
+				roundId,
+				null,
+				mapID,
+				votes
+			)
+			mapSwitchRes = apiHandler.queryAPI(mapSwitch)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			throw EXCEPTION(error.message)
 
-		if (!data)
-			throw EXCEPTION("No response from goonhub API route")
+		if (text2num(mapSwitchRes.status) != 200)
+			throw EXCEPTION("Build server failed to switch map. Expected HTTP status code 200, received code [isnull(mapSwitchRes.status) ? "null" : mapSwitchRes.status] instead")
 
-		if (data["error"])
-			throw EXCEPTION("Received error from goonhub API: [data["error"]]")
+		//we switched away from a voted map, make a note of this
+		if (src.nextMapIsVotedFor)
+			src.nextMapIsVotedFor = 0
+			src.nextMapIsVotedForPrior = 1
 
 		//make a note if this is a player voted map
 		src.nextMapIsVotedFor = trigger == "Player Vote" ? 1 : 0
+		world.save_intra_round_value("voted_map", src.nextMapIsVotedFor)
 
 		//set next only if we're not re-compiling the current map for whatever reason
 		if (src.current != mapName)
 			src.next = mapName
 		else
 			src.next = null
+
+		src.lock(mapID)
+
+
+	//we're stuck waiting for a map compile so we can reboot. try again
+	proc/attemptReboot()
+		src.currentRebootAttempt++
+
+		//that's it! pull the damn plug!
+		if (src.currentRebootAttempt >= src.rebootLimit)
+			src.unlock("FAILED")
+		else
+			Reboot_server(1)
 
 
 	//start a vote to change the map
@@ -116,7 +220,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 		src.voteChosenMap = ""
 		src.playersVoting = 1
-		src.voteStartedAt = world.time
+		src.voteStartedAt = TIME
 		src.voteCurrentDuration = duration
 		src.voteIndex++
 
@@ -207,12 +311,16 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 			//dont trigger a recompile of the current map for no reason
 			src.nextMapIsVotedFor = 1
 		else
-			try
-				src.setNextMap("Player Vote", mapName = src.voteChosenMap)
-			catch (var/exception/e)
-				logTheThing(LOG_ADMIN, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]")
-				logTheThing(LOG_DIARY, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]", "debug")
-				return
+			if (src.locked)
+				//welp we're already compiling something, queue this compilation for when it finishes
+				src.queuedVoteCompile = 1
+			else
+				try
+					src.setNextMap("Player Vote", mapName = src.voteChosenMap, votes = highestVotes)
+				catch (var/exception/e)
+					logTheThing(LOG_ADMIN, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e.name]")
+					logTheThing(LOG_DIARY, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e.name]", "debug")
+					return
 
 		//announce winner
 		var/msg = "<br><span style='font-size: 1.25em;' class='internal'>"
@@ -247,23 +355,9 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		if (vote > src.voteIndex || !("vote[vote]" in src.previousVotes))
 			throw EXCEPTION("That vote index does not exist")
 
-		var/html = ""
-		var/list/reportData = src.previousVotes["vote[vote]"]
-		for (var/mapName in reportData)
-			var/list/voters = reportData[mapName]
-			html += "<b>[mapName]</b> - [voters.len] total vote[length(voters) == 1 ? "" : "s"]<br>"
-
-			var/count = 1
-			for (var/ckey in voters)
-				html += ckey
-				if (count < voters.len)
-					html += ", "
-				count++
-
-			html += "<br><br>"
-
-		usr.Browse(html, "window=votereport[vote];title=Vote Report")
-
+		var/list/reportDataDetailed = src.previousVotes["vote[vote]"]
+		var/datum/MapVoteReport/mvr = new(reportDataDetailed = reportDataDetailed)
+		mvr.ui_interact(usr)
 
 	//show a html report of the weighted votes per choice
 	proc/composeVoteReportSimple(vote)
@@ -274,15 +368,9 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		if (vote > src.voteIndex || !("vote_tally[vote]" in src.previousVotes))
 			throw EXCEPTION("That vote index does not exist")
 
-		var/html = ""
-		var/list/votes = src.previousVotes["vote_tally[vote]"]
-		for (var/mapName in votes)
-			var/list/voters = votes[mapName]
-			html += "<b>[mapName]</b> - [voters] total vote[voters == 1 ? "" : "s"]<br>"
-			html += "<br><br>"
-
-		usr.Browse(html, "window=votetally[vote];title=Vote Tally")
-
+		var/list/reportDataSimple = src.previousVotes["vote_tally[vote]"]
+		var/datum/MapVoteReport/mvr = new(reportDataSimple = reportDataSimple)
+		mvr.ui_interact(usr)
 
 	Topic(href, href_list)
 		if (..())
@@ -296,7 +384,13 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				var/vote = href_list["vote"]
 				src.composeVoteReportSimple(vote)
 
-
+	proc/get_player_pickable_map_list()
+		. = new/list()
+		for (var/map in src.playerPickable)
+			. += list(list(
+				name = map,
+				thumbnail = "[config.goonhub_url]/storage/maps/[lowertext(src.playerPickable[map]["id"])]/thumb.png"
+			))
 /proc/isMapSwitcherBusted()
 	if (!mapSwitcher || !mapSwitcher.active)
 		return "The map switcher is apparently broken right now. Yell at Wire I guess"
@@ -316,7 +410,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 	map_vote_holder.show_window(usr.client)
 
 /datum/map_vote_holder
-	var/list/client/vote_map = list() // a map of ckeys to (a map of map_names to the ckey's current vote)
+	var/list/list/client/vote_map = list() // a map of ckeys to (a map of map_names to the ckey's current vote)
 	var/voters = 0
 
 	disposing()
@@ -385,25 +479,21 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				maps += map
 		return maps
 
-	proc/toggle_vote(subaction, href_list)
-		var/client/C = locate(href_list["client"])
-		var/map_name = subaction
+	proc/toggle_vote(map_name, client/C)
 		if(!(C.ckey in vote_map))
 			setup_client_vote_map(C)
 		var/list/client_vote_map = vote_map[C.ckey]
 		if(map_name in client_vote_map)
 			client_vote_map[map_name] = !client_vote_map[map_name]
 
-	proc/all_yes(subaction, href_list)
-		var/client/C = locate(href_list["client"])
+	proc/all_yes(client/C)
 		if(!(C.ckey in vote_map))
 			setup_client_vote_map(C)
 		var/list/client_vote_map = vote_map[C.ckey]
 		for(var/map_name in client_vote_map)
 			client_vote_map[map_name] = 1
 
-	proc/all_no(subaction, href_list)
-		var/client/C = locate(href_list["client"])
+	proc/all_no(client/C)
 		if(!(C.ckey in vote_map))
 			setup_client_vote_map(C)
 		var/list/client_vote_map = vote_map[C.ckey]
@@ -421,41 +511,45 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		vote_map[vref] = list(map_name)
 		vote_map[vref][map_name] = 1
 
-	proc/topicLink(action, subaction, var/list/extra)
-		return "?src=\ref[src]&action=[action][subaction ? "&subaction=[subaction]" : ""]&[extra && islist(extra) ? list2params(extra) : ""]"
+	ui_state(mob/user)
+		return tgui_always_state.can_use_topic(src, user)
 
-	proc/generate_window(var/client/C)
-		var/list/dat = list()
-		if(!mapSwitcher.playersVoting)
-			dat += "<h2>Sorry! The map vote is over!</h2><br>"
-			return dat.Join()
-		dat += "<h2>Vote For Some Maps:</h2><br>"
-		if(!(C.ckey in vote_map))
-			setup_client_vote_map(C)
-		var/list/client_vote_map = vote_map[C.ckey]
-		for(var/map_name in client_vote_map)
-			dat += "<B>[map_name]:</B> <A href='[topicLink("toggle_vote", "[map_name]",list("client" = "\ref[C]"))]'>[client_vote_map[map_name] ? "Yes" : "No"]</A><BR>"
+	ui_status(mob/user, datum/ui_state/state)
+		return tgui_always_state.can_use_topic(src, user)
 
-		dat += "<A href='[topicLink("all_yes", "all_yes",list("client" = "\ref[C]"))]'>MAKE THEM ALL YES</A><BR>"
-		dat += "<A href='[topicLink("all_no", "all_no",list("client" = "\ref[C]"))]'>MAKE THEM ALL NO</A>"
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "MapVote", "Map Vote")
+			ui.open()
 
-		return dat.Join()
+	ui_static_data()
+		. = list(
+			"mapList" = mapSwitcher.get_player_pickable_map_list()
+		)
 
-	proc/show_window(var/client/C)
-		C.Browse(generate_window(C),"window=map_vote_holder;title=Map_Vote")
+	ui_data(mob/user)
+		if(!(user.client.ckey in vote_map))
+			setup_client_vote_map(user.client)
 
-	Topic(href, href_list)
+		. = list(
+			"playersVoting" = mapSwitcher.playersVoting,
+			"clientVoteMap" = vote_map[user.client.ckey]
+		)
+
+	proc/show_window(client/C)
+		ui_interact(C.mob)
+
+	ui_act(action, list/params)
 		. = ..()
-		var/subaction = (href_list["subaction"] ? href_list["subaction"] : null)
-
-		switch (href_list["action"])
+		switch (action)
 			if("toggle_vote")
-				toggle_vote(subaction, href_list)
+				toggle_vote(params["map_name"], usr)
 			if("all_yes")
-				all_yes(subaction,href_list)
+				all_yes(usr)
 			if("all_no")
-				all_no(subaction,href_list)
-		src.show_window(usr.client)
+				all_no(usr)
+		. = TRUE
 
 /obj/mapVoteLink
 	name = "<span style='color: green; text-decoration: underline;'>Map Vote</span>"
@@ -499,3 +593,48 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 var/global/obj/mapVoteLink/mapVoteLinkStat = new /obj/mapVoteLink
 var/global/datum/map_vote_holder/map_vote_holder = new()
+
+/datum/MapVoteReport
+	var/list/mapList
+	var/winner
+	var/isDetailed = FALSE
+
+	New(list/reportDataSimple, list/reportDataDetailed)
+		src.mapList = mapSwitcher.get_player_pickable_map_list()
+
+		if (reportDataSimple)
+			for (var/map in src.mapList)
+				map["count"] = reportDataSimple[map["name"]] || 0
+
+		if (reportDataDetailed)
+			isDetailed = TRUE
+			for (var/map in src.mapList)
+				map["count"] = length(reportDataDetailed[map["name"]]) || 0
+				map["voters"] = reportDataDetailed[map["name"]]
+
+		sortList(src.mapList, /proc/compare_map_vote_count)
+
+		src.winner = mapSwitcher.voteChosenMap
+
+		..()
+
+	ui_state(mob/user)
+		return tgui_always_state.can_use_topic(src, user)
+
+	ui_status(mob/user, datum/ui_state/state)
+		return tgui_always_state.can_use_topic(src, user)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "MapVoteReport", "Vote Report")
+			ui.open()
+
+	ui_static_data(mob/user)
+		. = list(
+			"mapList" = mapList,
+			"winner" = winner,
+			"isDetailed" = isDetailed)
+
+/proc/compare_map_vote_count(list/a, list/b)
+	. = b["count"] - a["count"]

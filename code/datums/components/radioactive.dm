@@ -68,7 +68,7 @@ TYPEINFO(/datum/component/radioactive)
 			if(isnull(src._turf_glow))
 				src._turf_glow = image('icons/effects/effects.dmi', "greyglow")
 			src._turf_glow.color = color //we can do this because overlays take a copy of the image and do not preserve the link between them
-			PA.UpdateOverlays(src._turf_glow, "radiation_overlay_\ref[src]")
+			PA.AddOverlays(src._turf_glow, "radiation_overlay_\ref[src]")
 		else
 			PA.add_filter("radiation_outline_\ref[src]", 2, outline_filter(size=1.3, color=color))
 
@@ -87,7 +87,7 @@ TYPEINFO(/datum/component/radioactive)
 		PA.remove_simple_light("radiation_light_\ref[src]")
 		PA.remove_filter("radiation_outline_\ref[src]")
 		PA.remove_filter("radiation_color_\ref[src]")
-		PA.UpdateOverlays(null, "radiation_overlay_\ref[src]")
+		PA.ClearSpecificOverlays("radiation_overlay_\ref[src]")
 		PA.color = src._backup_color
 		UnregisterSignal(parent, list(COMSIG_ATOM_RADIOACTIVITY))
 		UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE))
@@ -122,10 +122,10 @@ TYPEINFO(/datum/component/radioactive)
 		if(ismob(PA.loc)) //if you're holding it in your hand, you're not a viewer, so special handling
 			var/mob/M = PA.loc
 			if(!ON_COOLDOWN(M, "radiation_exposure", 0.5 SECONDS))
-				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.2 SIEVERTS) * (radStrength/100))
+				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.4 SIEVERTS) * (radStrength/100))
 		for(var/mob/living/M in hearers(effect_range, parent)) //hearers is basically line-of-sight
 			if(!ON_COOLDOWN(M,"radiation_exposure", 0.5 SECONDS) && !isintangible(M)) //shorter than item tick time, so you can get multiple doses but there's a limit
-				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.2 SIEVERTS) * (radStrength/100) * 1/((GET_DIST(M, PA)/(src.effect_range+1)) + 1) * 0.8)
+				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.4 SIEVERTS) * (radStrength/100) * (src.effect_range - GET_DIST(M, PA) + 1) / (max(src.effect_range, 1)) * 0.8) //lnear, not inverse square because it plays nicer in game
 		if(src.decays && prob(33))
 			src.radStrength = max(0, src.radStrength - (1 * mult))
 			src.do_filters()

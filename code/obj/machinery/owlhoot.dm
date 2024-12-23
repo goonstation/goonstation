@@ -3,18 +3,21 @@
 	desc = "A portable flashing... device? Hoot."
 	icon = 'icons/obj/hooty.dmi'
 	icon_state = "owl"
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/base_state = "owl"
 	anchored = UNANCHORED
 	density = 1
 	var/flash_prob = 80
+
+	New()
+		..()
+		src.AddComponent(/datum/component/proximity)
 
 	proc/flash()
 		playsound(src.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 		flick("[base_state]_flash", src)
 		ON_COOLDOWN(src, "flash", 5 SECONDS)
 
-	HasProximity(atom/movable/AM as mob|obj)
+	EnteredProximity(atom/movable/AM)
 		if(GET_COOLDOWN(src, "flash"))
 			return
 

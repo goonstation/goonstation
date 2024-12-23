@@ -45,7 +45,7 @@ toxic - poisons
 	window_pass = 0
 	implanted = /obj/item/implant/projectile
 	// we create this overlay on walls when we hit them
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 
 	hit_mob_sound = 'sound/impact_sounds/Flesh_Stab_2.ogg'
 
@@ -60,7 +60,7 @@ toxic - poisons
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/staple // HEH
 	shot_sound = 'sound/impact_sounds/Generic_Snap_1.ogg'
-	impact_image_state = "bhole-staple"
+	impact_image_state = "bullethole-staple"
 	casing = null
 
 /datum/projectile/bullet/vbullet
@@ -83,9 +83,31 @@ toxic - poisons
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_22
 	casing = /obj/item/casing/small
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 	silentshot = 1 // It's supposed to be a stealth weapon, right (Convair880)?
 	ricochets = TRUE
+
+	a180
+		fullauto_valid = 1
+		shot_number = 1
+		damage = 18
+		cost = 1
+		shot_volume = 20
+		sname = "full auto"
+		casing = null
+		on_pre_hit(atom/hit, angle, var/obj/projectile/O)
+			if (isliving(hit))
+				if (ON_COOLDOWN(hit, "american180_miss", 3 DECI SECONDS))
+					return TRUE
+				else
+					return FALSE
+
+		get_power(obj/projectile/P, atom/A)
+			var/standard_damage = P.initial_power - max(0, (P.travelled/32 - src.dissipation_delay))*src.dissipation_rate
+			if (isliving(A))
+				return rand(standard_damage-5,standard_damage) //less accurate, hitting random parts instead of centre mass
+			else
+				return min(2,standard_damage) // dont break shit as hard
 
 /datum/projectile/bullet/bullet_22/smartgun
 	shot_sound = 'sound/weapons/smartgun.ogg'
@@ -106,7 +128,7 @@ toxic - poisons
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_22
 	casing = /obj/item/casing/small
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 
 //0.223
 /datum/projectile/bullet/assault_rifle
@@ -117,7 +139,7 @@ toxic - poisons
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	shot_number = 1
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
 	ricochets = TRUE
@@ -126,6 +148,8 @@ toxic - poisons
 		damage_type = D_PIERCING
 		hit_type = DAMAGE_STAB
 		armor_ignored = 0.66
+	remington
+		damage = 34
 
 /datum/projectile/bullet/assault_rifle/burst
 	sname = "burst fire"
@@ -137,6 +161,8 @@ toxic - poisons
 		damage_type = D_PIERCING
 		hit_type = DAMAGE_STAB
 		armor_ignored = 0.66
+	remington
+		damage = 26
 
 //0.308
 /datum/projectile/bullet/minigun
@@ -148,7 +174,7 @@ toxic - poisons
 	dissipation_delay = 7
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
 	fullauto_valid = 1
@@ -167,7 +193,21 @@ toxic - poisons
 	hit_type = DAMAGE_CUT
 	shot_number = 3
 	shot_delay = 120 MILLI SECONDS
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
+	implanted = /obj/item/implant/projectile/bullet_308
+	casing = /obj/item/casing/rifle
+	ricochets = TRUE
+
+/datum/projectile/bullet/draco
+	name = "bullet"
+	shot_sound = 'sound/weapons/akm.ogg'
+	damage = 31
+	cost = 1
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_CUT
+	shot_number = 1
+	fullauto_valid = 1
+	impact_image_state = "bullethole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
 	ricochets = TRUE
@@ -183,17 +223,17 @@ toxic - poisons
 	shot_volume = 50 // holy fuck why was this so loud
 	dissipation_delay = 10
 	casing = /obj/item/casing/rifle_loud
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if(ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			if(proj.power > 40)
 #ifdef USE_STAMINA_DISORIENT
-				M.do_disorient(75, weakened = 40, stunned = 40, disorient = 60, remove_stamina_below_zero = 0)
+				M.do_disorient(75, knockdown = 40, stunned = 40, disorient = 60, remove_stamina_below_zero = 0)
 #else
 				M.changeStatus("stunned", 4 SECONDS)
-				M.changeStatus("weakened", 3 SECONDS)
+				M.changeStatus("knockdown", 3 SECONDS)
 #endif
 			if(proj.power > 80)
 				var/turf/target = get_edge_target_turf(M, dirflag)
@@ -215,7 +255,7 @@ toxic - poisons
 	projectile_speed = 72
 	max_range = 100
 	casing = /obj/item/casing/rifle_loud
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 	on_launch(obj/projectile/O)
 		O.AddComponent(/datum/component/sniper_wallpierce, 3, 20) //pierces 3 walls/lockers/doors/etc. Does not function on restriced Z, rwalls and blast doors use 2 pierces
 
@@ -226,10 +266,10 @@ toxic - poisons
 				var/mob/living/carbon/human/H = hit
 				if(power > 40)
 	#ifdef USE_STAMINA_DISORIENT
-					H.do_disorient(50, weakened = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
+					H.do_disorient(50, knockdown = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
 	#else
 					H.changeStatus("stunned", 4 SECONDS)
-					H.changeStatus("weakened", 3 SECONDS)
+					H.changeStatus("knockdown", 3 SECONDS)
 	#endif
 			var/turf/target = get_edge_target_turf(hit, dirflag)
 			M.throw_at(target, 1, 3, throw_type = THROW_GUNIMPACT)
@@ -280,7 +320,7 @@ toxic - poisons
 	dissipation_delay = 12
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
 	var/slow = 1
@@ -318,13 +358,18 @@ toxic - poisons
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_9mm
 	casing = /obj/item/casing/small
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 	ricochets = TRUE
 
 	smg
 		damage = 20
 		cost = 3
 		shot_number = 3
+
+		auto
+			fullauto_valid = 1
+			cost = 1
+			shot_number = 1
 
 
 /datum/projectile/bullet/nine_mm_NATO
@@ -336,7 +381,7 @@ toxic - poisons
 	dissipation_rate = 3
 	dissipation_delay = 8
 	projectile_speed = 48
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 	hit_type = DAMAGE_BLUNT
 	implanted = /obj/item/implant/projectile/ninemmplastic
 	casing = /obj/item/casing/small
@@ -360,11 +405,39 @@ toxic - poisons
 	shot_volume = 66
 	sname = "full auto"
 
+
+
+/datum/projectile/bullet/nine_mm_surplus
+	name = "bullet"
+	shot_sound = 'sound/weapons/9x19NATO.ogg'
+	damage = 16
+	shot_number = 1
+	cost = 1
+	hit_ground_chance = 75
+	dissipation_rate = 3
+	dissipation_delay = 8
+	projectile_speed = 60
+	impact_image_state = "bhole-small"
+	hit_type = DAMAGE_CUT
+	implanted = /obj/item/implant/projectile/bullet_9mm
+	casing = /obj/item/casing/small
+/datum/projectile/bullet/nine_mm_surplus/burst
+	shot_number = 3
+	cost = 3
+	sname = "burst fire"
+
+/datum/projectile/bullet/nine_mm_surplus/auto
+	fullauto_valid = 1
+	shot_number = 1
+	cost = 1
+	shot_volume = 66
+	sname = "full auto"
+
 /datum/projectile/bullet/nine_mm_soviet
 	name = "bullet"
 	shot_sound = 'sound/weapons/9x19NATO.ogg'
 	damage = 25
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_9mm
@@ -380,7 +453,7 @@ toxic - poisons
 	hit_type = DAMAGE_STAB
 	hit_ground_chance = 50
 	projectile_speed = 60
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 	implanted = /obj/item/implant/projectile/bullet_9mm
 	casing = /obj/item/casing/small
 	ricochets = TRUE
@@ -399,7 +472,7 @@ toxic - poisons
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_357
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 	casing = /obj/item/casing/medium
 	ricochets = TRUE
 
@@ -424,7 +497,7 @@ toxic - poisons
 	sname = "execute"
 	damage = 35
 	implanted = /obj/item/implant/projectile/bullet_38
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 	casing = /obj/item/casing/medium
 	ricochets = TRUE
 
@@ -464,11 +537,13 @@ toxic - poisons
 	max_range = 15
 	dissipation_rate = 0
 	ie_type = null
+	smashes_glasses = FALSE //foam
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		..()
 		var/turf/T = istype(hit, /mob) ? get_turf(hit) : get_turf(P) // drop on same tile if mob, drop 1 tile away otherwise
 		drop_as_ammo(get_turf(T))
+		qdel(P) // we dropped, don't keep going
 
 	on_max_range_die(obj/projectile/P)
 		..()
@@ -509,12 +584,16 @@ toxic - poisons
 	silentshot = 1
 	casing = null
 	reagent_payload = "curare"
+	implanted = /obj/item/implant/projectile/body_visible/blowdart
 
 	madness
 		reagent_payload = "madness_toxin"
 
 	ls_bee
 		reagent_payload = "lsd_bee"
+
+	ketamine
+		reagent_payload = "ketamine"
 
 //0.41
 /datum/projectile/bullet/derringer
@@ -529,7 +608,7 @@ toxic - poisons
 	hit_type = DAMAGE_STAB
 	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_41
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	casing = /obj/item/casing/derringer
 
 //0.45
@@ -538,7 +617,7 @@ toxic - poisons
 	damage = 35
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_45
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 	casing = /obj/item/casing/medium
 	ricochets = TRUE
 
@@ -554,14 +633,14 @@ toxic - poisons
 	dissipation_delay = 10
 	hit_ground_chance = 50
 	casing = null
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if(ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			if(proj.power > 30)
 				M.changeStatus("slowed", 3 SECONDS)
-				M.changeStatus("weakened", 2 SECONDS)
+				M.changeStatus("knockdown", 2 SECONDS)
 			if(proj.power > 60)
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				M.throw_at(target, 3, 2, throw_type = THROW_GUNIMPACT)
@@ -570,13 +649,13 @@ toxic - poisons
 
 	rifle
 		damage = 70
-		impact_image_state = "bhole-large"
+		impact_image_state = "bullethole-large"
 
 	mortar
 		name = "mortar grenade"
 		icon_state = "mortar"
 		damage = 10 // The explosion should deal most of the damage.
-		impact_image_state = "bhole-large"
+		impact_image_state = "bullethole-large"
 		damage_type = D_KINETIC
 		hit_type = DAMAGE_BLUNT
 
@@ -584,7 +663,7 @@ toxic - poisons
 			if(ishuman(hit))
 				var/mob/living/carbon/human/M = hit
 
-				M.do_disorient(75, weakened = 50, stunned = 50, disorient = 30, remove_stamina_below_zero = 0)
+				M.do_disorient(75, knockdown = 50, stunned = 50, disorient = 30, remove_stamina_below_zero = 0)
 
 				if(!M.stat)
 					M.emote("scream")
@@ -610,7 +689,7 @@ toxic - poisons
 	dissipation_rate = 10
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_12ga
 	casing = /obj/item/casing/shotgun/red
@@ -619,7 +698,7 @@ toxic - poisons
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			if(proj.power >= 30)
-				M.do_disorient(75, weakened = 50, stunned = 50, disorient = 30, remove_stamina_below_zero = 0)
+				M.do_disorient(75, knockdown = 50, stunned = 50, disorient = 30, remove_stamina_below_zero = 0)
 
 			if(proj.power >= 40)
 				var/throw_range = (proj.power > 50) ? 6 : 3
@@ -638,6 +717,167 @@ toxic - poisons
 
 	weak
 		damage = 50 //can have a little throwing, as a treat
+
+/datum/projectile/bullet/bird12 //birdshot, for gangs. just much worse overall
+	icon_state = "birdshot1"
+	hit_ground_chance = 66
+	implanted = null
+	damage = 13
+	stun = 6
+	hit_type = DAMAGE_CUT //birdshot mutilates your skin more, but doesnt hurt organs like shotties
+	dissipation_rate = 4 //spread handles most of this
+	shot_sound = 'sound/weapons/birdshot.ogg'
+	dissipation_delay = 6
+	casing = /obj/item/casing/shotgun/red
+	on_launch(obj/projectile/O)
+		icon_state = "birdshot[rand(1,3)]"
+		. = ..()
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (istype(hit, /mob/living/critter/small_animal/bird))
+			var/mob/living/critter/small_animal/bird/M = hit
+			M.TakeDamage("chest", proj.power * 3 / M.get_ranged_protection()) //it's in the name
+			var/turf/target = get_edge_target_turf(M, dirflag)
+			M.throw_at(target, 4, 1, throw_type = THROW_GUNIMPACT)
+			M.update_canmove()
+		if (ismob(hit) && prob(60))
+			var/mob/M = hit
+			take_bleeding_damage(M, proj.shooter, 3, DAMAGE_CUT, 1, override_bleed_level=rand(2,4))
+		..()
+
+/datum/projectile/bullet/kuvalda_slug //engine block destroying slug. not as fun as Buck, but longer range and AP.
+	icon_state = "4gauge"
+	hit_ground_chance = 66
+	implanted = null
+	damage = 65
+	armor_ignored = 0.8
+	stun = 10
+	hit_type = DAMAGE_STAB
+	dissipation_rate = 10
+	shot_sound = 'sound/weapons/kuvalda.ogg'
+	dissipation_delay = 6
+	casing = /obj/item/casing/shotgun/gray
+	on_launch(obj/projectile/P)
+		P.AddComponent(/datum/component/nonwall_pierce)
+		icon_state = "4gauge-slug"
+		impact_image_state = "bullethole"
+		var/image/blood_image = image('icons/obj/projectiles.dmi', icon_state+"-blood")
+		blood_image.alpha = 0
+		P.special_data["blood_image"] = blood_image
+		P.special_data["bleeding"] = FALSE
+		P.UpdateOverlays(P.special_data["blood_image"], "blood_image")
+		. = ..()
+	on_hit(atom/hit, dirflag, obj/projectile/P)
+		if (isliving(hit) && !isrobot(hit))
+			var/mob/living/M = hit
+			take_bleeding_damage(M, P.shooter, 2, DAMAGE_CUT, 1)
+			P.special_data["bleeding"] = FALSE
+			P.special_data["last_projectile_loc"] = get_turf(P)
+			P.special_data["unfortunate"] = M
+			var/image/blood_image = P.special_data["blood_image"]
+			blood_image?.color = M.blood_color
+			blood_image?.alpha = 255
+			P.UpdateOverlays(blood_image, "blood_image")
+			for (var/x in 1 to 3)
+				var/obj/decal/cleanable/blood/gibs/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(M) )
+				gib.streak_cleanable(dirflag)
+			var/turf/target = get_edge_target_turf(M, dirflag)
+			M.throw_at(target, 3, 1, throw_type = THROW_GUNIMPACT)
+		..()
+
+	on_end(var/obj/projectile/P)
+		if (P.special_data["bleeding"])
+			bleed(P.special_data["unfortunate"],10,4,get_turf(P))
+			playsound(P.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+		..()
+	tick(var/obj/projectile/P)
+		var/turf/last_projectile_loc = P.special_data["last_projectile_loc"]
+		if (!P.special_data["bleeding"] || last_projectile_loc == get_turf(P))
+			..()
+			return
+		if (P.special_data["bleeding"])
+			last_projectile_loc = get_turf(P)
+			bleed(P.special_data["unfortunate"],0,1,last_projectile_loc)
+		..()
+
+
+/datum/projectile/bullet/kuvalda_shrapnel //kuvalda shot
+	icon_state = "4gauge"
+	hit_ground_chance = 66
+	implanted = null
+	damage = 34
+	stun = 6
+	hit_type = DAMAGE_STAB
+	dissipation_rate = 4 //spread handles most of this
+	shot_sound = 'sound/weapons/kuvalda.ogg'
+	dissipation_delay = 6
+	casing = /obj/item/casing/shotgun/gray
+
+	on_launch(obj/projectile/P)
+		P.AddComponent(/datum/component/nonwall_pierce)
+		icon_state = "4gauge[rand(1,3)]"
+		impact_image_state = "bullethole-small-cluster-[rand(1,3)]"
+		var/image/blood_image = image('icons/obj/projectiles.dmi', icon_state+"-blood")
+		blood_image.alpha = 0
+		P.special_data["blood_image"] = blood_image
+		P.UpdateOverlays(blood_image, "blood_image")
+		flick(icon_state,P) // this is a bit hacky - guarantees the full spread animation will play before swapping to bloodloop
+		. = ..()
+	on_hit(atom/hit, dirflag, obj/projectile/P)
+		if (isliving(hit) && !isrobot(hit))
+			var/mob/living/M = hit
+			take_bleeding_damage(M, P.shooter, 2, DAMAGE_CUT, 1)
+			P.special_data["bleeding"] = TRUE
+			P.special_data["last_projectile_locs"] = get_turf(P)
+			P.special_data["unfortunate"] = M
+			P.icon_state  = icon_state+"-bloodloop"
+			var/image/blood_image = P.special_data["blood_image"]
+			blood_image?.color = M.blood_color
+			blood_image?.alpha = 255
+			P.color = M.blood_color
+			P.UpdateOverlays(blood_image, "blood_image")
+			//the poor sod who eats all 3 of these can lose some GORE
+			if (ON_COOLDOWN(hit,"kuvalda_multihit", 2 DECI SECONDS))
+				if (ON_COOLDOWN(hit,"kuvalda_multihit2", 2 DECI SECONDS))
+					var/obj/decal/cleanable/blood/gibs/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(M) )
+					gib.streak_cleanable(dirflag)
+					if (ON_COOLDOWN(hit,"kuvalda_fullhit", 2 DECI SECONDS)) //owie
+						var/turf/target = get_edge_target_turf(M, dirflag)
+						M.throw_at(target, 3, 1, throw_type = THROW_GUNIMPACT)
+		..()
+	get_power(obj/projectile/P, atom/A)
+		. = ..()
+		if (isliving(A))
+			if (ON_COOLDOWN(A,"kuvalda_multihit", 2 DECI SECONDS)) // er, cant blow more holes in existing ones?
+				. *= 0.5
+
+
+	on_end(var/obj/projectile/P)
+		if (P.special_data["bleeding"])
+			bleed(P.special_data["unfortunate"],10,4,get_turf(P))
+			playsound(P.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+		..()
+	tick(var/obj/projectile/P)
+		if (!P.special_data["bleeding"] || P.special_data["last_projectile_locs"] == get_turf(P))
+			..()
+			return
+		if (P.special_data["bleeding"])
+			P.special_data["last_projectile_locs"] = get_turf(P)
+			bleed(P.special_data["unfortunate"],0,1,P.special_data["last_projectile_locs"])
+		..()
+
+	burst
+		shot_delay = 1
+		shot_number = 4
+		pierces = 2
+		projectile_speed = 72
+		dissipation_delay = 50
+		armor_ignored = 0.5
+		implanted = /obj/item/implant/projectile/shrapnel
+
+
+
+
 
 /datum/projectile/bullet/flak_chunk
 	name = "flak chunk"
@@ -660,6 +900,7 @@ toxic - poisons
 	dissipation_delay = 8
 	damage_type = D_KINETIC
 	ricochets = TRUE
+	silentshot = TRUE
 
 /datum/projectile/bullet/grenade_fragment
 	name = "grenade fragment"
@@ -672,6 +913,7 @@ toxic - poisons
 	dissipation_delay = 8
 	damage_type = D_KINETIC
 	ricochets = TRUE
+	silentshot = TRUE
 
 /datum/projectile/bullet/buckshot // buckshot pellets generates by shotguns
 	name = "buckshot"
@@ -718,11 +960,31 @@ toxic - poisons
 /datum/projectile/bullet/improvscrap
 	name = "fragments"
 	sname = "fragments"
-	icon_state = "trace"
+	icon_state = "metalproj"
 	dissipation_delay = 4
 	dissipation_rate = 1
 	implanted = /obj/item/implant/projectile/shrapnel
 	damage = 10
+
+/datum/projectile/bullet/improvbone
+	name = "bone"
+	sname = "bone"
+	icon_state = "boneproj"
+	dissipation_delay = 1
+	dissipation_rate = 3
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	implanted = null
+	damage = 9
+	hit_mob_sound = 'sound/effects/skeleton_break.ogg'
+	impact_image_state = null // in my mind these are just literal bones fragments being thrown at people, wouldn't stick into walls
+
+	on_hit(atom/hit)
+		var/turf/T = get_turf(hit)
+		T.fluid_react_single("calcium", 2) // Creates 5 units of calcium on hit
+	on_max_range_die(obj/projectile/O)
+		var/turf/T = get_turf(O)
+		T.fluid_react_single("calcium", 2) // Creates 5 units of caclium once it reaches max range.
 
 /datum/projectile/bullet/aex
 	name = "explosive slug"
@@ -733,7 +995,7 @@ toxic - poisons
 	implanted = null
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	casing = /obj/item/casing/shotgun/orange
 
 	on_hit(atom/hit)
@@ -764,7 +1026,7 @@ toxic - poisons
 	implanted = null
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	casing = /obj/item/casing/shotgun/blue
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
@@ -789,7 +1051,7 @@ toxic - poisons
 	implanted = null
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	casing = /obj/item/casing/shotgun/gray
 
 	on_hit(atom/hit)
@@ -816,7 +1078,7 @@ toxic - poisons
 		if(isliving(hit))
 			var/mob/living/L = hit
 			L.bodytemperature = max(50, L.bodytemperature - proj.power * 5)
-			if(L.getStatusDuration("shivering" < power))
+			if(L.getStatusDuration("shivering") < power)
 				L.setStatus("shivering", power/2 SECONDS)
 			var/obj/icecube/I = new/obj/icecube(get_turf(L), L)
 			I.health = proj.power / 2
@@ -831,7 +1093,7 @@ toxic - poisons
 	implanted = null
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	casing = /obj/item/casing/shotgun/gray
 
 	on_hit(atom/hit, direction, obj/projectile/P)
@@ -870,17 +1132,17 @@ toxic - poisons
 	color_blue = 0
 	icon_state = "flare"
 	implanted = null
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	casing = /obj/item/casing/shotgun/orange
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if (isliving(hit))
-			fireflash(get_turf(hit) || get_turf(P), 0)
+			fireflash(get_turf(hit) || get_turf(P), 0, chemfire = CHEM_FIRE_RED)
 			hit.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 		else if (isturf(hit))
-			fireflash(hit, 0)
+			fireflash(hit, 0, chemfire = CHEM_FIRE_RED)
 		else
-			fireflash(get_turf(hit) || get_turf(P), 0)
+			fireflash(get_turf(hit) || get_turf(P), 0, chemfire = CHEM_FIRE_RED)
 
 /datum/projectile/bullet/flare/UFO
 	name = "heat beam"
@@ -890,27 +1152,26 @@ toxic - poisons
 
 //0.787
 /datum/projectile/bullet/cannon // autocannon should probably be renamed next
-	name = "cannon round"
+	name = "20mm AP round"
 	brightness = 0.7
 	window_pass = 0
-	icon_state = "20mmAPHE"
+	icon_state = "20mm"
 	damage_type = D_PIERCING
-	armor_ignored = 0.66
-	hit_type = DAMAGE_CUT
-	damage = 150
-	dissipation_delay = 1
+	armor_ignored = 0.8
+	hit_type = DAMAGE_STAB
+	damage = 100
+	dissipation_delay = 30
 	dissipation_rate = 5
 	cost = 1
 	shot_sound = 'sound/weapons/20mm.ogg'
-	shot_volume = 130
+	shot_volume = 100
 	implanted = null
+	projectile_speed = 128
 
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/cannon
 	pierces = 4
 	shot_sound_extrarange = 1
-
-
 
 	on_launch(obj/projectile/proj)
 		proj.AddComponent(/datum/component/sniper_wallpierce, 4) //pierces 4 walls/lockers/doors/etc. Does not function on restricted Z, rwalls and blast doors use 2 pierces
@@ -925,14 +1186,8 @@ toxic - poisons
 			//hit.setTexture()
 
 			var/turf/T = get_turf(hit)
-			new /obj/effects/rendersparks (T)
+			new /obj/effects/explosion/smoky(T)
 			var/impact = clamp(1,3, proj.pierces_left % 4)
-			if(proj.pierces_left <= 1 )
-				new /obj/effects/explosion/dangerous(T)
-				new /obj/effects/explosion/dangerous(get_step(T, dirflag))
-				new /obj/effects/explosion/dangerous(get_step(get_step(T, dirflag), dirflag))
-				proj.die()
-				return
 
 			if(hit && ismob(hit))
 				var/mob/living/M = hit
@@ -948,27 +1203,16 @@ toxic - poisons
 						H.organHolder.damage_organ(proj.power/H.get_ranged_protection(), 0, 0,  targetorgan)
 				M.ex_act(impact)
 
-
-
 			if(hit && isobj(hit))
 				var/obj/O = hit
-				O.throw_shrapnel(T, 1, 1)
-
-				if(istype(hit, /obj/machinery/door))
-					var/obj/machinery/door/D = hit
-					if(!D.cant_emag)
-						D.take_damage(D.health) //fuck up doors without needing ex_act(1)
-
-				else if(istype(hit, /obj/window))
-					var/obj/window/W = hit
-					W.smash()
-
-				else
-					O.ex_act(impact)
+				O.blowthefuckup(impact)
 
 			if(hit && isturf(hit))
 				T.throw_shrapnel(T, 1, 1)
-				T.ex_act(2)
+				T.meteorhit()
+
+	antiair_burst
+		shot_number = 4
 
 //1.0
 /datum/projectile/bullet/rod // for the coilgun
@@ -981,10 +1225,105 @@ toxic - poisons
 	dissipation_delay = 25
 	shot_sound = 'sound/weapons/ACgun2.ogg'
 	casing = null
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 
 	on_hit(atom/hit)
 		explosion_new(null, get_turf(hit), 5)
+
+/datum/projectile/bullet/four_bore
+	name = "termination round"
+	sname = "terminate"
+	icon_state = "20mm"
+	shot_sound = 'sound/weapons/fourboreshot.ogg'
+	damage = 95
+	dissipation_rate = 8
+	dissipation_delay = 10
+	armor_ignored = 0.4
+	cost = 1
+	projectile_speed = 72
+	implanted = null
+	hit_type = DAMAGE_STAB
+	damage_type = D_PIERCING
+	impact_image_state = "bullethole-large"
+	casing = /obj/item/casing/cannon
+	ricochets = FALSE
+	hit_ground_chance = 50
+	shot_volume = 130
+	shot_sound_extrarange = 1
+
+	on_launch(obj/projectile/proj)
+		proj.AddComponent(/datum/component/sniper_wallpierce, 1) //pierces 1 walls/lockers/doors/etc. Does not function on restricted Z, rwalls and blast doors use 2 pierces
+		for(var/mob/M in range(proj.loc, 2))
+			shake_camera(M, 3, 4)
+
+	on_hit(atom/hit, dirflag, obj/projectile/P)
+		var/turf/T = get_turf(hit)
+
+		if(hit && isobj(hit))
+			new /obj/effects/rendersparks (T)
+			var/obj/O = hit
+			O.throw_shrapnel(T, 1, 1)
+
+			if(istype(hit, /obj/machinery/door))
+				var/obj/machinery/door/D = hit
+				if(!D.cant_emag)
+					D.take_damage(P.power * 2.5) //mess up doors a ton
+
+			else if(istype(hit, /obj/window))
+				var/obj/window/W = hit
+				W.damage_blunt(P.power * 1.75) //and windows too, but maybe a bit less
+
+		if (hit && ismob(hit))
+			var/mob/M = hit
+			if(ishuman(hit))
+				var/mob/living/carbon/human/H = hit
+				#ifdef USE_STAMINA_DISORIENT
+				H.do_disorient(max(P.power,10), knockdown = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
+				#else
+				H.changeStatus("stunned", 4 SECONDS)
+				H.changeStatus("knockdown", 3 SECONDS)
+				#endif
+			var/turf/target = get_edge_target_turf(hit, dirflag)
+			M.throw_at(target, max(round(P.power / 20), 0), 3, throw_type = THROW_GUNIMPACT)
+
+		if(hit && isturf(hit))
+			new /obj/effects/rendersparks (T)
+			T.throw_shrapnel(T, 1, 1)
+
+		..()
+
+/datum/projectile/bullet/four_bore_stunners //behavior is distinct enough to not be a child of four_bore lethals
+	name = "roundhouse slug"
+	sname = "roundhouse"
+	icon_state = "20mm"
+	shot_sound = 'sound/weapons/fourboreshot.ogg'
+	damage = 15
+	stun = 105
+	dissipation_rate = 12
+	dissipation_delay = 10
+	cost = 1
+	projectile_speed = 54
+	implanted = null
+	hit_type = DAMAGE_BLUNT
+	damage_type = D_KINETIC
+	impact_image_state = null
+	casing = /obj/item/casing/cannon
+	ricochets = TRUE
+
+	on_launch(obj/projectile/proj)
+		for(var/mob/M in range(proj.loc, 2))
+			shake_camera(M, 2, 4)
+
+	on_hit(atom/hit, dirflag, obj/projectile/P)
+		if(hit && isobj(hit) && istype(hit, /obj/window))
+			var/obj/window/W = hit
+			W.damage_blunt(P.power / 2.5) //even if it aint metal, its gonna crack a window
+
+		if (hit && ismob(hit))
+			var/mob/M = hit
+			var/turf/target = get_edge_target_turf(hit, dirflag)
+			M.throw_at(target, max(round(P.power / 35), 0), 3, throw_type = THROW_GUNIMPACT)
+		..()
 
 //1.57
 datum/projectile/bullet/autocannon
@@ -997,11 +1336,12 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 30
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
 
 	on_hit(atom/hit)
 		explosion_new(null, get_turf(hit), 12)
+
 
 	plasma_orb
 		name = "fusion orb"
@@ -1021,7 +1361,7 @@ datum/projectile/bullet/autocannon
 	huge
 		icon_state = "400mm"
 		damage = 100
-		impact_image_state = "bhole-large"
+		impact_image_state = "bullethole-large"
 
 		on_hit(atom/hit)
 			explosion_new(null, get_turf(hit), 80)
@@ -1033,7 +1373,6 @@ datum/projectile/bullet/autocannon
 		var/max_turn_rate = 20
 		var/type_to_seek = /obj/critter/gunbot/drone //what are we going to seek
 		precalculated = 0
-		disruption = INFINITY //disrupt every system at once
 		on_hit(atom/hit, angle, obj/projectile/P)
 			if (P.data)
 				..()
@@ -1106,7 +1445,7 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 30
 	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
 
 	explosive
@@ -1122,6 +1461,12 @@ datum/projectile/bullet/autocannon
 		on_hit(atom/hit)
 			explosion_new(null,get_turf(hit), 8, 0.75)
 
+		double
+			shot_delay = 0.20 SECONDS
+			shot_number = 2
+			damage = 50
+			shot_sound = 'sound/effects/exlow.ogg'
+
 /datum/projectile/bullet/smoke
 	name = "smoke grenade"
 	sname = "smokeshot"
@@ -1132,7 +1477,7 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 10
 	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
 	implanted = null
 
@@ -1176,7 +1521,7 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 10
 	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
 	hit_type = DAMAGE_BLUNT
 	hit_mob_sound = 'sound/misc/splash_1.ogg'
@@ -1200,7 +1545,7 @@ datum/projectile/bullet/autocannon
 	implanted = null
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
 	ie_type = null
 
@@ -1212,7 +1557,7 @@ datum/projectile/bullet/autocannon
 
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				M.changeStatus("stunned", 1 SECONDS)
-				M.changeStatus("weakened", 2 SECONDS)
+				M.changeStatus("knockdown", 2 SECONDS)
 				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
 				M.update_canmove()
 			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
@@ -1236,14 +1581,14 @@ datum/projectile/bullet/autocannon
 	damage_type = D_SPECIAL
 	hit_type = DAMAGE_BLUNT
 	hit_mob_sound = 'sound/impact_sounds/Energy_Hit_3.ogg'
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
 	ie_type = null
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if (isliving(hit))
 			var/mob/living/L = hit
-			L.do_disorient(130, weakened = 15 SECONDS, disorient = 6 SECONDS)
+			L.do_disorient(130, knockdown = 15 SECONDS, disorient = 6 SECONDS)
 
 			L.Virus_ShockCure(33)
 			L.shock_cyberheart(33)
@@ -1259,7 +1604,7 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 20
 	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
 	implanted = null
 
@@ -1345,6 +1690,8 @@ datum/projectile/bullet/autocannon
 	on_hit(atom/hit, angle, obj/projectile/O)
 		var/turf/T = get_turf(hit)
 		if (T)
+			if (T.density) // hit previous (non-dense) turf to spread chems/effects better
+				T = get_turf(get_step(T, turn(angle, 180)))
 			src.det(T)
 		else if (O)
 			var/turf/pT = get_turf(O)
@@ -1369,7 +1716,7 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 20
 	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
 	implanted = null
 
@@ -1399,7 +1746,7 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 30
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 
 	on_hit(atom/hit)
 		var/turf/T = get_turf(hit)
@@ -1418,73 +1765,83 @@ datum/projectile/bullet/autocannon
 		return
 
 /datum/projectile/bullet/homing
-    var/min_speed = 0
-    var/max_speed = 2
-    var/start_speed = 2
-    var/easemult = 0.
+	var/min_speed = 0
+	var/max_speed = 2
+	var/start_speed = 2
+	var/easemult = 0.
 
-    var/auto_find_targets = 1
-    var/list/targets = list()
-    var/homing_active = 1
+	var/auto_find_targets = 1
+	var/list/targets = list()
+	var/homing_active = 1
 
-    var/desired_x = 0
-    var/desired_y = 0
+	var/desired_x = 0
+	var/desired_y = 0
 
-    var/rotate_proj = 1
-    var/max_rotation_rate = 1
-    var/face_desired_dir = 0
+	var/rotate_proj = 1
+	var/max_rotation_rate = 1
+	var/face_desired_dir = 0
 
-    precalculated = FALSE
+	precalculated = FALSE
 
-    on_launch(var/obj/projectile/P)
-        ..()
-        P.internal_speed = start_speed
+	on_launch(var/obj/projectile/P)
+		..()
+		P.internal_speed = start_speed
 
-        if (auto_find_targets)
-            P.targets = list()
-            for(var/mob/M in view(P,15))
-                if (M == P.shooter) continue
-                P.targets += M
+		if (auto_find_targets)
+			P.targets = list()
+			for(var/mob/M in view(P,15))
+				if (!is_valid_target(M, P)) continue
+				P.targets += M
 
-        if (length(src.targets))
-            P.targets = src.targets
-            src.targets = list()
+		if (length(src.targets))
+			P.targets = src.targets
+			src.targets = list()
 
-    proc/calc_desired_x_y(var/obj/projectile/P)
-        .= 0
-        if (P.targets && P.targets.len && P.targets[1])
-            var/atom/closest = P.targets[1]
+	proc/is_valid_target(mob/M, obj/projectile/P)
+		return (M != P.shooter && M != P.mob_shooter)
 
-            for (var/atom in P.targets)
-                var/atom/A = atom
-                if (A.disposed)
-                    P.targets -= A
-                if (GET_DIST(P,A) < GET_DIST(P,closest))
-                    closest = A
+	proc/calc_desired_x_y(var/obj/projectile/P)
+		.= 0
+		if (P.targets && P.targets.len && P.targets[1])
+			var/atom/closest = P.targets[1]
 
-            desired_x = closest.x - P.x - P.pixel_x/32
-            desired_y = closest.y - P.y - P.pixel_y/32
+			for (var/atom in P.targets)
+				var/atom/A = atom
+				if (A.disposed)
+					P.targets -= A
+				if (GET_DIST(P,A) < GET_DIST(P,closest))
+					closest = A
 
-            .= 1
+			desired_x = closest.x - P.x - P.pixel_x/32
+			desired_y = closest.y - P.y - P.pixel_y/32
 
-    tick(var/obj/projectile/P)
-        if (!P || !src.homing_active)
-            return
+			if(ismovable(closest))
+				var/atom/movable/AM = closest
+				if(AM.bound_width > 32)
+					desired_x += AM.bound_width / 64 - 0.5
+				if(AM.bound_height > 32)
+					desired_y += AM.bound_height / 64 - 0.5
 
-        desired_x = 0
-        desired_y = 0
-        if (calc_desired_x_y(P))
-            var/magnitude = vector_magnitude(desired_x,desired_y)
-            if (magnitude != 0)
-                var/angle_diff = arctan(desired_y, desired_x) - arctan(P.yo, P.xo)
-                if (angle_diff > 180)
-                    angle_diff -= 360
-                else if (angle_diff < -180)
-                    angle_diff += 360
-                angle_diff = -clamp(angle_diff, -src.max_rotation_rate, src.max_rotation_rate)
-                P.rotateDirection(angle_diff)
+			.= 1
 
-        ..()
+	tick(var/obj/projectile/P)
+		if (!P || !src.homing_active)
+			return
+
+		desired_x = 0
+		desired_y = 0
+		if (calc_desired_x_y(P))
+			var/magnitude = vector_magnitude(desired_x,desired_y)
+			if (magnitude != 0)
+				var/angle_diff = arctan(desired_y, desired_x) - arctan(P.yo, P.xo)
+				if (angle_diff > 180)
+					angle_diff -= 360
+				else if (angle_diff < -180)
+					angle_diff += 360
+				angle_diff = -clamp(angle_diff, -src.max_rotation_rate, src.max_rotation_rate)
+				P.rotateDirection(angle_diff)
+
+		..()
 
 /datum/projectile/bullet/homing/mrl
 	name = "MRL rocket"
@@ -1494,7 +1851,7 @@ datum/projectile/bullet/autocannon
 	hit_type = DAMAGE_BLUNT
 	dissipation_delay = 30
 	shot_sound = 'sound/weapons/rocket.ogg'
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	shot_number = 1
 	cost = 1
 	damage = 15
@@ -1519,6 +1876,10 @@ datum/projectile/bullet/autocannon
 			explosion_new(null, T, 15, range_cutoff_fraction = 0.45)
 		return
 
+	is_valid_target(mob/M, obj/projectile/P)
+		. = ..()
+		return . && isliving(M) && !isintangible(M)
+
 /datum/projectile/bullet/homing/pod_seeking_missile
 	name = "pod-seeking missile"
 	window_pass = 0
@@ -1530,7 +1891,7 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 30
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 
 	max_rotation_rate = 7
 	max_speed = 30
@@ -1546,9 +1907,9 @@ datum/projectile/bullet/autocannon
 				M.playsound_local(src, 'sound/machines/whistlealert.ogg', 25)
 				boutput(M, pod.ship_message(message))
 
-	on_hit(atom/hit)
+	on_hit(atom/hit, angle, obj/projectile/O)
 		if (istype(hit, /obj/critter/gunbot/drone) || istype(hit, /obj/machinery/vehicle/miniputt) || istype(hit, /obj/machinery/vehicle/pod_smooth)|| istype(hit, /obj/machinery/vehicle/tank))
-			explosion_new(null, get_turf(hit), 12)
+			explosion_new(null, get_turf(O), 12)
 
 			if(istype(hit, /obj/machinery/vehicle))
 				var/obj/machinery/vehicle/vehicle = hit
@@ -1572,19 +1933,22 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 30
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	implanted = null
 
-	on_hit(atom/hit)
+	on_hit(atom/hit, dirflag)
 		var/obj/machinery/the_singularity/S = hit
 		if(istype(S))
-			new /obj/bhole(S.loc,rand(100,300))
+			new /obj/whitehole(S.loc, 0 SECONDS, 30 SECONDS)
 			qdel(S)
 		else
 			new /obj/effects/rendersparks(hit.loc)
 			if(ishuman(hit))
 				var/mob/living/carbon/human/M = hit
 				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
+				var/turf/target = get_edge_target_turf(M, dirflag)
+				M.throw_at(target, 8, 1, throw_type = THROW_GUNIMPACT)
+				M.update_canmove()
 				boutput(M, SPAN_ALERT("You are struck by a big rocket! Thankfully it was not the exploding kind."))
 				M.do_disorient(stunned = 40)
 
@@ -1599,7 +1963,7 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 30
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	implanted = null
 
 	on_hit(atom/hit)
@@ -1622,7 +1986,7 @@ datum/projectile/bullet/autocannon
 	dissipation_rate = 2
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	implanted = null
 	casing = null
 	cost = 1
@@ -1631,7 +1995,7 @@ datum/projectile/bullet/autocannon
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
-			M.do_disorient(15, weakened = 10)
+			M.do_disorient(15, knockdown = 10)
 			M.throw_at(target, 6, 3, throw_type = THROW_GUNIMPACT)
 
 /datum/projectile/bullet/airzooka/bad
@@ -1644,17 +2008,17 @@ datum/projectile/bullet/autocannon
 	dissipation_rate = 4
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	implanted = null
 	casing = null
 	cost = 2
 
 	on_hit(atom/hit, dirflag)
-		fireflash(get_turf(hit), 1)
+		fireflash(get_turf(hit), 1, chemfire = CHEM_FIRE_RED)
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
-			M.do_disorient(15, weakened = 25)
+			M.do_disorient(15, knockdown = 25)
 			M.throw_at(target, 12, 3, throw_type = THROW_GUNIMPACT)
 
 //misc (i dont know where to place the rest)- owari
@@ -1668,7 +2032,7 @@ datum/projectile/bullet/autocannon
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "2metal0"
 	casing = null
-	impact_image_state = "bhole-staple"
+	impact_image_state = "bullethole-staple"
 
 	shrapnel_implant
 		implanted = /obj/item/implant/projectile/shrapnel
@@ -1682,11 +2046,10 @@ datum/projectile/bullet/autocannon
 	damage = 6
 
 /datum/projectile/bullet/howitzer
-	name = "howitzer round"
+	name = "high explosive round"
 	brightness = 0.7
 	window_pass = 0
-	icon = 'icons/obj/large/bigprojectiles.dmi'
-	icon_state = "152mm-shot"
+	icon_state = "120mm"
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	damage = 200
@@ -1698,18 +2061,36 @@ datum/projectile/bullet/autocannon
 	shot_volume = 90
 	implanted = null
 
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/cannon
 	shot_sound_extrarange = 1
+	projectile_speed = 48
 
-	on_hit(atom/hit)
-		for(var/turf/T in range(get_turf(hit), 4))
-			new /obj/effects/explosion/dangerous(T)
-		explosion_new(null, get_turf(hit), 100)
+	on_hit(atom/hit, obj/projectile/P)
+		var/turf/T = get_turf(hit)
+		explosion_new(null, T, 40)
+		for(var/turf/T2 in range(hit, 3))
+			spawn(rand(1,2))
+				new /obj/effects/explosion/dangerous(T2)
 
 	on_launch(obj/projectile/proj)
-		for(var/mob/M in range(proj.loc, 5))
-			shake_camera(M, 3, 6)
+		for(var/mob/M in range(proj.loc, 2))
+			shake_camera(M, 2, 4)
+
+	siege
+		name = "siege round"
+		icon_state = "305mm"
+		damage = 1600
+		projectile_speed = 24
+		shot_sound = 'sound/effects/explosion_new1.ogg'
+
+		on_hit(atom/hit, obj/projectile/P)
+			var/turf/T = get_turf(hit)
+			explosion_new(null, T, 80)
+			for(var/turf/T2 in range(hit, 4))
+				spawn(rand(1,2))
+					new /obj/effects/explosion/dangerous(T2)
+
 
 /datum/projectile/bullet/glitch
 	name = "bullet"
@@ -1774,7 +2155,7 @@ datum/projectile/bullet/autocannon
 	hit_type = DAMAGE_BLUNT
 	implanted = null
 	shot_sound = 'sound/impact_sounds/Generic_Snap_1.ogg'
-	impact_image_state = "bhole-staple"
+	impact_image_state = "bullethole-staple"
 	casing = null
 	hit_ground_chance = 50
 	icon_state = "random_thing"	//actually exists, looks funny enough to use as the projectile image for this
@@ -1822,7 +2203,7 @@ datum/projectile/bullet/autocannon
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "2metal0"
 	casing = null
-	impact_image_state = "bhole-staple"
+	impact_image_state = "bullethole-staple"
 	implanted = /obj/item/implant/projectile/shrapnel/radioactive
 
 	on_hit(atom/hit, angle, obj/projectile/O)
@@ -1832,9 +2213,20 @@ datum/projectile/bullet/autocannon
 			if(isturf(hit)) //did you know that turf.loc is /area? because I didn't
 				hitloc = hit
 			for(var/obj/window/maybe_thindow in hitloc)
-				maybe_thindow.ex_act(3)
+				maybe_thindow.ex_act(2)
 			for(var/obj/structure/girder/girderstack in hitloc)
-				girderstack.ex_act(3)
+				girderstack.ex_act(2)
 			//let's pretend these walls/objects were destroyed in the explosion
-			hit.ex_act(2)
+			hit.ex_act(pick(1,2))
 		. = ..()
+
+/datum/projectile/bullet/webley
+	name = "bullet"
+	damage = 45
+	stun = 7
+	damage_type = D_PIERCING
+	armor_ignored = 0.5 //just enough to get past gang vests in 3 shots
+	implanted = /obj/item/implant/projectile/bullet_455
+	impact_image_state = "bullethole-small"
+	casing = /obj/item/casing/medium
+	ricochets = TRUE

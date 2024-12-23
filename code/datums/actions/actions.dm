@@ -93,7 +93,6 @@
 	var/call_proc_on = null
 	// Copy-Pasted from Adhara's generic action bar
 	/// set to a string version of the callback proc path
-	id = null
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	/// set to the path of the proc that will be called if the action bar finishes
 	var/proc_path = null
@@ -250,13 +249,18 @@
 		if (!obj_turf)
 			return FALSE
 		for (var/obj/O in obj_turf)
-			// girder for soul, window for thindow (fuck thindow)
-			if (istype(O, /obj/structure/girder) || istype(O, /obj/window) || istype(O, /obj/railing))
+			if (src.should_ignore_dense_check(O))
 				continue
 			if (O.density)
 				boutput(owner, SPAN_ALERT("You try to build \the [obj_name], but there's \the [O] in the way!"))
 				return TRUE
 		return FALSE
+
+	/// Check if the object is one of a dense object which is an exception to most others -- and should be allowed to have
+	/// several of its own instances on a tile. Girders, thin windows, and railings are all examples of this.
+	proc/should_ignore_dense_check(var/obj/O)
+		// girder for soul, window for thindow (fuck thindow) <- ((I have no idea what this means))
+		return istype(O, /obj/structure/girder) || istype(O, /obj/window) || istype(O, /obj/railing)
 
 	onStart()
 		..()
@@ -272,6 +276,11 @@
 			return
 
 		if (initial(src.obj_type.density) && src.has_dense_object())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if (!isturf(owner.loc))
+			boutput(owner, SPAN_ALERT("You don't think you can build \the [obj_name] from in here..."))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -295,6 +304,9 @@
 			return
 		owner.visible_message(SPAN_NOTICE("[owner] assembles \the [obj_name]!"))
 		var/obj/item/R = new obj_type(obj_turf)
+		if (isitem(R))
+			var/mob/living/carbon/human/H = owner
+			H.put_in_hand_or_drop(R)
 		R.setMaterial(obj_mat)
 		if (istype(R))
 			R.amount = obj_amt
@@ -311,7 +323,6 @@
 			call(post_callback)(src, R)
 
 /datum/action/bar/icon/cruiser_repair
-	id = "genproc"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 30
 	icon = 'icons/ui/actions.dmi'
@@ -414,7 +425,6 @@
 */
 /datum/action/bar/private/icon/callback
 	/// set to a string version of the callback proc path
-	id = null
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	/// set to the path of the proc that will be called if the action bar finishes
 	var/proc_path = null
@@ -503,7 +513,6 @@
 
 #define STAM_COST 30
 /datum/action/bar/icon/otherItem//Putting items on or removing items from others.
-	id = "otheritem"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
@@ -535,6 +544,7 @@
 				else
 					duration = 2.5 SECONDS
 
+
 		duration += ExtraDuration
 
 		if (source.reagents && source.reagents.has_reagent("crime"))
@@ -548,9 +558,7 @@
 	onStart()
 		target.add_fingerprint(source) // Added for forensics (Convair880).
 
-		if (source.mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in source.grabbed_by)
-				G.shoot()
+		SEND_SIGNAL(source, COMSIG_MOB_TRIGGER_THREAT)
 
 		if (source.use_stamina && source.get_stamina() < STAM_COST)
 			boutput(source, SPAN_ALERT("You're too winded to [item ? "place that on" : "take that from"] [him_or_her(target)]."))
@@ -638,9 +646,15 @@
 		if(item)
 			var/obj/item/existing_item = target.get_slot(slot)
 			if(existing_item && in_start) // if they have something there, smack it with held item
+				var/hidden_check = FALSE
+				if(src.item.w_class <= W_CLASS_POCKET_SIZED && !(src.item.item_function_flags & OBVIOUS_INTERACTION_BAR))
+					hidden_check = TRUE
 				logTheThing(LOG_COMBAT, source, "uses the inventory menu while holding [log_object(item)] to interact with \
 													[log_object(existing_item)] equipped by [log_object(target)].")
-				actions.start(new /datum/action/bar/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, /mob/proc/click, list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source) //this is messier
+				if(hidden_check)
+					actions.start(new /datum/action/bar/private/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, TYPE_PROC_REF(/mob/living, click), list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source)
+				else
+					actions.start(new /datum/action/bar/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, TYPE_PROC_REF(/mob/living, click), list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source) //this is messier
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			if(item != source.equipped())
@@ -678,7 +692,6 @@
 /datum/action/bar/icon/internalsOther //This is used when you try to set someones internals
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "internalsother"
 	icon = 'icons/obj/clothing/item_masks.dmi'
 	icon_state = "breath"
 	var/mob/living/carbon/human/target
@@ -736,7 +749,6 @@
 /datum/action/bar/icon/handcuffSet //This is used when you try to handcuff someone.
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "handcuffsset"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 	var/mob/living/carbon/human/target
@@ -811,7 +823,6 @@
 /datum/action/bar/icon/handcuffRemovalOther //This is used when you try to remove someone elses handcuffs.
 	duration = 70
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "handcuffsother"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 	var/mob/living/carbon/human/target
@@ -862,7 +873,6 @@
 /datum/action/bar/private/icon/handcuffRemoval //This is used when you try to resist out of handcuffs.
 	duration = 600
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "handcuffs"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 
@@ -902,7 +912,6 @@
 /datum/action/bar/private/icon/shackles_removal // Resisting out of shackles (Convair880).
 	duration = 450
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "shackles"
 	icon = 'icons/obj/clothing/item_shoes.dmi'
 	icon_state = "orange1"
 
@@ -939,14 +948,12 @@
 /datum/action/bar/private/welding
 	duration = 2 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "welding"
 	var/call_proc_on = null
 	var/obj/effects/welding/E
 	var/list/start_offset
 	var/list/end_offset
 
 
-	id = null
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	/// set to the path of the proc that will be called if the action bar finishes
 	var/proc_path = null
@@ -954,11 +961,26 @@
 	var/atom/movable/target = null
 	/// what string is broadcast once the action bar finishes
 	var/end_message = ""
-	/// what is the maximum range target and owner can be apart? need to modify before starting the action.
-	var/maximum_range = 1
 	/// a list of args for the proc thats called once the action bar finishes, if needed.
 	var/list/proc_args = null
 	bar_on_owner = FALSE
+
+	proc/make_welding_effect()
+		if(E)
+			if(ismovable(src.target))
+				var/atom/movable/M = src.target
+				M.vis_contents -= E
+			qdel(E)
+
+		if(ismovable(src.target))
+			var/atom/movable/M = src.target
+			E = new(M)
+			M.vis_contents += E
+		else
+			E = new(src.target)
+		E.pixel_x = start_offset[1]
+		E.pixel_y = start_offset[2]
+		animate(E, time=src.duration, pixel_x=end_offset[1], pixel_y=end_offset[2])
 
 	New(owner, target, duration, proc_path, proc_args, end_message, start, stop, call_proc_on)
 		..()
@@ -980,18 +1002,9 @@
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
-		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+		if (src.target && (BOUNDS_DIST(src.owner, src.target) > 0))
 			interrupt(INTERRUPT_ALWAYS)
-		if(!E)
-			if(ismovable(src.target))
-				var/atom/movable/M = src.target
-				E = new(M)
-				M.vis_contents += E
-			else
-				E = new(src.target)
-			E.pixel_x = start_offset[1]
-			E.pixel_y = start_offset[2]
-			animate(E, time=src.duration, pixel_x=end_offset[1], pixel_y=end_offset[2])
+		src.make_welding_effect()
 
 	onDelete(var/flag)
 		if(E)
@@ -1006,7 +1019,7 @@
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+		if (src.target && (BOUNDS_DIST(src.owner, src.target) > 0))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (end_message)
@@ -1019,11 +1032,87 @@
 		else
 			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
 
-		if(E)
-			if(ismovable(src.target))
-				var/atom/movable/M = src.target
-				M.vis_contents -= E
-			qdel(E)
+/// A looping weld action bar. Duration and cost are per cycle.
+/datum/action/bar/private/welding/loop
+	/// Tool being used to weld (weldingtool, omnitool, etc)
+	var/obj/item/welder
+	/// Unit cost per cycle (for charging fuel)
+	var/cycle_cost
+
+	New(owner, target, duration, proc_path, proc_args, end_message, start, stop, call_proc_on, tool, cost)
+		. = ..()
+		src.welder = tool
+		if(cost)
+			src.cycle_cost = cost
+
+	canRunCheck(in_start)
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (src.target && (BOUNDS_DIST(src.owner, src.target) > 0))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/M = owner
+		if (!istype(M) || !isweldingtool(M.equipped()) || !src.welder:welding)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		src.loopStart()
+
+	loopStart()
+		..()
+		src.make_welding_effect()
+
+	onEnd()
+		if(!src.welder:try_weld(owner, src.cycle_cost))
+			src.interrupt(INTERRUPT_ALWAYS)
+			return
+		..()
+		if(src.welder:get_fuel())
+			src.onResume()
+			src.onRestart()
+
+
+/// Weld-repairing vehicles/pods hulls
+/datum/action/bar/private/welding/loop/vehicle
+	duration = 0.5 SECONDS
+	cycle_cost = 1
+
+/datum/action/bar/private/welding/loop/vehicle/New(owner, target, duration, proc_path, proc_args, end_message, start, stop, call_proc_on, tool, cost)
+	. = ..()
+	src.place_to_put_bar = owner
+
+/datum/action/bar/private/welding/loop/vehicle/loopStart()
+	var/obj/machinery/vehicle/V = target
+	var/newPositions = V.get_welding_positions()
+	src.start_offset = newPositions[1]
+	src.end_offset = newPositions[2]
+	. = ..()
+
+/datum/action/bar/private/welding/loop/vehicle/canRunCheck(in_start)
+	..()
+
+	var/obj/machinery/vehicle/vehicle = target
+	if(!istype(vehicle))
+		src.interrupt(INTERRUPT_ALWAYS)
+
+	if(vehicle.health >= vehicle.maxhealth)
+		src.interrupt(INTERRUPT_ALWAYS)
+
+	var/turf/T = get_turf(target)
+	if(T.active_liquid)
+		if(T.active_liquid.my_depth_level >= 3 && T.active_liquid.group.reagents.get_reagent_amount("tene")) //SO MANY PERIODS
+			boutput(owner, SPAN_ALERT("The damaged parts are saturated with fluid. You need to move somewhere drier."))
+			src.interrupt(INTERRUPT_ALWAYS)
+#ifdef MAP_OVERRIDE_NADIR
+	if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
+		//prevent in-acid welding from extending excursion times indefinitely
+		boutput(owner, SPAN_ALERT("The damaged parts are saturated with acid. You need to move somewhere with less pressure."))
+		src.interrupt(INTERRUPT_ALWAYS)
+#endif
 
 //CLASSES & OBJS
 
@@ -1070,7 +1159,6 @@
 /datum/action/bar/private/icon/magPicker
 	duration = 30 //How long does this action take in ticks.
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "magpicker"
 	icon = 'icons/obj/items/items.dmi' //In these two vars you can define an icon you want to have on your little progress bar.
 	icon_state = "magtractor-small"
 
@@ -1124,7 +1212,6 @@
 /datum/action/magPickerHold
 	duration = 30
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
-	id = "magpickerhold"
 
 	var/obj/item/magtractor/picker = null //This is the magpicker.
 
@@ -1162,7 +1249,6 @@
 /datum/action/bar/icon/butcher_living_critter //Used when butchering a player-controlled critter
 	duration = 120
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
-	id = "butcherlivingcritter"
 	var/mob/living/critter/target
 
 	New(Target,var/dur = null)
@@ -1200,7 +1286,6 @@
 /datum/action/bar/icon/critter_arm_removal // only supports things with left and right arms
 	duration = 60
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
-	id = "removearmcritter"
 	var/mob/living/critter/target
 	var/left_or_right
 
@@ -1238,7 +1323,6 @@
 /datum/action/bar/icon/rev_flash
 	duration = 4 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
-	id = "rev_flash"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "rev_imp"
 	var/mob/living/target
@@ -1281,7 +1365,6 @@
 /datum/action/bar/icon/mop_thing
 	duration = 30
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "mop_thing"
 	icon = 'icons/obj/janitor.dmi' //In these two vars you can define an icon you want to have on your little progress bar.
 	icon_state = "mop"
 	var/atom/target
@@ -1316,7 +1399,6 @@
 
 /datum/action/bar/icon/CPR
 	duration = 4 SECONDS
-	id = "cpr"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "cpr"
@@ -1348,7 +1430,7 @@
 
 		target.take_oxygen_deprivation(-15)
 		target.losebreath = 0
-		target.changeStatus("paralysis", -2 SECONDS)
+		target.changeStatus("unconscious", -2 SECONDS)
 
 		if(target.find_ailment_by_type(/datum/ailment/malady/flatline) && target.health > -50)
 			if ((target.reagents?.has_reagent("epinephrine") || target.reagents?.has_reagent("atropine")) ? prob(5) : prob(2))
@@ -1543,7 +1625,6 @@
 /datum/action/bar/private/spy_steal //Used when a spy tries to steal a large object
 	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "spy_steal"
 	var/atom/target
 	var/obj/item/uplink/integrated/pda/spy/uplink
 
@@ -1578,7 +1659,6 @@
 
 /datum/action/bar/private/bombtest
 	duration = 100
-	id = "bombtest"
 
 	onEnd()
 		..()
@@ -1598,7 +1678,6 @@
 /datum/action/fire_roll //constant rolling
 	duration = -1
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "fire_roll"
 
 	var/mob/living/M = 0
 
@@ -1667,7 +1746,6 @@
 /datum/action/bar/private/icon/pickup //Delayed pickup, used for mousedrags to prevent 'auto clicky' exploits but allot us to pickup with mousedrag as a possibel action
 	duration = 0
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
-	id = "pickup"
 	var/obj/item/target
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "pickup"
@@ -1736,7 +1814,6 @@
 
 /// general purpose action to anchor or unanchor stuff
 /datum/action/bar/icon/anchor_or_unanchor
-	id = "table_tool_interact"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 5 SECONDS
 	icon = 'icons/ui/actions.dmi'
@@ -1795,3 +1872,141 @@
 			target.anchored = UNANCHORED
 		else
 			target.anchored = ANCHORED
+
+
+/datum/action/bar/icon/unhook_gangbag
+	duration = 20 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	icon = 'icons/obj/items/storage.dmi'
+	icon_state = "gang_dufflebag"
+	id = "unhook_gangbag"
+	var/obj/item/gang_loot/target
+
+	New(new_owner, obj/item/gang_loot/new_target)
+		owner = new_owner
+		target = new_target
+		..()
+	onEnd()
+		..()
+		target.unhook()
+
+
+/datum/action/bar/icon/doorhack
+	duration = 3 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	icon = 'icons/obj/items/gang.dmi'
+	icon_state = "quickhack_fire"
+	id = "quickhacking"
+	var/maximum_range = 1
+	var/obj/machinery/door/airlock/target
+	var/obj/item/tool/quickhack/hack_tool
+
+	New(Owner, Target, Hack)
+		owner = Owner
+		target = Target
+		hack_tool = Hack
+		..()
+
+	onUpdate()
+		..()
+		if(!IN_RANGE(src.owner, target, maximum_range) || target == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (target && !IN_RANGE(src.owner, target, maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+		boutput(src.owner, "<span class='alert'>You press the [src.hack_tool.name] against the [src.target.name]...</span>")
+		..()
+
+	onEnd()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(owner, target, maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+		else
+			hack_tool.force_open(owner, target)
+
+
+
+/datum/action/bar/icon/janktanktwo
+	duration = JANKTANK2_CHANNEL_TIME
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	icon = 'icons/obj/items/gang.dmi'
+	icon_state = "janktank_2_inj"
+	id = "janktanktwo"
+	var/mob/living/carbon/human/target
+	var/obj/item/tool/janktanktwo/injector
+
+	New(Owner, Target, Injector)
+		owner = Owner
+		target = Target
+		injector = Injector
+		..()
+
+	onStart()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (target && !IN_RANGE(src.owner, target, 1))
+			interrupt(INTERRUPT_ALWAYS)
+		boutput(src.owner, "<span class='alert'>You prepare the [injector.name], aiming right for [target]'s heart!</span>")
+		..()
+
+	onUpdate()
+		..()
+		if(!IN_RANGE(src.owner, target, 1) || target == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(owner, target, 1))
+			interrupt(INTERRUPT_ALWAYS)
+		else
+			playsound(target.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 0)
+			injector.inject(owner, target)
+
+
+/datum/action/show_item
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = SHOWOFF_COOLDOWN
+	var/mob/user = null
+	var/obj/item/item = null
+	var/hand_icon = ""
+	var/pixel_x_offset = null
+	var/pixel_y_offset = null
+
+	New(mob/user, obj/item/item, hand_icon, x_offset = 6, y_offset = 2)
+		. = ..()
+		src.user = user
+		src.item = item
+		src.hand_icon = hand_icon
+		src.pixel_x_offset = x_offset
+		src.pixel_y_offset = y_offset
+
+	onStart()
+		. = ..()
+		var/hand_icon_state = ""
+		if(src.user.hand)
+			hand_icon_state = "[hand_icon]_hold_l"
+		else
+			hand_icon_state = "[hand_icon]_hold_r"
+			src.pixel_x_offset = -src.pixel_x_offset
+
+		var/image/overlay = src.item.SafeGetOverlayImage("showoff_overlay", src.item.icon, src.item.icon_state, MOB_LAYER + 0.1, src.pixel_x_offset, src.pixel_y_offset)
+		var/image/hand_overlay = src.item.SafeGetOverlayImage("showoff_hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, src.pixel_x_offset, src.pixel_y_offset, color=user.get_fingertip_color())
+
+		src.user.UpdateOverlays(overlay, "showoff_overlay")
+		src.user.UpdateOverlays(hand_overlay, "showoff_hand_overlay")
+
+		src.user.set_dir(SOUTH)
+
+	onDelete()
+		. = ..()
+		src.user.UpdateOverlays(null, "showoff_overlay")
+		src.user.UpdateOverlays(null, "showoff_hand_overlay")

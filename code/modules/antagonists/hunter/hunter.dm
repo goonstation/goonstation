@@ -283,12 +283,12 @@
 
 		switch (stunned_only_is_okay)
 			if (0)
-				if (!isalive(M) || M.getStatusDuration("stunned") > 0 || M.getStatusDuration("paralysis") > 0 || M.getStatusDuration("weakened"))
+				if (!isalive(M) || M.getStatusDuration("stunned") > 0 || M.getStatusDuration("unconscious") > 0 || M.getStatusDuration("knockdown"))
 					return 0
 				else
 					return 1
 			if (1)
-				if (!isalive(M) || M.getStatusDuration("paralysis") > 0)
+				if (!isalive(M) || M.getStatusDuration("unconscious") > 0)
 					return 0
 				else
 					return 1
@@ -337,9 +337,7 @@
 	src.real_name = "hunter"
 
 	src.jitteriness = 0
-	src.delStatus("stunned")
-	src.delStatus("weakened")
-	src.delStatus("paralysis")
+	src.remove_stuns()
 	src.delStatus("slowed")
 	src.change_misstep_chance(-INFINITY)
 	src.stuttering = 0

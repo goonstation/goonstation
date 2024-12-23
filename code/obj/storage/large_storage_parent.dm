@@ -13,7 +13,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 /obj/storage
 	name = "storage"
 	desc = "this is a parent item you shouldn't see!!"
-	flags = FPRINT | NOSPLASH | FLUID_SUBMERGE
+	flags = NOSPLASH | FLUID_SUBMERGE
 	event_handler_flags = USE_FLUID_ENTER  | NO_MOUSEDROP_QOL
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "closed"
@@ -47,6 +47,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	var/emagged = 0
 	var/jiggled = 0
 	var/legholes = 0
+	var/can_leghole = TRUE
 	var/flip_health = 3
 	var/can_flip_bust = 0 // Can the trapped mob damage this container by flipping?
 	var/obj/item/card/id/scan = null
@@ -64,6 +65,9 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	var/made_stuff
 
 	var/grab_stuff_on_spawn = TRUE
+
+	///Controls items that are 'inside' the crate, even when it's open. These will be dragged around with the crate until removed.
+	var/datum/vis_storage_controller/vis_controller
 
 	New()
 		..()
@@ -88,14 +92,23 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (!islist(src.spawn_contents))
 			return 0
 
+		var/i = 1
 		for (var/thing in src.spawn_contents)
 			var/amt = 1
-			if (!ispath(thing))
-				continue
-			if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
-				amt = abs(spawn_contents[thing])
-			do new thing(src)	//Two lines! I TOLD YOU I COULD DO IT!!!
-			while (--amt > 0)
+			if(!istext(thing)) //cannot use ispath for reasons BYOND comprehension
+				if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
+					amt = abs(spawn_contents[thing])
+				do
+					var/atom/A = new thing(src)
+					A.layer += 0.00001 * i
+					i++
+				while (--amt > 0)
+			else if (thing in reagents_cache)
+				var/turf/T = get_turf(src)
+				var/vol = 1
+				if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
+					vol = abs(spawn_contents[thing])
+				T.fluid_react_single(thing, vol)
 
 	proc/get_welding_positions()
 		var/start
@@ -225,7 +238,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				user.show_text("You kick at [src], but it doesn't budge!", "red")
 				user.unlock_medal("IT'S A TRAP", 1)
 				for (var/mob/M in hearers(src, null))
-					M.show_text("<font size=[max(0, 5 - GET_DIST(src, M))]>THUD, thud!</font>")
+					M.show_text("<font size=[max(0, 5 - GET_DIST(src, M))]>THUD, thud!</font>", group = "storage_thud")
 				playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 				var/shakes = 5
 				while (shakes > 0)
@@ -300,6 +313,9 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 						src._health = src._max_health
 						src.visible_message(SPAN_ALERT("[user] repairs [src] with [I]."))
 					else if (!src.is_short && !src.legholes)
+						if (!src.can_leghole)
+							boutput(user, SPAN_ALERT("You can't cut holes in that!"))
+							return
 						if (!weldingtool.try_weld(user, 1))
 							return
 						src.legholes = 1
@@ -451,7 +467,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		var/turf/T = get_turf(src)
-		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying || isAI(user))
+		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying || isAI(user))
 			return
 
 		if (!src.is_acceptable_content(O))
@@ -474,8 +490,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 					SPAN_ALERT("You trip over [src]!"))
 					playsound(user.loc, 'sound/impact_sounds/Generic_Hit_2.ogg', 15, 1, -3)
 					user.set_loc(T)
-					if (!user.hasStatus("weakened"))
-						user.changeStatus("weakened", 10 SECONDS)
+					if (!user.hasStatus("knockdown"))
+						user.changeStatus("knockdown", 10 SECONDS)
 					JOB_XP(user, "Clown", 3)
 					return
 				else
@@ -609,9 +625,9 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		. = TRUE
 		if (!A || !(isobj(A) || ismob(A)))
 			return 0
-		if (istype(A, /obj/decal/fakeobjects/skeleton)) // uuuuuuugh
+		if (istype(A, /obj/fakeobject/skeleton)) // uuuuuuugh
 			return 1
-		if (isobj(A) && ((A.density && !istype(A, /obj/critter)) || A:anchored || A == src || istype(A, /obj/decal) || istype(A, /atom/movable/screen) || istype(A, /obj/storage)))
+		if (isobj(A) && ((A.density && !istype(A, /obj/critter)) || A:anchored || A == src || istype(A, /obj/decal) || istype(A, /atom/movable/screen) || istype(A, /obj/storage) || istype(A, /obj/tug_cart)))
 			return 0
 
 	var/obj/storage/entangled
@@ -672,6 +688,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		for (var/obj/O in get_turf(src))
 			if (src.is_acceptable_content(O))
 				O.set_loc(src)
+		vis_controller?.hide()
 
 		for (var/mob/M in get_turf(src))
 			if (isobserver(M) || iswraith(M) || isintangible(M) || islivingobject(M))
@@ -757,8 +774,10 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			spawn_contents = null
 
 		var/newloc = get_turf(src)
+		vis_controller?.show()
 		for (var/obj/O in src)
-			O.set_loc(newloc)
+			if (!(O in vis_controller?.vis_items))
+				O.set_loc(newloc)
 			if(istype(O,/obj/item/mousetrap))
 				var/obj/item/mousetrap/our_trap = O
 				if(our_trap.armed && user)
@@ -822,7 +841,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				M.show_text("<b>OH JESUS CHRIST</b>", "red")
 				bleed(M, 500, 5)
 				src.log_me(usr && ismob(usr) ? usr : null, M, "uses trash compactor")
-				var/mob/living/carbon/cube/meat/meatcube = M.make_cube(/mob/living/carbon/cube/meat, rand(10,15), get_turf(src))
+				var/mob/living/carbon/cube/meatcube = M.make_cube(null, rand(10,15), get_turf(src))
 				if (src.crunches_deliciously)
 					meatcube.name = "hotdog"
 					var/obj/item/reagent_containers/food/snacks/hotdog/syndicate/snoopdog = new /obj/item/reagent_containers/food/snacks/hotdog/syndicate(src)
@@ -831,8 +850,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				for (var/obj/item/I in M)
 					if (istype(I, /obj/item/implant))
 						I.set_loc(meatcube)
-
-					I.set_loc(src)
+					else
+						I.set_loc(src)
 
 			src.locked = FALSE
 
@@ -890,7 +909,6 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			src.bust_out()
 
 /datum/action/bar/icon/storage_disassemble
-	id = "storage_disassemble"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 20
 	icon = 'icons/obj/items/tools/wrench.dmi'
@@ -966,7 +984,7 @@ TYPEINFO_NEW(/obj/storage/secure)
 		if (isnum(src.radio_control))
 			radio_control = clamp(round(radio_control), 1000, 1500)
 			src.net_id = generate_net_id(src)
-			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, radio_control)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, radio_control)
 
 	update_icon()
 		..()

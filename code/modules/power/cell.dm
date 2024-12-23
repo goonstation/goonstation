@@ -5,7 +5,6 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "cell"
 	item_state = "cell"
-	flags = FPRINT|TABLEPASS
 	force = 5
 	throwforce = 5
 	throw_speed = 3
@@ -143,13 +142,13 @@
 	if(!I) I = image('icons/obj/power.dmi', "cell-o2")
 
 	if(charge < 0.01)
-		UpdateOverlays(null, "charge_indicator", 0, 1)
+		ClearSpecificOverlays(TRUE, "charge_indicator")
 	else if(charge/maxcharge >=0.995)
 		I.icon_state = "cell-o2"
-		UpdateOverlays(I, "charge_indicator")
+		AddOverlays(I, "charge_indicator")
 	else
 		I.icon_state = "cell-o1"
-		UpdateOverlays(I, "charge_indicator")
+		AddOverlays(I, "charge_indicator")
 
 /obj/item/cell/proc/percent()		// return % charge of cell
 	return 100.0*charge/maxcharge
@@ -317,10 +316,11 @@
 	max_charge = 10
 	recharge_rate = 0
 
-/obj/item/ammo/power_cell/self_charging/potato/New(var/loc, var/potency, var/endurance)
+/obj/item/ammo/power_cell/self_charging/potato/New(var/loc, var/potency, var/endurance) //capped, approches double stats of disruptor cell
 	var/rngfactor = 2 + rand()
-	src.max_charge += round(potency/rngfactor)
-	src.recharge_rate = 0.25 * round(endurance/rand(25,30))
+//	src.max_charge += round(potency/rngfactor)
+	src.max_charge += round(190 * potency / (potency + 100 * rngfactor)) //asymptote at 200pu
+	src.recharge_rate = 0.25 * round(0.01 + 20 * endurance / (endurance + rand(400,500))) //asymptote at 5 recharge rate
 	src.charge = src.max_charge
 	..()
 

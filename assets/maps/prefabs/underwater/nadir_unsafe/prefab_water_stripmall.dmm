@@ -181,7 +181,7 @@
 /turf/simulated/floor/red/checker,
 /area/prefab/mobius)
 "aB" = (
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /obj/marker/supplymarker,
 /turf/simulated/floor/red/checker,
 /area/prefab/mobius)
@@ -262,7 +262,7 @@
 /turf/simulated/floor/green/checker,
 /area/prefab/mobius)
 "aT" = (
-/obj/decal/fakeobjects/pcb,
+/obj/fakeobject/pcb,
 /turf/simulated/floor/green/checker,
 /area/prefab/mobius)
 "aU" = (

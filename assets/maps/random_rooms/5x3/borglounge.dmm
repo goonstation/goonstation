@@ -1,12 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/simulated/floor/airless/grime,
+/turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "f" = (
 /obj/stool/chair/couch{
 	dir = 8
 	},
-/turf/simulated/floor/airless/grime,
+/turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "h" = (
 /obj/machinery/vending/standard,
@@ -14,22 +14,22 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/airless/grime,
+/turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "j" = (
 /obj/machinery/recharge_station,
-/turf/simulated/floor/airless/grime,
+/turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "m" = (
 /obj/storage/crate/loot,
 /obj/random_item_spawner/tools/some,
-/turf/simulated/floor/airless/grime,
+/turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "p" = (
 /obj/stool/chair/couch{
 	dir = 4
 	},
-/obj/decal/fakeobjects/robot{
+/obj/fakeobject/robot{
 	anchored = 1;
 	desc = "How long has this been down here?"
 	},
@@ -37,19 +37,19 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/airless/grime,
+/turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "r" = (
 /obj/storage/crate/loot,
 /obj/item/weldingtool,
 /obj/random_item_spawner/tools/maybe_few,
-/turf/simulated/floor/airless/grime,
+/turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "C" = (
 /obj/item/storage/secure/ssafe/loot{
 	pixel_y = 32
 	},
-/turf/simulated/floor/airless/grime,
+/turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 
 (1,1,1) = {"

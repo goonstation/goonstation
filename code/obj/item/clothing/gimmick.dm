@@ -24,7 +24,7 @@
 
 	New()
 		..()
-		src.vchange = new(src) // Built-in voice changer (Convair880).
+		src.vchange = new /obj/item/voice_changer/permanent(src) // Built-in voice changer (Convair880).
 		if(istype(src.loc, /mob/living))
 			var/mob/M = src.loc
 			src.AddComponent(/datum/component/self_destruct, M)
@@ -101,7 +101,7 @@
 			return 0
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.w_uniform, /obj/item/clothing/under/gimmick/owl) && !(user.stat || user.getStatusDuration("paralysis")))
+			if (istype(H.w_uniform, /obj/item/clothing/under/gimmick/owl) && !(user.stat || user.getStatusDuration("unconscious")))
 				user.visible_message(SPAN_ALERT("<b>[user] hoots loudly!</b>"))
 				user.owlgib()
 				return 1
@@ -234,7 +234,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
 	icon_state = "cyborg"
 	item_state = "cyborg"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	hides_from_examine = C_UNIFORM|C_GLOVES
 
 /obj/item/clothing/under/gimmick/johnny
@@ -251,7 +251,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "johnny"
 	item_state = "johnny"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 
 // UNUSED COLORS
 
@@ -262,7 +262,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	item_state = "headset" // lol
 
 /obj/item/clothing/under/gimmick/police
-	name = "police uniform"
+	name = "guard uniform"
 	desc = "Move along, nothing to see here."
 	icon_state = "police"
 	item_state = "police"
@@ -312,12 +312,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 			src.blade = null
 			return
 		. = ..()
-
-/obj/item/clothing/head/devil
-	name = "devil horns"
-	desc = "Plastic devil horns attached to a headband as part of a Halloween costume."
-	icon_state = "devil"
-	item_state = "devil"
 
 // Donk clothes
 
@@ -480,6 +474,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	cant_self_remove = 1
 	cant_other_remove = 1
 	material_prints = "greasy polymer fibers"
+	fingertip_color = "#f3f3f3"
 
 	setupProperties()
 		..()
@@ -493,6 +488,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "Hey, still looks pretty happy for being so blue."
 	icon_state = "blessedclown"
 	item_state = "bclown_hat"
+	base_icon_state = "blessedclown"
 	bald_desc_state = "For sad clowns who want to show off their hair!"
 
 /obj/item/clothing/under/misc/clown/blue
@@ -518,6 +514,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "Purple is a very flattering color on almost everyone."
 	icon_state = "purpleclown"
 	//item_state = "purpleclown"
+	base_icon_state = "purpleclown"
 	bald_desc_state = "For fancy clowns who want to show off their hair!"
 
 /obj/item/clothing/under/misc/clown/purple
@@ -538,6 +535,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "pink clown mask"
 	desc = "This reminds you of cotton candy."
 	icon_state = "pinkclown"
+	base_icon_state = "pinkclown"
 	//item_state = "pinkclown"
 	bald_desc_state = "For sweet clowns who want to show off their hair!"
 
@@ -572,6 +570,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "yellow clown mask"
 	desc = "A ray of sunshine."
 	icon_state = "yellowclown"
+	base_icon_state = "yellowclown"
 	//item_state = "yellowclown"
 	bald_desc_state = "For bright clowns who want to show off their hair!"
 
@@ -644,7 +643,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "A handheld projected energy barrier for personal protection, bearing the insignia of the Terra Nivium company."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "viking_shield"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS| CONDUCT
 	c_flags = ONBELT
 	item_state = "vshield"
 	throwforce = 7
@@ -876,11 +875,11 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 
 			boutput(H, SPAN_ALERT("<b>You suddenly feel whiny and ineffectual.</b>"))
 			H.real_name = "Mike Dawson"
-			H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/bedhead
-			H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/moustache/selleck
+			H.bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/hair/long/bedhead
+			H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/moustache/selleck
 			H.bioHolder.mobAppearance.e_color = "#321E14"
-			H.bioHolder.mobAppearance.customization_first_color = "#412819"
-			H.bioHolder.mobAppearance.customization_second_color = "#412819"
+			H.bioHolder.mobAppearance.customizations["hair_bottom"].color = "#412819"
+			H.bioHolder.mobAppearance.customizations["hair_middle"].color = "#412819"
 			H.bioHolder.mobAppearance.s_tone = "#FAD7D0"
 			H.bioHolder.AddEffect("clumsy")
 			H.update_colorful_parts()
@@ -1157,6 +1156,18 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	setupProperties()
 		..()
 		setProperty("coldprot", 10)
+
+/obj/item/clothing/suit/scarf/cozy
+	name = "scarf"
+	desc = "A cozy scarf. A beautiful adornment to any outfit."
+	icon_state = "shortscarf"
+	item_state = "shortscarf"
+
+/obj/item/clothing/suit/scarf/long
+	name = "long scarf"
+	desc = "A long luxurious scarf. A perfect addition to any look."
+	icon_state = "longscarf"
+	item_state = "longscarf"
 
 /obj/item/clothing/suit/suspenders
 	name = "suspenders"
@@ -1964,7 +1975,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	item_state = "trashbag"
 	w_class = W_CLASS_TINY
 	rand_pos = TRUE
-	flags = FPRINT | TABLEPASS | NOSPLASH
+	flags = TABLEPASS | NOSPLASH
 	tooltip_flags = REBUILD_DIST
 	body_parts_covered = TORSO
 
@@ -2027,3 +2038,28 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "chaps"
 	item_state = "chaps"
+
+/obj/item/clothing/suit/rabbitsuit
+	name = "Rabbit Costume Suit"
+	desc = "Horrifingly cute, or cutely horrifying?"
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	icon_state = "rabbitsuit"
+	item_state = "rabbitsuit"
+	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+
+// Goku
+
+/obj/item/clothing/under/gimmick/goku
+	name = "anime martial artist costume"
+	desc = "Sturdy karate gi intended for only the toughest martial artists out there. If only you actually practiced!"
+	icon_state = "goku"
+	item_state = "goku"
+
+/obj/item/clothing/shoes/goku
+	name = "anime martial artist boots"
+	desc = "A pair of blue boots with a yellow stripe and a red string. They'd help you be swift and agile, if not for the cheap flimsy soles!"
+	icon_state = "goku"
+	item_state = "goku"

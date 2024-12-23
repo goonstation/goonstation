@@ -93,7 +93,17 @@
 /obj/item/storage/box/ic_cones
 	name = "ice cream cone box"
 	icon_state = "ic_cones"
-	desc = "Ice cream cones stored in a handy box."
+	desc = "A box full of delicious ice cream cones, a brittle pastry in a convenient hollow \
+	 cone shape. When held, the cone provides an insulative, absorbent, and edible layer between \
+	 the holder's hands and the ice cream (with a temperature difference of about 30C), \
+	 allowing the ice cream to be eaten in comfort without worry of accelerated melting, \
+	 or sticky hands. Because of this ease of use, as well as the precarious position \
+	 that the often overfilled cones hold the ice cream in, ice cream stored in this\
+	 way is often eaten without the help of utensils, such as spoons. The edibility\
+	 of the cone solves logistical issues with discarded packaging, and provides a \
+	 new texture to the classic treat that many eaters find quite delightful. \
+	 All in all, if you're looking to serve some ice cream, the humble ice cream \
+	 cone is the premier choice for carrying your ice cream!"
 	spawn_contents = list(/obj/item/reagent_containers/food/snacks/ice_cream_cone = 7)
 
 /obj/item/storage/box/butter
@@ -130,10 +140,16 @@
 			var/obj/item/reagent_containers/food/snacks/candy/newcandy = new newcandy_path(src)
 			src.storage.add_contents(newcandy)
 			if (prob(5))
-				newcandy.razor_blade = 1
+				newcandy.has_razor_blade = TRUE
 
 /obj/item/storage/box/popsicles
 	name = "popsicles"
 	desc = "A box of generic unbranded popsicles."
 	icon_state = "popsiclebox"
 	spawn_contents = list(/obj/item/popsicle = 7)
+
+/obj/item/storage/box/popsicle_sticks
+	name = "popsicle sticks"
+	desc = "A box of popsicle sticks, used for making various kinds of sweets."
+	icon_state = "sticks"
+	spawn_contents = list(/obj/item/stick = 7)

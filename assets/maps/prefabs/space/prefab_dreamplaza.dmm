@@ -46,7 +46,7 @@
 /obj/decal/cleanable/blood{
 	desc = "It looks like it's been here for months."
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	name = "mall employee skeleton";
 	pixel_y = 12
 	},
@@ -363,7 +363,7 @@
 /area/prefab/dreamplaza)
 "lo" = (
 /obj/lattice,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -416,7 +416,7 @@
 /obj/storage/crate/packing{
 	name = "merchandise samples"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Looks like they were trapped here for some time.";
 	name = "employee skeleton"
 	},
@@ -971,7 +971,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "Gd" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even cloned.";

@@ -62,6 +62,11 @@ var/list/pw_rewards_tier3 = null
 
 //setup teams and commanders
 /datum/game_mode/pod_wars/pre_setup()
+	if (global.map_setting != "POD_WARS")
+		message_admins("Pod wars gamemode attempted to start with a non pod wars map, aborting!")
+		logTheThing(LOG_DEBUG, "Pod wars gamemode attempted to start with a non pod wars map, aborting!")
+		return 0
+
 	board = new()
 	stats_manager = new()
 	if (!setup_teams())
@@ -944,7 +949,7 @@ proc/setup_pw_crate_lists()
 		/obj/item/material_piece/steel{amount=10} = 1, /obj/item/material_piece/copper{amount=10} = 1, /obj/item/material_piece/glass{amount=10} = 1)
 
 	pw_rewards_tier2 = list(/obj/item/tank/jetpack = 1, /obj/item/old_grenade/smoke = 2,/obj/item/chem_grenade/flashbang = 2, /obj/item/barrier = 1,
-		/obj/item/old_grenade/emp = 3, /obj/item/sword/discount = 4, /obj/item/storage/firstaid/crit = 1, /obj/item/fireaxe = 1, /obj/item/dagger/syndicate/specialist = 2,
+		/obj/item/old_grenade/emp = 3, /obj/item/sword/discount = 4, /obj/item/storage/firstaid/crit = 1, /obj/item/fireaxe = 1, /obj/item/dagger/specialist = 2,
 		/obj/item/shipcomponent/mainweapon/mining = 2, /obj/item/shipcomponent/mainweapon/laser = 4, /obj/item/shipcomponent/mainweapon/disruptor_light = 4,/obj/item/ammo/power_cell/higher_power = 3, /obj/item/ammo/power_cell/self_charging/pod_wars_standard = 3,
 		/obj/item/material_piece/cerenkite{amount=5} = 1, /obj/item/material_piece/claretine{amount=5} = 1, /obj/item/material_piece/bohrum{amount=10} = 1, /obj/item/material_piece/plasmastone{amount=10} = 1, /obj/item/material_piece/uqill{amount=10} = 1, /obj/item/material_piece/telecrystal{amount=10})
 
@@ -1003,16 +1008,7 @@ proc/setup_pw_crate_lists()
 		if (..(user))
 			return
 
-		var/nt_wins = world.load_intra_round_value("nt_win")
-		var/nt_deaths = world.load_intra_round_value("nt_death")
-		if(isnull(nt_wins))
-			nt_wins = 0
-		if(isnull(nt_deaths))
-			nt_deaths = 0
-
-		src.add_dialog(user)
-		user.Browse(src.desc, "title=Mission Log;window=pod_war_stats_[src];size=300x300")
-		onclose(user, "pod_war_stats_[src]")
+		tgui_message(user, src.desc, "Mission Log", theme = "ntos")
 
 /obj/decoration/memorial/pod_war_stats_sy/
 	name = "Syndicate Mission Log"
@@ -1038,16 +1034,7 @@ proc/setup_pw_crate_lists()
 		if (..(user))
 			return
 
-		var/sy_wins = world.load_intra_round_value("sy_win")
-		var/sy_deaths = world.load_intra_round_value("sy_death")
-		if(isnull(sy_wins))
-			sy_wins = 0
-		if(isnull(sy_deaths))
-			sy_deaths = 0
-
-		src.add_dialog(user)
-		user.Browse(src.desc, "title=Mission Log;window=pod_war_stats_[src];size=300x300")
-		onclose(user, "pod_war_stats_[src]")
+		tgui_message(user, src.desc, "Mission Log", theme = "syndicate")
 
 /obj/decoration/memorial/memorial_left
 	name = "Memorial Inscription"

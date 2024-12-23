@@ -23,9 +23,6 @@
 		return FALSE
 	return copytext(text, length(text) - length(end) + 1, length(text) + 1) == end
 
-/proc/trim(text)
-	return trim_left(trim_right(text))
-
 #define is_uppercase_letter(c) (text2ascii(c, 1) >= 65 && text2ascii(c, 1) <= 90)
 #define is_lowercase_letter(c) (text2ascii(c, 1) >= 97 && text2ascii(c, 1) <= 122)
 
@@ -166,6 +163,8 @@ proc/pluralize(word)
 	else
 		. += "s"
 
+proc/list2text(L, d = "")
+	return jointext(L, d)
 
 
 // DM simultaneously makes cursed shit like this work...
@@ -178,3 +177,4 @@ var/static/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
   * Removes the special data inserted via use of \improper etc in strings
   */
 #define stripTextMacros(text) replacetext(text, regexTextMacro, "")
+

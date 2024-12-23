@@ -62,6 +62,9 @@
 	return {"[SPAN_BOLD("Status:")] [charge_message].
 		<br>[SPAN_BOLD("Charge Percentage:")] [src.charge]%."}
 
+/obj/flock_structure/sentinel/skip_process()
+	return !length(src.flock?.enemies)
+
 /obj/flock_structure/sentinel/process(mult)
 	if(!src.flock)
 		if (src.powered)
@@ -79,6 +82,8 @@
 		src.compute = 0
 		src.powered = FALSE
 
+	src.updatefilter()
+
 	if(src.powered)
 		if (src.charge_status != CHARGED)
 			src.icon_state = "sentinelon"
@@ -86,13 +91,12 @@
 			src.charge_status = CHARGING
 		if (src.charge == 100)
 			src.charge_status = CHARGED
-			if (!length(src.flock?.enemies))
-				src.updatefilter()
+			if (src.skip_process())
 				return
 			var/atom/to_hit
 			var/list/hit = list()
 			for(var/atom/A as anything in view(src.range, src))
-				if(src.flock?.isEnemy(A))
+				if(src.isEnemy(A))
 					if (ismob(A))
 						var/mob/M = A
 						if (isdead(M) || is_incapacitated(M))
@@ -102,7 +106,6 @@
 					to_hit = A
 					break
 			if(!to_hit)
-				src.updatefilter()
 				return
 			arcFlash(src, to_hit, wattage, 0.9)
 			logTheThing(LOG_COMBAT, src, "Flock sentinel at [log_loc(src)] belonging to flock [src.flock?.name] fires an arcflash at [constructTarget(to_hit)].")
@@ -136,8 +139,6 @@
 			src.icon_state = "sentinel"
 			src.charge_status = NOT_CHARGED
 
-	src.updatefilter()
-
 /obj/flock_structure/sentinel/proc/charge(chargeamount)
 	src.charge = clamp(src.charge + chargeamount, 0, 100)
 	src.info_tag.set_info_tag("Charge: [src.charge]%")
@@ -159,6 +160,14 @@
 	var/dm_filter/filter = src.rays.get_filter("flock_sentinel_rays")
 	// for non-linear scaling of size, using an oscillating value from 0 to 1 * 32
 	UNLINT(animate(filter, size = ((-(cos(180 * (charge / 100)) - 1) / 2) * 32), flags = ANIMATION_PARALLEL))
+
+
+/obj/flock_structure/sentinel/angry
+	skip_process()
+		return FALSE //too ANGRY
+
+	isEnemy(mob/M)
+		return istype(M) && isalive(M) && !isintangible(M)
 
 /obj/effect/flock_sentinelrays
 	mouse_opacity = 0

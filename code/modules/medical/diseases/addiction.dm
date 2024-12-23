@@ -8,6 +8,7 @@
 	cure_flags = CURE_CUSTOM
 	cure_desc = "Time"
 	affected_species = list("Human")
+	strain_type = /datum/ailment_data/addiction
 
 /datum/ailment/addiction/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/addiction/D, mult)
 	if (..())
@@ -60,15 +61,10 @@
 					affected_mob.change_eye_blurry(rand(7, 10))
 					boutput(affected_mob, SPAN_ALERT("Your vision blurs, you REALLY need some [D.associated_reagent]."))
 				else if (prob(1))
-					if (affected_mob.nutrition > 10 && !affected_mob.reagents?.has_reagent("promethazine"))
-						affected_mob.visible_message(SPAN_ALERT("[affected_mob] vomits on the floor profusely!"),\
-						SPAN_ALERT("You vomit all over the floor!"))
-						affected_mob.vomit(rand(3,5))
-					else
-						affected_mob.visible_message(SPAN_ALERT("[affected_mob] gags and retches!"),\
-						SPAN_ALERT("Your stomach lurches painfully!"))
+					if (!(affected_mob.nutrition > 10 && affected_mob.vomit(rand(3,5), flavorMessage = SPAN_ALERT("[affected_mob] vomits on the floor profusely!"), selfMessage = SPAN_ALERT("You vomit all over the floor!"))))
+						affected_mob.visible_message(SPAN_ALERT("[affected_mob] gags and retches!"), SPAN_ALERT("Your stomach lurches painfully!"))
 						affected_mob.changeStatus("stunned", 2 SECONDS)
-						affected_mob.changeStatus("weakened", 2 SECONDS)
+						affected_mob.changeStatus("knockdown", 2 SECONDS)
 			if (prob(8))
 				affected_mob.emote(pick("twitch", "twitch_s", "shiver"))
 			if (prob(4))

@@ -23,6 +23,7 @@
 		if (M == target)
 			boutput(M, SPAN_ALERT("You can't throw yourself."))
 			return 1
+		. = ..()
 		HH.set_loc(M.loc)
 		HH.set_dir(get_dir(HH, M))
 		HH.changeStatus("stunned", 4 SECONDS)
@@ -67,7 +68,7 @@
 				if (!isdead(HH))
 					HH.emote("scream")
 				HH.throw_at(T, 10, 4)
-				HH.changeStatus("weakened", 2 SECONDS)
+				HH.changeStatus("knockdown", 2 SECONDS)
 				HH.change_misstep_chance(33)
 			logTheThing(LOG_COMBAT, M, "uses the throw werewolf move on [constructTarget(HH,"combat")] at [log_loc(M)].")
 		return 0

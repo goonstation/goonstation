@@ -10,19 +10,19 @@
 	icon_state = "watertank"
 	density = 1
 	anchored = UNANCHORED
-	flags = FPRINT | FLUID_SUBMERGE | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = FLUID_SUBMERGE | ACCEPTS_MOUSEDROP_REAGENTS
 	object_flags = NO_GHOSTCRITTER
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	p_class = 1.5
 
 	var/amount_per_transfer_from_this = 10
-	var/capacity
+	var/capacity = 4000
 
 	New()
 		..()
 		// TODO enable when I do leaking
 		// src.AddComponent(/datum/component/bullet_holes, 10, 5)
-		src.create_reagents(4000)
+		src.create_reagents(src.capacity)
 
 
 	get_desc(dist, mob/user)
@@ -53,7 +53,7 @@
 		if (prob(25))
 			smash()
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 		..()
 		if (reagents)
 			for (var/i = 0, i < 9, i++) // ugly hack
@@ -80,11 +80,25 @@
 			return TRUE
 		return ..()
 
+	proc/bolt_unbolt(mob/user)
+		if(!src.anchored)
+			var/turf/T = get_turf(src)
+			if (istype(T, /turf/space))
+				boutput(user, SPAN_ALERT("What exactly are you gonna secure [src] to?"))
+				return
+			user.visible_message("<b>[user]</b> secures [src] to the floor!")
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			src.anchored = ANCHORED
+		else
+			user.visible_message("<b>[user]</b> unbolts [src] from the floor!")
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			src.anchored = UNANCHORED
+
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
 /* =================================================== */
 /obj/reagent_dispensers/cleanable
-	flags = FPRINT | FLUID_SUBMERGE
+	flags = FLUID_SUBMERGE
 
 /obj/reagent_dispensers/cleanable/ants
 	name = "space ants"
@@ -102,6 +116,11 @@
 		src.Scale(scale, scale)
 		src.set_dir(pick(NORTH, SOUTH, EAST, WEST))
 		reagents.add_reagent("ants",20)
+		START_TRACKING_CAT(TR_CAT_BUGS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_BUGS)
+		..()
 
 	get_desc(dist, mob/user)
 		return null
@@ -133,6 +152,11 @@
 		src.pixel_x = rand(-8,8)
 		src.pixel_y = rand(-8,8)
 		reagents.add_reagent("spiders", 5)
+		START_TRACKING_CAT(TR_CAT_BUGS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_BUGS)
+		..()
 
 	get_desc(dist, mob/user)
 		return null
@@ -179,11 +203,11 @@
 	attackby(obj/item/W, mob/user)
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			if(!src.anchored)
-				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
+				user.visible_message("<b>[user]</b> secures [src] to the floor!")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.anchored = ANCHORED
 			else
-				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
+				user.visible_message("<b>[user]</b> unbolts [src] from the floor!")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.anchored = UNANCHORED
 			return
@@ -203,6 +227,8 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
 	capacity = 500
+	_health = 250
+	_max_health = 250
 
 	var/has_tank = 1
 
@@ -297,11 +323,17 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 				user.show_text("That was the last cup!", "red")
 				src.UpdateIcon()
 
-	piss
+	bullet_act(obj/projectile/P)
+		src.changeHealth(-P.power * P.proj_data.ks_ratio)
+
+	onDestroy()
+		src.smash()
+
+	drugged
 		New()
 			..()
 			src.create_reagents(4000)
-			reagents.add_reagent("urine",400)
+			reagents.add_reagent("LSD",400)
 			reagents.add_reagent("water",600)
 			src.UpdateIcon()
 		name = "discolored water fountain"
@@ -312,10 +344,10 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		New()
 			..()
 			src.create_reagents(4000)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("CBD","THC","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("CBD","THC","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("CBD","THC","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("CBD","THC","refried_beans","coffee","methamphetamine"),100)
 			reagents.add_reagent("water",600)
 			src.UpdateIcon()
 		name = "discolored water fountain"
@@ -404,7 +436,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	icon_state = "barrel-blue"
 	amount_per_transfer_from_this = 25
 	p_class = 3
-	flags = FPRINT | FLUID_SUBMERGE | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = FLUID_SUBMERGE | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	var/base_icon_state = "barrel-blue"
 	var/funnel_active = TRUE //if TRUE, allows players pouring liquids from beakers with just one click instead of clickdrag, for convenience
 	var/image/fluid_image = null
@@ -472,7 +504,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 				boutput(user, SPAN_ALERT("[src] is full."))
 				return
 
-			boutput(user, SPAN_NOTICE("You squeeze the [W] into the [src]. Gross."))
+			boutput(user, SPAN_NOTICE("You squeeze the [W] into [src]. Gross."))
 			playsound(src.loc, pick('sound/effects/splort.ogg'), 100, 1)
 
 			W.reagents.trans_to(src, W.reagents.total_volume)
@@ -481,9 +513,9 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 
 		if (istool(W, TOOL_WRENCHING))
 			if(src.flags & OPENCONTAINER)
-				user.visible_message("<b>[user]</b> wrenches the [src]'s lid closed!")
+				user.visible_message("<b>[user]</b> wrenches [src]'s lid closed!")
 			else
-				user.visible_message("<b>[user]</b> wrenches the [src]'s lid open!")
+				user.visible_message("<b>[user]</b> wrenches [src]'s lid open!")
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			src.set_open_container(!src.is_open_container())
 			UpdateIcon()
@@ -596,14 +628,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 
 	attackby(obj/item/W, mob/user)
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
-			if(!src.anchored)
-				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				src.anchored = ANCHORED
-			else
-				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				src.anchored = UNANCHORED
+			bolt_unbolt(user)
 			return
 		var/load = 1
 		if (istype(W,/obj/item/reagent_containers/food/snacks/plant/)) src.reagents.add_reagent("poo", 20)
@@ -679,13 +704,13 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		var/list/brew_result = W.brew_result
 		var/list/brew_amount = 20 // how much brew could a brewstill brew if a brewstill still brewed brew?
 
+		if (!brew_result)
+			return FALSE
+
 		if(istype(W, /obj/item/reagent_containers/food/snacks/plant))
 			var/obj/item/reagent_containers/food/snacks/plant/P = W
 			var/datum/plantgenes/DNA = P.plantgenes
-			brew_amount = max(DNA?.get_effective_value("potency"), 5) //always produce SOMETHING
-
-		if (!brew_result)
-			return FALSE
+			brew_amount = max(HYPfull_potency_calculation(DNA), 5) //always produce SOMETHING
 
 		if (islist(brew_result))
 			for(var/I in brew_result)
@@ -701,7 +726,12 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		return TRUE
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W,/obj/item/reagent_containers/food) || istype(W, /obj/item/plant))
+		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
+			bolt_unbolt(user)
+			return
+
+		var/isfull = src.reagents.is_full()
+		if (W && W.brew_result && !isfull)
 			var/load = 0
 			if (src.brew(W))
 				load = 1
@@ -712,55 +742,68 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 				user.u_equip(W)
 				W.dropped(user)
 				qdel(W)
+				playsound(src.loc, 'sound/effects/bubbles_short.ogg', 30, 1)
 				return
 			else  ..()
-		else ..()
+		// create feedback for items which don't produce attack messages
+		// but not for chemistry containers, because they have their own feedback
+		if (W && (W.flags & (SUPPRESSATTACK | OPENCONTAINER)) == SUPPRESSATTACK)
+			if (isfull)
+				boutput(user, SPAN_ALERT("[src] is already full."))
+			else
+				boutput(user, SPAN_ALERT("Can't brew anything from [W]."))
+		..()
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!isliving(user))
-			user.show_text("It's probably a bit too late for you to drink your problems away.", "red")
+			boutput(user, SPAN_ALERT("It's probably a bit too late for you to drink your problems away!"))
 			return
 		if (BOUNDS_DIST(user, src) > 0)
-			user.show_text("You need to move closer to [src] to do that.", "red")
+			// You have to be adjacent to the still
+			boutput(user, SPAN_ALERT("You need to move closer to [src] to do that."))
 			return
-		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
-			user.show_text("[O] is too far away to load into [src]!", "red")
+		if (BOUNDS_DIST(O, user) > 0)
+			// You have to be adjacent to the brewables also
+			boutput(user, SPAN_ALERT("[O] is too far away to load into [src]!"))
 			return
-
+		// loading from crate
 		if (istype(O, /obj/storage/crate/))
-			user.visible_message(SPAN_NOTICE("[user] loads [O]'s contents into [src]!"),\
-			SPAN_NOTICE("You load [O]'s contents into [src]!"))
+			user.visible_message(SPAN_NOTICE("[user] charges [src] with [O]'s contents!"))
 			var/amtload = 0
-			for (var/obj/item/P in O.contents)
+			for (var/obj/item/Produce in O.contents)
 				if (src.reagents.is_full())
-					user.show_text("[src] is full!", "red")
+					boutput(user, SPAN_ALERT("[src] is full!"))
 					break
-				if (src.brew(P))
+				if (src.brew(Produce))
 					amtload++
-					qdel(P)
-				else
-					continue
+					qdel(Produce)
 			if (amtload)
-				user.show_text("[amtload] items loaded from [O]!", "blue")
+				boutput(user, SPAN_NOTICE("Charged [src] with [amtload] items from [O]!"))
+				playsound(src.loc, 'sound/effects/bubbles_short.ogg', 40, 1)
 			else
-				user.show_text("Nothing was loaded!", "red")
-		else if (istype(O, /obj/item/reagent_containers/food) || istype(O, /obj/item/plant))
-			user.visible_message(SPAN_NOTICE("<b>[user]</b> begins quickly stuffing items into [src]!"),\
-			SPAN_NOTICE("You begin quickly stuffing items into [src]!"))
+				boutput(user, SPAN_ALERT("Nothing was put into [src]!"))
+		// loading from the ground
+		else if (istype(O, /obj/item))
+			var/obj/item/item = O
+			if (!item.brew_result)
+				return ..()
+			// "charging" is for sure correct terminology, I'm an expert because I asked chatgpt AND read the first result on google. Mhm mhm.
+			user.visible_message(SPAN_NOTICE("[user] begins quickly charging [src] with [O]!"))
+
 			var/staystill = user.loc
-			for (O in view(1,user))
-				if (src.reagents.is_full())
-					user.show_text("[src] is full!", "red")
+			var/itemtype = O.type
+			for(var/obj/item/Produce in view(1,user))
+				if (src.reagents.total_volume >= src.reagents.maximum_volume)
+					boutput(user, SPAN_ALERT("[src] is full!"))
 					break
-				if (user.loc != staystill)
-					user.show_text("You were interrupted!", "red")
-					break
-				if (src.brew(O))
-					qdel(O)
-				else
-					continue
-			user.visible_message(SPAN_NOTICE("<b>[user]</b> finishes stuffing items into [src]."),\
-			SPAN_NOTICE("You finish stuffing items into [src]."))
+				if (user.loc != staystill) break
+				if (Produce.type != itemtype) continue
+				if (src.brew(Produce))
+					qdel(Produce)
+					playsound(src.loc, 'sound/effects/bubbles_short.ogg', 30, 1)
+					sleep(0.3 SECONDS)
+			boutput(user, SPAN_NOTICE("You finish charging [src] with [O]!"))
+
 		else
 			return ..()
 
@@ -771,33 +814,21 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 /obj/item/reagent_containers/food/drinks/coolerbottle
 	name = "water cooler bottle"
 	desc = "A water cooler bottle. Can hold up to 500 units."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
-	icon_state = "itemtank"
+	icon_state = "cooler_bottle"
 	item_state = "flask"
 	initial_volume = 500
 	w_class = W_CLASS_BULKY
 	incompatible_with_chem_dispensers = 1
 	can_chug = 0
 
-	var/image/fluid_image
-
 	New()
-		..()
-		fluid_image = image(src.icon, "fluid-[src.icon_state]")
-
-	on_reagent_change()
-		..()
-		src.UpdateIcon()
-
-	update_icon()
-		src.underlays = null
-		if (reagents.total_volume)
-			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
-			src.icon_state = "itemtank[fluid_state]"
-			var/datum/color/average = reagents.get_average_color()
-			src.fluid_image.color = average.to_rgba()
-			src.fluid_image.icon_state = "fluid-itemtank[fluid_state]"
-			src.underlays += src.fluid_image
-		else
-			src.icon_state = initial(src.icon_state)
+		. = ..()
+		src.AddComponent( \
+			/datum/component/reagent_overlay, \
+			reagent_overlay_icon = src.icon, \
+			reagent_overlay_icon_state = src.icon_state, \
+			reagent_overlay_states = 15, \
+			reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, \
+		)

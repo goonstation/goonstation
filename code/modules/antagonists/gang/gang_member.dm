@@ -7,12 +7,17 @@
 	var/datum/gang/gang
 	/// The headset of this gang member, tracked so that additional channels may be later removed.
 	var/obj/item/device/radio/headset/headset
+	/// The ability holder of this gang member, containing their abilities (namely, toggling the gang overlay)
+	var/datum/abilityHolder/gang/ability_holder
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, master)
 		src.master = master
-		src.gang = src.master.current.get_gang()
+		var/datum/antagonist/gang_leader/antagrole = src.master.get_antagonist(ROLE_GANG_LEADER)
+		src.gang = antagrole.gang
+		antagonist_icon = "gang_member_[gang.color_id]"
 		src.gang.members += new_owner
-
+		if (src.gang.gang_points[new_owner] == null)
+			src.gang.gang_points[new_owner] = GANG_STARTING_POINTS
 		. = ..()
 
 	disposing()
@@ -26,6 +31,16 @@
 	give_equipment()
 		if (!ishuman(src.owner.current))
 			return FALSE
+
+
+		var/datum/abilityHolder/gang/gangHolder = src.owner.current.get_ability_holder(/datum/abilityHolder/gang)
+		if (!gangHolder)
+			src.ability_holder = src.owner.current.add_ability_holder(/datum/abilityHolder/gang)
+		else
+			src.ability_holder = gangHolder
+
+		src.ability_holder.addAbility(/datum/targetable/gang/toggle_overlay)
+		src.ability_holder.addAbility(/datum/targetable/gang/locker_spot)
 
 		var/mob/living/carbon/human/H = src.owner.current
 
@@ -47,6 +62,7 @@
 
 	remove_equipment()
 		src.headset.remove_radio_upgrade()
+		src.owner.current.remove_ability_holder(/datum/abilityHolder/gang)
 
 	add_to_image_groups()
 		. = ..()
@@ -54,11 +70,21 @@
 		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		imgroup.add_mind(src.owner)
+		var/datum/client_image_group/objimgroup = get_image_group(CLIENT_IMAGE_GROUP_GANG_OBJECTIVES)
+		objimgroup.add_mind(src.owner)
+
 	remove_from_image_groups()
 		. = ..()
 		var/datum/client_image_group/image_group = get_image_group(src.gang)
 		image_group.remove_mind_mob_overlay(src.owner)
 		image_group.remove_mind(src.owner)
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		imgroup.remove_mind(src.owner)
+
+		var/datum/client_image_group/objimgroup = get_image_group(CLIENT_IMAGE_GROUP_GANG_OBJECTIVES)
+		objimgroup.remove_mind(src.owner)
 
 	assign_objectives()
 		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/gang/member, src)
@@ -66,17 +92,21 @@
 	announce()
 		. = ..()
 		var/gang_name = src.gang.gang_name
+		src.owner.current.show_antag_popup(ROLE_GANG_MEMBER)
 		if(gang_name == initial(src.gang.gang_name))
 			gang_name = "a yet to be named gang"
+		// this is a LOT of text, but it will help in the absence of the wiki
 		boutput(src.owner.current, SPAN_ALERT("You are now a member of [gang_name]!"))
 		boutput(src.owner.current, SPAN_ALERT("Your headset has been tuned to your gang's frequency. Prefix a message with :z to communicate on this channel."))
-		boutput(src.owner.current, SPAN_ALERT("Your boss is denoted by the blue G and your fellow gang members are denoted by the red G! Work together and do some crime!"))
-		boutput(src.owner.current, SPAN_ALERT("You are free to harm anyone who isn't in your gang, but be careful, they can do the same to you!"))
-		boutput(src.owner.current, SPAN_ALERT("You should only use bombs if you have a good reason to, and also run any bombings past your gang!"))
-		boutput(src.owner.current, SPAN_ALERT("Capture areas for your gang by using spraypaint on other gangs' tags (or on any turf if the area is unclaimed)."))
 		boutput(src.owner.current, SPAN_ALERT("You can get spraypaint, an outfit, and a gang headset from your locker."))
-		boutput(src.owner.current, SPAN_ALERT("Your gang will earn points for cash, drugs, and guns stored in your locker."))
-		boutput(src.owner.current, SPAN_ALERT("Make sure to defend your locker, as other gangs can break it open to loot it!"))
+		boutput(src.owner.current, SPAN_ALERT("Be proud of your outfit! Wearing it grants benefits, hiding it under a suit doesn't count."))
+		boutput(src.owner.current, SPAN_ALERT("------"))
+		boutput(src.owner.current, SPAN_ALERT("You and your gang earn points by claiming territory, finding dead drops, storing guns & drugs in your locker."))
+		boutput(src.owner.current, SPAN_ALERT("Capture areas for your gang by using spraypaint around the edges of your territory. The more populated the area, the better!"))
+		boutput(src.owner.current, SPAN_ALERT("In a few minutes, your gang will send PDA messages to civilians about a dead drop. Work with the civilians to find them for guns & loot!"))
+		boutput(src.owner.current, SPAN_ALERT("Additionally, a couple of large weapons crates will spawn over the shift. watch the radio to find out where!"))
+		boutput(src.owner.current, SPAN_ALERT("------"))
+		boutput(src.owner.current, SPAN_ALERT("You are free to harm anyone who isn't in your gang, but be careful, they can do the same to you!"))
 		if(src.gang.base)
 			boutput(src.owner.current, SPAN_ALERT("Your gang's base is located in [src.gang.base], along with your locker."))
 		else

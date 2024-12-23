@@ -88,7 +88,7 @@
 	},
 /area/shuttle/escape/centcom)
 "u" = (
-/obj/decal/fakeobjects/dreambeach/biggest/big_palm,
+/obj/fakeobject/dreambeach/biggest/big_palm,
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/dream/beach,
 /area/shuttle/escape/centcom)

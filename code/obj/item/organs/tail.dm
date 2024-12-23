@@ -45,11 +45,11 @@
 		if(src.colorful)
 			if (AHL && istype(AHL, /datum/appearanceHolder))
 				src.organ_color_1 = AHL.s_tone
-				src.organ_color_2 = AHL.customization_second_color
+				src.organ_color_2 = AHL.customizations["hair_middle"].color
 				src.donor_AH = AHL
 			else if (src.donor && ishuman(src.donor))	// Get the colors here so they dont change later, ie reattached on someone else
-				src.organ_color_1 = fix_colors(src.donor_AH.customization_first_color)
-				src.organ_color_2 = fix_colors(src.donor_AH.customization_second_color)
+				src.organ_color_1 = fix_colors(src.donor_AH.customizations["hair_bottom"].color)
+				src.organ_color_2 = fix_colors(src.donor_AH.customizations["hair_middle"].color)
 			else	// Just throw some colors in there or something
 				src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
 				src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
@@ -256,6 +256,13 @@
 	organ_image_under_suit_1 = "cat_under_suit"
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "cat_over_suit"
+
+/obj/item/organ/tail/cat/bingus
+	desc = "A long, not-furry tail."
+	organ_image_icon = 'icons/mob/bingus.dmi'
+	organ_image_under_suit_1 = "bingus_under_suit"
+	organ_image_under_suit_2 = null
+	organ_image_over_suit = "bingus_over_suit"
 
 /obj/item/organ/tail/roach
 	name = "roach abdomen"

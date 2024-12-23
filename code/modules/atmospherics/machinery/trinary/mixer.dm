@@ -1,8 +1,7 @@
-
-#define _SET_SIGNAL_GAS(GAS, _, _, MIXTURE, ID, ...) signal.data[ID + #GAS] = round(100*##MIXTURE.GAS/MIXTURE##_total_moles);
-#define _RESET_SIGNAL_GAS(GAS, _, _, ID, ...) signal.data[ID + #GAS] = 0;
-#define SET_SIGNAL_MIXTURE(MIXTURE, ID) APPLY_TO_GASES(_SET_SIGNAL_GAS, MIXTURE, ID)
-#define RESET_SIGNAL_MIXTURE(ID) APPLY_TO_GASES(_RESET_SIGNAL_GAS, ID)
+#define _SET_SIGNAL_GAS(GAS, _, _, MIXTURE, ...) gasses.Add(list(list(Name = #GAS, Color = gas_text_color(#GAS), Ratio = round(100*##MIXTURE.GAS/MIXTURE##_total_moles))));
+#define _RESET_SIGNAL_GAS(GAS, _, _, ...) gasses.Add(list(list(Gas = #GAS, Ratio = 0)));
+#define SET_SIGNAL_MIXTURE(MIXTURE) APPLY_TO_GASES(_SET_SIGNAL_GAS, MIXTURE)
+#define RESET_SIGNAL_MIXTURE APPLY_TO_GASES(_RESET_SIGNAL_GAS)
 /// Max mixer pressure.
 #define MAX_PRESSURE 20 * ONE_ATMOSPHERE
 
@@ -32,7 +31,7 @@
 
 /obj/machinery/atmospherics/trinary/mixer/initialize()
 		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, null, src.frequency)
 
 /obj/machinery/atmospherics/trinary/mixer/update_icon()
 	if(!(src.node1 && src.node2 && src.node3))
@@ -111,7 +110,7 @@
 
 		if ("set_ratio")
 			var/number = text2num(signal.data["parameter"])
-			if (number && isnum(number))
+			if ((number || number == 0) && isnum(number))
 				number = clamp(number, 0, 100)
 				src.node1_ratio = number/100
 				src.node2_ratio = (100-number)/100
@@ -124,8 +123,7 @@
 				src.target_pressure = 0
 
 	if (signal.data["tag"])
-		SPAWN(0.5 SECONDS)
-			if (src) src.report_status()
+		if (src) src.report_status()
 
 	UpdateIcon()
 
@@ -141,42 +139,34 @@
 	signal.data["pump_status"] = src.on ? "Online" : "Offline"
 
 	//Report gas concentration of in1
-	var/air1_total_moles = TOTAL_MOLES(src.air1)
-	if(air1_total_moles > 0)
-		SET_SIGNAL_MIXTURE(air1, "In1")
-		signal.data["in1kpa"] = round(MIXTURE_PRESSURE(src.air1), 0.1)
-		signal.data["in1temp"] = round(TO_CELSIUS(src.air1.temperature))
-	else
-		RESET_SIGNAL_MIXTURE("In1")
-		signal.data["in1tg"] = 0
+	signal.data["in1"] = get_air_data(src.air1)
 
 	//Report gas concentration of in2
-	var/air2_total_moles = TOTAL_MOLES(src.air2)
-	if(air2_total_moles > 0)
-		SET_SIGNAL_MIXTURE(air2, "In2")
-		signal.data["in2kpa"] = round(MIXTURE_PRESSURE(src.air2), 0.1)
-		signal.data["in2temp"] = round(TO_CELSIUS(src.air2.temperature))
-	else
-		RESET_SIGNAL_MIXTURE("In2")
-		signal.data["in2tg"] = 0
+	signal.data["in2"] = get_air_data(src.air2)
 
 	//Report transferred concentrations
-	signal.data["i1trans"] = src.node1_ratio*100
-	signal.data["i2trans"] = src.node2_ratio*100
+	signal.data["in1_ratio"] = src.node1_ratio*100
+	signal.data["in2_ratio"] = src.node2_ratio*100
 
 	//Report gas concentration of out
-	var/air3_total_moles = TOTAL_MOLES(src.air3)
-	if(air3_total_moles > 0)
-		SET_SIGNAL_MIXTURE(air3, "Out")
-		signal.data["outkpa"] = round(MIXTURE_PRESSURE(src.air3), 0.1)
-		signal.data["outtemp"] = round(TO_CELSIUS(src.air3.temperature))
-	else
-		RESET_SIGNAL_MIXTURE("Out")
-		signal.data["outtg"] = 0
+	signal.data["out"] = get_air_data(src.air3)
 
 	signal.data["address_tag"] = "mixercontrol"
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+
+/proc/get_air_data(var/datum/gas_mixture/air)
+	. = list()
+
+	var/list/gasses = list() // Needs to be a typed var for .Add(...) to work
+	var/air_total_moles = TOTAL_MOLES(air)
+	if(air_total_moles > 0)
+		SET_SIGNAL_MIXTURE(air)
+		.["kpa"] = round(MIXTURE_PRESSURE(air), 0.1)
+		.["temp"] = round(TO_CELSIUS(air.temperature))
+	else
+		RESET_SIGNAL_MIXTURE
+	.["gasses"] = gasses
 
 /obj/machinery/atmospherics/trinary/mixer/active
 	icon_state = "normal_on-map"

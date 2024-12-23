@@ -7,15 +7,30 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": false,
     "jsx": "preserve",
-    "lib": ["DOM", "DOM.Iterable", "ESNext", "ScriptHost"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext",
+      "ScriptHost"
+    ],
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitThis": true,
+    // "noUncheckedIndexedAccess": true, TODO: enable
+    // "noUnusedLocals": true, TODO: enable
+    // "noUnusedParameters": true, TODO: enable
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": false,
-    //"strictNullChecks": true,
-    "target": "ES3"
+    "strictBindCallApply": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "target": "ES5"
   },
-  "include": ["./*.d.ts", "./packages"]
+  "include": [
+    "./*.d.ts",
+    "./packages"
+  ]
 }

@@ -91,9 +91,10 @@
 				mind_to_be_transferred.remove_antagonist(antag)
 
 		// Remove any previous hivemind member roles, and add a new one.
+
 		mind_to_be_transferred.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 		mind_to_be_transferred.add_subordinate_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER, master = src.owner.mind)
-		mind_to_be_transferred.current.show_antag_popup("changeling_absorb")
+		mind_to_be_transferred.current.show_antag_popup(ROLE_CHANGELING_HIVEMIND_MEMBER)
 		return mind_to_be_transferred.current
 
 	proc/return_control_to_master()
@@ -154,7 +155,7 @@
 		var/datum/abilityHolder/changeling/H = holder
 		if (istype(H) && H.in_fakedeath)
 			return 1
-		return M.stat || M.getStatusDuration("paralysis")
+		return M.stat || M.getStatusDuration("unconscious")
 
 	castcheck()
 		if (incapacitationCheck())

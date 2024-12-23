@@ -16,7 +16,6 @@
 			return 1
 
 		var/mob/living/M = holder.owner
-		var/datum/abilityHolder/vampire/H = holder
 
 		if (!M)
 			return 1
@@ -29,6 +28,7 @@
 			boutput(M, SPAN_ALERT("You're already jamming radio signals."))
 			return 1
 
+		. = ..()
 		boutput(M, SPAN_NOTICE("<b>You will disrupt radio signals in your immediate vicinity for the next [src.duration / 10] seconds.</b>"))
 		OTHER_START_TRACKING_CAT(M, TR_CAT_RADIO_JAMMERS)
 		SPAWN(src.duration)
@@ -36,6 +36,5 @@
 				boutput(M, SPAN_ALERT("<b>You no longer disrupt radio signals.</b>"))
 				OTHER_STOP_TRACKING_CAT(M, TR_CAT_RADIO_JAMMERS)
 
-		if (istype(H)) H.blood_tracking_output(src.pointCost)
 		logTheThing(LOG_COMBAT, M, "uses radio interference at [log_loc(M)].")
 		return 0

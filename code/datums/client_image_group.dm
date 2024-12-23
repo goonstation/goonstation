@@ -34,7 +34,7 @@ var/global/list/datum/client_image_group/client_image_groups
 			else
 				return TRUE
 
-		return (src.always_visible || !image.loc.invisibility || istype(mob, /mob/dead/observer))
+		return (src.always_visible || !image.loc?.invisibility || istype(mob, /mob/dead/observer))
 
 	/// Adds an image to the image list and adds it to all mobs' clients directly where appropriate. Registers signal to track mob invisibility changes.
 	proc/add_image(image/img)

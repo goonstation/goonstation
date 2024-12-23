@@ -34,7 +34,7 @@
 			if (4)
 				if (probmult(10))
 					H.emote("cough")
-				if (probmult(5) && !H.getStatusDuration("weakened") && !H.getStatusDuration("paralysis"))
+				if (probmult(5) && !H.getStatusDuration("knockdown") && !H.getStatusDuration("unconscious"))
 					boutput(H, SPAN_ALERT("You suddenly feel very weak."))
 					H.emote("collapse")
 
@@ -43,7 +43,7 @@
 				if (probmult(50) && src.triggered_transformation == 0)
 					if (!istype(H.mutantrace, /datum/mutantrace/werewolf))
 						H.visible_message(SPAN_ALERT("<B>[H] starts having a seizure!</B>"))
-						H.changeStatus("weakened", 15 SECONDS)
+						H.changeStatus("knockdown", 15 SECONDS)
 						H.stuttering = max(10, H.stuttering)
 						H.make_jittery(1000)
 					else

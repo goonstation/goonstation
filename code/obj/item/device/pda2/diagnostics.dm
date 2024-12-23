@@ -193,7 +193,7 @@
 
 		if(result)
 			for(var/r in result)
-				dat += "<tt>[r]</tt><BR>"
+				dat += "<tt>[html_encode(r)]</tt><BR>"
 
 		dat +="<HR>"
 		if(mode == 0)
@@ -268,7 +268,7 @@
 		// ruck kit lock packets use this
 		if(signal.encryption)
 			t += "[signal.encryption]"
-			t2 = stars(t2, 15)
+			t2 = stars(t2, signal.encryption_obfuscation)
 
 		result += "[t][t2]"
 

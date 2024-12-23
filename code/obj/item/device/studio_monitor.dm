@@ -16,14 +16,14 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	frequency = R_FREQ_LOUDSPEAKERS
 	locked_frequency = TRUE
 	rand_pos = 0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBACK
 	w_class = W_CLASS_NORMAL
 	var/obj/effects/music/effect
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		pixel_y = 0
 		effect = new
 		src.vis_contents += effect
@@ -97,8 +97,8 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	var/overheated = FALSE
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		effect = new
 		speakers |= new /obj/item/device/radio/nukie_studio_monitor(src.loc)
 		speakers |= new /obj/item/device/radio/nukie_studio_monitor(src.loc)
@@ -118,7 +118,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	afterattack(atom/target, mob/user, reach, params)
 		. = ..()
 		if(ismob(target) || iscritter(target))
-			if(actions.hasAction(user,"rocking_out"))
+			if(actions.hasAction(user, /datum/action/bar/private/icon/rock_on))
 				play_notes()
 			else
 				playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
@@ -128,7 +128,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		..()
 
 	proc/play_notes()
-		if(!actions.hasAction(usr,"rocking_out"))
+		if(!actions.hasAction(usr, /datum/action/bar/private/icon/rock_on))
 			if(effect.is_playing()) return
 			effect.play_notes()
 			for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
@@ -211,7 +211,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 			boutput(src.the_mob, SPAN_ALERT("The speakers have overheated.  You must wait for them to cooldown!"))
 			. = FALSE
 
-		if(. && actions.hasAction(usr,"rocking_out"))
+		if(. && actions.hasAction(usr, /datum/action/bar/private/icon/rock_on))
 			boutput(src.the_mob, SPAN_ALERT("You are already playing something..."))
 			. = FALSE
 
@@ -298,9 +298,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
 			for(var/mob/living/HH in I.get_speaker_targets())
 				if(is_rock_immune(HH))
-					HH.delStatus("stunned")
-					HH.delStatus("weakened")
-					HH.delStatus("paralysis")
+					HH.remove_stuns()
 					HH.delStatus("slowed")
 					HH.delStatus("disorient")
 					HH.change_misstep_chance(-INFINITY)
@@ -359,7 +357,6 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 /datum/action/bar/private/icon/rock_on
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "rocking_out"
 	fill_bar = FALSE
 
 	var/obj/item/breaching_hammer/rock_sledge/instrument

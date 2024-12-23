@@ -30,7 +30,7 @@ A Flamethrower in various states of assembly
 	icon_state = "flamethrower_no_oxy_no_fuel"
 	item_state = "flamethrower0"
 	desc = "You are a firestarter!"
-	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	c_flags = null
 	force = 3
 	throwforce = 10
@@ -68,13 +68,14 @@ A Flamethrower in various states of assembly
 	move_triggered = 1
 	spread_angle = 0
 	shoot_delay = 1 SECOND
+	recoil_strength = 6
 
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_LARGE)
 		setItemSpecial(null)
 		set_current_projectile(new/datum/projectile/special/shotchem)
-		AddComponent(/datum/component/holdertargeting/fullauto, src.shoot_delay, src.shoot_delay, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, src.shoot_delay)
 
 	/// Just check if there's a usable air and fuel tank
 	canshoot(mob/user)
@@ -128,12 +129,11 @@ A Flamethrower in various states of assembly
 		var/datum/gas_mixture/gastank_aircontents = src.gastank.air_contents
 
 		var/chem_amount = min(src.fueltank?.reagents.total_volume, src.amt_chem/chem_divisor)
-		var/datum/reagents/chems = new(chem_amount)
 		if(!P.reagents)
 			P.create_reagents(chem_amount)
 		fueltank_reagents.trans_to_direct(P.reagents, chem_amount)
 
-		P_special_data["proj_color"] = chems.get_average_color()
+		P_special_data["proj_color"] = P.reagents.get_average_color().to_rgb()
 		P_special_data["IS_LIT"] = src.lit //100
 		P_special_data["burn_temp"] = src.base_temperature
 
@@ -174,7 +174,7 @@ A Flamethrower in various states of assembly
 				P_special_data["chem_pct_app_tile"] = 0.15
 		inventory_counter?.update_percent(src.fueltank?.reagents?.total_volume, src.fueltank?.reagents?.maximum_volume)
 
-/obj/item/gun/flamethrower/return_air()
+/obj/item/gun/flamethrower/return_air(direct = FALSE)
 	return src.gastank?.return_air()
 
 /obj/item/gun/flamethrower/assembled
@@ -182,7 +182,7 @@ A Flamethrower in various states of assembly
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	desc = "You are a firestarter!"
-	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD
 	force = 3
 	throwforce = 10
@@ -203,15 +203,15 @@ A Flamethrower in various states of assembly
 	icon_state = "syndflametank0"
 	base_icon_state = "syndflametank"
 	desc = "A back mounted fueltank/jetpack system for use with a tactical flamethrower."
-	flags = FPRINT | TABLEPASS | CONDUCT | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = TABLEPASS | CONDUCT | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBACK
 	var/obj/item/gun/flamethrower/backtank/linkedflamer
 	inventory_counter_enabled = 1
 	move_triggered = 1
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		src.create_reagents(4000)
 		inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
@@ -302,12 +302,14 @@ A Flamethrower in various states of assembly
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 /obj/item/gun/flamethrower/backtank
 	name = "\improper Vega flamethrower"
 	desc = "A military-grade flamethrower, supplied with fuel and propellant from a back-mounted fuelpack. Developed by Almagest Weapons Fabrication."
 	icon_state = "syndthrower_0"
 	item_state = "syndthrower_0"
 	force = 6
+	contraband = 7
 	two_handed = 1
 	swappable_tanks = 0 // Backpack or bust
 	spread_angle = 10
@@ -316,16 +318,27 @@ A Flamethrower in various states of assembly
 	can_dual_wield = 0
 	shoot_delay = 5 DECI SECONDS
 
-
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		var/obj/item/tank/jetpack/backtank/B = new /obj/item/tank/jetpack/backtank(src.loc)
-		src.gastank = B
-		src.fueltank = B
-		B.linkedflamer = src
+		src.link_tank(B)
 		..()
 		src.current_projectile.fullauto_valid = 1
 		src.set_current_projectile(src.current_projectile)
+
+	proc/link_tank(obj/item/tank/jetpack/backtank/tank)
+		src.gastank = tank
+		src.fueltank = tank
+		tank.linkedflamer = src
+
+	process_ammo(mob/user)
+		var/list/equipped_list = user.get_equipped_items()
+		if (!(src.gastank in equipped_list))
+			var/obj/item/tank/jetpack/backtank/tank = locate() in equipped_list
+			if (tank)
+				src.link_tank(tank)
+		return ..()
+
 
 	disposing()
 		if(istype(gastank, /obj/item/tank/jetpack/backtank/))
@@ -389,7 +402,7 @@ A Flamethrower in various states of assembly
 	var/obj/item/weldingtool/welder = null
 	var/obj/item/rods/rod = null
 	status = null
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	force = 3
 	throwforce = 5
 	throw_speed = 1
@@ -410,7 +423,7 @@ A Flamethrower in various states of assembly
 	var/obj/item/rods/rod = null
 	var/obj/item/device/igniter/igniter = null
 	status = null
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	force = 3
 	throwforce = 5
 	throw_speed = 1
@@ -460,8 +473,6 @@ A Flamethrower in various states of assembly
 			boutput(user, SPAN_ALERT("You need to be holding [src] to work on it!"))
 			return
 		var/obj/item/device/igniter/I = W
-		if (!( I.status ))
-			return
 		user.show_message(SPAN_NOTICE("You put the igniter in place, it still needs to be firmly attached."), 1)
 		var/obj/item/assembly/weld_rod/S = src
 		var/obj/item/assembly/w_r_ignite/R = new /obj/item/assembly/w_r_ignite( user )
@@ -632,6 +643,7 @@ A Flamethrower in various states of assembly
 		return	..()
 
 /obj/item/gun/flamethrower/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	var/mob/user
 	if(ismob(usr))
 		user = usr
@@ -735,7 +747,7 @@ A Flamethrower in various states of assembly
 					src.shoot_delay = 2 DECI SECONDS
 					src.chem_divisor = 1 //hehehe
 
-			AddComponent(/datum/component/holdertargeting/fullauto, src.shoot_delay, src.shoot_delay, 1)
+			AddComponent(/datum/component/holdertargeting/fullauto, src.shoot_delay)
 			set_current_projectile(src.current_projectile)
 
 		if ("change_temperature")

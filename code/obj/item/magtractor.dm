@@ -11,7 +11,7 @@ TYPEINFO(/obj/item/magtractor)
 	opacity = 0
 	density = 0
 	anchored = UNANCHORED
-	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY
+	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	force = 10
 	throwforce = 10
 	throw_speed = 1
@@ -39,7 +39,7 @@ TYPEINFO(/obj/item/magtractor)
 		//power usage here maybe??
 
 		if ((!src.holding || src.holding.disposed) && src.holder && processHeld) //If the item has been consumed somehow
-			actions.stopId("magpickerhold", src.holder)
+			actions.stopId(/datum/action/magPickerHold, src.holder)
 			processHeld = 0
 		return
 
@@ -85,7 +85,7 @@ TYPEINFO(/obj/item/magtractor)
 	attack_self(mob/user as mob)
 		if (src.holding && !src.holding.disposed)
 			//activate held item (if possible)
-			src.holding.attack_self(user)
+			src.holding.AttackSelf(user)
 			src.updateHeldOverlay(src.holding) //for items that update icon on activation (e.g. welders)
 		else
 			return 0
@@ -111,21 +111,21 @@ TYPEINFO(/obj/item/magtractor)
 			actions.start(new/datum/action/bar/private/icon/magPicker(target, src), user)
 
 		else if ((src.holding && src.holding.loc != src) || src.holding.disposed) // it's gone!!
-			actions.stopId("magpickerhold", user)
+			actions.stopId(/datum/action/magPickerHold, user)
 
 		return 1
 
 	throw_begin(atom/target)
 		..()
-		actions.stopId("magpicker", usr)
+		actions.stopId(/datum/action/bar/private/icon/magPicker, usr)
 		if (src.holding)
-			actions.stopId("magpickerhold", usr)
+			actions.stopId(/datum/action/magPickerHold, usr)
 
 	dropped(mob/user as mob)
 		..()
-		actions.stopId("magpicker", user)
+		actions.stopId(/datum/action/bar/private/icon/magPicker, user)
 		if (src.holding)
-			actions.stopId("magpickerhold", user)
+			actions.stopId(/datum/action/magPickerHold, user)
 
 	examine()
 		. = ..()
@@ -140,8 +140,8 @@ TYPEINFO(/obj/item/magtractor)
 		set desc = "Release the item currently held by the magtractor"
 		set category = "Local"
 
-		if (!src || !src.holding || usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis")) return 0
-		actions.stopId("magpickerhold", usr)
+		if (!src || !src.holding || usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown") || usr.getStatusDuration("unconscious")) return 0
+		actions.stopId(/datum/action/magPickerHold, usr)
 		return 1
 
 	proc/toggleHighPower()
@@ -150,7 +150,7 @@ TYPEINFO(/obj/item/magtractor)
 		set desc = "Increases power driven to the magtractor, allowing it to carry items while moving."
 		set category = "Local"
 
-		if (!src || usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis")) return 0
+		if (!src || usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown") || usr.getStatusDuration("unconscious")) return 0
 
 		var/image/magField = GetOverlayImage("magField")
 		var/msg = "<span class='notice'>You toggle the [src]'s HPM "
@@ -194,7 +194,7 @@ TYPEINFO(/obj/item/magtractor)
 
 		W.set_loc(src)
 		W.pickup(user)
-
+		logTheThing(LOG_STATION, user, "pick up [W] with a magtractor at [log_loc(user)]")
 		src.holding = W
 		src.processHeld = 1
 		src.w_class = W_CLASS_BULKY //bulky
@@ -263,6 +263,6 @@ TYPEINFO(/obj/item/magtractor)
 
 	Exited(Obj, newloc) // handles the held item going byebye
 		if(Obj == src.holding  && src.holder)
-			actions.stopId("magpickerhold", src.holder)
+			actions.stopId(/datum/action/magPickerHold, src.holder)
 
 /obj/item/magtractor/abilities = list(/obj/ability_button/magtractor_toggle, /obj/ability_button/magtractor_drop)

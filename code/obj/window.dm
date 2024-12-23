@@ -9,7 +9,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	density = 1
 	stops_space_move = 1
 	dir = NORTHEAST //full tile
-	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
+	flags = USEDELAY | ON_BORDER | FLUID_DENSE
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	text = "<font color=#aaf>#"
@@ -345,7 +345,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			return TRUE
 		if(istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
-			if(P.proj_data?.window_pass)
+			if(P.proj_data?.window_pass && !src.opacity)
 				return TRUE
 		if (!is_cardinal(dir))
 			return FALSE //full tile window, you can't move into it!
@@ -473,7 +473,10 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		else
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 75, 1)
-			src.damage_blunt(W.force)
+			if (ischoppingtool(W))
+				src.damage_blunt(W.force*4, user)
+			else
+				src.damage_blunt(W.force)
 			..()
 		return
 
@@ -584,7 +587,6 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 /datum/action/bar/icon/deconstruct_window
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "deconstruct_window"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "decon"
 	var/obj/window/the_window
@@ -693,19 +695,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 /obj/window/bulletproof/pyro
 	icon_state = "rpyro"
-/*
-/obj/window/supernorn
-	icon = 'icons/Testing/newicons/obj/NEWstructures.dmi'
-	dir = 5
 
-	attackby() // TODO: need to be able to smash them, this is a hack
-	rotate()
-		set hidden = 1
-
-	New()
-		for (var/turf/simulated/wall/auto/T in orange(1))
-			T.UpdateIcon()
-*/
 /obj/window/north
 	dir = NORTH
 
@@ -773,7 +763,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	health_multiplier = 2
 	alpha = 160
 	object_flags = 0 // so they don't inherit the HAS_DIRECTIONAL_BLOCKING flag from thindows
-	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = USEDELAY | ON_BORDER | FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 	var/mod = "W-"
 	var/connectdir
@@ -838,7 +828,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	update_icon()
 		if (!src.anchored)
 			icon_state = "[mod]0"
-			src.UpdateOverlays(null, "connect")
+			src.ClearSpecificOverlays("connect")
 			update_damage_overlay()
 			return
 
@@ -851,9 +841,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				src.connect_image = image(src.icon, "overlay-[overlaydir]")
 			else
 				src.connect_image.icon_state = "overlay-[overlaydir]"
-				src.UpdateOverlays(src.connect_image, "connect")
+				src.AddOverlays(src.connect_image, "connect")
 		else
-			src.UpdateOverlays(null, "connect")
+			src.ClearSpecificOverlays("connect")
 		src.update_damage_overlay()
 
 	proc/update_neighbors()
@@ -861,8 +851,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			T.UpdateIcon()
 		for (var/obj/window/auto/O in orange(1,src))
 			O.UpdateIcon()
-		for (var/obj/grille/G in orange(1,src))
-			G.UpdateIcon()
+		for (var/obj/mesh/M in orange(1,src))
+			M.UpdateIcon()
 
 	proc/update_damage_overlay()
 		var/health_percentage = health/health_max
@@ -882,7 +872,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			src.damage_image.icon_state = "light-[connectdir]"
 		else
 			src.damage_image.icon_state = null
-		src.UpdateOverlays(src.damage_image, "damage")
+		src.AddOverlays(src.damage_image, "damage")
 
 /obj/window/auto/the_tuff_stuff
 	explosion_resistance = 3

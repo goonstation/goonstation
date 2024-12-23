@@ -133,8 +133,12 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						var/westBound = world.maxx
 						var/eastBound = 1
 
+						// explode everything that exists where the shuttle is landing
 						for (var/atom/A as obj|mob in end_location)
 							SPAWN(0)
+								if (isliving(A) && !isintangible(A))
+									var/mob/living/M = A
+									M.unlock_medal("Reserved Parking", TRUE)
 								A.ex_act(1)
 
 						end_location.color = null //Remove the colored shuttle!
@@ -201,7 +205,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						var/display_time = round(src.timeleft()/60)
 						//if (display_time <= 0) // The Emergency Shuttle will be entering the wormhole to CentCom in 0 minutes!
 							//display_time = 1 // fuckofffffffffff
-						boutput(world, "<B>The Emergency Shuttle will be entering the wormhole to CentCom in [display_time] minute[s_es(display_time)]! Please prepare for wormhole traversal.</B>")
+						boutput(world, "<B>The Emergency Shuttle will be entering the Channel in [display_time] minute[s_es(display_time)]! Please prepare for Channel traversal.</B>")
 						src.announcement_done = SHUTTLE_ANNOUNCEMENT_WILL_DEPART_IN
 
 					else if (src.announcement_done < SHUTTLE_ANNOUNCEMENT_SHIP_CHARGE && timeleft < 30)
@@ -261,7 +265,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 										//DEBUG_MESSAGE("[M] is human and bonus_stun is [bonus_stun]")
 									if (!M.buckled || bonus_stun)
 										M.changeStatus("stunned", 2 SECONDS)
-										M.changeStatus("weakened", 2 SECONDS)
+										M.changeStatus("knockdown", 2 SECONDS)
 
 										if (prob(50) || bonus_stun)
 											var/atom/target = get_edge_target_turf(M, pick(alldirs))
@@ -269,7 +273,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 												if (M.buckled) M.buckled.unbuckle()
 												M.throw_at(target, 25, 1)
 												if (bonus_stun)
-													M.changeStatus("paralysis", 6 SECONDS)
+													M.changeStatus("unconscious", 6 SECONDS)
 													M.playsound_local(target, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 													M.show_text("You are thrown off the chair! [prob(50) ? "Standing on that during takeoff was a terrible idea!" : null]", "red")
 
@@ -286,7 +290,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						if(station_repair.station_generator)
 							var/list/turf/turfs_to_fix = get_area_turfs(start_location)
 							if(length(turfs_to_fix))
-								station_repair.repair_turfs(turfs_to_fix)
+								station_repair.repair_turfs(turfs_to_fix, force_floor=TRUE)
 
 						DEBUG_MESSAGE("Done moving shuttle!")
 						settimeleft(SHUTTLETRANSITTIME)

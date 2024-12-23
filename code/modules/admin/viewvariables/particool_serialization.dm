@@ -92,7 +92,7 @@ proc/binobj_to_generator(var/binobj)
 	else
 		var/regex/valuesExtractRegex = regex(@"\s+[A-Za-z0-9]+\([^)]*\),\s+[a-zA-Z]+\([^)]*\),\s+")
 		valuesExtractRegex.Find(parsedText)
-		var/valuesText = trim(valuesExtractRegex.match)
+		var/valuesText = trimtext(valuesExtractRegex.match)
 		parsedText = replacetext(parsedText, valuesExtractRegex, "")
 
 		var/list/generatorTypeAndRandomDistribution = splittext(parsedText, ",")
@@ -105,22 +105,22 @@ proc/binobj_to_generator(var/binobj)
 
 	// extracted values
 	generatorType = replacetext(generatorType, "\"", "")
-	randomDistributionType = trim(randomDistributionType)
-	A = trim(A)
+	randomDistributionType = trimtext(randomDistributionType)
+	A = trimtext(A)
 	if (findtext(A,",") != 0) // dealing with a comma separated list
 		var/list/l = list()
 		var/list/split_values = splittext(A, ",")
 		for(var/i = 1 to length(split_values))
-			l.Add(text2num_safe(trim(split_values[i])))
+			l.Add(text2num_safe(trimtext(split_values[i])))
 		A = l
 	else
 		A = text2num_safe(A)
-	B = trim(B)
+	B = trimtext(B)
 	if (findtext(B,",") != 0) // dealing with a comma separated list
 		var/list/l = list()
 		var/list/split_values = splittext(B, ",")
 		for(var/i = 1 to length(split_values))
-			l.Add(text2num_safe(trim(split_values[i])))
+			l.Add(text2num_safe(trimtext(split_values[i])))
 		B = l
 	else
 		B = text2num_safe(B)

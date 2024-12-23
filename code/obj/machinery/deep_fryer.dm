@@ -161,12 +161,9 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		qdel(src.fryitem)
 		src.fryitem = null
 		src.visible_message(SPAN_ALERT("The ice reacts violently with the hot oil!"))
-		fireflash(src, 3)
+		fireflash(src, 3, chemfire = CHEM_FIRE_RED)
 		UnsubscribeProcess()
 		return
-
-	if (!src.fryitem.reagents)
-		src.fryitem.create_reagents(50)
 
 	src.reagents.trans_to(src.fryitem, 2)
 
@@ -179,7 +176,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	else if(src.cooktime >= 120)
 		if((src.cooktime % 5) == 0 && prob(10))
 			src.visible_message(SPAN_ALERT("[src] sprays burning oil all around it!"))
-			fireflash(src, 1)
+			fireflash(src, 1, chemfire = CHEM_FIRE_RED)
 
 /obj/machinery/deep_fryer/custom_suicide = TRUE
 /obj/machinery/deep_fryer/suicide(var/mob/user as mob)
@@ -207,12 +204,18 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	src.cooktime = 0
 	src.fryitem = frying
 	src.UpdateIcon()
+	if (!src.fryitem.reagents)
+		src.fryitem.create_reagents(50)
+	if (round(src.fryitem.reagents.total_volume, 1) == round(src.fryitem.reagents.maximum_volume, 1)) //I LOVE FLOATING POINTS
+		src.fryitem.reagents.maximum_volume += 25
 	SubscribeToProcess()
 
 /obj/machinery/deep_fryer/proc/fryify(atom/movable/thing, burnt=FALSE)
 	var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = new(src)
 
-	if(burnt)
+	//photos cause exponential lag when deepfried, see #17848
+	//feel free to remove this if you can figure out why
+	if(burnt || istype(thing, /obj/item/photo))
 		if (ismob(thing))
 			var/mob/M = thing
 			M.ghostize()

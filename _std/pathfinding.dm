@@ -291,7 +291,7 @@
 	while(unwind_node.previous_node)
 		var/dir_goal = get_dir(iter_turf, unwind_node.previous_node.tile)
 
-		for(var/i = 1 to unwind_node.jumps)
+		for(var/i in 1 to unwind_node.jumps)
 			var/turf/next_turf = get_step(iter_turf,dir_goal)
 			if(cardinal_only && !is_cardinal(dir_goal))
 				var/candidate_dir = dir_goal & (prob(50) ? (NORTH | SOUTH) : (EAST | WEST))
@@ -340,7 +340,7 @@
 		var/list/reached_target_goals = null
 		if(mintargetdist)
 			for(var/turf/T as anything in ends)
-				if(GET_DIST(current_turf, T) <= mintargetdist && !istype(current_turf,/turf/simulated/wall) && !is_blocked_turf(current_turf))
+				if(GET_DIST(current_turf, T) <= mintargetdist && !istype(current_turf, /turf/simulated/wall) && !is_blocked_turf(current_turf))
 					LAZYLISTADD(reached_target_goals, ends[T])
 					ends -= T
 		else if(current_turf in ends)

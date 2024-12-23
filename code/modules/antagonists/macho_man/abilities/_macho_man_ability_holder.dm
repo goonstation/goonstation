@@ -13,3 +13,4 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 	last_cast = 0
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/macho
+	interrupt_action_bars = FALSE

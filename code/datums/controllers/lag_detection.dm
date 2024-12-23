@@ -78,6 +78,8 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 				force_start = TRUE
 			else
 				highCpuCount = 0
+			if (global.current_state >= GAME_STATE_FINISHED) //we don't reeaally care about the end of game lag spike, probably
+				return
 			if(highCpuCount >= CPU_START_PROFILING_COUNT || force_start)
 				var/prof_flags = PROFILE_START
 				#ifndef PRE_PROFILING_ENABLED

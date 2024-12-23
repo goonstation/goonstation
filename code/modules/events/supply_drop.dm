@@ -21,10 +21,10 @@
 			SPAWN(rand(0, 20)) //Looks better with a bit of variance
 				new/obj/effect/supplymarker(pick(turfs), preDropTime)
 		for(var/datum/mind/M in ticker.minds)
-			boutput(M.current, SPAN_NOTICE("A supply drop will happen soon in the [A.name]"))
+			boutput(M.current, SPAN_BLOBALERT("A supply drop will happen soon in the [A.name]"))
 		SPAWN(20 SECONDS)
 			for(var/datum/mind/M in ticker.minds)
-				boutput(M.current, "[SPAN_NOTICE("A supply drop occurred in [A.name]!")]")
+				boutput(M.current, "[SPAN_BLOBALERT("A supply drop occurred in [A.name]!")]")
 
 /obj/effect/supplymarker
 	name = ""
@@ -138,10 +138,12 @@
 	var/list/obj/murder_supplies = list()
 
 	for(var/datum/syndicate_buylist/D in syndi_buylist_cache)
-		if(D.item)
-			if(!D.br_allowed)
-				continue
-			murder_supplies.Add(D.item)
+		if(length(D.items) == 0)
+			continue
+		if(!D.br_allowed)
+			continue
+		for (var/item in D.items)
+			murder_supplies.Add(item)
 
 	var/datum/syndicate_buylist/S = pick(murder_supplies)
 	var/pickedPath = pick(pickedClothingPath, S) //50-50 of either clothes or traitor item.

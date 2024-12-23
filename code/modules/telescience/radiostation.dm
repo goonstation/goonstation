@@ -247,7 +247,7 @@
 
 	New()
 		. = ..()
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "pda", FREQ_PDA)
 		START_TRACKING
 
 	get_desc()
@@ -269,8 +269,8 @@
 			boutput(user, SPAN_ALERT("Music is already playing, it'd be rude to interrupt!"))
 		else
 			var/obj/item/record/inserted_record = W
-			var/R = copytext(html_encode(tgui_input_text(user, "What is the name of this record?", "Record Name", inserted_record.record_name)), 1, MAX_MESSAGE_LEN)
-			if(!R)
+			var/record_name = copytext(tgui_input_text(user, "What is the name of this record?", "Record Name", inserted_record.record_name), 1, MAX_MESSAGE_LEN)
+			if(!record_name)
 				boutput(user, SPAN_NOTICE("You decide not to play this record."))
 				return
 			if(!in_interact_range(src, user))
@@ -278,17 +278,27 @@
 				return
 			if(is_music_playing()) // someone queuing up several input windows
 				return
-			phrase_log.log_phrase("record", R)
+			phrase_log.log_phrase("record", html_encode(record_name))
 			boutput(user, "You insert the record into the record player.")
 			src.visible_message(SPAN_NOTICE("<b>[user] inserts the record into the record player.</b>"))
 			user.drop_item()
 			W.set_loc(src)
 			src.record_inside = W
 			src.has_record = TRUE
-			user.client.play_music_radio(record_inside.song, R)
+
+			if (istype(W, /obj/item/record/remote))
+				// play remote
+				var/obj/item/record/remote/YT = W
+				if (YT.youtube)
+					play_youtube_remote_url(user, YT.youtube)
+				else
+					boutput(user, SPAN_ALERT("You have no idea what happened but this record does not seem to work. Maybe call an admin."))
+					return	// guh????
+			else
+				user.client.play_music_radio(record_inside.song, html_encode(record_name))
 			/// PDA message ///
 			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [R].", "group" = MGA_RADIO)
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [record_name].", "group" = MGA_RADIO)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 #ifdef UNDERWATER_MAP
 			EXTEND_COOLDOWN(global, "music", 500 SECONDS)
@@ -309,6 +319,22 @@
 		else
 			boutput(user, "You can feel heat emanating from the record player. You should probably wait a while before touching it. It's kinda old and you don't want to break it.")
 
+/obj/submachine/record_player/portable
+	name = "portable record player"
+	desc = "An old school record player, painted in a cool syndicate-red."
+	icon_state = "portable_record"
+	density = 0
+
+	New()
+		..()
+		src.AddComponent(/datum/component/foldable,/obj/item/objBriefcase/syndicate)
+		var/datum/component/foldable/fold_component = src.GetComponent(/datum/component/foldable) //Fold up into a briefcase the first spawn
+		if(!fold_component?.the_briefcase)
+			return
+		var/obj/item/objBriefcase/briefcase = fold_component.the_briefcase
+		if (briefcase)
+			briefcase.set_loc(get_turf(src))
+			src.set_loc(briefcase)
 // Records
 /obj/item/record
 	name = "record"
@@ -339,7 +365,7 @@
 			target.visible_message(SPAN_ALERT("<B>[user] smashes [src] over [target]'s head!</B>"))
 			logTheThing(LOG_COMBAT, user, "smashes [src] over [constructTarget(target,"combat")]'s head! ")
 		target.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
-		target.changeStatus("weakened", 2 SECONDS)
+		target.changeStatus("knockdown", 2 SECONDS)
 		playsound(src, "shatter", 70, 1)
 		var/obj/O = new /obj/item/raw_material/shard/glass
 		O.set_loc(get_turf(target))
@@ -696,6 +722,35 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	song = 'sound/radio_station/music/core_of_poo.ogg'
 	color = "#DE9F47"
 
+/obj/item/record/remote
+	name = "remote record"
+	desc = "You know those casettes that you put in tape decks that are actually aux cables? This is like that, but for records! You have no idea how it works."
+	icon_state = "record_red"
+	var/youtube = null
+
+	get_desc()
+		if (src.youtube)
+			. += " It looks like it will play <a href=\"[copytext(src.youtube,1,5) == "http" ? "[src.youtube]" : "https://youtu.be/[src.youtube]"]\">this</a>, whatever that is."
+		else
+			. += " It looks like this isn't connected to anything. You should probably call an admin."
+
+	attack_self(mob/user as mob)
+		if (!src.youtube && isadmin(user))
+			var/yt = input(user, "Input the Youtube video information\nEither the full URL e.g. https://www.youtube.com/watch?v=145RCdUwAxM\nOr just the video ID e.g. 145RCdUwAxM", "Set Record Audio") as null|text
+			if (yt)
+				boutput(user, SPAN_NOTICE("You configure the record's radio. This makes sense, I promise."))
+				src.name = "remote record - \"???\""
+				src.youtube = yt
+				src.record_name = yt
+				var/de = input(user, "What should the name of this record be?", "Set Record Name") as null|text
+				if (de)
+					src.name = "remote record - \"[de]\""
+					src.record_name = de
+		else if (!src.youtube && !isadmin(user))
+			boutput(user, SPAN_NOTICE("You have no idea how to configure this thing! It's written in some sort of weird language that makes your head hurt and your ears throb with knocking sounds."))
+		return
+
+
 // Record sets
 /obj/item/storage/box/record
 	name = "record sleeve"
@@ -1020,7 +1075,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 		/obj/item/radio_tape/audio_book/heisenbee)*/
 
 //Fake objects
-/obj/decal/fakeobjects/cpucontroller
+/obj/fakeobject/cpucontroller
 	name = "central processing unit"
 	desc = "The computing core of the mainframe."
 	icon = 'icons/obj/large/64x64.dmi'
@@ -1030,7 +1085,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/vacuumtape
+/obj/fakeobject/vacuumtape
 	name = "vacuum column tape drive"
 	desc = "A large 9 track magnetic tape storage unit."
 	icon = 'icons/obj/large/32x64.dmi'
@@ -1040,7 +1095,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/operatorconsole
+/obj/fakeobject/operatorconsole
 	name = "operator's console"
 	desc = "The computer operating console, covered in fancy toggle switches and register value lamps."
 	icon = 'icons/obj/large/32x64.dmi'
@@ -1050,14 +1105,14 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/broadcastcomputer
+/obj/fakeobject/broadcastcomputer
 	name = "broadcast server"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "gannets_machine11"
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/tapedeck
+/obj/fakeobject/tapedeck
 	name = "reel to reel tape deck"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "gannets_machine20"

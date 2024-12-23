@@ -7,7 +7,7 @@
 	density = TRUE
 	speechverb_say = "oinks"
 	speechverb_exclaim = "squeals"
-	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	name_the_meat = FALSE
 	var/feral = FALSE
 
@@ -50,8 +50,7 @@
 		else
 			if (isintangible(C)) return FALSE
 			if (isdead(C)) return FALSE
-			if (src.faction)
-				if (C.faction & src.faction) return FALSE
+			if (length(C.faction & src.faction)) return FALSE
 			if (istype(C, /mob/living/critter/small_animal/mouse)) return TRUE
 
 	death(var/gibbed)
@@ -84,3 +83,13 @@
 		limb.borg_damage_bonus = 5
 		limb.human_desorient_duration = 0
 		limb.human_stam_damage = 20
+
+/mob/living/critter/small_animal/pig/flying
+	icon_state = "pig-fly"
+	ai_type = /datum/aiHolder/pig_flying
+
+	New(loc)
+		..()
+		src.flags |= TABLEPASS
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+		animate_bumble(src)

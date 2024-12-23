@@ -45,35 +45,108 @@
 	regenRate = 0
 	tabName = "Thrall"
 	notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
+#ifdef BONUS_POINTS
+	points = 300
+#else
 	points = 0
+#endif
 	remove_on_clone = TRUE
 
 	var/mob/vamp_isbiting = null
 	var/datum/abilityHolder/vampire/master
 
-	var/last_blood_points = 0
+#ifdef RP_MODE
+	var/blood_decay = 0.125
+#else
+	var/blood_decay = 0.25
+#endif
+	var/blood_to_health_scalar = 0.75 //! 200 blood = 150 health
+	var/min_max_health = 40 //! Minimum health we can get to via blood loss. also lol
 
-	onLife(var/mult = 1) //failsafe for UI not doing its update correctly elsewhere
+	///How far you can stray from your vampire without losing blood
+	var/max_range = 20
+
+	///Counter that ticks up as you spend time away from your vampire before you start to loose blood
+	var/grace_count = 0
+	///How many (mult adjusted) life ticks before you start to lose blood
+	var/grace_limit = 1.5
+
+	onLife(var/mult = 1)
 		.= 0
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
-				var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
+		var/mob/living/owner_mob = src.owner
+		if (!istype(owner_mob))
+			return
+		//normal bleeding
+		if (owner_mob.bleeding)
+			src.points -= src.blood_decay * owner_mob.bleeding
 
-				if (last_blood_points != V.blood_points)
-					last_blood_points = V.blood_points
-					src.updateText(0, src.x_occupied, src.y_occupied)
+		//passive decay
+		src.points -= blood_decay * mult
+		src.points = max(0,src.points)
 
+		if (ON_COOLDOWN(src.owner, "thrall_blood_waste", 5 SECONDS))
+			src.update_max_health()
+			return
+
+		var/dist
+		if (!master?.owner || get_z(master.owner) != get_z(src.owner))
+			dist = 60
+		else
+			dist = GET_DIST(get_turf(master.owner), get_turf(src.owner))
+		dist = min(dist, 100)
+		if (dist > src.max_range)
+			if (src.grace_count > src.grace_limit)
+				var/blood_loss = 15 + dist/2
+				src.blood_waste(blood_loss)
+			else
+				src.grace_count += mult
+				boutput(src.owner, SPAN_ALERT("You feel an insistent tug, you need to stick closer to your master."))
+				src.waste_effect(0.2)
+		else
+			src.grace_count = 0 //we're within range, reset
+
+		src.update_max_health()
+
+	proc/update_max_health()
+		src.owner.max_health = src.points * blood_to_health_scalar
+		src.owner.max_health = max(src.min_max_health, src.owner.max_health)
+		global.health_update_queue |= src.owner
+		src.updateText(0, src.x_occupied, src.y_occupied) //might not be needed?
+
+	///Lose an amount of blood, first from points then from bloodstream
+	proc/blood_waste(blood_loss)
+		var/overflow_loss = blood_loss - src.points //the amount not covered by our points
+		src.points = max(0, src.points - blood_loss)
+		var/mob/living/living_owner = src.owner //the calling proc can be responsible for checking this, it needs some responsibility in its life
+		if (src.points <= 0 && living_owner.blood_volume < 200)
+			boutput(src.owner, SPAN_ALERT(SPAN_BOLD(pick("You feel your master's power fading...", "NEED. BLOOOD.", "You can feel death trying to take you back."))))
+		else
+			boutput(src.owner, SPAN_ALERT(SPAN_BOLD("You feel [pick("your gut wrench", "your skin bleed", "your heart twist")] as you stray too far from your master.")))
+		if (overflow_loss > 0)
+			bleed(src.owner, overflow_loss, 5, get_turf(src.owner)) //take it from our actual bloodstream instead
+			src.waste_effect(1)
+		else
+			var/obj/decal/cleanable/blood/blood_decal = make_cleanable(/obj/decal/cleanable/blood, get_turf(src.owner))
+			if (src.owner.bioHolder)
+				blood_decal.blood_DNA = src.owner.bioHolder.Uid
+				blood_decal.blood_type = src.owner.bioHolder.bloodType
+			src.waste_effect(0.4)
+
+	proc/waste_effect(severity)
+		if (!src.owner.client)
+			return
+		var/original_color = src.owner.client.color
+		var/flash_color = rgb(255, (1-severity) * 255, (1-severity) * 255)
+		animate(src.owner.client, color=flash_color, time=0.4 SECONDS)
+		animate(color=original_color, time=1.5 SECONDS)
+		if (severity > 0.2)
+			playsound(src.owner, 'sound/effects/heartbeat.ogg', 60, FALSE)
 
 	onAbilityStat() // In the 'Vampire' tab.
 		..()
 		.= list()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
-				var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
-				.["Blood:"] = round(V.blood_points)
-				.["Max HP:"] = round(H.max_health)
+		.["Blood:"] = round(src.points)
+		.["Max HP:"] = round(src.owner.max_health)
 
 	proc/msg_to_master(var/msg)
 		if (master)
@@ -81,17 +154,12 @@
 
 	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
 		if(!total_blood)
-			var/mob/living/carbon/human/M = owner
-			if(istype(M) && istype(M.mutantrace, /datum/mutantrace/vampiric_thrall))
-				var/datum/mutantrace/vampiric_thrall/V = M.mutantrace
-				if (V.blood_points < 0)
-					V.blood_points = 0
-					if (haine_blood_debug) logTheThing(LOG_DEBUG, M, "<b>HAINE BLOOD DEBUG:</b> [M]'s blood_points dropped below 0 and was reset to 0")
-
-				if (set_null)
-					V.blood_points = 0
-				else
-					V.blood_points = max(V.blood_points + change, 0)
+			if (src.points < 0)
+				src.points = 0
+			if (set_null)
+				src.points = 0
+			else
+				src.points = max(src.points + change, 0)
 
 
 /datum/targetable/vampiric_thrall
@@ -152,12 +220,12 @@
 
 		switch (stunned_only_is_okay)
 			if (0)
-				if (!isalive(M) || M.getStatusDuration("stunned") > 0 || M.getStatusDuration("paralysis") > 0 || M.getStatusDuration("weakened"))
+				if (!isalive(M) || M.getStatusDuration("stunned") > 0 || M.getStatusDuration("unconscious") > 0 || M.getStatusDuration("knockdown"))
 					return 0
 				else
 					return 1
 			if (1)
-				if (!isalive(M) || M.getStatusDuration("paralysis") > 0)
+				if (!isalive(M) || M.getStatusDuration("unconscious") > 0)
 					return 0
 				else
 					return 1

@@ -45,12 +45,12 @@
 
 	proc/update_color(datum/appearanceHolder/AH, side)
 		if(src.change_iris)
-			if (AH.customization_first.id == "hetcro[side]")
-				src.iris_color = AH.customization_first_color
-			else if (AH.customization_second.id == "hetcro[side]")
-				src.iris_color = AH.customization_second_color
-			else if (AH.customization_third.id == "hetcro[side]")
-				src.iris_color = AH.customization_third_color
+			if (AH.customizations["hair_bottom"].style.id == "hetcro[side]")
+				src.iris_color = AH.customizations["hair_bottom"].color
+			else if (AH.customizations["hair_middle"].style.id == "hetcro[side]")
+				src.iris_color = AH.customizations["hair_middle"].color
+			else if (AH.customizations["hair_top"].style.id == "hetcro[side]")
+				src.iris_color = AH.customizations["hair_top"].color
 			else
 				src.iris_color = AH.e_color
 			var/image/iris_image = image(src.icon, src, "[iris_state_override || icon_state]-iris")
@@ -143,7 +143,7 @@ TYPEINFO(/obj/item/organ/eye/cyber)
 	emp_act()
 		..()
 		if (!src.broken)
-			src.take_damage(20, 20, 0)
+			src.donor.take_eye_damage(0.01, 0) //nonzero amount of eye damage in order to trigger actually updating the blindness/etc
 			if (src.holder && src.holder.donor)
 				src.holder.donor.show_text("<b>Your [src.organ_name] [pick("crackles and sparks", "makes a weird crunchy noise", "buzzes strangely")]!</b>", "red")
 
@@ -263,26 +263,19 @@ TYPEINFO(/obj/item/organ/eye/cyber/meson)
 		if (ishuman(M))
 			src.assigned = M
 			if (src.on)
-				src.assigned.vision.set_scan(1)
-				APPLY_ATOM_PROPERTY(M, PROP_MOB_MESONVISION, src)
+				src.assigned.meson(src)
 
 	on_removal()
-		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)
-		if (istype(assigned.glasses, /obj/item/clothing/glasses/visor))
-			return
-		else
-			src.assigned.vision.set_scan(0)
+		src.assigned.unmeson(src)
 		..()
 
 	proc/toggle()
 		src.on = !src.on
 		playsound(assigned, 'sound/items/mesonactivate.ogg', 30, TRUE)
 		if (src.on)
-			assigned.vision.set_scan(1)
-			APPLY_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)
+			src.assigned.meson(src)
 		else
-			assigned.vision.set_scan(0)
-			REMOVE_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)
+			src.assigned.unmeson(src)
 
 TYPEINFO(/obj/item/organ/eye/cyber/spectro)
 	mats = 7

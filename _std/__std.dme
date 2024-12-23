@@ -5,12 +5,16 @@
  * the order that things are compiled in is important. please stick with alphabetical order unless it wont compile in alphabetical order.
  */
 
+#if fexists("__build.local.dm")
+#include "__build.local.dm"			// this is for setting local testing defines, like `#define STOP_DISTRACTING_ME` (before due to collated defines)
+#endif
 #include "__build.dm"				// this controls how a lot of our defines and macros and code is compiled, so it absolutely needs to be the first
 #include "macros\_metamacros.dm"	// this has some structural helpers that a lot of other macros/defines use, so it needs to be near the start
 #include "_spaceman_dmm.dm"			// linter stuff is used in other macros
 #include "mapDefines.dm"			// knowing if we're underwater is important for some later macros
 #include "setup.dm"					// initializes important stuff for later macros
 #include "defines\_units.dm"		// this has some unit defines that a lot of other macros/defines use, so it needs to go near the start too
+#include "macros\_unit_conversions.dm"
 #include "defines\lag.dm"			// the all important LAGCHECK()
 #include "address.dm"
 #include "types.dm"					// stuff like childrentypesof()
@@ -30,12 +34,15 @@
 #include "defines\atom.dm"
 #include "defines\bioeffect.dm"
 #include "defines\blocking.dm"
+#include "defines\burning.dm"
 #include "defines\camera_coverage.dm"
 #include "defines\chemicompiler.dm"
 #include "defines\chemistry.dm"
+#include "defines\chem_fire.dm"
 #include "defines\client.dm"
 #include "defines\cloner_defects.dm"
 #include "defines\clothing.dm"
+#include "defines\clothingbooth.dm"
 #include "defines\combat.dm"
 #include "defines\component_defines\component_defines_atom.dm"
 #include "defines\component_defines\component_defines_datum.dm"
@@ -55,9 +62,12 @@
 #include "defines\economy.dm"
 #include "defines\ephemeral.dm"
 #include "defines\events.dm"
+#include "defines\faith.dm"
 #include "defines\floors.dm"
 #include "defines\fluid.dm"
+#include "defines\gang.dm"
 #include "defines\food.dm"
+#include "defines\hydroponics.dm"
 #include "defines\infernal.dm"
 #include "defines\input.dm"
 #include "defines\item.dm"
@@ -70,22 +80,24 @@
 #include "defines\lighting.dm"
 #include "defines\living.dm"
 #include "defines\logging.dm"
+#include "defines\manufacturing.dm"
 #include "defines\materials.dm"
 #include "defines\mechanics.dm"
 #include "defines\medals.dm"
+#include "defines\medical.dm"
 #include "defines\message_lengths.dm"
 #include "defines\minimap.dm"
 #include "defines\mob.dm"
 #include "defines\movement.dm"
 #include "defines\mutantraces.dm"
 #include "defines\obj.dm"
-#include "defines\pathology.dm"
 #include "defines\pod_door_access_levels.dm"
 #include "defines\preferences.dm"
 #include "defines\process.dm"
 #include "defines\projectiles.dm"
 #include "defines\radio.dm"
 #include "defines\RCD.dm"
+#include "defines\speech_pro.dm"
 #include "defines\reagents.dm"
 #include "defines\robot.dm"
 #include "defines\roles.dm"
@@ -98,6 +110,7 @@
 #include "defines\spacebee_extension.dm"
 #include "defines\speed.dm"
 #include "defines\stamina.dm"
+#include "defines\status_display.dm"
 #include "defines\status_effects.dm"
 #include "defines\storage.dm"
 #include "defines\surgery.dm"
@@ -105,7 +118,9 @@
 #include "defines\temperatures.dm"
 #include "defines\time.dm"
 #include "defines\tooltips.dm"
+#include "defines\tracy.dm"
 #include "defines\traits.dm"
+#include "defines\trader.dm"
 #include "defines\turf.dm"
 #include "defines\ui.dm"
 #include "defines\uplink.dm"
@@ -166,6 +181,7 @@
 #include "machinery.dm"
 #include "map.dm"
 #include "math.dm"
+#include "macros\luck.dm"
 #include "matrix.dm"
 #include "parallax.dm"
 #include "pathfinding.dm"
@@ -177,6 +193,7 @@
 #include "sorting.dm"
 #include "spatial_hashing.dm"
 #include "text.dm"
+#include "tgs.config.dm"
 #include "tgs.dm"
 #include "tgui.dm"
 #include "unionfind.dm"

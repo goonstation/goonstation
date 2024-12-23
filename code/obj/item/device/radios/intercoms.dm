@@ -41,7 +41,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 			if(new_color)
 				screen_image.color = new_color
 		screen_image.alpha = 180
-		src.UpdateOverlays(screen_image, "screen")
+		src.AddOverlays(screen_image, "screen")
 		if(src.pixel_x == 0 && src.pixel_y == 0)
 			update_pixel_offset_dir(src,null,src.dir)
 
@@ -51,12 +51,12 @@ TYPEINFO(/obj/item/device/radio/intercom)
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
 	src.add_fingerprint(user)
 	SPAWN(0)
-		attack_self(user)
+		src.AttackSelf(user)
 
 /obj/item/device/radio/intercom/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	SPAWN(0)
-		attack_self(user)
+		src.AttackSelf(user)
 
 /obj/item/device/radio/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/reagent_containers/food/fish))
@@ -202,6 +202,16 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	initialize()
 		set_frequency(frequency)
 
+/obj/item/device/radio/intercom/mining
+	name = "Mining Intercom"
+	frequency = R_FREQ_INTERCOM_MINING
+	broadcasting = FALSE
+	device_color = "#6b4e0b"
+
+	initialize(player_caused_init)
+		. = ..()
+		src.set_frequency(frequency)
+
 /obj/item/device/radio/intercom/catering
 	name = "Catering Intercom"
 	frequency = R_FREQ_INTERCOM_CATERING
@@ -332,7 +342,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	device_color = "#3983C6" // for chat color
 
 	// burning stuff
-	burn_type = 1 // burn down to a glob
+	burn_remains = BURN_REMAINS_MELT // burn down to a glob
 	burn_possible = TRUE
 	burn_point = 300
 	health = 50 // same as a plank
@@ -358,3 +368,11 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 	update_pixel_offset_dir()
 		return // no
+
+/obj/item/device/radio/intercom/AI/handheld
+	name = "Portable Intercom"
+	desc = "A portable intercom that's useful to do all the things intercoms normally do, which is mostly listening in on people."
+	broadcasting = FALSE
+	listening = FALSE
+	anchored = UNANCHORED
+	icon_state = "intercom_pot"

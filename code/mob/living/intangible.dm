@@ -9,6 +9,7 @@
 	throws_can_hit_me = FALSE
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP | MOVE_NOCLIP
 	canbegrabbed = FALSE
+	can_lie = FALSE
 
 	New()
 		. = ..()

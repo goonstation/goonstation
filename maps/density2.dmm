@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ag" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
@@ -23,11 +23,15 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
 /area/listeningpost)
+"at" = (
+/obj/machinery/info_map,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "au" = (
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
@@ -60,7 +64,7 @@
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "aC" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -88,7 +92,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/station/bridge)
 "aH" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -98,7 +102,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/aisat)
 "aI" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 2;
 	id = "Sleeper_Access";
 	name = "Listening Post"
@@ -155,7 +159,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "aT" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -170,7 +174,7 @@
 	},
 /area/station/solar/aisat)
 "aW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -193,7 +197,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bc" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -228,7 +232,7 @@
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "bg" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -315,7 +319,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "bL" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -333,7 +337,7 @@
 	},
 /area/station/solar/aisat)
 "bO" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -419,19 +423,6 @@
 /obj/mapping_helper/access/heads,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"cs" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4";
-	pixel_y = 0
-	},
-/obj/machinery/lrteleporter{
-	layer = 3
-	},
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
-	},
-/area/station/science/teleporter)
 "cu" = (
 /obj/machinery/vending/floppy{
 	profit = 0
@@ -461,7 +452,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/AIsat)
 "cL" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-8"
 	},
@@ -528,14 +519,14 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;
 	layer = 2
 	},
 /area/mining/magnet)
 "cW" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -549,7 +540,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/AIsat)
 "da" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -577,7 +568,7 @@
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -585,7 +576,7 @@
 	},
 /area/station/solar/zeta)
 "df" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;
 	layer = 2
@@ -633,7 +624,7 @@
 	pixel_x = -1;
 	pixel_y = 26
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;
 	layer = 2
@@ -994,7 +985,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 1;
 	icon_state = "rwindow"
@@ -1058,7 +1049,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 1;
 	icon_state = "rwindow"
@@ -1470,7 +1461,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "it" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/reagent_dispensers/fueltank,
 /obj/machinery/light{
 	dir = 4;
@@ -1778,7 +1769,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "ko" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "ks" = (
@@ -2141,8 +2132,8 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "mx" = (
-/obj/grille/catwalk,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/quartermaster/magnet)
 "my" = (
@@ -2219,7 +2210,7 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "mV" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -2402,16 +2393,12 @@
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "nY" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -2441,6 +2428,27 @@
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
+"oF" = (
+/obj/storage/secure/crate/weapon/armory{
+	name = "armory in a box"
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 4;
+	pixel_y = -6
+	},
+/obj/item/clothing/glasses/thermal,
+/obj/item/gun/energy/pulse_rifle,
+/obj/item/gun/kinetic/pumpweapon/riotgun,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/suit/armor/EOD,
+/obj/item/clothing/head/helmet/EOD,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/storage/box/flashbang_kit,
+/obj/item/storage/box/revimp_kit,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/turf/simulated/floor/marble/black,
+/area/station/bridge)
 "oG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/garden)
@@ -2506,7 +2514,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	layer = 2
@@ -2554,6 +2562,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
+"pp" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/info_map,
+/turf/simulated/floor/purple,
+/area/station/science)
 "pu" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -2796,7 +2811,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
 "rg" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk,
@@ -2810,6 +2825,12 @@
 	},
 /turf/simulated/floor/purple/checker,
 /area/station/quartermaster/office)
+"rl" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/space,
+/area/shuttle/arrival/station)
 "rm" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2884,6 +2905,23 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"rQ" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/obj/fakeobject{
+	density = 1;
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "Active Particle Phase Matrix"
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0
+	},
+/area/station/science/teleporter)
 "rT" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon20_to_1_end,
 /turf/simulated/floor/auto/dirt,
@@ -3059,8 +3097,14 @@
 	},
 /turf/simulated/floor/purple/checker,
 /area/station/science)
+"tg" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/decal/poster/wallsign/stencil/left/a,
+/obj/decal/poster/wallsign/stencil/right/r,
+/turf/unsimulated/floor/plating,
+/area/shuttle/arrival/station)
 "tl" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 2;
 	id = "Sleeper_Access";
 	name = "Listening Post"
@@ -3070,6 +3114,10 @@
 "tn" = (
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
+"tu" = (
+/obj/indestructible/shuttle_corner,
+/turf/space,
+/area/shuttle/arrival/station)
 "tx" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
@@ -3081,7 +3129,7 @@
 /turf/simulated/floor/purple/checker,
 /area/station/quartermaster/office)
 "tB" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/quartermaster/magnet)
@@ -3240,7 +3288,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "uy" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/light/incandescent,
@@ -3286,6 +3334,9 @@
 "uF" = (
 /turf/unsimulated/wall/setpieces/leadwindow,
 /area/station/hallway/secondary/entry)
+"uG" = (
+/turf/simulated/shuttle/wall/cockpit,
+/area/shuttle/arrival/station)
 "uJ" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/decal/cleanable/dirt,
@@ -3317,6 +3368,10 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/science)
+"uQ" = (
+/obj/machinery/sheet_extruder,
+/turf/simulated/floor/plating/airless,
+/area/station/quartermaster/magnet)
 "uR" = (
 /obj/machinery/light{
 	dir = 4;
@@ -3397,7 +3452,7 @@
 /turf/simulated/floor/purple/checker,
 /area/station/quartermaster/office)
 "vF" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -3411,10 +3466,6 @@
 /obj/machinery/computer/barcode/qm,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"vL" = (
-/obj/machinery/processor,
-/turf/simulated/floor/plating/airless,
-/area/station/quartermaster/magnet)
 "vM" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -3663,7 +3714,7 @@
 /obj/cable/yellow{
 	icon_state = "0-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/power/tracker/aisat,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
@@ -3671,10 +3722,6 @@
 	layer = 2
 	},
 /area/station/solar/aisat)
-"xP" = (
-/obj/storage/secure/closet/security/armory,
-/turf/simulated/floor/marble/black,
-/area/station/bridge)
 "xU" = (
 /obj/machinery/conveyor/WE{
 	id = "qmout"
@@ -3752,7 +3799,7 @@
 	dir = 1;
 	icon_state = "lattice-dir"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/magnet_chassis{
@@ -3939,7 +3986,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "zw" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/quartermaster/magnet)
 "zz" = (
@@ -3960,6 +4007,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/quartermaster/office)
+"zL" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/decal/poster/wallsign/stencil/left/r,
+/obj/decal/poster/wallsign/stencil/right/v,
+/turf/unsimulated/floor/plating,
+/area/shuttle/arrival/station)
 "zN" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate/clown,
@@ -4009,7 +4062,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "Ac" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/wall/auto/asteroid,
 /area/station/mining/staff_room)
 "Ah" = (
@@ -4083,7 +4136,7 @@
 /turf/simulated/floor/carpet/red/fancy/innercorner/ne_triple,
 /area/station/bridge)
 "AB" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -4108,6 +4161,12 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple,
 /area/station/hallway/secondary/researchshuttle)
+"AH" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/space,
+/area/shuttle/arrival/station)
 "AQ" = (
 /turf/simulated/floor/stairs/wood/wide{
 	dir = 4
@@ -4120,6 +4179,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
 	dir = 4;
+	id = "Sleeper_Access";
 	name = "Weather Satellite"
 	},
 /turf/simulated/floor/shuttle{
@@ -4269,7 +4329,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -4660,7 +4720,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "ED" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
@@ -4778,12 +4838,6 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/innercorner/north,
 /area/station/bridge)
-"Fg" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4
-	},
-/turf/simulated/shuttle/wall/corner,
-/area/shuttle/arrival/station)
 "Fi" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/phone,
@@ -4814,7 +4868,7 @@
 	},
 /area/station/bridge)
 "Fr" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -4904,6 +4958,12 @@
 /obj/machinery/vending/coffee,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"FY" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/space,
+/area/shuttle/arrival/station)
 "FZ" = (
 /obj/cable/orange{
 	icon_state = "0-2"
@@ -5000,7 +5060,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "GH" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
@@ -5348,6 +5408,9 @@
 	},
 /obj/item/disk/data/cartridge/captain,
 /obj/item/peripheral/network/radio/locked,
+/obj/item/pinpointer/disk{
+	pixel_y = 9
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "IV" = (
@@ -5501,7 +5564,7 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -5721,7 +5784,7 @@
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "Lb" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/magnet)
 "Lc" = (
@@ -5787,7 +5850,7 @@
 /turf/simulated/floor/marble,
 /area/station/bridge)
 "LI" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-2"
 	},
@@ -5898,7 +5961,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/station/quartermaster/magnet)
 "Mo" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/landmark/magnet_shield,
@@ -5935,7 +5998,7 @@
 /turf/simulated/floor/auto/dirt,
 /area/station/crew_quarters/garden/sunlight)
 "MB" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "MI" = (
@@ -6280,7 +6343,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "OB" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/neosmelter,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/quartermaster/magnet)
@@ -6436,27 +6499,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"Qc" = (
-/obj/storage/secure/crate/weapon/armory{
-	name = "armory in a box"
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = 4;
-	pixel_y = -6
-	},
-/obj/item/clothing/glasses/thermal,
-/obj/item/gun/energy/pulse_rifle,
-/obj/item/gun/kinetic/riotgun,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/EOD,
-/obj/item/clothing/head/helmet/EOD,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/storage/box/flashbang_kit,
-/obj/item/storage/box/revimp_kit,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/turf/simulated/floor/marble/black,
-/area/station/bridge)
 "Qg" = (
 /obj/stool/bench/red,
 /obj/landmark/start/job/geneticist,
@@ -6537,7 +6579,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/plating/airless,
 /area/station/mining/staff_room)
 "QU" = (
@@ -6587,7 +6629,7 @@
 /turf/simulated/floor/marble,
 /area/station/ranch)
 "Rj" = (
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/table/auto,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
@@ -6609,6 +6651,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"Rr" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/crew_quarters/garden/sunlight)
 "Rv" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/station/security/main)
@@ -6655,7 +6701,7 @@
 /turf/simulated/floor/auto/dirt,
 /area/station/crew_quarters/garden/sunlight)
 "RX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/light/incandescent,
@@ -6848,6 +6894,10 @@
 /obj/machinery/light,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
+"Tq" = (
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/auto/dirt,
+/area/station/crew_quarters/garden/sunlight)
 "Tt" = (
 /obj/machinery/gibber{
 	dir = 4
@@ -6989,7 +7039,7 @@
 /turf/space,
 /area/shuttle/arrival/station)
 "Uz" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/zeta)
 "UB" = (
@@ -7028,14 +7078,6 @@
 	},
 /turf/simulated/floor/auto/grass/leafy,
 /area/station/crew_quarters/garden/sunlight)
-"UI" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1
-	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 1
-	},
-/area/shuttle/arrival/station)
 "UJ" = (
 /obj/railing/orange/reinforced{
 	dir = 1
@@ -7043,12 +7085,6 @@
 /obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
-"UN" = (
-/obj/indestructible/shuttle_corner,
-/turf/simulated/shuttle/wall/corner{
-	dir = 8
-	},
-/area/shuttle/arrival/station)
 "UP" = (
 /obj/item/storage/wall/medical,
 /turf/simulated/wall/auto/shuttle{
@@ -7067,15 +7103,6 @@
 	icon_state = "15"
 	},
 /area/shuttle/arrival/station)
-"Vb" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/unsimulated/floor{
-	desc = "";
-	dir = 8;
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor6"
-	},
-/area/shuttle/arrival/station)
 "Ve" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
@@ -7085,28 +7112,6 @@
 /area/station/bridge)
 "Vi" = (
 /obj/machinery/door/airlock/pyro/reinforced/arrivals,
-/turf/unsimulated/floor{
-	desc = "";
-	dir = 8;
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor6"
-	},
-/area/shuttle/arrival/station)
-"Vk" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/decal/poster/wallsign/stencil/left/a,
-/obj/decal/poster/wallsign/stencil/right/r,
-/turf/unsimulated/floor{
-	desc = "";
-	dir = 8;
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor6"
-	},
-/area/shuttle/arrival/station)
-"Vq" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/decal/poster/wallsign/stencil/left/r,
-/obj/decal/poster/wallsign/stencil/right/v,
 /turf/unsimulated/floor{
 	desc = "";
 	dir = 8;
@@ -7172,6 +7177,10 @@
 /obj/strip_door,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"VI" = (
+/obj/storage/secure/crate/gear/armory/equipment,
+/turf/simulated/floor/marble/black,
+/area/station/bridge)
 "VK" = (
 /obj/kitchenspike,
 /turf/simulated/floor/plating,
@@ -7246,7 +7255,7 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
 "Wg" = (
@@ -7359,7 +7368,7 @@
 	},
 /area/shuttle/arrival/station)
 "WM" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
@@ -7430,7 +7439,7 @@
 	},
 /area/listeningpost)
 "Xa" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless/asteroid/lighted,
@@ -7472,6 +7481,11 @@
 	dir = 8;
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor2"
+	},
+/area/shuttle/arrival/station)
+"Xm" = (
+/turf/unsimulated/wall/generic{
+	opacity = 0
 	},
 /area/shuttle/arrival/station)
 "Xo" = (
@@ -7529,7 +7543,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
 	layer = 2
@@ -7578,7 +7592,7 @@
 	},
 /area/shuttle/arrival/station)
 "XK" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -7650,13 +7664,6 @@
 "XY" = (
 /turf/simulated/floor,
 /area/station/science)
-"XZ" = (
-/turf/unsimulated/wall/generic{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "wall";
-	opacity = 0
-	},
-/area/shuttle/arrival/station)
 "Yg" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "4"
@@ -7682,6 +7689,10 @@
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor6"
 	},
+/area/shuttle/arrival/station)
+"Yn" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
 "Yp" = (
 /obj/cable{
@@ -7749,17 +7760,6 @@
 "YD" = (
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/magnet)
-"YJ" = (
-/turf/unsimulated/wall/generic{
-	icon = 'icons/effects/160x160.dmi';
-	icon_state = "shuttlecock";
-	layer = 30;
-	name = "Cockpit";
-	opacity = 0;
-	pixel_x = -64;
-	pixel_y = -64
-	},
-/area/shuttle/arrival/station)
 "YK" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
@@ -7778,7 +7778,7 @@
 	},
 /area/shuttle/arrival/station)
 "YQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/landmark/magnet_shield,
@@ -7799,7 +7799,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "YT" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -7849,7 +7849,7 @@
 	},
 /area/shuttle/arrival/station)
 "Za" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/turret,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;
@@ -7929,14 +7929,6 @@
 "ZJ" = (
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
-"ZK" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8
-	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 4
-	},
-/area/shuttle/arrival/station)
 "ZN" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -49794,7 +49786,7 @@ MU
 MU
 MU
 RC
-xP
+VI
 aG
 aG
 Rf
@@ -50700,7 +50692,7 @@ MU
 Oc
 QF
 kD
-Qc
+oF
 Sy
 aG
 Rf
@@ -51611,7 +51603,7 @@ SJ
 lF
 Rf
 Rf
-UN
+tu
 Ux
 Ux
 Ux
@@ -51619,7 +51611,7 @@ Yg
 Ux
 Ux
 Ux
-Fg
+rl
 Rf
 Rf
 Rf
@@ -52818,7 +52810,7 @@ gE
 gE
 lF
 lF
-UI
+FY
 Va
 VC
 WX
@@ -52828,7 +52820,7 @@ VC
 bw
 VC
 Va
-ZK
+AH
 Rf
 Rf
 Rf
@@ -53388,8 +53380,8 @@ hB
 Rf
 Rf
 Rf
-XQ
-jx
+Wl
+at
 rP
 jx
 jx
@@ -53423,7 +53415,7 @@ SY
 QU
 WK
 Rf
-Vb
+Yn
 VW
 VW
 XN
@@ -53431,7 +53423,7 @@ XN
 XN
 VW
 XN
-Vb
+Yn
 Rf
 Rf
 Rf
@@ -53690,7 +53682,7 @@ hB
 Rf
 Rf
 Rf
-XQ
+Wl
 jx
 rP
 ui
@@ -55235,7 +55227,7 @@ Oj
 Mq
 WK
 Rf
-Vk
+tg
 VW
 Xb
 VW
@@ -55243,7 +55235,7 @@ VW
 YU
 XN
 XN
-Vk
+tg
 Rf
 Rf
 Rf
@@ -55537,7 +55529,7 @@ Oj
 Kd
 WK
 Rf
-Vq
+zL
 VW
 Xf
 VW
@@ -55545,7 +55537,7 @@ VW
 XN
 XN
 XN
-Vq
+zL
 Rf
 Rf
 Rf
@@ -56141,7 +56133,7 @@ Tt
 hj
 Rf
 Rf
-UI
+FY
 Ww
 Xj
 VC
@@ -56149,7 +56141,7 @@ Yv
 VC
 Xj
 Ww
-ZK
+AH
 Rf
 Rf
 Rf
@@ -56429,7 +56421,7 @@ sc
 sc
 sc
 sc
-Pf
+Rr
 Lh
 qG
 MA
@@ -56746,13 +56738,13 @@ in
 Rf
 Rf
 Rf
-Rf
+FY
 Xq
 XV
 XV
 XV
 Zp
-ZK
+AH
 Rf
 Rf
 Rf
@@ -57024,7 +57016,7 @@ mM
 Pf
 sv
 qG
-qG
+Tq
 qG
 qG
 qG
@@ -57049,11 +57041,11 @@ Rf
 Rf
 Rf
 Rf
-Xy
-XZ
-XZ
-XZ
-Zf
+FY
+Xm
+Xm
+Xm
+AH
 Rf
 Rf
 Rf
@@ -57353,7 +57345,7 @@ Rf
 Rf
 XB
 Xy
-YJ
+uG
 Zf
 XB
 Rf
@@ -79006,9 +78998,9 @@ vr
 te
 gz
 dt
-hv
+pp
 Or
-cs
+rQ
 Td
 UC
 Ia
@@ -80535,7 +80527,7 @@ zw
 zw
 zw
 gN
-vL
+uQ
 Rf
 Rf
 Rf

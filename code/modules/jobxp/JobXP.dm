@@ -9,40 +9,6 @@ var/list/xp_archive = list()
 
 var/list/xp_cache = list()
 
-/proc/testSummary(var/amt = 1)
-	award_xp(usr.key, "Bip", amt, 1)
-	award_xp(usr.key, "Bop", amt, 1)
-	sleep(1 SECOND)
-	SPAWN(0) show_xp_summary(usr.key, usr)
-	return
-
-/proc/show_xp_summary(var/key, var/mob/M) //ONLY EVER SPAWN THIS
-	if(key in xp_archive)
-		var/loadingHtml = {"<p>Loading your XP stats. Hang on ...</p><br>"}
-		M.Browse(loadingHtml, "window=xpsummary;size=350x450;title=Experience")
-
-		var/html = {"<link rel="stylesheet" type="text/css" href="[resource("css/style.css")]">"}
-
-		var/list/keyList = xp_archive[key]
-		var/hasEntries = 0
-		for(var/job in keyList)
-			hasEntries = 1
-			var/xpEarned = keyList[job]
-			var/xpTotal = get_xp(key, job)
-
-			html += {"<p>[job] +[xpEarned]xp</p>"}
-			if (isnull(xpTotal))
-				xpTotal = xpEarned // for local dev servers where get_xp will always return null
-			var/current_level = round(LEVEL_FOR_XP(xpTotal))
-			var/percent_complete = round((xpTotal / XP_FOR_LEVEL(current_level + 1))*100)
-			html += {"<span style="float:left">Level [current_level]</span><span style="float:right">Level [current_level+1]</span><br>"}
-			html += {"<div class="progress-bar"><div class="progress" style="width: [min(percent_complete, 100)]%"></div></div><br><br>"}
-
-		if(!hasEntries)
-			html += {"<p>No experience earned.</p><br>"}
-
-		M.Browse(html, "window=xpsummary;size=350x450;title=Experience")
-	return
 
 /proc/is_eligible_xp(key, xp)
 	if(!xp_throttle_list.Find(key))

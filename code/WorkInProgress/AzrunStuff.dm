@@ -43,20 +43,20 @@
 
 /datum/manufacture/sub/treads
 	name = "Vehicle Treads"
-	item_paths = list("MET-2","CON-1")
-	item_amounts = list(5,2)
+	item_requirements = list("metal_dense" = 5,
+							 "conductive" = 2)
 	item_outputs = list(/obj/item/shipcomponent/locomotion/treads)
-	time = 5 SECONDS
 	create = 1
+	time = 5 SECONDS
 	category = "Component"
 
 /datum/manufacture/sub/wheels
 	name = "Vehicle Wheels"
-	item_paths = list("MET-2","CON-1")
-	item_amounts = list(5,2)
+	item_requirements = list("metal_dense" = 5,
+							 "conductive" = 2)
 	item_outputs = list(/obj/item/shipcomponent/locomotion/wheels)
-	time = 5 SECONDS
 	create = 1
+	time = 5 SECONDS
 	category = "Component"
 
 
@@ -91,7 +91,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
+		if (POT.growth > (P.HYPget_growth_to_harvestable(DNA) + 10))
 			for (var/mob/living/X in view(1,POT.loc))
 				if(isalive(X) && !iskudzuman(X))
 					poof(X, POT)
@@ -101,24 +101,25 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
+		if (POT.growth > (P.HYPget_growth_to_harvestable(DNA) + 10))
 			if(!iskudzuman(user))
 				poof(user, POT)
 
 	proc/poof(atom/movable/AM, obj/machinery/plantpot/POT)
 		if(!ON_COOLDOWN(src,"spore_poof", 2 SECONDS))
+			var/datum/plant/P = POT.current
 			var/datum/plantgenes/DNA = POT.plantgenes
 			var/datum/reagents/reagents_temp = new/datum/reagents(max(1,(50 + DNA.cropsize))) // Creating a temporary chem holder
 			reagents_temp.my_atom = POT
 			var/list/plant_complete_reagents = HYPget_assoc_reagents(src, DNA)
 			for (var/plantReagent in plant_complete_reagents)
-				reagents_temp.add_reagent(plantReagent, 2 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * length(plant_complete_reagents))))))
+				reagents_temp.add_reagent(plantReagent, 2 * max(1, HYPfull_potency_calculation(DNA, 0.1 / length(plant_complete_reagents))))
 
 			SPAWN(0) // spawning to kick fluid processing out of machine loop
 				reagents_temp.smoke_start()
 				qdel(reagents_temp)
 
-			POT.growth = clamp(POT.growth/2, src.growtime, src.harvtime-10)
+			POT.growth = clamp(POT.growth/2, P.HYPget_growth_to_matured(DNA), P.HYPget_growth_to_harvestable(DNA)-10)
 			POT.UpdateIcon()
 
 	getIconState(grow_level, datum/plantmutation/MUT)
@@ -175,7 +176,7 @@
 			if(prob(20))
 				return
 
-		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 5))
+		if (POT.growth > (P.HYPget_growth_to_harvestable(DNA) + 5))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT.loc))
 				if(isalive(X) && (X != POT.loc) && !iskudzuman(X))
@@ -199,7 +200,40 @@
 	name = "strange seed"
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "seedproj"
-	implanted = /obj/item/implant/projectile/spitter_pod
+	implanted = /obj/item/implant/projectile/body_visible/seed/spitter_pod
+
+/obj/item/implant/projectile/body_visible/seed/spitter_pod
+	name = "strange seed pod"
+	pull_out_name = "strange seed pod"
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
+	desc = "A small hollow pod."
+	icon_state = "seedproj"
+	var/dig_ticker = 25
+
+	New()
+		..()
+		implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "dart_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
+
+	do_process()
+		src.dig_ticker = max(src.dig_ticker-1, 0)
+		if(!src.dig_ticker)
+			online = FALSE
+			if(prob(80))
+				var/mob/living/carbon/human/H = src.owner
+				var/obj/item/implant/projectile/spitter_pod/implant = new
+				implant.implanted(H)
+				boutput(src.owner,SPAN_ALERT("You feel something work its way into your body from \the [src]."))
+
+	on_death()
+		if(!online)
+			return
+		if(prob(80))
+			var/mob/living/carbon/human/H = src.owner
+			var/obj/item/implant/projectile/spitter_pod/implant = new
+			implant.implanted(H)
+			SPAWN(rand(5 SECONDS, 30 SECONDS))
+				if(!QDELETED(H) && !QDELETED(implant))
+					implant.on_death()
 
 /obj/item/implant/projectile/spitter_pod
 	name = "strange seed pod"
@@ -207,7 +241,7 @@
 	desc = "A small hollow pod."
 	icon_state = "seedproj"
 
-	var/heart_ticker = 10
+	var/heart_ticker = 35
 	online = TRUE
 
 	implanted(mob/M, mob/Implanter)
@@ -233,25 +267,29 @@
 				animate(P, alpha=255, time=2 SECONDS)
 
 	do_process()
-		heart_ticker = max(heart_ticker--,0)
-		if(heart_ticker & prob(50))
+		heart_ticker = max(heart_ticker-1, 0)
+		if(!isalive(src.owner))
+			online = FALSE
+			return
+		if(heart_ticker & prob(60) && !ON_COOLDOWN(src,"[src] spam", 5 SECONDS) )
 			if(prob(30))
 				boutput(src.owner,SPAN_ALERT("You feel as though something moving towards your heart... That can't be good."))
 			else
 				boutput(src.owner,SPAN_ALERT("You feel as though something is working its way through your chest."))
 		else if(!heart_ticker)
-			var/mob/living/carbon/human/H = src.owner
-			if(istype(H))
-				H.organHolder.damage_organs(2, 0, 1, "heart")
-			else
-				src.owner.TakeDamage("All", 2, 0)
+			if(!ON_COOLDOWN(src,"[src] spam", 8 SECONDS))
+				var/mob/living/carbon/human/H = src.owner
+				if(istype(H))
+					H.organHolder.damage_organs(rand(1,5)/2, 0, 1, list("heart"))
+				else
+					src.owner.TakeDamage("All", 1, 0)
 
-			if(prob(5))
-				boutput(src.owner,SPAN_ALERT("AAHRRRGGGG something is trying to dig your heart out from the inside?!?!"))
-				src.owner.emote("scream")
-				src.owner.changeStatus("stunned", 2 SECONDS)
-			else if(prob(10))
-				boutput(src.owner,SPAN_ALERT("You feel a sharp pain in your chest."))
+				if(prob(5))
+					boutput(src.owner,SPAN_ALERT("AAHRRRGGGG something is trying to dig your heart out from the inside?!?!"))
+					src.owner.emote("scream")
+					src.owner.changeStatus("stunned", rand(1 SECOND, 2 SECONDS))
+				else if(prob(40))
+					boutput(src.owner,SPAN_ALERT("You feel a sharp pain in your chest."))
 
 /datum/gimmick_event
 	var/interaction = 0
@@ -276,7 +314,7 @@
 /obj/gimmick_obj
 	var/list/gimmick_events
 	var/active_stage
-	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE
 
 	New()
 		..()
@@ -581,6 +619,7 @@
 	cooldown = 2 SECONDS
 
 	cast(atom/target)
+		. = ..()
 		var/obj/item/aiModule/ability_expansion/friend_turret/expansion = get_law_module()
 		expansion.turret.lasers = !expansion.turret.lasers
 		var/mode = expansion.turret.lasers ? "LETHAL" : "STUN"
@@ -706,7 +745,7 @@
 		color_shift_lights(list(color), list(3 SECONDS))
 
 
-ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/set_color)
+ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/set_color, proc/lightning)
 
 /proc/get_cone(turf/epicenter, radius, angle, width, heuristic, heuristic_args)
 	var/list/nodes = list()
@@ -823,7 +862,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	implanted = null
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	casing = /obj/item/casing/shotgun/pipe
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
@@ -954,7 +993,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "bp_security"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBACK
 	inventory_counter_enabled = 1
 
@@ -1130,6 +1169,164 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 
 
 
+/obj/effect/status_area
+	name = "status area"
+	layer = EFFECTS_LAYER_BASE
+	var/status_effect = "time_slowed"
+	var/mob/source
+
+	New(turf/loc, mob/target)
+		. = ..()
+		if(target)
+			src.source = target
+
+	proc/check_movable(atom/movable/AM, crossed=TRUE)
+		. = TRUE
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		if(check_movable(AM, TRUE))
+			AM.changeStatus(status_effect, 20 SECONDS, src)
+
+	Uncrossed(atom/movable/AM)
+		. = ..()
+		if(check_movable(AM, FALSE))
+			AM.delStatus(status_effect)
+
+/obj/effect/status_area/slow_globe
+	name = "temporal sphere"
+	icon = 'icons/effects/224x224.dmi'
+	icon_state = "shockwave"
+	pixel_x = -96
+	pixel_y = -96
+	bound_x = -64
+	bound_y = -64
+	bound_width = 160
+	bound_height = 160
+	status_effect = "time_slowed"
+	var/hue_shift = 0
+	var/sound = 'sound/effects/mag_forcewall.ogg'
+	var/pitch
+
+	New(turf/loc, mob/target)
+		. = ..()
+		if(hue_shift)
+			color = hsv_transform_color_matrix(hue_shift)
+		SafeScale(0.1,0.1)
+		SafeScaleAnim((10/1.4), (10/1.4), anim_time=2 SECONDS, anim_easing=ELASTIC_EASING)
+		SPAWN(2 SECONDS)
+			animate_wave(src, waves=5)
+		playsound(get_turf(src), sound, 25, 1, -1, pitch)
+
+	check_movable(atom/movable/AM, crossed)
+		if(crossed)
+			if(AM != src.source)
+				if(ismob(AM) || AM.throwing || istype(AM, /obj/projectile))
+					. = TRUE
+		else
+			if(ismob(AM) || AM.throwing || istype(AM, /obj/projectile))
+				if(!locate(/obj/effect/status_area/slow_globe) in obounds(AM,0))
+					. = TRUE
+
+
+	strong
+		status_effect = "time_slowed_plus"
+		hue_shift = 60
+
+	reversed
+		status_effect = "time_hasted"
+		hue_shift = 90
+		pitch = -1
+
+
+/datum/statusEffect/time_slowed
+	id = "time_slowed"
+	name = "Slowed"
+	desc = "You are slowed by a temporal anomoly.<br>Movement speed and action speed is reduced."
+	icon_state = "slowed"
+	unique = 1
+	var/howMuch = 10
+	exclusiveGroup = "temporal"
+	movement_modifier = new /datum/movement_modifier/status_slowed
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	move_triggered = TRUE
+	var/atom/status_source
+
+	onAdd(source)
+		. = ..()
+		if(source)
+			status_source = source
+
+		var/atom/movable/AM = owner
+		var/scale_factor = (howMuch/2)
+		if(howMuch<0)
+			scale_factor = -1/scale_factor
+
+		if (ismob(owner))
+			var/mob/M = owner
+			M.next_click = world.time + (0.5 SECONDS)
+			movement_modifier.additive_slowdown = howMuch
+
+		else if(istype(AM, /obj/projectile))
+			var/obj/projectile/B = AM
+			B.internal_speed = B.proj_data.projectile_speed / scale_factor
+			B.special_data["slowed"] = TRUE
+
+		if(istype(AM) && AM.throwing)
+			var/list/datum/thrown_thing/existing_throws = global.throwing_controller.throws_of_atom(AM)
+			for(var/datum/thrown_thing/T in existing_throws)
+				T.speed /= scale_factor
+			AM.throw_speed /= scale_factor
+
+	onRemove()
+		. = ..()
+		var/atom/movable/AM = owner
+		var/scale_factor = (howMuch/2)
+		if(howMuch<0)
+			scale_factor = -1/scale_factor
+
+		if (ismob(owner))
+			var/mob/M = owner
+			var/atom/source = locate(/obj/effect/status_area/slow_globe) in obounds(M,0)
+			if(source)
+				M.changeStatus("time_slowed", 10 SECONDS, source)
+		else if(istype(AM, /obj/projectile))
+			var/obj/projectile/B = AM
+			if(B?.special_data && B.special_data["slowed"])
+				B.internal_speed *= scale_factor
+
+		if(istype(AM) && AM.throwing)
+			var/list/datum/thrown_thing/existing_throws = global.throwing_controller.throws_of_atom(AM)
+			for(var/datum/thrown_thing/T in existing_throws)
+				T.speed *= scale_factor
+			AM.throw_speed *= scale_factor
+
+	onUpdate(timePassed)
+		. = ..()
+		if(status_source && QDELETED(status_source))
+			owner.delStatus(id)
+
+		if (ismob(owner))
+			var/mob/M = owner
+			M.next_click = world.time + ((howMuch/20) SECONDS)
+
+	move_trigger(mob/user, ev)
+		if (ismob(owner))
+			var/mob/M = owner
+			M.next_click = world.time + ((howMuch/20) SECONDS)
+
+	extra
+		name = "Sloooowwwwed"
+		id = "time_slowed_plus"
+		howMuch = 20
+
+	reversed
+		name = "Hastened"
+		id = "time_hasted"
+		howMuch = -5
+
+
+
 /obj/storage/crate/exosuit
 	name = "experimental crate"
 	desc = "A protective equipment case."
@@ -1173,361 +1370,3 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		..()
 		new /mob/living/carbon/human/normal/assistant(newLoc)
 
-#define DANCE_TRAVEL_FORWARD 1
-#define DANCE_TRAVEL_RIGHT 2
-#define DANCE_TRAVEL_LEFT 3
-#define DANCE_TRAVEL_BACK 4
-#define DANCE_TRAVEL_TOWARD 5
-#define DANCE_TRAVEL_AWAY 6
-
-#define BEAT_COUNT(_X) (AH.time_per_count * _X)
-
-/datum/abilityHolder/dancing
-	var/style = "Waltz"
-	var/list/styles = list("NC2S", "Waltz")
-	var/mob/lead
-	var/mob/follow
-	var/time_per_count = 3
-
-	onAttach(mob/to_whom)
-		. = ..()
-		src.addAbility(/datum/targetable/dancing/choose_style)
-		src.addAbility(/datum/targetable/dancing/rest)
-		src.addAbility(/datum/targetable/dancing/change_speed/faster)
-		src.addAbility(/datum/targetable/dancing/change_speed/slower)
-		for(var/move in childrentypesof(/datum/targetable/dancing/nc2s))
-			src.addAbility(move)
-		for(var/move in childrentypesof(/datum/targetable/dancing/waltz))
-			src.addAbility(move)
-
-/datum/targetable/dancing
-	icon = 'icons/mob/dance_ui.dmi'
-	var/style = null
-	var/list/static/follower_offsets = list("[NORTH]"=list(-4,-2),
-											"[EAST]"=list(-8,1),
-											"[SOUTH]"=list(4,2),
-											"[WEST]"=list(8,-1))
-
-	display_available()
-		var/datum/abilityHolder/dancing/AH = holder
-		var/mob/living/carbon/human/H = holder.owner
-		var/obj/item/shoes = H.get_slot(SLOT_SHOES)
-		if(istype(shoes, /obj/item/clothing/shoes/dress_shoes/dance))
-			. = TRUE
-		else
-			. = FALSE
-
-		if(. && style)
-			. = style == AH.style
-
-	castcheck(atom/target)
-		. = ..()
-		if(.)
-			src.cooldown = 0
-
-		var/datum/abilityHolder/dancing/AH = holder
-		AH.lead = holder.owner
-		AH.follow = null
-		for (var/obj/item/grab/G in AH.lead?.equipped_list(check_for_magtractor = 0))
-			if (G.affecting.buckled) continue
-			AH.follow = G.affecting
-
-		var/reset_position = FALSE
-		if(AH.lead)
-			if((abs(AH.lead.pixel_x) + abs(AH.lead.pixel_y)) > 48)
-				reset_position = BEAT_COUNT(4)
-			else if(AH.follow && (abs(AH.lead.pixel_x - AH.follow.pixel_x ) + abs(AH.lead.pixel_y - AH.follow.pixel_y)) > 10 )
-				reset_position = BEAT_COUNT(4)
-			if(reset_position)
-				animate(AH.lead, time=reset_position, pixel_x=0, pixel_y = 0)
-
-		if(AH.follow && style)
-			if(reset_position || (AH.follow.dir != turn(AH.lead.dir,180)) || ((abs(AH.lead.pixel_x - AH.follow.pixel_x ) + abs(AH.lead.pixel_y - AH.follow.pixel_y))==0))
-				reset_position = max(reset_position, BEAT_COUNT(1))
-				AH.follow.dir = turn(AH.lead.dir,180)
-				AH.follow.layer = AH.lead.layer
-				if(AH.follow.dir & (SOUTH | EAST))
-					AH.follow.layer -= 0.1
-				else
-					AH.follow.layer += 0.1
-
-				animate(AH.follow, time=reset_position, pixel_x=follower_offsets["[AH.follow.dir]"][1], pixel_y = follower_offsets["[AH.follow.dir]"][2])
-
-
-	cast(atom/target)
-		. = ..()
-		var/datum/abilityHolder/dancing/AH = holder
-		if(AH)
-			var/duration = src.cooldown + 5 SECONDS
-			AH.lead.setStatusMin("dancing", duration)
-			AH.follow?.setStatusMin("dancing", duration)
-
-	choose_style
-		name = "Style"
-		icon_state = "style"
-		desc = "Choose from style of dance"
-		cooldown = 2 SECOND
-
-		cast(atom/target)
-			. = ..()
-			var/datum/abilityHolder/dancing/AH = holder
-			var/dance_style = tgui_input_list(holder.owner, "Select style", "Dance Selection", AH.styles)
-			if(dance_style in AH.styles)
-				AH.style = dance_style
-
-	rest
-		name = "Pause"
-		desc = "Maintain your current position"
-		icon_state = "pause"
-		cooldown = 10 SECOND
-
-		cast(atom/target)
-			. = ..()
-			var/datum/abilityHolder/dancing/AH = holder
-			if(AH)
-				AH.lead.setStatusMin("dancing", 15 SECONDS)
-				AH.follow?.setStatusMin("dancing", 15 SECONDS)
-
-	change_speed
-		var/time_change
-
-		cast(atom/target)
-			var/datum/abilityHolder/dancing/AH = holder
-			if(AH)
-				AH.time_per_count += time_change
-				boutput(holder.owner,"[AH.time_per_count/10] seconds per count. ([60/(AH.time_per_count/10)] BPM)")
-
-		faster
-			name = "Faster"
-			icon_state = "fast"
-			time_change = -0.5
-
-		slower
-			name = "Slower"
-			icon_state = "slow"
-			time_change = 0.5
-
-/datum/targetable/dancing/nc2s
-	style = "NC2S"
-
-	var/list/static/turn_offsets = list("[NORTH]"=list(4,-12),
-											"[EAST]"=list(-20,-1),
-											"[SOUTH]"=list(-4,12),
-											"[WEST]"=list(20,1),
-											)
-
-	proc/basic(var/mob/dancer, loop=1)
-		var/datum/abilityHolder/dancing/AH = holder
-		if(dancer==AH.lead)
-			src.cooldown += BEAT_COUNT(8) - BEAT_COUNT(0.5)
-		if(!dancer)
-			return
-
-		var/datum/dance_transform/D = new(dancer, turn_offsets)
-		D.travel(dancer, DANCE_TRAVEL_AWAY, AH.lead, 3)
-		animate(dancer, time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_TOWARD, AH.lead, 3)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 8)
-		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_AWAY, AH.lead, 3)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_TOWARD, AH.lead, 3)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 8)
-		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
-
-	proc/closed_left_turn(var/mob/dancer, loop=1)
-		var/datum/abilityHolder/dancing/AH = holder
-		if(dancer==AH.lead)
-			src.cooldown += BEAT_COUNT(8) - BEAT_COUNT(0.5)
-		if(!dancer)
-			return
-
-		var/datum/dance_transform/D = new(dancer, turn_offsets)
-		D.travel(dancer, DANCE_TRAVEL_AWAY, AH.lead, 3)
-		animate(dancer, time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_TOWARD, AH.lead, 3)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 8)
-		D.do_turn(dancer, AH.lead, 90)
-		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, dir=D.dir, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
-
-		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 16)
-		animate(time=BEAT_COUNT(3), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 2)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
-
-	proc/grapevine(var/mob/dancer, loop=1)
-		var/datum/abilityHolder/dancing/AH = holder
-		if(dancer==AH.lead)
-			src.cooldown += BEAT_COUNT(8) - BEAT_COUNT(0.5)
-		if(!dancer)
-			return
-
-		var/datum/dance_transform/D = new(dancer, turn_offsets)
-		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 16)
-		animate(dancer, time=BEAT_COUNT(3), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 2)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 16)
-		animate(time=BEAT_COUNT(3), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 2)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
-
-	basic
-
-		name = "Basic"
-		icon_state = "basic"
-
-		cast(atom/target)
-			var/datum/abilityHolder/dancing/AH = holder
-			basic(AH.lead, 1)
-			basic(AH.follow, 1)
-			..()
-
-	grapevine
-		name = "Grapevine"
-		icon_state = "grapevine"
-
-		cast(atom/target)
-			var/datum/abilityHolder/dancing/AH = holder
-			grapevine(AH.lead, 1)
-			grapevine(AH.follow, 1)
-			..()
-
-	closed_left_turn
-		name = "Left Turn"
-		icon_state = "left_turn"
-
-		cast(atom/target)
-			var/datum/abilityHolder/dancing/AH = holder
-			closed_left_turn(AH.lead, 1)
-			closed_left_turn(AH.follow, 1)
-			..()
-
-/datum/targetable/dancing/waltz
-	style = "Waltz"
-	var/list/static/turn_offsets = list("[NORTH]"=list(4,-12),
-											"[EAST]"=list(-4,-1),
-											"[SOUTH]"=list(-4,12),
-											"[WEST]"=list(4,1),
-											)
-
-
-	proc/box_step(var/mob/dancer, loop=1, turn)
-		var/datum/abilityHolder/dancing/AH = holder
-		if(dancer==AH.lead)
-			src.cooldown += BEAT_COUNT(6) - BEAT_COUNT(0.5)
-		if(!dancer)
-			return
-
-		var/datum/dance_transform/D = new(dancer, turn_offsets)
-		D.travel(dancer, DANCE_TRAVEL_FORWARD, AH.lead, 9)
-		animate(dancer, time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 8)
-		if(turn)
-			D.do_turn(dancer, AH.lead, turn)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, dir=D.dir, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_BACK, AH.lead, 1)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
-
-		D.travel(dancer, DANCE_TRAVEL_BACK, AH.lead, 7)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 8)
-		if(turn)
-			D.do_turn(dancer, AH.lead, turn)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, dir=D.dir, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_BACK, AH.lead, 1)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
-
-	box_step
-		name = "Box Step"
-		icon_state = "box"
-		cast(atom/target)
-			var/datum/abilityHolder/dancing/AH = holder
-			box_step(AH.lead, 1)
-			box_step(AH.follow, 1)
-			..()
-
-	turning_box
-		name = "Turning Box Step"
-		icon_state = "l_box"
-		cast(atom/target)
-			var/datum/abilityHolder/dancing/AH = holder
-			box_step(AH.lead, 1, 90)
-			box_step(AH.follow, 1, 90)
-			..()
-
-
-/datum/dance_transform
-	var/x_offset
-	var/y_offset
-	var/layer
-	var/dir
-	var/open_position = FALSE
-	var/list/turn_offsets
-
-	New(mob/M, turn_offsets)
-		. = ..()
-		src.x_offset = 0
-		src.y_offset = 0
-		src.dir = M.dir
-		src.turn_offsets = turn_offsets
-
-	proc/travel(mob/M, dance_dir, mob/lead, distance)
-		var/angle = dir_to_angle(M.dir)
-		switch(dance_dir)
-			if(DANCE_TRAVEL_FORWARD)
-				; //noop
-			if(DANCE_TRAVEL_RIGHT)
-				angle += 90
-			if(DANCE_TRAVEL_LEFT)
-				angle += -90
-			if(DANCE_TRAVEL_BACK)
-				angle += 180
-			if(DANCE_TRAVEL_FORWARD)
-				; //noop
-			if(DANCE_TRAVEL_AWAY)
-				angle += 180
-
-		if(M != lead) // follow
-			if( (dance_dir != DANCE_TRAVEL_TOWARD) && (dance_dir != DANCE_TRAVEL_AWAY))
-				angle += 180
-
-		src.x_offset = (distance*sin(angle))
-		src.y_offset = (distance*cos(angle))
-
-	proc/do_turn(mob/M, mob/lead, angle)
-		src.dir = turn(M.dir,angle)
-		if(M != lead) // follow
-			M.layer = lead.layer
-			if(dir & (SOUTH | EAST))
-				M.layer -= 0.1
-			else
-				M.layer += 0.1
-
-			if(length(src.turn_offsets))
-				src.x_offset = src.turn_offsets["[src.dir]"][1]
-				src.y_offset = src.turn_offsets["[src.dir]"][2]
-
-
-/datum/statusEffect/dancing
-	id = "dancing"
-	name = "Dancing"
-	maxDuration = 1 MINUTE
-	effect_quality = STATUS_QUALITY_NEUTRAL
-
-	onRemove()
-		. = ..()
-		if(ismob(owner))
-			var/mob/M = owner
-			animate(M, time=2 SECOND, pixel_x=0, pixel_y=0, easing = QUAD_EASING | EASE_OUT)
-
-#undef BEAT_COUNT
-#undef DANCE_TRAVEL_FORWARD
-#undef DANCE_TRAVEL_RIGHT
-#undef DANCE_TRAVEL_LEFT
-#undef DANCE_TRAVEL_BACK
-#undef DANCE_TRAVEL_TOWARD
-#undef DANCE_TRAVEL_AWAY

@@ -45,7 +45,7 @@
 					var/mob/some_idiot = M
 					if(some_idiot?.traitHolder?.hasTrait("training_chaplain"))
 						continue
-					some_idiot.changeStatus("weakened", 3 SECONDS)
+					some_idiot.changeStatus("knockdown", 3 SECONDS)
 					some_idiot.TakeDamage("chest", 33, 0, 0, DAMAGE_BLUNT)//it's magic. no armor 4 u
 				affected += M
 				M.throw_at(get_edge_cheap(T, B.dir), 30, 1)

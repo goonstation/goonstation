@@ -45,6 +45,10 @@
 		image_group.remove_mind_mob_overlay(src.owner)
 		image_group.remove_mind(src.owner)
 
+	//robotic transformation isn't *technically* death but should still remove the role I think
+	borged()
+		src.owner.remove_antagonist(src.id)
+
 	announce_objectives()
 		return
 
@@ -57,12 +61,6 @@
 		src.owner.current.visible_message(SPAN_NOTICE("<b>[src.owner.current] looks like they just remembered their real allegiance!</b>"), SPAN_NOTICE("<b>You remember your real allegiance!</b>"))
 		src.owner.current.show_text("<h4>Protect the Heads of Staff and help them kill the leaders of the revolution.</h4>", "blue")
 		src.owner.current.show_antag_popup("derevved")
-
-	do_popup(override)
-		if (!override)
-			override = "revved"
-
-		..(override)
 
 	check_success()
 		var/list/heads_of_staff = ticker?.mode?.get_living_heads()

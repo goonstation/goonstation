@@ -99,7 +99,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 		workingoverlay.pixel_y = 2
 		workingoverlay.layer = src.layer + 0.1
 
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "pda", FREQ_PDA)
 
 	disposing()
 		STOP_TRACKING
@@ -202,7 +202,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 						var/price = input(usr, "Please enter price for [P.name].", "Gene Price", 0) as null|num
 						if(!isnum_safe(price))
 							return
-						price = max(price,0)
+						price = ceil(clamp(price, 0, 999999))
 						P.cost = price
 
 				if("lock")

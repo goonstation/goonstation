@@ -233,7 +233,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/secbot_academy)
 "iR" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	pixel_y = 18
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
@@ -280,7 +280,7 @@
 /area/prefab/secbot_academy)
 "lu" = (
 /obj/machinery/light/small/floor,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "lA" = (
@@ -325,9 +325,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/noGenerate)
 "nG" = (
-/obj/deployable_turret/riot{
-	active = 1;
-	anchored = 1;
+/obj/deployable_turret/riot/active{
 	desc = "A Nanotrasen Automatic Riot Control System repurposed for home security.";
 	dir = 4
 	},
@@ -384,7 +382,7 @@
 /area/prefab/secbot_academy)
 "pi" = (
 /obj/table/reinforced/bar/auto,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	icon = 'icons/obj/networked.dmi';
 	icon_state = "printer0";
 	name = "Old Printer";
@@ -394,7 +392,7 @@
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/secbot_academy)
 "pY" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "ql" = (
@@ -482,7 +480,7 @@
 /turf/simulated/floor/red,
 /area/prefab/secbot_academy)
 "vQ" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	pixel_y = 18
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,

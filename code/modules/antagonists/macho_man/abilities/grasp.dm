@@ -6,6 +6,7 @@
 
 	cast(atom/target)
 		var/mob/M = target
+		. = ..()
 		if (!(BOUNDS_DIST(M, holder.owner) == 0))
 			return
 		if (istype(M) && isalive(holder.owner) && !holder.owner.transforming)

@@ -160,6 +160,7 @@
 
 /datum/targetable/spell
 	preferred_holder_type = /datum/abilityHolder/wizard
+	icon_state = "fixme"
 	var/requires_being_on_turf = FALSE
 	var/requires_robes = 0
 	var/offensive = 0
@@ -171,6 +172,7 @@
 	var/voice_other = null
 	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
 	var/maptext_colors = null
+	var/voice_on_cast_start = TRUE //override if e.g.: spell does voiceline at the end of an actionbar
 
 	proc/calculate_cooldown()
 		var/cool = src.cooldown
@@ -285,7 +287,8 @@
 		return holder.owner.wizard_castcheck(src)
 
 	cast(atom/target)
-		if(ishuman(holder.owner))
+		. = ..()
+		if(ishuman(holder.owner) && src.voice_on_cast_start)
 			var/mob/living/carbon/human/O = holder.owner
 			if(src.voice_grim && O && istype(O.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(O.head, /obj/item/clothing/head/wizard/necro))
 				playsound(O.loc, src.voice_grim, 50, 0, -1)
@@ -293,6 +296,3 @@
 				playsound(O.loc, src.voice_fem, 50, 0, -1)
 			else if (src.voice_other)
 				playsound(O.loc, src.voice_other, 50, 0, -1)
-
-		var/log_target = constructTarget(target,"combat")
-		logTheThing(LOG_COMBAT, holder.owner, "casts [src.name] from [log_loc(holder.owner)][targeted ? ", at [log_target]" : ""].")

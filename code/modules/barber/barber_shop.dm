@@ -18,6 +18,9 @@
 	desc = "You can't tell the difference, Honest!"
 	icon_state= "wig"
 	wear_layer = MOB_HAIR_LAYER2 //it IS hair afterall
+	hat_offset_y = -15 // offsets for hattable component
+	hat_offset_x = 0
+	compatible_species = list("human", "cow", "werewolf", "flubber") // No wigs for martians / blobs
 
 	///Takes a list of style ids to colors and generates a wig from it
 	proc/setup_wig(var/style_list)
@@ -89,7 +92,7 @@
 	desc = "Used to cut hair. Make sure you aim at the head, where the hair is."
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "scissors"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SNIPPING
 	force = 8
@@ -134,7 +137,7 @@
 	desc = "Used to cut facial hair"
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "razorblade"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
@@ -178,7 +181,7 @@
 	desc = "Used to dye hair a different color. Seems to be made of tough, unshatterable plastic."
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "dye"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	//Default Colors
 	var/customization_first_color = "#FFFFFF"
 	var/uses_left
@@ -290,11 +293,11 @@
 				user.visible_message("[user] slips and dumps the [src] all over [M]'s head!")
 				famtofuckup = M
 			if (recolor_these_hair_layers_instead & HAIR_1_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.customization_first_color = bottle.customization_first_color
+				famtofuckup.bioHolder.mobAppearance.customizations["hair_bottom"].color = bottle.customization_first_color
 			if (recolor_these_hair_layers_instead & HAIR_2_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.customization_second_color = bottle.customization_first_color
+				famtofuckup.bioHolder.mobAppearance.customizations["hair_middle"].color = bottle.customization_first_color
 			if (recolor_these_hair_layers_instead & HAIR_3_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
+				famtofuckup.bioHolder.mobAppearance.customizations["hair_top"].color = bottle.customization_first_color
 			if (recolor_these_hair_layers_instead & EYES_FUCKED)
 				famtofuckup.bioHolder.mobAppearance.e_color = bottle.customization_first_color
 				famtofuckup.emote("scream")
@@ -310,19 +313,19 @@
 						bottle.hair_group = pick(list(BOTTOM_DETAIL, MIDDLE_DETAIL, TOP_DETAIL) - bottle.hair_group)
 					switch(bottle.hair_group)
 						if(BOTTOM_DETAIL)
-							M.bioHolder.mobAppearance.customization_first_color = bottle.customization_first_color
+							M.bioHolder.mobAppearance.customizations["hair_bottom"].color = bottle.customization_first_color
 						if(MIDDLE_DETAIL)
-							M.bioHolder.mobAppearance.customization_second_color = bottle.customization_first_color
+							M.bioHolder.mobAppearance.customizations["hair_middle"].color = bottle.customization_first_color
 						if(TOP_DETAIL)
-							M.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
+							M.bioHolder.mobAppearance.customizations["hair_top"].color = bottle.customization_first_color
 				if(ALL_HAIR)
 					if(src.uses_left < 3)
 						boutput(M, SPAN_NOTICE("This dyejob's going to need a full bottle!"))
 						return
 					else
-						M.bioHolder.mobAppearance.customization_first_color = bottle.customization_first_color
-						M.bioHolder.mobAppearance.customization_second_color = bottle.customization_first_color
-						M.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
+						M.bioHolder.mobAppearance.customizations["hair_bottom"].color = bottle.customization_first_color
+						M.bioHolder.mobAppearance.customizations["hair_middle"].color = bottle.customization_first_color
+						M.bioHolder.mobAppearance.customizations["hair_top"].color = bottle.customization_first_color
 
 				if(EYES)
 					M.bioHolder.mobAppearance.e_color = bottle.customization_first_color
@@ -434,6 +437,7 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 				src.bottle = bottle
 
 	ui_act(action, params)
+		. = ..()
 		if(status & BROKEN)
 			return
 		if(usr.stat || usr.restrained())

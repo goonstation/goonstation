@@ -13,6 +13,23 @@ var/list/datum/bioEffect/mutini_effects = list()
 	M.bioHolder.AddEffect(id)
 	return
 
+/proc/StaggeredCopyHex(var/hex, var/targetHex, var/adjust_denominator)
+
+	adjust_denominator = clamp(adjust_denominator, 1, 10)
+
+	. = "#"
+	for(var/i = 0, i < 3, i++)
+		//Isolate the RGB values
+		var/color = copytext(hex, 2 + (2 * i), 4 + (2 * i))
+		var/targetColor = copytext(targetHex, 2 + (2 * i), 4 + (2 * i))
+
+		//Turn them into numbers
+		color = hex2num(color)
+		targetColor = hex2num(targetColor)
+
+		//Do the math and add to the output
+		. += num2hex(color + ((targetColor - color) / adjust_denominator), 0)
+
 /// Holds all the appearance information.
 /datum/appearanceHolder
 	/** Mob Appearance Flags - used to modify how the mob is drawn
@@ -25,7 +42,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 	*/
 	var/mob_appearance_flags = HUMAN_APPEARANCE_FLAGS
 
-
 	/// tells update_body() which DMI to use for rendering the chest/groin, torso-details, and oversuit tails
 	var/body_icon = 'icons/mob/human.dmi'
 	/// for mutant races that are rendered using a static icon. Ignored if BUILT_FROM_PIECES is set in mob_appearance_flags
@@ -35,28 +51,12 @@ var/list/datum/bioEffect/mutini_effects = list()
 	/// What icon state is our mob's head?
 	var/head_icon_state = "head"
 
-	/// The color that gets used for determining your colors
-	var/customization_first_color = "#101010"
-	/// The color that was set by the player's preferences
-	var/customization_first_color_original = "#101010"
-	/// The hair style / detail thing that gets displayed on your spaceperson
-	var/datum/customization_style/customization_first = new /datum/customization_style/hair/short/short
-	/// The hair style / detail thing that was set by the player in their settings
-	var/customization_first_original = "None"
-	/// The Y offset to display this image
-	var/customization_first_offset_y = 0
-
-	var/customization_second_color = "#101010"
-	var/customization_second_color_original = "#101010"
-	var/datum/customization_style/customization_second =  new /datum/customization_style/none
-	var/customization_second_original = "None"
-	var/customization_second_offset_y = 0
-
-	var/customization_third_color = "#101010"
-	var/customization_third_color_original = "#101010"
-	var/datum/customization_style/customization_third = new /datum/customization_style/none
-	var/customization_third_original = "None"
-	var/customization_third_offset_y = 0
+	// It's probably smarter to have customizations in an associative list for later - Glamurio
+	var/list/datum/customizationHolder/customizations = list(
+		"hair_bottom" = new /datum/customizationHolder/first,
+		"hair_middle" = new /datum/customizationHolder/second,
+		"hair_top" = new /datum/customizationHolder/third,
+	)
 
 	/// Currently changes which sprite sheet is used
 	var/special_style
@@ -171,7 +171,18 @@ var/list/datum/bioEffect/mutini_effects = list()
 		..()
 		voicetype = RANDOM_HUMAN_VOICE
 
-	proc/CopyOther(var/datum/appearanceHolder/toCopy)
+	disposing()
+		owner = null
+		if(src.parentHolder)
+			if(src.parentHolder.mobAppearance == src)
+				src.parentHolder.mobAppearance = null
+			src.parentHolder = null
+		src.mutant_race = null
+		src.original_mutant_race = null
+		src.customizations = null
+		..()
+
+	proc/CopyOther(var/datum/appearanceHolder/toCopy, skip_update_colorful = FALSE)
 		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
 		mob_appearance_flags = toCopy.mob_appearance_flags
 
@@ -179,6 +190,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		body_icon_state = toCopy.body_icon_state
 
 		CopyOtherHeadAppearance(toCopy)
+		CopyOtherCustomizationAppearance(toCopy)
 
 		mob_detail_1_icon = toCopy.mob_detail_1_icon
 		mob_detail_1_state = toCopy.mob_detail_1_state
@@ -221,7 +233,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		voicetype = toCopy.voicetype
 
 		flavor_text = toCopy.flavor_text
-		if(ishuman(owner))
+		if(ishuman(owner) && !skip_update_colorful)
 			var/mob/living/carbon/human/H = owner
 			H.update_colorful_parts()
 		return src
@@ -229,24 +241,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/CopyOtherHeadAppearance(var/datum/appearanceHolder/toCopy)
 		head_icon = toCopy.head_icon
 		head_icon_state = toCopy.head_icon_state
-
-		customization_first_color_original = toCopy.customization_first_color_original
-		customization_first_color = toCopy.customization_first_color
-		customization_first = toCopy.customization_first
-		customization_first_offset_y = toCopy.customization_first_offset_y
-		customization_first_original = toCopy.customization_first_original
-
-		customization_second_color_original = toCopy.customization_second_color_original
-		customization_second_color = toCopy.customization_second_color
-		customization_second = toCopy.customization_second
-		customization_second_offset_y = toCopy.customization_second_offset_y
-		customization_second_original = toCopy.customization_second_original
-
-		customization_third_color_original = toCopy.customization_third_color_original
-		customization_third_color = toCopy.customization_third_color
-		customization_third = toCopy.customization_third
-		customization_third_offset_y = toCopy.customization_third_offset_y
-		customization_third_original = toCopy.customization_third_original
 
 		special_hair_1_icon = toCopy.special_hair_1_icon
 		special_hair_1_state = toCopy.special_hair_1_state
@@ -263,30 +257,23 @@ var/list/datum/bioEffect/mutini_effects = list()
 		special_hair_3_color_ref = toCopy.special_hair_3_color_ref
 		special_hair_3_offset_y = toCopy.special_hair_3_offset_y
 
-	disposing()
-		owner = null
-		if(src.parentHolder)
-			if(src.parentHolder.mobAppearance == src)
-				src.parentHolder.mobAppearance = null
-			src.parentHolder = null
-		..()
+	proc/CopyOtherCustomizationAppearance(var/datum/appearanceHolder/toCopy)
+		for(var/holder in src.customizations)
+			var/datum/customizationHolder/custom = src.customizations[holder]
+			var/datum/customizationHolder/customCopy = toCopy.customizations[holder]
+			custom.color_original = customCopy.color_original
+			custom.color = customCopy.color
+			custom.style_original = customCopy.style_original
+			custom.style = customCopy.style
+			custom.offset_y = customCopy.offset_y
 
 	// Disabling this for now as I have no idea how to fit it into hex strings
 	// I'm help -Spy
+	// I might have messed this up when introducting customizationHolders - Glamurio
 	proc/StaggeredCopyOther(var/datum/appearanceHolder/toCopy, var/progress = 1)
 		var/adjust_denominator = 11 - progress
 
-		customization_first_color = StaggeredCopyHex(customization_first_color, toCopy.customization_first_color, adjust_denominator)
-
-		if (progress >= 9 || prob(progress * 10))
-			customization_first = toCopy.customization_first
-			customization_second = toCopy.customization_second
-			customization_third = toCopy.customization_third
-
-		customization_second_color = StaggeredCopyHex(customization_second_color, toCopy.customization_second_color, adjust_denominator)
-		customization_third_color = StaggeredCopyHex(customization_third_color, toCopy.customization_third_color, adjust_denominator)
 		e_color = StaggeredCopyHex(e_color, toCopy.e_color, adjust_denominator)
-
 		s_tone = StaggeredCopyHex(s_tone, toCopy.s_tone, adjust_denominator)
 
 		if (progress > 7 || prob(progress * 10))
@@ -296,6 +283,17 @@ var/list/datum/bioEffect/mutini_effects = list()
 			mutant_race = toCopy.mutant_race
 			original_mutant_race = toCopy.original_mutant_race
 
+		if (progress >= 9 || prob(progress * 10))
+
+			for(var/holder in src.customizations)
+				if (!src.CanCopyCustomization(toCopy))
+					continue
+				var/datum/customizationHolder/custom = src.customizations[holder]
+				var/datum/customizationHolder/customCopy = toCopy.customizations[holder]
+
+				custom.color = StaggeredCopyHex(custom.color, customCopy.color, adjust_denominator)
+				custom.style = customCopy.style
+
 		if(progress >= 10) //Finalize the copying here, with anything we may have missed.
 			src.CopyOther(toCopy)
 		if(ishuman(owner))
@@ -303,22 +301,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 			H.update_colorful_parts()
 		return
 
-	proc/StaggeredCopyHex(var/hex, var/targetHex, var/adjust_denominator)
-
-		adjust_denominator = clamp(adjust_denominator, 1, 10)
-
-		. = "#"
-		for(var/i = 0, i < 3, i++)
-			//Isolate the RGB values
-			var/color = copytext(hex, 2 + (2 * i), 4 + (2 * i))
-			var/targetColor = copytext(targetHex, 2 + (2 * i), 4 + (2 * i))
-
-			//Turn them into numbers
-			color = hex2num(color)
-			targetColor = hex2num(targetColor)
-
-			//Do the math and add to the output
-			. += num2hex(color + ((targetColor - color) / adjust_denominator), 0)
+	proc/CanCopyCustomization(var/datum/appearanceHolder/toCopy)
+		if (!length(src.customizations) > 0 || !length(toCopy.customizations) > 0)
+			logTheThing(LOG_DEBUG, null, {"<b>Customizations:</b> Tried to copy customization [!length(src.customizations) > 0 ? "from" : "to"]
+			 [toCopy.owner ? "\ref[toCopy.owner] [toCopy.owner.name]" : "*NULL*"] to [src.owner ? "\ref[src.owner] [src.owner.name]" : "*NULL*"],
+			but the holder we are copying [!length(src.customizations) > 0 ? "to" : "from"] has no customizations!"})
+			return FALSE
+		return TRUE
 
 	proc/UpdateMob() //Rebuild the appearance of the mob from the settings in this holder.
 		if (ishuman(owner))
@@ -335,12 +324,32 @@ var/list/datum/bioEffect/mutini_effects = list()
 			H.sound_fart = fartsounds[fartsound || "default"] || fartsounds["default"]
 			H.voice_type = voicetype || RANDOM_HUMAN_VOICE
 
-			if (H.mutantrace.voice_override)
+			if (H.mutantrace?.voice_override)
 				H.voice_type = H.mutantrace.voice_override
 
 			H.update_name_tag()
 		// if the owner's not human I don't think this would do anything anyway so fuck it
 		return
+
+/// Holds all the customization information.
+/datum/customizationHolder
+	/// The color that gets used for determining your colors
+	var/color = "#101010"
+	/// The color that was set by the player's preferences
+	var/color_original = "#101010"
+	/// The hair style / detail thing that gets displayed on your spaceperson
+	var/datum/customization_style/style = new /datum/customization_style/hair/short/short
+	/// The hair style / detail thing that was set by the player in their settings
+	var/datum/customization_style/style_original = new /datum/customization_style/none
+	/// The Y offset to display this image
+	var/offset_y = 0
+
+	first
+		style =  new /datum/customization_style/hair/short/short
+	second
+		style =  new /datum/customization_style/none
+	third
+		style =  new /datum/customization_style/none
 
 /datum/bioHolder
 	//Holds the appearanceholder aswell as the effects. Controls adding and removing of effects.
@@ -496,14 +505,16 @@ var/list/datum/bioEffect/mutini_effects = list()
 		mobAppearance.UpdateMob()
 		return E
 
-	proc/AddNewPoolEffect(var/idToAdd)
+	proc/AddNewPoolEffect(var/idToAdd, var/scramble=FALSE)
 		if(HasEffect(idToAdd) || HasEffectInPool(idToAdd))
 			return 0
 
 		var/datum/bioEffect/newEffect = bioEffectList[idToAdd]
 		newEffect = newEffect.GetCopy()
+
 		if (istype(newEffect))
 			effectPool[newEffect.id] = newEffect
+			if(scramble) newEffect.dnaBlocks.ModBlocks()
 			newEffect.holder = src
 			newEffect.owner = src.owner
 			return 1
@@ -548,6 +559,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		var/list/filteredGood = new/list()
 		var/list/filteredBad = new/list()
 		var/list/filteredSecret = new/list()
+		var/datum/bioEffect/selectedNew
 
 		for(var/datum/bioEffect/BE in effectPool)
 			qdel(BE)
@@ -556,6 +568,21 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if (!bioEffectList || !length(bioEffectList))
 			logTheThing(LOG_DEBUG, null, {"<b>Genetics:</b> Tried to build effect pool for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"], but bioEffectList is empty!"})
+
+		var/mob/living/L = owner
+		if(!istype(L))
+			return
+		var/good_genes = 0
+		var/bad_genes = 0
+		var/secret_genes = 0
+		var/genetic_counts = L.get_genetic_traits()
+		if(length(genetic_counts) == 3)
+			good_genes = genetic_counts[1]
+			bad_genes = genetic_counts[2]
+			secret_genes = genetic_counts[3]
+
+		if(!good_genes && !bad_genes && !secret_genes)
+			return
 
 		for(var/T in bioEffectList)
 			var/datum/bioEffect/instance = bioEffectList[T]
@@ -573,16 +600,16 @@ var/list/datum/bioEffect/mutini_effects = list()
 				else
 					filteredGood[instance] = instance.probability
 
-		if(!filteredGood.len || !length(filteredBad))
+		if(!length(filteredGood) || !length(filteredBad))
 			logTheThing(LOG_DEBUG, null, {"<b>Genetics:</b> Unable to build effect pool for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"]. (filteredGood.len = [filteredGood.len],
 			  filteredBad.len = [filteredBad.len])"})
 			return
 
-		for(var/g=0, g<5, g++)
+		for(var/g=0, g<good_genes, g++)
 			var/datum/bioEffect/selectedG = weighted_pick(filteredGood)
 			if(selectedG)
-				var/datum/bioEffect/selectedNew = selectedG.GetCopy()
+				selectedNew = selectedG.GetCopy()
 				selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
 				selectedNew.holder = src
 				selectedNew.owner = src.owner
@@ -591,10 +618,10 @@ var/list/datum/bioEffect/mutini_effects = list()
 			else
 				break
 
-		for(var/b=0, b<5, b++)
+		for(var/b=0, b<bad_genes, b++)
 			var/datum/bioEffect/selectedB = weighted_pick(filteredBad)
 			if(selectedB)
-				var/datum/bioEffect/selectedNew = selectedB.GetCopy()
+				selectedNew = selectedB.GetCopy()
 				selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
 				selectedNew.holder = src
 				selectedNew.owner = src.owner
@@ -604,13 +631,17 @@ var/list/datum/bioEffect/mutini_effects = list()
 				break
 
 		if (filteredSecret.len)
-			var/datum/bioEffect/selectedS = weighted_pick(filteredSecret)
-			var/datum/bioEffect/selectedNew = selectedS.GetCopy()
-			selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
-			selectedNew.holder = src
-			selectedNew.owner = src.owner
-			effectPool[selectedNew.id] = selectedNew
-			filteredBad.Remove(selectedS)
+			for(var/s=0, s<secret_genes, s++)
+				var/datum/bioEffect/selectedS = weighted_pick(filteredSecret)
+				if(selectedS)
+					selectedNew = selectedS.GetCopy()
+					selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
+					selectedNew.holder = src
+					selectedNew.owner = src.owner
+					effectPool[selectedNew.id] = selectedNew
+					filteredSecret.Remove(selectedS)
+				else
+					break
 
 		shuffle_list(effectPool)
 
@@ -705,7 +736,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		age += (toCopy.age - age) / (11 - progress)
 
-	proc/AddEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0, var/safety = 0)
+	proc/AddEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0, var/safety = 0, var/for_scanning=0)
 		//Adds an effect to this holder. Returns the newly created effect if succesful else 0.
 		if(issilicon(src.owner))
 			return 0
@@ -730,12 +761,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if(power) newEffect.power = power
 			if(timeleft) newEffect.timeLeft = timeleft
 			if(magical)
-				newEffect.curable_by_mutadone = 0
+				newEffect.curable_by_mutadone = FALSE
 				newEffect.stability_loss = 0
-				newEffect.can_scramble = 0
-				newEffect.can_reclaim = 0
+				newEffect.can_scramble = FALSE
+				newEffect.can_reclaim = FALSE
 				newEffect.degrade_to = null
-				newEffect.can_copy = 0
+				newEffect.can_copy = FALSE
+				newEffect.is_magical = TRUE
 
 			if(safety && istype(newEffect, /datum/bioEffect/power))
 				// Only powers have safety ("synced" i.e. safe for user)
@@ -817,33 +849,37 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		var/datum/bioEffect/D = effects[id]
 		if (D && !D.removed)
-			D.OnRemove()
-			if (!D.activated_from_pool)
-				src.genetic_stability += D.stability_loss
-				src.genetic_stability = max(0,src.genetic_stability)
-			D.activated_from_pool = 0 //Fix for bug causing infinitely exploitable stability gain / loss
-
-			if (owner)
-				OutputGainOrLoseMsg(D, FALSE)
-
-			if (mobAppearance)
-				mobAppearance.UpdateMob()
-			logTheThing(LOG_COMBAT, owner, "loses the [D] mutation at [log_loc(owner)].")
-			return effects.Remove(D.id)
+			return src.RemoveEffectInstance(D)
 
 		return 0
 
-	proc/RemoveAllEffects(var/type = null)
+	proc/RemoveEffectInstance(var/datum/bioEffect/effect)
+		effect.OnRemove()
+		if (!effect.activated_from_pool)
+			src.genetic_stability += effect.stability_loss
+			src.genetic_stability = max(0,src.genetic_stability)
+		effect.activated_from_pool = 0 //Fix for bug causing infinitely exploitable stability gain / loss
+
+		if (owner)
+			OutputGainOrLoseMsg(effect, FALSE)
+
+		if (mobAppearance)
+			mobAppearance.UpdateMob()
+		logTheThing(LOG_COMBAT, owner, "loses the [effect] mutation at [log_loc(owner)].")
+		return effects.Remove(effect.id)
+
+	///ignoreMagic means "do not remove magical bioeffects"
+	proc/RemoveAllEffects(var/type = null, var/ignoreMagic = FALSE)
 		for(var/D as anything in effects)
 			var/datum/bioEffect/BE = effects[D]
 			if(BE && (isnull(type) || BE.effectType == type))
-				RemoveEffect(BE.id)
-				BE.owner = null
-				BE.holder = null
-				if(istype(BE, /datum/bioEffect/power))
-					var/datum/bioEffect/power/BEP = BE
-					BEP?.ability?.owner = null
-				//qdel(BE)
+				if(!ignoreMagic || ignoreMagic && !BE.is_magical) // No removing hairy trait or job traits!
+					RemoveEffect(BE.id)
+					BE.owner = null
+					BE.holder = null
+					if(istype(BE, /datum/bioEffect/power))
+						var/datum/bioEffect/power/BEP = BE
+						BEP?.ability?.owner = null
 		return 1
 
 	proc/RemoveAllPoolEffects(var/type = null)
@@ -920,6 +956,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/RandomEffect(var/type = "either", var/useProbability = 1, var/datum/dna_chromosome/toApply)
 		//Adds a random effect to this holder. Argument controls which type. bad , good, either.
+		if(check_target_immunity(owner, TRUE))
+			return
 		var/list/filtered = new/list()
 
 		for(var/T in bioEffectList)
@@ -982,3 +1020,7 @@ proc/GetBioeffectResearchLevelFromGlobalListByID(var/id)
 		. = BE.research_level
 	else
 		. = 0
+
+///Bioholder type for when you need a bioholder that isn't strongly linked to an owner, uses a weakref to allow GC
+/datum/bioHolder/unlinked
+	var/datum/weakref/weak_owner = null

@@ -15,7 +15,7 @@
 	rarity_weight = 200
 	validtypes = list("wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
-	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
+	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch, /datum/artifact_trigger/language)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activated = 0
 	activ_text = "uncovers an array of guns!"
@@ -70,7 +70,7 @@
 					cycles_without_target = 0
 					O.ArtifactDeactivated()
 		else
-			if (target_is_valid(current_target,O) && istype(bullet,/datum/projectile/artifact))
+			if (target_is_valid(current_target,O) && bullet)
 				shoot_projectile_ST_pixel_spread(O, bullet, current_target)
 			else
 				current_target = null

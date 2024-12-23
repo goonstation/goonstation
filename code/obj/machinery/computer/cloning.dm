@@ -7,7 +7,7 @@
 var/global/cloning_with_records = TRUE
 ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/clone_someone)
 /obj/machinery/computer/cloning
-	name = "Cloning Console"
+	name = "cloning console"
 	desc = "Use this console to operate a cloning scanner and pod. There is a slot to insert modules - they can be removed with a screwdriver."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
@@ -36,7 +36,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 	var/gen_analysis = 0 //Are we analysing the genes while reassembling the duder? (read: Do we work faster or do we give a material bonus?)
 	//Sound for scans and toggling gene analysis. They need to be the same so you can fake the former with the latter
 	var/sound_ping = 'sound/machines/ping.ogg'
-
+	var/emagged = FALSE
 	light_r =1
 	light_g = 0.6
 	light_b = 1
@@ -218,6 +218,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 			qdel(RIP)
 	..()
 
+/obj/machinery/computer/cloning/emag_act(mob/user, obj/item/card/emag/E)
+	..()
+	if (!src.emagged)
+		src.emagged = TRUE
+		playsound(src, 'sound/effects/sparks4.ogg', 50)
+		logTheThing(LOG_ADMIN, user, "emagged the cloning console at \[[log_loc(src)]]")
+		if(user)
+			boutput(user, "You short out the access lock on [src].")
+		return 1
+	return 0
+
 // message = message you want to pass to the noticebox
 // status = warning/success/danger/info which changes the color of the noticebox on the frontend
 
@@ -259,8 +270,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 
 	var/datum/mind/subjMind = subject.mind
 	if ((!subjMind) || (!subjMind.key))
-		if (eligible_to_clone(subject.oldmind))
-			subjMind = subject.oldmind
+		if(subject.ghost?.mind)
+			subjMind = subject.ghost.mind
+		else if(subject.oldmind)
+			if(eligible_to_clone(subject.oldmind, scanning = TRUE))
+				subjMind = subject.oldmind
+			else
+				show_message("Error: Mental interface failure.", "warning")
+				return
 		else
 			show_message("Error: Mental interface failure.", "warning")
 			return
@@ -423,8 +440,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		src.menu = 1
 		src.records_scan()
 
-// check if a mind has a current mob, a client, and is dead/a ghost/doing afterlife stuff
-proc/eligible_to_clone(var/datum/mind/mind)
+/// Check if a mind has a current mob, a client, and is dead/a ghost/doing afterlife stuff.
+/// Scanning var controls whether we will return ghosts, because ghosts needs special handling in clone scans
+/// to ensure they're not using a body that they've been cloned from before
+proc/eligible_to_clone(datum/mind/mind, scanning = FALSE)
 	if (!mind)
 		return null
 
@@ -436,13 +455,16 @@ proc/eligible_to_clone(var/datum/mind/mind)
 	if (!M.client)
 		return null
 
+	if (istype(M, /mob/new_player))
+		return null
+
 	if(istype(M, /mob/dead/target_observer))
 		var/mob/dead/target_observer/tobserver = M
 		if(!tobserver.is_respawnable)
 			return null
 	if(iswraith(M))
 		return null
-	if(isdead(M) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
+	if((!scanning && isdead(M)) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
 		return M
 	return null
 
@@ -525,6 +547,10 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			occupant = null
 		..()
 
+	Click(location, control, params)
+		if(!src.ghost_observe_occupant(usr, src.occupant))
+			. = ..()
+
 	MouseDrop_T(mob/living/target, mob/user)
 		if (!istype(target) || isAI(user))
 			return
@@ -600,7 +626,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		return
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user) || iswraith(user) || isintangible(user))
+		if (!src.can_eject_occupant(user))
 			return
 		src.go_out()
 		add_fingerprint(user)
@@ -771,7 +797,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 
 	switch(action)
 		if("delete")
-			if(!src.allowed(usr))
+			if(!(src.allowed(usr) || src.emagged))
 				show_message("You do not have permission to delete records.", "danger")
 				return TRUE
 			var/selected_record =	find_record_by_id(params["id"])
@@ -917,7 +943,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 
 	. = list(
 		"cloningWithRecords" = cloning_with_records,
-		"allowedToDelete" = src.allowed(user),
+		"allowedToDelete" = (src.allowed(user) || src.emagged),
 		"scannerGone" = isnull(src.scanner),
 		"occupantScanned" = FALSE,
 

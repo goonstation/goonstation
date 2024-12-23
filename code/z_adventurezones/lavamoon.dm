@@ -52,7 +52,7 @@
 	New()
 		..()
 		if (prob(33))
-			src.UpdateOverlays(image(src.icon, "panelscorched"), "burn")
+			src.AddOverlays(image(src.icon, "panelscorched"), "burn")
 
 /turf/unsimulated/iomoon/ancient_floor
 	name = "Ancient Metal Floor"
@@ -494,18 +494,6 @@ var/sound/iomoon_alarm_sound = null
 			"and safety procedures in place for the magma chamber area.")
 
 //Items
-/obj/item/paper/xg_tapes
-	name = "XIANG|GIESEL Onboarding Course"
-	desc = "A cover sheet meant to accompany a set of corporate training materials."
-	icon_state = "paper_burned"
-	sizex = 740
-	sizey = 1100
-
-	New()
-		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/xg_tapes.png")]'></body></html>"
 
 /obj/item/radio_tape/adventure/xg
 	name = "XIANG|GIESEL Onboarding Tape 1"
@@ -574,7 +562,7 @@ var/sound/iomoon_alarm_sound = null
 			. = ..()
 
 //Clothing & Associated Equipment
-/obj/item/clothing/suit/rad/iomoon
+/obj/item/clothing/suit/hazard/rad/iomoon
 	name = "FB-8 Environment Suit"
 	desc = "A rather old-looking suit designed to guard against extreme heat and radiation."
 	icon_state = "rad_io"
@@ -598,7 +586,7 @@ var/sound/iomoon_alarm_sound = null
 	icon_state = "syndicate"
 	icon_opened = "syndicate-open"
 	icon_closed = "syndicate"
-	spawn_contents = list(/obj/item/clothing/suit/rad/iomoon,\
+	spawn_contents = list(/obj/item/clothing/suit/hazard/rad/iomoon,\
 	/obj/item/clothing/head/rad_hood/iomoon)
 
 /obj/machinery/light/small/iomoon
@@ -706,7 +694,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		var/b_pressed = FALSE
 
 		attack_hand(mob/user)
-			if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands())
+			if (user.stat || user.getStatusDuration("knockdown") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands())
 				return
 
 			user.visible_message(SPAN_ALERT("[user] presses [src]."), SPAN_ALERT("You press [src]."))
@@ -1000,6 +988,11 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				if (src.status == IOCORE_DEAD)
 					return
 
+				if (istype(get_area(src), /area/iomoon/robot_ruins/boss_chamber))
+					for (var/mob/living/L in range(6, src))
+						if (!isintangible(L))
+							L.unlock_medal("What's Buried Stays Buried", TRUE)
+
 				STOP_TRACKING_CAT(TR_CAT_CRITTERS)
 
 				src.status = IOCORE_DEAD
@@ -1035,7 +1028,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 					var/obj/decal/exitMarker = locate("IOMOON_BOSSDEATH_EXIT")
 					if (istype(exitMarker))
-						var/obj/perm_portal/portalOut = new
+						var/obj/laser_sink/perm_portal/portalOut = new
 						portalOut.target = get_turf(exitMarker)
 						portalOut.icon = 'icons/misc/worlds.dmi'
 						portalOut.icon_state = "jitterportal"
@@ -1120,7 +1113,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 #undef STATE_RECHARGING
 
 
-/obj/decal/fakeobjects/tallsmes
+/obj/fakeobject/tallsmes
 	name = "large power storage unit"
 	desc = "An ultra-high-capacity superconducting magnetic energy storage (SMES) unit."
 	icon = 'icons/misc/worlds.dmi'
@@ -1571,7 +1564,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			id = params2list(id)
 
 	attack_hand(mob/user)
-		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands() || !ishuman(user))
+		if (user.stat || user.getStatusDuration("knockdown") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands() || !ishuman(user))
 			return
 
 		user.visible_message(SPAN_ALERT("[user] presses [src]."), SPAN_ALERT("You press [src]."))

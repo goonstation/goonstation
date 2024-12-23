@@ -34,7 +34,7 @@
 				next_spawn_check = TIME + rand(20 SECONDS, 25 SECONDS)
 				if (linked_critters < max_critters)
 					var/mob/living/critter/small_animal/mouse/mad/rat_den/M = new /mob/living/critter/small_animal/mouse/mad/rat_den(src.loc)
-					M.faction |= FACTION_WRAITH
+					LAZYLISTADDUNIQUE(M.faction, FACTION_WRAITH)
 					M.linked_den = src
 					linked_critters ++
 

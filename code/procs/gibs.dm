@@ -264,4 +264,4 @@
 
 	// CORE SPLAT
 	gib = make_cleanable(/obj/decal/cleanable/ash, location)
-	fireflash(location, 1)
+	fireflash(location, 1, chemfire = CHEM_FIRE_RED)

@@ -70,6 +70,10 @@
 #define CANADADAY 1
 #endif
 
+#if (BUILD_TIME_MONTH == 7) && (BUILD_TIME_DAY == 6)
+#define MIDSUMMER 1
+#endif
+
 // other toggles
 
 #define FOOTBALL_MODE 1

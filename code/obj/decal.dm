@@ -64,10 +64,18 @@
 	mouse_opacity = 0
 	blend_mode = 2
 	plane = PLANE_NOSHADOW_ABOVE
+	var/y_blur = 3
 
 	New()
-		add_filter("motion blur", 1, motion_blur_filter(x=0, y=3))
+		add_filter("motion blur", 1, motion_blur_filter(x=0, y=src.y_blur))
 		..()
+
+	talisman
+		icon_state = null
+		y_blur = 2
+
+		proc/activate_glimmer()
+			flick("glimmer", src)
 
 /obj/decal/floatingtiles
 	name = "floating tiles"
@@ -173,353 +181,13 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "hazard_delivery"
 
-obj/decal/fakeobjects
-	layer = OBJ_LAYER
-	plane = PLANE_DEFAULT
-	var/true_name = "fuck you erik"	//How else will players banish it or place curses on it?? honestly people
-
-	New()
-		..()
-		true_name = name
-
-	UpdateName()
-		src.name = "[name_prefix(null, 1)][src.true_name][name_suffix(null, 1)]"
-
-/obj/decal/fakeobjects/skeleton
-	name = "skeleton"
-	desc = "The remains of a human."
-	opacity = 0
-	density = 0
-	anchored = ANCHORED
-	icon = 'icons/obj/adventurezones/void.dmi'
-	icon_state = "skeleton_l"
-	plane = PLANE_DEFAULT
-
-	decomposed_corpse
-		name = "decomposed corpse"
-		desc = "Eugh, the stench is horrible!"
-		icon = 'icons/misc/hstation.dmi'
-		icon_state = "body1"
-
-	unanchored
-		anchored = UNANCHORED
-
-		summon
-			New()
-				flick("skeleton_summon", src)
-				..()
-
-
-	cap
-		name = "remains of the captain"
-		desc = "The remains of the captain of this station ..."
-		opacity = 0
-		density = 0
-		anchored = ANCHORED
-		icon = 'icons/obj/adventurezones/void.dmi'
-		icon_state = "skeleton_l"
-
-/obj/decal/fakeobjects/pole
-	name = "Barber Pole"
-	icon = 'icons/obj/decoration.dmi'
-	icon_state = "pole"
-	anchored = ANCHORED
-	density = 0
-	desc = "Barber poles historically were signage used to convey that the barber would perform services such as blood letting and other medical procedures, with the red representing blood, and the white representing the bandaging. In America, long after the time when blood-letting was offered, a third colour was added to bring it in line with the colours of their national flag. This one is in space."
-	layer = EFFECTS_LAYER_UNDER_2
-	plane = PLANE_DEFAULT
-
-/obj/decal/fakeobjects/oven
-	name = "Oven"
-	desc = "An old oven."
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "oven_off"
-	anchored = ANCHORED
-	density = 1
-	layer = OBJ_LAYER
-	plane = PLANE_DEFAULT
-
-/obj/decal/fakeobjects/sink
-	name = "Sink"
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "sink"
-	desc = "The sink doesn't appear to be connected to a waterline."
-	anchored = ANCHORED
-	density = 1
-	layer = OBJ_LAYER
-	plane = PLANE_DEFAULT
-
-/obj/decal/fakeobjects/console_lever
-	name = "lever console"
-	icon = 'icons/obj/decoration.dmi'
-	icon_state = "lever0"
-	density = 1
-
-/obj/decal/fakeobjects/console_randompc
-	name = "computer console"
-	icon = 'icons/obj/decoration.dmi'
-	icon_state = "randompc"
-	density = 1
-
-/obj/decal/fakeobjects/console_radar
-	name = "radar console"
-	icon = 'icons/obj/decoration.dmi'
-	icon_state = "radar"
-	density = 1
-
-obj/decal/fakeobjects/cargopad
-	name = "Cargo Pad"
-	desc = "Used to receive objects transported by a Cargo Transporter."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "cargopad"
-	anchored = ANCHORED
-
-/obj/decal/fakeobjects/robot
-	name = "Inactive Robot"
-	desc = "The robot looks to be in good condition."
-	icon = 'icons/mob/robots.dmi'
-	icon_state = "robot"
-	anchored = UNANCHORED
-	density = 1
-
-/obj/decal/fakeobjects/robot/security
-	name = "robot"
-	desc = "A Security Robot, something seems a bit off."
-	icon = 'icons/mob/critter/robotic/gunbot.dmi'
-	icon_state = "gunbot"
-
-	hugo
-		name = "HUGO"
-
-	henk
-		name = "HENK"
-
-/obj/decal/fakeobjects/apc_broken
-	name = "broken APC"
-	desc = "A smashed local power unit."
-	icon = 'icons/obj/power.dmi'
-	icon_state = "apc-b"
-	anchored = ANCHORED
-
-obj/decal/fakeobjects/teleport_pad
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "pad0"
-	name = "teleport pad"
-	anchored = ANCHORED
-	layer = FLOOR_EQUIP_LAYER1
-	desc = "A pad used for scientific teleportation."
-
-/obj/decal/fakeobjects/firealarm_broken
-	name = "broken fire alarm"
-	desc = "This fire alarm is burnt out, ironically."
-	icon = 'icons/obj/monitors.dmi'
-	icon_state = "firex"
-	anchored = ANCHORED
-
-/obj/decal/fakeobjects/firelock_broken
-	name = "rusted firelock"
-	desc = "Rust has rendered this firelock useless."
-	icon = 'icons/obj/doors/door_fire2.dmi'
-	icon_state = "door0"
-	anchored = ANCHORED
-
-/obj/decal/fakeobjects/airlock_broken
-	name = "rusted airlock"
-	desc = "Rust has rendered this airlock useless."
-	icon = 'icons/obj/doors/Door1.dmi';
-	icon_state = "doorl";
-	anchored = ANCHORED
-	density = 1
-	opacity = 1
-
-/obj/decal/fakeobjects/lighttube_broken
-	name = "shattered light tube"
-	desc = "Something has broken this light."
-	icon = 'icons/obj/lighting.dmi'
-	icon_state = "tube-broken"
-	anchored = ANCHORED
-
-/obj/decal/fakeobjects/lightbulb_broken
-	name = "shattered light bulb"
-	desc = "Something has broken this light."
-	icon = 'icons/obj/lighting.dmi'
-	icon_state = "bulb-broken"
-	anchored = ANCHORED
-
-/obj/decal/fakeobjects/airmonitor_broken
-	name = "broken air monitor"
-	desc = "Something has broken this air monitor."
-	icon = 'icons/obj/monitors.dmi'
-	icon_state = "alarmx"
-	anchored = ANCHORED
-
-/obj/decal/fakeobjects/shuttlethruster
-	name = "propulsion unit"
-	desc = "A small impulse drive that moves the shuttle."
-	icon = 'icons/obj/shuttle.dmi'
-	icon_state = "alt_propulsion"
-	anchored = ANCHORED
-	density = 1
-	opacity = 0
-
-/obj/decal/fakeobjects/shuttleweapon
-	name = "weapons unit"
-	desc = "A weapons system for shuttles and similar craft."
-	icon = 'icons/obj/shuttle.dmi'
-	icon_state = "shuttle_laser"
-	anchored = ANCHORED
-	density = 1
-	opacity = 0
-
-	base
-		icon_state = "alt_heater"
-
-/obj/decal/fakeobjects/pipe
-	name = "rusted pipe"
-	desc = "Good riddance."
-	icon = 'icons/obj/atmospherics/pipes/pipe.dmi'
-	icon_state = "intact"
-	anchored = ANCHORED
-	layer = DECAL_LAYER
-
-	heat
-		icon = 'icons/obj/atmospherics/pipes/heat_pipe.dmi'
-
-/obj/decal/fakeobjects/oldcanister
-	name = "old gas canister"
-	desc = "All the gas in it seems to be long gone."
-	icon = 'icons/misc/evilreaverstation.dmi'
-	icon_state = "old_oxy"
-	anchored = UNANCHORED
-	density = 1
-
-
-	plasma
-		name = "old plasma canister"
-		icon_state = "old_plasma"
-		desc = "This used to be the most feared piece of equipment on the station, don't you believe it?"
-
-/obj/decal/fakeobjects/shuttleengine
-	name = "engine unit"
-	desc = "A generator unit that uses complex technology."
-	icon = 'icons/obj/shuttle.dmi'
-	icon_state = "heater"
-	anchored = ANCHORED
-	density = 1
-	opacity = 0
-
-/obj/decal/fakeobjects/falseladder
-	name = "ladder"
-	desc = "The ladder is blocked, you can't get down there."
-	icon = 'icons/misc/worlds.dmi'
-	icon_state = "ladder"
-	anchored = ANCHORED
-	density = 0
-
-/obj/decal/fakeobjects/sealedsleeper
-	name = "sleeper"
-	desc = "This one appears to still be sealed. Who's in there?"
-	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "sealedsleeper"
-	anchored = ANCHORED
-	density = 1
-
-// Laundry machines
-
-/obj/decal/fakeobjects/Laundry
-	name = "laundry machine"
-	desc = "The door has been pried off..."
-	icon = 'icons/obj/janitor.dmi'
-	icon_state = "laundry"
-	anchored = ANCHORED
-	density = 1
-	var/image/cycle = null
-	var/image/light = null
-
-	New()
-		..()
-		src.UpdateOverlays(src.cycle, "door")
-
-	drying
-		desc = "Will those clothes ever be dry?"
-		New()
-			icon_state = "laundry-d1"
-			ENSURE_IMAGE(src.cycle, src.icon, "laundry0")
-			ENSURE_IMAGE(src.light, src.icon, "laundry-dlight")
-			src.UpdateOverlays(src.light, "light")
-			..()
-
-	washing
-		desc = "Around and around..."
-		New()
-			icon_state = "laundry-w1"
-			ENSURE_IMAGE(src.cycle, src.icon, "laundry0")
-			ENSURE_IMAGE(src.light, src.icon, "laundry-wlight")
-			src.UpdateOverlays(src.light, "light")
-			..()
-
-	open
-		desc = "Who left these clothes?"
-		New()
-			icon_state = "laundry-p"
-			ENSURE_IMAGE(src.cycle, src.icon, "laundry1")
-			..()
-
-//sealab prefab fakeobjs
-
-/obj/decal/fakeobjects/pcb
-	name = "PCB constructor"
-	desc = "A combination pick and place machine and wave soldering gizmo.  For making boards.  Buddy boards.   Well, it would if the interface wasn't broken."
-	icon = 'icons/obj/manufacturer.dmi'
-	icon_state = "fab-general"
-	anchored = ANCHORED
-	density = 1
-
-/obj/decal/fakeobjects/palmtree
-	name = "palm tree"
-	desc = "This is a palm tree. Smells like plastic."
-	icon = 'icons/misc/beach2.dmi'
-	icon_state = "palm"
-	anchored = ANCHORED
-	density = 0
-
-/obj/decal/fakeobjects/brokenportal
-	name = "broken portal ring"
-	desc = "This portal ring looks completely fried."
-	icon = 'icons/obj/teleporter.dmi'
-	icon_state = "tele_fuzz"
-	anchored = ANCHORED
-	density = 1
-
-/obj/decal/fakeobjects/lawrack
-	name = "defunct AI Law Mount Rack"
-	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs. This one looks non-functional."
-	icon = 'icons/obj/large/32x48.dmi'
-	icon_state = "airack_empty"
-	anchored = ANCHORED
-	density = 1
-	layer = EFFECTS_LAYER_UNDER_1
-	plane = PLANE_DEFAULT
-
-/obj/decal/fakeobjects/artifact_boh_pocket_dimension_artifact
-	name = "fake artifact"
-	desc = "Looking at this fills you with even more dread."
-	icon = 'icons/obj/artifacts/artifactsitem.dmi'
-	icon_state = "eldritch-1"
-	anchored = ANCHORED
-
-	New()
-		src.name = pick("unnerving claw", "horrid carving", "foreboding relic")
-		icon_state = "eldritch-[rand(1, 7)]"
-		..()
-
 /obj/decal/bloodtrace
 	name = "blood trace"
 	desc = "Oh my!!"
 	icon = 'icons/obj/decals/blood/blood.dmi'
 	icon_state = "floor2"
 	color = "#3399FF"
-	alpha = 100
+	alpha = 200
 	invisibility = INVIS_ALWAYS
 	blood_DNA = null
 	blood_type = null
@@ -567,6 +235,7 @@ obj/decal/fakeobjects/teleport_pad
 	layer = OBJ_LAYER
 	event_handler_flags = USE_FLUID_ENTER
 	pass_unstable = TRUE
+	deconstructable = FALSE
 
 	rotatable = 0
 	foldable = 0
@@ -660,7 +329,7 @@ obj/decal/fakeobjects/teleport_pad
 		var/mob/M =	AM
 		// drsingh fix for undefined variable mob/living/carbon/monkey/var/shoes
 
-		if (M.getStatusDuration("weakened") || M.getStatusDuration("stunned") || M.getStatusDuration("frozen"))
+		if (M.getStatusDuration("knockdown") || M.getStatusDuration("stunned") || M.getStatusDuration("frozen"))
 			return
 
 		if (!(M.bioHolder?.HasEffect("cold_resist") > 1) && M.slip(walking_matters = 1))
@@ -670,7 +339,7 @@ obj/decal/fakeobjects/teleport_pad
 				M.visible_message(SPAN_ALERT("<b>[M]</b> hits their head on [src]!"))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
 
-/obj/decal/icefloor/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/decal/icefloor/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 	. = ..()
 	if (exposed_temperature > T0C)
 		if(prob((exposed_temperature - T0C) * 0.1))

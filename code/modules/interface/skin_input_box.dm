@@ -12,7 +12,7 @@
 
 	// Create a macro set for handling enter presses
 	winclone(src, "input_box_macro", "persist_[id]_macro")
-	winset(src, "[id]_macro_returnup", "parent=persist_[id]_macro;name=Return+UP;command=\".winset \\\"[id].is-visible=false\\\"\"")
+	winset(src, "[id]_macro_returnup", "parent=persist_[id]_macro;name=Return+UP;command=\".winset \\\"[id].is-visible=false\"")
 	// Return+UP allows us to close the window after typing in a command, pressing enter and releasing enter.
 	// Can't use just Return for this, because when there's text in the box Return is handled by BYOND and doesn't run the macro.
 
@@ -22,18 +22,18 @@
 
 	if(accept_verb)
 		winset(src, "[id].say-input", "command=\"[accept_verb] \\\"\"")
-		winset(src, "[id].accept", "command=\".winset \\\"command=\\\"[accept_verb] \\\\\\\"\[\[[id].say-input.text as escaped\]\]\\\";[id].is-visible=false\\\";[id].say-input.text=\\\"\\\"\"") //Invokes the accept verb using the inputted text, and hides the window.
+		winset(src, "[id].accept", "command=\".winset \\\"command=\\\"[accept_verb] \\\\\\\"\[\[[id].say-input.text as escaped\]\]\\\";[id].is-visible=false;[id].say-input.text=\\\"\\\"\"") //Invokes the accept verb using the inputted text, and hides the window.
 	if(cancel_verb)
 		//All of these close the window and invoke the cancel verb, as well as clear the input box of all text. The second arg is the method of which the window was closed.
-		winset(src, "[id].cancel", "command=\".winset \\\"command=\\\"[cancel_verb]\\\";[id].is-visible=false\\\";[id].say-input.text=\\\"\\\"\"")
-		winset(src, "[id]_macro_return", "parent=persist_[id]_macro;name=Return;command=\".winset \\\"command=\\\"[cancel_verb]\\\";[id].is-visible=false\\\";[id].say-input.text=\\\"\\\"\"")
-		winset(src, "[id]_macro_escape", "parent=persist_[id]_macro;name=Escape;command=\".winset \\\"command=\\\"[cancel_verb]\\\";[id].is-visible=false\\\";[id].say-input.text=\\\"\\\"\"")
+		winset(src, "[id].cancel", "command=\".winset \\\"command=\\\"[cancel_verb]\\\";[id].is-visible=false;[id].say-input.text=\\\"\\\"\"")
+		winset(src, "[id]_macro_return", "parent=persist_[id]_macro;name=Return;command=\".winset \\\"command=\\\"[cancel_verb]\\\";[id].is-visible=false;[id].say-input.text=\\\"\\\"\"")
+		winset(src, "[id]_macro_escape", "parent=persist_[id]_macro;name=Escape;command=\".winset \\\"command=\\\"[cancel_verb]\\\";[id].is-visible=false;[id].say-input.text=\\\"\\\"\"")
 		winset(src, id, "on-close=\"[cancel_verb]\"") //Invokes the cancel verb if you close the window
 	else
 		//Hides the window and does nothing else.
-		winset(src, "[id].cancel", "command=\".winset \\\"[id].is-visible=false\\\";[id].say-input.text=\\\"\\\"\"")
+		winset(src, "[id].cancel", "command=\".winset \\\"[id].is-visible=false;[id].say-input.text=\\\"\\\"\"")
 		winset(src, "[id]_macro_return", "parent=persist_[id]_macro;name=Return;command=\".winset \\\"[id].is-visible=false\\\"\"")
-		winset(src, "[id]_macro_escape", "parent=persist_[id]_macro;name=Escape;command=\".winset \\\"[id].is-visible=false\\\";[id].say-input.text=\\\"\\\"\"")
+		winset(src, "[id]_macro_escape", "parent=persist_[id]_macro;name=Escape;command=\".winset \\\"[id].is-visible=false;[id].say-input.text=\\\"\\\"\"")
 
 	//Window scaling!
 	//BYOND doesn't scale the window by DPI scaling, so it'll appear too big/too small with DPI scaling other than the one it was based on
@@ -45,14 +45,20 @@
 
 	var/titlebarHeight = text2num(window_outersize[2])-text2num(window_innersize[2])
 
+	// 514 numbers
 	//Known titlebar heights for DPI scaling:
 	//win7:  100%-28, 125%-33, 150%-39
 	//win10: 100%-29, 125%-35, 150%-40
+	//win11: 100%-29, 125%-35, 150%-40
 
 	//Known window sizes for DPI scaling: (Win7)
 	//100%: 302x86,  font 7
 	//125%: 402x106, font 8
 	//150%: 503x133, font 8
+
+	// 515 numbers
+	//Known titlebar heights for DPI scaling:
+	//win11: 100%-39, 125%-47, 150%-56
 
 	var/scaling = FALSE
 
@@ -62,17 +68,30 @@
 	var/font_size = 7
 
 	//The values used here were sampled from BYOND in practice, I couldn't find a formula that would describe them
-	switch(titlebarHeight)
-		if(30 to 37)
-			scaling = 1.25
-			window_width  = 402
-			window_height = 106
-			font_size = 8
-		if(37 to 42)
-			scaling = 1.5
-			window_width  = 503
-			window_height = 133
-			font_size = 8
+	if (byond_version < 515)
+		switch(titlebarHeight)
+			if(30 to 37)
+				scaling = 1.25
+				window_width  = 402
+				window_height = 106
+				font_size = 8
+			if(37 to 42)
+				scaling = 1.5
+				window_width  = 503
+				window_height = 133
+				font_size = 8
+	else
+		switch(titlebarHeight)
+			if(40 to 50)
+				scaling = 1.25
+				window_width  = 402
+				window_height = 106
+				font_size = 8
+			if(50 to INFINITY)
+				scaling = 1.5
+				window_width  = 503
+				window_height = 133
+				font_size = 8
 
 	if(scaling)
 		winset(src, null, "[id].size=[window_width]x[window_height];[id].say-input.font-size=[font_size];[id].accept.font-size=[font_size];[id].cancel.font-size=[font_size]")

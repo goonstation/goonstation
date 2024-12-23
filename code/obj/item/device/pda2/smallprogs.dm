@@ -82,17 +82,16 @@
 
 		dat += "<h4>Station Status Display Interlink</h4>"
 
-		dat += "\[ <A HREF='?src=\ref[src];statdisp=blank'>Clear</A> \]<BR>"
-		dat += "\[ <A HREF='?src=\ref[src];statdisp=shuttle'>Shuttle ETA</A> \]<BR>"
-		dat += "\[ <A HREF='?src=\ref[src];statdisp=message'>Message</A> \]"
+		dat += "\[ <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_DEFAULT]'>Default</A> \]<BR>"
+		dat += "\[ <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_SHUTTLE]'>Shuttle ETA</A> \]<BR>"
+		dat += "\[ <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_MESSAGE]'>Message</A> \]"
 
-		dat += "<ul><li> Line 1: <A HREF='?src=\ref[src];statdisp=setmsg1'>[ message1 ? message1 : "(none)"]</A>"
-		dat += "<li> Line 2: <A HREF='?src=\ref[src];statdisp=setmsg2'>[ message2 ? message2 : "(none)"]</A></ul><br>"
-		dat += "\[ Alert: <A HREF='?src=\ref[src];statdisp=alert;alert=default'>None</A> |"
-
-		dat += " <A HREF='?src=\ref[src];statdisp=alert;alert=redalert'>Red Alert</A> |"
-		dat += " <A HREF='?src=\ref[src];statdisp=alert;alert=lockdown'>Lockdown</A> |"
-		dat += " <A HREF='?src=\ref[src];statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR>"
+		dat += "<ul><li> Line 1: <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MESSAGE_TEXT_1]'>[ message1 ? message1 : "(none)"]</A>"
+		dat += "<li> Line 2: <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MESSAGE_TEXT_2]'>[ message2 ? message2 : "(none)"]</A></ul><br>"
+		dat += "\[ Alert: "
+		dat += " <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT];alert=[STATUS_DISPLAY_PACKET_ALERT_REDALERT]'>Red Alert</A> |"
+		dat += " <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT];alert=[STATUS_DISPLAY_PACKET_ALERT_LOCKDOWN]'>Lockdown</A> |"
+		dat += " <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT];alert=[STATUS_DISPLAY_PACKET_ALERT_BIOHAZ]'>Biohazard</A> \]<BR>"
 
 		return dat
 
@@ -103,12 +102,15 @@
 
 		if(href_list["statdisp"])
 			switch(href_list["statdisp"])
-				if("message")
-					post_status("message", message1, message2)
-				if("alert")
-					post_status("alert", href_list["alert"])
+				if(STATUS_DISPLAY_PACKET_MODE_DISPLAY_DEFAULT)
+					post_status(STATUS_DISPLAY_PACKET_MODE_DISPLAY_DEFAULT)
+				if(STATUS_DISPLAY_PACKET_MODE_MESSAGE)
+					post_status(STATUS_DISPLAY_PACKET_MODE_MESSAGE, message1, message2)
 
-				if("setmsg1")
+				if(STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT)
+					post_status(STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT, href_list["alert"])
+
+				if(STATUS_DISPLAY_PACKET_MESSAGE_TEXT_1)
 					if (!src.master?.is_user_in_interact_range(usr))
 						return
 
@@ -119,7 +121,7 @@
 					message1 = copytext(adminscrub(message1), 1, MAX_MESSAGE_LEN)
 					src.master.updateSelfDialog()
 
-				if("setmsg2")
+				if(STATUS_DISPLAY_PACKET_MESSAGE_TEXT_2)
 					if (!src.master?.is_user_in_interact_range(usr))
 						return
 
@@ -681,7 +683,7 @@ Code:
 
 		. += "<HR>"
 		if(laser)
-			. += "<BR><B>Power Transmition Laser Status</B><BR>"
+			. += "<BR><B>Power Transmission Laser Status</B><BR>"
 			. += "Currently Active: [laser.firing ? "Yes" : "No"]<BR>"
 			. += "Power Stored: [engineering_notation(laser.charge)]J ([round(100.0*laser.charge/laser.capacity, 0.1)]%)<BR>"
 			. += "Power Input: [engineering_notation(laser.chargelevel)]W<BR>"
@@ -859,6 +861,11 @@ Code:
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = src.master.owner
 		signal.data["group"] = list(mailgroup, MGA_CRISIS)
+		// prevent message spam for same-department alert ACKs
+		if (mailgroup in src.master.mailgroups)
+			signal.data["noreply"] = TRUE
+		else
+			signal.data["noreply"] = FALSE
 		var/area/an_area = get_area(src.master)
 
 		if (isAIeye(usr))
@@ -866,7 +873,8 @@ Code:
 			if (length(eye_loc.camera_coverage_emitters))
 				an_area = get_area(eye_loc)
 
-		signal.data["message"] = SPAN_ALERT("<b>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</b>")
+		signal.data["message"] = "***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!"
+		signal.data["is_alert"] = TRUE
 
 		src.post_signal(signal)
 
@@ -1035,12 +1043,9 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 								dat += "[T.text]<br>"
 
 				if(2) //requested fines
-					var/can_approve = 0
 
 					var/PDAowner = src.master.owner
 					var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
-
-					if(PDAownerjob in list("Head of Security","Head of Personnel","Captain")) can_approve = 1
 
 					dat += "<br><br><a href='byond://?src=\ref[src];back=1'>Back</a>"
 
@@ -1049,7 +1054,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					for (var/datum/fine/F in data_core.fines)
 						if(!F.approver)
 							dat += "[F.target]: [F.amount] credits<br>Reason: [F.reason]<br>Requested by: [F.issuer] - [F.issuer_job]"
-							if(can_approve) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[F]'>Approve Fine</a>"
+							if((PDAownerjob in JOBS_CAN_TICKET_BIG) || ((PDAownerjob in JOBS_CAN_TICKET_SMALL) && F.amount <= MAX_FINE_NO_APPROVAL)) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[F]'>Approve Fine</a>"
 							dat += "<br><br>"
 
 				if(3) //unpaid fines
@@ -1083,10 +1088,10 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			var/PDAowner = src.master.owner
 			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
-			var/ticket_target = input(usr, "Ticket recipient:",src.name) as text
+			var/ticket_target = input(usr, "Ticket recipient:",src.name) as text | null
 			if(!ticket_target) return
 			ticket_target = copytext(sanitize(html_encode(ticket_target)), 1, MAX_MESSAGE_LEN)
-			var/ticket_reason = input(usr, "Ticket reason:",src.name) as text
+			var/ticket_reason = input(usr, "Ticket reason:",src.name) as text | null
 			if(!ticket_reason) return
 			ticket_reason = copytext(sanitize(html_encode(ticket_reason)), 1, MAX_MESSAGE_LEN)
 
@@ -1106,7 +1111,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 			SPAWN(3 SECONDS)
 				var/obj/item/paper/p = new /obj/item/paper
-				p.set_loc(get_turf(src.master))
+				usr.put_in_hand_or_drop(p)
 				p.name = "Official Caution - [ticket_target]"
 				p.info = ticket_text
 				p.icon_state = "paper_caution"
@@ -1123,7 +1128,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			var/PDAowner = src.master.owner
 			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
-			var/ticket_target = input(usr, "Fine recipient:",src.name) as text
+			var/ticket_target = input(usr, "Fine recipient:",src.name) as text | null
 			if(!ticket_target) return
 			ticket_target = copytext(strip_html(ticket_target),	 1, MAX_MESSAGE_LEN)
 			var/has_bank_record = !!data_core.bank.find_record("name", ticket_target)
@@ -1131,12 +1136,12 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				message = "Error: No bank records found for [ticket_target]."
 				src.master.updateSelfDialog()
 				return
-			var/ticket_reason = input(usr, "Fine reason:",src.name) as text
+			var/ticket_reason = input(usr, "Fine reason:",src.name) as text | null
 			if(!ticket_reason) return
 			ticket_reason = copytext(strip_html(ticket_reason), 1, MAX_MESSAGE_LEN)
-			var/fine_amount = input(usr, "Fine amount (1-1000):",src.name, 0) as num
+			var/fine_amount = input(usr, "Fine amount (1-10000):",src.name, 0) as num | null
 			if(!isnum_safe(fine_amount)) return
-			fine_amount = min(fine_amount,1000)
+			fine_amount = min(fine_amount,10000)
 			fine_amount = max(fine_amount,1)
 
 			var/datum/fine/F = new /datum/fine()
@@ -1149,19 +1154,22 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			F.issuer_byond_key = usr.key
 			data_core.fines += F
 
-			logTheThing(LOG_ADMIN, usr, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
-			if(PDAownerjob in list("Head of Security","Head of Personnel","Captain"))
+			logTheThing(LOG_ADMIN, usr, "requested a fine using [PDAowner]([PDAownerjob])'s PDA. It is a [fine_amount] credit fine on <b>[ticket_target]</b> with the reason: [ticket_reason].")
+			if((fine_amount <= MAX_FINE_NO_APPROVAL && (PDAownerjob in JOBS_CAN_TICKET_SMALL)) || (PDAownerjob in JOBS_CAN_TICKET_BIG))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
 				playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 				SPAWN(3 SECONDS)
 					F.approve(PDAowner,PDAownerjob)
 					var/obj/item/paper/p = new /obj/item/paper
-					p.set_loc(get_turf(src.master))
+					usr.put_in_hand_or_drop(p)
 					p.name = "Official Fine Notification - [ticket_target]"
 					p.info = ticket_text
 					p.icon_state = "paper_caution"
+
+			else if(fine_amount <= MAX_FINE_NO_APPROVAL)
+				message = "Fine request created, awaiting approval from the [english_list(JOBS_CAN_TICKET_SMALL, "nobody", " or ")]."
 			else
-				message = "Fine request created, awaiting approval from the Captain, Head of Security or Head of Personnel."
+				message = "Fine request created, awaiting approval from the [english_list(JOBS_CAN_TICKET_BIG, "nobody", " or ")]."
 
 		else if(href_list["approve"])
 			var/PDAowner = src.master.owner
@@ -1174,7 +1182,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				F.approve(PDAowner,PDAownerjob)
 				var/ticket_text = "[F.target] has been fined [F.amount] credits by Nanotrasen Corporate Security for [F.reason] on [time2text(world.realtime, "DD/MM/53")].<br>Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [PDAowner] - [PDAownerjob]<br>"
 				var/obj/item/paper/p = new /obj/item/paper
-				p.set_loc(get_turf(src.master))
+				usr.put_in_hand_or_drop(p)
 				p.name = "Official Fine Notification - [F.target]"
 				p.info = ticket_text
 				p.icon_state = "paper_caution"
@@ -1238,13 +1246,15 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		if (href_list["order"])
 			src.temp = {"<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR><HR>
 			<B>Please select the Supply Package you would like to request:</B><BR><BR>"}
+			src.temp += search_snippet("background-color: #6F7961; color: #000;")
+			src.temp += "<BR><BR>"
 			for(var/S in concrete_typesof(/datum/supply_packs) )
 				var/datum/supply_packs/N = new S()
 				if(N.hidden || N.syndicate) continue
 				// Have to send the type instead of a reference to the obj because it would get caught by the garbage collector. oh well.
-				src.temp += {"<A href='?src=\ref[src];doorder=[N.type]'><B><U>[N.name]</U></B></A><BR>
+				src.temp += {"<div class='supply-package'><A href='?src=\ref[src];doorder=[N.type]'><B><U>[N.name]</U></B></A><BR>
 				<B>Cost:</B> [N.cost] Credits<BR>
-				<B>Contents:</B> [N.desc]<BR><BR>"}
+				<B>Contents:</B> [N.desc]<BR><BR></div>"}
 			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
 		else if (href_list["doorder"])
@@ -1354,17 +1364,19 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	var/x = -1
 	var/y = -1
 	var/z = -1
+	///Fully rendered text data about nearby celestial objects, cached here to line up with the coordinates
+	var/parallax_data = null
 
 	return_text()
 		if(..())
 			return
 
 		var/dat = src.return_text_header()
-		dat += "<h4>Space GPS: Pocket Edition</h4>"
+		dat += "<h3>Space GPS: Pocket Edition</h3>"
 
 		dat += "<a href='byond://?src=\ref[src];getloc=1'>Get Coordinates</a>"
-		if (x >= 0)
 
+		if (x >= 0)
 			var/landmark = "Unknown"
 			switch (src.z)
 				if (1)
@@ -1380,7 +1392,10 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					landmark = "Asteroid Field"
 					#endif
 
-			dat += "<BR>X = [src.x], Y = [src.y], Landmark: [landmark]"
+			dat += "<BR><b>\[</b>X = [src.x], Y = [src.y], Landmark: [landmark]<b>\]</b>"
+			dat += "<br>------------------------------------------------------------------------------"
+			dat += "<br><h4>Currently visible celestial bodies:</h4>"
+			dat += src.parallax_data
 
 		return dat
 
@@ -1393,6 +1408,11 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			src.x = T.x
 			src.y = T.y
 			src.z = T.z
+			src.parallax_data = ""
+			var/list/render_sources = usr.client?.parallax_controller?.parallax_render_sources
+			for (var/atom/movable/screen/parallax_render_source/source in render_sources)
+				if (source.visible_to_gps)
+					src.parallax_data += "<br><b>[source.name]</b> - [source.desc]<br>"
 
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
@@ -1409,6 +1429,9 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	return_text()
 		if(..())
 			return
+		for_by_tcl(random_eye, /mob/living/critter/small_animal/floateye/watchful)
+			if (prob(5)) // The satellite has 21 eyes in it. it's fine if more than one jitters but it shouldn't be all of them and it should be around 1.
+				random_eye.make_jittery(100)
 
 		var/dat = src.return_text_header()
 
@@ -1737,7 +1760,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
 			. += "<b>Location: [get_area(S)]</b><br>"
-			if(S.broken)
+			if(S.is_disabled())
 				.= "No response from Rockbox™ Ore Cloud Storage Container!<br><br>"
 				continue
 			if (!length(S.ores))

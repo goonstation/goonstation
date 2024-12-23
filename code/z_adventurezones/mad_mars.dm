@@ -77,8 +77,8 @@
 
 	Entered(mob/living/carbon/M as mob )
 		..()
-		SPAWN(0.8)
-			if(ishuman(M))
+		if(ishuman(M))
+			SPAWN(0.8)
 				var/image/F = image('icons/misc/mars_outpost.dmi', icon_state = "footprint", dir = M.dir)
 				src.overlays += F
 				sleep(20 SECONDS)
@@ -147,7 +147,7 @@
 
 // Kingsway Systems
 
-/obj/decal/fakeobjects/robot/servotron
+/obj/fakeobject/robot/servotron
 	name = "servotron statue"
 	desc = "A statue of Kingsway Systems' Servotron"
 	icon = 'icons/misc/mars_outpost.dmi'
@@ -155,7 +155,7 @@
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/robot/servotron/old
+/obj/fakeobject/robot/servotron/old
 	name = "servotron statue"
 	desc = "A statue of Kingsway Systems' Servotron"
 	icon = 'icons/misc/mars_outpost.dmi'
@@ -163,7 +163,7 @@
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/robot/servotron/older
+/obj/fakeobject/robot/servotron/older
 	name = "servotron statue"
 	desc = "A statue of Kingsway Systems' Servotron"
 	icon = 'icons/misc/mars_outpost.dmi'
@@ -172,7 +172,7 @@
 	density = 1
 
 
-/obj/decal/fakeobjects/robotpedestal
+/obj/fakeobject/robotpedestal
 	name = "pedestal"
 	icon = 'icons/misc/mars_outpost.dmi'
 	icon_state = "statue_pedestal"
@@ -180,7 +180,7 @@
 	density = 1
 
 
-/obj/decal/fakeobjects/robotarm
+/obj/fakeobject/robotarm
 	name = "robot arm"
 	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "marsfactory_arm"
@@ -250,14 +250,14 @@
 	fullbright = 0
 
 
-/obj/decal/fakeobjects/mule_xl
+/obj/fakeobject/mule_xl
 	name = "Mulebot XL"
 	desc = "If you thought getting run over by a mulebot was bad, get a load of his big brother! No pun intended."
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "mule-xl"
 	pixel_x = -16
 
-/obj/decal/fakeobjects/mars_billboard
+/obj/fakeobject/mars_billboard
 	name = "Billboard"
 	desc = "A billboard for some backwater planetary outpost. How old is this?"
 	icon = 'icons/effects/96x96.dmi'
@@ -501,7 +501,7 @@ TYPEINFO(/obj/vehicle/marsrover)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 		boutput(rider, SPAN_COMBAT("<B>You are flung over the [src]'s handlebars!</B>"))
 		rider.changeStatus("stunned", 8 SECONDS)
-		rider.changeStatus("weakened", 5 SECONDS)
+		rider.changeStatus("knockdown", 5 SECONDS)
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
@@ -577,7 +577,7 @@ TYPEINFO(/obj/vehicle/marsrover)
 			if(prob(60))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 				src.visible_message(SPAN_COMBAT("<B>[M] has shoved [rider] off of the [src]!</B>"))
-				rider.changeStatus("weakened", 2 SECONDS)
+				rider.changeStatus("knockdown", 2 SECONDS)
 				eject_rider()
 			else
 				playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
@@ -631,7 +631,7 @@ TYPEINFO(/obj/vehicle/marsrover)
 			if (!isdead(jerk))
 				if((istype(jerk:wear_suit, /obj/item/clothing/suit/armor/mars))&&(istype(jerk:head, /obj/item/clothing/head/helmet/mars))) return
 				random_brute_damage(jerk, 100)
-				jerk.changeStatus("weakened", 40 SECONDS)
+				jerk.changeStatus("knockdown", 40 SECONDS)
 				step(jerk,EAST)
 				if(prob(50))
 					playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_2.ogg', 50, 1)
@@ -775,6 +775,11 @@ TYPEINFO(/obj/vehicle/marsrover)
 							P.open()
 				for_by_tcl(M, /obj/item/storage/secure/ssafe/marsvault)
 					M.disabled = 0
+
+				if (istype(get_area(src), /area/marsoutpost/vault))
+					for (var/mob/living/L in range(3, src))
+						if (!isintangible(L))
+							L.unlock_medal("Where are the Ghosts?", TRUE)
 
 				playsound(src.loc, 'sound/machines/engine_alert1.ogg', 50, 1)
 

@@ -9,6 +9,7 @@ ABSTRACT_TYPE(/area/supply)
 
 	#ifdef UNDERWATER_MAP
 	color = OCEAN_COLOR
+	ambient_light = OCEAN_LIGHT
 	#endif
 
 /area/supply/delivery_point //the area supplies are fired at
@@ -18,6 +19,7 @@ ABSTRACT_TYPE(/area/supply)
 
 	#ifdef UNDERWATER_MAP
 	color = OCEAN_COLOR
+	ambient_light = OCEAN_LIGHT
 	#endif
 
 /area/supply/sell_point //the area where supplies move from the station z level
@@ -27,6 +29,7 @@ ABSTRACT_TYPE(/area/supply)
 
 	#ifdef UNDERWATER_MAP
 	color = OCEAN_COLOR
+	ambient_light = OCEAN_LIGHT
 	#endif
 
 	Entered(var/atom/movable/AM)
@@ -37,8 +40,6 @@ ABSTRACT_TYPE(/area/supply)
 			art = O.artifact
 		if(art)
 			shippingmarket.sell_artifact(AM, art)
-		else if (istype(AM, /obj/storage/crate/biohazard/cdc))
-			QM_CDC.receive_pathogen_samples(AM)
 		else if (istype(AM, /obj/storage/crate) || istype(AM, /obj/storage/secure/crate/))
 			if (AM.delivery_destination)
 				for (var/datum/trader/T in shippingmarket.active_traders)
@@ -134,8 +135,8 @@ TYPEINFO(/obj/strip_door)
 			T.UpdateIcon()
 		for (var/obj/window/auto/O in orange(1,src))
 			O.UpdateIcon()
-		for (var/obj/grille/G in orange(1,src))
-			G.UpdateIcon()
+		for (var/obj/mesh/M in orange(1,src))
+			M.UpdateIcon()
 
 	Cross(atom/A)
 		if (!src.flap_material)  // You Shall Pass! But Only Because I Have No Flaps!
@@ -145,6 +146,8 @@ TYPEINFO(/obj/strip_door)
 		if (isliving(A)) // You Shall Not Pass!
 			var/mob/living/M = A
 			if (isghostdrone(M)) // except for drones
+				return TRUE
+			else if (isintangible(A))
 				return TRUE
 			else if (istype(A,/mob/living/critter/changeling/handspider) || istype(A,/mob/living/critter/changeling/eyespider))
 				return TRUE
@@ -159,6 +162,8 @@ TYPEINFO(/obj/strip_door)
 	Crossed(atom/A)
 		..()
 		if (!src.flap_material)
+			return
+		if (isintangible(A))
 			return
 		if (isliving(A))
 			var/mob/living/M = A

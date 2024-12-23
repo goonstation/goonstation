@@ -338,7 +338,139 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 #undef CHEMLAB_SOLVENTS
 #undef CHEMLAB_CULINARY
 
-/datum/req_contract/scientific/botanical
+/datum/req_contract/scientific/botanical_mutates
+	payout = PAY_TRADESMAN*10*2
+	var/list/namevary = list("Plant Mutation Research","Bio-Mutate Engineering","Agricultural Variation Study","Crop Innovation",
+							"Botanical Advancement", "Agronomic Specimen Testing", "Cultivar Innovation Study","Eco-Evolution Research",
+							 "Plant-Deviate Experimentation")
+	var/list/desc_wherestudy = list(
+		"An advanced phytogenetic study lab",
+		"The flora development branch of a nearby outpost",
+		"The botanical division of a partnered research station",
+		"The agricultural innovation department of an allied lab",
+		"A terrestrially-based agronomic development team",
+		"The botanical wing of an affiliated station",
+		"The botanical team of an affiliated vessel",
+		"A Nanotrasen horticultural scientist"
+	)
+	var/list/desc_items = list("botanical mutates","mutated produce","deviant plant specimens","aberrant crop samples", "botanical aberrations",
+								"cultivar deviants","anomalous plant varieties")
+	var/list/desc_bonusflavor = list(
+		null,
+		" All specimens must be properly decontaminated before shipment.",
+		" Ensure container is properly sealed before sending.",
+		" Follow mandatory packing guidelines to ensure specimens are not damaged by transit.",
+		" Damaged or low-quality specimens received will be reflected in filed paperwork.",
+		" Please use appropriate container to avoid in-transit loss of specimens."
+	)
+
+	New()
+		src.name = pick(namevary)
+		src.flavor_desc = "[pick(desc_wherestudy)] is requesting a specific batch of [pick(desc_items)]. [pick(desc_bonusflavor)]"
+		src.payout += rand(0,30) * 10
+
+		if (prob(60))
+			src.rc_entries += new /datum/rc_entry/item/mutated_produce(rc_entries,rand(5,12))
+			src.payout += 8000
+			if (prob(70))
+				src.rc_entries += new /datum/rc_entry/item/mutated_produce(rc_entries,rand(5,12))
+				src.payout += 5000
+			if (prob(20))
+				src.rc_entries += new /datum/rc_entry/item/mutated_produce(rc_entries,rand(5,12))
+				src.payout += 5000
+			AddReward(30)
+		else
+			src.rc_entries += new /datum/rc_entry/item/mutated_produce/complex(rc_entries,rand(5,12))
+			src.payout += 13000 // mutations with prerequisites tend to take considerably more work to produce, so they demand a better reward.
+			if (prob(30))
+				src.rc_entries += new /datum/rc_entry/item/mutated_produce/complex(rc_entries,rand(5,12))
+				src.payout += 10000
+			if (prob(30))
+				src.rc_entries += new /datum/rc_entry/item/mutated_produce(rc_entries,rand(5,12))
+				src.payout += 5000
+				if (length(src.rc_entries) < 3 && prob(50))
+					src.rc_entries += new /datum/rc_entry/item/mutated_produce(rc_entries,rand(5,12))
+					src.payout += 5000
+			AddReward(60)
+		..()
+
+	proc/AddReward(var/probability)
+		if(prob(probability))
+			src.item_rewarders += new /datum/rc_itemreward/strange_seed
+		else
+			src.item_rewarders += new /datum/rc_itemreward/tumbleweed
+
+/datum/rc_entry/item/mutated_produce
+	name = "mutated produce"
+	// Easy to get mutations, ones which don't have prerequisites.
+	// These are chosen either because they're lesser-oft grown mutations, or mutations that are usually associated with antag gimmicks,
+	// thus potentially providing a bit of plausible deniability.
+	var/list/mutates = list(
+		/obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega,
+		/obj/item/plant/oat/salt,
+		/obj/item/reagent_containers/food/snacks/plant/corn/pepper,
+		/obj/item/reagent_containers/food/snacks/plant/soy/soylent,
+		/obj/item/plant/herb/commol/burning,
+		/obj/item/plant/herb/sassafras,
+		/obj/item/reagent_containers/food/snacks/plant/raspberry/blackberry,
+		/obj/item/reagent_containers/food/snacks/plant/raspberry/blueraspberry,
+		/obj/item/reagent_containers/food/snacks/plant/melon/george,
+		/obj/item/reagent_containers/food/snacks/plant/peas/ammonia,
+		/obj/item/reagent_containers/food/snacks/plant/grapefruit
+	)
+	// Group the synth organs together so they don't overwhelm every other option.
+	var/list/synthorgans = list(
+		/obj/item/organ/eye/synth,/obj/item/organ/brain/synth,/obj/item/organ/heart/synth,/obj/item/organ/lung/synth,/obj/item/organ/appendix/synth,
+		/obj/item/organ/pancreas/synth,/obj/item/organ/liver/synth,/obj/item/organ/kidney/synth,/obj/item/organ/spleen/synth,
+		/obj/item/organ/intestines/synth,/obj/item/organ/stomach/synth
+	)
+
+	complex
+		// plants which require specific stats or infusions to mutate, and are thus a little tougher to get.
+		mutates = list(
+			/obj/item/reagent_containers/food/snacks/plant/tomato/incendiary,
+			///datum/plantmutation/rice/ricein,
+			/obj/item/reagent_containers/food/snacks/plant/orange/clockwork,
+			/obj/item/reagent_containers/food/snacks/mushroom/amanita,
+			/obj/item/reagent_containers/food/snacks/mushroom/cloak,
+			/obj/item/reagent_containers/food/snacks/plant/apple/poison,
+			/obj/item/plant/herb/tobacco/twobacco,
+			/obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha,
+			/obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte,
+			"synth"
+		)
+
+	proc/select_mutate(mutates_list, synthorgans_list)
+		var/type = pick(mutates_list)
+		if (type == "synth")
+			type = pick(synthorgans_list)
+		return type
+
+	New(list/entries = null, var/numberof = 1)
+		var/obj/item/item
+		// duplicate avoidance
+		if (entries != null && entries.len > 0)
+			var/list/mutates_copy = mutates.Copy()
+			var/list/synthorgans_copy = synthorgans.Copy()
+			for(var/datum/rc_entry/item/entry in entries)
+				mutates_copy -= entry.typepath
+				synthorgans_copy -= entry.typepath
+			item = select_mutate(mutates_copy, synthorgans_copy)
+		else
+			item = select_mutate(mutates, synthorgans)
+		name = initial(item.name)
+		typepath = item
+		count = numberof
+		..()
+		// Override the names of things that are too generic.
+		if (typepath == /obj/item/reagent_containers/food/snacks/mushroom/cloak) name = "cloaked panellus mushroom"
+		else if (typepath == /obj/item/reagent_containers/food/snacks/mushroom/amanita) name = "amanita mushroom"
+		else if (typepath == /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary) name = "volatile tomato"
+
+
+
+// old seed requisition
+/* /datum/req_contract/scientific/botanical
 	//name = "Feed Me, Seymour (Butz)"
 	payout = PAY_TRADESMAN*10*2
 	var/list/namevary = list("Botanical Prototyping","Hydroponic Acclimation","Cultivar Propagation","Plant Genotype Study","Botanical Advancement")
@@ -373,40 +505,13 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		if(length(src.rc_entries) == 3) src.item_rewarders += new /datum/rc_itemreward/plant_cartridge
 		src.payout += 8000 * length(src.rc_entries)
 
-		if(prob(70))
+		if(prob(30))
 			src.item_rewarders += new /datum/rc_itemreward/strange_seed
 		else
-			src.item_rewarders += new /datum/rc_itemreward/uv_lamp_frame
-		..()
+			src.item_rewarders += new /datum/rc_itemreward/tumbleweed
+		..()*/
 
-/datum/rc_entry/seed/scientific
-	name = "genetically fussy seed"
-	cropname = "Durian"
-	feemod = PAY_DOCTORATE*3
-	var/crop_genpath = /datum/plant
 
-	fruit
-		crop_genpath = /datum/plant/fruit
-	veg
-		crop_genpath = /datum/plant/veg
-	crop
-		crop_genpath = /datum/plant/crop
-
-	New()
-		var/datum/plant/plantalyze = pick(concrete_typesof(crop_genpath))
-		src.cropname = initial(plantalyze.name)
-
-		switch(rand(1,7))
-			if(1) src.gene_reqs["Maturation"] = rand(10,20)
-			if(2) src.gene_reqs["Production"] = rand(10,20)
-			if(3) src.gene_reqs["Lifespan"] = rand(3,5)
-			if(4) src.gene_reqs["Yield"] = rand(3,5)
-			if(5) src.gene_reqs["Potency"] = rand(3,5)
-			if(6) src.gene_reqs["Endurance"] = rand(3,5)
-			if(7)
-				src.gene_reqs["Maturation"] = rand(5,10)
-				src.gene_reqs["Production"] = rand(5,10)
-		..()
 
 
 /datum/rc_itemreward/plant_cartridge
@@ -429,6 +534,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 			seed_list += new /obj/item/seed/alien
 		return seed_list
 
+/datum/rc_itemreward/tumbleweed
+	name = "aggressive plant specimen"
+
+	build_reward()
+		return new /obj/item/plant/tumbling_creeper
+
 /datum/rc_itemreward/uv_lamp_frame
 	name = "ultraviolet botanical lamp"
 
@@ -442,11 +553,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		return F
 
 
-#define NUM_PROTOTYPISTS 3
+#define NUM_PROTOTYPISTS 4
 
 #define PROTOTYPIST_SAFETY 1
 #define PROTOTYPIST_ENERGY 2
 #define PROTOTYPIST_ENGINEER 3
+#define PROTOTYPIST_REV_ENG 4
 
 #define NUM_GOALS 3
 
@@ -457,7 +569,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 //Prototypist contract; payout in cash is notably lower than usual on purpose, since you get "paid in items"
 /datum/req_contract/scientific/prototypist
 	payout = PAY_DOCTORATE
-	weight = 120
+	weight = 180
 
 	var/list/namevary = list("Prototyping Assistance","Cutting-Edge Endeavor","Investment Opportunity","Limited Run","Overhaul Project")
 	var/list/desc_bonusflavor = list(
@@ -539,7 +651,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 			if(PROTOTYPIST_ENGINEER)
 				prototypist_desc = "Engineering firm"
 				if(prob(60))
-					src.rc_entries += rc_buildentry(/datum/rc_entry/item/tscan,rand(2,4))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/tscan,rand(1,2))
 				else
 					if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/mainboard_noprice,rand(1,3))
 				if(prob(70) || !length(src.rc_entries))
@@ -566,9 +678,42 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 							src.rc_entries += rc_buildentry(/datum/rc_entry/stack/claretine,2)
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/robot_arm_any,1)
 					if(GOAL_REFINEMENT)
-						goal_desc = "fuel encapsulation lining improvements"
-						src.item_rewarders += new /datum/rc_itemreward/upgraded_welders
+						goal_desc = "sanitation hardware enhancement"
+						src.payout += rand(80,130) * 20
+						src.item_rewarders += new /datum/rc_itemreward/sonic_shower
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/soldering_noprice,rand(1,2))
+
+			if(PROTOTYPIST_REV_ENG)
+				prototypist_desc = "Artifact reverse-engineer"
+				src.payout += rand(80,120) * 20
+
+				if(prob(60))
+					var/suitsets = rand(1,2)
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/radsuit,suitsets)
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/radhelm,suitsets)
+				else
+					if(prob(40)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/uqill_minprice,1)
+				if(prob(70) || !length(src.rc_entries))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/geiger,1)
+				if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/coil,1)
+				if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/mini_ox,rand(1,3)*2)
+
+				switch(goal_id)
+					if(GOAL_PROTOTYPING)
+						goal_desc = "cutting-edge decentralized storage technology"
+						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/telec/minprice,3)
+						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/force_projection,1)
+						src.item_rewarders += new /datum/rc_itemreward/terminus
+					if(GOAL_MANUFACTURE)
+						goal_desc = "production of a medical biomatter recombinator"
+						//when built and powered, slowly makes weak healing patches out of food you load in
+						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/martian,1)
+						src.item_rewarders += new /datum/rc_itemreward/medimulcher
+					if(GOAL_REFINEMENT)
+						goal_desc = "development of an enhanced mobile recharging bay"
+						//special backpack capable of accepting a large power cell to recharge contents automatically
+						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/chamber,1)
+						src.item_rewarders += new /datum/rc_itemreward/recharge_bay
 
 		src.flavor_desc = "[prototypist_desc] seeking supplies for [goal_desc]. [pick(desc_bonusflavor)]"
 
@@ -579,12 +724,55 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 #undef PROTOTYPIST_SAFETY
 #undef PROTOTYPIST_ENERGY
 #undef PROTOTYPIST_ENGINEER
+#undef PROTOTYPIST_REV_ENG
 
 #undef NUM_GOALS
 
 #undef GOAL_PROTOTYPING
 #undef GOAL_MANUFACTURE
 #undef GOAL_REFINEMENT
+
+/datum/rc_entry/artifact/martian
+	name = "any martian artifact"
+	required_origin = "Martian"
+
+/datum/rc_entry/artifact/force_projection
+	name = "force projection artifact"
+	acceptable_types = list(
+		"Elemental Wand",
+		"Energy Gun",
+		"Forcefield Wand",
+		"Melee Weapon"
+	)
+
+/datum/rc_entry/artifact/chamber
+	name = "chamber-type artifact"
+	acceptable_types = list(
+		"Bag of Holding",
+		"Beaker",
+		"Instrument",
+		"Large power cell",
+		"Small power cell",
+		"Pitcher"
+	)
+
+/datum/rc_entry/item/radsuit
+	name = "radiation suit"
+	typepath = /obj/item/clothing/suit/hazard/rad
+	feemod = PAY_TRADESMAN
+
+/datum/rc_entry/item/radhelm
+	name = "radiation helmet"
+	typepath = /obj/item/clothing/head/rad_hood
+	feemod = PAY_TRADESMAN
+
+/datum/rc_entry/item/geiger
+	name = "Geiger counter"
+	typepath = /obj/item/device/geiger
+
+/datum/rc_entry/item/mini_ox
+	name = "personnel-class 'mini' pressure tank"
+	typepath = /obj/item/tank/mini_oxygen
 
 /datum/rc_entry/stack/fibrilith_minprice
 	name = "fibrilith"
@@ -602,8 +790,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/rc_entry/stack/fancy_cloth
 	name = "high-grade cloth (carbon or bee wool)"
-	typepath = /obj/item/material_piece/cloth/carbon
-	typepath_alt = /obj/item/material_piece/cloth/beewool
+	typepath = /obj/item/material_piece/cloth
+
+	extra_eval(obj/item/eval_item)
+		. = FALSE
+		if(eval_item.material?.getID() == "carbonfibre" || eval_item.material?.getID() == "beewool")
+			return TRUE
 
 /datum/rc_entry/stack/uqill_minprice
 	name = "uqill"
@@ -646,7 +838,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/rc_entry/item/laser_drill
 	name = "handheld laser drill"
-	typepath = /obj/item/mining_tool/drill
+	typepath = /obj/item/mining_tool/powered/drill
 
 /datum/rc_entry/stack/claretine
 	name = "claretine"
@@ -709,7 +901,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 			if("paramedic suit")
 				rewardthing1 = /obj/item/clothing/suit/hazard/paramedic
 			if("heavy firesuit")
-				rewardthing1 = /obj/item/clothing/suit/fire/heavy
+				rewardthing1 = /obj/item/clothing/suit/hazard/fire/heavy
 			if("light space suit set")
 				rewardthing1 = /obj/item/clothing/suit/space/light
 				rewardthing2 = /obj/item/clothing/head/helmet/space/light
@@ -719,7 +911,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 				rewardthing2 = /obj/item/clothing/head/emerg
 			if("radiation suit set")
 				rewardthing1 = /obj/item/clothing/head/rad_hood
-				rewardthing2 = /obj/item/clothing/suit/rad
+				rewardthing2 = /obj/item/clothing/suit/hazard/rad
 
 	build_reward()
 		var/list/yielder = list()
@@ -743,7 +935,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_itemreward/hedron
 	name = "prototype multifunction tool"
 	build_reward()
-		var/theitem = new /obj/item/mining_tool/hedron_beam
+		var/theitem = new /obj/item/mining_tool/powered/hedron_beam
 		return theitem
 
 /datum/rc_itemreward/beam_devices
@@ -829,20 +1021,51 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 			yielder += new rewardthing
 		return yielder
 
-/datum/rc_itemreward/upgraded_welders
-	name = "high-capacity welding tool"
+/datum/rc_itemreward/sonic_shower
+	name = "sonic shower head"
 
 	New()
 		..()
-		count = rand(3,5)
+		count = rand(2,3)
 
 	build_reward()
 		var/list/yielder = list()
 		for(var/i in 1 to count)
-			yielder += new /obj/item/weldingtool/high_cap
+			var/obj/item/electronics/frame/F = new
+			F.store_type = /obj/machinery/sonic_shower
+			F.name = "sonic shower head frame"
+			F.viewstat = 2
+			F.secured = 2
+			F.icon_state = "dbox_big"
+			F.w_class = W_CLASS_BULKY
+			yielder += F
 		return yielder
 
+//artifact reverse engineer rewards
 
+/datum/rc_itemreward/terminus
+	name = "prototype terminus drive"
+	count = 3
+	build_reward()
+		var/list/yielder = list()
+		for(var/i in 1 to count)
+			yielder += new /obj/item/terminus_drive
+		return yielder
 
+/datum/rc_itemreward/medimulcher
+	name = "APS-4 bio-integrator"
+	build_reward()
+		var/obj/item/electronics/frame/F = new
+		F.store_type = /obj/machinery/medimulcher
+		F.name = "APS-4 bio-integrator frame"
+		F.viewstat = 2
+		F.secured = 2
+		F.icon_state = "dbox_big"
+		F.w_class = W_CLASS_BULKY
+		return F
 
-
+/datum/rc_itemreward/recharge_bay
+	name = "mobile recharging bay"
+	build_reward()
+		var/theitem = new /obj/item/storage/backpack/recharge_bay
+		return theitem

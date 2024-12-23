@@ -37,12 +37,12 @@
 	},
 /area/shuttle/escape/centcom)
 "dQ" = (
-/obj/decal/fakeobjects/shuttleweapon{
+/obj/fakeobject/shuttleweapon{
 	dir = 4
 	},
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/shuttle/escape/centcom)
 "ed" = (
@@ -276,7 +276,7 @@
 "DP" = (
 /turf/simulated/shuttle/wall{
 	dir = 10;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/shuttle/escape/centcom)
 "Ef" = (
@@ -340,12 +340,12 @@
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "LM" = (
-/obj/decal/fakeobjects/shuttleweapon{
+/obj/fakeobject/shuttleweapon{
 	dir = 4
 	},
 /turf/simulated/shuttle/wall{
 	dir = 10;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/shuttle/escape/centcom)
 "Mv" = (
@@ -367,7 +367,7 @@
 "NM" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/shuttle/escape/centcom)
 "Od" = (
@@ -388,7 +388,7 @@
 /turf/unsimulated/floor/redblack/corner,
 /area/shuttle/escape/centcom)
 "Pz" = (
-/obj/decal/fakeobjects/shuttleweapon/base{
+/obj/fakeobject/shuttleweapon/base{
 	dir = 8
 	},
 /turf/simulated/shuttle/wall{
@@ -437,7 +437,7 @@
 "Wf" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/shuttle/escape/centcom)
 "XU" = (

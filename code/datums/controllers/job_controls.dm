@@ -5,21 +5,20 @@ var/datum/job_controller/job_controls
 	var/list/special_jobs = list()
 	var/list/hidden_jobs = list() // not visible to players, for admin stuff, like the respawn panel
 	var/allow_special_jobs = 1 // hopefully this doesn't break anything!!
-	var/datum/job/job_creator = null
+	var/datum/job/created/job_creator = null
 
 	var/loaded_save = 0
 	var/last_client = null
-	var/load_another_ckey = null
 
 	New()
 		..()
-		if (derelict_mode)
+		if (world.load_intra_round_value("solarium_complete") == 1 || derelict_mode || global.master_mode == "disaster")
 			src.staple_jobs = list(new /datum/job/command/captain/derelict {limit = 1;name = "NT-SO Commander";} (),
 			new /datum/job/command/head_of_security/derelict {limit = 1; name = "NT-SO Special Operative";} (),
 			new /datum/job/command/chief_engineer/derelict {limit = 1; name = "Salvage Chief";} (),
 			new /datum/job/security/security_officer/derelict {limit = 6; name = "NT-SO Officer";} (),
-			new /datum/job/research/medical_doctor/derelict {limit = 6; name = "Salvage Medic";} (),
-			new /datum/job/engineering/engineer/derelict {limit = 6; name = "Salvage Engineer";} (),
+			new /datum/job/research/medical_doctor/derelict {limit = 8; name = "Salvage Medic";} (),
+			new /datum/job/engineering/engineer/derelict {limit = 10; name = "Salvage Engineer";} (),
 			new /datum/job/civilian/staff_assistant (),
 			new /datum/job/civilian/chef (),
 			new /datum/job/civilian/bartender (),
@@ -52,56 +51,164 @@ var/datum/job_controller/job_controls
 		for (var/datum/job/J in staple_jobs)
 			if (J.limit > 0)
 				J.limit *= 4
+				J.upper_limit = J.limit
 		#endif
-
-
-	proc/job_config()
-		var/dat = "<html><body><title>Job Controller</title>"
-		dat += "<b><u>Job Controls</u></b><HR>"
-		dat += "<b>Command & Security Jobs</b><BR>"
-		for(var/datum/job/command/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		for(var/datum/job/security/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		dat += "<BR>"
-		dat += "<b>Research Jobs</b><BR>"
-		for(var/datum/job/research/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		dat += "<BR>"
-		dat += "<b>Engineering Jobs</b><BR>"
-		for(var/datum/job/engineering/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		dat += "<BR>"
-		dat += "<b>Civilian Jobs</b><BR>"
-		for(var/datum/job/civilian/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		dat += "<BR>"
-		dat += "<b>Special Jobs</b><BR>"
-		for(var/datum/job/special/JOB in src.special_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		for(var/datum/job/created/JOB in src.special_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a>"
-			dat += " <a href='byond://?src=\ref[src];RemoveJob=\ref[JOB]'>(Remove)</A><BR>"
-		dat += "<BR>"
-		if (src.allow_special_jobs)
-			dat += "<A href='?src=\ref[src];SpecialToggle=1'>Special Jobs Enabled</A><BR>"
-		else
-			dat += "<A href='?src=\ref[src];SpecialToggle=1'>Special Jobs Disabled</A><BR>"
-		dat += "<A href='?src=\ref[src];JobCreator=1'>Create New Job</A>"
-		dat += "</body></html>"
-
-		usr.Browse(dat,"window=jobconfig;size=300x600")
 
 	proc/check_user_changed()//Since this is a 'public' window that everyone can get to, make sure we keep the user contained to their own savefile
 		if (last_client != usr.client)
-			src.savefile_unlock(usr)
 			src.last_client = usr.client
 			src.loaded_save = 0
-			src.load_another_ckey = null
 			return 1
 		return 0
 
+	/// Returns TRUE if a player is eligible to play a given job
+	proc/check_job_eligibility(mob/new_player/player, datum/job/job, valid_categories = STAPLE_JOBS | SPECIAL_JOBS | HIDDEN_JOBS)
+		if(!player?.client)
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.last_ckey] has no client.")
+			return
+		if (!job)
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested check with invalid job datum arg.")
+			return
+		if ((job.limit >= 0) && (job.assigned >= job.limit))
+			return
+		// prevent someone from trying to sneak their way into a job they shouldn't be able to choose
+		var/list/valid_jobs = list()
+		if (HAS_FLAG(valid_categories, STAPLE_JOBS))
+			valid_jobs.Add(src.staple_jobs)
+		if (HAS_FLAG(valid_categories, SPECIAL_JOBS))
+			valid_jobs.Add(src.special_jobs)
+		if (HAS_FLAG(valid_categories, HIDDEN_JOBS))
+			valid_jobs.Add(src.hidden_jobs)
+		if (!valid_jobs.Find(job))
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but it was not found in list of valid jobs! (Flag value: [valid_categories]).")
+			return
+		// antag job exemptions
+		if(player.mind?.is_antagonist())
+			if ((!job.allow_traitors && player.mind.special_role))
+				return
+			else if (!job.allow_spy_theft && (player.mind.special_role == ROLE_SPY_THIEF))
+				return
+			else if (istype(ticker?.mode, /datum/game_mode/revolution) && job.cant_spawn_as_rev)
+				return
+			else if ((istype(ticker?.mode, /datum/game_mode/conspiracy)) && job.cant_spawn_as_con)
+				return
+			else if ((!job.can_join_gangs) && (player.mind.special_role in list(ROLE_GANG_MEMBER,ROLE_GANG_LEADER)))
+				return
+		// job ban check
+		if (!job.no_jobban_from_this_job && jobban_isbanned(player, job.name))
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but is job banned.")
+			return
+		// trusted only job check
+		if (job.trusted_only && (!(player.ckey in mentors) && !NT.Find(ckey(player.mind.key))))
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], a mentor only job.")
+			return
+		// meant to prevent you from setting sec as fav and captain (or similar) as your only medium to ensure only captain traitor rounds
+		if (!job.allow_antag_fallthrough && player.antag_fallthrough)
+			return
+		// all of the 'serious' check have passed, ignore the rest of the requirements for random job rounds.
+		if (global.totally_random_jobs)
+			return TRUE
+
+		if (!job.has_rounds_needed(player.client.player))
+			return
+		if (job.needs_college && !player.has_medal("Unlike the director, I went to college"))
+			return
+		if (job.requires_whitelist && !NT.Find(ckey(player.mind.key)))
+			return
+		if (job.requires_supervisor_job && countJob(job.requires_supervisor_job) <= 0)
+			return
+		return TRUE
+
+	/// attempts to assign a player to a job from a list of either job datums or job strings
+	proc/try_assign_job_from_list(mob/player, list/jobs)
+		PRIVATE_PROC(TRUE)
+		RETURN_TYPE(/datum/job)
+		shuffle_list(jobs)
+		for(var/job_entry in jobs)
+			var/datum/job/job
+			if (istext(job_entry))
+				job = find_job_in_controller_by_string(job_entry)
+			else
+				job = job_entry
+			if (job && check_job_eligibility(player, job, STAPLE_JOBS))
+				player.mind.assigned_role = job.name
+				job.assigned++
+				return job
+		return
+
+	/// Assigns a player a job based on their preferences and job availability
+	proc/allocate_player_to_job_by_preference(mob/new_player/player)
+		RETURN_TYPE(/datum/job)
+		if (!player.client)
+			return
+		var/datum/preferences/player_preferences = player.client.preferences
+		if (!player_preferences)
+			return
+
+		if (totally_random_jobs)
+			var/datum/job/job = try_assign_job_from_list(player, staple_jobs)
+			if (!job) // what are you like, banned from everything...?
+				job = find_job_in_controller_by_path(/datum/job/civilian/staff_assistant) // very random
+				player.mind.assigned_role = job.name
+				job.assigned++
+			logTheThing(LOG_DEBUG, player, "<b>Jobs:</b> Assigned job: [job.name] (random job)")
+			return job
+
+		if (player_preferences.job_favorite)
+			var/datum/job/job = find_job_in_controller_by_string(player_preferences.job_favorite)
+			if (job)
+				// antag fall through flag set check
+				if ((!job.allow_traitors && player.mind.special_role))
+					player.antag_fallthrough = TRUE
+				else if (!job.allow_spy_theft && (player.mind.special_role == ROLE_SPY_THIEF))
+					player.antag_fallthrough = TRUE
+				else if ((!job.can_join_gangs) && (player.mind.special_role in list(ROLE_GANG_MEMBER,ROLE_GANG_LEADER)))
+					player.antag_fallthrough = TRUE
+
+				// try to assign fav job
+				if (check_job_eligibility(player, job, STAPLE_JOBS))
+					player.mind.assigned_role = job.name
+					job.assigned++
+					logTheThing(LOG_DEBUG, player, "<b>Jobs:</b> Assigned job: [job.name] (favorite job)")
+					return job
+
+		// If favorite job isn't available, check medium priority jobs
+		if (length(player_preferences.jobs_med_priority))
+			var/datum/job/job =	try_assign_job_from_list(player, player_preferences.jobs_med_priority)
+			if (job)
+				logTheThing(LOG_DEBUG, player, "<b>Jobs:</b> Assigned job: [job.name] (medium priority job)")
+				return job
+
+		// If no medium priority jobs are available or suitable, check low priority jobs
+		if (length(player_preferences.jobs_low_priority))
+			var/datum/job/job =	try_assign_job_from_list(player, player_preferences.jobs_low_priority)
+			if (job)
+				logTheThing(LOG_DEBUG, player, "<b>Jobs:</b> Assigned job: [job.name] (low priority job)")
+				return job
+
+		// look, we tried ok? Just be happy you work here at all.
+		var/list/low_priority_jobs = list()
+		for(var/datum/job/job in job_controls.staple_jobs)
+			if (job.low_priority_job)
+				low_priority_jobs += job
+		if (length(low_priority_jobs))
+			var/datum/job/job = pick(low_priority_jobs)
+			player.mind.assigned_role = job.name
+			job.assigned++
+			logTheThing(LOG_DEBUG, player, "<b>Jobs:</b> Assigned job: [job.name] (fallback job).")
+			return job
+
+		// staffie fallback
+		var/datum/job/fallback_job = find_job_in_controller_by_path(/datum/job/civilian/staff_assistant)
+		if(!fallback_job)
+			CRASH("Unable to locate the default fallback job in job controller. [player] has not been assigned a job!")
+		player.mind.assigned_role = fallback_job.name
+		fallback_job.assigned++
+		logTheThing(LOG_DEBUG, player, "<b>Jobs:</b> Assigned job: [fallback_job.name] (emergency fallback job)")
+		return fallback_job
+
 	proc/job_creator()
+		src.convert_to_cloudsave(usr.client)
 		src.check_user_changed()
 		var/list/dat = list("<html><body><title>Job Creation</title>")
 		dat += "<b><u>Job Creator</u></b><HR>"
@@ -135,7 +242,7 @@ var/datum/job_controller/job_controls
 			dat += "<A href='?src=\ref[src];EditPock2=1'>Starting 2nd Pocket Item:</A> [english_list(src.job_creator.slot_poc2)]<br>"
 			dat += "<A href='?src=\ref[src];EditLhand=1'>Starting Left Hand Item:</A> [english_list(src.job_creator.slot_lhan)]<br>"
 			dat += "<A href='?src=\ref[src];EditRhand=1'>Starting Right Hand Item:</A> [english_list(src.job_creator.slot_rhan)]<br>"
-			dat += "<A href='?src=\ref[src];EditImpl=1'>Starting Implant:</A> [src.job_creator.receives_implant]<br>"
+			dat += "<A href='?src=\ref[src];EditImpl=1'>Starting Implants:</A> [english_list(src.job_creator.receives_implants)]<br>"
 			for(var/i in 1 to 7)
 				dat += "<A href='?src=\ref[src];EditBpItem=[i]'>Starting Backpack Item [i]:</A> [length(src.job_creator.items_in_backpack) >= i ? src.job_creator.items_in_backpack[i] : null]<br>"
 			for(var/i in 1 to 7)
@@ -166,71 +273,27 @@ var/datum/job_controller/job_controls
 
 		if (loaded_save)
 			dat += "<b>Saved Jobs:</b>"
-			if (src.load_another_ckey)
-				dat += "<b> (Showing [src.load_another_ckey]'s jobs)</b>"
 			dat += "<br><small>"
-			var/list/job_names = src.savefile_get_job_names(usr)
+			var/list/job_names = src.savefile_get_job_names(usr.client)
 			for (var/i in 1 to length(job_names))
-				dat += " <a href='?src=\ref[src];Load=[i]'>[job_names[i] || i]</a>"
+				if(job_names[i])
+					dat += " <a href='?src=\ref[src];Load=[i]'>[job_names[i]]</a>"
+				else
+					dat += " Empty slot ([i])"
 				dat += "&nbsp;"
-				if (!src.load_another_ckey)
-					dat += " <a href='?src=\ref[src];Save=[i]'>(Save here)</a>"
+				dat += " <a href='?src=\ref[src];Save=[i]'>(Save here)</a>"
 				dat += "<br>"
 			dat += "</small><br>"
-			if (src.load_another_ckey)
-				dat += "<A href='?src=\ref[src];SaveLoad=1'><b>Load your own jobs</b></A>"
-			else
-				dat += "<A href='?src=\ref[src];LoadDifKey=1'><b>Load another admin's jobs</b></A>"
 		else
 			dat += "<A href='?src=\ref[src];SaveLoad=1'>Save/Load</A>"
 
+		dat += "<br><A href='?src=\ref[src];Import=1'>Import</A> / <A href='?src=\ref[src];Export=1'>Export</A>"
 		dat += "</body></html>"
 
 		usr.Browse(dat.Join(),"window=jobcreator;size=500x650")
 
 	Topic(href, href_list[])
-		// JOB CONFIG COMMANDS
 		USR_ADMIN_ONLY
-		if(href_list["AlterCap"])
-			var/list/alljobs = src.staple_jobs | src.special_jobs
-			var/datum/job/JOB = locate(href_list["AlterCap"]) in alljobs
-			var/newcap = input("Choose the new cap.","Job Cap Config", JOB.limit) as null|num
-			if (isnull(newcap))
-				return
-			JOB.limit = newcap
-			message_admins("Admin [key_name(usr)] altered [JOB.name] job cap to [newcap]")
-			logTheThing(LOG_ADMIN, usr, "altered [JOB.name] job cap to [newcap]")
-			logTheThing(LOG_DIARY, usr, "altered [JOB.name] job cap to [newcap]", "admin")
-			src.job_config()
-
-		if(href_list["RemoveJob"])
-			var/list/alljobs = src.staple_jobs | src.special_jobs
-			var/datum/job/JOB = locate(href_list["RemoveJob"]) in alljobs
-			if (!istype(JOB,/datum/job/created/))
-				boutput(usr, SPAN_ALERT("<b>Removing integral jobs is not allowed. Bad for business, y'know.</b>"))
-				return
-			message_admins("Admin [key_name(usr)] removed special job [JOB.name]")
-			logTheThing(LOG_ADMIN, usr, "removed special job [JOB.name]")
-			logTheThing(LOG_DIARY, usr, "removed special job [JOB.name]", "admin")
-			src.special_jobs -= JOB
-			src.job_config()
-
-		if(href_list["SpecialToggle"])
-			src.allow_special_jobs = !src.allow_special_jobs
-			message_admins("Admin [key_name(usr)] toggled Special Jobs [src.allow_special_jobs ? "On" : "Off"]")
-			logTheThing(LOG_ADMIN, usr, "toggled Special Jobs [src.allow_special_jobs ? "On" : "Off"]")
-			logTheThing(LOG_DIARY, usr, "toggled Special Jobs [src.allow_special_jobs ? "On" : "Off"]", "admin")
-			src.job_config()
-
-		if(href_list["JobCreator"])
-			savefile_fix(usr.client)
-			src.job_creator()
-
-		if(href_list["Edit"])
-			src.job_creator = locate(href_list["Edit"])
-			savefile_fix(usr.client)
-			src.job_creator()
-
 		// JOB CREATOR COMMANDS
 
 		// I tweaked this section a little so you can actual search for certain items.
@@ -746,11 +809,11 @@ var/datum/job_controller/job_controls
 			src.job_creator()
 
 		if(href_list["EditImpl"])
-			switch(alert("Clear or reselect implant?","Job Creator","Clear","Reselect"))
+			switch(alert("Clear or reselect implant?","Job Creator","Clear","Add"))
 				if("Clear")
-					src.job_creator.receives_implant = null
+					src.job_creator.receives_implants = null
 
-				if("Reselect")
+				if("Add")
 					var/list/L = list()
 					var/search_for = input(usr, "Search for implants (or leave blank for complete list)", "Select implant") as null|text
 					if (search_for)
@@ -767,8 +830,10 @@ var/datum/job_controller/job_controls
 					else
 						usr.show_text("No implant matching that name", "red")
 						return
+					if(isnull(src.job_creator.receives_implants))
+						src.job_creator.receives_implants = list()
+					src.job_creator.receives_implants += picker
 
-					src.job_creator.receives_implant = picker
 
 			src.job_creator()
 
@@ -888,10 +953,7 @@ var/datum/job_controller/job_controls
 			src.job_creator()
 
 		if(href_list["ChangeName"])
-			if (src.job_creator.change_name_on_spawn == 0)
-				src.job_creator.change_name_on_spawn = 1
-			else
-				src.job_creator.change_name_on_spawn = 0
+			src.job_creator.change_name_on_spawn = !src.job_creator.change_name_on_spawn
 			src.job_creator()
 
 		if(href_list["SetSpawnLoc"])
@@ -906,6 +968,9 @@ var/datum/job_controller/job_controls
 			src.job_creator()
 
 		if(href_list["CreateJob"])
+			if (!length(src.job_creator.name))
+				alert("You must give your job a name.")
+				return
 			var/datum/job/match_check
 			try
 				match_check = find_job_in_controller_by_string(src.job_creator.name)
@@ -918,79 +983,89 @@ var/datum/job_controller/job_controls
 				boutput(usr, SPAN_ALERT("<b>A job with this name already exists. It cannot be created.</b>"))
 				return
 			else
-				var/datum/job/created/JOB = new /datum/job/created(src)
+				var/hidden = FALSE
 				if(href_list["Hidden"])
-					src.hidden_jobs += JOB
-				else
-					src.special_jobs += JOB
-				wagesystem.jobs[JOB.name] = src.job_creator.wages
+					hidden = TRUE
 
-				JOB.name = src.job_creator.name
-				JOB.wages = src.job_creator.wages
-				JOB.limit = src.job_creator.limit
-				JOB.mob_type = src.job_creator.mob_type
-				JOB.slot_head = src.job_creator.slot_head
-				JOB.slot_mask = src.job_creator.slot_mask
-				JOB.slot_ears = src.job_creator.slot_ears
-				JOB.slot_eyes = src.job_creator.slot_eyes
-				JOB.slot_glov = src.job_creator.slot_glov
-				JOB.slot_foot = src.job_creator.slot_foot
-				JOB.slot_card = src.job_creator.slot_card
-				JOB.slot_jump = src.job_creator.slot_jump
-				JOB.slot_suit = src.job_creator.slot_suit
-				JOB.slot_back = src.job_creator.slot_back
-				JOB.slot_belt = src.job_creator.slot_belt
-				JOB.slot_poc1 = src.job_creator.slot_poc1
-				JOB.slot_poc2 = src.job_creator.slot_poc2
-				JOB.slot_lhan = src.job_creator.slot_lhan
-				JOB.slot_rhan = src.job_creator.slot_rhan
-				JOB.access = JOB.access | src.job_creator.access
-				JOB.change_name_on_spawn = src.job_creator.change_name_on_spawn
-				JOB.special_spawn_location = src.job_creator.special_spawn_location
-				JOB.bio_effects = src.job_creator.bio_effects
-				JOB.objective = src.job_creator.objective
-				JOB.announce_on_join = src.job_creator.announce_on_join
-				JOB.radio_announcement = src.job_creator.radio_announcement
-				JOB.add_to_manifest = src.job_creator.add_to_manifest
-				JOB.receives_implant = src.job_creator.receives_implant
-				JOB.items_in_backpack = src.job_creator.items_in_backpack
-				JOB.items_in_belt = src.job_creator.items_in_belt
-				JOB.spawn_id = src.job_creator.spawn_id
-				JOB.starting_mutantrace = src.job_creator.starting_mutantrace
-				message_admins("Admin [key_name(usr)] created special job [JOB.name]")
-				logTheThing(LOG_ADMIN, usr, "created special job [JOB.name]")
-				logTheThing(LOG_DIARY, usr, "created special job [JOB.name]", "admin")
+				src.create_job(hidden)
 
 			src.job_creator()
 
 		if(href_list["Save"])
 			if (!src.check_user_changed())
-				src.savefile_save(usr.client, (isnum(text2num(href_list["Save"])) ? text2num(href_list["Save"]) : 1))
+				src.cloudsave_save(usr.client, (isnum(text2num(href_list["Save"])) ? text2num(href_list["Save"]) : 1))
 				boutput(usr, SPAN_NOTICE("<b>Job saved to Slot [text2num(href_list["Save"])].</b>"))
 			src.job_creator()
 
 		if(href_list["Load"])
 			if (!src.check_user_changed())
-				if (!src.savefile_load(usr.client, (isnum(text2num(href_list["Load"])) ? text2num(href_list["Load"]) : 1)))
-					alert(usr, "You do not have a job saved in this slot.")
+				if (!src.cloudsave_load(usr.client, (isnum(text2num(href_list["Load"])) ? text2num(href_list["Load"]) : 1)))
+					alert(usr, "Loading failed.")
 				else
 					boutput(usr, SPAN_NOTICE("<b>Job loaded from Slot [text2num(href_list["Load"])].</b>"))
 			src.job_creator()
 
 		if(href_list["SaveLoad"])
 			src.loaded_save = 1
-			src.load_another_ckey = null
 			src.job_creator()
 
-		if (href_list["LoadDifKey"])
-			var/key = input("Which admin's jobs? (Enter ckey)","Job Creator")
-			src.load_another_ckey = key
-			if (!src.savefile_path_exists(key))
-				src.load_another_ckey = null
-				alert(usr, "Could not find a savefile with that ckey!.")
+		if(href_list["Import"])
+			if(src.savefile_import(usr.client))
+				boutput(usr, SPAN_NOTICE("<b>Job imported from file.</b>"))
 			src.job_creator()
 
-/proc/find_job_in_controller_by_string(var/string, var/staple_only = 0)
+		if(href_list["Export"])
+			src.savefile_export(usr.client)
+			boutput(usr, SPAN_NOTICE("<b>Job exporting.</b>"))
+			src.job_creator()
+
+///create job datum from job-creator job datum. todo just add a clone method to jobs?
+/datum/job_controller/proc/create_job(hidden = FALSE)
+	var/datum/job/created/JOB = new /datum/job/created(src)
+	if(hidden)
+		src.hidden_jobs += JOB
+	else
+		src.special_jobs += JOB
+
+	JOB.name = src.job_creator.name
+	JOB.wages = src.job_creator.wages
+	JOB.limit = src.job_creator.limit
+	JOB.mob_type = src.job_creator.mob_type
+	JOB.slot_head = src.job_creator.slot_head
+	JOB.slot_mask = src.job_creator.slot_mask
+	JOB.slot_ears = src.job_creator.slot_ears
+	JOB.slot_eyes = src.job_creator.slot_eyes
+	JOB.slot_glov = src.job_creator.slot_glov
+	JOB.slot_foot = src.job_creator.slot_foot
+	JOB.slot_card = src.job_creator.slot_card
+	JOB.slot_jump = src.job_creator.slot_jump
+	JOB.slot_suit = src.job_creator.slot_suit
+	JOB.slot_back = src.job_creator.slot_back
+	JOB.slot_belt = src.job_creator.slot_belt
+	JOB.slot_poc1 = src.job_creator.slot_poc1
+	JOB.slot_poc2 = src.job_creator.slot_poc2
+	JOB.slot_lhan = src.job_creator.slot_lhan
+	JOB.slot_rhan = src.job_creator.slot_rhan
+	JOB.access = JOB.access | src.job_creator.access
+	JOB.change_name_on_spawn = src.job_creator.change_name_on_spawn
+	JOB.special_spawn_location = src.job_creator.special_spawn_location
+	JOB.bio_effects = src.job_creator.bio_effects
+	JOB.objective = src.job_creator.objective
+	JOB.announce_on_join = src.job_creator.announce_on_join
+	JOB.radio_announcement = src.job_creator.radio_announcement
+	JOB.add_to_manifest = src.job_creator.add_to_manifest
+	JOB.receives_implants = src.job_creator.receives_implants
+	JOB.items_in_backpack = src.job_creator.items_in_backpack
+	JOB.items_in_belt = src.job_creator.items_in_belt
+	JOB.spawn_id = src.job_creator.spawn_id
+	JOB.starting_mutantrace = src.job_creator.starting_mutantrace
+	message_admins("Admin [key_name(usr)] created special job [JOB.name]")
+	logTheThing(LOG_ADMIN, usr, "created special job [JOB.name]")
+	logTheThing(LOG_DIARY, usr, "created special job [JOB.name]", "admin")
+	return JOB
+
+///Soft supresses logging on failing to find a job
+/proc/find_job_in_controller_by_string(var/string, var/staple_only = 0, var/soft = FALSE, var/case_sensitive = TRUE)
 	RETURN_TYPE(/datum/job)
 	if (!string || !istext(string))
 		logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job with bad string in controller detected")
@@ -1000,28 +1075,26 @@ var/datum/job_controller/job_controls
 	#ifndef MAP_OVERRIDE_MANTA
 	excluded_strings += "Communications Officer"
 	#endif
-	#ifndef CREATE_PATHOGENS
-	excluded_strings += "Pathologist"
-	#endif
 	if (string in excluded_strings)
 		return null
 	var/list/results = list()
 	for (var/datum/job/J in job_controls.staple_jobs)
-		if (J.name == string || (string in J.alias_names))
+		if (J.match_to_string(string, case_sensitive))
 			results += J
 	if (!staple_only)
 		for (var/datum/job/J in job_controls.special_jobs)
-			if (J.name == string || (string in J.alias_names))
+			if (J.match_to_string(string, case_sensitive))
 				results += J
 		for (var/datum/job/J in job_controls.hidden_jobs)
-			if (J.name == string || (string in J.alias_names))
+			if (J.match_to_string(string, case_sensitive))
 				results += J
 	if(length(results) == 1)
 		return results[1]
 	else if(length(results) > 1)
 		stack_trace("Multiple jobs share the name '[string]'!")
 		return results[1]
-	CRASH("No job found with name '[string]'!")
+	if (!soft)
+		logTheThing(LOG_DEBUG, null, "No job found with name '[string]'!")
 
 /proc/find_job_in_controller_by_path(var/path)
 	if (!path || !ispath(path) || !istype(path,/datum/job/))
@@ -1037,8 +1110,12 @@ var/datum/job_controller/job_controls
 	return null
 
 /client/proc/cmd_job_controls()
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Job Controls"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
-	if (job_controls == null) boutput(src, "<h3 class='admin'>UH OH! Shit's broken as fuck!</h3>")
-	else src.debug_variables(job_controls)
+	if (isnull(src.holder.job_manager))
+		src.holder.job_manager = new
+
+	src.holder.job_manager.ui_interact(src.mob)

@@ -18,3 +18,7 @@
 #define CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS "all_antagonist_icons"
 #define CLIENT_IMAGE_GROUP_HEADS_OF_STAFF "heads_of_staff"
 #define CLIENT_IMAGE_GROUP_POD_WARS "pod_wars_team_icons"
+#define CLIENT_IMAGE_GROUP_GANGS "client_image_group_gang" // covers tags and territory
+#define CLIENT_IMAGE_GROUP_GANG_OBJECTIVES "client_image_group_gang_objective" // covers crate spawns
+#define CLIENT_IMAGE_GROUP_MECHCOMP "mechcomp"
+#define CLIENT_IMAGE_GROUP_SALVAGER_VALUES "salvage_value_icons"

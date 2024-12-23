@@ -74,6 +74,40 @@ TYPEINFO(/turf/unsimulated/floor/void)
 	can_burn = FALSE
 	can_break = FALSE
 
+
+TYPEINFO(/turf/unsimulated/floor/auto/void)
+	mat_appearances_to_ignore = list("steel")
+
+/turf/unsimulated/floor/auto/void
+	name = "void"
+	icon = 'icons/obj/adventurezones/void.dmi'
+	icon_state = "void"
+	desc = "A strange shifting void ..."
+	plane = PLANE_SPACE
+	can_burn = FALSE
+	can_break = FALSE
+	edge_priority_level = INFINITY
+	icon_state_edge = "void_edge"
+
+	edge_overlays()
+		if(src.icon_state_edge)
+			var/connectdir = get_connected_directions_bitflag(list(src.type=TRUE), list(), TRUE, FALSE)
+			for (var/direction in alldirs)
+				var/turf/T = get_step(src, turn(direction, 180))
+				if(T)
+					if (istype(T, /turf/unsimulated/floor/auto))
+						var/turf/unsimulated/floor/auto/TA = T
+						if (TA.edge_priority_level >= src.edge_priority_level)
+							T.ClearSpecificOverlays("edge_[direction]") // Cull overlaps
+							continue
+					if(turn(direction, 180) & connectdir)
+						T.ClearSpecificOverlays("edge_[direction]") // Cull diagonals
+						continue
+					T.add_filter("edge_[direction]", 0, alpha_mask_filter(icon=icon(src.icon, "[icon_state_edge][direction]", dir=pick(cardinal)), flags = MASK_INVERSE))
+
+
+
+
 /turf/unsimulated/floor/void/crunch
 	fullbright = 0
 
@@ -442,12 +476,12 @@ TYPEINFO(/turf/simulated/floor/void)
 				playsound(src.loc, 'sound/machines/modem.ogg', 75, 1)
 
 				A.emote("scream")
-				A.changeStatus("weakened", 5 SECONDS)
+				A.changeStatus("knockdown", 5 SECONDS)
 				A.show_text("<B>IT HURTS!</B>", "red")
 				A.shock(src, 75000, ignore_gloves=1)
 
 				B.emote("scream")
-				B.changeStatus("weakened", 5 SECONDS)
+				B.changeStatus("knockdown", 5 SECONDS)
 				B.show_text("<B>IT HURTS!</B>", "red")
 				B.shock(src, 75000, ignore_gloves=1)
 				SPAWN(5 SECONDS)
@@ -461,11 +495,11 @@ TYPEINFO(/turf/simulated/floor/void)
 				playsound(src.loc,'sound/effects/elec_bzzz.ogg', 60, 1)
 				if(A && B && can_operate()) //We're all here, still
 					A.emote("faint")
-					A.changeStatus("paralysis", 25 SECONDS)
+					A.changeStatus("unconscious", 25 SECONDS)
 					A.shock(src, 750000, ignore_gloves=1)
 
 					B.emote("faint")
-					B.changeStatus("paralysis", 25 SECONDS)
+					B.changeStatus("unconscious", 25 SECONDS)
 					A.shock(src, 750000, ignore_gloves=1)
 
 					if(A.mind)

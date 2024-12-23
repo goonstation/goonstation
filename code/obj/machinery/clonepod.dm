@@ -2,14 +2,16 @@
 #define MAXIMUM_MEAT_LEVEL		100
 #define DEFAULT_MEAT_USED_PER_TICK 0.6
 #define DEFAULT_SPEED_BONUS 1
+// a lower bound on the amount of meat used per clone, even if ejected instantly
+#define MINIMUM_MEAT_USED 4
 
 #define MEAT_LOW_LEVEL	MAXIMUM_MEAT_LEVEL * 0.15
 
 #define MAX_FAILED_CLONE_TICKS 200 // vOv
 
 TYPEINFO(/obj/machinery/clonepod)
-	mats = list("MET-1"=35, "honey"=5)
-
+	mats = list("metal" = 35,
+				"honey" = 5)
 /obj/machinery/clonepod
 	anchored = ANCHORED
 	name = "cloning pod"
@@ -55,6 +57,8 @@ TYPEINFO(/obj/machinery/clonepod)
 	var/datum/light/light
 
 	var/meat_level = MAXIMUM_MEAT_LEVEL / 4
+	///Total meat used to grow the current clone
+	var/meat_used
 
 	var/static/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.75,"pepperoni"=0.5,"meat_slurry"=1,"bloodc"=0.5)
 
@@ -82,10 +86,11 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		if (!src.net_id)
 			src.net_id = generate_net_id(src)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
 
 
 	disposing()
+		message_ghosts("<b>[src]</b> has been destroyed at [log_loc(src, ghostjump=TRUE)].")
 		mailgroups.len = 0
 		genResearch?.clonepods?.Remove(src) //Bye bye
 		connected?.linked_pods -= src
@@ -128,7 +133,10 @@ TYPEINFO(/obj/machinery/clonepod)
 		newsignal.data["message"] = "[msg]"
 
 		newsignal.data["address_1"] = "00000000"
-		newsignal.data["group"] = mailgroups + MGA_CLONER
+		if(src.clonehack)
+			newsignal.data["group"] = list(MGA_SYNDICATE)
+		else
+			newsignal.data["group"] = mailgroups + MGA_CLONER
 		newsignal.data["sender"] = src.net_id
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
@@ -276,9 +284,6 @@ TYPEINFO(/obj/machinery/clonepod)
 					// First cloning can't get major defects
 					defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MINOR)
 
-		if (length(defects.active_cloner_defects) > 7)
-			src.occupant.unlock_medal("Quit Cloning Around")
-
 		src.mess = FALSE
 		var/is_puritan = FALSE
 		if (!isnull(traits) && src.occupant.traitHolder)
@@ -298,6 +303,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				// Puritans have a bad time.
 				// This is a little different from how it was before:
 				// - Immediately take 250 tox and 100 random brute
+				// - Always get a major cloning defect
 				// - 50% chance, per limb, to lose that limb
 				// - enforced premature_clone, which gibs you on death
 				// If you have a clone body that's been allowed to fully heal before
@@ -305,6 +311,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				// out of deep critical health before they turn into chunky salsa
 				// This should be really rare to have happen, but I want to leave it in
 				// just in case someone manages to pull off a miracle save
+				defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MAJOR)
 				src.occupant.bioHolder?.AddEffect("premature_clone")
 				src.occupant.take_toxin_damage(250)
 				random_brute_damage(src.occupant, 100, 0)
@@ -316,6 +323,9 @@ TYPEINFO(/obj/machinery/clonepod)
 							if (prob(50))
 								P.limbs.sever(limb)
 			#endif
+
+		if (length(defects.active_cloner_defects) > 7)
+			src.occupant.unlock_medal("Quit Cloning Around")
 
 		if (src.mess)
 			boutput(src.occupant, "[SPAN_NOTICE("<b>Clone generation process initi&mdash;</b>")][SPAN_ALERT(" oh fuck oh god oh no no NO <b>NO NO THIS IS NOT GOOD</b>")]")
@@ -330,7 +340,8 @@ TYPEINFO(/obj/machinery/clonepod)
 		else
 			src.occupant.real_name = "clone"  //No null names!!
 		src.occupant.name = src.occupant.real_name
-
+		if (is_puritan)
+			message_ghosts("<b>[src.occupant]</b> is being cloned as a puritan at [log_loc(src, ghostjump=TRUE)].")
 		if (!((mindref) && (istype(mindref))))
 			logTheThing(LOG_DEBUG, null, "<b>Mind</b> Clonepod forced to create new mind for key \[[src.occupant.key ? src.occupant.key : "INVALID KEY"]]")
 			src.occupant.mind = new /datum/mind(  )
@@ -362,6 +373,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (!src.occupant?.mind)
 			logTheThing(LOG_DEBUG, src, "Cloning pod failed to check mind status of occupant [src.occupant].")
 		else
+			src.occupant.job = src.occupant.mind.assigned_role //Set the new mob's job to our mind's job
 			for (var/datum/antagonist/antag in src.occupant.mind.antagonists)
 				if (!antag.remove_on_clone)
 					continue
@@ -385,7 +397,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			src.occupant.bioHolder.AddEffectInstance(src.connected.BE,1)
 
 		if (!is_puritan)
-			src.occupant.changeStatus("paralysis", 10 SECONDS)
+			src.occupant.changeStatus("unconscious", 10 SECONDS)
 		previous_heal = src.occupant.health
 #ifdef CLONING_IS_INSTANT
 		src.occupant.full_heal()
@@ -462,7 +474,7 @@ TYPEINFO(/obj/machinery/clonepod)
 					src.look_busy(prob(33))
 
 				// Otherwise, heal thyself, clone.
-				src.occupant.changeStatus("paralysis", 10 SECONDS)
+				src.occupant.changeStatus("unconscious", 10 SECONDS)
 
 				// Slowly get that clone healed and finished.
 				//At this rate one clone takes about 95 seconds to produce.
@@ -491,7 +503,10 @@ TYPEINFO(/obj/machinery/clonepod)
 				//Also heal some oxy ourselves because epinephrine is so bad at preventing it!!
 				src.occupant.take_oxygen_deprivation(-10 * mult) // cogwerks: speeding this up too
 
+				var/old_level = src.meat_level
 				src.meat_level = max( 0, src.meat_level - meat_used_per_tick * mult )
+				src.meat_used += old_level - src.meat_level //delta meat
+
 				if (!src.meat_level)
 					src.connected_message("Additional biomatter required to continue.", "warning")
 					src.send_pda_message("Low Biomatter")
@@ -735,6 +750,9 @@ TYPEINFO(/obj/machinery/clonepod)
 			// max_health can vary depending on other
 			src.occupant.bioHolder.AddEffect("premature_clone")
 
+		if (src.meat_used < MINIMUM_MEAT_USED) //always make sure we use at least SOME meat
+			src.meat_level = max(0, src.meat_level - (MINIMUM_MEAT_USED - src.meat_used))
+
 		if (src.mess) //Clean that mess and dump those gibs!
 			src.mess = 0
 			gibs(get_turf(src)) // we don't need to do if/else things just to say "put gibs on this thing's turf"
@@ -764,7 +782,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			var/mob/living/carbon/C = src.occupant
 			C.remove_ailments() // no more cloning with heart failure
 
-		src.occupant.changeStatus("paralysis", 10 SECONDS)
+		src.occupant.changeStatus("unconscious", 10 SECONDS)
 		src.occupant.set_loc(get_turf(src))
 		if (src.emagged) //huck em
 			src.occupant.throw_at(get_edge_target_turf(src, pick(alldirs)), 10, 3)
@@ -798,6 +816,10 @@ TYPEINFO(/obj/machinery/clonepod)
 			return
 		src.go_out()
 		return
+
+	Click(location, control, params)
+		if(!src.ghost_observe_occupant(usr, src.occupant))
+			. = ..()
 
 	ex_act(severity)
 		switch(severity)
@@ -1182,7 +1204,6 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		return 1
 
 /datum/action/bar/icon/put_in_reclaimer
-	id = "put_in_reclaimer"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 50
 	icon = 'icons/mob/screen1.dmi'
@@ -1261,3 +1282,4 @@ TYPEINFO(/obj/machinery/clonegrinder)
 #undef DEFAULT_MEAT_USED_PER_TICK
 #undef DEFAULT_SPEED_BONUS
 #undef MEAT_LOW_LEVEL
+#undef MINIMUM_MEAT_USED

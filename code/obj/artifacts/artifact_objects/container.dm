@@ -9,7 +9,7 @@
 	rarity_weight = 450
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
-	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
+	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch, /datum/artifact_trigger/language)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activ_text = "seems like it has something inside of it..."
 	deact_text = "locks back up."
@@ -31,10 +31,12 @@
 			if(1)
 				if(prob(5))
 					new/obj/item/artifact/activator_key(src.holder)
+				else if (prob(50))
+					new/obj/item/cell/artifact(src.holder)
+					new/obj/item/cell/artifact(src.holder)
+					new/obj/item/cell/artifact(src.holder)
 				else
-					new/obj/item/cell/artifact(src.holder)
-					new/obj/item/cell/artifact(src.holder)
-					new/obj/item/cell/artifact(src.holder)
+					new/obj/item/artifact/talisman(src.holder)
 			if(2)
 				if(prob(5))
 					new/obj/critter/domestic_bee/buddy(src.holder)

@@ -74,7 +74,7 @@
 				break
 
 	flockdronegibs(src.loc, eject) //ejectables ejected here
-	src.flock.flockmind.started = TRUE
+	src.flock.flockmind?.started = TRUE
 	qdel(src)
 
 /obj/flock_structure/rift/disposing()

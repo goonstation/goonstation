@@ -13,6 +13,7 @@
 	voice_fem = 'sound/voice/wizard/CluwneFem.ogg'
 	voice_other = 'sound/voice/wizard/CluwneLoud.ogg'
 	maptext_colors = list("#3fb54f", "#9eee80", "#d3cb21", "#b97517")
+	voice_on_cast_start = FALSE
 
 	cast(mob/target)
 		if(!holder)
@@ -28,6 +29,7 @@
 
 		var/mob/living/carbon/human/H = target
 
+		. = ..()
 		if (targetSpellImmunity(H, TRUE, 2))
 			return 1
 
@@ -35,9 +37,8 @@
 		actions.start(new/datum/action/bar/icon/cluwne_spell(usr, target, src), holder.owner)
 
 /datum/action/bar/icon/cluwne_spell
-	duration = 1.5 SECONDS
+	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "cluwne_spell"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "cluwne"
 
@@ -83,7 +84,7 @@
 		smoke.set_up(5, 0, target.loc)
 		smoke.attach(target)
 		smoke.start()
-		logTheThing(LOG_COMBAT, M, "casts a Cluwne spell on [constructTarget(target,"combat")] at [log_loc(target)].")
+		logTheThing(LOG_COMBAT, M, "successfully casts a Cluwne spell on [constructTarget(target,"combat")] at [log_loc(target)].")
 		if (target.job != "Cluwne")
 			boutput(target, SPAN_ALERT("<B>You HONK painfully!</B>"))
 			target.take_brain_damage(50)

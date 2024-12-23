@@ -17,14 +17,14 @@
 	src.add_simple_light("compute_light", rgb2num(glow_color))
 	var/image/screen = image('icons/misc/featherzone.dmi', "compute_screen", EFFECTS_LAYER_BASE)
 	screen.pixel_y = 14
-	src.UpdateOverlays(screen, "screen")
+	src.AddOverlays(screen, "screen")
 	src.info_tag.set_info_tag("Compute provided: [src.compute]")
 
 /obj/flock_structure/compute/process()
 	var/id = rand(1, src.display_count)
 	var/image/overlay = image('icons/misc/featherzone.dmi', "compute_display[id]", EFFECTS_LAYER_BASE)
 	overlay.pixel_y = 16
-	src.UpdateOverlays(overlay, "display")
+	src.AddOverlays(overlay, "display")
 
 /obj/flock_structure/compute/disposing()
 	src.remove_simple_light("compute_light")

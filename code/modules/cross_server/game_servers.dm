@@ -60,21 +60,31 @@ var/global/datum/game_servers/game_servers = new
 		if(data["subtype"] == "set_ip_port")
 			var/datum/game_server/reply_server = src.servers[data["sent_from"]]
 			if(isnull(reply_server))
+				logTheThing(LOG_DEBUG, html_encode(data["sent_from"]), "<b>XServerComm</b>: Unable to establish cross server trust, 'set_ip_port' sender not found in servers list.")
+				logTheThing(LOG_DIARY, html_encode(data["sent_from"]), "XServerComm: Unable to establish cross server trust, 'set_ip_port' sender not found in servers list.", "debug")
 				return FALSE
 			if(reply_server.waiting_for_ip_port_auth != data["auth"])
+				logTheThing(LOG_DEBUG, reply_server, "<b>XServerComm</b>: Unable to establish cross server trust, Received invalid or expired auth code.")
+				logTheThing(LOG_DIARY, reply_server, "XServerComm: Unable to establish cross server trust, Received invalid or expired auth code.", "debug")
 				return FALSE
 			reply_server.ip_port = addr
 			return TRUE
 		if(data["subtype"] == "get_ip_port")
 			var/datum/game_server/reply_server = src.servers[data["reply_to"]]
 			if(isnull(reply_server))
+				logTheThing(LOG_DEBUG, html_encode(data["reply_to"]), "<b>XServerComm</b>: Unable to establish cross server trust, 'get_ip_port' unknown reply server.")
+				logTheThing(LOG_DIARY, html_encode(data["reply_to"]), "XServerComm: Unable to establish cross server trust, 'get_ip_port' unknown reply server.", "debug")
 				return FALSE
 			reply_server.send_message(list("type"="game_servers", "subtype"="set_ip_port", "sent_from"=config.server_id, "auth"=data["auth"]))
 			return TRUE
 		var/datum/game_server/server = src.find_by_ip_port(addr)
 		if(isnull(server))
+			logTheThing(LOG_DEBUG, addr, "<b>XServerComm</b>: Received message from [addr], but server trust has not yet been established.")
+			logTheThing(LOG_DIARY, addr, "XServerComm: Received message from [addr], but server trust has not yet been established.", "debug")
 			return null
 		if(!(data["subtype"] in src.message_kinds))
+			logTheThing(LOG_DEBUG, server.id, "<b>XServerComm</b>: Received message from [server.id], but message type [html_encode(data["subtype"])] is unrecognized.")
+			logTheThing(LOG_DIARY, server.id, "XServerComm: Received message from [server.id], but message type [html_encode(data["subtype"])] is unrecognized.", "debug")
 			return null
 		var/datum/cross_server_message/csm = src.message_kinds[data["subtype"]]
 		return csm.receive(data, server)
@@ -112,6 +122,14 @@ var/global/datum/game_servers/game_servers = new
 	var/ghost_notif_target = TRUE
 	var/ip_port = null
 	var/waiting_for_ip_port_auth = null
+	/// last known player count
+	var/player_count
+	/// last known map
+	var/map
+	/// last known next map
+	var/next_map
+	/// last known round time
+	var/round_time
 
 	New(id, name, url, numeric_id, publ=TRUE, ghost_notif_target=TRUE)
 		..()
@@ -123,6 +141,8 @@ var/global/datum/game_servers/game_servers = new
 		src.ghost_notif_target = ghost_notif_target
 #ifdef LIVE_SERVER
 		SPAWN(0)
+			if (src.id == config.server_id)
+				return
 			get_ip_port()
 #endif
 
@@ -137,15 +157,19 @@ var/global/datum/game_servers/game_servers = new
 				src.waiting_for_ip_port_auth = md5("[rand()][rand()][rand()][world.time]")
 				success = src.send_message(list("type"="game_servers", "subtype"="get_ip_port", "reply_to"=config.server_id, "auth"=src.waiting_for_ip_port_auth))
 				if(success)
-					var/wait_count = 20
+					var/wait_count = 30
 					while(isnull(src.ip_port) && wait_count-- > 0)
 						sleep(1)
 					if(!isnull(src.ip_port))
 						global.game_servers.by_ip_port[src.ip_port] = src
 					else
 						success = FALSE
+						logTheThing(LOG_DEBUG, src.id, "<b>XServerComm</b>:Unable to establish cross server trust, challenge response attempt timed out.")
+						logTheThing(LOG_DIARY, src.id, "XServerComm:Unable to establish cross server trust, challenge response attempt timed out.", "debug")
 				if(!success)
 					src.waiting_for_ip_port_auth = FALSE
+					logTheThing(LOG_DEBUG, src.id, "<b>XServerComm</b>:Unable to establish cross server trust, World.Export returned falsey value")
+					logTheThing(LOG_DIARY, src.id, "XServerComm:Unable to establish cross server trust, World.Export returned falsey value.", "debug")
 					sleep(5 SECONDS)
 		return src.ip_port
 
@@ -154,3 +178,29 @@ var/global/datum/game_servers/game_servers = new
 
 	proc/send_message(list/data)
 		return world.Export("[src.url]?[list2params(data)]")
+
+	/// Fetches server data from remote goonhub node
+	proc/sync_server_data()
+		if (src.is_me())
+			return
+		var/datum/http_request/request = new()
+		request.prepare(RUSTG_HTTP_METHOD_GET, "https://node.goonhub.com/status?server=[src.id]", "", "")
+		request.begin_async()
+		UNTIL(request.is_complete())
+		var/datum/http_response/response = request.into_response()
+		var/list/data
+		if (!rustg_json_is_valid(response.body))
+			logTheThing(LOG_DEBUG, src.id, "<b>Server Sync</b>: Failed to sync. Received malformed or non-JSON response.")
+			logTheThing(LOG_DIARY, src.id, "Server Sync: Failed to sync. Received malformed or non-JSON response.", "debug")
+			return
+		data = json_decode(response.body)
+		if (data["response"])
+			src.player_count = data["response"]["players"]
+			src.map = data["response"]["map_name"]
+
+		else if (data["message"])
+			logTheThing(LOG_DEBUG, src.id, "<b>Server Sync</b>: Failed to sync. Server message: [html_encode(data["message"])]")
+			logTheThing(LOG_DIARY, src.id, "Server Sync: Failed to sync. Server message: [html_encode(data["message"])]", "debug")
+		else
+			logTheThing(LOG_DEBUG, src.id, "<b>Server Sync</b>: Failed to sync. Received unexpected JSON data.")
+			logTheThing(LOG_DIARY, src.id, "Server Sync: Failed to sync. Received unexpected JSON data.", "debug")

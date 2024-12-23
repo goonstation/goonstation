@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ai" = (
 /obj/lattice{
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/pirate_ship)
+/area/pirate_ship_space)
 "ak" = (
 /obj/item/storage/wall/office,
 /turf/simulated/floor/orange/side,
@@ -38,7 +38,7 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/vehicle/miniputt/indyputt{
 	dir = 1;
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Dreadful"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -53,7 +53,7 @@
 	dir = 1
 	},
 /obj/machinery/vehicle/miniputt/indyputt{
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Deathly"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -66,6 +66,7 @@
 /obj/decal/stage_edge/alt{
 	color = "#555555"
 	},
+/obj/storage/crate/chest,
 /turf/simulated/floor,
 /area/pirate_ship)
 "bu" = (
@@ -102,15 +103,32 @@
 	dir = 6
 	},
 /area/pirate_ship)
+"bJ" = (
+/turf/unsimulated/wall/generic{
+	icon = 'icons/obj/singularity.dmi';
+	icon_state = "TheSingMain";
+	name = "cloaking field"
+	},
+/area/space)
+"bV" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
 "cx" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/vehicle/pod_smooth/black{
 	dir = 1;
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Waking Nightmare"
 	},
 /turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"cI" = (
+/obj/table/reinforced/bar/auto,
+/turf/simulated/floor/orange,
 /area/pirate_ship)
 "cK" = (
 /obj/indestructible/shuttle_corner{
@@ -138,7 +156,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/shuttleweapon{
+/obj/fakeobject/shuttleweapon{
 	dir = 1
 	},
 /turf/space,
@@ -150,10 +168,7 @@
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "dk" = (
-/obj/machinery/r_door_control/podbay{
-	access_type = -1;
-	id = "peregrine_podbay"
-	},
+/obj/machinery/r_door_control/podbay/pirate,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/pirate_ship)
 "dt" = (
@@ -193,7 +208,7 @@
 	},
 /obj/machinery/vehicle/pod_smooth/industrial{
 	dir = 1;
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Vehement"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -242,11 +257,11 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
-/obj/decal/fakeobjects/shuttleweapon/base{
+/obj/fakeobject/shuttleweapon/base{
 	dir = 1
 	},
 /turf/space,
@@ -279,11 +294,15 @@
 	},
 /turf/simulated/floor/black,
 /area/pirate_ship)
-"gH" = (
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/grey/side{
-	dir = 4
+"gc" = (
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 12
 	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"gH" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/black,
 /area/pirate_ship)
 "gJ" = (
 /turf/simulated/floor/blackwhite{
@@ -315,7 +334,7 @@
 	dir = 1
 	},
 /obj/machinery/vehicle/miniputt/wizard{
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Brimstone"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -511,38 +530,10 @@
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "mu" = (
-/obj/rack,
-/obj/item/clothing/mask/breath{
-	pixel_x = 10
-	},
-/obj/item/clothing/suit/space/emerg{
-	pixel_x = 14
-	},
-/obj/item/clothing/head/emerg{
-	pixel_x = 11;
-	pixel_y = 10
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/emerg{
-	pixel_x = 4
-	},
-/obj/item/clothing/head/emerg{
-	pixel_x = 1;
-	pixel_y = 10
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = -10
-	},
-/obj/item/clothing/suit/space/emerg{
-	pixel_x = -6
-	},
-/obj/item/clothing/head/emerg{
-	pixel_x = -9;
-	pixel_y = 10
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/vending/air_vendor/pod_wars,
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "mx" = (
@@ -564,6 +555,7 @@
 	pixel_y = -2;
 	pixel_x = -8
 	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "nu" = (
@@ -578,7 +570,7 @@
 "nC" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/vehicle/pod_smooth{
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Retribution"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -646,19 +638,8 @@
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "oO" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/computer3/terminal{
-	dir = 8
-	},
-/turf/simulated/floor/orangeblack/side{
-	dir = 4
-	},
+/obj/stool/bar,
+/turf/simulated/floor,
 /area/pirate_ship)
 "pb" = (
 /obj/machinery/power/terminal,
@@ -683,7 +664,7 @@
 "pO" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/vehicle/pod_smooth/gold{
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Cannonade"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -702,7 +683,7 @@
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "qM" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/space,
 /area/pirate_ship)
 "rg" = (
@@ -774,6 +755,14 @@
 	dir = 8
 	},
 /area/pirate_ship)
+"te" = (
+/obj/item/storage/toilet,
+/obj/decoration/toiletholder{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
 "tB" = (
 /obj/item/bandage,
 /obj/item/bandage,
@@ -794,10 +783,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
-	dir = 4;
-	id = "peregrine_podbay";
-	name = "Cargo Bay Door"
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/pirate_podbay{
+	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
 /area/pirate_ship)
@@ -838,7 +825,7 @@
 	dir = 1
 	},
 /obj/machinery/vehicle/miniputt/black{
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Black Flag"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -1043,6 +1030,10 @@
 	dir = 1
 	},
 /area/pirate_ship)
+"vt" = (
+/obj/stool/bed,
+/turf/simulated/floor/black,
+/area/pirate_ship)
 "vv" = (
 /obj/decal/poster/wallsign/stencil/left/y{
 	pixel_x = -12;
@@ -1060,12 +1051,6 @@
 	pixel_y = 41
 	},
 /turf/simulated/floor/shuttlebay,
-/area/pirate_ship)
-"vz" = (
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/orange/side{
-	dir = 8
-	},
 /area/pirate_ship)
 "vN" = (
 /obj/decoration/bullethole{
@@ -1126,25 +1111,31 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/pirate_ship)
+"xh" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
 "xs" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/door_control{
 	id = "peregrine_podbay";
 	name = "Podbay Door Control";
 	pixel_x = -24;
 	pixel_y = 12
 	},
+/obj/machinery/vending/air_vendor/plasma/pod_wars,
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "xG" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/obj/decal/fakeobjects/shuttleweapon/base{
+/obj/fakeobject/shuttleweapon/base{
 	dir = 1
 	},
 /turf/space,
@@ -1187,7 +1178,7 @@
 /area/pirate_ship)
 "yQ" = (
 /obj/machinery/power/smes/magical,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/space,
@@ -1232,6 +1223,11 @@
 	},
 /turf/simulated/floor/black,
 /area/pirate_ship)
+"zP" = (
+/obj/lattice/auto,
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/pirate_ship_space)
 "zX" = (
 /obj/stool/chair/office/yellow{
 	dir = 4
@@ -1240,6 +1236,9 @@
 	dir = 4
 	},
 /area/pirate_ship)
+"As" = (
+/turf/cordon,
+/area/cordon)
 "Au" = (
 /obj/table/nanotrasen/auto,
 /obj/machinery/recharger/wall{
@@ -1313,6 +1312,10 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
 /area/pirate_ship)
+"Bg" = (
+/obj/lattice/auto,
+/turf/space,
+/area/pirate_ship_space)
 "Bp" = (
 /obj/item/storage/toolbox/mechanical{
 	pixel_x = 3;
@@ -1343,6 +1346,10 @@
 	},
 /turf/simulated/floor/black,
 /area/pirate_ship)
+"CO" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor,
+/area/pirate_ship)
 "Df" = (
 /obj/storage/closet/emergency,
 /turf/unsimulated/floor/plating/random,
@@ -1363,6 +1370,11 @@
 	dir = 8
 	},
 /area/pirate_ship)
+"DL" = (
+/obj/lattice/auto,
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/pirate_ship_space)
 "DP" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -1461,10 +1473,8 @@
 	powerlevel = 1
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
-	dir = 4;
-	id = "peregrine_podbay";
-	name = "Cargo Bay Door"
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/pirate_podbay{
+	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
 /area/pirate_ship)
@@ -1564,7 +1574,7 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/vehicle/miniputt{
 	dir = 1;
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Inglorious"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -1619,6 +1629,16 @@
 	},
 /turf/simulated/floor/orange,
 /area/pirate_ship)
+"Jv" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/fakeobject/teleport_pad{
+	name = "prototype receiver pad"
+	},
+/obj/landmark/pirate_tele,
+/turf/simulated/floor/orange,
+/area/pirate_ship)
 "Jy" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -1655,7 +1675,7 @@
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "Ke" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-L"
 	},
 /turf/space,
@@ -1733,6 +1753,14 @@
 /obj/decoration/bustedmantapc,
 /turf/simulated/floor/orange,
 /area/pirate_ship)
+"Mg" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/pirate_ship)
 "Mw" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1755,7 +1783,7 @@
 	},
 /area/pirate_ship)
 "MM" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	icon_state = "alt_propulsion"
 	},
 /turf/space,
@@ -1793,6 +1821,11 @@
 	},
 /turf/space,
 /area/pirate_ship)
+"Or" = (
+/obj/lattice/auto,
+/obj/warp_beacon/pirate,
+/turf/space,
+/area/pirate_ship_space)
 "Ox" = (
 /obj/decal/tile_edge/stripe{
 	dir = 6;
@@ -1809,11 +1842,10 @@
 	},
 /area/pirate_ship)
 "OK" = (
-/obj/lattice{
-	icon_state = "lattice-dir-b"
-	},
-/turf/space,
-/area/space)
+/obj/table/reinforced/bar/auto,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/orange,
+/area/pirate_ship)
 "ON" = (
 /obj/table/syndicate/auto,
 /obj/item/storage/firstaid/toxin{
@@ -1831,6 +1863,21 @@
 	pixel_x = 6
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"OR" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/computer3/terminal{
+	dir = 8
+	},
+/turf/simulated/floor/orange/side{
+	dir = 4
+	},
 /area/pirate_ship)
 "OU" = (
 /obj/table/syndicate/auto,
@@ -1910,10 +1957,8 @@
 /area/pirate_ship)
 "Qd" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
-	dir = 4;
-	id = "peregrine_armoury";
-	name = "Cargo Bay Door"
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/pirate_armory{
+	dir = 8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/pirate_ship)
@@ -2052,7 +2097,7 @@
 	dir = 1
 	},
 /obj/machinery/vehicle/miniputt{
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Spectre"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -2071,7 +2116,7 @@
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "TY" = (
-/obj/decal/fakeobjects/palmtree{
+/obj/fakeobject/palmtree{
 	layer = 4;
 	pixel_y = 6;
 	pixel_x = 2
@@ -2101,6 +2146,14 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
 /area/pirate_ship)
+"Ve" = (
+/obj/item/storage/toilet,
+/obj/decoration/toiletholder{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
 "Vf" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2114,15 +2167,13 @@
 /turf/simulated/floor,
 /area/pirate_ship)
 "Vj" = (
-/obj/lattice{
-	icon_state = "lattice-dir-b"
-	},
 /turf/space,
-/area/pirate_ship)
+/area/pirate_ship_space)
 "Vm" = (
 /obj/decal/stage_edge/alt{
 	color = "#555555"
 	},
+/obj/storage/crate/chest,
 /turf/simulated/floor,
 /area/pirate_ship)
 "Vo" = (
@@ -2181,14 +2232,17 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/vehicle/miniputt/nanoputt/security{
 	dir = 1;
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Betrayal"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/pirate_ship)
 "Wl" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
 /turf/space,
-/area/space)
+/area/pirate_ship_space)
 "Wp" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/orange/side,
@@ -2220,6 +2274,14 @@
 	},
 /turf/simulated/floor/black,
 /area/pirate_ship)
+"XJ" = (
+/obj/machinery/light/runway_light,
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/pirate_ship_space)
 "Yb" = (
 /obj/machinery/light/incandescent/warm,
 /obj/submachine/weapon_vendor/pirate,
@@ -2233,7 +2295,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/decal/fakeobjects/console_radar{
+/obj/fakeobject/console_radar{
 	anchored = 2
 	},
 /obj/machinery/light/incandescent/warm{
@@ -2301,20 +2363,187 @@
 /area/pirate_ship)
 
 (1,1,1) = {"
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+"}
+(2,1,1) = {"
+As
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+As
+"}
+(3,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+bJ
+As
+"}
+(4,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+bJ
+As
+"}
+(5,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
 cK
 nu
 nu
@@ -2326,18 +2555,28 @@ Qd
 Qd
 Qd
 Oi
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
+bJ
+As
 "}
-(2,1,1) = {"
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+(6,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
 cK
 TC
 TC
@@ -2358,16 +2597,26 @@ GY
 nu
 Ke
 MM
-Wl
+Vj
+Vj
+bJ
+As
 "}
-(3,1,1) = {"
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+(7,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+nu
+nu
+nu
+nu
 nu
 tB
 yw
@@ -2388,16 +2637,26 @@ Yb
 nu
 Ke
 MM
-Wl
+Vj
+Vj
+bJ
+As
 "}
-(4,1,1) = {"
-Wl
-Wl
-Wl
-Wl
+(8,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+Vj
 cK
 nu
 nu
+nu
+te
+bV
+vt
 Fp
 uq
 zp
@@ -2418,16 +2677,26 @@ GY
 nu
 nu
 hg
-Wl
+Vj
+Vj
+bJ
+As
 "}
-(5,1,1) = {"
-Wl
-Wl
-Wl
-OK
+(9,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+ai
 TC
 oE
 mL
+nu
+gc
+JM
+JM
 nu
 ak
 yM
@@ -2448,16 +2717,26 @@ GY
 nu
 Ke
 MM
-Wl
+Vj
+Vj
+bJ
+As
 "}
-(6,1,1) = {"
+(10,1,1) = {"
+As
+bJ
 Vj
 ai
+Wl
 cS
 fy
 Zt
 vX
 qq
+nu
+JM
+JM
+JM
 nu
 uI
 zp
@@ -2478,16 +2757,26 @@ Yb
 nu
 Ke
 MM
-Wl
+Vj
+Vj
+bJ
+As
 "}
-(7,1,1) = {"
-Wl
+(11,1,1) = {"
+As
+bJ
+Vj
+Vj
 cK
 nu
 nu
 Pf
 fh
-vz
+AJ
+nu
+gH
+Jy
+gH
 nu
 vl
 zp
@@ -2507,17 +2796,27 @@ Xy
 GY
 nu
 Oi
-Wl
-Wl
+Vj
+Vj
+Vj
+bJ
+As
 "}
-(8,1,1) = {"
-Wl
+(12,1,1) = {"
+As
+bJ
+Vj
+Vj
 nu
 Kn
 VJ
 Vm
 cP
 cP
+cP
+cP
+cP
+CO
 nu
 nu
 JF
@@ -2537,15 +2836,25 @@ nu
 hS
 at
 nu
-Wl
-Wl
+Vj
+Vj
+Vj
+bJ
+As
 "}
-(9,1,1) = {"
-Wl
+(13,1,1) = {"
+As
+bJ
+Vj
+Vj
 TC
 LU
 tS
 wp
+cP
+oO
+oO
+oO
 cP
 cP
 nu
@@ -2568,14 +2877,24 @@ JM
 Be
 TC
 nu
-Wl
+Vj
+Vj
+bJ
+As
 "}
-(10,1,1) = {"
-Wl
+(14,1,1) = {"
+As
+bJ
+Vj
+Vj
 TC
 zp
 nv
 WB
+zp
+OK
+cI
+OK
 zp
 zp
 Vr
@@ -2599,18 +2918,28 @@ rt
 TC
 qM
 vh
+Vj
+bJ
+As
 "}
-(11,1,1) = {"
-Wl
+(15,1,1) = {"
+As
+bJ
+Vj
+Vj
 zs
 PY
 mh
 Mw
 nW
 Io
+Io
+Io
+Io
+Io
 Ph
 Io
-Io
+Jv
 Io
 Io
 Mw
@@ -2629,14 +2958,24 @@ mu
 pb
 yQ
 DS
+Vj
+bJ
+As
 "}
-(12,1,1) = {"
-Wl
+(16,1,1) = {"
+As
+bJ
+Vj
+Vj
 TC
 zp
 nv
 WB
 nv
+OK
+cI
+OK
+zp
 zp
 SY
 dd
@@ -2659,14 +2998,24 @@ rt
 TC
 qM
 qg
+Vj
+bJ
+As
 "}
-(13,1,1) = {"
-Wl
+(17,1,1) = {"
+As
+bJ
+Vj
+Vj
 TC
 Re
 dC
 bG
 oe
+oO
+oO
+oO
+cP
 cP
 nu
 JA
@@ -2688,16 +3037,26 @@ JM
 Be
 TC
 nu
-Wl
+Vj
+Vj
+bJ
+As
 "}
-(14,1,1) = {"
-Wl
+(18,1,1) = {"
+As
+bJ
+Vj
+Vj
 nu
 Tb
 Yy
 be
 Vf
 cP
+cP
+cP
+cP
+CO
 nu
 nu
 DP
@@ -2717,16 +3076,26 @@ Sw
 ip
 nu
 nu
-Wl
-Wl
+Vj
+Vj
+Vj
+bJ
+As
 "}
-(15,1,1) = {"
-Wl
+(19,1,1) = {"
+As
+bJ
+Vj
+Vj
 bB
 nu
 nu
 hn
-oO
+OR
+ph
+nu
+gH
+Jy
 gH
 nu
 vo
@@ -2747,17 +3116,27 @@ JM
 UX
 nu
 ku
-Wl
-Wl
+Vj
+Vj
+Vj
+bJ
+As
 "}
-(16,1,1) = {"
+(20,1,1) = {"
+As
+bJ
 Vj
 ai
+Wl
 cS
 xG
 nu
 GP
 sl
+nu
+JM
+JM
+JM
 Nj
 vp
 zo
@@ -2778,16 +3157,26 @@ dN
 nu
 Ke
 MM
-Wl
+Vj
+Vj
+bJ
+As
 "}
-(17,1,1) = {"
-Wl
-Wl
-Wl
-OK
+(21,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+ai
 TC
 Df
-zM
+Mg
+nu
+gc
+JM
+JM
 nu
 vp
 VL
@@ -2808,16 +3197,26 @@ nV
 nu
 Ke
 MM
-Wl
+Vj
+Vj
+bJ
+As
 "}
-(18,1,1) = {"
-Wl
-Wl
-Wl
-Wl
+(22,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+Vj
 bB
 nu
 sl
+nu
+Ve
+xh
+vt
 nu
 Rp
 Hs
@@ -2838,16 +3237,26 @@ nV
 nu
 nu
 hg
-Wl
+Vj
+Vj
+bJ
+As
 "}
-(19,1,1) = {"
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+(23,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+nu
+nu
+nu
+nu
 nu
 Kf
 zF
@@ -2868,16 +3277,26 @@ cx
 nu
 Ke
 MM
-Wl
+Vj
+Vj
+bJ
+As
 "}
-(20,1,1) = {"
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+(24,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
 bB
 nu
 nK
@@ -2898,23 +3317,33 @@ KZ
 nu
 Ke
 MM
-Wl
+Vj
+Vj
+bJ
+As
 "}
-(21,1,1) = {"
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+(25,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
 bB
 dk
 tH
@@ -2926,7 +3355,330 @@ FT
 tH
 FT
 ku
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
+bJ
+As
+"}
+(26,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+XJ
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+bJ
+As
+"}
+(27,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Bg
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+bJ
+As
+"}
+(28,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+zP
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+bJ
+As
+"}
+(29,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Bg
+Or
+Bg
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+bJ
+As
+"}
+(30,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+DL
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+bJ
+As
+"}
+(31,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+bJ
+As
+"}
+(32,1,1) = {"
+As
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+As
+"}
+(33,1,1) = {"
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
 "}

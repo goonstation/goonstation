@@ -56,7 +56,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "bi" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "bj" = (
@@ -77,7 +77,7 @@
 /area/wrecknsspolaris)
 "bn" = (
 /obj/item/raw_material/shard/glass,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "bo" = (
@@ -128,7 +128,7 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
 "bz" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	icon_state = "tube-broken"
 	},
@@ -139,7 +139,7 @@
 /turf/unsimulated/floor/longtile,
 /area/wrecknsspolaris)
 "bA" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 4
 	},
 /obj/dialogueobj/securitycorpse2,
@@ -147,7 +147,7 @@
 /area/wrecknsspolaris)
 "bB" = (
 /obj/shrub/dead,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	icon_state = "tube-broken"
 	},
@@ -159,7 +159,7 @@
 /area/wrecknsspolaris)
 "bD" = (
 /obj/item/pen/fancy,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	icon_state = "tube-broken"
 	},
@@ -180,7 +180,7 @@
 /area/wrecknsspolaris)
 "bH" = (
 /obj/shrub/dead,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 4;
 	icon_state = "tube0";
@@ -205,7 +205,7 @@
 /turf/unsimulated/floor/longtile,
 /area/wrecknsspolaris)
 "bL" = (
-/obj/decal/fakeobjects/creepytv{
+/obj/fakeobject/creepytv{
 	desc = "Only creepy static here."
 	},
 /obj/map/light/screen,
@@ -251,7 +251,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/wrecknsspolaris)
 "bS" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	icon_state = "tube-broken"
 	},
@@ -307,7 +307,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
 "bY" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	icon_state = "tube-broken"
 	},
@@ -319,7 +319,7 @@
 /turf/unsimulated/floor/carpet/arcade,
 /area/wrecknsspolaris)
 "bZ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -373,7 +373,7 @@
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "cg" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 8;
 	icon_state = "tube0";
@@ -396,7 +396,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
 "cj" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 4
 	},
 /turf/unsimulated/floor/black,
@@ -443,7 +443,7 @@
 	dir = 8;
 	pixel_x = 8
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 2;
 	icon_state = "tube0";
@@ -481,7 +481,7 @@
 /obj/shrub/dead{
 	dir = 4
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 4;
 	icon_state = "tube0";
@@ -513,7 +513,7 @@
 	},
 /area/wrecknsspolaris)
 "cA" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
@@ -524,7 +524,7 @@
 /turf/simulated/floor/plating,
 /area/wrecknsspolaris)
 "cB" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "snack-broken";
@@ -605,7 +605,7 @@
 	name = "Dead plant";
 	pixel_y = 10
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -619,14 +619,14 @@
 	},
 /area/wrecknsspolaris)
 "cN" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = -32
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/wood/two,
 /area/wrecknsspolaris)
 "cO" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 1;
 	icon_state = "tube0";
@@ -649,10 +649,10 @@
 /area/wrecknsspolaris/vault)
 "cR" = (
 /obj/table/wood/auto,
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = -32
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -671,7 +671,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
 "cT" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -688,7 +688,7 @@
 	},
 /area/wrecknsspolaris)
 "cV" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -699,7 +699,7 @@
 /area/wrecknsspolaris)
 "cW" = (
 /obj/item/storage/toolbox/mechanical,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 1;
 	icon_state = "tube0";
@@ -708,7 +708,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "cX" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be a part of a very old robotic arm.";
@@ -719,7 +719,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "cY" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -732,7 +732,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "cZ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -740,7 +740,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -760,7 +760,7 @@
 	},
 /area/wrecknsspolaris)
 "db" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -770,7 +770,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (EAST)"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -778,7 +778,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -790,7 +790,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "dc" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -799,7 +799,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -819,7 +819,7 @@
 /turf/unsimulated/floor/carpet/arcade,
 /area/wrecknsspolaris)
 "de" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -831,7 +831,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "df" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -843,7 +843,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "dg" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -852,7 +852,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -864,7 +864,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "dh" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -873,7 +873,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (NORTHEAST)"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -882,7 +882,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -894,7 +894,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "di" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -903,7 +903,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (NORTHEAST)"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -912,7 +912,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -924,7 +924,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "dj" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -948,7 +948,7 @@
 	},
 /area/wrecknsspolaris)
 "dm" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	icon_state = "tube-broken"
 	},
@@ -992,7 +992,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 4;
 	icon_state = "tube-broken"
 	},
@@ -1077,7 +1077,7 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
 "dJ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A broken gas circulator from a generator.";
@@ -1105,7 +1105,7 @@
 	},
 /area/wrecknsspolaris)
 "dN" = (
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/fakeobject/lighttube_broken,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "floor"
@@ -1120,7 +1120,7 @@
 /area/wrecknsspolaris)
 "dP" = (
 /obj/fluid_spawner/shortdelaybig,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -1134,7 +1134,7 @@
 	},
 /area/wrecknsspolaris)
 "dQ" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 2;
 	icon_state = "tube0";
@@ -1146,7 +1146,7 @@
 	},
 /area/wrecknsspolaris)
 "dR" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 4;
 	icon_state = "tube0";
@@ -1168,7 +1168,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "dT" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 32
 	},
 /obj/dialogueobj/polariscrate,
@@ -1177,7 +1177,7 @@
 /area/wrecknsspolaris/vault)
 "dU" = (
 /obj/stool/bench,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 8;
 	icon_state = "tube0";
@@ -1194,7 +1194,7 @@
 "dW" = (
 /obj/stool/bench,
 /obj/fluid_spawner/shortdelaybig,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 4;
 	icon_state = "tube-broken"
 	},
@@ -1240,7 +1240,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "eb" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 8;
 	icon_state = "tube0";
@@ -1252,7 +1252,7 @@
 	},
 /area/wrecknsspolaris)
 "ed" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 1
 	},
 /turf/unsimulated/floor{
@@ -1337,7 +1337,7 @@
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "en" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -1349,7 +1349,7 @@
 /area/wrecknsspolaris)
 "eo" = (
 /obj/decal/cleanable/dirt/dirt5,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -1363,7 +1363,7 @@
 	},
 /area/wrecknsspolaris)
 "ep" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 4;
 	icon_state = "tube0";
@@ -1387,7 +1387,7 @@
 /area/wrecknsspolaris)
 "es" = (
 /obj/decal/cleanable/dirt/dirt2,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 4;
 	icon_state = "tube0";
@@ -1396,7 +1396,7 @@
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "et" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	icon_state = "tube-broken"
 	},
@@ -1445,10 +1445,10 @@
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "ey" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_x = 32
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 4;
 	icon_state = "tube-broken"
 	},
@@ -1475,7 +1475,7 @@
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "eC" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -1532,7 +1532,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "eM" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -1541,14 +1541,14 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/item/storage/toolbox/emergency,
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "eN" = (
 /obj/decal/cleanable/machine_debris,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 1;
 	icon_state = "tube0";
@@ -1561,13 +1561,13 @@
 /area/wrecknsspolaris)
 "eO" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "eP" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -1580,7 +1580,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "eQ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -1716,17 +1716,17 @@
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "fn" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "fo" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_x = -32
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	icon_state = "tube-broken"
 	},
@@ -1734,14 +1734,14 @@
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "fp" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 2;
 	icon_state = "catwalk_cross"
 	},
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "fq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -1778,7 +1778,7 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
 "fw" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = -32
 	},
 /obj/table/wood/auto,
@@ -1803,7 +1803,7 @@
 /area/wrecknsspolaris)
 "fz" = (
 /obj/item/scrap,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A segment of a broken gas turbine.  Seems to be broken due to an impact.";
@@ -1919,20 +1919,20 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
 "fS" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "fT" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "fU" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 1
 	},
 /obj/decoration/bullethole{
@@ -1969,7 +1969,7 @@
 /area/wrecknsspolaris/vault)
 "fZ" = (
 /obj/decal/cleanable/dirt/dirt4,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -2015,7 +2015,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "gh" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -2420,7 +2420,7 @@
 /turf/unsimulated/floor/black/grime,
 /area/dank_trench)
 "hr" = (
-/obj/decal/fakeobjects/creepytv{
+/obj/fakeobject/creepytv{
 	desc = "There's a gummy layer of dust over the controls."
 	},
 /obj/map/light/screen,
@@ -2995,7 +2995,7 @@
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "ne" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of martian experimentation thingamajig.";
@@ -3130,7 +3130,7 @@
 /area/evilreaver/security)
 "Mi" = (
 /obj/marker/supplymarker,
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /obj/map/light/dimred,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)

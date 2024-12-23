@@ -4,6 +4,7 @@
 	var/list/crew_tab_data
 	var/list/antagonist_tab_data
 	var/list/score_tab_data
+	var/list/citation_tab_data
 
 /datum/crewCredits/New()
 	. = ..()
@@ -29,6 +30,10 @@
 		SCORE_TAB_SECTION_CIVILIAN = list(),
 		SCORE_TAB_SECTION_ESCAPEE = list(),
 	)
+	src.citation_tab_data = list(
+		CITATION_TAB_SECTION_TICKETS = list(),
+		CITATION_TAB_SECTION_FINES = list(),
+	)
 
 	src.generate_crew_credits()
 
@@ -48,7 +53,7 @@
 /datum/crewCredits/ui_static_data(mob/user)
 	return src.crew_credits_data
 
-/// Populates `crew_credits_data` with the data to be passed to the UI.
+/// Populates each tab with the data to be passed to the UI.
 /datum/crewCredits/proc/generate_crew_credits()
 #ifdef CREW_CREDITS_DEBUGGING
 
@@ -66,6 +71,7 @@
 
 #endif
 	src.generate_score_data()
+	src.generate_citation_data()
 
 	src.crew_credits_data = list(
 		// Crew Tab Data:
@@ -136,6 +142,10 @@
 				"entries" = src.score_tab_data[SCORE_TAB_SECTION_ESCAPEE],
 			),
 		),
+
+		// Tickets Tab Data:
+		"tickets" = src.citation_tab_data[CITATION_TAB_SECTION_TICKETS],
+		"fines" = src.citation_tab_data[CITATION_TAB_SECTION_FINES],
 	)
 
 /// For a specified mind, creates an entry in `crew_tab_data` containing the applicable information.
@@ -198,7 +208,7 @@
 
 	return list(list(
 		"real_name" = mind.current.real_name,
-		"dead" = isdead(mind.current),
+		"dead" = isdead(mind.current) || isVRghost(mind.current),
 		"player" = mind.displayed_key,
 		"role" = full_role,
 		"head" = is_head,
@@ -254,12 +264,18 @@
 	// Determine whether this antagonist is dead or alive, and where they currently are.
 	var/status = "Unknown"
 	if (!isdead(mind.current))
-		if (mind.current.z == Z_LEVEL_STATION)
-			status = "Alive, On Station"
-		else if (istype(get_area(mind.current), /area/centcom) || istype(get_area(mind.current), /area/shuttle/escape) )
-			status = "Alive, At CentComm"
+		// status
+		if(issilicon(mind.current))
+			status = "Silicon, " // you made it, but not really
 		else
-			status = "Alive, Off Station"
+			status = "Alive, "
+		// where
+		if (mind.current.z == Z_LEVEL_STATION)
+			status += "On Station"
+		else if (istype(get_area(mind.current), /area/centcom) || istype(get_area(mind.current), /area/shuttle/escape) )
+			status += "At CentComm"
+		else
+			status += "Off Station"
 
 	else
 		var/mob/corpse
@@ -303,7 +319,7 @@
 
 	src.antagonist_tab_data[ANTAGONIST_TAB_VERBOSE_DATA] += list(data)
 
-/// Station score
+/// Station Score
 /datum/crewCredits/proc/generate_score_data()
 	if (score_tracker.score_calculated == 0)
 		return
@@ -326,6 +342,10 @@
 			"value" = round(score_tracker.score_enemy_failure_rate),
 		),
 		list(
+			"name" = "Monsieur Stirstir Survived",
+			"value" = score_tracker.score_stirstir_alive ? "Yes" : "No",
+		),
+		list(
 			"name" = "Total Department Score",
 			"type" = "colorPercent",
 			"value" =  round(score_tracker.final_score_sec),
@@ -335,7 +355,7 @@
 	src.score_tab_data[SCORE_TAB_SECTION_ENGINEERING] = list(
 		list(
 			"name" = "Power Generated",
-			"value" = "[engineering_notation(score_tracker.power_generated)]W",
+			"value" = "[engineering_notation(score_tracker.power_generated / 3600)]Wh",
 		),
 		list(
 			"name" = "Station Structural Integrity",
@@ -376,6 +396,10 @@
 			"name" = "Station Profitability",
 			"type" = "colorPercent",
 			"value" = round(score_tracker.score_expenses),
+		),
+		list(
+			"name" = "Mails Delivered / Frauded",
+			"value" = "[score_tracker.mail_opened] / [score_tracker.mail_fraud]"
 		),
 		list(
 			"name" = "Total Department Score",
@@ -435,6 +459,8 @@
 		))
 	src.score_tab_data[SCORE_TAB_SECTION_ESCAPEE] += list(generate_heisenhat_data())
 
+
+/// Heisenbee's hat
 /datum/crewCredits/proc/generate_heisenhat_data()
 	. = list()
 	.["name"] = "Heisenbee's Hat"
@@ -490,7 +516,54 @@
 			))
 
 		found_hb = TRUE
+		.["type"] = "itemList"
 		break
 
 	if(!found_hb)
 		.["value"] = "Heisenbee is missing, [tier ? "but the hat is safe at tier [tier]" : "and has no hat"]."
+
+/// Tickets/Fines
+/datum/crewCredits/proc/generate_citation_data()
+	if(length(data_core.tickets))
+		var/list/people_with_tickets = list()
+		for (var/datum/ticket/T in data_core.tickets)
+			people_with_tickets |= T.target
+
+		for(var/ticket_target in people_with_tickets)
+			var/list/tickets = list()
+			for(var/datum/ticket/ticket in data_core.tickets)
+				if(ticket.target == ticket_target)
+					tickets += list(list(
+						"reason" = html_decode(ticket.reason),
+						"issuer" = html_decode(ticket.issuer),
+						"issuer_job" = html_decode(ticket.issuer_job),
+					))
+			src.citation_tab_data[CITATION_TAB_SECTION_TICKETS] += list(list(
+				"name" = html_decode(ticket_target),
+				"citations" = tickets,
+			))
+
+	if(length(data_core.fines))
+		var/list/people_with_fines = list()
+		for (var/datum/fine/F in data_core.fines)
+			people_with_fines |= F.target
+
+		for(var/fine_target in people_with_fines)
+			var/list/fines = list()
+			for(var/datum/fine/fine in data_core.fines)
+				if(fine.target == fine_target)
+					fines += list(list(
+						"reason" = fine.reason,
+						"issuer" = fine.issuer,
+						"issuer_job" = fine.issuer_job,
+						"amount" = fine.amount,
+						"approver" = fine.approver,
+						"approver_job" = fine.approver_job,
+						"paid_amount" = fine.paid_amount,
+						"paid" = fine.paid
+					))
+
+			src.citation_tab_data[CITATION_TAB_SECTION_FINES] += list(list(
+				"name" = fine_target,
+				"citations" = fines,
+			))

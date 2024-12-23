@@ -10,6 +10,8 @@
 	when_stunned = 0
 	not_when_handcuffed = 0
 	unlock_message = "You have gained cloak of darkness. It makes you invisible in dark areas and is a toggleable, permanent effect."
+	interrupt_action_bars = FALSE
+	do_logs = FALSE
 
 	cast(mob/target)
 		if (!holder)
@@ -29,6 +31,7 @@
 			boutput(MM, SPAN_ALERT("You can't use this ability in your current form."))
 			return 1
 
+		. = ..()
 		if (MM.bioHolder.HasEffect("cloak_of_darkness"))
 			MM.bioHolder.RemoveEffect("cloak_of_darkness")
 			MM.set_body_icon_dirty() // Might help to get rid of those overlay issues.

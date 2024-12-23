@@ -30,7 +30,7 @@ Returns:
 		By default the image is attached to source. You can change this by setting the image's loc to something else.
 		crossed contains a list of crossed turfs if getCrossed was set to 1.
 */
-/proc/drawLine(var/atom/source, var/atom/target, var/render_source_line = null, var/render_source_cap = null, var/src_off_x=0, var/src_off_y=0, var/trg_off_x=0, var/trg_off_y=0, var/mode = LINEMODE_STRETCH, var/getCrossed = 1, var/adjustTiles=1)
+/proc/drawLine(var/atom/source, var/atom/target, var/render_source_line = null, var/render_source_cap = null, var/src_off_x=0, var/src_off_y=0, var/trg_off_x=0, var/trg_off_y=0, var/mode = LINEMODE_STRETCH, var/getCrossed = 1, var/adjustTiles=1, var/applyTransform = TRUE)
 	if(render_source_line == null) return
 	var/datum/lineResult/result = new()
 
@@ -95,7 +95,10 @@ Returns:
 		if(render_source_cap != null)
 			var/matrix/M2 = UNLINT(matrix().Translate(-(iconWidth / 2),0).Turn(angle).Translate(src_off_x,src_off_y))
 			I.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
-		I.transform = UNLINT(matrix().Turn(-angle).Translate((dist),0).Turn(angle))
+		var/matrix/final_matrix = UNLINT(matrix().Turn(-angle).Translate((dist),0).Turn(angle))
+		result.transform = final_matrix
+		if (applyTransform)
+			I.transform = final_matrix
 		result.lineImage = I
 
 	else if(mode == LINEMODE_STRETCH_NO_CLIP)
@@ -105,6 +108,7 @@ Returns:
 
 		//Matrix M scales down our 64 pixel line to whatever length was calculated earlier, then moves it into place.
 		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate((dist/2),0).Turn(angle).Translate(src_off_x,src_off_y))
+		result.transform = M
 		var/image/I = image(null,source)
 		I.appearance_flags = KEEP_APART  //Required for some odd reason.
 		I.filters += filter(type="layer", render_source = (islist(render_source_line) ? pick(render_source_line) : render_source_line))
@@ -113,21 +117,26 @@ Returns:
 			//This probably breaks dual-ended caps.
 			var/matrix/M2 = UNLINT(matrix().Scale(1/scale,1).Translate(-((1/scale)-1)*32,0))
 			I.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
-		I.transform = M
+		if (applyTransform)
+			I.transform = M
 		result.lineImage = I
 	else if(mode == LINEMODE_SIMPLE)
 		var/image/I = image(null,source)
 		I.icon = 'icons/effects/lines2.dmi'
 		I.icon_state = islist(render_source_line) ? pick(render_source_line) : render_source_line
 		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate(dist/2,0).Turn(angle).Translate(src_off_x - iconWidth / 4,src_off_y))
-		I.transform = M
+		result.transform = M
+		if (applyTransform)
+			I.transform = M
 		result.lineImage = I
 	else if(mode == LINEMODE_SIMPLE_REVERSED)
 		var/image/I = image(null,source)
 		I.icon = 'icons/effects/lines2.dmi'
 		I.icon_state = islist(render_source_line) ? pick(render_source_line) : render_source_line
 		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate(-dist/2,0).Turn(180 + angle).Translate(src_off_x - iconWidth / 4,src_off_y))
-		I.transform = M
+		result.transform = M
+		if (applyTransform)
+			I.transform = M
 		result.lineImage = I
 	else if(mode == LINEMODE_SEGMENT)
 		var/image/composite = image(null,source)
@@ -158,6 +167,8 @@ Returns:
 /datum/lineResult
 	var/image/lineImage = null
 	var/list/crossed = null
+	/// The resulting transform applied to the line, null in the case of LINEMODE_SEGMENT because there's no single transform there.
+	var/matrix/transform = null
 
 //Gets a line of turfs between the two atoms. Doesn't miss tiles, like bresenham.
 //Adapted from http://playtechs.blogspot.com/2007/03/raytracing-on-grid.html
@@ -407,7 +418,7 @@ Returns:
 	onMouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 		if(target == null) target = new()
 		if(!over_object || !istype(over_object, /atom)) return
-		target.params = params2list(params)
+		if (!islist(target.params)) target.params = params2list(params)
 		target.target = over_object
 		target.user = usr
 		if(over_object.loc != startingLoc && over_object != startingLoc) return
@@ -418,7 +429,7 @@ Returns:
 		if(object == src || (!isturf(object.loc) && !isturf(object))) return
 		if(!object || !istype(object, /atom)) return
 		if(target == null) target = new()
-		target.params = params2list(params)
+		if (!islist(target.params)) target.params = params2list(params)
 		target.target = object
 		target.user = usr
 		startingLoc = get_turf(object)
@@ -736,7 +747,7 @@ Returns:
 	var/list/oneTurfsExpend = oneTurfs.Copy()
 	var/list/twoTurfsExpend = twoTurfs.Copy()
 
-	var/list/ignoreTypes = list(/obj/machinery/disposal,/obj/cable,/obj/machinery/power,/obj/machinery/light,/obj/disposalpipe,/obj/grille,/obj/window,/obj/machinery/door,/obj/machinery/atmospherics,/obj/overlay/tile_effect)
+	var/list/ignoreTypes = list(/obj/machinery/disposal,/obj/cable,/obj/machinery/power,/obj/machinery/light,/obj/disposalpipe,/obj/mesh/grille,/obj/window,/obj/machinery/door,/obj/machinery/atmospherics,/obj/overlay/tile_effect)
 
 	var/oneName = ""
 	var/twoName = ""
@@ -818,7 +829,8 @@ Returns:
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Test Cinematic camera"
 	set desc="Test Cinematic camera"
-
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/mob/M = usr
 	var/datum/targetable/cincam/R = new()
 	M.targeting_ability = R
@@ -999,7 +1011,7 @@ Returns:
 			qdel(src)
 		..()
 
-/obj/meleeeffect
+/obj/effect/melee
 	name = ""
 	desc = ""
 	icon = 'icons/effects/meleeeffects.dmi'
@@ -1044,7 +1056,7 @@ Returns:
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "glowyline"
 
-/obj/meleeeffect/spearimage
+/obj/effect/melee/spearimage
 	name = ""
 	desc = ""
 	icon = null
@@ -1066,7 +1078,7 @@ Returns:
 	icon_state = "sword1-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	item_state = "sword1-W"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	var/obj/beam_dummy/beam
 	var/turf/last = null
 
@@ -1121,7 +1133,7 @@ Returns:
 	icon_state = "sword1-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	item_state = "sword1-W"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, var/reach)
 		return doAttack(user, target, reach ? target : null)
@@ -1152,7 +1164,6 @@ Returns:
 		return attackDir
 
 /datum/action/bar/private/icon/daggerStab
-	id = "daggerStab"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "cdagger"
@@ -1235,7 +1246,7 @@ Returns:
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "dagger"
 	hitsound = null
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | SUPPRESSATTACK
+	flags = EXTRADELAY | TABLEPASS | CONDUCT | SUPPRESSATTACK
 	force = 1
 	var/datum/action/bar/private/icon/daggerStab/stabAction
 
@@ -1311,8 +1322,8 @@ Returns:
 		return
 
 	showEffect(var/mob/user, var/atom/target, var/direction, var/stabStrength = 0)
-		var/obj/meleeeffect/dagger/M
-		M = new/obj/meleeeffect/dagger(target)
+		var/obj/effect/melee/dagger/M
+		M = new/obj/effect/melee/dagger(target)
 		M.set_dir(direction)
 		M.color = (stabStrength < 1 ? "#FFFFFF" : "#FF4444")
 
@@ -1460,8 +1471,8 @@ Returns:
 
 		var/color_new = list(partred*2.5,0.30,0.30, 0.30,partgreen*2.5,0.30, 0.30,0.30,partblue*2.5, 0,0,0)
 		var/atom/effectLoc = null
-		var/obj/meleeeffect/spear/M
-		//var/obj/meleeeffect/spearimage/I
+		var/obj/effect/melee/spear/M
+
 		switch(direction)
 			if(NORTH)
 				effectLoc = locate(user.x, user.y + 1, user.z)
@@ -1470,7 +1481,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_y = 96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1482,7 +1493,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_x = 96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1494,7 +1505,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_y = -96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1506,7 +1517,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_x = -96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1547,29 +1558,29 @@ Returns:
 
 		var/color_new = list(partred*2.5,0.30,0.30, 0.30,partgreen*2.5,0.30, 0.30,0.3,partblue*2.5, 0,0,0)
 		var/atom/effectLoc = null
-		var/obj/meleeeffect/M
+		var/obj/effect/melee/M
 		switch(direction)
 			if(NORTH)
 				effectLoc = locate(user.x, user.y + 1, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
 			if(EAST)
 				effectLoc = locate(user.x + 1, user.y, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
 			if(SOUTH)
 				effectLoc = locate(user.x, user.y - 3, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
 			if(WEST)
 				effectLoc = locate(user.x - 3, user.y, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1634,12 +1645,24 @@ Returns:
 					argcopy[r] = X
 			call(procpath)(arglist(argcopy))
 
-/datum/admins/proc/pixelexplosion(mode="explode" in list("explode", "pixelate"))
+/datum/admins/proc/pixelexplosion()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Pixel explosion mode"
-	set desc = "Enter pixel explosion mode."
-	alert("Clicking on things will now explode them into pixels!")
-	pixelmagic(mode == "explode")
+	set desc = "Makes everything you click on explode into pixels."
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
+	if (istype(usr.targeting_ability, /datum/targetable/pixelpicker))
+		var/datum/targetable/pixelpicker/pixel_picker = usr.targeting_ability
+		usr.targeting_ability = null
+		qdel(pixel_picker)
+		usr.update_cursor()
+		boutput(usr, "Pixel explosion mode toggled off.")
+	else
+		var/mode = alert(usr, "Explode or pixelate?", "", "Explode", "Pixelate", "Cancel")
+		if (!mode || mode == "Cancel")
+			return
+		pixelmagic(mode == "Explode")
+		boutput(usr, "Clicking things will now [mode == "Explode" ? "explode them into pixels" : "turn them into individual pixel items"]")
 
 /datum/targetable/pixelpicker
 	target_anything = 1
@@ -1670,11 +1693,15 @@ Returns:
 	M.targeting_ability = R
 	M.update_cursor()
 
-/proc/dothepixelthing(var/atom/A, pixel_type=/obj/apixel, explode=TRUE)
+/proc/dothepixelthing(var/atom/movable/A, pixel_type=/obj/apixel, explode=TRUE)
 	if (isturf(A)) //deleting turfs is bad!
 		return
 
 	if(istype(A, /obj/item/apixel) || istype(A, /obj/apixel))
+		return
+
+	//large objects + pixel explosion effects = world ending amounts of lag
+	if (A.bound_width > 32 || A.bound_height > 32)
 		return
 
 	if (ismob(A)) //deleting mobs crashes them - lets transfer their client to a ghost first
@@ -1743,19 +1770,6 @@ Returns:
 	dropped(mob/user)
 		. = ..()
 		src.icon = initial(icon)
-
-
-/datum/admins/proc/turn_off_pixelexplosion()
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	set name = "Turn off pixel explosion mode"
-	set desc = "Turns off pixel explosion mode."
-
-	var/mob/M = usr
-	if (istype(M.targeting_ability, /datum/targetable/pixelpicker))
-		var/datum/targetable/pixelpicker/pixel_picker = M.targeting_ability
-		M.targeting_ability = null
-		qdel(pixel_picker)
-		M.update_cursor()
 
 /obj/item/craftedmelee/spear
 	name = "spear"
@@ -1854,14 +1868,14 @@ Returns:
 
 		if (r <= 60)
 			if(r < 30)
-				return item1.attack_self(user)
+				return item1.AttackSelf(user)
 			else
-				return item2.attack_self(user)
+				return item2.AttackSelf(user)
 		else
 			if(r <= 80)
 				SPAWN(0)
-					item1.attack_self(user)
-					item2.attack_self(user)
+					item1.AttackSelf(user)
+					item2.AttackSelf(user)
 				return
 			else
 				src.fall_apart(user)
@@ -1993,7 +2007,7 @@ Returns:
 	icon = 'icons/obj/items/guns/energy.dmi'
 	icon_state = "teslacannon"
 	item_state = "gun"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 	var/firing = 0
 
@@ -2017,7 +2031,7 @@ Returns:
 			for(var/turf/T in affected)
 				animate_flash_color_fill(T,"#aaddff",1,5)
 				for(var/mob/M in T)
-					M.changeStatus("weakened", 2 SECONDS)
+					M.changeStatus("knockdown", 2 SECONDS)
 					random_burn_damage(M, 10)
 
 				if(istype(T, /turf/simulated/floor))
@@ -2180,7 +2194,7 @@ Returns:
 	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "pstone"
 	item_state = "injector"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -2259,6 +2273,7 @@ Returns:
 	anchored = ANCHORED
 	density = 0
 	opacity = 0
+	mouse_opacity = 0
 
 /obj/elec_trg_dummy
 	name = ""
@@ -2267,6 +2282,7 @@ Returns:
 	density = 0
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
+	mouse_opacity = 0
 /*
 /obj/item/rpg_rocket_shuttle
 	name = "MPRT rocket"
@@ -2278,7 +2294,7 @@ Returns:
 	throw_speed = 2
 	throw_range = 10
 	force = 5
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	var/state = 0
 	var/yo = null
 	var/xo = null
@@ -2675,8 +2691,8 @@ Returns:
 					user.visible_message(SPAN_ALERT("<B>[user] fumbles the catch and is clonked on the head!</B>"))
 					playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 					user.changeStatus("stunned", 5 SECONDS)
-					user.changeStatus("weakened", 3 SECONDS)
-					user.changeStatus("paralysis", 2 SECONDS)
+					user.changeStatus("knockdown", 3 SECONDS)
+					user.changeStatus("unconscious", 2 SECONDS)
 					user.force_laydown_standup()
 				else
 					src.Attackhand(user)
@@ -2686,7 +2702,7 @@ Returns:
 					var/mob/living/carbon/human/H = hit_atom
 					if(istype(user?.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(user?.head, /obj/item/clothing/head/safari))
 						H.changeStatus("stunned", 4 SECONDS)
-						H.changeStatus("weakened", 2 SECONDS)
+						H.changeStatus("knockdown", 2 SECONDS)
 						H.force_laydown_standup()
 						//H.paralysis++
 						playsound(H.loc, "swing_hit", 50, 1)
@@ -2795,6 +2811,7 @@ Returns:
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/mob/M = src.mob
 	if (istype(M))
@@ -2804,7 +2821,7 @@ Returns:
 		M.update_cursor()
 		return
 
-/obj/perm_portal
+/obj/laser_sink/perm_portal //this path is FINE, shut UP
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	anchored = ANCHORED
@@ -2813,6 +2830,8 @@ Returns:
 	var/atom/target = null
 	var/target_tag = null
 	var/datum/light/light
+
+	var/obj/linked_laser/out_laser = null
 
 	New()
 		..()
@@ -2824,6 +2843,20 @@ Returns:
 		SPAWN(0.6 SECONDS)
 			if (target_tag)
 				target = locate(target_tag)
+
+	incident(obj/linked_laser/laser)
+		if (src.in_laser) //no infinite loops allowed
+			return FALSE
+		src.in_laser = laser
+		src.out_laser = laser.copy_laser(get_turf(target), laser.dir)
+		laser.next = src.out_laser
+		src.out_laser.try_propagate()
+		return TRUE
+
+	exident(obj/linked_laser/laser)
+		qdel(src.out_laser)
+		src.out_laser = null
+		..()
 
 	Bumped(atom/movable/AM)
 		if(target && istype(target))
@@ -3172,7 +3205,7 @@ var/list/lag_list = new/list()
 	name = "Place Grille"
 	desc = "Places a Grille."
 	used(atom/user, atom/target)
-		var/obj/grille/L = new/obj/grille/steel(get_turf(target))
+		var/obj/mesh/grille/L = new/obj/mesh/grille/steel(get_turf(target))
 		L.set_dir(user:dir)
 		return
 
@@ -3242,7 +3275,7 @@ var/list/lag_list = new/list()
 	var/datum/engibox_mode/active_mode = null
 	var/ckey_lock = null
 	var/z_level_lock = 0
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(ckey_lock && user.ckey != ckey_lock)
@@ -3291,9 +3324,9 @@ var/list/lag_list = new/list()
 			if(istype(active_mode,/datum/engibox_mode/replicate))
 				active_mode:obj_path = null
 
-			src.attack_self(usr)
+			src.AttackSelf(usr)
 			return
-		src.attack_self(usr)
+		src.AttackSelf(usr)
 		src.add_fingerprint(usr)
 		return
 

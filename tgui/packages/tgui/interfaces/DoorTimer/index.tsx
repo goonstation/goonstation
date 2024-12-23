@@ -5,14 +5,22 @@
  * @license MIT
  */
 
+import {
+  Button,
+  Knob,
+  LabeledControls,
+  Section,
+  Stack,
+  TimeDisplay,
+} from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Button, Knob, LabeledControls, Section, Stack, TimeDisplay } from '../../components';
 import { formatTime } from '../../format';
 import { Window } from '../../layouts';
 import { DoorTimerData } from './type';
 
-export const DoorTimer = (_props, context) => {
-  const { act, data } = useBackend<DoorTimerData>(context);
+export const DoorTimer = () => {
+  const { act, data } = useBackend<DoorTimerData>();
 
   return (
     <Window width={260} height={data.flasher ? 279 : 207}>
@@ -30,17 +38,27 @@ export const DoorTimer = (_props, context) => {
                         maxValue={data.maxTime}
                         value={data.time}
                         format={(v) => formatTime(v * 10)}
-                        onDrag={(_e: any, time: number) => act('set-time', { time })}
-                        onChange={(_e: any, time: number) => act('set-time', { time, finish: true })}
+                        onDrag={(_e: any, time: number) =>
+                          act('set-time', { time })
+                        }
+                        onChange={(_e: any, time: number) =>
+                          act('set-time', { time, finish: true })
+                        }
                       />
                     </Stack.Item>
                     <Stack.Item>
-                      <TimeDisplay value={data.time * 10} timing={data.timing} format={formatTime} />
+                      <TimeDisplay
+                        value={data.time * 10}
+                        auto={data.timing ? 'down' : undefined}
+                        format={formatTime}
+                      />
                     </Stack.Item>
                   </Stack>
                 </LabeledControls.Item>
-                <LabeledControls.Item>
-                  <Button onClick={() => act('toggle-timing')}>{data.timing ? 'Stop' : 'Start'}</Button>
+                <LabeledControls.Item label="">
+                  <Button onClick={() => act('toggle-timing')}>
+                    {data.timing ? 'Stop' : 'Start'}
+                  </Button>
                 </LabeledControls.Item>
               </LabeledControls>
             </Section>
@@ -50,8 +68,15 @@ export const DoorTimer = (_props, context) => {
               <Section title="Floor Flusher" fill>
                 <Button
                   onClick={() => act('toggle-flusher')}
-                  backgroundColor={data.opening ? 'orange' : undefined}>
-                  {data.opening ? (data.flusheropen ? 'Opening...' : 'Closing...') : (data.flusheropen ? 'Close Flusher' : 'Open Flusher')}
+                  backgroundColor={data.opening ? 'orange' : undefined}
+                >
+                  {data.opening
+                    ? data.flusheropen
+                      ? 'Opening...'
+                      : 'Closing...'
+                    : data.flusheropen
+                      ? 'Close Flusher'
+                      : 'Open Flusher'}
                 </Button>
               </Section>
             </Stack.Item>
@@ -61,7 +86,8 @@ export const DoorTimer = (_props, context) => {
               <Section title="Flasher" fill>
                 <Button
                   onClick={() => act('activate-flasher')}
-                  backgroundColor={data.recharging ? 'orange' : undefined}>
+                  backgroundColor={data.recharging ? 'orange' : undefined}
+                >
                   Flash Cell {!!data.recharging && '(Recharging)'}
                 </Button>
               </Section>

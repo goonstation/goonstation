@@ -267,6 +267,7 @@ What can break when adding new gases:
 	* Returns the color of a given gas ID.
 	*
 	* This is used only in the gas mixer computer as of now.
+	* Garash - 2024: Hi, this is the tgui gas mixer computer speaking, we still use it!
 	*/
 proc/gas_text_color(gas_id)
 	switch(gas_id)
@@ -341,20 +342,35 @@ proc/gas_text_color(gas_id)
 //Possible states are "exposed" and "intact". sizes are "short", "medium" and "long". These are strings.
 #define SET_PIPE_UNDERLAY(NODE, DIR, SIZE, COLOUR, HIDDEN) do { \
 	if (UNLINT(HIDDEN)) { \
-		src.UpdateOverlays(null, "[DIR]"); \
+		src.ClearSpecificOverlays("[DIR]"); \
 		break; \
 		}  \
 	var/pipe_state = NODE ? "intact" : "exposed"; \
 	var/pipe_cached = pipe_underlay_cache["[pipe_state]_[DIR]_[SIZE]"]; \
 	if (!pipe_cached) { \
-		pipe_underlay_cache["[pipe_state]_[DIR]_[SIZE]"] = icon('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "[pipe_state]_[NODE ? null : SIZE]", DIR); \
-		pipe_cached = pipe_underlay_cache["[pipe_state]_[DIR]_[SIZE]"]; \
+		pipe_cached = icon('icons/obj/atmospherics/pipes/pipe_underlays.dmi', "[pipe_state]_[NODE ? null : SIZE]", DIR); \
+		pipe_underlay_cache["[pipe_state]_[DIR]_[SIZE]"] = pipe_cached; \
 		} \
 	var/image/pipe_image = mutable_appearance(pipe_cached); \
 	pipe_image.color = COLOUR ? COLOUR : "#B4B4B4"; \
 	pipe_image.layer = src.layer - 0.001; \
 	pipe_image.appearance_flags |= RESET_TRANSFORM | RESET_COLOR | KEEP_APART; \
-	src.UpdateOverlays(pipe_image, "[DIR]"); \
+	src.AddOverlays(pipe_image, "[DIR]"); \
+	} while(0)
+
+//Used solely for simple pipes. Possible states are "exposed" and "intact".
+#define SET_SIMPLE_PIPE_UNDERLAY(NODE, DIR) do { \
+	var/pipe_state = NODE ? "intact" : "exposed"; \
+	var/pipe_cached = pipe_underlay_cache["[pipe_state]_[DIR]"]; \
+	if (!pipe_cached) { \
+		pipe_cached = icon('icons/obj/atmospherics/pipes/pipe.dmi', "ends_[pipe_state]", DIR); \
+		pipe_underlay_cache["simple_[pipe_state]_[DIR]"] = pipe_cached; \
+		} \
+	var/image/pipe_image = mutable_appearance(pipe_cached); \
+	pipe_image.color = src.color; \
+	pipe_image.layer = src.layer - 0.001; \
+	pipe_image.appearance_flags |= RESET_TRANSFORM | RESET_COLOR | KEEP_APART; \
+	src.AddOverlays(pipe_image, "[DIR]"); \
 	} while(0)
 
 #define issimplepipe(X) istype(X, /obj/machinery/atmospherics/pipe/simple)

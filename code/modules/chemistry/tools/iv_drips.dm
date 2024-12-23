@@ -13,7 +13,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "IV"
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | OPENCONTAINER
+	flags = TABLEPASS | SUPPRESSATTACK | OPENCONTAINER
 	rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 	amount_per_transfer_from_this = 5
 	initial_volume = 250//100
@@ -192,12 +192,14 @@
 	proc/start_transfusion()
 		src.in_use = 1
 		processing_items |= src
+		APPLY_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src, 2)
 		if (src.stand)
 			src.stand.UpdateIcon()
 
 	proc/stop_transfusion()
 		processing_items -= src
 		src.in_use = 0
+		REMOVE_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
 		src.patient = null
 		if (src.stand)
 			src.stand.UpdateIcon()

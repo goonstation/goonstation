@@ -1,13 +1,3 @@
-
-
-
-/mob/living/proc/handle_skin(var/mult = 1)
-	if (src.skin_process && length(src.skin_process))
-		for(var/obj/item/reagent_containers/patch/P in skin_process)
-			//P.process_skin(src, XXX * mult)
-			continue
-
-
 /* ================================================= */
 /* -------------------- Patches -------------------- */
 /* ================================================= */
@@ -23,7 +13,7 @@
 	var/style = "patch"
 	initial_volume = 30
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | EXTRADELAY
+	flags = TABLEPASS | SUPPRESSATTACK | EXTRADELAY
 	rc_flags = RC_SPECTRO		// only spectroscopic analysis
 	var/in_use = 0
 	var/good_throw = 0
@@ -117,21 +107,18 @@
 			return
 
 		if (can_operate_on(user))
-			user.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
-			SPAN_NOTICE("You apply [src] to yourself."))
-			logTheThing(LOG_CHEMISTRY, user, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
 			user.Attackby(src, user)
 		return
 
-	throw_impact(atom/M, datum/thrown_thing/thr)
+	throw_impact(atom/hit_thing, datum/thrown_thing/thr)
 		..()
-		if (src.medical && !borg && !src.in_use && (can_operate_on(M)))
+		if (src.medical && !borg && !src.in_use && (can_operate_on(hit_thing)))
 			if (prob(30) || good_throw && prob(70))
 				src.in_use = 1
-				M.visible_message(SPAN_ALERT("[src] lands on [M] sticky side down!"))
-				logTheThing(LOG_COMBAT, M, "is stuck by a patch [log_reagents(src)] thrown by [constructTarget(usr,"combat")] at [log_loc(M)].")
-				apply_to(M,usr)
-				attach_sticker(M)
+				hit_thing.visible_message(SPAN_ALERT("[src] lands on [hit_thing] sticky side down!"))
+				logTheThing(LOG_COMBAT, hit_thing, "is stuck by a patch [log_reagents(src)] thrown by [constructTarget(usr,"combat")] at [log_loc(hit_thing)].")
+				apply_to(hit_thing, usr)
+				attach_sticker(hit_thing)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.in_use)
@@ -207,7 +194,8 @@
 				src.set_loc(M)
 				if (isliving(M))
 					var/mob/living/L = M
-					L.skin_process += src
+					L.applied_patches += src
+					L.setStatus("patches_applied", INFINITE_STATUS)
 					src.do_sticker_thing = TRUE
 			else
 				reagents.reaction(M, TOUCH, paramslist = list("nopenetrate","ignore_chemprot"))
@@ -257,7 +245,9 @@
 
 			if (isliving(attached))
 				var/mob/living/L = attached
-				L.skin_process -= src
+				L.applied_patches -= src
+				if (!length(L.applied_patches))
+					L.delStatus("patches_applied")
 		..()
 
 /* =================================================== */
@@ -369,12 +359,21 @@
 	medical = 1
 	initial_reagents = "synthflesh"
 
+/obj/item/reagent_containers/patch/synthetic
+	name = "synthetic anticyst"
+	desc = "It reeks like an abandoned TV dinner. Hopefully it's healthier than one."
+	icon_state = "synthpatch"
+	style = "synthpatch"
+	sticker_icon_state = "synthpatch"
+	initial_volume = 10
+	initial_reagents = "synthflesh"
+
 /obj/item/patch_stack
 	name = "Patch Stack"
 	desc = "A stack, holding patches. The top patch can be used."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "patch_stack"
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	var/list/patches = list()
 
 	proc/update_overlay()
@@ -442,8 +441,9 @@
 
 //mender
 TYPEINFO(/obj/item/reagent_containers/mender)
-	mats = list("MET-2"=5,"CRY-1"=4, "gold"=5)
-
+	mats = list("metal_dense" = 5,
+				"crystal" = 4,
+				"gold" = 5)
 /obj/item/reagent_containers/mender
 	name = "auto-mender"
 	desc = "A small electronic device designed to topically apply healing chemicals."
@@ -453,7 +453,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 	var/tampered = 0
 	var/borg = 0
 	initial_volume = 200
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH | ATTACK_SELF_DELAY | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = TABLEPASS | OPENCONTAINER | NOSPLASH | ATTACK_SELF_DELAY | ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBELT
 	click_delay = 0.7 SECONDS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
@@ -477,7 +477,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 
 	on_reagent_change(add)
 		..()
-		if (src.reagents)
+		if (src.reagents && (src.reagents.total_temperature > 330 || src.reagents.total_temperature < 270))
 			src.reagents.temperature_cap = 330
 			src.reagents.temperature_min = 270
 			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
@@ -536,7 +536,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 			user.show_text("This item is not designed with organic users in mind.", "red")
 			return
 
-		if (can_operate_on(target) && !actions.hasAction(user,"automender_apply"))
+		if (can_operate_on(target) && !actions.hasAction(user, /datum/action/bar/icon/automender_apply))
 			if (target == user)
 				target.visible_message("[user] begins mending [himself_or_herself(user)] with [src].",\
 					SPAN_NOTICE("You begin mending yourself with [src]."))
@@ -616,7 +616,6 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 /datum/action/bar/icon/automender_apply
 	duration = 10
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "automender_apply"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mender-active"
 	var/mob/living/user
@@ -695,7 +694,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 	initial_reagents = "nicotine"
 	// item_state = "ecigrefill"
 	icon_state = "mender-refill"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	var/image/fluid_image
 
 	New()

@@ -1,52 +1,72 @@
 /datum/targetable/wraithAbility/lay_trap
-	name = "Place rune trap"
+	name = "Place Rune Trap"
 	icon_state = "runetrap"
-	desc = "Create a rune trap which stays invisible in the dark and can be sprung by people."
+	desc = "Create a rune trap which stays invisible in the dark and can be sprung by people. It takes several seconds to arm."
 	pointCost = 50
-	targeted = 0
+	targeted = FALSE
 	cooldown = 30 SECONDS
 	var/max_traps = 7
-	var/list/trap_types = list("Madness",
-	"Burning",
-	"Teleporting",
-	"Illusions",
-	"EMP",
-	"Blinding",
-	"Sleepyness",
-	"Slipperiness")
+	var/list/trap_types = list(
+		"Madness",
+		"Burning",
+		"Teleporting",
+		"Illusions",
+		"EMP",
+		"Blinding",
+		"Sleepyness",
+		"Slipperiness"
+	)
+
+	onAttach(datum/abilityHolder/holder)
+		. = ..()
+		if (src.max_traps)
+			src.desc += " You can only place up to [src.max_traps] trap[s_es(src.max_traps)] at a time."
+			src.object.desc = src.desc
+
+	allowcast()
+		if (istype(src.holder.owner, /mob/living/intangible/wraith/wraith_trickster))
+			var/mob/living/intangible/wraith/wraith_trickster/W = src.holder.owner
+			return W.haunting
+		return ..()
 
 	cast()
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
-		if (!istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster) && !istype(holder.owner, /mob/living/critter/wraith/trickster_puppet))
-			boutput(holder.owner, SPAN_NOTICE("You cannot cast this under your current form."))
-			return 1
-
-		var/mob/living/intangible/wraith/wraith_trickster/W = null
-		var/mob/living/critter/wraith/trickster_puppet/P = null
-		if(istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster))
-			W = holder.owner
+		if (isrestrictedz(src.holder.owner.z))
+			boutput(src.holder.owner, SPAN_ALERT("A strange force prevents you from doing that in this area!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		var/area/A = get_area(src.holder.owner)
+		if (A.sanctuary)
+			boutput(src.holder.owner, SPAN_ALERT("A strange force prevents you from doing that in this area!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		var/mob/living/intangible/wraith/wraith_trickster/W
+		if (istype(src.holder.owner, /mob/living/intangible/wraith/wraith_trickster))
+			W = src.holder.owner
 			if (!W.haunting)
-				boutput(holder.owner, SPAN_NOTICE("You must be manifested to place a trap!"))
-				return 1
+				boutput(src.holder.owner, SPAN_ALERT("You cannot cast this under your current form."))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		var/mob/living/critter/wraith/trickster_puppet/P = src.holder.owner
+		if (!istype(P))
+			boutput(src.holder.owner, SPAN_ALERT("You cannot cast this under your current form."))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		else
-			P = holder.owner
-		var/trap_choice = null
-		var/turf/T = get_turf(holder.owner)
-		if (!isturf(T) || !istype(T,/turf/simulated/floor))
-			boutput(holder.owner, SPAN_NOTICE("You cannot open a trap here."))
-			return 1
+			W = P.master
+		var/turf/T = get_turf(src.holder.owner)
+		if (!isturf(T) || !istype(T, /turf/simulated/floor))
+			boutput(src.holder.owner, SPAN_ALERT("You cannot place a trap here."))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		for (var/obj/machinery/wraith/runetrap/R in range(T, 3))
-			boutput(holder.owner, SPAN_NOTICE("That is too close to another trap."))
-			return 1
+			boutput(src.holder.owner, SPAN_ALERT("That is too close to another trap to the [dir2text(get_dir(R, src.holder.owner))]."))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if ((W != null && W.traps_laid >= max_traps) || (P != null && P.traps_laid >= max_traps))
-			boutput(holder.owner, SPAN_NOTICE("You already have too many traps!"))
-			return 1
+			boutput(src.holder.owner, SPAN_ALERT("You already have too many traps!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		var/trap_choice = null
 		if (length(src.trap_types) > 1)
-			trap_choice = input("What type of trap do you want?", "Target trap type", null) as null|anything in trap_types
-		if(trap_choice == null)
-			return 1
+			trap_choice = tgui_input_list(src.holder.owner, "What type of trap do you want?", src.name, trap_types)
+		if(trap_choice == null || QDELETED(src.holder.owner))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		switch(trap_choice)
 			if("Madness")
 				trap_choice = /obj/machinery/wraith/runetrap/madness
@@ -64,13 +84,15 @@
 				trap_choice = /obj/machinery/wraith/runetrap/sleepyness
 			if("Slipperiness")
 				trap_choice = /obj/machinery/wraith/runetrap/slipping
-
-		if(P != null)
-			new trap_choice(T, P.master)
+		if (istype(P))
+			new trap_choice(T, P.master, src.holder.owner)
 			P.master.traps_laid++
 			P.traps_laid++
-		else
-			new trap_choice(T, W)
+		else if (istype(W))
+			new trap_choice(T, W, src.holder.owner)
 			W.traps_laid++
-		boutput(holder.owner, "You place a trap on the floor, it begins to charge up.")
-		return 0
+		else
+			stack_trace("[identify_object(src.holder.owner)] attempted to place a trap as a non-wraith and non-puppet, this should never happen!!!")
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		boutput(src.holder.owner, SPAN_NOTICE("You place a trap on the floor, and it begins to charge up."))
+		return CAST_ATTEMPT_SUCCESS

@@ -47,7 +47,7 @@
 			else if (prob(10))
 				src.take_brain_damage(1 * mult)
 
-			src.changeStatus("weakened", 5 * mult SECONDS)
+			src.changeStatus("knockdown", 5 * mult SECONDS)
 			src.losebreath += 20 * mult
 			src.take_oxygen_deprivation(20 * mult)
 	else
@@ -65,7 +65,7 @@
 			else if (prob(10))
 				src.take_brain_damage(1 * mult)
 
-			changeStatus("weakened", 2 * mult SECONDS)
+			changeStatus("knockdown", 2 * mult SECONDS)
 			src.losebreath += 20 * mult
 			src.take_oxygen_deprivation(20 * mult)
 		else if (src.organHolder.heart.get_damage() > 100)

@@ -28,7 +28,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "aZ" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "com_open";
@@ -260,7 +260,7 @@
 /turf/simulated/floor/airless/neutral,
 /area/prefab/discount_dans_asteroid)
 "hI" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	pixel_y = -1;
 	color = "b4b4b4"
@@ -353,7 +353,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "mu" = (
-/obj/decal/fakeobjects/apc_broken,
+/obj/fakeobject/apc_broken,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/discount_dans_asteroid)
 "mz" = (
@@ -453,7 +453,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/discount_dans_asteroid)
 "ox" = (
-/obj/decal/fakeobjects/apc_broken,
+/obj/fakeobject/apc_broken,
 /turf/simulated/wall/auto/jen,
 /area/prefab/discount_dans_asteroid)
 "oO" = (
@@ -539,7 +539,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/prefab/discount_dans_asteroid)
 "uY" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/airless/plating/scorched,
 /area/prefab/discount_dans_asteroid)
 "vk" = (
@@ -547,7 +547,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/prefab/discount_dans_asteroid)
 "vO" = (
-/obj/decal/fakeobjects/airmonitor_broken,
+/obj/fakeobject/airmonitor_broken,
 /turf/simulated/wall/auto/supernorn,
 /area/prefab/discount_dans_asteroid)
 "vS" = (
@@ -625,7 +625,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/prefab/discount_dans_asteroid)
 "xV" = (
-/obj/decal/fakeobjects/firelock_broken,
+/obj/fakeobject/airlock_broken/firelock,
 /obj/decal/cleanable/blood/tracks{
 	dir = 8;
 	icon_state = "tracks"
@@ -682,7 +682,7 @@
 /turf/simulated/floor/airless/neutral,
 /area/prefab/discount_dans_asteroid)
 "Bg" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	pixel_y = -1;
 	color = "b4b4b4"
@@ -750,7 +750,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/prefab/discount_dans_asteroid)
 "DW" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "door_open";
@@ -761,7 +761,7 @@
 /turf/simulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "Ec" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -863,7 +863,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "Jr" = (
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/fakeobject/skeleton/decomposed_corpse,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "Jx" = (
@@ -972,7 +972,7 @@
 /turf/simulated/floor/airless/grime,
 /area/prefab/discount_dans_asteroid)
 "Nf" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	pixel_y = -1;
 	tag = "icon-intact (NORTHEAST)";
@@ -987,7 +987,7 @@
 /turf/simulated/floor/airless/grime,
 /area/prefab/discount_dans_asteroid)
 "Nr" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	pixel_y = -1;
 	tag = "icon-intact-f (NORTHWEST)";
@@ -1005,7 +1005,7 @@
 	dir = 4;
 	icon_state = "xtra_bigstripe-edge"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -1142,7 +1142,7 @@
 "QS" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/orange,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	pixel_x = 2;
 	pixel_y = 1
 	},
@@ -1189,7 +1189,7 @@
 /turf/simulated/floor/airless/neutral,
 /area/prefab/discount_dans_asteroid)
 "Se" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "What was this thing even supposed to do?";
@@ -1210,7 +1210,7 @@
 /turf/simulated/floor/airless/neutral,
 /area/prefab/discount_dans_asteroid)
 "SO" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's just sideways but apparently that's enough to stop it dead in its tracks.";

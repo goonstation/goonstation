@@ -33,9 +33,9 @@
 				if (MOB_ARMOR_LAYER)
 					blood_image.layer = MOB_ARMOR_LAYER + 0.1
 			blood_image.color = src.wear_suit.forensics_blood_color
-			src.UpdateOverlays(blood_image, "wear_suit_bloody")
+			src.AddOverlays(blood_image, "wear_suit_bloody")
 			return
-	src.UpdateOverlays(null, "wear_suit_bloody")
+	src.ClearSpecificOverlays("wear_suit_bloody")
 
 /mob/living/carbon/human/proc/update_bloody_uniform()
 	if (src.w_uniform)
@@ -44,9 +44,9 @@
 			blood_image.icon_state = "uniformblood_c"
 			blood_image.color = src.w_uniform.forensics_blood_color
 			blood_image.layer = src.w_uniform.wear_layer + 0.1
-			src.UpdateOverlays(blood_image, "suit_image_blood")
+			src.AddOverlays(blood_image, "suit_image_blood")
 			return
-	src.UpdateOverlays(null, "suit_image_blood")
+	src.ClearSpecificOverlays("suit_image_blood")
 
 /mob/living/carbon/human/proc/update_bloody_mask()
 	var/head_offset = src.mutantrace?.head_offset
@@ -59,9 +59,9 @@
 				blood_image.layer = MOB_HEAD_LAYER1 + 0.1
 				blood_image.pixel_x = 0
 				blood_image.pixel_y = head_offset
-				src.UpdateOverlays(blood_image, "wear_mask_blood")
+				src.AddOverlays(blood_image, "wear_mask_blood")
 				return
-	src.UpdateOverlays(null, "wear_mask_blood")
+	src.ClearSpecificOverlays("wear_mask_blood")
 
 /mob/living/carbon/human/proc/update_bloody_head()
 	var/head_offset = src.mutantrace?.head_offset
@@ -73,11 +73,11 @@
 			blood_image.layer = MOB_HEAD_LAYER2 + 0.1
 			blood_image.pixel_x = 0
 			blood_image.pixel_y = head_offset
-			src.UpdateOverlays(blood_image, "wear_head_blood")
+			src.AddOverlays(blood_image, "wear_head_blood")
 			blood_image.pixel_x = 0
 			blood_image.pixel_y = 0
 			return
-	src.UpdateOverlays(null, "wear_head_blood")
+	src.ClearSpecificOverlays("wear_head_blood")
 
 /mob/living/carbon/human/proc/update_bloody_gloves()
 	var/hand_offset = src.mutantrace?.hand_offset
@@ -88,21 +88,20 @@
 			if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays)
 				blood_image.color = src.gloves.forensics_blood_color
 				blood_image.icon_state = "left_bloodygloves_c"
-				src.UpdateOverlays(blood_image, "bloody_gloves_l")
+				src.AddOverlays(blood_image, "bloody_gloves_l")
 			else
-				src.UpdateOverlays(null, "bloody_gloves_l")
+				src.ClearSpecificOverlays("bloody_gloves_l")
 
 			blood_image = src.SafeGetOverlayImage("bloody_gloves_r", 'icons/obj/decals/blood/blood.dmi', layer=MOB_HAND_LAYER2 + 0.1)
 			blood_image.pixel_y = hand_offset
 			if (src.limbs && src.limbs.r_arm && src.limbs.r_arm.accepts_normal_human_overlays)
 				blood_image.color = src.gloves.forensics_blood_color
 				blood_image.icon_state = "right_bloodygloves_c"
-				src.UpdateOverlays(blood_image, "bloody_gloves_r")
+				src.AddOverlays(blood_image, "bloody_gloves_r")
 			else
-				src.UpdateOverlays(null, "bloody_gloves_r")
+				src.ClearSpecificOverlays("bloody_gloves_r")
 			return
-	src.UpdateOverlays(null, "bloody_gloves_l")
-	src.UpdateOverlays(null, "bloody_gloves_r")
+	src.ClearSpecificOverlays("bloody_gloves_l", "bloody_gloves_r")
 
 /mob/living/carbon/human/proc/update_bloody_shoes()
 	if (src.shoes)
@@ -111,19 +110,18 @@
 				var/image/blood_image = src.SafeGetOverlayImage("bloody_shoes_l", 'icons/obj/decals/blood/blood.dmi', layer=src.shoes.wear_layer + 0.1)
 				blood_image.color = src.shoes.forensics_blood_color
 				blood_image.icon_state = "left_shoeblood_c"
-				src.UpdateOverlays(blood_image, "bloody_shoes_l")
+				src.AddOverlays(blood_image, "bloody_shoes_l")
 			else
-				src.UpdateOverlays(null, "bloody_shoes_l")
+				src.ClearSpecificOverlays("bloody_shoes_l")
 			if (src.limbs && src.limbs.r_leg && src.limbs.r_leg.accepts_normal_human_overlays)
 				var/image/blood_image = src.SafeGetOverlayImage("bloody_shoes_r", 'icons/obj/decals/blood/blood.dmi', layer=src.shoes.wear_layer + 0.1)
 				blood_image.color = src.shoes.forensics_blood_color
 				blood_image.icon_state = "right_shoeblood_c"
-				src.UpdateOverlays(blood_image, "bloody_shoes_r")
+				src.AddOverlays(blood_image, "bloody_shoes_r")
 			else
-				src.UpdateOverlays(null, "bloody_shoes_r")
+				src.ClearSpecificOverlays("bloody_shoes_r")
 			return
-	src.UpdateOverlays(null, "bloody_shoes_l")
-	src.UpdateOverlays(null, "bloody_shoes_r")
+	src.ClearSpecificOverlays("bloody_shoes_l", "bloody_shoes_r")
 
 /mob/living/carbon/human/proc/update_bloody_hands()
 	var/hand_offset = src.mutantrace?.hand_offset
@@ -134,23 +132,22 @@
 			if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays)
 				blood_image.color = src.forensics_blood_color
 				blood_image.icon_state = "left_bloodyhands_c"
-				src.UpdateOverlays(blood_image, "bloody_hands_l")
+				src.AddOverlays(blood_image, "bloody_hands_l")
 			else
-				src.UpdateOverlays(null, "bloody_hands_l")
+				src.ClearSpecificOverlays("bloody_hands_l")
 
 			blood_image = src.SafeGetOverlayImage("bloody_hands_r", 'icons/obj/decals/blood/blood.dmi', layer=MOB_HAND_LAYER2 + 0.1)
 			blood_image.pixel_y = hand_offset
 			if (src.limbs && src.limbs.r_arm && src.limbs.r_arm.accepts_normal_human_overlays)
 				blood_image.color = src.forensics_blood_color
 				blood_image.icon_state = "right_bloodyhands_c"
-				src.UpdateOverlays(blood_image, "bloody_hands_r")
+				src.AddOverlays(blood_image, "bloody_hands_r")
 			else
-				src.UpdateOverlays(null, "bloody_hands_r")
+				src.ClearSpecificOverlays("bloody_hands_r")
 			blood_image.pixel_x = 0
 			blood_image.pixel_y = 0
 			return
-	src.UpdateOverlays(null, "bloody_hands_l")
-	src.UpdateOverlays(null, "bloody_hands_r")
+	src.ClearSpecificOverlays("bloody_hands_l", "bloody_hands_r")
 
 /mob/living/carbon/human/proc/update_bloody_feet()
 	if (!src.shoes)
@@ -159,16 +156,15 @@
 			if (src.limbs && src.limbs.l_leg && src.limbs.l_leg.accepts_normal_human_overlays)
 				blood_image.color = src.forensics_blood_color
 				blood_image.icon_state = "left_shoeblood_c"
-				src.UpdateOverlays(blood_image, "bloody_feet_l")
+				src.AddOverlays(blood_image, "bloody_feet_l")
 			else
-				src.UpdateOverlays(null, "bloody_feet_l")
+				src.ClearSpecificOverlays("bloody_feet_l")
 			blood_image = src.SafeGetOverlayImage("bloody_feet_r", 'icons/obj/decals/blood/blood.dmi', layer=MOB_CLOTHING_LAYER + 0.1)
 			if (src.limbs && src.limbs.r_leg && src.limbs.r_leg.accepts_normal_human_overlays)
 				blood_image.color = src.forensics_blood_color
 				blood_image.icon_state = "right_shoeblood_c"
-				src.UpdateOverlays(blood_image, "bloody_feet_r")
+				src.AddOverlays(blood_image, "bloody_feet_r")
 			else
-				src.UpdateOverlays(null, "bloody_feet_r")
+				src.ClearSpecificOverlays("bloody_feet_r")
 			return
-	src.UpdateOverlays(null, "bloody_feet_l")
-	src.UpdateOverlays(null, "bloody_feet_r")
+	src.ClearSpecificOverlays("bloody_feet_l", "bloody_feet_r")

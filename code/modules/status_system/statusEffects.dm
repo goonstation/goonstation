@@ -135,6 +135,9 @@
 	proc/move_trigger(mob/user, ev)
 		. = 0
 
+	proc/remove_self()
+		src.owner.delStatus(src)
+
 	disposing()
 		if (owner?.statusEffects)
 			owner.statusEffects -= src
@@ -152,6 +155,9 @@
 
 		getTooltip()
 			. = "You've been zapped in a way your heart seems to like!<br>You feel more resistant to cardiac arrest, and more likely for subsequent defibrillating shocks to restart your heart if it stops!"
+
+		preCheck(atom/A)
+			return ..() && !issilicon(A) && !isrobocritter(A) //heartless borgs
 
 		onAdd(optional=null) // added so strange reagent can be triggered by shocking someone's heart to restart it
 			..()
@@ -343,6 +349,11 @@
 
 			onChange(optional=null)
 				. = ..(change)
+
+		talisman_artifact
+			id = "talisman_extra_hp"
+			unique = FALSE
+			visible = FALSE
 
 	simplehot //Simple heal over time.
 		id = "simplehot"
@@ -580,11 +591,11 @@
 					boutput(M, SPAN_ALERT("You mutate!"))
 					M.bioHolder.RandomEffect("either")
 				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECONDS) && prob((stage-1)**2))
-					M.changeStatus("weakened", 3 SECONDS)
+					M.changeStatus("knockdown", 3 SECONDS)
 					boutput(M, SPAN_ALERT("You feel weak."))
 					M.emote("collapse")
 				if(!ON_COOLDOWN(M, "radiation_vomit_check", 5 SECONDS) && prob(stage**2))
-					M.changeStatus("weakened", 3 SECONDS)
+					M.changeStatus("knockdown", 3 SECONDS)
 					boutput(M, SPAN_ALERT("You feel sick."))
 					M.vomit()
 
@@ -716,6 +727,24 @@
 					damage_burn = 5 * prot
 					howMuch = "extremely "
 
+			// doesn't need to happen super often, more like a life process in priority
+			if (!ON_COOLDOWN(owner, "burning_nearby_status_effect", LIFE_PROCESS_TICK_SPACING))
+				if (duration > 20 SECONDS)
+					for (var/atom/A as anything in owner.contents)
+						if (A.event_handler_flags & HANDLE_STICKER)
+							if (A:active)
+								owner.visible_message(SPAN_ALERT("<b>[A]</b> is burnt to a crisp and destroyed!"))
+								qdel(A)
+				if (isturf(owner.loc))
+					var/turf/location = owner.loc
+					location.hotspot_expose(T0C + 300, 400)
+				for (var/atom/A as anything in owner.contents)
+					A.material_trigger_on_temp(T0C + 900)
+				if (istype(owner, /mob))
+					var/mob/M = owner
+					for (var/atom/A as anything in M.equipped())
+						A.material_trigger_on_temp(T0C + 900)
+
 			return ..(timePassed)
 
 	simpledot/stimulant_withdrawl
@@ -768,7 +797,7 @@
 		onRemove()
 			..()
 			if(!owner) return
-			if (!owner.hasStatus(list("stunned", "weakened", "paralysis", "pinned")))
+			if (!owner.hasStatus(list("stunned", "knockdown", "unconscious", "pinned")))
 				if (isliving(owner))
 					var/mob/living/L = owner
 					L.force_laydown_standup()
@@ -798,11 +827,11 @@
 					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
 				. = ..()
 
-		weakened
-			id = "weakened"
+		knockdown
+			id = "knockdown"
 			name = "Knocked-down"
 			desc = "You are knocked-down.<br>Unable to take any actions, prone."
-			icon_state = "weakened"
+			icon_state = "knockdown"
 			unique = 1
 			maxDuration = 30 SECONDS
 
@@ -855,11 +884,11 @@
 
 
 
-		paralysis
-			id = "paralysis"
+		unconscious
+			id = "unconscious"
 			name = "Unconscious"
 			desc = "You are unconscious.<br>Unable to take any actions, blinded."
-			icon_state = "paralysis"
+			icon_state = "unconscious"
 			unique = 1
 			maxDuration = 30 SECONDS
 
@@ -875,11 +904,33 @@
 					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
 				. = ..()
 
+		paralysis
+			id = "paralysis"
+			name = "Paralyzed" //I'm going to scream
+			desc = "You are completely paralyzed."
+			unique = 1
+			maxDuration = 30 SECONDS
+			icon_state = "paralysis"
+
+			onAdd(optional=null)
+				. = ..()
+				if (ismob(owner) && !QDELETED(owner))
+					var/mob/mob_owner = owner
+					APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+					APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTTURN, src.type)
+
+			onRemove()
+				if (ismob(owner) && !QDELETED(owner))
+					var/mob/mob_owner = owner
+					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTTURN, src.type)
+				. = ..()
+
 		dormant
 			id = "dormant"
 			name = "Dormant"
 			desc = "You are dormant.<br>Unable to take any actions, until you power yourself."
-			icon_state = "paralysis"
+			icon_state = "unconscious"
 			unique = 1
 			duration = INFINITE_STATUS
 
@@ -895,9 +946,13 @@
 
 		onAdd(optional=null)
 			.=..()
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
 			if (ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 				H.sustained_moves = 0
+		onRemove()
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
+			. = ..()
 
 	blocking
 		id = "blocking"
@@ -971,7 +1026,7 @@
 
 		onUpdate(timePassed)
 			counter += timePassed
-			if (counter >= count && owner && !owner.hasStatus(list("weakened", "paralysis")) )
+			if (counter >= count && owner && !owner.hasStatus(list("knockdown", "unconscious")) )
 				counter -= count
 				playsound(owner, sound, 17, TRUE, 0.4, 1.6)
 				violent_twitch(owner)
@@ -1246,7 +1301,7 @@
 
 				ON_COOLDOWN(owner, "lying_bullet_dodge_cheese", 0.2 SECONDS)
 				if (L.getStatusDuration("burning"))
-					if (!actions.hasAction(L, "fire_roll"))
+					if (!actions.hasAction(L, /datum/action/fire_roll))
 						L.last_resist = world.time + 25
 						actions.start(new/datum/action/fire_roll(), L)
 					else
@@ -1277,9 +1332,8 @@
 		maxDuration = null
 		effect_quality = STATUS_QUALITY_POSITIVE
 		var/const/max_health = 30
-		var/const/max_stam = 60
+		var/const/max_stam = 40
 		var/const/regen_stam = 5
-		var/const/max_dist = 50
 		var/mob/living/carbon/human/H
 		var/datum/gang/gang
 		var/on_turf = 0
@@ -1290,6 +1344,7 @@
 				H = owner
 			else
 				owner.delStatus("ganger")
+				return
 			H.max_health += max_health
 			health_update_queue |= H
 			H.add_stam_mod_max("ganger_max", max_stam)
@@ -1308,37 +1363,87 @@
 			gang = null
 
 		onUpdate(timePassed)
-			var/area/cur_area = get_area(H)
-			if (cur_area?.gang_owners == gang && prob(50))
-				on_turf = 1
+			var/mob/living/carbon/human/H
+			if(!ishuman(owner))
+				return
+			H = owner
+			if(ON_COOLDOWN(H, "ganger_heal", 1 SECOND))
+				H.HealDamage("All", 0.2, 0.2, 0)
+				if (GET_DIST(owner,gang.locker) < 4) //give a boost to folks camping round their locker
+					H.HealDamage("All", 0.5, 0.5, 0.5)
+					icon_state = "ganger_heal"
+				else
+					icon_state = "ganger"
 
-				//get distance divided by max distance and invert it. Result will be between 0 and 1
-				var/buff_mult = round(1-(min(GET_DIST(owner,gang.locker), max_dist) / max_dist), 0.1)
-				if (buff_mult <=0)
-					buff_mult = 0.1
+				if (H.bleeding && prob(20))
+					repair_bleeding_damage(H, 5, 1)
 
-				var/mob/living/carbon/human/H
-				if(ishuman(owner))
-					H = owner
-					H.HealDamage("All", 10*buff_mult, 0, 0)
-					if (H.bleeding && prob(100*buff_mult))
-						repair_bleeding_damage(H, 5, 1)
 
-					var/list/statusList = H.getStatusList()
+			var/list/statusList = H.getStatusList()
 
-					if(statusList["paralysis"])
-						H.changeStatus("paralysis", -3*buff_mult)
-					if(statusList["stunned"])
-						H.changeStatus("stunned", -3*buff_mult)
-					if(statusList["weakened"])
-						H.changeStatus("weakened", -3*buff_mult)
-			else
-				on_turf = 0
-
-			return
+			if(statusList["unconscious"])
+				H.changeStatus("unconscious", -1)
+			if(statusList["stunned"])
+				H.changeStatus("stunned", -1)
+			if(statusList["knockdown"])
+				H.changeStatus("knockdown", -1)
 
 		getTooltip()
-			. = "Your max health, max stamina, and stamina regen have been increased because of the pride you feel while wearing your uniform. [on_turf?"You are on home turf and receiving healing and stun reduction buffs when nearer your locker.":""]"
+			if (GET_DIST(owner,gang.locker) < 4)
+				. = "You're healing quickly, proudly wearing your uniform next to your locker."
+			else
+				. = "Your endurance and recovery are improved because of the pride you feel while wearing your uniform in your territory."
+
+	ganger_debuff
+		id = "ganger_debuff"
+		name = "Gang Member"
+		desc = "You're hiding your gang uniform in enemy territory. Shameful!"
+		icon_state = "ganger"
+		unique = TRUE
+		duration = INFINITE_STATUS
+		maxDuration = null
+		effect_quality = STATUS_QUALITY_NEGATIVE
+		var/const/max_stam = -20
+		var/const/regen_stam = -2
+		var/mob/living/carbon/human/H
+		var/datum/gang/gang
+		var/on_turf = 0
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+			else
+				owner.delStatus("ganger_debuff")
+				return
+			H.add_stam_mod_max("ganger_debuff_max", max_stam)
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "ganger_debuff_regen", regen_stam)
+			gang = H.get_gang()
+
+		onRemove()
+			. = ..()
+			H?.remove_stam_mod_max("ganger_debuff_max")
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "ganger_debuff_regen")
+			gang = null
+			H = null
+			gang = null
+		onUpdate(timePassed)
+			if (prob(5))
+				H?.emote(pick("shiver","flinch","twitch"))
+
+		getTooltip()
+			. = "Your vitals have dropped from the shame you feel hiding your true colors inside enemy territory."
+
+	gangtrapped
+		id = "gang_trap"
+		name = "Punctured"
+		desc = "You've grabbed something that wasn't yours, and it's lodged in your hand! Use it in hand to start plucking it free."
+		icon_state = "gangtrapped"
+		unique = TRUE
+		duration = INFINITE_STATUS
+		maxDuration = null
+		effect_quality = STATUS_QUALITY_NEGATIVE
+		movement_modifier = /datum/movement_modifier/gang_trapped
 
 	janktank
 		id = "janktank"
@@ -1418,6 +1523,7 @@
 		name = "Mutiny"
 		desc = "You can sense the aura of revolutionary activity! Your bossy attitude grants you health and stamina bonuses."
 		icon_state = "mutiny"
+		visible = FALSE
 		unique = 1
 		maxDuration = 1 MINUTES
 		effect_quality = STATUS_QUALITY_POSITIVE
@@ -1497,79 +1603,12 @@
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src, optional)
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src, optional)
 
-	onRemove()
-		. = ..()
-		if(ismob(owner))
-			var/mob/M = owner
-			REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src)
-			REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src)
-
-	patho_oxy_speed
-		id = "patho_oxy_speed"
-		name = "Oxygen Storage"
-		icon_state = "patho_oxy_speed"
-		unique = 1
-		movement_modifier = /datum/movement_modifier/patho_oxygen
-		effect_quality = STATUS_QUALITY_POSITIVE
-		var/oxygenAmount = 100
-		var/mob/living/carbon/human/H
-		var/endCount = 0
-
-		onAdd(optional)
+		onRemove()
 			. = ..()
-			src.oxygenAmount = optional
-			if(iscarbon(owner))
-				H = owner
-			else
-				owner.delStatus(src.id)
-
-		getTooltip()
-			. = "You are tapping your oxygen storage to breathe and move faster. Oxygen Storage at [oxygenAmount]% capacity!"
-
-		onUpdate(timePassed)
-			var/oxy_damage = min(20, H.get_oxygen_deprivation(), oxygenAmount)
-			if(oxy_damage <= 0)											// If no oxy damage for 8 seconds, remove the status
-				endCount += timePassed
-			else
-				endCount = 0
-			if(endCount > 8 SECONDS)
-				owner.delStatus(src.id)
-			if (H.oxyloss)
-				H.take_oxygen_deprivation(-oxy_damage)
-				oxygenAmount -= oxy_damage
-				H.losebreath = 0
-
-	patho_oxy_speed/bad
-		id = "patho_oxy_speed_bad"
-		name = "Oxygen Conversion"
-		icon_state = "patho_oxy_speed_bad"
-		effect_quality = STATUS_QUALITY_NEGATIVE
-		var/efficiency = 1
-
-		onAdd(optional)
-			. = ..()
-			src.efficiency = optional
-			..()
-			if(H)
-				H.show_message(SPAN_ALERT("You feel your body deteriorating as you breathe on."))
-
-		onUpdate(timePassed)
-			var/oxy_damage = min(20, H.get_oxygen_deprivation())
-			if(oxy_damage <= 0)				// If no oxy damage for 8 seconds, remove the status
-				endCount += timePassed
-			else
-				endCount = 0
-			if(endCount > 8 SECONDS)
-				owner.delStatus(src.id)
-			if (H.oxyloss)
-				H.take_oxygen_deprivation(-oxy_damage)
-				H.TakeDamage("chest", oxy_damage/efficiency, 0)
-				H.losebreath = 0
-
-		getTooltip()
-			. = "Your flesh is being converted into oxygen! But you are moving slightly faster."
-
-
+			if(ismob(owner))
+				var/mob/M = owner
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src)
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src)
 
 /datum/statusEffect/bloodcurse
 	id = "bloodcurse"
@@ -1601,7 +1640,7 @@
 	onUpdate()
 		if (H.blood_volume > 400 && H.blood_volume > 0)
 			H.blood_volume -= units
-		if (prob(5) && !H.reagents?.has_reagent("promethazine"))
+		if (prob(5) && !HAS_ATOM_PROPERTY(H, PROP_MOB_CANNOT_VOMIT))
 			var/damage = rand(1,5)
 			var/bleed = rand(3,5)
 			H.visible_message(SPAN_ALERT("[H] [damage > 3 ? "vomits" : "coughs up"] blood!"), SPAN_ALERT("You [damage > 3 ? "vomit" : "cough up"] blood!"))
@@ -1834,14 +1873,15 @@
 	maxDuration = 3 MINUTES
 	effect_quality = STATUS_QUALITY_NEGATIVE
 	var/charge = null
+	var/ignore_unionized = FALSE
 
 	onAdd(optional)
 		. = ..()
 		if (!ismob(owner)) return
 		var/mob/M = owner
-		if (!M.bioHolder || M.bioHolder.HasEffect("resist_electric") || M.traitHolder.hasTrait("unionized"))
+		if (!M.bioHolder || M.bioHolder.HasEffect("resist_electric") || (!ignore_unionized && M.traitHolder.hasTrait("unionized")))
 			SPAWN(0)
-				M.delStatus("magnetized")
+				M.delStatus(src.id)
 			return
 		if (optional)
 			src.charge = optional
@@ -1854,6 +1894,10 @@
 		if (QDELETED(owner) || !ismob(owner)) return
 		var/mob/M = owner
 		M.bioHolder.RemoveEffect(charge)
+
+/datum/statusEffect/magnetized/arcfiend
+	id = "magnetized_arcfiend"
+	ignore_unionized = TRUE
 
 //I call it regrow limb, but it can regrow any limb/organ that a changer can make a spider from. (apart from headspider obviously)
 /datum/statusEffect/changeling_regrow
@@ -2094,7 +2138,7 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			M.changeStatus("paralysis", 5 SECONDS)
+			M.changeStatus("unconscious", 5 SECONDS)
 			M.force_laydown_standup()
 			M.delStatus("drowsy")
 
@@ -2190,17 +2234,18 @@
 		. = ..()
 		if(ishuman(owner))
 			H = owner
+			H.add_stam_mod_max("stam_filthy", -5)
 
 	onUpdate(timePassed)
 		. = ..()
-		if (H?.sims?.getValue("Hygiene") > SIMS_HYGIENE_THRESHOLD_CLEAN)
+		if (H?.sims?.getValue("Hygiene") > SIMS_HYGIENE_THRESHOLD_FILTHY)
 			H.delStatus("filthy")
-
 
 	onRemove()
 		. = ..()
 		if (H.sims?.getValue("Hygiene") < SIMS_HYGIENE_THRESHOLD_FILTHY)
 			H.setStatus("rancid", null)
+			H.remove_stam_mod_max("stam_filthy")
 
 /datum/statusEffect/rancid
 	id = "rancid"
@@ -2214,6 +2259,7 @@
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder?.AddEffect("sims_stinky")
+			M.add_stam_mod_max("stam_rancid", -35)
 		OTHER_START_TRACKING_CAT(owner, TR_CAT_RANCID_STUFF)
 
 	onRemove()
@@ -2221,6 +2267,7 @@
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder?.RemoveEffect("sims_stinky")
+			M.remove_stam_mod_max("stam_rancid")
 		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_RANCID_STUFF)
 
 /datum/statusEffect/fragrant
@@ -2347,8 +2394,6 @@
 		. = ..()
 		owner.remove_filter("gnesis_tint")
 
-#define LAUNDERED_COLDPROT_AMOUNT 2 /// Amount of coldprot(%) given to each item of wearable clothing
-#define LAUNDERED_STAIN_TEXT "freshly-laundered" /// Name of the "stain" given to wearable clothing
 /datum/statusEffect/freshly_laundered
 	id = "freshly_laundered"
 	name = "Freshly Laundered"
@@ -2362,19 +2407,13 @@
 		. = ..()
 		if (istype(owner, /obj/item/clothing/))
 			var/obj/item/clothing/C = owner
-			C.add_stain(LAUNDERED_STAIN_TEXT) // we just cleaned them so this is cheeky...
-			C.setProperty("coldprot", C.getProperty("coldprot") + LAUNDERED_COLDPROT_AMOUNT)
+			C.add_stain(/datum/stain/laundered)
 
 	onRemove()
 		. = ..()
 		if (istype(owner, /obj/item/clothing/))
 			var/obj/item/clothing/C = owner
-			C.setProperty("coldprot", C.getProperty("coldprot") - LAUNDERED_COLDPROT_AMOUNT)
-			if (C.stains)
-				C.stains -= LAUNDERED_STAIN_TEXT
-
-#undef LAUNDERED_COLDPROT_AMOUNT
-#undef LAUNDERED_STAIN_TEXT
+			C.remove_stain(/datum/stain/laundered)
 
 /datum/statusEffect/quickcharged
 	id = "quick_charged"
@@ -2399,6 +2438,58 @@
 			for (var/obj/item/roboupgrade/R in robot.contents)
 				if (R.activated) R.upgrade_deactivate(robot)
 		. = ..()
+
+/datum/statusEffect/oiled
+	id = "oiled"
+	name = "Oiled"
+	icon_state = "oil"
+	maxDuration = 6 MINUTES
+	movement_modifier = /datum/movement_modifier/robot_oil
+
+	getTooltip()
+		. = "You have been oiled, your movement delay and passive power consumption have been reduced by 15%, and you feel more ready to resist anything that may stun you in your tracks."
+
+	onAdd(optional=null)
+		..()
+		var/mob/M = owner
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "robot_oil", 25)
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "robot_oil", 25)
+
+	onRemove()
+		..()
+		var/mob/M = owner
+		REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "robot_oil")
+		REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "robot_oil")
+
+/datum/statusEffect/oiled/fresh
+	id = "freshly_oiled"
+	name = "Freshly oiled"
+	icon_state = "fresh_oil"
+	maxDuration = 15 SECONDS
+	movement_modifier = /datum/movement_modifier/robot_oil/fresh
+	/// Duration of the oiled status effect a person has before more oil is applied.
+	var/oiledDuration = 0
+	/// How long have we had the status effect for
+	var/tickspassed = 0
+
+	getTooltip()
+		. = "You have recently been oiled, your movement delay and passive power consumption have been reduced by 50%, and you feel more ready to resist anything that may stun you in your tracks."
+
+	onAdd(optional=null)
+		..()
+		var/mob/M = owner
+		if(M.hasStatus("oiled"))
+			oiledDuration = M.getStatusDuration("oiled")
+			M.delStatus("oiled")
+
+	onUpdate(timePassed) // I gotta do it this way trust me on this
+		. = ..()
+		tickspassed += timePassed
+
+	onRemove()
+		..()
+		var/mob/M = owner
+		M.changeStatus("oiled", (min(tickspassed, maxDuration) * 24 + oiledDuration)) //  freshly oiled decays into oiled status with 12 times the duration that the status effect has peaked at.
 
 /datum/statusEffect/criticalcondition
 	id = "critical_condition"
@@ -2562,3 +2653,363 @@
 			M.max_health += change
 			current_bonus = newBonus
 			health_update_queue |= M
+
+/datum/statusEffect/wiz_polymorph
+	id = "wiz_polymorph"
+	name = "Polymorphed"
+	desc = "You've been polymorphed by a wizard! It will take a few minutes for the spell to wear off."
+	icon_state = "polymorph"
+	unique = TRUE
+	var/mob/living/carbon/human/original
+
+	onAdd(mob/living/carbon/human/H)
+		. = ..()
+		original = H
+
+	onRemove()
+		..()
+		var/mob/M = owner
+		if (ismobcritter(M) && isalive(M))
+			var/mob/living/critter/C = M
+			C.empty_hands()
+			C.drop_equipment()
+
+			original.set_loc(M.loc)
+			original.hibernating = FALSE
+			M.mind?.transfer_to(original)
+			qdel(M)
+		else
+			qdel(original)
+
+		src.original = null
+
+/datum/statusEffect/conspiracy_convert
+	id = "conspiracy_convert"
+	name = "Recent Conversion"
+	desc = "You have recently converted another to your side, you will be able to convert again soon."
+	icon_state = "possess"
+	maxDuration = 30 MINUTES
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+/datum/statusEffect/noir
+	id = "noir"
+	name = "Noir"
+	maxDuration = 2 MINUTES
+	visible = FALSE
+
+	onAdd(optional)
+		..()
+		var/mob/M = src.owner
+		if (M.client)
+			animate_fade_grayscale(M.client, 5 SECONDS)
+		if (M.mind)
+			RegisterSignal(M.mind, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(remove_self)) //we're editing the client directly so we should be Cautious
+
+	onRemove()
+		..()
+		var/mob/M = src.owner
+		if (M.mind)
+			UnregisterSignal(M.mind, COMSIG_MIND_DETACH_FROM_MOB)
+		if (M.client)
+			animate_fade_from_grayscale(M.client, 5 SECONDS)
+
+/datum/statusEffect/oneMsgAccent
+	id = "temp_accent"
+	name = "Temporary Accent"
+	visible = FALSE
+	var/datum/bioEffect/added_accent = null
+
+	onAdd(optional)
+		..()
+		var/mob/living/M = src.owner
+		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(remove_self))
+		if (!istype(M) || !M.bioHolder)
+			src.remove_self()
+			return
+		var/datum/bioEffect/accent = random_accent()
+		var/emergency_loop_stop = 0
+		while (M.bioHolder.HasEffect(accent.id) && emergency_loop_stop < 10)
+			accent = random_accent()
+			emergency_loop_stop++
+
+		src.added_accent = M.bioHolder.AddEffect(accent.id, do_stability = FALSE, magical = TRUE)
+
+	onRemove()
+		..()
+		if (src.added_accent)
+			var/mob/living/M = src.owner
+			M.bioHolder.RemoveEffectInstance(src.added_accent)
+		UnregisterSignal(src.owner, COMSIG_MOB_SAY)
+
+/datum/statusEffect/graffiti
+	id = "graffiti_blind"
+	name = "Tagged!"
+	desc = "You've been tagged! <br>Movement speed is reduced. Eyesight reduced. "
+	icon_state = "tagged"
+	unique = TRUE
+	maxDuration = 15 SECONDS
+	var/emote_delay_counter = 0
+	var/sound = 'sound/effects/electric_shock_short.ogg'
+	var/emote_cooldown = 7
+	var/list/tag_images = list()
+	var/list/tag_filters = list()
+	movement_modifier = /datum/movement_modifier/tagged
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/datum/hud/vision_impair_tag/hud = new
+
+	onAdd(optional)
+		..()
+		if (ismob(owner))
+			var/mob/victim = owner
+			victim.attach_hud(src.hud)
+
+	onRemove()
+		qdel(hud)
+		hud = null
+		. = ..()
+		if (ismob(owner))
+			var/mob/victim = owner
+			victim.detach_hud(src.hud)
+		for (var/i in 1 to length(tag_images))
+			owner.ClearSpecificOverlays("graffitisplat[i]")
+		owner.UpdateIcon()
+
+	onUpdate(timePassed)
+		emote_delay_counter += timePassed
+		if (duration < 4 SECONDS)
+			for (var/i in 1 to length(tag_images))
+				var/image/tag = tag_images[i]
+				var/target_alpha = duration * 5
+				if (tag.alpha > target_alpha)
+					tag.alpha = target_alpha
+					owner.UpdateOverlays(tag,"graffitisplat[i]")
+					owner.UpdateIcon()
+		if (emote_delay_counter >= emote_cooldown && owner && !owner.hasStatus(list("knockdown", "unconscious")) )
+			emote_delay_counter -= emote_cooldown
+			if (prob(10) && ismob(owner))
+				var/mob/victim = owner
+				victim.emote(pick("cough", "blink"))
+			playsound(owner, sound, 17, TRUE, 0.4, 1.6)
+			violent_twitch(owner)
+		. = ..(timePassed)
+
+/datum/statusEffect/patches_applied
+	id = "patches_applied"
+	desc = "Patch(es) have been applied"
+	visible = FALSE
+	var/passed = 0
+
+	onUpdate(timePassed)
+		src.passed += timePassed
+		if (ON_COOLDOWN(src.owner, "applied_patches_application", LIFE_PROCESS_TICK_SPACING))
+			return
+		var/mob/living/L = src.owner
+		var/mult = max(LIFE_PROCESS_TICK_SPACING, src.passed) / LIFE_PROCESS_TICK_SPACING
+		src.passed = 0
+
+		//patches become wasteful with >2 patches applied
+		//gives patches a way to heal quickly if you slap on a whole bunch, but at the cost of flinging chems into nothingness
+
+		// amount applied via touch
+		var/use_volume = 0.5 * mult
+		//amount that gets removed from the patch. Half of this gets transferred into the body
+		var/waste_volume = use_volume * max(length(L.applied_patches) * 0.75, 1)
+
+		for (var/atom/movable/A as anything in L.applied_patches)
+			if (A.reagents?.total_volume)
+				A.reagents.reaction(L, TOUCH, react_volume = use_volume, paramslist = \
+					(A.reagents.total_volume == A.reagents.maximum_volume) ? 0 : list("silent", "nopenetrate", "ignore_chemprot"))
+				A.reagents.trans_to(L, waste_volume / 2)
+				A.reagents.remove_any(waste_volume / 2)
+			else
+				qdel(A)
+
+	preCheck(atom/A)
+		. = ..()
+		if (!istype(A, /mob/living))
+			return FALSE
+
+/datum/statusEffect/active_ailments
+	id = "active_ailments"
+	desc = "Owner is currently afflicted with one or more ailments"
+	visible = FALSE
+	var/passed = 0
+
+	onUpdate(timePassed)
+		src.passed += timePassed
+		if (ON_COOLDOWN(src.owner, "active_ailments_tick", LIFE_PROCESS_TICK_SPACING))
+			return
+		if (istype(src.owner.loc, /obj/cryotron))
+			return
+		var/mult = max(LIFE_PROCESS_TICK_SPACING, src.passed) / LIFE_PROCESS_TICK_SPACING
+		src.passed = 0
+
+		var/mob/living/L = src.owner
+
+		if (!isdead(L))
+			for (var/datum/ailment_data/ailment as anything in L.ailments)
+				ailment.stage_act(mult)
+
+		for (var/mob/living/other_mob in hearers(4, L))
+			if (prob(40) && other_mob != L)
+				L.viral_transmission(other_mob, "Airborne", 0)
+
+	preCheck(atom/A)
+		. = ..()
+		if (!istype(A, /mob/living))
+			return FALSE
+
+/datum/statusEffect/transparium
+	id = "transparium"
+	name = "Faded"
+	icon_state = "cloaked0"
+	unique = TRUE
+	var/alpha = 0
+	/// This is an unintentional interaction turned into a feature
+	/// Patches apply reagents very slowly, meaning that a transparium patch would constantly cause its user to flicker, spamming messages all the while
+	/// This variable is set whenever the duration is less than one second, and prevents message spam as well as not invoking some of the logic
+	var/flickering = FALSE
+
+	onAdd(optional)
+		..()
+		if (isnum(optional))
+			src.alpha = clamp(optional, 0, 255)
+			animate(src.owner, alpha = src.alpha, time = 2 SECONDS, flags = ANIMATION_PARALLEL, easing = BOUNCE_EASING)
+			if (src.duration < 1 SECOND)
+				if (!GET_COOLDOWN(src.owner, "[src.id]_flicker_message"))
+					boutput(src.owner, SPAN_ALERT("You're flickering [pick("crazily", "randomly", "wildly", "wackily", "out of control")]![pick(" Woah!", "")]"))
+				visible = FALSE
+				flickering = TRUE
+				// This should let the message start fresh for new patches/etc, but only show once for any given source
+				OVERRIDE_COOLDOWN(src.owner, "[src.id]_flicker_message", 5 SECONDS)
+			else
+				boutput(src.owner, SPAN_ALERT("You feel yourself fading away."))
+				if (src.alpha == 0)
+					APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_HIDE_ICONS, src.id)
+
+	onRemove()
+		..()
+		animate(src.owner, alpha = 255, time = 2 SECONDS, flags = ANIMATION_PARALLEL, easing = SINE_EASING | EASE_OUT)
+		if (!flickering)
+			boutput(src.owner, SPAN_NOTICE("You feel yourself returning back to normal. Phew!"))
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_HIDE_ICONS, src.id)
+
+	getTooltip()
+		return "You've [alpha == 0 ? "completely" : "partially"] faded from view! People can still hear you and see light from anything you're carrying."
+
+/datum/statusEffect/talisman_fortune
+	id = "art_talisman_fortune"
+	unique = FALSE
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_POSITIVE
+	var/time_passed = 0
+	var/time_threshold
+
+	preCheck(atom/A)
+		if (!ishuman(A))
+			return
+		return ..()
+
+	onAdd(optional)
+		..()
+		src.time_threshold = rand(60, 300) SECONDS
+
+	onUpdate(timePassed)
+		..()
+		src.time_passed += timePassed
+		if (src.time_passed < src.time_threshold)
+			return
+		src.time_passed = 0
+		src.time_threshold = rand(60, 300) SECONDS
+		var/obj/item/currency/spacecash/money = new
+		money.amount = rand(100, 500)
+		money.UpdateStackAppearance()
+		var/mob/living/carbon/human/H = src.owner
+		H.stow_in_available(money, FALSE)
+		if (prob(25)) // mostly so there's no spam of the same message for 30+ minutes
+			var/msg = pick(list("You feel slightly heavier...", "Is that the smell of money...?", "You feel like you won big.", \
+				"Luck is on your side... wait, what...?"))
+			boutput(H, SPAN_NOTICE(msg))
+
+/datum/statusEffect/talisman_held
+	id = "art_talisman_held"
+	unique = FALSE
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEUTRAL // still rolls a chance for art faults though
+	var/fault_time_passed = 0
+	var/fault_threshold
+	var/glimmer_time_passed = 0
+	var/glimmer_threshold
+	var/obj/item/artifact/talisman/art
+	var/obj/decal/ceshield/talisman/glimmer
+
+	preCheck(atom/A)
+		if (!ishuman(A))
+			return
+		return ..()
+
+	onAdd(optional)
+		..()
+		src.art = optional
+		src.glimmer = new
+		src.art.active_user.vis_contents += src.glimmer
+
+		src.fault_threshold = rand(1, 3) MINUTES
+		src.glimmer_threshold = rand(15, 30) SECONDS
+
+	onUpdate(timePassed)
+		..()
+		src.fault_time_passed += timePassed
+		src.glimmer_time_passed += timePassed
+
+		if (src.glimmer_time_passed >= src.glimmer_threshold)
+			src.glimmer_time_passed = 0
+			src.glimmer_threshold = rand(15, 30) SECONDS
+			src.glimmer.activate_glimmer()
+
+		if (src.fault_time_passed < src.fault_threshold)
+			return
+		src.fault_time_passed = 0
+		src.fault_threshold = rand(1, 3) MINUTES
+		src.art.ArtifactFaultUsed(src.owner, src.art)
+
+	onRemove()
+		src.art.active_user.vis_contents -= src.glimmer
+		..()
+		src.art = null
+		qdel(src.glimmer)
+		src.glimmer = null
+
+/datum/statusEffect/art_fissure_corrosion
+	id = "art_fissure_corrosion"
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/corrosion_stacks = 0 // 1 stack per tick
+
+	preCheck(atom/A)
+		if (!isobj(A) || (!A.density && !istype(A, /obj/item)) || A.invisibility >= INVIS_ALWAYS_ISH)
+			return
+		var/obj/O = A
+		if (O.artifact || istype(A, /obj/art_fissure_objs/door))
+			return
+		return ..()
+
+	onAdd(optional)
+		..()
+		var/turf/T = get_turf(src.owner)
+		T.visible_message(SPAN_ALERT("[src.owner] starts corroding!"))
+		src.corrosion_stacks = GET_ATOM_PROPERTY(src.owner, PROP_ATOM_ART_FISSURE_CORROSION_COUNT)
+
+	onUpdate(timePassed)
+		..()
+		var/mult = timePassed / LIFE_PROCESS_TICK_SPACING
+		if (istype(get_area(src.owner), /area/artifact_fissure) && istype(src.owner.loc, /turf))
+			src.corrosion_stacks += 1 * mult
+		if (src.corrosion_stacks >= 8)
+			src.owner.visible_message(SPAN_ALERT("[src.owner] fully corrodes and is destroyed!!"))
+			new /obj/decal/cleanable/molten_item(get_turf(src.owner))
+			logTheThing(LOG_STATION, src.owner, "[src.owner] destroyed by dimensional key artifact corrosion at [log_loc(src.owner)].")
+			qdel(src.owner)
+			src.owner.delStatus(src)
+		else
+			APPLY_ATOM_PROPERTY(src.owner, PROP_ATOM_ART_FISSURE_CORROSION_COUNT, "art_fissure_corrosion", src.corrosion_stacks)
+

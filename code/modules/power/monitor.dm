@@ -2,7 +2,7 @@
 // for the moment, just report the status of all APCs in the same powernet
 
 /obj/machinery/computer/power_monitor
-	name = "Power Monitoring Computer"
+	name = "power monitoring computer"
 	desc = "Shows the power usage of the station."
 	icon_state = "power2"
 	power_usage = 250
@@ -100,7 +100,7 @@
 
 // tweaked version to hook up to the engine->smes powernet and show SMES usage stats and power produced
 /obj/machinery/computer/power_monitor/smes
-	name = "SMES Monitoring Computer"
+	name = "\improper SMES monitoring computer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"
 	density = 1
@@ -108,6 +108,14 @@
 	desc = "Shows the SMES usage and power produced by the engine."
 	window_tag = "smespowcomp"
 	circuit_type = /obj/item/circuitboard/powermonitor_smes
+
+/obj/machinery/computer/power_monitor/smes/New()
+	. = ..()
+	START_TRACKING
+
+/obj/machinery/computer/power_monitor/smes/disposing()
+	STOP_TRACKING
+	. = ..()
 
 /obj/machinery/computer/power_monitor/smes/ui_static_data(mob/user)
 	. = list(

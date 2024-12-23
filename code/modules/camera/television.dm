@@ -36,7 +36,6 @@
 /datum/action/bar/icon/cameraSecure //This is used when you are securing a non-mobile television camera
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "cameraSecure"
 	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/machinery/camera/television/cam

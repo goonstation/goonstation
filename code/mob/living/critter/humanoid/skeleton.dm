@@ -137,7 +137,7 @@
 		src.name = "[capitalize(target)]'s skeleton"
 		src.desc = "A horrible skeleton, raised from the corpse of [target] by a wizard."
 		src.revivalChance = 100
-		src.faction = FACTION_WIZARD
+		LAZYLISTADDUNIQUE(src.faction, FACTION_WIZARD)
 
 		if (is_monkey)
 			icon = 'icons/mob/monkey.dmi'
@@ -152,7 +152,7 @@
 	health_brute = 15
 	health_burn = 15
 
-	faction = FACTION_WRAITH
+	faction = list(FACTION_WRAITH)
 
 	death()
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, get_turf(src)))

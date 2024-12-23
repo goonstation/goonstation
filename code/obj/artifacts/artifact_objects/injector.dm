@@ -10,7 +10,7 @@
 	validtypes = list("ancient","martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,
-	/datum/artifact_trigger/cold)
+	/datum/artifact_trigger/cold, /datum/artifact_trigger/language)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activ_text = "opens up, revealing an array of strange needles!"
 	deact_text = "closes itself up."
@@ -29,14 +29,14 @@
 				// medicine, some poisons, some gross stuff
 				potential_reagents = list("charcoal","salbutamol","anti_rad","synaptizine","omnizine","synthflesh",
 				"cyanide","ketamine","toxin","neurotoxin","solipsizine","neurodepressant","mutagen","fake_initropidril",
-				"toxic_slurry","space_fungus","blood","urine","meat_slurry")
+				"toxic_slurry","space_fungus","blood","meat_slurry")
 			if ("eldritch")
 				// all the worst stuff. all of it
-				potential_reagents = list("chlorine","fluorine","lithium","mercury","plasma","radium","uranium","strange_reagent",
+				potential_reagents = list("chlorine","hyper_vomitium","fluorine","lithium","mercury","plasma","radium","uranium","strange_reagent",
 				"amanitin","coniine","cyanide","curare",
 				"formaldehyde","lipolicide","initropidril","cholesterol","itching","pancuronium","polonium",
-				"sodium_thiopental","ketamine","sulfonal","toxin","venom","neurotoxin","mutagen","wolfsbane",
-				"toxic_slurry","histamine","saxitoxin","viper_venom","ricin")
+				"sodium_thiopental","ketamine","sulfonal","toxin","cytotoxin","neurotoxin","mutagen","wolfsbane",
+				"toxic_slurry","histamine","saxitoxin","hemotoxin","ricin","tetrodotoxin")
 			else
 				// absolutely everything
 				potential_reagents = all_functional_reagent_ids

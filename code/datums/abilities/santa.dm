@@ -127,8 +127,6 @@
 
 	cast(atom/target)
 		. = ..()
-		actions.interrupt(holder.owner, INTERRUPT_ACT)
-		return
 
 /datum/targetable/santa/heal
 	name = "Santa Heal"
@@ -138,6 +136,7 @@
 	cooldown = 1 MINUTES
 
 	cast()
+		. = ..()
 		playsound(holder.owner.loc, 'sound/voice/heavenly.ogg', 50, 1, 0)
 		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] calls on the power of Spacemas to heal everyone!</B>"))
 		for (var/mob/living/M in view(holder.owner,5))
@@ -151,6 +150,7 @@
 	cooldown = 2 MINUTES
 
 	cast()
+		. = ..()
 		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] throws out a bunch of Spacemas presents from nowhere!</B>"))
 		playsound(usr.loc, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
 		holder.owner.transforming = 1
@@ -176,6 +176,7 @@
 	cooldown = 80 SECONDS
 
 	cast()
+		. = ..()
 		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] casts out a whole shitload of snacks from nowhere!</B>"))
 		playsound(holder.owner.loc, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
 		holder.owner.transforming = 1
@@ -203,6 +204,7 @@
 	cooldown = 80 SECONDS
 
 	cast()
+		. = ..()
 		playsound(holder.owner.loc, 'sound/effects/MagShieldUp.ogg', 60, 1, 0)
 		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] summons the warmth of a nice toasty fireplace!</B>"))
 		for (var/mob/living/M in view(holder.owner,5))
@@ -217,6 +219,7 @@
 	cooldown = 80 SECONDS
 
 	cast()
+		. = ..()
 		var/list/tele_areas = get_teleareas()
 		var/A = tgui_input_list(src.holder.owner, "Area to jump to", "Teleportation", tele_areas)
 		if (isnull(A))
@@ -257,6 +260,7 @@
 	cooldown = 10 SECONDS
 
 	cast()
+		. = ..()
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 		for (var/mob/living/carbon/cube/meat/krampus/K in view(7,holder.owner))
 			holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] makes a stern gesture at [K]!</B>"))

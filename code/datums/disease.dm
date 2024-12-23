@@ -23,8 +23,12 @@
 	var/detectability = 0				// detectors must >= this to pick up the disease
 	var/resistance_prob = 0				// how likely this disease is to grant immunity once cured
 	var/max_stacks = 1					// how many times at once you can have this ailment
+	var/can_be_asymptomatic = TRUE
 
-	//MALADY STUFF ONLY
+	///If we need a specific ailment_data type
+	var/datum/ailment_data/strain_type = /datum/ailment_data
+
+	//MALstrainY STUFF ONLY
 	var/min_advance_ticks = 0//delay the evolution of stuff like shock if it rolls badly for us
 	var/tickcount = 0
 	//IM SORRY
@@ -48,10 +52,28 @@
 	proc/surgery(var/mob/living/surgeon, var/mob/living/affected_mob, var/datum/ailment_data/D)
 		return 1
 
+	///Return a default instance of our ailment_data type with all the vars copied in the awful way they have to be
+	proc/setup_strain()
+		RETURN_TYPE(/datum/ailment_data)
+		var/datum/ailment_data/strain = new src.strain_type
+		strain.name = src.name
+		strain.stage_prob = src.stage_prob
+		strain.reagentcure = src.reagentcure
+		strain.recureprob = src.recureprob
+		strain.detectability = src.detectability
+		strain.cure_flags = src.cure_flags
+		strain.cure_desc = src.cure_desc
+		strain.spread = src.spread
+		strain.info = src.info
+		strain.resistance_prob = src.resistance_prob
+		strain.temperature_cure = src.temperature_cure
+		return strain
+
 /datum/ailment/parasite
 	name = "Parasite"
 	scantype = "Parasite"
 	cure_flags = CURE_SURGERY
+	strain_type = /datum/ailment_data/parasite
 
 /datum/ailment/disability
 	name = "Disability"
@@ -62,10 +84,19 @@
 	name = "Disease"
 	scantype = "Virus"
 	cure_flags = CURE_UNKNOWN
+	strain_type = /datum/ailment_data/disease
 	var/virulence = 100
 	var/develop_resist = 0
 	var/associated_reagent = null // associated reagent, duh
 
+	setup_strain()
+		var/datum/ailment_data/disease/strain = ..()
+		if (prob(5) && src.can_be_asymptomatic)
+			strain.state = "Asymptomatic"
+			// carrier - will spread it but won't suffer from it
+		strain.virulence = src.virulence
+		strain.develop_resist = src.develop_resist
+		return strain
 
 // IMPLEMENT PROPER CURE PROC
 
@@ -92,10 +123,30 @@
 	var/temperature_cure = 406				// this temp or higher will cure the disease
 	var/resistance_prob = 0					// how likely this disease is to grant immunity once cured
 
+	proc/copy_other(datum/ailment_data/other)
+		SHOULD_CALL_PARENT(TRUE)
+		src.master = other.master
+		src.name = other.name
+		src.scantype = other.scantype
+		src.detectability = other.detectability
+		src.cure_flags = other.cure_flags
+		src.cure_desc = other.cure_desc
+		src.spread = other.spread
+		src.info = other.info
+		//leaving out stage and state
+		src.stage_prob = other.stage_prob
+		src.reagentcure = other.reagentcure.Copy()
+		src.recureprob = other.recureprob
+		src.temperature_cure = other.temperature_cure
+		src.resistance_prob = other.resistance_prob
+		//phew
+
 	disposing()
 		if (affected_mob)
 			if (affected_mob.ailments)
 				affected_mob.ailments -= src
+			if (!length(affected_mob.ailments))
+				affected_mob.delStatus("active_ailments")
 			affected_mob = null
 
 		master = null
@@ -171,6 +222,8 @@
 
 	proc/on_infection()
 		master.on_infection(affected_mob, src)
+		if (!affected_mob.ailment_immune && (src in affected_mob.ailments))
+			affected_mob.setStatus("active_ailments", INFINITE_STATUS)
 		return
 
 	proc/surgery(var/mob/living/surgeon, var/mob/living/affected_mob)
@@ -183,6 +236,12 @@
 	var/develop_resist = 0 // can you develop a resistance to this?
 	var/cycles = 0         // does this disease have a cyclical nature? if so, how many cycles have elapsed?
 	var/list/strain_data = list()  // Used for Rhinovirus, basically arbitrary data storage
+
+	copy_other(datum/ailment_data/disease/other)
+		..()
+		src.virulence = other.virulence
+		src.develop_resist = other.develop_resist
+		src.strain_data = other.strain_data.Copy() //hopefully this is good enough?
 
 	stage_act(var/mult)
 		if (!affected_mob || disposed)
@@ -261,6 +320,12 @@
 	var/withdrawal_duration = 4800
 	var/max_severity = "HIGH"
 
+	copy_other(datum/ailment_data/addiction/other)
+		..()
+		src.associated_reagent = other.associated_reagent
+		src.withdrawal_duration = other.withdrawal_duration
+		src.max_severity = other.max_severity
+
 	New()
 		..()
 		master = get_disease_from_path(/datum/ailment/addiction)
@@ -270,6 +335,11 @@
 	var/surgery_prob = 50
 	var/mob/living/critter/changeling/headspider/source = null // for headspiders
 	var/stealth_asymptomatic = 0
+
+	copy_other(datum/ailment_data/parasite/other)
+		..()
+		src.surgery_prob = other.surgery_prob
+		src.stealth_asymptomatic = other.stealth_asymptomatic
 
 	proc/setup()
 		src.stage_prob = master.stage_prob
@@ -347,7 +417,7 @@
 
 		if (istype(A,/datum/ailment/disease/))
 			var/datum/ailment/disease/D = A
-			resist_prob -= D.virulence
+			resist_prob = 100 - (((100 - resist_prob) / 100) * D.virulence)
 
 	if (prob(resist_prob))
 		return 0
@@ -365,24 +435,24 @@
 	if (!ailment_path && !ailment_name && !(istype(strain,/datum/ailment_data/disease) || istype(strain,/datum/ailment_data/malady))) // maladies use strain to transfer specific instances of their selves via organ transplant/etc
 		return null
 
-	var/datum/ailment/A = null
+	var/datum/ailment/ailment = null
 	if (strain && istype(strain.master,/datum/ailment/))
-		A = strain.master
+		ailment = strain.master
 	else if (ailment_name)
-		A = get_disease_from_name(ailment_name)
+		ailment = get_disease_from_name(ailment_name)
 	else
-		A = get_disease_from_path(ailment_path)
+		ailment = get_disease_from_path(ailment_path)
 
-	if (!istype(A,/datum/ailment/))
+	if (!istype(ailment,/datum/ailment/))
 		// can't find shit, captain!
 		return null
 
 	var/count = 0
 	for (var/datum/ailment_data/D in src.ailments)
-		if (D.master == A)
+		if (D.master == ailment)
 			count++
 
-	if (count >= A.max_stacks)
+	if (count >= ailment.max_stacks)
 		return null
 
 	if (ischangeling(src) || isvampire(src) || isvampiricthrall(src) || iszombie(src) || src.nodamage)
@@ -391,124 +461,20 @@
 		//hard immunity these folks are supposed to have
 		return null
 
-	if (!bypass_resistance && !src.disease_resistance_check(null,A.name))
+	if (!bypass_resistance && !src.disease_resistance_check(null,ailment.name))
 		return null
 
 	logTheThing(LOG_COMBAT, src, " gained the [ailment_name] ([ailment_path]) disease.")
 
-	if (istype(A, /datum/ailment/disease/))
-		var/datum/ailment/disease/D = A
-		var/datum/ailment_data/disease/AD = new /datum/ailment_data/disease
-		if (istype(strain,/datum/ailment_data/disease/))
-			if (strain.name)
-				AD.name = strain.name
-			else
-				AD.name = D.name
-			AD.stage_prob = strain.stage_prob
-			AD.reagentcure = strain.reagentcure
-			AD.recureprob = strain.recureprob
-			AD.virulence = strain.virulence
-			AD.detectability = strain.detectability
-			AD.develop_resist = strain.develop_resist
-			AD.cure_flags = strain.cure_flags
-			AD.cure_desc = strain.cure_desc
-			AD.spread = strain.spread
-			AD.info = strain.info
-			AD.resistance_prob = strain.resistance_prob
-			AD.temperature_cure = strain.temperature_cure
-			AD.strain_data = strain.strain_data.Copy()
-		else
-			AD.name = D.name
-			AD.stage_prob = D.stage_prob
-			AD.reagentcure = D.reagentcure
-			AD.recureprob = D.recureprob
-			AD.virulence = D.virulence
-			AD.detectability = D.detectability
-			AD.develop_resist = D.develop_resist
-			AD.cure_flags = D.cure_flags
-			AD.cure_desc = D.cure_desc
-			AD.spread = D.spread
-			AD.info = D.info
-			AD.resistance_prob = D.resistance_prob
-			AD.temperature_cure = D.temperature_cure
+	if (!strain) //no strain, set one up
+		strain = ailment.setup_strain()
 
-		src.ailments += AD
-		AD.master = A
-		AD.affected_mob = src
-		AD.on_infection()
+	src.ailments += strain
+	strain.master = ailment
+	strain.affected_mob = src
+	strain.on_infection()
 
-		if (prob(5))
-			AD.state = "Asymptomatic"
-			// carrier - will spread it but won't suffer from it
-		return AD
-
-	else if (istype(A, /datum/ailment/malady))
-		var/datum/ailment/malady/M = A
-		var/datum/ailment_data/malady/AD = new /datum/ailment_data/malady
-		if (istype(strain,/datum/ailment_data/malady))
-			if (strain.name)
-				AD.name = strain.name
-			else
-				AD.name = M.name
-			AD.stage_prob = strain.stage_prob
-			AD.reagentcure = strain.reagentcure
-			AD.recureprob = strain.recureprob
-			AD.detectability = strain.detectability
-			AD.cure_flags = strain.cure_flags
-			AD.cure_desc = strain.cure_desc
-			AD.spread = strain.spread
-			AD.info = strain.info
-			AD.resistance_prob = strain.resistance_prob
-			AD.temperature_cure = strain.temperature_cure
-		else
-			AD.name = M.name
-			AD.stage_prob = M.stage_prob
-			AD.reagentcure = M.reagentcure
-			AD.recureprob = M.recureprob
-			AD.detectability = M.detectability
-			AD.cure_flags = M.cure_flags
-			AD.cure_desc = M.cure_desc
-			AD.spread = M.spread
-			AD.info = M.info
-			AD.resistance_prob = M.resistance_prob
-			AD.temperature_cure = M.temperature_cure
-		src.ailments += AD
-		AD.master = A
-		AD.affected_mob = src
-		AD.on_infection()
-		return AD
-
-	else if (istype(A, /datum/ailment/parasite))
-		var/datum/ailment_data/parasite/AD = new /datum/ailment_data/parasite
-		AD.name = A.name
-		AD.stage_prob = A.stage_prob
-		AD.cure_flags = A.cure_flags
-		AD.cure_desc = A.cure_desc
-		AD.reagentcure = A.reagentcure
-		AD.recureprob = A.recureprob
-		AD.master = A
-
-		AD.master = A
-		AD.affected_mob = src
-		src.ailments += AD
-
-		return AD
-
-	else
-		var/datum/ailment_data/AD = new /datum/ailment_data
-		AD.name = A.name
-		AD.stage_prob = A.stage_prob
-		AD.cure_flags = A.cure_flags
-		AD.cure_desc = A.cure_desc
-		AD.reagentcure = A.reagentcure
-		AD.recureprob = A.recureprob
-		AD.master = A
-
-		AD.master = A
-		AD.affected_mob = src
-		src.ailments += AD
-
-		return AD
+	return strain
 
 /mob/living/proc/viral_transmission(var/mob/living/target, var/spread_type, var/two_way = 0)
 	if (!src || !target || !istext(spread_type))
@@ -517,39 +483,43 @@
 	if (!src.ailments || !length(src.ailments))
 		return
 
-	for (var/datum/ailment_data/disease/AD in src.ailments)
-		if (AD.spread == spread_type)
-			target.contract_disease(null,null,AD,0)
+	for (var/datum/ailment_data/disease/strain in src.ailments)
+		if (strain.spread == spread_type)
+			var/datum/ailment_data/new_data = new strain.type()
+			new_data.copy_other(strain)
+			target.contract_disease(null,null,new_data,0)
 
 	if (two_way)
-		for (var/datum/ailment_data/disease/AD in target.ailments)
-			if (AD.spread == spread_type)
-				src.contract_disease(null,null,AD,0)
+		for (var/datum/ailment_data/disease/strain in target.ailments)
+			if (strain.spread == spread_type)
+				var/datum/ailment_data/new_data = new strain.type()
+				new_data.copy_other(strain)
+				src.contract_disease(null,null,new_data,0)
 
 	return
 
-/mob/living/proc/cure_disease(var/datum/ailment_data/AD)
-	if (!istype(AD) || !AD.master)
+/mob/living/proc/cure_disease(var/datum/ailment_data/strain)
+	if (!istype(strain) || !strain.master)
 		return 0
 
-	if (prob(AD.resistance_prob))
-		src.resistances += AD.master.type
+	if (prob(strain.resistance_prob))
+		src.resistances += strain.master.type
 	if (src.ailments) //ZeWaka: Fix for null.ailments
-		src.ailments -= AD
-	AD.master.on_remove(src,AD)
-	qdel(AD)
+		src.ailments -= strain
+	strain.master.on_remove(src,strain)
+	qdel(strain)
 	return 1
 
 /mob/living/proc/cure_disease_by_path(var/ailment_path)
-	for (var/datum/ailment_data/AD in src.ailments)
-		if (!AD.master)
+	for (var/datum/ailment_data/strain in src.ailments)
+		if (!strain.master)
 			continue
-		if (AD.master.type == ailment_path)
-			if (prob(AD.resistance_prob))
-				src.resistances += AD.master.type
-			src.ailments -= AD
-			AD.master.on_remove(src,AD)
-			qdel(AD)
+		if (strain.master.type == ailment_path)
+			if (prob(strain.resistance_prob))
+				src.resistances += strain.master.type
+			src.ailments -= strain
+			strain.master.on_remove(src,strain)
+			qdel(strain)
 			return 1
 	return 0
 
@@ -557,9 +527,9 @@
 	if (!ispath(ailment_path))
 		return null
 
-	for (var/datum/ailment_data/AD in src.ailments)
-		if (AD.master && AD.master.type == ailment_path)
-			return AD
+	for (var/datum/ailment_data/strain in src.ailments)
+		if (strain.master && strain.master.type == ailment_path)
+			return strain
 
 	return null
 
@@ -567,11 +537,11 @@
 	if (!istext(ailment_name))
 		return null
 
-	for (var/datum/ailment_data/AD in src.ailments)
-		if (AD.name == ailment_name && !base_ailments_only)
-			return AD
-		if (AD.master && AD.master.name == ailment_name)
-			return AD
+	for (var/datum/ailment_data/strain in src.ailments)
+		if (strain.name == ailment_name && !base_ailments_only)
+			return strain
+		if (strain.master && strain.master.name == ailment_name)
+			return strain
 
 	return null
 

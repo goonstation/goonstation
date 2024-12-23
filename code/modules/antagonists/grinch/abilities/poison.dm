@@ -30,7 +30,7 @@
 		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return 1
-
+		. = ..()
 		// Written in such a way that adding other reagent containers (e.g. medicine) would be trivial.
 		var/obj/item/reagent_containers/RC = null
 		var/attempt_success = 0

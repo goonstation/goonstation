@@ -23,22 +23,16 @@
 	Crossed(atom/movable/A)
 		..()
 		if(istype(A,/obj/racing_clowncar))
-			playsound(A, 'sound/mksounds/boost.ogg', 30, FALSE)
 			step(A,src.dir)
 
 			var/obj/racing_clowncar/R = A
-			R.speed = R.base_speed - R.turbo
-			R.drive(R.dir, R.speed)
-			R.overlays += image('icons/mob/robots.dmi', "up-speed")
-			SPAWN(1.5 SECONDS)
-				R.speed = R.base_speed
-				if (R.driving) R.drive(R.dir, 2)
-				R.overlays -= image('icons/mob/robots.dmi', "up-speed")
+			R.boost()
 
 
 /obj/racing_powerup_spawner
 	name = "PowerUpSpawner"
-	icon = 'icons/Testing/atmos_testing.dmi'
+	icon = 'icons/map-editing/mapping_helpers.dmi'
+	icon_state = "spawner"
 	anchored = ANCHORED
 	density = 0
 	opacity = 0
@@ -190,158 +184,135 @@
 			R.random_powerup()
 			qdel(src)
 
-/obj/powerup
-	name = "powerup"
-	desc = "Click to use"
+/// This holds all of your abilities for kart racing
+/datum/abilityHolder/kart_racing
+	topBarRendered = 1
+
+/// the base kart ability
+ABSTRACT_TYPE(/datum/targetable/kart_powerup)
+/datum/targetable/kart_powerup
 	icon = 'icons/misc/racing.dmi'
 	icon_state = "blank"
-	anchored = ANCHORED
-	layer = HUD_LAYER
-	screen_loc = "NORTH,WEST"
-	var/obj/racing_clowncar/owner
+	desc = "Click to use"
+	cooldown = 0
+	last_cast = 0
+	targeted = 0
+	preferred_holder_type = /datum/abilityHolder/kart_racing
+	var/mob/living/carbon/human/racer
 
-	disposing()
-		if(owner?.powerup == src)
-			if(owner?.driver?.client)
-				owner.driver.client.screen -= src
-			owner.powerup = null
-		owner = null
-		..()
-
-	Click()
-		if (owner.powerup == src)
-			owner.powerup = null
-		qdel(src)
+	onAttach(datum/abilityHolder/H)
+		. = ..()
+		if(ishuman(holder.owner))
+			racer = holder.owner
 		return
 
-/obj/powerup/bananapeel
+	cast()
+		if (!istype(racer))
+			return 1
+		if (..())
+			return 1
+		if(!istype(racer?.loc,/obj/racing_clowncar))
+			return 1
+
+	disposing()
+		racer = null
+		. = ..()
+
+
+/datum/targetable/kart_powerup/banana_peel
 	name = "Bananapeel"
 	desc = "Click to use"
-	anchored = ANCHORED
 	icon_state = "banana"
-	screen_loc = "NORTH,WEST"
 
-	Click()
+	cast()
+		if (..())
+			return 1
 
-		if(!istype(src.loc,/obj/racing_clowncar))
-			qdel(src)
-			return
-
-		var/turf/T = get_turf(src.loc)
+		var/turf/T = get_turf(get_turf(racer))
 		new/obj/racing_trap_banana/(T)
 
 		playsound(T, 'sound/mksounds/itemdrop.ogg', 45, FALSE)
+		// remove ourselves when we're used
+		holder.removeAbilityInstance(src)
 
-		qdel(src)
-
-		return
-
-/obj/powerup/butt
+/datum/targetable/kart_powerup/butt
 	name = "Butt"
 	desc = "Click to use"
-	anchored = ANCHORED
 	icon_state = "butt"
-	screen_loc = "NORTH,WEST"
 
-	Click()
+	cast()
+		if (..())
+			return 1
 
-		if(!istype(src.loc,/obj/racing_clowncar))
-			qdel(src)
-			return
-
-		var/obj/racing_clowncar/C = src.loc
-
-		var/turf/T = get_turf(C)
-		var/turf/T2 = get_step(T,C.dir)
+		var/turf/T = get_turf(racer)
+		var/turf/T2 = get_step(T,racer.loc?.dir)
 		var/turf/trg = null
 
 		if(!T2.density) trg = T2
 		else trg = T
 
-		new/obj/racing_butt(trg, C.dir, C)
+		new/obj/racing_butt(trg, racer.loc?.dir, racer.loc)
 
-		playsound(C, 'sound/mksounds/throw.ogg', 33, FALSE)
+		playsound(racer.loc, 'sound/mksounds/throw.ogg', 33, FALSE)
 
-		qdel(src)
+		// remove ourselves when we're used
+		holder.removeAbilityInstance(src)
 
-		return
-
-/obj/powerup/superbutt
+/datum/targetable/kart_powerup/superbutt
 	name = "Superbutt"
 	desc = "Click to use"
-	anchored = ANCHORED
 	icon_state = "superbutt"
-	screen_loc = "NORTH,WEST"
 
-	Click()
+	cast()
+		if (..())
+			return 1
 
-		if(!istype(src.loc,/obj/racing_clowncar))
-			qdel(src)
-			return
-
-		var/obj/racing_clowncar/C = src.loc
-
-		var/turf/T = get_turf(C)
-		var/turf/T2 = get_step(T,C.dir)
+		var/turf/T = get_turf(racer)
+		var/turf/T2 = get_step(T,racer.loc?.dir)
 		var/turf/trg = null
 
 		if(!T2.density) trg = T2
 		else trg = T
 
-		new/obj/super_racing_butt(trg, C.dir, C)
+		new/obj/super_racing_butt(trg, racer.loc?.dir, racer.loc)
 
-		playsound(C, 'sound/mksounds/throw.ogg', 33, FALSE)
+		playsound(racer.loc, 'sound/mksounds/throw.ogg', 33, FALSE)
 
-		qdel(src)
+		// remove ourselves when we're used
+		holder.removeAbilityInstance(src)
 
-		return
-
-/obj/powerup/mushroom
+/datum/targetable/kart_powerup/mushroom
 	name = "Mushroom"
 	desc = "Click to use"
-	anchored = ANCHORED
 	icon_state = "mushroom"
-	screen_loc = "NORTH,WEST"
 
-	Click()
-		var/atom/source = src
-		src = null
+	cast()
+		if (..())
+			return 1
 
-		if(!istype(source.loc,/obj/racing_clowncar))
-			qdel(source)
-			return
-
-		var/obj/racing_clowncar/R = source.loc
-
+		// this should be valid, we're checking for it before we cast
+		var/obj/racing_clowncar/R = racer.loc
 		playsound(R, 'sound/mksounds/boost.ogg', 33, FALSE)
-
 		R.boost()
-		qdel(source)
-		return
 
-/obj/powerup/superboost
+		// remove ourselves when we're used
+		holder.removeAbilityInstance(src)
+
+/datum/targetable/kart_powerup/superboost
 	name = "Super Boost"
 	desc = "Click to use"
-	anchored = ANCHORED
 	icon_state = "superboost"
-	screen_loc = "NORTH,WEST"
 
-	Click()
-		var/atom/source = src
-		src = null
+	cast()
+		if (..())
+			return 1
 
-		if(!istype(source.loc,/obj/racing_clowncar))
-			qdel(source)
-			return
+		// this should be valid, we're checking for it before we cast
+		var/obj/racing_clowncar/R = racer.loc
+		R.boost(TRUE)
 
-		var/obj/racing_clowncar/R = source.loc
-
-		playsound(R, 'sound/mksounds/invin10sec.ogg',33, FALSE,0) // 33
-
-		R.super = 1
-		R.boost()
-		qdel(source)
-		return
+		// remove ourselves when we're used
+		holder.removeAbilityInstance(src)
 
 /obj/racing_clowncar
 	name = "Turbo Clowncar 2000"
@@ -365,23 +336,36 @@
 	var/speed = 2 //This is actually the DELAY. Lower = faster.
 
 	var/mob/living/carbon/human/driver = null
+	var/datum/abilityHolder/kart_racing/abilities = null
 
 	proc/random_powerup()
-		var/list/powerups = childrentypesof(/obj/powerup/)
-		if(!powerups.len) return
+		var/list/powerups = concrete_typesof(/datum/targetable/kart_powerup)
+		if(!length(powerups))
+			return
+		var/datum/targetable/kart_powerup/new_powerup = pick(powerups)
 
 		playsound(src, 'sound/mksounds/gotitem.ogg', 33, FALSE)
 
-		for(var/obj/powerup/OLD in src)
-			qdel(OLD)
-
-		var/picked = pick(powerups)
-		var/obj/powerup/P = new picked(src)
-		src.powerup = P
-
-		driver?.client.screen += P
+		if (abilities && new_powerup)
+			// only add a new kart powerup when there's not one already there
+			if (!length(abilities.abilities))
+				abilities.addAbility(new_powerup)
 
 		return
+	// copied from clown cars
+	Click()
+		if(usr != driver)
+			..()
+			return
+		if(can_act(usr))
+			exit()
+		return
+
+	// allow people to enter the car by clickdragging
+	MouseDrop_T(mob/living/target, mob/user)
+		if (BOUNDS_DIST(user, src) > 0 || !in_interact_range(src,user)) return
+		if (target == user)
+			enter()
 
 	verb/enter()
 		set src in oview(1)
@@ -397,10 +381,15 @@
 		M.set_loc(src)
 		driver = M
 
-		if(powerup && !(powerup in driver.client.screen))
-			driver.client.screen += powerup
+		// setup kart abilities
+		var/datum/abilityHolder/kart_racing/A = driver.get_ability_holder(/datum/abilityHolder/kart_racing)
+		if (!A || !istype(A))
+			A = driver.add_ability_holder(/datum/abilityHolder/kart_racing)
+		abilities = A
 
 		name = "Turbo Clowncar 2000 ([driver.name])"
+		src.name_suffix("([driver.name])")
+		src.UpdateName()
 		driving = 0
 
 	verb/exit()
@@ -412,10 +401,13 @@
 
 		driver.set_loc(get_turf(src))
 
-		if(powerup && (powerup in driver.client.screen))
-			driver.client.screen -= powerup
+		var/datum/abilityHolder/kart_racing/A = driver.get_ability_holder(/datum/abilityHolder/kart_racing)
+		if (istype(A))
+			driver.remove_ability_holder(/datum/abilityHolder/kart_racing)
+		abilities = null
 
-		name = "Turbo Clowncar 2000"
+		src.remove_suffixes("([driver.name])")
+		src.UpdateName()
 		driver = null
 		driving = 0
 
@@ -425,7 +417,7 @@
 		set_density(0)
 		dir_original = src.dir
 		var/image/out_of_control = image('icons/misc/racing.dmi',"broken")
-		src.overlays += out_of_control
+		src.AddOverlays(out_of_control,"spin")
 
 		playsound(src, 'sound/mksounds/cpuspin.ogg', 33, FALSE)
 
@@ -433,7 +425,7 @@
 			cant_control = 0
 			dir_original = 0
 			set_density(1)
-			src.overlays -= out_of_control
+			src.ClearSpecificOverlays("spin")
 
 		SPAWN(0)
 			for(var/i=0, i<magnitude, i++)
@@ -441,23 +433,27 @@
 				sleep(0.1 SECONDS)
 		return
 
-	proc/boost()
+	proc/boost(var/super_boost = FALSE)
 		speed = base_speed - turbo
 		drive(dir, speed)
 
-//		if(istype(src,/obj/racing_clowncar)) //what the fuck? src is a power up, why would it be a clown car
-		icon_state = "clowncar_boost"
-		SPAWN(5 SECONDS)
-			speed = base_speed
-			if (driving) drive(dir, speed)
-			icon_state = "clowncar"
+		// clown car doesnt have an overlay, so sad
+		if (super_boost)
+			src.super = TRUE
+			src.icon_state = "clowncar_super"
+			playsound(src, 'sound/mksounds/invin10sec.ogg',33, FALSE,0) // 33
+			SPAWN(10 SECONDS)
+				src.super = FALSE
+				speed = base_speed
+				src.icon_state = "clowncar"
+		else
+			icon_state = "clowncar_boost"
+			playsound(src, 'sound/mksounds/boost.ogg', 30, FALSE)
+			SPAWN(5 SECONDS)
+				speed = base_speed
+				if (driving) drive(dir, speed)
+				icon_state = "clowncar"
 
-//		else
-//			R.overlays += image('icons/mob/robots.dmi', "up-speed")
-//			SPAWN(5 SECONDS)
-//				R.speed = R.base_speed
-//				if (R.driving) R.drive(R.dir, 2)
-//				R.overlays -= image('icons/mob/robots.dmi', "up-speed")
 
 	proc/drive(var/direction, var/speed)
 		set_dir(direction)
@@ -507,6 +503,10 @@
 	var/returndir = null
 	var/turf/returnloc = null
 
+	/// the vis_flags to be restored on exiting the vehicle
+	var/occupant_vis_flags
+	var/cover_state = "kart_blue"
+
 	New()
 		..()
 		returndir = dir
@@ -526,13 +526,24 @@
 
 		M.set_loc(src)
 		driver = M
-		layer = MOB_EFFECT_LAYER
-		overlays += driver
-		update()
-		if(powerup && !(powerup in driver.client.screen))
-			driver.client.screen += powerup
 
-		name = "[driver.name]'s Go-Kart"
+		src.vis_contents += driver
+		occupant_vis_flags = driver.vis_flags
+		driver.pixel_x = 0
+		driver.pixel_y = 0
+		driver.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_DIR
+
+		src.AddOverlays(image('icons/misc/racing.dmi', src.cover_state,layer=ABOVE_OBJ_LAYER),"driver_cover")
+		update()
+
+		// setup kart abilities
+		var/datum/abilityHolder/kart_racing/A = driver.get_ability_holder(/datum/abilityHolder/kart_racing)
+		if (!A || !istype(A))
+			A = driver.add_ability_holder(/datum/abilityHolder/kart_racing)
+		abilities = A
+
+		src.name_suffix("([driver.name])")
+		src.UpdateName()
 		driving = 0
 		update()
 
@@ -547,33 +558,57 @@
 		returntoline()
 		if(driver)
 			driver.set_loc(get_turf(src))
-			if(driver.client)
-				if(powerup && (powerup in driver.client.screen))
-					driver.client.screen -= powerup
-		overlays = null
-		name = "Go-Kart"
+
+		var/datum/abilityHolder/kart_racing/A = driver.get_ability_holder(/datum/abilityHolder/kart_racing)
+		if (A && istype(A))
+			driver.remove_ability_holder(/datum/abilityHolder/kart_racing)
+		abilities = null
+
+		src.ClearSpecificOverlays("boost")
+		src.ClearSpecificOverlays("spin")
+		src.ClearSpecificOverlays("super")
+
+		src.remove_suffixes("([driver.name])")
+		src.UpdateName()
+		driver.vis_flags = occupant_vis_flags
+		src.vis_contents -= driver
 		driver = null
 		driving = 0
-		layer = OBJ_LAYER
 		update()
 
 	proc/update()
 		if(!driver)
-			overlays = null
-			icon_state = "kart_blue_u"
-		else
-			icon_state = "kart_blue"
+			src.ClearSpecificOverlays("driver_cover")
 
 	proc/returntoline()
 		if(returnloc)
 			set_loc(returnloc)
 			set_dir(returndir)
 
-/obj/racing_clowncar/kart/red
+	boost(var/super_boost = FALSE) // this exists because we dont have a boosted kart sprite????
+		speed = base_speed - turbo
+		drive(dir, speed)
 
-	update()
-		if(!driver)
-			overlays = null
-			icon_state = "kart_red_u"
+		src.AddOverlays(image('icons/mob/robots.dmi', "up-speed",layer=ABOVE_OBJ_LAYER),"boost")
+
+		if (super_boost)
+			src.super = TRUE
+			src.AddOverlays(image('icons/misc/racing.dmi', "kart_super"),"super")
+			playsound(src, 'sound/mksounds/invin10sec.ogg',33, FALSE,0) // 33
+			SPAWN(10 SECONDS)
+				src.super = FALSE
+				speed = base_speed
+				if (driving) drive(dir, speed)
+				src.ClearSpecificOverlays("super")
+				src.ClearSpecificOverlays("boost")
 		else
-			icon_state = "kart_red"
+			playsound(src, 'sound/mksounds/boost.ogg', 30, FALSE)
+			SPAWN(5 SECONDS)
+				speed = base_speed
+				if (driving) drive(dir, speed)
+				src.ClearSpecificOverlays("boost")
+
+
+/obj/racing_clowncar/kart/red
+	icon_state = "kart_red_u"
+	cover_state = "kart_red"

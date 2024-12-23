@@ -44,6 +44,9 @@
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/mini_oxygen) || istype(W, /obj/item/tank/jetpack))
+			if ((src.equipped_in_slot == SLOT_SHOES) && (src.cant_self_remove || src.cant_other_remove))
+				return
+
 			var/uses = 0
 
 			if(istype(W, /obj/item/tank/mini_oxygen)) uses = 2
@@ -189,12 +192,14 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 		src.setProperty("movespeed", 0.5)
 		src.setProperty("disorient_resist", 10)
 		step_sound = "step_lattice"
+		step_lots = TRUE
 		playsound(src.loc, 'sound/items/miningtool_on.ogg', 30, 1)
 	proc/deactivate()
 		src.magnetic = 0
 		src.delProperty("movespeed")
 		src.delProperty("disorient_resist")
 		step_sound = "step_plating"
+		step_lots = FALSE
 		playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 
 TYPEINFO(/obj/item/clothing/shoes/hermes)
@@ -217,8 +222,9 @@ TYPEINFO(/obj/item/clothing/shoes/hermes)
 		delProperty("chemprot")
 
 TYPEINFO(/obj/item/clothing/shoes/industrial)
-	mats = list("MET-3"= 15,"CON-2" = 10,"POW-3" = 10)
-
+	mats = list("metal_superdense" = 15,
+				"conductive_high" = 10,
+				"energy_high" = 10)
 /obj/item/clothing/shoes/industrial
 #ifdef UNDERWATER_MAP
 	name = "mechanised diving boots"
@@ -234,12 +240,14 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	kick_bonus = 2
 
 /obj/item/clothing/shoes/industrial/equipped(mob/user, slot)
+	APPLY_ATOM_PROPERTY(user, PROP_MOB_MOVESPEED_ASSIST, src.type, 1)
 	. = ..()
-	APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/reagent/energydrink, src.type)
+	APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/mechboots, src.type)
 
 /obj/item/clothing/shoes/industrial/unequipped(mob/user)
+	REMOVE_ATOM_PROPERTY(user, PROP_MOB_MOVESPEED_ASSIST, src.type)
 	. = ..()
-	REMOVE_MOVEMENT_MODIFIER(user, /datum/movement_modifier/reagent/energydrink, src.type)
+	REMOVE_MOVEMENT_MODIFIER(user, /datum/movement_modifier/mechboots, src.type)
 
 /obj/item/clothing/shoes/white
 	name = "white shoes"
@@ -304,6 +312,21 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 						return
 			else
 				boutput(user, SPAN_ALERT("You aren't funny enough to do that. Wait, did the shoes just laugh at you?"))
+		else if(istype(W, /obj/item/spray_paint_graffiti) && !(istype(src, /obj/item/clothing/shoes/clown_shoes/military)))
+			if (user.traitHolder.hasTrait("training_security"))
+				var/obj/item/I = new /obj/item/clothing/shoes/clown_shoes/military()
+				if (src.equipped_in_slot)
+					var/mob/living/carbon/human/wearer = src.loc
+					var/slot = src.equipped_in_slot
+					wearer.u_equip(src)
+					wearer.equip_if_possible(I, slot)
+				else
+					I.set_loc(get_turf(src))
+				playsound(src, 'sound/items/graffitispray3.ogg', 100, TRUE)
+				boutput(user, SPAN_NOTICE("You spraypaint the clown shoes in a sleek black!"))
+				qdel(src)
+			else
+				boutput(user, SPAN_ALERT("You don't feel like insulting the clown like this."))
 		else
 			return ..()
 
@@ -332,6 +355,17 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 		icon_state = "clown_winter"
 		item_state = "clown_winter"
 
+	military
+		name = "military shoes"
+		desc = ""
+		icon_state = "clown_military"
+		item_state = "clown_military"
+
+		get_desc(var/dist, var/mob/user)
+			if (user.mind?.assigned_role == "Head of Security")
+				. = "Extra long shoes to show the extra long reach of the law!"
+			else
+				. = "These are clearly just clown shoes covered in black spraypaint."
 
 /obj/item/clothing/shoes/clown_shoes/New()
 	. = ..()
@@ -348,6 +382,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 
 	New()
 		..()
+		src.item_function_flags |= IMMUNE_TO_ACID
 		setProperty("chemprot", 7)
 		setProperty("negate_fluid_speed_penalty",0.6)
 
@@ -378,12 +413,29 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 /obj/item/clothing/shoes/cowboy/boom
 	name = "Boom Boots"
 	desc = "Boom shake shake shake the room. Tick tick tick tick boom!"
-	icon_state = "cowboy"
-	color = "#FF0000"
+	icon_state = "boomboots"
 	step_sound = "explosion"
 	contraband = 10
 	step_priority = 999
 	is_syndicate = 1
+
+	equipped(mob/user, slot)
+		. = ..()
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_step))
+
+	unequipped(mob/user)
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+		. = ..()
+
+	proc/on_step(mob/user, atom/previous_loc, dir)
+		var/turf/T = get_turf(user)
+		if (user.lying || !(T.turf_flags & MOB_STEP))
+			return
+		if (prob(10))
+			if (ON_COOLDOWN(src, "EXPLOSION", 1 SECOND))
+				return
+			var/turf/explosion_target = get_turf(pick(oview(9, user)))
+			new /obj/effects/explosion/dangerous(explosion_target)
 
 /obj/item/clothing/shoes/ziggy
 	name = "familiar boots"
@@ -472,12 +524,42 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	step_priority = STEP_PRIORITY_LOW
 	tooltip_flags = REBUILD_DIST | REBUILD_USER
 
+	attackby(obj/item/W, mob/living/user)
+		if(istype(W, /obj/item/pen/crayon) && !(istype(src, /obj/item/clothing/shoes/swat/heavy/clown)))
+			if (user.traitHolder.hasTrait("training_clown"))
+				var/obj/item/I = new /obj/item/clothing/shoes/swat/heavy/clown()
+				if (src.equipped_in_slot)
+					var/mob/living/carbon/human/wearer = src.loc
+					var/slot = src.equipped_in_slot
+					wearer.u_equip(src)
+					wearer.equip_if_possible(I, slot)
+				else
+					I.set_loc(get_turf(src))
+				boutput(user, SPAN_NOTICE("You cover the heavy boots in crayon!"))
+				qdel(src)
+			else
+				boutput(user, SPAN_ALERT("You don't feel brave enough to do this."))
+		else
+			return ..()
+
 	get_desc(var/dist, var/mob/user)
 		if (user.mind && user.mind.assigned_role == "Head of Security")
 			. = "Still fit like a glove! Or a shoe."
 		else
 			. = "Looks like some big shoes to fill!"
 		. = ..()
+
+/obj/item/clothing/shoes/swat/heavy/clown
+	name = "heavy clown boots"
+	desc = ""
+	icon_state = "swatclown"
+	item_state = "swatclown"
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind?.assigned_role == "Head of Security")
+			. = "Your treasured boots covered in crayon. Someone's in trouble."
+		else
+			. = "Only the funniest of boots for the funniest of clowns."
 
 /obj/item/clothing/shoes/swat/knight // so heavy you can't get shoved!
 	name = "combat sabatons"

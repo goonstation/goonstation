@@ -11,14 +11,13 @@ TYPEINFO(/obj/machinery/espresso_machine)
 	icon_state = "espresso_machine"
 	density = 1
 	anchored = ANCHORED
-	flags = FPRINT | NOSPLASH | TGUI_INTERACTIVE
+	flags = NOSPLASH | TGUI_INTERACTIVE
 	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 	var/cupslimit = 2
 	var/cupsinside = 0
 	var/top_on = 1 //screwed on or screwed off
 	var/cup_name = "espresso cup"
-	var/image/image_top = null
 	var/image/image_cup = null
 	var/list/drink_options = list("Americano", "Cappuchino", "Decaf", "Espresso", "Flat White", "Latte", "Mocha")
 
@@ -173,13 +172,6 @@ TYPEINFO(/obj/machinery/espresso_machine)
 		else
 			src.image_cup = null
 		src.UpdateOverlays(src.image_cup, "cup")
-
-		if (src.top_on == 1)
-			if (!src.image_top)
-				src.image_top = image(src.icon, icon_state = "coffeetopoverlay")
-			src.UpdateOverlays(src.image_top, "top")
-		else
-			src.UpdateOverlays(null, "top")
 		return
 
 /* ===================================================== */
@@ -197,7 +189,7 @@ TYPEINFO(/obj/machinery/coffeemaker)
 	icon_state = "coffeemaker-gen"
 	density = 1
 	anchored = ANCHORED
-	flags = FPRINT | NOSPLASH
+	flags = NOSPLASH
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 	var/carafe_name = "coffee carafe"
 	var/image/image_top = null
@@ -207,6 +199,7 @@ TYPEINFO(/obj/machinery/coffeemaker)
 	var/image/fluid_image
 
 	var/emagged = FALSE
+	var/reagent_id = "coffee_fresh"
 
 	New()
 		..()
@@ -222,7 +215,7 @@ TYPEINFO(/obj/machinery/coffeemaker)
 				boutput(user, SPAN_NOTICE("You force the machine to brew something else..."))
 
 			src.desc = " It's top of the line NanoTrasen tea technology! Featuring 100% Organic Locally-Grown green leaves!"
-			src.emagged = TRUE
+			src.reagent_id = "tea"
 			return TRUE
 		else
 			if (user)
@@ -253,7 +246,7 @@ TYPEINFO(/obj/machinery/coffeemaker)
 					switch (choice)
 						if ("Brew coffee","Brew tea")
 							for(var/obj/item/reagent_containers/food/drinks/carafe/C in src.contents)
-								C.reagents.add_reagent(src.emagged ? "tea" : "coffee_fresh",100)
+								C.reagents.add_reagent(src.reagent_id,100)
 								playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 								use_power(10)
 						if ("Remove carafe")

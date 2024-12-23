@@ -67,3 +67,47 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	New()
 		src.create_reagents(100)
 		..()
+
+// Pumpkin hats
+
+/obj/item/clothing/head/pumpkinlatte
+	name = "carved spiced pumpkin"
+	desc = "Cute!"
+	icon_state = "pumpkinlatte"
+	c_flags = COVERSEYES | COVERSMOUTH
+	see_face = FALSE
+	item_state = "pumpkinlatte"
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/device/light/flashlight))
+			user.visible_message("[user] adds [W] to [src].", "You add [W] to [src].")
+			W.name = copytext(src.name, 8) + " lantern"	// "carved "
+			W.desc = "Cute!"
+			W.icon = 'icons/misc/halloween.dmi'
+			W.icon_state = "flight[W:on]"
+			W.item_state = "pumpkin"
+			qdel(src)
+		else
+			. = ..()
+
+
+/obj/item/clothing/head/pumpkin
+	name = "carved pumpkin"
+	desc = "Spookier!"
+	icon_state = "pumpkin"
+	c_flags = COVERSEYES | COVERSMOUTH
+	see_face = FALSE
+	item_state = "carved"
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/device/light/flashlight))
+			user.visible_message("[user] adds [W] to [src].", "You add [W] to [src].")
+			W.name = copytext(src.name, 8) + " lantern"	// "carved "
+			W.desc = "Spookiest!"
+			W.icon = 'icons/misc/halloween.dmi'
+			W.icon_state = "flight[W:on]"
+			W.item_state = "lantern"
+			W.transform = src.transform
+			qdel(src)
+		else
+			..()

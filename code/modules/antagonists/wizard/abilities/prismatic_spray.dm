@@ -44,10 +44,10 @@
 
 	cast(atom/target)
 		if (holder.owner.wizard_spellpower(src) || istype(src, /datum/targetable/spell/prismatic_spray/admin))
+			. = ..()
 			if(!istype(get_area(holder.owner), /area/sim/gunsim))
 				holder.owner.say("PROJEHK TUL IHNFERNUS", FALSE, maptext_style, maptext_colors) //incantation credit to Grifflez
 			//var/mob/living/carbon/human/O = holder.owner
-			logTheThing(LOG_COMBAT, holder.owner, "casts Prismatic spray at [constructTarget(target,"combat")].")
 			// Put voice stuff here in the future
 			if(src.random == 0)
 				for(var/i=0, i<num_projectiles, i++)

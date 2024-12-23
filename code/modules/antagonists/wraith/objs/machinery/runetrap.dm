@@ -2,7 +2,7 @@
 // Light revealed wraith trap
 //////////////////////////
 /obj/machinery/wraith/runetrap
-	name = "Rune trap"
+	name = "rune trap"
 	desc = "A strange ominous circle. You should likely tip-toe around this one."
 	icon = 'icons/obj/wraith_objects.dmi'
 	icon_state = "rune_trap"
@@ -12,15 +12,17 @@
 	var/armed = FALSE
 	var/mob/living/intangible/wraith/wraith_trickster/master = null
 
-	New(var/turf/T, var/mob/living/intangible/wraith/wraith_trickster/W = null)
+	New(turf/T, mob/living/intangible/wraith/wraith_trickster/W = null, mob/placing_mob)
 		..()
 		master = W
 		SPAWN(5 SECONDS)
-			var/turf/local_turf = get_turf(src)
-			if (local_turf.RL_GetBrightness() < 0.3)
-				APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_CLOAK)
-				animate(src, alpha=120, time = 1 SECONDS)
-			src.armed = TRUE
+			if (!QDELETED(src))
+				var/turf/local_turf = get_turf(src)
+				if (local_turf.RL_GetBrightness() < 0.3)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_CLOAK)
+					animate(src, alpha=120, time = 1 SECONDS)
+				src.armed = TRUE
+				boutput(placing_mob, SPAN_NOTICE("The rune trap you placed to the [dir2text(get_dir(placing_mob, src.loc))] has armed."))
 
 	process()
 		..()
@@ -30,16 +32,16 @@
 		if (local_turf.RL_GetBrightness() < 0.3 && src.visible)
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_CLOAK)
 			src.visible = FALSE
-			animate(src, alpha=120, time = 1 SECONDS)
+			animate(src, alpha = 120, time = 1 SECONDS)
 		else if (local_turf.RL_GetBrightness() >= 0.2 && !src.visible)
 			REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 			src.visible = TRUE
-			animate(src, alpha=255, time = 1 SECONDS)
-			src.visible_message("<span class='alert>[src] is revealed!")
+			animate(src, alpha = 255, time = 1 SECONDS)
+			src.visible_message(SPAN_ALERT("[src] is revealed!"))
 
 	attackby(obj/item/P, mob/living/user)
 		playsound(src, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 80)
-		src.visible_message(SPAN_NOTICE("The trap is destroyed!"))
+		src.visible_message(SPAN_ALERT("[src] is destroyed!"))
 		qdel(src)
 
 	disposing()
@@ -47,166 +49,134 @@
 			master.traps_laid--
 		. = ..()
 
+	Crossed(atom/movable/AM)
+		..()
+		if (!try_trigger(AM))
+			return
+		AM.visible_message(
+			SPAN_ALERT("[AM] steps on [src] and triggers it!"),
+			SPAN_ALERT("You step on [src] and trigger it!")
+		)
+		on_trigger(AM)
+		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
+		elecflash(src, 1, 1)
+		qdel(src)
+
 	/// attempts to detonate a runetrap, checks if the trap is armed and if the crosser is a valid target
 	proc/try_trigger(atom/movable/AM)
-		if(!armed) return
-		if(!isliving(AM)) return
-		if(istype(AM, /mob/living/critter/wraith/trickster_puppet)) return
-		if(isintangible(AM)) return
+		if(!armed)
+			return
+		if(!isliving(AM))
+			return
+		if(istype(AM, /mob/living/critter/wraith/trickster_puppet))
+			return
+		if(isintangible(AM))
+			return
+		if(!checkRun(AM))
+			return
+		if(isghostdrone(AM))
+			return
+		if(isghostcritter(AM))
+			return
 		return TRUE
+
+	proc/on_trigger(mob/living/M)
+		return
 
 
 /obj/machinery/wraith/runetrap/madness
 	var/amount_to_inject = 8
 
-	Crossed(atom/movable/AM)
-		..()
-		if(!try_trigger(AM)) return
-		var/mob/M = AM
-		if(!checkRun(M)) return
-		if(!M.reagents) return
+	on_trigger(mob/living/M)
+		if (!M.reagents)
+			boutput(M, SPAN_ALERT("...but you don't feel any different. Huh."))
+			return
 		if (M.reagents.total_volume + src.amount_to_inject >= M.reagents.maximum_volume)
 			M.reagents.remove_any(M.reagents.total_volume + amount_to_inject - M.reagents.maximum_volume)
 		M.reagents.add_reagent("madness_toxin", src.amount_to_inject)
-		src.visible_message("<span class='alert>[M] steps on [src] and triggers it!</span>")
 		boutput(M, SPAN_ALERT("Visions of murder and blood fill your mind. Rage builds up inside of you!"))
-		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
-		elecflash(src, 1, 1)
-		qdel(src)
 
 /obj/machinery/wraith/runetrap/sleepyness
 	var/amount_to_inject = 15
 
-	Crossed(atom/movable/AM)
-		..()
-		if(!try_trigger(AM)) return
-		var/mob/M = AM
-		if(!checkRun(M)) return
+	on_trigger(mob/living/M)
+		if (!M.reagents)
+			boutput(M, SPAN_ALERT("...but you don't feel any different. Huh."))
+			return
 		M.changeStatus("drowsy", 30 SECONDS)
 		if (M.reagents.total_volume + src.amount_to_inject >= M.reagents.maximum_volume)
 			M.reagents.remove_any(M.reagents.total_volume + amount_to_inject - M.reagents.maximum_volume)
 		M.reagents.add_reagent("haloperidol", src.amount_to_inject)
-		src.visible_message("<span class='alert>[M] steps on [src] and triggers it!</span>")
-		boutput(M, SPAN_NOTICE("You start to feel really sleepy!"))
+		boutput(M, SPAN_NOTICE("You start to feel really sleepy..."))
 		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
 		elecflash(src, 1, 1)
 		qdel(src)
 
 /obj/machinery/wraith/runetrap/stunning
-	Crossed(atom/movable/AM)
-		..()
-		if(!try_trigger(AM)) return
-		var/mob/M = AM
-		if(!checkRun(M)) return
+	on_trigger(mob/living/M)
 		flashpowder_reaction(get_turf(src), 40)
 		playsound(src, 'sound/weapons/flashbang.ogg', 25, TRUE)
 		M.changeStatus("stunned", 4 SECONDS)
-		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! A bright light flashes</span>")
-		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
-		elecflash(src, 1, 1)
-		qdel(src)
 
 /obj/machinery/wraith/runetrap/emp
-	Crossed(atom/movable/AM)
-		..()
-		var/area/AR = get_area(src)
-		if(AR.sanctuary) return
-		if(!try_trigger(AM)) return
-		var/mob/M = AM
-		if(!checkRun(M)) return
+	on_trigger(mob/living/M)
 		var/turf/T = get_turf(M)
 		for (var/atom/A as anything in T.contents)
 			A.emp_act()
 		playsound(src, 'sound/effects/electric_shock_short.ogg', 30, TRUE)
-		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! Your hair stands on end!</span>")
-		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
-		elecflash(src, 1, 1)
-		qdel(src)
 
 /obj/machinery/wraith/runetrap/terror
-	Crossed(atom/movable/AM)
+	on_trigger(mob/living/M)
 		..()
-		if(!try_trigger(AM)) return
-		var/mob/M = AM
-		if(!checkRun(M)) return
 		for (var/mob/living/L in range(4, src))
-			if(istype(L, /mob/living/critter/wraith/trickster_puppet)) continue
+			if(istype(L, /mob/living/critter/wraith/trickster_puppet))
+				continue
 			L.setStatus("terror", 45 SECONDS)
-
-		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! Your mind fills with terrible visions!</span>")
-		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
-		elecflash(src, 1, 1)
-		qdel(src)
+			boutput(L, SPAN_ALERT("Your mind fills with terrible visions!"))
 
 /obj/machinery/wraith/runetrap/fire
-	Crossed(atom/movable/AM)
-		..()
-		if(!try_trigger(AM)) return
-		var/mob/M = AM
-		if(!checkRun(M)) return
-		fireflash(M, 1, checkLos = FALSE)
+	on_trigger(mob/living/M)
+		fireflash(M, 1, checkLos = FALSE, chemfire = CHEM_FIRE_RED)
 		playsound(src, 'sound/effects/mag_fireballlaunch.ogg', 50, FALSE)
-		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! A flame engulfs them immediatly!</span>")
-		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
-		elecflash(src, 1, 1)
-		qdel(src)
 
 /obj/machinery/wraith/runetrap/teleport
 	var/range = 5
 
-	Crossed(atom/movable/AM)
-		..()
-		if(!try_trigger(AM)) return
-		var/mob/M = AM
-		if(!checkRun(M)) return
+	on_trigger(mob/living/M)
 		if (isrestrictedz(M.z))
-			src.visible_message("<span class='alert>[M] steps on [src] and triggers it! It missfires, sputters and dies!</span>")
+			src.visible_message(SPAN_ALERT("...but it sputters and dies! Guess it doesn't work here!"))
 			elecflash(src, 2, 1)
-			qdel(src)
-			return 1
+			return
 		var/turf/src_turf = get_turf(src)
 		var/list/turfs = block(locate(max(src_turf.x - range, 0), max(src_turf.y - range, 0), src_turf.z), locate(min(src_turf.x + range, world.maxx), min(src_turf.y + range, world.maxy), src_turf.z))
 		var/list/valid_turfs = list()
 		for (var/turf/T as anything in turfs)
-			if (T.density) continue
-			if (istype(T, /turf/space)) continue
-			valid_turfs += T
+			if (T.density)
+				continue
+			if (istype(T, /turf/space))
+				valid_turfs += T
 		if (!length(valid_turfs))
+			src.visible_message(SPAN_ALERT("...but nothing happens! Neat."))
 			return //guess we're already in the middle of fricken nowhere!
-		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! A flame engulfs them immediatly!</span>")
-		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
-		boutput(M, SPAN_ALERT("You blink, and suddenly you're somewhere else!"))
+		M.visible_message(
+			SPAN_ALERT("[M] vanishes in a flash of smoke!"),
+			SPAN_ALERT("You blink, and suddenly you're somewhere else!")
+		)
 		playsound(M.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 		M.set_loc(pick(valid_turfs))
-		elecflash(src, 1, 1)
-		qdel(src)
 
 /obj/machinery/wraith/runetrap/explosive
-	Crossed(atom/movable/AM)
-		..()
-		if(!try_trigger(AM)) return
-		var/mob/M = AM
-		if(!checkRun(M)) return
-		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! You hear a buzzing sound!</span>")
-		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
+	on_trigger(mob/living/M)
 		explosion(src, src, -1, 1, 2, 4)
-		elecflash(src, 1, 1)
-		qdel(src)
 
 /obj/machinery/wraith/runetrap/slipping
-	Crossed(atom/movable/AM)
-		..()
-		if(!try_trigger(AM)) return
-		var/mob/M = AM
-		if(!checkRun(M)) return
-		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! You can hear a slippery sound!</span>")
+	on_trigger(mob/living/M)
 		M.remove_pulling()
-		M.changeStatus("weakened", 3 SECONDS)
-		boutput(M, SPAN_NOTICE("An ethereal force slips you!"))
+		M.changeStatus("knockdown", 3 SECONDS)
+		boutput(M, SPAN_ALERT("An ethereal force sends you tumbling!"))
 		playsound(M, 'sound/misc/slip.ogg', 50, TRUE, -3)
 		var/atom/target = get_edge_target_turf(M, M.dir)
 		M.throw_at(target, 12, 1, throw_type = THROW_SLIP)
-		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
 
 /proc/checkRun(var/mob/M)	//If we are above walking speed, this triggers
 	if(!M) return

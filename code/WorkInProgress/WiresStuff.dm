@@ -5,9 +5,31 @@
 	set hidden = 1
 	ADMIN_ONLY
 
-	//mapWorldNew(src)
-	//boop2
+	var/loopTimes = input(src, "How many loops?") as num
 
+	var/counter = 1
+	while (counter <= loopTimes)
+		SPAWN(0)
+			var/response = wireSendTest()
+			var/msg = "\[[counter]\] - "
+			if (response == "This is a test")
+				msg += "Success"
+			else
+				msg += "Failed"
+			boutput(src, msg)
+		counter++
+
+	boutput(src, "Done!")
+
+/proc/wireSendTest()
+	var/datum/apiModel/Message/message
+	try
+		var/datum/apiRoute/test/getTest = new
+		message = apiHandler.queryAPI(getTest)
+	catch (var/exception/e)
+		var/datum/apiModel/Error/error = e.name
+		return error.message
+	return message.message
 
 /proc/mapWorldNew(client/C)
 	// future proofing against varied world icon sizes
@@ -129,6 +151,7 @@ var/global/deathConfettiActive = 0
 	set name = "Toggle Death Confetti"
 	set desc = "Toggles the fun confetti effect and sound whenever a mob dies"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	deathConfettiActive = !deathConfettiActive
 
@@ -219,6 +242,7 @@ var/global/deathConfettiActive = 0
 	set desc = "A hard reboot is when the game instance outright ends, and the backend server reinitialises it"
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/hardRebootFileExists = fexists(hardRebootFilePath)
 	var/logMessage = ""
@@ -242,3 +266,9 @@ var/global/deathConfettiActive = 0
 	ircmsg["key"] = src.key
 	ircmsg["msg"] = logMessage
 	ircbot.export_async("admin", ircmsg)
+
+/proc/goonhub_href(path, in_byond = FALSE)
+	var/url = "[config.goonhub_url][path]"
+	if (in_byond)
+		return "byond://winset?command=.openlink \"[url_encode(url)]\""
+	return url

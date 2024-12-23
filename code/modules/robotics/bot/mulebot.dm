@@ -86,8 +86,8 @@
 			cell.maxcharge = 2000
 		setup_wires()
 
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "control", control_freq)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "beacon", beacon_freq)
 
 	// set up the wire colours in random order
 	// and the random wire display order
@@ -704,19 +704,24 @@
 
 	// called when bot bumps into anything
 	bump(var/atom/obs)
-		if(!(wires & wire_mobavoid))		//usually just bumps, but if avoidance disabled knock over mobs
+		if(ismob(obs))
 			var/mob/M = obs
-			if(ismob(M))
-				if(isrobot(M))
-					src.visible_message(SPAN_ALERT("[src] bumps into [M]!"))
-				else
-					src.visible_message(SPAN_ALERT("[src] knocks over [M]!"))
-					M.remove_pulling()
-					M.changeStatus("stunned", 8 SECONDS)
-					M.changeStatus("weakened", 5 SECONDS)
-					M.lying = 1
-					M.set_clothing_icon_dirty()
+			if(M.traitHolder.hasTrait("wasitsomethingisaid")) //tee hee
+				knock_over_mob(M)
+			if(!(wires & wire_mobavoid))		//usually just bumps, but if avoidance disabled knock over mobs
+				knock_over_mob(M)
 		..()
+
+	proc/knock_over_mob(var/mob/M)
+		if(isrobot(M))
+			src.visible_message(SPAN_ALERT("[src] bumps into [M]!"))
+		else
+			src.visible_message(SPAN_ALERT("[src] knocks over [M]!"))
+			M.remove_pulling()
+			M.changeStatus("stunned", 8 SECONDS)
+			M.changeStatus("knockdown", 5 SECONDS)
+			M.lying = 1
+			M.set_clothing_icon_dirty()
 
 	alter_health()
 		return get_turf(src)

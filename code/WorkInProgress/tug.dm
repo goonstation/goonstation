@@ -12,7 +12,7 @@ TYPEINFO(/obj/tug_cart)
 	layer = MOB_LAYER + 1
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
-		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 			return
 
 		if (!istype(C)|| C.anchored || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(src, C) > 0 )
@@ -67,7 +67,7 @@ TYPEINFO(/obj/tug_cart)
 		..()
 		var/turf/T = get_turf(over_location)
 		var/mob/user = usr
-		if (!user || !(in_interact_range(user, src) || user.loc == src) || !in_interact_range(src, over_object) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!user || !(in_interact_range(user, src) || user.loc == src) || !in_interact_range(src, over_object) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 			return
 		if (!load)
 			return
@@ -81,7 +81,7 @@ TYPEINFO(/obj/tug_cart)
 				boutput(user, SPAN_ALERT("That tile is blocked by [O]."))
 				return
 		src.visible_message("<b>[user]</b> unloads [load] from [src].")
-		unload(over_object)
+		unload()
 
 	proc/load(var/atom/movable/C)
 		/*if ((wires & wire_loadcheck) && !istype(C,/obj/storage/crate))
@@ -116,22 +116,25 @@ TYPEINFO(/obj/tug_cart)
 					C.layer = layer + 0.1
 				src.UpdateOverlays(C, "load")
 
-	proc/unload(var/turf/T)//var/dirn = 0)
+	proc/unload()
 		if (!load)
 			return
-		if (!isturf(T))
-			T = get_turf(T)
+		var/turf/T = get_turf(src)
 
-		load.set_loc(src.loc)
+		load.set_loc(T)
 
 		// in case non-load items end up in contents, dump every else too
 		// this seems to happen sometimes due to race conditions
 		// with items dropping as mobs are loaded
 
 		for (var/atom/movable/AM in src)
-			AM.set_loc(src.loc)
+			AM.set_loc(T)
 			AM.layer = initial(AM.layer)
 			AM.pixel_y = initial(AM.pixel_y)
+
+	relaymove(mob/user, direction, delay, running)
+		. = ..()
+		src.unload()
 
 	Exited(atom/movable/Obj, newloc)
 		. = ..()
@@ -236,7 +239,7 @@ TYPEINFO(/obj/vehicle/tug)
 					playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 				boutput(rider, SPAN_ALERT("<B>You are flung off of [src]!</B>"))
 				rider.changeStatus("stunned", 8 SECONDS)
-				rider.changeStatus("weakened", 5 SECONDS)
+				rider.changeStatus("knockdown", 5 SECONDS)
 				for (var/mob/C in AIviewers(src))
 					if (C == rider)
 						continue
@@ -245,7 +248,7 @@ TYPEINFO(/obj/vehicle/tug)
 				rider.throw_at(target, 5, 1)
 				rider.buckled = null
 				rider = null
-				overlays = null
+				src.ClearSpecificOverlays("rider")
 				return
 			if (selfdismount)
 				boutput(rider, SPAN_NOTICE("You dismount from [src]."))
@@ -256,11 +259,11 @@ TYPEINFO(/obj/vehicle/tug)
 			if (rider)
 				rider.buckled = null
 			rider = null
-			overlays = null
+			src.ClearSpecificOverlays("rider")
 			return
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
-		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 			return
 
 		if (istype(C, /obj/tug_cart) && in_interact_range(C, src))
@@ -301,7 +304,7 @@ TYPEINFO(/obj/vehicle/tug)
 		target.set_loc(src)
 		rider = target
 		rider.pixel_y = 6
-		overlays += rider
+		src.UpdateOverlays(rider, "rider")
 		if (rider.restrained() || rider.stat)
 			rider.buckled = src
 
@@ -337,7 +340,7 @@ TYPEINFO(/obj/vehicle/tug)
 				if (prob(60))
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 					src.visible_message(SPAN_ALERT("<B>[M] has shoved [rider] off of [src]!</B>"))
-					rider.changeStatus("weakened", 2 SECONDS)
+					rider.changeStatus("knockdown", 2 SECONDS)
 					eject_rider()
 				else
 					playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)

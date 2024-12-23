@@ -56,11 +56,6 @@
 		simsController.simsMotives -= src
 		..()
 
-	disposing()
-		if (hud)
-			qdel(hud)
-		..()
-
 	proc/updateHud()
 		var/change = 0
 		if (value > last_life_value)
@@ -72,9 +67,9 @@
 				src.image_change = image(src.icon, "change[change]", layer = HUD_LAYER+2)
 			else
 				src.image_change.icon_state = "change[change]"
-			src.hud.UpdateOverlays(src.image_change, "change")
+			src.hud.AddOverlays(src.image_change, "change")
 		else
-			src.hud.UpdateOverlays(null, "change")
+			src.hud.ClearSpecificOverlays("change")
 		//var/a_change = value - last_life_value
 		var/maptext_color = "#ffffff"
 		var/round_value = round(value)
@@ -98,7 +93,7 @@
 		if (!src.image_meter)
 			src.image_meter = image(src.icon, "[src.icon_state]-o", layer = HUD_LAYER+1)
 		src.image_meter.color = rgb((1 - ratio) * 255, ratio * 255, 0)
-		src.hud.UpdateOverlays(src.image_meter, "meter")
+		src.hud.AddOverlays(src.image_meter, "meter")
 
 	proc/updateHudIcon(var/icon/I)
 		if (!I || !src.hud)
@@ -106,9 +101,8 @@
 		src.icon = I
 		src.hud.icon = I
 		if (src.image_change)
-			src.hud.UpdateOverlays(null, "change")
 			src.image_change.icon = I
-			src.hud.UpdateOverlays(src.image_change, "change")
+			src.hud.AddOverlays(src.image_change, "change")
 		if (src.image_meter)
 			src.image_meter.icon = I
 			src.updateHud()
@@ -269,29 +263,8 @@
 			if (value < SIMS_HYGIENE_THRESHOLD_FILTHY && prob(33))
 				if (holder.owner.bioHolder && !(holder.owner.bioHolder.HasEffect("sims_stinky")) && !holder.owner.hasStatus("filthy"))
 					holder.owner.setStatus("filthy", 3 MINUTES)
-			else if ((value >= SIMS_HYGIENE_THRESHOLD_CLEAN ) && holder.owner.hasStatus("rancid"))
+			else if ((value >= SIMS_HYGIENE_THRESHOLD_FILTHY) && holder.owner.hasStatus("rancid"))
 				holder.owner.delStatus("rancid")
-			/*
-			if (value < 10 && prob((10 - value) * 1.5))
-				for (var/mob/living/carbon/human/H in viewers(2, holder.owner))
-					if (H != holder.owner && prob(30 - value) * 2)
-						//H.stunned = max(holder.owner.stunned, 1) <- Let's not punish others for our poor choices in life - unrealistic but more fun
-						H.vomit()
-						H.visible_message(SPAN_ALERT("[H] throws up all over \himself. Gross!"))
-						boutput(H, SPAN_ALERT("You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by [holder.owner]'s [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!"))
-				holder.owner.changeStatus("stunned", 1 SECOND)
-				holder.owner.visible_message(SPAN_ALERT("[holder.owner] throws up all over \himself. Gross!"))
-				holder.owner.vomit()
-				showOwner(SPAN_ALERT("You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by your own [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!"))
-			*/
-			#ifdef CREATE_PATHOGENS //PATHOLOGY_REMOVAL
-			if (value < 5 && prob(1) && prob(25))
-				var/datum/pathogen/P = new /datum/pathogen
-				P.create_weak()
-				P.spread = 0
-				holder.owner.infected(P)
-				showOwner(SPAN_ALERT("You feel really sick.")) // in a bad way
-			#endif
 
 		getWarningMessage()
 			if (value < 25)
@@ -300,40 +273,6 @@
 				return SPAN_ALERT("You feel [pick("smelly", "stinky", "unclean", "filthy", "dirty", "a bit disgusting", "grimy", "mucky", "foul", "unwashed", "begrimed", "tainted")]!")
 			else
 				return null
-
-	bladder
-		name = "Bladder"
-		icon_state = "bladder"
-		desc = "You can raise your bladder by releasing your urges in the toilet. Be sure to stand above a toilet and type '*pee'."
-		depletion_rate = 0.067 //53
-		gain_rate = 1
-
-		getWarningMessage()
-			var/list/urination = list("urinate", "piss", "pee", "answer the call of nature", "wee-wee", "spend a penny", "have a leak", "take a leak", "relieve yourself", "have a Jimmy", "have a whizz", "have a piddle", "pass water", "empty the tank", "flush the buffers", "lower the water level", "pay the water bill", "park your breakfast", "make your bladder gladder", "release the pressure", "put out the fire", "visit the urination station", "drain the tank")
-			var/to_urinate = pick(urination)
-			if (value < 25)
-				return SPAN_ALERT("You feel like you could [pick("wet", "piss", "pee", "urinate into", "leak into")] your pants any minute now!")
-			else if (value < 50)
-				return SPAN_ALERT("You feel a [pick("serious", "pressing", "critical", "dire", "burning")] [pick("inclination", "desire", "need", "call", "urge", "motivation")] to [to_urinate]!")
-			else
-				return null
-
-		onDeplete()
-			showOwner(SPAN_ALERT("<b>You piss all over yourself!</b>"))
-			modifyValue(100)
-			holder.affectMotive("Hygiene", -100)
-			holder.owner.changeStatus("stunned", 2 SECONDS)
-			if (ishuman(holder.owner))
-				var/mob/living/carbon/human/H = holder.owner
-				if (H.w_uniform)
-					var/obj/item/clothing/U = H.w_uniform
-					U.add_stain("piss-soaked")
-					//U.name = "piss-soaked [initial(U.name)]"
-				else if (H.wear_suit)
-					var/obj/item/clothing/U = H.wear_suit
-					U.add_stain("piss-soaked")
-					//U.name = "piss-soaked [initial(U.name)]"
-			make_cleanable(/obj/decal/cleanable/urine,holder.owner.loc)
 
 	comfort
 		name = "comfort"
@@ -440,9 +379,9 @@
 		mayStandardDeplete()
 			if (..())
 				// JFC fuck mobs
-				if (holder.owner.getStatusDuration("weakened"))
+				if (holder.owner.getStatusDuration("knockdown"))
 					return 0
-				if (holder.owner.getStatusDuration("paralysis"))
+				if (holder.owner.getStatusDuration("unconscious"))
 					return 0
 				if (holder.owner.lying)
 					return 0
@@ -503,12 +442,7 @@
 	var/list/motives = list()
 	var/list/datum/simsHolder/simsHolders = list()
 	var/list/datum/simsMotive/simsMotives = list()
-
-#ifdef RP_MODE
 	var/provide_plumbobs = 0
-#else
-	var/provide_plumbobs = 1
-#endif
 
 	New()
 		..()
@@ -636,7 +570,6 @@ var/global/datum/simsControl/simsController = new()
 			addMotive(/datum/simsMotive/hunger/thirst)
 			addMotive(/datum/simsMotive/social)
 			addMotive(/datum/simsMotive/hygiene)
-			addMotive(/datum/simsMotive/bladder)
 			addMotive(/datum/simsMotive/comfort)
 			addMotive(/datum/simsMotive/fun)
 			addMotive(/datum/simsMotive/energy)
@@ -647,16 +580,11 @@ var/global/datum/simsControl/simsController = new()
 		make_motives()
 			addMotive(/datum/simsMotive/hunger)
 			addMotive(/datum/simsMotive/hunger/thirst)
-			addMotive(/datum/simsMotive/hygiene)
-			//addMotive(/datum/simsMotive/bladder)
-			//addMotive(/datum/simsMotive/energy)
-			//addMotive(/datum/simsMotive/sanity)
 
 		wolf
 			make_motives()
 				addMotive(/datum/simsMotive/hunger/wolfy)
 				addMotive(/datum/simsMotive/hunger/thirst)
-				addMotive(/datum/simsMotive/hygiene)
 
 	New(var/mob/living/L)
 		..()
@@ -726,6 +654,12 @@ var/global/datum/simsControl/simsController = new()
 			return
 		motives[initial(M.name)] = M
 		M.holder = src
+
+	proc/removeMotive(var/name)
+		if((name in src.motives))
+			var/datum/simsMotive/S = src.motives[name]
+			src.motives.Remove(name)
+			qdel(S)
 
 	proc/getValue(var/name)
 		if (name in motives)

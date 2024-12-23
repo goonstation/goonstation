@@ -1,5 +1,5 @@
 /obj/machinery/computer/teleporter
-	name = "Teleporter"
+	name = "teleporter console"
 	icon_state = "teleport"
 	circuit_type = /obj/item/circuitboard/teleporter
 	var/obj/item/locked = null

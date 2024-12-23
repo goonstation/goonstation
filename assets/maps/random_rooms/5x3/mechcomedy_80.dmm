@@ -70,7 +70,7 @@
 /area/dmm_suite/clear_area)
 "U" = (
 /obj/disposalpipe/segment/bent/north,
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/clothing/mask/clown_hat/yellow{
 	pixel_y = 6;
 	pixel_x = 7

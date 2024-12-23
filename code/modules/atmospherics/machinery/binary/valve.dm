@@ -146,7 +146,7 @@
 
 /obj/machinery/atmospherics/binary/valve/digital/New()
 	..()
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, null, frequency)
 
 /obj/machinery/atmospherics/binary/valve/digital/receive_signal(datum/signal/signal)
 	if(signal.data["tag"] && (signal.data["tag"] != id))

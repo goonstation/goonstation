@@ -533,7 +533,7 @@
 		src.ui_interact(user)
 
 	attack_ai(var/mob/user)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attackby(obj/item/W, mob/user, params)
 		/// Check if the board is hit by a paint can

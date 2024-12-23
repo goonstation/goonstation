@@ -40,15 +40,10 @@
 		src.changeStatus(id, bite_time)
 
 
-/mob/living/vomit(var/nutrition=0, var/specialType=null)
-	..()
-	return src.organHolder?.stomach?.vomit()
-
-
 /datum/statusEffect/simplehot/foodBrute
 	id = "food_brute"
 	name = "Food HoT (Brute)"
-	icon_state = "foodbuff"
+	icon_state = "hot_brute"
 	exclusiveGroup = "Food"
 	heal_brute = 0.26
 	maxDuration = 6000
@@ -63,7 +58,7 @@
 /datum/statusEffect/simplehot/foodTox
 	id = "food_tox"
 	name = "Food HoT (Toxin)"
-	icon_state = "foodbuff"
+	icon_state = "hot_tox"
 	exclusiveGroup = "Food"
 	heal_tox = 0.26
 	maxDuration = 6000
@@ -79,7 +74,7 @@
 /datum/statusEffect/simplehot/foodBurn
 	id = "food_burn"
 	name = "Food HoT (Burn)"
-	icon_state = "foodbuff"
+	icon_state = "hot_burn"
 	exclusiveGroup = "Food"
 	heal_burn = 0.26
 	maxDuration = 6000
@@ -95,7 +90,7 @@
 /datum/statusEffect/simplehot/foodAll
 	id = "food_all"
 	name = "Food HoT (All)"
-	icon_state = "foodbuff"
+	icon_state = "hot_all"
 	exclusiveGroup = "Food"
 	heal_burn = 0.086
 	heal_tox = 0.086
@@ -217,7 +212,6 @@
 	id = "food_hp_up"
 	name = "Food (HP++)"
 	desc = ""
-	icon_state = "foodbuff"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -250,7 +244,7 @@
 	id = "food_deep_fart"
 	name = "Food (Gassy)"
 	desc = "You feel gassy."
-	icon_state = "foodbuff"
+	visible = FALSE
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -262,7 +256,7 @@
 	id = "food_deep_burp"
 	name = "Food (Gross Burps)"
 	desc = "Your stomach feels gassy."
-	icon_state = "foodbuff"
+	visible = FALSE
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -274,7 +268,7 @@
 	id = "food_cateyes"
 	name = "Food (Night Vision)"
 	desc = "Your vision feels improved."
-	icon_state = "foodbuff"
+	icon_state = "cateyes"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -286,7 +280,7 @@
 	id = "food_fireburp"
 	name = "Food (Fire Burps)"
 	desc = "Your stomach is flaming hot!"
-	icon_state = "foodbuff"
+	icon_state = "fireburp"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -328,7 +322,7 @@
 				continue
 			if (GET_DIST(owner,F) > range)
 				continue
-			fireflash(F,0.5,temp)
+			fireflash(F,0.5,temp, chemfire = CHEM_FIRE_RED)
 
 		//reduce duration
 		src.duration -= min(durationLoss,src.duration)
@@ -340,7 +334,7 @@
 	id = "food_explosion_resist"
 	name = "Food (Sturdy)"
 	desc = "Your joints feel sturdy, as if they are more resistant to popping off. Uh."
-	icon_state = "foodbuff"
+	icon_state = "explosion_resist"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -364,7 +358,7 @@
 	id = "food_disease_resist"
 	name = "Food (Cleanse)"
 	desc = "You are more resistant to disease."
-	icon_state = "foodbuff"
+	icon_state = "disease_resist"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -376,7 +370,7 @@
 	id = "food_rad_resist"
 	name = "Food (Rad-Wick)"
 	desc = "You are more resistant to radiation."
-	icon_state = "foodbuff"
+	icon_state = "rad_resist"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -412,7 +406,7 @@
 	id = "food_bad_breath"
 	name = "Food (Bad Breath)"
 	desc = "You have extremely smelly breath."
-	icon_state = "foodbuff"
+	icon_state = "badbreath"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -436,7 +430,7 @@
 	id = "food_sweaty"
 	name = "Food (Sweaty)"
 	desc = "You feel sweaty!"
-	icon_state = "foodbuff"
+	icon_state = "sweaty"
 	exclusiveGroup = "Food"
 	maxDuration = 3000
 	unique = 1

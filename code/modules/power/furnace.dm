@@ -2,8 +2,9 @@ TYPEINFO(/obj/machinery/power/furnace)
 	mats = 20
 
 /obj/machinery/power/furnace
-	name = "Zaojun-2 5kW Furnace"
-	desc = "The venerable XIANG|GIESEL model '灶君' combustion furnace with integrated 5 kilowatt thermocouple. A simple power solution for low-demand facilities and outposts."
+	name = "Zaojun-2 20kW Furnace"
+	desc = "The venerable XIANG|GIESEL model '灶君' combustion furnace with integrated 20 kilowatt thermocouple. \
+	A simple power solution for low-demand facilities and outposts."
 	icon_state = "furnace"
 	anchored = ANCHORED
 	density = 1
@@ -74,11 +75,11 @@ TYPEINFO(/obj/machinery/power/furnace)
 			if(src.active)
 				var/image/I = GetOverlayImage("active")
 				if(!I) I = image('icons/obj/power.dmi', "furn-burn")
-				UpdateOverlays(I, "active")
+				AddOverlays(I, "active")
 				src.point_light.enable()
 				src.cone_light.enable()
 			else
-				UpdateOverlays(null, "active", 0, 1) //Keep it in cache for when it's toggled
+				ClearSpecificOverlays(TRUE, "active") //Keep it in cache for when it's toggled
 				src.point_light.disable()
 				src.cone_light.disable()
 
@@ -91,9 +92,9 @@ TYPEINFO(/obj/machinery/power/furnace)
 				if(fuel_state >= i) //Add the overlay
 					var/image/I = GetOverlayImage(okey)
 					if(!I) I = image('icons/obj/power.dmi', "furn-c[i]")
-					UpdateOverlays(I, okey)
+					AddOverlays(I, okey)
 				else //Clear the overlay
-					UpdateOverlays(null, okey, 0, 1)
+					ClearSpecificOverlays(TRUE, okey)
 
 
 	was_deconstructed_to_frame(mob/user)
@@ -132,7 +133,8 @@ TYPEINFO(/obj/machinery/power/furnace)
 				if (crate.spawn_contents && crate.make_my_stuff()) //Ensure contents have been spawned properly
 					crate.spawn_contents = null
 
-				user.visible_message(SPAN_NOTICE("[user] uses the [src]'s automatic ore loader on [crate]!"), SPAN_NOTICE("You use the [src]'s automatic ore loader on [crate]."))
+				user.visible_message(SPAN_NOTICE("[user] uses the [src]'s automatic ore loader on [crate]!"), \
+				SPAN_NOTICE("You use the [src]'s automatic ore loader on [crate]."))
 				for (var/obj/item/I in crate.contents)
 					load_into_furnace(I, 1, user)
 					if (src.fuel >= src.maxfuel)
@@ -296,7 +298,6 @@ TYPEINFO(/obj/machinery/power/furnace)
 		return 1
 
 /datum/action/bar/icon/stuff_mob_into_furnace
-	id = "stuff_into_furnace"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 	duration = 5 SECONDS

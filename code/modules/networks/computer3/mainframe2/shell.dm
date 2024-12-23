@@ -223,11 +223,11 @@
 							echo_text = pipetemp
 
 						var/add_newline = TRUE
-						if (command_list[1] == "-n")
-							add_newline = FALSE
-							command_list.Cut(1,2)
 
 						if(istype(command_list) && (length(command_list) > 0))
+							if (command_list[1] == "-n")
+								add_newline = FALSE
+								command_list.Cut(1,2)
 							echo_text += jointext(command_list, " ")
 
 						if (piping && piped_list.len && (ckey(piped_list[1]) != "break") )

@@ -30,7 +30,7 @@
 */
 
 /obj/machinery/computer/tetris
-	name = "Robustris Pro Cabinet"
+	name = "Robustris Pro cabinet"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tetris"
 	desc = "Instructions:<ul style='margin: 0;'><li>Left/Right Arrows: Move</li><li>Up Arrow/Space: Hard Drop</li><li>Down Arrow/S: Soft Drop</li><li>W/E/R: Rotate CW</li><li>Q/Z: Rotate CCW</li></ul>"

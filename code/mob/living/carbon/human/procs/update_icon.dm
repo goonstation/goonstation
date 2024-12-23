@@ -30,9 +30,9 @@
 
 	#define UPDATE_OVERLAY(X) \
 		if(src.X ## _standing?.icon_state && src.X ## _standing.icon_state != "00") {\
-			src.UpdateOverlays(src.X ## _standing, #X); \
+			src.AddOverlays(src.X ## _standing, #X); \
 		} else { \
-			src.UpdateOverlays(null, #X, 1, 1); \
+			src.ClearSpecificOverlays(1, #X); \
 		}
 
 	UPDATE_OVERLAY(body)
@@ -112,8 +112,9 @@
 		suit_image.filters = src.w_uniform.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.w_uniform)
 
 		var/wear_state = src.w_uniform.wear_state || src.w_uniform.icon_state
-		if (wear_state in src.mutantrace?.clothing_icon_states?["uniform"])
-			suit_image.icon = src.mutantrace.clothing_icons["uniform"]
+		var/typeinfo/datum/mutantrace/typeinfo = src.mutantrace?.get_typeinfo()
+		if (wear_state in typeinfo?.clothing_icon_states["uniform"])
+			suit_image.icon = typeinfo.clothing_icons["uniform"]
 		else
 			suit_image.icon = src.w_uniform.wear_image_icon
 		suit_image.icon_state = wear_state
@@ -122,32 +123,25 @@
 		suit_image.alpha = src.w_uniform.alpha
 		suit_image.color = src.w_uniform.color
 		src.w_uniform.update_wear_image(src, src.w_uniform.wear_image.icon != src.w_uniform.wear_image_icon)
-		src.UpdateOverlays(suit_image, "suit_image1")
-		var/counter = 1
-		while (counter < 6)
-			counter++
-			src.UpdateOverlays(null, "suit_image[counter]")
+		src.AddOverlays(suit_image, "suit_image1")
 
 		if (src.w_uniform.worn_material_texture_image != null)
 			src.w_uniform.worn_material_texture_image.layer = src.w_uniform.wear_image.layer + 0.1
-			src.UpdateOverlays(src.w_uniform.worn_material_texture_image, "material_suit")
+			src.AddOverlays(src.w_uniform.worn_material_texture_image, "material_suit")
 		else
-			src.UpdateOverlays(null, "material_suit")
+			src.ClearSpecificOverlays("material_suit")
 
 	else
-		var/counter = 0
-		while (counter < 6)
-			counter++
-			src.UpdateOverlays(null, "suit_image[counter]")
-		src.UpdateOverlays(null, "material_suit")
+		src.ClearSpecificOverlays("suit_image1", "material_suit")
 
 /mob/living/carbon/human/proc/update_id(head_offset)
 	if (src.wear_id)
 		wear_sanity_check(src.wear_id)
 		var/wear_state = src.wear_id.wear_state || src.wear_id.icon_state
 		var/no_offset = 0
-		if (wear_state in src.mutantrace?.clothing_icon_states?["id"])
-			src.wear_id.wear_image.icon = src.mutantrace.clothing_icons["id"]
+		var/typeinfo/datum/mutantrace/typeinfo = src.mutantrace?.get_typeinfo()
+		if (wear_state in typeinfo?.clothing_icon_states["id"])
+			src.wear_id.wear_image.icon = typeinfo.clothing_icons["id"]
 			no_offset = 1
 		else
 			src.wear_id.wear_image.icon = src.wear_id.wear_image_icon
@@ -161,9 +155,9 @@
 		src.wear_id.wear_image.color = src.wear_id.color
 		src.wear_id.wear_image.alpha = src.wear_id.alpha
 		src.wear_id.wear_image.filters = src.wear_id.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.wear_id)
-		src.UpdateOverlays(src.wear_id.wear_image, "wear_id")
+		src.AddOverlays(src.wear_id.wear_image, "wear_id")
 	else
-		src.UpdateOverlays(null, "wear_id")
+		src.ClearSpecificOverlays("wear_id")
 
 /mob/living/carbon/human/proc/update_gloves(hand_offset)
 	src.update_bloody_gloves()
@@ -172,12 +166,12 @@
 		var/icon_name = src.gloves.wear_state || src.gloves.item_state || src.gloves.icon_state
 		var/no_offset = FALSE
 		src.gloves.wear_image.layer = src.gloves.wear_layer
-		src.gloves.wear_image.filters = src.gloves.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.gloves)
-
+		src.gloves.wear_image.filters = src.gloves.filters.Copy() + src.mutantrace.apply_clothing_filters(src.gloves)
+		var/typeinfo/datum/mutantrace/typeinfo = src.mutantrace?.get_typeinfo()
 		if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_left_arm"))
 			var/icon_local = (src.gloves.which_hands & GLOVE_HAS_LEFT) ? icon_name : "transparent"
-			if ("left_[icon_local]" in src.mutantrace?.clothing_icon_states?["hands"]) //checking if the wearer is a mutant, and if so swaps the left glove with the special sprite if there is one.
-				src.gloves.wear_image.icon = src.mutantrace.clothing_icons["hands"]
+			if ("left_[icon_local]" in typeinfo?.clothing_icon_states["hands"]) //checking if the wearer is a mutant, and if so swaps the left glove with the special sprite if there is one.
+				src.gloves.wear_image.icon = typeinfo.clothing_icons["hands"]
 				no_offset = TRUE
 				src.gloves.wear_image.pixel_x = initial(src.gloves.wear_image.pixel_x)
 				src.gloves.wear_image.pixel_y = initial(src.gloves.wear_image.pixel_y)
@@ -187,14 +181,14 @@
 			src.gloves.wear_image.color = src.gloves.color
 			src.gloves.wear_image.alpha = src.gloves.alpha
 			src.gloves.update_wear_image(src, src.gloves.wear_image.icon != src.gloves.wear_image_icon)
-			src.UpdateOverlays(src.gloves.wear_image, "wear_gloves_l")
+			src.AddOverlays(src.gloves.wear_image, "wear_gloves_l")
 		else
-			src.UpdateOverlays(null, "wear_gloves_l")
+			src.ClearSpecificOverlays("wear_gloves_l")
 
 		if (src.limbs && src.limbs.r_arm && src.limbs.r_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_right_arm"))
 			var/icon_local = (src.gloves.which_hands & GLOVE_HAS_RIGHT) ? icon_name : "transparent"
-			if ("right_[icon_local]" in src.mutantrace?.clothing_icon_states?["hands"]) //above but right glove
-				src.gloves.wear_image.icon = src.mutantrace.clothing_icons["hands"]
+			if ("right_[icon_local]" in typeinfo?.clothing_icon_states["hands"]) //above but right glove
+				src.gloves.wear_image.icon = typeinfo.clothing_icons["hands"]
 				no_offset = TRUE
 				src.gloves.wear_image.pixel_x = initial(src.gloves.wear_image.pixel_x)
 				src.gloves.wear_image.pixel_y = initial(src.gloves.wear_image.pixel_y)
@@ -203,17 +197,16 @@
 			src.gloves.wear_image.icon_state = "right_[icon_local]"
 			src.gloves.wear_image.color = src.gloves.color
 			src.gloves.wear_image.alpha = src.gloves.alpha
-			src.UpdateOverlays(src.gloves.wear_image, "wear_gloves_r")
+			src.AddOverlays(src.gloves.wear_image, "wear_gloves_r")
 		else
-			src.UpdateOverlays(null, "wear_gloves_r")
+			src.ClearSpecificOverlays("wear_gloves_r")
 
 		if (!no_offset)
 			src.gloves.wear_image.pixel_x = 0
 			src.gloves.wear_image.pixel_y = hand_offset
 
 	else
-		src.UpdateOverlays(null, "wear_gloves_l")
-		src.UpdateOverlays(null, "wear_gloves_r")
+		src.ClearSpecificOverlays("wear_gloves_l", "wear_gloves_r")
 
 /mob/living/carbon/human/proc/update_shoes()
 	src.update_bloody_shoes()
@@ -226,10 +219,11 @@
 		src.shoes.wear_image.overlays = null
 
 		var/shoes_count = 0
+		var/typeinfo/datum/mutantrace/typeinfo = src.mutantrace?.get_typeinfo()
 		if (src.limbs && src.limbs.l_leg && src.limbs.l_leg.accepts_normal_human_overlays)
 			shoes_count++
-			if ("left_[wear_state]" in src.mutantrace?.clothing_icon_states?["feet"]) //checks if they are a mutantrace with special left shoe sprites and then replaces them if they do
-				src.shoes.wear_image.icon = src.mutantrace.clothing_icons["feet"]
+			if ("left_[wear_state]" in typeinfo?.clothing_icon_states["feet"]) //checks if they are a mutantrace with special left shoe sprites and then replaces them if they do
+				src.shoes.wear_image.icon = typeinfo.clothing_icons["feet"]
 			else
 				src.shoes.wear_image.icon = src.shoes.wear_image_icon
 			src.shoes.wear_image.icon_state = "left_[wear_state]"
@@ -237,14 +231,14 @@
 		if (src.limbs && src.limbs.r_leg && src.limbs.r_leg.accepts_normal_human_overlays)
 			shoes_count++
 			if(shoes_count == 1)
-				if ("right_[wear_state]" in src.mutantrace?.clothing_icon_states?["feet"]) //like above, but for right shoes
-					src.shoes.wear_image.icon = src.mutantrace.clothing_icons["feet"]
+				if ("right_[wear_state]" in typeinfo?.clothing_icon_states["feet"]) //like above, but for right shoes
+					src.shoes.wear_image.icon = typeinfo.clothing_icons["feet"]
 				else
 					src.shoes.wear_image.icon = src.shoes.wear_image_icon
 				src.shoes.wear_image.icon_state = "right_[wear_state]"
 			else
-				if ("right_[wear_state]" in src.mutantrace?.clothing_icon_states?["feet"])
-					src.shoes.wear_image.icon = src.mutantrace.clothing_icons["feet"]
+				if ("right_[wear_state]" in typeinfo?.clothing_icon_states?["feet"])
+					src.shoes.wear_image.icon = typeinfo.clothing_icons["feet"]
 				else
 					src.shoes.wear_image.icon = src.shoes.wear_image_icon
 				var/image/right_shoe_overlay = image(src.shoes.wear_image.icon, "right_[wear_state]")
@@ -254,11 +248,11 @@
 
 		if(shoes_count)
 			src.shoes.wear_image.filters = src.shoes.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.shoes)
-			src.UpdateOverlays(src.shoes.wear_image, "wear_shoes")
+			src.AddOverlays(src.shoes.wear_image, "wear_shoes")
 		else
-			src.UpdateOverlays(null, "wear_shoes")
+			src.ClearSpecificOverlays("wear_shoes")
 	else
-		src.UpdateOverlays(null, "wear_shoes")
+		src.ClearSpecificOverlays("wear_shoes")
 
 /mob/living/carbon/human/proc/update_suit()
 	src.update_bloody_suit()
@@ -267,10 +261,10 @@
 		src.wear_suit.wear_image.layer = src.wear_suit.wear_layer
 		src.wear_suit.wear_image.filters = src.wear_suit.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.wear_suit)
 		//src.wear_suit.wear_image.filters += src.mutantrace?.apply_clothing_filters(src.wear_suit)
-
+		var/typeinfo/datum/mutantrace/typeinfo = src.mutantrace?.get_typeinfo()
 		var/wear_state = src.wear_suit.wear_state || src.wear_suit.icon_state
-		if (wear_state in src.mutantrace?.clothing_icon_states?["overcoats"])
-			src.wear_suit.wear_image.icon = src.mutantrace.clothing_icons["overcoats"]
+		if (wear_state in typeinfo?.clothing_icon_states["overcoats"])
+			src.wear_suit.wear_image.icon = typeinfo.clothing_icons["overcoats"]
 		else
 			src.wear_suit.wear_image.icon = src.wear_suit.wear_image_icon
 		src.wear_suit.wear_image.icon_state = wear_state
@@ -281,13 +275,13 @@
 
 		if (src.organHolder?.tail) update_tail_clothing(wear_state)
 
-		src.UpdateOverlays(src.wear_suit.wear_image, "wear_suit")
+		src.AddOverlays(src.wear_suit.wear_image, "wear_suit")
 
 		if (src.wear_suit.worn_material_texture_image != null)
 			src.wear_suit.worn_material_texture_image.layer = src.wear_suit.wear_image.layer + 0.1
-			src.UpdateOverlays(src.wear_suit.worn_material_texture_image, "material_armor")
+			src.AddOverlays(src.wear_suit.worn_material_texture_image, "material_armor")
 		else
-			src.UpdateOverlays(null, "material_armor")
+			src.ClearSpecificOverlays("material_armor")
 
 		if (src.wear_suit.restrain_wearer)
 			if (src.hasStatus("handcuffed"))
@@ -300,21 +294,21 @@
 				drop_item()
 				src.hand = h
 	else
-		src.UpdateOverlays(null, "wear_suit")
-		src.UpdateOverlays(null, "material_armor")
+		src.ClearSpecificOverlays("wear_suit", "material_armor")
 		if (src.organHolder?.tail)
 			src.update_tail_clothing()
-		src.UpdateOverlays(src.tail_standing, "tail", 1, 1) // i blame pali for giving me this power
-		src.UpdateOverlays(src.tail_standing_oversuit, "tail_oversuit", 1, 1)
-		src.UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit", 1, 1)
+		src.AddOverlays(src.tail_standing, "tail", TRUE) // i blame pali for giving me this power
+		src.AddOverlays(src.tail_standing_oversuit, "tail_oversuit", TRUE)
+		src.AddOverlays(src.detail_standing_oversuit, "detail_oversuit", TRUE)
 
 /mob/living/carbon/human/proc/update_back(body_offset)
 	if (src.back)
 		wear_sanity_check(src.back)
 		var/wear_state = src.back.wear_state || src.back.icon_state
 		var/no_offset = FALSE
-		if (wear_state in src.mutantrace?.clothing_icon_states?["back"]) //checks if they are a mutantrace with special back sprites and then replaces them if they do
-			src.back.wear_image.icon = src.mutantrace.clothing_icons["back"]
+		var/typeinfo/datum/mutantrace/typeinfo = src.mutantrace?.get_typeinfo()
+		if (wear_state in typeinfo?.clothing_icon_states["back"]) //checks if they are a mutantrace with special back sprites and then replaces them if they do
+			src.back.wear_image.icon = typeinfo.clothing_icons["back"]
 			no_offset = TRUE
 			src.back.wear_image.pixel_x = initial(src.back.wear_image.pixel_x)
 			src.back.wear_image.pixel_y = initial(src.back.wear_image.pixel_y)
@@ -331,25 +325,25 @@
 		src.back.wear_image.alpha = src.back.alpha
 		src.back.update_wear_image(src, src.back.wear_image.icon != src.back.wear_image_icon)
 		src.back.wear_image.filters = src.back.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.back)
-		src.UpdateOverlays(src.back.wear_image, "wear_back")
+		src.AddOverlays(src.back.wear_image, "wear_back")
 
 		if (src.back.worn_material_texture_image != null)
 			src.back.worn_material_texture_image.layer = src.back.wear_image.layer + 0.1
-			src.UpdateOverlays(src.back.worn_material_texture_image, "material_back")
+			src.AddOverlays(src.back.worn_material_texture_image, "material_back")
 		else
-			src.UpdateOverlays(null, "material_back")
+			src.ClearSpecificOverlays("material_back")
 		src.back.screen_loc =  do_hud_offset_thing(src.back, hud.layouts[hud.layout_style]["back"])
 	else
-		src.UpdateOverlays(null, "wear_back")
-		src.UpdateOverlays(null, "material_back")
+		src.ClearSpecificOverlays("wear_back", "material_back")
 
 /mob/living/carbon/human/proc/update_glasses(head_offset)
 	if (src.glasses)
 		wear_sanity_check(src.glasses)
 		var/wear_state = src.glasses.wear_state || src.glasses.icon_state
 		var/no_offset = FALSE
-		if (wear_state in src.mutantrace?.clothing_icon_states?["eyes"]) //checks for special glasses sprites for mutantraces and replaces the sprite with it if there is one.
-			src.glasses.wear_image.icon = src.mutantrace.clothing_icons["eyes"]
+		var/typeinfo/datum/mutantrace/typeinfo = src.mutantrace?.get_typeinfo()
+		if (wear_state in typeinfo?.clothing_icon_states["eyes"]) //checks for special glasses sprites for mutantraces and replaces the sprite with it if there is one.
+			src.glasses.wear_image.icon = typeinfo.clothing_icons["eyes"]
 			no_offset = TRUE
 			src.glasses.wear_image.pixel_x = initial(src.glasses.wear_image.pixel_x)
 			src.glasses.wear_image.pixel_y = initial(src.glasses.wear_image.pixel_y)
@@ -364,23 +358,23 @@
 		src.glasses.wear_image.alpha = src.glasses.alpha
 		src.glasses.update_wear_image(src, src.glasses.wear_image.icon != src.glasses.wear_image_icon)
 		src.glasses.wear_image.filters = src.glasses.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.glasses)
-		src.UpdateOverlays(src.glasses.wear_image, "wear_glasses")
+		src.AddOverlays(src.glasses.wear_image, "wear_glasses")
 		if (src.glasses.worn_material_texture_image != null)
 			src.glasses.worn_material_texture_image.layer = src.glasses.wear_image.layer + 0.1
-			src.UpdateOverlays(src.glasses.worn_material_texture_image, "material_glasses")
+			src.AddOverlays(src.glasses.worn_material_texture_image, "material_glasses")
 		else
-			src.UpdateOverlays(null, "material_glasses")
+			src.ClearSpecificOverlays("material_glasses")
 	else
-		src.UpdateOverlays(null, "wear_glasses")
-		src.UpdateOverlays(null, "material_glasses")
+		src.ClearSpecificOverlays("wear_glasses", "material_glasses")
 
 /mob/living/carbon/human/proc/update_ears(head_offset)
 	if (src.ears)
 		wear_sanity_check(src.ears)
 		var/no_offset = FALSE
 		var/wear_state = src.ears.wear_state || src.ears.icon_state
-		if (wear_state in src.mutantrace?.clothing_icon_states?["ears"]) //checks if they are a mutantrace with special earwear sprites and then replaces them if they do
-			src.ears.wear_image.icon = src.mutantrace.clothing_icons["ears"]
+		var/typeinfo/datum/mutantrace/typeinfo = src.mutantrace?.get_typeinfo()
+		if (wear_state in typeinfo?.clothing_icon_states?["ears"]) //checks if they are a mutantrace with special earwear sprites and then replaces them if they do
+			src.ears.wear_image.icon = typeinfo.clothing_icons["ears"]
 			no_offset = TRUE
 			src.ears.wear_image.pixel_x = initial(src.ears.wear_image.pixel_x)
 			src.ears.wear_image.pixel_y = initial(src.ears.wear_image.pixel_y)
@@ -394,15 +388,14 @@
 		src.ears.wear_image.color = src.ears.color
 		src.ears.wear_image.alpha = src.ears.alpha
 		src.ears.wear_image.filters = src.ears.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.ears)
-		src.UpdateOverlays(src.ears.wear_image, "wear_ears")
+		src.AddOverlays(src.ears.wear_image, "wear_ears")
 		if (src.ears.worn_material_texture_image != null)
 			src.ears.worn_material_texture_image.layer = src.ears.wear_image.layer + 0.1
-			src.UpdateOverlays(src.ears.worn_material_texture_image, "material_ears")
+			src.AddOverlays(src.ears.worn_material_texture_image, "material_ears")
 		else
-			src.UpdateOverlays(null, "material_ears")
+			src.ClearSpecificOverlays("material_ears")
 	else
-		src.UpdateOverlays(null, "wear_ears")
-		src.UpdateOverlays(null, "material_ears")
+		src.ClearSpecificOverlays("wear_ears", "material_ears")
 
 /mob/living/carbon/human/proc/update_mask(head_offset)
 	src.update_bloody_mask()
@@ -411,8 +404,9 @@
 		var/no_offset = FALSE
 
 		var/wear_state = src.wear_mask.wear_state || src.wear_mask.icon_state
-		if (wear_state in src.mutantrace?.clothing_icon_states?["mask"])
-			src.wear_mask.wear_image.icon = src.mutantrace.clothing_icons["mask"]
+		var/typeinfo/datum/mutantrace/typeinfo = src.mutantrace?.get_typeinfo()
+		if (wear_state in typeinfo?.clothing_icon_states?["mask"])
+			src.wear_mask.wear_image.icon = typeinfo.clothing_icons["mask"]
 			no_offset = TRUE
 			src.wear_mask.wear_image.pixel_x = initial(src.wear_mask.wear_image.pixel_x)
 			src.wear_mask.wear_image.pixel_y = initial(src.wear_mask.wear_image.pixel_y)
@@ -428,15 +422,14 @@
 		src.wear_mask.wear_image.alpha = src.wear_mask.alpha
 		src.wear_mask.update_wear_image(src, src.wear_mask.wear_image.icon != src.wear_mask.wear_image_icon)
 		src.wear_mask.wear_image.filters = src.wear_mask.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.wear_mask)
-		src.UpdateOverlays(src.wear_mask.wear_image, "wear_mask")
+		src.AddOverlays(src.wear_mask.wear_image, "wear_mask")
 		if (src.wear_mask.worn_material_texture_image != null)
 			src.wear_mask.worn_material_texture_image.layer = src.wear_mask.wear_image.layer + 0.1
-			src.UpdateOverlays(src.wear_mask.worn_material_texture_image, "material_mask")
+			src.AddOverlays(src.wear_mask.worn_material_texture_image, "material_mask")
 		else
-			src.UpdateOverlays(null, "material_mask")
+			src.ClearSpecificOverlays("material_mask")
 	else
-		src.UpdateOverlays(null, "wear_mask")
-		src.UpdateOverlays(null, "material_mask")
+		src.ClearSpecificOverlays("wear_mask", "material_mask")
 
 /mob/living/carbon/human/proc/update_head(head_offset)
 	src.update_bloody_head()
@@ -445,8 +438,9 @@
 
 		var/no_offset = FALSE
 		var/wear_state = src.head.wear_state || src.head.icon_state
-		if (wear_state in src.mutantrace?.clothing_icon_states?["head"])
-			src.head.wear_image.icon = src.mutantrace.clothing_icons["head"]
+		var/typeinfo/datum/mutantrace/typeinfo = src.mutantrace?.get_typeinfo()
+		if (wear_state in typeinfo?.clothing_icon_states["head"])
+			src.head.wear_image.icon = typeinfo.clothing_icons["head"]
 			no_offset = TRUE
 			src.head.wear_image.pixel_x = initial(src.head.wear_image.pixel_x)
 			src.head.wear_image.pixel_y = initial(src.head.wear_image.pixel_y)
@@ -462,24 +456,23 @@
 		src.head.wear_image.alpha = src.head.alpha
 		src.head.update_wear_image(src, src.head.wear_image.icon != src.head.wear_image_icon)
 		src.head.wear_image.filters = src.head.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.head)
-		src.UpdateOverlays(src.head.wear_image, "wear_head")
+		src.AddOverlays(src.head.wear_image, "wear_head")
 		if (src.head.worn_material_texture_image != null)
 			src.head.worn_material_texture_image.layer = src.head.wear_image.layer + 0.1
-			src.UpdateOverlays(src.head.worn_material_texture_image, "material_head")
+			src.AddOverlays(src.head.worn_material_texture_image, "material_head")
 		else
-			src.UpdateOverlays(null, "material_head")
+			src.ClearSpecificOverlays("material_head")
 	else
-		src.UpdateOverlays(null, "wear_head")
-		src.UpdateOverlays(null, "material_head")
+		src.ClearSpecificOverlays("wear_head", "material_head")
 
 /mob/living/carbon/human/proc/update_belt(body_offset)
 	if (src.belt)
 		wear_sanity_check(src.belt)
 		var/wear_state = src.belt.wear_state || src.belt.item_state || src.belt.icon_state
 		var/no_offset = FALSE
-		//
-		if (wear_state in src.mutantrace?.clothing_icon_states?["belt"]) //checks if they are a mutantrace with special belt sprites and then replaces them if they do
-			src.belt.wear_image.icon = src.mutantrace.clothing_icons["belt"]
+		var/typeinfo/datum/mutantrace/typeinfo = src.mutantrace?.get_typeinfo()
+		if (wear_state in typeinfo?.clothing_icon_states["belt"]) //checks if they are a mutantrace with special belt sprites and then replaces them if they do
+			src.belt.wear_image.icon = typeinfo.clothing_icons["belt"]
 			no_offset = TRUE
 			src.belt.wear_image.pixel_x = initial(src.belt.wear_image.pixel_x)
 			src.belt.wear_image.pixel_y = initial(src.belt.wear_image.pixel_y)
@@ -495,34 +488,33 @@
 		src.belt.wear_image.color = src.belt.color
 		src.belt.wear_image.alpha = src.belt.alpha
 		src.belt.wear_image.filters = src.belt.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.belt)
-		src.UpdateOverlays(src.belt.wear_image, "wear_belt")
+		src.AddOverlays(src.belt.wear_image, "wear_belt")
 		if (src.belt.worn_material_texture_image != null)
 			src.belt.worn_material_texture_image.layer = src.belt.wear_image.layer + 0.1
-			src.UpdateOverlays(src.belt.worn_material_texture_image, "material_belt")
+			src.AddOverlays(src.belt.worn_material_texture_image, "material_belt")
 		else
-			src.UpdateOverlays(null, "material_belt")
+			src.ClearSpecificOverlays("material_belt")
 		src.belt.screen_loc = do_hud_offset_thing(belt, hud.layouts[hud.layout_style]["belt"])
 	else
-		src.UpdateOverlays(null, "wear_belt")
-		src.UpdateOverlays(null, "material_belt")
+		src.ClearSpecificOverlays("wear_belt", "material_belt")
 
 /mob/living/carbon/human/proc/update_handcuffs(hand_offset)
 	if (src.hasStatus("handcuffed"))
 		src.remove_pulling()
 		var/image/handcuff_img = SafeGetOverlayImage("handcuffs", 'icons/mob/mob.dmi', "handcuff1", MOB_HANDCUFF_LAYER)
 		handcuff_img.pixel_y = hand_offset
-		src.UpdateOverlays(handcuff_img, "handcuffs")
+		src.AddOverlays(handcuff_img, "handcuffs")
 	else
-		src.UpdateOverlays(null, "handcuffs")
+		src.ClearSpecificOverlays("handcuffs")
 
 /mob/living/carbon/human/proc/update_implants()
 	for (var/I in implant_images)
 		if (!(I in implant))
-			src.UpdateOverlays(null, "implant--\ref[I]")
+			src.ClearSpecificOverlays("implant--\ref[I]")
 			implant_images -= I
 	for (var/obj/item/implant/I in implant)
 		if (I.implant_overlay && !(I in implant_images))
-			src.UpdateOverlays(I.implant_overlay, "implant--\ref[I]")
+			src.AddOverlays(I.implant_overlay, "implant--\ref[I]")
 			implant_images += I
 
 #undef wear_sanity_check
@@ -537,7 +529,7 @@
 
 	// does a suit potentially cover our tail?
 	if(our_tail.clothing_image_icon && icon_state)
-		var/tail_overrides = icon_states(our_tail.clothing_image_icon, 1)
+		var/tail_overrides = icon_states(our_tail.clothing_image_icon)
 		if (islist(tail_overrides) && (icon_state in tail_overrides))
 			human_tail_image = image(our_tail.clothing_image_icon, icon_state)
 			src.tail_standing.overlays += human_tail_image
@@ -557,129 +549,120 @@
 	src.update_tail_overlays()
 
 /mob/living/carbon/human/proc/update_tail_overlays()
-	src.UpdateOverlays(src.tail_standing, "tail", 1, 1) // i blame pali for giving me this power
-	src.UpdateOverlays(src.tail_standing_oversuit, "tail_oversuit", 1, 1)
-	src.UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit", 1, 1)
+	src.AddOverlays(src.tail_standing, "tail", TRUE) // i blame pali for giving me this power
+	src.AddOverlays(src.tail_standing_oversuit, "tail_oversuit", TRUE)
+	src.AddOverlays(src.detail_standing_oversuit, "detail_oversuit", TRUE)
 
 /mob/living/carbon/human/update_face()
 	..()
 	if (!src.bioHolder)
 		return // fuck u
 
-	UpdateOverlays(null, "hair_one", 1, 1)
-	UpdateOverlays(null, "hair_two", 1, 1)
-	UpdateOverlays(null, "hair_three", 1, 1)
-
-	UpdateOverlays(null, "hair_special_one", 1, 1)
-	UpdateOverlays(null, "hair_special_two", 1, 1)
-	UpdateOverlays(null, "hair_special_three", 1, 1)
+	ClearSpecificOverlays(TRUE, "hair_one", "hair_two", "hair_three", "hair_special_one", "hair_special_two", "hair_special_three")
 
 	var/obj/item/clothing/suit/back_clothing = src.back // typed version of back to check hair sealage; might not be clothing, we check type below
 	var/seal_hair = ((src.wear_suit && src.wear_suit.over_hair) || (src.head && src.head.seal_hair) \
 						|| (src.wear_suit && src.wear_suit.body_parts_covered & HEAD) || (istype(back_clothing) && back_clothing.over_hair))
+	var/hooded = (src.wear_suit && src.wear_suit.hooded)
 	var/obj/item/organ/head/my_head
 	if (src?.organHolder?.head)
 		var/datum/appearanceHolder/AHH = src.bioHolder?.mobAppearance
 		my_head = src.organHolder.head
-		var/y_to_offset = AHH.customization_first_offset_y
+		var/y_to_offset = AHH.customizations["hair_bottom"].offset_y
 
 		if(my_head.head_image_nose)
-			UpdateOverlays(my_head.head_image_nose, "nose", 1, 1)
+			AddOverlays(my_head.head_image_nose, "nose", TRUE)
 		else
-			UpdateOverlays(null, "nose", 1, 1)
+			ClearSpecificOverlays(TRUE, "nose")
 
 		src.image_eyes_L = my_head.head_image_eyes_L
 		if (src.image_eyes_L && src.image_eyes_L.icon_state != "none"&& src.organHolder?.left_eye)
 			src.image_eyes_L.pixel_y = AHH.e_offset_y
 			src.image_eyes_L.color = src.organHolder.left_eye.iris_color
-			UpdateOverlays(image_eyes_L, "eyes_L", 1, 1)
+			AddOverlays(image_eyes_L, "eyes_L", TRUE)
 		else
-			UpdateOverlays(null, "eyes_L", 1, 1)
+			ClearSpecificOverlays(TRUE, "eyes_L")
 
 		src.image_eyes_R = my_head.head_image_eyes_R
 		if (src.image_eyes_R && src.image_eyes_R.icon_state != "none" && src.organHolder?.right_eye)
 			src.image_eyes_R.pixel_y = AHH.e_offset_y
 			src.image_eyes_R.color = src.organHolder.right_eye.iris_color
-			UpdateOverlays(image_eyes_R, "eyes_R", 1, 1)
+			AddOverlays(image_eyes_R, "eyes_R", TRUE)
 		else
-			UpdateOverlays(null, "eyes_R", 1, 1)
+			ClearSpecificOverlays(TRUE, "eyes_R")
+
+		// Add hoodie alpha mask for showing hair
+		if(hooded)
+			var/image/overlay_mask = image('icons/mob/clothing/overcoats/hoods/worn_hoodies.dmi', "hoodie-mask")
+			overlay_mask.render_target = "*hoody[\ref(src)]"
+			my_head.add_filter("hoodie-mask", 0, alpha_mask_filter(y=-8, render_source="*hoody[\ref(src)]"))
+			src.AddOverlays(overlay_mask, "hoodie-mask-overlay", TRUE)
+		else
+			my_head.remove_filter("hoodie-mask")
 
 		//Previously we shoved all the hair images into the overlays of two images (one for normal hair and one for special) 'cause of identical vars
 		//But now we need hairstyle-specific layering so RIP to that approach and time to do things manually
 		src.image_cust_one = my_head.head_image_cust_one
 		src.image_cust_one?.pixel_y = y_to_offset
+		src.image_cust_one.filters = my_head.filters.Copy()
 		src.image_cust_two = my_head.head_image_cust_two
 		src.image_cust_two?.pixel_y = y_to_offset
+		src.image_cust_two.filters = my_head.filters.Copy()
 		src.image_cust_three = my_head.head_image_cust_three
 		src.image_cust_three?.pixel_y = y_to_offset
+		src.image_cust_three.filters = my_head.filters.Copy()
 
 		src.image_special_one = my_head.head_image_special_one
 		src.image_special_one?.pixel_y = y_to_offset
+		src.image_special_one.filters = my_head.filters.Copy()
 		src.image_special_two = my_head.head_image_special_two
 		src.image_special_two?.pixel_y = y_to_offset
+		src.image_special_two.filters = my_head.filters.Copy()
 		src.image_special_three = my_head.head_image_special_three
 		src.image_special_three?.pixel_y = y_to_offset
+		src.image_special_three.filters = my_head.filters.Copy()
 
 		if(!seal_hair)
 			if (AHH.mob_appearance_flags & HAS_HUMAN_HAIR || src.hair_override)
 				if(image_cust_one?.icon_state && image_cust_one.icon_state != "none")
-					UpdateOverlays(image_cust_one, "hair_one", 1, 1)
+					AddOverlays(image_cust_one, "hair_one", TRUE)
 				else
-					UpdateOverlays(null, "hair_one", 1, 1)
+					ClearSpecificOverlays(TRUE, "hair_one")
 
 				if(image_cust_two?.icon_state && image_cust_two.icon_state != "none")
-					UpdateOverlays(image_cust_two, "hair_two", 1, 1)
+					AddOverlays(image_cust_two, "hair_two", TRUE)
 				else
-					UpdateOverlays(null, "hair_two", 1, 1)
+					ClearSpecificOverlays(TRUE, "hair_two")
 
 				if(image_cust_three?.icon_state && image_cust_three.icon_state != "none")
-					UpdateOverlays(image_cust_three, "hair_three", 1, 1)
+					AddOverlays(image_cust_three, "hair_three", TRUE)
 				else
-					UpdateOverlays(null, "hair_three", 1, 1)
+					ClearSpecificOverlays(TRUE, "hair_three")
 			else
-				UpdateOverlays(null, "hair_one", 1, 1)
-				UpdateOverlays(null, "hair_two", 1, 1)
-				UpdateOverlays(null, "hair_three", 1, 1)
+				ClearSpecificOverlays(TRUE, "hair_one", "hair_two", "hair_three")
 
 			if (AHH.mob_appearance_flags & HAS_SPECIAL_HAIR || src.special_hair_override)
 				if(image_special_one?.icon_state && image_special_one.icon_state != "none")
-					UpdateOverlays(image_special_one, "hair_special_one", 1, 1)
+					AddOverlays(image_special_one, "hair_special_one", TRUE)
 				else
-					UpdateOverlays(null, "hair_special_one", 1, 1)
+					ClearSpecificOverlays(TRUE, "hair_special_one")
 
 				if(image_special_two?.icon_state && image_special_two.icon_state != "none")
-					UpdateOverlays(image_special_two, "hair_special_two", 1, 1)
+					AddOverlays(image_special_two, "hair_special_two", TRUE)
 				else
-					UpdateOverlays(null, "hair_special_two", 1, 1)
+					ClearSpecificOverlays(TRUE, "hair_special_two")
 
 				if(image_special_three?.icon_state && image_special_three.icon_state != "none")
-					UpdateOverlays(image_special_three, "hair_special_three", 1, 1)
+					AddOverlays(image_special_three, "hair_special_three", TRUE)
 				else
-					UpdateOverlays(null, "hair_special_three", 1, 1)
+					ClearSpecificOverlays(TRUE, "hair_special_three")
 			else
-				UpdateOverlays(null, "hair_special_one", 1, 1)
-				UpdateOverlays(null, "hair_special_two", 1, 1)
-				UpdateOverlays(null, "hair_special_three", 1, 1)
+				ClearSpecificOverlays(1, "hair_special_one", "hair_special_two", "hair_special_three")
 		else
-			UpdateOverlays(null, "hair_one", 1, 1)
-			UpdateOverlays(null, "hair_two", 1, 1)
-			UpdateOverlays(null, "hair_three", 1, 1)
-
-			UpdateOverlays(null, "hair_special_one", 1, 1)
-			UpdateOverlays(null, "hair_special_two", 1, 1)
-			UpdateOverlays(null, "hair_special_three", 1, 1)
+			ClearSpecificOverlays(1, "hair_one", "hair_two", "hair_three", "hair_special_one", "hair_special_two", "hair_special_three")
 	else
-		UpdateOverlays(null, "hair_one", 1, 1)
-		UpdateOverlays(null, "hair_two", 1, 1)
-		UpdateOverlays(null, "hair_three", 1, 1)
-
-		UpdateOverlays(null, "hair_special_one", 1, 1)
-		UpdateOverlays(null, "hair_special_two", 1, 1)
-		UpdateOverlays(null, "hair_special_three", 1, 1)
-
-		UpdateOverlays(null, "nose", 1, 1)
-		UpdateOverlays(null, "eyes_L", 1, 1)
-		UpdateOverlays(null, "eyes_R", 1, 1)
+		ClearSpecificOverlays(1, "hair_one", "hair_two", "hair_three", "hair_special_one", "hair_special_two", "hair_special_three", \
+			"nose", "eyes_L", "eyes_R")
 
 
 /mob/living/carbon/human/update_burning_icon(var/force_remove=0, var/datum/statusEffect/simpledot/burning/B = 0)
@@ -702,11 +685,11 @@
 			//src.fire_lying = image('icons/mob/human.dmi', "fire3_l", MOB_EFFECT_LAYER)
 		if (ismonkey(src))
 			src.fire_standing = SafeGetOverlayImage("fire", 'icons/mob/monkey.dmi', istate, MOB_EFFECT_LAYER)
-		else if (istype(src:mutantrace, /datum/mutantrace/lizard))
+		else if (istype(src.mutantrace, /datum/mutantrace/lizard))
 			src.fire_standing = SafeGetOverlayImage("fire", 'icons/mob/lizard.dmi', istate, MOB_EFFECT_LAYER)
-		else if (istype(src:mutantrace, /datum/mutantrace/werewolf))
+		else if (istype(src.mutantrace, /datum/mutantrace/werewolf))
 			src.fire_standing = SafeGetOverlayImage("fire", 'icons/mob/werewolf.dmi', istate, MOB_EFFECT_LAYER)
-		else if (istype(src:mutantrace, /datum/mutantrace/abomination))
+		else if (istype(src.mutantrace, /datum/mutantrace/abomination))
 			src.fire_standing = SafeGetOverlayImage("fire", 'icons/mob/abomination.dmi', istate, MOB_EFFECT_LAYER)
 		else
 			src.fire_standing = SafeGetOverlayImage("fire", 'icons/mob/human.dmi', istate, MOB_EFFECT_LAYER)
@@ -717,7 +700,7 @@
 		src.fire_standing = null
 		remove_simple_light("burning")
 
-	UpdateOverlays(src.fire_standing, "fire", 0, 1)
+	UpdateOverlays(src.fire_standing, "fire", FALSE, TRUE)
 
 /mob/living/carbon/human/update_inhands()
 	..()
@@ -734,20 +717,7 @@
 				var/l_item_arm = !(!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item) && isitem(src.l_hand))
 				if (!r_item_arm && !l_item_arm)
 					var/obj/item/I = src.l_hand
-					if (!I.inhand_image)
-						I.inhand_image = image(I.inhand_image_icon, "", MOB_INHAND_LAYER)
-
-					var/state = I.item_state ? I.item_state + "-LR" : (I.icon_state ? I.icon_state + "-LR" : "LR")
-					if(!(state in icon_states(I.inhand_image_icon)))
-						state = I.item_state ? I.item_state + "-L" : (I.icon_state ? I.icon_state + "-L" : "L")
-
-					I.inhand_image.icon_state = state
-					if (I.color)
-						I.inhand_image.color = I.color
-					else if (I.inhand_color)
-						I.inhand_image.color = I.inhand_color
-					I.inhand_image.pixel_x = 0
-					I.inhand_image.pixel_y = hand_offset
+					I.update_inhand("LR", hand_offset)
 					i_r_hand = null
 					i_l_hand = I.inhand_image
 
@@ -755,30 +725,14 @@
 			if (src.limbs.r_arm && src.r_hand)
 				if (!istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item) && isitem(src.r_hand))
 					var/obj/item/I = src.r_hand
-					if (!I.inhand_image)
-						I.inhand_image = image(I.inhand_image_icon, "", MOB_INHAND_LAYER)
-					I.inhand_image.icon_state = I.item_state ? I.item_state + "-R" : (I.icon_state ? I.icon_state + "-R" : "R")
-					if (I.color)
-						I.inhand_image.color = I.color
-					else if (I.inhand_color)
-						I.inhand_image.color = I.inhand_color
-					I.inhand_image.pixel_x = 0
-					I.inhand_image.pixel_y = hand_offset
+					I.update_inhand("R", hand_offset)
 					i_r_hand = I.inhand_image
 
 
 			if (src.limbs.l_arm && src.l_hand)
 				if (!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item) && isitem(src.l_hand))
 					var/obj/item/I = src.l_hand
-					if (!I.inhand_image)
-						I.inhand_image = image(I.inhand_image_icon, "", MOB_INHAND_LAYER)
-					I.inhand_image.icon_state = I.item_state ? I.item_state + "-L" : (I.icon_state ? I.icon_state + "-L" : "L")
-					if (I.color)
-						I.inhand_image.color = I.color
-					else if (I.inhand_color)
-						I.inhand_image.color = I.inhand_color
-					I.inhand_image.pixel_x = 0
-					I.inhand_image.pixel_y = hand_offset
+					I.update_inhand("L", hand_offset)
 					i_l_hand = I.inhand_image
 
 
@@ -791,9 +745,9 @@
 		src.image_cust_two?.layer = MOB_HAIR_LAYER1
 		src.image_cust_three?.layer = MOB_HAIR_LAYER1
 	else
-		src.image_cust_one?.layer = src.bioHolder.mobAppearance.customization_first.default_layer
-		src.image_cust_two?.layer = src.bioHolder.mobAppearance.customization_second.default_layer
-		src.image_cust_three?.layer = src.bioHolder.mobAppearance.customization_third.default_layer
+		src.image_cust_one?.layer = src.bioHolder.mobAppearance.customizations["hair_bottom"].style.default_layer
+		src.image_cust_two?.layer = src.bioHolder.mobAppearance.customizations["hair_middle"].style.default_layer
+		src.image_cust_three?.layer = src.bioHolder.mobAppearance.customizations["hair_top"].style.default_layer
 
 
 var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_leg_left", "r_arm" = "stump_arm_right", "l_arm" = "stump_arm_left")
@@ -878,11 +832,11 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					human_image = image(AHOLD.mob_detail_1_icon, AHOLD.mob_detail_1_state, MOB_BODYDETAIL_LAYER1)
 					switch(AHOLD.mob_detail_1_color_ref)
 						if(CUST_1)
-							human_image.color = AHOLD.customization_first_color
+							human_image.color = AHOLD.customizations["hair_bottom"].color
 						if(CUST_2)
-							human_image.color = AHOLD.customization_second_color
+							human_image.color = AHOLD.customizations["hair_middle"].color
 						if(CUST_3)
-							human_image.color = AHOLD.customization_third_color
+							human_image.color = AHOLD.customizations["hair_top"].color
 						else
 							human_image.color = "#FFFFFF"
 					src.body_standing.overlays += human_image
@@ -891,17 +845,17 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					human_detail_image = image(AHOLD.mob_oversuit_1_icon, AHOLD.mob_oversuit_1_state, layer = MOB_OVERSUIT_LAYER1)
 					switch(AHOLD.mob_oversuit_1_color_ref)
 						if(CUST_1)
-							human_detail_image.color = AHOLD.customization_first_color
+							human_detail_image.color = AHOLD.customizations["hair_bottom"].color
 						if(CUST_2)
-							human_detail_image.color = AHOLD.customization_second_color
+							human_detail_image.color = AHOLD.customizations["hair_middle"].color
 						if(CUST_3)
-							human_detail_image.color = AHOLD.customization_third_color
+							human_detail_image.color = AHOLD.customizations["hair_top"].color
 						else
 							human_detail_image.color = "#FFFFFF"
 					src.detail_standing_oversuit.overlays += human_detail_image
-					UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit")
+					AddOverlays(src.detail_standing_oversuit, "detail_oversuit")
 				else // ^^ up here because peoples' bodies turn invisible if it down there with the rest of em
-					UpdateOverlays(null, "detail_oversuit")
+					ClearSpecificOverlays("detail_oversuit")
 
 				if (src.organHolder?.head && !(AHOLD.mob_appearance_flags & HAS_NO_HEAD))
 					var/obj/item/organ/head/our_head = src.organHolder.head
@@ -912,8 +866,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 				if (src.organHolder?.tail)
 					update_tail_clothing()
 				else
-					UpdateOverlays(null, "tail")
-					UpdateOverlays(null, "tail_oversuit")
+					ClearSpecificOverlays("tail", "tail_oversuit")
 
 			else
 				if (src.organHolder?.head && !(AHOLD.mob_appearance_flags & HAS_NO_HEAD))
@@ -944,8 +897,9 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					var/armleg_offset = (name == "r_arm" || name == "l_arm") ? arm_offset : leg_offset
 					if (limb)
 						var/mutantrace_override = null
-						if (!limb.decomp_affected && src.mutantrace?.override_limb_icons && (limb.getMobIconState() in src.mutantrace.icon_states))
-							mutantrace_override = src.mutantrace.icon
+						var/typeinfo/datum/mutantrace/typeinfo = src.mutantrace?.get_typeinfo()
+						if (!limb.decomp_affected && src.mutantrace?.override_limb_icons && (limb.getMobIconState() in typeinfo?.icon_states))
+							mutantrace_override = typeinfo.icon
 						var/image/limb_pic = limb.getMobIcon(src.decomp_stage, mutantrace_override, force)	// The limb, not the hand/foot
 						var/limb_skin_tone = "#FFFFFF"	// So we dont stomp on any limbs that arent supposed to be colorful
 						if (limb.skintoned && limb.skin_tone)	// Get the limb's stored skin tone, if its skintoned and has a skin_tone
@@ -1192,11 +1146,11 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 	if (src.bioHolder)
 		src.bioHolder.OnMobDraw()
 	//Also forcing the updates since the overlays may have been modified on the images
-	src.UpdateOverlays(src.body_standing, "body", 1, 1)
-	src.UpdateOverlays(src.hands_standing, "hands", 1, 1)
-	src.UpdateOverlays(src.tail_standing, "tail", 1, 1) // i blame pali for giving me this power
-	src.UpdateOverlays(src.tail_standing_oversuit, "tail_oversuit", 1, 1)
-	src.UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit", 1, 1)
+	src.AddOverlays(src.body_standing, "body", TRUE)
+	src.AddOverlays(src.hands_standing, "hands", TRUE)
+	src.AddOverlays(src.tail_standing, "tail", TRUE) // i blame pali for giving me this power
+	src.AddOverlays(src.tail_standing_oversuit, "tail_oversuit", TRUE)
+	src.AddOverlays(src.detail_standing_oversuit, "detail_oversuit", TRUE)
 
 
 /mob/living/carbon/human/UpdateDamageIcon()
@@ -1239,9 +1193,9 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 		src.body_damage_standing.layer = MOB_DAMAGE_LAYER
 
 		if(burn_state || brute_state)
-			UpdateOverlays(src.body_damage_standing, "body_damage")
+			AddOverlays(src.body_damage_standing, "body_damage")
 		else
-			UpdateOverlays(null, "body_damage",0,1)
+			ClearSpecificOverlays(TRUE, "body_damage")
 	else
 		//Body damage, always present
 		src.body_damage_standing = SafeGetOverlayImage("body_damage", 'icons/mob/dam_human.dmi',"body[brute_state][burn_state]", MOB_DAMAGE_LAYER)// image('icons/mob/dam_human.dmi', "[brute_state][burn_state]", MOB_DAMAGE_LAYER)
@@ -1276,9 +1230,9 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 		if(burn_state || brute_state)
 			#define UPDATE_OVERLAY(X) \
 				if(src.X ## _standing?.icon_state && src.X ## _standing.icon_state != "00") {\
-					src.UpdateOverlays(src.X ## _standing, #X); \
+					src.AddOverlays(src.X ## _standing, #X); \
 				} else { \
-					src.UpdateOverlays(null, #X, 1, 1); \
+					src.ClearSpecificOverlays(1, #X); \
 				}
 
 			UPDATE_OVERLAY(body_damage)
@@ -1290,9 +1244,4 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 
 			#undef UPDATE_OVERLAY
 		else
-			UpdateOverlays(null, "body_damage",0,1)
-			UpdateOverlays(null, "head_damage",0,1)
-			UpdateOverlays(null, "l_arm_damage",0,1)
-			UpdateOverlays(null, "r_arm_damage",0,1)
-			UpdateOverlays(null, "l_leg_damage",0,1)
-			UpdateOverlays(null, "r_leg_damage",0,1)
+			ClearSpecificOverlays(TRUE, "body_damage", "head_damage", "l_arm_damage", "r_arm_damage", "l_leg_damage", "r_leg_damage")

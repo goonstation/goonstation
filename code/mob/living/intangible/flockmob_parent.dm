@@ -25,7 +25,7 @@
 	respect_view_tint_settings = TRUE
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	var/compute = 0
-	var/datum/flock/flock = null
+	var/tmp/datum/flock/flock = null
 	var/wear_id = null // to prevent runtimes from AIs tracking down radio signals
 
 	var/afk_counter = 0
@@ -137,7 +137,7 @@
 			if(prob(5))
 				user.visible_message("<span class='alert bold'>[user] tries to shove [src.name], but overbalances and falls over!</span>",
 				"<span class='alert bold'>You try to shove [src.name] too forcefully and topple over!</span>")
-				user.changeStatus("weakened", 2 SECONDS)
+				user.changeStatus("knockdown", 2 SECONDS)
 		if(INTENT_GRAB)
 			user.visible_message(SPAN_ALERT("[user] tries to grab [src.name], but they're only a trick of light!"),
 				SPAN_ALERT("You try to grab [src.name] but they're intangible! It's like trying to pull a cloud!"))
@@ -233,15 +233,15 @@
 	if (src.client && src.client.ismuted())
 		boutput(src, "You are currently muted and may not speak.")
 		return
-
+	SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 	if (dd_hasprefix(message, "*"))
 		return src.emote(copytext(message, 2),1)
 
 	if (isdead(src))
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 		return src.say_dead(message)
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	logTheThing(LOG_DIARY, src, ": [message]", "say")
 
 	var/prefixAndMessage = separate_radio_prefix_and_message(message)
@@ -295,7 +295,7 @@
 	return src.compute
 
 //moved from flockmind to allow traces to teleport
-/mob/living/intangible/flock/flockmind/Topic(href, href_list)
+/mob/living/intangible/flock/Topic(href, href_list)
 	if(href_list["origin"])
 		var/atom/movable/origin = locate(href_list["origin"])
 		if(!QDELETED(origin))

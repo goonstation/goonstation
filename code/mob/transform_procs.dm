@@ -78,6 +78,8 @@
 
 /mob/new_player/AIize(var/mobile=0)
 	src.spawning = 1
+	src.name = "AI"
+	src.real_name = "AI"
 	return ..()
 
 /mob/living/carbon/AIize(var/mobile=0)
@@ -149,6 +151,7 @@
 	O.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
 	O.verbs += /mob/living/silicon/ai/proc/view_messageLog
 	O.verbs += /mob/living/silicon/ai/verb/rename_self
+	O.verbs += /mob/living/silicon/ai/verb/go_offline
 	O.job = "AI"
 
 	SPAWN(0)
@@ -167,12 +170,13 @@
 		return make_critter(CT, get_turf(src))
 	return 0
 
-/mob/proc/make_critter(var/critter_type, var/turf/T, ghost_spawned=FALSE)
+/mob/proc/make_critter(var/critter_type, var/turf/T, ghost_spawned=FALSE, delete_original=TRUE)
 	var/mob/living/critter/newmob = new critter_type()
 	if(ghost_spawned)
 		newmob.ghost_spawned = ghost_spawned
 		if(!istype(newmob, /mob/living/critter/small_animal/mouse/weak/mentor))
 			newmob.name_prefix("ethereal")
+			newmob.name_suffix("[rand(10,99)][rand(10,99)]")
 			newmob.UpdateName()
 	if (!T || !isturf(T))
 		T = get_turf(src)
@@ -180,7 +184,7 @@
 	newmob.gender = src.gender
 	if (src.bioHolder)
 		var/datum/bioHolder/original = new/datum/bioHolder(newmob)
-		original.CopyOther(src.bioHolder)
+		original.CopyOther(src.bioHolder, copyPool=FALSE, copyActiveEffects=FALSE)
 		qdel(newmob.bioHolder)
 		newmob.bioHolder = original
 
@@ -198,8 +202,9 @@
 		var/mob/living/critter/small_animal/small = newmob
 		small.setup_overlays() // this requires the small animal to have a client to set things up properly
 
-	SPAWN(1 DECI SECOND)
-		qdel(src)
+	if (delete_original)
+		SPAWN(1 DECI SECOND)
+			qdel(src)
 	return newmob
 
 
@@ -418,6 +423,7 @@
 		boutput(usr, "Sorry, respawn options aren't availbale during football mode.")
 		return
 	if (usr && istype(usr, /mob/dead/observer))
+		announce_ghost_afterlife(usr.key, "<b>[usr.name]</b> is logging into Ghost VR.")
 		var/obj/machinery/sim/vr_bed/vr_bed = locate(/obj/machinery/sim/vr_bed)
 		vr_bed.log_in(usr)
 
@@ -571,11 +577,6 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		boutput(src, SPAN_ALERT("You aren't even an admin, how did you get here?!"))
 		return
 
-	// has the game started?
-	if(!ticker || !ticker.mode)
-		boutput(src, SPAN_ALERT("The game hasn't started yet, silly!"))
-		return
-
 	if (tgui_alert(src, "Are you sure you want to respawn as an admin mouse?", "Respawn as Animal", list("Yes", "No")) != "Yes")
 		return
 
@@ -608,7 +609,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if (current_state < GAME_STATE_PLAYING)
 		boutput(src, "It's too early to go to the bar!")
 		return
-	if(!isdead(src) || !src.mind || !ticker || !ticker.mode)
+	if(!isobserver(src) || !src.mind || !ticker || !ticker.mode)
 		return
 	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 		boutput(src, "Sorry, respawn options aren't available during football mode.")
@@ -619,10 +620,23 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	var/mob/living/carbon/human/newbody = new(target_turf, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
 	newbody.ghost = src //preserve your original ghost
-	if(!src.mind.assigned_role || iswraith(src) || isblob(src) || src.mind.assigned_role == "Cyborg" || src.mind.assigned_role == "AI")
-		src.mind.assigned_role = "Staff Assistant"
-	newbody.JobEquipSpawned(src.mind.assigned_role, no_special_spawn = 1)
 
+	// preserve your original role;
+	// gives "???" if not an observer and not assigned a role,
+	// your "special_role" if one exists,
+	// and both your job and special role if both are set.
+	var/bar_role_name = src.observe_round ? "Observer" : (src.mind.assigned_role || "???")
+	if (src.mind.special_role)
+		bar_role_name = "[bar_role_name != "???" ? "[bar_role_name], " : ""][capitalize(replacetext(src.mind.special_role, "_", " "))]"
+
+	// future: maybe different outfits for special roles. cyborg costumes. lol
+	var/role_override = null
+	if(!src.mind.assigned_role || iswraith(src) || isblob(src) || src.mind.assigned_role == "Cyborg" || src.mind.assigned_role == "AI")
+		role_override = "Staff Assistant"
+	newbody.JobEquipSpawned(role_override || src.mind.assigned_role, no_special_spawn = 1)
+
+	if (newbody.traitHolder && newbody.traitHolder.hasTrait("bald"))
+		newbody.stow_in_available(newbody.create_wig())
 
 	// No contact between the living and the dead.
 	var/obj/to_del = newbody.ears
@@ -645,8 +659,18 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if(to_del)
 		newbody.remove_item(to_del)
 		qdel(to_del)
+	if(!newbody.w_uniform)
+		// you get some random clothes if you don't have any
+		newbody.equip_new_if_possible(pick(concrete_typesof(/obj/item/clothing/under/color)), SLOT_W_UNIFORM)
 	if(newbody.wear_id)
 		newbody.wear_id:access = get_access("Captain")
+	else
+		// if you dont have an id, you get one anyway
+		newbody.spawnId(new /datum/job/command/captain)
+
+	var/obj/item/card/id/newID = newbody.wear_id
+	newID?.assignment = bar_role_name
+	newID?.update_name()
 
 	if (!newbody.bioHolder)
 		newbody.bioHolder = new bioHolder(newbody)
@@ -658,14 +682,22 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	// There are some traits removed in the afterlife bar, these have afterlife_blacklist set to TRUE.
 
-	newbody.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+	newbody.setStatus("in_afterlife", INFINITE_STATUS, newbody)
 	newbody.set_clothing_icon_dirty()
+
+	announce_ghost_afterlife(src.key, "<b>[src.name]</b> is visiting the Afterlife Bar.")
+	boutput(src, "<h2>You are visiting the Afterlife Bar!</h2>You can still talk to ghosts! Start a message with \"<tt>:d</tt>\" (like \"<tt>:dhello ghosts</tt>\") to talk in deadchat.")
 
 	if (src.mind) //Mind transfer also handles key transfer.
 		src.mind.transfer_to(newbody)
 	else //Oh welp, still need to move that key!
 		newbody.key = src.key
 
+	// copy the respawn timer to the new body.
+	// since afterlife bodies get trashed when you die it isnt too big of a deal
+	var/atom/movable/screen/respawn_timer/respawn_timer = newbody.ghost.hud?.get_respawn_timer()
+	if (respawn_timer)
+		newbody.hud.add_object(newbody.ghost.hud?.get_respawn_timer())
 
 
 	return

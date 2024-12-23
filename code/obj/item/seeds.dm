@@ -1,4 +1,4 @@
-
+ADMIN_INTERACT_PROCS(/obj/item/seed, proc/admin_set_mutation)
 /obj/item/seed
 	name = "plant seed"
 	desc = "Plant this in soil to grow something."
@@ -12,9 +12,12 @@
 	var/seeddamage = 0 // This is used mostly for infusions. How likely a seed is to be destroyed.
 	var/isstrange = 0  // Seeds cannot be gene scanned if they're strange seeds.
 	var/generation = 0 // Keeps track of how many times a plant has been bred from the initial seed.
+	var/dont_mutate = FALSE //! Do not randomly mutate this seed on plant
+	var/charges = 1 // represents how many seeds are in this seed packet
 	stamina_damage = 0
 	stamina_cost = 0
 	rand_pos = 1
+	inventory_counter_enabled = 1
 
 	New(var/loc,var/do_color = 1)
 		..()
@@ -32,34 +35,36 @@
 
 		if (src.planttype)
 			src.name = "[src.planttype.name] seed"
+			if (charges > 1) name += " packet"
+		if (charges > 1) src.inventory_counter.update_number(src.charges)
 
 
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		// If the crop is just straight up seeds. Don't need reagents, but we do
 		// need to pass genes and whatnot along like we did for fruit.
-		var/obj/item/seed/new_seed = src
-		if(origin_plant.unique_seed)
-			new_seed = new origin_plant.unique_seed
-			new_seed.set_loc(harvested_plantpot)
+		var/datum/plant/child_planttype = HYPgenerateplanttypecopy(src, origin_plant)
+		var/datum/plantgenes/child_genes = src.plantgenes
+		var/datum/plantmutation/child_mutation = passed_genes.mutation
+		// If the plant is a standard plant, our work here is mostly done
+		if (!child_planttype.hybrid && !origin_plant.unique_seed)
+			src.generic_seed_setup(child_planttype)
 		else
-			new_seed = new /obj/item/seed
-			new_seed.set_loc(harvested_plantpot)
-			new_seed.removecolor()
-
-		var/datum/plantgenes/HDNA = harvested_plantpot.plantgenes
-		var/datum/plantgenes/SDNA = new_seed.plantgenes
-		if(!origin_plant.unique_seed && !origin_plant.hybrid)
-			new_seed.generic_seed_setup(origin_plant, TRUE)
-		HYPpassplantgenes(HDNA,SDNA)
-		new_seed.generation = harvested_plantpot.generation
-		if(origin_plant.hybrid)
-			var/datum/plant/hybrid = new /datum/plant(new_seed)
-			for(var/V in origin_plant.vars)
-				if(issaved(origin_plant.vars[V]) && V != "holder")
-					hybrid.vars[V] = origin_plant.vars[V]
-			new_seed.planttype = hybrid
-		qdel(src)
-		return new_seed
+			src.planttype = child_planttype
+			src.plant_seed_color(child_planttype.seedcolor)
+		//Now we generate the seeds name
+		var/seedname = "[child_planttype.name]"
+		if(istype(child_mutation,/datum/plantmutation/))
+			if(!child_mutation.name_prefix && !child_mutation.name_suffix && child_mutation.name)
+				seedname = "[child_mutation.name]"
+			else if(child_mutation.name_prefix || child_mutation.name_suffix)
+				seedname = "[child_mutation.name_prefix][child_planttype.name][child_mutation.name_suffix]"
+		src.name = "[seedname] seed"
+		if (charges > 1) src.name += " packet"
+		//What's missing is transfering genes and the generation
+		HYPpassplantgenes(passed_genes, child_genes)
+		src.generation = harvested_plantpot.generation
+		//Now the seed it created and we can release it upon the world
+		return src
 
 
 	//kudzumen can analyze seeds via ezamine when close.
@@ -111,6 +116,7 @@
 					HYPaddCommut(src.plantgenes, commut_to_add)
 		else
 			src.name = "[src.name] seed"
+		if (src.charges > 1) src.name += " packet"
 
 
 	proc/plant_seed_color(var/colorRef)
@@ -143,13 +149,29 @@
 		var/datum/plant/P = src.planttype
 		//this proc handles all statistics changes of the plant that depends on the chemical used, like phlogs 80-100 damage.
 		P.HYPinfusionP(src,reagent)
+		if (src.charges > 1) src.charges = floor(src.charges * 0.9) 	// Infusing reduces the number of viable seeds by a value that is
+																		// 10% of its current value rounded up, to a minimum of 1.
+		else src.charges = 1 // so the reagents don't have to worry about keeping minimum charges
 		if (src.seeddamage > 99)
 			// "Whoops you destroyed the seed you dumbass".
 			M.seeds -= src
 			qdel(src)
 			return 1 // We'll want to tell the manipulator that so it can inform the user, too.
 		else
+			src.inventory_counter.update_number(src.charges)
 			return 0 // Passes an "Everything went fine" code to the manipulator.
+
+	proc/admin_set_mutation()
+		set name = "Mutate"
+		var/list/mutations = list()
+		for (var/datum/plantmutation/mutation in src.planttype.mutations)
+			mutations[mutation.name] = mutation
+
+		var/selected = tgui_input_list(usr, "Pick mutation", "Mutation select", mutations)
+		if (!selected)
+			return
+		src.plantgenes.mutation = mutations[selected]
+
 
 /obj/item/seed/grass
 	name = "grass seed"

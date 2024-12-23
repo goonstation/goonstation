@@ -24,7 +24,7 @@
 	var/smashes_shit = 1
 	var/list/alert_sounds = list('sound/machines/whistlealert.ogg', 'sound/machines/whistlebeep.ogg')
 
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 
 	New()
 		..()
@@ -40,8 +40,8 @@
 					var/obj/window/W = AM
 					W.health = 0
 					W.smash()
-				else if(istype(AM,/obj/grille))
-					var/obj/grille/G = AM
+				else if(istype(AM,/obj/mesh/grille))
+					var/obj/mesh/grille/G = AM
 					G.damage_blunt(30)
 				else if(istype(AM, /obj/table))
 					AM.meteorhit()

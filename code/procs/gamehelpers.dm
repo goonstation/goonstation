@@ -30,6 +30,38 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 // TODO convert the above to use a file/string picker
 
 
+var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a hose","a new bottle of cologne")
+/proc/stinkStringHygiene(var/mob/stinker)
+	var/someone = "someone"
+	var/they = "it"
+	var/their = "their"
+	var/blank_or_s = "s"
+	if(stinker)
+		someone = stinker.name
+		they = "[he_or_she(stinker)]"
+		their = "[his_or_her(stinker)]"
+		blank_or_s = "[blank_or_s(stinker)]"
+	switch(rand(1,9))
+		if(1)
+			return "Smells like [someone] needs [pick(stink_remedy)]."
+		if(2)
+			return "[pick(stinkExclamations)], has anyone here heard of a shower before?"
+		if(3)
+			return "[capitalize(someone)] smells positively vile."
+		if(4)
+			return "[capitalize(someone)]'s odor hangs the air. You get a whiff. Disgusting."
+		if(5) //You wonder if John Joe even notices how gross he smells anymore.
+			return "You wonder if people around here ever notice how gross they smell sometimes."
+		if(6)
+			return "[pick(stinkExclamations)], what you wouldn't give to be staffed on a station where people bathe..."
+		if(7)
+			return "You reckon [someone] has [their] very own locker room in [their] backpack, because, damn! [they] REEK[capitalize(blank_or_s)]!"
+		if(8)
+			return "[capitalize(someone)] must have skipped laundry day for the past month. At least, [they] smell[blank_or_s] like it."
+		if(9)
+			return "Dirt and grime is practically airborne around you. [capitalize(someone)] must be responsible."
+
+
 /proc/get_local_apc(O)
 	var/turf/T = get_turf(O)
 	if (!T)
@@ -85,12 +117,18 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 		return TRUE
 	if(BOUNDS_DIST(source, user) == 0 || (IN_RANGE(source, user, 1))) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
 		return TRUE
-	else if ((source in bible_contents) && locate(/obj/item/bible) in range(1, user)) // whoever added the global bibles, fuck you
-		return TRUE
+	else if (source in bible_contents)
+		for_by_tcl(B, /obj/item/bible) // o coder past, quieten your rage
+			if(IN_RANGE(user,B,1))
+				return TRUE
+	else if (source in terminus_storage)
+		for_by_tcl(TR, /obj/item/terminus_drive)
+			if(IN_RANGE(user,TR,1))
+				return TRUE
 	else
 		if (iscarbon(user))
 			var/mob/living/carbon/C = user
-			if (C.bioHolder.HasEffect("telekinesis") && GET_DIST(source, user) <= 7) //You can only reach stuff within your screen.
+			if (C.bioHolder?.HasEffect("telekinesis") && GET_DIST(source, user) <= 7) //You can only reach stuff within your screen.
 				var/X = source:x
 				var/Y = source:y
 				var/Z = source:z
@@ -124,6 +162,9 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 			if(BOUNDS_DIST(T.vistarget, user) == 0 || BOUNDS_DIST(T.vistarget, user) == 0)
 				return TRUE
 
+		for (var/turf/reachable as anything in T.reachable_turfs)
+			if (user in reachable)
+				return TRUE
 
 /proc/test_click(turf/from, turf/target, actually_test_entering=FALSE)
 	var/obj/item/dummy/click_dummy = get_singleton(/obj/item/dummy)
@@ -167,7 +208,18 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 	if(user.client?.holder?.ghost_interaction)
 		return TRUE
 	if (target in bible_contents)
-		target = locate(/obj/item/bible) in range(1, user) // fuck bibles
+		target = null
+		for_by_tcl(B, /obj/item/bible)
+			if(IN_RANGE(user,B,1))
+				target = B
+				break
+		if (!target)
+			return 0
+	if (target in terminus_storage)
+		for_by_tcl(TR, /obj/item/terminus_drive)
+			if(IN_RANGE(user,TR,1))
+				target = TR
+				break
 		if (!target)
 			return 0
 	var/turf/UT = get_turf(user)
@@ -218,7 +270,7 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 	else if (isobj(target) || ismob(target))
 		var/atom/L = target.loc
 		while (L && !isturf(L))
-			if (L == user)
+			if (L == user || L == user.loc)
 				return 1
 			L = L.loc
 	return 0
@@ -237,15 +289,14 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 					. += theAI
 
 //Kinda sorta like viewers but includes target observers inside viewing mobs
-/proc/observersviewers(var/Dist=world.view, var/Center=usr)
-	var/list/viewMobs = viewers(Dist, Center)
+/proc/observersviewers(distance = world.view, center = usr)
+	. = viewers(distance, center)
 
 	for_by_tcl(M, /mob/dead/target_observer)
-		if(!M.client) continue
-		if(M.target in view(Dist, Center) || M.target == Center)
-			viewMobs += M
-
-	return viewMobs
+		if(!M.client)
+			continue
+		if((M.target in .) || (M.target == center))
+			. += M
 
 /proc/AIviewers(Depth=world.view,Center=usr)
 	if (istype(Depth, /atom))
@@ -263,10 +314,10 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 				. |= M
 
 //A unique network ID for devices that could use one
-/proc/format_net_id(var/refstring)
+/proc/format_net_id(refstring)
 	if(!refstring)
 		return
-	. = copytext(refstring,4,(length(refstring)))
+	. = copytext(refstring, 4, (length(refstring)))
 	. = add_zero(., 8)
 
 
@@ -289,11 +340,11 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 	if (!H || !istext(message))
 		return
 
-	if (H.bioHolder && !H.speech_void)
+	if (H.bioHolder)
 		var/datum/bioEffect/speech/S = null
 		for(var/X in H.bioHolder.effects)
 			S = H.bioHolder.GetEffect(X)
-			if (istype(S,/datum/bioEffect/speech/))
+			if (istype(S,/datum/bioEffect/speech/) && !(H.speech_void && !istype(S,/datum/bioEffect/speech/void)))
 				message = S.OnSpeak(message)
 				messageEffects += S
 
@@ -382,25 +433,6 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 #undef CLUWNE_NOISE_DELAY
 
 
-/proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
-	var/turf/current = get_turf(source)
-	var/turf/target_turf = get_turf(target)
-	if(current == target_turf)
-		return TRUE
-	if(GET_DIST(current, target_turf) > length)
-		return FALSE
-	current = get_step_towards(source, target_turf)
-	while((current != target_turf))
-		if(current.opacity)
-			return FALSE
-		for(var/atom/A in current)
-			if(A.opacity)
-				return FALSE
-		current = get_step_towards(current, target_turf)
-	return TRUE
-
-
-
 /mob/proc/get_equipped_items()
 	. = list()
 	if(src.back) . += src.back
@@ -425,35 +457,6 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 			for(var/obj/item/grab/G in src.r_hand)
 				if (G.c_flags & EQUIPPED_WHILE_HELD)
 					. += G
-
-
-/proc/get_step_towards2(var/atom/ref , var/atom/trg)
-	var/base_dir = get_dir(ref, get_step_towards(ref,trg))
-	var/turf/temp = get_step_towards(ref,trg)
-
-	if(is_blocked_turf(temp))
-		var/dir_alt1 = turn(base_dir, 90)
-		var/dir_alt2 = turn(base_dir, -90)
-		var/turf/turf_last1 = temp
-		var/turf/turf_last2 = temp
-		var/free_tile = null
-		var/breakpoint = 0
-
-		while(!free_tile && breakpoint < 10)
-			if(!is_blocked_turf(turf_last1))
-				free_tile = turf_last1
-				break
-			if(!is_blocked_turf(turf_last2))
-				free_tile = turf_last2
-				break
-			turf_last1 = get_step(turf_last1,dir_alt1)
-			turf_last2 = get_step(turf_last2,dir_alt2)
-			breakpoint++
-
-		if(!free_tile) return get_step(ref, base_dir)
-		else return get_step_towards(ref,free_tile)
-
-	else return get_step(ref, base_dir)
 
 /proc/get_areas(var/areatype)
 	//Takes: Area type as text string or as typepath OR an instance of the area.
@@ -549,16 +552,15 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 		for(var/atom/A in R)
 			. += A
 
-/datum/coords //Simple datum for storing coordinates.
-	var/x_pos = null
-	var/y_pos = null
-	var/z_pos = null
 
-
-/datum/color	//Simple datum for RGBA colours
-			  	// used as an alternative to rgb() proc
-			  	// for ease of access to components
-	var/r = null	// all stored as 0-255
+/////
+/**
+ * Simple datum for RGBA colours
+ * used as an alternative to rgb() proc for ease of access to components
+ * all stored as 0-255
+ */
+/datum/color
+	var/r = null
 	var/g = null
 	var/b = null
 	var/a = null
@@ -570,7 +572,7 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 		b = _b
 		a = _a
 
-	proc/from_hex(var/hexstr)
+	proc/from_hex(hexstr)
 		r = GetRedPart(hexstr)
 		g = GetGreenPart(hexstr)
 		b = GetBluePart(hexstr)
@@ -639,9 +641,8 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 
 
 
-// return description of how full a container is
+/// return description of how full a container is
 proc/get_fullness(var/percent)
-
 	if(percent == 0)
 		return "empty"
 	if(percent < 2)
@@ -722,7 +723,7 @@ proc/GetRandomPerimeterTurf(var/atom/A, var/dist = 10, var/dir)
 	if(isturf(T))
 		return T
 
-proc/ThrowRandom(var/atom/movable/A, var/dist = 10, var/speed = 1, var/list/params, var/thrown_from, var/throw_type, var/allow_anchored, var/bonus_throwforce, var/end_throw_callback)
+proc/ThrowRandom(atom/movable/A, dist = 10, speed = 1, list/params, thrown_from, throw_type, allow_anchored, bonus_throwforce, datum/callback/end_throw_callback)
 	if(istype(A))
 		var/turf/Y = GetRandomPerimeterTurf(A, dist)
 		A.throw_at(Y, dist, speed, params, thrown_from, throw_type, allow_anchored, bonus_throwforce, end_throw_callback)
@@ -746,7 +747,7 @@ proc/get_ouija_word_list(atom/movable/source = null, words_min = 5, words_max = 
 		words |= picked
 
 	if (prob(include_nearby_mobs_chance))
-		var/list/mobs = observersviewers(Center = source)
+		var/list/mobs = observersviewers(center = source)
 		if (length(mobs))
 			var/mob/M = pick(mobs)
 			words |= (M.real_name ? M.real_name : M.name)

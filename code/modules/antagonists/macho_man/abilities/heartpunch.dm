@@ -8,6 +8,7 @@
 		if (!(BOUNDS_DIST(M, holder.owner) == 0))
 			return
 
+		. = ..()
 		var/did_it = 0
 		holder.owner.verbs -= /mob/living/carbon/human/machoman/verb/macho_heartpunch
 		var/direction = get_dir(holder.owner,M)

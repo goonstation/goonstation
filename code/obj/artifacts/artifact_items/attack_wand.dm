@@ -1,7 +1,7 @@
 /obj/item/artifact/attack_wand
 	name = "artifact attack wand"
 	associated_datum = /datum/artifact/attack_wand
-	flags =  FPRINT | CONDUCT | EXTRADELAY
+	flags =  CONDUCT | EXTRADELAY
 
 	// this is necessary so that this returns null
 	// else afterattack will not be called when out of range
@@ -88,7 +88,7 @@
 		switch(curAttack)
 			if("fire")
 				playsound(T, 'sound/effects/bamf.ogg', 50, TRUE, 0)
-				fireflash(T, powerVars["fireRadius"], powerVars["fireTemp"])
+				fireflash(T, powerVars["fireRadius"], powerVars["fireTemp"], chemfire = CHEM_FIRE_RED)
 
 				ArtifactLogs(user, T, O, "used", "creating fireball on target turf", 0) // Attack wands need special log handling (Convair880).
 

@@ -341,9 +341,12 @@
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-			if (!istype(H.head, /obj/item/clothing/head/helmet) && istype(H.head, /obj/item/clothing/head)) // ha...
+			if (!istype(H.head, /obj/item/clothing/head/helmet) && !istype(H.head, /obj/item/clothing/head/headband && istype(H.head, /obj/item/clothing/head))) // ha...
 				var/obj/item/clothing/head/M = H.head
+				M.icon = 'icons/obj/clothing/item_hats.dmi'
 				M.icon_state = "beret_base"
+				M.item_state = "beret_base"
+				M.wear_state = "beret_base"
 				M.wear_image_icon = 'icons/mob/clothing/head.dmi'
 				M.color = random_saturated_hex_color(1)
 				M.name = "beret"
@@ -372,11 +375,23 @@
 			var/prev = skin_target.name
 			skin_target.name = "round-bottom flask"
 			skin_target.desc = "A large round-bottom flask, for all your chemistry needs. (Base Item: [prev])"
-			skin_target.icon_style = "flask"
-			skin_target.item_state = "flask"
-			skin_target.fluid_image = image(skin_target.icon, "fluid-flask")
-			skin_target.UpdateIcon()
+			skin_target.icon_state = "large_flask"
+			skin_target.item_state = "large_flask"
+			skin_target.original_icon_state = "large_flask"
+			skin_target.fluid_overlay_states = 11
+			skin_target.container_style = "large_flask"
+			skin_target.fluid_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_SPHERICAL
 			activator.set_clothing_icon_dirty()
+
+			var/datum/component/C = skin_target.GetComponent(/datum/component/reagent_overlay)
+			C?.RemoveComponent()
+			skin_target.AddComponent( \
+				/datum/component/reagent_overlay, \
+				reagent_overlay_icon = skin_target.container_icon, \
+				reagent_overlay_icon_state = skin_target.container_style, \
+				reagent_overlay_states = skin_target.fluid_overlay_states, \
+				reagent_overlay_scaling = skin_target.fluid_overlay_scaling, \
+			)
 			return 1
 		else
 			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a large beaker in your hands."))
@@ -734,6 +749,7 @@
 			if (H.head)
 				var/obj/item/clothing/M = H.head
 				var/obj/item/clothing/head/det_hat/gadget/G = H.head
+				var/obj/item/clothing/head/det_hat/folded_scuttlebot/S = H.head
 				if (istype(G))
 					var/prev = M.name
 					G.icon_state = "inspector"
@@ -742,6 +758,18 @@
 					G.inspector = TRUE
 					H.set_clothing_icon_dirty()
 					succ = TRUE
+
+				else if (istype(S))
+					var/prev = M.name
+					S.icon_state = "inspector"
+					S.item_state = "inspector"
+					S.name = "inspector's hat"
+					S.real_name = "inspector's hat"
+					S.desc = "A hat for the modern detective. It looks a bit heavier than it should. (Base Item: [prev])"
+					S.inspector = TRUE
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 				else if (istype(M, /obj/item/clothing/head/det_hat))
 					var/prev = M.name
 					M.icon_state = "inspector"
@@ -777,7 +805,7 @@
 					succ = TRUE
 
 			if (H.gloves)
-				var/obj/item/clothing/M = H.gloves
+				var/obj/item/clothing/gloves/M = H.gloves
 				if (istype(M, /obj/item/clothing/gloves/black))
 					var/prev = M.name
 					M.icon_state = "inspector"
@@ -785,6 +813,7 @@
 					M.name = "inspector's gloves"
 					M.real_name = "inspector's gloves"
 					M.desc = "A pair of gloves for the modern detective. (Base Item: [prev])"
+					M.fingertip_color = "#2d3c52"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -877,6 +906,7 @@
 					M.name = "commander's gloves"
 					M.real_name = "commander's gloves"
 					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
+					M.fingertip_color = "#3c6dc3"
 					H.update_gloves(H.mutantrace.hand_offset)
 					succ = TRUE
 
@@ -1048,6 +1078,7 @@
 					M.name = "CentCom gloves"
 					M.real_name = "CentCom gloves"
 					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
+					M.fingertip_color = "#d73715"
 					H.update_gloves(H.mutantrace.hand_offset)
 					succ = TRUE
 
@@ -1247,6 +1278,37 @@
 			H.update_inhands()
 			return 1
 
+/datum/achievementReward/goldenCarrier
+	title = "Golden Carrier"
+	desc = "Gold plates a pet carrier."
+	required_medal = "Noah's Shuttle"
+
+	rewardActivate(var/mob/activator)
+		if (ishuman(activator))
+			var/mob/living/carbon/human/H = activator
+			var/obj/item/pet_carrier/carrier
+			if (istype(H.l_hand, /obj/item/pet_carrier))
+				carrier = H.l_hand
+			else if (istype(H.r_hand, /obj/item/pet_carrier))
+				carrier = H.r_hand
+			if (!carrier)
+				boutput(activator, SPAN_ALERT("You attempt to plate your non-existant pet carrier to no avail."))
+				return
+			if (carrier.gilded)
+				boutput(activator, SPAN_ALERT("That's enough gold plating for now."))
+				return
+
+			carrier.name = "Golden [carrier.name]"
+			carrier.empty_carrier_icon_state = "[initial(carrier.empty_carrier_icon_state)]-golden"
+			carrier.icon_state = carrier.empty_carrier_icon_state
+			carrier.carrier_open_item_state = "[initial(carrier.carrier_open_item_state)]-golden"
+			carrier.carrier_closed_item_state = "[initial(carrier.carrier_closed_item_state)]-golden"
+			carrier.trap_mob_icon_state = "[carrier.trap_mob_icon_state]-golden"
+			carrier.release_mob_icon_state = "[carrier.release_mob_icon_state]-golden"
+			carrier.gilded = TRUE
+			carrier.UpdateIcon()
+			H.update_inhands()
+			return 1
 
 /datum/achievementReward/smug
 	title = "(Emote) Smug"
@@ -1350,7 +1412,7 @@
 /datum/achievementReward/beefriend
 	title = "(Reagent) Bee"
 	desc = "You're gonna burp one up, probably."
-	required_medal = "Bombini is missing!"
+	required_medal = "Bombini is Missing!"
 
 	rewardActivate(var/mob/activator)
 		if (!activator.reagents) return
@@ -1393,6 +1455,7 @@
 			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, TRUE)
 		activator.gib()
 		return 1
+
 /datum/achievementReward/HotrodHelmet
 	title = "(Skin) Hotrod Welding Helmet"
 	desc = "Requires you to hold a welding helmet."
@@ -1471,7 +1534,9 @@
 	proc/sillyscream(mob/M)
 		var/mob/living/living = M
 		if(istype( living ))
-			living.sound_scream = pick('sound/voice/screams/sillyscream1.ogg','sound/voice/screams/sillyscream2.ogg')
+			M.bioHolder.mobAppearance.screamsounds["sillyscream"] = pick('sound/voice/screams/sillyscream1.ogg', 'sound/voice/screams/sillyscream2.ogg')
+			M.bioHolder.mobAppearance.screamsound = "sillyscream"
+			M.bioHolder.mobAppearance.UpdateMob()
 			M.playsound_local_not_inworld(living.sound_scream, 100)
 			return 1
 		else

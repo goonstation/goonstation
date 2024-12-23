@@ -21,6 +21,11 @@
 	/// Armory computer unauthorized
 	#define COMSIG_GLOBAL_ARMORY_UNAUTH "armory_auth_removed"
 
+// ---- nukes ----
+
+	/// "Nuke" sized nuke planted on station Z
+	#define COMSIG_GLOBAL_NUKE_PLANTED "nuclear_bomb_planted"
+
 // ---- ඞ ----
 
 /// ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀

@@ -5,11 +5,10 @@
  * @license ISC
  */
 
-import { block, element } from 'common/bem';
+import { block } from 'common/goonstation/bem';
 
 export const Block = 'cyborg-module-rewriter-interface';
 
 export const ModuleView = block(Block, 'module-view');
-export const ToolLabel = element(ModuleView, 'tool-label');
 
 export const EmptyPlaceholder = block(Block, 'empty-placeholder');

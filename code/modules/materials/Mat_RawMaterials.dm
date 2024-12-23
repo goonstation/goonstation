@@ -162,6 +162,7 @@
 		icon_state = "fabric"
 		name = "fabric"
 		desc = "A weave of some kind."
+		default_material = "cotton"
 		var/in_use = 0
 
 		attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
@@ -380,6 +381,12 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	icon_state = "fabric"
 	default_material = "beewool"
 	mat_changename = FALSE
+
+/obj/item/material_piece/cloth/carpet
+	name = "carpet"
+	desc = "Some grimy carpet."
+	icon_state = "fabric"
+	default_material = "carpet"
 
 /obj/item/material_piece/soulsteel
 	desc = "A bar of soulsteel. Metal made from souls."

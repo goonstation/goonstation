@@ -1,10 +1,13 @@
 
 var/global/list/list/turf/landmarks = list()
 
-proc/pick_landmark(name, default = null)
+proc/pick_landmark(name, default = null, ignorespecific = list())
 	if(!(name in landmarks))
 		return default
-	return pick(landmarks[name])
+	if (ignorespecific == list())
+		return pick(landmarks[name])
+	else
+		return pick(landmarks[name] - ignorespecific)
 
 /obj/landmark
 	name = "landmark"
@@ -130,12 +133,19 @@ var/global/list/job_start_locations = list()
 	name = "Chaplain"
 	icon_state = "chaplain"
 
+/obj/landmark/start/job/mail_courier
+	name = "Mail Courier"
+	icon_state = "mail_courier"
+
 // Engineering
 
 /obj/landmark/start/job/engineer
 	name = "Engineer"
 	icon_state = "engineer"
 
+/obj/landmark/start/job/technical_trainee
+	name = "Technical Trainee"
+	icon_state = "engineer"
 /obj/landmark/start/job/miner
 	name = "Miner"
 	icon_state = "miner"
@@ -150,6 +160,10 @@ var/global/list/job_start_locations = list()
 	name = "Medical Doctor"
 	icon_state = "medical_doctor"
 
+/obj/landmark/start/job/medical_trainee
+	name = "Medical Trainee"
+	icon_state = "medical_doctor"
+
 /obj/landmark/start/job/geneticist
 	name = "Geneticist"
 	icon_state = "geneticist"
@@ -160,6 +174,10 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/start/job/scientist
 	name = "Scientist"
+	icon_state = "scientist"
+
+/obj/landmark/start/job/research_trainee
+	name = "Research Trainee"
 	icon_state = "scientist"
 
 // Security
@@ -334,7 +352,7 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/escape_pod_succ
 	name = LANDMARK_ESCAPE_POD_SUCCESS
-	icon_state = "xp"
+	icon_state = "escape_pod_succ"
 
 	New()
 		src.data = src.dir
@@ -491,6 +509,46 @@ var/global/list/job_start_locations = list()
 /obj/landmark/lrt/voiddiner
 	name = "Void Diner"
 
+/obj/landmark/lrt/icemoon
+	name = "Senex"
+
+/obj/landmark/lrt/solarium
+	name = "Sol"
+
+/obj/landmark/lrt/biodome
+	name = "Fatuus"
+
+/obj/landmark/lrt/mars_outpost
+	name = "Mars"
+
+/obj/landmark/lrt/io
+	name = "Io"
+
+/obj/landmark/lrt/luna_museum
+	name = "Luna"
+
+/obj/landmark/lrt/ainley
+	name = "Ainley Staff Retreat"
+
+/obj/landmark/lrt/meat_derelict
+	name = "Derelict Station"
+
+/obj/landmark/lrt/observatory
+	name = "Observatory"
+
+/obj/landmark/lrt/watchfuleye
+	name = "Watchful-Eye Sensor"
+
+/obj/landmark/icemoon_medal
+	deleted_on_start = FALSE
+	add_to_landmarks = FALSE
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		var/mob/living/L = AM
+		if (istype(L) && !isintangible(L))
+			L.unlock_medal("Ice Cold", TRUE)
+
 /obj/landmark/character_preview_spawn
 	name = LANDMARK_CHARACTER_PREVIEW_SPAWN
 
@@ -562,12 +620,14 @@ var/global/list/job_start_locations = list()
 		if(novis)
 			var/turf/W = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
 			W.warptarget = T
+			W.warptarget_modifier = warptarget_modifier
 		else
 			T.appearance_flags |= KEEP_TOGETHER
 			T.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
 			if (T.vistarget)
 				if(warptarget_modifier)
 					T.vistarget.warptarget = T
+					T.vistarget.warptarget_modifier = warptarget_modifier
 				T.updateVis()
 				T.vistarget.fullbright = TRUE
 				T.vistarget.RL_Init()
@@ -582,6 +642,10 @@ var/global/list/job_start_locations = list()
 	warptarget_modifier = LANDMARK_VM_WARP_NONE
 /// target turf for projecting its contents elsewhere
 /turf/var/turf/vistarget = null
+/// turfs to project speech to (overlaps with vistarget speech)
+/turf/var/list/listening_turfs = null
+/// turfs to project reachability of objects to  (overlaps somewhat with vistarget)
+/turf/var/list/reachable_turfs = null
 /// target turf for teleporting its contents elsewhere
 /turf/var/turf/warptarget = null
 /// control who gets warped to warptarget

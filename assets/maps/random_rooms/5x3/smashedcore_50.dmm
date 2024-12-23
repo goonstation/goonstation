@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/item/cable_coil/blue/cut,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A mass of cables snaking out from the central pedestal to connect with the surrounding machinery. Functions almost like veins, on a purely superficial level.";
 	dir = 10;
@@ -19,7 +19,7 @@
 	dir = 4;
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A mass of cables snaking out from the central pedestal to connect with the surrounding machinery. Or, it was. It looks like it's been hastily severed by someone. Isn't that what they make power buttons for? Seems a poor way to turn something off.";
 	dir = 4;
@@ -55,7 +55,7 @@
 /turf/simulated/floor/caution/south,
 /area/dmm_suite/clear_area)
 "i" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A mass of cables snaking out from the central pedestal to connect with the surrounding machinery. Functions almost like veins, on a purely superficial level.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -63,7 +63,7 @@
 	name = "power conduit";
 	layer = 2
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An old network terminal, all of its connections torn out and cut.";
@@ -85,7 +85,7 @@
 	desc = "The spider responsible sits dead in the middle of the web, surrounded by untouched flies."
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A networked printer. It's designed to print- emphasis on designed to. This particular printer seems to have given up the ghost, unresponsive in entirety apart from the blinking 'low ink' warning.";
@@ -125,7 +125,7 @@
 /turf/simulated/floor/circuit/vintage,
 /area/dmm_suite/clear_area)
 "m" = (
-/obj/decal/fakeobjects/beacon{
+/obj/fakeobject/beacon{
 	desc = "A small tracking beacon that looks like it's been bashed apart with something blunt. Technical geniuses, the crew here were not. It seems to have at least turned it off, though, to give credit where due."
 	},
 /turf/simulated/floor/caution/north,
@@ -140,7 +140,7 @@
 	pixel_x = -2;
 	pixel_y = -4
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	icon = 'icons/obj/networked.dmi';
@@ -157,7 +157,7 @@
 /obj/item/cable_coil/green/cut/small{
 	pixel_y = 13
 	},
-/obj/decal/fakeobjects/tapedeck{
+/obj/fakeobject/tapedeck{
 	pixel_x = -6;
 	pixel_y = -1;
 	layer = 3.1;
@@ -175,7 +175,7 @@
 	},
 /area/dmm_suite/clear_area)
 "H" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A mass of cables snaking out from the central pedestal to connect with the surrounding machinery. Functions almost like veins, on a purely superficial level.";
 	dir = 1;
@@ -185,7 +185,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (NORTH)"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An ancient rack of server modules. It hums a strained melody to itself through decades of gathered dust.";
@@ -197,7 +197,7 @@
 	layer = 2.97
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A bulky security camera that looks like it was taken right out of the early 2000s. It's been bashed up, lens shattered and wiring cut, but you could swear it's still tracking your movements.";
 	icon = 'icons/obj/monitors.dmi';
@@ -205,7 +205,7 @@
 	name = "broken security camera";
 	pixel_y = 21
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An electrical junction box with its front panel rusted open, trailing wires every which way.";
@@ -248,7 +248,7 @@
 	pixel_y = -8;
 	pixel_x = 3
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A mass of cables snaking out from the central pedestal to connect with the surrounding machinery. Functions almost like veins, on a purely superficial level.";
 	dir = 6;
@@ -260,7 +260,7 @@
 /turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "P" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A bulky computer databank. It probably serves better purpose as a barricade than an actual computer now, with how old it looks.";
@@ -271,7 +271,7 @@
 	pixel_y = 15;
 	layer = 2.98
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A networked tape drive that looks like it hasn't seen maintenance for a good few decades. Despite that, it clatters happily as it spins its magnetic tape, writing over old data to make room for the new.";
@@ -282,7 +282,7 @@
 	layer = 2.99
 	},
 /obj/decal/cleanable/oil,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A faded and peeling CAUTION sign. Whoever put it up didn't think to mention what you're meant to be cautious of. Maybe just cautious in general, of everything and anything?";
 	dir = 4;
@@ -298,7 +298,7 @@
 	},
 /area/dmm_suite/clear_area)
 "S" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A mass of cables snaking out from the central pedestal to connect with the surrounding machinery. Functions almost like veins, on a purely superficial level.";
 	dir = 4;
@@ -312,7 +312,7 @@
 	},
 /area/dmm_suite/clear_area)
 "T" = (
-/obj/decal/fakeobjects/cpucontroller{
+/obj/fakeobject/cpucontroller{
 	pixel_x = 5;
 	pixel_y = 2;
 	desc = "A bulky computational powerhouse- or, at least, it would have been twenty-odd years ago. It's been aged, gutted of parts, and wires trail out of an open panel on its side. Even without a power source, a few of the LEDs are still flickering weakly.";
@@ -323,7 +323,7 @@
 	pixel_x = -13;
 	pixel_y = 13
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A faded and peeling CAUTION sign. Whoever put it up didn't think to mention what you're meant to be cautious of. Maybe just cautious in general, of everything and anything?";
 	dir = 4;

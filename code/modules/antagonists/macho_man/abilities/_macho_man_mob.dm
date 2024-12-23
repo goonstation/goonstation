@@ -68,8 +68,8 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			src.clean_up_arena_turfs(src.macho_arena_turfs) // cleans up the macho_arena_turfs reference while animating the arena disappearing
 
 	initializeBioholder()
-		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/dreads
-		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
+		src.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/long/dreads
+		src.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/beard/fullbeard
 		. = ..()
 
 	Life(datum/controller/process/mobs/parent)
@@ -118,7 +118,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					shake_camera(C, 8, 24)
 					C.show_message(SPAN_ALERT("<B>[src] clotheslines [M] into oblivion!</B>"), 1)
 				M.changeStatus("stunned", 8 SECONDS)
-				M.changeStatus("weakened", 5 SECONDS)
+				M.changeStatus("knockdown", 5 SECONDS)
 				var/turf/target = get_edge_target_turf(src, src.dir)
 				M.throw_at(target, 10, 2)
 				playsound(src.loc, "swing_hit", 40, 1)
@@ -145,7 +145,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 						for (var/mob/C in oviewers(src))
 							shake_camera(C, 8, 24)
 							C.show_message(SPAN_ALERT("<B>[src] crashes into [O]!</B>"), 1)
-						if ((istype(O, /obj/window) && !istype(O, /obj/window/auto/reinforced/indestructible)) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
+						if ((istype(O, /obj/window) && !istype(O, /obj/window/auto/reinforced/indestructible)) || istype(O, /obj/mesh/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 							qdel(O)
 						else
 							var/turf/target = get_edge_target_turf(src, src.dir)
@@ -167,7 +167,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				src.visible_message(SPAN_ALERT("<B>[src] grabs the [W.name] out of [M]'s hands, shoving [M] to the ground!</B>"))
 			else
 				src.visible_message(SPAN_ALERT("<B>[src] parries [M]'s attack, knocking them to the ground!</B>"))
-			M.changeStatus("weakened", 10 SECONDS)
+			M.changeStatus("knockdown", 10 SECONDS)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 65, 1)
 			SPAWN(2 SECONDS)
 				playsound(src.loc, pick(snd_macho_rage), 60, 0, 0, src.get_age_pitch())
@@ -405,7 +405,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			playsound(src.loc, pick(snd_macho_rage), 50, 1, 0, 1.75)
 		M.changeStatus("stunned", 1 SECOND)
 		if (prob(25))
-			M.changeStatus("weakened", 2 SECONDS)
+			M.changeStatus("knockdown", 2 SECONDS)
 			random_brute_damage(M, rand(1,2))
 	CritterDeath()
 		..()
@@ -459,7 +459,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "machobelt"
 	item_state = "machobelt"
-	flags = FPRINT | TABLEPASS | NOSPLASH
+	flags = TABLEPASS | NOSPLASH
 	c_flags = ONBELT
 
 /obj/item/clothing/shoes/macho
@@ -534,7 +534,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				for (var/atom/A in range(user.loc, 4))
 					if (ismob(A) && A != user)
 						var/mob/N = A
-						N.changeStatus("weakened", 8 SECONDS)
+						N.changeStatus("knockdown", 8 SECONDS)
 						step_away(N, user)
 						step_away(N, user)
 					else if (isobj(A) || isturf(A))

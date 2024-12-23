@@ -1,9 +1,39 @@
+var/reboot_file_path = "data/restarting"
+
+/proc/Create_reboot_file()
+	file(reboot_file_path) << ""
+
+/proc/Remove_reboot_file()
+	if (fexists(reboot_file_path))
+		fdel(reboot_file_path)
+
 /world/Reboot()
 	TgsReboot()
 	shutdown_logging()
+	shutdown_byond_tracy()
+	disable_auxtools_debugger()
+	Create_reboot_file()
 	return ..()
 
+/proc/Shutdown_server()
+	Create_reboot_file()
+	shutdown()
+
 /proc/Reboot_server(var/retry)
+	//ohno the map switcher is in the midst of compiling a new map, we gotta wait for that to finish
+	if (mapSwitcher.locked)
+		//we're already holding and in the reboot retry loop, do nothing
+		if (mapSwitcher.holdingReboot && !retry) return
+
+		boutput(world, "<span class='bold notice'>Attempted to reboot but the server is currently switching maps. Please wait. (Attempt [mapSwitcher.currentRebootAttempt + 1]/[mapSwitcher.rebootLimit])</span>")
+		message_admins("Reboot interrupted by a map-switch compile to [mapSwitcher.next]. Retrying in [mapSwitcher.rebootRetryDelay / 10] seconds.")
+
+		mapSwitcher.holdingReboot = 1
+		SPAWN(mapSwitcher.rebootRetryDelay)
+			mapSwitcher.attemptReboot()
+
+		return
+
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_INGAME_ONLY))
 #if defined(SERVER_SIDE_PROFILING_INGAME_ONLY) || !defined(SERVER_SIDE_PROFILING_PREGAME)
 	// This is a profiler dump of only the in-game part of the round
@@ -25,6 +55,8 @@
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
+	save_intraround_eggs()
+	logTheThing(LOG_ADMIN, null, "Gamelogger stats BANDAID. [json_encode(game_stats.stats)]")
 	var/list/spacemas_ornaments = get_spacemas_ornaments(only_if_loaded=TRUE)
 	if(spacemas_ornaments) world.save_intra_round_value("tree_ornaments_[BUILD_TIME_YEAR]", spacemas_ornaments)
 	global.save_noticeboards()
@@ -36,6 +68,7 @@
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
+	eventRecorder.process() // Ensure any remaining events are processed
 #if defined(CI_RUNTIME_CHECKING) || defined(UNIT_TESTS)
 	for (var/client/C in clients)
 		ehjax.send(C, "browseroutput", "hardrestart")
@@ -57,7 +90,7 @@
 	if (!is_blank_string(apc_error_str))
 		text2file(apc_error_str, "errors.log")
 #endif
-	shutdown()
+	Shutdown_server()
 #endif
 
 	SPAWN(world.tick_lag)
@@ -98,7 +131,7 @@
 		message_admins("Hard reboot file detected, triggering shutdown instead of reboot. (The server will auto-restart don't worry)")
 
 		fdel("data/hard-reboot")
-		shutdown()
+		Shutdown_server()
 	else
 		//Tell client browserOutput that a restart is happening RIGHT NOW
 		for (var/client/C in clients)
@@ -124,6 +157,9 @@
 		// Delete .dyn.rsc so that stupid shit doesn't happen
 		fdel("[config.dmb_filename].dyn.rsc")
 
+		if (world.system_type == UNIX && shell())
+			shell("find ./tools -type f -name '*.sh' -o -name 'dc' -exec chmod +x {} \\;")
+
 		logTheThing(LOG_DIARY, null, "Update complete.", "admin")
 	else
 		logTheThing(LOG_DIARY, null, "No update found. Skipping update process.", "admin")
@@ -132,5 +168,6 @@
 /// EXPERIMENTAL STUFF
 
 /world/Del()
+	shutdown_byond_tracy()
 	disable_auxtools_debugger()
 	. = ..()

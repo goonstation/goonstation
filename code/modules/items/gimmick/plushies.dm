@@ -1,6 +1,8 @@
 TYPEINFO(/obj/submachine/claw_machine)
-	mats = list("MET-1"=5, "CON-1"=5, "CRY-1"=5, "FAB-1"=5)
-
+	mats = list("metal" = 5,
+				"conductive" = 5,
+				"crystal" = 5,
+				"fabric" = 5)
 /obj/submachine/claw_machine
 	name = "claw machine"
 	desc = "Sure we got our health insurance benefits cut, and yeah we don't get any overtime on holidays, but hey - free to play claw machines!"
@@ -46,7 +48,9 @@ TYPEINFO(/obj/submachine/claw_machine)
 		return
 
 /obj/submachine/claw_machine/attack_ai(mob/user)
-	src.attack_hand(user)
+	if (isAIeye(user))
+		return
+	src.Attackhand(user)
 
 /obj/submachine/claw_machine/get_desc(dist)
 	. = ..()
@@ -97,7 +101,6 @@ TYPEINFO(/obj/submachine/claw_machine)
 /datum/action/bar/icon/claw_machine
 	duration = 100
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ACTION
-	id = "claw_machine"
 	icon = 'icons/obj/plushies.dmi'
 	icon_state = "claw_action"
 	resumable = FALSE
@@ -184,19 +187,23 @@ TYPEINFO(/obj/submachine/claw_machine)
 	throw_range = 3
 	rand_pos = 1
 
-/obj/item/toy/plush/proc/say_something(mob/user as mob)
-	if(user.client && !isghostcritter(user)) // stupid monkeys...
-		var/message = input("What should [src] say?")
-		message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
-		if (!message || BOUNDS_DIST(src, user) > 0)
-			return
-		phrase_log.log_phrase("plushie", message)
-		logTheThing(LOG_SAY, user, "makes [src] say, \"[message]\"")
-		user.audible_message(SPAN_EMOTE("[src] says, \"[message]\""))
-		if (ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if (H.sims)
-				H.sims.affectMotive("fun", 1)
+/obj/item/toy/plush/proc/say_something(mob/user)
+	if(!user.client || isghostcritter(user)) // stupid monkeys...
+		return
+	if (user.hasStatus("muted") || user.bioHolder?.HasEffect("mute"))
+		boutput(user, SPAN_ALERT("You are unable to speak!"))
+		return
+	var/message = input("What should [src] say?")
+	message = trimtext(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
+	if (!message || BOUNDS_DIST(src, user) > 0)
+		return
+	phrase_log.log_phrase("plushie", message)
+	logTheThing(LOG_SAY, user, "makes [src] say, \"[message]\"")
+	user.audible_message(SPAN_EMOTE("[src] says, \"[message]\""))
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if (H.sims)
+			H.sims.affectMotive("fun", 1)
 
 /obj/item/toy/plush/attack_self(mob/user as mob)
 	src.say_something(user)
@@ -319,6 +326,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 	if (!menuchoice)
 		return
 	if (menuchoice == "Fidget")
+		animate_door_squeeze(src) //squish
 		user.visible_message(SPAN_EMOTE("[user] fidgets with [src]."))
 		boutput(user, SPAN_NOTICE("You feel [pick("a bit", "slightly", "a teeny bit", "somewhat", "surprisingly", "")] [pick("better", "more calm", "more composed", "less stressed")]."))
 	else if (menuchoice == "Say")

@@ -102,7 +102,7 @@
 
 			SPAWN(45)
 				explosion_new(death_loc, death_loc, rand(6, 12))
-				fireflash(death_loc, 2)
+				fireflash(death_loc, 2, chemfire = CHEM_FIRE_RED)
 
 			SPAWN(50)
 				for(var/board_count = rand(4, 8), board_count > 0, board_count--)
@@ -425,12 +425,12 @@
 					for (var/mob/living/M in T)
 						if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 						M.changeStatus("stunned", 2 SECONDS)
-						M.changeStatus("weakened", 4 SECONDS)
+						M.changeStatus("knockdown", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
 						for(var/mob/living/M in locate(src.loc.x + 1 + increment,src.loc.y + 4,src.loc.z))
 							if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 							M.changeStatus("stunned", 2 SECONDS)
-							M.changeStatus("weakened", 4 SECONDS)
+							M.changeStatus("knockdown", 4 SECONDS)
 							M.throw_at(T, 3, 1)
 
 				if (4)	//E
@@ -438,12 +438,12 @@
 					for (var/mob/living/M in T)
 						if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 						M.changeStatus("stunned", 2 SECONDS)
-						M.changeStatus("weakened", 4 SECONDS)
+						M.changeStatus("knockdown", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
 						for(var/mob/living/M in locate(src.loc.x + 4,src.loc.y + 1 + increment,src.loc.z))
 							if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 							M.changeStatus("stunned", 2 SECONDS)
-							M.changeStatus("weakened", 4 SECONDS)
+							M.changeStatus("knockdown", 4 SECONDS)
 							M.throw_at(T, 3, 1)
 
 				if (2)	//S
@@ -451,12 +451,12 @@
 					for (var/mob/living/M in T)
 						if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 						M.changeStatus("stunned", 2 SECONDS)
-						M.changeStatus("weakened", 4 SECONDS)
+						M.changeStatus("knockdown", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
 						for(var/mob/living/M in locate(src.loc.x + 1 + increment,src.loc.y - 2,src.loc.z))
 							if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 							M.changeStatus("stunned", 2 SECONDS)
-							M.changeStatus("weakened", 4 SECONDS)
+							M.changeStatus("knockdown", 4 SECONDS)
 							M.throw_at(T, 3, 1)
 
 				if (8)	//W
@@ -464,12 +464,12 @@
 					for (var/mob/living/M in T)
 						if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 						M.changeStatus("stunned", 2 SECONDS)
-						M.changeStatus("weakened", 4 SECONDS)
+						M.changeStatus("knockdown", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
 						for(var/mob/living/M in locate(src.loc.x - 2,src.loc.y + 1 + increment,src.loc.z))
 							if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 							M.changeStatus("stunned", 2 SECONDS)
-							M.changeStatus("weakened", 4 SECONDS)
+							M.changeStatus("knockdown", 4 SECONDS)
 							M.throw_at(T, 3, 1)
 
 		SPAWN(8)
@@ -843,13 +843,13 @@
 					M.health = M.health * randfloat(0.1 / dam_type, 0.2 / dam_type)
 				else
 					random_brute_damage(M, 80 / dam_type)
-			M.changeStatus("weakened", 4 SECOND)
+			M.changeStatus("knockdown", 4 SECOND)
 			M.changeStatus("stunned", 1 SECOND)
 			INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, emote), "scream")
 		var/turf/simulated/T = locate(point_x,point_y,src.z)
 		if(dam_type == 2 && istype(T, /turf/simulated/wall))
 			leavescan(T, 1)
-			fireflash(locate(point_x,point_y,src.z), 0)
+			fireflash(locate(point_x,point_y,src.z), 0, chemfire = CHEM_FIRE_RED)
 			if(prob(64))
 				new /obj/item/raw_material/scrap_metal(T)
 				if(prob(32))
@@ -870,11 +870,11 @@
 			for (var/obj/S in locate(point_x,point_y,src.z))
 				if(dam_type == 3 && !istype(S, /obj/critter))
 					leavescan(get_turf(S), 1)
-					fireflash(locate(point_x,point_y,src.z), 0)
+					fireflash(locate(point_x,point_y,src.z), 0, chemfire = CHEM_FIRE_RED)
 					qdel(S)
 				else if(prob(64) && !istype(S, /obj/critter))
 					leavescan(get_turf(S), 1)
-					fireflash(locate(point_x,point_y,src.z), 0)
+					fireflash(locate(point_x,point_y,src.z), 0, chemfire = CHEM_FIRE_RED)
 					S.ex_act(1)
 		return
 

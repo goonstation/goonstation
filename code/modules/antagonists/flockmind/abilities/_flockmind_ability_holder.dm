@@ -73,7 +73,7 @@
 	src.object = B
 
 /datum/targetable/flockmindAbility/cast(atom/target)
-	if (!holder || !holder.owner)
+	if (..() || !holder || !holder.owner)
 		return TRUE
 	return FALSE
 

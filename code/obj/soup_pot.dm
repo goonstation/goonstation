@@ -310,7 +310,7 @@ TYPEINFO(/obj/stove)
 	var/total_wclass_max = 15
 	var/total_wclass = 0
 	var/max_reagents = 150
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 	w_class = W_CLASS_HUGE
 	var/image/fluid_icon
 	var/datum/custom_soup/my_soup

@@ -7,11 +7,13 @@
 	max_range = 1
 	cooldown = 0
 	pointCost = 0
+	do_logs = FALSE
+	interrupt_action_bars = FALSE
 
 	cast(mob/target)
 		if (!holder)
 			return 1
-
+		. = ..()
 		var/mob/living/intangible/wraith/W = holder.owner
 
 		if (!W)
@@ -24,7 +26,7 @@
 			return 1
 		for(var/mob/living/critter/C in W.summons)
 			logTheThing(LOG_SAY, W, "WRAITH WHISPER TO [constructTarget(C,"say")]: [message]")
-			message = trim(copytext(sanitize(message), 1, 255))
+			message = trimtext(copytext(sanitize(message), 1, 255))
 			if (!message)
 				return 1
 			boutput(C, "<b>Your master's voice resonates in your head... </b> [message]")

@@ -18,7 +18,7 @@
 	speechverb_stammer = "states"
 	speechverb_exclaim = "declares"
 	speechverb_ask = "queries"
-	faction = FACTION_DERELICT
+	faction = list(FACTION_DERELICT)
 
 	setup_healths()
 		add_hh_robot(100, 1)
@@ -130,8 +130,8 @@
 					var/obj/window/W = AM
 					W.health = 0
 					W.smash()
-				else if(istype(AM,/obj/grille))
-					var/obj/grille/G = AM
+				else if(istype(AM,/obj/mesh/grille))
+					var/obj/mesh/grille/G = AM
 					G.damage_blunt(30)
 				else if(istype(AM, /obj/table))
 					AM.meteorhit()
@@ -237,6 +237,7 @@
 			boutput(M, SPAN_ALERT("It would be a waste of time to stun the dead."))
 			return TRUE
 
+		. = ..()
 		M.visible_message(SPAN_ALERT("<B>[M] glares angrily at [target]!</B>"))
 		target.apply_flash(5, 5)
 		boutput(target, SPAN_ALERT("You can feel a chill running down your spine as [M] glares at you with hatred burning in their  mechanical eyes."))
@@ -248,7 +249,6 @@
 /datum/action/bar/icon/mechanimateAbility
 	duration = 8 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "mechanimate"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "turn_over"
 	var/mob/living/target
@@ -326,6 +326,7 @@
 		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return TRUE
+		. = ..()
 		holder.owner.say("Transformation protocol engaged. Please stand clear of the recipient.")
 		actions.start(new/datum/action/bar/icon/mechanimateAbility(target, src), holder.owner)
 		return FALSE
@@ -357,6 +358,7 @@
 			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return TRUE
 
+		. = ..()
 		M.visible_message(SPAN_ALERT("<B>With their double saw whirling, [M] swiftly severs all [target]'s limbs!</B>"))
 		H.sever_limb("r_arm")
 		H.sever_limb("l_arm")
@@ -446,7 +448,8 @@
 	health_brute_vuln = 0.5
 	health_burn = 20
 	health_burn_vuln = 0.25
-	faction = FACTION_DERELICT
+	faction = list(FACTION_DERELICT)
+	is_npc = TRUE
 	ai_type = /datum/aiHolder/aggressive
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0

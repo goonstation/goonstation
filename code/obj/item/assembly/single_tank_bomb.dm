@@ -49,11 +49,10 @@
 	var/obj/item/device/igniter/part2 = null
 	var/obj/item/tank/plasma/part3 = null
 	status = 0
-	flags = FPRINT | TABLEPASS| CONDUCT
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
+	flags = TABLEPASS | CONDUCT
 
 /obj/item/assembly/proximity_bomb/dropped()
-
+	. = ..()
 	SPAWN( 0 )
 		src.part1.sense()
 		return
@@ -111,7 +110,7 @@
 /obj/item/assembly/proximity_bomb/attack_self(mob/user as mob)
 
 	playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
-	src.part1.attack_self(user, 1)
+	src.part1.AttackSelf(user, 1)
 	src.add_fingerprint(user)
 	return
 
@@ -141,13 +140,6 @@
 	src.icon_state = text("prox-igniter-tank[]", n)
 	return
 
-/obj/item/assembly/proximity_bomb/HasProximity(atom/movable/AM as mob|obj)
-	if (istype(AM, /obj/projectile))
-		return
-	if (AM.move_speed < 12 && src.part1)
-		src.part1.sense()
-	return
-
 /obj/item/assembly/proximity_bomb/bump(atom/O)
 	SPAWN(0)
 		//boutput(world, "miptank bumped into [O]")
@@ -170,7 +162,7 @@
 	SPAWN(1 SECOND)
 		prox_check()
 
-/obj/item/assembly/proximity_bomb/return_air()
+/obj/item/assembly/proximity_bomb/return_air(direct = FALSE)
 	return src.part3?.return_air()
 
 
@@ -184,7 +176,7 @@
 	var/obj/item/device/igniter/part2 = null
 	var/obj/item/tank/plasma/part3 = null
 	status = 0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 
 /obj/item/assembly/time_bomb/c_state(n)
 
@@ -243,7 +235,7 @@
 /obj/item/assembly/time_bomb/attack_self(mob/user as mob)
 
 	if (src.part1)
-		src.part1.attack_self(user, 1)
+		src.part1.AttackSelf(user, 1)
 		playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
 	src.add_fingerprint(user)
 	return
@@ -262,7 +254,7 @@
 			src.part3.release()
 	return
 
-/obj/item/assembly/time_bomb/return_air()
+/obj/item/assembly/time_bomb/return_air(direct = FALSE)
 	return src.part3?.return_air()
 
 /////////////////////////////////////////////////// Single tank bomb (remote signaller) ////////////////////////////////////
@@ -275,7 +267,7 @@
 	var/obj/item/device/igniter/part2 = null
 	var/obj/item/tank/plasma/part3 = null
 	status = 0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 
 /obj/item/assembly/radio_bomb/examine()
 	. = ..()
@@ -332,7 +324,7 @@
 
 	if (src.part1)
 		playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
-		src.part1.attack_self(user, 1)
+		src.part1.AttackSelf(user, 1)
 	src.add_fingerprint(user)
 	return
 
@@ -350,5 +342,5 @@
 			src.part3.release()
 	return
 
-/obj/item/assembly/radio_bomb/return_air()
+/obj/item/assembly/radio_bomb/return_air(direct = FALSE)
 	return src.part3?.return_air()

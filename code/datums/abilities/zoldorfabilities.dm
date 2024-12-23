@@ -31,9 +31,9 @@
 		src.object = B
 
 	cast(atom/target)
+		. = ..()
 		if (!holder || !holder.owner)
 			return 1
-		return 0
 
 /datum/targetable/zoldorfAbility/fortune //yay mad libs. its basically a bunch of input checks and dynamic popups and some animations while its active :)
 	name = "Tell Fortune"
@@ -73,6 +73,7 @@
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
 			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return 1
+		. = ..()
 		var/obj/machinery/playerzoldorf/pz = user.loc
 		var/list/zoldorflist = list(SPAN_NOTICE("[pz] makes a mystical gesture!</b>"),SPAN_NOTICE("[pz] rocks back and forth!"))
 		if((user.abilityHolder.points <= 3)&&(user.abilityHolder.points > 0))
@@ -257,6 +258,7 @@
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
 			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return
+		. = ..()
 		var/obj/machinery/playerzoldorf/pz = user.loc
 
 		user.abilityHolder.points++
@@ -274,6 +276,7 @@
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
 			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return
+		. = ..()
 		var/obj/machinery/playerzoldorf/pz = user.loc
 
 		user.abilityHolder.points--
@@ -291,6 +294,7 @@
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
 			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return 1
+		. = ..()
 		var/obj/machinery/playerzoldorf/pz = user.loc
 		pz.omen = 1
 		return !pz.omen(user)
@@ -307,6 +311,7 @@
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
 			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return 1
+		. = ..()
 		var/obj/machinery/playerzoldorf/pz = user.loc
 		if(istype(target,/obj/item/paper/thermal/playerfortune))
 			var/obj/item/paper/thermal/playerfortune/f = target
@@ -334,6 +339,7 @@
 	cooldown = 0
 
 	cast(atom/target)
+		. = ..()
 		var/mob/zoldorf/user = holder.owner
 		var/destination
 		if(istype(user.loc,/obj/machinery/playerzoldorf))
@@ -376,6 +382,7 @@
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
 			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return 1
+		. = ..()
 		if(!pz.omen)
 			pz.omen(user)
 		else
@@ -396,6 +403,7 @@
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
 			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return 1
+		. = ..()
 		var/obj/machinery/playerzoldorf/pz = user.loc
 		pz.storedsouls--
 		var/boothloc = get_turf(pz)
@@ -429,6 +437,7 @@
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
 			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return 1
+		. = ..()
 		var/obj/machinery/playerzoldorf/pz = user.loc
 		pz.storedsouls--
 		pz.lightrfade(5)
@@ -470,6 +479,7 @@
 	cooldown = 100
 
 	cast(atom/target)
+		. = ..()
 		var/mob/zoldorf/user = holder.owner
 		var/color
 		color = input(user,"Which soul color would you like?") as color
@@ -486,6 +496,7 @@
 
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
+		. = ..()
 		if(user.homebooth)
 			var/obj/machinery/playerzoldorf/pz = user.homebooth
 			var/list/selections = list("Read Notes","Add Note","Remove Note")
@@ -500,15 +511,15 @@
 					if(!pz.notes.len)
 						boutput(user,SPAN_ALERT("<b>You have no saved notes!</b>"))
 						return
+
 					var/aaa //modified list data
 					for(var/i=1,i<=pz.notes.len,i++)
 						var/yeet = "<span>"
 						yeet+=pz.notes[i]
 						yeet+="<br><br></span>"
 						aaa+=yeet
-					var/sizex = 0
-					var/sizey = 0
-					usr << browse("<HTML><HEAD><TITLE>Notes</TITLE></HEAD><BODY><TT>[aaa]</TT></BODY></HTML>", "window=Notes[(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]")
+					tgui_message(usr, "[aaa]", "Notes")
+
 				if("Add Note")
 					var/note
 					note = input("Note") as null|text
@@ -542,6 +553,7 @@
 
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
+		. = ..()
 		if(user.homebooth)
 			var/obj/machinery/playerzoldorf/pz = user.homebooth
 			boutput(user,SPAN_SUCCESS("<b>You have accumulated [pz.partialsouls]% of a soul!</b>"))

@@ -368,7 +368,7 @@
 	},
 /area/prefab/raceway)
 "bc" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},

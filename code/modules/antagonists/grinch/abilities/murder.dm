@@ -36,7 +36,7 @@
 		if (!iscarbon(target))
 			boutput(M, SPAN_ALERT("[target] is immune to the disease."))
 			return 1
-
+		. = ..()
 		var/mob/living/L = target
 
 		playsound(M.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 75, 1, -1)

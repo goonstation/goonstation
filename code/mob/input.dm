@@ -9,6 +9,9 @@
 		return controller.hotkey(src, name)
 	return ..()
 
+/mob/proc/can_turn()
+	return !src.dir_locked && (!isliving(src) || !isdead(src)) && !HAS_ATOM_PROPERTY(src, PROP_MOB_CANTTURN)
+
 /mob/proc/keys_changed(keys, changed)
 	set waitfor = 0
 	if (changed & KEY_EXAMINE && src.client)
@@ -59,7 +62,7 @@
 		else
 			src.move_dir = 0
 
-		if(!src.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
+		if(src.can_turn()) //in order to not turn around and good fuckin ruin the emote animation
 			src.set_dir(src.move_dir)
 	if (changed & (KEY_THROW|KEY_PULL|KEY_POINT|KEY_EXAMINE|KEY_BOLT|KEY_OPEN|KEY_SHOCK)) // bleh
 		src.update_cursor()
@@ -202,6 +205,12 @@
 						last_move_trigger = ticker ? ticker.round_elapsed_ticks : 0 //Wire note: Fix for Cannot read null.round_elapsed_ticks
 						deliver_move_trigger(running ? "sprint" : m_intent)
 
+					// Tripping (the physical kind)
+					var/trip_chance = 2 // because of how often this is called, 2% seems like more than enough
+					if (src.traitHolder && src.traitHolder.hasTrait("trippy") && prob(trip_chance))
+						src.setStatus("resting", INFINITE_STATUS)
+						src.force_laydown_standup()
+						src.visible_message(SPAN_ALERT("<B>[src]</B> trips!"))
 
 					src.glide_size = glide // dumb hack: some Move() code needs glide_size to be set early in order to adjust "following" objects
 					src.animate_movement = SLIDE_STEPS
@@ -232,9 +241,7 @@
 					//robust grab : Assailant gets moved here (do_step shit). this is messy, i'm sorry, blame MBC
 					if (!do_step || src.loc != old_loc)
 
-						if (mob_flags & AT_GUNPOINT) //we do this check here because if we DID take a step, we aren't tight-grabbed and the gunpoint shot will be triggered by Mob/Move(). messy i know, fix later
-							for(var/obj/item/grab/gunpoint/G in grabbed_by)
-								G.shoot()
+						SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT) //we do this check here because if we DID take a step, we aren't tight-grabbed and the gunpoint shot will be triggered by Mob/Move(). messy i know, fix later
 						var/list/stepped = list()
 						for (var/obj/item/grab/G as anything in src.grabbed_by)
 							if ((G.assailant in stepped) || G.assailant == pushing || G.affecting == pushing) continue

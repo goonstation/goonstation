@@ -14,9 +14,12 @@
 	New(datum/mind/new_owner)
 		src.gang = new /datum/gang
 		src.gang.leader = new_owner
-
+		antagonist_icon = "gang_head_[gang.color_id]"
 		SPAWN(0)
 			src.gang.select_gang_name()
+
+		if (src.gang.gang_points[new_owner] == null)
+			src.gang.gang_points[new_owner] = GANG_STARTING_POINTS
 
 		. = ..()
 
@@ -24,6 +27,18 @@
 		src.gang.leader = null
 
 		. = ..()
+
+	on_death()
+		if (GANG_LEADER_SOFT_DEATH_TIME > ticker.round_elapsed_ticks)
+			src.gang.handle_leader_early_death()
+		..()
+
+	handle_cryo()
+		src.gang.handle_leader_temp_cryo()
+
+	handle_perma_cryo()
+		src.gang.handle_leader_perma_cryo()
+
 
 	is_compatible_with(datum/mind/mind)
 		return ishuman(mind.current)
@@ -39,9 +54,10 @@
 			src.ability_holder = A
 
 		src.ability_holder.addAbility(/datum/targetable/gang/set_gang_base)
+		src.ability_holder.addAbility(/datum/targetable/gang/toggle_overlay)
+		src.ability_holder.addAbility(/datum/targetable/gang/locker_spot)
 
 		var/mob/living/carbon/human/H = src.owner.current
-
 		// If possible, get the gang leader's headset.
 		if (istype(H.ears, /obj/item/device/radio/headset))
 			src.headset = H.ears
@@ -62,19 +78,37 @@
 		src.ability_holder.removeAbility(/datum/targetable/gang/set_gang_base)
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/gang)
 
-		src.headset.remove_radio_upgrade()
+		src.headset?.remove_radio_upgrade()
 
 	add_to_image_groups()
 		. = ..()
 		var/datum/client_image_group/image_group = get_image_group(src.gang)
 		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		imgroup.add_mind(src.owner)
+		var/datum/client_image_group/objimgroup = get_image_group(CLIENT_IMAGE_GROUP_GANG_OBJECTIVES)
+		objimgroup.add_mind(src.owner)
 
 	remove_from_image_groups()
 		. = ..()
 		var/datum/client_image_group/image_group = get_image_group(src.gang)
 		image_group.remove_mind_mob_overlay(src.owner)
 		image_group.remove_mind(src.owner)
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		imgroup.remove_mind(src.owner)
+		var/datum/client_image_group/objimgroup = get_image_group(CLIENT_IMAGE_GROUP_GANG_OBJECTIVES)
+		objimgroup.remove_mind(src.owner)
+
+	transfer_to(datum/mind/target, take_gear, source, silent = FALSE)
+		var/datum/abilityHolder/gang/ability_source = src.owner.current.get_ability_holder(/datum/abilityHolder/gang)
+		var/datum/mind/old_owner = owner
+		..()
+		gang.leader = target
+		var/datum/abilityHolder/gang/ability_target = target.current.get_ability_holder(/datum/abilityHolder/gang)
+		target.current.remove_ability_holder(ability_target)
+		target.current.add_existing_ability_holder(ability_source)
+		old_owner.current.remove_ability_holder(/datum/abilityHolder/gang)
 
 	assign_objectives()
 		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/gang, src)
@@ -82,15 +116,25 @@
 	announce()
 		. = ..()
 		var/datum/game_mode/gang/gamemode = ticker.mode
+		src.owner.current.show_antag_popup(ROLE_GANG_LEADER)
 		boutput(src.owner.current, SPAN_ALERT("Your headset has been tuned to your gang's frequency. Prefix a message with :z to communicate on this channel."))
 		if(!gamemode.random_gangs)
 			boutput(src.owner.current, SPAN_ALERT("You must recruit people to your gang and compete for wealth and territory!"))
-		boutput(src.owner.current, SPAN_ALERT("You can harm whoever you want, but be careful - the crew can harm gang members too!"))
-		boutput(src.owner.current, SPAN_ALERT("To set your gang's home turf and spawn your locker, use the Set Gang Base ability in the top left. Make sure to pick somewhere safe, as your locker can be broken into and looted. You can only do this once!"))
-		boutput(src.owner.current, SPAN_ALERT("Build up a stash of cash, guns and drugs. Use the items on your locker to store them."))
+		boutput(src.owner.current, SPAN_ALERT("To set your gang's home turf and spawn your locker, use the Set Gang Base ability in the top left. Make sure to pick somewhere safe, as your locker is where your territory starts. You can only do this once!"))
+		boutput(src.owner.current, SPAN_ALERT("Once your locker is spawned, grab your gear and spraycans, then expand your territory!"))
+		boutput(src.owner.current, SPAN_ALERT("------"))
+		boutput(src.owner.current, SPAN_ALERT("You and your gang earn points by claiming territory, finding dead drops, storing guns & drugs in your locker."))
+		boutput(src.owner.current, SPAN_ALERT("Capture areas for your gang by using spraypaint around the edges of your territory. The more populated the area, the better!"))
+		boutput(src.owner.current, SPAN_ALERT("In a few minutes, your gang will send PDA messages to civilians about a dead drop. Work with the civilians to find them for guns & loot!"))
+		boutput(src.owner.current, SPAN_ALERT("Additionally, a couple of large weapons crates will spawn over the shift. watch the radio to find out where!"))
+		boutput(src.owner.current, SPAN_ALERT("Be proud of your outfit! Wearing it grants benefits, hiding it under a suit doesn't count."))
+		boutput(src.owner.current, SPAN_ALERT("------"))
+		boutput(src.owner.current, SPAN_ALERT("You are free to harm anyone who isn't in your gang, but be careful, they can do the same to you!"))
+
+
 		if(!gamemode.random_gangs)
 			boutput(src.owner.current, SPAN_ALERT("Use recruitment flyers obtained from the locker to invite new members, up to a limit of [src.gang.current_max_gang_members]."))
-		boutput(src.owner.current, SPAN_ALERT("<b>Turf, cash, guns and drugs all count towards victory, and your survival gives your gang bonus points!</b>"))
+		boutput(src.owner.current, SPAN_ALERT("<b>Keep in mind: As the gang leader, you have a special pool of 'Street Cred' to hire new gang members & buy revival syringes at your locker!</b>"))
 		if(gamemode.random_gangs)
 			var/list/member_strings = list()
 			for(var/datum/mind/member in src.gang.members)
@@ -124,8 +168,8 @@
 				"value" = purchased_items,
 			),
 			list(
-				"name" = "Areas Owned",
-				"value" = "[src.gang.num_areas_controlled()]",
+				"name" = "Tiles Controlled",
+				"value" = "[src.gang.num_tiles_controlled()]",
 			),
 			list(
 				"name" = "Turf Score",
@@ -133,7 +177,7 @@
 			),
 			list(
 				"name" = "Cash Pile",
-				"value" = "[src.gang.score_cash * 200][CREDIT_SIGN]",
+				"value" = "[src.gang.score_cash * GANG_CASH_DIVISOR][CREDIT_SIGN]",
 			),
 			list(
 				"name" = "Guns Stashed",

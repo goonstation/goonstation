@@ -8,8 +8,9 @@ var/list/basic_elements = list(
 
 ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
 TYPEINFO(/obj/machinery/chem_dispenser)
-	mats = list("MET-2" = 10, "CON-2" = 10, "miracle" = 20)
-
+	mats = list("metal_dense" = 10,
+				"conductive_high" = 10,
+				"miracle" = 20)
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	desc = "A complicated, soda fountain-like machine that allows the user to dispense basic chemicals for use in recipes."
@@ -18,7 +19,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
 	var/icon_base = "dispenser"
-	flags = FPRINT | NOSPLASH | TGUI_INTERACTIVE
+	flags = NOSPLASH | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
 	var/health = 400
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
@@ -45,7 +46,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 		if(!starting_groups && current_state <= GAME_STATE_PREGAME)
 			var/area/A = get_area(src)
-			if(istype(A,/area/station/medical))
+			if(istype(A,/area/station/medical) && !istype(A, /area/station/medical/asylum))
 				starting_groups = list(/datum/reagent_group/default/potassium_iodide,
 									   /datum/reagent_group/default/styptic,
 								       /datum/reagent_group/default/silver_sulfadiazine)
@@ -177,6 +178,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		qdel(src)
 		return
 
+
 	proc/eject_card()
 		if (src.user_id)
 			if((BOUNDS_DIST(usr, src) == 0))
@@ -248,10 +250,10 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			qdel(src)
 			return
 
-	proc/remove_distant_beaker()
+	proc/remove_distant_beaker(force = FALSE)
 		// borgs and people with item arms don't insert the beaker into the machine itself
 		// but whenever something would happen to the dispenser and the beaker is far it should disappear
-		if(beaker && BOUNDS_DIST(beaker, src) > 0)
+		if(beaker && (BOUNDS_DIST(beaker, src) > 0 || force))
 			REMOVE_ATOM_PROPERTY(beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 			beaker = null
 			src.UpdateIcon()
@@ -336,7 +338,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 					. = TRUE
 				else
 					var/obj/item/reagent_containers/newbeaker = usr.equipped()
-					if (istype(newbeaker, glass_path))
+					if (istype(newbeaker, glass_path) && !newbeaker.incompatible_with_chem_dispensers)
 						if (newbeaker.current_lid)
 							boutput(ui.user, SPAN_ALERT("You cannot put the [newbeaker.name] in the [src.name] while it has a lid on it."))
 							return
@@ -437,6 +439,11 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				src.recording_queue = list()
 				. = TRUE
 
+	ui_close(mob/user)
+		. = ..()
+		if(src.beaker?.loc != src)
+			src.remove_distant_beaker(force = TRUE)
+
 /obj/machinery/chem_dispenser/chemical
 	New()
 		..()
@@ -517,11 +524,9 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	dispense_sound = 'sound/misc/pourdrink2.ogg'
 
 /obj/machinery/chem_dispenser/chef
-	name = "kitchen fountain"
-	desc = "A soda fountain that definitely does not have a suspicious similarity to the alcohol and chemical dispensers OR the soda fountain. No sir."
-	dispensable_reagents = list("cola", "juice_lime", "juice_lemon", "juice_orange", "mint", "mustard", "pepper", \
-								"juice_cran", "juice_cherry", "juice_pineapple","coconut_milk", "ketchup", \
-								"sugar", "water", "vanilla", "tea", "chocolate", "chocolate_milk","strawberry_milk")
+	name = "HAPPY CHEF Dispense-o-tronic"
+	desc = "It's covered in a thin layer of acrid-smelling dust. The contents probably taste more like preservatives than whatever they're supposed to be."
+	dispensable_reagents = list("ketchup","mustard","salt","pepper","gravy","chocolate","chocolate_milk","strawberry_milk","milk")
 	icon_state = "alc_dispenser"
 	icon_base = "alc_dispenser"
 	glass_path = /obj/item/reagent_containers/food/drinks

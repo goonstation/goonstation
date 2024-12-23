@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 
 	proc/load()
 		RETURN_TYPE(/datum/allocated_region)
-		var/datum/allocated_region/region = global.region_allocator.allocate(src.prefabSizeX, src.prefabSizeY)
+		var/datum/allocated_region/region = global.region_allocator.allocate(src.prefabSizeX, src.prefabSizeY, name)
 		src.applyTo(region.bottom_left, overwrite_args = DMM_OVERWRITE_OBJS | DMM_OVERWRITE_MOBS | DMM_BESPOKE_AREAS)
 		return region
 
@@ -49,3 +49,26 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabPath = "assets/maps/allocated/artifact_stranded.dmm"
 	prefabSizeX = 5
 	prefabSizeY = 5
+
+/datum/mapPrefab/allocated/artifact_fissure
+	prefabPath = "assets/maps/allocated/artifact_fissure.dmm"
+	prefabSizeX = 29
+	prefabSizeY = 35
+
+/datum/mapPrefab/allocated/pirate_ship
+	prefabPath = "assets/maps/allocated/pirate_ship.dmm"
+	prefabSizeX = 33
+	prefabSizeY = 38
+
+/datum/mapPrefab/allocated/jar
+	prefabSizeX = 7
+	prefabSizeY = 7
+	prefabPath = "assets/maps/allocated/jar.dmm"
+
+/datum/mapPrefab/allocated/htr_team
+	prefabPath = "assets/maps/allocated/htr_team_ship.dmm"
+	prefabSizeX = 25
+	prefabSizeY = 25
+
+	purge
+		prefabPath = "assets/maps/allocated/htr_purge_ship.dmm"

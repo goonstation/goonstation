@@ -2,7 +2,7 @@
 /// Mark a specific flock as interested in this
 /datum/component/flock_interest
 	/// The flock who is intently interested in this thing.
-	var/datum/flock/flock
+	var/tmp/datum/flock/flock //setting this to tmp because deep copy is duplicating flocks and aaaa
 
 /datum/component/flock_interest/Initialize(datum/flock/flock)
 	. = ..()

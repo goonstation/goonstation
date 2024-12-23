@@ -24,7 +24,7 @@ CONTAINS:
 	icon_state = "scalpel1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
@@ -93,7 +93,7 @@ CONTAINS:
 	icon_state = "saw"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "saw"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SAWING
@@ -160,7 +160,7 @@ CONTAINS:
 	icon_state = "spoon"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SPOONING
@@ -274,7 +274,7 @@ CONTAINS:
 				if (src.staple.shot_sound)
 					playsound(user, src.staple.shot_sound, 50, 1)
 				if (user == H)
-					user.visible_message(SPAN_ALERT("<b>[user] staples \the [B.name] to their own head! [prob(10) ? pick("Woah!", "What a goof!", "Wow!", "WHY!?", "Huh!"): null]"))
+					user.visible_message(SPAN_ALERT("<b>[user] staples \the [B.name] to [his_or_her(user)] own head! [prob(10) ? pick("Woah!", "What a goof!", "Wow!", "WHY!?", "Huh!"): null]"))
 				else
 					user.visible_message(SPAN_ALERT("<b>[user] staples \the [B.name] to [H.name]'s head!"))
 				if (H.stat!=2)
@@ -289,7 +289,7 @@ CONTAINS:
 				if (src.staple.shot_sound)
 					playsound(user, src.staple.shot_sound, 50, 1)
 				if (user == H)
-					user.visible_message(SPAN_ALERT("<b>[user] staples [K] to their own head! [prob(10) ? pick("Woah!", "What a goof!", "Wow!", "WHY!?", "Huh!"): null]"))
+					user.visible_message(SPAN_ALERT("<b>[user] staples [K] to [his_or_her(user)] own head! [prob(10) ? pick("Woah!", "What a goof!", "Wow!", "WHY!?", "Huh!"): null]"))
 				else
 					user.visible_message(SPAN_ALERT("<b>[user] staples [K] to [H]'s head!"))
 				if (H.stat!=2)
@@ -327,7 +327,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 /obj/item/robodefibrillator
 	name = "defibrillator"
 	desc = "Uses electrical currents to restart the hearts of critical patients."
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	icon = 'icons/obj/surgery.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "defib-off"
@@ -337,6 +337,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 	var/charge_time = 100
 	var/emagged = 0
 	var/makeshift = 0
+	var/mounted = FALSE
 	var/obj/item/cell/cell = null
 
 	emag_act(var/mob/user)
@@ -490,10 +491,6 @@ TYPEINFO(/obj/item/robodefibrillator)
 
 			if (ishuman(patient)) //remove later when we give nonhumans pathogen / organ response?
 				var/mob/living/carbon/human/H = patient
-				for (var/uid in H.pathogens)
-					var/datum/pathogen/P = H.pathogens[uid]
-					P.onshocked(35, 500)
-
 				var/sumdamage = patient.get_brute_damage() + patient.get_burn_damage() + patient.get_toxin_damage()
 				if (suiciding)
 					; // do nothing
@@ -518,21 +515,21 @@ TYPEINFO(/obj/item/robodefibrillator)
 				var/adjust = cell.charge
 				if (adjust <= 0) // bwuh??
 					adjust = 1000 // fu
-				patient.changeStatus("paralysis", min(0.002 * adjust, 10) SECONDS)
+				patient.changeStatus("unconscious", min(0.002 * adjust, 10) SECONDS)
 				patient.stuttering += min(0.005 * adjust, 25)
 				//DEBUG_MESSAGE("[src]'s defibrillate(): adjust = [adjust], paralysis + [min(0.001 * adjust, 5)], stunned + [min(0.002 * adjust, 10)], weakened + [min(0.002 * adjust, 10)], stuttering + [min(0.005 * adjust, 25)]")
 
 			else if (faulty)
-				patient.changeStatus("paralysis", 1.5 SECONDS)
+				patient.changeStatus("unconscious", 1.5 SECONDS)
 				patient.stuttering += 5
 			else
 #ifdef USE_STAMINA_DISORIENT
 				if (emagged)
-					patient.do_disorient(130, weakened = 50, stunned = 50, paralysis = 40, disorient = 60, remove_stamina_below_zero = 0)
+					patient.do_disorient(130, knockdown = 50, stunned = 50, unconscious = 40, disorient = 60, remove_stamina_below_zero = 0)
 				else
-					patient.changeStatus("paralysis", 5 SECONDS)
+					patient.changeStatus("unconscious", 5 SECONDS)
 #else
-				patient.changeStatus("paralysis", 5 SECONDS)
+				patient.changeStatus("unconscious", 5 SECONDS)
 
 #endif
 				patient.stuttering += 10
@@ -564,7 +561,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 				user.visible_message(SPAN_ALERT("<b>[user]</b> shocks [user == patient ? "[him_or_her(user)]self" : patient] with [src]!"),\
 				SPAN_ALERT("You shock [user == patient ? "yourself" : patient] with [src]!"))
 				logTheThing(LOG_COMBAT, patient, "was defibrillated by [constructTarget(user,"combat")] with [src] when they didn't need it at [log_loc(patient)]")
-				patient.changeStatus("weakened", 0.1 SECONDS)
+				patient.changeStatus("knockdown", 0.1 SECONDS)
 				patient.force_laydown_standup()
 				patient.remove_stamina(45)
 				if (isdead(patient) && !patient.bioHolder.HasEffect("resist_electric"))
@@ -596,11 +593,10 @@ TYPEINFO(/obj/item/robodefibrillator)
 		newcell.set_loc(src)
 
 
-
-
 /obj/item/robodefibrillator/mounted
 	var/obj/machinery/defib_mount/parent = null	//temp set while not attached
 	w_class = W_CLASS_BULKY
+	mounted = TRUE
 
 	disposing()
 		parent?.defib = null
@@ -618,13 +614,14 @@ TYPEINFO(/obj/machinery/defib_mount)
 	anchored = ANCHORED
 	density = 0
 	status = REQ_PHYSICAL_ACCESS
+	/// defibrillator, when out of mount
 	var/obj/item/robodefibrillator/mounted/defib = null
 
 	New()
 		..()
 		if (!defib)
 			src.defib = new /obj/item/robodefibrillator/mounted(src)
-		RegisterSignal(src.defib, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
+		RegisterSignal(src, COMSIG_CORD_RETRACT, PROC_REF(put_back_defib))
 
 	emag_act()
 		..()
@@ -638,7 +635,8 @@ TYPEINFO(/obj/machinery/defib_mount)
 
 	process()
 		if(!QDELETED(src.defib))
-			handle_move()
+			if (BOUNDS_DIST(src.defib, src) > 0)
+				src.put_back_defib()
 		else
 			src.defib = null
 		..()
@@ -658,33 +656,27 @@ TYPEINFO(/obj/machinery/defib_mount)
 			return //maybe a bird ate it
 		if(defib.loc != src)
 			return //if someone else has it, don't put it in user's hand
+		src.AddComponent(/datum/component/cord, src.defib, base_offset_x = 0, base_offset_y = -2)
 		user.put_in_hand_or_drop(src.defib)
 		src.defib.parent = src
 		playsound(src, 'sound/items/pickup_defib.ogg', 65, vary=0.2)
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move), TRUE)
 		UpdateIcon()
 
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (W == src.defib)
-			put_back_defib(user)
+			src.put_back_defib()
 
-	proc/handle_move()
-		if (src.defib && src.defib.loc != src)
-			if (BOUNDS_DIST(src.defib, src) > 0)
-				put_back_defib()
-
+	/// Put the defib back in the mount, by force if necessary.
 	proc/put_back_defib()
 		if (src.defib)
-			if (isliving(src.defib.loc))
-				var/mob/living/L = src.defib.loc
-				L.drop_item(defib) // drop it before moving it back, otherwise its prob on floor
+			src.RemoveComponentsOfType(/datum/component/cord)
+			src.defib.force_drop(sever=TRUE)
 			src.defib.set_loc(src)
 			src.defib.parent = null
-
+			src.ClearSpecificOverlays("cord_\ref[src]")
 			playsound(src, 'sound/items/putback_defib.ogg', 65, vary=0.2)
 			UpdateIcon()
-
 
 /* ================================================ */
 /* -------------------- Suture -------------------- */
@@ -697,7 +689,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	icon_state = "suture"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "suture"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	hit_type = DAMAGE_STAB
 	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
@@ -758,7 +750,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	icon_state = "bandage-item-3"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "bandage"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	object_flags = NO_ARM_ATTACH
 	w_class = W_CLASS_TINY
 	force = 0
@@ -831,7 +823,6 @@ TYPEINFO(/obj/machinery/defib_mount)
 /* =============================================================== */
 
 /datum/action/bar/icon/medical_suture_bandage
-	id = "medical_suture_bandage"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 15
 	icon = 'icons/obj/surgery.dmi'
@@ -953,7 +944,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	desc = "A heavy bag, used for carrying stuff around. The stuff is usually dead bodies. Hence the name."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "bodybag"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH
 	w_class = W_CLASS_TINY
 	force = 0
@@ -1055,7 +1046,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 		for (var/obj/O in src)
 			O.set_loc(get_turf(src))
 		for (var/mob/M in src)
-			M.changeStatus("weakened", 0.5 SECONDS)
+			M.changeStatus("knockdown", 0.5 SECONDS)
 			M.set_loc(get_turf(src))
 		var/obj/decal/cleanable/balloon/B = make_cleanable(/obj/decal/cleanable/balloon, get_turf(src))
 		B.icon_state = "balloon_black_pop"
@@ -1068,7 +1059,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 		for (var/obj/O in src)
 			O.set_loc(get_turf(src))
 		for (var/mob/M in src)
-			M.changeStatus("weakened", 0.5 SECONDS)
+			M.changeStatus("knockdown", 0.5 SECONDS)
 			SPAWN(0.3 SECONDS)
 				M.set_loc(get_turf(src))
 		src.open = 1
@@ -1081,7 +1072,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 				continue
 			O.set_loc(src)
 		for (var/mob/M in get_turf(src))
-			if (!M.lying || M.anchored || M.buckled)
+			if (!(M.lying || (ismobcritter(M) && isdead(M))) || M.anchored || M.buckled)
 				continue
 			M.set_loc(src)
 		src.open = 0
@@ -1098,7 +1089,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	icon_state = "hemostat"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "hemostat"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	hit_type = DAMAGE_STAB
@@ -1374,9 +1365,6 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 
 					results_msg = "&emsp;[lmove][lpstatus][lpreact]<br>&emsp;[rmove][rpstatus][rpreact]"
 
-		else if (isliving(target)) // other mooooooobs
-			var/mob/living/L = target
-			L.vision.flash(src.anim_duration)
 
 		user.tri_message(target, "[user] shines [src] in [target == user ? "[his_or_her(user)] own" : "[target]'s"] eyes.[results_msg ? "<br>[results_msg]" : null]",\
 			"You shine [src] in [target == user ? "your own" : "[target]'s"] eyes.[(target != user && results_msg) ? "<br>[results_msg]" : null]",\
@@ -1471,11 +1459,11 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 		I.glide_size = 0 // required for smooth movement with the tray
 		// register for pickup, register for being pulled off the table, register for item deletion while attached to table
 		SPAWN(0)
-			RegisterSignals(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING), PROC_REF(detach))
+			RegisterSignals(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING, COMSIG_ATOM_MOUSEDROP), PROC_REF(detach))
 
 	proc/detach(obj/item/I as obj) //remove from the attached items list and deregister signals
 		src.attached_objs.Remove(I)
-		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING))
+		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING, COMSIG_ATOM_MOUSEDROP))
 
 	proc/toggle_brake(mob/user)
 		src.anchored = !src.anchored
@@ -1515,7 +1503,7 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "surgical_scissors"
 
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SNIPPING
 	force = 8

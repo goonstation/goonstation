@@ -109,7 +109,7 @@
 			return
 		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] [pick("rustles", "folds", "womps", "boxes", "foffs", "flaps")], \"[message]\""))
 		if (src.text2speech)
-			var/audio = dectalk("\[:nk\][message]")
+			var/audio = dectalk("\[:nk\][message]", BOTTALK_VOLUME)
 			if (audio["audio"])
 				for (var/mob/O in hearers(src, null))
 					if (!O.client)

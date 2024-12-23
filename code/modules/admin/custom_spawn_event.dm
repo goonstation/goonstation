@@ -19,6 +19,8 @@
 	var/equip_antag = TRUE
 	///Include DNR ghosts
 	var/allow_dnr = FALSE
+	///Should these newly spawned players show up on the manifest?
+	var/add_to_manifest = FALSE
 
 	proc/get_spawn_loc()
 		if (isturf(src.spawn_loc))
@@ -103,10 +105,17 @@
 			logTheThing(LOG_ADMIN, mind.current, "respawned as \a [src.get_mob_name()] from a custom spawn event triggered by [key_name(usr)].")
 
 			mind.transfer_to(new_mob)
+			if (istext(src.thing_to_spawn)) //it's a job
+				new_mob.mind.assigned_role = src.thing_to_spawn
+				if (src.add_to_manifest)
+					var/obj/item/device/pda2/pda = locate() in new_mob
+					global.data_core.addManifest(new_mob, "", "", pda?.net_id, "")
 
 			if (src.antag_role == "generic_antagonist")
 				mind.add_generic_antagonist("generic_antagonist", new_mob.real_name, do_equip = src.equip_antag, do_objectives = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
 			else if (src.antag_role)
+				if (mind.get_antagonist(src.antag_role))
+					mind.remove_antagonist(src.antag_role, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
 				mind.add_antagonist(src.antag_role, do_relocate = FALSE, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN, do_equip = src.equip_antag, respect_mutual_exclusives = FALSE)
 			else
 				mind.wipe_antagonists()
@@ -134,6 +143,8 @@
 		var/spawn_type = ""
 		if (ismob(src.spawn_event.thing_to_spawn))
 			spawn_type = "mob_ref"
+		else if (src.spawn_event.thing_to_spawn == /mob/living/carbon/human/normal) //special case for a useful shortcut
+			spawn_type = "random_human"
 		else if (ispath(src.spawn_event.thing_to_spawn, /mob))
 			spawn_type = "mob_type"
 		else if (istext(src.spawn_event.thing_to_spawn))
@@ -170,6 +181,7 @@
 			"ask_permission" = src.spawn_event.ask_permission,
 			"allow_dnr" = src.spawn_event.allow_dnr,
 			"eligible_player_count" = src.eligible_player_count,
+			"add_to_manifest" = src.spawn_event.add_to_manifest,
 		)
 
 	ui_static_data(mob/user)
@@ -181,6 +193,7 @@
 		return tgui_admin_state
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
 		switch (action)
 			if ("select_mob")
 				var/mob/selected = pick_ref(ui.user)
@@ -195,6 +208,8 @@
 				for (var/datum/job/job in (job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs))
 					job_names |= job.name
 				src.spawn_event.thing_to_spawn = tgui_input_list(ui.user, "Select job type", "Select type", job_names) || src.spawn_event.thing_to_spawn
+			if ("set_random_human")
+				src.spawn_event.thing_to_spawn = /mob/living/carbon/human/normal
 			if ("select_turf")
 				src.spawn_event.spawn_loc = get_turf(pick_ref(ui.user))
 			if ("select_landmark")
@@ -227,11 +242,13 @@
 				src.spawn_event.allow_dnr = params["allow_dnr"]
 			if ("spawn") //no accidental double clicks
 				if (!ON_COOLDOWN(ui.user, "custom_spawn_event", 1 SECOND))
-					message_admins("[key_name(ui.user)] initiated a custom spawn event of [src.spawn_event.amount_to_spawn] [src.spawn_event.get_mob_name()]")
-					logTheThing(LOG_ADMIN, ui.user, "initiated a custom spawn event of [src.spawn_event.amount_to_spawn] [src.spawn_event.get_mob_name()]")
+					message_admins("[key_name(ui.user)] initiated a custom spawn event of [src.spawn_event.amount_to_spawn] [src.spawn_event.get_mob_name()] [src.spawn_event.antag_role]")
+					logTheThing(LOG_ADMIN, ui.user, "initiated a custom spawn event of [src.spawn_event.amount_to_spawn] [src.spawn_event.get_mob_name()] [src.spawn_event.antag_role]")
 					src.spawn_event.do_spawn()
 			if ("refresh_player_count")
 				src.refresh_player_count = TRUE
+			if ("set_manifest")
+				src.spawn_event.add_to_manifest = params["add_to_manifest"]
 		return TRUE
 
 /client/proc/cmd_custom_spawn_event()
@@ -239,6 +256,7 @@
 	set name = "Custom Ghost Spawn"
 	set desc = "Set up a custom player spawn event."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/datum/spawn_event_editor/E = new /datum/spawn_event_editor(src.mob)
 	E.ui_interact(mob)

@@ -48,7 +48,7 @@ Contains:
 	var/obj/item/pipebomb/bomb/part5 = null
 	var/sound_pipebomb = 'sound/weapons/armbomb.ogg'
 	status = null
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
+	flags = TABLEPASS | CONDUCT | NOSPLASH
 
 /obj/item/assembly/time_ignite/New()
 	..()
@@ -81,7 +81,7 @@ Contains:
 	..()
 
 /obj/item/assembly/time_ignite/attack_self(mob/user as mob)
-	src.part1.attack_self(user, src.status)
+	src.part1.AttackSelf(user, src.status)
 	src.add_fingerprint(user)
 	return
 
@@ -284,18 +284,10 @@ Contains:
 	var/obj/item/pipebomb/bomb/part5 = null
 	var/sound_pipebomb = 'sound/weapons/armbomb.ogg'
 	status = null
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
-
-/obj/item/assembly/prox_ignite/HasProximity(atom/movable/AM as mob|obj)
-
-	if (isobserver(AM) || iswraith(AM) || isintangible(AM) || istype(AM, /obj/projectile))
-		return
-	if (AM.move_speed < 12 && src.part1)
-		src.part1.sense()
-	return
+	flags = TABLEPASS | CONDUCT | NOSPLASH
 
 /obj/item/assembly/prox_ignite/dropped()
+	. = ..()
 	SPAWN( 0 )
 		if (src.part1)
 			src.part1.sense()
@@ -404,7 +396,7 @@ Contains:
 
 /obj/item/assembly/prox_ignite/attack_self(mob/user as mob)
 
-	src.part1.attack_self(user, src.status)
+	src.part1.AttackSelf(user, src.status)
 	src.add_fingerprint(user)
 	return
 
@@ -541,7 +533,7 @@ Contains:
 	var/obj/item/pipebomb/bomb/part5 = null
 	var/sound_pipebomb = 'sound/weapons/armbomb.ogg'
 	status = null
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
+	flags = TABLEPASS | CONDUCT | NOSPLASH
 
 /obj/item/assembly/rad_ignite/New()
 	..()
@@ -622,7 +614,7 @@ Contains:
 
 /obj/item/assembly/rad_ignite/attack_self(mob/user as mob)
 
-	src.part1.attack_self(user, src.status)
+	src.part1.AttackSelf(user, src.status)
 	src.add_fingerprint(user)
 	return
 
@@ -781,7 +773,7 @@ Contains:
 	var/obj/item/device/analyzer/healthanalyzer/part1 = null
 	var/obj/item/device/igniter/part2 = null
 	status = null
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	item_state = "electronic"
 
 /obj/item/assembly/anal_ignite/New()
@@ -829,7 +821,7 @@ Contains:
 	var/obj/item/device/radio/signaler/part1 = null
 	var/obj/item/instrument/bikehorn/part2 = null
 	status = 0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 
 /obj/item/assembly/radio_horn/New()
 	..()
@@ -850,15 +842,30 @@ Contains:
 	..()
 	return
 
-obj/item/assembly/radio_horn/attack_self(mob/user as mob)
-	src.part1.attack_self(user)
+/obj/item/assembly/radio_horn/attack_self(mob/user as mob)
+	src.part1.AttackSelf(user)
 	src.add_fingerprint(user)
 	return
 
-obj/item/assembly/radio_horn/receive_signal()
+/obj/item/assembly/radio_horn/receive_signal()
 	var/num_notes = part2.sounds_instrument.len
 	part2.play_note(rand(1, num_notes), user = null)
 	return
+
+/obj/item/assembly/radio_horn/attackby(obj/item/W, mob/user)
+	if (iswrenchingtool(W))
+		var/turf/T = get_turf(src)
+		src.part1.set_loc(T)
+		src.part2.set_loc(T)
+		src.part1.master = null
+		src.part2.master = null
+		src.part1 = null
+		src.part2 = null
+
+		user.u_equip(src)
+		qdel(src)
+		return
+	. = ..()
 
 /////////////////////////////////////////////////////// Remote signaller/timer /////////////////////////////////////
 
@@ -869,7 +876,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	var/obj/item/device/radio/signaler/part1 = null
 	var/obj/item/device/timer/part2 = null
 	status = null
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 
 /obj/item/assembly/rad_time/disposing()
 	qdel(part1)
@@ -906,8 +913,8 @@ obj/item/assembly/radio_horn/receive_signal()
 
 /obj/item/assembly/rad_time/attack_self(mob/user as mob)
 
-	src.part1.attack_self(user, src.status)
-	src.part2.attack_self(user, src.status)
+	src.part1.AttackSelf(user, src.status)
+	src.part2.AttackSelf(user, src.status)
 	src.add_fingerprint(user)
 	return
 
@@ -926,8 +933,8 @@ obj/item/assembly/radio_horn/receive_signal()
 	var/obj/item/device/radio/signaler/part1 = null
 	var/obj/item/device/prox_sensor/part2 = null
 	status = null
-	flags = FPRINT | TABLEPASS| CONDUCT
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
+	flags = TABLEPASS | CONDUCT
+	event_handler_flags = USE_FLUID_ENTER
 
 /obj/item/assembly/rad_prox/c_state(n)
 	src.icon_state = "prox-radio[n]"
@@ -941,7 +948,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	..()
 	return
 
-/obj/item/assembly/rad_prox/HasProximity(atom/movable/AM as mob|obj)
+/obj/item/assembly/rad_prox/EnteredProximity(atom/movable/AM)
 	if (istype(AM, /obj/projectile))
 		return
 	if (AM.move_speed < 12 && src && src.part2)
@@ -974,8 +981,8 @@ obj/item/assembly/radio_horn/receive_signal()
 	return
 
 /obj/item/assembly/rad_prox/attack_self(mob/user as mob)
-	src.part1.attack_self(user, src.status)
-	src.part2.attack_self(user, src.status)
+	src.part1.AttackSelf(user, src.status)
+	src.part2.AttackSelf(user, src.status)
 	src.add_fingerprint(user)
 	return
 
@@ -991,6 +998,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	return
 
 /obj/item/assembly/rad_prox/dropped()
+	. = ..()
 	SPAWN( 0 )
 		src.part2.sense()
 		return
@@ -1066,6 +1074,13 @@ ABSTRACT_TYPE(/datum/pipeshotrecipe)
 	result = /obj/item/ammo/bullets/pipeshot/glass
 	accepteditem = /obj/item/raw_material/shard
 	craftname = "shard"
+
+/datum/pipeshotrecipe/bone
+	thingsneeded = 2
+	result = /obj/item/ammo/bullets/pipeshot/bone
+	accepteditem = /obj/item/material_piece/bone
+	craftname = "bone chunk"
+
 
 /obj/item/assembly/pipehulls
 	name = "filled pipe hulls"

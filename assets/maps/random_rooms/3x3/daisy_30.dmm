@@ -31,7 +31,7 @@
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)
 "C" = (
-/obj/decal/fakeobjects/lawrack,
+/obj/fakeobject/lawrack,
 /obj/map/light/dimred,
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)

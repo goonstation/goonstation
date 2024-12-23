@@ -22,6 +22,7 @@
 	health_burn = 25
 	health_burn_vuln = 0.2
 	var/is_inspector = FALSE
+	var/obj/item/clothing/head/det_hat/linked_hat = null
 	var/mob/living/carbon/human/controller = null //Who's controlling us? Lets keep track so we can put them back in their body
 
 	New()
@@ -81,6 +82,9 @@
 			else
 				boutput(src, SPAN_ALERT("Your conscience tries to reintegrate your body, but its already possessed by something!"))
 
+		for(var/obj/item/photo/P in src.contents)
+			P.set_loc(get_turf(src))
+
 		..(gibbed, 0)
 
 		if (!gibbed)
@@ -102,7 +106,12 @@
 				boutput(src, SPAN_ALERT("A horrible sense of dread looms over you. Your real body is dead! The scuttlebot's advanced AI takes over and retains your conscience."))
 			else
 				src.mind.transfer_to(controller)
+			controller.network_device = null
 			controller = null
+
+	proc/make_inspector()
+		icon_state = "scuttlebot_inspector"
+		src.is_inspector = TRUE
 
 /mob/living/critter/robotic/scuttlebot/weak
 
@@ -110,22 +119,12 @@
 						/datum/targetable/critter/scuttle_scan,
 						/datum/targetable/critter/control_owner)
 
-	var/obj/item/clothing/head/det_hat/gadget/linked_hat = null
-
 	setup_hands()
-
-	proc/make_inspector()
-		icon_state = "scuttlebot_inspector"
-		src.is_inspector = TRUE
 
 /mob/living/critter/robotic/scuttlebot/ghostplayable // admin gimmick ghost spawnable version
 
 	add_abilities = list(/datum/targetable/critter/takepicture)
 
-	var/obj/item/clothing/head/det_hat/gadget/linked_hat = null
 
 	setup_hands()
 
-	proc/make_inspector()
-		icon_state = "scuttlebot_inspector"
-		src.is_inspector = TRUE

@@ -66,7 +66,7 @@
 			if(loc_storage.storage.max_wclass < src.w_class)
 				var/turf/T = get_turf(src)
 				src.set_loc(T)
-				src.visible_message(SPAN_ALERT("[src] is too full to fit into [loc_storage] and tubmles onto [T]."))
+				src.visible_message(SPAN_ALERT("[src] is too full to fit into [loc_storage] and tumbles onto [T]."))
 
 	get_desc(dist, mob/user)
 		. = ..()
@@ -173,7 +173,7 @@ proc/save_intraround_jars()
 			if(pickled.material)
 				pickled.removeMaterial()
 			pickled.reagents?.clear_reagents()
-			pickled.setMaterial(getMaterial("pickle")) // maybe picklify should be able to override this idk!!!
+			pickled.setMaterial(getMaterial("pickle"), setname=FALSE) // maybe picklify should be able to override this idk!!!
 			jar_contents += pickled
 
 		var/zname = global.zlevels[jar_turf.z].name
@@ -295,7 +295,7 @@ proc/load_intraround_jars()
 	return new/obj/item/reagent_containers/food/snacks/pickle_holder/paper(loc, src)
 
 /obj/item/reagent_containers/food/snacks/pickle_holder/paper
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | TGUI_INTERACTIVE
+	flags = TABLEPASS | SUPPRESSATTACK | TGUI_INTERACTIVE
 	var/sizex
 	var/sizey
 	var/info
@@ -371,3 +371,36 @@ proc/load_intraround_jars()
 #undef DEFAULT_JAR_COUNT
 #undef MAX_JAR_COUNT
 #undef JAR_MAX_ITEMS
+
+///unrelated funny jar
+/obj/item/reagent_containers/glass/jar/extradimensional
+	anchored = TRUE
+	var/prefab_type = /datum/mapPrefab/allocated/jar
+
+	New()
+		. = ..()
+		var/datum/mapPrefab/allocated/prefab = get_singleton(src.prefab_type)
+		//heehee hooha component abuse (the alternative was worse sadly because we don't have anonymous functions)
+		var/datum/component/extradimensional_storage/shrink/component = src.AddComponent(/datum/component/extradimensional_storage/shrink, prefab.prefabSizeX + 2, prefab.prefabSizeX + 2)
+		prefab.applyTo(get_step(component.region.bottom_left, NORTHEAST), overwrite_args = DMM_OVERWRITE_MOBS | DMM_BESPOKE_AREAS)
+
+		var/datum/allocated_region/region = component.region
+		var/turf/exit = get_turf(src)
+		//dumb copy paste to set up the warps
+		for(var/x in 2 to region.width - 1)
+			var/turf/T = region.turf_at(x, 2)
+			T.warptarget = exit
+			T = region.turf_at(x, region.height - 1)
+			T.warptarget = exit
+
+		for(var/y in 2 to region.height - 1)
+			var/turf/T = region.turf_at(2, y)
+			T.warptarget = exit
+			T = region.turf_at(region.width - 1, y)
+			T.warptarget = exit
+
+	return_air(direct = FALSE)
+		if (direct)
+			return null
+		var/turf/T = get_turf(src)
+		return T?.return_air()

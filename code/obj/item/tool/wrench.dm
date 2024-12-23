@@ -5,7 +5,7 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/wrench.dmi'
 	icon_state = "wrench"
 
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	tool_flags = TOOL_WRENCHING
 	health = 5
@@ -53,8 +53,8 @@
 	stamina_damage = 55
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)

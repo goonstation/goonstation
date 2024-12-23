@@ -93,8 +93,6 @@ var/global
 			var/list/chatResources = list(
 				"browserassets/vendor/js/jquery.min.js",
 				"browserassets/js/errorHandler.js",
-				//"browserassets/vendor/js/array.generics.min.js",
-				//"browserassets/vendor/js/anchorme.js",
 				"browserassets/js/browserOutput.js",
 				"browserassets/css/fonts/fontawesome-webfont.eot",
 				"browserassets/css/fonts/fontawesome-webfont.ttf",
@@ -119,7 +117,7 @@ var/global
 		return
 
 /// Called on chat output done-loading by JS.
-/datum/chatOutput/proc/doneLoading(ua)
+/datum/chatOutput/proc/doneLoading()
 	if (src.owner && !src.loaded)
 		src.loaded = 1
 		winset(src.owner, "browseroutput", "is-disabled=false")
@@ -129,23 +127,13 @@ var/global
 			for (var/list/message in src.messageQueue)
 				boutput(src.owner, message["message"], message["group"])
 		src.messageQueue = null
-		if (ua)
-			//For persistent user tracking
-			apiHandler?.queryAPI("versions/add", list(
-				"ckey" = src.owner.ckey,
-				"userAgent" = ua,
-				"byondMajor" = src.owner.byond_version,
-				"byondMinor" = src.owner.byond_build
-			))
-
-		else
-			src.sendClientData()
-			/* WIRE TODO: Fix this so the CDN dying doesn't break everyone
-			SPAWN(1 MINUTE) //60 seconds
-				if (!src.cookieSent) //Client has very likely futzed with their local html/js chat file
-					boutput(src.owner, "<div class='fatalError'>Chat file tampering detected. Closing connection.</div>")
-					del(src.owner)
-			*/
+		src.sendClientData()
+		/* WIRE TODO: Fix this so the CDN dying doesn't break everyone
+		SPAWN(1 MINUTE) //60 seconds
+			if (!src.cookieSent) //Client has very likely futzed with their local html/js chat file
+				boutput(src.owner, "<div class='fatalError'>Chat file tampering detected. Closing connection.</div>")
+				del(src.owner)
+		*/
 
 /// Called in update_admins()
 /datum/chatOutput/proc/loadAdmin()
@@ -192,17 +180,18 @@ var/global
 		if (connData && islist(connData) && length(connData) && connData["connData"])
 			src.connectionHistory = connData["connData"] //lol fuck
 			var/list/found = new()
+			var/list/checkBan = null
 			for (var/i = src.connectionHistory.len; i >= 1; i--)
 				var/list/row = src.connectionHistory[i]
 				if (!row || length(row) < 3 || (!row["ckey"] && !row["compid"] && !row["ip"])) //Passed malformed history object
 					return
-				if (checkBan(row["ckey"], row["compid"], row["ip"]))
+				checkBan = bansHandler.check(row["ckey"], row["compid"], row["ip"])
+				if (checkBan)
 					found = row
 					break
 
 			//Uh oh this fucker has a history of playing on a banned account!!
 			if (length(found) && found["ckey"] != src.owner.ckey)
-				//TODO: add a new evasion ban for the CURRENT client details, using the matched row details
 				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 				logTheThing(LOG_DEBUG, src.owner, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 				logTheThing(LOG_DIARY, src.owner, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])", "debug")
@@ -212,17 +201,19 @@ var/global
 					var/ircmsg[] = new()
 					ircmsg["key"] = owner.key
 					ircmsg["name"] = stripTextMacros(owner.mob.name)
-					ircmsg["msg"] = "has a cookie from banned account [found["ckey"]](IP: [found["ip"]], CompID: [found["compID"]])"
+					ircmsg["msg"] = "has a cookie from banned account [found["ckey"]](IP: [found["ip"]], CompID: [found["compid"]])"
 					ircbot.export_async("admin", ircmsg)
 
-				var/banData[] = new()
-				banData["ckey"] = src.owner.ckey
-				banData["compID"] = (found["compID"] == "N/A" ? "N/A" : src.owner.computer_id) // don't add CID if original ban doesn't have one
-				banData["akey"] = "Auto Banner"
-				banData["ip"] = (found["ip"] == "N/A" ? "N/A" : src.owner.address) // don't add IP if original ban doesn't have one
-				banData["reason"] = "\[Evasion Attempt\] Previous ckey: [found["ckey"]]"
-				banData["mins"] = 0
-				addBan(banData)
+				//Add evasion ban details
+				var/datum/apiModel/Tracked/BanResource/ban = checkBan["ban"]
+				bansHandler.addDetails(
+					ban.id,
+					TRUE,
+					"bot",
+					src.owner.ckey,
+					isnull(found["compid"]) ? null : src.owner.computer_id,
+					isnull(found["ip"]) ? null : src.owner.address
+				)
 	src.cookieSent = 1
 
 /datum/chatOutput/proc/getContextFlags()
@@ -269,7 +260,7 @@ var/global
 		if ("boot")
 			src.owner.cmd_boot(targetMob)
 		if ("ban")
-			src.owner.addBanDialog(targetMob)
+			src.owner.addBanTemp(targetMob)
 		if ("gib")
 			src.owner.cmd_admin_gib(targetMob)
 			logTheThing(LOG_ADMIN, src.owner, "gibbed [constructTarget(targetMob,"admin")].")
@@ -300,9 +291,9 @@ var/global
 	for (var/client/C in clients)
 		ehjax.send(C, "browseroutput", data)
 
-/datum/chatOutput/proc/playMusic(url, volume)
+/datum/chatOutput/proc/playMusic(url, volume, fromTopic = FALSE)
 	if (!url || !volume) return
-	var/data = json_encode(list("playMusic" = url, "volume" = volume / 100))
+	var/data = json_encode(list("playMusic" = url, "volume" = volume / 100, "fromTopic" = fromTopic))
 	data = url_encode(data)
 
 	ehjax.send(src.owner, "browseroutput", data)
@@ -443,6 +434,8 @@ var/global
 	else if (ismind(target) && target:current)
 		C = target:current:client
 	else
+		if (ismobcritter(target) || istype(target, /obj/machinery/bot/)) // These act like clients a lot through logic, and get tons of messages.
+			return
 		CRASH("boutput called with incorrect target [target]")
 
 	if (islist(C?.chatOutput?.messageQueue) && !C.chatOutput.loaded)

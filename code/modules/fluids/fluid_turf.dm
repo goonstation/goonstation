@@ -354,7 +354,7 @@
 			icon_state = "pit_wall"
 
 		var/turf/space/fluid/under = get_step(src, SOUTH)
-		if (istype(under.type, /turf/space/fluid/warp_z5/realwarp))
+		if (istype(under, /turf/space/fluid/warp_z5/realwarp))
 			under.icon_state = "pit"
 
 	initialise_component()
@@ -452,12 +452,21 @@
 /turf/space/fluid/manta/nospawn
 	spawningFlags = null
 
-/turf/simulated/floor/specialroom/sea_elevator_shaft
+TYPEINFO(/turf/simulated/floor/auto/elevator_shaft)
+TYPEINFO_NEW(/turf/simulated/floor/auto/elevator_shaft)
+	. = ..()
+	connects_to = typecacheof(/turf/simulated/floor/auto/elevator_shaft)
+/turf/simulated/floor/auto/elevator_shaft
 	name = "elevator shaft"
 	desc = "It looks like it goes down a long ways."
-	icon_state = "moon_shaft"
-	var/const/area_type = /area/shuttle/sea_elevator/upper
+	icon = 'icons/turf/elevator_shaft.dmi'
+	icon_state = "shaft0"
+	mod = "shaft"
 
+	ex_act(severity)
+		return
+
+/turf/simulated/floor/auto/elevator_shaft/sea
 	New()
 		..()
 		src.AddComponent(/datum/component/pitfall/target_landmark,\
@@ -465,39 +474,19 @@
 			FallTime = 0 SECONDS,\
 			TargetLandmark = LANDMARK_FALL_SEA)
 
-		var/turf/n = get_step(src,NORTH)
-		var/turf/e = get_step(src,EAST)
-		var/turf/w = get_step(src,WEST)
-		var/turf/s = get_step(src,SOUTH)
+/turf/simulated/floor/auto/elevator_shaft/biodome
+	New()
+		..()
+		src.AddComponent(/datum/component/pitfall/target_landmark,\
+			BruteDamageMax = 50,\
+			FallTime = 0 SECONDS,\
+			TargetLandmark = LANDMARK_FALL_BIO_ELE)
 
-		if (!istype(get_area(n),area_type))
-			n = null
-		if (!istype(get_area(e),area_type))
-			e = null
-		if (!istype(get_area(w),area_type))
-			w = null
-		if (!istype(get_area(s),area_type))
-			s = null
+	Entered(atom/A as mob|obj)
+		if (istype(A, /mob) && !istype(A, /mob/dead))
+			bioele_accident()
+		..()
 
-		if (e && s)
-			set_dir(SOUTH)
-			e.set_dir(NORTH)
-			s.set_dir(WEST)
-		else if (e && n)
-			set_dir(WEST)
-			e.set_dir(EAST)
-			n.set_dir(SOUTH)
-		else if (w && s)
-			set_dir(NORTH)
-			w.set_dir(SOUTH)
-			s.set_dir(EAST)
-		else if (w && n)
-			set_dir(EAST)
-			w.set_dir(WEST)
-			n.set_dir(NORTH)
-
-	ex_act(severity)
-		return
 
 /turf/space/fluid/acid
 	name = "acid sea floor"

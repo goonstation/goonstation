@@ -277,7 +277,7 @@
 	},
 /area/ship/manta)
 "tK" = (
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/ship/manta)
 "vl" = (
@@ -288,8 +288,8 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/ship/manta)
 "vw" = (
-/obj/decal/fakeobjects/shuttlethruster,
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/ship/manta)
 "xq" = (
@@ -472,7 +472,7 @@
 /area/ship/manta)
 "JO" = (
 /obj/rack,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /turf/simulated/floor/black,
 /area/ship/manta)
@@ -512,7 +512,7 @@
 /area/ship/manta)
 "MW" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/blue/checker,
 /area/ship/manta)
 "Oi" = (
@@ -617,7 +617,7 @@
 	},
 /area/ship/manta)
 "Zu" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 1;
 	icon_state = "propulsion"
 	},

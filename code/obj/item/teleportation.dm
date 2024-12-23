@@ -144,7 +144,7 @@ TYPEINFO(/obj/item/hand_tele)
 			t1 = pick(L)
 		users -= user // We're done showing the UI
 
-		if (user.stat || user.restrained())
+		if (user.stat || user.restrained() || !(src in user.equipped_list())) //let's check if you actually still HAVE the hand tele
 			return
 
 		if (t1 == "Cancel")

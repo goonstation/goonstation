@@ -4,7 +4,7 @@
 	icon_state = "rack_base"
 	density = 1
 	layer = STORAGE_LAYER
-	flags = FPRINT | NOSPLASH
+	flags = NOSPLASH
 	anchored = ANCHORED
 	desc = "A metal frame used to hold objects. Can be wrenched and made portable."
 	event_handler_flags = USE_FLUID_ENTER
@@ -12,7 +12,7 @@
 	material_amt = 0.1
 
 	proc/rackbreak()
-		icon_state += "-broken"
+		src.icon_state = initial(src.icon_state) + "-broken"
 		src.set_density(0)
 
 /obj/rack/New()
@@ -58,7 +58,7 @@
 		return 0
 
 /obj/rack/MouseDrop_T(obj/O as obj, mob/user as mob)
-	if (!isitem(O) || !in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+	if (!isitem(O) || !in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 		return
 	var/obj/item/I = O
 	if (istype(I,/obj/item/satchel))
@@ -112,7 +112,6 @@
 	return
 
 /datum/action/bar/icon/rack_tool_interact
-	id = "rack_tool_interact"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 50
 	icon = 'icons/ui/actions.dmi'
@@ -155,3 +154,105 @@
 		playsound(the_rack, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		owner.visible_message(SPAN_NOTICE("[owner] disassembles [the_rack]."))
 		the_rack.deconstruct()
+
+#define RACK_SPAWN_DIAGONAL_PROBABILITY 10
+
+/// Map-spawn helper for regularly stacked rack items
+/obj/rack/organized
+	var/initialized = FALSE //! Have we spawned our items yet
+	var/list/obj/item/items_to_spawn = list() //! What items are we going to spawn
+	var/order_override = "" //! Force a specific organization layout
+	var/shuffle_chance = 1 //! Probability of the card order being shuffled
+#ifdef IN_MAP_EDITOR
+	icon_state = "rack_filled"
+#endif
+
+/obj/rack/organized/New()
+	if (!src.initialized)
+		if (prob(shuffle_chance))
+			shuffle_list(src.items_to_spawn)
+		switch(src.order_override)
+			if("zigzag")
+				src.zigzag()
+			if("diagonal")
+				src.diagonal()
+			else
+				if (prob(RACK_SPAWN_DIAGONAL_PROBABILITY))
+					src.diagonal()
+				else
+					src.zigzag()
+		src.initialized = TRUE
+	. = ..() // spawn items before calculating sims_score
+
+#undef RACK_SPAWN_DIAGONAL_PROBABILITY
+
+#define RACK_ZIGZAG_TOP 7
+#define RACK_ZIGZAG_CENTER_OFFSET 5
+#define RACK_ZIGZAG_VERTICAL_OFFSET 2
+
+/// Lay out items in a zig-zag pattern
+/obj/rack/organized/proc/zigzag()
+	var/move_y = RACK_ZIGZAG_TOP
+	var/left_side = FALSE // start on upper right
+	for(var/item in src.items_to_spawn)
+		var/obj/item/I = new item(get_turf(src))
+		I.pixel_y = move_y
+		I.pixel_x = left_side ? -RACK_ZIGZAG_CENTER_OFFSET : RACK_ZIGZAG_CENTER_OFFSET
+		move_y = move_y - RACK_ZIGZAG_VERTICAL_OFFSET // zig
+		left_side = !left_side // zag
+
+#undef RACK_ZIGZAG_TOP
+#undef RACK_ZIGZAG_CENTER_OFFSET
+#undef RACK_ZIGZAG_VERTICAL_OFFSET
+
+#define RACK_DIAGONAL_TOP 9
+#define RACK_DIAGONAL_OFFSET 3
+
+/// Lay out items from top left to bottom right
+/obj/rack/organized/proc/diagonal()
+	var/move_xy = RACK_DIAGONAL_TOP
+	for(var/item in src.items_to_spawn)
+		var/obj/item/I = new item(get_turf(src))
+		I.pixel_y = move_xy
+		I.pixel_x = -move_xy
+		move_xy = move_xy - RACK_DIAGONAL_OFFSET
+
+#undef RACK_DIAGONAL_TOP
+#undef RACK_DIAGONAL_OFFSET
+
+/// Technical Storage circuit board rack for engineering/supply
+/obj/rack/organized/techstorage_eng
+	items_to_spawn = list(
+		/obj/item/circuitboard/arcade,
+		/obj/item/circuitboard/qmorder,
+		/obj/item/circuitboard/qmsupply,
+		/obj/item/circuitboard/barcode,
+		/obj/item/circuitboard/barcode_qm,
+		/obj/item/circuitboard/telescope,
+		/obj/item/circuitboard/powermonitor,
+		/obj/item/circuitboard/powermonitor_smes,
+	)
+
+/// Includes the transception array board, for maps with transception cargo fulfillment
+/obj/rack/organized/techstorage_eng/transception
+	New()
+		src.items_to_spawn += /obj/item/circuitboard/transception
+		. = ..()
+
+/// Technical Storage circuit board rack for medical/science/misc
+/obj/rack/organized/techstorage_med
+	items_to_spawn = list(
+		/obj/item/circuitboard/card,
+		/obj/item/circuitboard/teleporter,
+		/obj/item/circuitboard/operating,
+		/obj/item/circuitboard/cloning,
+		/obj/item/circuitboard/genetics,
+		/obj/item/circuitboard/robot_module_rewriter,
+		/obj/item/circuitboard/chem_request,
+		/obj/item/circuitboard/chem_request_receiver,
+	)
+
+/obj/rack/organized/techstorage_med/sea
+	New()
+		src.items_to_spawn += /obj/item/circuitboard/sea_elevator
+		. = ..()

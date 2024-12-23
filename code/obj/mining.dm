@@ -60,7 +60,6 @@
 
 #ifndef UNDERWATER_MAP
 /datum/action/bar/icon/magnet_build
-	id = "magnet_build"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 24 SECONDS
 	icon = 'icons/ui/actions.dmi'
@@ -166,11 +165,11 @@
 			for (var/mob/living/L in T)
 				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
 					qdel(L)
-			if(istype(T,/turf/unsimulated) && ( T.GetComponent(/datum/component/buildable_turf) || (station_repair.station_generator && (origin.z == Z_LEVEL_STATION))))
+			if(istype(T,/turf/unsimulated) && ( T.can_build || (station_repair.station_generator && (origin.z == Z_LEVEL_STATION))))
 				T.ReplaceWith(/turf/space, force=TRUE)
 			else
 				T.ReplaceWith(/turf/space)
-			T.UpdateOverlays(new /image/fullbright, "fullbright")
+			T.AddOverlays(new /image/fullbright, "fullbright")
 
 	proc/generate_walls()
 		var/list/walls = list()
@@ -257,7 +256,7 @@
 			if (!T)
 				boutput(usr, SPAN_ALERT("Error: magnet area spans over construction area bounds."))
 				return 0
-			var/isterrain = T.GetComponent(/datum/component/buildable_turf) && istype(T,/turf/unsimulated)
+			var/isterrain = T.can_build && istype(T,/turf/unsimulated)
 			if ((!istype(T, /turf/space) && !isterrain) && !istype(T, /turf/simulated/floor/plating/airless/asteroid) && !istype(T, /turf/simulated/wall/auto/asteroid))
 				boutput(usr, SPAN_ALERT("Error: [T] detected in [width]x[height] magnet area. Cannot magnetize."))
 				return 0
@@ -265,13 +264,13 @@
 		var/borders = list()
 		for (var/cx = origin.x - 1, cx <= origin.x + width, cx++)
 			var/turf/S = locate(cx, origin.y - 1, origin.z)
-			var/isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			var/isterrain = S.can_build && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, SPAN_ALERT("Error: bordering tile has a gap, cannot magnetize area."))
 				return 0
 			borders += S
 			S = locate(cx, origin.y + height, origin.z)
-			isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			isterrain = S.can_build && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, SPAN_ALERT("Error: bordering tile has a gap, cannot magnetize area."))
 				return 0
@@ -279,13 +278,13 @@
 
 		for (var/cy = origin.y, cy <= origin.y + height - 1, cy++)
 			var/turf/S = locate(origin.x - 1, cy, origin.z)
-			var/isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			var/isterrain = S.can_build && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, SPAN_ALERT("Error: bordering tile has a gap, cannot magnetize area."))
 				return 0
 			borders += S
 			S = locate(origin.x + width, cy, origin.z)
-			isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			isterrain = S.can_build && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, SPAN_ALERT("Error: bordering tile has a gap, cannot magnetize area."))
 				return 0
@@ -318,10 +317,11 @@
 		if (istype(W, /obj/item/raw_material/plasmastone) && !loaded)
 			loaded = 1
 			boutput(user, SPAN_NOTICE("You charge the magnetizer with the plasmastone."))
-			qdel(W)
+			W.change_stack_amount(-1)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		var/isterrain = target.GetComponent(/datum/component/buildable_turf) && istype(target,/turf/unsimulated)
+		var/turf/target_turf = target
+		var/isterrain = istype(target_turf,/turf/unsimulated) && target_turf.can_build
 		if (!magnet)
 			if (istype(target, /obj/machinery/magnet_chassis))
 				magnet = target:linked_magnet
@@ -467,6 +467,7 @@
 					pull_new_source()
 
 	disposing()
+		src.health = 0 // DIE!!!!!! GOD!!!! (this makes sure the computers know the magnet is Dead and Buried)
 		src.visible_message("<b>[src] breaks apart!</b>")
 		robogibs(src.loc)
 		playsound(src.loc, src.sound_destroyed, 50, 2)
@@ -556,16 +557,23 @@
 		if (length(damage_overlays) == 4)
 			switch(src.health)
 				if (70 to 94)
-					src.UpdateOverlays(damage_overlays[1], "magnet_damage")
+					src.AddOverlays(damage_overlays[1], "magnet_damage")
 				if (40 to 69)
-					src.UpdateOverlays(damage_overlays[2], "magnet_damage")
+					src.AddOverlays(damage_overlays[2], "magnet_damage")
 				if (10 to 39)
-					src.UpdateOverlays(damage_overlays[3], "magnet_damage")
+					src.AddOverlays(damage_overlays[3], "magnet_damage")
 				if (-INFINITY to 10)
-					src.UpdateOverlays(damage_overlays[4], "magnet_damage")
+					src.AddOverlays(damage_overlays[4], "magnet_damage")
 
 		if (src.active)
-			src.UpdateOverlays(src.active_overlay, "magnet_active")
+			src.AddOverlays(src.active_overlay, "magnet_active")
+
+	// Sanity check to make sure we gib on no health
+	proc/check_should_die()
+		if (isnull(src.health) || src.health <= 0)
+			qdel(src)
+			return TRUE
+		return FALSE
 
 	proc/damage(var/amount)
 		if (!isnum(amount))
@@ -621,10 +629,14 @@
 		var/sleep_time = attract_time
 		if (sleep_time < 1)
 			sleep_time = 20
-		sleep_time /= 2
+		sleep_time /= 3
 
 		if (malfunctioning && prob(20))
 			do_malfunction()
+		sleep(sleep_time)
+
+		// Ensure area is erased, helps if atmos is being a jerk
+		target.erase_area()
 		sleep(sleep_time)
 
 		var/datum/mining_encounter/MC
@@ -655,7 +667,7 @@
 			var/turf/origin = get_turf(target)
 			for (var/turf/space/T in block(origin, locate(origin.x + target.width - 1, origin.y + target.height - 1, origin.z)))
 				repair_turfs += T
-			station_repair.repair_turfs(repair_turfs)
+			station_repair.repair_turfs(repair_turfs, force_floor=TRUE)
 
 		sleep(sleep_time)
 		if (malfunctioning && prob(20))
@@ -669,6 +681,7 @@
 			M.set_density(0)
 			M.invisibility = INVIS_ALWAYS
 
+		src.check_should_die()
 		src.updateUsrDialog()
 		return
 
@@ -693,6 +706,7 @@
 		.["time"] = TIME
 
 	ui_act(action, params)
+		. = ..()
 		var/magnetNotReady = src.active || (src.last_used > TIME && !src.cooldown_override) || src.last_use_attempt > TIME
 		switch(action)
 			if ("geoscan")
@@ -705,11 +719,11 @@
 				if (magnetNotReady)
 					return
 				if (!target || !src.get_magnetic_center())
-					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
+					src.visible_message("<b>[src.name]</b> states, \"Magnetic field strength error. Please ensure mining area is properly magnetized\"")
 					return
 
 				if (target.check_for_unacceptable_content())
-					src.visible_message("<b>[src.name]</b> armeds, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
+					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
 					src.last_use_attempt = TIME + 10
 					src.pull_new_source(params["encounter_id"])
@@ -718,11 +732,11 @@
 				if (magnetNotReady)
 					return
 				if (!target || !src.get_magnetic_center())
-					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
+					src.visible_message("<b>[src.name]</b> states, \"Magnetic field strength error. Please ensure mining area is properly magnetized\"")
 					return
 
 				if (target.check_for_unacceptable_content())
-					src.visible_message("<b>[src.name]</b> armeds, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
+					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
 					src.last_use_attempt = TIME + 10 // This is to prevent href exploits or autoclickers from pulling multiple times simultaneously
 					src.pull_new_source()
@@ -796,31 +810,31 @@
 			return
 		switch(action)
 			if("linkmagnet")
+				src.connection_scan() // Magnets can explode inbetween scanning and linking
 				linked_magnet = locate(params["ref"]) in linked_magnets
 				if (!istype(linked_magnet))
 					linked_magnet = null
-					src.visible_message("<b>[src.name]</b> armeds, \"Designated magnet is no longer operational.\"")
+					src.visible_message("<b>[src.name]</b> states, \"Designated magnet is no longer operational.\"")
 				. = TRUE
 			if ("magnetscan")
 				switch(src.connection_scan())
 					if(1)
-						src.visible_message("<b>[src.name]</b> armeds, \"Unoccupied Magnet Chassis located. Please connect magnet system to chassis.\"")
+						src.visible_message("<b>[src.name]</b> states, \"Unoccupied Magnet Chassis located. Please connect magnet system to chassis.\"")
 					if(2)
-						src.visible_message("<b>[src.name]</b> armeds, \"Magnet equipment not found within range.\"")
+						src.visible_message("<b>[src.name]</b> states, \"Magnet equipment not found within range.\"")
 					else
-						src.visible_message("<b>[src.name]</b> armeds, \"Magnet equipment located. Link established.\"")
+						src.visible_message("<b>[src.name]</b> states, \"Magnet equipment located. Link established.\"")
 				. = TRUE
 			if ("unlinkmagnet")
 				src.linked_magnet = null
 				. = TRUE
 			else
 				if(istype(src.linked_magnet))
+					if (src.linked_magnet.health <= 0)
+						src.linked_magnet = null // ITS DEAD!!!! STOP!!!
+						src.visible_message("<b>[src.name]</b> states, \"Designated magnet is no longer operational.\"")
+						return
 					. = src.linked_magnet.ui_act(action, params)
-
-	ui_status(mob/user, datum/ui_state/armed)
-		. = ..()
-		if(istype(src.linked_magnet))
-			. = min(., linked_magnet.ui_status(user))
 
 /obj/machinery/computer/magnet/connection_scan()
 	linked_magnets = list()
@@ -862,7 +876,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	light_mod = "wall-"
 	plane = PLANE_NOSHADOW_BELOW
 	layer = ASTEROID_LAYER
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 	default_material = "rock"
 	color = "#D1E6FF"
 
@@ -884,7 +898,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/weakened = 0
 	var/amount = 2
 	var/invincible = 0
-	var/quality = 0
 	var/default_ore = /obj/item/raw_material/rock
 	var/datum/ore/ore = null
 	var/datum/ore/event/event = null
@@ -912,7 +925,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 					var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
 					algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
 					algea.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[src.icon_state]"))
-					UpdateOverlays(algea, "glow_algae")
+					AddOverlays(algea, "glow_algae")
 					add_medium_light("glow_algae", color_vals)
 
 		destroy_asteroid(dropOre)
@@ -981,7 +994,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			stone_color = "#2070CC"
 			default_ore = /obj/item/raw_material/ice
 			hardness = 5
-			quality = 15
 			amount = 6
 
 		ice_char
@@ -1045,7 +1057,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			var/color_vals = list(rand(100,200), rand(100,200), rand(100,200), 30)  // random colors, muted
 			algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
 			algea.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[src.icon_state]"))
-			UpdateOverlays(algea, "glow_algae")
+			AddOverlays(algea, "glow_algae")
 			add_medium_light("glow_algae", color_vals)
 
 		destroy_asteroid(dropOre)
@@ -1067,8 +1079,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		src.topnumber = pick(1,2,3)
 		src.orenumber = pick(1,2,3)
 		..()
-		worldgenCandidates += src
 		if(current_state <= GAME_STATE_PREGAME)
+			worldgenCandidates += src
 			src.color = src.stone_color
 		else
 			SPAWN(1)
@@ -1144,8 +1156,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if(istype(W,/obj/item/mining_tool/))
 			var/obj/item/mining_tool/T = W
 			src.dig_asteroid(user,T)
-			if (T.status)
-				T.process_charges(T.digcost)
 		else if (istype(W, /obj/item/mining_tools))
 			return // matsci `mining_tools` handle their own digging
 		else if (istype(W, /obj/item/oreprospector))
@@ -1187,7 +1197,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		var/health_prc = (mining_health / mining_max_health)
 
 		if(health_prc >= 1)
-			UpdateOverlays(null, "damage")
+			ClearSpecificOverlays("damage")
 		else if(health_prc > 0.66 && health_prc < 1)
 			setTexture("damage1", BLEND_MULTIPLY, "damage")
 		else if(health_prc > 0.33 && health_prc < 0.66)
@@ -1204,9 +1214,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			light = src.GetOverlayImage("ambient")
 		src.ClearAllOverlays() // i know theres probably a better way to handle this
 		if(light)
-			src.UpdateOverlays(light, "ambient")
+			src.AddOverlays(light, "ambient")
 		if(src.fullbright)
-			src.UpdateOverlays(new/image/fullbright, "fullbright")
+			src.AddOverlays(new/image/fullbright, "fullbright")
 		src.top_overlays()
 		src.ore_overlays()
 
@@ -1218,14 +1228,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			cached = topoverlaycache["mask2[src.icon_state]"]
 		top_overlay.filters += filter(type="alpha", icon=cached)
 		top_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER
-		UpdateOverlays(top_overlay, "ast_top_rock")
+		AddOverlays(top_overlay, "ast_top_rock")
 
 	proc/ore_overlays()
 		if(src.ore) // make sure ores dont turn invisible
 			var/image/ore_overlay = mutable_appearance('icons/turf/walls/asteroid.dmi',"[src.ore?.name][src.orenumber]")
 			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[src.icon_state]"))
 			ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
-			src.UpdateOverlays(ore_overlay, "ast_ore")
+			src.AddOverlays(ore_overlay, "ast_ore")
 
 	proc/space_overlays()
 		for (var/turf/A in orange(src,1))
@@ -1248,7 +1258,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			edge_overlay.plane = PLANE_NOSHADOW_BELOW
 			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
-			A.UpdateOverlays(edge_overlay, "ast_edge_[dir_from]")
+			A.AddOverlays(edge_overlay, "ast_edge_[dir_from]")
 			src.space_overlays += edge_overlay
 
 	Del()
@@ -1261,15 +1271,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 		var/datum/ore/event/E = src.event
 
-		if (tool.status)
-			playsound(user.loc, tool.hitsound_charged, 50, 1)
-		else
-			playsound(user.loc, tool.hitsound_uncharged, 50, 1)
-
-		if (tool.weakener)
+		playsound(user.loc, tool.get_mining_sound(), 50, 1)
+		if (tool.is_weakener())
 			src.weaken_asteroid()
 
-		var/strength = tool.dig_strength
+		var/strength = tool.get_dig_strength()
 		if (iscarbon(user))
 			var/mob/living/carbon/C = user
 			if (C.bioHolder && C.bioHolder.HasOneOfTheseEffects("strong","hulk"))
@@ -1314,7 +1320,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			src.hardness /= 2
 		else
 			src.hardness = 0
-		src.UpdateOverlays(image('icons/turf/walls/asteroid.dmi', "weakened"), "asteroid_weakened")
+		src.AddOverlays(image('icons/turf/walls/asteroid.dmi', "weakened"), "asteroid_weakened")
 
 	proc/damage_asteroid(var/power,var/allow_zero = 0)
 		// use this for stuff that arent mining tools but still attack asteroids
@@ -1357,24 +1363,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				O.onExcavate(src)
 			var/makeores
 			for(makeores = src.amount, makeores > 0, makeores--)
-				var/obj/item/raw_material/MAT = new ore_to_create(src)
-
-				// rocks don't deserve quality; moreover this speeds up big explosions since rocks don't need to copyMaterial() anymore
-				if(ore_to_create ==  /obj/item/raw_material/rock)
-					continue
-
-				if(MAT.material)
-					//If we don't use quality anymore, remove this
-					MAT.material = MAT.material.getMutable()
-					if(MAT.material.getQuality() != 0) //If it's 0 then that's probably the default, so let's use the asteroids quality only if it's higher. That way materials that have a quality by default will not occur at any quality less than the set one. And materials that do not have a quality by default, use the asteroids quality instead.
-						var/newQual = max(MAT.material.getQuality(), src.quality)
-						MAT.material.setQuality(newQual)
-						MAT.quality = newQual
-					else
-						MAT.material.setQuality(src.quality)
-						MAT.quality = src.quality
-
-				MAT.name = getOreQualityName(MAT.quality) + " [MAT.name]"
+				new ore_to_create(src)
 		if(!icon_old)
 			icon_old = icon_state
 
@@ -1399,9 +1388,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 #endif
 
 		if(weather)
-			src.UpdateOverlays(weather, "weather")
+			src.AddOverlays(weather, "weather")
 		if(ambient)
-			src.UpdateOverlays(ambient, "ambient")
+			src.AddOverlays(ambient, "ambient")
 		return src
 
 	proc/set_event(var/datum/ore/event/E)
@@ -1428,6 +1417,111 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				AST.event = E
 				E.onGenerate(AST)
 				usable_turfs -= AST
+
+
+/turf/unsimulated/floor/plating/asteroid
+	name = "asteroid"
+	icon = 'icons/turf/walls/asteroid.dmi'
+	icon_state = "astfloor1"
+	plane = PLANE_FLOOR //Try to get the edge overlays to work with shadowing. I dare ya.
+	oxygen = 0
+	nitrogen = 0
+	temperature = TCMB
+	step_material = "step_plating"
+	step_priority = STEP_PRIORITY_MED
+	default_material = null
+	var/sprite_variation = 1
+	var/stone_color = "#D1E6FF"
+	var/image/coloration_overlay = null
+	var/list/space_overlays = null
+	turf_flags = MOB_SLIP | MOB_STEP | FLUID_MOVE
+	can_build = TRUE
+
+#ifdef UNDERWATER_MAP
+	fullbright = 0
+	luminosity = 3
+#else
+	luminosity = 1
+#endif
+
+	New()
+		..()
+		src.space_overlays = list()
+		src.name = initial(src.name)
+		src.sprite_variation = rand(1,3)
+		icon_state = "astfloor" + "[sprite_variation]"
+		coloration_overlay = image(src.icon,"color_overlay")
+		coloration_overlay.blend_mode = 4
+		UpdateIcon()
+		if(current_state > GAME_STATE_PREGAME)
+			SPAWN(1)
+				if(istype(src, /turf/unsimulated/floor/plating/asteroid))
+					space_overlays()
+		else
+			worldgenCandidates += src
+
+	generate_worldgen()
+		. = ..()
+		src.space_overlays()
+
+	ex_act(severity)
+		return
+
+	proc/destroy_asteroid()
+		return
+
+	proc/damage_asteroid(var/power)
+		return
+
+	proc/weaken_asteroid()
+		return
+
+	update_icon()
+		. = ..()
+
+		var/image/ambient_light = src.GetOverlayImage("ambient")
+		var/image/weather = src.GetOverlayImage("weather")
+
+		src.ClearAllOverlays()
+		src.color = src.stone_color
+		#ifndef UNDERWATER_MAP
+		if (fullbright)
+			src.AddOverlays(new /image/fullbright, "fullbright")
+		#endif
+
+		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
+			overlay_refs.len = 0
+		src.UpdateOverlays(ambient_light, "ambient")
+		src.UpdateOverlays(weather, "weather")
+
+	proc/space_overlays() //For overlays ON THE SPACE TILE
+		for (var/turf/A in orange(src,1))
+			var/dir_from = get_dir(A, src)
+			var/dir_to = get_dir(src, A)
+			var/skip_this = !istype(A, /turf/space)
+			if (!skip_this && !is_cardinal(dir_to))
+				for (var/cardinal_dir in cardinal)
+					if (dir_to & cardinal_dir)
+						var/turf/T = get_step(src, cardinal_dir)
+						if (!istype(T, /turf/space))
+							skip_this = TRUE
+							break
+			if (skip_this)
+				A.ClearSpecificOverlays("ast_edge_[dir_from]")
+				continue
+			var/image/edge_overlay = image('icons/turf/walls/asteroid.dmi', "edge[dir_from]")
+			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+			edge_overlay.plane = PLANE_FLOOR
+			edge_overlay.layer = TURF_EFFECTS_LAYER
+			edge_overlay.color = src.stone_color
+			A.AddOverlays(edge_overlay, "ast_edge_[dir_from]")
+			src.space_overlays += edge_overlay
+
+	Del()
+		for(var/turf/T in orange(src, 1))
+			T.ClearSpecificOverlays("ast_edge_[get_dir(T, src)]")
+		..()
+
 
 TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	mat_appearances_to_ignore = list("rock")
@@ -1478,11 +1572,12 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		coloration_overlay = image(src.icon,"color_overlay")
 		coloration_overlay.blend_mode = 4
 		UpdateIcon()
-		worldgenCandidates += src
 		if(current_state > GAME_STATE_PREGAME)
 			SPAWN(1)
 				if(istype(src, /turf/simulated/floor/plating/airless/asteroid))
 					space_overlays()
+		else
+			worldgenCandidates += src
 
 	generate_worldgen()
 		. = ..()
@@ -1515,7 +1610,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		src.color = src.stone_color
 		#ifndef UNDERWATER_MAP
 		if (fullbright)
-			src.UpdateOverlays(new /image/fullbright, "fullbright")
+			src.AddOverlays(new /image/fullbright, "fullbright")
 		#endif
 
 		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
@@ -1543,7 +1638,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			edge_overlay.plane = PLANE_FLOOR
 			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
-			A.UpdateOverlays(edge_overlay, "ast_edge_[dir_from]")
+			A.AddOverlays(edge_overlay, "ast_edge_[dir_from]")
 			src.space_overlays += edge_overlay
 
 	Del()
@@ -1622,91 +1717,313 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	w_class = W_CLASS_NORMAL
 	c_flags = ONBELT
 	force = 7
-	var/cell_type = null
-	var/dig_strength = 1
-	var/status = 0
-	var/digcost = 0
-	var/weakener = 0
-	var/image/powered_overlay = null
-	var/sound/hitsound_charged = 'sound/impact_sounds/Stone_Cut_1.ogg'
-	var/sound/hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
+	VAR_PROTECTED/dig_strength = 1
+	VAR_PROTECTED/weakener = FALSE //does this thing weaken asteroids when you hit them?
+	VAR_PROTECTED/sound/mining_sound = 'sound/impact_sounds/Stone_Cut_1.ogg'
 
 	New()
 		..()
-		if(cell_type)
-			var/cell = new cell_type
-			AddComponent(/datum/component/cell_holder, cell)
-			RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(power_down))
 		BLOCK_SETUP(BLOCK_ROD)
+
+	proc/get_dig_strength()
+		return src.dig_strength
+
+	proc/get_mining_sound()
+		return src.mining_sound
+
+	proc/is_weakener()
+		return src.weakener
+
+/obj/item/mining_tool/concussive_gloves_internal
+	name = "concussive gloves internal mining tool"
+	desc = "you shouldn't see this"
+	dig_strength = 3
+	mining_sound = 'sound/impact_sounds/Stone_Cut_1.ogg'
+
+/obj/item/mining_tool/powered
+	name = "power pick"
+	desc = "An energised mining tool."
+	icon_state = "powerpick"
+	item_state = "ppick0"
+	var/powered_item_state = "ppick1"
+	VAR_PROTECTED/sound/powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
+	force = 7
+	var/default_cell = /obj/item/ammo/power_cell
+	var/is_on = FALSE
+	var/powered_force = 13
+	VAR_PROTECTED/powered_dig_strength = 2
+	VAR_PROTECTED/powered_weakener = FALSE //does this become able to weaken asteroids when it's on?
+	VAR_PROTECTED/power_usage = 2 //power units expended per hit while on
+	VAR_PROTECTED/robot_power_usage = 50 //power units expended when drawing from a robot's internal power cell, which tends to be 150x bigger
+	var/violence_power_multiplier = 5 //multiply the cost by this if the thing we're hitting isnt a turf
+	var/image/powered_overlay = null //the glowy bits for when its on
+	var/datum/item_special/unpowered_item_special = /datum/item_special/simple
+	var/datum/item_special/powered_item_special = /datum/item_special/simple
+
+	New()
+		..()
+		if(src.default_cell)
+			AddComponent(/datum/component/cell_holder, new default_cell)
+			RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(power_down_callback))
+		src.setItemSpecial(unpowered_item_special)
+		src.power_up()
+
+	proc/get_power_usage(mob/user = null)
+		if(user && isrobot(user))
+			return src.robot_power_usage
+		return src.power_usage
+
+	get_dig_strength()
+		if(src.is_on)
+			return src.powered_dig_strength
+		return ..()
+
+	is_weakener()
+		if(src.is_on)
+			return src.powered_weakener
+		return ..()
+
+	get_mining_sound()
+		if(src.is_on)
+			return src.powered_mining_sound
+		return ..()
 
 	// Seems like a basic bit of user feedback to me (Convair880).
 	examine(mob/user)
 		. = ..()
-		if (isrobot(user))
-			return // Drains battery instead.
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			. += "The [src.name] is turned [src.status ? "on" : "off"]. There are [ret["charge"]]/[ret["max_charge"]] PUs left!"
+			. += "The [src] is turned [src.is_on ? "on" : "off"]. There are [ret["charge"]]/[ret["max_charge"]] PUs left!"
 
-	proc/process_charges(var/use)
-		if (!isnum(use) || use < 0)
-			return 0
-		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
-			return 0
+	attack_self(mob/user)
+		..()
+		src.mode_toggle(user)
 
-		if (SEND_SIGNAL(src, COMSIG_CELL_USE, use) & CELL_INSUFFICIENT_CHARGE)
-			src.power_down()
+	afterattack(atom/target, mob/user)
+		..()
+		if (src.is_on) //is the thing on? (or for the hedron beam, is it in mining mods)
+			if(isturf(target))
+				src.process_charges(src.get_power_usage(), user)
+			else
+				src.process_charges(src.get_power_usage() * src.violence_power_multiplier, user)
+
+	proc/process_charges(var/powerCost, var/mob/user = null)
+		//Returns FALSE if we failed to use power, otherwise returns TRUE
+		if (!isnum(powerCost) || powerCost < 0)
+			//We need a positive number
+			return FALSE
+		if(isrobot(user))
+			//You are a robot, expend power from your internal cell
+			var/mob/living/silicon/robot/robotUser = user
+			if (robotUser.cell.charge > powerCost)
+				robotUser.cell.use(powerCost)
+				return TRUE
+			//Not enough power
+			src.power_down(user)
 			OVERRIDE_COOLDOWN(src, "depowered", 8 SECONDS)
-			var/turf/T = get_turf(src)
-			T.visible_message(SPAN_ALERT("[src] runs out of charge and triggers an emergency shutdown!"))
-		return 1
+			boutput(user, SPAN_ALERT("Your charge is too low to power [src] and it shuts down!"))
+			return FALSE
+		//You passed the captcha, continue to use small cell power
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
+			//Cell needs to exist
+			return FALSE
+		if (SEND_SIGNAL(src, COMSIG_CELL_USE, powerCost) & CELL_INSUFFICIENT_CHARGE)
+			//You just used power, continue down this branch if you ran out of power
+			src.power_down(user)
+			OVERRIDE_COOLDOWN(src, "depowered", 8 SECONDS)
+			boutput(user, SPAN_ALERT("[src] runs out of charge and shuts down!"))
+		return TRUE
 
-	attack_self(var/mob/user as mob)
-		if (!digcost)
-			return
-		if (src.process_charges(0))
+	proc/mode_toggle(var/mob/user = null)
+		if (src.process_charges(0, user))
 			if(GET_COOLDOWN(src, "depowered"))
 				boutput(user, SPAN_ALERT("[src] was recently power cycled and is still cooling down!"))
 				return
-			if (!src.status)
+			if (!src.is_on)
 				boutput(user, SPAN_NOTICE("You power up [src]."))
-				src.power_up()
-				playsound(user.loc, 'sound/items/miningtool_on.ogg', 30, 1)
+				src.power_up(user)
 			else
 				boutput(user, SPAN_NOTICE("You power down [src]."))
-				src.power_down()
+				src.power_down(user)
 		else
 			boutput(user, SPAN_ALERT("No charge left in [src]."))
 
-	afterattack(target as mob, mob/user as mob)
-		..()
-		if (src.status && !isturf(target))
-			src.process_charges(digcost*5)
-
-	proc/power_up()
-		src.tooltip_rebuild = 1
-		src.status = 1
-		if (powered_overlay)
-			src.overlays += powered_overlay
+	proc/power_up(var/mob/user = null)
+		src.tooltip_rebuild = TRUE
+		src.is_on = TRUE
+		src.force = src.powered_force
+		src.item_state = src.powered_item_state
+		if (src.powered_overlay)
+			src.overlays.Add(powered_overlay)
 			signal_event("icon_updated")
+		if(user)
+			user.update_inhands()
+		playsound(user, 'sound/items/miningtool_on.ogg', 30, 1)
+		src.setItemSpecial(src.powered_item_special)
 		return
 
-	proc/power_down()
+	proc/power_down_callback(obj/item/mining_tool/powered/tool, obj/item/ammo/power_cell/cell, mob/user)
+		src.power_down(user)
+
+	proc/power_down(var/mob/user = null)
 		ON_COOLDOWN(src, "depowered", 1 SECOND)
-		src.tooltip_rebuild = 1
-		src.status = 0
-		if (powered_overlay)
-			src.overlays = null
+		src.tooltip_rebuild = TRUE
+		src.is_on = FALSE
+		src.force = initial(src.force)
+		src.item_state = initial(src.item_state)
+		if (src.powered_overlay)
+			src.overlays.Remove(powered_overlay)
 			signal_event("icon_updated")
+		if(user)
+			user.update_inhands()
+		playsound(user, 'sound/items/miningtool_off.ogg', 30, 1)
+		src.setItemSpecial(src.unpowered_item_special)
 		return
+
+/obj/item/mining_tool/powered/pickaxe
+	name = "energy pickaxe"
+	desc = "An energised mining tool."
+	icon_state = "powerpick"
+	item_state = "ppick0"
+	powered_item_state = "ppick1"
+	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
+	c_flags = ONBELT
+	force = 7
+	powered_force = 14
+	dig_strength = 2
+	powered_dig_strength = 3
+	power_usage = 2
+	robot_power_usage = 50
+	default_cell = /obj/item/ammo/power_cell
+	powered_overlay = null
+
+	New()
+		src.powered_overlay = image('icons/obj/items/mining.dmi', "pp-glow")
+		..()
+
+/obj/item/mining_tool/powered/drill
+	name = "energy drill"
+	desc = "An energized mining tool that's more energy efficient than a pickaxe."
+	icon_state = "powerdrill"
+	item_state = "pdrill0"
+	powered_item_state = "pdrill1"
+	powered_mining_sound = 'sound/items/Welder.ogg'
+	c_flags = ONBELT
+	force = 7
+	powered_force = 14
+	dig_strength = 2
+	powered_dig_strength = 3
+	power_usage = 1
+	robot_power_usage = 30
+	default_cell = /obj/item/ammo/power_cell
+
+	New()
+		src.powered_overlay = image('icons/obj/items/mining.dmi', "pd-glow")
+		..()
+
+/obj/item/mining_tool/powered/hammer
+	name = "energy hammer"
+	desc = "An energised mining tool that's a bit more powerful than a pickaxe."
+	icon_state = "powerhammer"
+	item_state = "phammer0"
+	powered_item_state = "phammer1"
+	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
+	c_flags = ONBELT
+	force = 9
+	powered_force = 20
+	dig_strength = 2
+	powered_dig_strength = 3
+	powered_weakener = TRUE
+	power_usage = 3
+	robot_power_usage = 75
+	default_cell = /obj/item/ammo/power_cell
+	powered_item_special = /datum/item_special/slam
+
+	New()
+		src.powered_overlay = image('icons/obj/items/mining.dmi', "ph-glow")
+		..()
+
+/obj/item/mining_tool/powered/shovel
+	name = "power shovel"
+	desc = "An energized mining tool that can be used to dig holes in the sand."
+	icon_state = "powershovel"
+	item_state = "pshovel0"
+	powered_item_state = "pshovel1"
+	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
+	c_flags = ONBELT
+	force = 6
+	powered_force = 12
+	dig_strength = 0
+	powered_dig_strength = 2
+	power_usage = 2
+	robot_power_usage = 50
+	default_cell = /obj/item/ammo/power_cell
+	powered_item_special = /datum/item_special/swipe
+
+	New()
+		powered_overlay = image('icons/obj/items/mining.dmi', "ps-glow")
+		..()
+
+TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
+	mats = list("metal_dense" = 15,
+				"conductive" = 8,
+				"claretine" = 10,
+				"koshmarite" = 2)
+/obj/item/mining_tool/powered/hedron_beam
+	//Being "On" (ie src.is_on() == TRUE) means it's in mining mode)
+	name = "\improper Hedron beam device"
+	desc = "A prototype multifunctional industrial tool capable of rapidly switching between welding and mining modes."
+	icon_state = "hedron-W"
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	item_state = "gun"
+	powered_item_state = "gun"
+	powered_mining_sound = 'sound/items/Welder.ogg'
+	c_flags = ONBELT
+	tool_flags = TOOL_WELDING
+	force = 10
+	dig_strength = 0
+	powered_dig_strength = 3
+	power_usage = 2
+	robot_power_usage = 50
+	default_cell = /obj/item/ammo/power_cell
+
+	examine(mob/user)
+		. = ..()
+		. += "<br>Currently in [src.is_on ? "mining mode" : "welding mode"]."
+
+	power_up(var/mob/user)
+		src.set_icon_state("hedron-M")
+		flick("hedron-WtoM", src)
+		..()
+
+	power_down(var/mob/user)
+		src.set_icon_state("hedron-W")
+		flick("hedron-MtoW", src)
+		..()
+
+	proc/try_weld(mob/user, var/fuel_amt = 2, var/use_amt = -1, var/noisy=TRUE, var/burn_eyes=FALSE)
+	//All welding tools just copy and paste this proc? Horrible, but out of scope so it can be some other handsome coder's problem.
+		if (!src.is_on) //are we in welding mode?
+			if(use_amt == -1)
+				use_amt = fuel_amt
+			if (!src.process_charges(use_amt * src.violence_power_multiplier, user))
+				boutput(user, SPAN_NOTICE("Cannot weld - cell insufficiently charged."))
+				return FALSE //not enough power
+			if(noisy)
+				playsound(user.loc, list('sound/items/Welder.ogg', 'sound/items/Welder2.ogg')[noisy], 35, 1)
+			return TRUE //welding checks passed
+		//not in welding mode, dont weld
+		boutput(user, SPAN_NOTICE("[src] is in mining mode and can't currently weld."))
+		return FALSE
 
 /obj/item/clothing/gloves/concussive
-	name = "concussion gauntlets"
+	name = "concussive gauntlets"
 	desc = "These gloves enable miners to punch through solid rock with their hands instead of using tools."
 	icon_state = "cgaunts"
 	item_state = "bgloves"
 	material_prints = "industrial-grade mineral fibers"
-	var/obj/item/mining_tool/tool = null
+	fingertip_color = "#535353"
+	var/obj/item/mining_tool/tool = new /obj/item/mining_tool/concussive_gloves_internal
 
 	setupProperties()
 		..()
@@ -1714,181 +2031,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 
 	New()
 		..()
-		var/obj/item/mining_tool/T = new /obj/item/mining_tool(src)
-		src.tool = T
-		T.name = src.name
-		T.desc = src.desc
-		T.dig_strength = 4
-		T.hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
-		T.hitsound_uncharged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 		AddComponent(/datum/component/wearertargeting/unarmedblock/concussive, list(SLOT_GLOVES))
-
-/obj/item/mining_tool/power_pick
-	name = "power pick"
-	desc = "An energised mining tool."
-	icon = 'icons/obj/items/mining.dmi'
-	icon_state = "powerpick"
-	item_state = "ppick1"
-	c_flags = ONBELT
-	dig_strength = 2
-	digcost = 2
-	cell_type = /obj/item/ammo/power_cell
-	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
-	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
-
-	New()
-		..()
-		powered_overlay = image('icons/obj/items/mining.dmi', "pp-glow")
-		src.power_up()
-
-	power_up()
-		..()
-		src.force = 15
-		src.dig_strength = 2
-		if(ismob(src.loc))
-			var/mob/user = src.loc
-			item_state = "ppick1"
-			user.update_inhands()
-
-	power_down()
-		..()
-		src.force = 7
-		src.dig_strength = 1
-		item_state = "ppick0"
-		if(ismob(src.loc))
-			var/mob/user = src.loc
-			user.update_inhands()
-			playsound(user.loc, 'sound/items/miningtool_off.ogg', 30, 1)
-
-	borg
-		process_charges(var/use)
-			var/mob/living/silicon/robot/R = usr
-			if (istype(R))
-				if (R.cell.charge > use * 66)
-					R.cell.use(66 * use)
-					return 1
-				return 0
-			else
-				. = ..()
-
-TYPEINFO(/obj/item/mining_tool/drill)
-	mats = 4
-
-/obj/item/mining_tool/drill
-	name = "laser drill"
-	desc = "Safe mining tool that doesn't require recharging."
-	icon = 'icons/obj/items/mining.dmi'
-	icon_state = "lasdrill"
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "drill"
-	c_flags = ONBELT
-	force = 10
-	dig_strength = 2
-	hitsound_charged = 'sound/items/Welder.ogg'
-	hitsound_uncharged = 'sound/items/Welder.ogg'
-
-/obj/item/mining_tool/powerhammer
-	name = "power hammer"
-	desc = "An energised mining tool."
-	icon = 'icons/obj/items/mining.dmi'
-	icon_state = "powerhammer"
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "phammer1"
-	cell_type = /obj/item/ammo/power_cell
-	force = 9
-	dig_strength = 3
-	digcost = 3
-	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
-	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
-
-	New()
-		..()
-		src.powered_overlay = image('icons/obj/items/mining.dmi', "ph-glow")
-		src.power_up()
-
-	power_up()
-		..()
-		src.force = 20
-		dig_strength = 3
-		weakener = 1
-		item_state = "phammer1"
-		if(ismob(src.loc))
-			var/mob/user = src.loc
-			user.update_inhands()
-		src.setItemSpecial(/datum/item_special/slam)
-
-	power_down()
-		..()
-		src.force = 9
-		dig_strength = 1
-		weakener = 0
-		item_state = "phammer0"
-		if(ismob(src.loc))
-			var/mob/user = src.loc
-			user.update_inhands()
-			playsound(user.loc, 'sound/items/miningtool_off.ogg', 30, 1)
-		src.setItemSpecial(/datum/item_special/simple)
-
-	borg
-		process_charges(var/use)
-			var/mob/living/silicon/robot/R = usr
-			if (istype(R))
-				if (R.cell.charge > use * 66)
-					R.cell.use(66 * use)
-					return 1
-				return 0
-			else
-				. = ..()
-
-/obj/item/mining_tool/power_shovel
-	name = "power shovel"
-	desc = "The final word in digging."
-	icon = 'icons/obj/sealab_power.dmi'
-	icon_state = "powershovel"
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "pshovel1"
-	c_flags = ONBELT
-	dig_strength = 0
-	digcost = 2
-	cell_type = /obj/item/ammo/power_cell
-	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
-	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
-
-	New()
-		..()
-		src.setItemSpecial(/datum/item_special/swipe)
-		powered_overlay = image('icons/obj/sealab_power.dmi', "ps-glow")
-		src.power_up()
-
-	power_up()
-		..()
-		src.force = 8
-		src.dig_strength = 0
-		item_state = "pshovel1"
-		if(ismob(src.loc))
-			var/mob/user = src.loc
-			user.update_inhands()
-
-	power_down()
-		..()
-		src.force = 4
-		src.dig_strength = 0
-		item_state = "pshovel0"
-		if(ismob(src.loc))
-			var/mob/user = src.loc
-			user.update_inhands()
-			playsound(user.loc, 'sound/items/miningtool_off.ogg', 30, 1)
-
-	borg
-		process_charges(var/use)
-			var/mob/living/silicon/robot/R = usr
-			if (istype(R))
-				if (R.cell.charge > use * 100)
-					R.cell.use(100 * use)
-					return 1
-				return 0
-			else
-				. = ..()
 
 /obj/item/breaching_charge/mining
 	name = "concussive charge"
@@ -1936,11 +2079,14 @@ TYPEINFO(/obj/item/mining_tool/drill)
 						qdel (src)
 						return
 				else
-					if (istype(target, /turf/simulated/wall/auto/asteroid/) && !src.hacked)
+					if (\
+						(\
+							istype(target, /turf/simulated/wall/auto/asteroid/) ||\
+							istype(target, /obj/geode)\
+						) && !src.hacked)
 						boutput(user, SPAN_ALERT("You slap the charge on [target], [det_time/10] seconds!"))
 						user.visible_message(SPAN_ALERT("[user] has attached [src] to [target]."))
 						src.icon_state = "bcharge2"
-						user.drop_item()
 
 						// Yes, please (Convair880).
 						if (src?.hacked)
@@ -1948,8 +2094,10 @@ TYPEINFO(/obj/item/mining_tool/drill)
 
 						user.set_dir(get_dir(user, target))
 						user.drop_item()
-						var/t = (isturf(target) ? target : target.loc)
-						step_towards(src, t)
+						var/turf/T = get_turf(target)
+						src.set_loc(T)
+						src.anchored = ANCHORED
+						step_towards(src, T)
 
 						SPAWN( src.det_time )
 							concussive_blast()
@@ -1958,7 +2106,10 @@ TYPEINFO(/obj/item/mining_tool/drill)
 									qdel(target)
 							qdel(src)
 							return
-					else if (src.hacked) ..()
+					else if (src.hacked)
+						var/turf/T = get_turf(target)
+						if(!IS_ARRIVALS(T.loc))
+							..()
 					else boutput(user, SPAN_ALERT("These will only work on asteroids."))
 			return
 
@@ -2010,12 +2161,15 @@ TYPEINFO(/obj/item/mining_tool/drill)
 			if (!isdead(C) && C.client) shake_camera(C, 3, 2)
 			if(GET_DIST(src,C) <= src.expl_light)
 				C.changeStatus("stunned", 8 SECONDS)
-				C.changeStatus("weakened", 10 SECONDS)
+				C.changeStatus("knockdown", 10 SECONDS)
 				C.stuttering += 15
 				boutput(C, SPAN_ALERT("The concussive blast knocks you off your feet!"))
 			if(GET_DIST(src,C) <= src.expl_heavy)
 				C.TakeDamage("All",rand(15,25)*(1-C.get_explosion_resistance()),0)
 				boutput(C, SPAN_ALERT("You are battered by the concussive shockwave!"))
+
+		for (var/obj/geode/geode in get_turf(src))
+			geode.ex_act(2, null, 5 * src.expl_heavy)
 
 /// Multiplier for power usage if the user is a silicon and the charge is coming from their internal cell
 #define SILICON_POWER_COST_MOD 10
@@ -2039,13 +2193,13 @@ TYPEINFO(/obj/item/cargotele)
 	/// List of types that cargo teles are allowed to send. Built in New, shared across all teles
 	var/static/list/allowed_types = list()
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	c_flags = ONBELT
 
 
 	New()
 		. = ..()
-		var/list/allowed_supertypes = list(/obj/machinery/portable_atmospherics/canister, /obj/reagent_dispensers, /obj/storage)
+		var/list/allowed_supertypes = list(/obj/machinery/portable_atmospherics/canister, /obj/reagent_dispensers, /obj/storage, /obj/geode)
 		for (var/supertype in allowed_supertypes)
 			for (var/subtype in typesof(supertype))
 				allowed_types[subtype] = 1
@@ -2145,7 +2299,7 @@ TYPEINFO(/obj/item/cargotele)
 				mob_teled = TRUE
 
 		if(!mob_teled)
-			logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] to [log_loc(src.target)].")
+			logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] ([cargo.type]) to [log_loc(src.target)].")
 
 		cargo.set_loc(get_turf(src.target))
 		target.receive_cargo(cargo)
@@ -2210,6 +2364,7 @@ TYPEINFO(/obj/item/cargotele)
 		else
 			qdel(cargo)
 		src.total_earned += value
+		logTheThing(LOG_STATION, user, "uses a Syndicate cargo transporter to sell shit for [value] credits.")
 		elecflash(src)
 		var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
 		boutput(user, "[bicon(src)] *beep*")
@@ -2253,6 +2408,16 @@ TYPEINFO(/obj/item/cargotele)
 
 	attack_self(var/mob/user as mob)
 		mining_scan(get_turf(user), user, 6)
+
+	afterattack(obj/geode/geode, mob/user, reach, params)
+		if (!istype(geode))
+			return ..()
+		var/text = "----------------------------------<br>"
+		text += "<B><U>Geological Report:</U></B><br>"
+		text += "<b>Structural composition: [istype(geode, /obj/geode/fluid) ? "liquid" : "hollow"]</b><br>"
+		text += "<b>Explosive resistance estimate:</b> [geode.break_power] Kiloblasts<br>"
+		boutput(user, text)
+
 
 /proc/mining_scan(var/turf/T, var/mob/living/L, var/range)
 	if (!istype(T) || !istype(L))
@@ -2325,20 +2490,49 @@ TYPEINFO(/obj/item/cargotele)
 	name = "mineral accumulator"
 	desc = "A powerful device for quick ore and salvage collection and movement."
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "gravgen-off"
+	icon_state = "accumulator-off"
 	density = 1
 	opacity = 0
 	anchored = UNANCHORED
-	var/active = 0
+	var/active = FALSE
 	var/obj/item/cell/cell = null
 	var/target = null
 	var/group = null
+	var/image/hatch_image = null //no connected magnet = hatch closed cuz it won't take ore in
+	var/image/powercell_image = null
 
 	New()
 		var/obj/item/cell/P = new/obj/item/cell(src)
 		P.charge = P.maxcharge
 		src.cell = P
+		UpdateIcon()
 		..()
+
+	update_icon()
+		if (!src.powercell_image)
+			src.powercell_image = image(src.icon)
+			src.powercell_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+			src.powercell_image.icon_state = "accumulator_cell_missing"
+		if (!src.hatch_image)
+			src.hatch_image = image(src.icon)
+			src.hatch_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+			src.hatch_image.icon_state = "accumulator_closed"
+
+		if(!src.cell)
+			src.UpdateOverlays(src.powercell_image, "powercell")
+		else
+			src.UpdateOverlays(null, "powercell")
+
+		if(!target)
+			src.UpdateOverlays(src.hatch_image, "hatch")
+		else
+			src.UpdateOverlays(null, "hatch")
+
+		if(active)
+			icon_state = "accumulator-on"
+		else
+			icon_state = "accumulator-off"
+
 
 	attack_hand(var/mob/user)
 		if (!src.cell) boutput(user, SPAN_ALERT("It won't work without a power cell!"))
@@ -2350,23 +2544,21 @@ TYPEINFO(/obj/item/cargotele)
 				if (PCEL) //ZeWaka: fix for null.updateicon
 					PCEL.UpdateIcon()
 				user.put_in_hand_or_drop(PCEL)
-
 				src.cell = null
 			else if (action == "Change the destination")
 				src.change_dest(user)
 			else if (action == "Flip the power switch")
 				if (!src.active)
 					user.visible_message("[user] powers up [src].", "You power up [src].")
-					src.active = 1
+					src.active = TRUE
 					src.anchored = ANCHORED
-					icon_state = "gravgen-on"
 				else
 					user.visible_message("[user] shuts down [src].", "You shut down [src].")
-					src.active = 0
+					src.active = FALSE
 					src.anchored = UNANCHORED
-					icon_state = "gravgen-off"
 			else
 				user.visible_message("[user] stares at [src] in confusion!", "You're not sure what that did.")
+			UpdateIcon()
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/cell/))
@@ -2377,22 +2569,23 @@ TYPEINFO(/obj/item/cargotele)
 				cell = W
 				user.visible_message("[user] inserts [W] into [src].", "You insert [W] into [src].")
 		else ..()
+		UpdateIcon()
 
 	process()
 		var/moved = 0
 		if (src.active)
 			if (!src.cell)
 				src.visible_message(SPAN_ALERT("[src] instantly shuts itself down."))
-				src.active = 0
+				src.active = FALSE
 				src.anchored = UNANCHORED
-				icon_state = "gravgen-off"
+				UpdateIcon()
 				return
 			var/obj/item/cell/PCEL = src.cell
 			if (PCEL.charge <= 0)
 				src.visible_message(SPAN_ALERT("[src] runs out of power and shuts down."))
-				src.active = 0
+				src.active = FALSE
 				src.anchored = UNANCHORED
-				icon_state = "gravgen-off"
+				UpdateIcon()
 				return
 			PCEL.use(5)
 			if (src.target)
@@ -2452,6 +2645,7 @@ TYPEINFO(/obj/item/cargotele)
 				return
 			boutput(user, "Target set to [selection] at [T.loc].")
 			src.target = T
+		UpdateIcon()
 
 	Exited(Obj, newloc)
 		. = ..()
@@ -2553,7 +2747,7 @@ TYPEINFO(/obj/submachine/cargopad)
 				src.mailgroup = MGD_CARGO
 
 		if (src.active) //in case of map edits etc
-			UpdateOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
+			AddOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_ENABLED, src)
 
 	disposing()
@@ -2578,12 +2772,12 @@ TYPEINFO(/obj/submachine/cargopad)
 	proc/toggle(mob/user)
 		if (src.active == 1)
 			boutput(user, SPAN_NOTICE("You switch the receiver off."))
-			UpdateOverlays(null, "lights")
+			ClearSpecificOverlays("lights")
 			src.active = FALSE
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_DISABLED, src)
 		else
 			boutput(user, SPAN_NOTICE("You switch the receiver on."))
-			UpdateOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
+			AddOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
 			src.active = TRUE
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_ENABLED, src)
 
@@ -2669,10 +2863,11 @@ TYPEINFO(/obj/item/ore_scoop)
 			if (length(satchel.contents) < 1)
 				boutput(user, SPAN_ALERT("The satchel in [src] is empty."))
 				return
-			user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
-			for (var/obj/item/I in satchel.contents)
-				I.set_loc(target)
-			satchel.UpdateIcon()
+			if(!is_blocked_turf(target))
+				user.visible_message("[user] dumps out [src]'s satchel contents onto the ground.", "You dump out [src]'s satchel contents onto the ground.")
+				for (var/obj/item/I in satchel.contents)
+					I.set_loc(target)
+				satchel.UpdateIcon()
 			return
 		if (istype(target, /obj/item/satchel/mining))
 			if (!issilicon(user))

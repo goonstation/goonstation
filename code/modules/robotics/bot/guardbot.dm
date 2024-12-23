@@ -379,9 +379,9 @@
 
 			src.net_id = generate_net_id(src)
 
-			MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
-			MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
-			MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "control", control_freq)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "beacon", beacon_freq)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
 
 			var/obj/machinery/guardbot_dock/dock = null
 			if(setup_spawn_dock)
@@ -1201,6 +1201,9 @@
 
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
+			if(istype(budgun, /obj/item/gun/kinetic/pumpweapon))
+				var/obj/item/gun/kinetic/pumpweapon/pumpy = budgun
+				pumpy.rack(src)
 			if((BOUNDS_DIST(target, src) == 0))
 				budgun.ShootPointBlank(target, src)
 			else
@@ -1208,9 +1211,6 @@
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up
-			if(istype(budgun, /obj/item/gun/kinetic/riotgun))
-				var/obj/item/gun/kinetic/riotgun/RG = budgun
-				RG.rack(src)
 		ON_COOLDOWN(src, "buddy_refire_delay", src.gunfire_cooldown)
 		return 1
 
@@ -1234,7 +1234,10 @@
 		if(user.a_intent == "help" && !user.using_dialog_of(src) && (BOUNDS_DIST(user, src) == 0))
 			var/affection = pick("hug","cuddle","snuggle")
 			user.visible_message(SPAN_NOTICE("[user] [affection]s [src]!"),SPAN_NOTICE("You [affection] [src]!"), group="buddyhug")
-			src.task?.task_input("hugged")
+			if(user.traitHolder?.hasTrait("wasitsomethingisaid"))
+				src.task?.task_input("hugged_annoying")
+			else
+				src.task?.task_input("hugged")
 			return
 
 		if(BOUNDS_DIST(user, src) > 0)
@@ -1608,7 +1611,7 @@
 					SPAWN(3 SECONDS)
 						src.set_emotion("sad")		// Still kinda sad that someone would bully a defenseless little rectangle.
 			else if(src.tool && (src.tool.tool_id != "GUN"))
-				var/is_ranged = BOUNDS_DIST(src, target) > 0
+				var/is_ranged = BOUNDS_DIST(src, target)
 				src.tool.bot_attack(target, src, is_ranged, lethal)
 			return
 
@@ -1898,7 +1901,6 @@
 /datum/action/bar/icon/buddy_cuff
 	duration = 30 // zippy zipcuffs
 	interrupt_flags = INTERRUPT_MOVE
-	id = "buddy_cuff"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 	var/obj/machinery/bot/guardbot/master
@@ -2124,7 +2126,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 
 		// Fixed. Was completely non-functional (Convair880).
 		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
-			if(..() || !reagents || ranged) return
+			if(..() || !reagents || ranged > 64) return
 
 			if(src.last_use && world.time < src.last_use + 120)
 				return
@@ -2135,7 +2137,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 			else
 				src.reagents.add_reagent(stun_reagent, 15)
 
-			smoke_reaction(src.reagents, 3, get_turf(src))
+			classic_smoke_reaction(src.reagents, 3, get_turf(src))
 			user.visible_message(SPAN_ALERT("<b>[master] releases a cloud of gas!</b>"))
 
 			src.last_use = world.time
@@ -2250,13 +2252,13 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 					if (lethal)
 						var/mob/living/carbon/human/H = target_r
 						random_burn_damage(target_r, rand(45,60))
-						H.do_disorient(stamina_damage = 45, weakened = 50, stunned = 40, disorient = 20, remove_stamina_below_zero = 0)
+						H.do_disorient(stamina_damage = 45, knockdown = 50, stunned = 40, disorient = 20, remove_stamina_below_zero = 0)
 					boutput(target_r, SPAN_ALERT("<B>You feel a powerful shock course through your body!</B>"))
 					target_r:unlock_medal("HIGH VOLTAGE", 1)
 					target_r:Virus_ShockCure(100)
 					target_r:shock_cyberheart(33)
 					if (ishuman(target_r))
-						target_r:changeStatus("weakened", lethal ? (3 SECONDS): (8 SECONDS))
+						target_r:changeStatus("knockdown", lethal ? (3 SECONDS): (8 SECONDS))
 					break
 
 				var/list/next = new/list()
@@ -2347,6 +2349,8 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						if (prob(25))
 							master.visible_message(SPAN_NOTICE("[master.name] reciprocates the hug!"))
 				return 1
+			if(input == "hugged_annoying")
+				master.set_emotion("ugh")
 
 			return 0
 
@@ -2760,6 +2764,12 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							return
 
 						if(BOUNDS_DIST(master, hug_target) == 0)
+							if(hug_target.traitHolder?.hasTrait("wasitsomethingisaid"))
+								master.bot_attack(hug_target, TRUE) //betrayal!!
+								master.speak(pick("As if!", "You know what you did.", "Level [rand(32,80)] dork alert!"))
+								drop_hug_target()
+								master.moving = FALSE
+								return
 							master.visible_message("<b>[master]</b> hugs [hug_target]!")
 							if (hug_target.reagents)
 								hug_target.reagents.add_reagent("hugs", 10)
@@ -2805,7 +2815,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				*/
 				if(1)
 					// First, check if we're already cuffing someone. Quit getting sidetracked, you scatterbrained rectangles
-					if(actions.hasAction(src.master, "buddy_cuff"))
+					if(actions.hasAction(src.master, /datum/action/bar/icon/buddy_cuff))
 						return
 
 					// Next check if they have someone to arrest, and that they're alive. And that they're living.
@@ -2847,14 +2857,14 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						src.arrest_target = null
 						src.last_found = world.time
 					src.arrest_attempts = 0
-					actions.stopId("buddy_cuff", src.master)
+					actions.stopId(/datum/action/bar/icon/buddy_cuff, src.master)
 
 					return 1
 
 				if("path_error","path_blocked")
 					src.arrest_attempts++
 					if(src.arrest_attempts >= 2)
-						actions.stopId("buddy_cuff", src.master)
+						actions.stopId(/datum/action/bar/icon/buddy_cuff, src.master)
 						src.target = null
 						if(arrest_target)
 							src.arrest_target = null
@@ -3036,7 +3046,10 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							last_cute_action = world.time
 							switch(rand(1,5))
 								if (1)
-									master.visible_message("<b>[master]</b> waves at [C.name].")
+									if(C.traitHolder?.hasTrait("wasitsomethingisaid"))
+										master.visible_message("<b>[master]</b> gestures rudely at [C.name].") //they can't really flip you off with two hooks so
+									else
+										master.visible_message("<b>[master]</b> waves at [C.name].")
 								if (2)
 									master.visible_message("<b>[master]</b> rotates slowly around in a circle.")
 								if (3,4)
@@ -3053,7 +3066,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 			drop_arrest_target()
 				src.arrest_target = null
 				src.last_found = world.time
-				actions.stopId("buddy_cuff", src.master)
+				actions.stopId(/datum/action/bar/icon/buddy_cuff, src.master)
 				src.master.frustration = 0
 				master.set_emotion()
 				return
@@ -3072,7 +3085,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				if(next_destination)
 					set_destination(next_destination)
 					if(!master.moving && target && (target != master.loc))
-						master.navigate_to(target, max_dist=40)
+						master.navigate_to(target, max_dist=80)
 					return
 				else
 					find_nearest_beacon()
@@ -3108,6 +3121,9 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				if(ckey(perp.name) in target_names)
 					return 7
 
+				if(perp.mutantrace.jerk)
+					return 5
+
 				var/obj/item/card/id/perp_id = perp.equipped()
 				if (!istype(perp_id))
 					perp_id = perp.get_id()
@@ -3116,20 +3132,10 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					if(ckey(perp_id.registered) in target_names)
 						return 7
 
-					var/list/contraband_returned = list()
-					if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !(contraband_access in perp_id.access), !(weapon_access in perp_id.access)))
-						. += max(contraband_returned)
-				else
-					var/list/contraband_returned = list()
-					if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
-						. += max(contraband_returned)
-				if(perp.mutantrace.jerk)
-//					if(istype(perp.mutantrace, /datum/mutantrace/zombie))
-//						return 5 //Zombies are bad news!
-
-//					threatcount += 2
-
-					return 5
+				if(!perp_id || !(contraband_access in perp_id.access))
+					. += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_VISIBLE_CONTRABAND)
+				if(!perp_id || !(weapon_access in perp_id.access))
+					. += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_VISIBLE_GUNS)
 
 
 		halloween //Go trick or treating!
@@ -3334,7 +3340,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					src.protected = null
 					src.arrest_attempts = 0
 					src.follow_attempts = 0
-					actions.stopId("buddy_cuff", src.master)
+					actions.stopId(/datum/action/bar/icon/buddy_cuff, src.master)
 				if("path_error","path_blocked")
 					if (src.protected)
 						if(!(src.protected in view(7,master)))
@@ -3396,7 +3402,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 
 			drop_arrest_target()
 				src.arrest_target = null
-				actions.stopId("buddy_cuff", src.master)
+				actions.stopId(/datum/action/bar/icon/buddy_cuff, src.master)
 				return
 
 			check_buddy()
@@ -3429,7 +3435,6 @@ TYPEINFO(/obj/item/device/guardbot_module)
 	bodyguard/heckle
 		name = "heckle"
 		task_id = "HECKLE"
-		var/global/list/buddy_heckle_phrases = list("I wish we could become better strangers.","You're impossible to underestimate.","You sound like a pizza cutter — all edge and no point.","I think you should carry a potted plant to replace the oxygen you waste.","You're not the dumbest person in this station, but you'd better hope they don't die!","You’re so dense, light bends around you. Fortunately, that keeps us from having to look at you!","I was today years old when I realized I didn’t like you.","Keep rolling your eyes, you might eventually find a brain.","You are more disappointing than an unsalted pretzel.","Hold still. I’m trying to imagine you with personality.","You are like a cloud. When you disappear, it’s a beautiful day.","You make staffies look competent.","Your incompetence makes me appreciate my programmer more.","I’m not a nerd. I’m just smarter than you.","I may love to shop but I will never buy your bull.","I hope both sides of your pillow are warm.","I feel jealous of the people who haven't met you.","Your parents aren't even disappointed in you. They know this is you at your best.","Neeerrd!","Dork!","Hey! Hey! You smell...bad! Really bad!","Hey! You have an odor! A grody one! GRODY NERD ALERT!","Are you as bad at your job as you are at dressing yourself?","You, uh, should probably wash your hair. I think if you took a swim, all the seals would die.")
 		var/tmp/initial_seek_complete = 0
 
 		task_act()
@@ -3437,7 +3442,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				return
 
 			if (src.protected && prob(10))
-				master.speak( pick(buddy_heckle_phrases) )
+				master.speak(pick_smart_string("buddy_phrases.txt", "heckles"))
 				master.point(src.protected, 1)
 
 		look_for_protected() //Search for a mob in view with the name we are programmed to guard.
@@ -3471,9 +3476,6 @@ TYPEINFO(/obj/item/device/guardbot_module)
 	bodyguard/cheer_up
 		name = "cheer_up"
 		task_id = "CHEER_UP"
-		var/global/list/buddy_cheer_up_phrases = list("What did one lobster say to the other? Nothing, since they can't talk. If they could, though, probably something about shellfish.","Remember that joke I told you about the chiropractor?  It was about a weak back.","How much does Santa pay to park his sleigh?  Nothing, it's on the house!","A new fish was discovered at the ocean floor composed of a couple sodium molecules.  Scientists have named it 2 Na ","You’re having a heart attack, the dispatcher say that help is going to arrive in a heartbeat.","You shouldn’t wear glasses while playing football. Why? Because it’s a contact sport.","A magician was walking down the street, then he turned into a grocery store. ","Three guys walked into a bar, you’d think at least one of them would have seen it. ","The past, present and future walked into a bar, things got tense. ","I asked my French friend if they like videogames, they said Wii."," RIP boiled water, you will be mist.","Haunted French pancakes give me the crepes.","A guy’s left side was cut off, don’t worry he’s all right now. ","A cow in an earthquake is called a milkshake.","A captain walks into a bar. A nearby salesman quadruples the price for a brand new 'sold-out' sign.","There are only 10 kinds of people in this world: those who understand binary and those who don’t.")
-		var/global/list/buddy_cheer_up_starters = list("Two silk worms compete in a race, who won? ","Why did the guardbuddy cross the road? ","What’re caterpillars scared of? ","What’s green and has wheels? ","What did the sea say to another sea? ","Why shouldn't you get close to trees? ","Why are there gates in graveyards? ","What do you call an illegal frog? ","What do you call a pig that does karate?","Why did the bike fall over?  ","Why did the golfer bring two pairs of pants?  ","What did the bartender say to the turkey sandwich when it tried to order a beer?  ","Why do seagulls fly over the sea?  ","Why did the scarecrow win an award?","What has four wheels and flies?","Why do cows have hooves and not feet?","What did the mama cow say to the baby cow?","Why did the two cows not like each other?","Why did the person living in Space Alaska name their dog Frost?","Why don’t pirates take a shower before they walk the plank?","What’s the best thing about Space Switzerland?","My computing software just created a new word!","My New Years' Resolution was to be less condescending. ","Whaddya call a patronising criminal going down a staircase?","What do you get when you cross a wall unit with artificial intelligence?","The opposite of Artificial Intelligence is Real Stupid.","There are two kinds of data scientists. ","What do you do if your guardbuddy catches a virus?")
-		var/global/list/buddy_cheer_up_answers = list("None of them, it ended in a tie.","It was programmed by the chicken!","Dog-apillers! ","Grass! I lied about the wheels.","Nothing, they just waved. ","Because they’re pretty shady. ","Because everyone is dying to get there. ","A toad. ","A pork chop!","It was two tired.","In case he got a hole in one.","Sorry, we don’t serve food here.","Because if they flew over the bay, they would be bagels!","Because he was outstanding in his field.","A garbage truck!","They lactose.","It's pasture bedtime.","They had BEEF.","Because Frost bites!","They just wash up on shore.","I don’t know, but the flag is a big plus.","Plagiarism!","Just so you know, condescending is a word that means talking down to people.","A condescending con descending.","Shelf-awareness.","Think about that, meatbag.","1.) Those who can extrapolate from incomplete data.","You give it some Robot-issin!")
 		var/tmp/initial_seek_complete = 0
 
 		task_act()
@@ -3483,14 +3485,16 @@ TYPEINFO(/obj/item/device/guardbot_module)
 			if (src.protected && prob(5))
 
 				if (prob(40))
-					var/buddy_cheer_up_chooser = rand(1, length(buddy_cheer_up_phrases))
-					master.speak(buddy_cheer_up_phrases[buddy_cheer_up_chooser])
+					master.speak(pick_smart_string("buddy_phrases.txt", "jokes"))
 					master.point(src.protected, 1)
 				else
-					var/buddy_cheer_up_chooser = rand(1, length(buddy_cheer_up_starters))
-					master.speak(buddy_cheer_up_starters[buddy_cheer_up_chooser])
+					var/split_joke = splittext(pick_smart_string("buddy_phrases.txt", "setupjokes"), "#")
+					if(length(split_joke) != 2)
+						master.speak("Error 404: Joke not found!")
+						return
+					master.speak(split_joke[1])
 					master.point(src.protected, 1)
-					master.speak(buddy_cheer_up_answers[buddy_cheer_up_chooser])
+					master.speak(split_joke[2])
 
 
 
@@ -3638,7 +3642,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							return
 
 						if (current_beacon_loc != master.loc)
-							master.navigate_to(current_beacon_loc, max_dist=30)
+							master.navigate_to(current_beacon_loc, max_dist=60)
 						else
 							state = STATE_AT_BEACON
 					return
@@ -3852,7 +3856,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							END_NEAT
 						return
 
-					if (!(src.neat_things & NT_DORK) && (H.client && H.client.IsByondMember() && prob(5)))// || (H.ckey in Dorks))) //If this is too mean to clarks, remove that part I guess
+					if (!(src.neat_things & NT_DORK) && (H.client && (H.client.IsByondMember() || H.traitHolder?.hasTrait("wasitsomethingisaid")) && prob(5)))// || (H.ckey in Dorks))) //If this is too mean to clarks, remove that part I guess
 						FOUND_NEAT(NT_DORK)
 							var/insult = pick("dork","nerd","weenie","doofus","loser","dingus","dorkus")
 							var/insultphrase = "And if you look to--[insult] alert!  [pick("Huge","Total","Mega","Complete")] [insult] detected! Alert! Alert! [capitalize(insult)]! "

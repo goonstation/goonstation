@@ -6,7 +6,7 @@
  * @license ISC
  */
 
-import { BooleanLike } from "common/react";
+import { BooleanLike } from 'common/react';
 
 export interface TeleConsoleData {
   xTarget: number;
@@ -18,10 +18,17 @@ export interface TeleConsoleData {
   padNum: number;
   maxBookmarks: number;
   bookmarks: BookmarkData[];
+  destinations: LongRangeData[];
+  disk: BooleanLike;
+}
+
+export interface LongRangeData {
+  nameRef: string;
+  name: string;
 }
 
 export interface BookmarkData {
-  ref: string;
+  nameRef: string;
   name: string;
   x: number;
   y: number;

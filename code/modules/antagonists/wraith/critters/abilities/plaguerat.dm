@@ -19,7 +19,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 	var/list/decal_list = list(/obj/decal/cleanable/blood,
 	/obj/decal/cleanable/ketchup,
 	/obj/decal/cleanable/rust,
-	/obj/decal/cleanable/urine,
 	/obj/decal/cleanable/vomit,
 	/obj/decal/cleanable/greenpuke,
 	/obj/decal/cleanable/slime,
@@ -62,7 +61,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 /datum/action/bar/private/icon/plaguerat_eat
 	duration = 9 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ATTACKED
-	id = "plaguerat_eat"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 	var/list/obj/decal/cleanable/targets = list()
@@ -82,7 +80,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 		current_target = targets[1]
 		M.visible_message(SPAN_COMBAT("<b>[M] begins eating [current_target]!</b>"),\
 			SPAN_COMBAT("<b>You start eating [current_target]!</b>"))
-		logTheThing(LOG_DEBUG, src, "Targets = [length(targets)]")
 
 	onUpdate()
 		..()
@@ -104,9 +101,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 		P.visible_message(SPAN_COMBAT("<b>[P] eats [current_target]!</b>"),\
 					SPAN_COMBAT("<b>You finish eating [current_target]!</b>"))
 		targets -= targets[1]
-		logTheThing(LOG_DEBUG, src, "Targets = [length(targets)]")
 		qdel(current_target)
-		logTheThing(LOG_DEBUG, src, "Targets = [length(targets)]")
 		P.eaten_amount ++
 		if (P.eaten_amount >= P.amount_to_grow)
 			P.grow_up()

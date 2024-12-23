@@ -593,8 +593,8 @@
 			src.wake_from_ai_pause()
 		//wake up if there are enemies in view
 		if(src.flock) //if we have a flock, use the enemies list, otherwise just use non-flock mobs in view
-			var/list/nearby_enemies = viewers(src)
-			for(var/enemy in src.flock.enemies)
+			var/list/mob/nearby_enemies = viewers(src) // TODO: technically ignores pods here
+			for(var/mob/enemy in src.flock.enemies)
 				if(enemy in nearby_enemies)
 					src.wake_from_ai_pause()
 					break
@@ -731,7 +731,7 @@
 					return
 			if (!istype(NewLoc, /turf/simulated/floor/feather))
 				for (var/obj/O in NewLoc.contents)
-					if (istype(O, /obj/grille/steel) || istype(O, /obj/window) || (istype(O, /obj/machinery/door) && O.density))
+					if (istype(O, /obj/mesh/grille) || istype(O, /obj/window) || (istype(O, /obj/machinery/door) && O.density))
 						return
 			src.set_loc(NewLoc)
 			return
@@ -1068,7 +1068,7 @@
 			if(user.a_intent == INTENT_DISARM)
 				var/turf/simulated/floor/feather/flocktarget = target
 				for (var/atom/O in flocktarget.contents)
-					if (istype(O, /obj/grille/flock))
+					if (istype(O, /obj/mesh/flock/barricade))
 						boutput(user, SPAN_ALERT("There's already a barricade here."))
 						return
 					if ((O.density && !isflockmob(O)) || istype(O, /obj/flock_structure/ghost))
@@ -1132,8 +1132,8 @@
 					var/obj/window/auto/feather/window = target
 					if (window.health < window.health_max)
 						found_target = TRUE
-				if (/obj/grille/flock)
-					var/obj/grille/flock/barricade = target
+				if (/obj/mesh/flock/barricade)
+					var/obj/mesh/flock/barricade/barricade = target
 					if (barricade.health < barricade.health_max)
 						found_target = TRUE
 				if (/obj/storage/closet/flock)

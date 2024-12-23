@@ -232,7 +232,7 @@
 	if(href_list["butt_fart_toggle"])
 		src.buttfart = !src.buttfart
 
-	attack_hand(usr)
+	src.Attackhand(usr)
 
 /obj/machinery/bot/buttbot/attack_hand(mob/user)
 	var/dat
@@ -345,7 +345,7 @@
 					for(var/mob/living/V in range(get_turf(src),8))
 						shake_camera(V,10,64)
 						boutput(V, SPAN_ALERT("You are sent flying!"))
-						V.changeStatus("weakened", 3 SECONDS)
+						V.changeStatus("knockdown", 3 SECONDS)
 						var/turf/target = get_edge_target_turf(V, get_dir(src, V))
 						V.throw_at(target, 8, 3, throw_type = THROW_GUNIMPACT)
 				var/go2hell

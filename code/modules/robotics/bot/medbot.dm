@@ -90,7 +90,7 @@
 	skin = "hs"
 	treatment_oxy = "perfluorodecalin"
 	access_lookup = "Head Surgeon"
-	text2speech = 0 // @TODO SOMEONE FIX THIS WHEN DECTALK IS WORKING AGAIN THANKS
+	text2speech = TRUE
 
 	New()
 		. = ..()
@@ -420,8 +420,17 @@
 			continue
 
 		if (src.assess_patient(C))
+			if(C.traitHolder.hasTrait("wasitsomethingisaid") && !src.emagged && !src.terrifying) //they still try to kill you if they can
+				ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[ckey(C?.name)]", src.last_patient_cooldown * 10) //don't bother insulting them for a good while
+				if (!ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam this either!
+					src.point(C, 1)
+					var/message = pick("I've seen worse, don't be such a baby!","That looks bad. You should find a doctor who cares.","Injured? Good.","I don't think your insurance covers THAT.","Just... walk that off.","You'll be fine. You want a second opinion? You're ugly!")
+					src.speak(message)
+				return
+
 			src.patient = C
 			src.doing_something = 1
+
 			if (!ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam these messages!
 				src.point(src.patient, 1)
 				var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!","Don't worry, I'm trained for this!")
@@ -591,7 +600,7 @@
 		src.speak(message)
 		src.KillPathAndGiveUp(1)
 		return FALSE
-	else if(!actions.hasAction(src, "medbot_inject"))
+	else if(!actions.hasAction(src, /datum/action/bar/icon/medbot_inject))
 		src.KillPathAndGiveUp(0)
 		actions.start(new/datum/action/bar/icon/medbot_inject(src, reagent_id), src)
 		return TRUE
@@ -614,7 +623,6 @@
 /datum/action/bar/icon/medbot_inject
 	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "medbot_inject"
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "syringe_15"
 	var/obj/machinery/bot/medbot/master
@@ -827,12 +835,6 @@
 
 /obj/item/storage/firstaid/attackby(var/obj/item/parts/robot_parts/S, mob/user as mob)
 	if (!istype(S, /obj/item/parts/robot_parts/arm/))
-		if (src.storage.is_full())
-			return
-		if (S.w_class >= W_CLASS_SMALL || S.storage)
-			if (!istype(S,/obj/item/storage/pill_bottle))
-				boutput(user, SPAN_ALERT("[S] won't fit into [src]!"))
-				return
 		..()
 		return
 

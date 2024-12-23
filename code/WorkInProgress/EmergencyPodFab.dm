@@ -11,10 +11,14 @@
 	var/steps_moved = 0
 	var/failing = 0
 
+	New()
+		. = ..()
+		for(var/datum/contextAction/CA in src.contextActions)
+			if(istype(CA, /datum/contextAction/vehicle/parts))
+				src.contextActions -= CA
+				break
+
 	attackby(obj/item/W, mob/living/user)
-		if (ispryingtool(W))
-			boutput(user, "There's no maintenance panel to open.")
-			return
 		if (isweldingtool(W))
 			boutput(user, "You can't repair this pod.")
 			return

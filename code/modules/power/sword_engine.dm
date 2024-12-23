@@ -95,7 +95,7 @@
 		UpdateIcon()
 
 	else if (integrity_state == 2 && ispryingtool(W) && core_inserted)
-		if (user.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(user))
+		if (user.hasStatus(list("knockdown", "unconscious", "stunned")) || !isalive(user))
 			user.show_text("Not when you're incapacitated.", "red")
 		user.shock(src, rand(5000, 30000))
 		elecflash(src)

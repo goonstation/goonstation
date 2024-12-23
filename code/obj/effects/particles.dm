@@ -1,12 +1,28 @@
 
-/obj/effects/tatara
+/obj/effects/little_sparks
 	var/obj/spark_generator/sparks = new/obj/spark_generator
 
 	New()
 		..()
-		sparks.mouse_opacity = 0
-		vis_contents += sparks
-		sparks.particles.spawning = 0
+		src.sparks.mouse_opacity = 0
+		vis_contents += src.sparks
+
+/obj/effects/little_sparks/lit
+	New()
+		..()
+		src.add_simple_light("spark_light", list(0.94 * 255, 0.94 * 255, 0.94 * 255, 0.7 * 255))
+		animate(simple_light, alpha=(0.5*255), loop=-1, time=6)
+		animate(alpha=(0.3*255), time=3, easing=ELASTIC_EASING)
+		animate(alpha=(0.7*255), time=3, easing=CUBIC_EASING)
+		animate(time=7)
+		animate(alpha=(0.5*255), time=3, easing=ELASTIC_EASING)
+		animate(alpha=(0.7*255), time=3, easing=CUBIC_EASING)
+
+
+/obj/effects/little_sparks/tatara
+	New()
+		..()
+		src.sparks.particles.spawning = 0
 
 	proc/spark_up()
 		if(!ON_COOLDOWN(src,"spark_up",2 SECONDS))

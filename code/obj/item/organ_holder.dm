@@ -623,6 +623,7 @@
 			var/list/organ_name_parts = splittext(O.name, "'s")
 			if(length(organ_name_parts) == 2)
 				O.name = "[user_name]'s [organ_name_parts[2]]"
+				O.donor_name = user_name
 
 	//input organ = string value of organ_list assoc list
 	proc/get_organ(var/organ)
@@ -1654,7 +1655,7 @@
 			return 1
 		if (!linked_organ)
 			return 1
-		actions.interrupt(holder.owner, INTERRUPT_ACT)
+		. = ..()
 		if (ismob(target))
 			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]) on [constructTarget(target,"combat")].")
 		else if (target)
@@ -1755,7 +1756,6 @@
 			linked_organ.take_damage(30, 30) //not safe
 		boutput(holder.owner, SPAN_NOTICE("You overclock your cyberkidney[islist(linked_organ) ? "s" : ""] to rapidly purge chemicals from your body."))
 		APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_CHEM_PURGE, src, power)
-		holder.owner.urine += power // -.-
 		SPAWN(15 SECONDS)
 			if(holder?.owner)
 				REMOVE_ATOM_PROPERTY(holder.owner, PROP_MOB_CHEM_PURGE, src)
@@ -1828,7 +1828,8 @@
 				SPAWN(0)
 					for (var/i in 1 to 3)
 						var/obj/item/O = L.vomit()
-						O.throw_at(target, 8, 3, bonus_throwforce=5)
+						if(istype(O))
+							O.throw_at(target, 8, 3, bonus_throwforce=5)
 						linked_organ.take_damage(3)
 						sleep(0.1 SECONDS)
 						if(linked_organ.broken || !length(L.organHolder.stomach.contents))

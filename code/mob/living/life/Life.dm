@@ -10,6 +10,7 @@
 	var/mob/living/carbon/human/human_owner = null
 	var/mob/living/silicon/hivebot/hivebot_owner = null
 	var/mob/living/silicon/robot/robot_owner = null
+	var/mob/living/silicon/ai/ai_mainframe_owner = null
 	var/mob/living/critter/critter_owner = null
 
 	New(new_owner,arguments)
@@ -23,6 +24,8 @@
 			hivebot_owner = owner
 		if (istype(owner,/mob/living/silicon/robot))
 			robot_owner = owner
+		if (istype(owner,/mob/living/silicon/ai))
+			ai_mainframe_owner = owner
 		if (istype(owner,/mob/living/critter))
 			critter_owner = owner
 
@@ -32,6 +35,7 @@
 		human_owner = null
 		hivebot_owner = null
 		robot_owner = null
+		ai_mainframe_owner = null
 		critter_owner = null
 
 	proc/Process(datum/gas_mixture/environment)
@@ -136,48 +140,38 @@
 	add_lifeprocess(/datum/lifeprocess/blood)
 	//add_lifeprocess(/datum/lifeprocess/bodytemp) //maybe enable per-critter
 	//add_lifeprocess(/datum/lifeprocess/breath) //most of them cant even wear internals
-	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/chems)
 	add_lifeprocess(/datum/lifeprocess/disability)
-	add_lifeprocess(/datum/lifeprocess/fire)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/mutations)
 	add_lifeprocess(/datum/lifeprocess/organs)
 	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/skin)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
-	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
 
 /mob/living/carbon/human/restore_life_processes()
 	..()
-	add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/blood)
 	add_lifeprocess(/datum/lifeprocess/bodytemp)
 	add_lifeprocess(/datum/lifeprocess/breath)
-	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/chems)
 	add_lifeprocess(/datum/lifeprocess/critical)
-	add_lifeprocess(/datum/lifeprocess/decomposition)
+	remove_lifeprocess(/datum/lifeprocess/decomposition) // only happens when mob is dead
 	add_lifeprocess(/datum/lifeprocess/disability)
-	add_lifeprocess(/datum/lifeprocess/fire)
-	add_lifeprocess(/datum/lifeprocess/health_mon)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/mutations)
 	add_lifeprocess(/datum/lifeprocess/organs)
 	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/skin)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
-	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
+	add_lifeprocess(/datum/lifeprocess/faith)
 
 /mob/living/carbon/cube/restore_life_processes()
 	..()
-	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/chems)
 	add_lifeprocess(/datum/lifeprocess/disability)
 	add_lifeprocess(/datum/lifeprocess/hud)
@@ -193,10 +187,10 @@
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/disability)
+	add_lifeprocess(/datum/lifeprocess/faith)
 
 /mob/living/silicon/hivebot/restore_life_processes()
 	..()
-	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/hivebot_statusupdate)
@@ -207,20 +201,18 @@
 
 /mob/living/silicon/robot/restore_life_processes()
 	..()
-	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/robot_statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
-	add_lifeprocess(/datum/lifeprocess/robot_oil)
 	add_lifeprocess(/datum/lifeprocess/robot_locks)
 	add_lifeprocess(/datum/lifeprocess/disability)
+	add_lifeprocess(/datum/lifeprocess/faith)
 
 
 /mob/living/silicon/drone/restore_life_processes()
 	..()
-	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 
 /mob/living/intangible/aieye/restore_life_processes()
@@ -290,7 +282,7 @@
 			// overlays
 			src.updateOverlaysClient(src.client)
 
-		if (src.observers.len)
+		if (length(src.observers))
 			for (var/mob/x in src.observers)
 				if (x.client)
 					src.updateOverlaysClient(x.client)
@@ -353,6 +345,11 @@
 				D.foreign_limb_effect()
 
 	if (!isdead(src)) // Marq was here, breaking everything.
+		if(src.limbs)
+			src.limbs.l_arm?.on_life(parent)
+			src.limbs.r_arm?.on_life(parent)
+			src.limbs.l_leg?.on_life(parent)
+			src.limbs.r_leg?.on_life(parent)
 
 		if (src.sims && src.ckey) // ckey will be null if it's an npc, so they're skipped
 			src.sims.Life()
@@ -362,8 +359,6 @@
 
 		if (src.organHolder?.chest?.op_stage > 0 && !src.chest_cavity_clamped && prob(10)) //Going around with a gaping unsutured wound is a bad idea
 			take_bleeding_damage(src, null, rand(5, 10))
-
-	src.handle_pathogens()
 
 	last_human_life_tick = TIME
 
@@ -398,10 +393,12 @@
 	process_locks()
 	update_canmove()
 
+	for (var/obj/item/parts/robot_parts/part in src.contents)
+		part.on_life(src)
+
 	if (metalman_skin && prob(1))
 		var/msg = pick("can't see...","feels bad...","leave me...", "you're cold...", "unwelcome...")
 		src.show_text(voidSpeak(msg))
-		src.emagged = 1
 
 /mob/living/silicon/ai/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
@@ -495,40 +492,16 @@
 		stuttering = clamp(stuttering, 0, 50)
 		losebreath = clamp(losebreath, 0, 25) // stop going up into the thousands, goddamn
 
-	proc/handle_burning()
-		if (src.getStatusDuration("burning"))
-
-			if (src.getStatusDuration("burning") > 200)
-				for (var/atom/A as anything in src.contents)
-					if (A.event_handler_flags & HANDLE_STICKER)
-						if (A:active)
-							src.visible_message(SPAN_ALERT("<b>[A]</b> is burnt to a crisp and destroyed!"))
-							qdel(A)
-
-			if (isturf(src.loc))
-				var/turf/location = src.loc
-				location.hotspot_expose(T0C + 300, 400)
-
-			for (var/atom/A in src.contents)
-				A.material_trigger_on_temp(T0C + 900)
-
-			for (var/atom/equipped_stuff in src.equipped())
-				equipped_stuff.material_trigger_on_temp(T0C + 900)
-
-			if(src.traitHolder && src.traitHolder.hasTrait("burning"))
-				if(prob(50))
-					src.update_burning(1)
-
 	proc/stink()
 		if (prob(15))
 			for (var/mob/living/carbon/C in view(6,get_turf(src)))
 				if (C == src || !C.client)
 					continue
-				boutput(C, SPAN_ALERT("[stinkString()]"))
+				boutput(C, SPAN_ALERT("[stinkString()]"), "stink_message")
 				if (prob(30))
 					C.vomit()
 					C.changeStatus("stunned", 2 SECONDS)
-					boutput(C, SPAN_ALERT("[stinkString()]"))
+					boutput(C, SPAN_ALERT("[stinkString()]"), "stink_message")
 
 	proc/update_sight()
 		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/sight]
@@ -536,9 +509,38 @@
 			L.Process()
 
 	update_canmove()
-		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/canmove]
-		if (L)
-			L.Process()
+		// update buckled
+		if (src.buckled)
+			if (src.buckled.loc != src.loc)
+				if(istype(src.buckled, /obj/stool))
+					src.buckled.unbuckle()
+					src.buckled.buckled_guy = null
+				src.buckled = null
+				return
+			src.set_density(initial(src.density))
+		else if (src.can_lie)
+			src.set_density(src.lying ? FALSE : initial(src.density))
+
+		// update canmove
+		if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE))
+			src.canmove = 0
+			return
+
+		if (src.buckled?.anchored)
+			if (istype(src.buckled, /obj/stool/chair)) //this check so we can still rotate the chairs on their slower delay even if we are anchored
+				var/obj/stool/chair/chair = src.buckled
+				if (!chair.rotatable)
+					src.canmove = FALSE
+					return
+			else
+				src.canmove = FALSE
+				return
+
+		if (src.throwing & (THROW_CHAIRFLIP | THROW_GUNIMPACT | THROW_SLIP))
+			src.canmove = FALSE
+			return
+
+		src.canmove = TRUE
 
 	force_laydown_standup() //immediately force a laydown
 		if(!lifeprocesses)
@@ -546,9 +548,7 @@
 		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/stuns_lying]
 		if (L)
 			L.Process()
-		L = lifeprocesses?[/datum/lifeprocess/canmove]
-		if (L)
-			L.Process()
+		src.update_canmove()
 		L = lifeprocesses?[/datum/lifeprocess/blindness]
 		if (L)
 			L.Process()
@@ -563,7 +563,7 @@
 
 	handle_stamina_updates()
 		if (stamina == STAMINA_NEG_CAP)
-			setStatusMin("paralysis", STAMINA_NEG_CAP_STUN_TIME)
+			setStatusMin("unconscious", STAMINA_NEG_CAP_STUN_TIME)
 
 		//Modify stamina.
 		var/stam_time_passed = max(tick_spacing, TIME - last_stam_change)
@@ -593,25 +593,13 @@
 
 /mob/living/carbon/human
 
-	proc/handle_pathogens()
-		if (isdead(src))
-			if (src.pathogens.len)
-				for (var/uid in src.pathogens)
-					var/datum/pathogen/P = src.pathogens[uid]
-					P.disease_act_dead()
-			return
-		for (var/uid in src.pathogens)
-			var/datum/pathogen/P = src.pathogens[uid]
-			P.disease_act()
-
-
 	proc/get_disease_protection(var/ailment_path=null, var/ailment_name=null)
 		if (!src)
 			return 100
 
 		var/resist_prob = 0
 
-		if (ispath(ailment_path) || istext(ailment_name))
+		if (ispath(ailment_path) || (ailment_name && istext(ailment_name)))
 			var/datum/ailment/A = null
 			if (ailment_name)
 				A = get_disease_from_name(ailment_name)
@@ -678,114 +666,29 @@
 		return min(GET_ATOM_PROPERTY(src, PROP_MOB_DISARM_RESIST), 90)
 
 
-	proc/add_fire_protection(var/temp)
-		var/fire_prot = 0
+	// unused???
+	proc/get_fire_protection(temp)
 		if (head)
 			if (head.protective_temperature > temp)
-				fire_prot += (head.protective_temperature/10)
+				. += (head.protective_temperature/10)
 		if (wear_mask)
 			if (wear_mask.protective_temperature > temp)
-				fire_prot += (wear_mask.protective_temperature/10)
+				. += (wear_mask.protective_temperature/10)
 		if (glasses)
 			if (glasses.protective_temperature > temp)
-				fire_prot += (glasses.protective_temperature/10)
+				. += (glasses.protective_temperature/10)
 		if (ears)
 			if (ears.protective_temperature > temp)
-				fire_prot += (ears.protective_temperature/10)
+				. += (ears.protective_temperature/10)
 		if (wear_suit)
 			if (wear_suit.protective_temperature > temp)
-				fire_prot += (wear_suit.protective_temperature/10)
+				. += (wear_suit.protective_temperature/10)
 		if (w_uniform)
 			if (w_uniform.protective_temperature > temp)
-				fire_prot += (w_uniform.protective_temperature/10)
+				. += (w_uniform.protective_temperature/10)
 		if (gloves)
 			if (gloves.protective_temperature > temp)
-				fire_prot += (gloves.protective_temperature/10)
+				. += (gloves.protective_temperature/10)
 		if (shoes)
 			if (shoes.protective_temperature > temp)
-				fire_prot += (shoes.protective_temperature/10)
-
-		return fire_prot
-
-////////////////////////////////////////
-//Unused heart thump stuff
-////////////////////////////////////////
-
-/mob/living/carbon/human
-	proc/Thumper_createHeartbeatOverlays()
-		for (var/mob/x in (src.observers + src))
-			if(!heartbeatOverlays[x] && x.client)
-				var/atom/movable/screen/hb = new
-				hb.icon = x.client.widescreen ? 'icons/effects/overlays/crit_thicc.png' : 'icons/effects/overlays/crit_thin.png'
-				hb.screen_loc = "1,1"
-				hb.layer = HUD_LAYER_UNDER_2
-				hb.plane = PLANE_HUD
-				hb.mouse_opacity = 0
-				x.client.screen += hb
-				heartbeatOverlays[x] = hb
-			else if(x.client && !(heartbeatOverlays[x] in x.client.screen))
-				x.client.screen += heartbeatOverlays[x]
-	proc/Thumper_thump(var/animateInitial)
-		Thumper_createHeartbeatOverlays()
-		var/sound/thud = sound('sound/effects/thump.ogg')
-#define HEARTBEAT_THUMP_APERTURE 3.5
-#define HEARTBEAT_THUMP_BASE 5
-#define HEARTBEAT_THUMP_INTENSITY 0.2
-#define HEARTBEAT_THUMP_INTENSITY_BASE 0.1
-		for(var/mob/x in src.heartbeatOverlays)
-			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
-			if(x.client)
-				x.client << thud
-				if(animateInitial)
-					animate(overlay, alpha=255, color=list( list(HEARTBEAT_THUMP_INTENSITY,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,HEARTBEAT_THUMP_APERTURE)), 10, easing=ELASTIC_EASING)
-					animate(color=list( list(HEARTBEAT_THUMP_INTENSITY_BASE,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,HEARTBEAT_THUMP_BASE), list(0,0,0,0) ), 10, easing=ELASTIC_EASING, flags=ANIMATION_END_NOW)
-				else
-					//src << sound('sound/thump.ogg')
-					overlay.color=list( list(0.16,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,2.6), list(0,0,0,0) )//, 5, 0, ELASTIC_EASING)
-					animate(overlay, color=list( list(0.13,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,3.5), list(0,0,0,0) ), 13, easing = ELASTIC_EASING, flags = ANIMATION_END_NOW)
-
-
-#undef HEARTBEAT_THUMP_APERTURE
-#undef HEARTBEAT_THUMP_BASE
-#undef HEARTBEAT_THUMP_INTENSITY
-#undef HEARTBEAT_THUMP_INTENSITY_BASE
-	var/doThumps = 0
-	proc/Thumper_theThumpening()
-		if(doThumps) return
-		doThumps = 1
-		Thumper_thump(1)
-		SPAWN(2 SECONDS)
-			while(src.doThumps)
-				Thumper_thump(0)
-				sleep(2 SECONDS)
-	proc/Thumper_stopThumps()
-		doThumps = 0
-	proc/Thumper_paralyzed()
-		Thumper_createHeartbeatOverlays()
-		if(doThumps)//we're thumping dangit
-			doThumps = 0
-		for(var/mob/x in src.heartbeatOverlays)
-			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
-			if(x.client)
-				animate(overlay, alpha = 255,
-					color = list( list(0,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,4) ),
-					10, flags=ANIMATION_END_NOW)//adjust the 4 to adjust aperture size
-	proc/Thumper_crit()
-		Thumper_createHeartbeatOverlays()
-		if(doThumps)
-			doThumps = 0
-		for(var/mob/x in src.heartbeatOverlays)
-			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
-			if(x.client)
-				animate(overlay,
-					alpha = 255,
-					color = list( list(0.1,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,0.8), list(0,0,0,0) ),
-				time = 10, easing = SINE_EASING)
-
-	proc/Thumper_restore()
-		Thumper_createHeartbeatOverlays()
-		doThumps = 0
-		for(var/mob/x in src.heartbeatOverlays)
-			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
-			if(x.client)
-				animate(overlay, color = list( list(0,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,-100), list(0,0,0,0) ), alpha = 0, 20, SINE_EASING )
+				. += (shoes.protective_temperature/10)

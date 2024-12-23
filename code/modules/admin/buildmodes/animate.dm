@@ -60,6 +60,7 @@ Left Mouse Button on turf/mob/obj      = Animate!<br>
 		/proc/animate_fade_to_color_fill,
 		/proc/animate_flash_color_fill,
 		/proc/animate_flash_color_fill_inherit,
+		/proc/animate_flubber,
 		/proc/animate_clownspell,
 		/proc/animate_wiggle_then_reset,
 		/proc/animate_blink,
@@ -108,7 +109,9 @@ Left Mouse Button on turf/mob/obj      = Animate!<br>
 		/proc/animate_stomp,
 		/proc/spawn_beam,
 		/proc/animate_orbit,
-		/proc/animate_juggle
+		/proc/animate_juggle,
+		/proc/animate_meltspark,
+		/proc/animate_little_spark,
 	)
 
 	New()

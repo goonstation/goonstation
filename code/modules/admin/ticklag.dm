@@ -4,6 +4,7 @@
 	set desc = "Ticklag"
 	set hidden = 1
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (src.holder.level < LEVEL_CODER)
 		alert("You must be at least a Coder to modify ticklag.")

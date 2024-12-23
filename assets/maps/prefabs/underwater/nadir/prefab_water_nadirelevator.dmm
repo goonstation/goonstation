@@ -16,7 +16,7 @@
 	},
 /area/noGenerate)
 "aN" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
@@ -42,7 +42,7 @@
 /obj/item/sea_ladder{
 	pixel_x = 4
 	},
-/obj/item/mining_tool/power_pick{
+/obj/item/mining_tool/powered/pickaxe{
 	pixel_x = -7
 	},
 /obj/item/tank/oxygen,
@@ -65,7 +65,7 @@
 /turf/simulated/floor/plating,
 /area/shuttle/sea_elevator/lower)
 "dh" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/cleanable/cobweb,
 /obj/item/cigbutt{
 	pixel_x = 6;
@@ -179,7 +179,7 @@
 /turf/simulated/floor/engine/caution/corner,
 /area/shuttle/sea_elevator)
 "fP" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
@@ -490,7 +490,7 @@
 /area/shuttle/sea_elevator)
 "sR" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/machinery/light/incandescent/warm{
 	dir = 4;
 	nostick = 1;
@@ -512,7 +512,7 @@
 	})
 "to" = (
 /obj/marker/supplymarker,
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -557,7 +557,7 @@
 	name = "Space Diner Backhall"
 	})
 "tX" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
@@ -715,7 +715,7 @@
 	},
 /area/shuttle/sea_elevator)
 "zF" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
@@ -782,7 +782,7 @@
 "Ck" = (
 /obj/machinery/drainage/big,
 /obj/decal/cleanable/dirt/dirt4,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
 	name = "Space Diner Backhall"
@@ -832,7 +832,7 @@
 	name = "The Recluse"
 	})
 "EG" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
@@ -842,7 +842,7 @@
 	})
 "EL" = (
 /obj/decal/cleanable/dirt,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
 	name = "Space Diner Backhall"
@@ -907,7 +907,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/kitchen)
 "Fx" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/light/incandescent/small,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
@@ -971,7 +971,7 @@
 	name = "Space Diner Backhall"
 	})
 "Ir" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
 	name = "Space Diner Backhall"
@@ -982,7 +982,7 @@
 /turf/simulated/floor/engine/caution/east,
 /area/diner/dining)
 "II" = (
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /obj/marker/supplymarker,
 /turf/simulated/floor/black/grime,
 /area/skeleton_trader)
@@ -1396,7 +1396,7 @@
 	layer = 2.5;
 	pixel_y = 32
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
 	name = "Space Diner Backhall"
@@ -1487,7 +1487,7 @@
 	})
 "WZ" = (
 /obj/decal/cleanable/blood/splatter,
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/raw_material/shard/glass{
 	pixel_x = -5;
 	pixel_y = 9
@@ -1511,7 +1511,7 @@
 /turf/simulated/floor,
 /area/shuttle/sea_elevator)
 "Xs" = (
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /obj/marker/supplymarker,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)

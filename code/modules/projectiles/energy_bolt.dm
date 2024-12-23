@@ -41,7 +41,7 @@ toxic - poisons
 
 	disruption = 8
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
+	hit_mob_sound = 'sound/impact_sounds/taser_hit.ogg'
 
 
 //Any special things when it hits shit?
@@ -224,7 +224,8 @@ toxic - poisons
 	//With what % do we hit mobs laying down
 	hit_ground_chance = 0
 	//Can we pass windows
-	window_pass = 0
+	window_pass = 1
+	goes_through_walls = 1
 	brightness = 0.8
 	color_red = 0.2
 	color_green = 0.8
@@ -275,7 +276,7 @@ toxic - poisons
 			if (isliving(M) && !check_target_immunity(M, FALSE, src) && M != P.shooter) //don't stun ourself while shooting in close quarters
 				var/mob/living/L = M
 				L.changeStatus("slowed", 2 SECONDS)
-				L.do_disorient(stamina_damage = 40, weakened = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
+				L.do_disorient(stamina_damage = 40, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
 				L.emote("twitch_v")
 
 
@@ -321,7 +322,6 @@ toxic - poisons
 
 	disruption = 8
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
 	var/strong = FALSE
 
@@ -337,7 +337,7 @@ toxic - poisons
 		if (isliving(hit))
 			O.die()
 			var/mob/living/mob = hit
-			mob.do_disorient(stamina_damage = pow*1.5, weakened = 0, stunned = 0, disorient = pow, remove_stamina_below_zero = strong)
+			mob.do_disorient(stamina_damage = pow*1.5, knockdown = 0, stunned = 0, disorient = pow, remove_stamina_below_zero = strong)
 			var/throw_type = mob.can_lie ? THROW_GUNIMPACT : THROW_NORMAL //fallback to just chucking them if they can't be knocked down
 			mob.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = throw_type)
 			mob.emote("twitch_v")
@@ -363,8 +363,6 @@ toxic - poisons
 
 	disruption = 25
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
-
 	on_hit(atom/hit, angle, var/obj/projectile/P)
 		var/turf/T = get_turf(hit)
 		for(var/turf/tile in range(1, T))
@@ -373,7 +371,7 @@ toxic - poisons
 					O.emp_act()
 		if (ishuman(hit))
 			var/mob/living/carbon/human/H = hit
-			H.do_disorient(stamina_damage = 30, weakened = 0, stunned = 0, disorient = 6 SECONDS, remove_stamina_below_zero = 0)
+			H.do_disorient(stamina_damage = 30, knockdown = 0, stunned = 0, disorient = 6 SECONDS, remove_stamina_below_zero = 0)
 		elecflash(T)
 
 /datum/projectile/energy_bolt/signifer_tase
@@ -396,13 +394,13 @@ toxic - poisons
 	disruption = 2
 	ie_type = "T"
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
+	hit_mob_sound = 'sound/impact_sounds/taser_hit02.ogg'
 
 	on_hit(atom/hit, angle, obj/projectile/O)
 		. = ..()
 		if(isliving(hit))
 			var/mob/living/L = hit
-			L.do_disorient(stamina_damage = 0, weakened = 1 SECOND, stunned = 1 SECOND, disorient = 0, remove_stamina_below_zero = 0)
+			L.do_disorient(stamina_damage = 0, knockdown = 1 SECOND, stunned = 1 SECOND, disorient = 0, remove_stamina_below_zero = 0)
 
 /datum/projectile/energy_bolt/smgburst
 	name = "energy bolt"
@@ -418,8 +416,6 @@ toxic - poisons
 	damage_type = D_ENERGY
 
 	disruption = 8
-
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
 /datum/projectile/energy_bolt/smgauto
 	name = "energy bolt"
@@ -437,13 +433,13 @@ toxic - poisons
 
 	disruption = 8
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
+	hit_mob_sound = 'sound/impact_sounds/taser_hit02.ogg'
 
 	on_hit(atom/hit, angle, obj/projectile/O)
 		. = ..()
 		if(isliving(hit))
 			var/mob/living/L = hit
-			L.do_disorient(stamina_damage = 0, weakened = 1 SECOND, stunned = 1 SECOND, disorient = 0, remove_stamina_below_zero = 0)
+			L.do_disorient(stamina_damage = 0, knockdown = 1 SECOND, stunned = 1 SECOND, disorient = 0, remove_stamina_below_zero = 0)
 
 /datum/projectile/energy_bolt/raybeam
 	name = "energy bolt"
@@ -460,8 +456,6 @@ toxic - poisons
 	fullauto_valid = 1
 
 	disruption = 2
-
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
 /datum/projectile/energy_bolt/dazzler
 	name = "energy bolt"
@@ -482,7 +476,6 @@ toxic - poisons
 	color_blue = 1
 	disruption = 8
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
 	on_pointblank(var/obj/projectile/P, var/mob/living/M)
 		M.changeStatus("disorient", 4 SECOND)

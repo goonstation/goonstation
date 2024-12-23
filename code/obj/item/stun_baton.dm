@@ -5,8 +5,8 @@
 ////////////////////////////////////////// Stun baton parent //////////////////////////////////////////////////
 // Completely refactored the ca. 2009-era code here. Powered batons also use power cells now (Convair880).
 TYPEINFO(/obj/item/baton)
-	mats = list("MET-3"=10, "CON-2"=10)
-
+	mats = list("metal_superdense" = 10,
+				"conductive_high" = 10)
 /obj/item/baton
 	name = "stun baton"
 	desc = "A standard issue baton for stunning people with."
@@ -14,7 +14,6 @@ TYPEINFO(/obj/item/baton)
 	icon_state = "stunbaton"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "baton-A"
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	force = 10
 	throwforce = 7
@@ -39,7 +38,7 @@ TYPEINFO(/obj/item/baton)
 	var/cost_cyborg = 500 // Battery charge to drain when user is a cyborg.
 	var/is_active = TRUE
 
-	var/stun_normal_weakened = 15
+	var/stun_normal_knockdown = 15
 
 	var/disorient_stamina_damage = 130 // Amount of stamina drained.
 	var/can_swap_cell = 1
@@ -148,9 +147,9 @@ TYPEINFO(/obj/item/baton)
 			if (user && ismob(user))
 				var/list/ret = list()
 				if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-					if (ret["charge"] > 0)
+					if (ret["charge"] >= src.cost_normal)
 						user.show_text("The [src.name] now has [ret["charge"]]/[ret["max_charge"]] PUs remaining.", "blue")
-					else if (ret["charge"] <= 0)
+					else
 						user.show_text("The [src.name] is now out of charge!", "red")
 						src.is_active = FALSE
 						if (istype(src, /obj/item/baton/ntso)) //since ntso batons have some extra stuff, we need to set their state var to the correct value to make this work
@@ -159,11 +158,11 @@ TYPEINFO(/obj/item/baton)
 		else if (amount > 0)
 			SEND_SIGNAL(src, COMSIG_CELL_CHARGE, src.cost_normal * amount)
 
-		src.UpdateIcon()
+		SPAWN(0) //update the icon after the attack so the little visual doesn't show the off state if it runs out of charge
+			src.UpdateIcon()
 
-		if(istype(user)) // user can be a Securitron sometims, scream
-			user.update_inhands()
-		return
+			if(istype(user)) // user can be a Securitron sometims, scream
+				user.update_inhands()
 
 	proc/do_stun(var/mob/user, var/mob/victim, var/type = "", var/stun_who = 2)
 		if (!src || !istype(src) || type == "")
@@ -213,7 +212,7 @@ TYPEINFO(/obj/item/baton)
 			dude_to_stun = victim
 
 
-		dude_to_stun.do_disorient(src.disorient_stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 60)
+		dude_to_stun.do_disorient(src.disorient_stamina_damage, knockdown = src.stun_normal_knockdown * 10, disorient = 60)
 
 		if (isliving(dude_to_stun))
 			var/mob/living/L = dude_to_stun
@@ -352,17 +351,19 @@ TYPEINFO(/obj/item/baton/beepsky)
 	cell_type = /obj/item/ammo/power_cell
 
 TYPEINFO(/obj/item/baton/cane)
-	mats = list("MET-3"=10, "CON-2"=10, "GEM-1"=10, "gold"=1)
-
+	mats = list("metal_superdense" = 10,
+				"conductive_high" = 10,
+				"gemstone" = 10,
+				"gold" = 1)
 /obj/item/baton/cane
 	name = "stun cane"
 	desc = "A stun baton built into the casing of a cane."
 	icon_state = "stuncane"
-	item_state = "cane"
+	item_state = "cane-A"
 	icon_on = "stuncane_active"
 	icon_off = "stuncane"
-	item_on = "cane"
-	item_off = "cane"
+	item_on = "cane-A"
+	item_off = "cane-D"
 	cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging
 	can_swap_cell = 0
@@ -393,7 +394,7 @@ TYPEINFO(/obj/item/baton/classic)
 		user.visible_message(SPAN_ALERT("<B>[victim] has been beaten with the [src.name] by [user]!</B>"))
 		playsound(src, "swing_hit", 50, 1, -1)
 		random_brute_damage(victim, src.force, 1) // Necessary since the item/attack() parent wasn't called.
-		victim.changeStatus("weakened", 8 SECONDS)
+		victim.changeStatus("knockdown", 8 SECONDS)
 		victim.force_laydown_standup()
 		victim.remove_stamina(src.stamina_damage)
 		if (user && ismob(user) && user.get_stamina() >= STAMINA_MIN_ATTACK)
@@ -401,13 +402,14 @@ TYPEINFO(/obj/item/baton/classic)
 
 
 TYPEINFO(/obj/item/baton/ntso)
-	mats = list("MET-3"=10, "CON-2"=10, "POW-1"=5)
-
+	mats = list("metal_superdense" = 10,
+				"conductive_high" = 10,
+				"energy" = 5)
 /obj/item/baton/ntso
 	name = "extendable stun baton"
 	desc = "An extendable stun baton for NT Security Consultants in sleek NanoTrasen blue."
-	icon_state = "ntso_baton-c"
-	item_state = "ntso-baton-c"
+	icon_state = "ntso-baton-a-1"
+	item_state = "ntso-baton-a"
 	force = 7
 	icon_on = "ntso-baton-a-1"
 	icon_off = "ntso-baton-c"
@@ -416,10 +418,10 @@ TYPEINFO(/obj/item/baton/ntso)
 	item_off = "ntso-baton-c"
 	var/item_off_open = "ntso-baton-d"
 	flick_baton_active = "ntso-baton-a-1"
-	w_class = W_CLASS_SMALL	//2 when closed, 4 when extended
+	w_class = W_CLASS_NORMAL	//2 when closed, 4 when extended
 	can_swap_cell = 0
 	rechargable = 0
-	is_active = FALSE
+	is_active = TRUE
 	// stamina_based_stun_amount = 110
 	cost_normal = 25 // Cost in PU. Doesn't apply to cyborgs.
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_baton
@@ -428,7 +430,7 @@ TYPEINFO(/obj/item/baton/ntso)
 	item_special_path = /datum/item_special/spark/ntso
 
 	//bascially overriding is_active, but it's kinda hacky in that they both are used jointly
-	var/state = EXTENDO_BATON_CLOSED_AND_OFF
+	var/state = EXTENDO_BATON_OPEN_AND_ON
 
 	//change for later for more interestings whatsits
 	// can_stun(var/requires_electricity = 0, var/amount = 1, var/mob/user)
@@ -518,5 +520,6 @@ TYPEINFO(/obj/item/baton/ntso)
 		if (state == EXTENDO_BATON_OPEN_AND_ON)
 			state = EXTENDO_BATON_OPEN_AND_OFF
 		src.is_active = FALSE
-		usr.show_text("The [src.name] is now open and unpowered.", "blue")
+		usr?.show_text("The [src.name] is now open and unpowered.", "blue")
 		src.process_charges(-INFINITY)
+

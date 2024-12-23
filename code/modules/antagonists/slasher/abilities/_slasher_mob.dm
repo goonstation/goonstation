@@ -42,9 +42,9 @@
 					L.broken()
 
 	initializeBioholder()
-		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none //pesky hair
-		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none //pesky hair
+		src.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customizations["hair_top"].style =  new /datum/customization_style/none
 		. = ..()
 
 	disposing()
@@ -109,7 +109,7 @@
 			var/we_hold_it = FALSE
 			var/mob/living/M = src
 
-			if (M.hasStatus("stunned") || M.hasStatus("weakened") || M.hasStatus("paralysis") || !isalive(M) || M.restrained())
+			if (M.hasStatus("stunned") || M.hasStatus("knockdown") || M.hasStatus("unconscious") || !isalive(M) || M.restrained())
 				boutput(M, SPAN_ALERT("Not when you're incapacitated, restrained, or incorporeal."))
 				return TRUE
 
@@ -155,7 +155,7 @@
 					if (!istype(K2))
 						boutput(M, SPAN_ALERT("You are unable to summon your machete."))
 						return TRUE
-					if (M.hasStatus("stunned") || M.hasStatus("weakened") || M.hasStatus("paralysis") || !isalive(M) || M.restrained())
+					if (M.hasStatus("stunned") || M.hasStatus("knockdown") || M.hasStatus("unconscious") || !isalive(M) || M.restrained())
 						boutput(M, SPAN_ALERT("Not when you're incapacitated, restrained, or incorporeal."))
 						return TRUE
 					if (M.mind.key != K2.slasher_key)
@@ -198,27 +198,27 @@
 				M.change_misstep_chance(30)
 				if(prob(33))
 					M.emote("faint")
-					M.setStatusMin("weakened", 4 SECONDS)
+					M.setStatusMin("knockdown", 4 SECONDS)
 				else
 					M.emote("tremble")
 				sleep(20 SECONDS)
 				boutput(M, SPAN_ALERT("[SPAN_NOTICE("You feel like you can't control your legs!")]"))
 				if(prob(50))
 					M.emote("shudder")
-					M.setStatusMin("weakened", 1 SECONDS)
-					M.setStatusMin("paralysis", 1 SECONDS)
+					M.setStatusMin("knockdown", 1 SECONDS)
+					M.setStatusMin("unconscious", 1 SECONDS)
 					M.force_laydown_standup()
 				else
 					M.emote("faint")
-					M.setStatusMin("weakened", 8 SECONDS)
+					M.setStatusMin("knockdown", 8 SECONDS)
 				M.change_misstep_chance(40)
 				sleep(10 SECONDS)
 				M.change_misstep_chance(-70)
 				boutput(M, SPAN_ALERT("[SPAN_NOTICE("You collapse!")]"))
 				M.emote("scream")
 				M.emote("faint")
-				M.setStatusMin("weakened", 8 SECONDS)
-				M.setStatusMin("paralysis", 8 SECONDS)
+				M.setStatusMin("knockdown", 8 SECONDS)
+				M.setStatusMin("unconscious", 8 SECONDS)
 				sleep(8 SECONDS)
 
 				var/turf/T = get_turf(M)
@@ -330,9 +330,7 @@
 				src.handcuffs.destroy_handcuffs(src)
 			SPAWN(5 DECI SECONDS)
 				src.losebreath = 0
-				src.delStatus("paralysis")
-				src.delStatus("stunned")
-				src.delStatus("weakened")
+				src.remove_stuns()
 				src.HealDamage("All", 100, 100)
 				src.add_stamina(200)
 				src.take_brain_damage(-INFINITY)

@@ -34,6 +34,7 @@
 			M.visible_message(SPAN_ALERT("You seem to attack [target]!"))
 			return 1
 
+		. = ..()
 		SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		M.emote("scream")
@@ -51,13 +52,16 @@
 		var/turf/T = get_edge_target_turf(M, get_dir(M, get_step_away(target, M)))
 		if (!fake && T && isturf(T))
 			target.throw_at(T, 3, 2, bonus_throwforce = 15)
-			target.changeStatus("weakened", 3 SECONDS)
+			target.changeStatus("knockdown", 3 SECONDS)
 			target.changeStatus("stunned", 3 SECONDS)
 			target.changeStatus("slowed", 8 SECONDS, 2)
 			target.force_laydown_standup()
 
-		logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""]kick wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""][name] wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0
+
+	logCast(atom/target)
+		return
 
 /datum/targetable/wrestler/kick/fake
 	fake = 1

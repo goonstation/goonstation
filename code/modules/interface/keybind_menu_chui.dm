@@ -55,11 +55,11 @@ chui/window/keybind_menu
 					var/datum/keymap/keydat = new(changed_keys_rev) //this should only have the changed entries, for optimal merge
 					current_keymap.overwrite_by_action(keydat)
 					current_keymap.on_update(owner)
-					owner.cloud_put("custom_keybind_data", json_encode(changed_keys_rev))
+					owner.player.cloudSaves.putData("custom_keybind_data", json_encode(changed_keys_rev))
 					boutput(who, SPAN_NOTICE("Your custom keybinding data has been saved."))
 			else if (id == "reset")
 				changed_keys = new/list()
-				owner.cloud_put("custom_keybind_data", null)
+				owner.player.cloudSaves.deleteData("custom_keybind_data")
 				who.keymap = null //To prevent merge() from not overwriting old keybinds
 				who.mob.reset_keymap() //Does successive calls to rebuild the keymap
 				boutput(who, SPAN_NOTICE("Your keybinding data has been reset. Please re-open the window."))

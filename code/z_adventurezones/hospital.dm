@@ -154,6 +154,10 @@
 			process()
 
 	proximity_act()
+		if (QDELETED(src.target)) //STOP CRASHING THE SERVER OMG
+			maniac_active &= ~2
+			qdel(src)
+			return
 		..()
 		if(prob(40))
 			src.visible_message(SPAN_ALERT("<B>[src] passes its arm through [target]!</B>"))
@@ -162,8 +166,10 @@
 			boutput(target, "<span><B>no no no no no no no no no no no no non&#9617;NO&#9617;NNnNNO</B></span>")
 			if (LANDMARK_SAMOSTREL_WARP in landmarks)
 				var/target_original_loc = target.loc
-				target.setStatusMin("paralysis", 10 SECONDS)
+				target.setStatusMin("unconscious", 10 SECONDS)
 				do_teleport(target, pick_landmark(LANDMARK_SAMOSTREL_WARP), 0, 0)
+
+				target.unlock_medal("I HATE Hospitals", TRUE)
 
 				if (ishuman(target))
 					var/atom/movable/overlay/animation = new(target_original_loc)
@@ -235,8 +241,8 @@
 	//icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "bottle-spicedrum"
 	bottle_style = "bottle-spicedrum"
-	fluid_style = "spicedrum"
-	label = "spicedrum"//"brandy"
+	fluid_style = "spicedrumfake"
+	label = "spicedrumfake"//"brandy"
 	heal_amt = 1
 	g_amt = 60
 	initial_volume = 250

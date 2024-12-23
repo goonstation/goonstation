@@ -30,7 +30,7 @@ ABSTRACT_TYPE(/obj/item/ai_plating_kit)
 /obj/item/ai_plating_kit/mime
 	name = "Mime AI Frame Plating Kit"
 	desc = "A kit for putting the plating on an AI! WARNING: Choking hazard, not intended for children under 3 years."
-	icon_state = "kit-mime"
+	icon_state = "kit_mime"
 	skin = "mime"
 
 /obj/item/ai_plating_kit/flock
@@ -38,3 +38,9 @@ ABSTRACT_TYPE(/obj/item/ai_plating_kit)
 	desc = "A kit for putting the plating on an AI! It seems to be... pulsing."
 	icon_state = "kit_flock"
 	skin = "flock"
+
+/obj/item/ai_plating_kit/pumpkin
+	name = "Pumpkin AI Frame Plating Kit"
+	desc = "A kit for putting the plating on an AI! It feels squishy."
+	icon_state = "kit_pumpkin"
+	skin = "pumpkin"

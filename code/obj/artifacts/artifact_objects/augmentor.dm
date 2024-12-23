@@ -10,7 +10,7 @@
 	validtypes = list("ancient","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,
-	/datum/artifact_trigger/cold)
+	/datum/artifact_trigger/cold, /datum/artifact_trigger/language)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activ_text = "opens up, revealing an array of strange tools!"
 	deact_text = "closes itself up."
@@ -117,7 +117,7 @@
 
 			working = 1
 			T.visible_message(SPAN_ALERT("<b>[O]</b> suddenly lashes out at [H.name] with a flurry of sharp implements!"))
-			H.changeStatus("paralysis", 4 SECONDS)
+			H.changeStatus("unconscious", 4 SECONDS)
 			playsound(H.loc, pick(work_sounds), 50, 1, -1)
 			random_brute_damage(user, 10)
 			sleep(1 SECOND)

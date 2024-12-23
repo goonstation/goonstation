@@ -108,7 +108,7 @@
 /turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "E" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
@@ -183,7 +183,7 @@
 /turf/variableTurf/clear,
 /area/prefab/martian_glomp)
 "S" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Okay, you're pretty sure that even the martians didn't know what this thing is.";

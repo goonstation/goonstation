@@ -41,7 +41,7 @@
 				return FALSE
 		else if (isobj(T))
 			var/obj/O = T
-			if(istype(O, /obj/machinery/computer/shuttle))
+			if(istype(O, /obj/machinery/computer/shuttle) || istype(O, /obj/item/parts/robot_parts/robot_frame))
 				boutput(usr, SPAN_ALERT("You cannot seem to alter the energy of [O].") )
 				return TRUE
 			// go to jail, do not pass src, do not collect pushed messages

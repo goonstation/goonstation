@@ -162,11 +162,11 @@ var/global/total_gas_mixtures = 0
 	src.is_busy = TRUE
 
 	if(!explosions.exploding)
-		if(length(groups_to_rebuild) || length(tiles_to_rebuild))
+		if(length(src.groups_to_rebuild) || length(src.tiles_to_rebuild))
 			src.process_rebuild_select_groups()
 		LAGCHECK(LAG_REALTIME)
 
-		if(length(tiles_to_update))
+		if(length(src.tiles_to_update))
 			src.process_update_tiles()
 		LAGCHECK(LAG_REALTIME)
 
@@ -221,6 +221,8 @@ var/global/total_gas_mixtures = 0
 			turf_list += T
 		air_master.air_groups -= turf_AG
 		turf_AG.members.len = 0
+		turf_AG.borders?.len = 0
+		qdel(turf_AG)
 	LAGCHECK(LAG_REALTIME)
 
 	for(var/turf/simulated/S as anything in turf_list) // Have old members try to form new groups
@@ -245,7 +247,7 @@ var/global/total_gas_mixtures = 0
 /// Do not call. Used by [/datum/controller/air_system/proc/process].
 /datum/controller/air_system/proc/process_groups()
 	PROTECTED_PROC(TRUE)
-	for(var/datum/air_group/AG as anything in air_groups)
+	for(var/datum/air_group/AG as anything in src.air_groups)
 		AG?.process_group(parent_controller)
 		LAGCHECK(LAG_REALTIME)
 
@@ -253,7 +255,7 @@ var/global/total_gas_mixtures = 0
 /// Do not call. Used by [/datum/controller/air_system/proc/process].
 /datum/controller/air_system/proc/process_singletons()
 	PROTECTED_PROC(TRUE)
-	for(var/turf/simulated/loner as anything in active_singletons)
+	for(var/turf/simulated/loner as anything in src.active_singletons)
 		loner.process_cell()
 		LAGCHECK(LAG_REALTIME)
 
@@ -261,7 +263,7 @@ var/global/total_gas_mixtures = 0
 /// Do not call. Used by [/datum/controller/air_system/proc/process].
 /datum/controller/air_system/proc/process_super_conductivity()
 	PROTECTED_PROC(TRUE)
-	for(var/turf/simulated/hot_potato as anything in active_super_conductivity)
+	for(var/turf/simulated/hot_potato as anything in src.active_super_conductivity)
 		hot_potato.super_conduct()
 		LAGCHECK(LAG_REALTIME)
 
@@ -269,7 +271,7 @@ var/global/total_gas_mixtures = 0
 /// Do not call. Used by [/datum/controller/air_system/proc/process].
 /datum/controller/air_system/proc/process_high_pressure_delta()
 	PROTECTED_PROC(TRUE)
-	for(var/turf/simulated/pressurized as anything in high_pressure_delta)
+	for(var/turf/simulated/pressurized as anything in src.high_pressure_delta)
 		pressurized.high_pressure_movements()
 		LAGCHECK(LAG_REALTIME)
 

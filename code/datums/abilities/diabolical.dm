@@ -106,12 +106,12 @@
 
 		switch (stunned_only_is_okay)
 			if (0)
-				if (!isalive(M) || M.hasStatus(list("stunned", "paralysis", "weakened")))
+				if (!isalive(M) || M.hasStatus(list("stunned", "unconscious", "knockdown")))
 					return 0
 				else
 					return 1
 			if (1)
-				if (!isalive(M) || M.getStatusDuration("paralysis") > 0)
+				if (!isalive(M) || M.getStatusDuration("unconscious") > 0)
 					return 0
 				else
 					return 1
@@ -192,6 +192,7 @@
 			boutput(M, SPAN_ALERT("You aren't evil enough to use this power!"))
 			boutput(M, SPAN_ALERT("Also, you should probably contact a coder because something has gone horribly wrong."))
 			return 1
+		. = ..()
 		souladjust(-CONTRACT_COST)
 		boutput(M, SPAN_ALERT("You spend [CONTRACT_COST] souls and summon a brand new contract along with a pen! However, losing the power of those souls has weakened your weapons."))
 		spawncontract(M, 1, 1) //strong contract + pen
@@ -219,7 +220,7 @@
 		if (!istype(H))
 			boutput(holder.owner, SPAN_ALERT("Your target must be human!"))
 			return 1
-
+		. = ..()
 		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] shoots finger guns in [target]s direction.</b>"))
 		playsound(holder.owner.loc, 'sound/effects/fingersnap.ogg', 50, 0, -1)
 
@@ -244,6 +245,7 @@
 	var/turf/spawnturf = null
 
 	cast(atom/T)
+		. = ..()
 		holder.owner.say("So long folks!")
 		playsound(holder.owner.loc, 'sound/voice/wizard/BlinkGrim.ogg', 50, 0, -1)
 		sleep(0.5 SECONDS)
@@ -274,6 +276,7 @@
 		var/mob/living/M = holder.owner
 		if (!M)
 			return 1
+		. = ..()
 		spawncontract(usr, 0, 1)
 		return 0
 
@@ -288,6 +291,7 @@
 	cast(atom/T)
 		if(!isliving(usr))
 			return
+		. = ..()
 		if(usr.alpha == 0)
 			usr.alpha = 255
 		else
@@ -302,6 +306,7 @@
 	cooldown = 5
 
 	cast(atom/T)
+		. = ..()
 		sonic_attack_environmental_effect(usr, 5, list("light"))
 		playsound(holder.owner.loc, 'sound/misc/jester_laugh.ogg', 125)
 
@@ -326,6 +331,7 @@
 		var/y_coeff = !x_coeff // or vertically but not both - it looks weird
 		var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath
 
+		. = ..()
 		if(usr.plane == PLANE_UNDERFLOOR)
 			APPLY_ATOM_PROPERTY(usr, PROP_MOB_HIDE_ICONS, "underfloor")
 			usr.flags &= ~(NODRIFT | DOORPASS | TABLEPASS)
@@ -370,6 +376,7 @@
 		if (!holder)
 			return 1
 
+		. = ..()
 		var/movedistX = input(usr,"How far would you like to move the floor tile.","How far to move left or right.","4") as num
 		var/movedistY = input(usr,"How far would you like to move the floor tile.","How far to move up or down.","4") as num
 		var/movetime = input(usr,"How fast would you like to move it.","How long it takes to move it.","4") as num
@@ -385,6 +392,7 @@
 	var/grabtime = 65
 
 	cast(mob/target)
+		. = ..()
 		usr.plane = PLANE_UNDERFLOOR
 		target.cluwnegib(grabtime)
 

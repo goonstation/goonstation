@@ -62,7 +62,7 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 // FLOCK FAKEOBJECT PARENT
 ///////////////////////////
 
-/obj/decal/fakeobjects/flock
+/obj/fakeobject/flock
 	icon = 'icons/misc/featherzone.dmi'
 	anchored = ANCHORED
 	density = 1
@@ -70,18 +70,18 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 /////////
 // WING
 /////////
-/obj/decal/fakeobjects/flock/wing
+/obj/fakeobject/flock/wing
 	icon = 'icons/misc/featherzone-96x96.dmi'
 	icon_state = "wing"
 	name = "sparking blade"
 	desc = "It looks very fragile from here. And dangerously live. Best not get too close."
 
-/obj/decal/fakeobjects/flock/wing/broken
+/obj/fakeobject/flock/wing/broken
 	icon_state = "wing-broken"
 	name = "jagged blade"
 	desc = "Looks incredibly sharp. It'll probably tear your hand to shreds if you try touching it."
 
-/obj/decal/fakeobjects/flock/wing/destroyed
+/obj/fakeobject/flock/wing/destroyed
 	icon_state = "wing-destroyed"
 	name = "razor-sharp shrapnel"
 	desc = "Looks incredibly sharp. It'll probably tear your hand to shreds if you try touching it."
@@ -89,18 +89,18 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 ///////////
 // ANTENNA
 ///////////
-/obj/decal/fakeobjects/flock/antenna
+/obj/fakeobject/flock/antenna
 	icon_state = "antenna"
 	name = "fibrous pole"
 	desc = "Huh. Weird."
 
-/obj/decal/fakeobjects/flock/antenna/not_dense
+/obj/fakeobject/flock/antenna/not_dense
 	density = FALSE
 
-/obj/decal/fakeobjects/flock/antenna/end
+/obj/fakeobject/flock/antenna/end
 	icon_state = "antenna-end"
 
-/obj/decal/fakeobjects/flock/antenna/broken
+/obj/fakeobject/flock/antenna/broken
 	icon_state = "antenna-broken-1"
 	desc = "Huh. Looks busted."
 	random_icon_states = list("antenna-broken-1", "antenna-broken-2")
@@ -108,7 +108,7 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 ///////////////////
 // TELEPORT MARKER
 ///////////////////
-/obj/decal/fakeobjects/flock/telepad
+/obj/fakeobject/flock/telepad
 	icon_state = "telemarker"
 	name = "glowing marker"
 	desc = "I got nothin'."

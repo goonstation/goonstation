@@ -12,6 +12,10 @@
 	//var/id_tag = null
 	var/executable = 1
 
+	var/tmp/authenticated = null //! Are we currently logged in?
+	var/datum/computer/file/user_data/account = null
+	var/setup_acc_filepath = "/logs/sysusr"//! Where do we look for login data?
+
 	os
 		name = "blank system program"
 		extension = "TSYS"
@@ -110,8 +114,36 @@
 
 			return 0
 
+		///Extracted with great pain from the like 6 other fucking programs that copy pasted this, whyyyy
+		///Returns true to halt the call stack
 		initialize() //Called when a program starts running.
-			return
+			SHOULD_CALL_PARENT(TRUE)
+			src.authenticated = null
+			if (!length(src.req_access)) //no access required, don't authenticate user
+				return FALSE
+
+			if(!src.find_access_file()) //Find the account information, as it's essentially a ~digital ID card~
+				src.print_text("<b>Error:</b> Cannot locate user file.  Quitting...")
+				src.master.unload_program(src) //Oh no, couldn't find the file.
+				return TRUE
+			if(!src.check_access(src.account.access))
+				src.print_text("User [src.account.registered] does not have needed access credentials.<br>Quitting...")
+				src.master.unload_program(src)
+				return TRUE
+			src.authenticated = src.account.registered
+
+		///Look for the whimsical account_data file
+		find_access_file()
+			var/datum/computer/folder/accdir = src.holder.root
+			if(src.master.host_program) //Check where the OS is, preferably.
+				accdir = src.master.host_program.holder.root
+
+			var/datum/computer/file/user_data/target = parse_file_directory(setup_acc_filepath, accdir)
+			if(target && istype(target))
+				src.account = target
+				return 1
+
+			return 0
 
 		restart()
 			return
@@ -462,6 +494,10 @@
 			if(!check_list || !istype(check_list, /list)) //invalid or no access
 				return 0
 			for(var/req in src.req_access)
+				if (req == access_fuck_all)
+					// access_fuck_all means no special access but needs authentication anyway
+					// and everyone should implicitly have that
+					continue
 				if(!(req in check_list)) //doesn't have this access
 					return 0
 			return 1

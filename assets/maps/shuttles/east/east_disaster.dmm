@@ -48,7 +48,7 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/shuttle/escape/centcom)
 "aZ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It's a pipe manifold.";
 	dir = 6;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
@@ -113,7 +113,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "dd" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -134,7 +134,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "dB" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater"
 	},
@@ -217,7 +217,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "gG" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-R"
 	},
@@ -271,7 +271,7 @@
 /turf/unsimulated/floor/plating/damaged3,
 /area/shuttle/escape/centcom)
 "ip" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It's a pipe manifold.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
@@ -281,7 +281,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "iC" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -327,7 +327,7 @@
 	},
 /area/centcom)
 "jY" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "A pipe.";
 	name = "pipe";
 	color = "b4b4b4"
@@ -335,7 +335,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "kt" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "pipe";
 	color = "b4b4b4"
@@ -343,7 +343,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "ky" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -365,7 +365,7 @@
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
@@ -416,7 +416,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/shuttle/escape/centcom)
 "mM" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body1";
@@ -429,7 +429,7 @@
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
@@ -440,7 +440,7 @@
 	},
 /area/centcom/outside)
 "oC" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -449,7 +449,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/shuttle/escape/centcom)
 "pj" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-L"
 	},
@@ -473,7 +473,7 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "px" = (
@@ -491,7 +491,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "qb" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-R"
 	},
@@ -503,7 +503,7 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -512,7 +512,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -619,7 +619,7 @@
 	},
 /area/centcom/outside)
 "tD" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -705,7 +705,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	name = "pipe";
 	color = "b4b4b4"
@@ -739,7 +739,7 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
@@ -777,7 +777,7 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -805,7 +805,7 @@
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 1
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body1";
@@ -886,7 +886,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/shuttle/escape/centcom)
 "DN" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 2;
 	icon = 'icons/obj/atmospherics/valve.dmi';
 	icon_state = "valve0-map";
@@ -920,7 +920,7 @@
 	},
 /area/shuttle/escape/centcom)
 "EH" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "pipe";
 	color = "b4b4b4"
@@ -946,7 +946,7 @@
 	dir = 6;
 	icon_state = "line2"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -967,7 +967,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "Gb" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-M"
 	},
@@ -1018,7 +1018,7 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor2"
 	},
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "HU" = (
@@ -1042,7 +1042,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	name = "pipe";
 	color = "b4b4b4"
@@ -1109,7 +1109,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "Ls" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-L"
 	},
@@ -1118,7 +1118,7 @@
 	},
 /area/shuttle/escape/centcom)
 "LN" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -1147,7 +1147,7 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -1162,7 +1162,7 @@
 	},
 /area/centcom/outside)
 "My" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating/damaged1,
 /area/shuttle/escape/centcom)
@@ -1172,7 +1172,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "MT" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of the captain of this, uh, part of station. Not sure if all of the station parts are from the same place.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body7"
@@ -1188,7 +1188,7 @@
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
@@ -1237,7 +1237,7 @@
 	dir = 4
 	},
 /obj/machinery/light,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
@@ -1246,7 +1246,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "PL" = (
-/obj/decal/fakeobjects/tallsmes,
+/obj/fakeobject/tallsmes,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -1307,7 +1307,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "Ti" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 8;
 	icon_state = "alt_propulsion"
 	},
@@ -1341,7 +1341,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
 	icon_state = "manifold-map";
@@ -1389,7 +1389,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body8";
@@ -1436,7 +1436,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "pipe";
 	color = "b4b4b4"
@@ -1487,7 +1487,7 @@
 	},
 /area/centcom)
 "ZY" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	name = "pipe";
 	color = "b4b4b4"

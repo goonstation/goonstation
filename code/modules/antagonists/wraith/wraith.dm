@@ -2,9 +2,10 @@
 	id = ROLE_WRAITH
 	display_name = "wraith"
 	antagonist_icon = "wraith"
-	faction = FACTION_WRAITH
+	faction = list(FACTION_WRAITH)
 	mob_path = /mob/living/intangible/wraith
 	uses_pref_name = FALSE
+	has_info_popup = FALSE
 
 	assign_objectives()
 		switch (rand(1, 3))

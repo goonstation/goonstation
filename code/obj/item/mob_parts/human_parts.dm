@@ -3,7 +3,7 @@
 	icon = 'icons/obj/items/human_parts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "arm-left"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	var/mob/living/original_holder = null
 	var/datum/appearanceHolder/holder_ahol
@@ -241,11 +241,11 @@
 			if(istype(AH_piece, /datum/appearanceHolder))
 				switch(src.severed_overlay_1_color)
 					if(CUST_1)
-						colorheck = AH_piece.customization_first_color
+						colorheck = AH_piece.customizations["hair_bottom"].color
 					if(CUST_2)
-						colorheck = AH_piece.customization_second_color
+						colorheck = AH_piece.customizations["hair_middle"].color
 					if(CUST_3)
-						colorheck = AH_piece.customization_third_color
+						colorheck = AH_piece.customizations["hair_top"].color
 					if (SKIN_TONE)
 						colorheck = src.skin_tone
 					else
@@ -269,11 +269,11 @@
 		if(istype(AH_overlimb, /datum/appearanceHolder))
 			switch(src.limb_overlay_1_color)
 				if(CUST_1)
-					colorlimb_heck = AH_overlimb.customization_first_color
+					colorlimb_heck = AH_overlimb.customizations["hair_bottom"].color
 				if(CUST_2)
-					colorlimb_heck = AH_overlimb.customization_second_color
+					colorlimb_heck = AH_overlimb.customizations["hair_middle"].color
 				if(CUST_3)
-					colorlimb_heck = AH_overlimb.customization_third_color
+					colorlimb_heck = AH_overlimb.customizations["hair_top"].color
 				if (SKIN_TONE)
 					colorlimb_heck = src.skin_tone
 				else
@@ -282,11 +282,11 @@
 		if(istype(AH_overlimb, /datum/appearanceHolder))
 			switch(src.handfoot_overlay_1_color)
 				if(CUST_1)
-					colorhandfoot_heck = AH_overlimb.customization_first_color
+					colorhandfoot_heck = AH_overlimb.customizations["hair_bottom"].color
 				if(CUST_2)
-					colorhandfoot_heck = AH_overlimb.customization_second_color
+					colorhandfoot_heck = AH_overlimb.customizations["hair_middle"].color
 				if(CUST_3)
-					colorhandfoot_heck = AH_overlimb.customization_third_color
+					colorhandfoot_heck = AH_overlimb.customizations["hair_top"].color
 				if (SKIN_TONE)
 					colorhandfoot_heck = src.skin_tone
 				else
@@ -306,7 +306,6 @@
 /obj/item/parts/human_parts/arm
 	name = "placeholder item (don't use this!)"
 	desc = "A human arm."
-	override_attack_hand = 0 //to hit with an item instead of hand when used empty handed
 	can_hold_items = 1
 	var/rebelliousness = 0
 	var/strangling = FALSE
@@ -452,7 +451,6 @@
 	limb_type = /datum/limb/item
 	streak_decal = /obj/decal/cleanable/oil
 	streak_descriptor = "oily"
-	override_attack_hand = 1
 	can_hold_items = 0
 	remove_object = null
 	handlistPart = null
@@ -515,7 +513,6 @@
 			//if(I.over_clothes) handlistPart += "l_arm_[I.arm_icon]"
 			//else partlistPart += "l_arm_[I.arm_icon]"
 			handlistPart += "l_arm_[I.arm_icon]"
-			override_attack_hand = I.override_attack_hand
 			can_hold_items = I.can_hold_items
 
 			if (I.cant_drop)
@@ -600,7 +597,6 @@
 	limb_type = /datum/limb/item
 	streak_decal = /obj/decal/cleanable/oil // what streaks everywhere when it's cut off?
 	streak_descriptor = "oily" //bloody, oily, etc
-	override_attack_hand = 1
 	can_hold_items = 0
 	remove_object = null
 	handlistPart = null
@@ -646,7 +642,6 @@
 			//if(I.over_clothes) handlistPart += "r_arm_[I.arm_icon]"
 			//else partlistPart += "r_arm_[I.arm_icon]"
 			handlistPart += "r_arm_[I.arm_icon]"
-			override_attack_hand = I.override_attack_hand
 			can_hold_items = I.can_hold_items
 
 			if (I.cant_drop)
@@ -729,7 +724,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "eerie"
-	override_attack_hand = 1
 	limb_type = /datum/limb/brullbar
 	handlistPart = "l_hand_brullbar"
 	partIconModifier = "brullbar"
@@ -756,7 +750,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "eerie"
-	override_attack_hand = 1
 	limb_type = /datum/limb/brullbar
 	handlistPart = "r_hand_brullbar"
 	partIconModifier = "brullbar"
@@ -783,7 +776,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bloody"
-	override_attack_hand = 1
 	limb_type = /datum/limb/hot
 	handlistPart = "hand_left"
 	show_on_examine = TRUE
@@ -803,7 +795,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bloody"
-	override_attack_hand = 1
 	limb_type = /datum/limb/hot
 	handlistPart = "hand_right"
 	show_on_examine = TRUE
@@ -825,7 +816,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bearly"
-	override_attack_hand = 1
 	limb_type = /datum/limb/bear
 	handlistPart = "l_hand_bear"
 	partIconModifier = "bear"
@@ -848,7 +838,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bearly"
-	override_attack_hand = 1
 	limb_type = /datum/limb/bear
 	handlistPart = "r_hand_bear"
 	partIconModifier = "bear"
@@ -876,6 +865,7 @@
 	/// Plants are pretty unnatural
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
+	fingertip_color = "#3fb54f"
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -896,6 +886,7 @@
 	easy_attach = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
+	fingertip_color = "#3fb54f"
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -976,7 +967,6 @@
 	side = "left"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/abomination
 	handlistPart = "l_hand_abomination"
 	partIconModifier = "abomination"
@@ -1016,7 +1006,6 @@
 	side = "right"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/abomination
 	handlistPart = "r_hand_abomination"
 	partIconModifier = "abomination"
@@ -1055,15 +1044,14 @@
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = FALSE
-	override_attack_hand = 1
 	can_hold_items = 0
 	limb_type = /datum/limb/zombie //Basically zombie arms am I right?
 	skintoned = TRUE
 	streak_descriptor = "undeadly"
-	override_attack_hand = 1
 	/// Supernatural if not abnormally gross
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
+	breaks_cuffs = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1078,14 +1066,13 @@
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = FALSE
-	override_attack_hand = 1
 	can_hold_items = 0
 	limb_type = /datum/limb/zombie //Basically zombie arms am I right?
 	skintoned = TRUE
 	streak_descriptor = "undeadly"
-	override_attack_hand = 1
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
+	breaks_cuffs = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1101,7 +1088,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "eerie"
-	override_attack_hand = 1
 	limb_type = /datum/limb/claw
 	handlistPart = "l_hand_brullbar"
 	partIconModifier = "brullbar"
@@ -1123,7 +1109,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "eerie"
-	override_attack_hand = 1
 	limb_type = /datum/limb/claw
 	handlistPart = "r_hand_brullbar"
 	partIconModifier = "brullbar"
@@ -1588,6 +1573,50 @@
 	partlistPart = "foot_right"
 	step_image_state = "footprintsR"
 
+// bingus limbs hehehe
+
+/obj/item/parts/human_parts/arm/mutant/cat/bingus
+	icon = 'icons/mob/bingus.dmi'
+	partIcon = 'icons/mob/bingus.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/cat/bingus
+	icon = 'icons/mob/bingus.dmi'
+	partIcon = 'icons/mob/bingus.dmi'
+
+////// ACTUAL CAT LIMBS //////
+/obj/item/parts/human_parts/arm/mutant/cat/bingus/left
+	name = "left cat arm"
+	desc = "A cat's left arm. Meow."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/cat/bingus/right
+	name = "right cat arm"
+	desc = "A cat's right arm. =3"
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/cat/bingus/left
+	name = "left cat leg"
+	desc = "A cat's left leg. =0w0="
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/cat/bingus/right
+	name = "right cat leg"
+	desc = "A cat's right leg. Mrow."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
 
 //// WEREWOLF LIMBS ////
 ////// PARENT	//////////
@@ -1601,6 +1630,7 @@
 	partIcon = 'icons/mob/werewolf.dmi'
 	limb_type = /datum/limb/abomination/werewolf
 	kind_of_limb = (LIMB_MUTANT | LIMB_WOLF)
+	fingertip_color = "#895d37"
 
 	sever(mob/user)
 		. = ..()
@@ -1641,7 +1671,6 @@
 	handlistPart = "hand_left"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/abomination/werewolf
 	show_on_examine = TRUE
 
@@ -1659,7 +1688,6 @@
 	side = "right"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/abomination/werewolf
 	handlistPart = "hand_right"
 	show_on_examine = TRUE
@@ -1674,13 +1702,12 @@
 /obj/item/parts/human_parts/arm/mutant/vampiric_thrall
 	icon = 'icons/mob/vampiric_thrall.dmi'
 	partIcon = 'icons/mob/vampiric_thrall.dmi'
-	kind_of_limb = (LIMB_MUTANT | LIMB_ZOMBIE)
-	limb_type = /datum/limb/zombie/thrall
+	kind_of_limb = LIMB_MUTANT
 
 /obj/item/parts/human_parts/leg/mutant/vampiric_thrall
 	icon = 'icons/mob/vampiric_thrall.dmi'
 	partIcon = 'icons/mob/vampiric_thrall.dmi'
-	kind_of_limb = (LIMB_MUTANT | LIMB_ZOMBIE)
+	kind_of_limb = LIMB_MUTANT
 
 //// LIMBS ////
 /obj/item/parts/human_parts/arm/mutant/vampiric_thrall/left
@@ -1727,6 +1754,7 @@
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
 	force = 10
 	throw_return = TRUE
+	fingertip_color = "#aa9987"
 
 /obj/item/parts/human_parts/leg/mutant/skeleton
 	icon = 'icons/mob/skeleton.dmi'
@@ -1778,6 +1806,7 @@
 	icon = 'icons/mob/monkey.dmi'
 	partIcon = 'icons/mob/monkey.dmi'
 	partDecompIcon = 'icons/mob/monkey_decomp.dmi'
+	fingertip_color = "#745136"
 
 /obj/item/parts/human_parts/leg/mutant/monkey
 	icon = 'icons/mob/monkey.dmi'
@@ -2006,7 +2035,6 @@
 	side = "left"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/hunter
 	handlistPart = "hand_left"
 	show_on_examine = TRUE
@@ -2025,7 +2053,6 @@
 	side = "right"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/hunter
 	handlistPart = "hand_right"
 	show_on_examine = TRUE

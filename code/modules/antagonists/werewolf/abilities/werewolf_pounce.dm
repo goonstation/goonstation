@@ -26,6 +26,7 @@
 		var/pixel_move = round((8/7)*max_range)
 		var/sleep_time = 1
 
+		. = ..()
 		if (istype(M.loc,/turf))
 			playsound(M.loc, 'sound/voice/animal/werewolf_attack2.ogg', 50, 1, 0, 1.4)
 			playsound(M.loc, 'sound/effects/swoosh.ogg', 50, 1)
@@ -54,8 +55,8 @@
 		if (istype(M.loc,/obj/))
 			var/obj/container = M.loc
 			boutput(M, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
-			M.setStatus("paralysis", 3 SECONDS)
-			M.setStatus("weakened", 5 SECONDS)
+			M.setStatus("unconscious", 3 SECONDS)
+			M.setStatus("knockdown", 5 SECONDS)
 			container.visible_message(SPAN_ALERT("<b>[M.loc]</b> emits a loud thump and rattles a bit."))
 			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 			var/wiggle = 6

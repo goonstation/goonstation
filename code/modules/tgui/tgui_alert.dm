@@ -52,8 +52,6 @@
  * a message and has items for responses.
  */
 /datum/tgui_modal
-	/// The user of the TGUI window
-	var/mob/user
 	/// The title of the TGUI window
 	var/title
 	/// The textual body of the TGUI window
@@ -76,7 +74,6 @@
 	var/theme
 
 /datum/tgui_modal/New(mob/user, message, title, list/items, timeout, autofocus, content_window, theme)
-	src.user = user
 	src.autofocus = autofocus
 	src.items = items.Copy()
 	src.title = title
@@ -101,7 +98,7 @@
  * the window was closed by the user.
  */
 /datum/tgui_modal/proc/wait()
-	UNTIL(!user.client || choice || closed || QDELETED(src))
+	UNTIL(choice || closed || QDELETED(src))
 
 /datum/tgui_modal/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -129,6 +126,9 @@
 		"items" = items,
 		"autofocus" = autofocus,
 		"theme" = theme,
+		// |GOONSTATION-ADD|
+		"cdn" = cdn,
+		"VCS_REVISION" = VCS_REVISION,
 	)
 
 /datum/tgui_modal/ui_act(action, list/params)

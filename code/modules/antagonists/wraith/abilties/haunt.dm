@@ -1,7 +1,7 @@
 /datum/targetable/wraithAbility/haunt
 	name = "Haunt"
 	icon_state = "haunt"
-	desc = "Become corporeal for 30 seconds. During this time, you gain additional biopoints, depending on the amount of humans in your vicinity. Use this ability again while corporeal to fade back into the aether."
+	desc = "Become corporeal for 30 seconds. During this time, you gain additional wraith points, depending on the amount of humans in your vicinity. Use this ability again while corporeal to fade back into the aether."
 	targeted = 0
 	pointCost = 0
 	cooldown = 30 SECONDS
@@ -19,11 +19,11 @@
 
 		var/mob/living/intangible/wraith/K = src.holder.owner
 		if (!K.forced_manifest && K.hasStatus("corporeal"))
-			boutput(holder.owner, "We fade back into the shadows")
+			boutput(holder.owner, SPAN_NOTICE("You fade back into the shadows."))
 			cooldown = 0 SECONDS
 			return K.delStatus("corporeal")
 		else
-			boutput(holder.owner, "We show ourselves")
+			boutput(holder.owner, SPAN_NOTICE("You show yourself."))
 			var/mob/living/intangible/wraith/W = holder.owner
 
 			cooldown = 30 SECONDS
@@ -42,12 +42,16 @@
 					puppet.alpha = 0
 					animate(puppet, alpha=255, time=2 SECONDS)
 					puppet.flags &= UNCRUSHABLE
+					puppet.stepsound = T.copied_footstep_sound
+					puppet.remove_typing_indicator()
+					puppet.remove_emote_typing_indicator()
+					puppet.voice_type = T.copied_voice
 					T.set_loc(puppet)
 					return 0
 
 			//check done in case a poltergeist uses this from within their master.
 			if (iswraith(W.loc))
-				boutput(W, "You can't become corporeal while inside another wraith! How would that even work?!")
+				boutput(W, SPAN_ALERT("You can't become corporeal while inside another wraith! How would that even work?!"))
 				return 1
 			if (W.hasStatus("corporeal"))
 				return 1

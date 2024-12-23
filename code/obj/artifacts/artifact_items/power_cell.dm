@@ -27,8 +27,8 @@
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint))
-			. += A.examine_hint
+		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
+			. += SPAN_ARTHINT(A.examine_hint)
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -114,11 +114,11 @@
 		if(prob(O.chargeCap/1000)) 			// the more charge the bigger the chance it does dumb stuff
 			switch(src.artitype.name) 		// leakage
 				if ("martian")
-					O.leakChem = pick("space_fungus","blood","vomit","gvomit","urine","meat_slurry","grease","butter","synthflesh","bread","poo","ants","spiders")
+					O.leakChem = pick("space_fungus","blood","vomit","gvomit","meat_slurry","grease","butter","synthflesh","bread","poo","ants","spiders")
 				if ("ancient")
 					O.leakChem = pick("voltagen","ash","cleaner", "oil", "thermite", "acid", "fuel", "nanites", "radium", "mercury")
 				if ("wizard")
-					O.leakChem = pick("glitter","sakuride","grassgro","sparkles","glowing_fliptonium", "mugwort")
+					O.leakChem = pick("glitter","sakuride","grassgro","sparkles","mirabilis", "mugwort", "carpet")
 				if ("precursor")
 					O.leakChem = pick(all_functional_reagent_ids) // no way this goes wrong
 			if(prob(10))

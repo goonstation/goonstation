@@ -34,15 +34,7 @@ ABSTRACT_TYPE(/datum/req_contract/special)
 		. = "<ul>"
 		for(var/datum/rc_entry/rce in src.rc_entries)
 			if(rce.name)
-				switch(rce.entryclass)
-					if(1) //item by path
-						. += "<li>[rce.count]x [rce.name]</li>"
-					if(2) //reagent
-						. += "<li>[rce.count]+ unit[s_es(rce.count)] of [rce.name]</li>"
-					if(3) //item stacks
-						. += "<li>[rce.count]+ [rce.name]</li>"
-					else //something else entirely custom
-						. += "<li>[rce.name]</li>"
+				. += rce.shoppinglist_description()
 		. += "</ul>"
 		return
 
@@ -149,7 +141,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 		src.rc_entries += rc_buildentry(/datum/rc_entry/item/megaweed,1)
 		src.rc_entries += rc_buildentry(/datum/rc_entry/item/whiteweed,1)
 		src.rc_entries += rc_buildentry(/datum/rc_entry/item/omegaweed,1)
-		src.rc_entries += rc_buildentry(/datum/rc_entry/food/pizza/spacer,6)
+		src.rc_entries += rc_buildentry(/datum/rc_entry/food/pizza/spacer,12)
 		..()
 
 /datum/rc_entry/item
@@ -164,7 +156,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 		typepath = /obj/item/plant/herb/cannabis/omega
 
 /datum/rc_entry/food/pizza/spacer
-	name = "Pizza Hexa-Subsections (May Be Unseparated)"
+	name = "Pizza Mouthfuls (Must Be Unseparated)"
 
 
 
@@ -179,7 +171,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 		payout =  PAY_TRADESMAN*10
 
 	New()
-		src.rc_entries += rc_buildentry(/datum/rc_entry/food/pizza,rand(10,15)*6)
+		src.rc_entries += rc_buildentry(/datum/rc_entry/food/pizza,rand(10,15)*12)
 		..()
 
 //contract below defines the details itself based on variety of order - this is just a dummy so as not to use an abstract type
@@ -188,7 +180,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 ABSTRACT_TYPE(/datum/req_contract/special/chef)
 /datum/req_contract/special/chef
 	weight = 50
-	payout = PAY_TRADESMAN*18*3
+	payout = PAY_DOCTORATE*18*3
 	req_sheet = new /obj/item/paper/requisition/food_order
 	var/mealflag = MEAL_TIME_BREAKFAST
 	var/list/cornucopia = list()

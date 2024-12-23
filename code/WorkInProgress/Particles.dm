@@ -1374,10 +1374,11 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				copied.reaction(A, TOUCH, 0, 0)
 			if(isliving(A))
 				var/mob/living/L = A
+				var/exception = ismiasmaimmune(L) ? "miasma" : null
 				if(!issmokeimmune(L))
 					logTheThing(LOG_COMBAT, A, "is hit by chemical smoke [log_reagents(copied)] at [log_loc(A)].")
 					if(L.reagents)
-						copied.copy_to(L.reagents, 1 / max((GET_DIST(A, location)+1)/2, 1)**2) //applies an adjusted inverse-square falloff to amount inhaled - 100% at center and adjacent tiles, then 44%, 25%, 16%, 11%, etc.
+						copied.copy_to(L.reagents, 1 / max((GET_DIST(A, location)+1)/2, 1)**2, exception = exception) //applies an adjusted inverse-square falloff to amount inhaled - 100% at center and adjacent tiles, then 44%, 25%, 16%, 11%, etc.
 
 /datum/particleSystem/chemspray
 	var/datum/reagents/copied = null
@@ -1445,7 +1446,8 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 	Run()
 		if (..())
-			SpawnParticle()
+			for(var/i in 1 to rand(1, 5))
+				SpawnParticle()
 			Sleep(1)
 
 /datum/particleSystem/blow_cig_smoke

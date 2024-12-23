@@ -1,0 +1,3763 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ai" = (
+/obj/storage/crate/freezer,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/salmon,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/salmon,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/white,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/white,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/sheep,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/sheep,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/shrimp,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/shrimp,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/shrimp,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/shrimp,
+/obj/item/reagent_containers/food/snacks/ingredient/meat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat,
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"ar" = (
+/obj/machinery/door/unpowered/wood/pyro,
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"aB" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/se,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"ba" = (
+/obj/machinery/light/small/warm,
+/turf/simulated/floor/carpet/grime,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"bg" = (
+/obj/machinery/light/small/warm{
+	dir = 4;
+	pixel_x = 8
+	},
+/obj/stool/bench/wooden/auto,
+/obj/decal/snowbits,
+/turf/simulated/floor/wood/three,
+/area/space)
+"bi" = (
+/obj/chainlink_fence{
+	dir = 9
+	},
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"bq" = (
+/obj/item/rocko{
+	name = "Le Pierre";
+	desc = "Oh, it's Pierre.";
+	pixel_y = 18;
+	plane = -100;
+	rarity = 7
+	},
+/obj/fakeobject/robotpedestal{
+	pixel_y = 20
+	},
+/obj/neon_lining,
+/obj/railing/velvet,
+/obj/neon_lining{
+	dir = 4
+	},
+/turf/simulated/floor/stone,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"bI" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"co" = (
+/obj/machinery/light/small/warm,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"cp" = (
+/obj/machinery/coffeemaker{
+	pixel_y = 4
+	},
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/drink_rack/cup{
+	pixel_y = 33
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"ct" = (
+/turf/unsimulated/wall/greek/underwall,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"cC" = (
+/obj/item/storage/wall/fire{
+	pixel_y = 32
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"df" = (
+/obj/table/auto,
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"dk" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"dG" = (
+/obj/structure/girder/reinforced,
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/black,
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"dI" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"dJ" = (
+/obj/item/storage/beartrap_pouch,
+/obj/storage/crate/wooden,
+/obj/item/clothing/suit/scarfcape/red,
+/obj/item/clothing/suit/scarfcape/red,
+/obj/item/clothing/suit/scarfcape/red,
+/obj/item/clothing/suit/scarfcape/red,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	name = "Equipements du Chasse";
+	icon_state = "red"
+	})
+"dP" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"dY" = (
+/obj/tree/snow_random{
+	pixel_x = -26;
+	pixel_y = -8
+	},
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"ea" = (
+/obj/table/wood/auto/desk,
+/obj/item/paper/book/custom{
+	desc = "A very, very detailed log regarding the progress of these cheese wheels, with weekly readings of ambient temperature and humidity levels.";
+	name = "le grimoire du fromage"
+	},
+/obj/item/pen/fancy,
+/obj/item/kitchen/utensil/knife{
+	force = 5;
+	icon = 'icons/obj/items/weapons.dmi';
+	icon_state = "dagger";
+	name = "antique cheese knife";
+	desc = "An ornate little cheese knife decorated with a fleur de lis emblem.";
+	rarity = 4
+	},
+/obj/decoration/candles/prelit{
+	pixel_y = 32
+	},
+/turf/simulated/floor/auto/dirt,
+/area/prefab{
+	requires_power = 1;
+	name = "Cave du Fromage";
+	icon_state = "yellow"
+	})
+"eq" = (
+/obj/table/wood/round/auto,
+/obj/machinery/phone{
+	name = "Le Glaive et Le Pierre"
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"es" = (
+/obj/shrub/snow/random,
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"et" = (
+/obj/storage/closet/wardrobe/white,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"ey" = (
+/obj/railing/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/stone,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"eC" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet/red/fancy/narrow/T_north,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"eY" = (
+/obj/ladder{
+	icon_state = "ladder_wall";
+	id = "cabin_hatch";
+	pixel_y = 20
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1";
+	tag = "icon-line1 (NORTH)"
+	},
+/obj/decal/snowbits,
+/turf/simulated/floor/auto/dirt,
+/area/prefab{
+	requires_power = 1;
+	name = "Cave du Fromage";
+	icon_state = "yellow"
+	})
+"ft" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/wall/adaptive/concrete,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"fW" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "tile1"
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"fX" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/minitiles/black,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"gr" = (
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"gL" = (
+/obj/shrub/snow/random,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/auto/snow,
+/area/space)
+"gP" = (
+/obj/stool/chair/comfy/green{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/ne,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"hi" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4;
+	opacity = 0;
+	name = "salle du personnel"
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"hn" = (
+/obj/decal/snowbits,
+/turf/simulated/floor/stairs/wood/wide,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"ho" = (
+/obj/submachine/chef_sink{
+	dir = 4;
+	name = "sink"
+	},
+/turf/simulated/floor/minitiles/black,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"hq" = (
+/obj/stone/snow/random,
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"hI" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet/red/fancy/innercorner/omni,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"hW" = (
+/turf/simulated/floor/carpet/grime,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"ig" = (
+/obj/decoration/toiletholder{
+	pixel_y = 36
+	},
+/obj/decoration/toiletholder{
+	pixel_y = 36
+	},
+/obj/machinery/light/small/warm,
+/obj/submachine/chef_sink/chem_sink{
+	desc = "A water-filled unit intended for hand-washing purposes.";
+	dir = 8;
+	pixel_x = 12
+	},
+/obj/machinery/drainage/big,
+/turf/simulated/floor/minitiles/black,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"iy" = (
+/obj/machinery/vending/cola/blue,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"iE" = (
+/turf/simulated/wall/auto/supernorn/wood,
+/area/space)
+"iH" = (
+/obj/item/storage/toilet,
+/obj/decoration/toiletholder{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/minitiles/black,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"jc" = (
+/obj/window/auto/reinforced,
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"jj" = (
+/obj/storage/secure/closet/kitchen,
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"jl" = (
+/obj/stool/chair/comfy/green{
+	dir = 4
+	},
+/obj/machinery/light/small/warm{
+	dir = 8;
+	pixel_x = -8
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/nw,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"ju" = (
+/obj/table/wood/round/auto,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"jC" = (
+/obj/tree{
+	dir = 4
+	},
+/turf/simulated/floor/auto/snow,
+/area/space)
+"jY" = (
+/obj/item/plate/tray,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/kitchen/utensil/knife{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/item/device/radio/intercom/fish{
+	frequency = 1732;
+	desc = "Must be some fine ice fishing around here.";
+	name = "monstre du lac";
+	broadcasting = 1
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"ku" = (
+/mob/living/critter/small_animal/bunny/hare,
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"kw" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "W APC";
+	noalerts = 1;
+	pixel_x = -24;
+	start_charge = 12
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/light/small/warm,
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"kE" = (
+/obj/chainlink_fence{
+	dir = 1
+	},
+/obj/decal/stage_edge/dojo,
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"kH" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/random,
+/turf/simulated/floor/carpet/grime,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"kL" = (
+/turf/unsimulated/wall/greek/underwall,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"kQ" = (
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/auto/dirt,
+/area/prefab{
+	requires_power = 1;
+	name = "Cave du Fromage";
+	icon_state = "yellow"
+	})
+"lf" = (
+/obj/item/raw_material/rock{
+	pixel_x = 14;
+	pixel_y = -11
+	},
+/obj/item/raw_material/rock{
+	pixel_x = 24
+	},
+/obj/item/raw_material/rock{
+	pixel_x = 17;
+	pixel_y = -4
+	},
+/turf/simulated/floor/auto/dirt,
+/area/space)
+"lh" = (
+/obj/machinery/light/small/warm{
+	dir = 4;
+	pixel_x = 8
+	},
+/obj/stool,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"ll" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	name = "Equipements du Chasse";
+	icon_state = "red"
+	})
+"lp" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"lS" = (
+/obj/tree{
+	dir = 4
+	},
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"lX" = (
+/obj/machinery/light_switch/south,
+/turf/simulated/floor/carpet/purple/fancy/edge/sw,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"mk" = (
+/obj/chainlink_fence{
+	dir = 6
+	},
+/obj/chainlink_fence{
+	dir = 1
+	},
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"mn" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"mA" = (
+/obj/machinery/power/smes{
+	charge = 1;
+	chargelevel = 3500;
+	output = 2000
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"mG" = (
+/obj/machinery/door/unpowered/wood{
+	name = "Le Glaive et Le Pierre"
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"mO" = (
+/obj/window/auto/reinforced,
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"nI" = (
+/obj/decal/snowbits,
+/turf/simulated/floor/stairs/wood/wide{
+	dir = 6
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"oa" = (
+/obj/item/instrument/large/jukebox,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"oc" = (
+/obj/table/auto,
+/obj/machinery/mixer,
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"oL" = (
+/obj/table/auto,
+/obj/item/kitchen/rollingpin,
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"pg" = (
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"pV" = (
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"qo" = (
+/obj/table/wood/round/auto,
+/obj/table/wood/round/auto,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"qH" = (
+/obj/tree/snow_random,
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"qI" = (
+/obj/machinery/door/unpowered/wood/pyro,
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"qK" = (
+/obj/machinery/light/small/warm{
+	dir = 4;
+	pixel_x = 8
+	},
+/turf/simulated/floor/minitiles/black,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"qT" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "tile1";
+	dir = 9
+	},
+/obj/machinery/computer/arcade,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"qZ" = (
+/obj/decal/stage_edge/dojo,
+/obj/tree{
+	dir = 4;
+	pixel_x = -30;
+	pixel_y = -2
+	},
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"ra" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1";
+	tag = "icon-line1 (NORTH)"
+	},
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"rq" = (
+/obj/railing,
+/obj/table/wood/auto,
+/turf/simulated/floor/wood/three,
+/area/space)
+"rv" = (
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"rC" = (
+/obj/decoration/candles/prelit{
+	pixel_y = 32
+	},
+/obj/stool/bench/wooden,
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"rE" = (
+/obj/decal/stage_edge/dojo,
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"rM" = (
+/obj/window/auto/reinforced,
+/obj/window_blinds/vertical/middle,
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"sc" = (
+/obj/item/raw_material/rock,
+/turf/simulated/wall/auto/asteroid/mountain/snow,
+/area/space)
+"sk" = (
+/obj/machinery/light/small/warm{
+	dir = 8;
+	pixel_x = -8
+	},
+/obj/submachine/chef_sink{
+	dir = 4;
+	name = "sink"
+	},
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"ss" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/auto/snow,
+/area/space)
+"sH" = (
+/obj/decal/stage_edge/dojo,
+/turf/simulated/floor/auto/dirt,
+/area/space)
+"sX" = (
+/obj/shrub/snow/random,
+/turf/simulated/floor/auto/snow,
+/area/space)
+"sY" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/table/wood/round/auto,
+/obj/machinery/phone{
+	name = "Le Glaive et Le Pierre"
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"sZ" = (
+/obj/decal/snowbits,
+/obj/admin_plaque{
+	desc = "A welcome sign.";
+	name = "Bienvenue!";
+	pixel_y = 26
+	},
+/obj/machinery/light/small/warm{
+	dir = 1;
+	pixel_y = 23
+	},
+/turf/simulated/floor/stairs/wood/wide{
+	dir = 4
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"tc" = (
+/obj/chainlink_fence,
+/turf/simulated/floor/auto/snow,
+/area/space)
+"te" = (
+/obj/machinery/gibber/output_west,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	name = "Equipements du Chasse";
+	icon_state = "red"
+	})
+"tj" = (
+/obj/item/bandage{
+	name = "cheesecloth"
+	},
+/obj/item/bandage{
+	name = "cheesecloth"
+	},
+/obj/item/bandage{
+	name = "cheesecloth"
+	},
+/obj/item/bandage{
+	name = "cheesecloth"
+	},
+/obj/item/spraybottle,
+/obj/item/device/analyzer/atmospheric,
+/obj/storage/closet/dresser{
+	name = "cheesemaking supplies";
+	desc = "It's got room for all your fanciest or shabbiest cheesemaking supplies!"
+	},
+/turf/simulated/floor/auto/dirt,
+/area/prefab{
+	requires_power = 1;
+	name = "Cave du Fromage";
+	icon_state = "yellow"
+	})
+"ty" = (
+/obj/decoration/candles/prelit{
+	pixel_y = 32
+	},
+/turf/simulated/floor/minitiles/black,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"tK" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/machinery/light/small/frostedred{
+	dir = 1;
+	pixel_y = 10
+	},
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"tL" = (
+/turf/unsimulated/wall/auto/adventure/overgrown2,
+/area/prefab{
+	requires_power = 1;
+	name = "Cave du Fromage";
+	icon_state = "yellow"
+	})
+"uD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"uI" = (
+/obj/submachine/chef_sink{
+	dir = 8
+	},
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"uP" = (
+/obj/table/wood/round/auto,
+/obj/machinery/cashreg,
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"vc" = (
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"vh" = (
+/obj/decal/stage_edge/dojo,
+/obj/admin_plaque{
+	desc = "Looks like some sorta bed and breakfast operation here.";
+	name = "Le Glaive et Le Pierre";
+	pixel_y = 26
+	},
+/obj/machinery/light/small/warm{
+	dir = 1;
+	pixel_y = 23
+	},
+/turf/simulated/floor/auto/snow,
+/area/space)
+"vl" = (
+/obj/decal/stage_edge/dojo,
+/obj/stone/snow/random,
+/turf/simulated/floor/auto/snow,
+/area/space)
+"vp" = (
+/obj/machinery/door/unpowered/wood{
+	autoclose = 0;
+	dir = 8;
+	name = "personnel de cuisine"
+	},
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"vt" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/east,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"vG" = (
+/obj/storage/closet/dresser/random,
+/obj/item/clothing/suit/snow,
+/obj/item/clothing/suit/snow,
+/obj/item/clothing/under/gimmick/pajamas,
+/obj/item/clothing/under/gimmick/pajamas,
+/obj/item/clothing/head/pajama_cap,
+/obj/item/clothing/head/pajama_cap,
+/turf/simulated/floor/carpet/grime,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"vJ" = (
+/obj/storage/crate/bartending,
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"vW" = (
+/obj/machinery/light/small/warm{
+	dir = 8;
+	pixel_x = -8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"wb" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"we" = (
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"wp" = (
+/turf/simulated/floor/minitiles/black,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"ws" = (
+/obj/stone/snow/random,
+/turf/simulated/floor/auto/snow,
+/area/space)
+"ww" = (
+/obj/machinery/door/unpowered/wood/pyro,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"wK" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 8;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4;
+	opacity = 0;
+	name = "salle du personnel"
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"wL" = (
+/obj/machinery/light/small/warm{
+	dir = 1;
+	pixel_y = 23
+	},
+/obj/admin_plaque{
+	desc = "Looks like some sorta bed and breakfast operation here.";
+	name = "Le Glaive et Le Pierre";
+	pixel_y = 26
+	},
+/obj/decal/stage_edge/dojo,
+/turf/simulated/floor/auto/dirt,
+/area/space)
+"wN" = (
+/obj/ladder{
+	id = "cabin_hatch";
+	layer = 0;
+	pixel_y = -2;
+	alpha = 0;
+	desc = "There's some sorta hatch here.";
+	name = "snowy hatch"
+	},
+/obj/tree{
+	dir = 4;
+	pixel_x = -30;
+	pixel_y = -2
+	},
+/turf/simulated/floor/auto/snow,
+/area/space)
+"wR" = (
+/obj/table/wood/auto/desk,
+/obj/item/device/key/generic{
+	name = "staff key"
+	},
+/obj/item/device/key/generic{
+	name = "staff key"
+	},
+/obj/item/device/key/generic{
+	name = "staff key"
+	},
+/obj/item/device/key/generic{
+	name = "staff key"
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"wW" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4;
+	opacity = 0;
+	name = "le cave du fromage"
+	},
+/turf/simulated/floor/auto/dirt,
+/area/prefab{
+	requires_power = 1;
+	name = "Cave du Fromage";
+	icon_state = "yellow"
+	})
+"xj" = (
+/obj/chainlink_fence,
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"xk" = (
+/obj/storage/secure/closet/fridge/kitchen{
+	pixel_y = -1
+	},
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"xl" = (
+/obj/stool/bench/wooden,
+/turf/simulated/floor/auto/dirt,
+/area/space)
+"xm" = (
+/obj/stool/chair/comfy/green{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/sw,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"xo" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/nw,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"xv" = (
+/obj/item/plate/tray,
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/food/snacks/croissant,
+/obj/decoration/candles/prelit{
+	pixel_y = 32
+	},
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/item/reagent_containers/food/snacks/painauchocolat{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"xH" = (
+/obj/chainlink_fence,
+/obj/decal/stage_edge/dojo,
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"xJ" = (
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line1"
+	},
+/obj/table/reinforced/industrial/auto,
+/obj/bedsheetbin,
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"xL" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 1
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"yp" = (
+/obj/storage/crate/freezer/milk,
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"yx" = (
+/obj/shrub/snow/random,
+/mob/living/critter/small_animal/bunny/hare,
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"yS" = (
+/turf/unsimulated/wall/adaptive/concrete,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"zg" = (
+/turf/simulated/floor/auto/snow,
+/area/space)
+"zE" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 8;
+	name = "old wooden chair"
+	},
+/turf/simulated/floor/auto/dirt,
+/area/prefab{
+	requires_power = 1;
+	name = "Cave du Fromage";
+	icon_state = "yellow"
+	})
+"zF" = (
+/obj/decal/stage_edge/dojo,
+/turf/simulated/floor/auto/snow,
+/area/space)
+"zW" = (
+/turf/simulated/floor/stone{
+	color = "#99AA55"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cave du Fromage";
+	icon_state = "yellow"
+	})
+"Aa" = (
+/obj/tree{
+	dir = 4;
+	pixel_x = -30;
+	pixel_y = -2
+	},
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"AN" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Bb" = (
+/obj/item/reagent_containers/food/snacks/painauchocolat,
+/obj/item/reagent_containers/food/snacks/painauchocolat,
+/obj/item/reagent_containers/food/snacks/painauchocolat,
+/obj/item/reagent_containers/food/snacks/cheesewheel,
+/obj/item/reagent_containers/food/snacks/plant/apple{
+	pixel_y = 4;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/snacks/plant/apple{
+	pixel_y = 4;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/snacks/plant/apple{
+	pixel_y = 4;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/snacks/plant/apple{
+	pixel_y = 4;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/obj/item/reagent_containers/food/snacks/plant/melonslice{
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/snacks/plant/melonslice{
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/snacks/plant/melonslice{
+	pixel_y = 9
+	},
+/obj/storage/secure/closet/fridge,
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Bc" = (
+/obj/blind_switch/north,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"Bk" = (
+/turf/unsimulated/wall/greek/underwall,
+/area/space)
+"Bq" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"Bw" = (
+/obj/table/wood/auto,
+/obj/item/gun/bow,
+/obj/item/gun/bow,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	name = "Equipements du Chasse";
+	icon_state = "red"
+	})
+"BS" = (
+/turf/simulated/wall/auto/supernorn/wood,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"BY" = (
+/obj/decal/tile_edge/check/orange{
+	icon_state = "check3"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Cc" = (
+/obj/item/storage/wall/medical{
+	dir = 1;
+	pixel_y = 32
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Ce" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "tile1";
+	dir = 5
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Cn" = (
+/obj/machinery/drainage,
+/obj/machinery/shower{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/simulated/floor/minitiles/black,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Cp" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "tile1";
+	dir = 4
+	},
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"CB" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "tile1"
+	},
+/obj/machinery/light/small/warm,
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"CY" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"DR" = (
+/turf/simulated/floor/stairs/dark{
+	dir = 4
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Ek" = (
+/obj/decal/snowbits,
+/turf/simulated/floor/stairs/wood/wide{
+	dir = 5
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"El" = (
+/turf/simulated/wall/auto/supernorn/wood,
+/area/prefab{
+	name = "Equipements du Chasse";
+	icon_state = "red"
+	})
+"EV" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/supernorn/wood,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"Fy" = (
+/obj/storage/closet/wardrobe/black/formalwear,
+/obj/item/clothing/under/gimmick/maid,
+/obj/item/clothing/head/maid,
+/obj/item/clothing/under/gimmick/red_wcoat,
+/obj/item/clothing/under/gimmick/red_wcoat,
+/obj/item/clothing/head/mime_beret,
+/obj/item/clothing/head/mime_beret,
+/obj/machinery/light/small/warm{
+	dir = 1;
+	pixel_y = 23
+	},
+/turf/simulated/floor/carpet/grime,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"FO" = (
+/obj/decal/stage_edge/dojo,
+/obj/shrub/snow/random,
+/turf/simulated/floor/auto/snow,
+/area/space)
+"FP" = (
+/obj/machinery/door/unpowered/wood/pyro,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/minitiles/black,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"FT" = (
+/obj/burning_barrel/bonfire{
+	pixel_y = 23
+	},
+/obj/railing/reinforced{
+	dir = 8
+	},
+/obj/decal/cleanable/ash,
+/turf/unsimulated/floor/engine,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Ge" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Gu" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1;
+	name = "Le Glaive et Le Pierre"
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"GH" = (
+/obj/mopbucket,
+/obj/item/mop,
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"GK" = (
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"GV" = (
+/obj/machinery/chem_dispenser/alcohol/bar,
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"Hl" = (
+/obj/stool/bench/wooden,
+/obj/machinery/light/small/warm,
+/turf/simulated/floor/carpet/purple/fancy/edge/south,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Hn" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/decal/tile_edge/check/orange{
+	icon_state = "check3"
+	},
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Hx" = (
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"HB" = (
+/obj/chainlink_fence{
+	dir = 5
+	},
+/turf/simulated/floor/auto/snow,
+/area/space)
+"HQ" = (
+/obj/table/auto,
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"HX" = (
+/obj/machinery/power/furnace,
+/obj/cable,
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"In" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "tile1";
+	dir = 5
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"Ir" = (
+/obj/machinery/power/apc{
+	name = "S APC";
+	noalerts = 1;
+	pixel_y = -24;
+	start_charge = 13
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"IN" = (
+/obj/table/auto,
+/obj/machinery/light/lamp/black,
+/obj/blind_switch/south,
+/obj/item/kitchen/utensil/knife{
+	pixel_x = -7
+	},
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"IO" = (
+/obj/tree/snow_random,
+/turf/simulated/floor/auto/snow,
+/area/space)
+"Ji" = (
+/obj/table/wood/auto/desk,
+/obj/item/paper/book/custom{
+	desc = "A ledger and log of guests. It's ready for new entries.";
+	name = "grand livre des invités"
+	},
+/obj/item/pen/fancy,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"Jo" = (
+/obj/table/wood/round/auto,
+/obj/item/plate/breakfast{
+	pixel_y = -5
+	},
+/obj/item/plate/breakfast{
+	pixel_y = -2
+	},
+/obj/item/plate/breakfast,
+/obj/item/plate/breakfast,
+/obj/item/plate/breakfast{
+	pixel_y = 2
+	},
+/obj/item/plate/breakfast{
+	pixel_y = 5
+	},
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Jx" = (
+/turf/simulated/floor/stairs/dark,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Jy" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"JB" = (
+/obj/railing,
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"JH" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "tile1";
+	dir = 6
+	},
+/obj/item/instrument/large/organ,
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"JM" = (
+/obj/table/auto,
+/obj/machinery/microwave{
+	pixel_y = 5
+	},
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"JO" = (
+/obj/chainlink_fence{
+	dir = 5
+	},
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"JW" = (
+/turf/simulated/floor/wood/three,
+/area/space)
+"Kb" = (
+/obj/stone/snow/random,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/auto/snow,
+/area/space)
+"Kt" = (
+/turf/simulated/floor/stone,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Ku" = (
+/obj/shrub/snow/random,
+/obj/decal/stage_edge/dojo,
+/turf/simulated/floor/auto/snow,
+/area/space)
+"Kv" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/light/lamp/green{
+	pixel_y = 20;
+	pixel_x = -1
+	},
+/obj/machinery/cashreg,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"KI" = (
+/turf/simulated/wall/auto/asteroid/mountain/snow,
+/area/space)
+"KX" = (
+/obj/stool/chair/comfy/green{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"KZ" = (
+/obj/stool/chair/comfy/green{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/se,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"Lg" = (
+/turf/simulated/floor/stairs/wood{
+	dir = 4
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"Lp" = (
+/obj/decal/tile_edge/check/orange{
+	icon_state = "check3"
+	},
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Ls" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Lt" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 8;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4;
+	opacity = 0
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"LJ" = (
+/obj/stool/chair/comfy,
+/obj/decal/tile_edge/line/black{
+	icon_state = "tile1"
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"LO" = (
+/obj/railing/reinforced{
+	dir = 8
+	},
+/obj/decal/cleanable/ash,
+/turf/unsimulated/floor/engine,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"LT" = (
+/obj/storage/closet/janitor,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"LY" = (
+/turf/simulated/floor/carpet/grime,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"Mo" = (
+/obj/stool/bench/wooden/auto,
+/obj/decal/snowbits,
+/turf/simulated/floor/wood/three,
+/area/space)
+"Mq" = (
+/obj/table/wood/auto,
+/obj/decal/snowbits,
+/turf/simulated/floor/wood/three,
+/area/space)
+"MB" = (
+/obj/decal/stage_edge/dojo,
+/obj/stone/snow/random,
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"Nc" = (
+/obj/stool/chair/comfy{
+	dir = 1
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "tile1"
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Ng" = (
+/obj/stool/bench/wooden,
+/turf/simulated/floor/carpet/purple/fancy/edge/south,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Ni" = (
+/turf/simulated/wall/auto/supernorn/wood,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"Np" = (
+/obj/storage/crate/wooden,
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater,
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Nq" = (
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Oh" = (
+/mob/living/critter/small_animal/bunny/hare,
+/turf/simulated/floor/auto/snow,
+/area/space)
+"Oo" = (
+/turf/simulated/floor/stairs/wood,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"OJ" = (
+/obj/machinery/light/small/frostedred,
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"OV" = (
+/obj/storage/crate/freezer,
+/obj/machinery/light/small/warm{
+	dir = 8;
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	name = "Equipements du Chasse";
+	icon_state = "red"
+	})
+"Pc" = (
+/obj/item/plate/tray,
+/obj/item/reagent_containers/food/snacks/plant/melonslice{
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/snacks/plant/apple{
+	pixel_y = 4;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/obj/item/reagent_containers/food/snacks/plant/banana{
+	pixel_x = 5
+	},
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/decoration/candles/prelit{
+	pixel_y = 32
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Pg" = (
+/obj/decal/snowbits,
+/turf/simulated/floor/wood/three,
+/area/space)
+"Pq" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"PI" = (
+/obj/item/halberd{
+	pixel_y = 28;
+	desc = "An ancient-pattern ceremonial polearm. The haft is etched with the name 'IRON BELLE BLADEWORKS.'";
+	name = "Le Glaive";
+	rarity = 5;
+	plane = -100
+	},
+/obj/item/clothing/suit/armor{
+	name = "armure de chevalier";
+	desc = "A modern reproduction set of full plate armor. This must have been quite expensive!";
+	pixel_y = 27;
+	rarity = 4;
+	plane = -100
+	},
+/obj/item/clothing/head/helmet/thunderdome{
+	name = "Le Bascinet";
+	rarity = 4;
+	desc = "A modern reproduction of antique armor. Fancy!";
+	pixel_y = 41;
+	anchored = sssssssssssssssss
+	},
+/obj/fakeobject/robotpedestal{
+	pixel_y = 20
+	},
+/obj/neon_lining,
+/obj/railing/velvet,
+/obj/neon_lining{
+	dir = 8
+	},
+/turf/simulated/floor/stone,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"PN" = (
+/obj/window/auto/reinforced,
+/obj/window_blinds/middle,
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"Qj" = (
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Qq" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Qx" = (
+/obj/item/device/radio{
+	pixel_x = -8;
+	pixel_y = 4;
+	frequency = 1732;
+	name = "staff radio";
+	color = "#FF66FF"
+	},
+/obj/item/device/radio{
+	pixel_x = -8;
+	pixel_y = -2;
+	frequency = 1732;
+	name = "staff radio";
+	color = "#FF66FF"
+	},
+/obj/item/device/radio{
+	pixel_x = 8;
+	pixel_y = 5;
+	frequency = 1732;
+	name = "staff radio";
+	color = "#FF66FF"
+	},
+/obj/item/device/radio{
+	pixel_x = 8;
+	pixel_y = -2;
+	frequency = 1732;
+	name = "staff radio";
+	color = "#FF66FF"
+	},
+/obj/table/wood/auto/desk,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"QD" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "tile1"
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"QJ" = (
+/obj/burning_barrel/bonfire,
+/obj/item/raw_material/rock{
+	pixel_x = 13
+	},
+/obj/item/raw_material/rock{
+	pixel_y = -17;
+	pixel_x = -11
+	},
+/obj/item/raw_material/rock{
+	pixel_x = 17;
+	pixel_y = -4
+	},
+/obj/item/raw_material/rock{
+	pixel_x = 17;
+	pixel_y = -11
+	},
+/obj/item/raw_material/rock{
+	pixel_x = 10;
+	pixel_y = -17
+	},
+/obj/item/raw_material/rock{
+	pixel_y = -17
+	},
+/turf/simulated/floor/auto/dirt,
+/area/space)
+"Rl" = (
+/obj/chainlink_fence{
+	dir = 1
+	},
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"Rs" = (
+/obj/decal/tile_edge/line/black{
+	dir = 2;
+	icon_state = "line1"
+	},
+/obj/decal/snowbits,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	name = "Equipements du Chasse";
+	icon_state = "red"
+	})
+"Rt" = (
+/obj/chainlink_fence{
+	dir = 1
+	},
+/obj/tree/snow_random{
+	pixel_y = 18;
+	pixel_x = -34
+	},
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"RR" = (
+/obj/table/auto,
+/obj/item/baguette,
+/obj/item/kitchen/utensil/knife/bread,
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"RW" = (
+/obj/decal/tile_edge/line/grey{
+	real_name = "edge";
+	icon_state = "line-broken1";
+	dir = 2;
+	color = "#8d8c8c"
+	},
+/turf/simulated/floor/auto/dirt,
+/area/space)
+"Sn" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet/red/fancy/narrow/T_south,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"Sq" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"SE" = (
+/obj/decal/snowbits,
+/turf/simulated/floor/stairs/wood3{
+	dir = 8
+	},
+/area/space)
+"SK" = (
+/obj/submachine/laundry_machine,
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"ST" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Tc" = (
+/obj/table/wood/auto,
+/obj/item/boardgame/chess,
+/turf/simulated/floor/wood/three,
+/area/space)
+"Te" = (
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/item/reagent_containers/food/snacks/cheesewheel,
+/turf/simulated/floor/auto/dirt,
+/area/prefab{
+	requires_power = 1;
+	name = "Cave du Fromage";
+	icon_state = "yellow"
+	})
+"Tz" = (
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"TE" = (
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"TP" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4;
+	opacity = 0;
+	name = "salle du personnel";
+	dir = 1
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 2;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"Ug" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/west,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Uk" = (
+/obj/reagent_dispensers/beerkeg,
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Uo" = (
+/obj/tree/snow_random,
+/obj/decal/tile_edge/line/grey{
+	real_name = "edge";
+	icon_state = "line-broken1";
+	dir = 2;
+	color = "#8d8c8c"
+	},
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"UJ" = (
+/obj/decal/stage_edge/dojo,
+/obj/shrub/snow/random,
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"UV" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "tile1";
+	dir = 4
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"UX" = (
+/obj/machinery/light/small/warm{
+	dir = 4;
+	pixel_x = 8
+	},
+/turf/simulated/floor/auto/dirt,
+/area/space)
+"UY" = (
+/turf/simulated/floor/auto/dirt,
+/area/prefab{
+	requires_power = 1;
+	name = "Cave du Fromage";
+	icon_state = "yellow"
+	})
+"Vh" = (
+/obj/stool/bench/wooden/auto,
+/turf/simulated/floor/wood/three,
+/area/space)
+"Vv" = (
+/turf/simulated/floor/auto/dirt,
+/area/space)
+"VN" = (
+/obj/machinery/light/small/warm,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"VU" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 8;
+	name = "Cafe et Couette"
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"VV" = (
+/obj/railing,
+/turf/simulated/floor/auto/snow,
+/area/space)
+"Wa" = (
+/obj/item/storage/toilet{
+	dir = 8;
+	pixel_x = 8;
+	tag = ""
+	},
+/obj/decoration/toiletholder{
+	pixel_y = 36
+	},
+/turf/simulated/floor/minitiles/black,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Wb" = (
+/obj/machinery/door/unpowered/wood/stall{
+	dir = 8
+	},
+/turf/simulated/floor/minitiles/black,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Wc" = (
+/obj/machinery/door/unpowered/wood/pyro,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"WB" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/auto/dirt,
+/area/space)
+"WP" = (
+/obj/stool/chair/comfy/green{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/west,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"WR" = (
+/obj/table/wood/round/auto,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = 7
+	},
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"WZ" = (
+/turf/simulated/floor/stairs/dark{
+	dir = 4;
+	color = "#99AA55"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cave du Fromage";
+	icon_state = "yellow"
+	})
+"Xd" = (
+/obj/machinery/vending/cards,
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"Xn" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/random,
+/turf/simulated/floor/carpet/grime,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Xo" = (
+/obj/decal/cleanable/cobweb,
+/obj/machinery/computer/power_monitor,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Xs" = (
+/obj/window/auto/reinforced,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Xv" = (
+/obj/stool/chair/comfy/ergonomic{
+	dir = 4
+	},
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"XC" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/supernorn/wood,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"XI" = (
+/obj/tree/snow_random{
+	pixel_y = 18;
+	pixel_x = -34
+	},
+/obj/chainlink_fence,
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"XK" = (
+/obj/chainlink_fence,
+/obj/tree/snow_random{
+	pixel_x = -26;
+	pixel_y = -8
+	},
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"Yj" = (
+/obj/submachine/chef_oven,
+/obj/machinery/light/small/warm{
+	dir = 1;
+	pixel_y = 8
+	},
+/turf/simulated/floor/minitiles,
+/area/prefab{
+	requires_power = 1;
+	name = "Salle du Personnel";
+	icon_state = "green"
+	})
+"Yq" = (
+/obj/stool/bench/wooden/auto,
+/obj/decal/snowbits,
+/obj/machinery/light/small/warm{
+	dir = 4;
+	pixel_x = 8
+	},
+/turf/simulated/floor/wood/three,
+/area/space)
+"YO" = (
+/obj/stool/bench/wooden,
+/turf/simulated/floor/carpet/purple/fancy/edge/north,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Zj" = (
+/obj/table/wood/round/auto,
+/obj/item/decoration/flower_vase/vase7,
+/turf/simulated/floor/minitiles/black,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"Zl" = (
+/obj/chainlink_fence{
+	dir = 6
+	},
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"Zo" = (
+/obj/chainlink_fence,
+/obj/tree{
+	dir = 4;
+	pixel_x = -30;
+	pixel_y = -7
+	},
+/turf/simulated/floor/auto/snow/rough,
+/area/space)
+"ZG" = (
+/obj/machinery/door/unpowered/wood{
+	name = "le cave du fromage";
+	dir = 8
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/minitiles/black,
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+"ZJ" = (
+/turf/simulated/floor/wood/five,
+/area/prefab{
+	name = "Equipements du Chasse";
+	icon_state = "red"
+	})
+"ZS" = (
+/obj/submachine/chef_sink/chem_sink{
+	desc = "A water-filled unit intended for hand-washing purposes.";
+	dir = 4;
+	pixel_x = -12
+	},
+/turf/simulated/floor/concrete{
+	color = "#999999"
+	},
+/area/prefab{
+	requires_power = 1;
+	name = "Cafe et Couette"
+	})
+
+(1,1,1) = {"
+JO
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+JO
+rv
+Vv
+Vv
+Vv
+Zl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+mk
+rv
+hq
+"}
+(2,1,1) = {"
+Zo
+rv
+rv
+es
+rv
+rv
+rv
+rv
+rv
+rv
+rv
+yx
+xj
+hq
+Vv
+Vv
+Vv
+xj
+lS
+zg
+rv
+Uo
+RW
+RW
+RW
+RW
+RW
+bi
+rv
+rv
+"}
+(3,1,1) = {"
+xj
+rv
+Ni
+mO
+mO
+Ni
+Ni
+mO
+mO
+Ni
+zF
+zg
+bi
+zg
+Vv
+Vv
+Vv
+bi
+rv
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+"}
+(4,1,1) = {"
+xj
+rv
+mO
+Xd
+Tz
+jl
+WP
+xm
+Tz
+mO
+zF
+zg
+zg
+zg
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+"}
+(5,1,1) = {"
+xj
+rv
+mO
+iy
+Tz
+eC
+hI
+Sn
+Tz
+mO
+zF
+ws
+zg
+zg
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+Vv
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+Aa
+rv
+"}
+(6,1,1) = {"
+xj
+rv
+Ni
+dI
+Tz
+eC
+hI
+Sn
+Ir
+Ni
+vl
+zg
+zg
+Vv
+Vv
+Vv
+Vv
+qH
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+"}
+(7,1,1) = {"
+xj
+rv
+kL
+kL
+In
+gP
+KX
+KZ
+co
+Ni
+Ni
+FO
+xl
+xl
+xl
+Vv
+zg
+KI
+KI
+KI
+tL
+tL
+tL
+tL
+tL
+tL
+tL
+tL
+KI
+KI
+"}
+(8,1,1) = {"
+xj
+rv
+kL
+PI
+fW
+Tz
+Tz
+Tz
+Jy
+mG
+hn
+Vv
+Vv
+lf
+Vv
+Vv
+sX
+KI
+tL
+tL
+tL
+UY
+UY
+UY
+UY
+UY
+UY
+tL
+tL
+KI
+"}
+(9,1,1) = {"
+Zo
+rv
+kL
+bq
+fW
+Tz
+Tz
+pg
+Jy
+Gu
+nI
+Vv
+Vv
+QJ
+Vv
+Vv
+wN
+KI
+tL
+eY
+tL
+UY
+Te
+Te
+Te
+Te
+UY
+UY
+tL
+KI
+"}
+(10,1,1) = {"
+xj
+rv
+kL
+kL
+qT
+lh
+oa
+Ni
+EV
+Ni
+Ni
+vh
+Vv
+Vv
+Vv
+Vv
+sX
+KI
+tL
+kQ
+tL
+UY
+UY
+UY
+UY
+UY
+UY
+UY
+tL
+KI
+"}
+(11,1,1) = {"
+xj
+rv
+Ni
+Ni
+Ni
+Ni
+Ni
+Ni
+Kb
+zg
+zg
+sX
+xl
+xl
+xl
+Vv
+zg
+KI
+tL
+UY
+wW
+UY
+UY
+tL
+ea
+zE
+UY
+UY
+tL
+KI
+"}
+(12,1,1) = {"
+xj
+rv
+sX
+zg
+zg
+zg
+jC
+zg
+ss
+zg
+sX
+Vv
+Vv
+Vv
+Vv
+zg
+IO
+KI
+tL
+UY
+tL
+UY
+UY
+UY
+UY
+UY
+UY
+UY
+tL
+KI
+"}
+(13,1,1) = {"
+xj
+rv
+hq
+zg
+zg
+zg
+zg
+Oh
+ss
+sX
+Vv
+Vv
+Vv
+Vv
+sX
+zg
+zg
+KI
+tL
+tj
+tL
+UY
+Te
+Te
+Te
+Te
+UY
+UY
+tL
+KI
+"}
+(14,1,1) = {"
+xj
+rv
+rv
+rv
+es
+zg
+zg
+zg
+gL
+Vv
+Vv
+Vv
+UX
+sX
+ws
+zg
+ws
+KI
+tL
+tL
+tL
+UY
+UY
+UY
+UY
+UY
+UY
+UY
+tL
+KI
+"}
+(15,1,1) = {"
+xj
+rv
+BS
+BS
+BS
+BS
+BS
+jc
+Xs
+BS
+sZ
+Ek
+BS
+BS
+jc
+jc
+BS
+BS
+BS
+BS
+tL
+tL
+tL
+tL
+tL
+tL
+tL
+WZ
+tL
+KI
+"}
+(16,1,1) = {"
+xj
+rv
+jc
+vG
+hW
+ba
+BS
+uP
+sY
+BS
+VU
+VU
+BS
+BS
+Zj
+ho
+BS
+BS
+kw
+BS
+yS
+yS
+yS
+yS
+yS
+yS
+tL
+zW
+tL
+KI
+"}
+(17,1,1) = {"
+xj
+rv
+jc
+Xn
+Xn
+hW
+ar
+Qj
+dP
+mn
+mn
+mn
+vW
+FP
+fX
+fX
+fX
+Wc
+Pq
+Oo
+Jx
+ra
+GK
+ZS
+SK
+yS
+tL
+zW
+tL
+KI
+"}
+(18,1,1) = {"
+XI
+rv
+BS
+BS
+BS
+BS
+BS
+xv
+Qj
+Qj
+Qj
+Qj
+Qj
+BS
+ty
+qK
+wp
+BS
+dk
+BS
+yS
+xJ
+dG
+Qq
+yS
+yS
+yS
+ZG
+yS
+KI
+"}
+(19,1,1) = {"
+xj
+rv
+jc
+vG
+hW
+ba
+BS
+jY
+Qj
+xo
+Ug
+Ug
+lX
+BS
+Wb
+BS
+Wb
+BS
+dk
+BS
+yS
+et
+GK
+OJ
+yS
+tK
+Jx
+wp
+yS
+qZ
+"}
+(20,1,1) = {"
+xj
+rv
+jc
+Xn
+Xn
+hW
+ar
+Qj
+Qj
+YO
+Jo
+WR
+Ng
+BS
+Wa
+BS
+Cn
+BS
+cC
+BS
+yS
+yS
+yS
+yS
+yS
+gr
+dG
+yS
+yS
+rE
+"}
+(21,1,1) = {"
+xj
+rv
+BS
+BS
+BS
+BS
+BS
+Pc
+Qj
+YO
+ju
+ju
+Hl
+BS
+BS
+BS
+BS
+BS
+dk
+BS
+yS
+Xo
+Lp
+GK
+GK
+Sq
+BY
+HX
+yS
+UJ
+"}
+(22,1,1) = {"
+xj
+rv
+jc
+vG
+hW
+ba
+BS
+cp
+Qj
+YO
+qo
+ju
+Ng
+BS
+Np
+sk
+RR
+BS
+Ge
+XC
+ft
+mA
+Hn
+AN
+AN
+uD
+BY
+HX
+yS
+MB
+"}
+(23,1,1) = {"
+xj
+rv
+jc
+Xn
+Xn
+hW
+ar
+Qj
+Qj
+Ls
+vt
+vt
+aB
+BS
+JM
+we
+HQ
+BS
+Cc
+BS
+yS
+yS
+dG
+GK
+GK
+GK
+dG
+yS
+yS
+rE
+"}
+(24,1,1) = {"
+xj
+es
+BS
+BS
+BS
+BS
+BS
+rC
+Qj
+Qj
+Qj
+Qj
+Qj
+qI
+we
+wb
+we
+ww
+TE
+BS
+yS
+Uk
+GK
+GK
+GK
+GK
+GK
+pV
+yS
+MB
+"}
+(25,1,1) = {"
+xj
+rv
+JB
+Mo
+JW
+JW
+BS
+JH
+UV
+Cp
+Cp
+UV
+Ce
+BS
+Bb
+we
+GH
+BS
+VN
+BS
+yS
+Uk
+dG
+GK
+GK
+GK
+dG
+pV
+yS
+KI
+"}
+(26,1,1) = {"
+xj
+rv
+JB
+Tc
+JW
+JW
+bI
+QD
+Kt
+Kt
+Kt
+Kt
+CB
+Ni
+Ni
+vp
+Ni
+Ni
+wK
+Ni
+yS
+vJ
+vc
+CY
+Nq
+GK
+ST
+pV
+yS
+KI
+"}
+(27,1,1) = {"
+xj
+rv
+JB
+Yq
+JW
+JW
+BS
+LJ
+Kt
+ey
+ey
+Kt
+Nc
+Ni
+GV
+Hx
+yp
+Ni
+Tz
+Ni
+yS
+yS
+yS
+DR
+yS
+yS
+yS
+yS
+yS
+KI
+"}
+(28,1,1) = {"
+xj
+es
+VV
+iE
+JW
+JW
+BS
+jc
+ct
+LO
+FT
+ct
+jc
+Ni
+xk
+Hx
+ai
+Ni
+Tz
+Ni
+Ni
+Ni
+Ni
+Lg
+Ni
+KI
+KI
+KI
+KI
+sc
+"}
+(29,1,1) = {"
+xj
+rv
+VV
+Mo
+JW
+JW
+JW
+Pg
+ct
+ct
+ct
+ct
+Pg
+TP
+Hx
+lp
+Hx
+hi
+Tz
+eq
+LT
+Ni
+Ni
+Lt
+Ni
+Ni
+Ni
+Ni
+KI
+Aa
+"}
+(30,1,1) = {"
+xj
+dY
+VV
+Mq
+JW
+JW
+iE
+SE
+Bk
+Bk
+Bk
+Bk
+SE
+Ni
+Yj
+Hx
+IN
+Ni
+Bc
+Tz
+Tz
+Tz
+Tz
+Tz
+xL
+LY
+LY
+Ni
+KI
+es
+"}
+(31,1,1) = {"
+xj
+rv
+VV
+bg
+JW
+Vh
+rq
+sH
+Vv
+Vv
+Vv
+Vv
+Vv
+PN
+jj
+Hx
+oL
+PN
+wR
+Xv
+Tz
+Ni
+Ni
+Bq
+Ni
+LY
+LY
+PN
+xH
+rv
+"}
+(32,1,1) = {"
+tc
+zg
+El
+El
+El
+El
+El
+wL
+Vv
+Vv
+Vv
+Vv
+zg
+PN
+oc
+uI
+df
+PN
+Kv
+Ji
+Qx
+Ni
+iH
+ig
+Ni
+Fy
+kH
+PN
+xH
+qH
+"}
+(33,1,1) = {"
+xj
+zg
+El
+OV
+ll
+ZJ
+Rs
+WB
+zg
+Vv
+Vv
+zg
+Oh
+Ni
+rM
+rM
+rM
+Ni
+rM
+rM
+rM
+Ni
+Ni
+Ni
+Ni
+rM
+rM
+Ni
+xH
+rv
+"}
+(34,1,1) = {"
+xj
+zg
+El
+te
+dJ
+Bw
+El
+Ku
+HB
+Vv
+Vv
+HB
+rv
+es
+rv
+rv
+rv
+es
+rv
+rv
+rv
+ku
+es
+rv
+rv
+rv
+rv
+rv
+XK
+rv
+"}
+(35,1,1) = {"
+bi
+Rt
+El
+El
+El
+El
+El
+kE
+bi
+Vv
+Vv
+bi
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+Rl
+bi
+rv
+"}

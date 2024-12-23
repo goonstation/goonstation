@@ -108,6 +108,7 @@
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 			for(var/turf/T in range(src,0))
 				make_cleanable(/obj/decal/cleanable/machine_debris, T)
+			message_ghosts("<b>A law rack</b> has been destroyed at [log_loc(src.loc, ghostjump=TRUE)].")
 			qdel(src)
 			return
 		var/law_update_needed = FALSE
@@ -228,8 +229,6 @@
 		damage = round((0.15*P.power*P.proj_data.ks_ratio), 1.0)
 		damage = damage - min(damage,3) //bullet resist
 		if (damage < 1 || istype(P.proj_data,/datum/projectile/laser/heavy/law_safe))
-			if(!P.proj_data.silentshot)
-				src.visible_message(SPAN_ALERT("[src] is hit by the [P] but it deflects harmlessly."))
 			return
 
 		src.material_trigger_on_bullet(src, P)
@@ -245,9 +244,6 @@
 				changeHealth(-damage*0.5,P.shooter)
 			if (D_ENERGY)
 				changeHealth(-damage*0.75,P.shooter)
-
-		if(!P.proj_data.silentshot)
-			src.visible_message(SPAN_ALERT("[src] is hit by the [P]!"))
 
 	update_icon()
 		var/image/circuit_image = null
@@ -576,30 +572,18 @@
 				if(R.dependent && R?.mainframe?.law_rack_connection != src)
 					R.law_rack_connection = R?.mainframe?.law_rack_connection //goddamn shells
 					continue
-				R.playsound_local(R, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
+				R.playsound_local(R, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 				R.show_text(notification_text, "red")
 				src.show_laws(R)
 				affected_mobs |= R
 				if(isAI(R))
 					var/mob/living/silicon/ai/holoAI = R
 					holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
-
-					var/ability_type
-					var/datum/abilityHolder/silicon/ai/aiAH = R.abilityHolder
-					var/list/current_abilities = list()
-					for(var/datum/ability in aiAH.abilities)
-						current_abilities |= ability.type
-					var/list/abilities_to_remove = current_abilities - ai_abilities
-					for(ability_type in abilities_to_remove)
-						if (ispath(ability_type, /datum/targetable/ai/module))
-							aiAH.removeAbility(ability_type)
-					var/list/abilities_to_add = ai_abilities - current_abilities
-					for(ability_type in abilities_to_add)
-						aiAH.addAbility(ability_type)
+					src.reset_ai_abilities(R)
 		src.calculate_power_usage()
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == src)
-				E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
+				E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 				src.show_laws(E)
 				affected_mobs |= E.mainframe
 				var/mob/living/silicon/ai/holoAI = E.mainframe
@@ -685,7 +669,7 @@
 			for (var/i in 1 to 10)
 				sleep(0.4 SECONDS)
 				if(src && prob(60))
-					var/obj/mined = new /obj/item/currency/spacecash/buttcoin
+					var/obj/mined = new /obj/item/currency/buttcoin
 					mined.set_loc(src.loc)
 					target = get_step(src, rand(1,8))
 					for (var/mob/living/mob in view(7,src))
@@ -709,7 +693,7 @@
 				src.ClearSpecificParticles("mine_spark")
 			sleep(0.7 SECONDS) // just enough time to recognize the card
 			if (I)
-				fireflash(I,0, checkLos = FALSE)
+				fireflash(I,0, checkLos = FALSE, chemfire = CHEM_FIRE_RED)
 				I.combust()
 
 	/**
@@ -717,6 +701,12 @@
 	 * Does not call UpdateLaws()
 	 */
 	proc/SetLaw(obj/item/aiModule/mod, slot = 1, screwed_in = FALSE, welded_in = FALSE)
+		if(istype(src.law_circuits[slot],/obj/item/aiModule/hologram_expansion))
+			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slot]
+			src.holo_expansions -= holo.expansion
+		else if(istype(src.law_circuits[slot],/obj/item/aiModule/ability_expansion))
+			var/obj/item/aiModule/ability_expansion/expansion = src.law_circuits[slot]
+			src.ai_abilities -= expansion.ai_abilities
 		if(mod && slot <= MAX_CIRCUITS)
 			src.law_circuits[slot] = mod
 			src.welded[slot] = welded_in
@@ -725,6 +715,9 @@
 			if(istype(mod,/obj/item/aiModule/hologram_expansion))
 				var/obj/item/aiModule/hologram_expansion/holo = mod
 				src.holo_expansions |= holo.expansion
+			else if(istype(mod,/obj/item/aiModule/ability_expansion))
+				var/obj/item/aiModule/ability_expansion/expansion = mod
+				src.ai_abilities |= expansion.ai_abilities
 			UpdateIcon()
 			src.calculate_power_usage()
 			return TRUE
@@ -790,6 +783,20 @@
 			if (src.law_circuits[i])
 				src.power_usage += 100
 
+	proc/reset_ai_abilities(mob/living/silicon/ai/target)
+		var/ability_type
+		var/datum/abilityHolder/silicon/ai/aiAH = target.abilityHolder
+		var/list/current_abilities = list()
+		for(var/datum/ability in aiAH.abilities)
+			current_abilities |= ability.type
+		var/list/abilities_to_remove = current_abilities - src.ai_abilities
+		for(ability_type in abilities_to_remove)
+			if (ispath(ability_type, /datum/targetable/ai/module))
+				aiAH.removeAbility(ability_type)
+		var/list/abilities_to_add = src.ai_abilities - current_abilities
+		for(ability_type in abilities_to_add)
+			aiAH.addAbility(ability_type)
+
 /particles/rack_smoke
 	icon = 'icons/effects/effects.dmi'
 	icon_state = list("smoke")
@@ -826,3 +833,11 @@
 	name = "AI Law Mount Rack - Syndicate Model"
 	icon_state = "airack_syndicate_empty"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs. This one has a little S motif on the side."
+
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()

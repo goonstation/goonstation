@@ -7,7 +7,7 @@ ABSTRACT_TYPE(/datum/material_property)
 	var/id = ""
 	/// Min value of this property. Please NOTHING BELOW `1`. It breaks everything.
 	var/min_value = 1
-	/// Max value of this property. May be modified by quality.
+	/// Max value of this property.
 	var/max_value = 9
 	/// What should be considered the "default" value of this property?
 	var/default_value = 5
@@ -213,11 +213,13 @@ ABSTRACT_TYPE(/datum/material_property)
 	onAdded(var/datum/material/M, var/new_value)
 		M.addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/radioactive_add())
 		M.addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/radioactive_remove())
+		M.addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/radioactive_temp())
 		return
 
 	onRemoved(var/datum/material/M)
 		M.removeTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radioactive_add)
 		M.removeTrigger(TRIGGERS_ON_REMOVE, /datum/materialProc/radioactive_remove)
+		M.removeTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/radioactive_temp())
 		return
 
 /datum/material_property/neutron_radioactivity

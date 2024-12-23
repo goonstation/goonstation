@@ -106,6 +106,7 @@
 		)
 
 	ui_act(action, params)
+		. = ..()
 		switch(action)
 			if ("set_turn")
 				if (src.timing) return
@@ -147,7 +148,7 @@
 		src.ui_interact(user)
 
 	attack_ai(var/mob/user)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_self(var/mob/user)
-		return src.attack_hand(user)
+		return src.Attackhand(user)

@@ -122,6 +122,11 @@
 	spawn_contents = list(/obj/item/rcd_ammo = 5,
 	/obj/item/rcd)
 
+	make_my_stuff()
+		. = ..()
+		if (prob(30))
+			new /obj/item/paper/businesscard/hemera_rcd(src)
+
 /obj/storage/crate/rcd/CE
 	name = "\improper RCD crate"
 	desc = "A crate for the Chief Engineer's personal RCD."
@@ -167,12 +172,6 @@
 	icon_opened = "biohazardcrateopen"
 	icon_closed = "biohazardcrate"
 	weld_image_offset_Y = -2
-
-	cdc
-		name = "CDC pathogen sample crate"
-		desc = "A crate for sending pathogen or blood samples to the CDC for analysis."
-		spawn_contents = list(/obj/item/reagent_containers/syringe,
-		/obj/item/paper/cdc_pamphlet)
 
 /obj/storage/crate/freezer/milk
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 10, \
@@ -339,15 +338,17 @@
 				var/datum/syndicate_buylist/item_datum = weighted_pick(possible_items)
 				crate_contents += item_datum.name
 				if(telecrystals + item_datum.cost > 24) continue
-				var/obj/item/I = new item_datum.item(src)
-				I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
-				if (owner)
-					item_datum.run_on_spawn(I, owner, TRUE, owner_uplink)
-					var/datum/antagonist/traitor/T = owner.mind?.get_antagonist(ROLE_TRAITOR)
-					if (istype(T))
-						T.surplus_crate_items.Add(item_datum)
+				if(length(item_datum.items) == 0) continue
+				for (var/item in item_datum.items)
+					var/obj/item/I = new item(src)
+					I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
+					if (owner)
+						item_datum.run_on_spawn(I, owner, TRUE, owner_uplink)
+						var/datum/antagonist/traitor/T = owner.mind?.get_antagonist(ROLE_TRAITOR)
+						if (istype(T))
+							T.surplus_crate_items.Add(item_datum)
 				telecrystals += item_datum.cost
-			var/str_contents = kText.list2text(crate_contents, ", ")
+			var/str_contents = jointext(crate_contents, ", ")
 			logTheThing(LOG_DEBUG, owner, "surplus crate contains: [str_contents] at [log_loc(src)]")
 		#undef NESTED_SCALING_FACTOR
 
@@ -526,7 +527,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		spawn_contents = list(/obj/item/gun/kinetic/light_machine_gun,
 		/obj/item/storage/pouch/lmg,
 		/obj/item/storage/grenade_pouch/high_explosive,
-		/obj/item/storage/fanny/syndie,
+		/obj/item/storage/fanny/syndie/large,
 		/obj/item/clothing/suit/space/industrial/syndicate/specialist,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
@@ -548,7 +549,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/clothing/glasses/nightvision,
 		/obj/item/cloaking_device,
 		/obj/item/old_grenade/smoke = 2,
-		/obj/item/dagger/syndicate/specialist,
+		/obj/item/dagger/specialist,
 		/obj/item/card/emag,
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
@@ -627,7 +628,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/fireaxe,
 		/obj/item/storage/grenade_pouch/napalm,
 		/obj/item/storage/grenade_pouch/incendiary,
-		/obj/item/storage/fanny/syndie,
+		/obj/item/storage/fanny/syndie/large,
 		/obj/item/clothing/suit/space/syndicate/specialist/firebrand,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/firebrand)
 
@@ -637,7 +638,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		spawn_contents = list(/obj/item/gun/kinetic/sniper,
 		/obj/item/storage/pouch/sniper,
 		/obj/item/storage/grenade_pouch/smoke,
-		/obj/item/storage/fanny/syndie,
+		/obj/item/storage/fanny/syndie/large,
 		/obj/item/clothing/glasses/thermal/traitor,
 		/obj/item/clothing/suit/space/syndicate/specialist/sniper,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/sniper)
@@ -647,7 +648,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/heavy_power_sword,
 		/obj/item/clothing/shoes/swat/knight,
-		/obj/item/clothing/gloves/swat/knight,
+		/obj/item/clothing/gloves/swat/syndicate/knight,
 		/obj/item/clothing/suit/space/syndicate/knight,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
 
@@ -656,7 +657,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/breaching_hammer/rock_sledge,
 		/obj/item/device/radio/headset/syndicate/bard,
-		/obj/item/storage/fanny/syndie,
+		/obj/item/storage/fanny/syndie/large,
 		/obj/item/clothing/suit/space/syndicate/specialist/bard,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/bard)
 
@@ -717,14 +718,14 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/raw_material/miracle = 2,
 		/obj/item/raw_material/telecrystal = 5,
 		/obj/item/raw_material/cerenkite = 5,
-		/obj/item/mining_tool/powerhammer)
+		/obj/item/mining_tool/powered/hammer)
 
 	ore2
 		spawn_contents = list(/obj/item/raw_material/plasmastone = 5,
 		/obj/item/raw_material/uqill = 5,
 		/obj/item/clothing/head/helmet/space/industrial,
 		/obj/item/clothing/suit/space/industrial,
-		/obj/item/mining_tool/power_pick)
+		/obj/item/mining_tool/powered/pickaxe)
 
 	ore3
 		spawn_contents = list(/obj/item/raw_material/cobryl = 5,
@@ -740,7 +741,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/mining_tool)
 
 	rad
-		spawn_contents = list(/obj/item/clothing/suit/rad,
+		spawn_contents = list(/obj/item/clothing/suit/hazard/rad,
 		/obj/item/mine/radiation = 5,
 		/obj/item/clothing/head/rad_hood,
 		/obj/item/storage/pill_bottle/antirad,
@@ -813,8 +814,48 @@ TYPEINFO(/obj/storage/crate/chest)
 
 	cargonia
 		spawn_contents = list(/obj/item/radio_tape/advertisement/cargonia,
-		/obj/item/clothing/under/rank/cargo,/obj/decal/fakeobjects/skeleton)
+		/obj/item/clothing/under/rank/cargo,/obj/fakeobject/skeleton)
 
 	escape
 		spawn_contents = list(/obj/item/sea_ladder,
 		/obj/item/pipebomb/bomb/engineering = 2)
+
+// evil nasty biohazard crate
+/obj/storage/crate/stxcrate
+	name = "saxitoxin grenade crate"
+	desc = "A menacing crate to store deadly saxitoxin grenades."
+	icon_state = "stxcrate"
+	icon_opened = "stxcrate_open"
+	icon_closed = "stxcrate"
+
+	filled_6
+		New()
+			var/datum/loot_generator/stx_filler
+			src.vis_controller = new(src)
+			stx_filler =  new /datum/loot_generator(3,1)
+			stx_filler.fill_remaining_with_instance(src, new /obj/loot_spawner/short/two_stx_grenades)
+			..()
+
+	filled_12
+		New()
+			var/datum/loot_generator/stx_filler
+			src.vis_controller = new(src)
+			stx_filler =  new /datum/loot_generator(3,2)
+			stx_filler.fill_remaining_with_instance(src, new /obj/loot_spawner/short/two_stx_grenades)
+			..()
+
+/obj/storage/crate/ks23
+	name = "Kuvalda Carbine crate"
+	desc = "A hefty container, presumably containing an equally hefty shotgun."
+	icon_state = "attachecase"
+	icon_opened = "attachecase_open"
+	icon_closed = "attachecase"
+
+	New()
+		var/datum/loot_generator/shotgun_gen
+		src.vis_controller = new(src)
+		shotgun_gen =  new /datum/loot_generator(4,3)
+		shotgun_gen.place_loot_instance(src,1,2, new /obj/loot_spawner/xlong_tall/ks23)
+		shotgun_gen.place_loot_instance(src,1,1, new /obj/loot_spawner/medium/ks23_shrapnel)
+		shotgun_gen.place_loot_instance(src,3,1, new /obj/loot_spawner/medium/ks23_slug)
+		..()

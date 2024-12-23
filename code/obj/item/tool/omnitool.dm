@@ -33,6 +33,14 @@
 		if (src.mode == OMNI_MODE_PRYING)
 			if (!pry_surgery(target, user))
 				return ..()
+		else if (src.mode == OMNI_MODE_WELDING)
+			if (src.welding && ishuman(target) && (user.a_intent != INTENT_HARM))
+				var/mob/living/carbon/human/H = target
+				if (H.bleeding || (H.organHolder?.back_op_stage > BACK_SURGERY_OPENED && user.zone_sel.selecting == "chest"))
+					if (!src.cautery_surgery(H, user, 15, src.welding))
+						return ..()
+			else
+				..()
 		else
 			..()
 
@@ -103,7 +111,7 @@
 
 			if (OMNI_MODE_SCREWING)
 				set_icon_state("[prefix]-screwing")
-				src.setItemSpecial(/datum/item_special/simple)
+				src.setItemSpecial(/datum/item_special/jab)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-screwing"), src)
@@ -163,8 +171,10 @@
 		var/safety = 0
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
+			if (!H.sight_check()) //don't blind if we're already blind
+				safety = 2
 			// we want to check for the thermals first so having a polarized eye doesn't protect you if you also have a thermal eye
-			if (istype(H.glasses, /obj/item/clothing/glasses/thermal) || H.eye_istype(/obj/item/organ/eye/cyber/thermal) || istype(H.glasses, /obj/item/clothing/glasses/nightvision) || H.eye_istype(/obj/item/organ/eye/cyber/nightvision))
+			else if (istype(H.glasses, /obj/item/clothing/glasses/thermal) || H.eye_istype(/obj/item/organ/eye/cyber/thermal) || istype(H.glasses, /obj/item/clothing/glasses/nightvision) || H.eye_istype(/obj/item/organ/eye/cyber/nightvision))
 				safety = -1
 			else if (istype(H.head, /obj/item/clothing/head/helmet/welding))
 				var/obj/item/clothing/head/helmet/welding/WH = H.head
@@ -242,7 +252,7 @@
 			if(!(get_fuel() > 0))
 				src.change_mode(OMNI_MODE_WELDING, user, /obj/item/weldingtool)
 
-		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
+		if (O.loc == user && O != src && istype(O, /obj/item/clothing) && !istype(O, /obj/item/clothing/mask/cigarette))
 			boutput(user, SPAN_HINT("You hide the set of tools inside \the [O]. (Use the flex emote while wearing the clothing item to retrieve it.)"))
 			user.u_equip(src)
 			src.set_loc(O)
@@ -252,8 +262,8 @@
 		..()
 
 	New()
-		. = ..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		. = ..()
 		src.create_reagents(20)
 		reagents.add_reagent("fuel", 20)
 

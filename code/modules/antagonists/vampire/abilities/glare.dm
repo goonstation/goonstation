@@ -37,6 +37,7 @@
 			M.visible_message(SPAN_ALERT("What was that? There's something odd about [M]'s eyes."))
 			return 0 // Cooldown because spam is bad.
 
+		. = ..()
 		if(istype(M))
 			M.visible_message(SPAN_ALERT("<B>[M]'s eyes emit a blinding flash at [target]!</B>"))
 		else

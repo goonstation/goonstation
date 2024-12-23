@@ -38,7 +38,7 @@
 			return
 		if ((usr in src.contents) || !isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown"))
 			return
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
@@ -73,6 +73,10 @@
 		playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 		return
 
+	Click(location, control, params)
+		if(!src.ghost_observe_occupant(usr, src.occupant))
+			. = ..()
+
 	MouseDrop_T(mob/living/target, mob/user)
 		if (!istype(target) || isAI(user))
 			return
@@ -80,9 +84,10 @@
 		if (BOUNDS_DIST(src, user) > 0 || BOUNDS_DIST(user, target) > 0)
 			return
 
-		if (target == user)
-			go_in(target)
-		else if (can_operate(user,target))
+		if (can_operate(user, target))
+			if (target == user)
+				go_in(target)
+				return
 			var/previous_user_intent = user.a_intent
 			user.set_a_intent(INTENT_GRAB)
 			user.drop_item()
@@ -92,22 +97,22 @@
 				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)
-		return
 
 	proc/can_operate(var/mob/M, var/mob/living/target)
 		if (!isalive(M))
 			return 0
 		if (BOUNDS_DIST(src, M) > 0)
 			return 0
-		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
+		if (M.getStatusDuration("unconscious") || M.getStatusDuration("stunned") || M.getStatusDuration("knockdown"))
 			return 0
 		if (src.occupant)
 			boutput(M, SPAN_NOTICE("<B>The scanner is already occupied!</B>"))
 			return 0
 		if(ismobcritter(target))
-			boutput(M, SPAN_ALERT("<B>The scanner doesn't support this body type.</B>"))
-			return 0
-		if(!iscarbon(target) )
+			if(!genResearch.isResearched(/datum/geneticsResearchEntry/critter_scanner))				 // CHANGE TO CHECK FOR MODULE?
+				boutput(M, SPAN_ALERT("<B>The scanner doesn't support this body type.</B>"))
+				return 0
+		else if(!iscarbon(target) )
 			boutput(M, SPAN_ALERT("<B>The scanner supports only carbon based lifeforms.</B>"))
 			return 0
 		if (src.occupant)
@@ -169,16 +174,7 @@
 		else if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
 
-			if (src.occupant)
-				boutput(user, SPAN_ALERT("<B>The scanner is already occupied!</B>"))
-				return
-
-			if (src.locked)
-				boutput(user, SPAN_ALERT("<B>You need to unlock the scanner first.</B>"))
-				return
-
-			if(!iscarbon(G.affecting))
-				boutput(user, SPAN_HINT("<B>The scanner supports only carbon based lifeforms.</B>"))
+			if(!can_operate(user, G.affecting))
 				return
 
 			var/mob/M = G.affecting

@@ -11,7 +11,7 @@
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "BioEffectManager")
-	ui.open()
+		ui.open()
 
 /datum/bioeffectmanager/ui_data(mob/user)
 	var/list/bioEffects = list()

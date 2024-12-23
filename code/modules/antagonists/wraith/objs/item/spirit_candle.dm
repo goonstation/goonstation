@@ -27,6 +27,7 @@
 				if ((W.last_spirit_candle_time + (W.forced_haunt_duration + 6 SECONDS)) < TIME)
 					W.last_spirit_candle_time = TIME
 					W.setStatus("corporeal", W.forced_haunt_duration, TRUE)
+					logTheThing(LOG_COMBAT, W, "is forced to manifest at [log_loc(W)] due to a spirit candle used by [user]")
 					boutput(W, SPAN_ALERT("A malignant spirit pulls you into the physical world! You begin to gather your forces to try and escape to the spirit realm..."))
 				else
 					boutput(user, SPAN_NOTICE("[src] vibrates slightly in your hand. A hostile entity lurks nearby but resisted our attempts to reveal it!"))

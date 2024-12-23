@@ -78,7 +78,7 @@
 			if(isAIeye(M))
 				obs_data["name"] += "'s eye"
 				obs_data["real_name"] += "'s eye"
-			obs_data["dead"] = isdead(M)
+			obs_data["dead"] = isdead(M) || inafterlife(M) || isVRghost(M)
 			obs_data["job"] = M.job
 			obs_data["npc"] = (M.client == null && M.ghost == null) //dead players have no client, but should have a ghost
 			obs_data["player"] = (M.client != null || M.ghost != null) //okay, I know this is just !npc, but it won't ever get set for objects, so it's needed

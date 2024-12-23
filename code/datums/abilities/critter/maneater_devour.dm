@@ -2,7 +2,6 @@
 	duration = 8 SECONDS
 	//no cancelling by moving the maneater. You gotta rip the person right out of their hands!
 	interrupt_flags =  INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "maneater_devour"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
 	bar_icon_state = "bar"
@@ -80,8 +79,15 @@
 
 		//Now, if a maneater has eaten someone, we will boost its stats the same way like it would be if it was fed a human in a tray
 		if (eating_maneater)
-			eating_maneater.plantgenes.endurance += rand(30, 40)
+			var/endurance_bonus = rand(30, 40)
+			//now we check if the target has any preferred spices in it and increase the endurance gain accordingly
+			if (target.reagents && length(eating_maneater.preferred_spices))
+				for (var/spice in eating_maneater.preferred_spices)
+					if (target.reagents.has_reagent(spice))
+						endurance_bonus += rand(3,8)
+			eating_maneater.plantgenes.endurance += min(endurance_bonus, 60)
 			eating_maneater.update_health_by_endurance(eating_maneater.plantgenes?.get_effective_value("endurance"), FALSE)
+
 
 		//Now, once we have all that together, kill the target
 

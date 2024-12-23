@@ -97,7 +97,6 @@
 	linked_commodities = list(
 		/datum/commodity/mat_bar = 10,
 	)
-/// pathology
 
 /datum/commodity/mat_bar
 	comname = "Material Bar"
@@ -431,32 +430,32 @@
 /datum/commodity/drugs/poppies
 	comname = "Poppies"
 	comtype = /obj/item/plant/herb/poppy
-	price = PAY_DOCTORATE/2
+	price = PAY_UNTRAINED
 
 /datum/commodity/drugs/shrooms
 	comname = "Psilocybin"
 	comtype = /obj/item/reagent_containers/food/snacks/mushroom/psilocybin
-	price = PAY_DOCTORATE
+	price = PAY_UNTRAINED
 
 /datum/commodity/drugs/cannabis
 	comname = "Cannabis"
 	comtype = /obj/item/plant/herb/cannabis
-	price = PAY_UNTRAINED
+	price = PAY_UNTRAINED/2
 
 /datum/commodity/drugs/cannabis_mega
 	comname = "Rainbow Cannabis"
 	comtype = /obj/item/plant/herb/cannabis/mega
-	price = PAY_DOCTORATE
+	price = PAY_UNTRAINED
 
 /datum/commodity/drugs/cannabis_white
 	comname = "White Cannabis"
 	comtype = /obj/item/plant/herb/cannabis/white
-	price = PAY_DOCTORATE
+	price = PAY_UNTRAINED
 
 /datum/commodity/drugs/cannabis_omega
 	comname = "Omega Cannabis"
 	comtype = /obj/item/plant/herb/cannabis/omega
-	price = PAY_EMBEZZLED
+	price = PAY_TRADESMAN
 
 ///// things you can buy from the traders
 
@@ -494,12 +493,6 @@
 	comname = "Krokodil (1x syringe)"
 	comtype = /obj/item/reagent_containers/syringe/krokodil
 	desc = "A sketchy homemade opiate often used by disgruntled Cosmonauts."
-	price = PAY_UNTRAINED
-
-/datum/commodity/drugs/jenkem
-	comname = "Jenkem (1x syringe)"
-	comtype = /obj/item/reagent_containers/syringe/jenkem
-	desc = "A low quality sewage drug used by no one in the right state of mind."
 	price = PAY_UNTRAINED
 
 /datum/commodity/drugs/lsd
@@ -579,6 +572,12 @@
 ///// syndicate trader /////////
 ////////////////////////////////
 
+/datum/commodity/clothing_restock
+	comname = "Syndicate Clothing Vendor Restock Cartridge"
+	desc = "A restock cartridge for restocking syndicate clothing vending machines."
+	comtype = /obj/item/vending/restock_cartridge/jobclothing/syndicate
+	price = PAY_IMPORTANT
+
 /datum/commodity/contraband
 	comname = "Contraband"
 	desc = "Stolen gear and syndicate products."
@@ -640,6 +639,12 @@
 	comname = "Scary Gasmask"
 	comtype = /obj/item/clothing/mask/gas/swat
 	desc = "Pretty much exactly what it sounds like."
+	price = PAY_IMPORTANT
+
+/datum/commodity/contraband/swatmask/NT
+	comname = "Scary NanoTrasen Gasmask"
+	comtype = /obj/item/clothing/mask/gas/swat/NT
+	desc = "Pretty much exactly what it sounds like, but in blue."
 	price = PAY_IMPORTANT
 
 /datum/commodity/contraband/plutonium
@@ -760,12 +765,6 @@
 	comtype = /obj/item/scrap
 	price = PAY_UNTRAINED/10
 	desc_buy = "We are interested in recycling ground metal scrap."
-
-/datum/commodity/salvage/electronic_debris
-	comname = "Electronic Debris"
-	comtype = /obj/item/electronics
-	price = PAY_UNTRAINED/10
-	desc_buy = "We will recover metals from resistors, fuses, and other electronic debris."
 
 /datum/commodity/salvage/robot_upgrades
 	comname = "Cyborg Upgrade"
@@ -933,6 +932,11 @@
 	comtype = /obj/item/reagent_containers/food/snacks/goldfish_cracker
 	price = PAY_TRADESMAN*2
 
+/datum/commodity/diner/monster
+	comname = "THE MONSTER"
+	comtype = /obj/item/reagent_containers/food/snacks/burger/monsterburger
+	price = PAY_TRADESMAN*2
+
 // sell
 
 /datum/commodity/diner
@@ -943,11 +947,6 @@
 	comname = "Mystery Burger"
 	comtype = /obj/item/reagent_containers/food/snacks/burger/mysteryburger
 	price = PAY_UNTRAINED/10
-
-/datum/commodity/diner/monster
-	comname = "THE MONSTER"
-	comtype = /obj/item/reagent_containers/food/snacks/burger/monsterburger
-	price = PAY_UNTRAINED/2
 
 /datum/commodity/diner/sloppyjoe
 	comname = "Sloppy Joe"
@@ -1307,7 +1306,7 @@
 
 /datum/commodity/medical/injectormask
 	comname = "Vapo-Matic"
-	comtype = /obj/item/clothing/mask/gas/injector_mask
+	comtype = /obj/item/clothing/mask/injector_mask
 	desc = "A gas mask that doses the wearer with chemicals loaded from a container."
 	price = PAY_EMBEZZLED
 
@@ -1375,7 +1374,7 @@
 
 /datum/commodity/medical/cyanide
 	comname = "Cyanide"
-	comtype = /obj/item/reagent_containers/glass/bottle/cyanide
+	comtype = /obj/item/reagent_containers/pill/toxlite
 	desc = "A rapidly acting and highly dangerous chemical."
 	price = PAY_EMBEZZLED
 
@@ -1421,6 +1420,11 @@
 /datum/commodity/costume/wonka
 	comname = "Victorian Confectionery Factory Owner Costume"
 	comtype = /obj/item/storage/box/costume/crap/wonka
+	price = PAY_TRADESMAN
+
+/datum/commodity/costume/goku
+	comname = "Anime Martial Artist Costume"
+	comtype = /obj/item/storage/box/costume/crap/goku
 	price = PAY_TRADESMAN
 
 /datum/commodity/costume/light_borg //YJHGHTFH's light borg costume
@@ -1499,6 +1503,12 @@
 	comtype = /obj/item/storage/box/costume/jester
 	desc = "Travel back in time and become the medieval version of a clown. (Does not provide time travel)"
 	price = PAY_TRADESMAN
+
+/datum/commodity/costume/rabbitsuit
+	comname = "Rabbit Suit"
+	comtype = /obj/item/storage/box/costume/rabbitsuit
+	desc = "A not-at-all scary rabbit suit! Steam clean only."
+	price = PAY_UNTRAINED
 
 /datum/commodity/backpack/breadpack
 	comname = "Bag-uette"
@@ -1597,61 +1607,6 @@
 	upperfluc = 150
 	lowerfluc = -20
 */
-
-/// pathology
-/datum/commodity/synthmodule
-	comname = "Synth-O-Matic module"
-	comtype = /obj/item/synthmodule
-	desc = "A synth-o-matic module."
-	onmarket = 0
-	price = PAY_DOCTORATE*5
-
-/datum/commodity/synthmodule/vaccine
-	comname = "Synth-O-Matic vaccine module"
-	comtype = /obj/item/synthmodule/vaccine
-
-/datum/commodity/synthmodule/upgrader
-	comname = "Synth-O-Matic efficiency module"
-	comtype = /obj/item/synthmodule/upgrader
-
-/datum/commodity/synthmodule/assistant
-	comname = "Synth-O-Matic assistant module"
-	comtype = /obj/item/synthmodule/assistant
-
-/datum/commodity/synthmodule/synthesizer
-	comname = "Synth-O-Matic synthesizer module"
-	comtype = /obj/item/synthmodule/synthesizer
-
-/datum/commodity/synthmodule/virii
-	comname = "Synth-O-Matic virus module"
-	comtype = /obj/item/synthmodule/virii
-
-/datum/commodity/synthmodule/bacteria
-	comname = "Synth-O-Matic bacterium module"
-	comtype = /obj/item/synthmodule/bacteria
-
-/datum/commodity/synthmodule/fungi
-	comname = "Synth-O-Matic fungus module"
-	comtype = /obj/item/synthmodule/fungi
-
-/datum/commodity/synthmodule/parasite
-	comname = "Synth-O-Matic parasite module"
-	comtype = /obj/item/synthmodule/parasite
-
-/datum/commodity/synthmodule/gmcell
-	comname = "Synth-O-Matic great mutatis cell module"
-	comtype = /obj/item/synthmodule/gmcell
-
-/datum/commodity/synthmodule/radiation
-	comname = "Synth-O-Matic irradiation module"
-	comtype = /obj/item/synthmodule/radiation
-
-/datum/commodity/pathogensample
-	comname = "Pathogen sample"
-	comtype = /obj/item/reagent_containers/glass/vial/prepared
-	desc = "A sample of pathogen. Probably stolen from a lab somewhere. Handle with care."
-	onmarket = 0
-	price = PAY_DOCTORATE
 
 /datum/commodity/largeartifact
 	comname = "Large Artifact"
@@ -1997,7 +1952,7 @@
 	desc = "In respect of those lost during the colonization of the frontier, we are now offering poppies."
 	comtype = /obj/item/plant/herb/poppy
 	onmarket = 0
-	price = PAY_DOCTORATE/2
+	price = PAY_UNTRAINED
 
 /datum/commodity/owlpaint
 	comtype = /obj/item/pod/paintjob/owl

@@ -53,7 +53,9 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 
 	apply_to(mob/living/carbon/human/human)
 		//assume it's only limbs for humans for now, maybe also include eyes and stuff in future??
-		human.limbs.replace_with(src.slot, pick(src.part_type), null, FALSE, TRUE) //pick can totally handle single values apparently
+		var/limb_type = pick(src.part_type)
+		if(human.limbs.get_limb(slot)?.type != limb_type)
+			human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE) //pick can totally handle single values apparently
 
 	can_apply(mob/M)
 		return ..() && ishuman(M)
@@ -69,7 +71,8 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 				limb_type = human.mutantrace.l_limb_arm_type_mutantrace_f || limb_type
 			if (!limb_type)
 				limb_type = src.part_type
-			human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
+			if(human.limbs.l_arm?.type != limb_type)
+				human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
 
 	default_right
 		id = "arm_default_right"
@@ -82,7 +85,8 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 				limb_type = human.mutantrace.r_limb_arm_type_mutantrace_f || limb_type
 			if (!limb_type)
 				limb_type = src.part_type
-			human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
+			if(!human.limbs.r_arm?.type == limb_type)
+				human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
 
 	robo_left
 		id = "arm_robo_left"

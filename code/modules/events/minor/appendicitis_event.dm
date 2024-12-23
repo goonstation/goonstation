@@ -13,14 +13,17 @@
 			if (isnpc(H)) continue // player
 			if (isvirtual(H)) continue
 			if (inafterlife(H)) continue
-			//TODO: in medical records
+			var/datum/db_record/record = data_core.general.find_record("name", H.real_name)
+			if (!record || record["pstat"] == "*Deceased*") continue
 			if (istype(H.loc, /obj/cryotron)) continue
 			if (!H.organHolder?.appendix) continue // with appendix
 			if (H.organHolder?.appendix?.robotic) continue // that isn't robotic
 			potential_victims += H
 		if (length(potential_victims))
-			shuffle_list(potential_victims)
 			var/num = rand(2, 4)
 			for (var/i in 1 to num)
-				var/mob/living/carbon/human/patient = potential_victims[i]
+				if (!length(potential_victims))
+					break
+				var/mob/living/carbon/human/patient = pick(potential_victims)
+				potential_victims -= patient
 				patient?.contract_disease(/datum/ailment/disease/appendicitis, null, null, 1)

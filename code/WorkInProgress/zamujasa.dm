@@ -174,43 +174,6 @@
 		src.bumped = 1
 		animate(src, alpha = 0, maptext_y = maptext_y + 8, time = 4)
 
-
-/obj/ptl_mirror
-#define NW_SE 0
-#define SW_NE 1
-
-	anchored = ANCHORED
-	density = 1
-	opacity = 0
-	icon = 'icons/obj/metal.dmi'
-	icon_state = "sheet-g_1"
-
-	var/facing = NW_SE
-	var/list/affecting = list()
-
-	attack_hand(mob/user)
-		boutput(user, "rotating mirror...")
-		facing = 1 - facing
-		for (var/obj/machinery/power/pt_laser/PTL in affecting)
-			//
-			boutput(user, "[PTL] would be notified")
-
-
-	attackby(obj/item/W, mob/user)
-		if (iswrenchingtool(W))
-			boutput(user, "this would deconstruct it.")
-			return
-
-		..()
-		return
-
-#undef NW_SE
-#undef SW_NE
-
-
-
-
-
 /obj/invisible_teleporter
 	name = "invisible teleporter side 1"
 	desc = "Totally not a portal."
@@ -286,7 +249,6 @@
 	icon_state = "voting_box"
 	density = 1
 	event_handler_flags = NO_MOUSEDROP_QOL
-	flags = FPRINT
 	anchored = ANCHORED
 	desc = "Funds further renovations for the afterlife. You can put the fruits / vegetables / minerals / bombs you grew into this (click this with them or click-drag them onto it)."
 	var/total_score = 0
@@ -309,7 +271,7 @@
 		return " It's saved a total of [round(total_score)] points, with [round(round_score)] points added today."
 
 	proc/update_totals()
-		tracker.maptext = "<span class='c vt ps2p sh'>TOTAL [add_lspace(round(total_score), 7)]\nROUND [add_lspace(round(round_score), 7)]</span>"
+		tracker.maptext = "<span class='c vt ps2p sh'>TOTAL [pad_leading(round(total_score), 7)]\nROUND [pad_leading(round(round_score), 7)]</span>"
 
 
 	attackby(obj/item/W, mob/user)
@@ -539,7 +501,7 @@
 	icon_state = "clowkey"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "nothing"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	c_flags = ONBELT
 	force = 0
 	w_class = W_CLASS_TINY
@@ -980,12 +942,12 @@
 			if (!src.monitored_proc)
 				// no proc to check.
 				return 0
-			if (src.monitored_var && !istype(src.monitored[monitored_var], /datum))
+			if (src.monitored_var && !istype(src.monitored.vars[monitored_var], /datum))
 				// If we're calling a proc on a var it better be something we can call a proc on
 				return 0
 
 			// So what ARE we calling this proc on then?
-			src.effective_callee = (src.monitored_var ? src.monitored[src.monitored_var] : src.monitored)
+			src.effective_callee = (src.monitored_var ? src.monitored.vars[src.monitored_var] : src.monitored)
 
 			if (!hascall(src.effective_callee, monitored_proc))
 				// does it have this proc?
@@ -1268,6 +1230,12 @@
 			monitored_var = "mail_opened"
 			maptext_prefix = "<span class='c pixel sh'>Mail opened:\n<span class='vga'>"
 
+		frauded_mail
+			name = "frauded mail counter"
+			desc = "The number of times someone has frauded someone's mail."
+			monitored_var = "mail_fraud"
+			maptext_prefix = "<span class='c pixel sh'>Mail frauded:\n<span class='vga'>"
+
 		last_death
 			name = "last death monitor"
 			desc = "RIP this idiot. Hope it wasn't you!"
@@ -1279,9 +1247,9 @@
 			update_delay = 1
 
 			get_value()
-				if (!src.monitored["stats"]["lastdeath"])
+				if (!src.monitored.vars["stats"]["lastdeath"])
 					return "None... yet</span>"
-				return "[src.monitored["stats"]["lastdeath"]["name"]]</span><br>[src.monitored["stats"]["lastdeath"]["whereText"]]"
+				return "[src.monitored.vars["stats"]["lastdeath"]["name"]]</span><br>[src.monitored.vars["stats"]["lastdeath"]["whereText"]]"
 
 
 
@@ -1384,24 +1352,26 @@
 		get_value()
 			var/lagc = "#ffffff"
 			switch (world.tick_lag)
-				if (0 to 0.4)
+				if (0   to 0.2)
 					lagc = "#00ff00"
-				if (0.4 to 0.6)
+				if (0.2 to 0.4)
 					lagc = "#ffff00"
-				if (0.6 to 0.8)
+				if (0.4 to 0.6)
 					lagc = "#ff8800"
-				if (0.8 to INFINITY)
+				if (0.6 to INFINITY)
 					lagc = "#ff0000; -dm-text-outline: 1px #000000 solid"
 
 			. = "<span style='color: [lagc];'>[round(world.cpu)]% @ [world.tick_lag / 10]s</span>"
 
 		the_literal_server
-			var/obj/decal/fakeobjects/the_server = null
+			var/obj/fakeobject/the_server = null
 			var/is_smoking = 0
 
 			New()
 				..()
 				src.maptext_y += 35	// appear *over* the fake server.
+				src.maptext_prefix = "<span class='c pixel sh' style='font-size: 6px;'>"
+				src.maptext_suffix = "</span>"
 
 				the_server = new(get_turf(src))
 				the_server.name = "server rack"
@@ -1419,19 +1389,19 @@
 			get_value()
 				if (src.the_server)
 					switch (world.tick_lag)
-						if (0 to 0.4)
+						if (0   to 0.2)
 							the_server.icon_state = "server0"
-						if (0.4 to 0.6)
+						if (0.2 to 0.4)
 							the_server.icon_state = "server"
-						if (0.6 to 0.8)
+						if (0.4 to 0.6)
 							the_server.icon_state = "server2"
-						if (0.8 to INFINITY)
+						if (0.6 to INFINITY)
 							the_server.icon_state = "serverf"
 
-					if (world.tick_lag > 1.0 && !src.is_smoking)
-						// starts smoking over 1.0, not at it
+					if (world.tick_lag >= 0.8 && !src.is_smoking)
+						// starts smoking
 						src.update_smoking(1)
-					else if (world.tick_lag <= 1.0 && src.is_smoking)
+					else if (world.tick_lag <= 0.8 && src.is_smoking)
 						src.update_smoking(0)
 
 				. = ..()
@@ -1545,25 +1515,33 @@ Read the rules, don't grief, and have fun!</div>"}
 
 	encourage
 		maptext_area = "leftside"
+		var/update_delay = 1 MINUTE
 
 		New()
 			..()
 			if (length(landmarks[LANDMARK_LOBBY_LEFTSIDE]))
 				src.set_loc(landmarks[LANDMARK_LOBBY_LEFTSIDE][1])
+			src.maptext_x = 0
+			src.maptext_width = 600
+			src.maptext_height = 400
+			update_text() // kick start
+			setup_process_signal()
 
+		proc/setup_process_signal()
+			set waitfor = FALSE
+			UNTIL(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes)
+			RegisterSignal(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes, COMSIG_SERVER_DATA_SYNCED, PROC_REF(update_text))
+
+		proc/update_text()
 			var/serverList = ""
 			for (var/serverId in global.game_servers.servers)
 				var/datum/game_server/server = global.game_servers.servers[serverId]
 				if (server.is_me() || !server.publ)
 					continue
-				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name]</a>"}
-
-			src.maptext_x = 0
-			src.maptext_width = 600
-			src.maptext_height = 400
+				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name][!isnull(server.player_count) ? " ([server.player_count] players)" : " (restarting now)"]</a>"}
 			src.set_text({"<span class='ol vga'>
 Welcome to Goonstation!
-New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
+New? <a style='color: #88f;' href="https://wiki.ss13.co/Super_Quick_Tutorial" target="_blank">Check the tutorial</a>!
 Have questions? Ask mentors with \[F3]!
 Need an admin? Message us with \[F1].
 
@@ -1836,6 +1814,7 @@ Other Goonstation servers:[serverList]</span>"})
 	var/tmp/obj/maptext_junk/price_text = null
 	var/tmp/obj/maptext_junk/quantity_text = null
 	var/tmp/list/purchaser_ckeys = list()
+	var/admin_ckey = null
 
 	get_desc()
 		if (set_up)
@@ -1847,7 +1826,7 @@ Other Goonstation servers:[serverList]</span>"})
 				boutput(user, SPAN_ALERT("You're no admin! Get your dirty hands off this!"))
 				return
 
-			var/copyOrType = alert(user, "Sell copies of a target, or new instances of a type?", "Whatcha sellin'?", "Copies", "Type")
+			var/copyOrType = alert(user, "Sell copies of a target, or new instances of a type?", "Whatcha sellin'?", "Copies", "Type", "Cancel")
 			if (copyOrType == "Copies")
 				// copy
 				alert(user, "Click on the thing you want to sell copies of.")
@@ -1861,7 +1840,7 @@ Other Goonstation servers:[serverList]</span>"})
 				src.appearance = thing.appearance
 				src.thing_name = thing.name
 
-			else
+			else if (copyOrType == "Type")
 
 				alert(user, "Click on something for the store to copy the appearance of (the actual item you're selling comes after this; you might have to varedit the store later)")
 				var/atom/thing = pick_ref(user)
@@ -1877,9 +1856,14 @@ Other Goonstation servers:[serverList]</span>"})
 				copy_mode = FALSE
 				src.type_to_spawn = objpath
 
+			else
+				// cancel
+				return
+
 			src.price = max(0, input(user, "How much does one cost?", "Spacebux Price", 500) as num)
 			src.limit_total = max(0, input(user, "How many can be sold? (0=infinite)", "Quantity", 0) as num)
 			src.limit_per_player = max(0, input(user, "How many can one player buy? (0=infinite)", "Quantity", 0) as num)
+			src.admin_ckey = (alert(user, "Attach it to your adminness? This will tell you when people buy it (and also give you the money they spend).", "FEED ME SPACEBUX", "Yes", "No") == "Yes") ? user.ckey : null
 
 			src.name = "[price > 0 ? "spacebux shop" : "dispenser"] - [src.thing_name]"
 			src.desc = "A little shop where you can buy \a [src.thing_name]. Each one costs [price] spacebux."
@@ -1928,6 +1912,14 @@ Other Goonstation servers:[serverList]</span>"})
 					return FALSE
 
 				user.client.add_to_bank(-src.price)
+				if (src.admin_ckey)
+					try
+						var/client/A = getClientFromCkey(src.admin_ckey)
+						A.add_to_bank(src.price)
+						boutput(A, SPAN_ALERT("[usr.real_name] bought \a [src.name] for [src.price]."))
+
+					catch
+						// do nothing. if they're offline we dont care.
 
 			logTheThing(LOG_DIARY, user, "purchased [src.thing_name] for [src.price] spacebux.")
 
@@ -1974,3 +1966,47 @@ Other Goonstation servers:[serverList]</span>"})
 		if (!src.quantity_text) return
 		src.quantity_text.maptext = "<span class='r sh pixel' style='font-size: 5px;[(limit_total - number_purchased) == 0 ? " color: red;" : ""]'>x[limit_total - number_purchased]</span>"
 		return
+
+/obj/admin_spacebux_store/premade
+	New()
+		. = ..()
+		if (!type_to_spawn) return
+		setup_premade_shop()
+
+
+	proc/setup_premade_shop()
+		var/atom/movable/AM = new type_to_spawn
+
+		src.appearance = AM.appearance
+		src.name = AM.name
+		src.thing_name = AM.name
+
+		src.price_text = new()
+		src.price_text.set_loc(src)
+		src.price_text.maptext_width = 132
+		src.price_text.maptext_x = -50
+		src.price_text.maptext_y = 34
+		src.price_text.maptext = "<span class='c vb sh xfont'>[price > 0 ? price : "FREE"]</span>"
+		src.vis_contents += src.price_text
+		src.price_text.appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | KEEP_APART | PIXEL_SCALE
+
+		if (src.limit_total)
+			src.quantity_text = new()
+			src.quantity_text.set_loc(src)
+			src.vis_contents += src.quantity_text
+			src.quantity_text.appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | KEEP_APART | PIXEL_SCALE
+			src.update_quantity()
+
+		animate(src, pixel_y = 0 + 8,  time = 2 SECONDS, loop = -1, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+		animate(pixel_y = 0, time = 2 SECONDS, loop = -1, easing = SINE_EASING)
+		set_up = TRUE
+
+
+/obj/admin_spacebux_store/premade/popcorn
+	price = 5
+	type_to_spawn = /obj/item/reagent_containers/food/snacks/popcorn
+
+	New()
+		. = ..()
+		pixel_x = 0
+		pixel_y = 0

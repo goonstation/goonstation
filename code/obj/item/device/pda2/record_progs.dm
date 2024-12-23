@@ -54,7 +54,7 @@
 					dat += "SecHUD Flag: [src.active2["sec_flag"]]<br>"
 
 					dat += "Minor Crimes: [src.active2["mi_crim"]]<br>"
-					dat += "Details: [src.active2["mi_crim"]]<br><br>"
+					dat += "Details: [src.active2["mi_crim_d"]]<br><br>"
 
 					dat += "Major Crimes: [src.active2["ma_crim"]]<br>"
 					dat += "Details: [src.active2["ma_crim_d"]]<br><br>"
@@ -150,7 +150,8 @@
 					dat += "Current Diseases: [src.active2["cdi"]]<br>"
 					dat += "Details: [src.active2["cdi_d"]]<br><br>"
 
-					dat += "Traits: [src.active2["traits"]]<br><br>"
+					dat += "Cloner Defects: [src.active2["cl_def"]]<br>"
+					dat += "Details: [src.active2["cl_def_d"]]<br><br>"
 
 					dat += "Important Notes: [src.active2["notes"]]<br>"
 				else

@@ -361,7 +361,7 @@
 /area/ship/artemis)
 "iV" = (
 /obj/rack,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /turf/simulated/floor/black,
 /area/ship/artemis)
@@ -801,7 +801,7 @@
 /area/ship/artemis)
 "uZ" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/blue/checker,
 /area/ship/artemis)
 "vc" = (
@@ -908,7 +908,7 @@
 /turf/unsimulated/wall/setpieces/leadwindow,
 /area/ship/artemis)
 "yw" = (
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/ship/arjuna)
 "za" = (
@@ -941,7 +941,7 @@
 /area/space)
 "Ae" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/blue/checker,
 /area/ship/arjuna)
 "Ai" = (
@@ -1267,8 +1267,8 @@
 /turf/background_canvas,
 /area/ship/artemis)
 "GP" = (
-/obj/decal/fakeobjects/shuttlethruster,
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/ship/arjuna)
 "GV" = (
@@ -1914,7 +1914,7 @@
 "YO" = (
 /obj/storage/closet/biohazard,
 /obj/item/clothing/head/rad_hood,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /turf/simulated/floor/engine,
 /area/ship/arjuna)
 "YR" = (

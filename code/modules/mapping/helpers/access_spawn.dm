@@ -50,21 +50,6 @@
 	color = SECURITY
 
 //////////// Medical ////
-/obj/mapping_helper/access/pathology // top of the list because of the whole "science or med" thing w/e
-	name = "pathology spawn"
-	#ifdef CREATE_PATHOGENS
-	req_access = list(access_pathology)
-	#elif defined(SCIENCE_PATHO_MAP)
-	req_access = list(access_research)
-	#else
-	req_access = list(access_medical)
-	#endif
-	#ifdef SCIENCE_PATHO_MAP
-	color = RESEARCH
-	#else
-	color = MEDICAL
-	#endif
-
 /obj/mapping_helper/access/medical
 	name = "medical access spawn"
 	req_access = list(access_medical)
@@ -88,6 +73,11 @@
 /obj/mapping_helper/access/robotics
 	name = "robotics access spawn"
 	req_access = list(access_robotics)
+	color = MEDICAL
+
+/obj/mapping_helper/access/pathology
+	name = "pathology spawn"
+	req_access = list(access_medical)
 	color = MEDICAL
 
 //////////// Engineering ////
@@ -121,11 +111,6 @@
 	req_access = list(access_engineering_engine)
 	color = ENGINEERING
 
-/obj/mapping_helper/access/engineering_power
-	name = "engineering power access spawn"
-	req_access = list(access_engineering_power)
-	color = ENGINEERING
-
 /obj/mapping_helper/access/engineering_mechanic
 	name = "engineering mechanics access spawn"
 	req_access = list(access_engineering_mechanic)
@@ -141,11 +126,6 @@
 	req_access = list(access_engineering_control)
 	color = ENGINEERING
 
-/obj/mapping_helper/access/mining_shuttle
-	name = "mining_shuttle access spawn"
-	req_access = list(access_mining_shuttle)
-	color = CARGO
-
 /obj/mapping_helper/access/mining
 	name = "mining EVA access spawn"
 	req_access = list(access_mining)
@@ -158,12 +138,12 @@
 
 //////////// Research ////
 /obj/mapping_helper/access/tox
-	name = "tox access spawn"
+	name = "toxins access spawn"
 	req_access = list(access_tox)
 	color = TOXINS
 
 /obj/mapping_helper/access/tox_storage
-	name = "tox access spawn"
+	name = "toxins storage access spawn"
 	req_access = list(access_tox_storage)
 	color = TOXINS
 
@@ -201,11 +181,6 @@
 /obj/mapping_helper/access/maint
 	name = "maint access spawn"
 	req_access = list(access_maint_tunnels)
-	color = MAINTENANCE
-
-/obj/mapping_helper/access/emergency_storage
-	name = "emergency storage access spawn"
-	req_access = list(access_emergency_storage)
 	color = MAINTENANCE
 
 /obj/mapping_helper/access/chapel_office
@@ -249,11 +224,6 @@
 	color = MAINTENANCE
 
 //////////// Command/Heads ////
-/obj/mapping_helper/access/emergency_storage // technically unused, sorta, mostly, kinda
-	name = "emergency storage access spawn"
-	req_access = list(access_emergency_storage)
-	color = MAINTENANCE
-
 /obj/mapping_helper/access/ai_upload
 	name = "ai upload access spawn"
 	req_access = list(access_ai_upload)
@@ -299,6 +269,11 @@
 	req_access = list(access_maxsec)
 	color = SECURITY
 
+/obj/mapping_helper/access/armory
+	name = "Armory access spawn"
+	req_access = list(access_armory)
+	color = SECURITY
+
 /obj/mapping_helper/access/engineering_chief
 	name = "CE access spawn"
 	req_access = list(access_engineering_chief)
@@ -335,12 +310,6 @@
 	setup()
 		for (var/obj/O in src.loc)
 			O.req_access = null
-
-//////////// unsorted/unused ////
-/obj/mapping_helper/access/hangar
-	name = "hangar access spawn"
-	req_access = list(access_hangar)
-	color = CARGO
 
 //////////////////////owlzone access///////
 /obj/mapping_helper/access/owlmaint

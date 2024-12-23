@@ -54,8 +54,8 @@ TYPEINFO(/obj/machinery/networked/telepad)
 	var/realy = 0
 	var/realz = 0
 	var/tmp/session = null
-	var/obj/perm_portal/start_portal
-	var/obj/perm_portal/end_portal
+	var/obj/laser_sink/perm_portal/start_portal
+	var/obj/laser_sink/perm_portal/end_portal
 	var/image/disconnectedImage
 	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL | DECON_WELDER | DECON_WIRECUTTERS | DECON_WRENCH | DECON_DESTRUCT
 
@@ -367,6 +367,44 @@ TYPEINFO(/obj/machinery/networked/telepad)
 
 							recharging = 0
 
+					if ("lrt")
+						var/tmp_place = replacetext(data["place"], "_", " ")
+						if(!(tmp_place in special_places))
+							message_host("command=nack&cause=badplace")
+							return
+
+						src.icon_state = "pad1"
+						switch(data["action"])
+							if("send")
+								if(src.lrtsend(tmp_place))
+									message_host("command=ack")
+								else
+									message_host("command=nack&cause=recharge")
+							if("receive")
+								if(src.lrtreceive(tmp_place))
+									message_host("command=ack")
+								else
+									message_host("command=nack&cause=recharge")
+							if("portal")
+								if (src.start_portal || src.end_portal)
+									if (start_portal)
+										qdel(start_portal)
+										start_portal = null
+									if (end_portal)
+										qdel(end_portal)
+										end_portal = null
+
+									message_host("command=ack")
+									return
+
+								if(src.lrtportal(tmp_place))
+									message_host("command=ack")
+								else
+									message_host("command=nack&cause=recharge")
+							else
+								message_host("command=nack&cause=badcmd")
+						src.icon_state = "pad0"
+
 					if ("scan")
 						var/turf/scanTurf = doturfcheck(1)
 						if(!scanTurf)
@@ -381,7 +419,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 								var/burning = 0
 								if(istype(scanTurf, /turf/simulated))
 									var/turf/simulated/T = scanTurf
-									if(T.active_hotspot)
+									if(length(T.active_hotspots))
 										burning = 1
 								message_host("command=scan_reply&[MOLES_REPORT_PACKET(GM)]temp=[GM.temperature]&pressure=[MIXTURE_PRESSURE(GM)][(burning)?("&burning=1"):(null)]")
 							else
@@ -469,6 +507,117 @@ TYPEINFO(/obj/machinery/networked/telepad)
 
 		return realturf
 
+	proc/lrtsend(var/place)
+		if (!ON_COOLDOWN(src, "busy", 5 SECOND))
+			if (place && (place in special_places))
+				var/turf/target = null
+				for(var/turf/T in landmarks[LANDMARK_LRT])
+					var/name = landmarks[LANDMARK_LRT][T]
+					if(name == place)
+						target = T
+						break
+				if (!target) //we didnt find a turf to send to
+					return 0
+				leaveresidual(target)
+				sleep(0.5 SECONDS)
+
+				showswirl_out(src.loc, FALSE)
+				playsound(src.loc, 'sound/machines/lrteleport.ogg', 60, TRUE)
+				leaveresidual(src.loc)
+				showswirl(target)
+				use_power(1500)
+
+				for(var/atom/movable/M in src.loc)
+					if(M.anchored)
+						continue
+					animate_teleport(M)
+					if(ismob(M))
+						var/mob/O = M
+						O.changeStatus("stunned", 2 SECONDS)
+					SPAWN(6 DECI SECONDS)
+						if(ismob(M))
+							logTheThing(LOG_STATION, usr, "sent [constructTarget(M,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
+						else
+							logTheThing(LOG_STATION, usr, "sent [log_object(M)] from [log_loc(M)] to [log_loc(target)] with a telepad")
+						do_teleport(M,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
+				return 1
+			return 0
+
+	proc/lrtreceive(var/place)
+		if (!ON_COOLDOWN(src, "busy", 5 SECOND))
+			if (place && (place in special_places))
+				var/turf/target = null
+				for(var/turf/T in landmarks[LANDMARK_LRT])
+					var/name = landmarks[LANDMARK_LRT][T]
+					if(name == place)
+						target = T
+						break
+				if (!target) //we didnt find a turf to send to
+					return 0
+				leaveresidual(target)
+				sleep(0.5 SECONDS)
+
+				showswirl(src.loc, FALSE)
+				playsound(src.loc, 'sound/machines/lrteleport.ogg', 60, TRUE)
+				leaveresidual(src.loc)
+				showswirl_out(target)
+				use_power(1500)
+				for(var/atom/movable/M in target)
+					if(M.anchored)
+						continue
+					animate_teleport(M)
+					if(ismob(M))
+						var/mob/O = M
+						O.changeStatus("stunned", 2 SECONDS)
+					SPAWN(6 DECI SECONDS)
+						if(ismob(M))
+							logTheThing(LOG_STATION, usr, "received [constructTarget(M,"station")] from [log_loc(M)] to [log_loc(src)] with a telepad")
+						else
+							logTheThing(LOG_STATION, usr, "received [log_object(M)] from [log_loc(M)] to [log_loc(src)] with a telepad")
+						do_teleport(M,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
+				return 1
+			return 0
+
+	proc/lrtportal(var/place)
+		if (!ON_COOLDOWN(src, "busy", 5 SECOND))
+			if (place && (place in special_places))
+				var/turf/target = null
+				for(var/turf/T in landmarks[LANDMARK_LRT])
+					var/name = landmarks[LANDMARK_LRT][T]
+					if(name == place)
+						target = T
+						break
+				if (!target) //we didnt find a turf to send to
+					return 0
+
+				var/list/send = list()
+				var/list/receive = list()
+				for(var/atom/movable/O as obj|mob in src.loc)
+					if(O.anchored) continue
+					send.Add(O)
+				for(var/atom/movable/O as obj|mob in target)
+					if(O.anchored) continue
+					receive.Add(O)
+				for(var/atom/movable/O in send)
+					do_teleport(O,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
+					if(ismob(O))
+						logTheThing(LOG_STATION, usr, "sent [constructTarget(O,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
+
+				for(var/atom/movable/O in receive)
+					if(ismob(O))
+						logTheThing(LOG_STATION, usr, "received [constructTarget(O,"station")] from [log_loc(O)] to [log_loc(src)] with a telepad")
+					do_teleport(O,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
+
+				showswirl(src.loc, FALSE)
+				playsound(src.loc, 'sound/machines/lrteleport.ogg', 60, TRUE)
+				showswirl(target)
+				use_power(400000)
+				start_portal = makeportal(src.loc, target)
+				if (start_portal)
+					end_portal = makeportal(target, src.loc)
+					logTheThing(LOG_STATION, usr, "created a portal to [log_loc(target)] at [log_loc(src.loc)] with a telepad")
+				return 1
+
 	proc/send(var/turf/target)
 		if (!target)
 			return 1
@@ -489,7 +638,6 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				logTheThing(LOG_STATION, usr, "sent [log_object(which)] from [log_loc(which)] to [log_loc(target)] with a telepad")
 			// teleblock checks should already be done
 			do_teleport(which,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
-
 
 		showswirl_out(src.loc)
 		leaveresidual(src.loc)
@@ -578,7 +726,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				logTheThing(LOG_STATION, usr, "created a portal to [log_loc(target)] at [log_loc(src.loc)] with a telepad")
 
 	proc/makeportal(var/turf/newloc, var/turf/destination)
-		var/obj/perm_portal/P = new /obj/perm_portal (newloc)
+		var/obj/laser_sink/perm_portal/P = new /obj/laser_sink/perm_portal (newloc)
 		P.target = destination
 		return P
 
@@ -664,7 +812,8 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				var/myturf = src.loc
 				for(var/atom/movable/M in view(4, myturf))
 					if(M.anchored) continue
-					if(ismob(M)) if(hasvar(M,"weakened")) M:changeStatus("weakened", 8 SECONDS)
+					if(ismob(M))
+						M.changeStatus("knockdown", 8 SECONDS)
 					if(ismob(M)) random_brute_damage(M, 20)
 					var/dir_away = get_dir(myturf,M)
 					var/turf/target = get_step(myturf,dir_away)
@@ -678,7 +827,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				src.visible_message(SPAN_ALERT("A bright green pulse emanates from the [src]!"))
 				return
 			if("fire")
-				fireflash(src.loc, 6) // cogwerks - lowered from 8, too laggy
+				fireflash(src.loc, 6, chemfire = CHEM_FIRE_RED) // cogwerks - lowered from 8, too laggy
 				for(var/mob/O in AIviewers(src, null)) O.show_message(SPAN_ALERT("A huge wave of fire explodes out from the [src]!"), 1)
 				return
 			if("widescatter")
@@ -754,7 +903,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 							new /mob/living/critter/rockworm(src.loc)
 				return
 			if("tinyfire")
-				fireflash(src.loc, 3)
+				fireflash(src.loc, 3, chemfire = CHEM_FIRE_RED)
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message(SPAN_ALERT("The area surrounding the [src] bursts into flame!"), 1)
 				return
@@ -792,7 +941,6 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				var/summon = pick(
 					/mob/living/critter/zombie,
 					/mob/living/critter/bear,
-					/mob/living/carbon/human/npc/syndicate,
 					/mob/living/critter/martian/soldier,
 					/mob/living/critter/lion,
 					/obj/critter/yeti,
@@ -800,7 +948,6 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					/obj/critter/ancient_thing)
 				new summon(src.loc)
 				return
-
 
 TYPEINFO(/obj/machinery/networked/teleconsole)
 	mats = 14
@@ -825,6 +972,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 
 	var/readout = ""
 	var/datum/computer/file/record/user_data
+	var/obj/item/disk/data/floppy/diskette = null
 	var/padNum = 1
 
 	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL | DECON_WIRECUTTERS | DECON_WRENCH | DECON_DESTRUCT
@@ -944,7 +1092,14 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			src.panel_open = !src.panel_open
 			boutput(user, "You [src.panel_open ? "unscrew" : "secure"] the cover.")
 			return
-
+		else if (istype(W, /obj/item/disk/data/floppy))
+			if (!src.diskette)
+				user.drop_item()
+				W.set_loc(src)
+				src.diskette = W
+				boutput(user, "You insert [W].")
+				src.updateUsrDialog()
+				return
 		else
 			return ..()
 
@@ -985,14 +1140,24 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			"isPanelOpen" = panel_open,
 			"padNum" = padNum,
 			"maxBookmarks" = max_bookmarks,
-			"bookmarks" = list()
+			"bookmarks" = list(),
+			"destinations" = list(),
+			"disk" = !isnull(src.diskette),
 		)
+
+		if (length(special_places))
+			.["destinations"] = list()
+
+			for(var/A in special_places)
+				.["destinations"] += list(list(
+					"ref" = ref(A),
+					"name" = "[A]"))
 
 		if (length(bookmarks) > 0)
 			.["bookmarks"] = list()
 			for (var/datum/teleporter_bookmark/b as anything in bookmarks)
 				.["bookmarks"] += list(list(
-					"ref" = ref(b),
+					"nameRef" = ref(b),
 					"name" = b.name,
 					"x" = b.x,
 					"y" = b.y,
@@ -1017,6 +1182,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				ztarget = clamp(text2num(params["value"]), 0, 14)
 				coord_update_flag = TRUE
 				. = TRUE
+
 			if ("send")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				if (!host_id)
@@ -1067,7 +1233,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				. = TRUE
 			if ("restorebookmark")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
-				var/datum/teleporter_bookmark/bm = locate(params["value"]) in bookmarks
+				var/datum/teleporter_bookmark/bm = locate(params["value"]) in src.bookmarks
 				if(!bm) return
 				xtarget = bm.x
 				ytarget = bm.y
@@ -1077,7 +1243,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 
 			if ("deletebookmark")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
-				var/datum/teleporter_bookmark/bm = locate(params["value"]) in bookmarks
+				var/datum/teleporter_bookmark/bm = locate(params["value"]) in src.bookmarks
 				if(!bm) return
 				bookmarks.Remove(bm)
 				. = TRUE
@@ -1112,6 +1278,11 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				newsignal.data["command"] = "term_connect"
 				newsignal.data["device"] = src.device_tag
 
+				if (!istype(user_data))
+					user_data = new
+					user_data.fields["userid"] = src.net_id
+					user_data.fields["access"] = "11"
+
 				newsignal.data_file = user_data.copy_file()
 
 				newsignal.data["address_1"] = old
@@ -1123,11 +1294,74 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 						old_host_id = old
 				. = TRUE
 
-
 			if ("setpad")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				src.padNum = (src.padNum & 3) + 1
 				. = TRUE
+
+			if ("lrt_portal")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				if (!host_id)
+					boutput(usr, SPAN_ALERT("Error: No host connection!"))
+					return
+
+				message_host("command=teleman&args=-p [padNum] lrt portal place=[replacetext(params["name"], " ", "_")]")
+				. = TRUE
+
+			if ("lrt_send")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				if (!host_id)
+					boutput(usr, SPAN_ALERT("Error: No host connection!"))
+					return
+
+				message_host("command=teleman&args=-p [padNum] lrt send place=[replacetext(params["name"], " ", "_")]")
+				. = TRUE
+
+			if ("lrt_receive")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				if (!host_id)
+					boutput(usr, SPAN_ALERT("Error: No host connection!"))
+					return
+
+				message_host("command=teleman&args=-p [padNum] lrt receive place=[replacetext(params["name"], " ", "_")]")
+				. = TRUE
+
+			if ("eject_disk")
+				if (!isnull(src.diskette))
+					playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+					src.diskette.set_loc(src.loc)
+					usr.put_in_hand_or_eject(src.diskette)
+					src.diskette = null
+					. = TRUE
+
+			if ("scan_disk")
+				if (!isnull(src.diskette))
+					playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+					var/file_found
+					var/file_added
+					for(var/datum/computer/file/lrt_data/galactic_position in src.diskette.root.contents)
+						if(!special_places.Find(galactic_position.place_name))
+							var/target
+							for(var/turf/T in landmarks[LANDMARK_LRT])
+								var/name = landmarks[LANDMARK_LRT][T]
+								if(name == galactic_position.place_name)
+									target = T
+									break
+							if (!target) //we didnt find a turf to send to
+								src.readout = "Invalid Galactic Coordinates"
+								return
+							else
+								special_places.Add(galactic_position.place_name)
+							file_added = TRUE
+						file_found = TRUE
+
+					if(file_added)
+						src.readout = "Galactic Coordinates Saved"
+					else if(file_found)
+						src.readout = "No new data"
+					else
+						src.readout = "Galactic Coordinates not found"
+					. = TRUE
 
 	proc/message_host(var/message, var/datum/computer/file/file)
 		if (!src.host_id || !message)
@@ -1140,4 +1374,5 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			src.post_file(src.host_id,"data",message, file)
 		else
 			src.post_status(src.host_id,"command","term_message","data",message)
+
 

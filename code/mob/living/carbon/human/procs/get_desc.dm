@@ -17,11 +17,11 @@
 	if (isalive(usr))
 		. += "<br>[SPAN_NOTICE("You look closely at <B>[src.name] ([src.get_pronouns()])</B>.")]"
 
-	if (!istype(usr, /mob/dead/target_observer))
+	if (!isobserver(usr) && !isintangible(usr))
 		if (!ignore_checks && (GET_DIST(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
 			return "[jointext(., "")]<br>[SPAN_ALERT("<B>[src.name]</B> is too far away to see clearly.")]"
 
-	if(src.face_visible() && src.bioHolder.mobAppearance.flavor_text)
+	if(src.face_visible() && src.bioHolder?.mobAppearance.flavor_text)
 		var/disguisered = FALSE
 		for (var/obj/item/device/disguiser/D in src)
 			disguisered |= D.active
@@ -127,13 +127,12 @@
 				else
 					. += "<br>[SPAN_NOTICE("[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(desc_id_card)] [desc_id_card.name] in it.")]"
 
-	if (src.arrestIcon?.icon_state)
-		if(global.client_image_groups?[CLIENT_IMAGE_GROUP_ARREST_ICONS]?.subscribed_mobs_with_subcount[usr]) // are you in the list of people who can see arrest icons??
-			var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
-			if(sec_record)
-				var/sechud_flag = sec_record["sec_flag"]
-				if (lowertext(sechud_flag) != "none")
-					. += "<br>[SPAN_NOTICE("[src.name] has a Security HUD flag set:")] [SPAN_ALERT("[sechud_flag]")]"
+	if(global.client_image_groups?[CLIENT_IMAGE_GROUP_ARREST_ICONS]?.subscribed_mobs_with_subcount[usr]) // are you in the list of people who can see arrest icons??
+		var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
+		if(sec_record)
+			var/sechud_flag = sec_record["sec_flag"]
+			if (lowertext(sechud_flag) != "none")
+				. += "<br>[SPAN_NOTICE("[src.name] has a Security HUD flag set:")] [SPAN_ALERT("[sechud_flag]")]"
 
 	if (locate(/obj/item/implant/projectile/body_visible/dart) in src.implant)
 		var/count = 0
@@ -152,6 +151,12 @@
 		for (var/obj/item/implant/projectile/body_visible/arrow/P in src.implant)
 			count++
 		. += "<br>[SPAN_ALERT("[src] has [count > 1 ? "arrows" : "an arrow"] stuck in [him_or_her(src)]!")]"
+
+	if (locate(/obj/item/implant/projectile/body_visible/seed) in src.implant)
+		var/count = 0
+		for (var/obj/item/implant/projectile/body_visible/seed/P in src.implant)
+			count++
+		. += "<br>[SPAN_ALERT("[src] has [count > 1 ? "seeds" : "a seed"] stuck in [him_or_her(src)]!")]"
 
 	if (src.is_jittery)
 		switch(src.jitteriness)
@@ -247,12 +252,10 @@
 		else
 			. += "<br>[SPAN_ALERT("<B>[src.name]'s entire chest is missing!</B>")]"
 
-
-		if (src.organHolder.back_op_stage > BACK_SURGERY_CLOSED)
-			if (!src.organHolder.butt)
-				. += "<br>[SPAN_ALERT("<B>[src.name]'s butt seems to be missing!</B>")]"
-			else
-				. += "<br>[SPAN_ALERT("<B>[src.name] has an open incision on [t_his] butt!</B>")]"
+		if (!src.organHolder.butt)
+			. += "<br>[SPAN_ALERT("<B>[src.name]'s butt seems to be missing!</B>")]"
+		else if (src.organHolder.back_op_stage > BACK_SURGERY_CLOSED)
+			. += "<br>[SPAN_ALERT("<B>[src.name] has an open incision on [t_his] butt!</B>")]"
 
 	if (src.limbs)
 		if (!src.limbs.l_arm)
@@ -323,7 +326,7 @@
 	if (C?.in_fakedeath)
 		changeling_fakedeath = 1
 
-	if ((isdead(src)) || changeling_fakedeath || src.bioHolder?.HasEffect("dead_scan") == 2 || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("weakened")) || (src.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting")))
+	if ((isdead(src)) || changeling_fakedeath || src.bioHolder?.HasEffect("dead_scan") == 2 || (src.reagents.has_reagent("capulettium") && is_incapacitated(src)) || (src.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting")))
 		if (!src.decomp_stage)
 			. += "<br>[SPAN_ALERT("[src] is limp and unresponsive, a dull lifeless look in [t_his] eyes.")]"
 	else
@@ -341,7 +344,7 @@
 			else
 				. += "<br>[SPAN_ALERT("<B>[src.name] looks severely burned!</B>")]"
 
-		if (src.stat)
+		if (src.stat || src.hasStatus("paralysis"))
 			. += "<br>[SPAN_ALERT("[src.name] doesn't seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep.")]"
 		else
 			if (src.get_brain_damage() >= 60)
@@ -364,7 +367,14 @@
 					if (!(src.wear_suit?.hides_from_examine & C_GLASSES) && !(src.head?.hides_from_examine & C_GLASSES))
 						. += "<br><span style='color:#8600C8'>[src.name]'s mind is elsewhere.</span>"
 				else
-					. += "<br>[src.name] seems to be staring blankly into space."
+					. += "<br>[src.name] seems to be staring blankly into space. "
+					if (src.last_ckey && src.logout_at)
+						var/gone_time_s = floor((TIME - src.logout_at) / 10)
+						var/gone_time_m = floor(gone_time_s / 60)
+						if (gone_time_s <= 60)
+							. += SPAN_SUBTLE("<br>They slipped into it [gone_time_s] second\s ago.")
+						else
+							. += SPAN_SUBTLE("<br>They've been like this for [gone_time_m] minute\s.")
 
 	switch (src.decomp_stage)
 		if (DECOMP_STAGE_BLOATED)
@@ -378,10 +388,13 @@
 
 	if(usr.traitHolder && (usr.traitHolder.hasTrait("observant") || istype(usr, /mob/dead/observer)))
 		if(src.traitHolder && length(src.traitHolder.traits))
-			. += "<br>[SPAN_NOTICE("[src] has the following traits:")]"
+			. += "<br>[SPAN_NOTICE("[src] has the following traits:")]<br>"
+			var/list/trait_names = list()
 			for(var/id in src.traitHolder.traits)
 				var/datum/trait/T = src.traitHolder.traits[id]
-				. += "<br>[SPAN_NOTICE("[T.name]")]"
+				trait_names += T.name
+			. += SPAN_NOTICE(english_list(trait_names))
+
 		else
 			. += "<br>[SPAN_NOTICE("[src] does not appear to possess any special traits.")]"
 
@@ -396,6 +409,27 @@
 			items += ", [O]"
 		items = copytext(items, 3)
 		. += "<br>[SPAN_NOTICE("[src] is juggling [items]!")]"
+
+	if (src.reagents.has_reagent("ethanol") && !isdead(src) && !src.hasStatus("paralysis"))
+		var/et_amt = src.reagents.get_reagent_amount("ethanol")
+		var/drunk_assess = ""
+		if (!isalcoholresistant(src) || src.reagents.has_reagent("moonshine"))
+			switch (et_amt)
+				if (0 to 10)
+					drunk_assess = "[capitalize("[he_or_she(src)]")] seem[blank_or_s(src)] <b>buzzed.</b>"
+				if (10 to 20)
+					drunk_assess = "[capitalize("[he_or_she(src)]")] look[blank_or_s(src)] a little <b>tipsy.</b>"
+				if (20 to 40)
+					drunk_assess = "[capitalize("[hes_or_shes(src)]")] pretty <b>[prob(10)? "stewed" : "drunk"].</b>"
+				if (40 to 70)
+					drunk_assess = "[capitalize("[hes_or_shes(src)]")] totally <b>smashed.</b>"
+				if (70 to 100)
+					drunk_assess = SPAN_ALERT("[capitalize("[hes_or_shes(src)]")] <b>[prob(3)? " zonked</b> off [his_or_her(src)] <b>rocker" : "badly inebriated"].</b>")
+				if (100 to INFINITY)
+					drunk_assess = SPAN_ALERT("[capitalize("[hes_or_shes(src)]")] <b>dying of drink.</b>")
+		else
+			drunk_assess = "[capitalize("[his_or_her(src)]")] inebriaton is almost <b>imperceptible</b> to you."
+		. += "<br> [drunk_assess]"
 
 	. += "<br>[SPAN_NOTICE("*---------*")]"
 

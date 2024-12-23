@@ -5,48 +5,36 @@
 /area/station/engine/inner)
 "b" = (
 /obj/cable/orange{
-	d1 = 0;
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "c" = (
 /obj/cable/orange{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "d" = (
 /obj/cable/orange{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "e" = (
 /obj/cable/orange{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "f" = (
 /obj/cable{
-	d1 = 0;
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "g" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grey,
@@ -84,8 +72,6 @@
 	name = "outlet purge valve"
 	},
 /obj/cable/orange{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grey,
@@ -122,8 +108,6 @@
 	dir = 10
 	},
 /obj/cable/orange{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,

@@ -6,6 +6,7 @@
 	damage = 30
 
 	is_magical = 1
+	var/fire_color = CHEM_FIRE_RED
 
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
 		var/turf/T = get_turf(hit) || get_turf(projectile)
@@ -15,7 +16,7 @@
 			if(prob(50))
 				explosion_new(null, T, 2, 1.2, turf_safe = TRUE)
 			boutput(projectile.mob_shooter, SPAN_NOTICE("Your spell is weakened without a staff to channel it."))
-		fireflash(T, 1, checkLos = FALSE)
+		fireflash(T, 1, checkLos = FALSE, chemfire = src.fire_color)
 
 /datum/projectile/fireball/fire_elemental
 	is_magical = 0
@@ -23,7 +24,7 @@
 	on_hit(atom/hit, direction, obj/projectile/projectile)
 		var/turf/T = get_turf(hit)
 		explosion(projectile, T, -1, -1, 0, 1)
-		fireflash(T, 1, checkLos = FALSE)
+		fireflash(T, 1, checkLos = FALSE, chemfire = src.fire_color)
 
 /datum/targetable/spell/fireball
 	name = "Fireball"
@@ -49,7 +50,25 @@
 		..()
 
 		var/obj/projectile/P = initialize_projectile_pixel_spread( holder.owner, fb_proj, target)
+
+		var/fire_color = CHEM_FIRE_RED
+
+		var/mob/living/carbon/human/H = src.holder.owner
+		if (istype(H))
+			if (istype(H.head, /obj/item/clothing/head/wizard/red))
+				fire_color = CHEM_FIRE_RED
+			else if (istype(H.head, /obj/item/clothing/head/wizard/purple))
+				fire_color = CHEM_FIRE_PURPLE
+			else if (istype(H.head, /obj/item/clothing/head/wizard/green))
+				fire_color = CHEM_FIRE_GREEN
+			else if (istype(H.head, /obj/item/clothing/head/wizard/witch) || istype(H.head, /obj/item/clothing/head/wizard/necro))
+				fire_color = CHEM_FIRE_BLACK
+			else
+				fire_color = CHEM_FIRE_BLUE
+
 		if (P)
+			var/datum/projectile/fireball/fireball = P.proj_data
+			fireball.fire_color = fire_color
 			P.mob_shooter = holder.owner
 			P.launch()
 
@@ -64,8 +83,8 @@
 	var/datum/projectile/fireball/fire_elemental/fb_proj = new
 
 	cast(atom/target)
+		. = ..()
 		var/obj/projectile/P = initialize_projectile_pixel_spread( holder.owner, fb_proj, target )
-		logTheThing(LOG_COMBAT, usr, "used their [src.name] ability at [log_loc(usr)]")
 		if (P)
 			P.mob_shooter = holder.owner
 			P.launch()

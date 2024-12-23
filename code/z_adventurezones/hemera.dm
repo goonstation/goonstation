@@ -336,8 +336,12 @@ Obsidian Crown
 
 		hear_voidSpeak("Hello, friend.")
 		hear_voidSpeak("Your world is so dangerous! Let me help you.")
-		if (user)
-			user.speech_void = 1
+
+		user.bioHolder?.AddEffect("accent_void")
+
+	unequipped(mob/user) //idk if this can even happen but :iiam:
+		user.bioHolder?.RemoveEffect("accent_void")
+		. = ..()
 
 	process()
 		var/mob/living/host = src.loc
@@ -440,9 +444,7 @@ Obsidian Crown
 			//Away with ye, all hope of healing.
 			//random_brute_damage(host, 1)
 
-		host.delStatus("stunned")
-		host.delStatus("weakened")
-		host.delStatus("paralysis")
+		host.remove_stuns()
 		host.dizziness = max(0,host.dizziness-10)
 		host.changeStatus("drowsy", -20 SECONDS)
 		host.sleeping = 0
@@ -480,9 +482,7 @@ Obsidian Crown
 			humHost.HealDamage("All", 1000, 1000)
 			humHost.take_toxin_damage(-INFINITY)
 			humHost.take_oxygen_deprivation(-INFINITY)
-			humHost.delStatus("paralysis")
-			humHost.delStatus("stunned")
-			humHost.delStatus("weakened")
+			humHost.remove_stuns()
 			humHost.delStatus("radiation")
 			humHost.take_radiation_dose(-INFINITY)
 			humHost.take_eye_damage(-INFINITY)

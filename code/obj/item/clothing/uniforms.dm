@@ -10,13 +10,13 @@
 	item_state = "black"
 	body_parts_covered = TORSO|LEGS|ARMS
 	protective_temperature = T0C + 50
-	flags = FPRINT|TABLEPASS
 	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 800
 	burn_possible = TRUE
 	health = 10
 	var/team_num
+	var/cutting_product = /obj/item/material_piece/cloth/cottonfabric
 
 	duration_remove = 7.5 SECONDS
 
@@ -27,6 +27,18 @@
 		setProperty("meleeprot", 1)
 		setProperty("chemprot", 10)
 
+	attackby(obj/item/W, mob/user)
+		if ((issnippingtool(W) || iscuttingtool(W)) && src.cutting_product)
+			if (istype(src.loc, /mob))
+				boutput(user, SPAN_ALERT("You can't cut that unless it's on a flat surface!"))
+				return
+			SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECOND, /obj/item/clothing/under/proc/cut_tha_crap, list(user), W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+
+	proc/cut_tha_crap(mob/user)
+		qdel(src)
+		var/obj/item/cupr = new src.cutting_product()
+		user.put_in_hand_or_drop(cupr)
+		user.visible_message(SPAN_NOTICE("<b>[user]</b> cuts \the [src] into \a [cupr]."),SPAN_NOTICE("You cut the [src] into \a [cupr]!"))
 
 /obj/item/clothing/under/crafted
 	name = "jumpsuit"
@@ -157,6 +169,7 @@
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_pride.dmi'
 	icon_state = "gay"
 	item_state = "gay"
+	cutting_product = /obj/item/flag/rainbow
 	burn_possible = FALSE
 
 	ace
@@ -164,30 +177,35 @@
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the asexual pride flag."
 		icon_state ="ace"
 		item_state = "ace"
+		cutting_product = /obj/item/flag/ace
 
 	aro
 		name = "aro pride jumpsuit"
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the aromantic pride flag."
 		icon_state ="aro"
 		item_state = "aro"
+		cutting_product = /obj/item/flag/aro
 
 	bi
 		name = "bi pride jumpsuit"
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the bisexual pride flag."
 		icon_state ="bi"
 		item_state = "bi"
+		cutting_product = /obj/item/flag/bisexual
 
 	inter
 		name = "inter pride jumpsuit"
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the intersex pride flag."
 		icon_state ="inter"
 		item_state = "inter"
+		cutting_product = /obj/item/flag/intersex
 
 	lesb
 		name = "lesb pride jumpsuit"
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the lesbian pride flag."
 		icon_state ="lesb"
 		item_state = "lesb"
+		cutting_product = /obj/item/flag/lesb
 
 	gaymasc
 		name = "MLM pride jumpsuit"
@@ -196,6 +214,7 @@
 		item_state = "mlm"
 		var/isachily = FALSE
 		var/ach_descstate = "A corporate token of inclusivity, made in a sweatshop. It's based off of achillean pride flag, but can be flipped inside-out to change it to the vincian one."
+		cutting_product = /obj/item/flag/mlmvinc
 
 		attack_self(mob/user as mob)
 			user.show_text("You flip the [src] inside out.")
@@ -204,11 +223,13 @@
 				src.desc = ach_descstate
 				src.icon_state = "[src.icon_state]alt"
 				src.item_state = "mlmalt"
+				src.cutting_product = /obj/item/flag/mlmachi
 			else
 				src.isachily = FALSE
 				src.desc = initial(src.desc)
 				src.icon_state = initial(src.icon_state)
 				src.item_state = "mlm"
+				src.cutting_product = /obj/item/flag/mlmvinc
 			src.UpdateIcon()
 
 
@@ -218,24 +239,28 @@
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the non-binary pride flag."
 		icon_state ="nb"
 		item_state = "nb"
+		cutting_product = /obj/item/flag/nb
 
 	pan
 		name = "pan pride jumpsuit"
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the pansexual pride flag."
 		icon_state ="pan"
 		item_state = "pan"
+		cutting_product = /obj/item/flag/pan
 
 	poly
 		name = "poly pride jumpsuit"
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the polysexual pride flag. Previously mistaken for polyamorous in uniform fabricators - the responsible employee was promptly terminated under all applicable versions of Space Law."
 		icon_state ="poly"
 		item_state = "poly"
+		cutting_product = /obj/item/flag/polysexual
 
 	trans
 		name = "trans pride jumpsuit"
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the transgender pride flag. Wearing this makes you <em>really</em> hate astroterf."
 		icon_state ="trans"
 		item_state = "trans"
+		cutting_product = /obj/item/flag/trans
 
 	special
 		name = "pride-o-matic jumpsuit"
@@ -588,6 +613,10 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 	icon_state = "chef"
 	item_state = "chef"
 
+	april_fools
+		icon_state = "chef-alt"
+		item_state = "chef-alt"
+
 /obj/item/clothing/under/rank/chaplain
 	name = "chaplain jumpsuit"
 	desc = "A protestant vicar's outfit. Used to be a nun's, but it was a rather bad habit."
@@ -674,7 +703,14 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 	icon_state = "mail"
 	item_state = "mail"
 
+	april_fools
+		icon_state = "mail-alt"
+		item_state = "mail-alt"
+
 	syndicate
+		april_fools  // This pathing is weird and I hate it
+			icon_state = "mail-alt"
+			item_state = "mail-alt"
 
 /obj/item/clothing/under/misc/barber
 	name = "barber's uniform"
@@ -958,22 +994,27 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 	item_state = "fswimW"
 
 	red
+		name = "red swimsuit"
 		icon_state = "fswimR"
 		item_state = "fswimR"
 
 	green
+		name = "green swimsuit"
 		icon_state = "fswimG"
 		item_state = "fswimG"
 
 	blue
+		name = "blue swimsuit"
 		icon_state = "fswimBl"
 		item_state = "fswimBl"
 
 	purple
+		name = "purple swimsuit"
 		icon_state = "fswimP"
 		item_state = "fswimP"
 
 	black
+		name = "black swimsuit"
 		icon_state = "fswimB"
 		item_state = "fswimB"
 
@@ -1320,9 +1361,6 @@ TYPEINFO(/obj/item/clothing/under/towel)
 		for (var/obj/decal/cleanable/water/W in T)
 			qdel(W)
 			dried ++
-		for (var/obj/decal/cleanable/urine/U in T) // ew
-			qdel(U)
-			dried ++
 		return dried
 
 // Gimmick Jumpsuits
@@ -1551,11 +1589,97 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
     icon_state = "fish"
     item_state = "fish"
 
-/obj/item/clothing/under/misc/collar_pink
-    name = "pink collar shirt"
-    desc = "A plain pink collared shirt."
-    icon_state = "pink_collar"
-    item_state = "pink_collar"
+ABSTRACT_TYPE(/obj/item/clothing/under/misc/collar_shirt)
+/obj/item/clothing/under/misc/collar_shirt
+	name = "collar shirt"
+	icon_state = "collar_shirt-white"
+	item_state = "collar_shirt-white"
+	var/shirt_colour_name = "white"
+
+	New()
+		..()
+		src.name = "[src.shirt_colour_name] collar shirt"
+		src.desc = "A plain [src.shirt_colour_name] collared shirt."
+
+/obj/item/clothing/under/misc/collar_shirt/white
+	icon_state = "collar_shirt-white"
+	item_state = "collar_shirt-white"
+	shirt_colour_name = "white"
+
+/obj/item/clothing/under/misc/collar_shirt/cream
+	icon_state = "collar_shirt-cream"
+	item_state = "collar_shirt-cream"
+	shirt_colour_name = "cream"
+
+/obj/item/clothing/under/misc/collar_shirt/khaki
+	icon_state = "collar_shirt-khaki"
+	item_state = "collar_shirt-khaki"
+	shirt_colour_name = "khaki"
+
+/obj/item/clothing/under/misc/collar_shirt/pink
+	icon_state = "collar_shirt-pink"
+	item_state = "collar_shirt-pink"
+	shirt_colour_name = "pink"
+
+/obj/item/clothing/under/misc/collar_shirt/red
+	icon_state = "collar_shirt-red"
+	item_state = "collar_shirt-red"
+	shirt_colour_name = "red"
+
+/obj/item/clothing/under/misc/collar_shirt/dark_red
+	icon_state = "collar_shirt-dred"
+	item_state = "collar_shirt-dred"
+	shirt_colour_name = "dark red"
+
+/obj/item/clothing/under/misc/collar_shirt/orange
+	icon_state = "collar_shirt-orange"
+	item_state = "collar_shirt-orange"
+	shirt_colour_name = "orange"
+
+/obj/item/clothing/under/misc/collar_shirt/brown
+	icon_state = "collar_shirt-brown"
+	item_state = "collar_shirt-brown"
+	shirt_colour_name = "brown"
+
+/obj/item/clothing/under/misc/collar_shirt/yellow
+	icon_state = "collar_shirt-yellow"
+	item_state = "collar_shirt-yellow"
+	shirt_colour_name = "yellow"
+
+/obj/item/clothing/under/misc/collar_shirt/green
+	icon_state = "collar_shirt-green"
+	item_state = "collar_shirt-green"
+	shirt_colour_name = "green"
+
+/obj/item/clothing/under/misc/collar_shirt/dark_green
+	icon_state = "collar_shirt-dgreen"
+	item_state = "collar_shirt-dgreen"
+	shirt_colour_name = "dark green"
+
+/obj/item/clothing/under/misc/collar_shirt/mint
+	icon_state = "collar_shirt-mint"
+	item_state = "collar_shirt-mint"
+	shirt_colour_name = "mint"
+
+/obj/item/clothing/under/misc/collar_shirt/blue
+	icon_state = "collar_shirt-blue"
+	item_state = "collar_shirt-blue"
+	shirt_colour_name = "blue"
+
+/obj/item/clothing/under/misc/collar_shirt/dark_blue
+	icon_state = "collar_shirt-dblue"
+	item_state = "collar_shirt-dblue"
+	shirt_colour_name = "dark blue"
+
+/obj/item/clothing/under/misc/collar_shirt/purple
+	icon_state = "collar_shirt-purple"
+	item_state = "collar_shirt-purple"
+	shirt_colour_name = "purple"
+
+/obj/item/clothing/under/misc/collar_shirt/black
+	icon_state = "collar_shirt-black"
+	item_state = "collar_shirt-black"
+	shirt_colour_name = "black"
 
 /obj/item/clothing/under/misc/fancy_vest
     name = "fancy vest"
@@ -1847,6 +1971,92 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
     icon_state = "mint_chip"
     item_state = "mint_chip"
 
+ABSTRACT_TYPE(/obj/item/clothing/under/misc/blouse_skirt)
+/obj/item/clothing/under/misc/blouse_skirt
+	name = "blouse and skirt"
+	desc = "A space rayon blouse with a pencil skirt. Professional."
+	icon_state = "blouse_skirt-white"
+	item_state = "blouse_skirt-white"
+
+/obj/item/clothing/under/misc/blouse_skirt/white
+	name = "white blouse and skirt"
+	icon_state = "blouse_skirt-white"
+	item_state = "blouse_skirt-white"
+
+/obj/item/clothing/under/misc/blouse_skirt/cream
+	name = "cream blouse and skirt"
+	icon_state = "blouse_skirt-cream"
+	item_state = "blouse_skirt-cream"
+
+/obj/item/clothing/under/misc/blouse_skirt/khaki
+	name = "khaki blouse and skirt"
+	icon_state = "blouse_skirt-khaki"
+	item_state = "blouse_skirt-khaki"
+
+/obj/item/clothing/under/misc/blouse_skirt/pink
+	name = "pink blouse and skirt"
+	icon_state = "blouse_skirt-pink"
+	item_state = "blouse_skirt-pink"
+
+/obj/item/clothing/under/misc/blouse_skirt/red
+	name = "red blouse and skirt"
+	icon_state = "blouse_skirt-red"
+	item_state = "blouse_skirt-red"
+
+/obj/item/clothing/under/misc/blouse_skirt/dark_red
+	name = "dark red blouse and skirt"
+	icon_state = "blouse_skirt-dred"
+	item_state = "blouse_skirt-dred"
+
+/obj/item/clothing/under/misc/blouse_skirt/orange
+	name = "orange blouse and skirt"
+	icon_state = "blouse_skirt-orange"
+	item_state = "blouse_skirt-orange"
+
+/obj/item/clothing/under/misc/blouse_skirt/brown
+	name = "brown blouse and skirt"
+	icon_state = "blouse_skirt-brown"
+	item_state = "blouse_skirt-brown"
+
+/obj/item/clothing/under/misc/blouse_skirt/yellow
+	name = "yellow blouse and skirt"
+	icon_state = "blouse_skirt-yellow"
+	item_state = "blouse_skirt-yellow"
+
+/obj/item/clothing/under/misc/blouse_skirt/green
+	name = "green blouse and skirt"
+	icon_state = "blouse_skirt-green"
+	item_state = "blouse_skirt-green"
+
+/obj/item/clothing/under/misc/blouse_skirt/dark_green
+	name = "dark green blouse and skirt"
+	icon_state = "blouse_skirt-dgreen"
+	item_state = "blouse_skirt-dgreen"
+
+/obj/item/clothing/under/misc/blouse_skirt/mint
+	name = "mint blouse and skirt"
+	icon_state = "blouse_skirt-mint"
+	item_state = "blouse_skirt-mint"
+
+/obj/item/clothing/under/misc/blouse_skirt/blue
+	name = "blue blouse and skirt"
+	icon_state = "blouse_skirt-blue"
+	item_state = "blouse_skirt-blue"
+
+/obj/item/clothing/under/misc/blouse_skirt/dark_blue
+	name = "navy blue blouse and skirt"
+	icon_state = "blouse_skirt-dblue"
+	item_state = "blouse_skirt-dblue"
+
+/obj/item/clothing/under/misc/blouse_skirt/purple
+	name = "purple blouse and skirt"
+	icon_state = "blouse_skirt-purple"
+	item_state = "blouse_skirt-purple"
+
+/obj/item/clothing/under/misc/blouse_skirt/black
+	name = "black blouse and skirt"
+	icon_state = "blouse_skirt-black"
+	item_state = "blouse_skirt-black"
 //Seasonal Stuff
 
 /obj/item/clothing/under/gimmick/clown_autumn
@@ -1860,3 +2070,11 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 	desc = "Lets you stay nice and warm while keeping that festive atmosphere. Actually kinda breezy, not very comfortable for the cold at all, but it still looks festive."
 	icon_state = "clown_winter"
 	item_state = "clown_winter"
+
+// New chaplain stuff
+
+/obj/item/clothing/under/gimmick/weirdo
+	name = "outlander's jumpsuit"
+	desc = "The symbols on this teal jumpsuit are entirely alien to you. It almost speaks to you of an ancient belief lost to time"
+	icon_state = "weirdo"
+	item_state = "weirdo"

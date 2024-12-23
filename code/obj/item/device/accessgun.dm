@@ -9,7 +9,6 @@ TYPEINFO(/obj/item/device/accessgun)
 	item_state = "accessgun"
 	w_class = W_CLASS_SMALL
 	rand_pos = 0
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	var/obj/item/card/id/ID_card = null
 	req_access = list(access_change_ids,access_engineering_chief)
@@ -108,7 +107,7 @@ TYPEINFO(/obj/item/device/accessgun)
 
 		var/obj/O = target
 
-		if (access_maxsec in O.req_access)
+		if ((access_maxsec in O.req_access) || (access_armory in O.req_access))
 			playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
 			boutput(user, SPAN_NOTICE("[src] can't reprogram this."))
 			return
@@ -133,7 +132,7 @@ TYPEINFO(/obj/item/device/accessgun)
 
 
 	proc/reprogram(var/obj/O,var/mob/user)
-		var/str_contents = kText.list2text(ID_card.access, ", ")
+		var/str_contents = jointext(ID_card.access, ", ")
 		if (!mode)
 			O.set_access_list(list(ID_card.access))
 		else
@@ -145,7 +144,6 @@ TYPEINFO(/obj/item/device/accessgun)
 /datum/action/bar/icon/access_reprog
 	duration = 90
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "access_reprog"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "reprog"
 	var/obj/O
@@ -186,7 +184,7 @@ TYPEINFO(/obj/item/device/accessgun)
 
 /obj/item/device/accessgun/lite
 	name = "Access Lite"
-	desc = "A device that sets the access requirments of newly constructed airlocks to ones scanned from an existing airlock."
+	desc = "A device that sets the access requirements of newly constructed airlocks to ones scanned from an existing airlock."
 	req_access = null
 	ID_card = 1
 	var/list/scanned_access = null

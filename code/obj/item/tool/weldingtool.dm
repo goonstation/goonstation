@@ -11,7 +11,7 @@
 
 	var/welding = FALSE
 	var/status = 0 // flamethrower construction :shobon:
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	tool_flags = TOOL_WELDING
 	force = 3
@@ -57,7 +57,7 @@
 				if (!src.cautery_surgery(H, user, 15, src.welding))
 					return ..()
 			else if (user.zone_sel.selecting != "chest" && user.zone_sel.selecting != "head" && H.limbs.vars[user.zone_sel.selecting])
-				if (!(locate(/obj/machinery/optable, target.loc) && target.lying) && !(locate(/obj/table, target.loc) && (target.getStatusDuration("paralysis") || target.stat)) && !(target.reagents && target.reagents.get_reagent_amount("ethanol") > 10 && target == user))
+				if (!(locate(/obj/machinery/optable, target.loc) && target.lying) && !(locate(/obj/table, target.loc) && (target.getStatusDuration("unconscious") || target.stat)) && !(target.reagents && target.reagents.get_reagent_amount("ethanol") > 10 && target == user))
 					return ..()
 				switch (user.zone_sel.selecting)
 					if ("l_arm")
@@ -140,8 +140,11 @@
 			var/turf/location = user.loc
 			if (istype(location, /turf))
 				location.hotspot_expose(700, 50, 1)
+			if (istype(O, /turf))
+				var/turf/target_turf = O
+				target_turf.hotspot_expose(700, 50, 1)
 			if (O && !ismob(O) && O.reagents)
-				boutput(user, SPAN_NOTICE("You heat \the [O.name]"))
+				boutput(user, SPAN_NOTICE("You heat \the [O.name]."))
 				O.reagents.temperature_reagents(4000,50, 100, 100, 1)
 
 	attack_self(mob/user as mob)
@@ -154,7 +157,7 @@
 		if (prob(power * 0.5))
 			qdel(src)
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 		if (exposed_temperature > 1000)
 			return ..()
 
@@ -190,6 +193,10 @@
 			reagents.remove_reagent("fuel", amount)
 		src.inventory_counter.update_number(get_fuel())
 
+	on_reagent_change(add)
+		. = ..()
+		src.inventory_counter.update_number(get_fuel())
+
 #define EYE_DAMAGE_IMMUNE 2
 #define EYE_DAMAGE_MINOR 1
 #define EYE_DAMAGE_NORMAL 0
@@ -202,8 +209,10 @@
 		var/safety = EYE_DAMAGE_NORMAL
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
+			if (!H.sight_check()) //don't blind if we're already blind
+				safety = EYE_DAMAGE_IMMUNE
 			// we want to check for the thermals first so having a polarized eye doesn't protect you if you also have a thermal eye
-			if (istype(H.glasses, /obj/item/clothing/glasses/thermal) || H.eye_istype(/obj/item/organ/eye/cyber/thermal) || istype(H.glasses, /obj/item/clothing/glasses/nightvision) || H.eye_istype(/obj/item/organ/eye/cyber/nightvision))
+			else if (istype(H.glasses, /obj/item/clothing/glasses/thermal) || H.eye_istype(/obj/item/organ/eye/cyber/thermal) || istype(H.glasses, /obj/item/clothing/glasses/nightvision) || H.eye_istype(/obj/item/organ/eye/cyber/nightvision))
 				safety = EYE_DAMAGE_EXTRA
 			else if (istype(H.head, /obj/item/clothing/head/helmet/welding))
 				var/obj/item/clothing/head/helmet/welding/WH = H.head

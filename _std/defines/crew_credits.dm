@@ -23,3 +23,6 @@
 #define SCORE_TAB_SECTION_ENGINEERING "engineering"
 #define SCORE_TAB_SECTION_CIVILIAN "civilian"
 #define SCORE_TAB_SECTION_ESCAPEE "escapee"
+
+#define CITATION_TAB_SECTION_TICKETS "ticket_targets"
+#define CITATION_TAB_SECTION_FINES "fine_targets"

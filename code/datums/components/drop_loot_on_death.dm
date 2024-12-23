@@ -20,12 +20,15 @@ TYPEINFO(/datum/component/drop_loot_on_death)
 	else
 		return COMPONENT_INCOMPATIBLE // no items to drop were provided, no point in adding the component
 
+	if (!ismob(parent) && !iscritter(parent))
+		return COMPONENT_INCOMPATIBLE
+
+/datum/component/drop_loot_on_death/RegisterWithParent()
+	..()
 	if (ismob(parent))
 		RegisterSignal(parent, COMSIG_MOB_DEATH, PROC_REF(drop_loot))
 	else if (iscritter(parent))
 		RegisterSignal(parent, COMSIG_OBJ_CRITTER_DEATH, PROC_REF(drop_loot))
-	else
-		return COMPONENT_INCOMPATIBLE
 
 /datum/component/drop_loot_on_death/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOB_DEATH, COMSIG_OBJ_CRITTER_DEATH))

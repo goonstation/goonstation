@@ -102,7 +102,7 @@
 				if (istype(P.proj_data, /datum/projectile/laser))
 					var/wound_num = rand(0, 4)
 					var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = "laser_wound-[wound_num]", layer = MOB_EFFECT_LAYER)
-					src.UpdateOverlays(I, "laser_wound-[wound_num]")
+					src.AddOverlays(I, "laser_wound-[wound_num]")
 
 			if (D_BURNING)
 				if (armor_value_bullet > 1)
@@ -127,7 +127,6 @@
 							implanted.owner = src
 							if (P.forensic_ID)
 								implanted.forensic_ID = P.forensic_ID
-							src.implant += implanted
 							implanted.setMaterial(P.proj_data.material)
 							implanted.implanted(src, null, 0)
 	return 1
@@ -214,7 +213,7 @@
 	src.apply_sonic_stun(0, 0, 0, 0, 0, round(power*7), round(power*7), power*40)
 
 	if (prob(b_loss) && !shielded && !reduction)
-		src.changeStatus("paralysis", b_loss DECI SECONDS)
+		src.changeStatus("unconscious", b_loss DECI SECONDS)
 		src.force_laydown_standup()
 
 	TakeDamage(zone="All", brute=b_loss, burn=f_loss, tox=0, damage_type=0, disallow_limb_loss=1)
@@ -260,7 +259,7 @@
 					src.show_message(SPAN_ALERT("You have been protected from a hit to the head."))
 				return
 			if (damage > 4.9)
-				changeStatus("weakened", 2 SECONDS)
+				changeStatus("knockdown", 2 SECONDS)
 				for (var/mob/O in viewers(src, null))
 					O.show_message(SPAN_ALERT("<B>The blob has weakened [src]!</B>"), 1, SPAN_ALERT("You hear someone fall."), 2)
 			src.TakeDamage("head", damage, 0, 0, DAMAGE_BLUNT)
@@ -270,7 +269,7 @@
 				return
 			if (damage > 4.9)
 				if (prob(50))
-					src.changeStatus("weakened", 5 SECONDS)
+					src.changeStatus("knockdown", 5 SECONDS)
 					for (var/mob/O in viewers(src, null))
 						O.show_message(SPAN_ALERT("<B>The blob has knocked down [src]!</B>"), 1, SPAN_ALERT("You hear someone fall."), 2)
 				else
@@ -297,14 +296,14 @@
 				visible_message(SPAN_ALERT("<b>The blob has knocked [src] off-balance!</b>"))
 				drop_item()
 				if (prob(50))
-					src.changeStatus("weakened", 1 SECOND)
+					src.changeStatus("knockdown", 1 SECOND)
 		if ("r_leg")
 			src.TakeDamage("r_leg", damage, 0, 0, DAMAGE_BLUNT)
 			if (prob(5))
 				visible_message(SPAN_ALERT("<b>The blob has knocked [src] off-balance!</b>"))
 				drop_item()
 				if (prob(50))
-					src.changeStatus("weakened", 1 SECOND)
+					src.changeStatus("knockdown", 1 SECOND)
 
 	src.force_laydown_standup()
 
@@ -327,6 +326,10 @@
 
 	if(src.traitHolder?.hasTrait("athletic"))
 		brute *=1.33
+
+	brute *= 1 - GET_ATOM_PROPERTY(src, PROP_MOB_TALISMAN_BRUTE_REDUCTION) / 100
+	burn *= 1 - GET_ATOM_PROPERTY(src, PROP_MOB_TALISMAN_BURN_REDUCTION) / 100
+	tox *= 1 - GET_ATOM_PROPERTY(src, PROP_MOB_TALISMAN_TOX_REDUCTION) / 100
 
 	if(src.mutantrace) //HOW
 		var/typemult
@@ -425,7 +428,6 @@
 	TakeDamage(zone, max(brute, 0), max(burn, 0), 0, damage_type)
 
 /mob/living/carbon/human/HealDamage(zone, brute, burn, tox, var/bypass_reversal = FALSE)
-
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		src.TakeDamage(zone, brute, burn, tox, null, FALSE, TRUE)
 
@@ -453,21 +455,19 @@
 	if (type == "single")
 		for (var/i in 0 to 2)
 			if (src.GetOverlayImage("slash_wound-[i]"))
-				src.UpdateOverlays(null, "slash_wound-[i]")
+				src.ClearSpecificOverlays( "slash_wound-[i]")
 				break
 	else if (type == "all")
-		for (var/i in 0 to 2)
-			src.UpdateOverlays(null, "slash_wound-[i]")
+		src.ClearSpecificOverlays("slash_wound-0", "slash_wound-1", "slash_wound-2")
 
 /mob/living/carbon/human/proc/heal_laser_wound(type)
 	if (type == "single")
 		for (var/i in 0 to 4)
 			if (src.GetOverlayImage("laser_wound-[i]"))
-				src.UpdateOverlays(null, "laser_wound-[i]")
+				src.ClearSpecificOverlays("laser_wound-[i]")
 				break
 	else if (type == "all")
-		for (var/i in 0 to 4)
-			src.UpdateOverlays(null, "laser_wound-[i]")
+		src.ClearSpecificOverlays("laser_wound-0", "laser_wound-1", "laser_wound-2", "laser_wound-3", "laser_wound-4")
 
 /mob/living/carbon/human/take_eye_damage(var/amount, var/tempblind = 0, var/side)
 	if (!src || !ishuman(src) || (!isnum(amount) || amount == 0))
@@ -649,3 +649,4 @@
 /mob/living/carbon/human/UpdateDamage()
 	..()
 	src.hud?.update_health_indicator()
+	src.update_health_monitor_icon()

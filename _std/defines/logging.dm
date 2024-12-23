@@ -13,7 +13,6 @@
 #define LOG_GAME "game"				//! Diary only
 #define LOG_MHELP "mhelp"			//! Used for diary too
 #define LOG_OOC "ooc"				//! OOC
-#define LOG_PATHOLOGY "pathology"	//! Unused :^)
 #define LOG_PDAMSG "pdamsg"			//! PDA messaging
 #define LOG_SAY "say"				//! IC Speech
 #define LOG_SPEECH "speech"			//! Ingame logs only, say + whisper
@@ -25,3 +24,7 @@
 #define LOG_TOPIC "topic"			//! Topic() logs
 #define LOG_GAMEMODE "gamemode"		//! Core gamemode stuff like game mode selection, blob starts, flock planting, etc
 #define LOG_CHEMISTRY "chemistry" 	//! Non-combat chemistry interactions
+#define LOG_TGUI "tgui" 			//! TGUI interactions
+
+//#undef Z_LOG_DEBUG
+//#define Z_LOG_DEBUG(WHAT, X) do{if(config){logTheThing(LOG_DEBUG, null, "Z_LOG_DEBUG: [WHAT] - [X]")}}while(FALSE)

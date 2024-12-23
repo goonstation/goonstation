@@ -14,8 +14,7 @@
 		) ; \
 	if (src.RL_NeedsAdditive || _E.RL_NeedsAdditive || _N.RL_NeedsAdditive || _NE.RL_NeedsAdditive) { \
 		if(!src.RL_AddOverlay) { \
-			src.RL_AddOverlay = new /obj/overlay/tile_effect/lighting/add ; \
-			src.RL_AddOverlay.set_loc(src) ; \
+			src.RL_AddOverlay = new /obj/overlay/tile_effect/lighting/add(src) ; \
 			src.RL_AddOverlay.icon = src.RL_OverlayIcon ; \
 			src.RL_AddOverlay.icon_state = src.RL_OverlayState ; \
 		} \
@@ -30,6 +29,7 @@
 
 
 // requires atten to be defined outside
+// consider: caching atten below, precomputed
 #define RL_APPLY_LIGHT_EXPOSED_ATTEN(src, lx, ly, brightness, height2, r, g, b) do { \
 	if (src.loc?:force_fullbright) { break } \
 	atten = (brightness*RL_Atten_Quadratic) / ((src.x - lx)*(src.x - lx) + (src.y - ly)*(src.y - ly) + height2) + RL_Atten_Constant ; \

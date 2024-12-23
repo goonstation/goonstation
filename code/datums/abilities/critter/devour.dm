@@ -5,7 +5,6 @@
 /datum/action/bar/icon/devourAbility
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "critter_devour"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "maneater_munch"
 	var/mob/living/target

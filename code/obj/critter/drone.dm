@@ -1,39 +1,61 @@
 TYPEINFO(/obj/critter/gunbot/drone)
-	mats = list("POW-1" = 5, "MET-2" = 12, "CON-2" = 12, "DEN-1" = 6)
-
+	mats = list("energy" = 5,
+				"metal_dense" = 12,
+				"conductive_high" = 12,
+				"dense" = 6)
 TYPEINFO(/obj/critter/gunbot/drone/glitchdrone)
 	mats = null
 
 TYPEINFO(/obj/critter/gunbot/drone/heavydrone)
-	mats = list("POW-2" = 10, "MET-3" = 12, "CON-2" = 12, "DEN-2" =9)
-
+	mats = list("energy_high" = 10,
+				"metal_superdense" = 12,
+				"conductive_high" = 12,
+				"dense_super" = 9)
 TYPEINFO(/obj/critter/gunbot/drone/cannondrone)
-	mats = list("POW-3" = 15, "MET-3" = 17, "CON-2" = 13, "CRY-2" =17, "erebite" =16)
-
+	mats = list("energy_extreme" = 15,
+				"metal_superdense" = 17,
+				"conductive_high" = 13,
+				"crystal_dense" = 17,
+				"erebite" = 16)
 TYPEINFO(/obj/critter/gunbot/drone/minigundrone)
-	mats = list("POW-3" = 13, "MET-3" = 24, "CON-2" = 20, "CRY-2" =17)
-
+	mats = list("energy_extreme" = 13,
+				"metal_superdense" = 24,
+				"conductive_high" = 20,
+				"crystal_dense" = 17)
 TYPEINFO(/obj/critter/gunbot/drone/raildrone)
-	mats = 	list("POW-3" = 19, "MET-3" = 20, "CON-2" = 24, "DEN-2" =16)
-
+	mats = list("energy_extreme" = 19,
+				"metal_superdense" = 20,
+				"conductive_high" = 24,
+				"dense_super" = 16)
 TYPEINFO(/obj/critter/gunbot/drone/buzzdrone)
-	mats = 	list("POW-2" = 19, "MET-2" = 12, "CON-2" = 14, "DEN-2" =26)
-
+	mats = list("energy_high" = 19,
+				"metal_dense" = 12,
+				"conductive_high" = 14,
+				"dense_super" = 26)
 TYPEINFO(/obj/critter/gunbot/drone/buzzdrone/fish)
 	mats = 	24
 
 TYPEINFO(/obj/critter/gunbot/drone/laser)
-	mats = 	list("POW-2" =11, "MET-2" = 14, "CON-2" = 13, "DEN-2" =12)
-
+	mats = list("energy_high" = 11,
+				"metal_dense" = 14,
+				"conductive_high" = 13,
+				"dense_super" = 12)
 TYPEINFO(/obj/critter/gunbot/drone/cutterdrone)
-	mats = 	list("POW-1" = 9, "MET-3" = 15, "CON-1" = 7, "CRY-2" =20)
-
+	mats = list("energy" = 9,
+				"metal_superdense" = 15,
+				"conductive" = 7,
+				"crystal_dense" = 20)
 TYPEINFO(/obj/critter/gunbot/drone/assdrone)
-	mats = 	list("POW-3" = 30, "MET-3" = 14, "CON-2" = 23, "CRY-2" =22, "butt"=10) //heh
-
+	mats = list("energy_extreme" = 30,
+				"metal_superdense" = 14,
+				"conductive_high" = 23,
+				"crystal_dense" = 22,
+				"butt" = 10)
 TYPEINFO(/obj/critter/gunbot/drone/aciddrone)
-	mats = 	list("POW-1" = 10, "MET-1" = 15, "CON-2" = 15, "DEN-1" =10)
-
+	mats = list("energy" = 10,
+				"metal" = 15,
+				"conductive_high" = 15,
+				"dense" = 10)
 TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	mats = null
 
@@ -76,7 +98,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	var/smashes_shit = 0
 	var/smashed_recently = 0
 	var/smash_cooldown = 200
-	var/list/can_smash = list(/obj/window, /obj/grille, /obj/table, /obj/foamedmetal, /obj/rack)
+	var/list/can_smash = list(/obj/window, /obj/mesh/grille, /obj/table, /obj/foamedmetal, /obj/rack)
 	var/list/do_not_smash = list(/obj/critter, /obj/machinery/vehicle, /obj/machinery/cruiser)
 
 	var/projectile_spread = 0
@@ -110,7 +132,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 				if(istype(AM, /obj/window))
 					AM:health = 0
 					AM:smash()
-				else if(istype(AM,/obj/grille))
+				else if(istype(AM,/obj/mesh/grille))
 					AM:damage_blunt(30)
 				else if(istype(AM, /obj/table))
 					AM.meteorhit()
@@ -154,10 +176,12 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			if (A && src.z == A.z && GET_DIST(src,A) <= src.seekrange)
 				if (istype(atom, /obj/machinery/vehicle))
 					var/obj/machinery/vehicle/C = atom
-					if (C.health < 0) continue
-					if (!istype(C, /obj/machinery/vehicle/pod_smooth/syndicate)) src.attack = 1
-					if (C.name == src.attacker) src.attack = 1
-					src.attack = 1
+					if (C.health < 0)
+						continue
+					if (!(FACTION_SYNDICATE in C.faction))
+						src.attack = 1
+					if (C.name == src.attacker)
+						src.attack = 1
 
 					if (src.attack)
 						select_target(C)
@@ -506,7 +530,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 
 		assdrone // HEH
 			name = "Virtual Assault Drone"
-			desc = "This is a digital reconstruction of the BR-series breach drones employed by Nanotransen in space extraction and destruction missions."
+			desc = "This is a digital reconstruction of the BR-series breach drones employed by Nanotrasen in space extraction and destruction missions."
 			icon = 'icons/mob/critter/robotic/drone/assault.dmi'
 			icon_state = "drone_assault"
 			dead_state = "drone_assault"
@@ -585,7 +609,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		health = 800
 		maxhealth = 800
 		score = 500
-		droploot = /obj/item/currency/spacecash/buttcoin // replace with railgun if that's ever safe enough to hand out? idk
+		droploot = /obj/item/currency/buttcoin // replace with railgun if that's ever safe enough to hand out? idk
 		attack_cooldown = 50
 		smashes_shit = 1
 
@@ -706,7 +730,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 				if(dying)
 					return
-				new /obj/item/mining_tool/power_pick(get_turf(src))
+				new /obj/item/mining_tool/powered/pickaxe(get_turf(src))
 				..()
 
 	gunshark
@@ -1043,7 +1067,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
 			poorSoul:Virus_ShockCure(100)
 			poorSoul:shock_cyberheart(100)
-			poorSoul:changeStatus("weakened", 4 SECONDS)
+			poorSoul:changeStatus("knockdown", 4 SECONDS)
 			if (isdead(poorSoul) && prob(25))
 				poorSoul.gib()
 
@@ -1081,7 +1105,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 		..()
 
 /obj/critter/gunbot/drone/iridium/whydrone
-	name = "Battledronì4?½&?aÄ	ÏbçÇ~¥D??õ®×³?£"
+	name = "Battledronì4?½&?aÄ ÏbçÇ~¥D??õ®×³?£"
 	desc = "Run."
 	health = 5000
 	maxhealth = 5000 // per stage
@@ -1104,7 +1128,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 
 	New()
 		..()
-		name = "Battledronì4?½&?aÄ	ÏbçÇ~¥D??õ®×³?£-[rand(1,5)]"
+		name = "Battledronì4?½&?aÄ ÏbçÇ~¥D??õ®×³?£-[rand(1,5)]"
 
 	// copied and modified to fuck from the Y-drone, murder me
 	Shoot(var/target, var/start, var/user, var/bullet = 0)

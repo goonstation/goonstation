@@ -117,18 +117,17 @@
 		animate_portal_tele(hostpda)
 
 		var/datum/antagonist/spy_thief/antag_role = user.mind?.get_antagonist(ROLE_SPY_THIEF)
-		if (reward.item)
-			var/obj/item = new reward.item(pda_turf)
-			logTheThing(LOG_DEBUG, user, "spy thief reward spawned: [item] at [log_loc(user)]")
-			user.show_text("Your PDA accepts the bounty and spits out [reward] in exchange.", "red")
-			reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
-			user.put_in_hand_or_drop(item)
+		if (length(reward.items) > 0)
+			for (var/reward_item in reward.items)
+				var/obj/item = new reward_item(pda_turf)
+				logTheThing(LOG_DEBUG, user, "spy thief reward spawned: [item] at [log_loc(user)]")
+				user.show_text("Your PDA accepts the bounty and spits out [reward] in exchange.", "red")
+				reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
+			if (!hostpda.uplink.purchase_log[reward.type])
+				hostpda.uplink.purchase_log[reward.type] = 0
+			hostpda.uplink.purchase_log[reward.type]++
 			if (istype(antag_role))
-				antag_role.redeemed_item_paths.Add(reward.type)
-		if (reward.item2)
-			new reward.item2(pda_turf)
-		if (reward.item3)
-			new reward.item3(pda_turf)
+				antag_role.redeemed_items.Add(reward)
 
 		for(var/obj/item/uplink/integrated/pda/spy/spy_uplink in game_mode.uplinks)
 			LAGCHECK(LAG_LOW)
@@ -144,12 +143,7 @@
 	boutput(world, "<B>There are spies planted on [station_or_ship()]. They plan to steal valuables and assasinate rival spies  - Do not let them succeed!</B>")
 
 /datum/game_mode/spy_theft/pre_setup()
-	var/num_players = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (player.ready) num_players++
+	var/num_players = src.roundstart_player_count()
 
 	var/randomizer = rand(0,6)
 	var/num_spies = 2 //minimum
@@ -320,7 +314,7 @@
 	station_bounties[/obj/item/clothing/suit/hazard/bio_suit] = 1
 	station_bounties[/obj/item/clothing/suit/hazard/paramedic] = 1
 	station_bounties[/obj/item/clothing/suit/judgerobe] = 1
-	station_bounties[/obj/item/clothing/suit/fire] = 1
+	station_bounties[/obj/item/clothing/suit/hazard/fire] = 1
 	station_bounties[/obj/item/clothing/suit/armor/vest] = 2
 
 	station_bounties[/obj/item/robodefibrillator] = 1
@@ -352,11 +346,11 @@
 	station_bounties[/obj/item/gun/kinetic/riot40mm] = 2
 	station_bounties[/obj/item/gun/kinetic/dart_rifle] = 3
 	station_bounties[/obj/item/gun/kinetic/detectiverevolver] = 3
-	station_bounties[/obj/item/captaingun] = 3
+	station_bounties[/obj/item/gun/energy/antique] = 3
 	station_bounties[/obj/item/gun/energy/taser_gun] = 2
 	station_bounties[/obj/item/gun/energy/egun] = 3
 	station_bounties[/obj/item/gun/energy/pulse_rifle] = 3
-	station_bounties[/obj/item/gun/kinetic/riotgun] = 3
+	station_bounties[/obj/item/gun/kinetic/pumpweapon/riotgun] = 3
 
 
 	station_bounties[/obj/item/kitchen/utensil] = 1
@@ -391,6 +385,7 @@
 	station_bounties[/obj/item/clothing/glasses/sunglasses] = 1
 	station_bounties[/obj/item/clothing/glasses/visor] = 1
 	station_bounties[/obj/item/clothing/glasses/healthgoggles] = 1
+	station_bounties[/obj/item/clothing/glasses/packetvision] = 2
 
 	#ifdef UNDERWATER_MAP
 	station_bounties[/obj/item/clothing/suit/space/diving/security] = 2
@@ -474,11 +469,12 @@
 
 	big_station_bounties[/obj/machinery/traymachine/morgue] = 1
 	big_station_bounties[/obj/machinery/optable] = 2
-	big_station_bounties[/obj/machinery/clonegrinder] = 1
+	big_station_bounties[/obj/machinery/clonegrinder] = 2
 	big_station_bounties[/obj/machinery/genetics_scanner] = 2
 	big_station_bounties[/obj/machinery/atmospherics/unary/cryo_cell] = 2
 	big_station_bounties[/obj/machinery/computer/cloning] = 2
 	big_station_bounties[/obj/machinery/clonepod] = 2
+	big_station_bounties[/obj/machinery/dialysis] = 2
 
 	big_station_bounties[/obj/machinery/flasher/portable] = 2
 	big_station_bounties[/obj/machinery/recharge_station] = 2

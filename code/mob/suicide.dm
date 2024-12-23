@@ -6,14 +6,14 @@
 	return
 
 /obj/proc/user_can_suicide(var/mob/user as mob)
-	if (!istype(user) || GET_DIST(user, src) > src.suicide_distance || user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned"))
+	if (!istype(user) || GET_DIST(user, src) > src.suicide_distance || user.stat || user.restrained() || user.getStatusDuration("unconscious") || user.getStatusDuration("stunned"))
 		return FALSE
 	return TRUE
 
 /obj/item/var/suicide_in_hand = TRUE // does it have to be held to be used for suicide?
 /obj/item/user_can_suicide(var/mob/user as mob)
 
-	if (!istype(user) || (src.suicide_in_hand && !user.find_in_hand(src)) || GET_DIST(user, src) > src.suicide_distance || user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned"))
+	if (!istype(user) || (src.suicide_in_hand && !user.find_in_hand(src)) || GET_DIST(user, src) > src.suicide_distance || user.stat || user.restrained() || user.getStatusDuration("unconscious") || user.getStatusDuration("stunned"))
 		return FALSE
 	return TRUE
 
@@ -49,6 +49,11 @@
 
 	if (!suicide_allowed)
 		boutput(src, SPAN_ALERT("You find yourself unable to go through with killing yourself!"))
+		return
+
+	var/area/area = get_area(src)
+	if (area?.sanctuary)
+		boutput(src, SPAN_ALERT("You can't hurt yourself here."))
 		return
 
 	if(ishuman(src))
@@ -96,7 +101,7 @@
 		if (equipped.custom_suicide)
 			suicides[equipped.name] = equipped
 
-	if (!src.restrained() && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+	if (!src.restrained() && !src.getStatusDuration("unconscious") && !src.getStatusDuration("stunned"))
 		for (var/obj/O in orange(1,src))
 			LAGCHECK(LAG_HIGH)
 			if (O.custom_suicide && can_reach(src, O))

@@ -123,7 +123,7 @@
 				if(M == usr)
 					continue
 				M.flash(60)
-				M.changeStatus("weakened", 5 SECONDS)
+				M.changeStatus("knockdown", 5 SECONDS)
 				M.playsound_local(M.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 
 				if(prob(1))
@@ -170,7 +170,7 @@
 						if(prob(50))
 							random_brute_damage(M, rand(1,5))
 							M.flash(10)
-						M.changeStatus("weakened", 0.5 SECONDS)
+						M.changeStatus("knockdown", 0.5 SECONDS)
 						sleep(rand(1,5))
 						hooting++
 
@@ -200,7 +200,7 @@
 				SPAWN(rand(30,50)) //Let's stagger out the vomitting a bit
 					M.visible_message(SPAN_ALERT("<B>[M] is violently sick everywhere!</B>"))
 					random_brute_damage(M, rand(5,30))
-					M.changeStatus("weakened", 0.5 SECONDS)
+					M.changeStatus("knockdown", 0.5 SECONDS)
 					var/turf/T = get_turf(M)
 					playsound(T, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 					if(prob(1)) //Oh no you rolled poorly. Welcome to the *instant death raffle!!*
@@ -275,7 +275,7 @@ proc/goldsnap(var/mob/user)
 	logTheThing(LOG_COMBAT, user, "used the Brass Gauntlet and triggered the goldsnap at [log_loc(user)]")
 	var/turf/T = get_turf(user)
 	user.set_dir(SOUTH)
-	user.become_statue(getMaterial("gold"))
+	user.become_statue("gold")
 	for(var/turf/G in range(10, T))
 		G.setMaterial(getMaterial("gold"))
 	sleep(2 SECONDS)

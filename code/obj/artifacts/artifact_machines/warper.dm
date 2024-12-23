@@ -8,7 +8,8 @@
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 365
 	validtypes = list("ancient","martian","eldritch","precursor")
-	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,/datum/artifact_trigger/heat)
+	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,/datum/artifact_trigger/heat,
+		/datum/artifact_trigger/language)
 	fault_blacklist = list(ITEM_ONLY_FAULTS,TOUCH_ONLY_FAULTS)
 	activ_text = "suddenly starts warping space around it!"
 	deact_text = "deactivates, and lays silent."

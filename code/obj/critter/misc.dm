@@ -92,7 +92,7 @@
 
 	ChaseAttack(mob/M)
 		..()
-		if (prob(30)) M.changeStatus("weakened", 3 SECONDS)
+		if (prob(30)) M.changeStatus("knockdown", 3 SECONDS)
 
 	CritterAttack(mob/M)
 		..()
@@ -105,7 +105,7 @@
 		qdel(src)
 
 	bullet_act(var/obj/projectile/P)
-		if (istype(P, /datum/projectile/energy_bolt_antighost))
+		if (istype(P.proj_data, /datum/projectile/energy_bolt_antighost))
 			src.CritterDeath()
 			return
 		else
@@ -170,7 +170,7 @@
 			boutput(M, SPAN_COMBAT("<b>You are forced to the ground by \the [src]!</b>"))
 			random_brute_damage(M, rand(0,5))
 			M.changeStatus("stunned", 5 SECONDS)
-			M.changeStatus("weakened", 5 SECONDS)
+			M.changeStatus("knockdown", 5 SECONDS)
 			src.attacking = 0
 			return
 
@@ -303,7 +303,7 @@
 			logTheThing(LOG_COMBAT, M, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 			doomedMob.ghostize()
-			new /obj/decal/fakeobjects/skeleton(doomedMob.loc)
+			new /obj/fakeobject/skeleton(doomedMob.loc)
 			doomedMob.gib()
 			src.target = null
 

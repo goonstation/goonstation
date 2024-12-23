@@ -1,5 +1,5 @@
 /obj/machinery/computer/operating
-	name = "Operating Computer"
+	name = "operating computer"
 	density = 1
 	anchored = ANCHORED
 	icon = 'icons/obj/computer.dmi'
@@ -14,6 +14,22 @@
 	id = 0
 	var/list/victim_data[][] = list()
 	var/const/history_max = 25
+
+	attackby(obj/item/W, mob/user)
+		. = ..()
+		if (iswrenchingtool(W) && src.circuit_type)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer/operating/proc/change_shape,\
+			list(W, user), W.icon, W.icon_state, "[user] changes the shape of the [src].", null)
+		else
+			src.Attackhand(user)
+
+	get_help_message(dist, mob/user)
+		. = "You can use a <b>screwdriver</b> to unscrew the screen"
+		if (src.can_reconnect)
+			. += ",\nor a <b>multitool</b> to re-scan for equipment. <br> You may also use a <b>wrench</b> to reconfigure the [src] visually."
+		else
+			. += "."
 
 /obj/machinery/computer/operating/New()
 	..()
@@ -154,6 +170,8 @@
 		else
 			if (O.robotic)
 				special = "Cybernetic"
+			if (O.synthetic)
+				special = "Synthetic"
 			if (O.unusual)
 				special = "Unusual"
 			var/list/organ_calc = calc_organ_damage_severity(O)
@@ -302,3 +320,15 @@
 		"implant_count" = implant_count,
 		"has_chest_object" = has_chest_object,
 	)
+
+/obj/machinery/computer/operating/small
+	density = 0
+	icon_state = "operating-small"
+
+/obj/machinery/computer/operating/proc/change_shape()
+	if (src.density)
+		src.base_icon_state = "operating-small"
+	else
+		src.base_icon_state = "operating"
+	src.power_change() // redraw nopower/broken/screen glow
+	src.density = !src.density

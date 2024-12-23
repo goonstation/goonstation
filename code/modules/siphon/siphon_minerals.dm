@@ -295,7 +295,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	tick_req = 21
 	shear = 69
 	sens_window = 0
-	product = /obj/item/reagent_containers/food/snacks/pizza
+	product = /obj/item/reagent_containers/food/snacks/pizza/standard/pepperoni
 
 /datum/siphon_mineral/weed
 	indexed = FALSE

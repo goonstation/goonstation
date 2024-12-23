@@ -38,6 +38,7 @@
 		return
 
 /datum/projectile/bioeffect_beam/stinky
+	sname = "stink ray"
 	bioeffect = "sims_stinky"
 
 

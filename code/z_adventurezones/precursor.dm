@@ -322,7 +322,7 @@
 		src.tag = "orb_stand_[id]"
 
 	attack_hand(mob/user)
-		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
+		if (user.stat || user.getStatusDuration("knockdown") || BOUNDS_DIST(user, src) > 0)
 			return
 
 		if (!src.assembled)
@@ -895,7 +895,6 @@
 	interesting = "Scans detect: BOSE-EINSTEIN CONDENSATE | RYDBERG MATTER *** ELECTROMAGNETIC HAZARD"
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "sphere"
-	event_handler_flags = USE_PROXIMITY
 	anchored = ANCHORED
 	density = 1
 	opacity = 0
@@ -909,8 +908,9 @@
 		light.attach(src)
 		light.set_color(0.8,0.9,1)
 		light.set_brightness(0.9)
+		src.AddComponent(/datum/component/proximity)
 
-	HasProximity(atom/movable/AM as mob|obj)
+	EnteredProximity(atom/movable/AM)
 		if(iscarbon(AM) && prob(20))
 			var/mob/living/carbon/user = AM
 			src.shock(user)
@@ -943,7 +943,7 @@
 			user.Virus_ShockCure(100)
 			user:shock_cyberheart(100)
 			user.changeStatus("stunned", 2 SECONDS)
-			user.changeStatus("weakened", 2 SECONDS)
+			user.changeStatus("knockdown", 2 SECONDS)
 			var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
 			user.throw_at(target, 200, 4)
 			for(var/mob/M in AIviewers(src))
@@ -1158,7 +1158,7 @@
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
 			poorSoul:Virus_ShockCure(100)
 			poorSoul:shock_cyberheart( 100)
-			poorSoul:changeStatus("weakened", 3 SECONDS)
+			poorSoul:changeStatus("knockdown", 3 SECONDS)
 			if (isdead(poorSoul) && prob(25))
 				poorSoul.gib()
 

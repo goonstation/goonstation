@@ -38,7 +38,7 @@
 /obj/storage/crate/medical{
 	desc = "A medical crate. For holding medical things. A serial code seems to have been scratched off it."
 	},
-/obj/item/clothing/mask/gas/injector_mask,
+/obj/item/clothing/mask/injector_mask,
 /obj/item/reagent_containers/syringe/morphine,
 /obj/item/reagent_containers/emergency_injector/random{
 	pixel_y = -6
@@ -589,7 +589,7 @@
 /turf/simulated/floor/engine,
 /area/prefab/adrift_cargorouter)
 "Wm" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "XO" = (
@@ -615,7 +615,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "ZB" = (
-/obj/grille/steel/broken/melted,
+/obj/mesh/grille/steel/broken/melted,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/prefab/adrift_cargorouter)

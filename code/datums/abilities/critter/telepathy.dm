@@ -25,7 +25,7 @@
       else
         var/message = html_encode(input("What would you like to communicate to [target]?", "Telepathy", "") as text)
         logTheThing(LOG_SAY, holder.owner, "MARTIAN TELEPATHY TO [constructTarget(target,"say")]: [message]")
-        message = trim(copytext(sanitize(message), 1, 255))
+        message = trimtext(copytext(sanitize(message), 1, 255))
         var/class = "martiansay"
         if(istype(holder.owner, /mob/living/critter/martian/overseer))
           class = "martianimperial"

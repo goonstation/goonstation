@@ -83,14 +83,13 @@
 			boutput(M, SPAN_ALERT("The blood of the dead provides little sustenance..."))
 
 		var/bitesize = 5 * mult
-		H.change_vampire_blood(bitesize, 1)
-		H.change_vampire_blood(bitesize, 0)
+		H.change_vampire_blood(bitesize, 1, victim = HH)
+		H.change_vampire_blood(bitesize, 0, victim = HH)
 		H.tally_bite(HH,bitesize)
 		if (HH.blood_volume < 20 * mult)
 			HH.blood_volume = 0
 		else
 			HH.blood_volume -= 20 * mult
-		if (istype(H)) H.blood_tracking_output()
 
 	else if (HH.bioHolder && HH.traitHolder.hasTrait("training_chaplain"))
 		if(istype(M))
@@ -99,7 +98,7 @@
 			if (M.get_vampire_blood() >= 20 * mult)
 				M.change_vampire_blood(-20 * mult, 0)
 			else
-				M.change_vampire_blood(0, 0, 1)
+				M.change_vampire_blood(0, 0, 1, victim = HH)
 			M.TakeDamage("chest", 0, 30 * mult)
 
 	else
@@ -109,21 +108,19 @@
 				HH.change_vampire_blood(-bitesize, 0)
 				HH.change_vampire_blood(-bitesize, 1) // Otherwise, two vampires could perpetually feed off of each other, trading blood endlessly.
 
-				H.change_vampire_blood(bitesize, 0)
-				H.change_vampire_blood(bitesize, 1)
+				H.change_vampire_blood(bitesize, 0, victim = HH)
+				H.change_vampire_blood(bitesize, 1, victim = HH)
 				H.tally_bite(HH,bitesize)
-				if (istype(H))
-					H.blood_tracking_output()
 				if (prob(50))
 					boutput(M, SPAN_ALERT("This is the blood of a fellow vampire!"))
 			else
-				HH.change_vampire_blood(0, 0, 1)
+				HH.change_vampire_blood(0, 0, 1, victim = HH)
 				boutput(M, SPAN_ALERT("[HH] doesn't have enough blood left to drink."))
 				return 0
 		else
 			var/bitesize = 10 * mult
-			H.change_vampire_blood(bitesize, 1)
-			H.change_vampire_blood(bitesize, 0)
+			H.change_vampire_blood(bitesize, 1, victim = HH)
+			H.change_vampire_blood(bitesize, 0, victim = HH)
 			H.tally_bite(HH,bitesize)
 			if (HH.blood_volume < 20 * mult)
 				HH.blood_volume = 0
@@ -139,15 +136,13 @@
 
 			if (mult >= 1) //mult is only 1 or greater during a pointblank true suck
 				if (HH.blood_volume < 300 && prob(15))
-					if (!HH.getStatusDuration("paralysis"))
+					if (!HH.getStatusDuration("unconscious"))
 						boutput(HH, SPAN_ALERT("Your vision fades to blackness."))
-					HH.changeStatus("paralysis", 10 SECONDS)
+					HH.changeStatus("unconscious", 10 SECONDS)
 				else
 					if (prob(65))
-						HH.changeStatus("weakened", 1 SECOND)
+						HH.changeStatus("knockdown", 1 SECOND)
 						HH.stuttering = min(HH.stuttering + 3, 10)
-
-			if (istype(H)) H.blood_tracking_output()
 
 	if (!can_take_blood_from(HH) && (mult >= 1) && isunconscious(HH))
 		boutput(HH, SPAN_ALERT("You feel your soul slipping away..."))
@@ -242,8 +237,8 @@
 			boutput(M, SPAN_ALERT("The blood of the rotten provides little sustenance..."))
 
 		var/bitesize = 5 * mult
-		M.change_vampire_blood(bitesize, 1)
-		M.change_vampire_blood(bitesize, 0)
+		M.change_vampire_blood(bitesize, 1, victim = HH)
+		M.change_vampire_blood(bitesize, 0, victim = HH)
 		H.tally_bite(HH,bitesize)
 		if (HH.blood_volume < 20 * mult)
 			HH.blood_volume = 0
@@ -256,7 +251,7 @@
 		if (M.get_vampire_blood() >= 20 * mult)
 			M.change_vampire_blood(-20 * mult, 0)
 		else
-			M.change_vampire_blood(0, 0, 1)
+			M.change_vampire_blood(0, 0, 1, victim = HH)
 		M.TakeDamage("chest", 0, 30 * mult)
 
 	else
@@ -266,19 +261,19 @@
 				HH.change_vampire_blood(-bitesize, 0)
 				HH.change_vampire_blood(-bitesize, 1) // Otherwise, two vampires could perpetually feed off of each other, trading blood endlessly.
 
-				M.change_vampire_blood(bitesize, 0)
-				M.change_vampire_blood(bitesize, 1)
+				M.change_vampire_blood(bitesize, 0, victim = HH)
+				M.change_vampire_blood(bitesize, 1, victim = HH)
 				H.tally_bite(HH,bitesize)
 				if (prob(50))
 					boutput(M, SPAN_ALERT("This is the blood of a fellow vampire!"))
 			else
-				HH.change_vampire_blood(0, 0, 1)
+				HH.change_vampire_blood(0, 0, 1, victim = HH)
 				boutput(M, SPAN_ALERT("[HH] doesn't have enough blood left to drink."))
 				return 0
 		else
 			var/bitesize = 10 * mult
-			M.change_vampire_blood(bitesize, 1)
-			M.change_vampire_blood(bitesize, 0)
+			M.change_vampire_blood(bitesize, 1, victim = HH)
+			M.change_vampire_blood(bitesize, 0, victim = HH)
 			H.tally_bite(HH,bitesize)
 			if (HH.blood_volume < 20 * mult)
 				HH.blood_volume = 0
@@ -286,12 +281,12 @@
 				HH.blood_volume -= 20 * mult
 			if (mult >= 1) //mult is only 1 or greater during a pointblank true suck
 				if (HH.blood_volume < 300 && prob(15))
-					if (!HH.getStatusDuration("paralysis"))
+					if (!HH.getStatusDuration("unconscious"))
 						boutput(HH, SPAN_ALERT("Your vision fades to blackness."))
-					HH.changeStatus("paralysis", 10 SECONDS)
+					HH.changeStatus("unconscious", 10 SECONDS)
 				else
 					if (prob(65))
-						HH.changeStatus("weakened", 1 SECOND)
+						HH.changeStatus("knockdown", 1 SECOND)
 						HH.stuttering = min(HH.stuttering + 3, 10)
 
 	if (!can_take_blood_from(HH) && (mult >= 1) && isunconscious(HH))
@@ -332,7 +327,7 @@
 			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return 1
 
-		if (actions.hasAction(M, "vamp_blood_suck_ranged"))
+		if (actions.hasAction(M, /datum/action/bar/private/icon/vamp_ranged_blood_suc))
 			boutput(M, SPAN_ALERT("You are already performing a Blood action and cannot start a Bite."))
 			return 1
 
@@ -340,6 +335,7 @@
 			boutput(M, SPAN_ALERT("The blood of this target would provide you with no sustenance."))
 			return 1
 
+		. = ..()
 		var/mob/living/carbon/human/HH = target
 
 
@@ -356,7 +352,6 @@
 /datum/action/bar/private/icon/vamp_blood_suc
 	duration = 30
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "vamp_blood_suck"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "blood"
 	bar_icon_state = "bar-vampire"

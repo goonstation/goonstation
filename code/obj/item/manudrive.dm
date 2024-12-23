@@ -54,6 +54,18 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 		singleuse
 			fablimit = 1
 
+	aiLaws //In case you want to make your own laws in the case the original ones are stolen/blown up
+		name = "Command ManuDrive: Artificial Intelligence Laws Blueprint"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture the AI laws found on each NT station."
+		icon_state = "datadiskcom"
+		temp_recipe_string = list(/datum/manufacture/aiModule/makeCaptain,
+		/datum/manufacture/aiModule/oneHuman,
+		/datum/manufacture/aiModule/notHuman,
+		/datum/manufacture/aiModule/emergency,
+		/datum/manufacture/aiModule/removeCrew,
+		/datum/manufacture/aiModule/freeform)
+
+
 	interdictor_parts //Compacts the parts into a single manudrive
 		name = "Engineering Manudrive: Spatial Interdictor Assembly Blueprints"
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture spatial interdictor hardware."
@@ -79,3 +91,24 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture laser mirrors and beam splitters."
 		icon_state = "datadiskeng"
 		temp_recipe_string = list(/datum/manufacture/mechanics/laser_mirror, /datum/manufacture/mechanics/laser_splitter)
+
+	comms_dish
+		name = "Command ManuDrive: Communications Dish"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture a new communications dish."
+		icon_state = "datadiskcom"
+		temp_recipe_string = list(/datum/manufacture/mechanics/comms_dish)
+
+		singleuse
+			fablimit = 1
+
+	pocketoxyex
+		name = "Civilian ManuDrive: Extended Capacity Pocket Oxygen Tank"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture an extended capacity pocket oxygen tank."
+		icon_state = "datadisk1"
+		temp_recipe_string = list(/datum/manufacture/pocketoxyex)
+
+		singleuse
+			fablimit = 1
+
+		threeuse
+			fablimit = 3

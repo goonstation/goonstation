@@ -550,6 +550,8 @@
 							src.throw_at(T, 10, 2)
 				/*if (user.glove_weaponcheck())
 					user.energyclaws_attack(src)*/
+				else if (user.equipped_limb()?.can_beat_up_robots)
+					user.equipped_limb().harm(src, user)
 				else
 					user.visible_message(SPAN_ALERT("<B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!"), SPAN_ALERT("<B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B>"))
 					random_brute_damage(user, rand(2,5))
@@ -582,8 +584,6 @@
 	return 1
 
 /mob/living/silicon/hivebot/update_icon()
-	src.overlays = null
-
 	if (isalive(src))
 		if (src.beebot == 1)
 			src.icon_state = "eyebot-bee[src.client ? null : "-logout"]"
@@ -774,7 +774,7 @@ Frequency:
 	UpdateIcon()
 
 	if (src.mainframe)
-		src.real_name = "SHELL/[src.mainframe]"
+		src.real_name = "SHELL/[src.mainframe.name]"
 		src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 		src.name = src.real_name
 		src.update_name_tag()
@@ -813,6 +813,9 @@ Frequency:
 	if (src.mainframe && src.mainframe.glitchy_speak)
 		text = voidSpeak(text)
 	var/ending = copytext(text, length(text))
+
+	if (singing)
+		return singify_text(text)
 
 	if (ending == "?")
 		return "queries, \"[text]\"";
@@ -910,6 +913,14 @@ Frequency:
 				return src.module_states[i]
 	return 0
 
+/mob/living/silicon/hivebot/set_a_intent(intent)
+	. = ..()
+	src.hud?.update_intent()
+
+/mob/living/silicon/hivebot/set_pulling(atom/movable/A)
+	. = ..()
+	src.hud?.update_pulling()
+
 /*-----Actual AI Shells---------------------------------------*/
 
 /mob/living/silicon/hivebot/eyebot
@@ -933,7 +944,7 @@ Frequency:
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/construction))
 				src.module = new /obj/item/robot_module/construction_ai( src )
 			else
-				src.module = new /obj/item/robot_module( src )
+				src.module = new /obj/item/robot_module/eyebot( src )
 			hud.update_tool_selector()
 
 			//ew
@@ -978,9 +989,10 @@ Frequency:
 		if (C.tg_controls)
 			C.apply_keybind("robot_tg")
 
-	update_icon() // Haine wandered in here and just junked up this code with bees.  I'm so sorry it's so ugly aaaa
-		src.overlays = null
+	create_offline_indicator()
+		return
 
+	update_icon() // Haine wandered in here and just junked up this code with bees.  I'm so sorry it's so ugly aaaa
 		if(isalive(src))
 			if(src.client)
 				if(pixel_y)
@@ -1219,3 +1231,4 @@ Frequency:
 			else
 				hivebot_owner.setStatus("low_signal", INFINITE_STATUS)
 		..()
+

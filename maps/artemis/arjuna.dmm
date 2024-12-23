@@ -227,7 +227,7 @@
 /area/ship/arjuna)
 "qD" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/blue/checker,
 /area/ship/arjuna)
 "rc" = (
@@ -358,7 +358,7 @@
 "Ak" = (
 /obj/storage/closet/biohazard,
 /obj/item/clothing/head/rad_hood,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /turf/simulated/floor/engine,
 /area/ship/arjuna)
 "AA" = (
@@ -460,12 +460,12 @@
 	},
 /area/ship/arjuna)
 "Ko" = (
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/ship/arjuna)
 "Kp" = (
-/obj/decal/fakeobjects/shuttlethruster,
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/ship/arjuna)
 "KX" = (

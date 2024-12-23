@@ -52,11 +52,18 @@
 	#define COMSIG_ATOM_RADIOACTIVITY "atom_get_radioactivity"
 	/// when this atom has clean_forensic called, send this signal.
 	#define COMSIG_ATOM_CLEANED "atom_cleaned"
+	/// sent to the parent object when its handset retracts, see /datum/component/cord
+	#define COMSIG_CORD_RETRACT "cord_retract"
 
 // ---- minimap ----
 
 /// When an atom requires to create a single minimap marker for a specific minimap.
 #define COMSIG_NEW_MINIMAP_MARKER "new_minimap_marker"
+
+// ---- machinery ----
+
+/// When this piece of machinery calls its process function
+#define COMSIG_MACHINERY_PROCESS "machinery_process"
 
 // ---- atom/movable signals ----
 
@@ -65,7 +72,7 @@
 	/// when an AM moves on the map (thing, previous_loc, direction)
 	#define COMSIG_MOVABLE_MOVED "mov_moved"
 	/// when a movable is about to move, return true to prevent (thing, new_loc, direction)
-	#define COMSIG_MOVABLE_BLOCK_MOVE "mov_block_moved"
+	#define COMSIG_MOVABLE_PRE_MOVE "mov_pre_move"
 	/// when an AM changes its loc (thing, previous_loc)
 	#define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
 	/// when an AM ends throw (thing, /datum/thrown_thing)
@@ -78,10 +85,10 @@
 	#define COMSIG_MOVABLE_HIT_THROWN "mov_hit_thrown"
 	/// when an AM is teleported by do_teleport
 	#define COMSIG_MOVABLE_TELEPORTED "mov_teleport"
-	/// when an AM changes nested contraband
+	/// when an AM changes contraband level (self_applied)
 	#define COMSIG_MOVABLE_CONTRABAND_CHANGED "mov_contraband_changed"
-	/// get contraband level of movable (check_nonfirearms, check_firearms)
-	#define COMSIG_MOVABLE_GET_CONTRABAND "mov_get_contraband"
+	/// when an AM is revealed from under a floor tile (turf revealed from)
+	#define COMSIG_MOVABLE_FLOOR_REVEALED "mov_floor_revealed"
 
 	// ---- complex ----
 
@@ -229,6 +236,10 @@
 	#define COMSIG_MOB_POINT "mob_point"
 	/// Sent when the mob starts sprinting, return TRUE to prevent other sprint code from running
 	#define COMSIG_MOB_SPRINT "mob_sprint"
+	/// Sent when the mob says something (message)
+	#define COMSIG_MOB_SAY "mob_say"
+	/// Sent when the mob should trigger a threat grab (yes this is really specific but shush)
+	#define COMSIG_MOB_TRIGGER_THREAT "mob_threat"
 
 	// ---- cloaking device signal ----
 
@@ -254,3 +265,7 @@
 		#define COMSIG_LIVING_LIFE_TICK "mob_life_tick"
 
 // ---- human signals ----
+
+// ---- cross server message signals
+	/// Sent when a server sync response is received
+	#define COMSIG_SERVER_DATA_SYNCED "server_data_synced"

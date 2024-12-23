@@ -21,7 +21,7 @@ TYPEINFO(/obj/item/reagent_containers/hypospray)
 	item_state = "syringe_0"
 	icon_state = "hypo0"
 	amount_per_transfer_from_this = 5
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH
+	flags = TABLEPASS | OPENCONTAINER | NOSPLASH
 	c_flags = ONBELT
 	var/list/whitelist = list()
 	var/inj_amount = 5
@@ -154,7 +154,7 @@ TYPEINFO(/obj/item/reagent_containers/hypospray)
 			return
 		var/amt_prop = inj_amount == -1 ? src.reagents.total_volume : inj_amount
 		user.visible_message(SPAN_NOTICE("<B>[user] injects [target] with [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()].</B>"),\
-		SPAN_NOTICE("You inject [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()]. [src] now contains [max(0,(src.reagents.total_volume-amt_prop))] units."))
+		SPAN_NOTICE("You inject [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()]. [src] now contains [max(0, APPLY_CHEM_EPSILON(src.reagents.total_volume-amt_prop))] units."))
 		logTheThing(user == target ? LOG_CHEMISTRY : LOG_COMBAT, user, "uses a hypospray [log_reagents(src)] to inject [constructTarget(target,"combat")] at [log_loc(user)].")
 
 		src.reagents.trans_to(target, amt_prop)

@@ -8,7 +8,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	fill_amt = 0.3 //You can eat a lot of candy
 	real_name = "candy"
 	var/sugar_content = 50
-	var/razor_blade = 0 //Is this BOOBYTRAPPED CANDY?
+	var/has_razor_blade = FALSE //!Is this BOOBYTRAPPED CANDY?
 	festivity = 1
 
 	New()
@@ -18,9 +18,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/razor_blade))
-			boutput(user, "You add the razor blade to [src]")
+			if (src.has_razor_blade)
+				boutput(user, "There's already a razor blade in [src]!")
+				return
+			boutput(user, "You add the razor blade to [src].")
 			qdel(W)
-			src.razor_blade = 1
+			src.has_razor_blade = TRUE
 			return
 
 		else
@@ -28,13 +31,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 		return
 
 	heal(var/mob/M)
-		if(src.razor_blade && ishuman(M))
+		if(src.has_razor_blade && ishuman(M))
 			var/mob/living/carbon/human/H = M
 			boutput(H, SPAN_ALERT("You bite down into a razor blade!"))
 			H.TakeDamage("head", 10, 0, 0, DAMAGE_STAB)
-			H.changeStatus("weakened", 3 SECONDS)
+			H.changeStatus("knockdown", 3 SECONDS)
 			H.UpdateDamageIcon()
-			src.razor_blade = 0
+			src.has_razor_blade = FALSE
 			new /obj/item/razor_blade( get_turf(src) )
 		..()
 
@@ -48,13 +51,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 		..()
 		if (icon_state == "nougat0")
 			icon_state = "nougat1"
-
-/obj/item/reagent_containers/food/snacks/candy/caramel
-	name = "'Hole Zone Layer' caramel creme"
-	desc = "You know that missing O-Zone from earth? We made it in a candy!"
-	real_name = "caramel"
-	icon_state = "caramel"
-	food_effects = list("food_energized")
 
 /obj/item/reagent_containers/food/snacks/candy/candy_cane
 	name = "candy cane"
@@ -124,37 +120,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	food_color = "#663300"
 	initial_reagents = list("chocolate"=10)
 
-/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup
-	name = "pack of Hetz's Cups"
-	desc = "A package of the popular Hetz's Cups chocolate peanut butter cups."
-	icon_state = "candy-pbcup_w"
-	sugar_content = 20
-	heal_amt = 5
-	food_color = "#663300"
-	real_name = "Hetz's Cup"
-	var/unwrapped = 0
-
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (user == target)
-			boutput(user, SPAN_ALERT("You need to unwrap them first, you greedy beast!"))
-			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
-			return
-		else
-			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
-			return
-
-	attack_self(mob/user as mob)
-		if (unwrapped)
-			return
-
-		unwrapped = 1
-		user.visible_message("[user] unwraps the Hetz's Cups!", "You unwrap the Hetz's Cups.")
-		var/turf/T = get_turf(user)
-		new /obj/item/reagent_containers/food/snacks/candy/pbcup(T)
-		new /obj/item/reagent_containers/food/snacks/candy/pbcup(T)
-		new /obj/item/reagent_containers/food/snacks/candy/pbcup(T)
-		qdel(src)
-
 /obj/item/reagent_containers/food/snacks/candy/pbcup
 	name = "Hetz's Cup"
 	desc = "A cup-shaped chocolate candy with a peanut butter filling. Of course, peanuts went extinct back in 2026, so it's really some weird soy paste that supposedly tastes like them."
@@ -172,11 +137,28 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	desc = "YOU SHOULDN'T SEE THIS OBJECT"
 	icon_state = "bean"
 	bites_left = 1
-	initial_volume = 100
-	sugar_content = 0 // hacky, I know. but it's necessary for the color!
-	var/flavor
-	var/phrase
-	var/tastesbad = 0
+	initial_volume = 110
+	sugar_content = 10
+	var/good_flavours = list("egg", "strawberry", "raspberry", "snozzberry", "happiness", "popcorn", "buttered popcorn", "cinnamon",
+						"macaroni and cheese", "pepperoni", "cheese", "lasagna", "pina colada", "tutti frutti", "lemon", "margarita",
+						"coconut", "pineapple", "scotch", "vodka", "root beer", "cotton candy", "Lagavulin 18", "toffee", "vanilla",
+						"coffee", "apple pie", "neapolitan", "orange", "lime", "mango", "apple", "grape", "Slurm", "slime mold")
+	var/bad_flavours = list("cardboard", "human souls", "something unspeakable", "egg", "vomit", "snot", "poo", "earwax", "wet dog",
+						"belly-button lint", "sweat", "congealed farts", "mold", "armpits", "elbow grease", "sour milk", "WD-40",
+						"slime", "blob", "gym sock", "pants", "brussels sprouts", "feet", "litter box", "durian fruit", "asbestos",
+						"corpse flower", "corpse", "cow dung", "rot", "tar", "ham", "bee", "quark-gluon plasma", "heat death", "gooncode")
+	var/good_phrases = list ("Yum", "Wow", "MMM", "Delicious", "Scrumptious", "Fantastic", "Oh yeah")
+	var/bad_phrases = list("Oh god", "Jeez", "Ugh", "Blecch", "Holy crap that's awful", "What the hell?", "*HURP*", "Phoo")
+	//pool 1 is slightly more likely to occur than pool 2
+	var/reagent_pool1 = list("milk", "coffee", "VHFCS", "gravy", "fakecheese", "grease", "ethanol", "chickensoup", "vanilla", "cornsyrup", "chocolate")
+	var/reagent_pool2 = list("bilk", "beff", "vomit", "gvomit", "porktonium", "badgrease", "yuck", "carbon", "salt", "pepper", "ketchup", "mustard")
+
+	heal(mob/M)
+		..()
+		if (prob(50))
+			boutput(M, SPAN_ALERT("[pick(bad_phrases)]! That tasted like [pick(bad_flavours)]..."))
+		else
+			boutput(M, SPAN_NOTICE("[pick(good_phrases)]! That tasted like [pick(good_flavours)]..."))
 
 /obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor
 	name = "\improper Mabie Nott's Some Flavor Bean"
@@ -185,75 +167,58 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	New()
 		..()
 		SPAWN(0)
-			if (src.reagents)
-				if (prob(33))
-					src.reagents.add_reagent(pick("milk", "coffee", "VHFCS", "gravy", "fakecheese", "grease", "ethanol", "chickensoup", "vanilla", "cornsyrup", "chocolate"), 10)
-					src.heal_amt = 1
-				else if (prob(33))
-					src.reagents.add_reagent(pick("bilk", "beff", "vomit", "gvomit", "porktonium", "badgrease", "yuck", "carbon", "salt", "pepper", "ketchup", "mustard"), 10)
-					src.heal_amt = 0
+			if (!src.reagents) return
+			var/reagent = null
+			if (prob(33))
+				reagent = pick(reagent_pool1)
+				src.heal_amt = 1
+			else if (prob(33))
+				reagent = pick(reagent_pool2)
+				src.heal_amt = 0
 
-				src.food_color = src.reagents.get_master_color()
-				src.icon += src.food_color
+			var/datum/reagent/current = reagents_cache[reagent]
+			if (current)
+				// make space for the flavouring if there is none
+				if(src.reagents.maximum_volume - src.reagents.total_volume < 10)
+					src.reagents.maximum_volume += 10
+				src.reagents.add_reagent(reagent, 10)
+				src.icon += rgb(current.fluid_r, current.fluid_g, current.fluid_b, max(current.transparency,255))
+			else // no flavouring? Pick a random colour!
+				src.icon += random_saturated_hex_color()
 
-				src.reagents.add_reagent("sugar", 50)
-				if (src.reagents.total_volume <= 60)
-					src.reagents.add_reagent("sugar", 40)
 
-			// set up flavors
-			if(prob(50))
-				flavor = pick("cardboard", "human souls", "something unspeakable", "egg", "vomit", "snot", "poo", "urine", "earwax", "wet dog", "belly-button lint", "sweat", "congealed farts", "mold", "armpits", "elbow grease", "sour milk", "WD-40", "slime", "blob", "gym sock", "pants", "brussels sprouts", "feet", "litter box", "durian fruit", "asbestos", "corpse flower", "corpse", "cow dung", "rot", "tar", "ham")
-				phrase = pick("Oh god", "Jeez", "Ugh", "Blecch", "Holy crap that's awful", "What the hell?", "*HURP*", "Phoo")
-				tastesbad = 1
-			else
-				flavor = pick("egg", "strawberry", "raspberry", "snozzberry", "happiness", "popcorn", "buttered popcorn", "cinnamon", "macaroni and cheese", "pepperoni", "cheese", "lasagna", "pina colada", "tutti frutti", "lemon", "margarita", "coconut", "pineapple", "scotch", "vodka", "root beer", "cotton candy", "Lagavulin 18", "toffee", "vanilla", "coffee", "apple pie", "neapolitan", "orange", "lime", "crotch", "mango", "apple", "grape", "Slurm")
-				phrase = pick("Yum", "Wow", "MMM", "Delicious", "Scrumptious", "Fantastic", "Oh yeah")
-				tastesbad = 0
-
-	heal(var/mob/M)
-		..()
-		if (tastesbad)
-			boutput(M, SPAN_ALERT("[phrase]! That tasted like [flavor]..."))
-		else
-			boutput(M, SPAN_NOTICE("[phrase]! That tasted like [flavor]..."))
 
 //#ifdef HALLOWEEN
 /obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor
 	name = "\improper Farty Snott's Every Flavour Bean"
 	desc = "A favorite halloween sweet worldwide!"
-
+	// sugar content is less than the flavouring content, so that wizard golems are guaranteed to be named after the flavouring
+	sugar_content = 40
 	New()
 		..()
 		SPAWN(0)
-			if (src.reagents)
-				if (prob(12))
-					src.reagents.add_reagent(pick("milk", "coffee", "VHFCS", "gravy", "fakecheese", "grease"), 10)
-					src.heal_amt = 1
-				else if (prob(12))
-					src.reagents.add_reagent(pick("bilk", "beff", "vomit", "gvomit", "porktonium", "badgrease"), 10)
-					src.heal_amt = 0
+			if (!src.reagents) return
+			var/reagent = null
+			if (prob(12))
+				reagent = pick(reagent_pool1)
+				src.heal_amt = 1
+			else if (prob(12))
+				reagent = pick(reagent_pool2)
+				src.heal_amt = 0
+			else
+				if (length(all_functional_reagent_ids) > 0)
+					reagent = pick(all_functional_reagent_ids)
 				else
-					var/flavor = null
-					if (length(all_functional_reagent_ids) > 0)
-						flavor = pick(all_functional_reagent_ids)
-					else
-						flavor = "sugar"
-					src.reagents.add_reagent(flavor, 50)
+					reagent = "sugar"
 
-				src.food_color = src.reagents.get_master_color()
-				src.icon += src.food_color // apparently this is a thing you can do?  neat!
+			var/datum/reagent/current = reagents_cache[reagent]
+			if (current)
+				// make space for the flavouring if there is none
+				if(src.reagents.maximum_volume - src.reagents.total_volume < 50)
+					src.reagents.maximum_volume += 50
+				src.reagents.add_reagent(reagent, 50)
+				src.icon += rgb(current.fluid_r, current.fluid_g, current.fluid_b, max(current.transparency,255)) // apparently this is a thing you can do?  neat!
 
-				src.reagents.add_reagent("sugar", 50)
-				if (src.reagents.total_volume <= 60)
-					src.reagents.add_reagent("sugar", 40)
-
-				if(prob(50))
-					flavor = pick("egg", "vomit", "snot", "poo", "urine", "earwax", "wet dog", "belly-button lint", "sweat", "congealed farts", "mold", "armpits", "elbow grease", "sour milk", "WD-40", "slime", "blob", "gym sock", "pants", "brussels sprouts", "feet", "litter box", "durian fruit", "asbestos", "corpse flower", "corpse", "cow dung", "rot", "tar", "ham", "gooncode", "quark-gluon plasma", "bee", "heat death")
-					phrase = pick("Oh god", "Jeez", "Ugh", "Blecch", "Holy crap that's awful", "What the hell?", "*HURP*", "Phoo")
-					tastesbad = 1
-				else
-					flavor = pick("egg", "strawberry", "raspberry", "snozzberry", "happiness", "popcorn", "buttered popcorn", "cinnamon", "macaroni and cheese", "pepperoni", "cheese", "lasagna", "pina colada", "tutti frutti", "lemon", "margarita", "coconut", "pineapple", "scotch", "vodka", "root beer", "cotton candy", "Lagavulin 18", "toffee", "vanilla", "coffee", "apple pie", "neapolitan", "orange", "lime", "crotch", "mango", "apple", "grape", "Slurm", "Popecrunch")
-					phrase = pick("Yum", "Wow", "MMM", "Delicious", "Scrumptious", "Fantastic", "Oh yeah")
 
 /obj/item/kitchen/everyflavor_box
 	var/beans_left = 6
@@ -315,11 +280,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	if (src.reagents)
 		ENSURE_IMAGE(src.image_candy, src.icon, "lpop-w")
 		var/datum/color/average = src.reagents.get_average_color(reagent_exception_ids=list("sugar"))
+		if (src.reagents.has_reagent("sugar") && src.reagents.reagent_list.len == 1)
+			average = new(255,255,255,255)
 		src.image_candy.color = average.to_rgba()
 		src.UpdateOverlays(src.image_candy, "candy")
 
 /obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical
 	icon_random = TRUE
+	name = "medical lollipop"
+	real_name = "medical lollipop"
+	desc = "It's good for you! Probably. It's actually mostly sugar."
 	var/list/flavors = list("omnizine", "saline", "salicylic_acid", "epinephrine", "mannitol", "synaptizine", "anti_rad", "oculine", "salbutamol", "charcoal")
 
 /obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical/New()
@@ -479,13 +449,46 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	get_desc()
 		. = "<br>[SPAN_NOTICE("It says: [phrase]")]"
 
-/obj/item/reagent_containers/food/snacks/candy/taffy
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy)
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy
+	name = "wrapped candy"
+	desc = "A piece of wrapped candy."
+	bites_left = 1
+	sugar_content = 5
+	food_effects = list("food_energized")
+	initial_volume = 5
+	initial_reagents = list("sugar"=5)
+	var/unwrapped = 0
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (unwrapped)
+			..()
+			return
+		if (user == target)
+			boutput(user, SPAN_ALERT("You need to unwrap this first!"))
+			user.visible_message(SPAN_EMOTE("<b>[user]</b> stares at [src] in a confused manner."))
+			return
+		else
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove the [src] into [target]'s mouth!"))
+			return
+
+	attack_self(mob/user as mob)
+		if (!unwrapped)
+			unwrap_candy(user)
+		else
+			..()
+
+	proc/unwrap_candy(mob/user)
+		unwrapped = 1
+		user.visible_message(SPAN_EMOTE("[user] unwraps [src]."), "You unwrap [src].")
+		icon_state = icon_state + "-unwrapped"
+
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy)
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 	name = "saltwater taffy"
 	desc = "Produced in small artisanal batches, straight from someone's kitchen. "
 	icon_state = "red"
-	amount = 1
 	sugar_content = 10
-	var/unwrapped = 0
 	var/flavor
 	var/list/flavors
 
@@ -496,33 +499,384 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 		for (var/F in flavors)
 			R.add_reagent(F, 10)
 
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (user == target)
-			boutput(user, SPAN_ALERT("You need to unwrap this first!"))
-			user.visible_message(SPAN_EMOTE("<b>[user]</b> stares at [src] in a confused manner."))
-			return
-		else
-			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove the unwrapped taffy into [target]'s mouth!"))
-			return
-
-	attack_self(mob/user as mob)
-		if (unwrapped)
-			return ..()
-
-		unwrapped = 1
-		user.visible_message(SPAN_EMOTE("[user] unwraps [src]."), "You unwrap [src].")
-		icon_state = icon_state + "-unwrapped"
-
-/obj/item/reagent_containers/food/snacks/candy/taffy/cherry
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/cherry
+	name = "red saltwater taffy"
 	flavor = "This one is cherry flavored."
 	flavors = list("juice_cherry", "psilocybin")
 
-/obj/item/reagent_containers/food/snacks/candy/taffy/watermelon
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/watermelon
+	name = "pink saltwater taffy"
 	icon_state = "pink"
 	flavor = "This one is watermelon flavored."
 	flavors = list("juice_watermelon", "love")
 
-/obj/item/reagent_containers/food/snacks/candy/taffy/blueraspberry
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/blueraspberry
+	name = "blue saltwater taffy"
 	icon_state = "blue"
 	flavor = "This one is blue raspberry flavored."
 	flavors = list("juice_raspberry", "LSD")
+
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/pb_cup
+	name = "pack of Hetz's Cups"
+	desc = "A package of the popular Hetz's Cups chocolate peanut butter cups."
+	icon_state = "candy-pbcup_w"
+	sugar_content = 20
+	heal_amt = 5
+	food_color = "#663300"
+	real_name = "Hetz's Cup"
+
+	unwrap_candy(mob/user)
+		unwrapped = 1
+		user.visible_message(SPAN_EMOTE("[user] unwraps the Hetz's Cups."), "You unwrap the Hetz's Cups.")
+		var/turf/T = get_turf(user)
+		new /obj/item/reagent_containers/food/snacks/candy/pbcup(T)
+		new /obj/item/reagent_containers/food/snacks/candy/pbcup(T)
+		new /obj/item/reagent_containers/food/snacks/candy/pbcup(T)
+		qdel(src)
+
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/caramel
+	name = "'Hole Zone Layer' caramel creme"
+	desc = "You know that missing O-Zone from earth? We made it in a candy!"
+	real_name = "caramel"
+	icon_state = "caramel"
+
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch
+	name = "butterscotch candy"
+	desc = "It's one of those old timey butterscotch candies like your grampa used to have."
+	real_name = "butterscotch"
+	icon_state = "butterscotch"
+
+/obj/item/reagent_containers/food/snacks/candy/hard_candy
+	name = "hard candy"
+	desc = "A piece of hard candy."
+	real_name = "hard candy"
+	icon_state = "hardcandy-nowrap"
+	bites_left = 1
+	food_effects = list("food_energized")
+	initial_volume = 5
+	sugar_content = 5
+	var/image/image_candy = null
+	var/flavor_name
+
+	on_reagent_change()
+		..()
+		src.update_icon()
+		src.update_name()
+
+	proc/update_name()
+		src.flavor_name = src.reagents.get_master_reagent_name()
+		if (src.flavor_name == "sugar")
+			src.flavor_name = null
+		src.name = "[name_prefix(null, 1)][src.flavor_name ? "[src.flavor_name]-flavored " : null][src.real_name][name_suffix(null, 1)]"
+
+	update_icon()
+		var/datum/color/average = src.reagents.get_average_color()
+		src.food_color = average.to_rgb()
+		src.color = src.food_color
+		src.alpha = round(average.a / 1.2)
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/paper))
+			user.visible_message("[user] wraps the [src] in the [W].", "You fold the [src] in the [W].")
+			var/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/hard/A = new /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/hard(get_turf(user))
+			A.reagents.clear_reagents()
+			src.reagents.trans_to(A, 5)
+			user.u_equip(src)
+			user.put_in_hand_or_drop(A)
+			qdel(src)
+			qdel(W)
+		else if (istype(W,/obj/item/rods) || istype(W,/obj/item/stick))
+			if(istype(W,/obj/item/stick))
+				var/obj/item/stick/S = W
+				if(S.broken)
+					boutput(user, SPAN_ALERT("That stick is broken!"))
+					return
+
+			boutput(user, SPAN_NOTICE("You stick the hard candy onto [W]."))
+
+			var/obj/item/reagent_containers/food/snacks/candy/lollipop/newcandy = new /obj/item/reagent_containers/food/snacks/candy/lollipop(get_turf(src))
+			newcandy.reagents.clear_reagents()
+			src.reagents.trans_to(newcandy, 5)
+			newcandy.update_icon()
+			user.u_equip(src)
+			user.put_in_hand_or_drop(newcandy)
+
+			if(istype(W,/obj/item/rods)) W.change_stack_amount(-1)
+			if(istype(W,/obj/item/stick)) W.amount--
+			if(!W.amount) qdel(W)
+
+			qdel(src)
+		else
+			..()
+
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/hard
+	name = "wrapped hard candy"
+	desc = "A piece of wrapped hard candy."
+	real_name = "hard candy"
+	icon_state = "hardcandy"
+	var/flavor_name
+
+	on_reagent_change()
+		..()
+		src.update_name()
+
+	proc/update_name()
+		src.flavor_name = src.reagents.get_master_reagent_name()
+		if (src.flavor_name == "sugar")
+			src.flavor_name = null
+		src.name = "[name_prefix(null, 1)][src.unwrapped ? null : "wrapped "][src.flavor_name ? "[src.flavor_name]-flavored " : null][src.real_name][name_suffix(null, 1)]"
+
+	unwrap_candy(mob/user)
+		..()
+		var/datum/color/average = src.reagents.get_average_color()
+		var/image/image_candy = image(src.icon, "hardcandy-nowrap")
+		image_candy.color = average.to_rgb()
+		image_candy.alpha = round(average.a / 1.2)
+		src.UpdateOverlays(image_candy, "hardcandy-nowrap")
+		src.update_name()
+
+/obj/item/reagent_containers/food/snacks/candy/rock_candy
+	name = "rock candy"
+	desc = "Rock candy on a stick. Hard as a rock, hopefully doesn't taste like one."
+	real_name = "rock candy"
+	icon_state = "rockcandy-0"
+	initial_volume = 15
+	sugar_content = 15
+	bites_left = 2
+	use_bite_mask = FALSE
+	var/image/image_candy = null
+	var/flavor_name
+
+	on_reagent_change()
+		..()
+		src.update_icon()
+		src.update_name()
+
+	proc/update_name()
+		src.flavor_name = src.reagents.get_master_reagent_name()
+		if (src.flavor_name == "sugar")
+			src.flavor_name = null
+		src.name = "[name_prefix(null, 1)][src.flavor_name ? "[src.flavor_name]-flavored " : null][src.real_name][name_suffix(null, 1)]"
+
+	update_icon()
+		var/datum/color/average = src.reagents.get_average_color()
+		if (!src.image_candy)
+			src.image_candy = image(src.icon, "rockcandy-1")
+		src.food_color = average.to_rgb()
+		src.image_candy.color = src.food_color
+		src.image_candy.alpha = round(average.a / 1.2)
+		src.UpdateOverlays(src.image_candy, "rockcandy-1")
+
+/obj/item/reagent_containers/food/snacks/candy/swirl_lollipop
+	name = "swirly lollipop"
+	desc = "A giant colorful lollipop in the shape of a swirl."
+	real_name = "swirly lollipop"
+	icon_state = "lpop-rainbow"
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	item_state = "lpop-rainbow"
+	initial_volume = 15
+	sugar_content = 15
+	var/flavor_name
+
+	on_reagent_change()
+		..()
+		src.update_name()
+
+	proc/update_name()
+		src.flavor_name = src.reagents.get_master_reagent_name()
+		if (src.flavor_name == "sugar")
+			src.flavor_name = null
+		src.name = "[name_prefix(null, 1)][src.flavor_name ? "[src.flavor_name]-flavored " : null][src.real_name][name_suffix(null, 1)]"
+
+/obj/item/reagent_containers/food/snacks/candy/dragons_beard
+	name = "dragon's beard candy loop"
+	desc = "A loop of dragon's beard candy."
+	real_name = "dragon's beard candy loop"
+	icon_state = "dragonsbeard-loop"
+	initial_volume = 18
+	sugar_content = 18
+	sliceable = TRUE
+	slice_product = /obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut
+	slice_amount = 3
+	slice_suffix = "piece"
+	food_effects = list("food_energized")
+	var/flavor_name
+	var/folds = 1 // How many folds have been done to the candy
+	var/eat_message = null // The message you get for eating the candy
+	var/floured = FALSE // If flour was applied. Gets removed on fold, contributes to success probability
+
+	New()
+		..()
+		src.update_candy()
+
+	on_reagent_change()
+		..()
+		src.update_icon(1)
+		src.update_name()
+
+	proc/update_name()
+		src.flavor_name = src.reagents.get_master_reagent_name()
+		if (src.flavor_name == "sugar" || src.flavor_name == "Enriched MSG")
+			src.flavor_name = null
+		src.name = "[name_prefix(null, 1)][src.flavor_name ? "[src.flavor_name]-flavored " : null][src.real_name][name_suffix(null, 1)]"
+
+	process_sliced_products(var/obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut/slice, var/amount_to_transfer)
+		slice.folds = src.folds
+		slice.desc = src.desc
+		slice.eat_message = src.eat_message
+		slice.food_effects = src.food_effects
+		..()
+
+	update_icon(var/did_reagents_change)
+		var/datum/color/average = src.reagents.get_average_color()
+		if (did_reagents_change)
+			src.food_color = average.to_rgba()
+			src.color = average.to_rgb()
+		if (folds > 31)
+			src.icon_state = "dragonsbeard-loopinf"
+			src.color = "#FFFFFF"
+			src.alpha = average.a
+			var/image/glow_image = new /image(src.icon, "dragonsbeard-loopinfoverlay")
+			var/image/loop_image = new /image(src.icon, "dragonsbeard-loopinf")
+			loop_image.color = average.to_rgba()
+			src.UpdateOverlays(glow_image, "dragonsbeard-loopinfoverlay")
+			src.UpdateOverlays(loop_image, "dragonsbeard-loopinf")
+			src.use_bite_mask = FALSE
+		else if (floured)
+			src.alpha = average.a
+		else
+			src.alpha = round(average.a / 1.5)
+
+	heal(var/mob/M)
+		..()
+		boutput(M, src.eat_message)
+		return
+
+	attack_self(mob/user as mob)
+		if (folds < 32)
+			user.visible_message("[user] twists [src], folding it in on itself!", "You twist [src] and fold it back into a ring.")
+			if (prob(get_success_prob(user)))
+				src.folds++
+				src.floured = FALSE
+				src.quality += 0.2
+				playsound(src.loc, "rustle", 50, 1)
+				update_icon(0)
+				update_candy()
+			else
+				user.visible_message("[src] disintegrates, falling apart into individual strands and sugar dust!", "[src] disintegrates through your fingers, what remains of its strands falling onto the floor.")
+				var/turf/T = get_turf(user)
+				var/diminished_reagents = max(1, round(src.reagents.total_volume / 6)) // less reagent content for failing
+				for (var/i=0, i<pick(1,2,3), i++)
+					var/obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut/A = new /obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut(T)
+					A.reagents.clear_reagents()
+					src.reagents.trans_to(A, diminished_reagents)
+					A.folds = src.folds
+					A.desc = src.desc
+					A.eat_message = src.eat_message
+					A.food_effects = src.food_effects
+				qdel(src)
+				return
+		else
+			boutput(user, "There is no point going any further.")
+
+	attackby(obj/item/W, mob/user)
+		if (folds < 32 && !src.floured && istype(W,/obj/item/reagent_containers/food/snacks/ingredient/flour))
+			boutput(user, "You flour [src].")
+			src.floured = TRUE
+			update_icon(0)
+		else if (folds > 31 && istype(W,/obj/item/reagent_containers/food/snacks/ingredient/flour))
+			boutput(user, "No need. It is complete.")
+		else
+			..()
+
+	proc/get_success_prob(mob/user)
+		var/success_prob = 0
+		if (floured)
+			success_prob = round(100 - (folds * 1.5))
+		else
+			success_prob = round(75 - (folds * 1.5)) // really hard to make unless you're the skilled chef
+		if (user.job == "Chef") success_prob = success_prob * 1.5
+		return success_prob
+
+	proc/update_candy()
+		switch(folds)
+			if (1 to 4)
+				src.desc = "A sorry excuse for proper candy. It looks terrible, you can see the strands individually."
+				src.eat_message = "That wasn't fluffy at all!"
+			if (4 to 7)
+				src.desc = "Chinese cotton candy. It doesn't look that well made."
+			if (7 to 11)
+				src.desc = "Chinese cotton candy. Its texture is thin like hair."
+				src.eat_message = "The texture is soft, but slightly chewy."
+			if (11 to 14)
+				src.desc = "Chinese cotton candy. Its strands are tiny and fragile."
+				src.eat_message = "The texture is soft and delicate."
+			if (14 to 18)
+				src.desc = "Chinese cotton candy. Its light and fluffy, made up of thousands of individual strands."
+			if (18 to 22)
+				src.desc = "Chinese cotton candy. Its clumped up into ropes of thousands of strands."
+				src.eat_message = "[src] melts in your mouth!"
+				src.food_effects = list("food_energized_big")
+			if (22 to 31)
+				src.desc = "Chinese cotton candy. Its stiff and dense, comprised of millions of microscopic strands. Does this still count as cotton candy?"
+			if (31 to 32)
+				src.name = "infinity-fold dragon's beard candy loop"
+				src.desc = "A loop of dragon's beard candy that has been folded into uncountable microscopic strands."
+				src.real_name = "infinity-fold dragon's beard candy loop"
+				src.eat_message = "[src] immediately dissolves in your mouth."
+				src.reagents.add_reagent("enriched_msg", 3)
+
+/obj/item/reagent_containers/food/snacks/candy/dragons_beard/infinity
+	name = "infinity-fold dragon's beard candy"
+	desc = "A piece of dragon's beard candy that has been folded into uncountable microscopic strands."
+	icon_state = "dragonsbeard-loopinf"
+	folds = 32
+
+	New()
+		..()
+		src.reagents.add_reagent("enriched_msg", 3)
+
+/obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut
+	name = "dragon's beard candy"
+	desc = "A piece of dragon's beard candy."
+	real_name = "dragon's beard candy"
+	icon_state = "dragonsbeard"
+	initial_volume = 6
+	sugar_content = 6
+	bites_left = 1
+	food_effects = list("food_energized")
+	var/flavor_name
+	var/folds
+	var/eat_message
+
+	heal(var/mob/M)
+		..()
+		boutput(M, src.eat_message)
+		return
+
+	on_reagent_change()
+		..()
+		src.update_icon()
+		src.update_name()
+
+	proc/update_name()
+		src.flavor_name = src.reagents.get_master_reagent_name()
+		if (src.flavor_name == "sugar" || src.flavor_name == "Enriched MSG")
+			src.flavor_name = null
+		src.name = "[name_prefix(null, 1)][src.flavor_name ? "[src.flavor_name]-flavored " : null][src.real_name][name_suffix(null, 1)]"
+
+	update_icon()
+		var/datum/color/average = src.reagents.get_average_color()
+		src.food_color = average.to_rgba()
+		if (folds > 31)
+			src.name = "infinity-fold dragon's beard candy"
+			src.desc = "A piece of dragon's beard candy that has been folded into uncountable microscopic strands."
+			src.real_name = "infinity-fold dragon's beard candy"
+			src.color = "#FFFFFF"
+			var/image/glow_image = new /image(src.icon, "dragonsbeard-infoverlay")
+			var/image/candy_image = new /image(src.icon, "dragonsbeard")
+			candy_image.color = average.to_rgba()
+			src.UpdateOverlays(glow_image, "dragonsbeard-infoverlay")
+			src.UpdateOverlays(candy_image, "dragonsbeard")
+		else
+			src.color = average.to_rgb()

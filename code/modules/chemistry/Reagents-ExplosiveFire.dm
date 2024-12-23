@@ -36,7 +36,7 @@ datum
 					volume = (volume/covered.len)
 
 				var/radius = clamp(volume/SD, 0, 8)
-				fireflash_melting(T, radius, rand(temp_fire - temp_deviance, temp_fire + temp_deviance), 500)
+				fireflash_melting(T, radius, rand(temp_fire - temp_deviance, temp_fire + temp_deviance), 500, chemfire = CHEM_FIRE_RED)
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -62,9 +62,9 @@ datum
 					L.update_burning(2 * mult)
 				..()
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("fire",8)
-				P.growth -= 12
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.fire_damage += 8
+				growth_tick.growth_rate -= 12
 
 		combustible/phlogiston/firedust
 			name = "phlogiston dust"
@@ -97,7 +97,7 @@ datum
 					var/list/covered = holder.covered_turf()
 					for(var/turf/t in covered)
 						radius = clamp((volume/covered.len)*0.15, 0, 8)
-						fireflash(t, radius, rand(3000, 6000), 500)
+						fireflash(t, radius, rand(3000, 6000), 500, chemfire = CHEM_FIRE_RED)
 				holder?.del_reagent(id)
 				return
 
@@ -125,8 +125,8 @@ datum
 				..()
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("poison",1)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.poison_damage += 1
 
 			syndicate
 				name = "syndicate napalm"
@@ -167,15 +167,15 @@ datum
 				var/radius = clamp(volume*0.15, 0, 8)
 				var/list/covered = holder.covered_turf()
 				var/list/affected = list()
+				radius = clamp((volume/covered.len)*0.15, 0, 8)
+				holder?.del_reagent(id)
 				for(var/turf/t in covered)
-					radius = clamp((volume/covered.len)*0.15, 0, 8)
-					affected += fireflash_melting(t, radius, rand(3000, 6000), 500)
+					affected += fireflash_melting(t, radius, rand(3000, 6000), 500, chemfire = CHEM_FIRE_RED)
 
 				for (var/turf/T in affected)
 					for (var/obj/steel_beams/O in T)
 						O.visible_message(SPAN_ALERT("[O] melts!"))
 						qdel(O)
-				holder?.del_reagent(id)
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!holder)
@@ -200,12 +200,17 @@ datum
 			fluid_flags = FLUID_BANNED
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				var/turf/simulated/A = holder.my_atom
-				if(!istype(A)) return
-
-				if(holder.get_reagent_amount(id) >= 15) //no more thermiting walls with 1u tyvm
-					holder.del_reagent(id)
-					fireflash_melting(A, 0, rand(20000, 25000), 0, TRUE, FALSE, TRUE) // Bypasses the RNG roll to melt walls (Convair880).
+				if (!istype(src.holder.my_atom, /obj/decal/cleanable)) //okay I wanted to let this react anywhere but then it tends to blow up when you synthesize it sooo
+					return
+				if(holder.get_reagent_amount(id) < 10) //no more thermiting walls with 1u tyvm
+					return
+				var/turf/T = get_turf(src.holder.my_atom)
+				var/atom/my_atom = src.holder.my_atom
+				holder.del_reagent(id)
+				var/temp = rand(20000, 25000)
+				fireflash_melting(T, 0, temp, 0, TRUE, CHEM_FIRE_DARKRED, FALSE, TRUE) // Bypasses the RNG roll to melt walls (Convair880).
+				fireflash(T, 0, temp, 0, TRUE, CHEM_FIRE_DARKRED) //another fireflash because the first one gets deleted along with the turf
+				qdel(my_atom)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
@@ -221,17 +226,21 @@ datum
 						volume = volume/length(covered)
 					if (volume < 3)
 						return
-					if(!T.reagents)
-						T.create_reagents(volume)
-					else
-						T.reagents.maximum_volume = T.reagents.maximum_volume + volume
+					if (length(covered) == 1 && volume < 10)
+						return
+					var/obj/decal/cleanable/thermite/cleanable = locate() in T
+					if (!cleanable)
+						cleanable = make_cleanable(/obj/decal/cleanable/thermite, T)
+						cleanable.create_reagents(10)
+						cleanable.reagents.add_reagent("thermite", 10, null)
 
-					if(!T.reagents.has_reagent("thermite"))
-						T.UpdateOverlays(image('icons/effects/effects.dmi',icon_state = "thermite"), "thermite")
-
-					T.reagents.add_reagent("thermite", volume, null)
-					if (T.active_hotspot)
-						T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 350, 300, 1)
+					if (length(T.active_hotspots))
+						var/max_temp = T.active_hotspots[1].temperature
+						var/max_vol = T.active_hotspots[1].volume
+						if (length(T.active_hotspots) > 1)
+							max_temp = max(max_temp, T.active_hotspots[2].temperature)
+							max_vol = max(max_vol, T.active_hotspots[2].volume)
+						T.reagents.temperature_reagents(max_temp, max_vol, 350, 300, 1)
 
 
 		combustible/smokepowder
@@ -362,7 +371,7 @@ datum
 
 				if (!fail)
 					var/radius = min((volume - 3) * 0.15, 3)
-					fireflash_melting(T, radius, 4500 + volume * 500, 350)
+					fireflash_melting(T, radius, 4500 + volume * 500, 350, chemfire = CHEM_FIRE_RED)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
@@ -400,7 +409,7 @@ datum
 			volatility = 4
 
 			reaction_turf(var/turf/T, var/volume)
-				fireflash(T, clamp(volume/10, 0, 8), 7000)
+				fireflash(T, clamp(volume/10, 0, 8), 7000, chemfire = CHEM_FIRE_RED)
 				if(!istype(T, /turf/space))
 					SPAWN(max(10, rand(20))) // let's burn right the fuck through the floor
 						switch(volume)
@@ -579,7 +588,7 @@ datum
 							caused_fireflash = 1
 						for(var/turf/turf in covered)
 							var/radius = clamp(((volume/covered.len) * volume_radius_multiplier + volume_radius_modifier), min_radius, max_radius)
-							fireflash_melting(turf, radius, 2200 + radius * 250, radius * 50)
+							fireflash_melting(turf, radius, 2200 + radius * 250, radius * 50, chemfire = CHEM_FIRE_RED)
 							if(holder && volume/length(covered) >= explosion_threshold)
 								if(holder.my_atom)
 									holder.my_atom.visible_message(SPAN_ALERT("<b>[holder.my_atom] explodes!</b>"))
@@ -621,8 +630,8 @@ datum
 					M.vomit(0, null, vomit_message)
 				..()
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("poison", 1)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.poison_damage += 1
 
 		// cogwerks - gunpowder test. IS THIS A TERRIBLE GODDAMN IDEA? PROBABLY
 
@@ -672,7 +681,7 @@ datum
 									holder.del_reagent(id)
 							if(21 to 80)
 								holder.my_atom.visible_message("<b>[holder.my_atom] flares up!</b>")
-								fireflash(location,0)
+								fireflash(location,0, chemfire = CHEM_FIRE_RED)
 								explosion(holder.my_atom, location, -1, -1, 1, 2)
 								if (length(covered) > 1)
 									holder.remove_reagent(id, our_amt)

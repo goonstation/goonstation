@@ -14,7 +14,7 @@ var/sound/helldrone_wakeup_sound = null
 		for (var/mob/M in drone_zone)
 			M << helldrone_wakeup_sound
 
-		for (var/obj/decal/fakeobjects/drone_eye in drone_zone)
+		for (var/obj/fakeobject/drone_eye in drone_zone)
 			if (drone_eye.icon_state == "eye_array")
 				drone_eye.icon_state = "eye_array_on"
 

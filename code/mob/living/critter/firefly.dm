@@ -23,7 +23,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 	health_brute = 10
 	health_burn = 10
 
-	faction = FACTION_NEUTRAL
+	faction = list(FACTION_NEUTRAL)
 	flags = TABLEPASS
 	fits_under_table = 1
 	base_move_delay = 1.5
@@ -33,6 +33,8 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 	New()
 		..()
 		UpdateIcon()
+		src.bioHolder.AddNewPoolEffect("aura", scramble=TRUE)
+		START_TRACKING_CAT(TR_CAT_BUGS)
 
 		SPAWN(randfloat(0.5 SECOND, 2 SECONDS))
 
@@ -65,6 +67,10 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 			// animate(time=duration*(2+rand()), loop = -1, pixel_x=-4*swap)
 
 		hotkey("walk")
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_BUGS)
+		..()
 
 	attackby(obj/item/W, mob/living/user)
 		// Move to TYPEINFO if more containers are whitelisted, k thx
@@ -101,11 +107,11 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 
 	ai_controlled
 		is_npc = 1
+		ailment_immune = TRUE
 		New()
 			..()
 			src.ai = new /datum/aiHolder/wanderer(src)
 			remove_lifeprocess(/datum/lifeprocess/blindness)
-			remove_lifeprocess(/datum/lifeprocess/viruses)
 
 		death(var/gibbed)
 			qdel(src.ai)
@@ -141,7 +147,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 
 	proc/pop()
 		src.visible_message(SPAN_ALERT("<b>[src]</b> erupts into a huge column of flames! That was unexpected!"))
-		fireflash_melting(get_turf(src), 1, 3000, 1000)
+		fireflash_melting(get_turf(src), 1, 3000, 1000, chemfire = CHEM_FIRE_RED)
 		death()
 
 	update_icon()
@@ -150,11 +156,11 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 
 	ai_controlled
 		is_npc = 1
+		ailment_immune = TRUE
 		New()
 			..()
 			src.ai = new /datum/aiHolder/wanderer(src)
 			remove_lifeprocess(/datum/lifeprocess/blindness)
-			remove_lifeprocess(/datum/lifeprocess/viruses)
 
 		death(var/gibbed)
 			qdel(src.ai)
@@ -217,11 +223,11 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 
 	ai_controlled
 		is_npc = 1
+		ailment_immune = TRUE
 		New()
 			..()
 			src.ai = new /datum/aiHolder/wanderer(src)
 			remove_lifeprocess(/datum/lifeprocess/blindness)
-			remove_lifeprocess(/datum/lifeprocess/viruses)
 
 		death(var/gibbed)
 			qdel(src.ai)
@@ -298,11 +304,11 @@ TYPEINFO(/mob/living/critter/small_animal/dragonfly)
 
 	ai_controlled
 		is_npc = 1
+		ailment_immune = TRUE
 		New()
 			..()
 			src.ai = new /datum/aiHolder/wanderer(src)
 			remove_lifeprocess(/datum/lifeprocess/blindness)
-			remove_lifeprocess(/datum/lifeprocess/viruses)
 
 		death(var/gibbed)
 			qdel(src.ai)
@@ -311,7 +317,8 @@ TYPEINFO(/mob/living/critter/small_animal/dragonfly)
 
 	Move(NewLoc, direct)
 		. = ..()
-		animate(src, time=5 SECONDS, pixel_x=rand(-4,4), pixel_y=rand(-8,8))
+		if (!ON_COOLDOWN(src, "move_bumble", 5 SECONDS))
+			animate(src, time=5 SECONDS, pixel_x=rand(-4,4), pixel_y=rand(-8,8))
 
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W, /obj/item/reagent_containers/glass/jar) || istype(W, /obj/item/reagent_containers/glass/beaker/large))

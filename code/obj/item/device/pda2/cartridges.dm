@@ -51,6 +51,26 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/station_name(src))
 			src.file_amount = src.file_used
 			src.read_only = 1
+	hop
+		name = "\improper CaterCoordinate + cartridge"
+		desc = "For everything a person managing a civilian department would need."
+		icon_state = "cart-hop"
+		file_amount = 64
+
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
+			src.root.add_file( new /datum/computer/file/pda_program/security_ticket(src))
+			src.root.add_file( new /datum/computer/file/pda_program/status_display(src))
+			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
+			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/plant_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/mopfinder(src))
+			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
+			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
+			src.root.add_file( new /datum/computer/file/pda_program/records/medical(src))
+			src.read_only = 1
 
 	head
 		name = "\improper Easy-Record DELUXE cartridge"

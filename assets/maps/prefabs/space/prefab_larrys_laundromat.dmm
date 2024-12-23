@@ -65,7 +65,7 @@
 /turf/simulated/floor/twotone/green,
 /area/prefab/larrys_laundry)
 "hv" = (
-/obj/decal/fakeobjects/Laundry,
+/obj/fakeobject/Laundry,
 /turf/simulated/floor/twotone/black,
 /area/prefab/larrys_laundry)
 "hF" = (
@@ -126,7 +126,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/decal/fakeobjects/Laundry/drying,
+/obj/fakeobject/Laundry/drying,
 /turf/simulated/floor/twotone/green,
 /area/prefab/larrys_laundry)
 "nq" = (
@@ -190,7 +190,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/prefab/larrys_laundry)
 "rC" = (
-/obj/decal/fakeobjects/Laundry/washing,
+/obj/fakeobject/Laundry/washing,
 /turf/simulated/floor/twotone/green,
 /area/prefab/larrys_laundry)
 "rI" = (
@@ -237,7 +237,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "yd" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/prefab/larrys_laundry)
 "ye" = (
@@ -301,7 +301,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "Et" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	name = "larry";
 	pixel_y = -7
 	},
@@ -405,7 +405,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/decal/fakeobjects/Laundry/open,
+/obj/fakeobject/Laundry/open,
 /turf/simulated/floor/twotone/green,
 /area/prefab/larrys_laundry)
 "Op" = (
@@ -444,7 +444,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/decal/fakeobjects/Laundry/open,
+/obj/fakeobject/Laundry/open,
 /turf/simulated/floor/twotone/black,
 /area/prefab/larrys_laundry)
 "Uq" = (

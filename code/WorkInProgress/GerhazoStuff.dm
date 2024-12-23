@@ -37,12 +37,12 @@
 		abilityHolder.updateButtons()
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/short/short
-		bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
-		bioHolder.mobAppearance.customization_third = new /datum/customization_style/eyebrows/eyebrows
-		bioHolder.mobAppearance.customization_first_color = "#555555"
-		bioHolder.mobAppearance.customization_second_color = "#555555"
-		bioHolder.mobAppearance.customization_third_color = "#555555"
+		bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/hair/short/short
+		bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/beard/fullbeard
+		bioHolder.mobAppearance.customizations["hair_top"].style =  new /datum/customization_style/eyebrows/eyebrows
+		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#555555"
+		bioHolder.mobAppearance.customizations["hair_middle"].color = "#555555"
+		bioHolder.mobAppearance.customizations["hair_top"].color = "#555555"
 		. = ..()
 
 	bullet_act(obj/projectile/P, mob/meatshield) // deflect energy projectiles, cut bullets
@@ -260,7 +260,7 @@
 	dissipation_rate = 5
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	implanted = null
 	casing = null
 
@@ -268,7 +268,7 @@
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
-			M.do_disorient(15, weakened = 10)
+			M.do_disorient(15, knockdown = 10)
 			M.throw_at(target, 6, 3, throw_type = THROW_GUNIMPACT)
 			M.update_canmove()
 
@@ -358,7 +358,6 @@
 /datum/action/bar/icon/force_lightning_action // UNLIMITED POWER
 	duration = 5
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "cyalumeknight_lightning"
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "cknight_lightning_action"
 	var/mob/living/carbon/human/M
@@ -470,7 +469,6 @@
 /datum/action/bar/icon/force_choke_action
 	duration = 50
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "cyalumeknight_choke"
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "cknight_grip_action"
 	var/mob/living/carbon/human/M
@@ -554,7 +552,6 @@
 /datum/action/bar/icon/force_heal_action
 	duration = 50
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "cyalumeknight_heal"
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "cknight_heal_action"
 	var/mob/living/carbon/human/M
@@ -732,7 +729,7 @@
 
 	afterattack(var/atom/target, mob/user, flag)
 		if (target == user)
-			src.attack_self(user)
+			src.AttackSelf(user)
 		else
 			. = ..()
 

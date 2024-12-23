@@ -28,7 +28,7 @@
 /turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "R" = (
-/obj/machinery/processor,
+/obj/machinery/sheet_extruder,
 /turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 

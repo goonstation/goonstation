@@ -22,7 +22,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 5
-	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT
+	flags = TABLEPASS | EXTRADELAY | CONDUCT
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	stamina_damage = 5
@@ -336,7 +336,7 @@ obj/item/cable_coil/dropped(mob/user)
 		return
 
 ///This was copy-pasted some 5 times across the 4 cable laying procs that existed) FSR?
-obj/item/cable_coil/proc/plop_a_cable(turf/overthere, mob/user, dir1, dir2)
+/obj/item/cable_coil/proc/plop_a_cable(turf/overthere, mob/user, dir1, dir2)
 	var/obj/cable/NC = new cable_obj_type(overthere, src)
 	applyCableMaterials(NC, src.insulator, src.conductor)
 	NC.d1 = dir1

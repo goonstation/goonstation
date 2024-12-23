@@ -301,7 +301,7 @@ SYNDICATE DRONE FACTORY AREAS
 	proc/process()
 		while(current_state < GAME_STATE_FINISHED)
 			sleep(10 SECONDS)
-			if (current_state == GAME_STATE_PLAYING)
+			if (current_state == GAME_STATE_PLAYING && length(population))
 				if(!played_fx_2 && prob(10))
 					sound_fx_2 = pick('sound/ambience/nature/Rain_ThunderDistant.ogg','sound/ambience/nature/Wind_Cold1.ogg','sound/ambience/nature/Wind_Cold2.ogg','sound/ambience/nature/Wind_Cold3.ogg','sound/ambience/nature/Lavamoon_RocksBreaking1.ogg', 'sound/voice/Zgroan1.ogg', 'sound/voice/Zgroan2.ogg', 'sound/voice/Zgroan3.ogg', 'sound/voice/Zgroan4.ogg', 'sound/voice/animal/werewolf_howl.ogg')
 					for(var/mob/M in src)
@@ -379,14 +379,15 @@ SYNDICATE DRONE FACTORY AREAS
 	can_burn = FALSE
 	can_break = FALSE
 	var/deadly = TRUE
+	var/leggy = FALSE
 	var/no_fly_zone = FALSE
 
 	Entered(atom/movable/O, atom/old_loc)
 		..()
-		if(src.deadly && !(isnull(old_loc) || O.anchored == ANCHORED_ALWAYS))
+		if((src.deadly || src.leggy)  && !(isnull(old_loc) || O.anchored == ANCHORED_ALWAYS))
 			return_if_overlay_or_effect(O)
 
-			if (istype(O, /obj/projectile))
+			if (istype(O, /obj/projectile) || istype(O, /obj/arrival_missile))
 				return
 
 			if (isintangible(O))
@@ -394,11 +395,18 @@ SYNDICATE DRONE FACTORY AREAS
 
 			if (istype(O, /obj/critter))
 				var/obj/critter/C = O
-				if (C.flying)
+				if (C.flying && !src.no_fly_zone)
+					return
+
+			if (istype(O, /obj/machinery/vehicle) && !src.no_fly_zone)
+				var/obj/machinery/vehicle/V = O
+				if(istype(V.movement_controller, /datum/movement_controller/pod) && V.engine?.active)
 					return
 
 			if (isliving(O))
 				var/mob/living/M = O
+				if(M.isFlying && !src.no_fly_zone)
+					return
 				if (M.mind?.damned)
 					melt_away(M)
 					return
@@ -426,22 +434,97 @@ SYNDICATE DRONE FACTORY AREAS
 			CRASH("[identify_object(O)] melted in lava at [src.x],[src.y],[src.z] ([src.loc] [src.loc.type]) during world initialization")
 		#endif
 		if (ismob(O))
-			if (isliving(O))
-				var/mob/living/M = O
-				var/mob/living/carbon/human/H = M
-				if (istype(H))
-					H.unkillable = FALSE
-				if(!M.stat)
-					M.emote("scream")
-				src.visible_message(SPAN_ALERT("<B>[M]</B> falls into the [src] and melts away!"))
-				logTheThing(LOG_COMBAT, M, "was firegibbed by [src] ([src.type]) at [log_loc(M)].")
-				M.firegib(drop_equipment = FALSE) // thanks ISN!
+			if(src.deadly)
+				if (isliving(O))
+					var/mob/living/M = O
+					var/mob/living/carbon/human/H = M
+					if (istype(H))
+						H.unkillable = FALSE
+					if(!M.stat)
+						M.emote("scream")
+					src.visible_message(SPAN_ALERT("<B>[M]</B> falls into the [src] and melts away!"))
+					logTheThing(LOG_COMBAT, M, "was firegibbed by [src] ([src.type]) at [log_loc(M)].")
+					M.firegib(drop_equipment = FALSE) // thanks ISN!
+			else if(src.leggy)
+				SPAWN(0)
+					var/mob/M = O
+					if(M.loc == src)
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							M.canmove = 0
+							M.changeStatus("knockdown", 6 SECONDS)
+							boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
+							visible_message(SPAN_ALERT("[M] gets too close to the edge of the lava and spontaniously combusts from the heat!"))
+							H.set_burning(500)
+							playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+							M.emote("scream")
+						if (isrobot(M))
+							M.canmove = 0
+							M.TakeDamage("chest", pick(5,10), 0, DAMAGE_BURN)
+							M.emote("scream")
+							playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+							boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
+							visible_message(SPAN_ALERT("[M] gets too close to the edge of the lava and their internal wiring suffers a major burn!"))
+							M.changeStatus("stunned", 6 SECONDS)
+					sleep(5 SECONDS)
+					if(M.loc == src)
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							M.changeStatus("knockdown", 10 SECONDS)
+							M.set_body_icon_dirty()
+							H.set_burning(1000)
+							playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+							M.emote("scream")
+							if (H.limbs.l_leg && H.limbs.r_leg)
+								if (H.limbs.l_leg)
+									H.limbs.l_leg.delete()
+								if (H.limbs.r_leg)
+									H.limbs.r_leg.delete()
+								boutput(M, "You can feel how both of your legs melt away!")
+								visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, their legs literally melting away!"))
+							else
+								boutput(M, "You can feel intense heat on the lower part of your torso.")
+								visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, if they had any legs, they would have melted away!"))
+
+						if (isrobot(M))
+							var/mob/living/silicon/robot/R = M
+							R.canmove = 0
+							R.TakeDamage("chest", pick(20,40), 0, DAMAGE_BURN)
+							R.emote("scream")
+							playsound(R.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+							R.changeStatus("stunned", 10 SECONDS)
+							R.part_leg_r?.holder = null
+							qdel(R.part_leg_r)
+							if (R.part_leg_r.slot == "leg_both")
+								R.part_leg_l = null
+								R.update_bodypart("l_leg")
+							R.part_leg_r = null
+							R.update_bodypart("r_leg")
+							R.part_leg_l?.holder = null
+							qdel(R.part_leg_l)
+							if (R.part_leg_l.slot == "leg_both")
+								R.part_leg_r = null
+								R.update_bodypart("r_leg")
+							R.part_leg_l = null
+							R.update_bodypart("l_leg")
+							visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, their legs literally melting away!"))
+							boutput(M, "You can feel how both of your legs melt away!")
+						else
+							boutput(M, "You can feel intense heat on the lower part of your torso.")
+							visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, if they had any legs, they would have melted away!"))
+
+
+
 		else
 			src.visible_message(SPAN_ALERT("<B>[O]</B> falls into the [src] and melts away!"))
 			qdel(O)
 
 /turf/unsimulated/floor/lava/nofly
 	no_fly_zone = TRUE
+
+/turf/unsimulated/floor/lava/with_warning
+	deadly = FALSE
+	leggy = TRUE
 
 /obj/decal/lightshaft
 	name = "light"
@@ -581,6 +664,17 @@ SYNDICATE DRONE FACTORY AREAS
 
 	var/active = 0
 
+	New()
+		. = ..()
+		if (current_state > GAME_STATE_WORLD_NEW)
+			SPAWN(0) //worldgen overrides ideally
+				UpdateIcon()
+		else
+			worldgenCandidates += src
+
+	proc/generate_worldgen()
+		src.UpdateIcon()
+
 	proc/do_move(var/direction)
 		if(active) return
 		var/turf/tile = get_step(src,direction)
@@ -599,6 +693,8 @@ SYNDICATE DRONE FACTORY AREAS
 			tile.invisibility = INVIS_ALWAYS_ISH
 			tile.set_opacity(1)
 			active = 0
+			src.UpdateIcon()
+			update_neighbors()
 
 	find_suitable_tiles()
 		var/list/possible = new/list()
@@ -640,8 +736,23 @@ SYNDICATE DRONE FACTORY AREAS
 			picked.invisibility = INVIS_ALWAYS_ISH
 			picked.set_opacity(1)
 			active = 0
+			src.UpdateIcon()
+			update_neighbors()
 
 		//SPAWN(rand(100,200)) update() // raised delay
+
+	proc/update_neighbors()
+		for (var/turf/unsimulated/wall/auto/T in orange(1,src))
+			T.UpdateIcon()
+		for (var/obj/shifting_wall/sneaky/cave/W in orange(1,src))
+			W.UpdateIcon()
+
+	update_icon()
+		var/typeinfo/turf/unsimulated/wall/auto/typinfo = get_type_typeinfo(/turf/unsimulated/wall/auto/adventure)
+		var/connectdir = get_connected_directions_bitflag(typinfo.connects_to, typinfo.connects_to_exceptions, TRUE, typinfo.connect_diagonal)
+		var/mod = "cave-"
+		var/the_state = "[mod][connectdir]"
+		icon_state = the_state
 
 /obj/line_obj/whip
 	name = "Whip"
@@ -665,7 +776,7 @@ SYNDICATE DRONE FACTORY AREAS
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "whip"
 	item_state = "c_tube"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 
 	New()
@@ -752,8 +863,7 @@ SYNDICATE DRONE FACTORY AREAS
 				src.set_loc(next)
 				for(var/mob/living/carbon/C in next)
 					C.TakeDamageAccountArmor("chest", 33, 0)
-					if(hasvar(C, "weakened"))
-						C:changeStatus("weakened", 5 SECONDS)
+					C.changeStatus("knockdown", 5 SECONDS)
 
 
 /obj/boulder_trap/respawning
@@ -867,7 +977,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "death"
 	item_state = "death"
 	// stole some shit from the welder's apron
-	flags = FPRINT | TABLEPASS | SPACEWEAR
+	flags = TABLEPASS | SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	fire_resist = T0C+5200
 	protective_temperature = 1000
@@ -1027,7 +1137,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "pstone"
 	item_state = "injector"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 	var/datum/light/light
 
@@ -1056,7 +1166,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "powder"
 	item_state = "injector"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -1372,7 +1482,7 @@ var/satellite_crash_event_status = -1
 		explode.start()
 		playsound(src.loc, 'sound/effects/kaboom.ogg', 90, 1)
 		SPAWN(1 DECI SECOND)
-			fireflash(src.loc, 4)
+			fireflash(src.loc, 4, chemfire = CHEM_FIRE_RED)
 		for (var/mob/living/L in range(src.loc, 2))
 			L.ex_act(GET_DIST(src.loc, L))
 
@@ -1392,20 +1502,20 @@ var/satellite_crash_event_status = -1
 		projection.layer = satellite.layer + 1
 		satellite.overlays += projection
 
-		var/obj/perm_portal/portal = new /obj/perm_portal {name="rift in space and time"; desc = "uh...huhh"; pixel_x = 16;} (locate(satellite.x+1,satellite.y-1, satellite.z))
+		var/obj/laser_sink/perm_portal/portal = new /obj/laser_sink/perm_portal {name="rift in space and time"; desc = "uh...huhh"; pixel_x = 16;} (locate(satellite.x+1,satellite.y-1, satellite.z))
 		for (var/obj/O in portal.loc)
 			if (O.density && O.anchored && O != portal)
 				qdel(O)
 
 		var/area/drone/zone/drone_zone = locate()
 		if (istype(drone_zone))
-			var/obj/decal/fakeobjects/teleport_pad/pad = locate() in drone_zone.contents
+			var/obj/fakeobject/teleport_pad/pad = locate() in drone_zone.contents
 			if (istype(pad))
 				portal.target = get_turf(pad)
 			else
 				portal.target = get_turf(pick( drone_zone.contents ))
 
-			var/obj/perm_portal/portal2 = new /obj/perm_portal {name="rift in space and time"; desc = "uh...huhh";} (get_turf(portal.target))
+			var/obj/laser_sink/perm_portal/portal2 = new /obj/laser_sink/perm_portal {name="rift in space and time"; desc = "uh...huhh";} (get_turf(portal.target))
 			portal2.target = get_turf(portal)
 
 		satellite_crash_event_status = 2

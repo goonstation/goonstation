@@ -37,6 +37,7 @@
 #define LANDMARK_PIRATE "Pirate-Spawn"
 #define LANDMARK_PIRATE_FIRST_MATE "Pirate-First-Mate-Spawn"
 #define LANDMARK_PIRATE_CAPTAIN "Pirate-Captain-Spawn"
+#define LANDMARK_PIRATES_TELE "Priate-Tele"
 
 // Salvagers
 #define LANDMARK_SALVAGER "Salvager-Spawn"
@@ -45,6 +46,9 @@
 
 // Wizard
 #define LANDMARK_WIZARD "Wizard_Spawn"
+
+// Witch
+#define LANDMARK_WITCH "Witch-Spawn"
 
 // misc and unused
 #define LANDMARK_CHARACTER_PREVIEW_SPAWN "character preview"
@@ -108,3 +112,9 @@
 #define LANDMARK_VM_WARP_NONE 0
 #define LANDMARK_VM_WARP_ALL 1
 #define LANDMARK_VM_WARP_NON_ADMINS 2
+#define LANDMARK_VM_ONLY_WITCHES 3
+
+//HTR teams
+#define LANDMARK_HTR_TEAM "HTR_TEAM"
+#define LANDMARK_HTR_VENDOR "HTR_VENDOR"
+#define LANDMARK_HTR_BOTS "HTR_BOTS"

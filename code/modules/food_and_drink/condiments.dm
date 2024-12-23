@@ -50,6 +50,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	desc = "Made with real artificial maple syrup!"
 	icon_state = "syrup"
 
+/obj/item/reagent_containers/food/snacks/condiment/gravyboat
+	name = "gravy boat"
+	desc = "Not actually a boat, but that sure is gravy."
+	icon = 'icons/obj/foodNdrink/food.dmi'
+	icon_state = "gravyboat"
+	initial_volume = 10
+	initial_reagents = list("gravy"=10)
+
 /obj/item/reagent_containers/food/snacks/condiment/soysauce
 	name = "soy sauce"
 	desc = "A dark brown sauce brewed from soybeans and wheat. Salty!"
@@ -163,7 +171,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	desc = "A little bottle for shaking things onto other things."
 	icon = 'icons/obj/foodNdrink/food.dmi'
 	icon_state = "shaker"
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	g_amt = 10
@@ -202,9 +209,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 				switch (src.stuff)
 					if ("salt")
 						H.tri_message(user, SPAN_ALERT("<b>[user]</b> [myVerb]s something into [H]'s eyes!"),\
-							SPAN_ALERT("[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some salt into your eyes! <B>FUCK!</B>"),\
-							SPAN_ALERT("You [myVerb] some salt into [user == H ? "your" : "[H]'s"] eyes![user == H ? " <B>FUCK!</B>" : null]"))
+							SPAN_ALERT("[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some salt into your eyes! <B>FUCK THAT STINGS!</B>"),\
+							SPAN_ALERT("You [myVerb] some salt into [user == H ? "your" : "[H]'s"] eyes![user == H ? " <B>FUCK THAT STINGS!</B>" : null]"))
 						random_brute_damage(user, 1)
+						H.change_eye_blurry(rand(10, 16))
+						H.take_eye_damage(rand(12, 16))
 						src.shakes ++
 						return
 					if ("pepper")

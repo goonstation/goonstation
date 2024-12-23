@@ -21,13 +21,7 @@
 	boutput(world, "<B>There is a [SPAN_ALERT("CHANGELING")] on the station. Be on your guard! Trust no one!</B>")
 
 /datum/game_mode/changeling/pre_setup()
-	var/num_players = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if(player.ready)
-			num_players++
+	var/num_players = src.roundstart_player_count()
 
 	var/i = rand(5)
 	var/num_changelings = clamp(round((num_players + i) / pop_divisor), 1, changelings_possible)

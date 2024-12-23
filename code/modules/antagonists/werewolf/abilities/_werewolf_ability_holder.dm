@@ -18,9 +18,7 @@
 				M.coreMR = null
 			M.coreMR = M.mutantrace
 			M.jitteriness = 0
-			M.delStatus("stunned")
-			M.delStatus("weakened")
-			M.delStatus("paralysis")
+			M.remove_stuns()
 			M.delStatus("slowed")
 			M.delStatus("disorient")
 			M.delStatus("radiation")
@@ -178,7 +176,7 @@
 				if (organ)
 					H.organHolder.drop_and_throw_organ(organ, src.loc, get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5)), rand(1,4), 1, 0)
 
-			HH.changeStatus("weakened", 2 SECONDS)
+			HH.changeStatus("knockdown", 2 SECONDS)
 			if (prob(33) && !isdead(HH))
 				HH.emote("scream")
 
@@ -205,7 +203,7 @@
 					M.visible_message(SPAN_ALERT("<B>[M] sinks its teeth into [target]! !</B>"))
 				HH.add_fingerprint(M) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit.
 				M.werewolf_audio_effects(HH, "feast")
-				HH.setStatus("weakened",rand(3 SECONDS, 6 SECONDS))
+				HH.setStatus("knockdown",rand(3 SECONDS, 6 SECONDS))
 				if (prob(70) && !isdead(HH))
 					HH.emote("scream")
 		if ("pounce")
@@ -226,7 +224,7 @@
 				damage += rand(5,15)
 
 			if (prob(60)) playsound(M.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-			if (prob(75)) target.setStatus("weakened", 3 SECONDS)
+			if (prob(75)) target.setStatus("knockdown", 3 SECONDS)
 			if (prob(33) && !isdead(target))
 				target.emote("scream")
 
@@ -359,12 +357,12 @@
 
 		switch (stunned_only_is_okay)
 			if (0)
-				if (!isalive(M) || M.hasStatus(list("stunned", "paralysis", "weakened")))
+				if (!isalive(M) || M.hasStatus(list("stunned", "unconscious", "knockdown")))
 					return 0
 				else
 					return 1
 			if (1)
-				if (!isalive(M) || M.getStatusDuration("paralysis") > 0)
+				if (!isalive(M) || M.getStatusDuration("unconscious") > 0)
 					return 0
 				else
 					return 1

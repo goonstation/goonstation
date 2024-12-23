@@ -66,5 +66,5 @@
 			target.lastattackertime = world.time
 			target.TakeDamage("chest", 0, 40, 0, DAMAGE_BURN)
 			target.changeStatus("stunned", 6 SECONDS)
-			target.changeStatus("weakened", 6 SECONDS)
+			target.changeStatus("knockdown", 6 SECONDS)
 			target.stuttering += 10

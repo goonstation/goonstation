@@ -766,7 +766,7 @@ TYPEINFO(/obj/submachine/blackjack)
 			src.equip_new_if_possible(/obj/item/clothing/under/rank/bartender, SLOT_W_UNIFORM)
 			src.equip_new_if_possible(/obj/item/clothing/suit/wcoat, SLOT_WEAR_SUIT)
 			src.equip_if_possible(new /obj/item/clothing/glasses/thermal/orange, SLOT_GLASSES)
-			src.equip_new_if_possible(/obj/item/gun/kinetic/riotgun, SLOT_IN_BACKPACK)
+			src.equip_new_if_possible(/obj/item/gun/kinetic/pumpweapon/riotgun, SLOT_IN_BACKPACK)
 			src.equip_new_if_possible(/obj/item/storage/box/glassbox, SLOT_IN_BACKPACK)
 			for (var/obj/item/reagent_containers/food/drinks/drinkingglass/glass in src)
 				src.glassware += glass
@@ -1017,6 +1017,7 @@ TYPEINFO(/obj/submachine/blackjack)
 	name = "gloves"
 	desc = "Long white gloves with red bands on them."
 	icon_state = "sailormoon"
+	fingertip_color = "#f3f3f3"
 
 /obj/item/clothing/shoes/sailormoon
 	name = "boots"
@@ -1062,7 +1063,7 @@ TYPEINFO(/obj/submachine/blackjack)
 	icon_state = "moonstick"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "moonstick"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	c_flags = ONBELT
 	force = 2
 	w_class = W_CLASS_SMALL
@@ -1080,7 +1081,7 @@ TYPEINFO(/obj/submachine/blackjack)
 	cooldown = 100
 
 	ability_allowed()
-		if (!the_mob || the_mob.stat || the_mob.getStatusDuration("paralysis"))
+		if (!the_mob || the_mob.stat || the_mob.getStatusDuration("unconscious"))
 			boutput(the_mob, SPAN_ALERT("You are incapacitated."))
 			return 0
 
@@ -1113,8 +1114,8 @@ TYPEINFO(/obj/submachine/blackjack)
 /mob/living/carbon/human/proc/sailormoon_reshape() // stolen from Spy's tommyize stuff
 	var/datum/appearanceHolder/AH = new
 	AH.gender = "female"
-	AH.customization_first = new /datum/customization_style/hair/gimmick/sailor_moon
-	AH.customization_first_color = "#FFD700"
+	AH.customizations["hair_bottom"].style =  new /datum/customization_style/hair/gimmick/sailor_moon
+	AH.customizations["hair_bottom"].color = "#FFD700"
 	AH.owner = src
 	AH.parentHolder = src.bioHolder
 
@@ -1150,7 +1151,7 @@ TYPEINFO(/obj/submachine/blackjack)
 	icon_state = "null_scalpel"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_CUT
@@ -1214,6 +1215,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 	var/possible_bling_uncommon = list(/obj/item/currency/spacecash/hundred,/obj/item/coin)
 	var/possible_bling_rare = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/gold)
 	default_material = "gold"
+	recoil_strength = 4
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (!istype(target, /turf) || !istype(start, /turf))
@@ -1338,7 +1340,6 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 /datum/action/bar/icon/apply_makeup // yee
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "apply_makeup"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spacelipstick1"
 	var/mob/living/carbon/human/target
@@ -1409,7 +1410,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
-	flags = FPRINT | TABLEPASS | EXTRADELAY
+	flags = TABLEPASS | EXTRADELAY
 	var/bangfired = FALSE // Checks if the gun has been fired before or not. If it's been fired, no more firing for you
 	var/description = "A bang flag pops out of the barrel!" // Used to fuck you and also decide what description is used for the fire text
 
@@ -1424,7 +1425,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 			icon_state = "bangflag[icon_state]"
 			return
 		else
-			boutput(user, SPAN_NOTICE("The gun is still cooling down from it's last incredibly powerful shot! Or at least you pretend that it is."))
+			boutput(user, SPAN_NOTICE("The gun is still cooling down from its last incredibly powerful shot! Or at least you pretend that it is."))
 
 	attack_self(mob/user)
 		if (src.bangfired)
@@ -1449,6 +1450,53 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 	desc = "There are 4 bullets left! Each shot will currently use 1 bullet!"
 	description = "A bang flag unfurls out of the barrel!"
 	two_handed = 1
+
+/obj/item/bang_gun/lawlbringer
+	name = "\improper Lawlbringer"
+	icon = 'icons/obj/items/guns/energy.dmi'
+	item_state = "lawg-detain"
+	icon_state = "lawbringer0"
+	desc = "A gun with a microphone. Fascinating."
+	description = "A bang flag unfurls out of the barrel!"
+	inventory_counter_enabled = TRUE
+
+	New()
+		src.create_inventory_counter()
+		inventory_counter.update_percent(1, 1)
+		..()
+
+	attack_hand(mob/user)
+		boutput(user, SPAN_ALERT("\The [src] has accepted your DNA string. You are its owner!"))
+		assign_name(user)
+		..()
+
+	proc/assign_name(var/mob/M)
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if (H.bioHolder)
+				src.name = "HoS [H.real_name]'s Lawlbringer"
+
+	pixelaction(atom/target, params, mob/user, reach)
+		if(reach || src.bangfired)
+			// this falling through is ok since it won't activate the else/if there either,
+			// so it will fall through once more
+			..()
+		else if (!ON_COOLDOWN(src, "recent_fire", 30 SECOND))
+			src.bangfired = TRUE
+			user?.visible_message(SPAN_ALERT("[user] fires [src][target ? " at [target]" : null]! [description]"))
+			playsound(user, 'sound/musical_instruments/Trombone_Failiure.ogg', 50, TRUE)
+			inventory_counter.update_percent(0, 1)
+			return
+		else
+			boutput(user, SPAN_NOTICE("The gun is still cooling down from its last incredibly powerful shot! Or at least you pretend that it is."))
+
+	attack_self(mob/user)
+		if (src.bangfired)
+			src.bangfired = FALSE
+			icon_state = initial(src.icon_state)
+			boutput(user, SPAN_NOTICE("You awkwardly jam the tiny flag back into the barrel."))
+			inventory_counter.update_percent(1, 1)
+
 
 /*
 /obj/item // if I accidentally commit this uncommented PLEASE KILL ME tia <3
@@ -1480,11 +1528,6 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 	var/hexnum = copytext(num1, 2)
 	var/num2 = num2hex(hex2num(hexnum) - 554040)
 */
-
-/turf/simulated/tempstuff
-	name = "floor"
-	icon = 'icons/misc/HaineSpriteDump.dmi'
-	icon_state = "gooberything_small"
 
 /obj/item/blessed_ball_bearing
 	name = "blessed ball bearing" // fill claymores with them for all your nazi-vampire-protection needs
@@ -1531,7 +1574,7 @@ TYPEINFO(/obj/item/space_thing)
 	desc = "Some kinda thing, from space. In space. A space thing."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "thing"
-	flags = FPRINT | CONDUCT | TABLEPASS
+	flags = CONDUCT | TABLEPASS
 	w_class = W_CLASS_TINY
 	force = 10
 	throwforce = 7
@@ -1647,7 +1690,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	SPAWN(0)
 
 		if(!src.stat && !src.transforming && M)
-			if(src.getStatusDuration("paralysis") || src.getStatusDuration("weakened") || src.stunned > 0)
+			if(src.getStatusDuration("unconscious") || src.getStatusDuration("knockdown") || src.stunned > 0)
 				boutput(src, "You can't do that while incapacitated!")
 				return
 
@@ -1669,8 +1712,8 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 						var/mob/living/H = G.affecting
 						if(H.lying)
 							H.lying = 0
-							H.delStatus("paralysis")
-							H.delStatus("weakened")
+							H.delStatus("unconscious")
+							H.delStatus("knockdown")
 							H.set_clothing_icon_dirty()
 						H.transforming = 1
 						src.transforming = 1
@@ -1751,7 +1794,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon_state = "beamout"
 		zero.d_blend_mode = 2 //add
-		zero.customization_third_color = "#08BFC2"
+		zero.customizations["hair_top"].color = "#08BFC2"
 		zero.d_alpha = 50
 		definitions.Add(zero)
 /*		var/datum/overlayDefinition/spot = new()
@@ -1765,7 +1808,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon_state = "beamout"
 		zero.d_blend_mode = 2
-		zero.customization_third_color = "#FFFFFF"
+		zero.customizations["hair_top"].color = "#FFFFFF"
 		zero.d_alpha = 50
 		definitions.Add(zero)
 /*		var/datum/overlayDefinition/spot = new()
@@ -1779,7 +1822,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon_state = "beamout"
 		zero.d_blend_mode = 2
-		zero.customization_third_color = "#C20B08"
+		zero.customizations["hair_top"].color = "#C20B08"
 		zero.d_alpha = 50
 		definitions.Add(zero)
 /*		var/datum/overlayDefinition/spot = new()
@@ -1848,7 +1891,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	on_mob_life(var/mob/M)
 		if(!M) M = holder.my_atom
 		M.drowsyness = max(M.drowsyness-15, 0)
-		if(M.getStatusDuration("paralysis")) M.paralysis-=3
+		if(M.getStatusDuration("unconscious")) M.paralysis-=3
 		if(M.stunned) M.stunned-=3
 		if(M.weakened) M.weakened-=3
 		if(M.sleeping) M.sleeping = 0

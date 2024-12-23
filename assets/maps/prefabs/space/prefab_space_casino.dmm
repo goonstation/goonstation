@@ -16,7 +16,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/prefab/space_casino)
 "co" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /obj/machinery/light/incandescent,
@@ -63,7 +63,7 @@
 /area/prefab/space_casino)
 "fz" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
@@ -96,11 +96,11 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor2"
 	},
-/obj/decal/fakeobjects/chefbot,
+/obj/fakeobject/chefbot,
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/prefab/space_casino)
 "le" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -128,7 +128,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/prefab/space_casino)
 "oD" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -145,7 +145,7 @@
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/prefab/space_casino)
 "po" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /obj/decal/cleanable/blood/splatter,
@@ -245,7 +245,7 @@
 /turf/simulated/floor/sanitary,
 /area/prefab/space_casino)
 "yu" = (
-/obj/decal/fakeobjects/barbuddy_dispenser,
+/obj/fakeobject/barbuddy_dispenser,
 /turf/simulated/floor/black,
 /area/prefab/space_casino)
 "yH" = (
@@ -302,7 +302,7 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gib4"
 	},
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/fakeobject/skeleton/decomposed_corpse,
 /turf/simulated/floor/plating,
 /area/prefab/space_casino)
 "Gp" = (
@@ -343,7 +343,7 @@
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/prefab/space_casino)
 "Jb" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /turf/simulated/floor/plating,
@@ -371,7 +371,7 @@
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/prefab/space_casino)
 "Mx" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	color = "b4b4b4"
 	},
@@ -414,7 +414,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "QF" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	color = "b4b4b4"
 	},
@@ -462,11 +462,11 @@
 /turf/simulated/floor/black,
 /area/prefab/space_casino)
 "XV" = (
-/obj/decal/fakeobjects/genetics_scrambler,
+/obj/fakeobject/genetics_scrambler,
 /turf/simulated/floor/plating,
 /area/prefab/space_casino)
 "XW" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /obj/decal/cleanable/blood/tracks,
@@ -499,7 +499,7 @@
 /area/prefab/space_casino)
 "ZY" = (
 /obj/stool,
-/obj/decal/fakeobjects/brokengamblebot,
+/obj/fakeobject/brokengamblebot,
 /turf/simulated/floor/wood,
 /area/prefab/space_casino)
 "ZZ" = (

@@ -12,6 +12,8 @@
 	hunter_only = 0
 	lock_holder = FALSE
 	ignore_holder_lock = 1
+	do_logs = FALSE
+	interrupt_action_bars = FALSE
 
 	cast(mob/target)
 		if (!holder)
@@ -22,6 +24,7 @@
 		if (!M)
 			return 1
 
+		. = ..()
 		var/count = M.get_skull_value()
 
 		if (count <= 0)

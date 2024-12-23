@@ -258,9 +258,9 @@
 				bothat = image('icons/obj/bots/aibots.dmi', "hat-[src.hat]")
 				UpdateOverlays(bothat, "secbot_hat")
 
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "control", control_freq)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "beacon", beacon_freq)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "pda", FREQ_PDA)
 
 		#ifdef I_AM_ABOVE_THE_LAW
 		START_TRACKING_CAT(TR_CAT_DELETE_ME)
@@ -579,12 +579,13 @@
 			UpdateOverlays(null, "secbot_charged")
 
 	/// Hits someone with our baton, or charges it if it isnt
-	proc/baton_attack(var/mob/living/carbon/M, var/force_attack = 0)
+	proc/baton_attack(var/mob/living/carbon/M, var/force_attack = 0, var/extra_hits = 0)
 		if(force_attack || baton_charged)
 			src.baton_charging = 0
 			src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
 			var/maxstuns = 4
 			var/stuncount = (src.emagged >= 2) ? rand(5,10) : 1
+			stuncount += extra_hits
 
 			// No need for unnecessary hassle, just make it ignore charges entirely for the time being.
 			if (src.our_baton && istype(src.our_baton))
@@ -615,7 +616,7 @@
 				return
 			SPAWN(0.2 SECONDS)
 				src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
-			if (src.target.getStatusDuration("weakened"))
+			if (src.target.getStatusDuration("knockdown"))
 				src.anchored = ANCHORED
 				src.target_lastloc = M.loc
 				src.KillPathAndGiveUp(KPAGU_CLEAR_PATH)
@@ -780,7 +781,7 @@
 				src.weeoo()
 				if(prob(50 + (src.emagged * 15)))
 					for(var/mob/M in hearers(C, null))
-						M.show_text("<font size=[max(0, 5 - GET_DIST(get_turf(src), M))]>THUD, thud!</font>")
+						M.show_text("<font size=[max(0, 5 - GET_DIST(get_turf(src), M))]>THUD, thud!</font>", group = "storage_thud")
 					playsound(C, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 					animate_storage_thump(C)
 				src.container_cool_off_counter++
@@ -798,7 +799,7 @@
 			/// Tango in batonning distance?
 			if ((BOUNDS_DIST(src, src.target) == 0))
 				/// Are they good and downed, and are we allowed to cuff em?
-				if(!src.arrest_type && src.target?.getStatusDuration("weakened") >= 3 SECONDS)
+				if(!src.arrest_type && src.target?.getStatusDuration("knockdown") >= 3 SECONDS)
 					if(!src.warn_minor_crime || ((src.warn_minor_crime || src.guard_area_lockdown) && src.threatlevel >= src.cuff_threat_threshold))
 						actions.start(new/datum/action/bar/icon/secbot_cuff(src, kpagu), src)
 					else
@@ -847,6 +848,8 @@
 			if (src.threatlevel >= 4)
 				src.EngageTarget(C)
 				break
+			if(C.traitHolder.hasTrait("wasitsomethingisaid"))
+				src.EngageTarget(C)
 			else
 				continue
 
@@ -940,14 +943,10 @@
 			if(istype(perp_id, /obj/item/card/id/syndicate))
 				threatcount -= 2
 
-			if(perp_id) //Checking for targets and permits
-				var/list/contraband_returned = list()
-				if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !(contraband_access in perp_id.access), !(weapon_access in perp_id.access)))
-					threatcount += max(contraband_returned)
-			else
-				var/list/contraband_returned = list()
-				if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
-					threatcount += max(contraband_returned)
+			if(!perp_id || !(contraband_access in perp_id.access))
+				threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_VISIBLE_CONTRABAND)
+			if(!perp_id || !(weapon_access in perp_id.access))
+				threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_VISIBLE_GUNS)
 
 		if(istype(perp.mutantrace, /datum/mutantrace/abomination))
 			threatcount += 5
@@ -964,7 +963,7 @@
 			var/perpname = perp.face_visible() ? perp.real_name : perp.name
 
 			for (var/datum/db_record/R as anything in data_core.security.find_records("name", perpname))
-				if(R["criminal"] == "*Arrest*")
+				if(R["criminal"] == ARREST_STATE_ARREST)
 					threatcount = 7
 					break
 
@@ -1230,7 +1229,6 @@
 /datum/action/bar/icon/secbot_cuff
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "secbot_cuff"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "buddycuff"
 	var/obj/machinery/bot/secbot/master
@@ -1283,7 +1281,12 @@
 			if(ishuman(master.target) && !uncuffable)
 				master.target.handcuffs = new /obj/item/handcuffs/guardbot(master.target)
 				master.target.setStatus("handcuffed", duration = INFINITE_STATUS)
+				master.target.update_clothing()
 				logTheThing(LOG_COMBAT, master, "handcuffs [constructTarget(master.target,"combat")] at [log_loc(master)].")
+
+			if(master.target.traitHolder?.hasTrait("wasitsomethingisaid")) //a little extra to make the trait funnier
+				var/extra_hits = (master.emagged >= 2) ? 20 : 4 //normal = 4. double emagged = 20. i just think its very funny
+				master.baton_attack(master.target, TRUE, extra_hits)
 
 			if(!uncuffable)
 				master.arrest_gloat()
@@ -1328,7 +1331,6 @@
 /datum/action/bar/icon/secbot_stun
 	duration = 10
 	interrupt_flags = 0 //THE SECURITRON STOPS FOR NOTHING
-	id = "secbot_cuff"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "stunbaton_active"
 	var/obj/machinery/bot/secbot/master

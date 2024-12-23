@@ -3,7 +3,6 @@
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "voting_box"
 	density = 1
-	flags = FPRINT
 	anchored = ANCHORED
 	desc = "Some sort of thing to put ballots into. Maybe you can even vote with it!"
 	var/bribeAmount = 0

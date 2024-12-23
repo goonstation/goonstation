@@ -20,102 +20,8 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 				// gonna be real here it seems more useful to have the oft-used stuff at the top.
 				//global.QM_CategoryList.Insert(1,S.category) //So Misc. is not #1, reverse ordering.
 
-/datum/cdc_contact_analysis
-	var/uid = 0
-	var/time_factor = 0
-	var/time_done = 0
-	var/begun_at = 0
-	var/description_available = 0
-	var/cure_available = 0
-	var/cure_cost = 0
-	var/name = ""
-	var/desc = ""
-	var/datum/pathogen/assoc_pathogen = null
-
-/datum/cdc_contact_controller
-	var/list/analysis_by_uid = list()
-	var/list/ready_to_analyze = list()
-	var/list/completed_analysis = list()
-	var/datum/cdc_contact_analysis/current_analysis = null
-	var/datum/pathogen/working_on = null
-	var/working_on_time_factor = 0
-	var/next_cure_batch = 0
-	var/batches_left = 0
-	var/next_crate = 0
-	var/last_switch = 0
-
-	New()
-		..()
-		processing_items.Add(src)
-
-	proc/process()
-		if (next_cure_batch < ticker.round_elapsed_ticks && working_on)
-			var/obj/storage/crate/biohazard/B = new
-			var/count = rand(3,6)
-			for (var/i = 0, i < count, i++)
-				new/obj/item/serum_injector(B, working_on, 1, 0)
-			B.name = "CDC Pathogen cure crate ([working_on.name])"
-			shippingmarket.receive_crate(B)
-			batches_left--
-			if (batches_left)
-				next_cure_batch = round(rand(175, 233) / 100 * working_on_time_factor) + ticker.round_elapsed_ticks
-			else
-				working_on = null
-
-	proc/receive_pathogen_samples(obj/storage/crate/biohazard/cdc/sell_crate)
-		for (var/R in sell_crate)
-			var/list/patho = null
-			if (istype(R, /obj/item/reagent_containers))
-				var/obj/item/reagent_containers/RC = R
-				patho = RC.reagents.aggregate_pathogens()
-				qdel(RC)
-			else if (ishuman(R)) // heh
-				var/mob/living/carbon/human/H = R
-				patho = H.reagents.aggregate_pathogens()
-				H.ghostize()
-				qdel(H)
-			else
-				qdel(R)
-				continue
-			for (var/uid in patho)
-				if (!(uid in src.analysis_by_uid))
-					var/datum/pathogen/P = patho[uid]
-					var/datum/cdc_contact_analysis/D = new
-					D.uid = uid
-					var/sym_count = clamp(length(P.effects), 2, 7)
-					D.time_factor = sym_count * rand(10, 15) // 200, 600
-					D.cure_cost = sym_count * rand(25, 40) // 2100, 4300
-					D.name = P.name
-					var/rating = max(P.advance_speed, P.suppression_threshold, P.spread)
-					var/ds = "weak"
-					switch (P.stages)
-						if (4)
-							ds = "potent"
-						if (5)
-							ds = "deadly"
-					var/df = "a relatively one-sided"
-					switch (sym_count)
-						if (3 to 4)
-							df = "a somewhat colorful"
-						if (5 to 6)
-							df = "a rather diverse"
-						if (7)
-							df = "an incredibly symptomatic"
-					D.desc = "It is [df] pathogen with a hazard rating of [rating]. We identify it to be a [ds] organism made up of [P.body_type.plural]. [P.suppressant.desc]"
-					var/datum/pathogen/copy = new /datum/pathogen
-					copy.setup(0, P, 0, null)
-					D.assoc_pathogen = copy
-					src.analysis_by_uid[uid] = D
-					src.ready_to_analyze += D
-			qdel(sell_crate)
-		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: Pathogen sample crate delivered to the CDC.")
-		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
-
-var/global/datum/cdc_contact_controller/QM_CDC = new()
-
 /obj/machinery/computer/supplycomp
-	name = "Quartermaster's Console"
+	name = "quartermaster's console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "QMcom"
 	req_access = list(access_supply_console)
@@ -140,7 +46,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	New()
 		..()
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "pda", FREQ_PDA)
 
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
@@ -295,7 +201,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			}
 
 		#fakeTopBar {
-			// position: sticky but shitty
+			/* position: sticky but shitty */
 			visibility: hidden;
 			margin-bottom: 0.5em;
 			opacity: 0;
@@ -351,11 +257,46 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	</style>
 	<script type="text/javascript">
-		// same-page anchor "a href=#id" links dont work in byond
-		// doesn't work for CHUI as it has its own scrolling logic
-		function scroll_to_id(h) {
-			var top = document.getElementById(h).offsetTop;
-			window.scrollTo(0, top);
+		function scroll_to_id(id) {
+			var element = document.getElementById(id);
+			if (element) {
+				var topBarHeight = document.getElementById('topBar').offsetHeight;
+				var elementTop = element.getBoundingClientRect().top;
+				var currentTop = window.pageYOffset || document.documentElement.scrollTop;
+				var targetTop = elementTop + currentTop - topBarHeight;
+
+				// Smooth scroll polyfill for IE11
+				function smoothScrollTo(endX, endY, duration) {
+					var startX = window.scrollX || window.pageXOffset;
+					var startY = window.scrollY || window.pageYOffset;
+					var startTime = new Date().getTime();
+
+					function easeInOutQuad(t, b, c, d) {
+						t /= d / 2;
+						if (t < 1) return c / 2 * t * t + b;
+						t--;
+						return -c / 2 * (t * (t - 2) - 1) + b;
+					}
+
+					function scroll() {
+						var currentTime = new Date().getTime();
+						var time = Math.min(1, ((currentTime - startTime) / duration));
+						var timeFunction = easeInOutQuad(time, 0, 1, 1);
+						window.scrollTo(
+							Math.ceil((timeFunction * (endX - startX)) + startX),
+							Math.ceil((timeFunction * (endY - startY)) + startY)
+						);
+
+						if (Math.abs(window.pageYOffset - endY) > 1) {
+							requestAnimationFrame(scroll);
+						}
+					}
+
+					scroll();
+				}
+
+				smoothScrollTo(0, targetTop, 600); // 600ms for the smooth scroll duration
+			}
 		}
 	</script>
 
@@ -370,7 +311,6 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			Order History &middot;
 			Shipping Market
 			<br>
-			Contact CDC &middot;
 			Traders
 			Requisitions
 			RockBox Controls
@@ -387,7 +327,6 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			<a href='[topicLink("order_history")]'>Order History</a> &bull;
 			<a href='[topicLink("viewmarket")]'>Shipping Market</a>
 			<br>
-			<a href='[topicLink("contact_cdc")]'>Contact CDC</a> &bull;
 			<a href='[topicLink("trader_list")]'>Traders</a> &bull;
 			<a href='[topicLink("requis_list")]'>Requisitions</a> &bull;
 			<a href='[topicLink("rockbox_controls")]'>Rockbox Controls</a>
@@ -415,57 +354,6 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	return "?src=\ref[src]&action=[action][subaction ? "&subaction=[subaction]" : ""]&[extra && islist(extra) ? list2params(extra) : ""]"
 
 
-/obj/machinery/computer/supplycomp/proc/set_cdc()
-	src.temp = "<h2>Center for Disease Control</h2>"
-	src.temp += "<I>Greetings, [station_name]; how can we help you today?</I><br><br>"
-
-	if (src.last_cdc_message)
-		src.temp += "[last_cdc_message]<br><br>"
-
-	src.temp += "<B>Pathogen analysis services</B><br>"
-	src.temp += "To send us pathogen samples, you can <A href='[topicLink("req_biohazard_crate")]'>requisition a biohazardous materials crate</a> from us for 5 credits.<br>"
-	if (!QM_CDC.current_analysis)
-		src.temp += "Our researchers currently have free capacity to analyze pathogen and blood samples for you.<br>"
-		if (length(QM_CDC.ready_to_analyze))
-			src.temp += "We received your packages and are ready to <A href='[topicLink("cdc_analyze")]'>analyze some samples</A>. It will cost you, but hey, you would like to survive, right?<br>"
-		else
-			src.temp += "We have no unanalyzed pathogen samples from your station.<br>"
-	else
-		src.temp += "We're currently analyzing the pathogen sample [QM_CDC.current_analysis.name]. We can <A href='[topicLink("cdc_analyze")]'>analyze something different</A>, if you want."
-		if (QM_CDC.current_analysis.description_available <= ticker.round_elapsed_ticks)
-			src.temp += "Here's what we have so far: <br>[QM_CDC.current_analysis.desc]<br>"
-			if (QM_CDC.current_analysis.cure_available <= ticker.round_elapsed_ticks)
-				src.temp += "We've also discovered a method to synthesize a cure for this pathogen.<br>"
-				QM_CDC.completed_analysis += QM_CDC.current_analysis
-				QM_CDC.current_analysis = null
-			else
-				var/CA = round((QM_CDC.current_analysis.cure_available - ticker.round_elapsed_ticks) / 600)
-				src.temp += "We're really close to discovering a cure as well. It should be available a few [CA > 0 ? "minutes" : "seconds"].<br>"
-		else
-			var/DA = round((QM_CDC.current_analysis.description_available - ticker.round_elapsed_ticks) / 600)
-			src.temp += "We cannot tell you anything about this pathogen so far. Check back in [DA > 1 ? "[DA] minutes" : (DA > 0 ? "1 minute" : "a few seconds")].<br>"
-	src.temp += "<br>"
-	src.temp += "<B>Pathogen cure services</B><br>"
-	if (length(QM_CDC.working_on))
-		src.temp += "We are currently working on [QM_CDC.batches_left] batch[QM_CDC.batches_left > 1 ? "es" : null] of cures for the [QM_CDC.working_on.name] pathogen. The crate will be delivered soon."
-	else if (length(QM_CDC.completed_analysis))
-		src.temp += "We have cures ready to be synthesized for [length(QM_CDC.completed_analysis)] pathogen[length(QM_CDC.completed_analysis) > 1 ? "s" : null].<br>"
-		src.temp += "You can requisition in batches. The more batches you order, the less time per batch it takes for us to deliver and the less credits per batch it will cost you.<br>"
-		src.temp += "<table style='width:100%; border:none; cell-spacing: 0px'>"
-		for (var/datum/cdc_contact_analysis/analysis in QM_CDC.completed_analysis)
-			var/one_cost = analysis.cure_cost
-			var/five_cost = analysis.cure_cost * 4
-			var/ten_cost = analysis.cure_cost * 7
-			src.temp += "<tr><td><b>[analysis.assoc_pathogen.name]</b><td><a href='[topicLink("batch_cure", "\ref[analysis]", list(count = "1"))]'>1 batch for [one_cost] credits</a></td><td><a href='[topicLink("batch_cure", "\ref[analysis]", list(count = "5"))]'>5 batches for [five_cost] credits</a></td><td><a href='[topicLink("batch_cure", "\ref[analysis]", list(count = "10"))]'>10 batches for [ten_cost] credits</a></td></tr>"
-			src.temp += "<tr><td colspan='4' style='font-style:italic'>[analysis.desc]</td></tr>"
-			src.temp += "<tr><td colspan='4'>&nbsp;</td></tr>"
-		src.temp += "</table><br>"
-	else
-		src.temp += "We have no pathogen samples from your station that we can cure, yet.<br>"
-	src.temp += "<br>"
-	src.temp += "<A href='[topicLink("mainmenu")]'>Main Menu</A>"
-
-
 /obj/machinery/computer/supplycomp/proc
 
 	order_menu(subaction, href_list)
@@ -477,6 +365,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if (null, "list")
 
 				. += "<h2>Order Supplies</h2><div style='text-align: center;' id='qmquickjump'>"
+				. += search_snippet("background: #222228; color: #ccc;")
+				. += "<br />"
 				var/ordershit = ""
 				var/catnum = 0
 				if (!global.QM_CategoryList)
@@ -484,7 +374,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				for (var/foundCategory in global.QM_CategoryList)
 					//var/categorycolor = random_color() //I must say, I simply love the colors this generates.
 
-					. += "[catnum ? " &middot; " : ""] <a href='javascript:scroll_to_id(\"category-[catnum]\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
+					. += "[catnum ? " &middot; " : ""] <a href='#' onclick='scroll_to_id(\"category-[catnum]\"); return false;' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
 
 					ordershit += {"
 			<a name='category-[catnum]' id='category-[catnum]'></a><h3>[foundCategory]</h3>
@@ -504,13 +394,15 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 						if((S.syndicate && !src.hacked) || S.hidden) continue
 						if (S.category == foundCategory)
 							ordershit += {"
-								<tr class='row[rownum % 2]'>
-									<th class='noborder itemtop'><a href='?src=\ref[src];action=order;subaction=buy;what=\ref[S]'>[S.name]</a></td>
-									<th class='noborder itemtop' style='text-align: right;'>[S.cost]</td>
-								</tr>
-								<tr class='row[rownum % 2]'>
-									<td colspan='2' class='itemdesc'>[S.desc]</td>
-								</tr>
+								<tbody class='supply-package'>
+									<tr class='row[rownum % 2]'>
+										<th class='noborder itemtop'><a href='?src=\ref[src];action=order;subaction=buy;what=\ref[S]'>[S.name]</a></td>
+										<th class='noborder itemtop' style='text-align: right;'>[S.cost]</td>
+									</tr>
+									<tr class='row[rownum % 2]'>
+										<td colspan='2' class='itemdesc'>[S.desc]</td>
+									</tr>
+								</tbody>
 								"}
 							rownum++
 						LAGCHECK(LAG_LOW)
@@ -534,10 +426,10 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 						O.orderedby = usr.name
 						var/default_comment = ""
 						O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
-						if (isnull(O.comment))
+						if (isnull(O.comment) || P.cost > wagesystem.shipping_budget)
 							shippingmarket.supply_requests += O
 							return .("list") // The user cancelled the order
-						O.comment = html_encode(O.comment)
+						O.comment = html_encode(trimtext(O.comment))
 						wagesystem.shipping_budget -= P.cost
 						if (O.address)
 							src.send_pda_message(O.address, "Your order of [P.name] has been approved.")
@@ -573,9 +465,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 							O.orderedby = usr.name
 							var/default_comment = ""
 							O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = FALSE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
-							if (isnull(O.comment))
+							if (isnull(O.comment) || P.cost > wagesystem.shipping_budget)
 								return .("list") // The user cancelled the order
-							O.comment = html_encode(O.comment)
+							O.comment = html_encode(trimtext(O.comment))
 							wagesystem.shipping_budget -= P.cost
 							var/obj/storage/S = O.create(usr)
 							shippingmarket.receive_crate(S)
@@ -717,103 +609,6 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 						</tbody>
 					</table>
 						"}
-
-		if ("contact_cdc")
-			if (signal_loss >= 75)
-				boutput(usr, SPAN_ALERT("Severe signal interference is preventing contact with the CDC."))
-				return
-			set_cdc()
-			last_cdc_message = null
-
-		if ("req_biohazard_crate")
-			if (signal_loss >= 75)
-				boutput(usr, SPAN_ALERT("Severe signal interference is preventing contact with the CDC."))
-				return
-			if (ticker.round_elapsed_ticks < QM_CDC.next_crate)
-				last_cdc_message = "<span style=\"color:red; font-style: italic\">We are fresh out of crates right now to send you. Check back in [ceil((QM_CDC.next_crate - ticker.round_elapsed_ticks) / (1 SECOND))] seconds!</span>"
-			else
-				if (wagesystem.shipping_budget < 5)
-					last_cdc_message = "<span style=\"color:red; font-style: italic\">You're completely broke. You cannot even afford a crate.</span>"
-				else
-					wagesystem.shipping_budget -= 5
-					last_cdc_message = "<span style=\"color:blue; font-style: italic\">We're delivering the crate right now. It should arrive shortly.</span>"
-					shippingmarket.receive_crate(new /obj/storage/crate/biohazard/cdc())
-					QM_CDC.next_crate = ticker.round_elapsed_ticks + 300
-			set_cdc()
-
-		if ("cdc_analyze")
-			if (signal_loss >= 75)
-				boutput(usr, SPAN_ALERT("Severe signal interference is preventing contact with the CDC."))
-				return
-			src.temp = "<B>Center for Disease Control communication line</B><HR>"
-			src.temp += "<i>These are the unanalyzed samples we have from you, [station_name].</i><br><br>"
-			if (QM_CDC.current_analysis)
-				src.temp += "We are currently researching the sample [QM_CDC.current_analysis.assoc_pathogen.name]. We can start on a new one if you like, but the analysis cost will not be refunded.<br><br>"
-			src.temp += "Analysis costs 100 credits to begin. Choose a pathogen sample to analyze:<br>"
-			for (var/datum/cdc_contact_analysis/C in QM_CDC.ready_to_analyze)
-				src.temp += "<a href='[topicLink("cdc_analyze_me", "\ref[C]")]'>[C.assoc_pathogen.name]</a> ([round(C.time_done / (2 * C.time_factor))]% done)<br>"
-			src.temp += "<br><A href='[topicLink("contact_cdc")]'>Back</A><br><A href='[topicLink("mainmenu")]'>Main Menu</A>"
-
-		if ("cdc_analyze_me")
-			if (signal_loss >= 75)
-				boutput(usr, SPAN_ALERT("Severe signal interference is preventing contact with the CDC."))
-				return
-			if (QM_CDC.last_switch > ticker.round_elapsed_ticks - 300)
-				last_cdc_message = "<span style=\"color:red; font-style: italic\">We just switched projects. Hold on for a bit.</span>"
-			else if (wagesystem.shipping_budget < 100)
-				last_cdc_message = "<span style=\"color:red; font-style: italic\">You cannot afford to start a new analysis.</span>"
-			else
-				var/datum/cdc_contact_analysis/C = locate(subaction)
-				if (!(C in QM_CDC.ready_to_analyze))
-					last_cdc_message = "<span style=\"color:red; font-style: italic\">That's not ready to analyze right now.</span>"
-				else
-					last_cdc_message = "<span style=\"color:blue; font-style: italic\">We'll begin the analysis and keep you updated.</span>"
-					wagesystem.shipping_budget -= 100
-					if (QM_CDC.current_analysis)
-						var/datum/cdc_contact_analysis/A = QM_CDC.current_analysis
-						A.time_done += ticker.round_elapsed_ticks - A.begun_at
-						if (A.cure_available <= ticker.round_elapsed_ticks)
-							QM_CDC.completed_analysis += A
-						else
-							QM_CDC.ready_to_analyze += A
-					QM_CDC.current_analysis = C
-					QM_CDC.ready_to_analyze -= C
-					C.begun_at = ticker.round_elapsed_ticks
-					C.description_available = C.begun_at + C.time_factor - C.time_done
-					C.cure_available = C.description_available + C.time_factor
-					QM_CDC.last_switch = C.begun_at
-
-			set_cdc()
-
-		if ("batch_cure")
-			if (signal_loss >= 75)
-				boutput(usr, SPAN_ALERT("Severe signal interference is preventing contact with the CDC."))
-				return
-			var/datum/cdc_contact_analysis/C = locate(subaction)
-			if (!(C in QM_CDC.completed_analysis))
-				last_cdc_message = "<span style=\"color:red; font-style: italic\">That's not ready to be cured yet.</span>"
-			var/count = text2num_safe(href_list["count"])
-			var/cost = 0
-			switch (count)
-				if (1)
-					cost = C.cure_cost
-				if (5)
-					cost = 4 * C.cure_cost
-				if (10)
-					cost = 7 * C.cure_cost
-				else
-					last_cdc_message = "<span style=\"color:red; font-style: italic\">No leet haxing, chump.</span>"
-			if (cost > 0)
-				if (wagesystem.shipping_budget < cost)
-					last_cdc_message = "<span style=\"color:red; font-style: italic\">You cannot afford these cures.</span>"
-				else
-					wagesystem.shipping_budget -= cost
-					QM_CDC.working_on = C.assoc_pathogen
-					QM_CDC.working_on_time_factor = C.time_factor
-					QM_CDC.next_cure_batch = round(rand(175, 233) / 100 * C.time_factor) + ticker.round_elapsed_ticks
-					QM_CDC.batches_left = count
-
-			set_cdc()
 
 		if ("trader_list")
 			if (!shippingmarket.active_traders.len)

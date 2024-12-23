@@ -97,7 +97,7 @@
 		if (istype(src.owner, /obj/machinery/vehicle/escape_pod))
 			return FALSE
 
-		var/can_user_act = user && user == owner.pilot && !user.getStatusDuration("stunned") && !user.getStatusDuration("weakened") && !user.getStatusDuration("paralysis") && !isdead(user)
+		var/can_user_act = user && user == owner.pilot && !is_incapacitated(user) && !isdead(user)
 
 		if(shooting && owner.m_w_system?.active && can_user_act && !GET_COOLDOWN(owner.m_w_system, "fire"))
 			owner.fire_main_weapon(user)

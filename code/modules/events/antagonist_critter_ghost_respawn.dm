@@ -247,6 +247,7 @@
 					new /obj/item/implant/access/infinite/assistant(M.current)
 					if (src.custom_spawn_turf)
 						M.current.set_loc(src.custom_spawn_turf)
+					message_ghosts("The antag critter <b>[picked_critter]</b> have spawned.") //noloc4antagspawns
 					M.add_generic_antagonist(ROLE_ANTAGONIST_CRITTER, "[M.current.real_name]", source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 				candidates -= M
 

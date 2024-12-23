@@ -3,6 +3,12 @@ TYPEINFO(/datum/component/hallucination/trippy_colors)
 		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts in seconds. -1 for permanent", 30),
 	)
 
+TYPEINFO(/datum/component/hallucination/fake_singulo)
+	initialization_args = list(
+		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts in seconds. -1 for permanent", 30),
+	)
+
+
 TYPEINFO(/datum/component/hallucination/random_sound)
 	initialization_args = list(
 		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts in seconds. -1 for permanent", 30),
@@ -344,6 +350,51 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			return FALSE //create a new hallucination
 
 //#########################################################
+//                     FAKE SINGULO
+//#########################################################
+
+/// Fake singulo - hallucinate a loose singularity approaching you and eating the station
+/datum/component/hallucination/fake_singulo
+	var/obj/fake_singulo/my_singulo = null
+
+	do_mob_tick(mob, mult)
+		if(parent_mob.client && (QDELETED(my_singulo)) && prob(50))
+			//pick a turf at the edge of the player's screen. Either all the way left/right + rand up/down, or all the way up/down + rand left/right
+			var/start_turf = null
+			var/bad_turf_count = 0
+			var/viewsize = parent_mob.client.view
+			if(!isnum(viewsize))
+				viewsize = splittext(viewsize,"x")
+				viewsize[1] = round(text2num(viewsize[1])/2)+1
+				viewsize[2] = round(text2num(viewsize[2])/2)+1
+			else
+				viewsize = round(viewsize/2)+1
+				viewsize = list(viewsize, viewsize)
+			while(isnull(start_turf) && bad_turf_count < 10) //just in case we pick an invalid turf a bunch, don't hang the server
+				var/x_offset = prob(50) ? (prob(50) ? -viewsize[1] : viewsize[1]) : rand(-viewsize[1],viewsize[1])
+				var/y_offset = abs(x_offset) != viewsize[1] ? (prob(50) ? -viewsize[2] : viewsize[2]) : rand(-viewsize[2],viewsize[2])
+				start_turf = locate(parent_mob.x + x_offset, parent_mob.y + y_offset, parent_mob.z)
+				bad_turf_count++
+			if(bad_turf_count >= 10)
+				//failed to spawn, call that a runtime cos it's weird
+				throw EXCEPTION("Failed to find a valid turf for fake singulo hallucination. That's weird, someone should investigate that. Hallucinator: [parent_mob] loc: [parent_mob?.loc]")
+			my_singulo = new(start_turf,parent_mob,ttl)
+
+		..()
+
+	UnregisterFromParent()
+		. = ..()
+		UnregisterSignal(parent, COMSIG_LIVING_LIFE_TICK)
+		if(parent_mob?.client && (!QDELETED(my_singulo)))
+			qdel(my_singulo)
+
+
+
+	CheckDupeComponent(timeout)
+		..()
+		return TRUE //only one of these please, just reset timeout
+
+//#########################################################
 //                    SUPPORTING CAST
 //#########################################################
 
@@ -533,11 +584,12 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		my_target.show_message(SPAN_COMBAT("<b>[src] narrowly dodges [my_target]'s attack!"))
 
 /obj/fake_attacker/proc/mirage_fadeout(time=2 SECONDS)
-	//gotta do it like this because /image is not /atom and so filter management no work
-	var/filter_params = wave_filter(x=0, size=2, flags=WAVE_BOUNDED|WAVE_SIDEWAYS)
-	src.client_image.filters += filter(arglist(filter_params))
-	animate(src.client_image.filters[length(src.client_image.filters)], x=5, time=time, loop=-1, flags=ANIMATION_PARALLEL)
-	animate(src, time=time, loop=-1, alpha=0, flags=ANIMATION_PARALLEL)
+	if(src.client_image)
+		//gotta do it like this because /image is not /atom and so filter management no work
+		var/filter_params = wave_filter(x=0, size=2, flags=WAVE_BOUNDED|WAVE_SIDEWAYS)
+		src.client_image.filters += filter(arglist(filter_params))
+		animate(src.client_image.filters[length(src.client_image.filters)], x=5, time=time, loop=-1, flags=ANIMATION_PARALLEL)
+		animate(src, time=time, loop=-1, alpha=0, flags=ANIMATION_PARALLEL)
 
 /obj/fake_attacker/Crossed(atom/movable/M)
 	..()
@@ -549,9 +601,112 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			for(var/mob/O in oviewers(world.view , my_target))
 				boutput(O, SPAN_ALERT("<B>[my_target] stumbles around.</B>"))
 
+/obj/fake_singulo
+	name = "gravitational singularity"
+	desc = "Perhaps the densest thing in existence, except for you."
+	icon = null
+	icon_state = null
+	density = 0
+	var/list/my_image_overrides = list()
+	var/list/eaten_atoms = list()
+	var/mob/my_target = null
+	var/spaget_count = 0
+	var/right_spinning = 0
+
+/obj/fake_singulo/New(var/loc, var/mob/target, var/ttl = 60 SECONDS)
+	..()
+	SPAWN(ttl)
+		qdel(src)
+	src.right_spinning = prob(50)
+	src.my_target = target
+	var/image/client_image = image(icon = 'icons/effects/64x64.dmi', icon_state = "whole", loc = src)
+	client_image.override = TRUE
+	client_image.plane = PLANE_DEFAULT_NOWARP
+	var/image/lense = image(icon='icons/effects/overlays/lensing.dmi', icon_state="lensing_med_hole", pixel_x = -208, pixel_y = -208, loc = src)
+	lense.plane = PLANE_DISTORTION
+	lense.blend_mode = BLEND_OVERLAY
+	lense.appearance_flags = RESET_ALPHA | RESET_COLOR
+	src.my_image_overrides += client_image
+	src.my_image_overrides += lense
+	target << client_image
+	target << lense
+	process()
+
+/obj/fake_singulo/disposing()
+	if(src.my_image_overrides && my_target?.client)
+		for(var/client_image in src.my_image_overrides)
+			my_target.client?.images -= client_image
+			qdel(client_image)
+	qdel(src.my_image_overrides) //not really necessary, but why not
+	qdel(src.eaten_atoms)
+	. = ..()
 
 
+/obj/fake_singulo/proc/process()
+	var/target_dist = get_dist(src, src.my_target)
+	if(target_dist > 20) //if offscreen by a good amount
+		qdel(src)
+		return
+	else if(target_dist < 6)
+		//oh no you're being pulled into the singularity!
+		if(prob(50))
+			src.my_target.step_towards_movedelay(src) //respect standard movements, this isn't actual gravity, you're just stepping cos you're hallucinating
 
+	//otherwise, we're pretending to be a singularity
+	if(prob(30))
+		step(src, pick(cardinal))
+	else
+		step_towards(src, src.my_target) //oh god it's chasing me!
+
+	//"eat" stuff by overriding its icon with a blank icon state
+	for (var/atom/A in range(3, src))
+		if (!A)
+			continue
+		if (A == src)
+			continue
+
+		if (A.event_handler_flags & IMMUNE_SINGULARITY)
+			continue
+
+		if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
+			continue
+
+		if (!isarea(A))
+			if(IN_EUCLIDEAN_RANGE(src, A, 2.5))
+				if (A == src.my_target) //gotcha!
+					if(!ON_COOLDOWN(src.my_target, "fake_singulo_scream", 5 SECONDS))
+						src.my_target.emote("scream", FALSE)
+					src.my_target.changeStatus("knockdown", 2 SECONDS)
+					src.my_target.changeStatus("stunned", 2 SECONDS)
+					SPAWN(5 SECONDS)
+						qdel(src)
+
+				if(A in src.eaten_atoms)
+					continue
+				//this is a thing we're going to eat, so blank client image override for you
+				var/image/blank_image = image(loc = A)
+				blank_image.override = TRUE
+				src.my_image_overrides += blank_image
+				src.eaten_atoms += A
+				src.my_target << blank_image
+				//for the spinny falling in animations. low count for performance
+				//this is almost a straight copy/paste from singulo code
+				if(src.spaget_count < 3 || A == src.my_target) //always show the mob getting spaget'd
+					src.spaget_count++
+					animate_spaghettification(A, src, 15 SECONDS, right_spinning, src.my_target.client)
+					SPAWN(16 SECONDS)
+						src.spaget_count--
+
+	SPAWN(1 SECOND)
+		process()
+
+/obj/fake_singulo/Move(NewLoc, direct)
+	. = ..()
+	if (NewLoc) //we can always move, because we're not real
+		src.set_dir(get_dir(loc, NewLoc))
+		src.set_loc(NewLoc)
+
+///Helper procs
 
 /proc/fake_blood(var/mob/target)
 	var/obj/overlay/O = new/obj/overlay(target.loc)

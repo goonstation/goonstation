@@ -99,14 +99,6 @@
 			terminals.len = 0
 			terminals = null
 
-		if (processing)
-			processing.len = 0
-			processing = null
-
-		if (timeout_list)
-			timeout_list.len = 0
-			timeout_list = null
-
 		if (os)
 			os.dispose()
 			os = null
@@ -121,6 +113,14 @@
 		if (hd)
 			hd.dispose()
 			hd = null
+
+		if (processing)
+			processing.len = 0
+			processing = null
+
+		if (timeout_list)
+			timeout_list.len = 0
+			timeout_list = null
 
 		..()
 

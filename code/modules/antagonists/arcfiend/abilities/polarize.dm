@@ -5,7 +5,6 @@
 	icon_state = "polarize"
 	cooldown = 12 SECONDS
 	pointCost = 50
-	container_safety_bypass = TRUE
 	var/range = 4
 	var/duration = 20 SECONDS
 
@@ -16,4 +15,4 @@
 		for (var/mob/living/carbon/human/H in range(src.range, get_turf(src.holder.owner)))
 			if (H == src.holder.owner)
 				continue
-			H.changeStatus("magnetized", src.duration, charge)
+			H.changeStatus("magnetized_arcfiend", src.duration, charge)

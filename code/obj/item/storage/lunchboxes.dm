@@ -42,7 +42,7 @@
 	food4
 		spawn_contents = list(/obj/item/reagent_containers/food/snacks/omelette,\
 		/obj/item/reagent_containers/food/snacks/croissant,\
-		/obj/item/reagent_containers/food/snacks/candy/caramel,\
+		/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/caramel,\
 		/obj/item/reagent_containers/food/drinks/water,\
 		/obj/item/kitchen/utensil/fork,\
 		/obj/item/paper/lunchbox_note)
@@ -63,11 +63,11 @@
 		/obj/item/paper/lunchbox_note)
 
 	food7
-		spawn_contents = list(/obj/item/reagent_containers/food/snacks/swedishmeatball,\
-		/obj/item/reagent_containers/food/snacks/stroopwafel,\
-		/obj/item/reagent_containers/food/snacks/swedish_fish,\
+		spawn_contents = list(/obj/item/reagent_containers/food/snacks/bagel/lox,\
+		/obj/item/reagent_containers/food/snacks/bagel/creamcheese,\
+		/obj/item/reagent_containers/food/snacks/ingredient/cheese,\
+		/obj/item/reagent_containers/food/snacks/plant/apple,\
 		/obj/item/reagent_containers/food/drinks/water,\
-		/obj/item/kitchen/utensil/fork,\
 		/obj/item/paper/lunchbox_note)
 
 	food8
@@ -81,7 +81,7 @@
 	food9
 		spawn_contents = list(/obj/item/reagent_containers/food/snacks/soup/tomato,\
 		/obj/item/reagent_containers/food/snacks/sandwich/cheese,\
-		/obj/item/reagent_containers/food/snacks/candy/taffy/watermelon,\
+		/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/watermelon,\
 		/obj/item/reagent_containers/food/drinks/water,\
 		/obj/item/kitchen/utensil/spoon,\
 		/obj/item/paper/lunchbox_note)

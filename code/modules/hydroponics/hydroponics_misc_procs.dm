@@ -1,5 +1,29 @@
 // Hydroponics procs not specific to the plantpot start here.
 
+
+
+
+proc/HYPchem_scaling(var/scaling_statistics)
+	//! This proc causes all chem production of botany to have a diminishing return with potency (or other stats for e.g. maneaters)
+	//For the graph in question with explanation, refer to this link: https://www.desmos.com/calculator/gy7tn43s6b
+	var/scaling_asymptote = 200 //! For potency reaching infinite, this times linear_factor will be the result
+	var/scaling_factor = 150 //! Refer to the graph in the explation on how this is calculated
+	var/result = 1
+	if (scaling_statistics > 0)
+		result *= scaling_asymptote / (scaling_statistics + scaling_factor)
+	return result
+
+proc/HYPfull_potency_calculation(var/datum/plantgenes/DNA, var/linear_factor = 1)
+	//! this proc is a shortcut to calculate the amount of chems to produce from a linear factor and the plantgenes
+	var/result = linear_factor
+	if(DNA)
+		var/potency_to_scale = DNA.get_effective_value("potency")
+		result *= potency_to_scale * HYPchem_scaling(potency_to_scale)
+	else
+		result = 0
+	return max(round(result), 0) //we return the rounded value or 0 when we have negative potency
+
+
 proc/HYPget_assoc_reagents(var/datum/plant/passed_plant, var/datum/plantgenes/passed_plantgenes)
 	//This proc returns a list with all reagents (or none) the plant currently is able to produce.
 	var/reagent_list = list()
@@ -49,7 +73,7 @@ proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/pl
 	if(special_condition == "jumbo")
 		basecapacity *= 2
 
-	var/to_add = basecapacity + DNA?.get_effective_value("potency")
+	var/to_add = basecapacity + HYPfull_potency_calculation(DNA)
 	I.reagents.maximum_volume = max(to_add, I.reagents.maximum_volume)
 	if(I.reagents.maximum_volume < 1)
 		I.reagents.maximum_volume = 1
@@ -59,7 +83,7 @@ proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/pl
 	if(I.reagents.maximum_volume)
 		var/putamount = round(to_add / putreagents.len)
 		for(var/X in putreagents)
-			I?.reagents?.add_reagent(X,putamount,,, 1) // ?. runtime fix
+			I?.reagents?.add_reagent(X,putamount) // ?. runtime fix
 	// And finally put them in there. We figure out the max volume and add an even amount of
 	// all reagents into the item.
 
@@ -92,7 +116,7 @@ proc/HYPgenerate_produce_name(var/atom/manipulated_atom, var/obj/machinery/plant
 
 	switch(quality_status)
 		if("jumbo")
-			completed_name = "jumbo [completed_name]"
+			completed_name = "JUMBO [uppertext(completed_name)]"
 		if("rotten")
 			switch(quality_score)
 				if(-14 to -11)
@@ -124,6 +148,8 @@ proc/HYPgenerate_produce_name(var/atom/manipulated_atom, var/obj/machinery/plant
 
 
 proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
+	if(!PARENT || !CHILD)
+		return
 	// This is a proc used to copy genes from PARENT to CHILD. It's used in a whole bunch
 	// of places, usually when seeds or fruit are created and need to get their genes from
 	// the thing that spawned them.
@@ -141,15 +167,24 @@ proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
 		for (var/datum/plant_gene_strain/checked_strain in CHILD.commuts)
 			checked_strain.on_passing(CHILD)
 
-proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/parent_planttype, var/parent_generation, var/location_to_create)
+proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/parent_planttype, var/parent_generation, var/location_to_create, charge_quantity = 1)
 	//This proc generates a seed at location_to_create with a copy of the planttype and genes of a given parent plant.
 	//This can be used, when you want to quickly generate seeds out of objects or other plants e.g. creeper or fruits.
-	var/obj/item/seed/child = new /obj/item/seed(location_to_create)
+	charge_quantity = max(charge_quantity, 1) // Assume whoever called this wants a seed regardless, don't deal with returning nulls.
+	var/obj/item/seed/child
+	if (parent_planttype.unique_seed)
+		child = new parent_planttype.unique_seed(location_to_create)
+	else
+		child = new /obj/item/seed(location_to_create)
+	child.charges = charge_quantity
+	if (child.charges > 1) child.inventory_counter.update_number(child.charges)
 	var/datum/plant/child_planttype = HYPgenerateplanttypecopy(child, parent_planttype)
 	var/datum/plantgenes/child_genes = child.plantgenes
-	var/datum/plantmutation/child_mutation = parent_genes.mutation
+	var/datum/plantmutation/child_mutation
+	if(parent_genes)
+		child_mutation = parent_genes.mutation
 	// If the plant is a standard plant, our work here is mostly done
-	if (!child_planttype.hybrid)
+	if (!child_planttype.hybrid && !parent_planttype.unique_seed)
 		child.generic_seed_setup(child_planttype)
 	else
 		child.planttype = child_planttype
@@ -161,22 +196,26 @@ proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/pare
 			seedname = "[child_mutation.name]"
 		else if(child_mutation.name_prefix || child_mutation.name_suffix)
 			seedname = "[child_mutation.name_prefix][child_planttype.name][child_mutation.name_suffix]"
-	HYPpassplantgenes(parent_genes, child_genes)
 	child.name = "[seedname] seed"
+	if (charge_quantity > 1) child.name += " packet"
+	//What's missing is transfering genes and the generation
+	HYPpassplantgenes(parent_genes, child_genes)
 	child.generation = parent_generation
 	//Now the seed it created and we can release it upon the world
 	return child
 
-proc/HYPgenerateplanttypecopy(var/obj/applied_object ,var/datum/plant/parent_planttype)
+proc/HYPgenerateplanttypecopy(var/obj/applied_object ,var/datum/plant/parent_planttype, var/force_new_datum = FALSE)
 	// this proc returns a copy of a planttype
 	// for basic plants, it just returns the planttype, since they are singletons.
 	// for spliced plants, since they run on instanced copies, it creates a new instance inside applied_object.
-	if (parent_planttype.hybrid)
+	// If we want to generate a new plant datum out one of our singletons, because we want to modify it (e.g. weed), set force_new_datum to TRUE
+	if (parent_planttype.hybrid || force_new_datum)
 		var/plantType = parent_planttype.type
 		var/datum/plant/hybrid = new plantType(applied_object)
 		for (var/transfered_variables in parent_planttype.vars)
 			if (issaved(parent_planttype.vars[transfered_variables]) && transfered_variables != "holder")
 				hybrid.vars[transfered_variables] = parent_planttype.vars[transfered_variables]
+		hybrid.hybrid = TRUE // That's cursed, but i'm here for it
 		return hybrid
 	else
 		return parent_planttype
@@ -278,7 +317,7 @@ proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/mach
 	// or not the mutation will actually appear is HYPmutationcheck_full.
 	if(!P || !DNA)
 		return
-	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/stabilizer))
+	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/stabilizer) || S?.dont_mutate)
 		return
 	if(P.mutations.len)
 		for (var/datum/plantmutation/MUT in P.mutations)
@@ -291,7 +330,7 @@ proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/mach
 						chance += M.chance_mod
 			chance = clamp(chance*frequencymult, 0, 100)
 			if(prob(chance))
-				if(HYPmutationcheck_full(P,DNA,MUT))
+				if(HYPmutationcheck_full(DNA,MUT))
 					DNA.mutation = HY_get_mutation_from_path(MUT.type)
 					MUT.HYPon_mutation_general(P, DNA)
 					if(PP)
@@ -303,6 +342,8 @@ proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/mach
 					else if(S)
 						// If it is not in a pot, it is most likely in PlantMaster Mk3
 						playsound(S, MUT.mutation_sfx, 20, 1)
+						// If a seed mutates via infusion we want the seed to be harvested before multiples can be grown
+						S.charges = 1
 					break
 
 proc/HYPCheckCommut(var/datum/plantgenes/DNA,var/searchtype)
@@ -381,7 +422,7 @@ proc/HYPmutateDNA(var/datum/plantgenes/DNA,var/severity = 1)
 	DNA.potency += rand(-5 * severity,5 * severity)
 	DNA.endurance += rand(-3 * severity,3 * severity)
 
-proc/HYPmutationcheck_full(var/datum/plant/growing,var/datum/plantgenes/DNA,var/datum/plantmutation/MUT)
+proc/HYPmutationcheck_full(var/datum/plantgenes/DNA,var/datum/plantmutation/MUT)
 	// This proc iterates through all of the various boundaries and requirements a mutation must
 	// have to appear, and if all of them are matchedit gives the green light to go ahead and
 	// add it - though there's still a % chance involved after this check passes which is handled
@@ -404,3 +445,9 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 		if(upperbound && checkedvariable > upperbound) return 0
 		return 1
 	else return 1
+
+proc/HYPstat_rounding(var/input_number)
+	// Since plantstats are integers, but we want to accomodate for fractional plantgrowth_tick-multipliers, we need some special behaviour
+	// This proc will take a value and round up with a chance equal to the first two fractional numbers
+	// this means e.g. 4,24 in this proc will output a 5 with a 24% chance and a 4 with a 76% chance
+	return trunc(input_number) + (prob(fract(input_number) * 100) * sign(input_number))

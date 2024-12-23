@@ -5,7 +5,7 @@ TYPEINFO(/obj/item/device/disguiser)
 	name = "holographic disguiser"
 	icon_state = "enshield0"
 	desc = "Experimental device that projects a hologram of a randomly generated appearance onto the user, hiding their real identity."
-	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY
+	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	c_flags = ONBELT
 	item_state = "electronic"
 	throwforce = 5
@@ -124,9 +124,9 @@ TYPEINFO(/obj/item/device/disguiser)
 		if (!reset_to_normal)
 			oldAH.CopyOther(AH)
 			if (AH.mob_appearance_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
-				AH.customization_first_color = fix_colors(AH.customization_first_color)
-				AH.customization_second_color = fix_colors(AH.customization_second_color)
-				AH.customization_third_color = fix_colors(AH.customization_third_color)
+				AH.customizations["hair_bottom"].color = fix_colors(AH.customizations["hair_bottom"].color)
+				AH.customizations["hair_middle"].color = fix_colors(AH.customizations["hair_middle"].color)
+				AH.customizations["hair_top"].color = fix_colors(AH.customizations["hair_top"].color)
 			src.real_name = user.real_name
 			randomize_look(user, 0, 0, 0, 1, 0, 0) // randomize: gender 0, blood type 0, age 0, name 1, underwear 0, remove effects 0
 			user.update_colorful_parts()
@@ -134,6 +134,7 @@ TYPEINFO(/obj/item/device/disguiser)
 		// Restore original appearance.
 		else
 			user.real_name = src.real_name
+			user.on_realname_change()
 			AH.CopyOther(oldAH)
 			if (user.limbs)
 				user.limbs.reset_stone()

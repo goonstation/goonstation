@@ -2,96 +2,115 @@
  * @file
  * @copyright 2022
  * @author glowbold (https://github.com/pgmzeta)
+ * @author Mordent (https://github.com/mordent-goonstation)
  * @license ISC
  */
 
+import { BooleanLike } from 'tgui-core/react';
+
+type FalsyBooleanLike = false | 0 | null | undefined;
+type TruthyBooleanLike = true | 1;
+
 export interface CyborgDockingStationData {
-  occupant?: OccupantData,
+  occupant?: OccupantData;
 
-  disabled: boolean;
-  viewer_is_occupant: boolean;
-  viewer_is_robot: boolean;
-  allow_self_service: boolean,
-  conversion_chamber: boolean,
+  disabled: BooleanLike;
+  viewer_is_occupant: BooleanLike;
+  viewer_is_robot: BooleanLike;
+  allow_self_service: BooleanLike;
+  conversion_chamber: BooleanLike;
 
-  cabling: number,
-  fuel: number,
+  cabling: number;
+  fuel: number;
 
-  cells?: Array<PowerCellData>,
-  modules?: Array<ModuleData>,
-  upgrades?: Array<UpgradeData>,
-  clothes?: Array<ClothingData>,
+  cells: PowerCellData[];
+  modules: ModuleData[];
+  upgrades: UpgradeData[];
+  clothes: ClothingData[];
 }
 
-interface OccupantData {
-  name: string,
-  kind: string,
+interface OccupantDataBase {
+  name: string;
+  kind: 'eyebot' | 'human' | 'robot';
 }
 
-interface OccupantDataRobot extends OccupantData {
-  parts?: PartListData,
-  cell?: PowerCellData,
-  module?: string,
-  upgrades?: Array<string>,
-  upgrades_max?: number,
-  clothing?: Array<string>,
-  cosmetics?: CyborgCosmeticsData,
+export interface OccupantDataRobot extends OccupantDataBase {
+  kind: 'robot';
+  parts: PartListData;
+  cell?: PowerCellData;
+  moduleName?: string;
+  upgrades: UpgradeData[];
+  upgrades_max: number;
+  clothing: ClothingData[];
+  cosmetics: RobotCosmeticsData;
+  user: 'brain' | 'ai' | 'unknown';
 }
 
-interface OccupantDataHuman extends OccupantData {
-  health: number,
-  max_health: number,
+export interface OccupantDataHuman extends OccupantDataBase {
+  kind: 'human';
+  health: number;
+  max_health: number;
 }
 
-interface OccupantDataEyebot extends OccupantData {
-  health: number,
-  max_health: number,
-  cell?: PowerCellData,
+export interface OccupantDataEyebot extends OccupantDataBase {
+  kind: 'eyebot';
+  cell: PowerCellData;
 }
 
-interface PartListData {
-  head: PartData,
-  chest: PartData,
-  arm_l: PartData,
-  arm_r: PartData,
-  leg_l: PartData,
-  leg_r: PartData,
+export type OccupantData =
+  | OccupantDataEyebot
+  | OccupantDataHuman
+  | OccupantDataRobot;
+
+export interface PartListData {
+  head: PartData;
+  chest: PartData;
+  arm_l: PartData;
+  arm_r: PartData;
+  leg_l: PartData;
+  leg_r: PartData;
 }
 
-interface PartData {
-  exists: boolean,
-  max_health: number
-  dmg_blunt: number,
-  dmg_burn: number,
+interface BasePartData {
+  exists: BooleanLike;
 }
 
-interface PowerCellData {
-  name: string,
-  ref: string,
-  current: number,
-  max: number,
+interface MissingPartData extends BasePartData {
+  exists: FalsyBooleanLike;
 }
 
-interface ModuleData {
-  name: string,
-  ref: string,
+interface PresentPartData extends BasePartData {
+  exists: TruthyBooleanLike;
+  max_health: number;
+  dmg_blunt: number;
+  dmg_burns: number;
 }
 
-interface UpgradeData {
-  name: string,
-  ref: string,
+export type PartData = MissingPartData | PresentPartData;
+
+export const isPresentPartsData = (
+  partData: PartData,
+): partData is PresentPartData => !!partData.exists;
+
+export interface ItemData {
+  name: string;
+  ref: string;
 }
 
-interface ClothingData {
-  name: string,
-  ref: string,
+export interface PowerCellData extends ItemData {
+  current: number;
+  max: number;
 }
 
-interface CyborgCosmeticsData {
-  chest: string,
-  head: string,
-  arms: string,
-  legs: string,
-  paint: string, // hex colour rep
-  fx: Array<number>, // R,G,B rep
+export interface ModuleData extends ItemData {}
+export interface UpgradeData extends ItemData {}
+export interface ClothingData extends ItemData {}
+
+export interface RobotCosmeticsData {
+  chest?: string;
+  head?: string;
+  arms?: string;
+  legs?: string;
+  paint?: string; // hex colour rep
+  fx: [number, number, number]; // R,G,B rep
 }

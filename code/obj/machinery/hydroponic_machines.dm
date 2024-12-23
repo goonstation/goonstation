@@ -33,18 +33,30 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 
 /obj/machinery/hydro_growlamp/process(mult)
 	..()
+	for(var/obj/machinery/hydro_growlamp/hg in get_turf(src))
+		if(hg.active && hg != src)
+			hg.visible_message(SPAN_ALERT("[hg] overheats and shuts down!"), "", "hydro_lamp_shutdown")
+			hg.active = FALSE
+			hg.light.disable()
+			hg.icon_state = "growlamp[hg.active]"
+
 	if(!src.active || !powered())
 		return
 	for (var/atom/A in view(4,src))
 		if (istype(A, /obj/machinery/plantpot))
-			var/obj/machinery/plantpot/P = A
-			if(!P.current || P.dead)
+			var/obj/machinery/plantpot/manipulated_plantpot = A
+			if(!manipulated_plantpot.current || manipulated_plantpot.dead)
 				continue
-			P.growth += 2
-			if(istype(P.plantgenes,/datum/plantgenes/))
-				var/datum/plantgenes/DNA = P.plantgenes
-				if(HYPCheckCommut(DNA,/datum/plant_gene_strain/photosynthesis))
-					P.growth += 4
+			var/datum/plant/growing = manipulated_plantpot.current
+			if(growing.simplegrowth || !manipulated_plantpot.current_tick)
+				manipulated_plantpot.growth += 2
+			else
+				var/datum/plantgrowth_tick/manipulated_tick = manipulated_plantpot.current_tick
+				manipulated_tick.growth_rate += 2
+				if(istype(manipulated_plantpot.plantgenes,/datum/plantgenes/))
+					var/datum/plantgenes/DNA = manipulated_plantpot.plantgenes
+					if(HYPCheckCommut(DNA,/datum/plant_gene_strain/photosynthesis))
+						manipulated_tick.growth_rate += 4
 		else if (ismob(A))
 			var/mob/M = A
 			if (M.bodytemperature < M.base_body_temp)
@@ -87,7 +99,7 @@ TYPEINFO(/obj/machinery/hydro_mister)
 	desc = "A device that constantly sprays small amounts of chemical onto nearby plants."
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "hydro_mister0"
-	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | ACCEPTS_MOUSEDROP_REAGENTS | OPENCONTAINER
+	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE | ACCEPTS_MOUSEDROP_REAGENTS | OPENCONTAINER
 	density = 1
 	anchored = UNANCHORED
 	var/active = 0
@@ -112,6 +124,25 @@ TYPEINFO(/obj/machinery/hydro_mister)
 		reag_list += "[reag_list ? ", " : " "][current_reagent.name]"
 	complete_description += " It seems to contain [reag_list]."
 	return complete_description
+
+/obj/machinery/hydro_mister/mouse_drop(over_object, src_location, over_location)
+	..()
+	if(!isturf(over_object) || !isliving(usr) || isintangible(usr) || isghostcritter(usr))
+		boutput(usr, SPAN_ALERT("You can only empty \the [src] out over a turf!"))
+		return
+	if(BOUNDS_DIST(src, usr) > 0 || BOUNDS_DIST(over_object, usr) > 0)
+		boutput(usr, SPAN_ALERT("You need to be closer to empty \the [src] out!"))
+		return
+	if (tgui_alert(usr, "Empty \the [src] tank?", "[src]", list("Yes", "No")) == "Yes")
+		if(BOUNDS_DIST(src, usr) > 0 || BOUNDS_DIST(over_object, usr) > 0)
+			boutput(usr, SPAN_ALERT("You need to be closer to empty \the [src] out!"))
+			return
+		boutput(usr, SPAN_NOTICE("You empty \the [src] onto \the [over_object]."))
+		src.reagents.reaction(over_object, TOUCH, src.reagents.total_volume)
+		src.reagents.clear_reagents()
+		src.active = 0
+		src.mode = 0
+		src.update_visual()
 
 /obj/machinery/hydro_mister/process()
 	..()
@@ -144,8 +175,10 @@ TYPEINFO(/obj/machinery/hydro_mister)
 
 		if(src.reagents.total_volume < 10)
 			src.visible_message("\The [src] sputters and runs out of liquid.")
+			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 			src.active = 0
 			src.mode = 0
+			src.update_visual()
 
 /obj/machinery/hydro_mister/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (src.emagged)
@@ -164,37 +197,32 @@ TYPEINFO(/obj/machinery/hydro_mister)
 			user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		src.anchored = !src.anchored
-	if(istype(W, /obj/item/reagent_containers/glass/) && W.is_open_container(FALSE))
-		// Not just watering cans - any kind of glass can be used to pour stuff in.
-		if(!W.reagents.total_volume)
-			boutput(user, SPAN_ALERT("There is nothing in [W] to pour!"))
-			return
-		else
-			user.visible_message(SPAN_NOTICE("[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src]."))
-			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-			W.reagents.trans_to(src, W:amount_per_transfer_from_this)
-			if(!W.reagents.total_volume) boutput(user, SPAN_ALERT("<b>[W] is now empty.</b>"))
-
 
 /obj/machinery/hydro_mister/attack_hand(var/mob/user)
 	src.add_fingerprint(user)
+	if(src.reagents.total_volume < 10)
+		boutput(user, SPAN_ALERT("\The [src] is out of reagents! It can't be turned on until it's been refilled!"))
+		playsound(src.loc, 'sound/machines/buzz-two.ogg', 30, 0)
 	if(!src.active)
 		src.active = 1
 		src.mode = 0
-		src.icon_state = "hydro_mister1"
+		src.update_visual()
 		user.visible_message("<b>[user]</b> switches [src.name] on to low power mode.")
 		src.visible_message("\The [src] starts to hum, emitting a fine mist.")
 	else
 		if(!src.mode)
 			src.mode = 1
-			src.icon_state = "hydro_mister2"
+			src.update_visual()
 			user.visible_message("<b>[user]</b> switches [src.name] to high power mode.")
 			src.visible_message("\The [src] starts to <em>really</em> emit a fine mist!")
 		else
 			src.active = 0
 			src.mode = 0
-			src.icon_state = "hydro_mister0"
+			src.update_visual()
 			user.visible_message("<b>[user]</b> switches [src.name] off.")
 			src.visible_message("\The [src] goes quiet.")
 
 	playsound(src, 'sound/misc/lightswitch.ogg', 50, TRUE)
+
+/obj/machinery/hydro_mister/proc/update_visual()
+	src.icon_state = "hydro_mister[active + mode]"

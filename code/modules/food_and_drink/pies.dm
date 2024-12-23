@@ -16,43 +16,75 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 	///In the case of a thrown splattered pie, maximum amount of time we remain visually stuck on someone's face.
 	var/max_stuck_time = 10 SECONDS
 
-	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
-		if (ismob(hit_atom) && src.splat)
-			var/mob/M = hit_atom
-			var/mob/thrower = thr.thrown_by
-			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, TRUE)
-			if (thrower.mind?.assigned_role == "Clown" && ishuman(M) && (prob(50) || M.mind?.assigned_role == "Captain") && !M.GetOverlayImage("face_pie"))
-				var/mob/living/carbon/human/H = M
-				var/image/face_pie = image('icons/obj/foodNdrink/food_dessert.dmi', "face_pie")
-				src.visible_message(SPAN_NOTICE("[src] splats right in [H]'s face and remains stuck there!"))
-				face_pie.layer = MOB_OVERLAY_BASE
-				face_pie.appearance_flags = RESET_COLOR | PIXEL_SCALE
-				var/overlay_key = "face_pie"
-				if(H.mutantrace.head_offset)
-					face_pie.pixel_y = H.mutantrace.head_offset
-				M.UpdateOverlays(face_pie, overlay_key)
-				src.set_loc(M)
-				M.bioHolder?.AddEffect("bad_eyesight")
-				JOB_XP(thrower, "Clown", 1)
-				SPAWN(rand(src.min_stuck_time, src.max_stuck_time))
-					if (QDELETED(M))
-						return
-					M.bioHolder?.RemoveEffect("bad_eyesight")
-					M.UpdateOverlays(null, overlay_key)
-					if (QDELETED(src))
-						return
-					src.visible_message(SPAN_NOTICE("[src] falls off of [M]'s face."))
-					src.set_loc(M.loc)
-					qdel(face_pie)
-				return
+/obj/item/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+	//first, try to do item pie behaviour
+	if(length(src.contents) && thr.user)
+		var/obj/item/contained_item = pick(src.contents)
+		if (istype(contained_item))
+			src.item_pie(contained_item, thr.user, hit_atom)
+			return
+
+	if (!ismob(hit_atom) || !src.splat)
+		return ..()
+
+	var/mob/M = hit_atom
+	var/mob/thrower = thr.thrown_by
+	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, TRUE)
+	if (thrower?.mind?.assigned_role == "Clown" && ishuman(M) && (prob(50) || M.mind?.assigned_role == "Captain") && !M.GetOverlayImage("face_pie"))
+		src.clown_pie(thrower, M)
+		return
+
+	src.visible_message(SPAN_ALERT("[src] splats in [M]'s face!"))
+	M.change_eye_blurry(rand(5,10))
+	M.take_eye_damage(rand(0, 2), 1)
+	if (prob(40))
+		JOB_XP(M, "Clown", 2)
+
+///Effect for when pie contains an item, hit the target with that item and call AfterAttack
+/obj/item/reagent_containers/food/snacks/pie/proc/item_pie(obj/item/contained_item, mob/user, atom/hit_atom)
+	playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+	//for Attackby, we specifically need any atom as target (TIL ID-pies to open doors are a thing and it fills me with joy)
+	SPAWN(0)
+		hit_atom.Attackby(contained_item, user)
+		if (ismob(hit_atom))
+			var/mob/hit_mob = hit_atom
+			//for AfterAttack, we specifically need a mob as target
+			contained_item.AfterAttack(hit_mob, user)
+			if (hit_mob == user)
+				src.visible_message(SPAN_ALERT("[user] fumbles and smacks the [src] into [his_or_her(user)] own face!"))
 			else
-				src.visible_message(SPAN_ALERT("[src] splats in [M]'s face!"))
-				M.change_eye_blurry(rand(5,10))
-				M.take_eye_damage(rand(0, 2), 1)
-				if (prob(40))
-					JOB_XP(M, "Clown", 2)
-		else
-			..()
+				src.visible_message(SPAN_ALERT("[src] smacks into [hit_mob]!"))
+
+///Stick to a person's face comedically when thrown by a clown
+/obj/item/reagent_containers/food/snacks/pie/proc/clown_pie(mob/user, mob/living/carbon/human/target)
+	var/image/face_pie = image('icons/obj/foodNdrink/food_dessert.dmi', "face_pie")
+	src.visible_message(SPAN_NOTICE("[src] splats right in [target]'s face and remains stuck there!"))
+	face_pie.layer = MOB_OVERLAY_BASE
+	face_pie.appearance_flags = RESET_COLOR | PIXEL_SCALE
+	var/overlay_key = "face_pie"
+	if(target.mutantrace.head_offset)
+		face_pie.pixel_y = target.mutantrace.head_offset
+	target.UpdateOverlays(face_pie, overlay_key)
+	src.set_loc(target)
+	target.bioHolder?.AddEffect("bad_eyesight")
+	JOB_XP(user, "Clown", 1)
+	SPAWN(rand(src.min_stuck_time, src.max_stuck_time))
+		if (QDELETED(target))
+			return
+		target.bioHolder?.RemoveEffect("bad_eyesight")
+		target.UpdateOverlays(null, overlay_key)
+		if (QDELETED(src))
+			return
+		src.visible_message(SPAN_NOTICE("[src] falls off of [target]'s face."))
+		src.set_loc(target.loc)
+		qdel(face_pie)
+
+/obj/item/reagent_containers/food/snacks/pie/Exited(atom/movable/Obj, newloc)
+	. = ..()
+	if(!QDELETED(Obj))
+		Obj.visible_message(SPAN_ALERT("[Obj] dissolves completely upon leaving [src]!"))
+		qdel(Obj)
+
 
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 /obj/item/reagent_containers/food/snacks/pieslice
@@ -201,37 +233,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 
 /obj/item/reagent_containers/food/snacks/pie/anything
 	name = "anything pie"
-	desc = "An empty anything pie. You shouldn't be able to see this!"
+	desc = "An empty anything pie."
 	icon_state = "pie"
 	bites_left = 3
 	heal_amt = 4
 	use_bite_mask = FALSE
-
-	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
-		var/atom/movable/random_content = src
-		if(length(src.contents) >= 1)
-			random_content = pick(src.contents)
-		if(random_content && thr.user && istype(random_content, /obj/item))
-			var/obj/item/randomed_item = random_content
-			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
-			//for Attackby, we specifically need any atom as target (TIL ID-pies to open doors are a thing and it fills me with joy)
-			hit_atom.Attackby(randomed_item, thr.user)
-			if (ismob(hit_atom))
-				var/mob/hit_mob = hit_atom
-				//for AfterAttack, we specifically need a mob as target
-				randomed_item.AfterAttack(hit_mob, thr.user)
-				if (hit_mob == thr.user)
-					src.visible_message(SPAN_ALERT("[thr.user] fumbles and smacks the [src] into their own face!"))
-				else
-					src.visible_message(SPAN_ALERT("[src] smacks into [hit_mob]!"))
-		else
-			..()
-
-	Exited(atom/movable/Obj, newloc)
-		. = ..()
-		if(!QDELETED(Obj))
-			Obj.visible_message(SPAN_ALERT("[Obj] dissolves completely upon leaving [src]!"))
-			qdel(Obj)
 
 /obj/item/reagent_containers/food/snacks/pie/slurry
 	name = "slurry pie"

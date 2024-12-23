@@ -8,7 +8,7 @@ proc/RL_Start()
 		if (light.enabled)
 			light.apply()
 	for (var/turf/T in world)
-		sleep(-1)
+		LAGCHECK_IF_LIVE(LAG_INIT)
 		RL_UPDATE_LIGHT(T)
 
 proc/RL_Suspend()
@@ -712,8 +712,7 @@ proc/get_moving_lights_stats()
 
 // Approximate RGB -> Luma conversion formula.
 /turf/proc/RL_GetBrightness()
-	var/BN = max(0, ((src.RL_LumR * 0.33) + (src.RL_LumG * 0.5) + (src.RL_LumB * 0.16)))
-	return BN
+	return max(0, ((src.RL_LumR * 0.33) + (src.RL_LumG * 0.5) + (src.RL_LumB * 0.16)))
 
 /turf/proc/RL_Cleanup()
 	/*
@@ -738,11 +737,11 @@ proc/get_moving_lights_stats()
 /turf/proc/RL_Init()
 	if (!fullbright && !loc:force_fullbright)
 		if(!src.RL_MulOverlay)
-			src.RL_MulOverlay = new /obj/overlay/tile_effect/lighting/mul
-			src.RL_MulOverlay.set_loc(src)
+			src.RL_MulOverlay = new /obj/overlay/tile_effect/lighting/mul(src)
 			src.RL_MulOverlay.icon = src.RL_OverlayIcon
 			src.RL_MulOverlay.icon_state = src.RL_OverlayState
-		if (RL_Started) RL_UPDATE_LIGHT(src)
+		if (RL_Started)
+			RL_UPDATE_LIGHT(src)
 	else
 		if (src.RL_MulOverlay)
 			qdel(src.RL_MulOverlay)

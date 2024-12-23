@@ -19,7 +19,7 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS | CONDUCT | UNCRUSHABLE
+	flags = TABLEPASS | CONDUCT | UNCRUSHABLE
 
 #define MAX_SCRAP	15000	// maximum content amount of a scrap pile
 
@@ -239,7 +239,7 @@
 
 // when dropped, try to make a pile if scrap is already there
 /obj/item/scrap/dropped()
-
+	. = ..()
 	SPAWN(0.2 SECONDS)	// delay to allow drop postprocessing (since src may be destroyed)
 		for(var/obj/item/scrap/S in oview(0,src))	// excludes src itself
 			S.add_scrap(src)

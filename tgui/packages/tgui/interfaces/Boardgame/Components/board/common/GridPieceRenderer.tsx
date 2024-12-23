@@ -1,18 +1,19 @@
+import { Box } from 'tgui-core/components';
+
 import { useBackend } from '../../../../../backend';
 import { codeRecordFromPieces, fetchPieces } from '../../../games';
 import { useActions, useStates } from '../../../utils';
 import { BoardgameData, PieceDataType } from '../../../utils';
-import { Box } from '../../../../../components';
 
 type GridPieceRendererProps = {
   pieces: PieceDataType[];
 };
 
-const GridPieceRenderer = ({ pieces }: GridPieceRendererProps, context) => {
-  const { act, data } = useBackend<BoardgameData>(context);
+const GridPieceRenderer = ({ pieces }: GridPieceRendererProps) => {
+  const { act, data } = useBackend<BoardgameData>();
 
   const { currentUser, users } = data;
-  const { isFlipped, tileSize } = useStates(context);
+  const { isFlipped, tileSize } = useStates();
   const { pieceSelect, pieceRemove, piecePlace } = useActions(act);
   const { width, height } = data.boardInfo;
 
@@ -23,7 +24,7 @@ const GridPieceRenderer = ({ pieces }: GridPieceRendererProps, context) => {
   return (
     <Box className="boardgame__board-gprenderer">
       {Object.keys(pieces).map((val, index) => {
-        const { x, y, prevX, prevY, code, selected } = pieces[val];
+        const { x, y, code, selected } = pieces[val];
         const pieceType = pieceRecords[code];
 
         // Is the piece selected by currentUser?
@@ -45,7 +46,7 @@ const GridPieceRenderer = ({ pieces }: GridPieceRendererProps, context) => {
         return (
           <div
             className="boardgame__board-gprenderer-piece"
-            onmousedown={(e) => {
+            onMouseDown={(e) => {
               if (e.button === 0 && !selected) {
                 if (currentUser.palette) {
                   piecePlace(currentUser.ckey, x, y);
@@ -65,7 +66,7 @@ const GridPieceRenderer = ({ pieces }: GridPieceRendererProps, context) => {
                 }
               }
             }}
-            onmouseup={(e) => {
+            onMouseUp={(e) => {
               if (currentUser.palette) {
                 piecePlace(currentUser.ckey, x, y);
               }
@@ -79,7 +80,8 @@ const GridPieceRenderer = ({ pieces }: GridPieceRendererProps, context) => {
               width: tileSize.width + 'px',
               height: tileSize.height + 'px',
             }}
-            key={index}>
+            key={index}
+          >
             <img
               style={{
                 width: tileSize.width + 'px',

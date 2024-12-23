@@ -24,13 +24,15 @@
 	canbegrabbed = FALSE
 	throws_can_hit_me = FALSE
 	reagent_capacity = 0
-	faction = FACTION_DERELICT
+	faction = list(FACTION_DERELICT)
 	blood_id = null
 	can_bleed = FALSE
 	metabolizes = FALSE
 	use_stamina = FALSE
+	ailment_immune = TRUE
+	throws_can_hit_me = FALSE
 
-	grabresistmessage = "but their hands pass right through %src%!"
+	grabresistmessage = "but their hands pass right through!"
 	death_text = "%src% dissipates!"
 
 	New()
@@ -38,12 +40,9 @@
 
 		remove_lifeprocess(/datum/lifeprocess/blood)
 		remove_lifeprocess(/datum/lifeprocess/chems)
-		remove_lifeprocess(/datum/lifeprocess/fire)
 		remove_lifeprocess(/datum/lifeprocess/mutations)
 		remove_lifeprocess(/datum/lifeprocess/organs)
-		remove_lifeprocess(/datum/lifeprocess/skin)
 		remove_lifeprocess(/datum/lifeprocess/stuns_lying)
-		remove_lifeprocess(/datum/lifeprocess/viruses)
 		remove_lifeprocess(/datum/lifeprocess/blindness)
 		remove_lifeprocess(/datum/lifeprocess/radiation)
 
@@ -96,7 +95,7 @@
 	projCanHit(datum/projectile/P)
 		return P.damage_type == D_ENERGY
 
-	do_disorient(stamina_damage, weakened, stunned, paralysis, disorient = 60, remove_stamina_below_zero = 0, target_type = DISORIENT_BODY, stack_stuns = 1)
+	do_disorient(stamina_damage, knockdown, stunned, unconscious, disorient = 60, remove_stamina_below_zero = 0, target_type = DISORIENT_BODY, stack_stuns = 1)
 		return
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
@@ -107,6 +106,9 @@
 
 	blob_act(power)
 		return
+
+	is_spacefaring()
+		return TRUE
 
 	proc/hurt(damage)
 		var/datum/healthHolder/Br = src.get_health_holder("brute")
@@ -138,6 +140,7 @@
 		return FALSE
 
 /datum/limb/aberration_field
+	can_beat_up_robots = TRUE
 
 	harm(mob/living/target, mob/living/user)
 		if (GET_COOLDOWN(user, "envelop_attack"))

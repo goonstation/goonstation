@@ -89,7 +89,7 @@
 		UpdateIcon()
 
 	disposing()
-		new /obj/decal/fakeobjects/nuclear_reactor_destroyed(src.loc)
+		new /obj/fakeobject/nuclear_reactor_destroyed(src.loc)
 		src._light_turf?.remove_medium_light("reactor_light")
 		for(var/turf/simulated/floor/F in src.locs) //restore the explosion immune state of the original turf
 			F.explosion_immune = initial(F.explosion_immune)
@@ -102,29 +102,29 @@
 		//status lights
 		//gas input/output
 		if(air1 && TOTAL_MOLES(air1) > 100)
-			src.UpdateOverlays(image(icon, "lights_cool"), "gas_input_lights")
+			src.AddOverlays(image(icon, "lights_cool"), "gas_input_lights")
 		else
-			src.UpdateOverlays(null, "gas_input_lights")
+			src.ClearSpecificOverlays("gas_input_lights")
 		if(air2 && TOTAL_MOLES(air2) > 100)
-			src.UpdateOverlays(image(icon, "lights_heat"), "gas_output_lights")
+			src.AddOverlays(image(icon, "lights_heat"), "gas_output_lights")
 		else
-			src.UpdateOverlays(null, "gas_output_lights")
+			src.ClearSpecificOverlays("gas_output_lights")
 
 		//temperature & radiation warning
 		if(src.temperature >= REACTOR_TOO_HOT_TEMP || src.radiationLevel > 50)
 			if(temperature >= REACTOR_ON_FIRE_TEMP || src.radiationLevel > 75)
-				src.UpdateOverlays(image(icon, "lights_meltdown"), "temp_warn_lights")
+				src.AddOverlays(image(icon, "lights_meltdown"), "temp_warn_lights")
 			else
-				src.UpdateOverlays(image(icon, "lights_warning"), "temp_warn_lights")
+				src.AddOverlays(image(icon, "lights_warning"), "temp_warn_lights")
 		else
-			src.UpdateOverlays(null, "temp_warn_lights")
+			src.ClearSpecificOverlays("temp_warn_lights")
 
 		//status lights
 		switch(src.temperature)
-			if(-INFINITY to T20C) src.UpdateOverlays(null, "status_display")
-			if(T20C to REACTOR_TOO_HOT_TEMP) src.UpdateOverlays(image(icon, "status_active"), "status_display")
-			if(REACTOR_TOO_HOT_TEMP to REACTOR_ON_FIRE_TEMP) src.UpdateOverlays(image(icon, "status_overheat"), "status_display")
-			if(REACTOR_ON_FIRE_TEMP to INFINITY) src.UpdateOverlays(image(icon, "status_meltdown"), "status_display")
+			if(-INFINITY to T20C) src.ClearSpecificOverlays("status_display")
+			if(T20C to REACTOR_TOO_HOT_TEMP) src.AddOverlays(image(icon, "status_active"), "status_display")
+			if(REACTOR_TOO_HOT_TEMP to REACTOR_ON_FIRE_TEMP) src.AddOverlays(image(icon, "status_overheat"), "status_display")
+			if(REACTOR_ON_FIRE_TEMP to INFINITY) src.AddOverlays(image(icon, "status_meltdown"), "status_display")
 
 		//and finally, component grid
 		if(_comp_grid_overlay_update)
@@ -140,14 +140,14 @@
 			var/image/old_grid = src.GetOverlayImage("reactor_grid")
 			if(old_grid)
 				old_grid.layer -= 0.1
-				src.UpdateOverlays(old_grid, "old_grid")
+				src.AddOverlays(old_grid, "old_grid")
 				_pending_grid_updates++
 				SPAWN(0.5 SECONDS)
 					if(_pending_grid_updates <= 1)
-						src.UpdateOverlays(null, "old_grid")
+						src.ClearSpecificOverlays("old_grid")
 					_pending_grid_updates--
 
-			src.UpdateOverlays(image(base_grid), "reactor_grid")
+			src.AddOverlays(image(base_grid), "reactor_grid")
 			_comp_grid_overlay_update = FALSE
 
 
@@ -230,12 +230,14 @@
 				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and may meltdown")
 				if(!ON_COOLDOWN(src, "pda_temp_alert", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has reached a dangerous temperature. Intervene immediately to prevent meltdown.")
+					message_ghosts("<b>[src]</b> is getting dangerously hot! [log_loc(src.loc, ghostjump=TRUE)].")
 			if(temperature >= REACTOR_ON_FIRE_TEMP && !src.GetParticles("overheat_fire"))
 				src.UpdateParticles(new/particles/nuke_overheat_fire(get_turf(src)),"overheat_fire")
 				src.visible_message(SPAN_ALERT("<b>The [src] begins to burn!</b>"))
 				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and is likely to meltdown")
 				if(!ON_COOLDOWN(src, "pda_temp_alert_critical", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has reached CRITICAL temperature. MELTDOWN IMMINENT.", crisis = TRUE)
+					message_ghosts("<b>[src]</b> is extremely close to melting down! [log_loc(src.loc, ghostjump=TRUE)].")
 			else if(temperature < REACTOR_ON_FIRE_TEMP && src.GetParticles("overheat_fire"))
 				src.visible_message(SPAN_ALERT("<b>The [src] stops burning.</b>"))
 				logTheThing(LOG_STATION, src, "[src] is cooling from 2500K")
@@ -283,6 +285,7 @@
 		signal.data["group"] = list(MGO_ENGINEER, MGA_ENGINE)
 		if(crisis)
 			signal.data["group"] += MGA_CRISIS
+			signal.data["noreply"] = TRUE
 		signal.data["message"] = msg
 		signal.data["sender"] = "00000000"
 		signal.data["address_1"] = "00000000"
@@ -409,6 +412,7 @@
 		for(var/i = 1 to rand(10,30))
 			shoot_projectile_XY(src, new /datum/projectile/bullet/wall_buster_shrapnel(), rand(-10,10), rand(-10,10))
 
+		message_ghosts("<b>[src]</b> is going BOOM! [log_loc(src.loc, ghostjump=TRUE)].")
 		logTheThing(LOG_STATION, src, "[src] CATASTROPHICALLY OVERLOADS (this is bad) meltdown badness: [meltdown_badness]")
 
 		explosion_new(src, current_loc, max(100, meltdown_badness*5), TRUE, 0, 360, TRUE)
@@ -682,7 +686,7 @@
 			return
 		. = ..()
 
-	return_air()
+	return_air(direct = FALSE)
 		return air_contents
 
 /datum/neutron //this is literally just a tuple

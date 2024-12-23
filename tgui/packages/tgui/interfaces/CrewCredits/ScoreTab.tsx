@@ -5,58 +5,64 @@
  * @license MIT
  */
 
-import { Fragment } from "inferno";
-import { useBackend } from "../../backend";
-import { Box, ItemList, LabeledList, Section, Stack } from "../../components";
-import { ScoreCategoryProps, ScoreItemProps, ScoreTabData } from "./type";
+import { Box, LabeledList, Section, Stack } from 'tgui-core/components';
 
-export const ScoreTab = (props, context) => {
-  const { data } = useBackend<ScoreTabData>(context);
-  const { score_groups, total_score, grade, victory_body, victory_headline } = data;
+import { useBackend } from '../../backend';
+import { ItemList } from '../../components';
+import { ScoreCategoryProps, ScoreItemProps, ScoreTabData } from './type';
+
+export const ScoreTab = () => {
+  const { data } = useBackend<ScoreTabData>();
+  const { score_groups, total_score, grade, victory_body, victory_headline } =
+    data;
   const total_score_render = <ColorPercentage items={total_score} />;
   return (
     <>
-      { !!victory_headline && <SummaryDisplay preamble="Round Result:" headline={victory_headline} body={victory_body}> </SummaryDisplay>}
-      { !victory_headline && <SummaryDisplay preamble="Total Score:" headline={total_score_render} body={grade}> </SummaryDisplay>}
+      {victory_headline ? (
+        <SummaryDisplay
+          preamble="Round Result:"
+          headline={victory_headline}
+          body={victory_body}
+        />
+      ) : (
+        <SummaryDisplay
+          preamble="Total Score:"
+          headline={total_score_render}
+          body={grade}
+        />
+      )}
 
       <Section>
         {score_groups?.map(
           (category, index) =>
-            !!category.entries.length && <ScoreCategory key={index} {...category} />
+            !!category.entries.length && (
+              <ScoreCategory key={index} {...category} />
+            ),
         )}
       </Section>
     </>
   );
 };
 
-const SummaryDisplay = (props) => {
-  const {
-    preamble,
-    headline,
-    body,
-  } = props;
+interface SummaryDisplayProps {
+  preamble: string;
+  headline: string | JSX.Element;
+  body: string;
+}
+
+const SummaryDisplay = (props: SummaryDisplayProps) => {
+  const { preamble, headline, body } = props;
 
   return (
     <Section>
-      <Stack
-        vertical
-        align="center"
-        my={3}>
-        <Stack.Item
-          italic
-          mt={0}
-          mb={-2.5}>
+      <Stack vertical align="center" my={3}>
+        <Stack.Item italic mt={0} mb={-2.5}>
           {preamble}
         </Stack.Item>
-        <Stack.Item
-          fontSize={2.75}
-          bold>
+        <Stack.Item fontSize={2.75} bold>
           {headline}
         </Stack.Item>
-        <Stack.Item
-          mb={-2.5}>
-          {body}
-        </Stack.Item>
+        <Stack.Item mb={-2.5}>{body}</Stack.Item>
       </Stack>
     </Section>
   );
@@ -85,18 +91,11 @@ const ScoreItem = (props: ScoreItemProps) => {
   const ScoreItemContents = getScoreItemComponent(type);
 
   return (
-    <LabeledList.Item
-      label={name}
-      verticalAlign="middle">
-      <ScoreItemContents
-        type={type}
-        items={value}
-        nothing_text={"N/A"}
-      />
+    <LabeledList.Item label={name} verticalAlign="middle">
+      <ScoreItemContents type={type} items={value} nothing_text={'N/A'} />
     </LabeledList.Item>
   );
 };
-
 
 const getScoreItemComponent = (type) => {
   if (type === undefined) {
@@ -108,25 +107,39 @@ const getScoreItemComponent = (type) => {
 };
 
 const ColorPercentage = (props) => {
-  const {
-    items,
-  } = props;
-  let textColor = "white";
-  if (items < 0) { textColor="purple"; } // ???
-  else if (items < 30) { textColor="brown"; } // SUPER F
-  else if (items < 60) { textColor="red"; } // F
-  else if (items < 70) { textColor="orange"; } // D
-  else if (items < 80) { textColor="yellow"; } // C
-  else if (items < 90) { textColor="yellowgreen"; } // B
-  else if (items < 100) { textColor = "chartreuse"; } // A
-  else if (items === 100) { textColor="lime"; } // PERFECT
-  else if (items > 100) { textColor="teal"; } // a level even further beyond
-  return (
-    <Box color={textColor}>{items}%</Box>
-  );
+  const { items } = props;
+  let textColor = 'white';
+  if (items < 0) {
+    textColor = 'purple';
+  } // ???
+  else if (items < 30) {
+    textColor = 'brown';
+  } // SUPER F
+  else if (items < 60) {
+    textColor = 'red';
+  } // F
+  else if (items < 70) {
+    textColor = 'orange';
+  } // D
+  else if (items < 80) {
+    textColor = 'yellow';
+  } // C
+  else if (items < 90) {
+    textColor = 'yellowgreen';
+  } // B
+  else if (items < 100) {
+    textColor = 'chartreuse';
+  } // A
+  else if (items === 100) {
+    textColor = 'lime';
+  } // PERFECT
+  else if (items > 100) {
+    textColor = 'teal';
+  } // a level even further beyond
+  return <Box color={textColor}>{items}%</Box>;
 };
 
 const scoreItemComponents = {
-  "itemList": ItemList,
-  "colorPercent": ColorPercentage,
+  itemList: ItemList,
+  colorPercent: ColorPercentage,
 };

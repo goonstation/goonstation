@@ -131,7 +131,7 @@
 	icon_state = "cubicle";
 	dir = 1
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
@@ -227,7 +227,7 @@
 /area/marsoutpost)
 "aD" = (
 /obj/table/auto,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
@@ -270,7 +270,7 @@
 	},
 /area/marsoutpost)
 "aK" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	tag = "icon-solar_panel (SOUTHWEST)";
 	name = "solar panel";
 	desc = "It's probably broken.";
@@ -344,7 +344,7 @@
 	},
 /area/mars)
 "aT" = (
-/obj/decal/fakeobjects/mars_billboard,
+/obj/fakeobject/mars_billboard,
 /turf/unsimulated/mars/t1,
 /area/mars)
 "aU" = (
@@ -502,7 +502,7 @@
 	},
 /area/marsoutpost)
 "bq" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
 /obj/window/reinforced/north,
@@ -529,7 +529,7 @@
 	},
 /area/mars)
 "bu" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/south,
 /obj/window/reinforced/west,
@@ -562,7 +562,7 @@
 	},
 /area/mars)
 "bz" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	tag = "icon-bdoorbroken (EAST)";
 	name = "rusty blastdoor";
 	desc = "This blast door looks rusted over.  Junk.";
@@ -612,7 +612,7 @@
 	},
 /area/mars)
 "bF" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	tag = "icon-bdoorbroken";
 	name = "rusty blastdoor";
 	desc = "This blast door looks rusted over.  Junk.";
@@ -626,7 +626,7 @@
 	},
 /area/marsoutpost)
 "bG" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	density = 1;
 	desc = "It probably doesn't work anymore.";
 	dir = 2;
@@ -640,12 +640,12 @@
 	},
 /area/mars)
 "bH" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	tag = "icon-intact (EAST)";
 	dir = 4;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	density = 1;
 	desc = "An old plasma tank that probably ran out eons ago.";
 	dir = 8;
@@ -666,7 +666,7 @@
 	},
 /area/marsoutpost)
 "bJ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	tag = "icon-1-6";
 	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
@@ -703,14 +703,14 @@
 	},
 /area/mars)
 "bO" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	tag = "icon-1-6";
 	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-6";
 	color = "#DD0000"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	tag = "icon-4-6";
 	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
@@ -735,14 +735,14 @@
 	},
 /area/mars)
 "bR" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	tag = "icon-2-6";
 	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "2-6";
 	color = "#DD0000"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	tag = "icon-8-9";
 	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
@@ -808,7 +808,7 @@
 	},
 /area/marsoutpost)
 "bZ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	tag = "icon-1-8";
 	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
@@ -830,7 +830,7 @@
 	},
 /area/mars)
 "cb" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	tag = "icon-2-9";
 	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
@@ -873,7 +873,7 @@
 /area/marsoutpost)
 "cf" = (
 /obj/stool/chair/office/blue,
-/obj/decal/fakeobjects/robot/servotron,
+/obj/fakeobject/robot/servotron,
 /turf/unsimulated/floor{
 	icon = 'icons/misc/mars_outpost.dmi';
 	icon_state = "floor_factory"
@@ -927,7 +927,7 @@
 	},
 /area/marsoutpost)
 "cm" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	color = "#DD0000";
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-2";
@@ -965,7 +965,7 @@
 	},
 /area/marsoutpost)
 "cq" = (
-/obj/decal/fakeobjects/robotarm{
+/obj/fakeobject/robotarm{
 	icon_state = "marsfactory_arm";
 	dir = 1
 	},
@@ -974,13 +974,13 @@
 	},
 /area/marsoutpost)
 "cr" = (
-/obj/decal/fakeobjects/robotarm,
+/obj/fakeobject/robotarm,
 /turf/unsimulated/floor{
 	icon_state = "caution_south"
 	},
 /area/marsoutpost)
 "cs" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/auto/reinforced,
 /turf/unsimulated/floor{
 	tag = "icon-plating_dusty1";
@@ -988,7 +988,7 @@
 	},
 /area/marsoutpost)
 "ct" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It doesn't seem to be hooked up to anything.";
@@ -1018,7 +1018,7 @@
 	},
 /area/marsoutpost)
 "cx" = (
-/obj/decal/fakeobjects/robotarm{
+/obj/fakeobject/robotarm{
 	dir = 4;
 	icon_state = "marsfactory_arm";
 	pixel_x = -22;
@@ -1037,7 +1037,7 @@
 	},
 /area/marsoutpost)
 "cI" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	tag = "icon-1-6";
 	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
@@ -1058,13 +1058,13 @@
 	},
 /area/mars)
 "db" = (
-/obj/decal/fakeobjects/robotarm,
+/obj/fakeobject/robotarm,
 /turf/unsimulated/floor{
 	icon_state = "caution_west"
 	},
 /area/marsoutpost)
 "dc" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It doesn't seem to be hooked up to anything.";
@@ -1168,7 +1168,7 @@
 	},
 /area/marsoutpost)
 "dq" = (
-/obj/decal/fakeobjects/mule_xl{
+/obj/fakeobject/mule_xl{
 	pixel_y = -10
 	},
 /turf/unsimulated/floor{
@@ -1176,7 +1176,7 @@
 	},
 /area/marsoutpost)
 "dr" = (
-/obj/decal/fakeobjects/mule_xl{
+/obj/fakeobject/mule_xl{
 	pixel_y = -10
 	},
 /turf/unsimulated/floor{
@@ -1227,7 +1227,7 @@
 /turf/unsimulated/wall/setpieces/martian,
 /area/marsoutpost)
 "dC" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	density = 1;
 	desc = "An old plasma tank that probably ran out eons ago.";
 	dir = 8;
@@ -1241,7 +1241,7 @@
 	},
 /area/mars)
 "dD" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	tag = "icon-bdoorbroken (SOUTHEAST)";
 	name = "rusty blastdoor";
 	desc = "This blast door looks rusted over.  Junk.";
@@ -1268,7 +1268,7 @@
 /turf/unsimulated/mars/t2,
 /area/mars)
 "dW" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	tag = "icon-8-9";
 	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
@@ -1295,7 +1295,7 @@
 	icon_state = "cubicle";
 	dir = 1
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
@@ -1341,7 +1341,7 @@
 	icon_state = "cubicle";
 	dir = 4
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
@@ -1361,7 +1361,7 @@
 	icon_state = "cubicle";
 	dir = 1
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
@@ -1374,10 +1374,10 @@
 	},
 /area/marsoutpost)
 "eH" = (
-/obj/decal/fakeobjects/robotpedestal{
+/obj/fakeobject/robotpedestal{
 	pixel_y = 5
 	},
-/obj/decal/fakeobjects/robot/servotron{
+/obj/fakeobject/robot/servotron{
 	pixel_y = 15
 	},
 /turf/unsimulated/floor{
@@ -1398,7 +1398,7 @@
 	},
 /area/marsoutpost)
 "eJ" = (
-/obj/decal/fakeobjects/robotpedestal{
+/obj/fakeobject/robotpedestal{
 	pixel_y = 5
 	},
 /turf/unsimulated/floor{
@@ -1478,10 +1478,10 @@
 	},
 /area/marsoutpost)
 "eQ" = (
-/obj/decal/fakeobjects/robotpedestal{
+/obj/fakeobject/robotpedestal{
 	pixel_y = 5
 	},
-/obj/decal/fakeobjects/robot/servotron/old{
+/obj/fakeobject/robot/servotron/old{
 	pixel_y = 15
 	},
 /turf/unsimulated/floor{
@@ -1491,10 +1491,10 @@
 	},
 /area/marsoutpost)
 "eR" = (
-/obj/decal/fakeobjects/robotpedestal{
+/obj/fakeobject/robotpedestal{
 	pixel_y = 5
 	},
-/obj/decal/fakeobjects/robot/servotron/older{
+/obj/fakeobject/robot/servotron/older{
 	pixel_y = 15
 	},
 /turf/unsimulated/floor{
@@ -1504,10 +1504,10 @@
 	},
 /area/marsoutpost)
 "eS" = (
-/obj/decal/fakeobjects/robotpedestal{
+/obj/fakeobject/robotpedestal{
 	pixel_y = 5
 	},
-/obj/decal/fakeobjects/robot/servotron/old{
+/obj/fakeobject/robot/servotron/old{
 	icon_state = "statue_oldgunrobot";
 	pixel_y = 12
 	},

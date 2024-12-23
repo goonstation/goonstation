@@ -307,6 +307,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (alert(usr, "Are you sure you want to spawn all wizard rings at your current location?", "Spawn rings", "Yes", "No, I misclicked") == "No, I misclicked")
 		return
 	var/turf/T_LOC = get_turf(src.mob)

@@ -1,5 +1,5 @@
 /obj/machinery/computer/ordercomp
-	name = "Supply Request Console"
+	name = "supply request console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "QMreq"
 	var/temp = null
@@ -14,7 +14,7 @@
 	New()
 		..()
 		console_location = get_area(src)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "pda", FREQ_PDA)
 
 /obj/machinery/computer/ordercomp/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
@@ -65,7 +65,7 @@
 				src.scan = id_card
 				src.Attackhand(user) // refresh console
 			else
-				boutput(user, SPAN_ALERT("Pin number incorrect."))
+				boutput(user, SPAN_ALERT("PIN incorrect."))
 				src.scan = null
 		else
 			boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
@@ -96,6 +96,8 @@
 		else
 			src.temp += "<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR><HR>"
 		src.temp += "<B>Please select the Supply Package you would like to request:</B><BR><BR>"
+		src.temp += search_snippet()
+		src.temp += "<BR><BR>"
 		src.temp += {"
 		<style>
 			table {border-collapse: collapse;}
@@ -111,10 +113,45 @@
 																						 1px 1px 0 #000;}
 		</style>
 		<script type="text/javascript">
-			// same-page anchor "a href=#id" links dont work in byond
-			function scroll_to_id(h) {
-				var top = document.getElementById(h).offsetTop;
-				window.scrollTo(0, top);
+			function scroll_to_id(id) {
+				var element = document.getElementById(id);
+				if (element) {
+					var elementTop = element.getBoundingClientRect().top;
+					var currentTop = window.pageYOffset || document.documentElement.scrollTop;
+					var targetTop = elementTop + currentTop;
+
+					// Smooth scroll polyfill for IE11
+					function smoothScrollTo(endX, endY, duration) {
+						var startX = window.scrollX || window.pageXOffset;
+						var startY = window.scrollY || window.pageYOffset;
+						var startTime = new Date().getTime();
+
+						function easeInOutQuad(t, b, c, d) {
+							t /= d / 2;
+							if (t < 1) return c / 2 * t * t + b;
+							t--;
+							return -c / 2 * (t * (t - 2) - 1) + b;
+						}
+
+						function scroll() {
+							var currentTime = new Date().getTime();
+							var time = Math.min(1, ((currentTime - startTime) / duration));
+							var timeFunction = easeInOutQuad(time, 0, 1, 1);
+							window.scrollTo(
+								Math.ceil((timeFunction * (endX - startX)) + startX),
+								Math.ceil((timeFunction * (endY - startY)) + startY)
+							);
+
+							if (Math.abs(window.pageYOffset - endY) > 1) {
+								requestAnimationFrame(scroll);
+							}
+						}
+
+						scroll();
+					}
+
+					smoothScrollTo(0, targetTop, 600); // 600ms for the smooth scroll duration
+				}
 			}
 		</script>
 		"}
@@ -122,7 +159,7 @@
 		var/buy_list = ""
 		var/catnum = 0
 		for (var/foundCategory in global.QM_CategoryList)
-			src.temp += "[catnum ? " &middot; " : ""] <a href='javascript:scroll_to_id(\"category-[catnum]\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
+			src.temp += "[catnum ? " &middot; " : ""] <a href='#' onclick='scroll_to_id(\"category-[catnum]\"); return false;' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
 
 			buy_list += {"<div class='categoryGroup' id='[foundCategory]' style='border-color:#666'>
 							<a name='category-[catnum]' id='category-[catnum]'></a><b class='title' style='background:#ccc'>[foundCategory]</b>"}
@@ -132,10 +169,10 @@
 			for (var/datum/supply_packs/S in qm_supply_cache) //yes I know what this is doing, feel free to make it more perf-friendly
 				if(S.syndicate || S.hidden) continue
 				if (S.category == foundCategory)
-					buy_list += "<tr><td><a href='?src=\ref[src];doorder=\ref[S]'><b><u>[S.name]</u></b></a></td><td>[S.cost]</td><td>[S.desc]</td></tr>"
+					buy_list += "<tr class='supply-package'><td><a href='?src=\ref[src];doorder=\ref[S]'><b><u>[S.name]</u></b></a></td><td>[S.cost]</td><td>[S.desc]</td></tr>"
 				LAGCHECK(LAG_LOW)
 
-			buy_list += "</table></div><a href='javascript:scroll_to_id(\"top\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>Back to top</a><hr>"
+			buy_list += "</table></div><a href='#' onclick='scroll_to_id(\"top\"); return false;' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>Back to top</a><hr>"
 			catnum++
 
 		src.temp += "<BR><HR><BR>"
@@ -228,7 +265,7 @@
 						src.scan = id_card
 						src.Attackhand(usr) // refresh console
 					else
-						boutput(usr, SPAN_ALERT("Pin number incorrect."))
+						boutput(usr, SPAN_ALERT("PIN incorrect."))
 						src.scan = null
 				else
 					boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))

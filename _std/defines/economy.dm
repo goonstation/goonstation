@@ -17,7 +17,11 @@
 #define REQ_RETURN_SALE 1
 #define REQ_RETURN_FULLSALE 2
 
-/mob/proc/enter_pin(title="ID PIN number")
-	. = input(src, "Please enter your PIN number:", title, src.mind?.remembered_pin) as num | null
-	if(src.mind && isnull(src.mind.remembered_pin))
+// PIN defines
+#define PIN_MIN 1000
+#define PIN_MAX 9999
+
+/mob/proc/enter_pin(title="ID PIN")
+	. = tgui_input_pin(src, "Please enter your PIN:", title, src.mind?.remembered_pin || null, PIN_MAX, PIN_MIN)
+	if(. && src.mind && isnull(src.mind.remembered_pin))
 		src.mind.remembered_pin = .

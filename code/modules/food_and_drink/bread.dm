@@ -9,7 +9,6 @@
 	fill_amt = 6
 	food_color = "#FFFFCC"
 	real_name = "bread"
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	sliceable = TRUE
 	slice_amount = 6
@@ -55,6 +54,7 @@
 	desc = "A bread made with honey. Right there in the name, first thing, top billing."
 	icon_state = "honeyloaf"
 	real_name = "honey-wheat bread"
+	initial_volume = 60
 	initial_reagents = list("bread"=30,"honey"=30)
 
 	slice_product = /obj/item/reagent_containers/food/snacks/breadslice/honeywheat
@@ -85,6 +85,7 @@
 	desc = "Fattening and delicious, despite the hair.  It tastes like the soul of rock and roll."
 	icon_state = "elvisbread"
 	real_name ="elvis bread"
+	initial_volume = 60
 	initial_reagents = list("bread"=30,"essenceofelvis"=30)
 	slice_product = /obj/item/reagent_containers/food/snacks/breadslice/elvis
 
@@ -93,6 +94,7 @@
 	desc = "The bread of the damned."
 	icon_state = "dreadloaf"
 	real_name = "dread"
+	initial_volume = 90
 	initial_reagents = list("bread"=30,"ectoplasm"=60)
 	slice_product = /obj/item/reagent_containers/food/snacks/breadslice/spooky
 
@@ -107,14 +109,42 @@
 	sweet
 		name = "northern-style cornbread"
 		desc = "A chunk of sweet maize-based quickbread."
+		initial_volume = 60
 		initial_reagents = list("bread"=30,"cornsyrup"=30)
 		slice_product = /obj/item/reagent_containers/food/snacks/breadslice/corn/sweet
 
 		honey
 			name = "honey cornbread"
 			desc = "A chunk of honey-sweetened maize-based quickbread."
+			initial_volume = 120
 			initial_reagents = list("bread"=30,"cornsyrup"=30,"honey"=60)
 			slice_product = /obj/item/reagent_containers/food/snacks/breadslice/corn/sweet/honey
+
+/obj/item/reagent_containers/food/snacks/breadloaf/fruit_cake
+	name = "fruitcake"
+	desc = "The most disgusting dessert ever devised. Legend says there's only one of these in the galaxy, passed from location to location by vengeful deities."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "cake_fruit"
+	bites_left = 12
+	heal_amt = 3
+	initial_volume = 50
+	initial_reagents = "yuck"
+	festivity = 10
+	slice_product = /obj/item/reagent_containers/food/snacks/breadslice/fruit_cake
+
+	on_finish(mob/eater)
+		..()
+		eater.show_text("It's so hard it breaks one of your teeth by the end AND it tastes disgusting! Why would you ever eat this?","red")
+		random_brute_damage(eater, 3)
+
+/obj/item/reagent_containers/food/snacks/breadloaf/toast
+	name = "loaf of toast"
+	desc = "Because you weren't patient enough to slice it first."
+	icon_state = "toastloaf"
+	real_name = "toast bread"
+	food_effects = list("food_warm", "food_hp_up")
+	meal_time_flags = MEAL_TIME_BREAKFAST
+	slice_product = /obj/item/reagent_containers/food/snacks/breadslice/toastslice
 
 /obj/item/reagent_containers/food/snacks/breadslice
 	name = "slice of bread"
@@ -214,6 +244,22 @@
 		heal_amt = 2
 		real_name = "french bread"
 		food_color = "#C78000"
+
+	fruit_cake
+		name = "slice of fruit cake"
+		desc = "The most despicable dessert ever sliced. According to legend, a vengeful deity invented sliced bread solely to allow the distribution of these miniature monstrosities to unsuspecting crewmembers."
+		icon_state = "fruitcakeslice"
+		real_name = "fruitcake \"bread\""
+		heal_amt = 1
+		initial_volume = 8
+		initial_reagents = "yuck"
+		festivity = 2
+		food_effects = list("food_cold","food_energized")
+
+		on_finish(mob/eater)
+			..()
+			eater.show_text("It’s so rock-solid it chips a tooth, and the taste is horrendous! What were you thinking cutting it into six slices?","red")
+			random_brute_damage(eater, 1)
 
 	New()
 		..()
@@ -394,7 +440,7 @@
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
 				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W]."))
 				user.change_eye_blurry(5)
-				user.changeStatus("weakened", 3 SECONDS)
+				user.changeStatus("knockdown", 3 SECONDS)
 				JOB_XP(user, "Clown", 2)
 				return
 

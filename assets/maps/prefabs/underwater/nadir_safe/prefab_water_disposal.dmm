@@ -83,7 +83,7 @@
 	name = "GLOMAR Salvager"
 	})
 "m" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
@@ -159,7 +159,7 @@
 	name = "GLOMAR Salvager"
 	})
 "v" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
@@ -234,7 +234,7 @@
 	name = "GLOMAR Salvager"
 	})
 "G" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"

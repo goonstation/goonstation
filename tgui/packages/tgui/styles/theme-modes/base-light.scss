@@ -12,7 +12,7 @@ $component-bg-color: color.scale($bg-color, $lightness: -10%) !default;
 $border-color: #4171a8 !default;
 $primary-color: color.scale($bg-color, $lightness: -20%) !default;
 
-@use '../colors.scss' with (
+@use '../colors' with (
   $primary: $primary-color,
   $bg-lightness: 25%,
   $fg-lightness: -10%,
@@ -24,77 +24,96 @@ $primary-color: color.scale($bg-color, $lightness: -20%) !default;
   // some base colours changed to be more readable on white background
   $white: #afafaf,
   $yellow: #c0a300,
-  $olive: #8c9e14,
+  $olive: #8c9e14
 );
 
-@use '../base.scss' with (
+@use '../base' with (
   $color-bg: $bg-color,
   $color-fg: $fg-color,
   $color-bg-section: rgba($bg-color, 0.33),
-  $color-bg-grad-spread: 3%,
+  $color-bg-grad-spread: 3%
 );
 
 // Atomic classes
 @include meta.load-css('../atomic/color.scss');
 
 // Components
-@include meta.load-css('../components/Tooltip.scss', $with: (
-  'color': base.$color-fg,
-  'background-color': $component-bg-color,
-));
-@include meta.load-css('../components/Divider.scss', $with: (
-  'color': rgba(0, 0, 0, 0.1),
-));
-@include meta.load-css('../components/Stack.scss', $with: (
-  'zebra-background-color': base.$color-bg-section,
-));
-@include meta.load-css('../components/ProgressBar.scss', $with: (
-  'color-default-fill': base.$color-bg,
-  'background-color': rgba(255, 255, 255, 0.5),
-));
-@include meta.load-css('../components/Section.scss', $with: (
-  'background-color': rgba(0, 0, 0, 0.1),
-));
-@include meta.load-css('../components/goonstation/SectionEx.scss');
-@include meta.load-css('../components/Button.scss', $with: (
-  'color-default': base.$color-bg,
-  'color-disabled': #777777,
-  'color-selected': #58c44a,
-  'color-caution': #b96817,
-  'color-danger': #9a9d00,
-  'color-transparent-text': rgba(33, 33, 34, 0.75),
-));
-@include meta.load-css('../components/Input.scss', $with: (
-  'background-color': $component-bg-color,
-  'border-color': $border-color,
-));
-@include meta.load-css('../components/TextArea.scss', $with: (
-  'background-color': $component-bg-color,
-));
-@include meta.load-css('../components/Modal.scss', $with: (
-  'background-color': $component-bg-color,
-));
+@include meta.load-css(
+  '../components/Tooltip.scss',
+  $with: ('color': base.$color-fg, 'background-color': $component-bg-color)
+);
+@include meta.load-css(
+  '../components/Divider.scss',
+  $with: ('color': rgba(0, 0, 0, 0.1))
+);
+@include meta.load-css(
+  '../components/Stack.scss',
+  $with: ('zebra-background-color': base.$color-bg-section)
+);
+@include meta.load-css(
+  '../components/ProgressBar.scss',
+  $with: (
+    'color-default-fill': base.$color-bg,
+    'background-color': rgba(255, 255, 255, 0.5)
+  )
+);
+@include meta.load-css(
+  '../components/Section.scss',
+  $with: ('background-color': rgba(0, 0, 0, 0.1))
+);
+@include meta.load-css(
+  '../components/Button.scss',
+  $with: (
+    'color-default': base.$color-bg,
+    'color-disabled': #777777,
+    'color-selected': #58c44a,
+    'color-caution': #b96817,
+    'color-danger': #9a9d00,
+    'color-transparent-text': rgba(33, 33, 34, 0.75)
+  )
+);
+@include meta.load-css(
+  '../components/Input.scss',
+  $with: (
+    'background-color': $component-bg-color,
+    'border-color': $border-color
+  )
+);
+@include meta.load-css(
+  '../components/TextArea.scss',
+  $with: ('background-color': $component-bg-color)
+);
+@include meta.load-css(
+  '../components/Modal.scss',
+  $with: ('background-color': $component-bg-color)
+);
 @include meta.load-css('../components/NumberInput.scss');
-@include meta.load-css('../components/Tabs.scss', $with: (
-  'text-color': rgba(0, 0, 0, 0.5),
-  'text-color-selected': rgba(0, 0, 0, 0.9),
-  'tab-color-hovered': rgba(0, 0, 0, 0.075),
-  'tab-color-selected': rgba(0, 0, 0, 0.125),
-));
-@include meta.load-css('../components/Slider.scss', $with: (
-  'popup-background-color': #ffffff,
-  'popup-text-color': #000000,
-));
+@include meta.load-css(
+  '../components/Tabs.scss',
+  $with: (
+    'text-color': rgba(0, 0, 0, 0.5),
+    'text-color-selected': rgba(0, 0, 0, 0.9),
+    'tab-color-hovered': rgba(0, 0, 0, 0.075),
+    'tab-color-selected': rgba(0, 0, 0, 0.125)
+  )
+);
+@include meta.load-css(
+  '../components/Slider.scss',
+  $with: ('popup-background-color': #ffffff, 'popup-text-color': #000000)
+);
 @include meta.load-css('../components/BlockQuote.scss');
 
 // Layouts
 @include meta.load-css('../layouts/Layout.scss');
 @include meta.load-css('../layouts/Window.scss');
-@include meta.load-css('../layouts/TitleBar.scss', $with: (
-  'text-color': rgba(0, 0, 0, 0.9),
-  'background-color': base.$color-bg,
-  'shadow-color-core': rgba(0, 0, 0, 0.25),
-));
+@include meta.load-css(
+  '../layouts/TitleBar.scss',
+  $with: (
+    'text-color': rgba(0, 0, 0, 0.9),
+    'background-color': base.$color-bg,
+    'shadow-color-core': rgba(0, 0, 0, 0.25)
+  )
+);
 
 .Layout__content {
   background-image: url('../../assets/bg-nanotrasen-light.svg');

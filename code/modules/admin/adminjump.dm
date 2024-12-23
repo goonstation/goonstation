@@ -1,12 +1,15 @@
-/client/proc/Jump(var/area/A in by_type[/area])
+/client/proc/Jump(var/area/A as null|area in by_type[/area])
 	set desc = "Area to jump to"
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Jump"
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(config.allow_admin_jump)
+		if (!A)
+			A = tgui_input_list(usr, "Where do you want to jump?", "Jump", by_type[/area])
 		if(flourish)
 			shrink_teleport(src.mob)
 		var/turf/origin_turf = get_turf(usr)
@@ -86,6 +89,7 @@
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(config.allow_admin_jump)
 		var/mob/target
@@ -119,6 +123,7 @@
 	set desc = "Jump to a coordinate in world (x, y, z)"
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(config.allow_admin_jump)
 		if (x > world.maxx || x < 1 || y > world.maxy || y < 1 || z > world.maxz || z < 1)
@@ -187,6 +192,7 @@
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(config.allow_admin_jump)
 		for(var/mob/living/carbon/human/H in mobs)
 			H.set_loc(pick(get_area_turfs(A)))
@@ -203,6 +209,7 @@
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(config.allow_admin_jump)
 		for(var/mob/living/M in mobs)
 			M.set_loc(pick(get_area_turfs(A)))
@@ -219,6 +226,7 @@
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
 			if("Yes")
@@ -239,6 +247,7 @@
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
 			if("Yes")
@@ -260,6 +269,7 @@
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
 			if("Yes")
@@ -282,6 +292,7 @@
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
 			if("Yes")
@@ -303,6 +314,7 @@
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(config.allow_admin_jump)
 		switch(alert("Are you sure?",,"Yes","No"))
 			if("Yes")

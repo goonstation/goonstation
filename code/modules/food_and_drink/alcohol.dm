@@ -55,6 +55,18 @@
 	initial_volume = 100
 	initial_reagents = list("wine"=60)
 
+/obj/item/reagent_containers/food/drinks/bottle/wine/white
+	name = "white wine"
+	desc = "Wine made from those nasty green grapes. Its a Riesling, according to the label. Whatever that means."
+	icon_state = "bottle-whitewine"
+	heal_amt = 1
+	g_amt = 40
+	bottle_style = "whitewine"
+	fluid_style = "whitewine"
+	label = "whitewine"
+	initial_volume = 100
+	initial_reagents = list("white_wine"=60)
+
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine
 	name = "fortified wine"
 	desc = "Some sort of bottom-shelf booze. Wasn't this brand banned awhile ago?"
@@ -96,6 +108,17 @@
 
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe
 	safe = 1
+
+/obj/item/reagent_containers/food/drinks/bottle/wine/spicy //Wine for Wander's office, very spicy drink
+	name = "Dragon's Wine"
+	desc = "A wine not served anywhere on earth, famous in certain communities for its taste strong enough to 'raise the dead' and subtle sweetness. Allegedly if you drink enough you'll burst into flames. Allegedly."
+	icon_state = "bottle-dragonwine"
+	heal_amt = 1
+	g_amt = 40
+	bottle_style = "dragonwine"
+	label = "dragonwine"
+	initial_volume = 100
+	initial_reagents = list("wine"=20,"dbreath" =80,)
 
 /obj/item/reagent_containers/food/drinks/bottle/champagne
 	name = "Champagne"
@@ -211,7 +234,7 @@
 	bottle_style = "barf"
 	label = "alcohol5"
 	initial_volume = 50
-	initial_reagents = list("urine"=30)
+	initial_reagents = list("water"=25,"pubbie tears"=5)
 
 /obj/item/reagent_containers/food/drinks/bottle/vodka
 	name = "vodka"
@@ -325,9 +348,9 @@
 	"cosmo"=20,"beach"=20,"gtonic"=20,"vtonic"=20,"sonic"=20,"gpink"=20,"eraser"=20,"dbreath"=20,"squeeze"=20,"madmen"=20,
 	"planter"=20,"maitai"=20,"harlow"=20,"gchronic"=20,"margarita"=20,"tequini"=20,"pfire"=20,"bull"=20,"longisland"=20,"longbeach"=20,
 	"pinacolada"=20,"mimosa"=20,"french75"=20,"sangria"=20,"tomcollins"=20,"peachschnapps"=20,"moscowmule"=20,"tequilasunrise"=20,"paloma"=20,
-	"mintjulep"=20,"mojito"=20,"cremedementhe"=20,"freeze"=20,"negroni"=20,"necroni"=20,"bathsalts"=20,"jenkem"=360,"crank"=360,"LSD"=360, "lsd_bee"=360,"space_drugs"=360,
+	"mintjulep"=20,"mojito"=20,"cremedementhe"=20,"freeze"=20,"negroni"=20,"necroni"=20,"bathsalts"=20,"crank"=360,"LSD"=360, "lsd_bee"=360,"space_drugs"=360,
 	"THC"=360,"nicotine"=360,"psilocybin"=360,"krokodil"=360,"catdrugs"=360,"triplemeth"=360,"methamphetamine"=360,"aranesp"=100,"capulettium"=100,
-	"spiders"=100,"glitter"=100,"triplepiss"=100,"acid"=100,"clacid"=100,"cyanide"=100,"formaldehyde"=100,"itching"=100,"pacid"=100,
+	"spiders"=100,"glitter"=100,"triplepissed"=100,"acid"=100,"clacid"=100,"cyanide"=100,"formaldehyde"=100,"itching"=100,"pacid"=100,
 	"sodium_thiopental"=100,"ketamine"=100,"neurotoxin"=100,"mutagen"=100,"omega_mutagen"=100,"histamine"=100,"haloperidol"=100,"morphine"=100)
 
 // nicknacks for making fancy drinks
@@ -335,8 +358,7 @@
 /obj/item/cocktail_stuff
 	name = "cocktail doodad"
 	desc = "Some kinda li'l thing to put in a cocktail. How are you seeing this?"
-	icon = 'icons/obj/foodNdrink/drinks.dmi'
-	flags = FPRINT | TABLEPASS
+	icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
 	w_class = W_CLASS_TINY
 	rand_pos = 1
 
@@ -373,7 +395,7 @@
 	desc = "A straw, for drinking from."
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	icon_state = "straw"
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	w_class = W_CLASS_TINY
 	var/cooldown = 1 SECOND
 	var/slurp_size = 5

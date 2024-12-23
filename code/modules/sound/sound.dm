@@ -104,7 +104,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 	volume = clamp(volume, 0, 2)
 	volumes[channel + 1] = volume
 
-	cloud_put("audio_volume", json_encode(volumes))
+	src.player.cloudSaves.putData("audio_volume", json_encode(volumes))
 
 	var/list/playing = src.SoundQuery()
 	if( channel == VOLUME_CHANNEL_MASTER )
@@ -125,6 +125,9 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 		src.chatOutput.adjustVolumeRaw( getMasterVolume() * volume )
 
 /proc/playsound(atom/source, soundin, vol, vary, extrarange, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
+	if(isarea(source))
+		CRASH("playsound(): source is an area [source.name], sound is [soundin]")
+
 	var/turf/source_turf = get_turf(source)
 
 	// don't play if the sound is happening nowhere
@@ -179,6 +182,8 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 		if (CLIENT_IGNORES_SOUND(C))
 			continue
 
+		if (!(flags & SOUND_IGNORE_DEAF) && !M.hearing_check(FALSE, TRUE))
+			continue
 		Mloc = get_turf(M)
 
 		if (!Mloc)
@@ -245,7 +250,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 				S.environment = SPACED_ENV
 				S.echo = SPACED_ECHO
 			else
-				if(listener_location != source_location)
+				if(listener_location != source_location) // are they in a different area?
 					//boutput(M, "You barely hear a [source] at [source_location]!")
 					S.echo = ECHO_AFAR //Sound is occluded
 				else
@@ -263,6 +268,9 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 /mob/proc/playsound_local(atom/source, soundin, vol, vary, extrarange, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 	if(!src.client)
+		return
+
+	if (!(flags & SOUND_IGNORE_DEAF) && !src.hearing_check(FALSE, TRUE))
 		return
 
 	var/turf/source_turf = get_turf(source)
@@ -328,7 +336,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 		src << S
 
-		if (src.observers.len && !(flags & SOUND_SKIP_OBSERVERS))
+		if (length(src.observers) && !(flags & SOUND_SKIP_OBSERVERS))
 			for (var/mob/M in src.observers)
 				if (!M.client || CLIENT_IGNORES_SOUND(M.client))
 					continue
@@ -343,6 +351,9 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 /// like playsound_local but without a source atom, this just plays at a given volume
 /mob/proc/playsound_local_not_inworld(soundin, vol, vary, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0, wait=FALSE)
 	if(!src.client)
+		return
+
+	if (!(flags & SOUND_IGNORE_DEAF) && !src.hearing_check(FALSE, TRUE))
 		return
 
 	if (CLIENT_IGNORES_SOUND(src.client))
@@ -367,7 +378,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 	src << S
 
-	if (src.observers.len && !(flags & SOUND_SKIP_OBSERVERS))
+	if (length(src.observers) && !(flags & SOUND_SKIP_OBSERVERS))
 		for (var/mob/M in src.observers)
 			if (!M.client || CLIENT_IGNORES_SOUND(M.client))
 				continue
@@ -450,7 +461,8 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 		S.volume = ourvolume
 
 		var/orig_freq = S.frequency
-		S.frequency *= (HAS_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) : 1)
+		if(C.mob)
+			S.frequency *= (HAS_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) : 1)
 
 		C << S
 

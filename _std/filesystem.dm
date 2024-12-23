@@ -31,3 +31,16 @@ proc/recursive_flist(dir, list_folders=TRUE)
 				stack += filepath
 			else
 				. += filepath
+
+/// Returns a file objects name as a string with or without the exstension stripped
+proc/stringify_file_name(file, strip_extension)
+    // Convert the file object to a string to extract the path
+    var/file_name = "[file]"
+
+    // If strip_extension is TRUE, remove the extension from the filename
+    if(strip_extension && file_name)
+        var/list/file_parts = splittext(file_name, ".")
+        if(length(file_parts) > 1)
+            file_name = file_parts[1]  // Use the first part, assuming 'filename.ext' format
+
+    return file_name

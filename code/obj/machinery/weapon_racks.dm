@@ -115,7 +115,7 @@
 		amount = 3
 		max_amount = 3
 		stand_type = "shotgun_rack"
-		contained_weapon = /obj/item/gun/kinetic/riotgun
+		contained_weapon = /obj/item/gun/kinetic/pumpweapon/riotgun
 		contained_weapon_name = "riot shotgun"
 		req_access = list(access_security)
 
@@ -132,6 +132,22 @@
 
 		recharger
 			recharges_contents = 1
+
+	phaser_rack
+		name = "phaser rack"
+		desc = "A rack that charges up to 3 phaser guns."
+		icon_state = "phaser_rack"
+		amount = 3
+		max_amount = 3
+		stand_type = "phaser_rack"
+		contained_weapon = /obj/item/gun/energy/phaser_gun/extended_mag
+		contained_weapon_name = "phaser"
+		req_access = list(access_security)
+		recharges_contents = TRUE
+
+		valid_item(obj/item/I)
+			return istype(I, /obj/item/gun/energy/phaser_gun)
+
 
 	New()
 		..()
@@ -269,7 +285,7 @@
 			for(var/obj/item/A in src) // For each item(A) in the rack(src) ...
 				if(!valid_item(A)) // Check if the item(A) is not(!) accepted in this kind of rack(contained_weapon) and then...
 					continue // It's not accepted here! Vamoose! Skidaddle! Git outta here! (Move on without executing any further code in this proc.)
-				SEND_SIGNAL(A, COMSIG_CELL_CHARGE, 10)
+				SEND_SIGNAL(A, COMSIG_CELL_CHARGE, 25)
 
 	Topic(href, href_list)
 		if(BOUNDS_DIST(usr, src) > 0 && !issilicon(usr) && !isAI(usr))

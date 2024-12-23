@@ -51,7 +51,7 @@
 	opacity = 0 	// changed in New()
 	anchored = ANCHORED
 	desc = "A heavy duty wall made of concrete! This thing is gonna take some manual labour to get through..."
-	flags = FPRINT | CONDUCT | USEDELAY
+	flags = CONDUCT | USEDELAY
 	var/const/baseHealth = 30
 	_max_health = baseHealth //Health related nums can be changed thru update_strength()
 	_health = baseHealth

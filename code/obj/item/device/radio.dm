@@ -49,7 +49,7 @@ proc/no_more_radio()
 	var/doesMapText = FALSE
 	// probably not too resource intensive but I'd be careful using this just in case
 
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	throw_speed = 2
 	throw_range = 9
@@ -68,7 +68,7 @@ var/list/headset_channel_lookup
 		world.log << "[src] ([src.type]) has a frequency of [src.frequency], sanitizing."
 		src.frequency = sanitize_frequency(src.frequency)
 
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "main", frequency)
 
 	if(src.secure_frequencies)
 		set_secure_frequencies()
@@ -97,7 +97,7 @@ var/list/headset_channel_lookup
 			var/frequency_id = src.secure_frequencies["[sayToken]"]
 			if (frequency_id)
 				if (!src.secure_connections["[sayToken]"])
-					src.secure_connections["[sayToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[frequency_id]", frequency_id)
+					src.secure_connections["[sayToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "f[frequency_id]", frequency_id)
 			else
 				src.secure_frequencies -= "[sayToken]"
 
@@ -115,7 +115,7 @@ var/list/headset_channel_lookup
 	if (oldConnection)
 		qdel(oldConnection)
 
-	src.secure_connections["[frequencyToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[newFrequency]", newFrequency)
+	src.secure_connections["[frequencyToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "f[newFrequency]", newFrequency)
 	src.secure_frequencies["[frequencyToken]"] = newFrequency
 	return
 
@@ -191,7 +191,7 @@ var/list/headset_channel_lookup
 				usr.u_equip(R)
 				usr.put_in_hand_or_drop(T)
 				R.set_loc(T)
-				T.attack_self(usr)
+				T.AttackSelf(usr)
 				return
 
 			return TRUE
@@ -381,17 +381,16 @@ var/list/headset_channel_lookup
 			R.hear_radio(M, messages, lang_id)
 
 	var/list/heard_flock = list() // heard by flockdrones/flockmind
-	var/datum/game_mode/conspiracy/N = ticker.mode
-	var/protected_frequency = null
-	if(istype(N))
-		protected_frequency = N.agent_radiofreq //groups conspirator frequency as a traitor one and protects it along with nukies
 	// Don't let them monitor Syndie headsets. You can get the radio_brain bioeffect at the start of the round, basically.
-	if (src.protected_radio != 1 && isnull(src.traitorradio) && protected_frequency != display_freq )
-		for (var/mob/living/L in radio_brains)
-			if(radio_brains[L] == 1 && display_freq != R_FREQ_DEFAULT)
-				continue
-			receive += L
+	var/protected = src.protected_radio || !isnull(src.traitorradio) || (display_freq in protected_frequencies)
+	for (var/mob/living/L in radio_brains)
+		if(radio_brains[L] == 1 && display_freq != R_FREQ_DEFAULT)
+			continue
+		else if(radio_brains[L] <= 3 && protected)
+			continue
+		receive += L
 
+	if(!protected)
 		for(var/mob/zoldorf/z in the_zoldorf)
 			if(z.client)
 				receive += z
@@ -470,7 +469,7 @@ var/list/headset_channel_lookup
 
 		if (length(heard_masked))
 			if (ishuman(M))
-				if (M:wear_id)
+				if (M:wear_id && length(M:wear_id:registered))
 					rendered = "[part_a][M:wear_id:registered][part_b][M.say_quote(messages[1])][part_c]"
 				else
 					rendered = "[part_a]Unknown[part_b][M.say_quote(messages[1])][part_c]"
@@ -649,9 +648,9 @@ var/list/headset_channel_lookup
 		bubbleOverride = global.living_speech_bubble
 	if ((src.listening && src.wires & WIRE_RECEIVE))
 		if (istype(src, /obj/item/device/radio/intercom))
-			UpdateOverlays(bubbleOverride, "speech_bubble")
+			AddOverlays(bubbleOverride, "speech_bubble")
 			SPAWN(1.5 SECONDS)
-				UpdateOverlays(null, "speech_bubble")
+				ClearSpecificOverlays("speech_bubble")
 
 /obj/item/device/radio/examine(mob/user)
 	. = ..()
@@ -676,7 +675,7 @@ var/list/headset_channel_lookup
 		user.show_message(SPAN_NOTICE("The radio can no longer be modified or attached!"))
 	if (isliving(src.loc))
 		var/mob/living/M = src.loc
-		src.attack_self(M)
+		src.AttackSelf(M)
 		//Foreach goto(83)
 	src.add_fingerprint(user)
 	return
@@ -717,6 +716,16 @@ TYPEINFO(/obj/item/radiojammer)
 			STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
 		..()
 
+/obj/item/device/radio/hall_monitor
+	name = "Hall monitor's radio"
+	desc = "So you can listen to(eavesdrop on) station security(drama)."
+	icon_state = "radio"
+	has_microphone = FALSE
+	frequency = R_FREQ_SECURITY
+	locked_frequency = TRUE
+	secure_frequencies = list("g" = R_FREQ_SECURITY)
+	secure_classes = list("g" = RADIOCL_SECURITY)
+
 /obj/item/device/radio/beacon
 	name = "tracking beacon"
 	icon_state = "beacon"
@@ -736,16 +745,15 @@ TYPEINFO(/obj/item/radiojammer)
 	proc/add_portal(obj/portal)
 		LAZYLISTADD(portals_pointed_at_us, portal)
 		if(length(portals_pointed_at_us) == 1)
-			src.UpdateOverlays(SafeGetOverlayImage("portal_indicator", src.icon, icon_state="beacon-portal_indicator"), "portal_indicator")
-			src.UpdateOverlays(SafeGetOverlayImage("portal_indicator_light", src.icon, icon_state="beacon-portal_indicator",
+			src.AddOverlays(SafeGetOverlayImage("portal_indicator", src.icon, icon_state="beacon-portal_indicator"), "portal_indicator")
+			src.AddOverlays(SafeGetOverlayImage("portal_indicator_light", src.icon, icon_state="beacon-portal_indicator",
 				plane=PLANE_SELFILLUM, blend_mode=BLEND_ADD, alpha=100), "portal_indicator_light")
 
 	proc/remove_portal(obj/portal)
 		if(portal in portals_pointed_at_us)
 			LAZYLISTREMOVE(portals_pointed_at_us, portal)
 			if(!length(portals_pointed_at_us))
-				src.UpdateOverlays(null, "portal_indicator")
-				src.UpdateOverlays(null, "portal_indicator_light")
+				src.ClearSpecificOverlays("portal_indicator", "portal_indicator_light")
 
 	attackby(obj/item/I, mob/user)
 		if (isscrewingtool(I))
@@ -792,7 +800,7 @@ TYPEINFO(/obj/item/radiojammer)
 	throw_speed = 1
 	throw_range = 3
 	w_class = W_CLASS_HUGE
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBACK
 	item_state = "electropack"
 	desc = "A device that, when signaled on the correct frequency, causes a disabling electric shock to be sent to the animal (or human) wearing it."
@@ -851,15 +859,10 @@ TYPEINFO(/obj/item/radiojammer)
 				M.mind?.remove_antagonist(ROLE_REVOLUTIONARY)
 
 #ifdef USE_STAMINA_DISORIENT
-			M.do_disorient(200, weakened = 100, disorient = 60, remove_stamina_below_zero = 0)
+			M.do_disorient(200, knockdown = 100, disorient = 60, remove_stamina_below_zero = 0)
 #else
-			M.changeStatus("weakened", 10 SECONDS)
+			M.changeStatus("knockdown", 10 SECONDS)
 #endif
-			if(istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				for (var/uid in H.pathogens)
-					var/datum/pathogen/P = H.pathogens[uid]
-					P.onshocked(35, 500)
 
 	if ((src.master && src.wires & WIRE_SIGNAL))
 		src.master.receive_signal()
@@ -878,7 +881,7 @@ TYPEINFO(/obj/item/radiojammer)
 
 
 /obj/item/device/radio/signaler
-	name = "\improper Remote Signaling Device"
+	name = "remote signaler" //US spelling :vomit: but we should be consistent
 	icon_state = "signaller"
 	item_state = "signaler"
 	var/code = 30
@@ -1016,6 +1019,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 	anchored = ANCHORED
 	speaker_range = 0
 	chat_class = RADIOCL_INTERCOM
+	locked_frequency = TRUE
 	//Best I can figure, you need broadcasting and listening to both be TRUE for it to make a signal and send the words spoken next to it. Why? Fuck whoever named these, that's why.
 	broadcasting = 0
 	listening = 0		//maybe this doesn't need to be on. It shouldn't be relaying signals.
@@ -1035,18 +1039,24 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 	. = ..()
 	. += "[src] is[src.broadcasting ? " " : " not "]active!\nIt is tuned to [format_frequency(src.frequency)]Hz."
 
-/obj/item/device/radio/intercom/loudspeaker/attack_self(mob/user as mob)
+/obj/item/device/radio/intercom/loudspeaker/proc/toggle_broadcast_mode(mob/user)
 	if (!broadcasting)
 		broadcasting = 1
 		src.icon_state = "transmitter-on"
-		boutput(user, "Now transmitting.")
+		src.visible_message("The [src] clicks on and begins transmitting.")
 	else
 		broadcasting = 0
 		src.icon_state = "transmitter"
-		boutput(user, "No longer transmitting.")
+		src.visible_message("The [src] whirrs down and stops transmitting.")
+
+/obj/item/device/radio/intercom/loudspeaker/attack_hand(mob/user)
+	. = ..()
+	src.toggle_broadcast_mode(user)
+
+/obj/item/device/radio/intercom/loudspeaker/attack_self(mob/user as mob)
+	src.toggle_broadcast_mode(user)
 
 /obj/item/device/radio/intercom/loudspeaker/initialize()
-
 	set_frequency(frequency)
 	if(src.secure_frequencies)
 		set_secure_frequencies()
@@ -1064,6 +1074,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 	listening = 1
 	chat_class = RADIOCL_INTERCOM
 	frequency = R_FREQ_LOUDSPEAKERS
+	locked_frequency = TRUE
 	rand_pos = 0
 	density = 0
 	desc = "A Loudspeaker."
@@ -1093,8 +1104,6 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 //You can't talk into it to send a message
 /obj/item/device/radio/intercom/loudspeaker/speaker/hear_talk()
 	return
-
-	//listening seems to refer to the device listening to the signals, not listening to voice
 
 /obj/item/device/radio/intercom/loudspeaker/speaker/send_hear()
 	var/list/hear = ..()

@@ -28,6 +28,7 @@
 			boutput(user, "You plant the [src] on the [A].")
 			logTheThing(LOG_STATION, user, "plants [src] (kudzu) at [log_loc(src)].")
 			message_admins("[key_name(user)] planted kudzu at [log_loc(src)].")
+			message_ghosts("<b>Kudzu</b> has been planted at [log_loc(src.loc, ghostjump=TRUE)].")
 			user.u_equip(src)
 			qdel(src)
 
@@ -229,42 +230,7 @@
 		Vspread = locate(src.x + rand(-1,1),src.y,src.z)
 	else
 		Vspread = locate(src.x,src.y + rand(-1, 1),src.z)
-	var/dogrowth = 1
-	if (!istype(Vspread, /turf/simulated/floor) || isfeathertile(Vspread))
-		dogrowth = 0
-		return
 
-	for (var/obj/O in Vspread)
-
-		if (istype(O, /obj/window) || istype(O, /obj/blob) || istype(O, /obj/spacevine) || istype(O, /obj/kudzu_marker))
-			dogrowth = 0
-			return
-		if (istype(O, /obj/forcefield) && O.density) //atmos and fluid fields shouldn't block
-			dogrowth = 0
-			return
-		if (istype(O, /obj/machinery/door))
-			var/obj/machinery/door/door = O
-			if(!door.density)
-				dogrowth = 1
-				continue
-			if (door_open_prob())
-				//force open doors too and keep it open
-				door.interrupt_autoclose = 1
-				// var/temp_op = door.operating
-				// door.operating = 1
-				// door.locked = 0
-				door.open()
-				// door.operating = temp_op
-				// door.locked = 1
-
-				dogrowth = 1 //for clarity
-			else
-				dogrowth = 0
-
-	if (dogrowth == 1)
-		var/obj/V = new src.vinepath(loc=Vspread, to_spread=to_spread-1)
-		if(!QDELETED(V))
-			V.set_loc(Vspread)
 	if (src.growth < 20 && !stunted)
 		src.growth++
 		src.update_self()
@@ -272,6 +238,36 @@
 		var/datum/controller/process/kudzu/K = get_master_kudzu_controller()
 		if (K)
 			K.kudzu -= src
+
+	var/spread_vines = TRUE
+
+	if (!istype(Vspread, /turf/simulated/floor) || isfeathertile(Vspread))
+		spread_vines = FALSE
+		return
+
+	for (var/obj/O in Vspread)
+		if (istype(O, /obj/window) || istype(O, /obj/blob) || istype(O, /obj/spacevine) || istype(O, /obj/kudzu_marker))
+			spread_vines = FALSE
+			return
+		if (istype(O, /obj/forcefield) && O.density) //atmos and fluid fields shouldn't block
+			spread_vines = FALSE
+			return
+		if (istype(O, /obj/machinery/door))
+			var/obj/machinery/door/door = O
+			if(!door.density)
+				spread_vines = TRUE
+				continue
+			if (door_open_prob())
+				door.interrupt_autoclose = TRUE //force open doors
+				door.open()
+				spread_vines = TRUE //for clarity
+			else
+				spread_vines = FALSE
+
+	if (spread_vines)
+		var/obj/V = new src.vinepath(loc=Vspread, to_spread=to_spread-1)
+		if(!QDELETED(V))
+			V.set_loc(Vspread)
 		return
 
 /obj/spacevine/proc/door_open_prob()
@@ -412,6 +408,7 @@
 	var/destroyed = 0
 	add_underlay = 0
 	health = 20
+	melttemp = 1000 //arbitrarily big number
 
 	New(loc, mob/M as mob)
 		..()
@@ -436,20 +433,20 @@
 					var/mob/living/carbon/human/H = M
 					flick("bulb-open-animation", src)
 					new/obj/decal/opened_kudzu_bulb(get_turf(src.loc))
-
-					H.full_heal()
-					if (!H.ckey && H.last_client && !H.last_client.mob.mind.get_player()?.dnr)
-						if (!istype(H.last_client.mob,/mob/living) || inafterlifebar(H.last_client.mob))
-							H.ckey = H.last_client.ckey
-					if (istype(H.abilityHolder, /datum/abilityHolder/composite))
-						var/datum/abilityHolder/composite/Comp = H.abilityHolder
-						Comp.removeHolder(/datum/abilityHolder/kudzu)
-					else if (H.abilityHolder)
-						H.abilityHolder.dispose()
-						H.abilityHolder = null
-					H.set_mutantrace(/datum/mutantrace/kudzu)
+					if(H in src)
+						H.full_heal()
+						if (!H.ckey && H.last_client && !H.last_client.mob.mind.get_player()?.dnr)
+							if (!istype(H.last_client.mob,/mob/living) || inafterlifebar(H.last_client.mob))
+								H.ckey = H.last_client.ckey
+						if (istype(H.abilityHolder, /datum/abilityHolder/composite))
+							var/datum/abilityHolder/composite/Comp = H.abilityHolder
+							Comp.removeHolder(/datum/abilityHolder/kudzu)
+						else if (H.abilityHolder)
+							H.abilityHolder.dispose()
+							H.abilityHolder = null
+						H.set_mutantrace(/datum/mutantrace/kudzu)
+						H.show_antag_popup("kudzu")
 					natural_opening = 1
-					H.show_antag_popup("kudzu")
 					qdel(src)
 		else
 			qdel(src)

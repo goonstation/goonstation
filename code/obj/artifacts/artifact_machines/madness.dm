@@ -25,7 +25,7 @@
 		// terrifying stuff
 		"eldritch" = list("screaming", "fleshy", "spooky_ghosts"),
 		// tech stuff
-		"precursor" = list("flock", "pretty_colours"),
+		"precursor" = list("flock", "pretty_colours","singulo"),
 	)
 
 	/// This is an associative list of hallucination name to a list of AddComponent arguments. Try not to cry.
@@ -332,7 +332,15 @@
 					sound_prob = 10
 				)
 			),
-		)
+		),
+		//oh god a singuloose is going to eat you!
+		"singulo" = list(
+			list(/datum/component/hallucination/fake_singulo,
+				list(
+					timeout=60,
+				)
+			)
+		),
 	)
 
 

@@ -70,7 +70,7 @@
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
-		if (.)
+		if (. || GET_COOLDOWN(src, "anti-spam"))
 			return
 
 		switch(action)
@@ -78,6 +78,8 @@
 				var/datum/materiel/M = locate(params["ref"]) in materiel_stock
 				if (src.credits[M.category] >= M.cost)
 					src.credits[M.category] -= M.cost
+					if (!M.cost)
+						ON_COOLDOWN(src, "anti-spam", 1 SECOND)
 					var/atom/A = new M.path(src.loc)
 					playsound(src.loc, sound_buy, 80, 1)
 					src.vended(A)
@@ -119,6 +121,7 @@
 		materiel_stock += new/datum/materiel/loadout/control
 		materiel_stock += new/datum/materiel/loadout/suppression
 		materiel_stock += new/datum/materiel/loadout/justabaton
+
 		materiel_stock += new/datum/materiel/utility/morphineinjectors
 		materiel_stock += new/datum/materiel/utility/donuts
 		materiel_stock += new/datum/materiel/utility/flashbangs
@@ -126,8 +129,10 @@
 		materiel_stock += new/datum/materiel/utility/nightvisionsechudgoggles
 		materiel_stock += new/datum/materiel/utility/markerrounds
 		materiel_stock += new/datum/materiel/utility/prisonerscanner
+
 		materiel_stock += new/datum/materiel/ammo/medium
 		materiel_stock += new/datum/materiel/ammo/self_charging
+
 		materiel_stock += new/datum/materiel/assistant/basic
 
 	vended(var/atom/A)
@@ -167,8 +172,8 @@
 		return
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		// List of avaliable objects for purchase
 		materiel_stock += new/datum/materiel/sidearm/smartgun
 		materiel_stock += new/datum/materiel/sidearm/pistol
@@ -212,6 +217,16 @@
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		switch(action) // Keep track of each purchase for the crew credits
+			if ("redeem")
+				var/datum/materiel/M = locate(params["ref"]) in materiel_stock
+				if (src.credits[M.category] >= M.cost && usr.mind.is_antagonist())
+					var/datum/antagonist/nuclear_operative/nukie = usr.mind.get_antagonist(ROLE_NUKEOP) || usr.mind.get_antagonist(ROLE_NUKEOP_COMMANDER)
+					nukie?.purchased_items.Add(M)
+		..()
+
 
 /obj/submachine/weapon_vendor/pirate
 	name = "Pirate Weapons Vendor"
@@ -393,7 +408,7 @@
 	description = "One case of 40mm Paint Marker Rounds, totalling 5 rounds, for the Riot Launcher."
 
 /datum/materiel/utility/prisonerscanner
-	name = "RecordTrak Scannner"
+	name = "RecordTrak Scanner"
 	path = /obj/item/device/prisoner_scanner
 	description = "A device used to scan in prisoners and update their security records."
 
@@ -425,7 +440,7 @@
 	description = "A gun-belt containing a semi-automatic, 9mm caliber service pistol and four magazines."
 
 /datum/materiel/sidearm/revolver
-	name = "Predator Revolver"
+	name = "Kestrel Revolver"
 	path = /obj/item/storage/belt/gun/revolver
 	description = "A gun-belt containing a hefty combat revolver and three .357 caliber speedloaders."
 
@@ -509,12 +524,12 @@
 */
 /datum/materiel/utility/belt
 	name = "Tactical Espionage Belt"
-	path = /obj/item/storage/fanny/syndie
+	path = /obj/item/storage/fanny/syndie/large
 	description = "The classic 7 slot syndicate belt pack. Has no relation to the fanny pack."
 
 /datum/materiel/utility/knife
 	name = "Combat Knife"
-	path = /obj/item/dagger/syndicate/specialist
+	path = /obj/item/dagger/specialist
 	description = "A field-tested 10 inch combat knife, helps you move faster when held & knocks down targets when thrown."
 
 /datum/materiel/utility/rpg_ammo

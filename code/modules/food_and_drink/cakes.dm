@@ -38,7 +38,7 @@
 	heal_amt = 2
 	fill_amt = 20 //2 per slice
 	use_bite_mask = FALSE
-	flags = FPRINT | TABLEPASS | NOSPLASH
+	flags = TABLEPASS | NOSPLASH
 	initial_volume = 100
 	w_class = W_CLASS_BULKY
 	var/list/cake_bases //stores the name of the base types of each layer of cake i.e. ("custom","gateau","meat")
@@ -82,11 +82,11 @@
 					tag = "cake[clayer]-lime"
 				if(/obj/item/reagent_containers/food/snacks/plant/strawberry)
 					tag = "cake[clayer]-strawberry"
-				if(/obj/item/reagent_containers/food/snacks/plant/blackberry)
+				if(/obj/item/reagent_containers/food/snacks/plant/raspberry/blackberry)
 					tag = "cake[clayer]-blackberry"
 				if(/obj/item/reagent_containers/food/snacks/plant/raspberry)
 					tag = "cake[clayer]-raspberry"
-				if(/obj/item/reagent_containers/food/snacks/plant/blueraspberry)
+				if(/obj/item/reagent_containers/food/snacks/plant/raspberry/blueraspberry)
 					tag = "cake[clayer]-braspberry"
 
 		if(tag && src.GetOverlayImage(tag)) //if there's a duplicate non-generic overlay, return a list of empty data
@@ -106,7 +106,7 @@
 				else
 					generic_number = 2
 				tag = "cake[clayer]-generic[generic_number]"
-				overlay_color = F.get_food_color()
+				overlay_color = F.get_average_color()
 
 			for(var/food_effect in F.food_effects)
 				src.food_effects |= food_effect
@@ -589,7 +589,7 @@
 
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau
 	name = "Extravagant Chocolate Gateau"
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!"
+	desc = "Holy shit! This cake probably costs more than the peak market cap of Donk Co.!"
 
 	New()
 		..()
@@ -641,26 +641,6 @@
 		cake_bases = list("base_true")
 		food_effects.Add("food_fireburp")
 		food_effects.Add("food_deep_burp")
-
-#ifdef XMAS
-
-/obj/item/reagent_containers/food/snacks/fruit_cake
-	name = "fruitcake"
-	desc = "The most disgusting dessert ever devised. Legend says there's only one of these in the galaxy, passed from location to location by vengeful deities."
-	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
-	icon_state = "cake_fruit"
-	bites_left = 12
-	heal_amt = 3
-	initial_volume = 50
-	initial_reagents = "yuck"
-	festivity = 10
-
-	on_finish(mob/eater)
-		..()
-		eater.show_text("It's so hard it breaks one of your teeth AND it tastes disgusting! Why would you ever eat this?","red")
-		random_brute_damage(eater, 3)
-
-#endif
 
 /obj/item/cake_item
 	name = "cream sponge cake"

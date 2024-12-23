@@ -19,7 +19,7 @@
 	if(locate(/obj/flock_structure) in T)
 		boutput(holder.get_controlling_mob(), SPAN_ALERT("There is already a flock structure on this flocktile!"))
 		return TRUE
-
+	. = ..()
 	var/list/friendlyNames = list()
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
 	if (!length(F.flock.unlockableStructures))
@@ -44,3 +44,6 @@
 	if(structurewantedtype)
 		logTheThing(LOG_STATION, holder.owner, "queues a [initial(structurewantedtype.flock_id)] tealprint ([log_loc(T)])")
 		return F.createstructure(structurewantedtype, initial(structurewantedtype.resourcecost))
+
+/datum/targetable/flockmindAbility/createStructure/logCast(atom/target)
+	return

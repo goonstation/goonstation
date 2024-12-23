@@ -184,7 +184,7 @@
 /mob/living/intangible/aieye/verb/ai_eye_create_viewport()
 	set category = "AI Commands"
 	set name = "Create Viewport"
-	set desc = "Expand your powers with Nanotransen's Viewportifier!"
+	set desc = "Expand your powers with Nanotrasen's Viewportifier!"
 
 	src.create_viewport(VIEWPORT_ID_AI)
 
@@ -207,24 +207,20 @@
 /client/proc/cmd_create_viewport()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Create Viewport"
+	set desc = "Creates a cute little popout window to let you monitor an area, just like how AIs can."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/datum/viewport/viewport = src.mob.create_viewport(VIEWPORT_ID_ADMIN, share_planes=TRUE)
 	viewport.handler.listens = TRUE
 
 
-/client/proc/cmd_create_viewport_silent()
-	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	set name = "Create Silent Viewport"
-	ADMIN_ONLY
-
-	src.mob.create_viewport(VIEWPORT_ID_ADMIN_SILENT, share_planes=TRUE)
-
-
 /client/proc/cmd_create_viewport_following()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Create Viewport Following"
+	set desc = "Creates a viewport that follows a selected atom."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/atom/target_atom = pick_ref(src.mob)
 	if(!target_atom || isturf(target_atom))

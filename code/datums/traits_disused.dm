@@ -46,7 +46,7 @@
 		if(!owner.stat && can_act(owner) && istype(owner.loc, /turf/space))
 			if(prob(2))
 				owner.emote("faint")
-				owner.changeStatus("paralysis", 8 SECONDS)
+				owner.changeStatus("unconscious", 8 SECONDS)
 			else if (prob(8))
 				owner.emote("scream")
 				owner.changeStatus("stunned", 2 SECONDS)
@@ -137,53 +137,3 @@
 	id = "reversal" //We can't have oxydamage in there, otherwise they'd immediately start suffocating.
 	points = -1
 	unselectable = 1
-
-/datum/trait/badgenes
-	name = "Bad Genes"
-	desc = "You spawn with 2 random, permanent, bad mutations."
-	id = "badgenes"
-	points = 2
-	category = "genetics"
-	unselectable = 1
-
-	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			var/str = "I have the following bad mutations: "
-
-			var/curr_id = owner.bioHolder.RandomEffect("bad", 1)
-			var/datum/bioEffect/curr = owner.bioHolder.effects[curr_id]
-			curr.curable_by_mutadone = 0
-			curr.can_reclaim = 0
-			curr.can_scramble = 0
-			str += " [curr.name],"
-			curr_id = owner.bioHolder.RandomEffect("bad", 1)
-			curr = owner.bioHolder.effects[curr_id]
-			curr.curable_by_mutadone = 0
-			curr.can_reclaim = 0
-			curr.can_scramble = 0
-			str += " [curr.name]"
-
-			SPAWN(4 SECONDS) owner.add_memory(str) //FUCK THIS SPAWN FUCK FUUUCK
-		return
-
-/datum/trait/goodgenes
-	name = "Good Genes"
-	desc = "You spawn with 2 random good mutations."
-	id = "goodgenes"
-	points = -3
-	category = "genetics"
-	unselectable = 1
-
-	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			var/str = "I have the following good mutations: "
-
-			var/curr_id = owner.bioHolder.RandomEffect("good", 1)
-			var/datum/bioEffect/curr = owner.bioHolder.effects[curr_id]
-			str += " [curr.name],"
-			curr_id = owner.bioHolder.RandomEffect("good", 1)
-			curr = owner.bioHolder.effects[curr_id]
-			str += " [curr.name]"
-
-			SPAWN(4 SECONDS) owner.add_memory(str) //FUCK THIS SPAWN FUCK FUUUCK
-		return

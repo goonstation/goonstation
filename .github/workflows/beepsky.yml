@@ -17,30 +17,52 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Cache SpacemanDMM
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: $HOME/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v1.4.1
+        uses: hecrj/setup-rust-action@v2.0.1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "yarn"
+          cache-dependency-path: ./tgui/yarn.lock
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
 
       - name: Install Dependencies
         run: |
+          touch +secret/__secret.dme
           pip3 install setuptools
           tools/ci/install_build_tools.sh
           tools/ci/install_spaceman_dmm.sh dreamchecker
           tools/bootstrap/python -c ''
-          touch +secret/__secret.dme
+
+      - name: Check TGUI
+        run: |
+          tgui/bin/tgui --ci
 
       - name: Misc Checks
         run: |
           tools/ci/check_filedirs.sh goonstation.dme
-          tools/ci/build_tgui.sh
           tools/ci/check_grep.sh
           tools/bootstrap/python tools/ci/validate_dme.py <goonstation.dme
+
+      - name: Check Maps
+        run: |
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
+
+      - name: Check Duplicate DMI Icon States
+        uses: spacestation13/dmi-duplicate-state-checker@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Linter
         id: linter
@@ -52,27 +74,13 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - run: touch +secret/__secret.dme
-      - uses: actions/checkout@v4
+      - uses: robinraju/release-downloader@v1.11
         with:
-          repository: OpenDreamProject/OpenDream
-          submodules: "recursive"
-          path: OpenDream
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: "7.0"
-      - uses: actions/cache@v3
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-od-${{ hashFiles('OpenDream/**/*.csproj') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-od
-      - uses: zyactions/dotnet-restore@v1
-        with:
-          working-directory: OpenDream
-      - run: dotnet build -c Release OpenDream/OpenDream.sln
-      - run: dotnet OpenDream/bin/DMCompiler/DMCompiler.dll --suppress-unimplemented goonstation.dme
+          repository: "OpenDreamProject/OpenDream"
+          tag: "latest"
+          fileName: "DMCompiler_linux-x64.tar.gz"
+          extract: true
+      - run: ./DMCompiler_linux-x64/DMCompiler --suppress-unimplemented goonstation.dme --version=515.1635
 
   compile:
     name: Compile
@@ -82,10 +90,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Cache BYOND
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
-          path: $HOME/BYOND
-          key: ${{ runner.os }}-byond
+          path: /home/runner/BYOND
+          key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
 
       - name: Setup BYOND
         run: |
@@ -96,7 +104,6 @@ jobs:
           echo "/home/runner/BYOND/byond/bin" >> $GITHUB_PATH
           echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
-          touch +secret/__secret.dme
 
       - name: Compile
         run: |
@@ -109,7 +116,7 @@ jobs:
       #     cp goonstation.rsc artifacts
 
       # - name: Upload Artifacts
-      #   uses: actions/upload-artifact@v1
+      #   uses: actions/upload-artifact@v4
       #   with:
       #     name: DMB + RSC
       #     path: ${{github.workspace}}/artifacts
@@ -126,10 +133,10 @@ jobs:
           token: "${{ secrets.ROBUDDYBOT_PAT }}"
 
       - name: Cache BYOND
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
-          path: $HOME/BYOND
-          key: ${{ runner.os }}-byond
+          path: /home/runner/BYOND
+          key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
 
       - name: Setup BYOND
         run: |
@@ -142,13 +149,24 @@ jobs:
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
 
       - name: Cache SpacemanDMM
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: $HOME/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v2.0.0
+        uses: hecrj/setup-rust-action@v2.0.1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "yarn"
+          cache-dependency-path: ./tgui/yarn.lock
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
 
       - name: Install Dependencies
         run: |
@@ -156,12 +174,11 @@ jobs:
           tools/ci/install_build_tools.sh
           tools/ci/install_spaceman_dmm.sh dreamchecker
           tools/bootstrap/python -c ''
-          touch +secret/__secret.dme
 
       - name: Misc Checks
         run: |
           tools/ci/check_filedirs.sh goonstation.dme
-          tools/ci/build_tgui.sh
+          tgui/bin/tgui --ci
           tools/ci/check_grep_secret.sh
           tools/bootstrap/python tools/ci/validate_dme.py <goonstation.dme
           tools/bootstrap/python -m dmi.test
@@ -174,4 +191,4 @@ jobs:
 
       - name: Compile
         run: |
-          tools/ci/dm.sh -DCIBUILD -DTRAVIS_SUB goonstation.dme
+          tools/ci/dm.sh -DCIBUILD goonstation.dme
