@@ -1,5 +1,9 @@
 
 (t)mon dec 23 24
+(u)JORJ949
+(p)21720
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)The Syndicate has issued syndicate berets to all syndicate apparel vendors.
 (u)glowbold
 (p)21738
 (e)⚖💡|C-Balance, A-Station-Systems
