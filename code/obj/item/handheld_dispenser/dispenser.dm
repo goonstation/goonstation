@@ -429,4 +429,4 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/binary)
 		name = "Digital valve"
 		path = /obj/machinery/atmospherics/binary/valve/digital
 		icon_state = "digitalvalve"
-		desc = "A digital valve that can be controlled by silicons, packet-controlled, or by hitting it with a wrench."
+		desc = "A digital valve that can be controlled by silicons or by hitting it with a wrench."
