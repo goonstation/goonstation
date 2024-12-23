@@ -1,4 +1,5 @@
 
+/mob/var/prev_loc = 0
 /mob/var/move_dir = 0
 /mob/var/next_move = 0
 
@@ -154,6 +155,7 @@
 						qdel(G)
 
 				var/turf/old_loc = src.loc
+				src.prev_loc = old_loc
 
 				//use commented bit if you wanna have world fps different from client. But its not perfect!
 				var/glide = (world.icon_size / ceil(delay / world.tick_lag)) //* (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH))
