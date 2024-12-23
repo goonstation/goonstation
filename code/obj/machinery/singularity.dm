@@ -301,19 +301,29 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularity/proc/calc_direction()
 	var/list/total_vector = list(0,0) //if only we had vector primitives...
 	var/turf/singulo_turf = get_turf(src)
-	for_by_tcl(artifact, /obj/machinery/artifact/gravity_well_generator)
-		var/turf/artifact_turf = get_turf(artifact)
-		if (artifact_turf.z != singulo_turf.z)
+	//unfortunately these are two unrelated types that both have special behaviour so this is going to get messy
+	for(var/atom/movable/magnet as anything in by_cat[TR_CAT_SINGULO_MAGNETS])
+		var/turf/magnet_turf = get_turf(magnet)
+		if (magnet_turf.z != singulo_turf.z)
 			continue
-		var/datum/artifact/gravity_well_generator/artifact_datum = artifact.artifact //parallel inheritence moment
-		if (!artifact_datum.activated)
-			continue
-		//pushing or pulling
-		var/sign = artifact_datum.gravity_type ? 1 : -1
-		//our actual offset from this artifact
+
+		var/sign = -1 //default to pull
+		if (istype(magnet, /obj/machinery/artifact))
+			var/obj/machinery/artifact/artifact = magnet
+			var/datum/artifact/gravity_well_generator/artifact_datum = artifact.artifact
+			if (istype(artifact_datum) && !artifact_datum.activated)
+				continue
+			if (artifact_datum.gravity_type == 1)
+				sign = 1 //push
+		if (istype(magnet, /obj/gravity_well_generator))
+			var/obj/gravity_well_generator/generator = magnet
+			if (!generator.active)
+				continue
+
+		//our actual offset from this magnet
 		var/list/vector = list(0,0)
-		vector[1] = ((singulo_turf.x - artifact_turf.x) * sign)
-		vector[2] = ((singulo_turf.y - artifact_turf.y) * sign)
+		vector[1] = ((singulo_turf.x - magnet_turf.x) * sign)
+		vector[2] = ((singulo_turf.y - magnet_turf.y) * sign)
 		//no need to root, we can reuse the squared value (I'm basically a doom programmer)
 		var/length_squared = (vector[1] ** 2) + (vector[2] ** 2)
 		//inverse square law I guess? gravity is radial

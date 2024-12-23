@@ -4,10 +4,10 @@
 
 	New()
 		..()
-		START_TRACKING
+		START_TRACKING_CAT(TR_CAT_SINGULO_MAGNETS)
 
 	disposing()
-		STOP_TRACKING
+		STOP_TRACKING_CAT(TR_CAT_SINGULO_MAGNETS)
 		. = ..()
 
 /obj/effect/grav_pulse
