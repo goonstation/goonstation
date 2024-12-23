@@ -1,5 +1,9 @@
 
 (t)mon dec 23 24
+(u)TDHooligan
+(p)21794
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Janktank II can be used to quickly revive gang members who are in crit (instead of just corpses). They still get messed up by it though.
 (u)JORJ949
 (p)21720
 (e)🎨🎩|C-Sprites, A-Clothing
