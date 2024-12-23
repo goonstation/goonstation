@@ -286,6 +286,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/atom/last = src
 
 	var/list/starts = new/list()
+
+	for_by_tcl(IX, /obj/machinery/interdictor)
+		if (IX.expend_interdict(500, src))
+			arcFlash(last, IX, 500000)
+			return 1
+
 	for(var/mob/living/M in oview(5, src))
 		if(M.invisibility) continue
 		starts.Add(M)
