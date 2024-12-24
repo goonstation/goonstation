@@ -8,8 +8,6 @@
 
 ///////////////////////////// Remote parent ///////////////////////////////////
 
-var/global/list/portable_machinery = list() // stop looping through world for things you SHITMONGERS
-
 // Adapted from the PDA program in portable_machinery_control.dm (Convair880).
 TYPEINFO(/obj/item/remote/porter)
 	mats = 4
@@ -194,7 +192,7 @@ TYPEINFO(/obj/item/remote/porter)
 		if (!src)
 			return
 
-		for (var/obj/machinery/port_a_brig/M in portable_machinery)
+		for (var/obj/machinery/port_a_brig/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -214,7 +212,7 @@ TYPEINFO(/obj/item/remote/porter)
 		if (!src)
 			return
 
-		for (var/obj/machinery/sleeper/port_a_medbay/M in portable_machinery)
+		for (var/obj/machinery/sleeper/port_a_medbay/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -239,7 +237,7 @@ TYPEINFO(/obj/item/remote/porter/port_a_sci)
 		if (!src)
 			return
 
-		for (var/obj/storage/closet/port_a_sci/M in portable_machinery)
+		for (var/obj/storage/closet/port_a_sci/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			/*var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue*/
@@ -259,7 +257,7 @@ TYPEINFO(/obj/item/remote/porter/port_a_sci)
 		if (!src)
 			return
 
-		for (var/obj/machinery/vending/port_a_nanomed/M in portable_machinery)
+		for (var/obj/machinery/vending/port_a_nanomed/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -279,7 +277,7 @@ TYPEINFO(/obj/item/remote/porter/port_a_sci)
 		if (!src)
 			return
 
-		for (var/obj/machinery/computer/genetics/portable/M in portable_machinery)
+		for (var/obj/machinery/computer/genetics/portable/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -299,7 +297,7 @@ TYPEINFO(/obj/item/remote/porter/port_a_sci)
 		if (!src)
 			return
 
-		for (var/obj/submachine/laundry_machine/portable/LP in portable_machinery)
+		for (var/obj/submachine/laundry_machine/portable/LP in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/T = get_turf(LP)
 			if (isrestrictedz(T?.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -338,15 +336,12 @@ TYPEINFO(/obj/machinery/port_a_brig)
 	New()
 		..()
 		UnsubscribeProcess()
-		if (!islist(portable_machinery))
-			portable_machinery = list()
-		portable_machinery.Add(src)
+		START_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		build_icon()
 		src.homeloc = src.loc
 
 	disposing()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		..()
 
 	examine()
@@ -726,9 +721,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 
 	New()
 		..()
-		if (!islist(portable_machinery))
-			portable_machinery = list()
-		portable_machinery.Add(src)
+		START_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 
 		src.homeloc = src.loc
 
@@ -737,8 +730,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 						- list(/mob/living/critter/spider/ice/queen)
 
 	disposing()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		..()
 
 	examine()
@@ -889,9 +881,7 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 	New()
 		..()
 		UnsubscribeProcess()
-		if (!islist(portable_machinery))
-			portable_machinery = list()
-		portable_machinery.Add(src)
+		START_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
@@ -928,8 +918,7 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 
 
 	disposing()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		..()
 
 	examine()
@@ -987,12 +976,11 @@ TYPEINFO(/obj/submachine/laundry_machine/portable)
 
 	New()
 		. = ..()
-		LAZYLISTADD(portable_machinery, src)
+		START_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		src.homeloc = get_turf(src)
 
 	disposing()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		..()
