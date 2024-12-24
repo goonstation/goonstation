@@ -1,7 +1,7 @@
 // Contains:
 // - Sleeper control console
 // - Sleeper
-// - Portable sleeper (fake Port-a-Medbay)
+// - Portable sleeper (Port-a-Medbay)
 
 // I overhauled the sleeper to make it a little more viable. Aside from being a saline dispenser,
 // it was of practically no use to medical personnel and thus ignored in general. The current
