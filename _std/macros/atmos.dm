@@ -351,8 +351,7 @@ proc/gas_text_color(gas_id)
 		pipe_underlay_cache["[pipe_state]_[DIR]_[SIZE]"] = pipe_cached; \
 		} \
 	var/image/pipe_image = mutable_appearance(pipe_cached); \
-	pipe_image.color = COLOUR ? COLOUR : "
-	"; \
+	pipe_image.color = COLOUR ? COLOUR : "#B4B4B4"; \
 	pipe_image.layer = src.layer - 0.001; \
 	pipe_image.appearance_flags |= RESET_TRANSFORM | RESET_COLOR | KEEP_APART; \
 	src.AddOverlays(pipe_image, "[DIR]"); \
