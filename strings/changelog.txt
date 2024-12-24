@@ -1,5 +1,13 @@
 
 (t)mon dec 23 24
+(u)FlameArrow57
+(p)21264
+(e)🆕🗺🎨📦🔬|C-Feature, A-Mapping, C-Sprites, A-Game-Objects, A-Science
+(*)Add a new Curser artifact! This is an artifact that gives you 1 of 6 curses when you touch it, as well as others nearby. See minor changelog for more details
+(+)The curser artifact will curse whoever touches it as well as a random 2 - 5 nearby people
+(+)Curses include: Blood, aging, nightmare creatures, labyrinth, soul displacement, and light curses
+(+)Curses are blocked by Talisman artifacts, but for the blood and aging curses the Talisman is also destroyed
+(+)Curses give you a status effect that will tell you the condition for removing the curse
 (u)glowbold
 (p)21803
 (e)🗺⚖📦|A-Mapping, C-Balance, A-Game-Objects
