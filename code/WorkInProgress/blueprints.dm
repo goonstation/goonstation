@@ -491,7 +491,8 @@
 // whitelists/blacklists applied during both saving and loading, so it's functionally retroactive
 #define WHITELIST_OBJECTS list( \
 	/obj/stool, \
-	/obj/grille, \
+	/obj/mesh/catwalk, \
+	/obj/mesh/grille, \
 	/obj/lattice, \
 	/obj/window, \
 	/obj/machinery/door, \

@@ -49,7 +49,17 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
     hasPower,
   } = props;
   // Condense producability
-  const notProduceable = Object.values(blueprintProducibilityData).some(
+  let safeBlueprintProducibilityData = blueprintProducibilityData;
+  let showSoftError = false;
+  if (
+    blueprintProducibilityData === undefined ||
+    blueprintProducibilityData.length === 0
+  ) {
+    // The key doesn't actually show up here but this is all part of showing an imcoder blurb if this EVER happens (shouldn't)
+    safeBlueprintProducibilityData = { '1-800-IMCODER': 0 };
+    showSoftError = true;
+  }
+  const notProduceable = Object.values(safeBlueprintProducibilityData).some(
     (x) => !x,
   );
   const memoizedOnRemoveBlueprint = useCallback(
@@ -91,7 +101,7 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
             <LabeledList.Item
               key={index}
               labelColor={
-                blueprintProducibilityData[
+                safeBlueprintProducibilityData[
                   blueprintData.requirement_data[value].name
                 ]
                   ? undefined
@@ -131,7 +141,11 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
         >
           <CenteredText
             height={BlueprintButtonStyle.Height}
-            text={truncate(blueprintData?.name ?? '', 40)}
+            text={
+              showSoftError
+                ? 'Call 1-800-IMCODER'
+                : truncate(blueprintData?.name ?? '', 40)
+            }
           />
         </ButtonWithBadge>
       </Stack.Item>

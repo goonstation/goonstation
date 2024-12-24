@@ -1848,18 +1848,53 @@ obj/decoration/pottedfern
 	density = 1
 	anchored = ANCHORED
 	opacity = 0
-
+	var/on = TRUE
 	var/datum/light/light
+	var/movable = TRUE
+	var/extinguishable = TRUE
 
 	New()
-		UpdateParticles(new/particles/barrel_embers, "embers")
-		UpdateParticles(new/particles/barrel_smoke, "smoke")
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(1)
 		light.set_color(0.5, 0.3, 0)
-		light.enable()
+		src.set_on(src.on, TRUE)
 		..()
+
+	get_help_message(dist, mob/user)
+		return "You can use a <b>wrench</b> to [src.anchored ? "unbolt it" : "bolt it down"]."
+
+	proc/set_on(on, quiet = FALSE)
+		if (on)
+			src.UpdateParticles(new/particles/barrel_embers, "embers")
+			src.UpdateParticles(new/particles/barrel_smoke, "smoke")
+			src.light.enable()
+			src.on = TRUE
+			name = initial(name)
+			desc = initial(desc)
+			if (!quiet)
+				playsound(src, 'sound/effects/lit.ogg', 80, 0, 1)
+			global.processing_items |= src //shut up
+		else
+			src.light.disable()
+			src.ClearAllParticles()
+			src.on = FALSE
+			src.name = "crusty barrel"
+			src.desc = "A grody old barrel full of flammable looking wood."
+			global.processing_items -= src
+		src.UpdateIcon()
+
+	proc/process()
+		var/turf/T = get_turf(src)
+		if (!T)
+			return
+		T.hotspot_expose(T0C + 300, 100, TRUE, FALSE)
+
+	update_icon(...)
+		if (src.on)
+			src.icon_state = "barrel1"
+		else
+			src.icon_state = "barrel-planks"
 
 	disposing()
 		light.disable()
@@ -1870,8 +1905,28 @@ obj/decoration/pottedfern
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/clothing/mask/cigarette))
 			var/obj/item/clothing/mask/cigarette/C = W
-			if(!C.on)
+			if(!C.on && src.on)
 				C.light(user, SPAN_ALERT("[user] lights the [C] with [src]. That seems appropriate."))
+			return
+		if (src.movable && (isscrewingtool(W) || iswrenchingtool(W)))
+			if (istype(src.loc, /turf/space))
+				boutput(user, SPAN_ALERT("There's nothing to bolt it to!"))
+				return
+			src.anchored = !src.anchored
+			src.visible_message(SPAN_NOTICE("[user] [src.anchored ? "bolts down" : "unbolts"] [src]"))
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, TRUE)
+			return
+		if (W.firesource && !src.on)
+			src.set_on(TRUE)
+			W.firesource_interact()
+			return
+		. = ..()
+
+	reagent_act(reagent_id, volume, datum/reagentsholder_reagents)
+		if (..() || !src.extinguishable)
+			return
+		if (reagent_id == "ff-foam" || reagent_id == "water" && volume >= 20)
+			src.set_on(FALSE)
 
 /obj/fireworksbox
 	name = "Box of Fireworks"

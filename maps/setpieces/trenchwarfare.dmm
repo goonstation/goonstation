@@ -126,6 +126,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/black,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -191,6 +192,7 @@
 	name = "HAFGAN security airlock"
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -618,6 +620,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/concrete,
 /area/space)
 "fv" = (
@@ -665,6 +668,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/carpet/red/standard/edge{
 	dir = 8
 	},
@@ -872,7 +876,7 @@
 	icon_state = "line-broken1";
 	dir = 1
 	},
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /obj/cable/conduit,
@@ -917,7 +921,7 @@
 /turf/simulated/floor/concrete,
 /area/space)
 "hC" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /obj/decal/tile_edge/line/red{
@@ -999,6 +1003,7 @@
 	dir = 1
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/stairs/dark{
 	dir = 6
 	},
@@ -1501,7 +1506,7 @@
 	name = "Caer Vedwyd"
 	})
 "ml" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /obj/decal/poster/wallsign/stencil/left/e{
@@ -1530,6 +1535,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/industrial,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -1620,6 +1626,7 @@
 	name = "HAFGAN security airlock"
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/space)
 "nq" = (
@@ -1654,6 +1661,7 @@
 	name = "HAFGAN security airlock"
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/concrete,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -1682,7 +1690,7 @@
 	name = "Caer Vedwyd"
 	})
 "nS" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille3-0"
 	},
 /obj/decal/tile_edge/line/red{
@@ -1756,6 +1764,7 @@
 /obj/machinery/door/poddoor/blast/single{
 	id = "vedwyd_armory"
 	},
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/engine/glow,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -1847,6 +1856,7 @@
 "pj" = (
 /obj/machinery/door/airlock/pyro/classic,
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/concrete,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -1906,6 +1916,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/carpet/grime,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -1971,6 +1982,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/redblack,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -2087,6 +2099,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/concrete,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -2220,7 +2233,7 @@
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/space)
 "rK" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /obj/decal/poster/wallsign/stencil/left/t{
@@ -2424,7 +2437,7 @@
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/space)
 "tr" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /obj/decal/tile_edge/line/red{
@@ -2471,7 +2484,7 @@
 	name = "Caer Vedwyd"
 	})
 "tz" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille3-0"
 	},
 /obj/decal/tile_edge/line/black{
@@ -2521,7 +2534,7 @@
 	name = "Caer Vedwyd"
 	})
 "tK" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /obj/decal/tile_edge/line/black{
@@ -2897,6 +2910,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/space,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -3144,6 +3158,7 @@
 /obj/machinery/door/poddoor/blast/single{
 	id = "vedwyd_armory"
 	},
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/engine/glow,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -3472,8 +3487,8 @@
 /obj/item/clothing/shoes/swat/heavy,
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
-/obj/item/clothing/gloves/swat,
-/obj/item/clothing/gloves/swat,
+/obj/item/clothing/gloves/swat/syndicate,
+/obj/item/clothing/gloves/swat/syndicate,
 /turf/unsimulated/floor/black,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -4061,8 +4076,8 @@
 /obj/item/clothing/shoes/swat/heavy,
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
-/obj/item/clothing/gloves/swat,
-/obj/item/clothing/gloves/swat,
+/obj/item/clothing/gloves/swat/syndicate,
+/obj/item/clothing/gloves/swat/syndicate,
 /obj/decal/poster/flag{
 	color = "red";
 	desc = "A simple banner in Syndicate red.";
@@ -4080,6 +4095,7 @@
 "HN" = (
 /obj/machinery/door/airlock/pyro/classic,
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/carpet/grime,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -4365,7 +4381,7 @@
 /turf/unsimulated/wall/setpieces/rootwall,
 /area/space)
 "Kr" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /obj/decal/poster/wallsign/stencil/left/a,
@@ -4467,6 +4483,7 @@
 	name = "HAFGAN warehouse"
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/industrial,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -4632,6 +4649,7 @@
 "MD" = (
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/industrial,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -4842,8 +4860,8 @@
 /obj/item/clothing/shoes/swat/heavy,
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
-/obj/item/clothing/gloves/swat,
-/obj/item/clothing/gloves/swat,
+/obj/item/clothing/gloves/swat/syndicate,
+/obj/item/clothing/gloves/swat/syndicate,
 /obj/decal/poster/flag{
 	color = "red";
 	desc = "A simple banner in Syndicate red.";
@@ -5126,6 +5144,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/black,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -5163,6 +5182,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/black,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -5335,6 +5355,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/sanitary/white,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -5353,7 +5374,7 @@
 	icon_state = "line-broken1";
 	dir = 1
 	},
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /turf/simulated/floor/concrete,
@@ -5591,6 +5612,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/black,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -5665,7 +5687,7 @@
 	},
 /area/space)
 "TJ" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /obj/decal/tile_edge/line/red{
@@ -5709,6 +5731,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/redblack{
 	dir = 1
 	},
@@ -5930,14 +5953,14 @@
 	pixel_y = 29;
 	rarity = 5
 	},
-/obj/item/clothing/gloves/swat/knight{
+/obj/item/clothing/gloves/swat/syndicate/knight{
 	pixel_y = 8
 	},
 /obj/item/clothing/shoes/swat/knight{
 	pixel_y = -17;
 	pixel_x = 7
 	},
-/obj/item/clothing/gloves/swat/knight,
+/obj/item/clothing/gloves/swat/syndicate/knight,
 /obj/item/clothing/shoes/swat/knight{
 	pixel_y = -17;
 	pixel_x = -7
@@ -5985,6 +6008,7 @@
 "Wi" = (
 /obj/machinery/door/airlock/pyro/classic,
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/black,
 /area/syndicate_station{
 	name = "Caer Vedwyd"
@@ -5997,8 +6021,8 @@
 /obj/item/clothing/shoes/swat/heavy,
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
 /obj/item/clothing/suit/armor/tacticalvest/heavy,
-/obj/item/clothing/gloves/swat,
-/obj/item/clothing/gloves/swat,
+/obj/item/clothing/gloves/swat/syndicate,
+/obj/item/clothing/gloves/swat/syndicate,
 /obj/item/device/radio/intercom/syndicate{
 	pixel_y = 20
 	},
@@ -6300,6 +6324,7 @@
 "Zi" = (
 /obj/machinery/door/airlock/pyro/glass/reinforced,
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/unsimulated/floor/stairs/dark{
 	dir = 6
 	},
@@ -6368,6 +6393,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/industrial,
 /area/syndicate_station{
 	name = "Caer Vedwyd"

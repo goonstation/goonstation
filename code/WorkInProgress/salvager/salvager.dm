@@ -60,7 +60,7 @@
 			. *= max(W.health/initial(W.health),0.1)
 
 		else if (istype(A, /turf/simulated/floor))
-			var/turf/simulated/floor/floor_turf
+			var/turf/simulated/floor/floor_turf = A
 #ifdef UNDERWATER_MAP
 			. = 45 SECONDS
 #else
@@ -78,9 +78,9 @@
 			. = 30 SECONDS
 		else if (istype(A, /obj/structure/girder))
 			. = 10 SECONDS
-		else if (istype(A, /obj/grille))
+		else if (istype(A, /obj/mesh/grille))
 			. = 6 SECONDS
-			var/obj/grille/the_grille = A
+			var/obj/mesh/grille/the_grille = A
 			. *= max(the_grille.health/the_grille.health_max,0.1)
 		else if (istype(A, /obj/window))
 			. = 10 SECONDS
@@ -189,7 +189,7 @@
 			log_construction(user, "deconstructs a ([A])")
 			qdel(A)
 
-		else if (istype(A, /obj/grille))
+		else if (istype(A, /obj/mesh/grille))
 			var/atom/movable/B
 			if(prob(20))
 				B = new /obj/item/raw_material/scrap_metal(get_turf(A))
@@ -257,8 +257,8 @@
 			W.health -= 5
 			if (istype(W, /turf/simulated/wall/r_wall) || istype(W, /turf/simulated/wall/auto/reinforced))
 				W.health -= 5
-		else if(istype(target, /obj/grille))
-			var/obj/grille/the_grille = target
+		else if(istype(target, /obj/mesh/grille))
+			var/obj/mesh/grille/the_grille = target
 			the_grille.health -= 5
 
 		var/obj/item/salvager/S = src.call_proc_on

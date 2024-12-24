@@ -2670,6 +2670,10 @@
 		..()
 		var/mob/M = owner
 		if (ismobcritter(M) && isalive(M))
+			var/mob/living/critter/C = M
+			C.empty_hands()
+			C.drop_equipment()
+
 			original.set_loc(M.loc)
 			original.hibernating = FALSE
 			M.mind?.transfer_to(original)
@@ -2976,6 +2980,7 @@
 		qdel(src.glimmer)
 		src.glimmer = null
 
+
 /datum/statusEffect/art_curse
 	icon_state = "art_curse"
 	desc = "You've been cursed by an Eldritch artifact!"
@@ -3252,3 +3257,51 @@
 				var/mob/living/carbon/human/H = src.owner
 				H.TakeDamage("All", burn = 5 * src.get_mult(time_passed), damage_type = DAMAGE_BURN)
 			src.time_passed = 0
+
+/datum/statusEffect/art_fissure_corrosion
+	id = "art_fissure_corrosion"
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/corrosion_stacks = 0 // 1 stack per tick
+
+	preCheck(atom/A)
+		if (!isobj(A) || (!A.density && !istype(A, /obj/item)) || A.invisibility >= INVIS_ALWAYS_ISH)
+			return
+		var/obj/O = A
+		if (O.artifact || istype(A, /obj/art_fissure_objs/door))
+			return
+		return ..()
+
+	onAdd(optional)
+		..()
+		var/turf/T = get_turf(src.owner)
+		T.visible_message(SPAN_ALERT("[src.owner] starts corroding!"))
+		src.corrosion_stacks = GET_ATOM_PROPERTY(src.owner, PROP_ATOM_ART_FISSURE_CORROSION_COUNT)
+
+	onUpdate(timePassed)
+		..()
+		var/mult = timePassed / LIFE_PROCESS_TICK_SPACING
+		if (istype(get_area(src.owner), /area/artifact_fissure) && istype(src.owner.loc, /turf))
+			src.corrosion_stacks += 1 * mult
+		if (src.corrosion_stacks >= 8)
+			src.owner.visible_message(SPAN_ALERT("[src.owner] fully corrodes and is destroyed!!"))
+			new /obj/decal/cleanable/molten_item(get_turf(src.owner))
+			logTheThing(LOG_STATION, src.owner, "[src.owner] destroyed by dimensional key artifact corrosion at [log_loc(src.owner)].")
+			qdel(src.owner)
+			src.owner.delStatus(src)
+		else
+			APPLY_ATOM_PROPERTY(src.owner, PROP_ATOM_ART_FISSURE_CORROSION_COUNT, "art_fissure_corrosion", src.corrosion_stacks)
+
+
+/datum/statusEffect/kudzuwalk
+	id = "kudzuwalk"
+	name = "Kudzu Walking"
+	desc = "You have a mutual understanding with kudzu, and know how to slip between the vines. Dense kudzu will not hinder your movements, and you slowly heal while standing in the vines."
+	icon_state = "photosynth"
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+	onUpdate(timePassed)
+		. = ..()
+		var/turf/T = get_turf(owner)
+		if((T.turf_flags & HAS_KUDZU) && !ON_COOLDOWN(src.owner, "kudzuwalk_heal", 2 SECONDS) && isliving(owner))
+			var/mob/living/L = owner
+			L.HealDamage("All", 0.5, 0.5, 0.25)

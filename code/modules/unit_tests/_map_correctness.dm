@@ -193,7 +193,7 @@ proc/check_mass_drivers()
 
 proc/check_missing_material()
 	var/list/missing = list()
-	for_by_tcl(grille, /obj/grille)
+	for_by_tcl(grille, /obj/mesh/grille)
 		if (isnull(grille.material))
 			missing += "[grille] [grille.type] on [grille.x], [grille.y], [grille.z] in [get_area(grille)]"
 	if(length(missing))

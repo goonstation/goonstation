@@ -727,12 +727,12 @@ MATERIAL
 			else // Lances up!
 				user.visible_message("[user] raises a rod as a lance!", "You raise the rod into jousting position.")
 				S.joustingTool = src
-		else if (locate(/obj/grille, user.loc))
-			for(var/obj/grille/G in user.loc)
+		else if (locate(/obj/mesh/grille, user.loc))
+			for(var/obj/mesh/grille/G in user.loc)
 				if (G.ruined)
 					G.health = G.health_max
-					G.set_density(1)
-					G.ruined = 0
+					G.set_density(TRUE)
+					G.ruined = FALSE
 					G.UpdateIcon()
 					if(src.material)
 						G.setMaterial(src.material)
@@ -752,7 +752,7 @@ MATERIAL
 
 	proc/build_grille(mob/user)
 		if (src.amount >= 2)
-			var/atom/A = new /obj/grille(user.loc)
+			var/atom/A = new /obj/mesh/grille(user.loc)
 			A.setMaterial(src.material)
 			src.change_stack_amount(-2)
 			logTheThing(LOG_STATION, user, "builds a grille (<b>Material:</b> [A.material?.getID() || "*UNKNOWN*"]) at [log_loc(user)].")

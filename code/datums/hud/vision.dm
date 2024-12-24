@@ -3,6 +3,7 @@
 	var/atom/movable/screen/hud/color_mod
 	var/atom/movable/screen/hud/dither
 	var/atom/movable/screen/hud/flash
+	var/atom/movable/screen/hud/flash_dark
 
 /datum/hud/vision/New()
 	..()
@@ -22,10 +23,16 @@
 	flash.mouse_opacity = 0
 	flash.alpha = 0
 
+	flash_dark = create_screen("", "", 'icons/effects/white.dmi', "", "WEST, SOUTH to EAST, NORTH", HUD_LAYER_UNDER_3)
+	flash_dark.mouse_opacity = 0
+	flash_dark.alpha = 0
+	flash_dark.color = "#000000"
+
 	remove_screen(scan)
 	remove_screen(color_mod)
 	remove_screen(dither)
 	remove_screen(flash)
+	remove_screen(flash_dark)
 
 /datum/hud/vision/disposing()
 	QDEL_NULL(scan)
@@ -36,11 +43,13 @@
 
 /datum/hud/vision/proc/flash(duration)
 	if(flash)
-		add_screen(flash)
+		add_screen("flash")
 		flash.alpha = 255
+		flash_dark.alpha = 255
 		animate(flash, alpha = 0, time = duration, easing = SINE_EASING)
+		animate(flash_dark, alpha = 0, time = duration, easing = SINE_EASING)
 		SPAWN(duration)
-			remove_screen(flash)
+			remove_screen("flash")
 
 /datum/hud/vision/proc/noise(duration)
 	// hacky and incorrect but I didnt want to introduce another object just for this
@@ -96,4 +105,25 @@
 		else
 			remove_screen(dither)
 
+/datum/hud/vision/add_screen(atom/movable/screen/S)
+	if(S == "flash" && !(flash in src.objects))
+		src.objects += flash
+		src.objects += flash_dark
+		for (var/client/C in src.clients)
+			if(C.dark_screenflash)
+				C.screen += flash_dark
+			else
+				C.screen += flash
+	else
+		. = ..()
+
+/datum/hud/vision/remove_screen(atom/movable/screen/S)
+	if(S == "flash")
+		if(src.objects)
+			src.objects -= src.flash
+			src.objects -= src.flash_dark
+		for (var/client/C in src.clients)
+			C.screen -= flash
+			C.screen -= flash_dark
+	. = ..()
 

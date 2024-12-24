@@ -2117,7 +2117,8 @@ datum
 						 "You imagine yourself dying alone."))
 					else
 						boutput(M, pick("You feel like your heart grew a size!", "You are overcome with joy!", "You feel generous!", "You feel compassionate!"))
-					modify_christmas_cheer(1)
+					if (!inafterlife(M))
+						modify_christmas_cheer(1)
 
 				..()
 				return
@@ -4190,6 +4191,10 @@ datum
 			taste = list("aromatic", "citrusy")
 			reagent_state = LIQUID
 			thirst_value = 0.8
+
+			reaction_temperature(exposed_temperature, exposed_volume)
+				return // avoid renaming in parent
+
 
 		fooddrink/kombucha
 			name = "kombucha"

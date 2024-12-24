@@ -177,7 +177,7 @@
 /turf/simulated/floor/black/grime,
 /area/prefab/synd_lab)
 "y" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/item/raw_material/shard/plasmacrystal{
 	pixel_x = 4;
 	pixel_y = 8
