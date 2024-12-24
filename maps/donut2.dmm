@@ -1097,6 +1097,7 @@
 "afZ" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light/incandescent,
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -28255,11 +28256,11 @@
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 8
 	},
-/obj/mapping_helper/access/research_director,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "jzx" = (
@@ -33236,6 +33237,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/research,
 /turf/simulated/floor,
 /area/station/hangar/science)
 "mxb" = (
@@ -38249,6 +38251,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/research_foyer,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "poJ" = (
@@ -50000,7 +50003,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass/command,
-/obj/mapping_helper/access/research_director,
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "wiL" = (
