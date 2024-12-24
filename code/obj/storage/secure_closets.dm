@@ -295,7 +295,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/suit/labcoat,
 	/obj/item/device/radio/headset/command/rd,
 	/obj/item/pet_carrier,
-	/obj/item/device/pda2/research_director)
+	/obj/item/device/pda2/research_director,
+	/obj/item/places_pipes,
+	/obj/item/rcd_ammo/big)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -869,6 +871,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 /obj/storage/secure/closet/civilian/ranch
 	name = "\improper Rancher supplies locker"
 	req_access = list(access_ranch)
+	icon_state = "secure_green"
+	icon_closed = "secure_green"
+	icon_opened = "secure_green-open"
 	spawn_contents = list(/obj/item/paper/ranch_guide,\
 	/obj/item/fishing_rod/basic,\
 	/obj/item/storage/box/clothing/rancher,\

@@ -2,6 +2,14 @@
 	name = "artifact gravity well generator"
 	associated_datum = /datum/artifact/gravity_well_generator
 
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_SINGULO_MAGNETS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_SINGULO_MAGNETS)
+		. = ..()
+
 /obj/effect/grav_pulse
 	icon='icons/effects/overlays/lensing.dmi'
 	icon_state="blank" //haha such hackery
