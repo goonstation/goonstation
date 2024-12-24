@@ -281,7 +281,7 @@
 	..()
 	src.set_dir(pick(cardinal))
 
-/obj/hotspot/gasfire/update_icon(base_icon)
+/atom/movable/hotspot/gasfire/update_icon(base_icon)
 	..()
 	var/turf/north_turf = get_step(src, NORTH)
 	var/turf/east_turf = get_step(src, EAST)
