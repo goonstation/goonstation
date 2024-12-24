@@ -499,8 +499,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 /obj/machinery/nuclearbomb/event/micronuke
 	name = "micronuke"
-	desc = "A moderately powerful bomb capable of levelling most of a room."
-	boom_size = 250
+	desc = "A powerful bomb capable of levelling a department and some more."
+	boom_size = 1250
 	_health = 75
 	_max_health = 75
 	timer_default = 5 MINUTES
