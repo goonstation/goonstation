@@ -329,10 +329,10 @@
 	src.remove_filter("fire-NE-alphamask")
 	if (!north_valid)
 		return
-	var/obj/hotspot/gasfire = locate(/obj/hotspot/gasfire) in get_step(src, NORTHWEST)
+	var/atom/movable/hotspot/gasfire = locate(/atom/movable/hotspot/gasfire) in get_step(src, NORTHWEST)
 	if (gasfire)
 		src.add_filter("fire-NW-alphamask", 0, alpha_mask_filter(icon = icon(src.icon, "NW-alpha"), flags = MASK_INVERSE))
-	gasfire = locate(/obj/hotspot/gasfire) in get_step(src, NORTHEAST)
+	gasfire = locate(/atom/movable/hotspot/gasfire) in get_step(src, NORTHEAST)
 	if (gasfire)
 		src.add_filter("fire-NE-alphamask", 0, alpha_mask_filter(icon = icon(src.icon, "NE-alpha"), flags = MASK_INVERSE))
 
