@@ -1,5 +1,9 @@
 
 (t)mon dec 23 24
+(u)glowbold
+(p)21803
+(e)🗺⚖📦|A-Mapping, C-Balance, A-Game-Objects
+(+)The mineral magnet computer and Rockbox require mining access to use.
 (u)TDHooligan
 (p)21794
 (e)⚖🧛|C-Balance, A-Gamemodes
