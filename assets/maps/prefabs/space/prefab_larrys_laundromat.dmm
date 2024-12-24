@@ -237,7 +237,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "yd" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/prefab/larrys_laundry)
 "ye" = (

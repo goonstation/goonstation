@@ -429,18 +429,6 @@
 	icon_override = "ghost_buster"
 	icon_tooltip = "Ghost Buster"
 
-/obj/item/device/radio/headset/hall_monitor
-	name = "Hall monitor's headset"
-	desc = "So you can listen to(evesdrop on) station security(drama)."
-	icon_state = "sec headset"
-	secure_frequencies = list("g" = R_FREQ_SECURITY, "c" = R_FREQ_CIVILIAN)
-	secure_classes = list(
-		"g" = RADIOCL_SECURITY,
-		"c" = RADIOCL_CIVILIAN,
-		)
-	icon_override = "civ"
-	icon_tooltip = "Hall Monitor"
-
 /obj/item/device/radio/headset/command/nt/commander
 	name = "\improper NT Commander's headset"
 	desc = "Issued to NanoTrasen Commanders, this radio headset can access several secure radio channels."

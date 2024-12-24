@@ -95,6 +95,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	// Because of how get_producibility_for_blueprints works it only updates if the materials changed in quantity or order, so this makes sure we have something for comparison
 	// The other option would be to manually set a trigger or flag whenever the contents are hard-coded to change but that would be unwarranted work onto future contributions
 	var/list/stored_previous_materials_data = list() //! List which stores the materials as they were last seen in get_producibility_for_blueprints
+	var/stored_previous_blueprint_data = "" //! JSON-encoded string of the blueprint data. used for comparisons in get_producibility_for_blueprints
 
 	/* Production options */
 	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned "Miscellaneous".
@@ -473,7 +474,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"isMechBlueprint" = istype(M, /datum/manufacture/mechanics),
 		)
 
-	/// Get an associated list for the UI of blueprintRef to associated list of requirement name to whether that one's producible
+	/// Get an associated list for the UI of blueprintRef to associated list of requirement name to whether that one's producible, but only when necessary
 	proc/get_producibility_for_blueprints()
 		// Run a comparison against the shallow storage of the previous contents to see if it changed
 		var/contents_changed = FALSE
@@ -493,10 +494,27 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/ref in src.stored_previous_materials_data)
 			if (!(ref in refs_encountered))
 				src.stored_previous_materials_data.Remove(ref)
-		// Return cached if nothing changed
-		if (!contents_changed)
-			return src.cached_producibility_data
-		// Do actual computation since it's necessary
+				contents_changed = TRUE
+		// Do actual computation since contents changed
+		if (contents_changed)
+			return src.compute_producibility_for_blueprints()
+		// Contents didn't change, but this nerd might have added blueprints so now we check if blueprints changed
+		// Quick first pass to see if lengths differ. If they do, blueprints certainly changed.
+		var/all_blueprints = ALL_BLUEPRINTS // just to compile the list once
+		if (length(all_blueprints) != length(src.stored_previous_blueprint_data))
+			src.stored_previous_blueprint_data = all_blueprints
+			return src.compute_producibility_for_blueprints()
+		// Slightly more in depth check over the blueprints to check if any are missing
+		for (var/datum/manufacture/M as anything in all_blueprints)
+			if (!(M in src.stored_previous_blueprint_data))
+				// A blueprint was found that wasn't previously seen, so it changed
+				src.stored_previous_blueprint_data = all_blueprints
+				return src.compute_producibility_for_blueprints()
+		// Nothing changed, return the cached data
+		return src.cached_producibility_data
+
+	/// Runs the actual computation for the above proc. Split apart so the caching can still be a bit more performant
+	proc/compute_producibility_for_blueprints()
 		var/list/output = list()
 		for (var/datum/manufacture/M as anything in ALL_BLUEPRINTS)
 			var/M_ref = "\ref[M]"

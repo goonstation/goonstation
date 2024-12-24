@@ -261,7 +261,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 	if (istype(subject.mutantrace, /datum/mutantrace/zombie))
 		show_message("Error: Incompatible cellular structure.", "danger")
 		return
-	if (subject.mob_flags & IS_BONEY)
+	if ((subject.mob_flags & IS_BONEY) && !allow_dead_scanning)
 		show_message("Error: No tissue mass present. Total ossification of subject detected.", "danger")
 		return
 	if (!cloning_with_records && isalive(subject))

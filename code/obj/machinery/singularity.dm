@@ -283,7 +283,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		return
 
 	if (selfmove)
+		var/list/vector = src.calc_direction()
 		var/dir = pick(cardinal)
+		var/vector_length = (vector[1] ** 2 + vector[2] ** 2) ** (1/2)
+		if (prob(vector_length * 400)) //scale the chance to move in the direction of resultant force by the strength of that force
+			var/angle = arctan(vector[2], vector[1])
+			dir = angle2dir(angle)
 
 		for (var/dist = max(0,radius-1), dist <= radius+1, dist++)
 			var/turf/checkloc = get_ranged_target_turf(src.get_center(), dir, dist)
@@ -292,6 +297,39 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		step(src, dir)
 
+///Returns a 2D vector representing the resultant force acting on the singulo by all gravity wells, scaled by their distance
+/obj/machinery/the_singularity/proc/calc_direction()
+	var/list/total_vector = list(0,0) //if only we had vector primitives...
+	var/turf/singulo_turf = get_turf(src)
+	//unfortunately these are two unrelated types that both have special behaviour so this is going to get messy
+	for(var/atom/movable/magnet as anything in by_cat[TR_CAT_SINGULO_MAGNETS])
+		var/turf/magnet_turf = get_turf(magnet)
+		if (magnet_turf.z != singulo_turf.z)
+			continue
+
+		var/sign = -1 //default to pull
+		if (istype(magnet, /obj/machinery/artifact))
+			var/obj/machinery/artifact/artifact = magnet
+			var/datum/artifact/gravity_well_generator/artifact_datum = artifact.artifact
+			if (istype(artifact_datum) && !artifact_datum.activated)
+				continue
+			if (artifact_datum.gravity_type == 1)
+				sign = 1 //push
+		if (istype(magnet, /obj/gravity_well_generator))
+			var/obj/gravity_well_generator/generator = magnet
+			if (!generator.active)
+				continue
+
+		//our actual offset from this magnet
+		var/list/vector = list(0,0)
+		vector[1] = ((singulo_turf.x - magnet_turf.x) * sign)
+		vector[2] = ((singulo_turf.y - magnet_turf.y) * sign)
+		//no need to root, we can reuse the squared value (I'm basically a doom programmer)
+		var/length_squared = (vector[1] ** 2) + (vector[2] ** 2)
+		//inverse square law I guess? gravity is radial
+		total_vector[1] += vector[1] * 1/length_squared
+		total_vector[2] += vector[2] * 1/length_squared
+	return total_vector
 
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
 	if (severity == 1 && prob(power * 5)) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
@@ -568,6 +606,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	density = 1
 	req_access = list(access_engineering_engine)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
+	appearance_flags = KEEP_TOGETHER
 	var/Varedit_start = 0
 	var/Varpower = 0
 	var/active = 0
@@ -684,6 +723,7 @@ TYPEINFO(/obj/machinery/field_generator)
 		if(Varpower == 0)
 			if(src.power <= 0)
 				src.visible_message(SPAN_ALERT("The [src.name] shuts down due to lack of power!"))
+				playsound(src, 'sound/machines/shielddown.ogg', 50, TRUE)
 				icon_state = "Field_Gen"
 				src.set_active(0)
 				src.cleanup(NORTH)
@@ -693,6 +733,16 @@ TYPEINFO(/obj/machinery/field_generator)
 				for(var/dir in cardinal)
 					src.UpdateOverlays(null, "field_start_[dir]")
 					src.UpdateOverlays(null, "field_end_[dir]")
+				return
+
+	if (src.active >= 1 && src.power <= 40)
+		if (!ON_COOLDOWN(src, "power_alarm", 20 SECONDS + rand(-5 SECONDS, 5 SECONDS))) //stupid rand just to make the alarms go off at slightly different times and not stack up
+			playsound(src, 'sound/machines/pod_alarm.ogg', 50, FALSE, pitch = 0.6 + (power/40) * 0.4)
+			src.visible_message(SPAN_ALERT("The [src.name] emits a low power warning alarm!"))
+		if (!src.GetOverlayImage("amber"))
+			src.UpdateOverlays(image(src.icon, "FieldGen_amber", FLOAT_LAYER - 1), "amber")
+	else
+		src.UpdateOverlays(null, "amber")
 
 /obj/machinery/field_generator/proc/setup_field(var/NSEW = 0)
 	var/turf/T = src.loc

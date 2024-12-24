@@ -5,7 +5,7 @@
 /datum/artifact/robot
 	associated_object = /obj/machinery/artifact/robot
 	type_name = "Drone"
-	type_size = ARTIFACT_SIZE_MEDIUM
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 200
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/language)
 	validtypes = list("ancient")
@@ -14,15 +14,37 @@
 	deact_text = "becomes eerily still."
 	react_xray = list(50,20,90,8,"MECHANICAL")
 	// possible AI types that the robot can have
-	var/static/list/datum/aiHolder/possible_ais = list(/datum/aiHolder/artifact_wallplacer, /datum/aiHolder/artifact_wallsmasher, /datum/aiHolder/artifact_floorplacer, /datum/aiHolder/wanderer, /datum/aiHolder/aggressive)
+	var/static/list/datum/aiHolder/possible_ais = list(/datum/aiHolder/artifact_wallplacer, /datum/aiHolder/artifact_wallsmasher, /datum/aiHolder/artifact_floorplacer, /datum/aiHolder/wanderer, /datum/aiHolder/aggressive, /datum/aiHolder/artifact_recycler)
 	// possible floor types for the floor placing robots
 	var/static/list/turf/floor_types = list(/turf/simulated/floor/industrial, /turf/simulated/floor/auto/glassblock/cyan, /turf/simulated/floor/circuit/vintage, /turf/simulated/floor/glassblock/transparent, /turf/simulated/floor/engine, /turf/simulated/floor/techfloor/yellow, /turf/simulated/floor/mauxite)
 	// possible wall types for the wall placing robots
 	var/static/list/turf/wall_types = list(/turf/simulated/wall/auto/supernorn/material/mauxite, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn)
+	// possible item types for the recycler to create - /obj/item/path = cost. Cost is total item health of absorbed items
+	var/static/list/item_types = list(
+		/obj/item/bananapeel=1,
+	 	/obj/item/fuel_pellet/cerenkite=25,
+		/obj/item/balloon_animal/random=5,
+		/obj/item/brick=10,
+		/obj/item/chilly_orb=50, //weird, mysterious, useless
+		/obj/item/mine/radiation/armed=100, //haha mean
+		/obj/item/mine/stun/armed=80,
+		/obj/item/nuclear_waste=50,
+		/obj/item/old_grenade/light_gimmick=200,
+		/obj/item/rubberduck=15, //quack
+		/obj/item/seed/alien=100,
+		/mob/living/critter/robotic/repairbot=100,
+		/mob/living/critter/robotic/repairbot/security=120,
+		/obj/item/artifact=200, //maybe too OP, so expensive
+		/obj/machinery/bot/duckbot=100 //implies duckbots are ancient eldritch tech
+		)
 
 	var/aiHolder_type
 	var/floor_type
 	var/wall_type
+	var/item_type
+	var/item_cost
+	//total health of absorbed items, for tracking recylcing
+	var/absorbed_item_health = 0
 	//artifact limb var storage
 	var/limb_damtype = "brute"
 	var/limb_dmg_amount = 0
@@ -35,6 +57,9 @@
 		aiHolder_type = pick(possible_ais)
 		floor_type = pick(floor_types)
 		wall_type = pick(wall_types)
+		item_type = pick(item_types)
+		SPAWN(0) //the reason for this cursed spawn is that the artifact controller tries to init before the static lists are init'd
+			item_cost = item_types[item_type]
 
 		//this is copy pasted from the melee artifact New()
 		limb_damtype = pick("brute", "fire", "toxin")

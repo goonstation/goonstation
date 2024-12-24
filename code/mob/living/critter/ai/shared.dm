@@ -26,7 +26,8 @@
 
 /datum/aiTask/sequence/goalbased/proc/precondition()
 	// useful for goals that have a requirement, return 0 to instantly make this state score 0 and not be picked
-	. = TRUE
+	if(src.holder)
+		. = TRUE
 
 /datum/aiTask/sequence/goalbased/on_tick()
 	..()
@@ -80,6 +81,10 @@
 	holder.owner.process_move()
 	holder?.stop_move() // Just in case they yeet themselves out of existance
 	holder?.owner.move_dir = null // clear out direction so it doesn't get latched when client is attached
+
+/datum/aiTask/timed/wander/short
+	minimum_task_ticks = 1
+	maximum_task_ticks = 3
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TARGETED TASK
@@ -273,20 +278,24 @@
 	var/end_message = null
 	// flags which indicate what actions should interupt the actionbar
 	var/interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	// internal flag for having started
+	var/_has_started = FALSE
 
 /datum/aiTask/succeedable/actionbar/on_reset()
 	QDEL_NULL(src.actionbar)
+	_has_started = FALSE
 
 /datum/aiTask/succeedable/actionbar/on_tick()
 	if(!istype(actionbar))
 		src.before_action_start()
 		actionbar = SETUP_GENERIC_ACTIONBAR(src.holder.owner, src.holder.target, src.duration, src.callback_proc, list(src.holder.owner, src.holder.target), src.action_icon, src.action_icon_state, src.end_message, src.interrupt_flags)
 		actionbar.call_proc_on = src
+		_has_started = TRUE
 
 /datum/aiTask/succeedable/actionbar/proc/before_action_start()
 
 /datum/aiTask/succeedable/actionbar/succeeded()
-	return (istype(actionbar) && actionbar.state == ACTIONSTATE_DELETE && actionbar.interrupt_time == 0)
+	return (_has_started && QDELETED(actionbar)) || (istype(actionbar) && actionbar.state == ACTIONSTATE_DELETE && actionbar.interrupt_start == -1)
 
 /datum/aiTask/succeedable/actionbar/failed()
 	return (istype(actionbar) && actionbar.state == ACTIONSTATE_DELETE && actionbar.interrupt_start > -1)
