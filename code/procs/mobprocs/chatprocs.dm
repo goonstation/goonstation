@@ -1051,6 +1051,11 @@
 // it was about time we had this instead of just visible_message()
 /atom/proc/audible_message(var/message, var/alt, var/alt_type, var/group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	for (var/mob/M in all_hearers(null, src))
+		if (istype(M, /mob/living/silicon/ai) && !M.client) // ai mainframes can still hear even if they're in aieye
+			var/mob/living/silicon/ai/mainframe = M
+			var/mob/message_mob = mainframe.get_message_mob()
+			message_mob.show_message(message, null, alt, alt_type, group, just_maptext, assoc_maptext) // skip type checks on hearing
+			continue
 		if (!M.client)
 			continue
 		M.show_message(message, 2, alt, alt_type, group, just_maptext, assoc_maptext)
