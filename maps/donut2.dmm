@@ -19842,7 +19842,9 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/darkblue/side{
+	dir = 5
+	},
 /area/station/science/lobby)
 "eqa" = (
 /obj/disposalpipe/segment{
@@ -36873,8 +36875,8 @@
 "oyr" = (
 /obj/machinery/firealarm/east,
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/neutral/side{
-	dir = 4
+/turf/simulated/floor/darkblue/side{
+	dir = 10
 	},
 /area/station/science/lobby)
 "oys" = (
