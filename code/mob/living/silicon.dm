@@ -28,8 +28,8 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 	var/static/regex/monospace_say_regex = new(@"`([^`]+)`", "g")
 
-	var/obj/minimap_controller/alertmap_controller
-	var/atom/movable/minimap_ui_handler/minimap_controller/general_alert/alert_minimap_ui
+	var/obj/minimap_controller/alertmap_controller = null
+	var/atom/movable/minimap_ui_handler/minimap_controller/general_alert/alert_minimap_ui = null
 
 	can_bleed = FALSE
 	blood_id = "oil"
@@ -56,6 +56,12 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 /mob/living/silicon/disposing()
 	req_access = null
+	if(src.alertmap_controller)
+		qdel(src.alertmap_controller)
+		src.alertmap_controller = null
+	if(src.alert_minimap_ui)
+		qdel(src.alert_minimap_ui)
+		src.alert_minimap_ui = null
 	return ..()
 
 /mob/living/silicon/can_eat()
