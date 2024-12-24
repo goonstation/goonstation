@@ -2050,7 +2050,9 @@
 	network = "Zeta"
 	},
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/bluegreen/corner,
+/turf/simulated/floor/darkblue/side{
+	dir = 4
+	},
 /area/station/science/lobby)
 "alE" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -2101,7 +2103,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/blue/side{
+/turf/simulated/floor/darkblue/side{
 	dir = 4
 	},
 /area/station/science/lobby)
@@ -2133,12 +2135,6 @@
 /obj/item/disk/data/tape/master/readonly,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
-"alY" = (
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/blue/side{
-	dir = 4
-	},
-/area/station/science/lobby)
 "alZ" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'SECURE AREA, Violators WILL be shot.'"
@@ -2189,7 +2185,7 @@
 "amF" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/blue/side{
+/turf/simulated/floor/darkblue/side{
 	dir = 4
 	},
 /area/station/science/lobby)
@@ -22939,7 +22935,7 @@
 /area/station/medical/medbay)
 "gni" = (
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/blue/corner{
+/turf/simulated/floor/darkblue/side{
 	dir = 4
 	},
 /area/station/science/lobby)
@@ -49455,7 +49451,7 @@
 "vMe" = (
 /obj/machinery/light_switch/east,
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/blue/side{
+/turf/simulated/floor/darkblue/side{
 	dir = 4
 	},
 /area/station/science/lobby)
@@ -125201,10 +125197,10 @@ ajK
 oyr
 alD
 alM
-alY
+gni
 vMe
 amF
-alY
+gni
 gni
 epT
 rxi
