@@ -506,13 +506,6 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 			return
 		..()
 
-	emag_act(mob/user, obj/item/card/emag/E)
-		if (!src.emagged)
-			if(user)
-				boutput(user, SPAN_ALERT("The network limiter on [src.viewer] overloads and fuses to [src]!"))
-			src.viewer.network.Add("public", "telesci", "SS13", "ranch", "Robots", "Mining", "Zeta")
-		. = ..()
-
 	add_ability(datum/abilityHolder/aholder, abil)
 		if (!ispath(abil, /datum/targetable/organAbility/view_camera) || !aholder)
 			return ..()
