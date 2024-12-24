@@ -45,6 +45,15 @@ CONTENTS:
 	area_parallax_render_source_group = null
 	teleport_blocked = 2
 
+/area/crunch/art_labyrinth
+	name = "unknown pocket dimension"
+	icon_state = ""
+	filler_turf = null
+	teleport_blocked = 2
+	allowed_restricted_z = TRUE
+	ambient_light = null
+	area_parallax_render_source_group = null
+
 TYPEINFO(/turf/unsimulated/wall/void)
 	mat_appearances_to_ignore = list("steel")
 /turf/unsimulated/wall/void
