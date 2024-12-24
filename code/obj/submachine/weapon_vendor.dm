@@ -325,7 +325,6 @@
 		materiel_stock += new/datum/materiel/loadout/pw_smg
 		materiel_stock += new/datum/materiel/loadout/pw_shotgun
 
-		materiel_stock += new/datum/materiel/storage/rucksack
 		materiel_stock += new/datum/materiel/utility/miscpouch
 		materiel_stock += new/datum/materiel/utility/pw_advanced_belt
 		materiel_stock += new/datum/materiel/utility/preparedtoolbelt
@@ -337,12 +336,7 @@
 
 
 /obj/submachine/weapon_vendor/podwars/NT
-	name = "Weapons Vendor"
-	icon = 'icons/obj/vending.dmi'
-	icon_state = "weapon"
-	desc = "An automated quartermaster service for supplying your team with weapons and gear."
 	token_accepted = /obj/item/requisition_token/podwars/NT
-	log_purchase = TRUE
 	color = "#3399ff" // so it's easy to tell which one you spawned
 
 	New()
@@ -351,7 +345,6 @@
 		materiel_stock += new/datum/materiel/loadout/pw_NTsmg
 		materiel_stock += new/datum/materiel/loadout/pw_NTshotgun
 
-		materiel_stock += new/datum/materiel/storage/rucksack
 		materiel_stock += new/datum/materiel/utility/miscpouch
 		materiel_stock += new/datum/materiel/utility/pw_advanced_belt
 		materiel_stock += new/datum/materiel/utility/preparedtoolbelt
@@ -362,12 +355,7 @@
 		materiel_stock += new/datum/materiel/utility/pw_NTcomtac
 
 /obj/submachine/weapon_vendor/podwars/SY
-	name = "Weapons Vendor"
-	icon = 'icons/obj/vending.dmi'
-	icon_state = "weapon"
-	desc = "An automated quartermaster service for supplying your team with weapons and gear."
 	token_accepted = /obj/item/requisition_token/podwars/SY
-	log_purchase = TRUE
 	color = "#ff9966" // so it's easy to tell which one you spawned
 
 	New()
@@ -376,7 +364,6 @@
 		materiel_stock += new/datum/materiel/loadout/pw_SYsmg
 		materiel_stock += new/datum/materiel/loadout/pw_SYshotgun
 
-		materiel_stock += new/datum/materiel/storage/rucksack
 		materiel_stock += new/datum/materiel/utility/miscpouch
 		materiel_stock += new/datum/materiel/utility/pw_advanced_belt
 		materiel_stock += new/datum/materiel/utility/preparedtoolbelt
@@ -592,13 +579,13 @@
 	name = "Custom Class Uplink"
 	path = /obj/item/uplink/syndicate/nukeop
 	description = "A standard syndicate uplink loaded with 12 telecrystals, allowing you to pick and choose from an array of syndicate items."
-
+/*
 /datum/materiel/storage/rucksack
 	name = "Assault Rucksack"
 	path = /obj/item/storage/backpack/syndie/tactical
 	category = "Storage"
 	description = "A large 10 slot military backpack, designed to fit a wide array of tools for comprehensive storage support."
-/*
+
 /datum/materiel/storage/belt
 	name = "Tactical Espionage Belt"
 	path = /obj/item/storage/fanny/syndie
