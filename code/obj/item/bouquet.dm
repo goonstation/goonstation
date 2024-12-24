@@ -9,7 +9,7 @@
 	inhand_image_icon = 'icons/obj/items/bouquets.dmi'
 	icon_state = "paper_back"
 	w_class = W_CLASS_SMALL
-	flags = SUPPRESSATTACK | TABLEPASS | FPRINT
+	flags = SUPPRESSATTACK | TABLEPASS
 	/// how many flowers are there in the bouquet?
 	var/flowernum = 1
 	/// what kind of wrap is used in the bouquet?
@@ -77,7 +77,7 @@
 	/// random appearance order for the flowers when shuffling them
 	var/list/frontflowerindex
 	//src.inhand_image.overlays = null
-	src.icon_state = "paper_back"
+	src.icon_state = "[src.wrapstyle]_back"
 	//src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = "inhand_base_[src.wrapstyle]")
 	for (var/obj/item/temp in src.contents)
 		if (istype(temp, /obj/item/clothing/head/flower) || istype(temp, /obj/item/plant))

@@ -62,7 +62,7 @@ TYPEINFO(/datum/component/bouquet)
 	if (istype(W, /obj/item/paper/fortune) || istype(W, /obj/item/paper/printout))
 		return
 	// attacked by a wrapping, make new bouquet
-	if (istype(W, /obj/item/paper || /obj/item/wrapping_paper))
+	if (istype(W, /obj/item/paper) || istype(W, /obj/item/wrapping_paper))
 		if(istype(W, /obj/item/paper))
 			if( tgui_alert(user, "How would you like to wrap \the [source]?", "Wrapping...", list("Bouquet", "Cigarette")) == "Cigarette" )
 				//Let herb handling do its magic
@@ -84,7 +84,7 @@ TYPEINFO(/datum/component/bouquet)
 		// set the wrapstyle based on the wrap used
 		if (istype(W, /obj/item/wrapping_paper))
 			var/obj/item/wrapping_paper/dummy = W
-			new_bouquet.wrapstyle = "gw_[dummy.style]"
+			new_bouquet.wrapstyle = "gw-[dummy.style]"
 		else if (istype(W, /obj/item/paper))
 			new_bouquet.wrapstyle = "paper"
 		// finish up
