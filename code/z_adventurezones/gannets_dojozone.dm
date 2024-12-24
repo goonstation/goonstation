@@ -443,13 +443,13 @@ Contents:
 	icon_state = "furnace"
 	density = 1
 	anchored = ANCHORED_ALWAYS
-	var/obj/effects/tatara/effect
+	var/obj/effects/little_sparks/tatara/effect
 
 	var/temperature = T0C + 870
 
 	New()
 		..()
-		effect = new /obj/effects/tatara(src)
+		effect = new(src)
 		vis_contents += effect
 
 	attackby(obj/item/W, mob/user as mob)

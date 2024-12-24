@@ -187,12 +187,8 @@ TYPEINFO(/obj/machinery/recharge_station)
 		. = ..()
 
 /obj/machinery/recharge_station/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
-	if (ismob(AM))
-		if (BOUNDS_DIST(AM, src) > 0 || BOUNDS_DIST(src, user) > 0)
-			return
-	else
-		if (BOUNDS_DIST(AM, user) > 0 || BOUNDS_DIST(src, user) > 0)
-			return
+	if (BOUNDS_DIST(AM, user) > 0 || BOUNDS_DIST(src, user) > 0 || (ismob(AM) && BOUNDS_DIST(AM, src) > 0))
+		return
 	if (!isturf(AM.loc) && !(AM in user))
 		return
 	if (!isliving(user) || isAI(user))
@@ -245,6 +241,23 @@ TYPEINFO(/obj/machinery/recharge_station)
 
 	if (ishuman(AM))
 		src.move_human_inside(user, AM)
+
+/obj/machinery/recharge_station/receive_silicon_hotkey(mob/user)
+	. = ..()
+
+	if (!isAI(user))
+		return
+
+	var/mob/living/silicon/ai/mainframe = null
+	if (isAIeye(user))
+		var/mob/living/intangible/aieye/eye = user
+		mainframe = eye.mainframe
+	else
+		mainframe = user
+
+	if(user.client.check_key(KEY_OPEN))
+		if (src.occupant)
+			mainframe.deploy_to_shell(src.occupant)
 
 /obj/machinery/recharge_station/proc/build_icon()
 	if (src.occupant)
@@ -629,6 +642,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			if (R.shell || R.dependent) //no renaming AI shells
 				return
 			var/newname = copytext(strip_html(sanitize(tgui_input_text(user, "What do you want to rename [R]?", "Cyborg Maintenance", R.name))), 1, 64)
+			newname = remove_bad_name_characters(newname)
 			if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat || !newname)
 				return
 			if (url_regex?.Find(newname))

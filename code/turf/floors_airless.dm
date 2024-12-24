@@ -388,6 +388,26 @@
 /turf/simulated/floor/airless/darkblue/checker/other
 	icon_state = "blue-dblue2"
 
+/turf/simulated/floor/airless/darkblue/side
+	icon_state = "dblue"
+
+/turf/simulated/floor/airless/darkblue/corner
+	icon_state = "dbluecorner"
+
+/turf/simulated/floor/airless/darkblue/checker
+	icon_state = "dbluechecker"
+
+/turf/simulated/floor/airless/darkblueblack
+	icon_state = "dblueblack"
+
+/turf/simulated/floor/airless/darkblueblack/corner
+	icon_state = "dblueblackcorner"
+
+/turf/simulated/floor/airless/darkbluewhite
+	icon_state = "dbluewhite"
+
+/turf/simulated/floor/airless/darkbluewhite/corner
+	icon_state = "dbluewhitecorner"
 /////////////////////////////////////////
 
 /turf/simulated/floor/airless/bluegreen
@@ -398,6 +418,33 @@
 
 /turf/simulated/floor/airless/bluegreen/corner
 	icon_state = "blugreencorner"
+
+/////////////////////////////////////////
+
+
+/turf/simulated/floor/airless/darkpurple
+	icon_state = "fulldpurple"
+
+/turf/simulated/floor/airless/darkpurple/side
+	icon_state = "dpurple"
+
+/turf/simulated/floor/airless/darkpurple/corner
+	icon_state = "dpurplecorner"
+
+/turf/simulated/floor/airless/darkpurple/checker
+	icon_state = "dpurplechecker"
+
+/turf/simulated/floor/airless/darkpurpleblack
+	icon_state = "dpurpleblack"
+
+/turf/simulated/floor/airless/darkpurpleblack/corner
+	icon_state = "dpurpleblackcorner"
+
+/turf/simulated/floor/airless/darkpurplewhite
+	icon_state = "dpurplewhite"
+
+/turf/simulated/floor/airless/darkpurplewhite/corner
+	icon_state = "dpurplewhitecorner"
 
 /////////////////////////////////////////
 

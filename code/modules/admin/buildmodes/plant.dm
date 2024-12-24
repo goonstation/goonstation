@@ -50,4 +50,4 @@ Ctrl + Right Mouse Button on buildmode  = Toggle density<br>
 		component.P.density = src.density
 		component.P.growth = seed.planttype.harvtime //set it to just matured
 		SPAWN(1) //look someone else did SPAWN(0) elsewhere in the chain and I just need this to work
-			component.P.process()
+			component.P.ProcessMachine()

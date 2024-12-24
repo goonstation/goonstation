@@ -39,6 +39,7 @@
 		#ifdef UPSCALED_MAP
 		pixel_x = -64
 		#endif
+		src.AddComponent(/datum/component/minimap_marker/minimap, MAP_INFO, "cryo")
 
 
 	disposing()
@@ -220,9 +221,6 @@
 								antagonist.handle_perma_cryo()
 							user.mind?.get_player()?.dnr = TRUE
 							user.ghostize()
-							var/datum/job/job = find_job_in_controller_by_string(user.job, soft=TRUE)
-							if (job && !job.unique)
-								job.assigned = max(0, job.assigned - 1)
 							qdel(user)
 							return 1
 

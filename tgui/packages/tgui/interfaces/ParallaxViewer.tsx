@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { BooleanLike } from 'common/react';
 import {
   Box,
   Button,
@@ -24,11 +25,12 @@ interface ParallaxSourceProps {
   icon: string;
   icon_state: string;
   value: number;
+  tessellate: BooleanLike;
   scroll_speed: number;
   scroll_angle: number;
   x: number;
   y: number;
-  static_color;
+  static_colour: BooleanLike;
   color;
 }
 
@@ -52,8 +54,8 @@ type ParallaxViewerData = {
 };
 
 interface ColorMatrixProps {
-  byondRef;
-  group_key;
+  byondRef: string;
+  group_key: string;
   color;
 }
 
@@ -153,6 +155,7 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
             <LabeledList.Item label="icon">
               <Button
                 icon="pencil-alt"
+                tooltip="Select new icon"
                 onClick={() =>
                   act('modify_icon', {
                     byondRef: sourceData.byondRef,
@@ -194,50 +197,69 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
                   act('modify', {
                     byondRef: sourceData.byondRef,
                     group: props.group_key,
-                    type: 'value',
+                    type: 'parallax_value',
                     value: value,
                   })
                 }
               />
             </LabeledList.Item>
 
-            <LabeledList.Item label="scroll_speed">
-              <NumberInput
-                value={sourceData.scroll_speed}
-                minValue={-900}
-                maxValue={900}
-                // stepPixelSize={4}
-                step={1}
-                width="80px"
-                onDrag={(value) =>
+            <LabeledList.Item label="Tessellate">
+              <Button.Checkbox
+                checked={sourceData.tessellate}
+                icon="cubes"
+                onClick={() =>
                   act('modify', {
                     byondRef: sourceData.byondRef,
                     group: props.group_key,
-                    type: 'scroll_speed',
-                    value: value,
+                    type: 'tessellate',
+                    value: !sourceData.tessellate,
                   })
                 }
               />
             </LabeledList.Item>
 
-            <LabeledList.Item label="scroll_angle">
-              <NumberInput
-                value={sourceData.scroll_angle}
-                minValue={0}
-                maxValue={360}
-                // stepPixelSize={4}
-                step={1}
-                width="80px"
-                onDrag={(value) =>
-                  act('modify', {
-                    byondRef: sourceData.byondRef,
-                    group: props.group_key,
-                    type: 'scroll_angle',
-                    value: value,
-                  })
-                }
-              />
-            </LabeledList.Item>
+            {sourceData.tessellate ? (
+              <>
+                <LabeledList.Item label="scroll_speed">
+                  <NumberInput
+                    value={sourceData.scroll_speed}
+                    minValue={-900}
+                    maxValue={900}
+                    step={1}
+                    width="80px"
+                    onDrag={(value) =>
+                      act('modify', {
+                        byondRef: sourceData.byondRef,
+                        group: props.group_key,
+                        type: 'scroll_speed',
+                        value: value,
+                      })
+                    }
+                  />
+                </LabeledList.Item>
+
+                <LabeledList.Item label="scroll_angle">
+                  <NumberInput
+                    value={sourceData.scroll_angle}
+                    minValue={0}
+                    maxValue={360}
+                    step={1}
+                    width="80px"
+                    onDrag={(value) =>
+                      act('modify', {
+                        byondRef: sourceData.byondRef,
+                        group: props.group_key,
+                        type: 'scroll_angle',
+                        value: value,
+                      })
+                    }
+                  />
+                </LabeledList.Item>
+              </>
+            ) : (
+              ''
+            )}
 
             <LabeledList.Item label="initial_x">
               <NumberInput
@@ -277,18 +299,17 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
               />
             </LabeledList.Item>
 
-            <LabeledList.Item label="static_color">
+            <LabeledList.Item label="Static Colour">
               <Button.Checkbox
-                checked={sourceData.static_color}
+                checked={sourceData.static_colour}
                 onClick={() =>
                   act('modify', {
                     byondRef: sourceData.byondRef,
                     group: props.group_key,
-                    type: 'value',
-                    value: !sourceData.static_color,
+                    type: 'static_colour',
+                    value: !sourceData.static_colour,
                   })
                 }
-                // }
               />
             </LabeledList.Item>
 
@@ -318,12 +339,23 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
                     value={sourceData.color}
                     width="90px"
                     onInput={(e, value) =>
-                      act('modify_particle_value', {
-                        new_data: {
-                          name: name,
-                          value: value,
-                          type: 'color',
-                        },
+                      act('modify', {
+                        byondRef: sourceData.byondRef,
+                        group: props.group_key,
+                        type: 'color',
+                        value: value,
+                      })
+                    }
+                  />
+                  <Button
+                    icon="table-cells"
+                    tooltip="Convert to Matrix"
+                    onClick={() =>
+                      act('modify', {
+                        byondRef: sourceData.byondRef,
+                        group: props.group_key,
+                        type: 'color_to_matrix',
+                        value: sourceData.color,
                       })
                     }
                   />
@@ -348,15 +380,21 @@ const ParallaxTypeView = (props: ParallaxTypeProps) => {
         <>
           <Button
             icon="window-restore"
+            tooltip="Restore layer to defaults"
             onClick={() => act('default', { group: group_key })}
           >
             Defaults
           </Button>
           <Button
             icon="wand-magic-sparkles"
+            tooltip="Add Parallax Effect"
             onClick={() => act('canned', { group: group_key })}
           />
-          <Button icon="plus" onClick={() => act('add', { group: group_key })}>
+          <Button
+            icon="plus"
+            onClick={() => act('add', { group: group_key })}
+            tooltip="Add new layer"
+          >
             Add
           </Button>
         </>
@@ -368,7 +406,7 @@ const ParallaxTypeView = (props: ParallaxTypeProps) => {
 };
 
 export const ParallaxViewer = () => {
-  const { act, data } = useBackend<ParallaxViewerData>();
+  const { data } = useBackend<ParallaxViewerData>();
 
   return (
     <Window title="Parallax Viewer" width={1600} height={800}>

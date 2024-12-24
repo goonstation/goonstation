@@ -776,6 +776,11 @@ TYPEINFO(/obj/vehicle/marsrover)
 				for_by_tcl(M, /obj/item/storage/secure/ssafe/marsvault)
 					M.disabled = 0
 
+				if (istype(get_area(src), /area/marsoutpost/vault))
+					for (var/mob/living/L in range(3, src))
+						if (!isintangible(L))
+							L.unlock_medal("Where are the Ghosts?", TRUE)
+
 				playsound(src.loc, 'sound/machines/engine_alert1.ogg', 50, 1)
 
 

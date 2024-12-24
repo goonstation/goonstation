@@ -530,6 +530,29 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			src.stow_in_available(src.ears)
 		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), SLOT_EARS)
 
+/// Equip items from body traits
+/mob/living/carbon/human/proc/equip_body_traits()
+	if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
+		if (src.limbs)
+			if (src.limbs.l_leg)
+				src.limbs.l_leg.delete()
+			if (src.limbs.r_leg)
+				src.limbs.r_leg.delete()
+			var/obj/stool/chair/comfy/chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
+			chair.buckle_in(src, src)
+
+	if (src.traitHolder && src.traitHolder.hasTrait("plasmalungs"))
+		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks
+			src.stow_in_available(src.wear_mask)
+
+		if(!src.wear_mask)
+			src.equip_if_possible(new /obj/item/clothing/mask/breath(src), SLOT_WEAR_MASK)
+
+		var/obj/item/tank/good_air = new /obj/item/tank/mini_plasma(src)
+		src.put_in_hand_or_drop(good_air)
+		if (!good_air.using_internal())//set tank ON
+			good_air.toggle_valve()
+
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
 	equip_job_items(JOB, src)
 	if (JOB.slot_back)
@@ -571,10 +594,15 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				D.name = "data disk - '[src.real_name]'"
 
 			if(JOB.receives_badge)
-				var/obj/item/clothing/suit/security_badge/B = new /obj/item/clothing/suit/security_badge(src)
-				src.equip_if_possible(B, SLOT_IN_BACKPACK)
-				B.badge_owner_name = src.real_name
-				B.badge_owner_job = src.job
+				var/obj/item/clothing/suit/security_badge/badge
+				if (ispath(JOB.receives_badge))
+					badge = new JOB.receives_badge(src)
+				else
+					badge = new /obj/item/clothing/suit/security_badge(src)
+				if (!src.equip_if_possible(badge, SLOT_WEAR_SUIT))
+					src.equip_if_possible(badge, SLOT_IN_BACKPACK)
+				badge.badge_owner_name = src.real_name
+				badge.badge_owner_job = src.job
 
 	if (src.traitHolder?.hasTrait("pilot"))
 		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
@@ -669,26 +697,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground
 				I.set_loc(get_turf(src))
 
-	if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
-		if (src.limbs)
-			if (src.limbs.l_leg)
-				src.limbs.l_leg.delete()
-			if (src.limbs.r_leg)
-				src.limbs.r_leg.delete()
-			var/obj/stool/chair/comfy/chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
-			chair.buckle_in(src, src)
-
-	if (src.traitHolder && src.traitHolder.hasTrait("plasmalungs"))
-		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks
-			src.stow_in_available(src.wear_mask)
-
-		if(!src.wear_mask)
-			src.equip_if_possible(new /obj/item/clothing/mask/breath(src), SLOT_WEAR_MASK)
-
-		var/obj/item/tank/good_air = new /obj/item/tank/mini_plasma(src)
-		src.put_in_hand_or_drop(good_air)
-		if (!good_air.using_internal())//set tank ON
-			good_air.toggle_valve()
+	src.equip_body_traits()
 
 	// Special mutantrace items
 	if (src.traitHolder && src.traitHolder.hasTrait("pug"))

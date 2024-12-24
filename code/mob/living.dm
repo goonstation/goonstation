@@ -95,6 +95,7 @@
 	var/metabolizes = 1
 
 	var/can_bleed = 1
+	var/regens_blood = TRUE
 	var/blood_id = null
 	var/blood_volume = 500
 	var/blood_pressure = null
@@ -199,10 +200,12 @@
 	..()
 
 /mob/living/death(gibbed)
-	#define VALID_MOB(M) (!isVRghost(M) && !isghostcritter(M) && !inafterlife(M))
+	#define VALID_MOB(M) (!isVRghost(M) && !isghostcritter(M) && !inafterlife(M) && !M.hasStatus("in_afterlife"))
 	src.remove_ailments()
 	src.lastgasp(allow_dead = TRUE)
 	if (src.ai) src.ai.disable()
+	if (src.isFlying)
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 	if (src.key && VALID_MOB(src))
 		var/datum/eventRecord/Death/deathEvent = new
 		deathEvent.buildAndSend(src, gibbed)
@@ -612,13 +615,18 @@
 		return
 
 	var/obj/item/gun/G = src.equipped()
+	var/gunpoint = FALSE
 	if(!istype(G) || !ismob(target))
 		src.visible_message(SPAN_EMOTE("<b>[src]</b> points to [target]."))
 	else
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
+		gunpoint = TRUE
 	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
 		..()
-		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color=get_symbol_color(), pointer=src)
+		var/obj/decal/point/point = make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color=get_symbol_color(), pointer=src)
+		if (gunpoint)
+			point.icon_state = "gun_point"
+			point.color = null
 
 /// Currently used for the color of pointing at things. Might be useful for other things that should have a color based off a mob.
 /mob/living/proc/get_symbol_color()

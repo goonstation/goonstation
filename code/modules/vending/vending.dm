@@ -1347,8 +1347,9 @@ TYPEINFO(/obj/machinery/vending/chemistry)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/dropper, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker, 15)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/large, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/condenser, 3)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/condenser/fractional, 1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/plumbing/condenser, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/plumbing/condenser/fractional, 1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/plumbing/dropper, 3)
 		product_list += new/datum/data/vending_product(/obj/item/bunsen_burner, 2)
 		product_list += new/datum/data/vending_product(/obj/item/beaker_lid, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 5)
@@ -1535,6 +1536,27 @@ TYPEINFO(/obj/machinery/vending/medical)
 
 		if (!restocked) //technically, this deletes any ammo left over on restock. oh well.
 			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
+
+/obj/machinery/vending/htr_team
+	name = "SecTech"
+	desc = "A dispenser for response team equipment."
+	icon_state = "sec"
+	icon_panel = "standard-panel"
+	icon_deny = "sec-deny"
+	req_access_txt = 0
+	acceptcard = 0
+
+	light_r =0.8
+	light_g = 0.8
+	light_b = 0.9
+
+	create_products(restocked)
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/handcuffs/guardbot, 16)
+		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/fog, 5)
+		product_list += new/datum/data/vending_product(/obj/item/device/flash, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/hardhat/security, 4)
+		product_list += new/datum/data/vending_product(/obj/item/sec_tape/vended, 3)
 
 ABSTRACT_TYPE(/obj/machinery/vending/cola)
 /obj/machinery/vending/cola
@@ -3049,6 +3071,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		product_list += new/datum/data/vending_product(/obj/item/caution, 10)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/long, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/surgical, 4)
+		product_list += new/datum/data/vending_product(/obj/item/instrument/whistle/janitor, 4)
 
 		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
 
@@ -3379,3 +3402,4 @@ TYPEINFO(/obj/machinery/vending/janitor)
 
 		product_list += new/datum/data/vending_product(/obj/item/scripture/reddarkhb, 1, hidden=1 )
 		product_list += new/datum/data/vending_product(/obj/item/scripture/cluwnehb, 1, hidden=1,)
+		product_list += new/datum/data/vending_product(/obj/item/scripture/tidehb, 1, hidden=1 )

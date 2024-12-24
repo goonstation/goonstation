@@ -64,7 +64,7 @@
 						if(N.client)
 							shake_camera(N, 6, 16)
 					logTheThing(LOG_COMBAT, user, "was turned into a gold statue by wishgranter [src] at [log_loc(user)].")
-					user.become_statue(getMaterial("gold"),"A statue of someone very wealthy", TRUE)
+					user.become_statue("gold", "A statue of someone very wealthy", TRUE)
 
 				if("I wish for great power!")
 					O.visible_message(SPAN_ALERT("<b>[O] discharges a massive bolt of electricity!</b>"))

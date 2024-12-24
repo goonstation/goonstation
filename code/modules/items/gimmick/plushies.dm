@@ -187,19 +187,23 @@ TYPEINFO(/obj/submachine/claw_machine)
 	throw_range = 3
 	rand_pos = 1
 
-/obj/item/toy/plush/proc/say_something(mob/user as mob)
-	if(user.client && !isghostcritter(user)) // stupid monkeys...
-		var/message = input("What should [src] say?")
-		message = trimtext(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
-		if (!message || BOUNDS_DIST(src, user) > 0)
-			return
-		phrase_log.log_phrase("plushie", message)
-		logTheThing(LOG_SAY, user, "makes [src] say, \"[message]\"")
-		user.audible_message(SPAN_EMOTE("[src] says, \"[message]\""))
-		if (ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if (H.sims)
-				H.sims.affectMotive("fun", 1)
+/obj/item/toy/plush/proc/say_something(mob/user)
+	if(!user.client || isghostcritter(user)) // stupid monkeys...
+		return
+	if (user.hasStatus("muted") || user.bioHolder?.HasEffect("mute"))
+		boutput(user, SPAN_ALERT("You are unable to speak!"))
+		return
+	var/message = input("What should [src] say?")
+	message = trimtext(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
+	if (!message || BOUNDS_DIST(src, user) > 0)
+		return
+	phrase_log.log_phrase("plushie", message)
+	logTheThing(LOG_SAY, user, "makes [src] say, \"[message]\"")
+	user.audible_message(SPAN_EMOTE("[src] says, \"[message]\""))
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if (H.sims)
+			H.sims.affectMotive("fun", 1)
 
 /obj/item/toy/plush/attack_self(mob/user as mob)
 	src.say_something(user)

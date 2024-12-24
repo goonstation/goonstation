@@ -110,6 +110,8 @@
 
 		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING))
 			src.update_breath_hud(status_updates)
+			if(owner.losebreath)
+				owner.losebreath -= (1.3 * mult) // base losebreath recovery
 			return
 
 		// Changelings generally can't take OXY/LOSEBREATH damage...except when they do.

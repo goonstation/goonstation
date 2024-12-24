@@ -1281,6 +1281,7 @@
 			if(ishuman(master.target) && !uncuffable)
 				master.target.handcuffs = new /obj/item/handcuffs/guardbot(master.target)
 				master.target.setStatus("handcuffed", duration = INFINITE_STATUS)
+				master.target.update_clothing()
 				logTheThing(LOG_COMBAT, master, "handcuffs [constructTarget(master.target,"combat")] at [log_loc(master)].")
 
 			if(master.target.traitHolder?.hasTrait("wasitsomethingisaid")) //a little extra to make the trait funnier

@@ -41,12 +41,11 @@
 
 	src.map = new()
 	src.map.icon = src.map_icons_by_z_level["[src.z_level]"]
-	src.map.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_LAYER
+	src.map.vis_flags |= VIS_INHERIT_ID
 	src.map.mouse_opacity = 0
 	src.map.vis_contents += src.dynamic_areas_overlays_by_z_level["[src.z_level]"]
 
 	src.minimap_render = new()
-	src.minimap_render.vis_flags = VIS_INHERIT_LAYER
 	src.minimap_render.appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	src.minimap_render.mouse_opacity = 0
 
@@ -129,3 +128,10 @@
 	for (var/atom/target as anything in src.minimap_markers)
 		var/datum/minimap_marker/minimap/minimap_marker = src.minimap_markers[target]
 		src.set_marker_position(minimap_marker, minimap_marker.target.x, minimap_marker.target.y, minimap_marker.target.z)
+
+/datum/minimap/area_map/transparent
+	initialise_minimap_render()
+		. = ..()
+		var/icon/icon = new(src.map.icon)
+		icon.SwapColor(rgb(0, 0, 0), rgb(0, 0, 0, 0))
+		src.map.icon = icon

@@ -155,6 +155,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		total_temperature = clamp(total_temperature, temperature_min, temperature_cap) //Cap for the moment.
 
+		reagents_changed()
+
 		update_total()
 
 		temperature_react()
@@ -762,7 +764,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 						if(ismob(A) && !isobserver(A))
 							//SPAWN(0)
 								//if (current_reagent) //This is in a spawn. Between our first check and the execution, this may be bad.
-							if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction, paramslist))
+							if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction, paramslist, current_reagent.volume*volume_fraction))
 								.+= current_id
 						if(isturf(A))
 							//SPAWN(0)
@@ -785,8 +787,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			fluid_turf.fluid_react(temp_fluid_reagents, temp_fluid_reagents.total_volume)
 
 	proc/add_reagent(var/reagent, var/amount, var/sdata, var/temp_new=T20C, var/donotreact = 0, var/donotupdate = 0, var/chemical_reaction = FALSE, var/chem_reaction_priority = 1)
-		if(istype(my_atom, /obj/item/reagent_containers/glass/condenser) && chemical_reaction)
-			var/obj/item/reagent_containers/glass/condenser/condenser = my_atom
+		if(istype(my_atom, /obj/item/reagent_containers/glass/plumbing) && chemical_reaction)
+			var/obj/item/reagent_containers/glass/plumbing/condenser/condenser = my_atom
 			condenser.try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate, chem_reaction_priority)
 			return
 		if(!isnum(amount) || amount <= 0 || src.disposed)
@@ -949,7 +951,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	/// returns text description of reagent(s)
 	/// plus exact text of reagents if using correct equipment
 	proc/get_description(mob/user, rc_flags=0)
-		if (rc_flags == 0)	// Report nothing about the reagents in this case
+		if (rc_flags == 0 || !user.sight_check(1))	// Report nothing about the reagents in this case
 			return null
 
 		if (length(reagent_list))
@@ -1054,7 +1056,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 			// weigh contribution of each reagent to the average color by amount present and it's transparency
 
-			var/weight = current_reagent.volume * current_reagent.transparency / 255
+			var/weight = min(current_reagent.volume * current_reagent.transparency / 255, 1e24) //infinity breaks things real badly here
 			total_weight += weight
 
 			average.r += weight * current_reagent.fluid_r

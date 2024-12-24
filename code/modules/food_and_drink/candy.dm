@@ -137,11 +137,28 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	desc = "YOU SHOULDN'T SEE THIS OBJECT"
 	icon_state = "bean"
 	bites_left = 1
-	initial_volume = 100
-	sugar_content = 0 // hacky, I know. but it's necessary for the color!
-	var/flavor
-	var/phrase
-	var/tastesbad = 0
+	initial_volume = 110
+	sugar_content = 10
+	var/good_flavours = list("egg", "strawberry", "raspberry", "snozzberry", "happiness", "popcorn", "buttered popcorn", "cinnamon",
+						"macaroni and cheese", "pepperoni", "cheese", "lasagna", "pina colada", "tutti frutti", "lemon", "margarita",
+						"coconut", "pineapple", "scotch", "vodka", "root beer", "cotton candy", "Lagavulin 18", "toffee", "vanilla",
+						"coffee", "apple pie", "neapolitan", "orange", "lime", "mango", "apple", "grape", "Slurm", "slime mold")
+	var/bad_flavours = list("cardboard", "human souls", "something unspeakable", "egg", "vomit", "snot", "poo", "earwax", "wet dog",
+						"belly-button lint", "sweat", "congealed farts", "mold", "armpits", "elbow grease", "sour milk", "WD-40",
+						"slime", "blob", "gym sock", "pants", "brussels sprouts", "feet", "litter box", "durian fruit", "asbestos",
+						"corpse flower", "corpse", "cow dung", "rot", "tar", "ham", "bee", "quark-gluon plasma", "heat death", "gooncode")
+	var/good_phrases = list ("Yum", "Wow", "MMM", "Delicious", "Scrumptious", "Fantastic", "Oh yeah")
+	var/bad_phrases = list("Oh god", "Jeez", "Ugh", "Blecch", "Holy crap that's awful", "What the hell?", "*HURP*", "Phoo")
+	//pool 1 is slightly more likely to occur than pool 2
+	var/reagent_pool1 = list("milk", "coffee", "VHFCS", "gravy", "fakecheese", "grease", "ethanol", "chickensoup", "vanilla", "cornsyrup", "chocolate")
+	var/reagent_pool2 = list("bilk", "beff", "vomit", "gvomit", "porktonium", "badgrease", "yuck", "carbon", "salt", "pepper", "ketchup", "mustard")
+
+	heal(mob/M)
+		..()
+		if (prob(50))
+			boutput(M, SPAN_ALERT("[pick(bad_phrases)]! That tasted like [pick(bad_flavours)]..."))
+		else
+			boutput(M, SPAN_NOTICE("[pick(good_phrases)]! That tasted like [pick(good_flavours)]..."))
 
 /obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor
 	name = "\improper Mabie Nott's Some Flavor Bean"
@@ -150,75 +167,58 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	New()
 		..()
 		SPAWN(0)
-			if (src.reagents)
-				if (prob(33))
-					src.reagents.add_reagent(pick("milk", "coffee", "VHFCS", "gravy", "fakecheese", "grease", "ethanol", "chickensoup", "vanilla", "cornsyrup", "chocolate"), 10)
-					src.heal_amt = 1
-				else if (prob(33))
-					src.reagents.add_reagent(pick("bilk", "beff", "vomit", "gvomit", "porktonium", "badgrease", "yuck", "carbon", "salt", "pepper", "ketchup", "mustard"), 10)
-					src.heal_amt = 0
+			if (!src.reagents) return
+			var/reagent = null
+			if (prob(33))
+				reagent = pick(reagent_pool1)
+				src.heal_amt = 1
+			else if (prob(33))
+				reagent = pick(reagent_pool2)
+				src.heal_amt = 0
 
-				src.food_color = src.reagents.get_master_color()
-				src.icon += src.food_color
+			var/datum/reagent/current = reagents_cache[reagent]
+			if (current)
+				// make space for the flavouring if there is none
+				if(src.reagents.maximum_volume - src.reagents.total_volume < 10)
+					src.reagents.maximum_volume += 10
+				src.reagents.add_reagent(reagent, 10)
+				src.icon += rgb(current.fluid_r, current.fluid_g, current.fluid_b, max(current.transparency,255))
+			else // no flavouring? Pick a random colour!
+				src.icon += random_saturated_hex_color()
 
-				src.reagents.add_reagent("sugar", 50)
-				if (src.reagents.total_volume <= 60)
-					src.reagents.add_reagent("sugar", 40)
 
-			// set up flavors
-			if(prob(50))
-				flavor = pick("cardboard", "human souls", "something unspeakable", "egg", "vomit", "snot", "poo", "earwax", "wet dog", "belly-button lint", "sweat", "congealed farts", "mold", "armpits", "elbow grease", "sour milk", "WD-40", "slime", "blob", "gym sock", "pants", "brussels sprouts", "feet", "litter box", "durian fruit", "asbestos", "corpse flower", "corpse", "cow dung", "rot", "tar", "ham")
-				phrase = pick("Oh god", "Jeez", "Ugh", "Blecch", "Holy crap that's awful", "What the hell?", "*HURP*", "Phoo")
-				tastesbad = 1
-			else
-				flavor = pick("egg", "strawberry", "raspberry", "snozzberry", "happiness", "popcorn", "buttered popcorn", "cinnamon", "macaroni and cheese", "pepperoni", "cheese", "lasagna", "pina colada", "tutti frutti", "lemon", "margarita", "coconut", "pineapple", "scotch", "vodka", "root beer", "cotton candy", "Lagavulin 18", "toffee", "vanilla", "coffee", "apple pie", "neapolitan", "orange", "lime", "mango", "apple", "grape", "Slurm", "slime mold")
-				phrase = pick("Yum", "Wow", "MMM", "Delicious", "Scrumptious", "Fantastic", "Oh yeah")
-				tastesbad = 0
-
-	heal(var/mob/M)
-		..()
-		if (tastesbad)
-			boutput(M, SPAN_ALERT("[phrase]! That tasted like [flavor]..."))
-		else
-			boutput(M, SPAN_NOTICE("[phrase]! That tasted like [flavor]..."))
 
 //#ifdef HALLOWEEN
 /obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor
 	name = "\improper Farty Snott's Every Flavour Bean"
 	desc = "A favorite halloween sweet worldwide!"
-
+	// sugar content is less than the flavouring content, so that wizard golems are guaranteed to be named after the flavouring
+	sugar_content = 40
 	New()
 		..()
 		SPAWN(0)
-			if (src.reagents)
-				if (prob(12))
-					src.reagents.add_reagent(pick("milk", "coffee", "VHFCS", "gravy", "fakecheese", "grease"), 10)
-					src.heal_amt = 1
-				else if (prob(12))
-					src.reagents.add_reagent(pick("bilk", "beff", "vomit", "gvomit", "porktonium", "badgrease"), 10)
-					src.heal_amt = 0
+			if (!src.reagents) return
+			var/reagent = null
+			if (prob(12))
+				reagent = pick(reagent_pool1)
+				src.heal_amt = 1
+			else if (prob(12))
+				reagent = pick(reagent_pool2)
+				src.heal_amt = 0
+			else
+				if (length(all_functional_reagent_ids) > 0)
+					reagent = pick(all_functional_reagent_ids)
 				else
-					var/flavor = null
-					if (length(all_functional_reagent_ids) > 0)
-						flavor = pick(all_functional_reagent_ids)
-					else
-						flavor = "sugar"
-					src.reagents.add_reagent(flavor, 50)
+					reagent = "sugar"
 
-				src.food_color = src.reagents.get_master_color()
-				src.icon += src.food_color // apparently this is a thing you can do?  neat!
+			var/datum/reagent/current = reagents_cache[reagent]
+			if (current)
+				// make space for the flavouring if there is none
+				if(src.reagents.maximum_volume - src.reagents.total_volume < 50)
+					src.reagents.maximum_volume += 50
+				src.reagents.add_reagent(reagent, 50)
+				src.icon += rgb(current.fluid_r, current.fluid_g, current.fluid_b, max(current.transparency,255)) // apparently this is a thing you can do?  neat!
 
-				src.reagents.add_reagent("sugar", 50)
-				if (src.reagents.total_volume <= 60)
-					src.reagents.add_reagent("sugar", 40)
-
-				if(prob(50))
-					flavor = pick("egg", "vomit", "snot", "poo", "earwax", "wet dog", "belly-button lint", "sweat", "congealed farts", "mold", "armpits", "elbow grease", "sour milk", "WD-40", "slime", "blob", "gym sock", "pants", "brussels sprouts", "feet", "litter box", "durian fruit", "asbestos", "corpse flower", "corpse", "cow dung", "rot", "tar", "ham", "gooncode", "quark-gluon plasma", "bee", "heat death")
-					phrase = pick("Oh god", "Jeez", "Ugh", "Blecch", "Holy crap that's awful", "What the hell?", "*HURP*", "Phoo")
-					tastesbad = 1
-				else
-					flavor = pick("egg", "strawberry", "raspberry", "snozzberry", "happiness", "popcorn", "buttered popcorn", "cinnamon", "macaroni and cheese", "pepperoni", "cheese", "lasagna", "pina colada", "tutti frutti", "lemon", "margarita", "coconut", "pineapple", "scotch", "vodka", "root beer", "cotton candy", "Lagavulin 18", "toffee", "vanilla", "coffee", "apple pie", "neapolitan", "orange", "lime", "mango", "apple", "grape", "Slurm")
-					phrase = pick("Yum", "Wow", "MMM", "Delicious", "Scrumptious", "Fantastic", "Oh yeah")
 
 /obj/item/kitchen/everyflavor_box
 	var/beans_left = 6
@@ -477,6 +477,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy)
 			unwrap_candy(user)
 		else
 			..()
+
+	ant_safe()
+		if(!src.unwrapped)
+			return TRUE
+		. = ..()
 
 	proc/unwrap_candy(mob/user)
 		unwrapped = 1

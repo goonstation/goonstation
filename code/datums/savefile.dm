@@ -349,6 +349,19 @@
 			// Welp, you get a random name then.
 			src.randomize_name()
 
+		//macros save me from infinite var hell
+#define FIX_NAME(name_var) var/fixed_##name_var = remove_bad_name_characters(src.##name_var);\
+		if (fixed_##name_var != src.##name_var){\
+			src.##name_var = fixed_##name_var;\
+			src.profile_modified = TRUE;\
+		}
+
+		FIX_NAME(name_first)
+		FIX_NAME(name_last)
+		FIX_NAME(name_middle)
+		FIX_NAME(real_name)
+
+#undef FIX_NAME
 		// Clean up invalid / default preferences
 		if (isnull(AH.fartsound))
 			AH.fartsound = "default"

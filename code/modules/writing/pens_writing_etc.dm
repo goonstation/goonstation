@@ -1172,6 +1172,8 @@
 
 /* =============== FOLDERS (wip) =============== */
 
+#define FOLDER_MAX_ITEMS 10
+
 /obj/item/folder //if any of these are bad numbers just change them im a bad idiot
 	name = "folder"
 	desc = "A folder for holding papers!"
@@ -1185,21 +1187,29 @@
 	throw_speed = 3
 	throw_range = 10
 	tooltip_flags = REBUILD_DIST
+	var/is_virtual = FALSE // True: can interact with this from a distance
 
 	attackby(var/obj/item/W, var/mob/user)
-		if (istype(W, /obj/item/paper))
-			if (length(src.contents) < 10)
+		if (istype(W, /obj/item/paper/book))
+			return
+		else if (istype(W, /obj/item/paper))
+			if (length(src.contents) < FOLDER_MAX_ITEMS)
 				boutput(user, "You cram the paper into the folder.")
-				user.drop_item()
-				W.set_loc(src)
-				src.amount++
-				tooltip_rebuild = 1
+				place_inside(W, user)
+		else if (istype(W, /obj/item/poster/titled_photo))
+			if (length(src.contents) < FOLDER_MAX_ITEMS)
+				boutput(user, "You cram the wanted poster into the folder.")
+				place_inside(W, user)
+		else if (istype(W, /obj/item/photo))
+			if (length(src.contents) < FOLDER_MAX_ITEMS)
+				boutput(user, "You cram the photo into the folder.")
+				place_inside(W, user)
 
 	attack_self(var/mob/user as mob)
 		show_window(user)
 
 	Topic(var/href, var/href_list)
-		if (BOUNDS_DIST(src, usr) > 0 || iswraith(usr) || isintangible(usr))
+		if ((BOUNDS_DIST(src, usr) > 0 && !src.is_virtual) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr))
 			return
@@ -1208,8 +1218,16 @@
 		if(href_list["action"] == "retrieve")
 			usr.put_in_hand_or_drop(src.contents[text2num(href_list["id"])], usr)
 			tooltip_rebuild = 1
-			usr.visible_message("[usr] takes a piece of paper out of the folder.")
-		show_window(usr) // to refresh the window
+			usr.visible_message("[usr] takes something out of the folder.")
+		else if(href_list["action"] == "peek")
+			var/obj/item/I = src.contents[text2num(href_list["id"])]
+			if(istype(I, /obj/item/paper))
+				var/obj/item/paper/P = I
+				P.ui_interact(usr)
+			else if(istype(I, /obj/item/poster/titled_photo))
+				var/obj/item/poster/titled_photo/W = I
+				W.examine(usr)
+		show_window(usr, href_list["action"]) // to refresh the window
 
 	get_desc(dist)
 		var/fullness = ""
@@ -1221,12 +1239,19 @@
 			fullness = "It looks like the folder's empty!"
 		return fullness
 
-	proc/show_window(var/user)
+	proc/show_window(var/user, var/action = "retrieve")
 		var/output = "<html><head><title>Folder</title></head><body><br>"
 		for(var/i = 1, i <= src.contents.len, i++)
-			output += "<a href='?src=\ref[src];id=[i];action=retrieve'>[src.contents[i].name]</a><br>"
+			output += "<a href='?src=\ref[src];id=[i];action=[action]'>[src.contents[i].name]</a><br>"
 		output += "</body></html>"
 		user << browse(output, "window=folder;size=400x600")
+
+	proc/place_inside(var/obj/item/W, var/mob/user)
+		if(user)
+			user.drop_item()
+		W.set_loc(src)
+		src.amount++
+		tooltip_rebuild = 1
 
 /* =============== BOOKLETS =============== */
 
@@ -1243,6 +1268,7 @@
 	w_class = W_CLASS_TINY
 
 	var/offset = 1
+	var/is_virtual = FALSE // True: can interact with this from a distance
 
 	var/list/obj/item/paper/pages = new/list()
 
@@ -1310,7 +1336,7 @@
 	Topic(href, href_list)
 		..()
 
-		if ((usr.stat || usr.restrained()) || (BOUNDS_DIST(src, usr) > 0))
+		if ((usr.stat || usr.restrained()) || ((BOUNDS_DIST(src, usr) > 0) && !src.is_virtual))
 			return
 
 		var/page_num = text2num(href_list["page"])

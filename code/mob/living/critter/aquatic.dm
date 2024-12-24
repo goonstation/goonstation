@@ -461,8 +461,8 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 			var/obj/window/W = AM
 			W.health = 0
 			W.smash()
-		else if(istype(AM, /obj/grille))
-			var/obj/grille/G = AM
+		else if(istype(AM, /obj/mesh/grille))
+			var/obj/mesh/grille/G = AM
 			G.damage_blunt(30)
 		else if(istype(AM, /obj/machinery/vehicle/tank) || istype(AM, /obj/table))
 			AM.meteorhit()
@@ -603,7 +603,8 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		. = ..()
 
 		if (length(.) && prob(10))
-			playsound(src.loc, 'sound/misc/jaws.ogg', 50, 0)
+			if (!ON_COOLDOWN(src, "jaws_sound", 50 SECONDS))
+				playsound(src.loc, 'sound/misc/jaws.ogg', 50, 0, 0, 1)
 
 	critter_scavenge(var/mob/target)
 		src.visible_message(SPAN_COMBAT("<B>[src]</B> gibs [target] in one bite!"))

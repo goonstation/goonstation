@@ -1072,7 +1072,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 				continue
 			O.set_loc(src)
 		for (var/mob/M in get_turf(src))
-			if (!M.lying || M.anchored || M.buckled)
+			if (!(M.lying || (ismobcritter(M) && isdead(M))) || M.anchored || M.buckled)
 				continue
 			M.set_loc(src)
 		src.open = 0

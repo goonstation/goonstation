@@ -1,4 +1,11 @@
 var/list/bad_name_characters = list("_", "'", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\", "/")
+var/regex/emoji_regex = regex(@{"([^\u0020-\u8000]+)"})
+
+proc/remove_bad_name_characters(string)
+	for (var/char in bad_name_characters)
+		string = replacetext(string, char, "")
+	return emoji_regex.Replace_char(string, "")
+
 var/list/removed_jobs = list(
 	// jobs that have been removed or replaced (replaced -> new name, removed -> null)
 	"Barman" = "Bartender",
@@ -420,8 +427,7 @@ var/list/removed_jobs = list(
 				if (isnull(new_name))
 					return
 				new_name = trimtext(new_name)
-				for (var/c in bad_name_characters)
-					new_name = replacetext(new_name, c, "")
+				new_name = remove_bad_name_characters(new_name)
 				if (length(new_name) < NAME_CHAR_MIN)
 					tgui_alert(usr, "Your first name is too short. It must be at least [NAME_CHAR_MIN] characters long.", "Name too short")
 					return
@@ -447,8 +453,7 @@ var/list/removed_jobs = list(
 				if (isnull(new_name))
 					new_name = ""
 				new_name = trimtext(new_name)
-				for (var/c in bad_name_characters)
-					new_name = replacetext(new_name, c, "")
+				new_name = remove_bad_name_characters(new_name)
 				if (length(new_name) > NAME_CHAR_MAX)
 					tgui_alert(usr, "Your middle name is too long. It must be no more than [NAME_CHAR_MAX] characters long.", "Name too long")
 					return
@@ -464,8 +469,7 @@ var/list/removed_jobs = list(
 				if (isnull(new_name))
 					return
 				new_name = trimtext(new_name)
-				for (var/c in bad_name_characters)
-					new_name = replacetext(new_name, c, "")
+				new_name = remove_bad_name_characters(new_name)
 				if (length(new_name) < NAME_CHAR_MIN)
 					tgui_alert(usr, "Your last name is too short. It must be at least [NAME_CHAR_MIN] characters long.", "Name too short")
 					return
@@ -1107,15 +1111,14 @@ var/list/removed_jobs = list(
 		src.update_preview_icon()
 
 	proc/sanitize_name()
-		for (var/c in bad_name_characters)
-			src.name_first = replacetext(src.name_first, c, "")
-			src.name_middle = replacetext(src.name_middle, c, "")
-			src.name_last = replacetext(src.name_last, c, "")
+		src.name_first = remove_bad_name_characters(src.name_first)
+		src.name_middle = remove_bad_name_characters(src.name_middle)
+		src.name_last = remove_bad_name_characters(src.name_last)
 
 		if (length(src.name_first) < NAME_CHAR_MIN || length(src.name_first) > NAME_CHAR_MAX || is_blank_string(src.name_first) || !character_name_validation.Find(src.name_first))
 			src.randomize_name(1, 0, 0)
 
-		if (length(src.name_middle) > NAME_CHAR_MAX || is_blank_string(src.name_middle))
+		if (length(src.name_middle) > NAME_CHAR_MAX)
 			src.randomize_name(0, 1, 0)
 
 		if (length(src.name_last) < NAME_CHAR_MIN || length(src.name_last) > NAME_CHAR_MAX || is_blank_string(src.name_last) || !character_name_validation.Find(src.name_last))

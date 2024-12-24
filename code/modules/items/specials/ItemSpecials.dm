@@ -1303,6 +1303,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			E.set_dir(direction)
 			if(master && istype(master, /obj/item/barrier))
 				var/obj/item/barrier/B = master
+				E.setMaterial(B.material)
 				B.destroy_deployed_barrier(user)
 				B.E = E //set barrier
 				var/mob/living/L = user

@@ -365,6 +365,8 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 			if (null, "list")
 
 				. += "<h2>Order Supplies</h2><div style='text-align: center;' id='qmquickjump'>"
+				. += search_snippet("background: #222228; color: #ccc;")
+				. += "<br />"
 				var/ordershit = ""
 				var/catnum = 0
 				if (!global.QM_CategoryList)
@@ -392,13 +394,15 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 						if((S.syndicate && !src.hacked) || S.hidden) continue
 						if (S.category == foundCategory)
 							ordershit += {"
-								<tr class='row[rownum % 2]'>
-									<th class='noborder itemtop'><a href='?src=\ref[src];action=order;subaction=buy;what=\ref[S]'>[S.name]</a></td>
-									<th class='noborder itemtop' style='text-align: right;'>[S.cost]</td>
-								</tr>
-								<tr class='row[rownum % 2]'>
-									<td colspan='2' class='itemdesc'>[S.desc]</td>
-								</tr>
+								<tbody class='supply-package'>
+									<tr class='row[rownum % 2]'>
+										<th class='noborder itemtop'><a href='?src=\ref[src];action=order;subaction=buy;what=\ref[S]'>[S.name]</a></td>
+										<th class='noborder itemtop' style='text-align: right;'>[S.cost]</td>
+									</tr>
+									<tr class='row[rownum % 2]'>
+										<td colspan='2' class='itemdesc'>[S.desc]</td>
+									</tr>
+								</tbody>
 								"}
 							rownum++
 						LAGCHECK(LAG_LOW)

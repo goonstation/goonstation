@@ -41,7 +41,7 @@ export interface MapVoteData {
 }
 
 export const MAP_PANEL_WIDTH = 150;
-export const SPACE_BETWEEN_PANELS = 5;
+export const SPACE_BETWEEN_PANELS = 6;
 export const WINDOW_HOZ_PADDING = 12;
 export const PANEL_PER_LINE = 4;
 
@@ -146,7 +146,7 @@ export const MapPanel = (props: MapPanelProps) => {
   );
 
   return (
-    <Stack.Item>
+    <Stack.Item mx={`${SPACE_BETWEEN_PANELS / 2}px`}>
       {details ? (
         <Tooltip content={<MapPanelTooltip name={name} details={details} />}>
           {panel}

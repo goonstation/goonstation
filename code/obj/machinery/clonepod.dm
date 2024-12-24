@@ -133,7 +133,10 @@ TYPEINFO(/obj/machinery/clonepod)
 		newsignal.data["message"] = "[msg]"
 
 		newsignal.data["address_1"] = "00000000"
-		newsignal.data["group"] = mailgroups + MGA_CLONER
+		if(src.clonehack)
+			newsignal.data["group"] = list(MGA_SYNDICATE)
+		else
+			newsignal.data["group"] = mailgroups + MGA_CLONER
 		newsignal.data["sender"] = src.net_id
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")

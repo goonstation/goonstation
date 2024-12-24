@@ -1424,6 +1424,7 @@
 				success = 1
 
 		if (success)
+			logTheThing(LOG_COMBAT, src.donor, "received a surgical transplant of \the [I] ([I.type]) by [constructTarget(usr,"combat")]")
 			if (istype(I, /obj/item/organ))
 				var/obj/item/organ/O = I
 				O.on_transplant(src.donor)

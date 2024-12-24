@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-@import '../colors.scss';
+@use '../colors';
 
 .PINInput {
   display: flex;
@@ -29,7 +29,7 @@
   justify-content: center;
   align-items: center;
   font-size: 1.7rem;
-  border: 1px solid $label;
+  border: 1px solid colors.$label;
   border-radius: 0.5rem;
   box-sizing: border-box;
   padding: 0.4rem;

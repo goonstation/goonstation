@@ -9,7 +9,7 @@
 
 /datum/game_mode/extended/pre_setup()
 	. = ..()
-	for(var/datum/random_event/event in random_events.events)
+	for(var/datum/random_event/event in random_events.major_events)
 		if(istype(event, /datum/random_event/major/law_rack_corruption))
 			event.disabled = TRUE
 

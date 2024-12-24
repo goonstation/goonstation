@@ -21,8 +21,8 @@ type ManufacturerSettingsProps = {
   max_speed_normal: number;
   max_speed_hacked: number;
   mode: 'working' | 'halt' | 'ready';
-  actionSetSpeed: (speed: number) => void;
-  actionRepeat: () => void;
+  onSpeedSet: (speed: number) => void;
+  onRepeatToggle: () => void;
 };
 
 export const ManufacturerSettings = (props: ManufacturerSettingsProps) => {
@@ -33,8 +33,8 @@ export const ManufacturerSettings = (props: ManufacturerSettingsProps) => {
     max_speed_normal,
     max_speed_hacked,
     mode,
-    actionSetSpeed,
-    actionRepeat,
+    onSpeedSet,
+    onRepeatToggle,
   } = props;
 
   const max_speed = hacked ? max_speed_hacked : max_speed_normal;
@@ -46,7 +46,7 @@ export const ManufacturerSettings = (props: ManufacturerSettingsProps) => {
           <LabeledList.Item
             label="Repeat"
             buttons={
-              <Button icon="repeat" onClick={() => actionRepeat()}>
+              <Button icon="repeat" onClick={onRepeatToggle}>
                 Toggle Repeat
               </Button>
             }
@@ -59,7 +59,7 @@ export const ManufacturerSettings = (props: ManufacturerSettingsProps) => {
               <Stack.Item>
                 <Button
                   icon="angle-double-left"
-                  onClick={() => actionSetSpeed(1)}
+                  onClick={() => onSpeedSet(1)}
                 />
               </Stack.Item>
               <Stack.Item grow>
@@ -69,13 +69,13 @@ export const ManufacturerSettings = (props: ManufacturerSettingsProps) => {
                   maxValue={max_speed}
                   step={1}
                   stepPixelSize={50}
-                  onChange={(_e: any, value: number) => actionSetSpeed(value)}
+                  onChange={(_e: any, value: number) => onSpeedSet(value)}
                 />
               </Stack.Item>
               <Stack.Item>
                 <Button
                   icon="angle-double-right"
-                  onClick={() => actionSetSpeed(max_speed)}
+                  onClick={() => onSpeedSet(max_speed)}
                 />
               </Stack.Item>
             </Stack>

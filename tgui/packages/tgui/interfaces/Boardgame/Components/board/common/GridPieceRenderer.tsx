@@ -24,7 +24,7 @@ const GridPieceRenderer = ({ pieces }: GridPieceRendererProps) => {
   return (
     <Box className="boardgame__board-gprenderer">
       {Object.keys(pieces).map((val, index) => {
-        const { x, y, prevX, prevY, code, selected } = pieces[val];
+        const { x, y, code, selected } = pieces[val];
         const pieceType = pieceRecords[code];
 
         // Is the piece selected by currentUser?

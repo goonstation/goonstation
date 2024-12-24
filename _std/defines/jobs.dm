@@ -40,6 +40,7 @@
 #define MGA_CRISIS "Crisis Alert"
 #define MGA_RADIO "Radio Alert"
 #define MGA_TRACKING "Tracking Alert"
+#define MGA_SYNDICATE "Syndicate Alert"
 
 // Job categories
 #define JOB_SPECIAL "special"

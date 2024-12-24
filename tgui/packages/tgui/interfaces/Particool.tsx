@@ -240,7 +240,7 @@ const ParticleVectorEntry = (props: ParticleVectorEntryProps) => {
   );
 };
 
-const ParticleVectorNonGenEntryVarLen = (len) => {
+const configureParticleVectorNonGenEntryVarLen = (len: number) => {
   return (props) => {
     let { value, tooltip, name } = props;
     const { act } = useBackend<ParticoolData>();
@@ -281,7 +281,7 @@ const ParticleVectorNonGenEntryVarLen = (len) => {
   };
 };
 
-const ParticleVectorNonGenEntry = ParticleVectorNonGenEntryVarLen(3);
+const ParticleVectorNonGenEntry = configureParticleVectorNonGenEntryVarLen(3);
 
 const ParticleVector2Entry = (props) => {
   const { value, tooltip, name } = props;
@@ -291,7 +291,7 @@ const ParticleVector2Entry = (props) => {
   if (isGen) {
     entry = ParticleGeneratorEntry(props);
   } else {
-    entry = ParticleVectorNonGenEntryVarLen(2)(props);
+    entry = configureParticleVectorNonGenEntryVarLen(2)(props);
   }
   return (
     <Tooltip position="bottom" content={tooltip}>

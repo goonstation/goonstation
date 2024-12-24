@@ -108,7 +108,7 @@
 	if (!msg)
 		return
 	if (src?.holder)
-		M.playsound_local_not_inworld('sound/misc/prayerchime.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS, channel = VOLUME_CHANNEL_MENTORPM)
+		M.playsound_local_not_inworld('sound/misc/prayerchime.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS | SOUND_IGNORE_DEAF, channel = VOLUME_CHANNEL_MENTORPM)
 		boutput(Mclient.mob, SPAN_NOTICE("You hear a voice in your head... <i>[msg]</i>"))
 
 	logTheThing(LOG_ADMIN, src.mob, "Subtle Messaged [constructTarget(Mclient.mob,"admin")]: [msg]")
@@ -318,7 +318,7 @@
 	if (law_num < 1 || law_num > 9)
 		return
 	else
-		ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module",input,law_num,TRUE,TRUE)
+		ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module",input,law_num,TRUE,TRUE,/obj/item/aiModule/custom/centcom)
 	boutput(usr, "Uploaded '[input]' as law # [law_num]")
 	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws() //I don't love this, but meh
 
@@ -367,7 +367,7 @@
 					ticker.ai_law_rack_manager.default_ai_rack.ai_abilities |= expansion.ai_abilities
 
 			else
-				ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module", split[i], i, TRUE, TRUE)
+				ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module", split[i], i, TRUE, TRUE,/obj/item/aiModule/custom/centcom)
 	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 	logTheThing(LOG_ADMIN, usr, "has set the AI laws to [input]")
 	logTheThing(LOG_DIARY, usr, "has set the AI laws to [input]", "admin")
@@ -2013,9 +2013,7 @@
 		return
 
 	if (istype(src.mob, /mob/dead/target_observer))
-		var/mob/dead/target_observer/old_mob = src.mob
-		src.mob = src.mob.ghost // switch our mob to /mob/dead/observer
-		qdel(old_mob) // so we don't leave a bunch of these empty observers inside mobs
+		qdel(src.mob) // so we don't leave a bunch of these empty observers inside mobs
 
 	var/mob/dead/observer/O = src.mob
 	var/client/C
@@ -2031,8 +2029,9 @@
 		if (C?.mob)
 			M = C.mob
 
-	boutput(src, SPAN_NOTICE("Now observing <b>[M] ([C])</b><br>") + M.get_desc())
 	O.insert_observer(M)
+	usr = src.mob // necessary so the get_desc() call works
+	boutput(src, SPAN_NOTICE("Now observing <b>[M] ([C])</b><br>") + M.get_desc())
 
 
 /client/proc/orp()
@@ -2834,6 +2833,51 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				logTheThing(LOG_ADMIN, src, "set every light on the station to a random color.")
 				logTheThing(LOG_DIARY, src, "set every light on the station to a random color.", "admin")
 				message_admins("[key_name(src)] set every light on the station to a random color.")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+
+/client/proc/cmd_nukie_colour()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Recolor Syndicate"
+	set desc = "Recolor (most) syndicate gear, mostly nukie gear."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if(holder && src.holder.level >= LEVEL_ADMIN)
+		switch(tgui_alert(src,"Recolor syndicate gear?","Syndicate Recolor",list("Yes", "No","Reset"), theme = "syndicate"))
+			if("Yes")
+				var/list/inputted_color_matrix = nuke_op_color_matrix.Copy()
+				for (var/i in 1 to 3)
+					inputted_color_matrix[i] = input("Choose a color for syndicate","Syndicate Recolor", nuke_op_color_matrix[i]) as color
+				if (length(inputted_color_matrix) != 3)
+					boutput(src, "You must input 3 colors.")
+					return
+				nuke_op_camo_matrix = inputted_color_matrix
+				var/color_matrix = color_mapping_matrix(nuke_op_color_matrix, nuke_op_camo_matrix)
+				for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
+					A.color = color_matrix
+					var/obj/item/Item = A
+					if(istype(Item) && Item.equipped_in_slot)
+						var/mob/living/carbon/human/wearer = Item.loc
+						wearer.update_clothing()
+					LAGCHECK(LAG_LOW)
+				logTheThing(LOG_ADMIN, src, "changed the syndicate colour scheme.")
+				logTheThing(LOG_DIARY, src, "changed the syndicate colour scheme.", "admin")
+				message_admins("[key_name(src)] changed the syndicate colour scheme.")
+			if ("Reset")
+				nuke_op_camo_matrix = null
+				for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
+					A.color = null
+					var/obj/item/Item = A
+					if(istype(Item) && Item.equipped_in_slot)
+						var/mob/living/carbon/human/wearer = Item.loc
+						wearer.update_clothing()
+					LAGCHECK(LAG_LOW)
+				logTheThing(LOG_ADMIN, src, "reset the syndicate colour scheme.")
+				logTheThing(LOG_DIARY, src, "reset the syndicate colour scheme.", "admin")
+				message_admins("[key_name(src)] reset the syndicate colour scheme.")
+			if("No")
+				return
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
 

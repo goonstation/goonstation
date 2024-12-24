@@ -130,8 +130,8 @@
 					var/obj/window/W = AM
 					W.health = 0
 					W.smash()
-				else if(istype(AM,/obj/grille))
-					var/obj/grille/G = AM
+				else if(istype(AM,/obj/mesh/grille))
+					var/obj/mesh/grille/G = AM
 					G.damage_blunt(30)
 				else if(istype(AM, /obj/table))
 					AM.meteorhit()
@@ -449,6 +449,7 @@
 	health_burn = 20
 	health_burn_vuln = 0.25
 	faction = list(FACTION_DERELICT)
+	is_npc = TRUE
 	ai_type = /datum/aiHolder/aggressive
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0

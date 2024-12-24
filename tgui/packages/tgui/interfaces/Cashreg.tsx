@@ -86,7 +86,7 @@ export const Cashreg = () => {
                     onClick={() => act('set_tip')}
                     width="100%"
                   >
-                    {`Tip: ${tip_proportion * 100}%`}
+                    {`Tip: ${(tip_proportion * 100).toFixed()}%`}
                   </Button>
                 </Stack.Item>
                 <Stack.Item grow>
@@ -144,7 +144,7 @@ const CenterPart = () => {
                 <>
                   <tr>
                     <td>{`Tip (%)`}</td>
-                    <td className="cashreg__table_cellright">{`${tip_proportion * 100}%`}</td>
+                    <td className="cashreg__table_cellright">{`${(tip_proportion * 100).toFixed()}%`}</td>
                   </tr>
                   <tr>
                     <td>{`Tip (⪽)`}</td>

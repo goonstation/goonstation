@@ -8,7 +8,7 @@
 	pixel_y = -1;
 	pixel_x = -3
 	},
-/turf/simulated/floor/airless/blue/corner{
+/turf/simulated/floor/blue/corner{
 	dir = 4
 	},
 /area/dmm_suite/clear_area)
@@ -83,7 +83,7 @@
 	pixel_y = 34;
 	pixel_x = -7
 	},
-/turf/simulated/floor/airless/blue/side,
+/turf/simulated/floor/blue/side,
 /area/dmm_suite/clear_area)
 "J" = (
 /obj/table/wood,
@@ -99,7 +99,7 @@
 /obj/decal/cleanable/cobweb{
 	layer = 14
 	},
-/turf/simulated/floor/airless/blue/corner,
+/turf/simulated/floor/blue/corner,
 /area/dmm_suite/clear_area)
 "N" = (
 /obj/table/wood,
@@ -157,7 +157,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/dmm_suite/clear_area)
 "X" = (
-/turf/simulated/floor/airless/blue/side{
+/turf/simulated/floor/blue/side{
 	dir = 4
 	},
 /area/dmm_suite/clear_area)
@@ -166,7 +166,7 @@
 /obj/machinery/light/small{
 	pixel_y = -5
 	},
-/turf/simulated/floor/airless/blue/side{
+/turf/simulated/floor/blue/side{
 	dir = 1
 	},
 /area/dmm_suite/clear_area)

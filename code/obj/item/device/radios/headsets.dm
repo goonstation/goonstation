@@ -294,13 +294,14 @@
 		)
 	icon_override = "sec"
 	icon_tooltip = "Security"
+	tooltip_flags = REBUILD_USER
 
 	get_desc(dist, mob/user)
-		if (user.mind?.special_role)
+		if (user.mind.is_antagonist())
 			. += SPAN_ALERT("<b>Good.</b>")
 		else
 			. += "Keep it safe!"
-
+		. += ..()
 /obj/item/device/radio/headset/detective
 	name = "detective's headset"
 	desc = "In addition to having access to the Security radio channel, this headset also features private frequency that's suited for only the sneakiest sleuthing."

@@ -6,8 +6,7 @@
  */
 
 @use 'sass:color';
-
-@use '~tgui/styles/base.scss';
+@use '~tgui/styles/base';
 
 .Layout__content {
   background-image: none !important; // TODO: Make an 'admin' theme with goon logo bg

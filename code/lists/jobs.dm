@@ -137,6 +137,7 @@ var/list/command_gimmicks = list(
 var/list/security_gimmicks = list(
 	"Vice Officer",
 	"Forensic Technician",
+	"Hall Monitor"
 )
 var/list/engineering_gimmicks = list(
 	"Head of Mining",

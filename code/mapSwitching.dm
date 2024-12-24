@@ -52,6 +52,10 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				src.setCurrentMap(map)
 
 			if (mapNames[map]["playerPickable"])
+				if (BUILD_TIME_MONTH == 6 && IS_IT_FRIDAY && BUILD_TIME_DAY <= 7) //the first friday of every june is donut day
+					if (findtext(map, "donut")) //all we care about today is donut
+						src.playerPickable[map] += mapNames[map]
+					continue
 				if (mapNames[map]["MinPlayersAllowed"])
 					if (total_clients() < mapNames[map]["MinPlayersAllowed"])
 						continue

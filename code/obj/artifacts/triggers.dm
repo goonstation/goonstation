@@ -127,7 +127,7 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 	proc/speech_act(text)
 		if (!text)
 			return
-		text = lowertext(text[1])
+		text = ckey(text[1])
 		if (length(text) != 5)
 			return "hint"
 		if (!(text in src.word_dict))

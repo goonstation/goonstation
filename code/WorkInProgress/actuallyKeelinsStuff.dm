@@ -747,7 +747,7 @@ Returns:
 	var/list/oneTurfsExpend = oneTurfs.Copy()
 	var/list/twoTurfsExpend = twoTurfs.Copy()
 
-	var/list/ignoreTypes = list(/obj/machinery/disposal,/obj/cable,/obj/machinery/power,/obj/machinery/light,/obj/disposalpipe,/obj/grille,/obj/window,/obj/machinery/door,/obj/machinery/atmospherics,/obj/overlay/tile_effect)
+	var/list/ignoreTypes = list(/obj/machinery/disposal,/obj/cable,/obj/machinery/power,/obj/machinery/light,/obj/disposalpipe,/obj/mesh/grille,/obj/window,/obj/machinery/door,/obj/machinery/atmospherics,/obj/overlay/tile_effect)
 
 	var/oneName = ""
 	var/twoName = ""
@@ -3205,7 +3205,7 @@ var/list/lag_list = new/list()
 	name = "Place Grille"
 	desc = "Places a Grille."
 	used(atom/user, atom/target)
-		var/obj/grille/L = new/obj/grille/steel(get_turf(target))
+		var/obj/mesh/grille/L = new/obj/mesh/grille/steel(get_turf(target))
 		L.set_dir(user:dir)
 		return
 

@@ -774,7 +774,7 @@ Frequency:
 	UpdateIcon()
 
 	if (src.mainframe)
-		src.real_name = "SHELL/[src.mainframe]"
+		src.real_name = "SHELL/[src.mainframe.name]"
 		src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 		src.name = src.real_name
 		src.update_name_tag()
