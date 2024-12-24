@@ -1878,31 +1878,19 @@
 	desc = "Look through a camera via your monitor eye."
 	icon_state = "eye-monitor"
 	targeted = FALSE
-	var/eye_side
+	toggled = TRUE
+	is_on = FALSE
 
 	cast(atom/target)
 		if (..())
 			return 1
 		var/obj/item/organ/eye/cyber/monitor/linked_eye = linked_organ
-		var/obj/machinery/camera/selected_camera = linked_eye.viewer.select_camera(holder.owner)
-
-		if(istype(selected_camera) && holder.owner.client)
-			var/list/viewports = holder.owner.client.getViewportsByType("[eye_side] monitor cybereye")
-			var/datum/viewport/vp
-			if(length(viewports))
-				vp = holder.owner.client.getViewportsByType("[eye_side] monitor cybereye")[1]
-			else
-				vp = new(holder.owner.client, "[eye_side] monitor cybereye")
-			var/turf/T = get_turf(selected_camera)
-			var/turf/closestPos = null
-			for(var/i = 4, i >= 0 || !closestPos, i--)
-				closestPos = locate(T.x - i, T.y + i, T.z)
-				if(closestPos) break
-			vp.SetViewport(closestPos, 8, 8)
-			vp.start_following(selected_camera)
-
-/datum/targetable/organAbility/view_camera/left
-	eye_side = "left"
-
-/datum/targetable/organAbility/view_camera/right
-	eye_side = "right"
+		if(src.is_on)
+			src.is_on = FALSE
+			linked_eye.provides_sight = FALSE
+			linked_eye.viewer.disconnect_user(holder.owner)
+			return
+		else
+			if(linked_eye.viewer.AttackSelf(holder.owner))
+				src.is_on = TRUE
+				linked_eye.provides_sight = TRUE

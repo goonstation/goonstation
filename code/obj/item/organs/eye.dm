@@ -474,7 +474,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 	name = "monitor cybereye"
 	organ_name = "monitor cybereye"
 	desc = "A tiny screen to replace an eye. You can't use it to see, but it can view camera networks from the installed monitor."
-	organ_abilities = list(/datum/targetable/organAbility/view_camera) // side subtype chosen in add_ability
+	organ_abilities = list(/datum/targetable/organAbility/view_camera)
 	default_material = "pharosium"
 	iris_color = "#0d0508"
 	icon_state = "eye-monitor"
@@ -486,7 +486,6 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 	New()
 		. = ..()
 		src.viewer = new /obj/item/device/camera_viewer/public(src)
-		src.viewer.network = list("public", "telesci")
 
 	disposing()
 		. = ..()
@@ -495,9 +494,6 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/camera_viewer))
-			if(src.emagged)
-				boutput(user, "The camera monitor is fused into the eye and can't be swapped!")
-				return
 			user.u_equip(W)
 			W.set_loc(src)
 			boutput(user, "You install [W] into [src].")
@@ -506,29 +502,11 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 			return
 		..()
 
-	add_ability(datum/abilityHolder/aholder, abil)
-		if (!ispath(abil, /datum/targetable/organAbility/view_camera) || !aholder)
-			return ..()
-		var/datum/targetable/organAbility/view_camera/OA
-		if(src.body_side == L_ORGAN)
-			aholder.addAbility(/datum/targetable/organAbility/view_camera/left)
-			OA = aholder.getAbility(/datum/targetable/organAbility/view_camera/left)
-		else
-			aholder.addAbility(/datum/targetable/organAbility/view_camera/right)
-			OA = aholder.getAbility(/datum/targetable/organAbility/view_camera/right)
-		if(istype(OA))
-			OA.linked_organ = src
-
-
 	remove_ability(datum/abilityHolder/aholder, abil)
 		if (!ispath(abil, /datum/targetable/organAbility/view_camera) || !aholder)
 			return ..()
-		if(src.body_side == L_ORGAN)
-			aholder.removeAbility(/datum/targetable/organAbility/view_camera/left)
-			src.donor?.client?.clearViewportsByType("left monitor cybereye")
-		else
-			aholder.removeAbility(/datum/targetable/organAbility/view_camera/right)
-			src.donor?.client?.clearViewportsByType("right monitor cybereye")
+		if (aholder.owner)
+			src.viewer.disconnect_user(aholder.owner)
 
 
 /obj/item/organ/eye/lizard
