@@ -1,4 +1,7 @@
-
+(t)tue dec 24 24
+(u)LeahTheTech
+(*)Magboots no longer allow you to anchor to space, now they prevent you from walking off into space when active.
+(+)APC repair actions are now quicker and use help messages.
 (t)mon dec 23 24
 (u)FlameArrow57
 (p)21264
