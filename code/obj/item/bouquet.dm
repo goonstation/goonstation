@@ -6,8 +6,9 @@
 	name = "bouquet"
 	desc = "A lovely arrangement of flowers."
 	icon = 'icons/obj/items/bouquets.dmi'
-	inhand_image_icon = 'icons/obj/items/bouquets.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_bouquet.dmi'
 	icon_state = "paper_back"
+	item_state = "bouquet"
 	w_class = W_CLASS_SMALL
 	flags = SUPPRESSATTACK | TABLEPASS
 	/// how many flowers are there in the bouquet?
@@ -56,6 +57,10 @@
 	src.refresh()
 	src.ruffle()
 
+/obj/item/bouquet/update_inhand(hand, hand_offset)
+	. = ..()
+	src.inhand_image.underlays = list(image(src.inhand_image_icon, "flower-[hand]"))
+
 
 /obj/item/bouquet/proc/add_flower(obj/item/W, mob/user)
 	W.force_drop(user)
@@ -78,6 +83,7 @@
 	var/list/frontflowerindex
 	//src.inhand_image.overlays = null
 	src.icon_state = "[src.wrapstyle]_back"
+	src.item_state = "[src.wrapstyle]"
 	//src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = "inhand_base_[src.wrapstyle]")
 	for (var/obj/item/temp in src.contents)
 		if (istype(temp, /obj/item/clothing/head/flower) || istype(temp, /obj/item/plant))
