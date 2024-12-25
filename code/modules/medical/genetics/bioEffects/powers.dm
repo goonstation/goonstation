@@ -333,9 +333,10 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/sleep_time = 1 / linked_power.power
 
 		if (istype(owner.loc,/turf/))
-			if (istype_exact(owner.loc, /turf/space) || owner.no_gravity)
+			var/turf/T = owner.loc
+			if (T.turf_flags & CAN_BE_SPACE_SAMPLE || T.throw_unlimited || owner.no_gravity)
 				var/push_off = FALSE
-				for(var/atom/A in view(1, owner.loc))
+				for(var/atom/A in oview(1, T))
 					if (A.stops_space_move)
 						push_off = TRUE
 						break
@@ -389,9 +390,10 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/sleep_time = 0.5 / linked_power.power
 
 		if (istype(owner.loc,/turf/))
-			if (istype_exact(owner.loc, /turf/space) || owner.no_gravity)
+			var/turf/T = owner.loc
+			if (T.turf_flags & CAN_BE_SPACE_SAMPLE || T.throw_unlimited || owner.no_gravity)
 				var/push_off = FALSE
-				for(var/atom/A in view(1, owner.loc))
+				for(var/atom/A in oview(1, T))
 					if (A.stops_space_move)
 						push_off = TRUE
 						break
