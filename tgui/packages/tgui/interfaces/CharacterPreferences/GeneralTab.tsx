@@ -57,6 +57,14 @@ export const GeneralTab = () => {
               {data.nameLast}
             </Button>
           </LabeledList.Item>
+          <LabeledList.Item label="Hyphenate Name">
+            <Button.Checkbox
+              checked={data.hyphenateName}
+              onClick={() => act('update-hyphenation')}
+            >
+              Y/N
+            </Button.Checkbox>
+          </LabeledList.Item>
           <LabeledList.Item label="Body Type">
             <Button onClick={() => act('update-gender')}>{data.gender}</Button>
           </LabeledList.Item>
