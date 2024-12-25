@@ -12,17 +12,13 @@
 
 	New()
 		..()
-
-		if (!islist(portable_machinery))
-			portable_machinery = list()
-		portable_machinery.Add(src)
+		START_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 
 		src.homeloc = src.loc
 		return
 
 	disposing()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		if(occupant)
 			occupant.set_loc(get_turf(src.loc))
 			occupant = null
