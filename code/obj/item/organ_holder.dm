@@ -1887,10 +1887,12 @@
 		var/obj/item/organ/eye/cyber/monitor/linked_eye = linked_organ
 		if(src.is_on)
 			src.is_on = FALSE
-			linked_eye.provides_sight = FALSE
 			linked_eye.viewer.disconnect_user(holder.owner)
+			if(linked_eye.emagged)
+				linked_eye.provides_sight = FALSE
 			return
-		else
+		else //TODO: give them a non-janky viewport instead, once they exist
 			if(linked_eye.viewer.AttackSelf(holder.owner))
 				src.is_on = TRUE
-				linked_eye.provides_sight = TRUE
+				if(linked_eye.emagged)
+					linked_eye.provides_sight = TRUE

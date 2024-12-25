@@ -473,12 +473,11 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 /obj/item/organ/eye/cyber/monitor
 	name = "monitor cybereye"
 	organ_name = "monitor cybereye"
-	desc = "A tiny screen to replace an eye. You can't use it to see, but it can view camera networks from the installed monitor."
+	desc = "A tiny screen to replace an eye. It can view camera networks from the installed monitor."
 	organ_abilities = list(/datum/targetable/organAbility/view_camera)
 	default_material = "pharosium"
 	iris_color = "#0d0508"
 	icon_state = "eye-monitor"
-	provides_sight = FALSE
 	var/obj/item/device/camera_viewer/viewer = null
 
 	HELP_MESSAGE_OVERRIDE("You can replace the installed camera monitor by clicking the eye with a monitor in-hand.")
@@ -487,6 +486,15 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 		. = ..()
 		src.viewer = new /obj/item/device/camera_viewer/public(src)
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		if(!src.emagged)
+			if(user)
+				boutput(user, SPAN_ALERT("The internal monitor's network limiter shorts, fusing to \the [src] and making the lens opaque!"))
+			src.visible_message(SPAN_ALERT("<B>[src] sparks and shudders oddly!</B>"))
+			src.viewer.network = list("public", "telesci", "SS13", "ranch", "Zeta", "Mining")
+			src.emagged = TRUE
+			src.provides_sight = FALSE
+
 	disposing()
 		. = ..()
 		qdel(src.viewer)
@@ -494,6 +502,9 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/camera_viewer))
+			if(src.emagged)
+				boutput(user, "The internal monitor on [src] is fused in place and can't be removed!")
+				return
 			user.u_equip(W)
 			W.set_loc(src)
 			boutput(user, "You install [W] into [src].")
@@ -507,6 +518,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 			return ..()
 		if (aholder.owner)
 			src.viewer.disconnect_user(aholder.owner)
+			aholder.removeAbility(abil)
 
 
 /obj/item/organ/eye/lizard
