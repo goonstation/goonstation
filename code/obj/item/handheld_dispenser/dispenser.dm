@@ -430,3 +430,18 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/binary)
 		path = /obj/machinery/atmospherics/binary/valve/digital
 		icon_state = "digitalvalve"
 		desc = "A digital valve that can be controlled by silicons or by hitting it with a wrench."
+
+/obj/item/places_pipes/research
+	icon_state = "hpd-destroy-r"
+
+/obj/item/places_pipes/research/update_icon(...)
+	if (src.destroying)
+		src.icon_state = "hpd-destroy-r"
+	else
+		src.icon_state = "hpd-place-r"
+
+	var/fullness = round(src.resources/src.max_resources * 100, 25)
+	if (fullness <= 0)
+		src.UpdateOverlays(null, "ammo")
+	else
+		src.UpdateOverlays(image(src.icon, "ammo-[fullness]"), "ammo")

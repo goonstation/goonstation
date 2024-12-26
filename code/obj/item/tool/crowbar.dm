@@ -56,6 +56,10 @@
 	desc = "A tool used as a lever to pry objects. The handle is painted an appropriate light blue."
 	icon_state = "crowbar-blue"
 
+/obj/item/crowbar/purple
+	desc = "A tool used as a lever to pry objects. This one is curiously purple."
+	icon_state = "crowbar-purple"
+
 /obj/item/crowbar/grey
 	desc = "A tool used as a lever to pry objects. Now in grey!"
 	icon_state = "crowbar-grey"

@@ -296,7 +296,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/radio/headset/command/rd,
 	/obj/item/pet_carrier,
 	/obj/item/device/pda2/research_director,
-	/obj/item/places_pipes,
+	/obj/item/places_pipes/research,
 	/obj/item/rcd_ammo/big)
 
 	make_my_stuff()

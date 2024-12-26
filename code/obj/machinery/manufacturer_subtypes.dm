@@ -268,7 +268,7 @@
 	available = list(
 		/datum/manufacture/flashlight,
 		/datum/manufacture/gps,
-		/datum/manufacture/crowbar,
+		/datum/manufacture/crowbar/purple,
 		/datum/manufacture/extinguisher,
 		/datum/manufacture/welder,
 		/datum/manufacture/patch,
