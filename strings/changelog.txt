@@ -1,3 +1,9 @@
+
+(t)wed dec 25 24
+(u)glowbold
+(p)21764
+(e)🪲⚖🔨|C-Bug, C-Balance, A-Player-Actions
+(+)Jumpy can no longer be used while floating in space.
 (t)tue dec 24 24
 (u)LeahTheTech
 (*)Magboots no longer allow you to anchor to space, now they prevent you from walking off into space when active.
