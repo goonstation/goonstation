@@ -254,6 +254,14 @@
 	time = 5 SECONDS
 	category = "Tool"
 
+/datum/manufacture/crowbar/purple
+	name = "Crowbar"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/crowbar/purple)
+	create = 1
+	time = 5 SECONDS
+	category = "Tool"
+
 /datum/manufacture/screwdriver/yellow
 	name = "Screwdriver"
 	item_requirements = list("metal" = 1)
