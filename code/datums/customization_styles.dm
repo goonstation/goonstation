@@ -370,6 +370,62 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			jelly
 				name = "Jelly"
 				id = "jelly"
+
+			cockatiel
+				name = "Cockatiel"
+				id = "cockatiel"
+
+			combed_fringe
+				name = "Combed Fringe"
+				id = "combed_fringe"
+
+			slicked_back
+				name = "Slicked Back"
+				id = "slicked_back"
+
+			asym_bob
+				name = "Asymmetrical Bob"
+				id = "asym_bob"
+
+			side_curls
+				name = "Side-Part Curls"
+				id = "side_curls"
+
+			messy_fringe
+				name = "Messy Fringe"
+				id = "messy_fringe"
+
+			aristocrat
+				name = "Aristocrat"
+				id = "aristocrat"
+
+			brushed_bob
+				name = "Brushed Bob"
+				id = "brushed_bob"
+
+			short_shag
+				name = "Short Shag"
+				id = "short_shag"
+
+			luxury_bob
+				name = "Luxurious Bob"
+				id = "luxury_bob"
+
+			wavy_front
+				name = "Wavy Front"
+				id = "wavy_front"
+
+			poofy_bob
+				name = "Poofy Bob"
+				id = "poofy_bob"
+
+			short_dreads
+				name = "Short Dreads"
+				id = "short_dreads"
+
+			Shaggy
+				name = "Shaggy"
+				id = "shaggy"
 		long
 			chub2_s
 				name = "Bang: Left"
