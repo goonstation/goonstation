@@ -1996,6 +1996,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = ""
 	anchored = ANCHORED
+	event_handler_flags = IMMUNE_TRENCH_WARP
 	pass_unstable = FALSE
 	layer = EFFECTS_LAYER_1
 	pixel_x = -64
