@@ -862,12 +862,12 @@ TYPEINFO(/obj/machinery/wirenav)
 	tour18
 		name = "tour beacon - return"
 		location = "tour18"
-		codes_txt = "tour;next_tour=tour19;desc="
+		codes_txt = "tour;next_tour=tour19;"
 
 	tour19
 		name = "tour beacon - return"
 		location = "tour19"
-		codes_txt = "tour;next_tour=tour20;desc="
+		codes_txt = "tour;next_tour=tour20;"
 
 	tour20
 		name = "tour beacon - home"

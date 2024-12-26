@@ -3662,11 +3662,14 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						awaiting_beacon = max(awaiting_beacon, 1) //This will just serve as a delay so the buddy isn't zipping around at light speed between stops.
 					else
 						state = STATE_POST_TOUR_IDLE
-						master.speak("And that concludes the tour session.  Please visit the gift shop on your way out.")
 						var/obj/machinery/guardbot_dock/dock = null
 						dock = locate() in master.loc
 						if(dock && istype(dock))
-							dock.connect_robot(master,0)
+							// Check for tour console, manual wake if present, auto wake if not
+							if (locate(/obj/machinery/computer/tour_console) in orange(1, src.master))
+								dock.connect_robot(master,0)
+							else
+								dock.connect_robot(master,2)
 							return
 						else
 							desired_emotion = "angry"
