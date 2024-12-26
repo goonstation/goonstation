@@ -3607,9 +3607,8 @@ TYPEINFO(/obj/item/device/guardbot_module)
 			if(master.emotion != desired_emotion)
 				master.set_emotion(desired_emotion)
 
-			if(state != STATE_AT_BEACON && state != STATE_FINDING_BEACON)
-				if(prob(tip_prob) && !ON_COOLDOWN(src.master, "tip", 3 SECONDS))
-					master.speak(get_random_tip())
+
+
 
 			switch (state)
 				if (STATE_FINDING_BEACON)
@@ -3633,6 +3632,10 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						state = STATE_FINDING_BEACON
 						return
 
+					if(prob(tip_prob) && !src.distracted && !GET_COOLDOWN(src.master, "tip"))
+						master.speak(get_random_tip())
+						ON_COOLDOWN(src.master, "tip", 10 SECONDS)
+
 					if (!src.distracted && prob(20))
 						src.look_for_neat_thing()
 
@@ -3652,20 +3655,33 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						return	//I realize this doesn't check if they're dead.  Buddies can't always tell, ok!! Maybe if people had helpful power lights too
 
 					speak_with_pause(current_tour_text, yield_to_neat=TRUE)
+					ON_COOLDOWN(src.master, "tip", 4 SECONDS)
 
 					if (next_beacon_id)
 						state = STATE_FINDING_BEACON
 						awaiting_beacon = max(awaiting_beacon, 1) //This will just serve as a delay so the buddy isn't zipping around at light speed between stops.
 					else
 						state = STATE_POST_TOUR_IDLE
-						tour_delay = 30
 						master.speak("And that concludes the tour session.  Please visit the gift shop on your way out.")
+						var/obj/machinery/guardbot_dock/dock = null
+						dock = locate() in master.loc
+						if(dock && istype(dock))
+							dock.connect_robot(master,0)
+							return
+						else
+							desired_emotion = "angry"
+							if(master.emotion != desired_emotion)
+								master.set_emotion(desired_emotion)
+							master.speak(pick("My dock... it's missing!", "Where's my dock? I was ready for a break.", "Hey you sleaze! My bed!"))
+							tour_delay = 30
 					return
 
 				if (STATE_POST_TOUR_IDLE)
 					if (tour_delay-- > 0)
 						return
-
+					desired_emotion = "happy"
+					if(master.emotion != desired_emotion)
+						master.set_emotion(desired_emotion)
 					next_beacon_id = initial(next_beacon_id)
 					state = STATE_FINDING_BEACON
 					neat_things = 0

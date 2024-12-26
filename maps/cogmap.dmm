@@ -1283,7 +1283,7 @@
 	name = "Murray";
 	req_access_txt = ""
 	},
-/obj/machinery/navbeacon/tour/cog1/tour18,
+/obj/machinery/navbeacon/tour/cog1/tour20,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
@@ -19194,7 +19194,6 @@
 /obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 4
 	},
-/obj/machinery/navbeacon/tour/cog1/tour17,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -30238,12 +30237,6 @@
 	},
 /area/station/medical/medbay/lobby)
 "cgU" = (
-/turf/simulated/floor/carpet{
-	icon_state = "red2"
-	},
-/area/station/medical/medbay/lobby)
-"cgV" = (
-/obj/machinery/navbeacon/tour/cog1/tour13,
 /turf/simulated/floor/carpet{
 	icon_state = "red2"
 	},
@@ -44289,6 +44282,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
+"ify" = (
+/obj/machinery/navbeacon/tour/cog1/tour13,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/lobby)
 "ifM" = (
 /obj/lattice{
 	dir = 4;
@@ -48231,6 +48228,10 @@
 /obj/cable/yellow,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
+"loD" = (
+/obj/machinery/navbeacon/tour/cog1/tour17,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "lpn" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -56140,6 +56141,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
+"rom" = (
+/obj/machinery/navbeacon/tour/cog1/tour19,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "roQ" = (
 /obj/machinery/light{
 	dir = 4
@@ -61882,6 +61887,13 @@
 	},
 /turf/space,
 /area/supply/delivery_point)
+"vzz" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/navbeacon/tour/cog1/tour18,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "vAd" = (
 /obj/machinery/firealarm/south,
 /obj/machinery/light/small,
@@ -100796,7 +100808,7 @@ bWD
 bWD
 cCl
 cfC
-cgV
+cgU
 cia
 fKR
 mrY
@@ -101701,7 +101713,7 @@ cfJ
 cbQ
 leZ
 ces
-cev
+ify
 cev
 cev
 cev
@@ -101995,7 +102007,7 @@ bPR
 bPR
 bSS
 bWU
-bLO
+loD
 bWY
 bYb
 bZF
@@ -102242,7 +102254,7 @@ aEh
 aUu
 aUu
 aVI
-aWT
+vzz
 aEh
 aVI
 bai
@@ -112495,7 +112507,7 @@ atw
 aBQ
 aqP
 cRg
-aqP
+rom
 aFO
 aIr
 aJD

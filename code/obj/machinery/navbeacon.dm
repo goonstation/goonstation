@@ -860,8 +860,18 @@ TYPEINFO(/obj/machinery/wirenav)
 		codes_txt = "tour;next_tour=tour18;desc=I hope you all have an excellent, safe and productive shift onboard this station! If you've enjoyed the tour, please put in a nice word about Murray if you see your captain."
 
 	tour18
-		name = "tour beacon - home"
+		name = "tour beacon - return"
 		location = "tour18"
+		codes_txt = "tour;next_tour=tour19;desc="
+
+	tour19
+		name = "tour beacon - return"
+		location = "tour19"
+		codes_txt = "tour;next_tour=tour20;desc="
+
+	tour20
+		name = "tour beacon - home"
+		location = "tour20"
 		codes_txt = "tour"
 
 /obj/machinery/navbeacon/tour/cog2
