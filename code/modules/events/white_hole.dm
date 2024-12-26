@@ -417,6 +417,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/reagent_containers/food/snacks/donkpocket_w = 1,
 			/obj/bomb_decoy = 0.4,
 			/obj/machinery/nuclearbomb/event/micronuke = 0.05,
+			'sound/effects/first_reality.ogg' = 0.5,
 		),
 		"hell" = list(
 			"fireflash" = 15,
@@ -1036,7 +1037,9 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		// we get one reroll to get something else
 		if((spawn_type in list(/obj/hotspot/gasfire, "plasma")) && source_location != src.source_location)
 			spawn_type = weighted_pick(src.spawn_probs[source_location])
-
+		if (isresource(spawn_type)) //assume it's a sound because it doesn't make sense to shove an icon in here
+			playsound(src.loc, spawn_type, 80, FALSE)
+			return src.generate_thing(source_location) //re-roll something else so we don't return null
 		if(ispath(spawn_type, /atom/movable))
 			. = new spawn_type(src.loc)
 		else if(ispath(spawn_type, /datum/projectile))

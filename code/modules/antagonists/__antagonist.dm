@@ -187,6 +187,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		RETURN_TYPE(/image)
 		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+		image.plane = PLANE_ANTAG_ICONS
 		. = image
 
 	proc/add_to_image_groups()
