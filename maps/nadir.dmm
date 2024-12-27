@@ -18418,6 +18418,7 @@
 "hOr" = (
 /obj/machinery/ore_cloud_storage_container,
 /obj/mapping_helper/access/research,
+/obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
