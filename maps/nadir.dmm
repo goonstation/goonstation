@@ -18417,6 +18417,7 @@
 /area/abandonedmedicalship/robot_trader)
 "hOr" = (
 /obj/machinery/ore_cloud_storage_container,
+/obj/mapping_helper/access/research,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
