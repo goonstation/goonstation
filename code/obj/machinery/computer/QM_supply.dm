@@ -857,6 +857,9 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 		if ("print_req_barcode")
 			if(!GET_COOLDOWN(src, "print"))
 				var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
+				if (isnull(RC))
+					var/debug_subaction = href_list["subaction"]
+					logTheThing(LOG_DEBUG, src, "Barcode print error - [debug_subaction]")
 				src.print_barcode(RC, RC.req_code)
 			else
 				boutput(usr, SPAN_ALERT("It's still cooling off from the last print!"))
