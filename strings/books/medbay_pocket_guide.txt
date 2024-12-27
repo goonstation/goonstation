@@ -165,8 +165,3 @@
 <h2>Conclusion</h2>
 <h3>Farewell</h3>
 <p>Thank you for taking the time to read this guide. Hopefully, you have learned something to help you on your medical journey, and don't ever be afraid to ask questions and learn new things!</p>
-<hr>
-<p>&nbsp;</p>
-<p><sup>First edition authored by the S.P.A.R.K. unit.</sup></p>
-<p><sup>Second edition authored by the counterfeit borgo.</sup></p>
-<p><sup>We hope to see you succeed!</sup></p>
