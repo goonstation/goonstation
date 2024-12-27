@@ -1,4 +1,9 @@
 
+(t)thu dec 26 24
+(u)LeahTheTech
+(p)21830
+(e)🆕📦💡|C-Feature, A-Game-Objects, A-Station-Systems
+(*)Data terminals can now be constructed by using a cable on a metal sheet.
 (t)wed dec 25 24
 (u)glowbold
 (p)21764
