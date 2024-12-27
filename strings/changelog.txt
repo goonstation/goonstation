@@ -1,4 +1,9 @@
 
+(t)fri dec 27 24
+(u)glowbold
+(p)21835
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Crisis Alert ACKs are much more responsive.
 (t)thu dec 26 24
 (u)LeahTheTech
 (p)21830
