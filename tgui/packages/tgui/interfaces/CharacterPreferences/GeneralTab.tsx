@@ -60,7 +60,7 @@ export const GeneralTab = () => {
           <LabeledList.Item label="Hyphenate Name">
             <Button.Checkbox
               checked={data.hyphenateName}
-              onClick={() => act('update-hyphenation')}
+              onClick={() => act('toggle-hyphenation')}
             >
               Y/N
             </Button.Checkbox>

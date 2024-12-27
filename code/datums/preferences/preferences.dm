@@ -492,7 +492,7 @@ var/list/removed_jobs = list(
 					src.profile_modified = TRUE
 					return TRUE
 
-			if ("update-hyphenation")
+			if ("toggle-hyphenation")
 				src.hyphenate_name = !src.hyphenate_name
 				src.set_real_name()
 				src.profile_modified = TRUE
