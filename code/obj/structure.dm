@@ -360,7 +360,7 @@ TYPEINFO(/obj/structure/woodwall)
 	var/projectile_gib_streak = FALSE
 
 	New()
-		src.AddComponent(/datum/component/obj_projectile_damage, src.type, src.projectile_gib, src.projectile_gib_streak)
+		src.AddComponent(/datum/component/obj_projectile_damage, /obj/decal/cleanable/wood_debris, src.projectile_gib, src.projectile_gib_streak)
 		. = ..()
 
 	virtual
@@ -444,10 +444,43 @@ TYPEINFO(/obj/structure/woodwall)
 		hit_twitch(src)
 		return
 
+	disposing()
+		var/turf/T = src.loc
+		. = ..()
+		for (var/turf/simulated/wall/auto/asteroid/A in orange(T,1))
+			A.UpdateIcon()
+
 /obj/structure/woodwall/Cross(obj/projectile/mover)
 	if (istype(mover) && !mover.proj_data.always_hits_structures && prob(src.projectile_passthrough_chance))
 		return TRUE
 	return (!density)
+
+/obj/structure/woodwall/fake_asteroid
+	name = "odd asteroid wall"
+	icon = 'icons/turf/walls/asteroid.dmi'
+	icon_state = "asteroid-map"
+	projectile_gib = FALSE
+	color = "#d1e6ff"
+	plane = PLANE_WALL
+
+	New()
+		..()
+		var/image/top_overlay = mutable_appearance('icons/turf/walls/asteroid.dmi', pick("top1", "top2", "top3"))
+		var/icon/top_icon = icon('icons/turf/walls/asteroid.dmi',"mask2[src.icon_state]")
+		top_overlay.filters += filter(type="alpha", icon=top_icon)
+		top_overlay.layer = src.layer + 0.1
+		AddOverlays(top_overlay, "ast_top_rock")
+
+	updateHealth()
+		if (_health <= 0)
+			src.visible_message(SPAN_ALERT("<b>[src] collapses!</b>"))
+			src.onDestroy()
+
+/obj/structure/woodwall/fake_asteroid/left_edge
+	icon_state = "asteroid-55"
+
+/obj/structure/woodwall/fake_asteroid/right_edge
+	icon_state = "asteroid-3"
 
 /datum/action/bar/icon/wood_repair_wall
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION

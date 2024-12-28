@@ -1,7 +1,7 @@
 // Contains:
 // - Sleeper control console
 // - Sleeper
-// - Portable sleeper (fake Port-a-Medbay)
+// - Portable sleeper (Port-a-Medbay)
 
 // I overhauled the sleeper to make it a little more viable. Aside from being a saline dispenser,
 // it was of practically no use to medical personnel and thus ignored in general. The current
@@ -680,9 +680,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 
 	New()
 		..()
-		if (!islist(portable_machinery))
-			portable_machinery = list()
-		portable_machinery.Add(src)
+		START_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		our_console = new /obj/machinery/sleep_console/compact/portable (src)
 		our_console.our_sleeper = src
 		src.homeloc = src.loc
@@ -691,9 +689,9 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
 
 	disposing()
+		STOP_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		..()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
+
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
@@ -772,16 +770,8 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 
 	New()
 		..()
-		if (!islist(portable_machinery))
-			portable_machinery = list()
-		portable_machinery.Add(src)
 		our_console = new /obj/machinery/sleep_console/compact (src)
 		our_console.our_sleeper = src
-
-	disposing()
-		..()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
 
 	attack_hand(mob/user)
 		if (our_console)

@@ -53,6 +53,9 @@ TYPEINFO(/obj/item/device/radio/intercom/ship)
 		External()
 			for(var/obj/machinery/mining_magnet/MM in range(7,src.ship))
 				linked_magnet = MM
+				if (!linked_magnet.allowed(usr))
+					boutput(usr, SPAN_ALERT("Access Denied."))
+					return
 				ui_interact(usr)
 				return null
 			boutput(usr, SPAN_ALERT("No magnet found in range of seven meters."))

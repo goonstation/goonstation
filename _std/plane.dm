@@ -23,7 +23,7 @@
 #define PLANE_OVERLAY_EFFECTS 25
 #define PLANE_MUL_OVERLAY_EFFECTS 26 //! Multiplicative blend mode
 #define PLANE_HUD 30
-#define PLANE_ANTAG_ICONS 31
+#define PLANE_ANTAG_ICONS 32
 #define PLANE_SCREEN_OVERLAYS 40
 
 /atom/movable/screen/plane_parent
@@ -162,6 +162,10 @@ client
 
 	proc/add_plane(var/atom/movable/screen/plane_parent/plane)
 		RETURN_TYPE(/atom/movable/screen/plane_parent)
+#ifdef CHECK_MORE_RUNTIMES
+		if (src.plane_parents["[plane.plane]"])
+			CRASH("Attempting to add plane parent with id [plane.plane] that is already taken by another plane!")
+#endif
 		src.plane_parents["[plane.plane]"] = plane
 		return plane
 

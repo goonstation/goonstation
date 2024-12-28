@@ -97,6 +97,7 @@ TYPEINFO(/mob/living)
 	var/metabolizes = 1
 
 	var/can_bleed = 1
+	var/regens_blood = TRUE
 	var/blood_id = null
 	var/blood_volume = 500
 	var/blood_pressure = null
