@@ -313,7 +313,7 @@
 				logTheThing(LOG_STATION, src, "[src] stator load configured to [x] by [ui.user]")
 			if("volChange")
 				var/x = params["newVal"]
-				src.flow_rate = min(max(x,1),10e5)
+				src.flow_rate = min(max(x,1),src.flow_rate_max)
 				logTheThing(LOG_STATION, src, "[src] flow rate configured to [x] by [ui.user]")
 
 	proc/ExplodeViolently()
@@ -323,6 +323,6 @@
 		src.visible_message(SPAN_ALERT("[src] tears itself apart!"))
 		//shoot turbine blades out everywhere
 		for(var/i = 1 to rand(5,20))
-			shoot_projectile_XY(src, new /datum/projectile/bullet/shrapnel/shrapnel_implant(), rand(-10,10), rand(-10,10))
+			shoot_projectile_XY(src, new /datum/projectile/bullet/wall_buster_shrapnel/turbine_blade(), rand(-10,10), rand(-10,10))
 		//destroy the turbine
 		qdel(src)
