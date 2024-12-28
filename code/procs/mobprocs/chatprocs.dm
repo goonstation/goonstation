@@ -262,7 +262,7 @@
 			var/mob/living/silicon/ai/mainframe = M
 			var/mob/message_mob = mainframe.get_message_mob()
 			if(isAIeye(message_mob))
-				message_mob.show_message(message, null, alt, alt_type, group, just_maptext, assoc_maptext) // type=null as AIeyes can't hear directly
+				message_mob.show_message(message, null, alt, alt_type, group) // type=null as AIeyes can't hear directly
 			continue
 		if (!M.client)
 			continue

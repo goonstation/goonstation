@@ -102,6 +102,7 @@
 #define SPEECH_MODIFIER_CRYPTID_PLUSHIE "cryptid_plushie"
 #define SPEECH_MODIFIER_DECTALK_BOT "bot_dectalk"
 #define SPEECH_MODIFIER_DECTALK_HEAD_SURGEON "head_surgeon_dectalk"
+#define SPEECH_MODIFIER_DISPLACED_SOUL "displaced_soul"
 #define SPEECH_MODIFIER_DOOR_CONTROL "door_control"
 #define SPEECH_MODIFIER_FLOCK_GRADIENT "flock_gradient"
 #define SPEECH_MODIFIER_INTERCOM "intercom"

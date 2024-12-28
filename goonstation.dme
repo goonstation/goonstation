@@ -1813,6 +1813,7 @@
 #include "code\modules\speech\modules\speech\modifiers\bot.dm"
 #include "code\modules\speech\modules\speech\modifiers\bradbury.dm"
 #include "code\modules\speech\modules\speech\modifiers\dectalk.dm"
+#include "code\modules\speech\modules\speech\modifiers\displaced_soul.dm"
 #include "code\modules\speech\modules\speech\modifiers\door_control.dm"
 #include "code\modules\speech\modules\speech\modifiers\flock_gradient.dm"
 #include "code\modules\speech\modules\speech\modifiers\inverted.dm"
