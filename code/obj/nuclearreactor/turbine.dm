@@ -39,7 +39,8 @@
 	/// Maximum volume of gas to process per tick
 	var/flow_rate_max = 1000
 	/// Health of the turbine - basically how many times it can grump before it explodes
-	var/health = 15
+	var/blade_health = 15
+	var/max_blade_health = 15
 
 	var/static/sound_stall = 'sound/machines/tractor_running.ogg'
 	var/static/list/grump_sound_list = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg', 'sound/impact_sounds/Metal_Clang_1.ogg', 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg')
@@ -235,7 +236,7 @@
 			if(overspeed && prob(40))
 				hit_twitch(src)
 				playsound(src, pick(src.grump_sound_list), 40, 2*rand())
-				src.health--;
+				UpdateHealthIndicators(src.blade_health--);
 
 			src.air2.merge(air_contents)
 			src.terminal.add_avail(src.lastgen)
@@ -246,8 +247,9 @@
 			src.network1?.update = TRUE
 			src.network2?.update = TRUE
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "rpm=[src.RPM]&stator=[src.stator_load]&power=[src.lastgen]&powerfmt=[engineering_notation(src.lastgen)]W")
-		if(src.health <= 0)
-			src.ExplodeViolently()
+		if(src.blade_health <= 0)
+			logTheThing(LOG_STATION, src, "[src] destroyed by overspeeding for too long")
+			src.TearApart()
 
 	suicide(mob/user)
 		user.visible_message(SPAN_ALERT("<b>[user] puts their head into blades of \the [src]!</b>"))
@@ -316,11 +318,40 @@
 				src.flow_rate = min(max(x,1),src.flow_rate_max)
 				logTheThing(LOG_STATION, src, "[src] flow rate configured to [x] by [ui.user]")
 
-	proc/ExplodeViolently()
-		//explode
-		explosion_new(src, get_turf(src), 10, TRUE, 0, 360, TRUE)
+	attackby(obj/item/I, mob/user)
+		if(isweldingtool(I))
+			if(I:try_weld(user,1))
+				if(src.blade_health < src.max_blade_health)
+					src.UpdateHealthIndicators(src.blade_health++)
+					boutput(user,"You repair some of the damage to \the [src]'s blades.")
+				else
+					boutput(user,"There's no damage to repair!")
+			return
+		.=..()
+
+	proc/UpdateHealthIndicators(prevHealth)
+		//handle particles
+		if(blade_health <= 0.75*max_blade_health)
+			if(!src.GetParticles("turbine_spark"))
+				playsound(src, 'sound/effects/electric_shock_short.ogg', 50)
+				src.UpdateParticles(new/particles/rack_spark,"turbine_spark")
+				src.visible_message(SPAN_ALERT("<b>The [src] starts sparking!</b>"))
+		else if(prevHealth <= 0.75*max_blade_health)
+			src.visible_message(SPAN_ALERT("<b>The [src] stops sparking.</b>"))
+			src.ClearSpecificParticles("turbine_spark")
+
+		if(blade_health <= 0.5*max_blade_health)
+			if(!src.GetParticles("turbine_smoke"))
+				src.UpdateParticles(new/particles/rack_smoke,"turbine_smoke")
+				src.visible_message(SPAN_ALERT("<b>The [src] begins to smoke!</b>"))
+		else if(prevHealth <=  0.5*max_blade_health)
+			src.visible_message(SPAN_ALERT("<b>The [src] stops smoking.</b>"))
+			src.ClearSpecificParticles("turbine_smoke")
+
+
+	proc/TearApart()
 		playsound(get_turf(src), 'sound/impact_sounds/Machinery_Break_1.ogg', 50, TRUE)
-		src.visible_message(SPAN_ALERT("[src] tears itself apart!"))
+		src.visible_message(SPAN_ALERT("The [src] tears itself apart!"))
 		//shoot turbine blades out everywhere
 		for(var/i = 1 to rand(5,20))
 			shoot_projectile_XY(src, new /datum/projectile/bullet/wall_buster_shrapnel/turbine_blade(), rand(-10,10), rand(-10,10))
