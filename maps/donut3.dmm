@@ -6160,12 +6160,6 @@
 	dir = 1
 	},
 /area/station/crew_quarters/kitchen)
-"bKP" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "bKS" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/railing/orange{
@@ -20208,9 +20202,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/maintenance{
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro,
 /turf/simulated/floor/wood,
 /area/station/hydroponics/bay)
 "fXD" = (
@@ -53025,9 +53017,7 @@
 /obj/mapping_helper/access/rancher,
 /obj/decal/stripe_delivery,
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/maintenance{
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro,
 /turf/simulated/floor,
 /area/station/ranch)
 "pZl" = (
@@ -129406,7 +129396,7 @@ sSb
 vzA
 vzA
 vzA
-bKP
+vzA
 eVk
 jyt
 lMh

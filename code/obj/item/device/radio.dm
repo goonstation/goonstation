@@ -723,6 +723,7 @@ TYPEINFO(/obj/item/radiojammer)
 	has_microphone = FALSE
 	frequency = R_FREQ_SECURITY
 	locked_frequency = TRUE
+	speaker_range = 0
 	secure_frequencies = list("g" = R_FREQ_SECURITY)
 	secure_classes = list("g" = RADIOCL_SECURITY)
 

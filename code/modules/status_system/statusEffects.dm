@@ -3013,3 +3013,17 @@
 		else
 			APPLY_ATOM_PROPERTY(src.owner, PROP_ATOM_ART_FISSURE_CORROSION_COUNT, "art_fissure_corrosion", src.corrosion_stacks)
 
+
+/datum/statusEffect/kudzuwalk
+	id = "kudzuwalk"
+	name = "Kudzu Walking"
+	desc = "You have a mutual understanding with kudzu, and know how to slip between the vines. Dense kudzu will not hinder your movements, and you slowly heal while standing in the vines."
+	icon_state = "photosynth"
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+	onUpdate(timePassed)
+		. = ..()
+		var/turf/T = get_turf(owner)
+		if((T.turf_flags & HAS_KUDZU) && !ON_COOLDOWN(src.owner, "kudzuwalk_heal", 2 SECONDS) && isliving(owner))
+			var/mob/living/L = owner
+			L.HealDamage("All", 0.5, 0.5, 0.25)
