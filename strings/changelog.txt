@@ -1,4 +1,10 @@
 
+(t)sun dec 29 24
+(u)TemThrush
+(p)21825
+(e)🎨|C-Sprites
+(*)Added 14 new short hairstyles into the game (again), see minor changes for the list!
+(+)New hairstyle options are; Cockatiel, Combed Fringe, Slicked Back, Asymmetrical Bob, Side-Part Curls, Messy Fringe, Aristocrat, Brushed Bob, Short Shag, Luxurious Bob, Wavy Front, Poofy Bob, Short Dreads, and Shaggy
 (t)fri dec 27 24
 (u)glowbold
 (p)21835
