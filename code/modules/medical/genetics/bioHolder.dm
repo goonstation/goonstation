@@ -792,10 +792,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				OutputGainOrLoseMsg(newEffect, TRUE)
 
 			mobAppearance.UpdateMob()
-			if(owner)
-				logTheThing(LOG_COMBAT, owner, "gains the [newEffect] mutation at [log_loc(owner)].")
-			else
-				logTheThing(LOG_DEBUG, owner, "Unowned bioHolder ref: \ref[src] ownerName: [ownerName] ownerType: [ownerType] Uid: [Uid] trying to add [newEffect].")
+			logTheThing(LOG_COMBAT, owner, "gains the [newEffect] mutation at [log_loc(owner)].")
 			return newEffect
 
 		return 0
