@@ -2509,9 +2509,7 @@
 /obj/map/light/white,
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/plating/damaged2,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "alG" = (
 /turf/simulated/floor,
 /area/radiostation/engineering)
@@ -2569,9 +2567,7 @@
 /area/bee_trader)
 "alR" = (
 /turf/simulated/floor/plating/airless,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "amc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -5013,17 +5009,13 @@
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "axK" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "axL" = (
 /obj/fakeobject/lightbulb_broken{
 	dir = 1
@@ -5053,17 +5045,13 @@
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "axP" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayg" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -5071,9 +5059,7 @@
 	icon_state = "wall3_space_end"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayh" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -5081,9 +5067,7 @@
 	icon_state = "wall3_space_end"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayw" = (
 /obj/mesh/catwalk{
 	dir = 9
@@ -5092,18 +5076,14 @@
 	dir = 8;
 	icon_state = "catwalk_cross"
 	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayx" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayy" = (
 /obj/mesh/catwalk{
 	dir = 5
@@ -5112,17 +5092,13 @@
 	dir = 4;
 	icon_state = "catwalk_cross"
 	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayz" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayA" = (
 /obj/mesh/catwalk{
 	dir = 6
@@ -5130,26 +5106,20 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	icon_state = "catwalk_cross"
 	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayB" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayC" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayF" = (
 /obj/machinery/plantpot{
 	anchored = 1
@@ -6435,18 +6405,14 @@
 /area/space)
 "aIz" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aIA" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aIB" = (
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedmedicalship)
@@ -6578,9 +6544,7 @@
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aIW" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/secure/closet/medical/medicine,
@@ -6709,9 +6673,7 @@
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aJs" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
@@ -6830,9 +6792,7 @@
 	color = "b4b4b4"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aJM" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/bot/medbot/terrifying,
@@ -6842,27 +6802,21 @@
 /obj/machinery/crusher/slow,
 /obj/map/light/white,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aJO" = (
 /obj/fakeobject/pipe{
 	dir = 10;
 	color = "b4b4b4"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aJP" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aJQ" = (
 /obj/lattice{
 	dir = 4;
@@ -6962,34 +6916,26 @@
 	icon_state = "wall3_space_end"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKd" = (
 /obj/fakeobject/pipe{
 	dir = 9;
 	color = "b4b4b4"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKg" = (
 /obj/map/light/white,
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKh" = (
 /obj/fakeobject/pipe{
 	dir = 5;
 	color = "b4b4b4"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKi" = (
 /obj/lattice,
 /obj/fakeobject/pipe{
@@ -7059,18 +7005,14 @@
 /area/abandonedmedicalship)
 "aKx" = (
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKy" = (
 /obj/submachine/ATM{
 	pixel_x = 32
 	},
 /obj/item/seed/alien,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKA" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
@@ -7123,17 +7065,13 @@
 /obj/npc/trader/robot/robuddy/salvage,
 /obj/map/light/white,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKH" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKI" = (
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -7184,20 +7122,14 @@
 	name = "GLOMAR Salvager"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKW" = (
 /obj/marker/supplymarker,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKX" = (
 /turf/simulated/floor/plating/damaged2,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKY" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor/airless/grime,
@@ -7257,21 +7189,15 @@
 	icon_state = "wall3_space_end"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aLf" = (
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/damaged2,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aLg" = (
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aLi" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/h7/storage)
@@ -10439,11 +10365,7 @@
 /turf/space,
 /area/h7/asteroid)
 "aUY" = (
-/obj/structure/woodwall{
-	color = "#CCCCCC";
-	name = "odd asteroid wall";
-	plane = -105
-	},
+/obj/structure/woodwall/fake_asteroid/left_edge,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aUZ" = (
@@ -15518,6 +15440,10 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/jucer_trader)
+"bud" = (
+/obj/structure/woodwall/fake_asteroid/right_edge,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "buU" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 6;
@@ -15917,9 +15843,7 @@
 	id = "salvage_in"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ctc" = (
 /turf/unsimulated/floor/black,
 /area/space_hive)
@@ -15983,9 +15907,7 @@
 /obj/machinery/crusher/slow,
 /obj/map/light/white,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "cEM" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/gangtag{
@@ -16989,9 +16911,7 @@
 	},
 /obj/machinery/launcher_loader/west,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "fIW" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -18439,9 +18359,7 @@
 	},
 /obj/machinery/launcher_loader/east,
 /turf/simulated/floor/plating/airless,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "jxr" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/airlock/pyro/classic{
@@ -18668,9 +18586,7 @@
 	dir = 4
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "kjj" = (
 /obj/machinery/door_control{
 	id = "zdrone_hangar";
@@ -19041,9 +18957,7 @@
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "lma" = (
 /obj/computerframe,
 /turf/simulated/floor/plating,
@@ -19725,9 +19639,7 @@
 	id = "salvage_in"
 	},
 /turf/simulated/floor/plating/airless,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "mZZ" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -20196,9 +20108,7 @@
 	name = "GLOMAR Salvager"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "oqh" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
@@ -20357,9 +20267,7 @@
 	color = "b4b4b4"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "oSY" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/black{
@@ -20947,9 +20855,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "qoJ" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 9;
@@ -21021,9 +20927,7 @@
 	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "qyc" = (
 /obj/item/sheet/wood,
 /obj/item/sheet/wood,
@@ -21208,9 +21112,7 @@
 	id = "salvage_out"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "qWV" = (
 /obj/stool/chair/couch{
 	dir = 4;
@@ -23250,9 +23152,7 @@
 	icon_state = "alt_heater"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "wru" = (
 /obj/stool/chair/dining/wood{
 	dir = 1
@@ -23647,9 +23547,7 @@
 	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "xvT" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -102225,7 +102123,7 @@ aab
 aab
 aab
 aab
-aUY
+bud
 aab
 aab
 aab

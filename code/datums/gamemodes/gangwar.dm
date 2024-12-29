@@ -2349,8 +2349,8 @@ proc/broadcast_to_all_gangs(var/message)
 	force = 1
 	w_class = W_CLASS_TINY
 	object_flags = NO_GHOSTCRITTER
-	HELP_MESSAGE_OVERRIDE({"Hitting a dead, non-rotten gang member's corpse with this item will start a short action bar.\n
-	On completion, if the syringe is not promptly removed from the corpse, it will come back to life, disoriented, at low health."})
+	HELP_MESSAGE_OVERRIDE({"Using this on a dying gang member, or their unrotten corpse, will start a short action bar.\n
+	On completion, if the syringe is not promptly removed, they will come back to life, disoriented, at low health."})
 
 	attack(mob/O, mob/user)
 		if (istype(O, /mob/living/carbon/human))
@@ -2358,13 +2358,16 @@ proc/broadcast_to_all_gangs(var/message)
 			if (!H.get_gang() && !H.ghost?.get_gang())
 				boutput(user, SPAN_ALERT("They aren't part of a gang! Janktank is <b><i>too cool</i></b> for them."))
 				return
+			if (H == user)
+				boutput(user, SPAN_ALERT("You're not jamming that in yourself!"))
+				return
 			if (H.decomp_stage)
 				boutput(user, SPAN_ALERT("It's too late, they're rotten."))
 				return
 			if (H.mind?.get_player()?.dnr || H.ghost?.mind?.get_player()?.dnr)
 				boutput(user, SPAN_ALERT("Seems they don't want to come back. Huh."))
 				return
-			if (isdead(H))
+			if (isdead(H) || H.health < 0)
 				actions.start(new /datum/action/bar/icon/janktanktwo(user, H, src),user)
 
 	/// heals and revives a human to JANKTANK2_DESIRED_HEALTH_PCT percent
@@ -2410,8 +2413,9 @@ proc/broadcast_to_all_gangs(var/message)
 			H.visible_message(SPAN_ALERT("<b>[H]</b> [pick("barfs up","spews", "projectile vomits")] as they're wrenched cruelly back to life!"),SPAN_ALERT("<b>[pick("JESUS CHRIST","THE PAIN!","IT BURNS!!")]</b>"))
 		SPAWN(0) //some part of the vomit proc makes these duplicate
 			H.reagents.clear_reagents()
-			H.reagents.add_reagent("atropine", 2.5) //don't slip straight back into crit
+			H.reagents.add_reagent("atropine", 2.5) //don't slip straight back into crit, get dizzy
 			H.reagents.add_reagent("synaptizine", 5)
+			H.reagents.add_reagent("proconvertin", 5)
 			H.reagents.add_reagent("ephedrine", 5)
 			H.reagents.add_reagent("salbutamol", 10) //don't die immediately in a vacuum
 			H.reagents.add_reagent("space_drugs", 5) //heh

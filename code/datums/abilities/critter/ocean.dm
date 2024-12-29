@@ -5,6 +5,7 @@
 	cooldown = 3 SECONDS
 	start_on_cooldown = 0
 	icon_state = "tears"
+	do_logs = FALSE
 
 /datum/targetable/critter/bury_hide/cast(atom/target)
 	if (..())
