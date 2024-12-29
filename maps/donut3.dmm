@@ -17936,7 +17936,7 @@
 /obj/disposalpipe/segment/ejection,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
-/obj/mapping_helper/access/security,
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "foT" = (
