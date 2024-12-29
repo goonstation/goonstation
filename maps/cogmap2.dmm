@@ -68634,8 +68634,8 @@
 /obj/machinery/door/airlock/pyro/security{
 	name = "Trial Chamber"
 	},
-/obj/mapping_helper/access/security,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor,
 /area/station/chapel/sanctuary)
 "qBp" = (

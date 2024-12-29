@@ -33176,7 +33176,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
-/obj/mapping_helper/access/brig,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
@@ -41999,7 +41999,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
-/obj/mapping_helper/access/brig,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
@@ -47269,7 +47269,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
-/obj/mapping_helper/access/brig,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
