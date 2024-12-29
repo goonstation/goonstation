@@ -317,7 +317,7 @@
 		if("Chef", "Sous-Chef")
 			return list(access_kitchen)
 		if("Bartender")
-			return list(access_bar)
+			return list(access_bar, access_carrypermit)
 		if("Waiter")
 			return list(access_bar, access_kitchen)
 		if("Clown", "Boxer", "Barber", "Mime", "Dungeoneer")
