@@ -59152,12 +59152,12 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "hopdesk";
 	enter_id = "outer";
 	name = "HOP Desk"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "xdq" = (
