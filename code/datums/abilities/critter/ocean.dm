@@ -11,7 +11,7 @@
 		return 1
 
 	var/turf/T = get_turf(holder.owner)
-	if (!istype(T) || T.turf_flags & CAN_BE_SPACE_SAMPLE || T.throw_unlimited)
+	if (!istype(T) || istype_exact(T, /turf/space))
 		boutput(holder.owner, SPAN_NOTICE("You can't bury yourself on this kind of turf!"))
 		return 1
 	if(T == holder.owner.loc)
