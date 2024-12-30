@@ -91,7 +91,7 @@ export const AlertModal = () => {
       height={windowHeight}
       title={
         typedContentWindow
-          ? (typedContentWindow.title ?? 'Antagonist Tips')
+          ? typedContentWindow.title ?? 'Antagonist Tips'
           : title
       }
       width={windowWidth}
@@ -119,6 +119,14 @@ export const AlertModal = () => {
           }
         }}
       >
+        {!!cant_interact && cant_interact_value && (
+          <Box position="absolute" top={1} right={1}>
+            <ProgressBar value={cant_interact}>
+              {round((cant_interact_value / 10) * cant_interact, 0)} seconds
+              remaining
+            </ProgressBar>
+          </Box>
+        )}
         <Section fill>
           <Stack fill vertical>
             <Stack.Item grow m={1}>
@@ -141,14 +149,6 @@ export const AlertModal = () => {
             </Stack.Item>
           </Stack>
         </Section>
-        {!!cant_interact && cant_interact_value && (
-          <Box position="absolute" top={1} right={1}>
-            <ProgressBar value={cant_interact}>
-              {round((cant_interact_value / 10) * cant_interact, 0)} seconds
-              remaining
-            </ProgressBar>
-          </Box>
-        )}
       </Window.Content>
     </Window>
   );
@@ -166,12 +166,12 @@ const ButtonDisplay = (props) => {
 
   return (
     <Flex align="center" direction={'row'} fill justify="space-around" wrap>
-      {items?.map((button, index) => (
-        <Flex.Item key={index}>
+      {items?.map((button) => (
+        <Flex.Item key={button}>
           <AlertButton
             button={button}
-            id={index.toString()}
-            selected={selected === index}
+            id={button}
+            selected={selected === items.indexOf(button)}
             disabled={cantInteract > 0}
           />
         </Flex.Item>
