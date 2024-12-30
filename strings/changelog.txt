@@ -1,4 +1,9 @@
 
+(t)mon dec 30 24
+(u)TemThrush
+(p)21863
+(e)🎨|C-Sprites
+(+)Additional hair bangs for your layering needs, they'll have "Bangs:" before their name: Cockatiel, Combed Fringe, Eye cover, Wavy, Tied, Tied Long, Blunt Side,  Emo, Lopsided, Curtain
 (t)sun dec 29 24
 (u)FlameArrow57
 (p)21819
