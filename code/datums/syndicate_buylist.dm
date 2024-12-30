@@ -284,7 +284,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	name = "Wrestling Belt"
 	items = list(/obj/item/storage/belt/wrestling)
 	cost = 7
-	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past. Wearing it unlocks a number of wrestling moves, which can be accessed in a separate command tab."
+	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past. Wearing it unlocks a number of wrestling moves."
 	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
