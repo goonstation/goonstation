@@ -1592,9 +1592,6 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		icon_state = "diving_suit-eng"
 		item_state = "diving_suit-eng"
 
-TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
-	mats = 45 //should not be cheap to make at mechanics, increased from 15.
-
 /obj/item/clothing/suit/space/industrial
 #ifdef MAP_OVERRIDE_NADIR
 	desc = "Armored, immersion-tight suit. Protects from a wide gamut of environmental hazards, including radiation and explosions."
@@ -1642,6 +1639,10 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		..()
 		setProperty("space_movespeed", 0)
 
+TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
+	mats = list("metal_superdense" = 15,
+				"conductive_high" = 15,
+				"crystal_dense" = 5)
 /obj/item/clothing/suit/space/industrial/syndicate
 	name = "\improper Syndicate command armor"
 	desc = "An armored space suit, not for your average expendable chumps. No sir."
