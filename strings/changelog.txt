@@ -1,5 +1,9 @@
 
 (t)sun dec 29 24
+(u)FlameArrow57
+(p)21819
+(e)🆕📄|C-Feature, A-UI
+(*)Added a "Hyphenate Name" option to the Character Setup window, which will cause your character appearance name to be set to "FirstName-MiddleName-LastName", or "FirstName-LastName" if no middle name. All three names are still used for purposes of security records and the like.
 (u)TemThrush
 (p)21825
 (e)🎨|C-Sprites
