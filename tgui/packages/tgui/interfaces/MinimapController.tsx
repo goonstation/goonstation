@@ -33,7 +33,7 @@ export interface MinimapControllerData {
   pos_y: number;
 }
 
-interface MinimapMarkerData {
+export interface MinimapMarkerData {
   name: string;
   pos: string;
   visible: BooleanLike;
