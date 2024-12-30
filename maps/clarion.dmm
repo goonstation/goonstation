@@ -1972,7 +1972,7 @@
 	name = "Public Market";
 	opacity = 0
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/market)
 "asV" = (
 /obj/cable{
@@ -5883,7 +5883,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/south)
 "aPw" = (
-/turf/simulated/floor/redblack/corner,
+/turf/unsimulated/floor/blueblack/corner,
 /area/station/hallway/primary/south)
 "aPx" = (
 /obj/shrub,
@@ -11571,10 +11571,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
-"bzv" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/black,
-/area/station/hangar/escape)
 "bzw" = (
 /obj/machinery/shieldgenerator/meteorshield,
 /turf/simulated/floor/plating,
@@ -15019,7 +15015,9 @@
 	pixel_y = 10
 	},
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "yellowblack"
+	},
 /area/station/hangar/main)
 "dhJ" = (
 /obj/machinery/door_control/antagscanner{
@@ -17399,7 +17397,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/janitor,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "fho" = (
 /obj/machinery/floorflusher/solitary,
@@ -20490,7 +20488,7 @@
 /obj/machinery/cashreg,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_mechanic,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "hyE" = (
 /obj/cable{
@@ -21342,7 +21340,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/white,
+/turf/simulated/floor/plating,
 /area/station/medical/research)
 "icv" = (
 /obj/disposalpipe/segment/mail,
@@ -26396,7 +26394,7 @@
 /obj/machinery/door/airlock/pyro/medical,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
-/turf/simulated/floor/white,
+/turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment)
 "lLu" = (
 /obj/table/reinforced/auto,
@@ -28922,6 +28920,14 @@
 /obj/landmark/kudzu,
 /turf/simulated/floor/black,
 /area/station/security/beepsky)
+"nDY" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
+/area/space)
 "nEg" = (
 /obj/disposalpipe/segment/mail,
 /obj/stool/chair,
@@ -28964,7 +28970,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/morgue,
-/turf/simulated/floor/sanitary/white,
+/turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "nFI" = (
 /obj/disposalpipe/segment{
@@ -30524,7 +30530,7 @@
 	},
 /obj/mapping_helper/access/medlab,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/white,
 /area/station/medical/research)
 "oOb" = (
 /obj/disposalpipe/segment/mail,
@@ -34619,7 +34625,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/machinery/door/airlock/pyro/medical,
-/turf/simulated/floor/wood/two,
+/turf/simulated/floor/plating,
 /area/station/medical/staff)
 "rVO" = (
 /obj/machinery/light/emergency,
@@ -35252,7 +35258,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/black,
 /area/station/chapel/funeral_parlor)
 "stg" = (
 /obj/cable/yellow{
@@ -35423,12 +35429,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
-"sBL" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor/blackwhite/side{
-	dir = 4
-	},
-/area/station/hallway/primary/southwest)
 "sBM" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
@@ -42759,7 +42759,7 @@
 	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "xXu" = (
 /obj/machinery/firealarm/east,
@@ -75080,7 +75080,7 @@ waq
 vTP
 wdx
 bIn
-sBL
+bsI
 hrx
 aHa
 bbt
@@ -76526,7 +76526,7 @@ cQJ
 wNk
 kjz
 rVO
-bzv
+dUY
 jQB
 rAy
 wUD
@@ -76828,7 +76828,7 @@ cQJ
 wNk
 kjz
 rVO
-bzv
+dUY
 jQB
 rAy
 iJF
@@ -85582,7 +85582,7 @@ aaa
 aaa
 aaa
 aaa
-xCU
+qPk
 bzy
 bzy
 bzy
@@ -85886,7 +85886,7 @@ aaa
 aaa
 eHQ
 fLV
-cQJ
+nDY
 bzy
 aaI
 get
