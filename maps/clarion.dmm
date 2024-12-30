@@ -5676,7 +5676,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/south)
 "aPw" = (
-/turf/unsimulated/floor/blueblack/corner,
+/turf/simulated/floor/blueblack/corner,
 /area/station/hallway/primary/south)
 "aPx" = (
 /obj/shrub,
