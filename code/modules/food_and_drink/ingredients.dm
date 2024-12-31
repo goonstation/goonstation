@@ -159,12 +159,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	desc = "What the fuck is this??"
 	icon_state = "meat-mystery"
 	var/cybermeat = 0
+	var/splatted = FALSE
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		if (src.cybermeat)
 			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
-			if (istype(T))
+			if (istype(T) && !splatted)
+				splatted = TRUE
 				make_cleanable(/obj/decal/cleanable/oil,T)
 				..()
 			else

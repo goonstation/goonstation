@@ -5,11 +5,6 @@
 		x:block_vision \
 	)
 
-//Put any items that NPCs physically cannot pickup here
-#define IS_NPC_ILLEGAL_ITEM(x) ( \
-		istype(x, /obj/item/body_bag) && x.w_class >= W_CLASS_BULKY \
-	)
-
 #define IS_NPC_CLOTHING(x) ( \
 		( \
 			istype(x, /obj/item/clothing) || \
@@ -954,8 +949,8 @@
 			W.Attackby(src.r_hand, src)
 			acted = 1
 
-		if((locate(/obj/grille) in get_step(src,dir))  && !acted)
-			var/obj/grille/G = (locate(/obj/grille) in get_step(src,dir))
+		if((locate(/obj/mesh/grille) in get_step(src,dir))  && !acted)
+			var/obj/mesh/grille/G = (locate(/obj/mesh/grille) in get_step(src,dir))
 			if(!G.ruined)
 				G.Attackby(src.r_hand, src)
 				acted = 1
@@ -985,4 +980,3 @@
 
 #undef IS_NPC_HATED_ITEM
 #undef IS_NPC_CLOTHING
-#undef IS_NPC_ILLEGAL_ITEM

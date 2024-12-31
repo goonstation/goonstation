@@ -135,8 +135,8 @@ TYPEINFO(/obj/strip_door)
 			T.UpdateIcon()
 		for (var/obj/window/auto/O in orange(1,src))
 			O.UpdateIcon()
-		for (var/obj/grille/G in orange(1,src))
-			G.UpdateIcon()
+		for (var/obj/mesh/M in orange(1,src))
+			M.UpdateIcon()
 
 	Cross(atom/A)
 		if (!src.flap_material)  // You Shall Pass! But Only Because I Have No Flaps!

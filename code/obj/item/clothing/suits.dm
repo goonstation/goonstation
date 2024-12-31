@@ -1476,6 +1476,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	april_fools
 		icon_state = "espace-alt"
 		item_state = "es_suit-alt"
+		wear_state = "espace-alt"
 
 /obj/item/clothing/suit/space/neon
 	name = "neon space suit"
@@ -2042,18 +2043,26 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 
 	New()
 		..()
-		src.reflection = image(src.wear_image_icon, "[src.icon_state]-overlay")
-		src.reflection.plane = PLANE_SELFILLUM
-		src.reflection.color = rgb(255, 255, 255)
-		src.reflection.alpha = 200
 
 	equipped(mob/user, slot)
 		..()
+		src.update_reflection(user)
 		user.UpdateOverlays(src.reflection, "reflection")
 
 	unequipped(mob/user)
 		. = ..()
 		user.ClearSpecificOverlays("reflection")
+
+	proc/update_reflection(var/mob/user)
+		if (!ishuman(user))
+			return
+		var/mob/living/carbon/human/H = user
+		var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
+		var/overlay_icon = typeinfo.clothing_icons["overcoats"] ? typeinfo.clothing_icons["overcoats"] : src.wear_image_icon
+		src.reflection = image(overlay_icon, "[src.icon_state]-overlay")
+		src.reflection.plane = PLANE_SELFILLUM
+		src.reflection.color = rgb(255, 255, 255)
+		src.reflection.alpha = 200
 
 	setupProperties()
 		..()
@@ -2214,10 +2223,11 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	item_state = "snowcoat"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_SHOES
+	var/style = "snowcoat"
 
 	New()
 		..()
-		src.AddComponent(/datum/component/toggle_hood, hood_style = "snowcoat")
+		src.AddComponent(/datum/component/toggle_hood, hood_style = src.style)
 
 	setupProperties()
 		..()
@@ -2234,6 +2244,10 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 			setProperty("coldprot", 70)
 		else
 			setProperty("coldprot", 50)
+
+/obj/item/clothing/suit/snow/grey
+	icon_state = "snowcoat-grey"
+	style = "snowcoat-grey"
 
 /obj/item/clothing/suit/jean_jacket
 	name = "jean jacket"

@@ -502,7 +502,7 @@
 	},
 /area/marsoutpost)
 "bq" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
 /obj/window/reinforced/north,
@@ -529,7 +529,7 @@
 	},
 /area/mars)
 "bu" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/south,
 /obj/window/reinforced/west,
@@ -980,7 +980,7 @@
 	},
 /area/marsoutpost)
 "cs" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/auto/reinforced,
 /turf/unsimulated/floor{
 	tag = "icon-plating_dusty1";

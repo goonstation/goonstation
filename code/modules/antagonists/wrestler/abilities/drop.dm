@@ -50,7 +50,7 @@
 				if (O == M) continue
 				if (O == target) continue
 				if (O.opacity) continue
-				if (istype(O, /obj/window) || istype(O, /obj/grille))
+				if (istype(O, /obj/window) || istype(O, /obj/mesh/grille))
 					continue
 				else
 					surface = O

@@ -1771,6 +1771,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	var/state = src.item_state ? src.item_state + "-[hand]" : (src.icon_state ? src.icon_state + "-[hand]" : hand)
 	if(!(state in icon_states(src.inhand_image_icon)))
+		// stack_trace("ZeWaka {TEMP}: [src] has no icon state [state] in [src.inhand_image_icon] | iconstate: [src.icon_state] | itemstate: [src.item_state]")
 		state = src.item_state ? src.item_state + "-L" : (src.icon_state ? src.icon_state + "-L" : "L")
 
 	src.inhand_image.icon_state = state

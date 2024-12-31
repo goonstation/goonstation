@@ -433,6 +433,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/toggle_pcap_kick_messages,
 		/client/proc/set_round_req_bypass,
 		/client/proc/test_spacebee_command,
+		/client/proc/delete_landmarks,
 		),
 
 	7 = list(
@@ -2355,6 +2356,9 @@ var/list/fun_images = list()
 		if ("Activate Artifact")
 			var/obj/object = A
 			object.ArtifactActivated()
+		if ("Object Speak")
+			var/obj/object = A
+			object.admin_command_obj_speak()
 
 	src.update_cursor()
 
@@ -2692,3 +2696,17 @@ var/list/fun_images = list()
 	SHOW_VERB_DESC
 
 	spacebee_extension_system.process_raw_command(command, usr.key)
+
+/client/proc/delete_landmarks()
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Delete landmarks"
+	set desc = "Delete all landmarks of a specific type."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	var/choice = tgui_input_list(src, "Choose landmark category", "Choose landmark", global.landmarks)
+	if (!choice)
+		return
+	for (var/turf/landmark in global.landmarks[choice])
+		boutput(src, "Deleting landmark at [log_loc(landmark)]")
+	global.landmarks[choice] = list()

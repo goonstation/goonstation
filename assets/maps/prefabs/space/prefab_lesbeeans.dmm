@@ -160,7 +160,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "sm" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/airless/plating/catwalk,
 /area/prefab/lesbeeans/exterior)
 "tG" = (

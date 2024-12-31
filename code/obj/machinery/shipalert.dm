@@ -30,6 +30,9 @@ TYPEINFO(/obj/machinery/shipalert)
 		..()
 		src.name = "[capitalize(station_or_ship())] Alert Button"
 		UnsubscribeProcess()
+
+		// Global signals that declare red alert automatically
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_NUKE_PLANTED, PROC_REF(activate))
 		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_AUTH, PROC_REF(activate))
 		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_UNAUTH, PROC_REF(deactivate))
 
