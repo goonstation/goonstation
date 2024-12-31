@@ -2196,6 +2196,7 @@
 "ww" = (
 /obj/machinery/ore_cloud_storage_container,
 /obj/machinery/light/incandescent,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "wx" = (
@@ -5522,6 +5523,7 @@
 /obj/machinery/computer/magnet{
 	dir = 8
 	},
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/scorched2,
 /area/mining/magnet_control)
 "SR" = (

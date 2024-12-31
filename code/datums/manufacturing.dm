@@ -864,6 +864,16 @@
 	time = 5 SECONDS
 	category = "Tool"
 
+/datum/manufacture/portable_dispenser
+	name = "Portable Dispenser"
+	item_requirements = list("molitz" = 3,
+							 "metal" = 2,
+							 "miracle" = 2)
+	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/dispenser)
+	create = 1
+	time = 5 SECONDS
+	category = "Tool"
+
 /datum/manufacture/beaker_lid_box
 	name = "Beaker Lid Box"
 	item_requirements = list("rubber" = 2)
