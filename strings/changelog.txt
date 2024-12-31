@@ -1,5 +1,10 @@
 
 (t)tue dec 31 24
+(u)JORJ949
+(p)21708
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Security data disks are no longer read-only, allowing them to be sabotaged without needing to be outright destroyed.
+(+)The Head of Security's disk contains the Heads netpass.
 (u)glowbold
 (p)21874
 (e)⚖🧱|C-Balance, A-Materials
