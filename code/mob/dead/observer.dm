@@ -445,7 +445,6 @@
 		if (QDELETED(src.AH_we_spawned_with))
 			if (QDELETED(src.bioHolder.mobAppearance))
 				CRASH("Ghostize called on a mob [src] with bioHolder but no non-null appearance holders")
-				return
 			else
 				temp_holder = src.bioHolder.mobAppearance
 		else
