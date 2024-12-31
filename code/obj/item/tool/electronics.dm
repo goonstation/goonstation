@@ -453,7 +453,7 @@
 		for (var/obj/item_type as anything in src.scanned)
 			if (initial(item_type.is_syndicate))
 				continue
-			. += "<br>-\proper[initial(item_type.name)]"
+			. += "<br>-" + "\proper[initial(item_type.name)]"
 
 	proc/pre_attackby(obj/item/parent_item, atom/A, mob/user)
 		if (user.a_intent == INTENT_HARM)
