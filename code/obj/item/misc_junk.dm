@@ -797,7 +797,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 
 	attack_hand(mob/user)
 		if (src.open)
-			var/amount = round(input("How much cash do you want to take from the briefcase?") as null|num)
+			var/amount = round(tgui_input_number(user, "How much cash do you want to take from the briefcase?", "Cash Briefcase", src.balance, src.balance))
 			if (isnum_safe(amount))
 				if (amount > src.balance || amount < 1)
 					boutput(user, SPAN_ALERT("You wish!"))
