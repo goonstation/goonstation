@@ -1,5 +1,9 @@
 
 (t)mon dec 30 24
+(u)KevinFromHP
+(p)21832
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)Added the Faustian Bargain Kit to the Lawyer's Syndicate Items.
 (u)TemThrush
 (p)21863
 (e)🎨|C-Sprites
