@@ -1,4 +1,9 @@
 
+(t)tue dec 31 24
+(u)glowbold
+(p)21874
+(e)⚖🧱|C-Balance, A-Materials
+(+)Censorium's material properties reflect the composition of its materials.
 (t)mon dec 30 24
 (u)KevinFromHP
 (p)21832
