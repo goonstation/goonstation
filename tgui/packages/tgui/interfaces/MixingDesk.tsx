@@ -103,7 +103,7 @@ export const MixingDesk = () => {
         e.stopPropagation();
       }
     },
-    [act, say_popup],
+    [act, say_popup, setMessage],
   );
 
   return (

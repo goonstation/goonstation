@@ -20,6 +20,7 @@ export interface CharacterPreferencesData {
   nameFirst: string;
   nameMiddle: string;
   nameLast: string;
+  hyphenateName: BooleanLike;
   robotName: string;
   randomName: number;
   gender: string;

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use './base.scss';
+@use 'base';
 
 html,
 body {
@@ -29,8 +29,12 @@ body {
   box-sizing: inherit;
 }
 
-// prettier-ignore
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   display: block;
   margin: 0;
   padding: 6px 0;

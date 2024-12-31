@@ -187,13 +187,20 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 	step_priority = STEP_PRIORITY_LOW
 	abilities = list(/obj/ability_button/magboot_toggle)
 
-	proc/activate()
+	proc/activate(mob/M)
+		if (src.check_move(M, get_turf(M), null, TRUE))
+			boutput(M, SPAN_ALERT("There's nothing to anchor to!"))
+			playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 1)
+			return FALSE
 		src.magnetic = 1
 		src.setProperty("movespeed", 0.5)
 		src.setProperty("disorient_resist", 10)
 		step_sound = "step_lattice"
 		step_lots = TRUE
 		playsound(src.loc, 'sound/items/miningtool_on.ogg', 30, 1)
+		RegisterSignal(src.loc, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(check_move))
+		return TRUE
+
 	proc/deactivate()
 		src.magnetic = 0
 		src.delProperty("movespeed")
@@ -201,6 +208,21 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 		step_sound = "step_plating"
 		step_lots = FALSE
 		playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 1)
+		UnregisterSignal(src.loc, COMSIG_MOVABLE_PRE_MOVE)
+
+	proc/check_move(mob/mover, turf/T, direction, quiet = FALSE)
+		//is the turf we're on solid?
+		if (!istype(T) || !(T.turf_flags & CAN_BE_SPACE_SAMPLE || T.throw_unlimited))
+			return FALSE
+		//this is kind of expensive to put on Move BUT in my defense it will only happen for magboots wearers standing on a space tile
+		//what are the chances they're also next to botany's server lag weed pile at the same time?
+		for (var/atom/A in oview(1,T))
+			if (A.stops_space_move)
+				if (!quiet && iswall(A) && prob(30)) //occasionally play a clonk for the people inside to hear
+					playsound(A, src.step_sound, 50, 1, extrarange = global.footstep_extrarange)
+				return FALSE
+		//if we've got here then there would be nothing stopping us drifting off, so block the move
+		return TRUE
 
 TYPEINFO(/obj/item/clothing/shoes/hermes)
 	mats = 0
@@ -434,7 +456,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 		if (prob(10))
 			if (ON_COOLDOWN(src, "EXPLOSION", 1 SECOND))
 				return
-			var/turf/explosion_target = get_turf(pick(view(8, user)))
+			var/turf/explosion_target = get_turf(pick(oview(9, user)))
 			new /obj/effects/explosion/dangerous(explosion_target)
 
 /obj/item/clothing/shoes/ziggy

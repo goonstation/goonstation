@@ -2,13 +2,11 @@
 // - Portable machinery remote parent
 // - Broken decal remote
 // - Port-a-Brig & remote
-// - Port-a-Medbay & remote
+// - Port-a-Medbay remote (Port-a-Medbay in sleeper.dm)
 // - Port-a-NanoMed & remote
 // - Port-a-Sci & remote
 
 ///////////////////////////// Remote parent ///////////////////////////////////
-
-var/global/list/portable_machinery = list() // stop looping through world for things you SHITMONGERS
 
 // Adapted from the PDA program in portable_machinery_control.dm (Convair880).
 TYPEINFO(/obj/item/remote/porter)
@@ -194,7 +192,7 @@ TYPEINFO(/obj/item/remote/porter)
 		if (!src)
 			return
 
-		for (var/obj/machinery/port_a_brig/M in portable_machinery)
+		for (var/obj/machinery/port_a_brig/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -214,7 +212,7 @@ TYPEINFO(/obj/item/remote/porter)
 		if (!src)
 			return
 
-		for (var/obj/machinery/sleeper/port_a_medbay/M in portable_machinery)
+		for (var/obj/machinery/sleeper/port_a_medbay/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -239,7 +237,7 @@ TYPEINFO(/obj/item/remote/porter/port_a_sci)
 		if (!src)
 			return
 
-		for (var/obj/storage/closet/port_a_sci/M in portable_machinery)
+		for (var/obj/storage/closet/port_a_sci/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			/*var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue*/
@@ -259,7 +257,7 @@ TYPEINFO(/obj/item/remote/porter/port_a_sci)
 		if (!src)
 			return
 
-		for (var/obj/machinery/vending/port_a_nanomed/M in portable_machinery)
+		for (var/obj/machinery/vending/port_a_nanomed/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -279,7 +277,7 @@ TYPEINFO(/obj/item/remote/porter/port_a_sci)
 		if (!src)
 			return
 
-		for (var/obj/machinery/computer/genetics/portable/M in portable_machinery)
+		for (var/obj/machinery/computer/genetics/portable/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -299,7 +297,7 @@ TYPEINFO(/obj/item/remote/porter/port_a_sci)
 		if (!src)
 			return
 
-		for (var/obj/submachine/laundry_machine/portable/LP in portable_machinery)
+		for (var/obj/submachine/laundry_machine/portable/LP in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/T = get_turf(LP)
 			if (isrestrictedz(T?.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -338,15 +336,12 @@ TYPEINFO(/obj/machinery/port_a_brig)
 	New()
 		..()
 		UnsubscribeProcess()
-		if (!islist(portable_machinery))
-			portable_machinery = list()
-		portable_machinery.Add(src)
+		START_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		build_icon()
 		src.homeloc = src.loc
 
 	disposing()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		..()
 
 	examine()
@@ -555,154 +550,6 @@ TYPEINFO(/obj/machinery/port_a_brig)
 	<i>Notice, the Port-A-Brig teleporter system may fail if you are not in a open space.</i><br>
 	<font size=1>This technology produced under license from  Quantum Movement Inc, LTD.</font>"}
 
-////////////////////////////////////////// Port-a-Medbay /////////////////////////////////////
-/* replaced with an actual sleeper, see sleeper.dm
-TYPEINFO(/obj/machinery/port_a_medbay)
-	mats = 30
-
-/obj/machinery/port_a_medbay
-	name = "Port-A-Medbay"
-	icon = 'icons/obj/porters.dmi'
-	icon_state = "sleeper"
-	var/image/image_lid = null
-	desc = "An emergency transportation device for critically injured patients."
-	density = 1
-	anchored = UNANCHORED
-	p_class = 1.2
-	event_handler_flags = USE_FLUID_ENTER
-	var/mob/occupant = null
-	var/homeloc = null
-
-	New()
-		..()
-		if (!islist(portable_machinery))
-			portable_machinery = list()
-		portable_machinery.Add(src)
-		UnsubscribeProcess()
-		build_icon()
-		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
-		src.homeloc = src.loc
-
-	disposing()
-		..()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
-
-	disposing()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
-		..()
-
-	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
-		..()
-		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
-
-	Cross(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
-		if (air_group || (height==0))
-			return 1
-		..()
-
-	examine()
-		..()
-		boutput(usr, "Home turf: [get_area(src.homeloc)].")
-		return
-
-	// Could be useful (Convair880).
-	mouse_drop(over_object, src_location, over_location)
-		..()
-		if (isobserver(usr) || isintangible(usr))
-			return
-		if (usr == src.occupant || !isturf(usr.loc))
-			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown"))
-			return
-		if (BOUNDS_DIST(src, usr) > 0)
-			usr.show_text("You are too far away to do this!", "red")
-			return
-		if (BOUNDS_DIST(over_object, src) > 0)
-			usr.show_text("The [src.name] is too far away from the target!", "red")
-			return
-		if (!istype(over_object,/turf/simulated/floor/))
-			usr.show_text("You can't set this target as the home location.", "red")
-			return
-
-		if (alert("Set selected turf as home location?",,"Yes","No") == "Yes")
-			src.homeloc = over_object
-			usr.visible_message(SPAN_NOTICE("<b>[usr.name]</b> changes the [src.name]'s home turf."), SPAN_NOTICE("New home turf selected: [get_area(src.homeloc)]."))
-			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
-			logTheThing(LOG_STATION, usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
-		return
-
-	allow_drop()
-		return 0
-
-	relaymove(mob/user as mob)
-		if (user && (!isalive(user) || user.getStatusDuration("stunned") != 0))
-			return
-		src.go_out()
-		return
-
-	attackby(obj/item/W, mob/user as mob)
-		if (istype(W, /obj/item/grab))
-			var/obj/item/grab/G = W
-			if (!G.affecting)
-				return
-			if (!ishuman(G.affecting))
-				boutput(user, SPAN_ALERT("You can't find a way to fit [G.affecting] into [src]!"))
-				return
-			if (src.occupant)
-				boutput(user, SPAN_ALERT("The Port-A-Medbay is already occupied!"))
-				return
-			var/mob/living/carbon/human/H = G.affecting
-			H.set_loc(src)
-			src.occupant = H
-			for(var/obj/O in src)
-				O.set_loc(src.loc)
-			src.add_fingerprint(user)
-			build_icon()
-			qdel(W)
-
-	proc/build_icon()
-		ENSURE_IMAGE(src.image_lid, src.icon, "sleeperlid[!isnull(occupant)]")
-		src.UpdateOverlays(src.image_lid, "lid")
-
-	proc/go_out()
-		if(!( src.occupant))
-			return
-		src.occupant.set_loc(src.loc)
-		src.occupant = null
-		build_icon()
-		for (var/obj/item/I in src) //Sometimes people drop stuff OKAY
-			I.set_loc(src.loc)
-		return
-
-	verb/move_eject()
-		set src in oview(1)
-		set category = "Local"
-		if (!isalive(usr) || usr.getStatusDuration("stunned") != 0)
-			return
-		src.go_out()
-		add_fingerprint(usr)
-		return
-
-	verb/move_inside()
-		set src in oview(1)
-		set category = "Local"
-		if (!ishuman(usr))
-			boutput(usr, SPAN_ALERT("You can't seem to fit into \the [src]."))
-			return
-		if (src.occupant)
-			boutput(usr, SPAN_ALERT("The Port-A-Medbay is already occupied!"))
-			return
-		if (!isalive(usr) || usr.getStatusDuration("stunned") != 0)
-			return
-		usr.remove_pulling()
-		usr.set_loc(src)
-		src.occupant = usr
-		src.add_fingerprint(usr)
-		build_icon()
-		return
-*/
 /////////////////////////////////////// Port-a-Sci ///////////////////////////////////////////
 
 /obj/storage/closet/port_a_sci
@@ -726,9 +573,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 
 	New()
 		..()
-		if (!islist(portable_machinery))
-			portable_machinery = list()
-		portable_machinery.Add(src)
+		START_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 
 		src.homeloc = src.loc
 
@@ -737,8 +582,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 						- list(/mob/living/critter/spider/ice/queen)
 
 	disposing()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		..()
 
 	examine()
@@ -889,9 +733,7 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 	New()
 		..()
 		UnsubscribeProcess()
-		if (!islist(portable_machinery))
-			portable_machinery = list()
-		portable_machinery.Add(src)
+		START_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
@@ -928,8 +770,7 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 
 
 	disposing()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		..()
 
 	examine()
@@ -987,12 +828,11 @@ TYPEINFO(/obj/submachine/laundry_machine/portable)
 
 	New()
 		. = ..()
-		LAZYLISTADD(portable_machinery, src)
+		START_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		src.homeloc = get_turf(src)
 
 	disposing()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		..()

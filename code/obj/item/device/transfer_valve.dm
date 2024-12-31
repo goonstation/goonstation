@@ -608,9 +608,9 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 							and seems to have succeeded. You feel ashamed for being so compelled by a device that \
 							has nothing more than a slot and a number display.</span>")
 
-	ex_act(var/ex, var/inf, var/factor)
+	ex_act(var/ex, var/inf, var/factor, var/datum/explosion/explosion)
 		if (src.crystal)
-			src.crystal.ex_act(ex, inf, factor)
+			src.crystal.ex_act(ex, inf, factor, explosion)
 			src.crystal.set_loc(src.loc)
 		qdel(src)
 

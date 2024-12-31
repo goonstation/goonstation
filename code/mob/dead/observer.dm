@@ -441,17 +441,26 @@
 		return O
 
 	if (src.bioHolder) //Not necessary for ghost appearance, but this will be useful if the ghost decides to respawn as critter.
-		var/image/hair = image(src.AH_we_spawned_with.customizations["hair_bottom"].style.icon, src.AH_we_spawned_with.customizations["hair_bottom"].style.id)
+		var/datum/appearanceHolder/temp_holder = null
+		if (QDELETED(src.AH_we_spawned_with))
+			if (QDELETED(src.bioHolder.mobAppearance))
+				CRASH("Ghostize called on a mob [src] with bioHolder but no non-null appearance holders")
+				return
+			else
+				temp_holder = src.bioHolder.mobAppearance
+		else
+			temp_holder = src.AH_we_spawned_with
+		var/image/hair = image(temp_holder.customizations["hair_bottom"].style.icon, temp_holder.customizations["hair_bottom"].style.id)
 		hair.color = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
 		hair.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(hair, "hair")
 
-		var/image/beard = image(src.AH_we_spawned_with.customizations["hair_middle"].style.icon, src.AH_we_spawned_with.customizations["hair_middle"].style.id)
+		var/image/beard = image(temp_holder.customizations["hair_middle"].style.icon, temp_holder.customizations["hair_middle"].style.id)
 		beard.color = src.bioHolder.mobAppearance.customizations["hair_middle"].color
 		beard.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(beard, "beard")
 
-		var/image/detail = image(src.AH_we_spawned_with.customizations["hair_top"].style.icon, src.AH_we_spawned_with.customizations["hair_top"].style.id)
+		var/image/detail = image(temp_holder.customizations["hair_top"].style.icon, temp_holder.customizations["hair_top"].style.id)
 		detail.color = src.bioHolder.mobAppearance.customizations["hair_top"].color
 		detail.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(detail, "detail")

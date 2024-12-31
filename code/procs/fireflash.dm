@@ -92,16 +92,17 @@
 			melting_point = 505.93 / 2 // 451F (temp paper burns at, / 2 to undo the * 2 below)
 			bypass_melt_RNG = TRUE
 
-		// chance to melt turf if hotspot is twice the turf melting point
-		hotspot_temp = T.active_hotspots[1].temperature
-		if (length(T.active_hotspots) > 1)
-			hotspot_temp = max(hotspot_temp, T.active_hotspots[2].temperature)
-		if (hotspot_temp >= melting_point * 2)
-			var/melt_chance = hotspot_temp / melting_point
-			if (use_turf_melt_chance)
-				melt_chance = min(melt_chance, T.default_melt_chance)
-			if (prob(melt_chance) || bypass_melt_RNG)
-				T.burn_down()
+		if(length(T.active_hotspots))
+			// chance to melt turf if hotspot is twice the turf melting point
+			hotspot_temp = T.active_hotspots[1].temperature
+			if (length(T.active_hotspots) > 1)
+				hotspot_temp = max(hotspot_temp, T.active_hotspots[2].temperature)
+			if (hotspot_temp >= melting_point * 2)
+				var/melt_chance = hotspot_temp / melting_point
+				if (use_turf_melt_chance)
+					melt_chance = min(melt_chance, T.default_melt_chance)
+				if (prob(melt_chance) || bypass_melt_RNG)
+					T.burn_down()
 
 		LAGCHECK(LAG_REALTIME)
 

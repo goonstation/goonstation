@@ -2038,7 +2038,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "akD" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "1-10"
 	},
@@ -2256,7 +2256,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "alS" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -5522,13 +5522,13 @@
 	dir = 1;
 	name = "river pipe"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/owllock)
 "aBC" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/disposalpipe/segment{
@@ -8151,7 +8151,7 @@
 	},
 /area/upper_arctic/exterior/surface)
 "aNo" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/comms)
 "aNp" = (
@@ -8595,7 +8595,7 @@
 	},
 /area/upper_arctic/exterior/surface)
 "aOO" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating/scorched,
 /area/lower_arctic/mining)
 "aOP" = (
@@ -8779,7 +8779,7 @@
 /turf/space/fluid/cenote,
 /area/crater)
 "aPj" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/channel{
@@ -9140,7 +9140,7 @@
 	},
 /area/crater/biodome/north)
 "aQu" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/research)
 "aQv" = (
@@ -9795,7 +9795,7 @@
 /turf/unsimulated/floor/arctic/cliff,
 /area/upper_arctic/exterior/surface)
 "aSO" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/exterior/abyss)
 "aSP" = (
@@ -10063,7 +10063,7 @@
 /area/upper_arctic/exterior/abyss)
 "aTH" = (
 /obj/decal/icefloor,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/exterior/abyss)
 "aTI" = (
@@ -10088,7 +10088,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aTL" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/crew)
 "aTN" = (
@@ -10782,13 +10782,13 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "aVS" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/floor/arctic/plating,
 /area/lower_arctic/lower)
 "aVT" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/creepy_sound_trigger_glacier,
@@ -11419,7 +11419,7 @@
 /obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty2"
 	},
@@ -11717,7 +11717,7 @@
 /obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/setpieces/martian,
 /area/marsoutpost/duststorm)
 "aYX" = (
@@ -11794,7 +11794,7 @@
 /area/upper_arctic/pod1)
 "aZj" = (
 /obj/decal/icefloor,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -11804,7 +11804,7 @@
 /area/upper_arctic/exterior/abyss)
 "aZk" = (
 /obj/decal/icefloor,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/floor/arctic/plating,
@@ -11827,7 +11827,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aZq" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/channel{
 	required_to_pass = 1e+009
 	},
@@ -11979,7 +11979,7 @@
 	},
 /area/upper_arctic/pod1)
 "aZT" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -11988,7 +11988,7 @@
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/exterior/abyss)
 "aZU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/floor/arctic/plating,
@@ -12684,7 +12684,7 @@
 /turf/space/fluid/cenote,
 /area/crater)
 "bcn" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/channel{
@@ -12825,7 +12825,7 @@
 	},
 /area/marsoutpost)
 "bcy" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating/scorched,
 /area/upper_arctic/mining)
 "bcB" = (
@@ -12838,7 +12838,7 @@
 	},
 /area/upper_arctic/exterior/surface)
 "bcF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -13005,7 +13005,7 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bdb" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -14030,7 +14030,7 @@
 /obj/item/raw_material/shard/glass{
 	icon_state = "small"
 	},
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bgB" = (
@@ -14376,7 +14376,7 @@
 /obj/item/raw_material/shard/glass{
 	icon_state = "medium"
 	},
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bhV" = (
@@ -15812,7 +15812,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "blH" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -15877,6 +15877,7 @@
 /area/precursor)
 "blP" = (
 /obj/landmark/fall/ice/deep,
+/obj/landmark/icemoon_medal,
 /turf/unsimulated/floor/void{
 	desc = "You can barely see ...";
 	icon = 'icons/misc/worlds.dmi';
@@ -15952,8 +15953,8 @@
 /turf/unsimulated/floor/setpieces/bluefloor,
 /area/precursor)
 "bmc" = (
-/obj/grille/catwalk,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/watchful_eye_sensor)
@@ -16285,7 +16286,7 @@
 	},
 /area/marsoutpost)
 "bnk" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
@@ -16324,7 +16325,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
 "bnr" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	dir = 8
@@ -16338,7 +16339,7 @@
 /turf/unsimulated/floor,
 /area/drone/office)
 "bns" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	dir = 2
@@ -16350,7 +16351,7 @@
 /turf/unsimulated/floor,
 /area/drone/office)
 "bnt" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	dir = 4
@@ -16621,7 +16622,7 @@
 	},
 /area/drone)
 "boe" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	dir = 8
@@ -16635,7 +16636,7 @@
 /turf/unsimulated/floor,
 /area/drone/assembly)
 "bof" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	dir = 2
@@ -16647,7 +16648,7 @@
 /turf/unsimulated/floor,
 /area/drone/assembly)
 "bog" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	dir = 4
@@ -18952,6 +18953,7 @@
 "bxT" = (
 /obj/landmark/fall/ice/deep,
 /obj/map/light/dimred,
+/obj/landmark/icemoon_medal,
 /turf/unsimulated/floor/void{
 	desc = "You can barely see ...";
 	icon = 'icons/misc/worlds.dmi';
@@ -23804,7 +23806,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/crew)
 "bQr" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-2"
 	},
@@ -28822,7 +28824,7 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "cjE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -29555,13 +29557,13 @@
 /turf/unsimulated/floor/void,
 /area/crunch)
 "clG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/floor/void,
 /area/crunch)
 "clH" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk_cross"
 	},
 /obj/item/cable_coil/cut{
@@ -29640,7 +29642,7 @@
 /turf/unsimulated/floor/cave,
 /area/cavetiny)
 "cmd" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/item/aiboss_tape/void,
 /turf/unsimulated/floor/void,
 /area/crunch)
@@ -29714,7 +29716,7 @@
 	},
 /area/crunch)
 "cmo" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/void,
 /area/crunch)
 "cmp" = (
@@ -31328,7 +31330,7 @@
 	},
 /area/crunch/wtc)
 "crZ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/machinery/power/smes/magical,
@@ -31437,7 +31439,7 @@
 "csx" = (
 /obj/window/reinforced/west,
 /obj/window/reinforced/east,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject/shuttleengine{
 	dir = 4
 	},
@@ -32648,7 +32650,7 @@
 /turf/unsimulated/floor/plating/random,
 /area/syndicate_station/battlecruiser)
 "cwq" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/channel{
 	required_to_pass = 1e+009
 	},
@@ -37604,7 +37606,7 @@
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -39436,7 +39438,7 @@
 	dir = 1;
 	name = "exhibit window"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/disposalpipe/segment{
@@ -39696,7 +39698,7 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/disposalpipe/segment{
@@ -40223,7 +40225,7 @@
 	desc = "An underfloor transport pipe.";
 	name = "river pipe"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
 "cSs" = (
@@ -40446,7 +40448,7 @@
 	desc = "An underfloor transport pipe.";
 	name = "river pipe"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
 "cTd" = (
@@ -40556,7 +40558,7 @@
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cTw" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
 	dir = 8;
@@ -40570,7 +40572,7 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/owllock)
 "cTx" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
 	dir = 4;
@@ -40600,7 +40602,7 @@
 /area/owlery/owllock)
 "cTz" = (
 /obj/decal/cleanable/oil/streak,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -40644,7 +40646,7 @@
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
 "cTD" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
 	dir = 8;
@@ -40808,7 +40810,7 @@
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cTW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -41332,7 +41334,7 @@
 	},
 /area/owlery/Owlmait2)
 "cVv" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/disposalpipe/segment{
@@ -41378,7 +41380,7 @@
 /turf/unsimulated/floor/caution/north,
 /area/owlery/Owlmait2)
 "cVD" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/disposalpipe/segment{
@@ -42564,7 +42566,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/syndicate/minerva5/command)
 "cYE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/disposalpipe/segment{
@@ -42788,7 +42790,7 @@
 /turf/unsimulated/floor/pool/no_animate,
 /area/owlery/Owlmait2)
 "cZj" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/disposalpipe/segment{
@@ -43022,7 +43024,7 @@
 	},
 /area/afterlife/arena)
 "dak" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/channel{
@@ -45287,7 +45289,7 @@
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "dhi" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/fakeobject{
 	desc = "It's probably broken.";
 	dir = 6;
@@ -45785,7 +45787,7 @@
 	},
 /area/syndicate_station/battlecruiser)
 "diY" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -45800,7 +45802,7 @@
 /turf/unsimulated/floor,
 /area/centcom/lounge)
 "dja" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -46301,7 +46303,7 @@
 /area/shuttle/battle)
 "dlh" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/battle)
 "dli" = (
@@ -46314,7 +46316,7 @@
 	},
 /area/shuttle/battle)
 "dll" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -46349,13 +46351,13 @@
 /area/shuttle/battle)
 "dlr" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
 /area/shuttle/battle)
 "dls" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -46420,7 +46422,7 @@
 	},
 /area/shuttle/battle)
 "dlD" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -49757,7 +49759,7 @@
 /turf/unsimulated/floor/dojo/sand,
 /area/centcom/offices/zamujasa)
 "dDC" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/fakeobject{
 	desc = "It's probably broken.";
 	dir = 6;
@@ -52598,7 +52600,7 @@
 /area/centcom/lobby)
 "dMB" = (
 /obj/decal/nav_danger,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-6"
 	},
@@ -55119,7 +55121,7 @@
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -55666,7 +55668,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
 "eFm" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable,
@@ -55987,7 +55989,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
 "eUP" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/item/raw_material/shard,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -56002,7 +56004,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/tdome/tdome1)
 "eWw" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -56145,7 +56147,7 @@
 	},
 /area/iomoon/base)
 "fcM" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -56262,12 +56264,12 @@
 /turf/unsimulated/floor/grime,
 /area/upper_arctic/mining)
 "fgU" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/item/raw_material/shard/glass,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "fgX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/railing/orange/reinforced{
@@ -56364,7 +56366,7 @@
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/firing_range)
 "fkC" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -56462,7 +56464,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
 "foM" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/railing/orange/reinforced{
@@ -56552,6 +56554,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
+"fuV" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/john_owlery/delay5,
+/turf/space,
+/area/space)
 "fvA" = (
 /obj/fakeobject{
 	icon = 'icons/misc/critter.dmi';
@@ -56617,7 +56627,7 @@
 /obj/cable{
 	icon_state = "5-10"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/space,
 /area/watchful_eye_sensor)
 "fzW" = (
@@ -56897,7 +56907,7 @@
 /area/centcom/gallery)
 "fKE" = (
 /obj/decal/nav_danger,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
 "fKT" = (
@@ -56948,7 +56958,7 @@
 /turf/unsimulated/floor/engine,
 /area/drone/assembly)
 "fLO" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/communications_dish,
 /obj/cable/green{
 	icon_state = "0-5"
@@ -57002,7 +57012,7 @@
 /area/sim/tdome/tdome1)
 "fPL" = (
 /obj/decal/nav_danger,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-9"
 	},
@@ -57222,8 +57232,15 @@
 /mob/living/critter/skeleton,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
+"fXX" = (
+/obj/stool/chair/comfy,
+/obj/landmark/spawner/random_trader/diner,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/diner_centcom)
 "fZb" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
@@ -57443,7 +57460,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait2)
 "giu" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject{
 	anchored = 1;
 	density = 1;
@@ -57476,7 +57493,7 @@
 /turf/unsimulated/floor/plating,
 /area/marsoutpost)
 "giS" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -57537,7 +57554,7 @@
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/observatory)
 "gkG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/railing/orange/reinforced,
@@ -57802,7 +57819,7 @@
 	icon_state = "blue"
 	})
 "gwQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -57832,6 +57849,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
+"gxj" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/john_owlery/delay5,
+/turf/space,
+/area/space)
 "gxE" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -57907,7 +57932,7 @@
 /turf/space,
 /area/space)
 "gzZ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject{
 	anchored = 1;
 	density = 1;
@@ -58051,7 +58076,7 @@
 	},
 /area/wizard_station)
 "gDK" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "4-9"
 	},
@@ -58090,7 +58115,7 @@
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/teleport)
 "gHt" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "gHO" = (
@@ -58266,7 +58291,7 @@
 /turf/unsimulated/floor/airless/plating/damaged2,
 /area/crunch)
 "gNL" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
@@ -58412,7 +58437,7 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
@@ -58433,7 +58458,7 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
 "gWW" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
@@ -58517,13 +58542,6 @@
 	opacity = 0
 	},
 /area/centcom/lounge)
-"gZG" = (
-/obj/stool/chair/comfy,
-/obj/landmark/spawner/random_trader,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/diner_centcom)
 "gZQ" = (
 /turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
@@ -58551,7 +58569,7 @@
 	icon_state = "rwindow";
 	reinf = 1
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/greenwhite{
 	dir = 1
 	},
@@ -58945,7 +58963,7 @@
 	},
 /area/owlery/gangzone)
 "huB" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject{
 	anchored = 1;
 	density = 1;
@@ -59063,7 +59081,7 @@
 /obj/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
 "hxO" = (
@@ -59131,7 +59149,7 @@
 	},
 /area/centcom/lobby)
 "hBx" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -59217,7 +59235,7 @@
 /turf/space,
 /area/syndicate_station_space)
 "hFv" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -59587,7 +59605,7 @@
 	},
 /area/owlery/staffhall)
 "hXz" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "2-9"
 	},
@@ -59698,7 +59716,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "idI" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -59776,7 +59794,7 @@
 	},
 /area/crunch/wtc)
 "ihz" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/nav_danger,
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
@@ -59907,7 +59925,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
 "ina" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -60034,7 +60052,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/offices/flaborized)
 "irO" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-10"
 	},
@@ -60083,7 +60101,7 @@
 /turf/unsimulated/floor/plating,
 /area/sim/tdome/tdome1)
 "isv" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -60180,7 +60198,7 @@
 /turf/simulated/floor/white/grime,
 /area/observatory)
 "ivt" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -60328,7 +60346,7 @@
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
 "iDJ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -60478,7 +60496,7 @@
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/sw,
 /area/centcom/offices/rodney)
 "iIC" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -60651,7 +60669,7 @@
 /obj/fakeobject/shuttleweapon{
 	dir = 1
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -60730,7 +60748,7 @@
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -60761,7 +60779,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/pod1)
 "iTv" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "4-8"
 	},
@@ -60796,7 +60814,7 @@
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "iUI" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-5"
 	},
@@ -60836,7 +60854,7 @@
 /turf/unsimulated/floor/wood/six,
 /area/afterlife/bar/sanctuary)
 "iVD" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
@@ -60860,7 +60878,7 @@
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -61024,7 +61042,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "jcL" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-4"
@@ -61202,7 +61220,7 @@
 /obj/item/raw_material/shard/glass{
 	icon_state = "small"
 	},
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/soviet)
 "jhY" = (
@@ -61315,7 +61333,7 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
 "jlh" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -61553,7 +61571,7 @@
 /turf/unsimulated/floor/plating,
 /area/marsoutpost)
 "jvd" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-2"
 	},
@@ -61712,7 +61730,7 @@
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
 "jzk" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating/random,
 /area/sim/gunsim/maintenance)
 "jzt" = (
@@ -61793,7 +61811,7 @@
 	},
 /area/iomoon/base)
 "jCA" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "5-8"
 	},
@@ -61902,7 +61920,7 @@
 /turf/unsimulated/floor/void,
 /area/crunch)
 "jIK" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/nav_danger,
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -62065,7 +62083,7 @@
 /turf/space,
 /area/syndicate_station_space)
 "jQN" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-10"
 	},
@@ -62261,7 +62279,7 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
 "kay" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "2-5"
 	},
@@ -62449,7 +62467,7 @@
 /turf/unsimulated/floor/engine/caution/east,
 /area/hospital/samostrel)
 "kiK" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -62603,7 +62621,7 @@
 /turf/unsimulated/floor/plating/random,
 /area/syndicate_station/firing_range)
 "kmI" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -62750,7 +62768,7 @@
 /turf/unsimulated/floor/plating,
 /area/solarium)
 "ktJ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "4-8"
 	},
@@ -62943,7 +62961,7 @@
 	},
 /area/crypt/graveyard)
 "kCa" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject{
 	anchored = 1;
 	density = 1;
@@ -63166,7 +63184,7 @@
 /turf/unsimulated/floor/black,
 /area/owlery/Owlmait2)
 "kKD" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/channel{
 	required_to_pass = 1e+009
 	},
@@ -63184,7 +63202,7 @@
 	},
 /area/iomoon/caves)
 "kMj" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject{
 	anchored = 1;
 	density = 1;
@@ -63388,7 +63406,7 @@
 	},
 /area/owlery/staffhall)
 "kUo" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject{
 	anchored = 1;
 	density = 1;
@@ -63477,7 +63495,7 @@
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/janantilles)
 "kXv" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
@@ -63538,7 +63556,7 @@
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
@@ -64024,7 +64042,7 @@
 /turf/unsimulated/wall/auto/supernorn/wood,
 /area/wizard_station)
 "ltJ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "5-8"
 	},
@@ -64149,14 +64167,6 @@
 	icon_state = "shore-31"
 	},
 /area/titlescreen)
-"lyi" = (
-/obj/machinery/light/runway_light/delay5,
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/space)
 "lzl" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_station/battlecruiser)
@@ -64222,7 +64232,7 @@
 /turf/unsimulated/floor/wood,
 /area/centcom/lounge)
 "lCM" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
 "lDq" = (
@@ -64349,7 +64359,7 @@
 /turf/unsimulated/floor/wood/eight,
 /area/centcom/offices/bilo)
 "lKe" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -64610,7 +64620,7 @@
 	},
 /area/marsoutpost)
 "lVt" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/lattice,
 /turf/space,
 /area/watchful_eye_sensor)
@@ -64669,7 +64679,7 @@
 	},
 /area/owlery/gangzone)
 "lXZ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
 "lYb" = (
@@ -64788,7 +64798,7 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
 "mdz" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -64856,7 +64866,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital)
 "mhP" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/map/light/lava,
 /obj/railing/orange/reinforced{
 	dir = 4
@@ -65088,7 +65098,7 @@
 	icon_state = "rwindow";
 	reinf = 1
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/greenwhite,
 /area/owlery/owleryhall)
 "muL" = (
@@ -65206,7 +65216,7 @@
 /turf/unsimulated/floor/carpet/red,
 /area/afterlife/bar/sanctuary)
 "mzo" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/space,
 /area/watchful_eye_sensor)
 "mzp" = (
@@ -65799,7 +65809,7 @@
 /obj/fakeobject/shuttleweapon{
 	dir = 1
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -66486,7 +66496,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
 "nFq" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
@@ -66632,7 +66642,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -66793,7 +66803,7 @@
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "6-10"
 	},
@@ -66930,7 +66940,7 @@
 	},
 /area/centcom/lounge)
 "nSH" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -66991,7 +67001,7 @@
 /turf/unsimulated/floor/grey/blackgrime,
 /area/owlery/Owlmait2)
 "nTU" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/map/light/lava,
 /obj/railing/orange/reinforced{
 	dir = 4
@@ -67628,7 +67638,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait2)
 "owa" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/watchful_eye_sensor)
@@ -67728,7 +67738,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "oBN" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "6-8"
 	},
@@ -67778,7 +67788,7 @@
 /obj/cable{
 	icon_state = "6-9"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/space,
 /area/watchful_eye_sensor)
 "oEX" = (
@@ -67933,7 +67943,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital)
 "oMX" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-9"
 	},
@@ -67946,7 +67956,7 @@
 /turf/space,
 /area/watchful_eye_sensor)
 "oNm" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/nav_danger,
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -67957,7 +67967,7 @@
 /turf/space,
 /area/watchful_eye_sensor)
 "oNz" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-9"
 	},
@@ -68286,6 +68296,14 @@
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/upper_arctic/hall)
+"pcP" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/john_owlery,
+/turf/space,
+/area/space)
 "pds" = (
 /obj/machinery/door/poddoor{
 	dir = 8;
@@ -68343,6 +68361,14 @@
 	name = "Fireplace"
 	},
 /area/centcom/offices/flaborized)
+"pfH" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/john_owlery/delay3,
+/turf/space,
+/area/space)
 "pfM" = (
 /turf/simulated/wall/auto/jen/dark2,
 /area/syndicate/minerva5/command)
@@ -68423,7 +68449,7 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
 "pho" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "phv" = (
@@ -68549,7 +68575,7 @@
 /turf/unsimulated/floor/engine,
 /area/shuttle/merchant_shuttle/diner_centcom)
 "pmn" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -68688,7 +68714,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
 "pou" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/railing/orange/reinforced,
@@ -68713,7 +68739,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
 "pry" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "4-10"
 	},
@@ -68822,7 +68848,7 @@
 /obj/fakeobject/shuttleweapon/base{
 	dir = 1
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -68960,7 +68986,7 @@
 /turf/unsimulated/floor,
 /area/centcom/offices/pali)
 "pAm" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -69209,7 +69235,7 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
 "pKi" = (
-/obj/machinery/clothingbooth,
+/obj/machinery/clothingbooth/free,
 /obj/map/light/brighterwhite,
 /turf/unsimulated/floor/carpet/blue/fancy/narrow/northsouth,
 /area/afterlife/bar/sanctuary)
@@ -69533,7 +69559,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
 "pWf" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/nav_danger,
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -69588,7 +69614,7 @@
 /turf/unsimulated/floor/scorched,
 /area/watchful_eye_sensor)
 "pXt" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject{
 	anchored = 1;
 	density = 1;
@@ -69910,7 +69936,7 @@
 /turf/unsimulated/floor/setpieces/gauntlet,
 /area/sim/racing_track)
 "qnW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -70117,7 +70143,7 @@
 /area/crunch)
 "qvj" = (
 /obj/map/light/lava,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/railing/orange/reinforced,
@@ -70231,7 +70257,7 @@
 /turf/unsimulated/floor/plating,
 /area/crypt/sigma)
 "qBh" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -70688,7 +70714,7 @@
 /turf/space,
 /area/space)
 "qRe" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject{
 	anchored = 1;
 	density = 1;
@@ -70796,7 +70822,7 @@
 /area/watchful_eye_sensor)
 "qWF" = (
 /obj/item/raw_material/shard/glass,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "qWW" = (
@@ -70823,7 +70849,7 @@
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
 "qYb" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "0-5"
 	},
@@ -70968,7 +70994,7 @@
 	icon_state = "blue"
 	})
 "reH" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/void_diner)
 "rfw" = (
@@ -71041,7 +71067,7 @@
 /turf/unsimulated/grass,
 /area/centcom/lounge)
 "rim" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -71114,7 +71140,7 @@
 	},
 /area/sim/racing_track)
 "rkj" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/map/light/lava,
@@ -71235,7 +71261,7 @@
 	},
 /area/centcom/offices/marknstein)
 "rqo" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/map/light/lava,
@@ -71278,7 +71304,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/lobby)
 "rsL" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/railing/orange/reinforced{
@@ -71486,7 +71512,7 @@
 	},
 /area/afterlife/heaven/hydroponics/inside)
 "ryq" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-6"
 	},
@@ -71582,7 +71608,7 @@
 	},
 /area/observatory)
 "rBm" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "1-6"
 	},
@@ -71762,7 +71788,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base/underground)
 "rHu" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/nav_danger,
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -71966,7 +71992,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/void_diner)
 "rPG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -72202,7 +72228,7 @@
 /area/moon/museum)
 "sat" = (
 /obj/map/light/lava,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/railing/orange/reinforced,
@@ -72520,7 +72546,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
 "sls" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -72885,7 +72911,7 @@
 	},
 /area/crunch/wtc)
 "sCG" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
 "sCP" = (
@@ -72899,7 +72925,7 @@
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "sCW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -73516,7 +73542,7 @@
 /area/centcom/outside)
 "tja" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -73763,7 +73789,7 @@
 	},
 /area/iomoon/base)
 "twK" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -73818,7 +73844,7 @@
 /area/owlery/Owlmait2)
 "tze" = (
 /obj/faint_shimmer,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/crunch/wtc)
 "tzl" = (
@@ -73886,7 +73912,7 @@
 /area/wizard_station)
 "tHf" = (
 /obj/map/light/lava,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/railing/orange/reinforced,
@@ -74077,7 +74103,7 @@
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
 "tPY" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/machinery/light/small/sticky/frostedred{
 	dir = 4;
 	pixel_x = 10
@@ -74425,7 +74451,7 @@
 	icon_state = "blue"
 	})
 "udS" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -74916,7 +74942,7 @@
 /area/centcom/offices/efrem)
 "uBB" = (
 /obj/decal/nav_danger,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/light/small/sticky/warm/very{
 	dir = 8
 	},
@@ -75189,11 +75215,11 @@
 /area/titlescreen)
 "uLf" = (
 /obj/lattice,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/watchful_eye_sensor)
 "uLU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -75259,7 +75285,7 @@
 	icon_state = "blue"
 	})
 "uOT" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -75349,7 +75375,7 @@
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "uRD" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable{
@@ -75441,7 +75467,7 @@
 	color = "b4b4b4";
 	dir = 4
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
 "uXv" = (
@@ -75583,7 +75609,7 @@
 	},
 /area/afterlife/hell)
 "vcR" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/map/light/lava,
@@ -75697,7 +75723,7 @@
 	icon_state = "blue"
 	})
 "vir" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
@@ -75744,7 +75770,7 @@
 	icon_state = "blue"
 	})
 "vjo" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -75890,7 +75916,7 @@
 /turf/space,
 /area/syndicate_station/assault_pod)
 "vnY" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/nav_danger,
 /obj/cable/yellow{
 	icon_state = "2-4"
@@ -76010,8 +76036,8 @@
 /turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim/lobby)
 "vqK" = (
-/obj/grille/catwalk,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
+/obj/mesh/catwalk,
 /turf/space,
 /area/watchful_eye_sensor)
 "vqT" = (
@@ -76467,7 +76493,7 @@
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "5-9"
 	},
@@ -76851,7 +76877,7 @@
 /turf/unsimulated/floor/dojo/sand,
 /area/centcom/offices/zamujasa)
 "vZo" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -76971,7 +76997,7 @@
 /turf/unsimulated/floor/black/side,
 /area/iomoon/base)
 "wfy" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
@@ -77055,7 +77081,7 @@
 /turf/unsimulated/floor/engine,
 /area/marsoutpost)
 "wgg" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -77113,7 +77139,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/void_diner)
 "wlA" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/communications_dish,
 /obj/cable/green{
 	icon_state = "0-9"
@@ -77303,7 +77329,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
 "wpT" = (
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/unsimulated/floor/plating/random,
 /area/sim/gunsim/maintenance)
 "wpX" = (
@@ -77357,7 +77383,7 @@
 /obj/fakeobject/shuttleweapon/base{
 	dir = 1
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -77476,7 +77502,7 @@
 	},
 /area/sim/gunsim/lobby)
 "wxW" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
@@ -77577,7 +77603,7 @@
 /area/space)
 "wCG" = (
 /obj/decal/nav_danger,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-10"
 	},
@@ -77677,7 +77703,7 @@
 	},
 /area/iomoon/caves)
 "wFc" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/communications_dish,
 /obj/cable/green{
 	icon_state = "0-6"
@@ -77790,7 +77816,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
 "wIE" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "4-8"
 	},
@@ -77870,11 +77896,11 @@
 	},
 /area/titlescreen)
 "wLK" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/crypt/sigma)
 "wLZ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/orange/reinforced{
 	dir = 4
 	},
@@ -78080,7 +78106,7 @@
 /turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
 "wVh" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
@@ -78371,7 +78397,7 @@
 	},
 /area/centcom)
 "xjx" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "6-8"
 	},
@@ -78429,7 +78455,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "xlM" = (
@@ -79009,7 +79035,7 @@
 	dir = 1;
 	name = "grimy pipe"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
 "xBc" = (
@@ -79535,7 +79561,7 @@
 /turf/unsimulated/floor/martian,
 /area/crunch)
 "xXF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -79562,7 +79588,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
 "xXW" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
@@ -79587,7 +79613,7 @@
 	icon_state = "airlock_locked";
 	name = "broken airlock"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/nav_danger,
 /obj/cable/yellow{
 	icon_state = "4-8"
@@ -79628,7 +79654,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/afterlife/bar/sanctuary)
 "xZu" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/map/light/lava,
@@ -79708,7 +79734,7 @@
 /turf/unsimulated/floor/plating,
 /area/crunch/wtc)
 "ybF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/map/light/lava,
@@ -79744,7 +79770,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
 "ycV" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/map/light/lava,
@@ -80854,7 +80880,7 @@ aIq
 cnw
 cnw
 aIq
-cnw
+fuV
 cEJ
 cFc
 cFc
@@ -81155,8 +81181,8 @@ aEN
 mqi
 cCS
 cCS
-lyi
-cnw
+mqi
+pfH
 cEJ
 caq
 aNz
@@ -81457,8 +81483,8 @@ cnw
 bHD
 cnw
 cnw
-bDu
-cnw
+bBm
+pcP
 cEJ
 caq
 bjh
@@ -83270,7 +83296,7 @@ fGT
 cEE
 cEE
 fGT
-cnw
+pcP
 cEJ
 caq
 bsL
@@ -83572,7 +83598,7 @@ fGT
 cEE
 cEE
 fGT
-cnw
+pfH
 cEJ
 caq
 but
@@ -83874,7 +83900,7 @@ fGT
 cNV
 cPH
 fGT
-cnw
+gxj
 cEJ
 cFc
 cFc
@@ -132248,7 +132274,7 @@ aES
 aES
 tRB
 hjf
-gZG
+fXX
 xBV
 mrd
 usM

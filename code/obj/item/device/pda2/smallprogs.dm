@@ -1246,13 +1246,15 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		if (href_list["order"])
 			src.temp = {"<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR><HR>
 			<B>Please select the Supply Package you would like to request:</B><BR><BR>"}
+			src.temp += search_snippet("background-color: #6F7961; color: #000;")
+			src.temp += "<BR><BR>"
 			for(var/S in concrete_typesof(/datum/supply_packs) )
 				var/datum/supply_packs/N = new S()
 				if(N.hidden || N.syndicate) continue
 				// Have to send the type instead of a reference to the obj because it would get caught by the garbage collector. oh well.
-				src.temp += {"<A href='?src=\ref[src];doorder=[N.type]'><B><U>[N.name]</U></B></A><BR>
+				src.temp += {"<div class='supply-package'><A href='?src=\ref[src];doorder=[N.type]'><B><U>[N.name]</U></B></A><BR>
 				<B>Cost:</B> [N.cost] Credits<BR>
-				<B>Contents:</B> [N.desc]<BR><BR>"}
+				<B>Contents:</B> [N.desc]<BR><BR></div>"}
 			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
 		else if (href_list["doorder"])

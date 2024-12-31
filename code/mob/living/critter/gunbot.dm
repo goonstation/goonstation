@@ -140,7 +140,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 	critter_range_attack(var/mob/target)
 		src.set_a_intent(INTENT_HARM)
-		if (src.hand_attack(target))
+		if (src.hand_attack(target, new/list("left" = TRUE)))
 			return TRUE
 
 	seek_target(range)

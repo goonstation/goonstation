@@ -51,6 +51,33 @@
 			qdel(src)
 		else ..()
 
+/obj/item/reagent_containers/food/snacks/ingredient/egg/chocolate
+	name = "chocolate egg"
+	desc = "A little chocolate egg, roughly egg sized."
+	icon_state = "chocolate-egg"
+	food_effects = list("food_brute", "food_burn")
+	initial_reagents = list("chocolate" = 5)
+
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		return
+
+	heal(mob/living/M)
+		if (length(src.contents))
+			var/obj/item/plastic_toy = pick(src.contents)
+			if (prob(70))
+				M.put_in_hand_or_drop(plastic_toy)
+				boutput(M, SPAN_NOTICE("You open [src] and get \a [plastic_toy]!"))
+			else
+				plastic_toy.Eat(M, M, FALSE, TRUE)
+				M.take_oxygen_deprivation(30)
+				M.lose_breath(2)
+				M.emote("gasp", FALSE)
+				boutput(M, SPAN_ALERT("You accidentally swallow \the [plastic_toy]! Shit!"))
+				M.changeStatus("knockdown", 4 SECONDS)
+			return
+		. = ..()
+
+
 //why am I doing this
 /obj/item/reagent_containers/food/snacks/ingredient/egg/century
 	name = "century egg"

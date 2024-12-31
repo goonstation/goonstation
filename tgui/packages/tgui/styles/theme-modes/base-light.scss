@@ -12,7 +12,7 @@ $component-bg-color: color.scale($bg-color, $lightness: -10%) !default;
 $border-color: #4171a8 !default;
 $primary-color: color.scale($bg-color, $lightness: -20%) !default;
 
-@use '../colors.scss' with (
+@use '../colors' with (
   $primary: $primary-color,
   $bg-lightness: 25%,
   $fg-lightness: -10%,
@@ -27,7 +27,7 @@ $primary-color: color.scale($bg-color, $lightness: -20%) !default;
   $olive: #8c9e14
 );
 
-@use '../base.scss' with (
+@use '../base' with (
   $color-bg: $bg-color,
   $color-fg: $fg-color,
   $color-bg-section: rgba($bg-color, 0.33),

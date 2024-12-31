@@ -650,6 +650,12 @@
 
 /obj/landmark/spawner/random_trader
 	spawn_the_thing()
+		var/type = pick(concrete_typesof(/obj/npc/trader/random) - /obj/npc/trader/random/contraband)
+		new type(src.loc)
+		qdel(src)
+
+/obj/landmark/spawner/random_trader/diner
+	spawn_the_thing()
 		var/type = pick(concrete_typesof(/obj/npc/trader/random))
 		new type(src.loc)
 		qdel(src)
@@ -661,7 +667,12 @@ ABSTRACT_TYPE(/obj/npc/trader/random)
 	picture = "generic.png"
 	angrynope = "Not right now..."
 	whotext = ""
+	///What base type do they buy/sell?
 	var/commercetype = null
+	///What do they buy (overrides commercetype)
+	var/buy_commercetype_override = null
+	///What do they sell (overrides commercetype)
+	var/sell_commercetype_override = null
 	var/list/possible_icon_states = list("welder")
 	var/list/descriptions = list("Broken", "ohgodwhy", "1800-coder")
 
@@ -723,8 +734,8 @@ ABSTRACT_TYPE(/obj/npc/trader/random)
 		var/items_for_sale = rand(5,8)
 		var/items_wanted = rand(2,5)
 
-		var/list/selltypes = typesof(commercetype)
-		var/list/buytypes = typesof(commercetype)
+		var/list/selltypes = typesof(sell_commercetype_override ? sell_commercetype_override : commercetype)
+		var/list/buytypes = typesof(buy_commercetype_override ? buy_commercetype_override : commercetype)
 
 		while(length(selltypes) > 0 && length(src.goods_sell) < items_for_sale)
 			var/pickedselltype = pick(selltypes)
@@ -739,6 +750,8 @@ ABSTRACT_TYPE(/obj/npc/trader/random)
 			buytypes -= pickedbuytype
 			if(buyitem.comtype != null)
 				src.goods_buy += buyitem
+
+		src.AddComponent(/datum/component/minimap_marker/minimap, MAP_INFO, "trader")
 
 	activatesecurity()
 		for(var/mob/M in AIviewers(src))
@@ -766,6 +779,8 @@ ABSTRACT_TYPE(/obj/npc/trader/random)
 
 /obj/npc/trader/random/drugs
 	commercetype = /datum/commodity/drugs
+	buy_commercetype_override = /datum/commodity/drugs/buy
+	sell_commercetype_override = /datum/commodity/drugs/sell
 	possible_icon_states = list("petbee","possum","bumblespider")
 	descriptions = list("off-brand pharmaceutical", "recreational chemicals")
 
@@ -1077,21 +1092,21 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/contraband/ntso_beret(src)
 		src.goods_sell += new /datum/commodity/contraband/ntso_vest(src)
 		src.goods_sell += new /datum/commodity/contraband/swatmask/NT(src)
-		src.goods_sell += new /datum/commodity/drugs/methamphetamine(src)
-		src.goods_sell += new /datum/commodity/drugs/crank(src)
-		src.goods_sell += new /datum/commodity/drugs/catdrugs(src)
-		src.goods_sell += new /datum/commodity/drugs/morphine(src)
-		src.goods_sell += new /datum/commodity/drugs/krokodil(src)
-		src.goods_sell += new /datum/commodity/drugs/lsd(src)
-		src.goods_sell += new /datum/commodity/drug/lsd_bee(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/methamphetamine(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/crank(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/catdrugs(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/morphine(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/krokodil(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/lsd(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/lsd_bee(src)
 		src.goods_sell += new /datum/commodity/relics/bootlegfirework(src)
 		src.goods_sell += new /datum/commodity/pills/uranium(src)
 
-		src.goods_buy += new /datum/commodity/drugs/shrooms(src)
-		src.goods_buy += new /datum/commodity/drugs/cannabis(src)
-		src.goods_buy += new /datum/commodity/drugs/cannabis_mega(src)
-		src.goods_buy += new /datum/commodity/drugs/cannabis_white(src)
-		src.goods_buy += new /datum/commodity/drugs/cannabis_omega(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/shrooms(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/cannabis(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/cannabis_mega(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/cannabis_white(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/cannabis_omega(src)
 
 /obj/npc/trader/robot/robuddy/diner
 	name = "B.I.F.F."
@@ -1423,13 +1438,13 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		//// sell list //////////////////////////////////////////
 		/////////////////////////////////////////////////////////
 		src.goods_sell += new /datum/commodity/pills/uranium(src)
-		src.goods_sell += new /datum/commodity/drugs/methamphetamine(src)
-		src.goods_sell += new /datum/commodity/drugs/crank(src)
-		src.goods_sell += new /datum/commodity/drugs/catdrugs(src)
-		src.goods_sell += new /datum/commodity/drugs/morphine(src)
-		src.goods_sell += new /datum/commodity/drugs/krokodil(src)
-		src.goods_sell += new /datum/commodity/drugs/lsd(src)
-		src.goods_sell += new /datum/commodity/drug/lsd_bee(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/methamphetamine(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/crank(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/catdrugs(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/morphine(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/krokodil(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/lsd(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/lsd_bee(src)
 		src.goods_sell += new /datum/commodity/medical/ether(src)
 		src.goods_sell += new /datum/commodity/medical/toxin(src)
 		src.goods_sell += new /datum/commodity/medical/cyanide(src)
@@ -1439,12 +1454,12 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		/////////////////////////////////////////////////////////
 		//// buy list ///////////////////////////////////////////
 		/////////////////////////////////////////////////////////
-		src.goods_buy += new /datum/commodity/drugs/poppies(src)
-		src.goods_buy += new /datum/commodity/drugs/shrooms(src)
-		src.goods_buy += new /datum/commodity/drugs/cannabis(src)
-		src.goods_buy += new /datum/commodity/drugs/cannabis_mega(src)
-		src.goods_buy += new /datum/commodity/drugs/cannabis_white(src)
-		src.goods_buy += new /datum/commodity/drugs/cannabis_omega(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/poppies(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/shrooms(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/cannabis(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/cannabis_mega(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/cannabis_white(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/cannabis_omega(src)
 		/////////////////////////////////////////////////////////
 
 		greeting= {"<i>A hand sticking out from a toilet waves in your direction.</i>"}

@@ -95,7 +95,8 @@
 	<a href='?src=\ref[src];action=souldorf'>Souldorf</a> |
 	<a href='?src=\ref[src];action=zoldorf'>Zoldorf</a> |
 	<a href='?src=\ref[src];action=football'>Football</a> |
-	<a href='?src=\ref[src];action=podwars'>Podwars</a>
+	<a href='?src=\ref[src];action=podwars'>Podwars</a> |
+	<a href='?src=\ref[src];action=[ROLE_FLOOR_GOBLIN]'>Floor goblin</a>
 </div>
 "}
 

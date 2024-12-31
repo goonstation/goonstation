@@ -802,6 +802,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/steak_ling(src)
 			src.recipes += new /datum/cookingrecipe/oven/fish_fingers(src)
 			src.recipes += new /datum/cookingrecipe/oven/shrimp(src)
+			src.recipes += new /datum/cookingrecipe/oven/chocolate_egg(src)
 			src.recipes += new /datum/cookingrecipe/oven/hardboiled(src)
 			src.recipes += new /datum/cookingrecipe/oven/bakedpotato(src)
 			src.recipes += new /datum/cookingrecipe/oven/rice_ball(src)

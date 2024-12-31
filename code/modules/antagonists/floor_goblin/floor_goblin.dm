@@ -1,7 +1,6 @@
 /datum/antagonist/floor_goblin
 	id = ROLE_FLOOR_GOBLIN
 	display_name = "floor goblin"
-	has_info_popup = FALSE
 
 	/// The ability holder of this floor goblin, containing their respective abilities.
 	var/datum/abilityHolder/floor_goblin/ability_holder

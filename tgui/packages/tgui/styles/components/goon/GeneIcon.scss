@@ -6,6 +6,7 @@
  */
 
 @use 'sass:math';
+@use 'sass:list';
 
 .GeneIcon {
   display: inline-block;
@@ -95,7 +96,7 @@ $gene-icons: (
 
 @each $name, $pos in $gene-icons {
   .GeneIcon--#{$name} {
-    background-position: (math.div(nth($pos, 1) * 100%, 9))
-      (math.div(nth($pos, 2) * 100%, 9));
+    background-position: (math.div(list.nth($pos, 1) * 100%, 9))
+      (math.div(list.nth($pos, 2) * 100%, 9));
   }
 }

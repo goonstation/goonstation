@@ -1385,3 +1385,43 @@ proc/spawn_kitchen_note()
 	<p>Spring came, <p> <br>
 	<p>spring came at last. <p> <br>
 	"}
+
+/obj/item/paper/packets
+	name = "Frequency reference sheet"
+	New()
+		..()
+		info = {"
+			<h2>Nanotrasen wireless technology data reference sheet 8.2</h2>
+			<table>
+				<tr>
+					<th>Category</th>
+					<th>Frequency</th>
+				</tr>
+
+			<tr><td>PDAs</td><td>[format_frequency(FREQ_PDA)]kHz</td></tr>
+			<tr><td>Gas pumps</td><td>[format_frequency(FREQ_PUMP_CONTROL)]kHz</td></tr>
+			<tr><td>Airlocks</td><td>[format_frequency(FREQ_AIRLOCK)]kHz</td></tr>
+			<tr><td>Designated free frequency</td><td>[format_frequency(FREQ_FREE)]kHz</td></tr>
+			<tr><td>Bot navbeacons</td><td>[format_frequency(FREQ_NAVBEACON)]kHz</td></tr>
+			<tr><td>Secure storage</td><td>[format_frequency(FREQ_SECURE_STORAGE)]kHz</td></tr>
+			<tr><td>Fire and air alarms</td><td>[format_frequency(FREQ_ALARM)]kHz</td></tr>
+			<tr><td>Hydroponics trays</td><td>[format_frequency(FREQ_HYDRO)]kHz</td></tr>
+			<tr><td>Harmonic siphon</td><td>[format_frequency(FREQ_HARMONIC_SIPHON)]kHz</td></tr>
+			<tr><td>Transception interlink</td><td>[format_frequency(FREQ_TRANSCEPTION_SYS)]kHz</td></tr>
+			<tr><td>Status displays</td><td>[format_frequency(FREQ_STATUS_DISPLAY)]kHz</td></tr>
+			<tr><td>Bot control</td><td>[format_frequency(FREQ_BOT_CONTROL)]kHz</td></tr>
+			<tr><td>GPS</td><td>[format_frequency(FREQ_GPS)]kHz</td></tr>
+			<tr><td>Ruckingenur kit</td><td>[format_frequency(FREQ_RUCK)]kHz</td></tr>
+			<tr><td>Guardbuddies</td><td>[format_frequency(FREQ_BUDDY)]kHz</td></tr>
+			<tr><td>Tourbot navbeacons</td><td>[format_frequency(FREQ_TOUR_NAVBEACON)]kHz</td></tr>
+			<tr><td>Signalers</td><td>[format_frequency(FREQ_SIGNALER)]kHz</td></tr>
+			<tr><td>Pod door controls</td><td>[format_frequency(FREQ_DOOR_CONTROL)]kHz</td></tr>
+			<tr><td>Mail chutes</td><td>[format_frequency(FREQ_MAIL_CHUTE)]kHz</td></tr>
+			<tr><td>Air alarm control</td><td>[format_frequency(FREQ_AIR_ALARM_CONTROL)]kHz</td></tr>
+			<tr><td>Tracking implants</td><td>[format_frequency(FREQ_TRACKING_IMPLANT)]kHz</td></tr>
+			<tr><td>Power systems</td><td>[format_frequency(FREQ_POWER_SYSTEMS)]kHz</td></tr>
+			<tr><td>Armory authorization \[RESTRICTED\]</td><td>[format_frequency(FREQ_ARMORY)]kHz</td></tr>
+			</table>
+			<br><br>
+			<i>Intelligent data ordering system proprietary, copyright of Nanotrasen (2053)</i>
+		"}

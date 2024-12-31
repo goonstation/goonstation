@@ -79,7 +79,7 @@
 		else // do sticker things
 			..()
 
-	stick_to(atom/A, pox, poy)
+	stick_to(var/atom/A, var/pox, var/poy, user, silent = FALSE)
 		. = ..()
 		if(isobj(A))
 			checkArtifactVars(A)

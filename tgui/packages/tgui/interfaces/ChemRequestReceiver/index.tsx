@@ -122,7 +122,7 @@ const ChemRequest = (props: ChemRequestProps) => {
 };
 
 export const ChemRequestReceiver = () => {
-  const { act, data } = useBackend<ChemRequestReceiverData>();
+  const { data } = useBackend<ChemRequestReceiverData>();
   const [tabIndex, setTabIndex] = useState(1);
   const { requests, allowed } = data;
   let request_index = 0;

@@ -53,7 +53,7 @@
 /obj/fakeobject/apc_broken{
 	icon_state = "2term"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4;
 	icon_state = "grate";
 	layer = 3
@@ -65,7 +65,7 @@
 	icon_state = "4-8";
 	
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4;
 	icon_state = "grate";
 	layer = 3
@@ -247,7 +247,7 @@
 	level = 2;
 	pixel_y = 6
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4;
 	icon_state = "grate";
 	layer = 3
@@ -292,7 +292,7 @@
 	pixel_y = -6;
 	tag = "icon-intact (SOUTHWEST)"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4;
 	icon_state = "grate";
 	layer = 3
@@ -322,7 +322,7 @@
 	level = 2;
 	tag = "icon-intact"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4;
 	icon_state = "grate";
 	layer = 3
