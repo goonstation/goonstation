@@ -796,7 +796,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 			. = ..()
 
 	attack_hand(mob/user)
-		if (src.open)
+		if (src.open && (user.a_intent != INTENT_GRAB))
 			var/amount = round(tgui_input_number(user, "How much cash do you want to take from the briefcase?", "Cash Briefcase", src.balance, src.balance))
 			if (isnum_safe(amount))
 				if (amount > src.balance || amount < 1)
