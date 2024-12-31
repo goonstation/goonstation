@@ -132,6 +132,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 
 /obj/item/device/light/flashlight/security
 	name = "security flashlight"
+	desc = "A hand-held emergency flashlight used by Nanotrasen corporate security. Resistant to electromagnetic fields."
 	icon_state = "flight_sec0"
 	item_state = "flight_sec"
 	icon_on = "flight_sec1"
