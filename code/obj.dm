@@ -454,7 +454,6 @@
 	qdel(src)
 
 
-ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
 /obj/proc/admin_command_obj_speak()
 	set name = "Object Speak"
 	var/msg = tgui_input_text(usr, "Speak message through [src]", "Speak", "")

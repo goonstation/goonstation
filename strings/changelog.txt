@@ -1,4 +1,109 @@
 
+(t)tue dec 31 24
+(u)JORJ949
+(p)21708
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Security data disks are no longer read-only, allowing them to be sabotaged without needing to be outright destroyed.
+(+)The Head of Security's disk contains the Heads netpass.
+(u)glowbold
+(p)21874
+(e)⚖🧱|C-Balance, A-Materials
+(+)Censorium's material properties reflect the composition of its materials.
+(t)mon dec 30 24
+(u)KevinFromHP
+(p)21832
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)Added the Faustian Bargain Kit to the Lawyer's Syndicate Items.
+(u)TemThrush
+(p)21863
+(e)🎨|C-Sprites
+(+)Additional hair bangs for your layering needs, they'll have "Bangs:" before their name: Cockatiel, Combed Fringe, Eye cover, Wavy, Tied, Tied Long, Blunt Side,  Emo, Lopsided, Curtain
+(t)sun dec 29 24
+(u)FlameArrow57
+(p)21819
+(e)🆕📄|C-Feature, A-UI
+(*)Added a "Hyphenate Name" option to the Character Setup window, which will cause your character appearance name to be set to "FirstName-MiddleName-LastName", or "FirstName-LastName" if no middle name. All three names are still used for purposes of security records and the like.
+(u)TemThrush
+(p)21825
+(e)🎨|C-Sprites
+(*)Added 14 new short hairstyles into the game (again), see minor changes for the list!
+(+)New hairstyle options are; Cockatiel, Combed Fringe, Slicked Back, Asymmetrical Bob, Side-Part Curls, Messy Fringe, Aristocrat, Brushed Bob, Short Shag, Luxurious Bob, Wavy Front, Poofy Bob, Short Dreads, and Shaggy
+(t)fri dec 27 24
+(u)glowbold
+(p)21835
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Crisis Alert ACKs are much more responsive.
+(t)thu dec 26 24
+(u)LeahTheTech
+(p)21830
+(e)🆕📦💡|C-Feature, A-Game-Objects, A-Station-Systems
+(*)Data terminals can now be constructed by using a cable on a metal sheet.
+(t)wed dec 25 24
+(u)glowbold
+(p)21764
+(e)🪲⚖🔨|C-Bug, C-Balance, A-Player-Actions
+(+)Jumpy can no longer be used while floating in space.
+(t)tue dec 24 24
+(u)LeahTheTech
+(*)Magboots no longer allow you to anchor to space, now they prevent you from walking off into space when active.
+(+)APC repair actions are now quicker and use help messages.
+(t)mon dec 23 24
+(u)FlameArrow57
+(p)21264
+(e)🆕🗺🎨📦🔬|C-Feature, A-Mapping, C-Sprites, A-Game-Objects, A-Science
+(*)Add a new Curser artifact! This is an artifact that gives you 1 of 6 curses when you touch it, as well as others nearby. See minor changelog for more details
+(+)The curser artifact will curse whoever touches it as well as a random 2 - 5 nearby people
+(+)Curses include: Blood, aging, nightmare creatures, labyrinth, soul displacement, and light curses
+(+)Curses are blocked by Talisman artifacts, but for the blood and aging curses the Talisman is also destroyed
+(+)Curses give you a status effect that will tell you the condition for removing the curse
+(u)glowbold
+(p)21803
+(e)🗺⚖📦|A-Mapping, C-Balance, A-Game-Objects
+(+)The mineral magnet computer and Rockbox require mining access to use.
+(u)TDHooligan
+(p)21794
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Janktank II can be used to quickly revive gang members who are in crit (instead of just corpses). They still get messed up by it though.
+(u)JORJ949
+(p)21720
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)The Syndicate has issued syndicate berets to all syndicate apparel vendors.
+(u)glowbold
+(p)21738
+(e)⚖💡|C-Balance, A-Station-Systems
+(+)Spatial Interdictors can nullify APC overcharge zaps. Ranchers, take note.
+(u)glowbold
+(p)21761
+(e)🧫🔄📦|C-Experimental, C-Rework, A-Game-Objects
+(+)Rideable vehicles update the rider's appearance in realtime.
+(u)cringe, LeahTheTech
+(p)21509
+(e)🆕🎨📄💨|C-Feature, C-Sprites, A-UI, A-Atmospherics
+(*)Constructible atmos, no longer a week away. Find the HPD in the CE's RCD crate, or in the RD locker along with a big RCD ammo charge.
+(u)LeahTheTech
+(p)21798
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Loose singularities now gravitate towards or away from active gravity well artifacts and gravity generators.
+(u)Flappybat
+(e)⚖|C-Balance
+(+)Cooldown on Jumpy raised from 3 seconds to 10 seconds.
+(t)sat dec 21 24
+(u)TDHooligan, Flaborized
+(p)21770
+(e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
+(*)The portable chemical dispenser has been added, for automating your glassware setups! Find it in the science manufacturer.
+(t)fri dec 20 24
+(u)Cheekybrdy
+(p)21736
+(e)⚖|C-Balance
+(+)All fishing rods can be held in a rancher's belt, including the Glaucus.
+(t)thu dec 19 24
+(u)AnomalousPotato
+(p)21721
+(e)🪲🆕💅💊📦|C-Bug, C-Feature, C-QoL, A-Medical, A-Game-Objects
+(*)Skeleton people can now be clone scanned with the necroscan upgrade
+(u)LeahTheTech
+(+)BARREL UPDATE. Chemical barrels can now have wood shoved in them and set on fire to make a burning barrel. Burning barrels now emit heat, can be extinguished with a fire extinguisher, and can be wrenched/unwrenched from the floor.
 (t)tue dec 17 24
 (u)tarmunora
 (+)Planting a kudzu seed now allows you to slip through dense kudzu, and (very) slowly heal while on kudzu. Still blocks vision though.

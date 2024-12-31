@@ -586,7 +586,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	items = list(/obj/item/storage/briefcase/satan)
 	cost = 8
 	desc = "Comes complete with three soul binding contracts, three extra-pointy pens, and one suit provided by Lucifer himself."
-	job = list("Chaplain")
+	job = list("Chaplain", "Lawyer")
 	not_in_crates = TRUE
 	vr_allowed = FALSE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY

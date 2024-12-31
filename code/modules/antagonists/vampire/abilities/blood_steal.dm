@@ -174,6 +174,9 @@
 			var/datum/abilityHolder/vampire/vampire = P.special_data["vamp"]
 			var/mob/living/victim = P.special_data["victim"]
 
+			if (QDELETED(victim))
+				return
+
 			if (vampire && victim)
 				if (vampire.can_bite(victim,is_pointblank = 0))
 					vampire.do_bite(victim, mult = 0.3333)

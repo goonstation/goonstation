@@ -2980,6 +2980,284 @@
 		qdel(src.glimmer)
 		src.glimmer = null
 
+
+/datum/statusEffect/art_curse
+	icon_state = "art_curse"
+	desc = "You've been cursed by an Eldritch artifact!"
+	unique = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	var/extra_desc = ""
+	var/removal_msg = ""
+	var/outputs_desc = TRUE
+	var/outputs_removal_msg = TRUE
+
+	var/datum/artifact/curser/linked_curser
+
+	New()
+		src.desc += " [src.extra_desc]"
+		..()
+
+	preCheck(atom/A)
+		. = ..()
+		if (!ishuman(A))
+			return FALSE
+
+	onAdd(optional)
+		..()
+		if (src.outputs_desc)
+			boutput(src.owner, SPAN_ALERT(src.desc))
+		src.linked_curser = optional
+
+	onRemove()
+		if (QDELETED(src.owner))
+			return ..()
+		var/mob/living/L = src.owner
+		if (!isdead(L) && src.outputs_removal_msg)
+			boutput(L, SPAN_NOTICE(src.removal_msg))
+		src.linked_curser = null
+		..()
+
+	proc/get_mult(timePassed)
+		return timePassed / LIFE_PROCESS_TICK_SPACING
+
+	blood
+		id = "art_blood_curse"
+		name = "Blood Curse"
+		duration = null
+		extra_desc = "Your blood is being drained. The artifact requires 600u of human blood, or your drained body, no matter the cost. Figure out how to supply it before you die."
+		removal_msg = "Your blood curse has been lifted!"
+		var/blood_to_collect = 600
+
+		onAdd(optional)
+			..()
+			var/mob/living/carbon/human/H = src.owner
+			H.regens_blood = FALSE // curse steals all your blood
+
+		onUpdate(timePassed)
+			..()
+			var/mob/living/carbon/human/H = src.owner
+			var/mult = src.get_mult(timePassed)
+			H.blood_volume -= 1.5 * mult
+			if (H.bleeding <= 1) // mostly enabled to show bleed indicator
+				H.bleeding = 1
+			src.blood_to_collect -= 1.5 * mult
+			if (probmult(7))
+				boutput(H, SPAN_ALERT(pick("You see things", "You have thoughts about blood", "You can feel an Eldritch presence", "You can feel your blood",
+					"You get the sense something is stealing from you", "Something doesn't feel right", "The artifact hungers", "You see visions of Eldritch artifacts",
+					"You're reminded of your blood curse", "You have a pact to fulfill", "You're going to die unless blood is given", "Blood is required")))
+
+			if (src.blood_to_collect <= 0)
+				src.linked_curser.lift_curse(TRUE)
+			else if (H.blood_volume <= 0 || isdead(H))
+				H.visible_message(SPAN_ALERT("[H] spontaneously implodes!!! <b>HOLY FUCK!!</b>"), SPAN_ALERT("<b>Ohhhh shit</b>"))
+				for (var/i in 1 to rand(3, 4))
+					var/obj/decal/cleanable/blood_splat = make_cleanable(/obj/decal/cleanable/blood/splatter, get_turf(H))
+					blood_splat.streak_cleanable(pick(cardinal), full_streak = prob(25), dist_upper = rand(4, 6))
+				playsound(H, 'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 40, TRUE)
+				H.implode(TRUE)
+				src.linked_curser.lift_curse_specific(FALSE, H)
+
+		onRemove()
+			var/mob/living/carbon/human/H = src.owner
+			if (!QDELETED(H))
+				var/count
+				for(var/datum/statusEffect/art_curse/blood/status in H.statusEffects)
+					count += 1
+				if (count == 1)
+					H.regens_blood = TRUE
+			..()
+
+	aging
+		id = "art_aging_curse"
+		name = "Aging Curse"
+		extra_desc = "You're rapidly aging and will die... You're going to need to get three other people younger than you to touch the artifact."
+		removal_msg = "You're returned to your original age! Though your hair is still grey."
+		var/original_age
+		var/hair_greyed
+		var/final_msg_given
+
+		onAdd()
+			..()
+			var/mob/living/carbon/human/H = src.owner
+			src.original_age = H.bioHolder.age
+
+		onUpdate(timePassed)
+			..()
+			var/mob/living/carbon/human/H = src.owner
+			H.bioHolder.age += src.get_mult(timePassed)
+			src.duration = (120 - (H.bioHolder.age - src.original_age) + 1) SECONDS // +1 is a safety buffer
+			var/mult = src.get_mult(timePassed)
+			if (probmult(7))
+				boutput(H, SPAN_ALERT(pick("Your joints hurt...", "Everything aches!", "Your eyes are sort of blurry", "It hurts to move",
+					"Your hands hurt", "Your skin feels strange", "The curse is aging you", "You have to do something quick", "Will you live long enough to remove the curse?",
+					"You can feel your age", "You see visions of eldritch beings")))
+			if (H.bioHolder.age >= 50 && !src.hair_greyed)
+				boutput(H, SPAN_ALERT("<b>Your hair greys!</b>"))
+				H.bioHolder.mobAppearance.customizations["hair_bottom"].color = "#b1b1b1"
+				H.bioHolder.mobAppearance.customizations["hair_middle"].color = "#b1b1b1"
+				H.bioHolder.mobAppearance.customizations["hair_top"].color = "#b1b1b1"
+				H.update_colorful_parts()
+				src.hair_greyed = TRUE
+			if (H.bioHolder.age >= src.original_age + 100 && !src.final_msg_given)
+				boutput(H, SPAN_ALERT("<b>You're over 100 years old... It's over soon. No going back.</b>"))
+				src.final_msg_given = TRUE
+				H.playsound_local(H, 'sound/ambience/spooky/Void_Calls.ogg', 75, FALSE)
+			if (H.bioHolder.age >= src.original_age + 120)
+				H.death(FALSE)
+				H.skeletonize()
+				src.linked_curser.lift_curse_specific(FALSE, H)
+
+		onRemove()
+			var/mob/living/carbon/human/H = src.owner
+			if (!QDELETED(H) && !isdead(H))
+				H.bioHolder.age = src.original_age
+			..()
+
+	nightmare
+		id = "art_nightmare_curse"
+		name = "Nightmare Curse"
+		extra_desc = "You're being haunted by nightmares! Kill them 7 of them or perish."
+		removal_msg = "The nightmare ends, along with the creatures..."
+		var/list/created_creatures = list()
+		var/creatures_to_kill = 7
+		var/time_passed = 0 SECONDS
+
+		onAdd()
+			..()
+			get_image_group(CLIENT_IMAGE_GROUP_ART_CURSER_NIGHTMARE).add_mob(src.owner)
+			src.spawn_creature()
+			var/mob/living/carbon/human/H = src.owner
+			H.client?.animate_color(normalize_color_to_matrix("#7e4599"), 3 SECONDS)
+			SPAWN(1 SECOND)
+				H.apply_color_matrix(normalize_color_to_matrix("#7e4599"), "art_curser_nightmare_overlay-[ref(src)]")
+
+		onUpdate(timePassed)
+			..()
+			var/mob/living/carbon/human/H = src.owner
+			if (src.creatures_to_kill <= 0 || QDELETED(H) || isdead(H))
+				src.linked_curser.lift_curse_specific(!QDELETED(H) && !isdead(H), H)
+				return
+			src.time_passed += timePassed
+			if (src.time_passed < 10 SECONDS)
+				return
+			src.time_passed = 0
+			src.spawn_creature()
+
+		onRemove()
+			get_image_group(CLIENT_IMAGE_GROUP_ART_CURSER_NIGHTMARE).remove_mob(src.owner)
+			var/mob/living/carbon/human/H = src.owner
+			H.client?.animate_color(time = 3 SECONDS)
+			SPAWN(3 SECONDS)
+				H.remove_color_matrix("art_curser_nightmare_overlay-[ref(src)]")
+			for (var/mob/living/critter/art_curser_nightmare/creature as anything in src.created_creatures)
+				if (!QDELETED(creature))
+					qdel(creature)
+			src.created_creatures = null
+			..()
+
+		proc/spawn_creature()
+			if (length(src.created_creatures) >= 2 || !istype(src.owner.loc, /turf))
+				return
+			var/mob/living/critter/art_curser_nightmare/creature = new(get_turf(src.owner), src)
+			src.created_creatures += creature
+			creature.register_target(src.owner)
+
+	maze
+		id = "art_maze_curse"
+		name = "Maze Curse"
+		extra_desc = "You're trapped in a labyrinth! Find your way out... if there is one..."
+		removal_msg = "You've found your way out! You could've been trapped there for eternity..."
+		var/turf/original_turf
+
+		onAdd(optional)
+			..()
+			src.original_turf = get_turf(src.owner)
+
+		onUpdate()
+			..()
+			var/mob/living/carbon/human/H = src.owner
+			if (QDELETED(H) || isdead(H))
+				src.linked_curser.lift_curse_specific(FALSE, H)
+
+		onRemove()
+			var/mob/living/carbon/human/H = src.owner
+			if (!QDELETED(H) && !isdead(H))
+				H.set_loc(src.original_turf)
+			else
+				var/mob/dead_ghost = H.ghostize() || ckey_to_mob_maybe_disconnected(H.last_ckey) // died or gibbed
+				dead_ghost.set_loc(src.original_turf)
+			..()
+
+	displacement
+		id = "art_displacement_curse"
+		var/mob/living/carbon/human/original_body
+		var/mob/living/intangible/art_curser_displaced_soul/soul
+		outputs_desc = FALSE
+
+		onAdd()
+			..()
+			src.soul = new(get_turf(src.owner), src.owner)
+			var/mob/living/carbon/human/H = src.owner
+			H.mind.transfer_to(soul)
+			src.original_body = H
+			src.soul.setStatus("art_curser_displaced_soul", src.duration, src.original_body)
+
+		onUpdate()
+			..()
+			if (QDELETED(src.original_body) || isdead(src.original_body))
+				src.linked_curser.lift_curse_specific(FALSE, src.original_body)
+
+		onRemove()
+			src.soul.delStatus("art_curser_displaced_soul")
+			if (QDELETED(src.original_body) || isdead(src.original_body))
+				boutput(src.soul, SPAN_ALERT("<b>Your body has died!</b>"))
+			if (!QDELETED(src.original_body))
+				src.soul.mind.transfer_to(src.original_body)
+			QDEL_NULL(src.soul)
+			src.original_body = null
+			..()
+
+	displaced_soul
+		id = "art_curser_displaced_soul"
+		name = "Soul Displacement Curse"
+		extra_desc = "Your soul has been displaced from your body! You're going to need to wait a short while or for someone to touch the artifact to return you."
+		removal_msg = "You're returned to your body! You feel a strong sense of relief."
+		var/mob/living/carbon/human/original_body
+
+		preCheck(atom/A)
+			. = ..()
+			if (istype(A, /mob/living/intangible/art_curser_displaced_soul))
+				return TRUE
+
+		onAdd(optional)
+			src.original_body = optional
+			..()
+
+		onRemove()
+			if (QDELETED(src.original_body) || isdead(src.original_body))
+				src.outputs_removal_msg = FALSE
+			src.original_body = null
+			..()
+
+	light
+		id = "art_light_curse"
+		name = "Light Curse"
+		extra_desc = "The light is extra harmful... stay out of it for a short while."
+		removal_msg = "You no longer feel harmed by light... thank goodness."
+		var/time_passed = 0
+
+		onUpdate(timePassed)
+			..()
+			src.time_passed += timePassed
+			var/turf/T = src.owner.loc
+			if (ON_COOLDOWN(src.owner, "art_curse_light_burn", 2 SECONDS))
+				return
+			if (istype(T) && T.is_lit())
+				var/mob/living/carbon/human/H = src.owner
+				H.TakeDamage("All", burn = 5 * src.get_mult(time_passed), damage_type = DAMAGE_BURN)
+			src.time_passed = 0
+
 /datum/statusEffect/art_fissure_corrosion
 	id = "art_fissure_corrosion"
 	effect_quality = STATUS_QUALITY_NEGATIVE
