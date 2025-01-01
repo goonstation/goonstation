@@ -1,5 +1,9 @@
 
 (t)wed jan 01 25
+(u)FlameArrow57
+(p)21880
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Device analyzers can be inspected to show scanned objects, excluding Syndicate objects.
 (u)JORJ949
 (p)21270
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
