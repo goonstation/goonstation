@@ -1881,8 +1881,9 @@
 
 		buffer_string = model
 		tooltip_rebuild = 1
-		qdel(buffer)
-		buffer = list()
+		buffer.len = 0
+		ring_reader = 1
+		ring_writer = 1
 		return TRUE
 
 	proc/compSetModel(var/datum/mechanicsMessage/input)
