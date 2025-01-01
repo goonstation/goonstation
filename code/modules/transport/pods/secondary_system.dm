@@ -430,13 +430,10 @@
 			return
 		if (usr != src.ship.pilot)
 			return
-		if (!src.ship.engine || !src.ship.engine.active)
-			return
 		if (ON_COOLDOWN(src, "thruster_movement", 5 SECONDS))
-			boutput(usr, SPAN_ALERT("Thrusters are cooling down! [round(GET_COOLDOWN(src, "thruster_movement") / 10, 0.1)] seconds left."))
+			boutput(usr, "[src.ship.ship_message("Thrusters are cooling down! [round(GET_COOLDOWN(src, "thruster_movement") / 10, 0.1)] seconds left.")]")
 			return
 		var/turn_angle = src.turn_dir == "right" ? -90 : 90
-
 		for (var/i in 1 to 5)
 			step(src.ship, turn(src.ship.dir, turn_angle))
 			sleep(0.125 SECONDS)
