@@ -1575,13 +1575,13 @@
 /obj/machinery/vehicle/mouse_drop(over_object, src_location, over_location)
 	if (!usr.client || !isliving(usr) || isintangible(usr))
 		return
-	if (!can_reach(usr, src))
+	if (!can_reach(usr, src) && !src.sec_system?.mousedroppable_by_pilot)
 		return
 	if (is_incapacitated(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
-	if(locked)
+	if(locked && !src.sec_system?.mousedroppable_by_pilot)
 		boutput(usr, SPAN_ALERT("[src] is locked!"))
 		return
 
