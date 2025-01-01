@@ -209,6 +209,8 @@ TYPEINFO(/obj/item/circuitboard/announcement/bridge)
 	computertype = /obj/machinery/computer/announcement/syndicate
 	is_syndicate = TRUE
 
+TYPEINFO(/obj/item/circuitboard/announcement/clown)
+	mats = null
 /obj/item/circuitboard/announcement/clown
 	name = "circuit board (clown announcement computer)"
 	computertype = /obj/machinery/computer/announcement/clown
