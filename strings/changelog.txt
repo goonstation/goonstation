@@ -1,5 +1,9 @@
 
 (t)wed jan 01 25
+(u)JORJ949
+(p)21270
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Added cash briefcases! An empty one can be found in the HoPs locker and traitors can also purchase two of them for 2tc.
 (u)444
 (p)21888
 (e)⚖|C-Balance
