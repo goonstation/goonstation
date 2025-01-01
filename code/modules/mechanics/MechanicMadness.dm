@@ -1914,15 +1914,9 @@
 		if(!in_interact_range(src, user) || !can_act(user) || isnull(inp))
 			return
 
+		if (isnull(inp)) return
 		inp = round(inp)
-		inp = min(inp, buffer_max_size)
-		if(inp == 0)
-			boutput(user,"Buffer size can't be zero.")
-			return
-		if(inp < 0)
-			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50,1)
-			boutput(user,"How could a buffer be negative? What are you doing here?")
-			return
+		inp = clamp(inp, 1, buffer_max_size)
 		buffer_size = inp
 		tooltip_rebuild = 1
 		boutput(user,"You set the buffer size to [inp]")
