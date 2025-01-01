@@ -1950,9 +1950,7 @@
 					ring_reader = 1
 				else if(bufl >= (ring_reader + 1) && !isnull(buffer[(ring_reader + 1)]))
 					ring_reader++
-			ring_writer++
-			if(ring_writer > buffer_size)
-				ring_writer = 1
+			ring_writer = (ring_writer % buffer_size) + 1
 			return
 
 		if(buffer_model == RANDOM_BUFFER)
