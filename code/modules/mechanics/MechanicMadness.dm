@@ -1910,7 +1910,7 @@
 		boutput(user, "Set delay to [inp]")
 
 	proc/setBufferSize(obj/item/W as obj, mob/user as mob)
-		var/inp = tgui_input_number(user,"Set size of signal buffer","Buffer size", buffer_size,buffer_max_size,-1)
+		var/inp = tgui_input_number(user,"Set size of signal buffer","Buffer size", buffer_size,buffer_max_size,1)
 		if(!in_interact_range(src, user) || !can_act(user) || isnull(inp))
 			return
 
