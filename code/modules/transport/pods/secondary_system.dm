@@ -439,8 +439,6 @@
 		boutput(usr, SPAN_NOTICE("Thrusters will now provide ship movement to the [src.turn_dir]."))
 
 	Clickdrag_PodToObject(mob/living/user, atom/A)
-		if (!src.ship.dir) // initial state of the ship
-			return
 		if (user != src.ship.pilot)
 			return
 		if (!src.ship.engine || !src.ship.engine.active)
