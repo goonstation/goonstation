@@ -416,18 +416,30 @@
 /obj/item/shipcomponent/secondary_system/lateral_thrusters
 	name = "Lateral Thrusters"
 	desc = "A thruster system that provides a burst of lateral movement upon use. Note, NanoTrasen is not liable for any resulting injuries."
-	help_message = {"Initialized to provide movement to the right. When installed in a pod, click the HUD button to change the movement direction."
-					"Click drag the pod to itself or something else to use the thrusters."}
+	help_message = "Initialized to provide movement to the right. When installed in a pod, click the pod and use the context menu button to change direction."
 	hud_state = "lat_thrusters_right"
 	f_active = TRUE
 	power_used = 50
-	mousedroppable_by_pilot = TRUE
 	var/turn_dir = "right"
 
 	Use(mob/user)
 		src.activate(user)
 
 	activate()
+		if (usr != src.ship.pilot)
+			return
+		if (!src.ship.engine || !src.ship.engine.active)
+			return
+		if (ON_COOLDOWN(src, "thruster_movement", 5 SECONDS))
+			boutput(usr, SPAN_ALERT("Thrusters are cooling down! [round(GET_COOLDOWN(src, "thruster_movement") / 10, 0.1)] seconds left."))
+			return
+		var/turn_angle = src.turn_dir == "right" ? -90 : 90
+
+		for (var/i in 1 to 5)
+			step(src.ship, turn(src.ship.dir, turn_angle))
+			sleep(0.125 SECONDS)
+
+	proc/change_thruster_direction()
 		if (src.turn_dir == "right")
 			src.turn_dir = "left"
 			src.hud_state = "lat_thrusters_left"
@@ -437,20 +449,6 @@
 			src.hud_state = "lat_thrusters_right"
 			src.ship.myhud.update_states()
 		boutput(usr, SPAN_NOTICE("Thrusters will now provide ship movement to the [src.turn_dir]."))
-
-	Clickdrag_PodToObject(mob/living/user, atom/A)
-		if (user != src.ship.pilot)
-			return
-		if (!src.ship.engine || !src.ship.engine.active)
-			return
-		if (ON_COOLDOWN(src, "thruster_movement", 5 SECONDS))
-			boutput(user, SPAN_ALERT("Thrusters are cooling down! [round(GET_COOLDOWN(src, "thruster_movement") / 10, 0.1)] seconds left."))
-			return
-		var/turn_angle = src.turn_dir == "right" ? -90 : 90
-
-		for (var/i in 1 to 5)
-			step(src.ship, turn(src.ship.dir, turn_angle))
-			sleep(0.125 SECONDS)
 
 /obj/item/shipcomponent/secondary_system/storage/Use(mob/user)
 	src.dummy_storage.storage.show_hud(user)

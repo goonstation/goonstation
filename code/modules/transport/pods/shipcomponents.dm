@@ -18,8 +18,6 @@
 	var/system = "part"
 	/// The part is disrupted by an attack and is forced to be off
 	var/disrupted = FALSE
-	/// This part has a mousedrop functionality that can be used by the pilot while flying
-	var/mousedroppable_by_pilot = FALSE
 
 // Code to clean up a shipcomponent that is no longer in use
 /obj/item/shipcomponent/disposing()
