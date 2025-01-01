@@ -426,6 +426,8 @@
 		src.activate(user)
 
 	activate()
+		if (!..())
+			return
 		if (usr != src.ship.pilot)
 			return
 		if (!src.ship.engine || !src.ship.engine.active)
