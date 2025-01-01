@@ -1,4 +1,9 @@
 
+(t)wed jan 01 25
+(u)444
+(p)21888
+(e)⚖|C-Balance
+(+)Due to a materials shortage, HE Torpedos now cost 10,000 Credits
 (t)tue dec 31 24
 (u)JORJ949
 (p)21708
