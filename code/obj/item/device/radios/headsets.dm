@@ -294,13 +294,14 @@
 		)
 	icon_override = "sec"
 	icon_tooltip = "Security"
+	tooltip_flags = REBUILD_USER
 
 	get_desc(dist, mob/user)
-		if (user.mind?.special_role)
+		if (user.mind.is_antagonist())
 			. += SPAN_ALERT("<b>Good.</b>")
 		else
 			. += "Keep it safe!"
-
+		. += ..()
 /obj/item/device/radio/headset/detective
 	name = "detective's headset"
 	desc = "In addition to having access to the Security radio channel, this headset also features private frequency that's suited for only the sneakiest sleuthing."
@@ -427,18 +428,6 @@
 		)
 	icon_override = "ghost_buster"
 	icon_tooltip = "Ghost Buster"
-
-/obj/item/device/radio/headset/hall_monitor
-	name = "Hall monitor's headset"
-	desc = "So you can listen to(evesdrop on) station security(drama)."
-	icon_state = "sec headset"
-	secure_frequencies = list("g" = R_FREQ_SECURITY, "c" = R_FREQ_CIVILIAN)
-	secure_classes = list(
-		"g" = RADIOCL_SECURITY,
-		"c" = RADIOCL_CIVILIAN,
-		)
-	icon_override = "civ"
-	icon_tooltip = "Hall Monitor"
 
 /obj/item/device/radio/headset/command/nt/commander
 	name = "\improper NT Commander's headset"

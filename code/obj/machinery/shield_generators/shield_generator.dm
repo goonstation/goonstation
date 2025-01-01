@@ -10,6 +10,9 @@ TYPEINFO(/area/station/shield_zone)
 	requires_power = FALSE
 	minimaps_to_render_on = null
 	occlude_foreground_parallax_layers = FALSE
+	#ifdef UNDERWATER_MAP
+	ambient_light = OCEAN_LIGHT
+	#endif
 
 /* ==================== Generator ==================== */
 

@@ -31,7 +31,7 @@ export const ResearchLevel = {
 };
 
 export const haveDevice = (equipmentCooldown, name) => {
-  for (const { label, cooldown } of equipmentCooldown) {
+  for (const { label } of equipmentCooldown) {
     if (label === name) {
       return true;
     }
@@ -121,7 +121,7 @@ export const BioEffect = (props) => {
                   maxValue={999999}
                   step={1}
                   width={'5'}
-                  value={booth.price}
+                  value={booth.price.toFixed()}
                   onChange={(price) =>
                     setBooth({
                       ref: booth.ref,

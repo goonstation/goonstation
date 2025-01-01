@@ -145,7 +145,7 @@ proc/maximal_subtype(var/list/L)
 // by_type and by_cat stuff
 
 // sometimes we want to have all objects of a certain type stored (bibles, staffs of cthulhu, ...)
-// to do that add START_TRACKING to New (or unpooled) and STOP_TRACKING to disposing, then use by_type[/obj/item/bible] to access the list of things
+// to do that add START_TRACKING to New and STOP_TRACKING to disposing, then use by_type[/obj/item/bible] to access the list of things
 
 #define START_TRACKING if(!by_type[__TYPE__]) { by_type[__TYPE__] = list() }; by_type[__TYPE__][src] = 1
 #define STOP_TRACKING by_type[__TYPE__].Remove(src)
@@ -158,7 +158,7 @@ var/list/list/by_type = list()
 #define for_by_tcl(_iterator, _type) for(var ##_type/##_iterator as anything in by_type[##_type])
 
 // sometimes we want to have a list of objects of multiple types, without having to traverse multiple lists
-// to do that add START_TRACKING_CAT("category") to New, unpooled, or whatever proc you want to start tracking the objects in (eg: tracking dead humans, put start tracking in death())
+// to do that add START_TRACKING_CAT("category") to New or whatever proc you want to start tracking the objects in (eg: tracking dead humans, put start tracking in death())
 // and add STOP_TRACKING_CAT("category") to disposing, or whatever proc you want to stop tracking the objects in (eg: tracking live humans, put stop tracking in death())
 // and to traverse the list, use by_cat["category"] to get the list of objects in that category
 // also ideally youd use defines for by_cat categories!
@@ -205,6 +205,8 @@ var/list/list/by_cat = list()
 #define TR_CAT_STAMINA_MOBS "stamina_mobs"
 #define TR_CAT_BUGS "bugs"
 #define TR_CAT_POSSIBLE_DEAD_DROP "dead_drops"
+#define TR_CAT_SINGULO_MAGNETS "singulo_magnets"
+#define TR_CAT_PORTABLE_MACHINERY "portable_machinery"
 // powernets? processing_items?
 // mobs? ai-mobs?
 

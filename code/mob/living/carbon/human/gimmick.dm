@@ -439,7 +439,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			var/turf/target_turf = pick(afterlife_bar_turfs)
 			var/mob/living/carbon/human/biker/newbody = new()
 			newbody.set_loc(target_turf)
-			newbody.overlays += image('icons/misc/32x64.dmi',"halo")
+			newbody.setStatus("in_afterlife", INFINITE_STATUS, newbody)
 			if(inafterlifebar(src))
 				qdel(src)
 			return

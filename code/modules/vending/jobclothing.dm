@@ -244,7 +244,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic/april_fools, 2, hidden=1)
 
 #ifdef SEASON_WINTER
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/hi_vis, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/hi_vis/puffer, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/engi, 2)
 #endif
 
@@ -288,7 +288,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/constructioncone, 16)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer/april_fools, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic/april_fools, 2)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/hi_vis, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/hi_vis/puffer, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/engi, 2)
 
 /obj/machinery/vending/jobclothing/catering
@@ -467,6 +467,10 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/syndicate, 4)
+#ifdef XMAS
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/space/santahat/noslow, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/space/santa/noslow, 2)
+#endif
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/space/syndicate, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/space/syndicate, 2)
 		product_list += new/datum/data/vending_product(/obj/item/tank/jetpack/syndicate, 2)
@@ -475,7 +479,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/fingerless, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/black, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/swat, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/beret/syndicate, 4)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/syndie, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/syndie, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/fanny/syndie, 1)
-

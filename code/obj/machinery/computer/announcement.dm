@@ -311,6 +311,7 @@
 	sound_to_play = 'sound/machines/announcement_clown.ogg'
 	override_font = "Comic Sans MS"
 	desc = "A bootleg announcement computer. Only accepts official Chips Ahoy brand clown IDs."
+	sound_volume = 50
 
 	send_message(mob/user, message)
 		. = ..()
@@ -328,10 +329,10 @@
 					S?["mi_crim"] = "Making a very irritating announcement."
 
 					clown.update_burning(15) // placed here since update_burning is only for mob/living
-				if(ID)
-					user.put_in_hand_or_eject(ID)
+				if(src.ID)
+					user.put_in_hand_or_eject(src.ID)
 
-				if (emagged)
+				if (src.emagged)
 					var/turf/T = get_turf(src.loc)
 					if(T)
 						src.visible_message("<b>The clown on the screen laughs as the [src] explodes!</b>")
@@ -350,13 +351,13 @@
 		..()
 		switch(action)
 			if ("id")
-				if ( ID.icon_state != "id_clown")
+				if (src.ID && (src.ID.icon_state != "id_clown"))
 					src.unlocked = 0 // clowns ONLY
 					update_status()
 
 
 	emag_act(mob/user, obj/item/card/emag/E)
-		if (!emagged)
+		if (!src.emagged)
 			src.visible_message(SPAN_ALERT("<B>The clown on the screen grins in horrid delight!</B>"))
-		emagged = TRUE
+		src.emagged = TRUE
 

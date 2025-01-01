@@ -2144,8 +2144,11 @@ or don't if it uses a custom topopen overlay
 	if (!C)
 		src.set_eye(null)
 		return 0
-	if (isdead(src) || C.network != src.network) return 0
+	if (isdead(src) || C.network != src.network)
+		return 0
 
+	if(isnull(C.loc) || QDELETED(C))
+		return 0
 	// ok, we're alive, camera is acceptable and in our network...
 	camera_overlay_check(C) //Add static if the camera is disabled
 

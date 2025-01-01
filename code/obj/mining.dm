@@ -198,7 +198,7 @@
 		// this used to use an area, which meant it only checked
 		var/turf/origin = get_turf(src)
 		var/unacceptable = FALSE
-		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
+		for (var/turf/T in block(locate(origin.x-1, origin.y-1, origin.z), locate(origin.x + width, origin.y + height, origin.z)))
 
 			for (var/mob/living/L in T)
 				if(ismobcritter(L)) // we don't care about critters
@@ -317,7 +317,7 @@
 		if (istype(W, /obj/item/raw_material/plasmastone) && !loaded)
 			loaded = 1
 			boutput(user, SPAN_NOTICE("You charge the magnetizer with the plasmastone."))
-			qdel(W)
+			W.change_stack_amount(-1)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		var/turf/target_turf = target
@@ -372,6 +372,7 @@
 	opacity = 0
 	density = 0 // collision is dealt with by the chassis
 	anchored = ANCHORED_ALWAYS
+	req_access = list(access_mining, access_mining_outpost)
 	var/obj/machinery/magnet_chassis/linked_chassis = null
 	var/health = 100
 	var/attract_time = 300
@@ -719,11 +720,11 @@
 				if (magnetNotReady)
 					return
 				if (!target || !src.get_magnetic_center())
-					src.visible_message("<b>[src.name]</b> armeds, \"Magnetic field strength error. Please ensure mining area is properly magnetized\"")
+					src.visible_message("<b>[src.name]</b> states, \"Magnetic field strength error. Please ensure mining area is properly magnetized\"")
 					return
 
 				if (target.check_for_unacceptable_content())
-					src.visible_message("<b>[src.name]</b> armeds, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
+					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
 					src.last_use_attempt = TIME + 10
 					src.pull_new_source(params["encounter_id"])
@@ -732,11 +733,11 @@
 				if (magnetNotReady)
 					return
 				if (!target || !src.get_magnetic_center())
-					src.visible_message("<b>[src.name]</b> armeds, \"Magnetic field strength error. Please ensure mining area is properly magnetized\"")
+					src.visible_message("<b>[src.name]</b> states, \"Magnetic field strength error. Please ensure mining area is properly magnetized\"")
 					return
 
 				if (target.check_for_unacceptable_content())
-					src.visible_message("<b>[src.name]</b> armeds, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
+					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
 					src.last_use_attempt = TIME + 10 // This is to prevent href exploits or autoclickers from pulling multiple times simultaneously
 					src.pull_new_source()
@@ -747,7 +748,7 @@
 				else
 					var/mob/living/carbon/human/H = usr
 					if(!src.allowed(H))
-						boutput(usr, SPAN_ALERT("Access denied. Please contact the Chief Engineer or Captain to access the override."))
+						boutput(usr, SPAN_ALERT("Access denied."))
 					else
 						src.cooldown_override = !src.cooldown_override
 					. = TRUE
@@ -767,7 +768,7 @@
 	var/temp = null
 	var/list/linked_magnets = list()
 	var/obj/machinery/mining_magnet/linked_magnet = null
-	req_access = list(access_engineering_chief)
+	req_access = list(access_mining)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	can_reconnect = 1 //IDK why you'd want to but for consistency's sake
 
@@ -777,6 +778,9 @@
 			src.connection_scan()
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if(!src.allowed(user))
+			boutput(user, SPAN_ALERT("Access Denied."))
+			return
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "MineralMagnet", src.name)
@@ -814,16 +818,16 @@
 				linked_magnet = locate(params["ref"]) in linked_magnets
 				if (!istype(linked_magnet))
 					linked_magnet = null
-					src.visible_message("<b>[src.name]</b> armeds, \"Designated magnet is no longer operational.\"")
+					src.visible_message("<b>[src.name]</b> states, \"Designated magnet is no longer operational.\"")
 				. = TRUE
 			if ("magnetscan")
 				switch(src.connection_scan())
 					if(1)
-						src.visible_message("<b>[src.name]</b> armeds, \"Unoccupied Magnet Chassis located. Please connect magnet system to chassis.\"")
+						src.visible_message("<b>[src.name]</b> states, \"Unoccupied Magnet Chassis located. Please connect magnet system to chassis.\"")
 					if(2)
-						src.visible_message("<b>[src.name]</b> armeds, \"Magnet equipment not found within range.\"")
+						src.visible_message("<b>[src.name]</b> states, \"Magnet equipment not found within range.\"")
 					else
-						src.visible_message("<b>[src.name]</b> armeds, \"Magnet equipment located. Link established.\"")
+						src.visible_message("<b>[src.name]</b> states, \"Magnet equipment located. Link established.\"")
 				. = TRUE
 			if ("unlinkmagnet")
 				src.linked_magnet = null
@@ -832,7 +836,7 @@
 				if(istype(src.linked_magnet))
 					if (src.linked_magnet.health <= 0)
 						src.linked_magnet = null // ITS DEAD!!!! STOP!!!
-						src.visible_message("<b>[src.name]</b> armeds, \"Designated magnet is no longer operational.\"")
+						src.visible_message("<b>[src.name]</b> states, \"Designated magnet is no longer operational.\"")
 						return
 					. = src.linked_magnet.ui_act(action, params)
 

@@ -169,6 +169,8 @@
 				target.setStatusMin("unconscious", 10 SECONDS)
 				do_teleport(target, pick_landmark(LANDMARK_SAMOSTREL_WARP), 0, 0)
 
+				target.unlock_medal("I HATE Hospitals", TRUE)
+
 				if (ishuman(target))
 					var/atom/movable/overlay/animation = new(target_original_loc)
 					animation.icon_state = "blank"

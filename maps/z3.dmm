@@ -287,7 +287,7 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "abe" = (
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "abf" = (
@@ -640,7 +640,7 @@
 	},
 /area/space_hive)
 "acc" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window{
 	dir = 8
 	},
@@ -769,11 +769,11 @@
 	icon_state = "rwindow";
 	reinf = 1
 	},
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/unsimulated/floor/plating/scorched,
 /area/space_hive)
 "acv" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window{
 	dir = 2;
 	icon_state = "rwindow";
@@ -782,7 +782,7 @@
 /turf/unsimulated/floor,
 /area/space_hive)
 "acw" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window{
 	dir = 1;
 	icon_state = "rwindow";
@@ -825,7 +825,7 @@
 /turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "acA" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -967,7 +967,7 @@
 /area/space_hive)
 "acW" = (
 /obj/machinery/communications_dish,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -997,7 +997,7 @@
 /turf/simulated/floor,
 /area/radiostation/hallway)
 "adb" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -1015,7 +1015,7 @@
 /area/space)
 "add" = (
 /obj/machinery/communications_dish,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -1197,7 +1197,7 @@
 /turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "adE" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/honeyblocks/corner{
 	dir = 1
 	},
@@ -1284,7 +1284,7 @@
 	},
 /area/radiostation/studio)
 "adR" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
@@ -2189,7 +2189,7 @@
 /turf/space,
 /area/diner/solar)
 "ajy" = (
-/obj/grille/catwalk/dubious,
+/obj/mesh/catwalk/dubious,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -2509,9 +2509,7 @@
 /obj/map/light/white,
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/plating/damaged2,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "alG" = (
 /turf/simulated/floor,
 /area/radiostation/engineering)
@@ -2569,9 +2567,7 @@
 /area/bee_trader)
 "alR" = (
 /turf/simulated/floor/plating/airless,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "amc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2937,7 +2933,7 @@
 /turf/simulated/floor/industrial,
 /area/space)
 "anm" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -2997,7 +2993,7 @@
 	},
 /area/flock_trader)
 "anH" = (
-/obj/grille/catwalk/dubious,
+/obj/mesh/catwalk/dubious,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -3020,14 +3016,14 @@
 /turf/space,
 /area/space)
 "anM" = (
-/obj/grille/catwalk/dubious,
+/obj/mesh/catwalk/dubious,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
 /area/space)
 "anN" = (
-/obj/grille/catwalk/dubious,
+/obj/mesh/catwalk/dubious,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -3083,7 +3079,7 @@
 /turf/simulated/shuttle/wall/flock,
 /area/flock_trader)
 "aoE" = (
-/obj/grille/catwalk/dubious,
+/obj/mesh/catwalk/dubious,
 /obj/map/light/dimred,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
@@ -3247,7 +3243,7 @@
 /turf/simulated/floor/damaged2,
 /area/diner/bathroom)
 "apr" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -3370,7 +3366,7 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "apO" = (
-/obj/grille/catwalk/dubious,
+/obj/mesh/catwalk/dubious,
 /obj/machinery/power/terminal{
 	dir = 4
 	},
@@ -3512,7 +3508,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "aqv" = (
-/obj/grille/catwalk/dubious,
+/obj/mesh/catwalk/dubious,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -3525,7 +3521,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay5,
+/obj/machinery/light/traffic_light/john_diner/delay5,
 /turf/space,
 /area/space)
 "aqB" = (
@@ -3545,11 +3541,11 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "aqF" = (
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aqG" = (
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/simulated/floor/airless/plating/scorched,
 /area/space)
 "aqH" = (
@@ -3617,11 +3613,11 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay4,
+/obj/machinery/light/traffic_light/john_diner/delay4,
 /turf/space,
 /area/space)
 "aqQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -3917,7 +3913,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "arQ" = (
@@ -5013,17 +5009,13 @@
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "axK" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "axL" = (
 /obj/fakeobject/lightbulb_broken{
 	dir = 1
@@ -5046,24 +5038,20 @@
 	},
 /area/salyut)
 "axO" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "axP" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayg" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -5071,9 +5059,7 @@
 	icon_state = "wall3_space_end"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayh" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -5081,75 +5067,59 @@
 	icon_state = "wall3_space_end"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayw" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross"
 	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayx" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayy" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
 	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayz" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayA" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	icon_state = "catwalk_cross"
 	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayB" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayC" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ayF" = (
 /obj/machinery/plantpot{
 	anchored = 1
@@ -5435,7 +5405,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/abandonedoutpostthing)
 "aDJ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/green/reinforced{
 	color = "#09bb00";
 	dir = 4
@@ -6435,18 +6405,14 @@
 /area/space)
 "aIz" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aIA" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aIB" = (
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedmedicalship)
@@ -6578,9 +6544,7 @@
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aIW" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/secure/closet/medical/medicine,
@@ -6709,9 +6673,7 @@
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aJs" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
@@ -6830,9 +6792,7 @@
 	color = "b4b4b4"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aJM" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/bot/medbot/terrifying,
@@ -6842,27 +6802,21 @@
 /obj/machinery/crusher/slow,
 /obj/map/light/white,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aJO" = (
 /obj/fakeobject/pipe{
 	dir = 10;
 	color = "b4b4b4"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aJP" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aJQ" = (
 /obj/lattice{
 	dir = 4;
@@ -6962,34 +6916,26 @@
 	icon_state = "wall3_space_end"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKd" = (
 /obj/fakeobject/pipe{
 	dir = 9;
 	color = "b4b4b4"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKg" = (
 /obj/map/light/white,
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKh" = (
 /obj/fakeobject/pipe{
 	dir = 5;
 	color = "b4b4b4"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKi" = (
 /obj/lattice,
 /obj/fakeobject/pipe{
@@ -7059,18 +7005,14 @@
 /area/abandonedmedicalship)
 "aKx" = (
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKy" = (
 /obj/submachine/ATM{
 	pixel_x = 32
 	},
 /obj/item/seed/alien,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKA" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
@@ -7123,17 +7065,13 @@
 /obj/npc/trader/robot/robuddy/salvage,
 /obj/map/light/white,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKH" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKI" = (
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -7184,20 +7122,14 @@
 	name = "GLOMAR Salvager"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKW" = (
 /obj/marker/supplymarker,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKX" = (
 /turf/simulated/floor/plating/damaged2,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aKY" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor/airless/grime,
@@ -7257,21 +7189,15 @@
 	icon_state = "wall3_space_end"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aLf" = (
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/damaged2,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aLg" = (
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "aLi" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/h7/storage)
@@ -8067,7 +7993,7 @@
 /turf/simulated/floor,
 /area/derelict_ai_sat)
 "aNQ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/item/cable_coil/cut{
 	color = "#DD0000"
 	},
@@ -8124,7 +8050,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/h7)
 "aOb" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -8528,7 +8454,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/derelict_ai_sat)
 "aPh" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/cable{
@@ -8620,7 +8546,7 @@
 /turf/simulated/floor/plating,
 /area/h7)
 "aPu" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/structure/woodwall,
@@ -8724,7 +8650,7 @@
 /turf/simulated/floor/sanitary,
 /area/h7/crew)
 "aPK" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -8962,7 +8888,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/h7/crew)
 "aQy" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced,
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
@@ -8970,7 +8896,7 @@
 /turf/simulated/floor/plating,
 /area/abandonedship)
 "aQz" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/north,
@@ -9064,7 +8990,7 @@
 /turf/simulated/floor/grime,
 /area/derelict_ai_sat/core)
 "aQO" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -9930,7 +9856,7 @@
 /turf/simulated/floor,
 /area/h7/control)
 "aTA" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -10439,15 +10365,11 @@
 /turf/space,
 /area/h7/asteroid)
 "aUY" = (
-/obj/structure/woodwall{
-	color = "#CCCCCC";
-	name = "odd asteroid wall";
-	plane = -105
-	},
+/obj/structure/woodwall/fake_asteroid/left_edge,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aUZ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -10484,7 +10406,7 @@
 /turf/space,
 /area/iss)
 "aVf" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/cable{
@@ -10634,7 +10556,7 @@
 /turf/simulated/floor/purple/corner,
 /area/h7)
 "aVA" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -10670,7 +10592,7 @@
 /turf/simulated/floor/plating,
 /area/h7)
 "aVI" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/abandonedoutpostthing)
 "aVJ" = (
@@ -10970,7 +10892,7 @@
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aWC" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -11518,7 +11440,7 @@
 	},
 /area/abandonedoutpostthing)
 "aYk" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -11552,7 +11474,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aYq" = (
@@ -11755,7 +11677,7 @@
 /turf/simulated/floor/plating,
 /area/h7/lab)
 "aZg" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -13460,7 +13382,7 @@
 /turf/simulated/floor/grime,
 /area/diner/arcade)
 "bgt" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/helldrone)
 "bgu" = (
@@ -13751,7 +13673,7 @@
 /turf/simulated/floor/engine,
 /area/derelict_ai_sat)
 "bhy" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable{
@@ -13766,7 +13688,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/derelict_ai_sat/solar)
 "bhB" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -13784,7 +13706,7 @@
 /turf/space,
 /area/space)
 "bhD" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/derelict_ai_sat/solar)
 "bhE" = (
@@ -13890,11 +13812,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/derelict_ai_sat/solar)
 "bhU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -13940,7 +13862,7 @@
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
 "bhZ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -13966,7 +13888,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -13980,7 +13902,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -13999,7 +13921,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bid" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-5"
 	},
@@ -14035,7 +13957,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/derelict_ai_sat)
 "bii" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-10"
 	},
@@ -14151,7 +14073,7 @@
 /turf/simulated/floor,
 /area/derelict_ai_sat)
 "biA" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk,
@@ -14206,7 +14128,7 @@
 /turf/simulated/floor/grime,
 /area/derelict_ai_sat)
 "biH" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable,
@@ -14506,7 +14428,7 @@
 "bjH" = (
 /obj/lattice,
 /obj/machinery/communications_dish,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable,
 /turf/space,
 /area/space)
@@ -14815,7 +14737,7 @@
 /turf/simulated/floor/longtile/black,
 /area/space)
 "bkX" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bkY" = (
@@ -15518,6 +15440,10 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/jucer_trader)
+"bud" = (
+/obj/structure/woodwall/fake_asteroid/right_edge,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "buU" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 6;
@@ -15657,7 +15583,7 @@
 /turf/space,
 /area/diner/tug)
 "bLN" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
@@ -15804,7 +15730,7 @@
 /turf/simulated/floor/scorched,
 /area/diner/bathroom)
 "ccW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/indestructible/shuttle_corner{
@@ -15917,14 +15843,12 @@
 	id = "salvage_in"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "ctc" = (
 /turf/unsimulated/floor/black,
 /area/space_hive)
 "cty" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
 /area/diner/hangar)
 "ctJ" = (
@@ -15983,9 +15907,7 @@
 /obj/machinery/crusher/slow,
 /obj/map/light/white,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "cEM" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/gangtag{
@@ -16021,7 +15943,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "cIW" = (
@@ -16160,7 +16082,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "cXk" = (
@@ -16170,7 +16092,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "cXX" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/power/apc/autoname_north/nopoweralert,
 /obj/cable{
 	icon_state = "0-2"
@@ -16727,7 +16649,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "eXg" = (
@@ -16799,7 +16721,7 @@
 /turf/simulated/floor/grime,
 /area/diner/hallway)
 "ffD" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/green/reinforced{
 	color = "#09bb00";
 	dir = 8
@@ -16825,11 +16747,6 @@
 	dir = 8
 	},
 /area/diner/hangar)
-"ffO" = (
-/obj/lattice,
-/obj/machinery/light/runway_light,
-/turf/space,
-/area/space)
 "fgb" = (
 /turf/simulated/wall/auto/asteroid{
 	dir = 1
@@ -16963,6 +16880,14 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/diner/jucer_trader)
+"fEX" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_diner,
+/turf/space,
+/area/space)
 "fFQ" = (
 /obj/table/auto,
 /obj/machinery/light/incandescent/warm{
@@ -16986,9 +16911,7 @@
 	},
 /obj/machinery/launcher_loader/west,
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "fIW" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -17132,7 +17055,7 @@
 	},
 /area/diner/jucer_trader)
 "ggp" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -17280,7 +17203,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "gtN" = (
@@ -17646,7 +17569,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/diner/motel)
 "hto" = (
-/obj/grille/catwalk/dubious,
+/obj/mesh/catwalk/dubious,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -17794,7 +17717,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "hYd" = (
@@ -18091,7 +18014,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "iOb" = (
@@ -18240,7 +18163,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/motel)
 "jar" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/door/airlock/pyro/external{
 	name = "Compartment Hatch"
 	},
@@ -18323,6 +18246,14 @@
 	},
 /turf/space,
 /area/diner/tug)
+"jiG" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_diner,
+/turf/space,
+/area/space)
 "jiP" = (
 /obj/npc/trader/robot/robuddy/drugs,
 /turf/simulated/floor/grime,
@@ -18379,7 +18310,7 @@
 /area/abandonedmedicalship)
 "jru" = (
 /obj/lattice,
-/obj/machinery/light/runway_light/delay5,
+/obj/machinery/light/traffic_light/trader_diner/delay5,
 /turf/space,
 /area/space)
 "jsq" = (
@@ -18428,9 +18359,7 @@
 	},
 /obj/machinery/launcher_loader/east,
 /turf/simulated/floor/plating/airless,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "jxr" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/airlock/pyro/classic{
@@ -18569,6 +18498,13 @@
 	icon_state = "red2"
 	},
 /area/diner/dining)
+"jUK" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_diner/delay3,
+/turf/space,
+/area/space)
 "jVh" = (
 /obj/machinery/r_door_control/podbay/diner2,
 /turf/simulated/wall/auto/reinforced/old,
@@ -18650,9 +18586,7 @@
 	dir = 4
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "kjj" = (
 /obj/machinery/door_control{
 	id = "zdrone_hangar";
@@ -18766,7 +18700,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
 "kxu" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/map/light/screen,
@@ -18797,7 +18731,7 @@
 /turf/space,
 /area/diner/jucer_trader)
 "kEg" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/green/reinforced{
 	color = "#09bb00";
 	dir = 4
@@ -18880,7 +18814,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "kVd" = (
@@ -18911,7 +18845,7 @@
 /turf/simulated/floor/grime,
 /area/diner/arcade)
 "laI" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -18956,6 +18890,14 @@
 	icon_state = "floor2"
 	},
 /area/diner/tug)
+"ldO" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/john_diner,
+/turf/space,
+/area/space)
 "lgw" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -18984,7 +18926,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "ljs" = (
@@ -19015,9 +18957,7 @@
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "lma" = (
 /obj/computerframe,
 /turf/simulated/floor/plating,
@@ -19126,7 +19066,7 @@
 /turf/simulated/floor/plating,
 /area/h7/lab)
 "lCx" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -19223,6 +19163,13 @@
 	},
 /turf/simulated/floor/carpet/green/fancy,
 /area/diner/motel/observatory)
+"lMQ" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_diner/delay2,
+/turf/space,
+/area/space)
 "lNV" = (
 /obj/stool,
 /obj/machinery/light/incandescent/netural{
@@ -19250,7 +19197,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
 "lQg" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -19393,7 +19340,7 @@
 	},
 /area/diner/dining)
 "meT" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "mfJ" = (
@@ -19431,6 +19378,14 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hangar)
+"mip" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/john_diner,
+/turf/space,
+/area/space)
 "miz" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/timewarp/ship)
@@ -19438,7 +19393,7 @@
 /obj/fakeobject/shuttleengine{
 	dir = 4
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/shuttlebay,
 /area/diner/tug)
 "mnZ" = (
@@ -19684,9 +19639,7 @@
 	id = "salvage_in"
 	},
 /turf/simulated/floor/plating/airless,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "mZZ" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -19782,7 +19735,7 @@
 /turf/simulated/floor/circuit/red,
 /area/helldrone/core)
 "ngA" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "nhs" = (
@@ -20025,8 +19978,8 @@
 /turf/simulated/floor/yellow/checker,
 /area/diner/arcade)
 "nRh" = (
-/obj/grille/steel,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "nSJ" = (
@@ -20155,9 +20108,7 @@
 	name = "GLOMAR Salvager"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "oqh" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
@@ -20316,9 +20267,7 @@
 	color = "b4b4b4"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "oSY" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/black{
@@ -20450,7 +20399,7 @@
 /turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "pio" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/space,
 /area/diner/jucer_trader)
 "piH" = (
@@ -20502,7 +20451,7 @@
 /turf/simulated/floor/airless/damaged2,
 /area/abandonedship)
 "pnX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/cable{
@@ -20550,7 +20499,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "psZ" = (
@@ -20650,7 +20599,7 @@
 /turf/simulated/floor/black,
 /area/radiostation/engineering)
 "pHw" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -20721,7 +20670,7 @@
 /turf/simulated/floor,
 /area/derelict_ai_sat)
 "pPj" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -20742,7 +20691,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay2,
+/obj/machinery/light/traffic_light/john_diner/delay2,
 /turf/space,
 /area/space)
 "pTb" = (
@@ -20773,7 +20722,7 @@
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
 "qbs" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/green/reinforced{
 	color = "#09bb00";
 	dir = 8
@@ -20906,9 +20855,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "qoJ" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 9;
@@ -20980,9 +20927,7 @@
 	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "qyc" = (
 /obj/item/sheet/wood,
 /obj/item/sheet/wood,
@@ -21007,6 +20952,14 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/mining/diner)
+"qEt" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_diner/delay2,
+/turf/space,
+/area/space)
 "qEL" = (
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 8
@@ -21125,7 +21078,7 @@
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/green/reinforced{
 	color = "#09bb00";
 	dir = 8
@@ -21159,9 +21112,7 @@
 	id = "salvage_out"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "qWV" = (
 /obj/stool/chair/couch{
 	dir = 4;
@@ -21337,7 +21288,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "rxi" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
@@ -21428,7 +21379,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay3,
+/obj/machinery/light/traffic_light/john_diner/delay3,
 /turf/space,
 /area/space)
 "rOu" = (
@@ -21599,7 +21550,7 @@
 /turf/simulated/floor/grime,
 /area/diner/hallway/docking)
 "sel" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/space,
@@ -21658,7 +21609,7 @@
 /turf/simulated/floor/sanitary,
 /area/diner/motel)
 "soT" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/indestructible/shuttle_corner{
@@ -22001,7 +21952,7 @@
 	dir = 4;
 	icon_state = "wall3_trans"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/green/reinforced{
 	color = "#09bb00";
 	dir = 4
@@ -22329,7 +22280,7 @@
 	icon_state = "0-4"
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "tYQ" = (
@@ -22508,7 +22459,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "uBn" = (
@@ -22577,8 +22528,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay5,
-/obj/machinery/light/runway_light/delay4,
+/obj/machinery/light/traffic_light/trader_diner/delay4,
 /turf/space,
 /area/space)
 "uIh" = (
@@ -22860,11 +22810,19 @@
 	},
 /area/space_hive)
 "vrP" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/fakeobject/cargopad,
 /obj/map/light/yellow,
 /turf/space,
 /area/diner/jucer_trader)
+"vub" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_diner/delay3,
+/turf/space,
+/area/space)
 "vue" = (
 /turf/unsimulated/floor/white/grime,
 /area/timewarp/ship)
@@ -22963,7 +22921,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
 "vNR" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/auto/reinforced,
 /obj/cable{
 	icon_state = "1-2"
@@ -23107,7 +23065,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -23194,9 +23152,7 @@
 	icon_state = "alt_heater"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "wru" = (
 /obj/stool/chair/dining/wood{
 	dir = 1
@@ -23454,7 +23410,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "xdk" = (
@@ -23506,7 +23462,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "xoi" = (
@@ -23514,7 +23470,7 @@
 /turf/simulated/floor/grime,
 /area/derelict_ai_sat)
 "xpj" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -23574,15 +23530,6 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/helldrone/core)
-"xtM" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/light/runway_light/delay3,
-/obj/machinery/light/runway_light/delay4,
-/turf/space,
-/area/space)
 "xvp" = (
 /obj/table/endtable_honey,
 /obj/item/decoration/flower_vase{
@@ -23600,14 +23547,20 @@
 	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
+/area/salvage_trader)
 "xvT" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
 /area/shuttle/mining/diner)
+"xwc" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_diner,
+/turf/space,
+/area/space)
 "xws" = (
 /turf/simulated/floor/plating/damaged1,
 /area/diner/hangar)
@@ -23669,7 +23622,7 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "xOE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -23815,6 +23768,13 @@
 "ygK" = (
 /turf/space,
 /area/diner/tug)
+"yhm" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_diner/delay4,
+/turf/space,
+/area/space)
 "yiv" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/diner/motel)
@@ -67070,14 +67030,14 @@ aaa
 aaa
 aaa
 aaa
-eha
+xwc
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-eha
+xwc
 aaa
 eha
 aaa
@@ -67674,14 +67634,14 @@ aaa
 aaa
 aaa
 aaa
-jtl
+qEt
 aaa
 bHv
 bHv
 bHv
 bHv
 aaa
-jtl
+qEt
 aaa
 luF
 aaa
@@ -68013,7 +67973,7 @@ aaa
 aaa
 aaa
 aaa
-eha
+ldO
 aaa
 aaa
 aaa
@@ -68278,14 +68238,14 @@ aaa
 aaa
 aaa
 aaa
-wsK
+vub
 bHv
 bHv
 bHv
 bHv
 bHv
 bHv
-wsK
+vub
 aaa
 anD
 rfM
@@ -68617,7 +68577,7 @@ avE
 avE
 avE
 aaa
-bjI
+mip
 aaa
 aaa
 aaa
@@ -68882,7 +68842,7 @@ aaa
 aaa
 aaa
 aaa
-xtM
+uGN
 bHv
 bHv
 bHv
@@ -70090,7 +70050,7 @@ aaa
 aaa
 aaa
 afs
-ffO
+aan
 aaK
 aCC
 ofQ
@@ -70694,7 +70654,7 @@ aaa
 aaa
 aaa
 aaa
-jtl
+aao
 aaa
 aCC
 ofQ
@@ -71637,7 +71597,7 @@ avE
 avE
 avE
 aaa
-eha
+ldO
 aaa
 aaa
 aaa
@@ -72241,7 +72201,7 @@ aaa
 aaa
 aaa
 aaa
-bjI
+mip
 aaa
 aaa
 aaa
@@ -76761,7 +76721,7 @@ aaa
 aaa
 aaa
 aaa
-eha
+fEX
 aaa
 aaa
 aaa
@@ -77058,11 +77018,11 @@ pMZ
 bxI
 apU
 aan
+yhm
 aaK
-aaK
-aaK
+jUK
 aan
-aaK
+lMQ
 weF
 aaa
 aaa
@@ -77365,7 +77325,7 @@ qBN
 qBN
 ejg
 udQ
-bjI
+jiG
 aaa
 aaa
 aaa
@@ -80076,7 +80036,7 @@ aan
 aaK
 aaK
 pPj
-aaK
+aaa
 aaa
 aaa
 aaa
@@ -102163,7 +102123,7 @@ aab
 aab
 aab
 aab
-aUY
+bud
 aab
 aab
 aab
