@@ -25,8 +25,17 @@ interface TurbineControlData {
 
 export const TurbineControl = () => {
   const { act, data } = useBackend<TurbineControlData>();
-  const { rpm, load, power, volume, volume_max, history, overspeed, overtemp, undertemp } =
-    data;
+  const {
+    rpm,
+    load,
+    power,
+    volume,
+    volume_max,
+    history,
+    overspeed,
+    overtemp,
+    undertemp,
+  } = data;
   const rpmHistory = history.map((v) => v[0]);
   const rpmHistoryData = rpmHistory.map((v, i) => [i, v]);
 
