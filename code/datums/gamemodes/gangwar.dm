@@ -149,6 +149,8 @@
 		if (islist(G.members))
 			for (var/datum/mind/M as anything in G.members)
 				var/mob/living/carbon/human/H = M.current
+				if (!H)
+					return
 				var/turf/sourceturf = get_turf(H)
 				var/gearworn = G.gear_worn(H)
 
@@ -246,6 +248,8 @@ proc/broadcast_to_all_gangs(var/message)
 	var/datum/generic_radio_source/announcer_source
 	/// The radio headset that the gang's announcer will use.
 	var/obj/item/device/radio/headset/gang/announcer_radio
+	/// String displayed to show the next spray paint restock
+	var/next_spray_paint_restock ="--:--"
 
 	/// The chosen name of this gang.
 	var/gang_name = "Gang Name"
@@ -1000,6 +1004,7 @@ proc/broadcast_to_all_gangs(var/message)
 				boutput(user, SPAN_ALERT("This is too close to your locker!"))
 				return
 
+		var/tagging_over = FALSE
 		var/obj/decal/gangtag/existingTag
 		for (var/obj/decal/gangtag/turfTag in target.contents)
 			if (turfTag.active)
@@ -1015,12 +1020,14 @@ proc/broadcast_to_all_gangs(var/message)
 					if (locker.gang == user.get_gang())
 						validLocation = TRUE
 				for_by_tcl(otherTag, /obj/decal/gangtag)
+					//if we can see one of our own tags in 2x the influence, then these tags are touching
 					if(!IN_EUCLIDEAN_RANGE(otherTag, target, GANG_TAG_INFLUENCE*2)) continue
 					if (otherTag.owners && otherTag.owners == user.get_gang() && otherTag.active)
 						validLocation = TRUE
+						tagging_over = TRUE
 			else
 				boutput(user, SPAN_ALERT("You can't spray over your own tags!"))
-				return
+				return GANG_CLAIM_INVALID
 		else
 			//we're tagging, check it's in our territory and not someone else's territory
 			for_by_tcl(tag, /obj/decal/gangtag)
@@ -1030,45 +1037,51 @@ proc/broadcast_to_all_gangs(var/message)
 				else if (tag.owners && tag.active)
 					boutput(user, SPAN_ALERT("You can't spray in another gang's territory! Spray over their tag, instead!"))
 					if (user.GetComponent(/datum/component/tracker_hud))
-						return
+						return GANG_CLAIM_INVALID
 					var/datum/game_mode/gang/mode = ticker.mode
 					if (!istype(mode))
-						return
+						return GANG_CLAIM_INVALID
 					user.AddComponent(/datum/component/tracker_hud/gang, get_turf(tag))
 					SPAWN(3 SECONDS)
 						var/datum/component/tracker_hud/gang/component = user.GetComponent(/datum/component/tracker_hud/gang)
 						component.RemoveComponent()
-					return
+					return GANG_CLAIM_INVALID
 			for_by_tcl(locker, /obj/ganglocker)
 				if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_INFLUENCE_LOCKER)) continue
 				if (locker.gang == user.get_gang())
 					validLocation = TRUE
 				else
 					boutput(user, SPAN_ALERT("There's better places to tag than near someone else's locker! "))
-					return
+					return GANG_CLAIM_INVALID
 
 		if(!validLocation)
 			boutput(user, SPAN_ALERT("This is outside your gang's influence!"))
-			return
+			return GANG_CLAIM_INVALID
 
 		var/area/getarea = get_area(target)
 		if(!getarea)
 			boutput(user, SPAN_ALERT("You can't claim this place!"))
-			return
+			return GANG_CLAIM_INVALID
 		if(getarea.name == "Space")
 			boutput(user, SPAN_ALERT("You can't claim space!"))
-			return
+			return GANG_CLAIM_INVALID
 		if(getarea.name == "Ocean")
 			boutput(user, SPAN_ALERT("You can't claim the entire ocean!"))
-			return
+			return GANG_CLAIM_INVALID
 		if((getarea.teleport_blocked) || istype(getarea, /area/supply) || istype(getarea, /area/shuttle/))
 			boutput(user, SPAN_ALERT("You can't claim this place!"))
-			return
+			return GANG_CLAIM_INVALID
 		if(!ishuman(user))
 			boutput(user, SPAN_ALERT("You don't have the dexterity to spray paint a gang tag!"))
-			return
+			return GANG_CLAIM_INVALID
 
-		return validLocation
+		if (validLocation)
+			if (tagging_over)
+				return GANG_CLAIM_TAKEOVER
+			else
+				return GANG_CLAIM_VALID
+
+		return GANG_CLAIM_INVALID
 
 	proc/do_gang_tag(target, mob/user)
 		if(!istype(target,/turf) && !istype(target,/obj/decal/gangtag)) return
@@ -1091,10 +1104,13 @@ proc/broadcast_to_all_gangs(var/message)
 		if(!gang)
 			boutput(user, SPAN_ALERT("You aren't in a gang, why would you do that?"))
 			return
-
-		if (check_tile_unclaimed(turftarget, user))
+		var/gang_claim = check_tile_unclaimed(turftarget, user)
+		if (gang_claim == GANG_CLAIM_TAKEOVER)
+			user.visible_message(SPAN_ALERT("[user] begins to spray over a gang tag on the [turftarget.name]!"))
+			actions.start(new/datum/action/bar/icon/spray_gang_tag(turftarget, src, TRUE), user)
+		else if (gang_claim == GANG_CLAIM_VALID)
 			user.visible_message(SPAN_ALERT("[user] begins to paint a gang tag on the [turftarget.name]!"))
-			actions.start(new/datum/action/bar/icon/spray_gang_tag(turftarget, src), user)
+			actions.start(new/datum/action/bar/icon/spray_gang_tag(turftarget, src, FALSE), user)
 /obj/item/spray_paint_graffiti
 	name = "'ProPaint' spray paint can"
 	desc = "A can of gloss spray paint. Great for doing wicked sick art. Not so great when the janitor shows up."
@@ -1229,7 +1245,7 @@ proc/broadcast_to_all_gangs(var/message)
 			add_target(user, turftarget)
 
 /datum/action/bar/icon/spray_gang_tag
-	duration = 15 SECONDS
+	duration = GANG_SPRAYPAINT_TAG_TIME
 	interrupt_flags = INTERRUPT_STUNNED
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
@@ -1243,10 +1259,12 @@ proc/broadcast_to_all_gangs(var/message)
 	/// when our next spray sound can beplayed
 	var/next_spray = 0 DECI SECONDS
 
-	New(var/turf/target_turf as turf, var/obj/item/spray_paint_gang/can)
+	New(var/turf/target_turf as turf, var/obj/item/spray_paint_gang/can, var/tag_over)
 		src.target_turf = target_turf
 		src.target_area = get_area(target_turf)
 		src.spraycan = can
+		if (tag_over)
+			src.duration = GANG_SPRAYPAINT_TAG_REPLACE_TIME
 		..()
 
 	onStart()
@@ -1317,7 +1335,7 @@ proc/broadcast_to_all_gangs(var/message)
 		spraycan.icon_state = "spraycan_crushed_gang"
 		spraycan.setItemSpecial(/datum/item_special/simple)
 		spraycan.tooltip_rebuild = 1
-		gang.add_points(round(100), M, showText = TRUE)
+		gang.add_points(GANG_SPRAYPAINT_INSTANT_SCORE, M, showText = TRUE)
 		if(sprayOver)
 			logTheThing(LOG_GAMEMODE, owner, "[owner] has successfully tagged the [target_area], spraying over another tag.")
 		else
@@ -1579,7 +1597,10 @@ proc/broadcast_to_all_gangs(var/message)
 		<div style="width: 100%; overflow: hidden;">
 			<div style="height: 150px;width: 290px;padding-left: 5px;; float: left;border-style: solid; text-align: center;">
 				<center style="padding-top: 25px;"><font size="5"><a href='byond://?src=\ref[src];get_gear=1'>Get gear</a></font></center><br>
-				<font size="3">The gang has [gang.spray_paint_remaining] spray paints remaining.</font>
+				<font size="3">The gang has [gang.spray_paint_remaining] spray paints remaining.
+				<br>
+				<font size="3">Spray paint will restock at [gang.next_spray_paint_restock].
+				</font>
 				<center><font size="5"><a href='byond://?src=\ref[src];get_spray=1'>Grab spraypaint</a></font></center><br>
 			</div>
 			<div>
@@ -2330,8 +2351,8 @@ proc/broadcast_to_all_gangs(var/message)
 	force = 1
 	w_class = W_CLASS_TINY
 	object_flags = NO_GHOSTCRITTER
-	HELP_MESSAGE_OVERRIDE({"Hitting a dead, non-rotten gang member's corpse with this item will start a short action bar.\n
-	On completion, if the syringe is not promptly removed from the corpse, it will come back to life, disoriented, at low health."})
+	HELP_MESSAGE_OVERRIDE({"Using this on a dying gang member, or their unrotten corpse, will start a short action bar.\n
+	On completion, if the syringe is not promptly removed, they will come back to life, disoriented, at low health."})
 
 	attack(mob/O, mob/user)
 		if (istype(O, /mob/living/carbon/human))
@@ -2339,13 +2360,16 @@ proc/broadcast_to_all_gangs(var/message)
 			if (!H.get_gang() && !H.ghost?.get_gang())
 				boutput(user, SPAN_ALERT("They aren't part of a gang! Janktank is <b><i>too cool</i></b> for them."))
 				return
+			if (H == user)
+				boutput(user, SPAN_ALERT("You're not jamming that in yourself!"))
+				return
 			if (H.decomp_stage)
 				boutput(user, SPAN_ALERT("It's too late, they're rotten."))
 				return
 			if (H.mind?.get_player()?.dnr || H.ghost?.mind?.get_player()?.dnr)
 				boutput(user, SPAN_ALERT("Seems they don't want to come back. Huh."))
 				return
-			if (isdead(H))
+			if (isdead(H) || H.health < 0)
 				actions.start(new /datum/action/bar/icon/janktanktwo(user, H, src),user)
 
 	/// heals and revives a human to JANKTANK2_DESIRED_HEALTH_PCT percent
@@ -2391,8 +2415,9 @@ proc/broadcast_to_all_gangs(var/message)
 			H.visible_message(SPAN_ALERT("<b>[H]</b> [pick("barfs up","spews", "projectile vomits")] as they're wrenched cruelly back to life!"),SPAN_ALERT("<b>[pick("JESUS CHRIST","THE PAIN!","IT BURNS!!")]</b>"))
 		SPAWN(0) //some part of the vomit proc makes these duplicate
 			H.reagents.clear_reagents()
-			H.reagents.add_reagent("atropine", 2.5) //don't slip straight back into crit
+			H.reagents.add_reagent("atropine", 2.5) //don't slip straight back into crit, get dizzy
 			H.reagents.add_reagent("synaptizine", 5)
+			H.reagents.add_reagent("proconvertin", 5)
 			H.reagents.add_reagent("ephedrine", 5)
 			H.reagents.add_reagent("salbutamol", 10) //don't die immediately in a vacuum
 			H.reagents.add_reagent("space_drugs", 5) //heh
@@ -2417,7 +2442,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /obj/item/tool/quickhack
 	name = "QuickHack"
-	desc = "A highly illegal, disposable device that can fake an AI's 'open' signal to a door a few times."
+	desc = "A highly illegal, disposable device that open doors like an AI."
 	icon = 'icons/obj/items/gang.dmi'
 	icon_state = "quickhack"
 	object_flags = NO_GHOSTCRITTER
@@ -2737,7 +2762,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /datum/gang_item/consumable/quickhack
 	name = "Quickhack"
-	desc = "An illegal, home-made tool able to fake up to 5 AI 'open' signals to unbolted doors."
+	desc = "Quickly opens unbolted doors you lack access to like an AI. 5 uses."
 	class2 = "Tools"
 	price = 800
 	item_path = /obj/item/tool/quickhack
@@ -2816,10 +2841,13 @@ proc/broadcast_to_all_gangs(var/message)
 
 	/// Makes this tag inert, so it no longer provides points.
 	proc/disable()
+		if (!active)
+			return
 		active = FALSE
 		src.owners?.unclaim_tiles(get_turf(src), GANG_TAG_INFLUENCE, GANG_TAG_SIGHT_RANGE)
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
-		imgroup.remove_image(heatTracker)
+		if (src.heatTracker)
+			imgroup.remove_image(heatTracker)
 		src.heatTracker = null
 		qdel(heatTracker)
 

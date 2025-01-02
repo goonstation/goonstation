@@ -77,6 +77,7 @@
 	/// color_matrix: the client's game color (tint)
 	var/saturation_matrix = COLOR_MATRIX_IDENTITY
 	var/color_matrix = COLOR_MATRIX_IDENTITY
+	var/colorblind_matrix = COLOR_MATRIX_IDENTITY
 
 	perspective = EYE_PERSPECTIVE
 	// please ignore this for now thanks in advance - drsingh
@@ -113,6 +114,10 @@
 	var/hand_ghosts = 1 //pickup ghosts inhand
 
 	var/dark_screenflash = FALSE
+
+	var/protanopia_toggled = FALSE
+	var/deuteranopia_toggled = FALSE
+	var/tritanopia_toggled = FALSE
 
 /client/proc/audit(var/category, var/message, var/target)
 	if(src.holder && (src.holder.audit & category))
@@ -935,7 +940,11 @@ var/global/curr_day = null
 	set name = "RP Rules"
 	set category = "Commands"
 
-	tgui_alert(src, content_window = "rpRules", do_wait = FALSE)
+	var/cant_interact_time = null
+	if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10)
+		cant_interact_time = 15 SECONDS
+
+	tgui_alert(src, content_window = "rpRules", do_wait = FALSE, cant_interact = cant_interact_time)
 #endif
 
 /client/verb/changeServer(var/server as text)
@@ -1445,6 +1454,71 @@ var/global/curr_day = null
 	set hidden = 1
 	set name = "set-hand-ghosts"
 	hand_ghosts = winget( src, "menu.use_hand_ghosts", "is-checked" ) == "true"
+
+/client/verb/disable_colorblind_modes()
+	set hidden = TRUE
+	set name = "disable-colorblind-modes"
+
+	if (src.protanopia_toggled)
+		src.toggle_protanopia_mode()
+	else if (src.deuteranopia_toggled)
+		src.toggle_deuteranopia_mode()
+	else if (src.tritanopia_toggled)
+		src.toggle_tritanopia_mode()
+
+/client/verb/toggle_protanopia_mode()
+	set hidden = TRUE
+	set name = "toggle-protanopia-mode"
+
+	if (src.deuteranopia_toggled)
+		src.toggle_deuteranopia_mode()
+	else if (src.tritanopia_toggled)
+		src.toggle_tritanopia_mode()
+
+	if (!src.protanopia_toggled)
+		src.colorblind_matrix = COLOR_MATRIX_PROTANOPIA_ACCESSIBILITY
+	else
+		src.colorblind_matrix = COLOR_MATRIX_IDENTITY
+	src.set_color()
+	src.protanopia_toggled = !src.protanopia_toggled
+	src.deuteranopia_toggled = FALSE
+	src.tritanopia_toggled = FALSE
+
+/client/verb/toggle_deuteranopia_mode()
+	set hidden = TRUE
+	set name = "toggle-deuteranopia-mode"
+
+	if (src.protanopia_toggled)
+		src.toggle_protanopia_mode()
+	else if (src.tritanopia_toggled)
+		src.toggle_tritanopia_mode()
+
+	if (!src.deuteranopia_toggled)
+		src.colorblind_matrix = COLOR_MATRIX_DEUTERANOPIA_ACCESSIBILITY
+	else
+		src.colorblind_matrix = COLOR_MATRIX_IDENTITY
+	src.set_color()
+	src.deuteranopia_toggled = !src.deuteranopia_toggled
+	src.protanopia_toggled = FALSE
+	src.tritanopia_toggled = FALSE
+
+/client/verb/toggle_tritanopia_mode()
+	set hidden = TRUE
+	set name = "toggle-tritanopia-mode"
+
+	if (src.protanopia_toggled)
+		src.toggle_protanopia_mode()
+	else if (src.deuteranopia_toggled)
+		src.toggle_deuteranopia_mode()
+
+	if (!src.tritanopia_toggled)
+		src.colorblind_matrix = COLOR_MATRIX_TRITANOPIA_ACCESSIBILITY
+	else
+		src.colorblind_matrix = COLOR_MATRIX_IDENTITY
+	src.set_color()
+	src.tritanopia_toggled = !src.tritanopia_toggled
+	src.protanopia_toggled = FALSE
+	src.deuteranopia_toggled = FALSE
 
 //These size helpers are invisible browser windows that help with getting client screen dimensions
 /client/proc/initSizeHelpers()

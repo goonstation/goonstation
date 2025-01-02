@@ -36,8 +36,12 @@
 		if (istype(ticker.mode, /datum/game_mode/gang))
 			var/datum/game_mode/gang/gamemode = ticker.mode
 			broadcast_to_all_gangs("Each gang has [GANG_SPRAYPAINT_REGEN_QUANTITY > 1 ? "extra spray cans" : "an extra spray can" ] available from their locker.")
+			var/nextTime = round((TIME + GANG_SPRAYPAINT_REGEN)/10 ,1)
+			var/timestring = "[(nextTime / 60) % 60]:[add_zero(num2text(nextTime % 60), 2)]"
+
 			for(var/datum/gang/gang as anything in gamemode.gangs)
 				gang.spray_paint_remaining += GANG_SPRAYPAINT_REGEN_QUANTITY
+				gang.next_spray_paint_restock = timestring
 
 
 /datum/controller/process/gang_launder_money
@@ -84,6 +88,9 @@
 		var/list/area/areas = get_accessible_station_areas()
 		for(var/area_name in areas)
 			if(istype(areas[area_name], /area/station/security) || areas[area_name].teleport_blocked || istype(areas[area_name], /area/station/turret_protected))
+				continue
+			var/typeinfo/area/typeinfo = areas[area_name].get_typeinfo()
+			if (!typeinfo.valid_bounty_area)
 				continue
 			potential_hot_zones += areas[area_name]
 	doWork()
