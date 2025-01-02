@@ -390,6 +390,8 @@
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
+		/datum/manufacture/pod/light_shielding,
+		/datum/manufacture/pod/heavy_shielding,
 		/datum/manufacture/beaconkit,
 		/datum/manufacture/podgps
 	)

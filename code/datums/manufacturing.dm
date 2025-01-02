@@ -3162,6 +3162,27 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	time = 10 SECONDS
 	category = "Tool"
 
+/datum/manufacture/pod/light_shielding
+	name = "Light Shielding System"
+	item_requirements = list("metal" = 5,
+							 "conductive" = 10,
+							 "energy_high" = 30)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/shielding/light)
+	create = 1
+	time = 15 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/heavy_shielding
+	name = "High Impact Shielding System"
+	item_requirements = list("metal" = 5,
+							 "crystal_dense" = 20,
+							 "conductive_high" = 10,
+							 "energy_extreme" = 30)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/shielding/heavy)
+	create = 1
+	time = 25 SECONDS
+	category = "Tool"
+
 /datum/manufacture/pod/sps
 	name = "Syndicate Purge System"
 	item_requirements = list("metal" = 8,

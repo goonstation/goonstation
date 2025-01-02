@@ -1170,3 +1170,82 @@
 			desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. The core is installed."
 			tooltip_rebuild = 1
 			return
+
+ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
+/obj/item/shipcomponent/secondary_system/shielding
+	name = "Shielding System"
+	desc = "Provides a timed shield to block incoming projectiles and explosions. Recharge is required between uses."
+	f_active = TRUE
+	hud_state = "shielding"
+	/// % of damage, that the shielding blocks (0.5 would make a 40 dmg projectile deal 20 dmg instead)
+	var/block_pct = 0
+	/// health of the shield in dmg points
+	var/life = 100
+	/// how long the shield stays on
+	var/duration = 0 SECONDS
+	/// once deactivated, how long it takes for the shield to be ready again
+	var/recharge_time = 0 SECONDS
+	/// color of the shield
+	var/shield_color
+
+	New()
+		..()
+		src.desc += " Has a life of [src.life] damage, providing [round(block_pct * 100, 1)]% damage reduction. Shielding can be provided for [src.duration / 10] seconds" + \
+					" with a shield recharge time of [src.recharge_time / 10] seconds."
+
+	activate()
+		var/cooldown = GET_COOLDOWN(src, "ship_shielding_recharge")
+		if (cooldown)
+			boutput(src.ship.pilot, "[src.ship.ship_message("[src] is currently recharging, and cannot be turned on. Wait [cooldown / 10] seconds.")]")
+			return
+		if (!..())
+			return
+
+		src.ship.add_filter("shield_outline", 0, outline_filter(2, src.shield_color))
+
+		playsound(src.ship.loc, 'sound/effects/MagShieldUp.ogg', 75, TRUE, pitch = 1.5)
+
+		SPAWN(src.duration)
+			if (src.active)
+				src.deactivate()
+
+	deactivate()
+		if (src.active)
+			ON_COOLDOWN(src, "ship_shielding_recharge", src.recharge_time)
+			for (var/mob/M in src.ship)
+				boutput(M, "[src.ship.ship_message("[src]'s shield is now offline. Please wait for full recharge after [src.recharge_time / 10] seconds.")]")
+			src.ship.remove_filter("shield_outline")
+			playsound(src.ship.loc, 'sound/effects/MagShieldDown.ogg', 75, TRUE, pitch = 1.5)
+		..()
+
+	// takes incoming damage "dmg", returns damage dealt to pod
+	proc/process_incoming_dmg(dmg)
+		var/dmg_dealt = dmg * (1 - src.block_pct)
+
+		if (src.life < dmg_dealt)
+			dmg_dealt += dmg_dealt - src.life
+
+		src.life -= dmg_dealt
+
+		if (src.life <= 0)
+			src.deactivate()
+
+		return dmg_dealt
+
+/obj/item/shipcomponent/secondary_system/shielding/light
+	name = "Light Shielding System"
+	power_used = 50
+	block_pct = 0.25
+	life = 100
+	duration = 10 SECONDS
+	recharge_time = 60 SECONDS
+	shield_color = "#1a4cf0"
+
+/obj/item/shipcomponent/secondary_system/shielding/heavy
+	name = "High Impact Shielding System"
+	power_used = 150
+	block_pct = 0.9
+	life = 1000
+	duration = 3 SECONDS
+	recharge_time = 120 SECONDS
+	shield_color = "#ff3916"
