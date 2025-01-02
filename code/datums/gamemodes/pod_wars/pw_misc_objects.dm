@@ -543,6 +543,15 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		icon_override = "ntboss"	//get better thingy // better thingy gotten
 		icon_tooltip = "NanoTrasen Commander"
 
+/obj/item/device/radio/headset/pod_wars/nanotrasen/comtac
+	name = "military headset"
+	icon_state = "radio" // blue enough
+	desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise during gunfights."
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_ear", 100)
+
 /obj/item/device/radio/headset/pod_wars/syndicate
 	name = "radio headset"
 	desc = "A radio headset that is also capable of communicating over, this one is tuned into a Syndicate frequency"
@@ -558,6 +567,15 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	commander
 		icon_override = "syndieboss"
 		icon_tooltip = "Syndicate Commander"
+
+/obj/item/device/radio/headset/pod_wars/syndicate/comtac
+	name = "military headset"
+	icon_state = "comtac"
+	desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise during gunfights."
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_ear", 100)
 
 
 /////////shit//////////////

@@ -39787,7 +39787,6 @@
 /obj/machinery/light,
 /obj/machinery/camera/television{
 	c_tag = "Chapel";
-	c_tag_order = "Chapel camera";
 	dir = 1;
 	name = "Chapel camera"
 	},

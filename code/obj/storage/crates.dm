@@ -131,7 +131,8 @@
 	name = "\improper RCD crate"
 	desc = "A crate for the Chief Engineer's personal RCD."
 	spawn_contents = list(/obj/item/rcd_ammo = 5,
-	/obj/item/rcd/construction/chiefEngineer)
+	/obj/item/rcd/construction/chiefEngineer,
+	/obj/item/places_pipes)
 
 /obj/storage/crate/abcumarker
 	name = "\improper ABCU-Marker crate"
