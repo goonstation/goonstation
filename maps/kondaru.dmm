@@ -31372,36 +31372,12 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "dzp" = (
-/obj/rack,
-/obj/item/clothing/mask/gas{
-	pixel_x = 8;
-	pixel_y = 5
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = -7;
-	pixel_y = 5
-	},
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = -8;
-	pixel_y = -5
-	},
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = 8;
-	pixel_y = -5
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = -7;
-	pixel_y = 11
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = 9;
-	pixel_y = 11
-	},
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/machinery/weapon_stand/phaser_rack,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -32574,7 +32550,13 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "epf" = (
-/obj/machinery/weapon_stand/phaser_rack,
+/obj/machinery/computer/announcement/station/security{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -33229,38 +33211,7 @@
 	},
 /area/station/mining/magnet)
 "eIo" = (
-/obj/rack,
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = -2
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = 1;
-	pixel_y = -3
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = 4;
-	pixel_y = -6
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = -4;
-	pixel_y = 5
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = -1;
-	pixel_y = 2
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = 2;
-	pixel_y = -1
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = 5;
-	pixel_y = -4
-	},
+/obj/random_item_spawner/armory_armor_supplies,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -56915,6 +56866,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "vvI" = (
@@ -58816,31 +58770,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "wQJ" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = -10;
-	pixel_y = -1
-	},
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = 4;
-	pixel_y = -1
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = -7;
-	pixel_y = 10
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = 7;
-	pixel_y = 10
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = -7;
-	pixel_y = 9
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = 7;
-	pixel_y = 9
-	},
+/obj/random_item_spawner/armory_goggle_supplies,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},

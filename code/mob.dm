@@ -1885,12 +1885,16 @@
 			light.enable()
 			SPAWN(1 SECOND)
 				qdel(light)
+	else if(src.custom_gib_handler)
+		call(src.custom_gib_handler)(src.loc)
+	else if(issilicon(src) || isrobocritter(src))
+		robogibs(src.loc)
+	else
+		gibs(src.loc)
+
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
-
-	if (!iscarbon(src))
-		robogibs(src.loc)
 
 	if (animation)
 		animation.delaydispose()
@@ -2928,6 +2932,9 @@
 
 	if (source && source != src) //we were moved by something that wasnt us
 		last_pulled_time = world.time
+		if ((istype(src.loc, /turf/space) || src.no_gravity) && ismob(source))
+			var/mob/M = source
+			src.inertia_dir = M.inertia_dir
 	else
 		if(src.pulled_by)
 			src.pulled_by.remove_pulling()
@@ -2970,6 +2977,8 @@
 	equipment_proxy.aquatic_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
 	if(equipment_proxy.aquatic_movement > 0)
 		equipment_proxy.aquatic_movement *= modifier
+		if(modifier == 0) // aquatic_movement requires a positive value to skip added fluid turf delay
+			equipment_proxy.aquatic_movement += 0.01
 
 
 
