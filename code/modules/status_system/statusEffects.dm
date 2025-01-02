@@ -3125,11 +3125,8 @@
 
 		onAdd()
 			..()
-			var/count = 0
 			for (var/datum/statusEffect/art_curse/nightmare/curse in src.owner.statusEffects)
-				count++
-				if (count >= 1)
-					return
+				return
 			get_image_group(CLIENT_IMAGE_GROUP_ART_CURSER_NIGHTMARE).add_mob(src.owner)
 			src.spawn_creature()
 			var/mob/living/carbon/human/H = src.owner
