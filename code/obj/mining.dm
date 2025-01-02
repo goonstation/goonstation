@@ -198,7 +198,7 @@
 		// this used to use an area, which meant it only checked
 		var/turf/origin = get_turf(src)
 		var/unacceptable = FALSE
-		for (var/turf/T in block(locate(origin.x-1, origin.y-1, origin.z), locate(origin.x + width, origin.y + height, origin.z)))
+		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
 
 			for (var/mob/living/L in T)
 				if(ismobcritter(L)) // we don't care about critters

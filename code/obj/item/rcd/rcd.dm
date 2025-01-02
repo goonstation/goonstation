@@ -335,7 +335,7 @@ TYPEINFO(/obj/item/rcd)
 			var/turf/simulated/floor/T = A
 			if(T.intact)
 				var/datum/material/mat = istext(T.default_material) ? getMaterial(T.default_material) : T.default_material
-				if(length(restricted_materials) && !(mat?.getID() in restricted_materials))
+				if(!(mat?.getID() in restricted_materials))
 					boutput(user, "Target object is not made of a material this RCD can deconstruct.")
 					return
 			src.do_rcd_action(user, A, "removing \the [A]", matter_remove_floor, time_remove_floor, PROC_REF(do_delete_floor), src)
@@ -455,7 +455,7 @@ TYPEINFO(/obj/item/rcd)
 				return
 
 			if (RCD_MODE_DECONSTRUCT)
-				if (length(restricted_materials) && !(A.material?.getID() in restricted_materials))
+				if (restricted_materials && !(A.material?.getID() in restricted_materials))
 					boutput(user, "Target object is not made of a material this RCD can deconstruct.")
 					return
 

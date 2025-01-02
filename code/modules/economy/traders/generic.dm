@@ -13,9 +13,7 @@
 			/datum/commodity/trader/generic/shipcomponents,
 			/datum/commodity/trader/generic/jumpsuits,
 			/datum/commodity/trader/generic/furniture,
-			/datum/commodity/trader/generic/shoes,
-			/datum/commodity/trader/generic/instruments,
-			/datum/commodity/trader/generic/utensils
+			/datum/commodity/trader/generic/pens
 		),
 		TRADER_RARITY_UNCOMMON = list(),
 		TRADER_RARITY_RARE = list()
@@ -138,7 +136,7 @@
 
 /datum/commodity/trader/generic/anyore
 	comname = "Ore"
-	comtype = /obj/item/raw_material
+	comtype = /obj/item/raw_material/
 	price_boundary = list(PAY_UNTRAINED/3,PAY_TRADESMAN)
 	possible_names = list("I'm looking to buy any kind of ore you might have.",
 	"Our ore supplies are critically low - I'll buy any kind of ore for this price.")
@@ -172,30 +170,17 @@
 	possible_names = list("We're drafting in some new staff soon, and need new jumpsuits.",
 	"We need any jumpsuits you can spare. Don't ask.")
 
-/datum/commodity/trader/generic/shoes
-	comname = "Shoes"
-	comtype = /obj/item/clothing/shoes
-	price_boundary = list(PAY_UNTRAINED/3,PAY_UNTRAINED)
-	possible_names = list("We're had a run-in with a rather unsavory type, and need new shoes.",
-	"We need any shoes you can spare. Don't ask.")
 
 /datum/commodity/trader/generic/furniture
 	comname = "Furniture Parts"
-	comtype = /obj/item/furniture_parts
+	comtype = /obj/item/furniture_parts/
 	price_boundary = list(PAY_UNTRAINED/3,PAY_TRADESMAN)
 	possible_names = list("We need some more furniture to spice up our ship.",
 	"We're building a new lounge, and we need whatever furniture you have.")
 
-/datum/commodity/trader/generic/instruments
-	comname = "Instruments"
-	comtype = /obj/item/instrument
-	price_boundary = list(PAY_UNTRAINED/2, PAY_UNTRAINED)
-	possible_names = list("We need some instruments to 'increase' staff morale.",
-	"The captain's latest team-building exercise requires a large number of instruments.")
-
-/datum/commodity/trader/generic/utensils
-	comname = "Kitchen Utensils"
-	comtype = /obj/item/kitchen/utensil
-	price_boundary = list(PAY_UNTRAINED/3, PAY_UNTRAINED)
-	possible_names = list("Our staff require kitchen utensils to eat our chef's food.",
-	"We need some kitchen utensils to prepare for a feast.")
+/datum/commodity/trader/generic/pens
+	comname = "Writing Utensils"
+	comtype = /obj/item/pen
+	price_boundary = list(PAY_UNTRAINED/3,PAY_TRADESMAN)
+	possible_names = list("We can't take notes! Send us something to write with, and make it snappy.",
+	"Our crew's been really starved creatively. Give us something we can doodle with.")

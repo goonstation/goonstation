@@ -329,10 +329,10 @@
 					S?["mi_crim"] = "Making a very irritating announcement."
 
 					clown.update_burning(15) // placed here since update_burning is only for mob/living
-				if(src.ID)
-					user.put_in_hand_or_eject(src.ID)
+				if(ID)
+					user.put_in_hand_or_eject(ID)
 
-				if (src.emagged)
+				if (emagged)
 					var/turf/T = get_turf(src.loc)
 					if(T)
 						src.visible_message("<b>The clown on the screen laughs as the [src] explodes!</b>")
@@ -351,13 +351,13 @@
 		..()
 		switch(action)
 			if ("id")
-				if (src.ID && (src.ID.icon_state != "id_clown"))
+				if ( ID.icon_state != "id_clown")
 					src.unlocked = 0 // clowns ONLY
 					update_status()
 
 
 	emag_act(mob/user, obj/item/card/emag/E)
-		if (!src.emagged)
+		if (!emagged)
 			src.visible_message(SPAN_ALERT("<B>The clown on the screen grins in horrid delight!</B>"))
-		src.emagged = TRUE
+		emagged = TRUE
 

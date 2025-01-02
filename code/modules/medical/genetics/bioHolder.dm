@@ -736,7 +736,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		age += (toCopy.age - age) / (11 - progress)
 
-	proc/AddEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0, var/safety = 0, scannable=0, innate = 0)
+	proc/AddEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0, var/safety = 0, var/for_scanning=0)
 		//Adds an effect to this holder. Returns the newly created effect if succesful else 0.
 		if(issilicon(src.owner))
 			return 0
@@ -760,19 +760,14 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 			if(power) newEffect.power = power
 			if(timeleft) newEffect.timeLeft = timeleft
-			if(magical || innate)
+			if(magical)
 				newEffect.curable_by_mutadone = FALSE
 				newEffect.stability_loss = 0
 				newEffect.can_scramble = FALSE
-				newEffect.scanner_visibility = FALSE
 				newEffect.can_reclaim = FALSE
 				newEffect.degrade_to = null
 				newEffect.can_copy = FALSE
 				newEffect.is_magical = TRUE
-			if(innate)
-				newEffect.can_copy = TRUE
-			if(scannable)
-				newEffect.scanner_visibility = TRUE
 
 			if(safety && istype(newEffect, /datum/bioEffect/power))
 				// Only powers have safety ("synced" i.e. safe for user)

@@ -24,9 +24,6 @@
 
 /datum/aiTask/timed/bury_ability/evaluate()
 	var/mob/living/critter/C = holder.owner
-	var/turf/T = get_turf(holder.owner)
-	if (!istype(T) || istype_exact(T, /turf/space))
-		return 0
 	return weight * (length(C.seek_target()) == 0)
 
 /datum/aiTask/timed/bury_ability/tick()

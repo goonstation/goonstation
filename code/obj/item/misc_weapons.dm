@@ -2188,3 +2188,28 @@ obj/item/whetstone
 			boutput(user, SPAN_NOTICE("You adjust your grip on [src], readying it to break stuff."))
 			src.setItemSpecial(/datum/item_special/simple)
 			hit_type = DAMAGE_CUT
+
+/obj/item/swords/sord
+	name = "gross sord"
+	desc = "oh no"
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "longsword"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	color = "#4a996c"
+	hit_type = DAMAGE_CUT
+	flags = TABLEPASS | NOSHIELD | USEDELAY
+	force = 10
+	throwforce = 5
+	throw_speed = 1
+	throw_range = 5
+	is_syndicate = TRUE
+	contraband = 10 // absolutely illegal
+	w_class = W_CLASS_NORMAL
+	hitsound = 'sound/voice/farts/fart7.ogg'
+	tool_flags = TOOL_CUTTING
+	attack_verbs = "slashes"
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/rangestab)
+

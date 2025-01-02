@@ -553,8 +553,6 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				for (var/obj/thing in view(1,user))
 					if(!istype(thing, drag_type))
 						continue
-					if (QDELETED(thing))
-						continue
 					if (thing.anchored)
 						continue
 					if (thing in user)

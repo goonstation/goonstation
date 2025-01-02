@@ -96,6 +96,8 @@
 
 		var/delay = max(src.movement_delay(get_step(src,src.move_dir), running), world.tick_lag) // don't divide by zero
 		var/move_dir = src.move_dir
+		if (move_dir & (move_dir-1))
+			delay *= DIAG_MOVE_DELAY_MULT // actual sqrt(2) unsurprisingly resulted in rounding errors
 		if (src.client && src.client.flying || (ismob(src) && HAS_ATOM_PROPERTY(src, PROP_MOB_NOCLIP)))
 			if(isnull(get_step(src, move_dir)))
 				return
@@ -132,9 +134,6 @@
 				var/move_angle = dir2angle(move_dir)
 				move_angle += pick(-misstep_angle,misstep_angle)
 				move_dir = angle2dir(move_angle)
-
-			if (move_dir & (move_dir-1))
-				delay *= DIAG_MOVE_DELAY_MULT // actual sqrt(2) unsurprisingly resulted in rounding errors
 
 			if (src.buckled && !istype(src.buckled, /obj/stool/chair))
 				src.buckled.relaymove(src, move_dir)

@@ -21,7 +21,6 @@ var/list/removed_jobs = list(
 	var/name_first
 	var/name_middle
 	var/name_last
-	var/hyphenate_name
 	var/robot_name
 	var/gender = MALE
 	var/age = 30
@@ -223,7 +222,6 @@ var/list/removed_jobs = list(
 			"nameFirst" = src.name_first,
 			"nameMiddle" = src.name_middle,
 			"nameLast" = src.name_last,
-			"hyphenateName" = src.hyphenate_name,
 			"robotName" = src.robot_name,
 			"randomName" = src.be_random_name,
 			"gender" = src.gender == MALE ? "Male" : "Female",
@@ -446,7 +444,7 @@ var/list/removed_jobs = list(
 
 				if (new_name)
 					src.name_first = new_name
-					src.set_real_name()
+					src.real_name = src.name_first + " " + src.name_last
 					src.profile_modified = TRUE
 					return TRUE
 
@@ -488,15 +486,9 @@ var/list/removed_jobs = list(
 
 				if (new_name)
 					src.name_last = new_name
-					src.set_real_name()
+					src.real_name = src.name_first + " " + src.name_last
 					src.profile_modified = TRUE
 					return TRUE
-
-			if ("toggle-hyphenation")
-				src.hyphenate_name = !src.hyphenate_name
-				src.set_real_name()
-				src.profile_modified = TRUE
-				return TRUE
 
 			if ("update-robotName")
 				var/new_name = tgui_input_text(usr, "Your preferred cyborg name, leave empty for random.", "Character Generation", src.robot_name)
@@ -1107,7 +1099,7 @@ var/list/removed_jobs = list(
 				src.name_middle = capitalize(pick_string_autokey("names/first_female.txt"))
 		if (last)
 			src.name_last = capitalize(pick_string_autokey("names/last.txt"))
-		src.set_real_name()
+		src.real_name = src.name_first + " " + src.name_last
 
 	proc/randomizeLook() // im laze
 		if (!src.AH)
@@ -1132,13 +1124,7 @@ var/list/removed_jobs = list(
 		if (length(src.name_last) < NAME_CHAR_MIN || length(src.name_last) > NAME_CHAR_MAX || is_blank_string(src.name_last) || !character_name_validation.Find(src.name_last))
 			src.randomize_name(0, 0, 1)
 
-		src.set_real_name()
-
-	proc/set_real_name()
-		if (!src.name_middle)
-			src.real_name = src.name_first + (!src.hyphenate_name ? " " : "-") + src.name_last
-		else
-			src.real_name = src.name_first + (!src.hyphenate_name ? " " : "-[src.name_middle]-") + src.name_last
+		src.real_name = src.name_first + " " + src.name_last
 
 
 	proc/update_preview_icon()
@@ -1844,7 +1830,7 @@ var/list/removed_jobs = list(
 					src.copy_to(character, user, TRUE) // apply the other stuff again but with the random name
 
 		//character.real_name = real_name
-		src.set_real_name()
+		src.real_name = src.name_first + " " + src.name_last
 		character.real_name = src.real_name
 		phrase_log.log_phrase("name-human", character.real_name, no_duplicates=TRUE)
 

@@ -337,16 +337,6 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/sleep_time = 1 / linked_power.power
 
 		if (istype(owner.loc,/turf/))
-			var/turf/T = owner.loc
-			if (T.turf_flags & CAN_BE_SPACE_SAMPLE || T.throw_unlimited || owner.no_gravity)
-				var/push_off = FALSE
-				for(var/atom/A in oview(1, T))
-					if (A.stops_space_move)
-						push_off = TRUE
-						break
-				if(!push_off)
-					boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
-					return TRUE
 			usr.visible_message(SPAN_ALERT("<b>[owner]</b> takes a huge leap!"))
 			playsound(owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 			var/prevLayer = owner.layer
@@ -394,16 +384,6 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/sleep_time = 0.5 / linked_power.power
 
 		if (istype(owner.loc,/turf/))
-			var/turf/T = owner.loc
-			if (T.turf_flags & CAN_BE_SPACE_SAMPLE || T.throw_unlimited || owner.no_gravity)
-				var/push_off = FALSE
-				for(var/atom/A in oview(1, T))
-					if (A.stops_space_move)
-						push_off = TRUE
-						break
-				if(!push_off)
-					boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
-					return TRUE
 			usr.visible_message(SPAN_ALERT("<b>[owner]</b> leaps far too high and comes crashing down hard!"))
 			playsound(owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 			playsound(owner.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)

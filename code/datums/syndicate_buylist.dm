@@ -146,13 +146,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 1
 	desc = "A counterfeit identification card, designed to prevent tracking by the station's AI systems. It features a one-time programmable identification circuit, allowing the entry of a custom false identity. It is also capable of scanning other ID cards and replicating their access credentials."
 
-/datum/syndicate_buylist/generic/cashcase
-	name = "Syndicate briefcase full of cash"
-	items = list(/obj/item/cash_briefcase/syndicate/loaded)
-	cost = 2
-	max_buy = 2
-	desc = "A syndicate briefcase designed to hold large quantities of cash. Comes loaded with 15 thousand credits."
-
 /datum/syndicate_buylist/generic/emag
 	name = "Electromagnet Card (EMAG)"
 	items = list(/obj/item/card/emag)
@@ -593,7 +586,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	items = list(/obj/item/storage/briefcase/satan)
 	cost = 8
 	desc = "Comes complete with three soul binding contracts, three extra-pointy pens, and one suit provided by Lucifer himself."
-	job = list("Chaplain", "Lawyer")
+	job = list("Chaplain")
 	not_in_crates = TRUE
 	vr_allowed = FALSE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY

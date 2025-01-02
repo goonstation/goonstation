@@ -401,7 +401,7 @@
 		return
 
 	R["bioHolder.bloodType"] = M.bioHolder.bloodType
-	R["cdi"] = english_list(M.ailments, MEDREC_DISEASE_DEFAULT)
+	R["cdi_d"] = english_list(M.ailments, MEDREC_DISEASE_DEFAULT)
 	if (M.ailments.len)
 		R["cdi_d"] = "Diseases detected at [time2text(world.realtime,"hh:mm")]."
 	else

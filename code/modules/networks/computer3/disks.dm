@@ -203,26 +203,6 @@
 		boutput(user, SPAN_ALERT("You can't flip the write-protect tab, it's held in place with glue or something!"))
 		return
 
-/obj/item/disk/data/floppy/security
-	icon_state = "datadiskmed" //yeah its "med" but its not used anywhere
-	random_color = FALSE
-	New()
-		..()
-		var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "SECAUTH";} (src)
-		authrec.fields = list("SEC"="[netpass_security]")
-		src.root.add_file( authrec )
-
-/obj/item/disk/data/floppy/sec_command
-	icon_state = "datadisksyn" //yeah its "syndie" but its not used anywhere
-	random_color = FALSE
-
-	New()
-		..()
-		var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "SECAUTH";} (src)
-		authrec.fields = list("HEADS"="[netpass_heads]",
-							"SEC"="[netpass_security]",)
-		src.root.add_file(authrec)
-
 /obj/item/disk/data/floppy/computer3boot
 	name = "data disk-'ThinkDOS'"
 

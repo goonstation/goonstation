@@ -11,12 +11,10 @@ import {
   Box,
   Button,
   Flex,
-  ProgressBar,
   Section,
   Stack,
 } from 'tgui-core/components';
-import { round } from 'tgui-core/math';
-import type { BooleanLike } from 'tgui-core/react';
+import { BooleanLike } from 'tgui-core/react';
 
 import {
   KEY_ENTER,
@@ -39,8 +37,6 @@ type AlertModalData = {
   timeout: number;
   title: string;
   theme: string | null;
-  cant_interact: number;
-  cant_interact_value: number | null;
 };
 
 const KEY_DECREMENT = -1;
@@ -59,8 +55,6 @@ export const AlertModal = () => {
     timeout,
     title,
     theme,
-    cant_interact,
-    cant_interact_value,
   } = data;
   const [selected, setSelected] = useState(0);
 
@@ -91,12 +85,11 @@ export const AlertModal = () => {
       height={windowHeight}
       title={
         typedContentWindow
-          ? typedContentWindow.title ?? 'Antagonist Tips'
+          ? (typedContentWindow.title ?? 'Antagonist Tips')
           : title
       }
       width={windowWidth}
       theme={typedContentWindow?.theme ?? theme ?? 'nanotrasen'}
-      canClose={cant_interact <= 0}
     >
       {!!timeout && <Loader value={timeout} />}
       <Window.Content
@@ -119,14 +112,6 @@ export const AlertModal = () => {
           }
         }}
       >
-        {!!cant_interact && cant_interact_value && (
-          <Box position="absolute" top={1} right={1}>
-            <ProgressBar value={cant_interact}>
-              {round((cant_interact_value / 10) * cant_interact, 0)} seconds
-              remaining
-            </ProgressBar>
-          </Box>
-        )}
         <Section fill>
           <Stack fill vertical>
             <Stack.Item grow m={1}>
@@ -142,10 +127,7 @@ export const AlertModal = () => {
             </Stack.Item>
             <Stack.Item>
               {!!autofocus && <Autofocus />}
-              <ButtonDisplay
-                selected={selected}
-                cantInteract={data.cant_interact}
-              />
+              <ButtonDisplay selected={selected} />
             </Stack.Item>
           </Stack>
         </Section>
@@ -162,17 +144,16 @@ export const AlertModal = () => {
 const ButtonDisplay = (props) => {
   const { data } = useBackend<AlertModalData>();
   const { items = [] } = data;
-  const { selected, cantInteract } = props;
+  const { selected } = props;
 
   return (
     <Flex align="center" direction={'row'} fill justify="space-around" wrap>
-      {items?.map((button) => (
-        <Flex.Item key={button}>
+      {items?.map((button, index) => (
+        <Flex.Item key={index}>
           <AlertButton
             button={button}
-            id={button}
-            selected={selected === items.indexOf(button)}
-            disabled={cantInteract > 0}
+            id={index.toString()}
+            selected={selected === index}
           />
         </Flex.Item>
       ))}
@@ -185,7 +166,7 @@ const ButtonDisplay = (props) => {
  */
 const AlertButton = (props) => {
   const { act } = useBackend<AlertModalData>();
-  const { button, selected, disabled } = props;
+  const { button, selected } = props;
   const buttonWidth = button.length > 7 ? button.length : 7;
 
   return (
@@ -196,7 +177,6 @@ const AlertButton = (props) => {
       pr={2}
       pt={0}
       selected={selected}
-      disabled={disabled}
       textAlign="center"
       width={buttonWidth}
     >

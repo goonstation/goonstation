@@ -1161,8 +1161,7 @@
 					var/mob/living/carbon/human/H = src.head.linked_human
 					if (H && (!isskeleton(src.donor) && H != src.donor))
 						var/datum/mutantrace/skeleton/S = H?.mutantrace
-						if (!QDELETED(S))
-							S.head_tracker = null
+						S.head_tracker = null
 						H.set_eye(null)
 						src.head.UnregisterSignal(src.head.linked_human, COMSIG_CREATE_TYPING)
 						src.head.UnregisterSignal(src.head.linked_human, COMSIG_REMOVE_TYPING)

@@ -608,7 +608,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			return
 		var/datum/bioEffect/mutantrace/mr = src.race_mutation
 		if(!H.bioHolder.HasEffect(initial(mr.id)))
-			H.bioHolder.AddEffect(initial(mr.id), 0, 0, 0, 1, scannable=TRUE)
+			H.bioHolder.AddEffect(initial(mr.id), 0, 0, 0, 1)
 
 	/// Copies over female variants of mutant heads and organs
 	proc/MakeMutantDimorphic(var/mob/living/carbon/human/H)

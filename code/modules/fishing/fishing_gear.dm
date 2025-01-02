@@ -24,7 +24,8 @@
 	New()
 		..()
 		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(attackby_pre))  // Storage for a single lure item
-		src.create_storage(/datum/storage, can_hold = list(/obj/item/reagent_containers/food), max_wclass = W_CLASS_NORMAL, slots = 1)
+		var/list/fishing_rods = list(/obj/item/fishing_rod, /obj/item/fishing_rod/basic, /obj/item/fishing_rod/upgraded, /obj/item/fishing_rod/master)
+		src.create_storage(/datum/storage, max_wclass = W_CLASS_NORMAL, slots = 1, prevent_holding = fishing_rods)
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE)

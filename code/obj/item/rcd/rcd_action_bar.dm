@@ -77,11 +77,6 @@
 	onEnd()
 		..()
 
-		if(!src.rcd.ammo_check(src.user, src.ammo_cost))
-			boutput(src.user, "Insufficient ammo to complete operation!")
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
 		src.rcd.ammo_consume(src.owner, src.ammo_cost)
 		var/datum/callback/cb = CALLBACK(src.callback_owner, src.callback_path)
 		cb.arguments = list(src.target, src.owner) + src.additionalArguments

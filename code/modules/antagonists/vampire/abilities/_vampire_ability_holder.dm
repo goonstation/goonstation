@@ -132,8 +132,7 @@
 					owner_human.update_face()
 					owner_human.update_body()
 			else
-				if (ishuman(owner))
-					changeling_super_heal_step(healed = owner, mult = mult*2, changer = 0)
+				changeling_super_heal_step(healed = owner, mult = mult*2, changer = 0)
 
 	set_loc_callback(newloc)
 		if (istype(newloc,/obj/storage/closet/coffin))

@@ -2463,7 +2463,6 @@
 #include "code\WorkInProgress\Railgun.dm"
 #include "code\WorkInProgress\simroom.dm"
 #include "code\WorkInProgress\sniper.dm"
-#include "code\WorkInProgress\sord.dm"
 #include "code\WorkInProgress\SpyGuyStuff.dm"
 #include "code\WorkInProgress\tarmStuff.dm"
 #include "code\WorkInProgress\tug.dm"

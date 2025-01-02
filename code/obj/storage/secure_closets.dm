@@ -266,7 +266,6 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	req_access = list(access_head_of_personnel)
 	spawn_contents = list(/obj/item/device/flash,
 	/obj/item/storage/box/id_kit,
-	/obj/item/cash_briefcase,
 	/obj/item/storage/box/clothing/hop,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/suit/armor/vest,

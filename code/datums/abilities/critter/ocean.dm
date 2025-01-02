@@ -5,16 +5,12 @@
 	cooldown = 3 SECONDS
 	start_on_cooldown = 0
 	icon_state = "tears"
-	do_logs = FALSE
 
 /datum/targetable/critter/bury_hide/cast(atom/target)
 	if (..())
 		return 1
 
 	var/turf/T = get_turf(holder.owner)
-	if (!istype(T) || istype_exact(T, /turf/space))
-		boutput(holder.owner, SPAN_NOTICE("You can't bury yourself on this kind of turf!"))
-		return 1
 	if(T == holder.owner.loc)
 		playsound(T, 'sound/effects/shovel1.ogg', 50, TRUE, 0.3)
 		holder.owner.visible_message(SPAN_NOTICE("<b>[holder.owner]</b> buries themselves!"),

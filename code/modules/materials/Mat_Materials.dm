@@ -1751,12 +1751,10 @@ ABSTRACT_TYPE(/datum/material/fabric)
 
 	New()
 		..()
-		setProperty("electrical", 4)
-		setProperty("thermal", 4)
-		setProperty("hard", 2)
+		setProperty("flammable", 2)
 		setProperty("density", 2)
-		setProperty("flammable", 3)
-		setProperty("chemical", 4)
+		setProperty("hard", 2)
+		setProperty("thermal", 1)
 
 /datum/material/fabric/hauntium
 	mat_id = "hauntium"

@@ -363,18 +363,3 @@
 		/obj/item/remote/sawflyremote
 	)
 
-// Pod wars pouches
-/obj/item/storage/pw_medical_pouch
-	name = "injector pouch"
-	icon_state = "ammopouch-medic"
-	health = 6
-	w_class = W_CLASS_TINY
-	slots = 4
-	opens_if_worn = TRUE
-	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/bloodbak,
-	/obj/item/reagent_containers/emergency_injector/qwikheal,
-	/obj/item/reagent_containers/emergency_injector/painstop,
-	/obj/item/reagent_containers/emergency_injector/bringbak)
-	prevent_holding = list(/obj/item/storage)
-
-// End of pod wars pouches

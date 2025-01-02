@@ -1050,12 +1050,8 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 			return
 		src.remove_visor(user)
 
-TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/syndicate)
-	mats = list("metal_superdense" = 5,
-				"conductive_high" = 5,
-				"crystal_dense" = 5)
 /obj/item/clothing/head/helmet/space/industrial/syndicate
-	name = "\improper Syndicate command helmet"
+	name = "\improper Syndicate Command Helmet"
 	desc = "Ooh, fancy."
 	icon_state = "indusred"
 	item_state = "indusred"
