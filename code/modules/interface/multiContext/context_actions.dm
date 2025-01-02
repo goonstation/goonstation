@@ -702,6 +702,10 @@
 		desc = "Change the lateral thrusters to move the ship left"
 		icon_state = "thrusters_left"
 
+		checkRequirements(atom/target, mob/user)
+			var/obj/machinery/vehicle/V = target
+			. = ..() && istype(V.sec_system, /obj/item/shipcomponent/secondary_system/lateral_thrusters)
+
 		execute(atom/target, mob/user)
 			..()
 			var/obj/machinery/vehicle/V = target
