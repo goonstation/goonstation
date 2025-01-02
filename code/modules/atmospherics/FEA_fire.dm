@@ -291,11 +291,11 @@ ABSTRACT_TYPE(/obj/hotspot)
 
 /obj/hotspot/gasfire/update_icon(base_icon)
 	..()
-	/*if (QDELETED(src))
+	if (QDELETED(src)) // covers cases like building a wall over a fire
 		src.icon_state = null
 		src.remove_filter("fire-NW-alphamask")
 		src.remove_filter("fire-NE-alphamask")
-		return*/
+		return
 	var/turf/north_turf = get_step(src, NORTH)
 	var/turf/east_turf = get_step(src, EAST)
 	var/turf/west_turf = get_step(src, WEST)
