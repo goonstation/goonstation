@@ -38,8 +38,7 @@
 	var/cant_allocate_unwanted = FALSE //! Job cannot be set to "unwanted" in player preferences.
 	var/receives_miranda = FALSE
 	var/list/receives_implants = null //! List of object paths of implant types given on spawn.
-	var/receives_disk = FALSE
-	var/receives_security_disk = FALSE
+	var/receives_disk = FALSE //! Job spawns with cloning data disk, can specify a type
 	var/receives_badge = FALSE
 	var/announce_on_join = FALSE //! On join, send message to all players indicating who is fulfilling the role; primarily for heads of staff
 	var/radio_announcement = TRUE //! The announcement computer will send a message when the player joins after round-start.
@@ -327,8 +326,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_con = TRUE
 	cant_spawn_as_rev = TRUE
 	announce_on_join = TRUE
-	receives_disk = TRUE
-	receives_security_disk = TRUE
+	receives_disk = /obj/item/disk/data/floppy/sec_command
 	receives_badge = TRUE
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	items_in_backpack = list(/obj/item/device/flash)
@@ -509,8 +507,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	cant_spawn_as_con = TRUE
 	cant_spawn_as_rev = TRUE
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
-	receives_disk = TRUE
-	receives_security_disk = TRUE
+	receives_disk = /obj/item/disk/data/floppy/security
 	receives_badge = TRUE
 	slot_back = list(/obj/item/storage/backpack/security)
 	slot_belt = list(/obj/item/device/pda2/security)
@@ -2848,7 +2845,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 		receives_implants = list(/obj/item/implant/pod_wars/nanotrasen)
 		slot_back = list(/obj/item/storage/backpack/NT)
-		slot_belt = list(/obj/item/gun/energy/blaster_pod_wars/nanotrasen)
+		slot_belt = list(/obj/item/device/pda2/pod_wars/nanotrasen)
 		slot_jump = list(/obj/item/clothing/under/misc/turds)
 		slot_head = list(/obj/item/clothing/head/helmet/space/nanotrasen/pilot)
 		slot_suit = list(/obj/item/clothing/suit/space/nanotrasen/pilot)
@@ -2858,8 +2855,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_mask = list(/obj/item/clothing/mask/gas/swat/NT)
 		slot_glov = list(/obj/item/clothing/gloves/swat/NT)
 		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
-		slot_poc2 = list(/obj/item/device/pda2/pod_wars/nanotrasen)
-		items_in_backpack = list(/obj/item/survival_machete)
+		slot_poc2 = list(/obj/item/requisition_token/podwars/NT)
 
 		commander
 			name = "NanoTrasen Commander"
@@ -2894,7 +2890,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 		receives_implants = list(/obj/item/implant/pod_wars/syndicate)
 		slot_back = list(/obj/item/storage/backpack/syndie)
-		slot_belt = list(/obj/item/gun/energy/blaster_pod_wars/syndicate)
+		slot_belt = list(/obj/item/device/pda2/pod_wars/syndicate)
 		slot_jump = list(/obj/item/clothing/under/misc/syndicate)
 		slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist)
 		slot_suit = list(/obj/item/clothing/suit/space/syndicate)
@@ -2904,8 +2900,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_mask = list(/obj/item/clothing/mask/gas/swat)
 		slot_glov = list(/obj/item/clothing/gloves/swat/syndicate)
 		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
-		slot_poc2 = list(/obj/item/device/pda2/pod_wars/syndicate)
-		items_in_backpack = list(/obj/item/survival_machete/syndicate)
+		slot_poc2 = list(/obj/item/requisition_token/podwars/SY)
 
 		commander
 			name = "Syndicate Commander"
