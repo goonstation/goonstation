@@ -2221,6 +2221,7 @@ datum/projectile/bullet/autocannon
 		. = ..()
 
 /datum/projectile/bullet/wall_buster_shrapnel/turbine_blade
+	name = "turbine blade"
 	implanted = null //just delimbs mobs, doesn't stick in them
 	damage = 100
 
