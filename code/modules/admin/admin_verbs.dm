@@ -2356,6 +2356,9 @@ var/list/fun_images = list()
 		if ("Activate Artifact")
 			var/obj/object = A
 			object.ArtifactActivated()
+		if ("Object Speak")
+			var/obj/object = A
+			object.admin_command_obj_speak()
 
 	src.update_cursor()
 
