@@ -291,6 +291,11 @@ ABSTRACT_TYPE(/obj/hotspot)
 
 /obj/hotspot/gasfire/update_icon(base_icon)
 	..()
+	/*if (QDELETED(src))
+		src.icon_state = null
+		src.remove_filter("fire-NW-alphamask")
+		src.remove_filter("fire-NE-alphamask")
+		return*/
 	var/turf/north_turf = get_step(src, NORTH)
 	var/turf/east_turf = get_step(src, EAST)
 	var/turf/west_turf = get_step(src, WEST)
@@ -299,18 +304,24 @@ ABSTRACT_TYPE(/obj/hotspot)
 	if (!north_valid)
 		for (var/obj/O in north_turf)
 			if (IS_PERSPECTIVE_BLOCK(O))
+				if (locate(/obj/hotspot/gasfire) in north_turf)
+					break
 				north_valid = TRUE
 				break
 	var/east_valid = !IS_VALID_FLUID_TURF(east_turf) && IS_PERSPECTIVE_WALL(east_turf)
 	if (!east_valid)
 		for (var/obj/O in east_turf)
 			if (IS_PERSPECTIVE_BLOCK(O))
+				if (locate(/obj/hotspot/gasfire) in east_turf)
+					break
 				east_valid = TRUE
 				break
 	var/west_valid = !IS_VALID_FLUID_TURF(west_turf) && IS_PERSPECTIVE_WALL(west_turf)
 	if (!west_valid)
 		for (var/obj/O in west_turf)
 			if (IS_PERSPECTIVE_BLOCK(O))
+				if (locate(/obj/hotspot/gasfire) in west_turf)
+					break
 				west_valid = TRUE
 				break
 
