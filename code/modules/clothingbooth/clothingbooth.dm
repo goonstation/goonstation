@@ -408,10 +408,10 @@
 		preview_mob.vars[src.selected_grouping.slot] = src.preview_item //hehe hoohoo
 	var/datum/human_limbs/preview_mob_limbs = preview_mob.limbs
 	// Get those limbs!
-	preview_mob_limbs.replace_with("l_arm", src.occupant.limbs.l_arm.type, src.occupant)
-	preview_mob_limbs.replace_with("r_arm", src.occupant.limbs.r_arm.type, src.occupant)
-	preview_mob_limbs.replace_with("l_leg", src.occupant.limbs.l_leg.type, src.occupant)
-	preview_mob_limbs.replace_with("r_leg", src.occupant.limbs.r_leg.type, src.occupant)
+	preview_mob_limbs.replace_with("l_arm", src.occupant.limbs.l_arm.type, show_message = FALSE)
+	preview_mob_limbs.replace_with("r_arm", src.occupant.limbs.r_arm.type, show_message = FALSE)
+	preview_mob_limbs.replace_with("l_leg", src.occupant.limbs.l_leg.type, show_message = FALSE)
+	preview_mob_limbs.replace_with("r_leg", src.occupant.limbs.r_leg.type, show_message = FALSE)
 	src.update_preview()
 
 /obj/machinery/clothingbooth/proc/reset_clothingbooth_parameters()

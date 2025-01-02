@@ -16,6 +16,7 @@
 	density = TRUE
 	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
+	req_access = list(access_mining)
 
 	var/sound_destroyed = 'sound/impact_sounds/Machinery_Break_1.ogg'
 	var/list/datum/ore_cloud_data/ores = list()
@@ -382,6 +383,9 @@
 	ui_interact(mob/user, datum/tgui/ui)
 		if (src.is_broken())
 			boutput(user, SPAN_ALERT("The [src] seems to be broken and inoperable!"))
+			return
+		if(!src.allowed(user))
+			boutput(user, SPAN_ALERT("Access Denied."))
 			return
 
 		ui = tgui_process.try_update_ui(user, src, ui)

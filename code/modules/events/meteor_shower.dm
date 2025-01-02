@@ -374,6 +374,8 @@ var/global/meteor_shower_active = 0
 				continue
 			//let's not just go straight through unsimmed turfs and total the inside of the listening post
 			if (!issimulatedturf(T) || !istype(T, /turf/unsimulated))
+				if(istype(T, /turf/unsimulated/wall))
+					qdel(src)
 				continue
 			hit_object = 1
 			if (prob(meteorhit_chance))

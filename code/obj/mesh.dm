@@ -241,11 +241,11 @@ TYPEINFO(/obj/mesh)
 	switch(diff)
 		if(-INFINITY to 25)
 			return "-3"
-		if(26 to 50)
+		if(25 to 50)
 			return "-2"
-		if(51 to 75)
+		if(50 to 75)
 			return "-1"
-		if(76 to INFINITY)
+		if(75 to INFINITY)
 			return "-0"
 
 ///Handle special icon states for cut/corroded/melted meshes
