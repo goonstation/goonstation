@@ -940,7 +940,11 @@ var/global/curr_day = null
 	set name = "RP Rules"
 	set category = "Commands"
 
-	tgui_alert(src, content_window = "rpRules", do_wait = FALSE)
+	var/cant_interact_time = null
+	if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10)
+		cant_interact_time = 15 SECONDS
+
+	tgui_alert(src, content_window = "rpRules", do_wait = FALSE, cant_interact = cant_interact_time)
 #endif
 
 /client/verb/changeServer(var/server as text)
