@@ -432,7 +432,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/binary)
 		desc = "A digital valve that can be controlled by silicons or by hitting it with a wrench."
 
 /obj/item/places_pipes/research
-	icon_state = "hpd-destroy-r"
+	icon_state = "hpd-place-r"
 
 /obj/item/places_pipes/research/update_icon(...)
 	if (src.destroying)
