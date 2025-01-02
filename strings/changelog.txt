@@ -1,4 +1,65 @@
 
+(t)wed jan 01 25
+(u)FlameArrow57
+(p)21880
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Device analyzers can be inspected to show scanned objects, excluding Syndicate objects.
+(u)JORJ949
+(p)21270
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Added cash briefcases! An empty one can be found in the HoPs locker and traitors can also purchase two of them for 2tc.
+(u)444
+(p)21888
+(e)⚖|C-Balance
+(+)Due to a materials shortage, HE Torpedos now cost 10,000 Credits
+(t)tue dec 31 24
+(u)JORJ949
+(p)21708
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Security data disks are no longer read-only, allowing them to be sabotaged without needing to be outright destroyed.
+(+)The Head of Security's disk contains the Heads netpass.
+(u)glowbold
+(p)21874
+(e)⚖🧱|C-Balance, A-Materials
+(+)Censorium's material properties reflect the composition of its materials.
+(t)mon dec 30 24
+(u)KevinFromHP
+(p)21832
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)Added the Faustian Bargain Kit to the Lawyer's Syndicate Items.
+(u)TemThrush
+(p)21863
+(e)🎨|C-Sprites
+(+)Additional hair bangs for your layering needs, they'll have "Bangs:" before their name: Cockatiel, Combed Fringe, Eye cover, Wavy, Tied, Tied Long, Blunt Side,  Emo, Lopsided, Curtain
+(t)sun dec 29 24
+(u)FlameArrow57
+(p)21819
+(e)🆕📄|C-Feature, A-UI
+(*)Added a "Hyphenate Name" option to the Character Setup window, which will cause your character appearance name to be set to "FirstName-MiddleName-LastName", or "FirstName-LastName" if no middle name. All three names are still used for purposes of security records and the like.
+(u)TemThrush
+(p)21825
+(e)🎨|C-Sprites
+(*)Added 14 new short hairstyles into the game (again), see minor changes for the list!
+(+)New hairstyle options are; Cockatiel, Combed Fringe, Slicked Back, Asymmetrical Bob, Side-Part Curls, Messy Fringe, Aristocrat, Brushed Bob, Short Shag, Luxurious Bob, Wavy Front, Poofy Bob, Short Dreads, and Shaggy
+(t)fri dec 27 24
+(u)glowbold
+(p)21835
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Crisis Alert ACKs are much more responsive.
+(t)thu dec 26 24
+(u)LeahTheTech
+(p)21830
+(e)🆕📦💡|C-Feature, A-Game-Objects, A-Station-Systems
+(*)Data terminals can now be constructed by using a cable on a metal sheet.
+(t)wed dec 25 24
+(u)glowbold
+(p)21764
+(e)🪲⚖🔨|C-Bug, C-Balance, A-Player-Actions
+(+)Jumpy can no longer be used while floating in space.
+(t)tue dec 24 24
+(u)LeahTheTech
+(*)Magboots no longer allow you to anchor to space, now they prevent you from walking off into space when active.
+(+)APC repair actions are now quicker and use help messages.
 (t)mon dec 23 24
 (u)FlameArrow57
 (p)21264

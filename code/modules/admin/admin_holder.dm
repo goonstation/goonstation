@@ -88,6 +88,7 @@
 			"Copy Here",\
 			"Ship to Cargo",\
 			"Set Material",\
+			"Object Speak",\
 			)
 			admin_interact_verbs["mob"] = list(\
 			"Player Options",\
