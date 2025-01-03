@@ -137,7 +137,8 @@
 			"visible" = marker.visible,
 			"can_be_deleted" = marker.can_be_deleted_by_player,
 			"marker" = marker,
-			"index" = length(minimap_markers_list) + 1
+			"index" = length(minimap_markers_list) + 1,
+			"icon_state" = marker.icon_state
 		)))
 
 	. = list(
@@ -225,3 +226,11 @@
 			src.minimap_controller.delete_marker(marker)
 
 	return TRUE
+
+/atom/movable/minimap_ui_handler/minimap_controller/general_alert
+
+/atom/movable/minimap_ui_handler/minimap_controller/general_alert/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "GeneralAlert")
+		ui.open()
