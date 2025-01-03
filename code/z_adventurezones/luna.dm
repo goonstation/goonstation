@@ -617,6 +617,10 @@ Contents:
 
 	tour17
 		location = "tour17"
+		codes_txt = "tour;next_tour=tour18;desc=And that concludes the tour session.  Please visit the gift shop on your way out."
+
+	tour18
+		location = "tour18"
 		codes_txt = "tour;"
 
 #define NT_DISCOUNT   (1<<0)
