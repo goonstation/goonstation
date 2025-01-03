@@ -700,6 +700,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 /obj/storage/secure/closet/research/uniform
 	name = "science uniform locker"
 	spawn_contents = list(/obj/item/tank/air,
+	/obj/item/crowbar/purple
 	/obj/item/storage/backpack/research,
 	/obj/item/storage/box/clothing/research,
 	/obj/item/clothing/suit/wintercoat/research,
