@@ -379,6 +379,9 @@
 		/datum/manufacture/pod/armor_industrial,
 		/datum/manufacture/cargohold,
 		/datum/manufacture/storagehold,
+#ifndef UNDERWATER_MAP
+		/datum/manufacture/lateral_thrusters,
+#endif
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,
