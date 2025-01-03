@@ -259,6 +259,7 @@
 		var/obj/ganglocker/locker = new /obj/ganglocker(get_turf(M))
 		locker.set_gang(antag_role.gang)
 		antag_role.gang.locker = locker
+		locker.post_move_locker()
 
 		M.abilityHolder.removeAbility(/datum/targetable/gang/set_gang_base)
 		var/datum/targetable/gang/set_gang_base/migrate/newAbil = M.abilityHolder.addAbility(/datum/targetable/gang/set_gang_base/migrate)
@@ -318,10 +319,11 @@
 				locker = new /obj/ganglocker(get_turf(M))
 				locker.set_gang(antag_role.gang)
 				antag_role.gang.locker = locker
+				locker.post_move_locker()
 			else
-				antag_role.gang.unclaim_tiles(locker.loc, GANG_TAG_INFLUENCE_LOCKER, GANG_TAG_SIGHT_RANGE_LOCKER)
+				locker.pre_move_locker()
 				locker.set_loc(get_turf(M))
-				antag_role.gang.claim_tiles(locker.loc, GANG_TAG_INFLUENCE_LOCKER, GANG_TAG_SIGHT_RANGE_LOCKER)
+				locker.post_move_locker()
 
 
 			return CAST_ATTEMPT_SUCCESS
