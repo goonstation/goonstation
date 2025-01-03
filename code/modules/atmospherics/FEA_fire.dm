@@ -296,7 +296,7 @@
 	if (!north_valid)
 		for (var/obj/O in north_turf)
 			if (IS_PERSPECTIVE_BLOCK(O))
-				if (locate(/obj/hotspot/gasfire) in north_turf)
+				if (locate(/atom/movable/hotspot/gasfire) in north_turf)
 					break
 				north_valid = TRUE
 				break
@@ -304,7 +304,7 @@
 	if (!east_valid)
 		for (var/obj/O in east_turf)
 			if (IS_PERSPECTIVE_BLOCK(O))
-				if (locate(/obj/hotspot/gasfire) in east_turf)
+				if (locate(/atom/movable/hotspot/gasfire) in east_turf)
 					break
 				east_valid = TRUE
 				break
@@ -312,7 +312,7 @@
 	if (!west_valid)
 		for (var/obj/O in west_turf)
 			if (IS_PERSPECTIVE_BLOCK(O))
-				if (locate(/obj/hotspot/gasfire) in west_turf)
+				if (locate(/atom/movable/hotspot/gasfire) in west_turf)
 					break
 				west_valid = TRUE
 				break
