@@ -171,6 +171,9 @@ TYPEINFO(/area)
 	/// Are mobs normally excluded from restricted Z levels allowed to exist here even on restricted Z levels?
 	var/allowed_restricted_z = FALSE
 
+	/// is this area permafrosted by an ice phoenix?
+	var/permafrosted = FALSE
+
 	proc/CanEnter(var/atom/movable/A)
 		if( blocked )
 			if( ismob(A) )
@@ -485,6 +488,44 @@ TYPEINFO(/area)
 
 	proc/store_biome(turf/T, datum/biome/B)
 		return
+
+	proc/add_permafrost()
+		src.permafrosted = TRUE
+
+		for (var/turf/simulated/floor/T in src)
+			T.type_before_permafrost = T.type
+			T.icon_before_permafrost = T.icon
+			T.icon_state_before_permafrost = T.icon_state
+			if (T.intact && !istype(T, /turf/simulated/floor/glassblock))
+				T.ReplaceWith(/turf/simulated/floor/snow/snowball)
+				T.icon = 'icons/turf/snow.dmi'
+				T.icon_state = "snow[pick(1, 2, 3)]"
+				T.set_dir(pick(cardinal))
+			else
+				T.icon = 'icons/turf/floors.dmi'
+				T.icon_state = "snow[pick(null, 1, 2, 3, 4)]"
+				T.set_dir(pick(cardinal))
+
+			new /obj/effects/precipitation/snow/grey/tile/light(T)
+
+			T.temperature = T0C
+			T.air.temperature = T0C
+
+			LAGCHECK(LAG_LOW)
+
+	proc/remove_permafrost()
+		src.permafrosted = FALSE
+
+		for (var/turf/simulated/floor/T in src)
+			T.ReplaceWith(T.type_before_permafrost)
+
+			var/obj/effects/precipitation/snow/grey/tile/light/snow = locate() in T
+			qdel(snow)
+
+			T.temperature = initial(T.temperature)
+			T.air.temperature = T.temperature
+
+			LAGCHECK(LAG_LOW)
 
 /area/space // the base area you SHOULD be using for space/ocean/etc.
 	do_not_irradiate = FALSE
