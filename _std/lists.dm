@@ -296,6 +296,7 @@ proc/params2complexlist(params)
 	var/element = null
 	var/a = 1,p_count = 1
 	var/escapee = null
+	//Replace characters escaped with a backslash
 	while(a < len)
 		if(findtext(params,"\\",a,a+1))
 			escapee = params[a+1]
