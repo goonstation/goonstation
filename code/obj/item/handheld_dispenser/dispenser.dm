@@ -5,6 +5,7 @@
 	icon_state = "hpd-place"
 	flags = TABLEPASS | CONDUCT
 	inventory_counter_enabled = 1
+	var/department_postfix = null //used for alternate colour HPDs
 	var/dispenser_being_used = FALSE
 	var/dispenser_delay = 5 DECI SECONDS
 	var/static/list/atmospipesforcreation = null
@@ -40,9 +41,9 @@
 
 /obj/item/places_pipes/update_icon(...)
 	if (src.destroying)
-		src.icon_state = "hpd-destroy"
+		src.icon_state = "hpd-destroy" + department_postfix
 	else
-		src.icon_state = "hpd-place"
+		src.icon_state = "hpd-place" + department_postfix
 
 	var/fullness = round(src.resources/src.max_resources * 100, 25)
 	if (fullness <= 0)
@@ -433,15 +434,4 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/binary)
 
 /obj/item/places_pipes/research
 	icon_state = "hpd-place-r"
-
-/obj/item/places_pipes/research/update_icon(...)
-	if (src.destroying)
-		src.icon_state = "hpd-destroy-r"
-	else
-		src.icon_state = "hpd-place-r"
-
-	var/fullness = round(src.resources/src.max_resources * 100, 25)
-	if (fullness <= 0)
-		src.UpdateOverlays(null, "ammo")
-	else
-		src.UpdateOverlays(image(src.icon, "ammo-[fullness]"), "ammo")
+	department_postfix = "-r"
