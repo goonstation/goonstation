@@ -2362,6 +2362,25 @@
 		var/mob/M = owner
 		M.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_EXPIRED)
 
+/datum/statusEffect/beton_decharging
+	id = "baton_decharging"
+	visible = FALSE
+	unique = TRUE
+
+	onRemove()
+		. = ..()
+		if(duration <= 0 && istype(owner, /obj/item/baton)) // if timed out, we turn the baton off
+			var/obj/item/baton/the_baton = owner
+			var/check_failed = TRUE
+			if (ismob(the_baton.loc))
+				var/mob/baton_owner = the_baton.loc
+				if(the_baton in baton_owner.equipped_list()) //if we picked it up while we stashed it, it should not depower
+					check_failed = FALSE
+			if (check_failed)
+				the_baton.is_active = FALSE
+				the_baton.UpdateIcon()
+				playsound(the_baton, "sparks", 75, 1, -1)
+
 /datum/statusEffect/defib_charged
 	id = "defib_charged"
 	visible = FALSE
