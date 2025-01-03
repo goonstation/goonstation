@@ -341,7 +341,7 @@
 	station_bounties[/obj/item/reagent_containers/food/drinks/bottle/champagne] = 2
 	station_bounties[/obj/item/pen/crayon/golden] = 2
 	station_bounties[/obj/item/remote/porter/port_a_sci] = 2
-	station_bounties[/obj/item/clothing/suit/hosmedal] = 3
+	station_bounties[/obj/item/clothing/suit/security_badge/hosmedal] = 3
 	station_bounties[/obj/item/rddiploma] = 2
 	station_bounties[/obj/item/mdlicense] = 2
 	station_bounties[/obj/item/firstbill] = 2
