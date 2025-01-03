@@ -147,7 +147,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	desc = "A counterfeit identification card, designed to prevent tracking by the station's AI systems. It features a one-time programmable identification circuit, allowing the entry of a custom false identity. It is also capable of scanning other ID cards and replicating their access credentials."
 
 /datum/syndicate_buylist/generic/cashcase
-	name = "Syndicate briefcase full of cash"
+	name = "Cash Briefcase"
 	items = list(/obj/item/cash_briefcase/syndicate/loaded)
 	cost = 2
 	max_buy = 2
@@ -291,7 +291,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	name = "Wrestling Belt"
 	items = list(/obj/item/storage/belt/wrestling)
 	cost = 7
-	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past. Wearing it unlocks a number of wrestling moves, which can be accessed in a separate command tab."
+	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past. Wearing it unlocks a number of wrestling moves."
 	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 

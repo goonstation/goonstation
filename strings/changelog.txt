@@ -1,4 +1,12 @@
 
+(t)fri jan 03 25
+(u)FlameArrow57
+(p)21896
+(e)🆕🎨🚗|C-Feature, C-Sprites, A-Vehicles
+(*)Added a new lateral thrusters pod component to the pod manufacturer. Thruster direction can be changed through clicking the pod and pressing the context menu button. Activation has a 5 second cooldown.
+(t)thu jan 02 25
+(u)LeahTheTech
+(+)Turbine stator load is now measured in kJ rather than Joules (number is 1000 times smaller).
 (t)wed jan 01 25
 (u)FlameArrow57
 (p)21880
