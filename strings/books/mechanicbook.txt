@@ -133,7 +133,7 @@
 	<br>which will then be sent on the set Frequency.
 	<br>A semicolon may also be used instead of &amp;, such as <tt>command=herp;data=derp</tt>
 	<br>which does the same as above.
-	<br>When sending special characters such as &amp; and ; and \ as a key or as data it is neccessary to "escape" them with a backslash.
+	<br>When sending special characters such as <tt>&amp; \ ( )</tt> as a key or as data it is neccessary to "escape" them with a backslash.
 	<br>For example
 	<br><tt>command=update_fruit_basket;fruits=apples\&oranges\&limes</tt>
 	<br>which will cause &amp; to be sent as data in the packet instead of as a delimeter.
