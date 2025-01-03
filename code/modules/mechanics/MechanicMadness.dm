@@ -1891,8 +1891,9 @@
 
 		buffer_string = model
 		tooltip_rebuild = 1
-		qdel(buffer)
-		buffer = list()
+		buffer.len = 0
+		ring_reader = 1
+		ring_writer = 1
 		return TRUE
 
 	proc/ProcessMachine(var/mult)
@@ -1926,19 +1927,13 @@
 		boutput(user, "Set delay to [inp]")
 
 	proc/setBufferSize(obj/item/W as obj, mob/user as mob)
-		var/inp = tgui_input_number(user,"Set size of signal buffer","Buffer size", buffer_size,buffer_max_size,-1)
+		var/inp = tgui_input_number(user,"Set size of signal buffer","Buffer size", buffer_size,buffer_max_size,1)
 		if(!in_interact_range(src, user) || !can_act(user) || isnull(inp))
 			return
 
+		if (isnull(inp)) return
 		inp = round(inp)
-		inp = min(inp, buffer_max_size)
-		if(inp == 0)
-			boutput(user,"Buffer size can't be zero.")
-			return
-		if(inp < 0)
-			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50,1)
-			boutput(user,"How could a buffer be negative? What are you doing here?")
-			return
+		inp = clamp(inp, 1, buffer_max_size)
 		buffer_size = inp
 		tooltip_rebuild = 1
 		boutput(user,"You set the buffer size to [inp]")
@@ -1966,9 +1961,7 @@
 					ring_reader = 1
 				else if(bufl >= (ring_reader + 1) && !isnull(buffer[(ring_reader + 1)]))
 					ring_reader++
-			ring_writer++
-			if(ring_writer > buffer_size)
-				ring_writer = 1
+			ring_writer = (ring_writer % buffer_size) + 1
 			return
 
 		if(buffer_model == RANDOM_BUFFER)
