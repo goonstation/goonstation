@@ -1303,6 +1303,17 @@ ABSTRACT_TYPE(/area/adventure)
 	requires_power = FALSE
 #endif
 
+/area/salvage_trader
+	name = "GLOMAR Salvager"
+	icon_state = "storage"
+	teleport_blocked = 1
+	sound_environment = 10
+	sound_loop = 'sound/ambience/spooky/Evilreaver_Ambience.ogg'
+	occlude_foreground_parallax_layers = TRUE
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
+
 /area/fermid_hive
 	name = "Fermid Hive"
 	icon_state = "purple"
@@ -3760,13 +3771,11 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "Peregrine"
 	icon_state = "red"
 	requires_power = 0
-	sanctuary = 1
 	teleport_blocked = 1
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/pirate
 
 /area/pirate_ship_space
 	name = "Peregrine Space"
-	sanctuary = 1
 	teleport_blocked = 1
 	// Must match /area/pirate_ship
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/pirate
