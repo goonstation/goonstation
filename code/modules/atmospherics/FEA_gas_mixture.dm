@@ -357,7 +357,7 @@ What are the archived variables for?
 /datum/gas_mixture/proc/share(datum/gas_mixture/sharer)
 	if(!sharer)
 		return
-	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = src.ARCHIVED(GAS) - sharer.ARCHIVED(GAS)/5;
+	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = (src.ARCHIVED(GAS) - sharer.ARCHIVED(GAS))/5;
 	APPLY_TO_GASES(_DELTA_GAS)
 	#undef _DELTA_GAS
 
