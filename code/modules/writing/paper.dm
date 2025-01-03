@@ -900,7 +900,7 @@
 	throw_spin = 0
 
 /obj/item/paper/folded/crane
-	name = "paper cranw"
+	name = "paper crane"
 	desc = "If you fold a lot of these do you get a wish granted?"
 	icon_state = "papercrane"
 	throw_speed = 1
