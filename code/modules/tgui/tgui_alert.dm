@@ -17,8 +17,20 @@
  * * content_window - The name of the part to be used for the alert's content, to be used in lieu of message
  * * do_wait - waits for user input then returns it. Set to false for asynchronism
  * * theme - The TGUI theme used for the window.
+ * * cant_interact - A number of seconds that the user must wait before being able to interact or close the alert. None by default.
  */
-/proc/tgui_alert(mob/user, message = "", title, list/items = list("Ok"), timeout = 0, autofocus = TRUE, content_window = null, do_wait = TRUE, theme = null)
+/proc/tgui_alert(
+		mob/user,
+		message = "",
+		title,
+		list/items = list("Ok"),
+		timeout = 0,
+		autofocus = TRUE,
+		content_window = null,
+		do_wait = TRUE,
+		theme = null,
+		cant_interact = 0
+)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -36,7 +48,7 @@
 	if(length(items) > 3)
 		log_tgui(user, "Error: TGUI Alert initiated with too many items. Use a list.", "TguiAlert")
 		return tgui_input_list(user, message, title, items, timeout, autofocus)
-	var/datum/tgui_modal/alert = new(user, message, title, items, timeout, autofocus, content_window, theme)
+	var/datum/tgui_modal/alert = new(user, message, title, items, timeout, autofocus, content_window, theme, cant_interact)
 	alert.ui_interact(user)
 	if (!do_wait)
 		return
@@ -72,17 +84,20 @@
 	var/content_window
 	/// The TGUI theme used for the window
 	var/theme
+	/// A number of seconds that the user must wait before being able to interact or close the alert.
+	var/cant_interact
 
-/datum/tgui_modal/New(mob/user, message, title, list/items, timeout, autofocus, content_window, theme)
+/datum/tgui_modal/New(mob/user, message, title, list/items, timeout, autofocus, content_window, theme, cant_interact)
 	src.autofocus = autofocus
 	src.items = items.Copy()
 	src.title = title
 	src.message = message
 	src.content_window = content_window
 	src.theme = theme
+	src.start_time = TIME
+	src.cant_interact = cant_interact
 	if (timeout)
 		src.timeout = timeout
-		src.start_time = TIME
 		SPAWN(timeout)
 			qdel(src)
 	. = ..()
@@ -115,18 +130,22 @@
 
 /datum/tgui_modal/ui_data(mob/user)
 	. = list()
-	if(timeout)
+	if (timeout)
 		.["timeout"] = clamp(((timeout - (TIME - start_time) - 1 SECONDS) / (timeout - 1 SECONDS)), 0, 1)
+	// |GOONSTATION-ADD|
+	if (cant_interact)
+		.["cant_interact"] = clamp(((cant_interact - (TIME - start_time)) / cant_interact), 0, 1)
+		.["cant_interact_value"] = cant_interact
 
 /datum/tgui_modal/ui_static_data(mob/user)
 	. = list(
 		"title" = title,
 		"message" = message,
-		"content_window" = content_window,
 		"items" = items,
 		"autofocus" = autofocus,
+		// |GOONSTATION-ADD| all below
+		"content_window" = content_window,
 		"theme" = theme,
-		// |GOONSTATION-ADD|
 		"cdn" = cdn,
 		"VCS_REVISION" = VCS_REVISION,
 	)

@@ -223,7 +223,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 	for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
 		qdel(hotspot)
-		src.active_hotspots -= null
+		src.active_hotspots -= hotspot
 
 	if(src.being_superconductive)
 		air_master.active_super_conductivity.Remove(src)
