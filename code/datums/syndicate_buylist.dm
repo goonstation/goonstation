@@ -147,7 +147,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	desc = "A counterfeit identification card, designed to prevent tracking by the station's AI systems. It features a one-time programmable identification circuit, allowing the entry of a custom false identity. It is also capable of scanning other ID cards and replicating their access credentials."
 
 /datum/syndicate_buylist/generic/cashcase
-	name = "Syndicate Cash Briefcase"
+	name = "Cash Briefcase"
 	items = list(/obj/item/cash_briefcase/syndicate/loaded)
 	cost = 2
 	max_buy = 2
