@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2025
+ * @author glowbold (https://github.com/pgmzeta)
+ * @license MIT
+ */
+
 import {
   Button,
   ByondUi,
