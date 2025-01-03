@@ -1084,7 +1084,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 TYPEINFO(/obj/item/storage/belt/wrestling)
 	mats = list("metal_dense" = 5,
 				"dense_super" = 10,
-				"fabric" = 5)
+				"hauntium" = 20)
 /obj/item/storage/belt/wrestling
 	name = "championship wrestling belt"
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."
@@ -1106,6 +1106,11 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 		if (!user.mind?.get_antagonist(ROLE_WRESTLER))
 			user.remove_wrestle_powers(src.fake)
 
+TYPEINFO(/obj/item/storage/belt/wrestling/fake)
+	mats = list("metal_dense" = 5,
+				"dense_super" = 10,
+				"fabric" = 5
+	)
 /obj/item/storage/belt/wrestling/fake
 	name = "fake wrestling belt"
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."
