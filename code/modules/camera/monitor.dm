@@ -15,14 +15,38 @@ TYPEINFO(/obj/item/device/camera_viewer)
 	var/can_view_ai = FALSE
 
 	disposing()
-		src.current?.disconnect_viewer(src.last_viewer)
-		src.last_viewer = null
-		src.current = null
+		src.disconnect_user(src.last_viewer)
 		..()
 
-	attack_self(var/mob/user)
+	attack_self(mob/user)
 		user.unlock_medal("I Spy", 1)
 
+		var/obj/machinery/camera/C = src.select_camera(user)
+		if(!istype(C))
+			src.disconnect_user(user)
+			return FALSE
+
+		if ((!(user.contains(src)) || !can_act(user) || !user.sight_check(1) || !(C.camera_status)) && (!issilicon(user)))
+			src.disconnect_user(user)
+			return FALSE
+		else if (src.current)
+			src.current.move_viewer_to(user, C)
+		else
+			C.connect_viewer(user)
+		src.current = C
+		src.last_viewer = user
+		return TRUE
+
+	dropped(mob/user)
+		..()
+		src.disconnect_user(user)
+
+	proc/disconnect_user(mob/user)
+		src.current?.disconnect_viewer(user)
+		src.last_viewer = null
+		src.current = null
+
+	proc/select_camera(mob/user)
 		var/list/cameras = list()
 		for_by_tcl(C, /obj/machinery/camera)
 			cameras.Add(C)
@@ -40,31 +64,9 @@ TYPEINFO(/obj/item/device/camera_viewer)
 		var/selected_camera = tgui_input_list(user, "Which camera should you change to?", "Camera Selection", sortList(displayed_cameras, /proc/cmp_text_asc))
 
 		if (!selected_camera)
-			src.current?.disconnect_viewer(user)
-			src.current = null
-			src.last_viewer = null
 			return FALSE
 
-		var/obj/machinery/camera/C = displayed_cameras[selected_camera]
-
-		if ((!(src in user.contents) || !can_act(user) || !user.sight_check(1) || !(C.camera_status)) && (!issilicon(user)))
-			src.current?.disconnect_viewer(user)
-			src.current = null
-			src.last_viewer = null
-			return FALSE
-		else if (src.current)
-			src.current.move_viewer_to(user, C)
-		else
-			C.connect_viewer(user)
-		src.current = C
-		src.last_viewer = user
-		return TRUE
-
-	dropped(var/mob/user)
-		..()
-		src.current?.disconnect_viewer(user)
-		src.last_viewer = null
-		src.current = null
+		return displayed_cameras[selected_camera]
 
 /obj/item/device/camera_viewer/public
 	desc = "A portable video monitor, connected to the public camera network."

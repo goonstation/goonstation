@@ -1208,6 +1208,11 @@ datum/commodity/drugs/sell/poppies
 	comtype = /obj/item/organ/eye/cyber/camera
 	price = PAY_IMPORTANT
 
+/datum/commodity/bodyparts/cybereye_monitor
+	comname = "Monitor Cybereye"
+	comtype = /obj/item/organ/eye/cyber/monitor
+	price = PAY_IMPORTANT
+
 /datum/commodity/bodyparts/cybereye_night
 	comname = "Night Vision Cybereye"
 	comtype = /obj/item/organ/eye/cyber/nightvision

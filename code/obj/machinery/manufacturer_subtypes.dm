@@ -118,6 +118,7 @@
 		/datum/manufacture/cybereye_spectro,
 		/datum/manufacture/cybereye_prodoc,
 		/datum/manufacture/cybereye_camera,
+		/datum/manufacture/cybereye_monitor,
 		/datum/manufacture/shell_frame,
 		/datum/manufacture/ai_interface,
 		/datum/manufacture/latejoin_brain,
