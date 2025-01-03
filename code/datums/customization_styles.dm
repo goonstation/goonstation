@@ -426,6 +426,58 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			Shaggy
 				name = "Shaggy"
 				id = "shaggy"
+
+			cockatielbang
+				name = "Bangs: Cockatiel"
+				id = "cockatielbang"
+				random_allowed = FALSE
+
+
+			combedfringebangs
+				name = "Bangs: Combed Fringe"
+				id = "combedfringebangs"
+				random_allowed = FALSE
+
+			longeyebangs
+				name = "Bangs: Eye cover"
+				id = "longeyebangs"
+				random_allowed = FALSE
+
+			wavybang
+				name = "Bangs: Wavy"
+				id = "wavybang"
+				random_allowed = FALSE
+
+			tied_bangs
+				name = "Bangs: Tied"
+				id = "tied_bangs"
+				random_allowed = FALSE
+
+			tied_bangs_long
+				name = "Bangs: Tied Long"
+				id = "tied_bangs_long"
+				random_allowed = FALSE
+
+			bluntsidebang
+				name = "Bangs: Blunt Side"
+				id = "bluntsidebang"
+				random_allowed = FALSE
+
+			emobang
+				name = "Bangs: Emo"
+				id = "emobang"
+				random_allowed = FALSE
+
+			lopsidedbang
+				name = "Bangs: Lopsided"
+				id = "lopsidedbang"
+				random_allowed = FALSE
+
+
+			curtainbangs
+				name = "Bangs: Curtain"
+				id = "curtainbangs"
+				random_allowed = FALSE
 		long
 			chub2_s
 				name = "Bang: Left"
