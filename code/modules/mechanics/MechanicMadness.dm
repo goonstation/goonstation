@@ -1941,7 +1941,7 @@
 	proc/send(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
-		var/list/converted = params2list(input.signal)
+		var/list/converted = params2complexlist(input.signal)
 		if(!length(converted) || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 
 		var/datum/signal/sendsig = get_free_signal()
