@@ -2535,10 +2535,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "oY" = (
-/obj/mapping_helper/access/security,
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4
 	},
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "pa" = (

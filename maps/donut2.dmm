@@ -48111,11 +48111,11 @@
 /area/station/janitor/supply)
 "vio" = (
 /obj/machinery/door/airlock/pyro/glass/security,
-/obj/mapping_helper/access/security,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/research)
 "vip" = (

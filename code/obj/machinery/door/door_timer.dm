@@ -4,7 +4,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doortimer0"
 	desc = "A remote control switch for a door."
-	req_access = list(access_security)
+	req_access = list(access_brig)
 	anchored = ANCHORED
 	var/id = null
 	var/time = 30
