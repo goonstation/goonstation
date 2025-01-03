@@ -837,6 +837,12 @@
 		SY
 			icon_state ="req-token"
 
+	broken
+		name = "broken requisition token"
+		desc = "A syndicate credit card charged with currency. This one seems broken."
+		icon_state = "req-token-broken"
+
+
 #undef WEAPON_VENDOR_CATEGORY_SIDEARM
 #undef WEAPON_VENDOR_CATEGORY_LOADOUT
 #undef WEAPON_VENDOR_CATEGORY_UTILITY
