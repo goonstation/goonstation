@@ -2165,23 +2165,22 @@ proc/broadcast_to_all_gangs(var/message)
 			text += "<b>[i]: [scores[i].gang_name]</b></br>"
 		boutput(user, SPAN_ALERT(text))
 
-	proc/turf_attacked(target, attacker)
-		if (!ismob(attacker))
+	proc/turf_attacked(target, mob/user)
+		if (!ismob(user))
 			return
-		var/mob/user = attacker
 		if (user.get_gang() != src.gang)
 			return
 		if(!isalive(user))
 			return
-		if(!isliving(user))
+		if(!isliving(user) && !issilicon(user))
 			return
 		if (ON_COOLDOWN(src, "hide_delay", 1 SECOND))
 			return
-		if (is_hiding)
-			boutput(user,SPAN_NOTICE("You reveal your gang's locker."))
-		else
-			boutput(user,SPAN_NOTICE("You hide your gang's locker."))
 		toggle_hide(!is_hiding)
+		if (is_hiding)
+			boutput(user,SPAN_NOTICE("You hide your gang's locker."))
+		else
+			boutput(user,SPAN_NOTICE("You reveal your gang's locker."))
 
 	proc/pre_move_locker()
 		gang.unclaim_tiles(src.loc, GANG_TAG_INFLUENCE_LOCKER, GANG_TAG_SIGHT_RANGE_LOCKER)
@@ -2197,38 +2196,19 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/toggle_hide(desired)
 		if (desired == is_hiding)
 			return
-		if (!is_hiding)
-			hide_locker()
-		else
-			unhide_locker()
-
-	proc/unhide_locker()
-		var/x_coeff = rand(0, 1)	// open the floor horizontally
-		var/y_coeff = !x_coeff // or vertically but not both - it looks weird
-		var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath
+		is_hiding = desired
 		var/turf/floorturf = get_turf(src)
-		is_hiding = FALSE
-		if (floorturf.intact)
-			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+		animate_slide(floorturf, 0, 22, 4)
 		SPAWN(0.4 SECONDS)
-			if(src)
+			if (!src)
+				return
+			if(is_hiding)
+				src.layer = PLATING_LAYER-0.01
+				src.plane = PLANE_FLOOR
+				src.mouse_opacity = 1
+			else
 				src.layer = MOB_LAYER
 				src.plane = PLANE_DEFAULT
-				src.mouse_opacity = 1
-			animate_slide(floorturf, 0, 0, 4)
-
-	proc/hide_locker()
-		var/x_coeff = rand(0, 1)	// open the floor horizontally
-		var/y_coeff = !x_coeff // or vertically but not both - it looks weird
-		var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath
-		var/turf/floorturf = get_turf(src)
-		is_hiding = TRUE
-		if (floorturf.intact)
-			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
-		SPAWN(0.4 SECONDS)
-			if(src)
-				src.layer = BETWEEN_FLOORS_LAYER
-				src.plane = PLANE_FLOOR
 				src.mouse_opacity = 0
 			animate_slide(floorturf, 0, 0, 4)
 
