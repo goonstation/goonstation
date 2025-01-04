@@ -16601,7 +16601,6 @@
 /obj/table/reinforced/auto{
 	icon_state = "3"
 	},
-/obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/kitchen,
 /obj/window_blinds/cog2/middle{
 	dir = 4;
@@ -25924,6 +25923,7 @@
 "ieq" = (
 /obj/item/device/radio/intercom/catering{
 	dir = 4;
+	pixel_x = -21;
 	pixel_y = 5
 	},
 /turf/simulated/floor/specialroom/freezer{
@@ -27133,10 +27133,6 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
-/obj/table/reinforced/auto{
-	icon_state = "1"
-	},
-/obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/kitchen,
 /obj/window_blinds/cog2/middle{
 	dir = 4;
@@ -27149,6 +27145,9 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/small/floor,
+/obj/table/reinforced/auto{
+	icon_state = "3"
+	},
 /turf/simulated/bar,
 /area/station/crew_quarters/kitchen)
 "iNJ" = (
@@ -34738,7 +34737,6 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
-/obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/kitchen,
 /obj/decal/tile_edge/line/black{
 	dir = 9;
@@ -46273,8 +46271,6 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
-/obj/table/auto,
-/obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/kitchen,
 /obj/window_blinds/cog2/left{
 	dir = 4;
@@ -46285,6 +46281,9 @@
 /obj/decal/tile_edge/line/black{
 	dir = 8;
 	icon_state = "line1"
+	},
+/obj/table/reinforced/auto{
+	icon_state = "1"
 	},
 /turf/simulated/bar,
 /area/station/crew_quarters/kitchen)
