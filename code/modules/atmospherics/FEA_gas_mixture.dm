@@ -74,7 +74,7 @@ What are the archived variables for?
 	if(src.temperature > 900 && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY)
 		if(src.oxygen_agent_b > MINIMUM_REACT_QUANTITY)
 			reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, src.oxygen_agent_b*0.05)
-			reaction_rate = reaction_rate * mult
+			reaction_rate = QUANTIZE(reaction_rate) * mult
 
 			src.carbon_dioxide -= reaction_rate
 			src.oxygen += reaction_rate
@@ -88,7 +88,7 @@ What are the archived variables for?
 
 		if(src.farts > MINIMUM_REACT_QUANTITY)
 			reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, src.farts*0.05)
-			reaction_rate = reaction_rate * mult
+			reaction_rate = QUANTIZE(reaction_rate) * mult
 
 			src.carbon_dioxide -= reaction_rate
 			src.toxins += reaction_rate
@@ -131,9 +131,9 @@ What are the archived variables for?
 			plasma_burn_rate *= mult
 			oxygen_burn_rate *= mult
 
-			src.toxins -= plasma_burn_rate / 3 // Plasma usage lowered
-			src.oxygen -= plasma_burn_rate * oxygen_burn_rate
-			src.carbon_dioxide += plasma_burn_rate / 3
+			src.toxins -= QUANTIZE(plasma_burn_rate / 3) // Plasma usage lowered
+			src.oxygen -= QUANTIZE(plasma_burn_rate * oxygen_burn_rate)
+			src.carbon_dioxide += QUANTIZE(plasma_burn_rate / 3)
 
 			energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
 
@@ -247,7 +247,7 @@ What are the archived variables for?
 	var/datum/gas_mixture/removed = new /datum/gas_mixture
 
 	#define _REMOVE_GAS(GAS, ...) \
-		removed.GAS = min((src.GAS/sum)*amount, src.GAS); \
+		removed.GAS = min(QUANTIZE((src.GAS/sum)*amount), src.GAS); \
 		src.GAS -= removed.GAS/src.group_multiplier;
 	APPLY_TO_GASES(_REMOVE_GAS)
 	#undef _REMOVE_GAS
@@ -267,7 +267,7 @@ What are the archived variables for?
 	var/datum/gas_mixture/removed = new /datum/gas_mixture
 
 	#define _REMOVE_GAS_RATIO(GAS, ...) \
-		removed.GAS = min(src.GAS*ratio, src.GAS); \
+		removed.GAS = min(QUANTIZE(src.GAS*ratio), src.GAS); \
 		src.GAS -= removed.GAS/src.group_multiplier;
 	APPLY_TO_GASES(_REMOVE_GAS_RATIO)
 	#undef _REMOVE_GAS_RATIO
@@ -357,7 +357,7 @@ What are the archived variables for?
 /datum/gas_mixture/proc/share(datum/gas_mixture/sharer)
 	if(!sharer)
 		return
-	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = (src.ARCHIVED(GAS) - sharer.ARCHIVED(GAS))/5;
+	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = QUANTIZE(src.ARCHIVED(GAS) - sharer.ARCHIVED(GAS))/5;
 	APPLY_TO_GASES(_DELTA_GAS)
 	#undef _DELTA_GAS
 
@@ -408,7 +408,7 @@ What are the archived variables for?
 	if (!model)
 		return FALSE
 
-	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = ((src.ARCHIVED(GAS) - model.GAS)/5)*border_multiplier/src.group_multiplier;
+	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = QUANTIZE(((src.ARCHIVED(GAS) - model.GAS)/5)*border_multiplier/src.group_multiplier);
 	APPLY_TO_GASES(_DELTA_GAS)
 	#undef _DELTA_GAS
 
@@ -417,7 +417,7 @@ What are the archived variables for?
 	var/moved_moles = 0 MOLES
 
 	#define _MIMIC_GAS(GAS, ...) \
-		src.GAS = src.GAS - delta_##GAS; \
+		src.GAS = QUANTIZE(src.GAS - delta_##GAS); \
 		moved_moles += delta_##GAS;
 	APPLY_TO_GASES(_MIMIC_GAS)
 	#undef _MIMIC_GAS
