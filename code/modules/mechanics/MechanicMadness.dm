@@ -1845,15 +1845,6 @@
 	var/buffer_desc = "This mode outputs from oldest to newest, overwriting the oldest signal when full."
 	var/changesig = 0
 
-	//Machine loop vars
-	var/processing_tier = PROCESSING_FULL
-	var/tmp/current_processing_tier
-	var/tmp/processing_bucket = 1
-	var/base_tick_spacing = 6
-	var/cap_base_tick_spacing = 60
-	var/tmp/last_process
-
-
 	get_desc()
 		. += "<br>[SPAN_NOTICE("Delay is [cooldown_time] (in 10ths of a second). <br> Buffer size is [buffer_size].\
 		 <br> Buffer mode is [buffer_string].<br>[buffer_desc]")]"
@@ -1867,7 +1858,6 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Buffer Size",PROC_REF(setBufferSize))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Changing",PROC_REF(toggleDefault))
-		START_PROCESSING(src, src.processing_tier)
 
 	proc/setModel(var/model)
 		//Uppercase everything so signal input can be case insensitive
@@ -1896,12 +1886,6 @@
 		ring_writer = 1
 		return TRUE
 
-	proc/ProcessMachine(var/mult)
-		SHOULD_NOT_OVERRIDE(1)
-		if(SEND_SIGNAL(src, COMSIG_MACHINERY_PROCESS, mult))
-			return
-		src.process(mult)
-
 	proc/compSetModel(var/datum/mechanicsMessage/input)
 		if(setModel(input.signal))
 			LIGHT_UP_HOUSING
@@ -1921,7 +1905,7 @@
 		if(!in_interact_range(src, user) || !can_act(user) || isnull(inp))
 			return
 		inp = min(inp, 60)
-		inp = max(1, inp)
+		inp = max(4, inp)
 		cooldown_time = inp
 		tooltip_rebuild = 1
 		boutput(user, "Set delay to [inp]")
