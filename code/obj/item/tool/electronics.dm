@@ -1002,7 +1002,7 @@
 			JOB_XP(user, "Clown", 3)
 
 
-		else // congrats buddy!!!!! you managed to pass all the checks!!!!! you get to do surgery!!!!
+		else if(!is_special) // congrats buddy!!!!! you managed to pass all the checks!!!!! you get to do surgery!!!!
 			saw_surgery(target,user)
 
 
