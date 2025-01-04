@@ -198,7 +198,7 @@ var/global/total_gas_mixtures = 0
 /// Do not call. Used by [/datum/controller/air_system/proc/process].
 /datum/controller/air_system/proc/process_update_tiles()
 	PROTECTED_PROC(TRUE)
-	for(var/turf/simulated/T in tiles_to_update) // ZEWAKA-ATMOS SPACE + SPACE FLUID LEAKAGE
+	for(var/turf/simulated/T as anything in tiles_to_update) // ZEWAKA-ATMOS SPACE + SPACE FLUID LEAKAGE
 		T.update_air_properties()
 	tiles_to_update.len = 0
 
