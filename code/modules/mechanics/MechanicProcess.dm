@@ -5,10 +5,9 @@
 	var/tmp/processing_mechanics
 
 	setup()
-		name = "Item"
+		name = "Mechanics"
 
 		schedule_interval = 0.4 SECONDS
-		//schedule_interval = 2.9 SECONDS
 
 		logTheThing(LOG_DEBUG, src, "Mechanics initialize loop completed")
 
