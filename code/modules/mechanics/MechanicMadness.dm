@@ -36,7 +36,7 @@
 	open_to_sound = TRUE
 
 	New()
-		processing_items |= src
+		processing_mechanics |= src
 		..()
 
 	process()
@@ -374,16 +374,17 @@
 	var/when_next_ready = 0
 	var/list/particle_list
 	var/mob/owner = null
+	var/process_fast = FALSE //Process will be called at 2.8s intervals instead of 0.4
 
 	New()
 		particle_list = new/list()
 		AddComponent(/datum/component/mechanics_holder)
-		processing_items |= src
+		processing_mechanics |= src
 		return ..()
 
 
 	disposing()
-		processing_items.Remove(src)
+		processing_mechanics.Remove(src)
 		clear_owner()
 		..()
 
@@ -810,7 +811,7 @@
 				P.info = strip_html_tags(html_decode(input.signal))
 				P.name = paper_name
 				paper_left--
-				processing_items |= src
+				processing_mechanics |= src
 			else
 				playsound(src.loc, 'sound/machines/click.ogg', 35, 1, -10)
 		return
@@ -836,7 +837,7 @@
 		if(T && !ON_COOLDOWN(T, "ambient_paper_generation", 30 SECONDS))
 			paper_left++
 			if(paper_left >= 10)
-				processing_items -= src
+				processing_mechanics -= src
 
 /obj/item/mechanics/pscan
 	name = "Paper scanner"
