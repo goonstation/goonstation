@@ -9,7 +9,7 @@
 
 		schedule_interval = 0.4 SECONDS
 
-		logTheThing(LOG_DEBUG, src, "Mechanics initialize loop completed")
+		logTheThing(LOG_DEBUG, src, "Mechanics process intialized")
 
 		detailed_count = new
 
