@@ -36,7 +36,7 @@
 	open_to_sound = TRUE
 
 	New()
-		processing_mechanics |= src
+		processing_items |= src //this thing is a dang storage
 		..()
 
 	process()
@@ -196,6 +196,7 @@
 			return discons
 	disposing()
 		..()
+		processing_items.Remove(src)
 		src.contents=null
 		return
 	mouse_drop(atom/target)
