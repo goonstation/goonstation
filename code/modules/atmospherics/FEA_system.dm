@@ -149,7 +149,7 @@ var/global/total_gas_mixtures = 0
 		base.processing = FALSE //singletons at startup are technically unconnected anyway
 		base.parent = null
 
-		if(base.air && base.air.check_tile_graphic())
+		if(base.air?.check_tile_graphic())
 			base.update_visuals(base.air)
 
 /// This first processes the air_master update/rebuild lists then processes all groups and tiles for air calculations

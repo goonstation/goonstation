@@ -317,10 +317,9 @@ var/global/list/turf/hotly_processed_turfs = list()
 			src.air_check_directions |= direction
 
 	if(src.parent)
-		if(src.parent.borders)
-			src.parent.borders -= src
-		if(src.length_space_border > 0)
-			src.parent.length_space_border -= length_space_border
+		src.parent.borders?.Remove(src)
+		if(src.length_space_border)
+			src.parent.length_space_border -= src.length_space_border
 			src.length_space_border = 0
 
 		src.group_border = 0

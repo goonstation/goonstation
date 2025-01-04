@@ -30,16 +30,14 @@
 	..()
 	var/datum/gas_mixture/air_contents = src.return_air()
 
-	if (!air_contents)
-		return FALSE
-
-	if (length(src.active_hotspots))
-		if (locate(/obj/fire_foam) in src)
+	if (locate(/obj/fire_foam) in src)
+		if (length(src.active_hotspots))
 			for (var/atom/movable/hotspot/hotspot as anything in src.active_hotspots)
 				qdel(hotspot)
 			src.active_hotspots.len = 0
-			return FALSE
+		return FALSE
 
+	if (length(src.active_hotspots))
 		if (source_of_heat)
 			/*  If we have a hotspot with sufficient gas, we set to the exposed_ args if the hotspot is lower and change our colour if needed.
 				My best guess on why we need this is so mounted igniters and such don't cool down hotspots when used, only heating them up.
@@ -53,18 +51,7 @@
 						hotspot.volume = exposed_volume
 		return TRUE
 
-	var/igniting = FALSE
-
-	if ((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (air_contents.toxins > 0.5))
-		igniting = TRUE
-
-	if (igniting)
-		if (locate(/obj/fire_foam) in src)
-			return FALSE
-
-		if (air_contents.oxygen < 0.5 || air_contents.toxins < 0.5)
-			return FALSE
-
+	if ((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (air_contents.toxins > 0.5) && (air_contents.oxygen > 0.5))
 		if (parent?.group_processing)
 			parent.suspend_group_processing()
 
@@ -74,7 +61,7 @@
 			hotspot.just_spawned = (current_cycle < air_master.current_cycle)
 		//remove just_spawned protection if no longer processing this cell
 
-	return igniting
+		return TRUE
 
 /// Adds a hotspot to self if a previous one of the same type can not be found. Sets processing to true also, since a fire kinda should be processed.
 /turf/proc/add_hotspot(temperature, volume, chemfire = null)
@@ -296,7 +283,7 @@
 	if (!north_valid)
 		for (var/obj/O in north_turf)
 			if (IS_PERSPECTIVE_BLOCK(O))
-				if (locate(/atom/movable/hotspot/gasfire) in north_turf)
+				if (locate(/atom/movable/hotspot/gasfire) in north_turf.active_hotspots)
 					break
 				north_valid = TRUE
 				break
@@ -304,7 +291,7 @@
 	if (!east_valid)
 		for (var/obj/O in east_turf)
 			if (IS_PERSPECTIVE_BLOCK(O))
-				if (locate(/atom/movable/hotspot/gasfire) in east_turf)
+				if (locate(/atom/movable/hotspot/gasfire) in east_turf.active_hotspots)
 					break
 				east_valid = TRUE
 				break
@@ -312,29 +299,11 @@
 	if (!west_valid)
 		for (var/obj/O in west_turf)
 			if (IS_PERSPECTIVE_BLOCK(O))
-				if (locate(/atom/movable/hotspot/gasfire) in west_turf)
+				if (locate(/atom/movable/hotspot/gasfire) in west_turf.active_hotspots)
 					break
 				west_valid = TRUE
 				break
-
-	if (north_valid)
-		if (east_valid && west_valid)
-			src.icon_state = "[base_icon]-NEW"
-		else if (east_valid && !west_valid)
-			src.icon_state = "[base_icon]-NE"
-		else if (!east_valid && west_valid)
-			src.icon_state = "[base_icon]-NW"
-		else
-			src.icon_state = "[base_icon]-N"
-	else if (east_valid)
-		if (west_valid)
-			src.icon_state = "[base_icon]-EW"
-		else
-			src.icon_state = "[base_icon]-E"
-	else if (west_valid)
-		src.icon_state = "[base_icon]-W"
-	else
-		src.icon_state = "[base_icon]"
+	src.icon_state = "[base_icon]-[north_valid ? "N" : null][east_valid ? "E" : null][west_valid ? "W" : null]"
 
 	src.remove_filter("fire-NW-alphamask")
 	src.remove_filter("fire-NE-alphamask")
