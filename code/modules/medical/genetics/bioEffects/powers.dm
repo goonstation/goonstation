@@ -338,7 +338,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 		if (istype(owner.loc,/turf/))
 			var/turf/T = owner.loc
-			if (T.turf_flags & CAN_BE_SPACE_SAMPLE || T.throw_unlimited || owner.no_gravity)
+			if (istype(T, /turf/space) || T.throw_unlimited || owner.no_gravity)
 				var/push_off = FALSE
 				for(var/atom/A in oview(1, T))
 					if (A.stops_space_move)
@@ -395,7 +395,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 		if (istype(owner.loc,/turf/))
 			var/turf/T = owner.loc
-			if (T.turf_flags & CAN_BE_SPACE_SAMPLE || T.throw_unlimited || owner.no_gravity)
+			if (istype(T, /turf/space) || T.throw_unlimited || owner.no_gravity)
 				var/push_off = FALSE
 				for(var/atom/A in oview(1, T))
 					if (A.stops_space_move)
