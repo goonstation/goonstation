@@ -18,6 +18,8 @@
 	icon_closed = "lootcrimegang"
 	icon_opened = "lootcrimeopengang"
 	can_flip_bust = FALSE
+	always_slow_pull = TRUE
+	p_class = 2 //lighten it up a teensy bit
 	grab_stuff_on_spawn = FALSE
 	anchored = ANCHORED
 	var/image/light = null
