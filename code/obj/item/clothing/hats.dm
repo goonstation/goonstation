@@ -1685,6 +1685,63 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 		icon_state = "cat-tiger"
 		item_state = "cat-tiger"
 
+/obj/item/clothing/head/headband/basic
+	name = "black headband"
+	icon_state = "headband-black"
+	item_state = "headband-black"
+	gray
+		name = "gray headband"
+		icon_state = "headband-gray"
+		item_state = "headband-gray"
+	white
+		name = "white headband"
+		icon_state = "headband-white"
+		item_state = "headband-white"
+	cream
+		name = "cream headband"
+		icon_state = "headband-cream"
+		item_state = "headband-cream"
+	pink
+		name = "pink headband"
+		icon_state = "headband-pink"
+		item_state = "headband-pink"
+	red
+		name = "red headband"
+		icon_state = "headband-red"
+		item_state = "headband-red"
+	gold
+		name = "gold headband"
+		icon_state = "headband-gold"
+		item_state = "headband-gold"
+	green
+		name = "green headband"
+		icon_state = "headband-green"
+		item_state = "headband-green"
+	mint
+		name = "mint headband"
+		icon_state = "headband-mint"
+		item_state = "headband-mint"
+	blue
+		name = "blue headband"
+		icon_state = "headband-blue"
+		item_state = "headband-blue"
+	navy
+		name = "navy headband"
+		icon_state = "headband-navy"
+		item_state = "headband-navy"
+	purple
+		name = "purple headband"
+		icon_state = "headband-purple"
+		item_state = "headband-purple"
+	shinyblack
+		name = "shiny-black headband"
+		icon_state = "headband-shinyblack"
+		item_state = "headband-shinyblack"
+	brown
+		name = "brown headband"
+		icon_state = "headband-brown"
+		item_state = "headband-brown"
+
 /obj/item/clothing/head/headband/devil
 	name = "devil horns"
 	desc = "Plastic devil horns attached to a headband as part of a Halloween costume."
