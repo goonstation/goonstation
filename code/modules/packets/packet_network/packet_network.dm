@@ -148,7 +148,7 @@
 	var/is_broadcast = target_address == "ping" || target_address == "00000000" || (isnull(target_tag) && isnull(target_address))
 	var/sender = signal.data["sender"]
 	//block any packet asking every device to send a ping back, trivial amplification attack that can seriously lag the server
-	if (sender == "ping" || sender == "00000000")
+	if (sender == "ping")
 		return
 	var/use_can_receive = src.can_receive_necessary(source, signal, params)
 	var/datum/client_image_group/img_group = get_image_group("[CLIENT_IMAGE_GROUP_PACKETVISION][src.channel_name]")

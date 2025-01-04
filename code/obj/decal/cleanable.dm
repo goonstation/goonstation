@@ -39,7 +39,8 @@ proc/make_cleanable(var/type,var/loc)
 	New(var/loc)
 		..()
 		if(loc)
-			setup(loc)
+			SPAWN(0)
+				setup(loc)
 
 	setup(var/L)
 		..()
@@ -1603,7 +1604,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	density = 0
 	anchored = ANCHORED
 	layer = OBJ_LAYER
-	icon = 'icons/obj/decals/graffiti.dmi'
+	icon = 'icons/obj/decals/gang_tags.dmi'
 	icon_state = "gangtag0"
 	var/datum/gang/owners = null
 
