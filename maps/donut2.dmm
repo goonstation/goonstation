@@ -24242,11 +24242,11 @@
 /area/station/hangar/sec)
 "hcg" = (
 /obj/machinery/door/airlock/pyro/security/alt,
-/obj/mapping_helper/access/brig,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
 "hcq" = (
@@ -38625,9 +38625,9 @@
 /area/station/maintenance/west)
 "pyi" = (
 /obj/machinery/door/airlock/pyro/security/alt,
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/equipment)
 "pyn" = (
@@ -39379,8 +39379,8 @@
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -45218,7 +45218,6 @@
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "2-8"
@@ -45228,6 +45227,7 @@
 	enter_id = "brig";
 	name = "Security"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -49806,10 +49806,10 @@
 /area/station/science/lobby)
 "waY" = (
 /obj/machinery/door/airlock/pyro/security/alt,
-/obj/mapping_helper/access/brig,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "wcl" = (
