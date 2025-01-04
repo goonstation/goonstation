@@ -1832,6 +1832,7 @@
 	desc = ""
 	icon_state = "comp_buffer"
 	cooldown_time = 0.4 SECONDS
+	process_fast = TRUE
 	var/list/buffer = list()
 	var/buffer_size = 30
 	//I wanted to set this to the same limit as the selection component
@@ -1845,6 +1846,7 @@
 	var/buffer_string = "ring"
 	var/buffer_desc = "This mode outputs from oldest to newest, overwriting the oldest signal when full."
 	var/changesig = 0
+
 
 	get_desc()
 		. += "<br>[SPAN_NOTICE("Delay is [cooldown_time] (in 10ths of a second). <br> Buffer size is [buffer_size].\
