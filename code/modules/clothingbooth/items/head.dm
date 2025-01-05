@@ -346,6 +346,80 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/hairbow)
 		swatch_foreground_shape = SWATCH_POLKADOTS
 		item_path = /obj/item/clothing/head/hairbow/yellowpolkadot
 
+ABSTRACT_TYPE(/datum/clothingbooth_item/head/headband/basic)
+/datum/clothingbooth_item/headband/basic
+	cost = PAY_TRADESMAN/5
+
+	blue
+		name = "Blue"
+		swatch_background_color = "#3c6dc3"
+		item_path = /obj/item/clothing/head/headband/basic/blue
+
+	matteblack
+		name = "Matte Black"
+		swatch_background_color = "#343442"
+		item_path = /obj/item/clothing/head/headband/basic
+
+	shinyblack
+		name = "Shiny Black"
+		swatch_background_color = "#1c0223"
+		item_path = /obj/item/clothing/head/headband/basic/shinyblack
+
+	gold
+		name = "Gold"
+		swatch_background_color = "#cf842e"
+		item_path = /obj/item/clothing/head/headband/basic/gold
+
+	green
+		name = "Green"
+		swatch_background_color = "#3fb54f"
+		item_path = /obj/item/clothing/head/headband/basic/green
+
+	gray
+		name = "Gray"
+		swatch_background_color = "#858585"
+		item_path = /obj/item/clothing/head/headband/basic/gray
+
+	mint
+		name = "Mint"
+		swatch_background_color = "#329297"
+		item_path = /obj/item/clothing/head/headband/basic/mint
+
+	navy
+		name = "Navy"
+		swatch_background_color = "#24639a"
+		item_path = /obj/item/clothing/head/headband/basic/navy
+
+	pink
+		name = "Pink"
+		swatch_background_color = "#e98b8b"
+		item_path = /obj/item/clothing/head/headband/basic/pink
+
+	purple
+		name = "Purple"
+		swatch_background_color = "#8d1bc2"
+		item_path = /obj/item/clothing/head/headband/basic/purple
+
+	red
+		name = "Red"
+		swatch_background_color = "#a40322"
+		item_path = /obj/item/clothing/head/headband/basic/red
+
+	white
+		name = "White"
+		swatch_background_color = "#cbd4da"
+		item_path = /obj/item/clothing/head/headband/basic/white
+
+	brown
+		name = "Brown"
+		swatch_background_color = "#463926"
+		item_path = /obj/item/clothing/head/headband/basic/brown
+
+	cream
+		name = "Yellow Polka-dot"
+		swatch_background_color = "#dfddc8"
+		item_path = /obj/item/clothing/head/headband/basic/cream
+
 /datum/clothingbooth_item/head/maid_headwear
 	cost = PAY_TRADESMAN/3
 	item_path = /obj/item/clothing/head/maid
