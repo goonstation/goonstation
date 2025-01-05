@@ -519,23 +519,22 @@ TYPEINFO(/atom/movable)
 	var/typeinfo/obj/typeinfo = src.get_typeinfo()
 	if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
 		src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
-	src.last_turf = isturf(src.loc) ? src.loc : null
+	var/turf/lastturf = isturf(src.loc) ? src.loc : null
+	src.last_turf = lastturf
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
-	if (isturf(src.loc))
-		var/turf/T = src.loc
+	if (lastturf)
 		if(src.opacity)
-			T.opaque_atom_count++
+			lastturf.opaque_atom_count++
 		if(src.pass_unstable || src.density)
 			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
-	if(!isnull(src.loc))
-		src.loc.Entered(src, null)
-		if(isturf(src.loc)) // call it on the area too
-			src.loc.loc.Entered(src, null)
-			for(var/atom/A in src.loc)
-				if(A != src)
-					A.Crossed(src)
+	src.loc?.Entered(src, null)
+	if(lastturf) // call it on the area too
+		lastturf.loc.Entered(src, null)
+		for(var/atom/A as anything in lastturf)
+			if(A != src)
+				A.Crossed(src)
 
 
 /atom/movable/disposing()
