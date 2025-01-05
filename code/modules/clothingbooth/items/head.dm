@@ -347,7 +347,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/hairbow)
 		item_path = /obj/item/clothing/head/hairbow/yellowpolkadot
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/headband/basic)
-/datum/clothingbooth_item/headband/basic
+/datum/clothingbooth_item/head/headband/basic
 	cost = PAY_TRADESMAN/5
 
 	blue
@@ -355,10 +355,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/headband/basic)
 		swatch_background_color = "#3c6dc3"
 		item_path = /obj/item/clothing/head/headband/basic/blue
 
-	matteblack
+	black
 		name = "Matte Black"
 		swatch_background_color = "#343442"
-		item_path = /obj/item/clothing/head/headband/basic
+		item_path = /obj/item/clothing/head/headband/basic/black
 
 	shinyblack
 		name = "Shiny Black"
@@ -416,7 +416,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/headband/basic)
 		item_path = /obj/item/clothing/head/headband/basic/brown
 
 	cream
-		name = "Yellow Polka-dot"
+		name = "Cream"
 		swatch_background_color = "#dfddc8"
 		item_path = /obj/item/clothing/head/headband/basic/cream
 

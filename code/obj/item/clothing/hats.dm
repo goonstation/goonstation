@@ -1700,9 +1700,14 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 		item_state = "cat-tiger"
 
 /obj/item/clothing/head/headband/basic
-	name = "black headband"
+	name = "headband"
 	icon_state = "headband-black"
 	item_state = "headband-black"
+
+	black
+		name = "black headband"
+		icon_state = "headband-black"
+		item_state = "headband-black"
 	gray
 		name = "gray headband"
 		icon_state = "headband-gray"
