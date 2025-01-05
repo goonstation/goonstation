@@ -1610,17 +1610,31 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 
 	attackby(obj/item/W, mob/user)
 		..()
+		var/obj/item/device/radio/headset/H = W
 		if(istype(W,/obj/item/device/radio/headset))
-			user.show_message("You stuff the headset on the headband and tape it in place. [istype(src, /obj/item/clothing/head/headband/nyan) ? "Meow" : "Now"] you should be able to hear the radio using these!")
-			var/obj/item/device/radio/headset/H = W
-			H.icon = src.icon
-			H.name = src.name
-			H.icon_state = src.icon_state
-			H.wear_image_icon = src.wear_image_icon
-			H.wear_image = src.wear_image
-			H.wear_layer = MOB_FULL_SUIT_LAYER
-			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
-			qdel(src)
+			if(istype(src, /obj/item/clothing/head/headband/basic))
+				user.show_message("You stuff the headset under the headband and tape it in place. Now you should be able to hear the radio using this!")
+				H.icon = src.icon
+				H.name = src.name
+				H.icon_state = src.icon_state
+				H.wear_image_icon = src.wear_image_icon
+				H.wear_image = src.wear_image
+				H.desc = "Someone has taped a radio headset underneath the headband."
+				qdel(src)
+			else
+				user.show_message("You stuff the headset on the headband and tape it in place. [istype(src, /obj/item/clothing/head/headband/nyan) ? "Meow" : "Now"] you should be able to hear the radio using these!")
+				H.icon = src.icon
+				H.name = src.name
+				H.icon_state = src.icon_state
+				H.wear_image_icon = src.wear_image_icon
+				H.wear_image = src.wear_image
+				H.wear_layer = MOB_FULL_SUIT_LAYER
+				H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
+				qdel(src)
+		else
+			return
+
+
 
 ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 /obj/item/clothing/head/headband/nyan
