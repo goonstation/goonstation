@@ -60,7 +60,8 @@ proc/make_cleanable(var/type,var/loc)
 				T.messy++
 				if (istype(T, /turf/simulated/floor))
 					var/turf/simulated/floor/floor = T
-					floor.cleanable_fluid_react()
+					SPAWN(0)
+						floor.cleanable_fluid_react()
 
 	set_loc(newloc)
 		if(isturf(src.loc))
