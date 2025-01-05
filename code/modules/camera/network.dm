@@ -80,26 +80,24 @@
 	var/dir_var = "" //! The direction we're trying to fill
 	var/rec_var = "" //! The reciprocal of this direction
 
-	if(direction & NORTH)
-		dir_var = "c_north"
-		rec_var = "c_south"
-	else if(direction & EAST)
-		dir_var ="c_east"
-		rec_var = "c_west"
-	else if(direction & SOUTH)
-		dir_var = "c_south"
-		rec_var = "c_north"
-	else if(direction & WEST)
-		dir_var = "c_west"
-		rec_var = "c_east"
-
-	if(!dir_var) return
+	switch(direction)
+		if(NORTH)
+			dir_var = "c_north"
+			rec_var = "c_south"
+		if(EAST)
+			dir_var = "c_east"
+			rec_var = "c_west"
+		if(SOUTH)
+			dir_var = "c_south"
+			rec_var = "c_north"
+		if(WEST)
+			dir_var = "c_west"
+			rec_var = "c_east"
 
 
 	if(!C.vars[dir_var] || force_connection)
-		var/obj/machinery/camera/candidate = null
-		candidate = getCameraMove(C, direction)
-		if(candidate && C.z == candidate.z && C.network == candidate.network) // && (!camera_network_reciprocity || !candidate.vars[rec_var]))
+		var/obj/machinery/camera/candidate = getCameraMove(C, direction)
+		if(candidate && C.network == candidate.network) // && (!camera_network_reciprocity || !candidate.vars[rec_var]))
 			C.vars[dir_var] = candidate
 			candidate.addToReferrers(C)
 

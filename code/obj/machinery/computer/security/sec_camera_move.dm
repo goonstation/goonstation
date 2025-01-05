@@ -11,46 +11,46 @@
 //If there is an existing link to this camera
 
 
-/proc/getCameraMove(var/atom/old, var/direct, var/skip_disabled = 0)
+/proc/getCameraMove(obj/machinery/camera/oldcam, direct, skip_disabled = 0)
+	if(!istype(oldcam))
+		return
 	var/min_dist = 1e8
 	var/obj/machinery/camera/closest = null
 
-	if(!old) return
-
 	var/dx = 0
 	var/dy = 0
-	if(direct & NORTH)
-		dy = 1
-	else if(direct & SOUTH)
-		dy = -1
-	if(direct & EAST)
-		dx = 1
-	else if(direct & WEST)
-		dx = -1
-
-	var/obj/machinery/camera/oldcam = old
-
-	var/area/A = get_area(old)
+	switch(direct)
+		if(NORTH)
+			dy = 1
+		if(SOUTH)
+			dy = -1
+		if(EAST)
+			dx = 1
+		if(WEST)
+			dx = -1
+#if SHARED_TYPES_WEIGHT != 0
+	var/area/A = get_area(oldcam)
 	if (!A)
 		return
 
 	var/list/old_types = splittext("[A.type]", "/")
-
+#endif
 	for_by_tcl(current, /obj/machinery/camera)
-		if(old.z != current.z)
+		if(oldcam.z != current.z)
 			continue
 		//make sure it's the right direction
-		if(dx && (current.x * dx <= old.x * dx))
+		if(dx && (current.x * dx <= oldcam.x * dx))
 			continue
-		if(dy && (current.y * dy <= old.y * dy))
+		if(dy && (current.y * dy <= oldcam.y * dy))
 			continue
 
 		if(skip_disabled && !current.status)
 			continue	//	ignore disabled cameras
 
-		if(istype(oldcam) && oldcam.network != current.network)
+		if(oldcam.network != current.network)
 			continue
 
+	#if SHARED_TYPES_WEIGHT != 0
 		var/shared_types = 0 //how many levels deep the old camera and the closest camera's areas share
 		//for instance, /area/A and /area/B would have shared_types = 2 (because of how dd_text2list works)
 		//whereas area/A/B and /area/A/C would have it as 3
@@ -60,22 +60,23 @@
 			continue
 
 		var/list/new_types = splittext("[cur_area.type]", "/")
-		for(var/i = 1; i <= old_types.len && i <= new_types.len; i++)
+		for(var/i in 1 to min(length(old_types), length(new_types)))
 			if(old_types[i] == new_types[i])
 				shared_types++
 			else
 				break
-
+	#endif
 		//don't let it be too far from the current one in the axis perpindicular to the direction of travel,
 		//but let it be farther from that if it's in the same area
 		//something in the same hallway but farther away beats something in the same hallway
 
-		var/distance = abs((current.y - old.y)/(CAMERA_PROXIMITY_PREFERENCE + abs(dy))) + abs((current.x - old.x)/(CAMERA_PROXIMITY_PREFERENCE + abs(dx)))
+		var/distance = abs((current.y - oldcam.y)/(CAMERA_PROXIMITY_PREFERENCE + abs(dy))) + abs((current.x - oldcam.x)/(CAMERA_PROXIMITY_PREFERENCE + abs(dx)))
+	#if SHARED_TYPES_WEIGHT != 0
 		distance -= SHARED_TYPES_WEIGHT * shared_types
+	#endif
 		//weight things in the same area as this so they count as being closer - makes you stay in the same area
 		//when possible
-		if(istype(old, /obj/machinery/camera))
-			distance += EXISTING_LINK_WEIGHT * old:hasNode(current)
+		distance += EXISTING_LINK_WEIGHT * oldcam.hasNode(current)
 		if(distance < min_dist)
 			//closer, or this is in the same area and the current closest isn't
 			min_dist = distance

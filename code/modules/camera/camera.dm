@@ -240,7 +240,6 @@
 
 /obj/machinery/camera/proc/hasNode(var/obj/machinery/camera/node)
 	if(!istype(node)) return 0
-	. = 0
 	. = (node == c_north) + (node == c_east) + (node == c_south) + (node == c_west)
 
 /// Connect a viewer to this camera
