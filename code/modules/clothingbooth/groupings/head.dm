@@ -172,6 +172,28 @@
 		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
+/datum/clothingbooth_grouping/head/headband
+	name = "Headband"
+	item_paths = list(
+		/datum/clothingbooth_item/head/headband/basic/headband-black,
+		/datum/clothingbooth_item/head/headband/basic/headband-shinyblack,
+		/datum/clothingbooth_item/head/headband/basic/headband-gold,
+		/datum/clothingbooth_item/head/headband/basic/headband-green,
+		/datum/clothingbooth_item/head/headband/basic/headband-gray,
+		/datum/clothingbooth_item/head/headband/basic/headband-mint,
+		/datum/clothingbooth_item/head/headband/basic/headband-navy,
+		/datum/clothingbooth_item/head/headband/basic/headband-blue,
+		/datum/clothingbooth_item/head/headband/basic/headband-pink,
+		/datum/clothingbooth_item/head/headband/basic/headband-purple,
+		/datum/clothingbooth_item/head/headband/basic/headband-red,
+		/datum/clothingbooth_item/head/headband/basic/headband-white,
+		/datum/clothingbooth_item/head/headband/basic/headband-cream,
+		/datum/clothingbooth_item/head/headband/basic/headband-brown,
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/casual,
+	)
+
 /datum/clothingbooth_grouping/maid_headwear
 	item_paths = list(/datum/clothingbooth_item/head/maid_headwear)
 	grouping_tags = list(
