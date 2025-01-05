@@ -88,7 +88,7 @@
 						qdel(talisman_effect.art)
 						break
 				continue
-			var/datum/statusEffect/active_curse = user.setStatus(src.chosen_curse, src.durations[src.chosen_curse], src)
+			var/datum/statusEffect/active_curse = H.setStatus(src.chosen_curse, src.durations[src.chosen_curse], src)
 			src.active_cursees[H] = active_curse
 			if (src.chosen_curse == BLOOD_CURSE)
 				src.blood_curse_active = TRUE
