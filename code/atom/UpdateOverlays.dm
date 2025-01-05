@@ -142,15 +142,16 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 		CRASH("UpdateOverlays called without a key.")
 	LAZYLISTINIT(src.overlay_refs)
 
-	var/list/prev_data
-	//List to store info about the last state of the icon
-	prev_data = overlay_refs[key]
-	if(!prev_data && I) //Ok, we don't have previous data, but we will add an overlay
-		prev_data = new /list(P_ILEN)
-	else if(!prev_data) //We don't have data and we won't add an overlay
-		return 0
+	var/list/prev_data = overlay_refs[key]
+	var/hash = I ? ref(I.appearance) : null
+	if(isnull(prev_data) && I) //Ok, we don't have previous data, but we will add an overlay
+		src.overlays += I
+		prev_data = list(length(src.overlays), I, hash)
+		overlay_refs[key] = prev_data
+		return TRUE
+	else if(isnull(prev_data))
+		return FALSE
 
-	var/hash = I ? "\ref[I.appearance]" : null
 	var/image/prev_overlay = prev_data[P_IMAGE] //overlay_refs[key]
 	if(!force && (prev_overlay == I) && hash == prev_data[P_ISTATE] ) //If it's the same image as the other one and the appearances match then do not update
 		return 0
@@ -169,10 +170,7 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 
 	if(I)
 		src.overlays += I
-		prev_data[P_INDEX] = length(src.overlays)
-
-		prev_data[P_IMAGE] = I
-		prev_data[P_ISTATE] = hash
+		prev_data = list(length(src.overlays), I, hash)
 
 		overlay_refs[key] = prev_data
 	else
@@ -190,16 +188,18 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 	#ifdef CHECK_MORE_RUNTIMES //asserts can be somewhat slow in a proc as often as this.
 	ASSERT(I)
 	#endif
-	var/list/prev_data
 	//List to store info about the last state of the icon
-	prev_data = overlay_refs[key]
-	if(isnull(prev_data)) //Ok, we don't have previous data, but we will add an overlay
-		prev_data = new /list(P_ILEN)
-
+	var/list/prev_data = overlay_refs[key]
 	var/hash = ref(I.appearance)
+	if(isnull(prev_data)) //Ok, we don't have previous data, but we will add an overlay
+		src.overlays += I
+		prev_data = list(length(src.overlays), I, hash)
+		overlay_refs[key] = prev_data
+		return TRUE
+
 	var/image/prev_overlay = prev_data[P_IMAGE] //overlay_refs[key]
 	if(!force && (prev_overlay == I) && hash == prev_data[P_ISTATE]) //If it's the same image as the other one and the appearances match then do not update
-		return 0
+		return FALSE
 
 	var/index = prev_data[P_INDEX]
 	if(index) //There is an existing overlay in place in this slot, remove it
@@ -214,11 +214,7 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 				L[P_INDEX]--
 
 	src.overlays += I
-	prev_data[P_INDEX] = length(src.overlays)
-
-	prev_data[P_IMAGE] = I
-	prev_data[P_ISTATE] = hash
-
+	prev_data = list(length(src.overlays), I, hash)
 	overlay_refs[key] = prev_data
 	return 1
 
