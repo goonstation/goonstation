@@ -3125,7 +3125,7 @@
 
 		onAdd()
 			..()
-			for (var/datum/statusEffect/art_curse/nightmare/curse in src.owner.statusEffects)
+			if (locate(/datum/statusEffect/art_curse/nightmare) in src.owner.statusEffects)
 				return
 			get_image_group(CLIENT_IMAGE_GROUP_ART_CURSER_NIGHTMARE).add_mob(src.owner)
 			src.spawn_creature()
