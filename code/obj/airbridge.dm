@@ -468,14 +468,9 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 				status |= NOPOWER
 				light.disable()
 	set_broken()
-		if (status & BROKEN) return
-		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-		smoke.set_up(5, 0, src)
-		smoke.start()
-		icon_state = initial(icon_state)
+		. = ..()
+		if(.) return
 		icon_state = "airbrbr"
-		light.disable()
-		status |= BROKEN
 
 /obj/machinery/computer/airbr/emergency_shuttle
 	emergency = 1
