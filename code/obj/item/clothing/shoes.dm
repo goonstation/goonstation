@@ -190,25 +190,25 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 	proc/activate(mob/M)
 		if (src.check_move(M, get_turf(M), null, TRUE))
 			boutput(M, SPAN_ALERT("There's nothing to anchor to!"))
-			playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 1)
+			playsound(M.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 			return FALSE
 		src.magnetic = 1
 		src.setProperty("movespeed", 0.5)
 		src.setProperty("disorient_resist", 10)
 		step_sound = "step_lattice"
 		step_lots = TRUE
-		playsound(src.loc, 'sound/items/miningtool_on.ogg', 30, 1)
-		RegisterSignal(src.loc, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(check_move))
+		playsound(M.loc, 'sound/items/miningtool_on.ogg', 30, 1)
+		RegisterSignal(M, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(check_move))
 		return TRUE
 
-	proc/deactivate()
+	proc/deactivate(mob/M)
 		src.magnetic = 0
 		src.delProperty("movespeed")
 		src.delProperty("disorient_resist")
 		step_sound = "step_plating"
 		step_lots = FALSE
-		playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 1)
-		UnregisterSignal(src.loc, COMSIG_MOVABLE_PRE_MOVE)
+		playsound(M.loc, 'sound/items/miningtool_off.ogg', 30, 1)
+		UnregisterSignal(M, COMSIG_MOVABLE_PRE_MOVE)
 
 	proc/check_move(mob/mover, turf/T, direction, quiet = FALSE)
 		//is the turf we're on solid?

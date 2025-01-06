@@ -160,7 +160,7 @@
 			return
 
 		if(W.magnetic)
-			W.deactivate()
+			W.deactivate(the_mob)
 			boutput(the_mob, "[SPAN_HINT("You power off your magnetic boots.")]<br>[SPAN_HINT("You are no longer anchored to the floor.")]", group = "magbootsoff")
 		else
 			if (!W.activate(the_mob))
