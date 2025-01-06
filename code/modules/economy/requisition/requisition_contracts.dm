@@ -491,7 +491,7 @@ ABSTRACT_TYPE(/datum/req_contract)
 		for(var/datum/rc_entry/rce in rc_entries) //Visual formatting of list entries
 			requis_desc += rce.generate_requis_description()
 			src.payout += rce.feemod * rce.count
-		src.payout *= round(1.1**count + 0.1*count)
+		src.payout *= round(1.1**count + 0.1*count, 2)
 
 /**
  * Called to tally a crate's contents, to evaluate whether they've fulfilled the contract.
