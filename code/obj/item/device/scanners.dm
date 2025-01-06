@@ -1160,9 +1160,10 @@ TYPEINFO(/obj/item/device/appraisal)
 			var/image/chat_maptext/chat_text = null
 			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">[round(sell_value)][CREDIT_SIGN]"]</span>"
 			chat_text = make_chat_maptext(A, popup_text, alpha = 180, force = 1, time = 1.5 SECONDS)
-			// many of the artifacts are upside down and stuff, it makes text a bit hard to read!
-			chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
+
 			if (chat_text)
+				// many of the artifacts are upside down and stuff, it makes text a bit hard to read!
+				chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
 				// don't bother bumping up other things
 				chat_text.show_to(user.client)
 
