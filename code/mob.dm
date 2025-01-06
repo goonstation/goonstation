@@ -1546,7 +1546,7 @@
 	set category = "Commands"
 
 	if (global.current_state < GAME_STATE_FINISHED)
-		boutput(src, SPAN_NOTICE("The gane hasn't finished yet!"))
+		boutput(src, SPAN_NOTICE("The game hasn't finished yet!"))
 		return
 
 	global.ticker.get_credits().ui_interact(src)
