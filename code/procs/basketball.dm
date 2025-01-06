@@ -289,15 +289,16 @@
 
 		return
 
-/datum/targetable/chaos_dunk
+/obj/ability_button/chaos_dunk
 	name = "Chaos Dunk"
 	desc = "Destroy the entire station with the ultimate slam"
 	targeted = FALSE
+	icon = 'icons/mob/spell_buttons.dmi'
 	icon_state = "bballslam"
 
-/datum/targetable/chaos_dunk/cast(atom/target)
+/obj/ability_button/chaos_dunk/execute_ability()
 	. = ..()
-	var/mob/M = holder.owner
+	var/mob/M = the_mob
 
 	if(M.stat)
 		boutput(M, "Not when you're incapacitated.")
@@ -317,7 +318,7 @@
 		boutput(M, SPAN_ALERT("You can't dunk without a b-ball, yo!"))
 		return
 
-	src.holder.removeAbilityInstance(src)
+	the_item.remove_item_ability(the_mob, src.type)
 	APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "chaosdunk")//you cannot move while doing this
 	logTheThing(LOG_COMBAT, M, "<b>triggers a chaos dunk in [M.loc.loc] ([log_loc(M)])!</b>")
 

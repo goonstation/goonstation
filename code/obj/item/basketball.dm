@@ -92,23 +92,10 @@
 		W.set_loc(src)
 		var/obj/item/plutonium_core/P = W
 		src.payload = W
-		if(src.loc == user)
-			P.plutonize(user)
+		src.add_item_ability((src in user) ? user : null, P.ability_path)
 		return
 	..()
 	return
-
-/obj/item/basketball/attack_hand(mob/user)
-	..()
-	var/mob/living/carbon/human/H = user
-	if(istype(H) && payload && istype(payload))
-		payload.plutonize(user)
-	return
-
-/obj/item/basketball/unequipped(var/mob/usr)
-	if(payload && istype(payload))
-		payload.unplutonize(usr)
-	..()
 
 
 /obj/item/basketball/lethal
@@ -315,13 +302,7 @@
 	w_class = W_CLASS_NORMAL
 	force = 0
 	throwforce = 10
-	var/ability_path = /datum/targetable/chaos_dunk
-
-	proc/plutonize(mob/user)
-		user.addAbility(src.ability_path)
-
-	proc/unplutonize(mob/user)
-		user.removeAbility(src.ability_path)
+	var/ability_path = /obj/ability_button/chaos_dunk
 
 /obj/item/plutonium_core/attack_hand(mob/user)
 	..()

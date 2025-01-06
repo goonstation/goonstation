@@ -397,7 +397,7 @@
 	desc = "A core of pure Hootonium, you can feel immense power radiating from within it."
 	icon = 'icons/misc/owlzone.dmi'
 	icon_state = "hootonium"
-	ability_path = /datum/targetable/owl_slam
+	ability_path = /obj/ability_button/owl_slam
 	var/chosen = 0
 
 	attack_self(mob/user as mob)
@@ -1282,15 +1282,16 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	sound_loop = 'sound/ambience/station/JazzLounge1.ogg'
 
 //Other fuckable things
-/datum/targetable/owl_slam
+/obj/ability_button/owl_slam
 	name = "Owl Slam"
 	desc = "Hoot the entire station with the power of an owl."
 	targeted = FALSE
+	icon = 'icons/mob/spell_buttons.dmi'
 	icon_state = "owlslam"
 
-/datum/targetable/cast()
+/obj/ability_button/owl_slam/execute_ability()
 	. = ..()
-	var/mob/M = holder.owner
+	var/mob/M = the_mob
 
 	var/equipped_thing = M.equipped()
 	if(istype(equipped_thing, /obj/item/basketball))
@@ -1306,7 +1307,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 		boutput(M, SPAN_ALERT("You can't slam without a b-ball, yo!"))
 		return
 
-	src.holder.removeAbilityInstance(src)
+	the_item.remove_item_ability(the_mob, src.type)
 	APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "owlslam") //you cannot move while doing this
 	logTheThing(LOG_COMBAT, M, "<b>triggers a owl slam in [M.loc.loc] ([log_loc(M)])!</b>")
 
