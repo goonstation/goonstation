@@ -286,8 +286,8 @@
 	src.attachedTo.visible_message(SPAN_ALERT("<b>The ruptured canister shatters from the pressure, and the hot gas ignites.</b>"))
 
 	var/power = min(850 * (MIXTURE_PRESSURE(attachedTo.air_contents) + attachedTo.air_contents.temperature - 107000) / 233196469.0 + 200, 7000) //the second arg is the max explosion power
-	//if (power == 150000) //they reached the cap SOMEHOW? well dang they deserve a medal
-		//src.builtBy.unlock_medal("", 1) //WIRE TODO: make new medal for this
+	if (power == 7000) //max explosion power
+		src.builtBy.unlock_medal("Consign a million souls to oblivion", 1)
 	explosion_new(attachedTo, epicenter, power)
 
 /obj/item/assembly/detonator/proc/setDescription()
