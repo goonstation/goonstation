@@ -430,7 +430,7 @@
 
 	say()
 		if (!ON_COOLDOWN(src, "displaced_soul_speak", 2 SECONDS))
-			src.visible_message("\the [src.name]'s mouth moves, but you can't tell what they're saying.", SPAN_ALERT("Nothing comes out of your mouth!"))
+			src.visible_message(SPAN_ALERT("\The [src.name]'s mouth moves, but you can't tell what they're saying!"), SPAN_ALERT("Nothing comes out of your mouth!"))
 		return
 
 	click(atom/target)
@@ -441,7 +441,12 @@
 		for (var/obj/O in NewLoc)
 			if (direct in NewLoc.blocked_dirs)
 				return FALSE
-			if (!NewLoc.blocked_dirs && O.density)
+			if (NewLoc.blocked_dirs)
+				return ..()
+			if (O.density)
+				if (istype(O, /obj/machinery/door/airlock))
+					src.set_loc(NewLoc)
+					return TRUE
 				return FALSE
 		return ..()
 
