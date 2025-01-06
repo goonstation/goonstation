@@ -57,7 +57,7 @@
 				for(var/mob/M in range(1, locker.loc))
 					if(M.get_gang() == locker.gang)
 						should_hide = FALSE
-						return
+						break
 				if (should_hide)
 					locker.toggle_hide(TRUE)
 
