@@ -18,7 +18,7 @@ var/global/list/bible_contents = list()
 		var/obj/item/W = src.linked_item
 		W.tooltip_rebuild = TRUE
 
-	LAZYLISTADD(src.prevent_holding, /obj/item/bible)
+	LAZYLISTADDUNIQUE(src.prevent_holding, /obj/item/bible)
 
 /datum/storage/bible/add_contents(obj/item/I, mob/user = null, visible = TRUE)
 	if (I in user?.equipped_list())
