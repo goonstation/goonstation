@@ -338,6 +338,11 @@
 		qdel(pulse2)
 	return
 
+/obj/machinery/proc/set_broken()
+	if (src.is_broken())
+		return TRUE
+	src.status |= BROKEN
+
 /obj/machinery/proc/is_broken()
 	return (src.status & BROKEN)
 
