@@ -3,15 +3,6 @@
 
 		schedule_interval = 0.4 SECONDS
 
-		detailed_count = new
-
-		src.processing_mechanics = global.processing_mechanics
-
-	copyStateFrom(datum/controller/process/target)
-		var/datum/controller/process/mechanics/old_items = target
-		src.processing_mechanics = old_items.processing_mechanics
-		src.detailed_count = old_items.detailed_count
-
 	doWork()
 		var/c
 		for(var/obj/item/mechanics/target in global.processing_mechanics)
