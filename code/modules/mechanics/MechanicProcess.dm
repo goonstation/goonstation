@@ -1,8 +1,5 @@
 /// handles obj/item/mechanics/process()
 /datum/controller/process/mechanics
-	var/tmp/list/detailed_count
-	var/tmp/tick_counter
-	var/tmp/processing_mechanics
 
 	setup()
 		name = "Mechanics"
