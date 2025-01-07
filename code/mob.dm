@@ -988,13 +988,13 @@
 		boutput(src, SPAN_ALERT("DNR status set!"))
 #endif
 
-/mob/proc/unequip_all(var/delete_stuff=0)
+/mob/proc/unequip_all(var/delete_stuff=0, atom/drop_loc = null)
 	var/list/obj/item/to_unequip = src.get_unequippable()
 	if(length(to_unequip))
 		for (var/obj/item/W in to_unequip)
 			src.remove_item(W)
 			if (W)
-				W.set_loc(src.loc)
+				W.set_loc(drop_loc || src.loc)
 				W.dropped(src)
 				W.layer = initial(W.layer)
 			if(delete_stuff)
