@@ -1,9 +1,6 @@
 /// handles obj/item/mechanics/process()
 /datum/controller/process/mechanics
 
-	setup()
-		name = "Mechanics"
-
 		schedule_interval = 0.4 SECONDS
 
 		detailed_count = new
