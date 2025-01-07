@@ -167,6 +167,17 @@
 /obj/item/basketball/lethal/ex_act(severity)
 	return
 
+/obj/item/basketball/lethal/summonable
+	var/owner_ckey = null
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
 // hoop
 
 /obj/item/bballbasket
