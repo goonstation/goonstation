@@ -350,7 +350,8 @@ TYPEINFO(/obj/item/device/gps)
 				if ("status")
 					var/turf/T = get_turf(src)
 					reply.data["identifier"] = "[src.serial]-[src.identifier]"
-					reply.data["coords"] = "[T.x],[T.y]"
+					reply.data["x"] = "[T.x]"
+					reply.data["y"] = "[T.y]"
 					reply.data["location"] = "[src.get_z_info(T)]"
 					reply.data["distress"] = "[src.distress]"
 				else
