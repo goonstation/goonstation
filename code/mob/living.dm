@@ -95,6 +95,7 @@
 	var/metabolizes = 1
 
 	var/can_bleed = 1
+	var/regens_blood = TRUE
 	var/blood_id = null
 	var/blood_volume = 500
 	var/blood_pressure = null
@@ -1789,6 +1790,8 @@
 				if (GET_DIST(src,A) > 0 && GET_DIST(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
 					if(pull_slowing)
 						. *= max(A.p_class, 1)
+					else if (A.always_slow_pull)
+						. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
 					else
 						if(istype(A,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
 							. *= max(A.p_class, 1)
@@ -1808,8 +1811,6 @@
 								. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
 							else if (locate(/obj/item/gang_loot) in A.contents)
 								. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
-						else if (A.always_slow_pull)
-							. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
 
 			. = lerp(1, . , pushpull_multiplier)
 

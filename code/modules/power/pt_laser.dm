@@ -618,8 +618,8 @@
 			L.TakeDamage("chest", 0, power/(1 MEGA WATT)) //ow
 			if(ishuman(L) && prob(min(power/(1 MEGA WATT),50)))
 				var/limb = pick("l_arm","r_arm","l_leg","r_leg")
-				L:sever_limb(limb)
-				L.visible_message("<b>The [src.name] slices off one of [L.name]'s limbs!</b>")
+				if(L:sever_limb(limb))
+					L.visible_message("<b>The [src.name] slices off one of [L.name]'s limbs!</b>")
 		if(200 MEGA WATTS + 1 to 5 GIGA WATTS) //you really fucked up this time buddy
 			make_cleanable( /obj/decal/cleanable/ash,src.loc)
 			L.unlock_medal("For Your Ohm Good", 1)

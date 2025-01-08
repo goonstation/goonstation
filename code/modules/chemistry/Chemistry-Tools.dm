@@ -947,6 +947,9 @@ proc/ui_describe_reagents(atom/A)
 	Flow rate can be adjusted either in your hand, or with a <b>screwdriver</b>.
 	To pick this up, click and drag it onto your person."})
 
+	get_desc()
+		. = " The flow rate is set to [flow_rate]."
+
 	disposing()
 		src.remove_container()
 		. = ..()
@@ -954,7 +957,7 @@ proc/ui_describe_reagents(atom/A)
 	mouse_drop(atom/over_object, src_location, over_location)
 		if (ismob(over_object))
 			var/mob/user = over_object
-			if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
+			if (user == usr && !user.restrained() && !is_incapacitated(user) && in_interact_range(src, user))
 				if (!user.put_in_hand(src))
 					return ..()
 		else
@@ -998,9 +1001,10 @@ proc/ui_describe_reagents(atom/A)
 			set_flow(!open)
 
 	proc/adjust_flow_rate(mob/user)
-		var/number = tgui_input_number(user,"Set flow rate, per beaker", "Set flow rate",flow_rate,10,1,FALSE,TRUE)
+		var/number = tgui_input_number(user,"Set flow rate, per beaker", "Set flow rate (1-10)",flow_rate,10,1,FALSE,TRUE)
 		if (number && flow_rate != number)
 			flow_rate = number
+		src.tooltip_rebuild = 1
 	proc/set_flow(var/desired_state)
 		if (!desired_state && open)
 			processing_items -= src
@@ -1012,6 +1016,136 @@ proc/ui_describe_reagents(atom/A)
 			open = TRUE
 			flick("dropper_funnel_swon",src)
 			icon_state = "dropper_funnel_on"
+
+
+
+/obj/item/reagent_containers/glass/plumbing/dispenser
+	name = "portable chemical dispenser"
+	desc = "A synthesizer, ripped from a Chem Dispenser, capable of placing reagents in glassware at a fixed rate."
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "producer"
+	splash_all_contents = FALSE
+	object_flags = SUPPRESSATTACK
+	initial_volume = 0
+	accepts_lid = TRUE
+	rc_flags = FALSE
+	fluid_overlay_states = 0
+	container_style = "condenser"
+	var/running = FALSE
+	var/flow_rate = 1
+	var/reagent_to_fabricate = ""
+	var/fabrication_tick = 0
+	var/ticks_to_fabricate = 4
+	var/image/fabricating_overlay = null
+	var/image/fabrication_tick_lights = null
+	HELP_MESSAGE_OVERRIDE({"Click and drag this onto other glassware to connect it.
+	Flow rate and chemical fabricated can be adjusted either in your hand, or with a <b>screwdriver</b>.
+	To pick this up, click and drag it onto your person."})
+
+
+	get_desc()
+		. = " It is set to dispense [flow_rate] units of [reagent_to_fabricate]."
+
+	New()
+		. = ..()
+
+	disposing()
+		src.remove_container()
+		. = ..()
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if (ismob(over_object))
+			var/mob/user = over_object
+			if (user == usr && !user.restrained() && !is_incapacitated(user) && in_interact_range(src, user))
+				if (!user.put_in_hand(src))
+					return ..()
+		else
+			..()
+
+	add_line(var/obj/container)
+		var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
+		result.lineImage.pixel_x = -src.pixel_x
+		result.lineImage.pixel_y = -src.pixel_y
+		result.lineImage.layer = src.layer+0.01
+		src.UpdateOverlays(result.lineImage, "tube\ref[container]")
+	attack_self(mob/user as mob)
+		adjust_flow_rate(user)
+		return
+
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/screwdriver))
+			adjust_flow_rate(user)
+			user.visible_message(SPAN_NOTICE("[user.name] adjusts \the [src.name]."))
+			return
+		..()
+	process()
+		if (running)
+			fabrication_tick += 1
+			if (fabrication_tick >= ticks_to_fabricate)
+				fabrication_tick = 0
+				var/reagents_per_container = flow_rate / length(connected_containers)
+				for(var/obj/container in connected_containers)
+					container.reagents.add_reagent(reagent_to_fabricate, reagents_per_container)
+			update_visuals()
+
+
+	set_loc(newloc, storage_check)
+		set_flow(FALSE)
+		. = ..()
+	Move()
+		set_flow(FALSE)
+		. = ..()
+	attack_hand(mob/user)
+		if (length(src.connected_containers) <= 0)
+			..()
+		else
+			src.add_fingerprint(user)
+			set_flow(!running)
+
+	proc/update_visuals()
+		if (running && fabrication_tick > 0)
+			fabrication_tick_lights = image('icons/obj/items/chemistry_glassware.dmi',"producer_lights_[fabrication_tick]")
+		else
+			fabrication_tick_lights = null
+
+		if (reagent_to_fabricate)
+			if (running)
+				fabricating_overlay = image('icons/obj/items/chemistry_glassware.dmi',"producer_chem_active")
+			else
+				fabricating_overlay = image('icons/obj/items/chemistry_glassware.dmi',"producer_chem")
+
+			var/datum/reagent/reagent_instance = reagents_cache[reagent_to_fabricate]
+			var/list/hsl = rgb2hsl(reagent_instance.fluid_r,reagent_instance.fluid_g,reagent_instance.fluid_b)
+			fabricating_overlay.color =  hsl2rgb(hsl[1], hsl[2], clamp(hsl[3],255,20))
+
+		else
+			fabricating_overlay = null
+		src.UpdateOverlays(src.fabrication_tick_lights, "light")
+		src.UpdateOverlays(src.fabricating_overlay, "overlay")
+
+	proc/adjust_flow_rate(mob/user)
+		var/reagent = tgui_input_list(user,"Set desired reagent", "Set reagent", basic_elements, reagent_to_fabricate)
+		if (reagent == null)
+			return
+		var/number = tgui_input_number(user,"Set fabrication volume, in units", "Set fabrication rate (1-5)",flow_rate,5,1,FALSE,TRUE)
+		if (reagent && (reagent in basic_elements) && reagent_to_fabricate != reagent)
+			reagent_to_fabricate = reagent
+		if (number && flow_rate != number)
+			flow_rate = number
+		src.tooltip_rebuild = 1
+		update_visuals()
+
+	proc/set_flow(var/desired_state)
+		if (!desired_state && running)
+			processing_items -= src
+			running = FALSE
+			fabrication_tick = 0
+		else if(desired_state && !running && reagent_to_fabricate)
+			processing_items |= src
+			running = TRUE
+		update_visuals()
+
+
 
 /obj/item/reagent_containers/synthflesh_pustule
 	name = "synthetic pustule"

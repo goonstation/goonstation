@@ -109,7 +109,7 @@ export const TurbineControl = () => {
           <Stack.Item>
             <LabeledList>
               <LabeledList.Item label="Turbine Load">
-                {load} Joules/Revolution
+                {load / 1000} kJ/Revolution
               </LabeledList.Item>
             </LabeledList>
             <Chart.Line
@@ -126,11 +126,11 @@ export const TurbineControl = () => {
             Stator Load:
             <NumberInput
               minValue={1}
-              maxValue={10e30}
-              value={load}
-              format={(value) => value + ' Joules/Revolution'}
+              maxValue={10e30 / 1000}
+              value={load / 1000}
+              format={(value) => value + ' kJ/Revolution'}
               step={1}
-              onChange={(value) => act('loadChange', { newVal: value })}
+              onChange={(value) => act('loadChange', { newVal: value * 1000 })}
             />
           </Stack.Item>
           <Stack.Item>

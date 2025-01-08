@@ -183,9 +183,11 @@
 		if (istype(winner))
 			boutput(world, "<h2><b>[winner.gang_name], led by [winner.leader.current.real_name], won the round!</b></h2>")
 
-			var/datum/hud/gang_victory/victory_hud = new(winner)
+			var/datum/hud/gang_victory/victory_hud = get_singleton(/datum/hud/gang_victory)
+			victory_hud.set_winner(winner)
 			for (var/client/C in clients)
 				victory_hud.add_client(C)
+				C.mob.addAbility(/datum/targetable/toggle_gang_victory_hud)
 
 	..()
 
@@ -1526,6 +1528,10 @@ proc/broadcast_to_all_gangs(var/message)
 	var/untracked_drugs_score = 0
 	/// How many leaves of weed have been given in
 	var/gang_weed = 0
+	/// If this locker is hiding under the floor
+	var/is_hiding = FALSE
+	/// The turf this locker is registered as hiding under
+	var/registered_turf = 0
 
 	New()
 		START_TRACKING
@@ -1580,7 +1586,6 @@ proc/broadcast_to_all_gangs(var/message)
 		src.name = "[gang.gang_name] Locker"
 		src.desc = "A locker with a small screen attached to the door, and the words 'Property of [gang.gang_name] - DO NOT TOUCH!' scratched into both sides."
 		src.gang = gang
-		src.gang.claim_tiles(usr.loc, GANG_TAG_INFLUENCE_LOCKER, GANG_TAG_SIGHT_RANGE_LOCKER)
 		src.UpdateIcon()
 
 		var/image/antag_icon = image('icons/mob/antag_overlays.dmi', icon_state = "gang_locker_[src.gang.color_id]", loc=src)
@@ -2162,6 +2167,52 @@ proc/broadcast_to_all_gangs(var/message)
 			text += "<b>[i]: [scores[i].gang_name]</b></br>"
 		boutput(user, SPAN_ALERT(text))
 
+	proc/turf_attacked(target, mob/user)
+		if (!ismob(user))
+			return
+		if (user.get_gang() != src.gang)
+			return
+		if(!isalive(user))
+			return
+		if(!isliving(user) && !issilicon(user))
+			return
+		if (ON_COOLDOWN(src, "hide_delay", 1 SECOND))
+			return
+		toggle_hide(!is_hiding)
+		if (is_hiding)
+			boutput(user,SPAN_NOTICE("You hide your gang's locker."))
+		else
+			boutput(user,SPAN_NOTICE("You reveal your gang's locker."))
+
+	proc/pre_move_locker()
+		gang.unclaim_tiles(src.loc, GANG_TAG_INFLUENCE_LOCKER, GANG_TAG_SIGHT_RANGE_LOCKER)
+
+	proc/post_move_locker()
+		if (registered_turf)
+			UnregisterSignal(registered_turf, COMSIG_ATTACKHAND)
+		toggle_hide(FALSE)
+		gang.claim_tiles(src.loc, GANG_TAG_INFLUENCE_LOCKER, GANG_TAG_SIGHT_RANGE_LOCKER)
+		registered_turf = get_turf(src)
+		RegisterSignal(registered_turf, COMSIG_ATTACKHAND, PROC_REF(turf_attacked))
+
+	proc/toggle_hide(desired)
+		if (desired == is_hiding)
+			return
+		is_hiding = desired
+		var/turf/floorturf = get_turf(src)
+		animate_slide(floorturf, 0, 22, 4)
+		SPAWN(0.4 SECONDS)
+			if (!src)
+				return
+			if(is_hiding)
+				src.layer = PLATING_LAYER-0.01
+				src.plane = PLANE_FLOOR
+				src.mouse_opacity = 1
+			else
+				src.layer = MOB_LAYER
+				src.plane = PLANE_DEFAULT
+				src.mouse_opacity = 0
+			animate_slide(floorturf, 0, 0, 4)
 
 	proc/cash_amount()
 		var/number = 0
@@ -2349,8 +2400,8 @@ proc/broadcast_to_all_gangs(var/message)
 	force = 1
 	w_class = W_CLASS_TINY
 	object_flags = NO_GHOSTCRITTER
-	HELP_MESSAGE_OVERRIDE({"Hitting a dead, non-rotten gang member's corpse with this item will start a short action bar.\n
-	On completion, if the syringe is not promptly removed from the corpse, it will come back to life, disoriented, at low health."})
+	HELP_MESSAGE_OVERRIDE({"Using this on a dying gang member, or their unrotten corpse, will start a short action bar.\n
+	On completion, if the syringe is not promptly removed, they will come back to life, disoriented, at low health."})
 
 	attack(mob/O, mob/user)
 		if (istype(O, /mob/living/carbon/human))
@@ -2358,13 +2409,16 @@ proc/broadcast_to_all_gangs(var/message)
 			if (!H.get_gang() && !H.ghost?.get_gang())
 				boutput(user, SPAN_ALERT("They aren't part of a gang! Janktank is <b><i>too cool</i></b> for them."))
 				return
+			if (H == user)
+				boutput(user, SPAN_ALERT("You're not jamming that in yourself!"))
+				return
 			if (H.decomp_stage)
 				boutput(user, SPAN_ALERT("It's too late, they're rotten."))
 				return
 			if (H.mind?.get_player()?.dnr || H.ghost?.mind?.get_player()?.dnr)
 				boutput(user, SPAN_ALERT("Seems they don't want to come back. Huh."))
 				return
-			if (isdead(H))
+			if (isdead(H) || H.health < 0)
 				actions.start(new /datum/action/bar/icon/janktanktwo(user, H, src),user)
 
 	/// heals and revives a human to JANKTANK2_DESIRED_HEALTH_PCT percent
@@ -2410,8 +2464,9 @@ proc/broadcast_to_all_gangs(var/message)
 			H.visible_message(SPAN_ALERT("<b>[H]</b> [pick("barfs up","spews", "projectile vomits")] as they're wrenched cruelly back to life!"),SPAN_ALERT("<b>[pick("JESUS CHRIST","THE PAIN!","IT BURNS!!")]</b>"))
 		SPAWN(0) //some part of the vomit proc makes these duplicate
 			H.reagents.clear_reagents()
-			H.reagents.add_reagent("atropine", 2.5) //don't slip straight back into crit
+			H.reagents.add_reagent("atropine", 2.5) //don't slip straight back into crit, get dizzy
 			H.reagents.add_reagent("synaptizine", 5)
+			H.reagents.add_reagent("proconvertin", 5)
 			H.reagents.add_reagent("ephedrine", 5)
 			H.reagents.add_reagent("salbutamol", 10) //don't die immediately in a vacuum
 			H.reagents.add_reagent("space_drugs", 5) //heh
