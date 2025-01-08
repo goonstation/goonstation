@@ -307,6 +307,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			return ..()
 
 	proc/set_broken()
+		if(src.status & BROKEN)
+			return
 		src.eject()
 		ZERO_GASES(src.air_contents)
 		playsound(src, "sound/impact_sounds/locker_break.ogg", 50, TRUE)
