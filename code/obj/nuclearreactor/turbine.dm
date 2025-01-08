@@ -449,7 +449,7 @@
 		NewBlade.set_loc(src)
 		src.current_blade = NewBlade
 		src.turbine_mass = max(200, 200*src.current_blade.material.getProperty("density")) //5 = 1000
-		src.max_blade_health = max(1, 3 * src.current_blade.material.getProperty("hard"))
+		src.max_blade_health = max(1, 5 * src.current_blade.material.getProperty("hard"))
 		src.blade_health = src.max_blade_health
 
 	proc/SetStator(var/obj/item/turbine_component/stator/NewStator)
