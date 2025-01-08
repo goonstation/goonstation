@@ -869,7 +869,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 
 	//no overlays
 	update()
-		return
+		if(src.status & BROKEN)
+			icon_state = "[icon_style]-broken"
+			mode = DISPOSAL_CHUTE_OFF
+			flush = 0
+			power_usage = 0
 
 	process()
 		if (src.static_data_invalid)
