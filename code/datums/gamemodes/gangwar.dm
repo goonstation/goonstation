@@ -845,6 +845,8 @@ proc/broadcast_to_all_gangs(var/message)
 				continue
 			if (isnull(M.current.loc)) //deleted or an admin who has removeself'd
 				continue
+			if (M.hibernating) //cryod
+				continue
 			if (is_dead_or_ghost_role(M.current)) //stop sending PDA messages to the afterlife
 				continue
 			if (!(M in deferred_minds))
