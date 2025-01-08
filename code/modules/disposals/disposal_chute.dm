@@ -158,7 +158,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 						src.update()
 					else
 						boutput(user, SPAN_HINT("You need to <b>pry</b> the locking panels."))
-			return TRUE
+			return
 		if (istype(I,/obj/item/deconstructor))
 			user.visible_message(SPAN_ALERT("<B>[user] hits [src] with [I]!</B>"))
 			return
@@ -822,7 +822,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 
 	attackby(obj/item/I, mob/user)
 		. = ..()
-		if(.) return
 		if (length(src.contents))
 			src.flush()
 
