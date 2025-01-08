@@ -311,7 +311,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			return
 		src.eject()
 		ZERO_GASES(src.air_contents)
-		playsound(src, "sound/impact_sounds/locker_break.ogg", 50, TRUE)
+		playsound(src, 'sound/impact_sounds/locker_break.ogg', 50, TRUE)
 		src.status |= BROKEN
 		src.repair_step = DISPOSAL_REPAIR_STEP_SCREWDRIVER
 		src.update()
