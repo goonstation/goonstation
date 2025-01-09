@@ -3445,6 +3445,8 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		product_list += new/datum/data/vending_product(/obj/item/gun/energy/lasergat, 1, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/power_cell/lasergat, 1, infinite=TRUE)
 
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/single_action/colt_saa, 1, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/c_45, 1, infinite=TRUE)
 
 		product_list += new/datum/data/vending_product(/obj/item/switchblade, 1, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/sword/discount, 1, infinite=TRUE)
