@@ -56507,8 +56507,8 @@
 	},
 /area/iomoon/base)
 "fsA" = (
-/obj/item/brick,
 /obj/decal/cleanable/dirt/dirt4,
+/obj/machinery/vending/murderbox_gang,
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
 "fth" = (
@@ -73934,6 +73934,7 @@
 /obj/item/cable_coil/cut/small{
 	pixel_y = 4
 	},
+/obj/item/brick,
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
 "tHH" = (
