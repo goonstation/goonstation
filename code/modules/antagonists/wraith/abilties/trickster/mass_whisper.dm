@@ -17,8 +17,7 @@
 		message = ghostify_message(copytext(html_encode(message), 1, MAX_MESSAGE_LEN))
 
 		var/image/chat_maptext/whisper_text = null
-		var/num = hex2num(copytext(md5(src.holder.owner.name), 1, 7))
-		var/maptext_color = hsv2rgb((num % 360)%40+240, (num / 360) % 15+5, (((num / 360) / 10) % 15) + 55)
+		var/maptext_color = dead_maptext_color(src.holder.owner.name)
 
 		var/hearers = 0
 		for (var/mob/living/carbon/human/H in range(8, src.holder.owner))

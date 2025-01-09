@@ -32,8 +32,7 @@
 		message = ghostify_message(trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 		var/image/chat_maptext/whisper_text = null
-		var/num = hex2num(copytext(md5(src.holder.owner.name), 1, 7))
-		var/maptext_color = hsv2rgb((num % 360)%40+240, (num / 360) % 15+5, (((num / 360) / 10) % 15) + 55)
+		var/maptext_color = dead_maptext_color(src.holder.owner.name)
 		whisper_text = make_chat_maptext(H, "<span style='text-shadow: 0 0 3px black; -dm-text-outline: 2px black;'>[message]</span>", alpha = 180)
 		if(whisper_text)
 			whisper_text.show_to(src.holder.owner.client)
