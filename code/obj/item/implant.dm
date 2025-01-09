@@ -40,6 +40,7 @@ THROWING DARTS
 	var/online = 0
 	var/instant = 1
 	var/scan_category = "other" // "health", "cloner", "other", "syndicate", "unknown", or "not_shown"
+	var/removal_heal = 0
 
 	//For PDA/signal alert stuff on implants
 	var/uses_radio = 0
@@ -112,7 +113,9 @@ THROWING DARTS
 			M.update_clothing()
 		src.owner = null
 		src.implanted = 0
-
+		if (removal_heal > 0)
+			M.HealDamage("All", removal_heal, 0)
+			removal_heal = 0
 	proc/activate()
 		online = 1
 
@@ -1335,6 +1338,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	var/bleed_time = 60
 	var/bleed_timer = 0
 	var/leaves_wound = TRUE
+	removal_heal = 5
 
 	New()
 		..()
@@ -1343,10 +1347,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	bullet_357
 		name = ".357 round"
 		desc = "A powerful revolver bullet, likely of criminal origin."
+		removal_heal = 10
 
 	bullet_357AP
 		name = ".357 AP round"
 		desc = "A highly illegal armor-piercing variant of the common .357 round."
+		removal_heal = 10
 
 	bullet_38
 		name = ".38 round"
@@ -1360,13 +1366,16 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	bullet_38AP
 		name = ".38 AP round"
 		desc = "A more powerful armor-piercing .38 round. Huh. Aren't these illegal?"
+		removal_heal = 10
 
 	bullet_9mm
 		name = "9mm round"
 		desc = "An extremely common bullet fired by a myriad of different cartridges."
+		removal_heal = 10
 	bullet_455
 		name = ".455 round"
 		desc = "A powerful, old-timey revolver bullet, likely of criminal origin."
+		removal_heal = 10
 	ninemmplastic
 		name = "9mm Plastic round"
 		icon_state = "bulletplastic"
@@ -1381,6 +1390,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		name = "Rifle Round" // this is used by basically every rifle in the game, ignore the "308" path
 		icon_state = "bulletbig"
 		desc = "A large bullet from a rifle cartridge."
+		removal_heal = 15
 
 	bullet_22
 		name = ".22 round"
@@ -1395,11 +1405,13 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		name = ".41 round"
 		icon_state = "bulletexpanded"
 		desc = ".41? What the heck? Who even uses these anymore?"
+		removal_heal = 15
 
 	bullet_12ga
 		name = "buckshot"
 		icon_state = "buckshot"
 		desc = "A collection of buckshot rounds, a very commonly used load for shotguns."
+		removal_heal = 15
 
 		New()
 			..()
@@ -1477,6 +1489,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			icon_state = "blowdart"
 			leaves_wound = FALSE
 			barbed = TRUE
+			removal_heal = 0
 
 			New()
 				..()
@@ -1488,6 +1501,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			icon = 'icons/obj/chemical.dmi'
 			desc = "A small hollow dart."
 			icon_state = "syringeproj"
+			removal_heal = 0
 
 			tranq_dart_sleepy
 				name = "spent tranquilizer dart"
@@ -1523,6 +1537,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			desc = "A syringe round, of the type that is fired from a syringe gun. Whatever was inside is completely gone."
 			icon = 'icons/obj/chemical.dmi'
 			icon_state = "syringeproj"
+			removal_heal = 0
 
 			New()
 				..()
@@ -1558,6 +1573,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			icon_state = "dna_scrambler_2"
 			var/obj/item/tool/janktanktwo/syringe
 			var/full = TRUE
+			removal_heal = 0
 
 			New()
 				..()
@@ -1587,11 +1603,13 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		name= "flintlock round"
 		desc = "A rather imperfect round ball. It looks very old indeed."
 		icon_state = "flintlockbullet"
+		removal_heal = 10
 
 	bullet_50
 		name = ".50AE round"
 		icon_state = "bulletbig"
 		desc = "Ouch."
+		removal_heal = 10
 
 	rakshasa
 		name = "\improper Rakshasa round"
