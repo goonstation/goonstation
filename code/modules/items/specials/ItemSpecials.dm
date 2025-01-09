@@ -100,7 +100,7 @@
 
 	return ((dx*dx) + (dy*dy))
 
-/// Finds every mob that is currently moving away from a turf, but has not made a full step
+/// Finds every mob that is currently moving away from a turf, but has not reached the end of their movement.
 /proc/atoms_in_combat_range(var/turf/target)
 	var/list/atom/atoms = list()
 	for(var/atom/A in target)
