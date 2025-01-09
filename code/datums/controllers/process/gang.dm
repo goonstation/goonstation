@@ -172,7 +172,6 @@
 	var/duffle_spawn_repeats = 0
 	var/list/unvandalised_departments = list()
 	var/list/possible_departments = list()
-	var/list/smaller_departments = list()
 	setup()
 		name = "Gang_Duffle_Objectives"
 		schedule_interval = GANG_LOOT_INITIAL_DROP
