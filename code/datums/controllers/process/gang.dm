@@ -182,14 +182,6 @@
 		possible_departments += /area/station/science/lobby
 		possible_departments += /area/station/crew_quarters
 		possible_departments += /area/station/hydroponics
-		possible_departments += /area/station/maintenance/north
-		possible_departments += /area/station/maintenance/northeast
-		possible_departments += /area/station/maintenance/northwest
-		possible_departments += /area/station/maintenance/east
-		possible_departments += /area/station/maintenance/south
-		possible_departments += /area/station/maintenance/southeast
-		possible_departments += /area/station/maintenance/southwest
-		possible_departments += /area/station/maintenance/central
 		possible_departments += /area/station/hallway/arrivals
 		possible_departments += /area/station/hallway/centralhallway
 		possible_departments += /area/station/hallway/primary
@@ -202,6 +194,7 @@
 		possible_departments += /area/station/janitor
 		possible_departments += /area/station/medical/robotics
 		possible_departments += /area/station/medical/research // and GENETICS too.
+		possible_departments += /area/station/hangar/main
 		for (var/area in station_areas)
 			var/area/test = station_areas[area]
 			if (test.type in possible_departments)
