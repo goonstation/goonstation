@@ -440,10 +440,9 @@ datum
 				var/min_effectiveness_at = M.max_health*SYNTHFLESH_MINIMUM_HEALTH_PCT
 				var/min_effectiveness = 0.25
 				var/healing_effectiveness = 0
-				if (M.health < min_effectiveness_at)
-					healing_effectiveness = 0
-				else
-					healing_effectiveness = lerp(min_effectiveness,1,(M.health - min_effectiveness_at) / (max_effectiveness_at - min_effectiveness_at))
+				var/health_remaining = (M.max_health - M.get_brute_damage() + M.get_burn_damage())
+
+				healing_effectiveness = lerp(min_effectiveness,1,(health_remaining - min_effectiveness_at) / (max_effectiveness_at - min_effectiveness_at))
 
 				if(method == TOUCH)
 					. = 0
@@ -1115,10 +1114,11 @@ datum
 				var/min_effectiveness_at = M.max_health*SULFAZINE_MINIMUM_HEALTH_PCT
 				var/min_effectiveness = 0.5
 				var/healing_effectiveness = 0
-				if (M.health < min_effectiveness_at)
+				var/health_remaining = (M.max_health - M.get_brute_damage() + M.get_burn_damage())
+				if (health_remaining < min_effectiveness_at)
 					healing_effectiveness = 0
 				else
-					healing_effectiveness = lerp(min_effectiveness,1,(M.health - min_effectiveness_at) / (max_effectiveness_at - min_effectiveness_at))
+					healing_effectiveness = lerp(min_effectiveness,1,(health_remaining - min_effectiveness_at) / (max_effectiveness_at - min_effectiveness_at))
 
 				if(method == TOUCH && healing_effectiveness > 0)
 					. = 0
@@ -1395,10 +1395,11 @@ datum
 				var/min_effectiveness_at = M.max_health*STYPTIC_MINIUMUM_HEALTH_PCT
 				var/min_effectiveness = 0.5
 				var/healing_effectiveness = 0
-				if (M.health < min_effectiveness_at)
+				var/health_remaining = (M.max_health - M.get_brute_damage() + M.get_burn_damage())
+				if (health_remaining < min_effectiveness_at)
 					healing_effectiveness = 0
 				else
-					healing_effectiveness = lerp(min_effectiveness,1,(M.health - min_effectiveness_at) / (max_effectiveness_at - min_effectiveness_at))
+					healing_effectiveness = lerp(min_effectiveness,1,(health_remaining - min_effectiveness_at) / (max_effectiveness_at - min_effectiveness_at))
 
 				if(method == TOUCH && healing_effectiveness > 0)
 					. = 0

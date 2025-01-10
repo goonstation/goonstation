@@ -537,6 +537,16 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 			return
 
 		if (can_operate_on(target) && !actions.hasAction(user, /datum/action/bar/icon/automender_apply))
+			var/invalid_reagent_amt
+			var/target_health_pct = 1-((target.get_brute_damage() + target.get_burn_damage()) / target.max_health)
+			if (target_health_pct <= STYPTIC_MINIUMUM_HEALTH_PCT)
+				invalid_reagent_amt += reagents.get_reagent_amount("styptic_powder")
+			if (target_health_pct <= SULFAZINE_MINIMUM_HEALTH_PCT)
+				invalid_reagent_amt += reagents.get_reagent_amount("silver_sulfadiazine")
+			if (!tampered && invalid_reagent_amt >= reagents.total_volume)
+				user.show_text("\The [src] beeps. [target]'s injuries are too severe for topical medicine to work! Consider medication or a synthflesh graft.", "red")
+				return
+
 			if (target == user)
 				target.visible_message("[user] begins mending [himself_or_herself(user)] with [src].",\
 					SPAN_NOTICE("You begin mending yourself with [src]."))
