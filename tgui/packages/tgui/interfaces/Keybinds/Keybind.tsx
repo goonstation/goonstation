@@ -24,6 +24,7 @@ export const Keybind = (props: KeybindProps) => {
     <LabeledList.Item label={keybind.label}>
       <Button
         onKeyDown={(event) => {
+          event.preventDefault();
           if (isEscape(event.key)) {
             setFocusedKey('');
           }
