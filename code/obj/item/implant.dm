@@ -115,7 +115,7 @@ THROWING DARTS
 		src.implanted = 0
 		if (removal_heal > 0)
 			M.HealDamage("All", removal_heal, 0)
-			removal_heal = 0
+			removal_heal = 0 // no reimplanting un-implanted bullets for infinite heals. you nerd.
 	proc/activate()
 		online = 1
 
