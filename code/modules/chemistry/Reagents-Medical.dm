@@ -625,7 +625,7 @@ datum
 		medical/saline // COGWERKS CHEM REVISION PROJECT. magic drug, ought to use plasma or something
 			name = "saline-glucose solution"
 			id = "saline"
-			description = "This saline and glucose solution can help stabilize critically injured patients and cleanse wounds."
+			description = "This saline and glucose solution works to stabilize critically injured patients. It is rapidly reabsorbed when in large quantities."
 			reagent_state = LIQUID
 			thirst_value = 0.25
 			fluid_r = 220
@@ -635,11 +635,34 @@ datum
 			depletion_rate = 0.15
 			value = 5 // 3c + 1c + 1c
 
+			//prioritise hooking up to IVs - large quantities added over time needed for peak healing
+			calculate_depletion_rate(var/mob/affected_mob, var/mult = 1)
+				. = ..()
+				var/amt = holder.get_reagent_amount(src.id)
+				switch(amt)
+					if(5 to 10)
+						. *= 2
+					if(10 to 20) // IV drip at ~20% saline (1)
+						. *= 5
+					if(20 to 40) // IV drip 50% saline (2.5)
+						. *= 7.5
+					if(40 to 60) // IV drip 100% saline (5)
+						. *= 15
+					if(60 to INFINITY) // nerd chugged it
+						. *= 30
+				return .
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
-				if (prob(33))
+
+				var/amt = holder.get_reagent_amount(src.id)
+				var/magnitude = 1+clamp(amt/20, 1, 3) // heal faster in larger doses, but be way less efficient
+
+				if (prob(33+magnitude*10))
 					M.HealDamage("All", 2 * mult, 2 * mult)
+					if (H.get_brain_damage() >= 50) // stabilize, but keep death chance high above 200% damage
+						M.take_brain_damage(-1 * mult)
 				if (blood_system && isliving(M) && prob(33))
 					var/mob/living/H = M
 					H.blood_volume += 1  * mult
@@ -1110,7 +1133,7 @@ datum
 
 
 					M.UpdateDamageIcon()
-				else if (METHOD == TOUCH)
+				else if (method == TOUCH)
 					var/silent = 0
 					if (length(paramslist))
 						if ("silent" in paramslist)
@@ -1396,7 +1419,7 @@ datum
 						repair_bleeding_damage(L, 5, 1)
 
 					M.UpdateDamageIcon()
-				else if (METHOD == TOUCH)
+				else if (method == TOUCH)
 					var/silent = 0
 					if (length(paramslist))
 						if ("silent" in paramslist)
