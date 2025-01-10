@@ -107,7 +107,7 @@
 		atoms += A
 	for(var/mob/dude in range(1,target))
 		if (dude.next_move > world.time && dude.prev_loc == target)
-			atoms += dude
+			atoms |= dude
 
 	return atoms
 
