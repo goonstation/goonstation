@@ -1463,7 +1463,7 @@
 /area/station/hallway/primary/west)
 "apr" = (
 /turf/simulated/floor/stairs{
-	dir = 5;
+	dir = 4;
 	icon_state = "quiltystair2"
 	},
 /area/station/hallway/primary/west)
@@ -12668,7 +12668,12 @@
 	dir = 8
 	},
 /obj/table/wood/round/auto,
-/obj/item/clothing/shoes/swat,
+/obj/item/clothing/shoes/swat{
+	pixel_y = -5
+	},
+/obj/item/paper/pipebombs{
+	pixel_y = 5
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "green2"
@@ -25217,8 +25222,8 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/stairs{
-	dir = 8;
-	icon_state = "quiltystair2"
+	dir = 9;
+	icon_state = "quiltystair"
 	},
 /area/station/hallway/primary/east)
 "kXh" = (
@@ -31404,39 +31409,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_east)
 "pzC" = (
-/obj/rack,
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = -2
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = 1;
-	pixel_y = -3
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = 4;
-	pixel_y = -6
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = -4;
-	pixel_y = 5
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = -1;
-	pixel_y = 2
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = 2;
-	pixel_y = -1
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = 5;
-	pixel_y = -4
-	},
-/obj/rack,
+/obj/random_item_spawner/armory_goggle_supplies,
 /turf/simulated/floor/redblack,
 /area/station/ai_monitored/armory)
 "pAt" = (
@@ -41578,54 +41551,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "xdq" = (
-/obj/rack,
-/obj/item/clothing/mask/gas{
-	pixel_x = -7;
-	pixel_y = 8
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = -15;
-	pixel_y = 8
-	},
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = -13
-	},
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = -5
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = -4;
-	pixel_y = 12
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = -13;
-	pixel_y = 12
-	},
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = 9
-	},
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = 1
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = 11;
-	pixel_y = 8
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = 12;
-	pixel_y = 8
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = 4;
-	pixel_y = 8
-	},
 /obj/machinery/turretid/armory_perimeter{
 	pixel_x = -24
 	},
+/obj/random_item_spawner/armory_armor_supplies,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -43096,7 +43025,7 @@
 	},
 /turf/simulated/floor/stairs{
 	dir = 5;
-	icon_state = "quiltystair2"
+	icon_state = "quiltystair"
 	},
 /area/station/hallway/primary/west)
 "ygj" = (

@@ -118,7 +118,7 @@
 	get_statistics()
 		var/list/purchases = list()
 		// Add items purchased from the nukies weapon vendor
-		for (var/datum/materiel/purchased_item as anything in src.purchased_items)
+		for (var/datum/materiel/purchased_item in src.purchased_items)
 			var/obj/item_type = initial(purchased_item.path)
 			purchases += list(
 				list(
@@ -128,7 +128,7 @@
 			)
 
 		// Add items from custom uplinks and the commander's special uplink
-		for (var/datum/syndicate_buylist/purchased_item as anything in src.uplink_items)
+		for (var/datum/syndicate_buylist/purchased_item in src.uplink_items)
 			if(length(purchased_item.items) > 0)
 				var/obj/item_type = initial(purchased_item.items[1])
 				purchases += list(

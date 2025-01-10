@@ -7147,6 +7147,8 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "aNY" = (
+/obj/table/syndicate/auto,
+/obj/item/paper/pipebombs,
 /turf/simulated/floor/redblack,
 /area/listeningpost)
 "aOa" = (
@@ -11020,7 +11022,6 @@
 /area/station/ranch)
 "eeM" = (
 /obj/storage/secure/crate/weapon/armory/shotgun,
-/obj/machinery/recharger/wall/sticky,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -11028,6 +11029,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "egb" = (
@@ -12185,39 +12187,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "fKM" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = -13
-	},
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = -5
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = -4;
-	pixel_y = 12
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = -13;
-	pixel_y = 12
-	},
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = 9
-	},
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = 1
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = 12;
-	pixel_y = 8
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = 4;
-	pixel_y = 8
-	},
 /obj/machinery/turretid/armory{
 	pixel_x = -24
 	},
-/turf/simulated/floor,
+/obj/random_item_spawner/armory_armor_supplies,
+/turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "fLt" = (
 /obj/lattice{
@@ -12944,18 +12918,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
-"hdM" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "hen" = (
 /obj/machinery/plantpot,
 /obj/machinery/firealarm/west{
@@ -15832,6 +15794,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -22637,10 +22602,7 @@
 /area/station/crew_quarters/kitchen/freezer)
 "uYF" = (
 /obj/storage/secure/crate/weapon/armory/tranquilizer,
-/obj/machinery/power/apc/autoname_north/noaicontrol,
-/obj/cable{
-	icon_state = "0-2"
-	},
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "uZH" = (
@@ -23542,55 +23504,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "wkg" = (
-/obj/rack,
-/obj/item/clothing/glasses/thermal{
-	pixel_x = 9;
-	pixel_y = 5
+/obj/random_item_spawner/armory_goggle_supplies,
+/obj/cable{
+	icon_state = "0-2"
 	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = 8
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = 7;
-	pixel_y = -5
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = 6;
-	pixel_y = -10
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = -7;
-	pixel_y = -3
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = -8;
-	pixel_y = -8
-	},
-/obj/item/clothing/mask/gas/emergency{
-	pixel_x = 9;
-	pixel_y = 11
-	},
-/obj/item/clothing/mask/gas/emergency{
-	pixel_x = 3;
-	pixel_y = 11
-	},
-/obj/item/clothing/mask/gas/emergency{
-	pixel_x = -3;
-	pixel_y = 11
-	},
-/obj/item/clothing/mask/gas/emergency{
-	pixel_x = -9;
-	pixel_y = 11
-	},
-/obj/machinery/recharger/wall/sticky,
+/obj/machinery/power/apc/autoname_north/noaicontrol,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "wlm" = (
@@ -76897,7 +76815,7 @@ aeu
 afa
 aez
 uYF
-hdM
+gGS
 vgk
 agr
 aez
