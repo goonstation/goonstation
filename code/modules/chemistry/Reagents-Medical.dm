@@ -929,7 +929,7 @@ datum
 			fluid_g = 230
 			fluid_b = 218
 			transparency = 80
-			depletion_rate = 0.4
+			depletion_rate = 0.2
 			overdose = 20
 
 			on_mob_life(var/mob/M, var/mult = 1)
