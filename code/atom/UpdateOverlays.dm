@@ -233,7 +233,8 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 		return 1
 
 /atom/proc/ClearSpecificOverlays(var/retain_cache = FALSE)
-	LAZYLISTINIT(src.overlay_refs)
+	if(!length(src.overlay_refs))
+		return
 	var/keep_cache = isnum(retain_cache) && retain_cache //Maybe someone forgets to include this argument and goes straight for the list, let's handle that case
 	for(var/key in args)
 		if(istext(key)) //The retain_cache value will be here as well, so skip it
@@ -267,15 +268,11 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 
 /atom/proc/GetOverlayImage(var/key)
 	RETURN_TYPE(/image)
-	if (!src.overlay_refs)
-		src.overlay_refs = list()
+	if (!length(src.overlay_refs))
+		return
 	//Never rely on this proc returning an image.
 	var/list/ov_data = overlay_refs[key]
-
-	if(ov_data)
-		. = ov_data[P_IMAGE]
-	else
-		. = null
+	return ov_data?[P_IMAGE]
 
 /atom/proc/SafeGetOverlayImage(
 		var/key,
