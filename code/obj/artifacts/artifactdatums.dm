@@ -111,6 +111,9 @@ ABSTRACT_TYPE(/datum/artifact/)
 	/// It is based on the fake origin though, so it is no use for recognizing fake origins.
 	var/list/touch_descriptors = list()
 
+	/// the shard that is rewarded for reticulating this artifact
+	var/shard_reward = ARTIFACT_SHARD_ESSENCE
+
 	/// gets called after the artifact basics (origin, appearance, object, etc) are all set up, so the type can modify it further
 	proc/post_setup()
 		SHOULD_CALL_PARENT(TRUE)
