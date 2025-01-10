@@ -32,32 +32,29 @@ proc/get_nearest_color(var/datum/color/c)
 /// returns the named_color datum that is nearest to the given color RGB
 proc/get_nearest_color_datum(var/datum/color/c)
 	var/distance = INFINITY
-	var/nearest = null
 
 	// Test if in cache
-	var/cache = named_color_cache[c.to_rgb()] // I think rgb is fine instead of rgba, since none of these are alpha-valued
-	if (cache)
-		return cache
+	. = named_color_cache[c.to_rgb()] // I think rgb is fine instead of rgba, since none of these are alpha-valued
+	if (.)
+		return
 
-	for(var/datum/named_color/col in named_colors)
-		LAGCHECK(LAG_MED)
-		var/d = color_dist2(col.r, col.g, col.b, c.r, c.g, c.b)
+	var/red = c.r
+	var/green = c.g
+	var/blue = c.b
+	for(var/datum/named_color/col as anything in named_colors)
+		var/d = color_dist2(col.r, col.g, col.b, red, green, blue)
 		if(d < distance)
 			distance = d
-			nearest = col
+			. = col
 
 	// Cache results so we don't have to iter next time
-	if (nearest)
-		named_color_cache[c.to_rgb()] = nearest
-
-	return nearest
+	if (.)
+		named_color_cache[c.to_rgb()] = .
 
 /// adds a named color to the global list
 /// given name and RGB color
-proc/add_color(var/name, var/red, var/green, var/blue)
-
-	var/color = new /datum/named_color(name, red, green, blue)
-	named_colors += color
+proc/add_color(name, red, green, blue)
+	named_colors += new /datum/named_color(name, red, green, blue)
 
 /// called at world startup
 /// populates the color list
