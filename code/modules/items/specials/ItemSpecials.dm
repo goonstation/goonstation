@@ -109,7 +109,7 @@
 		if(ismob(A))
 			var/mob/dude = A
 			if (dude.next_move > world.time && dude.prev_loc == target)
-				atoms += A
+				atoms |= A
 
 	return atoms
 
