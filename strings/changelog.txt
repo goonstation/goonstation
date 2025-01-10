@@ -1,4 +1,9 @@
+
 (t)fri jan 10 25
+(u)patricia
+(p)21957
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)GPS coordinates in packets are now in x=, y= format compatible with signal splitters
 (u)LeahTheTech
 (*)Adding items to pipebombs no longer reduces their reagent capacity or explosive power. Let your explosive creativity free!
 (*)The Syndicate have issued a handy new instructional manual on pipebomb crafting. One copy on each listening post.
