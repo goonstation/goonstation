@@ -3510,6 +3510,8 @@
 	. = ..()
 	if (src.traitHolder.hasTrait("slowmetabolism"))
 		. /= 2
+	if (src.reagents.get_reagent_amount("heparin") > 0)
+		. *= 2
 	if (src.organHolder && !ischangeling(src))
 		if (!src.organHolder.liver || src.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
 			. /= 2
