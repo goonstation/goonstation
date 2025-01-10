@@ -661,7 +661,7 @@ datum
 
 				if (prob(33+magnitude*10))
 					M.HealDamage("All", 2 * mult, 2 * mult)
-					if (H.get_brain_damage() >= 50) // stabilize, but keep death chance high above 200% damage
+					if (M.get_brain_damage() >= 50) // stabilize, but keep death chance high above 200% damage
 						M.take_brain_damage(-1 * mult)
 				if (blood_system && isliving(M) && prob(33))
 					var/mob/living/H = M
