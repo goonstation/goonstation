@@ -1419,6 +1419,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		bird
 			name = "birdshot"
 			desc = "A large collection of birdshot rounds, a less-lethal load for shotguns."
+			removal_heal = 5
 
 	staple
 		name = "staple"
@@ -1573,7 +1574,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			icon_state = "dna_scrambler_2"
 			var/obj/item/tool/janktanktwo/syringe
 			var/full = TRUE
-			removal_heal = 0
+			removal_heal = 10 // why not. sounds cool
 
 			New()
 				..()

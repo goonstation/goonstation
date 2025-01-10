@@ -7,3 +7,7 @@
 
 /// Maximum air temperature before default lungs start taking damage
 #define DEFAULT_LUNG_AIR_TEMP_TOLERANCE_MAX T0C + 66
+
+#define STYPTIC_MINIUMUM_HEALTH_PCT 0.1
+#define SULFAZINE_MINIMUM_HEALTH_PCT 0.1
+#define SYNTHFLESH_MINIMUM_HEALTH_PCT -0.3

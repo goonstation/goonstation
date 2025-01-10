@@ -436,12 +436,20 @@ datum
 				if(!volume_passed)
 					return
 				volume_passed = clamp(volume_passed, 0, 10)
+				var/max_effectiveness_at = M.max_health*0.25
+				var/min_effectiveness_at = M.max_health*SYNTHFLESH_MINIMUM_HEALTH_PCT
+				var/min_effectiveness = 0.25
+				var/healing_effectiveness = 0
+				if (M.health < min_effectiveness_at)
+					healing_effectiveness = 0
+				else
+					healing_effectiveness = lerp(min_effectiveness,1,(M.health - min_effectiveness_at) / (max_effectiveness_at - min_effectiveness_at))
 
 				if(method == TOUCH)
 					. = 0
 					if(issilicon(M)) //Metal flesh isn't repaired by synthflesh
 						return
-					M.HealDamage("All", volume_passed * 1.5, volume_passed * 1.5)
+					M.HealDamage("All", healing_effectiveness * 1.5, healing_effectiveness * 1.5)
 					if (isliving(M))
 						var/mob/living/H = M
 						if (H.disfigured)
@@ -494,7 +502,7 @@ datum
 		medical/synaptizine // COGWERKS CHEM REVISION PROJECT. remove this, make epinephrine (epinephrine) do the same thing
 			name = "synaptizine"
 			id = "synaptizine"
-			description = "Synaptizine a mild medical stimulant. Can be used to reduce drowsyness and resist disabling symptoms such as paralysis."
+			description = "Synaptizine is a mild medical stimulant. Can be used to reduce drowsiness and resist disabling symptoms such as paralysis."
 			reagent_state = LIQUID
 			fluid_r = 200
 			fluid_g = 0
@@ -624,7 +632,6 @@ datum
 			fluid_g = 220
 			fluid_b = 220
 			transparency = 40
-			penetrates_skin = 1 // splashing saline on someones wounds would sorta help clean them
 			depletion_rate = 0.15
 			value = 5 // 3c + 1c + 1c
 
@@ -1081,7 +1088,16 @@ datum
 					return
 				volume_passed = clamp(volume_passed, 0, 10)
 
-				if (method == TOUCH)
+				var/max_effectiveness_at = M.max_health*0.25
+				var/min_effectiveness_at = M.max_health*SULFAZINE_MINIMUM_HEALTH_PCT
+				var/min_effectiveness = 0.5
+				var/healing_effectiveness = 0
+				if (M.health < min_effectiveness_at)
+					healing_effectiveness = 0
+				else
+					healing_effectiveness = lerp(min_effectiveness,1,(M.health - min_effectiveness_at) / (max_effectiveness_at - min_effectiveness_at))
+
+				if(method == TOUCH && healing_effectiveness > 0)
 					. = 0
 					M.HealDamage("All", 0, volume_passed)
 
@@ -1094,6 +1110,14 @@ datum
 
 
 					M.UpdateDamageIcon()
+				else if (METHOD == TOUCH)
+					var/silent = 0
+					if (length(paramslist))
+						if ("silent" in paramslist)
+							silent = 1
+					if (!silent)
+						boutput(M, SPAN_NOTICE("The silver sulfadiazine isn't enough! The burns are too severe!"))
+
 				else if (method == INGEST)
 					boutput(M, SPAN_ALERT("You feel sick..."))
 					if (volume_passed > 0)
@@ -1344,9 +1368,18 @@ datum
 				if(issilicon(M)) // Borgs shouldn't heal from this
 					return
 				volume_passed = clamp(volume_passed, 0, 10)
-				if(method == TOUCH)
+				var/max_effectiveness_at = M.max_health*0.25
+				var/min_effectiveness_at = M.max_health*STYPTIC_MINIUMUM_HEALTH_PCT
+				var/min_effectiveness = 0.5
+				var/healing_effectiveness = 0
+				if (M.health < min_effectiveness_at)
+					healing_effectiveness = 0
+				else
+					healing_effectiveness = lerp(min_effectiveness,1,(M.health - min_effectiveness_at) / (max_effectiveness_at - min_effectiveness_at))
+
+				if(method == TOUCH && healing_effectiveness > 0)
 					. = 0
-					M.HealDamage("All", volume_passed, 0)
+					M.HealDamage("All", healing_effectiveness, 0)
 					// M.HealBleeding(volume_passed) // At least implement your stuff properly first, thanks. Styptic also shouldn't be as good as synthflesh for healing bleeding.
 
 					/*for(var/A in M.organs)
@@ -1357,12 +1390,19 @@ datum
 						affecting.heal_damage(volume_passed, 0)*/
 
 					var/mob/living/L = M
-					if (L.bleeding == 1)
+					if (L.bleeding == 1 && healing_effectiveness > 0)
 						repair_bleeding_damage(L, 50, 1)
-					else if (L.bleeding <= 3)
+					else if (L.bleeding <= 3 && healing_effectiveness >= 1)
 						repair_bleeding_damage(L, 5, 1)
 
 					M.UpdateDamageIcon()
+				else if (METHOD == TOUCH)
+					var/silent = 0
+					if (length(paramslist))
+						if ("silent" in paramslist)
+							silent = 1
+					if (!silent)
+						boutput(M, SPAN_NOTICE("The styptic powder doesn't take, your wounds are too severe!"))
 				else if(method == INGEST)
 					boutput(M, SPAN_ALERT("You feel gross!"))
 					if (volume_passed > 0)
