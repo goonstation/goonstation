@@ -41749,11 +41749,11 @@
 	name = "Courtroom";
 	req_access_txt = "1"
 	},
-/obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "2-5"
 	},
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor/red,
 /area/station/crew_quarters/courtroom)
 "pDI" = (

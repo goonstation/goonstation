@@ -1,4 +1,44 @@
 
+(t)thu jan 09 25
+(u)Temthrush & yelloworlemons
+(p)21939
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Adds a new headband accessory to the clothing booth.
+(t)wed jan 08 25
+(u)Glamurio (Ryou)
+(p)21471
+(e)💅📦|C-QoL, A-Game-Objects
+(+)You can now show off the HoS medal like other badges.
+(u)TDHooligan
+(p)21804
+(e)⚖🧫🔨|C-Balance, C-Experimental, A-Player-Actions
+(*)Melee attack range checks have been adjusted, you can now more reliably hit players as they are moving away from you. Special attacks are unaffected for now.
+(t)tue jan 07 25
+(u)TDHooligan
+(p)21868
+(e)⚖🧫🧛|C-Balance, C-Experimental, A-Gamemodes
+(*)Gang lockers now hide under the floor when not in use.
+(*)Gang members can unhide their locker by clicking the floor with an empty hand.
+(t)mon jan 06 25
+(u)LeahTheTech
+(+)Added an extremely illegal basketball that gains power every time it's caught and explosively transfers that power to anyone who fails to catch it. Found rarely in surplus crates.
+(t)sat jan 04 25
+(u)TDHooligan
+(p)21793
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Gang crates get pulled slower now.
+(u)TemThrush
+(p)21918
+(e)🎨|C-Sprites
+(+)You can now fold paper cranes.
+(t)fri jan 03 25
+(u)FlameArrow57
+(p)21896
+(e)🆕🎨🚗|C-Feature, C-Sprites, A-Vehicles
+(*)Added a new lateral thrusters pod component to the pod manufacturer. Thruster direction can be changed through clicking the pod and pressing the context menu button. Activation has a 5 second cooldown.
+(t)thu jan 02 25
+(u)LeahTheTech
+(+)Turbine stator load is now measured in kJ rather than Joules (number is 1000 times smaller).
 (t)wed jan 01 25
 (u)FlameArrow57
 (p)21880
