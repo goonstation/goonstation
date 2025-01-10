@@ -89,7 +89,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if(!target || target == src) return
 		var/newtemp = copy_temperature ? src.total_temperature : T20C
 		for(var/reagent_id in reagent_list)
-			if (exceptions && reagent_id in exceptions)
+			if (exceptions && (reagent_id in exceptions))
 				continue
 			var/datum/reagent/current_reagent = reagent_list[reagent_id]
 			if(current_reagent)
@@ -319,7 +319,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		if(!index)
 			for(var/reagent_id in reagent_list)
-				if (exceptions && reagent_id in exceptions)
+				if (exceptions && (reagent_id in exceptions))
 					continue
 
 				var/datum/reagent/current_reagent = reagent_list[reagent_id]
@@ -696,7 +696,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 							H.bodytemperature -= clamp((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5, 500)
 
 				for(var/current_id in reagent_list)
-					if (exceptions && current_id in exceptions)
+					if (exceptions && (current_id in exceptions))
 						continue
 					var/datum/reagent/current_reagent = reagent_list[current_id]
 					var/turf_reaction_success = 0
@@ -756,7 +756,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				// I didn't come across problems in local testing, I've commented them out as an experiment. If you've come
 				// here while investigating INGEST-related bugs, feel free to revert my change (Convair880).
 				for(var/current_id in reagent_list)
-					if (exceptions && current_id in exceptions)
+					if (exceptions && (current_id in exceptions))
 						continue
 					var/datum/reagent/current_reagent = reagent_list[current_id]
 					var/turf_reaction_success = 0
