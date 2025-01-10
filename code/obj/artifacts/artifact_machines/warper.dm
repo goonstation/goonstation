@@ -14,6 +14,7 @@
 	activ_text = "suddenly starts warping space around it!"
 	deact_text = "deactivates, and lays silent."
 	react_xray = list(15,75,90,3,"ANOMALOUS")
+	shard_reward = ARTIFACT_SHARD_SPACETIME
 	var/max_teleports
 	var/teleports = 0 //how many times has the artifact moved
 	var/grab_range //at what range can we "grab" living people

@@ -20,6 +20,7 @@
 	deact_text = "locks back up."
 	react_xray = list(2, 20, 55, 7, "HOLLOW")
 	examine_hint = "It is covered in very conspicuous markings."
+	shard_reward = ARTIFACT_SHARD_SPACETIME
 	// general vars
 	var/chosen_curse
 	var/list/active_cursees = list()

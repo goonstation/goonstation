@@ -122,6 +122,7 @@
 		/datum/artifact_trigger/cold)
 	type_size = ARTIFACT_SIZE_MEDIUM
 	react_xray = list(5, 91, 97, 11, "HOLLOW")
+	shard_reward = ARTIFACT_SHARD_SPACETIME
 
 	effect_activate(obj/O)
 		if (..())

@@ -41,6 +41,7 @@
 	var/gravity_type = 0 // push or pull?
 	examine_hint = "It is covered in very conspicuous markings."
 	var/obj/effect/grav_pulse/lense
+	shard_reward = ARTIFACT_SHARD_SPACETIME
 
 	New()
 		..()

@@ -14,6 +14,7 @@
 	activ_text = "begins glowing with an enticing light!"
 	deact_text = "falls dark and quiet."
 	react_xray = list(666,666,666,11,"NONE")
+	shard_reward = ARTIFACT_SHARD_POWER
 	var/list/wish_granted = list()
 	var/evil = 0
 

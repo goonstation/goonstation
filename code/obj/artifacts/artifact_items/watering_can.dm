@@ -172,6 +172,7 @@
 	max_triggers = 0
 	no_activation = TRUE
 	react_xray = list(2,90,15,11,"HOLLOW")
+	shard_reward = ARTIFACT_SHARD_SPACETIME
 
 
 	New()

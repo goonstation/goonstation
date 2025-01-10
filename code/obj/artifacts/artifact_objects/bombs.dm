@@ -29,6 +29,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	var/lightColor = list(255,255,255,255)
 	var/recharge_delay = 0
 	examine_hint = "It is covered in very conspicuous markings."
+	shard_reward = ARTIFACT_SHARD_POWER
 
 	New()
 		..()

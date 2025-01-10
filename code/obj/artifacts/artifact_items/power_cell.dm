@@ -87,6 +87,7 @@
 	react_elec = list("equal",0,10)
 	react_xray = list(10,80,95,11,"SEGMENTED")
 	examine_hint = "It kinda looks like it's supposed to be inserted into something."
+	shard_reward = ARTIFACT_SHARD_POWER
 
 	New()
 		..()

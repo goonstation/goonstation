@@ -14,6 +14,7 @@
 	activ_text = "seems like it has something inside of it..."
 	deact_text = "locks back up."
 	react_xray = list(7,50,40,11,"HOLLOW")
+	shard_reward = ARTIFACT_SHARD_SPACETIME
 	var/generated_loot = FALSE
 
 	post_setup()

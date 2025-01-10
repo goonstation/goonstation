@@ -13,6 +13,7 @@
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activated = 0
 	react_xray = list(15,75,90,3,"ANOMALOUS")
+	shard_reward = ARTIFACT_SHARD_SPACETIME
 	var/recall_delay = 10
 
 	New()

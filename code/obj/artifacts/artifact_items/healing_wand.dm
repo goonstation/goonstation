@@ -28,6 +28,7 @@
 	var/canhealself = FALSE
 	var/sound/healsound = null
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
+	shard_reward = ARTIFACT_SHARD_POWER
 
 	New()
 		..()
