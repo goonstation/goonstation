@@ -737,9 +737,9 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Croft"
 				id = "croft"
 				gender = FEMININE
-			doublebraids
+			indian
 				name = "Double Braids"
-				id = "doublebraids"
+				id = "indian"
 				gender = FEMININE
 			doublebun
 				name = "Double Buns"
