@@ -1778,7 +1778,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	proc/pipebomb_filling(var/atom/to_combine_atom, var/mob/user)
 		//There is less room for explosive material when you use item mods
 		var/obj/item/reagent_containers/filling_glass = to_combine_atom
-		var/max_allowed = 20 - src.item_mods.len * 5
+		var/max_allowed = 20
 		if(filling_glass.reagents.total_volume < max_allowed)
 			boutput(user, SPAN_NOTICE("There is not enough chemicals in [filling_glass] to fill the frame."))
 		else
@@ -1798,7 +1798,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				src.strength = 0
 			else
 				src.strength *= avg_volatility
-				src.strength -= item_mods.len * 0.5 //weakened by having mods
 
 			src.icon_state = "Pipe_Filled"
 			src.state = 3
