@@ -70,7 +70,7 @@
 		..()
 
 	//ALTERNATIVE to force ingest in life
-	proc/just_do_the_apply_thing(var/mob/M, var/mult = 1, var/hasmask = 0, var/exception = null)
+	proc/just_do_the_apply_thing(var/mob/M, var/mult = 1, var/hasmask = 0, var/list/exceptions = null)
 		if (!M) return
 		if (check_target_immunity(M, TRUE))
 			return
@@ -88,13 +88,13 @@
 			var/turftemp = T.temperature
 			plist["override_can_burn"] = (src.group.reagents.total_temperature + turftemp + turftemp) / 3
 
-		src.group.reagents.reaction(M, TOUCH, react_volume/2, 0, paramslist = plist, exception = exception)
+		src.group.reagents.reaction(M, TOUCH, react_volume/2, 0, paramslist = plist, exceptions = exceptions)
 
 		if (!hasmask)
-			src.group.reagents.reaction(M, INGEST, react_volume/2,1,src.group.members.len, paramslist = plist, exception = exception)
-			src.group.reagents.trans_to(M, react_volume, exception = exception)
+			src.group.reagents.reaction(M, INGEST, react_volume/2,1,src.group.members.len, paramslist = plist, exceptions = exceptions)
+			src.group.reagents.trans_to(M, react_volume, exceptions = exceptions)
 
-	force_mob_to_ingest(var/mob/M, var/mult = 1, var/exception = null)//called when mob is drowning/standing in the smoke
+	force_mob_to_ingest(var/mob/M, var/mult = 1, var/list/exceptions = null)//called when mob is drowning/standing in the smoke
 		if (!M) return
 		if (check_target_immunity(M, TRUE))
 			return
@@ -113,9 +113,9 @@
 			var/turftemp = T.temperature
 			plist["override_can_burn"] = (src.group.reagents.total_temperature + turftemp + turftemp) / 3
 
-		src.group.reagents.reaction(M, TOUCH, react_volume/2, 0, paramslist = plist, exception = exception)
-		src.group.reagents.reaction(M, INGEST, react_volume/2,1,src.group.members.len, paramslist = plist, exception = exception)
-		src.group.reagents.trans_to(M, react_volume, exception = exception)
+		src.group.reagents.reaction(M, TOUCH, react_volume/2, 0, paramslist = plist, exceptions = exceptions)
+		src.group.reagents.reaction(M, INGEST, react_volume/2,1,src.group.members.len, paramslist = plist, exceptions = exceptions)
+		src.group.reagents.trans_to(M, react_volume, exceptions = exceptions)
 
 	//incorporate touch_modifier?
 	Crossed(atom/movable/A)
@@ -336,8 +336,8 @@
 	if (entered_group)
 		if (!src.clothing_protects_from_chems())
 			var/has_mask = issmokeimmune(src)
-			var/exception = ismiasmaimmune(src) ? "miasma" : null
-			F.just_do_the_apply_thing(src, hasmask = has_mask, exception = exception)
+			var/exception = ismiasmaimmune(src) ? list("miasma") : null
+			F.just_do_the_apply_thing(src, hasmask = has_mask, exceptions = exception)
 
 /mob/living/silicon/EnteredAirborneFluid(obj/fluid/airborne/F as obj, atom/oldloc)
 	.=0

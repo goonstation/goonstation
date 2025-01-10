@@ -85,11 +85,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	proc/play_mix_sound(var/mix_sound)
 		playsound(my_atom, mix_sound, 80, TRUE, 3)
 
-	proc/copy_to(var/datum/reagents/target, var/multiplier = 1, var/do_not_react = 0, var/copy_temperature = 0, var/exception = null)
+	proc/copy_to(var/datum/reagents/target, var/multiplier = 1, var/do_not_react = 0, var/copy_temperature = 0, var/list/exceptions = null)
 		if(!target || target == src) return
 		var/newtemp = copy_temperature ? src.total_temperature : T20C
 		for(var/reagent_id in reagent_list)
-			if (reagent_id == exception)
+			if (exceptions && reagent_id in exceptions)
 				continue
 			var/datum/reagent/current_reagent = reagent_list[reagent_id]
 			if(current_reagent)
@@ -292,7 +292,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		return opacity_to_return
 
 	/// index = which reagent to transfer (0 = all)
-	proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/do_fluid_react=1, var/index=0, var/exception=0)
+	proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/do_fluid_react=1, var/index=0, var/exceptions=0)
 		if(amount > total_volume) amount = total_volume
 		if(amount <= 0) return
 		if(!target) return
@@ -308,18 +308,18 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			var/turf/simulated/T = target
 			return T.fluid_react(src, amount, index = index)
 
-		return trans_to_direct(target_reagents, amount, multiplier, index = index, exception = exception)
+		return trans_to_direct(target_reagents, amount, multiplier, index = index, exceptions = exceptions)
 
 	// MBC note : I added update_target_reagents and update_self_reagents vars for fluid handling. y'see, there are a ton of transfer operations involving fluids that don't need to update reagents immediately as they happen.
 	// we would rather perform all the transfers, and then batch update the reagents when necessary. Saves us from some lag, and avoids some *buggy shit*!
-	proc/trans_to_direct(var/datum/reagents/target_reagents, var/amount=1, var/multiplier=1, var/update_target_reagents = 1, var/update_self_reagents = 1, var/index = 0, var/exception = null)
+	proc/trans_to_direct(var/datum/reagents/target_reagents, var/amount=1, var/multiplier=1, var/update_target_reagents = 1, var/update_self_reagents = 1, var/index = 0, var/list/exceptions = null)
 		if (!target_reagents || !total_volume) //Wire & ZeWaka: Fix for Division by zero
 			return
 		var/transfer_ratio = amount/total_volume
 
 		if(!index)
 			for(var/reagent_id in reagent_list)
-				if (reagent_id == exception)
+				if (exceptions && reagent_id in exceptions)
 					continue
 
 				var/datum/reagent/current_reagent = reagent_list[reagent_id]
@@ -340,7 +340,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		else //Only transfer one reagent
 			var/CI = 1
 			for(var/reagent_id in reagent_list)
-				if (reagent_id == exception)
+				if (reagent_id in exceptions)
 					continue
 				if ( CI++ == index )
 					var/datum/reagent/current_reagent = reagent_list[reagent_id]
@@ -642,7 +642,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			R.grenade_effects(grenade, A)
 
 	///	paramslist thingy can override the can_burn oh god im sorry.	paramslist only used for mobs for now, feeel free to paste in for turfs objs
-	proc/reaction(var/atom/A, var/method=TOUCH, var/react_volume, var/can_spawn_fluid = 1, var/minimum_react = 0.01, var/can_burn = 1, var/list/paramslist = 0, var/exception = null)
+	proc/reaction(var/atom/A, var/method=TOUCH, var/react_volume, var/can_spawn_fluid = 1, var/minimum_react = 0.01, var/can_burn = 1, var/list/paramslist = 0, var/list/exceptions = null)
 		if (src.total_volume <= 0)
 			return
 		if (isintangible(A))
@@ -696,7 +696,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 							H.bodytemperature -= clamp((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5, 500)
 
 				for(var/current_id in reagent_list)
-					if (current_id == exception)
+					if (exceptions && current_id in exceptions)
 						continue
 					var/datum/reagent/current_reagent = reagent_list[current_id]
 					var/turf_reaction_success = 0
@@ -756,7 +756,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				// I didn't come across problems in local testing, I've commented them out as an experiment. If you've come
 				// here while investigating INGEST-related bugs, feel free to revert my change (Convair880).
 				for(var/current_id in reagent_list)
-					if (current_id == exception)
+					if (exceptions && current_id in exceptions)
 						continue
 					var/datum/reagent/current_reagent = reagent_list[current_id]
 					var/turf_reaction_success = 0

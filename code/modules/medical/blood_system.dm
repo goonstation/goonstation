@@ -19,6 +19,7 @@
 #define BLOOD_DEBUG(x) if (haine_blood_debug) message_coders("[SPAN_ALERT("<b>BLOOD DEBUG:</b>")] " + x)
 
 var/global/haine_blood_debug = 0
+var/list/bleed_exceptions = list("bloodc","proconvertin","heparin")
 
 /client/proc/haine_blood_debug()
 	set desc = "Toggle blood debug messages."
@@ -446,7 +447,7 @@ this is already used where it needs to be used, you can probably ignore it.
 
 		if (B.reagents && M.reagents?.total_volume)
 			//BLOOD_DEBUG("[H] transfers reagents to blood decal [log_reagents(H)]")
-			M.reagents.trans_to(B, (reagents_to_transfer))
+			M.reagents.trans_to(B, (reagents_to_transfer),exceptions=bleed_exceptions)
 		B.add_volume(blood_color_to_pass, M.blood_id, blood_to_transfer, vis_amount, blood_reagent_data = M.get_blood_bioholder())
 		//BLOOD_DEBUG("[H] adds volume to existing blood decal")
 
