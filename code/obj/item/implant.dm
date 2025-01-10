@@ -1347,26 +1347,28 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	bullet_357
 		name = ".357 round"
 		desc = "A powerful revolver bullet, likely of criminal origin."
-		removal_heal = 10
+		removal_heal = 15
 
 	bullet_357AP
 		name = ".357 AP round"
 		desc = "A highly illegal armor-piercing variant of the common .357 round."
-		removal_heal = 10
+		removal_heal = 15
 
 	bullet_38
 		name = ".38 round"
 		desc = "An outdated police-issue bullet. Some anachronistic detectives still like to use these, for style."
+		removal_heal = 10
 
 	bullet_45
 		name = ".45 round"
 		icon_state = "bulletround"
 		desc = "An outdated army-issue bullet. Mainly used by war reenactors and space cowboys."
+		removal_heal = 15
 
 	bullet_38AP
 		name = ".38 AP round"
 		desc = "A more powerful armor-piercing .38 round. Huh. Aren't these illegal?"
-		removal_heal = 10
+		removal_heal = 15
 
 	bullet_9mm
 		name = "9mm round"
@@ -1375,7 +1377,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	bullet_455
 		name = ".455 round"
 		desc = "A powerful, old-timey revolver bullet, likely of criminal origin."
-		removal_heal = 10
+		removal_heal = 15
 	ninemmplastic
 		name = "9mm Plastic round"
 		icon_state = "bulletplastic"
@@ -1390,7 +1392,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		name = "Rifle Round" // this is used by basically every rifle in the game, ignore the "308" path
 		icon_state = "bulletbig"
 		desc = "A large bullet from a rifle cartridge."
-		removal_heal = 15
+		removal_heal = 20
 
 	bullet_22
 		name = ".22 round"
@@ -1400,6 +1402,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		name = ".22 hollow point round"
 		icon_state = "bulletexpanded"
 		desc = "A small calibre hollow point bullet for use against unarmored targets. Hang on, aren't these a war crime?"
+		removal_heal = 10
 
 	bullet_41
 		name = ".41 round"
@@ -1411,7 +1414,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		name = "buckshot"
 		icon_state = "buckshot"
 		desc = "A collection of buckshot rounds, a very commonly used load for shotguns."
-		removal_heal = 15
+		removal_heal = 20
 
 		New()
 			..()
