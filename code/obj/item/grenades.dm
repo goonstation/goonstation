@@ -1952,7 +1952,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 				if (S && (S.material.hasProperty("hard") || istype(S, /obj/item/raw_material/shard/plasmacrystal)))
 					src.bleed += 1
 			if (istype(checked_item, /obj/item/raw_material/telecrystal))
-				src.tele += 1
+				src.tele += 2
 			if (istype(checked_item, /obj/item/instrument))
 				var/obj/item/instrument/R = checked_item
 				src.sound_effect = islist(R.sounds_instrument) ? pick(R.sounds_instrument) : R.sounds_instrument
@@ -2082,9 +2082,9 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 
 			//do mod effects : post-explosion
 			if (tele)
-				for (var/mob/M in view(2+tele,src.loc))
+				for (var/mob/M in view(4,src.loc))
 					if(isturf(M.loc) && !isrestrictedz(M.loc.z))
-						var/turf/warp_to = get_turf(pick(orange(3 + tele, M.loc)))
+						var/turf/warp_to = get_turf(pick(orange(3 * tele, M.loc)))
 						if (isturf(warp_to))
 							playsound(M.loc, "warp", 50, 1)
 							M.visible_message(SPAN_ALERT("[M] is warped away!"))

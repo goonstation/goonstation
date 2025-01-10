@@ -1,6 +1,7 @@
 (t)fri jan 10 25
 (u)LeahTheTech
 (*)Adding items to pipebombs no longer reduces their reagent capacity or explosive power. Let your explosive creativity free!
+(+)Telecrystals in pipebombs will now teleport victims further away.
 (t)thu jan 09 25
 (u)Temthrush & yelloworlemons
 (p)21939
