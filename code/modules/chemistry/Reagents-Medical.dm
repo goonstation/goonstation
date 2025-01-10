@@ -931,6 +931,7 @@ datum
 			transparency = 80
 			depletion_rate = 0.2
 			overdose = 20
+			threshold = THRESHOLD_INIT
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
