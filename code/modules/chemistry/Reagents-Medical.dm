@@ -448,7 +448,7 @@ datum
 					. = 0
 					if(issilicon(M)) //Metal flesh isn't repaired by synthflesh
 						return
-					M.HealDamage("All", healing_effectiveness * 1.5, healing_effectiveness * 1.5)
+					M.HealDamage("All", healing_effectiveness*volume_passed * 1.5, healing_effectiveness*volume_passed * 1.5)
 					if (isliving(M))
 						var/mob/living/H = M
 						if (H.disfigured)
@@ -1131,11 +1131,11 @@ datum
 				if (health_remaining < min_effectiveness_at)
 					healing_effectiveness = 0
 				else
-					healing_effectiveness = lerp(min_effectiveness,1,(health_remaining - min_effectiveness_at) / (max_effectiveness_at - min_effectiveness_at))
+					healing_effectiveness = clamp(lerp(min_effectiveness,1,(health_remaining - min_effectiveness_at) / (max_effectiveness_at - min_effectiveness_at)),0,1)
 
 				if(method == TOUCH && healing_effectiveness > 0)
 					. = 0
-					M.HealDamage("All", 0, volume_passed)
+					M.HealDamage("All", 0, healing_effectiveness*volume_passed)
 
 					var/silent = 0
 					if (length(paramslist))
@@ -1147,6 +1147,7 @@ datum
 
 					M.UpdateDamageIcon()
 				else if (method == TOUCH)
+					. = 0
 					var/silent = 0
 					if (length(paramslist))
 						if ("silent" in paramslist)
@@ -1416,7 +1417,7 @@ datum
 
 				if(method == TOUCH && healing_effectiveness > 0)
 					. = 0
-					M.HealDamage("All", healing_effectiveness, 0)
+					M.HealDamage("All", healing_effectiveness*volume_passed, 0)
 					// M.HealBleeding(volume_passed) // At least implement your stuff properly first, thanks. Styptic also shouldn't be as good as synthflesh for healing bleeding.
 
 					/*for(var/A in M.organs)
@@ -1434,6 +1435,7 @@ datum
 
 					M.UpdateDamageIcon()
 				else if (method == TOUCH)
+					. = 0
 					var/silent = 0
 					if (length(paramslist))
 						if ("silent" in paramslist)
