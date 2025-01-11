@@ -1605,6 +1605,7 @@
 	icon_state = "comp_disp"
 	var/exact_match = FALSE
 	var/single_output = FALSE
+	var/split_signals = TRUE
 
 	//This stores all the relevant filters per output
 	//Notably, this list doesn't remove entries when an output is removed.
@@ -1648,12 +1649,21 @@
 		tooltip_rebuild = 1
 		return 1
 
-	proc/dispatch(var/datum/mechanicsMessage/input)
+	proc/dispatch(var/datum/mechanicsMessage/taggedMessage/input)
 		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
-		var/sent = SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
+		var/sent = null
+		if(split_signals)
+			var/list/converted = params2list(input.signal)
+			for(var/signal in converted)
+				var/datum/mechanicsMessage/taggedMessage/outgoing = new/datum/mechanicsMessage/taggedMessage
+				outgoing.signal = converted[signal]
+				outgoing.tags += signal
+				sent = SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,outgoing)
+		else
+			sent = SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
+
 		if(sent) animate_flash_color_fill(src,"#00FF00",2, 2)
-		return
 
 	//This will get called from the component-datum when a device is being linked
 	proc/addFilter(var/comsig_target, atom/receiver, mob/user)
@@ -1674,11 +1684,15 @@
 		src.outgoing_filters.Remove(receiver)
 
 	//Called when mechanics_holder tries to fire out signals
-	proc/runFilter(var/comsig_target, atom/receiver, var/signal)
+	proc/runFilter(var/comsig_target, atom/receiver, var/signal, var/datum/mechanicsMessage/taggedMessage/fullsignal)
 		if(!(receiver in src.outgoing_filters))
 			return src.single_output? _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER : _MECHCOMP_VALIDATE_RESPONSE_GOOD //Not filtering this output, let anything pass
 		for (var/filter in src.outgoing_filters[receiver])
-			var/text_found = findtext(signal, filter)
+			var/text_found = null
+			if(split_signals && fullsignal.tags[1] == filter)
+				text_found = TRUE
+			else
+				text_found = findtext(signal, filter)
 			if (exact_match)
 				text_found = text_found && (length(signal) == length(filter))
 			if (text_found)
