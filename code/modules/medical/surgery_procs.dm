@@ -547,7 +547,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				// offset approximately around chest area, based on cutting over operating table
 				I.pixel_x = rand(-2, 5)
 				I.pixel_y = rand(-6, 1)
-
 				return TRUE
 
 		if (patient.organHolder.chest)
