@@ -1605,7 +1605,7 @@
 	icon_state = "comp_disp"
 	var/exact_match = FALSE
 	var/single_output = FALSE
-	var/split_signals = TRUE
+	var/split_signals = FALSE
 
 	//This stores all the relevant filters per output
 	//Notably, this list doesn't remove entries when an output is removed.
@@ -1622,6 +1622,7 @@
 		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING, PROC_REF(removeFilter))
 		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_VALIDATE, PROC_REF(runFilter))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"dispatch", PROC_REF(dispatch))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle splitting signals",PROC_REF(toggleSplitSignals))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle exact matching",PROC_REF(toggleExactMatching))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle single output mode",PROC_REF(toggleSingleOutput))
 
@@ -1640,6 +1641,12 @@
 	proc/toggleExactMatching(obj/item/W as obj, mob/user as mob)
 		exact_match = !exact_match
 		boutput(user, "Exact match mode now [exact_match ? "on" : "off"]")
+		tooltip_rebuild = 1
+		return 1
+
+	proc/toggleSplitSignals(obj/item/W as obj, mob/user as mob)
+		split_signals = !split_signals
+		boutput(user, "Signal splitting is now [split_signals ? "on. Exact matching does not apply in this mode." : "off"]")
 		tooltip_rebuild = 1
 		return 1
 
@@ -1674,7 +1681,10 @@
 			if (!src.outgoing_filters[receiver]) src.outgoing_filters[receiver] = list()
 			src.outgoing_filters.Add(receiver)
 			src.outgoing_filters[receiver] = splittext(filter, ",")
-			boutput(user, SPAN_SUCCESS("Only passing messages that [exact_match ? "match" : "contain"] [filter] to the [receiver.name]"))
+			if(split_signals)
+				boutput(user, SPAN_SUCCESS("Splitting signals that match [filter] to the [receiver.name]"))
+			else
+				boutput(user, SPAN_SUCCESS("Only passing messages that [exact_match ? "match" : "contain"] [filter] to the [receiver.name]"))
 		else
 			boutput(user, SPAN_SUCCESS("Passing all messages to the [receiver.name]"))
 		return
