@@ -1,0 +1,9307 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aj" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line-broken1"
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/blue,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"am" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	color = "aqua";
+	name = "reservoir";
+	dir = 4
+	},
+/area/space)
+"as" = (
+/obj/machinery/conveyor/SN,
+/obj/item/reagent_containers/food/drinks/coolerbottle,
+/turf/simulated/floor/engine,
+/area/space)
+"at" = (
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 8
+	},
+/area/space)
+"av" = (
+/obj/railing/cyan,
+/obj/table/scrap/auto,
+/obj/item/decoration/ashtray{
+	desc = "The rarely visited graveyard for cigarettes. This one has been epoxied to the table so it doesn't float away.";
+	anchored = 1
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
+"aA" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/unsimulated/floor/longtile{
+	color = "grey"
+	},
+/area/space)
+"aC" = (
+/obj/stool/chair/office/syndie,
+/obj/item/device/radio/headset/pod_wars/syndicate/comtac,
+/obj/machinery/light/small/floor/cool/very,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"aD" = (
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 1
+	},
+/area/space)
+"aO" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 12
+	},
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 9
+	},
+/area/space)
+"aP" = (
+/obj/stool/bench/blue/auto,
+/obj/admin_plaque{
+	name = "DDT-04 Beebe";
+	desc = "Decirprevo Distillation Tanker 04. Laid down at Ceres Orbital Gantrywerks in 2045.";
+	pixel_y = 25
+	},
+/obj/machinery/light/emergency/exitsign{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/airless/twotone/blue,
+/area/space)
+"aS" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line-broken1"
+	},
+/turf/simulated/floor/airless/marble/border_bw,
+/area/space)
+"aW" = (
+/obj/storage/crate/robotics_supplies,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"ba" = (
+/obj/lattice/directional_icons{
+	dir = 9
+	},
+/turf/space,
+/area/space)
+"bd" = (
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/machinery/space_heater,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"be" = (
+/obj/railing/cyan{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
+"bh" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "M9-0"
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
+"bi" = (
+/obj/table/sleek/auto,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/item/baton/cane,
+/turf/simulated/floor/airless/twotone/red,
+/area/space)
+"bk" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
+	dir = 1
+	},
+/turf/unsimulated/floor/redwhite{
+	dir = 1
+	},
+/area/space)
+"bl" = (
+/obj/table/auto,
+/turf/unsimulated/floor/wood/eight,
+/area/space)
+"bm" = (
+/obj/machinery/door/airlock/gannets/glass/morgue/alt{
+	name = "gangway airlock";
+	dir = 8
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"bw" = (
+/obj/table/wood/round/champagne,
+/obj/item/decoration/incenseholder{
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/pool/blue,
+/area/space)
+"bx" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "M3-0"
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
+"bD" = (
+/obj/machinery/vending/kitchen,
+/turf/simulated/floor/black,
+/area/space)
+"bF" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-R"
+	},
+/obj/mapping_helper/wingrille_spawn/bulletproof,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"bH" = (
+/turf/simulated/floor/circuit/off,
+/area/space)
+"bL" = (
+/turf/simulated/floor/neutral/side,
+/area/space)
+"bP" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/machinery/weapon_stand/shotgun_rack,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"bX" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 5
+	},
+/area/space)
+"bZ" = (
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R0"
+	},
+/turf/simulated/floor/circuit/off,
+/area/space)
+"cb" = (
+/obj/fakeobject/sealedsleeper,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"ch" = (
+/turf/unsimulated/wall/setpieces/leadwindow/white/full{
+	desc = "A hardened porthole.";
+	name = "porthole";
+	color = "aqua";
+	dir = 4
+	},
+/area/space)
+"ci" = (
+/turf/simulated/floor/glassblock/transparent/large/grey,
+/area/space)
+"ct" = (
+/obj/table/reinforced/industrial/auto,
+/turf/simulated/floor/plating/jen,
+/area/space)
+"cA" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 1;
+	name = "melt chamber"
+	},
+/area/space)
+"cD" = (
+/obj/table/sleek/auto,
+/obj/item/storage/pouch/tranq_pistol_dart,
+/obj/item/storage/pouch/tranq_pistol_dart,
+/obj/item/gun/kinetic/tranq_pistol,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"cI" = (
+/obj/table/auto,
+/obj/machinery/defib_mount,
+/turf/simulated/floor/sanitary/white,
+/area/space)
+"cJ" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/engine/glow,
+/area/space)
+"cN" = (
+/obj/pool/perspective{
+	dir = 4;
+	tag = "icon-pool (EAST)"
+	},
+/turf/unsimulated/floor/pool/bluewhite{
+	dir = 8
+	},
+/area/space)
+"cZ" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/table/reinforced/chemistry/auto/firstaid,
+/obj/item/reagent_containers/emergency_injector/high_capacity/atropine,
+/obj/item/reagent_containers/emergency_injector/high_capacity/atropine,
+/obj/item/reagent_containers/emergency_injector/high_capacity/atropine,
+/obj/item/reagent_containers/emergency_injector/high_capacity/atropine,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"da" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"db" = (
+/turf/simulated/floor/stairs/medical/wide{
+	dir = 8
+	},
+/area/space)
+"di" = (
+/obj/table/reinforced/auto,
+/obj/item/bell/kitchen,
+/turf/unsimulated/floor/specialroom/cafeteria,
+/area/space)
+"dq" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2{
+	color = "aqua";
+	name = "reservoir";
+	dir = 6
+	},
+/area/space)
+"dt" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2{
+	color = "aqua";
+	name = "reservoir";
+	dir = 10
+	},
+/area/space)
+"dv" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "M3-0"
+	},
+/turf/unsimulated/floor/airless/plating/catwalk,
+/area/space)
+"dw" = (
+/mob/living/critter/aquatic/shark,
+/obj/effects/lightshaft/blue,
+/turf/space/fluid/cenote{
+	name = "reservoir"
+	},
+/area/space)
+"dE" = (
+/obj/storage/closet/dresser/random{
+	pixel_y = 12
+	},
+/turf/unsimulated/floor/carpet/office/other,
+/area/space)
+"dK" = (
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R5"
+	},
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R3"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"dR" = (
+/obj/fakeobject/safehouse/biomatter_tank{
+	name = "bioreactor";
+	desc = "It seems to be full of toxic algae. Gross!"
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"dT" = (
+/obj/submachine/chef_sink/chem_sink{
+	desc = "A water-filled unit intended for hand-washing purposes.";
+	dir = 4;
+	pixel_x = -5
+	},
+/turf/simulated/floor/sanitary,
+/area/space)
+"dX" = (
+/obj/stool/chair/comfy/ergonomic,
+/turf/unsimulated/floor/carpet/office/other,
+/area/space)
+"eg" = (
+/obj/storage/crate/medical{
+	name = "Atropine"
+	},
+/obj/item/reagent_containers/emergency_injector/atropine,
+/obj/item/reagent_containers/emergency_injector/atropine,
+/obj/item/reagent_containers/emergency_injector/atropine,
+/obj/item/reagent_containers/emergency_injector/atropine,
+/obj/machinery/light,
+/turf/unsimulated/floor/redwhite{
+	dir = 1
+	},
+/area/space)
+"er" = (
+/obj/submachine/poster_creator{
+	dir = 8
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"es" = (
+/obj/mesh/grille/steel{
+	icon_state = "grille3-0"
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"ev" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/light/small/floor/cool/very,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"ey" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/sanitary/white,
+/area/space)
+"eD" = (
+/obj/machinery/light/small,
+/turf/unsimulated/floor/specialroom/cafeteria,
+/area/space)
+"eG" = (
+/obj/machinery/vending/cards,
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 1
+	},
+/area/space)
+"eH" = (
+/obj/forcefield/energyshield/perma,
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/airless/escape{
+	dir = 4
+	},
+/area/space)
+"eK" = (
+/obj/disposalpipe/segment/morgue,
+/turf/unsimulated/wall/setpieces/leadwall/white_2{
+	color = "aqua";
+	name = "reservoir"
+	},
+/area/space)
+"eL" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"eR" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor/grey/side{
+	dir = 1
+	},
+/area/space)
+"eS" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line-broken1"
+	},
+/obj/stool/chair/comfy/sleek{
+	dir = 1
+	},
+/turf/simulated/floor/airless/marble/border_bw,
+/area/space)
+"fa" = (
+/obj/machinery/door/airlock/gannets/glass/morgue/alt{
+	name = "gangway airlock";
+	dir = 4
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"fh" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"fj" = (
+/obj/machinery/disposal/morgue,
+/obj/disposalpipe/trunk/morgue{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/redwhite{
+	dir = 8
+	},
+/area/space)
+"fr" = (
+/turf/simulated/floor/stairs/medical/wide,
+/area/space)
+"fy" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor/black,
+/area/space)
+"fL" = (
+/obj/forcefield/energyshield/perma,
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/airless/escape{
+	dir = 8
+	},
+/area/space)
+"fV" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 4;
+	name = "engineer's seat"
+	},
+/turf/simulated/floor/circuit/white,
+/area/space)
+"gd" = (
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"ge" = (
+/obj/disposalpipe/segment/mineral{
+	dir = 8;
+	name = "ice processing pipe"
+	},
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/industrial,
+/area/space)
+"gf" = (
+/obj/disposalpipe/segment/mineral{
+	dir = 8;
+	name = "ice processing pipe"
+	},
+/obj/lattice/directional_icons{
+	dir = 4
+	},
+/turf/space,
+/area/space)
+"gh" = (
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 5
+	},
+/area/space)
+"gi" = (
+/obj/machinery/recharge_station/syndicate,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"gx" = (
+/obj/railing/cyan,
+/obj/disposalpipe/segment/morgue,
+/turf/simulated/floor/airless/plating,
+/area/space)
+"gy" = (
+/obj/fitness/weightlifter,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"gH" = (
+/turf/simulated/floor/stairs/dark{
+	dir = 4
+	},
+/area/space)
+"gK" = (
+/obj/storage/crate/medical/morgue,
+/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"gO" = (
+/obj/ladder/cruiser/syndicate{
+	id = "cruiser_aqua_barracks";
+	name = "barracks"
+	},
+/obj/machinery/light/emergency/exitsign{
+	desc = "There's a crew ladder here.";
+	name = "illuminated ladder shaft";
+	dir = 4;
+	pixel_y = 12;
+	pixel_x = 10
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/space)
+"gS" = (
+/obj/machinery/fluid_canister,
+/obj/machinery/conveyor/NS,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"gT" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1;
+	tag = "icon-sink (NORTH)"
+	},
+/turf/unsimulated/floor/redwhite{
+	dir = 1
+	},
+/area/space)
+"gV" = (
+/obj/stool/bench/blue/auto,
+/turf/simulated/floor/airless/twotone/blue,
+/area/space)
+"gX" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 9
+	},
+/turf/simulated/floor/sanitary/white,
+/area/space)
+"hd" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 12
+	},
+/turf/unsimulated/floor/carpet/office/other,
+/area/space)
+"hk" = (
+/obj/stool/chair/dining/scrap{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
+"hn" = (
+/obj/table/reinforced/chemistry/auto/beakers,
+/obj/fakeobject/microscope{
+	pixel_y = 2
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"hu" = (
+/obj/machinery/floorflusher/minibrig3{
+	name = "\improper Floor Flusher (Shark Tank)";
+	id = "aqua_shark"
+	},
+/obj/disposalpipe/trunk/regular/south,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"hw" = (
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/scalpel,
+/obj/item/staple_gun{
+	pixel_x = 5
+	},
+/obj/item/weldingtool,
+/obj/item/hemostat,
+/obj/item/surgical_spoon,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "bot2"
+	},
+/obj/item/suture,
+/obj/item/scissors/surgical_scissors,
+/turf/simulated/floor/sanitary/white,
+/area/space)
+"hx" = (
+/turf/simulated/floor/sanitary/white,
+/area/space)
+"hy" = (
+/obj/machinery/power/solar/owl_cheat,
+/turf/unsimulated/floor/airless/solar,
+/area/space)
+"hz" = (
+/obj/decoration/vent/vent3,
+/turf/simulated/wall/auto/jen/cyan,
+/area/space)
+"hE" = (
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R3"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"hL" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line-broken1"
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"hP" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 6
+	},
+/turf/simulated/floor/sanitary/white,
+/area/space)
+"hU" = (
+/obj/table/auto,
+/obj/item/bandage,
+/obj/item/bandage,
+/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/clothing/gloves/latex/random,
+/obj/item/implanter,
+/turf/unsimulated/floor/redwhite{
+	dir = 4
+	},
+/area/space)
+"hZ" = (
+/obj/machinery/door/airlock/gannets/command{
+	dir = 1;
+	name = "officers bunkroom"
+	},
+/turf/unsimulated/floor/carpet/office,
+/area/space)
+"ia" = (
+/obj/table/auto,
+/obj/item/storage/belt/medical,
+/obj/item/reagent_containers/glass/beaker/large/brute,
+/obj/item/reagent_containers/glass/beaker/large/burn,
+/obj/item/reagent_containers/glass/beaker/large/antitox,
+/obj/item/reagent_containers/glass/beaker/large/epinephrine,
+/obj/item/clothing/gloves/latex,
+/obj/item/storage/pill_bottle/mutadone,
+/turf/unsimulated/floor/redwhite{
+	dir = 4
+	},
+/area/space)
+"ig" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/machinery/computer/arcade,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"ij" = (
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R-139"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"iH" = (
+/obj/railing/cyan{
+	dir = 4
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"iO" = (
+/obj/cabinet/medical,
+/turf/unsimulated/floor/redwhite,
+/area/space)
+"iP" = (
+/obj/machinery/floorflusher/minibrig2{
+	name = "\improper Floor Flusher (Mortuary Hold)";
+	id = "aqua_mortuary"
+	},
+/obj/disposalpipe/trunk/regular/south,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"iQ" = (
+/obj/machinery/traymachine/morgue,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"iX" = (
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"jd" = (
+/turf/unsimulated/floor/wood/eight,
+/area/space)
+"je" = (
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R10"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"jf" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2{
+	color = "aqua";
+	name = "reservoir";
+	dir = 6
+	},
+/area/sunken{
+	name = "Distillation Chamber"
+	})
+"jh" = (
+/obj/machinery/door_control/north{
+	name = "Armory Shutters";
+	id = "aqua_armory1"
+	},
+/obj/storage/crate/classcrate{
+	name = "blasters"
+	},
+/obj/item/gun/energy/blaster_smg,
+/obj/item/gun/energy/blaster_smg,
+/obj/item/gun/energy/blaster_smg,
+/obj/item/gun/energy/blaster_smg,
+/turf/simulated/floor/circuit/off,
+/area/space)
+"jj" = (
+/obj/submachine/chef_sink{
+	dir = 4;
+	pixel_y = -2;
+	name = "utility sink";
+	desc = "A water-filled unit intended for sanitary purposes."
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"jm" = (
+/obj/machinery/door/airlock/pyro/external{
+	aiControlDisabled = 1;
+	dir = 4;
+	locked = 1;
+	secondsElectrified = -1
+	},
+/obj/forcefield/energyshield/perma{
+	dir = 4
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/plating/jen,
+/area/space)
+"jr" = (
+/obj/mesh/grille/steel{
+	icon_state = "grille3-0"
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"ju" = (
+/obj/storage/crate/syndicate_surplus/spawnable,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"jA" = (
+/obj/table/sleek/auto,
+/obj/item/storage/briefcase/instruments/blowgun/tranq,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"jD" = (
+/obj/disposalpipe/segment/horizontal,
+/turf/unsimulated/wall/setpieces/leadwall/white_2{
+	color = "aqua";
+	name = "reservoir";
+	dir = 6
+	},
+/area/space)
+"jT" = (
+/turf/space,
+/area/space)
+"jY" = (
+/obj/disposalpipe/segment/mineral{
+	dir = 8;
+	name = "ice processing pipe"
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/space)
+"jZ" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/grey/side{
+	dir = 1
+	},
+/area/space)
+"kd" = (
+/turf/unsimulated/floor/specialroom/cafeteria,
+/area/space)
+"kg" = (
+/obj/fakeobject/pipe/heat{
+	name = "bottling system"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"km" = (
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 9
+	},
+/area/space)
+"kn" = (
+/obj/submachine/chef_sink{
+	dir = 4;
+	pixel_y = -2
+	},
+/turf/simulated/floor/black,
+/area/space)
+"kA" = (
+/turf/unsimulated/floor/carpet/office/other,
+/area/space)
+"kD" = (
+/obj/effects/lightshaft/blue,
+/turf/space/fluid/cenote{
+	name = "reservoir"
+	},
+/area/sunken{
+	name = "Distillation Chamber"
+	})
+"kE" = (
+/obj/storage/secure/closet/fridge/kitchen,
+/turf/simulated/floor/black,
+/area/space)
+"kO" = (
+/obj/machinery/floorflusher/minibrig{
+	id = "aqua_prison";
+	name = "\improper Floor Flusher (Prison Hold)"
+	},
+/obj/disposalpipe/trunk/regular/north,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"kY" = (
+/obj/machinery/drainage,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"ld" = (
+/obj/fakeobject/tallsmes,
+/obj/machinery/light/emergency/exitsign{
+	desc = "There's a crew ladder here.";
+	name = "illuminated ladder shaft";
+	dir = 1;
+	pixel_y = 20
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"lg" = (
+/obj/machinery/optable,
+/turf/simulated/floor/sanitary/white,
+/area/space)
+"ln" = (
+/obj/forcefield/energyshield/perma,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/syndicate_horizontal{
+	id = "hangar_aqua"
+	},
+/turf/simulated/floor/engine,
+/area/space)
+"lC" = (
+/obj/railing/cyan{
+	dir = 8
+	},
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"lG" = (
+/obj/stool/chair/office{
+	dir = 8
+	},
+/turf/simulated/floor/airless/twotone/red,
+/area/space)
+"lJ" = (
+/obj/stool/chair/black{
+	dir = 8
+	},
+/turf/simulated/floor/industrial,
+/area/space)
+"lL" = (
+/obj/machinery/door/airlock/gannets/maintenance{
+	name = "restroom"
+	},
+/turf/simulated/floor/sanitary,
+/area/space)
+"lW" = (
+/obj/decoration/decorativeplant/plant2,
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 6
+	},
+/area/space)
+"lZ" = (
+/turf/simulated/floor/circuit/white,
+/area/space)
+"mb" = (
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/industrial,
+/area/space)
+"mc" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "M4-0"
+	},
+/turf/unsimulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
+"mf" = (
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"mh" = (
+/obj/channel{
+	required_to_pass = 210
+	},
+/obj/pool/perspective{
+	density = 0;
+	dir = 1;
+	tag = "icon-pool (NORTH)"
+	},
+/obj/pool{
+	density = 0;
+	dir = 8;
+	icon = 'icons/obj/fluid.dmi';
+	icon_state = "ladder";
+	name = "ladder"
+	},
+/turf/unsimulated/floor/pool/bluewhite,
+/area/space)
+"mm" = (
+/obj/machinery/bot/medbot/no_camera,
+/turf/unsimulated/floor/redwhite{
+	dir = 4
+	},
+/area/space)
+"mo" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/jen/red,
+/area/space)
+"mp" = (
+/obj/effects/lightshaft/blue,
+/turf/space/fluid/cenote{
+	name = "reservoir"
+	},
+/area/space)
+"ms" = (
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 10
+	},
+/area/space)
+"mu" = (
+/obj/cabinet/medicalmenders,
+/turf/unsimulated/floor/redwhite,
+/area/space)
+"mE" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-M"
+	},
+/obj/mapping_helper/wingrille_spawn/bulletproof,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"mI" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "M12-0"
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
+"mJ" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5;
+	layer = 2.13
+	},
+/turf/simulated/floor/sanitary/white,
+/area/space)
+"ng" = (
+/obj/railing/cyan,
+/obj/stool/chair/dining/scrap{
+	dir = 8
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
+"nk" = (
+/obj/fakeobject/pipe/heat{
+	name = "distillation system"
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
+"no" = (
+/obj/machinery/door/unpowered/wood{
+	name = "galley"
+	},
+/obj/decal/tile_edge/line/grey{
+	icon_state = "line-broken1"
+	},
+/turf/unsimulated/floor/specialroom/cafeteria,
+/area/space)
+"nt" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/sanitary,
+/area/space)
+"ny" = (
+/obj/storage/crate/medical{
+	name = "Medkits"
+	},
+/obj/item/storage/firstaid/regular,
+/obj/item/reagent_containers/mender/burn,
+/obj/item/reagent_containers/mender/brute,
+/turf/unsimulated/floor/redwhite{
+	dir = 8
+	},
+/area/space)
+"nz" = (
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/space)
+"nD" = (
+/turf/simulated/floor/airless/twotone/red,
+/area/space)
+"nK" = (
+/obj/machinery/door/airlock/gannets/glass/morgue/alt{
+	name = "secure sector";
+	dir = 4
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"nP" = (
+/obj/machinery/deep_fryer,
+/turf/simulated/floor/black,
+/area/space)
+"nU" = (
+/obj/machinery/door/airlock/gannets/glass/morgue/alt{
+	name = "gangway airlock"
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"nY" = (
+/obj/machinery/door/airlock/gannets/command{
+	dir = 1
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/circuit/off,
+/area/space)
+"nZ" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	color = "aqua";
+	name = "reservoir";
+	dir = 4
+	},
+/area/sunken{
+	name = "Distillation Chamber"
+	})
+"oa" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/turf/space/fluid/cenote{
+	name = "reservoir"
+	},
+/area/space)
+"ob" = (
+/obj/machinery/door/airlock/gannets/glass/morgue/alt{
+	name = "secure sector";
+	dir = 8
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"of" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/fakeobject/bigatmos/bigatmos2,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"oq" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/table/sleek/auto,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"os" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 4;
+	name = "copilot's seat"
+	},
+/turf/simulated/floor/airless/marble/border_bw,
+/area/space)
+"ow" = (
+/obj/storage/crate/robotics_supplies_borg,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"ox" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/space)
+"oG" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/wood/eight,
+/area/space)
+"oH" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line-broken1"
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"oM" = (
+/obj/item/reagent_containers/food/drinks/coolerbottle,
+/turf/simulated/floor/engine,
+/area/space)
+"oS" = (
+/obj/machinery/door/airlock/gannets/glass/morgue/alt{
+	name = "prison hold";
+	dir = 1
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"pd" = (
+/obj/table/sleek/auto,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "aqua_armory1";
+	name = "armory shutters"
+	},
+/turf/simulated/floor/circuit/off,
+/area/space)
+"ph" = (
+/obj/table/glass/reinforced/auto{
+	color = "aqua"
+	},
+/obj/item/plate/tray,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icewater{
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/icewater{
+	pixel_y = 5;
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/icewater{
+	pixel_y = 5;
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/icewater{
+	pixel_y = 5;
+	pixel_x = -7
+	},
+/obj/machinery/light/small/floor/cool/very,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"pi" = (
+/obj/reagent_dispensers/watertank/big,
+/turf/simulated/floor/engine,
+/area/space)
+"pj" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/airless/plating,
+/area/space)
+"pl" = (
+/obj/machinery/drainage,
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 8
+	},
+/turf/simulated/floor/sanitary,
+/area/space)
+"pr" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/turf/simulated/floor/circuit/off,
+/area/space)
+"ps" = (
+/obj/pool/perspective{
+	dir = 8;
+	tag = "icon-pool (WEST)"
+	},
+/turf/unsimulated/floor/pool/blue,
+/area/space)
+"pt" = (
+/obj/machinery/optable,
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/railing/cyan{
+	dir = 4
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"pv" = (
+/obj/fakeobject/biggercabinets/recorders,
+/turf/simulated/floor/circuit/white,
+/area/space)
+"pz" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"pJ" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/fakeobject/bigatmos/bigatmos3{
+	desc = "Industrial-scale water-bottling equipment.";
+	color = "aqua";
+	name = "filtration stack"
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"pL" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "M14-0"
+	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto,
+/area/space)
+"pN" = (
+/obj/machinery/door/airlock/gannets/glass/morgue/alt{
+	name = "distillation sector";
+	dir = 4
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"pO" = (
+/turf/simulated/floor/plating/jen,
+/area/space)
+"pZ" = (
+/turf/unsimulated/floor/redwhite{
+	dir = 8
+	},
+/area/space)
+"qb" = (
+/obj/storage/closet/wardrobe/mixed{
+	name = "guest lockers"
+	},
+/turf/unsimulated/floor/pool/blue,
+/area/space)
+"qe" = (
+/obj/machinery/door/airlock/gannets/engineering{
+	name = "exports"
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/engine,
+/area/space)
+"qf" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/machinery/manufacturer/uniform,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"qm" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-L"
+	},
+/obj/mapping_helper/wingrille_spawn/bulletproof,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"qn" = (
+/turf/simulated/floor/stairs/dark{
+	dir = 1
+	},
+/area/space)
+"qq" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "alt_propulsion"
+	},
+/turf/space,
+/area/space)
+"qx" = (
+/obj/machinery/r_door_control/podbay/syndicate{
+	id = "hangar_aqua"
+	},
+/turf/simulated/wall/auto/reinforced/jen/yellow,
+/area/space)
+"qE" = (
+/obj/disposalpipe/segment/mineral{
+	dir = 8;
+	name = "ice processing pipe"
+	},
+/turf/simulated/floor/engine/caution/west,
+/area/space)
+"qI" = (
+/obj/ladder/cruiser/syndicate{
+	id = "cruiser_aqua_bunkroom2";
+	name = "bunkroom"
+	},
+/obj/machinery/light/emergency/exitsign{
+	desc = "There's a crew ladder here.";
+	name = "illuminated ladder shaft";
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/space)
+"qL" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner"
+	},
+/obj/machinery/light/small/floor/blueish,
+/obj/window/auto/the_tuff_stuff,
+/turf/simulated/floor/circuit/vintage,
+/area/space)
+"qP" = (
+/obj/machinery/recharger/wall{
+	pixel_y = 26
+	},
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"qU" = (
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 8
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary,
+/area/space)
+"qW" = (
+/turf/unsimulated/floor/longtile{
+	color = "grey"
+	},
+/area/space)
+"rd" = (
+/obj/machinery/sleep_console,
+/turf/simulated/floor/sanitary/white,
+/area/space)
+"rf" = (
+/obj/machinery/door/airlock/gannets/glass/morgue/alt{
+	name = "distillation sector";
+	dir = 8
+	},
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"rm" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line-broken1"
+	},
+/obj/decal/tile_edge/line/blue{
+	icon_state = "line3"
+	},
+/turf/simulated/floor/circuit/off,
+/area/space)
+"ro" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/cabinet/restrictedmedical,
+/turf/unsimulated/floor/redwhite,
+/area/space)
+"rs" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/obj/storage/closet/fire,
+/turf/unsimulated/floor/longtile{
+	color = "grey"
+	},
+/area/space)
+"rv" = (
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R6"
+	},
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R3"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"rF" = (
+/obj/machinery/floorflusher/industrial,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"rV" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line-broken1"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 12
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"rW" = (
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R13"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"rZ" = (
+/turf/unsimulated/wall/setpieces/leadwindow/gray{
+	dir = 4
+	},
+/area/space)
+"sg" = (
+/obj/machinery/manufacturer/medical,
+/turf/unsimulated/floor/redwhite,
+/area/space)
+"so" = (
+/turf/space/fluid/cenote{
+	name = "reservoir"
+	},
+/area/sunken{
+	name = "Distillation Chamber"
+	})
+"sI" = (
+/obj/mesh/grille/steel{
+	icon_state = "grille3-0"
+	},
+/obj/disposalpipe/segment/morgue,
+/turf/simulated/floor/plating/jen,
+/area/space)
+"sJ" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	color = "aqua";
+	name = "reservoir";
+	dir = 8
+	},
+/area/space)
+"sN" = (
+/turf/unsimulated/floor/pool/blue,
+/area/space)
+"sT" = (
+/obj/disposalpipe/segment/morgue,
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	color = "aqua";
+	name = "reservoir";
+	dir = 1
+	},
+/area/space)
+"tl" = (
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/table/auto/desk,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"ts" = (
+/obj/vehicle/forklift,
+/turf/simulated/floor/industrial,
+/area/space)
+"uc" = (
+/obj/fakeobject/bigcabinets/gaugeswithlamp,
+/turf/simulated/floor/circuit/white,
+/area/space)
+"ul" = (
+/obj/fakeobject/airlock_broken/bolted{
+	name = "engineering"
+	},
+/turf/simulated/wall/auto/reinforced/jen/yellow,
+/area/space)
+"uw" = (
+/turf/simulated/floor/stairs/medical/wide/other{
+	dir = 8
+	},
+/area/space)
+"uz" = (
+/obj/ladder/cruiser/syndicate{
+	id = "cruiser_aqua_ext2";
+	name = "exterior";
+	icon_state = "ladder_wall";
+	pixel_y = 16
+	},
+/obj/machinery/light/emergency/exitsign{
+	desc = "There's a crew ladder here.";
+	name = "illuminated ladder shaft"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"uA" = (
+/obj/fakeobject/bigcabinets/gauges,
+/turf/simulated/floor/plating/jen,
+/area/space)
+"uB" = (
+/obj/effects/water,
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	color = "aqua";
+	name = "reservoir";
+	dir = 1
+	},
+/area/sunken{
+	name = "Distillation Chamber"
+	})
+"uG" = (
+/obj/storage/closet/fire,
+/turf/unsimulated/floor/longtile{
+	color = "grey"
+	},
+/area/space)
+"uJ" = (
+/turf/simulated/floor/stairs/medical/wide{
+	dir = 1
+	},
+/area/space)
+"uL" = (
+/obj/submachine/chem_extractor{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/item/reagent_containers/dropper/mechanical,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"uS" = (
+/turf/simulated/floor/airless/escape{
+	dir = 8
+	},
+/area/space)
+"vb" = (
+/obj/stool/chair/comfy/ergonomic{
+	dir = 4
+	},
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"vp" = (
+/obj/disposalpipe/segment/vertical,
+/turf/unsimulated/wall/setpieces/leadwindow/white/full{
+	desc = "A hardened porthole.";
+	name = "porthole";
+	color = "aqua";
+	dir = 4
+	},
+/area/space)
+"vq" = (
+/obj/machinery/door/airlock/gannets/glass/security,
+/obj/mapping_helper/access/syndie_shuttle,
+/obj/decal/tile_edge/line/grey{
+	icon_state = "line-broken1"
+	},
+/turf/simulated/floor/airless/twotone/red,
+/area/space)
+"vu" = (
+/obj/machinery/door/airlock/gannets/glass/morgue/alt{
+	name = "mortuaryhold";
+	dir = 1
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"vw" = (
+/obj/stool/bench/sauna{
+	dir = 1
+	},
+/turf/unsimulated/floor/wood/eight,
+/area/space)
+"vz" = (
+/obj/pool/perspective{
+	dir = 5;
+	tag = "icon-pool (NORTHEAST)"
+	},
+/turf/unsimulated/floor/pool/bluewhitecorner{
+	dir = 8
+	},
+/area/space)
+"vA" = (
+/turf/simulated/floor/airless/escape{
+	dir = 4
+	},
+/area/space)
+"vN" = (
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/fakeobject/bigcabinets/monitors,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"vS" = (
+/turf/simulated/floor/airless/darkbluewhite/corner{
+	dir = 8
+	},
+/area/space)
+"vT" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/unsimulated/floor/redwhite{
+	dir = 1
+	},
+/area/space)
+"vX" = (
+/obj/railing/cyan{
+	dir = 1
+	},
+/obj/fakeobject/pipe/heat{
+	name = "distillation system"
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
+"wc" = (
+/obj/machinery/door/airlock/gannets/maintenance,
+/turf/simulated/floor/plating/jen,
+/area/space)
+"wg" = (
+/turf/simulated/wall/auto/jen/cyan,
+/area/space)
+"wk" = (
+/obj/forcefield/energyshield/perma,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/syndicate_horizontal{
+	id = "hangar_aqua"
+	},
+/turf/simulated/floor/engine/caution/west,
+/area/space)
+"wx" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"wL" = (
+/obj/machinery/door/airlock/gannets/glass/morgue/alt{
+	name = "gangway airlock"
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"wP" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/storage/secure/crate/gear/saxitoxin_grenades,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"wQ" = (
+/obj/machinery/door/airlock/gannets/glass/alt{
+	dir = 8
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/specialroom/cafeteria,
+/area/space)
+"wU" = (
+/obj/machinery/space_heater/sauna_stove,
+/turf/unsimulated/floor/wood/eight,
+/area/space)
+"xd" = (
+/obj/railing/cyan,
+/obj/stool/chair/dining/scrap{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
+"xe" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/stool/chair/comfy/wheelchair{
+	dir = 8
+	},
+/turf/unsimulated/floor/redwhite,
+/area/space)
+"xl" = (
+/obj/decal/tile_edge/line/blue{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/circuit/off,
+/area/space)
+"xC" = (
+/turf/simulated/floor/airless/plating,
+/area/space)
+"xK" = (
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/machinery/vending/jobclothing/syndicate,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"xP" = (
+/obj/decoration/vent,
+/turf/simulated/wall/auto/reinforced/jen/the_tuff_stuff,
+/area/space)
+"xV" = (
+/obj/window/auto/reinforced/the_tuff_stuff,
+/turf/simulated/floor/airless/twotone/blue,
+/area/space)
+"xW" = (
+/obj/ladder/cruiser/syndicate{
+	id = "cruiser_aqua_ext1";
+	name = "exterior";
+	icon_state = "ladder_wall";
+	pixel_y = 16
+	},
+/obj/machinery/light/emergency/exitsign{
+	desc = "There's a crew ladder here.";
+	name = "illuminated ladder shaft"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"xY" = (
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R-6"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"yc" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/hop,
+/turf/unsimulated/floor/carpet/office/other,
+/area/space)
+"ye" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 5
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line-broken1"
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"yy" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/storage/closet/biohazard,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"yz" = (
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R5"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"yD" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/obj/stool/chair/comfy/sleek,
+/turf/simulated/floor/airless/marble/border_wb,
+/area/space)
+"yH" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/table/sleek/auto,
+/obj/item/ammo/bullets/bullet_22HP,
+/obj/item/ammo/bullets/bullet_22HP,
+/obj/item/ammo/bullets/bullet_22HP,
+/obj/item/gun/kinetic/silenced_22,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"yL" = (
+/obj/machinery/computer/announcement/syndicate/commander{
+	dir = 8;
+	name = "Announcement computer"
+	},
+/turf/simulated/floor/circuit/white,
+/area/space)
+"yN" = (
+/obj/table/wood/round/champagne,
+/obj/machinery/light/small/floor/cool/very,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"yX" = (
+/obj/decal/tile_edge/line/blue{
+	icon_state = "line3"
+	},
+/obj/fakeobject/console_lever,
+/turf/simulated/floor/circuit/off,
+/area/space)
+"yY" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1
+	},
+/turf/unsimulated/floor/pool/blue,
+/area/space)
+"zd" = (
+/obj/table/wood/auto/desk,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"zg" = (
+/obj/machinery/drainage/big,
+/turf/unsimulated/floor/pool/blue,
+/area/space)
+"zl" = (
+/obj/submachine/chef_oven,
+/turf/simulated/floor/black,
+/area/space)
+"zv" = (
+/obj/window/auto/reinforced/the_tuff_stuff,
+/obj/decal/poster/wallsign/security_wall,
+/turf/simulated/floor/plating/jen,
+/area/space)
+"zx" = (
+/obj/machinery/light/runway_light/delay3,
+/turf/simulated/floor/airless/engine/vacuum,
+/area/space)
+"zB" = (
+/obj/table/sleek/auto,
+/obj/towelbin{
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/pool/blue,
+/area/space)
+"zF" = (
+/obj/storage/crate/freezer/milk,
+/turf/simulated/floor/black,
+/area/space)
+"zK" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/item/storage/toilet{
+	dir = 8
+	},
+/obj/decoration/toiletholder{
+	dir = 1;
+	pixel_y = 22
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"zN" = (
+/obj/item/clothing/suit/space/industrial/syndicate,
+/obj/item/clothing/head/helmet/space/industrial/syndicate,
+/obj/item/clothing/shoes/industrial,
+/obj/storage/closet/dresser,
+/obj/item/device/pda2/syndicate/nuclear,
+/obj/item/paper/book/from_file/syndies_guide,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"zO" = (
+/turf/unsimulated/floor/industrial,
+/area/space)
+"zP" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/machinery/conveyor/NS,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"zV" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"zZ" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 8;
+	name = "melt chamber"
+	},
+/area/space)
+"Ae" = (
+/obj/fakeobject/broadcastcomputer,
+/turf/simulated/floor/circuit/white,
+/area/space)
+"Ah" = (
+/obj/forcefield/energyshield/perma,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/syndicate_horizontal{
+	id = "hangar_aqua"
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/space)
+"Ar" = (
+/obj/fakeobject/biggercabinets/recorders,
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"At" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/obj/stool/chair/comfy/sleek{
+	dir = 1
+	},
+/turf/simulated/floor/airless/marble/border_bw,
+/area/space)
+"Av" = (
+/obj/lattice/directional_icons{
+	dir = 4
+	},
+/turf/space,
+/area/space)
+"Ax" = (
+/obj/pool/perspective{
+	dir = 9;
+	tag = "icon-pool (NORTHWEST)"
+	},
+/turf/unsimulated/floor/pool/blue,
+/area/space)
+"Ay" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2{
+	color = "aqua";
+	name = "reservoir"
+	},
+/area/space)
+"Az" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line-broken1"
+	},
+/obj/decal/tile_edge/line/blue{
+	icon_state = "line3"
+	},
+/obj/fakeobject/console_lever,
+/turf/simulated/floor/circuit/off,
+/area/space)
+"AE" = (
+/obj/disposalpipe/segment/mineral{
+	dir = 8;
+	name = "ice processing pipe"
+	},
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 1;
+	name = "melt chamber"
+	},
+/area/space)
+"AG" = (
+/obj/machinery/weapon_stand/phaser_rack,
+/turf/simulated/floor/airless/twotone/red,
+/area/space)
+"AI" = (
+/turf/unsimulated/wall/setpieces/leadwindow/white{
+	name = "reservoir porthole";
+	desc = "A hardened, pressure-resistant porthole.";
+	color = "aqua";
+	dir = 1
+	},
+/area/space)
+"AM" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line-broken1"
+	},
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor/circuit/off,
+/area/space)
+"AO" = (
+/turf/unsimulated/floor/longtile,
+/area/space)
+"AX" = (
+/obj/decoration/vent/vent3,
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	color = "aqua";
+	name = "reservoir";
+	dir = 1
+	},
+/area/space)
+"AY" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/storage/secure/closet/fridge,
+/obj/item/reagent_containers/glass/bottle/cytotoxin,
+/obj/item/reagent_containers/glass/bottle/cytotoxin,
+/obj/item/reagent_containers/glass/bottle/cytotoxin,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"Bc" = (
+/obj/machinery/door/airlock/gannets/glass/maintenance{
+	name = "bunkroom"
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"Bh" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	color = "aqua";
+	name = "reservoir"
+	},
+/area/space)
+"Bl" = (
+/obj/machinery/floorflusher/industrial,
+/obj/disposalpipe/trunk/regular/east,
+/turf/simulated/floor/industrial,
+/area/space)
+"Br" = (
+/obj/mopbucket,
+/obj/item/mop/old,
+/turf/simulated/floor/plating/jen,
+/area/space)
+"Bu" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/light/small/floor/cool/very,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"BC" = (
+/obj/lattice/directional_icons{
+	dir = 4
+	},
+/obj/disposalpipe/segment/mineral{
+	dir = 8;
+	name = "ice processing pipe"
+	},
+/turf/space,
+/area/space)
+"BL" = (
+/obj/railing/cyan{
+	dir = 1
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
+"BO" = (
+/obj/table/reinforced/auto,
+/turf/unsimulated/floor/specialroom/cafeteria,
+/area/space)
+"BV" = (
+/obj/rack,
+/obj/item/cloneModule/mindhack_module,
+/obj/item/cloneModule/mindhack_module,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"BW" = (
+/obj/fakeobject/airlock_broken/bolted{
+	name = "sealed airlock"
+	},
+/turf/simulated/wall/auto/reinforced/jen/yellow,
+/area/space)
+"BY" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "M8-0"
+	},
+/turf/unsimulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
+"Ca" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/fakeobject/bigatmos,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"Cc" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	level = 2
+	},
+/turf/unsimulated/floor/red,
+/area/space)
+"Cg" = (
+/obj/disposalpipe/segment/morgue,
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction_four{
+	name = "reservoir";
+	color = "aqua"
+	},
+/area/space)
+"Cm" = (
+/obj/ladder/cruiser/syndicate{
+	id = "cruiser_aqua_crew1";
+	name = "barracks";
+	icon_state = "ladder_wall";
+	pixel_y = -8
+	},
+/obj/machinery/light/emergency/exitsign{
+	desc = "There's a crew ladder here.";
+	name = "illuminated ladder shaft";
+	dir = 4;
+	pixel_y = 12;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"Cn" = (
+/turf/unsimulated/floor/redwhite,
+/area/space)
+"Cp" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2{
+	color = "aqua";
+	name = "reservoir";
+	dir = 5
+	},
+/area/sunken{
+	name = "Distillation Chamber"
+	})
+"Cq" = (
+/obj/stool/bed/moveable/hospital,
+/turf/unsimulated/floor/redwhite{
+	dir = 4
+	},
+/area/space)
+"Cr" = (
+/obj/stool/bed/brig,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"Ct" = (
+/obj/machinery/conveyor/NW,
+/obj/reagent_dispensers/watertank/big,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"Cz" = (
+/obj/machinery/door/airlock/gannets/glass{
+	dir = 1
+	},
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 4
+	},
+/area/space)
+"CL" = (
+/obj/fakeobject/tallsmes,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"CO" = (
+/turf/simulated/floor/grey/side{
+	dir = 1
+	},
+/area/space)
+"CQ" = (
+/turf/simulated/floor/engine,
+/area/space)
+"CT" = (
+/obj/machinery/drainage/big,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"CW" = (
+/obj/pool/perspective{
+	dir = 1;
+	tag = "icon-pool (NORTH)"
+	},
+/turf/unsimulated/floor/pool/bluewhite,
+/area/space)
+"Da" = (
+/obj/machinery/light_switch/auto,
+/obj/rack,
+/obj/item/bandage,
+/obj/item/bandage,
+/obj/item/reagent_containers/patch/mini/synthflesh,
+/obj/item/reagent_containers/patch/mini/synthflesh,
+/obj/item/reagent_containers/mender_refill_cartridge/brute,
+/obj/item/reagent_containers/mender_refill_cartridge/burn,
+/turf/unsimulated/floor/redwhite,
+/area/space)
+"Db" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/cryo,
+/obj/item/wrench,
+/obj/machinery/light,
+/turf/unsimulated/floor/redwhite{
+	dir = 1
+	},
+/area/space)
+"Dd" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/simulated/floor/airless/marble/border_wb,
+/area/space)
+"De" = (
+/turf/simulated/floor/black,
+/area/space)
+"Dj" = (
+/mob/living/critter/aquatic/shark,
+/turf/space/fluid/cenote{
+	name = "reservoir"
+	},
+/area/space)
+"Dm" = (
+/obj/fakeobject/console_radar,
+/turf/simulated/floor/airless/marble/border_wb,
+/area/space)
+"Dn" = (
+/obj/decal/tile_edge/line/blue{
+	dir = 6;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/circuit/off,
+/area/space)
+"Dp" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/turf/unsimulated/floor/longtile{
+	color = "grey"
+	},
+/area/space)
+"Ds" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/obj/stool/chair/comfy/sleek{
+	dir = 1
+	},
+/turf/simulated/floor/airless/marble/border_bw,
+/area/space)
+"Du" = (
+/obj/table/sleek/auto,
+/obj/decal/tile_edge/line/grey{
+	icon_state = "line-broken1";
+	dir = 8
+	},
+/obj/machinery/door/airlock/pyro/glass/windoor/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/airless/twotone/red,
+/area/space)
+"DE" = (
+/obj/disposalpipe/segment/mineral{
+	dir = 8;
+	name = "ice processing pipe"
+	},
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/space)
+"DM" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/disposaloutlet/north{
+	desc = "An outlet for the river loop system.";
+	dir = 4;
+	layer = 4;
+	name = "Mortuary Hold";
+	pixel_x = -7;
+	pixel_y = -4
+	},
+/obj/disposalpipe/trunk/morgue{
+	dir = 1
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"DR" = (
+/obj/machinery/conveyor/SN,
+/turf/simulated/floor/industrial,
+/area/space)
+"DS" = (
+/turf/simulated/floor/stairs/medical/wide/other,
+/area/space)
+"DV" = (
+/obj/disposalpipe/segment/mineral{
+	dir = 8;
+	name = "ice processing pipe"
+	},
+/turf/simulated/wall/auto/reinforced/jen/yellow,
+/area/space)
+"DX" = (
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R-9"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"Ef" = (
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R3"
+	},
+/obj/disposalpipe/segment/mineral{
+	dir = 8;
+	name = "ice processing pipe"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"Eh" = (
+/obj/machinery/door/airlock/gannets/glass/morgue/alt,
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/circuit/off,
+/area/space)
+"Ej" = (
+/turf/simulated/floor/engine/caution/east,
+/area/space)
+"El" = (
+/obj/machinery/door/airlock/gannets/maintenance{
+	name = "toilet";
+	dir = 4
+	},
+/turf/simulated/floor/sanitary,
+/area/space)
+"En" = (
+/obj/machinery/vending/book,
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 9
+	},
+/area/space)
+"Er" = (
+/obj/machinery/door/airlock/gannets/maintenance{
+	name = "shower";
+	dir = 4
+	},
+/turf/simulated/floor/sanitary,
+/area/space)
+"Es" = (
+/obj/machinery/door/airlock/gannets/engineering{
+	dir = 4;
+	name = "podbay airlock"
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/industrial,
+/area/space)
+"Eu" = (
+/turf/simulated/floor/stairs/medical/wide/other{
+	dir = 1
+	},
+/area/space)
+"Ey" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/turf/simulated/floor/circuit/off,
+/area/space)
+"EG" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 10
+	},
+/area/space)
+"EU" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2{
+	color = "aqua";
+	name = "reservoir";
+	dir = 8
+	},
+/area/space)
+"Fc" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line-broken1"
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/blue,
+/obj/item/paper/book/from_file/deep_blue_sea,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"Ff" = (
+/obj/machinery/door/airlock/gannets/glass/engineering{
+	name = "podbay";
+	dir = 1
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/industrial,
+/area/space)
+"Fh" = (
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/fakeobject/bigcabinets/slider,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"Fj" = (
+/obj/machinery/door/airlock/gannets/glass/morgue/alt{
+	name = "distillation sector";
+	dir = 4
+	},
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"Fk" = (
+/obj/lattice/directional_icons{
+	dir = 10
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/space,
+/area/space)
+"Fn" = (
+/obj/storage/crate,
+/obj/item/clothing/under/gimmick/sailor,
+/obj/item/clothing/under/gimmick/sailor,
+/obj/item/clothing/head/blue,
+/obj/item/clothing/head/blue,
+/obj/item/reagent_containers/food/drinks/bottle/rum,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"Fr" = (
+/obj/machinery/door/airlock/gannets/glass/medical,
+/turf/simulated/floor/plating/jen,
+/area/space)
+"Ft" = (
+/turf/simulated/floor/airless/engine/vacuum,
+/area/space)
+"Fu" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/neutral/side,
+/area/space)
+"Fz" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"FG" = (
+/turf/simulated/floor/engine/caution/west,
+/area/space)
+"FI" = (
+/obj/stool/chair/office{
+	dir = 8
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"FQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"FW" = (
+/obj/machinery/door/airlock/gannets/glass/engineering{
+	name = "podbay"
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/industrial,
+/area/space)
+"FZ" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 9
+	},
+/area/space)
+"Gb" = (
+/obj/decal/tile_edge/line/blue{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/circuit/off,
+/area/space)
+"Gd" = (
+/obj/machinery/door/airlock/gannets/glass/toxins/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"Gk" = (
+/turf/simulated/wall/auto/reinforced/jen/the_tuff_stuff,
+/area/space)
+"Gm" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "M10-0"
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
+"Gs" = (
+/obj/machinery/vehicle/pod_smooth/industrial,
+/turf/simulated/floor/engine,
+/area/space)
+"Gu" = (
+/turf/simulated/floor/sanitary,
+/area/space)
+"Gv" = (
+/obj/machinery/door/airlock/gannets/maintenance{
+	dir = 8
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/plating/jen,
+/area/space)
+"Gx" = (
+/obj/forcefield/energyshield/perma,
+/obj/machinery/door/airlock/syndicate,
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/engine/glow,
+/area/space)
+"GC" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/space)
+"GF" = (
+/turf/simulated/floor/industrial,
+/area/space)
+"GJ" = (
+/obj/ladder/cruiser/syndicate{
+	id = "cruiser_aqua_bunkroom2";
+	name = "accomodation";
+	icon_state = "ladder_wall";
+	pixel_y = -8
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"GR" = (
+/turf/simulated/floor/airless/darkbluewhite/corner{
+	dir = 4
+	},
+/area/space)
+"GS" = (
+/turf/unsimulated/floor/longtile/black,
+/area/space)
+"Ha" = (
+/obj/machinery/door/unpowered/wood/stall{
+	pixel_y = -5
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"Hf" = (
+/obj/machinery/recharger/wall{
+	pixel_y = 26
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"Hj" = (
+/obj/fakeobject/biggercabinets/gauges,
+/turf/simulated/floor/circuit/white,
+/area/space)
+"Hm" = (
+/obj/machinery/conveyor/EW,
+/obj/reagent_dispensers/watertank/big,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"Hs" = (
+/obj/machinery/sonic_shower{
+	dir = 2
+	},
+/obj/machinery/drainage/big,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"Hx" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/stool/bed/brig,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"Hy" = (
+/obj/table/monodesk/auto,
+/obj/machinery/computer/security/wooden_tv{
+	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
+	name = "Television";
+	network = "Zeta";
+	pixel_y = 9;
+	pixel_x = -1
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"HB" = (
+/turf/simulated/floor/stairs/dark,
+/area/space)
+"HJ" = (
+/turf/simulated/floor/stairs/dark{
+	dir = 8
+	},
+/area/space)
+"HL" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/reagent_dispensers/watertank/fountain/drugged,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"HQ" = (
+/turf/simulated/floor/airless/darkbluewhite,
+/area/space)
+"HX" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"Ib" = (
+/obj/table/sleek/auto,
+/obj/item/implantcase/super_mindhack,
+/obj/item/implantcase/super_mindhack,
+/obj/item/implanter/super_mindhack,
+/obj/item/implanter/super_mindhack,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"Ie" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/machinery/sonic_shower{
+	pixel_y = 7
+	},
+/obj/machinery/drainage,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"Io" = (
+/obj/decoration/decorativeplant/plant7,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/wood/eight,
+/area/space)
+"Iq" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/turf/simulated/floor/airless/marble/border_wb,
+/area/space)
+"Iu" = (
+/obj/fakeobject/autoclave,
+/turf/simulated/floor/plating/jen,
+/area/space)
+"Iy" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/machinery/computer/cloner/portable,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"IA" = (
+/obj/disposaloutlet/north{
+	desc = "An outlet for the river loop system.";
+	dir = 4;
+	layer = 4;
+	name = "Ice Outlet";
+	pixel_x = -7;
+	pixel_y = -5
+	},
+/obj/disposalpipe/trunk/regular/west,
+/turf/simulated/floor/engine/glow,
+/area/space)
+"IO" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/wood/eight,
+/area/space)
+"IS" = (
+/turf/unsimulated/floor/redwhite{
+	dir = 1
+	},
+/area/space)
+"IZ" = (
+/obj/pool/perspective{
+	dir = 1;
+	tag = "icon-pool (NORTH)"
+	},
+/turf/unsimulated/floor/pool/blue,
+/area/space)
+"Jf" = (
+/obj/machinery/manufacturer/hangar,
+/turf/simulated/floor/industrial,
+/area/space)
+"Jk" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"Jt" = (
+/obj/ladder/cruiser/syndicate{
+	id = "cruiser_aqua_ext2";
+	name = "exterior"
+	},
+/obj/machinery/light/emergency/exitsign{
+	desc = "There's a crew ladder here.";
+	name = "illuminated ladder shaft";
+	dir = 1;
+	pixel_y = 20
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"Jw" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction_four{
+	name = "reservoir";
+	color = "aqua"
+	},
+/area/space)
+"Jy" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	color = "aqua";
+	name = "reservoir";
+	dir = 1
+	},
+/area/space)
+"JA" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/vending/restock_cartridge/cola,
+/obj/item/vending/restock_cartridge/cola,
+/obj/item/vending/restock_cartridge/cola,
+/obj/item/vending/restock_cartridge/cola,
+/obj/item/vending/restock_cartridge/cola,
+/obj/item/vending/restock_cartridge/cola,
+/obj/item/vending/restock_cartridge/cola,
+/obj/item/vending/restock_cartridge/cola,
+/turf/simulated/floor/industrial,
+/area/space)
+"JD" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/plating/jen,
+/area/space)
+"JG" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line-broken1"
+	},
+/turf/simulated/floor/airless/marble/border_wb,
+/area/space)
+"JH" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 10
+	},
+/turf/simulated/floor/sanitary/white,
+/area/space)
+"JR" = (
+/turf/space/fluid/cenote{
+	name = "reservoir"
+	},
+/area/space)
+"JV" = (
+/turf/simulated/floor/airless/engine/caution/east,
+/area/space)
+"JZ" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"Kl" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/turf/simulated/floor/circuit/off,
+/area/space)
+"Ko" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/fakeobject/safehouse/biomatter_tank{
+	name = "bioreactor";
+	desc = "It seems to be full of toxic algae. Gross!"
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"Kp" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2{
+	color = "aqua";
+	name = "reservoir";
+	dir = 9
+	},
+/area/space)
+"Ku" = (
+/obj/table/reinforced/chemistry/auto/beakers,
+/obj/item/reagent_containers/glass/plumbing/dropper{
+	pixel_y = 11
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"Kw" = (
+/obj/stool/bench/sauna,
+/turf/unsimulated/floor/wood/eight,
+/area/space)
+"KJ" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2{
+	color = "aqua";
+	name = "reservoir";
+	dir = 9
+	},
+/area/sunken{
+	name = "Distillation Chamber"
+	})
+"KM" = (
+/turf/unsimulated/wall/setpieces/leadwindow/white/full{
+	desc = "A hardened porthole.";
+	name = "porthole";
+	color = "aqua";
+	dir = 4
+	},
+/area/sunken{
+	name = "Distillation Chamber"
+	})
+"KN" = (
+/obj/machinery/light/runway_light/delay3,
+/turf/simulated/floor/airless/engine/caution/west,
+/area/space)
+"KP" = (
+/obj/machinery/computer/power_monitor{
+	dir = 8
+	},
+/turf/simulated/floor/circuit/white,
+/area/space)
+"KQ" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line-broken1"
+	},
+/turf/simulated/floor/circuit/off,
+/area/space)
+"KX" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	level = 2
+	},
+/turf/simulated/floor/sanitary/white,
+/area/space)
+"Lc" = (
+/turf/simulated/floor/grey/side,
+/area/space)
+"Lm" = (
+/obj/table/glass/reinforced/auto{
+	color = "aqua"
+	},
+/turf/simulated/floor/airless/marble/black,
+/area/space)
+"Lr" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2{
+	color = "aqua";
+	name = "reservoir";
+	dir = 5
+	},
+/area/space)
+"Ls" = (
+/obj/table/sleek/auto,
+/obj/item/baton/cane,
+/turf/simulated/floor/airless/twotone/red,
+/area/space)
+"Lt" = (
+/obj/machinery/door/airlock/gannets/medical/alt{
+	dir = 8
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"Lu" = (
+/obj/ladder/cruiser/syndicate{
+	id = "cruiser_aqua_barracks2";
+	name = "barracks"
+	},
+/obj/machinery/light/emergency/exitsign{
+	desc = "There's a crew ladder here.";
+	name = "illuminated ladder shaft";
+	dir = 4;
+	pixel_y = 12;
+	pixel_x = 10
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/space)
+"LI" = (
+/obj/mesh/grille/steel{
+	icon_state = "grille3-0"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"LX" = (
+/obj/machinery/light/emergency/exitsign{
+	desc = "There's a crew ladder here.";
+	name = "illuminated ladder shaft"
+	},
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"Ma" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/obj/stool/chair/comfy/sleek,
+/turf/simulated/floor/airless/marble/border_wb,
+/area/space)
+"Mb" = (
+/obj/fakeobject/operatorconsole,
+/turf/simulated/floor/circuit/white,
+/area/space)
+"Mi" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/turf/simulated/floor/airless/marble/border_bw,
+/area/space)
+"Ml" = (
+/obj/decoration/decorativeplant/plant2,
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 5
+	},
+/area/space)
+"Mt" = (
+/obj/structure/girder/reinforced,
+/obj/fakeobject/pipe/heat{
+	name = "distillation system"
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
+"Mx" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"MA" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/obj/item/reagent_containers/food/drinks/coolerbottle,
+/turf/simulated/floor/engine,
+/area/space)
+"MC" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	color = "aqua";
+	name = "reservoir"
+	},
+/area/space)
+"MD" = (
+/turf/unsimulated/floor/glassblock/transparent_cyan,
+/area/space)
+"MG" = (
+/obj/machinery/light,
+/obj/machinery/manufacturer/general,
+/turf/simulated/floor/industrial,
+/area/space)
+"MP" = (
+/turf/simulated/floor/airless/darkbluewhite/corner{
+	dir = 1
+	},
+/area/space)
+"MS" = (
+/obj/window/auto/reinforced/the_tuff_stuff,
+/turf/simulated/floor/plating/jen,
+/area/space)
+"Nb" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 9;
+	name = "melt chamber"
+	},
+/area/space)
+"Ne" = (
+/obj/stool/bench/blue,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"Nj" = (
+/obj/lattice/directional_icons{
+	dir = 8
+	},
+/turf/space,
+/area/space)
+"Nr" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/simulated/floor/circuit/off,
+/area/space)
+"Nu" = (
+/obj/disposalpipe/segment/bent/north,
+/turf/unsimulated/wall/setpieces/leadwindow/white{
+	name = "reservoir porthole";
+	desc = "A hardened, pressure-resistant porthole.";
+	color = "aqua";
+	dir = 8
+	},
+/area/space)
+"Nw" = (
+/obj/stool/bench/sauna{
+	dir = 4;
+	pixel_y = 32
+	},
+/obj/stool/bench/sauna,
+/turf/unsimulated/floor/wood/eight,
+/area/space)
+"Ny" = (
+/obj/machinery/atmospherics/unary/cryo_cell,
+/turf/unsimulated/floor/red,
+/area/space)
+"NJ" = (
+/obj/forcefield/energyshield/perma,
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/plating/jen,
+/area/space)
+"NK" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "M13-0"
+	},
+/turf/unsimulated/floor/airless/plating/catwalk/auto,
+/area/space)
+"NN" = (
+/obj/machinery/recharger/wall{
+	pixel_y = 26
+	},
+/obj/table/sleek/auto,
+/obj/item/baton/cane,
+/turf/simulated/floor/airless/twotone/red,
+/area/space)
+"NO" = (
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 4
+	},
+/area/space)
+"NQ" = (
+/obj/machinery/flasher/minibrig{
+	id = "aqua_prison_flash";
+	name = "\improper Mounted Flash (Prison Hold)";
+	pixel_y = 26
+	},
+/turf/simulated/floor/stairs/dark{
+	dir = 4
+	},
+/area/space)
+"NR" = (
+/obj/disposaloutlet/north{
+	name = "export outlet"
+	},
+/obj/machinery/conveyor/SN,
+/turf/simulated/floor/engine,
+/area/space)
+"NS" = (
+/obj/machinery/light,
+/turf/simulated/floor/industrial,
+/area/space)
+"NY" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/longtile/black,
+/area/space)
+"Og" = (
+/obj/lattice/directional_icons{
+	dir = 6
+	},
+/turf/space,
+/area/space)
+"Oi" = (
+/obj/decal/tile_edge/line/blue{
+	dir = 5;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/circuit/off,
+/area/space)
+"Ok" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/stool/chair/comfy/wheelchair{
+	dir = 4
+	},
+/turf/unsimulated/floor/redwhite,
+/area/space)
+"Oo" = (
+/obj/table/glass/reinforced/auto{
+	color = "aqua"
+	},
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"Oy" = (
+/obj/machinery/door/airlock/gannets/glass/morgue/alt{
+	name = "distillation sector";
+	dir = 8
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"Oz" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/space)
+"OA" = (
+/obj/ladder/cruiser/syndicate{
+	id = "cruiser_aqua_ext1";
+	name = "exterior"
+	},
+/obj/machinery/light/emergency/exitsign{
+	desc = "There's a crew ladder here.";
+	name = "illuminated ladder shaft"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"OB" = (
+/obj/table/podium_white/syndicate,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"OD" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1;
+	tag = "icon-sink (NORTH)";
+	pixel_x = 6
+	},
+/obj/railing/cyan{
+	dir = 8
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"OE" = (
+/obj/storage/secure/crate/gear,
+/obj/item/clothing/under/gimmick/sailor,
+/obj/item/clothing/under/gimmick/sailor,
+/obj/item/clothing/suit/armor/tacticalvest/heavy,
+/obj/item/clothing/suit/armor/tacticalvest/heavy,
+/obj/item/clothing/head/beret/syndicate,
+/obj/item/clothing/head/beret/syndicate,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"OH" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1;
+	name = "galley"
+	},
+/obj/decal/tile_edge/line/grey{
+	icon_state = "line-broken1"
+	},
+/turf/unsimulated/floor/specialroom/cafeteria,
+/area/space)
+"OI" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line-broken1"
+	},
+/obj/decal/tile_edge/line/blue{
+	icon_state = "line3"
+	},
+/turf/simulated/floor/circuit/off,
+/area/space)
+"OO" = (
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/storage/secure/crate/gear,
+/obj/item/clothing/under/gimmick/sailor,
+/obj/item/clothing/under/gimmick/sailor,
+/obj/item/clothing/suit/armor/tacticalvest/heavy,
+/obj/item/clothing/suit/armor/tacticalvest/heavy,
+/obj/item/clothing/head/beret/syndicate,
+/obj/item/clothing/head/beret/syndicate,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"OS" = (
+/turf/unsimulated/wall/setpieces/leadwindow/white/full{
+	desc = "A hardened porthole.";
+	name = "porthole";
+	color = "aqua";
+	dir = 1
+	},
+/area/sunken{
+	name = "Distillation Chamber"
+	})
+"Pc" = (
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"Po" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/turf/simulated/floor/airless/marble/border_bw,
+/area/space)
+"Pp" = (
+/turf/unsimulated/wall/setpieces/leadwindow/white{
+	name = "reservoir porthole";
+	desc = "A hardened, pressure-resistant porthole.";
+	color = "aqua";
+	dir = 8
+	},
+/area/space)
+"Pq" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"Pu" = (
+/obj/structure/girder/reinforced,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"Pw" = (
+/obj/item/storage/toilet{
+	dir = 8
+	},
+/obj/decoration/toiletholder{
+	pixel_y = 32
+	},
+/turf/simulated/floor/sanitary,
+/area/space)
+"Pz" = (
+/obj/ladder/cruiser/syndicate{
+	id = "cruiser_aqua_barracks";
+	name = "barracks";
+	icon_state = "ladder_wall";
+	pixel_y = -8
+	},
+/obj/machinery/light/emergency/exitsign{
+	desc = "There's a crew ladder here.";
+	name = "illuminated ladder shaft";
+	dir = 4;
+	pixel_y = 12;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"PF" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "M12-0"
+	},
+/turf/unsimulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
+"PK" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/circuit/off,
+/area/space)
+"PM" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	color = "aqua";
+	name = "reservoir";
+	dir = 1
+	},
+/area/sunken{
+	name = "Distillation Chamber"
+	})
+"PT" = (
+/obj/fakeobject/biggercabinets/gauges,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"PW" = (
+/turf/simulated/floor/airless/darkbluewhite/corner,
+/area/space)
+"PY" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 10
+	},
+/area/space)
+"Qg" = (
+/obj/structure/girder/reinforced,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"Qm" = (
+/obj/fakeobject/airlock_broken/bolted{
+	name = "engineering"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"Qr" = (
+/obj/fakeobject/console_radar,
+/turf/simulated/floor/airless/marble/border_bw,
+/area/space)
+"Qw" = (
+/obj/machinery/door/airlock/gannets/glass/toxins,
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"QI" = (
+/turf/simulated/floor/airless/engine/caution/west,
+/area/space)
+"QK" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line-broken1"
+	},
+/obj/machinery/vending/alcohol/with_ammo,
+/turf/simulated/floor/circuit/off,
+/area/space)
+"QS" = (
+/obj/disposalpipe/segment/mineral{
+	dir = 8;
+	name = "ice processing pipe"
+	},
+/turf/simulated/floor/engine,
+/area/space)
+"QV" = (
+/obj/table/reinforced/industrial/auto,
+/turf/simulated/floor/industrial,
+/area/space)
+"QZ" = (
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R0"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"Ra" = (
+/turf/unsimulated/floor/red,
+/area/space)
+"Rc" = (
+/obj/machinery/conveyor/EW,
+/obj/machinery/fluid_canister,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"Rk" = (
+/turf/unsimulated/wall/setpieces/leadwindow/white/full{
+	desc = "A hardened porthole.";
+	name = "porthole";
+	color = "aqua"
+	},
+/area/space)
+"Rl" = (
+/obj/disposalpipe/segment/morgue,
+/turf/unsimulated/wall/setpieces/leadwindow/white/full{
+	desc = "A hardened porthole.";
+	name = "porthole";
+	color = "aqua"
+	},
+/area/space)
+"Ro" = (
+/obj/machinery/vending/cola/blue,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 12
+	},
+/turf/unsimulated/floor/pool/blue,
+/area/space)
+"Rz" = (
+/obj/machinery/door/unpowered/wood/stall{
+	dir = 8
+	},
+/turf/simulated/floor/sanitary,
+/area/space)
+"RJ" = (
+/obj/structure/girder/reinforced,
+/obj/disposalpipe/segment/mineral{
+	dir = 8;
+	name = "ice processing pipe"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"RP" = (
+/obj/table/sleek/auto,
+/obj/item/radiojammer,
+/obj/item/radiojammer,
+/obj/item/radiojammer,
+/obj/item/radiojammer,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"RS" = (
+/obj/machinery/door/unpowered/wood,
+/turf/unsimulated/floor/pool/blue,
+/area/space)
+"RV" = (
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"Sc" = (
+/obj/stool/chair/comfy/ergonomic{
+	dir = 8
+	},
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"Sd" = (
+/obj/disposalpipe/junction/left,
+/turf/unsimulated/wall/setpieces/leadwindow/white/full{
+	desc = "A hardened porthole.";
+	name = "porthole";
+	color = "aqua";
+	dir = 4
+	},
+/area/space)
+"Sf" = (
+/turf/simulated/floor/engine/glow,
+/area/space)
+"So" = (
+/obj/decal/poster/wallsign/biohazard{
+	pixel_y = -14;
+	pixel_x = -1
+	},
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	color = "aqua";
+	name = "reservoir";
+	dir = 1
+	},
+/area/space)
+"Su" = (
+/obj/machinery/light/runway_light/delay3,
+/turf/simulated/floor/airless/engine/caution/east,
+/area/space)
+"Sy" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/emergencysuitfolded,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/emerg,
+/turf/simulated/floor/plating/jen,
+/area/space)
+"SE" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/turf/space,
+/area/space)
+"SG" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/reagent_containers/glass/bottle/oil,
+/turf/simulated/floor/plating/jen,
+/area/space)
+"SH" = (
+/obj/fakeobject/robotarm,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"SQ" = (
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R3"
+	},
+/turf/simulated/floor/airless/twotone/red,
+/area/space)
+"SR" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/carpet/office/other,
+/area/space)
+"SX" = (
+/obj/disposalpipe/segment/morgue,
+/turf/simulated/floor/airless/plating,
+/area/space)
+"Tg" = (
+/obj/disposaloutlet/north{
+	desc = "An outlet for the river loop system.";
+	dir = 4;
+	layer = 4;
+	name = "Ice Outlet";
+	pixel_x = -7;
+	pixel_y = -5
+	},
+/obj/disposalpipe/trunk/regular/south,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"Tl" = (
+/obj/storage/closet/janitor,
+/turf/simulated/floor/plating/jen,
+/area/space)
+"To" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line-broken1"
+	},
+/obj/stool/chair/comfy/sleek,
+/turf/simulated/floor/airless/marble/border_wb,
+/area/space)
+"TA" = (
+/obj/lattice/directional_icons{
+	dir = 10
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/turf/space,
+/area/space)
+"TD" = (
+/obj/railing/cyan,
+/obj/stool/chair/dining/scrap,
+/turf/simulated/floor/airless/plating,
+/area/space)
+"TF" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor/grey/side,
+/area/space)
+"TQ" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line-broken1"
+	},
+/obj/machinery/light/small,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"TW" = (
+/obj/railing/cyan,
+/turf/simulated/floor/airless/plating,
+/area/space)
+"TZ" = (
+/obj/fakeobject/bigatmos,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"Ua" = (
+/turf/simulated/wall/auto/reinforced/jen/yellow,
+/area/space)
+"Uc" = (
+/obj/stool/chair/office{
+	dir = 4
+	},
+/turf/unsimulated/floor/redwhite{
+	dir = 4
+	},
+/area/space)
+"Um" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line-broken1"
+	},
+/obj/decal/tile_edge/line/blue{
+	icon_state = "line3"
+	},
+/obj/fakeobject/cpucontroller,
+/turf/simulated/floor/circuit/off,
+/area/space)
+"Un" = (
+/obj/table/sleek/auto,
+/turf/simulated/floor/airless/marble/black,
+/area/space)
+"Uu" = (
+/obj/machinery/bathtub{
+	anchored = 1;
+	dir = 8
+	},
+/turf/unsimulated/floor/pool/blue,
+/area/space)
+"Uw" = (
+/obj/fakeobject/bigcabinets/gauges,
+/turf/simulated/floor/circuit/white,
+/area/space)
+"UE" = (
+/obj/machinery/vending/snack,
+/turf/unsimulated/floor/wood/eight,
+/area/space)
+"UF" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 6
+	},
+/area/space)
+"UH" = (
+/obj/pool/perspective{
+	dir = 4;
+	tag = "icon-pool (EAST)"
+	},
+/obj/pool_springboard,
+/turf/unsimulated/floor/pool/bluewhite{
+	dir = 8
+	},
+/area/space)
+"UQ" = (
+/obj/machinery/conveyor/EW,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"UT" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"UX" = (
+/turf/simulated/wall/auto/reinforced/jen,
+/area/space)
+"UY" = (
+/obj/machinery/door_control/podbay/syndicate{
+	pixel_y = 26;
+	id = "hangar_aqua"
+	},
+/turf/simulated/floor/industrial,
+/area/space)
+"Vc" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line-broken1"
+	},
+/obj/decal/tile_edge/line/blue{
+	icon_state = "line3"
+	},
+/obj/fakeobject/bigcabinets/monitors,
+/turf/simulated/floor/circuit/off,
+/area/space)
+"Vi" = (
+/obj/ladder/cruiser/syndicate{
+	id = "cruiser_aqua_bunkroom1";
+	name = "bunkroom"
+	},
+/obj/machinery/light/emergency/exitsign{
+	desc = "There's a crew ladder here.";
+	name = "illuminated ladder shaft";
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/space)
+"Vn" = (
+/obj/railing/cyan{
+	dir = 4
+	},
+/obj/table/scrap/auto,
+/turf/simulated/floor/airless/plating,
+/area/space)
+"Vr" = (
+/obj/table/sleek/auto,
+/obj/item/handcuffs/tape_roll,
+/obj/item/handcuffs/tape_roll,
+/obj/item/handcuffs/tape_roll,
+/obj/item/handcuffs/tape_roll,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"Vt" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/turf/simulated/floor/industrial,
+/area/space)
+"Vw" = (
+/turf/simulated/floor/stairs/medical{
+	dir = 8
+	},
+/area/space)
+"Vz" = (
+/turf/simulated/floor/airless/darkblue,
+/area/space)
+"VB" = (
+/obj/storage/crate,
+/obj/item/clothing/under/gimmick/sailor,
+/obj/item/clothing/under/gimmick/sailor,
+/obj/item/clothing/head/blue,
+/obj/item/clothing/head/blue,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"VE" = (
+/obj/ladder/cruiser/syndicate{
+	id = "cruiser_aqua_barracks2";
+	name = "barracks";
+	icon_state = "ladder_wall"
+	},
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/machinery/light/emergency/exitsign{
+	desc = "There's a crew ladder here.";
+	name = "illuminated ladder shaft";
+	dir = 4;
+	pixel_y = 12;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"VG" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/blue,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"VI" = (
+/turf/simulated/floor/airless/marble/black,
+/area/space)
+"VM" = (
+/obj/lattice/directional_icons{
+	dir = 5
+	},
+/turf/space,
+/area/space)
+"VO" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/plating/jen,
+/area/space)
+"VU" = (
+/obj/decal/poster/wallsign/no_smoking{
+	pixel_y = 29
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"VX" = (
+/obj/stool/bench/blue/auto,
+/turf/unsimulated/floor/wood/eight,
+/area/space)
+"VZ" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/table/reinforced,
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/red,
+/area/space)
+"Wg" = (
+/obj/table/sleek/auto,
+/obj/item/storage/box/handcuff_kit,
+/turf/simulated/floor/airless/twotone/red,
+/area/space)
+"Wk" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/airless/plating,
+/area/space)
+"Wm" = (
+/obj/ladder/cruiser/syndicate{
+	id = "cruiser_aqua_bunkroom1";
+	name = "accomodation";
+	icon_state = "ladder_wall";
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"Ww" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/airless/escape{
+	dir = 8
+	},
+/area/space)
+"Wx" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/space)
+"WC" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/space)
+"WK" = (
+/obj/surgery_tray/kitchen_island,
+/obj/item/kitchen/rollingpin,
+/turf/simulated/floor/black,
+/area/space)
+"WL" = (
+/turf/unsimulated/wall/setpieces/leadwindow/white{
+	name = "reservoir porthole";
+	desc = "A hardened, pressure-resistant porthole.";
+	color = "aqua"
+	},
+/area/space)
+"WP" = (
+/turf/unsimulated/wall/setpieces/leadwindow/white/full{
+	desc = "A hardened porthole.";
+	name = "porthole";
+	color = "aqua";
+	dir = 1
+	},
+/area/space)
+"WR" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line-broken1"
+	},
+/obj/decal/tile_edge/line/blue{
+	icon_state = "line3"
+	},
+/obj/fakeobject/bigcabinets/monitors,
+/turf/simulated/floor/circuit/off,
+/area/space)
+"WS" = (
+/turf/simulated/wall/auto/reinforced/jen/red,
+/area/space)
+"WT" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 4;
+	name = "engineer's seat"
+	},
+/turf/simulated/floor/airless/marble/border_wb,
+/area/space)
+"WX" = (
+/obj/submachine/ice_cream_dispenser,
+/turf/simulated/floor/black,
+/area/space)
+"Xa" = (
+/obj/machinery/conveyor/SN,
+/obj/reagent_dispensers/watertank/big,
+/turf/simulated/floor/engine,
+/area/space)
+"Xk" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line-broken1"
+	},
+/turf/simulated/floor/circuit/off,
+/area/space)
+"Xu" = (
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/space)
+"Xy" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/space)
+"XK" = (
+/obj/lattice/directional_icons{
+	dir = 1
+	},
+/turf/space,
+/area/space)
+"XN" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/pool/blue,
+/area/space)
+"XO" = (
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/scalpel,
+/obj/item/staple_gun{
+	pixel_x = 5
+	},
+/obj/item/weldingtool,
+/obj/item/hemostat,
+/obj/item/surgical_spoon,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "bot2"
+	},
+/obj/item/suture,
+/obj/item/scissors/surgical_scissors,
+/obj/machinery/light,
+/turf/unsimulated/floor/redwhite{
+	dir = 1
+	},
+/area/space)
+"XT" = (
+/obj/machinery/weapon_stand/rifle_rack/recharger,
+/turf/simulated/floor/circuit/off,
+/area/space)
+"XW" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"Yc" = (
+/obj/lattice/directional_icons{
+	dir = 10
+	},
+/turf/space,
+/area/space)
+"Yd" = (
+/turf/simulated/floor/white,
+/area/space)
+"Yr" = (
+/obj/mesh/grille/steel{
+	icon_state = "grille3-0"
+	},
+/obj/disposalpipe/segment/mineral{
+	dir = 8;
+	name = "ice processing pipe"
+	},
+/turf/simulated/floor/plating/jen,
+/area/space)
+"Ys" = (
+/obj/machinery/sleeper,
+/turf/simulated/floor/sanitary/white,
+/area/space)
+"Yt" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 10
+	},
+/area/space)
+"Yu" = (
+/obj/decal/tile_edge/line/blue{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/circuit/off,
+/area/space)
+"YM" = (
+/obj/table/reinforced/auto,
+/obj/submachine/foodprocessor{
+	pixel_y = 8
+	},
+/turf/simulated/floor/black,
+/area/space)
+"YO" = (
+/obj/storage/secure/closet/kitchen,
+/turf/simulated/floor/black,
+/area/space)
+"YQ" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	color = "aqua";
+	name = "reservoir";
+	dir = 8
+	},
+/area/sunken{
+	name = "Distillation Chamber"
+	})
+"YT" = (
+/turf/simulated/floor/glassblock/transparent/large/cyan,
+/area/space)
+"YU" = (
+/obj/machinery/door/airlock/gannets/command,
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/circuit/off,
+/area/space)
+"YV" = (
+/obj/fakeobject/bigatmos/bigatmos2,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"YY" = (
+/obj/machinery/vehicle/pod_smooth/industrial,
+/turf/simulated/floor/engine/caution/west,
+/area/space)
+"Zb" = (
+/obj/machinery/door/airlock/gannets/glass,
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 8
+	},
+/area/space)
+"Zp" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/disposaloutlet/north{
+	desc = "An outlet for the river loop system.";
+	dir = 4;
+	layer = 4;
+	name = "Prison Hold";
+	pixel_x = -7
+	},
+/turf/space/fluid/cenote{
+	name = "reservoir"
+	},
+/area/space)
+"Zq" = (
+/obj/disposalpipe/segment/mineral{
+	dir = 8;
+	name = "ice processing pipe"
+	},
+/turf/simulated/floor/stairs/dark,
+/area/space)
+"Zr" = (
+/obj/ladder/cruiser/syndicate{
+	id = "cruiser_aqua_crew1";
+	name = "barracks"
+	},
+/obj/machinery/light/emergency/exitsign{
+	desc = "There's a crew ladder here.";
+	name = "illuminated ladder shaft";
+	dir = 4;
+	pixel_y = 12;
+	pixel_x = 10
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/space)
+"Zv" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/turf/simulated/floor/plating/jen,
+/area/space)
+"ZM" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2{
+	color = "aqua";
+	name = "reservoir";
+	dir = 10
+	},
+/area/sunken{
+	name = "Distillation Chamber"
+	})
+"ZO" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/obj/reagent_dispensers/watertank/big,
+/turf/simulated/floor/engine,
+/area/space)
+"ZP" = (
+/obj/machinery/conveyor/SN,
+/turf/simulated/floor/engine,
+/area/space)
+"ZY" = (
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 6
+	},
+/area/space)
+
+(1,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+qq
+qq
+qq
+jT
+jT
+qq
+qq
+qq
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(2,1,1) = {"
+jT
+Gk
+Gk
+Gk
+Gk
+Gk
+Gk
+Gk
+hE
+Gk
+Gk
+jT
+jT
+jT
+jT
+jT
+jT
+qq
+qq
+qq
+Xu
+qm
+mE
+bF
+Xu
+Xu
+qm
+mE
+bF
+Xu
+qq
+qq
+qq
+jT
+jT
+jT
+jT
+jT
+jT
+Gk
+Gk
+Gk
+hE
+hE
+hE
+hE
+hE
+Gk
+Gk
+jT
+"}
+(3,1,1) = {"
+jT
+Gk
+zF
+xP
+fy
+YM
+WX
+Gk
+YO
+bD
+QZ
+jT
+jT
+ba
+jT
+jT
+Xu
+qm
+mE
+bF
+Xu
+VG
+VG
+VG
+Fn
+VB
+VG
+VG
+VG
+Xu
+qm
+mE
+bF
+Xu
+jT
+jT
+ba
+jT
+jT
+QZ
+sN
+Ax
+ps
+ps
+ps
+ps
+ps
+ps
+Gk
+jT
+"}
+(4,1,1) = {"
+jT
+QZ
+De
+De
+fy
+De
+De
+kn
+De
+De
+QZ
+jT
+jT
+Nj
+Xu
+Xu
+Xu
+ld
+zO
+gy
+Ua
+fh
+oH
+da
+zO
+zO
+fh
+oH
+da
+Ua
+CL
+zd
+LX
+Xu
+Xu
+Xu
+Yc
+jT
+jT
+QZ
+sN
+IZ
+MD
+YT
+YT
+YT
+YT
+MD
+QZ
+jT
+"}
+(5,1,1) = {"
+jT
+Gk
+De
+De
+De
+De
+De
+De
+De
+nP
+QZ
+jT
+jT
+Xu
+Xu
+Vi
+Ua
+Wm
+zO
+zO
+Bc
+TQ
+Pu
+Fc
+VG
+VG
+aj
+Pu
+rV
+Bc
+zO
+zO
+GJ
+Ua
+qI
+Xu
+Xu
+jT
+jT
+QZ
+zg
+mh
+YT
+ci
+ci
+ci
+ci
+YT
+QZ
+jT
+"}
+(6,1,1) = {"
+jT
+Gk
+kE
+Gk
+De
+De
+WK
+De
+De
+zl
+Gk
+Og
+Og
+Xu
+En
+ms
+Ua
+YV
+XW
+Ca
+Ua
+pz
+ye
+HX
+zO
+zO
+pz
+hL
+HX
+Ua
+TZ
+XW
+of
+Ua
+km
+ms
+Xu
+Og
+Og
+Gk
+sN
+IZ
+YT
+ci
+ci
+ci
+ci
+YT
+QZ
+jT
+"}
+(7,1,1) = {"
+jT
+Gk
+Gk
+Gk
+wQ
+Gk
+di
+BO
+BO
+Gk
+Gk
+Gk
+Gk
+Gk
+eG
+HQ
+Ua
+Ua
+BW
+Ua
+Ua
+El
+Ua
+El
+Ua
+Ua
+Er
+Ua
+Ua
+Ua
+Ua
+ul
+Ua
+Ua
+aD
+HQ
+Gk
+Gk
+Gk
+Gk
+sN
+IZ
+YT
+ci
+ci
+ci
+ci
+YT
+QZ
+jT
+"}
+(8,1,1) = {"
+jT
+Gk
+kd
+kd
+kd
+kd
+kd
+kd
+kd
+kd
+kd
+eD
+Gk
+aO
+MP
+HQ
+Gk
+Gk
+Gk
+Gk
+Gk
+Pw
+Ua
+Pw
+Ua
+qU
+Gu
+pl
+Ua
+Gk
+Gk
+Gk
+Gk
+Gk
+aD
+GR
+Yt
+Gk
+Ro
+zB
+sN
+IZ
+YT
+ci
+ci
+ci
+ci
+YT
+QZ
+jT
+"}
+(9,1,1) = {"
+jT
+Gk
+VX
+bl
+VX
+jd
+jd
+jd
+jd
+jd
+kd
+kd
+no
+aD
+Yd
+HQ
+Gk
+jh
+XT
+XT
+Gk
+Gk
+Gk
+Gk
+Gk
+Gk
+Gk
+Gk
+Gk
+Gk
+dE
+kA
+yc
+Gk
+aD
+Yd
+HQ
+RS
+sN
+sN
+sN
+IZ
+YT
+ci
+ci
+ci
+ci
+YT
+QZ
+jT
+"}
+(10,1,1) = {"
+jT
+QZ
+VX
+bl
+VX
+jd
+VX
+bl
+VX
+jd
+kd
+kd
+bZ
+aD
+Yd
+HQ
+pd
+bH
+bH
+PK
+Gk
+QK
+qL
+JG
+VI
+VI
+aS
+qL
+AM
+Gk
+hd
+dX
+SR
+Gk
+aD
+Yd
+HQ
+bZ
+qb
+sN
+sN
+CW
+MD
+YT
+YT
+YT
+YT
+MD
+QZ
+jT
+"}
+(11,1,1) = {"
+jT
+ij
+yz
+bl
+VX
+jd
+VX
+bl
+VX
+jd
+kd
+kd
+bZ
+aD
+Yd
+HQ
+pd
+bH
+bH
+bH
+Eh
+pr
+OI
+Iq
+VI
+VI
+Mi
+OI
+Kl
+hZ
+kA
+kA
+yc
+Gk
+aD
+Yd
+HQ
+bZ
+qb
+sN
+sN
+vz
+cN
+cN
+UH
+cN
+cN
+xY
+DX
+jT
+"}
+(12,1,1) = {"
+jT
+jT
+ij
+yz
+Io
+jd
+VX
+bl
+VX
+jd
+kd
+kd
+OH
+aD
+Yd
+HQ
+Gk
+Gk
+hE
+Gk
+Gk
+Ey
+rm
+Ma
+Lm
+Lm
+At
+rm
+Nr
+Gk
+Gk
+Gk
+Gk
+Gk
+aD
+Yd
+HQ
+yY
+sN
+sN
+sN
+sN
+sN
+sN
+XN
+sN
+xY
+DX
+jT
+jT
+"}
+(13,1,1) = {"
+jT
+jT
+jT
+je
+Gk
+hE
+Gk
+Gk
+Gk
+UE
+kd
+kd
+Gk
+aD
+Yd
+HQ
+Gk
+bH
+bH
+bH
+bH
+KQ
+qL
+To
+Lm
+Lm
+eS
+qL
+Xk
+bH
+bH
+bH
+bH
+nY
+aD
+Yd
+HQ
+Gk
+sN
+sN
+sN
+Gk
+Gk
+hE
+Gk
+Gk
+DX
+jT
+jT
+jT
+"}
+(14,1,1) = {"
+jT
+jT
+jT
+jT
+Av
+jT
+jT
+Nj
+Gk
+Gk
+hE
+Gk
+Gk
+aD
+Yd
+HQ
+Gk
+bH
+bH
+bH
+bH
+pr
+OI
+yD
+Lm
+Lm
+Ds
+OI
+Kl
+bH
+bH
+bH
+bH
+bZ
+aD
+Yd
+HQ
+Gk
+Uu
+bw
+Uu
+Xu
+Yc
+jT
+jT
+Av
+jT
+jT
+jT
+jT
+"}
+(15,1,1) = {"
+jT
+jT
+jT
+Xu
+Xu
+hE
+Xu
+Xu
+Xu
+aP
+gV
+gV
+xV
+aD
+Yd
+HQ
+Gk
+bH
+bH
+bH
+bH
+Ey
+rm
+Dd
+VI
+VI
+Po
+rm
+Nr
+bH
+bH
+bH
+bH
+bZ
+aD
+Yd
+HQ
+Gk
+Gk
+Gk
+Gk
+Xu
+Xu
+hE
+Xu
+Xu
+Xu
+jT
+jT
+jT
+"}
+(16,1,1) = {"
+jT
+jT
+jT
+fL
+Ww
+uS
+uS
+fL
+at
+at
+at
+at
+Zb
+MP
+Yd
+HQ
+Gk
+Yu
+Yu
+Yu
+Oi
+KQ
+qL
+JG
+VI
+VI
+aS
+qL
+Xk
+Dn
+Yu
+Yu
+Yu
+YU
+aD
+Yd
+GR
+at
+at
+at
+at
+at
+IO
+jd
+oG
+wU
+Xu
+jT
+jT
+jT
+"}
+(17,1,1) = {"
+jT
+jT
+jT
+eH
+vA
+vA
+vA
+eH
+NO
+NO
+NO
+NO
+Cz
+vS
+Yd
+HQ
+Gk
+pv
+lZ
+Mb
+xl
+pr
+WR
+Iq
+VI
+VI
+Mi
+Um
+Kl
+Gb
+Uw
+lZ
+Hj
+Gk
+aD
+Yd
+PW
+NO
+NO
+NO
+NO
+NO
+Xu
+Nw
+Kw
+vw
+Xu
+jT
+jT
+jT
+"}
+(18,1,1) = {"
+jT
+jT
+jT
+Xu
+Xu
+Xu
+Xu
+Xu
+hE
+SQ
+Du
+hE
+rW
+aD
+Yd
+HQ
+Gk
+lZ
+lZ
+Mb
+xl
+Ey
+Vc
+Dd
+VI
+VI
+Po
+rm
+Nr
+Gb
+uc
+lZ
+lZ
+Gk
+aD
+Yd
+HQ
+Gk
+Gk
+Gk
+Gk
+Gk
+Xu
+Xu
+Xu
+Xu
+Xu
+jT
+jT
+jT
+"}
+(19,1,1) = {"
+jT
+jT
+jT
+jT
+Xu
+Xu
+Wg
+nD
+nD
+nD
+lG
+nD
+zv
+aD
+Yd
+HQ
+Gk
+Gk
+Ae
+fV
+xl
+KQ
+qL
+JG
+VI
+VI
+aS
+qL
+Xk
+Gb
+fV
+lZ
+Gk
+Gk
+aD
+Yd
+HQ
+lL
+Gu
+dT
+nt
+Gu
+Gu
+Gu
+Xu
+Xu
+jT
+jT
+jT
+jT
+"}
+(20,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Xu
+AG
+nD
+nD
+nD
+nD
+nD
+vq
+aD
+Yd
+GR
+PY
+Gk
+Gk
+yL
+xl
+pr
+Az
+WT
+VI
+VI
+os
+Az
+Kl
+Gb
+KP
+Gk
+Gk
+FZ
+MP
+Yd
+HQ
+Gk
+Rz
+Gk
+Rz
+Gk
+qU
+qU
+Xu
+jT
+jT
+jT
+jT
+jT
+"}
+(21,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Xu
+Xu
+Xu
+Xu
+NN
+bi
+Ls
+MS
+Ml
+NO
+NO
+ZY
+Vz
+Gk
+Gk
+xl
+bH
+yX
+Dm
+Un
+Un
+Qr
+yX
+bH
+Gb
+Gk
+Gk
+Vz
+gh
+NO
+NO
+lW
+Gk
+Pw
+Gk
+Pw
+Xu
+Xu
+Xu
+Xu
+jT
+jT
+jT
+jT
+jT
+"}
+(22,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Nj
+BL
+mI
+Xu
+Ua
+Ua
+hE
+Ua
+Ua
+Ua
+Ua
+hE
+Vw
+hE
+Gk
+Gk
+Gk
+hE
+hE
+hE
+hE
+hE
+hE
+Gk
+Gk
+Gk
+hE
+Vw
+hE
+UX
+WS
+WS
+UX
+WS
+WS
+UX
+Xu
+mI
+TW
+Yc
+jT
+jT
+jT
+jT
+jT
+"}
+(23,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Nj
+Wk
+mI
+Ua
+Ua
+mb
+GF
+GF
+GF
+ts
+Ua
+Ua
+GS
+NY
+GS
+GS
+GS
+fr
+CO
+CO
+Lc
+nz
+uJ
+GS
+GS
+GS
+NY
+GS
+UX
+UX
+hU
+ia
+mm
+Cq
+Uc
+UX
+UX
+mI
+Wk
+Yc
+jT
+jT
+jT
+jT
+jT
+"}
+(24,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Nj
+KN
+QI
+wk
+FG
+FG
+FG
+YY
+GF
+GF
+Jf
+Ua
+GS
+GS
+GS
+GS
+GS
+DS
+jZ
+CO
+Lc
+GC
+Eu
+GS
+GS
+GS
+GS
+GS
+UX
+Da
+hx
+hx
+hx
+hx
+hx
+IS
+UX
+mI
+TW
+Yc
+jT
+jT
+jT
+jT
+jT
+"}
+(25,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Nj
+zx
+Ft
+ln
+CQ
+CQ
+CQ
+CQ
+GF
+GF
+MG
+Ua
+wg
+wg
+wg
+hE
+hE
+dK
+dK
+uw
+db
+dK
+rv
+hE
+hE
+wg
+wg
+wg
+UX
+Ok
+hx
+rd
+Ys
+rd
+Ys
+eg
+UX
+mI
+TW
+Yc
+jT
+jT
+jT
+jT
+jT
+"}
+(26,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Nj
+Su
+JV
+Ah
+Ej
+Ej
+Ej
+Ej
+GF
+GF
+GF
+FW
+AO
+AO
+AO
+AO
+AO
+uJ
+bL
+CO
+Lc
+nz
+fr
+AO
+AO
+AO
+AO
+AO
+Fr
+Cn
+hx
+hx
+hx
+ey
+hx
+gT
+UX
+mI
+TW
+Yc
+jT
+jT
+jT
+jT
+jT
+"}
+(27,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Nj
+Wk
+mI
+Ua
+hE
+hE
+hE
+Ua
+UY
+GF
+GF
+Ff
+AO
+AO
+AO
+AO
+AO
+Eu
+bL
+CO
+Lc
+nz
+DS
+AO
+AO
+AO
+AO
+AO
+Fr
+Cn
+hx
+hx
+Ny
+mJ
+hP
+bk
+UX
+mI
+Wk
+Yc
+jT
+jT
+jT
+jT
+jT
+"}
+(28,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Nj
+BL
+mI
+qx
+Bl
+DR
+DR
+DR
+GF
+GF
+NS
+Ua
+wg
+wg
+wg
+wg
+wg
+wg
+hE
+uw
+db
+hE
+wg
+wg
+wg
+wg
+wg
+wg
+UX
+xe
+hx
+Ra
+VZ
+Cc
+KX
+Db
+UX
+mI
+TW
+Yc
+jT
+jT
+jT
+jT
+jT
+"}
+(29,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Nj
+Wk
+mI
+Ua
+hE
+Ef
+hE
+Ua
+GF
+GF
+GF
+Ua
+MA
+oM
+as
+ZP
+NR
+wg
+Fu
+CO
+Lc
+WC
+Ua
+Ua
+Ua
+Ua
+Qm
+Ua
+UX
+sg
+hx
+hx
+Ny
+gX
+JH
+vT
+UX
+mI
+Wk
+Yc
+jT
+jT
+jT
+jT
+jT
+"}
+(30,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Nj
+zx
+Ft
+wk
+FG
+qE
+FG
+FG
+GF
+GF
+GF
+Vt
+Oz
+CQ
+CQ
+CQ
+CQ
+qe
+bL
+CO
+Lc
+nz
+fr
+qW
+qW
+Dp
+aA
+rs
+UX
+iO
+hx
+hx
+hx
+ey
+hx
+gT
+UX
+mI
+TW
+Yc
+jT
+jT
+jT
+jT
+jT
+"}
+(31,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Nj
+zx
+Ft
+ln
+CQ
+QS
+CQ
+Gs
+GF
+QV
+NS
+Ua
+ZO
+pi
+Xa
+ZP
+NR
+hz
+bL
+CO
+Lc
+nz
+DS
+qW
+qW
+qW
+qW
+uG
+UX
+ro
+hx
+hw
+lg
+cI
+lg
+XO
+UX
+mI
+TD
+Yc
+jT
+jT
+jT
+jT
+jT
+"}
+(32,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Nj
+Su
+JV
+Ah
+Ej
+jY
+Ej
+Ej
+GF
+QV
+lJ
+Ua
+wg
+wg
+wg
+wg
+wg
+wg
+bL
+CO
+Lc
+nz
+Ua
+Ua
+Ua
+Ua
+Ua
+Ua
+UX
+mu
+hx
+hx
+hx
+hx
+hx
+IS
+UX
+mI
+TW
+Yc
+jT
+jT
+jT
+jT
+jT
+"}
+(33,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Nj
+Wk
+mI
+Ua
+Ua
+ge
+GF
+GF
+GF
+JA
+Ua
+Ua
+Sy
+Sy
+Sy
+ct
+Zv
+wg
+bL
+CO
+Lc
+nz
+Ua
+Tl
+pO
+jj
+Br
+SG
+UX
+UX
+ny
+ny
+pZ
+pZ
+fj
+UX
+UX
+mI
+Wk
+Yc
+jT
+jT
+jT
+jT
+jT
+"}
+(34,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Nj
+BL
+mI
+xC
+Ua
+DV
+Es
+Ua
+Ua
+Ua
+Ua
+JD
+pO
+pO
+pO
+pO
+pO
+wc
+bL
+CO
+Lc
+nz
+wc
+pO
+pO
+pO
+pO
+ct
+JZ
+UX
+WS
+WS
+WS
+Lt
+mo
+UX
+pj
+mI
+xd
+Yc
+jT
+jT
+jT
+jT
+jT
+"}
+(35,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Nj
+BL
+mI
+xC
+Xu
+RJ
+HJ
+pO
+pO
+pO
+pO
+pO
+pO
+pO
+Kp
+am
+am
+am
+dt
+uw
+db
+Kp
+am
+am
+am
+dt
+pO
+pO
+pO
+pO
+pO
+pO
+pO
+HJ
+Qg
+Xu
+xC
+mI
+av
+Yc
+jT
+jT
+jT
+jT
+jT
+"}
+(36,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Nj
+BL
+Gm
+bx
+NJ
+Zq
+pO
+pO
+Xu
+Xu
+Xu
+xW
+Kp
+WP
+Jw
+YQ
+YQ
+YQ
+Jw
+Fj
+rf
+Jw
+YQ
+YQ
+YQ
+Jw
+WP
+dt
+Jt
+Xu
+Xu
+Xu
+VU
+pO
+UT
+NJ
+bx
+bh
+ng
+Yc
+jT
+jT
+jT
+jT
+jT
+"}
+(37,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Nj
+Wk
+xC
+xC
+Xu
+Yr
+LI
+LI
+Xu
+OA
+Xu
+Kp
+Jw
+OS
+jf
+so
+so
+so
+EU
+RV
+RV
+EU
+so
+so
+so
+Cp
+OS
+Jw
+dt
+Xu
+uz
+Xu
+jr
+sI
+es
+Xu
+xC
+hk
+Wk
+Yc
+jT
+jT
+jT
+jT
+jT
+"}
+(38,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Xu
+Xu
+be
+be
+Xu
+DE
+Xu
+Xu
+Xu
+jm
+Xu
+MC
+PM
+so
+so
+so
+so
+so
+Pp
+RV
+RV
+Pp
+so
+so
+so
+so
+so
+MC
+Jy
+Xu
+Gv
+Xu
+ox
+Xu
+Xu
+Xu
+Vn
+Vn
+Xu
+Xu
+jT
+jT
+jT
+jT
+jT
+"}
+(39,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Xu
+Xu
+jT
+Av
+jT
+BC
+jT
+Nj
+Wk
+xC
+Kp
+Jw
+jf
+so
+so
+so
+so
+so
+Pp
+RV
+RV
+Pp
+so
+so
+so
+so
+so
+Lr
+Jw
+dt
+pO
+Xu
+TA
+jT
+Av
+jT
+Av
+jT
+Xu
+Xu
+jT
+jT
+jT
+jT
+jT
+"}
+(40,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+Av
+jT
+jT
+Av
+jT
+gf
+jT
+Nj
+BL
+xC
+MC
+PM
+so
+so
+so
+so
+so
+kD
+Pp
+RV
+RV
+Pp
+so
+so
+so
+so
+so
+kD
+MC
+Jy
+pO
+Xu
+TA
+jT
+Av
+jT
+Av
+jT
+jT
+Av
+jT
+jT
+jT
+jT
+jT
+"}
+(41,1,1) = {"
+jT
+jT
+jT
+jT
+hy
+mc
+hy
+jT
+Nj
+Nb
+AE
+cA
+EG
+BL
+xC
+MC
+PM
+so
+so
+so
+so
+so
+so
+Pp
+RV
+RV
+Pp
+so
+so
+so
+so
+so
+so
+MC
+Jy
+pO
+Xu
+ox
+Xu
+Xu
+Xu
+Yc
+jT
+hy
+mc
+hy
+jT
+jT
+jT
+jT
+"}
+(42,1,1) = {"
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+Nb
+UF
+IA
+cJ
+zZ
+vX
+nk
+MC
+uB
+so
+so
+so
+so
+so
+so
+EU
+RV
+RV
+EU
+so
+so
+so
+so
+so
+so
+MC
+Jy
+kg
+kg
+ox
+pO
+pO
+Xu
+Xu
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+"}
+(43,1,1) = {"
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+zZ
+Sf
+Sf
+Sf
+rZ
+BL
+xC
+ch
+KM
+so
+so
+so
+so
+so
+Kp
+dq
+RV
+RV
+Lr
+dt
+so
+so
+so
+so
+so
+MC
+Jy
+pO
+pO
+ox
+uA
+pO
+Iu
+Xu
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+"}
+(44,1,1) = {"
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+zZ
+Sf
+Sf
+cJ
+zZ
+Mt
+nk
+MC
+uB
+so
+so
+so
+so
+so
+Pp
+Oo
+RV
+RV
+vb
+Pp
+so
+so
+so
+so
+so
+MC
+Jy
+kg
+VO
+ox
+pO
+pO
+Iu
+Xu
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+"}
+(45,1,1) = {"
+jT
+jT
+jT
+jT
+Nj
+PF
+Yc
+jT
+zZ
+Sf
+Sf
+Sf
+Gx
+xC
+xC
+MC
+PM
+so
+so
+so
+so
+so
+Pp
+ph
+RV
+RV
+yN
+Pp
+so
+so
+so
+so
+so
+MC
+Jy
+pO
+pO
+UT
+pO
+pO
+Iu
+Xu
+jT
+Nj
+PF
+Yc
+jT
+jT
+jT
+jT
+"}
+(46,1,1) = {"
+jT
+jT
+jT
+jT
+hy
+mc
+hy
+jT
+zZ
+Sf
+Sf
+cJ
+zZ
+Mt
+nk
+MC
+uB
+so
+so
+so
+so
+so
+Pp
+Oo
+RV
+RV
+Sc
+Pp
+so
+so
+so
+so
+so
+MC
+Jy
+kg
+VO
+ox
+pO
+pO
+Iu
+Xu
+jT
+hy
+mc
+hy
+jT
+jT
+jT
+jT
+"}
+(47,1,1) = {"
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+zZ
+Sf
+Sf
+Sf
+rZ
+BL
+xC
+ch
+KM
+so
+so
+so
+so
+so
+Lr
+dt
+RV
+RV
+Kp
+dq
+so
+so
+so
+so
+so
+MC
+Jy
+pO
+pO
+ox
+uA
+pO
+Iu
+Xu
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+"}
+(48,1,1) = {"
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+bX
+EG
+Sf
+cJ
+zZ
+vX
+nk
+MC
+uB
+so
+so
+so
+so
+so
+so
+EU
+RV
+RV
+EU
+so
+so
+so
+so
+so
+so
+MC
+Jy
+kg
+kg
+ox
+pO
+pO
+Xu
+Xu
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+"}
+(49,1,1) = {"
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+jT
+bX
+cA
+cA
+UF
+BL
+xC
+MC
+PM
+so
+so
+so
+so
+so
+so
+Pp
+RV
+RV
+Pp
+so
+so
+so
+so
+so
+so
+MC
+Jy
+pO
+Xu
+ox
+Xu
+Xu
+Xu
+jT
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+"}
+(50,1,1) = {"
+jT
+jT
+jT
+jT
+Nj
+PF
+Yc
+jT
+jT
+jT
+jT
+jT
+Nj
+BL
+xC
+MC
+PM
+so
+so
+so
+so
+so
+kD
+Pp
+RV
+RV
+Pp
+so
+so
+so
+so
+so
+kD
+MC
+Jy
+pO
+Xu
+TA
+jT
+jT
+jT
+jT
+jT
+Nj
+PF
+Yc
+jT
+jT
+jT
+jT
+"}
+(51,1,1) = {"
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+hy
+PF
+hy
+jT
+Nj
+Wk
+xC
+Lr
+Jw
+ZM
+so
+so
+so
+so
+so
+Pp
+RV
+RV
+Pp
+so
+so
+so
+so
+so
+Kp
+Jw
+dq
+pO
+Xu
+TA
+jT
+hy
+PF
+hy
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+"}
+(52,1,1) = {"
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+hy
+PF
+hy
+jT
+Xu
+Xu
+Xu
+Xu
+MC
+PM
+so
+so
+so
+so
+so
+Pp
+RV
+RV
+Pp
+so
+so
+so
+so
+so
+MC
+Jy
+Xu
+Gv
+Xu
+ox
+jT
+hy
+PF
+hy
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+"}
+(53,1,1) = {"
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+hy
+PF
+hy
+jT
+Xu
+Ar
+zO
+PT
+Lr
+Jw
+OS
+ZM
+so
+so
+so
+EU
+RV
+RV
+EU
+so
+so
+so
+KJ
+OS
+Jw
+dq
+Pq
+zO
+rF
+ox
+jT
+hy
+PF
+hy
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+"}
+(54,1,1) = {"
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+hy
+PF
+hy
+jT
+Xu
+mf
+zO
+zO
+zO
+Lr
+WP
+Jw
+nZ
+nZ
+nZ
+Jw
+pN
+Oy
+Jw
+nZ
+nZ
+nZ
+Jw
+WP
+dq
+pJ
+zO
+zO
+UQ
+ox
+jT
+hy
+PF
+hy
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+"}
+(55,1,1) = {"
+jT
+jT
+jT
+jT
+Nj
+PF
+Og
+Og
+Og
+PF
+Og
+Og
+Xu
+vN
+zO
+zO
+zO
+zO
+zO
+MC
+sJ
+Jw
+sJ
+dq
+CO
+Lc
+Lr
+sJ
+Jw
+sJ
+Jy
+pJ
+zO
+zO
+zO
+zO
+Hm
+ox
+Og
+Og
+PF
+Og
+Og
+Og
+PF
+Yc
+jT
+jT
+jT
+jT
+"}
+(56,1,1) = {"
+jT
+jT
+jT
+jT
+Nj
+pL
+dv
+dv
+dv
+pL
+dv
+dv
+Xu
+tl
+FI
+Xu
+Fh
+zO
+zO
+wL
+Cm
+Xu
+Zr
+Lc
+CO
+Lc
+CO
+Lu
+Xu
+VE
+wL
+zO
+zO
+zO
+Xu
+mf
+Hm
+ox
+dv
+dv
+NK
+dv
+dv
+dv
+NK
+Yc
+jT
+jT
+jT
+jT
+"}
+(57,1,1) = {"
+jT
+jT
+jT
+jT
+Nj
+PF
+XK
+XK
+XK
+PF
+XK
+XK
+Xu
+vN
+zO
+zO
+zO
+zO
+zO
+MC
+am
+Jw
+am
+dt
+eR
+TF
+Kp
+am
+Jw
+am
+Jy
+pJ
+zO
+zO
+zO
+zO
+Rc
+ox
+XK
+XK
+PF
+XK
+XK
+XK
+PF
+Yc
+jT
+jT
+jT
+jT
+"}
+(58,1,1) = {"
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+hy
+PF
+hy
+jT
+Xu
+Ar
+zO
+PT
+zO
+Kp
+WP
+Jw
+sJ
+sJ
+sJ
+Jw
+nK
+ob
+Jw
+sJ
+sJ
+sJ
+Jw
+WP
+dt
+pJ
+zO
+SH
+UQ
+ox
+jT
+hy
+PF
+hy
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+"}
+(59,1,1) = {"
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+hy
+PF
+hy
+jT
+Xu
+mf
+zO
+zO
+Kp
+Jw
+WP
+dq
+JR
+JR
+JR
+EU
+Jk
+Jk
+EU
+JR
+JR
+JR
+Lr
+WP
+Jw
+dt
+zP
+gS
+Ct
+ox
+jT
+hy
+PF
+hy
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+"}
+(60,1,1) = {"
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+hy
+PF
+hy
+jT
+Xu
+Xu
+Xu
+Xu
+MC
+Jy
+JR
+JR
+JR
+JR
+JR
+Pp
+RV
+RV
+Pp
+JR
+JR
+JR
+JR
+JR
+MC
+Jy
+Xu
+Xu
+Xu
+ox
+jT
+hy
+PF
+hy
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+"}
+(61,1,1) = {"
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+hy
+PF
+hy
+jT
+Nj
+Wk
+xC
+Kp
+Jw
+dq
+JR
+JR
+JR
+JR
+JR
+Pp
+RV
+RV
+Pp
+JR
+JR
+JR
+JR
+JR
+Lr
+Jw
+dt
+xC
+Wk
+TA
+jT
+hy
+PF
+hy
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+"}
+(62,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Nj
+PF
+Yc
+jT
+Nj
+BL
+xC
+MC
+Jy
+JR
+JR
+JR
+JR
+JR
+mp
+Pp
+RV
+RV
+Pp
+JR
+JR
+JR
+JR
+JR
+mp
+MC
+Jy
+xC
+TW
+TA
+jT
+Nj
+PF
+Yc
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(63,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+Nj
+BL
+xC
+MC
+Jy
+JR
+JR
+JR
+JR
+JR
+JR
+Pp
+RV
+RV
+Pp
+JR
+JR
+JR
+JR
+JR
+JR
+MC
+Jy
+xC
+TW
+TA
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(64,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+Nj
+BL
+xC
+MC
+Jy
+JR
+JR
+JR
+JR
+JR
+JR
+EU
+qP
+RV
+EU
+JR
+JR
+JR
+JR
+JR
+JR
+MC
+Jy
+xC
+TW
+TA
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(65,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+Nj
+Wk
+xC
+MC
+Jy
+JR
+JR
+JR
+JR
+JR
+Kp
+dq
+RV
+RV
+Lr
+dt
+JR
+JR
+JR
+JR
+JR
+MC
+Jy
+xC
+Wk
+TA
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(66,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+Nj
+BL
+xC
+MC
+Jy
+JR
+JR
+JR
+JR
+JR
+ch
+RV
+RV
+RV
+RV
+ch
+JR
+JR
+JR
+JR
+JR
+MC
+Jy
+xC
+TW
+TA
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(67,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Nj
+PF
+Yc
+jT
+Nj
+BL
+xC
+MC
+Jw
+Ay
+Ay
+Rk
+Ay
+Ay
+Jy
+Bu
+RV
+RV
+Bu
+Bh
+eK
+eK
+Rl
+eK
+eK
+Cg
+sT
+SX
+gx
+Fk
+jT
+Nj
+PF
+Yc
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(68,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+Nj
+BL
+xC
+MC
+Jy
+HL
+gd
+gd
+gd
+Tg
+vp
+kO
+Mx
+Xy
+iP
+Sd
+DM
+kY
+gK
+iQ
+iQ
+MC
+Jy
+xC
+TW
+Yc
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(69,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+Nj
+Wk
+xC
+MC
+Jy
+zV
+gd
+gd
+gd
+iH
+Lr
+dt
+RV
+RV
+Kp
+dq
+pt
+gd
+gd
+gd
+gd
+MC
+Jy
+xC
+Wk
+Yc
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(70,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+hy
+PF
+hy
+jT
+Nj
+BL
+xC
+MC
+Jw
+Ay
+Ay
+zV
+gd
+qn
+RV
+Pp
+RV
+RV
+Pp
+RV
+HB
+gd
+gd
+gd
+gd
+MC
+Jy
+xC
+TW
+Yc
+jT
+hy
+PF
+hy
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(71,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+hy
+BY
+hy
+jT
+Nj
+BL
+xC
+MC
+Jy
+Ie
+Ha
+gd
+gd
+Pp
+NQ
+Pp
+RV
+RV
+Pp
+gH
+Pp
+oq
+gd
+gd
+gi
+MC
+Jy
+xC
+TW
+Yc
+jT
+hy
+BY
+hy
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(72,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Nj
+BL
+xC
+MC
+Jy
+zK
+EU
+Wx
+gd
+Pp
+RV
+oS
+RV
+RV
+vu
+RV
+Pp
+Wx
+gd
+gd
+gi
+MC
+Jy
+xC
+TW
+Yc
+jT
+jT
+VM
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(73,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Nj
+Wk
+xC
+Lr
+Jw
+am
+dq
+zV
+gd
+Lr
+WL
+Jy
+RV
+RV
+MC
+WL
+dq
+zV
+gd
+aW
+Kp
+Jw
+dq
+xC
+Wk
+Yc
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(74,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Xu
+Xu
+Xu
+Xu
+MC
+AX
+ig
+gd
+gd
+gd
+gd
+ch
+RV
+RV
+ch
+Iy
+gd
+gd
+gd
+ow
+MC
+Jy
+Xu
+Xu
+Xu
+Xu
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(75,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Xu
+iX
+OE
+wx
+Lr
+Jw
+am
+dt
+Hx
+Cr
+Cr
+ch
+RV
+RV
+ch
+Iy
+gd
+BV
+Kp
+am
+Jw
+dq
+cb
+zO
+cb
+Xu
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(76,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Xu
+xK
+zO
+zO
+zO
+Lr
+sJ
+Jw
+am
+am
+am
+Jw
+fa
+bm
+Jw
+am
+am
+am
+Jw
+sJ
+dq
+zO
+zO
+zO
+zO
+Xu
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(77,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Xu
+iX
+zO
+zO
+zO
+zO
+zO
+MC
+sJ
+Jw
+sJ
+dq
+CO
+Lc
+Lr
+sJ
+Jw
+sJ
+Jy
+Pq
+zO
+zO
+zO
+zO
+cb
+Xu
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(78,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Xu
+OO
+zO
+Xu
+bd
+zO
+zO
+wL
+Pz
+Xu
+gO
+Lc
+CO
+Lc
+CO
+Lu
+Xu
+VE
+wL
+zO
+zO
+zO
+Xu
+mf
+zO
+Xu
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(79,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Xu
+iX
+zO
+zO
+zO
+zO
+zO
+MC
+am
+Jw
+am
+dt
+CO
+Lc
+Kp
+am
+Jw
+am
+Jy
+qf
+zO
+zO
+zO
+zO
+cb
+Xu
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(80,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Xu
+xK
+zO
+zO
+zO
+Kp
+am
+Jw
+sJ
+sJ
+sJ
+Jw
+fa
+bm
+Jw
+sJ
+sJ
+sJ
+Jw
+am
+dt
+zO
+zO
+zO
+zO
+Xu
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(81,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Xu
+iX
+OE
+wx
+Kp
+Jw
+sJ
+dq
+Ko
+CT
+dR
+EU
+Pc
+Pc
+EU
+ju
+ju
+ju
+Lr
+sJ
+Jw
+dt
+cb
+zO
+cb
+Xu
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(82,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Xu
+Xu
+Xu
+Xu
+MC
+Jy
+hn
+gd
+gd
+gd
+gd
+Pp
+Pc
+Pc
+Pp
+gd
+gd
+gd
+gd
+gd
+MC
+Jy
+Xu
+Xu
+Xu
+Xu
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(83,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Nj
+Wk
+xC
+Kp
+Jw
+dq
+Ku
+gd
+Ne
+Kp
+WL
+Jy
+Pc
+Pc
+MC
+WL
+dt
+yH
+gd
+gd
+Lr
+Jw
+dt
+xC
+Wk
+Yc
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(84,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Nj
+BL
+xC
+MC
+So
+wP
+eL
+eL
+uL
+Pp
+RV
+Qw
+Pc
+Pc
+nU
+RV
+Pp
+yH
+gd
+gd
+Ib
+MC
+Jy
+xC
+TW
+Yc
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(85,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Nj
+BL
+xC
+MC
+Jw
+Ay
+Ay
+Gd
+Ay
+Jy
+HJ
+Pp
+Pc
+Pc
+Pp
+HJ
+Pp
+yH
+gd
+gd
+jA
+MC
+Jy
+xC
+TW
+Yc
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(86,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Nj
+BL
+xC
+MC
+Jy
+yy
+FQ
+FQ
+FQ
+qn
+RV
+EU
+Hf
+Pc
+EU
+RV
+HB
+gd
+gd
+gd
+cD
+MC
+Jy
+xC
+TW
+Yc
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(87,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Nj
+Wk
+xC
+MC
+Jy
+cZ
+Ne
+gd
+gd
+OD
+Kp
+dq
+Pc
+Pc
+Lr
+dt
+lC
+gd
+gd
+gd
+cD
+MC
+Jy
+xC
+Wk
+Yc
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(88,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Nj
+BL
+xC
+MC
+Jy
+AY
+gd
+gd
+gd
+Hs
+Pp
+Pc
+Pc
+Pc
+Pc
+Pp
+bP
+RP
+Vr
+gd
+cD
+MC
+Jy
+xC
+TW
+Yc
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(89,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Nj
+BL
+xC
+MC
+Jw
+Ay
+Ay
+Rk
+Ay
+Ay
+Jy
+aC
+OB
+Pc
+ev
+MC
+Ay
+Ay
+Rk
+Ay
+Ay
+Jw
+Jy
+xC
+TW
+Yc
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(90,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Nj
+BL
+xC
+MC
+Jy
+JR
+JR
+JR
+JR
+JR
+Pp
+er
+Hy
+Fz
+hu
+Nu
+oa
+JR
+JR
+JR
+JR
+MC
+Jy
+xC
+TW
+Yc
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(91,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Nj
+Wk
+xC
+MC
+Jy
+JR
+JR
+JR
+JR
+JR
+Lr
+dt
+zN
+Pc
+Kp
+jD
+oa
+JR
+JR
+Dj
+JR
+MC
+Jy
+xC
+Wk
+Yc
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(92,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Nj
+BL
+xC
+MC
+Jy
+JR
+JR
+JR
+JR
+JR
+JR
+Lr
+AI
+AI
+dq
+Zp
+JR
+JR
+JR
+JR
+JR
+MC
+Jy
+xC
+TW
+Yc
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(93,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Nj
+BL
+xC
+MC
+Jy
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+MC
+Jy
+xC
+TW
+Yc
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(94,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Nj
+BL
+xC
+MC
+Jy
+JR
+JR
+JR
+JR
+dw
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+Dj
+JR
+JR
+mp
+MC
+Jy
+xC
+TW
+Yc
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(95,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Nj
+Wk
+be
+Lr
+Jw
+dt
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+Kp
+Jw
+dq
+be
+Wk
+Yc
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(96,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Xu
+Xu
+jT
+jT
+MC
+Jy
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+MC
+Jy
+SE
+jT
+Xu
+Xu
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(97,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Xu
+Xu
+jT
+jT
+Lr
+Jw
+am
+dt
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+JR
+Kp
+am
+Jw
+dq
+SE
+jT
+Xu
+Xu
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(98,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+Av
+jT
+jT
+jT
+jT
+Lr
+sJ
+Jw
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+Jw
+sJ
+dq
+SE
+jT
+jT
+jT
+Av
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(99,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+VM
+jT
+jT
+jT
+jT
+jT
+jT
+Lr
+sJ
+sJ
+sJ
+sJ
+sJ
+sJ
+sJ
+sJ
+sJ
+sJ
+Jy
+SE
+jT
+jT
+jT
+jT
+jT
+VM
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
+(100,1,1) = {"
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+jT
+"}
