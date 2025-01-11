@@ -334,7 +334,35 @@ ARTRET_INCREASE_ARMOR
 
 /obj/item/artifact_tuner
 	name = "Artifact tuner"
-	desc = "A device loaded with a one-time use charge that will randomly alter the faults of an artifact."
+	desc = "A device loaded with a one-time use charge that will randomly alter the faults of an activated artifact."
+	var/used = FALSE
+
+	afterattack(atom/target, mob/user, reach, params)
+		..()
+		if (src.used)
+			return
+		var/obj/O = target
+		if (!istype(O) || !O.artifact)
+			boutput(user, SPAN_NOTICE("[O] is not an artifact, [src] will have no effect."))
+			return
+		if (!O.artifact.activated)
+			boutput(user, SPAN_NOTICE("[O] is not activated, [src] will have no effect."))
+			return
+		var/datum/artifact/artifact = O.artifact
+		if (length(artifact.faults))
+			if (prob(90))
+				artifact.faults -= pick(artifact.faults)
+			if (prob(5))
+				for (var/i in 1 to rand(1, 3))
+					O.ArtifactDevelopFault(100)
+			else
+				O.ArtifactDevelopFault(100)
+		else
+			O.ArtifactDevelopFault(100) // bad effect guaranteed if fault didn't exist before
+
+		src.name = "Used artifact tuner"
+		src.desc = "A used artifact tuner. It has no more use and can be thrown away."
+		src.used = TRUE
 
 #undef ARTRET_RESONATOR
 #undef ARTRET_SCRAMBLER
