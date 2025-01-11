@@ -1,5 +1,9 @@
 
 (t)fri jan 10 25
+(u)glowbold
+(p)21733
+(e)🆕🎨💊|C-Feature, C-Sprites, A-Medical
+(+)Monitor cybereyes can remotely view cameras. Ask a roboticist to install one today!
 (u)patricia
 (p)21957
 (e)🆕💡|C-Feature, A-Station-Systems
