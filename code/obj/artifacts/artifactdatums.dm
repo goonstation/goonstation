@@ -48,6 +48,8 @@ ABSTRACT_TYPE(/datum/artifact/)
 	var/deact_text = null
 	/// How likely this artifact is to appear to be from an origin that it isn't from
 	var/scramblechance = 10
+	/// this artifact is currently disguised as a different origin
+	var/disguised = FALSE
 	/// used to set straight icon_states on activation instead of fx overlays
 	var/nofx = 0
 	/// special_addendum for ArtifactLogs() proc
