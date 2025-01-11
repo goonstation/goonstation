@@ -5,25 +5,56 @@
 	},
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/blue,
+/obj/machinery/light/small,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "am" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	color = "aqua";
-	name = "reservoir";
-	dir = 4
+/obj/machinery/light,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ap" = (
+/obj/table/reinforced/industrial/auto,
+/turf/simulated/floor/plating/jen,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "as" = (
 /obj/machinery/conveyor/SN,
 /obj/item/reagent_containers/food/drinks/coolerbottle,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/engine,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "at" = (
 /turf/simulated/floor/airless/darkbluewhite{
 	dir = 8
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"au" = (
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/airless/twotone/blue,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "av" = (
 /obj/railing/cyan,
 /obj/table/scrap/auto,
@@ -32,7 +63,10 @@
 	anchored = 1
 	},
 /turf/simulated/floor/airless/plating,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "aA" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -40,86 +74,126 @@
 /turf/unsimulated/floor/longtile{
 	color = "grey"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "aC" = (
 /obj/stool/chair/office/syndie,
 /obj/item/device/radio/headset/pod_wars/syndicate/comtac,
-/obj/machinery/light/small/floor/cool/very,
+/obj/machinery/activation_button/flusher_button{
+	name = "chum chute";
+	id = "aqua_shark";
+	pixel_y = 29
+	},
 /turf/unsimulated/floor/engine/glow/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "aD" = (
 /turf/simulated/floor/airless/darkbluewhite{
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "aO" = (
-/obj/machinery/light/small{
+/obj/machinery/light{
 	dir = 1;
-	pixel_y = 12
+	layer = 9.1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/airless/darkbluewhite{
 	dir = 9
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "aP" = (
 /obj/stool/bench/blue/auto,
-/obj/admin_plaque{
-	name = "DDT-04 Beebe";
-	desc = "Decirprevo Distillation Tanker 04. Laid down at Ceres Orbital Gantrywerks in 2045.";
-	pixel_y = 25
-	},
 /obj/machinery/light/emergency/exitsign{
 	dir = 1;
 	pixel_y = 21
 	},
 /turf/simulated/floor/airless/twotone/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "aS" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line-broken1"
 	},
 /turf/simulated/floor/airless/marble/border_bw,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "aW" = (
 /obj/storage/crate/robotics_supplies,
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "ba" = (
 /obj/lattice/directional_icons{
 	dir = 9
 	},
 /turf/space,
 /area/space)
+"bb" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/neutral/side,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "bd" = (
 /obj/decal/stage_edge/alt{
 	color = "gray"
 	},
 /obj/machinery/space_heater,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "be" = (
 /obj/railing/cyan{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "bh" = (
 /obj/mesh/catwalk/jen{
 	icon_state = "M9-0"
 	},
 /turf/simulated/floor/airless/plating,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "bi" = (
 /obj/table/sleek/auto,
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
 /obj/item/baton/cane,
 /turf/simulated/floor/airless/twotone/red,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "bk" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 1
@@ -127,11 +201,17 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "bl" = (
 /obj/table/auto,
 /turf/unsimulated/floor/wood/eight,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "bm" = (
 /obj/machinery/door/airlock/gannets/glass/morgue/alt{
 	name = "gangway airlock";
@@ -139,24 +219,47 @@
 	},
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"bp" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	color = "aqua";
+	name = "reservoir"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "bw" = (
-/obj/table/wood/round/champagne,
-/obj/item/decoration/incenseholder{
-	pixel_y = 6
+/obj/machinery/door/airlock/gannets/glass{
+	dir = 4
 	},
 /turf/unsimulated/floor/pool/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "bx" = (
 /obj/mesh/catwalk/jen{
 	icon_state = "M3-0"
 	},
 /turf/simulated/floor/airless/plating,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "bD" = (
 /obj/machinery/vending/kitchen,
 /turf/simulated/floor/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "bF" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -164,37 +267,79 @@
 	},
 /obj/mapping_helper/wingrille_spawn/bulletproof,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "bH" = (
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "bL" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/neutral/side,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "bP" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
 	},
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/table/sleek/auto,
+/obj/item/radiojammer,
+/obj/item/radiojammer,
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "bX" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 5
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "bZ" = (
-/obj/window/auto/reinforced/the_tuff_stuff{
-	icon_state = "R0"
+/obj/storage/cart{
+	name = "laundry hamper";
+	desc = "A big rolling laundry cart."
 	},
-/turf/simulated/floor/circuit/off,
-/area/space)
+/turf/simulated/floor/plating/jen,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "cb" = (
 /obj/fakeobject/sealedsleeper,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"cg" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 12
+	},
+/obj/disposalpipe/segment/transport{
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/sanitary,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "ch" = (
 /turf/unsimulated/wall/setpieces/leadwindow/white/full{
 	desc = "A hardened porthole.";
@@ -202,20 +347,45 @@
 	color = "aqua";
 	dir = 4
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "ci" = (
-/turf/simulated/floor/glassblock/transparent/large/grey,
-/area/space)
+/turf/simulated/floor/glassblock/transparent/large/grey{
+	alpha = 100
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"cn" = (
+/obj/machinery/activation_button/flusher_button{
+	name = "mortuary chute";
+	id = "aqua_mortuary";
+	pixel_y = 5
+	},
+/obj/table/sleek/auto,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "ct" = (
-/obj/table/reinforced/industrial/auto,
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "cA" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 1;
 	name = "melt chamber"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "cD" = (
 /obj/table/sleek/auto,
 /obj/item/storage/pouch/tranq_pistol_dart,
@@ -224,16 +394,25 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "cI" = (
 /obj/table/auto,
 /obj/machinery/defib_mount,
 /turf/simulated/floor/sanitary/white,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "cJ" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor/engine/glow,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "cN" = (
 /obj/pool/perspective{
 	dir = 4;
@@ -242,7 +421,10 @@
 /turf/unsimulated/floor/pool/bluewhite{
 	dir = 8
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "cZ" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
@@ -252,40 +434,59 @@
 /obj/item/reagent_containers/emergency_injector/high_capacity/atropine,
 /obj/item/reagent_containers/emergency_injector/high_capacity/atropine,
 /obj/item/reagent_containers/emergency_injector/high_capacity/atropine,
+/obj/item_dispenser/latex_gloves,
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "da" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
 	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "db" = (
 /turf/simulated/floor/stairs/medical/wide{
 	dir = 8
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "di" = (
 /obj/table/reinforced/auto,
 /obj/item/bell/kitchen,
 /turf/unsimulated/floor/specialroom/cafeteria,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "dq" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2{
 	color = "aqua";
 	name = "reservoir";
 	dir = 6
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "dt" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2{
 	color = "aqua";
 	name = "reservoir";
 	dir = 10
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "dv" = (
 /obj/mesh/catwalk/jen{
 	icon_state = "M3-0"
@@ -295,16 +496,46 @@
 "dw" = (
 /mob/living/critter/aquatic/shark,
 /obj/effects/lightshaft/blue,
-/turf/space/fluid/cenote{
-	name = "reservoir"
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
 	},
-/area/space)
+/turf/simulated/floor/solidcolor/black{
+	name = "deep reservoir";
+	icon = 'icons/turf/outdoors.dmi';
+	icon_state = "cenote"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"dC" = (
+/obj/disposalpipe/trunk/transport,
+/obj/disposaloutlet/north{
+	name = "laundry outlet";
+	desc = "An outlet for the pneumatic laundry system."
+	},
+/turf/simulated/floor/plating/jen,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "dE" = (
 /obj/storage/closet/dresser/random{
 	pixel_y = 12
 	},
 /turf/unsimulated/floor/carpet/office/other,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"dI" = (
+/obj/map/light/dimreddish,
+/turf/simulated/floor/engine/glow,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "dK" = (
 /obj/window/auto/reinforced/the_tuff_stuff{
 	icon_state = "R5"
@@ -313,7 +544,10 @@
 	icon_state = "R3"
 	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "dR" = (
 /obj/fakeobject/safehouse/biomatter_tank{
 	name = "bioreactor";
@@ -322,19 +556,37 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "dT" = (
 /obj/submachine/chef_sink/chem_sink{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -5
 	},
+/obj/machinery/light/small,
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "dX" = (
 /obj/stool/chair/comfy/ergonomic,
 /turf/unsimulated/floor/carpet/office/other,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ec" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light,
+/turf/simulated/floor/airless/twotone/blue,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "eg" = (
 /obj/storage/crate/medical{
 	name = "Atropine"
@@ -347,13 +599,19 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "er" = (
 /obj/submachine/poster_creator{
 	dir = 8
 	},
 /turf/unsimulated/floor/engine/glow/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "es" = (
 /obj/mesh/grille/steel{
 	icon_state = "grille3-0"
@@ -363,42 +621,59 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "ev" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/machinery/light/small/floor/cool/very,
 /turf/unsimulated/floor/engine/glow/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "ey" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor/sanitary/white,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "eD" = (
-/obj/machinery/light/small,
+/obj/machinery/light,
 /turf/unsimulated/floor/specialroom/cafeteria,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "eG" = (
 /obj/machinery/vending/cards,
 /turf/simulated/floor/airless/darkbluewhite{
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "eH" = (
 /obj/forcefield/energyshield/perma,
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/airless/escape{
 	dir = 4
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "eK" = (
 /obj/disposalpipe/segment/morgue,
 /turf/unsimulated/wall/setpieces/leadwall/white_2{
 	color = "aqua";
 	name = "reservoir"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "eL" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -406,7 +681,10 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "eR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -414,7 +692,10 @@
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "eS" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line-broken1"
@@ -423,7 +704,10 @@
 	dir = 1
 	},
 /turf/simulated/floor/airless/marble/border_bw,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "fa" = (
 /obj/machinery/door/airlock/gannets/glass/morgue/alt{
 	name = "gangway airlock";
@@ -431,13 +715,19 @@
 	},
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "fh" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 6
 	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "fj" = (
 /obj/machinery/disposal/morgue,
 /obj/disposalpipe/trunk/morgue{
@@ -450,33 +740,51 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 8
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "fr" = (
 /turf/simulated/floor/stairs/medical/wide,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "fy" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "fL" = (
 /obj/forcefield/energyshield/perma,
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/airless/escape{
 	dir = 8
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "fV" = (
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 4;
 	name = "engineer's seat"
 	},
 /turf/simulated/floor/circuit/white,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "gd" = (
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "ge" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 8;
@@ -485,12 +793,16 @@
 /obj/decal/stage_edge/alt{
 	color = "gray"
 	},
-/obj/machinery/light/small{
+/obj/machinery/light{
 	dir = 4;
-	pixel_x = 12
+	layer = 9.1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "gf" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 8;
@@ -505,710 +817,20 @@
 /turf/simulated/floor/airless/darkbluewhite{
 	dir = 5
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "gi" = (
 /obj/machinery/recharge_station/syndicate,
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
-"gx" = (
-/obj/railing/cyan,
-/obj/disposalpipe/segment/morgue,
-/turf/simulated/floor/airless/plating,
-/area/space)
-"gy" = (
-/obj/fitness/weightlifter,
-/turf/unsimulated/floor/industrial,
-/area/space)
-"gH" = (
-/turf/simulated/floor/stairs/dark{
-	dir = 4
-	},
-/area/space)
-"gK" = (
-/obj/storage/crate/medical/morgue,
-/obj/item/reagent_containers/glass/bottle/formaldehyde,
-/obj/item/reagent_containers/glass/bottle/formaldehyde,
-/turf/unsimulated/floor/shiny{
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
 	color = "aqua"
-	},
-/area/space)
-"gO" = (
-/obj/ladder/cruiser/syndicate{
-	id = "cruiser_aqua_barracks";
-	name = "barracks"
-	},
-/obj/machinery/light/emergency/exitsign{
-	desc = "There's a crew ladder here.";
-	name = "illuminated ladder shaft";
-	dir = 4;
-	pixel_y = 12;
-	pixel_x = 10
-	},
-/turf/simulated/floor/airless/darkblue,
-/area/space)
-"gS" = (
-/obj/machinery/fluid_canister,
-/obj/machinery/conveyor/NS,
-/turf/unsimulated/floor/industrial,
-/area/space)
-"gT" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 1;
-	tag = "icon-sink (NORTH)"
-	},
-/turf/unsimulated/floor/redwhite{
-	dir = 1
-	},
-/area/space)
-"gV" = (
-/obj/stool/bench/blue/auto,
-/turf/simulated/floor/airless/twotone/blue,
-/area/space)
-"gX" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 9
-	},
-/turf/simulated/floor/sanitary/white,
-/area/space)
-"hd" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 12
-	},
-/turf/unsimulated/floor/carpet/office/other,
-/area/space)
-"hk" = (
-/obj/stool/chair/dining/scrap{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating,
-/area/space)
-"hn" = (
-/obj/table/reinforced/chemistry/auto/beakers,
-/obj/fakeobject/microscope{
-	pixel_y = 2
-	},
-/turf/unsimulated/floor/shiny{
-	color = "aqua"
-	},
-/area/space)
-"hu" = (
-/obj/machinery/floorflusher/minibrig3{
-	name = "\improper Floor Flusher (Shark Tank)";
-	id = "aqua_shark"
-	},
-/obj/disposalpipe/trunk/regular/south,
-/turf/unsimulated/floor/engine/glow/blue,
-/area/space)
-"hw" = (
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
-	},
-/obj/item/scalpel,
-/obj/item/staple_gun{
-	pixel_x = 5
-	},
-/obj/item/weldingtool,
-/obj/item/hemostat,
-/obj/item/surgical_spoon,
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "bot2"
-	},
-/obj/item/suture,
-/obj/item/scissors/surgical_scissors,
-/turf/simulated/floor/sanitary/white,
-/area/space)
-"hx" = (
-/turf/simulated/floor/sanitary/white,
-/area/space)
-"hy" = (
-/obj/machinery/power/solar/owl_cheat,
-/turf/unsimulated/floor/airless/solar,
-/area/space)
-"hz" = (
-/obj/decoration/vent/vent3,
-/turf/simulated/wall/auto/jen/cyan,
-/area/space)
-"hE" = (
-/obj/window/auto/reinforced/the_tuff_stuff{
-	icon_state = "R3"
-	},
-/turf/simulated/floor/plating/jen,
-/area/space)
-"hL" = (
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line-broken1"
-	},
-/turf/unsimulated/floor/industrial,
-/area/space)
-"hP" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 6
-	},
-/turf/simulated/floor/sanitary/white,
-/area/space)
-"hU" = (
-/obj/table/auto,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/reagent_containers/iv_drip/blood,
-/obj/item/clothing/gloves/latex/random,
-/obj/item/implanter,
-/turf/unsimulated/floor/redwhite{
-	dir = 4
-	},
-/area/space)
-"hZ" = (
-/obj/machinery/door/airlock/gannets/command{
-	dir = 1;
-	name = "officers bunkroom"
-	},
-/turf/unsimulated/floor/carpet/office,
-/area/space)
-"ia" = (
-/obj/table/auto,
-/obj/item/storage/belt/medical,
-/obj/item/reagent_containers/glass/beaker/large/brute,
-/obj/item/reagent_containers/glass/beaker/large/burn,
-/obj/item/reagent_containers/glass/beaker/large/antitox,
-/obj/item/reagent_containers/glass/beaker/large/epinephrine,
-/obj/item/clothing/gloves/latex,
-/obj/item/storage/pill_bottle/mutadone,
-/turf/unsimulated/floor/redwhite{
-	dir = 4
-	},
-/area/space)
-"ig" = (
-/obj/decal/stage_edge/alt{
-	color = "aqua"
-	},
-/obj/machinery/computer/arcade,
-/turf/unsimulated/floor/shiny{
-	color = "aqua"
-	},
-/area/space)
-"ij" = (
-/obj/window/auto/reinforced/the_tuff_stuff{
-	icon_state = "R-139"
-	},
-/turf/simulated/floor/plating/jen,
-/area/space)
-"iH" = (
-/obj/railing/cyan{
-	dir = 4
-	},
-/turf/unsimulated/floor/shiny{
-	color = "aqua"
-	},
-/area/space)
-"iO" = (
-/obj/cabinet/medical,
-/turf/unsimulated/floor/redwhite,
-/area/space)
-"iP" = (
-/obj/machinery/floorflusher/minibrig2{
-	name = "\improper Floor Flusher (Mortuary Hold)";
-	id = "aqua_mortuary"
-	},
-/obj/disposalpipe/trunk/regular/south,
-/turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
-"iQ" = (
-/obj/machinery/traymachine/morgue,
-/turf/unsimulated/floor/shiny{
-	color = "aqua"
-	},
-/area/space)
-"iX" = (
-/obj/decal/stage_edge/alt{
-	color = "gray"
-	},
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/black,
-/turf/unsimulated/floor/industrial,
-/area/space)
-"jd" = (
-/turf/unsimulated/floor/wood/eight,
-/area/space)
-"je" = (
-/obj/window/auto/reinforced/the_tuff_stuff{
-	icon_state = "R10"
-	},
-/turf/simulated/floor/plating/jen,
-/area/space)
-"jf" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2{
-	color = "aqua";
-	name = "reservoir";
-	dir = 6
-	},
-/area/sunken{
-	name = "Distillation Chamber"
 	})
-"jh" = (
-/obj/machinery/door_control/north{
-	name = "Armory Shutters";
-	id = "aqua_armory1"
-	},
-/obj/storage/crate/classcrate{
-	name = "blasters"
-	},
-/obj/item/gun/energy/blaster_smg,
-/obj/item/gun/energy/blaster_smg,
-/obj/item/gun/energy/blaster_smg,
-/obj/item/gun/energy/blaster_smg,
-/turf/simulated/floor/circuit/off,
-/area/space)
-"jj" = (
-/obj/submachine/chef_sink{
-	dir = 4;
-	pixel_y = -2;
-	name = "utility sink";
-	desc = "A water-filled unit intended for sanitary purposes."
-	},
-/turf/simulated/floor/plating/jen,
-/area/space)
-"jm" = (
-/obj/machinery/door/airlock/pyro/external{
-	aiControlDisabled = 1;
-	dir = 4;
-	locked = 1;
-	secondsElectrified = -1
-	},
-/obj/forcefield/energyshield/perma{
-	dir = 4
-	},
-/obj/mapping_helper/access/syndie_shuttle,
-/turf/simulated/floor/plating/jen,
-/area/space)
-"jr" = (
-/obj/mesh/grille/steel{
-	icon_state = "grille3-0"
-	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/plating/jen,
-/area/space)
-"ju" = (
-/obj/storage/crate/syndicate_surplus/spawnable,
-/turf/unsimulated/floor/shiny{
-	color = "aqua"
-	},
-/area/space)
-"jA" = (
-/obj/table/sleek/auto,
-/obj/item/storage/briefcase/instruments/blowgun/tranq,
-/turf/unsimulated/floor/shiny{
-	color = "aqua"
-	},
-/area/space)
-"jD" = (
-/obj/disposalpipe/segment/horizontal,
-/turf/unsimulated/wall/setpieces/leadwall/white_2{
-	color = "aqua";
-	name = "reservoir";
-	dir = 6
-	},
-/area/space)
-"jT" = (
-/turf/space,
-/area/space)
-"jY" = (
-/obj/disposalpipe/segment/mineral{
-	dir = 8;
-	name = "ice processing pipe"
-	},
-/turf/simulated/floor/engine/caution/east,
-/area/space)
-"jZ" = (
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/grey/side{
-	dir = 1
-	},
-/area/space)
-"kd" = (
-/turf/unsimulated/floor/specialroom/cafeteria,
-/area/space)
-"kg" = (
-/obj/fakeobject/pipe/heat{
-	name = "bottling system"
-	},
-/turf/simulated/floor/plating/jen,
-/area/space)
-"km" = (
-/turf/simulated/floor/airless/darkbluewhite{
-	dir = 9
-	},
-/area/space)
-"kn" = (
-/obj/submachine/chef_sink{
-	dir = 4;
-	pixel_y = -2
-	},
-/turf/simulated/floor/black,
-/area/space)
-"kA" = (
-/turf/unsimulated/floor/carpet/office/other,
-/area/space)
-"kD" = (
-/obj/effects/lightshaft/blue,
-/turf/space/fluid/cenote{
-	name = "reservoir"
-	},
-/area/sunken{
-	name = "Distillation Chamber"
-	})
-"kE" = (
-/obj/storage/secure/closet/fridge/kitchen,
-/turf/simulated/floor/black,
-/area/space)
-"kO" = (
-/obj/machinery/floorflusher/minibrig{
-	id = "aqua_prison";
-	name = "\improper Floor Flusher (Prison Hold)"
-	},
-/obj/disposalpipe/trunk/regular/north,
-/turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
-"kY" = (
-/obj/machinery/drainage,
-/turf/unsimulated/floor/shiny{
-	color = "aqua"
-	},
-/area/space)
-"ld" = (
-/obj/fakeobject/tallsmes,
-/obj/machinery/light/emergency/exitsign{
-	desc = "There's a crew ladder here.";
-	name = "illuminated ladder shaft";
-	dir = 1;
-	pixel_y = 20
-	},
-/turf/unsimulated/floor/industrial,
-/area/space)
-"lg" = (
-/obj/machinery/optable,
-/turf/simulated/floor/sanitary/white,
-/area/space)
-"ln" = (
-/obj/forcefield/energyshield/perma,
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/syndicate_horizontal{
-	id = "hangar_aqua"
-	},
-/turf/simulated/floor/engine,
-/area/space)
-"lC" = (
-/obj/railing/cyan{
-	dir = 8
-	},
-/obj/decal/stage_edge/alt{
-	color = "aqua"
-	},
-/turf/unsimulated/floor/shiny{
-	color = "aqua"
-	},
-/area/space)
-"lG" = (
-/obj/stool/chair/office{
-	dir = 8
-	},
-/turf/simulated/floor/airless/twotone/red,
-/area/space)
-"lJ" = (
-/obj/stool/chair/black{
-	dir = 8
-	},
-/turf/simulated/floor/industrial,
-/area/space)
-"lL" = (
-/obj/machinery/door/airlock/gannets/maintenance{
-	name = "restroom"
-	},
-/turf/simulated/floor/sanitary,
-/area/space)
-"lW" = (
-/obj/decoration/decorativeplant/plant2,
-/turf/simulated/floor/airless/darkbluewhite{
-	dir = 6
-	},
-/area/space)
-"lZ" = (
-/turf/simulated/floor/circuit/white,
-/area/space)
-"mb" = (
-/obj/decal/stage_edge/alt{
-	color = "gray"
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/industrial,
-/area/space)
-"mc" = (
-/obj/mesh/catwalk/jen{
-	icon_state = "M4-0"
-	},
-/turf/unsimulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/space)
-"mf" = (
-/obj/decal/stage_edge/alt{
-	color = "gray"
-	},
-/turf/unsimulated/floor/industrial,
-/area/space)
-"mh" = (
-/obj/channel{
-	required_to_pass = 210
-	},
-/obj/pool/perspective{
-	density = 0;
-	dir = 1;
-	tag = "icon-pool (NORTH)"
-	},
-/obj/pool{
-	density = 0;
-	dir = 8;
-	icon = 'icons/obj/fluid.dmi';
-	icon_state = "ladder";
-	name = "ladder"
-	},
-/turf/unsimulated/floor/pool/bluewhite,
-/area/space)
-"mm" = (
-/obj/machinery/bot/medbot/no_camera,
-/turf/unsimulated/floor/redwhite{
-	dir = 4
-	},
-/area/space)
-"mo" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/jen/red,
-/area/space)
-"mp" = (
-/obj/effects/lightshaft/blue,
-/turf/space/fluid/cenote{
-	name = "reservoir"
-	},
-/area/space)
-"ms" = (
-/turf/simulated/floor/airless/darkbluewhite{
-	dir = 10
-	},
-/area/space)
-"mu" = (
-/obj/cabinet/medicalmenders,
-/turf/unsimulated/floor/redwhite,
-/area/space)
-"mE" = (
-/obj/machinery/shuttle/engine/heater{
-	dir = 8;
-	icon_state = "alt_heater-M"
-	},
-/obj/mapping_helper/wingrille_spawn/bulletproof,
-/turf/simulated/floor/plating/airless,
-/area/space)
-"mI" = (
-/obj/mesh/catwalk/jen{
-	icon_state = "M12-0"
-	},
-/turf/simulated/floor/airless/plating,
-/area/space)
-"mJ" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 5;
-	layer = 2.13
-	},
-/turf/simulated/floor/sanitary/white,
-/area/space)
-"ng" = (
-/obj/railing/cyan,
-/obj/stool/chair/dining/scrap{
-	dir = 8
-	},
-/turf/simulated/floor/airless/plating,
-/area/space)
-"nk" = (
-/obj/fakeobject/pipe/heat{
-	name = "distillation system"
-	},
-/turf/simulated/floor/airless/plating,
-/area/space)
-"no" = (
-/obj/machinery/door/unpowered/wood{
-	name = "galley"
-	},
-/obj/decal/tile_edge/line/grey{
-	icon_state = "line-broken1"
-	},
-/turf/unsimulated/floor/specialroom/cafeteria,
-/area/space)
-"nt" = (
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/sanitary,
-/area/space)
-"ny" = (
-/obj/storage/crate/medical{
-	name = "Medkits"
-	},
-/obj/item/storage/firstaid/regular,
-/obj/item/reagent_containers/mender/burn,
-/obj/item/reagent_containers/mender/brute,
-/turf/unsimulated/floor/redwhite{
-	dir = 8
-	},
-/area/space)
-"nz" = (
-/turf/simulated/floor/neutral/side{
-	dir = 1
-	},
-/area/space)
-"nD" = (
-/turf/simulated/floor/airless/twotone/red,
-/area/space)
-"nK" = (
-/obj/machinery/door/airlock/gannets/glass/morgue/alt{
-	name = "secure sector";
-	dir = 4
-	},
-/obj/mapping_helper/access/syndie_shuttle,
-/turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
-"nP" = (
-/obj/machinery/deep_fryer,
-/turf/simulated/floor/black,
-/area/space)
-"nU" = (
-/obj/machinery/door/airlock/gannets/glass/morgue/alt{
-	name = "gangway airlock"
-	},
-/obj/mapping_helper/access/syndie_shuttle,
-/turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
-"nY" = (
-/obj/machinery/door/airlock/gannets/command{
-	dir = 1
-	},
-/obj/mapping_helper/access/syndie_shuttle,
-/turf/simulated/floor/circuit/off,
-/area/space)
-"nZ" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	color = "aqua";
-	name = "reservoir";
-	dir = 4
-	},
-/area/sunken{
-	name = "Distillation Chamber"
-	})
-"oa" = (
-/obj/decal/stage_edge/alt{
-	color = "aqua"
-	},
-/turf/space/fluid/cenote{
-	name = "reservoir"
-	},
-/area/space)
-"ob" = (
-/obj/machinery/door/airlock/gannets/glass/morgue/alt{
-	name = "secure sector";
-	dir = 8
-	},
-/obj/mapping_helper/access/syndie_shuttle,
-/turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
-"of" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/fakeobject/bigatmos/bigatmos2,
-/turf/unsimulated/floor/industrial,
-/area/space)
-"oq" = (
-/obj/decal/stage_edge/alt{
-	color = "aqua"
-	},
-/obj/table/sleek/auto,
-/turf/unsimulated/floor/shiny{
-	color = "aqua"
-	},
-/area/space)
-"os" = (
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 10
-	},
-/obj/stool/chair/comfy/shuttle/pilot{
-	dir = 4;
-	name = "copilot's seat"
-	},
-/turf/simulated/floor/airless/marble/border_bw,
-/area/space)
-"ow" = (
-/obj/storage/crate/robotics_supplies_borg,
-/turf/unsimulated/floor/shiny{
-	color = "aqua"
-	},
-/area/space)
-"ox" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/jen/dark4,
-/area/space)
-"oG" = (
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/unsimulated/floor/wood/eight,
-/area/space)
-"oH" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line-broken1"
-	},
-/turf/unsimulated/floor/industrial,
-/area/space)
-"oM" = (
-/obj/item/reagent_containers/food/drinks/coolerbottle,
-/turf/simulated/floor/engine,
-/area/space)
-"oS" = (
-/obj/machinery/door/airlock/gannets/glass/morgue/alt{
-	name = "prison hold";
-	dir = 1
-	},
-/obj/mapping_helper/access/syndie_shuttle,
-/turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
-"pd" = (
-/obj/table/sleek/auto,
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "aqua_armory1";
-	name = "armory shutters"
-	},
-/turf/simulated/floor/circuit/off,
-/area/space)
-"ph" = (
+"gj" = (
 /obj/table/glass/reinforced/auto{
 	color = "aqua"
 	},
@@ -1230,15 +852,1201 @@
 	},
 /obj/machinery/light/small/floor/cool/very,
 /turf/unsimulated/floor/airless/minitiles/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"gx" = (
+/obj/railing/cyan,
+/obj/disposalpipe/segment/morgue,
+/turf/simulated/floor/airless/plating,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"gy" = (
+/obj/fitness/weightlifter,
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"gH" = (
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/airless/plating,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"gJ" = (
+/obj/disposalpipe/segment/transport,
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"gK" = (
+/obj/storage/crate/medical/morgue,
+/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/obj/item/storage/firstaid/docbag,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"gO" = (
+/obj/ladder/cruiser/syndicate{
+	id = "cruiser_aqua_barracks";
+	name = "barracks"
+	},
+/obj/machinery/light/emergency/exitsign{
+	desc = "There's a crew ladder here.";
+	name = "illuminated ladder shaft";
+	dir = 4;
+	pixel_y = 12;
+	pixel_x = 10
+	},
+/turf/simulated/floor/airless/darkblue,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"gP" = (
+/obj/table/sleek/auto,
+/obj/table/sleek/auto,
+/obj/machinery/cell_charger,
+/obj/item/cell,
+/obj/item/cell{
+	charge = 100;
+	maxcharge = 15000;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"gS" = (
+/obj/machinery/fluid_canister,
+/obj/machinery/conveyor/NS,
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"gT" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1;
+	tag = "icon-sink (NORTH)"
+	},
+/turf/unsimulated/floor/redwhite{
+	dir = 1
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"gV" = (
+/obj/stool/bench/blue/auto,
+/turf/simulated/floor/airless/twotone/blue,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"gX" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 9
+	},
+/turf/simulated/floor/sanitary/white,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"hd" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 12
+	},
+/turf/unsimulated/floor/carpet/office/other,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"hk" = (
+/obj/stool/chair/dining/scrap{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"hl" = (
+/obj/machinery/light/small/blueish,
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"hn" = (
+/obj/table/reinforced/chemistry/auto/beakers,
+/obj/fakeobject/microscope{
+	pixel_y = 2
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"hu" = (
+/obj/disposalpipe/trunk/transport,
+/obj/stool/chair/comfy/ergonomic{
+	dir = 8
+	},
+/obj/machinery/floorflusher/minibrig3{
+	name = "\improper Floor Flusher (Shark Tank)";
+	id = "aqua_shark";
+	alpha = 0
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"hw" = (
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/scalpel,
+/obj/item/staple_gun{
+	pixel_x = 5
+	},
+/obj/item/weldingtool,
+/obj/item/hemostat,
+/obj/item/surgical_spoon,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "bot2"
+	},
+/obj/item/suture,
+/obj/item/scissors/surgical_scissors,
+/turf/simulated/floor/sanitary/white,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"hx" = (
+/turf/simulated/floor/sanitary/white,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"hy" = (
+/obj/machinery/power/solar/owl_cheat,
+/turf/unsimulated/floor/airless/solar,
 /area/space)
+"hz" = (
+/obj/decoration/vent/vent3,
+/turf/simulated/wall/auto/reinforced/jen/cyan,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"hE" = (
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R3"
+	},
+/turf/simulated/floor/plating/jen,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"hG" = (
+/obj/item/storage/toilet{
+	dir = 8
+	},
+/obj/decoration/toiletholder{
+	pixel_y = 32
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/sanitary,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"hL" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line-broken1"
+	},
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"hO" = (
+/obj/table/wood/round,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"hP" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 6
+	},
+/turf/simulated/floor/sanitary/white,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"hS" = (
+/obj/table/reinforced/chemistry/auto/beakers,
+/turf/unsimulated/floor/marble/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"hU" = (
+/obj/table/auto,
+/obj/item/bandage,
+/obj/item/bandage,
+/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/clothing/gloves/latex/random,
+/obj/item/implanter,
+/turf/unsimulated/floor/redwhite{
+	dir = 4
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"hZ" = (
+/obj/machinery/door/airlock/gannets/command{
+	dir = 1;
+	name = "officers bunkroom"
+	},
+/turf/unsimulated/floor/carpet/office,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ia" = (
+/obj/table/auto,
+/obj/item/storage/belt/medical,
+/obj/item/reagent_containers/glass/beaker/large/brute,
+/obj/item/reagent_containers/glass/beaker/large/burn,
+/obj/item/reagent_containers/glass/beaker/large/antitox,
+/obj/item/reagent_containers/glass/beaker/large/epinephrine,
+/obj/item/clothing/gloves/latex,
+/obj/item/storage/pill_bottle/mutadone,
+/turf/unsimulated/floor/redwhite{
+	dir = 4
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ig" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/machinery/computer/arcade,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ij" = (
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R-139"
+	},
+/turf/simulated/floor/plating/jen,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ir" = (
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/item/clothing/under/gimmick/blue_wcoat,
+/obj/item/clothing/shoes/white{
+	pixel_y = -12;
+	pixel_x = -2
+	},
+/obj/item/clothing/gloves/crafted{
+	name = "sommolier gloves";
+	desc = "Fancy serving gloves, for the refined customer."
+	},
+/obj/item/clothing/head/beret{
+	pixel_y = 11
+	},
+/obj/storage/closet/dresser,
+/obj/item/experimental/melee/sabre{
+	name = "champagne sabre";
+	desc = "A highly theatrical way to uncork bottles. Or people."
+	},
+/turf/unsimulated/floor/marble/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"iH" = (
+/obj/railing/cyan{
+	dir = 4
+	},
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"iM" = (
+/obj/fluid_pipe/elbow{
+	dir = 8
+	},
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"iO" = (
+/obj/cabinet/medical,
+/turf/unsimulated/floor/redwhite,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"iP" = (
+/obj/machinery/floorflusher/minibrig2{
+	name = "\improper Floor Flusher (Mortuary Hold)";
+	id = "aqua_mortuary"
+	},
+/obj/disposalpipe/trunk/regular/south,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"iQ" = (
+/obj/machinery/traymachine/morgue,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"iX" = (
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"jd" = (
+/turf/unsimulated/floor/wood/eight,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"je" = (
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R10"
+	},
+/turf/simulated/floor/plating/jen,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"jf" = (
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 4
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"jh" = (
+/obj/machinery/door_control/north{
+	name = "Armory Shutters";
+	id = "aqua_armory1"
+	},
+/obj/storage/crate/classcrate{
+	name = "blasters"
+	},
+/obj/item/gun/energy/blaster_smg,
+/obj/item/gun/energy/blaster_smg,
+/obj/item/gun/energy/blaster_smg,
+/obj/item/gun/energy/blaster_smg,
+/turf/simulated/floor/circuit/off,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"jj" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/submachine/chef_sink{
+	dir = 4;
+	pixel_y = -2;
+	name = "utility sink";
+	desc = "A water-filled unit intended for sanitary purposes."
+	},
+/turf/simulated/floor/plating/jen,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"jm" = (
+/obj/machinery/door/airlock/pyro/external{
+	aiControlDisabled = 1;
+	dir = 4;
+	locked = 1;
+	secondsElectrified = -1
+	},
+/obj/forcefield/energyshield/perma{
+	dir = 4
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/plating/jen,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"jr" = (
+/obj/mesh/grille/steel{
+	icon_state = "grille3-0"
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating/jen,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ju" = (
+/obj/table/sleek/auto,
+/obj/item/pen/sleepypen,
+/obj/item/pen/sleepypen,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"jA" = (
+/obj/table/sleek/auto,
+/obj/item/storage/briefcase/instruments/blowgun/tranq,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"jD" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/unsimulated/wall/setpieces/leadwall/white_2{
+	color = "aqua";
+	name = "reservoir";
+	dir = 6
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"jT" = (
+/turf/space,
+/area/space)
+"jY" = (
+/obj/disposalpipe/segment/mineral{
+	dir = 8;
+	name = "ice processing pipe"
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"jZ" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/grey/side{
+	dir = 1
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"kd" = (
+/turf/unsimulated/floor/specialroom/cafeteria,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"kg" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/longtile,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"km" = (
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 9
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"kn" = (
+/obj/submachine/chef_sink{
+	dir = 4;
+	pixel_y = -2
+	},
+/turf/simulated/floor/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"kp" = (
+/obj/machinery/light,
+/turf/simulated/floor/airless/darkbluewhite,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"kA" = (
+/turf/unsimulated/floor/carpet/office/other,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"kD" = (
+/obj/effects/lightshaft/blue,
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/turf/simulated/floor/solidcolor/black{
+	name = "distillation chamber";
+	icon = 'icons/turf/water.dmi';
+	icon_state = "swamp0"
+	},
+/area/sunken{
+	name = "Distillation Chamber"
+	})
+"kE" = (
+/obj/storage/secure/closet/fridge/kitchen,
+/turf/simulated/floor/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"kO" = (
+/obj/machinery/floorflusher/minibrig{
+	id = "aqua_prison";
+	name = "\improper Floor Flusher (Prison Hold)"
+	},
+/obj/disposalpipe/trunk/regular/north,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"kY" = (
+/obj/machinery/drainage,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ld" = (
+/obj/fakeobject/tallsmes,
+/obj/machinery/light/emergency/exitsign{
+	desc = "There's a crew ladder here.";
+	name = "illuminated ladder shaft";
+	dir = 1;
+	pixel_y = 20
+	},
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"lg" = (
+/obj/machinery/optable,
+/turf/simulated/floor/sanitary/white,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ln" = (
+/obj/forcefield/energyshield/perma,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/syndicate_horizontal{
+	id = "hangar_aqua"
+	},
+/turf/simulated/floor/engine,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"lz" = (
+/obj/table/sleek/auto,
+/obj/random_item_spawner/desk_stuff/g_clip_bin_pen/few,
+/turf/simulated/floor/circuit/off,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"lC" = (
+/obj/railing/cyan{
+	dir = 8
+	},
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"lG" = (
+/obj/stool/chair/office{
+	dir = 8
+	},
+/turf/simulated/floor/airless/twotone/red,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"lJ" = (
+/obj/stool/chair/black{
+	dir = 8
+	},
+/turf/simulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"lL" = (
+/obj/machinery/door/airlock/gannets/maintenance{
+	name = "restroom"
+	},
+/turf/simulated/floor/sanitary,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"lW" = (
+/obj/decoration/decorativeplant/plant2,
+/obj/machinery/light,
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 6
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"lZ" = (
+/turf/simulated/floor/circuit/white,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"mb" = (
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"mc" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "M4-0"
+	},
+/turf/unsimulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
+"mf" = (
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/fluid_pipe/straight,
+/obj/machinery/light/small/blueish{
+	dir = 1;
+	pixel_y = 20
+	},
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"mh" = (
+/obj/channel{
+	required_to_pass = 210
+	},
+/obj/pool/perspective{
+	density = 0;
+	dir = 1;
+	tag = "icon-pool (NORTH)"
+	},
+/obj/pool{
+	density = 0;
+	dir = 8;
+	icon = 'icons/obj/fluid.dmi';
+	icon_state = "ladder";
+	name = "ladder"
+	},
+/turf/unsimulated/floor/pool/bluewhite,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"mk" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "M12-0"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/airless/plating,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"mm" = (
+/obj/machinery/bot/medbot/no_camera,
+/turf/unsimulated/floor/redwhite{
+	dir = 4
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"mo" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/jen/red,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"mp" = (
+/obj/effects/lightshaft/blue,
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/turf/simulated/floor/solidcolor/black{
+	name = "deep reservoir";
+	icon = 'icons/turf/outdoors.dmi';
+	icon_state = "cenote"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ms" = (
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 10
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"mu" = (
+/obj/cabinet/medicalmenders,
+/turf/unsimulated/floor/redwhite,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"mE" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-M"
+	},
+/obj/mapping_helper/wingrille_spawn/bulletproof,
+/turf/simulated/floor/plating/airless,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"mI" = (
+/obj/mesh/catwalk/jen{
+	icon_state = "M12-0"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"mJ" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5;
+	layer = 2.13
+	},
+/turf/simulated/floor/sanitary/white,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"mU" = (
+/obj/fakeobject/biggercabinets/recorders{
+	name = "salinity levels"
+	},
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ng" = (
+/obj/railing/cyan,
+/obj/stool/chair/dining/scrap{
+	dir = 8
+	},
+/turf/simulated/floor/airless/plating,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"nk" = (
+/obj/fakeobject/pipe/heat{
+	name = "distillation system"
+	},
+/turf/simulated/floor/airless/plating,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"no" = (
+/obj/machinery/door/unpowered/wood{
+	name = "galley"
+	},
+/obj/decal/tile_edge/line/grey{
+	icon_state = "line-broken1"
+	},
+/turf/unsimulated/floor/specialroom/cafeteria,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"nt" = (
+/turf/unsimulated/floor/marble/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ny" = (
+/obj/storage/crate/medical{
+	name = "Medkits"
+	},
+/obj/item/storage/firstaid/regular,
+/obj/item/reagent_containers/mender/burn,
+/obj/item/reagent_containers/mender/brute,
+/turf/unsimulated/floor/redwhite{
+	dir = 8
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"nz" = (
+/obj/machinery/light,
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"nD" = (
+/turf/simulated/floor/airless/twotone/red,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"nK" = (
+/obj/machinery/door/airlock/gannets/glass/morgue/alt{
+	name = "secure sector";
+	dir = 4
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"nP" = (
+/obj/machinery/deep_fryer,
+/turf/simulated/floor/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"nU" = (
+/obj/machinery/door/airlock/gannets/glass/morgue/alt{
+	name = "gangway airlock"
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"nY" = (
+/obj/machinery/door/airlock/gannets/command{
+	dir = 1
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/circuit/off,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"nZ" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	color = "aqua";
+	name = "reservoir";
+	dir = 4
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"oa" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/turf/simulated/floor/solidcolor/black{
+	name = "deep reservoir";
+	icon = 'icons/turf/outdoors.dmi';
+	icon_state = "cenote"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ob" = (
+/obj/machinery/door/airlock/gannets/glass/morgue/alt{
+	name = "secure sector";
+	dir = 8
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"of" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/fakeobject/bigatmos/bigatmos2,
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"oq" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/table/sleek/auto,
+/obj/item/storage/toolbox/mechanical,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"os" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 4;
+	name = "copilot's seat"
+	},
+/turf/simulated/floor/airless/marble/border_bw,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ow" = (
+/obj/storage/crate/robotics_supplies_borg,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ox" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/space)
+"oG" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/wood/eight,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"oH" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line-broken1"
+	},
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"oM" = (
+/obj/item/reagent_containers/food/drinks/coolerbottle,
+/turf/simulated/floor/engine,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"oR" = (
+/obj/disposalpipe/trunk/transport,
+/obj/machinery/disposal/transport{
+	name = "laundry chute";
+	desc = "A pneumatic delivery chute for transporting laundry. It smells like wet towels."
+	},
+/turf/simulated/floor/airless/twotone/blue,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"oS" = (
+/obj/machinery/door/airlock/gannets/glass/morgue/alt{
+	name = "prison hold";
+	dir = 1
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"oX" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/longtile/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"pd" = (
+/obj/table/sleek/auto,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "aqua_armory1";
+	name = "armory shutters"
+	},
+/turf/simulated/floor/circuit/off,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ph" = (
+/obj/stool/chair/office,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "pi" = (
 /obj/reagent_dispensers/watertank/big,
 /turf/simulated/floor/engine,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "pj" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/airless/plating,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "pl" = (
 /obj/machinery/drainage,
 /obj/machinery/shower{
@@ -1246,20 +2054,29 @@
 	pixel_x = 8
 	},
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "pr" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
 	},
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "ps" = (
 /obj/pool/perspective{
 	dir = 8;
 	tag = "icon-pool (WEST)"
 	},
 /turf/unsimulated/floor/pool/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "pt" = (
 /obj/machinery/optable,
 /obj/decal/stage_edge/alt{
@@ -1271,17 +2088,26 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "pv" = (
 /obj/fakeobject/biggercabinets/recorders,
 /turf/simulated/floor/circuit/white,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "pz" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
 	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "pJ" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
@@ -1292,7 +2118,10 @@
 	name = "filtration stack"
 	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "pL" = (
 /obj/mesh/catwalk/jen{
 	icon_state = "M14-0"
@@ -1300,41 +2129,83 @@
 /turf/unsimulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "pN" = (
-/obj/machinery/door/airlock/gannets/glass/morgue/alt{
-	name = "distillation sector";
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/fakeobject/bigcabinets/gaugeswithlamp{
+	name = "bottling system readouts"
+	},
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"pO" = (
+/obj/stool/chair/office/syndie{
 	dir = 4
 	},
-/obj/mapping_helper/access/syndie_shuttle,
+/turf/unsimulated/floor/marble/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"pP" = (
+/obj/machinery/light/small/floor/cool/very,
 /turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
-"pO" = (
-/turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "pZ" = (
 /turf/unsimulated/floor/redwhite{
 	dir = 8
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "qb" = (
 /obj/storage/closet/wardrobe/mixed{
 	name = "guest lockers"
 	},
+/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/head/goggles/blue{
+	name = "swim goggles"
+	},
+/obj/item/clothing/head/goggles/blue{
+	name = "swim goggles"
+	},
 /turf/unsimulated/floor/pool/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "qe" = (
 /obj/machinery/door/airlock/gannets/engineering{
 	name = "exports"
 	},
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/engine,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "qf" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
 	},
 /obj/machinery/manufacturer/uniform,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "qm" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -1342,12 +2213,18 @@
 	},
 /obj/mapping_helper/wingrille_spawn/bulletproof,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "qn" = (
 /turf/simulated/floor/stairs/dark{
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "qq" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 8;
@@ -1360,14 +2237,30 @@
 	id = "hangar_aqua"
 	},
 /turf/simulated/wall/auto/reinforced/jen/yellow,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "qE" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 8;
 	name = "ice processing pipe"
 	},
 /turf/simulated/floor/engine/caution/west,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"qH" = (
+/obj/storage/crate/bartending,
+/obj/item/storage/box/poison,
+/obj/item/storage/box/poison,
+/obj/item/reagent_containers/dropper/mechanical,
+/turf/unsimulated/floor/marble/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "qI" = (
 /obj/ladder/cruiser/syndicate{
 	id = "cruiser_aqua_bunkroom2";
@@ -1380,7 +2273,10 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/airless/darkblue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "qL" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6;
@@ -1389,37 +2285,68 @@
 /obj/machinery/light/small/floor/blueish,
 /obj/window/auto/the_tuff_stuff,
 /turf/simulated/floor/circuit/vintage,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "qP" = (
 /obj/machinery/recharger/wall{
 	pixel_y = 26
 	},
 /turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "qU" = (
 /obj/machinery/shower{
 	dir = 4;
-	pixel_x = 8
+	pixel_x = 8;
+	name = "luxury shower head"
 	},
 /obj/machinery/drainage,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "qW" = (
 /turf/unsimulated/floor/longtile{
 	color = "grey"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"rb" = (
+/obj/stool,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "rd" = (
 /obj/machinery/sleep_console,
 /turf/simulated/floor/sanitary/white,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "rf" = (
-/obj/machinery/door/airlock/gannets/glass/morgue/alt{
-	name = "distillation sector";
-	dir = 8
+/obj/table/podium_white{
+	name = "podium of the water sommelier"
 	},
+/obj/machinery/light/small/floor/cool/very,
 /turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "rm" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -1429,7 +2356,10 @@
 	icon_state = "line3"
 	},
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "ro" = (
 /obj/machinery/light{
 	dir = 1;
@@ -1438,7 +2368,10 @@
 	},
 /obj/cabinet/restrictedmedical,
 /turf/unsimulated/floor/redwhite,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "rs" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -1447,7 +2380,10 @@
 /turf/unsimulated/floor/longtile{
 	color = "grey"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "rv" = (
 /obj/window/auto/reinforced/the_tuff_stuff{
 	icon_state = "R6"
@@ -1456,11 +2392,28 @@
 	icon_state = "R3"
 	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "rF" = (
 /obj/machinery/floorflusher/industrial,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"rN" = (
+/obj/fakeobject/sealedsleeper,
+/obj/machinery/light/small/blueish{
+	dir = 1;
+	pixel_y = 20
+	},
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "rV" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -1471,28 +2424,60 @@
 	pixel_y = 12
 	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "rW" = (
 /obj/window/auto/reinforced/the_tuff_stuff{
 	icon_state = "R13"
 	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "rZ" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray{
 	dir = 4
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"sb" = (
+/obj/rack,
+/obj/item/paper/book/from_file/moby_dick,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "sg" = (
 /obj/machinery/manufacturer/medical,
 /turf/unsimulated/floor/redwhite,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "so" = (
-/turf/space/fluid/cenote{
-	name = "reservoir"
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/turf/simulated/floor/solidcolor/black{
+	name = "distillation chamber";
+	icon = 'icons/turf/water.dmi';
+	icon_state = "swamp0"
 	},
 /area/sunken{
 	name = "Distillation Chamber"
+	})
+"sy" = (
+/turf/simulated/floor/stairs/wood,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
 	})
 "sI" = (
 /obj/mesh/grille/steel{
@@ -1500,17 +2485,27 @@
 	},
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "sJ" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	color = "aqua";
-	name = "reservoir";
-	dir = 8
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
 	},
-/area/space)
+/turf/unsimulated/floor/longtile,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "sN" = (
 /turf/unsimulated/floor/pool/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "sT" = (
 /obj/disposalpipe/segment/morgue,
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
@@ -1518,33 +2513,71 @@
 	name = "reservoir";
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "tl" = (
 /obj/decal/stage_edge/alt{
 	color = "gray"
 	},
 /obj/table/auto/desk,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "ts" = (
 /obj/vehicle/forklift,
 /turf/simulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"tB" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"tQ" = (
+/obj/stool/chair/comfy/sleek{
+	dir = 8
+	},
+/turf/simulated/floor/circuit/off,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "uc" = (
 /obj/fakeobject/bigcabinets/gaugeswithlamp,
 /turf/simulated/floor/circuit/white,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "ul" = (
 /obj/fakeobject/airlock_broken/bolted{
 	name = "engineering"
 	},
 /turf/simulated/wall/auto/reinforced/jen/yellow,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "uw" = (
 /turf/simulated/floor/stairs/medical/wide/other{
 	dir = 8
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "uz" = (
 /obj/ladder/cruiser/syndicate{
 	id = "cruiser_aqua_ext2";
@@ -1557,11 +2590,21 @@
 	name = "illuminated ladder shaft"
 	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "uA" = (
-/obj/fakeobject/bigcabinets/gauges,
-/turf/simulated/floor/plating/jen,
-/area/space)
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/table/wood/auto/desk,
+/obj/random_item_spawner/desk_stuff/g_clip_bin_pen/few,
+/turf/unsimulated/floor/marble/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "uB" = (
 /obj/effects/water,
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
@@ -1569,20 +2612,27 @@
 	name = "reservoir";
 	dir = 1
 	},
-/area/sunken{
-	name = "Distillation Chamber"
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
 	})
 "uG" = (
 /obj/storage/closet/fire,
 /turf/unsimulated/floor/longtile{
 	color = "grey"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "uJ" = (
 /turf/simulated/floor/stairs/medical/wide{
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "uL" = (
 /obj/submachine/chem_extractor{
 	dir = 8
@@ -1594,18 +2644,67 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"uM" = (
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/machinery/light/small/blueish{
+	dir = 1;
+	pixel_y = 20
+	},
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "uS" = (
 /turf/simulated/floor/airless/escape{
 	dir = 8
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "vb" = (
 /obj/stool/chair/comfy/ergonomic{
 	dir = 4
 	},
 /turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ve" = (
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/storage/secure/closet/fridge,
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
+	pixel_y = 8;
+	name = "Decirprevo White Label";
+	desc = "Bottled from our cool natural springs on Europa. This one is just in a fancier bottle.";
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
+	pixel_y = 8;
+	name = "Decirprevo White Label";
+	desc = "Bottled from our cool natural springs on Europa. This one is just in a fancier bottle.";
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
+	pixel_y = 8;
+	name = "Decirprevo White Label";
+	desc = "Bottled from our cool natural springs on Europa. This one is just in a fancier bottle."
+	},
+/turf/unsimulated/floor/marble/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "vp" = (
 /obj/disposalpipe/segment/vertical,
 /turf/unsimulated/wall/setpieces/leadwindow/white/full{
@@ -1614,7 +2713,10 @@
 	color = "aqua";
 	dir = 4
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "vq" = (
 /obj/machinery/door/airlock/gannets/glass/security,
 /obj/mapping_helper/access/syndie_shuttle,
@@ -1622,7 +2724,10 @@
 	icon_state = "line-broken1"
 	},
 /turf/simulated/floor/airless/twotone/red,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "vu" = (
 /obj/machinery/door/airlock/gannets/glass/morgue/alt{
 	name = "mortuaryhold";
@@ -1630,13 +2735,19 @@
 	},
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "vw" = (
 /obj/stool/bench/sauna{
 	dir = 1
 	},
 /turf/unsimulated/floor/wood/eight,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "vz" = (
 /obj/pool/perspective{
 	dir = 5;
@@ -1645,24 +2756,36 @@
 /turf/unsimulated/floor/pool/bluewhitecorner{
 	dir = 8
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "vA" = (
 /turf/simulated/floor/airless/escape{
 	dir = 4
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "vN" = (
 /obj/decal/stage_edge/alt{
 	color = "gray"
 	},
 /obj/fakeobject/bigcabinets/monitors,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "vS" = (
 /turf/simulated/floor/airless/darkbluewhite/corner{
 	dir = 8
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "vT" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
@@ -1671,7 +2794,10 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "vX" = (
 /obj/railing/cyan{
 	dir = 1
@@ -1680,33 +2806,72 @@
 	name = "distillation system"
 	},
 /turf/simulated/floor/airless/plating,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "wc" = (
-/obj/machinery/door/airlock/gannets/maintenance,
+/obj/machinery/door/airlock/gannets/maintenance{
+	name = "laundry"
+	},
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"wd" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/shipcomponent/communications/syndicate,
+/obj/item/shipcomponent/communications/syndicate,
+/turf/simulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "wg" = (
-/turf/simulated/wall/auto/jen/cyan,
-/area/space)
+/turf/simulated/wall/auto/reinforced/jen/cyan,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "wk" = (
 /obj/forcefield/energyshield/perma,
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/syndicate_horizontal{
 	id = "hangar_aqua"
 	},
 /turf/simulated/floor/engine/caution/west,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ww" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "wx" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/black,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "wL" = (
 /obj/machinery/door/airlock/gannets/glass/morgue/alt{
 	name = "gangway airlock"
 	},
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "wP" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
@@ -1718,25 +2883,37 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "wQ" = (
 /obj/machinery/door/airlock/gannets/glass/alt{
 	dir = 8
 	},
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/specialroom/cafeteria,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "wU" = (
 /obj/machinery/space_heater/sauna_stove,
 /turf/unsimulated/floor/wood/eight,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "xd" = (
 /obj/railing/cyan,
 /obj/stool/chair/dining/scrap{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "xe" = (
 /obj/machinery/light{
 	dir = 1;
@@ -1747,32 +2924,56 @@
 	dir = 8
 	},
 /turf/unsimulated/floor/redwhite,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "xl" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 1;
 	icon_state = "line1"
 	},
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"xm" = (
+/turf/simulated/floor/engine/glow,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "xC" = (
 /turf/simulated/floor/airless/plating,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "xK" = (
 /obj/decal/stage_edge/alt{
 	color = "gray"
 	},
 /obj/machinery/vending/jobclothing/syndicate,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "xP" = (
 /obj/decoration/vent,
 /turf/simulated/wall/auto/reinforced/jen/the_tuff_stuff,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "xV" = (
 /obj/window/auto/reinforced/the_tuff_stuff,
 /turf/simulated/floor/airless/twotone/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "xW" = (
 /obj/ladder/cruiser/syndicate{
 	id = "cruiser_aqua_ext1";
@@ -1785,18 +2986,27 @@
 	name = "illuminated ladder shaft"
 	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "xY" = (
 /obj/window/auto/reinforced/the_tuff_stuff{
 	icon_state = "R-6"
 	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "yc" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/hop,
 /turf/unsimulated/floor/carpet/office/other,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "ye" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -1807,7 +3017,31 @@
 	icon_state = "line-broken1"
 	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"yr" = (
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"yv" = (
+/obj/machinery/door/airlock/gannets/maintenance{
+	name = "shower";
+	dir = 4
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "yy" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
@@ -1819,20 +3053,29 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "yz" = (
 /obj/window/auto/reinforced/the_tuff_stuff{
 	icon_state = "R5"
 	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "yD" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
 	},
 /obj/stool/chair/comfy/sleek,
 /turf/simulated/floor/airless/marble/border_wb,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "yH" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
@@ -1845,64 +3088,105 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "yL" = (
 /obj/machinery/computer/announcement/syndicate/commander{
 	dir = 8;
 	name = "Announcement computer"
 	},
 /turf/simulated/floor/circuit/white,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "yN" = (
-/obj/table/wood/round/champagne,
-/obj/machinery/light/small/floor/cool/very,
+/obj/table/endtable_classic,
 /turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "yX" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line3"
 	},
 /obj/fakeobject/console_lever,
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "yY" = (
-/obj/machinery/door/unpowered/wood{
-	dir = 1
-	},
+/obj/machinery/door/airlock/gannets/glass,
 /turf/unsimulated/floor/pool/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "zd" = (
 /obj/table/wood/auto/desk,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "zg" = (
 /obj/machinery/drainage/big,
 /turf/unsimulated/floor/pool/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "zl" = (
 /obj/submachine/chef_oven,
 /turf/simulated/floor/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"zn" = (
+/obj/machinery/door/airlock/gannets/maintenance,
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/plating/jen,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "zv" = (
 /obj/window/auto/reinforced/the_tuff_stuff,
 /obj/decal/poster/wallsign/security_wall,
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "zx" = (
 /obj/machinery/light/runway_light/delay3,
 /turf/simulated/floor/airless/engine/vacuum,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "zB" = (
 /obj/table/sleek/auto,
 /obj/towelbin{
 	pixel_y = 5
 	},
 /turf/unsimulated/floor/pool/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "zF" = (
 /obj/storage/crate/freezer/milk,
 /turf/simulated/floor/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "zK" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
@@ -1917,7 +3201,10 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "zN" = (
 /obj/item/clothing/suit/space/industrial/syndicate,
 /obj/item/clothing/head/helmet/space/industrial/syndicate,
@@ -1926,49 +3213,102 @@
 /obj/item/device/pda2/syndicate/nuclear,
 /obj/item/paper/book/from_file/syndies_guide,
 /turf/unsimulated/floor/engine/glow/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "zO" = (
+/obj/fluid_pipe/straight{
+	dir = 1
+	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "zP" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
 	},
 /obj/machinery/conveyor/NS,
+/obj/disposaloutlet/north{
+	name = "bottling line";
+	dir = 2;
+	desc = "An outlet for the bottling line."
+	},
+/obj/machinery/light/small/blueish{
+	dir = 1;
+	pixel_y = 20
+	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "zV" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
 	},
+/obj/machinery/vending/snack,
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "zZ" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 8;
 	name = "melt chamber"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ae" = (
 /obj/fakeobject/broadcastcomputer,
 /turf/simulated/floor/circuit/white,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ah" = (
 /obj/forcefield/energyshield/perma,
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/syndicate_horizontal{
 	id = "hangar_aqua"
 	},
 /turf/simulated/floor/engine/caution/east,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Ai" = (
+/obj/table/sleek/auto,
+/obj/towelbin{
+	pixel_y = 5
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/airless/twotone/blue,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ar" = (
-/obj/fakeobject/biggercabinets/recorders,
+/obj/fakeobject/biggercabinets/recorders{
+	name = "turbidity levels"
+	},
 /obj/decal/stage_edge/alt{
 	color = "gray"
 	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "At" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 6
@@ -1977,7 +3317,10 @@
 	dir = 1
 	},
 /turf/simulated/floor/airless/marble/border_bw,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Av" = (
 /obj/lattice/directional_icons{
 	dir = 4
@@ -1990,13 +3333,19 @@
 	tag = "icon-pool (NORTHWEST)"
 	},
 /turf/unsimulated/floor/pool/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ay" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2{
 	color = "aqua";
 	name = "reservoir"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Az" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -2007,7 +3356,21 @@
 	},
 /obj/fakeobject/console_lever,
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"AB" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "AE" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 8;
@@ -2017,11 +3380,17 @@
 	dir = 1;
 	name = "melt chamber"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "AG" = (
 /obj/machinery/weapon_stand/phaser_rack,
 /turf/simulated/floor/airless/twotone/red,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "AI" = (
 /turf/unsimulated/wall/setpieces/leadwindow/white{
 	name = "reservoir porthole";
@@ -2029,18 +3398,28 @@
 	color = "aqua";
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "AM" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
 	icon_state = "line-broken1"
 	},
 /obj/reagent_dispensers/watertank/fountain,
+/obj/machinery/light/small,
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "AO" = (
 /turf/unsimulated/floor/longtile,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "AX" = (
 /obj/decoration/vent/vent3,
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
@@ -2048,7 +3427,10 @@
 	name = "reservoir";
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "AY" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
@@ -2060,14 +3442,49 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Ba" = (
+/obj/item/instrument/large/jukebox,
+/turf/unsimulated/floor/wood/eight,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Bc" = (
 /obj/machinery/door/airlock/gannets/glass/maintenance{
 	name = "bunkroom"
 	},
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Bd" = (
+/obj/stool/chair/comfy/ergonomic{
+	dir = 4
+	},
+/obj/disposalpipe/trunk/transport,
+/obj/machinery/floorflusher/minibrig3{
+	name = "\improper Floor Flusher (Shark Tank)";
+	id = "aqua_shark";
+	alpha = 0
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Bf" = (
+/obj/fluid_pipe/t_junction,
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Bh" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -2077,24 +3494,50 @@
 	color = "aqua";
 	name = "reservoir"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Bl" = (
 /obj/machinery/floorflusher/industrial,
 /obj/disposalpipe/trunk/regular/east,
 /turf/simulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Br" = (
-/obj/mopbucket,
-/obj/item/mop/old,
-/turf/simulated/floor/plating/jen,
-/area/space)
+/obj/mesh/catwalk/jen{
+	icon_state = "M12-0"
+	},
+/turf/simulated/floor/airless/plating,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Bu" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /obj/machinery/light/small/floor/cool/very,
 /turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Bz" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/longtile{
+	color = "grey"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "BC" = (
 /obj/lattice/directional_icons{
 	dir = 4
@@ -2105,16 +3548,29 @@
 	},
 /turf/space,
 /area/space)
+"BD" = (
+/obj/table/sleek/auto,
+/turf/simulated/floor/circuit/off,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "BL" = (
 /obj/railing/cyan{
 	dir = 1
 	},
 /turf/simulated/floor/airless/plating,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "BO" = (
 /obj/table/reinforced/auto,
 /turf/unsimulated/floor/specialroom/cafeteria,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "BV" = (
 /obj/rack,
 /obj/item/cloneModule/mindhack_module,
@@ -2122,13 +3578,19 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "BW" = (
 /obj/fakeobject/airlock_broken/bolted{
 	name = "sealed airlock"
 	},
 /turf/simulated/wall/auto/reinforced/jen/yellow,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "BY" = (
 /obj/mesh/catwalk/jen{
 	icon_state = "M8-0"
@@ -2142,22 +3604,35 @@
 	dir = 4
 	},
 /obj/fakeobject/bigatmos,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Cc" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
 	level = 2
 	},
 /turf/unsimulated/floor/red,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Cg" = (
 /obj/disposalpipe/segment/morgue,
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction_four{
 	name = "reservoir";
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Cm" = (
 /obj/ladder/cruiser/syndicate{
 	id = "cruiser_aqua_crew1";
@@ -2173,36 +3648,52 @@
 	pixel_x = 10
 	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Cn" = (
 /turf/unsimulated/floor/redwhite,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Cp" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2{
 	color = "aqua";
 	name = "reservoir";
 	dir = 5
 	},
-/area/sunken{
-	name = "Distillation Chamber"
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
 	})
 "Cq" = (
 /obj/stool/bed/moveable/hospital,
 /turf/unsimulated/floor/redwhite{
 	dir = 4
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Cr" = (
 /obj/stool/bed/brig,
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ct" = (
 /obj/machinery/conveyor/NW,
 /obj/reagent_dispensers/watertank/big,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Cz" = (
 /obj/machinery/door/airlock/gannets/glass{
 	dir = 1
@@ -2210,32 +3701,62 @@
 /turf/simulated/floor/airless/darkbluewhite{
 	dir = 4
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"CB" = (
+/obj/table/sleek/auto,
+/obj/machinery/activation_button/flusher_button{
+	name = "prison chute";
+	id = "aqua_prison";
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "CL" = (
 /obj/fakeobject/tallsmes,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "CO" = (
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "CQ" = (
 /turf/simulated/floor/engine,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "CT" = (
 /obj/machinery/drainage/big,
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "CW" = (
 /obj/pool/perspective{
 	dir = 1;
 	tag = "icon-pool (NORTH)"
 	},
 /turf/unsimulated/floor/pool/bluewhite,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Da" = (
 /obj/machinery/light_switch/auto,
 /obj/rack,
@@ -2245,8 +3766,12 @@
 /obj/item/reagent_containers/patch/mini/synthflesh,
 /obj/item/reagent_containers/mender_refill_cartridge/brute,
 /obj/item/reagent_containers/mender_refill_cartridge/burn,
+/obj/item_dispenser/latex_gloves,
 /turf/unsimulated/floor/redwhite,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Db" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/cryo,
@@ -2255,41 +3780,73 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Dd" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
 	},
 /turf/simulated/floor/airless/marble/border_wb,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "De" = (
 /turf/simulated/floor/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Dj" = (
 /mob/living/critter/aquatic/shark,
-/turf/space/fluid/cenote{
-	name = "reservoir"
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
 	},
-/area/space)
+/turf/simulated/floor/solidcolor/black{
+	name = "deep reservoir";
+	icon = 'icons/turf/outdoors.dmi';
+	icon_state = "cenote"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Dm" = (
 /obj/fakeobject/console_radar,
 /turf/simulated/floor/airless/marble/border_wb,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Dn" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 6;
 	icon_state = "line1"
 	},
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Dp" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
 	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/unsimulated/floor/longtile{
 	color = "grey"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ds" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
@@ -2298,7 +3855,10 @@
 	dir = 1
 	},
 /turf/simulated/floor/airless/marble/border_bw,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Du" = (
 /obj/table/sleek/auto,
 /obj/decal/tile_edge/line/grey{
@@ -2310,20 +3870,26 @@
 	},
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/airless/twotone/red,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "DE" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 8;
 	name = "ice processing pipe"
 	},
 /turf/simulated/wall/auto/reinforced/jen/dark4,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "DM" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
 	},
 /obj/disposaloutlet/north{
-	desc = "An outlet for the river loop system.";
+	desc = "An outlet for the mortuary chamber.";
 	dir = 4;
 	layer = 4;
 	name = "Mortuary Hold";
@@ -2336,27 +3902,51 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"DN" = (
+/obj/fluid_pipe/straight{
+	dir = 4
+	},
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "DR" = (
 /obj/machinery/conveyor/SN,
 /turf/simulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "DS" = (
 /turf/simulated/floor/stairs/medical/wide/other,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "DV" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 8;
 	name = "ice processing pipe"
 	},
 /turf/simulated/wall/auto/reinforced/jen/yellow,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "DX" = (
 /obj/window/auto/reinforced/the_tuff_stuff{
 	icon_state = "R-9"
 	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ef" = (
 /obj/window/auto/reinforced/the_tuff_stuff{
 	icon_state = "R3"
@@ -2366,35 +3956,53 @@
 	name = "ice processing pipe"
 	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Eh" = (
 /obj/machinery/door/airlock/gannets/glass/morgue/alt,
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ej" = (
 /turf/simulated/floor/engine/caution/east,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "El" = (
 /obj/machinery/door/airlock/gannets/maintenance{
 	name = "toilet";
 	dir = 4
 	},
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "En" = (
 /obj/machinery/vending/book,
 /turf/simulated/floor/airless/darkbluewhite{
 	dir = 9
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Er" = (
 /obj/machinery/door/airlock/gannets/maintenance{
 	name = "shower";
 	dir = 4
 	},
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Es" = (
 /obj/machinery/door/airlock/gannets/engineering{
 	dir = 4;
@@ -2402,30 +4010,52 @@
 	},
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Eu" = (
 /turf/simulated/floor/stairs/medical/wide/other{
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ey" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 6
 	},
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "EG" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 10
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"EQ" = (
+/obj/machinery/light/flamp,
+/turf/simulated/floor/circuit/off,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "EU" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2{
 	color = "aqua";
 	name = "reservoir";
 	dir = 8
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Fc" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -2434,8 +4064,15 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/blue,
 /obj/item/paper/book/from_file/deep_blue_sea,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 12
+	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ff" = (
 /obj/machinery/door/airlock/gannets/glass/engineering{
 	name = "podbay";
@@ -2443,21 +4080,41 @@
 	},
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Fg" = (
+/obj/machinery/bathtub{
+	anchored = 1;
+	dir = 8
+	},
+/turf/unsimulated/floor/pool/blue,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Fh" = (
 /obj/decal/stage_edge/alt{
 	color = "gray"
 	},
 /obj/fakeobject/bigcabinets/slider,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Fj" = (
 /obj/machinery/door/airlock/gannets/glass/morgue/alt{
 	name = "distillation sector";
 	dir = 4
 	},
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Fk" = (
 /obj/lattice/directional_icons{
 	dir = 10
@@ -2476,34 +4133,70 @@
 /obj/item/clothing/head/blue,
 /obj/item/reagent_containers/food/drinks/bottle/rum,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Fr" = (
 /obj/machinery/door/airlock/gannets/glass/medical,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ft" = (
 /turf/simulated/floor/airless/engine/vacuum,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Fu" = (
-/obj/machinery/light/small{
+/obj/machinery/light{
 	dir = 8;
-	pixel_x = -12
+	layer = 9.1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/neutral/side,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Fx" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Fz" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor/engine/glow/blue,
-/area/space)
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 8
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "FG" = (
 /turf/simulated/floor/engine/caution/west,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "FI" = (
 /obj/stool/chair/office{
 	dir = 8
 	},
+/obj/machinery/light/small/blueish,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "FQ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -2511,26 +4204,38 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "FW" = (
 /obj/machinery/door/airlock/gannets/glass/engineering{
 	name = "podbay"
 	},
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "FZ" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/airless/darkbluewhite{
 	dir = 9
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Gb" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line1"
 	},
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Gd" = (
 /obj/machinery/door/airlock/gannets/glass/toxins/alt{
 	dir = 4
@@ -2539,48 +4244,83 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Gk" = (
-/turf/simulated/wall/auto/reinforced/jen/the_tuff_stuff,
-/area/space)
+/obj/window/auto/reinforced/the_tuff_stuff{
+	icon_state = "R0"
+	},
+/turf/simulated/floor/circuit/off,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Gm" = (
 /obj/mesh/catwalk/jen{
 	icon_state = "M10-0"
 	},
 /turf/simulated/floor/airless/plating,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Gs" = (
 /obj/machinery/vehicle/pod_smooth/industrial,
 /turf/simulated/floor/engine,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Gu" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Gv" = (
 /obj/machinery/door/airlock/gannets/maintenance{
 	dir = 8
 	},
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Gx" = (
 /obj/forcefield/energyshield/perma,
 /obj/machinery/door/airlock/syndicate,
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/engine/glow,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "GC" = (
-/obj/machinery/light/small{
+/obj/machinery/light{
 	dir = 4;
-	pixel_x = 12
+	layer = 9.1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "GF" = (
 /turf/simulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "GJ" = (
 /obj/ladder/cruiser/syndicate{
 	id = "cruiser_aqua_bunkroom2";
@@ -2589,15 +4329,29 @@
 	pixel_y = -8
 	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "GR" = (
 /turf/simulated/floor/airless/darkbluewhite/corner{
 	dir = 4
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "GS" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
 /turf/unsimulated/floor/longtile/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ha" = (
 /obj/machinery/door/unpowered/wood/stall{
 	pixel_y = -5
@@ -2605,22 +4359,34 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Hf" = (
 /obj/machinery/recharger/wall{
 	pixel_y = 26
 	},
 /turf/unsimulated/floor/engine/glow/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Hj" = (
 /obj/fakeobject/biggercabinets/gauges,
 /turf/simulated/floor/circuit/white,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Hm" = (
 /obj/machinery/conveyor/EW,
 /obj/reagent_dispensers/watertank/big,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Hs" = (
 /obj/machinery/sonic_shower{
 	dir = 2
@@ -2629,7 +4395,19 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Ht" = (
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/turf/unsimulated/floor/marble/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Hx" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
@@ -2638,7 +4416,10 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Hy" = (
 /obj/table/monodesk/auto,
 /obj/machinery/computer/security/wooden_tv{
@@ -2649,15 +4430,24 @@
 	pixel_x = -1
 	},
 /turf/unsimulated/floor/engine/glow/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "HB" = (
 /turf/simulated/floor/stairs/dark,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "HJ" = (
 /turf/simulated/floor/stairs/dark{
 	dir = 8
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "HL" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
@@ -2666,16 +4456,25 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "HQ" = (
 /turf/simulated/floor/airless/darkbluewhite,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "HX" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
 	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ib" = (
 /obj/table/sleek/auto,
 /obj/item/implantcase/super_mindhack,
@@ -2685,7 +4484,10 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ie" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
@@ -2693,11 +4495,16 @@
 /obj/machinery/sonic_shower{
 	pixel_y = 7
 	},
-/obj/machinery/drainage,
+/obj/machinery/drainage{
+	pixel_y = -15
+	},
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Io" = (
 /obj/decoration/decorativeplant/plant7,
 /obj/machinery/light/small{
@@ -2705,17 +4512,27 @@
 	pixel_x = 12
 	},
 /turf/unsimulated/floor/wood/eight,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Iq" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
 	},
 /turf/simulated/floor/airless/marble/border_wb,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Iu" = (
-/obj/fakeobject/autoclave,
-/turf/simulated/floor/plating/jen,
-/area/space)
+/obj/machinery/light/small/floor/cool/very,
+/obj/table/reinforced/chemistry/auto/chemstorage,
+/turf/unsimulated/floor/marble/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Iy" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
@@ -2724,10 +4541,13 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "IA" = (
 /obj/disposaloutlet/north{
-	desc = "An outlet for the river loop system.";
+	desc = "An outlet for the comet ice deliveries.";
 	dir = 4;
 	layer = 4;
 	name = "Ice Outlet";
@@ -2736,36 +4556,73 @@
 	},
 /obj/disposalpipe/trunk/regular/west,
 /turf/simulated/floor/engine/glow,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "IO" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 1;
 	pixel_y = 3
 	},
 /turf/unsimulated/floor/wood/eight,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "IS" = (
 /turf/unsimulated/floor/redwhite{
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"IY" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 3
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "IZ" = (
 /obj/pool/perspective{
 	dir = 1;
 	tag = "icon-pool (NORTH)"
 	},
 /turf/unsimulated/floor/pool/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Jf" = (
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Jk" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
 /turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Jt" = (
 /obj/ladder/cruiser/syndicate{
 	id = "cruiser_aqua_ext2";
@@ -2778,20 +4635,29 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Jw" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction_four{
 	name = "reservoir";
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Jy" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
 	color = "aqua";
 	name = "reservoir";
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "JA" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/vending/restock_cartridge/cola,
@@ -2803,44 +4669,77 @@
 /obj/item/vending/restock_cartridge/cola,
 /obj/item/vending/restock_cartridge/cola,
 /turf/simulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "JD" = (
 /obj/machinery/vending/air_vendor,
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "JG" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
 	icon_state = "line-broken1"
 	},
 /turf/simulated/floor/airless/marble/border_wb,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "JH" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
 	},
 /turf/simulated/floor/sanitary/white,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "JR" = (
-/turf/space/fluid/cenote{
-	name = "reservoir"
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
 	},
-/area/space)
+/turf/simulated/floor/solidcolor/black{
+	name = "deep reservoir";
+	icon = 'icons/turf/outdoors.dmi';
+	icon_state = "cenote"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "JV" = (
 /turf/simulated/floor/airless/engine/caution/east,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "JZ" = (
-/obj/stool/chair/dining/wood{
-	dir = 4
+/obj/item/storage/toilet{
+	dir = 8
 	},
-/turf/simulated/floor/plating/jen,
-/area/space)
+/obj/decoration/toiletholder{
+	pixel_y = 32
+	},
+/turf/simulated/floor/sanitary,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Kl" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
 	},
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ko" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
@@ -2852,14 +4751,20 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Kp" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2{
 	color = "aqua";
 	name = "reservoir";
 	dir = 9
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ku" = (
 /obj/table/reinforced/chemistry/auto/beakers,
 /obj/item/reagent_containers/glass/plumbing/dropper{
@@ -2868,79 +4773,120 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Kw" = (
 /obj/stool/bench/sauna,
 /turf/unsimulated/floor/wood/eight,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"KC" = (
+/obj/stool/bench/auto,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "KJ" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2{
-	color = "aqua";
-	name = "reservoir";
-	dir = 9
+/obj/fluid_pipe/elbow{
+	dir = 1
 	},
-/area/sunken{
-	name = "Distillation Chamber"
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
 	})
 "KM" = (
-/turf/unsimulated/wall/setpieces/leadwindow/white/full{
-	desc = "A hardened porthole.";
-	name = "porthole";
-	color = "aqua";
+/obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/area/sunken{
-	name = "Distillation Chamber"
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
 	})
 "KN" = (
 /obj/machinery/light/runway_light/delay3,
 /turf/simulated/floor/airless/engine/caution/west,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "KP" = (
 /obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /turf/simulated/floor/circuit/white,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "KQ" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line-broken1"
 	},
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "KX" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
 /turf/simulated/floor/sanitary/white,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Lc" = (
 /turf/simulated/floor/grey/side,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Lm" = (
 /obj/table/glass/reinforced/auto{
 	color = "aqua"
 	},
 /turf/simulated/floor/airless/marble/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Lr" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2{
-	color = "aqua";
-	name = "reservoir";
-	dir = 5
-	},
-/area/space)
+/obj/table/reinforced/industrial/auto,
+/obj/item/emergencysuitfolded,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/emerg,
+/turf/simulated/floor/plating/jen,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ls" = (
 /obj/table/sleek/auto,
 /obj/item/baton/cane,
+/obj/machinery/light,
 /turf/simulated/floor/airless/twotone/red,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Lt" = (
 /obj/machinery/door/airlock/gannets/medical/alt{
 	dir = 8
 	},
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Lu" = (
 /obj/ladder/cruiser/syndicate{
 	id = "cruiser_aqua_barracks2";
@@ -2954,13 +4900,35 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/airless/darkblue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "LI" = (
 /obj/mesh/grille/steel{
 	icon_state = "grille3-0"
 	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"LQ" = (
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/plating/jen,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"LW" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/turf/simulated/floor/plating/jen,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "LX" = (
 /obj/machinery/light/emergency/exitsign{
 	desc = "There's a crew ladder here.";
@@ -2970,85 +4938,152 @@
 	dir = 8
 	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ma" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
 	},
 /obj/stool/chair/comfy/sleek,
 /turf/simulated/floor/airless/marble/border_wb,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Mb" = (
 /obj/fakeobject/operatorconsole,
 /turf/simulated/floor/circuit/white,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Mi" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
 	},
 /turf/simulated/floor/airless/marble/border_bw,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ml" = (
 /obj/decoration/decorativeplant/plant2,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/airless/darkbluewhite{
 	dir = 5
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Mp" = (
+/obj/fakeobject/robotarm,
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Mt" = (
 /obj/structure/girder/reinforced,
 /obj/fakeobject/pipe/heat{
 	name = "distillation system"
 	},
 /turf/simulated/floor/airless/plating,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Mx" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
 /turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "MA" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
 	},
 /obj/item/reagent_containers/food/drinks/coolerbottle,
 /turf/simulated/floor/engine,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "MC" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
 	color = "aqua";
 	name = "reservoir"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "MD" = (
 /turf/unsimulated/floor/glassblock/transparent_cyan,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "MG" = (
 /obj/machinery/light,
 /obj/machinery/manufacturer/general,
 /turf/simulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "MP" = (
 /turf/simulated/floor/airless/darkbluewhite/corner{
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "MS" = (
 /obj/window/auto/reinforced/the_tuff_stuff,
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"MW" = (
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/sanitary,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Nb" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 9;
 	name = "melt chamber"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ne" = (
 /obj/stool/bench/blue,
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Nj" = (
 /obj/lattice/directional_icons{
 	dir = 8
@@ -3060,16 +5095,22 @@
 	dir = 5
 	},
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Nu" = (
-/obj/disposalpipe/segment/bent/north,
+/obj/disposalpipe/junction/right/east,
 /turf/unsimulated/wall/setpieces/leadwindow/white{
 	name = "reservoir porthole";
 	desc = "A hardened, pressure-resistant porthole.";
 	color = "aqua";
 	dir = 8
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Nw" = (
 /obj/stool/bench/sauna{
 	dir = 4;
@@ -3077,17 +5118,26 @@
 	},
 /obj/stool/bench/sauna,
 /turf/unsimulated/floor/wood/eight,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ny" = (
 /obj/machinery/atmospherics/unary/cryo_cell,
 /turf/unsimulated/floor/red,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "NJ" = (
 /obj/forcefield/energyshield/perma,
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "NK" = (
 /obj/mesh/catwalk/jen{
 	icon_state = "M13-0"
@@ -3101,40 +5151,69 @@
 /obj/table/sleek/auto,
 /obj/item/baton/cane,
 /turf/simulated/floor/airless/twotone/red,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "NO" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
 /turf/simulated/floor/airless/darkbluewhite{
 	dir = 4
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "NQ" = (
-/obj/machinery/flasher/minibrig{
-	id = "aqua_prison_flash";
-	name = "\improper Mounted Flash (Prison Hold)";
-	pixel_y = 26
-	},
 /turf/simulated/floor/stairs/dark{
 	dir = 4
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "NR" = (
 /obj/disposaloutlet/north{
 	name = "export outlet"
 	},
 /obj/machinery/conveyor/SN,
 /turf/simulated/floor/engine,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "NS" = (
 /obj/machinery/light,
 /turf/simulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "NY" = (
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
 /turf/unsimulated/floor/longtile/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Oc" = (
+/turf/simulated/floor/neutral/side,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Od" = (
+/obj/disposalpipe/segment/transport{
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 8
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Og" = (
 /obj/lattice/directional_icons{
 	dir = 6
@@ -3147,7 +5226,10 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ok" = (
 /obj/machinery/light{
 	dir = 1;
@@ -3158,13 +5240,37 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/redwhite,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Oo" = (
 /obj/table/glass/reinforced/auto{
 	color = "aqua"
 	},
+/obj/item/plate/tray,
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater{
+	name = "moonwater";
+	desc = "Mineral water from Decirprevo's Lunar operations. Bottled at Posidonius Reservoir at the Sea of Serenity, harvested from sunless craters in the polar regions.";
+	pixel_y = 7;
+	pixel_x = 9
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater{
+	name = "moonwater";
+	desc = "Mineral water from Decirprevo's Lunar operations. Bottled at Posidonius Reservoir at the Sea of Serenity, harvested from sunless craters in the polar regions.";
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater{
+	name = "moonwater";
+	desc = "Mineral water from Decirprevo's Lunar operations. Bottled at Posidonius Reservoir at the Sea of Serenity, harvested from sunless craters in the polar regions.";
+	pixel_y = 7
+	},
 /turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Oy" = (
 /obj/machinery/door/airlock/gannets/glass/morgue/alt{
 	name = "distillation sector";
@@ -3172,13 +5278,19 @@
 	},
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Oz" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
 /turf/simulated/floor/engine,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "OA" = (
 /obj/ladder/cruiser/syndicate{
 	id = "cruiser_aqua_ext1";
@@ -3189,11 +5301,18 @@
 	name = "illuminated ladder shaft"
 	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "OB" = (
 /obj/table/podium_white/syndicate,
+/obj/machinery/light/small/floor/cool/very,
 /turf/unsimulated/floor/engine/glow/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "OD" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1;
@@ -3206,7 +5325,10 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "OE" = (
 /obj/storage/secure/crate/gear,
 /obj/item/clothing/under/gimmick/sailor,
@@ -3216,7 +5338,10 @@
 /obj/item/clothing/head/beret/syndicate,
 /obj/item/clothing/head/beret/syndicate,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "OH" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 1;
@@ -3226,7 +5351,10 @@
 	icon_state = "line-broken1"
 	},
 /turf/unsimulated/floor/specialroom/cafeteria,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "OI" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -3236,7 +5364,10 @@
 	icon_state = "line3"
 	},
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "OO" = (
 /obj/decal/stage_edge/alt{
 	color = "gray"
@@ -3249,7 +5380,10 @@
 /obj/item/clothing/head/beret/syndicate,
 /obj/item/clothing/head/beret/syndicate,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "OS" = (
 /turf/unsimulated/wall/setpieces/leadwindow/white/full{
 	desc = "A hardened porthole.";
@@ -3257,18 +5391,26 @@
 	color = "aqua";
 	dir = 1
 	},
-/area/sunken{
-	name = "Distillation Chamber"
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
 	})
 "Pc" = (
+/obj/machinery/light/small/floor/cool/very,
 /turf/unsimulated/floor/engine/glow/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Po" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 6
 	},
 /turf/simulated/floor/airless/marble/border_bw,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Pp" = (
 /turf/unsimulated/wall/setpieces/leadwindow/white{
 	name = "reservoir porthole";
@@ -3276,26 +5418,36 @@
 	color = "aqua";
 	dir = 8
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Pq" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
 	},
+/obj/machinery/light/small/blueish{
+	dir = 1;
+	pixel_y = 20
+	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Pu" = (
 /obj/structure/girder/reinforced,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Pw" = (
-/obj/item/storage/toilet{
-	dir = 8
-	},
-/obj/decoration/toiletholder{
-	pixel_y = 32
-	},
-/turf/simulated/floor/sanitary,
-/area/space)
+/turf/simulated/wall/auto/reinforced/jen/the_tuff_stuff,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Pz" = (
 /obj/ladder/cruiser/syndicate{
 	id = "cruiser_aqua_barracks";
@@ -3311,7 +5463,10 @@
 	pixel_x = 10
 	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "PF" = (
 /obj/mesh/catwalk/jen{
 	icon_state = "M12-0"
@@ -3323,93 +5478,186 @@
 "PK" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "PM" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	color = "aqua";
-	name = "reservoir";
-	dir = 1
-	},
-/area/sunken{
-	name = "Distillation Chamber"
+/obj/machinery/light/small/floor/cool/very,
+/turf/unsimulated/floor/marble/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
 	})
 "PT" = (
-/obj/fakeobject/biggercabinets/gauges,
+/obj/fakeobject/biggercabinets/gauges{
+	name = "pump readouts"
+	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "PW" = (
 /turf/simulated/floor/airless/darkbluewhite/corner,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "PY" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/airless/darkbluewhite{
 	dir = 10
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Qg" = (
 /obj/structure/girder/reinforced,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Qm" = (
 /obj/fakeobject/airlock_broken/bolted{
 	name = "engineering"
 	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Qp" = (
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/unsimulated/wall/setpieces/leadwindow/white{
+	name = "reservoir porthole";
+	desc = "A hardened, pressure-resistant porthole.";
+	color = "aqua";
+	dir = 8
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Qq" = (
+/obj/table/sleek/auto,
+/obj/random_item_spawner/desk_stuff/few,
+/turf/simulated/floor/circuit/off,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Qr" = (
 /obj/fakeobject/console_radar,
 /turf/simulated/floor/airless/marble/border_bw,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Qw" = (
 /obj/machinery/door/airlock/gannets/glass/toxins,
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "QI" = (
 /turf/simulated/floor/airless/engine/caution/west,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "QK" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line-broken1"
 	},
 /obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "QS" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 8;
 	name = "ice processing pipe"
 	},
 /turf/simulated/floor/engine,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "QV" = (
 /obj/table/reinforced/industrial/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "QZ" = (
 /obj/window/auto/reinforced/the_tuff_stuff{
 	icon_state = "R0"
 	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ra" = (
 /turf/unsimulated/floor/red,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Rb" = (
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Rc" = (
 /obj/machinery/conveyor/EW,
 /obj/machinery/fluid_canister,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Rg" = (
+/obj/fakeobject/robot/servotron/older{
+	desc = "A Kingsway loader bot. It's currently in hibernation mode.";
+	name = "bottling attendant"
+	},
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Rk" = (
 /turf/unsimulated/wall/setpieces/leadwindow/white/full{
 	desc = "A hardened porthole.";
 	name = "porthole";
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Rl" = (
 /obj/disposalpipe/segment/morgue,
 /turf/unsimulated/wall/setpieces/leadwindow/white/full{
@@ -3417,21 +5665,42 @@
 	name = "porthole";
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ro" = (
 /obj/machinery/vending/cola/blue,
-/obj/machinery/light/small{
+/obj/machinery/light{
 	dir = 1;
-	pixel_y = 12
+	layer = 9.1;
+	pixel_y = 21
 	},
 /turf/unsimulated/floor/pool/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Rw" = (
+/obj/table/reinforced/chemistry/auto/drugs,
+/turf/unsimulated/floor/marble/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Rz" = (
-/obj/machinery/door/unpowered/wood/stall{
-	dir = 8
-	},
 /turf/simulated/floor/sanitary,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"RF" = (
+/obj/table/reinforced/chemistry/auto/allinone,
+/turf/unsimulated/floor/marble/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "RJ" = (
 /obj/structure/girder/reinforced,
 /obj/disposalpipe/segment/mineral{
@@ -3439,30 +5708,45 @@
 	name = "ice processing pipe"
 	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "RP" = (
 /obj/table/sleek/auto,
-/obj/item/radiojammer,
-/obj/item/radiojammer,
 /obj/item/radiojammer,
 /obj/item/radiojammer,
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "RS" = (
-/obj/machinery/door/unpowered/wood,
+/obj/machinery/door/airlock/gannets/glass{
+	dir = 1
+	},
 /turf/unsimulated/floor/pool/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "RV" = (
 /turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Sc" = (
 /obj/stool/chair/comfy/ergonomic{
 	dir = 8
 	},
 /turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Sd" = (
 /obj/disposalpipe/junction/left,
 /turf/unsimulated/wall/setpieces/leadwindow/white/full{
@@ -3471,10 +5755,35 @@
 	color = "aqua";
 	dir = 4
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Se" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/airless/minitiles/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Sf" = (
+/obj/machinery/space_heater,
 /turf/simulated/floor/engine/glow,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Si" = (
+/obj/decoration/decorativeplant/plant5,
+/turf/unsimulated/floor/pool/blue,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "So" = (
 /obj/decal/poster/wallsign/biohazard{
 	pixel_y = -14;
@@ -3485,18 +5794,32 @@
 	name = "reservoir";
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Su" = (
 /obj/machinery/light/runway_light/delay3,
 /turf/simulated/floor/airless/engine/caution/east,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Sy" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/emergencysuitfolded,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/emerg,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "SE" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
@@ -3504,34 +5827,47 @@
 /turf/space,
 /area/space)
 "SG" = (
-/obj/table/reinforced/industrial/auto,
-/obj/item/reagent_containers/glass/bottle/oil,
+/obj/submachine/laundry_machine,
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "SH" = (
-/obj/fakeobject/robotarm,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "SQ" = (
 /obj/window/auto/reinforced/the_tuff_stuff{
 	icon_state = "R3"
 	},
 /turf/simulated/floor/airless/twotone/red,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "SR" = (
 /obj/table/wood/auto/desk,
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 5
 	},
 /turf/unsimulated/floor/carpet/office/other,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "SX" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/airless/plating,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Tg" = (
 /obj/disposaloutlet/north{
-	desc = "An outlet for the river loop system.";
+	desc = "An outlet for the comet ice deliveries.";
 	dir = 4;
 	layer = 4;
 	name = "Ice Outlet";
@@ -3542,11 +5878,17 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Tl" = (
-/obj/storage/closet/janitor,
+/obj/table/reinforced/auto,
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "To" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -3554,7 +5896,10 @@
 	},
 /obj/stool/chair/comfy/sleek,
 /turf/simulated/floor/airless/marble/border_wb,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "TA" = (
 /obj/lattice/directional_icons{
 	dir = 10
@@ -3568,34 +5913,56 @@
 /obj/railing/cyan,
 /obj/stool/chair/dining/scrap,
 /turf/simulated/floor/airless/plating,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "TF" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /turf/simulated/floor/grey/side,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "TQ" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line-broken1"
 	},
 /obj/machinery/light/small,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "TW" = (
 /obj/railing/cyan,
 /turf/simulated/floor/airless/plating,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "TZ" = (
 /obj/fakeobject/bigatmos,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ua" = (
 /turf/simulated/wall/auto/reinforced/jen/yellow,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Uc" = (
 /obj/stool/chair/office{
 	dir = 4
@@ -3603,7 +5970,10 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 4
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Um" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -3614,31 +5984,75 @@
 	},
 /obj/fakeobject/cpucontroller,
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Un" = (
 /obj/table/sleek/auto,
 /turf/simulated/floor/airless/marble/black,
-/area/space)
-"Uu" = (
-/obj/machinery/bathtub{
-	anchored = 1;
-	dir = 8
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Ut" = (
+/obj/storage/secure/closet/fridge,
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater{
+	name = "moonwater";
+	desc = "Mineral water from Decirprevo's Lunar operations. Bottled at Posidonius Reservoir at the Sea of Serenity, harvested from sunless craters in the polar regions.";
+	pixel_y = 7;
+	pixel_x = -8
 	},
-/turf/unsimulated/floor/pool/blue,
-/area/space)
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater{
+	name = "moonwater";
+	desc = "Mineral water from Decirprevo's Lunar operations. Bottled at Posidonius Reservoir at the Sea of Serenity, harvested from sunless craters in the polar regions.";
+	pixel_y = 7;
+	pixel_x = 9
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater{
+	name = "moonwater";
+	desc = "Mineral water from Decirprevo's Lunar operations. Bottled at Posidonius Reservoir at the Sea of Serenity, harvested from sunless craters in the polar regions.";
+	pixel_y = 7
+	},
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/turf/unsimulated/floor/marble/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Uu" = (
+/obj/decal/stage_edge/alt{
+	color = "aqua"
+	},
+/turf/unsimulated/floor/industrial,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Uw" = (
 /obj/fakeobject/bigcabinets/gauges,
 /turf/simulated/floor/circuit/white,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "UE" = (
 /obj/machinery/vending/snack,
 /turf/unsimulated/floor/wood/eight,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "UF" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 6
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "UH" = (
 /obj/pool/perspective{
 	dir = 4;
@@ -3648,27 +6062,46 @@
 /turf/unsimulated/floor/pool/bluewhite{
 	dir = 8
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "UQ" = (
 /obj/machinery/conveyor/EW,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "UT" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/mapping_helper/access/syndie_shuttle,
+/obj/machinery/door/airlock/gannets/morgue/alt{
+	name = "water sommelier office"
+	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "UX" = (
 /turf/simulated/wall/auto/reinforced/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "UY" = (
 /obj/machinery/door_control/podbay/syndicate{
 	pixel_y = 26;
 	id = "hangar_aqua"
 	},
 /turf/simulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Vc" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -3679,7 +6112,10 @@
 	},
 /obj/fakeobject/bigcabinets/monitors,
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Vi" = (
 /obj/ladder/cruiser/syndicate{
 	id = "cruiser_aqua_bunkroom1";
@@ -3692,14 +6128,47 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/airless/darkblue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Vn" = (
 /obj/railing/cyan{
 	dir = 4
 	},
 /obj/table/scrap/auto,
 /turf/simulated/floor/airless/plating,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Vp" = (
+/obj/storage/secure/closet/fridge,
+/obj/decal/stage_edge/alt{
+	color = "gray"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater{
+	name = "marswater";
+	desc = "Sparkling water from Decirprevo's Martian operations. Naturally carbonated.";
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater{
+	name = "marswater";
+	desc = "Sparkling water from Decirprevo's Martian operations. Naturally carbonated.";
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda/lithiawater{
+	name = "marswater";
+	desc = "Sparkling water from Decirprevo's Martian operations. Naturally carbonated.";
+	pixel_y = 7;
+	pixel_x = 8
+	},
+/turf/unsimulated/floor/marble/black,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Vr" = (
 /obj/table/sleek/auto,
 /obj/item/handcuffs/tape_roll,
@@ -3709,21 +6178,37 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Vt" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
+/obj/machinery/door/airlock/gannets/engineering{
+	name = "exports"
+	},
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Vw" = (
 /turf/simulated/floor/stairs/medical{
 	dir = 8
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Vz" = (
 /turf/simulated/floor/airless/darkblue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "VB" = (
 /obj/storage/crate,
 /obj/item/clothing/under/gimmick/sailor,
@@ -3731,7 +6216,10 @@
 /obj/item/clothing/head/blue,
 /obj/item/clothing/head/blue,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "VE" = (
 /obj/ladder/cruiser/syndicate{
 	id = "cruiser_aqua_barracks2";
@@ -3749,15 +6237,35 @@
 	pixel_x = 10
 	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "VG" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/blue,
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "VI" = (
 /turf/simulated/floor/airless/marble/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"VJ" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/airless/twotone/red,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "VM" = (
 /obj/lattice/directional_icons{
 	dir = 5
@@ -3767,17 +6275,26 @@
 "VO" = (
 /obj/structure/girder/reinforced,
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "VU" = (
 /obj/decal/poster/wallsign/no_smoking{
 	pixel_y = 29
 	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "VX" = (
 /obj/stool/bench/blue/auto,
 /turf/unsimulated/floor/wood/eight,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "VZ" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -3793,16 +6310,40 @@
 	pixel_y = 3
 	},
 /turf/unsimulated/floor/red,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Wg" = (
 /obj/table/sleek/auto,
 /obj/item/storage/box/handcuff_kit,
 /turf/simulated/floor/airless/twotone/red,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Wk" = (
 /obj/structure/girder/reinforced,
 /turf/simulated/floor/airless/plating,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Wl" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/bathtub{
+	anchored = 1;
+	dir = 8
+	},
+/turf/unsimulated/floor/pool/blue,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Wm" = (
 /obj/ladder/cruiser/syndicate{
 	id = "cruiser_aqua_bunkroom1";
@@ -3811,7 +6352,10 @@
 	pixel_y = 16
 	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ww" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -3820,7 +6364,10 @@
 /turf/simulated/floor/airless/escape{
 	dir = 8
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Wx" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
@@ -3831,36 +6378,61 @@
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "WC" = (
-/obj/machinery/light/small{
+/obj/machinery/light{
 	dir = 8;
-	pixel_x = -12
+	layer = 9.1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "WK" = (
 /obj/surgery_tray/kitchen_island,
 /obj/item/kitchen/rollingpin,
 /turf/simulated/floor/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "WL" = (
 /turf/unsimulated/wall/setpieces/leadwindow/white{
 	name = "reservoir porthole";
 	desc = "A hardened, pressure-resistant porthole.";
 	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "WP" = (
-/turf/unsimulated/wall/setpieces/leadwindow/white/full{
-	desc = "A hardened porthole.";
-	name = "porthole";
-	color = "aqua";
-	dir = 1
+/obj/machinery/manufacturer/robotics,
+/turf/unsimulated/floor/shiny{
+	color = "aqua"
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"WQ" = (
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 8
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "WR" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -3871,10 +6443,16 @@
 	},
 /obj/fakeobject/bigcabinets/monitors,
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "WS" = (
 /turf/simulated/wall/auto/reinforced/jen/red,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "WT" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -3884,30 +6462,72 @@
 	name = "engineer's seat"
 	},
 /turf/simulated/floor/airless/marble/border_wb,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"WV" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 1
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "WX" = (
 /obj/submachine/ice_cream_dispenser,
 /turf/simulated/floor/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Xa" = (
 /obj/machinery/conveyor/SN,
 /obj/reagent_dispensers/watertank/big,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
 /turf/simulated/floor/engine,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"Xh" = (
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/stairs/dark{
+	dir = 8
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Xk" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
 	icon_state = "line-broken1"
 	},
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Xu" = (
 /turf/simulated/wall/auto/reinforced/jen/dark4,
 /area/space)
 "Xy" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor/airless/minitiles/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "XK" = (
 /obj/lattice/directional_icons{
 	dir = 1
@@ -3920,7 +6540,10 @@
 	pixel_x = 12
 	},
 /turf/unsimulated/floor/pool/blue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "XO" = (
 /obj/surgery_tray,
 /obj/item/circular_saw{
@@ -3944,17 +6567,26 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 1
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "XT" = (
 /obj/machinery/weapon_stand/rifle_rack/recharger,
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "XW" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Yc" = (
 /obj/lattice/directional_icons{
 	dir = 10
@@ -3963,7 +6595,10 @@
 /area/space)
 "Yd" = (
 /turf/simulated/floor/white,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Yr" = (
 /obj/mesh/grille/steel{
 	icon_state = "grille3-0"
@@ -3973,91 +6608,142 @@
 	name = "ice processing pipe"
 	},
 /turf/simulated/floor/plating/jen,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Ys" = (
 /obj/machinery/sleeper,
 /turf/simulated/floor/sanitary/white,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Yt" = (
-/obj/machinery/light/small,
+/obj/machinery/light,
 /turf/simulated/floor/airless/darkbluewhite{
 	dir = 10
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Yu" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
 	icon_state = "line1"
 	},
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "YM" = (
 /obj/table/reinforced/auto,
 /obj/submachine/foodprocessor{
 	pixel_y = 8
 	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "YO" = (
 /obj/storage/secure/closet/kitchen,
 /turf/simulated/floor/black,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "YQ" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
 	color = "aqua";
 	name = "reservoir";
 	dir = 8
 	},
-/area/sunken{
-	name = "Distillation Chamber"
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
 	})
 "YT" = (
 /turf/simulated/floor/glassblock/transparent/large/cyan,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "YU" = (
 /obj/machinery/door/airlock/gannets/command,
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/circuit/off,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "YV" = (
 /obj/fakeobject/bigatmos/bigatmos2,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /turf/unsimulated/floor/industrial,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "YY" = (
 /obj/machinery/vehicle/pod_smooth/industrial,
 /turf/simulated/floor/engine/caution/west,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Zb" = (
 /obj/machinery/door/airlock/gannets/glass,
 /turf/simulated/floor/airless/darkbluewhite{
 	dir = 8
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Zp" = (
 /obj/decal/stage_edge/alt{
 	color = "aqua"
 	},
 /obj/disposaloutlet/north{
-	desc = "An outlet for the river loop system.";
+	desc = "An outlet for the shark tank feeder.";
 	dir = 4;
 	layer = 4;
-	name = "Prison Hold";
+	name = "Chum outlet";
 	pixel_x = -7
 	},
-/turf/space/fluid/cenote{
-	name = "reservoir"
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
 	},
-/area/space)
+/turf/simulated/floor/solidcolor/black{
+	name = "deep reservoir";
+	icon = 'icons/turf/outdoors.dmi';
+	icon_state = "cenote"
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Zq" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 8;
 	name = "ice processing pipe"
 	},
 /turf/simulated/floor/stairs/dark,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Zr" = (
 /obj/ladder/cruiser/syndicate{
 	id = "cruiser_aqua_crew1";
@@ -4071,22 +6757,49 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/airless/darkblue,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "Zv" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/device/light/flashlight,
 /obj/item/device/light/flashlight,
 /obj/item/device/light/flashlight,
 /turf/simulated/floor/plating/jen,
-/area/space)
-"ZM" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2{
-	color = "aqua";
-	name = "reservoir";
-	dir = 10
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ZG" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
 	},
-/area/sunken{
-	name = "Distillation Chamber"
+/turf/simulated/floor/airless/darkbluewhite{
+	dir = 4
+	},
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ZL" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/specialroom/cafeteria,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
+"ZM" = (
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
 	})
 "ZO" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
@@ -4094,16 +6807,25 @@
 	},
 /obj/reagent_dispensers/watertank/big,
 /turf/simulated/floor/engine,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "ZP" = (
 /obj/machinery/conveyor/SN,
 /turf/simulated/floor/engine,
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "ZY" = (
 /turf/simulated/floor/airless/darkbluewhite{
 	dir = 6
 	},
-/area/space)
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 
 (1,1,1) = {"
 jT
@@ -4159,16 +6881,16 @@ jT
 "}
 (2,1,1) = {"
 jT
-Gk
-Gk
-Gk
-Gk
-Gk
-Gk
-Gk
+Pw
+Pw
+Pw
+Pw
+Pw
+Pw
+Pw
 hE
-Gk
-Gk
+Pw
+Pw
 jT
 jT
 jT
@@ -4178,16 +6900,16 @@ jT
 qq
 qq
 qq
-Xu
+ZM
 qm
 mE
 bF
-Xu
-Xu
+ZM
+ZM
 qm
 mE
 bF
-Xu
+ZM
 qq
 qq
 qq
@@ -4197,27 +6919,27 @@ jT
 jT
 jT
 jT
-Gk
-Gk
-Gk
+Pw
+Pw
+Pw
 hE
 hE
 hE
 hE
 hE
-Gk
-Gk
+Pw
+Pw
 jT
 "}
 (3,1,1) = {"
 jT
-Gk
+Pw
 zF
 xP
 fy
 YM
 WX
-Gk
+Pw
 YO
 bD
 QZ
@@ -4226,11 +6948,11 @@ jT
 ba
 jT
 jT
-Xu
+ZM
 qm
 mE
 bF
-Xu
+ZM
 VG
 VG
 VG
@@ -4239,18 +6961,18 @@ VB
 VG
 VG
 VG
-Xu
+ZM
 qm
 mE
 bF
-Xu
+ZM
 jT
 jT
 ba
 jT
 jT
 QZ
-sN
+Si
 Ax
 ps
 ps
@@ -4258,7 +6980,7 @@ ps
 ps
 ps
 ps
-Gk
+Pw
 jT
 "}
 (4,1,1) = {"
@@ -4276,18 +6998,18 @@ QZ
 jT
 jT
 Nj
-Xu
-Xu
-Xu
+ZM
+ZM
+ZM
 ld
-zO
+SH
 gy
 Ua
 fh
 oH
 da
-zO
-zO
+SH
+SH
 fh
 oH
 da
@@ -4295,9 +7017,9 @@ Ua
 CL
 zd
 LX
-Xu
-Xu
-Xu
+ZM
+ZM
+ZM
 Yc
 jT
 jT
@@ -4315,7 +7037,7 @@ jT
 "}
 (5,1,1) = {"
 jT
-Gk
+Pw
 De
 De
 De
@@ -4327,13 +7049,13 @@ nP
 QZ
 jT
 jT
-Xu
-Xu
+ZM
+ZM
 Vi
 Ua
 Wm
-zO
-zO
+SH
+SH
 Bc
 TQ
 Pu
@@ -4344,13 +7066,13 @@ aj
 Pu
 rV
 Bc
-zO
-zO
+SH
+SH
 GJ
 Ua
 qI
-Xu
-Xu
+ZM
+ZM
 jT
 jT
 QZ
@@ -4367,19 +7089,19 @@ jT
 "}
 (6,1,1) = {"
 jT
-Gk
+Pw
 kE
-Gk
+Pw
 De
-De
+AB
 WK
 De
 De
 zl
-Gk
+Pw
 Og
 Og
-Xu
+ZM
 En
 ms
 Ua
@@ -4390,8 +7112,8 @@ Ua
 pz
 ye
 HX
-zO
-zO
+SH
+SH
 pz
 hL
 HX
@@ -4402,10 +7124,10 @@ of
 Ua
 km
 ms
-Xu
+ZM
 Og
 Og
-Gk
+Pw
 sN
 IZ
 YT
@@ -4419,19 +7141,19 @@ jT
 "}
 (7,1,1) = {"
 jT
-Gk
-Gk
-Gk
+Pw
+Pw
+Pw
 wQ
-Gk
+Pw
 di
 BO
 BO
-Gk
-Gk
-Gk
-Gk
-Gk
+Pw
+Pw
+Pw
+Pw
+Pw
 eG
 HQ
 Ua
@@ -4454,10 +7176,10 @@ Ua
 Ua
 aD
 HQ
-Gk
-Gk
-Gk
-Gk
+Pw
+Pw
+Pw
+Pw
 sN
 IZ
 YT
@@ -4471,43 +7193,43 @@ jT
 "}
 (8,1,1) = {"
 jT
-Gk
+Pw
 kd
 kd
 kd
-kd
+ZL
 kd
 kd
 kd
 kd
 kd
 eD
-Gk
+Pw
 aO
 MP
 HQ
-Gk
-Gk
-Gk
-Gk
-Gk
 Pw
-Ua
 Pw
+Pw
+Pw
+Pw
+hG
 Ua
-qU
+hG
+Ua
+WQ
 Gu
 pl
 Ua
-Gk
-Gk
-Gk
-Gk
-Gk
+Pw
+Pw
+Pw
+Pw
+Pw
 aD
 GR
 Yt
-Gk
+Pw
 Ro
 zB
 sN
@@ -4523,7 +7245,7 @@ jT
 "}
 (9,1,1) = {"
 jT
-Gk
+Pw
 VX
 bl
 VX
@@ -4538,24 +7260,24 @@ no
 aD
 Yd
 HQ
-Gk
+Pw
 jh
 XT
 XT
-Gk
-Gk
-Gk
-Gk
-Gk
-Gk
-Gk
-Gk
-Gk
-Gk
+Pw
+Pw
+Pw
+Pw
+Pw
+Pw
+Pw
+Pw
+Pw
+Pw
 dE
 kA
 yc
-Gk
+Pw
 aD
 Yd
 HQ
@@ -4586,7 +7308,7 @@ VX
 jd
 kd
 kd
-bZ
+Gk
 aD
 Yd
 HQ
@@ -4594,7 +7316,7 @@ pd
 bH
 bH
 PK
-Gk
+Pw
 QK
 qL
 JG
@@ -4603,15 +7325,15 @@ VI
 aS
 qL
 AM
-Gk
+Pw
 hd
 dX
 SR
-Gk
+Pw
 aD
 Yd
 HQ
-bZ
+Gk
 qb
 sN
 sN
@@ -4638,7 +7360,7 @@ VX
 jd
 kd
 kd
-bZ
+Gk
 aD
 Yd
 HQ
@@ -4659,11 +7381,11 @@ hZ
 kA
 kA
 yc
-Gk
+Pw
 aD
 Yd
 HQ
-bZ
+Gk
 qb
 sN
 sN
@@ -4683,7 +7405,7 @@ jT
 ij
 yz
 Io
-jd
+Ba
 VX
 bl
 VX
@@ -4694,11 +7416,11 @@ OH
 aD
 Yd
 HQ
-Gk
-Gk
+Pw
+Pw
 hE
-Gk
-Gk
+Pw
+Pw
 Ey
 rm
 Ma
@@ -4707,11 +7429,11 @@ Lm
 At
 rm
 Nr
-Gk
-Gk
-Gk
-Gk
-Gk
+Pw
+Pw
+Pw
+Pw
+Pw
 aD
 Yd
 HQ
@@ -4723,7 +7445,7 @@ sN
 sN
 sN
 XN
-sN
+Si
 xY
 DX
 jT
@@ -4734,22 +7456,22 @@ jT
 jT
 jT
 je
-Gk
+Pw
 hE
-Gk
-Gk
-Gk
+Pw
+Pw
+Pw
 UE
 kd
-kd
-Gk
-aD
+eD
+Pw
+WV
 Yd
 HQ
-Gk
-bH
-bH
-bH
+Pw
+Qq
+lz
+BD
 bH
 KQ
 qL
@@ -4766,16 +7488,16 @@ bH
 nY
 aD
 Yd
-HQ
-Gk
+kp
+Pw
+Wl
 sN
-sN
-sN
-Gk
-Gk
+Fg
+Pw
+Pw
 hE
-Gk
-Gk
+Pw
+Pw
 DX
 jT
 jT
@@ -4790,17 +7512,17 @@ Av
 jT
 jT
 Nj
-Gk
-Gk
+Pw
+Pw
 hE
-Gk
-Gk
+Pw
+Pw
 aD
 Yd
 HQ
-Gk
-bH
-bH
+Pw
+EQ
+tQ
 bH
 bH
 pr
@@ -4815,14 +7537,14 @@ bH
 bH
 bH
 bH
-bZ
+Gk
 aD
 Yd
 HQ
-Gk
-Uu
+Pw
+hE
 bw
-Uu
+hE
 Xu
 Yc
 jT
@@ -4837,20 +7559,20 @@ jT
 jT
 jT
 jT
-Xu
-Xu
+ZM
+ZM
 hE
-Xu
-Xu
-Xu
+ZM
+ZM
+ZM
 aP
 gV
-gV
+ec
 xV
-aD
+WV
 Yd
 HQ
-Gk
+Pw
 bH
 bH
 bH
@@ -4867,20 +7589,20 @@ bH
 bH
 bH
 bH
-bZ
+Gk
 aD
 Yd
 HQ
 Gk
-Gk
-Gk
-Gk
-Xu
-Xu
+oR
+au
+Ai
+ZM
+ZM
 hE
-Xu
-Xu
-Xu
+ZM
+ZM
+ZM
 jT
 jT
 jT
@@ -4902,7 +7624,7 @@ Zb
 MP
 Yd
 HQ
-Gk
+Pw
 Yu
 Yu
 Yu
@@ -4926,13 +7648,13 @@ GR
 at
 at
 at
-at
-at
+Od
+Fz
 IO
 jd
 oG
 wU
-Xu
+ZM
 jT
 jT
 jT
@@ -4946,15 +7668,15 @@ vA
 vA
 vA
 eH
-NO
-NO
-NO
-NO
+ZG
+jf
+jf
+jf
 Cz
 vS
 Yd
 HQ
-Gk
+Pw
 pv
 lZ
 Mb
@@ -4971,20 +7693,20 @@ Gb
 Uw
 lZ
 Hj
-Gk
+Pw
 aD
 Yd
 PW
+jf
+jf
+jf
+jf
 NO
-NO
-NO
-NO
-NO
-Xu
+ZM
 Nw
 Kw
 vw
-Xu
+ZM
 jT
 jT
 jT
@@ -4993,11 +7715,11 @@ jT
 jT
 jT
 jT
-Xu
-Xu
-Xu
-Xu
-Xu
+ZM
+ZM
+ZM
+ZM
+ZM
 hE
 SQ
 Du
@@ -5006,7 +7728,7 @@ rW
 aD
 Yd
 HQ
-Gk
+Pw
 lZ
 lZ
 Mb
@@ -5023,20 +7745,20 @@ Gb
 uc
 lZ
 lZ
-Gk
+Pw
 aD
 Yd
 HQ
-Gk
-Gk
-Gk
-Gk
-Gk
-Xu
-Xu
-Xu
-Xu
-Xu
+Pw
+Pw
+Pw
+Pw
+yv
+ZM
+ZM
+ZM
+ZM
+ZM
 jT
 jT
 jT
@@ -5046,11 +7768,11 @@ jT
 jT
 jT
 jT
-Xu
-Xu
+ZM
+ZM
 Wg
 nD
-nD
+VJ
 nD
 lG
 nD
@@ -5058,8 +7780,8 @@ zv
 aD
 Yd
 HQ
-Gk
-Gk
+Pw
+Pw
 Ae
 fV
 xl
@@ -5074,20 +7796,20 @@ Xk
 Gb
 fV
 lZ
-Gk
-Gk
+Pw
+Pw
 aD
 Yd
 HQ
 lL
-Gu
+Rz
 dT
-nt
-Gu
-Gu
-Gu
-Xu
-Xu
+Pw
+cg
+MW
+KC
+ZM
+ZM
 jT
 jT
 jT
@@ -5099,7 +7821,7 @@ jT
 jT
 jT
 jT
-Xu
+ZM
 AG
 nD
 nD
@@ -5111,8 +7833,8 @@ aD
 Yd
 GR
 PY
-Gk
-Gk
+Pw
+Pw
 yL
 xl
 pr
@@ -5125,20 +7847,20 @@ Az
 Kl
 Gb
 KP
-Gk
-Gk
+Pw
+Pw
 FZ
 MP
 Yd
 HQ
-Gk
+Pw
 Rz
-Gk
 Rz
-Gk
+Pw
+Rz
 qU
-qU
-Xu
+KC
+ZM
 jT
 jT
 jT
@@ -5151,21 +7873,21 @@ jT
 jT
 jT
 jT
-Xu
-Xu
-Xu
-Xu
+ZM
+ZM
+ZM
+ZM
 NN
 bi
 Ls
 MS
 Ml
-NO
-NO
+jf
+jf
 ZY
 Vz
-Gk
-Gk
+Pw
+Pw
 xl
 bH
 yX
@@ -5176,21 +7898,21 @@ Qr
 yX
 bH
 Gb
-Gk
-Gk
+Pw
+Pw
 Vz
 gh
-NO
-NO
+jf
+jf
 lW
-Gk
 Pw
-Gk
+JZ
+sb
 Pw
-Xu
-Xu
-Xu
-Xu
+ZM
+ww
+ZM
+ZM
 jT
 jT
 jT
@@ -5205,8 +7927,8 @@ jT
 jT
 Nj
 BL
-mI
-Xu
+Br
+ZM
 Ua
 Ua
 hE
@@ -5217,18 +7939,18 @@ Ua
 hE
 Vw
 hE
-Gk
-Gk
-Gk
+Pw
+Pw
+Pw
 hE
 hE
 hE
 hE
 hE
 hE
-Gk
-Gk
-Gk
+Pw
+Pw
+Pw
 hE
 Vw
 hE
@@ -5239,7 +7961,7 @@ UX
 WS
 WS
 UX
-Xu
+ZM
 mI
 TW
 Yc
@@ -5257,7 +7979,7 @@ jT
 jT
 Nj
 Wk
-mI
+Br
 Ua
 Ua
 mb
@@ -5267,22 +7989,22 @@ GF
 ts
 Ua
 Ua
-GS
 NY
-GS
-GS
-GS
+oX
+NY
+NY
+NY
 fr
 CO
 CO
 Lc
-nz
+yr
 uJ
-GS
-GS
-GS
 NY
-GS
+NY
+NY
+NY
+NY
 UX
 UX
 hU
@@ -5319,22 +8041,22 @@ GF
 GF
 Jf
 Ua
+NY
+NY
 GS
-GS
-GS
-GS
-GS
+NY
+NY
 DS
 jZ
 CO
 Lc
 GC
 Eu
+NY
+NY
 GS
-GS
-GS
-GS
-GS
+NY
+NY
 UX
 Da
 hx
@@ -5425,18 +8147,18 @@ GF
 FW
 AO
 AO
-AO
+sJ
 AO
 AO
 uJ
-bL
+Fu
 CO
 Lc
-nz
+WC
 fr
 AO
 AO
-AO
+sJ
 AO
 AO
 Fr
@@ -5465,7 +8187,7 @@ jT
 jT
 Nj
 Wk
-mI
+Br
 Ua
 hE
 hE
@@ -5477,18 +8199,18 @@ GF
 Ff
 AO
 AO
-AO
+kg
 AO
 AO
 Eu
-bL
+bb
 CO
 Lc
-nz
+GC
 DS
 AO
 AO
-AO
+kg
 AO
 AO
 Fr
@@ -5517,7 +8239,7 @@ jT
 jT
 Nj
 BL
-mI
+Br
 qx
 Bl
 DR
@@ -5569,7 +8291,7 @@ jT
 jT
 Nj
 Wk
-mI
+Br
 Ua
 hE
 Ef
@@ -5589,12 +8311,12 @@ Fu
 CO
 Lc
 WC
-Ua
-Ua
-Ua
-Ua
+wg
+wg
+wg
+wg
 Qm
-Ua
+wg
 UX
 sg
 hx
@@ -5637,10 +8359,10 @@ CQ
 CQ
 CQ
 qe
-bL
+Oc
 CO
 Lc
-nz
+yr
 fr
 qW
 qW
@@ -5689,14 +8411,14 @@ Xa
 ZP
 NR
 hz
-bL
+Oc
 CO
 Lc
-nz
+yr
 DS
 qW
 qW
-qW
+Bz
 qW
 uG
 UX
@@ -5732,7 +8454,7 @@ jY
 Ej
 Ej
 GF
-QV
+wd
 lJ
 Ua
 wg
@@ -5745,12 +8467,12 @@ bL
 CO
 Lc
 nz
-Ua
-Ua
-Ua
-Ua
-Ua
-Ua
+wg
+wg
+wg
+wg
+wg
+wg
 UX
 mu
 hx
@@ -5777,7 +8499,7 @@ jT
 jT
 Nj
 Wk
-mI
+Br
 Ua
 Ua
 ge
@@ -5787,21 +8509,21 @@ GF
 JA
 Ua
 Ua
+Lr
+Lr
 Sy
-Sy
-Sy
-ct
+ap
 Zv
 wg
-bL
+Oc
 CO
 Lc
-nz
-Ua
+yr
+wg
 Tl
-pO
+Tl
 jj
-Br
+SG
 SG
 UX
 UX
@@ -5829,7 +8551,7 @@ jT
 jT
 Nj
 BL
-mI
+Br
 xC
 Ua
 DV
@@ -5839,23 +8561,23 @@ Ua
 Ua
 Ua
 JD
-pO
-pO
-pO
-pO
-pO
-wc
-bL
+ct
+ct
+ct
+ct
+ct
+zn
+Oc
 CO
 Lc
-nz
+yr
 wc
-pO
-pO
-pO
-pO
 ct
-JZ
+ct
+ct
+ct
+ct
+ct
 UX
 WS
 WS
@@ -5881,42 +8603,42 @@ jT
 jT
 Nj
 BL
-mI
+Br
 xC
-Xu
+ZM
 RJ
 HJ
-pO
-pO
-pO
-pO
-pO
-pO
-pO
+ct
+ct
+ct
+ct
+ct
+ct
+ct
 Kp
-am
-am
-am
+nZ
+nZ
+nZ
 dt
 uw
 db
 Kp
-am
-am
-am
+nZ
+nZ
+nZ
 dt
-pO
-pO
-pO
-pO
-pO
-pO
-pO
-HJ
+bZ
+dC
+LQ
+LQ
+LQ
+LQ
+LQ
+Xh
 Qg
-Xu
-xC
-mI
+gJ
+gH
+mk
 av
 Yc
 jT
@@ -5937,35 +8659,35 @@ Gm
 bx
 NJ
 Zq
-pO
-pO
-Xu
-Xu
-Xu
+ct
+ct
+ZM
+ZM
+ZM
 xW
 Kp
-WP
+OS
 Jw
 YQ
 YQ
 YQ
 Jw
 Fj
-rf
+Oy
 Jw
 YQ
 YQ
 YQ
 Jw
-WP
+OS
 dt
 Jt
-Xu
-Xu
-Xu
+ZM
+ZM
+ZM
 VU
-pO
-UT
+ct
+LW
 NJ
 bx
 bh
@@ -5987,17 +8709,17 @@ Nj
 Wk
 xC
 xC
-Xu
+ZM
 Yr
 LI
 LI
-Xu
+ZM
 OA
-Xu
+ZM
 Kp
 Jw
 OS
-jf
+dq
 so
 so
 so
@@ -6012,13 +8734,13 @@ Cp
 OS
 Jw
 dt
-Xu
+ZM
 uz
-Xu
+ZM
 jr
 sI
 es
-Xu
+ZM
 xC
 hk
 Wk
@@ -6035,19 +8757,19 @@ jT
 jT
 jT
 jT
-Xu
-Xu
+ZM
+ZM
 be
 be
-Xu
+ZM
 DE
-Xu
-Xu
-Xu
+ZM
+ZM
+ZM
 jm
-Xu
+ZM
 MC
-PM
+Jy
 so
 so
 so
@@ -6064,17 +8786,17 @@ so
 so
 MC
 Jy
-Xu
+ZM
 Gv
-Xu
-ox
-Xu
-Xu
-Xu
+ZM
+KM
+ZM
+ZM
+ZM
 Vn
 Vn
-Xu
-Xu
+ZM
+ZM
 jT
 jT
 jT
@@ -6087,8 +8809,8 @@ jT
 jT
 jT
 jT
-Xu
-Xu
+ZM
+ZM
 jT
 Av
 jT
@@ -6099,7 +8821,7 @@ Wk
 xC
 Kp
 Jw
-jf
+dq
 so
 so
 so
@@ -6114,19 +8836,19 @@ so
 so
 so
 so
-Lr
+Cp
 Jw
 dt
-pO
-Xu
+ct
+ZM
 TA
 jT
 Av
 jT
 Av
 jT
-Xu
-Xu
+ZM
+ZM
 jT
 jT
 jT
@@ -6150,7 +8872,7 @@ Nj
 BL
 xC
 MC
-PM
+Jy
 so
 so
 so
@@ -6169,8 +8891,8 @@ so
 kD
 MC
 Jy
-pO
-Xu
+ct
+ZM
 TA
 jT
 Av
@@ -6202,7 +8924,7 @@ EG
 BL
 xC
 MC
-PM
+Jy
 so
 so
 so
@@ -6221,12 +8943,12 @@ so
 so
 MC
 Jy
-pO
-Xu
+ct
+ZM
 ox
-Xu
-Xu
-Xu
+ZM
+ZM
+ZM
 Yc
 jT
 hy
@@ -6273,13 +8995,13 @@ so
 so
 MC
 Jy
-kg
-kg
-ox
-pO
-pO
-Xu
-Xu
+ct
+ct
+KM
+ir
+PM
+ZM
+ZM
 jT
 hy
 PF
@@ -6300,13 +9022,13 @@ hy
 jT
 zZ
 Sf
-Sf
-Sf
+dI
+xm
 rZ
 BL
 xC
 ch
-KM
+ch
 so
 so
 so
@@ -6316,7 +9038,7 @@ Kp
 dq
 RV
 RV
-Lr
+Cp
 dt
 so
 so
@@ -6325,13 +9047,13 @@ so
 so
 MC
 Jy
-pO
-pO
-ox
+ct
+ct
+KM
 uA
 pO
-Iu
-Xu
+qH
+ZM
 jT
 hy
 PF
@@ -6352,7 +9074,7 @@ hy
 jT
 zZ
 Sf
-Sf
+dI
 cJ
 zZ
 Mt
@@ -6366,7 +9088,7 @@ so
 so
 Pp
 Oo
-RV
+gj
 RV
 vb
 Pp
@@ -6377,13 +9099,13 @@ so
 so
 MC
 Jy
-kg
+ct
 VO
-ox
-pO
-pO
-Iu
-Xu
+KM
+Ht
+nt
+RF
+ZM
 jT
 hy
 PF
@@ -6404,13 +9126,13 @@ Yc
 jT
 zZ
 Sf
-Sf
-Sf
+dI
+xm
 Gx
 xC
 xC
 MC
-PM
+Jy
 so
 so
 so
@@ -6418,8 +9140,8 @@ so
 so
 Pp
 ph
-RV
-RV
+rf
+pP
 yN
 Pp
 so
@@ -6429,13 +9151,13 @@ so
 so
 MC
 Jy
-pO
-pO
+ct
+ct
 UT
-pO
-pO
+sy
+nt
 Iu
-Xu
+ZM
 jT
 Nj
 PF
@@ -6456,7 +9178,7 @@ hy
 jT
 zZ
 Sf
-Sf
+dI
 cJ
 zZ
 Mt
@@ -6469,7 +9191,7 @@ so
 so
 so
 Pp
-Oo
+RV
 RV
 RV
 Sc
@@ -6481,13 +9203,13 @@ so
 so
 MC
 Jy
-kg
+ct
 VO
-ox
-pO
-pO
-Iu
-Xu
+KM
+ve
+nt
+hS
+ZM
 jT
 hy
 mc
@@ -6508,19 +9230,19 @@ hy
 jT
 zZ
 Sf
-Sf
-Sf
+dI
+xm
 rZ
 BL
 xC
 ch
-KM
+ch
 so
 so
 so
 so
 so
-Lr
+Cp
 dt
 RV
 RV
@@ -6533,13 +9255,13 @@ so
 so
 MC
 Jy
-pO
-pO
-ox
-uA
-pO
-Iu
-Xu
+ct
+ct
+KM
+Ut
+nt
+Rw
+ZM
 jT
 hy
 PF
@@ -6560,7 +9282,7 @@ hy
 jT
 bX
 EG
-Sf
+xm
 cJ
 zZ
 vX
@@ -6585,13 +9307,13 @@ so
 so
 MC
 Jy
-kg
-kg
-ox
-pO
-pO
-Xu
-Xu
+ct
+ct
+KM
+Vp
+PM
+ZM
+ZM
 jT
 hy
 PF
@@ -6618,7 +9340,7 @@ UF
 BL
 xC
 MC
-PM
+Jy
 so
 so
 so
@@ -6637,12 +9359,12 @@ so
 so
 MC
 Jy
-pO
-Xu
+ct
+ZM
 ox
-Xu
-Xu
-Xu
+ZM
+ZM
+ZM
 jT
 jT
 hy
@@ -6670,7 +9392,7 @@ Nj
 BL
 xC
 MC
-PM
+Jy
 so
 so
 so
@@ -6689,8 +9411,8 @@ so
 kD
 MC
 Jy
-pO
-Xu
+ct
+ZM
 TA
 jT
 jT
@@ -6721,9 +9443,9 @@ jT
 Nj
 Wk
 xC
-Lr
+Cp
 Jw
-ZM
+dt
 so
 so
 so
@@ -6741,8 +9463,8 @@ so
 Kp
 Jw
 dq
-pO
-Xu
+ct
+ZM
 TA
 jT
 hy
@@ -6770,12 +9492,12 @@ hy
 PF
 hy
 jT
-Xu
-Xu
-Xu
-Xu
+ZM
+ZM
+ZM
+ZM
 MC
-PM
+Jy
 so
 so
 so
@@ -6792,10 +9514,10 @@ so
 so
 MC
 Jy
-Xu
+ZM
 Gv
-Xu
-ox
+ZM
+KM
 jT
 hy
 PF
@@ -6822,14 +9544,14 @@ hy
 PF
 hy
 jT
-Xu
-Ar
-zO
+ZM
+mU
+SH
 PT
-Lr
+Cp
 Jw
 OS
-ZM
+dt
 so
 so
 so
@@ -6840,14 +9562,14 @@ EU
 so
 so
 so
-KJ
+Kp
 OS
 Jw
 dq
 Pq
-zO
+SH
 rF
-ox
+KM
 jT
 hy
 PF
@@ -6874,32 +9596,32 @@ hy
 PF
 hy
 jT
-Xu
-mf
-zO
-zO
-zO
-Lr
-WP
+ZM
+Rb
+SH
+SH
+hl
+Cp
+OS
 Jw
 nZ
 nZ
 nZ
 Jw
-pN
+Fj
 Oy
 Jw
 nZ
 nZ
 nZ
 Jw
-WP
+OS
 dq
 pJ
-zO
-zO
+KJ
+SH
 UQ
-ox
+KM
 jT
 hy
 PF
@@ -6926,32 +9648,32 @@ Og
 PF
 Og
 Og
-Xu
-vN
-zO
-zO
-zO
-zO
-zO
+ZM
+pN
+SH
+SH
+SH
+SH
+SH
 MC
-sJ
+YQ
 Jw
-sJ
+YQ
 dq
 CO
 Lc
-Lr
-sJ
+Cp
+YQ
 Jw
-sJ
+YQ
 Jy
 pJ
 zO
-zO
-zO
-zO
+KJ
+DN
+Rg
 Hm
-ox
+KM
 Og
 Og
 PF
@@ -6978,32 +9700,32 @@ dv
 pL
 dv
 dv
-Xu
+ZM
 tl
 FI
-Xu
+ZM
 Fh
-zO
-zO
+SH
+SH
 wL
 Cm
-Xu
+ZM
 Zr
 Lc
 CO
 Lc
 CO
 Lu
-Xu
+ZM
 VE
 wL
-zO
-zO
-zO
-Xu
+SH
+SH
+Bf
+ZM
 mf
 Hm
-ox
+KM
 dv
 dv
 NK
@@ -7030,32 +9752,32 @@ XK
 PF
 XK
 XK
-Xu
+ZM
 vN
-zO
-zO
-zO
-zO
-zO
+SH
+SH
+SH
+SH
+SH
 MC
-am
+nZ
 Jw
-am
+nZ
 dt
 eR
 TF
 Kp
-am
+nZ
 Jw
-am
+nZ
 Jy
 pJ
 zO
-zO
-zO
-zO
+iM
+DN
+Mp
 Rc
-ox
+KM
 XK
 XK
 PF
@@ -7082,32 +9804,32 @@ hy
 PF
 hy
 jT
-Xu
+ZM
 Ar
-zO
+SH
 PT
-zO
+hl
 Kp
-WP
+OS
 Jw
-sJ
-sJ
-sJ
+YQ
+YQ
+YQ
 Jw
 nK
 ob
 Jw
-sJ
-sJ
-sJ
+YQ
+YQ
+YQ
 Jw
-WP
+OS
 dt
 pJ
-zO
+iM
 SH
 UQ
-ox
+KM
 jT
 hy
 PF
@@ -7134,13 +9856,13 @@ hy
 PF
 hy
 jT
-Xu
-mf
-zO
-zO
+ZM
+Rb
+SH
+SH
 Kp
 Jw
-WP
+OS
 dq
 JR
 JR
@@ -7152,14 +9874,14 @@ EU
 JR
 JR
 JR
-Lr
-WP
+Cp
+OS
 Jw
 dt
 zP
 gS
 Ct
-ox
+KM
 jT
 hy
 PF
@@ -7186,10 +9908,10 @@ hy
 PF
 hy
 jT
-Xu
-Xu
-Xu
-Xu
+ZM
+ZM
+ZM
+ZM
 MC
 Jy
 JR
@@ -7208,10 +9930,10 @@ JR
 JR
 MC
 Jy
-Xu
-Xu
-Xu
-ox
+ZM
+ZM
+ZM
+KM
 jT
 hy
 PF
@@ -7258,7 +9980,7 @@ JR
 JR
 JR
 JR
-Lr
+Cp
 Jw
 dt
 xC
@@ -7460,7 +10182,7 @@ Kp
 dq
 RV
 RV
-Lr
+Cp
 dt
 JR
 JR
@@ -7509,10 +10231,10 @@ JR
 JR
 JR
 ch
+CB
 RV
 RV
-RV
-RV
+cn
 ch
 JR
 JR
@@ -7608,8 +10330,8 @@ xC
 MC
 Jy
 HL
-gd
-gd
+rb
+hO
 gd
 Tg
 vp
@@ -7664,7 +10386,7 @@ gd
 gd
 gd
 iH
-Lr
+Cp
 dt
 RV
 RV
@@ -7713,7 +10435,7 @@ MC
 Jw
 Ay
 Ay
-zV
+tB
 gd
 qn
 RV
@@ -7726,7 +10448,7 @@ HB
 gd
 gd
 gd
-gd
+gP
 MC
 Jy
 xC
@@ -7773,12 +10495,12 @@ Pp
 RV
 RV
 Pp
-gH
+NQ
 Pp
 oq
 gd
 gd
-gi
+WP
 MC
 Jy
 xC
@@ -7818,16 +10540,16 @@ Jy
 zK
 EU
 Wx
-gd
+am
 Pp
-RV
+Se
 oS
 RV
 RV
 vu
-RV
+Fx
 Pp
-Wx
+IY
 gd
 gd
 gi
@@ -7865,13 +10587,13 @@ jT
 Nj
 Wk
 xC
-Lr
+Cp
 Jw
-am
+nZ
 dq
-zV
+tB
 gd
-Lr
+Cp
 WL
 Jy
 RV
@@ -7879,7 +10601,7 @@ RV
 MC
 WL
 dq
-zV
+tB
 gd
 aW
 Kp
@@ -7914,14 +10636,14 @@ jT
 jT
 jT
 jT
-Xu
-Xu
-Xu
-Xu
+ZM
+ZM
+ZM
+ZM
 MC
 AX
 ig
-gd
+rb
 gd
 gd
 gd
@@ -7936,10 +10658,10 @@ gd
 ow
 MC
 Jy
-Xu
-Xu
-Xu
-Xu
+ZM
+ZM
+ZM
+ZM
 jT
 jT
 jT
@@ -7966,13 +10688,13 @@ jT
 jT
 jT
 jT
-Xu
+ZM
 iX
 OE
 wx
-Lr
+Cp
 Jw
-am
+nZ
 dt
 Hx
 Cr
@@ -7985,13 +10707,13 @@ Iy
 gd
 BV
 Kp
-am
+nZ
 Jw
 dq
+rN
+SH
 cb
-zO
-cb
-Xu
+ZM
 jT
 jT
 jT
@@ -8018,32 +10740,32 @@ jT
 jT
 jT
 jT
-Xu
+ZM
 xK
-zO
-zO
-zO
-Lr
-sJ
+SH
+SH
+hl
+Cp
+YQ
 Jw
-am
-am
-am
+nZ
+nZ
+nZ
 Jw
 fa
 bm
 Jw
-am
-am
-am
+nZ
+nZ
+nZ
 Jw
-sJ
+YQ
 dq
-zO
-zO
-zO
-zO
-Xu
+SH
+SH
+SH
+SH
+ZM
 jT
 jT
 jT
@@ -8070,32 +10792,32 @@ jT
 jT
 jT
 jT
-Xu
+ZM
 iX
-zO
-zO
-zO
-zO
-zO
+SH
+SH
+SH
+SH
+SH
 MC
-sJ
+YQ
 Jw
-sJ
+YQ
 dq
 CO
 Lc
-Lr
-sJ
+Cp
+YQ
 Jw
-sJ
+YQ
 Jy
-Pq
-zO
-zO
-zO
-zO
+Uu
+SH
+SH
+SH
+SH
 cb
-Xu
+ZM
 jT
 jT
 jT
@@ -8122,32 +10844,32 @@ jT
 jT
 jT
 jT
-Xu
+ZM
 OO
-zO
-Xu
+hl
+ZM
 bd
-zO
-zO
+SH
+SH
 wL
 Pz
-Xu
+ZM
 gO
 Lc
 CO
 Lc
 CO
 Lu
-Xu
+ZM
 VE
 wL
-zO
-zO
-zO
-Xu
-mf
-zO
-Xu
+SH
+SH
+SH
+ZM
+uM
+SH
+ZM
 jT
 jT
 jT
@@ -8174,32 +10896,32 @@ jT
 jT
 jT
 jT
-Xu
+ZM
 iX
-zO
-zO
-zO
-zO
-zO
+SH
+SH
+SH
+SH
+SH
 MC
-am
+nZ
 Jw
-am
+nZ
 dt
 CO
 Lc
 Kp
-am
+nZ
 Jw
-am
+nZ
 Jy
 qf
-zO
-zO
-zO
-zO
+SH
+SH
+SH
+SH
 cb
-Xu
+ZM
 jT
 jT
 jT
@@ -8226,32 +10948,32 @@ jT
 jT
 jT
 jT
-Xu
+ZM
 xK
-zO
-zO
-zO
+SH
+SH
+hl
 Kp
-am
+nZ
 Jw
-sJ
-sJ
-sJ
+YQ
+YQ
+YQ
 Jw
 fa
 bm
 Jw
-sJ
-sJ
-sJ
+YQ
+YQ
+YQ
 Jw
-am
+nZ
 dt
-zO
-zO
-zO
-zO
-Xu
+SH
+SH
+SH
+SH
+ZM
 jT
 jT
 jT
@@ -8278,32 +11000,32 @@ jT
 jT
 jT
 jT
-Xu
+ZM
 iX
 OE
 wx
 Kp
 Jw
-sJ
+YQ
 dq
 Ko
 CT
 dR
 EU
-Pc
-Pc
+ev
+ev
 EU
 ju
-ju
-ju
-Lr
-sJ
+gd
+gd
+Cp
+YQ
 Jw
 dt
+rN
+SH
 cb
-zO
-cb
-Xu
+ZM
 jT
 jT
 jT
@@ -8330,10 +11052,10 @@ jT
 jT
 jT
 jT
-Xu
-Xu
-Xu
-Xu
+ZM
+ZM
+ZM
+ZM
 MC
 Jy
 hn
@@ -8342,20 +11064,20 @@ gd
 gd
 gd
 Pp
-Pc
-Pc
+ev
+ev
 Pp
-gd
+ju
 gd
 gd
 gd
 gd
 MC
 Jy
-Xu
-Xu
-Xu
-Xu
+ZM
+ZM
+ZM
+ZM
 jT
 jT
 jT
@@ -8394,15 +11116,15 @@ Ne
 Kp
 WL
 Jy
-Pc
-Pc
+ev
+ev
 MC
 WL
 dt
 yH
 gd
 gd
-Lr
+Cp
 Jw
 dt
 xC
@@ -8446,8 +11168,8 @@ uL
 Pp
 RV
 Qw
-Pc
-Pc
+ev
+ev
 nU
 RV
 Pp
@@ -8498,8 +11220,8 @@ Ay
 Jy
 HJ
 Pp
-Pc
-Pc
+ev
+ev
 Pp
 HJ
 Pp
@@ -8551,7 +11273,7 @@ qn
 RV
 EU
 Hf
-Pc
+ev
 EU
 RV
 HB
@@ -8602,9 +11324,9 @@ gd
 OD
 Kp
 dq
-Pc
-Pc
-Lr
+ev
+ev
+Cp
 dt
 lC
 gd
@@ -8653,11 +11375,11 @@ gd
 gd
 Hs
 Pp
-Pc
-Pc
-Pc
-Pc
-Pp
+ev
+ev
+ev
+Bd
+Qp
 bP
 RP
 Vr
@@ -8709,7 +11431,7 @@ aC
 OB
 Pc
 ev
-MC
+bp
 Ay
 Ay
 Rk
@@ -8759,7 +11481,7 @@ JR
 Pp
 er
 Hy
-Fz
+ev
 hu
 Nu
 oa
@@ -8808,10 +11530,10 @@ JR
 JR
 JR
 JR
-Lr
+Cp
 dt
 zN
-Pc
+ev
 Kp
 jD
 oa
@@ -8861,7 +11583,7 @@ JR
 JR
 JR
 JR
-Lr
+Cp
 AI
 AI
 dq
@@ -9009,7 +11731,7 @@ jT
 Nj
 Wk
 be
-Lr
+Cp
 Jw
 dt
 JR
@@ -9058,8 +11780,8 @@ jT
 jT
 jT
 jT
-Xu
-Xu
+ZM
+ZM
 jT
 jT
 MC
@@ -9082,8 +11804,8 @@ MC
 Jy
 SE
 jT
-Xu
-Xu
+ZM
+ZM
 jT
 jT
 jT
@@ -9110,13 +11832,13 @@ jT
 jT
 jT
 jT
-Xu
-Xu
+ZM
+ZM
 jT
 jT
-Lr
+Cp
 Jw
-am
+nZ
 dt
 JR
 JR
@@ -9129,13 +11851,13 @@ JR
 JR
 JR
 Kp
-am
+nZ
 Jw
 dq
 SE
 jT
-Xu
-Xu
+ZM
+ZM
 jT
 jT
 jT
@@ -9167,21 +11889,21 @@ jT
 jT
 jT
 jT
-Lr
-sJ
+Cp
+YQ
 Jw
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
+nZ
+nZ
+nZ
+nZ
+nZ
+nZ
+nZ
+nZ
+nZ
+nZ
 Jw
-sJ
+YQ
 dq
 SE
 jT
@@ -9221,17 +11943,17 @@ jT
 jT
 jT
 jT
-Lr
-sJ
-sJ
-sJ
-sJ
-sJ
-sJ
-sJ
-sJ
-sJ
-sJ
+Cp
+YQ
+YQ
+YQ
+YQ
+YQ
+YQ
+YQ
+YQ
+YQ
+YQ
 Jy
 SE
 jT
