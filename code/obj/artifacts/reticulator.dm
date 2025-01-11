@@ -223,7 +223,9 @@ ARTRET_INCREASE_ARMOR
 					var/datum/material/crystal/gemstone/mat = getMaterial(O.material.getID())
 					compatible_type = mat.gem_tier > 1
 			if (ARTRET_BREAKDOWN_MATS)
-				compatible_type = TRUE
+				var/typeinfo/obj/info = O.get_typeinfo()
+				var/list/mats_used = info.mats
+				compatible_type = length(mats_used)
 			if (ARTRET_INCREASE_STORAGE)
 				compatible_type = O.storage?.slots <= 13 && !istype(O, /obj/item/artifact/bag_of_holding)
 			if (ARTRET_INCREASE_REAGENTS)
@@ -253,7 +255,16 @@ ARTRET_INCREASE_ARMOR
 				var/datum/material/crystal/gemstone/mat = getMaterial(O.material.getID())
 				mat.gem_tier++
 				mat.update_properties()
-			//if (ARTRET_BREAKDOWN_MATS)
+			if (ARTRET_BREAKDOWN_MATS)
+				var/typeinfo/obj/info = O.get_typeinfo()
+				var/list/mats_used = info.mats
+				for (var/mat in mats_used)
+					var/datum/manufacturing_requirement/rqmt = getManufacturingRequirement(mat)
+					var/datum/material/material = getMaterial(rqmt.get_art_ret_breakdown())
+					var/bar = getProcessedMaterialForm(material)
+					var/obj/item/material_piece/bar_output = new bar(get_turf(src))
+					bar_output.setMaterial(material)
+					bar_output.change_stack_amount(0)
 			if (ARTRET_INCREASE_STORAGE)
 				O.storage.increase_slots(1)
 			if (ARTRET_INCREASE_REAGENTS)

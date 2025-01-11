@@ -20,6 +20,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement)
 /datum/manufacturing_requirement
 	VAR_PROTECTED/name = "Unknown" //! Player-facing name of the requirement.
 	VAR_PROTECTED/id //! Internal, unique ID of the requirement to use for the cache list.
+	VAR_PROTECTED/art_reticulator_breakdown // material id that this requirement corresponds to for the artifact reticulator
 
 	#ifdef CHECK_MORE_RUNTIMES
 	New()
@@ -33,6 +34,9 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement)
 
 	proc/getID()
 		return src.id
+
+	proc/get_art_ret_breakdown()
+		return src.art_reticulator_breakdown
 
 	/// Checks whether or not the given material meets the requirements enforced by this proc.
 	proc/is_match(var/datum/material/M)
@@ -86,44 +90,53 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	id = "conductive"
 	property_id = "electrical"
 	property_threshold = 6
+	art_reticulator_breakdown = "copper"
+
 
 /datum/manufacturing_requirement/match_property/conductive/high
 	name = "High Energy Conductor"
 	id = "conductive_high"
 	property_threshold = 8
+	art_reticulator_breakdown = "claretine"
 
 /datum/manufacturing_requirement/match_property/dense
 	name = "High Density Matter"
 	id = "dense"
 	property_id = "density"
 	property_threshold = 4
+	art_reticulator_breakdown = "steel"
 
 /datum/manufacturing_requirement/match_property/dense/super
 	name = "Very High Density Matter"
 	id = "dense_super"
 	property_threshold = 6
+	art_reticulator_breakdown = "bohrum"
 
 /datum/manufacturing_requirement/match_property/dense/ultra
 	name = "Ultra-Dense Matter"
 	id = "dense_property_ultra"
 	property_threshold = 7
+	art_reticulator_breakdown = "uqill"
 
 /datum/manufacturing_requirement/match_property/energy
 	name = "Radioactive"
 	id = "energy_property"
 	property_id = "radioactive"
 	property_threshold = 2
+	art_reticulator_breakdown = "plasmastone"
 
 /datum/manufacturing_requirement/match_property/energy/high
 	name = "Highly Radioactive"
 	id = "energy_property_high"
 	property_threshold = 5
+	art_reticulator_breakdown = "cerenkite"
 
 /datum/manufacturing_requirement/match_property/insulated
 	name = "Insulative Material"
 	id = "insulated_property"
 	property_id = "electrical"
 	property_threshold = 4
+	art_reticulator_breakdown = "latex"
 
 	match_property(datum/material/M)
 		return M.getProperty(src.property_id) <= src.property_threshold
@@ -132,12 +145,14 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	name = "Highly Insulative"
 	id = "insulated_property_high"
 	property_threshold = 2
+	art_reticulator_breakdown = "synthrubber"
 
 /datum/manufacturing_requirement/match_property/tough
 	name = "Tough Material"
 	id = "tough"
 	property_id = "density"
 	property_threshold = 10
+	art_reticulator_breakdown = "mauxite"
 
 	match_property(datum/material/M)
 		// This specific check is based off the hardness of mauxite and bohrum.
@@ -148,12 +163,14 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	name = "Extremely Tough Material"
 	id = "tough_super"
 	property_threshold = 15
+	art_reticulator_breakdown = "bohrum"
 
 /datum/manufacturing_requirement/match_property/reflective
 	name = "Reflective"
 	id = "reflective"
 	property_id = "reflective"
 	property_threshold = 6
+	art_reticulator_breakdown = "silver"
 
 #define MATCH_ANY 1 //! Pass as long as at least one flag is set.
 #define MATCH_ALL 2 //! Pass if every material flag being checked is set.
@@ -189,41 +206,49 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_flags)
 	name = "Metallic"
 	id = "metal_flag"
 	material_flags = MATERIAL_METAL
+	art_reticulator_breakdown = "steel"
 
 /datum/manufacturing_requirement/match_flags/wood
 	name = "Wood"
 	id = "wood_flag"
 	material_flags = MATERIAL_WOOD
+	art_reticulator_breakdown = "wood"
 
 /datum/manufacturing_requirement/match_flags/rubber
 	name = "Rubber"
 	id = "rubber"
 	material_flags = MATERIAL_RUBBER
+	art_reticulator_breakdown = "latex"
 
 /datum/manufacturing_requirement/match_flags/organic_or_rubber
 	name = "Organic or Rubber"
 	id = "organic_or_rubber"
 	material_flags = MATERIAL_ORGANIC | MATERIAL_RUBBER
+	art_reticulator_breakdown = "char"
 
 /datum/manufacturing_requirement/match_flags/fabric
 	name = "Fabric"
 	id = "fabric"
 	material_flags = MATERIAL_RUBBER | MATERIAL_ORGANIC | MATERIAL_CLOTH
+	art_reticulator_breakdown = "cotton"
 
 /datum/manufacturing_requirement/match_flags/crystal
 	name = "Crystal"
 	id = "crystal"
 	material_flags = MATERIAL_CRYSTAL
+	art_reticulator_breakdown = "silver"
 
 /datum/manufacturing_requirement/match_flags/energy
 	name = "Energy Source"
 	id = "energy"
 	material_flags = MATERIAL_ENERGY
+	art_reticulator_breakdown = "plasmastone"
 
 /datum/manufacturing_requirement/match_flags/insulated
 	name = "Insulative Material"
 	id = "insulative_flags"
 	material_flags = MATERIAL_CLOTH | MATERIAL_RUBBER
+	art_reticulator_breakdown = "synthrubber"
 
 #undef MATCH_ANY
 #undef MATCH_ALL
@@ -249,6 +274,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_subtypes)
 	name = "Gemstone"
 	id = "gemstone"
 	match_typepath = /datum/material/crystal/gemstone
+	art_reticulator_breakdown = "quartz"
 
 /// Manufacturing requirements which check several conditions at once.
 ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
@@ -283,6 +309,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 	requirement_ids = list(
 		"metal_flag",
 	)
+	art_reticulator_breakdown = "steel"
 
 /datum/manufacturing_requirement/mixed/metal_tough
 	name = "Sturdy Metal"
@@ -291,6 +318,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 		"metal_flag",
 		"tough",
 	)
+	art_reticulator_breakdown = "bohrum"
 
 /datum/manufacturing_requirement/mixed/metal_tough_extreme
 	name = "Extremely Tough Metal"
@@ -299,6 +327,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 		"metal_flag",
 		"tough_super",
 	)
+	art_reticulator_breakdown = "uqill"
 
 /datum/manufacturing_requirement/mixed/insulated
 	name = "Insulative"
@@ -307,6 +336,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 		"insulative_flags",
 		"insulated_property",
 	)
+	art_reticulator_breakdown = "latex"
 
 /datum/manufacturing_requirement/mixed/insulated_high
 	name = "Highly Insulative"
@@ -315,6 +345,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 		"insulative_flags",
 		"insulated_property_high",
 	)
+	art_reticulator_breakdown = "synthrubber"
 
 /datum/manufacturing_requirement/mixed/energy_high
 	name = "Significant Power Source"
@@ -323,6 +354,8 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 		"energy",
 		"energy_property",
 	)
+	art_reticulator_breakdown = "plasmastone"
+
 /datum/manufacturing_requirement/mixed/energy_extreme
 	name = "Extreme Power Source"
 	id = "energy_extreme"
@@ -330,3 +363,4 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 		"energy",
 		"energy_property_high",
 	)
+	art_reticulator_breakdown = "cerenkite"
