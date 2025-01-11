@@ -55,7 +55,7 @@ ARTRET_INCREASE_ARMOR
 		ARTRET_INCREASE_CELL_CAP = list(),
 		ARTRET_INCREASE_ATTACK_DMG = list(),
 		ARTRET_INCREASE_MINING_POWER = list(),
-		ARTRET_INCREASE_ARMOR = list(),
+		ARTRET_INCREASE_ARMOR = list()
 	)
 	var/list/reticulated_artifacts = list()
 
@@ -159,7 +159,7 @@ ARTRET_INCREASE_ARMOR
 					tgui_alert(user, "Can't modify! Incompatible item or insufficient artifact shards.", "Error", list("Ok"))
 					return
 
-				src.modify_item(src.stored_item, picked_option)
+				src.modify_item(src.stored_item, picked_option, user)
 
 
 	proc/can_break_down(obj/O)
@@ -225,15 +225,15 @@ ARTRET_INCREASE_ARMOR
 			if (ARTRET_BREAKDOWN_MATS)
 				compatible_type = TRUE
 			if (ARTRET_INCREASE_STORAGE)
-				compatible_type = O.storage
+				compatible_type = O.storage?.slots <= 13 && !istype(O, /obj/item/artifact/bag_of_holding)
 			if (ARTRET_INCREASE_REAGENTS)
 				compatible_type = O.reagents
 			if (ARTRET_INCREASE_CELL_CAP)
-				compatible_type = istype(O, /obj/item/cell)
+				compatible_type = istype(O, /obj/item/cell) || istype(O, /obj/item/ammo/power_cell)
 			if (ARTRET_INCREASE_ATTACK_DMG)
 				compatible_type = TRUE
 			if (ARTRET_INCREASE_MINING_POWER)
-				compatible_type = istype(O, /obj/item/mining_tool)
+				compatible_type = istype(O, /obj/item/mining_tools)
 			if (ARTRET_INCREASE_ARMOR)
 				compatible_type = TRUE
 
@@ -242,22 +242,44 @@ ARTRET_INCREASE_ARMOR
 
 		return src.meets_cost_requirement(action)
 
-	proc/modify_item(obj/O, action)
-		/*
+	proc/modify_item(obj/O, action, mob/user)
 		switch(action)
 			if (ARTRET_ADD_LIGHT)
+				var/col = tgui_color_picker(user, "Select color to add", "Color selection")
+				if (col)
+					O.remove_simple_light("artret_added_light")
+					O.add_simple_light("artret_added_light", rgb2num(col))
 			if (ARTRET_PERFECT_GEM)
-			if (ARTRET_BREAKDOWN_MATS)
+				var/datum/material/crystal/gemstone/mat = getMaterial(O.material.getID())
+				mat.gem_tier++
+				mat.update_properties()
+			//if (ARTRET_BREAKDOWN_MATS)
 			if (ARTRET_INCREASE_STORAGE)
+				O.storage.increase_slots(1)
 			if (ARTRET_INCREASE_REAGENTS)
 				O.reagents.maximum_volume *= 1.1
+				if (istype(O, /obj/item))
+					var/obj/item/I = O
+					I.inventory_counter?.update_counter()
 				//if (O.inventory_counter?.pct_counter)
 				//	O.inventory_counter.update_percent(O.reagents.total_volume, O.reagents.maximum_volume)
 			if (ARTRET_INCREASE_CELL_CAP)
-			if (ARTRET_INCREASE_ATTACK_DMG)
+				if (istype(O, /obj/item/cell))
+					var/obj/item/cell/cell = O
+					cell.maxcharge *= 1.1
+					cell.UpdateIcon()
+				else
+					var/obj/item/ammo/power_cell/cell = O
+					cell.max_charge *= 1.1
+					cell.UpdateIcon()
+			//if (ARTRET_INCREASE_ATTACK_DMG)
 			if (ARTRET_INCREASE_MINING_POWER)
-			if (ARTRET_INCREASE_ARMOR)
-		*/
+				var/obj/item/mining_tools/tool = O
+				tool.power *= 1.1
+				if (tool.power > SPIKES_MEDAL_POWER_THRESHOLD)
+					user.unlock_medal("This object menaces with spikes of...", TRUE)
+			//if (ARTRET_INCREASE_ARMOR)
+
 
 	proc/meets_cost_requirement(thing)
 		. = TRUE
