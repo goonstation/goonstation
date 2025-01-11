@@ -57,6 +57,7 @@ ARTRET_INCREASE_ARMOR
 		ARTRET_INCREASE_MINING_POWER = list(),
 		ARTRET_INCREASE_ARMOR = list(),
 	)
+	var/list/reticulated_artifacts = list()
 
 	var/obj/stored_artifact
 	var/obj/stored_item
@@ -132,7 +133,7 @@ ARTRET_INCREASE_ARMOR
 					tgui_alert(user, "Can't create! Insufficient artifact shards.", "Error", list("Ok"))
 					return
 
-				src.create_thing(to_create)
+				src.create_thing(to_create, user)
 
 			if ("Modify something")
 				if (!src.stored_item)
@@ -186,12 +187,14 @@ ARTRET_INCREASE_ARMOR
 			if (ARTIFACT_SHARD_OMNI)
 				src.omni_shards++
 
+		src.reticulated_artifacts[O.artifact.type_name] = O.artifact.type
+
 		qdel(O)
 
 	proc/can_create_thing(thing)
 		return src.meets_cost_requirement(thing)
 
-	proc/create_thing(thing)
+	proc/create_thing(thing, mob/user)
 		switch (thing)
 			if (ARTRET_RESONATOR)
 				new /obj/item/artifact_resonator(get_turf(src))
@@ -199,6 +202,13 @@ ARTRET_INCREASE_ARMOR
 				new /obj/item/artifact_scrambler(get_turf(src))
 			if (ARTRET_TUNER)
 				new /obj/item/artifact_tuner(get_turf(src))
+			if (ARTRET_PREVIOUS_ART)
+				if (!length(src.reticulated_artifacts))
+					tgui_alert(user, "No artifacts have been reticulated!", "Error", list("Ok"))
+				else
+					var/type_to_create = src.reticulated_artifacts[tgui_input_list(user, "Which artifact would you like to create?", "Create artifact", src.reticulated_artifacts)]
+					if (type_to_create)
+						new type_to_create(get_turf(src))
 
 	proc/can_modify_item(obj/O, action)
 		. = TRUE
