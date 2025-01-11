@@ -123,6 +123,7 @@
 	type_size = ARTIFACT_SIZE_MEDIUM
 	react_xray = list(5, 91, 97, 11, "HOLLOW")
 	shard_reward = ARTIFACT_SHARD_SPACETIME
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 
 	effect_activate(obj/O)
 		if (..())

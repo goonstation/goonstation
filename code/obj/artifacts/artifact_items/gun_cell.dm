@@ -71,6 +71,7 @@
 	react_xray = list(8,80,95,11,"SEGMENTED")
 	examine_hint = "It kinda looks like it's supposed to be inserted into something."
 	shard_reward = ARTIFACT_SHARD_POWER
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 
 	New()
 		..()

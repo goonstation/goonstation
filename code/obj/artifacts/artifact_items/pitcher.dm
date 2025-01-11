@@ -201,6 +201,7 @@
 	no_activation = TRUE
 	react_xray = list(2,85,12,8,"HOLLOW")
 	shard_reward = ARTIFACT_SHARD_SPACETIME
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 
 
 	New()

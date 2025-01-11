@@ -115,6 +115,10 @@ ABSTRACT_TYPE(/datum/artifact/)
 
 	/// the shard that is rewarded for reticulating this artifact
 	var/shard_reward = ARTIFACT_SHARD_ESSENCE
+	/// what this artifact combines with
+	var/combine_flags = ARTIFACT_DOES_NOT_COMBINE
+	/// when used in a combination effect, priority in which this artifact's effect is used
+	var/combine_effect_priority = ARTIFACT_COMBINATION_PASSIVE
 
 	/// gets called after the artifact basics (origin, appearance, object, etc) are all set up, so the type can modify it further
 	proc/post_setup()

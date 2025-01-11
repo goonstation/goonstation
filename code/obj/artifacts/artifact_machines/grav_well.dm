@@ -42,6 +42,7 @@
 	examine_hint = "It is covered in very conspicuous markings."
 	var/obj/effect/grav_pulse/lense
 	shard_reward = ARTIFACT_SHARD_SPACETIME
+	combine_flags = ARTIFACT_COMBINES_INTO_ANY | ARTIFACT_ACCEPTS_ANY_COMBINE
 
 	New()
 		..()

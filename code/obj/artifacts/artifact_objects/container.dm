@@ -15,6 +15,7 @@
 	deact_text = "locks back up."
 	react_xray = list(7,50,40,11,"HOLLOW")
 	shard_reward = ARTIFACT_SHARD_SPACETIME
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 	var/generated_loot = FALSE
 
 	post_setup()

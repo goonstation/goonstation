@@ -12,7 +12,7 @@
 	automatic_activation = 1
 	react_xray = list(12,80,95,8,"COMPLEX")
 	examine_hint = "It kinda looks like it's supposed to be inserted into something."
-	shard_reward = ARTIFACT_SHARD_OMNI
+	combine_flags = ARTIFACT_DOES_NOT_COMBINE
 	var/universal = 0 // normally it only activates its own type, but sometimes it can do all
 	var/activator = 1 // can also be a DEactivator key sometimes!
 	var/corrupting = 0 // generates faults in activated artifacts

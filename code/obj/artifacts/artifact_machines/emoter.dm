@@ -15,6 +15,7 @@
 	activ_text = "opens up, revealing a strange horn!"
 	deact_text = "closes itself up."
 	react_xray = list(8,60,80,6,"TUBULAR")
+	combine_flags = ARTIFACT_COMBINES_INTO_ANY | ARTIFACT_ACCEPTS_ANY_COMBINE
 	var/range
 	var/picked_emote
 	var/recharge_time

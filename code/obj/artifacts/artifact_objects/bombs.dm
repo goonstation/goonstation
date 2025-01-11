@@ -30,6 +30,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	var/recharge_delay = 0
 	examine_hint = "It is covered in very conspicuous markings."
 	shard_reward = ARTIFACT_SHARD_POWER
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 
 	New()
 		..()

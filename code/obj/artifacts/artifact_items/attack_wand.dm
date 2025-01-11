@@ -33,6 +33,7 @@
 	react_xray = list(8,80,60,11,"COMPLEX")
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
 	shard_reward = ARTIFACT_SHARD_POWER
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 	var/ready = 1
 	var/cooldown = 180
 	var/attack_type = null
