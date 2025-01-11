@@ -8,6 +8,7 @@
 #define ARTRET_ADD_LIGHT "add_light"
 #define ARTRET_PERFECT_GEM "perfect_gem"
 #define ARTRET_BREAKDOWN_MATS "breakdown_mats"
+#define ARTRET_MODIFY_MATERIAL "modify_material"
 #define ARTRET_INCREASE_STORAGE "increase_storage"
 #define ARTRET_INCREASE_REAGENTS "increase_reagents"
 #define ARTRET_INCREASE_CELL_CAP "increase_cell_power"
@@ -50,6 +51,7 @@ ARTRET_INCREASE_ARMOR
 		ARTRET_ADD_LIGHT = list(),
 		ARTRET_PERFECT_GEM = list(),
 		ARTRET_BREAKDOWN_MATS = list(),
+		ARTRET_MODIFY_MATERIAL = list(),
 		ARTRET_INCREASE_STORAGE = list(),
 		ARTRET_INCREASE_REAGENTS = list(),
 		ARTRET_INCREASE_CELL_CAP = list(),
@@ -151,6 +153,7 @@ ARTRET_INCREASE_ARMOR
 					"Imbue light ([src.get_readable_cost(ARTRET_ADD_LIGHT)])" = ARTRET_ADD_LIGHT,
 					"Perfect gem ([src.get_readable_cost(ARTRET_PERFECT_GEM)])" = ARTRET_PERFECT_GEM,
 					"Breakdown into materials ([src.get_readable_cost(ARTRET_BREAKDOWN_MATS)])" = ARTRET_BREAKDOWN_MATS,
+					"Set a material property ([src.get_readable_cost(ARTRET_MODIFY_MATERIAL)])" = ARTRET_MODIFY_MATERIAL,
 					"Increase storage capacity ([src.get_readable_cost(ARTRET_INCREASE_STORAGE)])" = ARTRET_INCREASE_STORAGE,
 					"Increase reagent capacity ([src.get_readable_cost(ARTRET_INCREASE_REAGENTS)])" = ARTRET_INCREASE_REAGENTS,
 					"Increase power cell capacity ([src.get_readable_cost(ARTRET_INCREASE_CELL_CAP)])" = ARTRET_INCREASE_CELL_CAP,
@@ -233,6 +236,8 @@ ARTRET_INCREASE_ARMOR
 				var/typeinfo/obj/info = O.get_typeinfo()
 				var/list/mats_used = info.mats
 				compatible_type = length(mats_used)
+			if (ARTRET_MODIFY_MATERIAL)
+				compatible_type = O.material
 			if (ARTRET_INCREASE_STORAGE)
 				compatible_type = O.storage?.slots <= 13 && !istype(O, /obj/item/artifact/bag_of_holding)
 			if (ARTRET_INCREASE_REAGENTS)
@@ -272,6 +277,27 @@ ARTRET_INCREASE_ARMOR
 					var/obj/item/material_piece/bar_output = new bar(get_turf(src))
 					bar_output.setMaterial(material)
 					bar_output.change_stack_amount(0)
+			if (ARTRET_MODIFY_MATERIAL)
+				var/list/props = O.material.getMaterialProperties()
+				var/list/to_output = list()
+				for (var/datum/material_property/prop as anything in props)
+					var/prop_value = O.material.getProperty(prop.id)
+					if (prop_value >= prop.max_value - 0.5 || prop_value <= prop.min_value + 0.5)
+						continue
+					to_output["[prop.name]: [O.material.getProperty(prop.id)]"] = prop.id
+				if (!length(to_output))
+					tgui_alert(user, "No available properties to modify!", "Error", list("Ok"))
+					return
+				var/to_modify = tgui_input_list(user, "Which property would you like to modify? It can be changed by + or - 0.5.", "Material modification", to_output)
+				if (!to_modify)
+					return
+				var/to_change = tgui_alert(user, "Select modification for [to_modify].", "Material modification", list("+0.5", "-0.5", "Cancel"))
+				if (to_change == "+0.5")
+					var/material_prop_id = to_output[to_modify]
+					O.material.setProperty(material_prop_id, O.material.getProperty(material_prop_id) + 0.5)
+				else if (to_change == "-0.5")
+					var/material_prop_id = to_output[to_modify]
+					O.material.setProperty(material_prop_id, O.material.getProperty(material_prop_id) - 0.5)
 			if (ARTRET_INCREASE_STORAGE)
 				O.storage.increase_slots(1)
 			if (ARTRET_INCREASE_REAGENTS)
