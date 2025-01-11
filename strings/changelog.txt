@@ -1,5 +1,9 @@
 
 (t)fri jan 10 25
+(u)Jan.antilles
+(p)21900
+(e)🎨|C-Sprites
+(+)Resprites the Double Braids style to add more shading and dimension.
 (u)glowbold
 (p)21733
 (e)🆕🎨💊|C-Feature, C-Sprites, A-Medical
