@@ -4251,6 +4251,13 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 							if (A.artitype.name == "eldritch" && prob(6))
 								src.sensed[5] = "ERROR"
 
+							if (A.reticulated)
+								src.sensed[1] = "???"
+								src.sensed[2] = "???"
+								src.sensed[3] = "???"
+								src.sensed[4] = "UNDETERMINABLE"
+								src.sensed[5] = "RETICULATED"
+
 							M.ArtifactStimulus("radiate", src.radstrength)
 
 						else

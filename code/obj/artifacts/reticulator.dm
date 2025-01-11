@@ -3,8 +3,9 @@
 #define ARTRET_SCRAMBLER "scrambler"
 #define ARTRET_TUNER "tuner"
 #define ARTRET_PREVIOUS_ART "previous_art"
+#define ARTRET_COMBINE_ARTS "combine_arts"
 
-// modifications
+// modifications - to generic/categories of items, nothing specific
 #define ARTRET_ADD_LIGHT "add_light"
 #define ARTRET_PERFECT_GEM "perfect_gem"
 #define ARTRET_BREAKDOWN_MATS "breakdown_mats"
@@ -32,6 +33,7 @@ ARTRET_INCREASE_MINING_POWER
 ARTRET_INCREASE_ARMOR
 */
 
+// machine that uses combined human and eldritch artifact technology in some way to modify things. an artifact black box that works without anyone knowing how
 /obj/machinery/reticulator
 	name = "Reticulator"
 	desc = "A fancy machine for doing fancy artifact things."
@@ -48,6 +50,7 @@ ARTRET_INCREASE_ARMOR
 		ARTRET_SCRAMBLER = list(),
 		ARTRET_TUNER = list(),
 		ARTRET_PREVIOUS_ART = list(),
+		ARTRET_COMBINE_ARTS = list(),
 		ARTRET_ADD_LIGHT = list(),
 		ARTRET_PERFECT_GEM = list(),
 		ARTRET_BREAKDOWN_MATS = list(),
@@ -73,7 +76,7 @@ ARTRET_INCREASE_ARMOR
 
 	attackby(obj/item/I, mob/user)
 		..()
-		src.mouse_drop(I, user, src)
+		src.MouseDrop_T(I, user, I.loc, src.loc)
 
 	mouse_drop(atom/over_object, src_location, over_location)
 		..()
@@ -100,7 +103,7 @@ ARTRET_INCREASE_ARMOR
 		if (!istype(dropped))
 			return
 		var/available_slots = list("Break down artifact", "Modification", "Cancel")
-		if (src.stored_artifact || !dropped.artifact)
+		if (src.stored_artifact || !dropped.artifact || !dropped.artifact.activated)
 			available_slots -= "Break down artifact"
 		if (src.stored_item)
 			available_slots -= "Modification"
@@ -132,7 +135,8 @@ ARTRET_INCREASE_ARMOR
 					"Resonator ([src.get_readable_cost(ARTRET_RESONATOR)])" = ARTRET_RESONATOR,
 					"Scrambler ([src.get_readable_cost(ARTRET_SCRAMBLER)])" = ARTRET_SCRAMBLER,
 					"Tuner ([src.get_readable_cost(ARTRET_TUNER)])" = ARTRET_TUNER,
-					"Previous artifact ([src.get_readable_cost(ARTRET_PREVIOUS_ART)])" = ARTRET_PREVIOUS_ART
+					"Previous artifact ([src.get_readable_cost(ARTRET_PREVIOUS_ART)])" = ARTRET_PREVIOUS_ART,
+					"Combine artifacts ([src.get_readable_cost(ARTRET_COMBINE_ARTS)])" = ARTRET_COMBINE_ARTS
 				)
 				var/to_create = creatables[tgui_input_list(user, "What would you like to create?[src.get_stored_info()]", "Create", creatables)]
 				if (!to_create)
@@ -141,6 +145,13 @@ ARTRET_INCREASE_ARMOR
 				if (!src.can_create_thing(to_create))
 					tgui_alert(user, "Can't create! Insufficient artifact shards.", "Error", list("Ok"))
 					return
+				if (to_create == ARTRET_COMBINE_ARTS)
+					if (!src.stored_item.artifact || !src.stored_item.artifact.activated)
+						tgui_alert(user, "The stored item must be an activated artifact!", "Error", list("Ok"))
+						return
+					if (!src.stored_artifact.can_combine_artifact(src.stored_item))
+						tgui_alert(user, "The artifacts are incompatible!", "Error", list("Ok"))
+						return
 
 				src.create_thing(to_create, user)
 
@@ -218,7 +229,20 @@ ARTRET_INCREASE_ARMOR
 				else
 					var/type_to_create = src.reticulated_artifacts[tgui_input_list(user, "Which artifact would you like to create?", "Create artifact", src.reticulated_artifacts)]
 					if (type_to_create)
-						new type_to_create(get_turf(src))
+						var/obj/artifact/art = new type_to_create(get_turf(src))
+						art.artifact.reticulated = TRUE
+			if (ARTRET_COMBINE_ARTS)
+				if (!src.stored_item.artifact || !src.stored_item.artifact.activated)
+					tgui_alert(user, "The stored item must be an activated artifact!", "Error", list("Ok"))
+					return
+				if (!src.stored_artifact.can_combine_artifact(src.stored_item))
+					tgui_alert(user, "The artifacts are incompatible!", "Error", list("Ok"))
+					return
+				if (tgui_alert(user, "Are you sure you wish to combine [src.stored_item] into [src.stored_artifact]? This can't be undone.", "Confirmation", list("Yes", "No")) != "Yes")
+					return
+				src.stored_artifact.combine_artifact(src.stored_item)
+				src.stored_artifact.artifact.reticulated = TRUE
+				src.stored_item = null
 
 	proc/can_modify_item(obj/O, action)
 		. = TRUE
@@ -305,8 +329,6 @@ ARTRET_INCREASE_ARMOR
 				if (istype(O, /obj/item))
 					var/obj/item/I = O
 					I.inventory_counter?.update_counter()
-				//if (O.inventory_counter?.pct_counter)
-				//	O.inventory_counter.update_percent(O.reagents.total_volume, O.reagents.maximum_volume)
 			if (ARTRET_INCREASE_CELL_CAP)
 				if (istype(O, /obj/item/cell))
 					var/obj/item/cell/cell = O
@@ -358,6 +380,8 @@ ARTRET_INCREASE_ARMOR
 	var/static/list/trigger_names = list()
 	var/static/list/trigger_names_assoc = list()
 	var/list/scanned_artifacts = list()
+
+	// also tells you if theres combined artifacts or if its been modified in some way
 
 	New()
 		..()
@@ -434,10 +458,12 @@ ARTRET_INCREASE_ARMOR
 #undef ARTRET_SCRAMBLER
 #undef ARTRET_TUNER
 #undef ARTRET_PREVIOUS_ART
+#undef ARTRET_COMBINE_ARTS
 
 #undef ARTRET_ADD_LIGHT
 #undef ARTRET_PERFECT_GEM
 #undef ARTRET_BREAKDOWN_MATS
+#undef ARTRET_MODIFY_MATERIAL
 #undef ARTRET_INCREASE_STORAGE
 #undef ARTRET_INCREASE_REAGENTS
 #undef ARTRET_INCREASE_CELL_CAP

@@ -113,6 +113,8 @@ ABSTRACT_TYPE(/datum/artifact/)
 	/// It is based on the fake origin though, so it is no use for recognizing fake origins.
 	var/list/touch_descriptors = list()
 
+	/// been modified in some way by the reticulator
+	var/reticulated = FALSE
 	/// the shard that is rewarded for reticulating this artifact
 	var/shard_reward = ARTIFACT_SHARD_ESSENCE
 	/// what this artifact combines with

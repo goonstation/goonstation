@@ -140,7 +140,7 @@
 	artifact_controls.artifacts += src
 	A.post_setup()
 
-/obj/proc/ArtifactActivated()
+/obj/proc/ArtifactActivated(combined_art_activation = FALSE)
 	if (!src)
 		return 1
 	if (!src.ArtifactSanityCheck())
@@ -152,9 +152,9 @@
 		return 1 // can't activate these ones at all by design
 	if (!A.may_activate(src))
 		return 1
-	if (A.activ_sound)
+	if (A.activ_sound && !combined_art_activation)
 		playsound(src.loc, A.activ_sound, 100, 1)
-	if (A.activ_text)
+	if (A.activ_text && !combined_art_activation)
 		var/turf/T = get_turf(src)
 		if (T) T.visible_message("<b>[src] [A.activ_text]</b>") //ZeWaka: Fix for null.visible_message()
 	A.activated = 1
@@ -163,6 +163,10 @@
 	else
 		A.show_fx(src)
 	A.effect_activate(src)
+	for (var/obj/O in src.combined_artifacts)
+		O.ArtifactActivated(TRUE)
+	if (combined_art_activation)
+		return
 	for (var/mob/living/L in range(5, src))
 		for(var/datum/objective/objective in L.mind?.objectives)
 			if (istype(objective, /datum/objective/crew/scientist/artifact))
@@ -174,15 +178,15 @@
 				art_obj.artifacts_activated++
 				break
 
-/obj/proc/ArtifactDeactivated()
+/obj/proc/ArtifactDeactivated(combined_art_activation = FALSE)
 	if (!src.ArtifactSanityCheck())
 		return
 	var/datum/artifact/A = src.artifact
 	if (!A.activated) // do not deactivate if already deactivated
 		return
-	if (A.deact_sound)
+	if (A.deact_sound && !combined_art_activation)
 		playsound(src.loc, A.deact_sound, 100, 1)
-	if (A.deact_text)
+	if (A.deact_text && !combined_art_activation)
 		var/turf/T = get_turf(src)
 		T.visible_message("<b>[src] [A.deact_text]</b>")
 	A.activated = 0
@@ -191,6 +195,8 @@
 	else
 		A.hide_fx(src)
 	A.effect_deactivate(src)
+	for (var/obj/O in src.combined_artifacts)
+		O.ArtifactDeactivated(TRUE)
 
 /obj/proc/Artifact_emp_act()
 	if (!src.ArtifactSanityCheck())
@@ -507,6 +513,8 @@
 				boutput(user, "You can't really tell how it feels.")
 		if (A.activated)
 			A.effect_touch(src,user)
+			for (var/obj/O in src.combined_artifacts)
+				O.artifact.effect_touch(O, user)
 	return
 
 /obj/proc/ArtifactHitWith(var/obj/item/O, var/mob/user)
@@ -560,7 +568,7 @@
 	else if(removed > 1)
 		src.visible_message("All the artifact forms that were attached fall to the ground.")
 
-/obj/proc/ArtifactDestroyed()
+/obj/proc/ArtifactDestroyed(combined_arti_destroy = FALSE)
 	// Call this rather than straight disposing() on an artifact if you want to destroy it. This way, artifacts can have their own
 	// version of this for ones that will deliver a payload if broken.
 	if (!src.ArtifactSanityCheck())
@@ -569,7 +577,7 @@
 	var/datum/artifact/A = src.artifact
 
 	var/turf/T = get_turf(src)
-	if (istype(T,/turf/))
+	if (istype(T,/turf/) && !combined_arti_destroy)
 		switch(A.artitype.name)
 			if("ancient")
 				T.visible_message(SPAN_ALERT("<B>[src] sparks and sputters violently before falling apart!</B>"))
@@ -584,11 +592,14 @@
 
 	src.remove_artifact_forms()
 
-	src.ArtifactDeactivated()
+	src.ArtifactDeactivated(TRUE)
 
 	ArtifactLogs(usr, null, src, "destroyed", null, 0)
 
 	artifact_controls.artifacts -= src
+
+	for (var/obj/O in src.combined_artifacts)
+		O.ArtifactDestroyed(TRUE)
 
 	qdel(src)
 	return
@@ -616,6 +627,51 @@
 			var/datum/artifact_fault/F = new new_fault(A)
 			F.holder = A
 			A.faults += F
+
+/obj/proc/can_combine_artifact(obj/O)
+	. = FALSE
+	if (!src.artifact.activated)
+		return
+	if (!O || !O.artifact || !O.artifact.activated)
+		return
+
+	if (src.artifact.combine_flags & ARTIFACT_DOES_NOT_COMBINE)
+		return
+	if (O.artifact.combine_flags & ARTIFACT_DOES_NOT_COMBINE)
+		return
+	if (src.artifact.combine_flags & ARTIFACT_ACCEPTS_ANY_COMBINE)
+		if (O.artifact.combine_flags & ARTIFACT_COMBINES_INTO_ANY)
+			. = TRUE
+		else if (src.artifact.type_size == ARTIFACT_SIZE_LARGE)
+			if (O.artifact.combine_flags & ARTIFACT_COMBINES_INTO_LARGE)
+				. = TRUE
+		else
+			if (O.artifact.combine_flags & ARTIFACT_COMBINES_INTO_HANDHELD)
+				. = TRUE
+
+	for (var/obj/art in O.combined_artifacts)
+		if (!src.can_combine_artifact(art))
+			return FALSE
+
+/// combines passed object into src
+/obj/proc/combine_artifact(obj/O)
+	if (!src.artifact.activated)
+		return
+	if (!O || !O.artifact || !O.artifact.activated)
+		return
+
+	if (!length(src.combined_artifacts))
+		src.combined_artifacts = list()
+	if (O.artifact.combine_effect_priority == ARTIFACT_COMBINATION_TOUCHED)
+		src.combined_artifacts.Insert(1, O)
+	else
+		src.combined_artifacts += O
+	O.name = src.name
+	O.real_name = src.real_name
+	O.set_loc(src)
+	for (var/obj/art in O.combined_artifacts)
+		src.combine_artifact(art)
+	O.combined_artifacts = null
 
 // Added. Very little related to artifacts was logged (Convair880).
 /proc/ArtifactLogs(var/mob/user, var/mob/target, var/obj/O, var/type_of_action, var/special_addendum, var/trigger_alert = 0)
