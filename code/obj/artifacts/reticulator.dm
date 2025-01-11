@@ -69,16 +69,23 @@ ARTRET_INCREASE_ARMOR
 	attack_hand(mob/user)
 		src.use_reticulator(user)
 
+	attackby(obj/item/I, mob/user)
+		..()
+		src.mouse_drop(I, user, src)
+
 	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		if (BOUNDS_DIST(src, over_location) > 0)
 			return
 		var/obj/O = over_object
-		if (!istype(over_object) || O.anchored)
+		if (!istype(O) || O.anchored)
 			return
 		var/turf/T = get_turf(over_location)
 		if (T.density)
 			return
+		if (ismob(src_location))
+			var/mob/M = src_location
+			M.drop_item(over_object)
 		src.stored_artifact?.set_loc(T)
 		src.stored_artifact = null
 		src.stored_item?.set_loc(T)
