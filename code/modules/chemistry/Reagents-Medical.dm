@@ -1103,7 +1103,7 @@ datum
 			fluid_g = 220
 			fluid_b = 0
 			transparency = 225
-			depletion_rate = 3
+			depletion_rate = 1.5
 			value = 6 // 2c + 1c + 1c + 1c + 1c
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1383,7 +1383,7 @@ datum
 			fluid_g = 150
 			fluid_b = 150
 			transparency = 255
-			depletion_rate = 3
+			depletion_rate = 1.5
 			value = 6 // 3c + 1c + 1c + 1c
 
 			on_mob_life(var/mob/M, var/mult = 1)
