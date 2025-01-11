@@ -442,7 +442,7 @@ datum
 				var/healing_effectiveness = 0
 				var/health_remaining = (M.max_health - M.get_brute_damage() + M.get_burn_damage())
 
-				healing_effectiveness = lerp(min_effectiveness,1,(health_remaining - min_effectiveness_at) / (max_effectiveness_at - min_effectiveness_at))
+				healing_effectiveness = clamp(lerp(min_effectiveness,1,(health_remaining - min_effectiveness_at) / (max_effectiveness_at - min_effectiveness_at)),0,1)
 
 				if(method == TOUCH)
 					. = 0
@@ -1412,7 +1412,7 @@ datum
 				if (health_remaining < min_effectiveness_at)
 					healing_effectiveness = 0
 				else
-					healing_effectiveness = lerp(min_effectiveness,1,(health_remaining - min_effectiveness_at) / (max_effectiveness_at - min_effectiveness_at))
+					healing_effectiveness = clamp(lerp(min_effectiveness,1,(health_remaining - min_effectiveness_at) / (max_effectiveness_at - min_effectiveness_at)),0,1)
 
 				if(method == TOUCH && healing_effectiveness > 0)
 					. = 0
