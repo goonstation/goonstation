@@ -137,6 +137,9 @@
 	<br>For example
 	<br><tt>command=update_fruit_basket;fruits=apples\&oranges\&limes</tt>
 	<br>which will cause &amp; to be sent as data in the packet instead of as a delimeter.
+	<br>You may also wrap data keys in parenthesis to ignore special characters, such as
+	<br><tt>clown_modes=(clown's delight&double honk)</tt>
+	<br>But parenthesis may still need to be escaped.
 	<br>The Component can receive a sendmsg Radio Signal that will send the Data in the \"data\" Portion of the Signal to the Outputs of this Component.
 	<br>Following the previous Syntax a sendmsg Signal would look like this : <tt>address_1=WIFICompoAddHere&command=sendmsg&data=MyCompoCommand</tt>
 	<br>Normal PDA Messages can also be used to trigger the Component.
