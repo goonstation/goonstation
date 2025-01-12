@@ -90,7 +90,7 @@
 						qdel(talisman_effect.art)
 						break
 				continue
-			var/datum/statusEffect/active_curse = user.setStatus(src.chosen_curse, src.durations[src.chosen_curse], src)
+			var/datum/statusEffect/active_curse = H.setStatus(src.chosen_curse, src.durations[src.chosen_curse], src)
 			src.active_cursees[H] = active_curse
 			if (src.chosen_curse == BLOOD_CURSE)
 				src.blood_curse_active = TRUE
@@ -432,7 +432,7 @@
 
 	say()
 		if (!ON_COOLDOWN(src, "displaced_soul_speak", 2 SECONDS))
-			src.visible_message("\the [src.name]'s mouth moves, but you can't tell what they're saying.", SPAN_ALERT("Nothing comes out of your mouth!"))
+			src.visible_message(SPAN_ALERT("\The [src.name]'s mouth moves, but you can't tell what they're saying!"), SPAN_ALERT("Nothing comes out of your mouth!"))
 		return
 
 	click(atom/target)
@@ -443,7 +443,12 @@
 		for (var/obj/O in NewLoc)
 			if (direct in NewLoc.blocked_dirs)
 				return FALSE
-			if (!NewLoc.blocked_dirs && O.density)
+			if (NewLoc.blocked_dirs)
+				return ..()
+			if (O.density)
+				if (istype(O, /obj/machinery/door/airlock))
+					src.set_loc(NewLoc)
+					return TRUE
 				return FALSE
 		return ..()
 

@@ -87,6 +87,7 @@
 				adj_entr_turfs = block(entrance.x - 1, entrance.y - 1, entrance.z, entrance.x - 1, entrance.y + 1, entrance.z)
 
 		entrance.density = FALSE
+		entrance.flags |= (FLUID_DENSE | FLUID_DENSE_ALWAYS)
 		var/obj/art_fissure_objs/door/outer_door = new(entrance)
 		outer_door.set_dir(get_dir(outer_door, user))
 		outer_door.linked_door = inner_door

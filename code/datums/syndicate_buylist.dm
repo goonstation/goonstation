@@ -1449,3 +1449,9 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 	items = list(/obj/item/tool/quickhack/syndicate)
 	cost = 1
 	desc = "An illegal, home-made tool able to fake up to 10 AI 'open' signals to unbolted doors."
+
+/datum/syndicate_buylist/surplus/basketball
+	name = "Extremely illegal basketball"
+	items = list(/obj/item/basketball/lethal)
+	cost = 3
+	desc = "An even more illegal basketball capable of dangerous levels of balling."
