@@ -1,5 +1,9 @@
 
 (t)sun jan 12 25
+(u)patricia
+(p)21746
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The arithmetic component now supports max and min operations
 (u)Valtsu0
 (p)21799
 (e)🆕📦|C-Feature, A-Game-Objects
