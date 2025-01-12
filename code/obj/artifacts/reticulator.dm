@@ -370,7 +370,8 @@
 			var/datum/artifact_trigger/activating_trigger = O.artifact.triggers[1]
 			boutput(user, SPAN_NOTICE("Analysis results:" + \
 				"<br>Origin disguised: <B>[O.artifact.disguised ? "Yes" : "No"]</B>" + \
-				"<br>Activation method: <B>[src.trigger_names_assoc[activating_trigger.type]]</B>"))
+				"<br>Activation method: <B>[src.trigger_names_assoc[activating_trigger.type]]</B>") + \
+				"<br>Artifacts combined: <B>[length(O.combined_artifacts) || 0]</B>")
 		else
 			if ("\ref[O]" in src.scanned_artifacts)
 				boutput(user, src.scanned_artifacts["\ref[O]"])
