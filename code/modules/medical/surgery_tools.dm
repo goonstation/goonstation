@@ -270,7 +270,7 @@ CONTAINS:
 			var/damage = H.get_brute_damage()
 			if (damage > H.max_health())
 				switch (damage)
-					if (400 to INFINITY) // ooer
+					if (400 to INFINITY) // it's a miracle they aren't gibbed. may as well make it not take 6 years to fix them
 						H.HealDamage("All", 100, 0)
 					if (200 to 399)
 						H.HealDamage("All", 50, 0)
@@ -278,7 +278,7 @@ CONTAINS:
 						H.HealDamage("All", 25, 0)
 				src.ammo--
 				if (!ON_COOLDOWN(user, "staple_heal", 5 SECONDS))
-					H.visible_message("[user] realigns and staples some of [H]'s wounds shut.")
+					H.visible_message("[user] staples some of [H]'s wounds shut.")
 				playsound(user, 'sound/misc/stapler.ogg', 25, TRUE)
 				return
 
