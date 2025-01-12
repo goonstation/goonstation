@@ -818,7 +818,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 			var/zone = user.zone_sel.selecting
 			var/surgery_status = H.get_surgery_status(zone)
 			if (H.bandaged.Find(zone))
-				user.show_text("[H == user ? "You have" : "[H] has"] already bandaged [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]]!", "red")
+				user.show_text("[H == user ? "You have" : "[H] has"] already got bandages on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]]!", "red")
 				return
 			if (surgery_status && H.organHolder)
 				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(2,5), brute_heal, burn_heal, "bandag"), user)
