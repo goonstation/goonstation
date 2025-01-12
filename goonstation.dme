@@ -754,6 +754,7 @@
 #include "code\modules\antagonists\arcfiend\abilities\polarize.dm"
 #include "code\modules\antagonists\arcfiend\abilities\ride_the_lightning.dm"
 #include "code\modules\antagonists\arcfiend\abilities\sap_power.dm"
+#include "code\modules\antagonists\basketball\basketball_wizard.dm"
 #include "code\modules\antagonists\blob\blob.dm"
 #include "code\modules\antagonists\blob\abilities\blob_abilities.dm"
 #include "code\modules\antagonists\changeling\changeling.dm"
