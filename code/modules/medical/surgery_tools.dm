@@ -220,7 +220,7 @@ CONTAINS:
 
 /obj/item/staple_gun
 	name = "staple gun"
-	desc = "A medical staple gun for securely reattaching limbs."
+	desc = "A heavy-duty medical staple gun for securely reattaching limbs."
 	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "staplegun"
 	w_class = W_CLASS_TINY
@@ -261,10 +261,30 @@ CONTAINS:
 				H.lastgasp()
 			return
 
-		if (!ishuman(target) || !(user.zone_sel && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "head"))))
+		if (!ishuman(target) )
 			return ..()
 
 		var/mob/living/carbon/human/H = target
+
+		if (isdead(H) && user.zone_sel && (user.zone_sel.selecting == "chest")) // you get some more leeway moving and stapling bits of viscera around in dead people
+			var/damage = H.get_brute_damage()
+			if (damage > H.max_health())
+				switch (damage)
+					if (400 to INFINITY) // ooer
+						H.HealDamage("All", 100, 0)
+					if (200 to 399)
+						H.HealDamage("All", 50, 0)
+					else
+						H.HealDamage("All", 25, 0)
+				src.ammo--
+				if (!ON_COOLDOWN(user, "staple_heal", 5 SECONDS))
+					H.visible_message("[user] realigns and staples some of [H]'s wounds shut.")
+				playsound(user, 'sound/misc/stapler.ogg', 25, TRUE)
+				return
+
+		if ( !(user.zone_sel && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "head"))))
+			return ..()
+
 
 		//Attach butt to head
 		if (user.zone_sel.selecting == "head")
@@ -307,7 +327,6 @@ CONTAINS:
 				src.ammo--
 				surgery_limb.surgery(src)
 			return
-
 
 // a mostly decorative thing from z2 areas I want to add to office closets
 /obj/item/staple_gun/red
