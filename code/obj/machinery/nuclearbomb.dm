@@ -21,7 +21,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	var/datum/hud/nukewires/wirepanel
 	var/obj/item/disk/data/floppy/read_only/authentication/disk = null
 	var/obj/item/record/record = null
-	var/record_locked = FALSE // Varedit to TRUE if you dont want admin gimmick music removed
+	var/record_locked = FALSE // TRUE if the internal record cannot be removed, intended to be varedited by admins for gimmicks.
 
 	var/target_override = null // varedit to an area TYPE to allow the nuke to be deployed in that area instead of whatever the mode says (also enables the bomb in non-nuke gamemodes)
 	var/target_override_name = "" // how the area gets displayed if you try to deploy the nuke in a wrong area
