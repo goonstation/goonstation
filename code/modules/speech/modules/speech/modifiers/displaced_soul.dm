@@ -7,6 +7,6 @@
 		return message
 
 	if (!ON_COOLDOWN(message.speaker, "displaced_soul_speak", 2 SECONDS))
-		message.speaker.visible_message("\the [message.speaker.name]'s mouth moves, but you can't tell what they're saying.", SPAN_ALERT("Nothing comes out of your mouth!"))
+		message.speaker.visible_message(SPAN_ALERT("\The [message.speaker.name]'s mouth moves, but you can't tell what they're saying!"), SPAN_ALERT("Nothing comes out of your mouth!"))
 
 	qdel(message)

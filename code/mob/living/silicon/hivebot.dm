@@ -67,9 +67,9 @@
 	SPAWN(1 SECOND)
 		if (!src.cell)
 			src.cell = new /obj/item/cell/shell_cell/charged (src)
-		src.camera = new /obj/machinery/camera(src)
+		src.camera = new /obj/machinery/camera/auto/AI(src)
 		src.camera.c_tag = src.name
-		src.camera.ai_only = TRUE
+		src.camera.network = "Robots"
 
 	..()
 	src.botcard.access = get_all_accesses()

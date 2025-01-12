@@ -7147,6 +7147,8 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "aNY" = (
+/obj/table/syndicate/auto,
+/obj/item/paper/pipebombs,
 /turf/simulated/floor/redblack,
 /area/listeningpost)
 "aOa" = (

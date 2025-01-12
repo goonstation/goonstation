@@ -6,7 +6,7 @@ TYPEINFO(/obj/machinery/door_timer)
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doortimer0"
 	desc = "A remote control switch for a door."
-	req_access = list(access_security)
+	req_access = list(access_brig)
 	anchored = ANCHORED
 	speech_verb_say = "beeps"
 

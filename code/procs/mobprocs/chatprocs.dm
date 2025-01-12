@@ -154,6 +154,16 @@
 	usr.client.preferences.flying_chat_hidden = !usr.client.preferences.flying_chat_hidden
 	boutput(usr, SPAN_NOTICE("[usr.client.preferences.flying_chat_hidden ? "No longer": "Now"] seeing flying chat."))
 
+/// Generate a hue for maptext from a given name
+/proc/living_maptext_color(given_name)
+	var/num = hex2num(copytext(md5(given_name), 1, 7))
+	return hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
+
+/// Generate a desatureated hue for maptext from a given name
+/proc/dead_maptext_color(given_name)
+	var/num = hex2num(copytext(md5(given_name), 1, 7))
+	return hsv2rgb((num % 360)%40+240, (num / 360) % 15+5, (((num / 360) / 10) % 15) + 55)
+
 /mob/proc/show_message(msg, type, alt, alt_type, group = "")
 	if (!src.client)
 		return

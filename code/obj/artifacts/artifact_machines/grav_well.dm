@@ -67,21 +67,27 @@
 
 		lense.pulse()
 
-		for (var/obj/V in orange(src.field_radius,get_turf(O)))
-			if (V.anchored)
-				continue
-
-			if (src.gravity_type)
-				step_away(V,O)
-			else
-				step_towards(V,O)
-		for (var/mob/living/M in orange(src.field_radius,get_turf(O)))
-			if(isintangible(M))
-				continue
-			if (src.gravity_type)
-				step_away(M,O)
-			else
-				step_towards(M,O)
-			if(O.ArtifactFaultUsed(M) == FAULT_RESULT_STOP)
-				break
+		for(var/turf/T in orange(src.field_radius,get_turf(O)))
+			var/fuckcrap_limit = 0
+			for (var/obj/V in T)
+				if(fuckcrap_limit++ > 30)
+					break
+				if (V.anchored)
+					continue
+				if (src.gravity_type)
+					step_away(V,O)
+				else
+					step_towards(V,O)
+			fuckcrap_limit = min(fuckcrap_limit, 25)
+			for (var/mob/living/M in T)
+				if(fuckcrap_limit++ > 30)
+					break
+				if(isintangible(M))
+					continue
+				if (src.gravity_type)
+					step_away(M,O)
+				else
+					step_towards(M,O)
+				if(O.ArtifactFaultUsed(M) == FAULT_RESULT_STOP)
+					break
 

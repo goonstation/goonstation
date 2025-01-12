@@ -1869,3 +1869,27 @@
 			src.icon_state = initial(src.icon_state)
 		else
 			src.icon_state = "[initial(src.icon_state)]_cd"
+
+/datum/targetable/organAbility/view_camera
+	name = "View Monitor"
+	desc = "Look through a camera via your monitor eye."
+	icon_state = "eye-monitor"
+	targeted = FALSE
+	toggled = TRUE
+	is_on = FALSE
+
+	cast(atom/target)
+		if (..())
+			return 1
+		var/obj/item/organ/eye/cyber/monitor/linked_eye = linked_organ
+		if(src.is_on)
+			src.is_on = FALSE
+			linked_eye.viewer.disconnect_user(holder.owner)
+			if(linked_eye.emagged)
+				linked_eye.provides_sight = FALSE
+			return
+		else //TODO: give them a non-janky viewport instead, once they exist
+			if(linked_eye.viewer.AttackSelf(holder.owner))
+				src.is_on = TRUE
+				if(linked_eye.emagged)
+					linked_eye.provides_sight = TRUE

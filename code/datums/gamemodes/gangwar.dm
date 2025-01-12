@@ -183,9 +183,11 @@
 		if (istype(winner))
 			boutput(world, "<h2><b>[winner.gang_name], led by [winner.leader.current.real_name], won the round!</b></h2>")
 
-			var/datum/hud/gang_victory/victory_hud = new(winner)
+			var/datum/hud/gang_victory/victory_hud = get_singleton(/datum/hud/gang_victory)
+			victory_hud.set_winner(winner)
 			for (var/client/C in clients)
 				victory_hud.add_client(C)
+				C.mob.addAbility(/datum/targetable/toggle_gang_victory_hud)
 
 	..()
 
@@ -809,6 +811,10 @@
 				continue
 			if (isnull(M.current.loc)) //deleted or an admin who has removeself'd
 				continue
+			if (isliving(M.current))
+				var/mob/living/L = M.current
+				if (L.hibernating) //cryod
+					continue
 			if (is_dead_or_ghost_role(M.current)) //stop sending PDA messages to the afterlife
 				continue
 			if (!(M in deferred_minds))
@@ -1490,6 +1496,10 @@
 	var/untracked_drugs_score = 0
 	/// How many leaves of weed have been given in
 	var/gang_weed = 0
+	/// If this locker is hiding under the floor
+	var/is_hiding = FALSE
+	/// The turf this locker is registered as hiding under
+	var/registered_turf = 0
 
 	New()
 		START_TRACKING
@@ -1544,7 +1554,6 @@
 		src.name = "[gang.gang_name] Locker"
 		src.desc = "A locker with a small screen attached to the door, and the words 'Property of [gang.gang_name] - DO NOT TOUCH!' scratched into both sides."
 		src.gang = gang
-		src.gang.claim_tiles(usr.loc, GANG_TAG_INFLUENCE_LOCKER, GANG_TAG_SIGHT_RANGE_LOCKER)
 		src.UpdateIcon()
 
 		var/image/antag_icon = image('icons/mob/antag_overlays.dmi', icon_state = "gang_locker_[src.gang.color_id]", loc=src)
@@ -2126,6 +2135,52 @@
 			text += "<b>[i]: [scores[i].gang_name]</b></br>"
 		boutput(user, SPAN_ALERT(text))
 
+	proc/turf_attacked(target, mob/user)
+		if (!ismob(user))
+			return
+		if (user.get_gang() != src.gang)
+			return
+		if(!isalive(user))
+			return
+		if(!isliving(user) && !issilicon(user))
+			return
+		if (ON_COOLDOWN(src, "hide_delay", 1 SECOND))
+			return
+		toggle_hide(!is_hiding)
+		if (is_hiding)
+			boutput(user,SPAN_NOTICE("You hide your gang's locker."))
+		else
+			boutput(user,SPAN_NOTICE("You reveal your gang's locker."))
+
+	proc/pre_move_locker()
+		gang.unclaim_tiles(src.loc, GANG_TAG_INFLUENCE_LOCKER, GANG_TAG_SIGHT_RANGE_LOCKER)
+
+	proc/post_move_locker()
+		if (registered_turf)
+			UnregisterSignal(registered_turf, COMSIG_ATTACKHAND)
+		toggle_hide(FALSE)
+		gang.claim_tiles(src.loc, GANG_TAG_INFLUENCE_LOCKER, GANG_TAG_SIGHT_RANGE_LOCKER)
+		registered_turf = get_turf(src)
+		RegisterSignal(registered_turf, COMSIG_ATTACKHAND, PROC_REF(turf_attacked))
+
+	proc/toggle_hide(desired)
+		if (desired == is_hiding)
+			return
+		is_hiding = desired
+		var/turf/floorturf = get_turf(src)
+		animate_slide(floorturf, 0, 22, 4)
+		SPAWN(0.4 SECONDS)
+			if (!src)
+				return
+			if(is_hiding)
+				src.layer = PLATING_LAYER-0.01
+				src.plane = PLANE_FLOOR
+				src.mouse_opacity = 0
+			else
+				src.layer = MOB_LAYER
+				src.plane = PLANE_DEFAULT
+				src.mouse_opacity = 1
+			animate_slide(floorturf, 0, 0, 4)
 
 	proc/cash_amount()
 		var/number = 0

@@ -940,7 +940,11 @@ var/global/curr_day = null
 	set name = "RP Rules"
 	set category = "Commands"
 
-	tgui_alert(src, content_window = "rpRules", do_wait = FALSE)
+	var/cant_interact_time = null
+	if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10)
+		cant_interact_time = 15 SECONDS
+
+	tgui_alert(src, content_window = "rpRules", do_wait = FALSE, cant_interact = cant_interact_time)
 #endif
 
 /client/verb/changeServer(var/server as text)
@@ -1476,6 +1480,7 @@ var/global/curr_day = null
 		src.toggle_deuteranopia_mode()
 	else if (src.tritanopia_toggled)
 		src.toggle_tritanopia_mode()
+	src.mob?.update_active_matrix()
 
 /client/verb/toggle_protanopia_mode()
 	set hidden = TRUE
@@ -1495,6 +1500,8 @@ var/global/curr_day = null
 	src.deuteranopia_toggled = FALSE
 	src.tritanopia_toggled = FALSE
 
+	src.mob?.update_active_matrix()
+
 /client/verb/toggle_deuteranopia_mode()
 	set hidden = TRUE
 	set name = "toggle-deuteranopia-mode"
@@ -1513,6 +1520,8 @@ var/global/curr_day = null
 	src.protanopia_toggled = FALSE
 	src.tritanopia_toggled = FALSE
 
+	src.mob?.update_active_matrix()
+
 /client/verb/toggle_tritanopia_mode()
 	set hidden = TRUE
 	set name = "toggle-tritanopia-mode"
@@ -1530,6 +1539,8 @@ var/global/curr_day = null
 	src.tritanopia_toggled = !src.tritanopia_toggled
 	src.protanopia_toggled = FALSE
 	src.deuteranopia_toggled = FALSE
+
+	src.mob?.update_active_matrix()
 
 //These size helpers are invisible browser windows that help with getting client screen dimensions
 /client/proc/initSizeHelpers()

@@ -12,6 +12,9 @@
 		return 1
 
 	var/turf/T = get_turf(holder.owner)
+	if (!istype(T) || istype_exact(T, /turf/space))
+		boutput(holder.owner, SPAN_NOTICE("You can't bury yourself on this kind of turf!"))
+		return 1
 	if(T == holder.owner.loc)
 		playsound(T, 'sound/effects/shovel1.ogg', 50, TRUE, 0.3)
 		holder.owner.visible_message(SPAN_NOTICE("<b>[holder.owner]</b> buries themselves!"),

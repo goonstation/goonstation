@@ -11447,7 +11447,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "biO" = (
 /obj/stool/chair{
@@ -15309,7 +15309,7 @@
 /obj/machinery/computer/magnet{
 	dir = 4
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "bHr" = (
 /obj/stool,
@@ -15320,17 +15320,17 @@
 /area/station/quartermaster/refinery)
 "bHt" = (
 /obj/machinery/portable_reclaimer,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "bHw" = (
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "bHz" = (
 /obj/machinery/manufacturer/mining,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "bHG" = (
 /obj/securearea{
@@ -24242,11 +24242,11 @@
 /area/station/hangar/sec)
 "hcg" = (
 /obj/machinery/door/airlock/pyro/security/alt,
-/obj/mapping_helper/access/brig,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
 "hcq" = (
@@ -26735,7 +26735,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "iBz" = (
 /obj/cable{
@@ -27523,6 +27523,7 @@
 	pixel_x = -24;
 	dir = 8
 	},
+/obj/item/paper/pipebombs,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "jbL" = (
@@ -38361,7 +38362,7 @@
 /obj/machinery/alarm{
 	pixel_y = 25
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "psM" = (
 /obj/machinery/light/incandescent,
@@ -38625,9 +38626,9 @@
 /area/station/maintenance/west)
 "pyi" = (
 /obj/machinery/door/airlock/pyro/security/alt,
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/equipment)
 "pyn" = (
@@ -39379,8 +39380,8 @@
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -45218,7 +45219,6 @@
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "2-8"
@@ -45228,6 +45228,7 @@
 	enter_id = "brig";
 	name = "Security"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -48111,11 +48112,11 @@
 /area/station/janitor/supply)
 "vio" = (
 /obj/machinery/door/airlock/pyro/glass/security,
-/obj/mapping_helper/access/security,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/research)
 "vip" = (
@@ -49806,10 +49807,10 @@
 /area/station/science/lobby)
 "waY" = (
 /obj/machinery/door/airlock/pyro/security/alt,
-/obj/mapping_helper/access/brig,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "wcl" = (

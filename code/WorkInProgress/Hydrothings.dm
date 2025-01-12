@@ -397,13 +397,8 @@
 	desc = "A core of pure Hootonium, you can feel immense power radiating from within it."
 	icon = 'icons/misc/owlzone.dmi'
 	icon_state = "hootonium"
+	ability_path = /obj/ability_button/owl_slam
 	var/chosen = 0
-
-	plutonize(var/usrverbs)
-		usrverbs += /proc/owl_slam
-
-	unplutonize(var/usrverbs)
-		usrverbs -= /proc/owl_slam
 
 	attack_self(mob/user as mob)
 		var/input = tgui_alert(user, "Would you like to attempt to absorb the core into your body?", "Hoot or not to hoot.", list("Yes", "No"))
@@ -1291,16 +1286,16 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	sound_loop = 'sound/ambience/station/JazzLounge1.ogg'
 
 //Other fuckable things
-/proc/owl_slam()
-	set category = "Spells"
-	set name = "Owl Slam"
-	set desc = "Hoot the entire station with the power of an owl."
+/obj/ability_button/owl_slam
+	name = "Owl Slam"
+	desc = "Hoot the entire station with the power of an owl."
+	targeted = FALSE
+	icon = 'icons/mob/spell_buttons.dmi'
+	icon_state = "owlslam"
 
-	var/mob/M = usr
-
-	if(M.stat)
-		boutput(M, "Not when you're incapacitated.")
-		return
+/obj/ability_button/owl_slam/execute_ability()
+	. = ..()
+	var/mob/M = the_mob
 
 	var/equipped_thing = M.equipped()
 	if(istype(equipped_thing, /obj/item/basketball))
@@ -1316,7 +1311,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 		boutput(M, SPAN_ALERT("You can't slam without a b-ball, yo!"))
 		return
 
-	M.verbs -= /proc/owl_slam
+	the_item.remove_item_ability(the_mob, src.type)
 	APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "owlslam") //you cannot move while doing this
 	logTheThing(LOG_COMBAT, M, "<b>triggers a owl slam in [M.loc.loc] ([log_loc(M)])!</b>")
 

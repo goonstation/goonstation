@@ -15,8 +15,7 @@
 	. = ..()
 
 /datum/speech_module/output/deadchat/process(datum/say_message/message)
-	var/num = hex2num(copytext(md5(message.speaker.name), 1, 7))
-	var/maptext_colour = hsv2rgb((num % 360) % 40 + 240, (num / 360) % 15 + 5, (num / 3600) % 15 + 55)
+	var/maptext_colour = dead_maptext_color(message.speaker.name)
 
 	message.maptext_css_values["color"] = maptext_colour
 	message.maptext_animation_colours = list(

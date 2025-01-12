@@ -993,7 +993,7 @@
 	else
 		src.ion_trail?.stop()
 
-	logTheThing(LOG_VEHICLE, ejectee, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
+	logTheThing(LOG_VEHICLE, ejectee, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b> at [log_loc(src)]")
 
 /obj/machinery/vehicle/proc/leave_pod(mob/ejectee as mob)
 	// Assert facing direction for eject location offset
@@ -1106,7 +1106,7 @@
 
 	boutput(M, SPAN_HINT("You can also use the Space Bar to fire!"))
 
-	logTheThing(LOG_VEHICLE, M, "enters vehicle: <b>[constructTarget(src.name,"vehicle")]</b>")
+	logTheThing(LOG_VEHICLE, M, "enters vehicle: <b>[constructTarget(src.name,"vehicle")]</b> at [log_loc(src)]")
 
 /obj/machinery/vehicle/proc/eject_occupants()
 	if(isghostdrone(usr))
