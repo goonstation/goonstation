@@ -12668,7 +12668,12 @@
 	dir = 8
 	},
 /obj/table/wood/round/auto,
-/obj/item/clothing/shoes/swat,
+/obj/item/clothing/shoes/swat{
+	pixel_y = -5
+	},
+/obj/item/paper/pipebombs{
+	pixel_y = 5
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "green2"

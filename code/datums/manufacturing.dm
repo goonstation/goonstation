@@ -1360,6 +1360,17 @@
 	time = 25 SECONDS
 	category = "Organ"
 
+/datum/manufacture/cybereye_monitor
+	name = "Monitor Cybereye"
+	item_requirements = list("crystal" = 3,
+							 "metal" = 1,
+							 "conductive" = 2,
+							 "insulated" = 1)
+	item_outputs = list(/obj/item/organ/eye/cyber/monitor)
+	create = 1
+	time = 25 SECONDS
+	category = "Organ"
+
 /datum/manufacture/cybereye_laser
 	name = "Laser Cybereye"
 	item_requirements = list("crystal" = 3,

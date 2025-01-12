@@ -1,4 +1,26 @@
 
+(t)fri jan 10 25
+(u)Jan.antilles
+(p)21900
+(e)🎨|C-Sprites
+(+)Resprites the Double Braids style to add more shading and dimension.
+(u)glowbold
+(p)21733
+(e)🆕🎨💊|C-Feature, C-Sprites, A-Medical
+(+)Monitor cybereyes can remotely view cameras. Ask a roboticist to install one today!
+(u)patricia
+(p)21957
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)GPS coordinates in packets are now in x=, y= format compatible with signal splitters
+(u)LeahTheTech
+(*)Adding items to pipebombs no longer reduces their reagent capacity or explosive power. Let your explosive creativity free!
+(*)The Syndicate have issued a handy new instructional manual on pipebomb crafting. One copy on each listening post.
+(+)Telecrystals in pipebombs will now teleport victims further away.
+(t)thu jan 09 25
+(u)Temthrush & yelloworlemons
+(p)21939
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Adds a new headband accessory to the clothing booth.
 (t)wed jan 08 25
 (u)Glamurio (Ryou)
 (p)21471
