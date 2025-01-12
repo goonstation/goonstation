@@ -817,17 +817,20 @@ TYPEINFO(/obj/machinery/defib_mount)
 			var/mob/living/carbon/human/H = target
 			var/zone = user.zone_sel.selecting
 			var/surgery_status = H.get_surgery_status(zone)
+			if (H.bandaged.Find(zone))
+				user.show_text("[H == user ? "You have" : "[H] has"] already bandaged [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]]!", "red")
+				return
 			if (surgery_status && H.organHolder)
 				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(2,5), brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
 			else if (H.bleeding)
-				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 1, zone, 0, rand(4,6), brute_heal, burn_heal, "bandag"), user)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 1, zone, zone, rand(4,6), brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
 			else if ((brute_heal || burn_heal) && target.health < target.max_health)
-				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 5 SECONDS, 0, 0, 5, brute_heal, burn_heal, "bandag"), user)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 5 SECONDS, zone, 0, 5, brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
-			else if (H.dead && H.get_burn_damage() > 0)
-				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 5, 0, 0, 5, brute_heal, burn_heal, "bandag"), user)
+			else if (isdead(H) && H.get_burn_damage() > 0)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 5, zone, 0, 5, brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
 			else
 				user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to bandage!", "red")
