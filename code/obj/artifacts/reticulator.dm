@@ -114,7 +114,7 @@
 			if ("Create something")
 				var/creatables = list(
 					"Resonator ([src.get_readable_cost(ARTRET_RESONATOR)])" = ARTRET_RESONATOR,
-					"Scrambler ([src.get_readable_cost(ARTRET_SCRAMBLER)])" = ARTRET_SCRAMBLER,
+				//	"Scrambler ([src.get_readable_cost(ARTRET_SCRAMBLER)])" = ARTRET_SCRAMBLER,
 					"Tuner ([src.get_readable_cost(ARTRET_TUNER)])" = ARTRET_TUNER,
 					"Previous artifact ([src.get_readable_cost(ARTRET_PREVIOUS_ART)])" = ARTRET_PREVIOUS_ART,
 					"Combine artifacts ([src.get_readable_cost(ARTRET_COMBINE_ARTS)])" = ARTRET_COMBINE_ARTS
@@ -216,8 +216,8 @@
 		switch (thing)
 			if (ARTRET_RESONATOR)
 				new /obj/item/artifact_resonator(get_turf(src))
-			if (ARTRET_SCRAMBLER)
-				new /obj/item/artifact_scrambler(get_turf(src))
+			//if (ARTRET_SCRAMBLER)
+			//	new /obj/item/artifact_scrambler(get_turf(src))
 			if (ARTRET_TUNER)
 				new /obj/item/artifact_tuner(get_turf(src))
 			if (ARTRET_PREVIOUS_ART)
@@ -412,6 +412,8 @@
 					"<br>Possible activation methods: <B>[english_list(possible_triggers)]</B>")
 				boutput(user, src.scanned_artifacts["\ref[O]"])
 
+// to be implmented in the future. requires a rewrite of code for each artifact to allow for this. ideal way would be for this to call art_datum.New(),
+// art_datum.effect_activate(), and art_datum.post_setup() but not all artifacts are compatible with that
 /obj/item/artifact_scrambler
 	name = "Artifact scrambler"
 	desc = "A device loaded with a one-time use charge that will randomly alter the makeup of an artifact."
