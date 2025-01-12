@@ -1893,7 +1893,7 @@
 		. += {"<br><span class='notice'>[forward_all ? "Sending full unprocessed Signals.":"Sending only processed sendmsg and pda Message Signals."]<br>
 		[only_directed ? "Only reacting to Messages directed at this Component.":"Reacting to ALL Messages received."]<br>
 		Current Frequency: [frequency]<br>
-		Current Range: [isnull(range) ? "Unlimited":range]<br>
+		Current Range: [isnull(range) ? "Unlimited" : range]<br>
 		Current NetID: [net_id]</span>"}
 
 	New()
@@ -1921,7 +1921,7 @@
 		return 0
 
 	proc/setRangeManually(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter the range (-1 for unlimited):","Range setting",isnull(range)?-1:range) as num
+		var/inp = input(user, "Please enter the range (-1 for unlimited):", "Range setting", isnull(range) ? -1 : range) as num
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		inp = text2num_safe(inp)
