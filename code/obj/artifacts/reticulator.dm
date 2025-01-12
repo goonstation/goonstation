@@ -26,13 +26,14 @@
 	var/essence_shards = 0
 	var/power_shards = 0
 	var/spacetime_shards = 0
+	var/fusion_shards = 0
 	var/omni_shards = 0
 	var/static/list/costs = list(
 		ARTRET_RESONATOR = list(ARTIFACT_SHARD_ESSENCE = 3, "readable" = "3E"),
 		ARTRET_SCRAMBLER = list(ARTIFACT_SHARD_ESSENCE = 2, ARTIFACT_SHARD_POWER = 1, "readable" = "2E 1P"),
 		ARTRET_TUNER = list(ARTIFACT_SHARD_ESSENCE = 2, ARTIFACT_SHARD_SPACETIME = 1, "readable" = "2E 1S"),
 		ARTRET_PREVIOUS_ART = list(ARTIFACT_SHARD_ESSENCE = 2, ARTIFACT_SHARD_POWER = 2, ARTIFACT_SHARD_SPACETIME = 2, "readable" = "2E 2P 2S"),
-		ARTRET_COMBINE_ARTS = list(ARTIFACT_SHARD_ESSENCE = 1, ARTIFACT_SHARD_POWER = 1, ARTIFACT_SHARD_SPACETIME = 1, "readable" = "1E 1P 1S"),
+		ARTRET_COMBINE_ARTS = list(ARTIFACT_SHARD_FUSION = 2, "readable" = "1F"),
 		ARTRET_ADD_LIGHT = list(ARTIFACT_SHARD_ESSENCE = 1, "readable" = "1E"),
 		ARTRET_PERFECT_GEM = list(ARTIFACT_SHARD_POWER = 1, "readable" = "1P"),
 		ARTRET_BREAKDOWN_MATS = list(ARTIFACT_SHARD_SPACETIME = 1, "readable" = "1S"),
@@ -170,21 +171,39 @@
 			return FALSE
 
 	proc/break_down_artifact(obj/O, mob/user)
+		var/breakdown_stored_item = FALSE
+		if (src.stored_item?.artifact?.activated)
+			breakdown_stored_item = tgui_alert(user, "Attempt to breakdown stored artifact for an extra shard? It must be labeled correctly.", "Extra shard", list("Yes", "No") == "Yes")
 		var/datum/artifact/artifact = O.artifact
-		var/obj/item/sticker/postit/artifact_paper/paper = locate(/obj/item/sticker/postit/artifact_paper/) in O.vis_contents
+		var/obj/item/sticker/postit/artifact_paper/paper = locate(/obj/item/sticker/postit/artifact_paper) in O.vis_contents
 		if (paper.lastAnalysis < 3)
 			qdel(O)
+			if (breakdown_stored_item)
+				qdel(src.stored_item)
+				src.stored_item = null
 			return
 
-		switch (artifact.shard_reward)
-			if (ARTIFACT_SHARD_ESSENCE)
-				src.essence_shards++
-			if (ARTIFACT_SHARD_POWER)
-				src.power_shards++
-			if (ARTIFACT_SHARD_SPACETIME)
-				src.spacetime_shards++
-			if (ARTIFACT_SHARD_OMNI)
-				src.omni_shards++
+		if (!breakdown_stored_item)
+			switch (artifact.shard_reward)
+				if (ARTIFACT_SHARD_ESSENCE)
+					src.essence_shards++
+				if (ARTIFACT_SHARD_POWER)
+					src.power_shards++
+				if (ARTIFACT_SHARD_SPACETIME)
+					src.spacetime_shards++
+				if (ARTIFACT_SHARD_OMNI)
+					src.omni_shards++
+
+		src.fusion_shards += length(O.combined_artifacts)
+
+		if (breakdown_stored_item)
+			paper = locate(/obj/item/sticker/postit/artifact_paper) in src.stored_item.vis_contents
+			if (paper.lastAnalysis < 3)
+				if (O.artifact.shard_reward != src.stored_item.artifact.shard_reward)
+					src.fusion_shards++
+
+			qdel(src.stored_item)
+			src.stored_item = null
 
 		src.reticulated_artifacts[O.artifact.type_name] = O.artifact.type
 
@@ -324,6 +343,7 @@
 		var/essence_required = src.costs[thing][ARTIFACT_SHARD_ESSENCE]
 		var/power_required = src.costs[thing][ARTIFACT_SHARD_POWER]
 		var/spacetime_required = src.costs[thing][ARTIFACT_SHARD_SPACETIME]
+		var/extra_required = src.costs[thing][ARTIFACT_SHARD_FUSION]
 		var/omni_required = src.costs[thing][ARTIFACT_SHARD_OMNI]
 
 		if (src.essence_shards < essence_required)
@@ -331,6 +351,8 @@
 		if (src.power_shards < power_required)
 			return FALSE
 		if (src.spacetime_shards < spacetime_required)
+			return FALSE
+		if (src.fusion_shards < extra_required)
 			return FALSE
 		if (src.omni_shards < omni_required)
 			return FALSE
@@ -344,6 +366,7 @@
 			"<br>Essence shards (E): [src.essence_shards]" + \
 			"<br>Power shards (P): [src.power_shards]" + \
 			"<br>Spacetime shards (S): [src.spacetime_shards]" + \
+			"<br>Extra shards (Ex): [src.fusion_shards]" + \
 			"<br>Omnishards (O): [src.omni_shards]"
 
 /obj/item/artifact_resonator
