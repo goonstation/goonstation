@@ -58334,6 +58334,9 @@
 /obj/item/reagent_containers/food/drinks/bottle/tequila{
 	pixel_x = 6
 	},
+/obj/item/paper/pipebombs{
+	pixel_x = -5
+	},
 /turf/simulated/floor/red,
 /area/listeningpost)
 "rHn" = (
