@@ -1,4 +1,9 @@
 
+(t)sun jan 12 25
+(u)Valtsu0
+(p)21799
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The WiFi component's range can now be adjusted.
 (t)sat jan 11 25
 (u)Sovexe
 (p)21792
