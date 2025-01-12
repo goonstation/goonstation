@@ -450,6 +450,71 @@
 		src.create_storage(/datum/storage, max_wclass = W_CLASS_NORMAL, slots = 10)
 		src.set_loc(parent_storage)
 
+/obj/item/shipcomponent/secondary_system/lateral_thrusters
+	name = "Lateral Thrusters"
+	desc = "A thruster system that provides a burst of lateral movement upon use. Note, NanoTrasen is not liable for any resulting injuries."
+	help_message = "Initialized to provide movement to the right. When installed in a pod, click the pod and use the context menu button to change direction."
+	hud_state = "lat_thrusters_right"
+	f_active = TRUE
+	power_used = 50
+	var/turn_dir = "right"
+	var/power_in_use = FALSE
+
+	Use(mob/user)
+		src.activate(user)
+
+	toggle()
+		src.activate()
+
+	activate(mob/user)
+		. = TRUE
+
+		user = user || usr
+
+		if (user != src.ship.pilot)
+			return FALSE
+
+		if (!src.power_in_use)
+			if (src.ship.powercapacity < (src.ship.powercurrent + src.power_used))
+				boutput(src.ship.pilot, "[src.ship.ship_message("Not enough power to activate [src]!")]")
+				return FALSE
+			src.ship.powercurrent += src.power_used
+			src.active = TRUE
+			src.power_in_use = TRUE
+
+		if (src.disrupted)
+			boutput(src.ship.pilot, "[src.ship.ship_message("ALERT: [src] is temporarily disabled!")]")
+			return FALSE
+
+		src.use_thrusters(user)
+
+	deactivate()
+		..()
+		src.power_in_use = FALSE
+
+	proc/use_thrusters(mob/user)
+		if (ON_COOLDOWN(src, "thruster_movement", 5 SECONDS))
+			boutput(user, "[src.ship.ship_message("Thrusters are cooling down! [round(GET_COOLDOWN(src, "thruster_movement") / 10, 0.1)] seconds left.")]")
+			return
+		var/turn_angle = src.turn_dir == "right" ? -90 : 90
+
+		// spawn to allow button clunk sound to play right away
+		SPAWN(0)
+			for (var/i in 1 to 5)
+				step(src.ship, turn(src.ship.dir, turn_angle))
+				sleep(0.125 SECONDS)
+
+	proc/change_thruster_direction()
+		if (src.turn_dir == "right")
+			src.turn_dir = "left"
+			src.hud_state = "lat_thrusters_left"
+			src.ship.myhud.update_states()
+		else
+			src.turn_dir = "right"
+			src.hud_state = "lat_thrusters_right"
+			src.ship.myhud.update_states()
+		boutput(usr, SPAN_NOTICE("Thrusters will now provide ship movement to the [src.turn_dir]."))
+
 /obj/item/shipcomponent/secondary_system/tractor_beam
 	name = "Tri-Corp Tractor Beam"
 	desc = "Allows the ship to pull objects towards it"
@@ -1083,10 +1148,10 @@
 				O:dump_contents()
 				qdel(O)
 			if(istype(O, /obj/window))
-				for(var/obj/grille/G in get_turf(O))
+				for(var/obj/mesh/grille/G in get_turf(O))
 					qdel(G)
 				qdel(O)
-			if(istype(O, /obj/grille))
+			if(istype(O, /obj/mesh/grille))
 				for(var/obj/window/W in get_turf(O))
 					qdel(W)
 				qdel(O)

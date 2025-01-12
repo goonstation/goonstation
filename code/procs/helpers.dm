@@ -124,7 +124,7 @@ var/global/obj/fuckyou/flashDummy
 		O.set_loc(target)
 		target_r = O
 	if(wattage && isliving(target)) //Grilles can reroute arcflashes
-		for(var/obj/grille/L in range(target,1)) // check for nearby grilles
+		for(var/obj/mesh/grille/L in range(target,1)) // check for nearby grilles
 			var/arcprob = L.material?.getProperty("electrical") >= 6 ? 60 : 30
 			if(!L.ruined && L.anchored)
 				if (prob(arcprob) && L.get_connection()) // hopefully half the default is low enough
@@ -142,9 +142,9 @@ var/global/obj/fuckyou/flashDummy
 	if(wattage && isliving(target)) //Probably unsafe.
 		target:shock(from, wattage, "chest", stun_coeff, 1)
 	if (isobj(target))
-		if(wattage && istype(target, /obj/grille))
-			var/obj/grille/G = target
-			G.lightningrod(wattage)
+		if(wattage && istype(target, /obj/mesh/grille))
+			var/obj/mesh/grille/G = target
+			G.on_arcflash(wattage)
 	var/elecflashpower = 0
 	if (wattage > 12000)
 		elecflashpower = 6
@@ -1258,6 +1258,8 @@ proc/outermost_movable(atom/movable/target)
 	if(T?.vistarget)
 		// this turf is being shown elsewhere through a visual mirror, make sure they get to hear too
 		. |= all_hearers(range, T.vistarget)
+	for (var/turf/listener as anything in T?.listening_turfs)
+		. |= all_hearers(range, listener)
 
 	for(var/atom/movable/screen/viewport_handler/viewport_handler in T?.vis_locs)
 		if(viewport_handler.listens)
@@ -1790,7 +1792,7 @@ proc/countJob(rank)
 					candidates |= M
 					continue
 				SPAWN(0) // Don't lock up the entire proc.
-					M.current.playsound_local(M.current, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE)
+					M.current.playsound_local(M.current, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 					boutput(M.current, text_chat_alert)
 					var/list/ghost_button_prompts = list("Yes", "No", "Stop these")
 					var/response = tgui_alert(M.current, text_alert, "Respawn", ghost_button_prompts, (ghost_timestamp + confirmation_spawn - TIME), autofocus = FALSE)
@@ -2752,3 +2754,37 @@ proc/search_snippet(var/inputStyle = "", var/inputPlaceholder = "filter packages
 				}
 			});
 		</script>"}
+
+//stolen from katana code, turns out blackbody color is quite universal!
+proc/blackbody_color(temperature)
+	var/input = temperature / 100
+
+	var/red
+	if (input <= 66)
+		red = 255
+	else
+		red = input - 60
+		red = 329.698727446 * (red ** -0.1332047592)
+	red = clamp(red, 0, 255)
+
+	var/green
+	if (input <= 66)
+		green = max(0.001, input)
+		green = 99.4708025861 * log(green) - 161.1195681661
+	else
+		green = input - 60
+		green = 288.1221695283 * (green ** -0.0755148492)
+	green = clamp(green, 0, 255)
+
+	var/blue
+	if (input >= 66)
+		blue = 255
+	else
+		if (input <= 19)
+			blue = 0
+		else
+			blue = input - 10
+			blue = 138.5177312231 * log(blue) - 305.0447927307
+	blue = clamp(blue, 0, 255)
+
+	return rgb(red, green, blue)

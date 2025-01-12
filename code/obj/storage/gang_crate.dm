@@ -18,6 +18,8 @@
 	icon_closed = "lootcrimegang"
 	icon_opened = "lootcrimeopengang"
 	can_flip_bust = FALSE
+	always_slow_pull = TRUE
+	p_class = 2 //lighten it up a teensy bit
 	grab_stuff_on_spawn = FALSE
 	anchored = ANCHORED
 	var/image/light = null
@@ -804,9 +806,9 @@ ABSTRACT_TYPE(/obj/loot_spawner/short)
 	xSize = 4
 	ySize = 2
 
-	ks23_empty
+	ks23
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/gun/kinetic/pumpweapon/ks23/empty,off_x=-8,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,/obj/item/gun/kinetic/pumpweapon/ks23,off_x=-8,scale_x=0.8,scale_y=0.8)
 
 // The random loot master checks all definitions of loot_spawner/random when it's first created.
 // To define new random loot, simply create a new child of the appropriate size and tier, and it will be automatically picked up.
@@ -1435,7 +1437,7 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/xlong_tall)
 	ks23
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/gun/kinetic/pumpweapon/ks23/empty,off_x=-8,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,/obj/item/gun/kinetic/pumpweapon/ks23,off_x=-8,scale_x=0.8,scale_y=0.8)
 			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda/slug,off_x=-7,off_y=-4,scale_x=0.5,scale_y=0.5)
 			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda,off_x=7,off_y=-4,scale_x=0.5,scale_y=0.5)
 

@@ -375,7 +375,6 @@
 /obj/machinery/atmospherics/pipe/simple/disposing()
 	node1?.disconnect(src)
 	node2?.disconnect(src)
-	parent = null
 	..()
 
 /obj/machinery/atmospherics/pipe/simple/pipeline_expansion()
@@ -429,11 +428,15 @@
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
 		if(target.initialize_directions & get_dir(target,src))
+			if(src.cant_connect(target, get_dir(target,src)) || target.cant_connect(src, get_dir(src,target)))
+				continue
 			src.node1 = target
 			break
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
 		if(target.initialize_directions & get_dir(target,src))
+			if(src.cant_connect(target, get_dir(target,src)) || target.cant_connect(src, get_dir(src,target)))
+				continue
 			src.node2 = target
 			break
 	if(player_caused_init)
@@ -522,24 +525,13 @@
 	fatigue_pressure = INFINITY
 
 /obj/machinery/atmospherics/pipe/simple/junction/update_icon()
-	if(istype(node1, /obj/machinery/atmospherics/pipe/simple/heat_exchanging))
-		dir = get_dir(src, node1)
+	icon_state = (src.node1 && src.node2) ? "intact" : "exposed"
 
-		if(node2)
-			icon_state = "intact"
-		else
-			icon_state = "exposed"
-
-	else if(istype(node2, /obj/machinery/atmospherics/pipe/simple/heat_exchanging))
-		dir = get_dir(src, node2)
-
-		if(node1)
-			icon_state = "intact"
-		else
-			icon_state = "exposed"
-
-	else
-		icon_state = "exposed"
+/obj/machinery/atmospherics/pipe/simple/junction/cant_connect(obj/machinery/atmospherics/device, direction)
+	if(!istype(device, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) && direction != src.dir)
+		return TRUE
+	if(istype(device, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) && direction == src.dir)
+		return TRUE
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging
 	icon = 'icons/obj/atmospherics/pipes/heat_pipe.dmi'
@@ -554,6 +546,9 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/update_icon()
 	icon_state = (node1 && node2) ? "intact" : "exposed"
 
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/cant_connect(obj/machinery/atmospherics/device, direction)
+	if(!(istype(device, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) || istype(device, /obj/machinery/atmospherics/pipe/simple/junction)))
+		return TRUE
 
 /obj/machinery/atmospherics/pipe/vertical_pipe
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
@@ -584,6 +579,8 @@
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
 		if(target.initialize_directions & get_dir(target,src))
+			if(src.cant_connect(target, get_dir(target,src)) || target.cant_connect(src, get_dir(src,target)))
+				continue
 			node1 = target
 			break
 	if(player_caused_init)
@@ -693,16 +690,22 @@
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
 		if(target.initialize_directions & get_dir(target,src))
+			if(src.cant_connect(target, get_dir(target,src)) || target.cant_connect(src, get_dir(src,target)))
+				continue
 			src.node1 = target
 			break
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
 		if(target.initialize_directions & get_dir(target,src))
+			if(src.cant_connect(target, get_dir(target,src)) || target.cant_connect(src, get_dir(src,target)))
+				continue
 			src.node2 = target
 			break
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node3_connect))
 		if(target.initialize_directions & get_dir(target,src))
+			if(src.cant_connect(target, get_dir(target,src)) || target.cant_connect(src, get_dir(src,target)))
+				continue
 			src.node3 = target
 			break
 	if(player_caused_init)
@@ -798,21 +801,29 @@
 
 	for(var/obj/machinery/atmospherics/target in get_step(src, SOUTH))
 		if(target.initialize_directions & get_dir(target,src))
+			if(src.cant_connect(target, get_dir(target,src)) || target.cant_connect(src, get_dir(src,target)))
+				continue
 			src.node1 = target
 			break
 
 	for(var/obj/machinery/atmospherics/target in get_step(src, WEST))
 		if(target.initialize_directions & get_dir(target,src))
+			if(src.cant_connect(target, get_dir(target,src)) || target.cant_connect(src, get_dir(src,target)))
+				continue
 			src.node2 = target
 			break
 
 	for(var/obj/machinery/atmospherics/target in get_step(src, NORTH))
 		if(target.initialize_directions & get_dir(target,src))
+			if(src.cant_connect(target, get_dir(target,src)) || target.cant_connect(src, get_dir(src,target)))
+				continue
 			src.node3 = target
 			break
 
 	for(var/obj/machinery/atmospherics/target in get_step(src, EAST))
 		if(target.initialize_directions & get_dir(target,src))
+			if(src.cant_connect(target, get_dir(target,src)) || target.cant_connect(src, get_dir(src,target)))
+				continue
 			src.node4 = target
 			break
 	if(player_caused_init)

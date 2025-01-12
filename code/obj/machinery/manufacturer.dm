@@ -88,12 +88,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// The types of material pieces of which the manufacturer will be spawned with.
 	/// The amount of each resource is defined on free_resource_amt
 	var/list/free_resources = list()
-	/// Supposedly used by podwards manufacturers, but not really
-	/// Kind of legacy is this is removed soon
-	var/list/resource_amounts = list()
 	var/obj/item/disk/data/floppy/manudrive/manudrive = null //! Where insertible manudrives are held for reading blueprints and getting/setting fablimits.
 	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
 	var/list/material_patterns_by_ref = list() //! Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
+	var/list/cached_producibility_data = list() //! List which stores producibility data to be returned early in get_producibility_for_blueprints
+	// Because of how get_producibility_for_blueprints works it only updates if the materials changed in quantity or order, so this makes sure we have something for comparison
+	// The other option would be to manually set a trigger or flag whenever the contents are hard-coded to change but that would be unwarranted work onto future contributions
+	var/list/stored_previous_materials_data = list() //! List which stores the materials as they were last seen in get_producibility_for_blueprints
+	var/stored_previous_blueprint_data = "" //! JSON-encoded string of the blueprint data. used for comparisons in get_producibility_for_blueprints
 
 	/* Production options */
 	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned "Miscellaneous".
@@ -308,12 +310,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 			should_update_static = FALSE
 			src.update_static_data(user)
 
-		// Send material data as tuples of material name, material id, material amount
-		var/resource_data = list()
+		// Get data about resources in the manufacturer and what it can/can't make
+		var/list/resource_data = list()
 		for (var/obj/item/material_piece/P as anything in src.get_contents())
 			if (!P.material)
 				continue
 			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_ref["\ref[P.material]"]))
+		var/list/blueprint_producibility_by_ref = src.get_producibility_for_blueprints()
 
 		// Package additional information into each queued item for the badges so that it can lookup its already sent information
 		var/queue_data = list()
@@ -344,6 +347,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"repeat" = src.repeat,
 			"error" = src.error,
 			"resource_data" = resource_data,
+			"producibility_data" = blueprint_producibility_by_ref,
 			"manudrive_uses_left" = src.get_drive_uses_left(),
 			"indicators" = list("electrified" = src.is_electrified(),
 							    "malfunctioning" = src.malfunction,
@@ -469,6 +473,63 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"byondRef" = "\ref[M]",
 			"isMechBlueprint" = istype(M, /datum/manufacture/mechanics),
 		)
+
+	/// Get an associated list for the UI of blueprintRef to associated list of requirement name to whether that one's producible, but only when necessary
+	proc/get_producibility_for_blueprints()
+		// Run a comparison against the shallow storage of the previous contents to see if it changed
+		var/contents_changed = FALSE
+		var/list/C = src.get_contents()
+		var/list/refs_encountered = list() //! List to gather the refs still in the container, to find what might no longer exist in the container and prune it from stored data accordingly
+		for (var/obj/item/material_piece/M as anything in C)
+			var/M_ref = "\ref[M]"
+			refs_encountered.Add(M_ref)
+			// Do checks if we still aren't convinced contents changed
+			if (!contents_changed)
+				// Compare amounts, where stored_previous_materials_data[ref] contains the amount last recorded
+				if (!(M_ref in src.stored_previous_materials_data) || M.amount != src.stored_previous_materials_data[M_ref])
+					contents_changed = TRUE
+			// After checking this one, overwrite the previous entry with the new
+			src.stored_previous_materials_data[M_ref] = M.amount
+		// Quick pass to remove any stored material refs that shouldn't exist
+		for (var/ref in src.stored_previous_materials_data)
+			if (!(ref in refs_encountered))
+				src.stored_previous_materials_data.Remove(ref)
+				contents_changed = TRUE
+		// Do actual computation since contents changed
+		if (contents_changed)
+			return src.compute_producibility_for_blueprints()
+		// Contents didn't change, but this nerd might have added blueprints so now we check if blueprints changed
+		// Quick first pass to see if lengths differ. If they do, blueprints certainly changed.
+		var/all_blueprints = ALL_BLUEPRINTS // just to compile the list once
+		if (length(all_blueprints) != length(src.stored_previous_blueprint_data))
+			src.stored_previous_blueprint_data = all_blueprints
+			return src.compute_producibility_for_blueprints()
+		// Slightly more in depth check over the blueprints to check if any are missing
+		for (var/datum/manufacture/M as anything in all_blueprints)
+			if (!(M in src.stored_previous_blueprint_data))
+				// A blueprint was found that wasn't previously seen, so it changed
+				src.stored_previous_blueprint_data = all_blueprints
+				return src.compute_producibility_for_blueprints()
+		// Nothing changed, return the cached data
+		return src.cached_producibility_data
+
+	/// Runs the actual computation for the above proc. Split apart so the caching can still be a bit more performant
+	proc/compute_producibility_for_blueprints()
+		var/list/output = list()
+		for (var/datum/manufacture/M as anything in ALL_BLUEPRINTS)
+			var/M_ref = "\ref[M]"
+			var/list/mats_needed = src.get_materials_needed(M)
+			output[M_ref] = list()
+			// 'convert' the result of R = P_ref to R.name = boolean
+			for (var/datum/manufacturing_requirement/needed_R as anything in M.item_requirements)
+				output[M_ref][needed_R.getName()] = FALSE
+				for (var/datum/manufacturing_requirement/satisfied_R as anything in mats_needed)
+					if (satisfied_R == needed_R)
+						output[M_ref][needed_R.getName()] = TRUE
+						break
+		// Store this as cached now that it has, in fact, changed
+		src.cached_producibility_data = output
+		return output
 
 	attack_hand(mob/user)
 		// We do this here instead of on New() as a tiny optimization to keep some overhead off of map load

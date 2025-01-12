@@ -688,6 +688,14 @@
 	category = list("skill")
 	points = -2
 
+/datum/trait/martyrdom
+	name = "Martyrdom"
+	id = "martyrdom"
+	desc = "If you have a grenade in-hand, arm it on death"
+	icon_state = "no"
+	category = list("skill")
+	points = -1
+
 /datum/trait/happyfeet
 	name = "Happyfeet"
 	desc = "Sometimes people can't help but dance along with you."
@@ -794,8 +802,8 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 	onAdd(var/mob/owner)
 		owner.AddComponent(/datum/component/death_confetti)
-		owner.bioHolder?.AddEffect("accent_comic", magical = TRUE)
-		owner.bioHolder?.AddEffect("clumsy", magical = TRUE)
+		owner.bioHolder?.AddEffect("accent_comic", innate = TRUE)
+		owner.bioHolder?.AddEffect("clumsy", innate = TRUE)
 
 /datum/trait/job/mime
 	name = "Mime Training"
@@ -803,8 +811,8 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "training_mime"
 
 	onAdd(var/mob/owner)
-		owner.bioHolder?.AddEffect("mute", magical = TRUE)
-		owner.bioHolder?.AddEffect("blankman", magical = TRUE)
+		owner.bioHolder?.AddEffect("mute", innate = TRUE)
+		owner.bioHolder?.AddEffect("blankman", innate = TRUE)
 
 /datum/trait/job/miner
 	name = "Miner Training"
@@ -1182,6 +1190,7 @@ TYPEINFO(/datum/trait/partyanimal)
 		if(probmult(0.01))
 			owner.setStatus("burning", 100 SECONDS, 60 SECONDS)
 			playsound(owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+			logTheThing(LOG_COMBAT, owner, "gets set on fire by their spontaneous combustion trait")
 			owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> suddenly bursts into flames!"))
 
 /datum/trait/carpenter
@@ -1382,7 +1391,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	icon_state = "hair"
 
 	onAdd(mob/owner)
-		owner.bioHolder.AddEffect("hair_growth", magical = TRUE)
+		owner.bioHolder.AddEffect("hair_growth", innate = TRUE)
 
 	onRemove(mob/owner)
 		owner.bioHolder.RemoveEffect("hair_growth")

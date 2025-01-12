@@ -121,7 +121,7 @@ export const BioEffect = (props) => {
                   maxValue={999999}
                   step={1}
                   width={'5'}
-                  value={booth.price}
+                  value={booth.price.toFixed()}
                   onChange={(price) =>
                     setBooth({
                       ref: booth.ref,
@@ -239,7 +239,9 @@ export const BioEffect = (props) => {
               disabled={onCooldown(equipmentCooldown, 'Reclaimer')}
               icon="times"
               color="bad"
-              onClick={() => act('reclaim', { ref })}
+              onClick={() =>
+                act(isStorage ? 'reclaimStored' : 'reclaimOccupant', { ref })
+              }
             >
               Reclaim
             </Button>

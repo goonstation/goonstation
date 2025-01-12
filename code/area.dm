@@ -777,6 +777,9 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/john/diner
 	name = "John's Bus Diner Dock"
 	icon_state = "shuttle"
+	#ifdef UNDERWATER_MAP
+	ambient_light = OCEAN_LIGHT
+	#endif
 
 /area/shuttle/john/diner/nadir
 	name = "John's Bus Station Dock"
@@ -1254,6 +1257,17 @@ ABSTRACT_TYPE(/area/adventure)
 	name = "Skeleton Trade Outpost"
 	icon_state = "green"
 	sound_environment = 2
+	occlude_foreground_parallax_layers = TRUE
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
+
+/area/salvage_trader
+	name = "GLOMAR Salvager"
+	icon_state = "storage"
+	teleport_blocked = 1
+	sound_environment = 10
+	sound_loop = 'sound/ambience/spooky/Evilreaver_Ambience.ogg'
 	occlude_foreground_parallax_layers = TRUE
 #ifdef UNDERWATER_MAP
 	requires_power = FALSE
@@ -3716,13 +3730,11 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "Peregrine"
 	icon_state = "red"
 	requires_power = 0
-	sanctuary = 1
 	teleport_blocked = 1
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/pirate
 
 /area/pirate_ship_space
 	name = "Peregrine Space"
-	sanctuary = 1
 	teleport_blocked = 1
 	// Must match /area/pirate_ship
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/pirate
@@ -4015,6 +4027,7 @@ ABSTRACT_TYPE(/area/mining)
 /area/mining/magnet_control
 	name = "Mining Outpost Magnet Control"
 	icon_state = "miningp"
+	lightswitch = FALSE
 
 /area/mining/refinery
 	name = "Mining Outpost Refinery"

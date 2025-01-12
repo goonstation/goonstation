@@ -168,7 +168,7 @@ var/datum/respawn_controls/respawn_controller
 	proc/notifyAndGrantVerb()
 		if(!client_processed && checkValid())
 			// Send a message to the client
-			the_client.mob.playsound_local(the_client.mob, 'sound/misc/respawn.ogg', 70, flags=SOUND_IGNORE_SPACE)
+			the_client.mob.playsound_local(the_client.mob, 'sound/misc/respawn.ogg', 70, flags=SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 
 			boutput(the_client.mob, "<h2>You are now eligible for a <a href='byond://winset?command=Respawn-As-New-Character'>respawn (click here)</a>!</h1>")
 			if(master.rp_alert)

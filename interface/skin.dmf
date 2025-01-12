@@ -296,6 +296,13 @@ menu "menu"
 		is-checked = true
 		can-check = true
 		saved-params = "is-checked"
+	elem "toggle_dark_screenflashes"
+		name = "&Toggle Dark Screenflashes"
+		command = "toggle-dark-screenflashes"
+		category = "&Effects"
+		is-checked = false
+		can-check = true
+		saved-params = "is-checked"
 	elem
 		name = "&Interface"
 		command = ""
@@ -356,6 +363,42 @@ menu "menu"
 		command = "set-hand-ghosts"
 		category = "&Interface"
 		is-checked = true
+		can-check = true
+		saved-params = "is-checked"
+	elem
+		name = "&Accessibility"
+		command = ""
+		category = "&Game"
+	elem "None"
+		name = "None"
+		command = "disable-colorblind-modes"
+		category = "&Accessibility"
+		group = "colorblind-accessibility"
+		is-checked = true
+		can-check = true
+		saved-params = "is-checked"
+	elem "Protanopia"
+		name = "Protanopia"
+		command = "toggle-protanopia-mode"
+		category = "&Accessibility"
+		group = "colorblind-accessibility"
+		is-checked = false
+		can-check = true
+		saved-params = "is-checked"
+	elem "Deuteranopia"
+		name = "Deuteranopia"
+		command = "toggle-deuteranopia-mode"
+		category = "&Accessibility"
+		group = "colorblind-accessibility"
+		is-checked = false
+		can-check = true
+		saved-params = "is-checked"
+	elem "Tritanopia"
+		name = "Tritanopia"
+		command = "toggle-tritanopia-mode"
+		category = "&Accessibility"
+		group = "colorblind-accessibility"
+		is-checked = false
 		can-check = true
 		saved-params = "is-checked"
 	elem

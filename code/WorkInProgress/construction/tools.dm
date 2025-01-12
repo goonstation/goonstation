@@ -244,7 +244,7 @@ TYPEINFO(/obj/item/room_marker)
 
 			var/dense = 0
 			for (var/obj/O in C)
-				if (istype(O, /obj/machinery/door) || istype(O, /obj/grille) || istype(O, /obj/window) || istype(O, /obj/table))
+				if (istype(O, /obj/machinery/door) || istype(O, /obj/mesh/grille) || istype(O, /obj/window) || istype(O, /obj/table))
 					dense = 1
 					break
 			if (dense)
@@ -733,7 +733,7 @@ TYPEINFO(/obj/item/room_planner)
 				if (recurse)
 					G.calculate_orientation(0)
 			else
-				var/obj/grille/Gr = locate() in N
+				var/obj/mesh/grille/Gr = locate() in N
 				if (Gr)
 					borders_mask -= 1
 					gcount--
@@ -745,7 +745,7 @@ TYPEINFO(/obj/item/room_planner)
 				if (recurse)
 					G.calculate_orientation(0)
 			else
-				var/obj/grille/Gr = locate() in S
+				var/obj/mesh/grille/Gr = locate() in S
 				if (Gr)
 					borders_mask -= 2
 					gcount--
@@ -757,7 +757,7 @@ TYPEINFO(/obj/item/room_planner)
 				if (recurse)
 					G.calculate_orientation(0)
 			else
-				var/obj/grille/Gr = locate() in E
+				var/obj/mesh/grille/Gr = locate() in E
 				if (Gr)
 					borders_mask -= 4
 					gcount--
@@ -769,7 +769,7 @@ TYPEINFO(/obj/item/room_planner)
 				if (recurse)
 					G.calculate_orientation(0)
 			else
-				var/obj/grille/Gr = locate() in W
+				var/obj/mesh/grille/Gr = locate() in W
 				if (Gr)
 					borders_mask -= 8
 					gcount--
@@ -814,7 +814,7 @@ TYPEINFO(/obj/item/room_planner)
 
 		origin.use_materials(2, borders)
 
-		var/obj/grille/G = new /obj/grille(L)
+		var/obj/mesh/grille/G = new /obj/mesh/grille(L)
 		G.setMaterial(metal)
 
 		var/mask = bmask

@@ -66,8 +66,7 @@ var/datum/magpie_manager/magpie_man = new
 			SPAWN(1.5 SECONDS)
 				UpdateOverlays(null, "bot_speech_bubble")
 			if(!src.bot_speech_color)
-				var/num = hex2num(copytext(md5("[src.name][TIME]"), 1, 7))
-				src.bot_speech_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
+				src.bot_speech_color = living_maptext_color("[src.name][TIME]")
 			var/maptext_color
 			if (sing)
 				maptext_color ="#D8BFD8"
@@ -347,11 +346,18 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		comtype = /obj/item/weldingtool/arcwelder
 		price = 500
 
+	caxe
+		comname = "Crash axe"
+		desc = "A light utility axe that can be serviced as a vicious weapon."
+		comtype = /obj/item/crashaxe
+		price = 400
+
 	sledgehammer
 		comname = "Sledgehammer"
 		desc = "A classic means of manual demolition."
 		comtype = /obj/item/breaching_hammer/salvager
 		price = 500
+		amount = 4
 
 #ifdef SECRETS_ENABLED
 	improved_zipgun
@@ -366,6 +372,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		desc = "A salvaged and rebuilt pump action shotgun."
 		comtype = /obj/item/gun/kinetic/pumpweapon/riotgun/salvager
 		price = 1200
+		amount = 6
 
 	quadbarrel
 		comname = "Four Letter Word"
@@ -385,6 +392,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		desc = "A makeshift laser rifle outfitted with a tube and cell."
 		comtype = /obj/item/gun/energy/makeshift/basic_salvager
 		price = 650
+		amount = 4
 
 	rifle
 		comname = "Survival Rifle"
@@ -397,24 +405,28 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		desc = "A small .22 magazine for kinetic firearms."
 		comtype = /obj/item/ammo/bullets/bullet_22
 		price = 200
+		amount = 4
 
 	bullets_22_hp
 		comname = ".22 Hollow Point magazine"
 		desc = "A small .22 HP magazine for kinetic firearms. Less penetration and more pain."
 		comtype = /obj/item/ammo/bullets/bullet_22HP
 		price = 500
+		amount = 10
 
 	rifle_9mm
 		comname = "Rifle 9mm conversion"
 		desc = "Survival rifle conversion kit to 9mm."
 		comtype = /obj/item/survival_rifle_barrel/barrel_9mm
 		price = 500
+		amount = 10
 
 	bullets_9mm
 		comname = "9mm magazine"
 		desc = "A handgun magazine with 9x19mm rounds."
 		comtype = /obj/item/ammo/bullets/bullet_9mm
 		price = 399
+		amount = 10
 
 #ifndef RP_MODE
 	rifle_556
@@ -429,12 +441,14 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		desc = "A magazine of 5.56 rounds, an intermediate rifle cartridge."
 		comtype =  /obj/item/ammo/bullets/assault_rifle
 		price = 699
+		amount = 10
 
 	assault_mag_ap
 		comname = "Armor Piercing Rifle magazine"
 		desc = "A magazine of 5.56 AP rounds, an intermediate rifle cartridge."
 		comtype =  /obj/item/ammo/bullets/assault_rifle/armor_piercing
 		price = 850
+		amount = 8
 
 	pepper_nades
 		comname = "Crowd Dispersal Grenades"
@@ -448,6 +462,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		desc = "Flashbang and smoke grenades."
 		comtype = /obj/item/storage/grenade_pouch/salvager_distract
 		price = 350
+		amount = 6
 
 #ifndef UNDERWATER_MAP
 	pod_kinetic
@@ -455,20 +470,21 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		comtype = /obj/item/shipcomponent/mainweapon/gun
 		desc = "A pod-mounted kinetic weapon system."
 		price = 3000
+		amount = 3
 
 	pod_40mm
 		comname = "40mm Assault Platform"
 		comtype = /obj/item/shipcomponent/mainweapon/artillery/lower_ammo
 		desc = "A pair of pod-mounted ballistic launchers, fires explosive 40mm shells. Holds 6 shells."
 		price = 5000
-		amount = 5
+		amount = 3
 
 	artillery_ammo
 		comname = "40mm HE Ammunition"
 		comtype = /obj/item/ammo/bullets/autocannon
 		desc = "High explosive grenades, for the resupplement of artillery assault platforms."
 		price = 1500
-		amount = 4
+		amount = 2
 #endif
 
 	barbed_wire
@@ -511,6 +527,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		comtype = /obj/item/device/powersink/salvager
 		desc = "A device that can be used to drain power and sell it back to the M4GP13."
 		price = 1000
+		amount = 6
 
 	crank
 		comname = "Crank (5x pills)"
@@ -541,6 +558,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		desc = "Replacement omnitool.  No one wants to carry around each tool individually."
 		comtype = /obj/item/tool/omnitool
 		price = 100
+		amount = 6
 
 	comm_upgrade
 		comname = "Radio channel upgrade"
@@ -567,18 +585,21 @@ ABSTRACT_TYPE(/datum/commodity/magpie/special/sell/arms)
 		desc = "A rare semi-automatic 9mm pistol that was collected from an military vessel."
 		comtype = /obj/item/gun/kinetic/pistol
 		price = 1650
+		amount = 4
 
 	pulse_rifle
 		comname = "Pulse Rifle"
 		desc = "A sleek energy rifle. Often kept under lock and key at nanotrasen facilities."
 		comtype = /obj/item/gun/energy/pulse_rifle
 		price = 1800
+		amount = 6
 
 	breaching_charge
 		comname = "Thermite Breaching Charge"
 		desc = "A self-contained thermite breaching charge, useful for destroying walls."
 		comtype = /obj/item/breaching_charge/thermite
 		price = 500
+		amount = 4
 
 #ifdef RP_MODE
 	rifle_556

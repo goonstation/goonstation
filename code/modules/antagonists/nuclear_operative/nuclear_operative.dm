@@ -40,7 +40,7 @@
 
 		H.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(H), SLOT_W_UNIFORM)
 		H.equip_if_possible(new /obj/item/clothing/shoes/swat/noslip(H), SLOT_SHOES)
-		H.equip_if_possible(new /obj/item/clothing/gloves/swat(H), SLOT_GLOVES)
+		H.equip_if_possible(new /obj/item/clothing/gloves/swat/syndicate(H), SLOT_GLOVES)
 		H.equip_if_possible(new /obj/item/storage/backpack/syndie/tactical(H), SLOT_BACK)
 		H.equip_if_possible(new /obj/item/clothing/mask/gas/swat/syndicate(H), SLOT_WEAR_MASK)
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(H), SLOT_GLASSES)
@@ -118,7 +118,7 @@
 	get_statistics()
 		var/list/purchases = list()
 		// Add items purchased from the nukies weapon vendor
-		for (var/datum/materiel/purchased_item as anything in src.purchased_items)
+		for (var/datum/materiel/purchased_item in src.purchased_items)
 			var/obj/item_type = initial(purchased_item.path)
 			purchases += list(
 				list(
@@ -128,7 +128,7 @@
 			)
 
 		// Add items from custom uplinks and the commander's special uplink
-		for (var/datum/syndicate_buylist/purchased_item as anything in src.uplink_items)
+		for (var/datum/syndicate_buylist/purchased_item in src.uplink_items)
 			if(length(purchased_item.items) > 0)
 				var/obj/item_type = initial(purchased_item.items[1])
 				purchases += list(

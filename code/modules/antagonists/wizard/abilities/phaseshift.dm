@@ -113,27 +113,16 @@
 /obj/dummy/spell_invis/relaymove(var/mob/user, direction, delay)
 	if (!src.canmove || src.movecd)
 		return
-	switch(direction)
-		if(NORTH)
-			src.y++
-		if(SOUTH)
-			src.y--
-		if(EAST)
-			src.x++
-		if(WEST)
-			src.x--
-		if(NORTHEAST)
-			src.y++
-			src.x++
-		if(NORTHWEST)
-			src.y++
-			src.x--
-		if(SOUTHEAST)
-			src.y--
-			src.x++
-		if(SOUTHWEST)
-			src.y--
-			src.x--
+
+	if(direction & NORTH)
+		src.y = min(src.y+1, world.maxy)
+	if(direction & SOUTH)
+		src.y = max(src.y-1, 1)
+	if(direction & EAST)
+		src.x = min(src.x+1, world.maxx)
+	if(direction & WEST)
+		src.x = max(src.x-1, 1)
+
 	src.movecd = 1
 	SPAWN(0.2 SECONDS) src.movecd = 0
 

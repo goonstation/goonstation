@@ -713,7 +713,7 @@ TYPEINFO(/obj/machinery/chem_master)
 			bottle_icons.Add(list(list(bottle_capacity, icon2base64(bottle_icon))))
 		qdel(bottle)
 		.["bottle_icons"] = bottle_icons
-
+		.["name_max_len"] = CHEMMASTER_ITEMNAME_MAXSIZE
 		var/list/patch_icons = list()
 
 		for(var/patch_path in patches_list)

@@ -84,7 +84,11 @@
 	var/image/i_critdmg
 	var/image/i_panel
 	var/image/i_upgrades
-	var/image/i_clothes
+
+	var/image/i_helmet
+	var/image/i_under
+	var/image/i_suit
+	var/image/i_mask
 
 	var/image/i_head
 	var/image/i_head_decor
@@ -97,6 +101,8 @@
 	var/image/i_arm_l
 	var/image/i_arm_r
 	var/image/i_arm_decor
+	var/image/i_hand_l
+	var/image/i_hand_r
 
 	var/image/i_details
 
@@ -293,6 +299,8 @@
 					chest.wires = 1
 					if (src.cell)
 						chest.cell = src.cell
+						src.cell = null
+						chest.cell.set_loc(chest)
 
 			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
 			frame.setMaterial(src.frame_material)
@@ -1388,6 +1396,9 @@
 				if("Remove Chest")
 					if(src.part_chest.robot_movement_modifier)
 						REMOVE_MOVEMENT_MODIFIER(src, src.part_chest.robot_movement_modifier, src.part_chest.type)
+					src.part_chest.cell = src.cell
+					src.cell = null
+					src.part_chest.cell.set_loc(src.part_chest)
 					src.part_chest.set_loc(src.loc)
 					src.part_chest.holder = null
 					src.part_chest = null
@@ -2692,7 +2703,7 @@
 				src.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
 
 	proc/internal_paint_part(var/image/part_image, var/list/color_matrix)
-		var/image/paint = image(part_image.icon, part_image.icon_state)
+		var/image/paint = image(part_image.icon, part_image.icon_state, layer=part_image.layer)
 		paint.color = color_matrix
 		part_image.overlays += paint
 
@@ -2722,7 +2733,7 @@
 
 		if (part == "head" || update_all)
 			if (src.part_head && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
-				src.i_head = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString)
+				src.i_head = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString, layer=MOB_FACE_LAYER)
 				if (color_matrix)
 					src.internal_paint_part(src.i_head, color_matrix)
 				if (src.part_head.visible_eyes && C)
@@ -2750,7 +2761,7 @@
 			if (src.part_chest && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				src.icon_state = "body-" + src.part_chest.appearanceString
 				if (C?.painted)
-					src.i_chest = image("icon" = src.icon, icon_state = src.icon_state, "layer" = FLOAT_LAYER)
+					src.i_chest = image("icon" = src.icon, icon_state = src.icon_state, layer = MOB_BODYDETAIL_LAYER1)
 					src.i_chest.color = color_matrix
 				else
 					src.i_chest = null
@@ -2760,9 +2771,9 @@
 		if (part == "l_leg" || update_all)
 			if (src.part_leg_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if (src.part_leg_l.slot == "leg_both")
-					src.i_leg_l = image('icons/mob/robots.dmi', "leg-" + src.part_leg_l.appearanceString)
+					src.i_leg_l = image('icons/mob/robots.dmi', "leg-" + src.part_leg_l.appearanceString, layer=MOB_LIMB_LAYER)
 				else
-					src.i_leg_l = image('icons/mob/robots.dmi', "l_leg-" + src.part_leg_l.appearanceString)
+					src.i_leg_l = image('icons/mob/robots.dmi', "l_leg-" + src.part_leg_l.appearanceString, layer=MOB_LIMB_LAYER)
 				if (color_matrix)
 					src.internal_paint_part(src.i_leg_l, color_matrix)
 			else
@@ -2771,9 +2782,9 @@
 		if (part == "r_leg" || update_all)
 			if (src.part_leg_r && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if (src.part_leg_r.slot == "leg_both")
-					src.i_leg_r = image('icons/mob/robots.dmi', "leg-" + src.part_leg_r.appearanceString)
+					src.i_leg_r = image('icons/mob/robots.dmi', "leg-" + src.part_leg_r.appearanceString, layer=MOB_LIMB_LAYER)
 				else
-					src.i_leg_r = image('icons/mob/robots.dmi', "r_leg-" + src.part_leg_r.appearanceString)
+					src.i_leg_r = image('icons/mob/robots.dmi', "r_leg-" + src.part_leg_r.appearanceString, layer=MOB_LIMB_LAYER)
 				if (color_matrix)
 					src.internal_paint_part(src.i_leg_r, color_matrix)
 			else
@@ -2782,43 +2793,51 @@
 		if (part == "l_arm" || update_all)
 			if (src.part_arm_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if (src.part_arm_l.slot == "arm_both")
-					src.i_arm_l = image('icons/mob/robots.dmi', "arm-" + src.part_arm_l.appearanceString)
+					src.i_arm_l = image('icons/mob/robots.dmi', "arm-" + src.part_arm_l.appearanceString, layer=MOB_LIMB_LAYER)
+					src.i_hand_l = image('icons/mob/robots.dmi', "hand-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER1)
 				else
-					src.i_arm_l = image('icons/mob/robots.dmi', "l_arm-" + src.part_arm_l.appearanceString)
+					src.i_arm_l = image('icons/mob/robots.dmi', "l_arm-" + src.part_arm_l.appearanceString, layer=MOB_LIMB_LAYER)
+					src.i_hand_l = image('icons/mob/robots.dmi', "l_hand-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER1)
 				if (color_matrix)
 					src.internal_paint_part(src.i_arm_l, color_matrix)
+					src.internal_paint_part(src.i_hand_l, color_matrix)
 			else
 				src.i_arm_l = null
+				src.i_hand_l = null
 
 		if (part == "r_arm" || update_all)
 			if (src.part_arm_r && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if (src.part_arm_r.slot == "arm_both")
-					src.i_arm_r = image('icons/mob/robots.dmi', "arm-" + src.part_arm_r.appearanceString)
+					src.i_arm_r = image('icons/mob/robots.dmi', "arm-" + src.part_arm_r.appearanceString, layer=MOB_LIMB_LAYER)
+					src.i_hand_r = image('icons/mob/robots.dmi', "hand-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER1)
 				else
-					src.i_arm_r = image('icons/mob/robots.dmi', "r_arm-" + src.part_arm_r.appearanceString)
+					src.i_arm_r = image('icons/mob/robots.dmi', "r_arm-" + src.part_arm_r.appearanceString, layer=MOB_LIMB_LAYER)
+					src.i_hand_r = image('icons/mob/robots.dmi', "r_hand-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER1)
 				if (color_matrix)
 					src.internal_paint_part(src.i_arm_r, color_matrix)
+					src.internal_paint_part(src.i_hand_r, color_matrix)
 			else
 				src.i_arm_r = null
+				src.i_hand_r = null
 
 		if (C)
 			if (C.legs_mod && (src.part_leg_r || src.part_leg_l) && (!src.part_leg_r || src.part_leg_r.slot != "leg_both") && (!src.part_leg_l || src.part_leg_l.slot != "leg_both"))
-				src.i_leg_decor = image('icons/mob/robots_decor.dmi', "legs-" + C.legs_mod)
+				src.i_leg_decor = image('icons/mob/robots_decor.dmi', "legs-" + C.legs_mod, layer=MOB_BODYDETAIL_LAYER2)
 			else
 				src.i_leg_decor = null
 
 			if (C.arms_mod && (src.part_arm_r || src.part_arm_l) && (!src.part_arm_r || src.part_arm_r.slot != "arm_both") && (!src.part_arm_l || src.part_arm_l.slot != "arm_both") )
-				src.i_arm_decor = image('icons/mob/robots_decor.dmi', "arms-" + C.arms_mod)
+				src.i_arm_decor = image('icons/mob/robots_decor.dmi', "arms-" + C.arms_mod, layer=MOB_BODYDETAIL_LAYER2)
 			else
 				src.i_arm_decor = null
 
 			if (C.head_mod && src.part_head)
-				src.i_head_decor = image('icons/mob/robots_decor.dmi', "head-" + C.head_mod)
+				src.i_head_decor = image('icons/mob/robots_decor.dmi', "head-" + C.head_mod, layer=MOB_HAIR_LAYER1)
 			else
 				src.i_head_decor = null
 
 			if (C.ches_mod && src.part_chest)
-				src.i_chest_decor = image('icons/mob/robots_decor.dmi', "body-" + C.ches_mod)
+				src.i_chest_decor = image('icons/mob/robots_decor.dmi', "body-" + C.ches_mod, layer=MOB_BODYDETAIL_LAYER2)
 			else
 				src.i_chest_decor = null
 
@@ -2862,14 +2881,18 @@
 
 		if (src.part_arm_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 			UpdateOverlays(src.i_arm_l, "arm_l")
+			UpdateOverlays(src.i_hand_l, "hand_l")
 		else
 			ClearSpecificOverlays("arm_l")
+			ClearSpecificOverlays("hand_l")
 
 
 		if (src.part_arm_r && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 			UpdateOverlays(src.i_arm_r, "arm_r")
+			UpdateOverlays(src.i_hand_r, "hand_r")
 		else
 			ClearSpecificOverlays("arm_r")
+			ClearSpecificOverlays("hand_r")
 
 		UpdateOverlays(src.i_chest, "chest")
 		UpdateOverlays(src.i_head_decor, "head_decor")
@@ -2878,9 +2901,10 @@
 		UpdateOverlays(src.i_arm_decor, "arm_decor")
 
 		if (length(src.clothes))
-			if (!src.i_clothes)
-				src.i_clothes = new
-			src.i_clothes.overlays.Cut()
+			src.i_under = new
+			src.i_suit = new
+			src.i_mask = new
+			src.i_helmet = new
 			for(var/x in src.clothes)
 				var/obj/item/clothing/U = src.clothes[x]
 				if (!istype(U))
@@ -2895,10 +2919,22 @@
 				clothed_image.alpha = U.alpha
 				clothed_image.color = U.color
 				clothed_image.layer = U.wear_layer
-				src.i_clothes.overlays += clothed_image
-			AddOverlays(src.i_clothes, "clothes", TRUE)
+
+				if (istype(U, /obj/item/clothing/under))
+					src.i_under = clothed_image
+				else if (istype(U, /obj/item/clothing/suit))
+					src.i_suit = clothed_image
+				else if (istype(U, /obj/item/clothing/mask))
+					src.i_mask = clothed_image
+				else if (istype(U, /obj/item/clothing/head))
+					src.i_helmet = clothed_image
+
+			AddOverlays(src.i_under, "under", TRUE)
+			AddOverlays(src.i_suit, "suit", TRUE)
+			AddOverlays(src.i_mask, "mask", TRUE)
+			AddOverlays(src.i_helmet, "helmet", TRUE)
 		else
-			ClearSpecificOverlays("clothes")
+			ClearSpecificOverlays("under", "suit", "mask", "helmet")
 
 		if (src.brainexposed && src.part_head)
 			if (src.part_head.brain)

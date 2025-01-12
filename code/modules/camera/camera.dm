@@ -69,7 +69,8 @@
 	var/list/aiareas = list(/area/station/turret_protected/ai,
 							/area/station/turret_protected/ai_upload,
 							/area/station/turret_protected/AIsat,
-							/area/station/turret_protected/AIbasecore1)
+							/area/station/turret_protected/AIbasecore1,
+							/area/station/turret_protected/ai_upload_foyer)
 	if (locate(area) in aiareas)
 		src.ai_only = TRUE
 		src.prefix = "AI"

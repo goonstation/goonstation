@@ -45,6 +45,7 @@
 #define ishelpermouse(x) (istype(x, /mob/living/critter/small_animal/mouse/weak/mentor))//mentor and admin mice
 #define islivingobject(x) (istype(x, /mob/living/object)) //! Is a possessed object
 #define is_dead_or_ghost_role(M) (isdead(M) || (isVRghost(M) || isghostcritter(M) || inafterlife(M) || isghostdrone(M)))
+#define istestdummy(x) (istype(x, /mob/living/carbon/human/tdummy))
 
 /// Returns true if x is a new player mob (what u r if ur in the lobby screen, usually)
 #define isnewplayer(x) (istype(x, /mob/new_player))

@@ -988,13 +988,13 @@
 		boutput(src, SPAN_ALERT("DNR status set!"))
 #endif
 
-/mob/proc/unequip_all(var/delete_stuff=0)
+/mob/proc/unequip_all(var/delete_stuff=0, atom/drop_loc = null)
 	var/list/obj/item/to_unequip = src.get_unequippable()
 	if(length(to_unequip))
 		for (var/obj/item/W in to_unequip)
 			src.remove_item(W)
 			if (W)
-				W.set_loc(src.loc)
+				W.set_loc(drop_loc || src.loc)
 				W.dropped(src)
 				W.layer = initial(W.layer)
 			if(delete_stuff)
@@ -1231,12 +1231,12 @@
 /mob/proc/restrained()
 	. = src.hasStatus("handcuffed")
 
-/mob/proc/drop_from_slot(obj/item/item, turf/T)
+/mob/proc/drop_from_slot(obj/item/item, turf/T, force_drop=FALSE)
 	if (!item)
 		return
 	if (!(item in src.contents))
 		return
-	if (item.cant_drop)
+	if (item.cant_drop && !force_drop)
 		return
 	if (item.cant_self_remove && src.l_hand != item && src.r_hand != item)
 		return
@@ -1546,7 +1546,7 @@
 	set category = "Commands"
 
 	if (global.current_state < GAME_STATE_FINISHED)
-		boutput(src, SPAN_NOTICE("The gane hasn't finished yet!"))
+		boutput(src, SPAN_NOTICE("The game hasn't finished yet!"))
 		return
 
 	global.ticker.get_credits().ui_interact(src)
@@ -1885,12 +1885,16 @@
 			light.enable()
 			SPAWN(1 SECOND)
 				qdel(light)
+	else if(src.custom_gib_handler)
+		call(src.custom_gib_handler)(src.loc)
+	else if(issilicon(src) || isrobocritter(src))
+		robogibs(src.loc)
+	else
+		gibs(src.loc)
+
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
-
-	if (!iscarbon(src))
-		robogibs(src.loc)
 
 	if (animation)
 		animation.delaydispose()
@@ -2100,7 +2104,7 @@
 		logTheThing(LOG_COMBAT, src, "is taken by the floor cluwne at [log_loc(src)].")
 		src.transforming = 1
 		src.canmove = 0
-		src.anchored = ANCHORED
+		src.anchored = ANCHORED_ALWAYS
 		src.mouse_opacity = 0
 
 		var/mob/living/carbon/human/cluwne/floor/floorcluwne = null
@@ -2515,6 +2519,7 @@
 	src.delStatus("radiation")
 	src.delStatus("critical_condition")
 	src.delStatus("recent_trauma")
+	src.delStatus("muted")
 	src.take_radiation_dose(-INFINITY)
 	src.change_eye_blurry(-INFINITY)
 	src.take_eye_damage(-INFINITY)
@@ -2532,6 +2537,7 @@
 	src.bodytemperature = src.base_body_temp
 	if (isdead(src))
 		setalive(src)
+	src.update_body()
 
 /mob/proc/shock(var/atom/origin, var/wattage, var/zone, var/stun_multiplier = 1, var/ignore_gloves = 0)
 	return 0
@@ -2926,6 +2932,9 @@
 
 	if (source && source != src) //we were moved by something that wasnt us
 		last_pulled_time = world.time
+		if ((istype(src.loc, /turf/space) || src.no_gravity) && ismob(source))
+			var/mob/M = source
+			src.inertia_dir = M.inertia_dir
 	else
 		if(src.pulled_by)
 			src.pulled_by.remove_pulling()
@@ -2968,6 +2977,8 @@
 	equipment_proxy.aquatic_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
 	if(equipment_proxy.aquatic_movement > 0)
 		equipment_proxy.aquatic_movement *= modifier
+		if(modifier == 0) // aquatic_movement requires a positive value to skip added fluid turf delay
+			equipment_proxy.aquatic_movement += 0.01
 
 
 
@@ -3046,7 +3057,7 @@
 	SPAWN(0.7 SECONDS) //Length of animation.
 		newbody.set_loc(animation.loc)
 		qdel(animation)
-		newbody.anchored = ANCHORED // Stop running into the lava every half second jeez!
+		newbody.anchored = ANCHORED_ALWAYS // Stop running into the lava every half second jeez!
 		sleep(4 SECONDS)
 		reset_anchored(newbody)
 
@@ -3061,7 +3072,7 @@
 		logTheThing(LOG_COMBAT, src, "is damned to hell from [log_loc(src)].")
 		src.transforming = 1
 		src.canmove = 0
-		src.anchored = ANCHORED
+		src.anchored = ANCHORED_ALWAYS
 		src.mouse_opacity = 0
 
 		var/mob/living/carbon/human/satan/satan = new /mob/living/carbon/human/satan
