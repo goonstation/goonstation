@@ -351,18 +351,23 @@ this is already used where it needs to be used, you can probably ignore it.
 /* ---------- bleed() ---------- */
 /* ============================= */
 
-/proc/bleed(var/mob/living/M, var/num_amount, var/vis_amount, var/turf/T as turf)
+/proc/bleed(var/mob/living/M, var/num_amount, var/vis_amount, var/turf/T as turf, var/reagent_transfer_override=0)
 
 	if (!T)
 		T = get_turf(M)
 
 	var/blood_color_to_pass = DEFAULT_BLOOD_COLOR //this makes it so the amounts of chemicals you bleed scales nonlinearly with the amount of chemicals in you compared to the amount of blood
-
-	var/reagents_to_transfer = \
-		(M.reagents?.total_volume + M.blood_volume) \
-		? min(num_amount * (0.2 + (0.8 * (M.reagents?.total_volume**(5/4)/(M.reagents?.total_volume**(5/4) + M.blood_volume)))), M.reagents.total_volume) \
-		: 0
-	var/blood_to_transfer = num_amount - reagents_to_transfer
+	var/reagents_to_transfer = 0
+	var/blood_to_transfer = 0
+	if (reagent_transfer_override)
+		reagents_to_transfer = reagent_transfer_override
+		blood_to_transfer = num_amount
+	else
+		reagents_to_transfer = \
+			(M.reagents?.total_volume + M.blood_volume) \
+			? min(num_amount * (0.2 + (0.8 * (M.reagents?.total_volume**(5/4)/(M.reagents?.total_volume**(5/4) + M.blood_volume)))), M.reagents.total_volume) \
+			: 0
+		blood_to_transfer = num_amount - reagents_to_transfer
 
 	if (M.bioHolder?.bloodColor)
 		blood_color_to_pass = M.bioHolder.bloodColor

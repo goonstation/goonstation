@@ -932,10 +932,11 @@ datum
 			depletion_rate = 0.2
 			overdose = 20
 			threshold = THRESHOLD_INIT
-
+			var/last_tracked_damage = 0
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
+					last_tracked_damage = (M.get_brute_damage() + M.get_burn_damage() + M.get_toxin_damage())
 					APPLY_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "heparin", 2)
 				..()
 
@@ -950,6 +951,19 @@ datum
 					M = holder.my_atom
 				if (holder.has_reagent("cholesterol"))
 					holder.remove_reagent("cholesterol", 2 * mult) // insulin used to do this but now doesn't, so w/e this can do it now.
+
+				var/new_damage = (M.get_brute_damage() + M.get_burn_damage() + M.get_toxin_damage())
+				var/damage_delta = (new_damage - last_tracked_damage)/mult
+				// spew blood when large damage deltas occur. force multiplier to being beaten, weaken poison mixes
+				if (volume > 1 && (damage_delta >= 10))
+					if (!ON_COOLDOWN(M, "heparin_message", 15 SECONDS))
+						M.visible_message(SPAN_ALERT("<b>[M]'s skin rapidly bruises and ruptures, bleeding everywhere!"))
+					var/bleed_volume = rand(8,15)*mult
+					bleed(M, bleed_volume, rand(1,3) * mult, reagent_transfer_override = bleed_volume)
+					take_bleeding_damage(M, 0, 10, DAMAGE_CUT, 1)
+					M.reagents.trans_to()
+
+				last_tracked_damage = new_damage
 				..()
 				return
 
