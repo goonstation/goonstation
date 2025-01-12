@@ -13,25 +13,7 @@
 #define ARTRET_INCREASE_STORAGE "increase_storage"
 #define ARTRET_INCREASE_REAGENTS "increase_reagents"
 #define ARTRET_INCREASE_CELL_CAP "increase_cell_power"
-#define ARTRET_INCREASE_ATTACK_DMG "increase_attack_force"
 #define ARTRET_INCREASE_MINING_POWER "increase_mining_power"
-#define ARTRET_INCREASE_ARMOR "increase_armor"
-
-/*
-ARTRET_RESONATOR
-ARTRET_SCRAMBLER
-ARTRET_TUNER
-ARTRET_PREVIOUS_ART
-ARTRET_ADD_LIGHT
-ARTRET_PERFECT_GEM
-ARTRET_BREAKDOWN_MATS
-ARTRET_INCREASE_STORAGE
-ARTRET_INCREASE_REAGENTS
-ARTRET_INCREASE_CELL_CAP
-ARTRET_INCREASE_ATTACK_DMG
-ARTRET_INCREASE_MINING_POWER
-ARTRET_INCREASE_ARMOR
-*/
 
 // machine that uses combined human and eldritch artifact technology in some way to modify things. an artifact black box that works without anyone knowing how
 /obj/machinery/reticulator
@@ -47,20 +29,18 @@ ARTRET_INCREASE_ARMOR
 	var/omni_shards = 0
 	var/static/list/costs = list(
 		ARTRET_RESONATOR = list(ARTIFACT_SHARD_ESSENCE = 3, "readable" = "3E"),
-		ARTRET_SCRAMBLER = list(),
-		ARTRET_TUNER = list(),
-		ARTRET_PREVIOUS_ART = list(),
-		ARTRET_COMBINE_ARTS = list(),
-		ARTRET_ADD_LIGHT = list(),
-		ARTRET_PERFECT_GEM = list(),
-		ARTRET_BREAKDOWN_MATS = list(),
-		ARTRET_MODIFY_MATERIAL = list(),
-		ARTRET_INCREASE_STORAGE = list(),
-		ARTRET_INCREASE_REAGENTS = list(),
-		ARTRET_INCREASE_CELL_CAP = list(),
-		ARTRET_INCREASE_ATTACK_DMG = list(),
-		ARTRET_INCREASE_MINING_POWER = list(),
-		ARTRET_INCREASE_ARMOR = list()
+		ARTRET_SCRAMBLER = list(ARTIFACT_SHARD_ESSENCE = 2, ARTIFACT_SHARD_POWER = 1, "readable" = "2E 1P"),
+		ARTRET_TUNER = list(ARTIFACT_SHARD_ESSENCE = 2, ARTIFACT_SHARD_SPACETIME = 1, "readable" = "2E 1S"),
+		ARTRET_PREVIOUS_ART = list(ARTIFACT_SHARD_ESSENCE = 2, ARTIFACT_SHARD_POWER = 2, ARTIFACT_SHARD_SPACETIME = 2, "readable" = "2E 2P 2S"),
+		ARTRET_COMBINE_ARTS = list(ARTIFACT_SHARD_ESSENCE = 1, ARTIFACT_SHARD_POWER = 1, ARTIFACT_SHARD_SPACETIME = 1, "readable" = "1E 1P 1S"),
+		ARTRET_ADD_LIGHT = list(ARTIFACT_SHARD_ESSENCE = 1, "readable" = "1E"),
+		ARTRET_PERFECT_GEM = list(ARTIFACT_SHARD_POWER = 1, "readable" = "1P"),
+		ARTRET_BREAKDOWN_MATS = list(ARTIFACT_SHARD_SPACETIME = 1, "readable" = "1S"),
+		ARTRET_MODIFY_MATERIAL = list(ARTIFACT_SHARD_ESSENCE = 1, ARTIFACT_SHARD_POWER = 1, ARTIFACT_SHARD_SPACETIME = 1, "readable" = "1E 1P 1S"),
+		ARTRET_INCREASE_STORAGE = list(ARTIFACT_SHARD_SPACETIME = 3, "readable" = "3S"),
+		ARTRET_INCREASE_REAGENTS = list(ARTIFACT_SHARD_SPACETIME = 1, "readable" = "1S"),
+		ARTRET_INCREASE_CELL_CAP = list(ARTIFACT_SHARD_POWER = 1, "readable" = "1P"),
+		ARTRET_INCREASE_MINING_POWER = list(ARTIFACT_SHARD_POWER = 1, "readable" = "1P"),
 	)
 	var/list/reticulated_artifacts = list()
 
@@ -168,9 +148,7 @@ ARTRET_INCREASE_ARMOR
 					"Increase storage capacity ([src.get_readable_cost(ARTRET_INCREASE_STORAGE)])" = ARTRET_INCREASE_STORAGE,
 					"Increase reagent capacity ([src.get_readable_cost(ARTRET_INCREASE_REAGENTS)])" = ARTRET_INCREASE_REAGENTS,
 					"Increase power cell capacity ([src.get_readable_cost(ARTRET_INCREASE_CELL_CAP)])" = ARTRET_INCREASE_CELL_CAP,
-					"Increase attack force ([src.get_readable_cost(ARTRET_INCREASE_ATTACK_DMG)])" = ARTRET_INCREASE_ATTACK_DMG,
 					"Increase mining tool power ([src.get_readable_cost(ARTRET_INCREASE_MINING_POWER)])" = ARTRET_INCREASE_MINING_POWER,
-					"Increase armor ([src.get_readable_cost(ARTRET_INCREASE_ARMOR)])" = ARTRET_INCREASE_ARMOR
 				)
 				var/picked_option = option_list[tgui_input_list(user, "How would you like to modify the stored item?[src.get_stored_info()]", "Pick option", option_list)]
 				if (!picked_option)
@@ -268,12 +246,8 @@ ARTRET_INCREASE_ARMOR
 				compatible_type = O.reagents
 			if (ARTRET_INCREASE_CELL_CAP)
 				compatible_type = istype(O, /obj/item/cell) || istype(O, /obj/item/ammo/power_cell)
-			if (ARTRET_INCREASE_ATTACK_DMG)
-				compatible_type = TRUE
 			if (ARTRET_INCREASE_MINING_POWER)
 				compatible_type = istype(O, /obj/item/mining_tools)
-			if (ARTRET_INCREASE_ARMOR)
-				compatible_type = TRUE
 
 		if (!compatible_type)
 			return FALSE
@@ -338,13 +312,11 @@ ARTRET_INCREASE_ARMOR
 					var/obj/item/ammo/power_cell/cell = O
 					cell.max_charge *= 1.1
 					cell.UpdateIcon()
-			//if (ARTRET_INCREASE_ATTACK_DMG)
 			if (ARTRET_INCREASE_MINING_POWER)
 				var/obj/item/mining_tools/tool = O
 				tool.power *= 1.1
 				if (tool.power > SPIKES_MEDAL_POWER_THRESHOLD)
 					user.unlock_medal("This object menaces with spikes of...", TRUE)
-			//if (ARTRET_INCREASE_ARMOR)
 
 
 	proc/meets_cost_requirement(thing)
@@ -380,8 +352,6 @@ ARTRET_INCREASE_ARMOR
 	var/static/list/trigger_names = list()
 	var/static/list/trigger_names_assoc = list()
 	var/list/scanned_artifacts = list()
-
-	// also tells you if theres combined artifacts or if its been modified in some way
 
 	New()
 		..()
@@ -467,6 +437,4 @@ ARTRET_INCREASE_ARMOR
 #undef ARTRET_INCREASE_STORAGE
 #undef ARTRET_INCREASE_REAGENTS
 #undef ARTRET_INCREASE_CELL_CAP
-#undef ARTRET_INCREASE_ATTACK_DMG
 #undef ARTRET_INCREASE_MINING_POWER
-#undef ARTRET_INCREASE_ARMOR
