@@ -8,7 +8,7 @@
 	oscillate_colors(text, list(dead_maptext_color(whisperer.name), "#c482d1"))
 	return text
 
-/// Displays the wraith whisper maptext to a specified client
+/// Displays the wraith whisper maptext to a specified client.
 /proc/wraith_whisper_maptext(message, mob/maptext_recipient, mob/whisperer)
 	if (!maptext_recipient.client)
 		return
