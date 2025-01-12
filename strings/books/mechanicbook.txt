@@ -34,6 +34,40 @@
 	<br>Sends specified signal when both inputs receive a Signal within a specified Time Frame.
 	<br>
 	<br>
+	<br><B>Arithmetic Component:</B>
+	<br>Store numbers received in signals to variable A or B, then do mathematical operations on them. By default it will compute the result immediately, then send it on as a signal.
+	<br>Conveniently strips off trailing letters when setting variables.
+	<br>
+	<br>There are several options and inputs.
+	<ul>
+		<li>Set A/Set B: set the variables manually with your multitool, or with with a signal input.</li>
+		<li>Evaluate: immediately send a signal with the result of the current mode and variables.</li>
+		<li>Set Mode: set the operation to apply to the variables, we'll list these below.
+			<br>It can be set by hand or with an input signal.
+		<li>Toggle Auto-Evaluate: toggle evaluating automatically when variables are set.</li>
+		<li>Toggle Auto-Floor: automatically floor() results to the closest integer
+	</ul>
+
+	The following are the modes you can set the component to. Results are passed along as a signal,
+	either when setting a variable with a signal, or when an evaluate signal is recieved.
+	<ul>
+		<li>Add: Finds the sum of A and B.</li>
+		<li>Sub: Subtracts B from A.</li>
+		<li>Div: Divides A by B, errors if B is zero.</li>
+		<li>Mul: Multiplies A and B.</li>
+		<li>Mod: Finds the modulus (remainder) of A divided by B.</li>
+		<li>Pow: Power. Gets the result of A to exponent B.</li>
+		<li>Rng: Gets a random number between A and B.</li>
+		<li>Gt/lt: Greater than, less than. Returns 1 if A is greater than or less than B, respectively. Otherwise returns 0.
+			<br>You'll need a signal check component after this.</li>
+		<li>Gte/lte: Greater than or equal/less than or equal. Same as above but also triggers on equality.</li>
+		<li>Eq: Equal. Returns 1 if A and B are equal, 0 if not.</li>
+		<li>Neq: Not equal. Opposite of equal.</li>
+		<li>Min: Returns A or B, whichever is smaller.</li>
+		<li>Max: Like min but returns whichever is larger.</li>
+
+	</ul>
+
 	<br><B>Button:</B>
 	<br>Sends set Signal when used.
 	<br>

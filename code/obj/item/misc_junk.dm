@@ -723,7 +723,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 		BLOCK_SETUP(BLOCK_ROPE)
 
 /obj/item/cash_briefcase
-	name = "Briefcase full of cash"
+	name = "Cash Briefcase"
 	desc = "A foldable briefcase that can hold a large amount of cash. "
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "briefcase"
@@ -792,6 +792,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 					user.u_equip(W)
 					qdel(W)
 				src.UpdateIcon()
+				src.tooltip_rebuild = TRUE
 		else
 			. = ..()
 
@@ -807,6 +808,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 				src.balance -= amount
 				user.put_in_hand_or_drop(taken_cash)
 				src.UpdateIcon()
+				src.tooltip_rebuild = TRUE
 		else
 			..(user)
 

@@ -1893,13 +1893,16 @@
 		. += {"<br><span class='notice'>[forward_all ? "Sending full unprocessed Signals.":"Sending only processed sendmsg and pda Message Signals."]<br>
 		[only_directed ? "Only reacting to Messages directed at this Component.":"Reacting to ALL Messages received."]<br>
 		Current Frequency: [frequency]<br>
+		Current Range: [isnull(range) ? "Unlimited" : range]<br>
 		Current NetID: [net_id]</span>"}
 
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send radio message", PROC_REF(send))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", PROC_REF(setfreq))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set range", PROC_REF(setrange))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency",PROC_REF(setFreqManually))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Range",PROC_REF(setRangeManually))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle NetID Filtering",PROC_REF(toggleAddressFiltering))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Forward All",PROC_REF(toggleForwardAll))
 
@@ -1917,6 +1920,23 @@
 			return 1
 		return 0
 
+	proc/setRangeManually(obj/item/W as obj, mob/user as mob)
+		var/inp = input(user, "Please enter the range (-1 for unlimited):", "Range setting", isnull(range) ? -1 : range) as num
+		if(!in_interact_range(src, user) || user.stat)
+			return 0
+		inp = text2num_safe(inp)
+		if(isnull(inp)) return 0
+		if(inp == -1)
+			src.range = null
+			boutput(user, "Range set to unlimited")
+			tooltip_rebuild = 1
+			return 1
+		inp = clamp(inp, 0, 512)
+		src.range = inp
+		boutput(user, "Range set to [inp]")
+		tooltip_rebuild = 1
+		return 1
+
 	proc/toggleAddressFiltering(obj/item/W as obj, mob/user as mob)
 		only_directed = !only_directed
 		get_radio_connection_by_id(src, "main").update_all_hearing(!only_directed)
@@ -1929,6 +1949,20 @@
 		boutput(user, "[forward_all ? "Now forwarding all Radio Messages as they are.":"Now processing only sendmsg and normal PDA messages."]")
 		tooltip_rebuild = 1
 		return 1
+
+	proc/setrange(var/datum/mechanicsMessage/input)
+		if(level == OVERFLOOR) return
+		LIGHT_UP_HOUSING
+		var/newrange = text2num_safe(input.signal)
+		if(isnull(newrange)) return
+		if(newrange == -1)
+			src.range = null
+			tooltip_rebuild = 1
+			return
+		newrange = clamp(newrange, 0, 512)
+		src.range = newrange
+		tooltip_rebuild = 1
+		return
 
 	proc/setfreq(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR) return
@@ -3291,7 +3325,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		return 1
 
 	proc/setMode(obj/item/W as obj, mob/user as mob)
-		mode = input("Set the math mode to what?", "Mode Selector", mode) in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte")
+		mode = input("Set the math mode to what?", "Mode Selector", mode) in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte", "min", "max")
 		tooltip_rebuild = 1
 		return 1
 
@@ -3326,7 +3360,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	proc/compSetMode(var/datum/mechanicsMessage/input)
 		LIGHT_UP_HOUSING
 		tooltip_rebuild = 1
-		if(input.signal in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte"))
+		if(input.signal in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte","min","max"))
 			mode = input.signal
 	proc/evaluate()
 		switch(mode)
@@ -3359,6 +3393,10 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				. = A == B
 			if("neq")
 				. = A != B
+			if("min")
+				. = min(A, B)
+			if("max")
+				. = max(A, B)
 			else
 				return
 
