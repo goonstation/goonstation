@@ -1,5 +1,9 @@
 
 (t)sun jan 12 25
+(u)glowbold
+(p)21714
+(e)🔄🤖|C-Rework, A-Silicons
+(+)AIs can now select all cameras they can see through from their camera list.
 (u)patricia
 (p)21746
 (e)🆕📦|C-Feature, A-Game-Objects
