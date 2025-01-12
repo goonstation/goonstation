@@ -61,10 +61,6 @@
 					final_bleed *= 0.25 // this guy's basically dead anyway. more bleed just means its less likely they get a transfusion
 				else if (owner.blood_volume < 300)
 					final_bleed *= 0.75 // less blood to bleed. negative blood fx taking place
-				if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
-					var/obj/machinery/atmospherics/unary/cryo_cell/cryo = owner.loc
-					if (cryo.air_contents.temperature < 210)
-						final_bleed = 0 // wounds frozen shut, but aren't healing
 				final_bleed *= mult
 				if (prob(clamp(final_bleed, 0, 10) * 5)) // up to 50% chance to make a big bloodsplatter
 					bleed(owner, final_bleed, 5)
