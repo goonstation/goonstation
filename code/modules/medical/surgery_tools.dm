@@ -274,7 +274,7 @@ CONTAINS:
 
 		if (isdead(H) && user.zone_sel && (user.zone_sel.selecting == "chest")) // you get some more leeway moving and stapling bits of viscera around in dead people
 			var/damage = H.get_brute_damage()
-			if (damage > H.max_health())
+			if (damage > H.max_health)
 				switch (damage)
 					if (400 to INFINITY) // it's a miracle they aren't gibbed. may as well make it not take 6 years to fix them
 						H.HealDamage("All", 100, 0)
@@ -826,6 +826,9 @@ TYPEINFO(/obj/machinery/defib_mount)
 			else if ((brute_heal || burn_heal) && target.health < target.max_health)
 				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 5 SECONDS, 0, 0, 5, brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
+			else if (H.dead && H.get_burn_damage() > 0)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 5, 0, 0, 5, brute_heal, burn_heal, "bandag"), user)
+				src.in_use = 1
 			else
 				user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to bandage!", "red")
 				src.in_use = 0
@@ -833,7 +836,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 		else
 			return ..()
 
-	apply_to(var/mob/living/carbon/human/H)
+	proc/apply_to(var/mob/living/carbon/human/H)
 		if (isdead(H)) // fix a third of a corpse's burn damage - prioritise making them into a mummy lol
 			var/damage = H.get_burn_damage()
 			H.HealDamage("All", 0, round(damage/3))
