@@ -236,6 +236,12 @@ CONTAINS:
 	stamina_cost = 7
 	stamina_crit_chance = 15
 
+	HELP_MESSAGE_OVERRIDE({"Can be used to attach limbs (or items) to mobs' missing limbs, or fix BRUTE in corpses.
+	To attach a limb, first target the desired location on the targetting paper doll, apply the limb/item with <b>HELP</b> intent, then apply the stapler.
+
+	To repair corpses, target the chest and apply to the corpse."})
+
+
 	// Every bit of usability helps (Convair880).
 	examine()
 		. = ..()
