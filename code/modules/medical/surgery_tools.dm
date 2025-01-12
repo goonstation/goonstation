@@ -794,6 +794,8 @@ TYPEINFO(/obj/machinery/defib_mount)
 	var/brute_heal = 0
 	var/burn_heal = 0
 
+	HELP_MESSAGE_OVERRIDE({"Can be used to repair bleeding or fix BURN damage on corpses. You may need to apply to multiple limbs to heal a corpse."})
+
 	get_desc()
 		..()
 		if (src.uses >= 0)
@@ -831,6 +833,10 @@ TYPEINFO(/obj/machinery/defib_mount)
 		else
 			return ..()
 
+	apply_to(var/mob/living/carbon/human/H)
+		if (isdead(H)) // fix a third of a corpse's burn damage - prioritise making them into a mummy lol
+			var/damage = H.get_burn_damage()
+			H.HealDamage("All", 0, round(damage/3))
 	update_icon()
 		switch (src.uses)
 			if (-INFINITY to 0)
@@ -948,6 +954,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 				S.in_use = 0
 			else if (istype(tool, /obj/item/bandage))
 				var/obj/item/bandage/B = tool
+				B.apply_to(target)
 				B.in_use = 0
 				B.uses --
 				B.tooltip_rebuild = 1
