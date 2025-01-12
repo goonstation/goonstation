@@ -13745,7 +13745,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/navbeacon{
-	codes_txt = "tour;next_tour=tour14;desc=I hope you all have an excellent, safe and productive shift onboard this station! If you've enjoyed the tour, please put in a nice word about Mary if you see your captain.";
+	codes_txt = "tour;next_tour=tour14;desc=I hope you all have an excellent, safe and productive shift onboard this station! If you've enjoyed the tour, please put in a nice word about Marco if you see your captain.";
 	freq = 1443;
 	location = "tour13";
 	name = "tour13 - end"
@@ -17193,8 +17193,8 @@
 /obj/machinery/navbeacon{
 	codes_txt = "tour";
 	freq = 1443;
-	location = "tour14";
-	name = "tour14 - home"
+	location = "tour15";
+	name = "tour15 - home"
 	},
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
@@ -20610,6 +20610,12 @@
 	},
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "tour;next_tour=tour15;desc=";
+	freq = 1443;
+	location = "tour14";
+	name = "tour14 - return"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
