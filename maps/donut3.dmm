@@ -11826,11 +11826,7 @@
 /turf/simulated/wall/auto/jen/blue,
 /area/station/maintenance/inner/sw)
 "dty" = (
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
+/obj/forcefield/energyshield/perma/doorlink,
 /obj/machinery/door/airlock/pyro/glass/command,
 /obj/mapping_helper/access/engineering_chief,
 /turf/simulated/floor/black,
@@ -17936,7 +17932,7 @@
 /obj/disposalpipe/segment/ejection,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
-/obj/mapping_helper/access/security,
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "foT" = (
@@ -58337,6 +58333,9 @@
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/tequila{
 	pixel_x = 6
+	},
+/obj/item/paper/pipebombs{
+	pixel_x = -5
 	},
 /turf/simulated/floor/red,
 /area/listeningpost)
