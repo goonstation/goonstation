@@ -1477,6 +1477,7 @@
 #include "code\modules\materials\Mat_Recipes.dm"
 #include "code\modules\mechanics\MechanicMadness.dm"
 #include "code\modules\mechanics\MechanicMC14500.dm"
+#include "code\modules\mechanics\MechanicProcess.dm"
 #include "code\modules\mechanics\MechanicsNetworkCon.dm"
 #include "code\modules\medals\rewardsAI.dm"
 #include "code\modules\medals\rewardsLocker.dm"
