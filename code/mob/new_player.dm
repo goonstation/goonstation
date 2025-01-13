@@ -836,7 +836,7 @@ a.latejoin-card:hover {
 
 		if(new_character?.client)
 			SPAWN(0)
-				new_character.client.loadResources()
+				new_character.client?.loadResources()
 
 		new_character.temporary_attack_alert(1200) //Messages admins if this new character attacks someone within 2 minutes of signing up. Might help detect grief, who knows?
 		new_character.temporary_suicide_alert(1500) //Messages admins if this new character commits suicide within 2 1/2 minutes. probably a bit much but whatever

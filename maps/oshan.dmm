@@ -12057,7 +12057,12 @@
 /area/listeningpost)
 "aPH" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = -3
+	},
+/obj/item/paper/pipebombs{
+	pixel_x = 7
+	},
 /turf/simulated/floor/carpet/red/standard/edge/west,
 /area/listeningpost)
 "aPJ" = (
@@ -41749,11 +41754,11 @@
 	name = "Courtroom";
 	req_access_txt = "1"
 	},
-/obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "2-5"
 	},
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor/red,
 /area/station/crew_quarters/courtroom)
 "pDI" = (

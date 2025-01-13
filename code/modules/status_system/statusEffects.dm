@@ -2545,7 +2545,7 @@
 	var/mob/living/carbon/human/H
 
 	getTooltip()
-		. = "You are recovering from being in critical condition. Max stamina reduced by 50 and stamina regen reduced by 2."
+		. = "You are recovering from being in critical condition. Max stamina reduced by 50 and stamina regen reduced by 2. Maybe you should find some painkillers..."
 
 	onAdd(optional=null)
 		. = ..()

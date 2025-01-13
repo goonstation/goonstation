@@ -194,7 +194,7 @@ proc/create_fluff(datum/mind/target)
 			if("aurora MKII utility belt")
 				steal_target = /obj/item/storage/belt/utility/prepared/ceshielded
 			if("Head of Security\'s war medal")
-				steal_target = /obj/item/clothing/suit/hosmedal
+				steal_target = /obj/item/clothing/suit/security_badge/hosmedal
 			if("Research Director\'s Diploma")
 				steal_target = /obj/item/rddiploma
 			if("Medical Director\'s Medical License")
