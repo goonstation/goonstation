@@ -23,7 +23,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 			return
 		EndSpacePush(L)
 
-		SETUP_GENERIC_ACTIONBAR(src.holder.owner, null, 20 SECONDS, /mob/living/critter/ice_phoenix/proc/on_sail, null, \
+		SETUP_GENERIC_ACTIONBAR(src.holder.owner, null, 10 SECONDS, /mob/living/critter/ice_phoenix/proc/on_sail, null, \
 			null, null, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 
 /datum/targetable/critter/ice_phoenix/ice_barrier
