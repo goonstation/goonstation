@@ -231,8 +231,7 @@
 
 	var/image/chat_maptext/chat_text = null
 	if (speechpopups && src.chat_text)
-		var/num = hex2num(copytext(md5(src.get_heard_name(just_name_itself=TRUE)), 1, 7))
-		var/maptext_color = hsv2rgb((num % 360)%40+240, (num / 360) % 15+5, (((num / 360) / 10) % 15) + 55)
+		var/maptext_color = dead_maptext_color(src.get_heard_name(just_name_itself=TRUE))
 
 		var/turf/T = get_turf(src)
 		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
@@ -1175,3 +1174,13 @@
 
 		if(thisR != "")
 			boutput(M, thisR)
+
+/// Generate a hue for maptext from a given name
+/proc/living_maptext_color(given_name)
+	var/num = hex2num(copytext(md5(given_name), 1, 7))
+	return hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
+
+/// Generate a desatureated hue for maptext from a given name
+/proc/dead_maptext_color(given_name)
+	var/num = hex2num(copytext(md5(given_name), 1, 7))
+	return hsv2rgb((num % 360)%40+240, (num / 360) % 15+5, (((num / 360) / 10) % 15) + 55)

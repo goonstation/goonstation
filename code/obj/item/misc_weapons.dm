@@ -856,8 +856,8 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	else
 		..()
 
-/obj/item/knife/butcher/attack(target, mob/user)
-	if (!istype(src,/obj/item/knife/butcher/hunterspear) && ishuman(target) && ishuman(user))
+/obj/item/knife/butcher/attack(target, mob/user, def_zone, is_special = FALSE, params = null)
+	if (!istype(src,/obj/item/knife/butcher/hunterspear) && ishuman(target) && ishuman(user) && !is_special)
 		if (scalpel_surgery(target,user))
 			return
 

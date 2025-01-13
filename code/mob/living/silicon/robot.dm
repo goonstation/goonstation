@@ -2832,7 +2832,7 @@
 				src.i_arm_decor = null
 
 			if (C.head_mod && src.part_head)
-				src.i_head_decor = image('icons/mob/robots_decor.dmi', "head-" + C.head_mod, layer=MOB_BODYDETAIL_LAYER2)
+				src.i_head_decor = image('icons/mob/robots_decor.dmi', "head-" + C.head_mod, layer=MOB_HAIR_LAYER1)
 			else
 				src.i_head_decor = null
 
