@@ -36,7 +36,7 @@
 	open_to_sound = TRUE
 
 	New()
-		processing_items |= src
+		processing_items |= src //this thing is a dang storage
 		..()
 
 	process()
@@ -196,6 +196,7 @@
 			return discons
 	disposing()
 		..()
+		processing_items.Remove(src)
 		src.contents=null
 		return
 	mouse_drop(atom/target)
@@ -374,16 +375,17 @@
 	var/when_next_ready = 0
 	var/list/particle_list
 	var/mob/owner = null
+	var/process_fast = FALSE //Process will be called at 2.8s intervals instead of 0.4
 
 	New()
 		particle_list = new/list()
 		AddComponent(/datum/component/mechanics_holder)
-		processing_items |= src
+		processing_mechanics |= src
 		return ..()
 
 
 	disposing()
-		processing_items.Remove(src)
+		processing_mechanics.Remove(src)
 		clear_owner()
 		..()
 
@@ -810,7 +812,7 @@
 				P.info = strip_html_tags(html_decode(input.signal))
 				P.name = paper_name
 				paper_left--
-				processing_items |= src
+				processing_mechanics |= src
 			else
 				playsound(src.loc, 'sound/machines/click.ogg', 35, 1, -10)
 		return
@@ -836,7 +838,7 @@
 		if(T && !ON_COOLDOWN(T, "ambient_paper_generation", 30 SECONDS))
 			paper_left++
 			if(paper_left >= 10)
-				processing_items -= src
+				processing_mechanics -= src
 
 /obj/item/mechanics/pscan
 	name = "Paper scanner"
@@ -1863,6 +1865,190 @@
 		icon_state = "[under_floor ? "u":""]comp_relay"
 		return
 
+#define FIFO_BUFFER 1
+#define FILO_BUFFER 2
+#define RANDOM_BUFFER 3
+#define RING_BUFFER 4 //When I say ring buffer what I really mean is..
+		//...FIFO queue with clobbering like an audio buffer
+
+/obj/item/mechanics/buffercomp
+	name = "Buffer Component"
+	desc = ""
+	icon_state = "comp_buffer"
+	cooldown_time = 0.4 SECONDS
+	process_fast = TRUE
+	var/list/buffer = list()
+	var/buffer_size = 30
+	//I wanted to set this to the same limit as the selection component
+	//But the selection compoment doesn't actually have a limit in the additem() proc
+	//It kind of worries me
+	var/buffer_max_size = 512
+	var/ring_reader = 1
+	var/ring_writer = 1
+
+	var/buffer_model = RING_BUFFER
+	var/buffer_string = "ring"
+	var/buffer_desc = "This mode outputs from oldest to newest, overwriting the oldest signal when full."
+	var/changesig = 0
+
+
+	get_desc()
+		. += "<br>[SPAN_NOTICE("Delay is [cooldown_time] (in 10ths of a second). <br> Buffer size is [buffer_size].\
+		 <br> Buffer mode is [buffer_string].<br>[buffer_desc]")]"
+
+	New()
+		..()
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"buffer", PROC_REF(buffer))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set buffer mode", PROC_REF(compSetModel))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Delay",PROC_REF(setDelay))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Buffer Mode",PROC_REF(userSetModel))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Buffer Size",PROC_REF(setBufferSize))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Changing",PROC_REF(toggleDefault))
+
+	proc/setModel(var/model)
+		//Uppercase everything so signal input can be case insensitive
+		model = uppertext(model)
+		if(model == "FIFO")
+			buffer_desc = "This mode outputs from oldest to newest, dropping signals when full."
+			buffer_model = FIFO_BUFFER
+		else if(model == "FILO")
+			buffer_desc = "This mode outputs from newest to oldest, dropping signals when full."
+			buffer_model = FILO_BUFFER
+		else if(model == "RING")
+			model = "ring"
+			buffer_desc = "This mode outputs from oldest to newest, overwriting the oldest signal when full."
+			buffer_model = RING_BUFFER
+		else if(model == "RANDOM")
+			model = "random"
+			buffer_desc = "This mode outputs signals randomly, randomly overwriting previous signals when full."
+			buffer_model = RANDOM_BUFFER
+		else
+			return FALSE
+
+		buffer_string = model
+		tooltip_rebuild = 1
+		buffer.len = 0
+		ring_reader = 1
+		ring_writer = 1
+		return TRUE
+
+	proc/compSetModel(var/datum/mechanicsMessage/input)
+		if(setModel(input.signal))
+			LIGHT_UP_HOUSING
+
+	proc/userSetModel(obj/item/W as obj, mob/user as mob)
+		var/model = tgui_input_list(user, "Set the buffer mode to what?", "Mode Selector", list("FIFO","FILO","ring","random"), buffer_string)
+		if(!in_interact_range(src, user) || !can_act(user) || isnull(model))
+			return
+		setModel(model)
+		boutput(user, "You set the buffer mode to [model]")
+
+
+
+	//Thanks delay component
+	proc/setDelay(obj/item/W as obj, mob/user as mob)
+		var/inp = tgui_input_number(user, "Enter delay in 10ths of a second:", "Set delay", cooldown_time, 60, 4)
+		if(!in_interact_range(src, user) || !can_act(user) || isnull(inp))
+			return
+		inp = min(inp, 60)
+		inp = max(4, inp)
+		cooldown_time = inp
+		tooltip_rebuild = 1
+		boutput(user, "Set delay to [inp]")
+
+	proc/setBufferSize(obj/item/W as obj, mob/user as mob)
+		var/inp = tgui_input_number(user,"Set size of signal buffer","Buffer size", buffer_size,buffer_max_size,1)
+		if(!in_interact_range(src, user) || !can_act(user) || isnull(inp))
+			return
+
+		if (isnull(inp)) return
+		inp = round(inp)
+		inp = clamp(inp, 1, buffer_max_size)
+		buffer_size = inp
+		tooltip_rebuild = 1
+		boutput(user,"You set the buffer size to [inp]")
+		qdel(buffer)
+		buffer = list()
+
+	proc/toggleDefault(obj/item/W as obj, mob/user as mob)
+		changesig = !changesig
+		boutput(user, "Signal changing now [changesig ? "on":"off"]")
+		tooltip_rebuild = 1
+
+	proc/buffer(var/datum/mechanicsMessage/input)
+		var/bufl = length(buffer)
+		if(buffer_model == RING_BUFFER)
+			if(bufl >= ring_writer)
+				buffer[ring_writer] = input
+			else
+				buffer.Add(input)
+			//Round and round we go
+			//If the writer runs into the reader and the next item in the queue isn't null
+			//That means that item is the oldest, jump the reader to it
+			//Watch out for the edge
+			if(ring_reader == ring_writer)
+				if((ring_reader + 1) > buffer_size && !isnull(buffer[1]) )
+					ring_reader = 1
+				else if(bufl >= (ring_reader + 1) && !isnull(buffer[(ring_reader + 1)]))
+					ring_reader++
+			ring_writer = (ring_writer % buffer_size) + 1
+			return
+
+		if(buffer_model == RANDOM_BUFFER)
+			if(bufl >= buffer_size)
+				buffer[rand(1,(bufl))] = input
+			else
+				buffer.Add(input)
+			return
+		if(bufl >= buffer_size)
+			return
+		if(buffer_model == FIFO_BUFFER || buffer_model == FILO_BUFFER)
+			buffer.Add(input)
+			return
+
+	process()
+		..()
+
+		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
+
+		var/bufl = (length(buffer))
+		var/signal = null
+		if(bufl > 0)
+
+			if(buffer_model == FIFO_BUFFER)
+				signal = buffer[1]
+				buffer.Remove(buffer[1])
+			if(buffer_model == FILO_BUFFER)
+				signal = buffer[bufl]
+				buffer.Remove(buffer[bufl])
+			if(buffer_model == RING_BUFFER && bufl >= ring_reader && !isnull(buffer[ring_reader]) )
+				signal = buffer[ring_reader]
+				buffer[ring_reader] = null
+				ring_reader++
+				if(ring_reader > buffer_size)
+					ring_reader = 1
+			if(buffer_model == RANDOM_BUFFER)
+				var/ran = rand(1,bufl)
+				signal = buffer[ran]
+				buffer.Remove(buffer[ran])
+
+			if(isnull(signal)) return
+
+			LIGHT_UP_HOUSING
+			flick("[under_floor ? "u":""]comp_buffer1", src)
+			var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
+			SPAWN(0) SEND_SIGNAL(src,transmissionStyle,signal)
+
+	update_icon()
+		icon_state = "[under_floor ? "u":""]comp_buffer"
+
+
+#undef FIFO_BUFFER
+#undef FILO_BUFFER
+#undef RANDOM_BUFFER
+#undef RING_BUFFER
+
 /obj/item/mechanics/filecomp
 	name = "File Component"
 	desc = ""
@@ -1936,13 +2122,16 @@
 		. += {"<br><span class='notice'>[forward_all ? "Sending full unprocessed Signals.":"Sending only processed sendmsg and pda Message Signals."]<br>
 		[only_directed ? "Only reacting to Messages directed at this Component.":"Reacting to ALL Messages received."]<br>
 		Current Frequency: [frequency]<br>
+		Current Range: [isnull(range) ? "Unlimited" : range]<br>
 		Current NetID: [net_id]</span>"}
 
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send radio message", PROC_REF(send))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", PROC_REF(setfreq))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set range", PROC_REF(setrange))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency",PROC_REF(setFreqManually))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Range",PROC_REF(setRangeManually))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle NetID Filtering",PROC_REF(toggleAddressFiltering))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Forward All",PROC_REF(toggleForwardAll))
 
@@ -1960,6 +2149,23 @@
 			return 1
 		return 0
 
+	proc/setRangeManually(obj/item/W as obj, mob/user as mob)
+		var/inp = input(user, "Please enter the range (-1 for unlimited):", "Range setting", isnull(range) ? -1 : range) as num
+		if(!in_interact_range(src, user) || user.stat)
+			return 0
+		inp = text2num_safe(inp)
+		if(isnull(inp)) return 0
+		if(inp == -1)
+			src.range = null
+			boutput(user, "Range set to unlimited")
+			tooltip_rebuild = 1
+			return 1
+		inp = clamp(inp, 0, 512)
+		src.range = inp
+		boutput(user, "Range set to [inp]")
+		tooltip_rebuild = 1
+		return 1
+
 	proc/toggleAddressFiltering(obj/item/W as obj, mob/user as mob)
 		only_directed = !only_directed
 		get_radio_connection_by_id(src, "main").update_all_hearing(!only_directed)
@@ -1972,6 +2178,20 @@
 		boutput(user, "[forward_all ? "Now forwarding all Radio Messages as they are.":"Now processing only sendmsg and normal PDA messages."]")
 		tooltip_rebuild = 1
 		return 1
+
+	proc/setrange(var/datum/mechanicsMessage/input)
+		if(level == OVERFLOOR) return
+		LIGHT_UP_HOUSING
+		var/newrange = text2num_safe(input.signal)
+		if(isnull(newrange)) return
+		if(newrange == -1)
+			src.range = null
+			tooltip_rebuild = 1
+			return
+		newrange = clamp(newrange, 0, 512)
+		src.range = newrange
+		tooltip_rebuild = 1
+		return
 
 	proc/setfreq(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR) return
@@ -3334,7 +3554,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		return 1
 
 	proc/setMode(obj/item/W as obj, mob/user as mob)
-		mode = input("Set the math mode to what?", "Mode Selector", mode) in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte")
+		mode = input("Set the math mode to what?", "Mode Selector", mode) in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte", "min", "max")
 		tooltip_rebuild = 1
 		return 1
 
@@ -3369,7 +3589,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	proc/compSetMode(var/datum/mechanicsMessage/input)
 		LIGHT_UP_HOUSING
 		tooltip_rebuild = 1
-		if(input.signal in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte"))
+		if(input.signal in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte","min","max"))
 			mode = input.signal
 	proc/evaluate()
 		switch(mode)
@@ -3402,6 +3622,10 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				. = A == B
 			if("neq")
 				. = A != B
+			if("min")
+				. = min(A, B)
+			if("max")
+				. = max(A, B)
 			else
 				return
 
