@@ -1607,7 +1607,7 @@
 	addedfilters = "Only passing signals that"
 
 	get_desc()
-		. += "<br>[SPAN_NOTICE("Exact match mode: [exact_match ? "on" : "off"]<br>Single output mode: [single_output ? "on" : "off"]")]"
+		. += "<br>[SPAN_NOTICE("Filtering signals: [outgoing_filters]")]"
 
 /obj/item/mechanics/dispatchcomp
 	name = "Dispatch Component"
@@ -1668,11 +1668,13 @@
 		LIGHT_UP_HOUSING
 		var/sent = null
 		if(split_signals)
-			var/list/converted = params2list(input.signal)
+			var/list/converted = params2complexlist(input.signal)
 			for(var/signal in converted)
 				var/datum/mechanicsMessage/taggedMessage/outgoing = new/datum/mechanicsMessage/taggedMessage
 				outgoing.signal = converted[signal]
-				outgoing.tags += signal
+				var/taglist = list("signal filter")
+				taglist += signal
+				outgoing.tags += taglist
 				sent = SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,outgoing)
 		else
 			sent = SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
@@ -1693,6 +1695,7 @@
 			boutput(user, SPAN_SUCCESS("[addedfilters] [exact_match ? "match" : "contain"] [filter] to the [receiver.name]"))
 		else
 			boutput(user, SPAN_SUCCESS("Passing all messages to the [receiver.name]"))
+		tooltip_rebuild = 1
 		return
 
 	//This will get called from the component-datum when a device is being unlinked
@@ -1700,17 +1703,23 @@
 		src.outgoing_filters.Remove(receiver)
 
 	//Called when mechanics_holder tries to fire out signals
-	proc/runFilter(var/comsig_target, atom/receiver, var/signal, var/datum/mechanicsMessage/taggedMessage/fullsignal)
+	proc/runFilter(var/comsig_target, atom/receiver, var/datum/mechanicsMessage/taggedMessage/signal)
 		if(!(receiver in src.outgoing_filters))
 			return src.single_output? _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER : _MECHCOMP_VALIDATE_RESPONSE_GOOD //Not filtering this output, let anything pass
+		var/signaltag
+		if(split_signals) //Dispatched signals have a tag with the filter
+			for(signaltag in signal.tags)
+				if(length(signaltag == 2) && signaltag[1] == "signal filter")
+					signaltag = signaltag[2]
+					break
 		for (var/filter in src.outgoing_filters[receiver])
 			var/text_found = null
-			if(split_signals && fullsignal.tags[1] == filter)
+			if(split_signals && signaltag == filter)
 				text_found = TRUE
 			else
-				text_found = findtext(signal, filter)
+				text_found = findtext(signal.signal, filter)
 			if (exact_match)
-				text_found = text_found && (length(signal) == length(filter))
+				text_found = text_found && (length(signal.signal) == length(filter))
 			if (text_found)
 				return src.single_output? _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER : _MECHCOMP_VALIDATE_RESPONSE_GOOD //Signal validated, let it pass
 		return 1 //Signal invalid, halt it

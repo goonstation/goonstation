@@ -258,7 +258,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 	var/fired = 0
 	for(var/atom/A in src.connected_outgoing)
 		//Note: a target not handling a signal returns 0.
-		var/validated = SEND_SIGNAL(parent,_COMSIG_MECHCOMP_DISPATCH_VALIDATE, A, msg.signal, msg)
+		var/validated = SEND_SIGNAL(parent,_COMSIG_MECHCOMP_DISPATCH_VALIDATE, A, msg)
 		if(validated == _MECHCOMP_VALIDATE_RESPONSE_HALT) //The component wants signal processing to stop NOW
 			return fired
 		if(validated == _MECHCOMP_VALIDATE_RESPONSE_BAD) //The component wants this signal to be skipped
