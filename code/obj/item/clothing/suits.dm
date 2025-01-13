@@ -1592,9 +1592,6 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		icon_state = "diving_suit-eng"
 		item_state = "diving_suit-eng"
 
-TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
-	mats = 45 //should not be cheap to make at mechanics, increased from 15.
-
 /obj/item/clothing/suit/space/industrial
 #ifdef MAP_OVERRIDE_NADIR
 	desc = "Armored, immersion-tight suit. Protects from a wide gamut of environmental hazards, including radiation and explosions."
@@ -1642,6 +1639,10 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		..()
 		setProperty("space_movespeed", 0)
 
+TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
+	mats = list("metal_superdense" = 15,
+				"conductive_high" = 15,
+				"crystal_dense" = 5)
 /obj/item/clothing/suit/space/industrial/syndicate
 	name = "\improper Syndicate command armor"
 	desc = "An armored space suit, not for your average expendable chumps. No sir."
@@ -2165,17 +2166,20 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	get_desc()
 		. += "This one belongs to [badge_owner_name], the [badge_owner_job]."
 
-	attack_self(mob/user as mob)
+	proc/show_off_badge(var/mob/user, var/mob/target = null)
 		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
 			return
-		user.visible_message("[user] flashes the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
+		if (istype(target))
+			user.visible_message("[user] flashes the badge at [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge to [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
+		else
+			user.visible_message("[user] flashes the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
 		actions.start(new /datum/action/show_item(user, src, "badge"), user)
 
+	attack_self(mob/user as mob)
+		src.show_off_badge(user)
+
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
-			return
-		user.visible_message("[user] flashes the badge at [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge to [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
-		actions.start(new /datum/action/show_item(user, src, "badge"), user)
+		src.show_off_badge(user, target)
 
 /obj/item/clothing/suit/security_badge/shielded
 	name = "NTSO Tactical Badge"
@@ -2198,7 +2202,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	desc = "A piece of soggy notebook paper with a red S doodled on it, presumably to represent security."
 	icon_state = "security_badge_paper"
 
-/obj/item/clothing/suit/hosmedal
+/obj/item/clothing/suit/security_badge/hosmedal
 	name = "war medal"
 	desc = ""
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
@@ -2206,6 +2210,16 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "hosmedal"
 	icon_state = "hosmedal"
+	var/award_text = "This is a medal. There are many like it, but this one's mine."
+
+	show_off_badge(var/mob/user, var/mob/target = null)
+		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+			return
+		if (istype(target))
+			user.visible_message("[user] flashes the medal at [target.name]. It reads: <br>[SPAN_BOLD("[bicon(src)]\"[src.award_text]\".")]", "You show off the medal to [target.name]. It reads: <br>[SPAN_BOLD("[bicon(src)]\"[src.award_text]\".")]")
+		else
+			user.visible_message("[user] flashes the medal. It reads: <br>[SPAN_BOLD("[bicon(src)]\"[src.award_text]\".")]", "You show off the medal. It reads: <br>[SPAN_BOLD("[bicon(src)]\"[src.award_text]\".")]")
+		actions.start(new /datum/action/show_item(user, src, "badge", x_hand_offset = -5, y_hand_offset = -3), user)
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind?.assigned_role == "Head of Security")

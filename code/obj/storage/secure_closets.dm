@@ -266,6 +266,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	req_access = list(access_head_of_personnel)
 	spawn_contents = list(/obj/item/device/flash,
 	/obj/item/storage/box/id_kit,
+	/obj/item/cash_briefcase,
 	/obj/item/storage/box/clothing/hop,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/suit/armor/vest,
@@ -295,7 +296,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/suit/labcoat,
 	/obj/item/device/radio/headset/command/rd,
 	/obj/item/pet_carrier,
-	/obj/item/device/pda2/research_director)
+	/obj/item/device/pda2/research_director,
+	/obj/item/places_pipes,
+	/obj/item/rcd_ammo/big)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has

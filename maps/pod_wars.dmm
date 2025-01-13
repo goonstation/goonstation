@@ -2559,14 +2559,6 @@
 	dir = 4
 	},
 /area/pod_wars/team2/mining)
-"iJ" = (
-/obj/table/nanotrasen/auto,
-/obj/decal/tile_edge{
-	icon_state = "hazard_delivery"
-	},
-/obj/machinery/recharger,
-/turf/unsimulated/floor/black,
-/area/pod_wars/team1/equipmentroom)
 "iK" = (
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -2590,13 +2582,6 @@
 	dir = 6
 	},
 /area/pod_wars/spacejunk/fstation)
-"iO" = (
-/obj/table/syndicate/auto,
-/obj/machinery/recharger{
-	pixel_y = 3
-	},
-/turf/unsimulated/floor/black,
-/area/pod_wars/team2/equipmentroom)
 "iP" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -3705,7 +3690,6 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "mI" = (
-/obj/table/nanotrasen/auto,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -3713,6 +3697,7 @@
 /obj/decal/tile_edge{
 	icon_state = "hazard_delivery"
 	},
+/obj/submachine/weapon_vendor/podwars/NT,
 /turf/unsimulated/floor/black,
 /area/pod_wars/team1/equipmentroom)
 "mJ" = (
@@ -4906,10 +4891,10 @@
 	},
 /area/pod_wars/spacejunk/snackstand)
 "qw" = (
-/obj/table/nanotrasen/auto,
 /obj/decal/tile_edge{
 	icon_state = "hazard_delivery"
 	},
+/obj/submachine/weapon_vendor/podwars/NT,
 /turf/unsimulated/floor/black,
 /area/pod_wars/team1/equipmentroom)
 "qx" = (
@@ -8069,7 +8054,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/secdock)
 "AV" = (
-/obj/table/syndicate/auto,
+/obj/submachine/weapon_vendor/podwars/SY,
 /turf/unsimulated/floor/black,
 /area/pod_wars/team2/equipmentroom)
 "AW" = (
@@ -9511,6 +9496,13 @@
 	dir = 1
 	},
 /area/pod_wars/spacejunk/fstation/primary)
+"FZ" = (
+/obj/decal/tile_edge{
+	icon_state = "hazard_delivery"
+	},
+/obj/table/nanotrasen/auto,
+/turf/unsimulated/floor/black,
+/area/pod_wars/team1/equipmentroom)
 "Ga" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable,
@@ -12445,14 +12437,6 @@
 /obj/machinery/drainage,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/crewlounge)
-"Qf" = (
-/obj/table/nanotrasen/auto,
-/obj/decal/tile_edge{
-	icon_state = "hazard_delivery"
-	},
-/obj/machinery/light/incandescent/netural,
-/turf/unsimulated/floor/black,
-/area/pod_wars/team1/equipmentroom)
 "Qg" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
@@ -13837,12 +13821,11 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/fstation/computercore)
 "Vd" = (
-/obj/table/nanotrasen/auto,
 /obj/decal/tile_edge{
 	icon_state = "hazard_delivery"
 	},
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/recharger,
+/obj/submachine/weapon_vendor/podwars/NT,
 /turf/unsimulated/floor/black,
 /area/pod_wars/team1/equipmentroom)
 "Ve" = (
@@ -51371,7 +51354,7 @@ wf
 hR
 wf
 Ht
-qw
+FZ
 JP
 Ud
 uY
@@ -52375,7 +52358,7 @@ NL
 NL
 NL
 Ht
-qw
+FZ
 Mq
 LY
 uH
@@ -52880,8 +52863,8 @@ Ht
 Ht
 Ht
 Ht
-Qf
-iJ
+Vd
+qw
 mI
 Vd
 qw
@@ -222953,7 +222936,7 @@ JW
 JW
 eg
 Oj
-iO
+AV
 sT
 hj
 lQ
@@ -223957,7 +223940,7 @@ JW
 Ff
 zI
 Ff
-iO
+AV
 vX
 zY
 lQ
@@ -224459,7 +224442,7 @@ JW
 Ff
 Vp
 Ff
-iO
+AV
 vX
 hj
 MF
@@ -225463,7 +225446,7 @@ Ff
 TT
 kR
 Ff
-iO
+AV
 qr
 zY
 yu

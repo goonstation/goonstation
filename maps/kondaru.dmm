@@ -3548,8 +3548,8 @@
 	name = "Secure Consultation";
 	req_access = null
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/interrogation)
 "ane" = (
@@ -28503,6 +28503,10 @@
 /obj/item/clothing/suit/wcoat,
 /obj/item/matchbook,
 /obj/item/pen/marker/red,
+/obj/item/paper/pipebombs{
+	pixel_y = 7;
+	pixel_x = 9
+	},
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
 "cmn" = (
@@ -29871,11 +29875,11 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
-/obj/mapping_helper/access/brig,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -33176,7 +33180,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
-/obj/mapping_helper/access/brig,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
@@ -38496,10 +38500,10 @@
 /obj/machinery/door/airlock/pyro/glass/security/alt{
 	name = "Armory Foyer"
 	},
-/obj/mapping_helper/access/brig,
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/secwing)
 "iys" = (
@@ -38514,11 +38518,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/station/security/secwing)
 "izg" = (
@@ -40562,8 +40566,8 @@
 	name = "Secure Consultation";
 	req_access = null
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/redblack,
 /area/station/security/interrogation)
 "jRa" = (
@@ -40928,8 +40932,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/secwing)
 "kgK" = (
@@ -41850,12 +41854,12 @@
 /obj/machinery/door/airlock/pyro/security{
 	name = "Courtroom"
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "hopdesk";
 	enter_id = "sec";
 	name = "HOP Desk"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/station/security/secwing)
 "kOP" = (
@@ -41999,7 +42003,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
-/obj/mapping_helper/access/brig,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
@@ -42980,8 +42984,8 @@
 /area/station/crew_quarters/showers)
 "lAi" = (
 /obj/machinery/door/airlock/pyro/glass/security/alt,
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -47269,7 +47273,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
-/obj/mapping_helper/access/brig,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
@@ -52470,7 +52474,6 @@
 /obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -52478,6 +52481,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/station/security/secwing)
 "sxY" = (
@@ -52510,8 +52514,8 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/mapping_helper/access/brig,
 /obj/machinery/atmospherics/pipe/simple,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -52859,11 +52863,11 @@
 /area/station/hallway/primary/north)
 "sLw" = (
 /obj/machinery/door/airlock/pyro/glass/security/alt,
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
@@ -58570,7 +58574,6 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -58581,6 +58584,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/interrogation)
 "wMb" = (
@@ -59152,12 +59156,12 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "hopdesk";
 	enter_id = "outer";
 	name = "HOP Desk"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "xdq" = (

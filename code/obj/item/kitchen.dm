@@ -108,7 +108,7 @@ TRAYS
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and jabs [himself_or_herself(user)]."))
 			random_brute_damage(user, 5)
-		if (!spoon_surgery(target,user))
+		if (is_special || !spoon_surgery(target,user))
 			return ..()
 
 	custom_suicide = TRUE
@@ -142,7 +142,7 @@ TRAYS
 			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and stabs [himself_or_herself(user)]."))
 			random_brute_damage(user, 10)
 			JOB_XP(user, "Clown", 1)
-		if(!saw_surgery(target,user)) // it doesn't make sense, no. but hey, it's something.
+		if((is_special || !saw_surgery(target,user))) // it doesn't make sense, no. but hey, it's something.
 			return ..()
 
 	custom_suicide = 1
@@ -182,7 +182,7 @@ TRAYS
 			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and cuts [himself_or_herself(user)]."))
 			random_brute_damage(user, 20)
 			JOB_XP(user, "Clown", 1)
-		if(!scalpel_surgery(target,user))
+		if(is_special || !scalpel_surgery(target, user))
 			return ..()
 
 	custom_suicide = TRUE
@@ -213,7 +213,7 @@ TRAYS
 		if (prob(20))
 			src.break_utensil(user)
 			return
-		if (!spoon_surgery(target,user))
+		if (is_special || !spoon_surgery(target,user))
 			return ..()
 
 	suicide(var/mob/user as mob)
@@ -243,7 +243,7 @@ TRAYS
 		if (prob(20))
 			src.break_utensil(user)
 			return
-		if (!saw_surgery(target,user))
+		if (is_special || !saw_surgery(target,user))
 			return ..()
 
 	suicide(var/mob/user as mob)
@@ -274,7 +274,7 @@ TRAYS
 		if(prob(20))
 			src.break_utensil(user)
 			return
-		if(!scalpel_surgery(target,user))
+		if(is_special || !scalpel_surgery(target, user))
 			return ..()
 
 	suicide(var/mob/user as mob)
@@ -416,7 +416,7 @@ TRAYS
 			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and pinches [his_or_her(user)] fingers against the blade guard."))
 			random_brute_damage(user, 5)
 			JOB_XP(user, "Clown", 1)
-		if(!saw_surgery(target,user))
+		if (is_special || !saw_surgery(target,user))
 			return ..()
 
 	suicide(var/mob/user as mob)
