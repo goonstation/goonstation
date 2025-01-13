@@ -1608,7 +1608,7 @@
 	passingmessage = "Passing all signals to the"
 
 	get_desc()
-		. += "<br>[SPAN_NOTICE("Filtering signals: [outgoing_filters]")]"
+		. += "<br>[SPAN_NOTICE("Currently dispatching signals")]"
 
 /obj/item/mechanics/dispatchcomp
 	name = "Dispatch Component"
