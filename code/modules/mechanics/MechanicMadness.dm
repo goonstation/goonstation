@@ -1599,13 +1599,27 @@
 		icon_state = "[under_floor ? "u":""]comp_check"
 		return
 
+/obj/item/mechanics/dispatchcomp/signaldispatch
+	name = "Signal Dispatch Component"
+	split_signals = TRUE
+
+	addingfilters = "Signals to split for this connection? (Comma-delimited list. Leave blank to pass all signals.)"
+	addedfilters = "Only passing signals that"
+
+	get_desc()
+		. += "<br>[SPAN_NOTICE("Exact match mode: [exact_match ? "on" : "off"]<br>Single output mode: [single_output ? "on" : "off"]")]"
+
 /obj/item/mechanics/dispatchcomp
 	name = "Dispatch Component"
 	desc = ""
 	icon_state = "comp_disp"
 	var/exact_match = FALSE
 	var/single_output = FALSE
-	var/split_signals = TRUE
+	var/split_signals = FALSE
+
+	//Verbiage variables so we can change them in the signal dispatch sub-type
+	var/addingfilters = "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)"
+	var/addedfilters = "Only passing messages that"
 
 	//This stores all the relevant filters per output
 	//Notably, this list doesn't remove entries when an output is removed.
@@ -1622,8 +1636,8 @@
 		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING, PROC_REF(removeFilter))
 		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_VALIDATE, PROC_REF(runFilter))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"dispatch", PROC_REF(dispatch))
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle exact matching",PROC_REF(toggleExactMatching))
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle single output mode",PROC_REF(toggleSingleOutput))
+		if (!split_signals) SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle exact matching",PROC_REF(toggleExactMatching))
+		if (!split_signals) SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle single output mode",PROC_REF(toggleSingleOutput))
 
 	disposing()
 		var/list/signals = list(\
@@ -1666,15 +1680,17 @@
 		if(sent) animate_flash_color_fill(src,"#00FF00",2, 2)
 
 	//This will get called from the component-datum when a device is being linked
+
 	proc/addFilter(var/comsig_target, atom/receiver, mob/user)
-		var/filter = input(user, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
+		var/filter = input(user, addingfilters, "Intput Filters") as text
 		if(!in_interact_range(src, user) || user.stat)
 			return
 		if (length(filter))
 			if (!src.outgoing_filters[receiver]) src.outgoing_filters[receiver] = list()
 			src.outgoing_filters.Add(receiver)
 			src.outgoing_filters[receiver] = splittext(filter, ",")
-			boutput(user, SPAN_SUCCESS("Only passing messages that [exact_match ? "match" : "contain"] [filter] to the [receiver.name]"))
+			//Exact match setting is hidden to signal dispatch
+			boutput(user, SPAN_SUCCESS("[addedfilters] [exact_match ? "match" : "contain"] [filter] to the [receiver.name]"))
 		else
 			boutput(user, SPAN_SUCCESS("Passing all messages to the [receiver.name]"))
 		return
