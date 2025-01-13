@@ -28503,6 +28503,10 @@
 /obj/item/clothing/suit/wcoat,
 /obj/item/matchbook,
 /obj/item/pen/marker/red,
+/obj/item/paper/pipebombs{
+	pixel_y = 7;
+	pixel_x = 9
+	},
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
 "cmn" = (
