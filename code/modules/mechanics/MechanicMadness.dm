@@ -1672,6 +1672,8 @@
 		if(split_signals)
 			var/list/converted = params2complexlist(input.signal)
 			for(var/signal in converted)
+				if(!signal || !length(signal) || !converted[signal] || !length(converted[signal]))
+					break //No empty keys or values or empty lists please
 				var/datum/mechanicsMessage/taggedMessage/outgoing = new/datum/mechanicsMessage/taggedMessage
 				outgoing.signal = converted[signal]
 				var/taglist = list("signal filter")
