@@ -1,5 +1,9 @@
 
 (t)sun jan 12 25
+(u)patricia
+(p)21548
+(e)🆕🎨💡|C-Feature, C-Sprites, A-Station-Systems
+(*)Adds a new buffering component to the mechanic's vendor. Read about it in the mechanic's book!
 (u)glowbold
 (p)21714
 (e)🔄🤖|C-Rework, A-Silicons
