@@ -1605,6 +1605,7 @@
 
 	addingfilters = "Signals to split for this connection? (Comma-delimited list. Leave blank to pass all signals.)"
 	addedfilters = "Only passing signals that"
+	passingmessage = "Passing all signals to the"
 
 	get_desc()
 		. += "<br>[SPAN_NOTICE("Filtering signals: [outgoing_filters]")]"
@@ -1620,6 +1621,7 @@
 	//Verbiage variables so we can change them in the signal dispatch sub-type
 	var/addingfilters = "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)"
 	var/addedfilters = "Only passing messages that"
+	var/passingmessage = "Passing all messages to the"
 
 	//This stores all the relevant filters per output
 	//Notably, this list doesn't remove entries when an output is removed.
@@ -1694,7 +1696,7 @@
 			//Exact match setting is hidden to signal dispatch
 			boutput(user, SPAN_SUCCESS("[addedfilters] [exact_match ? "match" : "contain"] [filter] to the [receiver.name]"))
 		else
-			boutput(user, SPAN_SUCCESS("Passing all messages to the [receiver.name]"))
+			boutput(user, SPAN_SUCCESS("[passingmessage] [receiver.name]"))
 		tooltip_rebuild = 1
 		return
 
@@ -1708,9 +1710,9 @@
 			return src.single_output? _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER : _MECHCOMP_VALIDATE_RESPONSE_GOOD //Not filtering this output, let anything pass
 		var/signaltag
 		if(split_signals) //Dispatched signals have a tag with the filter
-			for(signaltag in signal.tags)
-				if(length(signaltag == 2) && signaltag[1] == "signal filter")
-					signaltag = signaltag[2]
+			for(var/taglist in signal.tags)
+				if(length(taglist == 2) && taglist[1] == "signal filter")
+					signaltag = taglist[2]
 					break
 		for (var/filter in src.outgoing_filters[receiver])
 			var/text_found = null
