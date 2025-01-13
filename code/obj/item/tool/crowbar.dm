@@ -29,7 +29,7 @@
 		BLOCK_SETUP(BLOCK_ROD)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (!pry_surgery(target, user))
+		if (is_special || !pry_surgery(target, user))
 			return ..()
 
 	suicide(var/mob/user as mob)

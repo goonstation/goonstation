@@ -1980,14 +1980,18 @@
 	var/hand_icon = ""
 	var/pixel_x_offset = null
 	var/pixel_y_offset = null
+	var/pixel_x_hand_offset = null
+	var/pixel_y_hand_offset = null
 
-	New(mob/user, obj/item/item, hand_icon, x_offset = 6, y_offset = 2)
+	New(mob/user, obj/item/item, hand_icon, x_offset = 6, y_offset = 2, x_hand_offset = 6, y_hand_offset = 2)
 		. = ..()
 		src.user = user
 		src.item = item
 		src.hand_icon = hand_icon
 		src.pixel_x_offset = x_offset
 		src.pixel_y_offset = y_offset
+		src.pixel_x_hand_offset = x_hand_offset
+		src.pixel_y_hand_offset = y_hand_offset
 
 	onStart()
 		. = ..()
@@ -1999,7 +2003,7 @@
 			src.pixel_x_offset = -src.pixel_x_offset
 
 		var/image/overlay = src.item.SafeGetOverlayImage("showoff_overlay", src.item.icon, src.item.icon_state, MOB_LAYER + 0.1, src.pixel_x_offset, src.pixel_y_offset)
-		var/image/hand_overlay = src.item.SafeGetOverlayImage("showoff_hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, src.pixel_x_offset, src.pixel_y_offset, color=user.get_fingertip_color())
+		var/image/hand_overlay = src.item.SafeGetOverlayImage("showoff_hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, src.pixel_x_hand_offset, src.pixel_y_hand_offset, color=user.get_fingertip_color())
 
 		src.user.UpdateOverlays(overlay, "showoff_overlay")
 		src.user.UpdateOverlays(hand_overlay, "showoff_hand_overlay")
