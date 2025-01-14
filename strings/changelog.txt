@@ -1,5 +1,7 @@
 
 (t)tue jan 14 25
+(u)LeahTheTech
+(+)Traitor Pest Control Specialists can now buy an old hunting rifle for 7TC.
 (u)TDHooligan
 (p)21974
 (e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
