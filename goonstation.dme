@@ -2315,6 +2315,7 @@
 #include "code\obj\machinery\computer\communications.dm"
 #include "code\obj\machinery\computer\door_control.dm"
 #include "code\obj\machinery\computer\general_air_control.dm"
+#include "code\obj\machinery\computer\general_alert.dm"
 #include "code\obj\machinery\computer\hologram_comp.dm"
 #include "code\obj\machinery\computer\operating.dm"
 #include "code\obj\machinery\computer\pod.dm"
