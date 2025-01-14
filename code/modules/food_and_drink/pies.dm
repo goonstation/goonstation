@@ -91,7 +91,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "slice of pie"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	desc = "A slice of null pie. You shouldn't be able to see this!"
-	required_utensil = REQUIRED_UTENSIL_SPOON
 	food_effects = list("food_refreshed","food_cold")
 	bites_left = 1
 	heal_amt = 4

@@ -2535,10 +2535,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "oY" = (
-/obj/mapping_helper/access/security,
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4
 	},
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "pa" = (
@@ -3517,6 +3517,10 @@
 	},
 /obj/item/paper_bin,
 /obj/item/paper/printout/emerg1,
+/obj/item/paper/pipebombs{
+	pixel_x = 11;
+	pixel_y = 5
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "wb" = (
