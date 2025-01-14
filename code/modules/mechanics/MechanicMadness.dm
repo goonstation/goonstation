@@ -1678,17 +1678,12 @@
 				if(!signal || !length(signal) || !converted[signal] || !length(converted[signal]))
 					continue //No empty keys or values or empty lists please
 
-				var/datum/mechanicsMessage/taggedMessage/outgoing = new/datum/mechanicsMessage/taggedMessage
-				//outgoing.nodes = input.nodes //Maintain node list for infinite list prevention
-
 				//Make a signal for each parameter/key value and add a tag with the parmeter
 				//The validator will check if outgoing signal filters match the parameter
 				//Otherwise, an input couldn't accept more than one signal filter
 				var/datum/mechanicsTag/signalFilter/filter = new/datum/mechanicsTag/signalFilter
 				filter.parameter = signal
-				outgoing.signal = converted[signal]
-				outgoing.tags += filter
-				sent = SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,outgoing)
+				sent = SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL_TAGGED,converted[signal], filter)
 
 				//See if we've sent the max number already
 				signal_count++
@@ -1710,7 +1705,7 @@
 			src.outgoing_filters.Add(receiver)
 			src.outgoing_filters[receiver] = splittext(filter, ",")
 			//Exact match setting is hidden to signal dispatch
-			boutput(user, SPAN_SUCCESS("[addedfilters] [exact_match ? "match" : "contain"] [filter] to the [receiver.name]"))
+			boutput(user, SPAN_SUCCESS("[addedfilters] [exact_match || split_signals ? "match" : "contain"] [filter] to the [receiver.name]"))
 		else
 			boutput(user, SPAN_SUCCESS("[passingmessage] [receiver.name]"))
 		tooltip_rebuild = 1
