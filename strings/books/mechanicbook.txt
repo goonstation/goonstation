@@ -1,3 +1,6 @@
+	<!DOCTYPE html>
+	<html>
+	<body>
 	<BIG><B>Quick-start Guide</B></BIG>
 	<br>
 	<br>To connect Components to each other you use drag and drop.
@@ -85,6 +88,25 @@
 	<br>
 	<br><B>Delay Component:</B>
 	<br>Delays an incoming signal a certain amount of time before sending it to its connections.
+	<br>
+	<br>
+	<br><B>Dispatch Component:</B>
+	<br>Match signals like a signal-check component on a per-device basis. The dispatch component is unique in that when an outgoing connection is made, it will ask for a comma delimited list, for example
+	<br>
+	<br><tt>apples, oranges</tt>
+	<br>
+	<br>When signals are dispatched through the component, it will apply these per-connection filters. In the previous example, any signal containing apples or oranges would pass through.
+	With a multitool, two options can be enabled: exact match, and single output.
+	<br>Exact match mode will only signals that are identical to the filter, in the previous example, only the literal signals <tt>apples</tt> or <tt>oranges</tt> would pass.
+	Single output mode does not affect filtering, but instead, will only pass a signal to the first matching connection, from oldest to newest.
+	<br>
+	<br>
+	<br><B>Signal Dispatch Component:</B>
+	<br>The signal dispatch works identically to the dispatch component above, but rather than acting like a signal check, the filters are taken as a list of parmeters to be split identically to the signal split component.
+	When a given signal is split, the value of the parmeter is sent to the matching connection instead of the complete signal. Take this signal:
+	<br>
+	<br><tt>data=I am the data key;message=I am the message key</tt><br>
+	<br>A connection matching <tt>data</tt> would recieve a signal with the message <tt>I am the data key</tt>. For more information on this format, see the wifi splitter section of this book.
 	<br>
 	<br>
 	<br><B>Graviton Accelerator:</B>
@@ -204,3 +226,5 @@
 	<br>southeast 6
 	<br>northwest 9
 	<br>southwest 10
+	</body>
+	</html>
