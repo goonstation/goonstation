@@ -1619,6 +1619,7 @@
 	var/exact_match = FALSE
 	var/single_output = FALSE
 	var/split_signals = FALSE
+	var/max_split = 10 //don't allow creation of arbitary numbers of split signals
 
 	//Verbiage variables so we can change them in the signal dispatch sub-type
 	var/addingfilters = "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)"
@@ -1626,8 +1627,7 @@
 	var/passingmessage = "Passing all messages to the"
 
 	//This stores all the relevant filters per output
-	//Notably, this list doesn't remove entries when an output is removed.
-	//So it will bloat over time...
+	//Entries are removed from this in removeFilter on DISPATCH_RM_OUTGOING
 	var/list/outgoing_filters
 
 	get_desc()
@@ -1673,15 +1673,27 @@
 		var/sent = null
 		if(split_signals)
 			var/list/converted = params2complexlist(input.signal)
+			var/signal_count = 0
 			for(var/signal in converted)
 				if(!signal || !length(signal) || !converted[signal] || !length(converted[signal]))
-					break //No empty keys or values or empty lists please
+					continue //No empty keys or values or empty lists please
+
 				var/datum/mechanicsMessage/taggedMessage/outgoing = new/datum/mechanicsMessage/taggedMessage
+				//outgoing.nodes = input.nodes //Maintain node list for infinite list prevention
+
+				//Make a signal for each parameter/key value and add a tag with the parmeter
+				//The validator will check if outgoing signal filters match the parameter
+				//Otherwise, an input couldn't accept more than one signal filter
+				var/datum/mechanicsTag/signalFilter/filter = new/datum/mechanicsTag/signalFilter
+				filter.parameter = signal
 				outgoing.signal = converted[signal]
-				var/taglist = list("signal filter")
-				taglist += signal
-				outgoing.tags += taglist
+				outgoing.tags += filter
 				sent = SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,outgoing)
+
+				//See if we've sent the max number already
+				signal_count++
+				if(signal_count == max_split)
+					break
 		else
 			sent = SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 
@@ -1714,10 +1726,9 @@
 			return src.single_output? _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER : _MECHCOMP_VALIDATE_RESPONSE_GOOD //Not filtering this output, let anything pass
 		var/signaltag
 		if(split_signals) //Dispatched signals have a tag with the filter
-			for(var/taglist in signal.tags)
-				if(length(taglist == 2) && taglist[1] == "signal filter")
-					signaltag = taglist[2]
-					break
+			for(var/datum/mechanicsTag/signalFilter/filter in signal.tags)
+				signaltag = filter.parameter
+				break
 		for (var/filter in src.outgoing_filters[receiver])
 			var/text_found = null
 			if(split_signals && signaltag == filter)

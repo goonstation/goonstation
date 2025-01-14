@@ -11,6 +11,11 @@
 #define _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER 3
 
 #define MAX_OUTGOING_PER_TICK 25
+/datum/mechanicsTag
+
+/datum/mechanicsTag/signalFilter
+	var/parameter = ""
+	var/value = ""
 
 /datum/mechanicsMessage
 	var/signal = "1"
