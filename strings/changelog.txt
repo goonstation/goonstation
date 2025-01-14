@@ -25,6 +25,7 @@
 (u)LeahTheTech
 (+)Pie slices can now be eaten without a spoon.
 (+)Traitor Pest Control Specialists can now buy an old hunting rifle for 7TC.
+(*)Bacon and steaks can now be cooked in the engine burn chamber. Probably not very well.
 (u)TDHooligan
 (p)21974
 (e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
