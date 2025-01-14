@@ -10,6 +10,7 @@
 	var/deconstruct_flags = DECON_NONE
 
 	var/datum/artifact/artifact = null
+	var/list/combined_artifacts = null
 	var/cannot_be_stored = FALSE
 	var/move_triggered = 0
 	var/object_flags = 0
