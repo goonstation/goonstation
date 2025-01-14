@@ -1,5 +1,10 @@
 
 (t)tue jan 14 25
+(u)TDHooligan
+(p)22005
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Gangs' webley shoots slower when fanning the hammer. Hammer fanning lasts 2x as long.
+(+)The HAFGAN burst laser shoots faster and has more ammo, but now gains spread as you do so.
 (u)Cheekybrdy
 (p)21827
 (e)🎨|C-Sprites
