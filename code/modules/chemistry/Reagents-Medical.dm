@@ -631,24 +631,25 @@ datum
 			fluid_g = 220
 			fluid_b = 220
 			transparency = 40
-			depletion_rate = 0.15
+			depletion_rate = 0.4
 			value = 5 // 3c + 1c + 1c
+			overdose = 100 // hypervolemia or something. dont just chug this
 
 			//prioritise hooking up to IVs - large quantities added over time needed for peak healing
 			calculate_depletion_rate(var/mob/affected_mob, var/mult = 1)
 				. = ..()
 				var/amt = holder.get_reagent_amount(src.id)
 				switch(amt)
-					if(5 to 10)
-						. *= 2
-					if(10 to 20) // IV drip at ~20% saline (1)
+					if(0 to 30) // IV drip at ~20% saline (1)
+						. *= 1
+					if(30 to 50) // IV drip 50% saline (2.5)
+						. *= 2.5
+					if(50 to 70) // IV drip 100% saline (5)
 						. *= 5
-					if(20 to 40) // IV drip 50% saline (2.5)
-						. *= 7.5
-					if(40 to 60) // IV drip 100% saline (5)
+					if(70 to 100) // nerd pilled it, or slow metabolism
+						. *= 10
+					if(100 to INFINITY) // nerd tried to abuse it
 						. *= 15
-					if(60 to INFINITY) // nerd chugged it
-						. *= 30
 				return .
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -659,7 +660,7 @@ datum
 				var/magnitude = 1+clamp(amt/20, 1, 3) // heal faster in larger doses, but be way less efficient
 
 				if (prob(33+magnitude*10))
-					M.HealDamage("All", 2 * mult, 2 * mult)
+					M.HealDamage("All", 2 * mult, 2 * mult, 1 * mult)
 					if (M.get_brain_damage() >= 50) // stabilize, but keep death chance high above 200% damage
 						M.take_brain_damage(-1 * mult)
 				if (blood_system && isliving(M) && prob(33))
@@ -669,6 +670,23 @@ datum
 				//M.UpdateDamageIcon()
 				..()
 				return
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1) //hypervolemia
+				if (!M)
+					M = holder.my_atom
+				if (isliving(M))
+					var/mob/living/H = M
+					if (probmult(20))
+						M.reagents.add_reagent("salt", 3)
+					var/datum/reagents/tempHolder = new
+					if (probmult(10))
+						var/mob/living/carbon/human/H = M
+						if (H.organHolder)
+							H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 50)
+					if (probmult(5))
+						H.emote(pick("gasp", "choke", "cough"))
+						H.losebreath += (1 * mult)
+						H.changeStatus("knockdown", 2 SECONDS)
 
 		medical/anti_rad // COGWERKS CHEM REVISION PROJECT. replace with potassum iodide
 			name = "potassium iodide"
@@ -1475,10 +1493,29 @@ datum
 			transparency = 255
 			value = 12 // 5 3 3 1
 			target_organs = list("left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")	//RN this is all the organs. Probably I'll remove some from this list later. no "brain",  either
+			var/active = FALSE
+			cross_threshold_over()
+				if(M.bodytemperature < M.base_body_temp - 100 && M.bodytemperature > M.base_body_temp - 275)
+					active = TRUE
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "cryoxadone", 0.5)
+				else
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "cryoxadone")
+					active = FALSE
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "cryoxadone")
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature < M.base_body_temp - 100 && M.bodytemperature > M.base_body_temp - 275 && !M.hasStatus("burning")) //works in approx 35K to 210K -> -238C to -63C - medbay freezer goes down to -200C
+				if(M.bodytemperature < M.base_body_temp - 100 && M.bodytemperature > M.base_body_temp - 275) //works in approx 35K to 210K -> -238C to -63C - medbay freezer goes down to -200C
+					if (!active)
+						active = TRUE
+						APPLY_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "cryoxadone", 0.5)
+
 					if(M.get_oxygen_deprivation())
 						M.take_oxygen_deprivation(-2 * mult)
 					if(M.losebreath && prob(50))
@@ -1494,7 +1531,9 @@ datum
 						var/mob/living/carbon/human/H = M
 						if (H.organHolder)
 							H.organHolder.heal_organs(2*mult, 2*mult, 2*mult, target_organs)
-
+				else if (active)
+					active = FALSE
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "cryoxadone")
 				..()
 
 		medical/atropine // COGWERKS CHEM REVISION PROJECT. i dunno what the fuck this would be, probably something bad. maybe atropine?
