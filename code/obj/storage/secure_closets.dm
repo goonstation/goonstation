@@ -276,7 +276,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clipboard,
 	/obj/item/clothing/suit/hopjacket,
 	/obj/item/pet_carrier,
-	/obj/item/device/pda2/hop)
+	/obj/item/device/pda2/hop,
+	/obj/item/device/panicbutton/medicalalert/hop)
 
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"

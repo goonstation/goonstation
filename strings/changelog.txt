@@ -11,6 +11,8 @@
 (*)The murderbox now contains a vending machine for gang weaponry.
 (u)Sord
 (+)Security now has a box of fancy panic buttons to hand out in case of emergencies. Don't forget yours!
+(+)Medical also has some fancy buttons they can make in their fabricator.
+(+)The HoP got their own fancy button in their locker.
 (u)LeahTheTech
 (p)21833
 (e)⚖⛔|C-Balance, C-Removal

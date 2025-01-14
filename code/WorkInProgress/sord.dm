@@ -5,7 +5,9 @@
 	name = "panic button"
 	desc = "A big red button that alerts the station Security team that there's a crisis at your location. On the bottom someone has scribbled 'oh shit button', cute."
 	icon_state = "panic_button"
+	w_class = W_CLASS_TINY
 	var/net_id = null
+	var/alert_group = list(MGD_SECURITY, MGA_CRISIS)
 
 	New()
 		. = ..()
@@ -30,7 +32,7 @@
 		signal.source = src
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = "PANIC-BUTTON"
-		signal.data["group"] = list(MGD_SECURITY, MGA_CRISIS)
+		signal.data["group"] = src.alert_group
 		signal.data["sender"] = "00000000"
 		signal.data["address_1"] = "00000000"
 		signal.data["message"] = "***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!"
@@ -38,10 +40,25 @@
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, FREQ_PDA)
 
+/obj/item/device/panicbutton/medicalalert //really just adding this for the hop version but hey maybe medical wants to hand out medical life alert buttons for the funny
+	name = "medical alert button"
+	desc = "A big red button that alerts the station Medical team that there's a crisis at your location."
+	alert_group = list(MGD_MEDBAY, MGA_CRISIS)
+
+/obj/item/device/panicbutton/medicalalert/hop
+	name = "life alert button"
+	desc = "For when you've got a REAL BIG problem and want EVERYONE to know about it."
+	alert_group = list(MGD_PARTY, MGD_MEDBAY, MGD_SECURITY, MGD_COMMAND, MGA_CRISIS) // lol. lmao, even
+
 /obj/item/storage/box/panic_buttons
 	name = "box of panic buttons"
 	desc = "A box filled with panic buttons. For when you have a real big problem and need a whole lot of people to freak out about it. Note: DEFINITELY keep out of reach of the clown and/or assistants."
 	spawn_contents = list(/obj/item/device/panicbutton = 7)
+
+/obj/item/storage/box/panic_buttons/medicalalert
+	name = "box of medical alert buttons"
+	desc = "A box filled with medical alert buttons."
+	spawn_contents = list(/obj/item/device/panicbutton/medicalalert = 7)
 
 //dazzler. moved to own file. probably wont do anything with this
 /obj/item/gun/energy/dazzler
