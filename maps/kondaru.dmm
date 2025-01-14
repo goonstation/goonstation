@@ -38318,6 +38318,8 @@
 	dir = 1
 	},
 /obj/table/reinforced/auto,
+/obj/item/storage/box/panic_buttons,
+/obj/item/device/panicbutton,
 /turf/simulated/floor/red/side{
 	dir = 5
 	},

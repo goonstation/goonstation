@@ -24175,13 +24175,12 @@
 /area/station/security/main)
 "bwa" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/revimp_kit{
-	pixel_x = -3
-	},
 /obj/item/chem_grenade/pepper{
 	pixel_x = 11;
 	pixel_y = 3
 	},
+/obj/item/storage/box/panic_buttons,
+/obj/item/device/panicbutton,
 /turf/simulated/floor/carpet{
 	icon_state = "red2"
 	},
@@ -25442,7 +25441,10 @@
 /obj/item/paper/book/from_file/space_law,
 /obj/item/storage/box/trackimp_kit{
 	pixel_x = 8;
-	pixel_y = 3
+	pixel_y = 8
+	},
+/obj/item/storage/box/revimp_kit{
+	pixel_x = 4
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "red2"
