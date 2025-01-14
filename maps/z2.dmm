@@ -6029,6 +6029,7 @@
 /obj/machinery/bot/guardbot/old/tourguide/lunar{
 	beacon_freq = 1441
 	},
+/obj/machinery/navbeacon/lunar/tour18,
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum)
 "aDu" = (
@@ -24048,21 +24049,16 @@
 /area/crunch)
 "bRc" = (
 /obj/machinery/navbeacon{
-	codes_txt = "tour";
+	codes_txt = "tour;next_tour=tour9";
 	location = "tour8"
 	},
 /turf/unsimulated/floor/blue/checker,
 /area/crunch)
 "bRd" = (
-/obj/overlay{
-	density = 1;
-	desc = "It wont budge.";
-	dir = 4;
+/obj/fakeobject/airlock_broken{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "door_closed";
-	layer = 6;
-	name = "broken door";
-	opacity = 1
+	dir = 4
 	},
 /turf/unsimulated/floor/blue/checker,
 /area/crunch)
@@ -24283,6 +24279,10 @@
 	name = "old docking station"
 	},
 /obj/machinery/bot/guardbot/old/tourguide,
+/obj/machinery/navbeacon{
+	codes_txt = "tour";
+	location = "tour9"
+	},
 /turf/unsimulated/floor/blue/checker,
 /area/crunch)
 "bRW" = (
@@ -56507,8 +56507,8 @@
 	},
 /area/iomoon/base)
 "fsA" = (
-/obj/item/brick,
 /obj/decal/cleanable/dirt/dirt4,
+/obj/machinery/vending/murderbox_gang,
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
 "fth" = (
@@ -73934,6 +73934,7 @@
 /obj/item/cable_coil/cut/small{
 	pixel_y = 4
 	},
+/obj/item/brick,
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
 "tHH" = (
