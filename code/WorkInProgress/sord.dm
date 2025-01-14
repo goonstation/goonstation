@@ -5,6 +5,12 @@
 	name = "panic button"
 	desc = "A big red button that alerts the station Security team that there's a crisis at your location. On the bottom someone has scribbled 'oh shit button', cute."
 	icon_state = "panic_button"
+	var/net_id = null
+
+	New()
+		. = ..()
+		src.net_id = generate_net_id(src)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
 
 	attack_self(mob/user)
 		..()
@@ -30,7 +36,7 @@
 		signal.data["message"] = "***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!"
 		signal.data["is_alert"] = TRUE
 
-		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, FREQ_PDA)
 
 /obj/item/storage/box/panic_buttons
 	name = "box of panic buttons"
