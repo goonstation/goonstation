@@ -1,5 +1,11 @@
 
 (t)tue jan 14 25
+(u)Sord
+(+)Security now has a box of fancy panic buttons to hand out in case of emergencies. Don't forget yours!
+(u)LeahTheTech
+(p)21833
+(e)⚖⛔|C-Balance, C-Removal
+(*)Removed the security alert HUD button.
 (u)LeahTheTech
 (+)Traitor Pest Control Specialists can now buy an old hunting rifle for 7TC.
 (u)TDHooligan
