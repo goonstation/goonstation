@@ -117,9 +117,11 @@
 
 /obj/item/reagent_containers/emergency_injector/saline
 	name = "emergency auto-injector (saline-glucose)"
-	initial_reagents = "saline"
+	initial_reagents = list("saline"=30)
+	amount_per_transfer_from_this = 30
 	label = "blue"
 	desc = "An auto-injector containing saline-glucose solution, used for treating blood loss and shock. It also speeds up recovery from small injuries."
+
 
 /obj/item/reagent_containers/emergency_injector/anti_rad
 	name = "emergency auto-injector (potassium iodide)"
