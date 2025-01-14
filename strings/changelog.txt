@@ -1,4 +1,9 @@
 
+(t)tue jan 14 25
+(u)TDHooligan
+(p)21974
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(+)Special attacks now hit moving targets better.
 (t)sun jan 12 25
 (u)patricia
 (p)21548
