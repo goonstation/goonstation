@@ -1,5 +1,10 @@
 
 (t)tue jan 14 25
+(u)Cheekybrdy
+(p)21827
+(e)🎨|C-Sprites
+(+)Purple crowbars are now in research lockers.
+(+)The RD's HPD is no longer engineering colours
 (u)TDHooligan
 (p)21972
 (e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
