@@ -1,5 +1,9 @@
 
 (t)tue jan 14 25
+(u)TDHooligan
+(p)21972
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(*)The murderbox now contains a vending machine for gang weaponry.
 (u)Sord
 (+)Security now has a box of fancy panic buttons to hand out in case of emergencies. Don't forget yours!
 (u)LeahTheTech
