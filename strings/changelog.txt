@@ -37,6 +37,11 @@
 (e)🆕🎨💡|C-Feature, C-Sprites, A-Station-Systems
 (*)Adds a new buffering component to the mechanic's vendor. Read about it in the mechanic's book!
 (u)glowbold
+(p)21724
+(e)🆕🔄💡🤖|C-Feature, C-Rework, A-Station-Systems, A-Silicons
+(*)AIs/Cyborgs' "Show Alert Minimap" command and the General Alert computer display a minimap showing where the alerts are located.
+(+)Power, fire, and atmos alerts are all shown on the alert minimap based on where they are detected.
+(u)glowbold
 (p)21714
 (e)🔄🤖|C-Rework, A-Silicons
 (+)AIs can now select all cameras they can see through from their camera list.
