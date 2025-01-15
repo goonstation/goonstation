@@ -265,6 +265,10 @@
 			// out of range (this should never happen)
 			boutput(user, SPAN_ALERT("Something is too far away to do that."))
 			return
+		if (4)
+			// crate is anchored
+			boutput(user, SPAN_ALERT("The pod's cargo autoloader fails to budge [A]!"))
+			return
 		if (0)
 			// success
 			src.visible_message(SPAN_NOTICE("[user] loads the [A] into [src]'s cargo bay."))
@@ -289,6 +293,10 @@
 			break
 	if (!inrange)
 		return 3
+
+	if(C.anchored)
+		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+		return 4
 
 	// if a crate, close before loading
 	var/obj/storage/crate/crate = C
