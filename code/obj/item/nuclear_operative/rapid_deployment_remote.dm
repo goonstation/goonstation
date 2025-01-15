@@ -74,7 +74,8 @@
 
 	proc/choose_area(mob/user)
 		var/temp_people_count = 10 //sanity check to make sure there's enough turfs to land on
-		var/list/area/filtered_areas = get_nukie_deployment_areas()
+		var/list/area/filtered_areas = get_accessible_station_areas()
+		sortList(filtered_areas, /proc/cmp_text_asc)
 		var/list/turf/check_turfs = list()
 		for(var/mob/living/carbon/people_nearby in range(4, user.loc))
 			temp_people_count += 1
