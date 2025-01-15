@@ -632,7 +632,7 @@
 	item_requirements = list("metal" = 10)
 	item_outputs = list(/obj/item/sheet)
 	create = 5
-	time = 40 SECONDS
+	time = 50 SECONDS
 	category = "Resource"
 	apply_material = TRUE
 
@@ -657,7 +657,7 @@
 							 "metal_dense" = 5)
 	item_outputs = list(/obj/item/sheet/glass/reinforced)
 	create = 5
-	time = 40 SECONDS
+	time = 50 SECONDS
 	category = "Resource"
 	apply_material = TRUE
 
