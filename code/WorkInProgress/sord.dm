@@ -22,6 +22,7 @@
 				usr.visible_message(SPAN_ALERT("[usr] presses the red button on [src]."),
 				SPAN_NOTICE("You press the button on [src]."),
 				SPAN_ALERT("You see [usr] press a button on [src]."))
+				logTheThing(LOG_COMBAT, user, "triggers [src] at [log_loc(user)]")
 				triggerpanicbutton()
 		else
 			boutput(user, SPAN_NOTICE("The [src] buzzes faintly. It must be cooling down."))
