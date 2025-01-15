@@ -3204,7 +3204,7 @@ datum
 			fluid_g = 210
 			fluid_b = 210
 
-			on_plant_life(var/obj/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.harvests_bonus += 0.6
 
 		///////////////////////////

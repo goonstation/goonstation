@@ -405,6 +405,14 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	default_material = "bone"
 	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
+	attackby(obj/item/W, mob/user)
+		if(istype(W,/obj/item/extinguisher))
+			playsound(src,"sound/impact_sounds/Crystal_Shatter_1.ogg",30)
+			var/obj/item/reagent_containers/bone_fragments/B = new(src)
+			B.set_loc(src.loc)
+			qdel(src)
+		else
+			playsound(src,"sound/impact_sounds/Crystal_Hit_1.ogg",30)
 
 /obj/item/material_piece/gnesis
 	name = "wafer"

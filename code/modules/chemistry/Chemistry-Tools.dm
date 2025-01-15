@@ -421,6 +421,16 @@ proc/ui_describe_reagents(atom/A)
 			I.reagents.trans_to(src, I.reagents.total_volume)
 			qdel(I)
 
+		else if (istype(I, /obj/item/reagent_containers/bone_fragments))
+			if(src.reagents.total_volume >= src.reagents.maximum_volume)
+				boutput(user, SPAN_ALERT("[src] is full."))
+				return
+
+			boutput(user, SPAN_NOTICE("You toss the [I] into the beaker."))
+
+			I.reagents.trans_to(src, I.reagents.total_volume)
+			qdel(I)
+
 		else if (istype(I, /obj/item/reagent_containers/food/snacks/breadloaf))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, SPAN_ALERT("[src] is full."))
