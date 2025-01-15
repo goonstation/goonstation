@@ -677,10 +677,9 @@ datum
 				if (isliving(M))
 					var/mob/living/H = M
 					if (probmult(20))
-						M.reagents.add_reagent("salt", 3)
+						H.reagents.add_reagent("salt", 3)
 					var/datum/reagents/tempHolder = new
 					if (probmult(10))
-						var/mob/living/carbon/human/H = M
 						if (H.organHolder)
 							H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 50)
 					if (probmult(5))
@@ -1495,12 +1494,14 @@ datum
 			target_organs = list("left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")	//RN this is all the organs. Probably I'll remove some from this list later. no "brain",  either
 			var/active = FALSE
 			cross_threshold_over()
-				if(M.bodytemperature < M.base_body_temp - 100 && M.bodytemperature > M.base_body_temp - 275)
-					active = TRUE
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "cryoxadone", 0.5)
-				else
-					REMOVE_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "cryoxadone")
-					active = FALSE
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					if(M.bodytemperature < M.base_body_temp - 100 && M.bodytemperature > M.base_body_temp - 275)
+						active = TRUE
+						APPLY_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "cryoxadone", 0.5)
+					else
+						REMOVE_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "cryoxadone")
+						active = FALSE
 				..()
 
 			cross_threshold_under()
