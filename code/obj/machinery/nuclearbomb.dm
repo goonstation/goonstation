@@ -277,9 +277,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 		if (istype(W, /obj/item/wrench/battle))
 			if(src._health < src._max_health)
-				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[user] repairs the [src]!", null)
+				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[user] repairs [src]!", null)
 			else
-				boutput(user, SPAN_NOTICE("The [src] is already fully repaired!"))
+				boutput(user, SPAN_NOTICE("[src] is already fully repaired!"))
 			return
 
 		if (isnukeop(user) && !src.anyone_can_activate)
