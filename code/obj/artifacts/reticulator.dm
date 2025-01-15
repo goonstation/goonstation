@@ -70,7 +70,7 @@
     		"canCreateTuner" = src.meets_cost_requirement(ARTRET_TUNER),
     		"canCreateArtifact" = src.meets_cost_requirement(ARTRET_PREVIOUS_ART) && length(src.reticulated_artifacts),
     		"canCombineArtifacts" = src.can_combine(src.stored_artifact, src.stored_item),
-    		"canImbueLight" = TRUE,
+    		"canImbueLight" = src.can_modify_item(ARTRET_ADD_LIGHT),
     		"canCutGem" = src.can_modify_item(ARTRET_PERFECT_GEM),
     		"canBreakdownForMats" = src.can_modify_item(ARTRET_BREAKDOWN_MATS),
     		"canModifyMaterial" = src.can_modify_item(ARTRET_MODIFY_MATERIAL),
@@ -78,20 +78,20 @@
     		"canIncreaseReagents" = src.can_modify_item(ARTRET_INCREASE_REAGENTS),
     		"canIncreaseCellCapacity" = src.can_modify_item(ARTRET_INCREASE_CELL_CAP),
     		"canUpgradeMiningPower" = src.can_modify_item(ARTRET_INCREASE_MINING_POWER),
-			"breakdownTip" = "Breakdown stored artifact for a shard.\n-Required: Correctly labeled with a form.",
-			"breakdownFusionTip" = "Breakdown stored artifacts for a Fusion shard.\n-Required: Two correctly labeled artifacts of different shard categories.",
-			"resonatorTip" = "A handy device that reveals information about unactivated and activated artifacts.\n-Required: [src.costs[ARTRET_RESONATOR]["readable"]]",
-			"tunerTip" = "A single-use device that randomizes faults of an activated artifact.\n-Required: [src.costs[ARTRET_TUNER]["readable"]]",
-			"createArtTip" = "Re-create a previously broken down artifact.\n-Required: [src.costs[ARTRET_PREVIOUS_ART]["readable"]]",
-			"combineArtsTip" = "Combine compatible artifacts into a new artifact with combined properties.\n-Required: [src.costs[ARTRET_COMBINE_ARTS]["readable"]]",
-			"imbueLightTip" = "Imbue ambient light into the stored object.\n-Required: [src.costs[ARTRET_ADD_LIGHT]["readable"]]",
-			"cutGemTip" = "Perfect the quality of a gem.\n-Required: [src.costs[ARTRET_PERFECT_GEM]["readable"]]",
-			"breakdownMatsTip" = "Breakdown a compatible item for materials.\n-Required: [src.costs[ARTRET_BREAKDOWN_MATS]["readable"]]",
-			"modifyMaterialTip" = "Modify a property of the stored item's material by a value of +/- 0.5.\n-Required: [src.costs[ARTRET_MODIFY_MATERIAL]["readable"]]",
-			"upgradeStorageTip" = "Increase the storage space of the stored item by 1.\n-Required: [src.costs[ARTRET_INCREASE_STORAGE]["readable"]]",
-			"increaseReagentsTip" = "Increase the reagent capacity of the stored item by 10%.\n-Required: [src.costs[ARTRET_INCREASE_REAGENTS]["readable"]]",
-			"increaseCellCapTip" = "Increase the cell capacity of the stored item by 10%.\n-Required: [src.costs[ARTRET_INCREASE_CELL_CAP]["readable"]]",
-			"upgradeMiningPowerTip" = "Increase the mining power of the stored custom mining tool by 10%.\n-Required: [src.costs[ARTRET_INCREASE_MINING_POWER]["readable"]]",
+			"breakdownTip" = "Breakdown stored artifact for a shard. -Required: Correctly labeled with a form.",
+			"breakdownFusionTip" = "Breakdown stored artifacts for a Fusion shard. -Required: Two correctly labeled artifacts of different shard categories.",
+			"resonatorTip" = "A handy device that reveals information about unactivated and activated artifacts. -Required: [src.costs[ARTRET_RESONATOR]["readable"]]",
+			"tunerTip" = "A single-use device that randomizes faults of an activated artifact. -Required: [src.costs[ARTRET_TUNER]["readable"]]",
+			"createArtTip" = "Re-create a previously broken down artifact. -Required: [src.costs[ARTRET_PREVIOUS_ART]["readable"]]",
+			"combineArtsTip" = "Combine compatible artifacts into a new artifact with combined properties. -Required: [src.costs[ARTRET_COMBINE_ARTS]["readable"]]",
+			"imbueLightTip" = "Imbue ambient light into the stored object. -Required: [src.costs[ARTRET_ADD_LIGHT]["readable"]]",
+			"cutGemTip" = "Perfect the quality of a gem. -Required: [src.costs[ARTRET_PERFECT_GEM]["readable"]]",
+			"breakdownMatsTip" = "Breakdown a compatible item for materials. -Required: [src.costs[ARTRET_BREAKDOWN_MATS]["readable"]]",
+			"modifyMaterialTip" = "Modify a property of the stored item's material by a value of +/- 0.5. -Required: [src.costs[ARTRET_MODIFY_MATERIAL]["readable"]]",
+			"upgradeStorageTip" = "Increase the storage space of the stored item by 1. -Required: [src.costs[ARTRET_INCREASE_STORAGE]["readable"]]",
+			"increaseReagentsTip" = "Increase the reagent capacity of the stored item by 10%. -Required: [src.costs[ARTRET_INCREASE_REAGENTS]["readable"]]",
+			"increaseCellCapTip" = "Increase the cell capacity of the stored item by 10%. -Required: [src.costs[ARTRET_INCREASE_CELL_CAP]["readable"]]",
+			"upgradeMiningPowerTip" = "Increase the mining power of the stored custom mining tool by 10%. -Required: [src.costs[ARTRET_INCREASE_MINING_POWER]["readable"]]",
 			"reticulatedArtifacts" = src.reticulated_artifacts
 		)
 
@@ -164,22 +164,32 @@
 		..()
 		if (BOUNDS_DIST(dropped, src) > 0)
 			return
-		if (!istype(dropped) || !dropped.anchored)
+		if (!istype(dropped) || dropped.anchored)
+			return
+		if (!dropped.artifact)
+			if (!src.stored_item)
+				if (ismob(src_location))
+					var/mob/M = src_location
+					M.drop_item(dropped)
+				src.stored_item = dropped
+				dropped.set_loc(src)
+			return
+		var/list/options = list()
+		if (!src.stored_artifact)
+			options += "Break down"
+		if (!src.stored_item)
+			options += "Modification"
+		options += "Cancel"
+		if (length(options) == 1)
+			return
+		var/picked = tgui_alert(user, "What would you like to load the item for?", "Pick option", options)
+		if (!picked || picked == "Cancel")
 			return
 		if (ismob(src_location))
 			var/mob/M = src_location
 			M.drop_item(dropped)
-		var/available_slots = list("Break down artifact", "Modification", "Cancel")
-		if (src.stored_artifact || !dropped.artifact)
-			available_slots -= "Break down artifact"
-		if (src.stored_item)
-			available_slots -= "Modification"
-		if (available_slots[1] == "Cancel")
-			tgui_alert(user, "[src] is full!", "Error", list("Ok"))
-			return
-		var/picked = tgui_alert(user, "What would you like to load the item for?", "Pick option", available_slots)
-		switch(picked)
-			if ("Break down artifact")
+		switch (picked)
+			if ("Break down")
 				src.stored_artifact = dropped
 				dropped.set_loc(src)
 			if ("Modification")
@@ -286,6 +296,8 @@
 				src.stored_artifact.artifact.reticulated = TRUE
 				src.stored_item = null
 
+		src.apply_cost(thing)
+
 	proc/meets_cost_requirement(thing)
 		. = TRUE
 		var/essence_required = src.costs[thing][ARTIFACT_SHARD_ESSENCE]
@@ -304,6 +316,13 @@
 			return FALSE
 		if (src.omni_shards < omni_required)
 			return FALSE
+
+	proc/apply_cost(thing)
+		src.essence_shards -= src.costs[thing][ARTIFACT_SHARD_ESSENCE]
+		src.power_shards -= src.costs[thing][ARTIFACT_SHARD_POWER]
+		src.spacetime_shards -= src.costs[thing][ARTIFACT_SHARD_SPACETIME]
+		src.fusion_shards -= src.costs[thing][ARTIFACT_SHARD_FUSION]
+		src.omni_shards -= src.costs[thing][ARTIFACT_SHARD_OMNI]
 
 	proc/can_modify_item(action)
 		. = TRUE
@@ -343,15 +362,15 @@
 		switch(action)
 			if (ARTRET_ADD_LIGHT)
 				var/col = tgui_color_picker(user, "Select color to add", "Color selection")
-				if (col && src.artifact)
+				if (col && src.stored_item)
 					src.stored_item.remove_simple_light("artret_added_light")
-					src.stored_item.add_simple_light("artret_added_light", rgb2num(col))
+					src.stored_item.add_simple_light("artret_added_light", rgb2num(col) + list(255))
 			if (ARTRET_PERFECT_GEM)
 				var/datum/material/crystal/gemstone/mat = getMaterial(src.stored_item.material.getID())
 				mat.gem_tier++
 				mat.update_properties()
 			if (ARTRET_BREAKDOWN_MATS)
-				var/typeinfo/obj/info = src.artifact.get_typeinfo()
+				var/typeinfo/obj/info = src.stored_item.get_typeinfo()
 				var/list/mats_used = info.mats
 				for (var/mat in mats_used)
 					var/datum/manufacturing_requirement/rqmt = getManufacturingRequirement(mat)
@@ -403,12 +422,12 @@
 				if (tool.power > SPIKES_MEDAL_POWER_THRESHOLD)
 					user.unlock_medal("This object menaces with spikes of...", TRUE)
 
+		src.apply_cost(action)
 
 	proc/view_database(mob/user)
 		if (!src.artifact_shard_reference)
+			var/list/art_reference = list()
 			var/str
-			var/len = length(concrete_typesof(/datum/artifact))
-			var/i = 1
 			for (var/datum/artifact/art as anything in concrete_typesof(/datum/artifact))
 				switch (initial(art.shard_reward))
 					if (ARTIFACT_SHARD_ESSENCE)
@@ -419,12 +438,16 @@
 						str = "Spacetime"
 					if (ARTIFACT_SHARD_OMNI)
 						str = "Omni"
-				src.artifact_shard_reference += "[initial(art.type_name)] - [str]"
-				i++
-				if (i != len)
-					src.artifact_shard_reference += "\n"
+				art_reference += "[initial(art.type_name)] - [str]"
 
-		tgui_message(user, src.artifact_shard_reference, "Artifact Shard per Artifact")
+			sortList(art_reference, /proc/cmp_text_asc)
+
+			for (var/i in 1 to length(art_reference))
+				src.artifact_shard_reference += art_reference[i]
+				if (i != length(art_reference))
+					src.artifact_shard_reference += "<br>"
+
+		tgui_message(user, src.artifact_shard_reference, "Artifact Shard Per Artifact")
 
 /obj/item/artifact_resonator
 	name = "Artifact resonator"
