@@ -1492,6 +1492,7 @@ datum
 			transparency = 255
 			value = 12 // 5 3 3 1
 			target_organs = list("left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")	//RN this is all the organs. Probably I'll remove some from this list later. no "brain",  either
+			depletion_rate = 0.8 // halves itself
 			var/active = FALSE
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
@@ -1518,20 +1519,20 @@ datum
 						APPLY_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "cryoxadone", 0.5)
 
 					if(M.get_oxygen_deprivation())
-						M.take_oxygen_deprivation(-2 * mult)
-					if(M.losebreath && prob(50))
-						M.lose_breath(-1 * mult)
+						M.take_oxygen_deprivation(-4 * mult)
+					M.lose_breath(-1 * mult)
 					if (M.get_brain_damage())
-						M.take_brain_damage(-2 * mult)
-					M.HealDamage("All", 2 * mult, 2 * mult, 3 * mult)
+						M.take_brain_damage(-4 * mult)
+					// big numbers here - but this slows your metabolism by half, halving its speed
+					M.HealDamage("All", 4 * mult, 4 * mult, 6 * mult)
 
-					M.take_radiation_dose(-0.025 SIEVERTS * mult)
+					M.take_radiation_dose(-0.05 SIEVERTS * mult)
 					M.bodytemperature = min(M.bodytemperature + (12.5 * mult), M.base_body_temp)
 
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
 						if (H.organHolder)
-							H.organHolder.heal_organs(2*mult, 2*mult, 2*mult, target_organs)
+							H.organHolder.heal_organs(4*mult, 4*mult, 4*mult, target_organs)
 				else if (active)
 					active = FALSE
 					REMOVE_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "cryoxadone")
