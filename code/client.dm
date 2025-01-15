@@ -1160,10 +1160,6 @@ var/global/curr_day = null
 			var/t1 = text("window=[window]")
 			usr.remove_dialogs()
 			usr.Browse(null, t1)
-			//Special cases
-			switch (window)
-				if ("aialerts")
-					usr:viewalerts = 0
 
 		//A thing for the chat output to call so that links open in the user's default browser, rather than IE
 		if ("openLink")
@@ -1465,6 +1461,7 @@ var/global/curr_day = null
 		src.toggle_deuteranopia_mode()
 	else if (src.tritanopia_toggled)
 		src.toggle_tritanopia_mode()
+	src.mob?.update_active_matrix()
 
 /client/verb/toggle_protanopia_mode()
 	set hidden = TRUE
@@ -1484,6 +1481,8 @@ var/global/curr_day = null
 	src.deuteranopia_toggled = FALSE
 	src.tritanopia_toggled = FALSE
 
+	src.mob?.update_active_matrix()
+
 /client/verb/toggle_deuteranopia_mode()
 	set hidden = TRUE
 	set name = "toggle-deuteranopia-mode"
@@ -1502,6 +1501,8 @@ var/global/curr_day = null
 	src.protanopia_toggled = FALSE
 	src.tritanopia_toggled = FALSE
 
+	src.mob?.update_active_matrix()
+
 /client/verb/toggle_tritanopia_mode()
 	set hidden = TRUE
 	set name = "toggle-tritanopia-mode"
@@ -1519,6 +1520,8 @@ var/global/curr_day = null
 	src.tritanopia_toggled = !src.tritanopia_toggled
 	src.protanopia_toggled = FALSE
 	src.deuteranopia_toggled = FALSE
+
+	src.mob?.update_active_matrix()
 
 //These size helpers are invisible browser windows that help with getting client screen dimensions
 /client/proc/initSizeHelpers()

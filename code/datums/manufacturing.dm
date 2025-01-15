@@ -1360,6 +1360,17 @@
 	time = 25 SECONDS
 	category = "Organ"
 
+/datum/manufacture/cybereye_monitor
+	name = "Monitor Cybereye"
+	item_requirements = list("crystal" = 3,
+							 "metal" = 1,
+							 "conductive" = 2,
+							 "insulated" = 1)
+	item_outputs = list(/obj/item/organ/eye/cyber/monitor)
+	create = 1
+	time = 25 SECONDS
+	category = "Organ"
+
 /datum/manufacture/cybereye_laser
 	name = "Laser Cybereye"
 	item_requirements = list("crystal" = 3,
@@ -1388,6 +1399,15 @@
 	item_outputs = list(/obj/item/implantcase/antirot)
 	create = 1
 	time = 30 SECONDS
+	category = "Resource"
+
+/datum/manufacture/medicalalertbutton
+	name = "Medical Alert Button"
+	item_requirements = list("conductive" = 2,
+							 "metal" = 2)
+	item_outputs = list(/obj/item/device/panicbutton/medicalalert)
+	create = 1
+	time = 3 SECONDS
 	category = "Resource"
 
 #ifdef ENABLE_ARTEMIS
@@ -3160,6 +3180,17 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/lock)
 	create = 1
 	time = 10 SECONDS
+	category = "Tool"
+
+
+/datum/manufacture/lateral_thrusters
+	name = "Lateral Thrusters"
+	item_requirements = list("metal_dense" = 20,
+							 "conductive" = 10,
+							 "energy" = 20)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/lateral_thrusters)
+	create = 1
+	time = 12 SECONDS
 	category = "Tool"
 
 /datum/manufacture/pod/sps

@@ -1208,6 +1208,11 @@ datum/commodity/drugs/sell/poppies
 	comtype = /obj/item/organ/eye/cyber/camera
 	price = PAY_IMPORTANT
 
+/datum/commodity/bodyparts/cybereye_monitor
+	comname = "Monitor Cybereye"
+	comtype = /obj/item/organ/eye/cyber/monitor
+	price = PAY_IMPORTANT
+
 /datum/commodity/bodyparts/cybereye_night
 	comname = "Night Vision Cybereye"
 	comtype = /obj/item/organ/eye/cyber/nightvision
@@ -1999,7 +2004,7 @@ datum/commodity/drugs/sell/poppies
 	comtype = /obj/torpedo_tray/hiexp_loaded
 	desc = "A highly explosive torpedo, ready for your sick, destructive needs."
 	onmarket = 0
-	price = PAY_EMBEZZLED
+	price = PAY_EMBEZZLED*2
 
 /datum/commodity/sketchy_press_upgrade
 	comname = "Sketchy press upgrade"
