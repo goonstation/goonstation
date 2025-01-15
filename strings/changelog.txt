@@ -1,4 +1,9 @@
 
+(t)wed jan 15 25
+(u)JORJ949
+(p)22015
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Fixed nuclear operatives being unable to fix the bomb with the battle wrench.
 (t)tue jan 14 25
 (u)TDHooligan
 (p)22005
