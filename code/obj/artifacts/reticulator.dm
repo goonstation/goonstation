@@ -29,31 +29,120 @@
 	var/fusion_shards = 0
 	var/omni_shards = 0
 	var/static/list/costs = list(
-		ARTRET_RESONATOR = list(ARTIFACT_SHARD_ESSENCE = 3, "readable" = "3E"),
-		ARTRET_SCRAMBLER = list(ARTIFACT_SHARD_ESSENCE = 2, ARTIFACT_SHARD_POWER = 1, "readable" = "2E 1P"),
-		ARTRET_TUNER = list(ARTIFACT_SHARD_ESSENCE = 2, ARTIFACT_SHARD_SPACETIME = 1, "readable" = "2E 1S"),
-		ARTRET_PREVIOUS_ART = list(ARTIFACT_SHARD_ESSENCE = 2, ARTIFACT_SHARD_POWER = 2, ARTIFACT_SHARD_SPACETIME = 2, "readable" = "2E 2P 2S"),
-		ARTRET_COMBINE_ARTS = list(ARTIFACT_SHARD_FUSION = 2, "readable" = "1F"),
-		ARTRET_ADD_LIGHT = list(ARTIFACT_SHARD_ESSENCE = 1, "readable" = "1E"),
-		ARTRET_PERFECT_GEM = list(ARTIFACT_SHARD_POWER = 1, "readable" = "1P"),
-		ARTRET_BREAKDOWN_MATS = list(ARTIFACT_SHARD_SPACETIME = 1, "readable" = "1S"),
-		ARTRET_MODIFY_MATERIAL = list(ARTIFACT_SHARD_ESSENCE = 1, ARTIFACT_SHARD_POWER = 1, ARTIFACT_SHARD_SPACETIME = 1, "readable" = "1E 1P 1S"),
-		ARTRET_INCREASE_STORAGE = list(ARTIFACT_SHARD_SPACETIME = 3, "readable" = "3S"),
-		ARTRET_INCREASE_REAGENTS = list(ARTIFACT_SHARD_SPACETIME = 1, "readable" = "1S"),
-		ARTRET_INCREASE_CELL_CAP = list(ARTIFACT_SHARD_POWER = 1, "readable" = "1P"),
-		ARTRET_INCREASE_MINING_POWER = list(ARTIFACT_SHARD_POWER = 1, "readable" = "1P"),
+		ARTRET_RESONATOR = list(ARTIFACT_SHARD_ESSENCE = 3, "readable" = "3 Essence"),
+		ARTRET_SCRAMBLER = list(ARTIFACT_SHARD_ESSENCE = 2, ARTIFACT_SHARD_POWER = 1, "readable" = "2 Essence 1 Power"),
+		ARTRET_TUNER = list(ARTIFACT_SHARD_ESSENCE = 2, ARTIFACT_SHARD_SPACETIME = 1, "readable" = "2 Essence 1 Spacetime"),
+		ARTRET_PREVIOUS_ART = list(ARTIFACT_SHARD_ESSENCE = 2, ARTIFACT_SHARD_POWER = 2, ARTIFACT_SHARD_SPACETIME = 2, "readable" = "2 Essence 2 Power 2 Spacetime"),
+		ARTRET_COMBINE_ARTS = list(ARTIFACT_SHARD_FUSION = 2, "readable" = "1 Fusion"),
+		ARTRET_ADD_LIGHT = list(ARTIFACT_SHARD_ESSENCE = 1, "readable" = "1 Essence"),
+		ARTRET_PERFECT_GEM = list(ARTIFACT_SHARD_POWER = 1, "readable" = "1 Power"),
+		ARTRET_BREAKDOWN_MATS = list(ARTIFACT_SHARD_SPACETIME = 1, "readable" = "1 Spacetime"),
+		ARTRET_MODIFY_MATERIAL = list(ARTIFACT_SHARD_ESSENCE = 1, ARTIFACT_SHARD_POWER = 1, ARTIFACT_SHARD_SPACETIME = 1, "readable" = "1 Essence 1 Power 1 Spacetime"),
+		ARTRET_INCREASE_STORAGE = list(ARTIFACT_SHARD_SPACETIME = 3, "readable" = "3 Spacetime"),
+		ARTRET_INCREASE_REAGENTS = list(ARTIFACT_SHARD_SPACETIME = 1, "readable" = "1 Spacetime"),
+		ARTRET_INCREASE_CELL_CAP = list(ARTIFACT_SHARD_POWER = 1, "readable" = "1 Power"),
+		ARTRET_INCREASE_MINING_POWER = list(ARTIFACT_SHARD_POWER = 1, "readable" = "1 Power"),
 	)
+	var/static/artifact_shard_reference
 	var/list/reticulated_artifacts = list()
 
 	var/obj/stored_artifact
 	var/obj/stored_item
 
-	//ui_interact(mob/user, datum/tgui/ui)
-	//ui_data(mob/user)
-	//ui_act(action, params)
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "Reticulator")
+			ui.open()
+
+	ui_data(mob/user)
+		. = list(
+			"essenceShards" = src.essence_shards,
+			"powerShards" = src.power_shards,
+			"spacetimeShards" = src.spacetime_shards,
+			"fusionShards" = src.fusion_shards,
+			"omniShards" = src.omni_shards,
+			"storedArtifact" = src.stored_artifact?.name,
+			"storedItem" = src.stored_item?.name,
+			"canBreakdownArtifact" = src.stored_artifact,
+    		"canBreakdownFusion" = src.stored_artifact && src.stored_item?.artifact,
+    		"canCreateResonator" = src.meets_cost_requirement(ARTRET_RESONATOR),
+    		"canCreateTuner" = src.meets_cost_requirement(ARTRET_TUNER),
+    		"canCreateArtifact" = src.meets_cost_requirement(ARTRET_PREVIOUS_ART) && length(src.reticulated_artifacts),
+    		"canCombineArtifacts" = src.can_combine(src.stored_artifact, src.stored_item),
+    		"canImbueLight" = TRUE,
+    		"canCutGem" = src.can_modify_item(ARTRET_PERFECT_GEM),
+    		"canBreakdownForMats" = src.can_modify_item(ARTRET_BREAKDOWN_MATS),
+    		"canModifyMaterial" = src.can_modify_item(ARTRET_MODIFY_MATERIAL),
+    		"canUpgradeStorage" = src.can_modify_item(ARTRET_INCREASE_STORAGE),
+    		"canIncreaseReagents" = src.can_modify_item(ARTRET_INCREASE_REAGENTS),
+    		"canIncreaseCellCapacity" = src.can_modify_item(ARTRET_INCREASE_CELL_CAP),
+    		"canUpgradeMiningPower" = src.can_modify_item(ARTRET_INCREASE_MINING_POWER),
+			"breakdownTip" = "Breakdown stored artifact for a shard.\n-Required: Correctly labeled with a form.",
+			"breakdownFusionTip" = "Breakdown stored artifacts for a Fusion shard.\n-Required: Two correctly labeled artifacts of different shard categories.",
+			"resonatorTip" = "A handy device that reveals information about unactivated and activated artifacts.\n-Required: [src.costs[ARTRET_RESONATOR]["readable"]]",
+			"tunerTip" = "A single-use device that randomizes faults of an activated artifact.\n-Required: [src.costs[ARTRET_TUNER]["readable"]]",
+			"createArtTip" = "Re-create a previously broken down artifact.\n-Required: [src.costs[ARTRET_PREVIOUS_ART]["readable"]]",
+			"combineArtsTip" = "Combine compatible artifacts into a new artifact with combined properties.\n-Required: [src.costs[ARTRET_COMBINE_ARTS]["readable"]]",
+			"imbueLightTip" = "Imbue ambient light into the stored object.\n-Required: [src.costs[ARTRET_ADD_LIGHT]["readable"]]",
+			"cutGemTip" = "Perfect the quality of a gem.\n-Required: [src.costs[ARTRET_PERFECT_GEM]["readable"]]",
+			"breakdownMatsTip" = "Breakdown a compatible item for materials.\n-Required: [src.costs[ARTRET_BREAKDOWN_MATS]["readable"]]",
+			"modifyMaterialTip" = "Modify a property of the stored item's material by a value of +/- 0.5.\n-Required: [src.costs[ARTRET_MODIFY_MATERIAL]["readable"]]",
+			"upgradeStorageTip" = "Increase the storage space of the stored item by 1.\n-Required: [src.costs[ARTRET_INCREASE_STORAGE]["readable"]]",
+			"increaseReagentsTip" = "Increase the reagent capacity of the stored item by 10%.\n-Required: [src.costs[ARTRET_INCREASE_REAGENTS]["readable"]]",
+			"increaseCellCapTip" = "Increase the cell capacity of the stored item by 10%.\n-Required: [src.costs[ARTRET_INCREASE_CELL_CAP]["readable"]]",
+			"upgradeMiningPowerTip" = "Increase the mining power of the stored custom mining tool by 10%.\n-Required: [src.costs[ARTRET_INCREASE_MINING_POWER]["readable"]]",
+			"reticulatedArtifacts" = src.reticulated_artifacts
+		)
+
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return
+
+		switch (action)
+			if ("eject_art")
+				src.eject_artifact()
+			if ("eject_item")
+				src.eject_item()
+			if ("view_database")
+				src.view_database(usr)
+
+			if ("breakdown_artifact")
+				src.break_down_artifact(usr)
+			if ("break_down_fusion")
+				src.break_down_artifact_fusion(usr)
+
+			if ("create_resonator")
+				src.create_thing(ARTRET_RESONATOR, usr)
+			if ("create_tuner")
+				src.create_thing(ARTRET_TUNER, usr)
+			if ("create_artifact")
+				src.create_thing(ARTRET_PREVIOUS_ART, usr)
+			if ("combine_artifacts")
+				src.create_thing(ARTRET_COMBINE_ARTS, usr)
+
+			if ("imbue_light")
+				src.modify_item(ARTRET_ADD_LIGHT, usr)
+			if ("cut_gem")
+				src.modify_item(ARTRET_PERFECT_GEM, usr)
+			if ("breakdown_mats")
+				src.modify_item(ARTRET_BREAKDOWN_MATS, usr)
+			if ("modify_material")
+				src.modify_item(ARTRET_MODIFY_MATERIAL, usr)
+			if ("upgrade_storage")
+				src.modify_item(ARTRET_INCREASE_STORAGE, usr)
+			if ("increase_reagents")
+				src.modify_item(ARTRET_INCREASE_REAGENTS, usr)
+			if ("increase_cell_capacity")
+				src.modify_item(ARTRET_INCREASE_CELL_CAP, usr)
+			if ("upgrade_mining_power")
+				src.modify_item(ARTRET_INCREASE_MINING_POWER, usr)
 
 	attack_hand(mob/user)
-		src.use_reticulator(user)
+		if (..())
+			return
+		src.ui_interact(user)
 
 	attackby(obj/item/I, mob/user)
 		..()
@@ -63,15 +152,9 @@
 		..()
 		if (BOUNDS_DIST(src, over_location) > 0)
 			return
-		var/obj/O = over_object
-		if (!istype(O) || O.anchored)
-			return
 		var/turf/T = get_turf(over_location)
 		if (T.density)
 			return
-		if (ismob(src_location))
-			var/mob/M = src_location
-			M.drop_item(over_object)
 		src.stored_artifact?.set_loc(T)
 		src.stored_artifact = null
 		src.stored_item?.set_loc(T)
@@ -81,10 +164,13 @@
 		..()
 		if (BOUNDS_DIST(dropped, src) > 0)
 			return
-		if (!istype(dropped))
+		if (!istype(dropped) || !dropped.anchored)
 			return
+		if (ismob(src_location))
+			var/mob/M = src_location
+			M.drop_item(dropped)
 		var/available_slots = list("Break down artifact", "Modification", "Cancel")
-		if (src.stored_artifact || !dropped.artifact || !dropped.artifact.activated)
+		if (src.stored_artifact || !dropped.artifact)
 			available_slots -= "Break down artifact"
 		if (src.stored_item)
 			available_slots -= "Modification"
@@ -100,117 +186,85 @@
 				src.stored_item = dropped
 				dropped.set_loc(src)
 
-	proc/use_reticulator(mob/user)
-		var/choice = tgui_input_list(user, "Choose what you would like to do.[src.get_stored_info()]", "Choose Action", list("Break down artifact", "Create something", "Modify something"))
-		switch (choice)
-			if ("Break down artifact")
-				if (!src.stored_artifact)
-					tgui_alert(user, "Can't break down! No stored artifact.", "Error", list("Ok"))
-				else if (!src.can_break_down(src.stored_artifact))
-					tgui_alert(user, "Can't break down! Stored artifact is unlabeled.", "Error", list("Ok"))
-				else
-					src.break_down_artifact(src.stored_artifact, user)
+	verb/eject()
+		set name = "Eject Storage"
+		set src in oview(1)
+		set category = "Local"
 
-			if ("Create something")
-				var/creatables = list(
-					"Resonator ([src.get_readable_cost(ARTRET_RESONATOR)])" = ARTRET_RESONATOR,
-				//	"Scrambler ([src.get_readable_cost(ARTRET_SCRAMBLER)])" = ARTRET_SCRAMBLER,
-					"Tuner ([src.get_readable_cost(ARTRET_TUNER)])" = ARTRET_TUNER,
-					"Previous artifact ([src.get_readable_cost(ARTRET_PREVIOUS_ART)])" = ARTRET_PREVIOUS_ART,
-					"Combine artifacts ([src.get_readable_cost(ARTRET_COMBINE_ARTS)])" = ARTRET_COMBINE_ARTS
-				)
-				var/to_create = creatables[tgui_input_list(user, "What would you like to create?[src.get_stored_info()]", "Create", creatables)]
-				if (!to_create)
-					return
+		src.eject_artifact()
+		src.eject_item()
 
-				if (!src.can_create_thing(to_create))
-					tgui_alert(user, "Can't create! Insufficient artifact shards.", "Error", list("Ok"))
-					return
-				if (to_create == ARTRET_COMBINE_ARTS)
-					if (!src.stored_item.artifact || !src.stored_item.artifact.activated)
-						tgui_alert(user, "The stored item must be an activated artifact!", "Error", list("Ok"))
-						return
-					if (!src.stored_artifact.can_combine_artifact(src.stored_item))
-						tgui_alert(user, "The artifacts are incompatible!", "Error", list("Ok"))
-						return
+	proc/eject_artifact()
+		src.stored_artifact?.set_loc(get_turf(src))
+		src.stored_artifact = null
 
-				src.create_thing(to_create, user)
+	proc/eject_item()
+		src.stored_item?.set_loc(get_turf(src))
+		src.stored_item = null
 
-			if ("Modify something")
-				if (!src.stored_item)
-					tgui_alert(user, "Can't modify! No stored item.", "Error", list("Ok"))
-					return
-
-				var/option_list = list(
-					"Imbue light ([src.get_readable_cost(ARTRET_ADD_LIGHT)])" = ARTRET_ADD_LIGHT,
-					"Perfect gem ([src.get_readable_cost(ARTRET_PERFECT_GEM)])" = ARTRET_PERFECT_GEM,
-					"Breakdown into materials ([src.get_readable_cost(ARTRET_BREAKDOWN_MATS)])" = ARTRET_BREAKDOWN_MATS,
-					"Set a material property ([src.get_readable_cost(ARTRET_MODIFY_MATERIAL)])" = ARTRET_MODIFY_MATERIAL,
-					"Increase storage capacity ([src.get_readable_cost(ARTRET_INCREASE_STORAGE)])" = ARTRET_INCREASE_STORAGE,
-					"Increase reagent capacity ([src.get_readable_cost(ARTRET_INCREASE_REAGENTS)])" = ARTRET_INCREASE_REAGENTS,
-					"Increase power cell capacity ([src.get_readable_cost(ARTRET_INCREASE_CELL_CAP)])" = ARTRET_INCREASE_CELL_CAP,
-					"Increase mining tool power ([src.get_readable_cost(ARTRET_INCREASE_MINING_POWER)])" = ARTRET_INCREASE_MINING_POWER,
-				)
-				var/picked_option = option_list[tgui_input_list(user, "How would you like to modify the stored item?[src.get_stored_info()]", "Pick option", option_list)]
-				if (!picked_option)
-					return
-
-				if (!src.can_modify_item(src.stored_item, picked_option))
-					tgui_alert(user, "Can't modify! Incompatible item or insufficient artifact shards.", "Error", list("Ok"))
-					return
-
-				src.modify_item(src.stored_item, picked_option, user)
-
-
-	proc/can_break_down(obj/O)
+	proc/can_combine(obj/art1, obj/art2)
 		. = TRUE
-		if (!O.artifact)
+		if (!src.stored_artifact?.artifact?.activated || !src.stored_item?.artifact?.activated)
 			return FALSE
-		var/obj/item/sticker/postit/artifact_paper/paper = locate(/obj/item/sticker/postit/artifact_paper) in O.vis_contents
-		if (!paper)
+		if (!src.stored_artifact.can_combine_artifact(src.stored_item))
+			return FALSE
+		if (!src.meets_cost_requirement(ARTRET_COMBINE_ARTS))
 			return FALSE
 
-	proc/break_down_artifact(obj/O, mob/user)
-		var/breakdown_stored_item = FALSE
-		if (src.stored_item?.artifact?.activated)
-			breakdown_stored_item = tgui_alert(user, "Attempt to breakdown stored artifact for an extra shard? It must be labeled correctly.", "Extra shard", list("Yes", "No") == "Yes")
-		var/datum/artifact/artifact = O.artifact
-		var/obj/item/sticker/postit/artifact_paper/paper = locate(/obj/item/sticker/postit/artifact_paper) in O.vis_contents
-		if (paper.lastAnalysis < 3)
-			qdel(O)
-			if (breakdown_stored_item)
-				qdel(src.stored_item)
-				src.stored_item = null
+	proc/break_down_artifact(mob/user)
+		if (tgui_alert(user, "Attempt to breakdown stored artifact for a shard? It must be labeled correctly.", "Shard Extraction", list("Yes", "No") != "Yes"))
+			return
+		if (!src.stored_artifact)
+			return
+		var/datum/artifact/artifact = src.stored_artifact.artifact
+		var/obj/item/sticker/postit/artifact_paper/paper = locate(/obj/item/sticker/postit/artifact_paper) in src.stored_artifact.vis_contents
+		if (!paper || paper.lastAnalysis < 3)
+			qdel(src.stored_artifact)
+			src.stored_artifact = null
 			return
 
-		if (!breakdown_stored_item)
-			switch (artifact.shard_reward)
-				if (ARTIFACT_SHARD_ESSENCE)
-					src.essence_shards++
-				if (ARTIFACT_SHARD_POWER)
-					src.power_shards++
-				if (ARTIFACT_SHARD_SPACETIME)
-					src.spacetime_shards++
-				if (ARTIFACT_SHARD_OMNI)
-					src.omni_shards++
+		switch (artifact.shard_reward)
+			if (ARTIFACT_SHARD_ESSENCE)
+				src.essence_shards++
+			if (ARTIFACT_SHARD_POWER)
+				src.power_shards++
+			if (ARTIFACT_SHARD_SPACETIME)
+				src.spacetime_shards++
+			if (ARTIFACT_SHARD_OMNI)
+				src.omni_shards++
 
-		src.fusion_shards += length(O.combined_artifacts)
+		src.fusion_shards += length(src.stored_artifact.combined_artifacts)
 
-		if (breakdown_stored_item)
-			paper = locate(/obj/item/sticker/postit/artifact_paper) in src.stored_item.vis_contents
-			if (paper.lastAnalysis < 3)
-				if (O.artifact.shard_reward != src.stored_item.artifact.shard_reward)
-					src.fusion_shards++
+		src.reticulated_artifacts[src.stored_artifact.artifact.type_name] = src.stored_artifact.artifact.type
 
-			qdel(src.stored_item)
-			src.stored_item = null
+		qdel(src.stored_artifact)
+		src.stored_artifact = null
 
-		src.reticulated_artifacts[O.artifact.type_name] = O.artifact.type
+	proc/break_down_artifact_fusion(mob/user)
+		if (tgui_alert(user, "Attempt to breakdown stored artifacts for a Fusion shard? They must be labeled correctly.", "Shard Extraction", list("Yes", "No") != "Yes"))
+			return
+		if (!src.stored_artifact || !src.stored_item)
+			return
+		var/art1_breakdown_successful = FALSE
+		var/art2_breakdown_successful = FALSE
+		var/obj/item/sticker/postit/artifact_paper/paper = locate(/obj/item/sticker/postit/artifact_paper) in src.stored_artifact.vis_contents
+		art1_breakdown_successful = paper?.lastAnalysis >= 3
 
-		qdel(O)
+		paper = locate(/obj/item/sticker/postit/artifact_paper) in src.stored_item.vis_contents
+		art2_breakdown_successful = paper?.lastAnalysis >= 3
 
-	proc/can_create_thing(thing)
-		return src.meets_cost_requirement(thing)
+		if (art1_breakdown_successful && art2_breakdown_successful)
+			src.fusion_shards++
+			src.fusion_shards += length(src.stored_artifact.combined_artifacts)
+			src.fusion_shards += length(src.stored_item.combined_artifacts)
+
+		src.reticulated_artifacts[src.stored_artifact.artifact.type_name] = src.stored_artifact.artifact.type
+		src.reticulated_artifacts[src.stored_item.artifact.type_name] = src.stored_item.artifact.type
+
+		qdel(src.stored_artifact)
+		src.stored_artifact = null
+		qdel(src.stored_item)
+		src.stored_item = null
 
 	proc/create_thing(thing, mob/user)
 		switch (thing)
@@ -221,71 +275,83 @@
 			if (ARTRET_TUNER)
 				new /obj/item/artifact_tuner(get_turf(src))
 			if (ARTRET_PREVIOUS_ART)
-				if (!length(src.reticulated_artifacts))
-					tgui_alert(user, "No artifacts have been reticulated!", "Error", list("Ok"))
-				else
-					var/type_to_create = src.reticulated_artifacts[tgui_input_list(user, "Which artifact would you like to create?", "Create artifact", src.reticulated_artifacts)]
-					if (type_to_create)
-						var/obj/artifact/art = new type_to_create(get_turf(src))
-						art.artifact.reticulated = TRUE
+				var/type_to_create = src.reticulated_artifacts[tgui_input_list(user, "Which artifact would you like to create?", "Create artifact", src.reticulated_artifacts)]
+				if (type_to_create)
+					var/obj/artifact/art = new type_to_create(get_turf(src))
+					art.artifact.reticulated = TRUE
 			if (ARTRET_COMBINE_ARTS)
-				if (!src.stored_item.artifact || !src.stored_item.artifact.activated)
-					tgui_alert(user, "The stored item must be an activated artifact!", "Error", list("Ok"))
-					return
-				if (!src.stored_artifact.can_combine_artifact(src.stored_item))
-					tgui_alert(user, "The artifacts are incompatible!", "Error", list("Ok"))
-					return
 				if (tgui_alert(user, "Are you sure you wish to combine [src.stored_item] into [src.stored_artifact]? This can't be undone.", "Confirmation", list("Yes", "No")) != "Yes")
 					return
 				src.stored_artifact.combine_artifact(src.stored_item)
 				src.stored_artifact.artifact.reticulated = TRUE
 				src.stored_item = null
 
-	proc/can_modify_item(obj/O, action)
+	proc/meets_cost_requirement(thing)
 		. = TRUE
+		var/essence_required = src.costs[thing][ARTIFACT_SHARD_ESSENCE]
+		var/power_required = src.costs[thing][ARTIFACT_SHARD_POWER]
+		var/spacetime_required = src.costs[thing][ARTIFACT_SHARD_SPACETIME]
+		var/fusion_required = src.costs[thing][ARTIFACT_SHARD_FUSION]
+		var/omni_required = src.costs[thing][ARTIFACT_SHARD_OMNI]
+
+		if (src.essence_shards < essence_required)
+			return FALSE
+		if (src.power_shards < power_required)
+			return FALSE
+		if (src.spacetime_shards < spacetime_required)
+			return FALSE
+		if (src.fusion_shards < fusion_required)
+			return FALSE
+		if (src.omni_shards < omni_required)
+			return FALSE
+
+	proc/can_modify_item(action)
+		. = TRUE
+		if (!src.stored_item)
+			return FALSE
 
 		var/compatible_type = TRUE
 		switch (action)
 			if (ARTRET_ADD_LIGHT)
 				compatible_type = TRUE
 			if (ARTRET_PERFECT_GEM)
-				compatible_type = istype(O, /obj/item/raw_material/gemstone)
+				compatible_type = istype(src.stored_item, /obj/item/raw_material/gemstone)
 				if (compatible_type)
-					var/datum/material/crystal/gemstone/mat = getMaterial(O.material.getID())
+					var/datum/material/crystal/gemstone/mat = getMaterial(src.stored_item.material.getID())
 					compatible_type = mat.gem_tier > 1
 			if (ARTRET_BREAKDOWN_MATS)
-				var/typeinfo/obj/info = O.get_typeinfo()
-				var/list/mats_used = info.mats
+				var/typeinfo/obj/info = src.stored_item.get_typeinfo()
+				var/list/mats_used = info?.mats
 				compatible_type = length(mats_used)
 			if (ARTRET_MODIFY_MATERIAL)
-				compatible_type = O.material
+				compatible_type = src.stored_item.material
 			if (ARTRET_INCREASE_STORAGE)
-				compatible_type = O.storage?.slots <= 13 && !istype(O, /obj/item/artifact/bag_of_holding)
+				compatible_type = src.stored_item.storage?.slots <= 13 && !istype(src.stored_item, /obj/item/artifact/bag_of_holding)
 			if (ARTRET_INCREASE_REAGENTS)
-				compatible_type = O.reagents
+				compatible_type = src.stored_item.reagents?.maximum_volume > 0
 			if (ARTRET_INCREASE_CELL_CAP)
-				compatible_type = istype(O, /obj/item/cell) || istype(O, /obj/item/ammo/power_cell)
+				compatible_type = istype(src.stored_item, /obj/item/cell) || istype(src.stored_item, /obj/item/ammo/power_cell)
 			if (ARTRET_INCREASE_MINING_POWER)
-				compatible_type = istype(O, /obj/item/mining_tools)
+				compatible_type = istype(src.stored_item, /obj/item/mining_tools)
 
 		if (!compatible_type)
 			return FALSE
 
 		return src.meets_cost_requirement(action)
 
-	proc/modify_item(obj/O, action, mob/user)
+	proc/modify_item(action, mob/user)
 		switch(action)
 			if (ARTRET_ADD_LIGHT)
 				var/col = tgui_color_picker(user, "Select color to add", "Color selection")
-				if (col)
-					O.remove_simple_light("artret_added_light")
-					O.add_simple_light("artret_added_light", rgb2num(col))
+				if (col && src.artifact)
+					src.stored_item.remove_simple_light("artret_added_light")
+					src.stored_item.add_simple_light("artret_added_light", rgb2num(col))
 			if (ARTRET_PERFECT_GEM)
-				var/datum/material/crystal/gemstone/mat = getMaterial(O.material.getID())
+				var/datum/material/crystal/gemstone/mat = getMaterial(src.stored_item.material.getID())
 				mat.gem_tier++
 				mat.update_properties()
 			if (ARTRET_BREAKDOWN_MATS)
-				var/typeinfo/obj/info = O.get_typeinfo()
+				var/typeinfo/obj/info = src.artifact.get_typeinfo()
 				var/list/mats_used = info.mats
 				for (var/mat in mats_used)
 					var/datum/manufacturing_requirement/rqmt = getManufacturingRequirement(mat)
@@ -295,13 +361,13 @@
 					bar_output.setMaterial(material)
 					bar_output.change_stack_amount(0)
 			if (ARTRET_MODIFY_MATERIAL)
-				var/list/props = O.material.getMaterialProperties()
+				var/list/props = src.stored_item.material.getMaterialProperties()
 				var/list/to_output = list()
 				for (var/datum/material_property/prop as anything in props)
-					var/prop_value = O.material.getProperty(prop.id)
+					var/prop_value = src.stored_item.material.getProperty(prop.id)
 					if (prop_value >= prop.max_value - 0.5 || prop_value <= prop.min_value + 0.5)
 						continue
-					to_output["[prop.name]: [O.material.getProperty(prop.id)]"] = prop.id
+					to_output["[prop.name]: [src.stored_item.material.getProperty(prop.id)]"] = prop.id
 				if (!length(to_output))
 					tgui_alert(user, "No available properties to modify!", "Error", list("Ok"))
 					return
@@ -311,63 +377,54 @@
 				var/to_change = tgui_alert(user, "Select modification for [to_modify].", "Material modification", list("+0.5", "-0.5", "Cancel"))
 				if (to_change == "+0.5")
 					var/material_prop_id = to_output[to_modify]
-					O.material.setProperty(material_prop_id, O.material.getProperty(material_prop_id) + 0.5)
+					src.stored_item.material.setProperty(material_prop_id, src.stored_item.material.getProperty(material_prop_id) + 0.5)
 				else if (to_change == "-0.5")
 					var/material_prop_id = to_output[to_modify]
-					O.material.setProperty(material_prop_id, O.material.getProperty(material_prop_id) - 0.5)
+					src.stored_item.material.setProperty(material_prop_id, src.stored_item.material.getProperty(material_prop_id) - 0.5)
 			if (ARTRET_INCREASE_STORAGE)
-				O.storage.increase_slots(1)
+				src.stored_item.storage.increase_slots(1)
 			if (ARTRET_INCREASE_REAGENTS)
-				O.reagents.maximum_volume *= 1.1
-				if (istype(O, /obj/item))
-					var/obj/item/I = O
+				src.stored_item.reagents.maximum_volume *= 1.1
+				if (istype(src.stored_item, /obj/item))
+					var/obj/item/I = src.stored_item
 					I.inventory_counter?.update_counter()
 			if (ARTRET_INCREASE_CELL_CAP)
-				if (istype(O, /obj/item/cell))
-					var/obj/item/cell/cell = O
+				if (istype(src.stored_item, /obj/item/cell))
+					var/obj/item/cell/cell = src.stored_item
 					cell.maxcharge *= 1.1
 					cell.UpdateIcon()
 				else
-					var/obj/item/ammo/power_cell/cell = O
+					var/obj/item/ammo/power_cell/cell = src.stored_item
 					cell.max_charge *= 1.1
 					cell.UpdateIcon()
 			if (ARTRET_INCREASE_MINING_POWER)
-				var/obj/item/mining_tools/tool = O
+				var/obj/item/mining_tools/tool = src.stored_item
 				tool.power *= 1.1
 				if (tool.power > SPIKES_MEDAL_POWER_THRESHOLD)
 					user.unlock_medal("This object menaces with spikes of...", TRUE)
 
 
-	proc/meets_cost_requirement(thing)
-		. = TRUE
-		var/essence_required = src.costs[thing][ARTIFACT_SHARD_ESSENCE]
-		var/power_required = src.costs[thing][ARTIFACT_SHARD_POWER]
-		var/spacetime_required = src.costs[thing][ARTIFACT_SHARD_SPACETIME]
-		var/extra_required = src.costs[thing][ARTIFACT_SHARD_FUSION]
-		var/omni_required = src.costs[thing][ARTIFACT_SHARD_OMNI]
+	proc/view_database(mob/user)
+		if (!src.artifact_shard_reference)
+			var/str
+			var/len = length(concrete_typesof(/datum/artifact))
+			var/i = 1
+			for (var/datum/artifact/art as anything in concrete_typesof(/datum/artifact))
+				switch (initial(art.shard_reward))
+					if (ARTIFACT_SHARD_ESSENCE)
+						str = "Essence"
+					if (ARTIFACT_SHARD_POWER)
+						str = "Power"
+					if (ARTIFACT_SHARD_SPACETIME)
+						str = "Spacetime"
+					if (ARTIFACT_SHARD_OMNI)
+						str = "Omni"
+				src.artifact_shard_reference += "[initial(art.type_name)] - [str]"
+				i++
+				if (i != len)
+					src.artifact_shard_reference += "\n"
 
-		if (src.essence_shards < essence_required)
-			return FALSE
-		if (src.power_shards < power_required)
-			return FALSE
-		if (src.spacetime_shards < spacetime_required)
-			return FALSE
-		if (src.fusion_shards < extra_required)
-			return FALSE
-		if (src.omni_shards < omni_required)
-			return FALSE
-
-	proc/get_readable_cost(action)
-		return src.costs[action]["readable"]
-
-	proc/get_stored_info()
-		return "<br>Stored artifact: [src.stored_artifact || "None"]" + \
-			"<br>Stored item: [src.stored_item || "None"]" + \
-			"<br>Essence shards (E): [src.essence_shards]" + \
-			"<br>Power shards (P): [src.power_shards]" + \
-			"<br>Spacetime shards (S): [src.spacetime_shards]" + \
-			"<br>Extra shards (Ex): [src.fusion_shards]" + \
-			"<br>Omnishards (O): [src.omni_shards]"
+		tgui_message(user, src.artifact_shard_reference, "Artifact Shard per Artifact")
 
 /obj/item/artifact_resonator
 	name = "Artifact resonator"

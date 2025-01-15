@@ -104,7 +104,7 @@ export const Reticulator = () => {
               <LabeledList.Item label="Spacetime">{spacetimeShards}</LabeledList.Item>
               <LabeledList.Item label="Fusion">{fusionShards}</LabeledList.Item>
               <LabeledList.Item label="Omni">{omniShards}</LabeledList.Item>
-              <LabeledList.Item label="Database"><Button selected="true">Info</Button></LabeledList.Item>
+              <LabeledList.Item label="Database"><Button selected="true" onClick={() => act("view_database")}>Info</Button></LabeledList.Item>
             </LabeledList>
            </Section>
            <Section title="Objects">
