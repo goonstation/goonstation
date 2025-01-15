@@ -1154,11 +1154,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			src.on_spin_emote(user)
 			animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 			locked_shut = TRUE
-			shoot_delay = 1
+			shoot_delay = 2
 			spread_angle = 15
 			user.show_message(SPAN_ALERT("[user] whips \the [src] out of [his_or_her(user)] pocket, seating their free hand over the hammer!"), 1)
 			src.current_projectile.power *= 0.7 //a full pelting puts you INCHES from death
-			SPAWN (2 SECONDS)
+			SPAWN (4 SECONDS)
 				locked_shut = FALSE
 				spread_angle = 2
 				shoot_delay = 4
@@ -1187,7 +1187,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "american180"
 	item_state = "a180"
-	spread_angle = 10
+	spread_angle = 3
 	shoot_delay = 1
 	has_empty_state = FALSE // non detachable mag, for now...
 	w_class = W_CLASS_BULKY
@@ -1198,6 +1198,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	auto_eject = TRUE
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/bullet_22/american_180
+	recoil_max = 100
 
 	eject_magazine(mob/user)
 		user.show_message(SPAN_ALERT("They tell stories of how BORING these magazines are to load! Let's not do that."))
@@ -1207,7 +1208,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		ammo = new default_magazine
 
 		set_current_projectile(new/datum/projectile/bullet/bullet_22/a180)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
+		AddComponent(/datum/component/holdertargeting/fullauto, 0.6)
 		..()
 
 /obj/item/gun/kinetic/makarov
@@ -1926,7 +1927,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	recoil_strength = 18
 	recoil_max = 40
 	max_move_amount = 1
-	rack_delay = 6
+	rack_delay = 5
 	pumpsound = 'sound/weapons/kuvalda_pull2.ogg'
 	pushsound = 'sound/weapons/kuvalda_push2.ogg'
 	empty

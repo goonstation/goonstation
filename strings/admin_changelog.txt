@@ -1,3 +1,6 @@
+(t)mon jan 6 25
+(u)LeahTheTech
+(*)Basketball wizard spells are now abilities and work like you'd think they should.
 (t)sun dec 8 24
 (u)LeahTheTech
 (*)Added a "Delete landmarks" verb that lets you delete all landmarks of a specific type.

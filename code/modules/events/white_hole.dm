@@ -1,6 +1,6 @@
 #define VALID_WHITE_HOLE_LOCATIONS list("artlab", "teg", "flock", "chapel", "trench", "asteroid", \
 	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", \
-	"medbay", "security", "cargo", "nuclear", "janitorial", "wizard")
+	"medbay", "security", "cargo", "nuclear", "janitorial", "wizard", "spacemas")
 
 TYPEINFO(/datum/random_event/major/white_hole)
 	initialization_args = list(
@@ -417,6 +417,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/reagent_containers/food/snacks/donkpocket_w = 1,
 			/obj/bomb_decoy = 0.4,
 			/obj/machinery/nuclearbomb/event/micronuke = 0.05,
+			'sound/effects/first_reality.ogg' = 0.5,
 		),
 		"hell" = list(
 			"fireflash" = 15,
@@ -825,7 +826,37 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/clothing/gloves/ring/wizard/forcewall = 0.1,
 			/obj/item/enchantment_scroll = 0.5,
 			"wizard crystal" = 1
-		)
+		),
+		"spacemas" = list(
+			"present" = 25,
+			/obj/item/reagent_containers/food/snacks/breadloaf/fruit_cake = 4,
+			/obj/item/reagent_containers/food/snacks/breadslice/fruit_cake = 7,
+			/obj/item/reagent_containers/food/snacks/turkey = 5,
+			/mob/living/critter/small_animal/bird/turkey = 1,
+			/obj/item/reagent_containers/food/snacks/candy/candy_cane = 5,
+			/obj/item/reagent_containers/food/snacks/candy/nougat = 3,
+			/obj/item/reagent_containers/food/snacks/candy/negativeonebar = 3,
+			/obj/item/reagent_containers/food/snacks/candy/chocolate = 3,
+			/obj/item/reagent_containers/food/snacks/candy/pbcup = 2,
+			/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/cherry = 2,
+			/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch = 1,
+			/obj/item/reagent_containers/food/drinks/eggnog = 5,
+			/obj/item/reagent_containers/food/drinks/bottle/soda/xmas = 5,
+			/obj/item/reagent_containers/food/snacks/plant/orange = 3,
+			/obj/item/reagent_containers/food/snacks/snowball = 15,
+			/obj/decal/wreath = 1,
+			/mob/living/critter/small_animal/bunny/hare = 1,
+			/obj/item/raw_material/char = 3,
+			/obj/critter/domestic_bee/reindeer = 1,
+			/obj/critter/domestic_bee/santa = 1,
+			/obj/item/material_piece/organic/wood = 3,
+			/obj/item/clothing/head/helmet/space/santahat = 3,
+			/obj/item/clothing/suit/space/santa = 2,
+#ifdef XMAS
+			/datum/figure_info/santa = 1,
+#endif
+			/datum/reagent/fooddrink/alcoholic/mulled_wine = 2,
+		),
 	)
 
 	New(var/loc, grow_duration = 0, active_duration = null, source_location = null, triggered_by_event = FALSE)
@@ -1006,7 +1037,9 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		// we get one reroll to get something else
 		if((spawn_type in list(/obj/hotspot/gasfire, "plasma")) && source_location != src.source_location)
 			spawn_type = weighted_pick(src.spawn_probs[source_location])
-
+		if (isresource(spawn_type)) //assume it's a sound because it doesn't make sense to shove an icon in here
+			playsound(src.loc, spawn_type, 80, FALSE)
+			return src.generate_thing(source_location) //re-roll something else so we don't return null
 		if(ispath(spawn_type, /atom/movable))
 			. = new spawn_type(src.loc)
 		else if(ispath(spawn_type, /datum/projectile))
@@ -1165,6 +1198,13 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			if ("wizard crystal")
 				spawn_type = pick(concrete_typesof(/obj/item/wizard_crystal))
 				. = new spawn_type(src.loc)
+			if ("present")
+				var/atom/movable/thing = generate_thing(pick(valid_locations))
+				if (istype(thing, /obj/projectile))
+					qdel(thing)
+					. = new /obj/item/a_gift/festive(src.loc)
+				else
+					. = thing?.gift_wrap(xmas_style = TRUE)
 			else
 				CRASH("Unknown spawn type: [spawn_type]")
 

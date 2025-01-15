@@ -1254,6 +1254,7 @@ datum
 			hygiene_value = -1.5
 			value = 3 // 1c + 1c + 1c
 			viscosity = 0.13
+			volatility = 1
 			minimum_reaction_temperature = T0C + 200
 			var/min_req_fluid = 0.25 //at least 1/4 of the fluid needs to be oil for it to ignite
 
@@ -1670,7 +1671,7 @@ datum
 						var/amt = min(volume/100,1)
 						src.holder.remove_reagent("sewage",amt)
 						M.reagents.add_reagent("sewage",amt)
-						src.reaction_mob(M,INGEST,amt)
+						src.reaction_mob(M,INGEST,amt,null,amt)
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -3248,7 +3249,7 @@ datum
 							blood.blood_DNA = bioHolder.Uid
 						blood.reagents.add_reagent(src.id, volume, src.data)
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, paramslist = 0)
 				. = ..()
 				if (!volume_passed) return
 				if (!ishuman(M)) return
@@ -3276,7 +3277,8 @@ datum
 								var/datum/bioHolder/unlinked/bioHolder = src.data
 								M.change_vampire_blood(bloodget, 0, victim = bioHolder?.weak_owner?.deref()) // vamp_blood_remaining
 								V.check_for_unlocks()
-								holder.del_reagent(src.id)
+								if("digestion" in paramslist)
+									holder.del_reagent(src.id)
 								return 0
 				return 1
 
@@ -3305,6 +3307,11 @@ datum
 					if (holder.my_atom)
 						for (var/mob/O in AIviewers(get_turf(holder.my_atom), null))
 							boutput(O, SPAN_ALERT("The blood tries to climb out of [holder.my_atom] before sizzling away!"))
+						// Real world changeling tests should only happen in containers at a slow pace
+						if (!ON_COOLDOWN(global, "bloodc_logging", 4 SECONDS))
+							var/datum/bioHolder/bioHolder = src.data
+							if(bioHolder && bioHolder.ownerName)
+								logTheThing(LOG_COMBAT, bioHolder.ownerName, "Changeling blood reaction in [holder.my_atom] at [log_loc(holder.my_atom)]")
 					else
 						for(var/turf/t in covered)
 							for (var/mob/O in AIviewers(t, null))

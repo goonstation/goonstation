@@ -189,10 +189,11 @@
 		else
 			return ..() // CALL your GODDAMN PARENTS
 
-	attack(atom/target, mob/user)
+	attack(atom/target, mob/user, def_zone, is_special = FALSE)
 		if (isliving(target))
 			var/mob/living/M = target
-
+			if (is_special)
+				return ..()
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.bleeding || (H.organHolder?.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
@@ -1106,6 +1107,8 @@
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (ishuman(target))
+			if (is_special)
+				return ..()
 			if (src.on > 0)
 				var/mob/living/carbon/human/fella = target
 				if (fella.wear_mask && istype(fella.wear_mask, /obj/item/clothing/mask/cigarette))
@@ -1220,6 +1223,8 @@
 		if (ishuman(target))
 			var/mob/living/carbon/human/fella = target
 
+			if (is_special)
+				return ..()
 			if (src.on)
 				if (fella.wear_mask && istype(fella.wear_mask, /obj/item/clothing/mask/cigarette))
 					var/obj/item/clothing/mask/cigarette/smoke = fella.wear_mask // aaaaaaa

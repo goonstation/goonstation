@@ -199,6 +199,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
+"adK" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/john_diner/delay3,
+/turf/space/fluid/acid,
+/area/space)
 "adQ" = (
 /obj/table/reinforced/auto,
 /obj/item/clipboard,
@@ -1028,7 +1035,6 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 2
 	},
-/obj/mapping_helper/access/security,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -1039,6 +1045,7 @@
 	enter_id = "inner";
 	name = "Security Interrogation 1"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/redblack,
 /area/station/security/interrogation)
 "awO" = (
@@ -1715,6 +1722,13 @@
 /obj/decal/tile_edge/floorguide/qm,
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/southeast)
+"aOH" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay2,
+/turf/space/fluid/acid/clear,
+/area/space)
 "aOL" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
@@ -3541,6 +3555,13 @@
 	dir = 6
 	},
 /area/station/hangar/sec)
+"bAV" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/john_diner/delay4,
+/turf/space/fluid/acid/clear,
+/area/space)
 "bAZ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -3887,6 +3908,13 @@
 /obj/item/cell/supercell/charged,
 /turf/simulated/floor/blueblack,
 /area/station/medical/robotics)
+"bIC" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay4,
+/turf/space/fluid/acid/clear,
+/area/space)
 "bII" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/secwing)
@@ -4490,6 +4518,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/emergencyinternals)
+"bYl" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay3,
+/turf/space/fluid/acid/clear,
+/area/space)
 "bZd" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -7503,6 +7538,8 @@
 /area/station/science/artifact)
 "duP" = (
 /obj/table/reinforced/auto,
+/obj/item/storage/box/panic_buttons,
+/obj/item/device/panicbutton,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "duZ" = (
@@ -8767,6 +8804,14 @@
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/engine/caution/west,
 /area/station/ai_monitored/armory)
+"dVY" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/john_diner,
+/turf/space/fluid/acid,
+/area/space)
 "dWe" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -10903,6 +10948,13 @@
 /area/station/engine/inner{
 	name = "Transception Array Control"
 	})
+"eSx" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/john_diner/delay5,
+/turf/space/fluid/acid/clear,
+/area/space)
 "eSJ" = (
 /obj/item/organ/brain/flockdrone,
 /obj/table/flock/auto,
@@ -17354,35 +17406,7 @@
 	},
 /area/flock_trader)
 "huh" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = -13
-	},
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = -5
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = -4;
-	pixel_y = 12
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = -13;
-	pixel_y = 12
-	},
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = 9
-	},
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = 1
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = 12;
-	pixel_y = 8
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = 4;
-	pixel_y = 8
-	},
+/obj/random_item_spawner/armory_armor_supplies,
 /turf/simulated/floor/engine/caution/north,
 /area/station/ai_monitored/armory)
 "hus" = (
@@ -18115,54 +18139,7 @@
 	name = "Arrival Shuttle Hallway"
 	})
 "hHe" = (
-/obj/rack,
-/obj/item/clothing/glasses/thermal{
-	pixel_x = 9;
-	pixel_y = 5
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = 8
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = 7;
-	pixel_y = -5
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = 6;
-	pixel_y = -10
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = -7;
-	pixel_y = -3
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = -8;
-	pixel_y = -8
-	},
-/obj/item/clothing/mask/gas/emergency{
-	pixel_x = 9;
-	pixel_y = 11
-	},
-/obj/item/clothing/mask/gas/emergency{
-	pixel_x = 3;
-	pixel_y = 11
-	},
-/obj/item/clothing/mask/gas/emergency{
-	pixel_x = -3;
-	pixel_y = 11
-	},
-/obj/item/clothing/mask/gas/emergency{
-	pixel_x = -9;
-	pixel_y = 11
-	},
+/obj/random_item_spawner/armory_goggle_supplies,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 5
 	},
@@ -18442,6 +18419,8 @@
 /area/abandonedmedicalship/robot_trader)
 "hOr" = (
 /obj/machinery/ore_cloud_storage_container,
+/obj/mapping_helper/access/research,
+/obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -20491,7 +20470,6 @@
 /area/station/science/teleporter)
 "iBz" = (
 /obj/machinery/door/airlock/pyro/security/alt,
-/obj/mapping_helper/access/brig,
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
@@ -20505,6 +20483,7 @@
 	enter_id = "inner";
 	name = "Security Interrogation 2"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/redblack,
 /area/station/security/interrogation)
 "iBC" = (
@@ -23366,6 +23345,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/escape)
+"jPa" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/john_diner,
+/turf/space/fluid/acid/clear,
+/area/space)
 "jPg" = (
 /obj/stool/chair{
 	dir = 8
@@ -27737,6 +27723,12 @@
 	dir = 5
 	},
 /area/station/engine/core/nuclear)
+"lDO" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space/fluid/acid,
+/area/space)
 "lDT" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
@@ -29826,10 +29818,10 @@
 	dir = 4;
 	id = "secfoy_out"
 	},
-/obj/mapping_helper/access/brig,
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -31423,6 +31415,13 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"ncO" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/john_diner/delay2,
+/turf/space/fluid/acid,
+/area/space)
 "ndi" = (
 /obj/rack,
 /obj/item/clothing/suit/wizrobe/purple,
@@ -32313,6 +32312,14 @@
 	},
 /turf/simulated/floor/engine/glow,
 /area/station/ai_monitored/armory)
+"nxR" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/john_diner,
+/turf/space/fluid/acid/clear,
+/area/space)
 "nym" = (
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 5
@@ -32399,6 +32406,9 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
 /obj/machinery/light/incandescent/warm,
+/obj/item/paper/pipebombs{
+	pixel_y = 4
+	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -32792,6 +32802,14 @@
 /area/station/crew_quarters/clown{
 	name = "Honkington's Abode"
 	})
+"nFW" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/john_diner/delay2,
+/turf/space/fluid/acid/clear,
+/area/space)
 "nGd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -34145,6 +34163,13 @@
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/ai_monitored/armory)
+"onw" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay4,
+/turf/space/fluid/acid/clear,
+/area/space)
 "onE" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/guardbot_kit,
@@ -35935,6 +35960,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hangar/sec)
+"oZS" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay2,
+/turf/space/fluid/acid/clear,
+/area/space)
 "pah" = (
 /obj/item/sheet/steel/reinforced/fullstack{
 	pixel_x = 6;
@@ -38338,6 +38370,14 @@
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
+"qce" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/trader_right,
+/turf/space/fluid/acid/clear,
+/area/space)
 "qcg" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 8;
@@ -38758,11 +38798,11 @@
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor/redblack/corner{
 	dir = 4
 	},
@@ -39307,7 +39347,6 @@
 /area/station/storage/eva)
 "qxw" = (
 /obj/machinery/door/airlock/pyro/security/alt,
-/obj/mapping_helper/access/brig,
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
@@ -39321,6 +39360,7 @@
 	enter_id = "outer";
 	name = "Security Interrogation 2"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -53369,6 +53409,13 @@
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/secwing)
+"wPK" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay3,
+/turf/space/fluid/acid/clear,
+/area/space)
 "wPX" = (
 /obj/machinery/vending/kitchen,
 /obj/item/storage/wall{
@@ -55726,6 +55773,13 @@
 /obj/machinery/microwave,
 /turf/simulated/floor/grey/side,
 /area/station/crew_quarters/lounge)
+"xRR" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/trader_left,
+/turf/space/fluid/acid/clear,
+/area/space)
 "xSf" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4
@@ -56240,6 +56294,10 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
+"yhi" = (
+/mob/living/carbon/human/npc/monkey/krimpus,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "yhq" = (
 /obj/item/furniture_parts/table/flock,
 /obj/table/flock/auto,
@@ -82273,13 +82331,13 @@ bzS
 bzS
 bzS
 rJg
-rJg
-rJg
-rJg
-rJg
-rJg
-rJg
-rJg
+xRR
+iXj
+oZS
+iXj
+bYl
+iXj
+bIC
 dqY
 dqY
 dqY
@@ -82321,13 +82379,13 @@ dqY
 dqY
 dqY
 dqY
-rJg
-rJg
-rJg
-rJg
-rJg
-rJg
-rJg
+onw
+iXj
+wPK
+iXj
+aOH
+iXj
+qce
 rJg
 bzS
 bzS
@@ -84085,13 +84143,13 @@ bzS
 bzS
 bzS
 rJg
-rJg
-rJg
-rJg
-rJg
-rJg
-rJg
-rJg
+xRR
+iXj
+oZS
+iXj
+bYl
+iXj
+bIC
 fDm
 gfS
 aiq
@@ -84133,13 +84191,13 @@ jQa
 aiq
 gfS
 fDm
-rJg
-rJg
-rJg
-rJg
-rJg
-rJg
-rJg
+onw
+iXj
+wPK
+iXj
+aOH
+iXj
+qce
 rJg
 bzS
 bzS
@@ -92257,7 +92315,7 @@ fLE
 jdV
 jdV
 jdV
-jdV
+yhi
 jdV
 jdV
 fLE
@@ -119467,18 +119525,18 @@ tum
 hiM
 qBq
 uSe
-rJg
-rJg
-rJg
-rJg
-rJg
-rJg
-rJg
-bzS
-bzS
-bzS
-bzS
-bzS
+kmB
+nxR
+kmB
+eSx
+iXj
+bAV
+iXj
+adK
+lDO
+ncO
+lDO
+dVY
 bzS
 bzS
 bzS
@@ -122486,7 +122544,7 @@ uSe
 uSe
 xbO
 uSe
-rJg
+vnv
 bUI
 bUI
 bUI
@@ -122788,7 +122846,7 @@ uSe
 uSe
 rJg
 rJg
-rJg
+hnw
 bUI
 bUI
 bUI
@@ -123090,19 +123148,19 @@ rJg
 rJg
 rJg
 rJg
-rJg
-rJg
-rJg
-rJg
-rJg
-rJg
-rJg
-rJg
-bzS
-bzS
-bzS
-bzS
-bzS
+nFW
+iXj
+jPa
+iXj
+eSx
+iXj
+bAV
+iXj
+adK
+lDO
+ncO
+lDO
+dVY
 bzS
 bzS
 bzS

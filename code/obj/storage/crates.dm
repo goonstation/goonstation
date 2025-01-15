@@ -131,7 +131,8 @@
 	name = "\improper RCD crate"
 	desc = "A crate for the Chief Engineer's personal RCD."
 	spawn_contents = list(/obj/item/rcd_ammo = 5,
-	/obj/item/rcd/construction/chiefEngineer)
+	/obj/item/rcd/construction/chiefEngineer,
+	/obj/item/places_pipes)
 
 /obj/storage/crate/abcumarker
 	name = "\improper ABCU-Marker crate"
@@ -855,7 +856,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		var/datum/loot_generator/shotgun_gen
 		src.vis_controller = new(src)
 		shotgun_gen =  new /datum/loot_generator(4,3)
-		shotgun_gen.place_loot_instance(src,1,2, new /obj/loot_spawner/xlong_tall/ks23_empty)
+		shotgun_gen.place_loot_instance(src,1,2, new /obj/loot_spawner/xlong_tall/ks23)
 		shotgun_gen.place_loot_instance(src,1,1, new /obj/loot_spawner/medium/ks23_shrapnel)
 		shotgun_gen.place_loot_instance(src,3,1, new /obj/loot_spawner/medium/ks23_slug)
 		..()

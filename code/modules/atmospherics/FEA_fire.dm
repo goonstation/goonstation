@@ -254,7 +254,7 @@ ABSTRACT_TYPE(/obj/hotspot)
 
 	if (bypassing)
 		if (istype(src, /obj/hotspot/gasfire))
-			icon_state = "3"
+			src.UpdateIcon("3")
 		location.burn_tile()
 
 		//Possible spread due to radiated heat
@@ -267,9 +267,9 @@ ABSTRACT_TYPE(/obj/hotspot)
 
 	else if (istype(src, /obj/hotspot/gasfire))
 		if (volume > (CELL_VOLUME * 0.4))
-			icon_state = "2"
+			src.UpdateIcon("2")
 		else
-			icon_state = "1"
+			src.UpdateIcon("1")
 
 	return TRUE
 
@@ -279,12 +279,81 @@ ABSTRACT_TYPE(/obj/hotspot)
 
 /// fire created by a gaseous source. or atmos fire.
 /obj/hotspot/gasfire
+	icon = 'icons/effects/fire_atmospheric.dmi'
 	icon_state = "1"
+	appearance_flags = TILE_BOUND // prevents fires laying against walls from showing over the wall
 	alpha = 160
+	pixel_x = -16
 
 /obj/hotspot/gasfire/New(turf/newLoc)
 	..()
 	src.set_dir(pick(cardinal))
+
+/obj/hotspot/gasfire/update_icon(base_icon)
+	..()
+	if (QDELETED(src)) // covers cases like building a wall over a fire
+		src.icon_state = null
+		src.remove_filter("fire-NW-alphamask")
+		src.remove_filter("fire-NE-alphamask")
+		return
+	var/turf/north_turf = get_step(src, NORTH)
+	var/turf/east_turf = get_step(src, EAST)
+	var/turf/west_turf = get_step(src, WEST)
+
+	var/north_valid = !IS_VALID_FLUID_TURF(north_turf) && IS_PERSPECTIVE_WALL(north_turf)
+	if (!north_valid)
+		for (var/obj/O in north_turf)
+			if (IS_PERSPECTIVE_BLOCK(O))
+				if (locate(/obj/hotspot/gasfire) in north_turf)
+					break
+				north_valid = TRUE
+				break
+	var/east_valid = !IS_VALID_FLUID_TURF(east_turf) && IS_PERSPECTIVE_WALL(east_turf)
+	if (!east_valid)
+		for (var/obj/O in east_turf)
+			if (IS_PERSPECTIVE_BLOCK(O))
+				if (locate(/obj/hotspot/gasfire) in east_turf)
+					break
+				east_valid = TRUE
+				break
+	var/west_valid = !IS_VALID_FLUID_TURF(west_turf) && IS_PERSPECTIVE_WALL(west_turf)
+	if (!west_valid)
+		for (var/obj/O in west_turf)
+			if (IS_PERSPECTIVE_BLOCK(O))
+				if (locate(/obj/hotspot/gasfire) in west_turf)
+					break
+				west_valid = TRUE
+				break
+
+	if (north_valid)
+		if (east_valid && west_valid)
+			src.icon_state = "[base_icon]-NEW"
+		else if (east_valid && !west_valid)
+			src.icon_state = "[base_icon]-NE"
+		else if (!east_valid && west_valid)
+			src.icon_state = "[base_icon]-NW"
+		else
+			src.icon_state = "[base_icon]-N"
+	else if (east_valid)
+		if (west_valid)
+			src.icon_state = "[base_icon]-EW"
+		else
+			src.icon_state = "[base_icon]-E"
+	else if (west_valid)
+		src.icon_state = "[base_icon]-W"
+	else
+		src.icon_state = "[base_icon]"
+
+	src.remove_filter("fire-NW-alphamask")
+	src.remove_filter("fire-NE-alphamask")
+	if (!north_valid)
+		return
+	var/obj/hotspot/gasfire = locate(/obj/hotspot/gasfire) in get_step(src, NORTHWEST)
+	if (gasfire)
+		src.add_filter("fire-NW-alphamask", 0, alpha_mask_filter(icon = icon(src.icon, "NW-alpha"), flags = MASK_INVERSE))
+	gasfire = locate(/obj/hotspot/gasfire) in get_step(src, NORTHEAST)
+	if (gasfire)
+		src.add_filter("fire-NE-alphamask", 0, alpha_mask_filter(icon = icon(src.icon, "NE-alpha"), flags = MASK_INVERSE))
 
 // now this is ss13 level code
 /// Converts our temperature into an approximate color based on blackbody radiation.

@@ -17,6 +17,8 @@ TYPEINFO(/datum/component/snowballs)
 	. = ..()
 
 /datum/component/snowballs/proc/start_snowball(turf/T, mob/user)
+	if (user.a_intent != INTENT_GRAB)
+		return
 	if(!ON_COOLDOWN(source_turf, "snowball", 6 SECONDS))
 		actions.start(new /datum/action/bar/icon/callback(user, T, rand(3 SECONDS, 5 SECONDS), /datum/component/snowballs/proc/form_snowball,
 		list(user), 'icons/misc/xmas.dmi', "snowball", null, null, src), user)

@@ -998,6 +998,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
+	var/paper_icon_state = "paper_caution"
 
 	attack_self(mob/user)
 		var/menuchoice = tgui_alert(user, "What would you like to do?", "Ticket writer", list("Ticket", "Nothing"))
@@ -1016,7 +1017,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		else if (issilicon(user))
 			var/mob/living/silicon/S = user
 			I = S.botcard
-		if (!I || !(access_security in I.access))
+		if (!I || !(access_ticket in I.access))
 			boutput(user, SPAN_ALERT("Insufficient access."))
 			return
 		playsound(src, 'sound/machines/keyboard3.ogg', 30, TRUE)
@@ -1050,13 +1051,14 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			user.put_in_hand_or_drop(p)
 			p.name = "Official Caution - [ticket_target]"
 			p.info = ticket_text
-			p.icon_state = "paper_caution"
+			p.icon_state = src.paper_icon_state
 
 		return T.target_byond_key
 
 /obj/item/device/ticket_writer/crust
 	name = "crusty old security TicketWriter 1000"
 	desc = "An old TicketWriter model held together by hopes and dreams alone."
+	paper_icon_state = "paper_burned"
 
 TYPEINFO(/obj/item/device/appraisal)
 	mats = 5
@@ -1158,9 +1160,10 @@ TYPEINFO(/obj/item/device/appraisal)
 			var/image/chat_maptext/chat_text = null
 			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">[round(sell_value)][CREDIT_SIGN]"]</span>"
 			chat_text = make_chat_maptext(A, popup_text, alpha = 180, force = 1, time = 1.5 SECONDS)
-			// many of the artifacts are upside down and stuff, it makes text a bit hard to read!
-			chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
+
 			if (chat_text)
+				// many of the artifacts are upside down and stuff, it makes text a bit hard to read!
+				chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
 				// don't bother bumping up other things
 				chat_text.show_to(user.client)
 

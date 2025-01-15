@@ -57,6 +57,8 @@ datum/mind
 	var/const/karma_max = 69
 	var/damned = 0 //! If 1, they go to hell when are die
 
+	var/datum/personal_summary/personal_summary
+
 	var/show_respawn_prompts = TRUE
 
 	New(mob/M)

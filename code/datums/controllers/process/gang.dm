@@ -36,22 +36,35 @@
 		if (istype(ticker.mode, /datum/game_mode/gang))
 			var/datum/game_mode/gang/gamemode = ticker.mode
 			broadcast_to_all_gangs("Each gang has [GANG_SPRAYPAINT_REGEN_QUANTITY > 1 ? "extra spray cans" : "an extra spray can" ] available from their locker.")
+			var/nextTime = round((TIME + GANG_SPRAYPAINT_REGEN)/10 ,1)
+			var/timestring = "[(nextTime / 60) % 60]:[add_zero(num2text(nextTime % 60), 2)]"
+
 			for(var/datum/gang/gang as anything in gamemode.gangs)
 				gang.spray_paint_remaining += GANG_SPRAYPAINT_REGEN_QUANTITY
+				gang.next_spray_paint_restock = timestring
 
 
-/datum/controller/process/gang_launder_money
+/datum/controller/process/gang_locker_tick
 	setup()
-		name = "Gang_Money_laundering"
+		name = "Gang Locker Tick"
 		schedule_interval = GANG_LAUNDER_DELAY
 	doWork()
 		for_by_tcl(locker, /obj/ganglocker)
 			if (!locker)
-				return
+				continue
+			if (!locker.is_hiding)
+				var/should_hide = TRUE
+				for(var/mob/M in range(1, locker.loc))
+					if(M.get_gang() == locker.gang)
+						should_hide = FALSE
+						break
+				if (should_hide)
+					locker.toggle_hide(TRUE)
+
 			if (locker.stored_cash < 1)
 				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
 				locker.UpdateIcon()
-				return
+				continue
 
 			var/launder_rate = GANG_LAUNDER_RATE
 			if (locker.superlaunder_stacks > 0)
@@ -63,7 +76,7 @@
 			if (points < 1)
 				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
 				locker.UpdateIcon()
-				return
+				continue
 
 			if (locker.superlaunder_stacks)
 				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_superlaunder")
@@ -84,6 +97,9 @@
 		var/list/area/areas = get_accessible_station_areas()
 		for(var/area_name in areas)
 			if(istype(areas[area_name], /area/station/security) || areas[area_name].teleport_blocked || istype(areas[area_name], /area/station/turret_protected))
+				continue
+			var/typeinfo/area/typeinfo = areas[area_name].get_typeinfo()
+			if (!typeinfo.valid_bounty_area)
 				continue
 			potential_hot_zones += areas[area_name]
 	doWork()

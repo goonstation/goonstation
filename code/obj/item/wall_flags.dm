@@ -140,6 +140,15 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
 	desc = "A makeshift cape made out of a pride flag. Still creased, of course."
 	icon = 'icons/obj/items/flag.dmi'
 	burn_possible = FALSE
+	var/altside_cape
+
+	attack_self(mob/user as mob)
+		if(src.altside_cape)
+			user.show_text("You flip the [src] around.")
+			if(src.loc == user)
+				user.u_equip(src)
+			qdel(src)
+			user.put_in_hand_or_drop(new src.altside_cape())
 
 	bisexual
 		name = "bisexual pride cape"
@@ -152,10 +161,12 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
 	rainbow
 		name = "rainbow cape"
 		icon_state = "rainbow-cape"
+		altside_cape = /obj/item/clothing/suit/flag/progressive
 
 	progressive
 		name = "progressive pride cape"
 		icon_state = "progressive-cape"
+		altside_cape = /obj/item/clothing/suit/flag/rainbow
 
 	polysexual
 		name = "polysexual pride cape"
@@ -188,10 +199,12 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
 	mlmvinc
 		name = "\improper Vincian MLM pride cape"
 		icon_state = "mlmvinc-cape"
+		altside_cape = /obj/item/clothing/suit/flag/mlmachi
 
 	mlmachi
 		name = "\improper Achilean MLM pride cape"
 		icon_state = "mlmachi-cape"
+		altside_cape = /obj/item/clothing/suit/flag/mlmvinc
 
 	ace
 		name = "asexual pride flag"

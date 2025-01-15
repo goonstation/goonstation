@@ -2053,22 +2053,6 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 				ON_COOLDOWN(src, "raygun_cooldown", 2 SECONDS)
 		return ..(target, start, user)
 
-/obj/item/gun/energy/dazzler
-	name = "dazzler"
-	icon_state = "taser" // wtb 1 sprite
-	item_state = "taser"
-	force = 1
-	cell_type = /obj/item/ammo/power_cell/med_power
-	desc = "The Five Points Armory Dazzler Prototype, an experimental weapon that produces a cohesive electrical charge designed to disorient and slowdown a target. It can even shoot through windows!"
-	muzzle_flash = "muzzle_flash_bluezap"
-	uses_charge_overlay = TRUE
-	charge_icon_state = "taser"
-
-	New()
-		set_current_projectile(new/datum/projectile/energy_bolt/dazzler)
-		projectiles = list(current_projectile)
-		..()
-
 // Makeshift Laser Rifle
 #define HEAT_REMOVED_PER_PROCESS 30
 #define FIRE_THRESHOLD 125
@@ -2351,7 +2335,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 
 /obj/item/gun/energy/lasergat
-	name = "\improper Hafgan Mod.93R Repeating Laser"
+	name = "\improper HAFGAN Mod.93R Repeating Laser"
 	rechargeable = 0
 	icon_state = "burst_laser_idle"
 	cell_type = /obj/item/ammo/power_cell/lasergat
@@ -2362,8 +2346,13 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	muzzle_flash = "muzzle_flash_elec"
 	uses_charge_overlay = TRUE
 	charge_icon_state = "burst_laser"
-	shoot_delay = 6
-	spread_angle = 6
+	shoot_delay = 4
+	spread_angle = 2
+	recoil_enabled = TRUE
+	recoil_max = 50
+	recoil_inaccuracy_max = 10
+	icon_recoil_enabled = TRUE
+
 	restrict_cell_type = /obj/item/ammo/power_cell/lasergat
 	New()
 		set_current_projectile(new/datum/projectile/laser/lasergat/burst)

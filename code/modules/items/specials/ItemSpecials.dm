@@ -100,6 +100,17 @@
 
 	return ((dx*dx) + (dy*dy))
 
+/// Finds every mob that is currently moving away from a turf, but has not reached the end of their movement.
+/proc/atoms_in_combat_range(var/turf/target)
+	var/list/atom/atoms = list()
+	for(var/atom/A in target)
+		atoms += A
+	for(var/mob/dude in range(1,target))
+		if (dude.next_move > world.time && dude.prev_loc == target)
+			atoms |= dude
+
+	return atoms
+
 //Handles setup for specials and adds / removes them from items.
 /obj/item/proc/setItemSpecial(var/type = null)
 	if(!ispath(type))
@@ -449,7 +460,7 @@
 			S.setup(turf)
 
 			var/hit = FALSE
-			for(var/atom/A in turf)
+			for(var/atom/A in atoms_in_combat_range(turf))
 				if(isTarget(A))
 					A.Attackby(master, user, params, 1)
 					hit = TRUE
@@ -532,7 +543,7 @@
 			effect.setup(turf)
 
 			var/hit = FALSE
-			for(var/atom/A in turf)
+			for(var/atom/A in atoms_in_combat_range(turf))
 				if(isTarget(A))
 					A.Attackby(master, user, params, 1)
 					hit = TRUE
@@ -590,7 +601,7 @@
 
 			var/hit = 0
 			for(var/turf/T in list(one, two))
-				for(var/atom/A in T)
+				for(var/atom/A in atoms_in_combat_range(T))
 					if(A in attacked) continue
 					if(isTarget(A))
 						A.Attackby(master, user, params, 1)
@@ -688,7 +699,7 @@
 
 			var/hit = 0
 			for(var/turf/T in list(one, two, three))
-				for(var/atom/movable/A in T)
+				for(var/atom/A in atoms_in_combat_range(T))
 					if(A in attacked) continue
 					if(isTarget(A))
 						A.Attackby(master, user, params, 1)
@@ -868,7 +879,7 @@
 
 			for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
 				animate_shake(T,5,2,2,T.pixel_x,T.pixel_y)
-				for(var/atom/movable/A in T)
+				for(var/atom/movable/A in atoms_in_combat_range(T))
 					if(A in attacked) continue
 					if(isTarget(A))
 						if(master)
@@ -920,7 +931,7 @@
 
 			for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
 				animate_shake(T,5,2,2,T.pixel_x,T.pixel_y)
-				for(var/atom/movable/A in T)
+				for(var/atom/movable/A in  atoms_in_combat_range(T))
 					if(A in attacked) continue
 					if(isTarget(A))
 						if (isliving(A))
@@ -951,7 +962,7 @@
 			var/list/attacked = list()
 
 			for(var/turf/T in orange(2,get_turf(master)))
-				for(var/atom/A in T)
+				for(var/atom/A in  atoms_in_combat_range(T))
 					if(A in attacked) continue
 					if(isTarget(A))
 						A.Attackby(master, usr, params, 1)
@@ -1002,7 +1013,7 @@
 			C.setup(turf)
 
 			var/hit = 0
-			for(var/atom/A in turf)
+			for(var/atom/A in  atoms_in_combat_range(turf))
 				if(isTarget(A))
 					A.Attackhand(user,params)
 					hit = 1
@@ -1050,7 +1061,7 @@
 			C.setup(turf)
 
 			var/hit = 0
-			for(var/atom/A in turf)
+			for(var/atom/A in atoms_in_combat_range(turf))
 				if(isTarget(A))
 					A.Attackhand(user,params)
 					hit = 1
@@ -1099,7 +1110,7 @@
 
 			var/hit = 0
 			for(var/turf/T in list(one, two, three))
-				for(var/atom/movable/A in T)
+				for(var/atom/movable/A in atoms_in_combat_range(T))
 					if(A in attacked) continue
 					if(isTarget(A))
 						A.Attackhand(user,params)
@@ -1143,7 +1154,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			logTheThing(LOG_COMBAT, user, "uses the spark special attack ([src.type]) at [log_loc(user)].")
 
 			var/hit = 0
-			for(var/atom/movable/A in effect)
+			for(var/atom/movable/A in atoms_in_combat_range(effect))
 				if(A in attacked) continue
 				if(isTarget(A))
 					on_hit(A,2)
@@ -1155,7 +1166,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			if (!hit)
 				SPAWN(secondhit_delay)
 					step(spark, direction, 2)
-					for(var/atom/movable/A in spark.loc)
+					for(var/atom/movable/A in atoms_in_combat_range(spark.loc))
 						if(A in attacked) continue
 						if(isTarget(A))
 							on_hit(A, mult)
@@ -1241,7 +1252,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			S.setup(turf)
 
 			var/hit = 0
-			for(var/atom/A in turf)
+			for(var/atom/A in atoms_in_combat_range(turf))
 				if(isTarget(A))
 					A.Attackby(master, user, params, 1)
 					hit = 1
@@ -1256,7 +1267,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				SS.setup(turf)
 
 				hit = 0
-				for(var/atom/A in turf)
+				for(var/atom/A in atoms_in_combat_range(turf))
 					if(isTarget(A))
 						A.Attackby(master, user, params, 1)
 						hit = 1
@@ -1318,7 +1329,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 						L.move_laying = list(B)
 
 			var/hit = 0
-			for(var/atom/A in turf)
+			for(var/atom/A in atoms_in_combat_range(turf))
 				if(isTarget(A))
 					A.Attackby(master, user, params, 1)
 					hit = 1
@@ -1397,7 +1408,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			if (flame_succ)
 				logTheThing(LOG_COMBAT, user, "uses the flame special attack at [log_loc(user)].")
 				turf.hotspot_expose(T0C + 400, 400)
-				for(var/A in turf)
+				for(var/A in atoms_in_combat_range(turf))
 					if(!isTarget(A))
 						continue
 					logTheThing(LOG_COMBAT, user, "'s flame special attack hits [constructTarget(A,"combat")] at [log_loc(A)].")
@@ -1507,7 +1518,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 			logTheThing(LOG_COMBAT, user, "uses the spark special attack ([src.type]) at [log_loc(user)].")
 			var/hit = 0
-			for(var/atom/movable/A in effect)
+			for(var/atom/movable/A in atoms_in_combat_range(effect))
 				if(isTarget(A))
 					on_hit(A)
 					//fake harmbaton it
@@ -1642,7 +1653,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				K.mid2.loc = master
 				K.end.loc = master
 			// var/hit = 0
-			for(var/atom/movable/A in get_step(user, direction))
+			var/turf/turf = get_step(user,direction)
+			for(var/atom/movable/A in atoms_in_combat_range(turf))
 				if(A in attacked) continue
 				if(isTarget(A))
 					on_hit(A)
@@ -1781,8 +1793,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			else if (T2)
 				end.setup(T2)
 				end.set_dir(direction)
-
-			for(var/atom/movable/A in get_step(user, direction))
+			var/turf/turf = get_step(user, direction)
+			for(var/atom/movable/A in atoms_in_combat_range(turf))
 				if(A in attacked) continue
 				if(isTarget(A))
 					attacked += A
@@ -1834,14 +1846,14 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 			var/hit = 0
 			for(var/turf/T in list(two, three))
-				for(var/atom/movable/A in T)
+				for(var/atom/movable/A in atoms_in_combat_range(T))
 					if(A in attacked) continue
 					if(isTarget(A))
 						A.Attackby(master, user, params, 1)
 						attacked += A
 						hit = 1
 
-			for(var/atom/movable/A in one)
+			for(var/atom/movable/A in atoms_in_combat_range(one))
 				if(A in attacked) continue
 				if(isTarget(A))
 					A.Attackby(master, user, params, 1)
@@ -1884,7 +1896,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			S.setup(turf)
 
 			var/hit = 0
-			for(var/atom/A in turf)
+			for(var/atom/A in atoms_in_combat_range(turf))
 				if(isTarget(A))
 					A.Attackby(master, user, params, 1)
 					hit = 1
@@ -1939,7 +1951,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		var/turf/T2 = null
 		user.next_move = world.time + 6 DECI SECONDS
 		T2 = get_step(master, direction)
-		for(var/atom/A in T2)
+		for(var/atom/A in T2) // don't use atoms_in_combat_range, as we'd rather hit them with the swipe if they're running away
 			if(isTarget(A) && ismob(A))
 				var/mob/M = A
 				M.throw_at(get_edge_cheap(T2, direction), 3, 20, thrown_by=user)
@@ -1973,7 +1985,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 			var/hit = 0
 			for(var/turf/T in list(five,four))
-				for(var/atom/A in T)
+				for(var/atom/A in atoms_in_combat_range(T))
 					if(A in attacked) continue
 					if(isTarget(A))
 						A.Attackby(master, user, params, 1)
@@ -1981,7 +1993,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 						hit = 1
 			SPAWN(1 DECI SECONDS)
 				for(var/turf/T in list(three,two,one))
-					for(var/atom/A in T)
+					for(var/atom/A in atoms_in_combat_range(T))
 						if(A in attacked) continue
 						if(isTarget(A))
 							A.Attackby(master, user, params, 1)
@@ -1996,6 +2008,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = ""
 	anchored = ANCHORED
+	event_handler_flags = IMMUNE_TRENCH_WARP
 	pass_unstable = FALSE
 	layer = EFFECTS_LAYER_1
 	pixel_x = -64

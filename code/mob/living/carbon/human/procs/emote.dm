@@ -1864,7 +1864,7 @@
 					//		animate(transform = turn(GetPooledMatrix(), -180), time = 1, loop = -1)
 					//		animate(transform = turn(GetPooledMatrix(), -270), time = 1, loop = -1)
 					//		animate(transform = turn(GetPooledMatrix(), -360), time = 1, loop = -1)
-					if (isobj(src.loc))
+					if (isobj(src.loc) && !is_incapacitated(src))
 						var/obj/container = src.loc
 						container.mob_flip_inside(src)
 

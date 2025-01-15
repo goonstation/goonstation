@@ -169,10 +169,22 @@ proc/filter_carrier_pets(var/type)
 	player_can_spawn_with_pet = TRUE
 	var/attack_damage = 3
 	var/use_custom_color = TRUE
+	var/shiny_chance = 4096 ///One in this chance of being shiny
+	var/is_shiny = FALSE
 
 	New()
 		..()
-		fur_color =	pick("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D","#D8C078", "#E3CC88", "#F2DA91", "#F21AE", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
+		if(src.shiny_chance && (rand(1, src.shiny_chance) == 1))
+			src.real_name = "shiny [src.name]"
+			src.fur_color = "#aeff45"
+			src.icon_state = "mouse-shiny"
+			src.icon_state_dead = "mouse-shiny-dead"
+			src.use_custom_color = FALSE
+			src.name = src.real_name
+			src.is_shiny = TRUE
+			src.desc += " This one seems rare."
+		else
+			fur_color =	pick("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D","#D8C078", "#E3CC88", "#F2DA91", "#F21AE", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
 		eye_color = "#FFFFF"
 		setup_overlays()
 		src.bioHolder.AddNewPoolEffect("albinism", scramble=TRUE)
@@ -295,6 +307,7 @@ proc/filter_carrier_pets(var/type)
 /mob/living/critter/small_animal/mouse/mad/rat_den
 	var/obj/machinery/wraith/rat_den/linked_den = null
 	player_can_spawn_with_pet = FALSE
+	shiny_chance = 0
 
 	death()
 		if(linked_den?.linked_critters > 0)
@@ -314,6 +327,7 @@ proc/filter_carrier_pets(var/type)
 	ai_type = /datum/aiHolder/mouse_remy
 	use_custom_color = FALSE
 	player_can_spawn_with_pet = FALSE
+	shiny_chance = 0
 
 	New()
 		. = ..()
@@ -4363,14 +4377,20 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	void_mindswappable = FALSE
 	player_can_spawn_with_pet = FALSE
 	has_genes = FALSE
+	shiny_chance = 0
 
 	New()
 		..()
-		src.real_name = "[pick_string("mentor_mice_prefixes.txt", "mentor_mouse_prefix")] [src.name]"
+		if(src.is_shiny)
+			src.icon_state = "mouse-large-shiny"
+			src.icon_state_dead = "mouse-large-shiny-dead"
+			src.icon_state_exclaim = "mouse-large-shiny-exclaim"
+		else
+			src.real_name = "[pick_string("mentor_mice_prefixes.txt", "mentor_mouse_prefix")] [src.name]"
+			src.fur_color = "#a175cf"
 		src.name = src.real_name
 		abilityHolder.addAbility(/datum/targetable/critter/mentordisappear)
 		abilityHolder.addAbility(/datum/targetable/critter/mentortoggle)
-		src.fur_color = "#a175cf"
 
 	setup_overlays()
 		if(!src.colorkey_overlays)
@@ -4532,6 +4552,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	is_npc = FALSE
 	use_custom_color = FALSE
 	player_can_spawn_with_pet = FALSE
+	shiny_chance = 1365 //Odds with the shiny charm, because of how charming these guys are before they run you over with a truck!
 
 	New()
 		. = ..()
@@ -4585,7 +4606,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_exclaim = "snaps"
 	health_brute = 15
 	health_burn = 15
-	pet_text = list("gently pets", "rubs", "cuddles, coddles")
+	pet_text = list("gently pets", "rubs", "cuddles", "coddles")
 	player_can_spawn_with_pet = TRUE
 	var/can_hat = TRUE
 
