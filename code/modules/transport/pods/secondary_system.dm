@@ -1287,10 +1287,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 	proc/process_incoming_dmg(dmg)
 		var/dmg_dealt = dmg * (1 - src.block_pct)
 
-		if (src.life < dmg_dealt)
-			dmg_dealt += dmg_dealt - src.life
-
-		src.life -= dmg_dealt
+		src.life -= dmg * src.block_pct
 
 		if (src.life <= 0)
 			src.deactivate()
