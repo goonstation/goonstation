@@ -7538,6 +7538,8 @@
 /area/station/science/artifact)
 "duP" = (
 /obj/table/reinforced/auto,
+/obj/item/storage/box/panic_buttons,
+/obj/item/device/panicbutton,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "duZ" = (
@@ -18417,6 +18419,8 @@
 /area/abandonedmedicalship/robot_trader)
 "hOr" = (
 /obj/machinery/ore_cloud_storage_container,
+/obj/mapping_helper/access/research,
+/obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -32402,6 +32406,9 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
 /obj/machinery/light/incandescent/warm,
+/obj/item/paper/pipebombs{
+	pixel_y = 4
+	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},

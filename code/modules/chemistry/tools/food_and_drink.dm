@@ -26,7 +26,19 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/did_stomach_react = 0					//! Has this already reacted when being digested
 	var/digest_count = 0						//! How digested is this while in stomach
 	var/dissolve_threshold = 20					//! How digested something needs to be before it dissolves
+	var/heats_into = null						//! Type path of the thing this becomes when heated
+	var/heat_threshold = T0C + 500				//! Temperature required for this to cook from ambient air heat
 	rc_flags = 0
+
+	temperature_expose(datum/gas_mixture/air, temperature, volume)
+		. = ..()
+		if (src.heats_into && temperature > src.heat_threshold)
+			src.on_temperature_cook()
+			new src.heats_into(src.loc)
+			qdel(src)
+
+	proc/on_temperature_cook()
+		return
 
 	///Slowly dissolve in stomach, releasing reagents
 	proc/process_stomach(mob/living/owner, var/process_rate = 5)

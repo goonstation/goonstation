@@ -765,9 +765,10 @@ toxic - poisons
 	shot_sound = 'sound/weapons/laser_a.ogg'
 	icon_state = "lasergat_laser"
 	shot_volume = 50
+	dissipation_rate = 2
 	name = "single"
 	sname = "single"
-	damage = 14
+	damage = 10
 
 /datum/projectile/laser/lasergat/burst
 	name = "burst laser"

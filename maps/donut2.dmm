@@ -11372,8 +11372,11 @@
 /area/station/security/hos)
 "bio" = (
 /obj/table/auto,
+/obj/item/storage/box/panic_buttons,
+/obj/item/device/panicbutton,
 /obj/item/device/audio_log{
-	pixel_y = 8
+	pixel_y = 8;
+	pixel_x = 6
 	},
 /turf/simulated/floor/escape/corner{
 	dir = 1
@@ -27523,6 +27526,7 @@
 	pixel_x = -24;
 	dir = 8
 	},
+/obj/item/paper/pipebombs,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "jbL" = (

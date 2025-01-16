@@ -618,12 +618,12 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 		var/turf/ground_zero = get_turf(loc)
 
 		if(air_contents.temperature > (T0C + 400))
-			strength = fuel_moles/15
+			strength = fuel_moles/8
 
 			explosion(src, ground_zero, strength, strength*2, strength*4, strength*5)
 
 		else if(air_contents.temperature > (T0C + 250))
-			strength = fuel_moles/20
+			strength = fuel_moles/10
 
 			explosion(src, ground_zero, -1, -1, strength*3, strength*4)
 			ground_zero.assume_air(air_contents)
@@ -631,7 +631,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 			ground_zero.hotspot_expose(1000, 125)
 
 		else if(air_contents.temperature > (T0C + 100))
-			strength = fuel_moles/25
+			strength = fuel_moles/13
 
 			explosion(src, ground_zero, -1, -1, strength*2, strength*3)
 			ground_zero.assume_air(air_contents)
