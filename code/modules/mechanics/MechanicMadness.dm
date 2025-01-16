@@ -1924,6 +1924,9 @@
 		inp = clamp(inp, 1, buffer_max_size)
 		buffer_size = inp
 		tooltip_rebuild = 1
+		buffer.len = 0
+		ring_reader = 1
+		ring_writer = 1
 		boutput(user,"You set the buffer size to [inp]")
 		qdel(buffer)
 		buffer = list()
