@@ -1281,6 +1281,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 				boutput(M, "[src.ship.ship_message("[src]'s shield is now offline. Please wait for full recharge after [src.recharge_time / 10] seconds.")]")
 			src.ship.remove_filter("shield_outline")
 			playsound(src.ship.loc, 'sound/effects/MagShieldDown.ogg', 75, TRUE, pitch = 1.5)
+			src.life = initial(src.life)
 		..()
 
 	// takes incoming damage "dmg", returns damage dealt to pod
