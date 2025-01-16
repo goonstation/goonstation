@@ -108,9 +108,9 @@
 	signal.data["sender"] = src.net_id
 	signal.data["power"] = src.on ? "on": "off"
 	signal.data["mode"] = src.scrubbing ? "scrubbing" : "siphoning"
-	#define COMPILE_GAS_MOLES(GAS, ...) if(scrub_##GAS) {signal.data[#GAS] = "1"}
-	APPLY_TO_GASES(COMPILE_GAS_MOLES)
-	#undef COMPILE_GAS_MOLES
+	#define GET_GAS_SCUB_STATUS(GAS, ...) signal.data[#GAS] = scrub_##GAS;
+	APPLY_TO_GASES(GET_GAS_SCUB_STATUS)
+	#undef GET_GAS_SCUB_STATUS
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 

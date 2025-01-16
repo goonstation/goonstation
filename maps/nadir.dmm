@@ -1035,7 +1035,6 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 2
 	},
-/obj/mapping_helper/access/security,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -1046,6 +1045,7 @@
 	enter_id = "inner";
 	name = "Security Interrogation 1"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/redblack,
 /area/station/security/interrogation)
 "awO" = (
@@ -7538,6 +7538,8 @@
 /area/station/science/artifact)
 "duP" = (
 /obj/table/reinforced/auto,
+/obj/item/storage/box/panic_buttons,
+/obj/item/device/panicbutton,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "duZ" = (
@@ -18417,6 +18419,8 @@
 /area/abandonedmedicalship/robot_trader)
 "hOr" = (
 /obj/machinery/ore_cloud_storage_container,
+/obj/mapping_helper/access/research,
+/obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -20466,7 +20470,6 @@
 /area/station/science/teleporter)
 "iBz" = (
 /obj/machinery/door/airlock/pyro/security/alt,
-/obj/mapping_helper/access/brig,
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
@@ -20480,6 +20483,7 @@
 	enter_id = "inner";
 	name = "Security Interrogation 2"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/redblack,
 /area/station/security/interrogation)
 "iBC" = (
@@ -29814,10 +29818,10 @@
 	dir = 4;
 	id = "secfoy_out"
 	},
-/obj/mapping_helper/access/brig,
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -32402,6 +32406,9 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
 /obj/machinery/light/incandescent/warm,
+/obj/item/paper/pipebombs{
+	pixel_y = 4
+	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -38791,11 +38798,11 @@
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor/redblack/corner{
 	dir = 4
 	},
@@ -39340,7 +39347,6 @@
 /area/station/storage/eva)
 "qxw" = (
 /obj/machinery/door/airlock/pyro/security/alt,
-/obj/mapping_helper/access/brig,
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
@@ -39354,6 +39360,7 @@
 	enter_id = "outer";
 	name = "Security Interrogation 2"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},

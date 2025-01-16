@@ -1,3 +1,4 @@
+import { BooleanLike } from 'common/react';
 import { useState } from 'react';
 import {
   Box,
@@ -17,19 +18,29 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { capitalize } from './common/stringUtils';
 
-interface MinimapControllerData {
-  title;
-  theme;
-  minimap_id;
-  markers_visible;
-  selecting_coordinates;
-  minimap_markers;
-  placable_marker_states;
-  placable_marker_images;
-  icon;
-  image;
-  pos_x;
-  pos_y;
+export interface MinimapControllerData {
+  title: string;
+  theme: string;
+  minimap_id: string;
+  markers_visible: BooleanLike;
+  selecting_coordinates: BooleanLike;
+  minimap_markers: MinimapMarkerData[];
+  placable_marker_states: string[]; // list of indexes in placable_marker_images
+  placable_marker_images: Map<string, string>; // indexed base64 images
+  icon: string;
+  image: string; // base64 image
+  pos_x: number;
+  pos_y: number;
+}
+
+export interface MinimapMarkerData {
+  name: string;
+  pos: string;
+  visible: BooleanLike;
+  can_be_deleted: BooleanLike;
+  marker: string;
+  index: number;
+  icon_state: string;
 }
 
 export const MinimapController = () => {

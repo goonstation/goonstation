@@ -875,12 +875,12 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		for (var/obj/item/implant/H in src.implants)
 			H.on_death()
 		src.can_implant = 0
+	setdead(src)
 	if (!gibbed)
 		if (src.death_text)
 			src.tokenized_message(src.death_text, null, "red")
 		else
 			src.visible_message(SPAN_ALERT("<b>[src]</b> dies!"))
-		setdead(src)
 		icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead"
 		src.update_body()
 	empty_hands()
