@@ -1928,8 +1928,6 @@
 		ring_reader = 1
 		ring_writer = 1
 		boutput(user,"You set the buffer size to [inp]")
-		qdel(buffer)
-		buffer = list()
 
 	proc/toggleDefault(obj/item/W as obj, mob/user as mob)
 		changesig = !changesig
