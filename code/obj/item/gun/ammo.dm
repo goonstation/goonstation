@@ -823,6 +823,10 @@
 			amount_left = 4
 			max_amount = 4
 
+		five //mts
+			amount_left = 5
+			max_amount = 5
+
 
 /obj/item/ammo/bullets/buckshot_burst // real spread shotgun ammo
 	sname = "Buckshot"

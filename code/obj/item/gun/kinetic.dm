@@ -1959,13 +1959,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	has_uncocked_state = TRUE
 	fire_animation = TRUE
 	gildable = TRUE
-	default_magazine = /obj/item/ammo/bullets/pipeshot/scrap/five
+	default_magazine = /obj/item/ammo/bullets/a12/bird/five
 	recoil_strength = 10
 	recoil_max = 60
 
 	New()
 		ammo = new default_magazine
-		set_current_projectile(new /datum/projectile/special/spreader/buckshot_burst/scrap)
+		set_current_projectile(new/datum/projectile/special/spreader/uniform_burst/bird12)
 		..()
 
 /obj/item/gun/kinetic/striker
