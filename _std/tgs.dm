@@ -321,6 +321,7 @@
  * * success - Boolean request success flag. Set for any 2XX response code. Must be provided in New().
  */
 /datum/tgs_http_result/New(response_text, success)
+	..()
 	if(response_text && !istext(response_text))
 		CRASH("response_text was not text!")
 
