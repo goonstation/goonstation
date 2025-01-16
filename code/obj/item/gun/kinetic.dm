@@ -1883,7 +1883,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 5
-	ammo_cats = list(AMMO_SHOTGUN_ALL)
+	ammo_cats = list(AMMO_SHOTGUN_AUTOMATIC)
 	max_ammo_capacity = 8
 	auto_eject = FALSE
 	can_dual_wield = FALSE
@@ -1979,7 +1979,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	c_flags = EQUIPPED_WHILE_HELD
 	force = MELEE_DMG_RIFLE
 	contraband = 7
-	ammo_cats = list(AMMO_SHOTGUN_ALL)
+	ammo_cats = list(AMMO_SHOTGUN_AUTOMATIC)
 	max_ammo_capacity = 7
 	max_move_amount = 1
 	reload_cooldown = 8 DECI SECONDS
