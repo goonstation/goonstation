@@ -619,20 +619,26 @@
 	category = "Resource"
 
 /datum/manufacture/metal
-	name = "Metal Sheet (x5)"
-	item_requirements = list("metal" = 5)
+	name = "Metal Sheet"
+	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/sheet)
-	create = 5
-	time = 8 SECONDS
+	create = 1
+	time = 2 SECONDS
 	category = "Resource"
 	apply_material = TRUE
 
-/datum/manufacture/metalR
-	name = "Reinforced Metal (x5)"
-	item_requirements = list("metal" = 10)
-	item_outputs = list(/obj/item/sheet)
+/datum/manufacture/metal/bulk
+	name = "Metal Sheet (x5)"
+	item_requirements = list("metal" = 5)
 	create = 5
-	time = 50 SECONDS
+	time = 8 SECONDS
+
+/datum/manufacture/metalR
+	name = "Reinforced Metal"
+	item_requirements = list("metal" = 2)
+	item_outputs = list(/obj/item/sheet)
+	create = 1
+	time = 12 SECONDS
 	category = "Resource"
 	apply_material = TRUE
 
@@ -642,22 +648,34 @@
 		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("metal")])
 		S.set_reinforcement(applicable_material.material)
 
-/datum/manufacture/glass
-	name = "Glass Panel (x5)"
-	item_requirements = list("crystal" = 5)
-	item_outputs = list(/obj/item/sheet)
+/datum/manufacture/metalR/bulk
+	name = "Reinforced Metal (x5)"
+	item_requirements = list("metal" = 10)
 	create = 5
-	time = 8 SECONDS
+	time = 50 SECONDS
+
+/datum/manufacture/glass
+	name = "Glass Panel"
+	item_requirements = list("crystal" = 1)
+	item_outputs = list(/obj/item/sheet)
+	create = 1
+	time = 2 SECONDS
 	category = "Resource"
 	apply_material = TRUE
 
-/datum/manufacture/glassR
-	name = "Reinforced Glass Panel (x5)"
-	item_requirements = list("crystal" = 5,
-							 "metal_dense" = 5)
-	item_outputs = list(/obj/item/sheet/glass/reinforced)
+/datum/manufacture/glass/bulk
+	name = "Glass Panel (x5)"
+	item_requirements = list("crystal" = 5)
 	create = 5
-	time = 50 SECONDS
+	time = 8 SECONDS
+
+/datum/manufacture/glassR
+	name = "Reinforced Glass Panel"
+	item_requirements = list("crystal" = 1,
+							 "metal_dense" = 1)
+	item_outputs = list(/obj/item/sheet/glass/reinforced)
+	create = 1
+	time = 12 SECONDS
 	category = "Resource"
 	apply_material = TRUE
 
@@ -667,18 +685,26 @@
 		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("metal_dense")])
 		S.set_reinforcement(applicable_material.material)
 
+/datum/manufacture/glassR/bulk
+	name = "Reinforced Glass Panel (x5)"
+	item_requirements = list("crystal" = 5,
+							 "metal_dense" = 5)
+	create = 5
+	time = 50 SECONDS
+
+
 /datum/manufacture/rods2
-	name = "Metal Rods (x10)"
-	item_requirements = list("metal_dense" = 5)
+	name = "Metal Rods (x2)"
+	item_requirements = list("metal_dense" = 1)
 	item_outputs = list(/obj/item/rods)
-	time = 12 SECONDS
+	time = 3 SECONDS
 	category = "Resource"
 	apply_material = TRUE
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A)
 		..()
 		var/obj/item/sheet/S = A // this way they are instantly stacked rather than just 2 rods
-		S.amount = 10
+		S.amount = 2
 		S.inventory_counter.update_number(S.amount)
 
 /datum/manufacture/atmos_can
