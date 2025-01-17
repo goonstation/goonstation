@@ -45,6 +45,7 @@
 	)
 	var/static/artifact_shard_reference
 	var/list/reticulated_artifacts = list()
+	var/list/reticulated_art_names = list()
 
 	var/obj/stored_artifact
 	var/obj/stored_item
@@ -92,7 +93,7 @@
 			"increaseReagentsTip" = "Increase the reagent capacity of the stored item by 10%. -Required: [src.costs[ARTRET_INCREASE_REAGENTS]["readable"]]",
 			"increaseCellCapTip" = "Increase the cell capacity of the stored item by 10%. -Required: [src.costs[ARTRET_INCREASE_CELL_CAP]["readable"]]",
 			"upgradeMiningPowerTip" = "Increase the mining power of the stored custom mining tool by 10%. -Required: [src.costs[ARTRET_INCREASE_MINING_POWER]["readable"]]",
-			"reticulatedArtifacts" = src.reticulated_artifacts
+			"reticulatedArtifacts" = src.reticulated_art_names
 		)
 
 	ui_act(action, params)
@@ -245,7 +246,8 @@
 
 		src.fusion_shards += length(src.stored_artifact.combined_artifacts)
 
-		src.reticulated_artifacts[src.stored_artifact.artifact.type_name] = src.stored_artifact.artifact.type
+		src.reticulated_artifacts[src.stored_artifact.artifact.type_name] = src.stored_artifact.type
+		src.reticulated_art_names |= src.stored_artifact.artifact.type_name
 
 		qdel(src.stored_artifact)
 		src.stored_artifact = null
@@ -268,8 +270,10 @@
 			src.fusion_shards += length(src.stored_artifact.combined_artifacts)
 			src.fusion_shards += length(src.stored_item.combined_artifacts)
 
-		src.reticulated_artifacts[src.stored_artifact.artifact.type_name] = src.stored_artifact.artifact.type
-		src.reticulated_artifacts[src.stored_item.artifact.type_name] = src.stored_item.artifact.type
+		src.reticulated_artifacts[src.stored_artifact.artifact.type_name] = src.stored_artifact.type
+		src.reticulated_artifacts[src.stored_item.artifact.type_name] = src.stored_item.type
+		src.reticulated_art_names |= src.stored_artifact.artifact.type_name
+		src.reticulated_art_names |= src.stored_item.artifact.type_name
 
 		qdel(src.stored_artifact)
 		src.stored_artifact = null
@@ -329,7 +333,7 @@
 		if (!src.stored_item)
 			return FALSE
 
-		var/compatible_type = TRUE
+		var/compatible_type = FALSE
 		switch (action)
 			if (ARTRET_ADD_LIGHT)
 				compatible_type = TRUE
@@ -343,11 +347,11 @@
 				var/list/mats_used = info?.mats
 				compatible_type = length(mats_used)
 			if (ARTRET_MODIFY_MATERIAL)
-				compatible_type = src.stored_item.material
+				compatible_type = src.stored_item.material && src.stored_item.material.isMutable()
 			if (ARTRET_INCREASE_STORAGE)
-				compatible_type = src.stored_item.storage?.slots <= 13 && !istype(src.stored_item, /obj/item/artifact/bag_of_holding)
+				compatible_type = src.stored_item.storage && src.stored_item.storage.slots <= 13 && !istype(src.stored_item, /obj/item/artifact/bag_of_holding)
 			if (ARTRET_INCREASE_REAGENTS)
-				compatible_type = src.stored_item.reagents?.maximum_volume > 0
+				compatible_type = src.stored_item.reagents && src.stored_item.reagents.maximum_volume > 0
 			if (ARTRET_INCREASE_CELL_CAP)
 				compatible_type = istype(src.stored_item, /obj/item/cell) || istype(src.stored_item, /obj/item/ammo/power_cell)
 			if (ARTRET_INCREASE_MINING_POWER)
@@ -379,6 +383,8 @@
 					var/obj/item/material_piece/bar_output = new bar(get_turf(src))
 					bar_output.setMaterial(material)
 					bar_output.change_stack_amount(0)
+				qdel(src.stored_item)
+				src.stored_item = null
 			if (ARTRET_MODIFY_MATERIAL)
 				var/list/props = src.stored_item.material.getMaterialProperties()
 				var/list/to_output = list()
