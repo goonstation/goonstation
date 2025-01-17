@@ -407,6 +407,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 /obj/storage/secure/closet/security/equipment
 	name = "\improper Security equipment locker"
 	spawn_contents = list(/obj/item/clothing/under/rank/security,
+	/obj/item/device/radio/headset/security,
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security,
 	/obj/item/clothing/shoes/swat,
