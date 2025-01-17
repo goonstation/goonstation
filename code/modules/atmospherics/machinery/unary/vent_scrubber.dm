@@ -191,7 +191,7 @@
 	on = FALSE
 
 /obj/machinery/atmospherics/unary/vent_scrubber/breathable
-	#define _DEF_SCRUBBER_VAR(GAS, ...) var/scrub_##GAS = 1;
+	#define _DEF_SCRUBBER_VAR(GAS, ...) scrub_##GAS = 1;
 	APPLY_TO_GASES(_DEF_SCRUBBER_VAR)
 	#undef _DEF_SCRUBBER_VAR
 	scrub_oxygen = FALSE
