@@ -1401,6 +1401,15 @@
 	time = 30 SECONDS
 	category = "Resource"
 
+/datum/manufacture/medicalalertbutton
+	name = "Medical Alert Button"
+	item_requirements = list("conductive" = 2,
+							 "metal" = 2)
+	item_outputs = list(/obj/item/device/panicbutton/medicalalert)
+	create = 1
+	time = 3 SECONDS
+	category = "Resource"
+
 #ifdef ENABLE_ARTEMIS
 /******************** Artemis **************************/
 

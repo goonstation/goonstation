@@ -1,9 +1,56 @@
 
+(t)thu jan 16 25
+(u)Sovexe
+(p)22020
+(e)💅💡|C-QoL, A-Station-Systems
+(+)Vent scrubber broadcast_status packets will now provide a full list of which gases are and are not being scrubbed.
+(t)wed jan 15 25
+(u)JORJ949
+(p)22015
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Fixed nuclear operatives being unable to fix the bomb with the battle wrench.
+(t)tue jan 14 25
+(u)TDHooligan
+(p)22005
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Gangs' webley shoots slower when fanning the hammer. Hammer fanning lasts 2x as long.
+(+)The HAFGAN burst laser shoots faster and has more ammo, but now gains spread as you do so.
+(u)Cheekybrdy
+(p)21827
+(e)🎨|C-Sprites
+(+)Purple crowbars are now in research lockers.
+(+)The RD's HPD is no longer engineering colours
+(u)TDHooligan
+(p)21972
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(*)The murderbox now contains a vending machine for gang weaponry.
+(u)Sord
+(+)Security now has a box of fancy panic buttons to hand out in case of emergencies. Don't forget yours!
+(+)Medical also has some fancy buttons they can make in their fabricator.
+(+)The HoP got their own fancy button in their locker.
+(u)LeahTheTech
+(p)21833
+(e)⚖⛔|C-Balance, C-Removal
+(*)Removed the security alert HUD button.
+(u)LeahTheTech
+(+)Pie slices can now be eaten without a spoon.
+(+)Traitor Pest Control Specialists can now buy an old hunting rifle for 7TC.
+(*)Bacon and steaks can now be cooked in the engine burn chamber. Probably not very well.
+(*)Single tank plasma bombs no longer require welding and explode with around double the power, making them more powerful than equivalent TTVs at lower plasma temperatures.
+(u)TDHooligan
+(p)21974
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(+)Special attacks now hit moving targets better.
 (t)sun jan 12 25
 (u)patricia
 (p)21548
 (e)🆕🎨💡|C-Feature, C-Sprites, A-Station-Systems
 (*)Adds a new buffering component to the mechanic's vendor. Read about it in the mechanic's book!
+(u)glowbold
+(p)21724
+(e)🆕🔄💡🤖|C-Feature, C-Rework, A-Station-Systems, A-Silicons
+(*)AIs/Cyborgs' "Show Alert Minimap" command and the General Alert computer display a minimap showing where the alerts are located.
+(+)Power, fire, and atmos alerts are all shown on the alert minimap based on where they are detected.
 (u)glowbold
 (p)21714
 (e)🔄🤖|C-Rework, A-Silicons
