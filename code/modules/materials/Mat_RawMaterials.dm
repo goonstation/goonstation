@@ -406,7 +406,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 	attackby(obj/item/W, mob/user)
-		if(istype(W,/obj/item/extinguisher))
+		if(W.force > 5 && (W.hit_type == DAMAGE_BLUNT || W.hit_type == DAMAGE_CRUSH))
 			playsound(src,"sound/impact_sounds/Crystal_Shatter_1.ogg",30)
 			var/obj/item/reagent_containers/bone_fragments/B = new(src)
 			B.set_loc(src.loc)
