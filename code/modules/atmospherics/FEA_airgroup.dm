@@ -312,7 +312,7 @@
 
 				LAGCHECK(LAG_REALTIME)
 
-		src.air.react()
+		src.air?.react()
 
 
 /** If group processing is off, and the air group is bordered by a space tile, execute a fast evacuation of the air in the group.
