@@ -406,13 +406,23 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 
 /obj/storage/secure/closet/security/equipment
 	name = "\improper Security equipment locker"
-	spawn_contents = list(/obj/item/clothing/suit/armor/vest,
+	spawn_contents = list(/obj/item/clothing/under/rank/security,
+	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security,
+	/obj/item/clothing/shoes/swat,
 	/obj/item/clothing/glasses/sunglasses/sechud,
 	/obj/item/handcuffs,
 	/obj/item/handcuffs,
 	/obj/item/device/flash,
 	/obj/item/barrier)
+
+	make_my_stuff()
+		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
+			if (prob(15))
+				new /obj/item/gun/kinetic/riot40mm(src)
+			else
+				new /obj/item/chem_grenade/flashbang(src)
+			return 1
 
 /obj/storage/secure/closet/security/forensics
 	name = "Forensics equipment locker"
