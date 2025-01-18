@@ -2585,7 +2585,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 1
 	},
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "aIU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -6928,7 +6928,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "bZs" = (
 /obj/machinery/computer/tanning{
 	pixel_y = 32
@@ -7982,7 +7982,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "cmE" = (
 /obj/stool/chair/comfy,
 /obj/cable{
@@ -12466,7 +12466,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/green/fancy/edge,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "dEr" = (
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment/mail{
@@ -13964,12 +13964,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
-"eaG" = (
-/obj/disposalpipe/segment/food{
-	dir = 4
-	},
-/turf/simulated/wall/auto/jen,
-/area/station/chapel/sanctuary)
 "eaL" = (
 /obj/machinery/light/incandescent/warm,
 /obj/table/auto,
@@ -14514,9 +14508,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "eis" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -17767,9 +17759,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "flK" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/machinery/light/small/sticky{
@@ -21748,7 +21738,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 5
 	},
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "gwZ" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/jersey,
@@ -23713,7 +23703,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 10
 	},
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "hcX" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -26723,7 +26713,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 9
 	},
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "iaJ" = (
 /obj/table/glass/reinforced/auto,
 /obj/random_item_spawner/desk_stuff/one_or_zero,
@@ -27130,7 +27120,7 @@
 /area/station/science/storage)
 "igQ" = (
 /turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "iha" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -27549,7 +27539,7 @@
 	icon_state = "5-10"
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "iof" = (
 /obj/item/storage/wall/clothingrack/clothes4{
 	dir = 2
@@ -30101,9 +30091,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "jdn" = (
 /obj/submachine/foodprocessor,
 /obj/disposalpipe/segment/morgue{
@@ -31694,11 +31682,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"jCk" = (
-/turf/simulated/wall/auto/jen,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
 "jCs" = (
 /obj/machinery/disposal/mail/small/autoname/bridge/east,
 /obj/cable{
@@ -38038,11 +38021,6 @@
 	icon_state = "fblue1"
 	},
 /area/station/crew_quarters/cafeteria)
-"lyl" = (
-/turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
 "lyo" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -40047,9 +40025,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/sanctuary)
 "lXZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -44616,7 +44592,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/green/fancy/edge,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "nxO" = (
 /obj/machinery/vending/player/chemicals,
 /obj/disposalpipe/trunk/mail,
@@ -45765,7 +45741,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 6
 	},
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "nOU" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -45945,9 +45921,7 @@
 	req_access = null
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "nRW" = (
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/specialroom/chapel{
@@ -48879,9 +48853,7 @@
 "oMm" = (
 /obj/storage/closet/wardrobe/black,
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "oMn" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
@@ -49870,7 +49842,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/jen,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "pdD" = (
 /obj/table/auto,
 /obj/decal/cleanable/dirt/jen,
@@ -51501,9 +51473,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "pDI" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail{
@@ -53498,7 +53468,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "qiF" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
@@ -56641,7 +56611,7 @@
 "rgr" = (
 /obj/mesh/grille/steel,
 /turf/simulated/floor/plating/jen,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "rgS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -70110,7 +70080,7 @@
 	icon_state = "5-8"
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "vjv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -72884,7 +72854,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "vZU" = (
 /obj/machinery/portableowl/attached{
 	name = "Jowls"
@@ -73542,9 +73512,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "wkc" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/window_blinds/cog2/right{
@@ -74150,7 +74118,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "wst" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/medbooth)
@@ -76479,7 +76447,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "wZH" = (
 /obj/stool/chair,
 /obj/machinery/power/apc/autoname_north,
@@ -78688,9 +78656,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "xEj" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -80815,7 +80781,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 1
 	},
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "yja" = (
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/firedoor_spawn,
@@ -118611,7 +118577,7 @@ khe
 khe
 khe
 tLp
-eaG
+lNg
 wZE
 igQ
 igQ
@@ -119217,7 +119183,7 @@ cEv
 dQu
 shH
 pDy
-lyl
+cEv
 oMm
 bAD
 mWR
@@ -119822,7 +119788,7 @@ tVB
 shH
 pDy
 flF
-lyl
+cEv
 bAD
 bJZ
 aaz
@@ -120124,7 +120090,7 @@ uHa
 lNg
 vXX
 eic
-jCk
+uCX
 mpU
 mpU
 mpU
