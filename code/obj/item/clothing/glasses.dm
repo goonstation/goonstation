@@ -492,8 +492,8 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 /obj/item/clothing/glasses/scuttlebot_vr/mail
 	name = "P1ge0n remote controller"
 	desc = "A pair of VR goggles connected to a remote scuttlebot. Use them on the scuttlebot to turn it back into a hat."
-	icon_state = "vr_scuttlebot"
-	item_state = "vr_scuttlebot"
+	icon_state = "vr_dungeon_exit"
+	item_state = "vr_dungeon_exit"
 	var/mob/living/critter/robotic/scuttlebot/mail/connected_pigeon = null
 
 	equipped(var/mob/user, var/slot) //On equip, if there's a scuttlebot, control it
@@ -525,11 +525,6 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 			qdel(src)
 		else
 			..()
-
-	unequipped(var/mob/user) //Someone might have removed them from us. If we're inside the scuttlebot, we're forced out
-		..()
-		if(connected_scuttlebot != null)
-			connected_scuttlebot.return_to_owner()
 
 /obj/item/clothing/glasses/vr_fake //Only exist IN THE MATRIX.  Used to log out.
 	name = "\improper VR goggles"
