@@ -1376,7 +1376,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		desc = "A massive clamping arm from an ancient lifter construct."
 		icon_state = "r_arm-ancient3"
 		appearanceString = "ancient3"
-		max_health = 300
+		max_health = 350
 		weight = 0.5
 		handlistPart = "armL-heavy"
 		robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_left
@@ -1386,7 +1386,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	desc = "The pseudocranium of an ancient silicon utility construct."
 	icon_state = "head-ancient"
 	appearanceString = "ancient"
-	max_health = 400
+	max_health = 300
 	weight = 0.5
 	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_head
 
@@ -1395,7 +1395,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		desc = "The pseudocranium of an ancient silicon stonecutter."
 		icon_state = "head-ancient2"
 		appearanceString = "ancient2"
-		max_health = 250
+		max_health = 200
 		weight = 0.3
 		robot_movement_modifier = /datum/movement_modifier/robot_part/light_head
 
@@ -1404,6 +1404,24 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		desc = "The pseudocranium of an ancient silicon loader."
 		icon_state = "head-ancient3"
 		appearanceString = "ancient3"
+		max_health = 500
+		weight = 0.6
+		robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_head
+
+	worker
+		name = "worker head"
+		desc = "The pseudocranium of an ancient silicon worker."
+		icon_state = "head-ancient4"
+		appearanceString = "ancient4"
+		max_health = 300
+		weight = 0.3
+		robot_movement_modifier = /datum/movement_modifier/robot_part/standard_head
+
+	guardian
+		name = "guardian head"
+		desc = "The pseudocranium of an ancient silicon guardian."
+		icon_state = "head-ancient5"
+		appearanceString = "ancient5"
 		max_health = 500
 		weight = 0.6
 		robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_head
