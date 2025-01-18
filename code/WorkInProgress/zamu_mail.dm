@@ -575,7 +575,8 @@ var/global/mail_types_by_job = list(
 		/obj/item/fishing_rod/master = 1,
 		/obj/item/device/camera_viewer/ranch = 4,
 		/obj/item/clothing/mask/chicken = 5,
-		/obj/item/reagent_containers/food/snacks/ingredient/egg = 3,),
+		/obj/item/reagent_containers/food/snacks/ingredient/egg = 3,
+		), // Some T1 Power Eggs would be nice to add in secret, to give newer struggling ranchers a test taste on what they could do
 
 	/datum/job/civilian/janitor = list(
 		/obj/item/chem_grenade/cleaner = 5,
