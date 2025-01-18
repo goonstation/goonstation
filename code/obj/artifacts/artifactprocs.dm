@@ -154,7 +154,7 @@
 		return 1
 	if (A.activ_sound && !combined_art_activation)
 		playsound(src.loc, A.activ_sound, 100, 1)
-	if (A.activ_text && !combined_art_activation)
+	if (A.activ_text)
 		var/turf/T = get_turf(src)
 		if (T) T.visible_message("<b>[src] [A.activ_text]</b>") //ZeWaka: Fix for null.visible_message()
 	A.activated = 1
@@ -162,7 +162,7 @@
 		src.icon_state = src.icon_state + "fx"
 	else
 		A.show_fx(src)
-	A.effect_activate(src)
+	A.effect_activate(!combined_art_activation ? src : src.get_uppermost_artifact())
 	for (var/obj/O in src.combined_artifacts)
 		O.ArtifactActivated(TRUE)
 	if (combined_art_activation)
@@ -186,7 +186,7 @@
 		return
 	if (A.deact_sound && !combined_art_activation)
 		playsound(src.loc, A.deact_sound, 100, 1)
-	if (A.deact_text && !combined_art_activation)
+	if (A.deact_text)
 		var/turf/T = get_turf(src)
 		T.visible_message("<b>[src] [A.deact_text]</b>")
 	A.activated = 0
@@ -194,7 +194,7 @@
 		src.icon_state = src.icon_state - "fx"
 	else
 		A.hide_fx(src)
-	A.effect_deactivate(src)
+	A.effect_deactivate(!combined_art_activation ? src : src.get_uppermost_artifact())
 	for (var/obj/O in src.combined_artifacts)
 		O.ArtifactDeactivated(TRUE)
 
@@ -669,9 +669,17 @@
 	O.name = src.name
 	O.real_name = src.real_name
 	O.set_loc(src)
+	O.parent_artifact = src
+	O.artifact.hide_fx(O)
+	src.artifact.faults |= O.artifact.faults
+	src.artifact.validtriggers |= O.artifact.validtriggers
+	src.vis_contents += O.vis_contents
 	for (var/obj/art in O.combined_artifacts)
 		src.combine_artifact(art)
 	O.combined_artifacts = null
+
+/obj/proc/get_uppermost_artifact()
+	return src.parent_artifact || src
 
 // Added. Very little related to artifacts was logged (Convair880).
 /proc/ArtifactLogs(var/mob/user, var/mob/target, var/obj/O, var/type_of_action, var/special_addendum, var/trigger_alert = 0)

@@ -111,7 +111,7 @@
 
 			if ("breakdown_artifact")
 				src.break_down_artifact(usr)
-			if ("break_down_fusion")
+			if ("breakdown_fusion")
 				src.break_down_artifact_fusion(usr)
 
 			if ("create_resonator")
@@ -293,11 +293,15 @@
 				if (type_to_create)
 					var/obj/artifact/art = new type_to_create(get_turf(src))
 					art.artifact.reticulated = TRUE
+					art.name_prefix("synthetic")
+					art.UpdateName()
 			if (ARTRET_COMBINE_ARTS)
 				if (tgui_alert(user, "Are you sure you wish to combine [src.stored_item] into [src.stored_artifact]? This can't be undone.", "Confirmation", list("Yes", "No")) != "Yes")
 					return
 				src.stored_artifact.combine_artifact(src.stored_item)
 				src.stored_artifact.artifact.reticulated = TRUE
+				src.stored_artifact.name_prefix("synthetic")
+				src.stored_artifact.UpdateName()
 				src.stored_item = null
 
 		src.apply_cost(thing)
