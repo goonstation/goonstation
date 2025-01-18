@@ -36922,6 +36922,9 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "lhw" = (
