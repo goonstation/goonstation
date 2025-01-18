@@ -22,15 +22,19 @@
 	health_burn = 25
 	health_burn_vuln = 0.2
 	var/is_inspector = FALSE
-	var/glasses_path = /obj/item/clothing/glasses/scuttlebot_vr/
+	var/mail_glasses = FALSE
 	var/obj/item/clothing/head/det_hat/linked_hat = null
 	var/mob/living/carbon/human/controller = null //Who's controlling us? Lets keep track so we can put them back in their body
 
 	New()
 		..()
 		//Comes with the goggles
-		var/glasses_path/R = new glasses_path(src.loc)
-		R.connected_scuttlebot = src
+		if (!mail_glasses) //I tried to make this a variable injected into the query but cause var declare this'll work
+			var/obj/item/clothing/glasses/scuttlebot_vr/R = new /obj/item/clothing/glasses/scuttlebot_vr(src.loc)
+			R.connected_scuttlebot = src
+		else
+			var/obj/item/clothing/glasses/scuttlebot_vr/mail/R = new /obj/item/clothing/glasses/scuttlebot_vr/mail(src.loc)
+			R.connected_pigeon = src
 
 	setup_hands()
 		..()
@@ -124,7 +128,7 @@
 	desc = "A pigeon that must've escaped from the ranch and been trained to deliver mail... wait why is 8G labeled on its leg?"
 	icon = 'icons/mob/critter/robotic/scuttlebot.dmi'
 	icon_state = "pigeon"
-	glasses_path = /obj/item/clothing/glasses/scuttlebot_vr/mail
+	mail_glasses = TRUE
 	speechverb_say = "tweets"
 	speechverb_exclaim = "twoots"
 	speechverb_ask = "tweets curiously"
