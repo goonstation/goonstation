@@ -18,7 +18,7 @@
 		src.job_to_increase = tgui_input_list(usr, "Pick a job to decrease", src.name, jobs)
 		src.amount = tgui_input_number(usr, "Pick an amount to change by", src.name, 3, 10, -1)
 		//confirmation
-		if (tgui_alert(usr, "Are you sure?", src.name, list("Yes" "No")) == "Yes")
+		if (tgui_alert(usr, "Are you sure?", src.name, list("Yes", "No")) == "Yes")
 			event_effect(source)
 		else
 			src.cleanup()
