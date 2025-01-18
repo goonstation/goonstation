@@ -1318,3 +1318,114 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		AI.verbs -= whatever the vox verb is i guess
 */
 
+// ancient robot stuff
+
+
+/obj/item/parts/robot_parts/arm/right/ancient
+	name = "ancient right arm"
+	desc = "The right arm of an ancient utility construct."
+	icon_state = "r_arm-ancient"
+	appearanceString = "ancient"
+	max_health = 200
+	weight = 0.4
+	handlistPart = "armR-sturdy"
+	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_arm_right
+
+	stonecutter
+		name = "ancient stonecutter arm"
+		desc = "The cutting arm of an ancient stonemason construct."
+		icon_state = "r_arm-ancient2"
+		appearanceString = "ancient2"
+		max_health = 150
+		weight = 0.2
+		handlistPart = "armR-light"
+		robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_right
+
+	actuator
+		name = "ancient actuator arm"
+		desc = "A massive clamping arm from an ancient lifter construct."
+		icon_state = "r_arm-ancient3"
+		appearanceString = "ancient3"
+		max_health = 300
+		weight = 0.5
+		handlistPart = "armR-heavy"
+		robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_right
+
+/obj/item/parts/robot_parts/arm/left/ancient
+	name = "ancient left arm"
+	desc = "The left arm of an ancient silicon construct."
+	icon_state = "l_arm-ancient"
+	appearanceString = "ancient"
+	max_health = 200
+	weight = 0.4
+	handlistPart = "armL-sturdy"
+	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_arm_left
+
+	stonecutter
+		name = "ancient stonecutter arm"
+		desc = "The cutting arm of an ancient stonemason construct."
+		icon_state = "l_arm-ancient2"
+		appearanceString = "ancient2"
+		max_health = 150
+		weight = 0.2
+		handlistPart = "armL-light"
+		robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_left
+
+	actuator
+		name = "ancient actuator arm"
+		desc = "A massive clamping arm from an ancient lifter construct."
+		icon_state = "r_arm-ancient3"
+		appearanceString = "ancient3"
+		max_health = 300
+		weight = 0.5
+		handlistPart = "armL-heavy"
+		robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_left
+
+/obj/item/parts/robot_parts/head/ancient
+	name = "ancient head"
+	desc = "The pseudocranium of an ancient silicon utility construct."
+	icon_state = "head-ancient"
+	appearanceString = "ancient"
+	max_health = 400
+	weight = 0.5
+	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_head
+
+	stonecutter
+		name = "stonecutter head"
+		desc = "The pseudocranium of an ancient silicon stonecutter."
+		icon_state = "head-ancient2"
+		appearanceString = "ancient2"
+		max_health = 250
+		weight = 0.3
+		robot_movement_modifier = /datum/movement_modifier/robot_part/light_head
+
+	actuator
+		name = "actuator head"
+		desc = "The pseudocranium of an ancient silicon loader."
+		icon_state = "head-ancient3"
+		appearanceString = "ancient3"
+		max_health = 500
+		weight = 0.6
+		robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_head
+
+/obj/item/parts/robot_parts/chest/ancient
+	name = "ancient chest"
+	desc = "The thoracic carapace of an ancient silicon construct."
+	icon_state = "body-ancient"
+	appearanceString = "ancient"
+	max_health = 400
+	robot_movement_modifier = /datum/movement_modifier/robot_part/standard_chest
+
+	stonecutter
+		name = "stonecutter chest"
+		desc = "The thoracic carapace of an ancient silicon stonecutter."
+		icon_state = "body-ancient2"
+		appearanceString = "ancient2"
+		max_health = 300
+
+	actuator
+		name = "actuator chest"
+		desc = "The heavy actuator frame of an ancient silicon loader."
+		icon_state = "body-ancient3"
+		appearanceString = "ancient3"
+		max_health = 600
