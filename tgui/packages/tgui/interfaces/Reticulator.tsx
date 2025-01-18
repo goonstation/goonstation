@@ -33,7 +33,6 @@ interface ReticulatorData {
   canCreateArtifact;
   canCombineArtifacts;
   canImbueLight;
-  canCutGem;
   canBreakdownForMats;
   canModifyMaterial;
   canUpgradeStorage;
@@ -47,7 +46,6 @@ interface ReticulatorData {
   createArtTip;
   combineArtsTip;
   imbueLightTip;
-  cutGemTip;
   breakdownMatsTip;
   modifyMaterialTip;
   upgradeStorageTip;
@@ -74,7 +72,6 @@ export const Reticulator = () => {
     canCreateArtifact,
     canCombineArtifacts,
     canImbueLight,
-    canCutGem,
     canBreakdownForMats,
     canModifyMaterial,
     canUpgradeStorage,
@@ -88,7 +85,6 @@ export const Reticulator = () => {
     createArtTip,
     combineArtsTip,
     imbueLightTip,
-    cutGemTip,
     breakdownMatsTip,
     modifyMaterialTip,
     upgradeStorageTip,
@@ -265,16 +261,6 @@ export const Reticulator = () => {
                         tooltip={imbueLightTip}
                       >
                         Imbue Light
-                      </Button>
-                    </Flex.Item>
-                    <Flex.Item>
-                      <Button
-                        disabled={!canCutGem}
-                        selected={canCutGem}
-                        onClick={() => act('cut_gem')}
-                        tooltip={cutGemTip}
-                      >
-                        Restructure Gem
                       </Button>
                     </Flex.Item>
                     <Flex.Item>

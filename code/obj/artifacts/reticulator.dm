@@ -7,7 +7,6 @@
 
 // modifications - to generic/categories of items, nothing specific
 #define ARTRET_ADD_LIGHT "add_light"
-#define ARTRET_PERFECT_GEM "perfect_gem"
 #define ARTRET_BREAKDOWN_MATS "breakdown_mats"
 #define ARTRET_MODIFY_MATERIAL "modify_material"
 #define ARTRET_INCREASE_STORAGE "increase_storage"
@@ -35,7 +34,6 @@
 		ARTRET_PREVIOUS_ART = list(ARTIFACT_SHARD_ESSENCE = 2, ARTIFACT_SHARD_POWER = 2, ARTIFACT_SHARD_SPACETIME = 2, "readable" = "2 Essence 2 Power 2 Spacetime"),
 		ARTRET_COMBINE_ARTS = list(ARTIFACT_SHARD_FUSION = 2, "readable" = "1 Fusion"),
 		ARTRET_ADD_LIGHT = list(ARTIFACT_SHARD_ESSENCE = 1, "readable" = "1 Essence"),
-		ARTRET_PERFECT_GEM = list(ARTIFACT_SHARD_POWER = 1, "readable" = "1 Power"),
 		ARTRET_BREAKDOWN_MATS = list(ARTIFACT_SHARD_SPACETIME = 1, "readable" = "1 Spacetime"),
 		ARTRET_MODIFY_MATERIAL = list(ARTIFACT_SHARD_ESSENCE = 1, ARTIFACT_SHARD_POWER = 1, ARTIFACT_SHARD_SPACETIME = 1, "readable" = "1 Essence 1 Power 1 Spacetime"),
 		ARTRET_INCREASE_STORAGE = list(ARTIFACT_SHARD_SPACETIME = 3, "readable" = "3 Spacetime"),
@@ -72,7 +70,6 @@
     		"canCreateArtifact" = src.meets_cost_requirement(ARTRET_PREVIOUS_ART) && length(src.reticulated_artifacts),
     		"canCombineArtifacts" = src.can_combine(src.stored_artifact, src.stored_item),
     		"canImbueLight" = src.can_modify_item(ARTRET_ADD_LIGHT),
-    		"canCutGem" = src.can_modify_item(ARTRET_PERFECT_GEM),
     		"canBreakdownForMats" = src.can_modify_item(ARTRET_BREAKDOWN_MATS),
     		"canModifyMaterial" = src.can_modify_item(ARTRET_MODIFY_MATERIAL),
     		"canUpgradeStorage" = src.can_modify_item(ARTRET_INCREASE_STORAGE),
@@ -86,7 +83,6 @@
 			"createArtTip" = "Re-create a previously broken down artifact. -Required: [src.costs[ARTRET_PREVIOUS_ART]["readable"]]",
 			"combineArtsTip" = "Combine compatible artifacts into a new artifact with combined properties. -Required: [src.costs[ARTRET_COMBINE_ARTS]["readable"]]",
 			"imbueLightTip" = "Imbue ambient light into the stored object. -Required: [src.costs[ARTRET_ADD_LIGHT]["readable"]]",
-			"cutGemTip" = "Perfect the quality of a gem. -Required: [src.costs[ARTRET_PERFECT_GEM]["readable"]]",
 			"breakdownMatsTip" = "Breakdown a compatible item for materials. -Required: [src.costs[ARTRET_BREAKDOWN_MATS]["readable"]]",
 			"modifyMaterialTip" = "Modify a property of the stored item's material by a value of +/- 0.5. -Required: [src.costs[ARTRET_MODIFY_MATERIAL]["readable"]]",
 			"upgradeStorageTip" = "Increase the storage space of the stored item by 1. -Required: [src.costs[ARTRET_INCREASE_STORAGE]["readable"]]",
@@ -125,8 +121,6 @@
 
 			if ("imbue_light")
 				src.modify_item(ARTRET_ADD_LIGHT, usr)
-			if ("cut_gem")
-				src.modify_item(ARTRET_PERFECT_GEM, usr)
 			if ("breakdown_mats")
 				src.modify_item(ARTRET_BREAKDOWN_MATS, usr)
 			if ("modify_material")
@@ -341,11 +335,6 @@
 		switch (action)
 			if (ARTRET_ADD_LIGHT)
 				compatible_type = TRUE
-			if (ARTRET_PERFECT_GEM)
-				compatible_type = istype(src.stored_item, /obj/item/raw_material/gemstone)
-				if (compatible_type)
-					var/datum/material/crystal/gemstone/mat = getMaterial(src.stored_item.material.getID())
-					compatible_type = mat.gem_tier > 1
 			if (ARTRET_BREAKDOWN_MATS)
 				var/typeinfo/obj/info = src.stored_item.get_typeinfo()
 				var/list/mats_used = info?.mats
@@ -547,7 +536,6 @@
 #undef ARTRET_COMBINE_ARTS
 
 #undef ARTRET_ADD_LIGHT
-#undef ARTRET_PERFECT_GEM
 #undef ARTRET_BREAKDOWN_MATS
 #undef ARTRET_MODIFY_MATERIAL
 #undef ARTRET_INCREASE_STORAGE
