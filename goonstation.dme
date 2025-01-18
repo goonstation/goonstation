@@ -1141,6 +1141,7 @@
 #include "code\modules\events\battle_storm.dm"
 #include "code\modules\events\black_hole.dm"
 #include "code\modules\events\blowout.dm"
+#include "code\modules\events\bureaucratic_error.dm"
 #include "code\modules\events\crew_spawn.dm"
 #include "code\modules\events\faults.dm"
 #include "code\modules\events\ion_storm.dm"
