@@ -567,7 +567,15 @@ var/global/mail_types_by_job = list(
 		),
 
 	/datum/job/civilian/rancher = list(
-		),
+		/obj/item/knitting_needles = 5,
+		/obj/item/drop_spindle = 5,
+		/obj/item/scissors/surgical_scissors/shears = 5,
+		/obj/item/fishing_rod/basic = 9,
+		/obj/item/fishing_rod/upgraded = 3,
+		/obj/item/fishing_rod/master = 1,
+		/obj/item/device/camera_viewer/ranch = 4,
+		/obj/item/clothing/mask/chicken = 5,
+		/obj/item/reagent_containers/food/snacks/ingredient/egg = 3,),
 
 	/datum/job/civilian/janitor = list(
 		/obj/item/chem_grenade/cleaner = 5,
