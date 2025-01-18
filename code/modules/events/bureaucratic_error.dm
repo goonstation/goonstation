@@ -1,4 +1,4 @@
-#define BUREAUCRATIC_JOBS_IGNORE list("Staff Assistant", "Cyborg", "AI")
+#define BUREAUCRATIC_JOBS_IGNORE list("Staff Assistant", "Security Officer", "Cyborg", "AI")
 
 /datum/random_event/major/bureaucratic_error
 	name = "Bureaucratic Error"
