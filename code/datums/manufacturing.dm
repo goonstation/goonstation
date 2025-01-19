@@ -664,7 +664,7 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		..()
 		var/obj/item/sheet/S = A
-		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("crystal")])
+		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("metal_dense")])
 		S.set_reinforcement(applicable_material.material)
 
 /datum/manufacture/rods2
@@ -1360,6 +1360,17 @@
 	time = 25 SECONDS
 	category = "Organ"
 
+/datum/manufacture/cybereye_monitor
+	name = "Monitor Cybereye"
+	item_requirements = list("crystal" = 3,
+							 "metal" = 1,
+							 "conductive" = 2,
+							 "insulated" = 1)
+	item_outputs = list(/obj/item/organ/eye/cyber/monitor)
+	create = 1
+	time = 25 SECONDS
+	category = "Organ"
+
 /datum/manufacture/cybereye_laser
 	name = "Laser Cybereye"
 	item_requirements = list("crystal" = 3,
@@ -1388,6 +1399,15 @@
 	item_outputs = list(/obj/item/implantcase/antirot)
 	create = 1
 	time = 30 SECONDS
+	category = "Resource"
+
+/datum/manufacture/medicalalertbutton
+	name = "Medical Alert Button"
+	item_requirements = list("conductive" = 2,
+							 "metal" = 2)
+	item_outputs = list(/obj/item/device/panicbutton/medicalalert)
+	create = 1
+	time = 3 SECONDS
 	category = "Resource"
 
 #ifdef ENABLE_ARTEMIS

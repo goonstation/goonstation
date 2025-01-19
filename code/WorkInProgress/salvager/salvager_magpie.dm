@@ -66,8 +66,7 @@ var/datum/magpie_manager/magpie_man = new
 			SPAWN(1.5 SECONDS)
 				UpdateOverlays(null, "bot_speech_bubble")
 			if(!src.bot_speech_color)
-				var/num = hex2num(copytext(md5("[src.name][TIME]"), 1, 7))
-				src.bot_speech_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
+				src.bot_speech_color = living_maptext_color("[src.name][TIME]")
 			var/maptext_color
 			if (sing)
 				maptext_color ="#D8BFD8"

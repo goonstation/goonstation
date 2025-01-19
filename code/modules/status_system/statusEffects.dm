@@ -2529,7 +2529,7 @@
 	var/mob/living/carbon/human/H
 
 	getTooltip()
-		. = "You are recovering from being in critical condition. Max stamina reduced by 50 and stamina regen reduced by 2."
+		. = "You are recovering from being in critical condition. Max stamina reduced by 50 and stamina regen reduced by 2. Maybe you should find some painkillers..."
 
 	onAdd(optional=null)
 		. = ..()
@@ -3305,3 +3305,12 @@
 		if((T.turf_flags & HAS_KUDZU) && !ON_COOLDOWN(src.owner, "kudzuwalk_heal", 2 SECONDS) && isliving(owner))
 			var/mob/living/L = owner
 			L.HealDamage("All", 0.5, 0.5, 0.25)
+
+/datum/statusEffect/robospeed
+	id = "robospeed"
+	name = "Hastened"
+	desc = "MAXIMUM OVERDRIVE (You're faster.)."
+	icon_state = "janktank"
+	unique = TRUE
+	movement_modifier = /datum/movement_modifier/healbot
+	effect_quality = STATUS_QUALITY_POSITIVE

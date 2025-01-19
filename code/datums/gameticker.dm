@@ -422,6 +422,7 @@ var/global/current_state = GAME_STATE_INVALID
 				if(player.mind.assigned_role != "MODE")
 					player.Equip_Rank(player.mind.assigned_role)
 				spawn_rules_controller.apply_to(player)
+				player.apply_roundstart_events()
 
 	proc/process()
 		if(current_state != GAME_STATE_PLAYING)
