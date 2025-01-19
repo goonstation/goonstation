@@ -330,9 +330,11 @@ export const Reticulator = () => {
           </Flex.Item>
           <Flex.Item>
             <Section title="Reticulated Artifacts" scrollable fill>
-              {reticulatedArtifacts.map((item, index) => (
-                <Stack.Item key={index}>{item}</Stack.Item>
-              ))}
+              <Stack vertical fill>
+                {reticulatedArtifacts.map((item, index) => (
+                  <Stack.Item key={index}>{item}</Stack.Item>
+                ))}
+              </Stack>
             </Section>
           </Flex.Item>
         </Flex>
