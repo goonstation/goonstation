@@ -10,8 +10,15 @@
 	if(voluntary && !src.emote_allowed)
 		return
 
+	if (isdead(src))
+		src.emote_allowed = FALSE
+		return
+
 	if (src.hasStatus("paralysis"))
 		return //pls stop emoting :((
+
+	if (voluntary && (src.hasStatus("unconscious") || isunconscious(src)))
+		return
 
 	if (src.bioHolder.HasEffect("revenant"))
 		src.visible_message(SPAN_ALERT("[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!"), group = "revenant_emote")
@@ -42,9 +49,6 @@
 			message = mutantrace_emote_stuff[1]
 		if(length(mutantrace_emote_stuff) >= 2)
 			maptext_out = mutantrace_emote_stuff[2]
-
-	if (!src.emote_check(voluntary, 0))
-		return
 
 	if (!message)
 		switch (act)
