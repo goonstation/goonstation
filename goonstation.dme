@@ -1787,6 +1787,7 @@
 #include "code\modules\speech\modules\listen\effects\parrot.dm"
 #include "code\modules\speech\modules\listen\effects\prototype_maptext.dm"
 #include "code\modules\speech\modules\listen\effects\radio.dm"
+#include "code\modules\speech\modules\listen\effects\ritualhear.dm"
 #include "code\modules\speech\modules\listen\effects\sims_social_motive.dm"
 #include "code\modules\speech\modules\listen\effects\skullbot.dm"
 #include "code\modules\speech\modules\listen\inputs\_input_module_parent.dm"

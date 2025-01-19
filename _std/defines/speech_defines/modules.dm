@@ -204,5 +204,6 @@
 #define LISTEN_EFFECT_PARROT "parrot"
 #define LISTEN_EFFECT_PROTOTYPE_MAPTEXT "prototype_maptext"
 #define LISTEN_EFFECT_RADIO "radio"
+#define LISTEN_EFFECT_RITUAL "ritual"
 #define LISTEN_EFFECT_SIMS_SOCIAL_MOTIVE "sims_social_motive"
 #define LISTEN_EFFECT_SKULLBOT "skullbot"

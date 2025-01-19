@@ -152,12 +152,26 @@ var/list/globalRituals = list() //Global list of rituals.
 	proc/showEffect(var/atom/location, var/datum/ritualVars/ritVars)
 		return
 
-	New(atom/o)
-		owner = o
+	New(atom/A)
+		owner = A
 		. = ..()
 		if(prototype || !owner) return
+
+		owner.ensure_listen_tree()
+		owner.listen_tree.AddListenInput(LISTEN_INPUT_OUTLOUD)
+		owner.listen_tree.AddListenEffect(LISTEN_EFFECT_RITUALHEAR)
+
 		if(!istype(src, /datum/ritualComponent/anchor))
 			findAnchor()
+
+	disposing()
+		breakLinks()
+		filterList = null
+		if(istype(owner))
+			owner.ritualComponent = null
+			qdel(owner)
+			owner = null
+		. = ..()
 
 	proc/getFlagged(var/flags = 0, var/list/excludeList = list())
 		var/datum/ritualComponent/anchor/A = null
@@ -213,11 +227,11 @@ var/list/globalRituals = list() //Global list of rituals.
 			ownerAnchor = null
 		return
 
-	proc/hear_talk(mob/M as mob, text, real_name)
-		if(istype(ownerAnchor) && findtext(lowertext(text[1]), lowertext(name)) )// && BOUNDS_DIST(owner, M) == 0)
+	proc/hear(datum/say_message/message)
+		if(istype(ownerAnchor) && findtext(lowertext(message.content), lowertext(name)) )// && BOUNDS_DIST(owner, M) == 0)
 			if(!active)
 				setActive(1)
-				ownerAnchor.tryFire(M)
+				ownerAnchor.tryFire(message.speaker)
 		return
 
 	proc/setActive(var/val)
@@ -267,15 +281,6 @@ var/list/globalRituals = list() //Global list of rituals.
 
 		showConnection()
 		return
-
-	disposing()
-		breakLinks()
-		filterList = null
-		if(istype(owner))
-			owner.ritualComponent = null
-			qdel(owner)
-			owner = null
-		return ..()
 
 	anchor
 		name = "Ritual anchor"
