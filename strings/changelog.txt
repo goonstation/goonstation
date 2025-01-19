@@ -1,5 +1,9 @@
 
 (t)sun jan 19 25
+(u)cringe
+(p)20620
+(e)🚄💨|C-Performance, A-Atmospherics
+(*)Atmospherics has been tweaked internally for performance. Be sure to report any bugs!
 (u)Cheekybrdy
 (p)22039
 (e)|
