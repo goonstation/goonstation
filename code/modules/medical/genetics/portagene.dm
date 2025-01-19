@@ -24,13 +24,6 @@
 			occupant = null
 		..()
 
-	get_help_message(dist, mob/user)
-		. = ..()
-		if(src.status & BROKEN)
-			return "Use <b>2 glass sheets</b> to repair [src]."
-		else
-			return ""
-
 	examine()
 		. = ..()
 		. += "Home turf: [get_area(src.homeloc)]."
