@@ -6,4 +6,4 @@
 	if (!istype(A))
 		return
 
-	A.ritualComponent?.hear(message)
+	A.ritualComponent.hear(message)

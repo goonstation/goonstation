@@ -159,7 +159,7 @@ var/list/globalRituals = list() //Global list of rituals.
 
 		owner.ensure_listen_tree()
 		owner.listen_tree.AddListenInput(LISTEN_INPUT_OUTLOUD)
-		owner.listen_tree.AddListenEffect(LISTEN_EFFECT_RITUALHEAR)
+		owner.listen_tree.AddListenEffect(LISTEN_EFFECT_RITUAL)
 
 		if(!istype(src, /datum/ritualComponent/anchor))
 			findAnchor()
@@ -168,6 +168,8 @@ var/list/globalRituals = list() //Global list of rituals.
 		breakLinks()
 		filterList = null
 		if(istype(owner))
+			owner.listen_tree.RemoveListenInput(LISTEN_INPUT_OUTLOUD)
+			owner.listen_tree.RemoveListenEffect(LISTEN_EFFECT_RITUAL)
 			owner.ritualComponent = null
 			qdel(owner)
 			owner = null
@@ -296,7 +298,7 @@ var/list/globalRituals = list() //Global list of rituals.
 			globalRitualAnchors.Add(src)
 			linkComponents()
 
-		hear_talk(mob/M as mob, text, real_name)
+		hear()
 			return
 
 		breakLinks()
