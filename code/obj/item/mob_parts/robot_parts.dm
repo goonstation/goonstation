@@ -1408,6 +1408,11 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		weight = 0.6
 		robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_head
 
+		New()
+			. = ..()
+			AddComponent(/datum/component/loctargeting/medium_directional_light, 255, 0, 0, 210)
+			SEND_SIGNAL(src, COMSIG_LIGHT_ENABLE)
+
 	worker
 		name = "worker head"
 		desc = "The pseudocranium of an ancient silicon worker."
