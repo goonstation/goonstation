@@ -418,7 +418,6 @@
 			die()
 			return
 		src.ticks_until_can_hit_mob--
-		proj_data.tick(src)
 		if (QDELETED(src))
 			return
 
@@ -516,7 +515,7 @@
 
 		set_dir(facing_dir)
 		incidence = turn(incidence, 180)
-
+		proj_data.tick(src)
 		var/dx = loc.x - orig_turf.x
 		var/dy = loc.y - orig_turf.y
 		var/pixel_dx = dx * 32
