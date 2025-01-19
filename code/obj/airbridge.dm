@@ -344,6 +344,9 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 		starts_established = 0
 
 	proc/update_status()
+		if(src.status & BROKEN)
+			return
+
 		if (!links.len)
 			get_links()
 
@@ -467,10 +470,6 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 				icon_state = "airbroff"
 				status |= NOPOWER
 				light.disable()
-	set_broken()
-		. = ..()
-		if(.) return
-		icon_state = "airbrbr"
 
 /obj/machinery/computer/airbr/emergency_shuttle
 	emergency = 1

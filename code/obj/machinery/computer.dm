@@ -211,8 +211,6 @@
 	var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 	smoke.set_up(5, 0, src)
 	smoke.start()
-	icon_state = "[src.base_icon_state]b"
-	light.disable()
 
 /obj/machinery/computer/bullet_act(obj/projectile/P)
 	. = ..()

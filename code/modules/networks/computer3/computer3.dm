@@ -728,13 +728,6 @@
 
 	..()
 
-/obj/machinery/computer3/set_broken()
-	. = ..()
-	if(.) return
-	icon_state = src.base_icon_state
-	icon_state += "b"
-	light.disable()
-
 /obj/machinery/computer3/proc
 
 	run_program(datum/computer/file/terminal_program/program)

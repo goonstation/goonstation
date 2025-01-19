@@ -342,6 +342,7 @@
 	if (src.is_broken())
 		return TRUE
 	src.status |= BROKEN
+	src.power_change()
 
 /obj/machinery/proc/is_broken()
 	return (src.status & BROKEN)

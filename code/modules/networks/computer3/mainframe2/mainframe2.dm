@@ -460,12 +460,6 @@
 			set_broken()
 			src.set_density(0)
 
-	set_broken()
-		. = ..()
-		if(.) return
-		icon_state = initial(src.icon_state)
-		icon_state += "b"
-
 	proc
 		run_program(datum/computer/file/mainframe_program/program, var/datum/mainframe2_user_data/user, var/datum/computer/file/mainframe_program/caller, var/runparams, var/allow_fork=0)
 			if(!hd || !program || (!program.holder && program.needs_holder))
