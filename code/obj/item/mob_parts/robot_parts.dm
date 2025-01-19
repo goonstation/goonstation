@@ -1374,7 +1374,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	actuator
 		name = "ancient actuator arm"
 		desc = "A massive clamping arm from an ancient lifter construct."
-		icon_state = "r_arm-ancient3"
+		icon_state = "l_arm-ancient3"
 		appearanceString = "ancient3"
 		max_health = 350
 		weight = 0.5
