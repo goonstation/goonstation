@@ -170,14 +170,18 @@
 				dropped.set_loc(src)
 			return
 		var/list/options = list()
-		if (!src.stored_artifact)
+		if (!src.stored_artifact && dropped.artifact)
 			options += "Break down"
 		if (!src.stored_item)
 			options += "Modification"
 		options += "Cancel"
 		if (length(options) == 1)
 			return
-		var/picked = tgui_alert(user, "What would you like to load the item for?", "Pick option", options)
+		var/picked
+		if (length(options) == 3)
+			picked = tgui_alert(user, "What would you like to load the item for?", "Pick option", options)
+		else
+			picked = (options - list("Cancel"))[1]
 		if (!picked || picked == "Cancel")
 			return
 		if (ismob(src_location))
@@ -287,15 +291,13 @@
 				if (type_to_create)
 					var/obj/artifact/art = new type_to_create(get_turf(src))
 					art.artifact.reticulated = TRUE
-					art.name_prefix("synthetic")
-					art.UpdateName()
+					src.apply_new_name(art)
 			if (ARTRET_COMBINE_ARTS)
 				if (tgui_alert(user, "Are you sure you wish to combine [src.stored_item] into [src.stored_artifact]? This can't be undone.", "Confirmation", list("Yes", "No")) != "Yes")
 					return
 				src.stored_artifact.combine_artifact(src.stored_item)
 				src.stored_artifact.artifact.reticulated = TRUE
-				src.stored_artifact.name_prefix("synthetic")
-				src.stored_artifact.UpdateName()
+				src.apply_new_name(src.stored_artifact)
 				src.stored_item = null
 
 		src.apply_cost(thing)
@@ -340,7 +342,7 @@
 				var/list/mats_used = info?.mats
 				compatible_type = length(mats_used)
 			if (ARTRET_MODIFY_MATERIAL)
-				compatible_type = src.stored_item.material && src.stored_item.material.isMutable()
+				compatible_type = src.stored_item.material
 			if (ARTRET_INCREASE_STORAGE)
 				compatible_type = src.stored_item.storage && src.stored_item.storage.slots <= 13 && !istype(src.stored_item, /obj/item/artifact/bag_of_holding)
 			if (ARTRET_INCREASE_REAGENTS)
@@ -360,12 +362,9 @@
 			if (ARTRET_ADD_LIGHT)
 				var/col = tgui_color_picker(user, "Select color to add", "Color selection")
 				if (col && src.stored_item)
-					src.stored_item.remove_simple_light("artret_added_light")
-					src.stored_item.add_simple_light("artret_added_light", rgb2num(col) + list(255))
-			if (ARTRET_PERFECT_GEM)
-				var/datum/material/crystal/gemstone/mat = getMaterial(src.stored_item.material.getID())
-				mat.gem_tier++
-				mat.update_properties()
+					src.stored_item.remove_medium_light("artret_added_light")
+					src.stored_item.add_medium_light("artret_added_light", rgb2num(col) + list(500))
+					src.apply_new_name(src.stored_item)
 			if (ARTRET_BREAKDOWN_MATS)
 				var/typeinfo/obj/info = src.stored_item.get_typeinfo()
 				var/list/mats_used = info.mats
@@ -379,33 +378,48 @@
 				qdel(src.stored_item)
 				src.stored_item = null
 			if (ARTRET_MODIFY_MATERIAL)
-				var/list/props = src.stored_item.material.getMaterialProperties()
+				var/datum/material/copy_mat = src.stored_item.material.getMutable()
+				var/list/props = copy_mat.getMaterialProperties()
 				var/list/to_output = list()
-				for (var/datum/material_property/prop as anything in props)
-					var/prop_value = src.stored_item.material.getProperty(prop.id)
-					if (prop_value >= prop.max_value - 0.5 || prop_value <= prop.min_value + 0.5)
-						continue
-					to_output["[prop.name]: [src.stored_item.material.getProperty(prop.id)]"] = prop.id
+				for (var/datum/material_property/prop in props)
+					to_output["[prop.name]: [copy_mat.getProperty(prop.id)]"] = prop.id
 				if (!length(to_output))
 					tgui_alert(user, "No available properties to modify!", "Error", list("Ok"))
 					return
 				var/to_modify = tgui_input_list(user, "Which property would you like to modify? It can be changed by + or - 0.5.", "Material modification", to_output)
 				if (!to_modify)
 					return
-				var/to_change = tgui_alert(user, "Select modification for [to_modify].", "Material modification", list("+0.5", "-0.5", "Cancel"))
+				var/list/options = list("+0.5", "-0.5", "Cancel")
+				var/prop_id = to_output[to_modify]
+				var/prop_value = copy_mat.getProperty(prop_id)
+				if (prop_value > copy_mat.getProperty(prop_id, VALUE_MAX) - 0.5)
+					options -= "+0.5"
+				else if (prop_value < copy_mat.getProperty(prop_id, VALUE_MIN) + 0.5)
+					options -= "-0.5"
+				var/to_change = tgui_alert(user, "Select modification for [to_modify].", "Material modification", options)
+				if (!to_change)
+					return
 				if (to_change == "+0.5")
-					var/material_prop_id = to_output[to_modify]
-					src.stored_item.material.setProperty(material_prop_id, src.stored_item.material.getProperty(material_prop_id) + 0.5)
+					copy_mat.setProperty(prop_id, copy_mat.getProperty(prop_id) + 0.5)
 				else if (to_change == "-0.5")
-					var/material_prop_id = to_output[to_modify]
-					src.stored_item.material.setProperty(material_prop_id, src.stored_item.material.getProperty(material_prop_id) - 0.5)
+					copy_mat.setProperty(prop_id, copy_mat.getProperty(prop_id) - 0.5)
+				if (HAS_ATOM_PROPERTY(src.stored_item, PROP_ATOM_RETICULATED))
+					return
+				APPLY_ATOM_PROPERTY(src.stored_item, PROP_ATOM_RETICULATED, src)
+				copy_mat.setName("synthetic [copy_mat.getName()]")
+				src.stored_item.setMaterial(copy_mat)
+				if (!src.stored_item.mat_changename)
+					src.stored_item.name = "synthetic [src.stored_item.name]"
+				src.apply_new_name(src.stored_item)
 			if (ARTRET_INCREASE_STORAGE)
 				src.stored_item.storage.increase_slots(1)
+				src.apply_new_name(src.stored_item)
 			if (ARTRET_INCREASE_REAGENTS)
 				src.stored_item.reagents.maximum_volume *= 1.1
 				if (istype(src.stored_item, /obj/item))
 					var/obj/item/I = src.stored_item
 					I.inventory_counter?.update_counter()
+				src.apply_new_name(src.stored_item)
 			if (ARTRET_INCREASE_CELL_CAP)
 				if (istype(src.stored_item, /obj/item/cell))
 					var/obj/item/cell/cell = src.stored_item
@@ -414,12 +428,17 @@
 				else
 					var/obj/item/ammo/power_cell/cell = src.stored_item
 					cell.max_charge *= 1.1
+					cell.AddComponent(cell.component_type, cell.max_charge, cell.charge, cell.recharge_rate, cell.recharge_delay, cell.rechargable)
+					processing_items |= cell.GetComponent(cell.component_type)
 					cell.UpdateIcon()
+				src.apply_new_name(src.stored_item)
 			if (ARTRET_INCREASE_MINING_POWER)
 				var/obj/item/mining_tools/tool = src.stored_item
 				tool.power *= 1.1
+				tool.tooltip_rebuild = TRUE
 				if (tool.power > SPIKES_MEDAL_POWER_THRESHOLD)
 					user.unlock_medal("This object menaces with spikes of...", TRUE)
+				src.apply_new_name(tool)
 
 		src.apply_cost(action)
 
@@ -448,6 +467,13 @@
 
 		tgui_message(user, src.artifact_shard_reference, "Artifact Shard Per Artifact")
 
+	proc/apply_new_name(obj/to_change)
+		if (HAS_ATOM_PROPERTY(to_change, PROP_ATOM_RETICULATED))
+			return
+		APPLY_ATOM_PROPERTY(to_change, PROP_ATOM_RETICULATED, src)
+		to_change.name_prefix("synthetic")
+		to_change.UpdateName()
+
 /obj/item/artifact_resonator
 	name = "Artifact resonator"
 	desc = "A useful device to assist in activating artifacts. It has the ability to detect disguised origin artifacts, as well as possible activation methods."
@@ -472,8 +498,8 @@
 			var/datum/artifact_trigger/activating_trigger = O.artifact.triggers[1]
 			boutput(user, SPAN_NOTICE("Analysis results:" + \
 				"<br>Origin disguised: <B>[O.artifact.disguised ? "Yes" : "No"]</B>" + \
-				"<br>Activation method: <B>[src.trigger_names_assoc[activating_trigger.type]]</B>") + \
-				"<br>Artifacts combined: <B>[length(O.combined_artifacts) || 0]</B>")
+				"<br>Activation method: <B>[src.trigger_names_assoc[activating_trigger.type]]</B>" + \
+				"<br>Artifacts combined: <B>[length(O.combined_artifacts) || 0]</B>"))
 		else
 			if ("\ref[O]" in src.scanned_artifacts)
 				boutput(user, src.scanned_artifacts["\ref[O]"])
