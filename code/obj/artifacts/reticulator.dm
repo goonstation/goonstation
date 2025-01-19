@@ -1,6 +1,5 @@
 // creatables
 #define ARTRET_RESONATOR "resonator"
-#define ARTRET_SCRAMBLER "scrambler"
 #define ARTRET_TUNER "tuner"
 #define ARTRET_PREVIOUS_ART "previous_art"
 #define ARTRET_COMBINE_ARTS "combine_arts"
@@ -29,7 +28,6 @@
 	var/omni_shards = 0
 	var/static/list/costs = list(
 		ARTRET_RESONATOR = list(ARTIFACT_SHARD_ESSENCE = 3, "readable" = "3 Essence"),
-		ARTRET_SCRAMBLER = list(ARTIFACT_SHARD_ESSENCE = 2, ARTIFACT_SHARD_POWER = 1, "readable" = "2 Essence 1 Power"),
 		ARTRET_TUNER = list(ARTIFACT_SHARD_ESSENCE = 2, ARTIFACT_SHARD_SPACETIME = 1, "readable" = "2 Essence 1 Spacetime"),
 		ARTRET_PREVIOUS_ART = list(ARTIFACT_SHARD_ESSENCE = 2, ARTIFACT_SHARD_POWER = 2, ARTIFACT_SHARD_SPACETIME = 2, "readable" = "2 Essence 2 Power 2 Spacetime"),
 		ARTRET_COMBINE_ARTS = list(ARTIFACT_SHARD_FUSION = 2, "readable" = "1 Fusion"),
@@ -282,8 +280,6 @@
 		switch (thing)
 			if (ARTRET_RESONATOR)
 				new /obj/item/artifact_resonator(get_turf(src))
-			//if (ARTRET_SCRAMBLER)
-			//	new /obj/item/artifact_scrambler(get_turf(src))
 			if (ARTRET_TUNER)
 				new /obj/item/artifact_tuner(get_turf(src))
 			if (ARTRET_PREVIOUS_ART)
@@ -517,12 +513,6 @@
 					"<br>Possible activation methods: <B>[english_list(possible_triggers)]</B>")
 				boutput(user, src.scanned_artifacts["\ref[O]"])
 
-// to be implmented in the future. requires a rewrite of code for each artifact to allow for this. ideal way would be for this to call art_datum.New(),
-// art_datum.effect_activate(), and art_datum.post_setup() but not all artifacts are compatible with that
-/obj/item/artifact_scrambler
-	name = "Artifact scrambler"
-	desc = "A device loaded with a one-time use charge that will randomly alter the makeup of an artifact."
-
 /obj/item/artifact_tuner
 	name = "Artifact tuner"
 	desc = "A device loaded with a one-time use charge that will randomly alter the faults of an activated artifact."
@@ -556,7 +546,6 @@
 		src.used = TRUE
 
 #undef ARTRET_RESONATOR
-#undef ARTRET_SCRAMBLER
 #undef ARTRET_TUNER
 #undef ARTRET_PREVIOUS_ART
 #undef ARTRET_COMBINE_ARTS
