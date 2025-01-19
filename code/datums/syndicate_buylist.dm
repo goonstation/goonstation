@@ -1156,6 +1156,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	desc = "A signal flaregun for emergency use. Or for setting jerks on fire"
 	br_allowed = TRUE
 
+/datum/syndicate_buylist/traitor/rifle
+	name = "Old Hunting Rifle"
+	items = list(/obj/item/gun/kinetic/hunting_rifle)
+	cost = 7
+	job = list("Pest Control Specialist")
+	desc = "An old hunting rifle, comes with only four bullets. Use them wisely."
+	can_buy = UPLINK_TRAITOR
+
 /datum/syndicate_buylist/surplus/rifle
 	name = "Old Hunting Rifle"
 	items = list(/obj/item/gun/kinetic/hunting_rifle)

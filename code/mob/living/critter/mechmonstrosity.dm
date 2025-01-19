@@ -383,9 +383,13 @@
 	var/inject_amount = 15
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)
-		if (ismob(hit))
-			if (hit.reagents)
-				hit.reagents.add_reagent(venom_id, inject_amount)
+		if (!ismob(hit) || !hit.reagents)
+			return
+		if (islist(src.venom_id))
+			for (var/id in src.venom_id)
+				hit.reagents.add_reagent(id, inject_amount)
+		else
+			hit.reagents.add_reagent(venom_id, inject_amount)
 
 /datum/computer/file/record/replicants
 

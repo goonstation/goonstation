@@ -40,6 +40,9 @@ TYPEINFO(/mob/living/silicon)
 	speech_bubble_icon_sing = "noterobot"
 	speech_bubble_icon_sing_bad = "noterobot"
 
+	var/obj/minimap_controller/alertmap_controller = null
+	var/atom/movable/minimap_ui_handler/minimap_controller/general_alert/alert_minimap_ui = null
+
 	can_bleed = FALSE
 	blood_id = "oil"
 	use_stamina = FALSE
@@ -65,6 +68,12 @@ TYPEINFO(/mob/living/silicon)
 
 /mob/living/silicon/disposing()
 	req_access = null
+	if(src.alertmap_controller)
+		qdel(src.alertmap_controller)
+		src.alertmap_controller = null
+	if(src.alert_minimap_ui)
+		qdel(src.alert_minimap_ui)
+		src.alert_minimap_ui = null
 	return ..()
 
 /mob/living/silicon/can_eat()
@@ -598,3 +607,15 @@ var/global/list/module_editors = list()
 
 /mob/living/silicon/get_unequippable()
 	return
+
+/mob/living/silicon/proc/connect_to_alert_minimap()
+	var/obj/minimap/alert/alert_map = get_singleton(/obj/minimap/alert)
+	if (!src.alertmap_controller)
+		src.alertmap_controller = new(alert_map)
+	if (!src.alert_minimap_ui)
+		src.alert_minimap_ui = new(src, "alert_map", src.alertmap_controller, "Alert Map", "nanotrasen")
+
+/mob/living/silicon/proc/open_alert_minimap(mob/user=src)
+	if (!src.alertmap_controller || !src.alert_minimap_ui)
+		src.connect_to_alert_minimap()
+	src.alert_minimap_ui.ui_interact(user)

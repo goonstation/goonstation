@@ -43,7 +43,7 @@
 		graffiti.set_dir(direction)
 
 		for(var/turf/T in list(one, two, three))
-			for(var/atom/movable/A in T)
+			for(var/atom/movable/A in atoms_in_combat_range(T))
 				if(A in attacked) continue
 				if(!isliving(A) || isintangible(A)) continue
 				var/mob/living/loser = A
@@ -126,7 +126,7 @@
 		cleave_effect.setup(turf)
 		alternate = TRUE
 		var/hit = FALSE
-		for(var/atom/A in turf)
+		for(var/atom/A in atoms_in_combat_range(turf))
 			if(isTarget(A))
 				A.Attackby(master, user, params, TRUE)
 				hit = TRUE
@@ -166,7 +166,7 @@
 				user.emote(pick("laugh","cackle","grin"))
 
 			hit = 0
-			for(var/atom/A as anything in turf)
+			for(var/atom/A as anything in atoms_in_combat_range(turf))
 				if(isTarget(A))
 					A.Attackby(master, user, params, TRUE)
 					hit = TRUE

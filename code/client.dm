@@ -1160,10 +1160,6 @@ var/global/curr_day = null
 			var/t1 = text("window=[window]")
 			usr.remove_dialogs()
 			usr.Browse(null, t1)
-			//Special cases
-			switch (window)
-				if ("aialerts")
-					usr:viewalerts = 0
 
 		//A thing for the chat output to call so that links open in the user's default browser, rather than IE
 		if ("openLink")
