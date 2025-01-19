@@ -664,7 +664,7 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		..()
 		var/obj/item/sheet/S = A
-		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("crystal")])
+		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("metal_dense")])
 		S.set_reinforcement(applicable_material.material)
 
 /datum/manufacture/rods2
