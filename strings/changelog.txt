@@ -1,4 +1,9 @@
 
+(t)sun jan 19 25
+(u)FlameArrow57
+(p)21904
+(e)🆕🎨🚗|C-Feature, C-Sprites, A-Vehicles
+(*)Added Light and High Impact Shielding System pod components to pod manufacturers. They provide timed life shielding with a % dmg reduction against projectiles and explosions.
 (t)thu jan 16 25
 (u)Sovexe
 (p)22020
