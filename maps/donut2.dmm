@@ -11372,8 +11372,11 @@
 /area/station/security/hos)
 "bio" = (
 /obj/table/auto,
+/obj/item/storage/box/panic_buttons,
+/obj/item/device/panicbutton,
 /obj/item/device/audio_log{
-	pixel_y = 8
+	pixel_y = 8;
+	pixel_x = 6
 	},
 /turf/simulated/floor/escape/corner{
 	dir = 1
@@ -11447,7 +11450,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "biO" = (
 /obj/stool/chair{
@@ -15309,7 +15312,7 @@
 /obj/machinery/computer/magnet{
 	dir = 4
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "bHr" = (
 /obj/stool,
@@ -15320,17 +15323,17 @@
 /area/station/quartermaster/refinery)
 "bHt" = (
 /obj/machinery/portable_reclaimer,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "bHw" = (
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "bHz" = (
 /obj/machinery/manufacturer/mining,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "bHG" = (
 /obj/securearea{
@@ -16598,10 +16601,6 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
-/obj/table/reinforced/auto{
-	icon_state = "3"
-	},
-/obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/kitchen,
 /obj/window_blinds/cog2/middle{
 	dir = 4;
@@ -16613,6 +16612,8 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/table/reinforced/auto,
 /turf/simulated/bar,
 /area/station/crew_quarters/kitchen)
 "cwM" = (
@@ -24242,11 +24243,11 @@
 /area/station/hangar/sec)
 "hcg" = (
 /obj/machinery/door/airlock/pyro/security/alt,
-/obj/mapping_helper/access/brig,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
 "hcq" = (
@@ -25924,6 +25925,7 @@
 "ieq" = (
 /obj/item/device/radio/intercom/catering{
 	dir = 4;
+	pixel_x = -21;
 	pixel_y = 5
 	},
 /turf/simulated/floor/specialroom/freezer{
@@ -26735,7 +26737,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "iBz" = (
 /obj/cable{
@@ -27133,10 +27135,6 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
-/obj/table/reinforced/auto{
-	icon_state = "1"
-	},
-/obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/kitchen,
 /obj/window_blinds/cog2/middle{
 	dir = 4;
@@ -27149,6 +27147,8 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/small/floor,
+/obj/mapping_helper/firedoor_spawn,
+/obj/table/reinforced/auto,
 /turf/simulated/bar,
 /area/station/crew_quarters/kitchen)
 "iNJ" = (
@@ -27523,6 +27523,7 @@
 	pixel_x = -24;
 	dir = 8
 	},
+/obj/item/paper/pipebombs,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "jbL" = (
@@ -34738,15 +34739,12 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
-/obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/kitchen,
 /obj/decal/tile_edge/line/black{
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/table/reinforced/auto{
-	icon_state = "2"
-	},
+/obj/table/reinforced/auto,
 /obj/item/shaker/ketchup{
 	pixel_x = 3;
 	pixel_y = -7
@@ -34764,6 +34762,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 8
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/bar,
 /area/station/crew_quarters/kitchen)
 "nnN" = (
@@ -38361,7 +38360,7 @@
 /obj/machinery/alarm{
 	pixel_y = 25
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "psM" = (
 /obj/machinery/light/incandescent,
@@ -38625,9 +38624,9 @@
 /area/station/maintenance/west)
 "pyi" = (
 /obj/machinery/door/airlock/pyro/security/alt,
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/equipment)
 "pyn" = (
@@ -39379,8 +39378,8 @@
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -45134,6 +45133,9 @@
 	pixel_y = -3
 	},
 /obj/table/glass/auto,
+/obj/decal/poster/wallsign/teaparty{
+	pixel_y = -32
+	},
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "tsG" = (
@@ -45218,7 +45220,6 @@
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "2-8"
@@ -45228,6 +45229,7 @@
 	enter_id = "brig";
 	name = "Security"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -46273,8 +46275,6 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
-/obj/table/auto,
-/obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/kitchen,
 /obj/window_blinds/cog2/left{
 	dir = 4;
@@ -46286,6 +46286,8 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/table/reinforced/auto,
 /turf/simulated/bar,
 /area/station/crew_quarters/kitchen)
 "tXu" = (
@@ -48111,11 +48113,11 @@
 /area/station/janitor/supply)
 "vio" = (
 /obj/machinery/door/airlock/pyro/glass/security,
-/obj/mapping_helper/access/security,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/research)
 "vip" = (
@@ -49806,10 +49808,10 @@
 /area/station/science/lobby)
 "waY" = (
 /obj/machinery/door/airlock/pyro/security/alt,
-/obj/mapping_helper/access/brig,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "wcl" = (

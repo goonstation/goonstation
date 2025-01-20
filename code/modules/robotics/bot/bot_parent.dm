@@ -176,8 +176,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 				SPAWN(1.5 SECONDS)
 					ClearSpecificOverlays("bot_speech_bubble")
 			if(!src.bot_speech_color)
-				var/num = hex2num(copytext(md5("[src.name][TIME]"), 1, 7))
-				src.bot_speech_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
+				src.bot_speech_color = living_maptext_color("[src.name][TIME]")
 			var/singing_italics = sing ? " font-style: italic;" : ""
 			var/maptext_color
 			if (sing)
