@@ -1,5 +1,9 @@
 
 (t)mon jan 20 25
+(u)LeahTheTech
+(p)22052
+(e)💅📄|C-QoL, A-UI
+(+)The `ctrl + o, l, n` shortcuts will no longer work on <em>most</em> UI windows.
 (u)patricia
 (p)21956
 (e)💡|A-Station-Systems
