@@ -52,6 +52,13 @@ toxic - poisons
 	/// can it ricochet off a wall?
 	var/ricochets = FALSE
 
+	on_hit(atom/hit, direction, obj/projectile/P)
+		var/obj/effects/gunshot_impact/dust/dust_impact = new /obj/effects/gunshot_impact/dust(get_turf(hit))
+		dust_impact.setdir(-P.xo, -P.yo)
+		var/obj/effects/gunshot_impact/smoke/smoke_impact = new /obj/effects/gunshot_impact/smoke(get_turf(hit))
+		smoke_impact.setdir(-P.xo, -P.yo)
+		..()
+
 //no caliber
 /datum/projectile/bullet/staple
 	name = "staple"

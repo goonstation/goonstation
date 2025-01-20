@@ -266,3 +266,66 @@
 	position = generator("box", list(-6,-5,0), list(6,20,0), UNIFORM_RAND)
 	gravity = list(0, -1, 0)
 	scale = list(1.5, 1.5)
+
+/particles/gunshot_impact_dust
+	icon = 'icons/effects/particles.dmi'
+	icon_state = list(""=1, "2x2square"=1)
+	width = 256
+	height = 256
+	color = "#ddcea2"
+	spawning = 20
+	count = 20
+	lifespan = 0.4 SECONDS
+	fade = 0.4 SECONDS
+	position = list(0, 0, 0)
+	grow = list(-0.05, -0.05)
+	gravity = list(0, 0, 0)
+	spin =  generator("num", 5, -5, NORMAL_RAND)
+	friction = generator("num", 0.3, 0.1, UNIFORM_RAND)
+	drift = generator("vector", list(2,2,0), list(-2,-2,0), UNIFORM_RAND)
+
+/particles/gunshot_impact_smoke
+	icon = 'icons/effects/particles.dmi'
+	icon_state = "smoke_sample"
+	width = 256
+	height = 256
+	color = "#e6e6e625"
+	spawning = 3
+	count = 3
+	lifespan = 1 SECONDS
+	fade = 1 SECONDS
+	position = list(0, 0, 0)
+	grow = list(-0.05, -0.05)
+	gravity = list(0, 0, 0)
+	spin =  generator("num", 5, -5, NORMAL_RAND)
+	friction = generator("num", 0.2, 0.1, UNIFORM_RAND)
+	drift = generator("vector", list(1,1,0), list(-1,-1,0), UNIFORM_RAND)
+
+ABSTRACT_TYPE(/obj/effects/gunshot_impact)
+/obj/effects/gunshot_impact
+	plane = PLANE_NOSHADOW_ABOVE
+	particles = null
+	var/x_offset = 0
+	var/y_offset = 0
+
+	New()
+		..()
+		SPAWN(0.2 SECONDS)
+			src.particles?.spawning = 0
+			sleep(src.particles?.lifespan)
+			qdel(src)
+
+	proc/setdir(var/dir_x, var/dir_y)
+		//particles.velocity = generator("box", list(50*dir_x - 0.7, 50*dir_y - 0.7, 0), list(40*dir_x + 0.7, 40*dir_y + 0.7, 0), UNIFORM_RAND)
+		//particles.velocity = generator("box", list(40*dir_x - 3, 40*dir_y - 3, 0), list(15*dir_x + 3, 15*dir_y + 3, 0), UNIFORM_RAND)
+		particles.velocity = generator("box", list(40*dir_x - x_offset, 40*dir_y - y_offset, 0), list(15*dir_x + x_offset, 15*dir_y + y_offset, 0), UNIFORM_RAND)
+
+/obj/effects/gunshot_impact/dust
+	x_offset = 3
+	y_offset = 3
+	particles = new/particles/gunshot_impact_dust
+
+/obj/effects/gunshot_impact/smoke
+	x_offset = 2
+	y_offset = 2
+	particles = new/particles/gunshot_impact_smoke
