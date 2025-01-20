@@ -60,6 +60,8 @@ toxic - poisons
 			dust_impact.setcolor(avrg_color)
 			var/obj/effects/gunshot_impact/smoke/smoke_impact = new /obj/effects/gunshot_impact/smoke(get_turf(hit))
 			smoke_impact.setdir(-P.xo, -P.yo)
+			var/obj/effects/gunshot_impact/sparks/spark_impact = new /obj/effects/gunshot_impact/sparks(get_turf(hit))
+			spark_impact.setdir(-P.xo, -P.yo)
 		..()
 
 //no caliber

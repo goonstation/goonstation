@@ -273,15 +273,14 @@
 	width = 256
 	height = 256
 	color = "#ddcea2"
-	spawning = 25
-	count = 25
-	lifespan = 1 SECONDS
-	fade = 1 SECONDS
+	spawning = 12
+	count = 12
+	lifespan = 2.5 SECONDS
+	fade = 2.5 SECONDS
 	position = list(0, 0, 0)
 	gravity = list(0, 0, 0)
 	spin =  generator("num", 5, -5, NORMAL_RAND)
-	friction = generator("num", 0.3, 0.1, UNIFORM_RAND)
-	drift = generator("vector", list(3,3,0), list(-3,-3,0), UNIFORM_RAND)
+	friction = generator("num", 0.4, 0.2, UNIFORM_RAND)
 
 /particles/gunshot_impact_smoke
 	icon = 'icons/effects/particles.dmi'
@@ -299,6 +298,22 @@
 	friction = generator("num", 0.2, 0.1, UNIFORM_RAND)
 	drift = generator("vector", list(1,1,0), list(-1,-1,0), UNIFORM_RAND)
 
+/particles/gunshot_impact_sparks
+	icon = 'icons/effects/particles.dmi'
+	icon_state = list(""=1)
+	width = 256
+	height = 256
+	color = "#d1bb77"
+	spawning = 5
+	count = 5
+	lifespan = 1 SECONDS
+	fade = 1 SECONDS
+	position = list(0, 0, 0)
+	gravity = list(0, 0, 0)
+	spin =  generator("num", 5, -5, NORMAL_RAND)
+	friction = generator("num", 0.3, 0.2, UNIFORM_RAND)
+	drift = generator("vector", list(8,8,0), list(-8,-8,0), UNIFORM_RAND)
+
 ABSTRACT_TYPE(/obj/effects/gunshot_impact)
 /obj/effects/gunshot_impact
 	plane = PLANE_NOSHADOW_ABOVE
@@ -314,8 +329,6 @@ ABSTRACT_TYPE(/obj/effects/gunshot_impact)
 			qdel(src)
 
 	proc/setdir(var/dir_x, var/dir_y)
-		//particles.velocity = generator("box", list(50*dir_x - 0.7, 50*dir_y - 0.7, 0), list(40*dir_x + 0.7, 40*dir_y + 0.7, 0), UNIFORM_RAND)
-		//particles.velocity = generator("box", list(40*dir_x - 3, 40*dir_y - 3, 0), list(15*dir_x + 3, 15*dir_y + 3, 0), UNIFORM_RAND)
 		particles.velocity = generator("box", list(40*dir_x - x_offset, 40*dir_y - y_offset, 0), list(15*dir_x + x_offset, 15*dir_y + y_offset, 0), UNIFORM_RAND)
 
 	proc/setcolor(var/avrg_color)
@@ -323,15 +336,15 @@ ABSTRACT_TYPE(/obj/effects/gunshot_impact)
 		logTheThing(LOG_DEBUG, src, "Color is [avrg_color]")
 
 /obj/effects/gunshot_impact/dust
-	x_offset = 3
-	y_offset = 3
 	particles = new/particles/gunshot_impact_dust
+	plane = PLANE_NOSHADOW_BELOW
 
 	New()
 		particles.gravity = list(rand(-0.1, 0.1), rand(-0.1, 0.1), 0)
 		. = ..()
 
 /obj/effects/gunshot_impact/smoke
-	x_offset = 2
-	y_offset = 2
 	particles = new/particles/gunshot_impact_smoke
+
+/obj/effects/gunshot_impact/sparks
+	particles = new/particles/gunshot_impact_sparks
