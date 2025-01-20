@@ -765,8 +765,18 @@ ABSTRACT_TYPE(/datum/projectile)
 				var/new_impact_icon_state = hit.impact_icon_state
 				var/avrg_color = hit.get_average_color()
 				new /obj/effects/gunshot_impact/dust(get_turf(hit), -O.xo, -O.yo, damage, avrg_color, new_impact_icon, new_impact_icon_state)
-				new /obj/effects/gunshot_impact/smoke(get_turf(hit), -O.xo, -O.yo, damage)
-				new /obj/effects/gunshot_impact/sparks(get_turf(hit), -O.xo, -O.yo, damage)
+				var/underwater = FALSE
+				if (istype(get_turf(O), /turf/space/fluid)) underwater = TRUE
+				else
+					var/turf/T = get_turf(O)
+					if (T.active_liquid)
+						if(T.active_liquid.last_depth_level > 3)
+							underwater = TRUE
+				if (underwater)
+					new /obj/effects/gunshot_impact/bubble(get_turf(hit), -O.xo, -O.yo, damage)
+				else
+					new /obj/effects/gunshot_impact/sparks(get_turf(hit), -O.xo, -O.yo, damage)
+					new /obj/effects/gunshot_impact/smoke(get_turf(hit), -O.xo, -O.yo, damage)
 
 // THIS IS INTENDED FOR POINTBLANKING.
 /proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T)

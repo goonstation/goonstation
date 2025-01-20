@@ -279,7 +279,7 @@
 	fade = 2.5 SECONDS
 	position = list(0, 0, 0)
 	gravity = list(0, 0, 0)
-	spin =  generator("num", 5, -5, NORMAL_RAND)
+	spin = generator("num", 5, -5, NORMAL_RAND)
 	friction = generator("num", 0.4, 0.2, UNIFORM_RAND)
 
 /particles/gunshot_impact_smoke
@@ -294,7 +294,7 @@
 	fade = 1.5 SECONDS
 	position = list(0, 0, 0)
 	gravity = list(0, 0, 0)
-	spin =  generator("num", 5, -5, NORMAL_RAND)
+	spin = generator("num", 5, -5, NORMAL_RAND)
 	friction = generator("num", 0.2, 0.1, UNIFORM_RAND)
 	drift = generator("vector", list(1,1,0), list(-1,-1,0), UNIFORM_RAND)
 
@@ -306,13 +306,28 @@
 	color = "#d1bb77"
 	spawning = 5
 	count = 5
-	lifespan = 1 SECONDS
-	fade = 1 SECONDS
+	lifespan = 1 SECOND
+	fade = 1 SECOND
 	position = list(0, 0, 0)
 	gravity = list(0, 0, 0)
-	spin =  generator("num", 5, -5, NORMAL_RAND)
+	spin = generator("num", 5, -5, NORMAL_RAND)
 	friction = generator("num", 0.3, 0.2, UNIFORM_RAND)
 	drift = generator("vector", list(8,8,0), list(-8,-8,0), UNIFORM_RAND)
+
+/particles/gunshot_impact_bubble
+	icon = 'icons/effects/particles.dmi'
+	icon_state = list("bubble")
+	width = 256
+	height = 256
+	color = "#ffffff"
+	spawning = 6
+	count = 6
+	lifespan = 2 SECONDS
+	fade = 2 SECONDS
+	position = list(0, 0, 0)
+	gravity = list(0, 0, 0)
+	spin = generator("num", 5, -5, NORMAL_RAND)
+	friction = generator("num", 0.5, 0.3, UNIFORM_RAND)
 
 /obj/effects/gunshot_impact
 	plane = PLANE_NOSHADOW_ABOVE
@@ -342,7 +357,7 @@
 			particles.icon = impact_icon
 			particles.icon_state = impact_icon_state
 		..()
-		SPAWN(0.2 SECONDS)
+		SPAWN(2 DECI SECOND)
 			src.particles?.spawning = 0
 			sleep(src.particles?.lifespan)
 			qdel(src)
@@ -359,3 +374,7 @@
 /obj/effects/gunshot_impact/sparks
 	base_amt = 5
 	particles = new/particles/gunshot_impact_sparks
+
+/obj/effects/gunshot_impact/bubble
+	base_amt = 6
+	particles = new/particles/gunshot_impact_bubble
