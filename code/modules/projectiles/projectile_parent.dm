@@ -625,6 +625,15 @@ ABSTRACT_TYPE(/datum/projectile)
 	/// for on_pre_hit. Causes it to early-return TRUE if the thing checked was already cleared for pass-thru
 	var/atom/last_thing_hit
 
+	/// Set to TRUE if you want particles to spawn when you hit a non living thing
+	var/has_impact_particles = FALSE
+	/// Amount of sparks to spawn on impact if has_impact_particles is true
+	var/impact_sparks_amt = 5
+	/// Amount of dust to spawn on impact if has_impact_particles is true
+	var/impact_dust_amt = 12
+	/// Amount of smoke to spawn on impact if has_impact_particles is true
+	var/impact_smoke_amt = 3
+
 	New()
 		. = ..()
 		generate_stats()
@@ -680,7 +689,15 @@ ABSTRACT_TYPE(/datum/projectile)
 		//When it hits a mob or such should anything special happen
 		on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
 			impact_image_effect(ie_type, hit)
-
+			// Spawn some particles if you hit something solid
+			if (src.has_impact_particles && !ismob(hit))
+				if (impact_dust_amt > 0)
+					var/avrg_color = hit.get_average_color()
+					new /obj/effects/gunshot_impact/dust(get_turf(hit), -O.xo, -O.yo, impact_dust_amt, avrg_color)
+				if (impact_smoke_amt > 0)
+					new /obj/effects/gunshot_impact/smoke(get_turf(hit), -O.xo, -O.yo, impact_smoke_amt)
+				if (impact_sparks_amt > 0)
+					new /obj/effects/gunshot_impact/sparks(get_turf(hit), -O.xo, -O.yo, impact_sparks_amt)
 		/// Does a thing every step this projectile takes
 		tick(var/obj/projectile/O)
 			return

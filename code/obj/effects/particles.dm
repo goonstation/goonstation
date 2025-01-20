@@ -321,19 +321,17 @@ ABSTRACT_TYPE(/obj/effects/gunshot_impact)
 	var/x_offset = 0
 	var/y_offset = 0
 
-	New()
+	New(loc, var/dir_x = 0, var/dir_y = 0, var/particle_count = 0, var/color_avrg = null)
+		particles.velocity = generator("box", list(40*dir_x - x_offset, 40*dir_y - y_offset, 0), list(15*dir_x + x_offset, 15*dir_y + y_offset, 0), UNIFORM_RAND)
+		particles.count = particle_count
+		particles.spawning = particle_count
+		if (color_avrg)
+			particles.color = color_avrg
 		..()
 		SPAWN(0.2 SECONDS)
 			src.particles?.spawning = 0
 			sleep(src.particles?.lifespan)
 			qdel(src)
-
-	proc/setdir(var/dir_x, var/dir_y)
-		particles.velocity = generator("box", list(40*dir_x - x_offset, 40*dir_y - y_offset, 0), list(15*dir_x + x_offset, 15*dir_y + y_offset, 0), UNIFORM_RAND)
-
-	proc/setcolor(var/avrg_color)
-		particles.color = avrg_color
-		logTheThing(LOG_DEBUG, src, "Color is [avrg_color]")
 
 /obj/effects/gunshot_impact/dust
 	particles = new/particles/gunshot_impact_dust

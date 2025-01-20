@@ -49,20 +49,10 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/impact_sounds/Flesh_Stab_2.ogg'
 
+	has_impact_particles = TRUE
+
 	/// can it ricochet off a wall?
 	var/ricochets = FALSE
-
-	on_hit(atom/hit, direction, obj/projectile/P)
-		if (!ismob(hit))
-			var/avrg_color = hit.get_average_color()
-			var/obj/effects/gunshot_impact/dust/dust_impact = new /obj/effects/gunshot_impact/dust(get_turf(hit))
-			dust_impact.setdir(-P.xo, -P.yo)
-			dust_impact.setcolor(avrg_color)
-			var/obj/effects/gunshot_impact/smoke/smoke_impact = new /obj/effects/gunshot_impact/smoke(get_turf(hit))
-			smoke_impact.setdir(-P.xo, -P.yo)
-			var/obj/effects/gunshot_impact/sparks/spark_impact = new /obj/effects/gunshot_impact/sparks(get_turf(hit))
-			spark_impact.setdir(-P.xo, -P.yo)
-		..()
 
 //no caliber
 /datum/projectile/bullet/staple

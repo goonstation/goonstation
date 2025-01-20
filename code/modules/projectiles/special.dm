@@ -136,6 +136,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/split_type = 0
 	var/pellet_shot_volume = 0
 	silentshot = 1
+	has_impact_particles = TRUE
 	// 0 = on spawn
 	// 1 = on impact
 
