@@ -329,6 +329,7 @@ toxic - poisons
 	ricochets = TRUE
 
 	on_hit(atom/hit, direction, obj/projectile/P)
+		..()
 		if(slow && ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			M.setStatus("slowed", 0.3 SECONDS, optional = 4)
