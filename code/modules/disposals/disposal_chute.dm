@@ -306,7 +306,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		else
 			return ..()
 
-	proc/set_broken()
+	set_broken()
 		if(src.status & BROKEN)
 			return
 		src.eject()
