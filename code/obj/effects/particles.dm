@@ -338,22 +338,21 @@
 	var/base_amt = 0
 
 	New(loc, var/dir_x = 0, var/dir_y = 0, var/damage = 0, var/color_avrg = null, var/impact_icon = null, var/impact_icon_state = null)
-		switch(damage)
-			if (0 to 5)
-				particles.count = 0
-				particles.spawning = 0
-			if (6 to 35)
-				var/new_amt = round(src.base_amt / 2.5)
-				particles.count = new_amt
-				particles.spawning = new_amt
-				particles.velocity = generator("box", list(20*dir_x, 20*dir_y, 0), list(7*dir_x, 7*dir_y, 0), UNIFORM_RAND)
-			if (36 to 60)
-				particles.velocity = generator("box", list(40*dir_x, 40*dir_y, 0), list(15*dir_x, 15*dir_y, 0), UNIFORM_RAND)
-			if (61 to INFINITY)
-				var/new_amt = round(src.base_amt * 2)
-				particles.count = new_amt
-				particles.spawning = new_amt
-				particles.velocity = generator("box", list(60*dir_x, 60*dir_y, 0), list(20*dir_x, 20*dir_y, 0), UNIFORM_RAND)
+		if (damage <= 5)
+			particles.count = 0
+			particles.spawning = 0
+		else if (damage > 5 && damage <= 35)
+			var/new_amt = round(src.base_amt / 2.5)
+			particles.count = new_amt
+			particles.spawning = new_amt
+			particles.velocity = generator("box", list(20*dir_x, 20*dir_y, 0), list(7*dir_x, 7*dir_y, 0), UNIFORM_RAND)
+		else if (damage > 35 && damage <= 60)
+			particles.velocity = generator("box", list(40*dir_x, 40*dir_y, 0), list(15*dir_x, 15*dir_y, 0), UNIFORM_RAND)
+		else if (damage > 60)
+			var/new_amt = round(src.base_amt * 2)
+			particles.count = new_amt
+			particles.spawning = new_amt
+			particles.velocity = generator("box", list(60*dir_x, 60*dir_y, 0), list(20*dir_x, 20*dir_y, 0), UNIFORM_RAND)
 		if (color_avrg)
 			particles.color = color_avrg
 		if (impact_icon && impact_icon_state)
