@@ -320,6 +320,10 @@ ABSTRACT_TYPE(/obj/effects/gunshot_impact)
 		//particles.velocity = generator("box", list(40*dir_x - 3, 40*dir_y - 3, 0), list(15*dir_x + 3, 15*dir_y + 3, 0), UNIFORM_RAND)
 		particles.velocity = generator("box", list(40*dir_x - x_offset, 40*dir_y - y_offset, 0), list(15*dir_x + x_offset, 15*dir_y + y_offset, 0), UNIFORM_RAND)
 
+	proc/setcolor(var/avrg_color)
+		particles.color = avrg_color
+		logTheThing(LOG_DEBUG, src, "Color is [avrg_color]")
+
 /obj/effects/gunshot_impact/dust
 	x_offset = 3
 	y_offset = 3
