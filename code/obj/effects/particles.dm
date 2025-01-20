@@ -353,10 +353,6 @@ ABSTRACT_TYPE(/obj/effects/gunshot_impact)
 	particles = new/particles/gunshot_impact_dust
 	plane = PLANE_NOSHADOW_BELOW
 
-	New()
-		particles.gravity = list(rand(-0.1, 0.1), rand(-0.1, 0.1), 0)
-		. = ..()
-
 /obj/effects/gunshot_impact/smoke
 	base_amt = 3
 	particles = new/particles/gunshot_impact_smoke
