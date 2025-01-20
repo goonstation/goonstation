@@ -719,7 +719,7 @@ toxic - poisons
 
 			if(prob(proj.power/4) && power > 50) //only for strong. Lowish chance
 				M.sever_limb(pick("l_arm","r_arm","l_leg","r_leg"))
-			..()
+		..()
 
 	weak
 		damage = 50 //can have a little throwing, as a treat
