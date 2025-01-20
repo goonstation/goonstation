@@ -1,4 +1,9 @@
 
+(t)mon jan 20 25
+(u)patricia
+(p)22031
+(e)💡|A-Station-Systems
+(+)Vent scrubbers are no longer set to scrub any gasses when built
 (t)sun jan 19 25
 (u)cringe
 (p)20620
