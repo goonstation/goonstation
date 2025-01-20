@@ -1,5 +1,9 @@
 
 (t)mon jan 20 25
+(u)TealSeer
+(p)22024
+(e)🪲💡|C-Bug, A-Station-Systems
+(*)Repeatedly running DWAINE scripts will no longer crash the entire mainframe forever
 (u)glowbold
 (p)21962
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
