@@ -273,16 +273,15 @@
 	width = 256
 	height = 256
 	color = "#ddcea2"
-	spawning = 20
-	count = 20
-	lifespan = 0.4 SECONDS
-	fade = 0.4 SECONDS
+	spawning = 25
+	count = 25
+	lifespan = 1 SECONDS
+	fade = 1 SECONDS
 	position = list(0, 0, 0)
-	grow = list(-0.05, -0.05)
 	gravity = list(0, 0, 0)
 	spin =  generator("num", 5, -5, NORMAL_RAND)
 	friction = generator("num", 0.3, 0.1, UNIFORM_RAND)
-	drift = generator("vector", list(2,2,0), list(-2,-2,0), UNIFORM_RAND)
+	drift = generator("vector", list(3,3,0), list(-3,-3,0), UNIFORM_RAND)
 
 /particles/gunshot_impact_smoke
 	icon = 'icons/effects/particles.dmi'
@@ -292,10 +291,9 @@
 	color = "#e6e6e625"
 	spawning = 3
 	count = 3
-	lifespan = 1 SECONDS
-	fade = 1 SECONDS
+	lifespan = 1.5 SECONDS
+	fade = 1.5 SECONDS
 	position = list(0, 0, 0)
-	grow = list(-0.05, -0.05)
 	gravity = list(0, 0, 0)
 	spin =  generator("num", 5, -5, NORMAL_RAND)
 	friction = generator("num", 0.2, 0.1, UNIFORM_RAND)
@@ -328,6 +326,10 @@ ABSTRACT_TYPE(/obj/effects/gunshot_impact)
 	x_offset = 3
 	y_offset = 3
 	particles = new/particles/gunshot_impact_dust
+
+	New()
+		particles.gravity = list(rand(-0.1, 0.1), rand(-0.1, 0.1), 0)
+		. = ..()
 
 /obj/effects/gunshot_impact/smoke
 	x_offset = 2
