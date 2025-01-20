@@ -314,7 +314,6 @@
 	friction = generator("num", 0.3, 0.2, UNIFORM_RAND)
 	drift = generator("vector", list(8,8,0), list(-8,-8,0), UNIFORM_RAND)
 
-ABSTRACT_TYPE(/obj/effects/gunshot_impact)
 /obj/effects/gunshot_impact
 	plane = PLANE_NOSHADOW_ABOVE
 	particles = null
