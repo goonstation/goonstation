@@ -12,7 +12,7 @@
 	heat_capacity = 225000
 	default_material = "steel"
 
-	turf_flags = IS_TYPE_SIMULATED | MOB_SLIP | MOB_STEP
+	turf_flags = MOB_SLIP | MOB_STEP
 
 	can_burn = TRUE
 	can_break = TRUE
@@ -512,7 +512,7 @@
 /turf/simulated/floor/darkblue/corner
 	icon_state = "dbluecorner"
 
-/turf/simulated/floor/darkblue/checker
+/turf/simulated/floor/darkblue/checker/white
 	icon_state = "dbluechecker"
 
 /turf/simulated/floor/darkblueblack

@@ -195,12 +195,13 @@ var/global/list/nuke_op_camo_matrix = null
 			possible_leaders += mind
 	if(length(possible_leaders))
 		return pick(possible_leaders)
-	else
-		for(var/datum/mind/mind in syndicates)
-			if(mind.current.client?.preferences?.be_syndicate_commander)
-				possible_leaders += mind
+
+	for(var/datum/mind/mind in syndicates)
+		if(mind.current.client?.preferences?.be_syndicate_commander)
+			possible_leaders += mind
 	if(length(possible_leaders))
 		return pick(possible_leaders)
+
 	return pick(syndicates)
 
 /datum/game_mode/nuclear/post_setup()

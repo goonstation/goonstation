@@ -742,7 +742,7 @@
 
 				if (istype(tmob.loc, /turf/space))
 					logTheThing(LOG_COMBAT, src, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into space.")
-				else if (locate(/obj/hotspot) in tmob.loc)
+				else if (locate(/atom/movable/hotspot) in tmob.loc)
 					logTheThing(LOG_COMBAT, src, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into a fire.")
 				deliver_move_trigger("swap")
 				tmob.deliver_move_trigger("swap")
@@ -770,12 +770,12 @@
 			deliver_move_trigger("bump")
 			victim.deliver_move_trigger("bump")
 			var/was_in_space = istype(victim.loc, /turf/space)
-			var/was_in_fire = locate(/obj/hotspot) in victim.loc
+			var/was_in_fire = locate(/atom/movable/hotspot) in victim.loc
 			if (victim.buckled && !victim.buckled.anchored)
 				step(victim.buckled, t)
 			if (!was_in_space && istype(victim.loc, /turf/space))
 				logTheThing(LOG_COMBAT, src, "pushes [constructTarget(victim,"combat")] into space.")
-			else if (!was_in_fire && (locate(/obj/hotspot) in victim.loc))
+			else if (!was_in_fire && (locate(/atom/movable/hotspot) in victim.loc))
 				logTheThing(LOG_COMBAT, src, "pushes [constructTarget(victim,"combat")] into a fire.")
 
 		step(src,t)
@@ -988,13 +988,13 @@
 		boutput(src, SPAN_ALERT("DNR status set!"))
 #endif
 
-/mob/proc/unequip_all(var/delete_stuff=0)
+/mob/proc/unequip_all(var/delete_stuff=0, atom/drop_loc = null)
 	var/list/obj/item/to_unequip = src.get_unequippable()
 	if(length(to_unequip))
 		for (var/obj/item/W in to_unequip)
 			src.remove_item(W)
 			if (W)
-				W.set_loc(src.loc)
+				W.set_loc(drop_loc || src.loc)
 				W.dropped(src)
 				W.layer = initial(W.layer)
 			if(delete_stuff)
@@ -1546,7 +1546,7 @@
 	set category = "Commands"
 
 	if (global.current_state < GAME_STATE_FINISHED)
-		boutput(src, SPAN_NOTICE("The gane hasn't finished yet!"))
+		boutput(src, SPAN_NOTICE("The game hasn't finished yet!"))
 		return
 
 	global.ticker.get_credits().ui_interact(src)
@@ -2932,6 +2932,9 @@
 
 	if (source && source != src) //we were moved by something that wasnt us
 		last_pulled_time = world.time
+		if ((istype(src.loc, /turf/space) || src.no_gravity) && ismob(source))
+			var/mob/M = source
+			src.inertia_dir = M.inertia_dir
 	else
 		if(src.pulled_by)
 			src.pulled_by.remove_pulling()
@@ -2974,6 +2977,8 @@
 	equipment_proxy.aquatic_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
 	if(equipment_proxy.aquatic_movement > 0)
 		equipment_proxy.aquatic_movement *= modifier
+		if(modifier == 0) // aquatic_movement requires a positive value to skip added fluid turf delay
+			equipment_proxy.aquatic_movement += 0.01
 
 
 

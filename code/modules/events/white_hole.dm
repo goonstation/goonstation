@@ -146,7 +146,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			#endif
 		),
 		"teg" = list(
-			/obj/hotspot/gasfire = 90,
+			/atom/movable/hotspot/gasfire = 90,
 			"plasma" = 50,
 			"arcflash" = 30,
 			/obj/item/wrench/yellow = 10,
@@ -417,10 +417,11 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/reagent_containers/food/snacks/donkpocket_w = 1,
 			/obj/bomb_decoy = 0.4,
 			/obj/machinery/nuclearbomb/event/micronuke = 0.05,
+			'sound/effects/first_reality.ogg' = 0.5,
 		),
 		"hell" = list(
 			"fireflash" = 15,
-			/obj/hotspot/gasfire = 10,
+			/atom/movable/hotspot/gasfire = 10,
 			/mob/living/critter/small_animal/crab/lava = 5,
 			/obj/submachine/slot_machine = 5,
 			#ifdef SECRETS_ENABLED
@@ -1034,9 +1035,11 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 
 		// if we roll hotspot or plasma in an "inner" call (for example for flockification or deep frying)
 		// we get one reroll to get something else
-		if((spawn_type in list(/obj/hotspot/gasfire, "plasma")) && source_location != src.source_location)
+		if((spawn_type in list(/atom/movable/hotspot/gasfire, "plasma")) && source_location != src.source_location)
 			spawn_type = weighted_pick(src.spawn_probs[source_location])
-
+		if (isresource(spawn_type)) //assume it's a sound because it doesn't make sense to shove an icon in here
+			playsound(src.loc, spawn_type, 80, FALSE)
+			return src.generate_thing(source_location) //re-roll something else so we don't return null
 		if(ispath(spawn_type, /atom/movable))
 			. = new spawn_type(src.loc)
 		else if(ispath(spawn_type, /datum/projectile))
@@ -1236,8 +1239,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 								H.say(phrase_log.random_phrase("say"))
 							else
 								H.emote("me", TRUE, phrase_log.random_phrase("emote"))
-		else if(istype(., /obj/hotspot/gasfire))
-			var/obj/hotspot/gasfire/hotspot = .
+		else if(istype(., /atom/movable/hotspot/gasfire))
+			var/atom/movable/hotspot/gasfire/hotspot = .
 			hotspot.temperature = rand(FIRE_MINIMUM_TEMPERATURE_TO_EXIST, 6000)
 			hotspot.set_real_color()
 			SPAWN(rand(10 SECONDS, 2 MINUTES))

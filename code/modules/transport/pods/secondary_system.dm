@@ -265,6 +265,10 @@
 			// out of range (this should never happen)
 			boutput(user, SPAN_ALERT("Something is too far away to do that."))
 			return
+		if (4)
+			// crate is anchored
+			boutput(user, SPAN_ALERT("The pod's cargo autoloader fails to budge [A]!"))
+			return
 		if (0)
 			// success
 			src.visible_message(SPAN_NOTICE("[user] loads the [A] into [src]'s cargo bay."))
@@ -289,6 +293,10 @@
 			break
 	if (!inrange)
 		return 3
+
+	if(C.anchored)
+		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+		return 4
 
 	// if a crate, close before loading
 	var/obj/storage/crate/crate = C
@@ -449,6 +457,71 @@
 		..()
 		src.create_storage(/datum/storage, max_wclass = W_CLASS_NORMAL, slots = 10)
 		src.set_loc(parent_storage)
+
+/obj/item/shipcomponent/secondary_system/lateral_thrusters
+	name = "Lateral Thrusters"
+	desc = "A thruster system that provides a burst of lateral movement upon use. Note, NanoTrasen is not liable for any resulting injuries."
+	help_message = "Initialized to provide movement to the right. When installed in a pod, click the pod and use the context menu button to change direction."
+	hud_state = "lat_thrusters_right"
+	f_active = TRUE
+	power_used = 50
+	var/turn_dir = "right"
+	var/power_in_use = FALSE
+
+	Use(mob/user)
+		src.activate(user)
+
+	toggle()
+		src.activate()
+
+	activate(mob/user)
+		. = TRUE
+
+		user = user || usr
+
+		if (user != src.ship.pilot)
+			return FALSE
+
+		if (!src.power_in_use)
+			if (src.ship.powercapacity < (src.ship.powercurrent + src.power_used))
+				boutput(src.ship.pilot, "[src.ship.ship_message("Not enough power to activate [src]!")]")
+				return FALSE
+			src.ship.powercurrent += src.power_used
+			src.active = TRUE
+			src.power_in_use = TRUE
+
+		if (src.disrupted)
+			boutput(src.ship.pilot, "[src.ship.ship_message("ALERT: [src] is temporarily disabled!")]")
+			return FALSE
+
+		src.use_thrusters(user)
+
+	deactivate()
+		..()
+		src.power_in_use = FALSE
+
+	proc/use_thrusters(mob/user)
+		if (ON_COOLDOWN(src, "thruster_movement", 5 SECONDS))
+			boutput(user, "[src.ship.ship_message("Thrusters are cooling down! [round(GET_COOLDOWN(src, "thruster_movement") / 10, 0.1)] seconds left.")]")
+			return
+		var/turn_angle = src.turn_dir == "right" ? -90 : 90
+
+		// spawn to allow button clunk sound to play right away
+		SPAWN(0)
+			for (var/i in 1 to 5)
+				step(src.ship, turn(src.ship.dir, turn_angle))
+				sleep(0.125 SECONDS)
+
+	proc/change_thruster_direction()
+		if (src.turn_dir == "right")
+			src.turn_dir = "left"
+			src.hud_state = "lat_thrusters_left"
+			src.ship.myhud.update_states()
+		else
+			src.turn_dir = "right"
+			src.hud_state = "lat_thrusters_right"
+			src.ship.myhud.update_states()
+		boutput(usr, SPAN_NOTICE("Thrusters will now provide ship movement to the [src.turn_dir]."))
 
 /obj/item/shipcomponent/secondary_system/tractor_beam
 	name = "Tri-Corp Tractor Beam"
@@ -1170,3 +1243,80 @@
 			desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. The core is installed."
 			tooltip_rebuild = 1
 			return
+
+ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
+/obj/item/shipcomponent/secondary_system/shielding
+	name = "Shielding System"
+	desc = "Provides a timed shield to block incoming projectiles and explosions. Recharge is required between uses."
+	f_active = TRUE
+	hud_state = "shielding"
+	/// % of damage, that the shielding blocks (0.5 would make a 40 dmg projectile deal 20 dmg instead)
+	var/block_pct = 0
+	/// health of the shield in dmg points
+	var/life = 100
+	/// how long the shield stays on
+	var/duration = 0 SECONDS
+	/// once deactivated, how long it takes for the shield to be ready again
+	var/recharge_time = 0 SECONDS
+	/// color of the shield
+	var/shield_color
+
+	New()
+		..()
+		src.desc += " Has a life of [src.life] damage, providing [round(block_pct * 100, 1)]% damage reduction. Shielding can be provided for [src.duration / 10] seconds" + \
+					" with a shield recharge time of [src.recharge_time / 10] seconds."
+
+	activate()
+		var/cooldown = GET_COOLDOWN(src, "ship_shielding_recharge")
+		if (cooldown)
+			boutput(src.ship.pilot, "[src.ship.ship_message("[src] is currently recharging, and cannot be turned on. Wait [cooldown / 10] seconds.")]")
+			return
+		if (!..())
+			return
+
+		src.ship.add_filter("shield_outline", 0, outline_filter(2, src.shield_color))
+
+		playsound(src.ship.loc, 'sound/effects/MagShieldUp.ogg', 75, TRUE, pitch = 1.5)
+
+		SPAWN(src.duration)
+			if (src.active)
+				src.deactivate()
+
+	deactivate()
+		if (src.active)
+			ON_COOLDOWN(src, "ship_shielding_recharge", src.recharge_time)
+			for (var/mob/M in src.ship)
+				boutput(M, "[src.ship.ship_message("[src]'s shield is now offline. Please wait for full recharge after [src.recharge_time / 10] seconds.")]")
+			src.ship.remove_filter("shield_outline")
+			playsound(src.ship.loc, 'sound/effects/MagShieldDown.ogg', 75, TRUE, pitch = 1.5)
+			src.life = initial(src.life)
+		..()
+
+	// takes incoming damage "dmg", returns damage dealt to pod
+	proc/process_incoming_dmg(dmg)
+		var/dmg_dealt = dmg * (1 - src.block_pct)
+
+		src.life -= dmg * src.block_pct
+
+		if (src.life <= 0)
+			src.deactivate()
+
+		return dmg_dealt
+
+/obj/item/shipcomponent/secondary_system/shielding/light
+	name = "Light Shielding System"
+	power_used = 50
+	block_pct = 0.25
+	life = 100
+	duration = 10 SECONDS
+	recharge_time = 60 SECONDS
+	shield_color = "#1a4cf0"
+
+/obj/item/shipcomponent/secondary_system/shielding/heavy
+	name = "High Impact Shielding System"
+	power_used = 150
+	block_pct = 0.9
+	life = 1000
+	duration = 3 SECONDS
+	recharge_time = 120 SECONDS
+	shield_color = "#ff3916"

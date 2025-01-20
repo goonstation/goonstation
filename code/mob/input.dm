@@ -1,4 +1,5 @@
 
+/mob/var/prev_loc = 0
 /mob/var/move_dir = 0
 /mob/var/next_move = 0
 
@@ -96,8 +97,6 @@
 
 		var/delay = max(src.movement_delay(get_step(src,src.move_dir), running), world.tick_lag) // don't divide by zero
 		var/move_dir = src.move_dir
-		if (move_dir & (move_dir-1))
-			delay *= DIAG_MOVE_DELAY_MULT // actual sqrt(2) unsurprisingly resulted in rounding errors
 		if (src.client && src.client.flying || (ismob(src) && HAS_ATOM_PROPERTY(src, PROP_MOB_NOCLIP)))
 			if(isnull(get_step(src, move_dir)))
 				return
@@ -135,6 +134,9 @@
 				move_angle += pick(-misstep_angle,misstep_angle)
 				move_dir = angle2dir(move_angle)
 
+			if (move_dir & (move_dir-1))
+				delay *= DIAG_MOVE_DELAY_MULT // actual sqrt(2) unsurprisingly resulted in rounding errors
+
 			if (src.buckled && !istype(src.buckled, /obj/stool/chair))
 				src.buckled.relaymove(src, move_dir)
 			else if (isturf(src.loc))
@@ -154,6 +156,7 @@
 						qdel(G)
 
 				var/turf/old_loc = src.loc
+				src.prev_loc = old_loc
 
 				//use commented bit if you wanna have world fps different from client. But its not perfect!
 				var/glide = (world.icon_size / ceil(delay / world.tick_lag)) //* (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH))
@@ -264,7 +267,7 @@
 							if (!src?.client?.flying && !src.hasStatus("resting")) //no flop if laying or noclipping
 								//just fall over in place when in space (to prevent zooming)
 								var/turf/current_turf = get_turf(src)
-								if (!(current_turf.turf_flags & CAN_BE_SPACE_SAMPLE))
+								if (!(istype(current_turf, /turf/space)))
 									src.throw_at(get_step(src, move_dir), 1, 1)
 								src.setStatus("resting", duration = INFINITE_STATUS)
 								src.force_laydown_standup()

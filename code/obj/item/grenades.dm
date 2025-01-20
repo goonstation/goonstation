@@ -1778,7 +1778,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	proc/pipebomb_filling(var/atom/to_combine_atom, var/mob/user)
 		//There is less room for explosive material when you use item mods
 		var/obj/item/reagent_containers/filling_glass = to_combine_atom
-		var/max_allowed = 20 - src.item_mods.len * 5
+		var/max_allowed = 20
 		if(filling_glass.reagents.total_volume < max_allowed)
 			boutput(user, SPAN_NOTICE("There is not enough chemicals in [filling_glass] to fill the frame."))
 		else
@@ -1798,7 +1798,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				src.strength = 0
 			else
 				src.strength *= avg_volatility
-				src.strength -= item_mods.len * 0.5 //weakened by having mods
 
 			src.icon_state = "Pipe_Filled"
 			src.state = 3
@@ -1953,7 +1952,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 				if (S && (S.material.hasProperty("hard") || istype(S, /obj/item/raw_material/shard/plasmacrystal)))
 					src.bleed += 1
 			if (istype(checked_item, /obj/item/raw_material/telecrystal))
-				src.tele += 1
+				src.tele += 2
 			if (istype(checked_item, /obj/item/instrument))
 				var/obj/item/instrument/R = checked_item
 				src.sound_effect = islist(R.sounds_instrument) ? pick(R.sounds_instrument) : R.sounds_instrument
@@ -2083,9 +2082,9 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 
 			//do mod effects : post-explosion
 			if (tele)
-				for (var/mob/M in view(2+tele,src.loc))
+				for (var/mob/M in view(4,src.loc))
 					if(isturf(M.loc) && !isrestrictedz(M.loc.z))
-						var/turf/warp_to = get_turf(pick(orange(3 + tele, M.loc)))
+						var/turf/warp_to = get_turf(pick(orange(3 * tele, M.loc)))
 						if (isturf(warp_to))
 							playsound(M.loc, "warp", 50, 1)
 							M.visible_message(SPAN_ALERT("[M] is warped away!"))

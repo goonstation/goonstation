@@ -14917,6 +14917,9 @@
 "gzf" = (
 /obj/table/wood/auto,
 /obj/machinery/computer3/generic/personal,
+/obj/item/paper/pipebombs{
+	pixel_y = -9
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "gzK" = (
@@ -39787,7 +39790,6 @@
 /obj/machinery/light,
 /obj/machinery/camera/television{
 	c_tag = "Chapel";
-	c_tag_order = "Chapel camera";
 	dir = 1;
 	name = "Chapel camera"
 	},

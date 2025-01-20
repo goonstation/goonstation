@@ -1283,7 +1283,7 @@
 	name = "Murray";
 	req_access_txt = ""
 	},
-/obj/machinery/navbeacon/tour/cog1/tour18,
+/obj/machinery/navbeacon/tour/cog1/tour20,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
@@ -10997,6 +10997,10 @@
 	pixel_x = -5;
 	pixel_y = 4
 	},
+/obj/item/storage/box/panic_buttons{
+	pixel_x = 8
+	},
+/obj/item/device/panicbutton,
 /turf/simulated/floor/carpet,
 /area/station/security/main)
 "aNX" = (
@@ -19194,7 +19198,6 @@
 /obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 4
 	},
-/obj/machinery/navbeacon/tour/cog1/tour17,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -30242,12 +30245,6 @@
 	icon_state = "red2"
 	},
 /area/station/medical/medbay/lobby)
-"cgV" = (
-/obj/machinery/navbeacon/tour/cog1/tour13,
-/turf/simulated/floor/carpet{
-	icon_state = "red2"
-	},
-/area/station/medical/medbay/lobby)
 "cgW" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/carpet{
@@ -35898,6 +35895,7 @@
 	pixel_x = -24;
 	dir = 8
 	},
+/obj/item/paper/pipebombs,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "cAs" = (
@@ -38348,9 +38346,9 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10
 	},
-/obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor,
 /area/station/security/brig)
 "dPe" = (
@@ -44289,6 +44287,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
+"ify" = (
+/obj/machinery/navbeacon/tour/cog1/tour13,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/lobby)
 "ifM" = (
 /obj/lattice{
 	dir = 4;
@@ -48231,6 +48233,10 @@
 /obj/cable/yellow,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
+"loD" = (
+/obj/machinery/navbeacon/tour/cog1/tour17,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "lpn" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -49447,7 +49453,7 @@
 	id = "seccourtroom"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/security,
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor,
 /area/station/security/main)
 "mtN" = (
@@ -56140,6 +56146,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
+"rom" = (
+/obj/machinery/navbeacon/tour/cog1/tour19,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "roQ" = (
 /obj/machinery/light{
 	dir = 4
@@ -57834,8 +57844,8 @@
 "syQ" = (
 /obj/machinery/door/airlock/pyro/glass/security,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/security,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor,
 /area/station/security/checkpoint/cargo)
 "szn" = (
@@ -61682,8 +61692,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/security,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor,
 /area/station/security/brig)
 "vob" = (
@@ -61882,6 +61892,13 @@
 	},
 /turf/space,
 /area/supply/delivery_point)
+"vzz" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/navbeacon/tour/cog1/tour18,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "vAd" = (
 /obj/machinery/firealarm/south,
 /obj/machinery/light/small,
@@ -62892,9 +62909,9 @@
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4
 	},
-/obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor,
 /area/station/security/brig)
 "wqg" = (
@@ -64182,14 +64199,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 5;
-	name = "autoname - Mining";
-	network = "Mining";
-	tag = ""
-	},
 /obj/machinery/power/apc/autoname_south,
+/obj/machinery/camera/auto,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
@@ -100802,7 +100813,7 @@ bWD
 bWD
 cCl
 cfC
-cgV
+cgU
 cia
 fKR
 mrY
@@ -101707,7 +101718,7 @@ cfJ
 cbQ
 leZ
 ces
-cev
+ify
 cev
 cev
 cev
@@ -102001,7 +102012,7 @@ bPR
 bPR
 bSS
 bWU
-bLO
+loD
 bWY
 bYb
 bZF
@@ -102248,7 +102259,7 @@ aEh
 aUu
 aUu
 aVI
-aWT
+vzz
 aEh
 aVI
 bai
@@ -112501,7 +112512,7 @@ atw
 aBQ
 aqP
 cRg
-aqP
+rom
 aFO
 aIr
 aJD

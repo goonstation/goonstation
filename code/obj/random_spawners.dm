@@ -1218,7 +1218,7 @@
 	min_amt2spawn = 2
 	max_amt2spawn = 4
 	items2spawn = list(/obj/item/circuitboard/security,
-					/obj/item/circuitboard/atmospherealerts,
+					/obj/item/circuitboard/stockexchange,
 					/obj/item/circuitboard/air_management,
 					/obj/item/circuitboard/general_alert,
 					/obj/item/circuitboard/atm,
@@ -1887,7 +1887,19 @@
 	/obj/item/gun/kinetic/makarov,
 	/obj/item/gun/kinetic/single_action/mts_255,
 	/obj/item/gun/kinetic/survival_rifle,
-	/obj/item/gun/kinetic/survival_rifle)
+	/obj/item/gun/kinetic/survival_rifle,
+	/obj/item/gun/kinetic/m16,
+	/obj/item/gun/kinetic/m16,
+	/obj/item/gun/kinetic/pumpweapon/ks23,
+	/obj/item/gun/kinetic/striker,
+	/obj/item/gun/kinetic/striker,
+	/obj/item/gun/kinetic/webley,
+	/obj/item/gun/kinetic/lopoint,
+	/obj/item/gun/kinetic/uzi,
+	/obj/item/gun/kinetic/uzi,
+	/obj/item/gun/kinetic/greasegun,
+	/obj/item/gun/kinetic/greasegun
+	)
 
 	one
 		amt2spawn = 1

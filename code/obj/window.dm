@@ -474,7 +474,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 75, 1)
 			if (ischoppingtool(W))
-				src.damage_blunt(W.force*4, user)
+				src.damage_blunt(W.force*4)
 			else
 				src.damage_blunt(W.force)
 			..()
@@ -489,7 +489,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				src.anchored = !(src.anchored)
 				src.stops_space_move = !(src.stops_space_move)
 				user.show_text("You have [src.anchored ? "fastened the frame to" : "unfastened the frame from"] the floor.", "blue")
-				logTheThing(LOG_STATION, user, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "[src.anchored ? "anchored" : "unanchored"] [src] at [log_loc(src)].")
 				src.align_window()
 		else if(ispryingtool(W) && src.anchored)
 			state = 1 - state
@@ -548,14 +548,14 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 					affected_simturfs += get_step(src, neigh_dir)
 
 		if(need_rebuild)
-			for(var/turf/simulated/T in affected_simturfs)
+			for(var/turf/simulated/T as anything in affected_simturfs)
 				if(T.parent) //Rebuild/update nearby group geometry
-					air_master.groups_to_rebuild |= T.parent
+					air_master.groups_to_rebuild[T.parent] = null
 				else
-					air_master.tiles_to_update |= T
+					air_master.tiles_to_update[T] = null
 		else
-			for(var/turf/simulated/T in affected_simturfs)
-				air_master.tiles_to_update |= T
+			for(var/turf/simulated/T as anything in affected_simturfs)
+				air_master.tiles_to_update[T] = null
 
 		if (map_currently_underwater)
 			var/turf/space/fluid/n = get_step(src,NORTH)

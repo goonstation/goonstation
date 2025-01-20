@@ -446,6 +446,14 @@
 		// We display this on a separate line and with a different color to show emphasis
 		. = ..()
 		. += "<br>[SPAN_NOTICE("Use the Help, Disarm, or Grab intents to scan objects when you click them. Switch to Harm intent do other things.")]"
+		. += "<br>Scanned items:"
+		if (!length(src.scanned))
+			. += " None"
+			return
+		for (var/obj/item_type as anything in src.scanned)
+			if (initial(item_type.is_syndicate))
+				continue
+			. += "<br>-" + "\proper[initial(item_type.name)]"
 
 	proc/pre_attackby(obj/item/parent_item, atom/A, mob/user)
 		if (user.a_intent == INTENT_HARM)
@@ -1002,7 +1010,7 @@
 			JOB_XP(user, "Clown", 3)
 
 
-		else // congrats buddy!!!!! you managed to pass all the checks!!!!! you get to do surgery!!!!
+		else if(!is_special) // congrats buddy!!!!! you managed to pass all the checks!!!!! you get to do surgery!!!!
 			saw_surgery(target,user)
 
 

@@ -231,8 +231,7 @@
 
 	var/image/chat_maptext/chat_text = null
 	if (speechpopups && src.chat_text)
-		var/num = hex2num(copytext(md5(src.get_heard_name(just_name_itself=TRUE)), 1, 7))
-		var/maptext_color = hsv2rgb((num % 360)%40+240, (num / 360) % 15+5, (((num / 360) / 10) % 15) + 55)
+		var/maptext_color = dead_maptext_color(src.get_heard_name(just_name_itself=TRUE))
 
 		var/turf/T = get_turf(src)
 		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
@@ -1051,6 +1050,12 @@
 // it was about time we had this instead of just visible_message()
 /atom/proc/audible_message(var/message, var/alt, var/alt_type, var/group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	for (var/mob/M in all_hearers(null, src))
+		if (istype(M, /mob/living/silicon/ai) && !M.client && M.hearing_check(1)) //if heard, relay msg to client mob if they're in aieye form
+			var/mob/living/silicon/ai/mainframe = M
+			var/mob/message_mob = mainframe.get_message_mob()
+			if(isAIeye(message_mob))
+				message_mob.show_message(message, null, alt, alt_type, group, just_maptext, assoc_maptext) // type=null as AIeyes can't hear directly
+			continue
 		if (!M.client)
 			continue
 		M.show_message(message, 2, alt, alt_type, group, just_maptext, assoc_maptext)
@@ -1169,3 +1174,13 @@
 
 		if(thisR != "")
 			boutput(M, thisR)
+
+/// Generate a hue for maptext from a given name
+/proc/living_maptext_color(given_name)
+	var/num = hex2num(copytext(md5(given_name), 1, 7))
+	return hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
+
+/// Generate a desatureated hue for maptext from a given name
+/proc/dead_maptext_color(given_name)
+	var/num = hex2num(copytext(md5(given_name), 1, 7))
+	return hsv2rgb((num % 360)%40+240, (num / 360) % 15+5, (((num / 360) / 10) % 15) + 55)
