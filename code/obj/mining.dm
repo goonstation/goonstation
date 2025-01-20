@@ -1544,7 +1544,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	var/stone_color = "#D1E6FF"
 	var/image/coloration_overlay = null
 	var/list/space_overlays = null
-	turf_flags = MOB_SLIP | MOB_STEP | IS_TYPE_SIMULATED | FLUID_MOVE
+	turf_flags = MOB_SLIP | MOB_STEP | FLUID_MOVE
 
 #ifdef UNDERWATER_MAP
 	fullbright = 0

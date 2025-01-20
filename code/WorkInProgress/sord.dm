@@ -22,6 +22,7 @@
 				usr.visible_message(SPAN_ALERT("[usr] presses the red button on [src]."),
 				SPAN_NOTICE("You press the button on [src]."),
 				SPAN_ALERT("You see [usr] press a button on [src]."))
+				logTheThing(LOG_COMBAT, user, "triggers [src] at [log_loc(user)]")
 				triggerpanicbutton()
 		else
 			boutput(user, SPAN_NOTICE("The [src] buzzes faintly. It must be cooling down."))
@@ -121,3 +122,36 @@
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
 
+//mercenary stuff lives here for now
+/obj/item/clothing/under/misc/merc01
+	name = "khaki shirt and gray pants"
+	desc = "A slick pair of gray camouflage pattern pants and a khaki pocketed shirt."
+	icon_state = "merc01"
+	item_state = "merc01"
+
+/obj/item/storage/belt/security/shoulder_holster/small
+	name = "lightweight shoulder holster"
+	desc = "A cheap shoulder holster without much storage space for anything else."
+	slots = 3
+
+/mob/living/carbon/human/normal/merc
+	New()
+		..()
+		src.equip_new_if_possible(/obj/item/clothing/under/misc/merc01, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/storage/belt/security/shoulder_holster/small, SLOT_BELT)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/detective, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/card/id, SLOT_WEAR_ID)
+		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
+		src.equip_new_if_possible(/obj/item/storage/backpack/brown, SLOT_BACK)
+		src.equip_new_if_possible(/obj/item/clothing/suit/armor/vest/light, SLOT_WEAR_SUIT)
+
+		var/obj/item/card/id/C = src.wear_id
+		if(C)
+			C.registered = src.real_name
+			C.assignment = "Mercenary" // company name TBD
+			C.name = "[C.registered]'s ID Card ([C.assignment])"
+
+		update_clothing()
+
+/obj/mapping_helper/mob_spawn/corpse/human/merc
+	spawn_type = /mob/living/carbon/human/normal/merc
