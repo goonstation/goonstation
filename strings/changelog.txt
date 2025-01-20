@@ -1,5 +1,9 @@
 
 (t)mon jan 20 25
+(u)JORJ949
+(p)21582
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Nuclear Bombs can now have records loaded into them that play upon arming.
 (u)TealSeer
 (p)22024
 (e)🪲💡|C-Bug, A-Station-Systems
