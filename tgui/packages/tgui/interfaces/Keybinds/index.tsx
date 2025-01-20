@@ -12,7 +12,7 @@ import { KeybindList } from './KeybindList';
 
 export const Keybinds = () => {
   return (
-    <Window width={330} height={590}>
+    <Window width={330} height={590} title="Keybinding Customization">
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>

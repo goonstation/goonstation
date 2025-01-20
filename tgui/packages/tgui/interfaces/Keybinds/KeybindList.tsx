@@ -1,6 +1,6 @@
 /**
  * @file
- * @copyright 2024
+ * @copyright 2025
  * @author Garash2k (https://github.com/garash2k)
  * @license MIT
  */
@@ -50,7 +50,6 @@ const sortKeys = (k1: KeybindData, k2: KeybindData) => {
     return -1;
   } else if (Number(k2.id)) {
     return 1;
-  } else {
-    return k1.id.localeCompare(k2.id);
   }
+  return k1.id.localeCompare(k2.id);
 };

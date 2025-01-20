@@ -2,7 +2,6 @@
 /datum/keybind_menu
 	var/client/owner
 	var/list/changed_keys //so we can keep track of what keys the user changes then merge later
-	var/resetting = FALSE
 	var/hasChanges = FALSE
 
 	New(client/my_client)
@@ -12,7 +11,7 @@
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
-			ui = new(user, src, "Keybinds", "Keybinding Customization")
+			ui = new(user, src, "Keybinds")
 			ui.open()
 
 	ui_data(mob/user)
@@ -31,7 +30,6 @@
 			)))
 
 		.["keys"] = keys
-		.["resetting"] = resetting
 		.["hasChanges"] = hasChanges
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -61,15 +59,12 @@
 					hasChanges = FALSE
 					. = TRUE
 			if ("reset")
-				if (!resetting)
-					resetting = TRUE
-				else
-					changed_keys = new/list()
-					owner.player.cloudSaves.deleteData("custom_keybind_data")
-					owner.keymap = null //To prevent merge() from not overwriting old keybinds
-					owner.mob.reset_keymap() //Does successive calls to rebuild the keymap
-					boutput(owner, SPAN_NOTICE("Your keybinding data has been reset."))
-					tgui_process.close_uis(src)
+				changed_keys = new/list()
+				owner.player.cloudSaves.deleteData("custom_keybind_data")
+				owner.keymap = null //To prevent merge() from not overwriting old keybinds
+				owner.mob.reset_keymap() //Does successive calls to rebuild the keymap
+				boutput(owner, SPAN_NOTICE("Your keybinding data has been reset."))
+				tgui_process.close_uis(src)
 			if ("cancel")
 				tgui_process.close_uis(src)
 
@@ -87,6 +82,5 @@
 	if(!src.keybind_menu)
 		src.keybind_menu = new(src)
 	src.keybind_menu.changed_keys = list()
-	src.keybind_menu.resetting = FALSE
 	src.keybind_menu.hasChanges = FALSE
 	src.keybind_menu.ui_interact(src.mob)

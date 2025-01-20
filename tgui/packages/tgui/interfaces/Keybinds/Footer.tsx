@@ -1,6 +1,6 @@
 /**
  * @file
- * @copyright 2024
+ * @copyright 2025
  * @author Garash2k (https://github.com/garash2k)
  * @license MIT
  */
@@ -11,24 +11,25 @@ import { KeybindsData } from './types';
 
 export const Footer = () => {
   const { act, data } = useBackend<KeybindsData>();
-  const { hasChanges, resetting } = data;
+  const { hasChanges } = data;
 
   return (
     <>
       <Button
         onClick={() => act('confirm')}
-        color={!hasChanges ? null : 'good'}
+        color={!hasChanges ? undefined : 'good'}
         icon="save"
       >
         Confirm
       </Button>
-      <Button
+      <Button.Confirm
         onClick={() => act('reset')}
-        color={!resetting ? null : 'bad'}
+        color="bad"
         icon="trash"
+        confirmContent="Confirm Reset All?"
       >
-        {!resetting ? 'Reset All' : 'Confirm?'}
-      </Button>
+        Reset All
+      </Button.Confirm>
       <Button onClick={() => act('cancel')}>Cancel</Button>
     </>
   );
