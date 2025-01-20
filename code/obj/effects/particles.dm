@@ -284,10 +284,10 @@
 
 /particles/gunshot_impact_smoke
 	icon = 'icons/effects/particles.dmi'
-	icon_state = "impact_smoke"
+	icon_state = list("impact_smoke")
 	width = 256
 	height = 256
-	color = "#e6e6e625"
+	color = "#e6e6e61e"
 	spawning = 3
 	count = 3
 	lifespan = 1.5 SECONDS
@@ -300,7 +300,7 @@
 
 /particles/gunshot_impact_sparks
 	icon = 'icons/effects/particles.dmi'
-	icon_state = list(""=1)
+	icon_state = list("")
 	width = 256
 	height = 256
 	color = "#d1bb77"
