@@ -1,5 +1,9 @@
 
 (t)mon jan 20 25
+(u)glowbold
+(p)21962
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Disposal chutes can break from explosions and gunfire, and be repaired with a screwdriver and crowbar.
 (u)patricia
 (p)22031
 (e)💡|A-Station-Systems
