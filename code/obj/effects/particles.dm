@@ -287,7 +287,7 @@
 	icon_state = list("impact_smoke")
 	width = 256
 	height = 256
-	color = "#e6e6e61e"
+	color = "#e6e6e617"
 	spawning = 3
 	count = 3
 	lifespan = 1.5 SECONDS
