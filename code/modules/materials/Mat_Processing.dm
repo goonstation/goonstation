@@ -173,8 +173,10 @@
 			else
 				piece.set_loc(get_turf(src))
 			RE?.apply_to_obj(piece)
-			first_part = null
-			second_part = null
+			if (QDELETED(first_part))
+				first_part = null
+			if (QDELETED(second_part))
+				second_part = null
 			boutput(usr, SPAN_NOTICE("You make [piece]."))
 
 			return piece
