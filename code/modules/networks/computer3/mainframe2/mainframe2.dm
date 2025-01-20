@@ -591,11 +591,6 @@
 			var/callID = src.processing.Find(caller_prog)
 			return P.receive_progsignal(callID, data, file)
 
-		set_broken()
-			icon_state = initial(src.icon_state)
-			icon_state += "b"
-			status |= BROKEN
-
 		reconnect_all_devices()
 			for (var/device_id in src.terminals)
 				var/datum/terminal_connection/conn = src.terminals[device_id]

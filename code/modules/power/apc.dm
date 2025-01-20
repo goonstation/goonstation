@@ -1448,8 +1448,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		set_broken()
 
 
-/obj/machinery/power/apc/proc/set_broken()
-	status |= BROKEN
+/obj/machinery/power/apc/set_broken()
+	. = ..()
+	if(.) return
 	icon_state = "apc-b"
 	ClearAllOverlays() //no need to cache since nobody repairs these
 
