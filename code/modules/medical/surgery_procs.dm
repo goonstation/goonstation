@@ -14,7 +14,7 @@ So op_stage is a number that tells you how cut up the meatbag is.
 
 Step 3 - the exceptions
 
-Removing a head is done with patient.organHolder.head.op_stage and represents cuts to the neck. 3.0 is just before removing a head.
+Removing a head is done with patient.organHolder.head.op _stage and represents cuts to the neck. 3.0 is just before removing a head.
 
 Brain and skull use patient.organHolder.head.scalp_op_stage , ranging from 0.0 to 5.0 and is used to track an incisions in the top of the head/scalp.
 3.0 is right before brain removal, 4 is a missing brain, 5 is before skull removal. Skull must be there to add a brain, adding a brain resets the stage to 3

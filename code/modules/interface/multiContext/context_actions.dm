@@ -2,6 +2,9 @@
 	var/icon = 'icons/ui/context16x16.dmi'
 	var/icon_state = "eye"
 	var/icon_background = "bg"
+	var/pip_icon = 'icons/ui/context_pips.dmi'
+	var/pip_state = ""
+	var/pip_enabled = FALSE
 	var/name = ""
 	var/desc = ""
 	var/tooltip_flags = null
@@ -2242,6 +2245,70 @@
 				boutput(user, SPAN_NOTICE("You need a snipping tool."))
 				return FALSE
 			return TRUE
+
+
+
+
+/// surgical step - performs a step of a surgery
+/datum/contextAction/surgical_step
+	name = "Generic Surgery Step"
+	desc = "Call 1-800-IMCODER."
+	icon_state = "heal_generic"
+	var/datum/surgery_step/step = null
+	pip_enabled = TRUE
+
+	checkRequirements(atom/target, mob/user)
+		return TRUE
+
+	execute(atom/target, mob/user)
+		..()
+		var/obj/item/I = user.equipped()
+		step.perform_step(I,user)
+
+/// surgery context menu - starts/continues a surgery
+/datum/contextAction/surgery
+	name = "Generic Surgery"
+	desc = "Call 1-800-IMCODER."
+	icon_state = "heal_generic"
+	var/datum/surgeryHolder/holder = null
+	var/datum/surgery/surgery = null
+	checkRequirements(atom/target, mob/user)
+		..()
+		return TRUE
+	execute(atom/target, mob/user)
+		..()
+		var/obj/item/I = user.equipped()
+		holder.enter_surgery(surgery,user,I)
+/datum/contextAction/surgery/cancel
+	name = "Cancel"
+	desc = "Cancels this surgery."
+	icon_state = "cancel"
+
+	New(var/datum/surgeryHolder/holder, var/datum/surgery/surgery)
+		src.holder = holder
+		src.surgery = surgery
+		..()
+	execute(atom/target, mob/user)
+		..()
+		user.closeContextActions()
+		var/obj/item/I = user.equipped()
+		holder.cancel_surgery(surgery,user,I)
+/datum/contextAction/surgery/step_up
+	name = "Back"
+	desc = "Go up a level."
+	icon_state = "back_arrow"
+
+	New(var/datum/surgeryHolder/holder, var/datum/surgery/surgery)
+		src.holder = holder
+		src.surgery = surgery
+		..()
+	execute(atom/target, mob/user)
+		..()
+		user.closeContextActions()
+		var/obj/item/I = user.equipped()
+		holder.exit_surgery(surgery,user,I)
+
+
 #define BUNSEN_OFF "off"
 #define BUNSEN_LOW "low"
 #define BUNSEN_MEDIUM "medium"
