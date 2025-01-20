@@ -203,11 +203,11 @@
 		if(W == user.equipped())
 			user.drop_item()
 		W.set_loc(src)
-		if (params?["eject_result"])
+		if ("eject_result" in params)
 			return
-		if (params?["load_first_part"])
+		if ("load_first_part" in params)
 			src.first_part = W
-		else if (params?["load_second_part"])
+		else if ("load_second_part" in params)
 			src.second_part = W
 		else if (!src.first_part)
 			src.first_part = W
