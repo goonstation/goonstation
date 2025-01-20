@@ -627,12 +627,6 @@ ABSTRACT_TYPE(/datum/projectile)
 
 	/// Set to TRUE if you want particles to spawn when you hit a non living thing
 	var/has_impact_particles = FALSE
-	/// Amount of sparks to spawn on impact if has_impact_particles is true
-	var/impact_sparks_amt = 5
-	/// Amount of dust to spawn on impact if has_impact_particles is true
-	var/impact_dust_amt = 12
-	/// Amount of smoke to spawn on impact if has_impact_particles is true
-	var/impact_smoke_amt = 3
 
 	New()
 		. = ..()
@@ -689,15 +683,7 @@ ABSTRACT_TYPE(/datum/projectile)
 		//When it hits a mob or such should anything special happen
 		on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
 			impact_image_effect(ie_type, hit)
-			// Spawn some particles if you hit something solid
-			if (src.has_impact_particles && !ismob(hit))
-				if (impact_dust_amt > 0)
-					var/avrg_color = hit.get_average_color()
-					new /obj/effects/gunshot_impact/dust(get_turf(hit), -O.xo, -O.yo, impact_dust_amt, avrg_color)
-				if (impact_smoke_amt > 0)
-					new /obj/effects/gunshot_impact/smoke(get_turf(hit), -O.xo, -O.yo, impact_smoke_amt)
-				if (impact_sparks_amt > 0)
-					new /obj/effects/gunshot_impact/sparks(get_turf(hit), -O.xo, -O.yo, impact_sparks_amt)
+			spawn_impact_particles(hit, O)
 		/// Does a thing every step this projectile takes
 		tick(var/obj/projectile/O)
 			return
@@ -765,6 +751,16 @@ ABSTRACT_TYPE(/datum/projectile)
 
 			src.ie_type = P.ie_type
 			src.impact_image_state = P.impact_image_state
+
+		// Spawn some particles if you hit something solid
+		spawn_impact_particles(atom/hit, var/obj/projectile/O)
+			if (src.has_impact_particles && !ismob(hit))
+				var/new_impact_icon = hit.impact_icon
+				var/new_impact_icon_state = hit.impact_icon_state
+				var/avrg_color = hit.get_average_color()
+				new /obj/effects/gunshot_impact/dust(get_turf(hit), -O.xo, -O.yo, damage, avrg_color, new_impact_icon, new_impact_icon_state)
+				new /obj/effects/gunshot_impact/smoke(get_turf(hit), -O.xo, -O.yo, damage)
+				new /obj/effects/gunshot_impact/sparks(get_turf(hit), -O.xo, -O.yo, damage)
 
 // THIS IS INTENDED FOR POINTBLANKING.
 /proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T)

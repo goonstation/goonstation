@@ -87,6 +87,11 @@ TYPEINFO(/atom)
 	/// Whether the last material applied updated appearance. Used for re-applying material appearance on icon update
 	var/material_applied_appearance = FALSE
 
+	/// What icon to use if we want to create specific particles when hit by a projectile
+	var/impact_icon = null
+	/// What icon state to use if we want to create specific particles when hit by a projectile
+	var/impact_icon_state = null
+
 	New(turf/newLoc)
 		. = ..()
 		// Lets stop having 5 implementations of this that all do it differently

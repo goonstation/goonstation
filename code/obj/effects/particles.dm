@@ -273,8 +273,8 @@
 	width = 256
 	height = 256
 	color = "#ddcea2"
-	spawning = 12
-	count = 12
+	spawning = 10
+	count = 10
 	lifespan = 2.5 SECONDS
 	fade = 2.5 SECONDS
 	position = list(0, 0, 0)
@@ -284,7 +284,7 @@
 
 /particles/gunshot_impact_smoke
 	icon = 'icons/effects/particles.dmi'
-	icon_state = "smoke_sample"
+	icon_state = "impact_smoke"
 	width = 256
 	height = 256
 	color = "#e6e6e625"
@@ -318,15 +318,30 @@ ABSTRACT_TYPE(/obj/effects/gunshot_impact)
 /obj/effects/gunshot_impact
 	plane = PLANE_NOSHADOW_ABOVE
 	particles = null
-	var/x_offset = 0
-	var/y_offset = 0
+	var/base_amt = 0
 
-	New(loc, var/dir_x = 0, var/dir_y = 0, var/particle_count = 0, var/color_avrg = null)
-		particles.velocity = generator("box", list(40*dir_x - x_offset, 40*dir_y - y_offset, 0), list(15*dir_x + x_offset, 15*dir_y + y_offset, 0), UNIFORM_RAND)
-		particles.count = particle_count
-		particles.spawning = particle_count
+	New(loc, var/dir_x = 0, var/dir_y = 0, var/damage = 0, var/color_avrg = null, var/impact_icon = null, var/impact_icon_state = null)
+		switch(damage)
+			if (0 to 5)
+				particles.count = 0
+				particles.spawning = 0
+			if (6 to 35)
+				var/new_amt = round(src.base_amt / 2.5)
+				particles.count = new_amt
+				particles.spawning = new_amt
+				particles.velocity = generator("box", list(20*dir_x, 20*dir_y, 0), list(7*dir_x, 7*dir_y, 0), UNIFORM_RAND)
+			if (36 to 60)
+				particles.velocity = generator("box", list(40*dir_x, 40*dir_y, 0), list(15*dir_x, 15*dir_y, 0), UNIFORM_RAND)
+			if (61 to INFINITY)
+				var/new_amt = round(src.base_amt * 2)
+				particles.count = new_amt
+				particles.spawning = new_amt
+				particles.velocity = generator("box", list(60*dir_x, 60*dir_y, 0), list(20*dir_x, 20*dir_y, 0), UNIFORM_RAND)
 		if (color_avrg)
 			particles.color = color_avrg
+		if (impact_icon && impact_icon_state)
+			particles.icon = impact_icon
+			particles.icon_state = impact_icon_state
 		..()
 		SPAWN(0.2 SECONDS)
 			src.particles?.spawning = 0
@@ -334,6 +349,7 @@ ABSTRACT_TYPE(/obj/effects/gunshot_impact)
 			qdel(src)
 
 /obj/effects/gunshot_impact/dust
+	base_amt = 10
 	particles = new/particles/gunshot_impact_dust
 	plane = PLANE_NOSHADOW_BELOW
 
@@ -342,7 +358,9 @@ ABSTRACT_TYPE(/obj/effects/gunshot_impact)
 		. = ..()
 
 /obj/effects/gunshot_impact/smoke
+	base_amt = 3
 	particles = new/particles/gunshot_impact_smoke
 
 /obj/effects/gunshot_impact/sparks
+	base_amt = 5
 	particles = new/particles/gunshot_impact_sparks

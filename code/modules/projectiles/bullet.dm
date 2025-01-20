@@ -288,6 +288,7 @@ toxic - poisons
 	dissipation_delay = 10
 	reagent_payload = "haloperidol"
 	casing = /obj/item/casing/rifle
+	has_impact_particles = FALSE
 
 	syndicate
 		reagent_payload = "sodium_thiopental" // HEH
@@ -541,6 +542,7 @@ toxic - poisons
 	dissipation_rate = 0
 	ie_type = null
 	smashes_glasses = FALSE //foam
+	has_impact_particles = FALSE
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		..()
@@ -588,6 +590,7 @@ toxic - poisons
 	casing = null
 	reagent_payload = "curare"
 	implanted = /obj/item/implant/projectile/body_visible/blowdart
+	has_impact_particles = FALSE
 
 	madness
 		reagent_payload = "madness_toxin"
@@ -981,6 +984,7 @@ toxic - poisons
 	damage = 9
 	hit_mob_sound = 'sound/effects/skeleton_break.ogg'
 	impact_image_state = null // in my mind these are just literal bones fragments being thrown at people, wouldn't stick into walls
+	has_impact_particles = FALSE
 
 	on_hit(atom/hit)
 		var/turf/T = get_turf(hit)
@@ -1075,6 +1079,7 @@ toxic - poisons
 	hit_type = DAMAGE_BLUNT
 	impact_image_state = null
 	casing = /obj/item/casing/shotgun/blue
+	has_impact_particles = FALSE
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		. = ..()
@@ -1530,6 +1535,7 @@ datum/projectile/bullet/autocannon
 	hit_mob_sound = 'sound/misc/splash_1.ogg'
 	hit_object_sound = 'sound/misc/splash_1.ogg'
 	implanted = null
+	has_impact_particles = FALSE
 
 
 	on_hit(atom/hit, dirflag, atom/projectile)
@@ -1722,6 +1728,7 @@ datum/projectile/bullet/autocannon
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
 	implanted = null
+	has_impact_particles = FALSE
 
 	on_launch(obj/projectile/O)
 		. = ..()
@@ -1993,6 +2000,7 @@ datum/projectile/bullet/autocannon
 	implanted = null
 	casing = null
 	cost = 1
+	has_impact_particles = FALSE
 
 	on_hit(atom/hit, dirflag)
 		if (ishuman(hit))
@@ -2162,6 +2170,7 @@ datum/projectile/bullet/autocannon
 	casing = null
 	hit_ground_chance = 50
 	icon_state = "random_thing"	//actually exists, looks funny enough to use as the projectile image for this
+	has_impact_particles = FALSE
 
 	on_hit(atom/hit, dirflag)
 		if (ishuman(hit))
