@@ -16141,7 +16141,7 @@
 /turf/simulated/floor/grime,
 /area/diner/arcade)
 "dfF" = (
-/mob/living/carbon/human/normal/merc,
+/obj/mapping_helper/mob_spawn/corpse/human/merc,
 /turf/simulated/floor/airless/damaged5,
 /area/abandonedship)
 "dfH" = (
