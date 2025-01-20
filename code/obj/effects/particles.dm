@@ -287,16 +287,18 @@
 	icon_state = list("impact_smoke")
 	width = 256
 	height = 256
-	color = "#e6e6e617"
-	spawning = 3
-	count = 3
+	color = "#e6e6e613"
+	spawning = 5
+	count = 5
 	lifespan = 1.5 SECONDS
 	fade = 1.5 SECONDS
 	position = list(0, 0, 0)
 	gravity = list(0, 0, 0)
+	scale = list(0.7, 1)
+	grow = list(0.04, 0.08)
 	spin = generator("num", 5, -5, NORMAL_RAND)
-	friction = generator("num", 0.2, 0.1, UNIFORM_RAND)
-	drift = generator("vector", list(1,1,0), list(-1,-1,0), UNIFORM_RAND)
+	friction = generator("num", 0.4, 0.3, UNIFORM_RAND)
+	drift = generator("vector", list(3,3,0), list(-3,-3,0), UNIFORM_RAND)
 
 /particles/gunshot_impact_sparks
 	icon = 'icons/effects/particles.dmi'
@@ -324,6 +326,7 @@
 	count = 6
 	lifespan = 2 SECONDS
 	fade = 2 SECONDS
+	scale = list(0.7, 0.7)
 	position = list(0, 0, 0)
 	gravity = list(0, 0, 0)
 	spin = generator("num", 5, -5, NORMAL_RAND)
@@ -368,7 +371,7 @@
 	plane = PLANE_NOSHADOW_BELOW
 
 /obj/effects/gunshot_impact/smoke
-	base_amt = 3
+	base_amt = 5
 	particles = new/particles/gunshot_impact_smoke
 
 /obj/effects/gunshot_impact/sparks
