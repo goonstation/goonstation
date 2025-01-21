@@ -270,8 +270,8 @@
 /particles/impact_dust
 	icon = 'icons/effects/particles.dmi'
 	icon_state = list(""=1, "2x2square"=1)
-	width = 256
-	height = 256
+	width = 350
+	height = 350
 	color = "#ddcea2"
 	spawning = 10
 	count = 10
@@ -285,8 +285,8 @@
 /particles/impact_smoke
 	icon = 'icons/effects/particles.dmi'
 	icon_state = list("impact_smoke")
-	width = 256
-	height = 256
+	width = 350
+	height = 350
 	color = "#e6e6e613"
 	spawning = 5
 	count = 5
@@ -303,8 +303,8 @@
 /particles/impact_sparks
 	icon = 'icons/effects/particles.dmi'
 	icon_state = list("")
-	width = 256
-	height = 256
+	width = 350
+	height = 350
 	color = "#d1bb77"
 	spawning = 5
 	count = 5
@@ -323,8 +323,8 @@
 /particles/impact_energy
 	icon = 'icons/effects/particles.dmi'
 	icon_state = list("tazer_impact")
-	width = 256
-	height = 256
+	width = 350
+	height = 350
 	color = "#ecdc81"
 	spawning = 4
 	count = 4
@@ -341,8 +341,8 @@
 /particles/impact_bubble
 	icon = 'icons/effects/particles.dmi'
 	icon_state = list("bubble")
-	width = 256
-	height = 256
+	width = 350
+	height = 350
 	color = "#ffffff"
 	spawning = 6
 	count = 6
@@ -359,7 +359,7 @@
 	particles = null
 	var/base_amt = 0
 
-	New(loc, var/dir_x = 0, var/dir_y = 0, var/damage = 0, var/color_avrg = null, var/impact_icon = null, var/impact_icon_state = null)
+	New(loc, var/pos_x = 0, var/pos_y = 0, var/dir_x = 0, var/dir_y = 0, var/damage = 0, var/color_avrg = null, var/impact_icon = null, var/impact_icon_state = null)
 		particles.position = list(pos_x, pos_y, 0)
 		if (damage <= 5)
 			particles.count = 0
@@ -409,7 +409,8 @@
 	particles = null
 	var/base_amt = 0
 
-	New(loc, var/dir_x = 0, var/dir_y = 0, var/damage = 0, var/color_avrg = null)
+	New(loc, var/pos_x = 0, var/pos_y = 0, var/dir_x = 0, var/dir_y = 0, var/damage = 0, var/color_avrg = null)
+		particles.position = list(pos_x, pos_y, 0)
 		if (damage <= 40)
 			particles.count = base_amt
 			particles.spawning = base_amt
