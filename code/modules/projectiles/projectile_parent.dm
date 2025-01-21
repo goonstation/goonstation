@@ -794,9 +794,14 @@ ABSTRACT_TYPE(/datum/projectile)
 
 		spawn_mob_hit_particles(atom/hit, var/obj/projectile/O)
 			if ((!ishuman(hit) && !issilicon(hit)) || !src.kinetic_impact) return
-			var/mob/living/carbon/human/H = hit
+			var/blood_color = "#f12a23"
+			if (ishuman(hit))
+				var/mob/living/carbon/human/H = hit
+				blood_color = H.bioHolder?.bloodColor
+			if (issilicon(hit))
+				blood_color = "#2e2e2e"
 			if (damage >= 40)
-				new /obj/effects/blood(get_turf(hit), H.pixel_x, H.pixel_y, O.xo, O.yo, damage, H.bioHolder?.bloodColor)
+				new /obj/effects/blood(get_turf(hit), hit.pixel_x, hit.pixel_y, O.xo, O.yo, damage, blood_color)
 
 // THIS IS INTENDED FOR POINTBLANKING.
 /proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T)

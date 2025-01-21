@@ -362,8 +362,8 @@
 	color = "#f12a23"
 	spawning = 5
 	count = 5
-	lifespan = 6 SECONDS
-	fade = 6 SECONDS
+	lifespan = 10 SECONDS
+	fade = 10 SECONDS
 	position = list(0, 0, 0)
 	gravity = list(0, 0, 0)
 	grow = list(-0.01, -0.01)
@@ -467,7 +467,7 @@
 
 	New(loc, var/new_x = 0, var/new_y = 0, var/dir_x = 0, var/dir_y = 0, var/damage = 0, var/blood_clr = null)
 		particles.position = list(new_x, new_y)
-		if (damage >= 30 && damage < 55)
+		if (damage >= 40 && damage < 55)
 			particles.velocity = generator("box", list(40*dir_x, 40*dir_y, 0), list(5*dir_x, 5*dir_y, 0), UNIFORM_RAND)
 		else if (damage >= 55 && damage < 85)
 			var/new_amt = round(src.base_amt * 1.5)
