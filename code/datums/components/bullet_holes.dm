@@ -50,15 +50,6 @@ TYPEINFO(/datum/component/bullet_holes)
 
 /datum/component/bullet_holes/proc/handle_impact(rendering_on, obj/projectile/shot)
 	var/datum/projectile/shotdata = shot.proj_data
-	if (!shotdata.impact_image_state)
-		return
-	// Don't add an impact decal if projectile DAMAGE (not power) is insufficient
-	if (shotdata.ks_ratio * shotdata.get_power(shot, src.parent) < src.req_damage) // TODO figure out how and when power is calculated/stored for proj objects. Shit's confusing
-		return
-
-	var/image/impact = image('icons/obj/projectiles.dmi', shot.proj_data.impact_image_state)
-	// Rotate the decal randomly for variety
-	impact.transform = turn(impact.transform, rand(360, 1))
 
 	// Apply offset based on dir. The side we want to put holes on is opposite the dir of the bullet
 	// i.e. left facing bullet hits right side of wall
@@ -105,10 +96,20 @@ TYPEINFO(/datum/component/bullet_holes)
 	var/impact_offset_y = (sin(shot_angle)  * distance)
 
 	// Add the offsets to the impact's position. abs(sin(impact_normal)) strips the y component of the offset if we're hitting a horizontal wall, and vice versa for cos
+	var/image/impact = image('icons/obj/projectiles.dmi', shot.proj_data.impact_image_state)
 	impact.pixel_x += (impact_offset_x + x_distance)*abs(sin(impact_normal)) + (16-impact_final_height)*cos(impact_normal)
 	impact.pixel_y += (impact_offset_y + y_distance)*abs(cos(impact_normal)) + (16-impact_final_height)*sin(impact_normal)
 
 	shotdata.spawn_impact_particles(src.parent, shot, impact.pixel_x, impact.pixel_y)
+
+	if (!shotdata.impact_image_state)
+		return
+	// Don't add an impact decal if projectile DAMAGE (not power) is insufficient
+	if (shotdata.ks_ratio * shotdata.get_power(shot, src.parent) < src.req_damage) // TODO figure out how and when power is calculated/stored for proj objects. Shit's confusing
+		return
+
+	// Rotate the decal randomly for variety
+	impact.transform = turn(impact.transform, rand(360, 1))
 
 	// Add bullet hole to list, then increment index to insert at. Modulo ensures that we don't go out of bounds and replace from the head of the list first.
 	if (impact_decal)
