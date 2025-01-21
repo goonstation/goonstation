@@ -330,7 +330,6 @@ toxic - poisons
 	ricochets = TRUE
 
 	on_hit(atom/hit, direction, obj/projectile/P)
-		..()
 		if(slow && ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			M.setStatus("slowed", 0.3 SECONDS, optional = 4)
@@ -1125,6 +1124,7 @@ toxic - poisons
 	dissipation_variance = 64
 	spread_angle_variance = 7.5
 	pellets_to_fire = 7
+	has_impact_particles = TRUE
 
 /datum/projectile/bullet/flare
 	name = "flare"

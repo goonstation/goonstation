@@ -27,6 +27,9 @@
 	color_green = 0.2
 	color_blue = 1
 
+	has_impact_particles = TRUE
+	kinetic_impact = FALSE
+
 	var/obj/item/target = null
 	var/failchance = 5
 
