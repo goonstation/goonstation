@@ -119,6 +119,11 @@
 	/// Turf of the called_target during projectile initialization
 	var/turf/called_target_turf
 
+	/// The image that the impact should leave behind. Used for bullet holes
+	var/image/impact_image = null
+	/// Should the projectile spawn an impact decal on hit? Used for bullet holes
+	var/has_impact_decal = FALSE
+
 	disposing()
 		special_data = null
 		proj_data = null
@@ -198,8 +203,10 @@
 			//die()
 			return
 
+		//determine where exactly the bullet hit the atom and spawn particles
+		calculate_impact_particles(src, A)
 		var/sigreturn = SEND_SIGNAL(src, COMSIG_OBJ_PROJ_COLLIDE, A)
-		sigreturn |= SEND_SIGNAL(A, COMSIG_ATOM_HITBY_PROJ, src)
+		sigreturn |= SEND_SIGNAL(A, COMSIG_ATOM_HITBY_PROJ, src, src.impact_image, src.has_impact_decal)
 		if(QDELETED(src)) //maybe a signal proc QDELETED(src) us
 			return
 		// also run the atom's general bullet act
@@ -539,6 +546,63 @@
 		return
 
 	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
+		return
+
+	proc/calculate_impact_particles(obj/projectile/shot, atom/hit)
+		var/datum/projectile/shotdata = shot.proj_data
+
+		// Apply offset based on dir. The side we want to put holes on is opposite the dir of the bullet
+		// i.e. left facing bullet hits right side of wall
+		var/impact_side_dir = opposite_dir_to(shot.dir) // which edge of this object are we drawing the decals on
+		var/spawn_decal = TRUE
+
+		var/impact_target_height = 0 //! how 'high' on the wall we're hitting. in pixels from the outermost border
+		var/impact_random_cap = 0 //! how much we can safely move an impact up/down
+		var/max_sane_spread = 15 //! the spread value that caps how crazy the impact pattern is
+		var/impact_normal = 0 //! the way 'outwards' from the wall
+		switch(impact_side_dir)
+			if(WEST)
+				impact_target_height = 6
+				impact_random_cap = 5
+				impact_normal = 180
+			if (EAST)
+				impact_target_height = 6
+				impact_random_cap = 5
+				impact_normal = 0
+			if (NORTH)
+				spawn_decal = FALSE
+				impact_target_height = 4
+				impact_random_cap = 3
+				impact_normal = 90
+			if (SOUTH)
+				impact_target_height = 11
+				impact_random_cap = 8 // front face has a lot of room for impacts
+				impact_normal = 270
+
+		var/spread_peak = sqrt(shot.spread/max_sane_spread) * impact_random_cap
+		// as covered earlier - this is how 'high' up the wall the bullet hits. as if you were aiming for head/body shots.
+		var/impact_final_height = impact_target_height + rand(-spread_peak, spread_peak)
+
+		var/turf/parent_turf = get_turf(hit)
+		//distance from centre of wall to bullet's location
+		var/x_distance = (shot.orig_turf.x*32 + shot.wx) - parent_turf.x*32
+		var/y_distance = (shot.orig_turf.y*32 + shot.wy) - parent_turf.y*32
+
+		var/shot_angle = arctan(shot.xo, shot.yo)
+		//distance from chosen 'height' of wall, to bullet location.
+		var/distance = (x_distance * cos(impact_normal))+(y_distance*sin(impact_normal)) - (16-impact_final_height)
+		//final offsets for the impact decal
+		var/impact_offset_x = (cos(shot_angle)  * distance)
+		var/impact_offset_y = (sin(shot_angle)  * distance)
+
+		// Add the offsets to the impact's position. abs(sin(impact_normal)) strips the y component of the offset if we're hitting a horizontal wall, and vice versa for cos
+		var/image/impact = image('icons/obj/projectiles.dmi', shot.proj_data.impact_image_state)
+		impact.pixel_x += (impact_offset_x + x_distance)*abs(sin(impact_normal)) + (16-impact_final_height)*cos(impact_normal)
+		impact.pixel_y += (impact_offset_y + y_distance)*abs(cos(impact_normal)) + (16-impact_final_height)*sin(impact_normal)
+
+		shotdata.spawn_impact_particles(hit, shot, impact.pixel_x, impact.pixel_y)
+		src.has_impact_decal = spawn_decal
+		src.impact_image = impact
 		return
 
 ABSTRACT_TYPE(/datum/projectile)
