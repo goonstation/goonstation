@@ -192,6 +192,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		FC.rotateDirection(current_angle)
 		FC.launch()
 		current_angle += angle_adjust_per_pellet
+		FC.spread = P.spread + spread_angle
 
 /datum/projectile/special/spreader/buckshot_burst
 	name = "buckshot"
@@ -212,6 +213,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		FC.internal_speed = rand(speed_min,speed_max)
 		FC.travelled = rand(0,dissipation_variance)
 		FC.launch()
+		FC.spread = P.spread + dissipation_variance
 /datum/projectile/special/spreader/buckshot_burst/plasglass
 	name = "fragments"
 	sname = "fragments"

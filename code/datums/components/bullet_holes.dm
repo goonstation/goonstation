@@ -20,6 +20,8 @@ TYPEINFO(/datum/component/bullet_holes)
 	var/image/impact_image_base
 	/// Used to track where in the list we insert the impact decals
 	var/decal_num = 0
+	/// Limit the number of redraws to prevent lag
+	var/recent_redraws = 0
 
 /datum/component/bullet_holes/Initialize(max_holes, req_damage)
 	. = ..()
@@ -61,17 +63,66 @@ TYPEINFO(/datum/component/bullet_holes)
 	// Apply offset based on dir. The side we want to put holes on is opposite the dir of the bullet
 	// i.e. left facing bullet hits right side of wall
 	var/impact_side_dir = opposite_dir_to(shot.dir) // which edge of this object are we drawing the decals on
-	impact.pixel_x += impact_side_dir & WEST ?  rand(0, -MAX_OFFSET) : (impact_side_dir & EAST ? rand(MAX_OFFSET) : rand(-MAX_OFFSET, MAX_OFFSET))
-	impact.pixel_y += impact_side_dir & SOUTH ?  rand(0, -MAX_OFFSET) : (impact_side_dir & NORTH ? rand(MAX_OFFSET) : rand(-MAX_OFFSET, MAX_OFFSET))
+	var/impact_decal = TRUE
+
+	var/impact_target_height = 0 //! how 'high' on the wall we're hitting. in pixels from the outermost border
+	var/impact_random_cap = 0 //! how much we can safely move an impact up/down
+	var/max_sane_spread = 15 //! the spread value that caps how crazy the impact pattern is
+	var/impact_normal = 0 //! the way 'outwards' from the wall
+	switch(impact_side_dir)
+		if(WEST)
+			impact_target_height = 6
+			impact_random_cap = 5
+			impact_normal = 180
+		if (EAST)
+			impact_target_height = 6
+			impact_random_cap = 5
+			impact_normal = 0
+		if (NORTH)
+			impact_decal = FALSE
+			impact_target_height = 4
+			impact_random_cap = 3
+			impact_normal = 90
+		if (SOUTH)
+			impact_target_height = 11
+			impact_random_cap = 8 // front face has a lot of room for impacts
+			impact_normal = 270
+
+	var/spread_peak = sqrt(shot.spread/max_sane_spread) * impact_random_cap
+	// as covered earlier - this is how 'high' up the wall the bullet hits. as if you were aiming for head/body shots.
+	var/impact_final_height = impact_target_height + rand(-spread_peak, spread_peak)
+
+	var/turf/parent_turf = get_turf(src.parent)
+	//distance from centre of wall to bullet's location
+	var/x_distance = (shot.orig_turf.x*32 + shot.wx) - parent_turf.x*32
+	var/y_distance = (shot.orig_turf.y*32 + shot.wy) - parent_turf.y*32
+
+	var/shot_angle = arctan(shot.xo, shot.yo)
+	//distance from chosen 'height' of wall, to bullet location.
+	var/distance = (x_distance * cos(impact_normal))+(y_distance*sin(impact_normal)) - (16-impact_final_height)
+	//final offsets for the impact decal
+	var/impact_offset_x = (cos(shot_angle)  * distance)
+	var/impact_offset_y = (sin(shot_angle)  * distance)
+
+	// Add the offsets to the impact's position. abs(sin(impact_normal)) strips the y component of the offset if we're hitting a horizontal wall, and vice versa for cos
+	impact.pixel_x += (impact_offset_x + x_distance)*abs(sin(impact_normal)) + (16-impact_final_height)*cos(impact_normal)
+	impact.pixel_y += (impact_offset_y + y_distance)*abs(cos(impact_normal)) + (16-impact_final_height)*sin(impact_normal)
+
+	shotdata.spawn_impact_particles(src.parent, shot, impact.pixel_x, impact.pixel_y)
 
 	// Add bullet hole to list, then increment index to insert at. Modulo ensures that we don't go out of bounds and replace from the head of the list first.
-	src.impact_images[(decal_num++ % max_holes) + 1] = impact
-	src.redraw_impacts()
+	if (impact_decal)
+		src.impact_images[(decal_num++ % max_holes) + 1] = impact
+		src.redraw_impacts()
 
 /datum/component/bullet_holes/proc/redraw_impacts()
-	var/atom/atom_parent = src.parent
-	if (ON_COOLDOWN(atom_parent, "bullet hole render", 0.2 SECONDS))
+
+	if (recent_redraws > 10)
 		return
+	recent_redraws++
+	SPAWN(1 SECOND)
+		recent_redraws--
+
 
 	var/atom/A = src.parent
 	src.impact_image_base.overlays = null

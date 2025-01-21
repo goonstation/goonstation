@@ -360,6 +360,7 @@
 	var/base_amt = 0
 
 	New(loc, var/dir_x = 0, var/dir_y = 0, var/damage = 0, var/color_avrg = null, var/impact_icon = null, var/impact_icon_state = null)
+		particles.position = list(pos_x, pos_y, 0)
 		if (damage <= 5)
 			particles.count = 0
 			particles.spawning = 0

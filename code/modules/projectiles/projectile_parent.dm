@@ -39,6 +39,8 @@
 	var/angle
 	/// Original turf this projectiles was fired from
 	var/turf/orig_turf
+	/// Degree of spread this projectile was fired with. Note that this informational, and doesn't affect the projectile's trajectory
+	var/spread = 0
 
 	///Default dir, set to in do_step()
 	var/facing_dir = NORTH
@@ -692,7 +694,6 @@ ABSTRACT_TYPE(/datum/projectile)
 		//When it hits a mob or such should anything special happen
 		on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
 			impact_image_effect(ie_type, hit)
-			spawn_impact_particles(hit, O)
 		/// Does a thing every step this projectile takes
 		tick(var/obj/projectile/O)
 			return
@@ -762,7 +763,7 @@ ABSTRACT_TYPE(/datum/projectile)
 			src.impact_image_state = P.impact_image_state
 
 		// Spawn some particles if you hit something solid
-		spawn_impact_particles(atom/hit, var/obj/projectile/O)
+		spawn_impact_particles(atom/hit, var/obj/projectile/O, x, y)
 			if (src.has_impact_particles && !ismob(hit))
 				var/underwater = FALSE
 				if (istype(get_turf(O), /turf/space/fluid)) underwater = TRUE
