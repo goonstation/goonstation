@@ -362,8 +362,8 @@
 	color = "#f12a23"
 	spawning = 5
 	count = 5
-	lifespan = 30 SECONDS
-	fade = 5 SECONDS
+	lifespan = 5 SECONDS
+	fade = 3 SECONDS
 	position = list(0, 0, 0)
 	gravity = list(0, 0, 0)
 	friction = generator("num", 0.8, 0.6, UNIFORM_RAND)
@@ -460,7 +460,7 @@
 	particles = new/particles/impact_energy
 
 /obj/effects/blood
-	plane = PLANE_NOSHADOW_ABOVE
+	plane = PLANE_NOSHADOW_BELOW
 	particles = new/particles/impact_blood
 	var/base_amt = 5
 
