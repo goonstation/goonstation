@@ -768,28 +768,28 @@ ABSTRACT_TYPE(/datum/projectile)
 				if (istype(get_turf(O), /turf/space/fluid)) underwater = TRUE
 				else
 					var/turf/T = get_turf(O)
-					if (T.active_liquid)
+					if (T?.active_liquid)
 						if(T.active_liquid.last_depth_level > 3)
 							underwater = TRUE
 				if (src.kinetic_impact)
 					var/new_impact_icon = hit.impact_icon
 					var/new_impact_icon_state = hit.impact_icon_state
 					var/avrg_color = hit.get_average_color()
-					new /obj/effects/gunshot_impact/dust(get_turf(hit), -O.xo, -O.yo, damage, TRUE, avrg_color, new_impact_icon, new_impact_icon_state)
+					new /obj/effects/gunshot_impact/dust(get_turf(hit), -O.xo, -O.yo, damage, avrg_color, new_impact_icon, new_impact_icon_state)
 					if (underwater)
-						new /obj/effects/gunshot_impact/bubble(get_turf(hit), -O.xo, -O.yo, damage, TRUE)
+						new /obj/effects/gunshot_impact/bubble(get_turf(hit), -O.xo, -O.yo, damage)
 					else
-						new /obj/effects/gunshot_impact/sparks(get_turf(hit), -O.xo, -O.yo, damage, TRUE)
-						new /obj/effects/gunshot_impact/smoke(get_turf(hit), -O.xo, -O.yo, damage, TRUE)
+						new /obj/effects/gunshot_impact/sparks(get_turf(hit), -O.xo, -O.yo, damage)
+						new /obj/effects/gunshot_impact/smoke(get_turf(hit), -O.xo, -O.yo, damage)
 				else
 					var/avrg_color = O.get_average_color()
-					new /obj/effects/gunshot_impact/energy(get_turf(hit), -O.xo, -O.yo, damage, FALSE, avrg_color)
+					new /obj/effects/energy_impact/energy(get_turf(hit), -O.xo, -O.yo, damage, avrg_color)
 					if (underwater)
-						new /obj/effects/gunshot_impact/bubble(get_turf(hit), -O.xo, -O.yo, damage, FALSE)
+						new /obj/effects/gunshot_impact/bubble(get_turf(hit), -O.xo, -O.yo, damage)
 					else
-						new /obj/effects/gunshot_impact/sparks(get_turf(hit), -O.xo, -O.yo, damage, FALSE)
+						new /obj/effects/energy_impact/sparks(get_turf(hit), -O.xo, -O.yo, damage)
 						if (damage >= 40)
-							new /obj/effects/gunshot_impact/smoke(get_turf(hit), -O.xo, -O.yo, damage, FALSE)
+							new /obj/effects/energy_impact/smoke(get_turf(hit), -O.xo, -O.yo, damage)
 
 // THIS IS INTENDED FOR POINTBLANKING.
 /proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T)
