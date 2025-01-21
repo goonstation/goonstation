@@ -354,6 +354,21 @@
 	spin = generator("num", 5, -5, NORMAL_RAND)
 	friction = generator("num", 0.5, 0.3, UNIFORM_RAND)
 
+/particles/impact_blood
+	icon = 'icons/effects/particles.dmi'
+	icon_state = list(""=1, "line"=1, "2x2square"=1)
+	width = 350
+	height = 350
+	color = "#f12a23"
+	spawning = 5
+	count = 5
+	lifespan = 5 SECONDS
+	fade = 5 SECONDS
+	position = list(0, 0, 0)
+	gravity = list(0, 0, 0)
+	grow = list(-0.01, -0.01)
+	friction = generator("num", 0.6, 0.3, UNIFORM_RAND)
+
 /obj/effects/gunshot_impact
 	plane = PLANE_NOSHADOW_ABOVE
 	particles = null
@@ -444,3 +459,30 @@
 /obj/effects/energy_impact/energy
 	base_amt = 3
 	particles = new/particles/impact_energy
+
+/obj/effects/blood
+	plane = PLANE_NOSHADOW_ABOVE
+	particles = new/particles/impact_blood
+	var/base_amt = 5
+
+	New(loc, var/new_x = 0, var/new_y = 0, var/dir_x = 0, var/dir_y = 0, var/damage = 0, var/blood_clr = null)
+		particles.position = list(new_x, new_y)
+		if (damage >= 30 && damage < 55)
+			particles.velocity = generator("box", list(10*dir_x, 10*dir_y, 0), list(5*dir_x, 5*dir_y, 0), UNIFORM_RAND)
+		else if (damage >= 55 && damage < 85)
+			var/new_amt = round(src.base_amt * 1.5)
+			particles.count = new_amt
+			particles.spawning = new_amt
+			particles.velocity = generator("box", list(30*dir_x, 30*dir_y, 0), list(10*dir_x, 10*dir_y, 0), UNIFORM_RAND)
+		else if (damage >= 85)
+			var/new_amt = round(src.base_amt * 2.5)
+			particles.count = new_amt
+			particles.spawning = new_amt
+			particles.velocity = generator("box", list(50*dir_x, 50*dir_y, 0), list(15*dir_x, 15*dir_y, 0), UNIFORM_RAND)
+		if (blood_clr)
+			particles.color = blood_clr
+		..()
+		SPAWN(2 DECI SECOND)
+			src.particles?.spawning = 0
+			sleep(src.particles?.lifespan)
+			qdel(src)

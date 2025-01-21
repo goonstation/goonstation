@@ -213,6 +213,7 @@
 		// if we made it this far this is a valid bump, run the specific projectile's hit code
 		if (proj_data) //Apparently proj_data can still be missing. HUH.
 			proj_data.on_hit(A, angle_to_dir(src.angle), src)
+			proj_data.spawn_mob_hit_particles(A, src)
 
 		//Trigger material on attack.
 		proj_data?.material?.triggerOnAttack(src, src.shooter, A)
@@ -788,8 +789,14 @@ ABSTRACT_TYPE(/datum/projectile)
 						new /obj/effects/gunshot_impact/bubble(get_turf(hit), x, y, -O.xo, -O.yo, damage)
 					else
 						new /obj/effects/energy_impact/sparks(get_turf(hit), x, y, -O.xo, -O.yo, damage)
-						if (damage >= 40)
+						if (damage >= 30)
 							new /obj/effects/energy_impact/smoke(get_turf(hit), x, y, -O.xo, -O.yo, damage)
+
+		spawn_mob_hit_particles(atom/hit, var/obj/projectile/O)
+			if ((!ishuman(hit) && !issilicon(hit)) || !src.kinetic_impact) return
+			var/mob/living/carbon/human/H = hit
+			if (damage >= 40)
+				new /obj/effects/blood(get_turf(hit), H.pixel_x, H.pixel_y, O.xo, O.yo, damage, H.bioHolder?.bloodColor)
 
 // THIS IS INTENDED FOR POINTBLANKING.
 /proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T)
