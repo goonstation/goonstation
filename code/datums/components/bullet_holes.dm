@@ -20,6 +20,8 @@ TYPEINFO(/datum/component/bullet_holes)
 	var/image/impact_image_base
 	/// Used to track where in the list we insert the impact decals
 	var/decal_num = 0
+	/// Limit the number of redraws to prevent lag
+	var/recent_redraws = 0
 
 /datum/component/bullet_holes/Initialize(max_holes, req_damage)
 	. = ..()
@@ -115,8 +117,13 @@ TYPEINFO(/datum/component/bullet_holes)
 
 /datum/component/bullet_holes/proc/redraw_impacts()
 	var/atom/atom_parent = src.parent
-	if (ON_COOLDOWN(atom_parent, "bullet hole render", 0.2 SECONDS))
+
+	if (recent_redraws > 10)
 		return
+	recent_redraws++
+	SPAWN(1 SECOND)
+		recent_redraws--
+
 
 	var/atom/A = src.parent
 	src.impact_image_base.overlays = null
