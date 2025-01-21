@@ -116,7 +116,6 @@ TYPEINFO(/datum/component/bullet_holes)
 		src.redraw_impacts()
 
 /datum/component/bullet_holes/proc/redraw_impacts()
-	var/atom/atom_parent = src.parent
 
 	if (recent_redraws > 10)
 		return
