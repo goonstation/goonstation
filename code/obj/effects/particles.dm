@@ -362,12 +362,12 @@
 	color = "#f12a23"
 	spawning = 5
 	count = 5
-	lifespan = 5 SECONDS
-	fade = 5 SECONDS
+	lifespan = 6 SECONDS
+	fade = 6 SECONDS
 	position = list(0, 0, 0)
 	gravity = list(0, 0, 0)
 	grow = list(-0.01, -0.01)
-	friction = generator("num", 0.6, 0.3, UNIFORM_RAND)
+	friction = generator("num", 0.8, 0.6, UNIFORM_RAND)
 
 /obj/effects/gunshot_impact
 	plane = PLANE_NOSHADOW_ABOVE
@@ -468,17 +468,17 @@
 	New(loc, var/new_x = 0, var/new_y = 0, var/dir_x = 0, var/dir_y = 0, var/damage = 0, var/blood_clr = null)
 		particles.position = list(new_x, new_y)
 		if (damage >= 30 && damage < 55)
-			particles.velocity = generator("box", list(10*dir_x, 10*dir_y, 0), list(5*dir_x, 5*dir_y, 0), UNIFORM_RAND)
+			particles.velocity = generator("box", list(40*dir_x, 40*dir_y, 0), list(5*dir_x, 5*dir_y, 0), UNIFORM_RAND)
 		else if (damage >= 55 && damage < 85)
 			var/new_amt = round(src.base_amt * 1.5)
 			particles.count = new_amt
 			particles.spawning = new_amt
-			particles.velocity = generator("box", list(30*dir_x, 30*dir_y, 0), list(10*dir_x, 10*dir_y, 0), UNIFORM_RAND)
+			particles.velocity = generator("box", list(70*dir_x, 70*dir_y, 0), list(5*dir_x, 5*dir_y, 0), UNIFORM_RAND)
 		else if (damage >= 85)
 			var/new_amt = round(src.base_amt * 2.5)
 			particles.count = new_amt
 			particles.spawning = new_amt
-			particles.velocity = generator("box", list(50*dir_x, 50*dir_y, 0), list(15*dir_x, 15*dir_y, 0), UNIFORM_RAND)
+			particles.velocity = generator("box", list(110*dir_x, 110*dir_y, 0), list(10*dir_x, 10*dir_y, 0), UNIFORM_RAND)
 		if (blood_clr)
 			particles.color = blood_clr
 		..()
