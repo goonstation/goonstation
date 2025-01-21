@@ -267,7 +267,7 @@
 	gravity = list(0, -1, 0)
 	scale = list(1.5, 1.5)
 
-/particles/gunshot_impact_dust
+/particles/impact_dust
 	icon = 'icons/effects/particles.dmi'
 	icon_state = list(""=1, "2x2square"=1)
 	width = 256
@@ -279,26 +279,28 @@
 	fade = 2.5 SECONDS
 	position = list(0, 0, 0)
 	gravity = list(0, 0, 0)
-	spin =  generator("num", 5, -5, NORMAL_RAND)
+	spin = generator("num", 5, -5, NORMAL_RAND)
 	friction = generator("num", 0.4, 0.2, UNIFORM_RAND)
 
-/particles/gunshot_impact_smoke
+/particles/impact_smoke
 	icon = 'icons/effects/particles.dmi'
 	icon_state = list("impact_smoke")
 	width = 256
 	height = 256
-	color = "#e6e6e61e"
-	spawning = 3
-	count = 3
+	color = "#e6e6e613"
+	spawning = 5
+	count = 5
 	lifespan = 1.5 SECONDS
 	fade = 1.5 SECONDS
 	position = list(0, 0, 0)
 	gravity = list(0, 0, 0)
-	spin =  generator("num", 5, -5, NORMAL_RAND)
-	friction = generator("num", 0.2, 0.1, UNIFORM_RAND)
-	drift = generator("vector", list(1,1,0), list(-1,-1,0), UNIFORM_RAND)
+	scale = list(0.7, 1)
+	grow = list(0.04, 0.08)
+	spin = generator("num", 5, -5, NORMAL_RAND)
+	friction = generator("num", 0.4, 0.3, UNIFORM_RAND)
+	drift = generator("vector", list(3,3,0), list(-3,-3,0), UNIFORM_RAND)
 
-/particles/gunshot_impact_sparks
+/particles/impact_sparks
 	icon = 'icons/effects/particles.dmi'
 	icon_state = list("")
 	width = 256
@@ -306,57 +308,138 @@
 	color = "#d1bb77"
 	spawning = 5
 	count = 5
-	lifespan = 1 SECONDS
-	fade = 1 SECONDS
+	lifespan = 1 SECOND
+	fade = 1 SECOND
 	position = list(0, 0, 0)
 	gravity = list(0, 0, 0)
-	spin =  generator("num", 5, -5, NORMAL_RAND)
+	spin = generator("num", 5, -5, NORMAL_RAND)
 	friction = generator("num", 0.3, 0.2, UNIFORM_RAND)
 	drift = generator("vector", list(8,8,0), list(-8,-8,0), UNIFORM_RAND)
+
+	slow
+		friction = generator("num", 0.4, 0.3, UNIFORM_RAND)
+		drift = generator("vector", list(4,4,0), list(-4,-4,0), UNIFORM_RAND)
+
+/particles/impact_energy
+	icon = 'icons/effects/particles.dmi'
+	icon_state = list("tazer_impact")
+	width = 256
+	height = 256
+	color = "#ecdc81"
+	spawning = 4
+	count = 4
+	lifespan = 1.2 SECONDS
+	fade = 1.2 SECONDS
+	scale = list(0.8, 0.7)
+	position = list(0, 0, 0)
+	gravity = list(0, 0, 0)
+	grow = list(-0.05, -0.05)
+	spin = generator("num", 5, -5, NORMAL_RAND)
+	friction = generator("num", 0.5, 0.3, UNIFORM_RAND)
+	drift = generator("vector", list(4,4,0), list(-4,-4,0), UNIFORM_RAND)
+
+/particles/impact_bubble
+	icon = 'icons/effects/particles.dmi'
+	icon_state = list("bubble")
+	width = 256
+	height = 256
+	color = "#ffffff"
+	spawning = 6
+	count = 6
+	lifespan = 2 SECONDS
+	fade = 2 SECONDS
+	scale = list(0.7, 0.7)
+	position = list(0, 0, 0)
+	gravity = list(0, 0, 0)
+	spin = generator("num", 5, -5, NORMAL_RAND)
+	friction = generator("num", 0.5, 0.3, UNIFORM_RAND)
 
 /obj/effects/gunshot_impact
 	plane = PLANE_NOSHADOW_ABOVE
 	particles = null
 	var/base_amt = 0
 
-	New(loc, var/pos_x, var/pos_y, var/dir_x = 0, var/dir_y = 0, var/damage = 0, var/color_avrg = null, var/impact_icon = null, var/impact_icon_state = null)
+	New(loc, var/dir_x = 0, var/dir_y = 0, var/damage = 0, var/color_avrg = null, var/impact_icon = null, var/impact_icon_state = null)
 		particles.position = list(pos_x, pos_y, 0)
-		switch(damage)
-			if (0 to 5)
-				particles.count = 0
-				particles.spawning = 0
-			if (6 to 35)
-				var/new_amt = round(src.base_amt / 2.5)
-				particles.count = new_amt
-				particles.spawning = new_amt
-				particles.velocity = generator("box", list(20*dir_x, 20*dir_y, 0), list(7*dir_x, 7*dir_y, 0), UNIFORM_RAND)
-			if (36 to 60)
-				particles.velocity = generator("box", list(40*dir_x, 40*dir_y, 0), list(15*dir_x, 15*dir_y, 0), UNIFORM_RAND)
-			if (61 to INFINITY)
-				var/new_amt = round(src.base_amt * 2)
-				particles.count = new_amt
-				particles.spawning = new_amt
-				particles.velocity = generator("box", list(60*dir_x, 60*dir_y, 0), list(20*dir_x, 20*dir_y, 0), UNIFORM_RAND)
+		if (damage <= 5)
+			particles.count = 0
+			particles.spawning = 0
+		else if (damage > 5 && damage <= 35)
+			var/new_amt = round(src.base_amt / 2.5)
+			particles.count = new_amt
+			particles.spawning = new_amt
+			particles.velocity = generator("box", list(20*dir_x, 20*dir_y, 0), list(7*dir_x, 7*dir_y, 0), UNIFORM_RAND)
+		else if (damage > 35 && damage <= 60)
+			particles.velocity = generator("box", list(40*dir_x, 40*dir_y, 0), list(15*dir_x, 15*dir_y, 0), UNIFORM_RAND)
+		else if (damage > 60)
+			var/new_amt = round(src.base_amt * 2)
+			particles.count = new_amt
+			particles.spawning = new_amt
+			particles.velocity = generator("box", list(60*dir_x, 60*dir_y, 0), list(20*dir_x, 20*dir_y, 0), UNIFORM_RAND)
 		if (color_avrg)
 			particles.color = color_avrg
 		if (impact_icon && impact_icon_state)
 			particles.icon = impact_icon
 			particles.icon_state = impact_icon_state
 		..()
-		SPAWN(0.2 SECONDS)
+		SPAWN(2 DECI SECOND)
 			src.particles?.spawning = 0
 			sleep(src.particles?.lifespan)
 			qdel(src)
 
 /obj/effects/gunshot_impact/dust
 	base_amt = 10
-	particles = new/particles/gunshot_impact_dust
+	particles = new/particles/impact_dust
 	plane = PLANE_NOSHADOW_BELOW
 
 /obj/effects/gunshot_impact/smoke
-	base_amt = 3
-	particles = new/particles/gunshot_impact_smoke
+	base_amt = 5
+	particles = new/particles/impact_smoke
 
 /obj/effects/gunshot_impact/sparks
 	base_amt = 5
-	particles = new/particles/gunshot_impact_sparks
+	particles = new/particles/impact_sparks
+
+/obj/effects/gunshot_impact/bubble
+	base_amt = 6
+	particles = new/particles/impact_bubble
+
+/obj/effects/energy_impact
+	plane = PLANE_NOSHADOW_ABOVE
+	particles = null
+	var/base_amt = 0
+
+	New(loc, var/dir_x = 0, var/dir_y = 0, var/damage = 0, var/color_avrg = null)
+		if (damage <= 40)
+			particles.count = base_amt
+			particles.spawning = base_amt
+			particles.velocity = generator("box", list(15*dir_x, 15*dir_y, 0), list(6*dir_x, 6*dir_y, 0), UNIFORM_RAND)
+		else if (damage > 40 && damage <= 70)
+			var/new_amt = round(src.base_amt * 1.5)
+			particles.count = new_amt
+			particles.spawning = new_amt
+			particles.velocity = generator("box", list(25*dir_x, 25*dir_y, 0), list(10*dir_x, 10*dir_y, 0), UNIFORM_RAND)
+		else
+			var/new_amt = round(src.base_amt * 2.5)
+			particles.count = new_amt
+			particles.spawning = new_amt
+			particles.velocity = generator("box", list(40*dir_x, 40*dir_y, 0), list(15*dir_x, 15*dir_y, 0), UNIFORM_RAND)
+		if (color_avrg)
+			particles.color = color_avrg
+		..()
+		SPAWN(1 DECI SECOND)
+			src.particles?.spawning = 0
+			sleep(src.particles?.lifespan)
+			qdel(src)
+
+/obj/effects/energy_impact/smoke
+	base_amt = 3
+	particles = new/particles/impact_smoke
+
+/obj/effects/energy_impact/sparks
+	base_amt = 4
+	particles = new/particles/impact_sparks/slow
+
+/obj/effects/energy_impact/energy
+	base_amt = 3
+	particles = new/particles/impact_energy

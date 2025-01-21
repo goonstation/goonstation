@@ -25,6 +25,9 @@
 	window_pass = 0
 	projectile_speed = 20
 
+	has_impact_particles = TRUE
+	kinetic_impact = FALSE
+
 	var/turf/target = null
 	var/failchance = 5
 
