@@ -1125,6 +1125,7 @@ toxic - poisons
 	dissipation_variance = 64
 	spread_angle_variance = 7.5
 	pellets_to_fire = 7
+	has_impact_particles = TRUE
 
 /datum/projectile/bullet/flare
 	name = "flare"
