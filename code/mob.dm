@@ -740,7 +740,7 @@ TYPEINFO(/mob)
 
 				if (istype(tmob.loc, /turf/space))
 					logTheThing(LOG_COMBAT, src, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into space.")
-				else if (locate(/obj/hotspot) in tmob.loc)
+				else if (locate(/atom/movable/hotspot) in tmob.loc)
 					logTheThing(LOG_COMBAT, src, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into a fire.")
 				deliver_move_trigger("swap")
 				tmob.deliver_move_trigger("swap")
@@ -768,12 +768,12 @@ TYPEINFO(/mob)
 			deliver_move_trigger("bump")
 			victim.deliver_move_trigger("bump")
 			var/was_in_space = istype(victim.loc, /turf/space)
-			var/was_in_fire = locate(/obj/hotspot) in victim.loc
+			var/was_in_fire = locate(/atom/movable/hotspot) in victim.loc
 			if (victim.buckled && !victim.buckled.anchored)
 				step(victim.buckled, t)
 			if (!was_in_space && istype(victim.loc, /turf/space))
 				logTheThing(LOG_COMBAT, src, "pushes [constructTarget(victim,"combat")] into space.")
-			else if (!was_in_fire && (locate(/obj/hotspot) in victim.loc))
+			else if (!was_in_fire && (locate(/atom/movable/hotspot) in victim.loc))
 				logTheThing(LOG_COMBAT, src, "pushes [constructTarget(victim,"combat")] into a fire.")
 
 		step(src,t)
