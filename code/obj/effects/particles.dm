@@ -276,7 +276,7 @@
 	spawning = 10
 	count = 10
 	lifespan = 2.5 SECONDS
-	fade = 2.5 SECONDS
+	fade = 1.5 SECONDS
 	position = list(0, 0, 0)
 	gravity = list(0, 0, 0)
 	spin = generator("num", 5, -5, NORMAL_RAND)
@@ -362,11 +362,10 @@
 	color = "#f12a23"
 	spawning = 5
 	count = 5
-	lifespan = 10 SECONDS
-	fade = 10 SECONDS
+	lifespan = 30 SECONDS
+	fade = 5 SECONDS
 	position = list(0, 0, 0)
 	gravity = list(0, 0, 0)
-	grow = list(-0.01, -0.01)
 	friction = generator("num", 0.8, 0.6, UNIFORM_RAND)
 
 /obj/effects/gunshot_impact
