@@ -1,5 +1,9 @@
 
 (t)mon jan 20 25
+(u)Garash2k
+(p)21681
+(e)🆕💅📄|C-Feature, C-QoL, A-UI
+(*)Updated the keybind menu to use TGUI.
 (u)LeahTheTech
 (p)22052
 (e)💅📄|C-QoL, A-UI
