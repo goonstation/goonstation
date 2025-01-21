@@ -42,6 +42,8 @@ toxic - poisons
 	disruption = 8
 
 	hit_mob_sound = 'sound/impact_sounds/taser_hit.ogg'
+	has_impact_particles = TRUE
+	kinetic_impact = FALSE
 
 
 //Any special things when it hits shit?
@@ -84,6 +86,8 @@ toxic - poisons
 	color_green = 0.6
 	color_blue = 0.8
 	ie_type = "E"
+	has_impact_particles = TRUE
+	kinetic_impact = FALSE
 
 	on_hit(atom/hit)
 		if (isliving(hit))

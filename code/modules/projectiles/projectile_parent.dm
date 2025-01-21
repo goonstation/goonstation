@@ -211,6 +211,7 @@
 		// if we made it this far this is a valid bump, run the specific projectile's hit code
 		if (proj_data) //Apparently proj_data can still be missing. HUH.
 			proj_data.on_hit(A, angle_to_dir(src.angle), src)
+			proj_data.spawn_impact_particles(A, src)
 
 		//Trigger material on attack.
 		proj_data?.material?.triggerOnAttack(src, src.shooter, A)
@@ -633,6 +634,8 @@ ABSTRACT_TYPE(/datum/projectile)
 
 	/// Set to TRUE if you want particles to spawn when you hit a non living thing
 	var/has_impact_particles = FALSE
+	/// Set to TRUE if you want kinetic impact particles, FALSE assumes energy projectiles
+	var/kinetic_impact = TRUE
 
 	New()
 		. = ..()
@@ -761,10 +764,6 @@ ABSTRACT_TYPE(/datum/projectile)
 		// Spawn some particles if you hit something solid
 		spawn_impact_particles(atom/hit, var/obj/projectile/O)
 			if (src.has_impact_particles && !ismob(hit))
-				var/new_impact_icon = hit.impact_icon
-				var/new_impact_icon_state = hit.impact_icon_state
-				var/avrg_color = hit.get_average_color()
-				new /obj/effects/gunshot_impact/dust(get_turf(hit), -O.xo, -O.yo, damage, avrg_color, new_impact_icon, new_impact_icon_state)
 				var/underwater = FALSE
 				if (istype(get_turf(O), /turf/space/fluid)) underwater = TRUE
 				else
@@ -772,11 +771,25 @@ ABSTRACT_TYPE(/datum/projectile)
 					if (T.active_liquid)
 						if(T.active_liquid.last_depth_level > 3)
 							underwater = TRUE
-				if (underwater)
-					new /obj/effects/gunshot_impact/bubble(get_turf(hit), -O.xo, -O.yo, damage)
+				if (src.kinetic_impact)
+					var/new_impact_icon = hit.impact_icon
+					var/new_impact_icon_state = hit.impact_icon_state
+					var/avrg_color = hit.get_average_color()
+					new /obj/effects/gunshot_impact/dust(get_turf(hit), -O.xo, -O.yo, damage, TRUE, avrg_color, new_impact_icon, new_impact_icon_state)
+					if (underwater)
+						new /obj/effects/gunshot_impact/bubble(get_turf(hit), -O.xo, -O.yo, damage, TRUE)
+					else
+						new /obj/effects/gunshot_impact/sparks(get_turf(hit), -O.xo, -O.yo, damage, TRUE)
+						new /obj/effects/gunshot_impact/smoke(get_turf(hit), -O.xo, -O.yo, damage, TRUE)
 				else
-					new /obj/effects/gunshot_impact/sparks(get_turf(hit), -O.xo, -O.yo, damage)
-					new /obj/effects/gunshot_impact/smoke(get_turf(hit), -O.xo, -O.yo, damage)
+					var/avrg_color = O.get_average_color()
+					new /obj/effects/gunshot_impact/energy(get_turf(hit), -O.xo, -O.yo, damage, FALSE, avrg_color)
+					if (underwater)
+						new /obj/effects/gunshot_impact/bubble(get_turf(hit), -O.xo, -O.yo, damage, FALSE)
+					else
+						new /obj/effects/gunshot_impact/sparks(get_turf(hit), -O.xo, -O.yo, damage, FALSE)
+						if (damage >= 40)
+							new /obj/effects/gunshot_impact/smoke(get_turf(hit), -O.xo, -O.yo, damage, FALSE)
 
 // THIS IS INTENDED FOR POINTBLANKING.
 /proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T)

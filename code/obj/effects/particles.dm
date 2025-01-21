@@ -316,6 +316,24 @@
 	friction = generator("num", 0.3, 0.2, UNIFORM_RAND)
 	drift = generator("vector", list(8,8,0), list(-8,-8,0), UNIFORM_RAND)
 
+/particles/gunshot_impact_energy
+	icon = 'icons/effects/particles.dmi'
+	icon_state = list("tazer_impact")
+	width = 256
+	height = 256
+	color = "#ecdc81"
+	spawning = 4
+	count = 4
+	lifespan = 1.2 SECONDS
+	fade = 1.2 SECONDS
+	scale = list(0.8, 0.7)
+	position = list(0, 0, 0)
+	gravity = list(0, 0, 0)
+	grow = list(-0.05, -0.05)
+	spin = generator("num", 5, -5, NORMAL_RAND)
+	friction = generator("num", 0.4, 0.2, UNIFORM_RAND)
+	drift = generator("vector", list(7,7,0), list(-7,-7,0), UNIFORM_RAND)
+
 /particles/gunshot_impact_bubble
 	icon = 'icons/effects/particles.dmi'
 	icon_state = list("bubble")
@@ -337,8 +355,8 @@
 	particles = null
 	var/base_amt = 0
 
-	New(loc, var/dir_x = 0, var/dir_y = 0, var/damage = 0, var/color_avrg = null, var/impact_icon = null, var/impact_icon_state = null)
-		if (damage <= 5)
+	New(loc, var/dir_x = 0, var/dir_y = 0, var/damage = 0, var/kinetic = TRUE, var/color_avrg = null, var/impact_icon = null, var/impact_icon_state = null)
+		if (damage <= 5 && kinetic)
 			particles.count = 0
 			particles.spawning = 0
 		else if (damage > 5 && damage <= 35)
@@ -346,13 +364,13 @@
 			particles.count = new_amt
 			particles.spawning = new_amt
 			particles.velocity = generator("box", list(20*dir_x, 20*dir_y, 0), list(7*dir_x, 7*dir_y, 0), UNIFORM_RAND)
-		else if (damage > 35 && damage <= 60)
-			particles.velocity = generator("box", list(40*dir_x, 40*dir_y, 0), list(15*dir_x, 15*dir_y, 0), UNIFORM_RAND)
 		else if (damage > 60)
 			var/new_amt = round(src.base_amt * 2)
 			particles.count = new_amt
 			particles.spawning = new_amt
 			particles.velocity = generator("box", list(60*dir_x, 60*dir_y, 0), list(20*dir_x, 20*dir_y, 0), UNIFORM_RAND)
+		else
+			particles.velocity = generator("box", list(40*dir_x, 40*dir_y, 0), list(15*dir_x, 15*dir_y, 0), UNIFORM_RAND)
 		if (color_avrg)
 			particles.color = color_avrg
 		if (impact_icon && impact_icon_state)
@@ -380,3 +398,7 @@
 /obj/effects/gunshot_impact/bubble
 	base_amt = 6
 	particles = new/particles/gunshot_impact_bubble
+
+/obj/effects/gunshot_impact/energy
+	base_amt = 4
+	particles = new/particles/gunshot_impact_energy

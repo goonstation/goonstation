@@ -46,6 +46,8 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 	hit_object_sound = 'sound/impact_sounds/burn_sizzle.ogg'
+	has_impact_particles = TRUE
+	kinetic_impact = FALSE
 
 //Any special things when it hits shit?
 	on_hit(atom/hit)
