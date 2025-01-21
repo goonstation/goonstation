@@ -694,6 +694,7 @@ ABSTRACT_TYPE(/datum/projectile)
 		//When it hits a mob or such should anything special happen
 		on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
 			impact_image_effect(ie_type, hit)
+
 		/// Does a thing every step this projectile takes
 		tick(var/obj/projectile/O)
 			return
@@ -762,9 +763,10 @@ ABSTRACT_TYPE(/datum/projectile)
 			src.ie_type = P.ie_type
 			src.impact_image_state = P.impact_image_state
 
-		// Spawn some particles if you hit something solid
+		// Spawn some particles if we hit something solid that isnt a human or a silicon
 		spawn_impact_particles(atom/hit, var/obj/projectile/O, x, y)
 			if (src.has_impact_particles && !ismob(hit))
+				//If we are underwater, we want bubbles and not sparks or smoke!
 				var/underwater = FALSE
 				if (istype(get_turf(O), /turf/space/fluid)) underwater = TRUE
 				else
@@ -775,6 +777,7 @@ ABSTRACT_TYPE(/datum/projectile)
 				if (src.kinetic_impact)
 					var/new_impact_icon = hit.impact_icon
 					var/new_impact_icon_state = hit.impact_icon_state
+					//Bullet impacts create dust of the color of the hit thing
 					var/avrg_color = hit.get_average_color()
 					new /obj/effects/gunshot_impact/dust(get_turf(hit), x, y, -O.xo, -O.yo, damage, avrg_color, new_impact_icon, new_impact_icon_state)
 					if (underwater)
@@ -783,6 +786,7 @@ ABSTRACT_TYPE(/datum/projectile)
 						new /obj/effects/gunshot_impact/sparks(get_turf(hit), x, y, -O.xo, -O.yo, damage)
 						new /obj/effects/gunshot_impact/smoke(get_turf(hit), x, y, -O.xo, -O.yo, damage)
 				else
+					//Energy impacts create sparks of the color of the projectile
 					var/avrg_color = O.get_average_color()
 					new /obj/effects/energy_impact/energy(get_turf(hit), x, y, -O.xo, -O.yo, damage, avrg_color)
 					if (underwater)
@@ -792,6 +796,7 @@ ABSTRACT_TYPE(/datum/projectile)
 						if (damage >= 30)
 							new /obj/effects/energy_impact/smoke(get_turf(hit), x, y, -O.xo, -O.yo, damage)
 
+		// Spawn some blood particles if we hit some poor sod
 		spawn_mob_hit_particles(atom/hit, var/obj/projectile/O)
 			if ((!ishuman(hit) && !issilicon(hit)) || !src.kinetic_impact) return
 			var/blood_color = "#f12a23"
