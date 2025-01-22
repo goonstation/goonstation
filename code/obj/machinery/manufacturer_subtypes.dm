@@ -239,23 +239,19 @@
 		/datum/manufacture/medicalalertbutton,
 		/datum/manufacture/crowbar,
 		/datum/manufacture/extinguisher,
-		/datum/manufacture/cyberappendix,
-		/datum/manufacture/cyberpancreas,
-		/datum/manufacture/cyberspleen,
-		/datum/manufacture/cyberintestines,
-		/datum/manufacture/cyberstomach,
-		/datum/manufacture/cyberkidney,
-		/datum/manufacture/cyberliver,
-		/datum/manufacture/cyberlung_left,
-		/datum/manufacture/cyberlung_right,
 		/datum/manufacture/empty_kit,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass
 	)
 
-	hidden = list(/datum/manufacture/cyberheart,
-	/datum/manufacture/cybereye)
+	hidden = list(
+		/datum/manufacture/surgery_tray_parts,
+		/datum/manufacture/iv_stand_parts,
+		/datum/manufacture/reagentscanner,
+		/datum/manufacture/dropper,
+		/datum/manufacture/medbot,
+	)
 
 /obj/machinery/manufacturer/science
 	name = "science fabricator"
