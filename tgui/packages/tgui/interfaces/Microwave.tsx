@@ -86,7 +86,7 @@ export const Microwave = () => {
             </Stack>
           </Section>
         </Section>
-        {broken && (
+        {!!broken && (
           <Modal>
             <Section>
               This microwave is broken! Repair required, with a screwdriver and
@@ -94,7 +94,7 @@ export const Microwave = () => {
             </Section>
           </Modal>
         )}
-        {dirty && (
+        {!!dirty && (
           <Modal>
             <Section>
               This microwave is dirty! Please clean before use with a sponge or
@@ -102,7 +102,7 @@ export const Microwave = () => {
             </Section>
           </Modal>
         )}
-        {operating && (
+        {!!operating && (
           <Modal>
             <Section>Microwaving in progress! Please wait...</Section>
           </Modal>
