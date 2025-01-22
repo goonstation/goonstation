@@ -417,10 +417,11 @@
 		if (!loc || !orig_turf)
 			die()
 			return
-		src.ticks_until_can_hit_mob--
 		proj_data.tick(src)
-		if (QDELETED(src))
+		if(QDELETED(src))
 			return
+
+		src.ticks_until_can_hit_mob--
 
 		if(!was_setup) //if setup failed due to us having no speed or no direction, try to collide with something before dying
 			collide_with_applicable_in_tile(loc)
@@ -464,52 +465,58 @@
 				else
 					break
 
-		wx += dwx
-		wy += dwy
-		if (!proj_data.precalculated)
-			var/turf_x = round((wx + 16) / 32)
-			var/turf_y = round((wy + 16) / 32)
-			//check if we're about to fly out of the world, projectiles don't cross z levels
-			if (orig_turf.x + turf_x >= world.maxx-1 || orig_turf.x + turf_x <= 1 || orig_turf.y + turf_y >= world.maxy-1 || orig_turf.y + turf_y <= 1 )
-				die()
-				return
-			var/turf/Dest = locate(orig_turf.x + turf_x, orig_turf.y + turf_y, orig_turf.z)
-			if (loc != Dest)
 
-				if (!goes_through_walls)
-					Move(Dest)
-				else
-					set_loc(Dest) //set loc so we can cross walls etc properly
-					collide_with_applicable_in_tile(Dest)
-				if (QDELETED(src))
+		if (proj_data.precalculated)
+			wx += dwx
+			wy += dwy
+		else
+			var/steps = ceil(((!isnull(src.internal_speed)) ? src.internal_speed : src.proj_data.projectile_speed) / 32)
+			for (var/i in 1 to steps)
+				wx += dwx / steps
+				wy += dwy / steps
+				var/turf_x = round((wx + 16) / 32)
+				var/turf_y = round((wy + 16) / 32)
+				//check if we're about to fly out of the world, projectiles don't cross z levels
+				if (orig_turf.x + turf_x >= world.maxx-1 || orig_turf.x + turf_x <= 1 || orig_turf.y + turf_y >= world.maxy-1 || orig_turf.y + turf_y <= 1 )
+					die()
+					return
+				var/turf/Dest = locate(orig_turf.x + turf_x, orig_turf.y + turf_y, orig_turf.z)
+				if (loc != Dest)
+
+					if (!goes_through_walls)
+						Move(Dest)
+					else
+						set_loc(Dest) //set loc so we can cross walls etc properly
+						collide_with_applicable_in_tile(Dest)
+					if (QDELETED(src))
+						return
+
+					incidence = get_dir(curr_turf, Dest)
+					if (!(incidence in cardinal))
+						var/txl = wx + 16 % 32
+						var/tyl = wy + 16 % 32
+						var/ext
+						if (xo)
+							ext = xo < 0 ? (32 - txl) / -xo : txl / xo
+						else
+							ext = txl
+						var/eyt
+						if (eyt)
+							eyt = yo < 0 ? (32 - tyl) / -yo : tyl / yo
+						else
+							eyt = tyl
+						if (ext < eyt)
+							incidence &= EAST | WEST
+						else
+							incidence &= NORTH | SOUTH
+
+				if (!loc && !QDELETED(src))
+					die()
 					return
 
-				incidence = get_dir(curr_turf, Dest)
-				if (!(incidence in cardinal))
-					var/txl = wx + 16 % 32
-					var/tyl = wy + 16 % 32
-					var/ext
-					if (xo)
-						ext = xo < 0 ? (32 - txl) / -xo : txl / xo
-					else
-						ext = txl
-					var/eyt
-					if (eyt)
-						eyt = yo < 0 ? (32 - tyl) / -yo : tyl / yo
-					else
-						eyt = tyl
-					if (ext < eyt)
-						incidence &= EAST | WEST
-					else
-						incidence &= NORTH | SOUTH
-
-			if (!loc && !QDELETED(src))
-				die()
-				return
 
 		set_dir(facing_dir)
 		incidence = turn(incidence, 180)
-
 		var/dx = loc.x - orig_turf.x
 		var/dy = loc.y - orig_turf.y
 		var/pixel_dx = dx * 32

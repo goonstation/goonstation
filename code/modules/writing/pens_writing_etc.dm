@@ -75,6 +75,12 @@
 		src.create_reagents(PEN_REAGENT_CAPACITY)
 
 
+	clamp_act(mob/clamper, obj/item/clamp)
+		visible_message(SPAN_ALERT(SPAN_BOLD("[src] snaps in half!")))
+		playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+		qdel(src)
+		return TRUE
+
 	attack_self(mob/user as mob)
 		..()
 		if (!src.spam_flag_sound && src.clicknoise)

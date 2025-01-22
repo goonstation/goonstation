@@ -16140,6 +16140,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/arcade)
+"dfF" = (
+/obj/mapping_helper/mob_spawn/corpse/human/merc,
+/turf/simulated/floor/airless/damaged5,
+/area/abandonedship)
 "dfH" = (
 /obj/fakeobject/pipe{
 	dir = 6;
@@ -16400,6 +16404,10 @@
 	icon_state = "fred2"
 	},
 /area/timewarp/ship)
+"dUX" = (
+/obj/item/cable_coil/cut,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
 "dVm" = (
 /obj/table/wood/round/auto,
 /obj/decal/cleanable/dirt,
@@ -16564,6 +16572,10 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
+"esy" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
 "euD" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/shuttlebay,
@@ -16796,6 +16808,10 @@
 	icon_state = "floor6"
 	},
 /area/diner/jucer_trader)
+"fmZ" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor/airless/damaged5,
+/area/abandonedship)
 "fqL" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -18360,6 +18376,10 @@
 /obj/machinery/launcher_loader/east,
 /turf/simulated/floor/plating/airless,
 /area/salvage_trader)
+"jxf" = (
+/obj/item/raw_material/scrap_metal,
+/turf/space,
+/area/abandonedship)
 "jxr" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/airlock/pyro/classic{
@@ -18374,6 +18394,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hallway)
+"jyF" = (
+/obj/item/raw_material/scrap_metal,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
 "jzS" = (
 /obj/storage/crate,
 /obj/item/electronics/resistor{
@@ -18493,6 +18517,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/black/grime,
 /area/diner/motel/chemstorage)
+"jQi" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
 "jUl" = (
 /turf/simulated/floor/carpet{
 	icon_state = "red2"
@@ -18724,6 +18752,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/damaged2,
 /area/diner/hallway)
+"kCD" = (
+/obj/landmark/spawner/loot,
+/turf/space,
+/area/abandonedship)
 "kDA" = (
 /obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-M"
@@ -19671,6 +19703,13 @@
 	dir = 4
 	},
 /area/timewarp/ship)
+"nbs" = (
+/obj/fakeobject/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle,
+/area/abandonedship)
 "nbY" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/incandescent/warm{
@@ -21067,6 +21106,10 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/diner/dining)
+"qSW" = (
+/obj/item/clothing/head/emerg,
+/turf/space,
+/area/abandonedship)
 "qTq" = (
 /obj/fakeobject/shuttleengine{
 	dir = 4;
@@ -21203,6 +21246,10 @@
 /obj/item/device/audio_log/timewarp_00,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
+"rjD" = (
+/obj/item/clothing/mask/breath,
+/turf/simulated/floor/airless/damaged5,
+/area/abandonedship)
 "rkO" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -21227,6 +21274,9 @@
 "rpS" = (
 /turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
+"rsq" = (
+/turf/space,
+/area/abandonedship)
 "rsr" = (
 /obj/storage/crate{
 	name = "Cone Crate"
@@ -22537,6 +22587,10 @@
 	stone_color = "#575A5E"
 	},
 /area/space)
+"uIm" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/turf/simulated/floor/airless/damaged5,
+/area/abandonedship)
 "uJr" = (
 /obj/fakeobject/shuttleengine{
 	dir = 4;
@@ -23784,6 +23838,12 @@
 	dir = 4
 	},
 /area/abandonedoutpostthing)
+"ykA" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 1
+	},
+/turf/simulated/floor/airless/damaged5,
+/area/abandonedship)
 "ylg" = (
 /obj/machinery/computer/transit_shuttle/mining,
 /turf/simulated/floor/plating,
@@ -70581,7 +70641,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aab
 aaa
 aaa
 aaa
@@ -70884,7 +70944,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aad
 aaa
 aaa
 aaa
@@ -71185,8 +71245,8 @@ aaa
 aab
 aab
 aab
-aaa
-aaa
+aad
+aNb
 aaa
 aaa
 aaa
@@ -71487,9 +71547,9 @@ aaa
 aab
 aab
 aab
+aGW
 aaa
-aaa
-aaa
+aab
 aaa
 aaa
 aaa
@@ -71789,8 +71849,8 @@ aaa
 aab
 aab
 aab
-aaa
-aaa
+aIv
+pci
 aaa
 aaa
 aaa
@@ -72089,11 +72149,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aHU
+jyF
+jxf
+dUX
+aHU
 aaa
 aaa
 aaa
@@ -72391,11 +72451,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aHU
+uIm
+rsq
+kCD
+aHU
 aaa
 aaa
 aaa
@@ -72693,11 +72753,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aHU
+esy
+qSW
+rjD
+fmZ
 aaa
 aaa
 aaa
@@ -72995,11 +73055,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aHU
+uIm
+dfF
+ykA
+aHU
 aaa
 aaa
 aaa
@@ -73297,11 +73357,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aHU
+aHU
+jQi
+aHU
+aHU
 aaa
 aaa
 aaa
@@ -73600,9 +73660,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+aHU
+nbs
+aHU
 aaa
 aaa
 aaa
@@ -73903,7 +73963,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aHM
 aaa
 aaa
 aaa
