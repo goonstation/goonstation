@@ -1427,6 +1427,9 @@
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		var/mob/M = owner
+		M.losebreath++ // ♪ give a little bit of your life to me ♪
+		M.emote("gasp")
 
 		target.take_oxygen_deprivation(-15)
 		target.losebreath = 0
