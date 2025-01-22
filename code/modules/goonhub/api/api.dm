@@ -12,7 +12,7 @@ var/global/datum/apiHandler/apiHandler
 	var/debug = FALSE
 
 	/// how many times should a query attempt to run before giving up
-	var/maxApiRetries = 5
+	var/maxApiRetries = 1
 	/// base delay between query attempts, gets multiplied by attempt number
 	var/apiRetryDelay = 10
 
@@ -147,6 +147,17 @@ var/global/datum/apiHandler/apiHandler
 		// Otherwise the request did finish so we can lower this
 		src.lazy_concurrent_counter--
 		var/datum/http_response/response = request.into_response()
+
+		var/test = json_encode(list(
+			"raw_response" = request._raw_response,
+			"status_code" = response.status_code,
+			"body" = response.body,
+			"headers" = response.headers,
+			"errored" = response.errored,
+			"error" = response.error
+		))
+		logTheThing(LOG_DEBUG, null, "<b>API TEMP</b>: [test]")
+		logTheThing(LOG_DIARY, null, "API TEMP: [test]", "debug")
 
 		if (response.errored || !response.body)
 			src.trackRecentError()
