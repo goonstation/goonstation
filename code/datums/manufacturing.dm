@@ -1410,22 +1410,18 @@
 	time = 3 SECONDS
 	category = "Resource"
 
-/datum/manufacture/surgery_tray_parts
-	name = "Surgical Tray Parts"
-	item_requirements = list("metal" = 5)
-	item_outputs = list(/obj/item/furniture_parts/surgery_tray)
-	create = 1
-	time = 20 SECONDS
-	category = "Resource"
+#ifdef ENABLE_ARTEMIS
+/******************** Artemis **************************/
 
-/datum/manufacture/iv_stand_parts
-	name = "IV Stand Parts"
-	item_requirements = list("metal" = 5)
-	item_outputs = list(/obj/item/furniture_parts/IVstand)
+/datum/manufacture/nav_sat
+	name = "Navigation Satellite"
+	item_requirements = list("metal_dense" = 1)//AzrunADJUSTPOSTTESTING)
+	item_outputs = list(/obj/nav_sat)
 	create = 1
-	time = 20 SECONDS
-	category = "Resource"
+	time = 45 SECONDS
+	category = "Component"
 
+#endif
 /datum/manufacture/stress_ball
 	name = "Stress Ball"
 	item_requirements = list("fabric" = 1)
@@ -1442,19 +1438,6 @@
 	create = 1
 	time = 5 SECONDS
 	category = "Resource"
-
-#ifdef ENABLE_ARTEMIS
-/******************** Artemis **************************/
-
-/datum/manufacture/nav_sat
-	name = "Navigation Satellite"
-	item_requirements = list("metal_dense" = 1)//AzrunADJUSTPOSTTESTING)
-	item_outputs = list(/obj/nav_sat)
-	create = 1
-	time = 45 SECONDS
-	category = "Component"
-
-#endif
 
 /******************** Robotics **************************/
 

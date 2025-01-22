@@ -245,13 +245,7 @@
 		/datum/manufacture/glass
 	)
 
-	hidden = list(
-		/datum/manufacture/surgery_tray_parts,
-		/datum/manufacture/iv_stand_parts,
-		/datum/manufacture/reagentscanner,
-		/datum/manufacture/dropper,
-		/datum/manufacture/medbot,
-	)
+	hidden = list()
 
 /obj/machinery/manufacturer/science
 	name = "science fabricator"
