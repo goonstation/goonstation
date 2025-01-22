@@ -38,7 +38,7 @@
 		return 2
 
 	setup_equipment_slots()
-		return
+		equipment += new /datum/equipmentHolder/ears/intercom/syndicate(src)
 
 /mob/living/critter/robotic/gunbot/engineerbot/strong // Midrounds
 	hand_count = 3

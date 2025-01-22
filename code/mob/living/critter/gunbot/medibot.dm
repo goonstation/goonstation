@@ -37,7 +37,7 @@
 		return 2
 
 	setup_equipment_slots()
-		return
+		equipment += new /datum/equipmentHolder/ears/intercom/syndicate(src)
 
 /mob/living/critter/robotic/gunbot/medibot/strong
 	hand_count = 3
