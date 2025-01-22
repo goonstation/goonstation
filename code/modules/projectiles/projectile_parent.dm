@@ -516,6 +516,8 @@
 		set_dir(facing_dir)
 		incidence = turn(incidence, 180)
 		proj_data.tick(src)
+		if(QDELETED(src))
+			return
 		var/dx = loc.x - orig_turf.x
 		var/dy = loc.y - orig_turf.y
 		var/pixel_dx = dx * 32
