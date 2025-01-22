@@ -48,22 +48,26 @@ TYPEINFO(/datum/component/bullet_holes)
 	. = ..()
 
 
-/datum/component/bullet_holes/proc/handle_impact(rendering_on, obj/projectile/shot, image/impact, impact_decal)
+/datum/component/bullet_holes/proc/handle_impact(rendering_on, obj/projectile/shot, impact_x, impact_y)
 	var/datum/projectile/shotdata = shot.proj_data
-
+	// Shots coming from the south hit the top part of the wall. Perspective means we do not spawn a decal
+	if (shot.dir == SOUTH)
+		return
 	if (!shotdata.impact_image_state)
 		return
 	// Don't add an impact decal if projectile DAMAGE (not power) is insufficient
 	if (shotdata.ks_ratio * shotdata.get_power(shot, src.parent) < src.req_damage) // TODO figure out how and when power is calculated/stored for proj objects. Shit's confusing
 		return
 
+	var/image/impact = image('icons/obj/projectiles.dmi', shot.proj_data.impact_image_state)
+	impact.pixel_x += impact_x
+	impact.pixel_y += impact_y
 	// Rotate the decal randomly for variety
 	impact.transform = turn(impact.transform, rand(360, 1))
 
 	// Add bullet hole to list, then increment index to insert at. Modulo ensures that we don't go out of bounds and replace from the head of the list first.
-	if (impact_decal)
-		src.impact_images[(decal_num++ % max_holes) + 1] = impact
-		src.redraw_impacts()
+	src.impact_images[(decal_num++ % max_holes) + 1] = impact
+	src.redraw_impacts()
 
 /datum/component/bullet_holes/proc/redraw_impacts()
 

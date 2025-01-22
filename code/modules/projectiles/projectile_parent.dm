@@ -119,10 +119,10 @@
 	/// Turf of the called_target during projectile initialization
 	var/turf/called_target_turf
 
-	/// The image that the impact should leave behind. Used for bullet holes
-	var/image/impact_image = null
-	/// Should the projectile spawn an impact decal on hit? Used for bullet holes
-	var/has_impact_decal = FALSE
+	/// X position of the projectile impact, used for particles and bullet impacts
+	var/impact_x = null
+	/// y position of the projectile impact, used for particles and bullet impacts
+	var/impact_y = FALSE
 
 	disposing()
 		special_data = null
@@ -206,7 +206,7 @@
 		//determine where exactly the bullet hit the atom and spawn particles
 		calculate_impact_particles(src, A)
 		var/sigreturn = SEND_SIGNAL(src, COMSIG_OBJ_PROJ_COLLIDE, A)
-		sigreturn |= SEND_SIGNAL(A, COMSIG_ATOM_HITBY_PROJ, src, src.impact_image, src.has_impact_decal)
+		sigreturn |= SEND_SIGNAL(A, COMSIG_ATOM_HITBY_PROJ, src, src.impact_x, src.impact_y)
 		if(QDELETED(src)) //maybe a signal proc QDELETED(src) us
 			return
 		// also run the atom's general bullet act
@@ -554,7 +554,6 @@
 		// Apply offset based on dir. The side we want to put holes on is opposite the dir of the bullet
 		// i.e. left facing bullet hits right side of wall
 		var/impact_side_dir = opposite_dir_to(shot.dir) // which edge of this object are we drawing the decals on
-		var/spawn_decal = TRUE
 
 		var/impact_target_height = 0 //! how 'high' on the wall we're hitting. in pixels from the outermost border
 		var/impact_random_cap = 0 //! how much we can safely move an impact up/down
@@ -570,7 +569,6 @@
 				impact_random_cap = 5
 				impact_normal = 0
 			if (NORTH)
-				spawn_decal = FALSE
 				impact_target_height = 4
 				impact_random_cap = 3
 				impact_normal = 90
@@ -596,13 +594,12 @@
 		var/impact_offset_y = (sin(shot_angle)  * distance)
 
 		// Add the offsets to the impact's position. abs(sin(impact_normal)) strips the y component of the offset if we're hitting a horizontal wall, and vice versa for cos
-		var/image/impact = image('icons/obj/projectiles.dmi', shot.proj_data.impact_image_state)
-		impact.pixel_x += (impact_offset_x + x_distance)*abs(sin(impact_normal)) + (16-impact_final_height)*cos(impact_normal)
-		impact.pixel_y += (impact_offset_y + y_distance)*abs(cos(impact_normal)) + (16-impact_final_height)*sin(impact_normal)
+		var/new_x = (impact_offset_x + x_distance)*abs(sin(impact_normal)) + (16-impact_final_height)*cos(impact_normal)
+		var/new_y = (impact_offset_y + y_distance)*abs(cos(impact_normal)) + (16-impact_final_height)*sin(impact_normal)
 
-		shotdata.spawn_impact_particles(hit, shot, impact.pixel_x, impact.pixel_y)
-		src.has_impact_decal = spawn_decal
-		src.impact_image = impact
+		shotdata.spawn_impact_particles(hit, shot, new_x, new_y)
+		src.impact_x = new_x
+		src.impact_y = new_y
 		return
 
 ABSTRACT_TYPE(/datum/projectile)
