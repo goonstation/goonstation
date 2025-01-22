@@ -147,6 +147,8 @@
 
 	tick(var/obj/projectile/P)	//Trail the projectile
 		..()
+		if(get_turf(P) == P.orig_turf)
+			return //don't draw a trail if we haven't moved
 		if (previous_line != null)
 			for (var/obj/O in previous_line)
 				qdel(O)
