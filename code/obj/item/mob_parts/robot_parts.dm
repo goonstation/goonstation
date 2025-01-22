@@ -539,6 +539,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 	can_hold_items = 1
 	accepts_normal_human_overlays = TRUE
 	var/emagged = FALSE //contains: technical debt
+	var/add_to_tools = FALSE
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(!ismob(target))
@@ -1320,6 +1321,30 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 // ancient robot stuff
 
+///Returns TRUE on successful clamping
+/atom/movable/proc/clamp_act(mob/clamper, obj/item/clamp)
+	return FALSE
+
+proc/do_clamp(atom/movable/clamped, mob/clamper, obj/item/clamp)
+	if (ON_COOLDOWN(clamper, "clamp", DEFAULT_CLICK_DELAY))
+		return
+	if (isturf(clamped))
+		return
+	APPLY_ATOM_PROPERTY(clamper, PROP_MOB_CANTMOVE, ref(clamp))
+	APPLY_ATOM_PROPERTY(clamped, PROP_MOB_CANTMOVE, ref(clamp))
+	playsound(clamper.loc, 'sound/machines/hydraulic.ogg', 40, 1)
+	clamper.visible_message(SPAN_ALERT("[clamper] CLAMPS [clamped] with [his_or_her(clamper)] [clamp.name]!"))
+	sleep(1 SECOND)
+	if (!can_reach(clamper, clamped))
+		REMOVE_ATOM_PROPERTY(clamper, PROP_MOB_CANTMOVE, ref(clamp))
+		REMOVE_ATOM_PROPERTY(clamped, PROP_MOB_CANTMOVE, ref(clamp))
+		return
+
+	if (!clamped.clamp_act(clamper, clamp))
+		clamper.visible_message(SPAN_ALERT("...but [clamped] remains unclamped."))
+
+	REMOVE_ATOM_PROPERTY(clamper, PROP_MOB_CANTMOVE, ref(clamp))
+	REMOVE_ATOM_PROPERTY(clamped, PROP_MOB_CANTMOVE, ref(clamp))
 
 /obj/item/parts/robot_parts/arm/right/ancient
 	name = "ancient right arm"
@@ -1349,7 +1374,17 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		max_health = 300
 		weight = 0.5
 		handlistPart = "armR-heavy"
+		add_to_tools = TRUE
 		robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_right
+
+		New()
+			. = ..()
+			RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(clamp_proxy))
+
+		proc/clamp_proxy(_, target, user)
+			if (issilicon(user) && !(target in user))
+				do_clamp(target, user, src)
+				return TRUE
 
 /obj/item/parts/robot_parts/arm/left/ancient
 	name = "ancient left arm"
@@ -1379,7 +1414,17 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		max_health = 350
 		weight = 0.5
 		handlistPart = "armL-heavy"
+		add_to_tools = TRUE
 		robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_left
+
+		New()
+			. = ..()
+			RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(clamp_proxy))
+
+		proc/clamp_proxy(_, target, user)
+			if (issilicon(user) && !(target in user))
+				do_clamp(target, user, src)
+				return TRUE
 
 /obj/item/parts/robot_parts/head/ancient
 	name = "ancient head"
