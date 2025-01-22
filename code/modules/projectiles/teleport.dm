@@ -28,7 +28,7 @@
 	color_blue = 1
 
 	has_impact_particles = TRUE
-	kinetic_impact = FALSE
+	energy_particles_override = TRUE
 
 	var/obj/item/target = null
 	var/failchance = 5

@@ -220,7 +220,6 @@
 		// if we made it this far this is a valid bump, run the specific projectile's hit code
 		if (proj_data) //Apparently proj_data can still be missing. HUH.
 			proj_data.on_hit(A, angle_to_dir(src.angle), src)
-			proj_data.spawn_mob_hit_particles(A, src)
 
 		//Trigger material on attack.
 		proj_data?.material?.triggerOnAttack(src, src.shooter, A)
@@ -698,8 +697,8 @@ ABSTRACT_TYPE(/datum/projectile)
 
 	/// Set to TRUE if you want particles to spawn when you hit a non living thing
 	var/has_impact_particles = FALSE
-	/// Set to TRUE if you want kinetic impact particles, FALSE assumes energy projectiles
-	var/kinetic_impact = TRUE
+	/// Override var used for special projectiles, set to true if it should use energy impact particles
+	var/energy_particles_override = FALSE
 
 	New()
 		. = ..()
@@ -836,7 +835,7 @@ ABSTRACT_TYPE(/datum/projectile)
 					if (T?.active_liquid)
 						if(T.active_liquid.last_depth_level > 3)
 							underwater = TRUE
-				if (src.kinetic_impact)
+				if ((src.damage_type != D_ENERGY && src.damage_type != D_BURNING && src.damage_type != D_RADIOACTIVE && src.damage_type != D_TOXIC) && !src.energy_particles_override)
 					var/new_impact_icon = hit.impact_icon
 					var/new_impact_icon_state = hit.impact_icon_state
 					//Bullet impacts create dust of the color of the hit thing
@@ -857,18 +856,6 @@ ABSTRACT_TYPE(/datum/projectile)
 						new /obj/effects/energy_impact/sparks(get_turf(hit), x, y, -O.xo, -O.yo, damage)
 						if (damage >= 30)
 							new /obj/effects/energy_impact/smoke(get_turf(hit), x, y, -O.xo, -O.yo, damage)
-
-		// Spawn some blood particles if we hit some poor sod
-		spawn_mob_hit_particles(atom/hit, var/obj/projectile/O)
-			if ((!ishuman(hit) && !issilicon(hit)) || !src.kinetic_impact) return
-			var/blood_color = "#f12a23"
-			if (ishuman(hit))
-				var/mob/living/carbon/human/H = hit
-				blood_color = H.bioHolder?.bloodColor
-			if (issilicon(hit))
-				blood_color = "#2e2e2e"
-			if (damage >= 40)
-				new /obj/effects/blood(get_turf(hit), hit.pixel_x, hit.pixel_y, O.xo, O.yo, damage, blood_color)
 
 // THIS IS INTENDED FOR POINTBLANKING.
 /proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T)

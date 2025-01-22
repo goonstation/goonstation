@@ -29,7 +29,6 @@
 	color_blue = 0
 
 	has_impact_particles = TRUE
-	kinetic_impact = FALSE
 
 	get_power(obj/projectile/P, atom/A)
 		return 12.5 + 2.5 * clamp(GET_DIST(A, P.orig_turf) - 4, 0, 7)

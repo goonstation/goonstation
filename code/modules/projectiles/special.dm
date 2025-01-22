@@ -906,7 +906,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	split_type = 0
 	shot_sound = 'sound/weapons/Taser.ogg'
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
-	kinetic_impact = FALSE
+	energy_particles_override = TRUE
 	var/spread_angle = 10
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
@@ -931,7 +931,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_projectile_type = /datum/projectile/laser/blaster/pod_pilot/blue_NT/shotgun
 	split_type = 0
 	shot_sound = 'sound/weapons/laser_b.ogg'
-	kinetic_impact = FALSE
+	energy_particles_override = TRUE
 	var/spread_angle = 10
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0

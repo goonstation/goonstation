@@ -27,7 +27,7 @@
 
 	max_range = 10
 	has_impact_particles = TRUE
-	kinetic_impact = FALSE
+	energy_particles_override = TRUE
 	var/bioeffect = ""
 
 	on_hit(atom/hit)

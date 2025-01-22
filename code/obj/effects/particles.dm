@@ -411,6 +411,7 @@
 	particles = new/particles/impact_smoke
 
 /obj/effects/gunshot_impact/sparks
+	plane = PLANE_ABOVE_LIGHTING
 	base_amt = 5
 	particles = new/particles/impact_sparks
 
@@ -419,7 +420,7 @@
 	particles = new/particles/impact_bubble
 
 /obj/effects/energy_impact
-	plane = PLANE_NOSHADOW_ABOVE
+	plane = PLANE_ABOVE_LIGHTING
 	particles = null
 	var/base_amt = 0
 
@@ -448,6 +449,7 @@
 			qdel(src)
 
 /obj/effects/energy_impact/smoke
+	plane = PLANE_NOSHADOW_ABOVE
 	base_amt = 3
 	particles = new/particles/impact_smoke
 
@@ -458,30 +460,3 @@
 /obj/effects/energy_impact/energy
 	base_amt = 3
 	particles = new/particles/impact_energy
-
-/obj/effects/blood
-	plane = PLANE_NOSHADOW_BELOW
-	particles = new/particles/impact_blood
-	var/base_amt = 5
-
-	New(loc, var/new_x = 0, var/new_y = 0, var/dir_x = 0, var/dir_y = 0, var/damage = 0, var/blood_clr = null)
-		particles.position = list(new_x, new_y)
-		if (damage >= 40 && damage < 55)
-			particles.velocity = generator("box", list(40*dir_x, 40*dir_y, 0), list(5*dir_x, 5*dir_y, 0), UNIFORM_RAND)
-		else if (damage >= 55 && damage < 85)
-			var/new_amt = round(src.base_amt * 1.5)
-			particles.count = new_amt
-			particles.spawning = new_amt
-			particles.velocity = generator("box", list(70*dir_x, 70*dir_y, 0), list(5*dir_x, 5*dir_y, 0), UNIFORM_RAND)
-		else if (damage >= 85)
-			var/new_amt = round(src.base_amt * 2.5)
-			particles.count = new_amt
-			particles.spawning = new_amt
-			particles.velocity = generator("box", list(110*dir_x, 110*dir_y, 0), list(10*dir_x, 10*dir_y, 0), UNIFORM_RAND)
-		if (blood_clr)
-			particles.color = blood_clr
-		..()
-		SPAWN(2 DECI SECOND)
-			src.particles?.spawning = 0
-			sleep(src.particles?.lifespan)
-			qdel(src)

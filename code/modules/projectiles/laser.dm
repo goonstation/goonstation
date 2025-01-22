@@ -47,7 +47,6 @@ toxic - poisons
 	hit_mob_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 	hit_object_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 	has_impact_particles = TRUE
-	kinetic_impact = FALSE
 
 //Any special things when it hits shit?
 	on_hit(atom/hit)
@@ -608,6 +607,7 @@ toxic - poisons
 	dissipation_delay = 1
 	dissipation_rate = 45
 	impact_image_state = null
+	energy_particles_override = TRUE
 	var/damtype = DAMAGE_STAB
 
 	var/hit_human_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
@@ -694,6 +694,7 @@ toxic - poisons
 	brute
 		icon_state = "signifer2_brute"
 		damage_type = D_KINETIC
+		energy_particles_override = TRUE
 		color_red = 0.8
 		color_green = 0.1
 		color_blue = 0.1

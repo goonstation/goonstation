@@ -26,7 +26,7 @@
 	projectile_speed = 20
 
 	has_impact_particles = TRUE
-	kinetic_impact = FALSE
+	energy_particles_override = TRUE
 
 	var/turf/target = null
 	var/failchance = 5
