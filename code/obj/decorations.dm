@@ -340,7 +340,7 @@
 		src.take_damage(W.force)
 		user.visible_message(SPAN_ALERT("<b>[user] hacks at [src] with [W]!</b>"))
 
-	proc/graze(mob/living/carbon/human/user)
+	proc/take_bite()
 		src.bites -= 1
 		var/desired_mask = (src.bites / initial(src.bites)) * 5
 		desired_mask = round(desired_mask)
@@ -350,6 +350,10 @@
 			current_mask = desired_mask
 			src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
+		if(src.bites <= 0)
+			destroy()
+
+	proc/graze(mob/living/carbon/human/user)
 		eat_twitch(user)
 		playsound(user, 'sound/items/eatfood.ogg', rand(10,50), 1)
 
@@ -363,9 +367,13 @@
 			user.visible_message(SPAN_NOTICE("[user] takes a bite out of [src]."), SPAN_NOTICE("You munch on some of [src]'s leaves, like any normal human would."))
 			user.sims?.affectMotive("Hunger", 10)
 
-		if(src.bites <= 0)
-			destroy()
+		src.take_bite()
+
 		return 0
+
+	clamp_act(mob/clamper, obj/item/clamp)
+		src.take_bite()
+		return TRUE
 
 	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
