@@ -89,6 +89,7 @@
 		. = ..()
 		if (.)
 			return
+		. = TRUE
 		switch (action)
 			if ("set_filter")
 				src.set_filter()
@@ -97,22 +98,12 @@
 		var/filt_id = tgui_input_text(usr, "Please enter new 8 digit hex value filter net id", src.name, src.filter_id, 8,)
 		if (!filt_id)
 			src.filter_id = null
-			src.updateIntDialog()
 			return
 		if(length(filt_id) != 8 || !is_hex(filt_id))
 			src.filter_id = null
-			src.updateIntDialog()
 			return
 
 		src.filter_id = filt_id
-		src.updateIntDialog()
-
-	proc/updateIntDialog()
-		if(mode)
-			src.updateUsrDialog()
-		else
-			src.updateSelfDialog()
-		return
 
 	receive_signal(datum/signal/signal)
 		if(!mode || !src.link)
@@ -152,5 +143,4 @@
 			src.packet_stamps.Cut(1, 2)
 			src.packet_data.Cut(1,2)
 		src.last_intercept = world.time
-		src.updateIntDialog()
 		return
