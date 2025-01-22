@@ -539,6 +539,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 	can_hold_items = 1
 	accepts_normal_human_overlays = TRUE
 	var/emagged = FALSE //contains: technical debt
+	var/add_to_tools = FALSE
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(!ismob(target))
@@ -1320,6 +1321,30 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 // ancient robot stuff
 
+///Returns TRUE on successful clamping
+/atom/movable/proc/clamp_act(mob/clamper, obj/item/clamp)
+	return FALSE
+
+proc/do_clamp(atom/movable/clamped, mob/clamper, obj/item/clamp)
+	if (ON_COOLDOWN(clamper, "clamp", DEFAULT_CLICK_DELAY))
+		return
+	if (isturf(clamped))
+		return
+	APPLY_ATOM_PROPERTY(clamper, PROP_MOB_CANTMOVE, ref(clamp))
+	APPLY_ATOM_PROPERTY(clamped, PROP_MOB_CANTMOVE, ref(clamp))
+	playsound(clamper.loc, 'sound/machines/hydraulic.ogg', 40, 1)
+	clamper.visible_message(SPAN_ALERT("[clamper] CLAMPS [clamped] with [his_or_her(clamper)] [clamp.name]!"))
+	sleep(1 SECOND)
+	if (!can_reach(clamper, clamped))
+		REMOVE_ATOM_PROPERTY(clamper, PROP_MOB_CANTMOVE, ref(clamp))
+		REMOVE_ATOM_PROPERTY(clamped, PROP_MOB_CANTMOVE, ref(clamp))
+		return
+
+	if (!clamped.clamp_act(clamper, clamp))
+		clamper.visible_message(SPAN_ALERT("...but [clamped] remains unclamped."))
+
+	REMOVE_ATOM_PROPERTY(clamper, PROP_MOB_CANTMOVE, ref(clamp))
+	REMOVE_ATOM_PROPERTY(clamped, PROP_MOB_CANTMOVE, ref(clamp))
 
 /obj/item/parts/robot_parts/arm/right/ancient
 	name = "ancient right arm"
@@ -1349,7 +1374,17 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		max_health = 300
 		weight = 0.5
 		handlistPart = "armR-heavy"
+		add_to_tools = TRUE
 		robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_right
+
+		New()
+			. = ..()
+			RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(clamp_proxy))
+
+		proc/clamp_proxy(_, target, user)
+			if (issilicon(user) && !(target in user))
+				do_clamp(target, user, src)
+				return TRUE
 
 /obj/item/parts/robot_parts/arm/left/ancient
 	name = "ancient left arm"
@@ -1379,14 +1414,24 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		max_health = 350
 		weight = 0.5
 		handlistPart = "armL-heavy"
+		add_to_tools = TRUE
 		robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_left
+
+		New()
+			. = ..()
+			RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(clamp_proxy))
+
+		proc/clamp_proxy(_, target, user)
+			if (issilicon(user) && !(target in user))
+				do_clamp(target, user, src)
+				return TRUE
 
 /obj/item/parts/robot_parts/head/ancient
 	name = "ancient head"
 	desc = "The pseudocranium of an ancient silicon utility construct."
 	icon_state = "head-ancient"
 	appearanceString = "ancient"
-	max_health = 300
+	max_health = 200
 	weight = 0.5
 	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_head
 
@@ -1395,7 +1440,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		desc = "The pseudocranium of an ancient silicon stonecutter."
 		icon_state = "head-ancient2"
 		appearanceString = "ancient2"
-		max_health = 200
+		max_health = 100
 		weight = 0.3
 		robot_movement_modifier = /datum/movement_modifier/robot_part/light_head
 
@@ -1404,7 +1449,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		desc = "The pseudocranium of an ancient silicon loader."
 		icon_state = "head-ancient3"
 		appearanceString = "ancient3"
-		max_health = 500
+		max_health = 300
 		weight = 0.6
 		robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_head
 
@@ -1418,7 +1463,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		desc = "The pseudocranium of an ancient silicon worker."
 		icon_state = "head-ancient4"
 		appearanceString = "ancient4"
-		max_health = 300
+		max_health = 200
 		weight = 0.3
 		robot_movement_modifier = /datum/movement_modifier/robot_part/standard_head
 
@@ -1427,7 +1472,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		desc = "The pseudocranium of an ancient silicon guardian."
 		icon_state = "head-ancient5"
 		appearanceString = "ancient5"
-		max_health = 500
+		max_health = 400
 		weight = 0.6
 		robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_head
 
@@ -1436,7 +1481,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	desc = "The thoracic carapace of an ancient silicon construct."
 	icon_state = "body-ancient"
 	appearanceString = "ancient"
-	max_health = 400
+	max_health = 350
 	robot_movement_modifier = /datum/movement_modifier/robot_part/standard_chest
 
 	stonecutter
@@ -1444,11 +1489,11 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		desc = "The thoracic carapace of an ancient silicon stonecutter."
 		icon_state = "body-ancient2"
 		appearanceString = "ancient2"
-		max_health = 300
+		max_health = 250
 
 	actuator
 		name = "actuator chest"
 		desc = "The heavy actuator frame of an ancient silicon loader."
 		icon_state = "body-ancient3"
 		appearanceString = "ancient3"
-		max_health = 600
+		max_health = 450

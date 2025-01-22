@@ -470,7 +470,7 @@
 			CRASH("icon state set for action bar, but no icon was set")
 		if (end_message)
 			src.end_message = end_message
-		if (interrupt_flags)
+		if (interrupt_flags != null)
 			src.interrupt_flags = interrupt_flags
 		//generate a id
 		if (src.proc_path)

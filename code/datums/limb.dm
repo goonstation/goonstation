@@ -164,7 +164,7 @@
 			playsound(user, 'sound/weapons/railgun.ogg', 50, TRUE)
 			user.set_dir(get_dir(user, target))
 
-			var/list/affected = DrawLine(user, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
+			var/list/affected = drawLineObj(user, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
 
 			for(var/obj/O in affected)
 				O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.

@@ -938,6 +938,11 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 	elecflash(src, radius = 1, power = 2, exclude_center = 0)
 	logTheThing(LOG_STATION, null, "Light '[name]' broke itself (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
 
+/obj/machinery/light/clamp_act(mob/clamper, obj/item/clamp)
+	if (current_lamp.light_status != LIGHT_BROKEN || current_lamp.light_status != LIGHT_EMPTY)
+		src.do_break()
+		return TRUE
+
 /obj/machinery/light/proc/do_burn_out()
 	var/original_brightness = src.light.brightness
 	playsound(src, 'sound/effects/snaptape.ogg', 30, TRUE)

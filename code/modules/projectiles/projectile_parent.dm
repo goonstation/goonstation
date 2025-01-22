@@ -427,9 +427,11 @@
 		if (!loc || !orig_turf)
 			die()
 			return
-		src.ticks_until_can_hit_mob--
-		if (QDELETED(src))
+		proj_data.tick(src)
+		if(QDELETED(src))
 			return
+
+		src.ticks_until_can_hit_mob--
 
 		if(!was_setup) //if setup failed due to us having no speed or no direction, try to collide with something before dying
 			collide_with_applicable_in_tile(loc)
@@ -525,7 +527,6 @@
 
 		set_dir(facing_dir)
 		incidence = turn(incidence, 180)
-		proj_data.tick(src)
 		var/dx = loc.x - orig_turf.x
 		var/dy = loc.y - orig_turf.y
 		var/pixel_dx = dx * 32
