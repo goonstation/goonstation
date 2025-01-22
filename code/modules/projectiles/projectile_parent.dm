@@ -418,8 +418,6 @@
 			die()
 			return
 		src.ticks_until_can_hit_mob--
-		if (QDELETED(src))
-			return
 
 		if(!was_setup) //if setup failed due to us having no speed or no direction, try to collide with something before dying
 			collide_with_applicable_in_tile(loc)
