@@ -11,9 +11,9 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 interface PacketInfo {
-  packet_stamps;
-  packet_data;
-  filter;
+  packet_stamps: Array<string>;
+  packet_data: Array<string>;
+  filter: string;
 }
 
 export const PacketSniffer = () => {
