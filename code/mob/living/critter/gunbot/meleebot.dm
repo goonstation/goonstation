@@ -150,6 +150,6 @@
 		if(get_turf(P) == P.orig_turf)
 			return //don't draw a trail if we haven't moved
 		if (previous_line != null)
-			for (var/obj/O drawLineObjous_line)
+			for (var/obj/O in previous_line)
 				qdel(O)
 		previous_line = DrawLine(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_gungrab",1,1,"sstart_gungrab","end_gungrab",OBJ_LAYER,1)
