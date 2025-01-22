@@ -152,4 +152,4 @@
 		if (previous_line != null)
 			for (var/obj/O in previous_line)
 				qdel(O)
-		previous_line = DrawLine(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_gungrab",1,1,"sstart_gungrab","end_gungrab",OBJ_LAYER,1)
+		previous_line = drawLineObj(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_gungrab",1,1,"sstart_gungrab","end_gungrab",OBJ_LAYER,1)
