@@ -12,7 +12,7 @@ var/global/datum/apiHandler/apiHandler
 	var/debug = FALSE
 
 	/// how many times should a query attempt to run before giving up
-	var/maxApiRetries = 5
+	var/maxApiRetries = 1 //5
 	/// base delay between query attempts, gets multiplied by attempt number
 	var/apiRetryDelay = 10
 

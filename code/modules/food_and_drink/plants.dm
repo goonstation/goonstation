@@ -24,6 +24,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		src.plantgenes = new /datum/plantgenes(src)
 		src.make_reagents()
 
+	clamp_act(mob/clamper, obj/item/clamp)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+		if(src.reagents)
+			var/turf/T = get_turf(src)
+			T.fluid_react(src.reagents, src.reagents.total_volume, FALSE)
+		qdel(src)
+		return TRUE
+
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		// If we've got a piece of fruit or veg that contains seeds. More often than
 		// not this is fruit but some veg do this too.
