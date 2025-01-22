@@ -95,10 +95,7 @@
 				src.set_filter()
 
 	proc/set_filter()
-		var/filt_id = tgui_input_text(usr, "Please enter new 8 digit hex value filter net id", src.name, src.filter_id, 8,)
-		if (!filt_id)
-			src.filter_id = null
-			return
+		var/filt_id = tgui_input_text(usr, "Please enter new 8 digit hex value filter net id", src.name, src.filter_id, 8)
 		if(length(filt_id) != 8 || !is_hex(filt_id))
 			src.filter_id = null
 			return
