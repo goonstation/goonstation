@@ -3284,16 +3284,10 @@ TYPEINFO(/obj/machinery/vending/janitor)
 	can_fall = FALSE
 	can_hack = FALSE
 
-	ex_act(severity)
-		. = ..()
-
 /obj/machinery/vending/air_vendor/plasma/pod_wars
 	air_cost = 0
 	can_fall = FALSE
 	can_hack = FALSE
-
-	ex_act(severity)
-		. = ..()
 
 /obj/machinery/vending/player/chemicals
 	name = "dispensary interlink"
