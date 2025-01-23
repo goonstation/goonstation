@@ -47,7 +47,6 @@
 			werewolf_defense.handleCast(target)
 			return TRUE
 
-
 	get_melee_protection(zone, damage_type)
 		return 4
 
@@ -67,7 +66,17 @@
 
 	setup_hands()
 		. = ..()
-		var/datum/handHolder/HH = hands[2]
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/kinetic/abg/no_reload
+		HH.name = "ABG Riot Suppression Appendage"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handabg"
+		HH.limb_name = "ABG Riot Suppression Appendage"
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
+
+		HH = hands[2]
 		HH.limb = new /datum/limb/syndie_shield
 		HH.name = "Mod. 81 Alcor Shield"
 		HH.icon = 'icons/mob/critter_ui.dmi'
