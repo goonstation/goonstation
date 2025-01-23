@@ -12,6 +12,8 @@
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		abilityHolder.addAbility(/datum/targetable/critter/robofast)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_HEALTH, src)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(src)
 
 	setup_hands()
 		..()
