@@ -368,20 +368,7 @@
 	gravity = list(0, 0, 0)
 	friction = generator("num", 0.8, 0.6, UNIFORM_RAND)
 
-/obj/effects/impact
-	var/static/effect_amount = 0
-
-	New()
-		effect_amount ++
-		if (effect_amount > 450) //About 150 gunshots in the span of 5 seconds
-			qdel(src)
-		. = ..()
-
-	disposing()
-		effect_amount --
-		. = ..()
-
-/obj/effects/impact/gunshot
+/obj/effects/impact_gunshot
 	plane = PLANE_NOSHADOW_ABOVE
 	particles = null
 	var/base_amt = 0
@@ -414,25 +401,25 @@
 			sleep(src.particles?.lifespan)
 			qdel(src)
 
-/obj/effects/impact/gunshot/dust
+/obj/effects/impact_gunshot/dust
 	base_amt = 10
 	particles = new/particles/impact_dust
 	plane = PLANE_NOSHADOW_BELOW
 
-/obj/effects/impact/gunshot/smoke
+/obj/effects/impact_gunshot/smoke
 	base_amt = 5
 	particles = new/particles/impact_smoke
 
-/obj/effects/impact/gunshot/sparks
+/obj/effects/impact_gunshot/sparks
 	plane = PLANE_ABOVE_LIGHTING
 	base_amt = 5
 	particles = new/particles/impact_sparks
 
-/obj/effects/impact/gunshot/bubble
+/obj/effects/impact_gunshot/bubble
 	base_amt = 6
 	particles = new/particles/impact_bubble
 
-/obj/effects/impact/energy
+/obj/effects/impact_energy
 	plane = PLANE_ABOVE_LIGHTING
 	particles = null
 	var/base_amt = 0
@@ -461,15 +448,15 @@
 			sleep(src.particles?.lifespan)
 			qdel(src)
 
-/obj/effects/impact/energy/smoke
+/obj/effects/impact_energy/smoke
 	plane = PLANE_NOSHADOW_ABOVE
 	base_amt = 3
 	particles = new/particles/impact_smoke
 
-/obj/effects/impact/energy/sparks
+/obj/effects/impact_energy/sparks
 	base_amt = 4
 	particles = new/particles/impact_sparks/slow
 
-/obj/effects/impact/energy/projectile_sparks
+/obj/effects/impact_energy/projectile_sparks
 	base_amt = 3
 	particles = new/particles/impact_energy

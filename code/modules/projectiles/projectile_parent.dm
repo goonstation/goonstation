@@ -700,6 +700,8 @@ ABSTRACT_TYPE(/datum/projectile)
 	/// Override var used for special projectiles, set to true if it should use energy impact particles
 	var/energy_particles_override = FALSE
 
+	var/static/effect_amount = 0
+
 	New()
 		. = ..()
 		generate_stats()
@@ -826,36 +828,42 @@ ABSTRACT_TYPE(/datum/projectile)
 
 		// Spawn some particles if we hit something solid that isnt a human or a silicon
 		spawn_impact_particles(atom/hit, var/obj/projectile/O, x, y)
-			if (src.has_impact_particles && !ismob(hit))
-				//If we are underwater, we want bubbles and not sparks or smoke!
-				var/underwater = FALSE
-				if (istype(get_turf(O), /turf/space/fluid)) underwater = TRUE
+			if (!src.has_impact_particles || ismob(hit))
+				return
+			if (effect_amount >= 200)
+				return
+			effect_amount ++
+			SPAWN(5 SECONDS)
+				effect_amount --
+			//If we are underwater, we want bubbles and not sparks or smoke!
+			var/underwater = FALSE
+			if (istype(get_turf(O), /turf/space/fluid)) underwater = TRUE
+			else
+				var/turf/T = get_turf(O)
+				if (T?.active_liquid)
+					if(T.active_liquid.last_depth_level > 3)
+						underwater = TRUE
+			if ((src.damage_type != D_ENERGY && src.damage_type != D_BURNING && src.damage_type != D_RADIOACTIVE && src.damage_type != D_TOXIC) && !src.energy_particles_override)
+				var/new_impact_icon = hit.impact_icon
+				var/new_impact_icon_state = hit.impact_icon_state
+				//Bullet impacts create dust of the color of the hit thing
+				var/avrg_color = hit.get_average_color()
+				new /obj/effects/impact_gunshot/dust(get_turf(hit), x, y, -O.xo, -O.yo, damage, avrg_color, new_impact_icon, new_impact_icon_state)
+				if (underwater)
+					new /obj/effects/impact_gunshot/bubble(get_turf(hit), x, y, -O.xo, -O.yo, damage)
 				else
-					var/turf/T = get_turf(O)
-					if (T?.active_liquid)
-						if(T.active_liquid.last_depth_level > 3)
-							underwater = TRUE
-				if ((src.damage_type != D_ENERGY && src.damage_type != D_BURNING && src.damage_type != D_RADIOACTIVE && src.damage_type != D_TOXIC) && !src.energy_particles_override)
-					var/new_impact_icon = hit.impact_icon
-					var/new_impact_icon_state = hit.impact_icon_state
-					//Bullet impacts create dust of the color of the hit thing
-					var/avrg_color = hit.get_average_color()
-					new /obj/effects/impact/gunshot/dust(get_turf(hit), x, y, -O.xo, -O.yo, damage, avrg_color, new_impact_icon, new_impact_icon_state)
-					if (underwater)
-						new /obj/effects/impact/gunshot/bubble(get_turf(hit), x, y, -O.xo, -O.yo, damage)
-					else
-						new /obj/effects/impact/gunshot/sparks(get_turf(hit), x, y, -O.xo, -O.yo, damage)
-						new /obj/effects/impact/gunshot/smoke(get_turf(hit), x, y, -O.xo, -O.yo, damage)
+					new /obj/effects/impact_gunshot/sparks(get_turf(hit), x, y, -O.xo, -O.yo, damage)
+					new /obj/effects/impact_gunshot/smoke(get_turf(hit), x, y, -O.xo, -O.yo, damage)
+			else
+				//Energy impacts create sparks of the color of the projectile
+				var/avrg_color = O.get_average_color()
+				new /obj/effects/impact_energy/projectile_sparks(get_turf(hit), x, y, -O.xo, -O.yo, damage, avrg_color)
+				if (underwater)
+					new /obj/effects/impact_gunshot/bubble(get_turf(hit), x, y, -O.xo, -O.yo, damage)
 				else
-					//Energy impacts create sparks of the color of the projectile
-					var/avrg_color = O.get_average_color()
-					new /obj/effects/impact/energy/projectile_sparks(get_turf(hit), x, y, -O.xo, -O.yo, damage, avrg_color)
-					if (underwater)
-						new /obj/effects/impact/gunshot/bubble(get_turf(hit), x, y, -O.xo, -O.yo, damage)
-					else
-						new /obj/effects/impact/energy/sparks(get_turf(hit), x, y, -O.xo, -O.yo, damage)
-						if (damage >= 30)
-							new /obj/effects/impact/energy/smoke(get_turf(hit), x, y, -O.xo, -O.yo, damage)
+					new /obj/effects/impact_energy/sparks(get_turf(hit), x, y, -O.xo, -O.yo, damage)
+					if (damage >= 30)
+						new /obj/effects/impact_energy/smoke(get_turf(hit), x, y, -O.xo, -O.yo, damage)
 
 // THIS IS INTENDED FOR POINTBLANKING.
 /proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T)
