@@ -231,7 +231,7 @@
 				return
 			. = TRUE
 			current_shots--
-			if (pointblank)
+			if (pointblank && is_mob(target))
 				src.shoot_pointblank(target, user)
 			else
 				src.shoot_range(target, user, params)
