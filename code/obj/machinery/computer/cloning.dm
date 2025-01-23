@@ -958,12 +958,16 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		"geneticAnalysis" = src.gen_analysis,
 		"podNames" = list(),
 		"meatLevels" = list(),
+		"podSpeed" = list(),
+		"podEfficient" = list(),
 		"cloneHack" = list(),
 		"completion" = list(),
 	)
 	for (var/obj/machinery/clonepod/P in src.linked_pods)
 		.["podNames"] += P.name
 		.["meatLevels"] += P.meat_level
+		.["podSpeed"] += P.is_speedy
+		.["podEfficient"] += P.is_efficient
 		.["cloneHack"] += P.clonehack
 		.["completion"] += P.get_progress()
 	if(!isnull(src.scanner))

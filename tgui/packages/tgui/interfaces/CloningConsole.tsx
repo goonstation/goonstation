@@ -3,6 +3,7 @@
  * @copyright 2020
  * @author Original ThePotato97 (https://github.com/ThePotato97)
  * @author Changes Mordent (https://github.com/mordent-goonstation)
+ * @author Changes glowbold (https://github.com/pgmzeta)
  * @license ISC
  */
 
@@ -43,7 +44,9 @@ interface CloningConsoleData {
   message;
   mindWipe;
   occupantScanned;
+  podEfficient;
   podNames;
+  podSpeed;
   scannerGone;
   scannerLocked;
   scannerOccupied;
@@ -627,7 +630,7 @@ const Records = (props: RecordsProps) => {
 
 const Pods = () => {
   const { data } = useBackend<CloningConsoleData>();
-  const { completion, meatLevels, podNames } = data;
+  const { completion, meatLevels, podNames, podSpeed, podEfficient } = data;
 
   if (!meatLevels.length) {
     return (
@@ -670,6 +673,13 @@ const Pods = () => {
             }}
           />
         </LabeledList.Item>
+        {(!!podSpeed[i] || !!podEfficient[i]) && (
+          <LabeledList.Item label="Upgrades">
+            {!!podSpeed[i] && 'SpeedyClone2000'}
+            {!!podSpeed[i] && !!podEfficient[i] && ', '}
+            {!!podEfficient[i] && 'Recycling Unit'}
+          </LabeledList.Item>
+        )}
       </LabeledList>
     </Section>
   ));
