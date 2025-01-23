@@ -1848,7 +1848,7 @@
 		return .
 
 	var/turf/T = get_turf(src)
-	if (T?.turf_flags & CAN_BE_SPACE_SAMPLE)
+	if (istype(T, /turf/space))
 		. = max(., base_speed)
 
 
@@ -2396,3 +2396,11 @@
 	if (picked_item)
 		picked_item.pick_up_by(src)
 		return TRUE
+
+/mob/living/clamp_act()
+	if (isintangible(src))
+		return FALSE
+	src.TakeDamage("All", 6)
+	src.emote("scream", FALSE)
+	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 40, 1)
+	return TRUE

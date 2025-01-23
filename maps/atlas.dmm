@@ -16408,8 +16408,15 @@
 	pixel_x = 12;
 	pixel_y = 5
 	},
+/obj/item/storage/box/panic_buttons{
+	pixel_x = 12;
+	pixel_y = 4
+	},
 /obj/item/remote/porter/port_a_brig{
 	pixel_x = 13
+	},
+/obj/item/device/panicbutton{
+	pixel_x = -8
 	},
 /turf/simulated/floor/red/side{
 	dir = 9

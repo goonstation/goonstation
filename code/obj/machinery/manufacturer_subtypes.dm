@@ -236,6 +236,7 @@
 		/datum/manufacture/implant_health,
 		/datum/manufacture/implant_antirot,
 		/datum/manufacture/floppydisk,
+		/datum/manufacture/medicalalertbutton,
 		/datum/manufacture/crowbar,
 		/datum/manufacture/extinguisher,
 		/datum/manufacture/cyberappendix,
@@ -394,6 +395,8 @@
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
+		/datum/manufacture/pod/light_shielding,
+		/datum/manufacture/pod/heavy_shielding,
 		/datum/manufacture/beaconkit,
 		/datum/manufacture/podgps
 	)
