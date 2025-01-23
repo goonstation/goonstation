@@ -210,9 +210,13 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 		playsound(M.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 		UnregisterSignal(M, COMSIG_MOVABLE_PRE_MOVE)
 
+	unequipped(mob/user)
+		. = ..()
+		UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
+
 	proc/check_move(mob/mover, turf/T, direction, quiet = FALSE)
 		//is the turf we're on solid?
-		if (!istype(T) || !(T.turf_flags & CAN_BE_SPACE_SAMPLE || T.throw_unlimited))
+		if (!istype(T) || !(istype(T, /turf/space) || T.throw_unlimited))
 			return FALSE
 		//this is kind of expensive to put on Move BUT in my defense it will only happen for magboots wearers standing on a space tile
 		//what are the chances they're also next to botany's server lag weed pile at the same time?

@@ -1186,6 +1186,10 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"agv" = (
+/obj/spawner/ancient_robot_artifact,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/crater/cave/lower)
 "agE" = (
 /obj/machinery/door_control{
 	desc = "A remote control switch for the outer blast door.";
@@ -6029,6 +6033,7 @@
 /obj/machinery/bot/guardbot/old/tourguide/lunar{
 	beacon_freq = 1441
 	},
+/obj/machinery/navbeacon/lunar/tour18,
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum)
 "aDu" = (
@@ -6807,6 +6812,15 @@
 /area/crater/cave)
 "aIJ" = (
 /obj/storage/crate/haunted,
+/obj/item/clothing/suit/cultist,
+/obj/item/clothing/suit/cultist,
+/obj/item/clothing/suit/cultist,
+/obj/item/clothing/mask/burnedcultmask,
+/obj/item/clothing/mask/burnedcultmask,
+/obj/item/clothing/mask/burnedcultmask,
+/obj/map/light/graveyard,
+/obj/item/clothing/suit/bedsheet/cape/royal,
+/obj/item/sacdagger,
 /turf/unsimulated/floor/setpieces{
 	desc = "A strange jet black metal floor. There are odd lines carved into it.";
 	icon = 'icons/turf/floors.dmi';
@@ -9433,22 +9447,29 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aRu" = (
-/obj/decal/cliff{
-	dir = 1
+/obj/spawner/ancient_robot_artifact,
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
 	},
-/obj/decal/cleanable/cobweb,
-/turf/unsimulated/floor/setpieces/ancient_pit{
-	name = "Dark Pit"
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
 	},
-/area/crater/cave)
+/area/crater/cave/lower)
 "aRv" = (
-/obj/decal/cliff{
-	dir = 1
-	},
-/turf/unsimulated/floor/setpieces/ancient_pit{
-	name = "Dark Pit"
-	},
-/area/crater/cave)
+/turf/unsimulated/wall/auto/adventure/iomoon/interior,
+/area/crater/cave/lower)
 "aRw" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor{
@@ -9686,8 +9707,15 @@
 /turf/unsimulated/wall/auto/adventure/cave,
 /area/crater/cave)
 "aSu" = (
-/turf/unsimulated/floor/setpieces/ancient_pit{
-	name = "Dark Pit"
+/obj/map/light/void,
+/obj/ladder{
+	id = "ancientpit"
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
 	},
 /area/crater/cave)
 "aSv" = (
@@ -14898,6 +14926,12 @@
 /area/crater/cave/lower)
 "bjo" = (
 /obj/map/light/void,
+/obj/decal/lightshaft,
+/obj/ladder{
+	icon_state = "ladder_wall";
+	id = "ancientpit";
+	pixel_y = 24
+	},
 /turf/unsimulated/floor/setpieces{
 	desc = "A strange jet black metal floor. There are odd lines carved into it.";
 	icon = 'icons/turf/floors.dmi';
@@ -14907,12 +14941,7 @@
 /area/crater/cave/lower)
 "bjp" = (
 /obj/decal/cleanable/cobweb2,
-/turf/unsimulated/floor/setpieces{
-	desc = "A strange jet black metal floor. There are odd lines carved into it.";
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "ancient";
-	name = "strange surface"
-	},
+/turf/unsimulated/iomoon/ancient_floor,
 /area/crater/cave/lower)
 "bjq" = (
 /obj/item/tile/steel,
@@ -15224,15 +15253,16 @@
 	},
 /area/crater/cave/lower)
 "bkd" = (
-/obj/fakeobject{
+/obj/decal/glow{
 	anchored = 1;
-	density = 1;
-	desc = "It seems slightly warm.";
-	icon = 'icons/obj/artifacts/artifacts.dmi';
-	icon_state = "eldritch-5";
-	name = "warped figure"
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
 	},
-/obj/map/light/dimreddish,
 /turf/unsimulated/floor/setpieces{
 	desc = "A strange jet black metal floor. There are odd lines carved into it.";
 	icon = 'icons/turf/floors.dmi';
@@ -15727,12 +15757,7 @@
 	icon_state = "eldritch-3";
 	name = "unpleasant statue"
 	},
-/turf/unsimulated/floor/setpieces{
-	desc = "A strange jet black metal floor. There are odd lines carved into it.";
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "ancient";
-	name = "strange surface"
-	},
+/turf/unsimulated/iomoon/ancient_floor,
 /area/crater/cave/lower)
 "blz" = (
 /obj/decal/cleanable/cobweb2,
@@ -15745,12 +15770,7 @@
 	icon_state = "eldritch-3";
 	name = "unpleasant statue"
 	},
-/turf/unsimulated/floor/setpieces{
-	desc = "A strange jet black metal floor. There are odd lines carved into it.";
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "ancient";
-	name = "strange surface"
-	},
+/turf/unsimulated/iomoon/ancient_floor,
 /area/crater/cave/lower)
 "blA" = (
 /obj/decal/cleanable/cobweb2,
@@ -16074,6 +16094,8 @@
 /area/crater/cave/lower)
 "bmu" = (
 /obj/decal/cleanable/cobweb,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "bmw" = (
@@ -20937,6 +20959,19 @@
 "bGw" = (
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins/boss_chamber)
+"bGA" = (
+/obj/rack/iomoon,
+/obj/item/parts/robot_parts/chest/ancient/actuator,
+/obj/item/parts/robot_parts/head/ancient/actuator,
+/obj/item/parts/robot_parts/arm/left/ancient/actuator{
+	pixel_x = 6
+	},
+/obj/item/parts/robot_parts/arm/right/ancient/actuator{
+	pixel_x = -6
+	},
+/obj/map/light/dimreddish,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber)
 "bGC" = (
 /obj/fakeobject/lightbulb_broken{
 	desc = "This light is probably broken.  It looks pretty new and ok, though, so it's probably just not wired up.";
@@ -21239,13 +21274,17 @@
 	},
 /area/crypt/graveyard)
 "bHL" = (
-/turf/unsimulated/iomoon/ancient_wall{
-	desc = "Not only is it one hell of a foreboding door, it's also sealed fast.  It doesn't have any apparent means of opening.";
-	dir = 4;
-	icon_state = "ancientwall2";
-	name = "sealed door"
+/obj/decal/cleanable/cobweb,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
 	},
-/area/iomoon/robot_ruins/boss_chamber)
+/area/crater/cave/lower)
 "bHM" = (
 /obj/map/light/cyan,
 /obj/iomoon_boss/core,
@@ -24048,21 +24087,16 @@
 /area/crunch)
 "bRc" = (
 /obj/machinery/navbeacon{
-	codes_txt = "tour";
+	codes_txt = "tour;next_tour=tour9";
 	location = "tour8"
 	},
 /turf/unsimulated/floor/blue/checker,
 /area/crunch)
 "bRd" = (
-/obj/overlay{
-	density = 1;
-	desc = "It wont budge.";
-	dir = 4;
+/obj/fakeobject/airlock_broken{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "door_closed";
-	layer = 6;
-	name = "broken door";
-	opacity = 1
+	dir = 4
 	},
 /turf/unsimulated/floor/blue/checker,
 /area/crunch)
@@ -24283,6 +24317,10 @@
 	name = "old docking station"
 	},
 /obj/machinery/bot/guardbot/old/tourguide,
+/obj/machinery/navbeacon{
+	codes_txt = "tour";
+	location = "tour9"
+	},
 /turf/unsimulated/floor/blue/checker,
 /area/crunch)
 "bRW" = (
@@ -27689,6 +27727,12 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
+"cfN" = (
+/obj/river{
+	dir = 9
+	},
+/turf/unsimulated/floor/cave,
+/area/crater/cave/lower)
 "cfO" = (
 /obj/bookshelf/persistent{
 	density = 0;
@@ -40532,6 +40576,10 @@
 	dir = 4
 	},
 /area/owlery/owllock)
+"cTr" = (
+/obj/river,
+/turf/unsimulated/floor/cave,
+/area/crater/cave/lower)
 "cTs" = (
 /obj/disposalpipe/segment{
 	desc = "An underfloor transport pipe.";
@@ -40932,6 +40980,17 @@
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait2)
+"cUj" = (
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "cUl" = (
 /obj/decal/cleanable/oil,
 /turf/unsimulated/floor/stairs/quilty{
@@ -42895,6 +42954,17 @@
 	dir = 6
 	},
 /area/owlery/owleryhall)
+"cZw" = (
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/crater/cave/lower)
 "cZx" = (
 /obj/item/cigbutt,
 /turf/unsimulated/floor/plating,
@@ -52178,6 +52248,15 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
+"dLs" = (
+/obj/creepy_sound_trigger,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave)
 "dLt" = (
 /turf/unsimulated/floor/wood,
 /area/centcom/garden)
@@ -55145,6 +55224,14 @@
 	dir = 8
 	},
 /area/crypt/graveyard)
+"ehb" = (
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/crater/cave/lower)
 "ehl" = (
 /obj/window/cubicle{
 	dir = 4
@@ -55157,6 +55244,7 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb,
 /mob/living/critter/spider/spacerachnid,
+/obj/item/material_piece/cloth/spidersilk,
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "ehJ" = (
@@ -55783,6 +55871,15 @@
 	dir = 9
 	},
 /area/iomoon/base)
+"eNc" = (
+/obj/creepy_sound_trigger,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black set of metal stairs.";
+	dir = 4;
+	icon_state = "ancient_stairs";
+	name = "strange stairs"
+	},
+/area/crater/cave/lower)
 "eNi" = (
 /obj/item/reagent_containers/food/drinks/water,
 /turf/unsimulated/floor/plating,
@@ -55814,6 +55911,19 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
+"ePi" = (
+/obj/item/clothing/suit/armor/ancient,
+/obj/item/clothing/mask/skull{
+	pixel_y = 10
+	},
+/obj/map/light/dimreddish,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "ePs" = (
 /turf/unsimulated/floor/stairs{
 	dir = 10;
@@ -55910,6 +56020,14 @@
 /mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/crew)
+"eSF" = (
+/obj/creepy_sound_trigger,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black set of metal stairs.";
+	icon_state = "ancient_stairs";
+	name = "strange stairs"
+	},
+/area/crater/cave/lower)
 "eTd" = (
 /obj/fakeobject/robot{
 	anchored = 1;
@@ -56163,6 +56281,15 @@
 "fdC" = (
 /turf/unsimulated/floor/caution/west,
 /area/observatory)
+"fdV" = (
+/obj/item/implant/artifact/ancient/ancient_good,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "fen" = (
 /obj/structure/woodwall,
 /turf/unsimulated/floor/plating,
@@ -56507,8 +56634,8 @@
 	},
 /area/iomoon/base)
 "fsA" = (
-/obj/item/brick,
 /obj/decal/cleanable/dirt/dirt4,
+/obj/machinery/vending/murderbox_gang,
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
 "fth" = (
@@ -58082,6 +58209,38 @@
 	},
 /turf/space,
 /area/watchful_eye_sensor)
+"gEi" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 5;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 9;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "gEk" = (
 /obj/table/reinforced/auto,
 /obj/traitorifier/virtual/wizard,
@@ -58246,6 +58405,16 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
+"gLr" = (
+/obj/map/light/dimreddish,
+/obj/fakeobject/cultiststatue,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "gLs" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-19"
@@ -58738,6 +58907,17 @@
 /obj/securearea,
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/research)
+"hkZ" = (
+/obj/item/implant/artifact/ancient/ancient_good,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/crater/cave/lower)
 "hla" = (
 /obj/machinery/light,
 /obj/cauldron/candy/ephemeral,
@@ -59904,6 +60084,11 @@
 /obj/rack,
 /turf/unsimulated/floor/grey/blackgrime,
 /area/owlery/Owlmait2)
+"ime" = (
+/obj/item/parts/robot_parts/head/ancient/guardian,
+/obj/item/parts/robot_parts/head/ancient/guardian,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber)
 "imi" = (
 /obj/machinery/light/runway_light/delay4,
 /obj/lattice{
@@ -60043,6 +60228,11 @@
 /obj/railing/velvet,
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
+"irw" = (
+/obj/spawner/ancient_robot_artifact,
+/obj/spawner/ancient_robot_artifact,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber)
 "irM" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 8;
@@ -60561,6 +60751,12 @@
 	},
 /turf/unsimulated/floor/lava,
 /area/iomoon)
+"iKv" = (
+/obj/river{
+	dir = 6
+	},
+/turf/unsimulated/floor/cave,
+/area/crater/cave/lower)
 "iKM" = (
 /turf/unsimulated/floor/stairs/wood/wide,
 /area/afterlife/bar/sanctuary)
@@ -62150,6 +62346,15 @@
 /obj/item/device/audio_log/meatland_01,
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
+"jUj" = (
+/obj/spawner/ancient_robot_artifact,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "jUW" = (
 /obj/fakeobject/airlock_broken/firelock{
 	desc = "This blast door looks rusted over.  Junk.";
@@ -62232,6 +62437,15 @@
 	dir = 8
 	},
 /area/crunch/wtc)
+"jYm" = (
+/obj/creepy_sound_trigger,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black set of metal stairs.";
+	dir = 8;
+	icon_state = "ancient_stairs";
+	name = "strange stairs"
+	},
+/area/crater/cave/lower)
 "jYz" = (
 /obj/fakeobject/robot{
 	anchored = 1;
@@ -62885,6 +63099,26 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
+"kzI" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 6;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "kzP" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -63151,6 +63385,19 @@
 	dir = 4
 	},
 /area/centcom/offices/varshie)
+"kJQ" = (
+/obj/rack/iomoon,
+/obj/item/parts/robot_parts/chest/ancient/actuator,
+/obj/item/parts/robot_parts/head/ancient/actuator,
+/obj/item/parts/robot_parts/arm/left/ancient/actuator{
+	pixel_x = 6
+	},
+/obj/item/parts/robot_parts/arm/right/ancient/actuator{
+	pixel_x = -6
+	},
+/obj/map/light/dimreddish,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/crater/cave/lower)
 "kJR" = (
 /turf/unsimulated/floor/carpet/green/fancy/edge/north,
 /area/centcom/offices{
@@ -64239,6 +64486,17 @@
 /obj/machinery/light/small,
 /turf/unsimulated/floor/plating,
 /area/upper_arctic/pod1)
+"lDx" = (
+/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
+/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
+/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "lDQ" = (
 /obj/shrub{
 	dir = 1;
@@ -65084,6 +65342,26 @@
 	dir = 8
 	},
 /area/owlery/owleryhall)
+"mtQ" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 5;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "muz" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -65704,6 +65982,10 @@
 "mXo" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
+"mXu" = (
+/obj/spawner/ancient_robot_artifact,
+/turf/unsimulated/floor/ancient,
+/area/crunch)
 "mXS" = (
 /mob/living/critter/spider/spacerachnid,
 /turf/unsimulated/floor/cave,
@@ -65979,6 +66261,18 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"nkn" = (
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "nlC" = (
 /turf/unsimulated/floor/black/corner{
 	dir = 1
@@ -66939,6 +67233,9 @@
 	tag = "icon-fpurple1"
 	},
 /area/centcom/lounge)
+"nSq" = (
+/turf/unsimulated/iomoon/ancient_floor,
+/area/crater/cave/lower)
 "nSH" = (
 /obj/mesh/catwalk,
 /obj/cable/yellow{
@@ -67212,6 +67509,21 @@
 "obN" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/leah)
+"ocI" = (
+/obj/rack/iomoon,
+/obj/item/parts/robot_parts/chest/ancient,
+/obj/item/parts/robot_parts/arm/left/ancient{
+	pixel_x = 6
+	},
+/obj/item/parts/robot_parts/arm/right/ancient{
+	pixel_x = -6
+	},
+/obj/item/parts/robot_parts/head/ancient{
+	pixel_y = 4
+	},
+/obj/map/light/yellow,
+/turf/unsimulated/floor/ancient,
+/area/crunch)
 "ocV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -67900,6 +68212,38 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
+"oJi" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 6;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 10;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "oJy" = (
 /obj/stool/chair/dining/wood{
 	dir = 4
@@ -68452,6 +68796,28 @@
 /obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
+"phr" = (
+/obj/decal/cleanable/cobweb2,
+/obj/spawner/ancient_robot_artifact,
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "phv" = (
 /obj/fakeobject/airlock_broken/firelock{
 	density = 1;
@@ -69101,6 +69467,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
+"pFf" = (
+/obj/river{
+	dir = 4
+	},
+/turf/unsimulated/floor/cave,
+/area/crater/cave/lower)
 "pFm" = (
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
@@ -69609,6 +69981,11 @@
 /obj/machinery/power/data_terminal,
 /turf/space,
 /area/space)
+"pXb" = (
+/obj/decal/cleanable/cobweb2,
+/obj/item/material_piece/cloth/spidersilk,
+/turf/unsimulated/floor/cave,
+/area/crater/cave/lower)
 "pXh" = (
 /obj/machinery/light/small/broken,
 /turf/unsimulated/floor/scorched,
@@ -70235,6 +70612,27 @@
 	},
 /turf/unsimulated/floor/caution/east,
 /area/drone/assembly)
+"qzU" = (
+/obj/map/light/void,
+/obj/creepy_sound_trigger,
+/obj/trigger/spooky_emote,
+/obj/effects/lightshaft,
+/obj/stool/chair/comfy/throne_gold{
+	anchored = 1
+	},
+/obj/item/skull/gold,
+/obj/item/clothing/head/crown{
+	rarity = 5;
+	name = "crown of the underworld";
+	pixel_y = 11
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "qAh" = (
 /obj/cable/green{
 	icon_state = "6-9"
@@ -70365,6 +70763,38 @@
 	},
 /turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
+"qEp" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 10;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 6;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "qEK" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -70977,6 +71407,10 @@
 "rcQ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"rcX" = (
+/obj/decal/art_curser_sigil,
+/turf/unsimulated/wall/auto/adventure/ancient,
+/area/crater/cave/lower)
 "rdE" = (
 /obj/overlay{
 	density = 1;
@@ -71112,6 +71546,26 @@
 	},
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
+"rjf" = (
+/obj/rack/iomoon,
+/obj/item/parts/robot_parts/head/ancient/stonecutter{
+	pixel_y = 5
+	},
+/obj/item/parts/robot_parts/arm/right/ancient/stonecutter{
+	pixel_x = -5
+	},
+/obj/item/parts/robot_parts/chest/ancient/stonecutter,
+/obj/item/parts/robot_parts/arm/left/ancient/stonecutter{
+	pixel_x = 5
+	},
+/obj/map/light/dimreddish,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "rjl" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -72166,6 +72620,19 @@
 /obj/item/weldingtool,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"rYo" = (
+/obj/river{
+	desc = "It's pouring down from somewhere far above.";
+	name = "Waterfall"
+	},
+/obj/effects/harmless_smoke{
+	name = "mist";
+	opacity = 0
+	},
+/obj/decal/lightshaft,
+/obj/map/light/secretblue,
+/turf/unsimulated/wall/auto/adventure/cave,
+/area/crater/cave/lower)
 "rYq" = (
 /turf/unsimulated/wall/generic{
 	dir = 8;
@@ -73737,6 +74204,21 @@
 	name = "\proper the murderbox"
 	},
 /area/sim/gunsim/arena)
+"tsS" = (
+/obj/rack/iomoon,
+/obj/item/parts/robot_parts/chest/ancient,
+/obj/item/parts/robot_parts/arm/left/ancient{
+	pixel_x = 6
+	},
+/obj/item/parts/robot_parts/arm/right/ancient{
+	pixel_x = -6
+	},
+/obj/item/parts/robot_parts/head/ancient{
+	pixel_y = 4
+	},
+/obj/map/light/yellow,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "ttl" = (
 /obj/surgery_tray,
 /obj/item/scalpel,
@@ -73934,6 +74416,7 @@
 /obj/item/cable_coil/cut/small{
 	pixel_y = 4
 	},
+/obj/item/brick,
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
 "tHH" = (
@@ -74508,6 +74991,10 @@
 /obj/mapping_helper/access/owlmaint,
 /turf/unsimulated/floor/plating,
 /area/owlery/owllock)
+"ufy" = (
+/obj/geode/crystal/uqill,
+/turf/unsimulated/floor/cave,
+/area/crater/cave/lower)
 "ufO" = (
 /obj/decal/stripe_delivery,
 /mob/living/critter/robotic/gunbot/light,
@@ -74533,6 +75020,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
+"uhb" = (
+/obj/decal/cleanable/cobweb,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/crater/cave/lower)
 "uhr" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -74642,6 +75133,18 @@
 	icon_state = "shore-46"
 	},
 /area/titlescreen)
+"unU" = (
+/obj/decal/cleanable/cobweb2,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "uoE" = (
 /obj/shrub{
 	dir = 1
@@ -76014,11 +76517,18 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
 "vpA" = (
-/turf/unsimulated/wall/setpieces/stranger{
-	icon = 'icons/turf/walls/ancient.dmi';
-	icon_state = "ancient-2"
+/obj/rack/iomoon,
+/obj/item/parts/robot_parts/chest/ancient,
+/obj/item/parts/robot_parts/arm/left/ancient{
+	pixel_x = 6
 	},
-/area/crater/cave/lower)
+/obj/item/parts/robot_parts/arm/right/ancient{
+	pixel_x = -6
+	},
+/obj/item/parts/robot_parts/head/ancient/worker,
+/obj/map/light/yellow,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "vpM" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -76628,6 +77138,26 @@
 	dir = 8
 	},
 /area/void_diner)
+"vQW" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 10;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "vRa" = (
 /obj/machinery/door/poddoor/blast/single{
 	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
@@ -78159,9 +78689,12 @@
 /area/owlery/office)
 "wXl" = (
 /obj/map/light/dimreddish,
-/turf/unsimulated/wall/setpieces/stranger{
-	icon = 'icons/turf/walls/ancient.dmi';
-	icon_state = "ancient-2"
+/obj/item/implant/artifact/ancient/ancient_gimmick,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
 	},
 /area/crater/cave/lower)
 "wXp" = (
@@ -78221,6 +78754,15 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/centcom/lobby)
+"xbl" = (
+/obj/item/implant/artifact/ancient/ancient_gimmick,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "xbB" = (
 /obj/decal/cleanable/dirt,
 /obj/reagent_dispensers/still,
@@ -78267,6 +78809,11 @@
 	tag = "icon-fblue2 (NORTHWEST)"
 	},
 /area/afterlife/bar)
+"xcY" = (
+/obj/decal/cleanable/dirt,
+/obj/geode/crystal/uqill,
+/turf/unsimulated/floor/cave,
+/area/crater/cave/lower)
 "xdm" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/meat_derelict/main)
@@ -78575,6 +79122,15 @@
 "xpW" = (
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base/underground)
+"xqf" = (
+/obj/creepy_sound_trigger,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black set of metal stairs.";
+	dir = 1;
+	icon_state = "ancient_stairs";
+	name = "strange stairs"
+	},
+/area/crater/cave/lower)
 "xqq" = (
 /obj/table/clothred/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute{
@@ -79415,6 +79971,13 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/centcom/lobby)
+"xSl" = (
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/crater/cave/lower)
 "xSW" = (
 /obj/stool/bar,
 /mob/living/carbon/human/don_glab/cow,
@@ -79464,6 +80027,27 @@
 /obj/mapping_helper/access/owlcommand,
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
+"xUA" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/spawner/ancient_robot_artifact,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "xUF" = (
 /obj/map/light/lava,
 /obj/fakeobject/pipe{
@@ -79829,6 +80413,26 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
+"yfy" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "yfL" = (
 /obj/decal/poster/wallsign/stencil/left/f,
 /turf/unsimulated/floor/setpieces/gauntlet,
@@ -81974,7 +82578,7 @@ bIY
 bIY
 bJE
 bJE
-bKu
+ocI
 bJV
 bJV
 bJV
@@ -82277,7 +82881,7 @@ bIY
 bJE
 bJE
 bKv
-bJV
+bKu
 bKS
 bJV
 bJV
@@ -82578,7 +83182,7 @@ bIY
 bIY
 bJE
 bJE
-bJV
+ocI
 bJV
 bJV
 bJV
@@ -83792,7 +84396,7 @@ bJV
 bJE
 bJE
 bJE
-bJV
+mXu
 bJV
 bJV
 bJV
@@ -84396,7 +85000,7 @@ bJV
 bJE
 bJE
 bJE
-bJV
+mXu
 bJV
 bJV
 bJV
@@ -119666,15 +120270,15 @@ biL
 biL
 biL
 biL
-biL
-biL
-biL
-biL
-biL
-biL
-biL
-biL
-biL
+aRv
+aRv
+aRv
+aRv
+aRv
+aRv
+aRv
+aRv
+aRv
 biL
 biL
 biL
@@ -119966,27 +120570,27 @@ aaa
 biL
 biL
 bjn
-bjm
-bjm
-bkz
-bjm
+yfy
 bjm
 bkz
-bjm
-bjm
-bjm
-biL
-biL
+nSq
+nSq
+bkz
+nSq
+nSq
+nSq
+aRv
+aRv
 bjm
 bjm
 bnP
 biL
 bjm
-bjm
+yfy
 biL
+jUj
 bjm
-bjm
-bjm
+jUj
 biL
 aaa
 bva
@@ -120268,24 +120872,24 @@ aaa
 biL
 biL
 bjm
-bjm
+yfy
 biL
-biL
-biL
-biL
-biL
-bjm
-bjm
-bjm
-bjm
+aRv
+aRv
+aRv
+aRv
+nSq
+nSq
+nSq
+nSq
 bmj
 bjm
 bjm
 bjm
 biL
 bjm
-bjm
-bkz
+yfy
+xqf
 bjm
 bjm
 bjm
@@ -120570,23 +121174,23 @@ aaa
 biL
 biL
 bjm
-bjm
+yfy
+biL
+aRv
+cZw
+hkZ
+aRv
+agv
+nSq
+nSq
+aRv
+aRv
+biL
+biL
 biL
 biL
 bjm
-bjm
-biL
-bjm
-bjm
-bjm
-biL
-biL
-biL
-biL
-biL
-biL
-bjm
-bjm
+yfy
 biL
 bjm
 bjm
@@ -120872,23 +121476,23 @@ aaa
 biL
 bjl
 bjm
-bjm
+yfy
 bjl
-biL
-bjm
-bjm
-biL
-bjm
-bjm
-bjm
-bjm
+aRv
+nSq
+nSq
+aRv
+nSq
+nSq
+nSq
+nSq
 bmj
 bjm
 boo
 bjm
 biL
 bjm
-bjm
+yfy
 biL
 biL
 bjZ
@@ -121173,10 +121777,10 @@ aIr
 aaa
 biL
 biL
-bjm
-bjm
+bkd
+kzI
 biL
-biL
+aRv
 bjZ
 blx
 blx
@@ -121184,15 +121788,15 @@ blx
 bjZ
 blx
 blx
-biL
+aRv
 bjm
 bjm
 bnP
 biL
 bjm
-bjm
+yfy
 biL
-bjn
+bHL
 bjm
 bjm
 biL
@@ -121486,7 +122090,7 @@ bkY
 bkY
 bmK
 blx
-biL
+aRv
 biL
 biL
 biL
@@ -121494,7 +122098,7 @@ biL
 bpn
 biL
 biL
-bjm
+cUj
 bjm
 bjm
 biL
@@ -121794,9 +122398,9 @@ biL
 bjm
 bjm
 bjm
-bjm
+yfy
 biL
-bjp
+unU
 bjm
 bjm
 biL
@@ -122078,25 +122682,25 @@ aIr
 aIr
 aaa
 biL
+ePi
 bjm
 bjm
-biL
-biL
+bmj
 bkY
 bkY
 blx
 blx
-bkY
-bkY
-bkY
-bkY
-blx
+ufy
+cfN
+cTr
+cTr
+aRv
 bkY
 biL
 box
 bjm
 bjm
-bjm
+yfy
 biL
 biL
 bjZ
@@ -122380,25 +122984,25 @@ aIr
 aIr
 aaa
 biL
+biL
 bjm
 bjm
-bkz
-bkY
+bmj
 bkY
 bkY
 blx
 blx
 bmt
-bkY
+pFf
 bkY
 bkY
 bmj
 bkY
 biL
+fdV
 bjm
 bjm
-bjm
-bjm
+aRu
 biL
 bjm
 bjm
@@ -122682,16 +123286,16 @@ aIr
 aIr
 aaa
 biL
+ePi
 bjm
 bjm
-biL
-bkY
+bmj
 blo
 blx
 blx
 blx
-blx
-bkY
+rYo
+iKv
 mXS
 blx
 blx
@@ -122985,13 +123589,13 @@ aIr
 aaa
 biL
 biL
-bka
+jYm
 biL
 biL
 biL
-biL
-biL
-biL
+aRv
+aRv
+aRv
 blx
 blx
 bka
@@ -123002,11 +123606,11 @@ bkY
 bna
 biL
 bjm
-bjm
+mtQ
 biL
-bjm
-bjm
-bjm
+bkd
+bkd
+bkd
 biL
 bri
 bkY
@@ -123286,14 +123890,14 @@ aIr
 aIr
 aaa
 biL
+lDx
 bjm
 bjm
-bjm
-bjm
+biL
 biL
 bly
-bjm
-biL
+nSq
+aRv
 bmu
 bkY
 bkY
@@ -123301,7 +123905,7 @@ bkY
 blx
 bkY
 bkY
-bkY
+ufy
 biL
 bjm
 bjm
@@ -123310,7 +123914,7 @@ biL
 bjZ
 biL
 biL
-blA
+pXb
 bkY
 mXS
 blx
@@ -123588,14 +124192,14 @@ aIr
 aIr
 aaa
 biL
+lDx
 bjm
 bjm
-bjm
-bjm
+xUA
 biL
-bjm
-bjm
-bmj
+nSq
+nSq
+eSF
 bkY
 bkY
 bkY
@@ -123890,25 +124494,25 @@ aIr
 aIr
 aaa
 biL
-bjm
+biL
 bkb
 bjm
-bjm
+yfy
 biL
 bjp
-bjm
-biL
-biL
-biL
-biL
-biL
-biL
+nSq
+aRv
+aRv
+aRv
+aRv
+aRv
+aRv
 biL
 bka
 biL
 biL
 biL
-bjZ
+eNc
 biL
 biL
 biL
@@ -124195,16 +124799,21 @@ biL
 bjm
 bjm
 bjm
-bjm
+yfy
 biL
-bjn
-bjm
+uhb
+nSq
 bmj
+nSq
+nSq
+nSq
+ehb
+aRv
+yfy
 bjm
-bjm
-bjm
-bjm
+aRu
 biL
+bjl
 bjm
 bjm
 bjm
@@ -124213,12 +124822,7 @@ bjl
 bjm
 bjm
 bjm
-biL
-bjm
-bjm
-bjm
-bjm
-bjm
+bjl
 biL
 biL
 aaa
@@ -124497,19 +125101,19 @@ biL
 biL
 biL
 biL
-bka
+yfy
 biL
 blz
+nSq
+aRv
+nSq
+nSq
+nSq
+xSl
+aRv
+yfy
 bjm
-biL
-bjm
-bjm
-bjm
-bjm
-biL
-bjm
-bjm
-bjm
+yfy
 biL
 biL
 bjZ
@@ -124796,33 +125400,33 @@ aIr
 aIr
 aaa
 biL
-bjm
-bjm
-bjm
-bjm
+biL
+bkd
+bkd
+oJi
 biL
 biL
 biL
-biL
-biL
-biL
+aRv
+aRv
+aRv
 bka
+aRv
+aRv
+kzI
+bjm
+mtQ
 biL
-biL
-bjm
-bjm
-bjm
-biL
-bjm
+vQW
 bjm
 bkz
 bjm
 biL
+bjl
 bjm
 bjm
 bjm
-bjm
-bjm
+bjl
 biL
 biL
 biL
@@ -125098,24 +125702,24 @@ aIr
 aIr
 aaa
 biL
+rjf
 bjm
 bjm
+yfy
 bjm
 bjm
-bjm
-bjm
-biL
-blx
-blx
-biL
-bjm
-bjm
-bjm
-bjm
-bjm
-bjm
+bkz
+bkY
+bkY
 biL
 bjm
+yfy
+bjm
+bjm
+xbl
+xbl
+biL
+yfy
 bjm
 biL
 bjl
@@ -125400,31 +126004,31 @@ aIr
 aIr
 aaa
 biL
+gLr
+qzU
 bjm
+gEi
+bkd
+bkd
+biL
+bkY
+bkY
+blx
+blx
+blx
+biL
 bjm
-bjm
-bjm
-biL
-bjZ
-biL
-blx
-blx
-blx
-blx
-blx
-biL
-biL
 wXl
+xbl
+biL
+yfy
+bjm
+biL
+biL
 biL
 biL
 bjm
-bjm
-biL
-biL
-biL
-biL
-bjm
-bjm
+kJQ
 bjm
 biL
 biL
@@ -125702,24 +126306,24 @@ aIr
 aIr
 aaa
 biL
-biL
-vpA
-vpA
-biL
-biL
+rjf
+bjm
+bjm
+yfy
+bjm
 bjm
 bkz
 bkY
 bkY
-bkY
+ufy
 blx
 blx
 biL
-bjm
+xbl
 bjm
 bjm
 biL
-bjm
+yfy
 bjm
 biL
 biL
@@ -126004,10 +126608,10 @@ aIr
 aIr
 aaa
 biL
-bjn
-bjm
-bjm
-bjm
+biL
+bkd
+bkd
+qEp
 biL
 biL
 biL
@@ -126021,7 +126625,7 @@ bjm
 bjm
 bjm
 boO
-bjm
+yfy
 bjm
 box
 biL
@@ -126306,10 +126910,10 @@ aIr
 aIr
 aaa
 biL
-bjm
-bjo
-bjm
-bjm
+biL
+biL
+rcX
+yfy
 biL
 blx
 blX
@@ -126323,15 +126927,15 @@ bjm
 bjm
 bjm
 biL
+yfy
 bjm
 bjm
-bjm
 biL
 biL
 biL
-biL
-bka
-biL
+rcX
+jYm
+rcX
 biL
 biL
 blx
@@ -126609,10 +127213,10 @@ aIr
 aaa
 biL
 bjo
-bkd
-bjo
-bjm
-biL
+bmj
+bmj
+yfy
+xqf
 bkY
 bkY
 bkY
@@ -126625,7 +127229,7 @@ bjm
 bjm
 bjm
 bkz
-bjm
+yfy
 bjm
 box
 biL
@@ -126635,7 +127239,7 @@ bkY
 bkY
 bkY
 btA
-btA
+xcY
 blx
 blx
 aaa
@@ -126910,10 +127514,10 @@ aIr
 aIr
 aaa
 biL
-bjp
-bjo
-bjm
-bjm
+biL
+biL
+rcX
+yfy
 biL
 blA
 bkY
@@ -126923,11 +127527,11 @@ blx
 blx
 blx
 biL
-bjm
-bjm
-bjm
+nkn
+nkn
+nkn
 biL
-bjp
+phr
 bjm
 biL
 biL
@@ -127232,7 +127836,7 @@ biL
 biL
 biL
 biL
-bkY
+ufy
 brj
 bkY
 bkY
@@ -130483,7 +131087,7 @@ aaa
 bAt
 bAt
 aIK
-bAt
+mNW
 aIK
 aKn
 aIK
@@ -130588,7 +131192,7 @@ ahX
 bFN
 bFN
 bFN
-bHL
+bFN
 bFN
 bFN
 bFN
@@ -130889,9 +131493,9 @@ bFN
 bFN
 bFN
 bFN
+bGA
 bFN
-bGw
-bFN
+bGA
 bFN
 bFN
 bFN
@@ -131100,8 +131704,8 @@ bAt
 bAt
 bAt
 bAt
-aRu
-aSu
+bAt
+bAt
 bAt
 aIr
 aIr
@@ -131181,7 +131785,7 @@ bBZ
 bpo
 bpo
 bpo
-bqb
+tsS
 bqb
 brT
 bpo
@@ -131389,9 +131993,6 @@ aaa
 bAt
 bAt
 aIN
-aJs
-aIK
-aIK
 aIK
 aJs
 aIK
@@ -131402,7 +132003,10 @@ aIK
 aIK
 aIK
 aJs
-aRv
+aIK
+dLs
+aIK
+aJs
 aSu
 bAt
 aIr
@@ -131785,7 +132389,7 @@ bpo
 bpo
 bpo
 bpo
-bqb
+vpA
 bqb
 brT
 bpo
@@ -133597,7 +134201,7 @@ bpo
 bpo
 bpo
 bpo
-bqb
+vpA
 bqb
 brT
 bpo
@@ -134201,7 +134805,7 @@ bvb
 bpo
 bpo
 bpo
-bqb
+tsS
 bqb
 brT
 bpo
@@ -134815,7 +135419,7 @@ bFN
 bFN
 bFN
 bFN
-bHt
+ime
 bGw
 bIh
 bFN
@@ -135419,7 +136023,7 @@ aaa
 aaa
 bFN
 bFN
-bHt
+irw
 bHP
 bHt
 bFN

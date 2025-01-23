@@ -1,4 +1,5 @@
 /datum/targetable/bball
+	var/required_power = 3
 
 /datum/targetable/bball/tryCast(atom/target, params)
 	if(holder.owner.stat)
@@ -8,7 +9,7 @@
 	if(!isturf(holder.owner.loc))
 		return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
-	if(!holder.owner.bball_spellpower())
+	if(!(holder.owner.bball_spellpower() >= src.required_power))
 		boutput(holder.owner, SPAN_ALERT("You are not balling!"))
 		return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 	. = ..()
@@ -145,6 +146,12 @@
 	targeted = FALSE
 	cooldown = 4 SECONDS
 	icon_state = "blink"
+
+/datum/targetable/bball/blitz_slam/tryCast(atom/target, params)
+	if (isrestrictedz(get_z(holder.owner)))
+		boutput(holder.owner, SPAN_ALERT("You cannot cast that here"))
+		return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+	. = ..()
 
 /datum/targetable/bball/blitz_slam/cast(atom/target)
 	. = ..()
@@ -410,6 +417,30 @@
 
 	M.transforming = 0
 
+/datum/targetable/bball/summon
+	name = "Summon b-ball"
+	desc = "Summon a highly lethal basketball to your hands."
+	cooldown = 30 SECONDS
+	required_power = 1
+	icon_state = "summon-bball"
+
+/datum/targetable/bball/summon/cast(atom/target)
+	. = ..()
+	for_by_tcl(bball, /obj/item/basketball/lethal/summonable)
+		if (bball.owner_ckey == holder.owner.mind.key)
+			if (bball in holder.owner)
+				boutput(holder.owner, SPAN_ALERT("You are already balling!"))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+			boutput(holder.owner, SPAN_NOTICE("You flick your wrist and pull a basketball out of nowhere."))
+			holder.owner.put_in_hand_or_drop(bball)
+			return CAST_ATTEMPT_SUCCESS
+
+	var/obj/item/basketball/lethal/summonable/new_bball = new()
+	new_bball.owner_ckey = holder.owner.mind.key
+	holder.owner.put_in_hand_or_drop(new_bball)
+	boutput(holder.owner, SPAN_NOTICE("You flick your wrist and pull a basketball out of nowhere."))
+	return CAST_ATTEMPT_SUCCESS
+
 /obj/item/bball_uplink
 	name = "station bounced radio"
 	icon = 'icons/obj/items/device.dmi'
@@ -457,6 +488,7 @@
 			dat += "<A href='byond://?src=\ref[src];spell_holy=1'>Holy Jam</A> (15)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_blink=1'>Blitz Slam</A> (2)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_revengeclown=1'>Clown Jam</A> (90)<BR>"
+			dat += "<A href='byond://?src=\ref[src];spell_summon=1'>B-Ball Summon</A> (30)<BR>"
 //			dat += "<A href='byond://?src=\ref[src];spell_summongolem=1'>Summon Basketball Golem</A> (60)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_spin=1'>Spin (free)</A> (4)<BR>"
 			dat += "<HR>"
@@ -497,6 +529,11 @@
 				src.uses -= 1
 				H.addAbility(/datum/targetable/bball/blitz_slam)
 				src.temp = "This slam will allow you to teleport randomly at a short distance."
+		if (href_list["spell_summon"])
+			if (src.uses >= 1)
+				src.uses -= 1
+				H.addAbility(/datum/targetable/bball/summon)
+				src.temp = "Summon a basketball that gains in power the more times it's passed. Throwing the charged b-ball at someone will perform a potentially very lethal vibe check."
 		if (href_list["spell_revengeclown"])
 			if (src.uses >= 1)
 				src.uses -= 1
@@ -554,6 +591,4 @@
 		magcount += 1
 	for (var/obj/item/basketball/B in usr.contents)
 		magcount += 2
-	if (magcount >= 3)
-		return 1
-	return 0
+	return magcount

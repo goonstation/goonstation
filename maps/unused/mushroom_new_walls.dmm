@@ -10660,6 +10660,10 @@
 /obj/table/wood/auto,
 /obj/item/disk/data/cartridge/captain,
 /obj/item/disk/data/cartridge/captain,
+/obj/item/paper/pipebombs{
+	pixel_y = 5;
+	pixel_x = 5
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "bmn" = (

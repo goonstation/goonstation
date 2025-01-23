@@ -847,6 +847,10 @@ proc/broadcast_to_all_gangs(var/message)
 				continue
 			if (isnull(M.current.loc)) //deleted or an admin who has removeself'd
 				continue
+			if (isliving(M.current))
+				var/mob/living/L = M.current
+				if (L.hibernating) //cryod
+					continue
 			if (is_dead_or_ghost_role(M.current)) //stop sending PDA messages to the afterlife
 				continue
 			if (!(M in deferred_minds))
@@ -2207,11 +2211,11 @@ proc/broadcast_to_all_gangs(var/message)
 			if(is_hiding)
 				src.layer = PLATING_LAYER-0.01
 				src.plane = PLANE_FLOOR
-				src.mouse_opacity = 1
+				src.mouse_opacity = 0
 			else
 				src.layer = MOB_LAYER
 				src.plane = PLANE_DEFAULT
-				src.mouse_opacity = 0
+				src.mouse_opacity = 1
 			animate_slide(floorturf, 0, 0, 4)
 
 	proc/cash_amount()

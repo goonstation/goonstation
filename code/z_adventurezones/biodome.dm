@@ -801,7 +801,7 @@ SYNDICATE DRONE FACTORY AREAS
 		if (!viewable_atoms.Find(target_r))
 			return
 
-		var/list/affected = DrawLine(src.loc, target_r, /obj/line_obj/whip ,'icons/obj/projectiles.dmi',"WholeWhip",1,1,"HalfStartWhip","HalfEndWhip",OBJ_LAYER,1)
+		var/list/affected = drawLineObj(src.loc, target_r, /obj/line_obj/whip ,'icons/obj/projectiles.dmi',"WholeWhip",1,1,"HalfStartWhip","HalfEndWhip",OBJ_LAYER,1)
 
 		playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, TRUE)
 
