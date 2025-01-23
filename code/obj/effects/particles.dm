@@ -368,12 +368,26 @@
 	gravity = list(0, 0, 0)
 	friction = generator("num", 0.8, 0.6, UNIFORM_RAND)
 
-/obj/effects/gunshot_impact
+/obj/effects/impact
+	var/static/effect_amount = 0
+
+	New()
+		effect_amount ++
+		if (effect_amount > 450) //About 150 gunshots in the span of 5 seconds
+			qdel(src)
+		. = ..()
+
+	disposing()
+		effect_amount --
+		. = ..()
+
+/obj/effects/impact/gunshot
 	plane = PLANE_NOSHADOW_ABOVE
 	particles = null
 	var/base_amt = 0
 
 	New(loc, var/pos_x = 0, var/pos_y = 0, var/dir_x = 0, var/dir_y = 0, var/damage = 0, var/color_avrg = null, var/impact_icon = null, var/impact_icon_state = null)
+		..()
 		particles.position = list(pos_x, pos_y, 0)
 		if (damage <= 5)
 			particles.count = 0
@@ -395,36 +409,36 @@
 		if (impact_icon && impact_icon_state)
 			particles.icon = impact_icon
 			particles.icon_state = impact_icon_state
-		..()
 		SPAWN(2 DECI SECOND)
 			src.particles?.spawning = 0
 			sleep(src.particles?.lifespan)
 			qdel(src)
 
-/obj/effects/gunshot_impact/dust
+/obj/effects/impact/gunshot/dust
 	base_amt = 10
 	particles = new/particles/impact_dust
 	plane = PLANE_NOSHADOW_BELOW
 
-/obj/effects/gunshot_impact/smoke
+/obj/effects/impact/gunshot/smoke
 	base_amt = 5
 	particles = new/particles/impact_smoke
 
-/obj/effects/gunshot_impact/sparks
+/obj/effects/impact/gunshot/sparks
 	plane = PLANE_ABOVE_LIGHTING
 	base_amt = 5
 	particles = new/particles/impact_sparks
 
-/obj/effects/gunshot_impact/bubble
+/obj/effects/impact/gunshot/bubble
 	base_amt = 6
 	particles = new/particles/impact_bubble
 
-/obj/effects/energy_impact
+/obj/effects/impact/energy
 	plane = PLANE_ABOVE_LIGHTING
 	particles = null
 	var/base_amt = 0
 
 	New(loc, var/pos_x = 0, var/pos_y = 0, var/dir_x = 0, var/dir_y = 0, var/damage = 0, var/color_avrg = null)
+		..()
 		particles.position = list(pos_x, pos_y, 0)
 		if (damage <= 40)
 			particles.count = base_amt
@@ -442,21 +456,20 @@
 			particles.velocity = generator("box", list(40*dir_x, 40*dir_y, 0), list(15*dir_x, 15*dir_y, 0), UNIFORM_RAND)
 		if (color_avrg)
 			particles.color = color_avrg
-		..()
 		SPAWN(1 DECI SECOND)
 			src.particles?.spawning = 0
 			sleep(src.particles?.lifespan)
 			qdel(src)
 
-/obj/effects/energy_impact/smoke
+/obj/effects/impact/energy/smoke
 	plane = PLANE_NOSHADOW_ABOVE
 	base_amt = 3
 	particles = new/particles/impact_smoke
 
-/obj/effects/energy_impact/sparks
+/obj/effects/impact/energy/sparks
 	base_amt = 4
 	particles = new/particles/impact_sparks/slow
 
-/obj/effects/energy_impact/energy
+/obj/effects/impact/energy/projectile_sparks
 	base_amt = 3
 	particles = new/particles/impact_energy
