@@ -45,7 +45,9 @@
 				contexts += surgery.get_context()
 		surgeon.showContextActions(contexts, patient, new /datum/contextLayout/experimentalcircle)
 
-	proc/can_operate(obj/tool)
+	proc/can_operate(obj/item/tool)
+		if (tool.tool_flags & TOOL_CUTTING)
+			return TRUE
 		for(var/datum/surgery/surgery in surgeries)
 			if (surgery.can_operate(tool))
 				return TRUE
@@ -63,8 +65,6 @@
 	living
 		add_surgeries()
 			..()
-			surgeries += new/datum/surgery/heal_brute(patient, src)
-			surgeries += new/datum/surgery/heal_burn(patient, src)
-			surgeries += new/datum/surgery/brainsurg(patient, src)
+			surgeries += new/datum/surgery/heal_generic(patient, src)
 
 

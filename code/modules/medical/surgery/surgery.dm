@@ -7,18 +7,18 @@
 	var/icon_state = "scissor"
 	/// The surgery that this surgery sits inside of. Null if this sits at the top level.
 	var/datum/surgery/super_surgery
-	/// The remaining steps to perform this surgery (grey bg)
+	/// The remaining steps to perform this surgery
 	var/list/surgery_steps
-	/// Surgeries inside this surgery (green bg)
+	/// Surgeries inside this surgery
 	var/list/sub_surgeries
+	var/list/default_sub_surgeries
 	/// If FALSE, sub surgeries are hidden until steps are completed.
 	var/sub_surgeries_always_visible = FALSE
 	/// If TRUE, the surgery will be restarted when finished.
 	var/restart_when_finished = FALSE
 	var/holder = null
-	var/patient = null
+	var/mob/living/patient = null
 	var/started = FALSE
-
 
 	New(var/mob/living/patient, var/datum/surgeryHolder/holder, var/datum/surgery/super_surgery)
 		..()
@@ -29,7 +29,9 @@
 		if (super_surgery)
 			src.super_surgery = super_surgery
 		surgery_steps = list()
+		sub_surgeries = list()
 		generate_surgery_steps()
+		get_sub_surgeries()
 
 	proc/can_operate(obj/item/tool)
 		for(var/datum/surgery_step/step in surgery_steps)
@@ -38,34 +40,41 @@
 		return FALSE
 	///Create & add the surgery steps for this surgery
 	proc/generate_surgery_steps()
+	///Create the sub-surgeries for this surgery
+	proc/get_sub_surgeries()
+		for(var/surgery in default_sub_surgeries)
+			sub_surgeries += new surgery(patient, holder, src)
 
 	///Whether this surgery is possible on the target - Otherwise, will be hidden from the context menu
-	proc/surgery_possible(mob/living/target, mob/user)
+	proc/surgery_possible(mob/living/surgeon, mob/user)
 		return TRUE
 
 	/// Called when the surgery's context option is clicked
-	proc/enter_surgery(mob/living/user, obj/item/I)
+	proc/enter_surgery(mob/living/surgeon, obj/item/I)
 		if (!started)
-			start_surgery(user, I)
+			start_surgery(surgeon, I)
 			started = TRUE
 		var/contexts = get_surgery_contexts()
 		contexts += new/datum/contextAction/surgery/cancel(holder,src)
 		contexts += new /datum/contextAction/surgery/step_up(holder, src)
 
-		user.showContextActions(contexts, patient, new /datum/contextLayout/experimentalcircle)
+		surgeon.showContextActions(contexts, patient, new /datum/contextLayout/experimentalcircle)
 
 	/// Called the first time a surgery is entered
-	proc/start_surgery(mob/user, obj/item/I)
+	proc/start_surgery(mob/surgeon, obj/item/I)
 
 	/// Called when the last step of a surgery is completed
-	proc/complete_surgery(obj/item/I, mob/user)
+	proc/complete_surgery(mob/surgeon, obj/item/I)
+		on_complete()
 		if (restart_when_finished)
 			for(var/datum/surgery_step/step in surgery_steps)
 				qdel(step)
 			surgery_steps = list()
 			generate_surgery_steps()
 			started = FALSE
+			enter_surgery(surgeon, I)
 
+	proc/on_complete(mob/surgeon, obj/item/I)
 
 	/// Called when something cancels the surgery.
 	proc/cancel_surgery(obj/item/I, mob/user)
@@ -109,9 +118,9 @@
 			for (var/datum/surgery/surgery in sub_surgeries)
 				contexts += surgery.get_context()
 		return contexts
-	proc/step_completed(datum/surgery_step/step, mob/user)
+	proc/step_completed(datum/surgery_step/step, mob/user, obj/item/tool)
 		if (surgery_complete())
-			complete_surgery(user)
+			complete_surgery(user, tool)
 		else
 			enter_surgery(user, null)
 
@@ -147,13 +156,17 @@
 			if (success_sound)
 				playsound(parent_surgery.patient, success_sound, 50, TRUE)
 			user.visible_message(success_text)
-			step_completed(tool,user)
+			finish_step(user, tool)
 		else
 			boutput(user,SPAN_ALERT("You can't use that tool for this step."))
 
-	proc/step_completed(obj/tool, mob/user) //! Called when the step is completed
+	/// Mark this step as finished and call on_complete. It's better to override on_complete unless you know what you're doing.
+	proc/finish_step(mob/user, obj/item/tool)
 		finished = TRUE
 		parent_surgery.step_completed(src, user)
+
+	/// Override this to completion effects to this surgery step.
+	proc/on_complete(mob/user, obj/item/tool)
 
 	proc/get_context(var/locked) //! Get the context for this step
 		if (finished && hide_when_finished)
