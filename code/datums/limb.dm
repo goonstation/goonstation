@@ -312,6 +312,9 @@
 		reload_time = 30 SECONDS
 		muzzle_flash = "muzzle_flash"
 
+		no_reload
+			reload_time = 0 SECONDS
+
 
 	cannon
 		proj = new /datum/projectile/bullet/cannon
