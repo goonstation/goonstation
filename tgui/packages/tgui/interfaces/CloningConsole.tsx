@@ -7,6 +7,7 @@
  * @license ISC
  */
 
+import { BooleanLike } from 'common/react';
 import { useState } from 'react';
 import {
   Box,
@@ -29,6 +30,7 @@ import { HealthStat } from '../components/goonstation/HealthStat';
 import { Window } from '../layouts';
 
 interface CloningConsoleData {
+  allowDeadScan: BooleanLike;
   allowMindErasure;
   allowedToDelete;
   balance;
@@ -44,9 +46,9 @@ interface CloningConsoleData {
   message;
   mindWipe;
   occupantScanned;
-  podEfficient;
+  podEfficient: BooleanLike[];
   podNames;
-  podSpeed;
+  podSpeed: BooleanLike[];
   scannerGone;
   scannerLocked;
   scannerOccupied;
@@ -243,6 +245,7 @@ export const CloningConsole = () => {
 const Functions = () => {
   const { act, data } = useBackend<CloningConsoleData>();
   const {
+    allowDeadScan,
     allowMindErasure,
     disk,
     diskReadOnly,
@@ -275,6 +278,19 @@ const Functions = () => {
           </Button>
         </Box>
       </Section>
+      {!!allowDeadScan && (
+        <Section title="Necrosis Scanning Module">
+          <Box bold>Notice:</Box>
+          <Box>
+            Installation of the NecroScan II cloner upgrade module enables
+            scanning of rotted and skeletal remains.
+          </Box>
+          <Box fontSize="0.9em">
+            Disclaimer: Extreme genetic degredation is not covered by the
+            NecroScan II cloner module.
+          </Box>
+        </Section>
+      )}
       {!!allowMindErasure && (
         <Section title="Criminal Rehabilitation Controls">
           <Box>
