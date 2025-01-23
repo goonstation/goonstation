@@ -168,6 +168,7 @@
 //Borrowing this, sorry Azrun!
 /obj/item/salvager/gunbot
 	name = "deconstructor"
+	decon_time_mult = 0.5
 	use_power(watts)
 		return TRUE
 
