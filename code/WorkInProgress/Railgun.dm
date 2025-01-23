@@ -39,7 +39,7 @@
 
 		playsound(src, 'sound/weapons/railgun.ogg', 40, TRUE)
 
-		var/list/affected = DrawLine(src.loc, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
+		var/list/affected = drawLineObj(src.loc, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
 
 		for(var/obj/O in affected)
 			O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.
@@ -81,14 +81,14 @@ proc/Preload360()  //This is mainly for overhead pixel movement games but often 
 //This is not my code. VVV
 
 /*
-The DrawLine proc in detail:
+The drawLineObj proc in detail:
 
 
 
 
 The Proc:
 
-  DrawLine(Start,End,LineType,Icon,Whole_Icon_State,CenterOfIconStart,CenterOfIconEnd,HalfStart_Icon_State,HalfEnd_Icon_State,Layer,ExtraDetection,StartPx,StartPy,EndPx,EndPy,SpecStartPx,SpecStartPy)
+  drawLineObj(Start,End,LineType,Icon,Whole_Icon_State,CenterOfIconStart,CenterOfIconEnd,HalfStart_Icon_State,HalfEnd_Icon_State,Layer,ExtraDetection,StartPx,StartPy,EndPx,EndPy,SpecStartPx,SpecStartPy)
 
 
 
@@ -126,7 +126,7 @@ The Arguments:
       -1 if you want it to add extra lines to the line list to account for areas where one line segment crosses 2 tiles.
       -(The reason this is in effect is so it detects all tiles the line goes into, instead of just ones where the entire line segment is within bounds.  Check scrnshot1.jpg and scrnshot2.jpg for examples.)
       -Reccomended:  1
-      -Note that when you access the line list that is returned by the DrawLine proc, if you have Extra Detection on, if you are editing the images of lines, make sure to check if the line has an icon or not to determine if it is an extra detection line (which is invisible) or a regular line (which is visible).
+      -Note that when you access the line list that is returned by the drawLineObj proc, if you have Extra Detection on, if you are editing the images of lines, make sure to check if the line has an icon or not to determine if it is an extra detection line (which is invisible) or a regular line (which is visible).
   StartPx
       -Leave null unless you want pixel-based support.
       -If you want pixel-based support, set this to the object's Px loc var. (I refer to Px as a mob's x var multiplied by 32 and then having the lower-left corner of the object's bounding box's x added to it.)
@@ -168,7 +168,7 @@ damage that monster.
 
 Example of Proper Usage (Tile-based):
 
-  src.LineList.Add(DrawLine(StartingObject,EndingObject,/obj/Line,'Line.dmi',"Whole",1,1,"HalfStart","HalfEnd",OBJ_LAYER,1))
+  src.LineList.Add(drawLineObj(StartingObject,EndingObject,/obj/Line,'Line.dmi',"Whole",1,1,"HalfStart","HalfEnd",OBJ_LAYER,1))
 
 You could then access the list to see what turfs/mobs/objs/etc. the line crossed like this:
 
@@ -200,9 +200,9 @@ proc/Get_Angle(atom/ref, atom/target,startpx,startpy,endpx,endpy)
     .+=360
 
 
-proc/DrawLine(atom/Start,atom/End,LineType,Icon,Whole_Icon_State = "",CenterOfIconStart=1,CenterOfIconEnd=1,HalfStart_Icon_State = "HalfStart",HalfEnd_Icon_State = "HalfEnd",Layer=OBJ_LAYER,ExtraDetection=1,startpx,startpy,endpx,endpy,startpx2,startpy2,PreloadedIcon=null)
+proc/drawLineObj(atom/Start,atom/End,LineType,Icon,Whole_Icon_State = "",CenterOfIconStart=1,CenterOfIconEnd=1,HalfStart_Icon_State = "HalfStart",HalfEnd_Icon_State = "HalfEnd",Layer=OBJ_LAYER,ExtraDetection=1,startpx,startpy,endpx,endpy,startpx2,startpy2,PreloadedIcon=null)
 	if(isturf(Start) || isturf(End))
-		world.log << "DrawLine ERROR:  Cannot draw line with turf for starting or ending point.  Please use /obj points instead. S: [Start] | E: [End]"
+		world.log << "drawLineObj ERROR:  Cannot draw line with turf for starting or ending point.  Please use /obj points instead. S: [Start] | E: [End]"
 		return
 	if (!Start || !End)
 		return
