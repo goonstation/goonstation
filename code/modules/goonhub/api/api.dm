@@ -162,7 +162,7 @@ var/global/datum/apiHandler/apiHandler
 		// Otherwise the request did finish so we can lower this
 		src.lazy_concurrent_counter--
 		var/datum/http_response/response = request.into_response()
-		var/list/data
+		var/list/data = list()
 		if (src.debug) src.debugLogResponse(route.method, req_route, response.body, response.headers, response.status_code)
 
 		if (response.errored && response.status_code)
@@ -181,7 +181,7 @@ var/global/datum/apiHandler/apiHandler
 		// At this point we assume the request was a success, so reset the error counter
 		src.trackRecentError(TRUE)
 
-		if (!data)
+		if (!data.len)
 			try
 				// Parse the response
 				data = json_decode(response.body)
