@@ -376,8 +376,11 @@
 				return
 			if(I:try_weld(user,1))
 				if(src.ruined || src.blade_health < src.max_blade_health)
-					SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS, PROC_REF(weld_repair_callback), list(user), user.equipped().appearance, null, \
+					user.visible_message("[user] attempts to repair some damage to the [src]", "you start to repair the [src]")
+					var/datum/action/bar/icon/callback/A = new(user, src, 1 SECONDS, PROC_REF(weld_repair_callback), list(user), user.equipped().appearance, null, \
 						"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+					A.maximum_range=3 //should action bar used bounds_dist? idk probably
+					actions.start(A, user)
 				else
 					boutput(user,"There's no damage to repair!")
 			return
@@ -385,14 +388,17 @@
 			if(src.RPM > 1)
 				boutput(user, SPAN_ALERT("you cannot replace turbine components while the turbine is spinning!"))
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, PROC_REF(component_replace_callback), list(user), user.equipped().appearance, null, \
+				user.visible_message("[user] begins replacing a turbine component", "you begin replacing a turbine component")
+				var/datum/action/bar/icon/callback/A = new(user, src, 4 SECONDS, PROC_REF(component_replace_callback), list(user,I), I.appearance, null, \
 						"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+				A.maximum_range=3 //should action bar used bounds_dist? idk probably
+				actions.start(A, user)
 			return
 		.=..()
 
 	proc/weld_repair_callback(var/mob/user)
 		if(src.ruined)
-			boutput(user,"You repair the [src]'s casing.")
+			user.visible_message("[user] repairs the [src]'s casing.","You repair the [src]'s casing.")
 			src.ruined = FALSE
 		else if(src.blade_health < src.max_blade_health)
 			src.UpdateHealthIndicators(src.blade_health++)
@@ -406,9 +412,9 @@
 			return
 		if(istype(item, /obj/item/turbine_component/blade))
 			if(isnull(src.current_blade))
-				boutput(user, "You add the [item] to the turbine's drive shaft.")
+				user.visible_message("[user] attaches the [item] to the [src]'s drive shaft.", "You add the [item] to the turbine's drive shaft.")
 			else
-				boutput(user, "You replace the turbine's [src.current_blade] with the [item]")
+				user.visible_message("[user] attaches the [item] to the [src]'s drive shaft, replacing the [src.current_blade].", "You add the [item] to the turbine's drive shaft, replacing the [src.current_blade].")
 			user.u_equip(item)
 			item.set_loc(src)
 			user.put_in_hand_or_drop(src.current_blade) //no-op if item is null
@@ -416,9 +422,9 @@
 			playsound('sound/items/Ratchet.ogg', 70)
 		else if(istype(item, /obj/item/turbine_component/stator))
 			if(isnull(src.current_stator))
-				boutput(user, "You add the [item] to the turbine's generator.")
+				user.visible_message("[user] attaches the [item] to the [src]'s generator.", "You add the [item] to the turbine's generator.")
 			else
-				boutput(user, "You replace the turbine's [src.current_stator] with the [item]")
+				user.visible_message("[user] attaches the [item] to the [src]'s generator, replacing the [src.current_stator].", "You add the [item] to the turbine's generator, replacing the [src.current_stator].")
 			user.u_equip(item)
 			item.set_loc(src)
 			user.put_in_hand_or_drop(src.current_stator)
@@ -483,14 +489,14 @@
 			playsound(src, 'sound/effects/electric_shock_short.ogg', 50)
 			src.UpdateParticles(new/particles/rack_spark,"turbine_spark")
 			src.visible_message(SPAN_ALERT("<b>The [src] starts sparking!</b>"))
-		else if(prevHealth <= 0.75*max_blade_health && src.GetParticles("turbine_spark"))
+		else if(prevHealth < 0.75*max_blade_health && src.GetParticles("turbine_spark"))
 			src.visible_message(SPAN_ALERT("<b>The [src] stops sparking.</b>"))
 			src.ClearSpecificParticles("turbine_spark")
 
 		if(blade_health <= 0.5*max_blade_health && !src.GetParticles("turbine_smoke"))
 			src.UpdateParticles(new/particles/rack_smoke,"turbine_smoke")
 			src.visible_message(SPAN_ALERT("<b>The [src] begins to smoke!</b>"))
-		else if(prevHealth <=  0.5*max_blade_health && src.GetParticles("turbine_smoke"))
+		else if(prevHealth <  0.5*max_blade_health && src.GetParticles("turbine_smoke"))
 			src.visible_message(SPAN_ALERT("<b>The [src] stops smoking.</b>"))
 			src.ClearSpecificParticles("turbine_smoke")
 
