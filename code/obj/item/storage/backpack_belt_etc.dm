@@ -856,7 +856,7 @@
 	item_state = "rancher"
 	can_hold = list(
 		/obj/item/chicken_carrier,
-		/obj/item/fishing_rod/basic)
+		/obj/item/fishing_rod)
 	check_wclass = 1
 
 	prepared
@@ -864,6 +864,16 @@
 		/obj/item/chicken_carrier,
 		/obj/item/chicken_carrier,
 		/obj/item/fishing_rod/basic)
+
+	cowboy
+		name = "cowboy belt"
+		desc = "Yeehaw pardner."
+		icon_state = "hunterbelt"
+		item_state = "hunter"
+		spawn_contents = list(/obj/item/gun/kinetic/foamdartrevolver,
+		/obj/item/ammo/bullets/foamdarts,
+		/obj/item/ammo/bullets/foamdarts,
+		/obj/item/ammo/bullets/foamdarts,)
 
 /obj/item/storage/belt/hunter
 	name = "trophy belt"
@@ -912,34 +922,58 @@
 
 
 	standard
-		spawn_contents = list(/obj/item/gun/energy/taser_gun, /obj/item/baton, /obj/item/barrier)
+		spawn_contents = list(/obj/item/gun/energy/taser_gun,
+		/obj/item/baton,
+		/obj/item/barrier)
 
 	offense
-		spawn_contents = list(/obj/item/gun/energy/wavegun, /obj/item/baton, /obj/item/barrier)
+		spawn_contents = list(/obj/item/gun/energy/wavegun,
+		/obj/item/baton,
+		/obj/item/barrier)
 
 	support
-		spawn_contents = list(/obj/item/baton, /obj/item/reagent_containers/food/snacks/donut/custom/robust = 2,  /obj/item/reagent_containers/emergency_injector/morphine = 4)
+		spawn_contents = list(/obj/item/baton,
+		/obj/item/reagent_containers/food/snacks/donut/custom/robust = 2,
+		/obj/item/reagent_containers/emergency_injector/morphine = 4)
 
 	control
-		spawn_contents = list(/obj/item/gun/energy/tasershotgun, /obj/item/baton, /obj/item/barrier)
+		spawn_contents = list(/obj/item/gun/energy/tasershotgun,
+		/obj/item/baton,
+		/obj/item/barrier)
 		New()
 			..()
 			can_hold += /obj/item/gun/energy/tasershotgun
 
 	assistant
-		spawn_contents = list(/obj/item/barrier, /obj/item/device/detective_scanner, /obj/item/device/ticket_writer)
+		spawn_contents = list(/obj/item/barrier,
+		/obj/item/device/detective_scanner,
+		/obj/item/device/ticket_writer)
 
-	ntsc
-		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/baton/ntso, /obj/item/instrument/whistle/security, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntsc_pouch, /obj/item/barrier) //secbelt subtype that only spawns on NTSC, not in vendor
+	ntsc //secbelt subtype that only spawns on NTSC, not in vendor
+		spawn_contents = list(/obj/item/gun/energy/signifer2,
+		/obj/item/baton/ntso,
+		/obj/item/clothing/head/helmet/space/ntso,
+		/obj/item/cloth/handkerchief/nt,
+		/obj/item/barrier,
+		/obj/item/reagent_containers/food/snacks/candy/candyheart)
 
 	ntso
-		spawn_contents = list(/obj/item/gun/energy/cornicen3, /obj/item/old_grenade/energy_frag = 2, /obj/item/old_grenade/energy_concussion = 2, /obj/item/tank/emergency_oxygen/extended, /obj/item/reagent_containers/food/snacks/donkpocket/warm)
+		spawn_contents = list(/obj/item/gun/energy/cornicen3,
+		/obj/item/old_grenade/energy_frag = 2,
+		/obj/item/old_grenade/energy_concussion = 2,
+		/obj/item/tank/emergency_oxygen/extended,
+		/obj/item/reagent_containers/food/snacks/donkpocket/warm)
 
 	baton
-		spawn_contents = list(/obj/item/baton, /obj/item/ammo/bullets/stunbaton, /obj/item/barrier, /obj/item/requisition_token/security/utility)
+		spawn_contents = list(/obj/item/baton,
+		/obj/item/ammo/bullets/stunbaton,
+		/obj/item/barrier,
+		/obj/item/requisition_token/security/utility)
 
 	tasersmg
-		spawn_contents = list(/obj/item/gun/energy/tasersmg, /obj/item/baton, /obj/item/barrier)
+		spawn_contents = list(/obj/item/gun/energy/tasersmg,
+		/obj/item/baton,
+		/obj/item/barrier)
 
 //////////////////////////////
 // ~Nuke Ops Class Storage~ //
@@ -980,7 +1014,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 
 /obj/item/storage/belt/gun/revolver
 	name = "revolver belt"
-	desc = "A stylish leather belt for holstering a revolver and it's ammo."
+	desc = "A stylish leather belt for holstering a revolver and its ammo."
 	icon_state = "revolver_belt"
 	item_state = "revolver_belt"
 	slots = 6
@@ -1050,7 +1084,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 TYPEINFO(/obj/item/storage/belt/wrestling)
 	mats = list("metal_dense" = 5,
 				"dense_super" = 10,
-				"fabric" = 5)
+				"hauntium" = 20)
 /obj/item/storage/belt/wrestling
 	name = "championship wrestling belt"
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."
@@ -1072,6 +1106,11 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 		if (!user.mind?.get_antagonist(ROLE_WRESTLER))
 			user.remove_wrestle_powers(src.fake)
 
+TYPEINFO(/obj/item/storage/belt/wrestling/fake)
+	mats = list("metal_dense" = 5,
+				"dense_super" = 10,
+				"fabric" = 5
+	)
 /obj/item/storage/belt/wrestling/fake
 	name = "fake wrestling belt"
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."
@@ -1114,3 +1153,52 @@ TYPEINFO(/obj/item/inner_tube)
 		if (prob(40))
 			src.icon_state = "pool_ring-[pick("duck","giraffe","flamingo")]"
 			src.item_state = src.icon_state
+
+
+// Pod Wars belts and holsters
+/obj/item/storage/belt/podwars // Didn't use gun belt because the belt can hold any pod wars weapons
+	name = "small holster"
+	desc = "A small sidearm holster with a clip for a machete and a small pouch that attaches to your jumpsuit's belt loops."
+	icon_state = "inspector_holster"
+	item_state = "inspector_holster"
+	can_hold = list(/obj/item/gun/energy/blaster_pod_wars,
+	/obj/item/survival_machete)
+	check_wclass = 1
+	slots = 3
+
+/obj/item/storage/belt/podwars/pistol
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars, /obj/item/survival_machete)
+
+/obj/item/storage/belt/podwars/NTpistol
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/nanotrasen, /obj/item/survival_machete)
+
+/obj/item/storage/belt/podwars/SYpistol
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/syndicate, /obj/item/survival_machete/syndicate)
+
+/obj/item/storage/belt/podwars/smg
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/smg, /obj/item/survival_machete)
+
+/obj/item/storage/belt/podwars/NTsmg
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/smg/nanotrasen, /obj/item/survival_machete)
+
+/obj/item/storage/belt/podwars/SYsmg
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/smg/syndicate, /obj/item/survival_machete/syndicate)
+
+/obj/item/storage/belt/podwars/shotgun
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/shotgun, /obj/item/survival_machete)
+
+/obj/item/storage/belt/podwars/NTshotgun
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/shotgun/nanotrasen, /obj/item/survival_machete)
+
+/obj/item/storage/belt/podwars/SYshotgun
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/shotgun/syndicate, /obj/item/survival_machete/syndicate)
+
+/obj/item/storage/belt/podwars/advanced
+	name = "tactical belt"
+	desc = "A heavy duty tactical belt capable of holding a large number of objects"
+	icon_state = "secbelt"
+	item_state = "secbelt"
+	check_wclass = 0
+	slots = 6
+
+// End of pod wars belts and holsters

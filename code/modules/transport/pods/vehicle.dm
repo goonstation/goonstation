@@ -485,7 +485,7 @@
 
 		src.material_trigger_on_bullet(src, P)
 
-		var/damage = round(P.power, 1.0)
+		var/damage = src.calculate_shielded_dmg(round(P.power, 1.0))
 
 		var/hitsound = null
 
@@ -548,6 +548,12 @@
 			var/t_ind = clamp(round(keyed/10), 0, 10)
 			. += "It has been keyed [keyed] time[s_es(keyed)]! [t_ind ? t[t_ind] : null]"
 
+	proc/calculate_shielded_dmg(dmg)
+		if (!istype(src.sec_system, /obj/item/shipcomponent/secondary_system/shielding))
+			return dmg
+		var/obj/item/shipcomponent/secondary_system/shielding/shielding_comp = src.sec_system
+		return shielding_comp.process_incoming_dmg(dmg)
+
 	proc/paint_pod(var/obj/item/pod/paintjob/P as obj, var/mob/user as mob)
 		if (!P || !istype(P))
 			return
@@ -597,16 +603,13 @@
 
 		switch (severity)
 			if (1)
-				src.health -= round(src.maxhealth / 3)
-				src.health -= 65
+				src.health -= src.calculate_shielded_dmg(round(src.maxhealth / 3) + 65)
 				checkhealth()
 			if(2)
-				src.health -= round(src.maxhealth / 4)
-				src.health -= 40
+				src.health -= src.calculate_shielded_dmg(round(src.maxhealth / 4) + 40)
 				checkhealth()
 			if(3)
-				src.health -= round(src.maxhealth / 5)
-				src.health -= 25
+				src.health -= src.calculate_shielded_dmg(round(src.maxhealth / 5) + 25)
 				checkhealth()
 
 	proc/get_move_velocity_magnitude()
@@ -690,7 +693,7 @@
 		return
 
 	meteorhit(var/obj/O as obj)
-		src.health -= 50
+		src.health -= src.calculate_shielded_dmg(50)
 		checkhealth()
 
 	Move(NewLoc,Dir=0,step_x=0,step_y=0)
@@ -992,7 +995,7 @@
 	else
 		src.ion_trail?.stop()
 
-	logTheThing(LOG_VEHICLE, ejectee, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
+	logTheThing(LOG_VEHICLE, ejectee, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b> at [log_loc(src)]")
 
 /obj/machinery/vehicle/proc/leave_pod(mob/ejectee as mob)
 	// Assert facing direction for eject location offset
@@ -1105,7 +1108,7 @@
 
 	boutput(M, SPAN_HINT("You can also use the Space Bar to fire!"))
 
-	logTheThing(LOG_VEHICLE, M, "enters vehicle: <b>[constructTarget(src.name,"vehicle")]</b>")
+	logTheThing(LOG_VEHICLE, M, "enters vehicle: <b>[constructTarget(src.name,"vehicle")]</b> at [log_loc(src)]")
 
 /obj/machinery/vehicle/proc/eject_occupants()
 	if(isghostdrone(usr))
@@ -1891,7 +1894,7 @@
 	health = 150
 	maxhealth = 150
 	acid_damage_multiplier = 0
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()

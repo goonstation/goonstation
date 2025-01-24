@@ -23,11 +23,18 @@
 
 	New()
 		..()
-		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(attackby_pre))
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(attackby_pre))  // Storage for a single lure item
+		src.create_storage(/datum/storage, can_hold = list(/obj/item/reagent_containers/food), max_wclass = W_CLASS_NORMAL, slots = 1)
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE)
 		. = ..()
+
+	//get the kind of lure currently being used by the fishing rod
+	proc/get_lure()
+		if (length(src.storage.stored_items))
+			return src.storage.stored_items[1]
+		else return null
 
 	//todo: attack particle?? some sort of indicator of where we're fishing
 	proc/attackby_pre(source, atom/target, mob/user)
@@ -128,6 +135,10 @@
 
 		if (src.fishing_spot.try_fish(src.user, src.rod, target)) //if it returns one we successfully fished, otherwise lets restart the loop
 			..()
+			if (length(src.rod.storage.stored_items))
+				var/obj/item/lure = src.rod.storage.stored_items[1]
+				boutput(user, SPAN_NOTICE("The [lure] was bit and is no longer stuck to the [src.rod]."))
+				qdel(lure)
 			src.rod.is_fishing = FALSE
 			src.rod.UpdateIcon()
 			src.user.update_inhands()

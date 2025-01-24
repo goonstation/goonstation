@@ -9,7 +9,6 @@
 	var/obj/item/chem_grenade/payload = null
 	status = 0
 	flags = TABLEPASS | CONDUCT
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/mob/attacher = "Unknown"
 
 /obj/item/assembly/chem_bomb/c_state(n)
@@ -20,15 +19,6 @@
 			src.icon_state = text("prox-igniter-chem[]", n)
 		if (/obj/item/device/radio/signaler)
 			src.icon_state = "radio-igniter-chem"
-	return
-
-/obj/item/assembly/chem_bomb/HasProximity(atom/movable/AM as mob|obj)
-	if (!istype(src.triggering_device, /obj/item/device/prox_sensor))
-		return
-	if (istype(AM, /obj/projectile))
-		return
-	if (AM.move_speed < 12 && src.triggering_device)
-		src.triggering_device:sense()
 	return
 
 /obj/item/assembly/chem_bomb/bump(atom/O)
@@ -42,20 +32,6 @@
 		//else
 			//boutput(world, "not active")
 	..()
-
-/obj/item/assembly/chem_bomb/proc/prox_check()
-	if (!istype(src.triggering_device, /obj/item/device/prox_sensor))
-		return
-	if (!triggering_device || !triggering_device:state)
-		return
-	for (var/atom/A in view(1, src.loc))
-		if (A!=src && !istype(A, /turf/space) && !isarea(A))
-			//boutput(world, "[A]:[A.type] was sensed")
-			src.triggering_device:sense()
-			break
-
-	SPAWN(1 SECOND)
-		prox_check()
 
 /obj/item/assembly/chem_bomb/dropped()
 	. = ..()

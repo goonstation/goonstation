@@ -62,12 +62,6 @@
 		src.owner.current.show_text("<h4>Protect the Heads of Staff and help them kill the leaders of the revolution.</h4>", "blue")
 		src.owner.current.show_antag_popup("derevved")
 
-	do_popup(override)
-		if (!override)
-			override = "revved"
-
-		..(override)
-
 	check_success()
 		var/list/heads_of_staff = ticker?.mode?.get_living_heads()
 

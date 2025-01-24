@@ -17,6 +17,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	desc = "A wall-mounted radio intercom, used to communicate with the specified frequency. Usually turned off except during emergencies."
 	hardened = 0
 
+	HELP_MESSAGE_OVERRIDE("Stand next to an intercom and use the prefix <B> :in </B> to speak directly into it.")
+
 /obj/item/device/radio/intercom/proc/update_pixel_offset_dir(obj/item/AM, old_dir, new_dir)
 	src.pixel_x = 0
 	src.pixel_y = 0
@@ -202,6 +204,16 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	initialize()
 		set_frequency(frequency)
 
+/obj/item/device/radio/intercom/mining
+	name = "Mining Intercom"
+	frequency = R_FREQ_INTERCOM_MINING
+	broadcasting = FALSE
+	device_color = "#6b4e0b"
+
+	initialize(player_caused_init)
+		. = ..()
+		src.set_frequency(frequency)
+
 /obj/item/device/radio/intercom/catering
 	name = "Catering Intercom"
 	frequency = R_FREQ_INTERCOM_CATERING
@@ -332,7 +344,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	device_color = "#3983C6" // for chat color
 
 	// burning stuff
-	burn_type = 1 // burn down to a glob
+	burn_remains = BURN_REMAINS_MELT // burn down to a glob
 	burn_possible = TRUE
 	burn_point = 300
 	health = 50 // same as a plank

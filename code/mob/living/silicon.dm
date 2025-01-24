@@ -28,6 +28,9 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 	var/static/regex/monospace_say_regex = new(@"`([^`]+)`", "g")
 
+	var/obj/minimap_controller/alertmap_controller = null
+	var/atom/movable/minimap_ui_handler/minimap_controller/general_alert/alert_minimap_ui = null
+
 	can_bleed = FALSE
 	blood_id = "oil"
 	use_stamina = FALSE
@@ -53,6 +56,12 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 /mob/living/silicon/disposing()
 	req_access = null
+	if(src.alertmap_controller)
+		qdel(src.alertmap_controller)
+		src.alertmap_controller = null
+	if(src.alert_minimap_ui)
+		qdel(src.alert_minimap_ui)
+		src.alert_minimap_ui = null
 	return ..()
 
 /mob/living/silicon/can_eat()
@@ -320,7 +329,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 			M.show_message(thisR, 2)
 
-/mob/living/silicon/lastgasp(allow_dead=FALSE)
+/mob/living/silicon/lastgasp(allow_dead=FALSE, grunt)
 	..(allow_dead, grunt=pick("BZZT","WONK","ZAP","FZZZT","GRRNT","BEEP","BOOP"))
 
 /mob/living/silicon/proc/allowed(mob/M)
@@ -514,6 +523,7 @@ var/global/list/module_editors = list()
 			newname = default_name
 		else
 			newname = tgui_input_text(src, "You are a Robot. Would you like to change your name to something else?", "Name Change", default_name)
+			newname = remove_bad_name_characters(newname)
 			if(newname && newname != default_name)
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 		if (!newname)
@@ -622,7 +632,7 @@ var/global/list/module_editors = list()
 	if (user)
 		var/area/A = get_area(src.law_rack_connection)
 		boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
-	src.playsound_local(src, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
+	src.playsound_local(src, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 	src.show_text("<h3>You have been connected to a law rack</h3>", "red")
 	src.show_laws()
 
@@ -696,3 +706,15 @@ var/global/list/module_editors = list()
 
 /mob/living/silicon/get_unequippable()
 	return
+
+/mob/living/silicon/proc/connect_to_alert_minimap()
+	var/obj/minimap/alert/alert_map = get_singleton(/obj/minimap/alert)
+	if (!src.alertmap_controller)
+		src.alertmap_controller = new(alert_map)
+	if (!src.alert_minimap_ui)
+		src.alert_minimap_ui = new(src, "alert_map", src.alertmap_controller, "Alert Map", "nanotrasen")
+
+/mob/living/silicon/proc/open_alert_minimap(mob/user=src)
+	if (!src.alertmap_controller || !src.alert_minimap_ui)
+		src.connect_to_alert_minimap()
+	src.alert_minimap_ui.ui_interact(user)

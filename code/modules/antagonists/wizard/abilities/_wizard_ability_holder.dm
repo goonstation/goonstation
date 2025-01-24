@@ -296,6 +296,3 @@
 				playsound(O.loc, src.voice_fem, 50, 0, -1)
 			else if (src.voice_other)
 				playsound(O.loc, src.voice_other, 50, 0, -1)
-
-		var/log_target = constructTarget(target,"combat")
-		logTheThing(LOG_COMBAT, holder.owner, "casts [src.name] from [log_loc(holder.owner)][targeted ? ", at [log_target]" : ""].")

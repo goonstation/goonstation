@@ -129,7 +129,7 @@ datum
 			transparency = 30
 			addiction_prob = 10
 			addiction_min = 15
-			depletion_rate = 0.2
+			depletion_rate = 0.3
 			overdose = 40   //Ether is known for having a big difference in effective to toxic dosage
 			var/counter = 1 //Data is conserved...so some jerkbag could inject a monkey with this, wait for data to build up, then extract some instant KO juice.  Dumb.
 			minimum_reaction_temperature = T0C + 80 //This stuff is extremely flammable
@@ -191,18 +191,18 @@ datum
 					M.changeStatus("recent_trauma", -2 SECONDS * mult)
 				if(holder.has_reagent(src.id,10)) // large doses progress somewhat faster than small ones
 					counter += mult
-					depletion_rate = 0.4 // depletes faster in large doses as well
+					depletion_rate = 0.6 // depletes faster in large doses as well
 				else
-					depletion_rate = 0.2
+					depletion_rate = 0.3
 
 				switch(counter += 1 * mult)
-					if(1 to 12)
+					if(1 to 7)
 						if(probmult(7)) M.emote("yawn")
-					if(12 to 40)
+					if(7 to 30)
 						M.setStatus("drowsy", 40 SECONDS)
 						if(probmult(9)) M.emote(pick("smile","giggle","yawn"))
-					if(40 to INFINITY)
-						depletion_rate = 0.4
+					if(30 to INFINITY)
+						depletion_rate = 0.6
 						M.setStatusMin("unconscious", 6 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 				..()
@@ -863,7 +863,7 @@ datum
 				M.changeStatus("drowsy", -10 SECONDS)
 				if(M.sleeping && probmult(5)) M.sleeping = 0
 				if(M.get_brain_damage() && prob(5)) M.take_brain_damage(-1 * mult)
-				flush(holder, 2 * mult, flushed_reagents) //combats symptoms not source //ok combats source a bit more
+				flush(holder, 3 * mult, flushed_reagents) //combats symptoms not source //ok combats source a bit more
 				if(M.losebreath > 3)
 					M.losebreath -= (1 * mult)
 				if(M.get_oxygen_deprivation() > 35)
@@ -1148,6 +1148,19 @@ datum
 			fluid_b = 140
 			depletion_rate = 0.4
 			overdose = 100
+			threshold = THRESHOLD_INIT
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_CANNOT_VOMIT, src.type)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANNOT_VOMIT, src.type)
+				..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				var/effect = ..(severity, M)

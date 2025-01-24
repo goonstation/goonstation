@@ -20,6 +20,9 @@
 		src.help_put_out_fire(M)
 	else if (src == M && src.getStatusDuration("burning"))
 		M.resist()
+	else if (src != M && M.hasStatus("paralysis")) // we "dead"
+		src.visible_message(SPAN_ALERT("<B>[src] tries to perform CPR, but it's too late for [M]!</B>"))
+		return
 	//If we use an empty hand on a cut up person, we might wanna rip out their organs by hand
 	else if (surgeryCheck(M, src) && M.organHolder?.chest?.op_stage >= 2 && ishuman(src))
 		if (M.organHolder.build_region_buttons())
@@ -493,7 +496,8 @@
 		if (show_msg)
 			visible_message(SPAN_COMBAT("<b>[src] narrowly dodges [attacker]'s attack!"))
 		playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, TRUE, 1)
-
+		if (!ON_COOLDOWN(src, "matrix_sound_effect", 1 SECOND))
+			src.playsound_local(src, 'sound/effects/graffiti_hit.ogg', 40, pitch = 0.8)
 		add_stamina(STAMINA_FLIP_COST * 0.25) //Refunds some stamina if you successfully dodge.
 		stamina_stun()
 		fuckup_attack_particle(attacker)

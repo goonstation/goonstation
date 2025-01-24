@@ -41,6 +41,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/list/datum/objective/objectives = list()
 	/// The faction given to the player by this antagonist role for AI targeting purposes.
 	var/faction = list()
+	/// Used in lieu of the id for antag_popups.dm
+	var/popup_name_override
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
 		. = ..()
@@ -185,6 +187,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		RETURN_TYPE(/image)
 		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+		image.plane = PLANE_ANTAG_ICONS
 		. = image
 
 	proc/add_to_image_groups()
@@ -254,9 +257,9 @@ ABSTRACT_TYPE(/datum/antagonist)
 		boutput(owner.current, SPAN_ALERT("<h3>You are no longer \a [src.display_name]!</h3>"))
 
 	/// Show a popup window for this antagonist. Defaults to using the same ID as the antagonist itself.
-	proc/do_popup(override)
-		if (has_info_popup || override)
-			owner.current.show_antag_popup(!override ? id : override)
+	proc/do_popup()
+		if (has_info_popup || popup_name_override)
+			owner.current.show_antag_popup(popup_name_override ? popup_name_override : id)
 
 	/// Returns whether or not this antagonist is considered to have succeeded. By default, this checks all antagonist-specific objectives.
 	proc/check_success()

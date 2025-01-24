@@ -269,14 +269,14 @@
 /turf/simulated/floor/pool,
 /area/space)
 "aY" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 8
 	},
 /turf/space/cavern,
 /area/space)
 "aZ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 8
 	},
@@ -339,7 +339,7 @@
 /obj/channel{
 	required_to_pass = 210
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/pool,
 /area/space)
 "bh" = (
@@ -1382,7 +1382,7 @@
 	},
 /area/space)
 "ey" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating,
 /area/space)
 "ez" = (
@@ -1510,7 +1510,7 @@
 /turf/simulated/floor/airless/engine/caution,
 /area/space)
 "eP" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/space/cavern,
 /area/space)
 "eQ" = (
@@ -1534,7 +1534,7 @@
 /turf/simulated/floor/airless/plating,
 /area/space)
 "eU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 9
 	},
@@ -1542,14 +1542,14 @@
 /turf/space,
 /area/space)
 "eV" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 8
 	},
 /turf/space,
 /area/space)
 "eW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 8
 	},
@@ -1557,7 +1557,7 @@
 /turf/space,
 /area/space)
 "eX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 8
 	},
@@ -1565,14 +1565,14 @@
 /turf/simulated/floor/airless/plating,
 /area/space)
 "eY" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
 "eZ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 8
 	},
@@ -1580,14 +1580,14 @@
 /turf/simulated/floor/airless/plating,
 /area/space)
 "fa" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 8
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
 "fb" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 8
 	},
@@ -1607,7 +1607,7 @@
 /turf/simulated/floor/airless/plating,
 /area/space)
 "fd" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 8
 	},
@@ -1615,7 +1615,7 @@
 /turf/simulated/floor/airless/plating,
 /area/space)
 "fe" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 10
 	},
@@ -1623,7 +1623,7 @@
 /turf/space/cavern,
 /area/space)
 "ff" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 6
 	},
@@ -1667,7 +1667,7 @@
 /turf/simulated/floor/airless/engine/caution/south,
 /area/space)
 "fm" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 8
 	},
@@ -1687,14 +1687,14 @@
 /turf/simulated/floor/airless/plating,
 /area/space)
 "fo" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 10
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
 "fp" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 8
 	},
@@ -1702,7 +1702,7 @@
 /turf/simulated/floor/airless/plating,
 /area/space)
 "fq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 8
 	},
@@ -1710,7 +1710,7 @@
 /turf/simulated/floor/airless/plating,
 /area/space)
 "fr" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 6
 	},
@@ -1779,21 +1779,21 @@
 	},
 /area/space)
 "fD" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 6
 	},
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
 "fE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
 "fF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 10
 	},
@@ -1806,7 +1806,7 @@
 /turf/simulated/floor/airless/plating,
 /area/space)
 "fH" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
 	
@@ -1883,14 +1883,14 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "fS" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 5
 	},
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
 "fT" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 4;
 	
@@ -1961,7 +1961,7 @@
 	},
 /area/space)
 "gd" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
 "ge" = (
@@ -2036,14 +2036,14 @@
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "gn" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
 "go" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 6
 	},
@@ -2301,7 +2301,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "gX" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
 /area/space)
 "gY" = (
@@ -5806,7 +5806,7 @@
 /turf/simulated/floor/airless/engine,
 /area/space)
 "qY" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/engine,
 /area/space)
 "qZ" = (
@@ -6296,7 +6296,7 @@
 /turf/simulated/floor/airless/engine,
 /area/space)
 "sn" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/west,
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
@@ -6327,7 +6327,7 @@
 /turf/simulated/floor/arrival,
 /area/space)
 "sr" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
@@ -6348,7 +6348,7 @@
 	},
 /area/space)
 "su" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/indestructible/shuttle_corner{
@@ -6358,13 +6358,13 @@
 /turf/simulated/floor/airless/engine,
 /area/space)
 "sv" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/engine,
 /area/space)
 "sw" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
@@ -6410,14 +6410,14 @@
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "sD" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/door/airlock/external,
 /turf/space,
 /area/space)
 "sE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/map/light/screen,
@@ -6441,7 +6441,7 @@
 	},
 /area/space)
 "sH" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
@@ -6465,7 +6465,7 @@
 	},
 /area/space)
 "sL" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/indestructible/shuttle_corner{
@@ -6781,7 +6781,7 @@
 /obj/item/paper/tug/invoice,
 /obj/item/card_group/stg,
 /obj/item/pen/fancy,
-/obj/item/raw_material/fabric,
+/obj/item/material_piece/cloth,
 /obj/item/raw_material/fibrilith,
 /obj/item/raw_material/fibrilith,
 /obj/item/raw_material/fibrilith,
@@ -6814,7 +6814,7 @@
 "tz" = (
 /obj/window/reinforced/west,
 /obj/window/reinforced/east,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject/shuttleengine{
 	dir = 4
 	},
@@ -6839,7 +6839,7 @@
 	},
 /area/space)
 "tD" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/indestructible/shuttle_corner{
@@ -6849,13 +6849,13 @@
 /turf/space,
 /area/space)
 "tE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/space,
 /area/space)
 "tF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
@@ -7070,7 +7070,7 @@
 /area/space)
 "tW" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -7083,7 +7083,7 @@
 	},
 /area/space)
 "tY" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/map/light/screen,
@@ -7158,7 +7158,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "uh" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/indestructible/shuttle_corner{
@@ -7512,7 +7512,7 @@
 /turf/simulated/floor/grey,
 /area/space)
 "vf" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "vg" = (
@@ -7521,7 +7521,7 @@
 	icon_state = "line1";
 	dir = 1
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "vh" = (
@@ -7533,21 +7533,21 @@
 /turf/simulated/floor/grey,
 /area/space)
 "vj" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
 "vk" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk";
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
 "vl" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -7558,7 +7558,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "vn" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless/asteroid/dark,
@@ -7568,7 +7568,7 @@
 /turf/simulated/floor/grey,
 /area/space)
 "vp" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},

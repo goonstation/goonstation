@@ -200,12 +200,17 @@ datum
 			fluid_flags = FLUID_BANNED
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				var/turf/simulated/A = holder.my_atom
-				if(!istype(A)) return
-
-				if(holder.get_reagent_amount(id) >= 15) //no more thermiting walls with 1u tyvm
-					holder.del_reagent(id)
-					fireflash_melting(A, 0, rand(20000, 25000), 0, TRUE, CHEM_FIRE_DARKRED, FALSE, TRUE) // Bypasses the RNG roll to melt walls (Convair880).
+				if (!istype(src.holder.my_atom, /obj/decal/cleanable)) //okay I wanted to let this react anywhere but then it tends to blow up when you synthesize it sooo
+					return
+				if(holder.get_reagent_amount(id) < 10) //no more thermiting walls with 1u tyvm
+					return
+				var/turf/T = get_turf(src.holder.my_atom)
+				var/atom/my_atom = src.holder.my_atom
+				holder.del_reagent(id)
+				var/temp = rand(20000, 25000)
+				fireflash_melting(T, 0, temp, 0, TRUE, CHEM_FIRE_DARKRED, FALSE, TRUE) // Bypasses the RNG roll to melt walls (Convair880).
+				fireflash(T, 0, temp, 0, TRUE, CHEM_FIRE_DARKRED) //another fireflash because the first one gets deleted along with the turf
+				qdel(my_atom)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
@@ -221,15 +226,14 @@ datum
 						volume = volume/length(covered)
 					if (volume < 3)
 						return
-					if(!T.reagents)
-						T.create_reagents(volume)
-					else
-						T.reagents.maximum_volume = T.reagents.maximum_volume + volume
+					if (length(covered) == 1 && volume < 10)
+						return
+					var/obj/decal/cleanable/thermite/cleanable = locate() in T
+					if (!cleanable)
+						cleanable = make_cleanable(/obj/decal/cleanable/thermite, T)
+						cleanable.create_reagents(10)
+						cleanable.reagents.add_reagent("thermite", 10, null)
 
-					if(!T.reagents.has_reagent("thermite"))
-						T.UpdateOverlays(image('icons/effects/effects.dmi',icon_state = "thermite"), "thermite")
-
-					T.reagents.add_reagent("thermite", volume, null)
 					if (length(T.active_hotspots))
 						var/max_temp = T.active_hotspots[1].temperature
 						var/max_vol = T.active_hotspots[1].volume

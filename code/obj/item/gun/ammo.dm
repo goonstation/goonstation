@@ -347,7 +347,7 @@
 /obj/item/ammo/bullets/bullet_22
 	sname = ".22 LR"
 	name = ".22 magazine"
-	desc = "Despite being very small, these bullets are still lethal."
+	desc = "Cheap and easily mass-produced, these are a popular round for target practice, varmint-shooting and self-defense in confined spaces."
 	icon_state = "pistol_magazine"
 	amount_left = 10
 	max_amount = 10
@@ -358,7 +358,8 @@
 		ammo_type = new/datum/projectile/bullet/bullet_22/a180
 		amount_left = 177
 		max_amount = 177
-		desc = "177 rounds of .22 unceremoniously crammed into a goofy pancake magazine."
+		desc = "177 rounds of .22 fastidiously loaded into a fussy pancake magazine."
+
 /obj/item/ammo/bullets/bullet_22/smartgun
 	name = ".22 smartgun magazine"
 	desc = "A fancy, high-tech extended magazine of .22 bullets."
@@ -874,6 +875,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	sname = "bone load"
 	desc = "This appears to be some bone fragments haphazardly shoved into a few cut open pipe frames - grotesque!"
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/bone
+	icon_state = "makeshiftbone"
 
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"
@@ -1228,7 +1230,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 			return
 		if (src.loc == user && AMMO.has_grenade != 0)
 			for(var/i in 1 to amount_left)
-				user.put_in_hand_or_drop(SEMI_DEEP_COPY(AMMO.get_nade()))
+				user.put_in_hand_or_drop(AMMO.get_nade():launcher_clone())
 			AMMO.unload_nade()
 			boutput(user, "You pry the grenade[amount_left>1?"s":""] out of [src].")
 			src.add_fingerprint(user)
@@ -1249,7 +1251,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(AMMO.has_grenade && src.delete_on_reload)
 			for(var/i in 1 to amount_left)
-				user.put_in_hand_or_drop(SEMI_DEEP_COPY(AMMO.get_nade()))
+				user.put_in_hand_or_drop(AMMO.get_nade():launcher_clone())
 			AMMO.unload_nade()
 			qdel(src)
 
@@ -1731,8 +1733,8 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 /obj/item/ammo/power_cell/lasergat
 	name = "Mod. 93R Repeating Laser Cell"
 	desc = "This single-use cell has a proprietary port for injecting liquid coolant into a laser firearm."
-	charge = 120
-	max_charge = 120
+	charge = 180
+	max_charge = 180
 	icon_state = "burst_laspistol"
 	rechargable = FALSE
 	New()

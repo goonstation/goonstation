@@ -118,6 +118,7 @@
 		/datum/manufacture/cybereye_spectro,
 		/datum/manufacture/cybereye_prodoc,
 		/datum/manufacture/cybereye_camera,
+		/datum/manufacture/cybereye_monitor,
 		/datum/manufacture/shell_frame,
 		/datum/manufacture/ai_interface,
 		/datum/manufacture/latejoin_brain,
@@ -235,6 +236,7 @@
 		/datum/manufacture/implant_health,
 		/datum/manufacture/implant_antirot,
 		/datum/manufacture/floppydisk,
+		/datum/manufacture/medicalalertbutton,
 		/datum/manufacture/crowbar,
 		/datum/manufacture/extinguisher,
 		/datum/manufacture/cyberappendix,
@@ -281,6 +283,8 @@
 		/datum/manufacture/chembarrel/red,
 		/datum/manufacture/condenser,
 		/datum/manufacture/fractionalcondenser,
+		/datum/manufacture/dropper_funnel,
+		/datum/manufacture/portable_dispenser,
 		/datum/manufacture/beaker_lid_box,
 		/datum/manufacture/bunsen_burner,
 		/datum/manufacture/spectrogoggles,
@@ -377,6 +381,9 @@
 		/datum/manufacture/pod/armor_industrial,
 		/datum/manufacture/cargohold,
 		/datum/manufacture/storagehold,
+#ifndef UNDERWATER_MAP
+		/datum/manufacture/lateral_thrusters,
+#endif
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,
@@ -388,6 +395,8 @@
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
+		/datum/manufacture/pod/light_shielding,
+		/datum/manufacture/pod/heavy_shielding,
 		/datum/manufacture/beaconkit,
 		/datum/manufacture/podgps
 	)
@@ -448,12 +457,12 @@
 		/datum/manufacture/satchel,
 		/datum/manufacture/satchel_red,
 		/datum/manufacture/satchel_green,
-		/datum/manufacture/satchel_blue)
+		/datum/manufacture/satchel_blue,
+		/datum/manufacture/handkerchief)
 
 	hidden = list(/datum/manufacture/breathmask,
 		/datum/manufacture/patch,
 		/datum/manufacture/towel,
-		/datum/manufacture/handkerchief,
 		/datum/manufacture/tricolor,
 		/datum/manufacture/hat_ltophat)
 
@@ -548,7 +557,8 @@
 		/datum/manufacture/hat_green,
 		/datum/manufacture/hat_blue,
 		/datum/manufacture/hat_purple,
-		/datum/manufacture/hat_tophat)
+		/datum/manufacture/hat_tophat,
+		/datum/manufacture/handkerchief,)
 
 	hidden = list(/datum/manufacture/id_card_gold,
 		/datum/manufacture/implant_access_infinite,

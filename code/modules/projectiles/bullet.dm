@@ -90,13 +90,14 @@ toxic - poisons
 	a180
 		fullauto_valid = 1
 		shot_number = 1
-		damage = 15 //less accurate, hitting random parts instead of centre mass
+		damage = 18
 		cost = 1
-		shot_volume = 30
+		shot_volume = 20
 		sname = "full auto"
+		casing = null
 		on_pre_hit(atom/hit, angle, var/obj/projectile/O)
 			if (isliving(hit))
-				if (ON_COOLDOWN(hit, "american180_miss", 4 DECI SECONDS))
+				if (ON_COOLDOWN(hit, "american180_miss", 3 DECI SECONDS))
 					return TRUE
 				else
 					return FALSE
@@ -104,7 +105,7 @@ toxic - poisons
 		get_power(obj/projectile/P, atom/A)
 			var/standard_damage = P.initial_power - max(0, (P.travelled/32 - src.dissipation_delay))*src.dissipation_rate
 			if (isliving(A))
-				return rand(standard_damage/2,standard_damage) //dont kill dudes as hard
+				return rand(standard_damage-5,standard_damage) //less accurate, hitting random parts instead of centre mass
 			else
 				return min(2,standard_damage) // dont break shit as hard
 
@@ -536,11 +537,13 @@ toxic - poisons
 	max_range = 15
 	dissipation_rate = 0
 	ie_type = null
+	smashes_glasses = FALSE //foam
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		..()
 		var/turf/T = istype(hit, /mob) ? get_turf(hit) : get_turf(P) // drop on same tile if mob, drop 1 tile away otherwise
 		drop_as_ammo(get_turf(T))
+		qdel(P) // we dropped, don't keep going
 
 	on_max_range_die(obj/projectile/P)
 		..()
@@ -719,7 +722,7 @@ toxic - poisons
 	icon_state = "birdshot1"
 	hit_ground_chance = 66
 	implanted = null
-	damage = 18
+	damage = 13
 	stun = 6
 	hit_type = DAMAGE_CUT //birdshot mutilates your skin more, but doesnt hurt organs like shotties
 	dissipation_rate = 4 //spread handles most of this
@@ -957,7 +960,7 @@ toxic - poisons
 /datum/projectile/bullet/improvscrap
 	name = "fragments"
 	sname = "fragments"
-	icon_state = "trace"
+	icon_state = "metalproj"
 	dissipation_delay = 4
 	dissipation_rate = 1
 	implanted = /obj/item/implant/projectile/shrapnel
@@ -966,7 +969,7 @@ toxic - poisons
 /datum/projectile/bullet/improvbone
 	name = "bone"
 	sname = "bone"
-	icon_state = "trace"
+	icon_state = "boneproj"
 	dissipation_delay = 1
 	dissipation_rate = 3
 	damage_type = D_KINETIC
@@ -1687,6 +1690,8 @@ datum/projectile/bullet/autocannon
 	on_hit(atom/hit, angle, obj/projectile/O)
 		var/turf/T = get_turf(hit)
 		if (T)
+			if (T.density) // hit previous (non-dense) turf to spread chems/effects better
+				T = get_turf(get_step(T, turn(angle, 180)))
 			src.det(T)
 		else if (O)
 			var/turf/pT = get_turf(O)
@@ -1810,6 +1815,13 @@ datum/projectile/bullet/autocannon
 			desired_x = closest.x - P.x - P.pixel_x/32
 			desired_y = closest.y - P.y - P.pixel_y/32
 
+			if(ismovable(closest))
+				var/atom/movable/AM = closest
+				if(AM.bound_width > 32)
+					desired_x += AM.bound_width / 64 - 0.5
+				if(AM.bound_height > 32)
+					desired_y += AM.bound_height / 64 - 0.5
+
 			.= 1
 
 	tick(var/obj/projectile/P)
@@ -1895,9 +1907,9 @@ datum/projectile/bullet/autocannon
 				M.playsound_local(src, 'sound/machines/whistlealert.ogg', 25)
 				boutput(M, pod.ship_message(message))
 
-	on_hit(atom/hit)
+	on_hit(atom/hit, angle, obj/projectile/O)
 		if (istype(hit, /obj/critter/gunbot/drone) || istype(hit, /obj/machinery/vehicle/miniputt) || istype(hit, /obj/machinery/vehicle/pod_smooth)|| istype(hit, /obj/machinery/vehicle/tank))
-			explosion_new(null, get_turf(hit), 12)
+			explosion_new(null, get_turf(O), 12)
 
 			if(istype(hit, /obj/machinery/vehicle))
 				var/obj/machinery/vehicle/vehicle = hit

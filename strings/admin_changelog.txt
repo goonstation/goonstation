@@ -1,3 +1,27 @@
+(t)mon jan 6 25
+(u)LeahTheTech
+(*)Basketball wizard spells are now abilities and work like you'd think they should.
+(t)sun dec 8 24
+(u)LeahTheTech
+(*)Added a "Delete landmarks" verb that lets you delete all landmarks of a specific type.
+(t)sun dec 1 24
+(u)JORJ949
+(*)Added a "Recolor Syndicate" verb to easily recolor all syndicate gear.
+(t)tue nov 13 24
+(u)Azrun
+(*)Added Event Controller.  New Event Controller UI for evaluation.
+(t)fri nov 01 24
+(u)Azrun
+(*)Added Parallax Viewer.  Do parallax stuff with it! Also the Wand gives some cool options now!
+(t)mon oct 07 24
+(u)Sovexe
+(*)Added a new build mode tool Visual Mirror Setup to aid in the setup of adhoc visual mirror zones for advanced gimmicks. Use with care.
+(t)mon sep 23 24
+(u)Kyle
+(+)Added a "set status effect for all mobs" button to the secrets panel.
+(t)wed sep 18 24
+(u)Sord
+(+)You can now toggle ghost invisibility mid-round easily. "toggle-ghost-invisibility"
 (t)wed aug 08 24
 (u)LeahTheTech
 (*)New buildmode "Spawn Object" effect: "Fling" - spawns the object on you and immediately throws it at the target location.

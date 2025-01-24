@@ -398,7 +398,7 @@
 		// calculate price
 		price = calculate_artifact_price(modifier, max(pap?.lastAnalysis, 1))
 		price *= randfloat(0.9, 1.3)
-		price = round(price, 5)
+		price = round(price, 4)
 
 		// track score
 		if(pap)
@@ -592,6 +592,7 @@
 						if(AID_CONTRACT) src.aid_contracts_active--
 						if(SCI_CONTRACT) src.sci_contracts_active--
 					duckets += contract.payout
+					contract.count += 1
 					if(length(contract.item_rewarders))
 						for(var/datum/rc_itemreward/giftback in contract.item_rewarders)
 							var/reward = giftback.build_reward()

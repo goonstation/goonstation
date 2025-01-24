@@ -46,7 +46,7 @@
 			//	return 0.62 //todo : a cooler underwater effect if possible
 			//if (istype(T, /turf/space))
 			//	return 0 // in space nobody can hear you fart
-		if (T.turf_flags & IS_TYPE_SIMULATED) //danger :)
+		if (issimulatedturf(T)) //danger :)
 			var/datum/gas_mixture/air = T.return_air()
 			if (air)
 				attenuate *= MIXTURE_PRESSURE(air) / ONE_ATMOSPHERE
@@ -125,6 +125,9 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 		src.chatOutput.adjustVolumeRaw( getMasterVolume() * volume )
 
 /proc/playsound(atom/source, soundin, vol, vary, extrarange, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
+	if(isarea(source))
+		CRASH("playsound(): source is an area [source.name], sound is [soundin]")
+
 	var/turf/source_turf = get_turf(source)
 
 	// don't play if the sound is happening nowhere
@@ -179,6 +182,8 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 		if (CLIENT_IGNORES_SOUND(C))
 			continue
 
+		if (!(flags & SOUND_IGNORE_DEAF) && !M.hearing_check(FALSE, TRUE))
+			continue
 		Mloc = get_turf(M)
 
 		if (!Mloc)
@@ -265,6 +270,9 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 	if(!src.client)
 		return
 
+	if (!(flags & SOUND_IGNORE_DEAF) && !src.hearing_check(FALSE, TRUE))
+		return
+
 	var/turf/source_turf = get_turf(source)
 
 	// don't play if the sound is happening nowhere
@@ -343,6 +351,9 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 /// like playsound_local but without a source atom, this just plays at a given volume
 /mob/proc/playsound_local_not_inworld(soundin, vol, vary, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0, wait=FALSE)
 	if(!src.client)
+		return
+
+	if (!(flags & SOUND_IGNORE_DEAF) && !src.hearing_check(FALSE, TRUE))
 		return
 
 	if (CLIENT_IGNORES_SOUND(src.client))
@@ -450,7 +461,8 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 		S.volume = ourvolume
 
 		var/orig_freq = S.frequency
-		S.frequency *= (HAS_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) : 1)
+		if(C.mob)
+			S.frequency *= (HAS_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) : 1)
 
 		C << S
 

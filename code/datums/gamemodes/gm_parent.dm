@@ -12,6 +12,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	var/shuttle_auto_call_time = 90 MINUTES // 120 minutes.  Shuttle auto-called at this time and then again at this time + 1/2 this time, then every 1/2 this time after that. Set to 0 to disable.
 	var/shuttle_last_auto_call = 0
 	var/shuttle_initial_auto_call_done = 0 // set to 1 after first call so we know to start checking shuttle_auto_call_time/2
+	var/shuttle_prevent_recall_time = 120 MINUTES // After how long do we prevent recalling the Shuttle (only applied upon an automatic call)
 
 	var/latejoin_antag_compatible = 0 // Ultimately depends on the global 'late_traitors' setting, though.
 	var/latejoin_only_if_all_antags_dead = 0 // Don't spawn 'em until all antagonists are dead.
@@ -56,7 +57,14 @@ ABSTRACT_TYPE(/datum/game_mode)
 		return
 	if (shuttle_last_auto_call + (shuttle_initial_auto_call_done ? shuttle_auto_call_time / 2 : shuttle_auto_call_time) <= ticker.round_elapsed_ticks)
 		emergency_shuttle.incall()
-		command_alert("The shuttle has automatically been called for a shift change.  Please recall the shuttle to extend the shift.","Shift Shuttle Update")
+		var/announcement = "The shuttle has automatically been called for a shift change."
+		if(shuttle_prevent_recall_time <= ticker.round_elapsed_ticks)
+			emergency_shuttle.can_recall = FALSE
+			logTheThing(LOG_STATION, null, "Automatically disabled recalling of the Energency Shuttle.")
+			announcement += " Central Command has prohibited further recalls."
+		else
+			announcement += " Please recall the shuttle to extend the shift."
+		command_alert(announcement,"Shift Shuttle Update")
 		shuttle_last_auto_call = ticker.round_elapsed_ticks
 		if (!shuttle_initial_auto_call_done)
 			shuttle_initial_auto_call_done = 1

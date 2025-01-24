@@ -35,7 +35,6 @@
 			SPAN_ALERT("You place your hand onto [target] and start draining [ismob(target) ? him_or_her(target) : "it"] of energy."),
 			SPAN_ALERT("[src.holder.owner] places [his_or_her(src.holder.owner)] hand onto you."))
 		actions.start(new/datum/action/bar/private/icon/sap_power(src.holder.owner, target, holder), src.holder.owner)
-		logTheThing(LOG_COMBAT, src.holder.owner, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
 
 	castcheck()
 		. = ..()

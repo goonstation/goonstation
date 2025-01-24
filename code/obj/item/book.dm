@@ -352,6 +352,8 @@ Custom Books
 			if (!istype(jerk))
 				return
 
+			jerk.traitHolder?.addTrait("wasitsomethingisaid")
+
 			var/datum/db_record/S = data_core.security.find_record("id", jerk.datacore_id)
 			S?["criminal"] = ARREST_STATE_ARREST
 			S?["mi_crim"] = "Reading highly-confidential private information."

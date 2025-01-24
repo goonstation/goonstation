@@ -113,6 +113,7 @@ TYPEINFO(/obj/item/device/timer)
 	return list("name" = src.name)
 
 /obj/item/device/timer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch (action)
 		if ("set-time")
 			var/time = text2num_safe(params["value"])

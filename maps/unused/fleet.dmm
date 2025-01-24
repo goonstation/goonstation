@@ -282,7 +282,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -325,7 +325,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-9"
 	},
@@ -374,7 +374,7 @@
 	},
 /area/space)
 "bb" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -442,7 +442,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/maru)
 "bj" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -676,7 +676,7 @@
 	name = "Meridian Primary Zone"
 	})
 "bM" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -1335,7 +1335,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -1685,7 +1685,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross"
@@ -1734,10 +1734,10 @@
 /obj/item/raw_material/cotton,
 /obj/item/raw_material/cotton,
 /obj/item/raw_material/cotton,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "eo" = (
@@ -2052,7 +2052,7 @@
 	},
 /area/station/science/tenebrae)
 "ff" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/small_backup2{
 	name = "Maru Solar Array"
@@ -2386,7 +2386,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/science/tenebrae)
 "fW" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -2496,7 +2496,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/tenebrae)
 "gi" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -2611,7 +2611,7 @@
 	name = "Tenebrae Maintenance"
 	})
 "gs" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "tenebelt";
 	name = "Tenebrae disposal belt";
@@ -2639,7 +2639,7 @@
 	name = "Tenebrae Maintenance"
 	})
 "gv" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -2674,7 +2674,7 @@
 	name = "Maru Solar Array"
 	})
 "gA" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -2718,7 +2718,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -2726,7 +2726,7 @@
 	name = "Maru Solar Array"
 	})
 "gF" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -2741,7 +2741,7 @@
 	name = "Maru Solar Array"
 	})
 "gG" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -2848,7 +2848,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/maru)
 "gW" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -3138,7 +3138,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -3146,7 +3146,7 @@
 	name = "Hammer Defense Zone"
 	})
 "hO" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -3161,7 +3161,7 @@
 	name = "Hammer Defense Zone"
 	})
 "hP" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -3307,7 +3307,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)
 "ih" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -3608,7 +3608,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce{
 	name = "Maru Bridge"
@@ -3618,7 +3618,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -3633,7 +3633,7 @@
 	name = "Maru Bridge"
 	})
 "iR" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -3642,7 +3642,7 @@
 	name = "Maru Bridge"
 	})
 "iS" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/storage/crate/rcd,
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce{
@@ -3881,7 +3881,7 @@
 	name = "Maru Bridge"
 	})
 "jy" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -4084,7 +4084,7 @@
 	})
 "jZ" = (
 /obj/machinery/shield_generator,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
@@ -4102,7 +4102,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -4111,7 +4111,7 @@
 	name = "Hammer Defense Zone"
 	})
 "kb" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -4126,7 +4126,7 @@
 	name = "Maru Bridge"
 	})
 "kc" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -4145,7 +4145,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross"
@@ -4445,7 +4445,7 @@
 	name = "Maru Primary Zone"
 	})
 "kK" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -4844,7 +4844,7 @@
 	name = "Hammer Primary Concourse"
 	})
 "lB" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/warp_beacon/mining{
 	name = "Maru beacon"
 	},
@@ -4873,7 +4873,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "lF" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/turret_protected/AIbaseoutside{
 	name = "Hammer Defense Zone"
@@ -5042,7 +5042,7 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
 "ma" = (
@@ -5251,7 +5251,7 @@
 	name = "Maru Power Room"
 	})
 "mB" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -5991,7 +5991,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "od" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -6070,7 +6070,7 @@
 	name = "Maru Power Room"
 	})
 "ok" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "marubelt";
 	name = "Maru disposal belt";
@@ -6102,7 +6102,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -6274,7 +6274,7 @@
 	name = "Hammer Primary Concourse"
 	})
 "oD" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -6340,7 +6340,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/small_backup2{
 	name = "Maru Solar Array"
@@ -6578,7 +6578,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/garden/owlery)
 "pi" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -7064,7 +7064,7 @@
 /turf/simulated/floor/grey,
 /area/station/maintenance/inner/hammer)
 "qp" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "hambelt";
 	name = "Hammer disposal belt";
@@ -7086,7 +7086,7 @@
 /turf/simulated/floor/grey,
 /area/station/maintenance/inner/hammer)
 "qs" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -7148,7 +7148,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/indigo_rye)
 "qB" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -7183,7 +7183,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "qF" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -7198,7 +7198,7 @@
 	name = "Asclepius Solar Array"
 	})
 "qG" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -7252,7 +7252,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -7478,7 +7478,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -7486,7 +7486,7 @@
 	name = "Dionysus Solar Array"
 	})
 "rk" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -7501,7 +7501,7 @@
 	name = "Dionysus Solar Array"
 	})
 "rl" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -7825,7 +7825,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -8042,7 +8042,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -8120,7 +8120,7 @@
 	name = "Asclepius Primary Zone"
 	})
 "sF" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -8174,7 +8174,7 @@
 	name = "Hammer Primary Concourse"
 	})
 "sL" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -8694,7 +8694,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -8857,7 +8857,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/turret_protected/AIbaseoutside{
 	name = "Hammer Defense Zone"
@@ -8888,7 +8888,7 @@
 	name = "Dionysus Primary Zone"
 	})
 "un" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -8995,7 +8995,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -9463,7 +9463,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -9869,7 +9869,7 @@
 	name = "Asclepius Primary Zone"
 	})
 "wj" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -10392,7 +10392,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -10639,7 +10639,7 @@
 	name = "Dionysus Primary Zone"
 	})
 "xP" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -10887,24 +10887,12 @@
 	})
 "ys" = (
 /obj/storage/crate,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
@@ -11135,7 +11123,7 @@
 	name = "Asclepius Equipment Room"
 	})
 "yR" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "ascbelt";
 	name = "Asclepius disposal belt";
@@ -11167,7 +11155,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -11240,7 +11228,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross"
@@ -11452,7 +11440,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/indigo_rye)
 "zw" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -11613,7 +11601,7 @@
 	name = "Dionysus Maintenance"
 	})
 "zM" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "diobelt";
 	name = "Dionysus disposal belt";
@@ -11651,7 +11639,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -11724,7 +11712,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/indigo_rye)
 "Aa" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -11762,7 +11750,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -11770,7 +11758,7 @@
 	name = "Meridian Solar Array"
 	})
 "Af" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -11785,7 +11773,7 @@
 	name = "Meridian Solar Array"
 	})
 "Ag" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -11801,7 +11789,7 @@
 	name = "Meridian Solar Array"
 	})
 "Ah" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -12269,7 +12257,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "Bh" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/north{
 	name = "Asclepius Solar Array"
@@ -12456,7 +12444,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -12464,7 +12452,7 @@
 	name = "Demeter Solar Array"
 	})
 "BK" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -12678,7 +12666,7 @@
 	name = "Meridian Primary Zone"
 	})
 "Cg" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -12772,7 +12760,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -12830,7 +12818,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross"
@@ -13533,7 +13521,7 @@
 	name = "Meridian Primary Zone"
 	})
 "DX" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/south{
 	name = "Dionysus Solar Array"
@@ -13712,7 +13700,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/north{
 	name = "Asclepius Solar Array"
@@ -14095,7 +14083,7 @@
 	name = "Demeter Primary Zone"
 	})
 "Ff" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -14164,7 +14152,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "8-10"
 	},
@@ -14585,7 +14573,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -14737,7 +14725,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
@@ -14746,7 +14734,7 @@
 	name = "Erebus Solar Array"
 	})
 "GD" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -14768,7 +14756,7 @@
 	name = "Meridian Maintenance"
 	})
 "GF" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -14786,7 +14774,7 @@
 	name = "Erebus Solar Array"
 	})
 "GG" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -14933,7 +14921,7 @@
 /turf/simulated/floor/plating,
 /area/research_outpost/indigo_rye)
 "Hb" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -15022,7 +15010,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -15380,7 +15368,7 @@
 /turf/simulated/floor/engine,
 /area/research_outpost/indigo_rye)
 "HY" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -15397,7 +15385,7 @@
 	name = "Demeter Solar Array"
 	})
 "HZ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -15625,7 +15613,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -15694,7 +15682,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/south{
 	name = "Dionysus Solar Array"
@@ -15792,7 +15780,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
@@ -16607,7 +16595,7 @@
 /area/research_outpost/indigo_rye)
 "KT" = (
 /obj/machinery/drainage,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/white,
 /area/research_outpost/indigo_rye)
 "KU" = (
@@ -17131,7 +17119,7 @@
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)
 "Mn" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/research_outpost/indigo_rye)
 "Mo" = (
@@ -17144,7 +17132,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
@@ -17159,7 +17147,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
@@ -17213,7 +17201,7 @@
 	name = "Erebus Solar Array"
 	})
 "Mx" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/small_backup1{
 	name = "Erebus Solar Array"
@@ -17314,7 +17302,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "MH" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -17539,7 +17527,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -18037,7 +18025,7 @@
 	name = "Erebus Primary Zone"
 	})
 "NY" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/airless/plating,
 /area/listeningpost)
 "NZ" = (
@@ -18113,7 +18101,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -18122,7 +18110,7 @@
 	name = "Dionysus Solar Array"
 	})
 "Oh" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -18305,7 +18293,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -18385,7 +18373,7 @@
 	name = "Dionysus Primary Zone"
 	})
 "Oy" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -18400,7 +18388,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/disposalpipe/segment/transport,
 /obj/cable{
 	icon_state = "0-4"
@@ -18420,7 +18408,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -18465,7 +18453,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -18515,7 +18503,7 @@
 	name = "Dionysus Maintenance"
 	})
 "OI" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -19091,7 +19079,7 @@
 	name = "Demeter Primary Zone"
 	})
 "PC" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -19117,7 +19105,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -19133,7 +19121,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross"
@@ -19185,7 +19173,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -19208,7 +19196,7 @@
 /turf/simulated/floor/carpet/purple/standard/narrow/north,
 /area/station/chapel/sanctuary)
 "PN" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -19220,7 +19208,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/west{
@@ -19251,7 +19239,7 @@
 	name = "Tenebrae Command Center"
 	})
 "PQ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -19277,7 +19265,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -19292,7 +19280,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/disposalpipe/segment/transport,
 /obj/cable{
 	icon_state = "1-10"
@@ -19331,7 +19319,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "PU" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -19349,7 +19337,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -19376,7 +19364,7 @@
 	name = "Meridian Primary Zone"
 	})
 "PX" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -19391,7 +19379,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -19495,7 +19483,7 @@
 	name = "Meridian Command"
 	})
 "Qj" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -19521,7 +19509,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -19535,7 +19523,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
@@ -19565,7 +19553,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -19712,7 +19700,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -19721,7 +19709,7 @@
 	name = "Tenebrae Solar Array"
 	})
 "Qz" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -19744,7 +19732,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -19771,7 +19759,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/tenebrae)
 "QD" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/small_backup3{
 	name = "Tenebrae Solar Array"
@@ -19780,13 +19768,13 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/small_backup3{
 	name = "Tenebrae Solar Array"
 	})
 "QF" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -19812,7 +19800,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -19827,7 +19815,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -19836,7 +19824,7 @@
 	name = "Tenebrae Solar Array"
 	})
 "QI" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -19853,7 +19841,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -20220,7 +20208,7 @@
 	req_access = null
 	},
 /obj/mapping_helper/access/engineering_chief,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -20363,7 +20351,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "Se" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "erebusbelt";
 	name = "Erebus disposal belt";
@@ -20555,7 +20543,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "SK" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -20842,7 +20830,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
 	},
@@ -21208,7 +21196,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
@@ -21352,7 +21340,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/disposalpipe/segment/transport{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -21678,7 +21666,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
 	},
@@ -21852,7 +21840,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "VX" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -21984,7 +21972,7 @@
 /turf/simulated/floor/black,
 /area/station/security/secwing)
 "Wn" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -22623,7 +22611,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -22637,7 +22625,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -23010,7 +22998,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/small_backup1{
@@ -23101,7 +23089,7 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross"

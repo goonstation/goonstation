@@ -983,12 +983,12 @@ TYPEINFO(/obj/machinery/door/airlock)
 		switch( lowertext(signal.data["command"]) )
 			if("open")
 				SPAWN(0)
-					src.open(1)
+					src.open(surpress_send = 1)
 					src.send_status(,senderid)
 
 			if("close")
 				SPAWN(0)
-					src.close(1)
+					src.close(surpress_send = 1)
 					src.send_status(,senderid)
 
 			if("unlock")
@@ -1010,7 +1010,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 					if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 						src.set_unlocked()
 
-					src.open(1)
+					src.open(surpress_send = 1)
 					sleep(0.5 SECONDS)
 
 					if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
@@ -1027,7 +1027,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 					if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 						src.set_unlocked()
 
-					src.close(1)
+					src.close(surpress_send = 1)
 					sleep(0.5 SECONDS)
 
 					if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
@@ -1072,7 +1072,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, radiorange)
 
-	open(surpress_send)
+	open(manual_activation, surpress_send)
 		. = ..()
 		if(!surpress_send && (src.last_update_time + 100 < ticker.round_elapsed_ticks))
 			var/user_name = "???"
@@ -1090,7 +1090,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 			send_status(user_name)
 			src.last_update_time = ticker.round_elapsed_ticks
 
-	close(surpress_send, is_auto = 0)
+	close(manual_activation, surpress_send, is_auto = 0)
 		. = ..()
 		if(!surpress_send && (src.last_update_time + 100 < ticker.round_elapsed_ticks))
 			var/user_name = "???"
@@ -1456,6 +1456,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door/airlock, proc/play_deny, proc/toggle_bo
 	else if(locked)
 		boutput(user, SPAN_ALERT("The door bolts are down!"))
 	else if(!density)
+		if (!src.safety)
+			logTheThing(LOG_COMBAT, user, "closes an airlock with a cut safety wire at [log_loc(src)]")
 		close()
 	else
 		open()

@@ -1161,7 +1161,8 @@
 					var/mob/living/carbon/human/H = src.head.linked_human
 					if (H && (!isskeleton(src.donor) && H != src.donor))
 						var/datum/mutantrace/skeleton/S = H?.mutantrace
-						S.head_tracker = null
+						if (!QDELETED(S))
+							S.head_tracker = null
 						H.set_eye(null)
 						src.head.UnregisterSignal(src.head.linked_human, COMSIG_CREATE_TYPING)
 						src.head.UnregisterSignal(src.head.linked_human, COMSIG_REMOVE_TYPING)
@@ -1424,6 +1425,7 @@
 				success = 1
 
 		if (success)
+			logTheThing(LOG_COMBAT, src.donor, "received a surgical transplant of \the [I] ([I.type]) by [constructTarget(usr,"combat")]")
 			if (istype(I, /obj/item/organ))
 				var/obj/item/organ/O = I
 				O.on_transplant(src.donor)
@@ -1828,7 +1830,8 @@
 				SPAWN(0)
 					for (var/i in 1 to 3)
 						var/obj/item/O = L.vomit()
-						O.throw_at(target, 8, 3, bonus_throwforce=5)
+						if(istype(O))
+							O.throw_at(target, 8, 3, bonus_throwforce=5)
 						linked_organ.take_damage(3)
 						sleep(0.1 SECONDS)
 						if(linked_organ.broken || !length(L.organHolder.stomach.contents))
@@ -1871,3 +1874,27 @@
 			src.icon_state = initial(src.icon_state)
 		else
 			src.icon_state = "[initial(src.icon_state)]_cd"
+
+/datum/targetable/organAbility/view_camera
+	name = "View Monitor"
+	desc = "Look through a camera via your monitor eye."
+	icon_state = "eye-monitor"
+	targeted = FALSE
+	toggled = TRUE
+	is_on = FALSE
+
+	cast(atom/target)
+		if (..())
+			return 1
+		var/obj/item/organ/eye/cyber/monitor/linked_eye = linked_organ
+		if(src.is_on)
+			src.is_on = FALSE
+			linked_eye.viewer.disconnect_user(holder.owner)
+			if(linked_eye.emagged)
+				linked_eye.provides_sight = FALSE
+			return
+		else //TODO: give them a non-janky viewport instead, once they exist
+			if(linked_eye.viewer.AttackSelf(holder.owner))
+				src.is_on = TRUE
+				if(linked_eye.emagged)
+					linked_eye.provides_sight = TRUE

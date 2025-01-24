@@ -81,10 +81,7 @@
 
 		gen_turf.temperature = 330 // 56.9C
 
-		if (current_state >= GAME_STATE_PLAYING)
-			LAGCHECK(LAG_LOW)
-		else
-			LAGCHECK(LAG_HIGH)
+		src.lag_check()
 
 
 ///for the mapgen mountains, temp until we get something better

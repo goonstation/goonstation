@@ -89,7 +89,7 @@
 
 	Crossed(atom/movable/A)
 		..()
-		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A) || isflockmob(A)) return
+		if (istype(A, /mob/dead) || A.anchored || isintangible(A) || iswraith(A) || isflockmob(A)) return
 		return_if_overlay_or_effect(A)
 		activate()
 
@@ -300,16 +300,31 @@
 /obj/machinery/cargo_router/oshan_north
 	trigger_when_no_match = 0
 	New()
-		destinations = list("North" = NORTH, "South" = EAST)
+		destinations = list("North Carousel" = NORTH, "South Carousel" = EAST, "East Carousel" = EAST, "West Carousel" = EAST)
 		default_direction = NORTH
 		..()
 
 /obj/machinery/cargo_router/oshan_south
 	trigger_when_no_match = 0
 	New()
-		destinations = list("South" = SOUTH, "North" = WEST)
+		destinations = list("South Carousel" = SOUTH, "North Carousel" = WEST, "East Carousel" = WEST, "West Carousel" = WEST)
 		default_direction = SOUTH
 		..()
+
+/obj/machinery/cargo_router/oshan_east
+	trigger_when_no_match = 0
+	New()
+		destinations = list("East Carousel" = EAST, "North Carousel" = SOUTH, "South Carousel" = SOUTH, "West Carousel" = SOUTH)
+		default_direction = EAST
+		..()
+
+/obj/machinery/cargo_router/oshan_west
+	trigger_when_no_match = 0
+	New()
+		destinations = list("West Carousel" = WEST, "North Carousel" = NORTH, "South Carousel" = NORTH, "East Carousel" = NORTH)
+		default_direction = WEST
+		..()
+
 
 /obj/machinery/computer/barcode
 	name = "barcode computer"

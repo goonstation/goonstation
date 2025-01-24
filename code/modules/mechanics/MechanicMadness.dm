@@ -36,7 +36,7 @@
 	open_to_sound = TRUE
 
 	New()
-		processing_items |= src
+		processing_items |= src //this thing is a dang storage
 		..()
 
 	process()
@@ -196,6 +196,7 @@
 			return discons
 	disposing()
 		..()
+		processing_items.Remove(src)
 		src.contents=null
 		return
 	mouse_drop(atom/target)
@@ -220,6 +221,7 @@
 		desc="A rather chunky cabinet for storing up to 23 active mechanic components\
 		 at once.<br>It can only be connected to external components when bolted to the floor.<br>"
 		w_class = W_CLASS_GIGANTIC //Shouldn't be stored in a backpack
+		throwforce = 10
 		num_f_icons=3
 		density=1
 		anchored = UNANCHORED
@@ -373,16 +375,17 @@
 	var/when_next_ready = 0
 	var/list/particle_list
 	var/mob/owner = null
+	var/process_fast = FALSE //Process will be called at 2.8s intervals instead of 0.4
 
 	New()
 		particle_list = new/list()
 		AddComponent(/datum/component/mechanics_holder)
-		processing_items |= src
+		processing_mechanics |= src
 		return ..()
 
 
 	disposing()
-		processing_items.Remove(src)
+		processing_mechanics.Remove(src)
 		clear_owner()
 		..()
 
@@ -809,7 +812,7 @@
 				P.info = strip_html_tags(html_decode(input.signal))
 				P.name = paper_name
 				paper_left--
-				processing_items |= src
+				processing_mechanics |= src
 			else
 				playsound(src.loc, 'sound/machines/click.ogg', 35, 1, -10)
 		return
@@ -835,7 +838,7 @@
 		if(T && !ON_COOLDOWN(T, "ambient_paper_generation", 30 SECONDS))
 			paper_left++
 			if(paper_left >= 10)
-				processing_items -= src
+				processing_mechanics -= src
 
 /obj/item/mechanics/pscan
 	name = "Paper scanner"
@@ -1019,12 +1022,18 @@
 				src.set_loc(target)
 		return
 
+
+#define GRAVITON_ITEM_COOLDOWN 10
+#define GRAVITON_CONTAINER_COOLDOWN 35
+#define GRAVITON_CONTAINER_FAIL_SOUND_VOLUME 30
+#define GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN 10
+#define GRAVITON_CONTAINER_COOLDOWN_ID "Graviton container cooldown"
+#define GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN_ID "Graviton container fail sound cooldown"
 /obj/item/mechanics/accelerator
 	name = "Graviton accelerator"
 	desc = ""
 	icon_state = "comp_accel"
 	can_rotate = 1
-	cabinet_banned = TRUE // non-functional
 	var/active = 0
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -1032,39 +1041,51 @@
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", PROC_REF(activateproc))
 
-	proc/drivecurrent()
+	proc/drivecurrent(var/obj/item/storage/mechanics/container = null)
 		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
-		var/count = 0
-		for(var/atom/movable/M in src.loc)
-			if(M.anchored) continue
-			count++
-			if(M == src) continue
-			throwstuff(M)
-			if(count > 50) return
-			if(APPROX_TICK_USE > 100) return //fuck it, failsafe
+
+		if(container)
+			if(ON_COOLDOWN(container, GRAVITON_CONTAINER_COOLDOWN_ID, GRAVITON_CONTAINER_COOLDOWN) || container.anchored) // Cooldown is shared between all gravitons in locker
+				if(ON_COOLDOWN(container, GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN_ID, GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN)) // cooldown in a cooldown
+					playsound(src, 'sound/machines/buzz-sigh.ogg', GRAVITON_CONTAINER_FAIL_SOUND_VOLUME, 0, 0)
+				return
+			throwstuff(container, 3)
+		else
+			var/count = 0
+			for(var/atom/movable/M in src.loc)
+				if(M.anchored) continue
+				count++
+				if(M == src) continue
+				throwstuff(M)
+				if(count > 50) return
+				if(APPROX_TICK_USE > GRAVITON_ITEM_COOLDOWN * 10) return //fuck it, failsafe
 
 	proc/activateproc(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR) return
 		if(input)
 			if(active) return
 			particleMaster.SpawnSystem(new /datum/particleSystem/gravaccel(src.loc, src.dir))
+
+			var/obj/item/storage/mechanics/container  = src.stored?.linked_item
+			var/in_container = istype(container,/obj/item/storage/mechanics)
 			SPAWN(0)
 				icon_state = "[under_floor ? "u":""]comp_accel1"
 				active = 1
-				drivecurrent()
+				drivecurrent(container)
 				sleep(0.5 SECONDS)
-				drivecurrent()
+				if (!in_container)
+					drivecurrent() // Gravitons in lockers only bonk once
 				sleep(2.5 SECONDS)
 				icon_state = "[under_floor ? "u":""]comp_accel"
 				active = 0
 		return
 
-	proc/throwstuff(atom/movable/AM as mob|obj)
+	proc/throwstuff(atom/movable/AM as mob|obj, range = 50)
 		if(level == OVERFLOOR || AM.anchored || AM == src) return
 		if(AM.throwing) return
 		var/atom/target = get_edge_target_turf(AM, src.dir)
-		var/datum/thrown_thing/thr = AM.throw_at(target, 50, 1)
+		var/datum/thrown_thing/thr = AM.throw_at(target, range, 1)
 		thr?.user = (owner)
 		return
 
@@ -1078,6 +1099,12 @@
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_accel"
 		return
+#undef GRAVITON_ITEM_COOLDOWN
+#undef GRAVITON_CONTAINER_COOLDOWN
+#undef GRAVITON_CONTAINER_FAIL_SOUND_VOLUME
+#undef GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN
+#undef GRAVITON_CONTAINER_COOLDOWN_ID
+#undef GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN_ID
 
 /// Tesla Coil mechanics component - zaps people
 /obj/item/mechanics/zapper
@@ -1795,6 +1822,191 @@
 		icon_state = "[under_floor ? "u":""]comp_relay"
 		return
 
+#define FIFO_BUFFER 1
+#define FILO_BUFFER 2
+#define RANDOM_BUFFER 3
+#define RING_BUFFER 4 //When I say ring buffer what I really mean is..
+		//...FIFO queue with clobbering like an audio buffer
+
+/obj/item/mechanics/buffercomp
+	name = "Buffer Component"
+	desc = ""
+	icon_state = "comp_buffer"
+	cooldown_time = 0.4 SECONDS
+	process_fast = TRUE
+	var/list/buffer = list()
+	var/buffer_size = 30
+	//I wanted to set this to the same limit as the selection component
+	//But the selection compoment doesn't actually have a limit in the additem() proc
+	//It kind of worries me
+	var/buffer_max_size = 512
+	var/ring_reader = 1
+	var/ring_writer = 1
+
+	var/buffer_model = RING_BUFFER
+	var/buffer_string = "ring"
+	var/buffer_desc = "This mode outputs from oldest to newest, overwriting the oldest signal when full."
+	var/changesig = 0
+
+
+	get_desc()
+		. += "<br>[SPAN_NOTICE("Delay is [cooldown_time] (in 10ths of a second). <br> Buffer size is [buffer_size].\
+		 <br> Buffer mode is [buffer_string].<br>[buffer_desc]")]"
+
+	New()
+		..()
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"buffer", PROC_REF(buffer))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set buffer mode", PROC_REF(compSetModel))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Delay",PROC_REF(setDelay))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Buffer Mode",PROC_REF(userSetModel))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Buffer Size",PROC_REF(setBufferSize))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Changing",PROC_REF(toggleDefault))
+
+	proc/setModel(var/model)
+		//Uppercase everything so signal input can be case insensitive
+		model = uppertext(model)
+		if(model == "FIFO")
+			buffer_desc = "This mode outputs from oldest to newest, dropping signals when full."
+			buffer_model = FIFO_BUFFER
+		else if(model == "FILO")
+			buffer_desc = "This mode outputs from newest to oldest, dropping signals when full."
+			buffer_model = FILO_BUFFER
+		else if(model == "RING")
+			model = "ring"
+			buffer_desc = "This mode outputs from oldest to newest, overwriting the oldest signal when full."
+			buffer_model = RING_BUFFER
+		else if(model == "RANDOM")
+			model = "random"
+			buffer_desc = "This mode outputs signals randomly, randomly overwriting previous signals when full."
+			buffer_model = RANDOM_BUFFER
+		else
+			return FALSE
+
+		buffer_string = model
+		tooltip_rebuild = 1
+		buffer.len = 0
+		ring_reader = 1
+		ring_writer = 1
+		return TRUE
+
+	proc/compSetModel(var/datum/mechanicsMessage/input)
+		if(setModel(input.signal))
+			LIGHT_UP_HOUSING
+
+	proc/userSetModel(obj/item/W as obj, mob/user as mob)
+		var/model = tgui_input_list(user, "Set the buffer mode to what?", "Mode Selector", list("FIFO","FILO","ring","random"), buffer_string)
+		if(!in_interact_range(src, user) || !can_act(user) || isnull(model))
+			return
+		setModel(model)
+		boutput(user, "You set the buffer mode to [model]")
+
+
+
+	//Thanks delay component
+	proc/setDelay(obj/item/W as obj, mob/user as mob)
+		var/inp = tgui_input_number(user, "Enter delay in 10ths of a second:", "Set delay", cooldown_time, 60, 4)
+		if(!in_interact_range(src, user) || !can_act(user) || isnull(inp))
+			return
+		inp = min(inp, 60)
+		inp = max(4, inp)
+		cooldown_time = inp
+		tooltip_rebuild = 1
+		boutput(user, "Set delay to [inp]")
+
+	proc/setBufferSize(obj/item/W as obj, mob/user as mob)
+		var/inp = tgui_input_number(user,"Set size of signal buffer","Buffer size", buffer_size,buffer_max_size,1)
+		if(!in_interact_range(src, user) || !can_act(user) || isnull(inp))
+			return
+
+		if (isnull(inp)) return
+		inp = round(inp)
+		inp = clamp(inp, 1, buffer_max_size)
+		buffer_size = inp
+		tooltip_rebuild = 1
+		buffer.len = 0
+		ring_reader = 1
+		ring_writer = 1
+		boutput(user,"You set the buffer size to [inp]")
+
+	proc/toggleDefault(obj/item/W as obj, mob/user as mob)
+		changesig = !changesig
+		boutput(user, "Signal changing now [changesig ? "on":"off"]")
+		tooltip_rebuild = 1
+
+	proc/buffer(var/datum/mechanicsMessage/input)
+		var/bufl = length(buffer)
+		if(buffer_model == RING_BUFFER)
+			if(bufl >= ring_writer)
+				buffer[ring_writer] = input
+			else
+				buffer.Add(input)
+			//Round and round we go
+			//If the writer runs into the reader and the next item in the queue isn't null
+			//That means that item is the oldest, jump the reader to it
+			//Watch out for the edge
+			if(ring_reader == ring_writer)
+				if((ring_reader + 1) > buffer_size && !isnull(buffer[1]) )
+					ring_reader = 1
+				else if(bufl >= (ring_reader + 1) && !isnull(buffer[(ring_reader + 1)]))
+					ring_reader++
+			ring_writer = (ring_writer % buffer_size) + 1
+			return
+
+		if(buffer_model == RANDOM_BUFFER)
+			if(bufl >= buffer_size)
+				buffer[rand(1,(bufl))] = input
+			else
+				buffer.Add(input)
+			return
+		if(bufl >= buffer_size)
+			return
+		if(buffer_model == FIFO_BUFFER || buffer_model == FILO_BUFFER)
+			buffer.Add(input)
+			return
+
+	process()
+		..()
+
+		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
+
+		var/bufl = (length(buffer))
+		var/signal = null
+		if(bufl > 0)
+
+			if(buffer_model == FIFO_BUFFER)
+				signal = buffer[1]
+				buffer.Remove(buffer[1])
+			if(buffer_model == FILO_BUFFER)
+				signal = buffer[bufl]
+				buffer.Remove(buffer[bufl])
+			if(buffer_model == RING_BUFFER && bufl >= ring_reader && !isnull(buffer[ring_reader]) )
+				signal = buffer[ring_reader]
+				buffer[ring_reader] = null
+				ring_reader++
+				if(ring_reader > buffer_size)
+					ring_reader = 1
+			if(buffer_model == RANDOM_BUFFER)
+				var/ran = rand(1,bufl)
+				signal = buffer[ran]
+				buffer.Remove(buffer[ran])
+
+			if(isnull(signal)) return
+
+			LIGHT_UP_HOUSING
+			flick("[under_floor ? "u":""]comp_buffer1", src)
+			var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
+			SPAWN(0) SEND_SIGNAL(src,transmissionStyle,signal)
+
+	update_icon()
+		icon_state = "[under_floor ? "u":""]comp_buffer"
+
+
+#undef FIFO_BUFFER
+#undef FILO_BUFFER
+#undef RANDOM_BUFFER
+#undef RING_BUFFER
+
 /obj/item/mechanics/filecomp
 	name = "File Component"
 	desc = ""
@@ -1868,13 +2080,16 @@
 		. += {"<br><span class='notice'>[forward_all ? "Sending full unprocessed Signals.":"Sending only processed sendmsg and pda Message Signals."]<br>
 		[only_directed ? "Only reacting to Messages directed at this Component.":"Reacting to ALL Messages received."]<br>
 		Current Frequency: [frequency]<br>
+		Current Range: [isnull(range) ? "Unlimited" : range]<br>
 		Current NetID: [net_id]</span>"}
 
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send radio message", PROC_REF(send))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", PROC_REF(setfreq))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set range", PROC_REF(setrange))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency",PROC_REF(setFreqManually))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Range",PROC_REF(setRangeManually))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle NetID Filtering",PROC_REF(toggleAddressFiltering))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Forward All",PROC_REF(toggleForwardAll))
 
@@ -1892,6 +2107,23 @@
 			return 1
 		return 0
 
+	proc/setRangeManually(obj/item/W as obj, mob/user as mob)
+		var/inp = input(user, "Please enter the range (-1 for unlimited):", "Range setting", isnull(range) ? -1 : range) as num
+		if(!in_interact_range(src, user) || user.stat)
+			return 0
+		inp = text2num_safe(inp)
+		if(isnull(inp)) return 0
+		if(inp == -1)
+			src.range = null
+			boutput(user, "Range set to unlimited")
+			tooltip_rebuild = 1
+			return 1
+		inp = clamp(inp, 0, 512)
+		src.range = inp
+		boutput(user, "Range set to [inp]")
+		tooltip_rebuild = 1
+		return 1
+
 	proc/toggleAddressFiltering(obj/item/W as obj, mob/user as mob)
 		only_directed = !only_directed
 		get_radio_connection_by_id(src, "main").update_all_hearing(!only_directed)
@@ -1904,6 +2136,20 @@
 		boutput(user, "[forward_all ? "Now forwarding all Radio Messages as they are.":"Now processing only sendmsg and normal PDA messages."]")
 		tooltip_rebuild = 1
 		return 1
+
+	proc/setrange(var/datum/mechanicsMessage/input)
+		if(level == OVERFLOOR) return
+		LIGHT_UP_HOUSING
+		var/newrange = text2num_safe(input.signal)
+		if(isnull(newrange)) return
+		if(newrange == -1)
+			src.range = null
+			tooltip_rebuild = 1
+			return
+		newrange = clamp(newrange, 0, 512)
+		src.range = newrange
+		tooltip_rebuild = 1
+		return
 
 	proc/setfreq(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR) return
@@ -2415,7 +2661,8 @@
 		src.activate(input, TRUE)
 
 	proc/activate(var/datum/mechanicsMessage/input, use_signal_id = null)
-		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
+		var/turf/myTurf = get_turf(src)
+		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time) || isrestrictedz(myTurf.z)) return
 		LIGHT_UP_HOUSING
 		flick("[under_floor ? "u":""]comp_tele1", src)
 		var/list/destinations = new/list()
@@ -2452,7 +2699,8 @@
 				if(M == src || M.invisibility || M.anchored) continue
 				logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
 				do_teleport(M,get_turf(picked.loc),FALSE,use_teleblocks=FALSE,sparks=FALSE)
-				count_sent++
+				if(count_sent++ > 50) break //ratelimit
+
 			input.signal = "to=[targetTeleID]&count=[count_sent]"
 			SPAWN(0)
 				// Origin pad gets "to=destination&count=123"
@@ -2662,7 +2910,7 @@
 				if (H.wear_mask && H.wear_mask.vchange)
 					if (istype(H.wear_id, /obj/item/card/id))
 						var/obj/item/card/id/ID = H.wear_id
-						heardname = ID.registered
+						heardname = ID.registered || "Unknown"
 					else
 						heardname = "Unknown"
 				else if (H.vdisfigured)
@@ -2817,6 +3065,8 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 		var/new_label = input(user, "Button label", "Button Panel") as text
 		var/new_signal = input(user, "Button signal", "Button Panel") as text
+		new_label = trimtext(new_label)
+		new_signal = trimtext(new_signal)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(new_label) && length(new_signal))
@@ -2844,6 +3094,8 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			return 0
 		var/new_label = input(user, "Button label", "Button Panel", to_edit) as text
 		var/new_signal = input(user, "Button signal", "Button Panel", src.active_buttons[to_edit]) as text
+		new_label = trimtext(new_label)
+		new_signal = trimtext(new_signal)
 		if(!length(new_label) || !length(new_signal))
 			return 0
 		new_label = adminscrub(new_label)
@@ -2890,9 +3142,12 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		var/list/work_list = list()
 		var/button_count = 0
 		for (var/index in splittext(inputted_text, ";"))
-			var/list/split = splittext(index, "=")
-			if (length(split) != 2) continue
-			work_list[split[1]] = split[2]
+			var/first_equal_pos = findtext(index, "=")
+			if (!first_equal_pos) continue
+			var/new_label = trimtext(copytext(index, 1, first_equal_pos))
+			var/new_signal = trimtext(copytext(index, first_equal_pos + 1))
+			if (!new_label || !new_signal) continue
+			work_list[new_label] = new_signal
 			button_count++
 			if (button_count >= 10) break
 		if (!length(work_list)) return FALSE
@@ -3257,7 +3512,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		return 1
 
 	proc/setMode(obj/item/W as obj, mob/user as mob)
-		mode = input("Set the math mode to what?", "Mode Selector", mode) in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte")
+		mode = input("Set the math mode to what?", "Mode Selector", mode) in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte", "min", "max")
 		tooltip_rebuild = 1
 		return 1
 
@@ -3292,7 +3547,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	proc/compSetMode(var/datum/mechanicsMessage/input)
 		LIGHT_UP_HOUSING
 		tooltip_rebuild = 1
-		if(input.signal in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte"))
+		if(input.signal in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte","min","max"))
 			mode = input.signal
 	proc/evaluate()
 		switch(mode)
@@ -3325,6 +3580,10 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				. = A == B
 			if("neq")
 				. = A != B
+			if("min")
+				. = min(A, B)
+			if("max")
+				. = max(A, B)
 			else
 				return
 

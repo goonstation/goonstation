@@ -1123,7 +1123,7 @@
 	},
 /area/space)
 "dw" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/fakeobject/shuttleengine{
 	dir = 1;
@@ -1293,7 +1293,7 @@
 /turf/unsimulated/floor/plating,
 /area/space)
 "dT" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -1319,7 +1319,7 @@
 	},
 /area/space)
 "dW" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -1328,7 +1328,7 @@
 /turf/unsimulated/floor/plating,
 /area/space)
 "dX" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -1551,7 +1551,7 @@
 	},
 /area/space)
 "eE" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/west,
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
@@ -1598,7 +1598,7 @@
 	},
 /area/diner/tug)
 "eJ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
@@ -1623,7 +1623,7 @@
 	},
 /area/diner/tug)
 "eN" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/indestructible/shuttle_corner{
@@ -1647,14 +1647,14 @@
 /turf/space,
 /area/space)
 "eQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
 /turf/space,
 /area/space)
 "eR" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/space,
@@ -1884,7 +1884,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/space)
 "fx" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -1955,7 +1955,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "fI" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -1964,7 +1964,7 @@
 	},
 /area/space)
 "fJ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /obj/window/reinforced/east,
@@ -2033,7 +2033,7 @@
 	},
 /area/space)
 "fT" = (
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -2076,7 +2076,7 @@
 /area/space)
 "ga" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -2156,7 +2156,7 @@
 	},
 /area/space)
 "gl" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -2850,7 +2850,7 @@
 /area/space)
 "ih" = (
 /obj/machinery/communications_dish,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -2902,7 +2902,7 @@
 /area/space)
 "io" = (
 /obj/machinery/communications_dish,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -3947,7 +3947,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/diner/tug)
 "kX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/map/light/screen,
@@ -4039,7 +4039,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/diner/tug)
 "ll" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/door/airlock/external,
@@ -4071,7 +4071,7 @@
 /turf/space,
 /area/space)
 "lp" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
@@ -4102,7 +4102,7 @@
 "lt" = (
 /obj/lattice,
 /obj/machinery/communications_dish,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -4233,7 +4233,7 @@
 	},
 /area/space)
 "lN" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/map/light/white,
 /turf/simulated/floor/plating/scorched,
 /area/space)
@@ -4351,7 +4351,7 @@
 	},
 /area/diner/tug)
 "md" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/indestructible/shuttle_corner{
@@ -4457,7 +4457,7 @@
 	name = "salvage belt - east";
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/map/light/white,
 /turf/simulated/floor/plating/scorched,
 /area/space)
@@ -5234,7 +5234,7 @@
 /turf/simulated/shuttle/wall,
 /area/space)
 "od" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced,
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
@@ -5242,7 +5242,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "oe" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/north,
@@ -6021,9 +6021,7 @@
 "qo" = (
 /obj/stool/bed,
 /obj/decal/cleanable/cobweb,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/airless/grime,
 /area/space)
 "qp" = (
@@ -6226,7 +6224,7 @@
 "qS" = (
 /obj/window/reinforced/west,
 /obj/window/reinforced/east,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject/shuttleengine{
 	dir = 4
 	},
@@ -6522,7 +6520,7 @@
 "rB" = (
 /obj/window/reinforced/west,
 /obj/window/reinforced/east,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject/shuttleengine{
 	dir = 4
 	},
@@ -6946,7 +6944,7 @@
 /obj/item/raw_material/shard/glass{
 	icon_state = "medium"
 	},
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/space,
 /area/space)
 "sr" = (
@@ -7384,7 +7382,7 @@
 	dir = 1;
 	icon_state = "shuttle_laser"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -7442,7 +7440,7 @@
 	dir = 1;
 	icon_state = "shuttle_laser"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -7465,7 +7463,7 @@
 	dir = 1;
 	icon_state = "alt_heater"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -7499,7 +7497,7 @@
 	dir = 1;
 	icon_state = "alt_heater"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -9755,20 +9753,20 @@
 /turf/unsimulated/floor/plating/random,
 /area/space)
 "zi" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
 /turf/space,
 /area/space)
 "zj" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/space,
 /area/space)
 "zk" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -10056,7 +10054,7 @@
 	},
 /area/space)
 "zV" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -10065,7 +10063,7 @@
 	},
 /area/space)
 "zW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -10105,7 +10103,7 @@
 /turf/simulated/grimycarpet,
 /area/space)
 "Ad" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -10114,11 +10112,11 @@
 	},
 /area/space)
 "Ae" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating,
 /area/space)
 "Af" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/engine/vacuum,
@@ -10128,7 +10126,7 @@
 /turf/simulated/floor/yellowblack,
 /area/space)
 "Ah" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -10144,7 +10142,7 @@
 /turf/simulated/floor/yellowblack,
 /area/space)
 "Ak" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -10197,7 +10195,7 @@
 /turf/simulated/floor/airless/plating,
 /area/space)
 "At" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -10295,7 +10293,7 @@
 /turf/simulated/grimycarpet,
 /area/space)
 "AG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating,
@@ -10415,7 +10413,7 @@
 /turf/space,
 /area/space)
 "AW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -10460,7 +10458,7 @@
 /turf/space,
 /area/space)
 "Ba" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -10469,7 +10467,7 @@
 	},
 /area/space)
 "Bb" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -10488,7 +10486,7 @@
 /turf/space,
 /area/space)
 "Bd" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -10628,9 +10626,7 @@
 /area/space)
 "Bz" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
@@ -10666,7 +10662,7 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating,
@@ -10696,7 +10692,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating,
@@ -10742,7 +10738,7 @@
 /obj/item/paper/tug/invoice,
 /obj/item/card_group/stg,
 /obj/item/pen/fancy,
-/obj/item/raw_material/fabric,
+/obj/item/material_piece/cloth,
 /obj/item/raw_material/fibrilith,
 /obj/item/raw_material/fibrilith,
 /obj/item/raw_material/fibrilith,

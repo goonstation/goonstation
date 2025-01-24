@@ -30,6 +30,7 @@
 	metabolizes = FALSE
 	use_stamina = FALSE
 	ailment_immune = TRUE
+	throws_can_hit_me = FALSE
 
 	grabresistmessage = "but their hands pass right through!"
 	death_text = "%src% dissipates!"

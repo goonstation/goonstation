@@ -79,15 +79,21 @@
 		. = ..()
 	else
 		. = can_access_remotely_default(user)
-
 	/*
 	 *	Prototype procs common to all /obj/machinery objects
 	 */
+
+///wrapper proc for /obj/machinery/process so that signals are always sent. Call this, but do not override it.
+/obj/machinery/proc/ProcessMachine(var/mult)
+	SHOULD_NOT_OVERRIDE(1)
+	if(SEND_SIGNAL(src, COMSIG_MACHINERY_PROCESS, mult))
+		return
+	src.process(mult)
+
 // Want a mult on your machine process? Put var/mult in its arguments and put mult wherever something could be mangled by lagg
 /obj/machinery/proc/process(var/mult) //<- like that, but in your machine's process()
-
+	PROTECTED_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
-
 	// Called for all /obj/machinery in the "machines" list, approximately once per second
 	// by /datum/controller/game_controller/process() when a game round is active
 	// Any regular action of the machine is executed by this proc.
@@ -331,6 +337,12 @@
 		src.flags &= ~EMP_SHORT
 		qdel(pulse2)
 	return
+
+/obj/machinery/proc/set_broken()
+	if (src.is_broken())
+		return TRUE
+	src.status |= BROKEN
+	src.power_change()
 
 /obj/machinery/proc/is_broken()
 	return (src.status & BROKEN)

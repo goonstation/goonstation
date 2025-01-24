@@ -45,6 +45,8 @@
 		. += "It has [get_fuel()] units of fuel left!"
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (is_special)
+			return ..()
 		if (!src.welding)
 			if (!src.cautery_surgery(target, user, 0, src.welding))
 				return ..()
@@ -140,8 +142,11 @@
 			var/turf/location = user.loc
 			if (istype(location, /turf))
 				location.hotspot_expose(700, 50, 1)
+			if (istype(O, /turf))
+				var/turf/target_turf = O
+				target_turf.hotspot_expose(700, 50, 1)
 			if (O && !ismob(O) && O.reagents)
-				boutput(user, SPAN_NOTICE("You heat \the [O.name]"))
+				boutput(user, SPAN_NOTICE("You heat \the [O.name]."))
 				O.reagents.temperature_reagents(4000,50, 100, 100, 1)
 
 	attack_self(mob/user as mob)
@@ -206,8 +211,10 @@
 		var/safety = EYE_DAMAGE_NORMAL
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
+			if (!H.sight_check()) //don't blind if we're already blind
+				safety = EYE_DAMAGE_IMMUNE
 			// we want to check for the thermals first so having a polarized eye doesn't protect you if you also have a thermal eye
-			if (istype(H.glasses, /obj/item/clothing/glasses/thermal) || H.eye_istype(/obj/item/organ/eye/cyber/thermal) || istype(H.glasses, /obj/item/clothing/glasses/nightvision) || H.eye_istype(/obj/item/organ/eye/cyber/nightvision))
+			else if (istype(H.glasses, /obj/item/clothing/glasses/thermal) || H.eye_istype(/obj/item/organ/eye/cyber/thermal) || istype(H.glasses, /obj/item/clothing/glasses/nightvision) || H.eye_istype(/obj/item/organ/eye/cyber/nightvision))
 				safety = EYE_DAMAGE_EXTRA
 			else if (istype(H.head, /obj/item/clothing/head/helmet/welding))
 				var/obj/item/clothing/head/helmet/welding/WH = H.head

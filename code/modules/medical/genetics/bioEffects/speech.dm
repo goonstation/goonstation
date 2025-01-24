@@ -236,8 +236,12 @@
 		var/mob/living/L = owner
 		if (istype(L))
 			L.speechpopupstyle = "font-family: 'Comic Sans MS'; font-size: 8px;"
+		. = ..()
 
 	OnRemove()
+		. = ..()
+		if (!.)
+			return
 		var/mob/living/L = owner
 		if (istype(L))
 			L.speechpopupstyle = ""
@@ -265,8 +269,12 @@
 		var/mob/living/L = owner
 		if (istype(L))
 			L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: red !important; text-shadow: 0 0 3px black; -dm-text-outline: 2px black;"
+		. = ..()
 
 	OnRemove()
+		. = ..()
+		if (!.)
+			return
 		var/mob/living/L = owner
 		if (istype(L))
 			L.speechpopupstyle = ""
@@ -288,6 +296,7 @@
 			var/mob/living/L = owner
 			if (istype(L))
 				L.speechpopupstyle = "color: white !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px black;"
+			. = ..()
 
 	rainbow
 		name = "Frontal Gyrus Alteration Type-Radmin"
@@ -301,8 +310,12 @@
 			if (istype(L))
 				L.speechpopupstyle = "color: white !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px black;"
 				animate_rainbow_glow(L.chat_text)
+			. = ..()
 
 		OnRemove()
+			. = ..()
+			if (!.)
+				return
 			var/mob/living/L = owner
 			if (istype(L))
 				L.speechpopupstyle = ""
@@ -321,6 +334,7 @@
 				if (istype(L))
 					L.speechpopupstyle = "color: black !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px white;"
 					animate_rainbow_glow(L.chat_text)
+				. = ..()
 
 /datum/bioEffect/speech/slurring
 	name = "Frontal Gyrus Alteration Type-D"
@@ -563,8 +577,10 @@
 	OnAdd()
 		var/mob/living/L = owner
 		L.speech_void = TRUE
+		. = ..()
 
 	OnRemove()
+		. = ..()
 		var/mob/living/L = owner
 		L.speech_void = FALSE
 

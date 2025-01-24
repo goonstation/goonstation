@@ -23,7 +23,7 @@ proc/make_cleanable(var/type,var/loc)
 	var/slipped_in_blood = 0 // self explanitory hopefully
 	var/can_dry = 0
 	var/dry = 0 // if it's slippery to start, is it dry now?
-	var/stain = null // clothing will be stained with this message if the decal is created in the same tile as them
+	var/datum/stain/stain = null //! Stain to apply to clothing if it is on the same turf as the cleanable when spawned
 	var/last_color = null
 
 	var/can_fluid_absorb = 1
@@ -60,7 +60,8 @@ proc/make_cleanable(var/type,var/loc)
 				T.messy++
 				if (istype(T, /turf/simulated/floor))
 					var/turf/simulated/floor/floor = T
-					floor.cleanable_fluid_react()
+					SPAWN(0)
+						floor.cleanable_fluid_react()
 
 	set_loc(newloc)
 		if(isturf(src.loc))
@@ -257,7 +258,7 @@ proc/make_cleanable(var/type,var/loc)
 	can_sample = 1
 	sample_reagent = "blood"
 	can_dry = 1
-	stain = "blood-stained"
+	stain = /datum/stain/blood
 	var/can_track = 1
 	var/reagents_max = 10
 
@@ -622,7 +623,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_sample = 1
 	sample_reagent = "glitter"
 	sample_verb = "scrape"
-	stain = "sparkly"
+	stain = /datum/stain/sparkly
 
 /obj/decal/cleanable/glitter/harmless //updated to not be lethal
     sample_reagent = "sparkles"
@@ -661,6 +662,13 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "leaves"
 	random_dir = EAST
+
+/obj/decal/cleanable/wood_debris
+	name = "wood debris"
+	desc = "A few scattered pieces of wood that broke off something bigger."
+	icon = 'icons/obj/decals/cleanables.dmi'
+	icon_state = "wood"
+	random_dir = NORTH
 
 /obj/decal/cleanable/rust
 	name = "rust"
@@ -824,7 +832,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_sample = 1
 	sample_reagent = "water"
 	sample_amt = 5
-	stain = "damp"
+	stain = /datum/stain/damp
 
 	Crossed(atom/movable/O)
 		if (istype(O, /obj/item/clothing/under/towel))
@@ -846,7 +854,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	sample_amt = 5
 	sample_reagent = "vomit"
 	sample_verb = "scrape"
-	stain = "puke-coated"
+	stain = /datum/stain/puke
 
 	Dry(var/time = rand(200,500))
 		if (!src.can_dry || src.dry)
@@ -932,7 +940,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	sample_amt = 5
 	sample_reagent = "gvomit"
 	sample_verb = "scrape"
-	stain = "green-puke-coated"
+	stain = /datum/stain/puke/green
 
 	Dry(var/time = rand(200,500))
 		if (!src.can_dry)
@@ -1004,7 +1012,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_sample = 1
 	sample_reagent = "ash"
 	sample_verb = "scrape"
-	stain = "dirty"
+	stain = /datum/stain/dirt
 
 	Sample(var/obj/item/W as obj, var/mob/user as mob)
 		..()
@@ -1032,7 +1040,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_dry = 1
 	can_sample = 1
 	sample_reagent = "badgrease"
-	stain = "slimy"
+	stain = /datum/stain/slime
 
 	Dry(var/time = rand(100,200))
 		if (!src.can_dry)
@@ -1061,7 +1069,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "dirt"
 	random_dir = NORTH
-	stain = "dirty"
+	stain = /datum/stain/dirt
 	can_sample = 1
 	sample_reagent = "carbon"
 
@@ -1216,7 +1224,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	random_icon_states = list("fluid1", "fluid2", "fluid3")
 	anchored = ANCHORED
 	slippery = 50
-	stain = "teal-stained"
+	stain = /datum/stain/flock
 
 /obj/decal/cleanable/machine_debris
 	name = "twisted shrapnel"
@@ -1290,10 +1298,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	slippery = 70
 	can_sample = 1
 	sample_reagent = "oil"
-	stain = "oily"
+	stain = /datum/stain/oil
 
 /obj/decal/cleanable/oil/streak
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")
+	sample_amt = 5
 
 /obj/decal/cleanable/paint
 	name = "marker paint"
@@ -1305,7 +1314,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_dry = 0
 	can_sample = 0
 	sample_reagent = "juice_orange"
-	stain = "painted"
+	stain = /datum/stain/paint
 
 /obj/decal/cleanable/greenglow
 	name = "green glow"
@@ -1595,7 +1604,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	density = 0
 	anchored = ANCHORED
 	layer = OBJ_LAYER
-	icon = 'icons/obj/decals/graffiti.dmi'
+	icon = 'icons/obj/decals/gang_tags.dmi'
 	icon_state = "gangtag0"
 	var/datum/gang/owners = null
 
@@ -1712,3 +1721,19 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "What a mess..."
 	plane = PLANE_DEFAULT //needs to go on desks
 	layer = OBJ_LAYER
+
+/obj/decal/cleanable/thermite
+	name = "thermite powder"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "thermite"
+	mouse_opacity = FALSE
+	can_fluid_absorb = FALSE
+	sample_reagent = "thermite"
+
+	New(loc)
+		..()
+		SPAWN(1) //if we're being spawned manually we won't have our thermite amount set up so just Assume
+			if (!src.reagents?.has_reagent("thermite"))
+				if (!src.reagents)
+					src.create_reagents(src.sample_amt)
+				src.reagents.add_reagent("thermite", src.sample_amt)

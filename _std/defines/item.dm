@@ -67,17 +67,17 @@
 #define OBVIOUS_INTERACTION_BAR		(1<<6)
 
 //tool flags
-#define TOOL_CLAMPING 1
-#define TOOL_CUTTING 2
-#define TOOL_PRYING 4
-#define TOOL_PULSING 8
-#define TOOL_SAWING 16
-#define TOOL_SCREWING 32
-#define TOOL_SNIPPING 64
-#define TOOL_SPOONING 128
-#define TOOL_WELDING 256
-#define TOOL_WRENCHING 512
-#define TOOL_CHOPPING 1024 // for firaxes, does additional damage to doors.
+#define TOOL_CLAMPING  (1<<0)
+#define TOOL_CUTTING   (1<<1)
+#define TOOL_PRYING    (1<<2)
+#define TOOL_PULSING   (1<<3)
+#define TOOL_SAWING    (1<<4)
+#define TOOL_SCREWING  (1<<5)
+#define TOOL_SNIPPING  (1<<6)
+#define TOOL_SPOONING  (1<<7)
+#define TOOL_WELDING   (1<<8)
+#define TOOL_WRENCHING (1<<9)
+#define TOOL_CHOPPING  (1<<10) // for firaxes, does additional damage to doors.
 
 //omnitool flags
 #define OMNI_MODE_PRYING 1
@@ -105,12 +105,12 @@
 #define REBUILD_SPECTRO				8
 
 // blood system and item damage things
-#define DAMAGE_BLUNT 1 // 420
-#define DAMAGE_CUT 2
-#define DAMAGE_STAB 4
-#define DAMAGE_BURN 8
+#define DAMAGE_BLUNT (1<<0) // 420
+#define DAMAGE_CUT   (1<<1)
+#define DAMAGE_STAB  (1<<2)
+#define DAMAGE_BURN  (1<<3)
 /// crushing damage is technically blunt damage, but it causes bleeding
-#define DAMAGE_CRUSH 16
+#define DAMAGE_CRUSH (1<<4)
 #define DEFAULT_BLOOD_COLOR "#990000"	// speak for yourself, as a shapeshifting illuminati lizard, my blood is somewhere between lime and leaf green
 #define DAMAGE_TYPE_TO_STRING(x) (x == DAMAGE_BLUNT ? "blunt" : x == DAMAGE_CUT ? "cut" : x == DAMAGE_STAB ? "stab" : x == DAMAGE_BURN ? "burn" : x == DAMAGE_CRUSH ? "crush" : "")
 

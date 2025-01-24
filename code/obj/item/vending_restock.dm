@@ -34,6 +34,12 @@
 	desc = "A cartridge that restocks medical vending machines."
 	vendingType = "medical"
 
+/obj/item/vending/restock_cartridge/chemistry
+	name = "chemical restock cartridge"
+	icon_state = "chemistry"
+	desc = "A cartridge that restocks chemical vending machines."
+	vendingType = "chemistry"
+
 /obj/item/vending/restock_cartridge/medical_public
 	name = "public medical restock cartridge"
 	icon_state = "medical_public"

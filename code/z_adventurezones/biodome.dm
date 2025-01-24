@@ -493,14 +493,14 @@ SYNDICATE DRONE FACTORY AREAS
 							R.emote("scream")
 							playsound(R.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 							R.changeStatus("stunned", 10 SECONDS)
-							R.part_leg_r.holder = null
+							R.part_leg_r?.holder = null
 							qdel(R.part_leg_r)
 							if (R.part_leg_r.slot == "leg_both")
 								R.part_leg_l = null
 								R.update_bodypart("l_leg")
 							R.part_leg_r = null
 							R.update_bodypart("r_leg")
-							R.part_leg_l.holder = null
+							R.part_leg_l?.holder = null
 							qdel(R.part_leg_l)
 							if (R.part_leg_l.slot == "leg_both")
 								R.part_leg_r = null
@@ -801,7 +801,7 @@ SYNDICATE DRONE FACTORY AREAS
 		if (!viewable_atoms.Find(target_r))
 			return
 
-		var/list/affected = DrawLine(src.loc, target_r, /obj/line_obj/whip ,'icons/obj/projectiles.dmi',"WholeWhip",1,1,"HalfStartWhip","HalfEndWhip",OBJ_LAYER,1)
+		var/list/affected = drawLineObj(src.loc, target_r, /obj/line_obj/whip ,'icons/obj/projectiles.dmi',"WholeWhip",1,1,"HalfStartWhip","HalfEndWhip",OBJ_LAYER,1)
 
 		playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, TRUE)
 

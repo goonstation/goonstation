@@ -131,7 +131,8 @@
 	name = "\improper RCD crate"
 	desc = "A crate for the Chief Engineer's personal RCD."
 	spawn_contents = list(/obj/item/rcd_ammo = 5,
-	/obj/item/rcd/construction/chiefEngineer)
+	/obj/item/rcd/construction/chiefEngineer,
+	/obj/item/places_pipes)
 
 /obj/storage/crate/abcumarker
 	name = "\improper ABCU-Marker crate"
@@ -338,15 +339,17 @@
 				var/datum/syndicate_buylist/item_datum = weighted_pick(possible_items)
 				crate_contents += item_datum.name
 				if(telecrystals + item_datum.cost > 24) continue
-				var/obj/item/I = new item_datum.item(src)
-				I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
-				if (owner)
-					item_datum.run_on_spawn(I, owner, TRUE, owner_uplink)
-					var/datum/antagonist/traitor/T = owner.mind?.get_antagonist(ROLE_TRAITOR)
-					if (istype(T))
-						T.surplus_crate_items.Add(item_datum)
+				if(length(item_datum.items) == 0) continue
+				for (var/item in item_datum.items)
+					var/obj/item/I = new item(src)
+					I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
+					if (owner)
+						item_datum.run_on_spawn(I, owner, TRUE, owner_uplink)
+						var/datum/antagonist/traitor/T = owner.mind?.get_antagonist(ROLE_TRAITOR)
+						if (istype(T))
+							T.surplus_crate_items.Add(item_datum)
 				telecrystals += item_datum.cost
-			var/str_contents = list2text(crate_contents, ", ")
+			var/str_contents = jointext(crate_contents, ", ")
 			logTheThing(LOG_DEBUG, owner, "surplus crate contains: [str_contents] at [log_loc(src)]")
 		#undef NESTED_SCALING_FACTOR
 
@@ -646,7 +649,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/heavy_power_sword,
 		/obj/item/clothing/shoes/swat/knight,
-		/obj/item/clothing/gloves/swat/knight,
+		/obj/item/clothing/gloves/swat/syndicate/knight,
 		/obj/item/clothing/suit/space/syndicate/knight,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
 
@@ -853,7 +856,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		var/datum/loot_generator/shotgun_gen
 		src.vis_controller = new(src)
 		shotgun_gen =  new /datum/loot_generator(4,3)
-		shotgun_gen.place_loot_instance(src,1,2, new /obj/loot_spawner/xlong_tall/ks23_empty)
+		shotgun_gen.place_loot_instance(src,1,2, new /obj/loot_spawner/xlong_tall/ks23)
 		shotgun_gen.place_loot_instance(src,1,1, new /obj/loot_spawner/medium/ks23_shrapnel)
 		shotgun_gen.place_loot_instance(src,3,1, new /obj/loot_spawner/medium/ks23_slug)
 		..()

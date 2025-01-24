@@ -127,7 +127,7 @@
 
 ////////armed civ putt
 
-obj/machinery/vehicle/miniputt/pilot
+/obj/machinery/vehicle/miniputt/pilot
 	New()
 		. = ..()
 		src.com_system.deactivate()
@@ -135,9 +135,9 @@ obj/machinery/vehicle/miniputt/pilot
 		qdel(src.com_system)
 		src.components -= src.engine
 		src.components -= src.com_system
-		src.engine = new /obj/item/shipcomponent/engine/zero(src)
-		src.engine.ship = src
-		src.components += src.engine
+		src.engine = null
+		src.Install(new /obj/item/shipcomponent/engine/zero(src))
+		src.Install(new /obj/item/shipcomponent/mainweapon/bad_mining(src))
 		src.engine.activate()
 		src.com_system = null
 		myhud.update_systems()
@@ -188,7 +188,7 @@ obj/machinery/vehicle/miniputt/pilot
 	armor_score_multiplier = 0.7
 	speed = 0.8
 	acid_damage_multiplier = 0
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
@@ -967,7 +967,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	maxhealth = 500
 	speed = 0.9
 	acid_damage_multiplier = 0
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	/*prearmed

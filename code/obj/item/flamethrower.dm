@@ -643,6 +643,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 		return	..()
 
 /obj/item/gun/flamethrower/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	var/mob/user
 	if(ismob(usr))
 		user = usr

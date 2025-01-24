@@ -1,8 +1,8 @@
 /**
  * @file
  * @copyright 2024
- * @author Romayne (https://github.com/MeggalBozale)
- * @license ISC
+ * @author Romayne (https://github.com/MyNameIsRomayne)
+ * @license ISC (https://choosealicense.com/licenses/isc/)
  */
 
 // Controls the amount of space the settings window takes up.
@@ -32,6 +32,7 @@ export enum BlueprintButtonStyle {
   Height = 5,
   MarginX = 0.5,
   MarginY = 0.5,
+  Display = 'inline-flex',
 }
 
 // Controls the smaller 'settings' and 'info' buttons on the side of each larger button.

@@ -165,6 +165,7 @@ TYPEINFO(/obj/machinery/recharger)
 /obj/machinery/recharger/process(mult)
 	if(status & NOPOWER)
 		src.icon_state = sprite_empty
+		src.remove_charging()
 		UpdateIcon()
 		return
 

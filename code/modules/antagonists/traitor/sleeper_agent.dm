@@ -3,6 +3,12 @@
 	id = ROLE_SLEEPER_AGENT
 	display_name = "sleeper agent"
 	antagonist_icon = "traitor"
+	var/dead_drop
+
+/datum/antagonist/sleeper_agent/remove_self(take_gear, source)
+	. = ..()
+	if (src.dead_drop)
+		src.owner.current.RemoveComponentsOfType(/datum/component/tracker_hud/dead_drop)
 
 /datum/antagonist/sleeper_agent/announce()
 	boutput(owner.current, SPAN_ALERT("<h3>You have awakened as a Syndicate [display_name]!</h3>"))

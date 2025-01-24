@@ -379,14 +379,18 @@ var/list/admin_verbs = list(
 		/client/proc/implant_all,
 		/client/proc/cmd_crusher_walls,
 		/client/proc/cmd_disco_lights,
+		/client/proc/cmd_nukie_colour,
+		/client/proc/cmd_event_controller,
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_terrainify_station,
 		/client/proc/cmd_caviewer,
+		/client/proc/cmd_paraviewer,
 		/client/proc/cmd_custom_spawn_event,
 		/client/proc/cmd_special_shuttle,
 		/client/proc/toggle_all_artifacts,
 		/client/proc/spawn_tons_of_artifacts,
 		/client/proc/toggle_radio_maptext,
+		/client/proc/toggle_ghost_invisibility,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,
@@ -428,13 +432,14 @@ var/list/admin_verbs = list(
 		/client/proc/region_allocator_panel,
 		/datum/admins/proc/toggle_pcap_kick_messages,
 		/client/proc/set_round_req_bypass,
+		/client/proc/test_spacebee_command,
+		/client/proc/delete_landmarks,
 		),
 
 	7 = list(
 		// LEVEL_CODER, coder
 		/client/proc/cmd_job_controls,
 		/client/proc/cmd_modify_market_variables,
-		/client/proc/debug_pools,
 		/client/proc/debug_global_variable,
 		/client/proc/call_proc,
 		/client/proc/call_proc_all,
@@ -1761,6 +1766,7 @@ var/list/fun_images = list()
 	if(src.holder.respawn_as_self_mob)
 		qdel(src.holder.respawn_as_self_mob)
 	src.holder.respawn_as_self_mob = O
+	animate(src.holder.respawn_as_self_mob, transform = null)
 
 /client/proc/removeOther(var/mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
@@ -2350,6 +2356,9 @@ var/list/fun_images = list()
 		if ("Activate Artifact")
 			var/obj/object = A
 			object.ArtifactActivated()
+		if ("Object Speak")
+			var/obj/object = A
+			object.admin_command_obj_speak()
 
 	src.update_cursor()
 
@@ -2571,12 +2580,17 @@ var/list/fun_images = list()
 				players[M.mind.get_player()] = antag
 				break
 	var/total = 0
+	var/list/key_list = list()
 	for (var/datum/player/player in players)
 		var/datum/antagonist/antag = players[player]
 		boutput(src, "Giving token to roundstart [antag.display_name] [player.ckey], they now have [player.get_antag_tokens() + 1]")
 		total += 1
 		player.set_antag_tokens(player.get_antag_tokens() + 1)
+		key_list += player.key
 	boutput(src, "Roundstart antags given tokens: [total]")
+	var/key_text = english_list(key_list)
+	logTheThing(LOG_ADMIN, src, "[key_name(src.mob)] distributed antagonist tokens to the following roundstart antagonists: [key_text]")
+	message_admins("[key_name(src.mob)] distributed antagonist tokens to the following roundstart antagonists: [key_text]")
 
 /client/proc/spawn_all_type()
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
@@ -2637,7 +2651,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	ADMIN_ONLY
 	SHOW_VERB_DESC
-	for(var/obj/machinery/door/airlock/airlock)
+	for_by_tcl(airlock, /obj/machinery/door/airlock)
 		airlock.secondsElectrified = 0
 		LAGCHECK(LAG_LOW)
 	message_admins("Admin [key_name(usr)] de-electrified all airlocks.")
@@ -2673,3 +2687,26 @@ var/list/fun_images = list()
 		logTheThing(LOG_ADMIN, src, "[key_name(src)] sets [ckey]'s bypass round requirement flag to [value]")
 	else
 		boutput(src, SPAN_ALERT("Unable to put cloud data, uh oh!"))
+
+/client/proc/test_spacebee_command(command as text)
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Test spacebee command"
+	set desc = "Run a discord/IRC bot command on the current server, omit the ;;. Local servers are considered server 0 for server targeted commands."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	spacebee_extension_system.process_raw_command(command, usr.key)
+
+/client/proc/delete_landmarks()
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Delete landmarks"
+	set desc = "Delete all landmarks of a specific type."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	var/choice = tgui_input_list(src, "Choose landmark category", "Choose landmark", global.landmarks)
+	if (!choice)
+		return
+	for (var/turf/landmark in global.landmarks[choice])
+		boutput(src, "Deleting landmark at [log_loc(landmark)]")
+	global.landmarks[choice] = list()

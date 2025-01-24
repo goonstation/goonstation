@@ -75,7 +75,7 @@
 
 	attackby(obj/item/I, mob/user)
 		// You know, like a letter opener. It opens letters.
-		if (istype(I, /obj/item/kitchen/utensil/knife) && src.target_dna)
+		if ((istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/dagger)) && src.target_dna)
 			actions.start(new /datum/action/bar/icon/mail_lockpick(src, I, 5 SECONDS), user)
 			return
 		..()
@@ -114,6 +114,7 @@
 
 	var/obj/item/random_mail/the_mail
 	var/obj/item/the_tool
+	var/is_syndi_dagger = FALSE
 
 	New(var/obj/item/random_mail/O, var/obj/item/tool, var/duration_i)
 		..()
@@ -123,8 +124,13 @@
 			src.the_tool = tool
 			src.icon = src.the_tool.icon
 			src.icon_state = src.the_tool.icon_state
+			if (istype(src.the_tool, /obj/item/dagger/syndicate))
+				src.is_syndi_dagger = TRUE
+
 		if (duration_i)
 			src.duration = duration_i
+		if (src.is_syndi_dagger)
+			src.duration *= 0.25
 
 	onUpdate()
 		..()
@@ -135,7 +141,7 @@
 		if (istype(source) && src.the_tool != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (prob(8))
+		if (!src.is_syndi_dagger && prob(8))
 			owner.visible_message(SPAN_ALERT("[owner] messes up while disconnecting \the [src.the_mail]'s DNA lock!"))
 			playsound(the_mail, 'sound/items/Screwdriver2.ogg', 50, TRUE)
 			interrupt(INTERRUPT_ALWAYS)
@@ -143,7 +149,8 @@
 
 	onStart()
 		..()
-		owner.visible_message(SPAN_ALERT("[owner] begins disconnecting \the [src.the_mail]'s lock..."))
+		if (!src.is_syndi_dagger)
+			owner.visible_message(SPAN_ALERT("[owner] begins disconnecting \the [src.the_mail]'s lock..."))
 		playsound(src.the_mail, 'sound/items/Screwdriver2.ogg', 50, 1)
 
 	onEnd()
@@ -281,6 +288,7 @@
 			package_color = pick("#FFFFAA", "#FFBB88", "#FF8800", "#CCCCFF", "#FEFEFE")
 
 		package.name = "mail for [recipient["name"]] ([recipient["job"]])"
+		package.real_name = package.name
 		var/list/color_list = rgb2num(package_color)
 		for(var/j in 1 to 3)
 			color_list[j] = 127 + (color_list[j] / 2) + rand(-10, 10)
@@ -559,7 +567,16 @@ var/global/mail_types_by_job = list(
 		),
 
 	/datum/job/civilian/rancher = list(
-		),
+		/obj/item/knitting_needles = 5,
+		/obj/item/drop_spindle = 5,
+		/obj/item/scissors/surgical_scissors/shears = 5,
+		/obj/item/fishing_rod/basic = 9,
+		/obj/item/fishing_rod/upgraded = 3,
+		/obj/item/fishing_rod/master = 1,
+		/obj/item/device/camera_viewer/ranch = 4,
+		/obj/item/clothing/mask/chicken = 5,
+		/obj/item/reagent_containers/food/snacks/ingredient/egg = 3,
+		), // Some T1 Power Eggs would be nice to add in secret, to give newer struggling ranchers a test taste on what they could do
 
 	/datum/job/civilian/janitor = list(
 		/obj/item/chem_grenade/cleaner = 5,

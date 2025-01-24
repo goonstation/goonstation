@@ -617,6 +617,10 @@ Contents:
 
 	tour17
 		location = "tour17"
+		codes_txt = "tour;next_tour=tour18;desc=And that concludes the tour session.  Please visit the gift shop on your way out."
+
+	tour18
+		location = "tour18"
 		codes_txt = "tour;"
 
 #define NT_DISCOUNT   (1<<0)
@@ -727,7 +731,7 @@ Contents:
 						END_NEAT
 					return
 
-				if (!(src.neat_things & NT_PONZI) && (locate(/obj/item/currency/spacecash/buttcoin) in AM.contents))
+				if (!(src.neat_things & NT_PONZI) && (locate(/obj/item/currency/buttcoin) in AM.contents))
 					FOUND_NEAT(NT_PONZI)
 						speak_with_maptext("Um, I'm sorry [AM], we do not accept blockchain-based cryptocurrency as payment.  You aren't one of those guys who yell about gold on the apollo flag or something, right?")
 						H.unlock_medal("To the Moon!",1)

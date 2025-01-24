@@ -41,6 +41,12 @@
 		icon_state = "space-OLD"
 		desc = "A relic of the past."
 		item_state = null
+	fishbowl
+		name = "fishbowl helmet"
+		icon_state = "space-fish"
+		desc = "You're about 90% sure this isn't just a regular fishbowl."
+		item_state = "s_helmet"
+		seal_hair = 0
 
 /obj/item/clothing/head/helmet/space/engineer
 	name = "engineering space helmet"
@@ -1044,8 +1050,12 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 			return
 		src.remove_visor(user)
 
+TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/syndicate)
+	mats = list("metal_superdense" = 5,
+				"conductive_high" = 5,
+				"crystal_dense" = 5)
 /obj/item/clothing/head/helmet/space/industrial/syndicate
-	name = "\improper Syndicate Command Helmet"
+	name = "\improper Syndicate command helmet"
 	desc = "Ooh, fancy."
 	icon_state = "indusred"
 	item_state = "indusred"
@@ -1103,7 +1113,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	desc = "Someone's cut out a bit of this bucket so you can put it on your head."
 	icon_state = "buckethelm"
 	item_state = "buckethelm"
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	c_flags = COVERSEYES | BLOCKCHOKE
 	hides_from_examine = C_EARS
 
@@ -1131,7 +1141,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	desc = "Looks like this bucket has been turned upside down so it can be used as a hat."
 	icon_state = "buckethat"
 	item_state = "buckethat"
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	block_vision = 1
 	seal_hair = 1
 	var/bucket_type = /obj/item/reagent_containers/glass/bucket

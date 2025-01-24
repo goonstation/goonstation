@@ -284,10 +284,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 				if(T)
 					border_area.contents += T
 
-			if (current_state >= GAME_STATE_PLAYING)
-				LAGCHECK(LAG_LOW)
-			else
-				LAGCHECK(LAG_HIGH)
+			generator.lag_check()
 
 	//Lighten' Up the Place
 	var/image/ambient_light = new /image/ambient

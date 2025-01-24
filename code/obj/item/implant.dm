@@ -288,10 +288,16 @@ THROWING DARTS
 			healthlist["TOX"] = 0
 			healthlist["BURN"] = 0
 			healthlist["BRUTE"] = 0
+			healthlist["HealthImplant"] = 0
 		else
 			var/mob/living/L
 			if (isliving(src.owner))
 				L = src.owner
+				healthlist["HealthImplant"] = 0
+				for (var/implant in L.implant)
+					if (istype(implant, /obj/item/implant/health))
+						healthlist["HealthImplant"] = 1
+						break
 				healthlist["OXY"] = round(L.get_oxygen_deprivation())
 				healthlist["TOX"] = round(L.get_toxin_damage())
 				healthlist["BURN"] = round(L.get_burn_damage())
@@ -522,8 +528,8 @@ THROWING DARTS
 
 	deactivate()
 		. = ..()
-		var/datum/component/C = src.owner.GetComponent(/datum/component/minimap_marker)
-		C?.RemoveComponent(/datum/component/minimap_marker)
+		var/datum/component/C = src.owner.GetComponent(/datum/component/minimap_marker/minimap)
+		C?.RemoveComponent(/datum/component/minimap_marker/minimap)
 
 	on_death()
 		src.deactivate()
@@ -532,13 +538,13 @@ THROWING DARTS
 
 	activate()
 		. = ..()
-		src.owner.AddComponent(/datum/component/minimap_marker, MAP_POD_WARS_NANOTRASEN, "blue_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
+		src.owner.AddComponent(/datum/component/minimap_marker/minimap, MAP_POD_WARS_NANOTRASEN, "blue_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
 
 /obj/item/implant/pod_wars/syndicate
 
 	activate()
 		. = ..()
-		src.owner.AddComponent(/datum/component/minimap_marker, MAP_POD_WARS_SYNDICATE, "red_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
+		src.owner.AddComponent(/datum/component/minimap_marker/minimap, MAP_POD_WARS_SYNDICATE, "red_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
 
 
 /** Deprecated **/
@@ -701,7 +707,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	/// You probably want to call this parent after exploding or whatever
 	proc/do_effect(power)
 		SHOULD_CALL_PARENT(TRUE)
-		if (. >= 6)
+		if (power >= 6)
 			src.owner.visible_message(SPAN_ALERT("<b>[src.owner][big_message]!</b>"))
 		else
 			src.owner.visible_message("[src.owner][small_message].")
@@ -737,7 +743,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 		SPAWN(1)
 			T.hotspot_expose(800,125)
-			explosion_new(src, T, 7 * power, 1) //The . is the tally of explosionPower in this poor slob.
+			explosion_new(src, T, 7 * power, 1) //power is the tally of explosionPower in this poor slob.
 			if (ishuman(src.owner))
 				var/mob/living/carbon/human/H = src.owner
 				H.dump_contents_chance = 80 //hee hee
@@ -1710,6 +1716,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				..()
 				access.access = get_access("Chef")
 
+		admin_mouse
+			New()
+				..()
+				access.access = get_access("Admin")
+
 
 /* ============================================================ */
 /* --------------------- Artifact Implants -------------------- */
@@ -2089,7 +2100,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				H.firegib(FALSE)
 			else
 				playsound(get_turf(H), 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, TRUE)
-				H.become_statue(getMaterial("ice"), "Someone completely frozen in ice. How this happened, you have no clue!")
+				H.become_statue("ice", "Someone completely frozen in ice. How this happened, you have no clue!")
 
 		..()
 

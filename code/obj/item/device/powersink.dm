@@ -52,6 +52,7 @@ TYPEINFO(/obj/item/device/powersink)
 						anchored = ANCHORED
 						mode = POWERSINK_CLAMPED
 						boutput(user, "You attach the device to the cable.")
+						message_ghosts("<b>[src]</b> has been activated at [log_loc(src, ghostjump=TRUE)].")
 						for(var/mob/M in AIviewers(user))
 							if(M == user) continue
 							boutput(M, "[user] attaches the power sink to the cable.")

@@ -366,11 +366,10 @@ TYPEINFO(/atom)
 	#endif
 	SEND_SIGNAL(src, COMSIG_ATOM_UNCROSSED, AM)
 
-/atom/proc/ProximityLeave(atom/movable/AM as mob|obj)
+/atom/proc/ProximityLeave(atom/movable/AM)
 	return
 
-//atom.event_handler_flags & USE_PROXIMITY MUST EVALUATE AS TRUE OR THIS PROC WONT BE CALLED
-/atom/proc/HasProximity(atom/movable/AM as mob|obj)
+/atom/proc/EnteredProximity(atom/movable/AM)
 	return
 
 /atom/proc/EnteredFluid(obj/fluid/F as obj, atom/oldloc)
@@ -522,12 +521,10 @@ TYPEINFO(/atom/movable)
 		src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
+	if(istype(src, /atom/movable/hotspot)) //hotspots arent really tangible things
+		return
 	if (isturf(src.loc))
 		var/turf/T = src.loc
-		if (src.event_handler_flags & USE_PROXIMITY)
-			T.checkinghasproximity++
-			for (var/turf/T2 in range(1, T))
-				T2.neighcheckinghasproximity++
 		if(src.opacity)
 			T.opaque_atom_count++
 		if(src.pass_unstable || src.density)
@@ -563,7 +560,7 @@ TYPEINFO(/atom/movable)
 
 /atom/movable/Move(atom/NewLoc, direct)
 	SHOULD_CALL_PARENT(TRUE)
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_BLOCK_MOVE, NewLoc, direct))
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, direct))
 		return
 	#ifdef CHECK_MORE_RUNTIMES
 	if(!istype(src.loc, /turf) || !istype(NewLoc, /turf))
@@ -655,20 +652,11 @@ TYPEINFO(/atom/movable)
 			for(var/turf/covered_turf as anything in old_locs)
 				covered_turf.pass_unstable -= src.pass_unstable
 				covered_turf.passability_cache = null
-		if (src.event_handler_flags & USE_PROXIMITY)
-			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
-			for (var/turf/T2 in range(1, last_turf))
-				T2.neighcheckinghasproximity--
 	if(isturf(src.loc))
-		var/turf/T = src.loc
 		if(src.pass_unstable || src.density)
 			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
-		if (src.event_handler_flags & USE_PROXIMITY)
-			T.checkinghasproximity++
-			for (var/turf/T2 in range(1, T))
-				T2.neighcheckinghasproximity++
 
 	last_turf = isturf(src.loc) ? src.loc : null
 
@@ -837,12 +825,14 @@ TYPEINFO(/atom/movable)
 	PROTECTED_PROC(TRUE)
 	return
 
+///wrapper proc for /atom/proc/attack_hand so that signals are always sent. Call this, but do not override it.
 /atom/proc/Attackhand(mob/user as mob)
 	SHOULD_NOT_OVERRIDE(1)
 	if(SEND_SIGNAL(src, COMSIG_ATTACKHAND, user))
 		return
 	src.attack_hand(user)
 
+///internal proc for when an atom is attacked by a user's hand. Override this, but do not call it,
 /atom/proc/attack_hand(mob/user)
 	PROTECTED_PROC(TRUE)
 	src.storage?.storage_item_attack_hand(user)
@@ -972,6 +962,10 @@ TYPEINFO(/atom/movable)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!isatom(over_object))
 		return
+	// it can be useful for subsequent procs that receive params to know they are the result of a click-drag
+	if (isnull(params) || params == "") params = "dragged=1"
+	else params += ";dragged=1"
+
 	if (ismovable(src) && isobserver(usr) && usr.client?.holder?.ghost_interaction)
 		var/atom/movable/movablesrc = src
 		var/list/params_list = params2list(params)
@@ -995,6 +989,10 @@ TYPEINFO(/atom/movable)
 		return // Stops ghost drones from MouseDropping mobs
 	if (isAIeye(usr) || (isobserver(usr) && src != usr))
 		return // Stops AI eyes from click-dragging anything, and observers from click-dragging anything that isn't themselves (ugh)
+
+	// converting params to a list here enables it to be used for communicating between mousedrop() and MouseDrop_T()
+	params = params2list(params)
+
 	over_object._MouseDrop_T(src, usr, src_location, over_location, src_control, over_control, params)
 	if (SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP, usr, over_object, src_location, over_location, src_control, over_control, params))
 		return
@@ -1126,18 +1124,6 @@ TYPEINFO(/atom/movable)
 	if (islist(src.attached_objs) && length(attached_objs))
 		for (var/atom/movable/M in src.attached_objs)
 			M.set_loc(src.loc)
-
-	if (isturf(last_turf) && (src.event_handler_flags & USE_PROXIMITY))
-		last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
-		for (var/turf/T2 in range(1, last_turf))
-			T2.neighcheckinghasproximity--
-
-	if (isturf(src.loc))
-		last_turf = src.loc
-		if (src.event_handler_flags & USE_PROXIMITY)
-			last_turf.checkinghasproximity++
-			for (var/turf/T2 in range(1, last_turf))
-				T2.neighcheckinghasproximity++
 	else
 		last_turf = null
 
@@ -1252,28 +1238,10 @@ TYPEINFO(/atom/movable)
 /// Does x cold damage to the atom
 /atom/proc/damage_cold(amount)
 
-// Setup USE_PROXIMITY turfs
-/atom/proc/setup_use_proximity()
-	src.event_handler_flags |= USE_PROXIMITY
-	if (isturf(src.loc))
-		var/turf/T = src.loc
-		T.checkinghasproximity++
-		for (var/turf/T2 in range(1, T))
-			T2.neighcheckinghasproximity++
-
-/atom/proc/remove_use_proximity()
-	src.event_handler_flags = src.event_handler_flags & ~USE_PROXIMITY
-	if (isturf(src.loc))
-		var/turf/T = src.loc
-		if (T.checkinghasproximity > 0)
-			T.checkinghasproximity--
-		for (var/turf/T2 in range(1, T))
-			if (T2.neighcheckinghasproximity > 0)
-				T2.neighcheckinghasproximity--
 
 // auto-connecting sprites
 /// Check a turf and its contents to see if they're a valid auto-connection target
-/atom/proc/should_auto_connect(turf/T, connect_to = list(), list/exceptions = list(), cross_areas = TRUE)
+/atom/proc/should_auto_connect(turf/T, connect_to = list(), list/exceptions = list(), cross_areas = TRUE, turf_only = FALSE)
 	if (!T) // nothing to connect to
 		return FALSE
 	if (!cross_areas && (get_area(T) != get_area(src))) // don't connect across areas
@@ -1284,11 +1252,12 @@ TYPEINFO(/atom/movable)
 		return TRUE
 
 	// slow 😩
-	for (var/atom/movable/AM in T)
-		if (!AM.anchored)
-			continue
-		if (connect_to[AM.type] && !exceptions[AM.type])
-			return TRUE
+	if(!turf_only)
+		for (var/atom/movable/AM in T)
+			if (!AM.anchored)
+				continue
+			if (connect_to[AM.type] && !exceptions[AM.type])
+				return TRUE
 	return FALSE
 
 /**
@@ -1303,7 +1272,7 @@ TYPEINFO(/atom/movable)
  *
  * connect_diagonals 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
  */
-/atom/proc/get_connected_directions_bitflag(list/valid_atoms = list(), list/exceptions = list(), cross_areas = TRUE, connect_diagonal = 0)
+/atom/proc/get_connected_directions_bitflag(list/valid_atoms = list(), list/exceptions = list(), cross_areas = TRUE, connect_diagonal = 0, turf_only = FALSE)
 	var/ordir = null
 	var/connected_directions = 0
 	if (!valid_atoms || !islist(valid_atoms))
@@ -1312,7 +1281,7 @@ TYPEINFO(/atom/movable)
 	// cardinals first
 	for (var/dir in cardinal)
 		var/turf/CT = get_step(src, dir)
-		if (should_auto_connect(CT, valid_atoms, exceptions, cross_areas))
+		if (should_auto_connect(CT, valid_atoms, exceptions, cross_areas, turf_only))
 			connected_directions |= dir
 
 	if (connect_diagonal)
@@ -1321,7 +1290,7 @@ TYPEINFO(/atom/movable)
 			if (connect_diagonal < 2 && (ordir & connected_directions) != ordir)
 				continue
 			var/turf/OT = get_step(src, ordir)
-			if (should_auto_connect(OT, valid_atoms, exceptions, cross_areas))
+			if (should_auto_connect(OT, valid_atoms, exceptions, cross_areas, turf_only))
 				connected_directions |= 8 << i
 	return connected_directions
 
@@ -1425,3 +1394,13 @@ TYPEINFO(/atom/movable)
 	if (istype(target.loc, /atom/movable))
 		return src.is_that_in_this(target.loc)
 	return FALSE
+
+//Used for projectile bounces, override these for funny shaped objects like angled mirrors
+
+///Returns the x component of the surface normal of the atom relative to an incident direction
+/atom/proc/normal_x(incident_dir)
+	return incident_dir == WEST ? -1 : (incident_dir == EAST ?  1 : 0)
+
+///Returns the y component of the surface normal of the atom relative to an incident direction
+/atom/proc/normal_y(incident_dir)
+	return incident_dir == SOUTH ? -1 : (incident_dir == NORTH ?  1 : 0)

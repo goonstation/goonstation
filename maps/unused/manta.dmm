@@ -509,7 +509,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/critter/turtle/sylvester/HoS,
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/station/security/hos)
 "abA" = (
@@ -14848,9 +14848,7 @@
 /area/station/security/brig/genpop)
 "aRj" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/item/paper/mantasecscanners,
 /obj/decal/poster/wallsign/cdnp{
 	pixel_y = 32
@@ -15072,9 +15070,7 @@
 /area/station/security/brig/genpop)
 "aRQ" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decoration/clock{
 	pixel_x = 32
 	},
@@ -15429,9 +15425,7 @@
 /area/station/security/brig/genpop)
 "aTa" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/cleanable/dirt,
 /obj/submachine/ATM/atm_alt{
 	dir = 8
@@ -22011,9 +22005,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "bku" = (
@@ -22038,9 +22030,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "bky" = (
@@ -27009,7 +26999,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bxX" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/EW{
 	id = "disposals";
 	move_lag = 30;
@@ -32934,7 +32924,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "cJM" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -34269,9 +34259,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
 	pixel_x = 10
@@ -34367,7 +34355,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/starboard)
 "fxo" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -35522,7 +35510,7 @@
 /turf/space/fluid/manta,
 /area/mantaSpace)
 "ibY" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/space/fluid/manta,
@@ -37943,7 +37931,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerstarboard)
 "nZD" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -39661,7 +39649,7 @@
 /turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
 "rVY" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -39748,7 +39736,7 @@
 	},
 /area/station/security/secwing)
 "sdW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/space/fluid/manta,
@@ -42184,9 +42172,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
 	pixel_x = -10

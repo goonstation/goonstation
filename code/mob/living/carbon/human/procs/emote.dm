@@ -10,6 +10,9 @@
 	if(voluntary && !src.emote_allowed)
 		return
 
+	if (src.hasStatus("paralysis"))
+		return //pls stop emoting :((
+
 	if (src.bioHolder.HasEffect("revenant"))
 		src.visible_message(SPAN_ALERT("[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!"), group = "revenant_emote")
 		return
@@ -83,7 +86,7 @@
 					else
 						message = "<B>[src]</B> makes a very loud noise."
 						m_type = 2
-					if (src.traitHolder && src.traitHolder.hasTrait("scaredshitless"))
+					if (src.traitHolder && src.traitHolder.hasTrait("scaredshitless") && !ON_COOLDOWN(src, "scaredshitless", 1 SECOND))
 						src.emote("fart") //We can still fart if we're muzzled.
 
 			if ("monsterscream")
@@ -147,7 +150,7 @@
 
 						var/fart_on_other = 0
 						for (var/atom/A as anything in src.loc)
-							if (A.event_handler_flags & IS_FARTABLE)
+							if (A.event_handler_flags & IS_FARTABLE && !ON_COOLDOWN(A, "\ref[src]fart", 0.1 SECONDS))
 								if (istype(A,/mob/living))
 									var/mob/living/M = A
 									if (M == src || !M.lying)
@@ -264,7 +267,7 @@
 
 						var/turf/T = get_turf(src)
 						if (T && T == src.loc)
-							if (T.turf_flags & CAN_BE_SPACE_SAMPLE)
+							if (istype(T, /turf/space))
 								if (src.getStatusDuration("food_space_farts"))
 									src.inertia_dir = src.dir
 									step(src, inertia_dir)
@@ -676,7 +679,7 @@
 								thing = src.l_hand
 							else if (src.r_hand)
 								thing = src.r_hand
-						if (thing)
+						if (thing && !(istype(thing, /obj/item/grab)))
 							SEND_SIGNAL(thing, COMSIG_ITEM_TWIRLED, src, thing)
 							message = thing.on_spin_emote(src)
 							maptext_out = "<I>twirls [thing]</I>"
@@ -867,8 +870,11 @@
 
 				if (src.emote_check(voluntary,20))
 					if (act == "gasp")
-						if (src.health <= 0)
-							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender]_gasp_[pick(1,5)].ogg"
+						if (src.find_ailment_by_type(/datum/ailment/malady/flatline))
+							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender]_gasp_[pick(1,3)].ogg"
+							playsound(src, dying_gasp_sfx, 40, FALSE, 0, src.get_age_pitch())
+						else if (src.health <= 0)
+							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender]_gasp_[pick(4,5)].ogg"
 							playsound(src, dying_gasp_sfx, 40, FALSE, 0, src.get_age_pitch())
 						else
 							playsound(src, src.sound_gasp, 15, 0, 0, src.get_age_pitch())
@@ -1101,11 +1107,15 @@
 							if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
 								var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
 								var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
+								var/original_tool_loc = O.loc
 								drop_item()
 								O.set_loc(src)
-								equip_if_possible(O, drophand)
-								src.visible_message(SPAN_ALERT("<B>[src] pulls a set of tools out of \the [C]!</B>"))
-								playsound(src.loc, "rustle", 60, 1)
+								if(equip_if_possible(O, drophand))
+									src.visible_message(SPAN_ALERT("<B>[src] pulls a set of tools out of \the [C]!</B>"))
+									playsound(src.loc, "rustle", 60, 1)
+								else
+									O.set_loc(original_tool_loc)
+									boutput(src, SPAN_ALERT("You aren't able to equip the omnitool to that hand!"))
 								break
 				else
 					message = "<B>[src]</B> tries to stretch [his_or_her(src)] arms."
@@ -1641,7 +1651,7 @@
 							var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
 							var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
 							drop_item()
-							D.set_loc(src)
+							D.set_loc(src.loc)
 							equip_if_possible(D, drophand)
 							src.visible_message(SPAN_ALERT("<B>[src] pulls a derringer out of \the [C]!</B>"))
 							playsound(src.loc, "rustle", 60, 1)
@@ -1857,7 +1867,7 @@
 					//		animate(transform = turn(GetPooledMatrix(), -180), time = 1, loop = -1)
 					//		animate(transform = turn(GetPooledMatrix(), -270), time = 1, loop = -1)
 					//		animate(transform = turn(GetPooledMatrix(), -360), time = 1, loop = -1)
-					if (isobj(src.loc))
+					if (isobj(src.loc) && !is_incapacitated(src))
 						var/obj/container = src.loc
 						container.mob_flip_inside(src)
 
@@ -2005,7 +2015,7 @@
 							src.charges -= 1
 							playsound(src, src.sound_burp, 70, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 							return
-					else if ((src.charges >= 1) && (muzzled) && !src.reagents?.get_reagent_amount("promethazine"))
+					else if ((src.charges >= 1) && (muzzled) && !HAS_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT))
 						for (var/mob/O in viewers(src, null))
 							O.show_message("<B>[src]</B> vomits in [his_or_her(src)] own mouth a bit.")
 						src.TakeDamage("head", 0, 50, 0, DAMAGE_BURN)
@@ -2327,6 +2337,8 @@
 		gas.farts = 1.69
 	else
 		gas.farts = 0.69
+	if(src.bioHolder?.HasEffect("radioactive_farts"))
+		gas.radgas = 2
 	gas.temperature = T20C
 	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 	if (T)

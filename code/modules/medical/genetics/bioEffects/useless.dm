@@ -79,10 +79,12 @@
 	var/system_path = /datum/particleSystem/sparkles
 
 	OnAdd()
+		. = ..()
 		if (!particleMaster.CheckSystemExists(system_path, owner))
 			particleMaster.SpawnSystem(new system_path(owner))
 
 	OnRemove()
+		. = ..()
 		if (particleMaster.CheckSystemExists(system_path, owner))
 			particleMaster.RemoveSystem(system_path, owner)
 
@@ -95,6 +97,7 @@
 	var/holder_skin = null
 
 	OnAdd()
+		. = ..()
 		if (!ishuman(owner))
 			return
 
@@ -112,6 +115,9 @@
 		H.update_body()
 
 	OnRemove()
+		. = ..()
+		if (!.)
+			return
 		if (!ishuman(owner))
 			return
 
@@ -123,9 +129,9 @@
 			return
 		AH.s_tone = holder_skin
 		if(AH.mob_appearance_flags & FIX_COLORS) // human -> achrom -> lizard -> notachrom is *bright*
-			AH.customization_first_color = fix_colors(AH.customization_first_color)
-			AH.customization_second_color = fix_colors(AH.customization_second_color)
-			AH.customization_third_color = fix_colors(AH.customization_third_color)
+			AH.customizations["hair_bottom"].color = fix_colors(AH.customizations["hair_bottom"].color)
+			AH.customizations["hair_middle"].color = fix_colors(AH.customizations["hair_middle"].color)
+			AH.customizations["hair_top"].color = fix_colors(AH.customizations["hair_top"].color)
 		H.update_colorful_parts()
 		H.update_body()
 
@@ -142,6 +148,7 @@
 	var/skintone_to_use = "#FFFFFF"
 
 	OnAdd()
+		. = ..()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			for (var/ID in H.bioHolder.effects)
@@ -149,31 +156,36 @@
 					H.bioHolder.RemoveEffect(ID)
 			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
 			AH.e_color_original = AH.e_color
-			AH.customization_first_color_original = AH.customization_first_color
-			AH.customization_second_color_original = AH.customization_second_color
-			AH.customization_third_color_original = AH.customization_third_color
+			AH.customizations["hair_bottom"].color_original = AH.customizations["hair_bottom"].color
+			AH.customizations["hair_middle"].color_original = AH.customizations["hair_middle"].color
+			AH.customizations["hair_top"].color_original = AH.customizations["hair_top"].color
 			AH.s_tone_original = AH.s_tone
 
 			AH.e_color = eye_color_to_use
 			AH.s_tone = skintone_to_use
-			AH.customization_first_color = color_to_use
-			AH.customization_second_color = color_to_use
-			AH.customization_third_color = color_to_use
+			AH.customizations["hair_bottom"].color = color_to_use
+			AH.customizations["hair_middle"].color = color_to_use
+			AH.customizations["hair_top"].color = color_to_use
 			H.update_colorful_parts()
 
 	OnRemove()
+		. = ..()
+		if (!.)
+			return
 		if (ishuman(owner))
+			if (QDELETED(owner))
+				return
 			var/mob/living/carbon/human/H = owner
 			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
 			AH.e_color = AH.e_color_original
 			AH.s_tone = AH.s_tone_original
-			AH.customization_first_color = AH.customization_first_color_original
-			AH.customization_second_color = AH.customization_second_color_original
-			AH.customization_third_color = AH.customization_third_color_original
+			AH.customizations["hair_bottom"].color = AH.customizations["hair_bottom"].color_original
+			AH.customizations["hair_middle"].color = AH.customizations["hair_middle"].color_original
+			AH.customizations["hair_top"].color = AH.customizations["hair_top"].color_original
 			if(AH.mob_appearance_flags & FIX_COLORS) // human -> blank -> lizard -> unblank is *bright*
-				AH.customization_first_color = fix_colors(AH.customization_first_color)
-				AH.customization_second_color = fix_colors(AH.customization_second_color)
-				AH.customization_third_color = fix_colors(AH.customization_third_color)
+				AH.customizations["hair_bottom"].color = fix_colors(AH.customizations["hair_bottom"].color)
+				AH.customizations["hair_middle"].color = fix_colors(AH.customizations["hair_middle"].color)
+				AH.customizations["hair_top"].color = fix_colors(AH.customizations["hair_top"].color)
 			H.update_colorful_parts()
 
 /datum/bioEffect/color_changer/black

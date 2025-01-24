@@ -77,7 +77,7 @@
 	MouseDrop_T(obj/item/W, mob/user)
 		if (!in_interact_range(src, user)  || BOUNDS_DIST(W, user) > 0 || !can_act(user))
 			return
-		else
+		else if(isitem(W))
 			if (!W.cant_drop && (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece)))
 				boutput(user, SPAN_NOTICE("You insert [W] into the machine."))
 				W.set_loc(src)
@@ -358,6 +358,8 @@
 
 			if(istype(pos, /turf/space))
 				O = new/obj/effects/abcuMarker(pos)
+			else if(pos.can_build && pos.z == Z_LEVEL_STATION)
+				O = new/obj/effects/abcuMarker(pos)
 			else
 				O = new/obj/effects/abcuMarker/red(pos)
 				src.invalid_count++
@@ -489,7 +491,8 @@
 // whitelists/blacklists applied during both saving and loading, so it's functionally retroactive
 #define WHITELIST_OBJECTS list( \
 	/obj/stool, \
-	/obj/grille, \
+	/obj/mesh/catwalk, \
+	/obj/mesh/grille, \
 	/obj/lattice, \
 	/obj/window, \
 	/obj/machinery/door, \
@@ -559,7 +562,7 @@
 )
 
 #define WHITELIST_TURFS list(/turf/simulated)
-#define BLACKLIST_TURFS list(/turf/simulated/floor/specialroom/sea_elevator_shaft, /turf/simulated/shuttle, /turf/simulated/floor/shuttle, /turf/simulated/wall/auto/shuttle)
+#define BLACKLIST_TURFS list(/turf/simulated/floor/auto/elevator_shaft, /turf/simulated/shuttle, /turf/simulated/floor/shuttle, /turf/simulated/wall/auto/shuttle)
 
 /datum/abcu_blueprint
 	var/cost_metal = 0

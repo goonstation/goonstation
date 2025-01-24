@@ -520,7 +520,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 				"metal" = 4)
 /obj/item/device/light/floodlight
 	name = "floodlight"
-	desc = "A floodlight that can illuminate a large area. It can be wrenched to activate it."
+	desc = "A floodlight that can illuminate a large area."
 	icon = 'icons/obj/lighting.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "floodlight_item"
@@ -619,11 +619,11 @@ TYPEINFO(/obj/item/device/light/floodlight)
 				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if (!src.anchored)
-				src.visible_message(SPAN_NOTICE("[user] starts unwrenching \the [src]."))
+				src.visible_message(SPAN_NOTICE("[user] starts wrenching \the [src]."))
 				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS, PROC_REF(anchor), list(user), src.icon, src.icon_state,\
 					SPAN_NOTICE("[user] finishes wrenching \the [src]."), null)
 			else if(movable)
-				src.visible_message(SPAN_NOTICE("[user] starts wrenching \the [src]."))
+				src.visible_message(SPAN_NOTICE("[user] starts unwrenching \the [src]."))
 				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS, PROC_REF(unanchor), list(user), src.icon, src.icon_state,\
 					SPAN_NOTICE("[user] finishes unwrenching \the [src]."), null)
 		else if (ispryingtool(W))
@@ -667,6 +667,8 @@ TYPEINFO(/obj/item/device/light/floodlight)
 
 	get_desc()
 		. = ..() + "\n"
+		if (src.movable)
+			. +=  " It can be wrenched to activate it."
 		if (isnull(cell))
 			. += " It has no APC-sized cell installed."
 		else
@@ -851,7 +853,9 @@ ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 				if (check_target_immunity(target=target, ignore_everything_but_nodamage=FALSE, source=user))
 					return ..()
 				var/mob/living/carbon/human/H = target
-				if (H.bleeding || ((H.organHolder && !H.organHolder.get_organ("butt")) && user.zone_sel.selecting == "chest"))
+				if (is_special)
+					return ..()
+				else if (H.bleeding || ((H.organHolder && !H.organHolder.get_organ("butt")) && user.zone_sel.selecting == "chest"))
 					src.cautery_surgery(H, user, 5, src.on)
 					return ..()
 				else

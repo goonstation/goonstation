@@ -143,11 +143,14 @@ var/maniac_previous_victim = "Unknown"
 	icon_state = "body"
 	anchored = ANCHORED
 	density = 1
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/alert = 0
 	var/id = "evilreaverbridge"
 
-	HasProximity(atom/movable/AM as mob|obj)
+	New()
+		..()
+		src.AddComponent(/datum/component/proximity)
+
+	EnteredProximity(atom/movable/AM)
 		if(!alert)
 			if(iscarbon(AM))
 				alert = 1

@@ -23,6 +23,7 @@
 			return
 		return ..()
 
+
 /obj/item/clothing/glasses/crafted
 	name = "glasses"
 	icon_state = "crafted"
@@ -122,6 +123,19 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	item_state = "glasses"
 	desc = "Corrective lenses, perfect for the near-sighted."
 	correct_bad_vision = 1
+
+	attack_self(mob/user)
+		user.show_text("You swap the style of your glasses.")
+		if (src.icon_state == "glasses")
+			src.icon_state = "glasses_round"
+		else
+			src.icon_state = "glasses"
+
+/obj/item/clothing/glasses/regular/round
+	name = "round glasses"
+	icon_state = "glasses_round"
+	item_state = "glasses_round"
+	desc = "Big round corrective lenses, perfect for the near-sighted nerd."
 
 /obj/item/clothing/glasses/regular/ecto
 	name = "peculiar spectacles"
@@ -393,8 +407,8 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 /obj/item/clothing/glasses/vr
 	name = "\improper VR goggles"
 	desc = "A pair of VR goggles running a personal simulation."
-	icon_state = "vr"
-	item_state = "sunglasses"
+	icon_state = "vr_detective"
+	item_state = "vr_detective"
 	var/network = LANDMARK_VR_DET_NET
 
 	setupProperties()
@@ -427,8 +441,8 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 /obj/item/clothing/glasses/scuttlebot_vr
 	name = "Scuttlebot remote controller"
 	desc = "A pair of VR goggles connected to a remote scuttlebot. Use them on the scuttlebot to turn it back into a hat."
-	icon_state = "vr"
-	item_state = "sunglasses"
+	icon_state = "vr_scuttlebot"
+	item_state = "vr_scuttlebot"
 	var/mob/living/critter/robotic/scuttlebot/connected_scuttlebot = null
 
 	equipped(var/mob/user, var/slot) //On equip, if there's a scuttlebot, control it
@@ -438,19 +452,19 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 			if(connected_scuttlebot.mind)
 				boutput(user, SPAN_ALERT("The scuttlebot is already active somehow!"))
 			else if(!connected_scuttlebot.loc)
-				boutput(user, SPAN_ALERT("You put on the glasses but they show no signal. The scuttlebot couldnt be found."))
+				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot couldnt be found."))
 			else
 				H.network_device = src.connected_scuttlebot
 				connected_scuttlebot.controller = H
 				user.mind.transfer_to(connected_scuttlebot)
 		else
-			boutput(user, SPAN_ALERT("You put on the glasses but they show no signal. The scuttlebot is likely destroyed."))
+			boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot is likely destroyed."))
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (istype(target, /mob/living/critter/robotic/scuttlebot))
 			var/mob/living/critter/robotic/scuttlebot/S = target
 			if (connected_scuttlebot != S)
-				boutput(user, "You try to put the goggles back into the hat but it grumps at you, not recognizing the glasses.")
+				boutput(user, "You try to put the goggles back into the hat but it grumps at you, not recognizing the goggles.")
 				return 1
 			if (S.linked_hat != null)
 				S.linked_hat.set_loc(get_turf(S))
@@ -464,6 +478,9 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 					if (S.is_inspector)
 						newscuttle.make_inspector()
 			boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
+			for(var/obj/item/photo/P in S.contents)
+				P.set_loc(get_turf(src))
+
 			S.drop_item()
 			qdel(S)
 			qdel(src)
@@ -479,7 +496,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	name = "\improper VR goggles"
 	desc = "A pair of VR goggles running a personal simulation.  You should know this, being IN the simulation and all."
 	icon_state = "vr"
-	item_state = "sunglasses"
+	item_state = "vr"
 
 	unequipped(var/mob/user)
 		..()
@@ -489,9 +506,13 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		return
 
 /obj/item/clothing/glasses/vr/arcade
+	icon_state = "vr"
+	item_state = "vr"
 	network = LANDMARK_VR_ARCADE
 
 /obj/item/clothing/glasses/vr/bomb
+	icon_state = "vr_science"
+	item_state = "vr_science"
 	network = LANDMARK_VR_BOMBTEST
 
 TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
@@ -723,6 +744,7 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 		.["frequency"] = src.freq
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
 		if (action == "set-frequency" && params["finish"])
 			var/old_freq = src.freq
 			src.freq = sanitize_frequency_diagnostic(params["value"])

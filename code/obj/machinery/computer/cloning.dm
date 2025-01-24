@@ -261,7 +261,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 	if (istype(subject.mutantrace, /datum/mutantrace/zombie))
 		show_message("Error: Incompatible cellular structure.", "danger")
 		return
-	if (subject.mob_flags & IS_BONEY)
+	if ((subject.mob_flags & IS_BONEY) && !allow_dead_scanning)
 		show_message("Error: No tissue mass present. Total ossification of subject detected.", "danger")
 		return
 	if (!cloning_with_records && isalive(subject))
@@ -270,8 +270,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 
 	var/datum/mind/subjMind = subject.mind
 	if ((!subjMind) || (!subjMind.key))
-		if (eligible_to_clone(subject.oldmind))
-			subjMind = subject.oldmind
+		if(subject.ghost?.mind)
+			subjMind = subject.ghost.mind
+		else if(subject.oldmind)
+			if(eligible_to_clone(subject.oldmind, scanning = TRUE))
+				subjMind = subject.oldmind
+			else
+				show_message("Error: Mental interface failure.", "warning")
+				return
 		else
 			show_message("Error: Mental interface failure.", "warning")
 			return
@@ -434,8 +440,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		src.menu = 1
 		src.records_scan()
 
-// check if a mind has a current mob, a client, and is dead/a ghost/doing afterlife stuff
-proc/eligible_to_clone(var/datum/mind/mind)
+/// Check if a mind has a current mob, a client, and is dead/a ghost/doing afterlife stuff.
+/// Scanning var controls whether we will return ghosts, because ghosts needs special handling in clone scans
+/// to ensure they're not using a body that they've been cloned from before
+proc/eligible_to_clone(datum/mind/mind, scanning = FALSE)
 	if (!mind)
 		return null
 
@@ -456,7 +464,7 @@ proc/eligible_to_clone(var/datum/mind/mind)
 			return null
 	if(iswraith(M))
 		return null
-	if(isdead(M) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
+	if((!scanning && isdead(M)) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
 		return M
 	return null
 

@@ -86,7 +86,8 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 	src.arm(user)
 
 /obj/item/chem_grenade/ex_act(severity)
-	src.explode()
+	if(!src.detonating)
+		src.explode()
 	. = ..()
 
 /obj/item/chem_grenade/get_desc()

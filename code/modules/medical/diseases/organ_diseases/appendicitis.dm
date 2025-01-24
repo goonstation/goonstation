@@ -8,6 +8,7 @@
 	recureprob = 10
 	affected_species = list("Human")
 	stage_prob = 1
+	can_be_asymptomatic = FALSE
 	var/robo_restart = 0
 
 /datum/ailment/disease/appendicitis/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
@@ -48,7 +49,7 @@
 			if (probmult(10))
 				var/vomit_message = SPAN_ALERT("[H] suddenly and violently vomits!")
 				H.vomit(0, null, vomit_message)
-			else if (probmult(2) && !H.reagents?.has_reagent("promethazine"))
+			else if (probmult(2) && HAS_ATOM_PROPERTY(H, PROP_MOB_CANNOT_VOMIT))
 				H.visible_message(SPAN_ALERT("[H] vomits blood!"))
 				playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				random_brute_damage(H, rand(5,8))

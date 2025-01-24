@@ -24,6 +24,8 @@
 		"nopug",
 		"cloner_stuff",
 		"hemophilia",
+		"nohair",
+		"nowig",
 	)
 
 	var/list/traitData = list()
@@ -127,7 +129,7 @@
 
 			. += C
 
-	proc/generateTraitData(/mob/user)
+	proc/generateTraitData(mob/user)
 		if(traitDataDirty)
 			traitData = list()
 			for (var/datum/trait/trait as anything in src.getTraits(user))
@@ -294,7 +296,6 @@
 	onRemove(mob/owner)
 		owner.bioHolder?.RemoveEffect("deaf")
 
-
 /datum/trait/nolegs
 	name = "Stumped"
 	desc = "Because of a freak accident involving a piano, a forklift, and lots of vodka, both of your legs had to be amputated. Fortunately, NT has kindly supplied you with a wheelchair out of the goodness of their heart. (due to regulations)"
@@ -360,6 +361,29 @@
 
 			created_organ.donor = owner
 			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+
+/datum/trait/stinky
+	name = "Stinky"
+	desc = "Your body has exceedingly sensitive sweat glands that overproduce, causing you to become stinky unless frequently showered."
+	id = "stinky"
+	icon_state = "stinky"
+	category = list("body")
+	points = 1
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (!H.sims)
+				H.sims = new /datum/simsHolder(H)
+			H.sims.addMotive(/datum/simsMotive/hygiene)
+			H.sims.add_hud() // ensure hud has hygiene motive
+
+	onRemove(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (!H.sims)
+				H.sims = new /datum/simsHolder(H)
+			H.sims.removeMotive("Hygiene")
 
 // LANGUAGE - Yellow Border
 /datum/trait/swedish
@@ -481,6 +505,13 @@
 	icon_state = "infravisionG"
 	points = -1
 	category = list("vision")
+
+/datum/trait/wasitsomethingisaid
+	name = "Was It Something I Said?"
+	desc = "You did something to attract their ire, and the small robots of the station hate your guts!"
+	id = "wasitsomethingisaid"
+	icon_state = "wasitsomethingisaid"
+	points = 2
 
 /datum/trait/shortsighted
 	name = "Short-sighted"
@@ -636,7 +667,7 @@
 	id = "bald"
 	icon_state = "bald"
 	points = 0
-	category = list("trinkets", "nopug")
+	category = list("trinkets", "nopug","nowig")
 
 
 // Skill - White Border
@@ -656,6 +687,14 @@
 	icon_state = "matrix"
 	category = list("skill")
 	points = -2
+
+/datum/trait/martyrdom
+	name = "Martyrdom"
+	id = "martyrdom"
+	desc = "If you have a grenade in-hand, arm it on death"
+	icon_state = "no"
+	category = list("skill")
+	points = -1
 
 /datum/trait/happyfeet
 	name = "Happyfeet"
@@ -745,6 +784,11 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "Subject is experienced in foodstuffs and their effects."
 	id = "training_chef"
 
+/datum/trait/job/bartender
+	name = "Bartender Training"
+	desc = "Subject has a keen mind for all things alcoholic."
+	id = "training_bartender"
+
 // bartender, detective, HoS
 /datum/trait/job/drinker
 	name = "Professional Drinker"
@@ -758,8 +802,8 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 	onAdd(var/mob/owner)
 		owner.AddComponent(/datum/component/death_confetti)
-		owner.bioHolder?.AddEffect("accent_comic", magical = TRUE)
-		owner.bioHolder?.AddEffect("clumsy", magical = TRUE)
+		owner.bioHolder?.AddEffect("accent_comic", innate = TRUE)
+		owner.bioHolder?.AddEffect("clumsy", innate = TRUE)
 
 /datum/trait/job/mime
 	name = "Mime Training"
@@ -767,8 +811,8 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "training_mime"
 
 	onAdd(var/mob/owner)
-		owner.bioHolder?.AddEffect("mute", magical = TRUE)
-		owner.bioHolder?.AddEffect("blankman", magical = TRUE)
+		owner.bioHolder?.AddEffect("mute", innate = TRUE)
+		owner.bioHolder?.AddEffect("blankman", innate = TRUE)
 
 /datum/trait/job/miner
 	name = "Miner Training"
@@ -934,7 +978,6 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "randomallergy"
 	icon_state = "allergy"
 	points = 0
-	category = list("allergy")
 	afterlife_blacklisted = TRUE
 
 	var/allergen = null
@@ -964,7 +1007,6 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "medicalallergy"
 	icon_state = "medallergy"
 	points = 1
-	category = list("allergy")
 	afterlife_blacklisted = TRUE
 
 	allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
@@ -1136,6 +1178,21 @@ TYPEINFO(/datum/trait/partyanimal)
 	icon_state = "onfire"
 	points = 2
 
+/datum/trait/spontaneous_combustion
+	name = "Spontaneous Combustion"
+	desc = "You very, VERY rarely spontaneously light on fire."
+	id = "spontaneous_combustion"
+	icon_state = "onfire"
+	points = 0
+
+	onLife(mob/owner, mult)
+		. = ..()
+		if(probmult(0.01))
+			owner.setStatus("burning", 100 SECONDS, 60 SECONDS)
+			playsound(owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+			logTheThing(LOG_COMBAT, owner, "gets set on fire by their spontaneous combustion trait")
+			owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> suddenly bursts into flames!"))
+
 /datum/trait/carpenter
 	name = "Carpenter"
 	desc = "You can construct things more quickly than other people."
@@ -1204,7 +1261,6 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "allergic"
 	icon_state = "hypeallergy"
 	points = 1
-	category = list("allergy")
 	disability_type = TRAIT_DISABILITY_MINOR
 	disability_name = "Anaphylactic"
 	disability_desc = "Acute response to allergens"
@@ -1260,7 +1316,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "Compress all of your skin and flesh into your bones, making you resemble a skeleton. Not as uncomfortable as it sounds."
 	id = "skeleton"
 	points = -1
-	category = list("species", "cloner_stuff")
+	category = list("species", "cloner_stuff", "nohair")
 	mutantRace = /datum/mutantrace/skeleton
 
 /datum/trait/roach
@@ -1278,7 +1334,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "Should a pug really be on a space station? They aren't suited for space at all. They're practically a liability to the compan... Aw, look at those little ears!"
 	id = "pug"
 	points = -4 //Subject to change- -3 feels too low as puritan is relatively common. Though Puritan Pug DOES make for a special sort of Hard Modes
-	category = list("species", "nopug")
+	category = list("species", "nopug", "nohair")
 	mutantRace = /datum/mutantrace/pug
 
 /datum/trait/super_slips
@@ -1325,6 +1381,20 @@ TYPEINFO(/datum/trait/partyanimal)
 					explanation_text += "[ingredient], "
 				else
 					explanation_text += "and [ingredient]<br/>"
+
+/datum/trait/mutant_hair
+	name = "Hairy"
+	desc = "You will grow hair even if you usually would not (due to being a lizard or something)."
+	id = "mutant_hair"
+	points = 0
+	category = list("body", "nohair","nowig")
+	icon_state = "hair"
+
+	onAdd(mob/owner)
+		owner.bioHolder.AddEffect("hair_growth", innate = TRUE)
+
+	onRemove(mob/owner)
+		owner.bioHolder.RemoveEffect("hair_growth")
 
 //Infernal Contract Traits
 /datum/trait/hair

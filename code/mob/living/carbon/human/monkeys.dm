@@ -240,7 +240,7 @@
 		..()
 		START_TRACKING
 		if (!src.disposed)
-			src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+			src.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
 			if (src.name == "monkey" || !src.name)
 				src.name = pick_string_autokey("names/monkey.txt")
 			src.real_name = src.name

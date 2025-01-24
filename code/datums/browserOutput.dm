@@ -291,9 +291,9 @@ var/global
 	for (var/client/C in clients)
 		ehjax.send(C, "browseroutput", data)
 
-/datum/chatOutput/proc/playMusic(url, volume)
+/datum/chatOutput/proc/playMusic(url, volume, fromTopic = FALSE)
 	if (!url || !volume) return
-	var/data = json_encode(list("playMusic" = url, "volume" = volume / 100))
+	var/data = json_encode(list("playMusic" = url, "volume" = volume / 100, "fromTopic" = fromTopic))
 	data = url_encode(data)
 
 	ehjax.send(src.owner, "browseroutput", data)
@@ -434,6 +434,8 @@ var/global
 	else if (ismind(target) && target:current)
 		C = target:current:client
 	else
+		if (ismobcritter(target) || istype(target, /obj/machinery/bot/)) // These act like clients a lot through logic, and get tons of messages.
+			return
 		CRASH("boutput called with incorrect target [target]")
 
 	if (islist(C?.chatOutput?.messageQueue) && !C.chatOutput.loaded)

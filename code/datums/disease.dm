@@ -23,6 +23,7 @@
 	var/detectability = 0				// detectors must >= this to pick up the disease
 	var/resistance_prob = 0				// how likely this disease is to grant immunity once cured
 	var/max_stacks = 1					// how many times at once you can have this ailment
+	var/can_be_asymptomatic = TRUE
 
 	///If we need a specific ailment_data type
 	var/datum/ailment_data/strain_type = /datum/ailment_data
@@ -90,7 +91,7 @@
 
 	setup_strain()
 		var/datum/ailment_data/disease/strain = ..()
-		if (prob(5))
+		if (prob(5) && src.can_be_asymptomatic)
 			strain.state = "Asymptomatic"
 			// carrier - will spread it but won't suffer from it
 		strain.virulence = src.virulence
@@ -121,6 +122,24 @@
 	var/recureprob = 8						// probability per tick that the reagent will cure the disease
 	var/temperature_cure = 406				// this temp or higher will cure the disease
 	var/resistance_prob = 0					// how likely this disease is to grant immunity once cured
+
+	proc/copy_other(datum/ailment_data/other)
+		SHOULD_CALL_PARENT(TRUE)
+		src.master = other.master
+		src.name = other.name
+		src.scantype = other.scantype
+		src.detectability = other.detectability
+		src.cure_flags = other.cure_flags
+		src.cure_desc = other.cure_desc
+		src.spread = other.spread
+		src.info = other.info
+		//leaving out stage and state
+		src.stage_prob = other.stage_prob
+		src.reagentcure = other.reagentcure.Copy()
+		src.recureprob = other.recureprob
+		src.temperature_cure = other.temperature_cure
+		src.resistance_prob = other.resistance_prob
+		//phew
 
 	disposing()
 		if (affected_mob)
@@ -218,6 +237,12 @@
 	var/cycles = 0         // does this disease have a cyclical nature? if so, how many cycles have elapsed?
 	var/list/strain_data = list()  // Used for Rhinovirus, basically arbitrary data storage
 
+	copy_other(datum/ailment_data/disease/other)
+		..()
+		src.virulence = other.virulence
+		src.develop_resist = other.develop_resist
+		src.strain_data = other.strain_data.Copy() //hopefully this is good enough?
+
 	stage_act(var/mult)
 		if (!affected_mob || disposed)
 			return 1
@@ -295,6 +320,12 @@
 	var/withdrawal_duration = 4800
 	var/max_severity = "HIGH"
 
+	copy_other(datum/ailment_data/addiction/other)
+		..()
+		src.associated_reagent = other.associated_reagent
+		src.withdrawal_duration = other.withdrawal_duration
+		src.max_severity = other.max_severity
+
 	New()
 		..()
 		master = get_disease_from_path(/datum/ailment/addiction)
@@ -304,6 +335,11 @@
 	var/surgery_prob = 50
 	var/mob/living/critter/changeling/headspider/source = null // for headspiders
 	var/stealth_asymptomatic = 0
+
+	copy_other(datum/ailment_data/parasite/other)
+		..()
+		src.surgery_prob = other.surgery_prob
+		src.stealth_asymptomatic = other.stealth_asymptomatic
 
 	proc/setup()
 		src.stage_prob = master.stage_prob
@@ -381,7 +417,7 @@
 
 		if (istype(A,/datum/ailment/disease/))
 			var/datum/ailment/disease/D = A
-			resist_prob -= D.virulence
+			resist_prob = 100 - (((100 - resist_prob) / 100) * D.virulence)
 
 	if (prob(resist_prob))
 		return 0
@@ -449,12 +485,16 @@
 
 	for (var/datum/ailment_data/disease/strain in src.ailments)
 		if (strain.spread == spread_type)
-			target.contract_disease(null,null,strain,0)
+			var/datum/ailment_data/new_data = new strain.type()
+			new_data.copy_other(strain)
+			target.contract_disease(null,null,new_data,0)
 
 	if (two_way)
 		for (var/datum/ailment_data/disease/strain in target.ailments)
 			if (strain.spread == spread_type)
-				src.contract_disease(null,null,strain,0)
+				var/datum/ailment_data/new_data = new strain.type()
+				new_data.copy_other(strain)
+				src.contract_disease(null,null,new_data,0)
 
 	return
 

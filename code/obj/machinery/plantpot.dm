@@ -183,7 +183,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	return output
 
 
-/obj/machinery/plantpot/HasProximity(atom/movable/AM as mob|obj)
+/obj/machinery/plantpot/EnteredProximity(atom/movable/AM)
 	if(!src.current || src.dead)
 		return
 	src.current?.ProximityProc(src, AM)
@@ -267,6 +267,9 @@ TYPEINFO(/obj/machinery/plantpot)
 		else
 			// If there's no mutation we just use the base special proc, obviously!
 			growing.HYPspecial_proc(src)
+
+	if(src.current == null) //synthcats can just get up and walk away. check for that
+		return
 
 	// Have we lost all health or growth, or used up all available harvests? If so, this plant
 	// should now die. Sorry, that's just life! Didn't they teach you the curds and the peas?
@@ -450,15 +453,19 @@ TYPEINFO(/obj/machinery/plantpot)
 			boutput(user, SPAN_ALERT("Something is already in that tray."))
 			return
 		user.visible_message(SPAN_NOTICE("[user] plants a seed in the [src]."))
-		user.u_equip(SEED)
-		SEED.set_loc(src)
 		if(SEED.planttype)
 			logTheThing(LOG_STATION, user, "plants a [SEED.planttype?.name] [SEED.planttype?.type] (reagents: [json_encode(HYPget_assoc_reagents(SEED.planttype, SEED.plantgenes))]) seed at [log_loc(src)].")
 			src.HYPnewplant(SEED)
+			SEED.charges--
+			if (SEED.charges < 1)
+				user.u_equip(SEED)
+				qdel(SEED)
+			else SEED.inventory_counter.update_number(SEED.charges)
 			if(!(user in src.contributors))
 				src.contributors += user
 		else
 			boutput(user, SPAN_ALERT("You plant the seed, but nothing happens."))
+			user.u_equip(SEED)
 			qdel(SEED)
 		return
 
@@ -476,7 +483,6 @@ TYPEINFO(/obj/machinery/plantpot)
 		else
 			SEED = new /obj/item/seed
 		SEED.generic_seed_setup(SP.selected, FALSE)
-		SEED.set_loc(src)
 		if(SEED.planttype)
 			src.HYPnewplant(SEED)
 			logTheThing(LOG_STATION, user, "plants a [SEED.planttype?.name] [SEED.planttype?.type] seed at [log_loc(src)] using the seedplanter.")
@@ -484,7 +490,7 @@ TYPEINFO(/obj/machinery/plantpot)
 				src.contributors += user
 		else
 			boutput(user, SPAN_ALERT("You plant the seed, but nothing happens."))
-			qdel(SEED)
+		qdel(SEED)
 
 	else if(istype(W, /obj/item/reagent_containers/glass/) && W.is_open_container(FALSE))
 		// Not just watering cans - any kind of glass can be used to pour stuff in.
@@ -1095,8 +1101,9 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(((growing.isgrass || (growing.force_seed_on_harvest > 0 )) && prob(80)) && !istype(getitem,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless) && (growing.force_seed_on_harvest >= 0 ))
 				// Same shit again. This isn't so much the crop as it is giving you seeds
 				// incase you couldn't get them otherwise, though.
-				HYPgenerateseedcopy(src.plantgenes, growing, src.generation, src)
 				seedcount++
+
+		if (seedcount > 0) HYPgenerateseedcopy(src.plantgenes, growing, src.generation, src, seedcount)
 
 		// Give XP based on base quality of crop harvest. Will make better later, like so more plants harvasted and stuff, this is just for testing.
 		// This is only reached if you actually got anything harvested.
@@ -1233,7 +1240,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		// plant's starting health.
 
 	if(growing.proximity_proc) // Activate proximity proc for any tray where a plant that uses it is planted
-		setup_use_proximity()
+		src.AddComponent(/datum/component/proximity)
 
 	src.health += SEED.planttype.endurance + SDNA?.get_effective_value("endurance")
 	// Add the plant's total endurance score to the health.
@@ -1270,10 +1277,9 @@ TYPEINFO(/obj/machinery/plantpot)
 	// Copy over all genes, strains and mutations from the seed.
 
 	// Finally set the harvests, make sure we always have at least one harvest,
-	// then get rid of the seed, mutate the genes a little and update the pot sprite.
+	// mutate the genes a little and update the pot sprite.
 	if(growing.harvestable) src.harvests = growing.harvests + DNA?.get_effective_value("harvests")
 	if(src.harvests < 1) src.harvests = 1
-	qdel(SEED)
 	if (!SEED.dont_mutate)
 		src.HYPmutateplant(1)
 	src.post_alert(list("event" = "new", "plant" = src.current.name))
@@ -1298,7 +1304,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	src.health_warning = 0
 	src.harvest_warning = 0
 	src.UpdateIcon()
-	src.remove_use_proximity()// If there's no plant here, there doesn't need to be a check
+	src.RemoveComponentsOfType(/datum/component/proximity) // If there's no plant here, there doesn't need to be a check
 	src.update_name()
 	//we also get rid of the current plantgrowth_tick, since there is no plant to access it
 	qdel(src.current_tick)
@@ -1321,7 +1327,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	src.generation = 0
 	src.UpdateIcon()
-	src.remove_use_proximity()
+	src.RemoveComponentsOfType(/datum/component/proximity)
 	src.update_name()
 	src.post_alert(list("event" = "cleared"))
 	//we also get rid of the current plantgrowth_tick, since there is no plant to access it

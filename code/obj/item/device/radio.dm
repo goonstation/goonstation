@@ -469,7 +469,7 @@ var/list/headset_channel_lookup
 
 		if (length(heard_masked))
 			if (ishuman(M))
-				if (M:wear_id)
+				if (M:wear_id && length(M:wear_id:registered))
 					rendered = "[part_a][M:wear_id:registered][part_b][M.say_quote(messages[1])][part_c]"
 				else
 					rendered = "[part_a]Unknown[part_b][M.say_quote(messages[1])][part_c]"
@@ -715,6 +715,17 @@ TYPEINFO(/obj/item/radiojammer)
 		if(src in by_cat[TR_CAT_RADIO_JAMMERS])
 			STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
 		..()
+
+/obj/item/device/radio/hall_monitor
+	name = "Hall monitor's radio"
+	desc = "So you can listen to(eavesdrop on) station security(drama)."
+	icon_state = "radio"
+	has_microphone = FALSE
+	frequency = R_FREQ_SECURITY
+	locked_frequency = TRUE
+	speaker_range = 0
+	secure_frequencies = list("g" = R_FREQ_SECURITY)
+	secure_classes = list("g" = RADIOCL_SECURITY)
 
 /obj/item/device/radio/beacon
 	name = "tracking beacon"
@@ -1068,6 +1079,8 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 	rand_pos = 0
 	density = 0
 	desc = "A Loudspeaker."
+
+	HELP_MESSAGE_OVERRIDE("")
 
 	New()
 		..()

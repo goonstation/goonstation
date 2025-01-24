@@ -53,7 +53,7 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 
 		for(var/turf/T as anything in block(locate(target.x-1, target.y-1, target.z), locate(props.maxX+2, props.maxY+2, target.z)))
 			for(var/obj/O in T)
-				O.initialize()
+				O.initialize(FALSE)
 				O.UpdateIcon()
 		makepowernets()
 

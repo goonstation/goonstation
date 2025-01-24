@@ -579,12 +579,13 @@
 			UpdateOverlays(null, "secbot_charged")
 
 	/// Hits someone with our baton, or charges it if it isnt
-	proc/baton_attack(var/mob/living/carbon/M, var/force_attack = 0)
+	proc/baton_attack(var/mob/living/carbon/M, var/force_attack = 0, var/extra_hits = 0)
 		if(force_attack || baton_charged)
 			src.baton_charging = 0
 			src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
 			var/maxstuns = 4
 			var/stuncount = (src.emagged >= 2) ? rand(5,10) : 1
+			stuncount += extra_hits
 
 			// No need for unnecessary hassle, just make it ignore charges entirely for the time being.
 			if (src.our_baton && istype(src.our_baton))
@@ -847,6 +848,8 @@
 			if (src.threatlevel >= 4)
 				src.EngageTarget(C)
 				break
+			if(C.traitHolder.hasTrait("wasitsomethingisaid"))
+				src.EngageTarget(C)
 			else
 				continue
 
@@ -1278,7 +1281,12 @@
 			if(ishuman(master.target) && !uncuffable)
 				master.target.handcuffs = new /obj/item/handcuffs/guardbot(master.target)
 				master.target.setStatus("handcuffed", duration = INFINITE_STATUS)
+				master.target.update_clothing()
 				logTheThing(LOG_COMBAT, master, "handcuffs [constructTarget(master.target,"combat")] at [log_loc(master)].")
+
+			if(master.target.traitHolder?.hasTrait("wasitsomethingisaid")) //a little extra to make the trait funnier
+				var/extra_hits = (master.emagged >= 2) ? 20 : 4 //normal = 4. double emagged = 20. i just think its very funny
+				master.baton_attack(master.target, TRUE, extra_hits)
 
 			if(!uncuffable)
 				master.arrest_gloat()

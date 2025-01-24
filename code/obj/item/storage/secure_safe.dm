@@ -625,7 +625,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 /obj/item/storage/secure/ssafe/larrys
 	configure_mode = FALSE
 	random_code = TRUE
-	spawn_contents = list(/obj/item/paper/IOU, /obj/item/device/key/generic/larrys, /obj/item/currency/spacecash/buttcoin, /obj/item/currency/spacecash/buttcoin)
+	spawn_contents = list(/obj/item/paper/IOU, /obj/item/device/key/generic/larrys, /obj/item/currency/buttcoin, /obj/item/currency/buttcoin)
 
 #undef KEYPAD_ERR
 #undef KEYPAD_SET

@@ -201,7 +201,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Civilian Department"
 	contains = list(/obj/item/reagent_containers/food/snacks/ingredient/flour = 6,
 					/obj/item/reagent_containers/food/snacks/ingredient/rice_sprig = 4,
-					/obj/item/reagent_containers/food/snacks/ingredient/spaghetti = 3,
+					/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/sugar = 4,
 					/obj/item/reagent_containers/food/snacks/ingredient/oatmeal = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/tortilla = 3,
@@ -417,6 +417,18 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = PAY_TRADESMAN*2
 	containertype = /obj/storage/crate
 	containername = "Janitorial Supplies"
+
+/datum/supply_packs/janitor_sprayer
+	name = "WA-V3 Janitorial Sprayer"
+	desc = "x1 Brand new Wide Area V3 Cleaning Device, x1 Matching back-tank"
+	category = "Civilian Department"
+	containertype = /obj/storage/crate
+	containername = "WA-V3 Crate"
+	cost = PAY_TRADESMAN * 15 //pricy
+	contains = list(
+		/obj/item/gun/sprayer,
+		/obj/item/reagent_containers/glass/backtank
+	)
 
 /datum/supply_packs/hydronutrient
 	name = "Hydroponics: Nutrient Crate"
@@ -1136,17 +1148,6 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/packing
 	containername = "Utility Belt Crate"
 
-/datum/supply_packs/antibio
-	name = "Anti-Biological Hazard Supplies"
-	desc = " A couple of tools for combatting rogue biological lifeforms."
-	category = "Security Department"
-	contains = list(/obj/item/gun/flamethrower/assembled/loaded,
-					/obj/item/storage/box/flaregun)
-	cost = PAY_IMPORTANT*2
-	containertype = /obj/storage/secure/crate
-	containername = "Anti-Biological Hazard Supplies (Cardlocked \[Security Equipment])"
-	access = access_securitylockers
-
 /datum/supply_packs/counterrevimplant
 	name = "Counter-Revolutionary Kit"
 	desc = "Implanters and counter-revolutionary implants to suppress rebellion against Nanotrasen."
@@ -1624,6 +1625,16 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/crate
 	containername = "Magnet Kit"
 #endif
+
+/datum/supply_packs/complex/mining_rockbox
+	name = "Rockbox™ Storage Container (Cardlocked \[Chief Engineer])"
+	desc = "1x Rockbox™ Ore Cloud Storage Container"
+	category = "Engineering Department"
+	frames = list(/obj/machinery/ore_cloud_storage_container)
+	cost = PAY_EMBEZZLED
+	containertype = /obj/storage/secure/crate/plasma
+	containername = "Rockbox™ Storage Container (Cardlocked \[Chief Engineer])"
+	access = access_engineering_chief
 
 /datum/supply_packs/complex/manufacturer_kit
 	name = "Manufacturer Kit"

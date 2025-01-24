@@ -95,6 +95,51 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		logTheThing(LOG_ADMIN, usr, "created a poster[print_or_place == "Print" ? " at all printers" : null]")
 		message_admins("[key_name(usr)] created a poster[print_or_place == "Print" ? " at all printers" : null]")
 
+/proc/create_jailbird_wanted_poster(mob/living/carbon/human/H)
+	var/reason = "Previous criminal activity."
+	if (H.job == "Stowaway")
+		reason = "Unauthorized boarding of a Nanotrasen [station_or_ship()]."
+	else
+		var/datum/db_record/sec_record = data_core.security.find_record("id", H.datacore_id)
+		if (sec_record)
+			reason = "[sec_record["ma_crim"]] [sec_record["mi_crim"]]"
+	mass_print_wanted_poster(
+		uppertext(H.real_name),
+		H.build_flat_icon(),
+		"FROM CAMERA FOOTAGE",
+		"WANTED: ALIVE",
+		null, // no bounty
+		"<b>WANTED FOR:</b> [reason]",
+		"<center><i>NANOTRASEN AUTOMATED NOTICE</i></center>"
+	)
+
+/// Print a wanted poster to all station-level printers
+/proc/mass_print_wanted_poster(name, wanted_image, subtitle, dead_or_alive, bounty, wanted_for, notes)
+	for_by_tcl(P, /obj/machinery/networked/printer)
+		if (P.status & (NOPOWER|BROKEN))
+			continue
+		if (P.z != Z_LEVEL_STATION)
+			continue
+		flick("printer-printing",P)
+		playsound(P.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
+		SPAWN(3.2 SECONDS)
+			var/obj/item/poster/titled_photo/wp = new(get_turf(P))
+			if (name)
+				wp.line_title = name
+			if (wanted_image)
+				wp.poster_image = wanted_image
+			if (subtitle)
+				wp.line_photo_subtitle = subtitle
+			if (dead_or_alive)
+				wp.line_below_photo = dead_or_alive
+			if (bounty)
+				wp.line_b1 = bounty
+			if (wanted_for)
+				wp.line_b2 = wanted_for
+			if (notes)
+				wp.line_b3 = notes
+			wp.generate_poster()
+
 // admin wanted poster gen
 /proc/gen_wp(var/target)
 	if (!usr)
@@ -155,28 +200,15 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	var/print_or_place = alert(usr, "Print out at all printers or place on your tile?", "Selection", "Place", "Print")
 	if (alert(usr, "Confirm poster creation", "Confirmation", "OK", "Cancel") == "OK")
 		if (print_or_place == "Print")
-			for_by_tcl(P, /obj/machinery/networked/printer)
-				if (P.status & (NOPOWER|BROKEN))
-					continue
-				flick("printer-printing",P)
-				playsound(P.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
-				SPAWN(3.2 SECONDS)
-					var/obj/item/poster/titled_photo/wp = new(get_turf(P))
-					if (w_name)
-						wp.line_title = w_name
-					if (w_image)
-						wp.poster_image = w_image
-					if (w_sub)
-						wp.line_photo_subtitle = w_sub
-					if (doa)
-						wp.line_below_photo = doa
-					if (w_bounty)
-						wp.line_b1 = w_bounty
-					if (w_for)
-						wp.line_b2 = w_for
-					if (w_notes)
-						wp.line_b3 = w_notes
-					wp.generate_poster()
+			mass_print_wanted_poster(
+				w_name,
+				w_image,
+				w_sub,
+				doa,
+				w_bounty,
+				w_for,
+				w_notes
+			)
 		else
 			var/obj/item/poster/titled_photo/wp = new(get_turf(usr))
 			if (w_name)
@@ -423,25 +455,20 @@ TYPEINFO(/obj/submachine/poster_creator)
 			qdel(W)
 			return
 
-		else if (istype(W, /obj/item/paper_bin))
-			var/obj/item/paper_bin/B = W
-			var/n = B.amount
-			for (var/obj/item/paper/P in W)
-				n++
-			if (n <= 0)
-				boutput(user, SPAN_ALERT("\The [B] is empty!"))
+		else if (istype_exact(W, /obj/item/paper_bin)) // no artifact or robots pls
+			var/obj/item/paper_bin/bin = W
+			var/total_amount = bin.amount_left
+			for(var/obj/item/paper/P in bin)
+				total_amount += 1
+				qdel(P)
+			if (total_amount <= 0)
+				boutput(user, SPAN_ALERT("\The [bin] is empty!"))
 				return
-			user.visible_message("[user] loads [W] into [src].",\
-			"You load [W] into [src].")
-			src.papers += n
-			for (n, n>0, n--)
-				if (B.amount <= 0)
-					var/obj/item/paper/P = locate(/obj/item/paper) in B
-					if (P)
-						qdel(P)
-				else
-					B.amount --
-			B.update()
+			user.visible_message("[user] loads [bin] into [src].",\
+			"You load [total_amount] sheets from [bin] into [src].")
+			src.papers += total_amount
+			bin.amount_left -= bin.amount_left
+			bin.update()
 
 		else if (istype(W, /obj/item/photo))
 			var/obj/item/photo/P = W

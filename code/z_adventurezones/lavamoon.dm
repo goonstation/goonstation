@@ -988,6 +988,11 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				if (src.status == IOCORE_DEAD)
 					return
 
+				if (istype(get_area(src), /area/iomoon/robot_ruins/boss_chamber))
+					for (var/mob/living/L in range(6, src))
+						if (!isintangible(L))
+							L.unlock_medal("What's Buried Stays Buried", TRUE)
+
 				STOP_TRACKING_CAT(TR_CAT_CRITTERS)
 
 				src.status = IOCORE_DEAD
@@ -1042,10 +1047,10 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				playsound(src, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
 
 				var/list/lineObjs
-				lineObjs = DrawLine(src, zapMarker, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+				lineObjs = drawLineObj(src, zapMarker, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 				for (var/mob/living/poorSoul in range(zapMarker, 2))
-					lineObjs += DrawLine(zapMarker, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+					lineObjs += drawLineObj(zapMarker, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 					poorSoul.shock(src, 1250000, "chest", 0.15, 1)
 					if (isdead(poorSoul) && prob(25))

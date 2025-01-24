@@ -132,10 +132,10 @@ proc/Create_Tommyname()
 		if(src.bioHolder.mobAppearance)
 			var/datum/appearanceHolder/AH = src.bioHolder.mobAppearance
 			AH.gender = "male"
-			AH.customization_first = new /datum/customization_style/hair/long/dreads
-			AH.customization_first_color = "#101010"
-			AH.customization_second = new /datum/customization_style/none
-			AH.customization_third = new /datum/customization_style/none
+			AH.customizations["hair_bottom"].style =  new /datum/customization_style/hair/long/dreads
+			AH.customizations["hair_bottom"].color = "#101010"
+			AH.customizations["hair_middle"].style =  new /datum/customization_style/none
+			AH.customizations["hair_top"].style =  new /datum/customization_style/none
 			AH.s_tone = "#FAD7D0"
 			src.bioHolder.AddEffect("accent_tommy")
 
@@ -598,7 +598,7 @@ proc/Create_Tommyname()
 
 	//Create the initial padding
 	DEBUG_MESSAGE("Creating stationside padding.")
-	var/list/catwalk = list(/turf/simulated/floor/airless/plating/catwalk, /obj/grille/catwalk)
+	var/list/catwalk = list(/turf/simulated/floor/airless/plating/catwalk, /obj/mesh/catwalk)
 	for(var/i = 0; i < station_padding;i++)
 		move_create_obj(catwalk, walker, extension_dir, extension_dir) //Then we walk outwards, creating stuff as we go along
 		walker = get_step(walker,extension_dir)

@@ -81,6 +81,10 @@
 	src.try_cuff(target, user)
 
 /obj/item/handcuffs/proc/try_cuff(mob/M, mob/user, instant = FALSE)
+	if(HAS_ATOM_PROPERTY(user, PROP_MOB_PRE_POSSESSION) && M == user)
+		boutput(user, SPAN_ALERT("A mysterious force grips your limbs, flinging [src] away!"))
+		user.drop_item_throw(src)
+
 	if (user?.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 		boutput(user, SPAN_ALERT("Uh ... how do those things work?!"))
 		if (ishuman(user))

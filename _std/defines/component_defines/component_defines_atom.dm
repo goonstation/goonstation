@@ -60,6 +60,11 @@
 /// When an atom requires to create a single minimap marker for a specific minimap.
 #define COMSIG_NEW_MINIMAP_MARKER "new_minimap_marker"
 
+// ---- machinery ----
+
+/// When this piece of machinery calls its process function
+#define COMSIG_MACHINERY_PROCESS "machinery_process"
+
 // ---- atom/movable signals ----
 
 	// ---- generic ----
@@ -67,7 +72,7 @@
 	/// when an AM moves on the map (thing, previous_loc, direction)
 	#define COMSIG_MOVABLE_MOVED "mov_moved"
 	/// when a movable is about to move, return true to prevent (thing, new_loc, direction)
-	#define COMSIG_MOVABLE_BLOCK_MOVE "mov_block_moved"
+	#define COMSIG_MOVABLE_PRE_MOVE "mov_pre_move"
 	/// when an AM changes its loc (thing, previous_loc)
 	#define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
 	/// when an AM ends throw (thing, /datum/thrown_thing)

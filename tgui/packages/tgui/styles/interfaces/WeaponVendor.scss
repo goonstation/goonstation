@@ -1,5 +1,6 @@
-@use '../colors.scss';
-@use '../components/Button.scss';
+@use '../colors';
+@use '../functions' as *;
+@use '../components/Button';
 
 $categories: (
   'sidearm': colors.$teal,
@@ -12,7 +13,7 @@ $categories: (
 
 .WeaponVendor {
   @each $category, $color in $categories {
-    .Button--color--#{$category} {
+    .Button__#{$category} {
       @include Button.button-color($color);
     }
   }
@@ -23,6 +24,12 @@ $categories: (
     @at-root &--#{$category} {
       color: $color;
     }
+  }
+  .WeaponVendor__Category--#{$category} {
+    $luminance: luminance($color);
+    $text-color: if($luminance > 0.4, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
+    background-color: $color;
+    color: $text-color;
   }
 }
 

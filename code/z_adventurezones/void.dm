@@ -45,6 +45,15 @@ CONTENTS:
 	area_parallax_render_source_group = null
 	teleport_blocked = 2
 
+/area/crunch/art_labyrinth
+	name = "unknown pocket dimension"
+	icon_state = ""
+	filler_turf = null
+	teleport_blocked = 2
+	allowed_restricted_z = TRUE
+	ambient_light = null
+	area_parallax_render_source_group = null
+
 TYPEINFO(/turf/unsimulated/wall/void)
 	mat_appearances_to_ignore = list("steel")
 /turf/unsimulated/wall/void
@@ -73,6 +82,40 @@ TYPEINFO(/turf/unsimulated/floor/void)
 	plane = PLANE_SPACE
 	can_burn = FALSE
 	can_break = FALSE
+
+
+TYPEINFO(/turf/unsimulated/floor/auto/void)
+	mat_appearances_to_ignore = list("steel")
+
+/turf/unsimulated/floor/auto/void
+	name = "void"
+	icon = 'icons/obj/adventurezones/void.dmi'
+	icon_state = "void"
+	desc = "A strange shifting void ..."
+	plane = PLANE_SPACE
+	can_burn = FALSE
+	can_break = FALSE
+	edge_priority_level = INFINITY
+	icon_state_edge = "void_edge"
+
+	edge_overlays()
+		if(src.icon_state_edge)
+			var/connectdir = get_connected_directions_bitflag(list(src.type=TRUE), list(), TRUE, FALSE)
+			for (var/direction in alldirs)
+				var/turf/T = get_step(src, turn(direction, 180))
+				if(T)
+					if (istype(T, /turf/unsimulated/floor/auto))
+						var/turf/unsimulated/floor/auto/TA = T
+						if (TA.edge_priority_level >= src.edge_priority_level)
+							T.ClearSpecificOverlays("edge_[direction]") // Cull overlaps
+							continue
+					if(turn(direction, 180) & connectdir)
+						T.ClearSpecificOverlays("edge_[direction]") // Cull diagonals
+						continue
+					T.add_filter("edge_[direction]", 0, alpha_mask_filter(icon=icon(src.icon, "[icon_state_edge][direction]", dir=pick(cardinal)), flags = MASK_INVERSE))
+
+
+
 
 /turf/unsimulated/floor/void/crunch
 	fullbright = 0

@@ -72,7 +72,7 @@ TYPEINFO(/datum/component/glue_ready)
 		if(user)
 			boutput(user, SPAN_ALERT("[thing_glued] slids off the smooth window without adhering to it."))
 		return FALSE
-	if(istype(glued_to, /obj/machinery/door) || istype(glued_to, /obj/grille))
+	if(istype(glued_to, /obj/machinery/door) || istype(glued_to, /obj/mesh/grille))
 		return FALSE
 	if(istype(glued_to, /mob/dead) || istype(glued_to, /mob/living/intangible) )
 		if(user)

@@ -1394,6 +1394,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_color = "#A76933"
 	heal_amt = 1
 
+/obj/item/reagent_containers/food/snacks/mushroom/psilocybin/spawnable
+	initial_reagents = list("psilocybin" = 40)
+
 /obj/item/reagent_containers/food/snacks/mushroom/cloak
 	name = "space mushroom"
 	desc = "A mushroom cap of Space Fungus. It doesn't smell of anything."
@@ -2450,6 +2453,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
 	icon_state = "onigiri"
 
+/obj/item/reagent_containers/food/snacks/sushi_slice
+	name = "sushi roll"
+	desc = "A roll of seaweed, sticky rice, and freshly caught fish of unknown origin."
+	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
+	icon_state = "sushi_rolls"
+	bites_left = 1
+
 /obj/item/reagent_containers/food/snacks/sushi_roll
 	name = "sushi roll"
 	desc = "A roll of seaweed, sticky rice, and freshly caught fish of unknown origin."
@@ -2459,89 +2469,44 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 4
 	heal_amt = 2
 	food_effects = list("food_hp_up_big")
-	var/cut = 0
-
-	attackby(obj/item/W, mob/user)
-		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
-			if (src.cut == 1)
-				boutput(user, SPAN_ALERT("This has already been cut."))
-				return
-			boutput(user, SPAN_NOTICE("You cut the sushi roll into pieces."))
-			var/makepieces = src.bites_left
-			while (makepieces > 0)
-				var/obj/item/reagent_containers/food/snacks/sushi_roll/S = new src.type(get_turf(src))
-				S.cut = 1
-				S.bites_left = 1
-				S.icon_state = "sushi_rolls"
-				S.quality = src.quality
-				src.reagents.trans_to(S, src.reagents.total_volume/makepieces)
-				S.pixel_x = rand(-6, 6)
-				S.pixel_y = rand(-6, 6)
-				makepieces--
-			qdel (src)
+	slice_product = /obj/item/reagent_containers/food/snacks/sushi_slice
+	sliceable = TRUE
+	slice_amount = 4
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (!src.cut)
-			if (user == target)
-				boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
-				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
-				return
-			else
-				user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
-				return
+		if (user == target)
+			boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
 		else
-			..()
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
+			return
 
 	attack_self(mob/user as mob)
 		attack(user, user)
+
+/obj/item/reagent_containers/food/snacks/sushi_slice/custom
+	icon_state = "chopped_sushiroll"
 
 /obj/item/reagent_containers/food/snacks/sushi_roll/custom
 	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
 	icon_state = "sushiroll"
 	food_color = "#5E6351"
+	slice_product = /obj/item/reagent_containers/food/snacks/sushi_slice/custom
 
-	attackby(obj/item/W, mob/user)
-		if(istool(W, TOOL_CUTTING | TOOL_SAWING))
-			if(src.cut == 1)
-				boutput(user, SPAN_ALERT("This has already been cut."))
-				return
-			if(istype(src.loc,/mob))
-				user.u_equip(src)
-				src.set_loc(user)
-			boutput(user, SPAN_NOTICE("You cut the sushi roll into pieces."))
-			var/makepieces = src.bites_left
-			var/spawnloc = get_turf(src)
-			while (makepieces > 0)
-				var/obj/item/reagent_containers/food/snacks/sushi_roll/S = new src.type//src.type(get_turf(src))
-				S.cut = 1
-				S.bites_left = 1
-				S.icon_state = "chopped_sushiroll"
-				S.quality = src.quality
-				src.reagents.trans_to(S, src.reagents.total_volume/makepieces)
-				S.pixel_x = rand(-6, 6)
-				S.pixel_y = rand(-6, 6)
-				for(var/i=1,i<=src.overlays.len,i++) //transferring any overlays to the cut form
-					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
-					var/image/overlay = new /image('icons/obj/foodNdrink/food_sushi.dmi',"chopped_[src.overlay_refs[i]]")
-					overlay.color = buffer.color
-					S.UpdateOverlays(overlay,"[src.overlay_refs[i]]")
-				for(var/b=1,b<=src.food_effects.len,b++)
-					if(src.food_effects[b] in S.food_effects)
-						continue
-					S.food_effects += src.food_effects[b]
-				S.set_loc(spawnloc)
-				makepieces--
-			qdel(src)
-		else if(istype(W,/obj/item/kitchen/utensil/fork))
-			src.Eat(user,user)
-		else
-			..()
+	process_sliced_products(var/obj/item/reagent_containers/food/slice, var/amount_to_transfer)
+		. = ..()
+		for(var/i=1,i<=src.overlays.len,i++) //transferring any overlays to the cut form
+			var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
+			var/image/overlay = new /image('icons/obj/foodNdrink/food_sushi.dmi',"chopped_[src.overlay_refs[i]]")
+			overlay.color = buffer.color
+			slice.UpdateOverlays(overlay,"[src.overlay_refs[i]]")
 
 /obj/item/reagent_containers/food/snacks/nigiri_roll
 	name = "nigiri roll"
 	desc = "A ball of sticky rice with a slice of freshly caught fish on top."
 	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
-	icon_state = "nigiri"
+	icon_state = "nigiri1"
 	bites_left = 2
 	heal_amt = 2
 	food_effects = list("food_energized_big")

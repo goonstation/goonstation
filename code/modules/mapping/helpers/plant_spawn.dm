@@ -26,7 +26,7 @@
 	component.P.density = src.plant_density
 	component.P.growth = seed.planttype.harvtime //set it to just matured
 	SPAWN(1) //look someone else did SPAWN(0) elsewhere in the chain and I just need this to work
-		component.P.process()
+		component.P.ProcessMachine()
 
 /obj/mapping_helper/plant/grass
 	plant_type = /datum/plant/herb/grass

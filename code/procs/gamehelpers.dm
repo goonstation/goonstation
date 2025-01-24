@@ -115,6 +115,10 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 	ENSURE_TYPE(mobuser)
 	if(mobuser?.client?.holder?.ghost_interaction)
 		return TRUE
+	if(istype(source, /mob))
+		var/mob/target = source
+		if (target.next_move > world.time && IN_RANGE(target.prev_loc, user, 1))
+			return TRUE
 	if(BOUNDS_DIST(source, user) == 0 || (IN_RANGE(source, user, 1))) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
 		return TRUE
 	else if (source in bible_contents)
@@ -162,6 +166,9 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 			if(BOUNDS_DIST(T.vistarget, user) == 0 || BOUNDS_DIST(T.vistarget, user) == 0)
 				return TRUE
 
+		for (var/turf/reachable as anything in T.reachable_turfs)
+			if (user in reachable)
+				return TRUE
 
 /proc/test_click(turf/from, turf/target, actually_test_entering=FALSE)
 	var/obj/item/dummy/click_dummy = get_singleton(/obj/item/dummy)
@@ -292,7 +299,7 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 	for_by_tcl(M, /mob/dead/target_observer)
 		if(!M.client)
 			continue
-		if(M.target in . || M.target == center)
+		if((M.target in .) || (M.target == center))
 			. += M
 
 /proc/AIviewers(Depth=world.view,Center=usr)

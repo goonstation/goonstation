@@ -119,7 +119,7 @@ toxic - poisons
 	max_range = 30
 	projectile_speed = 20
 	sname = "assault laser"
-	shot_sound = 'sound/weapons/Laser.ogg'
+	shot_sound = 'sound/weapons/asslaser.ogg'
 	color_red = 0
 	color_green = 0
 	color_blue = 1
@@ -765,9 +765,10 @@ toxic - poisons
 	shot_sound = 'sound/weapons/laser_a.ogg'
 	icon_state = "lasergat_laser"
 	shot_volume = 50
+	dissipation_rate = 2
 	name = "single"
 	sname = "single"
-	damage = 14
+	damage = 10
 
 /datum/projectile/laser/lasergat/burst
 	name = "burst laser"

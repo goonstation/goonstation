@@ -42,6 +42,7 @@
 	var/in_use = 0
 	var/suiciding = 0
 	var/deadly = 0
+	var/buckled_guy // a a aaaaaaa aa aaaaaaaa
 
 	attackby(obj/item/W, mob/user)
 		return src.Attackhand(user)
@@ -110,6 +111,13 @@
 			user.pixel_y = 0
 			user.pixel_x = 0
 			playsound(user, 'sound/impact_sounds/Liquid_Hit_Big_1.ogg', 60, TRUE)
+			if (istype(user, /mob/living/silicon/ai))
+				src.visible_message(SPAN_ALERT("[user.name]'s bulky frame slams straight into the ground!"))
+				user.emote("scream")
+				playsound(user, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, TRUE)
+				user.TakeDamage(brute=10)
+				for (var/mob/M in viewers(user))
+					shake_camera(M, 4, 16)
 			in_use = 0
 			suiciding = 0
 			user.transforming = 0

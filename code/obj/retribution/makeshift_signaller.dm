@@ -14,7 +14,7 @@ TYPEINFO(/obj/item/makeshift_signaller_frame)
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	var/build_stage = 0
 	desc = "A disemboweled remote signaller, ready for further modifications."
 	stamina_damage = 0

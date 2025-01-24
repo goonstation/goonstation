@@ -50,6 +50,11 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabSizeX = 5
 	prefabSizeY = 5
 
+/datum/mapPrefab/allocated/artifact_fissure
+	prefabPath = "assets/maps/allocated/artifact_fissure.dmm"
+	prefabSizeX = 29
+	prefabSizeY = 35
+
 /datum/mapPrefab/allocated/pirate_ship
 	prefabPath = "assets/maps/allocated/pirate_ship.dmm"
 	prefabSizeX = 33
@@ -59,3 +64,11 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabSizeX = 7
 	prefabSizeY = 7
 	prefabPath = "assets/maps/allocated/jar.dmm"
+
+/datum/mapPrefab/allocated/htr_team
+	prefabPath = "assets/maps/allocated/htr_team_ship.dmm"
+	prefabSizeX = 25
+	prefabSizeY = 25
+
+	purge
+		prefabPath = "assets/maps/allocated/htr_purge_ship.dmm"

@@ -97,6 +97,7 @@
 			W.icon = 'icons/misc/halloween.dmi'
 			W.icon_state = "flight[W:on]"
 			W.item_state = "lantern"
+			W.transform = src.transform
 			qdel(src)
 		else
 			..()

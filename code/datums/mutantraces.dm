@@ -23,12 +23,17 @@ TYPEINFO_NEW(/datum/mutantrace) ///Load all the clothing override icons, should 
 
 ABSTRACT_TYPE(/datum/mutantrace)
 /datum/mutantrace
-	var/name = null				// used for identification in diseases, clothing, etc
+	/// used for identification in diseases, clothing, etc
+	var/name = null
+
 	/// The mutation associted with the mutantrace. Saurian genetics for lizards, for instance
 	var/race_mutation = null
+
 	/// The mutant's own appearanceholder, modified to suit our target appearance
 	var/datum/appearanceHolder/AH
-	/// The mutant's original appearanceholder, from before they were a mutant, to restore their old appearance
+
+	// The mutant's original appearanceholder, from before they were a mutant, to restore their old appearance
+	// ^ ??????? AH.original?
 	var/override_eyes = 1
 	var/override_hair = 1
 	var/override_beard = 1
@@ -399,6 +404,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.set_clothing_icon_dirty()
 			src.mob = null
 
+		src.AH = null
 		..()
 
 	proc/AppearanceSetter(var/mob/living/carbon/human/H, var/mode as text)
@@ -406,9 +412,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			return // please dont call set_mutantrace on a non-human non-appearanceholder
 
 		AH.mob_appearance_flags = src.mutant_appearance_flags
-		AH.customization_first_offset_y = src.head_offset
-		AH.customization_second_offset_y = src.head_offset
-		AH.customization_third_offset_y = src.head_offset
+		AH.customizations["hair_bottom"].offset_y = src.head_offset
+		AH.customizations["hair_middle"].offset_y = src.head_offset
+		AH.customizations["hair_top"].offset_y = src.head_offset
 
 		var/typeinfo/datum/mutantrace/typeinfo = src.get_typeinfo()
 		if(typeinfo.special_styles)
@@ -452,17 +458,17 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		AH.mob_arm_offset = src.arm_offset
 
 		if (src.mutant_appearance_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
-			AH.customization_first_color = fix_colors(AH.customization_first_color)
-			AH.customization_second_color = fix_colors(AH.customization_second_color)
-			AH.customization_third_color = fix_colors(AH.customization_third_color)
+			AH.customizations["hair_bottom"].color = fix_colors(AH.customizations["hair_bottom"].color)
+			AH.customizations["hair_middle"].color = fix_colors(AH.customizations["hair_middle"].color)
+			AH.customizations["hair_top"].color = fix_colors(AH.customizations["hair_top"].color)
 
 		AH.s_tone_original = AH.s_tone
 		if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_1)
-			AH.s_tone = AH.customization_first_color
+			AH.s_tone = AH.customizations["hair_bottom"].color
 		else if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_2)
-			AH.s_tone = AH.customization_second_color
+			AH.s_tone = AH.customizations["hair_middle"].color
 		else if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_3)
-			AH.s_tone = AH.customization_third_color
+			AH.s_tone = AH.customizations["hair_top"].color
 		else
 			AH.s_tone = AH.s_tone_original
 
@@ -602,7 +608,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			return
 		var/datum/bioEffect/mutantrace/mr = src.race_mutation
 		if(!H.bioHolder.HasEffect(initial(mr.id)))
-			H.bioHolder.AddEffect(initial(mr.id), 0, 0, 0, 1)
+			H.bioHolder.AddEffect(initial(mr.id), 0, 0, 0, 1, scannable=TRUE)
 
 	/// Copies over female variants of mutant heads and organs
 	proc/MakeMutantDimorphic(var/mob/living/carbon/human/H)
@@ -963,7 +969,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 			SPAWN(rand(4, 30))
 				M.emote("scream")
 			M.mind.add_antagonist(ROLE_ZOMBIE, "Yes", "Yes", ANTAGONIST_SOURCE_MUTANT, FALSE)
-			M.show_antag_popup("zombie")
+			M.show_antag_popup(ROLE_ZOMBIE)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("strong")
@@ -1746,7 +1752,7 @@ TYPEINFO(/datum/mutantrace/premature_clone)
 	human_compatible = 1
 	uses_human_clothes = 1
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
-	dna_mutagen_banned = FALSE
+	dna_mutagen_banned = TRUE
 
 
 	on_attach()
@@ -2181,6 +2187,8 @@ TYPEINFO(/datum/mutantrace/cow)
 	var/obj/effect/rt/cow_backpack_mask/mask_backpack = new
 
 	on_attach(var/mob/living/carbon/human/H)
+		if(prob(0.1))
+			src.blood_id = pick("chocolate_milk", "strawberry_milk", "super_milk", "banana_milk", "blue_milk")
 		..()
 		if(ishuman(src.mob))
 			src.mob.update_face()

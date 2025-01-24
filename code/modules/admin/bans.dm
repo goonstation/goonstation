@@ -294,16 +294,16 @@
 	var/mob/M
 	if (target && ismob(target)) M = target
 
-	var/ckey = ckey(tgui_input_text(src.mob, "Ckey of the player", "Ckey", M ? M.ckey : ""))
+	var/ckey = ckey(input(src.mob, "Ckey of the player", "Ckey", M ? M.ckey : "") as text)
 	if (!ckey) return
 
 	var/datum/player/player = find_player(ckey)
 	var/client/targetC = player?.client
 
 	var/defaultIp = targetC ? targetC.address : (M ? M.lastKnownIP : "")
-	var/ip = tgui_input_text(src.mob, "IP of the player", "IP", defaultIp, null, FALSE, null, TRUE)
+	var/ip = input(src.mob, "IP of the player", "IP", defaultIp) as text
 	var/defaultCompId = targetC ? targetC.computer_id : (M ? M.computer_id : "")
-	var/compId = tgui_input_text(src.mob, "Computer ID of the player", "Computer ID", defaultCompId, null, FALSE, null, TRUE)
+	var/compId = input(src.mob, "Computer ID of the player", "Computer ID", defaultCompId) as text
 
 	var/datum/game_server/game_server = global.game_servers.input_server(src.mob, "What server does the ban apply to?", "Ban", can_pick_all=TRUE)
 	if(isnull(game_server))

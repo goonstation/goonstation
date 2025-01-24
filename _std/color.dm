@@ -12,6 +12,8 @@
 
 #define rgb2hsl(r, g, b) rgb2num(rgb(r, g, b), COLORSPACE_HSL)
 
+#define hex_to_hsl_list(hex) rgb2num(hex, COLORSPACE_HSL)
+
 #define rgb2hsv(r, g, b) rgb2num(rgb(r, g, b), COLORSPACE_HSV)
 
 #define hex_to_rgb_list(hex) rgb2num(hex)
@@ -55,6 +57,29 @@
 																		 0.00, 0.48, 0.53, 0.00,\
 																		 0.00, 0.00, 0.00, 1.00,\
 																		 0.00, 0.00, 0.00, 0.00)
+
+// note: for colorblind accessibility matrices, these are arbitrary values that were found to work well per https://github.com/ParadiseSS13/Paradise/pull/17933
+#define COLOR_MATRIX_PROTANOPIA_ACCESSIBILITY \
+	list(1, 0.475, 0.594, 0, \
+		0, 0.482, -0.68, 0,\
+		0, 0.044, 1.087, 0,\
+		0, 0, 0, 1,\
+		0, 0, 0, 0)
+
+#define COLOR_MATRIX_DEUTERANOPIA_ACCESSIBILITY \
+	list(1.8, 0, -0.14, 0,\
+		-1.05, 1, 0.1, 0,\
+		0.3, 0, 1, 0,\
+		0, 0, 0, 1,\
+		0, 0, 0, 0)
+
+#define COLOR_MATRIX_TRITANOPIA_ACCESSIBILITY \
+	list(0.74, 0.07, 0, 0,\
+		-0.405, 0.593, 0, 0,\
+		0.665, 0.335, 1, 0,\
+		0, 0, 0, 1,\
+		0, 0, 0, 0)
+
 #define COLOR_MATRIX_FLOCKMIND_LABEL "flockmind"
 #define COLOR_MATRIX_FLOCKMIND list(1.00, 0.00, 0.00, 0.00,\
 																		0.00, 1.00, 0.00, 0.00,\
@@ -79,6 +104,13 @@
 																		0.0722,0.0722,0.0722,0.00,\
 																		0.00,  0.00,  0.00,  1.00,\
 																		0.00,  0.00,  0.00,  0.00)
+
+#define COLOR_MATRIX_SHADE_LABEL "shade"
+#define COLOR_MATRIX_SHADE list(0.4,0,0,0,\
+								0,0.4,0,0,\
+								0,0,0.4,0,\
+								0,0,0,1,\
+								0,0,0,0)
 
 /// Takes two 20-length lists, turns them into 5x4 matrices, multiplies them together, and returns a 20-length list
 /proc/mult_color_matrix(var/list/Mat1, var/list/Mat2) // always 5x4 please
@@ -416,16 +448,16 @@ proc/get_average_color(icon/I, xPixelInterval = 4, yPixelInterval = 4)
 
 /client/proc/set_saturation(s=1)
 	src.saturation_matrix = hsv_transform_color_matrix(0, s, 1)
-	src.color = mult_color_matrix(src.color_matrix, src.saturation_matrix)
+	src.color = mult_color_matrix(mult_color_matrix(src.color_matrix, src.saturation_matrix), src.colorblind_matrix)
 
 /client/proc/set_color(matrix=COLOR_MATRIX_IDENTITY, respect_view_tint_settings = FALSE)
 	if (!respect_view_tint_settings)
 		src.color_matrix = matrix
 	else
 		src.color_matrix = src.view_tint ? matrix : null
-	src.color = mult_color_matrix(src.color_matrix, src.saturation_matrix)
+	src.color = mult_color_matrix(mult_color_matrix(src.color_matrix, src.saturation_matrix), src.colorblind_matrix)
 
 /client/proc/animate_color(matrix=COLOR_MATRIX_IDENTITY, time=5, easing=SINE_EASING)
 	src.color_matrix = matrix
-	matrix = mult_color_matrix(src.color_matrix, src.saturation_matrix)
+	matrix = mult_color_matrix(mult_color_matrix(src.color_matrix, src.saturation_matrix), src.colorblind_matrix)
 	animate(src, color=matrix, time=time, easing=easing)

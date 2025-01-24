@@ -5,12 +5,12 @@
  * Changes: Mordent (FA6)
  */
 
-@use '../base.scss';
-@use '../colors.scss';
-@use '../functions.scss' as *;
+@use '../base';
+@use '../colors';
+@use '../functions' as *;
 
 $color-default: colors.bg(colors.$primary) !default;
-$color-disabled: #999999 !default;
+$color-disabled: hsl(0, 0%, 60%) !default;
 $color-selected: colors.bg(colors.$green) !default;
 $color-caution: colors.bg(colors.$yellow) !default;
 $color-danger: colors.bg(colors.$red) !default;
@@ -21,30 +21,23 @@ $bg-map: colors.$bg-map !default;
 @mixin button-color($color) {
   // Adapt text color to background luminance to ensure high contast
   $luminance: luminance($color);
-  $text-color: if($luminance > 0.4,
-    rgba(0, 0, 0, 1),
-    rgba(255, 255, 255, 1));
+  $text-color: if($luminance > 0.4, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
 
-  transition: color 50ms, background-color 50ms;
+  transition:
+    color 50ms,
+    background-color 50ms;
   background-color: $color;
   color: $text-color;
 
+  &:focus {
+    transition:
+      color 100ms,
+      background-color 100ms;
+  }
+
   &:hover {
-    transition: color 0ms, background-color 0ms;
-  }
-
-  &:focus {
-    transition: color 100ms, background-color 100ms;
-  }
-
-  &:hover,
-  &:focus {
     background-color: lighten($color, 30%);
     color: $text-color;
-  }
-
-  &:active {
-    background-color: lighten($color, 60%);
   }
 }
 
@@ -67,7 +60,10 @@ $bg-map: colors.$bg-map !default;
     margin-bottom: 0;
   }
 
-  .fa, .fa-solid, .fa-regular {
+  .fa,
+  .fa-solid, // |GOONSTATION-CHANGE|
+  .fa-regular // |GOONSTATION-CHANGE|
+  {
     margin-left: 0; // ZeWaka: Changed from -0.25em due to FA6 offset
     margin-right: 0; // Mordent: Changed from -0.25em due to FA6 offset
     min-width: 1.333em;
@@ -75,26 +71,40 @@ $bg-map: colors.$bg-map !default;
   }
 }
 
+.Button--dropdown {
+  line-height: base.em(16px);
+  height: base.em(22px);
+  padding: 0.2rem 0.5rem;
+}
+
 .Button--hasContent {
   // Add a margin to the icon to keep it separate from the text
-  .fa, .fa-solid, .fa-regular {
+  .fa,
+  .fa-solid, // |GOONSTATION-CHANGE|
+  .fa-regular // |GOONSTATION-CHANGE|
+  {
     margin-right: 0.25em;
   }
 }
 
 .Button--hasContent.Button--iconPosition--right {
-  .fa, .fas, .far {
+  .fa,
+  .fa-solid, // |GOONSTATION-CHANGE|
+  .fa-regular // |GOONSTATION-CHANGE|
+  {
     margin-right: 0px;
     margin-left: 3px;
   }
 }
 
 .Button--ellipsis {
-  overflow: hidden;
+  display: block;
   text-overflow: ellipsis;
+  overflow: hidden;
 }
 
-//ellipsis has to be on the children, it can't work otherwise.
+// |GOONSTATION-ADD|
+// ellipsis has to be on the children, it can't work otherwise.
 .Button--ellipsis .Button__content {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -171,4 +181,8 @@ $bg-map: colors.$bg-map !default;
 .Button__content {
   display: block;
   align-self: stretch;
+}
+
+.Button__textMargin {
+  margin-left: 0.4rem;
 }

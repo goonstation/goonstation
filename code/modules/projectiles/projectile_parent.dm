@@ -16,6 +16,7 @@
 	anchored = ANCHORED
 	animate_movement = FALSE
 	event_handler_flags = IMMUNE_TRENCH_WARP
+	pass_unstable = FALSE
 
 	/// Projectile data; almost all specific projectile information and functionality lives here
 	var/datum/projectile/proj_data = null
@@ -60,24 +61,29 @@
 	/// For disabling collision when a projectile has died but hasn't been disposed yet, e.g. under on_end effects
 	var/has_died = FALSE
 
-	// ----------------- BADLY DOCUMENTED VARS WHICH ARE NONETHELESS (PROBABLY) USEFUL, OR VARS THAT MAY BE UNNECESSARY BUT THAT IS UNCLEAR --------------------
 
-	/// TODO dunno what these are. guessing 'original x' and 'original y' but all the code involving them is mathy and i don't have the patience rn
-	/// Fill in if u know ty
+	/// x component of the projectile's direction vector. EAST is positive, WEST is negative.
 	var/xo
+	/// y component of the projectile's direction vector. NORTH is positive, SOUTH is negative.
 	var/yo
 
-	/// What the fuck is this comment your shit jesus christ ????? TODO
+	/// Offset within a tile, separate to pixel_x/y due to animation things probably?
 	var/wx = 0
 	var/wy = 0
+
+	/// The list of precalculated turfs this projectile will try to cross, along with the tick count(?) when each turf should be crossed.
+	/// The structure of this list is pure Byond demon magic: it's an indexed list of key-value pairs that can be accessed like:
+	/// `var/turf/T = crossed[i]` OR `var/value = crossed[T]` where `T` is a turf in the list and `value` is the aforesaid tick count.
+	/// a thousand year curse on whoever thought this was a good idea, and Lummox for enabling them.
+	var/list/crossing = list()
+	/// For precalculated projectiles, how far along the `crossing` list have we reached
+	var/curr_t = 0
+
+	// ----------------- BADLY DOCUMENTED VARS WHICH ARE NONETHELESS (PROBABLY) USEFUL, OR VARS THAT MAY BE UNNECESSARY BUT THAT IS UNCLEAR --------------------
 
 	/// Reflection normal on the current tile (NORTH if projectile came from the north, etc.)
 	/// TODO can maybe be replaced with a single dir check when relevant? not 100% sure why we need to track this always. Might be crucial, dunno
 	var/incidence = 0
-	/// No clue. Assoc list seems like? Also accessed as a non-assoc list sometimes. fuck. TODO
-	var/list/crossing = list()
-	/// No clue. Related to curr_t. TODO
-	var/curr_t = 0
 
 	/// One of the two below vars needs to be renamed or removed. Fucking confusing
 
@@ -92,9 +98,6 @@
 	var/is_processing = FALSE //MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
 
 	var/internal_speed = null // experimental    THANKS VERY INFORMATIVE   TODO: ask yass how this works
-
-	// TODO axe this var, only used for witch gimmick abilities which can be reworked
-	var/target = null
 
 	/// Arbitrary projectile data. Currently only used to hold an object that a projectile is seeking for a singular type. TODO remove
 	var/data = 0
@@ -119,7 +122,6 @@
 		proj_data = null
 		targets = null
 		hitlist = null
-		target = null
 		shooter = null
 		data = null
 		mob_shooter = null
@@ -137,11 +139,12 @@
 	proc/setDirection(x,y, do_turn = 1, angle_override = 0)
 		xo = x
 		yo = y
+		var/matrix/scale_matrix = matrix(src.proj_data.scale, src.proj_data.scale, MATRIX_SCALE)
 		if (do_turn)
 			//src.transform = null
-			src.transform = turn(matrix(),(angle_override ? angle_override : arctan(y,x)))
+			src.transform = turn(scale_matrix,(angle_override ? angle_override : arctan(y,x)))
 		else if (angle_override)
-			src.transform = null
+			src.transform = scale_matrix
 			facing_dir = angle2dir(angle_override)
 
 	proc/launch(do_delay = FALSE)
@@ -160,7 +163,6 @@
 			hitlist.len = 0
 		is_processing = 1
 		while (!QDELETED(src))
-
 			do_step()
 			sleep(1 DECI SECOND) //Changed from 1, minor proj. speed buff
 		is_processing = 0
@@ -189,6 +191,9 @@
 		var/immunity = check_target_immunity(A, source = src)
 		if (immunity)
 			log_shot(src, A, 1)
+			var/turf/sanctuary_check = get_turf(A)
+			if (sanctuary_check.is_sanctuary())
+				die()
 			A.visible_message(SPAN_ALERT("<b>The projectile narrowly misses [A]!</b>"))
 			//A.visible_message(SPAN_ALERT("<b>The projectile thuds into [A] uselessly!</b>"))
 			//die()
@@ -268,15 +273,11 @@
 		else
 			die()
 
-
 	proc/die()
 		has_died = TRUE
 		if (proj_data)
 			proj_data.on_end(src)
 		qdel(src)
-
-	proc/max_range_fail()
-
 
 	proc/set_icon()
 		if(istype(proj_data))
@@ -315,6 +316,8 @@
 
 		src.xo = src.xo / len
 		src.yo = src.yo / len
+
+		//recalculate the angle from the vector components, taking into account edge case trig weirdness
 		if (src.yo == 0)
 			if (src.xo < 0)
 				src.angle = -90
@@ -331,44 +334,46 @@
 			var/anglecheck = arcsin(src.xo / r)
 			if (anglecheck < 0)
 				src.angle = -src.angle
-		transform = null
+
+		transform = matrix(src.proj_data.scale, src.proj_data.scale, MATRIX_SCALE)
 		Turn(angle)
 		if (!proj_data.precalculated)
-			src.was_setup = 1
+			src.was_setup = TRUE
 			return
 		var/speed = internal_speed || proj_data.projectile_speed
 		var/x32 = 0
-		var/xs = 1
+		var/x_sign = 1
 		var/y32 = 0
-		var/ys = 1
+		var/y_sign = 1 //y sign?
 		if (xo)
 			x32 = 32 / (speed * xo)
 			if (x32 < 0)
-				xs = -1
+				x_sign = -1
 				x32 = -x32
 		if (yo)
 			y32 = 32 / (speed * yo)
 			if (y32 < 0)
-				ys = -1
+				y_sign = -1
 				y32 = -y32
 		var/max_t = src.max_range * (32/speed)
-		var/next_x = x32 * (16-wx*xs)/32
-		var/next_y = y32 * (16-wy*ys)/32
+		var/next_x = x32 * (16-wx*x_sign)/32
+		var/next_y = y32 * (16-wy*y_sign)/32
 		var/ct = 0
 		var/turf/T = get_turf(src)
 		var/cx = T.x
 		var/cy = T.y
+		//precalculate all the turfs this projectile will cross if able
 		while (ct < max_t)
 			if (next_x == 0 && next_y == 0)
 				break
 			if (next_x == 0 || (next_y != 0 && next_y < next_x))
 				ct = next_y
 				next_y = ct + y32
-				cy += ys
+				cy += y_sign
 			else
 				ct = next_x
 				next_x = ct + x32
-				cx += xs
+				cx += x_sign
 			var/turf/Q = locate(cx, cy, T.z)
 			if (!Q)
 				break
@@ -376,7 +381,7 @@
 			crossing[Q] = ct
 
 		curr_t = 0
-		src.was_setup = 1
+		src.was_setup = TRUE
 
 	ex_act(severity)
 		return
@@ -415,10 +420,11 @@
 		if (!loc || !orig_turf)
 			die()
 			return
-		src.ticks_until_can_hit_mob--
 		proj_data.tick(src)
-		if (QDELETED(src))
+		if(QDELETED(src))
 			return
+
+		src.ticks_until_can_hit_mob--
 
 		if(!was_setup) //if setup failed due to us having no speed or no direction, try to collide with something before dying
 			collide_with_applicable_in_tile(loc)
@@ -426,6 +432,7 @@
 			return
 
 		var/turf/curr_turf = loc
+		//delta wx, how far in pixels(?) the projectile should move this step
 		var/dwx
 		var/dwy
 		if (!isnull(internal_speed))
@@ -447,78 +454,86 @@
 
 		if (proj_data.precalculated)
 			var/incidence_turf = curr_turf
+			//now Move through the crossing turfs until we reach our current position in the list
 			for (var/i = 1, i < length(crossing), i++)
 				var/turf/T = crossing[i]
 				if (crossing[T] < curr_t)
 					Move(T)
-					if (QDELETED(src))
+					if (QDELETED(src)) //we hit something, stop
 						return
-					incidence = get_dir(incidence_turf, T)
+					src.incidence = get_dir(incidence_turf, T)
 					incidence_turf = T
 					crossing.Cut(1,2)
 					i--
 				else
 					break
 
-		wx += dwx
-		wy += dwy
-		if (!proj_data.precalculated)
-			var/trfx = round((wx + 16) / 32)
-			var/trfy = round((wy + 16) / 32)
-			if (orig_turf.x + trfx >= world.maxx-1 || orig_turf.x + trfx <= 1 || orig_turf.y + trfy >= world.maxy-1 || orig_turf.y + trfy <= 1 )
-				die()
-				return
-			var/turf/Dest = locate(orig_turf.x + trfx, orig_turf.y + trfy, orig_turf.z)
-			if (loc != Dest)
 
-				if (!goes_through_walls)
-					Move(Dest)
-				else
-					set_loc(Dest) //set loc so we can cross walls etc properly
-					collide_with_applicable_in_tile(Dest)
-				if (QDELETED(src))
+		if (proj_data.precalculated)
+			wx += dwx
+			wy += dwy
+		else
+			var/steps = ceil(((!isnull(src.internal_speed)) ? src.internal_speed : src.proj_data.projectile_speed) / 32)
+			for (var/i in 1 to steps)
+				wx += dwx / steps
+				wy += dwy / steps
+				var/turf_x = round((wx + 16) / 32)
+				var/turf_y = round((wy + 16) / 32)
+				//check if we're about to fly out of the world, projectiles don't cross z levels
+				if (orig_turf.x + turf_x >= world.maxx-1 || orig_turf.x + turf_x <= 1 || orig_turf.y + turf_y >= world.maxy-1 || orig_turf.y + turf_y <= 1 )
+					die()
+					return
+				var/turf/Dest = locate(orig_turf.x + turf_x, orig_turf.y + turf_y, orig_turf.z)
+				if (loc != Dest)
+
+					if (!goes_through_walls)
+						Move(Dest)
+					else
+						set_loc(Dest) //set loc so we can cross walls etc properly
+						collide_with_applicable_in_tile(Dest)
+					if (QDELETED(src))
+						return
+
+					incidence = get_dir(curr_turf, Dest)
+					if (!(incidence in cardinal))
+						var/txl = wx + 16 % 32
+						var/tyl = wy + 16 % 32
+						var/ext
+						if (xo)
+							ext = xo < 0 ? (32 - txl) / -xo : txl / xo
+						else
+							ext = txl
+						var/eyt
+						if (eyt)
+							eyt = yo < 0 ? (32 - tyl) / -yo : tyl / yo
+						else
+							eyt = tyl
+						if (ext < eyt)
+							incidence &= EAST | WEST
+						else
+							incidence &= NORTH | SOUTH
+
+				if (!loc && !QDELETED(src))
+					die()
 					return
 
-				incidence = get_dir(curr_turf, Dest)
-				if (!(incidence in cardinal))
-					var/txl = wx + 16 % 32
-					var/tyl = wy + 16 % 32
-					var/ext
-					if (xo)
-						ext = xo < 0 ? (32 - txl) / -xo : txl / xo
-					else
-						ext = txl
-					var/eyt
-					if (eyt)
-						eyt = yo < 0 ? (32 - tyl) / -yo : tyl / yo
-					else
-						eyt = tyl
-					if (ext < eyt)
-						incidence &= EAST | WEST
-					else
-						incidence &= NORTH | SOUTH
-
-			if (!loc && !QDELETED(src))
-				die()
-				return
 
 		set_dir(facing_dir)
 		incidence = turn(incidence, 180)
-
 		var/dx = loc.x - orig_turf.x
 		var/dy = loc.y - orig_turf.y
-		var/dpx = dx * 32
-		var/dpy = dy * 32
+		var/pixel_dx = dx * 32
+		var/pixel_dy = dy * 32
 
 		if (!dx && !dy) 	//smooth movement within a tile
-			animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW)
+			animate(src,pixel_x = wx-pixel_dx, pixel_y = wy-pixel_dy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW)
 		else
 			if ((loc.x - curr_turf.x))
 				pixel_x += 32 * -(loc.x - curr_turf.x)
 			if ((loc.y - curr_turf.y))
 				pixel_y += 32 * -(loc.y - curr_turf.y)
 
-			animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW) //todo figure out later
+			animate(src,pixel_x = wx-pixel_dx, pixel_y = wy-pixel_dy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW) //todo figure out later
 
 	track_blood()
 		src.tracked_blood = null
@@ -535,6 +550,7 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/icon_state = "bullet"	// A special note: the icon state, if not a point-symmetric sprite, should face NORTH by default.
 	var/x_offset = 0 //! absolute pixel offset of the projectile, set automatically based on the icon size
 	var/y_offset = 0
+	var/scale = 1
 	var/invisibility = INVIS_NONE
 	var/impact_image_state = null // what kinda overlay they puke onto non-mobs when they hit
 	var/brightness = 0
@@ -609,6 +625,7 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/hits_wraiths = 0
 	var/goes_through_walls = 0
 	var/goes_through_mobs = 0
+	var/smashes_glasses = TRUE
 	var/pierces = 0
 	var/ticks_between_mob_hits = 0
 	var/is_magical = 0              //magical projectiles, i.e. the chaplain is immune to these
@@ -925,14 +942,12 @@ ABSTRACT_TYPE(/datum/projectile)
  * So I made my own proc, but left the old one in place just in case -- Sovexe
  * var/reflect_on_nondense_hits - flag for handling hitting objects that let bullets pass through like secbots, rather than duplicating projectiles
  */
-/proc/shoot_reflected_bounce(var/obj/projectile/P, var/atom/reflector, var/max_reflects = 3, var/mode = PROJ_RAPID_HEADON_BOUNCE, var/reflect_on_nondense_hits = FALSE)
+/proc/shoot_reflected_bounce(var/obj/projectile/P, var/atom/reflector, var/max_reflects = 3, var/mode = PROJ_RAPID_HEADON_BOUNCE, var/reflect_on_nondense_hits = FALSE, var/play_shot_sound = TRUE, var/turf/fire_from = null)
 	if (!P || !reflector)
 		return
 
 	if(P.reflectcount >= max_reflects)
 		return
-
-	var/play_shot_sound = TRUE
 
 	switch (mode)
 		if (PROJ_NO_HEADON_BOUNCE) //no head-on bounce
@@ -984,8 +999,9 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/rx = 0
 	var/ry = 0
 
-	var/nx = P.incidence == WEST ? -1 : (P.incidence == EAST ?  1 : 0)
-	var/ny = P.incidence == SOUTH ? -1 : (P.incidence == NORTH ?  1 : 0)
+	//x and y components of the surface normal vector
+	var/nx = reflector.normal_x(P.incidence)
+	var/ny = reflector.normal_y(P.incidence)
 
 	var/dn = 2 * (P.xo * nx + P.yo * ny) // incident direction DOT normal * 2
 	rx = P.xo - dn * nx // r = d - 2 * (d * n) * n
@@ -996,7 +1012,7 @@ ABSTRACT_TYPE(/datum/projectile)
 		return // unknown error
 
 	//spawns the new projectile in the same location as the existing one, not inside the hit thing
-	var/obj/projectile/Q = initialize_projectile(get_turf(P), P.proj_data, rx, ry, reflector, play_shot_sound = play_shot_sound)
+	var/obj/projectile/Q = initialize_projectile(fire_from || get_turf(P), P.proj_data, rx, ry, reflector, play_shot_sound = play_shot_sound)
 	if (!Q)
 		return
 	Q.reflectcount = P.reflectcount + 1

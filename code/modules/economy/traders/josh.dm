@@ -11,24 +11,39 @@
 
 	business_card = /obj/item/paper/businesscard/josh
 
-	max_goods_buy = 3
-	max_goods_sell = 5
+	base_goods_buy = list(
+		TRADER_RARITY_COMMON = list(
+			/datum/commodity/trader/josh/syringes,
+			/datum/commodity/trader/josh/radios,
+			/datum/commodity/trader/josh/vrgoggles,
+			/datum/commodity/trader/josh/secbelts
+		),
+		TRADER_RARITY_UNCOMMON = list(),
+		TRADER_RARITY_RARE = list(
+			/datum/commodity/trader/josh/hosboots,
+			/datum/commodity/trader/josh/injectorbelt,
+			/datum/commodity/trader/josh/injectormask
+		)
+	)
 
-	base_goods_buy = list(/datum/commodity/trader/josh/syringes,
-	/datum/commodity/trader/josh/radios,
-	/datum/commodity/trader/josh/vrgoggles,
-	/datum/commodity/trader/josh/secbelts)
-
-	base_goods_sell = list(/datum/commodity/trader/josh/skateboards,
-	/datum/commodity/trader/josh/rocketshoes,
-	/datum/commodity/trader/josh/tacos,
-	/datum/commodity/trader/josh/fingerless,
-	/datum/commodity/trader/josh/energydrink,
-	/datum/commodity/trader/josh/hoodie,
-	/datum/commodity/trader/josh/flyswatter,
-	/datum/commodity/trader/josh/robustris,
-	/datum/commodity/trader/josh/foamgun,
-	/datum/commodity/trader/josh/paintgun,)
+	base_goods_sell = list(
+		TRADER_RARITY_COMMON = list(
+			/datum/commodity/trader/josh/skateboards,
+			/datum/commodity/trader/josh/tacos,
+			/datum/commodity/trader/josh/fingerless,
+			/datum/commodity/trader/josh/energydrink,
+			/datum/commodity/trader/josh/hoodie,
+			/datum/commodity/trader/josh/flyswatter,
+			/datum/commodity/trader/josh/robustris,
+		),
+		TRADER_RARITY_UNCOMMON = list(
+			/datum/commodity/trader/josh/foamgun,
+			/datum/commodity/trader/josh/paintgun,
+			/datum/commodity/trader/josh/spraypaint,
+			/datum/commodity/trader/josh/rocketshoes,
+		),
+		TRADER_RARITY_RARE = list()
+	)
 
 	dialogue_greet = list("What's up my bro? I got some fresh stuff for ya.",
 	"Sup bro, what's shakin' the bacon? Ho boy, I got some blazing hot items today.",
@@ -54,21 +69,6 @@
 	"Woah hold up. Am I counting wrong? That seems like not enough cash.")
 	dialogue_out_of_stock = list("Oh dang man, I think I pawned all of that off for some more muscle milk.",
 	"Sorry bronoccio, I don't got any more of that.")
-
-	set_up_goods()
-		..()
-		var/datum/commodity/the_commodity = null
-		var/pickwhich = rand(1,3)
-		switch(pickwhich)
-			if(1)
-				the_commodity = /datum/commodity/trader/josh/hosboots
-			if(2)
-				the_commodity = /datum/commodity/trader/josh/injectorbelt
-			if(3)
-				the_commodity = /datum/commodity/trader/josh/injectormask
-		var/datum/commodity/COM = new the_commodity(src)
-		src.goods_buy += COM
-
 
 /* Josh buys this stuff */
 
@@ -202,3 +202,9 @@
 	"Load this bad boy up with some paint and you'll be seeing colors!",
 	"Dude, paintball's season's here!")
 
+/datum/commodity/trader/josh/spraypaint
+	comname = "Wicked Spray Can"
+	comtype = /obj/item/spray_paint_graffiti
+	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
+	possible_names = list("All the up-and-coming artists are buzzing over this!",
+	"Show off your vast, oceanic soul with some ART, bro!")

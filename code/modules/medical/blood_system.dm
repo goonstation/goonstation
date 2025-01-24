@@ -390,12 +390,7 @@ this is already used where it needs to be used, you can probably ignore it.
 			B.blood_DNA = "--unidentified substance--"
 			B.blood_type = "--unidentified substance--"
 
-		var/datum/bioHolder/bloodHolder = new/datum/bioHolder(null)
-		bloodHolder.CopyOther(M.bioHolder)
-		bloodHolder.ownerName = M.real_name
-		bloodHolder.ownerType = M.type
-
-		B.add_volume(blood_color_to_pass, M.blood_id, num_amount, vis_amount, blood_reagent_data=bloodHolder)
+		B.add_volume(blood_color_to_pass, M.blood_id, num_amount, vis_amount, blood_reagent_data=M.get_blood_bioholder())
 		return
 
 	BLOOD_DEBUG("[M] begins to bleed")
@@ -449,17 +444,12 @@ this is already used where it needs to be used, you can probably ignore it.
 				M.blood_volume = 0
 				//BLOOD_DEBUG("[H]'s blood volume dropped below 0 and was reset to 0")
 
-		var/datum/bioHolder/bloodHolder = new/datum/bioHolder(null)
-		bloodHolder.CopyOther(M.bioHolder)
-		bloodHolder.ownerName = M.real_name
-		bloodHolder.ownerType = M.type
-
-		B.add_volume(blood_color_to_pass, M.blood_id, blood_to_transfer, vis_amount, blood_reagent_data = bloodHolder)
-		//BLOOD_DEBUG("[H] adds volume to existing blood decal")
-
 		if (B.reagents && M.reagents?.total_volume)
 			//BLOOD_DEBUG("[H] transfers reagents to blood decal [log_reagents(H)]")
-			M.reagents.trans_to(B, (num_amount - blood_to_transfer))
+			M.reagents.trans_to(B, (reagents_to_transfer))
+		B.add_volume(blood_color_to_pass, M.blood_id, blood_to_transfer, vis_amount, blood_reagent_data = M.get_blood_bioholder())
+		//BLOOD_DEBUG("[H] adds volume to existing blood decal")
+
 
 /* ====================================== */
 /* ---------- transfer_blood() ---------- */
@@ -488,10 +478,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		blood_to_transfer = some_idiot.blood_volume
 
 	if (!A.reagents.get_reagent("bloodc") && !A.reagents.get_reagent("blood")) // if it doesn't have blood with blood bioholder data already, only then create this
-		bloodHolder = new/datum/bioHolder(null)
-		bloodHolder.CopyOther(some_idiot.bioHolder)
-		bloodHolder.ownerName = some_idiot.real_name
-		bloodHolder.ownerType = some_idiot.type
+		bloodHolder = some_idiot.get_blood_bioholder()
 
 	if (ischangeling(some_idiot))
 		A.reagents.add_reagent("bloodc", blood_to_transfer, bloodHolder)
@@ -784,7 +771,7 @@ this is already used where it needs to be used, you can probably ignore it.
 	throwforce = 0
 	throw_range = 16
 	flags = TABLEPASS | NOSHIELD
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 
 	New()
 		..()

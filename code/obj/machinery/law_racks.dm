@@ -108,6 +108,7 @@
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 			for(var/turf/T in range(src,0))
 				make_cleanable(/obj/decal/cleanable/machine_debris, T)
+			message_ghosts("<b>A law rack</b> has been destroyed at [log_loc(src.loc, ghostjump=TRUE)].")
 			qdel(src)
 			return
 		var/law_update_needed = FALSE
@@ -571,7 +572,7 @@
 				if(R.dependent && R?.mainframe?.law_rack_connection != src)
 					R.law_rack_connection = R?.mainframe?.law_rack_connection //goddamn shells
 					continue
-				R.playsound_local(R, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
+				R.playsound_local(R, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 				R.show_text(notification_text, "red")
 				src.show_laws(R)
 				affected_mobs |= R
@@ -582,7 +583,7 @@
 		src.calculate_power_usage()
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == src)
-				E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
+				E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 				src.show_laws(E)
 				affected_mobs |= E.mainframe
 				var/mob/living/silicon/ai/holoAI = E.mainframe
@@ -668,7 +669,7 @@
 			for (var/i in 1 to 10)
 				sleep(0.4 SECONDS)
 				if(src && prob(60))
-					var/obj/mined = new /obj/item/currency/spacecash/buttcoin
+					var/obj/mined = new /obj/item/currency/buttcoin
 					mined.set_loc(src.loc)
 					target = get_step(src, rand(1,8))
 					for (var/mob/living/mob in view(7,src))
@@ -726,8 +727,10 @@
 	 * Does not call UpdateLaws()
 	 * Intended for Admemery
 	 */
-	proc/SetLawCustom(lawName, lawText, slot = 1, screwed_in = FALSE, welded_in = FALSE)
-		var/mod = new /obj/item/aiModule/custom(lawName,lawText)
+	proc/SetLawCustom(lawName, lawText, slot = 1, screwed_in = FALSE, welded_in = FALSE, path)
+		if(!path || !ispath(path))
+			path = /obj/item/aiModule/custom
+		var/mod = new path(lawName,lawText)
 		return src.SetLaw(mod,slot,screwed_in,welded_in)
 
 	/// Deletes a law in an abritrary slot. Does not call UpdateLaws()

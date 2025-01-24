@@ -27,7 +27,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
           cache: "yarn"
           cache-dependency-path: ./tgui/yarn.lock
 
@@ -73,6 +73,10 @@ jobs:
     name: Lint with OpenDream
     runs-on: ubuntu-22.04
     steps:
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4.2.0
+        with:
+          dotnet-version: 9.0.100
       - uses: actions/checkout@v4
       - uses: robinraju/release-downloader@v1.11
         with:
@@ -159,7 +163,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
           cache: "yarn"
           cache-dependency-path: ./tgui/yarn.lock
 

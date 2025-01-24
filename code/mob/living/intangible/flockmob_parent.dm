@@ -295,7 +295,7 @@
 	return src.compute
 
 //moved from flockmind to allow traces to teleport
-/mob/living/intangible/flock/flockmind/Topic(href, href_list)
+/mob/living/intangible/flock/Topic(href, href_list)
 	if(href_list["origin"])
 		var/atom/movable/origin = locate(href_list["origin"])
 		if(!QDELETED(origin))

@@ -129,7 +129,7 @@ TYPEINFO(/obj/item/gun/energy)
 				SEND_SIGNAL(src, COMSIG_CELL_USE, src.current_projectile.cost)
 				return 1
 			if (src.click_sound)
-				boutput(user, SPAN_ALERT("*click* *click*"))
+				boutput(user, SPAN_ALERT(src.click_msg))
 				if (!src.silenced)
 					playsound(user, src.click_sound, 60, TRUE)
 			return 0
@@ -1234,8 +1234,8 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 				"conductive_high" = 5,
 				"energy_high" = 10)
 /obj/item/gun/energy/pickpocket
-	name = "pickpocket grapple gun" // absurdly shitty name
-	desc = "A complicated, camoflaged claw device on a tether capable of complex and stealthy interactions. It steals shit."
+	name = "\improper Super! Grapple Friend" // like foam dart guns
+	desc = "A complicated, camoflaged claw device on a tether capable of complex and stealthy interactions. It's definitely not just a repurposed janky toy that steals shit."
 	icon_state = "pickpocket"
 	w_class = W_CLASS_SMALL
 	item_state = "pickpocket"
@@ -2053,22 +2053,6 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 				ON_COOLDOWN(src, "raygun_cooldown", 2 SECONDS)
 		return ..(target, start, user)
 
-/obj/item/gun/energy/dazzler
-	name = "dazzler"
-	icon_state = "taser" // wtb 1 sprite
-	item_state = "taser"
-	force = 1
-	cell_type = /obj/item/ammo/power_cell/med_power
-	desc = "The Five Points Armory Dazzler Prototype, an experimental weapon that produces a cohesive electrical charge designed to disorient and slowdown a target. It can even shoot through windows!"
-	muzzle_flash = "muzzle_flash_bluezap"
-	uses_charge_overlay = TRUE
-	charge_icon_state = "taser"
-
-	New()
-		set_current_projectile(new/datum/projectile/energy_bolt/dazzler)
-		projectiles = list(current_projectile)
-		..()
-
 // Makeshift Laser Rifle
 #define HEAT_REMOVED_PER_PROCESS 30
 #define FIRE_THRESHOLD 125
@@ -2103,7 +2087,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	///What step of repair are we on if we have broken? 0 = functional
 	var/heat_repair = 0
 
-	proc/attach_cell(var/obj/item/cell/C, mob/user)
+	proc/attach_cell(obj/item/cell/C, mob/user)
 		if (user)
 			user.u_equip(C)
 		RegisterSignal(C, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove_cell))
@@ -2113,7 +2097,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		SEND_SIGNAL(src, COMSIG_CELL_SWAP, our_cell)
 		UpdateIcon()
 
-	proc/attach_light(var/obj/item/light/tube/T, mob/user)
+	proc/attach_light(obj/item/light/tube/T, mob/user)
 		if (user)
 			user.u_equip(T)
 		our_light = T
@@ -2130,7 +2114,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		explosion(src, get_turf(src), -1, -1, 1, 2)
 		qdel(src)
 
-	proc/finish_repairs(var/obj/item/cable_coil/C, /var/mob/user)
+	proc/finish_repairs(obj/item/cable_coil/C, mob/user)
 		C.change_stack_amount(-10)
 		heat_repair = 0
 		playsound(src, 'sound/effects/pop.ogg', 50, TRUE)
@@ -2351,7 +2335,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 
 /obj/item/gun/energy/lasergat
-	name = "\improper Hafgan Mod.93R Repeating Laser"
+	name = "\improper HAFGAN Mod.93R Repeating Laser"
 	rechargeable = 0
 	icon_state = "burst_laser_idle"
 	cell_type = /obj/item/ammo/power_cell/lasergat
@@ -2362,8 +2346,13 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	muzzle_flash = "muzzle_flash_elec"
 	uses_charge_overlay = TRUE
 	charge_icon_state = "burst_laser"
-	shoot_delay = 6
-	spread_angle = 6
+	shoot_delay = 4
+	spread_angle = 2
+	recoil_enabled = TRUE
+	recoil_max = 50
+	recoil_inaccuracy_max = 10
+	icon_recoil_enabled = TRUE
+
 	restrict_cell_type = /obj/item/ammo/power_cell/lasergat
 	New()
 		set_current_projectile(new/datum/projectile/laser/lasergat/burst)
@@ -2389,6 +2378,32 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		..()
 		UpdateIcon()
 		M.update_inhands()
+
+/obj/item/gun/energy/bubble_gun
+	name = "Bubble Max XSTREAM"
+	icon_state = "phaser-tiny"
+	item_state = "phaser"
+	force = 4
+	desc = "The foremost name in bubble based warfare."
+	muzzle_flash = "muzzle_flash_launch"
+	cell_type = /obj/item/ammo/power_cell
+	w_class = W_CLASS_SMALL
+	var/bubble_type = /datum/projectile/special/bubble
+
+	New()
+		. = ..()
+		color = list(0,0,1,1,0,0,0,1,0)
+		set_current_projectile(new bubble_type)
+		projectiles = list(current_projectile)
+
+/obj/item/gun/energy/bubble_gun/bomb
+	name = "Bubble Bomb Max ULTRAimpact"
+	desc = "Looks to be a modified Bubble Max XSTREAM. There appears to be a warning label on the side, \"Fire at a distance.\""
+	bubble_type = /datum/projectile/special/bubble/bomb
+	shoot_delay = 50
+
+/obj/item/gun/energy/bubble_gun/bomb/turf_safe
+	bubble_type = /datum/projectile/special/bubble/bomb/turf_safe
 
 #undef HEAT_REMOVED_PER_PROCESS
 #undef FIRE_THRESHOLD

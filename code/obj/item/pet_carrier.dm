@@ -23,7 +23,7 @@
 	w_class = W_CLASS_BULKY
 
 	/// Please override this in child types to specify what can actually fit in.
-	var/allowed_mob_types = list(/mob/living/critter/small_animal, /mob/living/critter/wraith/plaguerat)
+	var/allowed_mob_types = list(/mob/living/critter/small_animal, /mob/living/critter/wraith/plaguerat, /obj/item/rocko)
 	/// Time it takes for each action (eg. grabbing, releasing).
 	var/actionbar_duration = 2 SECONDS
 	/// If FALSE, an occupant cannot escape the carrier on their own.
@@ -44,21 +44,21 @@
 	var/trap_mob_icon_state = "carrier-full"
 	/// The icon_state for the src.RELEASE_MOB() actionbar.
 	var/release_mob_icon_state = "carrier-full-open"
-	// Alpha mask icon state for cutting out the mob on non-transparent pixels.
+	/// Alpha mask icon state for cutting out the mob on non-transparent pixels.
 	var/const/carrier_alpha_mask = "carrier-mask"
 
-	// Empty carrier icon state name.
+	/// Empty carrier icon state name.
 	var/empty_carrier_icon_state = "carrier"
 
-	// Grate icon state names.
+	/// Grate icon state names.
 	var/const/grate_open_icon_state = "grate-open"
 	var/const/grate_closed_icon_state = "grate-closed"
 
-	// Carrier item state names.
+	/// Carrier item state names.
 	var/carrier_open_item_state = "carrier-open"
 	var/carrier_closed_item_state = "carrier-closed"
 
-	// For Noah's Shuttle medal
+	/// For Noah's Shuttle medal
 	var/gilded = FALSE
 
 	/// Carrier-related (grate_proxy, vis_contents_proxy) vis_flags.
@@ -71,7 +71,7 @@
 	/// Proxy object for storing the vis_contents of each occupant, which itself is contained in the vis_contents of the parent carrier.
 	var/obj/dummy/vis_contents_proxy
 	/// A list of the current occupants inside the carrier.
-	var/list/mob/carrier_occupants = list()
+	var/list/carrier_occupants = list()
 
 	New()
 		..()
@@ -103,7 +103,7 @@
 				src.add_mob(spawned_mob)
 
 	disposing()
-		for (var/mob/occupant in src.carrier_occupants)
+		for (var/occupant in src.carrier_occupants)
 			src.eject_mob(occupant)
 		for (var/obj/item/stuff in src.contents)
 			MOVE_OUT_TO_TURF_SAFE(stuff, src)
@@ -186,7 +186,15 @@
 	Exited(Obj, newloc)
 		if (Obj in src.carrier_occupants)
 			src.eject_mob(Obj)
-			src.visible_message(SPAN_ALERT("[Obj] bursts out of [src]!"))
+			if(istype(Obj, /obj/item/rocko))
+				src.visible_message(SPAN_ALERT("[usr] removes [Obj] from [src]."))
+			else if (istype(Obj, /mob))
+				src.visible_message(SPAN_ALERT("[Obj] bursts out of [src]!"))
+		..()
+
+	Entered(Obj, OldLoc)
+		if(istype(Obj, /obj/item/rocko))
+			src.visible_message(SPAN_ALERT("[usr] places [Obj] into [src]."))
 		..()
 
 	proc/is_allowed_type(type)
@@ -196,48 +204,60 @@
 		return FALSE
 
 	/// Called when a given mob/user steals a mob after an actionbar.
-	proc/trap_mob(mob/mob_to_trap, mob/user)
-		if (!mob_to_trap)
+	proc/trap_mob(atom/movable/thing_to_trap, mob/user)
+		if (!thing_to_trap)
 			return
-		if (mob_to_trap == user)
+		if (thing_to_trap == user)
 			user.drop_item(src)
-		src.add_mob(mob_to_trap)
+
+		if (istype(thing_to_trap, /mob))
+			var/mob/M = thing_to_trap
+			M.remove_pulling()
+		else
+			thing_to_trap.pulled_by = null
+			user.remove_pulling()
+			user.drop_item(thing_to_trap)
+
+		src.add_mob(thing_to_trap)
 		user.update_inhands()
 
 	/// Called when a given mob/user releases an mob after an actionbar.
-	proc/release_mob(mob/mob_to_release, mob/user)
-		if (mob_to_release)
-			src.eject_mob(mob_to_release)
+	proc/release_mob(atom/movable/thing_to_release, mob/user)
+		if (thing_to_release)
+			src.eject_mob(thing_to_release)
 			user.update_inhands()
 			return
 		boutput(user, SPAN_ALERT("Unable to release anyone from [src]!"))
 
 	proc/attempt_removal(mob/user)
 		if (length(src.carrier_occupants))
-			var/mob/mob_to_remove = src.carrier_occupants[1]
-			actions.start(new /datum/action/bar/icon/pet_carrier(mob_to_remove, src, src.icon, src.release_mob_icon_state, RELEASE_MOB, src.actionbar_duration), user)
+			var/atom/movable/thing_to_remove = src.carrier_occupants[1]
+			if (istype(thing_to_remove, /obj/item/rocko))
+				src.eject_mob(thing_to_remove)
+			if (istype(thing_to_remove, /mob))
+				var/mob/M = thing_to_remove
+				actions.start(new /datum/action/bar/icon/pet_carrier(M, src, src.icon, src.release_mob_icon_state, RELEASE_MOB, src.actionbar_duration), user)
 		else
 			boutput(user, SPAN_ALERT("[src] is without any friends! Aww!"))
 
 	/// Directly adds a target mob to the carrier.
-	proc/add_mob(mob/mob_to_add)
-		if (!mob_to_add)
+	proc/add_mob(atom/movable/thing_to_add)
+		if (!thing_to_add)
 			return
-		mob_to_add.remove_pulling()
-		mob_to_add.set_loc(src)
-		mob_to_add.vis_flags |= src.mob_vis_flags
-		src.carrier_occupants.Add(mob_to_add)
-		src.vis_contents_proxy.vis_contents.Add(mob_to_add)
+		thing_to_add.set_loc(src)
+		thing_to_add.vis_flags |= src.mob_vis_flags
+		src.carrier_occupants.Add(thing_to_add)
+		src.vis_contents_proxy.vis_contents.Add(thing_to_add)
 		src.UpdateIcon()
 
 	/// Directly ejects a target mob from the carrier.
-	proc/eject_mob(mob/mob_to_eject)
-		if (!mob_to_eject)
+	proc/eject_mob(atom/movable/thing_to_eject)
+		if (!thing_to_eject)
 			return
-		MOVE_OUT_TO_TURF_SAFE(mob_to_eject, src)
-		mob_to_eject.vis_flags &= ~src.mob_vis_flags
-		src.carrier_occupants.Remove(mob_to_eject)
-		src.vis_contents_proxy.vis_contents.Remove(mob_to_eject)
+		MOVE_OUT_TO_TURF_SAFE(thing_to_eject, src)
+		thing_to_eject.vis_flags &= ~src.mob_vis_flags
+		src.carrier_occupants.Remove(thing_to_eject)
+		src.vis_contents_proxy.vis_contents.Remove(thing_to_eject)
 
 		// Get rid of all /obj/items inside as well.
 		for (var/obj/item/stuff in src.contents)
@@ -245,19 +265,19 @@
 
 		src.UpdateIcon()
 
-	proc/transfer_mob(mob/mob_to_eject, obj/destination)
+	proc/transfer_mob(mob/thing_to_eject, obj/destination)
 		if(istype(destination, /obj/machinery/genetics_scanner))
 			var/obj/machinery/genetics_scanner/GC = destination
-			GC.go_in(mob_to_eject)
+			GC.go_in(thing_to_eject)
 		else if(istype(destination, /obj/machinery/computer/genetics/portable))
 			var/obj/machinery/computer/genetics/portable/PGC = destination
-			PGC.go_in(mob_to_eject)
+			PGC.go_in(thing_to_eject)
 
 	/// Deals damage to the door. If the remaining health <= 0, release everyone and reset the carrier.
 	proc/take_door_damage(damage)
 		src.door_health -= damage
 		if (src.door_health <= 0)
-			for (var/mob/occupant in src.carrier_occupants)
+			for (var/occupant in src.carrier_occupants)
 				src.eject_mob(occupant)
 			src.visible_message(SPAN_ALERT("The door on [src] busts wide open, releasing its occupants!"))
 			src.door_health = src.door_health_max
@@ -276,17 +296,25 @@
 
 	afterattack(atom/target, mob/user , flag)
 		. = ..()
-		if(istype(target, /obj/machinery/genetics_scanner) && length(src.carrier_occupants))
-			var/mob/mob_to_remove = src.carrier_occupants[1]
+		if (istype(target, /obj/item/rocko))
+			src.trap_mob(target, user)
+			return
+		else if(istype(target, /obj/machinery/genetics_scanner) && length(src.carrier_occupants))
+			var/mob/thing_to_remove = src.carrier_occupants[1]
 			var/obj/machinery/genetics_scanner/GS = target
-			if(GS.can_operate(user, mob_to_remove))
-				actions.start(new /datum/action/bar/icon/pet_carrier(mob_to_remove, src, src.icon, src.release_mob_icon_state, TRANSFER_MOB, src.actionbar_duration, GS), user)
+			if(GS.can_operate(user, thing_to_remove))
+				actions.start(new /datum/action/bar/icon/pet_carrier(thing_to_remove, src, src.icon, src.release_mob_icon_state, TRANSFER_MOB, src.actionbar_duration, GS), user)
 		else if(istype(target, /obj/machinery/computer/genetics/portable) && length(src.carrier_occupants))
-			var/mob/mob_to_remove = src.carrier_occupants[1]
+			var/mob/thing_to_remove = src.carrier_occupants[1]
 			var/obj/machinery/computer/genetics/portable/PGS = target
-			if(PGS.can_operate(user, mob_to_remove))
-				actions.start(new /datum/action/bar/icon/pet_carrier(mob_to_remove, src, src.icon, src.release_mob_icon_state, TRANSFER_MOB, src.actionbar_duration, PGS), user)
+			if(PGS.can_operate(user, thing_to_remove))
+				actions.start(new /datum/action/bar/icon/pet_carrier(thing_to_remove, src, src.icon, src.release_mob_icon_state, TRANSFER_MOB, src.actionbar_duration, PGS), user)
 
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/rocko))
+			src.trap_mob(I, user)
+			return
+		..()
 
 /obj/item/pet_carrier/admin_crimes
 	name = "pet carrier (ADMIN CRIMES EDITION)"
@@ -359,7 +387,7 @@
 				src.mob_owner.visible_message(SPAN_NOTICE("[src.mob_owner] coaxes [target] out of [src.carrier] and into [src.transfer_location]!"))
 
 	proc/interrupt_action()
-		if (BOUNDS_DIST(src.mob_owner, src.target) > 0 || !src.target || !src.mob_owner || !src.carrier \
+		if (BOUNDS_DIST(src.mob_owner, src.target) > 0 || !istype(src.target) || !src.mob_owner || !src.carrier \
 		|| (src.action == TRAP_MOB && src.mob_owner.equipped() != src.carrier) \
 		|| (src.action == TRANSFER_MOB && BOUNDS_DIST(src.mob_owner, src.transfer_location) > 0) )
 			return TRUE
