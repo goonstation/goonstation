@@ -71,6 +71,8 @@
 	/// bodge factor for power generation
 	var/power_multiplier = 1
 
+	HELP_MESSAGE_OVERRIDE("If damaged, simply use an active welding tool on the turbine to repair it. If parts are missing, they can be printed at the Nuclear Nanofabricator. You can replace parts when the turbine is not spinning.")
+
 	New()
 		. = ..()
 		terminal = new /obj/machinery/power/terminal/netlink(src.loc)
@@ -468,7 +470,6 @@
 			. += SPAN_NOTICE(" The turbine looks a bit scuffed!")
 		else
 			. += " It appears to be in good condition."
-
 
 
 	proc/SetTurbineBlade(var/obj/item/turbine_component/blade/NewBlade)
