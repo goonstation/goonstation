@@ -203,7 +203,7 @@
 					boutput(user, SPAN_ALERT("You accidentally grab the [src] razor-side first and cut yourself! Ouch!"))
 					user.TakeDamage("All", 5, 0)
 					take_bleeding_damage(user, user, 5, DAMAGE_CUT, 1)
-					playsound(user, "sound/impact_sounds/Blade_Small_Bloody.ogg", 100, TRUE)
+					playsound(user, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 100, TRUE)
 					user.changeStatus("knockdown", 4 SECONDS)
 					user.force_laydown_standup()
 				return
