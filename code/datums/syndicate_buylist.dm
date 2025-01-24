@@ -1084,7 +1084,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
-/dautm/syndicate_buylist/traitor/barberang
+/datum/syndicate_buylist/traitor/barberang
 	name = "Barberang"
 	item = /obj/item/razor_blade/barberang
 	cost = 5
