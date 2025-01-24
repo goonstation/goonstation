@@ -196,7 +196,7 @@
 					stolen_hair = null
 				else if(prob(50))
 					//you cut yourself
-					boutput(user, SPAN_COMBAT("You accidentally grab the [src] razor-side first and cut yourself! Ouch!"))
+					boutput(user, SPAN_ALERT("You accidentally grab the [src] razor-side first and cut yourself! Ouch!"))
 					user.TakeDamage("All", 5, 0)
 					take_bleeding_damage(user, user, 5, DAMAGE_CUT, 1)
 					playsound(user, "sound/impact_sounds/Blade_Small_Bloody.ogg", 100, TRUE)
@@ -212,11 +212,11 @@
 						//they are wearing a wig
 						stolen_hair = victim.head
 						victim.u_equip(stolen_hair)
-						boutput(victim, SPAN_COMBAT("the [src] snatches your wig right off your head!"))
+						boutput(victim, SPAN_ALERT("the [src] snatches your wig right off your head!"))
 					else if(!victim.is_bald())
 						//they have hair to yoink
 						stolen_hair = victim.create_wig()
-						boutput(victim, SPAN_COMBAT("the [src] takes your hair clean off!"))
+						boutput(victim, SPAN_ALERT("the [src] takes your hair clean off!"))
 
 		. = ..()
 
