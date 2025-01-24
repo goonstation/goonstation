@@ -1116,7 +1116,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/barberang
 	name = "Barberang"
-	item = /obj/item/razor_blade/barberang
+	items = list(/obj/item/razor_blade/barberang)
 	cost = 5
 	desc = "An aerodynamic, extra-sharp hand razor designed to be thrown, knocking down and shearing the hair off of anyone it hits. The razor will then return, allowing for stolen hair to be easily retrieved. Be careful not to cut yourself."
 	job = list("Barber")
