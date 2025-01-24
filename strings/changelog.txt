@@ -1,4 +1,14 @@
 
+(t)thu jan 23 25
+(u)glowbold
+(p)22083
+(e)⚖📄💊|C-Balance, A-UI, A-Medical
+(*)The cloning console only shows total damage with a cloner implant. Users with heatlh implants will still allow you to read individual damage types.
+(t)wed jan 22 25
+(u)tarmunora
+(*)Greatly increase damage taken by cloned puritans, who will also always drop their head or brain on gib. Premature clone effect can no longer be cleared by genetics.
+(u)LeahTheTech
+(*)The syndicate have deployed a new robotic threat in their gunbot raids. This one has claws.
 (t)mon jan 20 25
 (u)Garash2k
 (p)21681
