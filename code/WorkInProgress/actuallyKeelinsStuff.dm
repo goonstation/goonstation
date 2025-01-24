@@ -1,7 +1,7 @@
 //This file contains stuff that is still *mostly* my code.
 
 /*
-Proc: drawLine
+Proc: drawLineImg
 Arguments:
 	source: The source atom where the beam begins.
 	target: The target atom where the beam ends.
@@ -25,12 +25,12 @@ Arguments:
 	adjustTiles: If 1, will attempt to correct the list of crossed turfs based on the offsets passed into the proc.
 				 If 0, will ignore the offsets and just go from source to target.
 Returns:
-	An instance of /datum/lineResult. See below drawLine.
+	An instance of /datum/lineResult. See below drawLineImg.
 		lineImage contains the finished line image. You will still need to output it for it to be visible. addGlobalImage is an option.
 		By default the image is attached to source. You can change this by setting the image's loc to something else.
 		crossed contains a list of crossed turfs if getCrossed was set to 1.
 */
-/proc/drawLine(var/atom/source, var/atom/target, var/render_source_line = null, var/render_source_cap = null, var/src_off_x=0, var/src_off_y=0, var/trg_off_x=0, var/trg_off_y=0, var/mode = LINEMODE_STRETCH, var/getCrossed = 1, var/adjustTiles=1, var/applyTransform = TRUE)
+/proc/drawLineImg(var/atom/source, var/atom/target, var/render_source_line = null, var/render_source_cap = null, var/src_off_x=0, var/src_off_y=0, var/trg_off_x=0, var/trg_off_y=0, var/mode = LINEMODE_STRETCH, var/getCrossed = 1, var/adjustTiles=1, var/applyTransform = TRUE)
 	if(render_source_line == null) return
 	var/datum/lineResult/result = new()
 
@@ -207,7 +207,7 @@ Returns:
 /proc/testLine()
 	var/atom/source = get_turf(usr)
 	var/atom/target = get_turf(pick(oview(5)))
-	var/datum/lineResult/R = drawLine(source, target, list("elec1","elec2","elec3"), "eleccap")
+	var/datum/lineResult/R = drawLineImg(source, target, list("elec1","elec2","elec3"), "eleccap")
 	var/globalImageKey = "linetest[rand(0,INFINITY)]"
 	R.lineImage.color = "#4b8aff"
 	addGlobalImage(R.lineImage, globalImageKey)

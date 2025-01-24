@@ -54156,6 +54156,9 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/item/clothing/head/helmet/camera/security{
+	pixel_y = 6
+	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "qtp" = (
@@ -58333,6 +58336,9 @@
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/tequila{
 	pixel_x = 6
+	},
+/obj/item/paper/pipebombs{
+	pixel_x = -5
 	},
 /turf/simulated/floor/red,
 /area/listeningpost)
@@ -79973,12 +79979,11 @@
 /area/station/science/lab)
 "xVm" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/head/helmet/camera/security{
-	pixel_y = 2
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/storage/box/panic_buttons,
+/obj/item/device/panicbutton,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "xVr" = (

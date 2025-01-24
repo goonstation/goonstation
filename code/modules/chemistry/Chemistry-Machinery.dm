@@ -799,7 +799,7 @@ TYPEINFO(/obj/machinery/chem_master)
 		if(dir == WEST)
 			tube_x = -8
 			tube_y = 0
-		var/datum/lineResult/result = drawLine(src, barrel, "chemmaster", "chemmaster_end", src.pixel_x + tube_x, src.pixel_y + tube_y, barrel.pixel_x + 6, barrel.pixel_y + 8)
+		var/datum/lineResult/result = drawLineImg(src, barrel, "chemmaster", "chemmaster_end", src.pixel_x + tube_x, src.pixel_y + tube_y, barrel.pixel_x + 6, barrel.pixel_y + 8)
 		result.lineImage.pixel_x = -src.pixel_x
 		result.lineImage.pixel_y = -src.pixel_y
 		if(src.layer > barrel.layer) //this should ensure it renders above both the barrel and chemmaster

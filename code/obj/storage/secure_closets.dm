@@ -276,7 +276,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clipboard,
 	/obj/item/clothing/suit/hopjacket,
 	/obj/item/pet_carrier,
-	/obj/item/device/pda2/hop)
+	/obj/item/device/pda2/hop,
+	/obj/item/device/panicbutton/medicalalert/hop)
 
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"
@@ -297,7 +298,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/radio/headset/command/rd,
 	/obj/item/pet_carrier,
 	/obj/item/device/pda2/research_director,
-	/obj/item/places_pipes,
+	/obj/item/places_pipes/research,
 	/obj/item/rcd_ammo/big)
 
 	make_my_stuff()
@@ -701,6 +702,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 /obj/storage/secure/closet/research/uniform
 	name = "science uniform locker"
 	spawn_contents = list(/obj/item/tank/air,
+	/obj/item/crowbar/purple,
 	/obj/item/storage/backpack/research,
 	/obj/item/storage/box/clothing/research,
 	/obj/item/clothing/suit/wintercoat/research,
