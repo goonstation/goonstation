@@ -848,7 +848,7 @@
 			if (src.threatlevel >= 4)
 				src.EngageTarget(C)
 				break
-			if(C.traitHolder.hasTrait("wasitsomethingisaid"))
+			if(C.traitHolder.hasTrait("wasitsomethingisaid") && src.threatlevel >= 1)
 				src.EngageTarget(C)
 			else
 				continue
@@ -1200,7 +1200,7 @@
 			)
 
 		var/say_thing = pick(voice_lines)
-		if(say_thing == 'sound/voice/binsultbeep.ogg' && prob(90))
+		if(say_thing == 'sound/voice/binsultbeep.ogg' && (prob(90)))
 			say_thing = 'sound/voice/bsecureday.ogg'
 		switch(say_thing)
 			if('sound/voice/bgod.ogg')
