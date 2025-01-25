@@ -2242,6 +2242,43 @@
 				boutput(user, SPAN_NOTICE("You need a snipping tool."))
 				return FALSE
 			return TRUE
+
+
+/datum/contextAction/generic_surgery_heal
+		name = "Heal wounds"
+		desc = "Fix BRUTE/BURN damage with tools."
+		icon_state = "heal_generic"
+		var/open = FALSE
+
+		execute(atom/target, mob/user)
+			..()
+			var/mob/living/carbon/human/H = target
+			if (H.organHolder)
+				var/region_complexity = H.organHolder.build_subcostal_region_buttons(src)
+				if (!region_complexity)
+					boutput(user, SPAN_ALERT("The patient's subcostal region cannot be opened. Something went wrong. Dial 1-800-coder."))
+					return
+			if (src.open)
+				if (!H.organHolder.build_inside_subcostal_buttons())
+					boutput(user, SPAN_NOTICE("[H] doesn't have any organs in their subcostal region!"))
+					return
+				user.showContextActions(H.organHolder.inside_subcostal_contexts, H, H.organHolder.contextLayout)
+			else
+				user.showContextActions(H.organHolder.subcostal_contexts, H, H.organHolder.contextLayout)
+				boutput(user, SPAN_ALERT("You begin surgery on [H]'s subcostal region."))
+				return
+
+		checkRequirements(atom/target, mob/user)
+			var/mob/living/carbon/human/H = target
+			if (H.organHolder.subcostal_contexts && length(H.organHolder.subcostal_contexts) <= 0)
+				src.open = TRUE
+				return TRUE
+			else
+				src.open = FALSE
+			. = ..()
+
+
+
 #define BUNSEN_OFF "off"
 #define BUNSEN_LOW "low"
 #define BUNSEN_MEDIUM "medium"

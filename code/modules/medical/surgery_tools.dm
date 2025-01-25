@@ -220,7 +220,7 @@ CONTAINS:
 
 /obj/item/staple_gun
 	name = "staple gun"
-	desc = "A medical staple gun for securely reattaching limbs."
+	desc = "A heavy-duty medical staple gun for securely reattaching limbs."
 	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "staplegun"
 	w_class = W_CLASS_TINY
@@ -235,6 +235,12 @@ CONTAINS:
 	stamina_damage = 15
 	stamina_cost = 7
 	stamina_crit_chance = 15
+
+	HELP_MESSAGE_OVERRIDE({"Can be used to attach limbs (or items) to mobs' missing limbs, or fix BRUTE in corpses.
+	To attach a limb, first target the desired location on the targetting paper doll, apply the limb/item with <b>HELP</b> intent, then apply the stapler.
+
+	To repair corpses, target the chest and apply to the corpse."})
+
 
 	// Every bit of usability helps (Convair880).
 	examine()
@@ -261,10 +267,30 @@ CONTAINS:
 				H.lastgasp()
 			return
 
-		if (!ishuman(target) || !(user.zone_sel && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "head"))))
+		if (!ishuman(target) )
 			return ..()
 
 		var/mob/living/carbon/human/H = target
+
+		if (isdead(H) && user.zone_sel && (user.zone_sel.selecting == "chest")) // you get some more leeway moving and stapling bits of viscera around in dead people
+			var/damage = H.get_brute_damage()
+			if (damage > H.max_health)
+				switch (damage)
+					if (400 to INFINITY) // it's a miracle they aren't gibbed. may as well make it not take 6 years to fix them
+						H.HealDamage("All", 100, 0)
+					if (200 to 399)
+						H.HealDamage("All", 50, 0)
+					else
+						H.HealDamage("All", 25, 0)
+				src.ammo--
+				if (!ON_COOLDOWN(user, "staple_heal", 5 SECONDS))
+					H.visible_message("[user] staples some of [H]'s wounds shut.")
+				playsound(user, 'sound/misc/stapler.ogg', 25, TRUE)
+				return
+
+		if ( !(user.zone_sel && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "head"))))
+			return ..()
+
 
 		//Attach butt to head
 		if (user.zone_sel.selecting == "head")
@@ -307,7 +333,6 @@ CONTAINS:
 				src.ammo--
 				surgery_limb.surgery(src)
 			return
-
 
 // a mostly decorative thing from z2 areas I want to add to office closets
 /obj/item/staple_gun/red
@@ -769,6 +794,8 @@ TYPEINFO(/obj/machinery/defib_mount)
 	var/brute_heal = 0
 	var/burn_heal = 0
 
+	HELP_MESSAGE_OVERRIDE({"Can be used to repair bleeding or fix BURN damage on corpses. You may need to apply to multiple limbs to heal a corpse."})
+
 	get_desc()
 		..()
 		if (src.uses >= 0)
@@ -790,14 +817,20 @@ TYPEINFO(/obj/machinery/defib_mount)
 			var/mob/living/carbon/human/H = target
 			var/zone = user.zone_sel.selecting
 			var/surgery_status = H.get_surgery_status(zone)
+			if (H.bandaged.Find(zone))
+				user.show_text("[H == user ? "You have" : "[H] has"] already got bandages on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]]!", "red")
+				return
 			if (surgery_status && H.organHolder)
 				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(2,5), brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
 			else if (H.bleeding)
-				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 1, zone, 0, rand(4,6), brute_heal, burn_heal, "bandag"), user)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 1, zone, zone, rand(4,6), brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
 			else if ((brute_heal || burn_heal) && target.health < target.max_health)
-				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 5 SECONDS, 0, 0, 5, brute_heal, burn_heal, "bandag"), user)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 5 SECONDS, zone, 0, 5, brute_heal, burn_heal, "bandag"), user)
+				src.in_use = 1
+			else if (isdead(H) && H.get_burn_damage() > 0)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 5, zone, 0, 5, brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
 			else
 				user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to bandage!", "red")
@@ -806,6 +839,10 @@ TYPEINFO(/obj/machinery/defib_mount)
 		else
 			return ..()
 
+	proc/apply_to(var/mob/living/carbon/human/H)
+		if (isdead(H)) // fix a third of a corpse's burn damage - prioritise making them into a mummy lol
+			var/damage = H.get_burn_damage()
+			H.HealDamage("All", 0, round(damage/3))
 	update_icon()
 		switch (src.uses)
 			if (-INFINITY to 0)
@@ -923,6 +960,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 				S.in_use = 0
 			else if (istype(tool, /obj/item/bandage))
 				var/obj/item/bandage/B = tool
+				B.apply_to(target)
 				B.in_use = 0
 				B.uses --
 				B.tooltip_rebuild = 1
