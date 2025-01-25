@@ -1034,6 +1034,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			else if (isliving(mob_or_critter))
 				var/mob/living/critter/C = mob_or_critter
 				C.health *= health_multiplier //for critters that don't user health holders
+				C.faction = list(FACTION_GUANTLET)
 				for(var/damage_key in C.healthlist) //for critters that do
 					var/datum/healthHolder/HH = C.healthlist[damage_key]
 					HH.maximum_value *= health_multiplier
