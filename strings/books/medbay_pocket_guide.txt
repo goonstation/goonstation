@@ -147,7 +147,7 @@
     <div class="entry misc">Analyzing Results for <span class="notice">Devin Carr</span>:<br>  Overall Status: <span style="color:rgb(19,128,21);">96</span>% healthy<br>  Damage Specifics: <span style="color:rgb(31,117,209);">0</span> - <span style="color:rgb(19,128,21);">2.27</span> - <span style="color:rgb(204,122,29);">1.69</span> - <span style="color:rgb(230,14,78);">0</span><br>  Key: <span style="color:rgb(31,117,209);">Suffocation</span>/<span style="color:rgb(19,128,21);">Toxin</span>/<span style="color:rgb(204,122,29);">Burns</span>/<span style="color:rgb(230,14,78);">Brute</span><br>Body Temperature: 37°C (98.6°F)<br> <span class="alert">The subject is barely irradiated. Dose: 0.494814 Sv</span><br>Blood Pressure: <span style="color:rgb(19,128,21);">121/81 (NORMAL)</span> | Blood level: <span style="color:rgb(19,128,21);">502 units</span><br><span class="alert">Significant brain damage detected. Subject may have had a concussion.</span></div>
 </div>
 <p>&nbsp;</p>
-<p>Radiation causes tox and burn damage, but it's fairly simple to heal. Just inject potassium iodide from the NanoMed, and keep up with the escalating damages. The potassium iodide will reduce remove radiation from the patient over time.</p>
+<p>Radiation causes tox and burn damage, but it's fairly simple to heal. Just inject potassium iodide from the NanoMed, and keep up with the escalating damages. The potassium iodide will remove radiation from the patient over time.</p>
 <p>Brain damage can be fatal: accumulate too much, and the patient will drop dead. However, mannitol, available in pills from the NanoMed, can easily heal brain damage.</p>
 <h3>Organ Damage and Other Ailments</h3>
 <div style="font-size:14px;" id="messages">
