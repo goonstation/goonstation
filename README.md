@@ -46,7 +46,7 @@ To contribute maps to the game, please follow our mapping guidelines! It details
 ## LICENSE
 [![license-badge](https://shields.io/badge/license-CC--BY--NC--SA-lightgrey?style=for-the-badge)](https://creativecommons.org/licenses/by-nc-sa/3.0/)
 
-All Goonstation contributions are licensed under [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/3.0/). See LICENSE for more details.
+All ff Goonstation contributions are licensed under [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/3.0/). See LICENSE for more details.
 
 Contributions made under the `tgui` folder are licensed under [MIT](https://choosealicense.com/licenses/mit/) unless otherwise specified.
 
