@@ -1163,8 +1163,7 @@
 	if (!message_range && speechpopups && src.chat_text)
 		var/heard_name = src.get_heard_name(just_name_itself=TRUE)
 		if(!last_heard_name || heard_name != src.last_heard_name)
-			var/num = hex2num(copytext(md5(heard_name), 1, 7))
-			src.last_chat_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
+			src.last_chat_color = living_maptext_color(heard_name)
 			src.last_heard_name = heard_name
 
 		var/turf/T = get_turf(say_location)
@@ -1849,7 +1848,7 @@
 		return .
 
 	var/turf/T = get_turf(src)
-	if (T?.turf_flags & CAN_BE_SPACE_SAMPLE)
+	if (istype(T, /turf/space))
 		. = max(., base_speed)
 
 
@@ -2397,3 +2396,11 @@
 	if (picked_item)
 		picked_item.pick_up_by(src)
 		return TRUE
+
+/mob/living/clamp_act()
+	if (isintangible(src))
+		return FALSE
+	src.TakeDamage("All", 6)
+	src.emote("scream", FALSE)
+	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 40, 1)
+	return TRUE

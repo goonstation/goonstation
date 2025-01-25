@@ -792,7 +792,7 @@ proc/ui_describe_reagents(atom/A)
 			boutput(user, "<span class='notice'>You hook the [container.name] up to the [src.name].</span>")
 		add_container(container)
 	proc/add_line(var/obj/container)
-		var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
+		var/datum/lineResult/result = drawLineImg(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
 		result.lineImage.pixel_x = -src.pixel_x
 		result.lineImage.pixel_y = -src.pixel_y
 		result.lineImage.layer = src.layer+0.01
@@ -895,7 +895,7 @@ proc/ui_describe_reagents(atom/A)
 		add_line(var/obj/container, var/containerNo)
 			var/x_off = 5*((containerNo+1)%2)  //alternate between 0/+5
 			var/y_off = (4*round((containerNo-1)/2)) //go up by 4 pixels for every 2nd connection
-			var/datum/lineResult/result = drawLine(src, container, "condenser_[containerNo]", "condenser_end_[containerNo]", src.pixel_x-4+x_off, src.pixel_y+5+y_off, container.pixel_x, container.pixel_y + container.get_chemical_effect_position(), mode=LINEMODE_STRETCH_NO_CLIP)
+			var/datum/lineResult/result = drawLineImg(src, container, "condenser_[containerNo]", "condenser_end_[containerNo]", src.pixel_x-4+x_off, src.pixel_y+5+y_off, container.pixel_x, container.pixel_y + container.get_chemical_effect_position(), mode=LINEMODE_STRETCH_NO_CLIP)
 			result.lineImage.layer = src.layer+0.01
 			result.lineImage.pixel_x = -src.pixel_x
 			result.lineImage.pixel_y = -src.pixel_y
@@ -964,7 +964,7 @@ proc/ui_describe_reagents(atom/A)
 			..()
 
 	add_line(var/obj/container)
-		var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x-1, src.pixel_y-13, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
+		var/datum/lineResult/result = drawLineImg(src, container, "condenser", "condenser_end", src.pixel_x-1, src.pixel_y-13, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
 		result.lineImage.pixel_x = -src.pixel_x
 		result.lineImage.pixel_y = -src.pixel_y
 		result.lineImage.layer = src.layer+0.01
@@ -1063,7 +1063,7 @@ proc/ui_describe_reagents(atom/A)
 			..()
 
 	add_line(var/obj/container)
-		var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
+		var/datum/lineResult/result = drawLineImg(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
 		result.lineImage.pixel_x = -src.pixel_x
 		result.lineImage.pixel_y = -src.pixel_y
 		result.lineImage.layer = src.layer+0.01

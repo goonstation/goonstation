@@ -65,8 +65,6 @@
 	var/locked = 1
 	var/locking = 0
 	req_access = list(access_robotics)
-	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
-	var/viewalerts = 0
 	var/jetpack = 0
 	var/freemodule = 1 // For picking modules when a robot is first created
 	var/automaton_skin = 0 // for the medal reward
@@ -1087,47 +1085,6 @@
 					src.cell = null
 					src.part_chest?.cell = null
 
-	triggerAlarm(var/class, area/A, var/O, var/alarmsource)
-		if (isdead(src))
-			return 1
-		var/list/L = src.alarms[class]
-		for (var/I in L)
-			if (I == A.name)
-				var/list/alarm = L[I]
-				var/list/sources = alarm[3]
-				if (!(alarmsource in sources))
-					sources += alarmsource
-				return 1
-		var/obj/machinery/camera/C = null
-		var/list/CL = null
-		if (O && istype(O, /list))
-			CL = O
-			if (length(CL) == 1)
-				C = CL[1]
-		else if (O && istype(O, /obj/machinery/camera))
-			C = O
-		L[A.name] = list(A, (C) ? C : O, list(alarmsource))
-		boutput(src, text("--- [class] alarm detected in [A.name]!"))
-		if (src.viewalerts) src.robot_alerts()
-		return 1
-
-	cancelAlarm(var/class, area/A as area, obj/origin)
-		var/list/L = src.alarms[class]
-		var/cleared = 0
-		for (var/I in L)
-			if (I == A.name)
-				var/list/alarm = L[I]
-				var/list/srcs = alarm[3]
-				if (origin in srcs)
-					srcs -= origin
-				if (length(srcs) == 0)
-					cleared = 1
-					L -= I
-		if (cleared)
-			boutput(src, text("--- [class] alarm in [A.name] has been cleared."))
-			if (src.viewalerts) src.robot_alerts()
-		return !cleared
-
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 			var/obj/item/device/borg_linker/linker = W
@@ -1992,8 +1949,6 @@
 					IT.dropped(src) // Handle light datums and the like.
 				if (I in module.tools)
 					I.set_loc(module)
-				else
-					qdel(I)
 			src.module_active = null
 			src.module_states[i] = null
 
@@ -2107,6 +2062,14 @@
 
 		hud.toggle_equipment()
 
+	proc/get_tools()
+		RETURN_TYPE(/list)
+		var/list/tools = src.module.tools.Copy()
+		if (src.part_arm_l.add_to_tools)
+			tools += src.part_arm_l
+		if (src.part_arm_r.add_to_tools)
+			tools += src.part_arm_r
+		return tools
 
 	proc/installed_modules()
 		if(weapon_lock)
@@ -2465,31 +2428,8 @@
 
 	verb/cmd_robot_alerts()
 		set category = "Robot Commands"
-		set name = "Show Alerts"
-		src.robot_alerts()
-
-	proc/robot_alerts()
-		var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
-		dat += "<A HREF='?action=mach_close&window=robotalerts'>Close</A><BR><BR>"
-		for (var/cat in src.alarms)
-			dat += text("<B>[cat]</B><BR><br>")
-			var/list/L = src.alarms[cat]
-			if (L.len)
-				for (var/alarm in L)
-					var/list/alm = L[alarm]
-					var/area/A = alm[1]
-					var/list/sources = alm[3]
-					dat += "<NOBR>"
-					dat += text("-- [A.name]")
-					if (length(sources) > 1)
-						dat += text("- [sources.len] sources")
-					dat += "</NOBR><BR><br>"
-			else
-				dat += "-- All Systems Nominal<BR><br>"
-			dat += "<BR><br>"
-
-		src.viewalerts = 1
-		src.Browse(dat, "window=robotalerts&can_close=0")
+		set name = "Show Alert Minimap"
+		src.open_alert_minimap()
 
 	proc/get_poweruse_count()
 		if (src.cell)
@@ -2793,11 +2733,11 @@
 		if (part == "l_arm" || update_all)
 			if (src.part_arm_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if (src.part_arm_l.slot == "arm_both")
-					src.i_arm_l = image('icons/mob/robots.dmi', "arm-" + src.part_arm_l.appearanceString, layer=MOB_LIMB_LAYER)
-					src.i_hand_l = image('icons/mob/robots.dmi', "hand-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_arm_l = image('icons/mob/robots.dmi', "arm-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_hand_l = image('icons/mob/robots.dmi', "hand-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER2)
 				else
-					src.i_arm_l = image('icons/mob/robots.dmi', "l_arm-" + src.part_arm_l.appearanceString, layer=MOB_LIMB_LAYER)
-					src.i_hand_l = image('icons/mob/robots.dmi', "l_hand-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_arm_l = image('icons/mob/robots.dmi', "l_arm-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_hand_l = image('icons/mob/robots.dmi', "l_hand-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER2)
 				if (color_matrix)
 					src.internal_paint_part(src.i_arm_l, color_matrix)
 					src.internal_paint_part(src.i_hand_l, color_matrix)
@@ -2808,11 +2748,11 @@
 		if (part == "r_arm" || update_all)
 			if (src.part_arm_r && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if (src.part_arm_r.slot == "arm_both")
-					src.i_arm_r = image('icons/mob/robots.dmi', "arm-" + src.part_arm_r.appearanceString, layer=MOB_LIMB_LAYER)
-					src.i_hand_r = image('icons/mob/robots.dmi', "hand-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_arm_r = image('icons/mob/robots.dmi', "arm-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_hand_r = image('icons/mob/robots.dmi', "hand-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER2)
 				else
-					src.i_arm_r = image('icons/mob/robots.dmi', "r_arm-" + src.part_arm_r.appearanceString, layer=MOB_LIMB_LAYER)
-					src.i_hand_r = image('icons/mob/robots.dmi', "r_hand-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_arm_r = image('icons/mob/robots.dmi', "r_arm-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_hand_r = image('icons/mob/robots.dmi', "r_hand-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER2)
 				if (color_matrix)
 					src.internal_paint_part(src.i_arm_r, color_matrix)
 					src.internal_paint_part(src.i_hand_r, color_matrix)
@@ -2832,12 +2772,12 @@
 				src.i_arm_decor = null
 
 			if (C.head_mod && src.part_head)
-				src.i_head_decor = image('icons/mob/robots_decor.dmi', "head-" + C.head_mod, layer=MOB_BODYDETAIL_LAYER2)
+				src.i_head_decor = image('icons/mob/robots_decor.dmi', "head-" + C.head_mod, layer=MOB_HAIR_LAYER1)
 			else
 				src.i_head_decor = null
 
 			if (C.ches_mod && src.part_chest)
-				src.i_chest_decor = image('icons/mob/robots_decor.dmi', "body-" + C.ches_mod, layer=MOB_BODYDETAIL_LAYER2)
+				src.i_chest_decor = image('icons/mob/robots_decor.dmi', "body-" + C.ches_mod, layer=MOB_ARMOR_LAYER - 0.1) //layer just under outer suits
 			else
 				src.i_chest_decor = null
 

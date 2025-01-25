@@ -51,7 +51,7 @@
 	doWork()
 		for_by_tcl(locker, /obj/ganglocker)
 			if (!locker)
-				return
+				continue
 			if (!locker.is_hiding)
 				var/should_hide = TRUE
 				for(var/mob/M in range(1, locker.loc))
@@ -64,7 +64,7 @@
 			if (locker.stored_cash < 1)
 				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
 				locker.UpdateIcon()
-				return
+				continue
 
 			var/launder_rate = GANG_LAUNDER_RATE
 			if (locker.superlaunder_stacks > 0)
@@ -76,7 +76,7 @@
 			if (points < 1)
 				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
 				locker.UpdateIcon()
-				return
+				continue
 
 			if (locker.superlaunder_stacks)
 				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_superlaunder")
