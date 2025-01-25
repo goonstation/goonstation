@@ -235,9 +235,35 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	SETUP_GENERIC_ACTIONBAR(user, H, 5 SECONDS, /mob/living/carbon/human/proc/on_bandage_removal, list(user, removing), src.icon, src.icon_state, null,
 		list(INTERRUPT_MOVE, INTERRUPT_ATTACKED, INTERRUPT_STUNNED, INTERRUPT_ACTION))
 
-/mob/proc/get_surgery_status(var/zone)
+/mob/proc/get_surgery_depth(var/zone)
 	return FALSE
 
+/// Returns a number you can estimate the 'level of surgery' going on. Higher number = more, deeper surgeries.
+/mob/living/carbon/human/get_surgery_depth(var/zone)
+	if (!src.organHolder)
+		DEBUG_MESSAGE("has_active_surgery failed due to [src] having no organHolder")
+		return FALSE
+
+	if (!zone || zone == "head")
+		if (src.organHolder.head && src.organHolder.head.op_stage > 0)
+			return TRUE
+
+	if (!zone || zone == "chest")
+		if (src.organHolder.chest && src.organHolder.chest.op_stage > 0)
+			return TRUE
+
+	if (!zone || zone in list("l_arm","r_arm","l_leg","r_leg"))
+		var/obj/item/parts/surgery_limb = src.limbs.vars[zone]
+		if (istype(surgery_limb) && surgery_limb.remove_stage > 0)
+			return TRUE
+
+	return FALSE
+
+
+
+/*
+/mob/proc/get_surgery_status(var/zone)
+	return FALSE
 /mob/living/carbon/human/get_surgery_status(var/zone)
 	if (!src.organHolder)
 		DEBUG_MESSAGE("get_surgery_status failed due to [src] having no organHolder")
@@ -286,7 +312,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	//DEBUG_MESSAGE("get_surgery_status for [src] returning [return_thing]")
 	return return_thing
+*/
 
+/*
 /* ============================= */
 /* ---------- SCALPEL ---------- */
 /* ============================= */
@@ -1429,7 +1457,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			playsound(patient, 'sound/items/Ratchet.ogg', 50, TRUE)
 			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s [limb] with [src].")
 			return TRUE
-
+*/
 ///You messed up. Cause damage and spawn some indicators.
 /proc/do_slipup(var/mob/surgeon, var/mob/patient, var/damage_target, var/damage_value, var/fluff_text)
 	surgeon.visible_message(SPAN_ALERT("<b>[surgeon][fluff_text]!</b>"))

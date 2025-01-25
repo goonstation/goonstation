@@ -16,9 +16,12 @@
 	var/sub_surgeries_always_visible = FALSE
 	/// If TRUE, the surgery will be restarted when finished.
 	var/restart_when_finished = FALSE
+	/// If TRUE, the surgery will be exited when finished, placing the user up 1 level.
+	var/exit_when_finished = FALSE
+
+	var/active = FALSE //! If TRUE, the surgery is partially complete.
 	var/holder = null
 	var/mob/living/patient = null
-	var/started = FALSE
 
 	New(var/mob/living/patient, var/datum/surgeryHolder/holder, var/datum/surgery/super_surgery)
 		..()
@@ -38,30 +41,29 @@
 			if (step.can_operate(tool))
 				return TRUE
 		return FALSE
-	///Create & add the surgery steps for this surgery
-	proc/generate_surgery_steps()
 	///Create the sub-surgeries for this surgery
 	proc/get_sub_surgeries()
 		for(var/surgery in default_sub_surgeries)
 			sub_surgeries += new surgery(patient, holder, src)
 
-	///Whether this surgery is possible on the target - Otherwise, will be hidden from the context menu
-	proc/surgery_possible(mob/living/surgeon, mob/user)
-		return TRUE
+
+	proc/surgery_damage_multiplier(mob/living/surgeon)
+		if(patient == surgeon)
+			if (patient.reagents)
+				if (patient.reagents.get_reagent_amount("ethanol") > 40)
+					return 3.5
+				if (patient.reagents.get_reagent_amount("morphine") > 5)
+					return 2
+			return 3.5
+		return 1
 
 	/// Called when the surgery's context option is clicked
 	proc/enter_surgery(mob/living/surgeon, obj/item/I)
-		if (!started)
-			start_surgery(surgeon, I)
-			started = TRUE
 		var/contexts = get_surgery_contexts()
 		contexts += new/datum/contextAction/surgery/cancel(holder,src)
 		contexts += new /datum/contextAction/surgery/step_up(holder, src)
 
 		surgeon.showContextActions(contexts, patient, new /datum/contextLayout/experimentalcircle)
-
-	/// Called the first time a surgery is entered
-	proc/start_surgery(mob/surgeon, obj/item/I)
 
 	/// Called when the last step of a surgery is completed
 	proc/complete_surgery(mob/surgeon, obj/item/I)
@@ -71,17 +73,19 @@
 				qdel(step)
 			surgery_steps = list()
 			generate_surgery_steps()
-			started = FALSE
+			active = FALSE
+		if (exit_when_finished)
+			super_surgery?.enter_surgery(surgeon, I)
+		else
 			enter_surgery(surgeon, I)
-
-	proc/on_complete(mob/surgeon, obj/item/I)
-
 	/// Called when something cancels the surgery.
-	proc/cancel_surgery(obj/item/I, mob/user)
+	proc/cancel_surgery(mob/user, obj/item/I)
 		for(var/datum/surgery_step/step in surgery_steps)
 			step.finished = FALSE
-
-	/// Gets the context action for this surgery - For when you're selecting a surgery.
+		for(var/datum/surgery/surgery in sub_surgeries)
+			surgery.cancel_surgery(user, I)
+		active = FALSE
+	/// Gets the context action for this surgery.
 	proc/get_context()
 		var/datum/contextAction/surgery/action= new
 		action.name = name
@@ -90,9 +94,8 @@
 		action.surgery = src
 		action.holder = holder
 		return action
-
 	proc/get_surgery_progress()
-		var/complete = 0
+		var/length = 0
 		for (var/datum/surgery_step/step in surgery_steps)
 			if (step.finished)
 				complete++
@@ -100,10 +103,10 @@
 
 	proc/surgery_complete()
 		for(var/datum/surgery_step/step in surgery_steps)
-			if(!step.finished)
+			if(!step.optional && !step.finished)
 				return FALSE
 		return TRUE
-	/// Gets the context actions for this surgeries's steps - For when you're performing the surgery.
+	/// Gets the context actions for this surgeries's steps.
 	proc/get_surgery_contexts()
 		var/list/datum/contextAction/surgical_step/contexts = list()
 		var/step_locked = FALSE
@@ -119,10 +122,18 @@
 				contexts += surgery.get_context()
 		return contexts
 	proc/step_completed(datum/surgery_step/step, mob/user, obj/item/tool)
+		active = TRUE
 		if (surgery_complete())
 			complete_surgery(user, tool)
 		else
 			enter_surgery(user, null)
+
+	///Create & add the surgery steps for this surgery
+	proc/generate_surgery_steps()
+	///Whether this surgery is possible on the target - Otherwise, will be hidden from the context menu
+	proc/surgery_possible(mob/living/surgeon)
+		return TRUE
+	proc/on_complete(mob/surgeon, obj/item/I)
 
 /datum/surgery_step
 	var/flags_required = 0 //! Flags for tools that are accepted for this step
@@ -133,6 +144,7 @@
 	var/success_text = "Manages to manifest coder magic and perform the basest of all surgeries."
 	var/success_sound = 'sound/items/Scissor.ogg'
 	var/slipup_text = "Fails to manifest coder magic and screws up the surgery."
+	var/optional = FALSE //! Whether this step is optional
 	var/datum/surgery/parent_surgery = null //! The surgery this step is a part of
 	var/hide_when_finished = TRUE //! Whether this step should be hidden when finished
 	var/finished = FALSE //! Whether this step is finished
@@ -145,27 +157,48 @@
 		for(var/type in tools_required)
 			if (istype(tool,type))
 				return TRUE
-	proc/can_operate(obj/item/tool)
-		return (tool.tool_flags & flags_required || valid_subtype(tool) || tool_requirement(tool))
+	proc/can_operate(mob/surgeon, obj/item/tool)
+		if (!IN_RANGE(surgeon, parent_surgery.patient, 1))
+			boutput(surgeon,SPAN_ALERT("You're too far away!"))
+		if (tool.tool_flags & flags_required || valid_subtype(tool) || tool_requirement(tool))
+			return TRUE
+		else
+			boutput(surgeon,SPAN_ALERT("You can't use that tool for this step."))
+
 
 	///Code based object requirement, IE. contains 50 units of ethanol or something
 	proc/tool_requirement(obj/item/tool)
 		return FALSE
-	proc/perform_step(obj/item/tool, mob/user) //! Perform the surgery step
-		if (can_operate(tool))
+
+	///Calculate if this step succeeds, apply failure effects here
+	proc/calculate_success(mob/surgeon, obj/item/tool)
+		//todo: migrate all these over
+		if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
+			surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!"), \
+			SPAN_ALERT("You fumble and stab yourself in the eye with [src]!"))
+			surgeon.bioHolder.AddEffect("blind")
+			surgeon.changeStatus("knockdown", 4 SECONDS)
+			JOB_XP(surgeon, "Clown", 1)
+			var/damage = rand(5, 15)
+			random_brute_damage(surgeon, damage)
+			take_bleeding_damage(surgeon, null, damage)
+			return FALSE
+		return TRUE
+
+	proc/perform_step(mob/surgeon, obj/item/tool) //! Perform the surgery step
+		if (can_operate(surgeon, tool) && calculate_success(surgeon, tool))
 			if (success_sound)
 				playsound(parent_surgery.patient, success_sound, 50, TRUE)
-			user.visible_message(success_text)
-			finish_step(user, tool)
-		else
-			boutput(user,SPAN_ALERT("You can't use that tool for this step."))
+			surgeon.visible_message(success_text)
+			finish_step(surgeon, tool)
+
 
 	/// Mark this step as finished and call on_complete. It's better to override on_complete unless you know what you're doing.
 	proc/finish_step(mob/user, obj/item/tool)
 		finished = TRUE
 		parent_surgery.step_completed(src, user)
 
-	/// Override this to completion effects to this surgery step.
+	/// Override this to add completion effects to this surgery step.
 	proc/on_complete(mob/user, obj/item/tool)
 
 	proc/get_context(var/locked) //! Get the context for this step
@@ -179,6 +212,9 @@
 		if (finished)
 			step_context.icon_background = "greenbg"
 			step_context.pip_state = "check"
+		else if (optional)
+			step_context.icon_background = "bluebg"
+			step_context.pip_state = "squiggle"
 		else if (!locked)
 			step_context.icon_background = "yellowbg"
 			step_context.pip_state = "circle"
@@ -187,32 +223,6 @@
 			step_context.pip_state = "cross"
 		return step_context
 
-	suture
-		name = "Suture"
-		desc = "Suture the wound."
-		icon_state = "suture"
-		success_text = "sutures the wound"
-		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		slipup_text = "screws up!"
-
-		tools_required = list(/obj/item/suture)
-	snip
-		name = "Snip"
-		desc = "Snip out some tissue."
-		icon_state = "scissor"
-		success_text = "snips out various tissues and tendons"
-		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		slipup_text = " loses control of the scissors and drags it across the patient's entire chest"
-		flags_required = TOOL_SNIPPING
-
-	cut
-		name = "Cut"
-		desc = "Cut through the flesh."
-		icon_state = "scalpel"
-		success_text = "cuts through the flesh"
-		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		slipup_text = "cuts too deep and messes up!"
-		flags_required = TOOL_CUTTING
 	screw
 		name = "Screw"
 		desc = "Screw the thing into place."
@@ -232,39 +242,3 @@
 			if (tool.force >= 5 && (tool.hit_type == DAMAGE_BLUNT || tool.hit_type == DAMAGE_CRUSH))
 				return TRUE
 			return FALSE
-
-	whack
-		name = "Whack"
-		desc = "Hit with something kinda heavy."
-		icon_state = "bar"
-		success_text = "whacks really hard"
-		success_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
-		slipup_text = "cuts too deep and messes up!"
-		tool_requirement(obj/item/tool)
-			if (tool.force >= 5 && (tool.hit_type == DAMAGE_BLUNT || tool.hit_type == DAMAGE_CRUSH))
-				return TRUE
-			return FALSE
-	gun
-		name = "Gun"
-		desc = "what?."
-		icon_state = "gun"
-		success_text = "shoots really hard"
-		success_sound = 'sound/weapons/kuvalda.ogg'
-		slipup_text = "cuts too deep and messes up!"
-		tools_required = list(/obj/item/gun/kinetic)
-	saw
-		name = "Saw"
-		desc = "Saw through the bone."
-		icon_state = "saw"
-		success_text = "cuts through the flesh"
-		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		slipup_text = "cuts too deep and messes up!"
-		flags_required = TOOL_SAWING
-	bandage
-		name = "Bandage"
-		desc = "Bandage the wound."
-		icon_state = "bandage"
-		success_text = "bandages the wound"
-		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		slipup_text = "screws up!"
-		tools_required = list(/obj/item/bandage)

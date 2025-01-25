@@ -27,11 +27,21 @@
 	proc/start_surgery(mob/surgeon, obj/tool)
 		show_contexts(surgeon, tool)
 
+	proc/do_life(var/mult)
+		for(var/datum/surgery/surgery in surgeries)
+			if (surgery.active)
+				take_bleeding_damage(src, null, rand(5, 10))
+
+
 	/// Enter a specific surgery, used here for tracking state of each surgeon
 	proc/enter_surgery(datum/surgery/surgery, mob/living/surgeon, obj/item/I)
 		if (!surgery)
 			return
 		surgery.enter_surgery(surgeon, I)
+
+	proc/cancel_all()
+		for(var/datum/surgery/surgery in surgeries)
+			surgery.cancel_surgery(null, null)
 
 	proc/cancel_surgery(datum/surgery/surgery, mob/living/surgeon, obj/item/I)
 		if (!surgery)
@@ -45,12 +55,28 @@
 				contexts += surgery.get_context()
 		surgeon.showContextActions(contexts, patient, new /datum/contextLayout/experimentalcircle)
 
-	proc/can_operate(obj/item/tool)
-		if (tool.tool_flags & TOOL_CUTTING)
-			return TRUE
-		for(var/datum/surgery/surgery in surgeries)
-			if (surgery.can_operate(tool))
+	proc/can_operate(mob/surgeon, obj/item/tool)
+		if (!patient)
+			return FALSE
+		if (!ishuman(patient)) // is the patient not a human?
+			return FALSE
+		// is the patient on an optable and lying?
+		if (locate(/obj/machinery/optable, patient.loc))
+			if(patient.lying || patient == surgeon)
 				return TRUE
+		// is the patient on a table and paralyzed or dead?
+		else if ((locate(/obj/stool/bed, patient.loc) || locate(/obj/table, patient.loc)) && (patient.getStatusDuration("unconscious") || patient.stat))
+			return TRUE
+		// is the patient really drunk and also the surgeon?
+		else if (patient.reagents && (patient.reagents.get_reagent_amount("ethanol") > 40 || patient.reagents.get_reagent_amount("morphine") > 5) && (patient == surgeon || (locate(/obj/stool/bed, patient.loc) && patient.lying)))
+			return TRUE
+		return FALSE
+
+
+//		for(var/datum/surgery/surgery in surgeries)
+//			if (surgery.can_operate(tool))
+//				return TRUE
+
 	/// called when wanting to 'go up' a level
 	proc/exit_surgery(datum/surgery/surgery, mob/living/surgeon, obj/item/I)
 		if (!surgery)
@@ -66,5 +92,9 @@
 		add_surgeries()
 			..()
 			surgeries += new/datum/surgery/heal_generic(patient, src)
+			surgeries += new/datum/surgery/organ_surgery(patient, src)
+			surgeries += new/datum/surgery/limb_surgery(patient, src)
+
+
 
 

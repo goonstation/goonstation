@@ -46,7 +46,11 @@
 	/// If our organ's been severed and reattached. Used by heads to preserve their appearance across icon updates if reattached
 	var/transplanted = FALSE
 
-	var/op_stage = 0
+	/// Is this organ currently attached securely?
+	var/secure = TRUE
+	/// Is this organ under active surgery?
+	var/in_surgery = FALSE
+
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/tox_dam = 0

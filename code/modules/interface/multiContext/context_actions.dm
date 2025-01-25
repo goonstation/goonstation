@@ -1422,6 +1422,7 @@
 	execute(var/obj/item/robospray/robospray, var/mob/user)
 		robospray.change_reagent(src.reagent_id, user)
 
+/*
 /// Organ context action to pick a region to operate on
 /datum/contextAction/surgery_region
 	name = "Open up surgery region"
@@ -1693,7 +1694,8 @@
 			else
 				src.open = FALSE
 			. = ..()
-
+*/
+/*
 /// Organ context action to pick an organ to operate on
 /datum/contextAction/organs
 	name = "Cut out organ"
@@ -2245,7 +2247,7 @@
 				boutput(user, SPAN_NOTICE("You need a snipping tool."))
 				return FALSE
 			return TRUE
-
+*/
 
 
 
@@ -2263,7 +2265,7 @@
 	execute(atom/target, mob/user)
 		..()
 		var/obj/item/I = user.equipped()
-		step.perform_step(I,user)
+		step.perform_step(user,I)
 
 /// surgery context menu - starts/continues a surgery
 /datum/contextAction/surgery

@@ -1303,7 +1303,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		var/mob/living/H = target
 		if (H.surgeryHolder)
 			var/datum/surgeryHolder/holder = H.surgeryHolder
-			if (holder.can_operate(src))
+			if (holder.can_operate(user,src))
 				holder.start_surgery(user,src)
 				return
 

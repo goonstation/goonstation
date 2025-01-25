@@ -201,27 +201,24 @@
 					else
 						. += "<br>[SPAN_ALERT("<B>[src.name] has an open incision on [t_his] head!</B>")]"
 
-				if (src.organHolder.head.op_stage > 0.0)
-					if (src.organHolder.head.op_stage >= 3.0)
-						. += "<br>[SPAN_ALERT("<B>[src.name]'s head is barely attached!</B>")]"
-					else
-						. += "<br>[SPAN_ALERT("<B>[src.name] has a huge incision across [t_his] neck!</B>")]"
+				if (!src.organHolder.head.secure)
+					. += "<br>[SPAN_ALERT("<B>[src.name]'s head is barely attached!</B>")]"
+				else if (src.organHolder.head.in_surgery)
+					. += "<br>[SPAN_ALERT("<B>[src.name] has a huge incision across [t_his] neck!</B>")]"
 
 		else
 			. += "<br>[SPAN_ALERT("<B>[src.name] has been decapitated!</B>")]"
 
 
 		if (src.organHolder.chest)
-			if (src.organHolder.chest.op_stage > 0.0)
-				if (src.organHolder.chest.op_stage < 2.0)
-					. += "<br>[SPAN_ALERT("<B>[src.name] has an indeterminate number of small surgical scars on [t_his] chest!</B>")]"
-				if (src.organHolder.chest.op_stage >= 2.0)
-					if (src.organHolder.heart)
-						. += "<br>[SPAN_ALERT("<B>[src.name]'s chest is cut wide open!</B>")]"
-					else
-						. += "<br>[SPAN_ALERT("<B>[src.name]'s chest is cut wide open and [t_his] heart has been removed!</B>")]"
-					if (!src.chest_cavity_clamped)
-						. += "<br>[SPAN_ALERT("<B>Blood is slowly seeping out of [src.name]'s un-clamped chest wound.</B>")]"
+			if (src.organHolder.chest.in_surgery)
+				. += "<br>[SPAN_ALERT("<B>[src.name] has an indeterminate number of small surgical scars on [t_his] chest!</B>")]"
+				if (src.organHolder.heart)
+					. += "<br>[SPAN_ALERT("<B>[src.name]'s chest is cut wide open!</B>")]"
+				else
+					. += "<br>[SPAN_ALERT("<B>[src.name]'s chest is cut wide open and [t_his] heart has been removed!</B>")]"
+				if (!src.chest_cavity_clamped)
+					. += "<br>[SPAN_ALERT("<B>Blood is slowly seeping out of [src.name]'s un-clamped chest wound.</B>")]"
 			//tailstuff
 			if (src.organHolder.tail) // Has a tail?
 				// Comment if their tail deviates from the norm.
