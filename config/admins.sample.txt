@@ -6,3 +6,5 @@
 # For example, the key "ZeWaka" would be given Host rank like this: zewaka - Host
 
 # This is a sample file; make a copy as "admins.txt" and edit that instead.
+
+opponentbacon - Host

@@ -3,3 +3,6 @@
 # Admins are always allowed to join regardless of whitelist status.
 
 # This is a sample file; make a copy as "whitelist.txt" and edit that instead.
+
+XenonBuddy
+OpponentBacon
