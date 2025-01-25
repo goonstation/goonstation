@@ -1,0 +1,8 @@
+# When the config setting WHITELIST_ENABLED is set, only keys in this file will be allowed to join the server.
+# One key per line.
+# Admins are always allowed to join regardless of whitelist status.
+
+# This is a sample file; make a copy as "whitelist.txt" and edit that instead.
+
+XenonBuddy
+OpponentBacon
