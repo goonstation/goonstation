@@ -855,9 +855,9 @@ ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 				var/mob/living/carbon/human/H = target
 				if (is_special)
 					return ..()
-				else if (H.bleeding || ((H.organHolder && !H.organHolder.get_organ("butt")) && user.zone_sel.selecting == "chest"))
-					src.cautery_surgery(H, user, 5, src.on)
-					return ..()
+				// else if (H.bleeding || ((H.organHolder && !H.organHolder.get_organ("butt")) && user.zone_sel.selecting == "chest"))
+				// 	src.cautery_surgery(H, user, 5, src.on)
+				// 	return ..()
 				else
 					user.visible_message(SPAN_ALERT("<b>[user]</b> pushes the burning [src] against [H]!"),\
 					SPAN_ALERT("You press the burning end of [src] against [H]!"))

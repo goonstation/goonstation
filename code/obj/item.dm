@@ -750,13 +750,6 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	if (!islist(params)) params = params2list(params)
 
-	if (ishuman(over_object) && ishuman(usr) && !src.storage)
-		var/mob/living/carbon/human/patient = over_object
-		var/mob/living/carbon/human/surgeon = usr
-		if (surgeryCheck(patient, surgeon))
-			if (insertChestItem(patient, surgeon, src))
-				return
-
 	if (isliving(over_object) && isliving(usr) && !src.storage) //pickup action
 		if (user == over_object)
 			actions.start(new /datum/action/bar/private/icon/pickup(src), user)

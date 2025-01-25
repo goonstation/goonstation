@@ -1010,8 +1010,8 @@
 			JOB_XP(user, "Clown", 3)
 
 
-		else if(!is_special) // congrats buddy!!!!! you managed to pass all the checks!!!!! you get to do surgery!!!!
-			saw_surgery(target,user)
+		// else if(!is_special) // congrats buddy!!!!! you managed to pass all the checks!!!!! you get to do surgery!!!!
+		// 	saw_surgery(target,user)
 
 
 /obj/item/deconstructor/borg

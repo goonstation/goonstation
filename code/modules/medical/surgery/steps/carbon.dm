@@ -45,10 +45,11 @@
 		tools_required = list(/obj/item/bandage)
 
 	organ
-		var/obj/item/organ/affected_organ
-		New(datum/surgery/parent_surgery, /obj/item/organ/the_organ)
-			affected_organ = the_organ
+		var/affected_organ
+		New(datum/surgery/parent_surgery, the_organ)
+			src.affected_organ = the_organ
 			..(parent_surgery)
+
 		snip
 			name = "Snip"
 			desc = "Disconnect the organ."
@@ -57,12 +58,30 @@
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 			slipup_text = " loses control of the scissors and drags it across the patient's entire chest"
 			flags_required = TOOL_SNIPPING
-
+			on_complete(mob/user, obj/item/tool)
+				. = ..()
+				parent_surgery.patient.organHolder.vars[affected_organ].in_surgery = TRUE
 		cut
 			name = "Cut"
-			desc = "Cut the organ out."
+			desc = "Cut connective tissues from the organ."
 			icon_state = "scalpel"
 			success_text = "cuts through the flesh"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 			slipup_text = "cuts too deep and messes up!"
 			flags_required = TOOL_CUTTING
+			on_complete(mob/user, obj/item/tool)
+				. = ..()
+				parent_surgery.patient.organHolder.vars[affected_organ].secure = FALSE
+
+		remove
+			name = "Remove"
+			desc = "Remove the organ."
+			icon_state = "scalpel"
+			success_text = "cuts out organ"
+			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+			slipup_text = "cuts too deep and messes up!"
+			flags_required = TOOL_CUTTING
+			on_complete(mob/user, obj/item/tool)
+				. = ..()
+				parent_surgery.patient.organHolder.drop_organ(affected_organ)
+

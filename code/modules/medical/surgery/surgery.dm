@@ -20,6 +20,7 @@
 	var/exit_when_finished = FALSE
 
 	var/active = FALSE //! If TRUE, the surgery is partially complete.
+	var/complete = FALSE //! If TRUE, the surgery is complete and will show as green.
 	var/holder = null
 	var/mob/living/patient = null
 
@@ -93,9 +94,13 @@
 		action.icon_state = icon_state
 		action.surgery = src
 		action.holder = holder
+		if (complete)
+			action.icon_background = "greenbg"
+		else if (active)
+			action.icon_background = "yellowbg"
 		return action
 	proc/get_surgery_progress()
-		var/length = 0
+		var/complete = 0
 		for (var/datum/surgery_step/step in surgery_steps)
 			if (step.finished)
 				complete++
@@ -190,6 +195,7 @@
 			if (success_sound)
 				playsound(parent_surgery.patient, success_sound, 50, TRUE)
 			surgeon.visible_message(success_text)
+			on_complete(surgeon, tool)
 			finish_step(surgeon, tool)
 
 

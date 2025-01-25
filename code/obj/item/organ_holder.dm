@@ -47,23 +47,6 @@
 		"appendix"="/obj/item/organ/appendix",
 		"butt"="/obj/item/clothing/head/butt",
 		"tail"="/obj/item/organ/tail")
-	///List of buttons used in chest organ surgery
-	var/list/datum/contextAction/contexts = list()
-	var/datum/contextLayout/contextLayout = new /datum/contextLayout/experimentalcircle
-	///List of buttons used in back surgery (tail/butt)
-	var/list/datum/contextAction/back_contexts = list()
-
-	//List of buttons used to open specific regions of the person
-	var/list/datum/contextAction/rib_contexts = null
-	var/list/datum/contextAction/abdomen_contexts = null
-	var/list/datum/contextAction/flanks_contexts = null
-	var/list/datum/contextAction/subcostal_contexts = null
-
-	//List of buttons showing all the organs inside a region
-	var/list/datum/contextAction/inside_ribs_contexts = null
-	var/list/datum/contextAction/inside_abdomen_contexts = null
-	var/list/datum/contextAction/inside_flanks_contexts = null
-	var/list/datum/contextAction/inside_subcostal_contexts = null
 	///How cut up is our back for surgery purposes
 	var/back_op_stage = BACK_SURGERY_CLOSED
 	///How cut up are our ribs?
@@ -84,44 +67,44 @@
 		if (src.donor && !ling) // so changers just get the datum and not a metric fuckton of organs
 			src.create_organs()
 
-	proc/build_region_buttons()
+	// proc/build_region_buttons()
 
-		if (!src.chest)	//Can't do surgery without a chest to operate on
-			return null
-		src.contexts = list()
+	// 	if (!src.chest)	//Can't do surgery without a chest to operate on
+	// 		return null
+	// 	src.contexts = list()
 
-		//begin by adding regions
-		var/datum/contextAction/surgery_region/ribs/ribs_action = new /datum/contextAction/surgery_region/ribs(src.ribs_stage)
-		src.contexts += ribs_action
-		var/datum/contextAction/surgery_region/subcostal/subcostal_action = new /datum/contextAction/surgery_region/subcostal(src.subcostal_stage)
-		src.contexts += subcostal_action
-		var/datum/contextAction/surgery_region/abdomen/abdomen_action = new /datum/contextAction/surgery_region/abdomen(src.abdominal_stage)
-		src.contexts += abdomen_action
-		var/datum/contextAction/surgery_region/flanks/flanks_action = new /datum/contextAction/surgery_region/flanks(src.flanks_stage)
-		src.contexts += flanks_action
+	// 	//begin by adding regions
+	// 	var/datum/contextAction/surgery_region/ribs/ribs_action = new /datum/contextAction/surgery_region/ribs(src.ribs_stage)
+	// 	src.contexts += ribs_action
+	// 	var/datum/contextAction/surgery_region/subcostal/subcostal_action = new /datum/contextAction/surgery_region/subcostal(src.subcostal_stage)
+	// 	src.contexts += subcostal_action
+	// 	var/datum/contextAction/surgery_region/abdomen/abdomen_action = new /datum/contextAction/surgery_region/abdomen(src.abdominal_stage)
+	// 	src.contexts += abdomen_action
+	// 	var/datum/contextAction/surgery_region/flanks/flanks_action = new /datum/contextAction/surgery_region/flanks(src.flanks_stage)
+	// 	src.contexts += flanks_action
 
-		//possible parasite removal surgery
-		if (length(donor.ailments) > 0)
-			for (var/datum/ailment_data/an_ailment in donor.ailments)
-				if (an_ailment.cure_flags & CURE_SURGERY)
-					var/datum/contextAction/surgery_region/parasite/parasite_action = new /datum/contextAction/surgery_region/parasite()
-					src.contexts += parasite_action
-					break
+	// 	//possible parasite removal surgery
+	// 	if (length(donor.ailments) > 0)
+	// 		for (var/datum/ailment_data/an_ailment in donor.ailments)
+	// 			if (an_ailment.cure_flags & CURE_SURGERY)
+	// 				var/datum/contextAction/surgery_region/parasite/parasite_action = new /datum/contextAction/surgery_region/parasite()
+	// 				src.contexts += parasite_action
+	// 				break
 
-		//possible chest item removal surgery
-		if (ishuman(src.donor))
-			var/mob/living/carbon/human/H = src.donor
-			if (H.chest_item)
-				var/datum/contextAction/surgery_region/chest_item/item_action = new /datum/contextAction/surgery_region/chest_item()
-				src.contexts += item_action
+	// 	//possible chest item removal surgery
+	// 	if (ishuman(src.donor))
+	// 		var/mob/living/carbon/human/H = src.donor
+	// 		if (H.chest_item)
+	// 			var/datum/contextAction/surgery_region/chest_item/item_action = new /datum/contextAction/surgery_region/chest_item()
+	// 			src.contexts += item_action
 
-		for (var/obj/item/implant/I in donor.implant)
-			if (!istype(I, /obj/item/implant/projectile)) //We dont want bullets/shrapnel
-				var/datum/contextAction/surgery_region/implant/implant_action = new /datum/contextAction/surgery_region/implant()
-				src.contexts += implant_action
-				break
+	// 	for (var/obj/item/implant/I in donor.implant)
+	// 		if (!istype(I, /obj/item/implant/projectile)) //We dont want bullets/shrapnel
+	// 			var/datum/contextAction/surgery_region/implant/implant_action = new /datum/contextAction/surgery_region/implant()
+	// 			src.contexts += implant_action
+	// 			break
 
-		return length(src.contexts)
+	// 	return length(src.contexts)
 /*
 	proc/close_surgery_regions()
 		src.rib_contexts = null
@@ -394,13 +377,6 @@
 		tail = null
 
 		donor = null
-
-		if (src.contexts)
-			for(var/datum/contextAction/C in src.contexts)
-				C.dispose()
-		if (src.back_contexts)
-			for(var/datum/contextAction/C in src.contexts)
-				C.dispose()
 
 		..()
 

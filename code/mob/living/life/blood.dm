@@ -41,14 +41,14 @@
 			if (coag_amt) // coagulant
 				decrease_chance += 5
 
-			if (owner.get_surgery_status())
+			if (owner.get_surgery_depth())
 				decrease_chance -= 1
 
 			if (probmult(decrease_chance))
 				owner.bleeding -= 1
 				boutput(owner, SPAN_NOTICE("Your wounds feel [pick("better", "like they're healing a bit", "a little better", "itchy", "less tender", "less painful", "like they're closing", "like they're closing up a bit", "like they're closing up a little")]."))
 
-			if (probmult(surgery_increase_chance) && owner.get_surgery_status())
+			if (probmult(surgery_increase_chance) && owner.get_surgery_depth())
 				owner.bleeding += 1
 
 			owner.bleeding = clamp(owner.bleeding, 0, 5)

@@ -20,14 +20,14 @@ TYPEINFO(/obj/item/device/igniter)
 	//its still a bit stronger than non-inventory interactions, why not
 	var/last_ignite = 0
 
-/obj/item/device/igniter/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-	if (ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if (H:bleeding || (H.organHolder.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
-			if (is_special || !src.cautery_surgery(target, user, 15))
-				return ..()
-		else return ..()
-	else return ..()
+// /obj/item/device/igniter/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+// 	if (ishuman(target))
+// 		var/mob/living/carbon/human/H = target
+// 		if (H:bleeding || (H.organHolder.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
+// 			if (is_special || !src.cautery_surgery(target, user, 15))
+// 				return ..()
+// 		else return ..()
+// 	else return ..()
 
 /obj/item/device/igniter/attackby(obj/item/W, mob/user)
 	if ((istype(W, /obj/item/device/radio/signaler) && !( src.status )))

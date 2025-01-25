@@ -386,24 +386,24 @@
 		var/mob/living/carbon/human/H = M
 		if (!H.organHolder)
 			return FALSE
-		switch (src.region)
-			//Check if our relevant region is opened up. For example hearts need the ribs to be opened up
-			if (null)
-				return TRUE
-			if (RIBS)
-				if (H.organHolder.ribs_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
-					return TRUE
-				return FALSE
-			if (ABDOMINAL)
-				if (H.organHolder.abdominal_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
-					return TRUE
-				return FALSE
-			if (SUBCOSTAL)
-				if (H.organHolder.subcostal_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
-					return TRUE
-			if (FLANKS)
-				if (H.organHolder.flanks_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
-					return TRUE
+		// switch (src.region)
+		// 	//Check if our relevant region is opened up. For example hearts need the ribs to be opened up
+		// 	if (null)
+		// 		return TRUE
+		// 	if (RIBS)
+		// 		if (H.organHolder.ribs_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
+		// 			return TRUE
+		// 		return FALSE
+		// 	if (ABDOMINAL)
+		// 		if (H.organHolder.abdominal_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
+		// 			return TRUE
+		// 		return FALSE
+		// 	if (SUBCOSTAL)
+		// 		if (H.organHolder.subcostal_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
+		// 			return TRUE
+		// 	if (FLANKS)
+		// 		if (H.organHolder.flanks_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
+		// 			return TRUE
 
 		return FALSE
 
@@ -435,7 +435,7 @@
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
-			H.organHolder.receive_organ(src, full_organ_name, organ_location.op_stage)
+			// H.organHolder.receive_organ(src, full_organ_name, organ_location.op_stage)
 			H.update_body()
 
 			return 1
@@ -468,27 +468,3 @@
 					src.add_ability(A, abil)
 			src.broken = 0
 			return TRUE
-
-	proc/build_organ_buttons()
-		.= 0
-
-		if (surgery_flags)
-			.= 1
-
-			if (src.surgery_contexts != null)
-				return
-
-			src.surgery_contexts = list()
-
-			if (surgery_flags & SURGERY_CUTTING)
-				var/datum/contextAction/organ_surgery/cut/action = new
-				surgery_contexts += action
-			if (surgery_flags & SURGERY_SNIPPING)
-				var/datum/contextAction/organ_surgery/snip/action = new
-				surgery_contexts += action
-			if (surgery_flags & SURGERY_SAWING)
-				var/datum/contextAction/organ_surgery/saw/action = new
-				surgery_contexts += action
-
-			.+= length(surgery_contexts)
-

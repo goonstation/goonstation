@@ -194,11 +194,11 @@
 			var/mob/living/M = target
 			if (is_special)
 				return ..()
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.bleeding || (H.organHolder?.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
-					if (src.cautery_surgery(H, user, 5, src.on))
-						return
+			// if (ishuman(M))
+			// 	var/mob/living/carbon/human/H = M
+			// 	if (H.bleeding || (H.organHolder?.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
+			// 		if (src.cautery_surgery(H, user, 5, src.on))
+			// 			return
 			if (M.getStatusDuration("burning") && src.on == 0)
 				if (M == user)
 					src.light(user, SPAN_ALERT("<b>[user]</b> lights [his_or_her(user)] [src.name] with [his_or_her(user)] OWN flaming body. That's dedication! Or crippling addiction."))
@@ -1116,9 +1116,9 @@
 					smoke.light(user, SPAN_ALERT("<b>[user]</b> lights [fella]'s [smoke] with [src]."))
 					fella.set_clothing_icon_dirty()
 					return
-				else if (fella.bleeding || (fella.organHolder?.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
-					src.cautery_surgery(fella, user, 5, src.on)
-					return ..()
+				// else if (fella.bleeding || (fella.organHolder?.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
+				// 	src.cautery_surgery(fella, user, 5, src.on)
+				// 	return ..()
 				else
 					user.visible_message(SPAN_ALERT("<b>[user]</b> puts out [src] on [fella]!"),\
 					SPAN_ALERT("You put out [src] on [fella]!"))
@@ -1232,9 +1232,9 @@
 					fella.set_clothing_icon_dirty()
 					return
 
-			if (fella.bleeding || (fella.organHolder?.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
-				if (src.cautery_surgery(target, user, 10, src.on))
-					return
+			// if (fella.bleeding || (fella.organHolder?.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
+			// 	if (src.cautery_surgery(target, user, 10, src.on))
+			// 		return
 
 		user.visible_message(SPAN_ALERT("<b>[user]</b> waves [src] around in front of [target]'s face! OoOo, are ya scared?![src.on ? "" : " No, probably not, since [src] is closed."]"))
 		return

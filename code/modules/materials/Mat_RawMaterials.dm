@@ -173,7 +173,7 @@
 			if (ishuman(target))
 				var/mob/living/carbon/human/H = target
 				var/zone = user.zone_sel.selecting
-				var/surgery_status = H.get_surgery_status(zone)
+				var/surgery_status = H.get_surgery_depth(zone)
 				if (surgery_status && H.organHolder)
 					actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 15, zone, surgery_status, rand(1,4), Vrb = "bandag"), user)
 					src.in_use = 1

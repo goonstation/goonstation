@@ -108,8 +108,8 @@ TRAYS
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and jabs [himself_or_herself(user)]."))
 			random_brute_damage(user, 5)
-		if (is_special || !spoon_surgery(target,user))
-			return ..()
+		// if (is_special || !spoon_surgery(target,user))
+		// 	return ..()
 
 	custom_suicide = TRUE
 	suicide(var/mob/user as mob)
@@ -142,8 +142,8 @@ TRAYS
 			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and stabs [himself_or_herself(user)]."))
 			random_brute_damage(user, 10)
 			JOB_XP(user, "Clown", 1)
-		if((is_special || !saw_surgery(target,user))) // it doesn't make sense, no. but hey, it's something.
-			return ..()
+		// if((is_special || !saw_surgery(target,user))) // it doesn't make sense, no. but hey, it's something.
+		// 	return ..()
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -182,8 +182,8 @@ TRAYS
 			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and cuts [himself_or_herself(user)]."))
 			random_brute_damage(user, 20)
 			JOB_XP(user, "Clown", 1)
-		if(is_special || !scalpel_surgery(target, user))
-			return ..()
+		// if(is_special || !scalpel_surgery(target, user))
+		// 	return ..()
 
 	custom_suicide = TRUE
 	suicide(var/mob/user as mob)
@@ -213,8 +213,8 @@ TRAYS
 		if (prob(20))
 			src.break_utensil(user)
 			return
-		if (is_special || !spoon_surgery(target,user))
-			return ..()
+		// if (is_special || !spoon_surgery(target,user))
+		// 	return ..()
 
 	suicide(var/mob/user as mob)
 		user.visible_message(SPAN_ALERT("<b>[user] tries to jab [src] straight through [his_or_her(user)] eye and into [his_or_her(user)] brain!</b>"))
@@ -243,8 +243,8 @@ TRAYS
 		if (prob(20))
 			src.break_utensil(user)
 			return
-		if (is_special || !saw_surgery(target,user))
-			return ..()
+		// if (is_special || !saw_surgery(target,user))
+		// 	return ..()
 
 	suicide(var/mob/user as mob)
 		user.visible_message(SPAN_ALERT("<b>[user] tries to stab [src] right into [his_or_her(user)] heart!</b>"))
@@ -274,8 +274,8 @@ TRAYS
 		if(prob(20))
 			src.break_utensil(user)
 			return
-		if(is_special || !scalpel_surgery(target, user))
-			return ..()
+		// if(is_special || !scalpel_surgery(target, user))
+		// 	return ..()
 
 	suicide(var/mob/user as mob)
 		user.visible_message(SPAN_ALERT("<b>[user] tries to slash [his_or_her(user)] own throat with [src]!</b>"))
@@ -416,8 +416,8 @@ TRAYS
 			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and pinches [his_or_her(user)] fingers against the blade guard."))
 			random_brute_damage(user, 5)
 			JOB_XP(user, "Clown", 1)
-		if (is_special || !saw_surgery(target,user))
-			return ..()
+		// if (is_special || !saw_surgery(target,user))
+		// 	return ..()
 
 	suicide(var/mob/user as mob)
 		user.visible_message(SPAN_ALERT("<b>[user] rolls [src] repeatedly over [his_or_her(user)] own throat and slices it wide open!</b>"))
