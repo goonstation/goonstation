@@ -29,7 +29,6 @@
 	var/followed_path_retry_target = null
 	var/follow_path_blindly = 0
 
-	var/report_state = 0
 	var/quality_name = null
 	var/mobile = 1
 	var/aggressive = 0
