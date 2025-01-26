@@ -403,6 +403,7 @@
 	throwforce = 5
 	w_class = W_CLASS_SMALL
 	pressure_resistance = 40
+	tool_flags = TOOL_SOLDERING
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (!isobj(target))
@@ -1010,7 +1011,7 @@
 			JOB_XP(user, "Clown", 3)
 
 
-		else // congrats buddy!!!!! you managed to pass all the checks!!!!! you get to do surgery!!!!
+		else if(!is_special) // congrats buddy!!!!! you managed to pass all the checks!!!!! you get to do surgery!!!!
 			saw_surgery(target,user)
 
 

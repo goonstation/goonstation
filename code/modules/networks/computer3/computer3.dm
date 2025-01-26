@@ -803,12 +803,6 @@
 			qdel(signal)
 		return
 
-	set_broken()
-		icon_state = src.base_icon_state
-		icon_state += "b"
-		status |= BROKEN
-		light.disable()
-
 	restart()
 		if(src.restarting)
 			return
