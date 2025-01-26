@@ -535,4 +535,4 @@ ABSTRACT_TYPE(/obj/item/turbine_component)
 	name = "turbine stator"
 	desc = "a replacement stator the reactor's turbine"
 	icon = 'icons/obj/items/device.dmi'
-	icon_state = "radio_mic2"
+	icon_state = "stator"
