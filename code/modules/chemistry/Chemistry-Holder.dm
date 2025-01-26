@@ -332,11 +332,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				/*if(istype(current_reagent, /datum/reagent/disease))
 					target_reagents.add_reagent_disease(current_reagent, (transfer_amt * multiplier), current_reagent.data, current_reagent.temperature)
 				else*/
-				target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, !update_target_reagents)
+				target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, TRUE, TRUE)
 
 				current_reagent.on_transfer(src, target_reagents, receive_amt)
 
-				src.remove_reagent(reagent_id, transfer_amt, update_self_reagents, update_self_reagents)
+				src.remove_reagent(reagent_id, transfer_amt, FALSE, FALSE)
 		else //Only transfer one reagent
 			var/CI = 1
 			for(var/reagent_id in reagent_list)
@@ -348,9 +348,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 						return 0
 					var/transfer_amt = min(current_reagent.volume,amount)
 					var/receive_amt = transfer_amt * multiplier
-					target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, !update_target_reagents)
+					target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, TRUE, TRUE)
 					current_reagent.on_transfer(src, target_reagents, receive_amt)
-					src.remove_reagent(reagent_id, transfer_amt, update_self_reagents, update_self_reagents)
+					src.remove_reagent(reagent_id, transfer_amt, FALSE, FALSE)
 					return 0
 
 		if (update_self_reagents)
