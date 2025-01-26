@@ -1460,6 +1460,10 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 				src.smash()
 		. = ..()
 
+	clamp_act(mob/clamper, obj/item/clamp)
+		src.smash()
+		return TRUE
+
 	proc/smash(var/atom/A)
 		if (src.smashed)
 			return

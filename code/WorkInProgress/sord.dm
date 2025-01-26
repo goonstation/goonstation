@@ -155,3 +155,35 @@
 
 /obj/mapping_helper/mob_spawn/corpse/human/merc
 	spawn_type = /mob/living/carbon/human/normal/merc
+
+/obj/item/paper/mercmanifest1
+	name = "Shipping Manifest"
+	info = {"<center><b>Manifest</b><br>
+	Target Destination: Frontier, local distrubution<br><br>
+	<li>Standard Uniform</li> - 5x<br><br>
+	Approved for processing.<br>
+	Shipping to Frontier Outpost 8.<br>
+	Received at Frontier Outpost 8.<br>
+	Awaiting local transportation.</center>"}
+
+
+/obj/item/paper/mercmanifest2
+	name = "Shipping Manifest"
+	info = {"<center><b>Manifest</b><br>
+	Target Destination: Frontier Outpost 8<br><br>
+	<li>Rations</li> - Burrito 5x<br>
+	<li>Rations</li> - TV Dinner 5x<br><br>
+	Approved for processing.<br>
+	Shipping to Frontier Outpost 8.<br>
+	Received at Frontier Outpost 8. </center>"}
+
+/obj/item/paper/mercmanifest3
+	name = "Shipping Manifest"
+	info = {"<center><b>Manifest</b><br>
+	Target Destination: Frontier, local distrubution<br><br>
+	<li>Medical Kit</li> - Standard 1x<br>
+	<li>Medical Kit</li> - Oxygen 1x<br><br>
+	Approved for processing.<br>
+	Shipping to Frontier Outpost 8.<br>
+	Received at Frontier Outpost 8.<br>
+	Awaiting local transportation.</center>"}
