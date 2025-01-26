@@ -16,9 +16,6 @@
 #define ischoppingtool(x) (istool(x, TOOL_CHOPPING))
 #define issolderingtool(x) (istool(x, TOOL_SOLDERING))
 #define iswiringtool(x) (istool(x, TOOL_WIRING))
-#define isweldingtool(x) (istool(x, TOOL_WELDING))
-#define issawingtool(x) (istool(x, TOOL_SAWING))
-#define isspooningtool(x) (istool(x, TOOL_SPOONING))
 #define isassemblyapplier(x) (istool(x, TOOL_ASSEMBLY_APPLIER))
 
 /// Returns true if the given x is a grab (obj/item/grab)
