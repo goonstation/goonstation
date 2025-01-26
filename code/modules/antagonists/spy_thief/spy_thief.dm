@@ -108,7 +108,7 @@
 		. = ..()
 
 		if (length(src.stolen_items) >= 7)
-			src.owner.current.unlock_medal("Professional thief", TRUE)
+			src.owner.current.unlock_medal("Professional Thief", TRUE)
 
 	get_statistics()
 		var/list/stolen_items = list()
