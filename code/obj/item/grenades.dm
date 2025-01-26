@@ -1660,12 +1660,47 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 
 	New()
 		. = ..()
+		//signals for trigger/applier-assembly
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK, PROC_REF(assembly_check))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, PROC_REF(assembly_removal))
 		// unwelded frame + welder -> hollow frame
 		src.AddComponent(/datum/component/assembly, TOOL_WELDING, PROC_REF(pipeframe_welding), FALSE)
 		// unwelded frame + hollow frame -> slamgun
 		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(slamgun_crafting), TRUE)
 		// unwelded frame + mousetrap -> mousetrap roller
 		src.AddComponent(/datum/component/assembly, /obj/item/mousetrap, PROC_REF(mousetrap_roller_crafting), TRUE)
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL)
+		..()
+
+	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	proc/assembly_check(var/manipulated_bomb, var/obj/item/second_part, var/mob/user)
+		if(src.state < 4)
+			boutput(user, "You have to add reagents and wires to the pipebomb before you can add it to an assembly.")
+			return TRUE
+
+	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+		//since in the assembly it functions as a full pipebomb, we change the name accordingly
+		if (src.material)
+			src.name = "[src.material.getName()] pipe bomb"
+		else
+			src.name = "pipe bomb"
+
+
+	proc/assembly_removal(var/manipulated_bomb, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+		//since outside the assembly it  does not function as a full pipebomb, we change the name accordingly
+		if (src.material)
+			src.name = "[src.material.getName()] pipe bomb frame"
+		else
+			src.name = "pipe bomb frame"
+
+	/// ----------------------------------------------
+
 
 	// Pipebomb/shot assembly procs
 

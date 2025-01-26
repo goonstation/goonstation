@@ -78,6 +78,7 @@
 #define TOOL_WELDING   (1<<8)
 #define TOOL_WRENCHING (1<<9)
 #define TOOL_CHOPPING  (1<<10) // for firaxes, does additional damage to doors.
+#define TOOL_ASSEMBLY_APPLIER (1<<11) // for anything that are useable for assemblies, e.g. igniters & bikehorns
 
 //omnitool flags
 #define OMNI_MODE_PRYING 1

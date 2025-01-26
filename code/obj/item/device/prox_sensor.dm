@@ -19,9 +19,37 @@ TYPEINFO(/obj/item/device/prox_sensor)
 /obj/item/device/prox_sensor/New()
 	..()
 	src.AddComponent(/datum/component/proximity, FALSE)
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION, PROC_REF(assembly_manipulation))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION, PROC_REF(assembly_activation))
+	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(signal_dropped))
+	// Prox-Sensor + assembly-applier -> timer/Applier-Assembly
+	src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
 
-/obj/item/device/prox_sensor/dropped()
+/obj/item/device/prox_sensor/disposing()
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION)
+	UnregisterSignal(src, COMSIG_ITEM_DROPPED)
 	..()
+
+
+/// ----------- Assembly-Related Procs -----------
+
+/obj/item/device/prox_sensor/proc/assembly_manipulation(var/manipulated_sensor, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+	src.attack_self(user)
+
+/obj/item/device/prox_sensor/proc/assembly_activation(var/manipulated_sensor, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+	//Activating a secured assembly sets it off -without- the UI. Good luck
+	if(!src.timing)
+		src.timing = TRUE
+		src.UpdateIcon()
+		if(timing || armed) processing_items |= src
+		logTheThing(LOG_BOMBING, usr, "initiated a proximity's sensor's timer on a [src.master.name] at [log_loc(src.master)].")
+		//missing log about contents of beakers
+		return TRUE
+
+/// ----------------------------------------------
+
+/obj/item/device/prox_sensor/proc/signal_dropped()
 	SPAWN(0)
 		src.sense()
 
@@ -79,24 +107,6 @@ TYPEINFO(/obj/item/device/prox_sensor)
 		return
 	if (AM.move_speed < 12)
 		src.sense()
-
-/obj/item/device/prox_sensor/attackby(obj/item/device/radio/signaler/S, mob/user)
-	if ((!( istype(S, /obj/item/device/radio/signaler) ) || !( S.b_stat )))
-		return
-	var/obj/item/assembly/rad_prox/R = new /obj/item/assembly/rad_prox( user )
-	S.set_loc(R)
-	R.part1 = S
-	S.layer = initial(S.layer)
-	user.u_equip(S)
-	user.put_in_hand_or_drop(R)
-	S.master = R
-	src.master = R
-	src.layer = initial(src.layer)
-	user.u_equip(src)
-	src.set_loc(R)
-	R.part2 = src
-	R.set_dir(src.dir)
-	src.add_fingerprint(user)
 
 /obj/item/device/prox_sensor/attack_self(mob/user as mob)
 	src.ui_interact(user)
@@ -169,7 +179,6 @@ TYPEINFO(/obj/item/device/prox_sensor)
 				var/obj/item/assembly/rad_ignite/RI = src.master
 				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a prox-arming timer on a radio-igniter assembly at [T ? log_loc(T) : "horrible no-loc nowhere void"]. Contents: [log_reagents(RI.part3)]")
 				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
-
 			else if(src.master && istype(src.master, /obj/item/assembly/proximity_bomb))	//Radio-detonated single-tank bombs
 				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a prox-arming timer on a single-tank bomb at [T ? log_loc(T) : "horrible no-loc nowhere void"].")
 				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a prox-arming timer on a single-tank bomb at [T ? showCoords(T.x, T.y, T.z) : "horrible no-loc nowhere void"].")

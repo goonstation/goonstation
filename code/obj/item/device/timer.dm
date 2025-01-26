@@ -16,6 +16,36 @@ TYPEINFO(/obj/item/device/timer)
 	m_amt = 100
 	desc = "A device that emits a signal when the time reaches 0."
 
+/obj/item/device/timer/New()
+	..()
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION, PROC_REF(assembly_manipulation))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION, PROC_REF(assembly_activation))
+	// Timer + assembly-applier -> timer/Applier-Assembly
+	src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
+
+/obj/item/device/timer/disposing()
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION)
+	..()
+
+
+/// ----------- Assembly-Related Procs -----------
+
+/obj/item/device/timer/proc/assembly_manipulation(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+	src.attack_self(user)
+
+/obj/item/device/timer/proc/assembly_activation(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+	//Activating a secured assembly sets it off -without- the UI. Good luck
+	if(!src.timing)
+		src.timing = TRUE
+		src.c_state(1)
+		processing_items |= src
+		logTheThing(LOG_BOMBING, usr, "initiated a timer on a [src.master.name] at [log_loc(src.master)].")
+		//missing log about contents of beakers
+		return TRUE
+
+/// ----------------------------------------------
+
 /obj/item/device/timer/proc/time()
 	src.c_state(0)
 
@@ -70,27 +100,6 @@ TYPEINFO(/obj/item/device/timer)
 		src.last_tick = 0
 	src.time = max(src.time, 0)
 
-/obj/item/device/timer/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/device/radio/signaler) )
-		var/obj/item/device/radio/signaler/S = W
-		if(!S.b_stat)
-			return
-
-		var/obj/item/assembly/rad_time/R = new /obj/item/assembly/rad_time( user )
-		S.set_loc(R)
-		R.part1 = S
-		S.layer = initial(S.layer)
-		user.u_equip(S)
-		user.put_in_hand_or_drop(R)
-		S.master = R
-		src.master = R
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		src.set_loc(R)
-		R.part2 = src
-		R.set_dir(src.dir)
-		src.add_fingerprint(user)
-		return
 
 /obj/item/device/timer/attack_self(mob/user as mob)
 	src.ui_interact(user)
