@@ -490,14 +490,14 @@
 			playsound(src, 'sound/effects/electric_shock_short.ogg', 50)
 			src.UpdateParticles(new/particles/rack_spark,"turbine_spark")
 			src.visible_message(SPAN_ALERT("<b>The [src] starts sparking!</b>"))
-		else if(prevHealth < 0.75*max_blade_health && src.GetParticles("turbine_spark"))
+		else if(blade_health > 0.75*max_blade_health && src.GetParticles("turbine_spark"))
 			src.visible_message(SPAN_ALERT("<b>The [src] stops sparking.</b>"))
 			src.ClearSpecificParticles("turbine_spark")
 
 		if(blade_health <= 0.5*max_blade_health && !src.GetParticles("turbine_smoke"))
 			src.UpdateParticles(new/particles/rack_smoke,"turbine_smoke")
 			src.visible_message(SPAN_ALERT("<b>The [src] begins to smoke!</b>"))
-		else if(prevHealth <  0.5*max_blade_health && src.GetParticles("turbine_smoke"))
+		else if(blade_health > 0.5*max_blade_health && src.GetParticles("turbine_smoke"))
 			src.visible_message(SPAN_ALERT("<b>The [src] stops smoking.</b>"))
 			src.ClearSpecificParticles("turbine_smoke")
 
