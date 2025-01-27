@@ -50,7 +50,7 @@ TYPEINFO(/datum/component/bullet_holes)
 
 /datum/component/bullet_holes/proc/handle_impact(rendering_on, obj/projectile/shot, impact_x, impact_y)
 	var/datum/projectile/shotdata = shot.proj_data
-	// Shots coming from the south hit the top part of the wall. Perspective means we do not spawn a decal
+	// Shots heading south hit the top part of the wall. Perspective means we do not spawn a decal
 	if (shot.dir == SOUTH)
 		return
 	if (!shotdata.impact_image_state)
