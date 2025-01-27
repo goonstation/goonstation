@@ -34,15 +34,20 @@
 
 
 	/// Enter a specific surgery, used here for tracking state of each surgeon
-	proc/enter_surgery(datum/surgery/surgery, mob/living/surgeon, obj/item/I)
+	proc/surgery_clicked(datum/surgery/surgery, mob/living/surgeon, obj/item/I)
 		if (!surgery)
 			return
-		surgery.enter_surgery(surgeon, I)
+		surgery.surgery_clicked(surgeon, I)
 
 	proc/cancel_all()
 		for(var/datum/surgery/surgery in surgeries)
 			surgery.cancel_surgery(null, null)
-
+	/// Cancel a surgery through the context menu. Places player 1 layer up.
+	proc/cancel_surgery_context(datum/surgery/surgery, mob/living/surgeon, obj/item/I)
+		if (!surgery)
+			return
+		surgery.cancel_surgery_context(surgeon, I)
+	/// Cancel a surgery. Does not interact with context menus.
 	proc/cancel_surgery(datum/surgery/surgery, mob/living/surgeon, obj/item/I)
 		if (!surgery)
 			return
@@ -72,17 +77,23 @@
 			return TRUE
 		return FALSE
 
-
-//		for(var/datum/surgery/surgery in surgeries)
-//			if (surgery.can_operate(tool))
-//				return TRUE
+	// 'Shortcuts' are for surgeries that might not need the context menu. For example. Cramming an organ inside someone's chest.
+	// Use them sparingly - obviously, in the case of conflict, a surgeon may end up doing something unintentional.
+	/// Determine if this surgery will use the item without needing a context popup.
+	proc/shortcut(mob/surgeon, obj/item/tool)
+		if (!can_operate(surgeon, tool))
+			return FALSE
+		for (var/datum/surgery/surgery in surgeries)
+			if (surgery.do_shortcut(patient, tool))
+				return TRUE
+		return FALSE
 
 	/// called when wanting to 'go up' a level
 	proc/exit_surgery(datum/surgery/surgery, mob/living/surgeon, obj/item/I)
 		if (!surgery)
 			return
 		if (surgery.super_surgery)
-			surgery.super_surgery.enter_surgery(surgeon, I)
+			surgery.super_surgery.enter_surgery()
 		else
 			//go back to the start if we've no more supersurgeries
 			src.start_surgery(surgeon, I)
@@ -92,9 +103,10 @@
 		add_surgeries()
 			..()
 			surgeries += new/datum/surgery/heal_generic(patient, src)
-			surgeries += new/datum/surgery/organ_surgery(patient, src)
 			surgeries += new/datum/surgery/limb_surgery(patient, src)
-
+			surgeries += new/datum/surgery/test(patient, src)
+			//these two might need subtypes for different organ havers?
+			surgeries += new/datum/surgery/organ_surgery(patient, src)
 
 
 

@@ -2280,7 +2280,7 @@
 	execute(atom/target, mob/user)
 		..()
 		var/obj/item/I = user.equipped()
-		holder.enter_surgery(surgery,user,I)
+		holder.surgery_clicked(surgery,user,I)
 /datum/contextAction/surgery/cancel
 	name = "Cancel"
 	desc = "Cancels this surgery."
@@ -2294,7 +2294,7 @@
 		..()
 		user.closeContextActions()
 		var/obj/item/I = user.equipped()
-		holder.cancel_surgery(surgery,user,I)
+		holder.cancel_surgery_context(surgery,user,I)
 /datum/contextAction/surgery/step_up
 	name = "Back"
 	desc = "Go up a level."

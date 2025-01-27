@@ -1265,6 +1265,14 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (!target || !user) // not sure if this is the right thing...
 		return
 
+	if (isliving(target) && (user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM))
+		var/mob/living/H = target
+		if (H.surgeryHolder)
+			var/datum/surgeryHolder/holder = H.surgeryHolder
+			if (holder.can_operate(user,src))
+				holder.start_surgery(user,src)
+				return
+
 	if (src.Eat(target, user)) // All those checks were done in there anyway
 		return
 
@@ -1291,14 +1299,6 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	def_zone = target.get_def_zone(user, def_zone)
 	var/hit_area = parse_zone(def_zone)
-
-	if (isliving(target) && (user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM))
-		var/mob/living/H = target
-		if (H.surgeryHolder)
-			var/datum/surgeryHolder/holder = H.surgeryHolder
-			if (holder.can_operate(user,src))
-				holder.start_surgery(user,src)
-				return
 
 	if (!target.melee_attack_test(user, src, def_zone))
 		logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with [src] ([type], object name: [initial(name)]) but the attack is blocked!")

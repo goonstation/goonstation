@@ -85,3 +85,19 @@
 				. = ..()
 				parent_surgery.patient.organHolder.drop_organ(affected_organ)
 
+		add
+			name = "Add"
+			desc = "Add the organ."
+			icon_state = "scalpel"
+			success_text = "rips out organ"
+			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+			slipup_text = "slips!"
+			on_complete(mob/user, obj/item/tool)
+				. = ..()
+				parent_surgery.patient.organHolder.receive_organ(tool, affected_organ)
+			tool_requirement(mob/user, obj/item/tool)
+				if (istype(tool, /obj/item/organ))
+					var/obj/item/organ/O = tool
+					if (O.organ_holder_name == affected_organ)
+						return TRUE
+				return FALSE
