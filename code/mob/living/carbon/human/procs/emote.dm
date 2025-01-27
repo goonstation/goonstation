@@ -267,7 +267,7 @@
 
 						var/turf/T = get_turf(src)
 						if (T && T == src.loc)
-							if (T.turf_flags & CAN_BE_SPACE_SAMPLE)
+							if (istype(T, /turf/space))
 								if (src.getStatusDuration("food_space_farts"))
 									src.inertia_dir = src.dir
 									step(src, inertia_dir)
@@ -870,8 +870,11 @@
 
 				if (src.emote_check(voluntary,20))
 					if (act == "gasp")
-						if (src.health <= 0)
-							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender]_gasp_[pick(1,5)].ogg"
+						if (src.find_ailment_by_type(/datum/ailment/malady/flatline))
+							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender]_gasp_[pick(1,3)].ogg"
+							playsound(src, dying_gasp_sfx, 40, FALSE, 0, src.get_age_pitch())
+						else if (src.health <= 0)
+							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender]_gasp_[pick(4,5)].ogg"
 							playsound(src, dying_gasp_sfx, 40, FALSE, 0, src.get_age_pitch())
 						else
 							playsound(src, src.sound_gasp, 15, 0, 0, src.get_age_pitch())

@@ -245,7 +245,11 @@
 			return 0
 
 		if(user.a_intent == "help" || user.a_intent == "grab")
-			if(!(user.equipped() && (user.equipped().item_function_flags & USE_SPECIALS_ON_ALL_INTENTS)))
+			var/mob/living/critter/critter = user
+			var/datum/limb/active_limb = null
+			if (istype(critter)) //I am in agony
+				active_limb = critter.get_active_hand().limb
+			if(!(user.equipped() && (user.equipped().item_function_flags & USE_SPECIALS_ON_ALL_INTENTS) || active_limb?.use_specials_on_all_intents))
 				return 0
 
 		if (user.check_block())
@@ -1293,6 +1297,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	image = "barrier"
 	name = "Energy Barrier"
 	desc = "Deploy a temporary barrier that reflects projectiles. The barrier can be easily broken by any attack or a sustained push. "
+	var/barrier_type = /obj/itemspecialeffect/barrier
 
 	onAdd()
 		if(master)
@@ -1303,46 +1308,50 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
-		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
-			preUse(user)
+		if(params["left"] && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			var/direction = get_dir_pixel(user, target, params)
-			var/turf/turf = get_step(master, direction)
+			var/turf/turf = get_step(master || user, direction)
+			if (locate(src.barrier_type) in turf)
+				return
 
-			var/obj/itemspecialeffect/barrier/E = new /obj/itemspecialeffect/barrier
+			preUse(user)
+			var/obj/itemspecialeffect/barrier/E = new src.barrier_type
 			E.setup(turf)
 			E.master = user
 			E.set_dir(direction)
-			if(master && istype(master, /obj/item/barrier))
+			E.RegisterSignal(user, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/obj/itemspecialeffect/barrier, on_move))
+			if(istype(master, /obj/item/barrier))
 				var/obj/item/barrier/B = master
 				E.setMaterial(B.material)
 				B.destroy_deployed_barrier(user)
 				B.E = E //set barrier
-				var/mob/living/L = user
-
-				//set move callback (when user moves, shield go down)
-				if (islist(L.move_laying))
-					L.move_laying += B
-				else
-					if (L.move_laying)
-						L.move_laying = list(L.move_laying, B)
-					else
-						L.move_laying = list(B)
 
 			var/hit = 0
-			for(var/atom/A in atoms_in_combat_range(turf))
-				if(isTarget(A))
-					A.Attackby(master, user, params, 1)
-					hit = 1
-					break
+			if (master)
+				for(var/atom/A in atoms_in_combat_range(turf))
+					if(isTarget(A))
+						A.Attackby(master, user, params, 1)
+						hit = 1
+						break
 
 			if (hit)
 				E.was_clashed(0)
 			else
-				playsound(master, 'sound/items/miningtool_on.ogg', 30, 0.1, 0, 2)
+				playsound(master || user, 'sound/items/miningtool_on.ogg', 30, 0.1, 0, 2)
 
 			afterUse(user)
 		return
 
+/datum/item_special/barrier/syndie
+	image = "syndiebarrier"
+	name = "Mod. 81 Alcor"
+	desc = "Deploy a temporary barrier that reflects projectiles. This design is original and NOT stolen."
+	barrier_type = /obj/itemspecialeffect/barrier/syndie
+
+/obj/itemspecialeffect/barrier/syndie
+	name = "energy barrier"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "syndiebarrier"
 
 /datum/item_special/flame
 	cooldown = 0
@@ -2201,7 +2210,12 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				playsound(src.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.5)
 			qdel(src)
 
-		proc/deactivate()
+		proc/on_move(mob/living/mover, previous_loc, dir)
+			if (mover.loc != previous_loc && !(mover.restrain_time > TIME))
+				src.deactivate(mover)
+
+		proc/deactivate(mob/living/user)
+			src.UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 			if (src.qdeled || src.disposed)
 				return
 			playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 0.1, 0, 2)
