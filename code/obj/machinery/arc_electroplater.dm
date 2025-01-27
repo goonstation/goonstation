@@ -31,7 +31,7 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 			boutput(user, SPAN_ALERT("You can't plate yourself without a source material!"))
 			return 0
 		if(status & (BROKEN|NOPOWER))
-			boutput(user, SPAN_ALERT("You try to turn on [src] and jump into it, but it is out of power."))
+			boutput(user, SPAN_ALERT("You try to turn on [src] and jump into it, but it is not working."))
 			return 0
 		user.visible_message(SPAN_ALERT("<b>[user] jumps into [src].</b>"), SPAN_ALERT("<b>You jump into [src].</b>"))
 		var/obj/statue = user.become_statue(src.my_bar.material.getID(), survive=TRUE)
