@@ -95,7 +95,7 @@
 			on_complete(mob/surgeon, obj/item/tool)
 				. = ..()
 				surgeon.drop_item(tool)
-				tool.loc = parent_surgery.patient
+				tool.set_loc(parent_surgery.patient)
 				parent_surgery.patient.organHolder.receive_organ(tool, affected_organ)
 			tool_requirement(mob/surgeon, obj/item/tool)
 				if (istype(tool, /obj/item/organ))
