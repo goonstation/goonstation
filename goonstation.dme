@@ -232,6 +232,7 @@
 #include "code\datums\components\fragile_item.dm"
 #include "code\datums\components\fullauto.dm"
 #include "code\datums\components\gaseous_projectile.dm"
+#include "code\datums\components\gauntlet_critter.dm"
 #include "code\datums\components\gear_corrosion.dm"
 #include "code\datums\components\geiger_counter.dm"
 #include "code\datums\components\ghost_observable.dm"
