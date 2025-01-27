@@ -1,3 +1,6 @@
+(t)sun jan 26 25
+(u)Sord
+(+)Added a "Show Mining Map" verb that shows you the Z5 mining level map to the "self" tab.
 (t)sat jan 25 25
 (u)Kyle
 (*)Add a "set max health" button to the player panel right next to "kill"
