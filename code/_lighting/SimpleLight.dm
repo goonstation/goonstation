@@ -94,7 +94,7 @@
 	icon_state = "medium_dir"
 	New(loc, dir=0)
 		..()
-		src.set_dir(dir)
+		src.dir = dir //nothing will care about whether or not light rotates, so why spend precious time calling set_dir()?
 		switch(dir)
 			if(NORTH)
 				pixel_y += 32
