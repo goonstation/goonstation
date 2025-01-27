@@ -357,7 +357,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			src.update_total()
 			src.handle_reactions()
 			// this was missing. why was this missing? i might be breaking the shit out of something here
-			reagents_changed()
+			src.reagents_changed()
 
 		if (!target_reagents) // on_transfer may murder the target, see: nitroglycerin
 			return amount
@@ -365,6 +365,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if (update_target_reagents)
 			target_reagents.update_total()
 			target_reagents.handle_reactions()
+			target_reagents.reagents_changed()
 
 		reagents_transferred()
 		return amount
