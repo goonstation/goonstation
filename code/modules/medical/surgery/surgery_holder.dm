@@ -56,7 +56,7 @@
 	proc/show_contexts(mob/surgeon, obj/tool)
 		var/list/datum/contextAction/surgery/contexts = list()
 		for (var/datum/surgery/surgery in surgeries)
-			if (surgery.surgery_possible(patient))
+			if (surgery.surgery_possible(patient) && surgery.visible)
 				contexts += surgery.get_context()
 		surgeon.showContextActions(contexts, patient, new /datum/contextLayout/experimentalcircle)
 
@@ -93,7 +93,7 @@
 		if (!surgery)
 			return
 		if (surgery.super_surgery)
-			surgery.super_surgery.enter_surgery()
+			surgery.super_surgery.enter_surgery(surgeon)
 		else
 			//go back to the start if we've no more supersurgeries
 			src.start_surgery(surgeon, I)

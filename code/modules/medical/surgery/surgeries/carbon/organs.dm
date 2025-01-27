@@ -27,7 +27,9 @@
 	name = "Rib Surgery"
 	desc = "Open the patient's ribcage"
 	icon_state = "ribs"
-	default_sub_surgeries = list(/datum/surgery/organ/heart, /datum/surgery/organ/left_lung, /datum/surgery/organ/right_lung)
+	default_sub_surgeries = list(/datum/surgery/organ/heart, /datum/surgery/organ/replace/heart,
+	/datum/surgery/organ/left_lung, /datum/surgery/organ/replace/left_lung,
+	/datum/surgery/organ/right_lung, /datum/surgery/organ/replace/right_lung)
 	generate_surgery_steps(mob/living/surgeon, mob/user)
 		add_next_step(new /datum/surgery_step/cut(src))
 		add_next_step(new /datum/surgery_step/saw(src))
@@ -37,7 +39,9 @@
 	name = "Subcostal"
 	desc = "Open the subcostal region"
 	icon_state = "subcostal"
-	default_sub_surgeries = list(/datum/surgery/organ/liver, /datum/surgery/organ/spleen, /datum/surgery/organ/pancreas)
+	default_sub_surgeries = list(/datum/surgery/organ/liver, /datum/surgery/organ/replace/liver,
+	/datum/surgery/organ/spleen, /datum/surgery/organ/replace/spleen,
+	/datum/surgery/organ/pancreas, /datum/surgery/organ/replace/pancreas)
 	generate_surgery_steps(mob/living/surgeon, mob/user)
 		add_next_step(new /datum/surgery_step/cut(src))
 		add_next_step(new /datum/surgery_step/snip(src))
@@ -46,7 +50,8 @@
 	name = "Flank Surgery"
 	desc = "Open the patient's flanks"
 	icon_state = "flanks"
-	default_sub_surgeries = list(/datum/surgery/organ/left_kidney, /datum/surgery/organ/right_kidney)
+	default_sub_surgeries = list(/datum/surgery/organ/left_kidney, /datum/surgery/organ/replace/left_kidney,
+	/datum/surgery/organ/right_kidney, /datum/surgery/organ/replace/right_kidney)
 	generate_surgery_steps(mob/living/surgeon, mob/user)
 		add_next_step(new /datum/surgery_step/cut(src))
 		add_next_step(new /datum/surgery_step/snip(src))
@@ -55,7 +60,9 @@
 	name = "Abdomen Surgery"
 	desc = "Open the patient's abdomen"
 	icon_state = "abdominal"
-	default_sub_surgeries = list(/datum/surgery/organ/stomach, /datum/surgery/organ/intestine, /datum/surgery/organ/appendix)
+	default_sub_surgeries = list(/datum/surgery/organ/stomach, /datum/surgery/organ/replace/stomach,
+	/datum/surgery/organ/intestine, /datum/surgery/organ/replace/intestine,
+	/datum/surgery/organ/appendix, /datum/surgery/organ/replace/appendix)
 	generate_surgery_steps(mob/living/surgeon, mob/user)
 		add_next_step(new /datum/surgery_step/cut(src))
 		add_next_step(new /datum/surgery_step/snip(src))
@@ -65,6 +72,8 @@
 	desc = "Call a coder if you see this!"
 	icon_state = "heart"
 	var/organ_var_name = "heart"
+	restart_when_finished = TRUE
+	exit_when_finished = TRUE
 	surgery_possible(mob/living/surgeon)
 		if (patient.organHolder.get_organ(organ_var_name))
 			return TRUE
@@ -142,60 +151,66 @@
 	desc = "Replace the patients' organs."
 	visible = FALSE
 	can_shortcut = TRUE
+	restart_when_finished = TRUE
+	exit_when_finished = TRUE
 	generate_surgery_steps(mob/living/surgeon, mob/user)
-		add_next_step(new /datum/surgery_step/organ/add(src))
+		add_next_step(new /datum/surgery_step/organ/add(src,organ_var_name))
+	surgery_possible(mob/living/surgeon)
+		if (patient.organHolder.get_organ(organ_var_name))
+			return FALSE
+		return TRUE
 	heart
-		name = "Heart Surgery"
+		name = "Heart Replacement"
 		desc = "Replace the patients' heart."
 		icon_state = "heart"
 		organ_var_name = "heart"
 	liver
-		name = "Liver Surgery"
+		name = "Liver Replacement"
 		desc = "Replace the patients' liver."
 		icon_state = "liver"
 		organ_var_name = "liver"
 	pancreas
-		name = "Pancreas Surgery"
+		name = "Pancreas Replacement"
 		desc = "Replace the patients' pancreas."
 		icon_state = "pancreas"
 		organ_var_name = "pancreas"
 	left_lung
-		name = "Left Lung Surgery"
+		name = "Left Lung Replacement"
 		desc = "Replace the patients' left lung."
 		icon_state = "left_lung"
 		organ_var_name = "left_lung"
 	right_lung
-		name = "Right Lung Surgery"
+		name = "Right Lung Replacement"
 		desc = "Replace the patients' right lung."
 		icon_state = "right_lung"
 		organ_var_name = "right_lung"
 	stomach
-		name = "Stomach Surgery"
+		name = "Stomach Replacement"
 		desc = "Replace the patients' stomach."
 		icon_state = "stomach"
 		organ_var_name = "stomach"
 	spleen
-		name = "Spleen Surgery"
+		name = "Spleen Replacement"
 		desc = "Replace the patients' spleen."
 		icon_state = "spleen"
 		organ_var_name = "spleen"
 	appendix
-		name = "Appendix Surgery"
+		name = "Appendix Replacement"
 		desc = "Replace the patients' appendix."
 		icon_state = "appendix"
 		organ_var_name = "appendix"
 	intestine
-		name = "Intestine Surgery"
+		name = "Intestine Replacement"
 		desc = "Replace the patients' intestine."
 		icon_state = "intestine"
 		organ_var_name = "intestines"
 	left_kidney
-		name = "Left Kidney Surgery"
+		name = "Left Kidney Replacement"
 		desc = "Replace the patients' left kidney."
 		icon_state = "left_kidney"
 		organ_var_name = "left_kidney"
 	right_kidney
-		name = "Right Kidney Surgery"
+		name = "Right Kidney Replacement"
 		desc = "Replace the patients' right kidney."
 		icon_state = "right_kidney"
 		organ_var_name = "right_kidney"

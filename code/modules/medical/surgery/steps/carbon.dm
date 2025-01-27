@@ -89,13 +89,15 @@
 			name = "Add"
 			desc = "Add the organ."
 			icon_state = "scalpel"
-			success_text = "rips out organ"
+			success_text = "adds organ"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 			slipup_text = "slips!"
-			on_complete(mob/user, obj/item/tool)
+			on_complete(mob/surgeon, obj/item/tool)
 				. = ..()
+				surgeon.drop_item(tool)
+				tool.loc = parent_surgery.patient
 				parent_surgery.patient.organHolder.receive_organ(tool, affected_organ)
-			tool_requirement(mob/user, obj/item/tool)
+			tool_requirement(mob/surgeon, obj/item/tool)
 				if (istype(tool, /obj/item/organ))
 					var/obj/item/organ/O = tool
 					if (O.organ_holder_name == affected_organ)

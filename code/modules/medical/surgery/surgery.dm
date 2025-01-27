@@ -43,9 +43,9 @@
 		generate_surgery_steps()
 		get_sub_surgeries()
 
-	proc/can_operate(obj/item/tool)
+	proc/can_operate(mob/surgeon, obj/item/tool)
 		for(var/datum/surgery_step/step in surgery_steps)
-			if (step.can_operate(tool))
+			if (step.can_operate(surgeon, tool))
 				return TRUE
 		return FALSE
 	///Create the sub-surgeries for this surgery
@@ -130,7 +130,7 @@
 
 
 	proc/do_shortcut(mob/surgeon, obj/item/I)
-		if (super_surgery?.surgery_complete() && can_shortcut && can_operate(I))
+		if (super_surgery?.surgery_complete() && can_shortcut && can_operate(surgeon, I))
 			for(var/datum/surgery_step/step in surgery_steps)
 				if (step.can_operate(surgeon, I))
 					step.perform_step(surgeon, I)
@@ -175,7 +175,7 @@
 
 		if (sub_surgeries_always_visible || surgery_complete())
 			for (var/datum/surgery/surgery in sub_surgeries)
-				if (surgery.surgery_possible(patient))
+				if (surgery.surgery_possible(patient) && surgery.visible)
 					contexts += surgery.get_context()
 
 		contexts += new /datum/contextAction/surgery/step_up(holder, src)
@@ -221,22 +221,27 @@
 		for(var/type in tools_required)
 			if (istype(tool,type))
 				return TRUE
-	proc/can_operate(mob/surgeon, obj/item/tool)
+	proc/can_operate(mob/surgeon, obj/item/tool, quiet = TRUE)
 		if (!IN_RANGE(surgeon, parent_surgery.patient, 1))
-			boutput(surgeon,SPAN_ALERT("You're too far away!"))
+			if (!quiet)
+				boutput(surgeon,SPAN_ALERT("You're too far away!"))
+			return FALSE
 		if (!tool)
 			if (flags_required == 0 && !length(tools_required))
 				return TRUE
 			else
-				boutput(surgeon,SPAN_ALERT("You need a tool for this step!"))
-		if (tool?.tool_flags & flags_required || valid_subtype(tool) || tool_requirement(tool))
+				if (!quiet)
+					boutput(surgeon,SPAN_ALERT("You need a tool for this step!"))
+				return FALSE
+		if (tool?.tool_flags & flags_required || valid_subtype(tool) || tool_requirement(surgeon, tool))
 			return TRUE
 		else
-			boutput(surgeon,SPAN_ALERT("You can't use that tool for this step."))
-
+			if (!quiet)
+				boutput(surgeon,SPAN_ALERT("You can't use that tool for this step."))
+			return FALSE
 
 	///Code based object requirement, IE. contains 50 units of ethanol or something
-	proc/tool_requirement(obj/item/tool)
+	proc/tool_requirement(mob/surgeon, obj/item/tool)
 		return FALSE
 
 	///Calculate if this step succeeds, apply failure effects here
@@ -255,7 +260,7 @@
 		return TRUE
 
 	proc/perform_step(mob/surgeon, obj/item/tool) //! Perform the surgery step
-		if (can_operate(surgeon, tool) && calculate_success(surgeon, tool))
+		if (can_operate(surgeon, tool, FALSE) && calculate_success(surgeon, tool))
 			if (success_sound)
 				playsound(parent_surgery.patient, success_sound, 50, TRUE)
 			surgeon.visible_message(success_text)
@@ -310,7 +315,7 @@
 		success_text = "whacks really hard"
 		success_sound = 'sound/impact_sounds/meat_smack.ogg'
 		slipup_text = "cuts too deep and messes up!"
-		tool_requirement(obj/item/tool)
+		tool_requirement(mob/surgeon, obj/item/tool)
 			if (tool.force >= 5 && (tool.hit_type == DAMAGE_BLUNT || tool.hit_type == DAMAGE_CRUSH))
 				return TRUE
 			return FALSE

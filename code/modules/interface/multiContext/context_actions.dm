@@ -2283,7 +2283,7 @@
 		holder.surgery_clicked(surgery,user,I)
 /datum/contextAction/surgery/cancel
 	name = "Cancel"
-	desc = "Cancels this surgery."
+	desc = "Cancels this surgery, and all surgeries beneath it."
 	icon_state = "cancel"
 
 	New(var/datum/surgeryHolder/holder, var/datum/surgery/surgery)
