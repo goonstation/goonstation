@@ -655,6 +655,6 @@ var/global/list/job_start_locations = list()
 	if(vistarget)
 		vistarget.overlays.Cut()
 		vistarget.vis_contents += src
-		var/obj/overlay/tile_effect/lighting/L = locate() in vistarget.vis_contents
+		var/atom/movable/light/robust_light/L = locate() in vistarget.vis_contents
 		if(L)
 			vistarget.vis_contents -= L

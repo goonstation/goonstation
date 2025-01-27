@@ -135,7 +135,7 @@
 
 
 		sleep(0.1 SECONDS)
-		for(var/obj/overlay/tile_effect/lighting/L in src)
+		for(var/atom/movable/light/robust_light/L in src)
 			src.icon = getFlatIcon(L)
 			qdel(L)
 

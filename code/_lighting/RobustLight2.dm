@@ -606,7 +606,7 @@ proc/get_moving_lights_stats()
 	The initial sprite, `no name` in all lighting overlay files, was programmatically generated using Python, from this initial
 	sprite, five sprites were handcrafted and then passed into the `icon-cutter` tool to generate the remaining directional sprites.
 */
-/obj/overlay/tile_effect/lighting
+/atom/movable/light/robust_light
 	icon = 'icons/effects/lighting_overlays/floors.dmi'
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | RESET_ALPHA | RESET_COLOR
 	blend_mode = BLEND_ADD
@@ -614,7 +614,7 @@ proc/get_moving_lights_stats()
 	layer = LIGHTING_LAYER_BASE
 	anchored = ANCHORED_ALWAYS
 
-/obj/overlay/tile_effect/lighting/mul
+/atom/movable/light/robust_light/mul
 	plane = PLANE_LIGHTING
 	layer = LIGHTING_LAYER_ROBUST
 	disposing()
@@ -623,7 +623,7 @@ proc/get_moving_lights_stats()
 			T.RL_MulOverlay = null
 		..()
 
-/obj/overlay/tile_effect/lighting/add
+/atom/movable/light/robust_light/add
 	plane = PLANE_SELFILLUM
 	disposing()
 		var/turf/T = src.loc
@@ -634,8 +634,8 @@ proc/get_moving_lights_stats()
 /turf
 	var/RL_ApplyGeneration = 0
 	var/RL_UpdateGeneration = 0
-	var/obj/overlay/tile_effect/lighting/mul/RL_MulOverlay = null
-	var/obj/overlay/tile_effect/lighting/add/RL_AddOverlay = null
+	var/atom/movable/light/robust_light/mul/RL_MulOverlay = null
+	var/atom/movable/light/robust_light/add/RL_AddOverlay = null
 	var/RL_LumR = 0
 	var/RL_LumG = 0
 	var/RL_LumB = 0
@@ -725,7 +725,7 @@ proc/get_moving_lights_stats()
 		qdel(src.RL_AddOverlay)
 		src.RL_AddOverlay = null
 	// cirr effort to remove redundant overlays that still persist EVEN THOUGH they shouldn't
-	for(var/obj/overlay/tile_effect/lighting/L in src.contents)
+	for(var/atom/movable/light/robust_light/L in src.contents)
 		L.set_loc(null)
 		qdel(L)
 	*/
@@ -737,7 +737,7 @@ proc/get_moving_lights_stats()
 /turf/proc/RL_Init()
 	if (!fullbright && !loc:force_fullbright)
 		if(!src.RL_MulOverlay)
-			src.RL_MulOverlay = new /obj/overlay/tile_effect/lighting/mul(src)
+			src.RL_MulOverlay = new /atom/movable/light/robust_light/mul(src)
 			src.RL_MulOverlay.icon = src.RL_OverlayIcon
 			src.RL_MulOverlay.icon_state = src.RL_OverlayState
 		if (RL_Started)

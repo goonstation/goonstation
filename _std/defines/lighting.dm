@@ -14,7 +14,7 @@
 		) ; \
 	if (src.RL_NeedsAdditive || _E.RL_NeedsAdditive || _N.RL_NeedsAdditive || _NE.RL_NeedsAdditive) { \
 		if(!src.RL_AddOverlay) { \
-			src.RL_AddOverlay = new /obj/overlay/tile_effect/lighting/add(src) ; \
+			src.RL_AddOverlay = new /atom/movable/light/robust_light/add(src) ; \
 			src.RL_AddOverlay.icon = src.RL_OverlayIcon ; \
 			src.RL_AddOverlay.icon_state = src.RL_OverlayState ; \
 		} \

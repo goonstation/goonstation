@@ -1,12 +1,6 @@
 /atom/var/ignore_simple_light_updates = 0 //to avoid double-updating on diagonal steps when we are really only taking a single step
 
-/obj/overlay/simple_light
-	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
-	anchored = ANCHORED_ALWAYS
-	mouse_opacity = 0
-	layer = LIGHTING_LAYER_BASE
-	plane = PLANE_LIGHTING
-	blend_mode = BLEND_ADD
+/atom/movable/light/simple_light
 	icon = 'icons/effects/overlays/simplelight.dmi'
 	icon_state = "3x3"
 	appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART // PIXELSCALE omitted on purpose
@@ -15,7 +9,7 @@
 	text = ""
 
 /atom/var/list/simple_light_rgbas = null
-/atom/var/obj/overlay/simple_light/simple_light = null
+/atom/var/atom/movable/light/simple_light/simple_light = null
 
 /atom/proc/add_simple_light(var/id, var/list/rgba)
 	if (!simple_light_rgbas)
