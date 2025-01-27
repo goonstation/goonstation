@@ -38,7 +38,7 @@
 		return 2
 
 	setup_equipment_slots()
-		return
+		equipment += new /datum/equipmentHolder/ears/intercom/syndicate(src)
 
 	setStatus(statusId, duration, optional)
 		if (statusId == "slowed")

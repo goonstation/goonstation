@@ -117,7 +117,7 @@
 	var/number_of_antagonist_roles = ""
 
 	if (M.mind)
-		var/number_of_antagonists = 0
+		var/number_of_antagonists =  0
 		for (var/datum/antagonist/antagonist_role as anything in M.mind.antagonists)
 			var/display_name = "<span class='antag'>[capitalize(antagonist_role.display_name)]</span>"
 			if (antagonist_role.vr)
@@ -196,6 +196,7 @@
 						<a href='[playeropt_link(M, "checkhealth")]'>Check</a> &bull;
 						<a href='[playeropt_link(M, "revive")]'>Heal</a> &bull;
 						[(isdead(M) || M.max_health == 0) ? "Dead" : "[round(100 * M.health / M.max_health)]%"] &bull;
+						<a href='[playeropt_link(M, "max_health")]'>Max Health</a> &bull;
 						<a href='[playeropt_link(M, "kill")]'>Kill</a>
 					</div>
 					"} : ""]

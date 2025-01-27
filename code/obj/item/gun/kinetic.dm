@@ -1074,6 +1074,14 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/draco)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.6)
 		..()
+
+/obj/item/gun/kinetic/draco/empty
+
+	New()
+		..()
+		ammo.amount_left = 0
+		UpdateIcon()
+
 /obj/item/gun/kinetic/webley
 	name = "Webley 'Holdout' Snubnose"
 	desc = "A cut down Webley break-action revolver. There's some extra weight in the grip for spinning action."
