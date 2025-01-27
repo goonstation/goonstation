@@ -114,7 +114,7 @@
 #define DWAINE_COMMAND_DSCAN	10
 
 /**
- *	Instruct the caller to exit the current running program.
+ *	Instruct the caller_prog to exit the current running program.
  *	No applicable data fields.
  */
 #define DWAINE_COMMAND_EXIT		11
@@ -474,17 +474,17 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 			if (!sendid)
 				return ESIG_GENERIC
 
-			var/datum/computer/file/mainframe_program/caller = src.master.processing[sendid]
-			if (!caller || !data["name"])
+			var/datum/computer/file/mainframe_program/caller_prog = src.master.processing[sendid]
+			if (!caller_prog || !data["name"])
 				return ESIG_GENERIC
 
 			if (data["data"] && (data["name"] == "TEMP"))
-				return (src.login_temp_user(data["data"], null, caller)) ? ESIG_GENERIC : ESIG_SUCCESS
+				return (src.login_temp_user(data["data"], null, caller_prog)) ? ESIG_GENERIC : ESIG_SUCCESS
 
-			if (!caller.useracc)
+			if (!caller_prog.useracc)
 				return ESIG_NOUSR
 
-			if (src.login_user(caller.useracc, data["name"], data["sysop"], (data["service"] != 1)))
+			if (src.login_user(caller_prog.useracc, data["name"], data["sysop"], (data["service"] != 1)))
 				return ESIG_GENERIC
 
 			return ESIG_SUCCESS
@@ -493,14 +493,14 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 			if (!sendid)
 				return ESIG_GENERIC
 
-			var/datum/computer/file/mainframe_program/caller = src.master.processing[sendid]
-			if (!caller || !isnum(data["group"]))
+			var/datum/computer/file/mainframe_program/caller_prog = src.master.processing[sendid]
+			if (!caller_prog || !isnum(data["group"]))
 				return ESIG_GENERIC
 
-			if (!caller.useracc || !caller.useracc.user_file)
+			if (!caller_prog.useracc || !caller_prog.useracc.user_file)
 				return ESIG_NOUSR
 
-			caller.useracc.user_file.fields["group"] = clamp(0, data["group"], 255)
+			caller_prog.useracc.user_file.fields["group"] = clamp(0, data["group"], 255)
 			return ESIG_SUCCESS
 
 		if (DWAINE_COMMAND_ULIST)
@@ -529,11 +529,11 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 			return user_list
 
 		if (DWAINE_COMMAND_UMSG)
-			var/datum/computer/file/mainframe_program/caller = src.master.processing[sendid]
-			if (!caller || !caller.useracc)
+			var/datum/computer/file/mainframe_program/caller_prog = src.master.processing[sendid]
+			if (!caller_prog || !caller_prog.useracc)
 				return ESIG_NOUSR
 
-			var/sender_name = caller.useracc.user_name
+			var/sender_name = caller_prog.useracc.user_name
 			if (!sender_name)
 				return ESIG_NOUSR
 
@@ -565,7 +565,7 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 			else if (!istype(target.user_file))
 				return ESIG_NOTARGET
 
-			if (caller.useracc == target)
+			if (caller_prog.useracc == target)
 				return ESIG_NOTARGET
 
 			if (!(target.user_file.fields["accept_msg"] == "1"))
@@ -687,23 +687,23 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 			if (!sendid)
 				return ESIG_GENERIC
 
-			var/datum/computer/file/mainframe_program/caller = src.master.processing[sendid]
-			if (!caller || (caller == src))
+			var/datum/computer/file/mainframe_program/caller_prog = src.master.processing[sendid]
+			if (!caller_prog || (caller_prog == src))
 				return ESIG_GENERIC
 
-			if (!caller.useracc)
-				caller.handle_quit()
+			if (!caller_prog.useracc)
+				caller_prog.handle_quit()
 				return ESIG_NOUSR
 
-			var/datum/mainframe2_user_data/user = caller.useracc
+			var/datum/mainframe2_user_data/user = caller_prog.useracc
 			var/datum/computer/file/mainframe_program/shellbase = src.get_file_name(src.setup_progname_shell, src.sys_folder)
-			var/shellexit = (shellbase && (shellbase.type == caller.type) && (caller.parent_id == src.progid))
+			var/shellexit = (shellbase && (shellbase.type == caller_prog.type) && (caller_prog.parent_id == src.progid))
 
-			var/datum/computer/file/mainframe_program/quitparent = caller.parent_task
-			caller.handle_quit()
+			var/datum/computer/file/mainframe_program/quitparent = caller_prog.parent_task
+			caller_prog.handle_quit()
 
 			if (istype(quitparent) && (quitparent != src) && !istype(quitparent, /datum/computer/file/mainframe_program/driver/mountable/radio)) // Hello, this last istype() is a dirty hack.
-				if (user.current_prog == caller)
+				if (user.current_prog == caller_prog)
 					user.current_prog = quitparent
 				quitparent.useracc = user
 				quitparent.receive_progsignal(TRUE, list("command" = DWAINE_COMMAND_TEXIT, "id" = sendid))
@@ -729,15 +729,15 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 
 			var/pass_user = (data["passusr"] == 1)
 
-			var/datum/computer/file/mainframe_program/caller = src.master.processing[sendid]
-			if (!caller)
+			var/datum/computer/file/mainframe_program/caller_prog = src.master.processing[sendid]
+			if (!caller_prog)
 				return ESIG_GENERIC
 
 			var/datum/computer/file/mainframe_program/task_model = src.parse_file_directory(data["path"], src.holder.root, FALSE)
 			if (!task_model?.executable)
 				return ESIG_NOTARGET
 
-			task_model = src.master.run_program(task_model, (pass_user ? caller.useracc : null), caller, data["args"])
+			task_model = src.master.run_program(task_model, (pass_user ? caller_prog.useracc : null), caller_prog, data["args"])
 			if (!task_model)
 				return ESIG_GENERIC
 
@@ -747,11 +747,11 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 			if (!sendid)
 				return ESIG_GENERIC
 
-			var/datum/computer/file/mainframe_program/caller = src.master.processing[sendid]
-			if (!caller)
+			var/datum/computer/file/mainframe_program/caller_prog = src.master.processing[sendid]
+			if (!caller_prog)
 				return ESIG_GENERIC
 
-			var/datum/computer/file/mainframe_program/fork = src.master.run_program(caller, null, caller, data["args"], TRUE)
+			var/datum/computer/file/mainframe_program/fork = src.master.run_program(caller_prog, null, caller_prog, data["args"], TRUE)
 			if (!fork)
 				return ESIG_GENERIC
 
@@ -765,21 +765,21 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 			if (!isnum(target_id) || (target_id < 0) || (target_id > length(src.master.processing)))
 				return ESIG_NOTARGET
 
-			var/datum/computer/file/mainframe_program/caller = src.master.processing[sendid]
-			if (!caller)
+			var/datum/computer/file/mainframe_program/caller_prog = src.master.processing[sendid]
+			if (!caller_prog)
 				return ESIG_GENERIC
 
 			var/datum/computer/file/mainframe_program/target_task = src.master.processing[target_id]
 			if (!target_task)
 				return ESIG_SUCCESS
 
-			if (target_task.parent_task != caller)
+			if (target_task.parent_task != caller_prog)
 				return ESIG_GENERIC
 
 			var/datum/mainframe2_user_data/target_user = target_task.useracc
-			if (target_user && (!caller.useracc || (target_user.current_prog == target_task)))
-				target_user.current_prog = caller
-				caller.useracc = target_user
+			if (target_user && (!caller_prog.useracc || (target_user.current_prog == target_task)))
+				target_user.current_prog = caller_prog
+				caller_prog.useracc = target_user
 
 			target_task.handle_quit()
 
@@ -789,8 +789,8 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 			if (!sendid)
 				return ESIG_GENERIC
 
-			var/datum/computer/file/mainframe_program/caller = src.master.processing[sendid]
-			if (!caller)
+			var/datum/computer/file/mainframe_program/caller_prog = src.master.processing[sendid]
+			if (!caller_prog)
 				return ESIG_GENERIC
 
 			var/list/datum/computer/file/mainframe_program/progs = list()
@@ -798,7 +798,7 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 
 			for (var/i in 1 to length(src.master.processing))
 				var/datum/computer/file/mainframe_program/MP = src.master.processing[i]
-				if (MP && (MP.parent_task == caller))
+				if (MP && (MP.parent_task == caller_prog))
 					progs[i] = MP
 
 			return progs
@@ -807,11 +807,11 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 			if (!sendid)
 				return ESIG_GENERIC
 
-			var/datum/computer/file/mainframe_program/caller = src.master.processing[sendid]
-			if (!data["path"] || !caller)
+			var/datum/computer/file/mainframe_program/caller_prog = src.master.processing[sendid]
+			if (!data["path"] || !caller_prog)
 				return ESIG_NOTARGET
 
-			var/datum/computer/target_file = src.parse_datum_directory(data["path"], src.holder.root, FALSE, caller.useracc)
+			var/datum/computer/target_file = src.parse_datum_directory(data["path"], src.holder.root, FALSE, caller_prog.useracc)
 			if (!target_file)
 				return ESIG_NOFILE
 
@@ -821,11 +821,11 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 			if (!sendid)
 				return ESIG_GENERIC
 
-			var/datum/computer/file/mainframe_program/caller = src.master.processing[sendid]
-			if (!data["path"] || !caller)
+			var/datum/computer/file/mainframe_program/caller_prog = src.master.processing[sendid]
+			if (!data["path"] || !caller_prog)
 				return ESIG_NOTARGET
 
-			var/datum/mainframe2_user_data/user = caller.useracc
+			var/datum/mainframe2_user_data/user = caller_prog.useracc
 			var/datum/computer/target_file = src.parse_datum_directory(data["path"], src.holder.root, FALSE, user)
 
 			if (!target_file || (target_file.holding_folder == src.master.runfolder) || (target_file == src.master.runfolder) || (target_file == src.holder.root))
@@ -848,15 +848,15 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 			if (!isnum(data["permission"]))
 				return ESIG_GENERIC
 
-			var/datum/computer/file/mainframe_program/caller = src.master.processing[sendid]
-			if (!data["path"] || !caller)
+			var/datum/computer/file/mainframe_program/caller_prog = src.master.processing[sendid]
+			if (!data["path"] || !caller_prog)
 				return ESIG_NOTARGET
 
-			var/datum/computer/target_file = src.parse_datum_directory(data["path"], src.holder.root, FALSE, caller.useracc)
+			var/datum/computer/target_file = src.parse_datum_directory(data["path"], src.holder.root, FALSE, caller_prog.useracc)
 			if (!istype(target_file))
 				return ESIG_NOFILE
 
-			if (caller.useracc && !src.check_mode_permission(target_file, caller.useracc))
+			if (caller_prog.useracc && !src.check_mode_permission(target_file, caller_prog.useracc))
 				return ESIG_GENERIC
 
 			src.change_metadata(target_file, "permission", data["permission"])
@@ -869,15 +869,15 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 			if (!isnum(data["group"]) && !data["owner"])
 				return ESIG_GENERIC
 
-			var/datum/computer/file/mainframe_program/caller = src.master.processing[sendid]
-			if (!data["path"] || !caller)
+			var/datum/computer/file/mainframe_program/caller_prog = src.master.processing[sendid]
+			if (!data["path"] || !caller_prog)
 				return ESIG_NOTARGET
 
-			var/datum/computer/target_file = src.parse_datum_directory(data["path"], src.holder.root, FALSE, caller.useracc)
+			var/datum/computer/target_file = src.parse_datum_directory(data["path"], src.holder.root, FALSE, caller_prog.useracc)
 			if (!istype(target_file))
 				return ESIG_NOFILE
 
-			if (caller.useracc && !src.check_mode_permission(target_file, caller.useracc))
+			if (caller_prog.useracc && !src.check_mode_permission(target_file, caller_prog.useracc))
 				return ESIG_GENERIC
 
 			if (data["owner"])
@@ -892,14 +892,14 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 			if (!sendid)
 				return ESIG_GENERIC
 
-			var/datum/computer/file/mainframe_program/caller = src.master.processing[sendid]
-			if (!file || !data["path"] || !caller)
+			var/datum/computer/file/mainframe_program/caller_prog = src.master.processing[sendid]
+			if (!file || !data["path"] || !caller_prog)
 				return ESIG_NOTARGET
 
 			if (src.is_name_invalid(file.name))
 				return ESIG_GENERIC
 
-			var/datum/mainframe2_user_data/user = caller.useracc
+			var/datum/mainframe2_user_data/user = caller_prog.useracc
 			var/datum/computer/folder/destination = src.parse_directory(data["path"], src.holder.root, (data["mkdir"] == 1), user)
 			if (!destination || (destination == src.master.runfolder))
 				return ESIG_NOTARGET
@@ -1060,7 +1060,7 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 	return FALSE
 
 /// Log a connection in as a temporary user, starting the full login program, or logging in fully if a valid login record is provided.
-/datum/computer/file/mainframe_program/os/kernel/proc/login_temp_user(user_netid, datum/computer/file/record/login_record, datum/computer/file/mainframe_program/caller_override)
+/datum/computer/file/mainframe_program/os/kernel/proc/login_temp_user(user_netid, datum/computer/file/record/login_record, datum/computer/file/mainframe_program/caller_prog_override)
 	if (length(src.users) >= src.max_users)
 		return TRUE
 
@@ -1079,10 +1079,10 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 	if (istype(login_record) && login_record.fields && login_record.fields["registered"] && login_record.fields["assignment"] && !src.login_user(new_user, login_record.fields["registered"], FALSE))
 		var/datum/computer/file/mainframe_program/shellbase = src.get_file_name(src.setup_progname_shell, src.sys_folder)
 		if (istype(shellbase))
-			src.master.run_program(shellbase, new_user, istype(caller_override) ? caller_override : src)
+			src.master.run_program(shellbase, new_user, istype(caller_prog_override) ? caller_prog_override : src)
 			return FALSE
 
-	helloprog = src.master.run_program(helloprog, new_user, istype(caller_override) ? caller_override : src)
+	helloprog = src.master.run_program(helloprog, new_user, istype(caller_prog_override) ? caller_prog_override : src)
 	if (!istype(helloprog))
 		return TRUE
 

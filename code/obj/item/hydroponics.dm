@@ -88,7 +88,7 @@ TYPEINFO(/obj/item/saw)
 			target.lastattackertime = world.time
 
 			if (ishuman(target))
-				if (ishuman(user) && saw_surgery(target,user))
+				if (ishuman(user) && (!is_special && saw_surgery(target,user)))
 					take_bleeding_damage(target, user, 2, DAMAGE_CUT)
 					return
 				else if (!isdead(target))

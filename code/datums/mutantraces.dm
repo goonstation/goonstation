@@ -608,7 +608,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			return
 		var/datum/bioEffect/mutantrace/mr = src.race_mutation
 		if(!H.bioHolder.HasEffect(initial(mr.id)))
-			H.bioHolder.AddEffect(initial(mr.id), 0, 0, 0, 1)
+			H.bioHolder.AddEffect(initial(mr.id), 0, 0, 0, 1, scannable=TRUE)
 
 	/// Copies over female variants of mutant heads and organs
 	proc/MakeMutantDimorphic(var/mob/living/carbon/human/H)
@@ -1752,7 +1752,7 @@ TYPEINFO(/datum/mutantrace/premature_clone)
 	human_compatible = 1
 	uses_human_clothes = 1
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
-	dna_mutagen_banned = FALSE
+	dna_mutagen_banned = TRUE
 
 
 	on_attach()
