@@ -23,7 +23,8 @@
 #define PLANE_OVERLAY_EFFECTS 25
 #define PLANE_MUL_OVERLAY_EFFECTS 26 //! Multiplicative blend mode
 #define PLANE_HUD 30
-#define PLANE_ANTAG_ICONS 32
+#define PLANE_ABOVE_HUD 31
+#define PLANE_ANTAG_ICONS 33
 #define PLANE_SCREEN_OVERLAYS 40
 
 /atom/movable/screen/plane_parent
