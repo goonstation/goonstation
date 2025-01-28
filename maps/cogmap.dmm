@@ -29045,6 +29045,7 @@
 	can_rupture = 0;
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/methane,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "ccP" = (

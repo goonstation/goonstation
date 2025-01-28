@@ -11613,7 +11613,7 @@
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "eXF" = (
-/obj/machinery/portable_atmospherics/canister/empty,
+/obj/machinery/portable_atmospherics/canister/methane,
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -13180,6 +13180,7 @@
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister,
 /turf/simulated/floor,
 /area/station/science/storage)
 "hwt" = (

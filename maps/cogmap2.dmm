@@ -50239,6 +50239,7 @@
 /area/station/maintenance/outer/se)
 "cXr" = (
 /obj/machinery/light_switch/east,
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "cXs" = (
@@ -71975,6 +71976,10 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/research_outpost/hangar)
+"tOl" = (
+/obj/machinery/portable_atmospherics/canister/methane,
+/turf/simulated/floor/plating/scorched,
+/area/station/science/storage)
 "tOV" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south,
@@ -101696,7 +101701,7 @@ cUW
 cWe
 cXr
 cZx
-cZx
+tOl
 cOR
 dby
 dcn

@@ -6991,7 +6991,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/methane,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/lab)

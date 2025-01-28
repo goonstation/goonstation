@@ -34098,6 +34098,10 @@
 	dir = 4
 	},
 /area/station/hallway/primary/west)
+"fpg" = (
+/obj/machinery/portable_atmospherics/canister/methane,
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "fpu" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Crematorium"
@@ -98046,9 +98050,9 @@ cav
 cav
 cav
 cav
-cdR
-cgz
 cfL
+cgz
+fpg
 bZD
 aaa
 aaa

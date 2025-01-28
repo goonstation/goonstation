@@ -32663,6 +32663,10 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/greenwhite/other,
 /area/station/crew_quarters/market)
+"jRb" = (
+/obj/machinery/portable_atmospherics/canister/methane,
+/turf/simulated/floor/black,
+/area/station/science/storage)
 "jRn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -117518,7 +117522,7 @@ ijU
 mEC
 hzD
 pPz
-bBt
+jRb
 xli
 ijU
 hkC

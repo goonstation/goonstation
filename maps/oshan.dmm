@@ -34876,6 +34876,10 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
+"gvu" = (
+/obj/machinery/portable_atmospherics/canister/methane,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
 "gvW" = (
 /obj/table/wood,
 /obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
@@ -131880,9 +131884,9 @@ eqg
 bcE
 bcW
 gNp
+bct
 aTq
 aTq
-bbP
 bcV
 bcS
 bZn
@@ -132182,7 +132186,7 @@ eqg
 rwx
 bdf
 gNp
-aTq
+bct
 aTq
 bbP
 bcV
@@ -132486,7 +132490,7 @@ bdf
 bcs
 bcs
 aTq
-bct
+bbP
 bcV
 sBQ
 bZn
@@ -132788,7 +132792,7 @@ bdf
 bcs
 bcs
 aTq
-bct
+gvu
 bcV
 xyc
 bZn

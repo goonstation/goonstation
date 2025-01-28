@@ -527,6 +527,11 @@
 	},
 /turf/simulated/floor/black/side,
 /area/station/crew_quarters/quarters_east)
+"akv" = (
+/obj/mesh/catwalk,
+/obj/machinery/portable_atmospherics/canister/methane,
+/turf/simulated/floor/plating/jen,
+/area/station/crew_quarters/quarters_east)
 "akw" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor/black,
@@ -114382,7 +114387,7 @@ wtW
 iXV
 ylv
 ylv
-ylv
+akv
 vTZ
 mai
 vEo

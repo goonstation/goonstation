@@ -795,7 +795,7 @@
 /area/station/science/chemistry)
 "aew" = (
 /obj/decal/cleanable/cobweb,
-/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/portable_atmospherics/canister/methane,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "aey" = (
@@ -33102,6 +33102,7 @@
 /area/station/science/gen_storage)
 "mqD" = (
 /obj/machinery/drone_recharger,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "mqE" = (
