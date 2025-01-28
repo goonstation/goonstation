@@ -267,6 +267,14 @@
 	gravity = list(0, -1, 0)
 	scale = list(1.5, 1.5)
 
+/particles/steam_leak
+	color = "ffffff"
+	count = 30
+	spawning = 3
+	lifespan = 7
+	fade = 7
+	velocity = generator("box", list(2,4,0), list(1,2,0), UNIFORM_RAND)
+
 /particles/impact_dust
 	icon = 'icons/effects/particles.dmi'
 	icon_state = list(""=1, "2x2square"=1)
@@ -460,10 +468,3 @@
 /obj/effects/impact_energy/projectile_sparks
 	base_amt = 3
 	particles = new/particles/impact_energy
-/particles/steam_leak
-	color = "ffffff"
-	count = 30
-	spawning = 3
-	lifespan = 7
-	fade = 7
-	velocity = generator("box", list(2,4,0), list(1,2,0), UNIFORM_RAND)
