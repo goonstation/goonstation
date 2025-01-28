@@ -269,3 +269,4 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 	. = ..()
 	if(.) return
 	AddComponent(/datum/component/equipment_fault/embers, tool_flags = TOOL_WELDING | TOOL_WRENCHING | TOOL_SCREWING)
+	playsound(src, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
