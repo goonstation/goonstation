@@ -2466,7 +2466,7 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 		. = ..()
 		for (var/key in src.particle_refs)
 			var/obj/effects/particle_holder/holder = src.particle_refs[key]
-			holder.plane = PLANE_HUD + 1
+			holder.plane = PLANE_ABOVE_HUD
 
 	proc/shoot_check(var/mob/user)
 		if (SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, amount) & CELL_INSUFFICIENT_CHARGE)
