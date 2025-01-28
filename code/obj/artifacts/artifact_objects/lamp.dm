@@ -83,7 +83,6 @@
 		src.appearance_flags |= RESET_TRANSFORM
 		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, PROC_REF(update_whacky))
 		update_whacky(loc, null, 0)
-		src.add_filter("test", 1, alpha_mask_filter(0,0,icon('icons/effects/overlays/knockout.dmi',"knockout")))
 
 	proc/update_whacky(var/atom/movable/thing, prev_loc, dir)
 		src.vis_contents.Cut()
