@@ -235,7 +235,7 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 
 /obj/machinery/arc_electroplater/bullet_act(obj/projectile/P)
 	if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
-		if(prob(P.power * P.proj_data?.ks_ratio))
+		if(prob(P.power * P.proj_data?.ks_ratio / 2))
 			src.set_broken()
 	..()
 
