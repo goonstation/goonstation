@@ -36,7 +36,6 @@ export const NanoCrucible = () => {
               <Button
                 onClick={() => act('load_first_part')}
                 tooltip={first_part}
-                color={!first_part ? 'orange' : 'green'}
               >
                 {first_part ? (
                   <img
@@ -56,7 +55,6 @@ export const NanoCrucible = () => {
               <Button
                 onClick={() => act('load_second_part')}
                 tooltip={second_part}
-                color={!second_part ? 'orange' : 'green'}
               >
                 {second_part ? (
                   <img
