@@ -35,6 +35,34 @@ TYPEINFO(/datum/component/equipment_fault)
 		RegisterSignal(parent, COMSIG_MACHINERY_PROCESS, PROC_REF(ef_process))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examined))
 
+/datum/component/equipment_fault/RegisterWithParent()
+	. = ..()
+	var/atom/movable/object = src.parent
+	RegisterHelpMessageHandler(object, PROC_REF(get_help_msg))
+
+/datum/component/equipment_fault/proc/get_help_msg(atom/movable/parent, mob/user, list/lines)
+	lines += "[parent] is broken and requires [english_list(src.tool_flags_to_list())] to be repaired."
+
+/datum/component/equipment_fault/proc/tool_flags_to_list()
+	var/tool_list = list()
+	if (src.interactions & (TOOL_CUTTING|TOOL_SNIPPING))
+		tool_list += "cutting"
+	if (src.interactions & TOOL_PRYING)
+		tool_list += "prying"
+	if (src.interactions & TOOL_PULSING)
+		tool_list += "pulsing"
+	if (src.interactions & TOOL_SCREWING)
+		tool_list += "screwing"
+	if (src.interactions & TOOL_WELDING)
+		tool_list += "welding"
+	if (src.interactions & TOOL_WRENCHING)
+		tool_list += "wrenching"
+	if (src.interactions & TOOL_SOLDERING)
+		tool_list += "soldering"
+	if (src.interactions & TOOL_WIRING)
+		tool_list += "wiring"
+	return tool_list
+
 /datum/component/equipment_fault/proc/examined(obj/O, mob/examiner, list/lines)
 	return
 
@@ -389,3 +417,120 @@ TYPEINFO(/datum/component/equipment_fault)
 			var/obj/machinery/power/apc/target_apc = O
 			if(!target_apc.isWireColorCut(wire))
 				target_apc.pulse(wire)
+
+///leaks chemicals to nearby tiles
+/datum/component/equipment_fault/leaky
+	///base/current probability to spawn fluids on this process tick
+	var/current_prob = 5
+	///increase in probability per process tick
+	var/static/prob_raise = 5
+	///list of reagents IDs to leak
+	var/list/reagent_list = list("carbon", "copper", "iron", "nickel", "oil")
+	var/static/list/sounds = list(
+		'sound/machines/vending_dispense_small.ogg',
+		'sound/machines/decompress.ogg',
+		'sound/effects/splort.ogg',
+		'sound/effects/zzzt.ogg',
+	)
+
+/datum/component/equipment_fault/leaky/ef_process(obj/machinery/M, mult)
+	if(probmult(current_prob))
+		src.ef_perform_fault(M)
+		src.current_prob = initial(src.current_prob)
+	else
+		src.current_prob += src.prob_raise
+
+/datum/component/equipment_fault/leaky/ef_perform_fault(obj/O)
+	if(..())
+		var/target_dir = pick(alldirs)
+		var/turf/simulated/floor/T = get_step(O.loc, target_dir)
+		if(!istype(T))
+			T = O.loc
+		else
+			var/obj/effects/spray/spray = new(T)
+			SPAWN(1 SECOND) qdel(spray)
+			spray.set_dir(target_dir)
+		playsound(O, pick(sounds), 50, 2)
+		O.visible_message(SPAN_NOTICE("Some of the contents of [O] leaks onto the floor."))
+
+		var/datum/reagents/temp_fluid_reagents = new /datum/reagents(5)
+		temp_fluid_reagents.add_reagent(pick(src.reagent_list), 5)
+		T.fluid_react(temp_fluid_reagents, temp_fluid_reagents.total_volume)
+
+/datum/component/equipment_fault/leaky/chemical
+	reagent_list = list(
+		"aluminium","barium","bromine","calcium","carbon","chlorine", \
+		"chromium","copper","ethanol","fluorine","hydrogen", \
+		"iodine","iron","lithium","magnesium","mercury","nickel", \
+		"nitrogen","oxygen","phosphorus","plasma","platinum","potassium", \
+		"radium","silicon","silver","sodium","sugar","sulfur","water"
+	)
+
+/datum/component/equipment_fault/leaky/alcohol
+	current_prob = 30
+	reagent_list = list("beer", "cider", "gin", "wine", "champagne", \
+								"rum", "vodka", "bourbon", "vermouth", "tequila", \
+								"bitters", "tonic")
+
+/datum/component/equipment_fault/leaky/soda
+	current_prob = 30
+	reagent_list = list("cola", "ginger_ale", "juice_lime", "juice_lemon", "juice_orange", \
+								"juice_cran", "juice_cherry", "juice_pineapple", "juice_tomato", \
+								"coconut_milk", "sugar", "water", "vanilla", "tea", "grenadine")
+
+/datum/component/equipment_fault/leaky/chef
+	current_prob = 30
+	reagent_list = list("ketchup","mustard","salt","pepper","gravy","chocolate","chocolate_milk","strawberry_milk","milk")
+
+/datum/component/equipment_fault/leaky/water
+	current_prob = 50
+	reagent_list = list("water")
+
+/datum/component/equipment_fault/leaky/blood
+	current_prob = 50
+	reagent_list = list("blood")
+
+///streaks a cleanable near the machine
+/datum/component/equipment_fault/messy
+	///base probability to spawn cleanable on this process tick
+	var/current_prob = 2
+	///increase in probability per process tick
+	var/static/prob_raise = 1
+	///list of cleanables picked to spawn when a fault is triggered
+	var/list/obj/decal/cleanable/cleanable_types = list(
+		/obj/decal/cleanable/machine_debris=40,
+		/obj/decal/cleanable/oil=10,
+		/obj/decal/cleanable/oil/streak=20,
+		/obj/decal/cleanable/generic=10,
+		/obj/decal/cleanable/glitter/harmless=5,
+	)
+	var/static/list/sounds = list(
+		'sound/machines/weaponoverload.ogg',
+		'sound/machines/windup.ogg',
+		'sound/machines/hydraulic.ogg',
+		'sound/machines/seed_destroyed.ogg',
+		'sound/machines/ArtifactBee1.ogg',
+		'sound/machines/constructor_work.ogg',
+	)
+
+/datum/component/equipment_fault/messy/ef_process(obj/machinery/M, mult)
+	if(probmult(current_prob))
+		src.ef_perform_fault(M)
+		src.current_prob = initial(src.current_prob)
+	else
+		src.current_prob += src.prob_raise
+
+/datum/component/equipment_fault/messy/ef_perform_fault(obj/O)
+	if(..())
+		playsound(O, pick(sounds), 30, 2)
+		var/obj/decal/cleanable/junk = make_cleanable(pick(src.cleanable_types), O.loc)
+		junk.streak_cleanable(cardinal, dist_upper=1)
+		hit_twitch(O)
+		O.visible_message(SPAN_NOTICE("[O] spews out some of its internals."))
+
+/datum/component/equipment_fault/messy/bloody
+	cleanable_types = list(
+		/obj/decal/cleanable/blood/gibs=50,
+		/obj/decal/cleanable/blood/gibs/core=20,
+		/obj/decal/cleanable/blood/gibs/body=10
+	)
