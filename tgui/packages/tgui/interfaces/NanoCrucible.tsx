@@ -10,16 +10,16 @@ import { Button, Flex, Icon, Section } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-interface PacketInfo {
-  first_part;
-  first_part_img;
-  second_part;
-  second_part_img;
-  result_part;
+interface CrucibleInfo {
+  first_part: string;
+  first_part_img: string;
+  second_part: string;
+  second_part_img: string;
+  result_part: string;
 }
 
 export const NanoCrucible = () => {
-  const { act, data } = useBackend<PacketInfo>();
+  const { act, data } = useBackend<CrucibleInfo>();
   const {
     first_part,
     first_part_img,
