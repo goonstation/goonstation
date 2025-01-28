@@ -61,34 +61,42 @@ export const GPS = () => {
     <Window title="GPS" width={420} height={555} theme="ntos">
       <Window.Content>
         <Section title={`GPS Device ${src_name}`}>
-          <LabeledList>
-            <LabeledList.Item label="Coordinates">
-              {src_x}, {src_y}
-            </LabeledList.Item>
-            <LabeledList.Item label="Trackable">
-              <Button onClick={() => act('toggle_trackable')}>
-                {trackable ? 'Yes' : 'No'}
-              </Button>
-            </LabeledList.Item>
-            <LabeledList.Item label="Send distress">
-              <Button onClick={() => act('toggle_distress')}>
-                {distress ? 'Yes' : 'No'}
-              </Button>
-            </LabeledList.Item>
-            <LabeledList.Item label="Identifier">
-              <Button
-                onClick={() => act('change_identifier')}
-                tooltip={gpsTooltip}
-              >
-                {src_name.slice(5, src_name.length)}
-              </Button>
-            </LabeledList.Item>
-            <LabeledList.Item label="Tracking">
-              <Button onClick={() => act('track_gps')}>
-                {tracking ? tracking : 'None'}
-              </Button>
-            </LabeledList.Item>
-          </LabeledList>
+          <Stack>
+            <Stack.Item>
+              <LabeledList>
+                <LabeledList.Item label="Coordinates">
+                  {src_x}, {src_y}
+                </LabeledList.Item>
+                <LabeledList.Item label="Identifier">
+                  <Button
+                    onClick={() => act('change_identifier')}
+                    tooltip={gpsTooltip}
+                  >
+                    {src_name.slice(5, src_name.length)}
+                  </Button>
+                </LabeledList.Item>
+                <LabeledList.Item label="Tracking">
+                  <Button onClick={() => act('track_gps')}>
+                    {tracking ? tracking : 'None'}
+                  </Button>
+                </LabeledList.Item>
+              </LabeledList>
+            </Stack.Item>
+            <Stack.Item>
+              <LabeledList>
+                <LabeledList.Item label="Trackable">
+                  <Button.Checkbox onClick={() => act('toggle_trackable')} selected={trackable} checked={trackable}>
+                    {trackable ? 'Yes' : 'No'}
+                  </Button.Checkbox>
+                </LabeledList.Item>
+                <LabeledList.Item label="Send distress">
+                  <Button.Checkbox onClick={() => act('toggle_distress')} selected={distress} checked={distress}>
+                    {distress ? 'Yes' : 'No'}
+                  </Button.Checkbox>
+                </LabeledList.Item>
+              </LabeledList>
+            </Stack.Item>
+          </Stack>
         </Section>
         <Section title="Tracking">
           <Collapsible title="GPS Devices">
@@ -134,23 +142,25 @@ export const GPS = () => {
   );
 };
 
+let distress_red = false;
 const TrackableList = (props) => {
   const { act } = useBackend();
   const { gps_names, gps_coords, gps_distress, gps_refs } = props;
   const nodes: JSX.Element[] = [];
+
+  distress_red = !distress_red;
+
   for (let i = 0; i < gps_names.length; i++) {
     const node = (
       <Box key={i} fontSize={0.8}>
-        <Stack.Item
-          backgroundColor={gps_distress && !!gps_distress[i] ? '#900603' : null}
-        >
+        <Stack.Item>
           <Stack>
             <Stack.Item grow>
               <Stack vertical>
-                <Stack.Item>{gps_names[i]}</Stack.Item>
-                <Stack.Item>{gps_coords[i]}</Stack.Item>
+                <Stack.Item><strong>{gps_names[i]}</strong></Stack.Item>
+                <Stack.Item><em>{gps_coords[i]}</em></Stack.Item>
                 {gps_distress && !!gps_distress[i] && (
-                  <Stack.Item>Distress Alert</Stack.Item>
+                  <Stack.Item textColor={distress_red ? "red" : "default"}>Distress Alert</Stack.Item>
                 )}
               </Stack>
             </Stack.Item>
