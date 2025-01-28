@@ -18,7 +18,7 @@
 		light.set_brightness(light_brightness)
 		light.set_color(light_r, light_g, light_b)
 		light.attach(src)
-		if(prob(100)) //20 chance this is an inverting lamp
+		if(prob(20)) //20 chance this is an inverting lamp
 			bonus_light = new /obj/effect/whackylight(src, light.radius)
 			src.vis_contents += bonus_light
 
