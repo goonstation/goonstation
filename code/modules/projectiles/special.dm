@@ -923,6 +923,37 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		FC.launch()
 		current_angle += angle_adjust_per_pellet
 
+/datum/projectile/special/spreader/tasershotgunspread/laser
+	name = "laser"
+	sname = "shotgun spread"
+	cost = 50
+	damage = 20
+	damage_type = D_ENERGY
+	pellets_to_fire = 5
+	spread_projectile_type = /datum/projectile/laser/lasershotgun
+	split_type = 0
+	shot_sound = 'sound/weapons/shotgunlaser.ogg'
+
+/datum/projectile/laser/lasershotgun
+	name = "Lethal Mode"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "redbolt"
+	shot_sound = 'sound/weapons/shotgunlaser.ogg'
+	cost = 50
+	damage = 15
+	shot_number = 1
+	sname = "lethal"
+	damage_type = D_ENERGY
+	hit_ground_chance = 30
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if(!ismob(hit))
+			shot_volume = 0
+			shoot_reflected_bounce(proj, hit, 2, PROJ_HEADON_BOUNCE)
+			shot_volume = 100
+		if(proj.reflectcount >= 2)
+			elecflash(get_turf(hit),radius=0, power=1, exclude_center = 0)
+
 /datum/projectile/special/spreader/pwshotgunspread
 	name = "blaster bolt"
 	sname = "shotgun spread"

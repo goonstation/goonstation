@@ -1782,6 +1782,10 @@ TYPEINFO(/datum/mutantrace/premature_clone)
 				sleep(rand(40, 120))
 				src.mob.gib()
 
+	disposing()
+		REMOVE_ATOM_PROPERTY(src.mob, PROP_HUMAN_DROP_BRAIN_ON_GIB, "puritan")
+		. = ..()
+
 // some new simple gimmick junk
 
 /datum/mutantrace/gross

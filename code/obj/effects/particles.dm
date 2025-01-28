@@ -460,3 +460,10 @@
 /obj/effects/impact_energy/projectile_sparks
 	base_amt = 3
 	particles = new/particles/impact_energy
+/particles/steam_leak
+	color = "ffffff"
+	count = 30
+	spawning = 3
+	lifespan = 7
+	fade = 7
+	velocity = generator("box", list(2,4,0), list(1,2,0), UNIFORM_RAND)
