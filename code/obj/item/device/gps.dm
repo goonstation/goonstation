@@ -168,10 +168,10 @@ TYPEINFO(/obj/item/device/gps)
 					src.icon_state = "gps-off"
 					src.tracking_string = null
 				else
-					var/target_x = tgui_input_number(usr, "Select x of target:", "Coordinate Entry", 1, world.maxx, 1)
+					var/target_x = tgui_input_number(usr, "Select x of target:", "Coordinate Entry", 1, world.maxx, 1, theme="ntos")
 					if (!target_x)
 						return
-					var/target_y = tgui_input_number(usr, "Select y of target:", "Coordinate Entry", 1, world.maxy, 1)
+					var/target_y = tgui_input_number(usr, "Select y of target:", "Coordinate Entry", 1, world.maxy, 1, theme="ntos")
 					if (!target_y)
 						return
 					var/turf/T = get_turf(src)
