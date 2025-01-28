@@ -136,8 +136,6 @@ TYPEINFO(/datum/component/equipment_fault)
 				var/obj/machinery/machine = src.parent
 				machine.status &= ~BROKEN
 				machine.power_change()
-			RemoveComponent()
-			qdel(src)
 		else
 			showContextActions(user)
 
