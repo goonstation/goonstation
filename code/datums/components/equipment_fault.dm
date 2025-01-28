@@ -64,7 +64,7 @@ TYPEINFO(/datum/component/equipment_fault)
 	return tool_list
 
 /datum/component/equipment_fault/proc/examined(obj/O, mob/examiner, list/lines)
-	return
+	lines += "This one looks broken, but it could be repaired."
 
 /datum/component/equipment_fault/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ATTACKBY, COMSIG_ATTACKHAND, COMSIG_MACHINERY_PROCESS, COMSIG_ATOM_EXAMINE))
