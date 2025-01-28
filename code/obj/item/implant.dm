@@ -1463,6 +1463,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			..()
 			implant_overlay = null
 
+	ice_feather
+		name = "ice feather"
+		icon = 'icons/obj/items/items.dmi'
+		icon_state = "ice_feather"
+		burn_possible = FALSE
+
 	body_visible
 		bleed_time = 0
 		leaves_wound = FALSE
