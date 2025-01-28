@@ -7,6 +7,12 @@
 	var/light_b = 1
 	var/datum/light/light
 	var/obj/effect/bonus_light
+	// valid color matrices for the "inverted lamp" effect. Works best if it's a dramatic change, otherwise it just looks kinda mid.
+	var/static/list/possible_color_matrices = list(
+		COLOR_MATRIX_GRAYSCALE,
+		COLOR_MATRIX_FLOCKMANGLED,
+		COLOR_MATRIX_FLOCKMIND,
+		COLOR_MATRIX_INVERSE)
 
 	New()
 		..()
@@ -18,8 +24,9 @@
 		light.set_brightness(light_brightness)
 		light.set_color(light_r, light_g, light_b)
 		light.attach(src)
-		if(prob(20)) //20 chance this is an inverting lamp
-			bonus_light = new /obj/effect/whackylight(src, light.radius)
+		if(prob(40)) //chance this is an inverting lamp
+			var/color = pick(possible_color_matrices)
+			bonus_light = new /obj/effect/whackylight(src, light.radius, color)
 			src.vis_contents += bonus_light
 
 	disposing()
@@ -65,12 +72,18 @@
 
 	var/radius
 	var/active = FALSE
-	New(loc, radius=2)
+
+	New(loc, radius=2, color=null)
 		.=..(get_turf(loc))
 		src.radius = radius
-		src.color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
+		if(isnull(color))
+			src.color = COLOR_MATRIX_INVERSE
+		else
+			src.color = color
+		src.appearance_flags |= RESET_TRANSFORM
 		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, PROC_REF(update_whacky))
 		update_whacky(loc, null, 0)
+		src.add_filter("test", 1, alpha_mask_filter(0,0,icon('icons/effects/overlays/knockout.dmi',"knockout")))
 
 	proc/update_whacky(var/atom/movable/thing, prev_loc, dir)
 		src.vis_contents.Cut()
