@@ -1,4 +1,9 @@
 
+(t)tue jan 28 25
+(u)patricia
+(p)21973
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)The nuclear turbine's power signal now works correctly with mechcomp arithmetic components
 (t)mon jan 27 25
 (u)glowbold
 (p)22076
