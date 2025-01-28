@@ -1,4 +1,9 @@
 
+(t)mon jan 27 25
+(u)glowbold
+(p)22076
+(e)⚖💊|C-Balance, A-Medical
+(*)Cyber-organs do not appear in the Medical Manufacturer - get your patients to a roboticist, source synthorgans from botany, or harvest monkey organs.
 (t)sun jan 26 25
 (u)AnomalousPotato
 (p)21753
