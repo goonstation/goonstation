@@ -18,9 +18,13 @@
 		light.set_brightness(light_brightness)
 		light.set_color(light_r, light_g, light_b)
 		light.attach(src)
-		if(prob(20)) //20 chance this is an inverting lamp
+		if(prob(100)) //20 chance this is an inverting lamp
 			bonus_light = new /obj/effect/whackylight(src, light.radius)
 			src.vis_contents += bonus_light
+
+	disposing()
+		. = ..()
+		QDEL_NULL(bonus_light) //because it exists on the map, it won't get cleaned up automatically
 
 /datum/artifact/lamp
 	associated_object = /obj/artifact/lamp
