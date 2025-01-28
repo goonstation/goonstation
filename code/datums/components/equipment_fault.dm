@@ -68,6 +68,7 @@ TYPEINFO(/datum/component/equipment_fault)
 
 /datum/component/equipment_fault/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ATTACKBY, COMSIG_ATTACKHAND, COMSIG_MACHINERY_PROCESS, COMSIG_ATOM_EXAMINE))
+	UnregisterHelpMessageHandler(parent)
 	. = ..()
 
 /datum/component/equipment_fault/proc/ef_process(obj/machinery/M, mult)
@@ -160,6 +161,9 @@ TYPEINFO(/datum/component/equipment_fault)
 				var/obj/machinery/machine = src.parent
 				machine.status &= ~BROKEN
 				machine.power_change()
+			user.closeContextActions()
+			RemoveComponent()
+			qdel(src)
 		else
 			showContextActions(user)
 
