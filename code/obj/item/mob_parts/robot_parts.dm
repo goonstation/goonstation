@@ -1326,7 +1326,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	return FALSE
 
 proc/do_clamp(atom/movable/clamped, mob/clamper, obj/item/clamp)
-	if (ON_COOLDOWN(clamper, "clamp", DEFAULT_CLICK_DELAY))
+	if (ON_COOLDOWN(clamper, "clamp", 1 SECOND))
 		return
 	if (isturf(clamped))
 		return
