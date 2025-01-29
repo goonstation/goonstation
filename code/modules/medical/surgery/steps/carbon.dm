@@ -171,6 +171,9 @@
 				H.vars[affected_limb] = tool
 				tool.holder = parent_surgery.patient
 
+				var/can_secure = ismob(attacher) && (attacher?.find_type_in_hand(/obj/item/suture) || attacher?.find_type_in_hand(/obj/item/staple_gun))
+				new_arm.remove_stage = can_secure ? 0 : 2
+
 
 			tool_requirement(mob/surgeon, obj/item/tool)
 
