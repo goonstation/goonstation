@@ -1003,8 +1003,6 @@
 
 /* =============== CLIPBOARDS =============== */
 
-#define CLIPBOARD_MAX_ITEMS 15
-
 /obj/item/clipboard
 	name = "clipboard"
 	icon = 'icons/obj/writing.dmi'
@@ -1020,6 +1018,7 @@
 	stamina_cost = 1
 	stamina_crit_chance = 5
 	var/obj/item/pen/pen = null
+	var/max_items = 15
 	var/tmp/list/image/overlay_images = null
 
 	New()
@@ -1140,8 +1139,8 @@
 
 	proc/add_stuff(obj/item/I, mob/user)
 		if (istype(I, /obj/item/paper) || istype(I, /obj/item/photo))
-			if (length(src.contents) >= CLIPBOARD_MAX_ITEMS)
-				boutput(user, SPAN_NOTICE("[src] can only hold [CLIPBOARD_MAX_ITEMS] items!"))
+			if (length(src.contents) >= src.max_items)
+				boutput(user, SPAN_NOTICE("[src] can only hold [src.max_items] items!"))
 				return
 			user.drop_item()
 			I.set_loc(src)
@@ -1154,10 +1153,10 @@
 			src.pen = I
 		else if (istype_exact(I, /obj/item/paper_bin))
 			var/obj/item/paper_bin/bin = I
-			if (length(src.contents) >= CLIPBOARD_MAX_ITEMS)
-				boutput(user, SPAN_NOTICE("[src] can only hold [CLIPBOARD_MAX_ITEMS] items!"))
+			if (length(src.contents) >= src.max_items)
+				boutput(user, SPAN_NOTICE("[src] can only hold [src.max_items] items!"))
 				return
-			while (length(src.contents) < CLIPBOARD_MAX_ITEMS)
+			while (length(src.contents) < max_items)
 				var/obj/item/paper = locate(/obj/item/paper) in bin
 				if (paper)
 					paper.set_loc(src)
@@ -1211,7 +1210,6 @@
 		STOP_TRACKING
 		..()
 
-#undef CLIPBOARD_MAX_ITEMS
 
 /* =============== FOLDERS (wip) =============== */
 
