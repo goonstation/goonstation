@@ -354,15 +354,15 @@
 		for (var/medtype in list(/obj/item/storage/firstaid/vr/regular, /obj/item/storage/firstaid/vr/fire, /obj/item/storage/firstaid/vr/brute, /obj/item/storage/firstaid/vr/toxin, /obj/item/reagent_containers/pill/vr/mannitol, /obj/item/storage/box/donkpocket_w_kit/vr))
 			new medtype(target)
 
-	proc/increaseCritters(var/obj/critter/C)
-		var/name = initial(C.name)
+	proc/increaseCritters(atom/mob_or_critter)
+		var/name = initial(mob_or_critter.name)
 		if (!(name in critters_left))
 			critters_left += name
 			critters_left[name] = 0
 		critters_left[name] += 1
 
-	proc/decreaseCritters(var/obj/critter/C)
-		var/name = initial(C.name)
+	proc/decreaseCritters(atom/mob_or_critter)
+		var/name = initial(mob_or_critter.name)
 		if (!(name in critters_left))
 			return
 		critters_left[name] -= 1
@@ -1034,12 +1034,14 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			else if (isliving(mob_or_critter))
 				var/mob/living/critter/C = mob_or_critter
 				C.health *= health_multiplier //for critters that don't user health holders
+				C.faction = list(FACTION_GUANTLET)
 				for(var/damage_key in C.healthlist) //for critters that do
 					var/datum/healthHolder/HH = C.healthlist[damage_key]
 					HH.maximum_value *= health_multiplier
 					HH.value *= health_multiplier
 			else
 				CRASH("Gauntlet tried to spawn [identify_object(mob_or_critter)], but only /mob/living or /obj/critter are allowed.")
+			mob_or_critter.AddComponent(/datum/component/gauntlet_critter)
 			if (ev)
 				ev.onSpawn(mob_or_critter)
 			count--

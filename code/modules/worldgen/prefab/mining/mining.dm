@@ -260,3 +260,10 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/space)
 		prefabPath = "assets/maps/prefabs/space/prefab_mauxite_hideout.dmm"
 		prefabSizeX = 22
 		prefabSizeY = 20
+
+	merc_outpost
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/space/prefab_merc_outpost.dmm"
+		prefabSizeX = 25
+		prefabSizeY = 25
