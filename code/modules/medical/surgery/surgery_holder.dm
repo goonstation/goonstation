@@ -84,7 +84,7 @@
 		if (!can_operate(surgeon, tool))
 			return FALSE
 		for (var/datum/surgery/surgery in surgeries)
-			if (surgery.do_shortcut(patient, tool))
+			if (surgery.do_shortcut(surgeon, tool))
 				return TRUE
 		return FALSE
 

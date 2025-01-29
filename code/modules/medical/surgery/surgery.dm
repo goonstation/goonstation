@@ -64,6 +64,11 @@
 			return 3.5
 		return 1
 
+	proc/complete_step(datum/surgery_step/step)
+		step.finished = TRUE
+		step.on_complete(patient, null)
+		step_completed(step, patient)
+
 	/// Called when the surgery's context option is entered. This will be called when exiting subsurgeries!
 	proc/enter_surgery(mob/surgeon)
 		var/contexts = get_surgery_contexts()
@@ -130,7 +135,7 @@
 
 
 	proc/do_shortcut(mob/surgeon, obj/item/I)
-		if (super_surgery?.surgery_complete() && can_shortcut && can_operate(surgeon, I))
+		if (super_surgery?.surgery_complete() && can_shortcut && surgery_possible(surgeon, I) && can_operate(surgeon, I))
 			for(var/datum/surgery_step/step in surgery_steps)
 				if (step.can_operate(surgeon, I))
 					step.perform_step(surgeon, I)
@@ -245,7 +250,7 @@
 		return FALSE
 
 	///Calculate if this step succeeds, apply failure effects here
-	proc/calculate_success(mob/surgeon, obj/item/tool)
+	proc/attempt_surgery_step(mob/surgeon, obj/item/tool)
 		//todo: migrate all these over
 		if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
 			surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!"), \
@@ -260,7 +265,7 @@
 		return TRUE
 
 	proc/perform_step(mob/surgeon, obj/item/tool) //! Perform the surgery step
-		if (can_operate(surgeon, tool, FALSE) && calculate_success(surgeon, tool))
+		if (can_operate(surgeon, tool, FALSE) && attempt_surgery_step(surgeon, tool))
 			if (success_sound)
 				playsound(parent_surgery.patient, success_sound, 50, TRUE)
 			surgeon.visible_message(success_text)

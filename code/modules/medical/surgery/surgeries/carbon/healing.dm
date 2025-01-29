@@ -54,7 +54,6 @@
 
 	on_complete(mob/living/surgeon, mob/user)
 		patient.bleeding = 0
-		..()
 
 	surgery_possible(mob/living/surgeon)
 		if (patient.bleeding > 0)

@@ -59,7 +59,6 @@
 			slipup_text = " loses control of the scissors and drags it across the patient's entire chest"
 			flags_required = TOOL_SNIPPING
 			on_complete(mob/user, obj/item/tool)
-				. = ..()
 				parent_surgery.patient.organHolder.vars[affected_organ].in_surgery = TRUE
 		cut
 			name = "Cut"
@@ -70,7 +69,6 @@
 			slipup_text = "cuts too deep and messes up!"
 			flags_required = TOOL_CUTTING
 			on_complete(mob/user, obj/item/tool)
-				. = ..()
 				parent_surgery.patient.organHolder.vars[affected_organ].secure = FALSE
 
 		remove
@@ -82,7 +80,6 @@
 			slipup_text = "cuts too deep and messes up!"
 			flags_required = TOOL_CUTTING
 			on_complete(mob/user, obj/item/tool)
-				. = ..()
 				parent_surgery.patient.organHolder.drop_organ(affected_organ)
 
 		add
@@ -93,13 +90,92 @@
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 			slipup_text = "slips!"
 			on_complete(mob/surgeon, obj/item/tool)
-				. = ..()
-				surgeon.drop_item(tool)
-				tool.set_loc(parent_surgery.patient)
-				parent_surgery.patient.organHolder.receive_organ(tool, affected_organ)
+				var/datum/organHolder/H = parent_surgery.patient.organHolder
+				if (surgeon.find_in_hand(tool))
+					surgeon.u_equip(tool)
+				H.receive_organ(tool, affected_organ)
+
 			tool_requirement(mob/surgeon, obj/item/tool)
 				if (istype(tool, /obj/item/organ))
 					var/obj/item/organ/O = tool
 					if (O.organ_holder_name == affected_organ)
+						return TRUE
+				return FALSE
+
+
+
+	limb
+		var/affected_limb
+		New(datum/surgery/parent_surgery, affected_limb)
+			src.affected_limb = affected_limb
+			..(parent_surgery)
+		cut
+			name = "Cut"
+			desc = "Cut connective tissues from the limb."
+			icon_state = "scalpel"
+			success_text = "scalp through the flesh"
+			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+			slipup_text = "cuts too deep and messes up!"
+			flags_required = TOOL_CUTTING
+			on_complete(mob/user, obj/item/tool)
+
+				var/mob/living/carbon/human/C = parent_surgery.patient
+				var/obj/item/parts/limb = C.limbs.vars[affected_limb]
+				limb.remove_stage = 1
+		saw
+			name = "Saw"
+			desc = "Saw through the bone."
+			icon_state = "saw"
+			success_text = "saw through the flesh"
+			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+			slipup_text = "cuts"
+			flags_required = TOOL_SAWING
+			on_complete(mob/user, obj/item/tool)
+				var/mob/living/carbon/human/C = parent_surgery.patient
+				var/obj/item/parts/limb = C.limbs.vars[affected_limb]
+				limb.remove_stage = 2
+		remove
+			name = "Remove"
+			desc = "Remove the limb."
+			icon_state = "saw"
+			success_text = "remove da limb"
+			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+			slipup_text = "cuts"
+			flags_required = TOOL_CUTTING
+			on_complete(mob/user, obj/item/tool)
+				var/mob/living/carbon/human/C = parent_surgery.patient
+				var/obj/item/parts/limb = C.limbs.vars[affected_limb]
+				limb.remove(0)
+		attach
+			name = "Add"
+			desc = "Add the limb."
+			icon_state = "scalpel"
+			success_text = "adds limb"
+			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+			slipup_text = "slips!"
+			flags_required = TOOL_CUTTING
+
+			attempt_surgery_step(mob/surgeon, obj/item/tool)
+				if (tool.object_flags & NO_ARM_ATTACH || tool.cant_drop || tool.two_handed)
+					boutput(surgeon, SPAN_ALERT("You try to attach [tool] to [parent_surgery.patient]'s stump, but it politely declines!"))
+					return
+				if (!parent_surgery.patient.limbs?.get_limb(affected_limb))
+					return FALSE
+				return ..()
+
+			on_complete(mob/surgeon, obj/item/tool)
+				var/mob/living/carbon/human/C = parent_surgery.patient
+				var/datum/human_limbs/H = C.limbs
+				if (surgeon.find_in_hand(tool))
+					surgeon.u_equip(tool)
+				H.vars[affected_limb] = tool
+				tool.holder = parent_surgery.patient
+
+
+			tool_requirement(mob/surgeon, obj/item/tool)
+
+				if (istype(tool, /obj/item/organ))
+					var/obj/item/organ/O = tool
+					if (O.organ_holder_name == affected_limb)
 						return TRUE
 				return FALSE
