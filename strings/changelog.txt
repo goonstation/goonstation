@@ -1,6 +1,10 @@
 
 (t)thu jan 30 25
 (u)glowbold
+(p)21955
+(e)🆕💡|C-Feature, A-Station-Systems
+(*)Scanning in unregistered persons with a RecordTrak will make them a new bank account.
+(u)glowbold
 (p)22075
 (e)🆕📦|C-Feature, A-Game-Objects
 (+)Microwaves can be broken by explosions and gunfire.
