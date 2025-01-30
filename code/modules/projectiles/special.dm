@@ -706,6 +706,60 @@ ABSTRACT_TYPE(/datum/projectile/special)
 					boutput(dropme, SPAN_ALERT("Your coffin was lost or destroyed! Oh no!!!"))
 		..()
 
+/datum/projectile/special/homing/mechcomp_warp
+	name = "teleporter energy ball"
+	icon_state = "heavyion"
+	auto_find_targets = 0
+	max_speed = 6
+	start_speed = 0.1
+
+	shot_sound = 'sound/effects/mag_warp.ogg'
+	goes_through_walls = 1
+	goes_through_mobs = 1
+	smashes_glasses = FALSE
+
+	silentshot = 1
+	var/obj/effect/eye_glider
+
+	on_launch(obj/projectile/P)
+		. = ..()
+		src.eye_glider = new(get_turf(P))
+		for (var/mob/M in P.contents)
+			if(M.client)
+				M.client.eye = src.eye_glider
+
+
+	on_hit(atom/hit, direction, obj/projectile/O)
+		. = ..()
+		if (istype(hit, /obj/item/mechanics/telecomp))
+			var/obj/item/mechanics/telecomp/tele = O
+			if (tele.anchored)
+				O.die()
+				particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(hit.loc))).Run()
+
+	tick(obj/projectile/P)
+		..()
+		src.eye_glider.set_loc(get_turf(P))
+		src.eye_glider.step_x = P.step_x
+		src.eye_glider.step_y = P.step_y
+		if (!(P.targets && P.targets.len && P.targets[1] && !(P.targets[1]:disposed)))
+			P.die()
+		var/obj/item/mechanics/telecomp/tele = P.targets[1]
+		if (!tele.anchored)
+			P.die()
+
+	on_end(obj/projectile/P)
+		for (var/atom/movable/AM in P.contents)
+			AM.set_loc(get_turf(P))
+			AM.delStatus("teleporting")
+			if (istype(AM, /mob))
+				var/mob/M = AM
+				if (M.client)
+					M.client.eye = M
+		qdel(src.eye_glider)
+		src.eye_glider = null
+		..()
+
 /datum/projectile/special/homing/magicmissile
 	name = "magic missile"
 	sname = "magic missile"

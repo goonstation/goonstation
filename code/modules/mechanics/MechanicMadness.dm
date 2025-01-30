@@ -2675,33 +2675,35 @@
 			// Skip ourselves, disconnected pads, ones not on the ground, in restricted areas, or in send-only mode
 			if (T == src || T.level == OVERFLOOR || !isturf(T.loc) || isrestrictedz(T.z) || T.send_only) continue
 
-			// This ordinarily skips all on other zlevels, but
-			// trying a change to let them do any non-restricted Z for now
-			/*
-#ifdef UNDERWATER_MAP
-			if (!(T.z == 5 && src.z == 1) && !(T.z == 1 && src.z == 5)) //underwater : allow TP to/from trench
-				if(T.z != src.z) continue
-#else
+			// you used to be able to cross z-levels with mechcomp teles, but no longer
 			if (T.z != src.z) continue
-#endif
-			*/
 
 			if (T.teleID == targetTeleID)
 				destinations.Add(T)
 
 		if(length(destinations))
 			var/atom/picked = pick(destinations)
+			var/turf/destination_turf = get_turf(picked)
 			var/count_sent = 0
 			playsound(src.loc, 'sound/mksounds/boost.ogg', 50, 1)
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc))).Run()
-			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(picked.loc))).Run()
-			for(var/atom/movable/M in src.loc)
-				if(M == src || M.invisibility || M.anchored) continue
-				logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
-				do_teleport(M,get_turf(picked.loc),FALSE,use_teleblocks=FALSE,sparks=FALSE)
+			var/obj/projectile/proj = initialize_projectile_pixel_spread(src, new/datum/projectile/special/homing/mechcomp_warp, destination_turf)
+			var/tries = 5
+			while (tries > 0 && (!proj || proj.disposed))
+				proj = initialize_projectile_pixel_spread(src, new/datum/projectile/special/homing/mechcomp_warp, destination_turf)
+			proj.targets = list(picked)
+			for(var/atom/movable/AM in src.loc)
+				if(AM == src || AM.invisibility || AM.anchored) continue
+				logTheThing(LOG_STATION, AM, "entered [src] at [log_loc(src)] targeting destination [log_loc(picked)]")
+				AM.set_loc(proj)
+				AM.changeStatus("teleporting", INFINITY)
+				if (istype(AM, /mob/living))
+					var/mob/living/M = AM
+					M.blinded = TRUE // we don't want to wait for the statusfx
 				if(count_sent++ > 50) break //ratelimit
 
 			input.signal = "to=[targetTeleID]&count=[count_sent]"
+			proj.launch()
 			SPAWN(0)
 				// Origin pad gets "to=destination&count=123"
 				// Dest. pad gets "from=origin&count=123"
@@ -2713,6 +2715,13 @@
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 
 		return
+
+	Cross(atom/movable/mover)
+		if (src.level == UNDERFLOOR && istype(mover, /obj/projectile))
+			var/obj/projectile/P = mover
+			if (istype(P.proj_data, /datum/projectile/special/homing/mechcomp_warp))
+				return FALSE
+		. = ..()
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_tele"
