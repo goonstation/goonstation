@@ -33,7 +33,8 @@ if [ -n "$(ls -A update)" ]; then
 	echo "Applying updates"
 	cd update
 	# Replace directories with update directories
-	ls -1d */ 2> /dev/null | rsync -a --delete-before --files-from=- . ..
+	ls -1d */ 2> /dev/null | rsync -a --remove-source-files --delete-before --files-from=- . ..
+	find . -depth -type d -empty -delete
 	# Move any remaining top-level files up
 	mv * ..
 	cd ..
