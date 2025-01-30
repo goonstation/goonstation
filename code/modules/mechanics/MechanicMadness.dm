@@ -2672,7 +2672,7 @@
 		var/targetTeleID = use_signal_id ? input.signal : src.teleID
 
 		for_by_tcl(T, /obj/item/mechanics/telecomp)
-			// Skip ourselves, disconnected pads, ones not on the ground, in restricted areas, or in send-only mode
+			// Skip ourselves, disconnected pads, ones not on the ground, in restricted areas, send-only mode, or on the same turf.
 			if (T == src || T.level == OVERFLOOR || !isturf(T.loc) || isrestrictedz(T.z) || T.send_only || get_turf(T) == get_turf(src)) continue
 
 			// you used to be able to cross z-levels with mechcomp teles, but no longer
@@ -2702,9 +2702,7 @@
 			proj.launch()
 			SPAWN(0)
 				// Origin pad gets "to=destination&count=123"
-				// Dest. pad gets "from=origin&count=123"
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
-				SEND_SIGNAL(picked,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"from=[src.teleID]&count=[count_sent]")
 		else
 			// If nowhere to go, output an error
 			input.signal = "to=[targetTeleID]&error=no destinations found"

@@ -742,6 +742,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		for (var/obj/item/mechanics/telecomp/tele in get_turf(P))
 			if (tele.anchored)
 				particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(tele.loc))).Run()
+				// Dest. pad gets "from=origin&count=123"
 				SEND_SIGNAL(tele, COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"from=[tele.teleID]&count=[P.special_data["count_sent"]]")
 				if (tele != P.targets[1])
 					logTheThing(LOG_STATION, tele, "intercepted teleport projectile [P] at [log_loc(tele)] (targeted destination [log_loc(P.targets[1])])")
