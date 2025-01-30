@@ -2696,8 +2696,6 @@
 				logTheThing(LOG_STATION, AM, "entered [src] at [log_loc(src)] targeting destination [log_loc(picked)]")
 				AM.set_loc(proj)
 				AM.changeStatus("teleporting", INFINITY)
-				if (istype(AM, /mob/living))
-					var/mob/living/M = AM
 				if(count_sent++ > 50) break //ratelimit
 
 			input.signal = "to=[targetTeleID]&count=[count_sent]"
