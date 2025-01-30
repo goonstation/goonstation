@@ -1,5 +1,9 @@
 
 (t)thu jan 30 25
+(u)Chatauscours
+(p)22097
+(e)⚖💪|C-Balance, A-Traits
+(+)If you have the "Was it something I said?" trait, Beepsky will now only arrest you if you have at least 1 level of contraband on you.
 (u)glowbold
 (p)21955
 (e)🆕💡|C-Feature, A-Station-Systems
