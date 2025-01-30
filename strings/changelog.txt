@@ -1,4 +1,9 @@
 
+(t)thu jan 30 25
+(u)glowbold
+(p)22075
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Microwaves can be broken by explosions and gunfire.
 (t)wed jan 29 25
 (u)LeahTheTech
 (+)The extended gamemode will no longer roll below a certain population threshold (~20 people readied up at roundstart)
