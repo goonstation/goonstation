@@ -740,8 +740,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	tick(obj/projectile/P)
 		..()
 		src.eye_glider.set_loc(get_turf(P))
-		src.eye_glider.step_x = P.step_x
-		src.eye_glider.step_y = P.step_y
 		if (!(P.targets && P.targets.len && P.targets[1] && !(P.targets[1]:disposed)))
 			P.die()
 		var/obj/item/mechanics/telecomp/tele = P.targets[1]
