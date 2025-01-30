@@ -2683,14 +2683,13 @@
 
 		if(length(destinations))
 			var/atom/picked = pick(destinations)
-			var/turf/destination_turf = get_turf(picked)
 			var/count_sent = 0
 			playsound(src.loc, 'sound/mksounds/boost.ogg', 50, 1)
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc))).Run()
-			var/obj/projectile/proj = initialize_projectile_pixel_spread(src, new/datum/projectile/special/homing/mechcomp_warp, destination_turf)
+			var/obj/projectile/proj = initialize_projectile_pixel_spread(src, new/datum/projectile/special/homing/mechcomp_warp, picked)
 			var/tries = 5
 			while (tries > 0 && (!proj || proj.disposed))
-				proj = initialize_projectile_pixel_spread(src, new/datum/projectile/special/homing/mechcomp_warp, destination_turf)
+				proj = initialize_projectile_pixel_spread(src, new/datum/projectile/special/homing/mechcomp_warp, picked)
 			proj.targets = list(picked)
 			for(var/atom/movable/AM in src.loc)
 				if(AM == src || AM.invisibility || AM.anchored) continue
