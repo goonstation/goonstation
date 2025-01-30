@@ -2698,7 +2698,6 @@
 				AM.changeStatus("teleporting", INFINITY)
 				if (istype(AM, /mob/living))
 					var/mob/living/M = AM
-					M.blinded = TRUE // we don't want to wait for the statusfx
 				if(count_sent++ > 50) break //ratelimit
 
 			input.signal = "to=[targetTeleID]&count=[count_sent]"
