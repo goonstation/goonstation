@@ -2673,7 +2673,7 @@
 
 		for_by_tcl(T, /obj/item/mechanics/telecomp)
 			// Skip ourselves, disconnected pads, ones not on the ground, in restricted areas, or in send-only mode
-			if (T == src || T.level == OVERFLOOR || !isturf(T.loc) || isrestrictedz(T.z) || T.send_only) continue
+			if (T == src || T.level == OVERFLOOR || !isturf(T.loc) || isrestrictedz(T.z) || T.send_only || get_turf(T) == get_turf(src)) continue
 
 			// you used to be able to cross z-levels with mechcomp teles, but no longer
 			if (T.z != src.z) continue
@@ -2697,8 +2697,8 @@
 				AM.set_loc(proj)
 				AM.changeStatus("teleporting", INFINITY)
 				if(count_sent++ > 50) break //ratelimit
-
 			input.signal = "to=[targetTeleID]&count=[count_sent]"
+			proj.special_data["count_sent"] = count_sent
 			proj.launch()
 			SPAWN(0)
 				// Origin pad gets "to=destination&count=123"
@@ -2711,13 +2711,6 @@
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 
 		return
-
-	Cross(atom/movable/mover)
-		if (src.level == UNDERFLOOR && istype(mover, /obj/projectile))
-			var/obj/projectile/P = mover
-			if (istype(P.proj_data, /datum/projectile/special/homing/mechcomp_warp))
-				return FALSE
-		. = ..()
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_tele"

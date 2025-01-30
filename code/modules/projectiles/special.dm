@@ -720,31 +720,32 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	silentshot = 1
 	var/obj/effect/eye_glider
+	var/turf/starting_turf
 
 	on_launch(obj/projectile/P)
 		. = ..()
+		src.starting_turf = get_turf(P)
 		src.eye_glider = new(get_turf(P))
 		for (var/mob/M in P.contents)
 			if(M.client)
 				M.client.eye = src.eye_glider
-
-
-	on_hit(atom/hit, direction, obj/projectile/O)
-		. = ..()
-		if (istype(hit, /obj/item/mechanics/telecomp))
-			var/obj/item/mechanics/telecomp/tele = O
-			if (tele.anchored)
-				O.die()
-				particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(hit.loc))).Run()
 
 	tick(obj/projectile/P)
 		..()
 		src.eye_glider.set_loc(get_turf(P))
 		if (!(P.targets && P.targets.len && P.targets[1] && !(P.targets[1]:disposed)))
 			P.die()
-		var/obj/item/mechanics/telecomp/tele = P.targets[1]
-		if (!tele.anchored)
+		var/obj/item/mechanics/telecomp/target_tele = P.targets[1]
+		if (!target_tele.anchored)
 			P.die()
+		if (get_turf(P) == src.starting_turf) return
+		for (var/obj/item/mechanics/telecomp/tele in get_turf(P))
+			if (tele.anchored)
+				particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(tele.loc))).Run()
+				SEND_SIGNAL(tele, COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"from=[tele.teleID]&count=[P.special_data["count_sent"]]")
+				if (tele != P.targets[1])
+					logTheThing(LOG_STATION, tele, "intercepted teleport projectile [P] at [log_loc(tele)] (targeted destination [log_loc(P.targets[1])])")
+				P.die()
 
 	on_end(obj/projectile/P)
 		for (var/atom/movable/AM in P.contents)
