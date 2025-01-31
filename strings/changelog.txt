@@ -1,5 +1,9 @@
 
 (t)thu jan 30 25
+(u)glowbold
+(p)22077
+(e)⚖💊|C-Balance, A-Medical
+(+)You take deep breaths when doing CPR.
 (u)Chatauscours
 (p)22097
 (e)⚖💪|C-Balance, A-Traits
