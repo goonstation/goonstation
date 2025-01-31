@@ -49,10 +49,10 @@ TYPEINFO(/datum/component/equipment_fault)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!ON_COOLDOWN(O, "equip_fault_[ref(src)]",src.fault_delay))
 		. = TRUE
-	if(istype(O, /obj/machinery))
-		var/obj/machinery/machine = O
-		if(machine.status & NOPOWER)
-			. = FALSE
+		if(istype(O, /obj/machinery))
+			var/obj/machinery/machine = O
+			if(machine.status & NOPOWER)
+				. = FALSE
 
 /datum/component/equipment_fault/proc/ef_attackby(obj/O, obj/item/I, mob/user = null)
 	var/attempt = FALSE
