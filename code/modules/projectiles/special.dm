@@ -712,8 +712,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	auto_find_targets = 0
 	max_speed = 6
 	start_speed = 0.1
+	invisibility = INVIS_INFRA
 
-	shot_sound = 'sound/effects/mag_warp.ogg'
+	shot_sound = null
 	goes_through_walls = 1
 	goes_through_mobs = 1
 	smashes_glasses = FALSE
