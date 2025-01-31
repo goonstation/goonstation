@@ -47,6 +47,7 @@ Contains:
 	var/target_item_prefix = null
 	var/secured = FALSE //! If false, this does not activate and can be modified on self-use
 	var/list/additional_components = null //! This is a list of components that don't make up the main 3 components of the assembly, but can be attached after the target was added.
+	var/icon_base_offset = 0 //! offset for the base-icon of the assembly, if the target gets overriden
 	flags = TABLEPASS | CONDUCT | NOSPLASH
 
 /obj/item/assembly/complete/New()
@@ -94,26 +95,37 @@ Contains:
 	return
 
 /obj/item/assembly/complete/update_icon()
+	var/overlay_offset = 0 //how many pixels we want to move the overlays
 	src.overlays = null
-	if(!src.secured)
-		src.overlays += image('icons/obj/items/assemblies.dmi', src, "assembly_unsecured")
+	src.underlays = null
 	if(src.target && !src.target_item_prefix)
 		//If the target doesn't add it's own special icon state
 		src.icon = src.target.icon
 		src.icon_state = src.target.icon_state
+		overlay_offset += 5
 	else
 		src.icon = initial(src.icon)
 		src.icon_state = "trigger_[src.trigger_icon_prefix]"
 		if(src.target_item_prefix)
-			src.overlays += image('icons/obj/items/assemblies.dmi', src, "target_[src.target_item_prefix]")
+			var/image/temp_image_target = image('icons/obj/items/assemblies.dmi', src, "target_[src.target_item_prefix]")
+			temp_image_target.pixel_y += overlay_offset + src.icon_base_offset
+			src.overlays += temp_image_target
 	if(src.applier_icon_prefix)
-		src.overlays += image('icons/obj/items/assemblies.dmi', src, "applier_[src.applier_icon_prefix]")
+		var/image/temp_image_applier = image('icons/obj/items/assemblies.dmi', src, "applier_[src.applier_icon_prefix]")
+		temp_image_applier.pixel_y += overlay_offset + src.icon_base_offset
+		src.overlays += temp_image_applier
 	if (src.additional_components)
 		for(var/obj/item/iterated_component in src.additional_components)
 			//if we have anny additional components, we send them a signal to see if they add overlays to the assembly.
-			SEND_SIGNAL(iterated_component,COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS , src)
+			SEND_SIGNAL(iterated_component,COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS , src, overlay_offset)
 	//So the applier gets rendered over every other component, we add it here as an overlay
-	src.overlays += image('icons/obj/items/assemblies.dmi', src, "trigger_[src.trigger_icon_prefix]")
+	var/image/temp_image_trigger = image('icons/obj/items/assemblies.dmi', src, "trigger_[src.trigger_icon_prefix]")
+	temp_image_trigger.pixel_y += overlay_offset + src.icon_base_offset
+	src.overlays += temp_image_trigger
+	if(!src.secured)
+		var/image/temp_image_cables = image('icons/obj/items/assemblies.dmi', src, "assembly_unsecured")
+		temp_image_cables.pixel_y += overlay_offset + src.icon_base_offset
+		src.underlays += temp_image_cables
 
 
 /obj/item/assembly/complete/UpdateName()
