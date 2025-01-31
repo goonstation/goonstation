@@ -333,7 +333,6 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/det_hat/gadget
 	name = "DetGadget hat"
 	desc = "Detective's special hat you can outfit with various items for easy retrieval!"
-	item_function_flags = IMMUNE_TO_ACID
 	var/phrase = "go go gadget"
 
 	var/list/items
