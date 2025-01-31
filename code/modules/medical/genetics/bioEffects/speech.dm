@@ -427,16 +427,16 @@
 		if (!istext(message))
 			return ""
 
-		message = replacetext(message, "a", vowel_lower)
-		message = replacetext(message, "e", vowel_lower)
-		message = replacetext(message, "i", vowel_lower)
-		message = replacetext(message, "o", vowel_lower)
-		message = replacetext(message, "u", vowel_lower)
-		message = replacetext(message, "A", vowel_upper)
-		message = replacetext(message, "E", vowel_upper)
-		message = replacetext(message, "I", vowel_upper)
-		message = replacetext(message, "O", vowel_upper)
-		message = replacetext(message, "U", vowel_upper)
+		message = replacetextEx(message, "a", vowel_lower)
+		message = replacetextEx(message, "e", vowel_lower)
+		message = replacetextEx(message, "i", vowel_lower)
+		message = replacetextEx(message, "o", vowel_lower)
+		message = replacetextEx(message, "u", vowel_lower)
+		message = replacetextEx(message, "A", vowel_upper)
+		message = replacetextEx(message, "E", vowel_upper)
+		message = replacetextEx(message, "I", vowel_upper)
+		message = replacetextEx(message, "O", vowel_upper)
+		message = replacetextEx(message, "U", vowel_upper)
 
 		return message
 
