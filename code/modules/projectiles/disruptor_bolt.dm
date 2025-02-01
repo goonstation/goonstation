@@ -42,6 +42,7 @@ toxic - poisons
 	color_red = 0.2
 	color_green = 0.2
 	color_blue = 1
+	has_impact_particles = TRUE
 
 /datum/projectile/disruptor/burst
 	icon_state = "disrupt"
