@@ -83,7 +83,7 @@ Contains:
 	..()
 
 /obj/item/assembly/complete/attack_self(mob/user)
-	if (user.ghost_spawned)
+	if (isghostcritter(user))
 		user.show_text(SPAN_ALERT("<b>Sensing the danger, you shy away from [src].</b>"))
 		return
 	if(src.secured)
