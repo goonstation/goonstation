@@ -618,6 +618,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				boutput(user,SPAN_ALERT("The cloning pod emits an angry boop!"))
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			logTheThing(LOG_STATION, user, "installed ([W]) to ([src]) at [log_loc(user)].")
 			speed_bonus *= 3
 			meat_used_per_tick *= 4
@@ -634,6 +635,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				boutput(user,SPAN_ALERT("The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!"))
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			logTheThing(LOG_STATION, user, "installed ([W]) to ([src]) at [log_loc(user)].")
 			meat_used_per_tick *= 0.5
 			is_efficient = 1
@@ -664,6 +666,13 @@ TYPEINFO(/obj/machinery/clonepod)
 			SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 5 SECONDS, PROC_REF(remove_mindhack_module), list(user), W.icon, W.icon_state, null, INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_MOVE | INTERRUPT_ATTACKED)
 			return
 
+		else if (ispryingtool(W) && (src.is_speedy || src.is_efficient))
+			if (src.occupant && src.attempting)
+				boutput(user, "<space class='alert'>You must wait for the current cloning cycle to finish before you can remove upgrade modules.</span>")
+				return
+			user.visible_message(SPAN_NOTICE("[user] starts removing the upgrade modules."))
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, PROC_REF(remove_upgrade_modules), list(user), W.icon, W.icon_state, null, INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_MOVE | INTERRUPT_ATTACKED)
 		else
 			..()
 
@@ -677,6 +686,22 @@ TYPEINFO(/obj/machinery/clonepod)
 		boutput(user, SPAN_ALERT("The mindhack cloning module falls to the floor!"))
 		playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
 		src.light.disable()
+		src.UpdateIcon()
+
+	proc/remove_upgrade_modules(mob/user)
+		if (src.is_speedy)
+			src.is_speedy = FALSE
+			src.speed_bonus /= 3
+			src.meat_used_per_tick /= 4
+			var/obj/speedy = new /obj/item/cloneModule/speedyclone(src.loc)
+			src.visible_message(SPAN_ALERT("The [speedy] module falls to the floor!"))
+			playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
+		if (src.is_efficient)
+			src.is_efficient = FALSE
+			src.meat_used_per_tick /= 0.5
+			var/obj/efficient = new /obj/item/cloneModule/efficientclone(src.loc)
+			src.visible_message(SPAN_ALERT("The [efficient] module falls to the floor!"))
+			playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
 		src.UpdateIcon()
 
 	on_reagent_change()
@@ -903,6 +928,10 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		occupant = null
 		..()
 
+	get_desc(dist, mob/user)
+		. = ..()
+		if (src.upgraded)
+			. += "This one has an efficiency upgrade installed."
 
 	proc/find_pods()
 		if (!islist(src.pods))
@@ -1102,9 +1131,19 @@ TYPEINFO(/obj/machinery/clonegrinder)
 				boutput(user, SPAN_ALERT("There is already an upgrade card installed."))
 				return
 			user.visible_message("[user] installs [G] into [src].", "You install [G] into [src].")
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			src.upgraded = 1
 			user.drop_item()
 			qdel(G)
+			return
+
+		if (ispryingtool(G))
+			if (src.upgraded)
+				user.visible_message("[user] begins removing the upgrade module from [src].", "You begin removing the upgrade module from [src].")
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, PROC_REF(remove_upgrade_module), list(user), G.icon, G.icon_state, null, INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_MOVE | INTERRUPT_ATTACKED)
+			else
+				boutput(user, SPAN_ALERT("There is no upgrade card installed."))
 			return
 		if (src.process_timer > 0)
 			boutput(user, SPAN_ALERT("The [src.name] is still running, hold your horses!"))
@@ -1203,6 +1242,13 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			if (user && !isdead(user)) // how????????? ?
 				user.suiciding = 0 // just in case I guess
 		return 1
+
+	proc/remove_upgrade_module(mob/user)
+		if(src.upgraded)
+			src.upgraded = FALSE
+			var/obj/upgrade = new /obj/item/grinder_upgrade(src.loc)
+			src.visible_message(SPAN_ALERT("The [upgrade] module falls to the floor!"))
+			playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
 
 /datum/action/bar/icon/put_in_reclaimer
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
