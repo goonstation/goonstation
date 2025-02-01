@@ -1438,6 +1438,23 @@ var/global/noir = 0
 				if (A)
 					usr.client.cmd_admin_check_health(A)
 					return
+		if ("max_health")
+			if (src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				if (ismob(M))
+					if(isobserver(M))
+						tgui_alert(usr,"You can't revive a ghost! How does that even work?!")
+						return
+					if(config.allow_admin_rev)
+						var/amount = input(usr,"Amount:","Amount",100) as null|num
+						if(!amount) return
+						M.max_health = amount
+						M.full_heal()
+						message_admins(SPAN_ALERT("Admin [key_name(usr)] set max health of [key_name(M)] to [amount]!"))
+						logTheThing(LOG_ADMIN, usr, "set max health of [constructTarget(M,"admin")] to [amount]")
+						logTheThing(LOG_DIARY, usr, "set max health of [constructTarget(M,"diary")] to [amount]", "admin")
+					else
+						tgui_alert(usr,"Reviving is currently disabled, which is tied to changing max health.")
 
 		if ("kill")
 			if (src.level >= LEVEL_SA)

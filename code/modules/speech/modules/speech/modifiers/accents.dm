@@ -572,16 +572,16 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 /datum/speech_module/modifier/accent/vowelitis/process(datum/say_message/message)
 	. = message
 
-	message.content = replacetext(message.content, "a", src.vowel_lower)
-	message.content = replacetext(message.content, "e", src.vowel_lower)
-	message.content = replacetext(message.content, "i", src.vowel_lower)
-	message.content = replacetext(message.content, "o", src.vowel_lower)
-	message.content = replacetext(message.content, "u", src.vowel_lower)
-	message.content = replacetext(message.content, "A", src.vowel_upper)
-	message.content = replacetext(message.content, "E", src.vowel_upper)
-	message.content = replacetext(message.content, "I", src.vowel_upper)
-	message.content = replacetext(message.content, "O", src.vowel_upper)
-	message.content = replacetext(message.content, "U", src.vowel_upper)
+	message.content = replacetextEx(message.content, "a", src.vowel_lower)
+	message.content = replacetextEx(message.content, "e", src.vowel_lower)
+	message.content = replacetextEx(message.content, "i", src.vowel_lower)
+	message.content = replacetextEx(message.content, "o", src.vowel_lower)
+	message.content = replacetextEx(message.content, "u", src.vowel_lower)
+	message.content = replacetextEx(message.content, "A", src.vowel_upper)
+	message.content = replacetextEx(message.content, "E", src.vowel_upper)
+	message.content = replacetextEx(message.content, "I", src.vowel_upper)
+	message.content = replacetextEx(message.content, "O", src.vowel_upper)
+	message.content = replacetextEx(message.content, "U", src.vowel_upper)
 
 
 /datum/speech_module/modifier/accent/word_scrambled

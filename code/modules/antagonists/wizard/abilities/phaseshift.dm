@@ -206,6 +206,8 @@
 		if(owner)
 			owner.set_loc(src.loc)
 			owner = 0
+		for(var/atom/movable/AM in src)
+			AM.set_loc(src.loc)
 		//overlay_image = 0
 		if (use_cloakofdarkness)
 			processing_items.Remove(src)

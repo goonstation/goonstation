@@ -3223,6 +3223,16 @@ var/global/force_radio_maptext = FALSE
 		container.reagents.add_reagent("custom_transmutation", amount, sdata=matId)
 	usr.put_in_hand_or_drop(container)
 
+/client/proc/show_mining_map()
+	set name = "Show Mining Map"
+	set desc = "Show the Z5 Mining Zlevel map."
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if (usr.client && hotspot_controller)
+		hotspot_controller.show_map(usr.client)
+
 #undef ARTIFACT_BULK_LIMIT
 #undef ARTIFACT_HARD_LIMIT
 #undef ARTIFACT_MAX_SPAWN_ATTEMPTS

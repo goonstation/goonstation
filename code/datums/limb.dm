@@ -164,7 +164,7 @@
 			playsound(user, 'sound/weapons/railgun.ogg', 50, TRUE)
 			user.set_dir(get_dir(user, target))
 
-			var/list/affected = DrawLine(user, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
+			var/list/affected = drawLineObj(user, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
 
 			for(var/obj/O in affected)
 				O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.
@@ -231,7 +231,7 @@
 				return
 			. = TRUE
 			current_shots--
-			if (pointblank)
+			if (pointblank && ismob(target))
 				src.shoot_pointblank(target, user)
 			else
 				src.shoot_range(target, user, params)
@@ -311,6 +311,9 @@
 		cooldown = 3 SECONDS
 		reload_time = 30 SECONDS
 		muzzle_flash = "muzzle_flash"
+
+		no_reload
+			reload_time = 0 SECONDS
 
 
 	cannon
@@ -403,6 +406,13 @@
 
 	rifle
 		proj = new/datum/projectile/bullet/assault_rifle
+		shots = 5
+		current_shots = 5
+		cooldown = 1 SECOND
+		reload_time = 20 SECONDS
+
+	draco
+		proj = new/datum/projectile/bullet/draco
 		shots = 5
 		current_shots = 5
 		cooldown = 1 SECOND

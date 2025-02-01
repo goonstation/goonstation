@@ -22,6 +22,7 @@
 	inventory_counter_enabled = 1
 	/// do we really actually for real want this to work in adventure zones?? just do this with varedit dont make children with this on
 	var/really_actually_bypass_z_restriction = FALSE
+	var/decon_time_mult = 1
 
 	New()
 		..()
@@ -113,6 +114,8 @@
 
 		if(user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
 			. = round(. * 0.75)
+
+		. *= src.decon_time_mult
 
 		if(.)
 			. = max(., 2 SECONDS)

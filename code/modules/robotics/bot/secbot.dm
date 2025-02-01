@@ -848,7 +848,7 @@ TYPEINFO(/obj/machinery/bot/secbot)
 			if (src.threatlevel >= 4)
 				src.EngageTarget(C)
 				break
-			if(C.traitHolder.hasTrait("wasitsomethingisaid"))
+			if(C.traitHolder.hasTrait("wasitsomethingisaid") && src.threatlevel >= 1)
 				src.EngageTarget(C)
 			else
 				continue

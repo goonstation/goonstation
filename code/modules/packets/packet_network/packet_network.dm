@@ -73,8 +73,8 @@
 	if(!sourceT || !targetT || sourceT.z != targetT.z)
 		return null
 	// we draw twice, once anchored to source, once to target; this is so the line is visible at both ends
-	var/datum/lineResult/R1 = drawLine(sourceT, targetT, "triangle", getCrossed = 0, mode = LINEMODE_SIMPLE)
-	var/datum/lineResult/R2 = drawLine(targetT, sourceT, "triangle", getCrossed = 0, mode = LINEMODE_SIMPLE_REVERSED)
+	var/datum/lineResult/R1 = drawLineImg(sourceT, targetT, "triangle", getCrossed = 0, mode = LINEMODE_SIMPLE)
+	var/datum/lineResult/R2 = drawLineImg(targetT, sourceT, "triangle", getCrossed = 0, mode = LINEMODE_SIMPLE_REVERSED)
 	. = list(R1.lineImage, R2.lineImage)
 	for(var/image/img as anything in .)
 		img.color = debug_color_of(src.channel_name)

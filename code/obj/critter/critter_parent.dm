@@ -29,7 +29,6 @@
 	var/followed_path_retry_target = null
 	var/follow_path_blindly = 0
 
-	var/report_state = 0
 	var/quality_name = null
 	var/mobile = 1
 	var/aggressive = 0
@@ -116,18 +115,6 @@
 		msg = replacetext(msg, "%target%", "[target]")
 		msg = replacetext(msg, "[constructTarget(target,"combat")]", "[target]")
 		src.visible_message(SPAN_ALERT("[msg]"))
-
-	proc/report_spawn()
-		if (!report_state)
-			report_state = 1
-			if (src in gauntlet_controller.gauntlet)
-				gauntlet_controller.increaseCritters(src)
-
-	proc/report_death()
-		if (report_state == 1)
-			report_state = 0
-			if (src in gauntlet_controller.gauntlet)
-				gauntlet_controller.decreaseCritters(src)
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()
@@ -784,7 +771,6 @@
 		if(!src.reagents) src.create_reagents(100)
 		wander_check = rand(5,20)
 		START_TRACKING_CAT(TR_CAT_CRITTERS)
-		report_spawn()
 		if(isnull(src.is_pet))
 			src.is_pet = !generic && (copytext(src.name, 1, 2) in uppercase_letters)
 		if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
@@ -892,7 +878,6 @@
 		src.anchored = UNANCHORED
 		src.set_density(0)
 		walk_to(src,0) //halt walking
-		report_death()
 		src.tokenized_message(death_text)
 
 	proc/ChaseAttack(mob/M)
