@@ -502,7 +502,6 @@
 		..()
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
-		return
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)

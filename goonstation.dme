@@ -1058,7 +1058,6 @@
 #include "code\modules\chemistry\tools\ampoules.dm"
 #include "code\modules\chemistry\tools\balloons.dm"
 #include "code\modules\chemistry\tools\beakers.dm"
-#include "code\modules\chemistry\tools\bombs.dm"
 #include "code\modules\chemistry\tools\bottles.dm"
 #include "code\modules\chemistry\tools\chemistry_hints.dm"
 #include "code\modules\chemistry\tools\dispensers.dm"
