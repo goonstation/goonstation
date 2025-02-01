@@ -1601,16 +1601,33 @@
 		icon_state = "[under_floor ? "u":""]comp_check"
 		return
 
+/obj/item/mechanics/dispatchcomp/signaldispatch
+	name = "Signal Dispatch Component"
+	split_signals = TRUE
+
+	addingfilters = "Signals to split for this connection? (Comma-delimited list. Leave blank to pass all signals.)"
+	addedfilters = "Only passing signals that"
+	passingmessage = "Passing all signals to the"
+
+	get_desc()
+		. += "<br>[SPAN_NOTICE("Currently dispatching signals")]"
+
 /obj/item/mechanics/dispatchcomp
 	name = "Dispatch Component"
 	desc = ""
 	icon_state = "comp_disp"
 	var/exact_match = FALSE
 	var/single_output = FALSE
+	var/split_signals = FALSE
+	var/max_split = 10 //don't allow creation of arbitary numbers of split signals
+
+	//Verbiage variables so we can change them in the signal dispatch sub-type
+	var/addingfilters = "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)"
+	var/addedfilters = "Only passing messages that"
+	var/passingmessage = "Passing all messages to the"
 
 	//This stores all the relevant filters per output
-	//Notably, this list doesn't remove entries when an output is removed.
-	//So it will bloat over time...
+	//Entries are removed from this in removeFilter on DISPATCH_RM_OUTGOING
 	var/list/outgoing_filters
 
 	get_desc()
@@ -1623,8 +1640,8 @@
 		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING, PROC_REF(removeFilter))
 		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_VALIDATE, PROC_REF(runFilter))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"dispatch", PROC_REF(dispatch))
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle exact matching",PROC_REF(toggleExactMatching))
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle single output mode",PROC_REF(toggleSingleOutput))
+		if (!split_signals) SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle exact matching",PROC_REF(toggleExactMatching))
+		if (!split_signals) SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle single output mode",PROC_REF(toggleSingleOutput))
 
 	disposing()
 		var/list/signals = list(\
@@ -1650,25 +1667,48 @@
 		tooltip_rebuild = 1
 		return 1
 
-	proc/dispatch(var/datum/mechanicsMessage/input)
+	proc/dispatch(var/datum/mechanicsMessage/taggedMessage/input)
 		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
-		var/sent = SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
+		var/sent = null
+		if(split_signals)
+			var/list/converted = params2complexlist(input.signal)
+			var/signal_count = 0
+			for(var/signal in converted)
+				if(!signal || !length(signal) || !converted[signal] || !length(converted[signal]))
+					continue //No empty keys or values or empty lists please
+
+				//Make a signal for each parameter/key value and add a tag with the parmeter
+				//The validator will check if outgoing signal filters match the parameter
+				//Otherwise, an input couldn't accept more than one signal filter
+				var/datum/mechanicsTag/signalFilter/filter = new/datum/mechanicsTag/signalFilter
+				filter.parameter = signal
+				sent = SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL_TAGGED,converted[signal], filter)
+
+				//See if we've sent the max number already
+				signal_count++
+				if(signal_count == max_split)
+					break
+		else
+			sent = SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
+
 		if(sent) animate_flash_color_fill(src,"#00FF00",2, 2)
-		return
 
 	//This will get called from the component-datum when a device is being linked
+
 	proc/addFilter(var/comsig_target, atom/receiver, mob/user)
-		var/filter = input(user, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
+		var/filter = input(user, addingfilters, "Intput Filters") as text
 		if(!in_interact_range(src, user) || user.stat)
 			return
 		if (length(filter))
 			if (!src.outgoing_filters[receiver]) src.outgoing_filters[receiver] = list()
 			src.outgoing_filters.Add(receiver)
 			src.outgoing_filters[receiver] = splittext(filter, ",")
-			boutput(user, SPAN_SUCCESS("Only passing messages that [exact_match ? "match" : "contain"] [filter] to the [receiver.name]"))
+			//Exact match setting is hidden to signal dispatch
+			boutput(user, SPAN_SUCCESS("[addedfilters] [exact_match || split_signals ? "match" : "contain"] [filter] to the [receiver.name]"))
 		else
-			boutput(user, SPAN_SUCCESS("Passing all messages to the [receiver.name]"))
+			boutput(user, SPAN_SUCCESS("[passingmessage] [receiver.name]"))
+		tooltip_rebuild = 1
 		return
 
 	//This will get called from the component-datum when a device is being unlinked
@@ -1676,13 +1716,22 @@
 		src.outgoing_filters.Remove(receiver)
 
 	//Called when mechanics_holder tries to fire out signals
-	proc/runFilter(var/comsig_target, atom/receiver, var/signal)
+	proc/runFilter(var/comsig_target, atom/receiver, var/datum/mechanicsMessage/taggedMessage/signal)
 		if(!(receiver in src.outgoing_filters))
 			return src.single_output? _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER : _MECHCOMP_VALIDATE_RESPONSE_GOOD //Not filtering this output, let anything pass
+		var/signaltag
+		if(split_signals) //Dispatched signals have a tag with the filter
+			for(var/datum/mechanicsTag/signalFilter/filter in signal.tags)
+				signaltag = filter.parameter
+				break
 		for (var/filter in src.outgoing_filters[receiver])
-			var/text_found = findtext(signal, filter)
+			var/text_found = null
+			if(split_signals && signaltag == filter)
+				text_found = TRUE
+			else
+				text_found = findtext(signal.signal, filter)
 			if (exact_match)
-				text_found = text_found && (length(signal) == length(filter))
+				text_found = text_found && (length(signal.signal) == length(filter))
 			if (text_found)
 				return src.single_output? _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER : _MECHCOMP_VALIDATE_RESPONSE_GOOD //Signal validated, let it pass
 		return 1 //Signal invalid, halt it

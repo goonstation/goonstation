@@ -11,11 +11,19 @@
 #define _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER 3
 
 #define MAX_OUTGOING_PER_TICK 25
+/datum/mechanicsTag
+
+/datum/mechanicsTag/signalFilter
+	var/parameter = ""
+	var/value = ""
 
 /datum/mechanicsMessage
 	var/signal = "1"
 	var/list/nodes = list()
 	var/datum/computer/file/data_file
+
+/datum/mechanicsMessage/taggedMessage
+	var/tags = list()
 
 /datum/mechanicsMessage/proc/addNode(var/atom/A)
 	nodes.Add(A)
@@ -108,6 +116,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 	RegisterSignal(parent, COMSIG_MECHCOMP_ADD_INPUT, PROC_REF(addInput))
 	RegisterSignal(parent, _COMSIG_MECHCOMP_RECEIVE_MSG, PROC_REF(fireInput))
 	RegisterSignal(parent, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, PROC_REF(fireOutSignal))
+	RegisterSignal(parent, COMSIG_MECHCOMP_TRANSMIT_SIGNAL_TAGGED, PROC_REF(fireOutSignalTagged))
 	RegisterSignal(parent, COMSIG_MECHCOMP_TRANSMIT_MSG, PROC_REF(fireOutgoing))
 	RegisterSignal(parent, COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, PROC_REF(fireDefault)) //Only use this when also using COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL
 	RegisterSignal(parent, _COMSIG_MECHCOMP_RM_INCOMING, PROC_REF(removeIncoming))
@@ -255,7 +264,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 	var/fired = 0
 	for(var/atom/A in src.connected_outgoing)
 		//Note: a target not handling a signal returns 0.
-		var/validated = SEND_SIGNAL(parent,_COMSIG_MECHCOMP_DISPATCH_VALIDATE, A, msg.signal)
+		var/validated = SEND_SIGNAL(parent,_COMSIG_MECHCOMP_DISPATCH_VALIDATE, A, msg)
 		if(validated == _MECHCOMP_VALIDATE_RESPONSE_HALT) //The component wants signal processing to stop NOW
 			return fired
 		if(validated == _MECHCOMP_VALIDATE_RESPONSE_BAD) //The component wants this signal to be skipped
@@ -278,6 +287,16 @@ TYPEINFO(/datum/component/mechanics_holder)
 	ret.signal = sig
 	ret.data_file = data_file
 	return ret
+
+//newSignal gets called a lot, lets just make a new proc for tagged messages
+//we'll call this one directly from COMSIG_MECHCOMP_TRANSMIT_SIGNAL_TAGGED
+/datum/component/mechanics_holder/proc/fireOutSignalTagged(var/comsig_target, var/sig, var/datum/mechanicsTag/tag, var/datum/computer/file/data_file=null)
+	var/datum/mechanicsMessage/taggedMessage/ret = new/datum/mechanicsMessage/taggedMessage
+	ret.signal = sig
+	ret.tags += tag
+	ret.data_file = data_file
+	fireOutgoing(null, ret, data_file)
+	return
 
 //Called when a component is dragged onto another one.
 /datum/component/mechanics_holder/proc/dropConnect(atom/comsig_target, atom/A, mob/user)

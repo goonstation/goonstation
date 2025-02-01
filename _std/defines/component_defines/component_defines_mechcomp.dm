@@ -13,6 +13,8 @@
 #define COMSIG_MECHCOMP_RM_ALL_CONNECTIONS "mechcomp_remove_all_connections"
 /// Passing the signal of a message to all connected mechcomp devices for handling (message will be instatiated by the component)
 #define COMSIG_MECHCOMP_TRANSMIT_SIGNAL "mechcomp_transmit_signal"
+/// Create a new signal like above with a tagged mechcomp signal
+#define COMSIG_MECHCOMP_TRANSMIT_SIGNAL_TAGGED "mechcomp_transmit_signal_tagged"
 /// Passing a message to all connected mechcomp devices for handling
 #define COMSIG_MECHCOMP_TRANSMIT_MSG "mechcomp_transmit_message"
 /// Passing the stored message to all connected mechcomp devices for handling
