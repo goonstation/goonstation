@@ -426,7 +426,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			return 1
 
 /obj/storage/secure/closet/security/equipment/derelict
-name = "derelict Security equipment locker"
+	name = "derelict Security equipment locker"
 	spawn_contents = list(/obj/item/clothing/head/helmet/hardhat/security,
 	/obj/item/clothing/glasses/sunglasses/sechud,
 	/obj/item/handcuffs,
