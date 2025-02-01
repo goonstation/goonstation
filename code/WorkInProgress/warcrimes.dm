@@ -70,6 +70,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 	icon_off = "monkey-off"
 	icon_broken = "monkey-broken"
 	icon_fallen = "monkey-fallen"
+	icon_fallen_broken = "monkey-fallen-broken"
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("It's meat you can buy!",
