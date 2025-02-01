@@ -84,8 +84,8 @@ Contains:
 
 /obj/item/assembly/complete/attack_self(mob/user)
 	if (user.ghost_spawned)
-			user.show_text(SPAN_ALERT("<b>Sensing the danger, you shy away from [src].</b>"))
-			return
+		user.show_text(SPAN_ALERT("<b>Sensing the danger, you shy away from [src].</b>"))
+		return
 	if(src.secured)
 		//if the assembly is secured, we activate that thing
 		if (SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ACTIVATION, src, user))
