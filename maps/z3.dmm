@@ -9215,7 +9215,7 @@
 	},
 /area/fermid_hive)
 "aRH" = (
-/obj/storage/secure/closet/security/equipment,
+/obj/storage/secure/closet/security/equipment/derelict,
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
@@ -9559,7 +9559,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aSI" = (
-/obj/storage/secure/closet/security/equipment,
+/obj/storage/secure/closet/security/equipment/derelict,
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
