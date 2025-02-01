@@ -6,6 +6,8 @@
 	var/image_url = "images/titlecards/oshan_titlecard.png"
 	#elif defined(MAP_OVERRIDE_MANTA)
 	var/image_url = "images/titlecards/manta_titlecard.png"
+	#elif defined(MAP_OVERRIDE_POD_WARS)
+	var/image_url = "images/titlecards/podwars.png"
 	#else
 	var/image_url = "images/titlecards/main_titlecard.gif"
 	#endif

@@ -1432,12 +1432,11 @@
 	},
 /area/radiostation/podbay)
 "aes" = (
-/obj/structure/vehicleframe/puttframe,
-/obj/item/shipcomponent/life_support,
 /obj/decal/cleanable/oil/streak,
 /obj/machinery/light_switch/north{
 	pixel_y = 30
 	},
+/obj/structure/preassembeled_vehicleframe/puttframe,
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aet" = (
@@ -16141,7 +16140,7 @@
 /turf/simulated/floor/grime,
 /area/diner/arcade)
 "dfF" = (
-/mob/living/carbon/human/normal/merc,
+/obj/mapping_helper/mob_spawn/corpse/human/merc,
 /turf/simulated/floor/airless/damaged5,
 /area/abandonedship)
 "dfH" = (

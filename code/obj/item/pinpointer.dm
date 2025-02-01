@@ -556,6 +556,20 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 	category = /mob
 	thing_name = "mob"
 
+/obj/item/pinpointer/category/mobs/single_use
+	name = "single-use mob pinpointer"
+	var/used = FALSE
+
+	attack_self(mob/user)
+		if (used)
+			user.show_text("This pinpointer has already been used and cannot be activated again.", "red")
+			return
+		. = ..()
+		used = TRUE
+
+		src.name = "[target.name] pinpointer"
+
+
 /obj/item/pinpointer/category/ouija_boards
 	name = "ouija board pinpointer"
 	category = /obj/item/ghostboard
