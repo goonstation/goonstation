@@ -387,6 +387,7 @@
 		/datum/manufacture/pod/lock,
 		/datum/manufacture/pod/light_shielding,
 		/datum/manufacture/pod/heavy_shielding,
+		/datum/manufacture/pod/auto_repair_kit,
 		/datum/manufacture/beaconkit,
 		/datum/manufacture/podgps
 	)
