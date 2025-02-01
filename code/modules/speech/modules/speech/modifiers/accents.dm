@@ -567,7 +567,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 	. = ..()
 
 	src.vowel_lower = pick("a", "e", "i", "o", "u")
-	src.vowel_lower = uppertext(src.vowel_lower)
+	src.vowel_upper = uppertext(src.vowel_lower)
 
 /datum/speech_module/modifier/accent/vowelitis/process(datum/say_message/message)
 	. = message
