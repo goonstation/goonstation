@@ -425,6 +425,18 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 				new /obj/item/chem_grenade/flashbang(src)
 			return 1
 
+/obj/storage/secure/closet/security/equipment/derelict
+name = "derelict Security equipment locker"
+	spawn_contents = list(/obj/item/clothing/head/helmet/hardhat/security,
+	/obj/item/clothing/glasses/sunglasses/sechud,
+	/obj/item/handcuffs,
+	/obj/item/handcuffs,
+	/obj/item/device/flash,
+	/obj/item/barrier)
+
+	make_my_stuff()
+		..()
+
 /obj/storage/secure/closet/security/forensics
 	name = "Forensics equipment locker"
 	req_access = list(access_forensics_lockers)
