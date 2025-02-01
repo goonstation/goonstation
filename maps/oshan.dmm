@@ -9025,12 +9025,6 @@
 /obj/table/round/auto,
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
-"aEo" = (
-/obj/machinery/camera/auto,
-/turf/simulated/floor/orangeblack/side/white{
-	dir = 8
-	},
-/area/station/science/teleporter)
 "aEp" = (
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
@@ -28081,13 +28075,6 @@
 	dir = 5
 	},
 /area/station/ai_monitored/armory)
-"bYq" = (
-/obj/machinery/light/incandescent/greenish,
-/obj/random_item_spawner/armory_armor_supplies,
-/turf/simulated/floor/redblack/corner{
-	dir = 8
-	},
-/area/station/ai_monitored/armory)
 "bYt" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/kitchen/food_box/donut_box{
@@ -28562,11 +28549,6 @@
 /obj/submachine/slot_machine,
 /turf/simulated/floor/black,
 /area/diner/dining)
-"cac" = (
-/obj/machinery/computer/arcade,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/black,
-/area/diner/dining)
 "cad" = (
 /obj/machinery/light/incandescent/warm/very,
 /turf/simulated/floor/wood/two,
@@ -28581,11 +28563,6 @@
 "cag" = (
 /obj/item/poster/titled_photo/bee,
 /turf/simulated/floor/carpet/green/standard/edge/ne,
-/area/diner/dining)
-"cai" = (
-/obj/stool/bench/wooden,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/black,
 /area/diner/dining)
 "caj" = (
 /obj/stool/bench/wooden,
@@ -28614,15 +28591,6 @@
 "cap" = (
 /obj/decal/cleanable/generic,
 /obj/machinery/light/incandescent/warm/very,
-/turf/simulated/floor/black,
-/area/diner/dining)
-"caq" = (
-/obj/machinery/door/unpowered/wood/pyro{
-	dir = 4
-	},
-/obj/machinery/door/unpowered/wood/pyro{
-	dir = 8
-	},
 /turf/simulated/floor/black,
 /area/diner/dining)
 "car" = (
@@ -31505,12 +31473,6 @@
 	},
 /turf/simulated/floor/red,
 /area/research_outpost/toxins)
-"cwj" = (
-/obj/item/storage/secure/ssafe/diner_arcade{
-	pixel_x = -30
-	},
-/turf/simulated/floor/black,
-/area/diner/dining)
 "cwz" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -31861,6 +31823,13 @@
 	},
 /turf/simulated/floor,
 /area/station/security/processing)
+"cRX" = (
+/obj/machinery/light/incandescent/greenish,
+/obj/random_item_spawner/armory_armor_supplies,
+/turf/simulated/floor/redblack/corner{
+	dir = 8
+	},
+/area/station/ai_monitored/armory)
 "cSf" = (
 /turf/simulated/floor,
 /area/station/maintenance/northwest)
@@ -32203,6 +32172,13 @@
 	},
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/genetics)
+"dom" = (
+/obj/rack,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/emergency_oxygen,
+/obj/machinery/camera/auto,
+/turf/simulated/floor,
+/area/shuttle/sea_elevator_room)
 "dou" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
@@ -32451,6 +32427,12 @@
 	},
 /turf/simulated/shuttle/wall/flock,
 /area/space)
+"dDa" = (
+/obj/machinery/light/incandescent/warm/very{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/diner/dining)
 "dDM" = (
 /obj/machinery/light/incandescent/netural,
 /obj/table/reinforced/chemistry/auto,
@@ -33682,6 +33664,12 @@
 	dir = 9
 	},
 /area/station/science/lobby)
+"eXu" = (
+/obj/random_item_spawner/armory_goggle_supplies,
+/turf/simulated/floor/redblack/corner{
+	dir = 1
+	},
+/area/station/ai_monitored/armory)
 "eXF" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -33970,10 +33958,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"flb" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating/random,
-/area/diner/dining)
 "flf" = (
 /obj/stool/chair/yellow,
 /obj/landmark/start/job/technical_trainee,
@@ -36932,6 +36916,10 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/crew_quarters/quartersA)
+"jvC" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/diner/dining)
 "jvN" = (
 /obj/lattice,
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
@@ -37453,6 +37441,13 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/grass,
 /area/spacehabitat/owlery)
+"kei" = (
+/obj/decal/cleanable/dirt,
+/obj/item/storage/secure/ssafe/diner_arcade{
+	pixel_x = -30
+	},
+/turf/simulated/floor/black,
+/area/diner/dining)
 "keq" = (
 /obj/disposalpipe/segment/morgue,
 /obj/cable{
@@ -39550,12 +39545,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
-"mLJ" = (
-/obj/random_item_spawner/armory_goggle_supplies,
-/turf/simulated/floor/redblack/corner{
-	dir = 1
-	},
-/area/station/ai_monitored/armory)
 "mMd" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
@@ -39732,6 +39721,12 @@
 /obj/machinery/firealarm/west,
 /turf/simulated/floor,
 /area/station/security/processing)
+"mWE" = (
+/obj/machinery/camera/auto,
+/turf/simulated/floor/orangeblack/side/white{
+	dir = 8
+	},
+/area/station/science/teleporter)
 "mXI" = (
 /obj/stool/bench/blue/auto,
 /obj/landmark/start/job/medical_trainee,
@@ -40716,6 +40711,10 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/diner/hallway)
+"ohR" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/black,
+/area/diner/dining)
 "oiW" = (
 /obj/stool/chair/green{
 	dir = 8
@@ -41058,6 +41057,10 @@
 	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
+"oEW" = (
+/obj/machinery/computer/arcade,
+/turf/simulated/floor/black,
+/area/diner/dining)
 "oFv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/disposalpipe/segment/mail{
@@ -42325,6 +42328,9 @@
 /obj/machinery/firealarm/north,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"qqE" = (
+/turf/space/fluid,
+/area/shuttle/merchant_shuttle/diner_station)
 "qqR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -43046,10 +43052,6 @@
 /mob/living/critter/martian/warrior,
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
-"rqY" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor,
-/area/diner/dining)
 "rrj" = (
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
@@ -43775,6 +43777,16 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
+"sAH" = (
+/obj/blind_switch/area/west{
+	pixel_y = 4
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = -4
+	},
+/obj/machinery/camera/auto,
+/turf/simulated/floor,
+/area/station/engine/engineering)
 "sAV" = (
 /obj/item/raw_material/bohrum,
 /obj/item/raw_material/bohrum,
@@ -44623,6 +44635,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
+"tIV" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/diner/dining)
 "tJG" = (
 /obj/critter/gunbot/drone,
 /turf/unsimulated/floor/shuttle/red,
@@ -45223,6 +45244,14 @@
 	dir = 1
 	},
 /area/station/medical/medbay/surgery/storage)
+"uFY" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_diner,
+/turf/space/fluid,
+/area/space)
 "uHb" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -45971,6 +46000,14 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/toilets)
+"vWs" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_diner/delay2,
+/turf/space/fluid,
+/area/space)
 "vWv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
@@ -46282,6 +46319,12 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/engine/elect)
+"wty" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/diner/dining)
 "wtT" = (
 /obj/stool/bench/green,
 /obj/machinery/firealarm/north,
@@ -46359,6 +46402,14 @@
 	},
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
+"wAI" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/trader_diner/delay4,
+/turf/space/fluid,
+/area/space)
 "wBk" = (
 /obj/machinery/atmospherics/unary/tank{
 	dir = 8
@@ -46736,16 +46787,6 @@
 "wRa" = (
 /turf/simulated/floor/stairs/wide,
 /area/station/hallway/secondary/exit)
-"wRK" = (
-/obj/blind_switch/area/west{
-	pixel_y = 4
-	},
-/obj/machinery/light_switch/west{
-	pixel_y = -4
-	},
-/obj/machinery/camera/auto,
-/turf/simulated/floor,
-/area/station/engine/engineering)
 "wRN" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
@@ -47299,13 +47340,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
-"xDt" = (
-/obj/rack,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/emergency_oxygen,
-/obj/machinery/camera/auto,
-/turf/simulated/floor,
-/area/shuttle/sea_elevator_room)
 "xFd" = (
 /obj/storage/crate,
 /turf/simulated/floor/grime,
@@ -47423,6 +47457,14 @@
 /obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
+"xNT" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_diner/delay3,
+/turf/space/fluid,
+/area/space)
 "xOk" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/creamer{
@@ -47824,6 +47866,14 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
+"ylL" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_diner/delay5,
+/turf/space/fluid,
+/area/space)
 
 (1,1,1) = {"
 cer
@@ -89054,7 +89104,7 @@ aLV
 qaU
 cfR
 wLY
-xDt
+dom
 aQB
 vVQ
 acL
@@ -91818,7 +91868,7 @@ bVX
 bWH
 bVX
 bYp
-bYq
+cRX
 bTR
 bNP
 bLr
@@ -93026,7 +93076,7 @@ vex
 bWH
 gJy
 pij
-mLJ
+eXu
 bTR
 pRU
 bLr
@@ -103822,7 +103872,7 @@ aAY
 aBS
 djq
 aDy
-aEo
+mWE
 aFc
 aFI
 aGe
@@ -106265,7 +106315,7 @@ awa
 aRj
 bgN
 biJ
-wRK
+sAH
 bkp
 aON
 afS
@@ -119346,10 +119396,10 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
+qqE
+qqE
+qqE
+qqE
 aqn
 aqn
 aqn
@@ -119646,14 +119696,14 @@ aqn
 aqn
 aqn
 aqn
+uFY
 aqn
+qqE
+qqE
+qqE
+qqE
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+uFY
 aqn
 aqn
 aqn
@@ -119948,14 +119998,14 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+aBF
+qqE
+qqE
+qqE
+qqE
+qqE
+qqE
+aBF
 aqn
 aqn
 aqn
@@ -120250,14 +120300,14 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+vWs
+qqE
+qqE
+qqE
+qqE
+qqE
+qqE
+xNT
 cax
 cax
 cax
@@ -120552,14 +120602,14 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+aBF
+qqE
+qqE
+qqE
+qqE
+qqE
+qqE
+aBF
 cax
 caD
 caR
@@ -120854,14 +120904,14 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+xNT
+qqE
+qqE
+qqE
+qqE
+qqE
+qqE
+ylL
 cax
 caE
 caS
@@ -121156,14 +121206,14 @@ aqn
 aqn
 aqn
 aqn
+aBF
 aqn
+aPB
+tIV
+tIV
+aPB
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+aBF
 cax
 caF
 caT
@@ -121458,13 +121508,13 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
+wAI
 aPB
 aPB
-flb
+cao
+cao
+aPB
+aPB
 aPB
 cax
 cax
@@ -121761,13 +121811,13 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aPB
+jvC
 cab
-cai
-cwj
+caj
+cao
+cao
+kei
+cao
 aPB
 kJY
 caJ
@@ -122063,12 +122113,12 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aPB
+jvC
 cab
 caj
+cao
+cao
+cao
 cap
 aPB
 caH
@@ -122365,12 +122415,12 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aPB
-cac
+jvC
+oEW
 caj
+dDa
+ohR
+cao
 cao
 aPB
 sCW
@@ -122667,13 +122717,13 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
 aPB
 aPB
 aPB
 aPB
-caq
+aPB
+aPB
+wty
 aPB
 caJ
 caJ
@@ -122976,7 +123026,7 @@ bZW
 cad
 bZW
 bZW
-rqY
+jvC
 caK
 caJ
 mJI
@@ -123273,12 +123323,12 @@ aqn
 aqn
 aqn
 aqn
-rqY
+jvC
 bZW
 cae
 cak
 bZW
-rqY
+jvC
 caL
 caJ
 caJ
@@ -123575,7 +123625,7 @@ aqn
 aqn
 aqn
 aqn
-rqY
+jvC
 bZW
 caf
 cal
@@ -123877,7 +123927,7 @@ aqn
 aqn
 aqn
 aqn
-rqY
+jvC
 bZW
 cag
 cam
@@ -124184,7 +124234,7 @@ bZX
 cad
 bZW
 bZW
-rqY
+jvC
 caJ
 caX
 caJ
