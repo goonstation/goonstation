@@ -6,6 +6,13 @@
 	var/light_g = 1
 	var/light_b = 1
 	var/datum/light/light
+	var/obj/effect/bonus_light
+	// valid color matrices for the "inverted lamp" effect. Works best if it's a dramatic change, otherwise it just looks kinda mid.
+	var/static/list/possible_color_matrices = list(
+		COLOR_MATRIX_GRAYSCALE,
+		COLOR_MATRIX_FLOCKMANGLED,
+		COLOR_MATRIX_FLOCKMIND,
+		COLOR_MATRIX_INVERSE)
 
 	New()
 		..()
@@ -17,6 +24,14 @@
 		light.set_brightness(light_brightness)
 		light.set_color(light_r, light_g, light_b)
 		light.attach(src)
+		if(prob(40)) //chance this is an inverting lamp
+			var/color = pick(possible_color_matrices)
+			bonus_light = new /obj/effect/whackylight(src, light.radius, color)
+			src.vis_contents += bonus_light
+
+	disposing()
+		. = ..()
+		QDEL_NULL(bonus_light) //because it exists on the map, it won't get cleaned up automatically
 
 /datum/artifact/lamp
 	associated_object = /obj/artifact/lamp
@@ -37,6 +52,10 @@
 		var/obj/artifact/lamp/L = O
 		if (L.light)
 			L.light.enable()
+		var/obj/effect/whackylight/bonus = L.bonus_light
+		if(bonus)
+			bonus.active = TRUE
+			bonus.update_whacky(L,null,0)
 
 	effect_deactivate(var/obj/O)
 		if (..())
@@ -44,3 +63,33 @@
 		var/obj/artifact/lamp/L = O
 		if (L.light)
 			L.light.disable()
+		var/obj/effect/whackylight/bonus = L.bonus_light
+		if(bonus)
+			bonus.active = FALSE
+			bonus.update_whacky(L,null,0)
+
+/obj/effect/whackylight
+
+	var/radius
+	var/active = FALSE
+
+	New(loc, radius=2, color=null)
+		.=..(get_turf(loc))
+		src.radius = radius
+		if(isnull(color))
+			src.color = COLOR_MATRIX_INVERSE
+		else
+			src.color = color
+		src.appearance_flags |= RESET_TRANSFORM
+		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, PROC_REF(update_whacky))
+		update_whacky(loc, null, 0)
+
+	proc/update_whacky(var/atom/movable/thing, prev_loc, dir)
+		src.vis_contents.Cut()
+		src.loc = get_turf(thing)
+		if(active)
+			for(var/turf/T in range(src.loc, src.radius))
+				if(IN_EUCLIDEAN_RANGE(src.loc, T, src.radius))
+					src.vis_contents += T
+					src.pixel_x = min(-world.icon_size*(T.x - src.loc.x), src.pixel_x)
+					src.pixel_y = min(-world.icon_size*(T.y - src.loc.y), src.pixel_y)
