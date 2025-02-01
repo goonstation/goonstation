@@ -1,6 +1,6 @@
 (t)sat feb 1 25
 (u)Sovexe
-(+)Added a "Admin Minimap" verb that shows colored dots for the crew members and allows clicking to warp
+(*)Added a "Admin Minimap" verb that shows colored dots for the crew members and allows clicking to warp
 (t)sun jan 26 25
 (u)Sord
 (+)Added a "Show Mining Map" verb that shows you the Z5 mining level map to the "self" tab.
