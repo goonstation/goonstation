@@ -151,6 +151,7 @@ Contains:
 			src.target.set_loc(T)
 			src.target.master = null
 			src.target = null
+			src.target_item_prefix = null
 			// When we remove the target, we also rip out all additions added after that.
 			if (src.additional_components)
 				for(var/obj/item/iterated_component in src.additional_components)

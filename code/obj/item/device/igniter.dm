@@ -77,13 +77,18 @@ TYPEINFO(/obj/item/device/igniter)
 			manipulated_beaker.reagents.temperature_reagents(4000, 400)
 			manipulated_beaker.reagents.temperature_reagents(4000, 400)
 			return
+		if(istype(assembly_target, /obj/item/tank/plasma))
+			var/obj/item/tank/plasma/manipulated_plasma_tank = assembly_target
+			manipulated_plasma_tank.ignite()
+			qdel(parent_assembly)
+			return
 
 
 /obj/item/device/igniter/proc/assembly_setup(var/manipulated_igniter, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
 	//once integrated in the assembly, we secure the igniter
 	src.status = 1
 	// trigger-igniter- Assembly + wired pipebomb/pipebomb-frame/beaker -> trigger-igniter pipebomb/beakerbomb
-	parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/pipebomb/frame, /obj/item/pipebomb/bomb, /obj/item/reagent_containers/glass/beaker), TYPE_PROC_REF(/obj/item/assembly/complete, add_target_item), TRUE)
+	parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/tank/plasma, /obj/item/pipebomb/frame, /obj/item/pipebomb/bomb, /obj/item/reagent_containers/glass/beaker), TYPE_PROC_REF(/obj/item/assembly/complete, add_target_item), TRUE)
 
 /// ----------------------------------------------
 

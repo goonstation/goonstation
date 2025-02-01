@@ -489,6 +489,7 @@
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
 	w_class = W_CLASS_TINY
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	throwforce = 3
 	stamina_damage = 5
 	stamina_cost = 5
@@ -496,6 +497,28 @@
 	desc_verb = list("honks")
 	note_time = 0.8 SECONDS
 	pick_random_note = 1
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+		return
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+		..()
+
+	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	proc/assembly_setup(var/manipulated_horn, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+		//we need to add the new icon for the bike-horn
+		parent_assembly.target_item_prefix = "bike-horn"
+
+	proc/assembly_application(var/manipulated_horn, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
+		src.play_note(rand(1, length(src.sounds_instrument)), user = null)
+
+	/// ----------------------------------------------
 
 	show_play_message(mob/user as mob)
 		return
