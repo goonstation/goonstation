@@ -241,8 +241,16 @@ TYPEINFO(/obj/item/device/gps)
 		serial = rand(4201,7999)
 		START_TRACKING
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
-
+		src.AddComponent( \
+		/datum/component/packet_connected/radio, \
+			"gps", \
+			src.frequency, \
+			src.net_id, \
+			"receive_signal", \
+			FALSE, \
+			"GPS", \
+			FALSE \
+	)
 	get_desc(dist, mob/user)
 		. = "<br>Its serial code is [src.serial]-[identifier]."
 		if (dist > 2)
@@ -330,7 +338,7 @@ TYPEINFO(/obj/item/device/gps)
 			return
 		else if (!signal.data["sender"])
 			return
-		else if (signal.data["address_1"] == src.net_id && src.allowtrack)
+		else if ((signal.data["address_1"] == src.net_id || signal.data["address_tag"] == "GPS") && src.allowtrack)
 			var/datum/signal/reply = get_free_signal()
 			reply.source = src
 			reply.data["sender"] = src.net_id
