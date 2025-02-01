@@ -887,11 +887,51 @@ TYPEINFO(/obj/item/radiojammer)
 	item_state = "signaler"
 	var/code = 30
 	w_class = W_CLASS_TINY
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	frequency = FREQ_SIGNALER
 	has_microphone = FALSE
 	var/delay = 0
 	var/airlock_wire = null
 	desc = "A device used to send a coded signal over a specified frequency, with the effect depending on the device that receives the signal."
+
+
+/obj/item/device/radio/signaler/New()
+	..()
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK, PROC_REF(assembly_check))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION, PROC_REF(assembly_manipulation))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+	// Timer + assembly-applier -> timer/Applier-Assembly
+	src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
+
+/obj/item/device/radio/signaler/disposing()
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+	..()
+
+
+/// ----------- Assembly-Related Procs -----------
+
+/obj/item/device/radio/signaler/proc/assembly_check(var/manipulated_signaler, var/obj/item/second_part, var/mob/user)
+	//if secured, we return TRUE and prevent the combination
+	if (!src.b_stat)
+		boutput(user, SPAN_NOTICE("You need to unsecure the [src.name] to attach it to that."))
+	return !src.b_stat
+
+/obj/item/device/radio/signaler/proc/assembly_manipulation(var/manipulated_signaler, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+	src.attack_self(user)
+
+/obj/item/device/radio/signaler/proc/assembly_application(var/manipulated_signaler, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
+	src.send_signal()
+
+/obj/item/device/radio/signaler/proc/assembly_setup(var/manipulated_signaler, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+	//once integrated in the assembly, we secure the radio
+	src.b_stat = 0
+
+/// ----------------------------------------------
+
 
 /obj/item/device/radio/signaler/ui_data(mob/user)
 	. = ..()
@@ -900,24 +940,9 @@ TYPEINFO(/obj/item/radiojammer)
 		"sendButton" = TRUE,
 		)
 
-obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/instrument/bikehorn))
-		var/obj/item/assembly/radio_horn/A = new /obj/item/assembly/radio_horn( user )
-		W.set_loc(A)
-		A.part2 = W
-		W.layer = initial(W.layer)
-		user.u_equip(W)
-		user.put_in_hand_or_drop(A)
-		W.master = A
-		src.master = A
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		src.set_loc(A)
-		A.part1 = src
-		src.add_fingerprint(user)
-		boutput(user, "You open the signaller and cram the [W.name] in there!")
+//obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 	//Commenting this out so the SWORD PR gets merged without being summonable by normal players, so it can be tested first. Both the MSF and SWORD can still be spawned in with admin powers, obviously.
-	//else if (istype(W, /obj/item/cable_coil))
+	//if (istype(W, /obj/item/cable_coil))
 	//	W.amount -= 1
 	//	if (W.amount <= 0)
 	//		qdel(W)
@@ -928,9 +953,9 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 	//	A.add_fingerprint(user)
 	//	boutput(user, "You open the signaller and attach some additional wires to it!")
 	//	qdel(src)
-	else
-		..()
-	return
+	//else
+	//	..()
+	//return
 
 /obj/item/device/radio/signaler/hear_talk()
 	return
@@ -968,7 +993,10 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 			message_admins("[key_name(usr)] signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"] with code [src.code] on freq [src.frequency].")
 			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
 		SPAWN(0)
-			src.master.receive_signal(signal)
+			var/datum/signal/new_signal = get_free_signal()
+			new_signal.source = src
+			new_signal.data["message"] = "ACTIVATE"
+			src.master.receive_signal(new_signal)
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 

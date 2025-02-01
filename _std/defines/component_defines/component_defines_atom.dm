@@ -174,6 +174,23 @@
 	/// Triggers when an assembly bomb's signalling is cancelled
 	#define COMSIG_ITEM_BOMB_SIGNAL_CANCEL "bomb_signal_cancel"
 
+	// ---- general assembly signals ----
+
+	/// Triggers on attack_self of the assembly if it is unsecured
+	#define COMSIG_ITEM_ASSEMBLY_MANIPULATION "assembly_manipulation"
+	/// Triggers on attack_self of the assembly if it is secured
+	#define COMSIG_ITEM_ASSEMBLY_ACTIVATION "assembly_activation"
+	/// Triggers if the assembly fires it's applier
+	#define COMSIG_ITEM_ASSEMBLY_APPLY "assembly_apply"
+	/// Triggers on an item when it is build into an assembly. Used in case something needs to behave differently in an assembly than for itself
+	#define COMSIG_ITEM_ASSEMBLY_ITEM_SETUP "assembly_item_setup"
+	/// Triggers on an item when it is removed from an assembly. Used in case something needs to behave differently in an assembly than for itself
+	#define COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL "assembly_item_removal"
+	/// Checks on any item if they have special conditions under which they cannot be used in the assembly, e.g. igniters needing to be unsecured
+	#define COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK "assembly_combination_check"
+	/// Checks if that item, as additional component, adds any odd overlays on the assembly
+	#define COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS "assembly_overlay_additions"
+
 	// ---- implant signals ----
 
 	/// When implanted
