@@ -28,7 +28,7 @@ export const NanoCrucible = () => {
     result_part,
   } = data;
   return (
-    <Window title="Nano-Crucible" width={300} height={125}>
+    <Window title="Nano-Crucible" width={300} height={145}>
       <Window.Content>
         <Section fill>
           <Flex align="center" textAlign="center" justify="space-between">
@@ -52,20 +52,33 @@ export const NanoCrucible = () => {
               <Icon name="plus" />
             </Flex.Item>
             <Flex.Item grow>
-              <Button
-                onClick={() => act('load_second_part')}
-                tooltip={second_part}
-              >
-                {second_part ? (
-                  <img
-                    height={32}
-                    width={32}
-                    src={`data:image/png;base64,${second_part_img}`}
-                  />
-                ) : (
-                  'Empty'
-                )}
-              </Button>
+              <Flex direction="column">
+                <Flex.Item style={{ transform: 'translate(0, 16px)' }}>
+                  <Button
+                    onClick={() => act('load_second_part')}
+                    tooltip={second_part}
+                  >
+                    {second_part ? (
+                      <img
+                        height={32}
+                        width={32}
+                        src={`data:image/png;base64,${second_part_img}`}
+                      />
+                    ) : (
+                      'Empty'
+                    )}
+                  </Button>
+                </Flex.Item>
+                <Flex.Item
+                  fontSize={1.3}
+                  mt={1}
+                  style={{ transform: 'translate(0, 16px)' }}
+                >
+                  <Button onClick={() => act('switch_parts')}>
+                    <Icon name="arrows-left-right" />
+                  </Button>
+                </Flex.Item>
+              </Flex>
             </Flex.Item>
             <Flex.Item fontSize={2}>
               <Icon name="arrow-right-long" />
@@ -76,13 +89,6 @@ export const NanoCrucible = () => {
                 color={result_part === '???' ? 'red' : 'green'}
               >
                 {result_part}
-              </Button>
-            </Flex.Item>
-          </Flex>
-          <Flex align="center" textAlign="center">
-            <Flex.Item grow fontSize={1.3} mt={1}>
-              <Button onClick={() => act('switch_parts')}>
-                <Icon name="arrows-left-right" />
               </Button>
             </Flex.Item>
           </Flex>
