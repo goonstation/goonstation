@@ -941,8 +941,7 @@ or don't if it uses a custom topopen overlay
 	if (deployed_shell)
 		src.return_to(deployed_shell)
 
-	var/list/viewports = src.client?.getViewportsByType(VIEWPORT_ID_AI)
-	for(var/datum/viewport/viewport as anything in viewports)
+	for(var/datum/viewport/viewport as anything in src.client?.getViewportsByType(VIEWPORT_ID_AI))
 		viewport.Close()
 
 	src.lastgasp() // calling lastgasp() here because we just died
