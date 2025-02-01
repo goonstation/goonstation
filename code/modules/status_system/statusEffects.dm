@@ -3317,3 +3317,11 @@
 	unique = TRUE
 	movement_modifier = /datum/movement_modifier/healbot
 	effect_quality = STATUS_QUALITY_POSITIVE
+
+/datum/statusEffect/teleporting
+	id = "teleporting"
+	name = "Teleporting"
+	desc = "You're in a waveform of semi-stable radio energy.'.<br>Visibility drastically reduced."
+	icon_state = "empulsar"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEUTRAL

@@ -43,7 +43,7 @@
 			owner.emote("twitch")
 
 		//todo : clothing blindles flags for less istypeing
-		if (owner.getStatusDuration("blinded"))
+		if (owner.getStatusDuration("blinded") || owner.getStatusDuration("teleporting"))
 			owner.blinded = 1
 		else
 			if(!(HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION) || HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK)))
