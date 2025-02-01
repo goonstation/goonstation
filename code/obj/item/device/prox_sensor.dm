@@ -61,7 +61,13 @@ TYPEINFO(/obj/item/device/prox_sensor)
 	icon_state = "motion[n]"
 
 	if(src.master)
-		src.master:c_state(n)
+		if(istype(src.master,/obj/item/assembly/complete))
+			var/obj/item/assembly/complete/checked_assembly = src.master
+			if(checked_assembly.trigger == src) //in case a sensor is used for something else than a trigger
+				checked_assembly.trigger_icon_prefix = icon_state
+				checked_assembly.UpdateIcon()
+		else
+			src.master:c_state(n)
 
 /obj/item/device/prox_sensor/proc/sense()
 	if (src.armed == 1)
