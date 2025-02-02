@@ -67,7 +67,7 @@ TYPEINFO(/obj/item/device/igniter)
 			return
 		if(istype(assembly_target, /obj/item/pipebomb/bomb))
 			playsound(get_turf(parent_assembly), 'sound/weapons/armbomb.ogg', 50, TRUE)
-			SPAWN(3 SECONDS)
+			SPAWN(0.5 SECONDS)
 				var/obj/item/pipebomb/bomb/manipulated_pipebomb = assembly_target
 				manipulated_pipebomb.do_explode()
 				qdel(parent_assembly)
