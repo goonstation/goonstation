@@ -90,14 +90,6 @@
 		inject_amount = 9
 		cooldown = 300
 
-	tetrodotoxin
-		name = "Tetrodotoxin Sting"
-		desc = "Transfer tetrodotoxin into your target. Slow, but stealthy and potentially very lethal."
-		icon_state = "stingtetro"
-		venom_id = "tetrodotoxin"
-		inject_amount = 15
-		cooldown = 1400
-
 	madness
 		name = "Madness Toxin Sting"
 		desc = "Transfer Rajaijah into your target. Causes a target to attack all nearby, but has a long cooldown and DNA cost."
@@ -184,7 +176,6 @@
 				/datum/targetable/changeling/sting/neurotoxin,
 				/datum/targetable/changeling/sting/neurodepressant,
 				/datum/targetable/changeling/sting/hemotoxin,
-				/datum/targetable/changeling/sting/tetrodotoxin,
 				/datum/targetable/changeling/sting/madness)
 	var/current_sting_index = 1;
 	var/datum/targetable/changeling/sting/chemical = null
