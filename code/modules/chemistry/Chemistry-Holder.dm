@@ -351,7 +351,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 					target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, TRUE, TRUE)
 					current_reagent.on_transfer(src, target_reagents, receive_amt)
 					src.remove_reagent(reagent_id, transfer_amt, FALSE, FALSE)
-					return 0
 
 		if (update_self_reagents)
 			src.update_total()
@@ -365,7 +364,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if (update_target_reagents)
 			target_reagents.update_total()
 			target_reagents.handle_reactions()
-			target_reagents.reagents_changed()
+			target_reagents.reagents_changed(TRUE)
 
 		reagents_transferred()
 		return amount
