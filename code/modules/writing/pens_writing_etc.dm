@@ -224,7 +224,7 @@
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 
-/obj/item/pen/fancy
+/obj/item/pen/elite
 	name = "Elite pen"
 	desc = "The pinnacle of National Notary pens, worth more than the GDP of The Vatican City. Looks like the 'Lieutenat Corbesier' model with the platinum nib and African blackwood barrel."
 	icon_state = "pen_fancy"
