@@ -127,13 +127,14 @@ var/global/current_state = GAME_STATE_INVALID
 	// try to roll a gamemode 10 times before giving up
 	var/attempts_left = 10
 	var/list/failed_modes = list()
+	var/readied_count = src.roundstart_player_count(FALSE)
 	while(attempts_left > 0)
 		switch(master_mode)
 			if("random","secret") src.mode = config.pick_random_mode(failed_modes)
 			if("action")
 				src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
 			if("intrigue")
-				src.mode = config.pick_mode(pick(prob(300);"traitor", prob(200);"mixed_rp", prob(75);"changeling",prob(75);"vampire", prob(50);"spy_theft", prob(50);"arcfiend", prob(50);"salvager", prob(50);"extended", prob(50);"gang"))
+				src.mode = config.pick_mode(pick(prob(300);"traitor", prob(200);"mixed_rp", prob(75);"changeling",prob(75);"vampire", prob(50);"spy_theft", prob(50);"arcfiend", prob(50);"salvager", prob(readied_count > 20 ? 50 : 0);"extended", prob(50);"gang"))
 			if("pod_wars") src.mode = config.pick_mode("pod_wars")
 			else src.mode = config.pick_mode(master_mode)
 
@@ -315,6 +316,21 @@ var/global/current_state = GAME_STATE_INVALID
 		world.tick_lag = OVERLOADED_WORLD_TICKLAG
 	else if (total_clients() >= SEMIOVERLOAD_PLAYERCOUNT)
 		world.tick_lag = SEMIOVERLOADED_WORLD_TICKLAG
+
+/datum/controller/gameticker/proc/roundstart_player_count(loud = TRUE)
+	var/readied_count = 0
+	var/unreadied_count = 0
+	for (var/client/C in global.clients)
+		var/mob/new_player/mob = C.mob
+		if (istype(mob))
+			if (mob.ready)
+				readied_count++
+			else
+				unreadied_count++
+	var/total = readied_count + (unreadied_count/2)
+	if (loud)
+		logTheThing(LOG_GAMEMODE, "Found [readied_count] readied players and [unreadied_count] unreadied ones, total count being fed to gamemode datum: [total]")
+	return total
 
 //Okay this is kinda stupid, but mapSwitcher.autoVoteDelay which is now set to 30 seconds, (used to be 5 min).
 //The voting will happen 30 seconds into the pre-game lobby. This is probably fine to leave. But if someone changes that var then it might start before the lobby timer ends.
