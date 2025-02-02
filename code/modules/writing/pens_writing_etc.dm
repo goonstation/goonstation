@@ -233,12 +233,11 @@
 	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
 	uses_handwriting = 1
-	var/clicknoise=1
-	material_uses = 123456 // it's not plated. its solid gold-wax alloy!
 
-		New()
-			..()
-			src.setMaterial(getMaterial("gold"))
+	material_uses = 123456
+	New()
+		..()
+		src.setMaterial(getMaterial("gold"))
 
 
 /obj/item/pen/odd
