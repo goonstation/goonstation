@@ -632,7 +632,6 @@ TYPEINFO(/obj/item/clothing/glasses/spectro)
 		if (new_mode)
 			display_type = "screen"
 			current_clock_mode = new_mode
-			new_mode.vis_flags |= (VIS_INHERIT_PLANE | VIS_INHERIT_LAYER)
 			update_clock()
 
 
