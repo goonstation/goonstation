@@ -11,7 +11,6 @@
 	var/static/list/possible_color_matrices = list(
 		COLOR_MATRIX_GRAYSCALE,
 		COLOR_MATRIX_FLOCKMANGLED,
-		COLOR_MATRIX_FLOCKMIND,
 		COLOR_MATRIX_INVERSE)
 
 	New()
@@ -24,10 +23,10 @@
 		light.set_brightness(light_brightness)
 		light.set_color(light_r, light_g, light_b)
 		light.attach(src)
-		if(prob(40)) //chance this is an inverting lamp
+		if(prob(100)) //chance this is an inverting lamp
 			var/color = pick(possible_color_matrices)
 			bonus_light = new /obj/effect/whackylight(src, light.radius, color)
-			src.vis_contents += bonus_light
+			src.vis_flags |= VIS_HIDE
 
 	disposing()
 		. = ..()
@@ -72,6 +71,8 @@
 
 	var/radius
 	var/active = FALSE
+	glide_size = INFINITY //no gliding for you!
+	anchored = TRUE //not really, but we do our own moving thank you very much
 
 	New(loc, radius=2, color=null)
 		.=..(get_turf(loc))
@@ -85,9 +86,11 @@
 		update_whacky(loc, null, 0)
 
 	proc/update_whacky(var/atom/movable/thing, prev_loc, dir)
-		src.vis_contents.Cut()
 		src.loc = get_turf(thing)
 		if(active)
+			for(var/turf/T in src.vis_contents)
+				if(!IN_EUCLIDEAN_RANGE(src.loc, T, src.radius))
+					src.vis_contents -= T
 			for(var/turf/T in range(src.loc, src.radius))
 				if(IN_EUCLIDEAN_RANGE(src.loc, T, src.radius))
 					src.vis_contents += T
