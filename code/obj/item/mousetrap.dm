@@ -528,7 +528,7 @@
 					//we reset the transformation here
 					src.payload.transform = null
 					//this will deactivate the mousetrap
-					SEND_SIGNAL(src.payload.trigger, COMSIG_ITEM_ASSEMBLY_MANIPULATION, payload, user)
+					SEND_SIGNAL(src.payload.trigger, COMSIG_ITEM_ASSEMBLY_MANIPULATION, payload)
 					src.payload = null
 				if (src.frame)
 					src.frame.set_loc(src.loc)
