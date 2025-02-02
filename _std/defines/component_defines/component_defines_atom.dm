@@ -168,6 +168,8 @@
 	#define COMSIG_ITEM_TWIRLED "itm_twirled"
 	/// When an item reacting to being seen in a storage or dumped out of it (e.g. mousetraps)
 	#define COMSIG_ITEM_STORAGE_INTERACTION "itm_storage_interaction"
+	/// Send out to every item directly in and on the person on no-suicide-death
+	#define COMSIG_ITEM_ON_OWNER_DEATH "itm_on_owner_death"
 
 	// ---- bomb assembly signals ----
 

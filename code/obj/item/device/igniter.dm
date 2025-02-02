@@ -49,7 +49,7 @@ TYPEINFO(/obj/item/device/igniter)
 		if(istype(assembly_target, /obj/item/pipebomb/frame))
 			//fuck pipebomb-code
 			playsound(get_turf(parent_assembly), 'sound/weapons/armbomb.ogg', 50, TRUE)
-			SPAWN(3 SECONDS)
+			SPAWN(1 SECONDS)
 				var/obj/item/pipebomb/frame/manipulated_pipebomb = assembly_target
 				var/obj/item/pipebomb/bomb/the_real_bomb = new /obj/item/pipebomb/bomb
 				the_real_bomb.master = parent_assembly
@@ -104,24 +104,7 @@ TYPEINFO(/obj/item/device/igniter)
 
 /obj/item/device/igniter/attackby(obj/item/W, mob/user)
 
-	if ((istype(W, /obj/item/device/analyzer/healthanalyzer) && !( src.status )))
-
-		var/obj/item/assembly/anal_ignite/R = new /obj/item/assembly/anal_ignite( user ) // Hehehe anal
-		W.set_loc(R)
-		R.part1 = W
-		W.layer = initial(W.layer)
-		user.u_equip(W)
-		user.put_in_hand_or_drop(R)
-		W.master = R
-		src.master = R
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		src.set_loc(R)
-		R.part2 = src
-		src.add_fingerprint(user)
-
-	else if (istype(W, /obj/item/device/multitool)) // check specifically for a multitool
-
+	if (istype(W, /obj/item/device/multitool)) // check specifically for a multitool
 		var/obj/item/assembly/detonator/R = new /obj/item/assembly/detonator(user);
 		W.set_loc(R)
 		W.master = R

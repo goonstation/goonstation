@@ -361,6 +361,41 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 		..()
 		scanner_status = image('icons/obj/items/device.dmi', icon_state = "health_over-basic")
 		AddOverlays(scanner_status, "status")
+		RegisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH, PROC_REF(assembly_on_wearer_death))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_building))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, PROC_REF(assembly_building))
+		// Health-analyser + assembly-applier -> health-analyser/Applier-Assembly
+		src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH)
+		..()
+
+/// ----------- Assembly-Related Procs -----------
+
+	proc/assembly_on_wearer_death(var/affected_analyser, var/mob/dying_mob)
+		if (src.master && istype(src.master, /obj/item/assembly/complete))
+			if (dying_mob.suiciding && prob(60)) // no suiciding
+				dying_mob.visible_message(SPAN_ALERT("<b>[dying_mob]'s [src.master.name] clicks softly, but nothing happens.</b>"))
+				return
+			//we give our potential victims a time of 3 seconds to react and flee
+			dying_mob.visible_message(SPAN_ALERT("<B>With [him_or_her(dying_mob)] last breath, the [src.master.name] on them is set off!</B>"),\
+			SPAN_ALERT("<B>With your last breath, you trigger the [src.master.name]!</B>"))
+			logTheThing(LOG_BOMBING, dying_mob, "initiated a health-analyser on a [src.master.name] at [log_loc(src.master)].")
+			playsound(get_turf(dying_mob), 'sound/machines/twobeep.ogg', 40, TRUE)
+			SPAWN(3 SECONDS)
+				var/datum/signal/signal = get_free_signal()
+				signal.source = src
+				signal.data["message"] = "ACTIVATE"
+				src.master.receive_signal(signal)
+
+	proc/assembly_building(var/manipulated_mousetrap, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+		//since we have a lot of icon states for health analysers, but they have no effect, we take a single one
+		parent_assembly.trigger_icon_prefix = "health-scanner"
+		//health-analyser-assembly + armor vest -> suicide vest
+		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/clothing/suit/armor/vest), TYPE_PROC_REF(/obj/item/assembly/complete, create_suicide_vest), TRUE)
+
+/// ----------------------------------------------
 
 	attack_self(mob/user as mob)
 		if (!src.reagent_upgrade && !src.organ_upgrade)

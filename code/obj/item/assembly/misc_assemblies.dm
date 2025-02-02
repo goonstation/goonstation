@@ -55,6 +55,7 @@ Contains:
 	src.additional_components = list()
 	RegisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED, PROC_REF(on_floor_reveal))
 	RegisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION, PROC_REF(on_storage_interaction))
+	RegisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH, PROC_REF(on_wearer_death))
 	..()
 
 /obj/item/assembly/complete/proc/on_floor_reveal(var/affected_assembly, var/turf/revealed_turf)
@@ -64,6 +65,10 @@ Contains:
 /obj/item/assembly/complete/proc/on_storage_interaction(var/affected_assembly, var/mob/user)
 	//we relay the signal to the trigger, in case of mousetraps
 	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_STORAGE_INTERACTION, user)
+
+/obj/item/assembly/complete/proc/on_wearer_death(var/affected_assembly, var/mob/dying_mob)
+	//we relay the signal to the trigger, in case of health-analyser
+	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ON_OWNER_DEATH, dying_mob)
 
 /obj/item/assembly/complete/receive_signal(datum/signal/signal)
 	//only secured assemblies should fire and only if the signal is not from the applier.
@@ -87,6 +92,7 @@ Contains:
 /obj/item/assembly/complete/disposing()
 	UnregisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED)
 	UnregisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION)
+	UnregisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH)
 	qdel(src.trigger)
 	src.trigger = null
 	qdel(src.applier)
@@ -258,7 +264,21 @@ Contains:
 	// Since the assembly was done, return TRUE
 	return TRUE
 
-
+/obj/item/assembly/complete/proc/create_suicide_vest(var/atom/to_combine_atom, var/mob/user)
+	if(src.secured)
+		boutput(user, "You need to unsecure [src.name] first.")
+		return FALSE
+	user.u_equip(to_combine_atom)
+	user.u_equip(src)
+	src.secured = TRUE
+	src.UpdateIcon()
+	src.add_fingerprint(user)
+	to_combine_atom.add_fingerprint(user)
+	var/obj/item/clothing/suit/armor/suicide_bomb/new_suicide_vest = new /obj/item/clothing/suit/armor/suicide_bomb(get_turf(user), src, to_combine_atom)
+	user.put_in_hand_or_drop(new_suicide_vest)
+	// we don't remove the components here since the frame and assembly can be retreived by disassembling the roller
+	// Since the assembly was done, return TRUE
+	return TRUE
 /// -----------------------------------------------------
 
 /////////////////////////////////////// Timer/igniter /////////////////////////

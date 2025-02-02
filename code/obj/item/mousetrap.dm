@@ -1,6 +1,6 @@
 // Added support for old-style grenades (Convair880).
 
-#define HAS_TRIGGERABLE(x) (x.grenade || x.grenade_old || x.pipebomb || x.arm || x.signaler || x.butt || x.gimmickbomb)
+#define HAS_TRIGGERABLE(x) (x.arm || x.butt)
 /obj/item/mousetrap
 	name = "mousetrap"
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
@@ -12,14 +12,9 @@
 	force = null
 	throwforce = null
 	var/armed = FALSE
-	var/obj/item/chem_grenade/grenade = null
-	var/obj/item/old_grenade/grenade_old = null
-	var/obj/item/pipebomb/bomb/pipebomb = null
-	var/obj/item/device/radio/signaler/signaler = null
 	var/obj/item/reagent_containers/food/snacks/pie/pie = null
 	var/obj/item/parts/arm = null
 	var/obj/item/clothing/head/butt/butt = null
-	var/obj/item/gimmickbomb/gimmickbomb = null
 	var/mob/armer = null
 	stamina_damage = 0
 	stamina_cost = 0
@@ -35,8 +30,9 @@
 
 			New()
 				..()
-				src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
-				src.grenade = new /obj/item/chem_grenade/cleaner(src)
+				//TODO Add implementation of pre-assembles assemblies
+				//src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
+				//src.grenade = new /obj/item/chem_grenade/cleaner(src)
 				return
 
 	New()
@@ -155,25 +151,8 @@
 		return ..()
 
 	attackby(obj/item/C, mob/user)
-		if (istype(C, /obj/item/old_grenade/) && !HAS_TRIGGERABLE(src))
-			var/obj/item/old_grenade/OG = C
-			if (!OG.armed)
-				if(!(src in user.equipped_list()))
-					boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
-					return
 
-				user.u_equip(OG)
-				OG.set_loc(src)
-				user.show_text("You attach [OG]'s detonator to [src].", "blue")
-				src.grenade_old = OG
-				src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
-				src.w_class = max(src.w_class, C.w_class)
-
-				if(OG.is_dangerous)
-					message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
-				logTheThing(LOG_BOMBING, user, "rigs [src] with [OG] at [log_loc(user)].")
-
-		else if (!src.arm && (istype(C, /obj/item/parts/robot_parts/arm) || istype(C, /obj/item/parts/human_parts/arm)) && !HAS_TRIGGERABLE(src))
+		if (!src.arm && (istype(C, /obj/item/parts/robot_parts/arm) || istype(C, /obj/item/parts/human_parts/arm)) && !HAS_TRIGGERABLE(src))
 			if(!(src in user.equipped_list()))
 				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
 				return
@@ -184,7 +163,7 @@
 			src.UpdateOverlays(image(C.icon, C.icon_state), "triggerable")
 			user.show_text("You add [C] to [src].", "blue")
 		//this check needs to exclude the arm one
-		else if (istype(C, /obj/item/reagent_containers/food/snacks/pie) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.gimmickbomb)
+		else if (istype(C, /obj/item/reagent_containers/food/snacks/pie) && !src.butt)
 			if (src.pie)
 				user.show_text("There's already a pie attached to [src]!", "red")
 				return
@@ -219,39 +198,8 @@
 			src.butt = B
 			src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-[src.butt.icon_state]"), "triggerable")
 
-		else if (istype(C, /obj/item/gimmickbomb) && !HAS_TRIGGERABLE(src))
-			if(!(src in user.equipped_list()))
-				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
-				return
-
-			var/obj/item/gimmickbomb/BB = C
-			user.u_equip(BB)
-			BB.set_loc(src)
-			user.show_text("You attach [BB] to [src].", "blue")
-			src.gimmickbomb = BB
-			if (istype(BB, /obj/item/gimmickbomb/butt))
-				src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-buttbomb"), "triggerable")
-			else
-				src.UpdateOverlays(image(BB.icon, BB.icon_state), "triggerable")
-
 		else if (iswrenchingtool(C))
-			if (src.grenade)
-				user.show_text("You detach [src.grenade].", "blue")
-				src.grenade.set_loc(get_turf(src))
-				src.grenade = null
-			else if (src.grenade_old)
-				user.show_text("You detach [src.grenade_old].", "blue")
-				src.grenade_old.set_loc(get_turf(src))
-				src.grenade_old = null
-			else if (src.pipebomb)
-				user.show_text("You detach [src.pipebomb].", "blue")
-				src.pipebomb.set_loc(get_turf(src))
-				src.pipebomb = null
-			else if (src.signaler)
-				user.show_text("You detach [src.signaler].", "blue")
-				src.signaler.set_loc(get_turf(src))
-				src.signaler = null
-			else if (src.pie)
+			if (src.pie)
 				user.show_text("You remove [src.pie] from [src].", "blue")
 				src.pie.layer = initial(src.pie.layer)
 				src.pie.set_loc(get_turf(src))
@@ -266,11 +214,6 @@
 				src.butt.layer = initial(src.butt.layer)
 				src.butt.set_loc(get_turf(src))
 				src.butt = null
-			else if (src.gimmickbomb)
-				user.show_text("You remove [src.gimmickbomb] from [src].", "blue")
-				src.gimmickbomb.layer = initial(src.gimmickbomb.layer)
-				src.gimmickbomb.set_loc(get_turf(src))
-				src.gimmickbomb = null
 			src.UpdateOverlays(null, "triggerable")
 		else
 			..()
@@ -364,17 +307,7 @@
 		src.icon_state = "mousetrap"
 		src.armed = FALSE
 
-		if (src.grenade)
-			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.grenade]) at [log_loc(src)]")
-			src.grenade.explode()
-			src.grenade = null
-
-		else if (src.grenade_old)
-			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.grenade_old]) at [log_loc(src)]")
-			src.grenade_old.detonate()
-			src.grenade_old = null
-
-		else if (src.pie && src.arm)
+		if (src.pie && src.arm)
 			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.arm] and [src.pie]) at [log_loc(src)]")
 			target.visible_message(SPAN_ALERT("<b>[src]'s [src.arm] launches [src.pie] at [target]!</b>"),\
 			SPAN_ALERT("<b>[src]'s [src.arm] launches [src.pie] at you!</b>"))
@@ -396,11 +329,6 @@
 				playsound(target, src.butt.sound_fart, 50)
 			else
 				playsound(target, 'sound/voice/farts/poo2.ogg', 50)
-
-		else if (src.gimmickbomb)
-			src.gimmickbomb.detonate()
-			qdel(src.gimmickbomb)
-			src.gimmickbomb = null
 
 		else if (src.master && istype(src.master, /obj/item/assembly/complete))
 			var/obj/item/assembly/complete/parent_assembly = src.master
