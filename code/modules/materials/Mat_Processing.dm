@@ -111,7 +111,7 @@
 		var/mob/user = usr
 		switch (action)
 			if ("load_first_part")
-				if (!src.first_part)
+				if (!src.first_part || user.equipped())
 					var/obj/possible_first_part = user.equipped()
 					if (possible_first_part)
 						src.Attackby(possible_first_part, user, list(action))
@@ -120,7 +120,7 @@
 					user.put_in_hand_or_drop(src.first_part)
 					src.first_part = null
 			if ("load_second_part")
-				if (!src.second_part)
+				if (!src.second_part || user.equipped())
 					var/obj/possible_second_part = user.equipped()
 					if (possible_second_part)
 						src.Attackby(possible_second_part, user, list(action))
@@ -209,9 +209,15 @@
 		if ("eject_result" in params)
 			return
 		if ("load_first_part" in params)
-			src.first_part = W
+			if (!src.first_part)
+				src.first_part = W
+			else
+				src.second_part = W
 		else if ("load_second_part" in params)
-			src.second_part = W
+			if (!src.second_part)
+				src.second_part = W
+			else
+				src.first_part = W
 		else if (!src.first_part)
 			src.first_part = W
 		else if (!src.second_part)
