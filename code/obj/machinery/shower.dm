@@ -89,7 +89,7 @@
 			steam.attach(src)
 			steam.start()
 
-			for (var/turf/T in block(locate(src.x-1,src.y-1,src.z), locate(src.x+1,src.y+1,src.z))) // View and oview are unreliable as heck, apparently?
+			for (var/turf/T in view(1, get_turf(src))) // View and oview are unreliable as heck, apparently?
 				if (!T.ocean_canpass()) continue
 				spawn(0)
 					src.reagents.reaction(T, 1, 40)
