@@ -612,20 +612,10 @@
 				logTheThing(LOG_COMBAT, source, "successfully removes \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 				for(var/mob/O in AIviewers(owner))
 					O.show_message(SPAN_ALERT("<B>[source] removes [I] from [target]!</B>"), 1)
-
 				// Re-added (Convair880).
-				if (istype(I, /obj/item/mousetrap/))
-					var/obj/item/mousetrap/MT = I
-					if (MT?.armed)
-						for (var/mob/O in AIviewers(owner))
-							O.show_message(SPAN_ALERT("<B>...and triggers it accidentally!</B>"), 1)
-						MT.triggered(source, source.hand ? "l_hand" : "r_hand")
-				else if (istype(I, /obj/item/mine))
-					var/obj/item/mine/M = I
-					if (M.armed && M.used_up != 1)
-						for (var/mob/O in AIviewers(owner))
-							O.show_message(SPAN_ALERT("<B>...and triggers it accidentally!</B>"), 1)
-						M.triggered(source)
+				if SEND_SIGNAL(I, COMSIG_ITEM_STORAGE_INTERACTION, source)
+					for (var/mob/O in AIviewers(owner))
+						O.show_message(SPAN_ALERT("<B>...and triggers it accidentally!</B>"), 1)
 
 				target.u_equip(I)
 				I.set_loc(target.loc)
