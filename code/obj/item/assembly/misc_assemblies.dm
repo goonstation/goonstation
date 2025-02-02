@@ -53,11 +53,16 @@ Contains:
 /obj/item/assembly/complete/New()
 	src.additional_components = list()
 	RegisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED, PROC_REF(on_floor_reveal))
+	RegisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION, PROC_REF(on_storage_interaction))
 	..()
 
 /obj/item/assembly/complete/proc/on_floor_reveal(var/affected_assembly, var/turf/revealed_turf)
 	//we relay the signal to the trigger, in case of mousetraps
 	SEND_SIGNAL(src.trigger, COMSIG_MOVABLE_FLOOR_REVEALED, revealed_turf)
+
+/obj/item/assembly/complete/proc/on_storage_interaction(var/affected_assembly, var/mob/user)
+	//we relay the signal to the trigger, in case of mousetraps
+	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_STORAGE_INTERACTION, user)
 
 /obj/item/assembly/complete/receive_signal(datum/signal/signal)
 	//only secured assemblies should fire and only if the signal is not from the applier.
@@ -80,6 +85,7 @@ Contains:
 
 /obj/item/assembly/complete/disposing()
 	UnregisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED)
+	UnregisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION)
 	qdel(src.trigger)
 	src.trigger = null
 	qdel(src.applier)

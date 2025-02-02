@@ -43,6 +43,7 @@
 		..()
 
 		RegisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED, PROC_REF(triggered))
+		RegisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION, PROC_REF(triggered))
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION, PROC_REF(assembly_activation))
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION, PROC_REF(assembly_manipulation))
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_building))
@@ -125,6 +126,7 @@
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION)
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION)
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION)
 		. = ..()
 
 	attack_hand(mob/user)
@@ -412,7 +414,7 @@
 
 		src.UpdateOverlays(null, "triggerable")
 		clear_armer()
-		return
+		return TRUE
 
 // Added support for old-style grenades and pipe bombs (Convair880).
 /obj/item/mousetrap_roller
