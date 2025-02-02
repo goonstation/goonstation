@@ -41,9 +41,12 @@
 
 	New()
 		..()
-		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION, PROC_REF(assembly_manipulation))
+
 		RegisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED, PROC_REF(triggered))
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION, PROC_REF(assembly_activation))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION, PROC_REF(assembly_manipulation))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_building))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, PROC_REF(assembly_building))
 		// Mousetrap + assembly-applier -> mousetrap/Applier-Assembly
 		src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
 
@@ -66,6 +69,13 @@
 			logTheThing(LOG_BOMBING, usr, "activated the mousetrap on a [parent_assembly.name] at [log_loc(parent_assembly)].")
 			//missing log about contents of beakers
 
+	proc/assembly_building(var/manipulated_mousetrap, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+		//once integrated in the assembly, we unarm the mousetrap
+		src.armed = FALSE
+		src.icon_state = "mousetrap"
+		src.clear_armer()
+		//mousetrap-assembly + pipebomb-frame -> mousetrap-roller-assembly
+		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/pipebomb/frame), TYPE_PROC_REF(/obj/item/assembly/complete, create_mousetrap_roller), TRUE)
 /// ----------------------------------------------
 
 
@@ -82,11 +92,11 @@
 
 	proc/toggle_armed(var/mob/user)
 		if (!src.armed)
-			icon_state = "mousetraparmed"
+			src.icon_state = "mousetraparmed"
 			boutput(user, SPAN_NOTICE("You arm the [src.master ? "[src.master.name]" : "[src.name]"]."))
-			set_armer(user)
+			src.set_armer(user)
 		else
-			icon_state = "mousetrap"
+			src.icon_state = "mousetrap"
 			if (user && (user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
 				var/which_hand = "l_arm"
 				if (!user.hand)
@@ -97,23 +107,24 @@
 				SPAN_ALERT("<B>You accidentally trigger the [src.master ? "[src.master.name]" : "[src.name]"]!</B>"))
 				return
 			boutput(user, SPAN_NOTICE("You disarm the [src.master ? "[src.master.name]" : "[src.name]"]."))
-			clear_armer()
+			src.clear_armer()
 		src.armed = !src.armed
 		playsound(get_turf(src), 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 
 	proc/clear_armer()
 		UnregisterSignal(armer, COMSIG_PARENT_PRE_DISPOSING)
-		armer = null
+		src.armer = null
 
 	proc/set_armer(mob/user)
 		RegisterSignal(user, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(clear_armer))
-		armer = user
+		src.armer = user
 
 	disposing()
 		clear_armer()
 		UnregisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED)
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION)
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
 		. = ..()
 
 	attack_hand(mob/user)
@@ -412,63 +423,58 @@
 	item_state = "mousetrap"
 	w_class = W_CLASS_TINY
 	var/armed = FALSE
-	var/obj/item/mousetrap/mousetrap = null
+	var/obj/item/assembly/complete/payload = null
 	var/obj/item/pipebomb/frame/frame = null
-	var/payload = ""
+	var/buttbomb = FALSE
 
-	New(ourLoc, var/obj/item/mousetrap/newtrap, obj/item/pipebomb/frame/newframe)
+	New(ourLoc, var/obj/item/assembly/complete/new_payload, var/obj/item/pipebomb/frame/new_frame)
 		..()
 
-		if (newtrap)
-			newtrap.set_loc(src)
-			src.mousetrap = newtrap
+		if (new_payload)
+			new_payload.set_loc(src)
+			src.payload = new_payload
+			//we scale down the assembly and resets its icon area to position it properly on the mousetrap roller
+			src.payload.pixel_x = 0
+			src.payload.pixel_y = 0
+			src.payload.transform *= 0.75
+			new_payload.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
+			src.vis_contents += new_payload
+			if(istype(src.payload.applier, /obj/item/gimmickbomb/butt))
+				src.buttbomb = TRUE
+
+
+		if (new_frame)
+			new_frame.set_loc(src)
+			src.frame = new_frame
 		else
-			src.mousetrap = new /obj/item/mousetrap(src)
+			src.frame = new /obj/item/pipebomb/frame
+			src.frame.set_loc(src)
+		//else
+		//	src.mousetrap = new /obj/item/mousetrap(src)
 
 		// Fallback in case something goes wrong.
-		if (!HAS_TRIGGERABLE(src.mousetrap))
-			src.mousetrap.grenade = new /obj/item/chem_grenade/flashbang(src.mousetrap)
-			src.mousetrap.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
+		//if (!HAS_TRIGGERABLE(src.mousetrap))
+		//	src.mousetrap.grenade = new /obj/item/chem_grenade/flashbang(src.mousetrap)
+		//	src.mousetrap.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
 
-		if (src.mousetrap.grenade)
-			src.payload = src.mousetrap.grenade.name
-			src.name = "mousetrap/grenade/roller assembly"
-		else if (src.mousetrap.grenade_old)
-			src.payload = src.mousetrap.grenade_old.name
-			src.name = "mousetrap/grenade/roller assembly"
-		else if (src.mousetrap.pipebomb)
-			src.payload = src.mousetrap.pipebomb.name
-			src.name = "mousetrap/pipe bomb/roller assembly"
-		else if (src.mousetrap.gimmickbomb)
-			src.payload = src.mousetrap.gimmickbomb.name
-			src.name = "mousetrap/bomb/roller assembly"
-		else
-			src.payload = "*unknown or null*"
-
-		if (newframe)
-			newframe.set_loc(src)
-			src.frame = newframe
-		else
-			src.frame = new /obj/item/pipebomb/frame(src)
-
-		return
+	disposing()
+		qdel(src.frame)
+		src.frame = null
+		qdel(src.payload)
+		src.payload = null
+		..()
 
 	attackby(obj/item/C, mob/user)
 		if (iswrenchingtool(C))
-			if (!isturf(src.loc))
-				user.show_text("Place the [src.name] on the ground first.", "red")
-				return
-
 			user.visible_message("<b>[user]</b> disassembles [src].","You disassemble [src].")
-
-			if (src.mousetrap)
-				src.mousetrap.set_loc(src.loc)
-				src.mousetrap = null
-
+			if (src.payload)
+				src.payload.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
+				src.payload.set_loc(get_turf(src))
+				src.payload.transform = null //we reset the transformation here
+				src.payload = null
 			if (src.frame)
-				src.frame.set_loc(src.loc)
+				src.frame.set_loc(get_turf(src))
 				src.frame = null
-
 			qdel(src)
 
 		else
@@ -490,13 +496,12 @@
 			return
 
 		user.visible_message(SPAN_ALERT("[user] starts up the [src.name]."), "You start up the [src.name]")
-		message_admins("[key_name(user)] releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
-		logTheThing(LOG_BOMBING, user, "releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
+		message_admins("[key_name(user)] releases a [src] (Payload: [src.payload.name]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
+		logTheThing(LOG_BOMBING, user, "releases a [src] (Payload: [src.payload.name]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
 
 		src.armed = TRUE
-		if (!(src.mousetrap?.armed))
-			src.mousetrap.armed = TRUE // Must be armed or it won't work in mousetrap.triggered().
-			src.mousetrap.set_armer(user)
+		//we arm our assembly here
+		SEND_SIGNAL(src.payload.trigger, COMSIG_ITEM_ASSEMBLY_ACTIVATION, payload, user)
 		src.set_density(1)
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
@@ -506,23 +511,27 @@
 		walk(src, src.dir, 3)
 
 	bump(atom/movable/AM as mob|obj)
-		if (src.armed && src.mousetrap)
+		if (src.armed && src.payload)
 			src.visible_message(SPAN_ALERT("[src] bumps against [AM]!"))
 			walk(src, 0)
 			SPAWN(0)
-				src.mousetrap.triggered(AM && ismob(AM) ? AM : null)
-
-				if (src.mousetrap)
-					src.mousetrap.set_loc(src.loc)
-					src.mousetrap = null
+				// we now trigger the assembly
+				var/datum/signal/signal = get_free_signal()
+				signal.source = src.payload.trigger
+				signal.data["message"] = "ACTIVATE"
+				payload.receive_signal(signal)
+				//now, if the payload still exists, we leave it on the ground
+				if (src.payload)
+					src.payload.set_loc(src.loc)
+					src.payload.transform = null //we reset the transformation here
+					src.payload = null
 				if (src.frame)
 					src.frame.set_loc(src.loc)
 					src.frame = null
-
 				qdel(src)
 
 	Move(var/turf/new_loc,direction)
-		if (istype(src.mousetrap.gimmickbomb, /obj/item/gimmickbomb/butt) && src.armed)
+		if (src.buttbomb && src.armed)
 			playsound(src, 'sound/voice/farts/poo2.ogg', 30, FALSE, 0, 1.8)
 		..()
 

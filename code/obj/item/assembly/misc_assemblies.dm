@@ -197,6 +197,8 @@ Contains:
 		return
 	..()
 
+/// misc. Assembly-procs --------------------------------
+
 /obj/item/assembly/complete/proc/add_target_item(var/atom/to_combine_atom, var/mob/user)
 	if(src.secured)
 		boutput(user, "You need to unsecure the assembly first.")
@@ -226,6 +228,31 @@ Contains:
 	// Since the assembly was done, return TRUE
 	return TRUE
 
+
+///mousetrap roller crafting proc
+/obj/item/assembly/complete/proc/create_mousetrap_roller(var/atom/to_combine_atom, var/mob/user)
+	if(src.w_class > W_CLASS_NORMAL)
+		boutput(user, "[src.name] is too large for a mousetrap roller assembly.")
+		return FALSE
+	var/obj/item/pipebomb/frame/manipulated_frame = to_combine_atom
+	if(src.secured || manipulated_frame.state > 1)
+		//we can only use non-welded frames and unsecured assemblies
+		return FALSE
+	user.u_equip(to_combine_atom)
+	user.u_equip(src)
+	src.secured = TRUE
+	src.UpdateIcon()
+	src.add_fingerprint(user)
+	manipulated_frame.add_fingerprint(user)
+	var/obj/item/mousetrap_roller/new_roller = new /obj/item/mousetrap_roller(get_turf(user), src, to_combine_atom)
+	new_roller.name = "roller/[src.name]" // Roller/mousetrap/igniter/plutonium 239-pipebomb-assembly, gotta love those names
+	user.put_in_hand_or_drop(new_roller)
+	// we don't remove the components here since the frame and assembly can be retreived by disassembling the roller
+	// Since the assembly was done, return TRUE
+	return TRUE
+
+
+/// -----------------------------------------------------
 
 /////////////////////////////////////// Timer/igniter /////////////////////////
 

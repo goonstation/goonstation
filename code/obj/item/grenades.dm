@@ -1668,8 +1668,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		src.AddComponent(/datum/component/assembly, TOOL_WELDING, PROC_REF(pipeframe_welding), FALSE)
 		// unwelded frame + hollow frame -> slamgun
 		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(slamgun_crafting), TRUE)
-		// unwelded frame + mousetrap -> mousetrap roller
-		src.AddComponent(/datum/component/assembly, /obj/item/mousetrap, PROC_REF(mousetrap_roller_crafting), TRUE)
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK)
@@ -1740,26 +1738,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		user.put_in_hand_or_drop(new_gun)
 		qdel(to_combine_atom)
 		qdel(src)
-
-	///mousetrap roller crafting proc
-	proc/mousetrap_roller_crafting(var/atom/to_combine_atom, var/mob/user)
-		//This could theoretically be moved to mousetrap and enabled if a bomb is attached.
-		//But you either check if a bomb is attached or if the pipeframe is state 2, so it won't change much
-
-		var/obj/item/mousetrap/checked_trap = to_combine_atom
-
-		// Pies won't do, they require a mob as the target. Obviously, the mousetrap roller is much more
-		// likely to bump into an inanimate object.
-		if (!checked_trap.grenade && !checked_trap.grenade_old && !checked_trap.pipebomb && !checked_trap.gimmickbomb)
-			user.show_text("[checked_trap] must have a grenade or pipe bomb attached first.", "red")
-			return FALSE
-
-		user.u_equip(checked_trap)
-		user.u_equip(src)
-		new /obj/item/mousetrap_roller(get_turf(checked_trap), checked_trap, src)
-		// we don't remove the components here since the frame can be retreived by disassembling the roller
-		// Since the assembly was done, return TRUE
-		return TRUE
 
 	/// Slamgun crafting proc
 	proc/slamgun_crafting(var/atom/to_combine_atom, var/mob/user)
