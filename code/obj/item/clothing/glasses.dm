@@ -610,6 +610,60 @@ TYPEINFO(/obj/item/clothing/glasses/spectro)
 	item_state = "spectro_monocle"
 	desc = "Such a dapper eyepiece! And a practical one at that."
 
+/obj/item/clothing/glasses/tonocle
+	name = "T-MOnocle" //! Can't sprite this myself, but I imagine it looking something a scouter.
+	desc = "A high tech, AR monocle that shows the station's various budgets, so you can yell at the poors for being unprofitable in a more efficient manner."
+	icon_state = "monocle"
+	item_state = "headset"
+	inventory_counter_enabled = TRUE
+	var/current_clock_mode = "Toyal Station Budget Monitor"
+	var/display_type = "clock" //! used to show analog or screen displays on sprite
+	var/text_to_display
+	var/list/clock_modes = list("Total Station Budget Monitor",
+	"Payroll Budget Monitor",
+	"Cargo Budget Monitor",
+	"Research Budget Monitor",
+	"Total PTL Net Income",
+	)
+
+
+	attack_self(mob/user as mob)
+		var/new_mode = tgui_input_list(usr, "What should be monitored?", "Watch Mode", clock_modes)
+		if (new_mode)
+			display_type = "screen"
+			current_clock_mode = new_mode
+			new_mode.vis_flags |= (VIS_INHERIT_PLANE | VIS_INHERIT_LAYER)
+			update_clock()
+
+
+
+	proc/update_clock()
+		switch(current_clock_mode)
+
+			if("Total Station Budget Monitor")
+				text_to_display = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
+
+			if("Payroll Budget Monitor")
+				text_to_display = wagesystem.station_budget
+
+			if("Cargo Budget Monitor")
+				text_to_display = wagesystem.shipping_budget
+
+			if("Research Budget Monitor")
+				text_to_display = wagesystem.research_budget
+
+			if("Total PTL Net Income")
+				var/total_PTL_money = 0
+				for(var/obj/machinery/power/pt_laser/PTL in machine_registry[MACHINES_POWER])
+					total_PTL_money += PTL.lifetime_earnings
+				text_to_display = total_PTL_money
+
+		src.inventory_counter.update_text(text_to_display)
+
+	process()
+		update_clock()
+		..()
+
 // testing thing for static overlays
 /obj/item/clothing/glasses/staticgoggles
 	name = "goggles"

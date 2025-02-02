@@ -1428,18 +1428,17 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/vip
 	name = "VIP"
 	wages = PAY_EXECUTIVE
-cant_spawn_as_rev = TRUE
 	access_string = "VIP"
+	cant_spawn_as_rev = TRUE
 	linkcolor = "#FF0000"
-slot_card = /obj/item/card/id/nt_specialist
-slot_belt = list(/obj/item/device/pda2/ntofficial)
-	slot_jump = list(/obj/item/clothing/under/suit/black)
-	slot_head = list(/obj/item/clothing/head/that)
-	slot_eyes = list(/obj/item/clothing/glasses/monocle)
-	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_card = /obj/item/card/id/nt_specialist
+	slot_belt = list(/obj/item/device/pda2/ntofficial)
+	slot_jump = list(/obj/item/clothing/under/misc/NT)
+	slot_eyes = list(/obj/item/clothing/glasses/tonocle)
+	slot_foot = list(/obj/item/clothing/shoes/dress_shoes)
 	slot_lhan = list(/obj/item/storage/secure/sbriefcase)
 	items_in_backpack = list(/obj/item/baton/cane)
-	alt_names = list("Senator", "President", "Board Member", "Mayor", "Vice-President", "Governor", "Regional Director")
+	alt_names = list("Executive", "President", "Board Member", "Vice-President", "Regional Director")
 	wiki_link = "https://wiki.ss13.co/VIP"
 
 	special_setup(var/mob/living/carbon/human/M)
