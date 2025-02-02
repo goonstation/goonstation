@@ -193,8 +193,14 @@ TYPEINFO(/atom)
 /client/New()
 	. = ..()
 
+	src.ensure_listen_tree()
+	src.ensure_speech_tree()
+
+/// Returns this client's auxiliary listen module tree. If this client does not possess an auxiliary listen module tree, instantiates one.
+/client/proc/ensure_listen_tree()
+	RETURN_TYPE(/datum/listen_module_tree/auxiliary)
+
 	src.listen_tree = new(null, null, null, list(LISTEN_EFFECT_DISPLAY_TO_CLIENT), null, src.mob.listen_tree)
-	src.speech_tree = new(null, list(SPEECH_OUTPUT_OOC, SPEECH_OUTPUT_LOOC), null, null, src.mob.speech_tree)
 
 	src.preferences.listen_ooc = !src.preferences.listen_ooc
 	src.toggle_ooc(!src.preferences.listen_ooc)
@@ -204,7 +210,18 @@ TYPEINFO(/atom)
 
 	if (src.holder && !src.player_mode)
 		src.holder.admin_listen_tree.update_target_listen_tree(src.listen_tree)
+
+	return src.listen_tree
+
+/// Returns this client's auxiliary speech module tree. If this client does not possess an auxiliary speech module tree, instantiates one.
+/client/proc/ensure_speech_tree()
+	RETURN_TYPE(/datum/speech_module_tree/auxiliary)
+
+	src.speech_tree = new(null, list(SPEECH_OUTPUT_OOC, SPEECH_OUTPUT_LOOC), null, null, src.mob.speech_tree)
+	if (src.holder && !src.player_mode)
 		src.holder.admin_speech_tree.update_target_speech_tree(src.speech_tree)
+
+	return src.speech_tree
 
 /// Toggle hearing OOC for this client.
 /client/proc/toggle_ooc(ooc_enabled)
@@ -256,5 +273,5 @@ TYPEINFO(/atom)
 	src.ensure_listen_tree()
 	src.ensure_speech_tree()
 
-	src.client.listen_tree?.update_target_listen_tree(src.listen_tree)
-	src.client.speech_tree?.update_target_speech_tree(src.speech_tree)
+	src.client.ensure_listen_tree().update_target_listen_tree(src.listen_tree)
+	src.client.ensure_speech_tree().update_target_speech_tree(src.speech_tree)
