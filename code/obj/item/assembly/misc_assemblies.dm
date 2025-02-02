@@ -24,7 +24,7 @@ Contains:
 	item_state = "assembly"
 	var/status = 0
 	throwforce = 10
-	w_class = W_CLASS_NORMAL
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 10
 	force = 2
@@ -52,7 +52,12 @@ Contains:
 
 /obj/item/assembly/complete/New()
 	src.additional_components = list()
+	RegisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED, PROC_REF(on_floor_reveal))
 	..()
+
+/obj/item/assembly/complete/proc/on_floor_reveal(var/affected_assembly, var/turf/revealed_turf)
+	//we relay the signal to the trigger, in case of mousetraps
+	SEND_SIGNAL(src.trigger, COMSIG_MOVABLE_FLOOR_REVEALED, revealed_turf)
 
 /obj/item/assembly/complete/receive_signal(datum/signal/signal)
 	//only secured assemblies should fire and only if the signal is not from the applier.
@@ -66,9 +71,15 @@ Contains:
 	. = ..()
 	// we relay the dropping of the assembly to the trigger in case of a proximity sensor
 	SEND_SIGNAL(src.trigger, COMSIG_ITEM_DROPPED, user)
-	return
+
+/obj/item/assembly/complete/Crossed(atom/movable/crossing_atom)
+	. = ..()
+	// we relay the dropping of the assembly to the trigger in case of a mouse trap
+	src.trigger.Crossed(crossing_atom)
+
 
 /obj/item/assembly/complete/disposing()
+	UnregisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED)
 	qdel(src.trigger)
 	src.trigger = null
 	qdel(src.applier)
@@ -84,7 +95,7 @@ Contains:
 
 /obj/item/assembly/complete/attack_self(mob/user)
 	if (isghostcritter(user))
-		user.show_text(SPAN_ALERT("<b>Sensing the danger, you shy away from [src].</b>"))
+		boutput(user, SPAN_NOTICE("Some unseen force stops you from tampering with [src.name]."))
 		return
 	if(src.secured)
 		//if the assembly is secured, we activate that thing
@@ -162,6 +173,7 @@ Contains:
 					src.additional_components =- iterated_component
 					iterated_component.set_loc(T)
 					iterated_component.master = null
+			src.w_class = max(src.trigger.w_class, src.applier.w_class)
 			src.UpdateIcon()
 			src.UpdateName()
 		else
@@ -204,7 +216,11 @@ Contains:
 	src.RemoveComponentsOfType(/datum/component/assembly)
 	//Now we set up the attached target for overlays/other assembly steps
 	SEND_SIGNAL(manipulated_item, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, TRUE)
-	//Last but not least, we update our icon and name
+	//Now we send a signal to the other two components in case we enable certain combinations, e.g. for mousetraps
+	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, TRUE)
+	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, TRUE)
+	//Last but not least, we update our icon, w_class and name
+	src.w_class = max(src.w_class, manipulated_item.w_class)
 	src.UpdateIcon()
 	src.UpdateName()
 	// Since the assembly was done, return TRUE

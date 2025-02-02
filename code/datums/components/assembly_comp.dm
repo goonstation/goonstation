@@ -110,6 +110,7 @@ TYPEINFO(/datum/component/assembly)
 	SEND_SIGNAL(product.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, product, user, TRUE)
 	SEND_SIGNAL(product.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, product, user, TRUE)
 	//last but not least, we set the proper variables on the assembly
+	product.w_class = max(product.trigger.w_class, product.applier.w_class)
 	product.UpdateIcon()
 	product.UpdateName()
 	//we finished the assembly, now we give it to its proud new owner

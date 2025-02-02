@@ -41,7 +41,36 @@
 
 	New()
 		..()
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION, PROC_REF(assembly_manipulation))
 		RegisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED, PROC_REF(triggered))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION, PROC_REF(assembly_activation))
+		// Mousetrap + assembly-applier -> mousetrap/Applier-Assembly
+		src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
+
+/// ----------- Assembly-Related Procs -----------
+
+	proc/assembly_manipulation(var/manipulated_mousetrap, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+		if(src.armed)
+			src.toggle_armed(user)
+			parent_assembly.trigger_icon_prefix = src.icon_state
+			parent_assembly.UpdateIcon()
+			logTheThing(LOG_BOMBING, usr, "deactivated the mousetrap on a [parent_assembly.name] at [log_loc(parent_assembly)].")
+			//missing log about contents of beakers
+
+
+	proc/assembly_activation(var/manipulated_mousetrap, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+		if(!src.armed)
+			src.toggle_armed(user)
+			parent_assembly.trigger_icon_prefix = src.icon_state
+			parent_assembly.UpdateIcon()
+			logTheThing(LOG_BOMBING, usr, "activated the mousetrap on a [parent_assembly.name] at [log_loc(parent_assembly)].")
+			//missing log about contents of beakers
+
+/// ----------------------------------------------
+
+
+
+
 
 	examine()
 		. = ..()
@@ -49,27 +78,28 @@
 			. += SPAN_ALERT("It looks like it's armed.")
 
 	attack_self(mob/user as mob)
+		src.toggle_armed(user)
+
+	proc/toggle_armed(var/mob/user)
 		if (!src.armed)
 			icon_state = "mousetraparmed"
-			user.show_text("You arm the mousetrap.", "blue")
+			boutput(user, SPAN_NOTICE("You arm the [src.master ? "[src.master.name]" : "[src.name]"]."))
 			set_armer(user)
 		else
 			icon_state = "mousetrap"
-			if ((user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
+			if (user && (user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
 				var/which_hand = "l_arm"
 				if (!user.hand)
 					which_hand = "r_arm"
 				src.triggered(user, which_hand)
 				JOB_XP(user, "Clown", 1)
-				user.visible_message(SPAN_ALERT("<B>[user] accidentally sets off the mousetrap, breaking their fingers.</B>"),\
-				SPAN_ALERT("<B>You accidentally trigger the mousetrap!</B>"))
+				user.visible_message(SPAN_ALERT("<B>[user] accidentally sets off the [src.master ? "[src.master.name]" : "[src.name]"], breaking their fingers.</B>"),\
+				SPAN_ALERT("<B>You accidentally trigger the [src.master ? "[src.master.name]" : "[src.name]"]!</B>"))
 				return
-			user.show_text("You disarm the mousetrap.", "blue")
+			boutput(user, SPAN_NOTICE("You disarm the [src.master ? "[src.master.name]" : "[src.name]"]."))
 			clear_armer()
-
 		src.armed = !src.armed
-		playsound(user.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
-		return
+		playsound(get_turf(src), 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 
 	proc/clear_armer()
 		UnregisterSignal(armer, COMSIG_PARENT_PRE_DISPOSING)
@@ -82,6 +112,8 @@
 	disposing()
 		clear_armer()
 		UnregisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION)
 		. = ..()
 
 	attack_hand(mob/user)
@@ -110,32 +142,7 @@
 		return ..()
 
 	attackby(obj/item/C, mob/user)
-		if (istype(C, /obj/item/chem_grenade) && !HAS_TRIGGERABLE(src))
-			var/obj/item/chem_grenade/CG = C
-			var/grenade_ready = TRUE
-			if(istype(CG, /obj/item/chem_grenade/custom))
-				//we want to only fit custom grenades if they are ready to be applied
-				var/obj/item/chem_grenade/custom/custom_grenade = CG
-				if (custom_grenade.stage != 2)
-					grenade_ready = FALSE
-
-			if (grenade_ready && !CG.armed)
-				if(!(src in user.equipped_list()))
-					boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
-					return
-
-				user.u_equip(CG)
-				CG.set_loc(src)
-				user.show_text("You attach [CG]'s detonator to [src].", "blue")
-				src.grenade = CG
-				src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
-				src.w_class = max(src.w_class, C.w_class)
-
-				if(CG.is_dangerous)
-					message_admins("[key_name(user)] rigs [src] with [CG] at [log_loc(user)].")
-				logTheThing(LOG_BOMBING, user, "rigs [src] with [CG] at [log_loc(user)].")
-
-		else if (istype(C, /obj/item/old_grenade/) && !HAS_TRIGGERABLE(src))
+		if (istype(C, /obj/item/old_grenade/) && !HAS_TRIGGERABLE(src))
 			var/obj/item/old_grenade/OG = C
 			if (OG.not_in_mousetraps == 0 && !OG.armed)
 				if(!(src in user.equipped_list()))
@@ -152,39 +159,6 @@
 				if(OG.is_dangerous)
 					message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
 				logTheThing(LOG_BOMBING, user, "rigs [src] with [OG] at [log_loc(user)].")
-
-		else if (istype(C, /obj/item/pipebomb/bomb) && !HAS_TRIGGERABLE(src))
-			var/obj/item/pipebomb/bomb/PB = C
-			if (!PB.armed)
-				if(!(src in user.equipped_list()))
-					boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
-					return
-
-				user.u_equip(PB)
-				PB.set_loc(src)
-				user.show_text("You attach [PB]'s detonator to [src].", "blue")
-				src.pipebomb = PB
-				src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-pipebomb"), "triggerable")
-				src.w_class = max(src.w_class, C.w_class)
-
-				message_admins("[key_name(user)] rigs [src] with [PB] at [log_loc(user)].")
-				logTheThing(LOG_BOMBING, user, "rigs [src] with [PB] at [log_loc(user)].")
-
-		else if (istype(C, /obj/item/device/radio/signaler) && !HAS_TRIGGERABLE(src))
-			if(!(src in user.equipped_list()))
-				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
-				return
-
-			var/obj/item/device/radio/signaler/S = C
-			user.u_equip(S)
-			S.set_loc(src)
-			user.show_text("You attach [S]'s detonator to [src].", "blue")
-			src.signaler = S
-			src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-signaler"), "triggerable")
-			src.w_class = max(src.w_class, C.w_class)
-
-			message_admins("[key_name(user)] rigs [src] with [S] at [log_loc(user)].")
-			logTheThing(LOG_BOMBING, user, "rigs [src] with [S] at [log_loc(user)].")
 
 		else if (!src.arm && (istype(C, /obj/item/parts/robot_parts/arm) || istype(C, /obj/item/parts/human_parts/arm)) && !HAS_TRIGGERABLE(src))
 			if(!(src in user.equipped_list()))
@@ -387,15 +361,6 @@
 			src.grenade_old.detonate()
 			src.grenade_old = null
 
-		else if (src.pipebomb)
-			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.pipebomb]) at [log_loc(src)]")
-			src.pipebomb.do_explode()
-			src.pipebomb = null
-
-		else if (src.signaler)
-			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.signaler]) at [log_loc(src)]")
-			src.signaler.send_signal("ACTIVATE")
-
 		else if (src.pie && src.arm)
 			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.arm] and [src.pie]) at [log_loc(src)]")
 			target.visible_message(SPAN_ALERT("<b>[src]'s [src.arm] launches [src.pie] at [target]!</b>"),\
@@ -423,6 +388,17 @@
 			src.gimmickbomb.detonate()
 			qdel(src.gimmickbomb)
 			src.gimmickbomb = null
+
+		else if (src.master && istype(src.master, /obj/item/assembly/complete))
+			var/obj/item/assembly/complete/parent_assembly = src.master
+			parent_assembly.trigger_icon_prefix = src.icon_state
+			parent_assembly.UpdateIcon()
+			SPAWN( 0 )
+				var/datum/signal/signal = get_free_signal()
+				signal.source = src
+				signal.data["message"] = "ACTIVATE"
+				parent_assembly.receive_signal(signal)
+
 		src.UpdateOverlays(null, "triggerable")
 		clear_armer()
 		return
