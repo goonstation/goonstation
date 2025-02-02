@@ -23,7 +23,7 @@
 
 /mob/living/Login()
 	. = ..()
-	SPAWN(0 SECONDS)
+	SPAWN(5 SECONDS) // race condition with job assignment at round start
 		var/datum/job/J = find_job_in_controller_by_string(src.job)
 		var/job_dot
 
