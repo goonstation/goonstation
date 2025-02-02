@@ -345,12 +345,13 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				if ( CI++ == index )
 					var/datum/reagent/current_reagent = reagent_list[reagent_id]
 					if (isnull(current_reagent) || current_reagent.volume == 0)
-						return 0
+						break
 					var/transfer_amt = min(current_reagent.volume,amount)
 					var/receive_amt = transfer_amt * multiplier
 					target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, TRUE, TRUE)
 					current_reagent.on_transfer(src, target_reagents, receive_amt)
 					src.remove_reagent(reagent_id, transfer_amt, FALSE, FALSE)
+					break
 
 		if (update_self_reagents)
 			src.update_total()
