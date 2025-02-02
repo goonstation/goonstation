@@ -1,6 +1,7 @@
 /datum/say_channel/dead
 	channel_id = SAY_CHANNEL_DEAD
 	disabled_message = "Deadchat is currently disabled."
+	affected_by_modifiers = FALSE
 	suppress_say_sound = TRUE
 	var/datum/say_channel/delimited/local/ghostly_whisper/ghostly_whisper_channel
 
