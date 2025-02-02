@@ -430,9 +430,6 @@
 			if("rack")
 				if(!in_interact_range(src, ui.user))
 					return
-				if (src.status & NOPOWER)
-					ui.user.visible_message(SPAN_ALERT("[ui.user] tries to tug a module out of the rack, but the retaining mag-locks are unpowered!"), SPAN_ALERT("You struggle with the module but [src] is unpowered!"))
-					return
 				if (welded[slotNum])
 					ui.user.visible_message(SPAN_ALERT("[ui.user] tries to tug a module out of the rack, but it's welded in place!"), SPAN_ALERT("You struggle with the module but it's welded in place!"))
 					return
@@ -443,6 +440,9 @@
 				if(law_circuits[slotNum])
 					if(issilicon(ui.user))
 						boutput(ui.user,"Your clunky robot hands can't grip the module!")
+						return
+					if (src.status & NOPOWER)
+						ui.user.visible_message(SPAN_ALERT("[ui.user] tries to tug a module out of the rack, but the retaining mag-locks are unpowered!"), SPAN_ALERT("You struggle with the module but [src] is unpowered!"))
 						return
 					ui.user.visible_message(SPAN_ALERT("[ui.user] starts removing a module!"), SPAN_ALERT("You start removing the module!"))
 					SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, PROC_REF(remove_module_callback), list(slotNum,ui.user), law_circuits[slotNum].icon, law_circuits[slotNum].icon_state, \

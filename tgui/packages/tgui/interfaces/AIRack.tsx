@@ -38,8 +38,13 @@ export const AIRack = () => {
                 <Button
                   icon={item ? 'circle' : 'circle-o'}
                   onClick={() => act('rack', { rack_index: index + 1 })}
-                  disabled={!powered || welded[index] || screwed[index]}
+                  disabled={
+                    (!powered && item ? true : false) ||
+                    welded[index] ||
+                    screwed[index]
+                  }
                   tooltip={moduleTooltip(
+                    item ? true : false,
                     powered,
                     welded[index],
                     screwed[index],
@@ -71,18 +76,25 @@ export const AIRack = () => {
 };
 
 const moduleTooltip = (
+  filled: BooleanLike,
   powered: BooleanLike,
   welded: BooleanLike,
   screwed: BooleanLike,
 ) => {
+  if (!filled) {
+    return 'Insert a module';
+  }
   if (!powered) {
     return 'The AI Law Rack is unpowered';
   }
+  if (welded && screwed) {
+    return 'The module is welded and screwed in place';
+  }
   if (welded) {
-    return `The module is still welded${screwed ? ' and screwed' : ''} in place`;
+    return `The module is welded in place`;
   }
   if (screwed) {
-    return 'The module is still screwed in place';
+    return 'The module is screwed in place';
   }
   return 'Remove the module';
 };
