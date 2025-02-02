@@ -107,6 +107,7 @@
 		. = ..()
 		if (.)
 			return
+		. = TRUE
 		var/mob/user = usr
 		switch (action)
 			if ("load_first_part")
