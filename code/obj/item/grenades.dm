@@ -29,6 +29,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	throw_speed = 4
 	throw_range = 20
 	flags = TABLEPASS | CONDUCT | EXTRADELAY
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	c_flags = ONBELT
 	is_syndicate = FALSE
 	stamina_damage = 0
@@ -38,12 +39,34 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	var/is_dangerous = TRUE
 	var/sound_armed = null
 	var/icon_state_armed = null
-	var/not_in_mousetraps = 0
 	var/issawfly = FALSE //for sawfly remote
 	///damage when loaded into a 40mm convesion chamber
 	var/launcher_damage = 25
 	var/detonating = FALSE
 	HELP_MESSAGE_OVERRIDE({"You can use a <b>screwdriver</b> to adjust the detonation time."})
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+		..()
+
+	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	proc/assembly_setup(var/manipulated_grenade, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+		//since we have a lot of icons for grenades, but not for the assembly, we go, like with old assemblies, just with the custom chem grenade icon
+		parent_assembly.applier_icon_prefix = "chem_grenade"
+
+	proc/assembly_application(var/manipulated_grenade, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
+		src.detonate()
+		qdel(parent_assembly)
+
+	/// ----------------------------------------------
+
 
 	attack_self(mob/user as mob)
 		if (!src.armed)
@@ -816,7 +839,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	icon = 'icons/obj/items/weapons.dmi'
 	desc = "It's a small cast-iron egg-shaped object, with the words \"Pick Me Up\" in gold in it."
 	armed = FALSE
-	not_in_mousetraps = TRUE
+	tool_flags = 0 // No
 	var/old_light_grenade = 0
 	var/destination
 	HELP_MESSAGE_OVERRIDE({""})
@@ -925,6 +948,32 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	var/sound_beep = 'sound/machines/twobeep.ogg'
 	var/is_dangerous = TRUE
 	var/icon_state_armed = null
+	tool_flags = TOOL_ASSEMBLY_APPLIER
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+		..()
+
+	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	proc/assembly_setup(var/manipulated_grenade, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+		//since we have a lot of icons for grenades, but not for the assembly, we go, like with old assemblies, just with the custom chem grenade icon
+		parent_assembly.applier_icon_prefix = "chem_grenade"
+
+	proc/assembly_application(var/manipulated_grenade, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
+		src.detonate()
+		//why the fuck is do gimickbombs only vanish after 15 seconds, what the fuck?
+		parent_assembly.invisibility = INVIS_ALWAYS_ISH
+		SPAWN(15 SECONDS)
+			qdel(parent_assembly)
+
+	/// ----------------------------------------------
 
 	proc/detonate()
 		playsound(src.loc, sound_explode, 45, 1)

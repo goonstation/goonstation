@@ -143,7 +143,7 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 		else if (istype(W, /obj/item/old_grenade/))
 			if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
 				var/obj/item/old_grenade/OG = W
-				if (OG.not_in_mousetraps == 0 && !OG.armed) // Same principle, okay.
+				if (!OG.armed) // Same principle, okay.
 					user.u_equip(OG)
 					OG.set_loc(src)
 					src.grenade_old = OG

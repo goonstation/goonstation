@@ -157,7 +157,7 @@
 	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/old_grenade/) && !HAS_TRIGGERABLE(src))
 			var/obj/item/old_grenade/OG = C
-			if (OG.not_in_mousetraps == 0 && !OG.armed)
+			if (!OG.armed)
 				if(!(src in user.equipped_list()))
 					boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
 					return

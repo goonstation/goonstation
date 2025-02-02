@@ -49,6 +49,7 @@ Contains:
 	var/list/additional_components = null //! This is a list of components that don't make up the main 3 components of the assembly, but can be attached after the target was added.
 	var/icon_base_offset = 0 //! offset for the base-icon of the assembly, if the target gets overriden
 	flags = TABLEPASS | CONDUCT | NOSPLASH
+	item_function_flags = OBVIOUS_INTERACTION_BAR
 
 /obj/item/assembly/complete/New()
 	src.additional_components = list()

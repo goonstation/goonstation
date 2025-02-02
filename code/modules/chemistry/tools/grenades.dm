@@ -49,20 +49,20 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
 
 /obj/item/chem_grenade/disposing()
-		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
-		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
-		..()
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+	..()
 
-	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
 
 /obj/item/chem_grenade/proc/assembly_setup(var/manipulated_grenade, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
-		//since we have a lot of icons for chem grenades, but not for the assembly, we go, like with old assemblies, just with the custom chem grenade icon
-		parent_assembly.applier_icon_prefix = "chem_grenade"
+	//since we have a lot of icons for chem grenades, but not for the assembly, we go, like with old assemblies, just with the custom chem grenade icon
+	parent_assembly.applier_icon_prefix = "chem_grenade"
 
-/obj/item/chem_grenade/proc/assembly_application(var/manipulated_horn, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
-		src.explode() //we don't delete the assembly here because its happening in explode() because of chem-shenanigans
+/obj/item/chem_grenade/proc/assembly_application(var/manipulated_grenade, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
+	src.explode() //we don't delete the assembly here because its happening in explode() because of chem-shenanigans
 
-	/// ----------------------------------------------
+/// ----------------------------------------------
 
 
 ///clone for grenade launcher purposes only. Not a real deep copy, just barely good enough to work for something that's going to be instantly detonated. Mostly for like, custom grenades or whatever
