@@ -1,5 +1,5 @@
 /obj/machinery/lawrack
-	name = "AI Law Mount Rack"
+	name = "AI Law Rack"
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "airack_empty"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs."
@@ -335,6 +335,12 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
+	// the law rack TGUI represents a physical rack, area power shouldn't disable it
+	broken_state_topic(mob/user)
+		. = user.shared_ui_interaction(src)
+		if (src.status & NOPOWER)
+			return min(., UI_INTERACTIVE)
+		. = ..()
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -359,6 +365,7 @@
 				src.screwed[i] = FALSE
 
 		. = list(
+			"powered" = src.powered(),
 			"lawTitles" = lawTitles,
 			"lawText" = lawText,
 			"welded" = src.welded,
@@ -422,6 +429,9 @@
 				return
 			if("rack")
 				if(!in_interact_range(src, ui.user))
+					return
+				if (src.status & NOPOWER)
+					ui.user.visible_message(SPAN_ALERT("[ui.user] tries to tug a module out of the rack, but the retaining mag-locks are unpowered!"), SPAN_ALERT("You struggle with the module but [src] is unpowered!"))
 					return
 				if (welded[slotNum])
 					ui.user.visible_message(SPAN_ALERT("[ui.user] tries to tug a module out of the rack, but it's welded in place!"), SPAN_ALERT("You struggle with the module but it's welded in place!"))
@@ -832,7 +842,7 @@
 
 
 /obj/machinery/lawrack/syndicate
-	name = "AI Law Mount Rack - Syndicate Model"
+	name = "AI Law Rack - Syndicate Model"
 	icon_state = "airack_syndicate_empty"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs. This one has a little S motif on the side."
 
