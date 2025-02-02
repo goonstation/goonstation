@@ -1818,8 +1818,10 @@ or don't if it uses a custom topopen overlay
 
 /mob/living/silicon/ai/proc/return_to(var/mob/user)
 	if (user.mind)
-		src.eyecam.ensure_speech_tree().migrate_speech_tree(src, src, FALSE)
-		src.eyecam.ensure_listen_tree().migrate_listen_tree(src, src, FALSE)
+		if (src.deployed_to_eyecam)
+			src.eyecam.ensure_speech_tree().migrate_speech_tree(src, src, FALSE)
+			src.eyecam.ensure_listen_tree().migrate_listen_tree(src, src, FALSE)
+
 		user.mind.transfer_to(src)
 		src.deployed_shell = null
 		src.deployed_to_eyecam = 0
