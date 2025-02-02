@@ -616,7 +616,7 @@ TYPEINFO(/obj/item/clothing/glasses/spectro)
 	icon_state = "monocle"
 	item_state = "headset"
 	inventory_counter_enabled = TRUE
-	var/current_clock_mode = "Toyal Station Budget Monitor"
+	var/current_clock_mode = "Total Station Budget Monitor"
 	var/display_type = "clock" //! used to show analog or screen displays on sprite
 	var/text_to_display
 	var/list/clock_modes = list("Total Station Budget Monitor",
