@@ -4585,10 +4585,6 @@
 	},
 /area/station/hallway/primary/north)
 "aza" = (
-/obj/machinery/camera{
-	c_tag = "Barbershop";
-	dir = 4
-	},
 /obj/machinery/light/incandescent,
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/orangeblack/side{
@@ -5003,6 +4999,12 @@
 /obj/item/crowbar,
 /obj/item/storage/belt/utility,
 /obj/item/clothing/mask/balaclava,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname  - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},
@@ -49499,6 +49501,10 @@
 /turf/simulated/floor/yellow/side,
 /area/station/engine/storage)
 "vOI" = (
+/obj/machinery/camera{
+	c_tag = "Barbershop";
+	dir = 4
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
 "vOY" = (
