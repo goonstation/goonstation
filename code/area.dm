@@ -493,9 +493,10 @@ TYPEINFO(/area)
 		src.permafrosted = TRUE
 
 		for (var/turf/simulated/floor/T in src)
-			T.type_before_permafrost = T.type
-			T.icon_before_permafrost = T.icon
-			T.icon_state_before_permafrost = T.icon_state
+			var/type_before_permafrost = T.type
+			var/dir_before_permafrsot = T.dir
+			var/icon_before_permafrost = T.icon
+			var/icon_state_before_permafrost = T.icon_state
 			if (T.intact && !istype(T, /turf/simulated/floor/glassblock))
 				T.ReplaceWith(/turf/simulated/floor/snow/snowball)
 				T.icon = 'icons/turf/snow.dmi'
@@ -505,6 +506,11 @@ TYPEINFO(/area)
 				T.icon = 'icons/turf/floors.dmi'
 				T.icon_state = "snow[pick(null, 1, 2, 3, 4)]"
 				T.set_dir(pick(cardinal))
+
+			T.type_before_permafrost = type_before_permafrost
+			T.dir_before_permafrost = dir_before_permafrsot
+			T.icon_before_permafrost = icon_before_permafrost
+			T.icon_state_before_permafrost = icon_state_before_permafrost
 
 			new /obj/effects/precipitation/snow/grey/tile/light(T)
 
@@ -517,13 +523,20 @@ TYPEINFO(/area)
 		src.permafrosted = FALSE
 
 		for (var/turf/simulated/floor/T in src)
-			T.ReplaceWith(T.type_before_permafrost)
+			if (T.type_before_permafrost) // in case a turf is replaced somehow, by RCD for example
+				var/dir_before_permafrost = T.dir_before_permafrost
+				var/icon_before_permafrost = T.icon_before_permafrost
+				var/icon_state_before_permafrost = T.icon_state_before_permafrost
+				T.ReplaceWith(T.type_before_permafrost, handle_air = TRUE)
+				T.dir = dir_before_permafrost
+				T.icon = icon_before_permafrost
+				T.icon_state = icon_state_before_permafrost
 
 			var/obj/effects/precipitation/snow/grey/tile/light/snow = locate() in T
 			qdel(snow)
 
 			T.temperature = initial(T.temperature)
-			T.air.temperature = T.temperature
+			//T.air.temperature = T.temperature
 
 			LAGCHECK(LAG_LOW)
 

@@ -66,6 +66,8 @@
 
 	/// turf type before being changed by ice phoenix permafrost
 	var/type_before_permafrost = null
+	/// turf dir before being changed by ice phoenix permafrost
+	var/dir_before_permafrost = null
 	/// turf icon before being changed by ice phoenix permafrost
 	var/icon_before_permafrost = null
 	/// turf icon state before being changed by ice phoenix permafrost
