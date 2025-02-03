@@ -5,9 +5,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 
 /datum/targetable/critter/ice_phoenix/sail
 	name = "Sail"
-	desc = "Channel to gain a large movement speed buff while in space for 20 seconds"
+	desc = "Channel to gain a large movement speed buff while in space for 10 seconds"
 	icon_state = "sail"
-	cooldown = 60 SECONDS
+	cooldown = 30 SECONDS
 	cooldown_after_action = TRUE
 
 	tryCast()
@@ -24,7 +24,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		EndSpacePush(L)
 
 		SETUP_GENERIC_ACTIONBAR(src.holder.owner, null, 10 SECONDS, /mob/living/critter/ice_phoenix/proc/on_sail, null, \
-			null, null, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
+			null, null, null, INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 
 /datum/targetable/critter/ice_phoenix/ice_barrier
 	name = "Ice Barrier"
