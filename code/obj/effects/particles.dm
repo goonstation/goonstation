@@ -266,3 +266,11 @@
 	position = generator("box", list(-6,-5,0), list(6,20,0), UNIFORM_RAND)
 	gravity = list(0, -1, 0)
 	scale = list(1.5, 1.5)
+
+/particles/steam_leak
+	color = "ffffff"
+	count = 30
+	spawning = 3
+	lifespan = 7
+	fade = 7
+	velocity = generator("box", list(2,4,0), list(1,2,0), UNIFORM_RAND)

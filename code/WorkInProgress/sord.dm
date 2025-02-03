@@ -135,6 +135,7 @@
 	slots = 3
 
 /mob/living/carbon/human/normal/merc
+	faction = list(FACTION_MERCENARY)
 	New()
 		..()
 		src.equip_new_if_possible(/obj/item/clothing/under/misc/merc01, SLOT_W_UNIFORM)
@@ -155,3 +156,89 @@
 
 /obj/mapping_helper/mob_spawn/corpse/human/merc
 	spawn_type = /mob/living/carbon/human/normal/merc
+
+ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
+/mob/living/critter/human/mercenary
+	name = "\improper Mercenary"
+	real_name = "\improper Mercenary"
+	desc = "A very angry merc."
+	health_brute = 25
+	health_burn = 25
+	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/merc
+	human_to_copy = /mob/living/carbon/human/normal/merc
+
+	faction = list(FACTION_MERCENARY)
+
+/mob/living/critter/human/mercenary/knife
+	ai_type = /datum/aiHolder/aggressive
+	hand_count = 2
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.limb = new /datum/limb/sword
+		HH.name = "left hand"
+		HH.suffix = "-L"
+		HH.icon_state = "blade"
+		HH.limb_name = "combat knife"
+		HH.can_hold_items = FALSE
+		HH.object_for_inhand = /obj/item/dagger
+
+		HH = hands[2]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.limb = new /datum/limb
+		HH.name = "right hand"
+		HH.suffix = "-R"
+		HH.icon_state = "handr"
+		HH.limb_name = "right arm"
+
+/mob/living/critter/human/mercenary/rifle
+	ai_type = /datum/aiHolder/ranged
+	hand_count = 1
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.limb = new /datum/limb/gun/kinetic/draco
+		HH.name = "rifle"
+		HH.suffix = "-LR"
+		HH.icon_state = "handrifle"
+		HH.limb_name = "\improper Draco Pistol"
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
+		HH.object_for_inhand = /obj/item/gun/kinetic/draco
+
+/obj/item/paper/mercmanifest1
+	name = "Shipping Manifest"
+	info = {"<center><b>Manifest</b><br>
+	Target Destination: Frontier, local distrubution<br><br>
+	<li>Standard Uniform</li> - 5x<br><br>
+	Approved for processing.<br>
+	Shipping to Frontier Outpost 8.<br>
+	Received at Frontier Outpost 8.<br>
+	Awaiting local transportation.</center>"}
+
+
+/obj/item/paper/mercmanifest2
+	name = "Shipping Manifest"
+	info = {"<center><b>Manifest</b><br>
+	Target Destination: Frontier Outpost 8<br><br>
+	<li>Rations</li> - Burrito 5x<br>
+	<li>Rations</li> - TV Dinner 5x<br><br>
+	Approved for processing.<br>
+	Shipping to Frontier Outpost 8.<br>
+	Received at Frontier Outpost 8. </center>"}
+
+/obj/item/paper/mercmanifest3
+	name = "Shipping Manifest"
+	info = {"<center><b>Manifest</b><br>
+	Target Destination: Frontier, local distrubution<br><br>
+	<li>Medical Kit</li> - Standard 1x<br>
+	<li>Medical Kit</li> - Oxygen 1x<br><br>
+	Approved for processing.<br>
+	Shipping to Frontier Outpost 8.<br>
+	Received at Frontier Outpost 8.<br>
+	Awaiting local transportation.</center>"}
