@@ -122,6 +122,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		if (!iswall(target))
 			boutput(src.holder.owner, SPAN_ALERT("You can only cast this ability on walls!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (isrestrictedz(target?.z))
+			boutput(src.holder.owner, SPAN_ALERT("Your power is useless here!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		return ..()
 
 	cast(atom/target)
