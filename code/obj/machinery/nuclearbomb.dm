@@ -20,6 +20,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	var/debugmode = 0
 	var/datum/hud/nukewires/wirepanel
 	var/obj/item/disk/data/floppy/read_only/authentication/disk = null
+	var/obj/item/record/record = null
+	var/record_locked = FALSE // TRUE if the internal record cannot be removed, intended to be varedited by admins for gimmicks.
 
 	var/target_override = null // varedit to an area TYPE to allow the nuke to be deployed in that area instead of whatever the mode says (also enables the bomb in non-nuke gamemodes)
 	var/target_override_name = "" // how the area gets displayed if you try to deploy the nuke in a wrong area
@@ -216,11 +218,41 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		command_alert("\A [src] has been armed in [isturf(src.loc) ? get_area(src) : src.loc]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [get_area(src)] to disarm the bomb immediately.", "Nuclear Weapon Detected")
 		if (!ON_COOLDOWN(global, "nuke_planted", 20 SECONDS))
 			playsound_global(world, 'sound/machines/bomb_planted.ogg', 75)
+		if(src.record)
+			if(is_music_playing())
+				src.visible_message(SPAN_NOTICE("The [src]'s record player detects conflicting music and ejects the record!"))
+				src.record.set_loc(get_turf(src))
+				src.record = null
+			else
+				SPAWN(6 SECONDS) // Length of the "Bomb planted" sound effect
+				if (istype(src.record, /obj/item/record/remote))
+					var/obj/item/record/remote/YT = src.record
+					if (YT.youtube)
+						play_youtube_remote_url(user, YT.youtube)
+					else
+						src.visible_message(SPAN_ALERT("The [src] ejects the faulty record. Maybe call an admin."))
+						src.record.set_loc(get_turf(src))
+						src.record = null
+				else
+					user.client.play_music_radio(src.record.song, html_encode(src.record.name))
+
 		logTheThing(LOG_GAMEMODE, user, "armed [src] at [log_loc(src)].")
 		message_ghosts("<b>[src]</b> has been armed at [log_loc(src.loc, ghostjump=TRUE)].")
 		var/datum/game_mode/nuclear/gamemode = ticker?.mode
 		ENSURE_TYPE(gamemode)
 		gamemode?.shuttle_available = SHUTTLE_AVAILABLE_DISABLED
+
+	mouse_drop(atom/over_object as mob|obj)
+		if (over_object == usr && ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			if (in_interact_range(src, H))
+				if (src.record_locked)
+					boutput(H, SPAN_ALERT("The [src]'s record cannot be removed!"))
+				else if (tgui_alert(H, "Remove the [src]'s stored record?", src.name, list("Yes", "No")) == "Yes")
+					H.put_in_hand_or_drop(src.record)
+					src.record = null
+					return
+		..()
 
 	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
@@ -255,6 +287,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			src.disk = W
 			src.det_time += timer_modifier
 			attack_particle(user,src)
+			return
+
+		if (istype(W, /obj/item/record))
+			if(src.record)
+				boutput(user, SPAN_ALERT("The [src.name] already has a record inserted!"))
+				return
+			boutput(user, "You insert the record into the record player.")
+			src.visible_message(SPAN_NOTICE("<b>[user] inserts the record into the record player.</b>"))
+			user.drop_item()
+			W.set_loc(src)
+			src.record = W
 			return
 
 		if (istype(W, /obj/item/remote/syndicate_teleporter))

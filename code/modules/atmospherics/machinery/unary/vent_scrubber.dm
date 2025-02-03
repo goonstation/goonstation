@@ -21,7 +21,7 @@
 	/// Are we sucking in all gas or only some?
 	var/scrubbing = SCRUBBING
 	// Sets up vars to scrub gases
-	#define _DEF_SCRUBBER_VAR(GAS, ...) var/scrub_##GAS = 1;
+	#define _DEF_SCRUBBER_VAR(GAS, ...) var/scrub_##GAS = 0;
 	APPLY_TO_GASES(_DEF_SCRUBBER_VAR)
 	#undef _DEF_SCRUBBER_VAR
 	/// Volume of gas to take from turf.
@@ -108,9 +108,9 @@
 	signal.data["sender"] = src.net_id
 	signal.data["power"] = src.on ? "on": "off"
 	signal.data["mode"] = src.scrubbing ? "scrubbing" : "siphoning"
-	#define COMPILE_GAS_MOLES(GAS, ...) if(scrub_##GAS) {signal.data[#GAS] = "1"}
-	APPLY_TO_GASES(COMPILE_GAS_MOLES)
-	#undef COMPILE_GAS_MOLES
+	#define GET_GAS_SCUB_STATUS(GAS, ...) signal.data[#GAS] = scrub_##GAS;
+	APPLY_TO_GASES(GET_GAS_SCUB_STATUS)
+	#undef GET_GAS_SCUB_STATUS
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
@@ -191,6 +191,9 @@
 	on = FALSE
 
 /obj/machinery/atmospherics/unary/vent_scrubber/breathable
+	#define _DEF_SCRUBBER_VAR(GAS, ...) scrub_##GAS = 1;
+	APPLY_TO_GASES(_DEF_SCRUBBER_VAR)
+	#undef _DEF_SCRUBBER_VAR
 	scrub_oxygen = FALSE
 	scrub_nitrogen = FALSE
 

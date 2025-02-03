@@ -628,7 +628,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 				playsound(src, 'sound/weapons/railgun.ogg', 50, TRUE)
 				src.set_dir(get_dir(src, target))
 
-				var/list/affected = DrawLine(src, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
+				var/list/affected = drawLineObj(src, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
 
 				for(var/obj/O in affected)
 					O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.
@@ -1059,7 +1059,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 
 		var/list/lineObjs
 		for (var/mob/living/poorSoul in range(src, 5))
-			lineObjs += DrawLine(src, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+			lineObjs += drawLineObj(src, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			poorSoul.playsound_local_not_inworld('sound/effects/electric_shock.ogg', 50)
 			random_burn_damage(poorSoul, 45)
@@ -1072,13 +1072,13 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 				poorSoul.gib()
 
 		for (var/obj/machinery/vehicle/poorPod in range(src, 5))
-			lineObjs += DrawLine(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+			lineObjs += drawLineObj(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			playsound(poorPod.loc, 'sound/effects/elec_bigzap.ogg', 40, 0)
 			poorPod.ex_act(3)
 
 		for (var/obj/machinery/cruiser/C in range(src, 5))
-			lineObjs += DrawLine(src, C, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+			lineObjs += drawLineObj(src, C, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 			playsound(C.loc, 'sound/effects/elec_bigzap.ogg', 40, 0)
 			C.ex_act(3)
 
@@ -1186,7 +1186,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 
 		var/list/lineObjs
 		for (var/mob/living/poorSoul in range(src, 5))
-			lineObjs += DrawLine(src, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+			lineObjs += drawLineObj(src, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			poorSoul.playsound_local_not_inworld('sound/effects/electric_shock.ogg', 50)
 			random_burn_damage(poorSoul, 45)
@@ -1199,7 +1199,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 				poorSoul.gib()
 
 		for (var/obj/machinery/vehicle/poorPod in range(src, 5))
-			lineObjs += DrawLine(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+			lineObjs += drawLineObj(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			playsound(poorPod.loc, 'sound/effects/elec_bigzap.ogg', 40, 0)
 			poorPod.ex_act(3)

@@ -867,7 +867,7 @@
 				)
 
 				var/datum/player/player = make_player(plist["ckey"])
-				if(isnull(player.last_seen))
+				if(!player.cached_round_stats)
 					player.cache_round_stats_blocking()
 				if(player)
 					response["last_seen"] = player.last_seen

@@ -9,7 +9,7 @@ proc/get_telearea(var/name)
 	var/list/areas = get_teleareas()
 	return areas[name]
 
-proc/generate_teleareas()
+proc/generate_teleareas() //Turns out nukies could deploy to the wizards den all this time
 	LAGCHECK(LAG_HIGH)
 	teleareas = list()
 	for (var/area/area in world)

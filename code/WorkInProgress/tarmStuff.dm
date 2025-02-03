@@ -118,7 +118,7 @@
 		var/Px = Sx + sin(P.angle) * dist
 		var/Py = Sy + cos(P.angle) * dist
 
-		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,0,"HalfStartRailG","HalfEndRailG",OBJ_LAYER, 0, Sx, Sy, Px, Py)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,0,"HalfStartRailG","HalfEndRailG",OBJ_LAYER, 0, Sx, Sy, Px, Py)
 		for(var/obj/O in affected)
 			O.color = list(1,2.30348,-4.4382,0,0,1.96078,0,-1.3074,3.46173)
 			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
@@ -171,7 +171,7 @@
 		var/Px = Sx + sin(P.angle) * dist
 		var/Py = Sy + cos(P.angle) * dist
 
-		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,0,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0, Sx, Sy, Px, Py)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,0,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0, Sx, Sy, Px, Py)
 		for(var/obj/O in affected)
 			O.color = list(-0.8, 0, 0, 0, -0.8, 0, 0, 0, -0.8, 1.5, 1.5, 1.5)
 			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
@@ -201,7 +201,7 @@
 		. = ..()
 		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
 		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
-		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
 		for(var/obj/O in affected)
 			O.alpha = 0
 			O.color = "#ff0000"
@@ -241,7 +241,7 @@
 		. = ..()
 		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
 		var/obj/railgun_trg_dummy/end = new(get_turf(P))
-		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
 		for(var/obj/O in affected)
 			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
 		SPAWN(1 SECOND)
@@ -437,7 +437,7 @@
 
 /datum/projectile/bullet/gyrojet
 	name = "gyrojet bullet"
-	projectile_speed = 6
+	projectile_speed = 7
 	max_range = 500
 	dissipation_rate = 0
 	damage = 10
@@ -450,10 +450,10 @@
 		O.internal_speed = projectile_speed
 
 	tick(obj/projectile/O)
-		O.internal_speed = min(O.internal_speed * 1.25, 32)
+		O.internal_speed = min(O.internal_speed * 1.33, 72)
 
 	get_power(obj/projectile/P, atom/A)
-		return 15 + P.internal_speed
+		return 15 + (P.internal_speed * 0.66)
 
 //desert eagle. The biggest, baddest handgun
 /obj/item/gun/kinetic/deagle
@@ -864,7 +864,7 @@ TYPEINFO(/obj/item/device/geiger)
 		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
 		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
 
-		var/list/affected = DrawLine(start, end, /obj/line_obj/timeshot ,'icons/obj/projectiles.dmi',"WholeRailG",1,0,"HalfStartRailG","HalfEndRailG",OBJ_LAYER, 0)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/timeshot ,'icons/obj/projectiles.dmi',"WholeRailG",1,0,"HalfStartRailG","HalfEndRailG",OBJ_LAYER, 0)
 		var/datum/theBulletThatShootsTheFutureController/controller = new(affected, start, end, P.shooter, P.mob_shooter, followup)
 		for(var/obj/line_obj/timeshot/ts in affected)
 			ts.controller = controller
