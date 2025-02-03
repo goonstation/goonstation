@@ -159,6 +159,10 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		src.UpdateIcon()
 		src.ui_interact(user)
 
+	bullet_act(obj/projectile/P)
+		if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
+			src.take_damage(P.power * P.proj_data?.ks_ratio)
+
 	ex_act(severity)
 		switch(severity)
 			if(1)
@@ -169,10 +173,15 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				SPAWN(0)
 					src.take_damage(150)
 				return
+			if(3)
+				SPAWN(0)
+					src.take_damage(50)
 
 	blob_act(var/power)
 		if (prob(25 * power/20))
 			qdel(src)
+		else
+			src.take_damage(power*5)
 
 	meteorhit()
 		qdel(src)
@@ -211,7 +220,9 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			src.current_account = new_account
 
 	update_icon()
-		if (!beaker)
+		if (src.status & BROKEN)
+			src.icon_state = "[src.icon_base]-broken"
+		else if (!beaker)
 			src.icon_state = src.icon_base
 		else
 			src.icon_state = "[src.icon_base][rand(1,5)]"
@@ -239,6 +250,9 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
+		if (src.health < 100)
+			if(prob(100-src.health))
+				src.set_broken()
 		if (src.health <= 0)
 			if (beaker)
 				beaker.set_loc(src.output_target ? src.output_target : get_turf(src))
@@ -444,10 +458,32 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		if(src.beaker?.loc != src)
 			src.remove_distant_beaker(force = TRUE)
 
+	set_broken()
+		. = ..()
+		if (.) return
+		if (src.beaker && src.beaker.loc == src)
+			src.beaker.set_loc(src.loc)
+			REMOVE_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
+			src.beaker = null
+		if (src.user_id && src.user_id.loc == src)
+			src.user_id.set_loc(src.loc)
+			src.user_id = null
+
+		src.UpdateIcon()
+
+	power_change()
+		. = ..()
+		src.UpdateIcon()
+
 /obj/machinery/chem_dispenser/chemical
 	New()
 		..()
 		src.dispensable_reagents = basic_elements
+
+/obj/machinery/chem_dispenser/chemical/set_broken(mob/user)
+	. = ..()
+	if(.) return
+	AddComponent(/datum/component/equipment_fault/leaky/chemical, tool_flags = TOOL_SCREWING | TOOL_WRENCHING)
 
 /obj/machinery/chem_dispenser/chemical/med_test
 	starting_groups = list(/datum/reagent_group/default/potassium_iodide,
@@ -467,6 +503,11 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	dispenser_name = "Alcohol"
 
 	dispense_sound = 'sound/misc/pourdrink2.ogg'
+
+/obj/machinery/chem_dispenser/alcohol/set_broken(mob/user)
+	. = ..()
+	if(.) return
+	AddComponent(/datum/component/equipment_fault/leaky/alcohol, tool_flags = TOOL_SCREWING | TOOL_WRENCHING)
 
 //Combines alcohol and soda dispenser
 /obj/machinery/chem_dispenser/alcohol/bar
@@ -523,6 +564,11 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	dispense_sound = 'sound/misc/pourdrink2.ogg'
 
+/obj/machinery/chem_dispenser/soda/set_broken(mob/user)
+	. = ..()
+	if(.) return
+	AddComponent(/datum/component/equipment_fault/leaky/soda, tool_flags = TOOL_SCREWING | TOOL_WRENCHING)
+
 /obj/machinery/chem_dispenser/chef
 	name = "HAPPY CHEF Dispense-o-tronic"
 	desc = "It's covered in a thin layer of acrid-smelling dust. The contents probably taste more like preservatives than whatever they're supposed to be."
@@ -534,6 +580,11 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	dispenser_name = "Soda"
 
 	dispense_sound = 'sound/effects/splort.ogg'
+
+/obj/machinery/chem_dispenser/chef/set_broken(mob/user)
+	. = ..()
+	if(.) return
+	AddComponent(/datum/component/equipment_fault/leaky/chef, tool_flags = TOOL_SCREWING | TOOL_WRENCHING)
 
 /obj/machinery/chem_dispenser/botany
 	name = "botany dispenser"

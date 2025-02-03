@@ -421,3 +421,75 @@ TYPEINFO(/datum/component/equipment_fault)
 			var/obj/machinery/power/apc/target_apc = O
 			if(!target_apc.isWireColorCut(wire))
 				target_apc.pulse(wire)
+
+///leaks chemicals to nearby tiles
+/datum/component/equipment_fault/leaky
+	///base/current probability to spawn fluids on this process tick
+	var/current_prob = 5
+	///increase in probability per process tick
+	var/static/prob_raise = 5
+	///list of reagents IDs to leak
+	var/list/reagent_list = list("carbon", "copper", "iron", "nickel", "oil")
+	var/static/list/sounds = list(
+		'sound/machines/vending_dispense_small.ogg',
+		'sound/machines/decompress.ogg',
+		'sound/effects/splort.ogg',
+		'sound/effects/zzzt.ogg',
+	)
+
+/datum/component/equipment_fault/leaky/ef_process(obj/machinery/M, mult)
+	if(probmult(current_prob))
+		src.ef_perform_fault(M)
+		src.current_prob = initial(src.current_prob)
+	else
+		src.current_prob += src.prob_raise
+
+/datum/component/equipment_fault/leaky/ef_perform_fault(obj/O)
+	if(..())
+		var/target_dir = pick(alldirs)
+		var/turf/simulated/floor/T = get_step(O.loc, target_dir)
+		if(!istype(T))
+			T = O.loc
+		else
+			var/obj/effects/spray/spray = new(T)
+			SPAWN(1 SECOND) qdel(spray)
+			spray.set_dir(target_dir)
+		playsound(O, pick(sounds), 50, 2)
+		O.visible_message(SPAN_NOTICE("Some of the contents of [O] leaks onto the floor."))
+
+		var/datum/reagents/temp_fluid_reagents = new /datum/reagents(5)
+		temp_fluid_reagents.add_reagent(pick(src.reagent_list), 5)
+		T.fluid_react(temp_fluid_reagents, temp_fluid_reagents.total_volume)
+
+/datum/component/equipment_fault/leaky/chemical
+	reagent_list = list(
+		"aluminium","barium","bromine","calcium","carbon","chlorine", \
+		"chromium","copper","ethanol","fluorine","hydrogen", \
+		"iodine","iron","lithium","magnesium","mercury","nickel", \
+		"nitrogen","oxygen","phosphorus","plasma","platinum","potassium", \
+		"radium","silicon","silver","sodium","sugar","sulfur","water"
+	)
+
+/datum/component/equipment_fault/leaky/alcohol
+	current_prob = 30
+	reagent_list = list("beer", "cider", "gin", "wine", "champagne", \
+								"rum", "vodka", "bourbon", "vermouth", "tequila", \
+								"bitters", "tonic")
+
+/datum/component/equipment_fault/leaky/soda
+	current_prob = 30
+	reagent_list = list("cola", "ginger_ale", "juice_lime", "juice_lemon", "juice_orange", \
+								"juice_cran", "juice_cherry", "juice_pineapple", "juice_tomato", \
+								"coconut_milk", "sugar", "water", "vanilla", "tea", "grenadine")
+
+/datum/component/equipment_fault/leaky/chef
+	current_prob = 30
+	reagent_list = list("ketchup","mustard","salt","pepper","gravy","chocolate","chocolate_milk","strawberry_milk","milk")
+
+/datum/component/equipment_fault/leaky/water
+	current_prob = 50
+	reagent_list = list("water")
+
+/datum/component/equipment_fault/leaky/blood
+	current_prob = 50
+	reagent_list = list("blood")
