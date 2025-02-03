@@ -307,7 +307,7 @@
 
 	disposing()
 		src.visible_message(SPAN_ALERT("[src] shatters!"))
-		playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_[pick(1, 2, 3)]", 75, TRUE)
+		playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_[pick(1, 2, 3)].ogg", 75, TRUE)
 		var/area/A = get_area(src)
 		A.remove_permafrost()
 		..()
