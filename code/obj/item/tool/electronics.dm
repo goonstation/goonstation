@@ -917,6 +917,11 @@
 		. = ..()
 		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby))
 
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE)
+		. = ..()
+
+
 	proc/finish_decon(atom/target,mob/user) // deconstructing work
 		if (!isobj(target))
 			return
@@ -966,7 +971,7 @@
 		var/decon_complexity = O.build_deconstruction_buttons()
 		if (!decon_complexity || !O.can_deconstruct(user))
 			if (istype(O, /obj/item/storage))
-				return // if we're here, it's storage we cannot deconstruct
+				return // if we're here, it's storage we cannot deconstruct, so attempt stowing it
 			boutput(user, SPAN_ALERT("[target] cannot be deconstructed."))
 			if (O.deconstruct_flags & DECON_NULL_ACCESS)
 				boutput(user, SPAN_ALERT("[target] is under an access lock and must have its access requirements removed first."))
