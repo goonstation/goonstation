@@ -140,7 +140,7 @@
 		animate(src.owner.client, color=flash_color, time=0.4 SECONDS)
 		animate(color=original_color, time=1.5 SECONDS)
 		if (severity > 0.2)
-			playsound_local(src.owner, 'sound/effects/heartbeat.ogg', 60, FALSE)
+			src.owner.playsound_local(src.owner, 'sound/effects/heartbeat.ogg', 60, FALSE)
 
 	onAbilityStat() // In the 'Vampire' tab.
 		..()
