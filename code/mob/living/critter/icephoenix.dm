@@ -176,7 +176,8 @@
 		abil.afterAction()
 
 	proc/create_ice_tunnel(turf/T)
-		new /turf/simulated/ice_phoenix_ice_tunnel(T, get_dir(src, T))
+		T.ReplaceWith(/turf/simulated/ice_phoenix_ice_tunnel, FALSE)
+		T.set_dir(get_dir(src, T))
 		playsound(T, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, TRUE)
 		var/datum/targetable/critter/ice_phoenix/thermal_shock/abil = src.abilityHolder.getAbility(/datum/targetable/critter/ice_phoenix/thermal_shock)
 		abil.afterAction()
