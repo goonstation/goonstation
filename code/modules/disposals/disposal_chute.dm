@@ -159,9 +159,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					else
 						boutput(user, SPAN_HINT("You need to <b>pry</b> the locking panels."))
 			return
-		if (istype(I,/obj/item/deconstructor))
-			user.visible_message(SPAN_ALERT("<B>[user] hits [src] with [I]!</B>"))
-			return
 		if (istype(I, /obj/item/handheld_vacuum))
 			return
 		if (istype(I,/obj/item/satchel/) && I.contents.len)

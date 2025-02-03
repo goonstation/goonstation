@@ -911,6 +911,11 @@
 	tool_flags = TOOL_SAWING
 	c_flags = ONBELT
 	w_class = W_CLASS_NORMAL
+	HELP_MESSAGE_OVERRIDE("Use the Help, Disarm, or Grab intents to attempt deconstructing objects when you click them. Switch to Harm intent to use as a weapon.")
+
+	New()
+		. = ..()
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby))
 
 	proc/finish_decon(atom/target,mob/user) // deconstructing work
 		if (!isobj(target))
@@ -946,48 +951,53 @@
 			F.RegisterSignal(O, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
 
 	MouseDrop_T(atom/target, mob/user)
-		if (!isobj(target))
-			return
-		src.AfterAttack(target,user)
+		src.pre_attackby(src, target, user)
 		..()
 
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+	proc/pre_attackby(source, atom/target, mob/user)
+		if (user.a_intent == INTENT_HARM)
+			return
 		if (!isobj(target))
+			return
+		if (iscritter(target))
 			return
 		var/obj/O = target
 
 		var/decon_complexity = O.build_deconstruction_buttons()
 		if (!decon_complexity || !O.can_deconstruct(user))
+			if (istype(O, /obj/item/storage))
+				return // if we're here, it's storage we cannot deconstruct
 			boutput(user, SPAN_ALERT("[target] cannot be deconstructed."))
 			if (O.deconstruct_flags & DECON_NULL_ACCESS)
 				boutput(user, SPAN_ALERT("[target] is under an access lock and must have its access requirements removed first."))
-			return
+			return ATTACK_PRE_DONT_ATTACK
 		if (istext(decon_complexity))
 			boutput(user, SPAN_ALERT("[decon_complexity]"))
-			return
+			return ATTACK_PRE_DONT_ATTACK
 		if (issilicon(user) && (O.deconstruct_flags & DECON_NOBORG))
 			boutput(user, SPAN_ALERT("Cyborgs cannot deconstruct this [target]."))
-			return
+			return ATTACK_PRE_DONT_ATTACK
 		if ((!(O.allowed(user) || O.deconstruct_flags & DECON_NO_ACCESS) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
 			boutput(user, SPAN_ALERT("You cannot deconstruct [target] without sufficient access to operate it."))
-			return
+			return ATTACK_PRE_DONT_ATTACK
 
 		if(length(get_all_mobs_in(O)))
 			boutput(user, SPAN_ALERT("You cannot deconstruct [target] while someone is inside it!"))
-			return
+			return ATTACK_PRE_DONT_ATTACK
 
 		if (isrestrictedz(O.z) && !isitem(target) && !istype(get_area(O), /area/salvager)) //let salvagers deconstruct on the magpie
 			boutput(user, SPAN_ALERT("You cannot bring yourself to deconstruct [target] in this area."))
-			return
+			return ATTACK_PRE_DONT_ATTACK
 
 		if (O.decon_contexts && length(O.decon_contexts) <= 0) //ready!!!
 			boutput(user, "Deconstructing [O], please remain still...")
 			playsound(user.loc, 'sound/effects/pop.ogg', 50, 1)
 			actions.start(new/datum/action/bar/icon/deconstruct_obj(target,src,(decon_complexity * 2.5 SECONDS)), user)
+			return ATTACK_PRE_DONT_ATTACK
 		else
 			user.showContextActions(O.decon_contexts, O)
 			boutput(user, SPAN_ALERT("You need to use some tools on [target] before it can be deconstructed."))
-			return
+			return ATTACK_PRE_DONT_ATTACK
 
  // here be extra surgery penalties
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
