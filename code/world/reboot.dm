@@ -141,6 +141,12 @@ var/reboot_file_path = "data/restarting"
 
 
 /world/proc/installUpdate()
+	#ifdef LIVE_SERVER
+	if (world.system_type == UNIX && shell())
+		logTheThing(LOG_DIARY, null, "Running update script", "admin")
+		shell("/usr/bin/bash tools/server/update.sh --from-game")
+	#else
+
 	// Simple check to see if a new dmb exists in the update folder
 	logTheThing(LOG_DIARY, null, "Checking for updated [config.dmb_filename].dmb...", "admin")
 	if(fexists("update/[config.dmb_filename].dmb"))
@@ -163,6 +169,8 @@ var/reboot_file_path = "data/restarting"
 		logTheThing(LOG_DIARY, null, "Update complete.", "admin")
 	else
 		logTheThing(LOG_DIARY, null, "No update found. Skipping update process.", "admin")
+
+	#endif
 
 
 /// EXPERIMENTAL STUFF

@@ -32,6 +32,15 @@
 		P.change_stack_amount(toRemove - P.amount)
 		return P
 
+	clamp_act(mob/clamper, obj/item/clamp)
+		if (!(src.material?.getMaterialFlags() & MATERIAL_METAL))
+			return FALSE
+		var/obj/item/sheet/sheets = new(src.loc)
+		sheets.set_stack_amount(src.amount * 10)
+		sheets.setMaterial(src.material)
+		qdel(src)
+		return TRUE
+
 	attack_hand(mob/user)
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many material pieces do you want to take from the stack?","Stack of [src.amount]",1) as num)

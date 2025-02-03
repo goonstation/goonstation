@@ -32,6 +32,14 @@
 			bodypart.name = "mutagenic [initial(bodypart.name)]"
 		src.original_bodypart = bodypart
 		src.original_bodypart?.set_loc(src)
+		if(istype(original_bodypart, /obj/item/organ) || istype(original_bodypart, /obj/item/clothing/head/butt))
+			var/obj/item/organ/org = original_bodypart
+			org.donor_DNA = src.bioHolder?.Uid
+			org.blood_DNA = org.donor_DNA
+		else if(istype(original_bodypart, /obj/item/parts/human_parts))
+			var/obj/item/parts/human_parts/hpart = original_bodypart
+			hpart.original_DNA = src.bioHolder?.Uid
+			hpart.blood_DNA = hpart.original_DNA
 
 	say(message, involuntary = 0)
 		if (hivemind_owner)
