@@ -35,11 +35,40 @@ TYPEINFO(/datum/component/equipment_fault)
 		RegisterSignal(parent, COMSIG_MACHINERY_PROCESS, PROC_REF(ef_process))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examined))
 
+/datum/component/equipment_fault/RegisterWithParent()
+	. = ..()
+	var/atom/movable/object = src.parent
+	RegisterHelpMessageHandler(object, PROC_REF(get_help_msg))
+
+/datum/component/equipment_fault/proc/get_help_msg(atom/movable/parent, mob/user, list/lines)
+	lines += "[parent] is broken and requires [english_list(src.tool_flags_to_list())] to be repaired."
+
+/datum/component/equipment_fault/proc/tool_flags_to_list()
+	var/tool_list = list()
+	if (src.interactions & (TOOL_CUTTING|TOOL_SNIPPING))
+		tool_list += "cutting"
+	if (src.interactions & TOOL_PRYING)
+		tool_list += "prying"
+	if (src.interactions & TOOL_PULSING)
+		tool_list += "pulsing"
+	if (src.interactions & TOOL_SCREWING)
+		tool_list += "screwing"
+	if (src.interactions & TOOL_WELDING)
+		tool_list += "welding"
+	if (src.interactions & TOOL_WRENCHING)
+		tool_list += "wrenching"
+	if (src.interactions & TOOL_SOLDERING)
+		tool_list += "soldering"
+	if (src.interactions & TOOL_WIRING)
+		tool_list += "wiring"
+	return tool_list
+
 /datum/component/equipment_fault/proc/examined(obj/O, mob/examiner, list/lines)
-	return
+	lines += "This one looks broken, but it could be repaired."
 
 /datum/component/equipment_fault/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ATTACKBY, COMSIG_ATTACKHAND, COMSIG_MACHINERY_PROCESS, COMSIG_ATOM_EXAMINE))
+	UnregisterHelpMessageHandler(parent)
 	. = ..()
 
 /datum/component/equipment_fault/proc/ef_process(obj/machinery/M, mult)
@@ -49,6 +78,10 @@ TYPEINFO(/datum/component/equipment_fault)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!ON_COOLDOWN(O, "equip_fault_[ref(src)]",src.fault_delay))
 		. = TRUE
+		if(istype(O, /obj/machinery))
+			var/obj/machinery/machine = O
+			if(machine.status & NOPOWER)
+				. = FALSE
 
 /datum/component/equipment_fault/proc/ef_attackby(obj/O, obj/item/I, mob/user = null)
 	var/attempt = FALSE
@@ -132,6 +165,9 @@ TYPEINFO(/datum/component/equipment_fault)
 				var/obj/machinery/machine = src.parent
 				machine.status &= ~BROKEN
 				machine.power_change()
+			user.closeContextActions()
+			RemoveComponent()
+			qdel(src)
 		else
 			showContextActions(user)
 
@@ -389,3 +425,32 @@ TYPEINFO(/datum/component/equipment_fault)
 			var/obj/machinery/power/apc/target_apc = O
 			if(!target_apc.isWireColorCut(wire))
 				target_apc.pulse(wire)
+
+/// uses item_special/flame special attack fx, weighted towards harmless embers
+/datum/component/equipment_fault/embers
+/datum/component/equipment_fault/embers/ef_perform_fault(obj/O)
+	if(..())
+		var/list/valid_dirs = list()
+		for (var/dir in alldirs)
+			var/turf/T = get_step(O, dir)
+			if (T.gas_cross(T))
+				valid_dirs += dir
+		if (length(valid_dirs) == 0)
+			return
+		var/obj/itemspecialeffect/flame/S = new /obj/itemspecialeffect/flame
+		S.set_dir(pick(valid_dirs))
+		var/turf/flame_turf = get_step(O, S.dir)
+		S.setup(flame_turf)
+
+		if (prob(20))
+			flick("flame",S)
+			flame_turf.hotspot_expose(T0C + 400, 400)
+			playsound(flame_turf, 'sound/effects/flame.ogg', 50, FALSE)
+			O.visible_message(SPAN_ALERT("A tuft of flame erupts from [O]!"))
+			for (var/mob/M in flame_turf)
+				M.changeStatus("burning", 2 SECONDS)
+		else
+			flick("spark",S)
+			flame_turf.hotspot_expose(T0C + 50, 50)
+			playsound(flame_turf, 'sound/effects/gust.ogg', 50, FALSE)
+			O.visible_message(SPAN_NOTICE("An ember flies out of [O]."))

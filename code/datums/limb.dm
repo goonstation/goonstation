@@ -418,6 +418,13 @@
 		cooldown = 1 SECOND
 		reload_time = 20 SECONDS
 
+	draco
+		proj = new/datum/projectile/bullet/draco
+		shots = 5
+		current_shots = 5
+		cooldown = 1 SECOND
+		reload_time = 20 SECONDS
+
 /datum/limb/gun/energy
 	phaser
 		proj = new/datum/projectile/laser/light
