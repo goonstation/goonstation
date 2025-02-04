@@ -149,7 +149,7 @@
 		var/obj/item/card/id/C = src.wear_id
 		if(C)
 			C.registered = src.real_name
-			C.assignment = "Mercenary" // company name TBD
+			C.assignment = "Greyhold Mercenary Operative"
 			C.name = "[C.registered]'s ID Card ([C.assignment])"
 
 		update_clothing()
