@@ -361,7 +361,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	health_brute_vuln = 1
 	health_burn_vuln = 1
 	hand_count = 1
-	add_abilities = list(/datum/targetable/critter/weak_tackle)
+	add_abilities = list(/datum/targetable/critter/tackle/weak)
 	ai_attacks_per_ability = 1
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
@@ -388,7 +388,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			playsound(src.loc, pick(snd_macho_rage), 50, 1, 0, 1.75)
 
 	critter_ability_attack(mob/target)
-		var/datum/targetable/critter/weak_tackle/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/weak_tackle)
+		var/datum/targetable/critter/tackle/weak/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/tackle/weak)
 		if(pounce && !pounce.disabled && pounce.cooldowncheck())
 			pounce.handleCast(target)
 			if (prob(50))
