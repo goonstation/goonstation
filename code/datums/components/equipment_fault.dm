@@ -78,6 +78,10 @@ TYPEINFO(/datum/component/equipment_fault)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!ON_COOLDOWN(O, "equip_fault_[ref(src)]",src.fault_delay))
 		. = TRUE
+		if(istype(O, /obj/machinery))
+			var/obj/machinery/machine = O
+			if(machine.status & NOPOWER)
+				. = FALSE
 
 /datum/component/equipment_fault/proc/ef_attackby(obj/O, obj/item/I, mob/user = null)
 	var/attempt = FALSE
@@ -421,3 +425,32 @@ TYPEINFO(/datum/component/equipment_fault)
 			var/obj/machinery/power/apc/target_apc = O
 			if(!target_apc.isWireColorCut(wire))
 				target_apc.pulse(wire)
+
+/// uses item_special/flame special attack fx, weighted towards harmless embers
+/datum/component/equipment_fault/embers
+/datum/component/equipment_fault/embers/ef_perform_fault(obj/O)
+	if(..())
+		var/list/valid_dirs = list()
+		for (var/dir in alldirs)
+			var/turf/T = get_step(O, dir)
+			if (T.gas_cross(T))
+				valid_dirs += dir
+		if (length(valid_dirs) == 0)
+			return
+		var/obj/itemspecialeffect/flame/S = new /obj/itemspecialeffect/flame
+		S.set_dir(pick(valid_dirs))
+		var/turf/flame_turf = get_step(O, S.dir)
+		S.setup(flame_turf)
+
+		if (prob(20))
+			flick("flame",S)
+			flame_turf.hotspot_expose(T0C + 400, 400)
+			playsound(flame_turf, 'sound/effects/flame.ogg', 50, FALSE)
+			O.visible_message(SPAN_ALERT("A tuft of flame erupts from [O]!"))
+			for (var/mob/M in flame_turf)
+				M.changeStatus("burning", 2 SECONDS)
+		else
+			flick("spark",S)
+			flame_turf.hotspot_expose(T0C + 50, 50)
+			playsound(flame_turf, 'sound/effects/gust.ogg', 50, FALSE)
+			O.visible_message(SPAN_NOTICE("An ember flies out of [O]."))
