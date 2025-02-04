@@ -1,5 +1,31 @@
 
+(t)tue feb 04 25
+(u)glowbold
+(p)22131
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Arc Electroplaters can be broken by kinetics and explosions - repair them with common tools!
+(t)mon feb 03 25
+(u)Chasu
+(p)22034
+(e)🗺⚖📦|A-Mapping, C-Balance, A-Game-Objects
+(+)On station Security equipment lockers now feature more equipment, such as uniforms and headsets.
+(t)sat feb 1 25
+(u)tarmunora
+(+)Changeling limb critters mutate the DNA of their composite bodypart such that the original owner cannot be tracked by it.
+(t)fri jan 31 25
+(u)Chatauscours
+(p)22026
+(e)🗺💅|A-Mapping, C-QoL
+(+)Clarion podbay is now slightly bigger and has a couple more pods.
 (t)thu jan 30 25
+(u)glowbold
+(p)22077
+(e)⚖💊|C-Balance, A-Medical
+(+)You take deep breaths when doing CPR.
+(u)Chatauscours
+(p)22097
+(e)⚖💪|C-Balance, A-Traits
+(+)If you have the "Was it something I said?" trait, Beepsky will now only arrest you if you have at least 1 level of contraband on you.
 (u)glowbold
 (p)21955
 (e)🆕💡|C-Feature, A-Station-Systems

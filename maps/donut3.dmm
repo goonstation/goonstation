@@ -13750,19 +13750,6 @@
 /area/station/storage/auxillary{
 	name = "Tool Storage"
 	})
-"dWX" = (
-/obj/strip_door,
-/obj/machinery/conveyor/SN{
-	id = "disposals";
-	move_lag = 30;
-	operating = 1
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "crusher1";
-	name = "crusher door"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "dWY" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -34038,6 +34025,19 @@
 	},
 /turf/simulated/floor/red/checker,
 /area/station/security/checkpoint/sec_foyer)
+"kmy" = (
+/obj/machinery/conveyor/SN{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/strip_door,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "crusher1";
+	name = "crusher door"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "kmE" = (
 /turf/simulated/floor/carpet/green/standard/edge{
 	dir = 8
@@ -35108,6 +35108,23 @@
 "kCF" = (
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/fitness)
+"kCI" = (
+/obj/machinery/conveyor/EW{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/strip_door{
+	dir = 4;
+	layer = 3
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 8;
+	id = "crusher1";
+	name = "crusher door"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "kCM" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -36171,17 +36188,6 @@
 	dir = 6
 	},
 /area/station/medical/head)
-"kUR" = (
-/obj/machinery/conveyor/EW{
-	id = "disposals";
-	move_lag = 30;
-	operating = 1
-	},
-/obj/strip_door{
-	dir = 4
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "kUS" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -76662,14 +76668,6 @@
 	move_lag = 30;
 	operating = 1
 	},
-/obj/strip_door{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 8;
-	id = "crusher1";
-	name = "crusher door"
-	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "xbR" = (
@@ -106604,7 +106602,7 @@ pFp
 jEM
 pFp
 kxT
-dWX
+nrz
 lFJ
 ieL
 rdj
@@ -106907,7 +106905,7 @@ iNG
 ieL
 xbJ
 ieL
-ltH
+kCI
 ieL
 cNV
 rIZ
@@ -107206,10 +107204,10 @@ iSC
 eQS
 pFp
 xVy
-nrz
+kmy
 efD
 ieL
-kUR
+ltH
 ieL
 rdj
 rdj
