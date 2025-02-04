@@ -968,10 +968,11 @@
 			return
 		var/obj/O = target
 
+		if (O.deconstruct_flags == DECON_NONE)
+			return
+
 		var/decon_complexity = O.build_deconstruction_buttons()
 		if (!decon_complexity || !O.can_deconstruct(user))
-			if (istype(O, /obj/item/storage))
-				return // if we're here, it's storage we cannot deconstruct, so attempt stowing it
 			boutput(user, SPAN_ALERT("[target] cannot be deconstructed."))
 			if (O.deconstruct_flags & DECON_NULL_ACCESS)
 				boutput(user, SPAN_ALERT("[target] is under an access lock and must have its access requirements removed first."))
