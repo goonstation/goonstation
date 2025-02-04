@@ -1,4 +1,9 @@
 
+(t)tue feb 04 25
+(u)glowbold
+(p)22131
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Arc Electroplaters can be broken by kinetics and explosions - repair them with common tools!
 (t)mon feb 03 25
 (u)Chasu
 (p)22034
