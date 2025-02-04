@@ -5,6 +5,7 @@
 	density = 1
 	flags = USEDELAY
 	anchored = ANCHORED
+	open_to_sound = TRUE
 	stops_space_move = 1
 	status = REQ_PHYSICAL_ACCESS
 	var/numbers_in_name = TRUE //! Whether to append a random number to the name of the vehicle
