@@ -91,7 +91,7 @@
 
 			for (var/turf/T in view(1, get_turf(src))) // View and oview are unreliable as heck, apparently?
 				if (!T.ocean_canpass()) continue
-				spawn(0)
+				SPAWN(0)
 					src.reagents.reaction(T, 1, 40)
 				for(var/atom/movable/AM as anything in T)
 					// Added. We don't care about unmodified shower heads, though (Convair880).
