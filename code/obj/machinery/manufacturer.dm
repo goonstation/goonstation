@@ -877,6 +877,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (src.shock(user, 33))
 				return
 
+		if (istype(W, /obj/item/deconstructor)) return  // handled in decon afterattack
+
 		// Handling for getting the satchel of an ore scoop
 		if (istype(W, /obj/item/ore_scoop))
 			var/obj/item/ore_scoop/scoop = W

@@ -126,6 +126,8 @@
 		if (current_stage == 3)
 			if (ishuman(A) &&  istype(A:mutantrace, /datum/mutantrace/kudzu) || A.hasStatus("kudzuwalk"))
 				animate_door_squeeze(A)
+				if(!ON_COOLDOWN(A, "kudzuwalk", 1 SECOND))
+					playsound(A.loc, 'sound/impact_sounds/Bush_Hit.ogg', 45, 1)
 				return 1
 			return 0
 		return 1

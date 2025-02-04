@@ -12,6 +12,8 @@
 											   "[TOOL_SCREWING]"=list(/datum/contextAction/repair/screw, "You screw in some of the screws on %target%.", 'sound/items/Screwdriver.ogg'),
 											   "[TOOL_WELDING]"=list(/datum/contextAction/repair/weld, "You weld %target% carefully.", null),
 											   "[TOOL_WRENCHING]"=list(/datum/contextAction/repair/wrench, "You wrench %target%'s bolts. Nice and snug.", 'sound/items/Ratchet.ogg'),
+											   "[TOOL_SOLDERING]"=list(/datum/contextAction/repair/solder, "You solder %target%'s loose connections.", 'sound/effects/tinyhiss.ogg'),
+											   "[TOOL_WIRING]"=list(/datum/contextAction/repair/wire, "You replace damaged wires in %target%.", 'sound/items/Deconstruct.ogg')
 											   )
 
 TYPEINFO(/datum/component/equipment_fault)
@@ -23,7 +25,7 @@ TYPEINFO(/datum/component/equipment_fault)
 	. = ..()
 	if(!istype(parent, /obj/machinery) && !istype(parent, /obj/submachine))
 		return COMPONENT_INCOMPATIBLE
-	src.interactions = tool_flags & (TOOL_CUTTING|TOOL_PRYING|TOOL_PULSING|TOOL_SCREWING|TOOL_SNIPPING|TOOL_WELDING|TOOL_WRENCHING)
+	src.interactions = tool_flags & (TOOL_CUTTING|TOOL_PRYING|TOOL_PULSING|TOOL_SCREWING|TOOL_SNIPPING|TOOL_WELDING|TOOL_WRENCHING|TOOL_SOLDERING|TOOL_WIRING)
 	if(!src.interactions)
 		return COMPONENT_INCOMPATIBLE
 
@@ -33,11 +35,40 @@ TYPEINFO(/datum/component/equipment_fault)
 		RegisterSignal(parent, COMSIG_MACHINERY_PROCESS, PROC_REF(ef_process))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examined))
 
+/datum/component/equipment_fault/RegisterWithParent()
+	. = ..()
+	var/atom/movable/object = src.parent
+	RegisterHelpMessageHandler(object, PROC_REF(get_help_msg))
+
+/datum/component/equipment_fault/proc/get_help_msg(atom/movable/parent, mob/user, list/lines)
+	lines += "[parent] is broken and requires [english_list(src.tool_flags_to_list())] to be repaired."
+
+/datum/component/equipment_fault/proc/tool_flags_to_list()
+	var/tool_list = list()
+	if (src.interactions & (TOOL_CUTTING|TOOL_SNIPPING))
+		tool_list += "cutting"
+	if (src.interactions & TOOL_PRYING)
+		tool_list += "prying"
+	if (src.interactions & TOOL_PULSING)
+		tool_list += "pulsing"
+	if (src.interactions & TOOL_SCREWING)
+		tool_list += "screwing"
+	if (src.interactions & TOOL_WELDING)
+		tool_list += "welding"
+	if (src.interactions & TOOL_WRENCHING)
+		tool_list += "wrenching"
+	if (src.interactions & TOOL_SOLDERING)
+		tool_list += "soldering"
+	if (src.interactions & TOOL_WIRING)
+		tool_list += "wiring"
+	return tool_list
+
 /datum/component/equipment_fault/proc/examined(obj/O, mob/examiner, list/lines)
-	return
+	lines += "This one looks broken, but it could be repaired."
 
 /datum/component/equipment_fault/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ATTACKBY, COMSIG_ATTACKHAND, COMSIG_MACHINERY_PROCESS, COMSIG_ATOM_EXAMINE))
+	UnregisterHelpMessageHandler(parent)
 	. = ..()
 
 /datum/component/equipment_fault/proc/ef_process(obj/machinery/M, mult)
@@ -71,6 +102,12 @@ TYPEINFO(/datum/component/equipment_fault)
 		if(I:try_weld(user,1))
 			attempt = TRUE
 			interaction_type = TOOL_WELDING
+	else if((src.interactions & TOOL_SOLDERING) && issolderingtool(I))
+		attempt = TRUE
+		interaction_type = TOOL_SOLDERING
+	else if((src.interactions & TOOL_WIRING) && iswiringtool(I))
+		attempt = TRUE
+		interaction_type = TOOL_WIRING
 
 	if(attempt)
 		actions.start(new /datum/action/bar/icon/callback(user, O, duration, PROC_REF(complete_stage), list(user, I, interaction_type), I.icon, I.icon_state,
@@ -120,6 +157,13 @@ TYPEINFO(/datum/component/equipment_fault)
 		if(src.interactions == 0)
 			UnregisterFromParent()
 			boutput(user, SPAN_ALERT("You feel as though you have repaired [src.parent]. Job well done!"))
+			if (istype(src.parent, /obj/machinery))
+				var/obj/machinery/machine = src.parent
+				machine.status &= ~BROKEN
+				machine.power_change()
+			user.closeContextActions()
+			RemoveComponent()
+			qdel(src)
 		else
 			showContextActions(user)
 
@@ -256,6 +300,30 @@ TYPEINFO(/datum/component/equipment_fault)
 					if(omnitool_swap(target, user, I))
 						return ..(target, user, I)
 				if (ispulsingtool(I))
+					return ..(target, user, I)
+
+	solder
+		name = "Solder"
+		desc = "Soldering required to repair."
+		icon_state = "solder"
+		success_text = "You solder %target%'s loose connections."
+		success_sound = 'sound/effects/tinyhiss.ogg'
+
+		execute(atom/target, mob/user)
+			for (var/obj/item/I in user.equipped_list())
+				if (issolderingtool(I))
+					return ..(target, user, I)
+
+	wire
+		name = "Wire"
+		desc = "Wire cabling required to repair."
+		icon_state = "tray_cable_on"
+		success_text = "You replace damaged wires in %target%."
+		success_sound = 'sound/items/Deconstruct.ogg'
+
+		execute(atom/target, mob/user)
+			for (var/obj/item/I in user.equipped_list())
+				if (iswiringtool(I))
 					return ..(target, user, I)
 
 /datum/component/equipment_fault/grumble
