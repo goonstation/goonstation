@@ -270,7 +270,7 @@
 		user.lastattacked = src
 		boutput(user, SPAN_NOTICE("It's really cold!"))
 		if (!ON_COOLDOWN(src, "hit_impact_sound", 2 SECONDS))
-			playsound(get_turf(src), 'Glass_Shards_Hit_1.ogg', 75, TRUE)
+			playsound(get_turf(src), 'sound/impact_sounds/Glass_Shards_Hit_1.ogg', 75, TRUE)
 		..()
 
 	attackby(obj/item/I, mob/user)
@@ -288,7 +288,7 @@
 			return
 
 		if (!ON_COOLDOWN(src, "hit_impact_sound", 2 SECONDS))
-			playsound(get_turf(src), 'Glass_Shards_Hit_1.ogg', 75, TRUE)
+			playsound(get_turf(src), 'sound/impact_sounds/Glass_Shards_Hit_1.ogg', 75, TRUE)
 
 	bullet_act(obj/projectile/P)
 		if (istype(P.proj_data, /datum/projectile/bullet/ice_phoenix_icicle))
@@ -300,7 +300,7 @@
 				qdel(src)
 				return
 			if (!ON_COOLDOWN(src, "hit_impact_sound", 2 SECONDS))
-				playsound(get_turf(src), 'Glass_Shards_Hit_1.ogg', 75, TRUE)
+				playsound(get_turf(src), 'sound/impact_sounds/Glass_Shards_Hit_1.ogg', 75, TRUE)
 		..()
 
 	blob_act()
@@ -309,7 +309,7 @@
 			qdel(src)
 			return
 		if (!ON_COOLDOWN(src, "hit_impact_sound", 2 SECONDS))
-			playsound(get_turf(src), 'Glass_Shards_Hit_1.ogg', 75, TRUE)
+			playsound(get_turf(src), 'sound/impact_sounds/Glass_Shards_Hit_1.ogg', 75, TRUE)
 
 	ex_act()
 		qdel(src)
