@@ -35,11 +35,40 @@ TYPEINFO(/datum/component/equipment_fault)
 		RegisterSignal(parent, COMSIG_MACHINERY_PROCESS, PROC_REF(ef_process))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examined))
 
+/datum/component/equipment_fault/RegisterWithParent()
+	. = ..()
+	var/atom/movable/object = src.parent
+	RegisterHelpMessageHandler(object, PROC_REF(get_help_msg))
+
+/datum/component/equipment_fault/proc/get_help_msg(atom/movable/parent, mob/user, list/lines)
+	lines += "[parent] is broken and requires [english_list(src.tool_flags_to_list())] to be repaired."
+
+/datum/component/equipment_fault/proc/tool_flags_to_list()
+	var/tool_list = list()
+	if (src.interactions & (TOOL_CUTTING|TOOL_SNIPPING))
+		tool_list += "cutting"
+	if (src.interactions & TOOL_PRYING)
+		tool_list += "prying"
+	if (src.interactions & TOOL_PULSING)
+		tool_list += "pulsing"
+	if (src.interactions & TOOL_SCREWING)
+		tool_list += "screwing"
+	if (src.interactions & TOOL_WELDING)
+		tool_list += "welding"
+	if (src.interactions & TOOL_WRENCHING)
+		tool_list += "wrenching"
+	if (src.interactions & TOOL_SOLDERING)
+		tool_list += "soldering"
+	if (src.interactions & TOOL_WIRING)
+		tool_list += "wiring"
+	return tool_list
+
 /datum/component/equipment_fault/proc/examined(obj/O, mob/examiner, list/lines)
-	return
+	lines += "This one looks broken, but it could be repaired."
 
 /datum/component/equipment_fault/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ATTACKBY, COMSIG_ATTACKHAND, COMSIG_MACHINERY_PROCESS, COMSIG_ATOM_EXAMINE))
+	UnregisterHelpMessageHandler(parent)
 	. = ..()
 
 /datum/component/equipment_fault/proc/ef_process(obj/machinery/M, mult)
@@ -132,6 +161,9 @@ TYPEINFO(/datum/component/equipment_fault)
 				var/obj/machinery/machine = src.parent
 				machine.status &= ~BROKEN
 				machine.power_change()
+			user.closeContextActions()
+			RemoveComponent()
+			qdel(src)
 		else
 			showContextActions(user)
 

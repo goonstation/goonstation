@@ -2417,7 +2417,7 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 	icon = 'icons/obj/items/guns/energy48x32.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "lasershotgun"
-	desc = "A burst shotgun with short range. Sold for heavy crowd control and shock tactics."
+	desc = "Originally developed as a mining laser, the Nosaxa was quickly rebranded after the dangers of firing it in confined spaces were discovered."
 	item_state = "lasershotgun"
 	c_flags = ONBACK
 	force = 10
