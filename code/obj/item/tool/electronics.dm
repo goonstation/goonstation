@@ -964,8 +964,6 @@
 			return
 		if (!isobj(target))
 			return
-		if (iscritter(target))
-			return
 		var/obj/O = target
 
 		if (O.deconstruct_flags == DECON_NONE)
