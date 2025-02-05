@@ -72,7 +72,7 @@ export const Oven = () => {
             <Stack.Item vertical>
               <Stack.Item>
                 <Button
-                  color={heat === 'High' ? 'red' : 'grey'}
+                  selected={heat === 'High'}
                   onClick={() => act('set_heat', { heat: 'High' })}
                   minWidth="75px"
                   textAlign="center"
@@ -82,7 +82,7 @@ export const Oven = () => {
               </Stack.Item>
               <Stack.Item mt={0.5}>
                 <Button
-                  color={heat === 'Low' ? 'blue' : 'grey'}
+                  selected={heat === 'Low'}
                   onClick={() => act('set_heat', { heat: 'Low' })}
                   minWidth="75px"
                   textAlign="center"
@@ -94,7 +94,7 @@ export const Oven = () => {
           </Stack>
           <Stack justify="center">
             <Stack.Item>
-              <Button selected onClick={() => act('start')} fontSize={2} mt={0.5}>
+              <Button onClick={() => act('start')} fontSize={2} mt={0.5}>
                 Cook
               </Button>
             </Stack.Item>
@@ -207,7 +207,7 @@ const OvenDialbuttons = (props) => {
   for (let i = min; i <= max; i++) {
     const node = (
       <Button key={i}
-        color={time === i ? 'default' : 'grey'}
+        selected={time === i}
         onClick={() => act('set_time', { "time": i })}
         width="40px"
         textAlign="center">{i}
