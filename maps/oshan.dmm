@@ -10478,10 +10478,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
-"aJi" = (
-/obj/machinery/light/incandescent/blueish,
-/turf/simulated/floor/plating/random,
-/area/station/turret_protected/ai)
 "aJk" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -11154,9 +11150,6 @@
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
-"aLZ" = (
-/turf/simulated/floor/plating/random,
-/area/station/turret_protected/ai)
 "aMa" = (
 /obj/item/device/multitool,
 /obj/cable{
@@ -12057,12 +12050,7 @@
 /area/listeningpost)
 "aPH" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/storage/pill_bottle/cyberpunk{
-	pixel_x = -3
-	},
-/obj/item/paper/pipebombs{
-	pixel_x = 7
-	},
+/obj/item/storage/pill_bottle/cyberpunk,
 /turf/simulated/floor/carpet/red/standard/edge/west,
 /area/listeningpost)
 "aPJ" = (
@@ -25853,9 +25841,6 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bQL" = (
-/obj/item/storage/box/panic_buttons{
-	pixel_x = 6
-	},
 /obj/item/clothing/head/helmet/camera/security{
 	pixel_y = 10
 	},
@@ -25867,9 +25852,6 @@
 /obj/table/reinforced/auto,
 /obj/item/device/prisoner_scanner{
 	pixel_x = -11
-	},
-/obj/item/device/panicbutton{
-	pixel_x = 6
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -30579,7 +30561,7 @@
 "chM" = (
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/plating/random,
-/area/station/turret_protected/ai)
+/area/station/maintenance/northeast)
 "chO" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -41760,11 +41742,11 @@
 	name = "Courtroom";
 	req_access_txt = "1"
 	},
+/obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "2-5"
 	},
-/obj/mapping_helper/access/brig,
 /turf/simulated/floor/red,
 /area/station/crew_quarters/courtroom)
 "pDI" = (
@@ -108668,10 +108650,10 @@ aFl
 aKb
 aKy
 aFl
-aLZ
-aJi
+aoj
+aqd
 chM
-aJZ
+anx
 tTu
 aPT
 aPR
