@@ -1013,6 +1013,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 		user.u_equip(W)
 		W.set_loc(src)
 		W.dropped(user)
+		src.ui_interact(user)
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && W.w_class <= W_CLASS_HUGE && !W.anchored && isalive(user) && !isintangible(user))
