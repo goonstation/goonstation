@@ -22,11 +22,11 @@ interface PacketInfo {
   time: number;
   heat: string;
   cooking: boolean;
-  content_icons: Array<Object>;
-  content_names: Array<string>;
-  recipe_icons: Array<Object>;
-  recipe_names: Array<string>;
-  output_icon: Object;
+  content_icons: string[];
+  content_names: string[];
+  recipe_icons: string[];
+  recipe_names: string[];
+  output_icon: string;
   output_name: string;
   cook_time: string;
 }
