@@ -9,6 +9,7 @@ import {
   Button,
   Divider,
   Icon,
+  Image,
   LabeledList,
   Modal,
   Section,
@@ -116,9 +117,9 @@ export const Oven = () => {
                   <Stack.Item grow style={{
                           display: 'flex',
                         }}>
-                    <img
-                      height={26}
-                      width={26}
+                    <Image
+                      height="32px"
+                      width="32px"
                       src={`data:image/png;base64,${item}`}
                       style={{ transform: 'translate(0, -4px)' }}
                     />
@@ -149,9 +150,9 @@ export const Oven = () => {
                     <Stack.Item>
                     {recipe_icons.map((item, index) => (
                       <Stack.Item key={index} style={{ borderBottom: '0.5px #555 solid', display: "flex" }}>
-                        <img
-                          height={26}
-                          width={26}
+                        <Image
+                          height="32px"
+                          width="32px"
                           src={`data:image/png;base64,${item}`}
                           style={{ transform: 'translate(0, -4px)' }}
                         />
@@ -174,11 +175,10 @@ export const Oven = () => {
                 <Section title="Result">
                   <Stack vertical align="center" textAlign="center">
                     <Stack.Item>
-                      <img
-                        height={48}
-                        width={48}
+                      <Image
+                        height="64px"
+                        width="64px"
                         src={`data:image/png;base64,${output_icon}`}
-                        style={{ transform: 'translate(0, -4px)' }}
                       />
                     </Stack.Item>
                     <Stack.Item>
