@@ -10,7 +10,6 @@ import { useState } from 'react';
 import {
   Box,
   Button,
-  ColorBox,
   Flex,
   Icon,
   LabeledList,
@@ -25,6 +24,7 @@ import { clamp } from 'tgui-core/math';
 
 import { useBackend, useSharedState } from '../backend';
 import { HealthStat } from '../components/goonstation/HealthStat';
+import { COLORS } from '../constants';
 import { Window } from '../layouts';
 
 interface CloningConsoleData {
@@ -463,13 +463,13 @@ const Records = (props: RecordsProps) => {
                 <Box
                   style={{
                     position: 'absolute',
-                    left: '50%',
+                    left: '48%',
                     top: '20%',
                     transform: 'translate(-40%, 22px)',
                   }}
                   fontSize="9px"
                 >
-                  OXY / TOX / BURN / BRUTE
+                  TOTAL : OXY / TOX / BURN / BRUTE
                 </Box>
               </Flex.Item>
               <Flex.Item
@@ -501,54 +501,122 @@ const Records = (props: RecordsProps) => {
                     </Flex.Item>
                     <Flex.Item
                       className="cloning-console__body__item"
-                      style={{ width: '160px' }}
+                      style={{ width: '180px' }}
                     >
-                      <ColorBox
-                        mr={1}
-                        color={healthToColor(
-                          record.health.OXY,
-                          record.health.TOX,
-                          record.health.BURN,
-                          record.health.BRUTE,
-                        )}
-                      />
                       {record.implant && record.health.OXY >= 0 ? (
                         <Box inline>
-                          <HealthStat
-                            inline
-                            align="center"
-                            type="oxy"
-                            width={2}
-                          >
-                            {shortenNumber(record.health.OXY)}
-                          </HealthStat>
-                          {'/'}
-                          <HealthStat
-                            inline
-                            align="center"
-                            type="toxin"
-                            width={2}
-                          >
-                            {shortenNumber(record.health.TOX)}
-                          </HealthStat>
-                          {'/'}
-                          <HealthStat
-                            inline
-                            align="center"
-                            type="burn"
-                            width={2}
-                          >
-                            {shortenNumber(record.health.BURN)}
-                          </HealthStat>
-                          {'/'}
-                          <HealthStat
-                            inline
-                            align="center"
-                            type="brute"
-                            width={2}
-                          >
-                            {shortenNumber(record.health.BRUTE)}
-                          </HealthStat>
+                          {!!record.health.HealthImplant && (
+                            <>
+                              <Box
+                                inline
+                                align="center"
+                                width={3}
+                                color={healthToColor(
+                                  record.health.OXY,
+                                  record.health.TOX,
+                                  record.health.BURN,
+                                  record.health.BRUTE,
+                                )}
+                              >
+                                {record.health.OXY +
+                                  record.health.TOX +
+                                  record.health.BURN +
+                                  record.health.BRUTE}
+                              </Box>
+                              {':'}
+                              <HealthStat
+                                inline
+                                align="center"
+                                type="oxy"
+                                width={2}
+                              >
+                                {shortenNumber(record.health.OXY)}
+                              </HealthStat>
+                              {'/'}
+                              <HealthStat
+                                inline
+                                align="center"
+                                type="toxin"
+                                width={2}
+                              >
+                                {shortenNumber(record.health.TOX)}
+                              </HealthStat>
+                              {'/'}
+                              <HealthStat
+                                inline
+                                align="center"
+                                type="burn"
+                                width={2}
+                              >
+                                {shortenNumber(record.health.BURN)}
+                              </HealthStat>
+                              {'/'}
+                              <HealthStat
+                                inline
+                                align="center"
+                                type="brute"
+                                width={2}
+                              >
+                                {shortenNumber(record.health.BRUTE)}
+                              </HealthStat>
+                            </>
+                          )}
+                          {!record.health.HealthImplant && (
+                            <>
+                              <Box
+                                inline
+                                align="center"
+                                width={3}
+                                color={healthToColor(
+                                  record.health.OXY,
+                                  record.health.TOX,
+                                  record.health.BURN,
+                                  record.health.BRUTE,
+                                )}
+                              >
+                                {record.health.OXY +
+                                  record.health.TOX +
+                                  record.health.BURN +
+                                  record.health.BRUTE}
+                              </Box>
+                              {':'}
+                              <Box
+                                inline
+                                align="center"
+                                width={2}
+                                color={COLORS.damageType['oxy']}
+                              >
+                                ??
+                              </Box>
+                              {'/'}
+                              <Box
+                                inline
+                                align="center"
+                                width={2}
+                                color={COLORS.damageType['toxin']}
+                              >
+                                ??
+                              </Box>
+                              {'/'}
+                              <Box
+                                inline
+                                align="center"
+                                width={2}
+                                color={COLORS.damageType['burn']}
+                              >
+                                ??
+                              </Box>
+                              {'/'}
+                              <Box
+                                inline
+                                align="center"
+                                width={2}
+                                color={COLORS.damageType['brute']}
+                              >
+                                ??
+                              </Box>
+                            </>
+                          )}
                         </Box>
                       ) : (
                         'No Implant Detected'

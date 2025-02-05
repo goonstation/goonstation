@@ -3,16 +3,19 @@
 #define isitem(x) istype(x, /obj/item)
 
 #define istool(x,y) (isitem(x) && (x:tool_flags & (y)))
+#define isclampingtool(x) (istool(x, TOOL_CLAMPING))
 #define iscuttingtool(x) (istool(x, TOOL_CUTTING))
-#define ispulsingtool(x) (istool(x, TOOL_PULSING))
 #define ispryingtool(x) (istool(x, TOOL_PRYING))
+#define ispulsingtool(x) (istool(x, TOOL_PULSING))
+#define issawingtool(x) (istool(x, TOOL_SAWING))
 #define isscrewingtool(x) (istool(x, TOOL_SCREWING) || (istype(x, /obj/item/reagent_containers) && x:reagents:has_reagent("screwdriver")) ) //the joke is too good
 #define issnippingtool(x) (istool(x, TOOL_SNIPPING))
+#define isspooningtool(x) (istool(x, TOOL_SPOONING))
+#define isweldingtool(x) (istool(x, TOOL_WELDING))
 #define iswrenchingtool(x) (istool(x, TOOL_WRENCHING))
 #define ischoppingtool(x) (istool(x, TOOL_CHOPPING))
-#define isweldingtool(x) (istool(x, TOOL_WELDING))
-#define issawingtool(x) (istool(x, TOOL_SAWING))
-#define isspooningtool(x) (istool(x, TOOL_SPOONING))
+#define issolderingtool(x) (istool(x, TOOL_SOLDERING))
+#define iswiringtool(x) (istool(x, TOOL_WIRING))
 
 /// Returns true if the given x is a grab (obj/item/grab)
 #define isgrab(x) (istype(x, /obj/item/grab/))

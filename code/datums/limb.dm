@@ -231,7 +231,7 @@
 				return
 			. = TRUE
 			current_shots--
-			if (pointblank)
+			if (pointblank && ismob(target))
 				src.shoot_pointblank(target, user)
 			else
 				src.shoot_range(target, user, params)
@@ -311,6 +311,9 @@
 		cooldown = 3 SECONDS
 		reload_time = 30 SECONDS
 		muzzle_flash = "muzzle_flash"
+
+		no_reload
+			reload_time = 0 SECONDS
 
 
 	cannon
@@ -403,6 +406,13 @@
 
 	rifle
 		proj = new/datum/projectile/bullet/assault_rifle
+		shots = 5
+		current_shots = 5
+		cooldown = 1 SECOND
+		reload_time = 20 SECONDS
+
+	draco
+		proj = new/datum/projectile/bullet/draco
 		shots = 5
 		current_shots = 5
 		cooldown = 1 SECOND
