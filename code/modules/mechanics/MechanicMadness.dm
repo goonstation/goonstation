@@ -2692,6 +2692,7 @@
 				proj = initialize_projectile_pixel_spread(src, new/datum/projectile/special/homing/mechcomp_warp, picked)
 			proj.targets = list(picked)
 			proj.event_handler_flags &= IMMUNE_SINGULARITY
+			proj.has_atmosphere = TRUE
 			for(var/atom/movable/AM in src.loc)
 				if(AM == src || AM.invisibility || AM.anchored) continue
 				logTheThing(LOG_STATION, AM, "entered [src] at [log_loc(src)] targeting destination [log_loc(picked)]")

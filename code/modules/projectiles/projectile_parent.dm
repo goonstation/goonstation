@@ -117,6 +117,9 @@
 	/// Turf of the called_target during projectile initialization
 	var/turf/called_target_turf
 
+	/// Simulate standard atmos for any mobs inside
+	var/has_atmosphere = FALSE
+
 	disposing()
 		special_data = null
 		proj_data = null
@@ -541,6 +544,37 @@
 
 	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 		return
+
+	return_air(direct)
+		if (src.has_atmosphere)
+			var/datum/gas_mixture/GM = new /datum/gas_mixture
+
+			var/oxygen = MOLES_O2STANDARD
+			var/nitrogen = MOLES_N2STANDARD
+			var/sum = oxygen + nitrogen
+
+			GM.oxygen = (oxygen/sum)
+			GM.nitrogen = (nitrogen/sum)
+			GM.temperature = T20C
+
+			return GM
+		..()
+
+	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
+		if (src.has_atmosphere && breath_request > 0)
+			var/datum/gas_mixture/GM = new /datum/gas_mixture
+
+			var/oxygen = MOLES_O2STANDARD
+			var/nitrogen = MOLES_N2STANDARD
+			var/sum = oxygen + nitrogen
+
+			GM.oxygen = (oxygen/sum)*breath_request * mult
+			GM.nitrogen = (nitrogen/sum)*breath_request * mult
+			GM.temperature = T20C
+
+			return GM
+		..()
+
 
 ABSTRACT_TYPE(/datum/projectile)
 /datum/projectile
