@@ -367,12 +367,15 @@
 				var/typeinfo/obj/info = src.stored_item.get_typeinfo()
 				var/list/mats_used = info.mats
 				for (var/mat in mats_used)
+					var/mat_amt = floor(mats_used[mat] / 10)
+					if (mat_amt < 1)
+						continue
 					var/datum/manufacturing_requirement/rqmt = getManufacturingRequirement(mat)
 					var/datum/material/material = getMaterial(rqmt.get_art_ret_breakdown())
 					var/bar = getProcessedMaterialForm(material)
 					var/obj/item/material_piece/bar_output = new bar(get_turf(src))
 					bar_output.setMaterial(material)
-					bar_output.change_stack_amount(0)
+					bar_output.change_stack_amount(mat_amt - 1)
 				qdel(src.stored_item)
 				src.stored_item = null
 			if (ARTRET_MODIFY_MATERIAL)
