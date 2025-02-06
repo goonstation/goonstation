@@ -1,4 +1,9 @@
 
+(t)thu feb 06 25
+(u)Bartimeus973 & TDHooligan
+(p)22061
+(e)🆕🎨|C-Feature, C-Sprites
+(*)Most guns now create particles when they hit something. This includes walls and objects!
 (t)tue feb 04 25
 (u)glowbold
 (p)22131
