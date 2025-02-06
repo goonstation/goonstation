@@ -103,6 +103,23 @@
 				icon_state = "securitycomputer2"
 				base_icon_state = "securitycomputer2"
 
+		bank_data
+			name = "Bank computer"
+			icon_state = "databank"
+			base_icon_state = "databank"
+			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
+			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda/transmit_only
+			setup_starting_program = /datum/computer/file/terminal_program/bank_records
+
+			console_upper
+				icon = 'icons/obj/computerpanel.dmi'
+				icon_state = "bank1"
+				base_icon_state = "bank1"
+			console_lower
+				icon = 'icons/obj/computerpanel.dmi'
+				icon_state = "bank2"
+				base_icon_state = "bank2"
+
 		communications
 			name = "Communications Console"
 			icon_state = "comm"

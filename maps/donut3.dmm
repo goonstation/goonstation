@@ -5384,12 +5384,12 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "bzS" = (
-/obj/machinery/computer/bank_data{
-	dir = 8
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/computer3/generic/bank_data{
+	dir = 8
 	},
 /turf/simulated/floor/blueblack,
 /area/station/bridge)
@@ -13061,14 +13061,14 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/engineering)
 "dOe" = (
-/obj/machinery/computer/bank_data{
-	dir = 8
-	},
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/bank_data{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/customs)
 "dOk" = (
