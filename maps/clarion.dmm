@@ -32425,7 +32425,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "rcG" = (
-/obj/critter/opossum/morty,
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "rdA" = (
