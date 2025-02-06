@@ -1012,7 +1012,10 @@
 		equipped_talk_thing.talk_into(src, messages, secure_headset_mode, src.real_name, lang_id)
 
 	// AI phone fuckery
-		
+	if(isAI(src))
+		var/mob/living/silicon/ai/ai = src
+		if(ai.phone.answered)
+			ai.phone.handset.talk_into(src, messages, secure_headset_mode, src.real_name, lang_id)
 
 	switch (message_mode)
 		if ("headset", "secure headset", "right hand", "left hand")

@@ -124,7 +124,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/obj/item/device/radio/radio2 = null
 	var/obj/item/device/radio/radio3 = null
 	var/obj/item/device/pda2/internal_pda = null
-	var/obj/item/machinery/phone/phone = null
+	var/obj/machinery/phone/phone = null
 	var/obj/item/organ/brain/brain = null
 	var/moustache_mode = 0
 	var/status_message = null
@@ -318,6 +318,7 @@ or don't if it uses a custom topopen overlay
 	src.radio2 = new /obj/item/device/radio(src)
 	src.radio3 = new /obj/item/device/radio/headset/command/ai(src)
 	src.internal_pda = new /obj/item/device/pda2/ai(src)
+	src.phone = new /obj/machinery/phone(src)
 
 	src.tracker = new /datum/ai_camera_tracker(src)
 	src.coreSkin = skinToApply
@@ -364,6 +365,8 @@ or don't if it uses a custom topopen overlay
 		src.radio3.broadcasting = FALSE
 		src.internal_pda.name = "AI's Internal PDA Unit"
 		src.internal_pda.owner = "AI"
+		src.phone.name = "AI Internal Telephone"
+		src.phone.phone_id = "AI"
 		if (src.brain && src.key)
 			src.brain.name = "neural net processor"
 			src.brain.owner = src.mind
@@ -566,6 +569,7 @@ or don't if it uses a custom topopen overlay
 				src.verbs += /mob/living/silicon/ai/proc/toggle_alerts_verb
 				src.verbs += /mob/living/silicon/ai/verb/access_internal_radio
 				src.verbs += /mob/living/silicon/ai/verb/access_internal_pda
+				src.verbs += /mob/living/silicon/ai/verb/access_internal_phone
 				src.verbs += /mob/living/silicon/ai/proc/ai_colorchange
 				src.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
 				src.verbs += /mob/living/silicon/ai/proc/view_messageLog
@@ -1775,6 +1779,10 @@ or don't if it uses a custom topopen overlay
 	if (target_shell.mind || target_shell.dependent)
 		boutput(src, SPAN_ALERT(SPAN_BOLD("That shell is already occupied!")))
 		return
+
+	if(src.phone.answered)
+		phone.hang_up()
+
 	target_shell.mainframe = src
 	target_shell.dependent = 1
 	src.deployed_shell = target_shell
@@ -2031,8 +2039,22 @@ or don't if it uses a custom topopen overlay
 	var/mob/message_mob = src.get_message_mob()
 	if (!src || !message_mob.client || isdead(src))
 		return
-	
-	// guh
+
+	var/phone_action = tgui_alert(message_mob, "What do you want to do?", "Internal Telephone", list("Pick up", "Hang up", src.phone.connected ? "Disconnect" : "Reconnect"))
+
+	switch(phone_action)
+		if("Pick up")
+			if(src.phone.answered)
+				boutput(src, "The phone is already picked up!")
+			src.phone.attack_hand(src.deployed_to_eyecam ? src.eyecam : src)
+		if("Hang up")
+			src.phone.hang_up()
+		if("Disconnect")
+			src.phone.set_connected(FALSE)
+			src.textToPlayer("You disconnect your internal telephone.")
+		if("Reconnect")
+			src.phone.set_connected(TRUE)
+			src.textToPlayer("You reconnect your internal telephone.")
 
 /mob/living/silicon/ai/verb/open_map()
 	set name = "Open station map"
@@ -2542,6 +2564,7 @@ proc/get_mobs_trackable_by_AI()
 					src.real_name = newname
 					if (src.deployed_to_eyecam)
 						src.eyecam.real_name = newname
+					src.phone.phone_id = "AI - [src.real_name]"
 					ON_COOLDOWN(src, "ai_self_rename", src.rename_cooldown)
 					break
 				else

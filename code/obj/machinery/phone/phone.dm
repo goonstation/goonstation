@@ -42,7 +42,7 @@ TYPEINFO(/obj/machinery/phone)
 			if(istype(location,/area/station/security))
 				stripe_color = "#ff0000"
 				phone_category = "security"
-			else if(istype(location,/area/station/bridge))
+			else if(istype(location,/area/station/bridge) || isAI(src.loc))
 				stripe_color = "#00ff00"
 				phone_category = "bridge"
 			else if(istype(location, /area/station/engine) || istype(location, /area/station/quartermaster) || istype(location, /area/station/mining))
@@ -116,11 +116,11 @@ TYPEINFO(/obj/machinery/phone)
 			if(src.connected)
 				if(user)
 					boutput(user,"You cut the phone line leading to the phone.")
-				src.connected = FALSE
+				set_connected(FALSE)
 			else
 				if(user)
 					boutput(user,"You repair the line leading to the phone.")
-				src.connected = TRUE
+				set_connected(TRUE)
 			return
 		if(ispulsingtool(P))
 			if(src.labelling)
@@ -158,9 +158,6 @@ TYPEINFO(/obj/machinery/phone)
 			src.explode()
 			return
 
-		src.handset = new /obj/item/phone_handset(src,user)
-		src.AddComponent(/datum/component/cord, src.handset, base_offset_x = -4, base_offset_y = -1)
-
 		if(isAI(user)) // AI phone fuckery
 			src.handset.loc = user
 		else
@@ -170,7 +167,8 @@ TYPEINFO(/obj/machinery/phone)
 
 		src.icon_state = "[answered_icon]"
 		UpdateIcon()
-		playsound(user, 'sound/machines/phones/pick_up.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/phones/pick_up.ogg', 50, FALSE)
+		ai_play_sound(src.loc, list('sound/machines/phones/pick_up.ogg', 50, FALSE))
 
 		if(!src.ringing) // we are making an outgoing call
 			if(src.connected)
@@ -208,6 +206,7 @@ TYPEINFO(/obj/machinery/phone)
 	process()
 		if(src.emagged)
 			playsound(src.loc,'sound/machines/phones/ring_incoming.ogg' ,100,1)
+			ai_play_sound(src.loc, list('sound/machines/phones/ring_incoming.ogg' ,100,1)) // how the fuck could this even happen
 			if(!src.answered)
 				src.obj_speak("Call from [src.caller_id_message].")
 				src.icon_state = "[ringing_icon]"
@@ -227,9 +226,11 @@ TYPEINFO(/obj/machinery/phone)
 					src.last_ring = 0
 					if(src.handset && src.handset.get_holder() && GET_DIST(src.handset,src.handset.get_holder()) < 1)
 						src.handset.get_holder().playsound_local(src.handset.get_holder(),'sound/machines/phones/ring_outgoing.ogg' ,40,0)
+						ai_play_sound(src.loc, list('sound/machines/phones/ring_outgoing.ogg' ,40,0))
 			else
 				if(src.last_ring >= 2)
 					playsound(src.loc,'sound/machines/phones/ring_incoming.ogg' ,40,0)
+					ai_play_sound(src.loc, list('sound/machines/phones/ring_incoming.ogg' ,40,0))
 					src.icon_state = "[ringing_icon]"
 					UpdateIcon()
 					src.last_ring = 0
@@ -283,7 +284,8 @@ TYPEINFO(/obj/machinery/phone)
 				if(src.dialing == TRUE || src.linked)
 					return
 				. = TRUE
-				src.add_fingerprint(usr)
+				if(!isAI(usr))
+					src.add_fingerprint(usr)
 				var/id = params["target"]
 				for_by_tcl(P, /obj/machinery/phone)
 					if(P.phone_id == id)
@@ -291,9 +293,38 @@ TYPEINFO(/obj/machinery/phone)
 						return
 				boutput(usr, SPAN_ALERT("Unable to connect!"))
 
+	ui_close(mob/user) // Ease of use and reducing button bloat for AI phone
+		if(isAI(user))
+			hang_up()
+
 	update_icon()
 		. = ..()
 		src.UpdateOverlays(src.SafeGetOverlayImage("stripe", 'icons/obj/machines/phones.dmi',"[src.icon_state]-stripe"), "stripe")
+
+	proc/set_connected(boolean)
+		if(boolean)
+			src.connected = TRUE
+		else
+			src.connected = FALSE
+			if(src.linked) // Other phone needs updating
+				if(src.answered && src.handset && src.handset.get_holder() && GET_DIST(src.handset, src.handset.get_holder()) < 1)
+					src.handset.get_holder().playsound_local(src.handset.get_holder(), 'sound/machines/phones/remote_hangup.ogg', 50, 0)
+					ai_play_sound(src.loc, list('sound/machines/phones/remote_hangup.ogg', 50, 0))
+				if(!src.linked.answered) // nobody picked up. Go back to not-ringing state
+					src.linked.icon_state = "[src.linked.phone_icon]"
+					src.linked.UpdateIcon()
+				else if(src.linked.handset && src.linked.handset.get_holder() && GET_DIST(src.linked.handset,src.linked.handset.get_holder()) < 1)
+					src.linked.handset.get_holder().playsound_local(src.linked.handset.get_holder(),'sound/machines/phones/remote_hangup.ogg',50,0)
+				src.linked.ringing = FALSE
+				src.linked.linked = null
+				src.linked = null
+				src.ringing = FALSE
+
+	proc/ai_play_sound(mob/M, list/sound_args)
+		if(!isAI(M))
+			return
+		var/mob/living/silicon/ai/borgo = M
+		borgo.soundToPlayer(arglist(sound_args))
 
 	proc/explode()
 		src.blowthefuckup(strength = 2.5, delete = TRUE)
@@ -317,6 +348,7 @@ TYPEINFO(/obj/machinery/phone)
 		tgui_process.close_uis(src)
 		UpdateIcon()
 		playsound(src.loc,'sound/machines/phones/hang_up.ogg' ,50,0)
+		ai_play_sound(src.loc, list('sound/machines/phones/hang_up.ogg' ,50,0))
 
 	// This makes phones do that thing that phones do
 	proc/call_other(var/obj/machinery/phone/target)
@@ -327,12 +359,14 @@ TYPEINFO(/obj/machinery/phone)
 		tgui_process?.update_uis(src)
 		if(src.handset.get_holder() && GET_DIST(src.handset,src.handset.get_holder()) < 1)
 			src.handset.get_holder()?.playsound_local(src.handset.get_holder(),'sound/machines/phones/dial.ogg' ,50,0)
+			ai_play_sound(src.loc, list('sound/machines/phones/dial.ogg' ,50,0))
 		src.last_called = target.unlisted ? "Undisclosed" : "[target.phone_id]"
 		target.caller_id_message = "<span style='color: [src.stripe_color];'>[src.phone_id]</span>"
 		SPAWN(4 SECONDS)
 			// Is it busy?
 			if(target.answered || target.linked || !target.connected || !src.answered)
 				playsound(src.loc,'sound/machines/phones/phone_busy.ogg' ,50,0)
+				ai_play_sound(src.loc, list('sound/machines/phones/phone_busy.ogg' ,50,0))
 				src.dialing = FALSE
 				return
 
@@ -354,7 +388,6 @@ TYPEINFO(/obj/machinery/phone)
 		user.TakeDamage("head", 150, 0)
 		return TRUE
 
-// Item generated when someone picks up a phone // NO ITS THE SAME HANDSET EVERY TIME NOW WHY
 /obj/item/phone_handset
 
 	name = "phone handset"
@@ -397,7 +430,7 @@ TYPEINFO(/obj/machinery/phone)
 		if(!src.parent)
 			qdel(src)
 			return
-		if(src.parent.answered && BOUNDS_DIST(src, src.parent) > 0)
+		if(!isAI(src.get_holder()) && src.parent.answered && BOUNDS_DIST(src, src.parent) > 0)
 			if(src.get_holder())
 				boutput(src.get_holder(),SPAN_ALERT("The phone cord reaches it limit and the handset is yanked back to its base!"))
 			src.parent.hang_up()

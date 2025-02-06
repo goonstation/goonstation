@@ -441,6 +441,14 @@
 		if(mainframe)
 			mainframe.access_internal_radio()
 
+	verb/access_internal_phone()
+		set category = "AI Commands"
+		set name = "Access Internal Phone"
+		set desc = "Access your internal landline telephone."
+
+		if(mainframe)
+			mainframe.access_internal_phone()
+
 	verb/ai_camera_list()
 		set category = "AI Commands"
 		set name = "Show Camera List"
