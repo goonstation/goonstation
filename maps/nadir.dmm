@@ -7538,6 +7538,8 @@
 /area/station/science/artifact)
 "duP" = (
 /obj/table/reinforced/auto,
+/obj/item/storage/box/panic_buttons,
+/obj/item/device/panicbutton,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "duZ" = (

@@ -88,100 +88,108 @@
 		light.set_brightness(0.5)
 		light.set_color(0.4, 0.8, 1)
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "NanoCrucible")
+			ui.open()
+
+	ui_data(mob/user)
+		. = list(
+			"first_part" = first_part?.name,
+			"first_part_img" = first_part ? icon2base64(getFlatIcon(first_part)) : null,
+			"second_part" = second_part?.name,
+			"second_part_img" = second_part ? icon2base64(getFlatIcon(second_part)) : null,
+			"result_part" = updateResultName()
+		)
+
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return
+		. = TRUE
+		var/mob/user = usr
+		switch (action)
+			if ("load_first_part")
+				if (!src.first_part || user.equipped())
+					var/obj/possible_first_part = user.equipped()
+					if (possible_first_part)
+						src.Attackby(possible_first_part, user, list(action))
+				else
+					src.first_part.set_loc(src.loc)
+					user.put_in_hand_or_drop(src.first_part)
+					src.first_part = null
+			if ("load_second_part")
+				if (!src.second_part || user.equipped())
+					var/obj/possible_second_part = user.equipped()
+					if (possible_second_part)
+						src.Attackby(possible_second_part, user, list(action))
+				else
+					src.second_part.set_loc(src.loc)
+					user.put_in_hand_or_drop(src.second_part)
+					src.second_part = null
+			if ("switch_parts")
+				var/obj/part1 = src.first_part
+				var/obj/part2 = src.second_part
+				src.first_part = part2
+				src.second_part = part1
+			if ("eject_result")
+				var/obj/result = src.eject_result()
+				if (result)
+					user.put_in_hand_or_drop(result)
+
 	attack_hand(mob/user)
-		var/list/html = list("")
-		html += "<div style='margin: auto;text-align:center'>[first_part ? "<a href='?src=\ref[src];remove=\ref[first_part]'>[first_part.name]</a>" : "EMPTY"] <i class='icon-plus'></i> [second_part ? "<a href='?src=\ref[src];remove=\ref[second_part]'>[second_part.name]</a>" : "EMPTY"]   <i class='icon-double-angle-right'></i> [resultName]</div><br>"
-		html += "<div style='margin: auto;text-align:center'><a href='?src=\ref[src];activate=1'><i class='icon-check-sign icon-large'></i></a></div><br><br>"
+		src.ui_interact(user)
 
-		for(var/obj/item/I in src)
-			if(isnull(I.material))
-				stack_trace("Null material item [I] [I.type] in nano-crucible")
-				continue
-			if(!I.amount) continue
-			if(first_part == I) continue
-			if(second_part == I) continue
-			html += "<div style='margin: auto;text-align:center'><a href='?src=\ref[src];select_l=\ref[I]'><i class='icon-arrow-left'></i></a> <a href='?src=\ref[src];eject=\ref[I]'>[I.name]</a> <a href='?src=\ref[src];select_r=\ref[I]'><i class='icon-arrow-right'></i></a></div><br>"
-
-		user.Browse(html.Join(), "window=crucible;size=500x650;title=Nano-crucible;fade_in=0", 1)
-		return
-
-	Topic(href, href_list)
-		if(BOUNDS_DIST(usr, src) > 0 || usr.z != src.z) return
-
-		if(href_list["select_l"])
-			var/obj/item/L = locate(href_list["select_l"]) in src
-			if(!L) return
-			first_part = L
-		else if(href_list["select_r"])
-			var/obj/item/R = locate(href_list["select_r"]) in src
-			if(!R) return
-			second_part = R
-
-		else if(href_list["activate"])
-			if(first_part && second_part)
-				var/obj/item/FP = first_part
-				var/obj/item/SP = second_part
-				var/maxamt = min(FP.amount, SP.amount)
-				var/amt = input(usr, "How many? ([maxamt] max)", "Select amount", maxamt) as null|num
-				amt = max(0, amt)
-				if(amt && isnum_safe(amt) && FP && FP.amount >= amt && SP && SP.amount >= amt && (FP in src) && (SP in src))
-					flick("smelter1",src)
-					var/datum/material/merged = getFusedMaterial(FP.material, SP.material)
-					var/datum/material_recipe/RE = matchesMaterialRecipe(merged)
-					var/newtype = getProcessedMaterialForm(merged)
-					var/apply_material = 1
-
-					if(RE)
-						if(!RE.result_id && !RE.result_item)
-							RE.apply_to(merged)
-						else if(RE.result_item)
-							newtype = RE.result_item
-							apply_material = 0
-						else if(RE.result_id)
-							merged = getMaterial(RE.result_id)
-
-					var/obj/item/piece = new newtype(src)
-
-					if(apply_material)
-						piece.setMaterial(merged)
-
-					piece.change_stack_amount(amt - piece.amount)
-					FP.change_stack_amount(-amt)
-					SP.change_stack_amount(-amt)
-					if(istype(piece, /obj/item/material_piece))
-						addMaterial(piece, usr)
-					else
-						piece.set_loc(get_turf(src))
-					RE?.apply_to_obj(piece)
-					first_part = null
-					second_part = null
-					boutput(usr, SPAN_NOTICE("You make [piece]."))
-
-		else if(href_list["eject"])
-			var/obj/item/L = locate(href_list["eject"]) in src
-			if(!(L in src)) return
-			if(first_part == L)
+	proc/eject_result()
+		if(!first_part || !second_part)
+			return
+		var/obj/item/FP = first_part
+		var/obj/item/SP = second_part
+		var/maxamt = min(FP.amount, SP.amount)
+		var/amt = input(usr, "How many? ([maxamt] max)", "Select amount", maxamt) as null|num
+		amt = max(0, amt)
+		if(amt && isnum_safe(amt) && FP && FP.amount >= amt && SP && SP.amount >= amt && (FP in src) && (SP in src))
+			flick("smelter1",src)
+			var/datum/material/merged = getFusedMaterial(FP.material, SP.material)
+			var/datum/material_recipe/RE = matchesMaterialRecipe(merged)
+			var/newtype = getProcessedMaterialForm(merged)
+			var/apply_material = 1
+			if(RE)
+				if(!RE.result_id && !RE.result_item)
+					RE.apply_to(merged)
+				else if(RE.result_item)
+					newtype = RE.result_item
+					apply_material = 0
+				else if(RE.result_id)
+					merged = getMaterial(RE.result_id)
+			var/obj/item/piece = new newtype(src)
+			if(apply_material)
+				piece.setMaterial(merged)
+			piece.change_stack_amount(amt - piece.amount)
+			FP.change_stack_amount(-amt)
+			SP.change_stack_amount(-amt)
+			if(istype(piece, /obj/item/material_piece))
+				addMaterial(piece, usr, "eject_result")
+			else
+				piece.set_loc(get_turf(src))
+			RE?.apply_to_obj(piece)
+			if (QDELETED(first_part))
 				first_part = null
-			else if (second_part == L)
+			if (QDELETED(second_part))
 				second_part = null
-			L.set_loc(src.loc)
-		else if(href_list["remove"])
-			var/obj/item/L = locate(href_list["remove"]) in src
-			if(first_part == L)
-				first_part = null
-			else if (second_part == L)
-				second_part = null
+			boutput(usr, SPAN_NOTICE("You make [piece]."))
 
-		updateResultName()
-		src.Attackhand(usr)
+			return piece
 
 	proc/updateResultName()
 		if(first_part && second_part)
 			resultName = findRecipeName(first_part, second_part)
 		else
 			resultName = "???"
+		return resultName
 
-	proc/addMaterial(var/obj/item/W, var/mob/user)
+	proc/addMaterial(var/obj/item/W, var/mob/user, params)
 		for(var/obj/item/A in src)
 			if(A == W|| !A.amount) continue
 			if(A.material)
@@ -198,9 +206,24 @@
 		if(W == user.equipped())
 			user.drop_item()
 		W.set_loc(src)
-		return
+		if ("eject_result" in params)
+			return
+		if ("load_first_part" in params)
+			if (!src.first_part)
+				src.first_part = W
+			else
+				src.second_part = W
+		else if ("load_second_part" in params)
+			if (!src.second_part)
+				src.second_part = W
+			else
+				src.first_part = W
+		else if (!src.first_part)
+			src.first_part = W
+		else if (!src.second_part)
+			src.second_part = W
 
-	attackby(var/obj/item/W , mob/user as mob)
+	attackby(var/obj/item/W , mob/user as mob, params)
 		if(isExploitableObject(W))
 			boutput(user, SPAN_ALERT("\the [src] grumps at you and refuses to use [W]."))
 			return
@@ -212,11 +235,10 @@
 
 			user.visible_message(SPAN_NOTICE("[user] puts \the [W] in \the [src]."))
 			if( istype(W, /obj/item/material_piece) || istype(W, /obj/item/raw_material) )
-				addMaterial(W, user)
+				addMaterial(W, user, params)
 			else
 				boutput(user, SPAN_ALERT("The crucible can only use raw materials."))
 				return
-		return
 
 	custom_suicide = 1
 	suicide(var/mob/user)

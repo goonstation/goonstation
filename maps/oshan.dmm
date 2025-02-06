@@ -25854,6 +25854,9 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bQL" = (
+/obj/item/storage/box/panic_buttons{
+	pixel_x = 6
+	},
 /obj/item/clothing/head/helmet/camera/security{
 	pixel_y = 10
 	},
@@ -25865,6 +25868,9 @@
 /obj/table/reinforced/auto,
 /obj/item/device/prisoner_scanner{
 	pixel_x = -11
+	},
+/obj/item/device/panicbutton{
+	pixel_x = 6
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
