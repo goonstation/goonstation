@@ -22486,6 +22486,7 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 1
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
 "gIU" = (
@@ -25492,6 +25493,19 @@
 	dir = 4
 	},
 /area/station/crew_quarters/hor)
+"hDI" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
 "hDK" = (
 /obj/item/storage/toolbox/electrical{
 	pixel_y = -1
@@ -34152,6 +34166,16 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/maintenance)
+"knJ" = (
+/obj/machinery/reticulator,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
 "knP" = (
 /obj/railing/red,
 /obj/cable{
@@ -120339,7 +120363,7 @@ aGD
 dkB
 fwI
 xJu
-tbu
+knJ
 nDE
 hKs
 rOT
@@ -120641,7 +120665,7 @@ aGD
 pDt
 nwP
 bQT
-vcE
+hDI
 ceb
 srn
 rOT

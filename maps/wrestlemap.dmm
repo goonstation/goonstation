@@ -15230,7 +15230,10 @@
 	},
 /area/station/science/lobby)
 "gGQ" = (
-/obj/storage/crate,
+/obj/machinery/reticulator,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/caution/north,
 /area/station/science/artifact)
 "gHp" = (
@@ -23861,6 +23864,9 @@
 "ktO" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/caution/north,
 /area/station/science/artifact)
@@ -54340,6 +54346,7 @@
 	},
 /area/station/engine/engineering/breakroom)
 "xOw" = (
+/obj/storage/crate,
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "xOy" = (

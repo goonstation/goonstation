@@ -28234,6 +28234,15 @@
 /obj/item/camera,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"jyx" = (
+/obj/machinery/reticulator,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/station/science/artifact)
 "jyN" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -32615,6 +32624,17 @@
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/magnet)
+"mea" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/station/science/artifact)
 "mei" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -129110,7 +129130,7 @@ dXX
 uoo
 tma
 xnK
-fkY
+mea
 viQ
 vzb
 dyJ
@@ -129412,7 +129432,7 @@ aiU
 dcj
 tma
 nAS
-tma
+jyx
 fYd
 mDh
 rYT

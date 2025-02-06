@@ -19802,6 +19802,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/artifact)
 "qXi" = (
@@ -22129,6 +22132,10 @@
 	name = "artifact ejection chute switch";
 	pixel_y = -24
 	},
+/obj/machinery/networked/test_apparatus/heater,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 10
 	},
@@ -22369,8 +22376,6 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "uGg" = (
-/obj/machinery/networked/test_apparatus/heater,
-/obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -22379,6 +22384,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/machinery/reticulator,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},

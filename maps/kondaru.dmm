@@ -22112,11 +22112,11 @@
 	},
 /area/station/hangar/science)
 "bMD" = (
-/obj/landmark/spawner/artifact,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/reticulator,
 /turf/simulated/floor/darkblue/checker,
 /area/station/science/artifact)
 "bME" = (
@@ -22673,6 +22673,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/caution/westeast,
 /area/station/science/artifact)
 "bOk" = (

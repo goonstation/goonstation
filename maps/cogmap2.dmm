@@ -49921,6 +49921,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/reticulator,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},

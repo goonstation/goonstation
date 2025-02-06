@@ -30516,6 +30516,10 @@
 /area/station/science/artifact)
 "chQ" = (
 /obj/machinery/light_switch/east,
+/obj/machinery/reticulator,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "chR" = (
@@ -43263,6 +43267,15 @@
 	dir = 10
 	},
 /area/space)
+"hsk" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/white,
+/area/station/science/artifact)
 "hsl" = (
 /obj/storage/secure/closet/brig_automatic/genpop_n,
 /obj/machinery/light{
@@ -46873,6 +46886,12 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/science/storage)
+"kgL" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/white,
+/area/station/science/artifact)
 "khd" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/decal/stripe_caution,
@@ -94468,8 +94487,8 @@ ccV
 ceg
 csd
 cgI
-cgI
-cfq
+kgL
+hsk
 ckv
 xBH
 ccX

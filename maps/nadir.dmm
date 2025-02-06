@@ -38101,6 +38101,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/pasiphae/sys)
+"pVT" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/science/artifact)
 "pVX" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
 	dir = 4
@@ -45462,6 +45468,9 @@
 	dir = 8
 	},
 /obj/landmark/start/job/scientist,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "tmC" = (
@@ -48464,6 +48473,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
 "uBU" = (
+/obj/machinery/reticulator,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -98361,7 +98374,7 @@ mjv
 xjY
 tGN
 xjY
-xjY
+pVT
 fEJ
 fEJ
 cNY
