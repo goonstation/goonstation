@@ -1010,6 +1010,10 @@
 	var/obj/item/equipped_talk_thing = src.equipped()
 	if(equipped_talk_thing && equipped_talk_thing.flags & TALK_INTO_HAND && !message_mode)
 		equipped_talk_thing.talk_into(src, messages, secure_headset_mode, src.real_name, lang_id)
+
+	// AI phone fuckery
+		
+
 	switch (message_mode)
 		if ("headset", "secure headset", "right hand", "left hand")
 			talk_into_equipment(message_mode, messages, secure_headset_mode, lang_id)

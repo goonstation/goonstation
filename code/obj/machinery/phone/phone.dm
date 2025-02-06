@@ -157,7 +157,12 @@ TYPEINFO(/obj/machinery/phone)
 
 		src.handset = new /obj/item/phone_handset(src,user)
 		src.AddComponent(/datum/component/cord, src.handset, base_offset_x = -4, base_offset_y = -1)
-		user.put_in_hand_or_drop(src.handset)
+		
+		if(isAI(user)) // AI phone fuckery
+			src.handset.loc = user
+		else
+			user.put_in_hand_or_drop(src.handset)
+
 		src.answered = TRUE
 
 		src.icon_state = "[answered_icon]"

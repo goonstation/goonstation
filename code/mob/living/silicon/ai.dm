@@ -124,6 +124,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/obj/item/device/radio/radio2 = null
 	var/obj/item/device/radio/radio3 = null
 	var/obj/item/device/pda2/internal_pda = null
+	var/obj/item/machinery/phone/phone = null
 	var/obj/item/organ/brain/brain = null
 	var/moustache_mode = 0
 	var/status_message = null
@@ -2021,6 +2022,17 @@ or don't if it uses a custom topopen overlay
 		which.AttackSelf(message_mob)
 	else
 		boutput(usr, SPAN_ALERT("<b>Radio not found!</b>"))
+
+/mob/living/silicon/ai/verb/access_internal_phone()
+	set category = "AI Commands"
+	set name = "Access Internal Phone"
+	set desc = "Access your internal landline telephone."
+
+	var/mob/message_mob = src.get_message_mob()
+	if (!src || !message_mob.client || isdead(src))
+		return
+	
+	// guh
 
 /mob/living/silicon/ai/verb/open_map()
 	set name = "Open station map"
