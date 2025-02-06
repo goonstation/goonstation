@@ -78,6 +78,9 @@ TYPEINFO(/obj/machinery/phone)
 				temp_name = "[temp_name] [name_counter]"
 			src.phone_id = temp_name
 
+		src.handset = new /obj/item/phone_handset(src)
+		src.AddComponent(/datum/component/cord, src.handset, base_offset_x = -4, base_offset_y = -1)
+
 		RegisterSignal(src, COMSIG_CORD_RETRACT, PROC_REF(hang_up))
 
 		START_TRACKING
@@ -157,7 +160,7 @@ TYPEINFO(/obj/machinery/phone)
 
 		src.handset = new /obj/item/phone_handset(src,user)
 		src.AddComponent(/datum/component/cord, src.handset, base_offset_x = -4, base_offset_y = -1)
-		
+
 		if(isAI(user)) // AI phone fuckery
 			src.handset.loc = user
 		else
@@ -309,8 +312,7 @@ TYPEINFO(/obj/machinery/phone)
 		src.RemoveComponentsOfType(/datum/component/cord)
 		src.ringing = FALSE
 		src.handset?.force_drop(sever=TRUE)
-		qdel(src.handset)
-		src.handset = null
+		src.handset.loc = src
 		src.icon_state = "[phone_icon]"
 		tgui_process.close_uis(src)
 		UpdateIcon()
@@ -352,7 +354,7 @@ TYPEINFO(/obj/machinery/phone)
 		user.TakeDamage("head", 150, 0)
 		return TRUE
 
-// Item generated when someone picks up a phone
+// Item generated when someone picks up a phone // NO ITS THE SAME HANDSET EVERY TIME NOW WHY
 /obj/item/phone_handset
 
 	name = "phone handset"
@@ -363,7 +365,7 @@ TYPEINFO(/obj/machinery/phone)
 	w_class = W_CLASS_TINY
 	var/icon/handset_icon = null
 
-	New(var/obj/machinery/phone/parent_phone, var/mob/living/picker_upper)
+	New(var/obj/machinery/phone/parent_phone)
 		if(!parent_phone)
 			return
 		..()
