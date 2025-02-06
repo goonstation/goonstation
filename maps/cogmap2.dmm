@@ -56595,10 +56595,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
-"eSe" = (
-/obj/storage/cart/mechcart/tools,
-/turf/space,
-/area/space)
 "eSC" = (
 /obj/submachine/laundry_machine,
 /turf/simulated/floor/sanitary,
@@ -80299,7 +80295,7 @@ aaa
 aaa
 aaa
 aaa
-eSe
+aaa
 aaa
 aaa
 aaa
