@@ -478,6 +478,8 @@
 /obj/item/artifact_resonator
 	name = "Artifact resonator"
 	desc = "A useful device to assist in activating artifacts. It has the ability to detect disguised origin artifacts, as well as possible activation methods."
+	icon = 'icons/obj/artifacts/reticulator.dmi'
+	icon_state = "resonator"
 	var/static/list/trigger_names = list()
 	var/static/list/trigger_names_assoc = list()
 	var/list/scanned_artifacts = list()
@@ -521,6 +523,8 @@
 /obj/item/artifact_tuner
 	name = "Artifact tuner"
 	desc = "A device loaded with a one-time use charge that will randomly alter the faults of an activated artifact."
+	icon = 'icons/obj/artifacts/reticulator.dmi'
+	icon_state = "tuner"
 	var/used = FALSE
 
 	afterattack(atom/target, mob/user, reach, params)
@@ -548,6 +552,7 @@
 
 		src.name = "Used artifact tuner"
 		src.desc = "A used artifact tuner. It has no more use and can be thrown away."
+		src.icon_state = "tuner-used"
 		src.used = TRUE
 
 #undef ARTRET_RESONATOR
