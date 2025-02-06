@@ -167,6 +167,8 @@
 				src.stored_item = dropped
 				dropped.set_loc(src)
 			return
+		if (!dropped.artifact.can_reticulate_when_active)
+			return
 		var/list/options = list()
 		if (!src.stored_artifact && dropped.artifact)
 			options += "Break down"

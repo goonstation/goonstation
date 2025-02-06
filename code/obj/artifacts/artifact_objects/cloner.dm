@@ -24,6 +24,7 @@
 	react_xray = list(15,90,90,11,"HOLLOW")
 	validtypes = list("wizard","eldritch")
 	touch_descriptors = list("You seem to have a little difficulty taking your hand off its surface.")
+	can_reticulate_when_active = FALSE
 	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 	var/mob/living/carbon/human/clone = null
 	var/imprison_time = 0

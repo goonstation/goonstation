@@ -115,6 +115,8 @@ ABSTRACT_TYPE(/datum/artifact/)
 
 	/// been modified in some way by the reticulator
 	var/reticulated = FALSE
+	/// if the artifact can be loaded into the reticulator when active
+	var/can_reticulate_when_active = TRUE
 	/// the shard that is rewarded for reticulating this artifact
 	var/shard_reward = ARTIFACT_SHARD_ESSENCE
 	/// what this artifact combines with
