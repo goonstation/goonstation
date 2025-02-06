@@ -1757,13 +1757,14 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 
 /datum/supply_packs/complex/artlab_kit
 	name = "Artifact Research Kit"
-	desc = "Frames: 5x Data Terminal, 1x Pitcher, 1x Impact pad, 1x Heater pad, 1x Electric box, 1x X-Ray machine"
+	desc = "Frames: 5x Data Terminal, 1x Pitcher, 1x Impact pad, 1x Heater pad, 1x Electric box, 1x X-Ray machine, 1x Reticulator"
 	category = "Research Department"
 	frames = list(/obj/machinery/networked/test_apparatus/pitching_machine,
 					/obj/machinery/networked/test_apparatus/impact_pad,
 					/obj/machinery/networked/test_apparatus/electrobox,
 					/obj/machinery/networked/test_apparatus/heater,
 					/obj/machinery/networked/test_apparatus/xraymachine,
+					/obj/machinery/reticulator
 					/obj/machinery/power/data_terminal = 5)
 	cost = PAY_DOCTORATE*10
 	containertype = /obj/storage/crate
