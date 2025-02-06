@@ -1764,7 +1764,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/machinery/networked/test_apparatus/electrobox,
 					/obj/machinery/networked/test_apparatus/heater,
 					/obj/machinery/networked/test_apparatus/xraymachine,
-					/obj/machinery/reticulator
+					/obj/machinery/reticulator,
 					/obj/machinery/power/data_terminal = 5)
 	cost = PAY_DOCTORATE*10
 	containertype = /obj/storage/crate
