@@ -17,8 +17,8 @@
 /obj/machinery/reticulator
 	name = "Reticulator"
 	desc = "A fancy machine for doing fancy artifact things."
-	icon = 'icons/obj/networked.dmi'
-	icon_state = "heptemitter1"
+	icon = 'icons/obj/artifacts/reticulator.dmi'
+	icon_state = "reticulator"
 	anchored = ANCHORED
 	density = TRUE
 	var/essence_shards = 0
