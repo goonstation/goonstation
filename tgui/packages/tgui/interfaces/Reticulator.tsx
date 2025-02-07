@@ -19,40 +19,40 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 interface ReticulatorData {
-  essenceShards;
-  powerShards;
-  spacetimeShards;
-  fusionShards;
-  omniShards;
-  storedArtifact;
-  storedItem;
-  canBreakdownArtifact;
-  canBreakdownFusion;
-  canCreateResonator;
-  canCreateTuner;
-  canCreateArtifact;
-  canCombineArtifacts;
-  canImbueLight;
-  canBreakdownForMats;
-  canModifyMaterial;
-  canUpgradeStorage;
-  canIncreaseReagents;
-  canIncreaseCellCapacity;
-  canUpgradeMiningPower;
-  breakdownTip;
-  breakdownFusionTip;
-  resonatorTip;
-  tunerTip;
-  createArtTip;
-  combineArtsTip;
-  imbueLightTip;
-  breakdownMatsTip;
-  modifyMaterialTip;
-  upgradeStorageTip;
-  increaseReagentsTip;
-  increaseCellCapTip;
-  upgradeMiningPowerTip;
-  reticulatedArtifacts;
+  essenceShards: number;
+  powerShards: number;
+  spacetimeShards: number;
+  fusionShards: number;
+  omniShards: number;
+  storedArtifact: string;
+  storedItem: string;
+  canBreakdownArtifact: boolean;
+  canBreakdownFusion: boolean;
+  canCreateResonator: boolean;
+  canCreateTuner: boolean;
+  canCreateArtifact: boolean;
+  canCombineArtifacts: boolean;
+  canImbueLight: boolean;
+  canBreakdownForMats: boolean;
+  canModifyMaterial: boolean;
+  canUpgradeStorage: boolean;
+  canIncreaseReagents: boolean;
+  canIncreaseCellCapacity: boolean;
+  canUpgradeMiningPower: boolean;
+  breakdownTip: string;
+  breakdownFusionTip: string;
+  resonatorTip: string;
+  tunerTip: string;
+  createArtTip: string;
+  combineArtsTip: string;
+  imbueLightTip: string;
+  breakdownMatsTip: string;
+  modifyMaterialTip: string;
+  upgradeStorageTip: string;
+  increaseReagentsTip: string;
+  increaseCellCapTip: string;
+  upgradeMiningPowerTip: string;
+  reticulatedArtifacts: string[];
 }
 
 export const Reticulator = () => {
@@ -116,12 +116,12 @@ export const Reticulator = () => {
                   </LabeledList.Item>
                   <LabeledList.Item label="Omni">{omniShards}</LabeledList.Item>
                   <LabeledList.Item label="Shard info">
-                    <Button selected onClick={() => act('view_shard_database')}>
+                    <Button onClick={() => act('view_shard_database')}>
                       Info
                     </Button>
                   </LabeledList.Item>
                   <LabeledList.Item label="Combinations">
-                    <Button selected onClick={() => act('view_combine_database')}>
+                    <Button onClick={() => act('view_combine_database')}>
                       Info
                     </Button>
                   </LabeledList.Item>
@@ -134,7 +134,6 @@ export const Reticulator = () => {
                     buttons={
                       <Button
                         disabled={!storedArtifact}
-                        selected={!!storedArtifact}
                         onClick={() => act('eject_art')}
                       >
                         Eject
@@ -148,7 +147,6 @@ export const Reticulator = () => {
                     buttons={
                       <Button
                         disabled={!storedItem}
-                        selected={!!storedItem}
                         onClick={() => act('eject_item')}
                       >
                         Eject
@@ -189,7 +187,6 @@ export const Reticulator = () => {
                     <Flex.Item>
                       <Button
                         disabled={!canBreakdownArtifact}
-                        selected={canBreakdownArtifact}
                         onClick={() => act('breakdown_artifact')}
                         tooltip={breakdownTip}
                       >
@@ -199,7 +196,6 @@ export const Reticulator = () => {
                     <Flex.Item>
                       <Button
                         disabled={!canBreakdownFusion}
-                        selected={canBreakdownFusion}
                         onClick={() => act('breakdown_fusion')}
                         tooltip={breakdownFusionTip}
                       >
@@ -215,7 +211,6 @@ export const Reticulator = () => {
                     <Flex.Item>
                       <Button
                         disabled={!canCreateResonator}
-                        selected={canCreateResonator}
                         onClick={() => act('create_resonator')}
                         tooltip={resonatorTip}
                       >
@@ -225,7 +220,6 @@ export const Reticulator = () => {
                     <Flex.Item>
                       <Button
                         disabled={!canCreateTuner}
-                        selected={canCreateTuner}
                         onClick={() => act('create_tuner')}
                         tooltip={tunerTip}
                       >
@@ -235,7 +229,6 @@ export const Reticulator = () => {
                     <Flex.Item>
                       <Button
                         disabled={!canCreateArtifact}
-                        selected={canCreateArtifact}
                         onClick={() => act('create_artifact')}
                         tooltip={createArtTip}
                       >
@@ -245,7 +238,6 @@ export const Reticulator = () => {
                     <Flex.Item>
                       <Button
                         disabled={!canCombineArtifacts}
-                        selected={canCombineArtifacts}
                         onClick={() => act('combine_artifacts')}
                         tooltip={combineArtsTip}
                       >
@@ -261,7 +253,6 @@ export const Reticulator = () => {
                     <Flex.Item>
                       <Button
                         disabled={!canImbueLight}
-                        selected={canImbueLight}
                         onClick={() => act('imbue_light')}
                         tooltip={imbueLightTip}
                       >
@@ -271,7 +262,6 @@ export const Reticulator = () => {
                     <Flex.Item>
                       <Button
                         disabled={!canBreakdownForMats}
-                        selected={canBreakdownForMats}
                         onClick={() => act('breakdown_mats')}
                         tooltip={breakdownMatsTip}
                       >
@@ -281,7 +271,6 @@ export const Reticulator = () => {
                     <Flex.Item>
                       <Button
                         disabled={!canModifyMaterial}
-                        selected={canModifyMaterial}
                         onClick={() => act('modify_material')}
                         tooltip={modifyMaterialTip}
                       >
@@ -291,7 +280,6 @@ export const Reticulator = () => {
                     <Flex.Item>
                       <Button
                         disabled={!canUpgradeStorage}
-                        selected={canUpgradeStorage}
                         onClick={() => act('upgrade_storage')}
                         tooltip={upgradeStorageTip}
                       >
@@ -301,7 +289,6 @@ export const Reticulator = () => {
                     <Flex.Item>
                       <Button
                         disabled={!canIncreaseReagents}
-                        selected={canIncreaseReagents}
                         onClick={() => act('increase_reagents')}
                         tooltip={increaseReagentsTip}
                       >
@@ -311,7 +298,6 @@ export const Reticulator = () => {
                     <Flex.Item>
                       <Button
                         disabled={!canIncreaseCellCapacity}
-                        selected={canIncreaseCellCapacity}
                         onClick={() => act('increase_cell_capacity')}
                         tooltip={increaseCellCapTip}
                       >
@@ -321,7 +307,6 @@ export const Reticulator = () => {
                     <Flex.Item>
                       <Button
                         disabled={!canUpgradeMiningPower}
-                        selected={canUpgradeMiningPower}
                         onClick={() => act('upgrade_mining_power')}
                         tooltip={upgradeMiningPowerTip}
                       >
