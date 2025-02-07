@@ -2,6 +2,7 @@
 (t)fri feb 07 25
 (u)LeahTheTech
 (*)Roaches can now skitter by sprinting while lying down, allowing them to hide under tables.
+(+)Roaches now take extra damage from mousetraps.
 (u)glowbold
 (p)22200
 (e)💅📦|C-QoL, A-Game-Objects
