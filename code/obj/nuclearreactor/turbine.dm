@@ -529,7 +529,7 @@ ABSTRACT_TYPE(/obj/item/turbine_component)
 	name = "turbine blade"
 	desc = "a replacement blade for the reactor's turbine"
 	icon = 'icons/obj/large/64x32.dmi'
-	icon_state = "artilleryL"
+	icon_state = "turbine"
 
 /obj/item/turbine_component/stator
 	name = "turbine stator"
