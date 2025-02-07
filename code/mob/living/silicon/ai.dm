@@ -2046,6 +2046,7 @@ or don't if it uses a custom topopen overlay
 		if("Pick up")
 			if(src.phone.answered)
 				boutput(src, "The phone is already picked up!")
+				return
 			src.phone.attack_hand(src.deployed_to_eyecam ? src.eyecam : src)
 		if("Hang up")
 			src.phone.hang_up()

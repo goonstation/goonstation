@@ -176,12 +176,36 @@ TYPEINFO(/obj/machinery/phone)
 					ui_interact(user)
 			else
 				if(user)
+					if(isAI(user))
+						var/mob/living/silicon/ai/borgo = user
+						borgo.textToPlayer("Your internal telephone is disconnected.")
 					boutput(user,SPAN_ALERT("As you pick up the phone you notice that the cord has been cut!"))
 		else
 			src.ringing = FALSE
 			src.linked.ringing = FALSE
 			if(src.linked.handset.get_holder() && GET_DIST(src.linked.handset,src.linked.handset.get_holder()) < 1)
 				src.linked.handset.get_holder().playsound_local(src.linked.handset.get_holder(),'sound/machines/phones/remote_answer.ogg',50,0)
+
+	receive_silicon_hotkey(mob/user)
+		. = ..()
+		if(!isAI(user))
+			return
+
+		var/mob/living/silicon/ai/borgo = user
+
+		if(isAIeye(borgo))
+			borgo = borgo.mainframe
+
+		if(user.client.check_key(KEY_BOLT))
+			if(borgo.phone.linked || borgo.phone.ringing || borgo.phone.dialing)
+				if(borgo.phone.linked == src)
+					borgo.phone.hang_up()
+					return
+				borgo.textToPlayer("Your internal phone is busy.")
+				return
+		if(!borgo.phone.answered)
+			borgo.phone.attack_hand(user) // user in case AI is deployed to eye
+		borgo.phone.call_other(src)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		src.icon_state = "[ringing_icon]"
@@ -364,7 +388,7 @@ TYPEINFO(/obj/machinery/phone)
 		target.caller_id_message = "<span style='color: [src.stripe_color];'>[src.phone_id]</span>"
 		SPAWN(4 SECONDS)
 			// Is it busy?
-			if(target.answered || target.linked || !target.connected || !src.answered)
+			if(target.answered || target.linked || !target.connected || !src.answered || !src.connected)
 				playsound(src.loc,'sound/machines/phones/phone_busy.ogg' ,50,0)
 				ai_play_sound(src.loc, list('sound/machines/phones/phone_busy.ogg' ,50,0))
 				src.dialing = FALSE
