@@ -65,6 +65,12 @@
 		item_state = "backpackg"
 		desc = "A thick, wearable container made of synthetic fibers. The green variation reminds you of a botanist's garden..."
 
+	NT
+		name = "\improper NT backpack"
+		desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
+		icon_state = "NTbackpack"
+		item_state = "NTbackpack"
+
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 

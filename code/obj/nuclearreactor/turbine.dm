@@ -271,7 +271,7 @@
 		src.network2?.update = TRUE
 
 
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "rpm=[src.RPM]&stator=[src.stator_load]&power=[src.lastgen]&powerfmt=[engineering_notation(src.lastgen)]W")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "rpm=[src.RPM]&stator=[src.stator_load]&power=[num2text(round(src.lastgen), 50)]&powerfmt=[engineering_notation(src.lastgen)]W")
 		if(!src.ruined && src.blade_health <= 0)
 			logTheThing(LOG_STATION, src, "[src] destroyed by overspeeding for too long")
 			src.TearApart()

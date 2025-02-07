@@ -1576,6 +1576,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "hideout"
 	icon_state = "orange"
 
+/area/prefab/merc_outpost
+	name = "Frontier Outpost 8"
+	icon_state = "red"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room

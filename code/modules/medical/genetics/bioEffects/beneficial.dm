@@ -1073,3 +1073,32 @@ var/list/radio_brains = list()
 			M.hair_override = 0
 			M.bioHolder.mobAppearance.UpdateMob()
 			M.update_colorful_parts()
+
+/datum/bioEffect/skitter
+	id = "skitter"
+	name = "Insectoid locomotion"
+	desc = "The subject is capable of skittering across the floor like a bug."
+
+	OnAdd()
+		RegisterSignal(src.owner, COMSIG_MOB_SPRINT, PROC_REF(on_sprint))
+		. = ..()
+
+	proc/on_sprint()
+		set waitfor = FALSE
+		if (src.owner.lying && !is_incapacitated(src.owner) && !ON_COOLDOWN(src.owner, "skitter", 7 SECONDS))
+			src.owner.visible_message(SPAN_ALERT("[src.owner] skitters away!"))
+			playsound(src.owner, 'sound/voice/animal/bugchitter.ogg', 80, TRUE)
+			src.owner.flags |= TABLEPASS
+			src.owner.layer = OBJ_LAYER-0.2
+			for (var/i in 1 to 4)
+				step(src.owner, src.owner.dir)
+				sleep(0.1 SECONDS)
+			src.owner.flags &= ~TABLEPASS
+			if (locate(/obj/table) in src.owner.loc)
+				src.owner.setStatus("undertable", INFINITE_STATUS)
+			else
+				src.owner.layer = initial(src.owner.layer)
+
+	OnRemove()
+		UnregisterSignal(src.owner, COMSIG_MOB_SPRINT)
+		. = ..()
