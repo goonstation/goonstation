@@ -597,13 +597,13 @@
 			if (choice > BONUS_MAX_CHOICE)
 				src.print_text("<b>Error:</b> Invalid option [choice]. Should be between 1 and [BONUS_MAX_CHOICE]")
 				return
-			for (var/datum/db_record/record in data_core.bank.records)
+			for (var/datum/db_record/record in data_core.general.records)
 				if (choice == BONUS_STATIONWIDE)
 					src.bonus_crew += record
 					continue
 				for(var/job_datum in src.team_to_job_datum[src.teams[choice]])
 					for(var/datum/job/job_type as anything in concrete_typesof(job_datum))
-						if (record["job"] == job_type::name)
+						if (record["rank"] == job_type::name)
 							src.bonus_crew += record
 							goto next_record // pop out of both for loops
 				next_record:
