@@ -336,10 +336,10 @@
 						return
 					var/newWage = round(text2num_safe(command))
 					if (newWage < 0)
-						src.print_text("You cannot set a negative wage.")
+						src.print_text("<b>Error</b>: You cannot set a negative wage.")
 						return
 					if (newWage > 10000)
-						src.print_text("Maximum wage is 10,000[CREDIT_SIGN]")
+						src.print_text("<b>Warning:</b> Maximum wage is 10,000[CREDIT_SIGN]")
 						newWage = 10000
 
 					src.log_string += "<br>Wage for [src.active_general["name"]] changed from [src.active_bank["wage"]][CREDIT_SIGN] to [newWage][CREDIT_SIGN]"
@@ -362,14 +362,16 @@
 							if ((src.active_bank["current_money"] + balanceChange) < 0)
 								src.print_text("<b>Warning:</b> [src.active_general["name"]] only has [src.active_bank["current_money"]][CREDIT_SIGN] in account!")
 								balanceChange = -src.active_bank["current_money"]
-							src.print_text("Transferred [abs(balanceChange)] credits from [src.active_general["name"]] to station budget.")
+							logTheThing(LOG_STATION, usr, "adds [abs(balanceChange)][CREDIT_SIGN] to the station budget from <b>[src.active_general["name"]]</b>'s account.")
+							src.print_text("Transferred [abs(balanceChange)][CREDIT_SIGN] from [src.active_general["name"]] to station budget.")
 							src.active_bank["current_money"] += balanceChange
 							global.wagesystem.station_budget -= balanceChange // balanceChange is negative here, this adds to the station budget
 						if (0 to INFINITY)
 							if (global.wagesystem.station_budget < balanceChange)
 								src.print_text("<b>Warning:</b> Station budget only has [global.wagesystem.station_budget][CREDIT_SIGN] available!")
 								balanceChange = global.wagesystem.station_budget
-							src.print_text("Transferred [balanceChange][CREDIT_SIGN] from station budget to [src.active_general["name"]].")
+							logTheThing(LOG_STATION, usr, "adds [balanceChange][CREDIT_SIGN] to <b>[src.active_general["name"]]</b>'s account from the station budget.")
+							src.print_text("Transferred [balanceChange][CREDIT_SIGN] from the station budget to [src.active_general["name"]].")
 							src.active_bank["current_money"] += balanceChange
 							global.wagesystem.station_budget -= balanceChange
 					src.menu = MENU_IN_RECORD
@@ -579,6 +581,7 @@
 			src.transfer_from = null
 			src.transfer_to = null
 
+			logTheThing(LOG_STATION, usr, "transferred [transfer_amount][CREDIT_SIGN] from [src.budgets[src.transfer_from]] to [src.budgets[src.transfer_to]] budget.")
 			src.print_text("Transferred [transfer_amount][CREDIT_SIGN] from [src.budgets[src.transfer_from]] to [src.budgets[src.transfer_to]] budget.")
 			src.menu = MENU_STATION_BUDGET
 			src.print_budget()
