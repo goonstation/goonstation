@@ -1090,14 +1090,24 @@ var/list/radio_brains = list()
 			playsound(src.owner, 'sound/voice/animal/bugchitter.ogg', 80, TRUE)
 			src.owner.flags |= TABLEPASS
 			src.owner.layer = OBJ_LAYER-0.2
+			var/initial_glide = src.owner.glide_size
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, src) //stop them from rolling out from under the table
+			var/stop_delay = 0
 			for (var/i in 1 to 4)
+				src.owner.glide_size = (32 / 1) * world.tick_lag
 				step(src.owner, src.owner.dir)
+				if (locate(/obj/table) in src.owner.loc)
+					stop_delay = 1 SECOND
+					break
 				sleep(0.1 SECONDS)
+			src.owner.glide_size = initial_glide
 			src.owner.flags &= ~TABLEPASS
 			if (locate(/obj/table) in src.owner.loc)
 				src.owner.setStatus("undertable", INFINITE_STATUS)
 			else
 				src.owner.layer = initial(src.owner.layer)
+			sleep(stop_delay)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, src)
 
 	OnRemove()
 		UnregisterSignal(src.owner, COMSIG_MOB_SPRINT)
