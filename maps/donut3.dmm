@@ -66139,9 +66139,6 @@
 /turf/simulated/floor/yellowblack,
 /area/station/engine/ptl)
 "tZn" = (
-/obj/critter/opossum/morty{
-	dir = 4
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -66155,6 +66152,9 @@
 /obj/machinery/light_switch/west{
 	pixel_y = -6;
 	pixel_x = -27
+	},
+/mob/living/critter/small_animal/opossum/morty{
+	dir = 4
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
