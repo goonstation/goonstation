@@ -673,7 +673,6 @@
 	O.artifact.hide_fx(O)
 	src.artifact.faults |= O.artifact.faults
 	src.artifact.validtriggers |= O.artifact.validtriggers
-	src.vis_contents += O.vis_contents
 	for (var/obj/art in O.combined_artifacts)
 		src.combine_artifact(art)
 	O.combined_artifacts = null
