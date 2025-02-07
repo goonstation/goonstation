@@ -1085,7 +1085,7 @@ var/list/radio_brains = list()
 
 	proc/on_sprint()
 		set waitfor = FALSE
-		if (src.owner.lying && !ON_COOLDOWN(src.owner, "skitter", 10 SECONDS))
+		if (src.owner.lying && !is_incapacitated(src.owner) && !ON_COOLDOWN(src.owner, "skitter", 7 SECONDS))
 			src.owner.visible_message(SPAN_ALERT("[src.owner] skitters away!"))
 			playsound(src.owner, 'sound/voice/animal/bugchitter.ogg', 80, TRUE)
 			src.owner.flags |= TABLEPASS
