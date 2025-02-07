@@ -453,10 +453,18 @@ TYPEINFO(/datum/component/equipment_fault)
 			playsound(flame_turf, 'sound/effects/gust.ogg', 50, FALSE)
 			O.visible_message(SPAN_NOTICE("An ember flies out of [O]."))
 
+TYPEINFO(/datum/component/equipment_fault/leaky)
+	initialization_args = list(
+		ARG_INFO("tool_flags", DATA_INPUT_BITFIELD, "Tools Required", TOOL_PULSING | TOOL_SCREWING),
+		ARG_INFO("reagent_list", DATA_INPUT_LIST_PROVIDED, "Reagent List", list("carbon", "copper", "iron", "nickel", "oil")),
+	)
+
 ///leaks chemicals to nearby tiles
 /datum/component/equipment_fault/leaky
-	///base/current probability to spawn fluids on this process tick
-	var/current_prob = 5
+	///base probability to spawn fluids each tick
+	var/static/base_probability = 30
+	///current probability to spawn fluids on this process tick
+	var/current_prob
 	///increase in probability per process tick
 	var/static/prob_raise = 5
 	///list of reagents IDs to leak
@@ -468,21 +476,29 @@ TYPEINFO(/datum/component/equipment_fault)
 		'sound/effects/zzzt.ogg',
 	)
 
+/datum/component/equipment_fault/leaky/Initialize(tool_flags, reagent_list)
+	. = ..()
+	if (!islist(reagent_list))
+		return COMPONENT_INCOMPATIBLE
+	src.reagent_list = reagent_list
+	src.current_prob = src.base_probability
+
 /datum/component/equipment_fault/leaky/ef_process(obj/machinery/M, mult)
 	if(probmult(current_prob))
 		src.ef_perform_fault(M)
-		src.current_prob = initial(src.current_prob)
+		src.current_prob = src.base_probability
 	else
 		src.current_prob += src.prob_raise
 
 /datum/component/equipment_fault/leaky/ef_perform_fault(obj/O)
 	if(..())
 		var/target_dir = pick(alldirs)
-		var/turf/simulated/floor/T = get_step(O.loc, target_dir)
-		if(!istype(T))
-			T = O.loc
+		var/turf/object_turf = get_turf(O)
+		var/turf/target_turf = get_step(O.loc, target_dir)
+		if (!test_click(object_turf, target_turf))
+			target_turf = object_turf
 		else
-			var/obj/effects/spray/spray = new(T)
+			var/obj/effects/spray/spray = new(target_turf)
 			SPAWN(1 SECOND) qdel(spray)
 			spray.set_dir(target_dir)
 		playsound(O, pick(sounds), 50, 2)
@@ -490,37 +506,4 @@ TYPEINFO(/datum/component/equipment_fault)
 
 		var/datum/reagents/temp_fluid_reagents = new /datum/reagents(5)
 		temp_fluid_reagents.add_reagent(pick(src.reagent_list), 5)
-		T.fluid_react(temp_fluid_reagents, temp_fluid_reagents.total_volume)
-
-/datum/component/equipment_fault/leaky/chemical
-	reagent_list = list(
-		"aluminium","barium","bromine","calcium","carbon","chlorine", \
-		"chromium","copper","ethanol","fluorine","hydrogen", \
-		"iodine","iron","lithium","magnesium","mercury","nickel", \
-		"nitrogen","oxygen","phosphorus","plasma","platinum","potassium", \
-		"radium","silicon","silver","sodium","sugar","sulfur","water"
-	)
-
-/datum/component/equipment_fault/leaky/alcohol
-	current_prob = 30
-	reagent_list = list("beer", "cider", "gin", "wine", "champagne", \
-								"rum", "vodka", "bourbon", "vermouth", "tequila", \
-								"bitters", "tonic")
-
-/datum/component/equipment_fault/leaky/soda
-	current_prob = 30
-	reagent_list = list("cola", "ginger_ale", "juice_lime", "juice_lemon", "juice_orange", \
-								"juice_cran", "juice_cherry", "juice_pineapple", "juice_tomato", \
-								"coconut_milk", "sugar", "water", "vanilla", "tea", "grenadine")
-
-/datum/component/equipment_fault/leaky/chef
-	current_prob = 30
-	reagent_list = list("ketchup","mustard","salt","pepper","gravy","chocolate","chocolate_milk","strawberry_milk","milk")
-
-/datum/component/equipment_fault/leaky/water
-	current_prob = 50
-	reagent_list = list("water")
-
-/datum/component/equipment_fault/leaky/blood
-	current_prob = 50
-	reagent_list = list("blood")
+		target_turf.fluid_react(temp_fluid_reagents, temp_fluid_reagents.total_volume)

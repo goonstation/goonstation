@@ -250,8 +250,11 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
-		if (src.health < 100)
-			if(prob(100-src.health))
+		if (damage_amount > 0 && src.health < 300)
+			if (prob(((400-src.health)/400)*100)) // probability of breaking increases with damage taken
+				src.set_broken()
+		if (damage_amount > 50) // additional break roll for high-damage hits
+			if (prob(damage_amount))
 				src.set_broken()
 		if (src.health <= 0)
 			if (beaker)
@@ -469,6 +472,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			src.user_id.set_loc(src.loc)
 			src.user_id = null
 
+		AddComponent(/datum/component/equipment_fault/leaky, tool_flags = TOOL_SCREWING | TOOL_WRENCHING, reagent_list = src.dispensable_reagents)
 		src.UpdateIcon()
 
 	power_change()
@@ -479,11 +483,6 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	New()
 		..()
 		src.dispensable_reagents = basic_elements
-
-/obj/machinery/chem_dispenser/chemical/set_broken(mob/user)
-	. = ..()
-	if(.) return
-	AddComponent(/datum/component/equipment_fault/leaky/chemical, tool_flags = TOOL_SCREWING | TOOL_WRENCHING)
 
 /obj/machinery/chem_dispenser/chemical/med_test
 	starting_groups = list(/datum/reagent_group/default/potassium_iodide,
@@ -503,11 +502,6 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	dispenser_name = "Alcohol"
 
 	dispense_sound = 'sound/misc/pourdrink2.ogg'
-
-/obj/machinery/chem_dispenser/alcohol/set_broken(mob/user)
-	. = ..()
-	if(.) return
-	AddComponent(/datum/component/equipment_fault/leaky/alcohol, tool_flags = TOOL_SCREWING | TOOL_WRENCHING)
 
 //Combines alcohol and soda dispenser
 /obj/machinery/chem_dispenser/alcohol/bar
@@ -564,11 +558,6 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	dispense_sound = 'sound/misc/pourdrink2.ogg'
 
-/obj/machinery/chem_dispenser/soda/set_broken(mob/user)
-	. = ..()
-	if(.) return
-	AddComponent(/datum/component/equipment_fault/leaky/soda, tool_flags = TOOL_SCREWING | TOOL_WRENCHING)
-
 /obj/machinery/chem_dispenser/chef
 	name = "HAPPY CHEF Dispense-o-tronic"
 	desc = "It's covered in a thin layer of acrid-smelling dust. The contents probably taste more like preservatives than whatever they're supposed to be."
@@ -580,11 +569,6 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	dispenser_name = "Soda"
 
 	dispense_sound = 'sound/effects/splort.ogg'
-
-/obj/machinery/chem_dispenser/chef/set_broken(mob/user)
-	. = ..()
-	if(.) return
-	AddComponent(/datum/component/equipment_fault/leaky/chef, tool_flags = TOOL_SCREWING | TOOL_WRENCHING)
 
 /obj/machinery/chem_dispenser/botany
 	name = "botany dispenser"
