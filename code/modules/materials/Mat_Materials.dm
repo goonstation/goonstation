@@ -956,9 +956,6 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 	New()
 		..()
-		src.update_properties()
-
-	proc/update_properties()
 		switch(src.gem_tier)
 			if(1)
 				value = 700
@@ -976,6 +973,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 				name = "inferior [src.name]"
 				setProperty("density", 3)
 				setProperty("hard", 4)
+
 
 	diamond
 		mat_id = "diamond"
