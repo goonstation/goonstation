@@ -1,3 +1,5 @@
+/// Prevent input detection, used for networking
+#define MENU_HOLD -1
 #define MENU_MAIN 0
 #define MENU_INDEX 1
 #define MENU_IN_RECORD 2
@@ -13,6 +15,8 @@
 #define MENU_STAFF_BONUS_TEAM 12
 #define MENU_STAFF_BONUS_AMOUNT 13
 #define MENU_STAFF_BONUS_REASON 14
+#define MENU_PRINT_SETTINGS 15
+#define MENU_SELECT_PRINTER 16
 
 // menu options
 // main menu
@@ -20,6 +24,7 @@
 #define MENU_MAIN_OPT_INDEX 1
 #define MENU_MAIN_OPT_SEARCH 2
 #define MENU_MAIN_OPT_BUDGET 3
+#define MENU_MAIN_OPT_PRINT 4
 // budget menu
 #define MENU_BUDGET_OPT_BACK 0
 #define MENU_BUDGET_OPT_PAYROLL 1
@@ -30,6 +35,11 @@
 #define MENU_TRANSFER_OPT_PAYROLL 1
 #define MENU_TRANSFER_OPT_SHIPPING 2
 #define MENU_TRANSFER_OPT_RESEARCH 3
+// print menu
+#define MENU_PRINT_OPT_BACK 0
+#define MENU_PRINT_OPT_CONNECT 1
+#define MENU_PRINT_OPT_SELECT 2
+#define MENU_PRINT_OPT_PRINTLOG 3
 
 // team bonuses
 #define BONUS_BACK 0
@@ -123,7 +133,7 @@
 	)
 
 	// printer stuff
-	var/tmp/connected = 0
+	var/tmp/connected = FALSE
 	var/tmp/server_netid = null
 	var/tmp/potential_server_netid = null
 	var/tmp/selected_printer = null
@@ -159,6 +169,7 @@
 			switch(text2num_safe(command))
 				if(MENU_MAIN_OPT_QUIT)
 					src.print_text("Quitting...")
+					src.autosave_log()
 					src.master.unload_program(src)
 					return
 				if(MENU_MAIN_OPT_INDEX)
@@ -172,6 +183,10 @@
 				if(MENU_MAIN_OPT_BUDGET)
 					src.print_budget()
 					src.menu = MENU_STATION_BUDGET
+					return
+				if(MENU_MAIN_OPT_PRINT)
+					src.print_settings()
+					src.menu = MENU_PRINT_SETTINGS
 					return
 
 		if(MENU_INDEX)
@@ -190,7 +205,7 @@
 				data_core.general.add_record(general_record)
 				src.active_general = general_record
 				src.active_bank = null
-				src.log_string += "<br>Record created: [general_record["id"]]"
+				src.log_wrapper("Created new general record [general_record["id"]].")
 
 				if (src.print_active_record())
 					src.menu = MENU_IN_RECORD
@@ -218,7 +233,7 @@
 				if (!src.active_bank)
 					data_core.bank.find_record("name", src.active_general["name"])
 
-			src.log_string += "<br>Record loaded: [src.active_general["id"]]"
+			src.log_string += "<br>Loaded record [src.active_general["id"]] for [src.active_general["name"]]"
 
 			if (src.print_active_record())
 				src.menu = MENU_IN_RECORD
@@ -235,12 +250,12 @@
 					return
 				if ("p")
 					if ((src.connected && src.selected_printer) && !src.network_record_print())
-						src.print_text("Print instruction sent.")
+						src.print_text("Print instruction sent to remote printer.")
 					else
 						if (src.local_record_print())
 							src.print_text("<b>Error:</b> No printer detected.")
 						else
-							src.print_text("Print instruction sent.")
+							src.print_text("Print instruction sent to local printer.")
 					return
 				if (FIELDNUM_NEWREC)
 					if (src.active_bank)
@@ -363,8 +378,7 @@
 						src.print_text("<b>Warning:</b> Maximum wage is 10,000[CREDIT_SIGN]")
 						newWage = 10000
 
-					src.log_string += "<br>Wage for [src.active_general["name"]] changed from [src.active_bank["wage"]][CREDIT_SIGN] to [newWage][CREDIT_SIGN]"
-					logTheThing(LOG_STATION, usr, "sets <b>[src.active_general["name"]]</b>'s wage to [newWage][CREDIT_SIGN].")
+					src.log_wrapper("Set wage for [src.active_general["name"]] from [src.active_bank["wage"]][CREDIT_SIGN] to [newWage][CREDIT_SIGN]")
 					src.active_bank["wage"] = newWage
 
 				if(FIELDNUM_BALANCE)
@@ -383,18 +397,14 @@
 							if ((src.active_bank["current_money"] + balanceChange) < 0)
 								src.print_text("<b>Warning:</b> [src.active_general["name"]] only has [src.active_bank["current_money"]][CREDIT_SIGN] in account!")
 								balanceChange = -src.active_bank["current_money"]
-							src.log_string += "<br>Transferred [abs(balanceChange)][CREDIT_SIGN] to the payroll budget from [src.active_general["name"]]'s account."
-							logTheThing(LOG_STATION, usr, "adds [abs(balanceChange)][CREDIT_SIGN] to the payroll budget from <b>[src.active_general["name"]]</b>'s account.")
-							src.print_text("Transferred [abs(balanceChange)][CREDIT_SIGN] from [src.active_general["name"]] to station budget.")
+							src.log_wrapper("Transferred [abs(balanceChange)][CREDIT_SIGN] from [src.active_general["name"]]'s account to payroll budget.")
 							src.active_bank["current_money"] += balanceChange
-							global.wagesystem.station_budget -= balanceChange // balanceChange is negative here, this adds to the station budget
+							global.wagesystem.station_budget -= balanceChange // balanceChange is negative here, this adds to the budget
 						if (0 to INFINITY)
 							if (global.wagesystem.station_budget < balanceChange)
 								src.print_text("<b>Warning:</b> Station budget only has [global.wagesystem.station_budget][CREDIT_SIGN] available!")
 								balanceChange = global.wagesystem.station_budget
-							src.log_string += "<br>Transferred [balanceChange][CREDIT_SIGN] to [src.active_general["name"]]'s account from the payroll budget."
-							logTheThing(LOG_STATION, usr, "adds [balanceChange][CREDIT_SIGN] to <b>[src.active_general["name"]]</b>'s account from the payroll budget.")
-							src.print_text("Transferred [balanceChange][CREDIT_SIGN] from the station budget to [src.active_general["name"]].")
+							src.log_wrapper("Transferred [abs(balanceChange)][CREDIT_SIGN] from payroll budget to [src.active_general["name"]]'s account.")
 							src.active_bank["current_money"] += balanceChange
 							global.wagesystem.station_budget -= balanceChange
 					src.menu = MENU_IN_RECORD
@@ -413,14 +423,14 @@
 						if ("y")
 							if (src.active_bank)
 								global.wagesystem.station_budget += src.active_bank["current_money"]
-								src.log_string += "<br>Transferred [src.active_bank["current_money"]][CREDIT_SIGN] from [src.active_bank["name"]] into payroll budget."
-								src.log_string += "<br>Bank Record [src.active_bank["id"]] deleted."
+								src.log_wrapper("Transferred [src.active_bank["current_money"]][CREDIT_SIGN] from [src.active_bank["name"]] into payroll budget.")
+								src.log_wrapper("Deleted bank record [src.active_bank["id"]] for [src.active_general["name"]]")
 								qdel(src.active_bank)
 								src.active_bank = null
 								src.print_active_record()
 								src.menu = MENU_IN_RECORD
 							else if (src.active_general)
-								src.log_string += "<br>General Record [src.active_general["id"]] deleted."
+								src.log_wrapper("Deleted general record [src.active_general["id"]] for [src.active_general["name"]]")
 								qdel(src.active_general)
 								src.active_general = null
 								src.menu = MENU_INDEX
@@ -432,7 +442,7 @@
 			src.print_text("Field updated.")
 			src.menu = MENU_IN_RECORD
 
-		if (MENU_SEARCH_PICK)
+		if(MENU_SEARCH_PICK)
 			var/input = text2num_safe(ckey(strip_html(text)))
 			if(isnull(input) || input < 0 || input >> length(src.possible_active))
 				src.print_text("Cancelled")
@@ -499,13 +509,11 @@
 						return
 					if (global.wagesystem.pay_active)
 						global.wagesystem.pay_active = 0
-						logTheThing(LOG_STATION, usr, "suspends the station payroll.")
-						src.print_text("Station payroll has now been suspended!")
+						src.log_wrapper("Suspended station payroll.")
 						command_alert("The payroll has been suspended until further notice. No further wages will be paid until the payroll is resumed.","Payroll Announcement", alert_origin = ALERT_STATION)
 					else
 						global.wagesystem.pay_active = 1
-						logTheThing(LOG_STATION, usr, "resumes the station payroll.")
-						src.print_text("Station payroll has now been resumed!")
+						src.log_wrapper("Resumed station payroll.")
 						command_alert("The payroll has been resumed. Wages will now be paid into employee accounts normally.","Payroll Announcement", alert_origin = ALERT_STATION)
 					src.print_budget()
 
@@ -608,8 +616,8 @@
 			src.transfer_from = null
 			src.transfer_to = null
 
-			logTheThing(LOG_STATION, usr, "transferred [transfer_amount][CREDIT_SIGN] from [src.budgets[src.transfer_from]] to [src.budgets[src.transfer_to]] budget.")
-			src.print_text("Transferred [transfer_amount][CREDIT_SIGN] from [src.budgets[src.transfer_from]] to [src.budgets[src.transfer_to]] budget.")
+			src.log_wrapper("Transferred [transfer_amount][CREDIT_SIGN] from [src.budgets[src.transfer_from]] to [src.budgets[src.transfer_to]] budget.")
+
 			src.menu = MENU_STATION_BUDGET
 			src.print_budget()
 
@@ -704,7 +712,7 @@
 				return
 
 			var/bonus_total = length(src.bonus_crew) * src.bonus_amount
-			logTheThing(LOG_STATION, usr, "issued a bonus of [src.bonus_amount][CREDIT_SIGN] ([bonus_total][CREDIT_SIGN] total) to team [src.teams[src.bonus_team]].")
+			src.log_wrapper("Issued bonus of [src.bonus_amount][CREDIT_SIGN] ([bonus_total][CREDIT_SIGN] total) to team [src.teams[src.bonus_team]].")
 			command_announcement(
 				"Bonus of [src.bonus_amount][CREDIT_SIGN] issued to all [src.teams[src.bonus_team]] staff.<br>Reason: [inputText]",
 				"Payroll Announcement by [src.authenticated] ([src.account.assignment])"
@@ -719,6 +727,90 @@
 			src.menu = MENU_STATION_BUDGET
 			src.print_budget()
 			return
+		if(MENU_PRINT_SETTINGS)
+			switch(round(text2num_safe(command)))
+				if(MENU_PRINT_OPT_BACK)
+					src.menu = MENU_MAIN
+					src.master.temp = null
+					src.print_text(src.mainmenu_text())
+					return
+				if(MENU_PRINT_OPT_CONNECT)
+					if(src.connected)
+						src.disconnect_server()
+						src.connected = FALSE
+						src.master.temp = null
+						src.print_settings()
+						return
+					if (src.server_netid)
+						src.menu = MENU_HOLD
+						src.connect_printserver(src.server_netid, 1)
+						if (connected)
+							src.master.temp = null
+							src.print_text("Connection established to \[[server_netid]]!")
+							src.print_settings()
+							src.menu = MENU_PRINT_SETTINGS
+							return
+						src.menu = MENU_PRINT_SETTINGS
+						src.print_text("Connection failed.")
+						return
+
+					src.menu = MENU_HOLD
+					src.print_text("Searching for printserver...")
+					if (src.ping_server(1))
+						src.print_text("Unable to detect printserver!")
+						src.menu = MENU_PRINT_SETTINGS
+						return
+
+					src.print_text("Printserver detected at \[[potential_server_netid]]<br>Connecting...")
+					src.connect_printserver(potential_server_netid, 1)
+
+					src.menu = MENU_PRINT_SETTINGS
+					if (src.connected)
+						src.master.temp = null
+						src.print_text("Connection established to \[[server_netid]]!")
+						src.print_settings()
+						return
+
+					src.print_text("Connection failed.")
+					return
+				if(MENU_PRINT_OPT_SELECT)
+					src.menu = MENU_HOLD
+					src.message_server("command=print&args=index")
+					sleep(0.8 SECONDS)
+					var/dat = "Known Printers:"
+					if (!src.known_printers || !length(src.known_printers))
+						dat += "<br> \[__] No printers known."
+					else
+						var/leadingZeroCount = length("[src.known_printers.len]")
+						for (var/kp_index=1, kp_index <= src.known_printers.len, kp_index++)
+							dat += "<br> \[[add_zero("[kp_index]",leadingZeroCount)]] [src.known_printers[kp_index]]"
+
+					src.master.temp = null
+					src.print_text("[dat]<br> (0) Return")
+					src.menu = MENU_SELECT_PRINTER
+					return
+				if(MENU_PRINT_OPT_PRINTLOG)
+					src.print_log()
+					return
+
+
+		if(MENU_SELECT_PRINTER)
+			var/printerNumber = round(text2num_safe(command))
+			if (printerNumber == 0)
+				src.menu = MENU_PRINT_SETTINGS
+				src.master.temp = null
+				src.print_settings()
+				return
+
+			if (printerNumber < 1 || printerNumber > src.known_printers.len)
+				return
+
+			src.selected_printer = src.known_printers[printerNumber]
+			src.menu = MENU_PRINT_SETTINGS
+			src.master.temp = null
+			src.print_text("Printer set.")
+			src.print_settings()
+			return
 
 /datum/computer/file/terminal_program/bank_records/proc/mainmenu_text()
 	var/dat = {"<center>B A N K B O S S 2</center><br>
@@ -727,6 +819,7 @@
 	<br>([MENU_MAIN_OPT_INDEX]) View bank records.
 	<br>([MENU_MAIN_OPT_SEARCH]) Search for a record.
 	<br>([MENU_MAIN_OPT_BUDGET]) View station budget.
+	<br>([MENU_MAIN_OPT_PRINT]) Print options.
 	<br>([MENU_MAIN_OPT_QUIT]) Quit."}
 
 	return dat
@@ -841,16 +934,18 @@
 	src.print_text(dat)
 	return
 /datum/computer/file/terminal_program/bank_records/proc/print_settings()
+	src.master.temp = null
 	var/dat = "Options:"
 
 	if (src.connected)
-		dat += "<br>(1) Disconnect from print server."
-		dat += "<br>(2) Select printer."
-
+		dat += "<br>([MENU_PRINT_OPT_CONNECT]) Disconnect from print server."
+		dat += "<br>([MENU_PRINT_OPT_SELECT]) Select printer."
+		dat += "<br>([MENU_PRINT_OPT_PRINTLOG]) Print session log."
 	else
-		dat += "<br>(1) Connect to print server."
+		dat += "<br>([MENU_PRINT_OPT_CONNECT]) Connect to print server."
+		dat += "<br>([MENU_PRINT_OPT_PRINTLOG]) Print session log (local)."
 
-	dat += "<br>(0) Back."
+	dat += "<br>([MENU_PRINT_OPT_BACK]) Back."
 
 	src.print_text(dat)
 	return 1
@@ -900,7 +995,7 @@
 	var/datum/computer/file/record/printRecord = new
 
 	printRecord.fields += "title=Bank Record"
-	printRecord.fields += "Bank Record"
+	printRecord.fields += "<center><B>Bank Record</B></center>"
 	if (istype(src.active_general, /datum/db_record) && data_core.general.has_record(src.active_general))
 		printRecord.fields += "Full Name: [src.active_general["full_name"]] ID: [src.active_general["id"]]"
 		printRecord.fields += "Sex: [src.active_general["sex"]]"
@@ -916,14 +1011,43 @@
 		printRecord.fields += "General Record Lost!"
 
 	if ((istype(src.active_bank, /datum/db_record) && data_core.bank.has_record(src.active_bank)))
-		printRecord.fields += "Bank Data"
-		printRecord.fields += "Wage: [src.active_bank["wage"]]"
-		printRecord.fields += "Balance: [src.active_bank["current_money"]]"
+		printRecord.fields += ""
+		printRecord.fields += "<center><B>Bank Data</B></center>"
+		printRecord.fields += "Wage: [src.active_bank["wage"]][CREDIT_SIGN]"
+		printRecord.fields += "Balance: [src.active_bank["current_money"]][CREDIT_SIGN]"
 		printRecord.fields += "Notes: [src.active_bank["notes"]]"
 	else
 		printRecord.fields += "Bank Record Lost!"
 
 	src.message_server("command=print&args=print [selected_printer]", printRecord)
+
+/datum/computer/file/terminal_program/bank_records/proc/print_log()
+	if ((src.connected && src.selected_printer && src.server_netid) && !src.network_log_print())
+		src.print_text("Print instruction sent to remote printer.")
+	else
+		if (src.local_log_print())
+			src.print_text("<b>Error:</b> No printer detected.")
+		else
+			src.print_text("Print instruction sent to local printer.")
+
+/datum/computer/file/terminal_program/bank_records/proc/network_log_print()
+	if (!connected || !selected_printer || !server_netid)
+		return 1
+	var/datum/computer/file/text/logdump = new /datum/computer/file/text
+	logdump.name = src.setup_logdump_name
+	logdump.data = src.log_string
+	src.message_server("command=print&args=print [selected_printer]", logdump)
+
+/datum/computer/file/terminal_program/bank_records/proc/local_log_print()
+	var/obj/item/peripheral/printcard = find_peripheral("LAR_PRINTER")
+	if(!printcard)
+		return 1
+
+	var/datum/signal/signal = get_free_signal()
+	signal.data["title"] = "Bank Record"
+	signal.data["data"] = src.log_string
+	src.peripheral_command("print",signal, "\ref[printcard]")
+	return 0
 
 /datum/computer/file/terminal_program/bank_records/proc/message_server(var/message, var/datum/computer/file/toSend)
 	if (!connected || !server_netid || !message)
@@ -1000,22 +1124,128 @@
 	return 0
 
 /datum/computer/file/terminal_program/bank_records/proc/ping_server(delayCaller=0)
-	if (connected)
+	if (src.connected)
 		return 1
 
 	var/netCard = find_peripheral("NET_ADAPTER")
 	if (!netCard)
 		return 1
 
-	potential_server_netid = null
+	src.potential_server_netid = null
 	src.peripheral_command("ping", null, "\ref[netCard]")
 
 	if (delayCaller)
 		sleep(0.8 SECONDS)
-		return (potential_server_netid == null)
+		return (src.potential_server_netid == null)
 
-	return 0
+	return
 
+/datum/computer/file/terminal_program/bank_records/proc/autosave_log()
+	if(!src.log_string) //Something is wrong.
+		return
+
+	if(src.holder.read_only)
+		return
+
+	var/filename = "[setup_logdump_name]-[ckey(src.authenticated)]-[ckey(time2text(world.timeofday, "hh:mm"))]"
+	var/datum/computer/folder/logs_folder = src.get_folder_name("logs", src.holder.root)
+	if (!logs_folder)
+		return
+
+	var/datum/computer/file/text/logdump = get_file_name(filename, logs_folder)
+	if(logdump && !istype(logdump) || get_folder_name(filename, logs_folder))
+		return
+
+	if(logdump && istype(logdump))
+		logdump.data = src.log_string
+	else
+		logdump = new /datum/computer/file/text
+		logdump.name = filename
+		logdump.data = src.log_string
+		if(!logs_folder.add_file(logdump))
+			logdump.dispose()
+			return
+
+/datum/computer/file/terminal_program/bank_records/receive_command(obj/source, command, datum/signal/signal)
+	if ((..()) || (!signal))
+		return
+
+	if (!connected)
+		if (signal.data["command"] == "ping_reply" && !potential_server_netid)
+
+			if (signal.data["device"] == "PNET_MAINFRAME" && signal.data["sender"] && is_hex(signal.data["sender"]))
+				src.potential_server_netid = signal.data["sender"]
+				return
+
+		else if (signal.data["command"] == "term_connect")
+			src.server_netid = ckey(signal.data["sender"])
+			src.connected = TRUE
+			src.potential_server_netid = null
+			if(signal.data["data"] != "noreply")
+				var/datum/signal/termsignal = get_free_signal()
+
+				termsignal.data["address_1"] = signal.data["sender"]
+				termsignal.data["command"] = "term_connect"
+				termsignal.data["device"] = "SRV_TERMINAL"
+				termsignal.data["data"] = "noreply"
+
+				src.peripheral_command("transmit", termsignal, "\ref[find_peripheral("NET_ADAPTER")]")
+
+		return
+	else
+		if (signal.data["sender"] != server_netid)
+			return
+
+		if (!server_netid)
+			src.connected = FALSE
+			return
+
+		switch(lowertext(signal.data["command"]))
+			if ("term_message","term_file")
+				var/list/data = params2list(signal.data["data"])
+				if(!data || !data["command"])
+					return
+
+				var/list/commandList = splittext(data["command"], "|n")
+				if (!commandList || !length(commandList))
+					return
+
+				switch (commandList[1])
+					if ("print_index")
+						if (length(commandList) > 1)
+							known_printers = commandList.Copy(2)
+						else
+							known_printers = list()
+
+					if ("print_status")
+						if (length(commandList) > 1)
+							printer_status = commandList[2]
+						else
+							printer_status = "???"
+				return
+
+			if ("term_disconnect")
+				src.connected = FALSE
+				src.server_netid = null
+				src.print_text("Connection closed by printserver.")
+
+			if("term_ping")
+				if(signal.data["data"] == "reply")
+					var/datum/signal/termsignal = get_free_signal()
+
+					termsignal.data["address_1"] = signal.data["sender"]
+					termsignal.data["command"] = "term_ping"
+
+					src.peripheral_command("transmit", termsignal, "\ref[find_peripheral("NET_ADAPTER")]")
+	return
+
+///Wrapper for logging things to three different places: The admin LOG_STATION, the local computer log file, and to the terminal screen
+/datum/computer/file/terminal_program/bank_records/proc/log_wrapper(log_text)
+	logTheThing(LOG_STATION, usr, log_text)
+	src.log_string += "<br>[log_text]"
+	src.print_text(log_text)
+
+#undef MENU_HOLD
 #undef MENU_MAIN
 #undef MENU_INDEX
 #undef MENU_IN_RECORD
@@ -1031,11 +1261,14 @@
 #undef MENU_STAFF_BONUS_TEAM
 #undef MENU_STAFF_BONUS_AMOUNT
 #undef MENU_STAFF_BONUS_REASON
+#undef MENU_PRINT_SETTINGS
+#undef MENU_SELECT_PRINTER
 
 #undef MENU_MAIN_OPT_QUIT
 #undef MENU_MAIN_OPT_INDEX
 #undef MENU_MAIN_OPT_SEARCH
 #undef MENU_MAIN_OPT_BUDGET
+#undef MENU_MAIN_OPT_PRINT
 
 #undef MENU_BUDGET_OPT_BACK
 #undef MENU_BUDGET_OPT_PAYROLL
@@ -1046,6 +1279,11 @@
 #undef MENU_TRANSFER_OPT_PAYROLL
 #undef MENU_TRANSFER_OPT_SHIPPING
 #undef MENU_TRANSFER_OPT_RESEARCH
+
+#undef MENU_PRINT_OPT_BACK
+#undef MENU_PRINT_OPT_CONNECT
+#undef MENU_PRINT_OPT_SELECT
+#undef MENU_PRINT_OPT_PRINTLOG
 
 #undef BONUS_BACK
 #undef BONUS_STATIONWIDE
