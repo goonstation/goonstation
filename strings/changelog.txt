@@ -1,4 +1,9 @@
 
+(t)fri feb 07 25
+(u)glowbold
+(p)22200
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Deconstruction tools will always try to deconstruct objects on help, disarm, and grab intents. On harm intent, deconstruction tools will be used like a normal item on objects.
 (t)thu feb 06 25
 (u)Bartimeus973
 (p)22204
