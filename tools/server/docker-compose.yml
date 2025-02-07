@@ -15,6 +15,8 @@ services:
       - ../../:/ss13_server:rw
     ports:
       - "${SS13_PORT:-6969}:${SS13_PORT:-6969}"
+    extra_hosts:
+      - "api.goonhub.com:192.168.0.1"
     environment:
       - SS13_ID=${SS13_ID:-main}
       - SS13_PORT=${SS13_PORT:-6969}

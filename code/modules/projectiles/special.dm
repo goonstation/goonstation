@@ -136,6 +136,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/split_type = 0
 	var/pellet_shot_volume = 0
 	silentshot = 1
+	has_impact_particles = TRUE
 	// 0 = on spawn
 	// 1 = on impact
 
@@ -191,6 +192,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		FC.rotateDirection(current_angle)
 		FC.launch()
 		current_angle += angle_adjust_per_pellet
+		FC.spread = P.spread + spread_angle
 
 /datum/projectile/special/spreader/buckshot_burst
 	name = "buckshot"
@@ -211,6 +213,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		FC.internal_speed = rand(speed_min,speed_max)
 		FC.travelled = rand(0,dissipation_variance)
 		FC.launch()
+		FC.spread = P.spread + dissipation_variance
 /datum/projectile/special/spreader/buckshot_burst/plasglass
 	name = "fragments"
 	sname = "fragments"
@@ -903,6 +906,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	split_type = 0
 	shot_sound = 'sound/weapons/Taser.ogg'
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
+	energy_particles_override = TRUE
 	var/spread_angle = 10
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
@@ -919,6 +923,37 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		FC.launch()
 		current_angle += angle_adjust_per_pellet
 
+/datum/projectile/special/spreader/tasershotgunspread/laser
+	name = "laser"
+	sname = "shotgun spread"
+	cost = 50
+	damage = 20
+	damage_type = D_ENERGY
+	pellets_to_fire = 5
+	spread_projectile_type = /datum/projectile/laser/lasershotgun
+	split_type = 0
+	shot_sound = 'sound/weapons/shotgunlaser.ogg'
+
+/datum/projectile/laser/lasershotgun
+	name = "Lethal Mode"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "redbolt"
+	shot_sound = 'sound/weapons/shotgunlaser.ogg'
+	cost = 50
+	damage = 15
+	shot_number = 1
+	sname = "lethal"
+	damage_type = D_ENERGY
+	hit_ground_chance = 30
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if(!ismob(hit))
+			shot_volume = 0
+			shoot_reflected_bounce(proj, hit, 2, PROJ_HEADON_BOUNCE)
+			shot_volume = 100
+		if(proj.reflectcount >= 2)
+			elecflash(get_turf(hit),radius=0, power=1, exclude_center = 0)
+
 /datum/projectile/special/spreader/pwshotgunspread
 	name = "blaster bolt"
 	sname = "shotgun spread"
@@ -927,6 +962,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_projectile_type = /datum/projectile/laser/blaster/pod_pilot/blue_NT/shotgun
 	split_type = 0
 	shot_sound = 'sound/weapons/laser_b.ogg'
+	energy_particles_override = TRUE
 	var/spread_angle = 10
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
@@ -965,6 +1001,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	window_pass = 0
 	spread_projectile_type = /datum/projectile/special/spawner/wasp
 	pellets_to_fire = 4
+	has_impact_particles = FALSE
 	var/spread_angle = 60
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0

@@ -1283,7 +1283,7 @@
 	name = "Murray";
 	req_access_txt = ""
 	},
-/obj/machinery/navbeacon/tour/cog1/tour18,
+/obj/machinery/navbeacon/tour/cog1/tour20,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
@@ -10997,6 +10997,10 @@
 	pixel_x = -5;
 	pixel_y = 4
 	},
+/obj/item/storage/box/panic_buttons{
+	pixel_x = 8
+	},
+/obj/item/device/panicbutton,
 /turf/simulated/floor/carpet,
 /area/station/security/main)
 "aNX" = (
@@ -19194,7 +19198,6 @@
 /obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 4
 	},
-/obj/machinery/navbeacon/tour/cog1/tour17,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -30242,12 +30245,6 @@
 	icon_state = "red2"
 	},
 /area/station/medical/medbay/lobby)
-"cgV" = (
-/obj/machinery/navbeacon/tour/cog1/tour13,
-/turf/simulated/floor/carpet{
-	icon_state = "red2"
-	},
-/area/station/medical/medbay/lobby)
 "cgW" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/carpet{
@@ -35898,6 +35895,7 @@
 	pixel_x = -24;
 	dir = 8
 	},
+/obj/item/paper/pipebombs,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "cAs" = (
@@ -44289,6 +44287,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
+"ify" = (
+/obj/machinery/navbeacon/tour/cog1/tour13,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/lobby)
 "ifM" = (
 /obj/lattice{
 	dir = 4;
@@ -48189,10 +48191,10 @@
 	},
 /area/station/engine/elect)
 "lmb" = (
-/obj/critter/opossum/morty,
 /obj/item/device/radio/intercom/medical{
 	dir = 8
 	},
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "lmh" = (
@@ -48231,6 +48233,10 @@
 /obj/cable/yellow,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
+"loD" = (
+/obj/machinery/navbeacon/tour/cog1/tour17,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "lpn" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -56140,6 +56146,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
+"rom" = (
+/obj/machinery/navbeacon/tour/cog1/tour19,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "roQ" = (
 /obj/machinery/light{
 	dir = 4
@@ -61882,6 +61892,13 @@
 	},
 /turf/space,
 /area/supply/delivery_point)
+"vzz" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/navbeacon/tour/cog1/tour18,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "vAd" = (
 /obj/machinery/firealarm/south,
 /obj/machinery/light/small,
@@ -100796,7 +100813,7 @@ bWD
 bWD
 cCl
 cfC
-cgV
+cgU
 cia
 fKR
 mrY
@@ -101701,7 +101718,7 @@ cfJ
 cbQ
 leZ
 ces
-cev
+ify
 cev
 cev
 cev
@@ -101995,7 +102012,7 @@ bPR
 bPR
 bSS
 bWU
-bLO
+loD
 bWY
 bYb
 bZF
@@ -102242,7 +102259,7 @@ aEh
 aUu
 aUu
 aVI
-aWT
+vzz
 aEh
 aVI
 bai
@@ -112495,7 +112512,7 @@ atw
 aBQ
 aqP
 cRg
-aqP
+rom
 aFO
 aIr
 aJD

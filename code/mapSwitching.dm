@@ -161,23 +161,19 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		else
 			mapName = getMapNameFromID(mapID)
 
-		var/datum/apiModel/MapSwitch/mapSwitchRes
 		try
-			var/datum/apiRoute/mapswitch/mapSwitch = new
-			mapSwitch.buildBody(
-				trigger == "Player Vote" ? null : trigger, // trigger should be a ckey if not a vote
+			var/datum/apiRoute/gamebuilds/build/gameBuild = new
+			gameBuild.buildBody(
+				trigger == "Player Vote" ? "bot" : trigger,
+				config.server_id,
 				roundId,
-				null,
 				mapID,
 				votes
 			)
-			mapSwitchRes = apiHandler.queryAPI(mapSwitch)
+			apiHandler.queryAPI(gameBuild)
 		catch (var/exception/e)
 			var/datum/apiModel/Error/error = e.name
 			throw EXCEPTION(error.message)
-
-		if (text2num(mapSwitchRes.status) != 200)
-			throw EXCEPTION("Build server failed to switch map. Expected HTTP status code 200, received code [isnull(mapSwitchRes.status) ? "null" : mapSwitchRes.status] instead")
 
 		//we switched away from a voted map, make a note of this
 		if (src.nextMapIsVotedFor)

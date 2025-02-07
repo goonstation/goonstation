@@ -24137,6 +24137,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "bUk" = (
@@ -28503,6 +28504,10 @@
 /obj/item/clothing/suit/wcoat,
 /obj/item/matchbook,
 /obj/item/pen/marker/red,
+/obj/item/paper/pipebombs{
+	pixel_y = 7;
+	pixel_x = 9
+	},
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
 "cmn" = (
@@ -38314,6 +38319,8 @@
 	dir = 1
 	},
 /obj/table/reinforced/auto,
+/obj/item/storage/box/panic_buttons,
+/obj/item/device/panicbutton,
 /turf/simulated/floor/red/side{
 	dir = 5
 	},

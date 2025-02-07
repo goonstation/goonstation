@@ -1,4 +1,216 @@
 
+(t)fri feb 07 25
+(u)LeahTheTech
+(*)Roaches can now skitter by sprinting while lying down, allowing them to hide under tables.
+(+)Roaches now take extra damage from mousetraps.
+(u)glowbold
+(p)22200
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Deconstruction tools will always try to deconstruct objects on help, disarm, and grab intents. On harm intent, deconstruction tools will be used like a normal item on objects.
+(t)thu feb 06 25
+(u)Bartimeus973
+(p)22204
+(e)🗺📦🐁|A-Mapping, A-Game-Objects, A-Critters
+(+)Morty is now a real mob. This means you can grab him or put him inside pet carriers among others things.
+(u)Bartimeus973 & TDHooligan
+(p)22061
+(e)🆕🎨|C-Feature, C-Sprites
+(*)Most guns now create particles when they hit something. This includes walls and objects!
+(t)tue feb 04 25
+(u)glowbold
+(p)22131
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Arc Electroplaters can be broken by kinetics and explosions - repair them with common tools!
+(t)mon feb 03 25
+(u)Chasu
+(p)22034
+(e)🗺⚖📦|A-Mapping, C-Balance, A-Game-Objects
+(+)On station Security equipment lockers now feature more equipment, such as uniforms and headsets.
+(t)sat feb 1 25
+(u)tarmunora
+(+)Changeling limb critters mutate the DNA of their composite bodypart such that the original owner cannot be tracked by it.
+(t)fri jan 31 25
+(u)Chatauscours
+(p)22026
+(e)🗺💅|A-Mapping, C-QoL
+(+)Clarion podbay is now slightly bigger and has a couple more pods.
+(t)thu jan 30 25
+(u)glowbold
+(p)22077
+(e)⚖💊|C-Balance, A-Medical
+(+)You take deep breaths when doing CPR.
+(u)Chatauscours
+(p)22097
+(e)⚖💪|C-Balance, A-Traits
+(+)If you have the "Was it something I said?" trait, Beepsky will now only arrest you if you have at least 1 level of contraband on you.
+(u)glowbold
+(p)21955
+(e)🆕💡|C-Feature, A-Station-Systems
+(*)Scanning in unregistered persons with a RecordTrak will make them a new bank account.
+(u)glowbold
+(p)22075
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Microwaves can be broken by explosions and gunfire.
+(t)wed jan 29 25
+(u)LeahTheTech
+(+)The extended gamemode will no longer roll below a certain population threshold (~20 people readied up at roundstart)
+(u)DukePaulAtreides
+(p)22129
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The T-MO watch can now be worn on the belt.
+(t)tue jan 28 25
+(u)patricia
+(p)21973
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)The nuclear turbine's power signal now works correctly with mechcomp arithmetic components
+(t)mon jan 27 25
+(u)glowbold
+(p)22076
+(e)⚖💊|C-Balance, A-Medical
+(*)Cyber-organs do not appear in the Medical Manufacturer - get your patients to a roboticist, source synthorgans from botany, or harvest monkey organs.
+(t)sun jan 26 25
+(u)AnomalousPotato
+(p)21753
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Updated Medbay Pocket Guide to be more up-to-date, comprehensive, and useful.
+(t)thu jan 23 25
+(u)glowbold
+(p)22083
+(e)⚖📄💊|C-Balance, A-UI, A-Medical
+(*)The cloning console only shows total damage with a cloner implant. Users with heatlh implants will still allow you to read individual damage types.
+(t)wed jan 22 25
+(u)tarmunora
+(*)Greatly increase damage taken by cloned puritans, who will also always drop their head or brain on gib. Premature clone effect can no longer be cleared by genetics.
+(u)LeahTheTech
+(*)The syndicate have deployed a new robotic threat in their gunbot raids. This one has claws.
+(t)mon jan 20 25
+(u)Garash2k
+(p)21681
+(e)🆕💅📄|C-Feature, C-QoL, A-UI
+(*)Updated the keybind menu to use TGUI.
+(u)LeahTheTech
+(p)22052
+(e)💅📄|C-QoL, A-UI
+(+)The `ctrl + o, l, n` shortcuts will no longer work on <em>most</em> UI windows.
+(u)patricia
+(p)21956
+(e)💡|A-Station-Systems
+(+)Control units now output signals and execute programs at a more consistent rate
+(u)JORJ949
+(p)21582
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Nuclear Bombs can now have records loaded into them that play upon arming.
+(u)TealSeer
+(p)22024
+(e)🪲💡|C-Bug, A-Station-Systems
+(*)Repeatedly running DWAINE scripts will no longer crash the entire mainframe forever
+(u)glowbold
+(p)21962
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Disposal chutes can break from explosions and gunfire, and be repaired with a screwdriver and crowbar.
+(u)patricia
+(p)22031
+(e)💡|A-Station-Systems
+(+)Vent scrubbers are no longer set to scrub any gasses when built
+(t)sun jan 19 25
+(u)cringe
+(p)20620
+(e)🚄💨|C-Performance, A-Atmospherics
+(*)Atmospherics has been tweaked internally for performance. Be sure to report any bugs!
+(u)Cheekybrdy
+(p)22039
+(e)|
+(+)Ranchers can now get job specific items in the mail.
+(u)FlameArrow57
+(p)21904
+(e)🆕🎨🚗|C-Feature, C-Sprites, A-Vehicles
+(*)Added Light and High Impact Shielding System pod components to pod manufacturers. They provide timed life shielding with a % dmg reduction against projectiles and explosions.
+(t)thu jan 16 25
+(u)Sovexe
+(p)22020
+(e)💅💡|C-QoL, A-Station-Systems
+(+)Vent scrubber broadcast_status packets will now provide a full list of which gases are and are not being scrubbed.
+(t)wed jan 15 25
+(u)JORJ949
+(p)22015
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Fixed nuclear operatives being unable to fix the bomb with the battle wrench.
+(t)tue jan 14 25
+(u)TDHooligan
+(p)22005
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Gangs' webley shoots slower when fanning the hammer. Hammer fanning lasts 2x as long.
+(+)The HAFGAN burst laser shoots faster and has more ammo, but now gains spread as you do so.
+(u)Cheekybrdy
+(p)21827
+(e)🎨|C-Sprites
+(+)Purple crowbars are now in research lockers.
+(+)The RD's HPD is no longer engineering colours
+(u)TDHooligan
+(p)21972
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(*)The murderbox now contains a vending machine for gang weaponry.
+(u)Sord
+(+)Security now has a box of fancy panic buttons to hand out in case of emergencies. Don't forget yours!
+(+)Medical also has some fancy buttons they can make in their fabricator.
+(+)The HoP got their own fancy button in their locker.
+(u)LeahTheTech
+(p)21833
+(e)⚖⛔|C-Balance, C-Removal
+(*)Removed the security alert HUD button.
+(u)LeahTheTech
+(+)Pie slices can now be eaten without a spoon.
+(+)Traitor Pest Control Specialists can now buy an old hunting rifle for 7TC.
+(*)Bacon and steaks can now be cooked in the engine burn chamber. Probably not very well.
+(*)Single tank plasma bombs no longer require welding and explode with around double the power, making them more powerful than equivalent TTVs at lower plasma temperatures.
+(u)TDHooligan
+(p)21974
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(+)Special attacks now hit moving targets better.
+(t)sun jan 12 25
+(u)patricia
+(p)21548
+(e)🆕🎨💡|C-Feature, C-Sprites, A-Station-Systems
+(*)Adds a new buffering component to the mechanic's vendor. Read about it in the mechanic's book!
+(u)glowbold
+(p)21724
+(e)🆕🔄💡🤖|C-Feature, C-Rework, A-Station-Systems, A-Silicons
+(*)AIs/Cyborgs' "Show Alert Minimap" command and the General Alert computer display a minimap showing where the alerts are located.
+(+)Power, fire, and atmos alerts are all shown on the alert minimap based on where they are detected.
+(u)glowbold
+(p)21714
+(e)🔄🤖|C-Rework, A-Silicons
+(+)AIs can now select all cameras they can see through from their camera list.
+(u)patricia
+(p)21746
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The arithmetic component now supports max and min operations
+(u)Valtsu0
+(p)21799
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The WiFi component's range can now be adjusted.
+(t)sat jan 11 25
+(u)Sovexe
+(p)21792
+(e)⚖🔄🧛|C-Balance, C-Rework, A-Gamemodes
+(*)Podwars kills will now only subtract a half point from the dead players team rather than a full point. Kills will still credit your team a full point. This should alleviate the endless tug of war over kill based points.
+(t)fri jan 10 25
+(u)Jan.antilles
+(p)21900
+(e)🎨|C-Sprites
+(+)Resprites the Double Braids style to add more shading and dimension.
+(u)glowbold
+(p)21733
+(e)🆕🎨💊|C-Feature, C-Sprites, A-Medical
+(+)Monitor cybereyes can remotely view cameras. Ask a roboticist to install one today!
+(u)patricia
+(p)21957
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)GPS coordinates in packets are now in x=, y= format compatible with signal splitters
+(u)LeahTheTech
+(*)Adding items to pipebombs no longer reduces their reagent capacity or explosive power. Let your explosive creativity free!
+(*)The Syndicate have issued a handy new instructional manual on pipebomb crafting. One copy on each listening post.
+(+)Telecrystals in pipebombs will now teleport victims further away.
 (t)thu jan 09 25
 (u)Temthrush & yelloworlemons
 (p)21939

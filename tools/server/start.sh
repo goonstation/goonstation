@@ -18,23 +18,25 @@ if [[ -v SS13_ID ]]; then
 fi
 
 # Apply updates
-if [ -n "$(ls -A update)" ]; then
-	cd update
-	for filename in *; do
-		[ -e "$filename" ] || continue
-		if [ -d "$filename" ] && [ -d "../$filename" ]; then
-			rm -r "../$filename"
-		fi
-		mv "$filename" ..
-	done
-	cd ..
-	find ./tools -type f -name "*.sh" -o -name "dc" -exec chmod +x {} \;
+bash tools/server/update.sh
+
+# Load any new build version values
+if [ -e ".env.build" ]; then
+	eval $(cat .env.build)
+fi
+
+# Temp conditional for transition to new .env.build system
+if [[ -v RUSTG_VERSION ]]; then
+	cp -a "/rust-g/$RUSTG_VERSION/librust_g.so" .
+else
+	cp -a "/rust-g/librust_g.so" .
 fi
 
 # Update external libraries
-# TODO: versioning
-cp "/rust-g/librust_g.so" .
+# cp -a "/rust-g/$RUSTG_VERSION/librust_g.so" .
 cp "/byond-tracy/libprof.so" .
+
+chmod -R 770 /ss13_server
 
 # Pick a Byond version
 BYONDDIR="/byond/$BYOND_MAJOR_VERSION.$BYOND_MINOR_VERSION"

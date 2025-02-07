@@ -10660,6 +10660,10 @@
 /obj/table/wood/auto,
 /obj/item/disk/data/cartridge/captain,
 /obj/item/disk/data/cartridge/captain,
+/obj/item/paper/pipebombs{
+	pixel_y = 5;
+	pixel_x = 5
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "bmn" = (
@@ -20609,10 +20613,10 @@
 	},
 /area/station/hallway/secondary/entry)
 "iKs" = (
-/obj/critter/opossum/morty,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "iKt" = (

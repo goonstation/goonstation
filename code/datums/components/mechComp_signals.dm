@@ -365,11 +365,11 @@ TYPEINFO(/datum/component/mechanics_holder)
 		return
 
 	//draw a line for meson lookers
-	var/datum/lineResult/R1 = drawLine(get_turf(trigger), get_turf(receiver), "data", null,\
+	var/datum/lineResult/R1 = drawLineImg(get_turf(trigger), get_turf(receiver), "data", null,\
 		trigger.pixel_x, trigger.pixel_y,\
 		receiver.pixel_x, receiver.pixel_y,\
 		getCrossed = 0, mode = LINEMODE_SIMPLE)
-	var/datum/lineResult/R2 = drawLine(get_turf(receiver), get_turf(trigger), "data", null,\
+	var/datum/lineResult/R2 = drawLineImg(get_turf(receiver), get_turf(trigger), "data", null,\
 		receiver.pixel_x, receiver.pixel_y,\
 		trigger.pixel_x, trigger.pixel_y,\
 		getCrossed = 0, mode = LINEMODE_SIMPLE_REVERSED)
