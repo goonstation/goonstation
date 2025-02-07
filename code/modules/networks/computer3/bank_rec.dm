@@ -383,7 +383,8 @@
 							if ((src.active_bank["current_money"] + balanceChange) < 0)
 								src.print_text("<b>Warning:</b> [src.active_general["name"]] only has [src.active_bank["current_money"]][CREDIT_SIGN] in account!")
 								balanceChange = -src.active_bank["current_money"]
-							logTheThing(LOG_STATION, usr, "adds [abs(balanceChange)][CREDIT_SIGN] to the station budget from <b>[src.active_general["name"]]</b>'s account.")
+							src.log_string += "<br>Transferred [abs(balanceChange)][CREDIT_SIGN] to the payroll budget from [src.active_general["name"]]'s account."
+							logTheThing(LOG_STATION, usr, "adds [abs(balanceChange)][CREDIT_SIGN] to the payroll budget from <b>[src.active_general["name"]]</b>'s account.")
 							src.print_text("Transferred [abs(balanceChange)][CREDIT_SIGN] from [src.active_general["name"]] to station budget.")
 							src.active_bank["current_money"] += balanceChange
 							global.wagesystem.station_budget -= balanceChange // balanceChange is negative here, this adds to the station budget
@@ -391,7 +392,8 @@
 							if (global.wagesystem.station_budget < balanceChange)
 								src.print_text("<b>Warning:</b> Station budget only has [global.wagesystem.station_budget][CREDIT_SIGN] available!")
 								balanceChange = global.wagesystem.station_budget
-							logTheThing(LOG_STATION, usr, "adds [balanceChange][CREDIT_SIGN] to <b>[src.active_general["name"]]</b>'s account from the station budget.")
+							src.log_string += "<br>Transferred [balanceChange][CREDIT_SIGN] to [src.active_general["name"]]'s account from the payroll budget."
+							logTheThing(LOG_STATION, usr, "adds [balanceChange][CREDIT_SIGN] to <b>[src.active_general["name"]]</b>'s account from the payroll budget.")
 							src.print_text("Transferred [balanceChange][CREDIT_SIGN] from the station budget to [src.active_general["name"]].")
 							src.active_bank["current_money"] += balanceChange
 							global.wagesystem.station_budget -= balanceChange
