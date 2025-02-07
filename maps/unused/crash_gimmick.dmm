@@ -19456,7 +19456,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/bank_data{
 	dir = 8
 	},
 /obj/cable{
@@ -32383,7 +32383,7 @@
 	},
 /area/russian/radiation)
 "dgG" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/bank_data{
 	dir = 4
 	},
 /obj/disposalpipe/segment/transport,

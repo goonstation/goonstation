@@ -3890,7 +3890,7 @@
 /area/station/crew_quarters/clown)
 "yF" = (
 /obj/decal/stage_edge,
-/obj/machinery/computer/bank_data,
+/obj/machinery/computer3/bank_data,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"

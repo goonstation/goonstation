@@ -15621,7 +15621,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/bank_data{
 	dir = 8
 	},
 /obj/cable{
@@ -20988,7 +20988,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/heads)
 "bio" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/bank_data{
 	dir = 4
 	},
 /obj/machinery/light{
