@@ -86,7 +86,6 @@ TYPEINFO(/datum/component/equipment_fault)
 /datum/component/equipment_fault/proc/ef_attackby(obj/O, obj/item/I, mob/user = null)
 	var/attempt = FALSE
 	var/interaction_type = 0
-	var/duration = 2 SECONDS
 	if( (src.interactions & (TOOL_CUTTING | TOOL_SNIPPING) ) && (iscuttingtool(I) || issnippingtool(I)))
 		attempt = TRUE
 		interaction_type = TOOL_CUTTING | TOOL_SNIPPING
@@ -114,8 +113,7 @@ TYPEINFO(/datum/component/equipment_fault)
 		interaction_type = TOOL_WIRING
 
 	if(attempt)
-		actions.start(new /datum/action/bar/icon/callback(user, O, duration, PROC_REF(complete_stage), list(user, I, interaction_type), I.icon, I.icon_state,
-			null, null, src), user)
+		src.complete_stage(user, I, interaction_type)
 	else
 		showContextActions(user)
 		ef_perform_fault(O)
