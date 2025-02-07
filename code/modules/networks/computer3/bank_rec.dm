@@ -399,6 +399,7 @@
 							else if (src.active_general)
 								src.log_string += "<br>General Record [src.active_general["id"]] deleted."
 								qdel(src.active_general)
+								src.active_general = null
 								src.menu = MENU_INDEX
 								src.print_index()
 						if ("n")
