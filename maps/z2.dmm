@@ -53066,7 +53066,7 @@
 /turf/unsimulated/floor/darkblue,
 /area/centcom/lobby)
 "dNN" = (
-/obj/machinery/computer3/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/two,

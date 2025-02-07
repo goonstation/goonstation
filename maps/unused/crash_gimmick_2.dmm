@@ -1102,7 +1102,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "KD" = (
-/obj/machinery/computer3/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /turf/simulated/floor/shuttle,

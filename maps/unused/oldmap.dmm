@@ -2439,7 +2439,7 @@
 /turf/simulated/floor,
 /area/bridge)
 "fQ" = (
-/obj/machinery/computer3/bank_data,
+/obj/machinery/computer3/generic/bank_data,
 /turf/simulated/floor,
 /area/bridge)
 "fR" = (

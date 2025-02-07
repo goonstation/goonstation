@@ -139,7 +139,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/computer3/bank_data/console_upper{
+/obj/machinery/computer3/generic/bank_data/console_upper{
 	dir = 4
 	},
 /turf/simulated/floor/longtile,
@@ -15457,7 +15457,7 @@
 /turf/simulated/floor/wood,
 /area/station/hos)
 "aTd" = (
-/obj/machinery/computer3/bank_data,
+/obj/machinery/computer3/generic/bank_data,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
