@@ -218,7 +218,7 @@
 				if (!src.active_bank)
 					data_core.bank.find_record("name", src.active_general["name"])
 
-			src.log_string += "<br>Log loaded: [src.active_general["id"]]"
+			src.log_string += "<br>Record loaded: [src.active_general["id"]]"
 
 			if (src.print_active_record())
 				src.menu = MENU_IN_RECORD
@@ -234,10 +234,10 @@
 					src.menu = MENU_FIELD_INPUT
 					return
 				if ("p")
-					if ((src.connected && src.selected_printer) && !src.network_print())
+					if ((src.connected && src.selected_printer) && !src.network_record_print())
 						src.print_text("Print instruction sent.")
 					else
-						if (local_print())
+						if (src.local_record_print())
 							src.print_text("<b>Error:</b> No printer detected.")
 						else
 							src.print_text("Print instruction sent.")
@@ -855,7 +855,7 @@
 	src.print_text(dat)
 	return 1
 
-/datum/computer/file/terminal_program/bank_records/proc/local_print()
+/datum/computer/file/terminal_program/bank_records/proc/local_record_print()
 	var/obj/item/peripheral/printcard = find_peripheral("LAR_PRINTER")
 	if(!printcard)
 		return 1
@@ -893,7 +893,7 @@
 	src.peripheral_command("print",signal, "\ref[printcard]")
 	return 0
 
-/datum/computer/file/terminal_program/bank_records/proc/network_print()
+/datum/computer/file/terminal_program/bank_records/proc/network_record_print()
 	if (!connected || !selected_printer || !server_netid)
 		return 1
 
