@@ -95,7 +95,7 @@ export const Reticulator = () => {
   } = data;
   const [tabIndex, setTabIndex] = useState(1);
   return (
-    <Window title="Reticulator" width={600} height={350}>
+    <Window title="Reticulator" width={600} height={375}>
       <Window.Content>
         <Flex>
           <Flex.Item mr={1}>
@@ -115,8 +115,13 @@ export const Reticulator = () => {
                     {fusionShards}
                   </LabeledList.Item>
                   <LabeledList.Item label="Omni">{omniShards}</LabeledList.Item>
-                  <LabeledList.Item label="Database">
-                    <Button selected onClick={() => act('view_database')}>
+                  <LabeledList.Item label="Shard info">
+                    <Button selected onClick={() => act('view_shard_database')}>
+                      Info
+                    </Button>
+                  </LabeledList.Item>
+                  <LabeledList.Item label="Combinations">
+                    <Button selected onClick={() => act('view_combine_database')}>
                       Info
                     </Button>
                   </LabeledList.Item>

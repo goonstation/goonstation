@@ -40,6 +40,7 @@
 		ARTRET_INCREASE_MINING_POWER = list(ARTIFACT_SHARD_POWER = 1, "readable" = "1 Power"),
 	)
 	var/static/artifact_shard_reference
+	var/static/artifact_combinations_reference
 	var/list/reticulated_artifacts = list()
 	var/list/reticulated_art_names = list()
 
@@ -94,14 +95,16 @@
 		. = ..()
 		if (.)
 			return
-
+		. = TRUE
 		switch (action)
 			if ("eject_art")
 				src.eject_artifact()
 			if ("eject_item")
 				src.eject_item()
-			if ("view_database")
-				src.view_database(usr)
+			if ("view_shard_database")
+				src.view_shard_database(usr)
+			if ("view_combine_database")
+				src.view_combine_database(usr)
 
 			if ("breakdown_artifact")
 				src.break_down_artifact(usr)
@@ -443,7 +446,7 @@
 
 		src.apply_cost(action)
 
-	proc/view_database(mob/user)
+	proc/view_shard_database(mob/user)
 		if (!src.artifact_shard_reference)
 			var/list/art_reference = list()
 			var/str
@@ -467,6 +470,36 @@
 					src.artifact_shard_reference += "<br>"
 
 		tgui_message(user, src.artifact_shard_reference, "Artifact Shard Per Artifact")
+
+	proc/view_combine_database(mob/user)
+		if (!src.artifact_combinations_reference)
+			var/list/art_reference = list()
+			var/list/combinations = list()
+			for (var/datum/artifact/art as anything in concrete_typesof(/datum/artifact))
+				var/art_flags = initial(art.combine_flags)
+				if (art_flags & ARTIFACT_DOES_NOT_COMBINE)
+					combinations += "does not combine"
+				else
+					if (art_flags & ARTIFACT_ACCEPTS_ANY_COMBINE)
+						combinations += "accepts incoming combinations"
+					if (art_flags & ARTIFACT_COMBINES_INTO_ANY)
+						combinations += "combines into any"
+					else if (art_flags & ARTIFACT_COMBINES_INTO_HANDHELD)
+						combinations += "combines into handheld"
+					else if (art_flags & ARTIFACT_COMBINES_INTO_LARGE)
+						combinations += "combines into large"
+				art_reference += "[initial(art.type_name)] - [capitalize(english_list(combinations))]"
+
+				combinations = list()
+
+			sortList(art_reference, /proc/cmp_text_asc)
+
+			for (var/i in 1 to length(art_reference))
+				src.artifact_combinations_reference += art_reference[i]
+				if (i != length(art_reference))
+					src.artifact_combinations_reference += "<br>"
+
+		tgui_message(user, src.artifact_combinations_reference, "Artifact Combinations")
 
 	proc/apply_new_name(obj/to_change)
 		if (HAS_ATOM_PROPERTY(to_change, PROP_ATOM_RETICULATED))
