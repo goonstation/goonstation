@@ -175,6 +175,27 @@
 					return
 
 		if(MENU_INDEX)
+			if (lowertext(command) == FIELDNUM_NEWREC)
+				var/datum/db_record/general_record = new
+				general_record["name"] = "New Record"
+				general_record["full_name"] = "New Record"
+				general_record["id"] = "[num2hex(rand(1, 0xffffff), 6)]"
+				general_record["rank"] = "Unassigned"
+				general_record["sex"] = "Other"
+				general_record["pronouns"] = "Unknown"
+				general_record["age"] = "Unknown"
+				general_record["fingerprint"] = "Unknown"
+				general_record["p_stat"] = "Active"
+				general_record["m_stat"] = "Stable"
+				data_core.general.add_record(general_record)
+				src.active_general = general_record
+				src.active_bank = null
+				src.log_string += "<br>Record created: [general_record["id"]]"
+
+				if (src.print_active_record())
+					src.menu = MENU_IN_RECORD
+				return
+
 			var/index_number = round(max(text2num_safe(command), 0))
 			if (index_number == 0)
 				src.menu = MENU_MAIN
