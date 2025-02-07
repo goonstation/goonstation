@@ -389,8 +389,11 @@
 					switch(ckey(inputText))
 						if ("y")
 							if (src.active_bank)
+								global.wagesystem.station_budget += src.active_bank["current_money"]
+								src.log_string += "<br>Transferred [src.active_bank["current_money"]][CREDIT_SIGN] from [src.active_bank["name"]] into payroll budget."
 								src.log_string += "<br>Bank Record [src.active_bank["id"]] deleted."
 								qdel(src.active_bank)
+								src.active_bank = null
 								src.print_active_record()
 								src.menu = MENU_IN_RECORD
 							else if (src.active_general)
