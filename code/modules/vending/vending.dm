@@ -366,8 +366,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		src.scan = null
 
 /obj/machinery/vending/attackby(obj/item/W, mob/user)
-	if (istype(W,/obj/item/electronics/scanner) || istype(W,/obj/item/deconstructor)) // So people don't end up making the vending machines fall on them when they try to scan/deconstruct it
-		return
 	// repair fallen/broken in any order first
 	if (src.fallen)
 		if (ispryingtool(W))

@@ -140,6 +140,9 @@ ABSTRACT_TYPE(/obj/art_fissure_objs)
 	desc = ""
 	anchored = ANCHORED_ALWAYS
 
+	ex_act()
+		return
+
 ABSTRACT_TYPE(/obj/art_fissure_objs/cross_dummy)
 /obj/art_fissure_objs/cross_dummy
 	invisibility = INVIS_ALWAYS

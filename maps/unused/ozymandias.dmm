@@ -12755,7 +12755,6 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "dxg" = (
-/obj/critter/opossum/morty,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -12764,6 +12763,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/maintenance{
 	name = "Medical Booth Morgue"

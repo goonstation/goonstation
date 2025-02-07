@@ -206,6 +206,7 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 	color_r = 0.95 // darken a little, kinda red
 	color_g = 0.9
 	color_b = 0.9
+	var/image_group = CLIENT_IMAGE_GROUP_ARREST_ICONS
 
 	emp_act()
 		if (ishuman(src.loc))
@@ -218,14 +219,36 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 
+	emag_act(mob/user)
+		if (src.image_group != CLIENT_IMAGE_GROUP_ARREST_ICONS)
+			boutput(user, SPAN_ALERT("[src]'s facial recognition is already fried!"))
+			return
+		src.image_group = "fake_arrest_icons_\ref[src]"
+		for (var/i in 1 to rand(3,7))
+			var/datum/db_record/record = pick(data_core.security.records)
+			for_by_tcl(H, /mob/living/carbon/human)
+				if (H.real_name == record["name"] || H.name == record["name"])
+					var/icon_state = pick(100; "*Arrest*", 20; "Contraband", 5; "Clown")
+					var/image/fake_arrest_icon = image('icons/effects/sechud.dmi',H,icon_state,EFFECTS_LAYER_UNDER_4)
+					fake_arrest_icon.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+					get_image_group(src.image_group).add_image(fake_arrest_icon)
+					break
+
+		if(src.equipped_in_slot == SLOT_GLASSES)
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(src.loc)
+			get_image_group(src.image_group).add_mob(src.loc)
+
+		boutput(user, SPAN_ALERT("You short out [src]'s facial recognition circuit!"))
+		return TRUE
+
 	equipped(var/mob/user, var/slot)
 		..()
 		if (slot == SLOT_GLASSES)
-			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(user)
+			get_image_group(src.image_group).add_mob(user)
 
 	unequipped(var/mob/user)
 		if(src.equipped_in_slot == SLOT_GLASSES)
-			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)
+			get_image_group(src.image_group).remove_mob(user)
 		..()
 
 /obj/item/clothing/glasses/sunglasses/sechud/superhero
