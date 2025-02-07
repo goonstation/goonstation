@@ -38,11 +38,14 @@ TYPEINFO(/obj/machinery/phone)
 		var/area/location = get_area(src)
 
 		// Give the phone an appropriate departmental color. Jesus christ thats fancy.
-		if(isnull(stripe_color)) // maps can override it now
+		if(isAI(src.loc))
+			stripe_color = "#00ff00"
+			phone_category = "bridge"
+		else if(isnull(stripe_color)) // maps can override it now
 			if(istype(location,/area/station/security))
 				stripe_color = "#ff0000"
 				phone_category = "security"
-			else if(istype(location,/area/station/bridge) || isAI(src.loc))
+			else if(istype(location,/area/station/bridge))
 				stripe_color = "#00ff00"
 				phone_category = "bridge"
 			else if(istype(location, /area/station/engine) || istype(location, /area/station/quartermaster) || istype(location, /area/station/mining))
@@ -176,9 +179,6 @@ TYPEINFO(/obj/machinery/phone)
 					ui_interact(user)
 			else
 				if(user)
-					if(isAI(user))
-						var/mob/living/silicon/ai/borgo = user
-						borgo.textToPlayer("Your internal telephone is disconnected.")
 					boutput(user,SPAN_ALERT("As you pick up the phone you notice that the cord has been cut!"))
 		else
 			src.ringing = FALSE

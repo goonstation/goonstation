@@ -1008,14 +1008,12 @@
 
 	// Do they have a phone?
 	var/obj/item/equipped_talk_thing = src.equipped()
-	if(equipped_talk_thing && equipped_talk_thing.flags & TALK_INTO_HAND && !message_mode)
+	if((equipped_talk_thing && equipped_talk_thing.flags & TALK_INTO_HAND && !message_mode) || isAI(src))
+		if(isAI(src))
+			var/mob/living/silicon/ai/ai = src
+			if(ai.phone.answered)
+				equipped_talk_thing = ai.phone.handset
 		equipped_talk_thing.talk_into(src, messages, secure_headset_mode, src.real_name, lang_id)
-
-	// AI phone fuckery
-	if(isAI(src))
-		var/mob/living/silicon/ai/ai = src
-		if(ai.phone.answered)
-			ai.phone.handset.talk_into(src, messages, secure_headset_mode, src.real_name, lang_id)
 
 	switch (message_mode)
 		if ("headset", "secure headset", "right hand", "left hand")
