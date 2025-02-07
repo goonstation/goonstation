@@ -719,19 +719,19 @@
 	for(var/datum/db_record/R as anything in data_core.bank.records)
 		payroll += R["wage"]
 	var/surplus = round(global.wagesystem.payroll_stipend - payroll)
-	src.print_text("<br><b>Payroll Details</b>")
-	src.print_text("Payroll Stipend: [num2text(round(global.wagesystem.payroll_stipend), 50)][CREDIT_SIGN]")
-	src.print_text("Payroll Cost: [num2text(round(payroll),50)][CREDIT_SIGN]")
+	src.print_text("<br><b>Payroll Cycle Details</b>")
+	src.print_text("Per-Cycle Stipend: [num2text(round(global.wagesystem.payroll_stipend), 50)][CREDIT_SIGN]")
+	src.print_text("Per-Cycle Cost: -[num2text(round(payroll),50)][CREDIT_SIGN]")
 	if(surplus >= 0)
 		src.print_text("<b>Payroll Surplus:</b> +[num2text(round(surplus),50)][CREDIT_SIGN]")
 	else
-		src.print_text("<b>Payroll Deficit:</b> -[num2text(round(surplus),50)][CREDIT_SIGN]")
+		src.print_text("<b>Payroll Deficit:</b> [num2text(round(surplus),50)][CREDIT_SIGN]")
 
-	var/profit_margin = total_funds - global.wagesystem.total_stipend
+	var/net_profit = total_funds - global.wagesystem.total_stipend
 	src.print_text("<br><b>Station Profitability</b>")
 	src.print_text("Total Budget: +[num2text(round(total_funds),50)][CREDIT_SIGN]")
 	src.print_text("Total Stipend: -[num2text(round(global.wagesystem.total_stipend), 50)][CREDIT_SIGN]")
-	src.print_text("<b>Profit Margin:</b> [num2text(round(profit_margin), 50)][CREDIT_SIGN]")
+	src.print_text("<b>Net Profit:</b> [num2text(round(net_profit), 50)][CREDIT_SIGN]")
 
 	src.print_text("<br><b>Commands:</b>")
 	if(global.wagesystem.pay_active)
