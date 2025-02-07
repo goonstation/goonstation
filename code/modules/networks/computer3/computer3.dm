@@ -91,7 +91,7 @@
 			icon_state = "datasec"
 			base_icon_state = "datasec"
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda/transmit_only
+			setup_starting_peripheral2 = /obj/item/peripheral/printer
 			setup_starting_program = /datum/computer/file/terminal_program/secure_records
 
 			console_upper
