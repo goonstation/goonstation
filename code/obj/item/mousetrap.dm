@@ -293,7 +293,8 @@
 					if (!H.gloves)
 						zone = type
 						H.changeStatus("stunned", 3 SECONDS)
-			H.TakeDamage(zone, 1, 0, 0, DAMAGE_CRUSH)
+			var/damage = istype(H.mutantrace, /datum/mutantrace/roach) ? 10 : 1
+			H.TakeDamage(zone, damage, 0, 0, DAMAGE_CRUSH)
 
 		else if (ismobcritter(target))
 			var/mob/living/critter/C = target

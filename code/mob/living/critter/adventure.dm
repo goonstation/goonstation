@@ -288,7 +288,7 @@
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	faction = list(FACTION_DERELICT)
-	ai_type = /datum/aiHolder/aggressive
+	ai_type = /datum/aiHolder/ranged
 	is_npc = TRUE
 	death_text = "%src% blows apart!"
 	custom_gib_handler = /proc/robogibs

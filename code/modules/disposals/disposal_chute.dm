@@ -159,9 +159,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					else
 						boutput(user, SPAN_HINT("You need to <b>pry</b> the locking panels."))
 			return
-		if (istype(I,/obj/item/deconstructor))
-			user.visible_message(SPAN_ALERT("<B>[user] hits [src] with [I]!</B>"))
-			return
 		if (istype(I, /obj/item/handheld_vacuum))
 			return
 		if (istype(I,/obj/item/satchel/) && I.contents.len)
@@ -735,7 +732,28 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		return
 
 	attackby(var/obj/item/I, var/mob/user)
-		return
+		if(status & BROKEN)
+			switch(src.repair_step)
+				if(DISPOSAL_REPAIR_STEP_SCREWDRIVER)
+					if(isscrewingtool(I))
+						playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, TRUE)
+						src.visible_message("[user] loosens the jammed retaining screws.")
+						src.repair_step = DISPOSAL_REPAIR_STEP_CROWBAR
+					else
+						boutput(user, SPAN_HINT("You need to <b>loosen</b> the retaining screws."))
+
+				if(DISPOSAL_REPAIR_STEP_CROWBAR)
+					if(ispryingtool(I))
+						playsound(src.loc, 'sound/machines/airlock_pry.ogg', 35, TRUE)
+						src.visible_message("[user] pries the chute locking panels back in place")
+						src.repair_step = DISPOSAL_REPAIR_STEP_FIXED
+						src.status &= ~BROKEN
+						src.mode = DISPOSAL_CHUTE_CHARGING
+						src.icon_state = initial(icon_state)
+						src.update()
+					else
+						boutput(user, SPAN_HINT("You need to <b>pry</b> the locking panels."))
+			return
 
 	Entered()
 		. = ..()

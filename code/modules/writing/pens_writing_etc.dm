@@ -1007,7 +1007,6 @@
 	name = "clipboard"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "clipboard"
-	var/obj/item/pen/pen = null
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "clipboard0"
 	throwforce = 1
@@ -1018,6 +1017,8 @@
 	stamina_damage = 10
 	stamina_cost = 1
 	stamina_crit_chance = 5
+	var/obj/item/pen/pen = null
+	var/max_items = 15
 	var/tmp/list/image/overlay_images = null
 
 	New()
@@ -1026,6 +1027,12 @@
 		src.overlay_images = list()
 		overlay_images["paper"] = image('icons/obj/writing.dmi', "clipboard_paper")
 		overlay_images["pen"] = image('icons/obj/writing.dmi', "clipboard_pen")
+
+	disposing()
+		. = ..()
+		if(src.pen)
+			qdel(src.pen)
+			src.pen = null
 
 	attack_self(mob/user as mob)
 		var/dat = "<B>Clipboard</B><BR>"
@@ -1117,28 +1124,56 @@
 		else
 			return ..()
 
-	attackby(obj/item/P, mob/user)
+	attackby(obj/item/I, mob/user)
+		if (in_interact_range(I, user))
+			src.add_stuff(I, user)
 
-		if (istype(P, /obj/item/paper) || istype(P, /obj/item/photo))
-			if (length(src.contents) < 15)
-				user.drop_item()
-				P.set_loc(src)
-			else
-				boutput(user, SPAN_NOTICE("Not enough space!!!"))
-		else
-			if (istype(P, /obj/item/pen))
-				if (!src.pen)
-					user.drop_item()
-					P.set_loc(src)
-					src.pen = P
-			else
+	MouseDrop_T(atom/movable/O, mob/user)
+		if (!in_interact_range(src, user) || !in_interact_range(O, user) || !IN_RANGE(O, src, 1))
+			return
+		if (O == src)
+			SPAWN(0)
+				src.AttackSelf(user)
+			return
+		src.add_stuff(O, user)
+
+	proc/add_stuff(obj/item/I, mob/user)
+		if (istype(I, /obj/item/paper) || istype(I, /obj/item/photo))
+			if (length(src.contents) >= src.max_items)
+				boutput(user, SPAN_NOTICE("[src] can only hold [src.max_items] items!"))
 				return
+			user.drop_item()
+			I.set_loc(src)
+		else if (istype(I, /obj/item/pen))
+			if (src.pen)
+				boutput(user, SPAN_NOTICE("[src] already has a pen!"))
+				return
+			user.drop_item()
+			I.set_loc(src)
+			src.pen = I
+		else if (istype_exact(I, /obj/item/paper_bin))
+			var/obj/item/paper_bin/bin = I
+			if (length(src.contents) >= src.max_items)
+				boutput(user, SPAN_NOTICE("[src] can only hold [src.max_items] items!"))
+				return
+			while (length(src.contents) < max_items)
+				var/obj/item/paper = locate(/obj/item/paper) in bin
+				if (paper)
+					paper.set_loc(src)
+				else
+					if (bin.amount_left <= 0)
+						break
+					bin.amount_left--
+					new /obj/item/paper(src)
+			bin.update()
+		else
+			boutput(user, SPAN_NOTICE("You're not quite sure how to fit [I] into [src]."))
+			return
+		src.add_fingerprint(user)
 		src.update()
 		user.update_inhands()
 		SPAWN(0)
 			src.AttackSelf(user)
-			return
-		return
 
 	proc/update()
 		if (locate(/obj/item/paper) in src)
