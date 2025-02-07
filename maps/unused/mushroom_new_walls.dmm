@@ -20613,10 +20613,10 @@
 	},
 /area/station/hallway/secondary/entry)
 "iKs" = (
-/obj/critter/opossum/morty,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "iKt" = (

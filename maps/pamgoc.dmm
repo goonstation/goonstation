@@ -21097,10 +21097,10 @@
 /turf/simulated/floor/red/side,
 /area/station/crew_quarters/info)
 "bcb" = (
-/obj/critter/opossum/morty,
 /obj/item/device/radio/intercom/medical{
 	dir = 4
 	},
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "bcc" = (

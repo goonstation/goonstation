@@ -10478,10 +10478,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
-"aJi" = (
-/obj/machinery/light/incandescent/blueish,
-/turf/simulated/floor/plating/random,
-/area/station/turret_protected/ai)
 "aJk" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -11154,9 +11150,6 @@
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
-"aLZ" = (
-/turf/simulated/floor/plating/random,
-/area/station/turret_protected/ai)
 "aMa" = (
 /obj/item/device/multitool,
 /obj/cable{
@@ -30579,7 +30572,7 @@
 "chM" = (
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/plating/random,
-/area/station/turret_protected/ai)
+/area/station/maintenance/northeast)
 "chO" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -40390,7 +40383,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/critter/opossum/morty,
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "nLd" = (
@@ -108668,10 +108661,10 @@ aFl
 aKb
 aKy
 aFl
-aLZ
-aJi
+aoj
+aqd
 chM
-aJZ
+anx
 tTu
 aPT
 aPR

@@ -603,7 +603,7 @@
 					dat += "<center><font color=red>Fatal Error 0x17<br>"
 					dat += "No System Software Loaded</font></center>"
 
-		user << output(dat, "pda2_\ref[src].texto")
+		user.Browse(dat, "window=pda2_\ref[src].texto")
 
 
 	winshow(user,"pda2_\ref[src]",1)
