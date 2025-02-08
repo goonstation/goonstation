@@ -709,6 +709,61 @@ ABSTRACT_TYPE(/datum/projectile/special)
 					boutput(dropme, SPAN_ALERT("Your coffin was lost or destroyed! Oh no!!!"))
 		..()
 
+/datum/projectile/special/homing/mechcomp_warp
+	name = "teleporter energy ball"
+	icon_state = "heavyion"
+	auto_find_targets = 0
+	max_speed = 6
+	start_speed = 0.1
+	invisibility = INVIS_INFRA
+
+	shot_sound = null
+	goes_through_walls = 1
+	goes_through_mobs = 1
+	smashes_glasses = FALSE
+
+	silentshot = 1
+	var/obj/effect/eye_glider
+	var/turf/starting_turf
+
+	on_launch(obj/projectile/P)
+		. = ..()
+		src.starting_turf = get_turf(P)
+		src.eye_glider = new(get_turf(P))
+		for (var/mob/M in P.contents)
+			if(M.client)
+				M.client.eye = src.eye_glider
+
+	tick(obj/projectile/P)
+		..()
+		src.eye_glider.set_loc(get_turf(P))
+		if (!(P.targets && P.targets.len && P.targets[1] && !(P.targets[1]:disposed)))
+			P.die()
+		var/obj/item/mechanics/telecomp/target_tele = P.targets[1]
+		if (!target_tele.anchored)
+			P.die()
+		if (get_turf(P) == src.starting_turf) return
+		for (var/obj/item/mechanics/telecomp/tele in get_turf(P))
+			if (tele.anchored)
+				particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(tele.loc))).Run()
+				// Dest. pad gets "from=origin&count=123"
+				SEND_SIGNAL(tele, COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"from=[tele.teleID]&count=[P.special_data["count_sent"]]")
+				if (tele != P.targets[1])
+					logTheThing(LOG_STATION, tele, "intercepted teleport projectile [P] at [log_loc(tele)] (targeted destination [log_loc(P.targets[1])])")
+				P.die()
+
+	on_end(obj/projectile/P)
+		for (var/atom/movable/AM in P.contents)
+			AM.set_loc(get_turf(P))
+			AM.delStatus("teleporting")
+			if (istype(AM, /mob))
+				var/mob/M = AM
+				if (M.client)
+					M.client.eye = M
+		qdel(src.eye_glider)
+		src.eye_glider = null
+		..()
+
 /datum/projectile/special/homing/magicmissile
 	name = "magic missile"
 	sname = "magic missile"

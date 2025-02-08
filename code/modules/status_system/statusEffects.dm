@@ -3354,3 +3354,11 @@
 		UnregisterSignal(src.owner, COMSIG_MOVABLE_MOVED)
 		src.owner.layer = initial(src.owner.layer)
 		. = ..()
+
+/datum/statusEffect/teleporting
+	id = "teleporting"
+	name = "Teleporting"
+	desc = "You're in a waveform of semi-stable radio energy.'.<br>Visibility drastically reduced."
+	icon_state = "empulsar"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEUTRAL
