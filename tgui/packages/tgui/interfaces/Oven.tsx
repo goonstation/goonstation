@@ -48,7 +48,7 @@ export const Oven = () => {
   } = data;
 
   return (
-    <Window title="Cookomatic Multi-Oven" width={420} height={555}>
+    <Window title="Cookomatic Multi-Oven" width={420} height={595}>
       <Window.Content>
         <Section
           title="Settings"
@@ -99,7 +99,7 @@ export const Oven = () => {
         </Section>
         <Section
           title="Contents"
-          scrollable
+          scrollable={content_icons && content_icons.length}
           buttons={
             <Button onClick={() => act('eject_all')}>
               <Icon name="eject" />
@@ -107,7 +107,7 @@ export const Oven = () => {
           }
         >
           {content_icons && content_icons.length ? (
-            <Stack vertical minHeight="110px" maxHeight="110px">
+            <Stack vertical minHeight="130px" maxHeight="130px">
               {content_icons.map((item, index) => (
                 <Stack key={index} style={{ borderBottom: '0.5px #555 solid' }}>
                   <Stack.Item grow style={{
@@ -134,7 +134,7 @@ export const Oven = () => {
               ))}
             </Stack>
           ) : (
-            <Stack minHeight="110px" maxHeight="110px"><Stack.Item>(Empty)</Stack.Item></Stack>
+            <Stack minHeight="130px" maxHeight="130px"><Stack.Item>(Empty)</Stack.Item></Stack>
           )}
         </Section>
         {output_icon && (
