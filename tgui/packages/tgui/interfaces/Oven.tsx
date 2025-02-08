@@ -48,7 +48,7 @@ export const Oven = () => {
   } = data;
 
   return (
-    <Window title="Cookomatic Multi-Oven" width={420} height={595}>
+    <Window title="Cookomatic Multi-Oven" width={420} height={600}>
       <Window.Content>
         <Section
           title="Settings"
@@ -62,11 +62,11 @@ export const Oven = () => {
           }
         >
           <Stack fontSize={1.5} justify="center">
-            <Stack.Item vertical>
+            <Stack.Item>
               <OvenDialbuttons min={1} max={5} time={time} />
               <OvenDialbuttons min={6} max={10} time={time} />
             </Stack.Item>
-            <Stack.Item vertical>
+            <Stack.Item>
               <Stack.Item>
                 <Button
                   selected={heat === 'High'}
@@ -99,7 +99,7 @@ export const Oven = () => {
         </Section>
         <Section
           title="Contents"
-          scrollable={content_icons && content_icons.length}
+          scrollable={!!(content_icons && content_icons.length)}
           buttons={
             <Button onClick={() => act('eject_all')}>
               <Icon name="eject" />
@@ -110,9 +110,12 @@ export const Oven = () => {
             <Stack vertical minHeight="130px" maxHeight="130px">
               {content_icons.map((item, index) => (
                 <Stack key={index} style={{ borderBottom: '0.5px #555 solid' }}>
-                  <Stack.Item grow style={{
-                          display: 'flex',
-                        }}>
+                  <Stack.Item
+                    grow
+                    style={{
+                      display: 'flex',
+                    }}
+                  >
                     <Image
                       height="32px"
                       width="32px"
@@ -134,27 +137,35 @@ export const Oven = () => {
               ))}
             </Stack>
           ) : (
-            <Stack minHeight="130px" maxHeight="130px"><Stack.Item>(Empty)</Stack.Item></Stack>
+            <Stack minHeight="130px" maxHeight="130px">
+              <Stack.Item>(Empty)</Stack.Item>
+            </Stack>
           )}
         </Section>
-        {output_icon && (
-          <Section grow>
-            <Stack align>
-              <Stack.Item grow>
-                <Section title="Potential Recipe">
+        <Section>
+          <Stack align>
+            <Stack.Item grow>
+              <Section title="Potential Recipe">
+                {output_icon ? (
                   <Stack vertical>
                     <Stack.Item>
-                    {recipe_icons.map((item, index) => (
-                      <Stack.Item key={index} style={{ borderBottom: '0.5px #555 solid', display: "flex" }}>
-                        <Image
-                          height="32px"
-                          width="32px"
-                          src={`data:image/png;base64,${item}`}
-                          style={{ transform: 'translate(0, -4px)' }}
-                        />
-                        {recipe_names[index]}
-                      </Stack.Item>
-                    ))}
+                      {recipe_icons.map((item, index) => (
+                        <Stack.Item
+                          key={index}
+                          style={{
+                            borderBottom: '0.5px #555 solid',
+                            display: 'flex',
+                          }}
+                        >
+                          <Image
+                            height="32px"
+                            width="32px"
+                            src={`data:image/png;base64,${item}`}
+                            style={{ transform: 'translate(0, -4px)' }}
+                          />
+                          {recipe_names[index]}
+                        </Stack.Item>
+                      ))}
                     </Stack.Item>
                     <Stack.Item>
                       <LabeledList>
@@ -164,11 +175,17 @@ export const Oven = () => {
                       </LabeledList>
                     </Stack.Item>
                   </Stack>
-                </Section>
-              </Stack.Item>
-              <Stack.Item><Divider vertical /></Stack.Item>
-              <Stack.Item grow>
-                <Section title="Result">
+                ) : (
+                  'N/A'
+                )}
+              </Section>
+            </Stack.Item>
+            <Stack.Item>
+              <Divider vertical />
+            </Stack.Item>
+            <Stack.Item grow>
+              <Section title="Result">
+                {output_icon ? (
                   <Stack vertical align="center" textAlign="center">
                     <Stack.Item>
                       <Image
@@ -177,15 +194,15 @@ export const Oven = () => {
                         src={`data:image/png;base64,${output_icon}`}
                       />
                     </Stack.Item>
-                    <Stack.Item>
-                     {output_name}
-                    </Stack.Item>
+                    <Stack.Item>{output_name}</Stack.Item>
                   </Stack>
-                </Section>
-              </Stack.Item>
-            </Stack>
-          </Section>
-        )}
+                ) : (
+                  'N/A'
+                )}
+              </Section>
+            </Stack.Item>
+          </Stack>
+        </Section>
         {!!cooking && (
           <Modal fontSize={2} textAlign="center">
             <Section>Cooking! Please wait...</Section>
@@ -202,12 +219,16 @@ const OvenDialbuttons = (props) => {
   const nodes: JSX.Element[] = [];
   for (let i = min; i <= max; i++) {
     const node = (
-      <Button key={i}
+      <Button
+        key={i}
         selected={time === i}
-        onClick={() => act('set_time', { "time": i })}
+        onClick={() => act('set_time', { time: i })}
         width="40px"
-        textAlign="center">{i}
-      </Button>);
+        textAlign="center"
+      >
+        {i}
+      </Button>
+    );
     nodes.push(node);
   }
   return <Stack.Item>{nodes}</Stack.Item>;
