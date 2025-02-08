@@ -51,7 +51,9 @@
 	/datum/matfab_recipe/simple/nuclear/heat_exchanger,
 	/datum/matfab_recipe/simple/nuclear/control_rod,
 	/datum/matfab_recipe/simple/nuclear/fuel_rod,
-	/datum/matfab_recipe/makeshift_fuel_rod)
+	/datum/matfab_recipe/makeshift_fuel_rod,
+	/datum/matfab_recipe/simple/turbine/blade,
+	/datum/matfab_recipe/simple/turbine/stator)
 
 /obj/machinery/nanofab/prototype
 	name = "Nano-fabricator (Prototype)"
