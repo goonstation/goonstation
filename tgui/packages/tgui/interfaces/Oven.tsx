@@ -63,12 +63,8 @@ export const Oven = () => {
         >
           <Stack fontSize={1.5} justify="center">
             <Stack.Item vertical>
-              <Stack.Item>
-                <OvenDialbuttons min={1} max={5} time={time} />
-              </Stack.Item>
-              <Stack.Item>
-                <OvenDialbuttons min={6} max={10} time={time} />
-              </Stack.Item>
+              <OvenDialbuttons min={1} max={5} time={time} />
+              <OvenDialbuttons min={6} max={10} time={time} />
             </Stack.Item>
             <Stack.Item vertical>
               <Stack.Item>
@@ -214,5 +210,5 @@ const OvenDialbuttons = (props) => {
       </Button>);
     nodes.push(node);
   }
-  return nodes;
+  return <Stack.Item>{nodes}</Stack.Item>;
 };
