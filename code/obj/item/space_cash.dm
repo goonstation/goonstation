@@ -201,7 +201,7 @@
 	name = "buttcoin"
 	real_name = "credit"
 	desc = "The crypto-currency of the future (If you don't pay for your own electricity and got in early and don't lose the file and don't want transactions to be faster than half an hour and . . .)"
-	icon_state = "cashblue"
+	icon_state = "buttcoin"
 	stack_type = /obj/item/currency/buttcoin
 	display_name = "cash"
 
