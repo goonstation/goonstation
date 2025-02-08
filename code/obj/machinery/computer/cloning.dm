@@ -71,7 +71,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 
 /obj/item/cloner_upgrade
 	name = "\improper NecroScan II cloner upgrade module"
-	desc = "A circuit module designed to improve cloning machine scanning capabilities to the point where even the deceased may be scanned."
+	desc = "A circuit module designed to improve cloning machine scanning capabilities to the point where even skeletal remains may be scanned."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cloner_upgrade"
 	health = 8
@@ -950,6 +950,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		"message" = src.currentStatusMessage,
 		"disk" = !isnull(src.diskette),
 
+		"allowDeadScan" = src.allow_dead_scanning,
 		"allowMindErasure" = src.allow_mind_erasure,
 		"clonesForCash" = wagesystem.clones_for_cash,
 		"balance" = src.held_credit,
@@ -958,12 +959,16 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		"geneticAnalysis" = src.gen_analysis,
 		"podNames" = list(),
 		"meatLevels" = list(),
+		"podSpeed" = list(),
+		"podEfficient" = list(),
 		"cloneHack" = list(),
 		"completion" = list(),
 	)
 	for (var/obj/machinery/clonepod/P in src.linked_pods)
 		.["podNames"] += P.name
 		.["meatLevels"] += P.meat_level
+		.["podSpeed"] += P.is_speedy
+		.["podEfficient"] += P.is_efficient
 		.["cloneHack"] += P.clonehack
 		.["completion"] += P.get_progress()
 	if(!isnull(src.scanner))
