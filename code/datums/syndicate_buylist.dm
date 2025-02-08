@@ -1114,6 +1114,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
+/datum/syndicate_buylist/traitor/barberang
+	name = "Barberang"
+	items = list(/obj/item/razor_blade/barberang)
+	cost = 5
+	desc = "An aerodynamic, extra-sharp hand razor designed to be thrown, knocking down and shearing the hair off of anyone it hits. The razor will then return, allowing for stolen hair to be easily retrieved. Notice: hitting a bald target will disrupt the razor's aerodynamic properties and void the warranty."
+	job = list("Barber")
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
