@@ -6,6 +6,7 @@
  */
 
 import {
+  Box,
   Button,
   Divider,
   Icon,
@@ -231,5 +232,5 @@ const OvenDialbuttons = (props) => {
     );
     nodes.push(node);
   }
-  return <Stack.Item>{nodes}</Stack.Item>;
+  return <Box>{nodes}</Box>;
 };
