@@ -1,4 +1,26 @@
 
+(t)sat feb 08 25
+(u)glowbold
+(p)22203
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Chemical, bar, and chef dispensers can be broken with enough damage. Fix them with common tools!
+(t)fri feb 07 25
+(u)LeahTheTech
+(*)Roaches can now skitter by sprinting while lying down, allowing them to hide under tables.
+(+)Roaches now take extra damage from mousetraps.
+(u)glowbold
+(p)22200
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Deconstruction tools will always try to deconstruct objects on help, disarm, and grab intents. On harm intent, deconstruction tools will be used like a normal item on objects.
+(t)thu feb 06 25
+(u)Bartimeus973
+(p)22204
+(e)🗺📦🐁|A-Mapping, A-Game-Objects, A-Critters
+(+)Morty is now a real mob. This means you can grab him or put him inside pet carriers among others things.
+(u)Bartimeus973 & TDHooligan
+(p)22061
+(e)🆕🎨|C-Feature, C-Sprites
+(*)Most guns now create particles when they hit something. This includes walls and objects!
 (t)tue feb 04 25
 (u)glowbold
 (p)22131

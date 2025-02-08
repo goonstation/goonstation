@@ -19212,7 +19212,6 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bds" = (
-/obj/critter/opossum/morty,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"
@@ -19220,6 +19219,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bdt" = (

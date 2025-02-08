@@ -3334,6 +3334,43 @@
 	movement_modifier = /datum/movement_modifier/healbot
 	effect_quality = STATUS_QUALITY_POSITIVE
 
+//first_note_of_megalovania.wav
+/datum/statusEffect/undertable
+	id = "undertable"
+	name = "Under table"
+	desc = "You're hidden under a table, standing up may be a bad idea."
+	visible = FALSE
+
+	onAdd(optional)
+		. = ..()
+		RegisterSignal(src.owner, COMSIG_MOB_LAYDOWN_STANDUP, PROC_REF(standup))
+		RegisterSignal(src.owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_valid))
+
+	proc/check_valid()
+		var/obj/table/table = locate() in src.owner.loc
+		if (!table)
+			src.owner.delStatus(src)
+			return FALSE
+		return TRUE
+
+	proc/standup(_, lying)
+		if (!src.check_valid())
+			return
+		if (!lying)
+			playsound(src.owner, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
+			boutput(src.owner, SPAN_ALERT("You smack your head on the table trying to stand up. OW!"))
+			src.owner.setStatus("knockdown", 2 SECONDS)
+			src.owner.setStatus("resting", INFINITE_STATUS)
+			var/mob/mobowner = src.owner
+			mobowner.force_laydown_standup()
+			random_brute_damage(src.owner, 5)
+
+	onRemove()
+		UnregisterSignal(src.owner, COMSIG_MOB_LAYDOWN_STANDUP)
+		UnregisterSignal(src.owner, COMSIG_MOVABLE_MOVED)
+		src.owner.layer = initial(src.owner.layer)
+		. = ..()
+
 /datum/statusEffect/ice_phoenix
 
 /datum/statusEffect/ice_phoenix/empowered_feather
