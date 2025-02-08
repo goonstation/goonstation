@@ -21439,6 +21439,9 @@
 	icon_state = "1-4"
 	},
 /obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
@@ -22801,6 +22804,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fblue2"
@@ -22812,12 +22818,12 @@
 	pixel_y = 6
 	},
 /obj/item/storage/toolbox/emergency,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bFI" = (
-/obj/machinery/computer/bank_data{
-	dir = 8
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
@@ -22825,6 +22831,13 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/computer3/generic/bank_data{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bFK" = (
@@ -31429,6 +31442,9 @@
 /area/station/security/checkpoint/escape)
 "crW" = (
 /obj/decal/stripe_delivery,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/bridge)
 "csr" = (
@@ -32433,6 +32449,9 @@
 	pixel_y = 16
 	},
 /obj/machinery/navbeacon/mule/bridge_north/east,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
@@ -36432,6 +36451,14 @@
 	},
 /turf/simulated/floor/grass,
 /area/spacehabitat/owlery)
+"iKU" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "green1"
+	},
+/area/station/bridge/customs)
 "iLk" = (
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
@@ -39996,6 +40023,14 @@
 /obj/machinery/manufacturer/science,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
+"nlJ" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "green1"
+	},
+/area/station/bridge/customs)
 "nml" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
@@ -43203,12 +43238,16 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "rDq" = (
-/obj/machinery/computer/bank_data{
-	dir = 4
-	},
 /obj/window_blinds/cog2/right{
 	dir = 4;
 	pixel_x = -32
+	},
+/obj/machinery/computer3/generic/bank_data{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -96318,9 +96357,9 @@ luN
 lSE
 bzJ
 bBc
-bCt
-bCt
-bCt
+iKU
+iKU
+nlJ
 bFK
 ffV
 bHz

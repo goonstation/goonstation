@@ -18146,14 +18146,14 @@
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "gCh" = (
-/obj/machinery/computer/bank_data{
-	dir = 8
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/item/device/radio/intercom/engineering{
+	dir = 8
+	},
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/se,
@@ -26528,7 +26528,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/bank_data,
+/obj/machinery/computer3/generic/bank_data{
+	dir = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
 "mCQ" = (
@@ -28103,9 +28105,6 @@
 	},
 /area/station/medical/medbay/surgery)
 "nPZ" = (
-/obj/machinery/computer/bank_data{
-	dir = 4
-	},
 /obj/machinery/door_control{
 	id = "lockdown";
 	name = "Bridge Lockdown Control";
@@ -28117,6 +28116,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/bank_data{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/bridge/hos)
 "nQh" = (

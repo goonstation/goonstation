@@ -229,7 +229,6 @@
 	S["sec_flag"] = "None"
 
 
-	B["job"] = H.job
 	B["current_money"] = 100
 	B["pda_net_id"] = pda_net_id
 	B["notes"] = "No notes."

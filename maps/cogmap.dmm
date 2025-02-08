@@ -14875,12 +14875,12 @@
 	},
 /area/station/chapel/sanctuary)
 "aYX" = (
-/obj/machinery/computer/bank_data{
-	dir = 4
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/computer3/generic/bank_data{
+	dir = 4
 	},
 /turf/simulated/floor/blueblack{
 	dir = 8
@@ -50925,7 +50925,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /turf/simulated/floor/black,

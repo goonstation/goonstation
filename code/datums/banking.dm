@@ -24,6 +24,9 @@
 	var/time_between_lotto = 0
 	var/time_until_lotto = 0
 
+	/// The last time a bonus was issued
+	var/last_issued_bonus_time = 0
+
 	// We'll start at 0 credits, and increase it in the lotteryday proc
 	var/lotteryJackpot = 0
 	// 500 minutes ~ 8.2 hours
@@ -756,7 +759,7 @@ proc/FindBankAccountsByJobs(var/list/job_list)
 	RETURN_TYPE(/list/datum/db_record)
 	. = list()
 	for (var/each_job in job_list)
-		. += data_core.bank.find_records("job", each_job)
+		. += data_core.general.find_records("rank", each_job)
 
 #undef STATE_LOGGEDOFF
 #undef STATE_LOGGEDIN

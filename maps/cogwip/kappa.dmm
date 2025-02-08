@@ -724,7 +724,7 @@
 /turf/simulated/floor/wood/seven,
 /area/space)
 "cp" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	icon_state = "databank";
 	dir = 8
 	},
@@ -5584,7 +5584,7 @@
 /turf/simulated/floor/wood/seven,
 /area/space)
 "qo" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 4
 	},
 /turf/simulated/floor/wood/seven,

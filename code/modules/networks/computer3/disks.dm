@@ -264,14 +264,24 @@
 		src.read_only = 1
 
 /obj/item/disk/data/floppy/read_only/security_progs
-	name = "data disk-'SecMate 6'"
-	desc = "It manages security records.  It is the law."
-	title = "SecMate 6"
+	name = "data disk-'SecMate 7'"
+	desc = "It manages security records. It is the law."
+	title = "SecMate 7"
 
 	New()
 		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/secure_records(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/manifest(src))
+		src.read_only = 1
+
+/obj/item/disk/data/floppy/read_only/bank_progs
+	name = "data disk-'BankBoss 2'"
+	desc = "For managing and micro-managing staff payroll."
+	title = "BankBoss 2"
+
+	New()
+		. = ..()
+		src.root.add_file( new /datum/computer/file/terminal_program/bank_records(src))
 		src.read_only = 1
 
 /obj/item/disk/data/floppy/read_only/research_progs
