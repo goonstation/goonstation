@@ -72,7 +72,7 @@
 /obj/machinery/nanofab
 	name = "Nano-fabricator"
 	desc = "A more complicated sibling to the manufacturers, this machine can make things that inherit material properties."// this isnt super good but it's better than what it was
-	icon = 'icons/obj/manufacturer.dmi'
+	icon = 'icons/obj/crafting.dmi'
 	icon_state = "fab2-on"
 	anchored = ANCHORED
 	density = 1
@@ -317,7 +317,8 @@
 					var/howMany = input(usr, "How many ([maxAmt] max)?", "Select amount", maxAmt)
 					if(howMany > maxAmt || !selectedRecipe) return //ZeWaka: Fix for null.canBuild
 					if(selectedRecipe.canBuild(howMany, src))
-						selectedRecipe.build(howMany, src)
+						SPAWN(2.5 SECONDS)
+							selectedRecipe.build(howMany, src)
 						var/list/parts = list()
 						for(var/datum/matfab_part/P in selectedRecipe.required_parts)
 							if(P.assigned)
