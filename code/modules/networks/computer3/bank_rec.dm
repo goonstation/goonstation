@@ -844,11 +844,6 @@
 	else
 		src.print_text("<b>Payroll Deficit:</b> [num2text(round(surplus),50)][CREDIT_SIGN]")
 
-	var/net_profit = total_funds - global.wagesystem.total_stipend
-	src.print_text("<br><b>Station Profitability</b>")
-	src.print_text("Total Budget: +[num2text(round(total_funds),50)][CREDIT_SIGN]")
-	src.print_text("Total Stipend: -[num2text(round(global.wagesystem.total_stipend), 50)][CREDIT_SIGN]")
-	src.print_text("<b>Net Profit:</b> [num2text(round(net_profit), 50)][CREDIT_SIGN]")
 
 	src.print_text("<br><b>Commands:</b>")
 	if(global.wagesystem.pay_active)
