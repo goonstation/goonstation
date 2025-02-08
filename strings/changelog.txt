@@ -1,4 +1,9 @@
 
+(t)sat feb 08 25
+(u)glowbold
+(p)22203
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Chemical, bar, and chef dispensers can be broken with enough damage. Fix them with common tools!
 (t)fri feb 07 25
 (u)LeahTheTech
 (*)Roaches can now skitter by sprinting while lying down, allowing them to hide under tables.
