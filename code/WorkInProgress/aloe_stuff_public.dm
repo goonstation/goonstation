@@ -85,7 +85,7 @@
 	New()
 		..()
 		src.occupant = new /mob/living/critter/small_animal/cat/brixley(src)
-		src.build_icon()
+		src.UpdateIcon()
 
 /obj/table/wood/auto/desk/aloe
 	has_drawer = TRUE

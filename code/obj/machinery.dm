@@ -309,16 +309,15 @@
 
 	A.use_power(amount, chan)
 
-
-/obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
-										// by default, check equipment channel & set flag
-										// can override if needed
+///Checks the machiney's equipment channel and local power, setting the NOPOWER flag as needed.
+///
+///Called when the power settings of the containing area change.
+/obj/machinery/proc/power_change()
 	if(powered())
 		status &= ~NOPOWER
 	else
-
 		status |= NOPOWER
-	return
+	src.UpdateIcon()
 
 /obj/machinery/emp_act()
 	if(src.flags & EMP_SHORT) return
@@ -338,6 +337,7 @@
 		qdel(pulse2)
 	return
 
+///Attempt to break a machine. Returns TRUE if already broken.
 /obj/machinery/proc/set_broken()
 	if (src.is_broken())
 		return TRUE
