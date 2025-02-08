@@ -441,6 +441,11 @@ menu "menu"
 		category = "&Audio"
 		saved-params = "is-checked"
 	elem
+		name = "&Adjust Instrument Volume"
+		command ="change-volume instruments"
+		category = "&Audio"
+		saved-params = "is-checked"
+	elem
 		name = ""
 		command = ""
 		category = "&Audio"
