@@ -250,7 +250,7 @@
 		src.reticulated_artifacts[src.stored_artifact.artifact.type_name] = src.stored_artifact.type
 		src.reticulated_art_names |= src.stored_artifact.artifact.type_name
 
-		playsound(get_turf(src), 'sound/machines/reticulator_create.ogg', 40, TRUE)
+		playsound(get_turf(src), 'sound/machines/reticulator_create.ogg', 20, TRUE)
 
 		qdel(src.stored_artifact)
 		src.stored_artifact = null
@@ -278,7 +278,7 @@
 		src.reticulated_art_names |= src.stored_artifact.artifact.type_name
 		src.reticulated_art_names |= src.stored_item.artifact.type_name
 
-		playsound(get_turf(src), 'sound/machines/reticulator_create.ogg', 40, TRUE)
+		playsound(get_turf(src), 'sound/machines/reticulator_create.ogg', 20, TRUE)
 
 		qdel(src.stored_artifact)
 		src.stored_artifact = null
@@ -305,7 +305,7 @@
 				src.apply_new_name(src.stored_artifact)
 				src.stored_item = null
 
-		playsound(get_turf(src), 'sound/machines/reticulator_create.ogg', 40, TRUE)
+		playsound(get_turf(src), 'sound/machines/reticulator_create.ogg', 20, TRUE)
 
 		src.apply_cost(thing)
 
@@ -450,7 +450,7 @@
 					user.unlock_medal("This object menaces with spikes of...", TRUE)
 				src.apply_new_name(tool)
 
-		playsound(get_turf(src), 'sound/machines/reticulator_create.ogg', 40, TRUE)
+		playsound(get_turf(src), 'sound/machines/reticulator_create.ogg', 20, TRUE)
 
 		src.apply_cost(action)
 
@@ -562,7 +562,7 @@
 				boutput(user, src.scanned_artifacts["\ref[O]"])
 
 		if (!ON_COOLDOWN(src, "scan_sound", 2 SECONDS))
-			playsound(get_turf(src), 'sound/items/reticulator-resonator_scan.ogg', 50, TRUE)
+			playsound(get_turf(src), 'sound/items/reticulator-resonator_scan.ogg', 25, TRUE)
 
 
 /obj/item/artifact_tuner
@@ -595,7 +595,7 @@
 		else
 			O.ArtifactDevelopFault(100) // bad effect guaranteed if fault didn't exist before
 
-		playsound(get_turf(src), 'sound/items/reticulator-tuner_scramble.ogg', 40, TRUE)
+		playsound(get_turf(src), 'sound/items/reticulator-tuner_scramble.ogg', 30, TRUE)
 
 		src.name = "Used artifact tuner"
 		src.desc = "A used artifact tuner. It has no more use and can be thrown away."
