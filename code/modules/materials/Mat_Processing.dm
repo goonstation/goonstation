@@ -239,6 +239,7 @@
 				else
 					user.visible_message(SPAN_NOTICE("[user] puts \the [W] in \the [src]."))
 					addMaterial(W, user, params)
+					src.ui_interact(user)
 			else
 				boutput(user, SPAN_ALERT("The crucible can only use raw materials."))
 				return
