@@ -198,29 +198,33 @@
 					var/obj/item/clothing/head/wig/I = stolen_hair
 					user.put_in_hand_or_drop(I)
 					stolen_hair = null
-				else if(prob(50))
-					//you cut yourself
-					boutput(user, SPAN_ALERT("You accidentally grab the [src] razor-side first and cut yourself! Ouch!"))
-					user.TakeDamage("All", 5, 0)
-					take_bleeding_damage(user, user, 5, DAMAGE_CUT, 1)
-					playsound(user, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 100, TRUE)
-					user.changeStatus("knockdown", 4 SECONDS)
-					user.force_laydown_standup()
+
 				return
 			else if (ishuman(hit_atom))
 				var/mob/living/carbon/human/victim = hit_atom
+				playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 50)
+				var/yoinked = FALSE
 				if(!stolen_hair)
-					victim.changeStatus("knockdown", 4 SECONDS)
-					victim.force_laydown_standup()
 					if(istype(victim.head, /obj/item/clothing/head/wig))
 						//they are wearing a wig
 						stolen_hair = victim.head
 						victim.u_equip(stolen_hair)
 						boutput(victim, SPAN_ALERT("the [src] snatches your wig right off your head!"))
+						yoinked = TRUE
 					else if(!victim.is_bald())
 						//they have hair to yoink
 						stolen_hair = victim.create_wig()
 						boutput(victim, SPAN_ALERT("the [src] takes your hair clean off!"))
+						yoinked = TRUE
+				if(yoinked)
+					victim.changeStatus("knockdown", 4 SECONDS)
+					victim.force_laydown_standup()
+				else
+					boutput(victim, SPAN_ALERT("the [src] slashes your head really bad!"))
+					take_bleeding_damage(victim, user, throwforce)
+					throw_return = FALSE
+					SPAWN(2 SECONDS)
+						throw_return = TRUE
 
 		. = ..()
 
