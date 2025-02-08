@@ -50,6 +50,7 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	nectarlevel = 15
 	genome = 3
 	assoc_reagents = list("ephedrine")
+	commuts = list(/datum/plant_gene_strain/growth_slow,/datum/plant_gene_strain/stabilizer)
 	mutations = list(/datum/plantmutation/asomna/robust)
 
 /datum/plant/herb/commol
