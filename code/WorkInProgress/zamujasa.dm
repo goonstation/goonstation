@@ -1558,6 +1558,12 @@ Other Goonstation servers:[serverList]</span>"})
 	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	var/static/matrix/infinity_matrix = matrix().Turn(90).Translate(18, 1)
 
+	var/pct_counter = FALSE
+	var/cur_text
+	var/cur_num
+	var/cur_pct_min
+	var/cur_pct_max
+
 	New()
 		..()
 		maptext_width = 64
@@ -1567,10 +1573,18 @@ Other Goonstation servers:[serverList]</span>"})
 		maptext = ""
 
 	proc/update_text(var/text)
+		src.cur_text = text
+		src.cur_num = null
+		src.cur_pct_min = null
+		src.cur_pct_max = null
 		maptext = {"<span class="vb r pixel sh">[text]</span>"}
 		if(src.transform) src.transform = null
 
 	proc/update_number(var/number)
+		src.cur_text = null
+		src.cur_num = number
+		src.cur_pct_min = null
+		src.cur_pct_max = null
 		if(number == -1)
 			maptext = {"<span class="vb r pixel sh" style="font-size:1.5em;">8</span>"} // pixel font has more symmetric 8, ok?
 			src.transform = infinity_matrix
@@ -1579,12 +1593,25 @@ Other Goonstation servers:[serverList]</span>"})
 		if(src.transform) src.transform = null
 
 	proc/update_percent(var/current, var/maximum)
+		src.cur_text = null
+		src.cur_num = null
+		src.cur_pct_min = current
+		src.cur_pct_max = maximum
 		if (!maximum)
 			// no dividing by zero
 			src.update_number(current)
 			return
 		maptext = {"<span class="vb r xfont sh"[current == 0 ? " style='color: #ff6666;'" : ""]>[round(current / maximum * 100)]%</span>"}
 		if(src.transform) src.transform = null
+		pct_counter = TRUE
+
+	proc/update_counter()
+		if (src.cur_text)
+			src.update_text(src.cur_text)
+		else if (src.cur_num)
+			src.update_number(src.cur_num)
+		else if (src.cur_pct_min)
+			src.update_percent(src.cur_pct_min, src.cur_pct_max)
 
 	proc/hide_count()
 		invisibility = INVIS_ALWAYS

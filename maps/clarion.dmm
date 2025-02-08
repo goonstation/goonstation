@@ -12892,10 +12892,9 @@
 /area/station/hallway/primary/south)
 "cBh" = (
 /obj/machinery/firealarm/east,
-/obj/table/reinforced/auto,
-/obj/item/storage/box/tapebox,
-/obj/item/disk/data/tape{
-	layer = 3.5
+/obj/machinery/reticulator,
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -24959,17 +24958,15 @@
 /area/station/science/lobby)
 "lwN" = (
 /obj/machinery/light/emergency,
-/obj/machinery/networked/test_apparatus/pitching_machine{
-	dir = 4
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/machinery/light{
 	dir = 8;
 	pixel_x = -10
 	},
+/obj/table/reinforced/auto,
+/obj/item/disk/data/tape{
+	layer = 3.5
+	},
+/obj/item/storage/box/tapebox,
 /turf/simulated/floor/caution/misc{
 	dir = 8
 	},
@@ -29629,9 +29626,11 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "oRh" = (
-/obj/cable{
-	icon_state = "1-8"
+/obj/machinery/networked/test_apparatus/pitching_machine{
+	dir = 4
 	},
+/obj/cable,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/caution/northsouth,
 /area/station/science/artifact)
 "oRn" = (
@@ -31559,6 +31558,9 @@
 "qor" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/neutral/corner,
 /area/station/science/artifact)

@@ -49,9 +49,10 @@
 		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
-		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
-			. += SPAN_ARTHINT(A.examine_hint)
+		if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
+			for (var/obj/O as anything in (list(src) + src.combined_artifacts || list()))
+				if (istext(O.artifact.examine_hint))
+					. += SPAN_ARTHINT(O.artifact.examine_hint)
 
 	ex_act(severity)
 		switch(severity)
@@ -136,9 +137,10 @@
 		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
-		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist"))))
-			. += SPAN_ARTHINT(A.examine_hint)
+		if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
+			for (var/obj/O as anything in (list(src) + src.combined_artifacts || list()))
+				if (istext(O.artifact.examine_hint))
+					. += SPAN_ARTHINT(O.artifact.examine_hint)
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -150,7 +152,7 @@
 		var/datum/artifact/A = src.artifact
 
 		if (A.activated)
-			A.effect_process(src)
+			A.effect_process(src.get_uppermost_artifact())
 
 	attack_hand(mob/user)
 		src.ArtifactTouched(user)
@@ -241,9 +243,10 @@
 		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
-		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist"))))
-			. += SPAN_ARTHINT(A.examine_hint)
+		if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
+			for (var/obj/O as anything in (list(src) + src.combined_artifacts || list()))
+				if (istext(O.artifact.examine_hint))
+					. += SPAN_ARTHINT(O.artifact.examine_hint)
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"

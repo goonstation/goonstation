@@ -26,9 +26,10 @@
 		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
-		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
-			. += SPAN_ARTHINT(A.examine_hint)
+		if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
+			for (var/obj/O as anything in (list(src) + src.combined_artifacts || list()))
+				if (istext(O.artifact.examine_hint))
+					. += SPAN_ARTHINT(O.artifact.examine_hint)
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -87,6 +88,8 @@
 	react_elec = list("equal",0,10)
 	react_xray = list(10,80,95,11,"SEGMENTED")
 	examine_hint = "It kinda looks like it's supposed to be inserted into something."
+	shard_reward = ARTIFACT_SHARD_POWER
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 
 	New()
 		..()

@@ -956,7 +956,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 	New()
 		..()
-		switch(gem_tier)
+		switch(src.gem_tier)
 			if(1)
 				value = 700
 				name = "clear [src.name]"

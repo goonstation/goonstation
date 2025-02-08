@@ -177,6 +177,8 @@
 		/datum/artifact_trigger/radiation, /datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/silicon_touch, /datum/artifact_trigger/data)
 	react_xray = list(30, 25, 97, 95, "ANOMALOUS")
 	examine_hint = "It seems magical somehow."
+	shard_reward = ARTIFACT_SHARD_POWER
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 
 	effect_activate(obj/O)
 		. = ..()

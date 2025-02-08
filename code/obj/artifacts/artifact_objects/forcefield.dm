@@ -15,12 +15,15 @@
 	activ_text = "comes to life, projecting out a wall of force!"
 	deact_text = "shuts down, causing the forcefield to vanish!"
 	react_xray = list(13,60,95,11,"NONE")
+	can_reticulate_when_active = FALSE
+	combine_flags = ARTIFACT_DOES_NOT_COMBINE
 	var/cooldown = 80
 	var/field_radius = 3
 	var/field_time = 80
 	var/icon_state = "shieldsparkles"
 	var/next_activate = 0
 	var/list/forcefields = list()
+	shard_reward = ARTIFACT_SHARD_POWER
 
 	New()
 		..()

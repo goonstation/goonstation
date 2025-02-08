@@ -14201,6 +14201,7 @@
 "aYJ" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
+/obj/machinery/reticulator,
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "aYQ" = (
