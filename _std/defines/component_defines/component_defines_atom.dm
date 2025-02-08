@@ -166,6 +166,10 @@
 	#define COMSIG_ITEM_AFTERATTACK "itm_afterattack"
 	/// When the item in hand is twirl emoted and spun in hand. (user, item)
 	#define COMSIG_ITEM_TWIRLED "itm_twirled"
+	/// When an item reacting to being seen in a storage or dumped out of it (e.g. mousetraps)
+	#define COMSIG_ITEM_STORAGE_INTERACTION "itm_storage_interaction"
+	/// Send out to every item directly in and on the person on no-suicide-death
+	#define COMSIG_ITEM_ON_OWNER_DEATH "itm_on_owner_death"
 
 	// ---- bomb assembly signals ----
 
@@ -173,6 +177,25 @@
 	#define COMSIG_ITEM_BOMB_SIGNAL_START "bomb_signal_start"
 	/// Triggers when an assembly bomb's signalling is cancelled
 	#define COMSIG_ITEM_BOMB_SIGNAL_CANCEL "bomb_signal_cancel"
+
+	// ---- general assembly signals ----
+
+	/// Triggers on attack_self of the assembly if it is unsecured
+	#define COMSIG_ITEM_ASSEMBLY_MANIPULATION "assembly_manipulation"
+	/// Triggers on attack_self of the assembly if it is secured
+	#define COMSIG_ITEM_ASSEMBLY_ACTIVATION "assembly_activation"
+	/// Triggers if the assembly fires it's applier
+	#define COMSIG_ITEM_ASSEMBLY_APPLY "assembly_apply"
+	/// Triggers on an item when it is build into an assembly. Used in case something needs to behave differently in an assembly than for itself
+	#define COMSIG_ITEM_ASSEMBLY_ITEM_SETUP "assembly_item_setup"
+	/// Triggers on an item when a target is build into an assembly. Used when special combinations are enabled through certain components
+	#define COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION "assembly_item_on_target_addition"
+	/// Triggers on an item when it is removed from an assembly. Used in case something needs to behave differently in an assembly than for itself
+	#define COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL "assembly_item_removal"
+	/// Checks on any item if they have special conditions under which they cannot be used in the assembly, e.g. igniters needing to be unsecured
+	#define COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK "assembly_combination_check"
+	/// Checks if that item, as additional component, adds any odd overlays on the assembly
+	#define COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS "assembly_overlay_additions"
 
 	// ---- implant signals ----
 

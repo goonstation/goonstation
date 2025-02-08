@@ -24,7 +24,7 @@ Contains:
 	item_state = "assembly"
 	var/status = 0
 	throwforce = 10
-	w_class = W_CLASS_NORMAL
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 10
 	force = 2
@@ -34,6 +34,252 @@ Contains:
 
 /obj/item/assembly/proc/c_state(n, O as obj)
 	return
+
+/////////////////////////////////////// Component-Assembly /////////////////////////
+
+/obj/item/assembly/complete
+	desc = "An assembly of multiple components."
+	var/obj/item/trigger = null //! This is anything that causes the Applier to fire, e.g. a signaler, mouse trap or a timer
+	var/trigger_icon_prefix = null
+	var/obj/item/applier = null //!  This is anything that is activated by the trigger, e.g. an igniter or a bikehorn
+	var/applier_icon_prefix = null
+	var/obj/item/target = null //! This is anything that the applier will be used upon, e.g. a plasma tank or a beaker
+	var/target_item_prefix = null
+	var/secured = FALSE //! If false, this does not activate and can be modified on self-use
+	var/list/additional_components = null //! This is a list of components that don't make up the main 3 components of the assembly, but can be attached after the target was added.
+	var/icon_base_offset = 0 //! offset for the base-icon of the assembly, if the target gets overriden
+	flags = TABLEPASS | CONDUCT | NOSPLASH
+	item_function_flags = OBVIOUS_INTERACTION_BAR
+
+/obj/item/assembly/complete/New()
+	src.additional_components = list()
+	RegisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED, PROC_REF(on_floor_reveal))
+	RegisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION, PROC_REF(on_storage_interaction))
+	RegisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH, PROC_REF(on_wearer_death))
+	..()
+
+/obj/item/assembly/complete/proc/on_floor_reveal(var/affected_assembly, var/turf/revealed_turf)
+	//we relay the signal to the trigger, in case of mousetraps
+	SEND_SIGNAL(src.trigger, COMSIG_MOVABLE_FLOOR_REVEALED, revealed_turf)
+
+/obj/item/assembly/complete/proc/on_storage_interaction(var/affected_assembly, var/mob/user)
+	//we relay the signal to the trigger, in case of mousetraps
+	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_STORAGE_INTERACTION, user)
+
+/obj/item/assembly/complete/proc/on_wearer_death(var/affected_assembly, var/mob/dying_mob)
+	//we relay the signal to the trigger, in case of health-analyser
+	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ON_OWNER_DEATH, dying_mob)
+
+/obj/item/assembly/complete/receive_signal(datum/signal/signal)
+	//only secured assemblies should fire and only if the signal is not from the applier.
+	if (src.secured && (signal && signal.source != src.applier))
+		for(var/mob/O in hearers(1, src.loc))
+			O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
+		SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_APPLY, src, src.target)
+
+
+/obj/item/assembly/complete/dropped(mob/user)
+	. = ..()
+	// we relay the dropping of the assembly to the trigger in case of a proximity sensor
+	SEND_SIGNAL(src.trigger, COMSIG_ITEM_DROPPED, user)
+
+/obj/item/assembly/complete/Crossed(atom/movable/crossing_atom)
+	. = ..()
+	// we relay the dropping of the assembly to the trigger in case of a mouse trap
+	src.trigger.Crossed(crossing_atom)
+
+
+/obj/item/assembly/complete/disposing()
+	UnregisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED)
+	UnregisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION)
+	UnregisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH)
+	qdel(src.trigger)
+	src.trigger = null
+	qdel(src.applier)
+	src.applier = null
+	qdel(src.target)
+	src.target = null
+	if (src.additional_components)
+		for(var/obj/item/iterated_component in src.additional_components)
+			src.additional_components =- iterated_component
+			qdel(iterated_component)
+	src.additional_components = null
+	..()
+
+/obj/item/assembly/complete/attack_self(mob/user)
+	if (isghostcritter(user))
+		boutput(user, SPAN_NOTICE("Some unseen force stops you from tampering with [src.name]."))
+		return
+	if(src.secured)
+		//if the assembly is secured, we activate that thing
+		if (SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ACTIVATION, src, user))
+			boutput(user, SPAN_NOTICE("You activate the [src.trigger.name] on the [src.name]."))
+	else
+		//if the assembly is unsecured, we enable modification on that thing
+		SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_MANIPULATION, src, user)
+		SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_MANIPULATION, src, user)
+	src.add_fingerprint(user)
+	return
+
+/obj/item/assembly/complete/update_icon()
+	var/overlay_offset = 0 //how many pixels we want to move the overlays
+	src.overlays = null
+	src.underlays = null
+	if(src.target && !src.target_item_prefix)
+		//If the target doesn't add it's own special icon state
+		src.icon = src.target.icon
+		src.icon_state = src.target.icon_state
+		overlay_offset += 5
+	else
+		src.icon = initial(src.icon)
+		src.icon_state = "trigger_[src.trigger_icon_prefix]"
+		if(src.target_item_prefix)
+			var/image/temp_image_target = image('icons/obj/items/assemblies.dmi', src, "target_[src.target_item_prefix]")
+			temp_image_target.pixel_y += overlay_offset + src.icon_base_offset
+			src.overlays += temp_image_target
+	if(src.applier_icon_prefix)
+		var/image/temp_image_applier = image('icons/obj/items/assemblies.dmi', src, "applier_[src.applier_icon_prefix]")
+		temp_image_applier.pixel_y += overlay_offset + src.icon_base_offset
+		src.overlays += temp_image_applier
+	if (src.additional_components)
+		for(var/obj/item/iterated_component in src.additional_components)
+			//if we have anny additional components, we send them a signal to see if they add overlays to the assembly.
+			SEND_SIGNAL(iterated_component,COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS , src, overlay_offset)
+	//So the applier gets rendered over every other component, we add it here as an overlay
+	var/image/temp_image_trigger = image('icons/obj/items/assemblies.dmi', src, "trigger_[src.trigger_icon_prefix]")
+	temp_image_trigger.pixel_y += overlay_offset + src.icon_base_offset
+	src.overlays += temp_image_trigger
+	if(!src.secured)
+		var/image/temp_image_cables = image('icons/obj/items/assemblies.dmi', src, "assembly_unsecured")
+		temp_image_cables.pixel_y += overlay_offset + src.icon_base_offset
+		src.underlays += temp_image_cables
+
+
+/obj/item/assembly/complete/UpdateName()
+	var/component_names = ""
+	if(src.trigger) //lets not crash when we initially create the assembly
+		component_names = "[initial(src.trigger.name)]/[initial(src.applier.name)]"
+	if(src.target)
+		component_names = "[component_names]/[initial(src.target.name)]"
+	src.name = "[name_prefix(null, 1)][component_names]-[initial(src.name)][name_suffix(null, 1)]"
+
+
+/obj/item/assembly/complete/attackby(obj/item/used_object, mob/user)
+	if (iswrenchingtool(used_object) && !src.secured)
+		var/turf/T = get_turf(src)
+		if (src.target)
+			boutput(user, SPAN_NOTICE("You remove the [src.target.name] from the assembly."))
+			// We remove all assembly-components from the assembly
+			// and send the different parts of the assembly their corresponding signals to set up the assembly to the state it was
+			src.RemoveComponentsOfType(/datum/component/assembly)
+			SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, FALSE)
+			SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, FALSE)
+			SEND_SIGNAL(src.target, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, user)
+			src.target.set_loc(T)
+			src.target.master = null
+			src.target = null
+			src.target_item_prefix = null
+			// When we remove the target, we also rip out all additions added after that.
+			if (src.additional_components)
+				for(var/obj/item/iterated_component in src.additional_components)
+					SEND_SIGNAL(iterated_component, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, user)
+					src.additional_components =- iterated_component
+					iterated_component.set_loc(T)
+					iterated_component.master = null
+			src.w_class = max(src.trigger.w_class, src.applier.w_class)
+			src.UpdateIcon()
+			src.UpdateName()
+		else
+			boutput(user, SPAN_NOTICE("You disassemble the [src.name]."))
+			SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, user)
+			SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, user)
+			src.trigger.set_loc(T)
+			src.trigger.master = null
+			src.trigger = null
+			src.applier.set_loc(T)
+			src.applier.master = null
+			src.applier = null
+			user.u_equip(src)
+			qdel(src)
+		return
+	if (isscrewingtool(used_object))
+		src.secured = !(src.secured)
+		boutput(user, SPAN_NOTICE("[src.name] is now [src.secured ? "secured" : "unsecured"]."))
+		src.add_fingerprint(user)
+		src.UpdateIcon()
+		return
+	..()
+
+/// misc. Assembly-procs --------------------------------
+
+/obj/item/assembly/complete/proc/add_target_item(var/atom/to_combine_atom, var/mob/user)
+	if(src.secured)
+		boutput(user, "You need to unsecure the assembly first.")
+		return
+	if(SEND_SIGNAL(to_combine_atom, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK, src, user))
+		//let's check if we can combine the item in the first place, e.g. in case of cabled pipebombs
+		return
+	var/obj/item/manipulated_item = to_combine_atom
+	src.target = manipulated_item
+	manipulated_item.master = src
+	manipulated_item.layer = initial(manipulated_item.layer)
+	user.u_equip(manipulated_item)
+	manipulated_item.set_loc(src)
+	manipulated_item.add_fingerprint(user)
+	boutput(user, "You attach the [src.name] to the [manipulated_item.name].")
+	//Since we completed the assembly, remove all assembly components
+	src.RemoveComponentsOfType(/datum/component/assembly)
+	//Now we set up the attached target for overlays/other assembly steps
+	SEND_SIGNAL(manipulated_item, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, TRUE)
+	//Now we send a signal to the other two components in case we enable certain combinations, e.g. for mousetraps
+	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, TRUE)
+	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, TRUE)
+	//Last but not least, we update our icon, w_class and name
+	src.w_class = max(src.w_class, manipulated_item.w_class)
+	src.UpdateIcon()
+	src.UpdateName()
+	// Since the assembly was done, return TRUE
+	return TRUE
+
+
+///mousetrap roller crafting proc
+/obj/item/assembly/complete/proc/create_mousetrap_roller(var/atom/to_combine_atom, var/mob/user)
+	if(src.w_class > W_CLASS_NORMAL)
+		boutput(user, "[src.name] is too large for a mousetrap roller assembly.")
+		return FALSE
+	var/obj/item/pipebomb/frame/manipulated_frame = to_combine_atom
+	if(src.secured || manipulated_frame.state > 1)
+		//we can only use non-welded frames and unsecured assemblies
+		return FALSE
+	user.u_equip(to_combine_atom)
+	user.u_equip(src)
+	src.secured = TRUE
+	src.UpdateIcon()
+	src.add_fingerprint(user)
+	manipulated_frame.add_fingerprint(user)
+	var/obj/item/mousetrap_roller/new_roller = new /obj/item/mousetrap_roller(get_turf(user), src, to_combine_atom)
+	new_roller.name = "roller/[src.name]" // Roller/mousetrap/igniter/plutonium 239-pipebomb-assembly, gotta love those names
+	user.put_in_hand_or_drop(new_roller)
+	// we don't remove the components here since the frame and assembly can be retreived by disassembling the roller
+	// Since the assembly was done, return TRUE
+	return TRUE
+
+/obj/item/assembly/complete/proc/create_suicide_vest(var/atom/to_combine_atom, var/mob/user)
+	if(src.secured)
+		boutput(user, "You need to unsecure [src.name] first.")
+		return FALSE
+	user.u_equip(to_combine_atom)
+	user.u_equip(src)
+	src.secured = TRUE
+	src.UpdateIcon()
+	src.add_fingerprint(user)
+	to_combine_atom.add_fingerprint(user)
+	var/obj/item/clothing/suit/armor/suicide_bomb/new_suicide_vest = new /obj/item/clothing/suit/armor/suicide_bomb(get_turf(user), src, to_combine_atom)
+	user.put_in_hand_or_drop(new_suicide_vest)
+	// we don't remove the components here since the frame and assembly can be retreived by disassembling the roller
+	// Since the assembly was done, return TRUE
+	return TRUE
+/// -----------------------------------------------------
 
 /////////////////////////////////////// Timer/igniter /////////////////////////
 

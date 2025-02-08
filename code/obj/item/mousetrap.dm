@@ -1,6 +1,6 @@
 // Added support for old-style grenades (Convair880).
 
-#define HAS_TRIGGERABLE(x) (x.grenade || x.grenade_old || x.pipebomb || x.arm || x.signaler || x.butt || x.gimmickbomb)
+#define HAS_TRIGGERABLE(x) (x.arm || x.butt)
 /obj/item/mousetrap
 	name = "mousetrap"
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
@@ -12,14 +12,9 @@
 	force = null
 	throwforce = null
 	var/armed = FALSE
-	var/obj/item/chem_grenade/grenade = null
-	var/obj/item/old_grenade/grenade_old = null
-	var/obj/item/pipebomb/bomb/pipebomb = null
-	var/obj/item/device/radio/signaler/signaler = null
 	var/obj/item/reagent_containers/food/snacks/pie/pie = null
 	var/obj/item/parts/arm = null
 	var/obj/item/clothing/head/butt/butt = null
-	var/obj/item/gimmickbomb/gimmickbomb = null
 	var/mob/armer = null
 	stamina_damage = 0
 	stamina_cost = 0
@@ -35,13 +30,54 @@
 
 			New()
 				..()
-				src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
-				src.grenade = new /obj/item/chem_grenade/cleaner(src)
+				//TODO Add implementation of pre-assembles assemblies
+				//src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
+				//src.grenade = new /obj/item/chem_grenade/cleaner(src)
 				return
 
 	New()
 		..()
+
 		RegisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED, PROC_REF(triggered))
+		RegisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION, PROC_REF(triggered))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION, PROC_REF(assembly_activation))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION, PROC_REF(assembly_manipulation))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_building))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, PROC_REF(assembly_building))
+		// Mousetrap + assembly-applier -> mousetrap/Applier-Assembly
+		src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
+
+/// ----------- Assembly-Related Procs -----------
+
+	proc/assembly_manipulation(var/manipulated_mousetrap, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+		if(src.armed)
+			src.toggle_armed(user)
+			parent_assembly.trigger_icon_prefix = src.icon_state
+			parent_assembly.UpdateIcon()
+			logTheThing(LOG_BOMBING, usr, "deactivated the mousetrap on a [parent_assembly.name] at [log_loc(parent_assembly)].")
+			//missing log about contents of beakers
+
+
+	proc/assembly_activation(var/manipulated_mousetrap, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+		if(!src.armed)
+			src.toggle_armed(user)
+			parent_assembly.trigger_icon_prefix = src.icon_state
+			parent_assembly.UpdateIcon()
+			logTheThing(LOG_BOMBING, usr, "activated the mousetrap on a [parent_assembly.name] at [log_loc(parent_assembly)].")
+			//missing log about contents of beakers
+
+	proc/assembly_building(var/manipulated_mousetrap, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+		//once integrated in the assembly, we unarm the mousetrap
+		src.armed = FALSE
+		src.icon_state = "mousetrap"
+		src.clear_armer()
+		//mousetrap-assembly + pipebomb-frame -> mousetrap-roller-assembly
+		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/pipebomb/frame), TYPE_PROC_REF(/obj/item/assembly/complete, create_mousetrap_roller), TRUE)
+/// ----------------------------------------------
+
+
+
+
 
 	examine()
 		. = ..()
@@ -49,39 +85,44 @@
 			. += SPAN_ALERT("It looks like it's armed.")
 
 	attack_self(mob/user as mob)
+		src.toggle_armed(user)
+
+	proc/toggle_armed(var/mob/user)
 		if (!src.armed)
-			icon_state = "mousetraparmed"
-			user.show_text("You arm the mousetrap.", "blue")
-			set_armer(user)
+			src.icon_state = "mousetraparmed"
+			boutput(user, SPAN_NOTICE("You arm the [src.master ? "[src.master.name]" : "[src.name]"]."))
+			src.set_armer(user)
 		else
-			icon_state = "mousetrap"
-			if ((user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
+			src.icon_state = "mousetrap"
+			if (user && (user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
 				var/which_hand = "l_arm"
 				if (!user.hand)
 					which_hand = "r_arm"
 				src.triggered(user, which_hand)
 				JOB_XP(user, "Clown", 1)
-				user.visible_message(SPAN_ALERT("<B>[user] accidentally sets off the mousetrap, breaking their fingers.</B>"),\
-				SPAN_ALERT("<B>You accidentally trigger the mousetrap!</B>"))
+				user.visible_message(SPAN_ALERT("<B>[user] accidentally sets off the [src.master ? "[src.master.name]" : "[src.name]"], breaking their fingers.</B>"),\
+				SPAN_ALERT("<B>You accidentally trigger the [src.master ? "[src.master.name]" : "[src.name]"]!</B>"))
 				return
-			user.show_text("You disarm the mousetrap.", "blue")
-			clear_armer()
-
+			boutput(user, SPAN_NOTICE("You disarm the [src.master ? "[src.master.name]" : "[src.name]"]."))
+			src.clear_armer()
 		src.armed = !src.armed
-		playsound(user.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
-		return
+		playsound(get_turf(src), 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 
 	proc/clear_armer()
 		UnregisterSignal(armer, COMSIG_PARENT_PRE_DISPOSING)
-		armer = null
+		src.armer = null
 
 	proc/set_armer(mob/user)
 		RegisterSignal(user, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(clear_armer))
-		armer = user
+		src.armer = user
 
 	disposing()
 		clear_armer()
 		UnregisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION)
 		. = ..()
 
 	attack_hand(mob/user)
@@ -110,83 +151,8 @@
 		return ..()
 
 	attackby(obj/item/C, mob/user)
-		if (istype(C, /obj/item/chem_grenade) && !HAS_TRIGGERABLE(src))
-			var/obj/item/chem_grenade/CG = C
-			var/grenade_ready = TRUE
-			if(istype(CG, /obj/item/chem_grenade/custom))
-				//we want to only fit custom grenades if they are ready to be applied
-				var/obj/item/chem_grenade/custom/custom_grenade = CG
-				if (custom_grenade.stage != 2)
-					grenade_ready = FALSE
 
-			if (grenade_ready && !CG.armed)
-				if(!(src in user.equipped_list()))
-					boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
-					return
-
-				user.u_equip(CG)
-				CG.set_loc(src)
-				user.show_text("You attach [CG]'s detonator to [src].", "blue")
-				src.grenade = CG
-				src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
-				src.w_class = max(src.w_class, C.w_class)
-
-				if(CG.is_dangerous)
-					message_admins("[key_name(user)] rigs [src] with [CG] at [log_loc(user)].")
-				logTheThing(LOG_BOMBING, user, "rigs [src] with [CG] at [log_loc(user)].")
-
-		else if (istype(C, /obj/item/old_grenade/) && !HAS_TRIGGERABLE(src))
-			var/obj/item/old_grenade/OG = C
-			if (OG.not_in_mousetraps == 0 && !OG.armed)
-				if(!(src in user.equipped_list()))
-					boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
-					return
-
-				user.u_equip(OG)
-				OG.set_loc(src)
-				user.show_text("You attach [OG]'s detonator to [src].", "blue")
-				src.grenade_old = OG
-				src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
-				src.w_class = max(src.w_class, C.w_class)
-
-				if(OG.is_dangerous)
-					message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
-				logTheThing(LOG_BOMBING, user, "rigs [src] with [OG] at [log_loc(user)].")
-
-		else if (istype(C, /obj/item/pipebomb/bomb) && !HAS_TRIGGERABLE(src))
-			var/obj/item/pipebomb/bomb/PB = C
-			if (!PB.armed)
-				if(!(src in user.equipped_list()))
-					boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
-					return
-
-				user.u_equip(PB)
-				PB.set_loc(src)
-				user.show_text("You attach [PB]'s detonator to [src].", "blue")
-				src.pipebomb = PB
-				src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-pipebomb"), "triggerable")
-				src.w_class = max(src.w_class, C.w_class)
-
-				message_admins("[key_name(user)] rigs [src] with [PB] at [log_loc(user)].")
-				logTheThing(LOG_BOMBING, user, "rigs [src] with [PB] at [log_loc(user)].")
-
-		else if (istype(C, /obj/item/device/radio/signaler) && !HAS_TRIGGERABLE(src))
-			if(!(src in user.equipped_list()))
-				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
-				return
-
-			var/obj/item/device/radio/signaler/S = C
-			user.u_equip(S)
-			S.set_loc(src)
-			user.show_text("You attach [S]'s detonator to [src].", "blue")
-			src.signaler = S
-			src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-signaler"), "triggerable")
-			src.w_class = max(src.w_class, C.w_class)
-
-			message_admins("[key_name(user)] rigs [src] with [S] at [log_loc(user)].")
-			logTheThing(LOG_BOMBING, user, "rigs [src] with [S] at [log_loc(user)].")
-
-		else if (!src.arm && (istype(C, /obj/item/parts/robot_parts/arm) || istype(C, /obj/item/parts/human_parts/arm)) && !HAS_TRIGGERABLE(src))
+		if (!src.arm && (istype(C, /obj/item/parts/robot_parts/arm) || istype(C, /obj/item/parts/human_parts/arm)) && !HAS_TRIGGERABLE(src))
 			if(!(src in user.equipped_list()))
 				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
 				return
@@ -197,7 +163,7 @@
 			src.UpdateOverlays(image(C.icon, C.icon_state), "triggerable")
 			user.show_text("You add [C] to [src].", "blue")
 		//this check needs to exclude the arm one
-		else if (istype(C, /obj/item/reagent_containers/food/snacks/pie) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.gimmickbomb)
+		else if (istype(C, /obj/item/reagent_containers/food/snacks/pie) && !src.butt)
 			if (src.pie)
 				user.show_text("There's already a pie attached to [src]!", "red")
 				return
@@ -232,39 +198,8 @@
 			src.butt = B
 			src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-[src.butt.icon_state]"), "triggerable")
 
-		else if (istype(C, /obj/item/gimmickbomb) && !HAS_TRIGGERABLE(src))
-			if(!(src in user.equipped_list()))
-				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
-				return
-
-			var/obj/item/gimmickbomb/BB = C
-			user.u_equip(BB)
-			BB.set_loc(src)
-			user.show_text("You attach [BB] to [src].", "blue")
-			src.gimmickbomb = BB
-			if (istype(BB, /obj/item/gimmickbomb/butt))
-				src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-buttbomb"), "triggerable")
-			else
-				src.UpdateOverlays(image(BB.icon, BB.icon_state), "triggerable")
-
 		else if (iswrenchingtool(C))
-			if (src.grenade)
-				user.show_text("You detach [src.grenade].", "blue")
-				src.grenade.set_loc(get_turf(src))
-				src.grenade = null
-			else if (src.grenade_old)
-				user.show_text("You detach [src.grenade_old].", "blue")
-				src.grenade_old.set_loc(get_turf(src))
-				src.grenade_old = null
-			else if (src.pipebomb)
-				user.show_text("You detach [src.pipebomb].", "blue")
-				src.pipebomb.set_loc(get_turf(src))
-				src.pipebomb = null
-			else if (src.signaler)
-				user.show_text("You detach [src.signaler].", "blue")
-				src.signaler.set_loc(get_turf(src))
-				src.signaler = null
-			else if (src.pie)
+			if (src.pie)
 				user.show_text("You remove [src.pie] from [src].", "blue")
 				src.pie.layer = initial(src.pie.layer)
 				src.pie.set_loc(get_turf(src))
@@ -279,11 +214,6 @@
 				src.butt.layer = initial(src.butt.layer)
 				src.butt.set_loc(get_turf(src))
 				src.butt = null
-			else if (src.gimmickbomb)
-				user.show_text("You remove [src.gimmickbomb] from [src].", "blue")
-				src.gimmickbomb.layer = initial(src.gimmickbomb.layer)
-				src.gimmickbomb.set_loc(get_turf(src))
-				src.gimmickbomb = null
 			src.UpdateOverlays(null, "triggerable")
 		else
 			..()
@@ -378,26 +308,7 @@
 		src.icon_state = "mousetrap"
 		src.armed = FALSE
 
-		if (src.grenade)
-			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.grenade]) at [log_loc(src)]")
-			src.grenade.explode()
-			src.grenade = null
-
-		else if (src.grenade_old)
-			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.grenade_old]) at [log_loc(src)]")
-			src.grenade_old.detonate()
-			src.grenade_old = null
-
-		else if (src.pipebomb)
-			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.pipebomb]) at [log_loc(src)]")
-			src.pipebomb.do_explode()
-			src.pipebomb = null
-
-		else if (src.signaler)
-			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.signaler]) at [log_loc(src)]")
-			src.signaler.send_signal("ACTIVATE")
-
-		else if (src.pie && src.arm)
+		if (src.pie && src.arm)
 			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.arm] and [src.pie]) at [log_loc(src)]")
 			target.visible_message(SPAN_ALERT("<b>[src]'s [src.arm] launches [src.pie] at [target]!</b>"),\
 			SPAN_ALERT("<b>[src]'s [src.arm] launches [src.pie] at you!</b>"))
@@ -420,13 +331,19 @@
 			else
 				playsound(target, 'sound/voice/farts/poo2.ogg', 50)
 
-		else if (src.gimmickbomb)
-			src.gimmickbomb.detonate()
-			qdel(src.gimmickbomb)
-			src.gimmickbomb = null
+		else if (src.master && istype(src.master, /obj/item/assembly/complete))
+			var/obj/item/assembly/complete/parent_assembly = src.master
+			parent_assembly.trigger_icon_prefix = src.icon_state
+			parent_assembly.UpdateIcon()
+			SPAWN( 0 )
+				var/datum/signal/signal = get_free_signal()
+				signal.source = src
+				signal.data["message"] = "ACTIVATE"
+				parent_assembly.receive_signal(signal)
+
 		src.UpdateOverlays(null, "triggerable")
 		clear_armer()
-		return
+		return TRUE
 
 // Added support for old-style grenades and pipe bombs (Convair880).
 /obj/item/mousetrap_roller
@@ -437,63 +354,58 @@
 	item_state = "mousetrap"
 	w_class = W_CLASS_TINY
 	var/armed = FALSE
-	var/obj/item/mousetrap/mousetrap = null
+	var/obj/item/assembly/complete/payload = null
 	var/obj/item/pipebomb/frame/frame = null
-	var/payload = ""
+	var/buttbomb = FALSE
 
-	New(ourLoc, var/obj/item/mousetrap/newtrap, obj/item/pipebomb/frame/newframe)
+	New(ourLoc, var/obj/item/assembly/complete/new_payload, var/obj/item/pipebomb/frame/new_frame)
 		..()
 
-		if (newtrap)
-			newtrap.set_loc(src)
-			src.mousetrap = newtrap
+		if (new_payload)
+			new_payload.set_loc(src)
+			src.payload = new_payload
+			//we scale down the assembly and resets its icon area to position it properly on the mousetrap roller
+			src.payload.pixel_x = 0
+			src.payload.pixel_y = 0
+			src.payload.transform *= 0.75
+			new_payload.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
+			src.vis_contents += new_payload
+			if(istype(src.payload.applier, /obj/item/gimmickbomb/butt))
+				src.buttbomb = TRUE
+
+
+		if (new_frame)
+			new_frame.set_loc(src)
+			src.frame = new_frame
 		else
-			src.mousetrap = new /obj/item/mousetrap(src)
+			src.frame = new /obj/item/pipebomb/frame
+			src.frame.set_loc(src)
+		//else
+		//	src.mousetrap = new /obj/item/mousetrap(src)
 
 		// Fallback in case something goes wrong.
-		if (!HAS_TRIGGERABLE(src.mousetrap))
-			src.mousetrap.grenade = new /obj/item/chem_grenade/flashbang(src.mousetrap)
-			src.mousetrap.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
+		//if (!HAS_TRIGGERABLE(src.mousetrap))
+		//	src.mousetrap.grenade = new /obj/item/chem_grenade/flashbang(src.mousetrap)
+		//	src.mousetrap.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
 
-		if (src.mousetrap.grenade)
-			src.payload = src.mousetrap.grenade.name
-			src.name = "mousetrap/grenade/roller assembly"
-		else if (src.mousetrap.grenade_old)
-			src.payload = src.mousetrap.grenade_old.name
-			src.name = "mousetrap/grenade/roller assembly"
-		else if (src.mousetrap.pipebomb)
-			src.payload = src.mousetrap.pipebomb.name
-			src.name = "mousetrap/pipe bomb/roller assembly"
-		else if (src.mousetrap.gimmickbomb)
-			src.payload = src.mousetrap.gimmickbomb.name
-			src.name = "mousetrap/bomb/roller assembly"
-		else
-			src.payload = "*unknown or null*"
-
-		if (newframe)
-			newframe.set_loc(src)
-			src.frame = newframe
-		else
-			src.frame = new /obj/item/pipebomb/frame(src)
-
-		return
+	disposing()
+		qdel(src.frame)
+		src.frame = null
+		qdel(src.payload)
+		src.payload = null
+		..()
 
 	attackby(obj/item/C, mob/user)
 		if (iswrenchingtool(C))
-			if (!isturf(src.loc))
-				user.show_text("Place the [src.name] on the ground first.", "red")
-				return
-
 			user.visible_message("<b>[user]</b> disassembles [src].","You disassemble [src].")
-
-			if (src.mousetrap)
-				src.mousetrap.set_loc(src.loc)
-				src.mousetrap = null
-
+			if (src.payload)
+				src.payload.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
+				src.payload.set_loc(get_turf(src))
+				src.payload.transform = null //we reset the transformation here
+				src.payload = null
 			if (src.frame)
-				src.frame.set_loc(src.loc)
+				src.frame.set_loc(get_turf(src))
 				src.frame = null
-
 			qdel(src)
 
 		else
@@ -515,13 +427,12 @@
 			return
 
 		user.visible_message(SPAN_ALERT("[user] starts up the [src.name]."), "You start up the [src.name]")
-		message_admins("[key_name(user)] releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
-		logTheThing(LOG_BOMBING, user, "releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
+		message_admins("[key_name(user)] releases a [src] (Payload: [src.payload.name]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
+		logTheThing(LOG_BOMBING, user, "releases a [src] (Payload: [src.payload.name]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
 
 		src.armed = TRUE
-		if (!(src.mousetrap?.armed))
-			src.mousetrap.armed = TRUE // Must be armed or it won't work in mousetrap.triggered().
-			src.mousetrap.set_armer(user)
+		//we arm our assembly here
+		SEND_SIGNAL(src.payload.trigger, COMSIG_ITEM_ASSEMBLY_ACTIVATION, payload, user)
 		src.set_density(1)
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
@@ -531,23 +442,30 @@
 		walk(src, src.dir, 3)
 
 	bump(atom/movable/AM as mob|obj)
-		if (src.armed && src.mousetrap)
+		if (src.armed && src.payload)
 			src.visible_message(SPAN_ALERT("[src] bumps against [AM]!"))
 			walk(src, 0)
 			SPAWN(0)
-				src.mousetrap.triggered(AM && ismob(AM) ? AM : null)
-
-				if (src.mousetrap)
-					src.mousetrap.set_loc(src.loc)
-					src.mousetrap = null
+				// we now trigger the assembly
+				var/datum/signal/signal = get_free_signal()
+				signal.source = src.payload.trigger
+				signal.data["message"] = "ACTIVATE"
+				payload.receive_signal(signal)
+				//now, if the payload still exists, we leave it on the ground
+				if (src.payload)
+					src.payload.set_loc(src.loc)
+					//we reset the transformation here
+					src.payload.transform = null
+					//this will deactivate the mousetrap
+					SEND_SIGNAL(src.payload.trigger, COMSIG_ITEM_ASSEMBLY_MANIPULATION, payload)
+					src.payload = null
 				if (src.frame)
 					src.frame.set_loc(src.loc)
 					src.frame = null
-
 				qdel(src)
 
 	Move(var/turf/new_loc,direction)
-		if (istype(src.mousetrap.gimmickbomb, /obj/item/gimmickbomb/butt) && src.armed)
+		if (src.buttbomb && src.armed)
 			playsound(src, 'sound/voice/farts/poo2.ogg', 30, FALSE, 0, 1.8)
 		..()
 

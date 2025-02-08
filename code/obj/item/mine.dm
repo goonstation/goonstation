@@ -19,6 +19,7 @@ TYPEINFO(/obj/item/mine)
 
 	New()
 		..()
+		RegisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION, PROC_REF(on_storage_interaction))
 		if (src.armed)
 			src.UpdateIcon()
 
@@ -27,8 +28,14 @@ TYPEINFO(/obj/item/mine)
 			src.our_timer.master = src
 
 	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION)
 		our_timer = null
 		..()
+
+	proc/on_storage_interaction(var/affected_mine, var/mob/user)
+		if(src.armed)
+			src.triggered(user)
+			return TRUE
 
 	examine()
 		. = ..()
