@@ -64,6 +64,15 @@
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
 	flags = OPENCONTAINER
 
+	/// turf type before being changed by ice phoenix permafrost
+	var/type_before_permafrost = null
+	/// turf dir before being changed by ice phoenix permafrost
+	var/dir_before_permafrost = null
+	/// turf icon before being changed by ice phoenix permafrost
+	var/icon_before_permafrost = null
+	/// turf icon state before being changed by ice phoenix permafrost
+	var/icon_state_before_permafrost = null
+
 
 	New()
 		..()
@@ -1300,6 +1309,10 @@ TYPEINFO(/turf/simulated)
 			if(target_turf)
 				zlevel = target_turf.z
 			V.going_home = 0
+	else if (istype(A, /mob/living/critter/ice_phoenix))
+		var/mob/living/critter/ice_phoenix/phoenix = A
+		if (phoenix.travel_back_to_station)
+			zlevel = Z_LEVEL_STATION
 	if (istype(A, /obj/newmeteor))
 		qdel(A)
 		return
