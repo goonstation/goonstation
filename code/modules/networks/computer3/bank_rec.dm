@@ -826,7 +826,6 @@
 
 /datum/computer/file/terminal_program/bank_records/proc/print_budget()
 	src.master.temp = null
-	var/total_funds = global.wagesystem.station_budget + global.wagesystem.research_budget + global.wagesystem.shipping_budget
 	src.print_text("<br><b>Station Budget</b>")
 	src.print_text("Payroll Budget: [num2text(round(global.wagesystem.station_budget),50)][CREDIT_SIGN]")
 	src.print_text("Shipping Budget: [num2text(round(global.wagesystem.shipping_budget),50)][CREDIT_SIGN]")
