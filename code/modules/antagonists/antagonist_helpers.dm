@@ -73,6 +73,7 @@ proc/get_all_gangs()
 		"Security Assistant",
 		"Vice Officer",
 		"Detective",
+		"VIP",
 		"AI",
 		"Cyborg")
 
