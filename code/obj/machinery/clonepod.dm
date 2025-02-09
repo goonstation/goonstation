@@ -1000,6 +1000,9 @@ TYPEINFO(/obj/machinery/clonegrinder)
 
 	attack_hand(mob/user)
 		interact_particle(user,src)
+		if (src.status & (BROKEN | NOPOWER))
+			boutput(user, SPAN_ALERT("The [src.name] is not functioning!"))
+			return
 
 		if (src.process_timer > 0)
 			boutput(user, SPAN_ALERT("The [src.name] is already running!"))
