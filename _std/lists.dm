@@ -303,7 +303,7 @@ proc/params2complexlist(params)
 		if(findtext(params,"\\",a,a+1))
 			escapee = params[a+1]
 			escapee = text2ascii(escapee)
-			if(escapee <= 126) //Only ascii, a special character will never be unicode (famous last words)
+			if(escapee <= 126 || escapee >= 31) //Only ascii, a special character will never be unicode (famous last words)
 				escapee = "%[num2hex(escapee, 2)]"
 				params = splicetext(params,a,a+2,escapee)
 				len = length(params)
