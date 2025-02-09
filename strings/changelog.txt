@@ -1,5 +1,7 @@
 
 (t)sun feb 09 25
+(u)LeahTheTech
+(+)Roaches can no longer skitter out of grabs.
 (u)Lord_Earthfire
 (p)22230
 (e)🔎💅📦|C-Code-Quality, C-QoL, A-Game-Objects
