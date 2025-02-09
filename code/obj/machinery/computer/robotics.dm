@@ -190,7 +190,7 @@
 			timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 			src.ai_killswitch_times += timeleft
 		else
-			src.ai_killswitch_times += "-1"
+			src.ai_killswitch_times += null
 
 		for(var/mob/living/silicon/robot/R in A.connected_robots)
 			if(QDELETED(R))
@@ -216,14 +216,14 @@
 				src.cyborg_modules += "No Module Installed"
 
 			if(!R.weapon_lock)
-				src.cyborg_lock_times += "-1"
+				src.cyborg_lock_times += null
 			else
 				var/timeleft = round(R.weaponlock_time, 1)
 				timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 				src.cyborg_lock_times += timeleft
 
 			if (!R.killswitch)
-				src.cyborg_killswitch_times += "-1"
+				src.cyborg_killswitch_times += null
 			else
 				var/timeleft = round((R.killswitch_at - TIME)/10, 1)
 				timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"

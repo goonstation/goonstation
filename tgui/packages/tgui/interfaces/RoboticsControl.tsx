@@ -107,7 +107,7 @@ const AiStatuses = (props) => {
           <Table.Cell>{item}</Table.Cell>
           <Table.Cell>{ai_statuses[index]}</Table.Cell>
           <Table.Cell collapsing>
-            {ai_killswitch_times[index] === '-1' ? (
+            {!ai_killswitch_times[index] ? (
               <NoticeBox warning inline>
                 <Button
                   disabled={user_is_robot}
@@ -167,7 +167,7 @@ const SiliconStatuses = (props) => {
           <Table.Cell>{cyborg_cell_charges[index]}</Table.Cell>
           <Table.Cell>{cyborg_modules[index]}</Table.Cell>
           <Table.Cell>
-            {cyborg_lock_times[index] === '-1' ? (
+            {!cyborg_lock_times[index] ? (
               <NoticeBox warning inline>
                 <Button
                   disabled={!user_is_ai}
@@ -189,7 +189,7 @@ const SiliconStatuses = (props) => {
             )}
           </Table.Cell>
           <Table.Cell collapsing>
-            {cyborg_killswitch_times[index] === '-1' ? (
+            {!cyborg_killswitch_times[index] ? (
               <NoticeBox warning inline>
                 <Button
                   disabled={user_is_cyborg || user_is_ai}
