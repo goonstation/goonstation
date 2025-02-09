@@ -218,7 +218,7 @@
 			if(!R.weapon_lock)
 				src.cyborg_lock_times += "-1"
 			else
-				var/timeleft = round((R.weaponlock_time - TIME)/10, 1)
+				var/timeleft = round(R.weaponlock_time, 1)
 				timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 				src.cyborg_lock_times += timeleft
 
@@ -232,6 +232,6 @@
 /obj/machinery/computer/robotics/proc/update_ghostdrone_statuses()
 	src.ghostdrone_names = list()
 	for_by_tcl(drone, /mob/living/silicon/ghostdrone)
-		//if(!drone.last_ckey || isdead(drone))
-		//	continue
+		if(!drone.last_ckey || isdead(drone))
+			continue
 		src.ghostdrone_names += drone.name
