@@ -1078,6 +1078,7 @@ var/list/radio_brains = list()
 	id = "skitter"
 	name = "Insectoid locomotion"
 	desc = "The subject is capable of skittering across the floor like a bug."
+	occur_in_genepools = 0
 
 	OnAdd()
 		RegisterSignal(src.owner, COMSIG_MOB_SPRINT, PROC_REF(on_sprint))
