@@ -501,8 +501,8 @@ var/datum/signal_holder/global_signal_holder
 						new_comp = new nt(raw_args)
 					if(!QDELETED(new_comp))
 						new_comp.InheritComponent(old_comp, FALSE)
-						qdel(new_comp)
-						new_comp = null
+						qdel(old_comp)
+						old_comp = null
 				if(COMPONENT_DUPE_UNIQUE_PASSARGS)
 					if(!new_comp)
 						var/list/arguments = raw_args.Copy(2)
