@@ -263,7 +263,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/space)
 
 	merc_outpost
 		maxNum = 1
-		probability = 10
+		probability = 30
 		prefabPath = "assets/maps/prefabs/space/prefab_merc_outpost.dmm"
 		prefabSizeX = 25
 		prefabSizeY = 25

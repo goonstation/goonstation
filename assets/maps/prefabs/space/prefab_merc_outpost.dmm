@@ -38,7 +38,6 @@
 	pixel_x = -12;
 	pixel_y = -30
 	},
-/obj/decal/cleanable/blood/drip/low,
 /turf/simulated/floor/black,
 /area/prefab/merc_outpost)
 "cK" = (
@@ -170,10 +169,6 @@
 /obj/decal/cleanable/ash,
 /turf/simulated/floor/plating/airless,
 /area/prefab/merc_outpost)
-"mr" = (
-/obj/decal/cleanable/blood/splatter,
-/turf/simulated/floor/black,
-/area/prefab/merc_outpost)
 "mP" = (
 /obj/table/auto,
 /obj/item/extinguisher{
@@ -273,6 +268,10 @@
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor,
 /area/prefab/merc_outpost)
+"vy" = (
+/obj/storage/closet,
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
 "wo" = (
 /obj/machinery/light/incandescent,
 /obj/reagent_dispensers/foamtank,
@@ -314,11 +313,8 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/black,
-/area/prefab/merc_outpost)
-"zM" = (
-/obj/storage/crate,
-/obj/mapping_helper/mob_spawn/corpse/human/merc,
+/mob/living/critter/human/mercenary/rifle,
+/obj/storage/closet,
 /turf/simulated/floor/black,
 /area/prefab/merc_outpost)
 "Aj" = (
@@ -357,14 +353,6 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/prefab/merc_outpost)
-"Do" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/item/casing/rifle,
-/obj/item/casing/rifle,
-/turf/simulated/floor/black,
 /area/prefab/merc_outpost)
 "Dy" = (
 /obj/mesh/grille/steel,
@@ -417,13 +405,6 @@
 /area/prefab/merc_outpost)
 "GD" = (
 /turf/simulated/floor,
-/area/prefab/merc_outpost)
-"GE" = (
-/obj/decal/cleanable/blood/drip/low,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
 /area/prefab/merc_outpost)
 "GJ" = (
 /obj/reagent_dispensers/fueltank,
@@ -605,7 +586,6 @@
 /turf/simulated/wall/auto/supernorn,
 /area/prefab/merc_outpost)
 "SO" = (
-/obj/decal/cleanable/blood/drip/low,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -662,11 +642,6 @@
 /obj/cable,
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/prefab/merc_outpost)
-"Wj" = (
-/obj/item/casing/rifle,
-/obj/item/casing/rifle,
-/turf/simulated/floor/black,
 /area/prefab/merc_outpost)
 "Wu" = (
 /obj/item/casing/rifle,
@@ -1077,7 +1052,7 @@ GD
 yU
 Sv
 Sv
-Ao
+vy
 Fg
 Ao
 nN
@@ -1106,7 +1081,7 @@ Sv
 Sk
 Ao
 Xf
-GE
+jV
 bX
 LH
 hD
@@ -1134,7 +1109,7 @@ Sk
 Ao
 sL
 hn
-zM
+Sk
 jK
 nn
 kG
@@ -1157,8 +1132,8 @@ Sv
 Bl
 Wu
 Sv
-Wj
-mr
+Ao
+Ao
 He
 oP
 xu
@@ -1184,7 +1159,7 @@ XT
 qJ
 rq
 eC
-Do
+jV
 SO
 fS
 Qc
