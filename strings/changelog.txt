@@ -1,6 +1,10 @@
 
 (t)sat feb 08 25
 (u)glowbold
+(p)22074
+(e)🪲🆕🎨📦|C-Bug, C-Feature, C-Sprites, A-Game-Objects
+(*)Vending machines can be both broken and fallen; broken vending machines require a glass sheet to fix, while fallen vending machines require a crowbar to fix.
+(u)glowbold
 (p)22203
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
 (+)Chemical, bar, and chef dispensers can be broken with enough damage. Fix them with common tools!
