@@ -10,6 +10,21 @@
 	id = 0
 	var/perma = 0
 
+	var/list/ai_names = list()
+	var/list/ai_statuses = list()
+	var/list/ai_killswitch_times = list()
+
+	var/list/cyborg_names = list()
+	var/list/cyborg_statuses = list()
+	var/list/cyborg_cell_charges = list()
+	var/list/cyborg_modules = list()
+	var/list/cyborg_lock_times = list()
+	var/list/cyborg_killswitch_times = list()
+
+	var/list/ghostdrone_names = list()
+
+	var/list/tracked_cyborgs = list()
+
 	light_r =0.85
 	light_g = 0.86
 	light_b = 1
@@ -22,6 +37,121 @@
 		..()
 		STOP_TRACKING
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "RoboticsControl")
+			ui.open()
+
+	ui_data(mob/user)
+		src.update_silicon_statuses()
+		src.update_ghostdrone_statuses()
+		. = list(
+			"user_is_ai" = isAI(user),
+			"user_is_cyborg" = isrobot(user),
+			"ai_names" = src.ai_names,
+			"ai_statuses" = src.ai_statuses,
+			"ai_killswitch_times" = src.ai_killswitch_times,
+			"cyborg_names" = src.cyborg_names,
+			"cyborg_statuses" = src.cyborg_statuses,
+			"cyborg_cell_charges" = src.cyborg_cell_charges,
+			"cyborg_modules" = src.cyborg_modules,
+			"cyborg_lock_times" = src.cyborg_lock_times,
+			"cyborg_killswitch_times" = src.cyborg_killswitch_times,
+			"ghostdrone_names" = src.ghostdrone_names
+		)
+
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return
+		. = TRUE
+		switch (action)
+			if ("start_ai_killswitch")
+				var/obj/item/card/id/I = usr.equipped()
+				if (istype(I))
+					if(src.check_access(I))
+						var/mob/living/silicon/ai/ai_player = by_type[/mob/living/silicon/ai][params["index"]]
+						var/mob/message = ai_player.get_message_mob()
+						message_admins(SPAN_ALERT("[key_name(usr)] has activated the AI self destruct on [key_name(message)]."))
+						logTheThing(LOG_COMBAT, usr, "has activated the AI killswitch process on [constructTarget(message,"combat")]")
+						if(message.client)
+							boutput(message, SPAN_ALERT("<b>AI Killswitch process activated.</b>"))
+							boutput(message, SPAN_ALERT("<b>Killswitch will engage in 3 minutes.</b>"))
+						ai_player.killswitch = TRUE
+						ai_player.killswitch_at = TIME + 3 MINUTES
+					else
+						boutput(usr, SPAN_ALERT("Access Denied."))
+			if ("stop_ai_killswitch")
+				var/mob/living/silicon/ai/ai_player = by_type[/mob/living/silicon/ai][params["index"]]
+				ai_player.killswitch_at = 0
+				ai_player.killswitch = FALSE
+				var/mob/message = ai_player.get_message_mob()
+				message_admins(SPAN_ALERT("[key_name(usr)] has stopped the AI self destruct on [key_name(message, 1, 1)]."))
+				logTheThing(LOG_COMBAT, usr, "has stopped the AI killswitch process on [constructTarget(message,"combat")].")
+				if(message.client)
+					boutput(message, SPAN_NOTICE("<b>Killswitch process deactivated.</b>"))
+
+			if ("start_silicon_killswitch")
+				var/obj/item/card/id/I = usr.equipped()
+				if (istype(I))
+					if(src.check_access(I))
+						var/mob/living/silicon/robot/robot = src.tracked_cyborgs[params["index"]]
+						message_admins(SPAN_ALERT("[key_name(usr)] has activated the robot self destruct on [key_name(robot)]."))
+						logTheThing(LOG_COMBAT, usr, "has activated the robot killswitch process on [constructTarget(robot,"combat")]")
+						if(robot.client)
+							boutput(robot, SPAN_ALERT("<b>Killswitch process activated.</b>"))
+							boutput(robot, SPAN_ALERT("<b>Killswitch will engage in 1 minute.</b>"))
+						robot.killswitch = TRUE
+						robot.killswitch_at = TIME + 1 MINUTE
+					else
+						boutput(usr, SPAN_ALERT("Access Denied."))
+			if ("stop_silicon_killswitch")
+				var/mob/living/silicon/robot/robot = src.tracked_cyborgs[params["index"]]
+				robot.killswitch_at = 0
+				robot.killswitch = 0
+				message_admins(SPAN_ALERT("[key_name(usr)] has stopped the robot self destruct on [key_name(robot, 1, 1)]."))
+				logTheThing(LOG_COMBAT, usr, "has stopped the robot killswitch process on [constructTarget(robot,"combat")].")
+				if(robot.client)
+					boutput(robot, SPAN_NOTICE("<b>Killswitch process deactivated.</b>"))
+			if ("start_silicon_lock")
+				var/mob/living/silicon/robot/robot = src.tracked_cyborgs[params["index"]]
+				if(robot.client)
+					if (robot.emagged)
+						boutput(robot, SPAN_NOTICE("<b>Weapon Lock signal blocked!</b>"))
+						return
+					boutput(robot, SPAN_ALERT("<b>Weapon Lock activated!</b>"))
+				robot.weapon_lock = TRUE
+				robot.weaponlock_time = 120
+				robot.uneq_active()
+				logTheThing(LOG_COMBAT, usr, "has activated [constructTarget(robot,"combat")]'s weapon lock (120 seconds).")
+				for (var/obj/item/roboupgrade/upgrade in robot.contents)
+					if (upgrade.activated)
+						upgrade.activated = 0
+						boutput(robot, SPAN_ALERT("<b>[upgrade] was shut down by the Weapon Lock!</b>"))
+					if (istype(upgrade, /obj/item/roboupgrade/jetpack))
+						robot.jetpack = 0
+			if ("stop_silicon_lock")
+				var/mob/living/silicon/robot/robot = src.tracked_cyborgs[params["index"]]
+				if(robot.emagged)
+					return
+				if(robot.client)
+					boutput(robot, "Weapon Lock deactivated.")
+				robot.weapon_lock = FALSE
+				robot.weaponlock_time = 120
+				logTheThing(LOG_COMBAT, usr, "has deactivated [constructTarget(robot, "combat")]'s weapon lock.")
+			if ("killswitch_ghostdrone")
+				var/obj/item/card/id/I = usr.equipped()
+				var/mob/living/silicon/ghostdrone/drone = by_type[/mob/living/silicon/ghostdrone][params["index"]]
+				if (istype(drone))
+					if(src.check_access(I))
+						message_admins(SPAN_ALERT("[key_name(usr)] killswitched drone [key_name(drone)]."))
+						logTheThing(LOG_COMBAT, usr, "killswitched drone [constructTarget(drone,"combat")]")
+						if(drone.client)
+							boutput(drone, SPAN_ALERT("<b>Killswitch activated.</b>"))
+						drone.gib()
+					else
+						boutput(usr, SPAN_ALERT("Access Denied."))
 
 /obj/machinery/computer/robotics/attackby(obj/item/I, user)
 	if (perma && isscrewingtool(I))
@@ -34,212 +164,74 @@
 	logTheThing(LOG_STATION, src, "is deconstructed by [key_name(user)] at [log_loc(src)]")
 	frame.circuit.id = src.id
 
-/obj/machinery/computer/robotics/process()
-	..()
-	if(status & (NOPOWER|BROKEN))
-		return
-	src.updateDialog()
-	return
+/obj/machinery/computer/robotics/proc/update_silicon_statuses()
+	src.ai_names = list()
+	src.ai_statuses = list()
+	src.ai_killswitch_times = list()
 
+	src.cyborg_names = list()
+	src.cyborg_statuses = list()
+	src.cyborg_cell_charges = list()
+	src.cyborg_modules = list()
+	src.cyborg_lock_times = list()
+	src.cyborg_killswitch_times = list()
 
-/obj/machinery/computer/robotics/attack_hand(var/mob/user)
-	if(..())
-		return
-	src.add_dialog(user)
-	var/list/dat = list("Located AI Units<BR><BR>")
+	src.tracked_cyborgs = list()
+
 	for_by_tcl(A, /mob/living/silicon/ai)
-		dat += "[A.name] |"
-		if(A.stat)
-			dat += "ERROR: Not Responding!<BR>"
+		src.ai_names += A.name
+		if (A.stat)
+			src.ai_statuses += "ERROR: Not Responding!"
 		else
-			dat += "Operating Normally<BR>"
+			src.ai_statuses += "Operating Normally"
 
-		if(!isrobot(user)&&!ishivebot(user))
-			//if(!A.weapon_lock)
-				//dat += "<A href='?src=\ref[src];lock=1;ai=\ref[A]'>Emergency Lockout AI *Swipe ID*</A><BR>"
-			//else
-				//dat += "Time left:[A.weaponlock_time] | "
-				//dat += "<A href='?src=\ref[src];lock=2;ai=\ref[A]'>Cancel Lockout</A><BR>"
-
-			if(!A.killswitch)
-				dat += "<A href='?src=\ref[src];gib=1;ai=\ref[A]'>Kill Switch AI *Swipe ID*</A><BR>"
-			else
-				var/timeleft = round((A.killswitch_at - TIME)/10, 1)
-				timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
-				dat += "Time left:[timeleft]"
-				if (!isAI(user))
-					dat += " | <A href='?src=\ref[src];gib=2;ai=\ref[A]'>Cancel</A>"
-				dat += "<BR>"
-
-		dat += "<BR> Connected Cyborgs<BR>"
-		dat += " *------------------------------------------------*<BR>"
+		if (A.killswitch)
+			var/timeleft = round((A.killswitch_at - TIME)/10, 1)
+			timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
+			src.ai_killswitch_times += timeleft
+		else
+			src.ai_killswitch_times += "-1"
 
 		for(var/mob/living/silicon/robot/R in A.connected_robots)
-			if(R.disposed)
+			if(QDELETED(R))
 				continue
-			dat += "[R.name] |"
+			src.tracked_cyborgs += R
+			src.cyborg_names += R.name
+
 			if(isnull(R.part_head?.brain))
-				dat += " Intelligence Cortex Missing |"
+				src.cyborg_statuses += "Intelligence Cortex Missing"
 			else if(R.stat)
-				dat += " Not Responding |"
+				src.cyborg_statuses += "Not Responding"
 			else
-				dat += " Operating Normally |"
+				src.cyborg_statuses += "Operating Normally"
+
 			if(R.cell)
-				dat += " Battery Installed ([R.cell.charge]/[R.cell.maxcharge]) |"
+				src.cyborg_cell_charges += "Battery Installed ([R.cell.charge]/[R.cell.maxcharge])"
 			else
-				dat += " No Cell Installed |"
+				src.cyborg_cell_charges += "No Cell Installed"
+
 			if(R.module)
-				dat += " Module Installed ([R.module.name]) |"
+				src.cyborg_modules += "Module Installed ([R.module.name])"
 			else
-				dat += " No Module Installed |"
-			dat += "<BR>"
-			if(isAI(user))
-				if(user == A || user == A.eyecam)
-					if(!R.weapon_lock)
-						dat += "<A href='?src=\ref[src];lock=1;bot=\ref[R]'>Lockdown Bot</A><BR>"
-					else
-						dat += "Time left:[R.weaponlock_time] | "
-						dat += "<A href='?src=\ref[src];lock=2;bot=\ref[R]'>Cancel Lockdown</A><BR>"
-			else if(!isrobot(user)&&!ishivebot(user))
-				if(!R.killswitch)
-					dat += "<A href='?src=\ref[src];gib=1;bot=\ref[R]'>Kill Switch *Swipe ID*</A><BR>"
-				else
-					var/timeleft = round((R.killswitch_at - TIME)/10, 1)
-					timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
-					dat += "Time left:[timeleft] | "
-					dat += "<A href='?src=\ref[src];gib=2;bot=\ref[R]'>Cancel</A><BR>"
-			dat += "*----------*<BR>"
+				src.cyborg_modules += "No Module Installed"
 
-	var/found_drones = FALSE
+			if(!R.weapon_lock)
+				src.cyborg_lock_times += "-1"
+			else
+				var/timeleft = round((R.weaponlock_time - TIME)/10, 1)
+				timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
+				src.cyborg_lock_times += timeleft
+
+			if (!R.killswitch)
+				src.cyborg_killswitch_times += "-1"
+			else
+				var/timeleft = round((R.killswitch_at - TIME)/10, 1)
+				timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
+				src.cyborg_killswitch_times += timeleft
+
+/obj/machinery/computer/robotics/proc/update_ghostdrone_statuses()
+	src.ghostdrone_names = list()
 	for_by_tcl(drone, /mob/living/silicon/ghostdrone)
-		if(!drone.last_ckey || isdead(drone))
-			continue
-		if(!found_drones)
-			dat += "*----------*<BR><BR>"
-			dat += "Ghostdrones:<BR>"
-			found_drones = TRUE
-		dat += "[drone] <A href='?src=\ref[src];gib=drone;bot=\ref[drone]'>Kill Switch *Swipe ID*</A><BR>"
-
-	user.Browse(dat.Join(), "window=computer;size=400x500")
-	onclose(user, "computer")
-	return
-
-/obj/machinery/computer/robotics/Topic(href, href_list)
-	if(..())
-		return
-	if(isghostdrone(usr))
-		return
-	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		src.add_dialog(usr)
-
-	var/mob/living/silicon/robot/R = locate(href_list["bot"])
-	var/mob/living/silicon/ai/A = locate(href_list["ai"])
-
-	if (href_list["gib"])
-		switch(href_list["gib"])
-			if("drone")
-				var/obj/item/card/id/I = usr.equipped()
-				var/mob/living/silicon/ghostdrone/drone = locate(href_list["bot"])
-				if (istype(drone))
-					if(src.check_access(I))
-						message_admins(SPAN_ALERT("[key_name(usr)] killswitched drone [key_name(drone)]."))
-						logTheThing(LOG_COMBAT, usr, "killswitched drone [constructTarget(drone,"combat")]")
-						if(drone.client)
-							boutput(drone, SPAN_ALERT("<b>Killswitch activated.</b>"))
-						drone.gib()
-					else
-						boutput(usr, SPAN_ALERT("Access Denied."))
-
-			if("1")
-				var/obj/item/card/id/I = usr.equipped()
-				if (istype(I))
-					if(src.check_access(I))
-						if(istype(R))
-							message_admins(SPAN_ALERT("[key_name(usr)] has activated the robot self destruct on [key_name(R)]."))
-							logTheThing(LOG_COMBAT, usr, "has activated the robot killswitch process on [constructTarget(R,"combat")]")
-							if(R.client)
-								boutput(R, SPAN_ALERT("<b>Killswitch process activated.</b>"))
-								boutput(R, SPAN_ALERT("<b>Killswitch will engage in 1 minute.</b>"))
-							R.killswitch = TRUE
-							R.killswitch_at = TIME + 1 MINUTE
-						else if(istype(A))
-							var/mob/message = A.get_message_mob()
-							message_admins(SPAN_ALERT("[key_name(usr)] has activated the AI self destruct on [key_name(message)]."))
-							logTheThing(LOG_COMBAT, usr, "has activated the AI killswitch process on [constructTarget(message,"combat")]")
-							if(message.client)
-								boutput(message, SPAN_ALERT("<b>AI Killswitch process activated.</b>"))
-								boutput(message, SPAN_ALERT("<b>Killswitch will engage in 3 minutes.</b>"))
-							A.killswitch = TRUE
-							A.killswitch_at = TIME + 3 MINUTES
-					else
-						boutput(usr, SPAN_ALERT("Access Denied."))
-
-			if("2")
-				if(istype(R))
-					R.killswitch_at = 0
-					R.killswitch = 0
-					message_admins(SPAN_ALERT("[key_name(usr)] has stopped the robot self destruct on [key_name(R, 1, 1)]."))
-					logTheThing(LOG_COMBAT, usr, "has stopped the robot killswitch process on [constructTarget(R,"combat")].")
-					if(R.client)
-						boutput(R, SPAN_NOTICE("<b>Killswitch process deactivated.</b>"))
-				else if(istype(A))
-					A.killswitch_at = 0
-					A.killswitch = 0
-					var/mob/message = A.get_message_mob()
-					message_admins(SPAN_ALERT("[key_name(usr)] has stopped the AI self destruct on [key_name(message, 1, 1)]."))
-					logTheThing(LOG_COMBAT, usr, "has stopped the AI killswitch process on [constructTarget(message,"combat")].")
-					if(message.client)
-						boutput(message, SPAN_NOTICE("<b>Killswitch process deactivated.</b>"))
-
-
-	if (href_list["lock"])
-		switch(href_list["lock"])
-			if("1")
-				if(istype(R))
-					if(R.client)
-						if (R.emagged)
-							boutput(R, SPAN_NOTICE("<b>Weapon Lock signal blocked!</b>"))
-							return
-						boutput(R, SPAN_ALERT("<b>Weapon Lock activated!</b>"))
-					R.weapon_lock = 1
-					R.weaponlock_time = 120
-					R.uneq_active()
-					logTheThing(LOG_COMBAT, usr, "has activated [constructTarget(R,"combat")]'s weapon lock (120 seconds).")
-					for (var/obj/item/roboupgrade/X in R.contents)
-						if (X.activated)
-							X.activated = 0
-							boutput(R, SPAN_ALERT("<b>[X] was shut down by the Weapon Lock!</b>"))
-						if (istype(X, /obj/item/roboupgrade/jetpack))
-							R.jetpack = 0
-				else if(istype(A))
-					var/obj/item/card/id/I = usr.equipped()
-					if (istype(I))
-						if(src.check_access(I))
-							var/mob/message = A.get_message_mob()
-							if(message.client)
-								boutput(message, SPAN_ALERT("<b>Emergency lockout activated!</b>"))
-								A.weapon_lock = 1
-								A.weaponlock_time = 120
-								logTheThing(LOG_COMBAT, usr, "has activated [constructTarget(message,"combat")]'s weapon lock (120 seconds).")
-					else
-						boutput(usr, SPAN_ALERT("Access Denied."))
-
-			if("2")
-				if(istype(R))
-					if(R.emagged) return
-					if(R.client)
-						boutput(R, "Weapon Lock deactivated.")
-					R.weapon_lock = 0
-					R.weaponlock_time = 120
-					logTheThing(LOG_COMBAT, usr, "has deactivated [constructTarget(R,"combat")]'s weapon lock.")
-
-				else if(istype(A))
-					var/mob/message = A.get_message_mob()
-					if(message.client)
-						boutput(message, "Emergency lockout deactivated.")
-					A.weapon_lock = 0
-					A.weaponlock_time = 120
-					logTheThing(LOG_COMBAT, usr, "has deactivated [constructTarget(message,"combat")]'s weapon lock.")
-
-	src.updateUsrDialog()
-	return
+		//if(!drone.last_ckey || isdead(drone))
+		//	continue
+		src.ghostdrone_names += drone.name
