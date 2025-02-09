@@ -17,7 +17,7 @@
 
 /datum/effects/system/ion_trail_follow/proc/on_vehicle_move(atom/movable/vehicle, atom/previous_loc, direction)
 	var/turf/T = get_turf(vehicle)
-	var/has_trailblazer
+	var/has_trailblazer = FALSE
 	if (istype(vehicle, /obj/machinery/vehicle))
 		var/obj/machinery/vehicle/mover = vehicle
 		if (istype(mover.sec_system, /obj/item/shipcomponent/secondary_system/trailblazer))
