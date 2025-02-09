@@ -4,6 +4,7 @@ TYPEINFO(/datum/component/assembly)
 		ARG_INFO("proc_to_call", DATA_INPUT_REF, "The proc reference that will be called when the item can be assembled"),
 		ARG_INFO("on_tool_attack", DATA_INPUT_BOOL, "Set this to TRUE if you want the component to fire if the construction should go two-ways.", FALSE),
 		ARG_INFO("allow_on_others", DATA_INPUT_BOOL, "Set this to TRUE if you want the component to fire even though one of the items is on someone else. Sneaky.", FALSE),
+		ARG_INFO("ignore_given_proc", DATA_INPUT_BOOL, "Set this to TRUE if you want the component to ignore that proc_to_call isn't given and instead call src.override_combination. This is only usefull for children of this component.", FALSE),
 	)
 
 ///This component calls a procref with a assembly_information string on the atom it was added to when it gets attacked with an object specified in the to_combine_item
@@ -85,7 +86,7 @@ TYPEINFO(/datum/component/assembly)
 /datum/component/assembly/trigger_applier_assembly/Initialize()
 	if(!src.parent)
 		return COMPONENT_INCOMPATIBLE
-	. = ..(TOOL_ASSEMBLY_APPLIER, null, TRUE, TRUE) //here, we use ignore_given_proc = TRUE in the parent because we want to create the assembly in src.override_combination
+	. = ..(TOOL_ASSEMBLY_APPLIER, null, TRUE, FALSE, TRUE) //here, we use ignore_given_proc = TRUE in the parent because we want to create the assembly in src.override_combination
 
 /datum/component/assembly/trigger_applier_assembly/try_combination(var/atom/checked_atom, var/mob/user)
 	if(istype(checked_atom, src.parent.type))
