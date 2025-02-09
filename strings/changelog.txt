@@ -1,4 +1,9 @@
 
+(t)sun feb 09 25
+(u)AnomalousPotato
+(p)22218
+(e)🆕💅🔊📄|C-Feature, C-QoL, C-Sound, A-UI
+(*)Added an adjustable Instruments volume channel in audio options, on the top left of the screen.
 (t)sat feb 08 25
 (u)TDHooligan
 (p)22025
