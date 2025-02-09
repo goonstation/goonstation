@@ -109,7 +109,7 @@
 			if ("stop_silicon_killswitch")
 				var/mob/living/silicon/robot/robot = src.tracked_cyborgs[params["index"]]
 				robot.killswitch_at = 0
-				robot.killswitch = 0
+				robot.killswitch = FALSE
 				message_admins(SPAN_ALERT("[key_name(usr)] has stopped the robot self destruct on [key_name(robot, 1, 1)]."))
 				logTheThing(LOG_COMBAT, usr, "has stopped the robot killswitch process on [constructTarget(robot,"combat")].")
 				if(robot.client)
@@ -127,10 +127,10 @@
 				logTheThing(LOG_COMBAT, usr, "has activated [constructTarget(robot,"combat")]'s weapon lock (120 seconds).")
 				for (var/obj/item/roboupgrade/upgrade in robot.contents)
 					if (upgrade.activated)
-						upgrade.activated = 0
+						upgrade.activated = FALSE
 						boutput(robot, SPAN_ALERT("<b>[upgrade] was shut down by the Weapon Lock!</b>"))
 					if (istype(upgrade, /obj/item/roboupgrade/jetpack))
-						robot.jetpack = 0
+						robot.jetpack = FALSE
 			if ("stop_silicon_lock")
 				var/mob/living/silicon/robot/robot = src.tracked_cyborgs[params["index"]]
 				if(robot.emagged)
