@@ -1,5 +1,9 @@
 
 (t)sun feb 09 25
+(u)Lord_Earthfire
+(p)22230
+(e)🔎💅📦|C-Code-Quality, C-QoL, A-Game-Objects
+(+)You don't need to unsecure a welding tool anymore to begin the construction of a flamethrower. Also, you can start it by either using material rods on a welding tool or using the welding tool on the material rods.
 (u)AnomalousPotato
 (p)21660
 (e)🆕🔨🤖|C-Feature, A-Player-Actions, A-Silicons
