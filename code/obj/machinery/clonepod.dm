@@ -878,6 +878,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 	icon_state = "grinder0"
 	anchored = ANCHORED
 	density = 1
+	power_usage = 100 WATTS
 	var/list/pods = null // cloning pods we're tied to
 	var/id = null // if this isn't null, we'll only look for pods with this ID
 	var/pod_range = 4 // if we don't have an ID, we look for pods in orange(this value)
