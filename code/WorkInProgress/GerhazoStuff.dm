@@ -592,6 +592,7 @@
 			M.take_toxin_damage(-15)
 			M.take_oxygen_deprivation(-15)
 			M.losebreath = max(0, M.losebreath - 10)
+			repair_bleeding_damage(M, 100, rand(1,2))
 			M.visible_message(SPAN_ALERT("Some of [M]'s wounds slowly fade away!"), SPAN_ALERT("Your wounds begin to fade away."))
 			playsound(M, 'sound/items/mender.ogg', 50, TRUE)
 		else

@@ -34,6 +34,17 @@
 	<br>Sends specified signal when both inputs receive a Signal within a specified Time Frame.
 	<br>
 	<br>
+	<br><B>Buffer Component:</B>
+	<br>Collects signals in a buffer of a congfigurable size and outputs them with a delay, also configurable.
+	<br>There are several buffer modes that can be set, either with a multitool or a component input.
+	<br><ul>
+	<li> FIFO(First in First Out) outputs the oldest signals first, dropping new signals when the buffer is full. </li>
+	<li> FILO(First in Last Out) outputs the newest signals first, dropping new signals when the buffer is full. </li>
+	<li> Ring buffer outputs the oldest signals first like FIFO, but signals will replace the oldest signal in the buffer instead of being dropped.</li>
+	<li> Random mode outputs signals in a random order, and randomly overwrites signals when the buffer is full. </li>
+	</ul>
+  <br>
+	<br>
 	<br><B>Arithmetic Component:</B>
 	<br>Store numbers received in signals to variable A or B, then do mathematical operations on them. By default it will compute the result immediately, then send it on as a signal.
 	<br>Conveniently strips off trailing letters when setting variables.
@@ -65,9 +76,9 @@
 		<li>Neq: Not equal. Opposite of equal.</li>
 		<li>Min: Returns A or B, whichever is smaller.</li>
 		<li>Max: Like min but returns whichever is larger.</li>
-
 	</ul>
-
+	<br>
+	<br>
 	<br><B>Button:</B>
 	<br>Sends set Signal when used.
 	<br>
