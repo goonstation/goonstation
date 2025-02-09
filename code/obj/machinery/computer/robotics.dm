@@ -65,7 +65,6 @@
 		. = ..()
 		if (.)
 			return
-		. = TRUE
 		switch (action)
 			if ("start_ai_killswitch")
 				var/obj/item/card/id/I = usr.equipped()
@@ -82,6 +81,7 @@
 						ai_player.killswitch_at = TIME + 3 MINUTES
 					else
 						boutput(usr, SPAN_ALERT("Access Denied."))
+				return TRUE
 			if ("stop_ai_killswitch")
 				var/mob/living/silicon/ai/ai_player = by_type[/mob/living/silicon/ai][params["index"]]
 				ai_player.killswitch_at = 0
@@ -91,7 +91,7 @@
 				logTheThing(LOG_COMBAT, usr, "has stopped the AI killswitch process on [constructTarget(message,"combat")].")
 				if(message.client)
 					boutput(message, SPAN_NOTICE("<b>Killswitch process deactivated.</b>"))
-
+				return TRUE
 			if ("start_silicon_killswitch")
 				var/obj/item/card/id/I = usr.equipped()
 				if (istype(I))
@@ -106,6 +106,7 @@
 						robot.killswitch_at = TIME + 1 MINUTE
 					else
 						boutput(usr, SPAN_ALERT("Access Denied."))
+				return TRUE
 			if ("stop_silicon_killswitch")
 				var/mob/living/silicon/robot/robot = src.tracked_cyborgs[params["index"]]
 				robot.killswitch_at = 0
@@ -114,6 +115,7 @@
 				logTheThing(LOG_COMBAT, usr, "has stopped the robot killswitch process on [constructTarget(robot,"combat")].")
 				if(robot.client)
 					boutput(robot, SPAN_NOTICE("<b>Killswitch process deactivated.</b>"))
+				return TRUE
 			if ("start_silicon_lock")
 				var/mob/living/silicon/robot/robot = src.tracked_cyborgs[params["index"]]
 				if(robot.client)
@@ -131,6 +133,7 @@
 						boutput(robot, SPAN_ALERT("<b>[upgrade] was shut down by the Weapon Lock!</b>"))
 					if (istype(upgrade, /obj/item/roboupgrade/jetpack))
 						robot.jetpack = FALSE
+				return TRUE
 			if ("stop_silicon_lock")
 				var/mob/living/silicon/robot/robot = src.tracked_cyborgs[params["index"]]
 				if(robot.emagged)
@@ -140,6 +143,7 @@
 				robot.weapon_lock = FALSE
 				robot.weaponlock_time = 120
 				logTheThing(LOG_COMBAT, usr, "has deactivated [constructTarget(robot, "combat")]'s weapon lock.")
+				return TRUE
 			if ("killswitch_ghostdrone")
 				var/obj/item/card/id/I = usr.equipped()
 				var/mob/living/silicon/ghostdrone/drone = by_type[/mob/living/silicon/ghostdrone][params["index"]]
@@ -152,6 +156,7 @@
 						drone.gib()
 					else
 						boutput(usr, SPAN_ALERT("Access Denied."))
+				return TRUE
 
 /obj/machinery/computer/robotics/attackby(obj/item/I, user)
 	if (perma && isscrewingtool(I))
