@@ -10,7 +10,7 @@ import { Button, NoticeBox, Section, Table } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-interface GPSInfo {
+interface RoboticsControlData {
   user_is_ai: boolean;
   user_is_cyborg: boolean;
   ai_names: string[];
@@ -26,7 +26,7 @@ interface GPSInfo {
 }
 
 export const RoboticsControl = () => {
-  const { act, data } = useBackend<GPSInfo>();
+  const { act, data } = useBackend<RoboticsControlData>();
   const {
     user_is_ai,
     user_is_cyborg,
