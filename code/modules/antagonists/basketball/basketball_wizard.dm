@@ -12,6 +12,7 @@
 		H.equip_new_if_possible(pick(concrete_typesof(/obj/item/clothing/under/jersey)), SLOT_W_UNIFORM)
 		H.equip_new_if_possible(/obj/item/clothing/shoes/white, SLOT_SHOES)
 		H.equip_new_if_possible(pick(concrete_typesof(/obj/item/clothing/head/wizard)), SLOT_HEAD)
+		H.equip_if_possible(new /obj/item/device/radio/headset/wizard(H), SLOT_EARS)
 		H.equip_new_if_possible(/obj/item/bball_uplink, SLOT_R_STORE)
 		H.equip_new_if_possible(/obj/item/storage/backpack, SLOT_BACK)
 		H.equip_new_if_possible(/obj/item/basketball, SLOT_R_HAND)

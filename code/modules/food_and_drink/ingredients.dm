@@ -479,6 +479,11 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	food_color = "#FFFFFF"
 	custom_food = 0
 
+	clamp_act(mob/clamper, obj/item/clamp)
+		new /obj/item/reagent_containers/food/snacks/ingredient/pizza_base(src.loc)
+		qdel(src)
+		return TRUE
+
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/sugar))
 			boutput(user, SPAN_NOTICE("You add [W] to [src] to make sweet dough!"))

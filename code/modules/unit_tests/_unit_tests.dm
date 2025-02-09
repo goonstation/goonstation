@@ -50,6 +50,7 @@
 #include "antag_popup_existence.dm"
 #include "job_name_uniqueness.dm"
 #include "mutation_combo_valid_ids.dm"
+#include "od_compile_bot.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL

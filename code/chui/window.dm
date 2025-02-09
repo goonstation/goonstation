@@ -153,6 +153,12 @@ chui/window
 		window.addEventListener("beforeunload", updateScroll);
 		window.addEventListener("scroll", updateScroll);
 		window.addEventListener("load", function() {document.documentElement.scrollTop = document.body.scrollTop = window.name;});
+		// Prevent some default window shortcuts that annoy people
+		window.addEventListener("keydown", function(event){
+			if (event.ctrlKey && "oln".indexOf(event.key) > -1) {
+				event.preventDefault()
+			}
+		})
 	</script>
 </head>
 <body>
