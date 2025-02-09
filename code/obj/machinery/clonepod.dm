@@ -1161,13 +1161,13 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			ClearSpecificOverlays(TRUE, "paddle")
 			return
 
-		if (src.status & NOPOWER)
-			UpdateOverlays(image(src.icon, "grindpaddle0"), "paddle") // stop the paddle if no power
-			return
-
 		var/fluid_level = ((src.reagents.total_volume >= (src.reagents.maximum_volume * 0.6)) ? 2 : (src.reagents.total_volume >= (src.reagents.maximum_volume * 0.2) ? 1 : 0))
 
 		src.icon_state = "grinder[fluid_level]"
+
+		if (src.status & NOPOWER)
+			UpdateOverlays(image(src.icon, "grindpaddle0"), "paddle") // stop the paddle if no power
+			return
 
 		if (update_grindpaddle)
 			UpdateOverlays(image(src.icon, "grindpaddle[src.process_timer > 0 ? 1 : 0]"),"paddle")
