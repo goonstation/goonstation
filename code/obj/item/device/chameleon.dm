@@ -100,8 +100,8 @@ TYPEINFO(/obj/item/device/chameleon)
 		if(disrupt_on_drop)
 			disrupt()
 
-	attack_self()
-		toggle()
+	attack_self(mob/user)
+		toggle(user)
 
 	get_desc(dist)
 		if (dist < 1 && !istype(src, /obj/item/device/chameleon/bomb))
@@ -152,7 +152,7 @@ TYPEINFO(/obj/item/device/chameleon)
 		else
 			user.show_text("\The [target] is not compatible with the scanner.", "red")
 
-	proc/toggle()
+	proc/toggle(mob/user)
 		if (!can_use)
 			return
 
@@ -165,23 +165,23 @@ TYPEINFO(/obj/item/device/chameleon)
 			for (var/atom/movable/A in cham)
 				A.set_loc(get_turf(cham))
 			cham.set_loc(src)
-			boutput(usr, SPAN_NOTICE("You deactivate the [src]."))
+			boutput(user, SPAN_NOTICE("You deactivate the [src]."))
 			anim.set_loc(get_turf(src))
 			flick("emppulse",anim)
 			SPAWN(0.8 SECONDS)
 				anim.set_loc(src)
 		else
 			if (istype(src.loc, /obj/dummy/chameleon)) //No recursive chameleon projectors!!
-				boutput(usr, SPAN_ALERT("As your finger nears the power button, time seems to slow, and a strange silence falls.  You reconsider turning on a second projector."))
+				boutput(user, SPAN_ALERT("As your finger nears the power button, time seems to slow, and a strange silence falls.  You reconsider turning on a second projector."))
 				return
 
 			playsound(src, 'sound/effects/pop.ogg', 100, TRUE, 1)
 			cham.master = src
 			cham.set_loc(get_turf(src))
 			src.active = 1
-			usr.set_loc(cham)
+			user.set_loc(cham)
 
-			boutput(usr, SPAN_NOTICE("You activate the [src]."))
+			boutput(user, SPAN_NOTICE("You activate the [src]."))
 			anim.set_loc(get_turf(src))
 			flick("emppulse",anim)
 			SPAWN(0.8 SECONDS)

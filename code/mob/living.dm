@@ -1584,6 +1584,7 @@
 		src.animate_lying(src.lying)
 		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
 		actions.interrupt(src, INTERRUPT_ACT) // interrupt actions
+		SEND_SIGNAL(src, COMSIG_MOB_LAYDOWN_STANDUP, src.lying)
 
 /mob/living/proc/animate_lying(lying)
 	animate_rest(src, !lying)
@@ -2016,7 +2017,7 @@
 					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
-				if (isalive(src))
+				if (damage > 0 && isalive(src))
 					lastgasp()
 
 			if (D_PIERCING)
@@ -2024,7 +2025,7 @@
 					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				src.TakeDamage("chest", damage/rangedprot_mod, 0, 0, P.proj_data.hit_type)
-				if (isalive(src))
+				if (damage > 0 && isalive(src))
 					lastgasp()
 
 			if (D_SLASHING)

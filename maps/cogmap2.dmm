@@ -3433,9 +3433,9 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/critter/opossum/morty,
 /obj/disposalpipe/trunk/mail/south,
 /obj/machinery/disposal/mail/small/autoname/chapel/north,
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "alF" = (
@@ -56595,10 +56595,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
-"eSe" = (
-/obj/storage/cart/mechcart/tools,
-/turf/space,
-/area/space)
 "eSC" = (
 /obj/submachine/laundry_machine,
 /turf/simulated/floor/sanitary,
@@ -80299,7 +80295,7 @@ aaa
 aaa
 aaa
 aaa
-eSe
+aaa
 aaa
 aaa
 aaa

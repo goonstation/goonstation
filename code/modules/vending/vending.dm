@@ -98,6 +98,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	var/icon_off // trying to cut down on some duplicated icons in vending.dmi so I'm adding more icon states wee
 	var/icon_broken // you only need to set these to something if you want these icons to be something other than "[initial(icon_state)]-off/-broken/-fallen"
 	var/icon_fallen // otherwise it'll just default to that behavior
+	var/icon_fallen_broken // both fallen & broken
 
 	var/emagged = 0 //Ignores if somebody doesn't have card access to that machine.
 
@@ -253,8 +254,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 	HELP_MESSAGE_OVERRIDE({""})
 	get_help_message(dist, mob/user)
-		if (src.status & BROKEN) // Vendor is tipped
+		if (src.fallen) // Vendor is tipped
 			. += {"You can use a <b>crowbar</b> to lift the machine back up.\n"}
+			return // No need to show other tooltips
+		if (src.status & BROKEN)
+			. += {"You can use a <b>glass sheet</b> to repair the machine.\n"}
 			return // No need to show other tooltips
 		if ((src.can_hack) && (src.panel_open)) // Wire panel open for hacking
 			. += {"You can use a <b>multitool</b> to pulse and <b>wirecutters</b> to cut wires in the wire panel.\n"}
@@ -279,13 +283,23 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 			if (prob(50))
 				qdel(src)
 				return
+			if (prob(50))
+				SPAWN(0)
+					src.set_broken()
+					return
+				return
+			if (prob(50))
+				SPAWN(0)
+					src.fall()
+					return
+				return
 		if(3)
 			if (prob(25))
 				SPAWN(0)
-					src.malfunction()
+					src.set_broken()
 					return
 				return
-			else if (prob(25))
+			if (prob(25))
 				SPAWN(0)
 					src.fall()
 					return
@@ -293,12 +307,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 /obj/machinery/vending/blob_act(var/power)
 	if (prob(power * 1.25))
 		SPAWN(0)
-			if (prob(power / 3) &&  fallen)
+			if (prob(power / 3) && src.fallen)
 				for (var/i = 0, i < rand(4,7), i++)
 					src.malfunction()
 				qdel(src)
-			if (prob(50) || fallen)
-				src.malfunction()
+				return
+			if (prob(50) || src.fallen)
+				src.set_broken()
 			else
 				src.fall()
 		return
@@ -307,8 +322,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 /obj/machinery/vending/bullet_act(var/obj/projectile/P)
 	if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
-		if((src.can_fall) && prob(P.power * P.proj_data?.ks_ratio))
-			src.fall()
+		if(prob(P.power * P.proj_data?.ks_ratio))
+			if(src.status & BROKEN)
+				if (!src.fallen)
+					src.fall()
+			else
+				src.set_broken()
 	..()
 
 /obj/machinery/vending/emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -347,7 +366,26 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		src.scan = null
 
 /obj/machinery/vending/attackby(obj/item/W, mob/user)
-	if (istype(W,/obj/item/electronics/scanner) || istype(W,/obj/item/deconstructor)) // So people don't end up making the vending machines fall on them when they try to scan/deconstruct it
+	// repair fallen/broken in any order first
+	if (src.fallen)
+		if (ispryingtool(W))
+			//action bar is defined at the end of these procs
+			actions.start(new /datum/action/bar/icon/right_vendor(src), user)
+			return
+	if (src.status & BROKEN)
+		if (istype(W, /obj/item/sheet))
+			var/obj/item/sheet/sheet = W
+			if (sheet.material?.getMaterialFlags() & MATERIAL_CRYSTAL)
+				sheet.change_stack_amount(-1)
+				src.visible_message("[user] repairs the front panel on [src].")
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
+				src.status &= ~BROKEN
+				src.power_change()
+				return
+			else
+				boutput(user, SPAN_NOTICE("You need a glass sheet to repair [src]!"))
+				return
+	if (src.fallen || (src.status & BROKEN))
 		return
 	if (istype(W, /obj/item/currency/spacecash))
 		if (src.pay)
@@ -402,13 +440,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		src.Attackhand(user)
 		return
 	else if (ispryingtool(W))
-		if (src.status & BROKEN) //if the vendor is broken
-			//action bar is defined at the end of these procs
-			actions.start(new /datum/action/bar/icon/right_vendor(src), user)
-			return
-		else
-			actions.start(new /datum/action/bar/icon/rotate_machinery(src), user)
-			return
+		//action bar is defined at the end of these procs
+		actions.start(new /datum/action/bar/icon/rotate_machinery(src), user)
+		return
 	if (istype(W, /obj/item/vending/restock_cartridge))
 		//check if cartridge type matches the vending machine
 		var/obj/item/vending/restock_cartridge/Q = W
@@ -453,10 +487,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	return src.Attackhand(user)
 
 /obj/machinery/vending/ui_interact(mob/user, datum/tgui/ui)
-  ui = tgui_process.try_update_ui(user, src, ui)
-  if(!ui)
-    ui = new(user, src, "Vendors")
-    ui.open()
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Vendors")
+		ui.open()
 
 #define WIRE_VIOLET 1
 #define WIRE_ORANGE 2
@@ -712,7 +746,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	return vended
 
 /obj/machinery/vending/attack_hand(mob/user as mob)
-	if (status & (BROKEN|NOPOWER))
+	if (src.fallen || (status & (BROKEN|NOPOWER)))
 		return
 
 	if (src.seconds_electrified != 0)
@@ -722,7 +756,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	return ..()
 
 /obj/machinery/vending/Topic(href, href_list)
-	if (status & (BROKEN|NOPOWER))
+	if (src.fallen || (status & (BROKEN|NOPOWER)))
 		return
 	if (usr.stat || usr.restrained())
 		return
@@ -892,7 +926,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	return
 
 /obj/machinery/vending/process()
-	if (status & BROKEN)
+	if (src.fallen || (status & BROKEN))
 		return
 	..()
 	if (status & NOPOWER)
@@ -960,37 +994,37 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	return
 
 /obj/machinery/vending/power_change()
-	if (fallen)
-		icon_state = icon_fallen ? icon_fallen : "[initial(icon_state)]-fallen"
+	if (src.fallen)
+		src.panel_open = FALSE
+		src.ClearSpecificOverlays("panel")
 		light.disable()
+		if (src.status & BROKEN)
+			icon_state = icon_fallen_broken ? icon_fallen_broken : "[initial(icon_state)]-fallen-broken"
+		else
+			icon_state = icon_fallen ? icon_fallen : "[initial(icon_state)]-fallen"
 		return
 
 	if (status & BROKEN)
 		icon_state = icon_broken ? icon_broken : "[initial(icon_state)]-broken"
 		light.disable()
+		return
+	if ( powered() )
+		icon_state = initial(icon_state)
+		status &= ~NOPOWER
+		light.enable()
 	else
-		if ( powered() )
-			icon_state = initial(icon_state)
-			status &= ~NOPOWER
-			light.enable()
-		else
-			SPAWN(rand(0, 15))
-				src.icon_state = icon_off ? icon_off : "[initial(icon_state)]-off"
-				status |= NOPOWER
-				light.disable()
+		SPAWN(rand(0, 15))
+			src.icon_state = icon_off ? icon_off : "[initial(icon_state)]-off"
+			status |= NOPOWER
+			light.disable()
 
 /obj/machinery/vending/proc/fall(mob/living/carbon/victim)
 	if (!can_fall || fallen)
 		return
 	fallen = TRUE
-	status |= BROKEN
 	var/turf/vicTurf = get_turf(victim)
 	src.icon_state = "[initial(icon_state)]-fallen"
 	playsound(src.loc, 'sound/machines/vending_crash.ogg', 50, 0)
-//	SPAWN(0)
-//		src.icon_state = "[initial(icon_state)]-fall"
-//		SPAWN(2 SECONDS)
-//			src.icon_state = "[initial(icon_state)]-fallen"
 	if (istype(victim) && vicTurf && (BOUNDS_DIST(vicTurf, src) == 0))
 		victim.do_disorient(80, 5 SECONDS, 5 SECONDS, 0, 3 SECONDS, FALSE, DISORIENT_NONE, FALSE)
 		src.visible_message("<b>[SPAN_ALERT("[src.name] tips over onto [victim]!")]</b>")
@@ -1007,6 +1041,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	src.power_change()
 	src.anchored = UNANCHORED
 	return
+
+/obj/machinery/vending/set_broken()
+	. = ..()
+	if(.) return
+	src.malfunction()
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
@@ -1025,7 +1064,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 			continue
 
 		while(R.product_amount>0 || R.infinite)
-			new dump_path(src.loc)
+			var/atom/movable/dump = new dump_path(src.loc)
+			if (prob(40))
+				dump.throw_at(get_edge_cheap(src.loc, pick(alldirs)), 4, 2)
 			if (!R.infinite)
 				R.product_amount--
 			else if(prob(20))
@@ -1175,7 +1216,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	src.fallen = FALSE
 	src.layer = initial(src.layer)
 	src.anchored = ANCHORED
-	src.status &= ~BROKEN
 	src.power_change()
 
 /obj/machinery/vending/Cross(atom/movable/mover)
@@ -1729,6 +1769,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	icon_off = "standard-off"
 	icon_broken = "standard-broken"
 	icon_fallen = "standard-fallen"
+	icon_fallen_broken = "standard-fallen-broken"
 	acceptcard = 0
 
 	light_r =1
@@ -1758,6 +1799,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	icon_off = "standard-off"
 	icon_broken = "standard-broken"
 	icon_fallen = "standard-fallen"
+	icon_fallen_broken = "standard-fallen-broken"
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("Remember to read the EULA!",
@@ -1789,6 +1831,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	icon_off = "standard-off"
 	icon_broken = "standard-broken"
 	icon_fallen = "standard-fallen"
+	icon_fallen_broken = "standard-fallen-broken"
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("Convenient and feature-packed!",
@@ -1830,6 +1873,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	icon_off = "standard-off"
 	icon_broken = "standard-broken"
 	icon_fallen = "standard-fallen"
+	icon_fallen_broken = "standard-fallen-broken"
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("Read a book today!",
@@ -1871,9 +1915,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	desc = "Food storage unit."
 	icon_state = "food"
 	icon_panel = "standard-panel"
-	icon_off = "food-off"
-	icon_broken = "food-broken"
-	icon_fallen = "food-fallen"
 	req_access = list(access_kitchen)
 	acceptcard = 0
 
@@ -2646,9 +2687,6 @@ TYPEINFO(/obj/machinery/vending/monkey)
 	desc = "A vendor for Hydroponics related equipment."
 	icon_state = "gardengear"
 	icon_panel = "standard-panel"
-	icon_off = "gardengear-off"
-	icon_broken = "gardengear-broken"
-	icon_fallen = "gardengear-fallen"
 	acceptcard = 0
 
 	light_r =0.5
@@ -2693,7 +2731,6 @@ TYPEINFO(/obj/machinery/vending/monkey)
 	desc = "A horrid old fortune-telling machine."
 	icon_state = "hfortuneteller"
 	icon_vend = "hfortuneteller-vend"
-	icon_fallen = "hfortuneteller-fallen"
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("Ha ha ha ha ha!",
@@ -2717,7 +2754,6 @@ TYPEINFO(/obj/machinery/vending/monkey)
 	desc = "A horrid old fortune-telling machine."
 	icon_state = "fortuneteller"
 	icon_vend = "fortuneteller-vend"
-	icon_fallen = "fortuneteller-fallen"
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("Ha ha ha ha ha!",
@@ -2733,7 +2769,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 	var/list/sounds_working = list('sound/misc/automaton_scratch.ogg','sound/machines/mixer.ogg')
 	var/list/sounds_broken = list('sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
 
-	light_r =0.3
+	light_r = 0.3
 	light_g = 0.3
 	light_b = 1
 #endif
@@ -2845,6 +2881,11 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		else
 			..()
 
+/obj/machinery/vending/fortune/necromancer
+	name = "Necromancer Zoldorf"
+	icon_state = "hfortuneteller"
+	icon_vend = "hfortuneteller-vend"
+
 /obj/machinery/vending/alcohol
 	name = "Cap'n Bubs' Booze-O-Mat"
 	desc = "A vending machine filled with various kinds of alcoholic beverages and things for fancying up drinks."
@@ -2901,6 +2942,7 @@ TYPEINFO(/obj/machinery/vending/chem)
 	icon_off = "standard-off"
 	icon_broken = "standard-broken"
 	icon_fallen = "standard-fallen"
+	icon_fallen_broken =  "standard-fallen-broken"
 	glitchy_slogans = 1
 	pay = 1
 	acceptcard = 1
@@ -2984,6 +3026,7 @@ TYPEINFO(/obj/machinery/vending/chem)
 	icon_off = "standard-off"
 	icon_broken = "standard-broken"
 	icon_fallen = "standard-fallen"
+	icon_fallen_broken = "standard-fallen-broken"
 	pay = 1
 	acceptcard = 1
 	vend_delay = 20
@@ -3239,16 +3282,10 @@ TYPEINFO(/obj/machinery/vending/janitor)
 	can_fall = FALSE
 	can_hack = FALSE
 
-	ex_act(severity)
-		. = ..()
-
 /obj/machinery/vending/air_vendor/plasma/pod_wars
 	air_cost = 0
 	can_fall = FALSE
 	can_hack = FALSE
-
-	ex_act(severity)
-		. = ..()
 
 /obj/machinery/vending/player/chemicals
 	name = "dispensary interlink"
