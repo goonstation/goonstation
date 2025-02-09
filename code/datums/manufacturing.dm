@@ -631,7 +631,7 @@
 	name = "Metal Sheet (x5)"
 	item_requirements = list("metal" = 5)
 	create = 5
-	time = 8 SECONDS
+	time = 5 * /datum/manufacture/metal::time
 
 /datum/manufacture/metalR
 	name = "Reinforced Metal"
@@ -652,7 +652,7 @@
 	name = "Reinforced Metal (x5)"
 	item_requirements = list("metal" = 10)
 	create = 5
-	time = 50 SECONDS
+	time = 5 * /datum/manufacture/metalR::time
 
 /datum/manufacture/glass
 	name = "Glass Panel"
@@ -667,7 +667,7 @@
 	name = "Glass Panel (x5)"
 	item_requirements = list("crystal" = 5)
 	create = 5
-	time = 8 SECONDS
+	time = 5 * /datum/manufacture/glass::time
 
 /datum/manufacture/glassR
 	name = "Reinforced Glass Panel"
@@ -690,7 +690,7 @@
 	item_requirements = list("crystal" = 5,
 							 "metal_dense" = 5)
 	create = 5
-	time = 50 SECONDS
+	time = 5 * /datum/manufacture/glassR::time
 
 
 /datum/manufacture/rods2
