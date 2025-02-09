@@ -5,6 +5,7 @@
 	icon_state = "dark_lipstick0"
 	click_delay = 0.7 SECONDS
 
+
 	New()
 		..()
 		src.ColorOverride()
@@ -20,7 +21,7 @@
 		return
 
 	proc/ColorOverride()
-		src.font_color = "#000fdd"
+		src.font_color = "#e00d31"
 		src.color_name = hex2color_name(src.font_color)
 		src.name = "lipstick"
 		return
@@ -159,3 +160,10 @@
 			target.update_body()
 			for (var/mob/O in AIviewers(ownerMob))
 				O.show_message("[owner] applies [blush] to [target ]!", 1)
+/////blush
+/obj/item/makeup/blush
+	name = "Blush"
+	desc = "this is blush"
+	var/blush_color = "#8888f8"
+
+///// EYESHADOW

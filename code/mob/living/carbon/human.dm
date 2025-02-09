@@ -94,6 +94,8 @@
 	var/makeup_color = null
 	var/blush = null
 	var/blush_color = null
+	var/eyeshadow = null
+	var/eyeshadow_color = null
 
 	var/gunshot_residue = 0 // Fire a kinetic firearm and get forensic evidence all over you (Convair880).
 
@@ -133,6 +135,7 @@
 	var/static/image/spider_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/makeup_image = image('icons/mob/human.dmi') // yeah this is just getting stupider
 	var/static/image/blush_image = image ('icons/mob/human.dmi')
+	var/static/image/eyeshadow_image = image ('icons/mob/human.dmi')
 
 	var/list/juggling = list()
 	var/can_juggle = 0
