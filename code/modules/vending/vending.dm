@@ -1241,7 +1241,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if(!(src.vendor.status & BROKEN)) //it somehow got fixed while making it go upright??
+		if(!src.vendor.fallen)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1256,7 +1256,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 	onEnd()
 		..()
-		if(src.owner && vendor && (src.vendor.status & BROKEN))
+		if(src.owner && vendor && (src.vendor.fallen))
 			vendor.right()
 			for(var/mob/M in AIviewers(src.owner))
 				M.show_message(SPAN_NOTICE("<B>[src.owner] manages to stand \the [src.vendor] back upright!</B>"), 1)
