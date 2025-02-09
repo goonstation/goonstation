@@ -304,6 +304,10 @@ TYPEINFO(/atom)
 /atom/proc/ex_act(var/severity=0,var/last_touched=0, var/power=0, var/datum/explosion/explosion=null)
 	return
 
+/// Use this proc to check if you can use and permanently change this item via a combination
+/atom/proc/is_combination_consumeable()
+	return TRUE
+
 /atom/proc/reagent_act(var/reagent_id,var/volume,var/datum/reagentsholder_reagents)
 	if (!istext(reagent_id) || !isnum(volume) || volume < 1)
 		return 1
