@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { Button, Flex, Icon, Section } from 'tgui-core/components';
+import { Button, Flex, Icon, Image, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -38,9 +38,9 @@ export const NanoCrucible = () => {
                 tooltip={first_part}
               >
                 {first_part ? (
-                  <img
-                    height={32}
-                    width={32}
+                  <Image
+                    height="32px"
+                    width="32px"
                     src={`data:image/png;base64,${first_part_img}`}
                   />
                 ) : (
@@ -59,9 +59,9 @@ export const NanoCrucible = () => {
                     tooltip={second_part}
                   >
                     {second_part ? (
-                      <img
-                        height={32}
-                        width={32}
+                      <Image
+                        height="32px"
+                        width="32px"
                         src={`data:image/png;base64,${second_part_img}`}
                       />
                     ) : (
