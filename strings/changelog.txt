@@ -1,5 +1,9 @@
 
 (t)sun feb 09 25
+(u)patricia
+(p)21958
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)GPS units can now have their locations (packet) queried in bulk with address_tag=GPS
 (u)AnomalousPotato
 (p)22218
 (e)🆕💅🔊📄|C-Feature, C-QoL, C-Sound, A-UI
