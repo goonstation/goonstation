@@ -9,7 +9,7 @@
 	foldable = FALSE
 	rotatable = FALSE
 	var/on = FALSE
-	var/obj/item/assembly/shock_kit/part1 = null
+	var/obj/item/shock_kit/part1 = null
 	var/last_time = 1
 	var/lethal = FALSE
 	var/image/image_belt = null
@@ -21,35 +21,49 @@
 	get_help_message(dist, mob/user)
 		. = "You can use a <b>multitool</b> to open the settings menu, or a <b>wrench</b> to disassemble it."
 
-	New(atom/newLoc, obj/item/assembly/shock_kit/shock_kit)
+	New(var/atom/new_location, var/obj/item/shock_kit/new_shock_kit)
 		contextLayout = new /datum/contextLayout/experimentalcircle
 		..()
 		for(var/button in childrentypesof(/datum/contextAction/electric_chair))
 			src.contexts += new button()
-		shock_kit ||= new /obj/item/assembly/shock_kit(src)
-		src.part1 = shock_kit
-		shock_kit.master = src
-		src.on = src.part1.part2.on
+		if(!new_shock_kit)
+			new_shock_kit = new /obj/item/shock_kit
+		new_shock_kit.loc = src
+		src.part1 = new_shock_kit
+		new_shock_kit.master = src
+		src.on = src.part1.electropack_part.on
 		src.set_dir(SOUTH)
 		src.UpdateIcon()
-		return
+		// Electric chair + wrench  -> deconstruction
+		src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(deconstruction), FALSE)
+		// Electric chair + multitool  -> open context options
+		src.AddComponent(/datum/component/assembly, TOOL_PULSING, PROC_REF(show_context_options), FALSE)
 
-	attackby(obj/item/W, mob/user)
-		if (iswrenchingtool(W))
-			var/obj/stool/chair/C = new /obj/stool/chair(get_turf(src))
-			if (src.material)
-				C.setMaterial(src.material)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, TRUE)
-			C.set_dir(src.dir)
-			if (src.part1)
-				src.part1.set_loc(get_turf(src))
-				src.part1.master = null
-				src.part1 = null
-			qdel(src)
-			return
-		if (ispulsingtool(W))
-			user.showContextActions(src.contexts, src, src.contextLayout)
-			return
+// ----------------------- Assembly-procs -----------------------
+
+	/// deconstruction
+	proc/deconstruction(var/atom/to_combine_atom, var/mob/user)
+		var/turf/chosen_turf = get_turf(src)
+		var/obj/stool/chair/new_chair = new /obj/stool/chair(chosen_turf)
+		if (src.material)
+			new_chair.setMaterial(src.material)
+		if (src.part1)
+			src.part1.set_loc(chosen_turf)
+			src.part1.master = null
+			src.part1 = null
+		boutput(user, SPAN_NOTICE("You deconstruct the [src.name]."))
+		playsound(chosen_turf, 'sound/items/Ratchet.ogg', 50, TRUE)
+		qdel(src)
+		// Since the assembly was done, return TRUE
+		return TRUE
+
+	/// change the options of the chair
+	proc/show_context_options(var/atom/to_combine_atom, var/mob/user)
+		user.showContextActions(src.contexts, src, src.contextLayout)
+		// Since the "assembly" was done, return TRUE
+		return TRUE
+
+// ----------------------- -------------- -----------------------
 
 	proc/set_option(setting, mob/user)
 		switch(setting)
@@ -59,11 +73,11 @@
 				src.toggle_lethal()
 			if(ELECTRIC_CHAIR_SHOCK)
 				if(src.buckled_guy)
-					// The log entry for remote signallers can be found in item/assembly/shock_kit.dm (Convair880).
+					// The log entry for remote signallers can be found in item/shock_kit.dm (Convair880).
 					logTheThing(LOG_COMBAT, usr, "activated an electric chair (setting: [src.lethal ? "lethal" : "non-lethal"]), shocking [constructTarget(src.buckled_guy,"combat")] at [log_loc(src)].")
 				shock(lethal)
 			if(ELECTRIC_CHAIR_SET_SIGNAL)
-				src.part1.part2.ui_interact(user)
+				src.part1.electropack_part.ui_interact(user)
 		src.add_fingerprint(user)
 		return
 
