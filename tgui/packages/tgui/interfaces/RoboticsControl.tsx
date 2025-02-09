@@ -5,14 +5,14 @@
  * @license ISC
  */
 
-import { Button, NoticeBox, Section, Table } from 'tgui-core/components';
+import { BooleanLike, Button, NoticeBox, Section, Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 interface RoboticsControlData {
-  user_is_ai: boolean;
-  user_is_cyborg: boolean;
+  user_is_ai: BooleanLike;
+  user_is_cyborg: BooleanLike;
   ai_names: string[];
   ai_statuses: string[];
   ai_killswitch_times: string[];
