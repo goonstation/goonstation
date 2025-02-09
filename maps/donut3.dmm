@@ -37885,11 +37885,11 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/mapping_helper/access/research,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/chemistry,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "lwW" = (
@@ -70709,6 +70709,7 @@
 	id = "chemistry"
 	},
 /obj/table/reinforced/chemistry/auto/clericalsup,
+/obj/mapping_helper/access/chemistry,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "vrX" = (
@@ -76098,6 +76099,7 @@
 	id = "chemistry"
 	},
 /obj/table/reinforced/chemistry/auto/clericalsup,
+/obj/mapping_helper/access/chemistry,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "wVy" = (
@@ -78791,7 +78793,6 @@
 /area/station/hangar/science)
 "xFV" = (
 /obj/decal/stripe_delivery,
-/obj/mapping_helper/access/research,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/sci_alt{
 	dir = 4;
@@ -78800,6 +78801,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/chemistry,
 /turf/simulated/floor/black,
 /area/station/science/testchamber)
 "xGu" = (
