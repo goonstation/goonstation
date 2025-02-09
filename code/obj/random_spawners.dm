@@ -1100,7 +1100,7 @@
 	items2spawn = list(/obj/critter/domestic_bee,
 	/obj/critter/bat,
 	/mob/living/critter/small_animal/mouse,
-	/obj/critter/opossum,
+	/mob/living/critter/small_animal/opossum,
 	/mob/living/critter/small_animal/dog,
 	/mob/living/critter/small_animal/dog/george,
 	/mob/living/critter/small_animal/dog/blair,

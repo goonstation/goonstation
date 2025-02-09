@@ -28,6 +28,8 @@
 #define FACTION_FERMID			"fermid"
 /// Gauntlet-spawned
 #define FACTION_GUANTLET		"gauntlet"
+/// Mercenaries
+#define FACTION_MERCENARY		"mercenary"
 
 /// Returns TRUE if ourguy is enemies with otherguy FALSE otherwise
 proc/faction_check(mob/ourguy, mob/otherguy, attack_neutral)
