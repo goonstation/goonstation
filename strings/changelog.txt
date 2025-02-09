@@ -1,5 +1,9 @@
 
 (t)sat feb 08 25
+(u)TDHooligan
+(p)22025
+(e)⚖💅🌱|C-Balance, C-QoL, A-Hydroponics
+(+)Asomna now rolls Stabilizer and Slow Growth.
 (u)glowbold
 (p)22074
 (e)🪲🆕🎨📦|C-Bug, C-Feature, C-Sprites, A-Game-Objects
