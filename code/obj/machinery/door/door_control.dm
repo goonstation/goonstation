@@ -663,7 +663,7 @@ TYPEINFO(/obj/machinery/door_control)
 	if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT) || user.mind?.get_antagonist(ROLE_TRAITOR) || user.mind?.get_antagonist(ROLE_NUKEOP) || user.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER))
 		src.toggle()
 		if (src.entrance_scanner)
-			src.say("Biometric profile accepted. Welcome, Agent. All facilities permanantly unlocked.")
+			src.say("Biometric profile accepted. Welcome, Agent. All facilities permanently unlocked.")
 	else
 		src.say("Invalid biometric profile. Access denied.")
 

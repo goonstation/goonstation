@@ -404,7 +404,7 @@ TYPEINFO(/obj/item/device/audio_log)
 								"Re-routing remaaaaaainiiiiiing power to top-deck cyro-sleepers.",
 								"*humming electronics*",
 								"Autopilot disengaged.",
-								"Delopying emergency beacon.",
+								"Deploying emergency beacon.",
 								"Central c-c-cOmpUtEr shut- d-dow-ow-ow-ownnnnn in 5,",
 								"4,",
 								"3-",

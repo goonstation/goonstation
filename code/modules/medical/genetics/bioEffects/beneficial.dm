@@ -1090,3 +1090,42 @@
 			M.hair_override = 0
 			M.bioHolder.mobAppearance.UpdateMob()
 			M.update_colorful_parts()
+
+/datum/bioEffect/skitter
+	id = "skitter"
+	name = "Insectoid locomotion"
+	desc = "The subject is capable of skittering across the floor like a bug."
+
+	OnAdd()
+		RegisterSignal(src.owner, COMSIG_MOB_SPRINT, PROC_REF(on_sprint))
+		. = ..()
+
+	proc/on_sprint()
+		set waitfor = FALSE
+		if (src.owner.lying && !is_incapacitated(src.owner) && !ON_COOLDOWN(src.owner, "skitter", 7 SECONDS))
+			src.owner.visible_message(SPAN_ALERT("[src.owner] skitters away!"))
+			playsound(src.owner, 'sound/voice/animal/bugchitter.ogg', 80, TRUE)
+			src.owner.flags |= TABLEPASS
+			src.owner.layer = OBJ_LAYER-0.2
+			var/initial_glide = src.owner.glide_size
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, src) //stop them from rolling out from under the table
+			var/stop_delay = 0
+			for (var/i in 1 to 4)
+				src.owner.glide_size = (32 / 1) * world.tick_lag
+				step(src.owner, src.owner.dir)
+				if (locate(/obj/table) in src.owner.loc)
+					stop_delay = 1 SECOND
+					break
+				sleep(0.1 SECONDS)
+			src.owner.glide_size = initial_glide
+			src.owner.flags &= ~TABLEPASS
+			if (locate(/obj/table) in src.owner.loc)
+				src.owner.setStatus("undertable", INFINITE_STATUS)
+			else
+				src.owner.layer = initial(src.owner.layer)
+			sleep(stop_delay)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, src)
+
+	OnRemove()
+		UnregisterSignal(src.owner, COMSIG_MOB_SPRINT)
+		. = ..()

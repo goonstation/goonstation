@@ -135,6 +135,7 @@
 	slots = 3
 
 /mob/living/carbon/human/normal/merc
+	faction = list(FACTION_MERCENARY)
 	New()
 		..()
 		src.equip_new_if_possible(/obj/item/clothing/under/misc/merc01, SLOT_W_UNIFORM)
@@ -148,7 +149,7 @@
 		var/obj/item/card/id/C = src.wear_id
 		if(C)
 			C.registered = src.real_name
-			C.assignment = "Mercenary" // company name TBD
+			C.assignment = "Greyhold Mercenary Operative"
 			C.name = "[C.registered]'s ID Card ([C.assignment])"
 
 		update_clothing()
@@ -166,7 +167,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/merc
 	human_to_copy = /mob/living/carbon/human/normal/merc
 
-	faction = list(FACTION_GENERIC)
+	faction = list(FACTION_MERCENARY)
 
 /mob/living/critter/human/mercenary/knife
 	ai_type = /datum/aiHolder/aggressive

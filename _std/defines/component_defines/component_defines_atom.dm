@@ -241,6 +241,8 @@
 	#define COMSIG_MOB_SPRINT "mob_sprint"
 	/// Sent when the mob should trigger a threat grab (yes this is really specific but shush)
 	#define COMSIG_MOB_TRIGGER_THREAT "mob_threat"
+	/// Sent when a mob changes its lying state (lying)
+	#define COMSIG_MOB_LAYDOWN_STANDUP "mob_laydown"
 
 	// ---- cloaking device signal ----
 

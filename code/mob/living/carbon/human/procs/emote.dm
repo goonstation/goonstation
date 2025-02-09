@@ -75,15 +75,6 @@
 						#ifdef HALLOWEEN
 						spooktober_GH.change_points(src.ckey, 30)
 						#endif
-						var/possumMax = 15
-						for_by_tcl(responsePossum, /obj/critter/opossum)
-							if (!responsePossum.alive)
-								continue
-							if(!IN_RANGE(responsePossum, src, 4))
-								continue
-							if (possumMax-- < 0)
-								break
-							responsePossum.CritterDeath() // startled into playing dead!
 						for_by_tcl(P, /mob/living/critter/small_animal/opossum) // is this more or less intensive than a range(4)?
 							if (P.playing_dead) // already out
 								continue
