@@ -947,6 +947,9 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		return
 
 	process()
+		if (src.status & (BROKEN|NOPOWER))
+			return
+
 		process_timer--
 		if (process_timer > 0)
 			// Add reagents for this tick
@@ -1148,7 +1151,16 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		actions.start(new /datum/action/bar/icon/put_in_reclaimer(G.affecting, src, G, 50), user)
 		return
 
-	update_icon(var/update_grindpaddle=0)
+	update_icon(update_grindpaddle=FALSE)
+		if (src.status & BROKEN)
+			src.icon_state = "grinderb"
+			ClearSpecificOverlays(TRUE, "paddle")
+			return
+
+		if (src.status & NOPOWER)
+			UpdateOverlays(image(src.icon, "grindpaddle0"), "paddle") // stop the paddle if no power
+			return
+
 		var/fluid_level = ((src.reagents.total_volume >= (src.reagents.maximum_volume * 0.6)) ? 2 : (src.reagents.total_volume >= (src.reagents.maximum_volume * 0.2) ? 1 : 0))
 
 		src.icon_state = "grinder[fluid_level]"
@@ -1175,11 +1187,31 @@ TYPEINFO(/obj/machinery/clonegrinder)
 					return
 			if(3)
 				if (prob(25))
-					src.status |= BROKEN
-					src.icon_state = "grinderb"
+					src.set_broken()
+
+	bullet_act(obj/projectile/P)
+		. = ..()
+		if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
+			if(prob(P.power * P.proj_data?.ks_ratio))
+				src.set_broken()
 
 	is_open_container()
 		return -1
+
+	power_change()
+		. = ..()
+		src.UpdateIcon(TRUE)
+		if (src.status & BROKEN)
+			src.SubscribeToProcess()
+
+	set_broken()
+		. = ..()
+		if(.) return
+		AddComponent(/datum/component/equipment_fault/messy, tool_flags = TOOL_SCREWING | TOOL_WRENCHING, cleanables = list(
+			/obj/decal/cleanable/blood/gibs=50,
+			/obj/decal/cleanable/blood/gibs/core=20,
+			/obj/decal/cleanable/blood/gibs/body=10
+		))
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
