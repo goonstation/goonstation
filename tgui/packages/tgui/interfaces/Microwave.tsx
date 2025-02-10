@@ -6,6 +6,7 @@
  */
 
 import {
+  BooleanLike,
   Button,
   LabeledList,
   Modal,
@@ -17,9 +18,9 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 interface PacketInfo {
-  broken: boolean;
-  operating: boolean;
-  dirty: boolean;
+  broken: BooleanLike;
+  operating: BooleanLike;
+  dirty: BooleanLike;
   eggs: number;
   flour: number;
   monkey_meat: number;
