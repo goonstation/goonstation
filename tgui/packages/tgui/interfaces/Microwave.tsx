@@ -6,13 +6,7 @@
  */
 
 import { BooleanLike } from 'common/react';
-import {
-  Button,
-  LabeledList,
-  Modal,
-  Section,
-  Stack,
-} from 'tgui-core/components';
+import { Button, LabeledList, Modal, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -66,16 +60,12 @@ export const Microwave = () => {
               </LabeledList.Item>
             )}
           </LabeledList>
-          <Stack vertical mt={1}>
-            <Stack.Item>
-              <Button onClick={() => act('start_microwave')}>Start!</Button>
-            </Stack.Item>
-            <Stack.Item>
-              <Button onClick={() => act('eject_contents')}>
-                Eject contents
-              </Button>
-            </Stack.Item>
-          </Stack>
+          <Button onClick={() => act('start_microwave')} mt={1}>
+            Start!
+          </Button>
+          <Button onClick={() => act('eject_contents')} mt={1}>
+            Eject contents
+          </Button>
         </Section>
         {!!broken && (
           <Modal>
