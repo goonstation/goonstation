@@ -90,10 +90,10 @@
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (ishuman(target))
-			if (src.open == 1)
-				actions.start(new /datum/action/bar/icon/apply_blush(target, src, target == user ? 40 : 60), user)
-			else
+			if (!src.open)
 				user.show_text("You need to open it first!")
+			else
+				actions.start(new /datum/action/bar/icon/apply_blush(target, src, target == user ? 40 : 60), user)
 				return
 		else
 			return ..()

@@ -230,10 +230,12 @@
 			M.add_forensic_trace("fprints", M.fingerprints)
 			M.fingerprints = null // Foreign fingerprints on the mob.
 			M.gunshot_residue = 0 // Only humans can have residue at the moment.
-			if (M.makeup || M.spiders)
+			if (M.makeup || M.spiders || M.blush)
 				M.makeup = null
 				M.makeup_color = null
 				M.spiders = null
+				M.blush = null
+				M.blush_color = null
 				M.set_body_icon_dirty()
 			M.tracked_blood = null
 			M.set_clothing_icon_dirty()
