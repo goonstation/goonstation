@@ -5,8 +5,8 @@
  * @license ISC
  */
 
+import { BooleanLike } from 'common/react';
 import {
-  BooleanLike,
   Button,
   LabeledList,
   Modal,
@@ -55,26 +55,20 @@ export const Microwave = () => {
             <LabeledList.Item label="Monkey Meat">
               {monkey_meat}
             </LabeledList.Item>
-            <LabeledList.Item label="Synth-Meat">
-              {synth_meat}
-            </LabeledList.Item>
+            <LabeledList.Item label="Synth-Meat">{synth_meat}</LabeledList.Item>
             <LabeledList.Item label="Meat Turnovers">
               {donk_pockets}
             </LabeledList.Item>
-            <LabeledList.Item label="Other Meat">
-              {other_meat}
-            </LabeledList.Item>
+            <LabeledList.Item label="Other Meat">{other_meat}</LabeledList.Item>
             {unclassified_item && (
-              <LabeledList.Item label="???">{unclassified_item}</LabeledList.Item>
+              <LabeledList.Item label="???">
+                {unclassified_item}
+              </LabeledList.Item>
             )}
           </LabeledList>
           <Stack vertical mt={1}>
             <Stack.Item>
-              <Button
-                onClick={() => act('start_microwave')}
-              >
-                Start!
-              </Button>
+              <Button onClick={() => act('start_microwave')}>Start!</Button>
             </Stack.Item>
             <Stack.Item>
               <Button onClick={() => act('eject_contents')}>
