@@ -10,7 +10,6 @@
 
 	if (!holder.admin_station_map)
 		holder.admin_station_map = new
-	holder.admin_station_map.initialise_minimap()
 	if (!holder.admin_minimap_ui)
 		holder.admin_minimap_ui = new(src.holder, "admin_map", holder.admin_station_map, "Admin Station Map", "hackerman")
 

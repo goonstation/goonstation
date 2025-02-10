@@ -28,6 +28,7 @@
 	src.scale_marker(marker_scale)
 
 /datum/minimap_marker/minimap/handle_move(datum/component/component, turf/old_turf, turf/new_turf)
+	. = ..()
 	if (!src.map || !new_turf)
 		return
 

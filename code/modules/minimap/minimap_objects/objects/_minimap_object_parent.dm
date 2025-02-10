@@ -23,6 +23,7 @@
 		src.initialise_minimap()
 
 /obj/minimap/disposing()
+	qdel(map)
 	STOP_TRACKING
 	. = ..()
 
