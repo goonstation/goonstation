@@ -9243,8 +9243,8 @@
 	name = "Autopsy Table"
 	},
 /obj/machinery/drainage,
-/obj/critter/opossum/morty,
 /obj/random_item_spawner/organs/bloody,
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "aWQ" = (
