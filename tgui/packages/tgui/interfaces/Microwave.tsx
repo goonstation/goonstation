@@ -17,7 +17,7 @@ import {
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-interface PacketInfo {
+interface MicrowaveData {
   broken: BooleanLike;
   operating: BooleanLike;
   dirty: BooleanLike;
@@ -31,7 +31,7 @@ interface PacketInfo {
 }
 
 export const Microwave = () => {
-  const { act, data } = useBackend<PacketInfo>();
+  const { act, data } = useBackend<MicrowaveData>();
   const {
     broken,
     operating,
