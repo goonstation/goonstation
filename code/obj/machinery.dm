@@ -309,7 +309,7 @@
 
 	A.use_power(amount, chan)
 
-///Checks the machiney's equipment channel and local power, setting the NOPOWER flag as needed.
+///Checks the machinery's equipment channel and local power, setting the `NOPOWER` flag as needed.
 ///
 ///Called when the power settings of the containing area change.
 /obj/machinery/proc/power_change()
@@ -337,7 +337,7 @@
 		qdel(pulse2)
 	return
 
-///Attempt to break a machine. Returns TRUE if already broken.
+///Attempt to break a machine. Returns `TRUE` if already broken.
 /obj/machinery/proc/set_broken()
 	if (src.is_broken())
 		return TRUE

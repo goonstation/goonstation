@@ -439,7 +439,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 	..()
 
 /obj/machinery/recharge_station/syndicate/set_broken(mob/user)
-	return TRUE// cannot be broken, must be made of sturdy stuff
+	return TRUE // cannot be broken, must be made of sturdy stuff
 
 /obj/machinery/recharge_station/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
