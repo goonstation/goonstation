@@ -1,6 +1,6 @@
 (t)sun feb 09 25
 (u)Sovexe
-(*)Added a "Admin Minimap" verb to allow admins easy access to the observer minimap at any time.
+(*)Added a "View Admin Minimap" verb to allow admins easy access to the observer minimap at any time.
 (t)tue feb 04 25
 (u)LeahTheTech
 (*)Added `/obj/lever/custom` as an easy way to make a player accessible button that calls procs on things. Basically lets you give players access to admin interact procs and more. Call "Set up" on it for setup interface.
