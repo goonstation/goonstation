@@ -1998,6 +1998,33 @@ ADMIN_INTERACT_PROCS(/obj/lever, proc/toggle)
 
 	proc/off()
 		return
+
+
+ADMIN_INTERACT_PROCS(/obj/lever/custom, proc/set_up)
+/obj/lever/custom
+	var/datum/target = null
+	var/on_proc = ""
+	var/off_proc = ""
+
+	proc/set_up()
+		var/list/data = usr.client.get_proccall_arglist(list(
+			ARG_INFO("target_datum", DATA_INPUT_REFPICKER, "Target"),
+			ARG_INFO("on_proc", DATA_INPUT_TEXT, "Name of proc to call when the lever is pulled ON"),
+			ARG_INFO("off_proc", DATA_INPUT_TEXT, "Name of proc to call when the lever is pulled OFF")
+		))
+		src.target = data["target_datum"]
+		src.on_proc = data["on_proc"]
+		src.off_proc = data["off_proc"]
+
+	on()
+		if (src.target && length(src.on_proc))
+			call(src.target, src.on_proc)()
+
+	off()
+		if (src.target && length(src.off_proc))
+			call(src.target, src.off_proc)()
+
+
 /obj/decoration/paperstack/massive
 	name = "Pile of papers"
 	desc = "The pile of papers is so overwhelming it crush you."

@@ -8,6 +8,7 @@
 	force = 0
 	throwforce = 0
 	w_class = W_CLASS_SMALL
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	inventory_counter_enabled = TRUE
 	var/current_clock_mode = "Time Keeping"
