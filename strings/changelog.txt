@@ -1,4 +1,6 @@
-
+(t)mon feb 10 25
+(u)Sord
+(+)You can now buy a SecHUD cybereye from the sec weapons vendor as a utility item.
 (t)sun feb 09 25
 (u)LeahTheTech
 (+)Roaches can no longer skitter out of grabs.
