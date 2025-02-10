@@ -72,15 +72,13 @@ export const Microwave = () => {
             <Stack vertical mt={1}>
               <Stack.Item>
                 <Button
-                  color="green"
-                  fontSize={1.5}
                   onClick={() => act('start_microwave')}
                 >
                   Start!
                 </Button>
               </Stack.Item>
               <Stack.Item>
-                <Button fontSize={1.5} onClick={() => act('eject_contents')}>
+                <Button onClick={() => act('eject_contents')}>
                   Eject contents
                 </Button>
               </Stack.Item>
