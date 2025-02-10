@@ -1,6 +1,3 @@
-/datum/admins/var/atom/movable/minimap_ui_handler/admin/admin_minimap_ui = null
-/datum/admins/var/obj/minimap/admin/admin_station_map
-
 /client/proc/admin_minimap()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Admin Minimap"
@@ -8,17 +5,26 @@
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
-	if (!holder.admin_station_map)
-		holder.admin_station_map = new
-	if (!holder.admin_minimap_ui)
-		holder.admin_minimap_ui = new(src.holder, "admin_map", holder.admin_station_map, "Admin Station Map", "hackerman")
+	observer_minimap_ui.ui_interact(src.mob)
 
-	holder.admin_minimap_ui.ui_interact(src.mob)
+/mob/dead/observer/verb/observer_minimap()
+	set name = "View Minimap"
+	set category = "Ghost"
 
-/atom/movable/minimap_ui_handler/admin/ui_state(mob/user)
-	return tgui_admin_state.can_use_topic(src, user)
-/atom/movable/minimap_ui_handler/admin/ui_status(mob/user)
-	return tgui_admin_state.can_use_topic(src, user)
+	observer_minimap_ui.ui_interact(src)
+
+/datum/targetable/ghost_observer/view_minimap
+	name = "View Minimap"
+	desc = "View the station minimap and crew locations"
+	icon_state = "minimap"
+	targeted = 0
+	cooldown = 0
+
+	cast(atom/target)
+		. = ..()
+		if (holder && istype(holder.owner, /mob/dead/observer))
+			var/mob/dead/observer/ghost = holder.owner
+			ghost.observer_minimap()
 
 /mob/living/Login()
 	. = ..()
@@ -40,4 +46,4 @@
 			job_dot = "special_dot"
 		else
 			job_dot = "civilian_dot"
-		AddComponent(/datum/component/minimap_marker/minimap, MAP_ADMINISTRATOR, job_dot, 'icons/obj/minimap/minimap_markers.dmi', null, FALSE)
+		AddComponent(/datum/component/minimap_marker/minimap, MAP_OBSERVER, job_dot, 'icons/obj/minimap/minimap_markers.dmi', null, FALSE)
