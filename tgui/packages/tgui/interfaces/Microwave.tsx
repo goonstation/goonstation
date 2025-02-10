@@ -16,7 +16,7 @@ import {
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-interface PacketInfo {
+interface MicrowaveData {
   broken: boolean;
   operating: boolean;
   dirty: boolean;
@@ -30,7 +30,7 @@ interface PacketInfo {
 }
 
 export const Microwave = () => {
-  const { act, data } = useBackend<PacketInfo>();
+  const { act, data } = useBackend<MicrowaveData>();
   const {
     broken,
     operating,
@@ -72,14 +72,13 @@ export const Microwave = () => {
               <Stack.Item>
                 <Button
                   color="green"
-                  fontSize={1.5}
                   onClick={() => act('start_microwave')}
                 >
                   Start!
                 </Button>
               </Stack.Item>
               <Stack.Item>
-                <Button fontSize={1.5} onClick={() => act('eject_contents')}>
+                <Button onClick={() => act('eject_contents')}>
                   Eject contents
                 </Button>
               </Stack.Item>
