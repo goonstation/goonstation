@@ -27,7 +27,7 @@ interface PacketInfo {
   synth_meat: number;
   donk_pockets: number;
   other_meat: number;
-  unusual_item: string;
+  unclassified_item: string;
 }
 
 export const Microwave = () => {
@@ -42,7 +42,7 @@ export const Microwave = () => {
     synth_meat,
     donk_pockets,
     other_meat,
-    unusual_item,
+    unclassified_item,
   } = data;
 
   return (
@@ -65,8 +65,8 @@ export const Microwave = () => {
               <LabeledList.Item label="Other Meat">
                 {other_meat}
               </LabeledList.Item>
-              {unusual_item && (
-                <LabeledList.Item label="???">{unusual_item}</LabeledList.Item>
+              {unclassified_item && (
+                <LabeledList.Item label="???">{unclassified_item}</LabeledList.Item>
               )}
             </LabeledList>
             <Stack vertical mt={1}>

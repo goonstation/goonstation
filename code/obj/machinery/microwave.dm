@@ -220,7 +220,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 		"synth_meat" = src.synthmeat_amount,
 		"donk_pockets" = src.donkpocket_amount,
 		"other_meat" = src.humanmeat_amount,
-		"unusual_item" = src.extra_item
+		"unclassified_item" = src.extra_item
 		)
 
 /obj/machinery/microwave/ui_act(action, params)
