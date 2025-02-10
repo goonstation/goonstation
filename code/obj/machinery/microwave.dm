@@ -227,16 +227,17 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 	. = ..()
 	if (.)
 		return
-	. = TRUE
 	switch (action)
 		if ("start_microwave")
 			src.try_cook()
+			return TRUE
 		if ("eject_contents")
 			if (length(src.contents))
 				for(var/obj/item/I in src.contents)
 					I.set_loc(get_turf(src))
 				src.clean_up()
 				boutput(usr, "You empty the contents out of the microwave.")
+				return TRUE
 
 /obj/machinery/microwave/attack_hand(mob/user)
 	if (isghostdrone(user))
