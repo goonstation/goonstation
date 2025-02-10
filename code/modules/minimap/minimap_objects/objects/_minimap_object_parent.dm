@@ -24,6 +24,9 @@
 
 /obj/minimap/disposing()
 	qdel(map)
+	// cleanup reference loops
+	map = null
+	vis_contents = null
 	STOP_TRACKING
 	. = ..()
 

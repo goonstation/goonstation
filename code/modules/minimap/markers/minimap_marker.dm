@@ -19,6 +19,11 @@
 	/// Marker's icon_state
 	var/icon_state = null
 
+/datum/minimap_marker/minimap/disposing()
+	// cleanup reference loops
+	map = null
+	. = ..()
+
 /datum/minimap_marker/minimap/New(atom/target, name, can_be_deleted_by_player = FALSE, list_on_ui = TRUE, marker_scale)
 	. = ..()
 
