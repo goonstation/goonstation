@@ -294,7 +294,7 @@ or don't if it uses a custom topopen overlay
 
 	ai_station_map = new /obj/minimap/ai
 	ai_station_map.initialise_minimap()
-	AddComponent(/datum/component/minimap_marker/minimap, MAP_AI | MAP_SYNDICATE, "ai")
+	AddComponent(/datum/component/minimap_marker/minimap, MAP_AI | MAP_SYNDICATE | MAP_OBSERVER, "ai")
 	SPAWN(0)
 		if (bought_hat || prob(5))
 			AddComponent(/datum/component/hattable, TRUE, TRUE, default_hat_y)
