@@ -4,8 +4,8 @@
 	var/marker_icon
 	var/name
 	var/list_on_ui
-	/// helper flag to prevent dupe unregister from interferring with original
-	var/is_dupe
+	/// helper flag to prevent dupe component's unregister call from interferring with original's markers
+	var/skip_marker_cleanup
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
 TYPEINFO(/datum/component/minimap_marker/minimap)
@@ -43,7 +43,7 @@ TYPEINFO(/datum/component/minimap_marker/minimap)
 			minimap.create_minimap_marker(src.parent, src.marker_icon, src.marker_icon_state, src.name, FALSE, src.list_on_ui)
 
 /datum/component/minimap_marker/minimap/remove_minimap_markers()
-	if (!global.minimap_marker_targets[src.parent] || is_dupe)
+	if (!global.minimap_marker_targets[src.parent] || skip_marker_cleanup)
 		return
 
 	global.minimap_marker_targets -= src.parent
@@ -60,5 +60,5 @@ TYPEINFO(/datum/component/minimap_marker/minimap)
 
 /datum/component/minimap_marker/minimap/InheritComponent(datum/component/minimap_marker/minimap/C, i_am_original)
 	ADD_FLAG(src.minimaps_to_display_on , C.minimaps_to_display_on)
-	C.is_dupe = TRUE
+	C.skip_marker_cleanup = TRUE
 	. = ..()
