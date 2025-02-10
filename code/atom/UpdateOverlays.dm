@@ -146,7 +146,7 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 	var/hash = I ? ref(I.appearance) : null
 	if(isnull(prev_data) && I) //Ok, we don't have previous data, but we will add an overlay
 		src.overlays += I
-		prev_data = list(length(src.overlays), I, hash)
+		prev_data = list(length(src.overlays), I, hash) // (`P_INDEX`, `P_IMAGE`, `P_ISTATE`)
 		overlay_refs[key] = prev_data
 		return TRUE
 	else if(isnull(prev_data))
@@ -170,7 +170,7 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 
 	if(I)
 		src.overlays += I
-		prev_data = list(length(src.overlays), I, hash)
+		prev_data = list(length(src.overlays), I, hash) // (`P_INDEX`, `P_IMAGE`, `P_ISTATE`)
 
 		overlay_refs[key] = prev_data
 	else
@@ -213,7 +213,7 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 				L[P_INDEX]--
 
 	src.overlays += I
-	prev_data = list(length(src.overlays), I, hash)
+	prev_data = list(length(src.overlays), I, hash) // (`P_INDEX`, `P_IMAGE`, `P_ISTATE`)
 
 	overlay_refs[key] = prev_data
 	return 1
