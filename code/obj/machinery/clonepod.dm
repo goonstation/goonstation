@@ -2,6 +2,9 @@
 #define MAXIMUM_MEAT_LEVEL		100
 #define DEFAULT_MEAT_USED_PER_TICK 0.6
 #define DEFAULT_SPEED_BONUS 1
+#define SPEEDY_MODULE_SPEED_MULT 3
+#define SPEEDY_MODULE_MEAT_MULT 4
+#define EFFICIENCY_MODULE_MEAT_MULT 0.5
 // a lower bound on the amount of meat used per clone, even if ejected instantly
 #define MINIMUM_MEAT_USED 4
 
@@ -620,8 +623,8 @@ TYPEINFO(/obj/machinery/clonepod)
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			logTheThing(LOG_STATION, user, "installed ([W]) to ([src]) at [log_loc(user)].")
-			speed_bonus *= 3
-			meat_used_per_tick *= 4
+			speed_bonus *= SPEEDY_MODULE_SPEED_MULT
+			meat_used_per_tick *= SPEEDY_MODULE_MEAT_MULT
 			is_speedy = 1
 			user.drop_item()
 			qdel(W)
@@ -637,7 +640,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			logTheThing(LOG_STATION, user, "installed ([W]) to ([src]) at [log_loc(user)].")
-			meat_used_per_tick *= 0.5
+			meat_used_per_tick *= EFFICIENCY_MODULE_MEAT_MULT
 			is_efficient = 1
 			user.drop_item()
 			qdel(W)
@@ -689,18 +692,22 @@ TYPEINFO(/obj/machinery/clonepod)
 		src.UpdateIcon()
 
 	proc/remove_upgrade_modules(mob/user)
+		var/removed_module = FALSE
 		if (src.is_speedy)
 			src.is_speedy = FALSE
-			src.speed_bonus /= 3
-			src.meat_used_per_tick /= 4
+			removed_module = TRUE
+			src.speed_bonus /= SPEEDY_MODULE_SPEED_MULT
+			src.meat_used_per_tick /= SPEEDY_MODULE_MEAT_MULT
 			var/obj/speedy = new /obj/item/cloneModule/speedyclone(src.loc)
 			src.visible_message(SPAN_ALERT("The [speedy] module falls to the floor!"))
-			playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
 		if (src.is_efficient)
 			src.is_efficient = FALSE
-			src.meat_used_per_tick /= 0.5
+			removed_module = TRUE
+			src.meat_used_per_tick /= EFFICIENCY_MODULE_MEAT_MULT
 			var/obj/efficient = new /obj/item/cloneModule/efficientclone(src.loc)
 			src.visible_message(SPAN_ALERT("The [efficient] module falls to the floor!"))
+			playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
+		if(removed_module)
 			playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
 		src.UpdateIcon()
 
@@ -1328,5 +1335,8 @@ TYPEINFO(/obj/machinery/clonegrinder)
 #undef MAXIMUM_MEAT_LEVEL
 #undef DEFAULT_MEAT_USED_PER_TICK
 #undef DEFAULT_SPEED_BONUS
+#undef SPEEDY_MODULE_SPEED_MULT
+#undef SPEEDY_MODULE_MEAT_MULT
+#undef EFFICIENCY_MODULE_MEAT_MULT
 #undef MEAT_LOW_LEVEL
 #undef MINIMUM_MEAT_USED
