@@ -1,6 +1,6 @@
 /client/proc/admin_minimap()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	set name = "Admin Minimap"
+	set name = "View Admin Minimap"
 	set desc = "An admin view of the station map with player locations"
 	ADMIN_ONLY
 	SHOW_VERB_DESC
