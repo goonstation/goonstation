@@ -233,9 +233,13 @@
 				boutput(user, SPAN_ALERT("This material can not be used in \the [src]."))
 				return
 
-			user.visible_message(SPAN_NOTICE("[user] puts \the [W] in \the [src]."))
 			if( istype(W, /obj/item/material_piece) || istype(W, /obj/item/raw_material) )
-				addMaterial(W, user, params)
+				if (src.first_part && src.second_part)
+					boutput(user, SPAN_ALERT("\The [src] is full!"))
+				else
+					user.visible_message(SPAN_NOTICE("[user] puts \the [W] in \the [src]."))
+					addMaterial(W, user, params)
+					src.ui_interact(user)
 			else
 				boutput(user, SPAN_ALERT("The crucible can only use raw materials."))
 				return
