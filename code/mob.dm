@@ -1895,7 +1895,7 @@
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
+		newmob?.corpse = null
 
 	if (animation)
 		animation.delaydispose()
@@ -1967,7 +1967,7 @@
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
+		newmob?.corpse = null
 
 	if (bdna && btype)
 		partygibs(src.loc, bdna, btype) // For forensics (Convair880).
@@ -2015,7 +2015,7 @@
 
 	if (!transfer_mind_to_owl && (src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
+		newmob?.corpse = null
 
 	if (bdna && btype)
 		gibs(src.loc, null, bdna, btype) // For forensics (Convair880).
@@ -2058,7 +2058,7 @@
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
+		newmob?.corpse = null
 
 	elecflash(src.loc,exclude_center = 0)
 
@@ -2086,7 +2086,7 @@
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
+		newmob?.corpse = null
 
 	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 100, 1)
 
@@ -2194,7 +2194,7 @@
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
+		newmob?.corpse = null
 
 	var/list/ejectables = list_ejectables()
 

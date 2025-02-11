@@ -3317,3 +3317,61 @@
 	unique = TRUE
 	movement_modifier = /datum/movement_modifier/healbot
 	effect_quality = STATUS_QUALITY_POSITIVE
+
+//first_note_of_megalovania.wav
+/datum/statusEffect/undertable
+	id = "undertable"
+	name = "Under table"
+	desc = "You're hidden under a table, standing up may be a bad idea."
+	visible = FALSE
+
+	onAdd(optional)
+		. = ..()
+		RegisterSignal(src.owner, COMSIG_MOB_LAYDOWN_STANDUP, PROC_REF(standup))
+		RegisterSignal(src.owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_valid))
+
+	proc/check_valid()
+		var/obj/table/table = locate() in src.owner.loc
+		if (!table)
+			src.owner.delStatus(src)
+			return FALSE
+		return TRUE
+
+	proc/standup(_, lying)
+		if (!src.check_valid())
+			return
+		if (!lying)
+			playsound(src.owner, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
+			boutput(src.owner, SPAN_ALERT("You smack your head on the table trying to stand up. OW!"))
+			src.owner.setStatus("knockdown", 2 SECONDS)
+			src.owner.setStatus("resting", INFINITE_STATUS)
+			var/mob/mobowner = src.owner
+			mobowner.force_laydown_standup()
+			random_brute_damage(src.owner, 5)
+
+	onRemove()
+		UnregisterSignal(src.owner, COMSIG_MOB_LAYDOWN_STANDUP)
+		UnregisterSignal(src.owner, COMSIG_MOVABLE_MOVED)
+		src.owner.layer = initial(src.owner.layer)
+		. = ..()
+
+/datum/statusEffect/stasis
+	id = "stasis"
+	name = "Stasis"
+	desc = "You are caught in a stasis field. Unable to move."
+	icon_state = "stunned"
+	unique = 1
+	maxDuration = 30 SECONDS
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onAdd(optional=null)
+		if (ismob(owner) && !QDELETED(owner))
+			var/mob/mob_owner = owner
+			APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+		..()
+
+	onRemove()
+		if (ismob(owner) && !QDELETED(owner))
+			var/mob/mob_owner = owner
+			REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+		..()
