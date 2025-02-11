@@ -211,6 +211,20 @@ TYPEINFO(/obj/machinery/chem_heater)
 	*/
 
 	process(mult)
+		if (status & BROKEN)
+			var/turf/simulated/T = src.loc
+			if (istype(T))
+				var/datum/gas_mixture/environment = T.return_air()
+
+				// less efficient than an HVAC so people don't abuse these for changing air temps
+				var/transfer_moles = 0.1 * TOTAL_MOLES(environment)
+				var/datum/gas_mixture/removed = environment.remove(transfer_moles)
+				if (removed && TOTAL_MOLES(removed) > 0)
+					var/heat_capacity = HEAT_CAPACITY(removed)
+					removed.temperature = (removed.temperature * heat_capacity + 200 * (src.target_temp-T20C))/heat_capacity
+					use_power(2000 WATTS) // early return below stops normal power usage check
+				T.assume_air(removed)
+
 		if (!active) return
 		if (status & (NOPOWER|BROKEN) || !beaker || !beaker.reagents.total_volume)
 			set_inactive()
