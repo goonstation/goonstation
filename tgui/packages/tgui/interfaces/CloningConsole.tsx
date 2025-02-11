@@ -7,7 +7,6 @@
  * @license ISC
  */
 
-import { BooleanLike } from 'common/react';
 import { useState } from 'react';
 import {
   Box,
@@ -23,6 +22,7 @@ import {
   Tabs,
 } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend, useSharedState } from '../backend';
 import { HealthStat } from '../components/goonstation/HealthStat';
@@ -283,11 +283,8 @@ const Functions = () => {
           <Box bold>Notice:</Box>
           <Box>
             Installation of the NecroScan II cloner upgrade module enables
-            scanning of rotted and skeletal remains.
-          </Box>
-          <Box fontSize="0.9em">
-            Disclaimer: Extreme genetic degredation is not covered by the
-            NecroScan II cloner module.
+            scanning of rotted and skeletal remains. Extreme genetic degredation
+            is not covered by the NecroScan II cloner module.
           </Box>
         </Section>
       )}
@@ -759,9 +756,12 @@ const Pods = () => {
         </LabeledList.Item>
         {(!!podSpeed[i] || !!podEfficient[i]) && (
           <LabeledList.Item label="Upgrades">
-            {!!podSpeed[i] && 'SpeedyClone2000'}
-            {!!podSpeed[i] && !!podEfficient[i] && ', '}
-            {!!podEfficient[i] && 'Recycling Unit'}
+            {[
+              podSpeed[i] && 'SpeedyClone2000',
+              podEfficient[i] && 'Recycling Unit',
+            ]
+              .filter((x) => x)
+              .join(', ')}
           </LabeledList.Item>
         )}
       </LabeledList>
