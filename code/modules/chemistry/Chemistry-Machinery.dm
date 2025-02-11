@@ -306,7 +306,10 @@ TYPEINFO(/obj/machinery/chem_heater)
 	set_broken()
 		. = ..()
 		if (.) return
-		AddComponent(pick(/datum/component/equipment_fault/embers, /datum/component/equipment_fault/smoke), tool_flags = TOOL_WRENCHING | TOOL_SCREWING | TOOL_PRYING)
+		if(src.target_temp > T20C)
+			AddComponent(/datum/component/equipment_fault/embers, tool_flags = TOOL_WRENCHING | TOOL_SCREWING | TOOL_PRYING)
+		else
+			AddComponent(/datum/component/equipment_fault/smoke, tool_flags = TOOL_WRENCHING | TOOL_SCREWING | TOOL_PRYING)
 		animate_shake(src, 5, rand(3,8),rand(3,8))
 		playsound(src, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 
