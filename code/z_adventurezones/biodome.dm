@@ -776,6 +776,9 @@ SYNDICATE DRONE FACTORY AREAS
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "whip"
 	item_state = "c_tube"
+	var/whole_whip_state = "WholeWhip"
+	var/half_start_state = "HalfStartWhip"
+	var/half_end_state = "HalfEndWhip"
 	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 
@@ -801,7 +804,7 @@ SYNDICATE DRONE FACTORY AREAS
 		if (!viewable_atoms.Find(target_r))
 			return
 
-		var/list/affected = drawLineObj(src.loc, target_r, /obj/line_obj/whip ,'icons/obj/projectiles.dmi',"WholeWhip",1,1,"HalfStartWhip","HalfEndWhip",OBJ_LAYER,1)
+		var/list/affected = drawLineObj(src.loc, target_r, /obj/line_obj/whip ,'icons/obj/projectiles.dmi',whole_whip_state,1,1,half_start_state,half_end_state,OBJ_LAYER,1)
 
 		playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, TRUE)
 
@@ -830,6 +833,15 @@ SYNDICATE DRONE FACTORY AREAS
 			qdel(target_r)
 
 		return
+
+	pointwhip // I'm going to hell for this.
+		name = "Pointwhip"
+		desc = "A product of mad science and the natural reaction of any spaceman upon seeing anything remotely criminal."
+		icon_state = "pwhip"
+		item_state = "pwhip"
+		whole_whip_state = "WholePWhip"
+		half_start_state = "HalfStartPWhip"
+		half_end_state = "HalfEndPWhip"
 
 /obj/boulder_trap_boulder
 	icon = 'icons/misc/exploration.dmi'
