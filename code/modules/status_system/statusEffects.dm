@@ -3379,7 +3379,7 @@
 /datum/statusEffect/teleporting
 	id = "teleporting"
 	name = "Teleporting"
-	desc = "You're in a waveform of semi-stable radio energy.'.<br>Visibility drastically reduced."
+	desc = "You're in a semi-stable hexaquark arrangement.<br>Visibility drastically reduced."
 	icon_state = "empulsar"
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEUTRAL
