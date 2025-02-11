@@ -1027,9 +1027,10 @@
 /datum/computer/file/terminal_program/bank_records/proc/network_log_print()
 	if (!connected || !selected_printer || !server_netid)
 		return 1
-	var/datum/computer/file/text/logdump = new /datum/computer/file/text
-	logdump.name = src.setup_logdump_name
-	logdump.data = src.log_string
+	var/datum/computer/file/record/logdump = new /datum/computer/file/record
+	logdump.fields += "title=BankBoss Session Log"
+	for (var/line in splittext(src.log_string, "<br>"))
+		logdump.fields += line
 	src.message_server("command=print&args=print [selected_printer]", logdump)
 
 /datum/computer/file/terminal_program/bank_records/proc/local_log_print()
@@ -1040,7 +1041,7 @@
 	var/datum/signal/signal = get_free_signal()
 	signal.data["title"] = "Bank Record"
 	signal.data["data"] = src.log_string
-	src.peripheral_command("print",signal, "\ref[printcard]")
+	src.peripheral_command("print", signal, "\ref[printcard]")
 	return 0
 
 /datum/computer/file/terminal_program/bank_records/proc/message_server(var/message, var/datum/computer/file/toSend)
