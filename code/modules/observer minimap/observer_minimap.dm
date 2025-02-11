@@ -15,7 +15,7 @@
 
 /datum/targetable/ghost_observer/view_minimap
 	name = "View Minimap"
-	desc = "View the station minimap and crew locations"
+	desc = "View the station minimap and crew locations, click to teleport."
 	icon_state = "minimap"
 	targeted = 0
 	cooldown = 0
