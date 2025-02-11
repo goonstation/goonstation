@@ -82,6 +82,7 @@
 		else
 			src.color = color
 		src.appearance_flags |= RESET_TRANSFORM
+		RegisterSignal(loc, COMSIG_MOVABLE_SET_LOC, PROC_REF(update_whacky))
 		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, PROC_REF(update_whacky))
 		update_whacky(loc, null, 0)
 
@@ -96,3 +97,5 @@
 					src.vis_contents += T
 					src.pixel_x = min(-world.icon_size*(T.x - src.loc.x), src.pixel_x)
 					src.pixel_y = min(-world.icon_size*(T.y - src.loc.y), src.pixel_y)
+		else
+			src.vis_contents.Cut()
