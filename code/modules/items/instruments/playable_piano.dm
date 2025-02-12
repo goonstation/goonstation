@@ -17,8 +17,6 @@ TYPEINFO(/obj/player_piano)
 	anchored = ANCHORED
 	var/items_claimed = 0 //set to 1 when items are claimed
 	var/panel_exposed = 0 //0 by default
-	var/is_stored = FALSE //same as is_busy, but for automatic linking
-	var/list/linked_pianos = list() //list that stores our linked pianos, including the main one
 	var/datum/text_to_music/player_piano/music_player = null
 
 	New()
@@ -34,7 +32,8 @@ TYPEINFO(/obj/player_piano)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set timing", PROC_REF(mechcompTiming))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "stop", PROC_REF(mechcompStop))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "reset", PROC_REF(mechcompReset))
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Start Storing Pianos", PROC_REF(start_storing_pianos))
+
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "start autolinking", PROC_REF(mechcompConfigStartAutolinking))
 
 	// requires it's own proc because else the mechcomp input will be taken as first argument of ready_piano()
 	proc/mechcompPlay(var/datum/mechanicsMessage/input)
@@ -55,6 +54,9 @@ TYPEINFO(/obj/player_piano)
 
 	proc/mechcompReset(var/datum/mechanicsMessage/input)
 		src.music_player.reset_piano(FALSE)
+
+	proc/mechcompConfigStartAutolinking(obj/item/W as obj, mob/user as mob)
+		src.music_player.start_autolinking(W, user)
 
 	attackby(obj/item/W, mob/user) //this one is big and sucks, where all of our key and construction stuff is
 		if (istype(W, /obj/item/piano_key)) //piano key controls
@@ -114,7 +116,7 @@ TYPEINFO(/obj/player_piano)
 
 		else if (istype(W, /obj/item/sheet/wood) && W.amount > 0) //replacing panel
 			var/obj/item/sheet/wood/wood = W
-			if (panel_exposed == 1 && !src.music_player.is_busy && !is_stored)
+			if (panel_exposed == 1 && !src.music_player.is_busy && !src.music_player.is_stored)
 				user.visible_message("[user] starts replacing the piano's maintenance panel...", "You start replacing the piano's maintenance panel...")
 				if (!do_after(user, 3 SECONDS) || panel_exposed != 1)
 					return
@@ -154,7 +156,7 @@ TYPEINFO(/obj/player_piano)
 		src.anchored = !src.anchored
 
 	attack_hand(var/mob/user)
-		if (src.music_player.is_busy || is_stored)
+		if (src.music_player.is_busy || src.music_player.is_stored)
 			src.visible_message(SPAN_ALERT("\The [src] emits an angry beep!"))
 			return
 		var/mode_sel = input("Which mode would you like?", "Mode Select") as null|anything in list("Choose Notes", "Play Song")
@@ -170,57 +172,58 @@ TYPEINFO(/obj/player_piano)
 			return
 
 	mouse_drop(obj/player_piano/piano)
-		if (!istype(usr, /mob/living))
-			return
-		if (usr.stat)
-			return
-		if (!allowChange(usr))
-			boutput(usr, SPAN_ALERT("You can't link pianos without a multitool!"))
-			return
-		ENSURE_TYPE(piano)
-		if (!piano)
-			return
-		if (is_pulser_auto_linking(usr))
-			boutput(usr, SPAN_ALERT("You can't link pianos manually while auto-linking!"))
-			return
-		if (piano == src)
-			boutput(usr, SPAN_ALERT("You can't link a piano with itself!"))
-			return
-		if (piano.music_player.is_busy || src.music_player.is_busy)
-			boutput(usr, SPAN_ALERT("You can't link a busy piano!"))
-			return
-		if (piano.panel_exposed && panel_exposed)
-			usr.visible_message("[usr] links the pianos.", "You link the pianos!")
-			src.add_piano(piano)
-			piano.add_piano(src)
+		src.music_player.mouse_drop(usr, piano)
+		// if (!istype(usr, /mob/living))
+		// 	return
+		// if (usr.stat)
+		// 	return
+		// if (!allowChange(usr))
+		// 	boutput(usr, SPAN_ALERT("You can't link pianos without a multitool!"))
+		// 	return
+		// ENSURE_TYPE(piano)
+		// if (!piano)
+		// 	return
+		// if (is_pulser_auto_linking(usr))
+		// 	boutput(usr, SPAN_ALERT("You can't link pianos manually while auto-linking!"))
+		// 	return
+		// if (piano == src)
+		// 	boutput(usr, SPAN_ALERT("You can't link a piano with itself!"))
+		// 	return
+		// if (piano.music_player.is_busy || src.music_player.is_busy)
+		// 	boutput(usr, SPAN_ALERT("You can't link a busy piano!"))
+		// 	return
+		// if (piano.panel_exposed && panel_exposed)
+		// 	usr.visible_message("[usr] links the pianos.", "You link the pianos!")
+		// 	src.music_player.add_piano(piano.music_player)
+		// 	piano.music_player.add_piano(src.music_player)
 
 	disposing() //just to clear up ANY funkiness
-		music_player.reset_piano(1)
+		src.music_player.reset_piano(1)
 		..()
 
-	proc/allowChange(var/mob/M) //copypasted from mechanics code because why do something someone else already did better
-		if(hasvar(M, "l_hand") && ispulsingtool(M:l_hand)) return 1
-		if(hasvar(M, "r_hand") && ispulsingtool(M:r_hand)) return 1
-		if(hasvar(M, "module_states"))
-			for(var/atom/A in M:module_states)
-				if(ispulsingtool(A))
-					return 1
-		return 0
+	// proc/allowChange(var/mob/M) //copypasted from mechanics code because why do something someone else already did better
+	// 	if(hasvar(M, "l_hand") && ispulsingtool(M:l_hand)) return 1
+	// 	if(hasvar(M, "r_hand") && ispulsingtool(M:r_hand)) return 1
+	// 	if(hasvar(M, "module_states"))
+	// 		for(var/atom/A in M:module_states)
+	// 			if(ispulsingtool(A))
+	// 				return 1
+	// 	return 0
 
-	proc/is_pulser_auto_linking(var/mob/M)
-		if(ispulsingtool(M.l_hand) && SEND_SIGNAL(M.l_hand, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)) return TRUE
-		if(ispulsingtool(M.r_hand) && SEND_SIGNAL(M.r_hand, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)) return TRUE
-		if(istype(M, /mob/living/silicon/robot))
-			var/mob/living/silicon/robot/silicon_user = M
-			for(var/atom/A in silicon_user.module_states)
-				if(ispulsingtool(A) && SEND_SIGNAL(A, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE))
-					return TRUE
-		if(istype(M, /mob/living/silicon/hivebot))
-			var/mob/living/silicon/hivebot/silicon_user = M
-			for(var/atom/A in silicon_user.module_states)
-				if(ispulsingtool(A) && SEND_SIGNAL(A, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE))
-					return TRUE
-		return FALSE
+	// proc/is_pulser_auto_linking(var/mob/M)
+	// 	if(ispulsingtool(M.l_hand) && SEND_SIGNAL(M.l_hand, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)) return TRUE
+	// 	if(ispulsingtool(M.r_hand) && SEND_SIGNAL(M.r_hand, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)) return TRUE
+	// 	if(istype(M, /mob/living/silicon/robot))
+	// 		var/mob/living/silicon/robot/silicon_user = M
+	// 		for(var/atom/A in silicon_user.module_states)
+	// 			if(ispulsingtool(A) && SEND_SIGNAL(A, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE))
+	// 				return TRUE
+	// 	if(istype(M, /mob/living/silicon/hivebot))
+	// 		var/mob/living/silicon/hivebot/silicon_user = M
+	// 		for(var/atom/A in silicon_user.module_states)
+	// 			if(ispulsingtool(A) && SEND_SIGNAL(A, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE))
+	// 				return TRUE
+	// 	return FALSE
 
 	update_icon(var/active) //1: active, 0: inactive
 		if (panel_exposed)
@@ -231,14 +234,6 @@ TYPEINFO(/obj/player_piano)
 			return
 		icon_state = "player_piano"
 		return
-
-	proc/add_piano(var/obj/player_piano/p)
-		var/piano_id = "\ref[p]"
-		for (var/obj/player_piano in linked_pianos)
-			var/other_piano_id = "\ref[player_piano]"
-			if (other_piano_id == piano_id)
-				linked_pianos -= p
-		linked_pianos += p
 
 	verb/item_claim()
 		set name = "Claim Items"
@@ -252,21 +247,6 @@ TYPEINFO(/obj/player_piano)
 		items_claimed = 1
 		src.visible_message("\The [src] spills out a key and a booklet! Nifty!")
 		src.desc = "A piano that can take raw text and turn it into music! The future is now! The free user essentials box has been raided!" //jaaaaaaaank
-
-	proc/start_storing_pianos(obj/item/I, mob/user)
-		if (src.music_player.is_busy)
-			boutput(user, SPAN_ALERT("Can't link a busy piano!"))
-			return
-		if (!src.panel_exposed)
-			boutput(user, SPAN_ALERT("Can't link without an exposed panel!"))
-			return
-		if (length(src.linked_pianos))
-			boutput(user, SPAN_ALERT("Can't link an already linked piano!"))
-			return
-		if (src.is_stored)
-			boutput(user, SPAN_ALERT("Another device has already stored that piano!"))
-			return
-		I.AddComponent(/datum/component/player_piano_auto_linker, src, user)
 
 	was_deconstructed_to_frame(mob/user)
 		. = ..()

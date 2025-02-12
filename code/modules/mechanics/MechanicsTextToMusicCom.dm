@@ -28,6 +28,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set instrument", PROC_REF(mechcompConfigInstrument))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "stop", PROC_REF(mechcompConfigStop))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "reset", PROC_REF(mechcompConfigReset))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "start autolinking", PROC_REF(mechcompConfigStartAutolinking))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "view errors", PROC_REF(mechcompConfigViewErrors))
 
 	get_desc()
@@ -95,12 +96,20 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 	proc/mechcompConfigReset(obj/item/W as obj, mob/user as mob)
 		src.music_player.reset_piano(0)
 
+	proc/mechcompConfigStartAutolinking(obj/item/W as obj, mob/user as mob)
+		src.music_player.start_autolinking(W, user)
+
 	proc/mechcompConfigViewErrors(obj/item/W as obj, mob/user as mob)
 		if (length(src.music_player.error_messages) > 0)
 			var/message = jointext(src.music_player.error_messages, "<br><hr>")
 			tgui_message(user, message, "T2M Error Messages")
 
+		boutput(user, SPAN_NOTICE("Error log is empty!"))
+
 	// ----------------------------------------------------------------------------------------------------
+
+	mouse_drop(obj/item/mechanics/text_to_music/t2m_comp)
+		src.music_player.mouse_drop(usr, t2m_comp)
 
 	disposing() //just to clear up ANY funkiness
 		src.music_player.reset_piano(1)
