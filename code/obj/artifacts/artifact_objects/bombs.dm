@@ -7,7 +7,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	rarity_weight = 0
 	validtypes = list("ancient","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
-	/datum/artifact_trigger/cold,/datum/artifact_trigger/radiation)
+	/datum/artifact_trigger/cold,/datum/artifact_trigger/radiation, /datum/artifact_trigger/language)
 	fault_blacklist = list(ITEM_ONLY_FAULTS, TOUCH_ONLY_FAULTS) // can't sting you at range
 	react_xray = list(12,75,30,11,"COMPLEX")
 	var/explode_delay = 600
@@ -286,7 +286,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 						continue
 				looper--
 				payload_reagents += reagent
-			log_addendum = "Payload: [payload_type_name], [list2text(payload_reagents, ", ")]"
+			log_addendum = "Payload: [payload_type_name], [jointext(payload_reagents, ", ")]"
 
 		recharge_delay = rand(300,800)
 
@@ -510,7 +510,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			var/range_squared = range**2
 			var/turf/T = get_turf(O)
 			for(var/atom/G in range(range, T))
-				if(istype(G, /obj/overlay) || istype(G, /obj/effects) || istype(G, /turf/space) || istype(G, /obj/fluid))
+				if(istype(G, /obj/overlay) || istype(G, /obj/effects) || istype(G, /turf/space) || istype(G, /obj/fluid) || istype(G, /obj/particle))
 					continue
 				var/dist = GET_SQUARED_EUCLIDEAN_DIST(O, G)
 				var/distPercent = (dist/range_squared)*100
@@ -532,7 +532,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 							if(distPercent < 40) // only inner 40% of range
 								O.ArtifactFaultUsed(M)
 								if(M)
-									M.become_statue(mat)
+									M.become_statue(mat.getID())
 				else
 					G.setMaterial(mat)
 

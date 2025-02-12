@@ -5,7 +5,6 @@
  * @license ISC
  */
 
-import { useState } from 'react';
 import {
   AnimatedNumber,
   Button,
@@ -31,13 +30,6 @@ export const ResearchTab = (props) => {
     savedMutations,
     research,
   } = data;
-
-  // Store research locally, since we can be passed partial updates
-  const [researchTree, setResearchData] = useState(research);
-
-  if (researchTree !== research) {
-    setResearchData(research);
-  }
 
   const { maxBuyMats, setBuyMats } = props;
 
@@ -84,26 +76,46 @@ export const ResearchTab = (props) => {
         {availableResearch.map((ar, tier) => (
           <Section key={tier} title={`Tier ${tier + 1}`}>
             {ar.length
-              ? ar.map((r) => (
-                  <Section
-                    key={r.ref}
-                    title={researchTree[r.ref]?.name}
-                    buttons={
-                      <Button
-                        icon="flask"
-                        /** unlike with finished researches below, the cost
-                         * property is always set for available researches */
-                        disabled={materialCur < r.cost!}
-                        onClick={() => act('research', { ref: r.ref })}
-                        color="teal"
-                      >
-                        {'Research (' + r.cost + ' mat, ' + r.time + 's)'}
-                      </Button>
-                    }
-                  >
-                    <Description text={researchTree[r.ref]?.desc} />
-                  </Section>
-                ))
+              ? ar.map((partialAvailableResearchEntry) => {
+                  if (!partialAvailableResearchEntry?.ref) {
+                    return null;
+                  }
+                  const researchEntry =
+                    research[partialAvailableResearchEntry.ref];
+                  if (!researchEntry) {
+                    return null;
+                  }
+                  return (
+                    <Section
+                      key={partialAvailableResearchEntry.ref}
+                      title={researchEntry.name}
+                      buttons={
+                        <Button
+                          icon="flask"
+                          /** unlike with finished researches below, the cost
+                           * property is always set for available researches */
+                          disabled={
+                            materialCur < partialAvailableResearchEntry.cost!
+                          }
+                          onClick={() =>
+                            act('research', {
+                              ref: partialAvailableResearchEntry.ref,
+                            })
+                          }
+                          color="teal"
+                        >
+                          {'Research (' +
+                            partialAvailableResearchEntry.cost +
+                            ' mat, ' +
+                            partialAvailableResearchEntry.time +
+                            's)'}
+                        </Button>
+                      }
+                    >
+                      <Description text={researchEntry.desc} />
+                    </Section>
+                  );
+                })
               : 'No research is currently available at this tier.'}
           </Section>
         ))}
@@ -112,14 +124,21 @@ export const ResearchTab = (props) => {
         {finishedResearch.map((fr, tier) => (
           <Section key={tier} title={`Tier ${tier + 1}`}>
             {fr.length
-              ? fr.map((r) => (
-                  <Section
-                    key={researchTree[r.ref].name}
-                    title={researchTree[r.ref].name}
-                  >
-                    <Description text={researchTree[r.ref].desc} />
-                  </Section>
-                ))
+              ? fr.map((partialFinishedResearchEntry) => {
+                  const researchEntry =
+                    research[partialFinishedResearchEntry.ref];
+                  if (!researchEntry) {
+                    return null;
+                  }
+                  return (
+                    <Section
+                      key={researchEntry.name}
+                      title={researchEntry.name}
+                    >
+                      <Description text={researchEntry.desc} />
+                    </Section>
+                  );
+                })
               : 'No research has been completed at this tier.'}
           </Section>
         ))}

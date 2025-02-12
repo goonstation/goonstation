@@ -195,12 +195,13 @@ var/global/list/nuke_op_camo_matrix = null
 			possible_leaders += mind
 	if(length(possible_leaders))
 		return pick(possible_leaders)
-	else
-		for(var/datum/mind/mind in syndicates)
-			if(mind.current.client?.preferences?.be_syndicate_commander)
-				possible_leaders += mind
+
+	for(var/datum/mind/mind in syndicates)
+		if(mind.current.client?.preferences?.be_syndicate_commander)
+			possible_leaders += mind
 	if(length(possible_leaders))
 		return pick(possible_leaders)
+
 	return pick(syndicates)
 
 /datum/game_mode/nuclear/post_setup()
@@ -519,17 +520,7 @@ var/syndicate_name = null
 		if (..(user))
 			return
 
-		var/wins = world.load_intra_round_value("nukie_win")
-		var/losses = world.load_intra_round_value("nukie_loss")
-		if(isnull(wins))
-			wins = 0
-		if(isnull(losses))
-			losses = 0
-
-		src.add_dialog(user)
-		user.Browse(src.desc, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x300")
-		onclose(user, "cairngorm_stats_[src]")
-		return
+		tgui_message(user, src.desc, "Mission Memorial", theme = "syndicate")
 
 
 /obj/New()

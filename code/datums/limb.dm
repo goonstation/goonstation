@@ -21,6 +21,8 @@
 	var/can_gun_grab = TRUE
 	/// if true, bypasses unarmed attack immunity for cyborgs (separate to weird special case handling for them)
 	var/can_beat_up_robots = FALSE
+	/// Bypass to allow special attacks to work on help/grab intent, kind of dumb but necessary
+	var/use_specials_on_all_intents = FALSE
 
 	New(var/obj/item/parts/holder)
 		..()
@@ -162,7 +164,7 @@
 			playsound(user, 'sound/weapons/railgun.ogg', 50, TRUE)
 			user.set_dir(get_dir(user, target))
 
-			var/list/affected = DrawLine(user, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
+			var/list/affected = drawLineObj(user, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
 
 			for(var/obj/O in affected)
 				O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.
@@ -229,7 +231,7 @@
 				return
 			. = TRUE
 			current_shots--
-			if (pointblank)
+			if (pointblank && ismob(target))
 				src.shoot_pointblank(target, user)
 			else
 				src.shoot_range(target, user, params)
@@ -309,6 +311,9 @@
 		cooldown = 3 SECONDS
 		reload_time = 30 SECONDS
 		muzzle_flash = "muzzle_flash"
+
+		no_reload
+			reload_time = 0 SECONDS
 
 
 	cannon
@@ -401,6 +406,13 @@
 
 	rifle
 		proj = new/datum/projectile/bullet/assault_rifle
+		shots = 5
+		current_shots = 5
+		cooldown = 1 SECOND
+		reload_time = 20 SECONDS
+
+	draco
+		proj = new/datum/projectile/bullet/draco
 		shots = 5
 		current_shots = 5
 		cooldown = 1 SECOND
@@ -824,8 +836,8 @@
 				playsound(user.loc, O.hitsound, 50, 1, pitch = 1.6)
 				O.take_damage(20, user) //Like 30ish hits to break a normal airlock?
 				hit = TRUE
-			else if(istype(target, /obj/grille))
-				var/obj/grille/O = target
+			else if(istype(target, /obj/mesh/grille))
+				var/obj/mesh/grille/O = target
 				if (!O.shock(user, 70))
 					O.visible_message(SPAN_COMBAT("<b>[user]</b> violently slashes [O]!"))
 					playsound(O.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
@@ -1514,6 +1526,7 @@
 		return
 
 /datum/limb/claw
+	var/damage = 10
 	can_beat_up_robots = TRUE
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
@@ -1585,7 +1598,7 @@
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "claws [constructTarget(target,"combat")] with claw arms at [log_loc(user)].")
 
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 10, 10, rand(1,3) * quality, can_punch = 0, can_kick = 0)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, src.damage, src.damage, rand(1,3) * quality, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("maim", "stab", "rip", "claw", "slashe")
 		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target] with their [src.holder]!</b>")

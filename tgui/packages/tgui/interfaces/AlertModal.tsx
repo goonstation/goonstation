@@ -11,10 +11,12 @@ import {
   Box,
   Button,
   Flex,
+  ProgressBar,
   Section,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import { round } from 'tgui-core/math';
+import type { BooleanLike } from 'tgui-core/react';
 
 import {
   KEY_ENTER,
@@ -36,11 +38,16 @@ type AlertModalData = {
   content_window: string;
   timeout: number;
   title: string;
-  theme: string;
+  theme: string | null;
+  cant_interact: number;
+  cant_interact_value: number | null;
 };
 
 const KEY_DECREMENT = -1;
 const KEY_INCREMENT = 1;
+
+const DEFAULT_CONTENT_WINDOW_WIDTH = 600;
+const DEFAULT_CONTENT_WINDOW_HEIGHT = 480;
 
 export const AlertModal = () => {
   const { act, data } = useBackend<AlertModalData>();
@@ -52,6 +59,8 @@ export const AlertModal = () => {
     timeout,
     title,
     theme,
+    cant_interact,
+    cant_interact_value,
   } = data;
   const [selected, setSelected] = useState(0);
 
@@ -61,10 +70,10 @@ export const AlertModal = () => {
 
   // Dynamically sets window dimensions
   const windowHeight = typedContentWindow
-    ? typedContentWindow.height
+    ? typedContentWindow.height || DEFAULT_CONTENT_WINDOW_HEIGHT
     : 115 + (message.length > 30 ? Math.ceil(message.length / 4) : 0);
   const windowWidth = typedContentWindow
-    ? typedContentWindow.width
+    ? typedContentWindow.width || DEFAULT_CONTENT_WINDOW_WIDTH
     : 325 + (items.length > 2 ? 55 : 0);
 
   const onKey = (direction: number) => {
@@ -80,9 +89,14 @@ export const AlertModal = () => {
   return (
     <Window
       height={windowHeight}
-      title={typedContentWindow ? typedContentWindow.title : title}
+      title={
+        typedContentWindow
+          ? (typedContentWindow.title ?? 'Antagonist Tips')
+          : title
+      }
       width={windowWidth}
-      theme={theme || 'nanotrasen'}
+      theme={typedContentWindow?.theme ?? theme ?? 'nanotrasen'}
+      canClose={cant_interact <= 0}
     >
       {!!timeout && <Loader value={timeout} />}
       <Window.Content
@@ -105,6 +119,14 @@ export const AlertModal = () => {
           }
         }}
       >
+        {!!cant_interact && cant_interact_value && (
+          <Box position="absolute" top={1} right={1}>
+            <ProgressBar value={cant_interact}>
+              {round((cant_interact_value / 10) * cant_interact, 0)} seconds
+              remaining
+            </ProgressBar>
+          </Box>
+        )}
         <Section fill>
           <Stack fill vertical>
             <Stack.Item grow m={1}>
@@ -120,7 +142,10 @@ export const AlertModal = () => {
             </Stack.Item>
             <Stack.Item>
               {!!autofocus && <Autofocus />}
-              <ButtonDisplay selected={selected} />
+              <ButtonDisplay
+                selected={selected}
+                cantInteract={data.cant_interact}
+              />
             </Stack.Item>
           </Stack>
         </Section>
@@ -137,16 +162,17 @@ export const AlertModal = () => {
 const ButtonDisplay = (props) => {
   const { data } = useBackend<AlertModalData>();
   const { items = [] } = data;
-  const { selected } = props;
+  const { selected, cantInteract } = props;
 
   return (
     <Flex align="center" direction={'row'} fill justify="space-around" wrap>
-      {items?.map((button, index) => (
-        <Flex.Item key={index}>
+      {items?.map((button) => (
+        <Flex.Item key={button}>
           <AlertButton
             button={button}
-            id={index.toString()}
-            selected={selected === index}
+            id={button}
+            selected={selected === items.indexOf(button)}
+            disabled={cantInteract > 0}
           />
         </Flex.Item>
       ))}
@@ -159,7 +185,7 @@ const ButtonDisplay = (props) => {
  */
 const AlertButton = (props) => {
   const { act } = useBackend<AlertModalData>();
-  const { button, selected } = props;
+  const { button, selected, disabled } = props;
   const buttonWidth = button.length > 7 ? button.length : 7;
 
   return (
@@ -170,6 +196,7 @@ const AlertButton = (props) => {
       pr={2}
       pt={0}
       selected={selected}
+      disabled={disabled}
       textAlign="center"
       width={buttonWidth}
     >

@@ -10,7 +10,6 @@
 	var/item_state_variant_suffix = null
 
 	var/welding = FALSE
-	var/status = 0 // flamethrower construction :shobon:
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	tool_flags = TOOL_WELDING
@@ -40,11 +39,35 @@
 
 		AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 125, src.welding)
 
+		// Welder + rods  -> Welder/Rods Assembly
+		src.AddComponent(/datum/component/assembly, /obj/item/rods, PROC_REF(welder_rod_construction), TRUE)
+
+// ----------------------- Assembly-procs -----------------------
+	///Begin of the flamethrower assembly
+	proc/welder_rod_construction(var/atom/to_combine_atom, var/mob/user)
+		boutput(user, SPAN_NOTICE("You attach the rod to the welding tool."))
+		var/obj/item/rods/handled_rods = to_combine_atom
+		handled_rods.add_fingerprint(user)
+		user.u_equip(src)
+		src.add_fingerprint(user)
+		if(handled_rods.amount > 1)
+			handled_rods = handled_rods.split_stack(1)
+			handled_rods.add_fingerprint(user)
+		else
+			user.u_equip(handled_rods)
+		var/obj/item/flamethrower_construction/new_construction = new /obj/item/flamethrower_construction(null, src, handled_rods, null)
+		user.put_in_hand_or_drop(new_construction)
+		return TRUE
+// ----------------------- -------------- -----------------------
+
+
 	examine()
 		. = ..()
 		. += "It has [get_fuel()] units of fuel left!"
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (is_special)
+			return ..()
 		if (!src.welding)
 			if (!src.cautery_surgery(target, user, 0, src.welding))
 				return ..()
@@ -88,37 +111,6 @@
 			else return ..()
 		else return ..()
 
-	attackby(obj/item/I, mob/user)
-		if (isscrewingtool(I))
-			if (status)
-				status = 0
-				boutput(user, SPAN_NOTICE("You resecure the welder."))
-			else
-				status = 1
-				boutput(user, SPAN_NOTICE("The welder can now be attached and modified."))
-
-		else if (status == 1 && istype(I, /obj/item/rods))
-			if (src.loc != user)
-				boutput(user, SPAN_ALERT("You need to be holding [src] to work on it!"))
-				return
-			boutput(user, SPAN_NOTICE("You attach the rod to the welding tool."))
-			var/obj/item/rods/R = new /obj/item/rods
-			R.amount = 1
-			var/obj/item/rods/S = I
-			S.change_stack_amount(-1)
-			var/obj/item/assembly/weld_rod/F = new /obj/item/assembly/weld_rod( user )
-			src.set_loc(F)
-			F.welder = src
-			user.u_equip(src)
-			user.put_in_hand_or_drop(F)
-			R.master = F
-			src.master = F
-			src.layer = initial(src.layer)
-			user.u_equip(src)
-			src.set_loc(F)
-			F.rod = R
-			src.add_fingerprint(user)
-
 
 	afterattack(obj/O, mob/user)
 		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && BOUNDS_DIST(src, O) == 0)
@@ -144,11 +136,10 @@
 				var/turf/target_turf = O
 				target_turf.hotspot_expose(700, 50, 1)
 			if (O && !ismob(O) && O.reagents)
-				boutput(user, SPAN_NOTICE("You heat \the [O.name]"))
+				boutput(user, SPAN_NOTICE("You heat \the [O.name]."))
 				O.reagents.temperature_reagents(4000,50, 100, 100, 1)
 
 	attack_self(mob/user as mob)
-		if (status > 1) return
 		src.firesource = !(src.firesource)
 		tooltip_rebuild = TRUE
 		src.set_state(on = !src.welding, user = user)
@@ -209,8 +200,10 @@
 		var/safety = EYE_DAMAGE_NORMAL
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
+			if (!H.sight_check()) //don't blind if we're already blind
+				safety = EYE_DAMAGE_IMMUNE
 			// we want to check for the thermals first so having a polarized eye doesn't protect you if you also have a thermal eye
-			if (istype(H.glasses, /obj/item/clothing/glasses/thermal) || H.eye_istype(/obj/item/organ/eye/cyber/thermal) || istype(H.glasses, /obj/item/clothing/glasses/nightvision) || H.eye_istype(/obj/item/organ/eye/cyber/nightvision))
+			else if (istype(H.glasses, /obj/item/clothing/glasses/thermal) || H.eye_istype(/obj/item/organ/eye/cyber/thermal) || istype(H.glasses, /obj/item/clothing/glasses/nightvision) || H.eye_istype(/obj/item/organ/eye/cyber/nightvision))
 				safety = EYE_DAMAGE_EXTRA
 			else if (istype(H.head, /obj/item/clothing/head/helmet/welding))
 				var/obj/item/clothing/head/helmet/welding/WH = H.head

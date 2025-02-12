@@ -242,7 +242,7 @@ proc/filter_trait_hats(var/type)
 
 	afterattack(atom/target, mob/user as mob)
 		if (src.on && !ismob(target) && target.reagents)
-			boutput(user, SPAN_NOTICE("You heat \the [target.name]"))
+			boutput(user, SPAN_NOTICE("You heat \the [target.name]."))
 			target.reagents.temperature_reagents(4000,10)
 		return
 
@@ -303,6 +303,7 @@ proc/filter_trait_hats(var/type)
 //A robot in disguise, ready to go and spy on everyone for you
 /obj/item/clothing/head/det_hat/folded_scuttlebot
 	blocked_from_petasusaphilic = TRUE
+	item_function_flags = IMMUNE_TO_ACID
 	var/inspector = FALSE
 	desc = "Someone who wears this will look very smart. It looks a bit heavier than it should."
 
@@ -984,6 +985,15 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			return
 		. = ..()
 
+/obj/item/clothing/head/beret/syndicate
+	name = "syndicate beret"
+	desc = "A dastardly beret for only the most cunning of operatives."
+	icon_state = "syndieberet"
+
+	New()
+		..()
+		src.color = null
+
 /obj/item/clothing/head/bandana
 	name = "bandana"
 	desc = "A bandana. You've seen space action stars wear these things."
@@ -1164,6 +1174,138 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 				return 0
 		else
 			return 0
+
+/obj/item/clothing/head/bighat/syndicate/infiniteglory
+	name = "The Syndicate Hat"
+	desc = "It makes you weep"
+	icon = 'icons/mob/clothing/biggestesthat.dmi'
+	wear_image_icon = 'icons/mob/clothing/biggestesthat.dmi'
+	icon_state = "syndicate_top_TheOne"
+	cant_other_remove = TRUE
+	cant_drop = TRUE
+	anchored = ANCHORED
+	contraband = INFINITY // h e h
+	rarity = ITEM_RARITY_MYTHIC
+	var/obj/machinery/maptext_monitor/health/constantly_overhead/maptext_thingamajig
+
+	setupProperties()
+		..() // Syndie gaming
+		setProperty("meleeprot_all", 8)
+		setProperty("rangedprot", 5)
+		setProperty("space_movespeed", -1.25)
+		setProperty("disorient_resist", 90)
+		setProperty("disorient_resist_eye", 90)
+		setProperty("disorient_resist_ear", 75)
+		setProperty("exploprot", 75)
+		setProperty("chemprot", 75)
+		setProperty("stamregen", 10)
+		setProperty("deflection", 60)
+
+	proc/change_big_icon_state(var/BIG)
+		if(BIG == TRUE)
+			src.icon = initial(src.icon)
+			src.icon_state = initial(src.icon_state)
+		else
+			src.icon = 'icons/mob/clothing/bighat.dmi'
+			src.icon_state = "syndicate_top_biggest"
+
+
+	attack_hand(mob/living/carbon/human/user)
+		if(user.head == src)
+			return
+		user.drop_from_slot(src, get_turf(src))
+		var/obj/item/current_head = user.head
+		if (current_head)
+			current_head.unequipped(user)
+			user.hud.remove_item(current_head)
+			user.head = null
+			user.drop_from_slot(current_head, get_turf(current_head))
+		if (user.equip_if_possible(src, SLOT_HEAD))
+			change_big_icon_state(FALSE)
+
+
+
+	equipped(mob/user, slot)
+		..()
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_BREATHLESS, src.type) //we need no oxygen in this place
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_STUN_RESIST, src.type, 80) // falling to a couple batons is shameful
+		APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/pain_immune, src.type) // slow for nothing
+		user.add_antagonist(role_id = ROLE_CONFIRMED_CRIMINAL, do_equip = FALSE, do_objectives = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE) //crime time
+		command_alert("An overwhelming aura of EEEEVVVVIIIILLLL has been detected at [get_area(src)].", alert_origin = ALERT_ANOMALY)
+		src.maptext_thingamajig = new /obj/machinery/maptext_monitor/health/constantly_overhead(user)
+
+	unequipped(mob/user)
+		. = ..()
+		change_big_icon_state(TRUE)
+		qdel(src.maptext_thingamajig)
+		src.maptext_thingamajig = null
+
+	suicide(var/mob/user as mob)
+		var/turf/T = get_turf(src)
+		if (!src.user_can_suicide(user))
+			return 0
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate))
+				H.visible_message(SPAN_NOTICE("<b>[H] becomes one with the [src.name]!</b>"))
+				H.firegib()
+				SPAWN(1 SECONDS)
+					explosion_new(src, T, 200) // a silly goodbye
+					qdel(src)
+				return 1
+
+	disposing()
+		qdel(src.maptext_thingamajig)
+		src.maptext_thingamajig = null
+		..()
+
+/obj/item/clothing/head/bighat/capitalism
+	name = "The Hat of John Nanotrasen, Owner of the Frontier Nanotrasen"
+	desc = "You feel an intense aura of capitalism radiating from this hat"
+	icon = 'icons/mob/clothing/biggestesthat.dmi'
+	wear_image_icon = 'icons/mob/clothing/biggestesthat.dmi'
+	icon_state = "spessdome_top_TheOne"
+	rarity = ITEM_RARITY_MYTHIC
+	anchored = ANCHORED
+
+	setupProperties()
+		..()
+		setProperty("meleeprot_all", 10)
+		setProperty("rangedprot", 4)
+		setProperty("space_movespeed", -0.4)
+		setProperty("disorient_resist", 90)
+		setProperty("disorient_resist_eye", 100)
+		setProperty("disorient_resist_ear", 50)
+		setProperty("exploprot", 50)
+		setProperty("chemprot", 50)
+		setProperty("stamregen", 5)
+		setProperty("rangedprot", 4)
+
+	proc/change_big_icon_state(var/BIG)
+		if(BIG == TRUE)
+			src.icon = initial(src.icon)
+			src.icon_state = initial(src.icon_state)
+		else
+			src.icon = 'icons/mob/clothing/bighat.dmi'
+			src.icon_state = "spessdome_top_TheOne"
+
+
+	attack_hand(mob/living/carbon/human/user)
+		if(user.head == src)
+			return
+		user.drop_from_slot(src, get_turf(src))
+		var/obj/item/current_head = user.head
+		if (current_head)
+			boutput(user, SPAN_NOTICE("You cannot pick up [src.name] while currently wearing another hat."))
+
+		else
+			boutput(user, SPAN_NOTICE("You put the [src.name] on immediately because it is too tall too unwieldly in your hands."))
+			if (user.equip_if_possible(src, SLOT_HEAD))
+				change_big_icon_state(FALSE)
+
+	unequipped(mob/user)
+		. = ..()
+		change_big_icon_state(TRUE)
 
 /obj/item/clothing/head/witchfinder
 	name = "witchfinder general's hat"
@@ -1469,17 +1611,31 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 
 	attackby(obj/item/W, mob/user)
 		..()
+		var/obj/item/device/radio/headset/H = W
 		if(istype(W,/obj/item/device/radio/headset))
-			user.show_message("You stuff the headset on the headband and tape it in place. [istype(src, /obj/item/clothing/head/headband/nyan) ? "Meow" : "Now"] you should be able to hear the radio using these!")
-			var/obj/item/device/radio/headset/H = W
-			H.icon = src.icon
-			H.name = src.name
-			H.icon_state = src.icon_state
-			H.wear_image_icon = src.wear_image_icon
-			H.wear_image = src.wear_image
-			H.wear_layer = MOB_FULL_SUIT_LAYER
-			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
-			qdel(src)
+			if(istype(src, /obj/item/clothing/head/headband/basic))
+				user.show_message("You stuff the headset under the headband and tape it in place. Now you should be able to hear the radio using this!")
+				H.icon = src.icon
+				H.name = src.name
+				H.icon_state = src.icon_state
+				H.wear_image_icon = src.wear_image_icon
+				H.wear_image = src.wear_image
+				H.desc = "Someone has taped a radio headset underneath the headband."
+				qdel(src)
+			else
+				user.show_message("You stuff the headset on the headband and tape it in place. [istype(src, /obj/item/clothing/head/headband/nyan) ? "Meow" : "Now"] you should be able to hear the radio using these!")
+				H.icon = src.icon
+				H.name = src.name
+				H.icon_state = src.icon_state
+				H.wear_image_icon = src.wear_image_icon
+				H.wear_image = src.wear_image
+				H.wear_layer = MOB_FULL_SUIT_LAYER
+				H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
+				qdel(src)
+		else
+			return
+
+
 
 ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 /obj/item/clothing/head/headband/nyan
@@ -1543,6 +1699,68 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 		name = "tiger ears"
 		icon_state = "cat-tiger"
 		item_state = "cat-tiger"
+
+/obj/item/clothing/head/headband/basic
+	name = "headband"
+	icon_state = "headband-black"
+	item_state = "headband-black"
+
+	black
+		name = "black headband"
+		icon_state = "headband-black"
+		item_state = "headband-black"
+	gray
+		name = "gray headband"
+		icon_state = "headband-gray"
+		item_state = "headband-gray"
+	white
+		name = "white headband"
+		icon_state = "headband-white"
+		item_state = "headband-white"
+	cream
+		name = "cream headband"
+		icon_state = "headband-cream"
+		item_state = "headband-cream"
+	pink
+		name = "pink headband"
+		icon_state = "headband-pink"
+		item_state = "headband-pink"
+	red
+		name = "red headband"
+		icon_state = "headband-red"
+		item_state = "headband-red"
+	gold
+		name = "gold headband"
+		icon_state = "headband-gold"
+		item_state = "headband-gold"
+	green
+		name = "green headband"
+		icon_state = "headband-green"
+		item_state = "headband-green"
+	mint
+		name = "mint headband"
+		icon_state = "headband-mint"
+		item_state = "headband-mint"
+	blue
+		name = "blue headband"
+		icon_state = "headband-blue"
+		item_state = "headband-blue"
+	navy
+		name = "navy headband"
+		icon_state = "headband-navy"
+		item_state = "headband-navy"
+	purple
+		name = "purple headband"
+		icon_state = "headband-purple"
+		item_state = "headband-purple"
+	shinyblack
+		name = "shiny-black headband"
+		icon_state = "headband-shinyblack"
+		item_state = "headband-shinyblack"
+	brown
+		name = "brown headband"
+		icon_state = "headband-brown"
+		item_state = "headband-brown"
 
 /obj/item/clothing/head/headband/devil
 	name = "devil horns"

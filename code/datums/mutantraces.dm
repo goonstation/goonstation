@@ -608,7 +608,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			return
 		var/datum/bioEffect/mutantrace/mr = src.race_mutation
 		if(!H.bioHolder.HasEffect(initial(mr.id)))
-			H.bioHolder.AddEffect(initial(mr.id), 0, 0, 0, 1)
+			H.bioHolder.AddEffect(initial(mr.id), 0, 0, 0, 1, scannable=TRUE)
 
 	/// Copies over female variants of mutant heads and organs
 	proc/MakeMutantDimorphic(var/mob/living/carbon/human/H)
@@ -969,7 +969,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 			SPAWN(rand(4, 30))
 				M.emote("scream")
 			M.mind.add_antagonist(ROLE_ZOMBIE, "Yes", "Yes", ANTAGONIST_SOURCE_MUTANT, FALSE)
-			M.show_antag_popup("zombie")
+			M.show_antag_popup(ROLE_ZOMBIE)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("strong")
@@ -1752,7 +1752,7 @@ TYPEINFO(/datum/mutantrace/premature_clone)
 	human_compatible = 1
 	uses_human_clothes = 1
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
-	dna_mutagen_banned = FALSE
+	dna_mutagen_banned = TRUE
 
 
 	on_attach()
@@ -1781,6 +1781,10 @@ TYPEINFO(/datum/mutantrace/premature_clone)
 				src.mob.make_jittery(1000)
 				sleep(rand(40, 120))
 				src.mob.gib()
+
+	disposing()
+		REMOVE_ATOM_PROPERTY(src.mob, PROP_HUMAN_DROP_BRAIN_ON_GIB, "puritan")
+		. = ..()
 
 // some new simple gimmick junk
 
@@ -1837,6 +1841,7 @@ TYPEINFO(/datum/mutantrace/roach)
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 100)
 		OTHER_START_TRACKING_CAT(M, TR_CAT_BUGS)
+		M.bioHolder.AddEffect("skitter", do_stability = FALSE, scannable = FALSE, innate = TRUE)
 
 	say_verb()
 		return "clicks"
@@ -1849,6 +1854,7 @@ TYPEINFO(/datum/mutantrace/roach)
 		if(ishuman(src.mob))
 			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		if(src.mob)
+			src.mob.bioHolder.RemoveEffect("skitter")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_RADPROT_INT, src)
 			OTHER_STOP_TRACKING_CAT(src.mob, TR_CAT_BUGS)
 		. = ..()

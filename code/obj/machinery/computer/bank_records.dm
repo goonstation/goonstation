@@ -8,11 +8,29 @@
 	var/authenticated = null
 	var/rank = null
 	var/screen = null
-	var/a_id = null
 	var/temp = null
 	var/printing = null
 	var/can_change_id = 0
 	var/payroll_rate_limit_time = 0 //for preventing coammand message spam
+	var/static/bonus_rate_limit_time = 0 //prevent bonus spam because these have an annoucement
+	///I know we already have department job lists but they suck and are brittle and way too general so I made my own here
+	var/static/list/departments = list(
+		"Stationwide" = list(),
+		"Genetics" = list(/datum/job/research/geneticist),
+		"Robotics" = list(/datum/job/research/roboticist),
+		"Cargo" = list(/datum/job/engineering/quartermaster, /datum/job/civilian/mail_courier),
+		"Mining" = list(/datum/job/engineering/miner),
+		"Engineering" = list(/datum/job/engineering/engineer, /datum/job/engineering/technical_assistant, /datum/job/command/chief_engineer),
+		"Research" = list(/datum/job/research/scientist, /datum/job/research/research_assistant, /datum/job/command/research_director),
+		"Catering" = list(/datum/job/civilian/chef, /datum/job/civilian/bartender, /datum/job/special/souschef, /datum/job/daily/waiter),
+		"Hydroponics" = list(/datum/job/civilian/botanist, /datum/job/civilian/rancher),
+		"Security" = list(/datum/job/security, /datum/job/command/head_of_security),
+		"Medical" = list(/datum/job/research/medical_doctor, /datum/job/research/medical_assistant, /datum/job/command/medical_director),
+		"Civilian" = list(/datum/job/civilian/janitor, /datum/job/civilian/chaplain, /datum/job/civilian/staff_assistant, /datum/job/civilian/clown,\
+		/datum/job/special) //Who really makes the world go round? At least one of these guys
+							//I can live with the sous chef getting paid in two categories
+							//If you have a special role and you're on the manifest everything is probably normal
+	)
 
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
@@ -95,6 +113,7 @@
 			<div class='c'>
 				<a href='?src=\ref[src];payroll=1'>[wagesystem.pay_active ? "Suspend Payroll" : "Resume Payroll"]</a>
 				- <a href='?src=\ref[src];transfer=1'>Transfer Funds Between Budgets</a>
+				- <a href='?src=\ref[src];bonus=1'>Issue Staff Bonus</a>
 			</div>
 			<hr>
 			Every payday cycle, Centcom distributes the <em>payroll stipend</em> into the station's budget, which is then paid out to crew accounts.
@@ -128,6 +147,8 @@
 				dat += {"
 				</tbody>
 			</table>
+			<hr>
+			New bank records can be added by scanning in an unregistered person with a security RecordTrak.
 				"}
 		user.Browse(dat.Join(), "window=secure_bank;size=500x700;title=Bank Records")
 		onclose(user, "secure_bank")
@@ -158,7 +179,7 @@
 				else
 					if (href_list["login"])
 						if (usr_is_robot && !isghostdrone(usr))
-							src.authenticated = 1
+							src.authenticated = usr.real_name
 							src.rank = "AI"
 							src.screen = 1
 						if (istype(src.scan, /obj/item/card/id))
@@ -264,6 +285,67 @@
 					if (transto == "Payroll") wagesystem.station_budget += amount
 					if (transto == "Shipping") wagesystem.shipping_budget += amount
 					if (transto == "Research") wagesystem.research_budget += amount
+				else if(href_list["bonus"])
+					if(!(world.time >= src.bonus_rate_limit_time))
+						boutput(usr, SPAN_ALERT("NT Regulations forbid issuing multiple staff incentives within five minutes."))
+						return
+					var/department = input(usr, "Which department should receive the bonus?", "Choose department") in src.departments | null
+					if (!department)
+						return
+
+					var/list/datum/db_record/lucky_crew = list()
+					for (var/datum/db_record/record in data_core.bank.records)
+						if(department == "Stationwide")
+							lucky_crew += record
+							continue
+						for (var/job_type in src.departments[department])
+							for (var/datum/job/child_type as anything in concrete_typesof(job_type))
+								if (record["job"] == child_type::name)
+									lucky_crew += record
+									goto next_record //actually almost good goto use case?? (byond doesn't have outer loop break syntax)
+						next_record:
+
+					if(length(lucky_crew) == 0)
+						boutput(usr, SPAN_ALERT("There are no eligble crew in this department."))
+						return
+
+					var/bonus = input(usr, "How many credits should we issue to each staff member?", "Issue Bonus", 100) as null|num
+					if(isnull(bonus)) return
+					bonus = ceil(clamp(bonus, 1, 999999))
+
+					var/bonus_total = (length(lucky_crew) * bonus)
+					if ( bonus_total > wagesystem.station_budget)
+						//Let the user know the budget is too small before they set the reason if we can
+						boutput(usr, SPAN_ALERT("Total bonus cost would be [bonus_total][CREDIT_SIGN], payroll budget is only [wagesystem.station_budget][CREDIT_SIGN]!"))
+						return
+
+					var/message = input(usr, "What is the reason for this staff bonus?", "Bonus Reason") as text
+					if(isnull(message) || message == "")
+						boutput(usr, SPAN_ALERT("NT Regulations require that the reason for issuing a staff bonus be recorded."))
+						return
+
+					//Something ain't right  if we enter either of these but it could be a coincidence
+					//Maybe someone stole the budget under our feet, or payroll was issued
+					if(isnull(bonus) || isnull(bonus_total))
+						//No you really shouldn't be here
+						return
+					if(bonus_total > wagesystem.station_budget)
+						boutput(usr, SPAN_ALERT("Total bonus cost would be [bonus_total][CREDIT_SIGN], payroll budget is only [wagesystem.station_budget][CREDIT_SIGN]!"))
+						return
+
+					logTheThing(LOG_STATION, usr, "issued a bonus of [bonus][CREDIT_SIGN] ([bonus_total][CREDIT_SIGN] total) to department [department].")
+					src.bonus_rate_limit_time = world.time + (5 MINUTES)
+					if(department == "Stationwide")
+						department = "eligible"
+					command_announcement("[message]<br>Bonus of [bonus][CREDIT_SIGN] issued to all [lowertext(department)] staff.", "Payroll Announcement by [src.authenticated] ([src.rank])")
+					wagesystem.station_budget = wagesystem.station_budget - bonus_total
+					for(var/datum/db_record/R as anything in lucky_crew)
+						if(R["job"] == "Clown")
+							//Tax the clown
+							R["current_money"] = (R["current_money"] + ceil((bonus / 2)))
+						else
+							R["current_money"] = (R["current_money"] + bonus)
+
 
 		src.add_fingerprint(usr)
 		src.updateUsrDialog()

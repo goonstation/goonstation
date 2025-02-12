@@ -202,7 +202,7 @@
 		if("Captain")
 			return get_all_accesses()
 		if("Head of Personnel")
-			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_forensics_lockers,
+			return list(access_security, access_carrypermit, access_contrabandpermit, access_forensics_lockers, access_ticket,
 						access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
 						access_change_ids, access_eva, access_heads, access_head_of_personnel, access_medical_lockers,
 						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
@@ -211,8 +211,8 @@
 						access_telesci, access_teleporter, access_money)
 		if("Head of Security")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_maxsec, access_brig, access_securitylockers,
-						access_forensics_lockers, access_armory, access_tox, access_tox_storage, access_chemistry, access_medical, access_morgue,
-						access_change_ids, access_eva, access_heads, access_medical_lockers, access_medlab,
+						access_forensics_lockers, access_armory, access_ticket, access_tox, access_tox_storage, access_chemistry, access_medical,
+						access_morgue, access_change_ids, access_eva, access_heads, access_medical_lockers, access_medlab,
 						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_crematorium, access_kitchen, access_robotics, access_cargo, access_money,
 						access_research, access_dwaine_superuser, access_hydro, access_ranch, access_mail, access_ai_upload,
@@ -242,17 +242,21 @@
 						access_mining_outpost, access_heads, access_ai_upload, access_eva)
 
 		// --------------------------- Security
+		if("Nanotrasen Security Consultant")
+			return get_access("Security Officer") + list(access_heads, access_eva)
 		if("Security Officer")
-			return list(access_security, access_carrypermit, access_contrabandpermit, access_securitylockers, access_brig, access_maint_tunnels,
-			access_medical, access_morgue, access_research, access_cargo, access_engineering, access_engineering_control,
+			return list(access_security, access_carrypermit, access_contrabandpermit, access_securitylockers, access_brig,  access_ticket,
+			access_maint_tunnels, access_medical, access_morgue, access_research, access_cargo, access_engineering, access_engineering_control,
 			access_chemistry, access_bar, access_kitchen, access_hydro, access_pathology, access_researchfoyer, access_mining
 			)
 		if("Vice Officer")
-			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_maint_tunnels,access_hydro, access_bar, access_kitchen, access_ranch)
+			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_ticket, access_maint_tunnels,
+			access_hydro, access_bar, access_kitchen, access_ranch)
 		if("Security Assistant")
-			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_maint_tunnels)
+			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_ticket, access_maint_tunnels)
 		if("Detective", "Forensic Technician")
-			return list(access_brig, access_carrypermit, access_contrabandpermit, access_security, access_forensics_lockers, access_morgue, access_maint_tunnels, access_crematorium, access_medical, access_research)
+			return list(access_brig, access_carrypermit, access_contrabandpermit, access_security, access_forensics_lockers, access_ticket,
+			access_morgue, access_maint_tunnels, access_crematorium, access_medical, access_research)
 		if("Lawyer")
 			return list(access_morgue, access_maint_tunnels)
 
@@ -333,10 +337,12 @@
 		if("Club member")
 			return list(access_special_club)
 		if("Inspector", "Communications Officer")
-			return list(access_security, access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
+			return list(access_security, access_ticket, access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
 						access_eva, access_heads, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_kitchen, access_robotics, access_cargo, access_research, access_hydro, access_ranch, access_pathology,
 						access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
+		if("Hall Monitor")
+			return list(access_ticket)
 		if("Admin")
 			return access_all_actually
 		else
@@ -346,7 +352,7 @@
 #if defined(I_MEAN_ALL_ACCESS)
 	return access_all_actually
 #else
-	return list(access_security, access_brig, access_forensics_lockers,
+	return list(access_security, access_brig, access_forensics_lockers, access_ticket,
 				access_medical, access_medlab, access_morgue, access_securitylockers,
 				access_tox, access_tox_storage, access_chemistry, access_carrypermit, access_contrabandpermit,
 				access_change_ids, access_ai_upload,
@@ -517,6 +523,8 @@ var/list/access_all_actually = null
 			return "Robot Depot"
 		if (access_money)
 			return "Budget Control"
+		if (access_ticket)
+			return "Ticketing"
 
 
 proc/colorAirlock(access)

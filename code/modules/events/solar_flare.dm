@@ -24,6 +24,7 @@
 			command_alert("A solar flare has been detected near the [station_or_ship()]. We estimate a signal interference rate of [headline_estimate]% lasting anywhere between three to five minutes.", "Solar Flare", alert_origin = ALERT_WEATHER)
 		SPAWN(flare_start_time)
 			signal_loss += signal_loss_current
+			global.solar_gen_rate *= signal_loss_current
 
 	#ifndef UNDERWATER_MAP
 			for (var/turf/space/S in world)
@@ -35,6 +36,7 @@
 	#endif
 			sleep(rand(1200,1800))
 			signal_loss -= signal_loss_current
+			global.solar_gen_rate = DEFAULT_SOLARGENRATE
 
 	#ifndef UNDERWATER_MAP
 			for (var/turf/space/S in world)

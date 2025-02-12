@@ -12,7 +12,7 @@
 	heat_capacity = 225000
 	default_material = "steel"
 
-	turf_flags = IS_TYPE_SIMULATED | MOB_SLIP | MOB_STEP
+	turf_flags = MOB_SLIP | MOB_STEP
 
 	can_burn = TRUE
 	can_break = TRUE
@@ -506,6 +506,27 @@
 /turf/simulated/floor/darkblue/checker/other
 	icon_state = "blue-dblue2"
 
+/turf/simulated/floor/darkblue/side
+	icon_state = "dblue"
+
+/turf/simulated/floor/darkblue/corner
+	icon_state = "dbluecorner"
+
+/turf/simulated/floor/darkblue/checker/white
+	icon_state = "dbluechecker"
+
+/turf/simulated/floor/darkblueblack
+	icon_state = "dblueblack"
+
+/turf/simulated/floor/darkblueblack/corner
+	icon_state = "dblueblackcorner"
+
+/turf/simulated/floor/darkbluewhite
+	icon_state = "dbluewhite"
+
+/turf/simulated/floor/darkbluewhite/corner
+	icon_state = "dbluewhitecorner"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/bluegreen
@@ -592,6 +613,21 @@
 /turf/simulated/floor/darkpurple/corner
 	icon_state = "dpurplecorner"
 
+/turf/simulated/floor/darkpurple/checker
+	icon_state = "dpurplechecker"
+
+/turf/simulated/floor/darkpurpleblack
+	icon_state = "dpurpleblack"
+
+/turf/simulated/floor/darkpurpleblack/corner
+	icon_state = "dpurpleblackcorner"
+
+
+/turf/simulated/floor/darkpurplewhite
+	icon_state = "dpurplewhite"
+
+/turf/simulated/floor/darkpurplewhite/corner
+	icon_state = "dpurplewhitecorner"
 /////////////////////////////////////////
 
 /turf/simulated/floor/yellow
@@ -1509,7 +1545,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 /// wetType: [-2 = glue, -1 = slime, 0 = dry, 1 = water, 2 = lube, 3 = superlube]
 /// silent: makes the overlay invisible and prevents the sound effect
 /turf/simulated/proc/wetify(var/wetType = 2, var/timeout = 80 SECONDS, var/color = null, var/silent = FALSE)
-	var/obj/grille/catwalk/catwalk = null
+	var/obj/mesh/catwalk/catwalk = null
 	var/image/overlay = null
 	var/alpha = 60
 
@@ -1540,7 +1576,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 /turf/simulated/proc/dryify()
 	src.ClearSpecificOverlays("wet_overlay")
 	if(istype(src, /turf/simulated/floor/airless/plating/catwalk)) // ""Guh" - Leah" - Me
-		var/obj/grille/catwalk/catwalk = locate() in src
+		var/obj/mesh/catwalk/catwalk = locate() in src
 		catwalk?.ClearSpecificOverlays("wet_overlay")
 	src.wet = 0
 
@@ -2702,6 +2738,23 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 		if(prob(10))
 			src.icon_state = "snow_rough[rand(1,3)]"
 
+/turf/simulated/floor/swampgrass
+	name = "reedy grass"
+	desc = ""
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "swampgrass"
+
+	New()
+		..()
+		set_dir(pick(1,2,4,8))
+		return
+
+/turf/simulated/floor/swampgrass_edging
+	name = "reedy grass"
+	desc = ""
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "swampgrass_edge"
+
 TYPEINFO(/turf/simulated/floor/auto/glassblock)
 	mat_appearances_to_ignore = list("steel","synthrubber","glass")
 	connect_diagonal = 1
@@ -2848,9 +2901,11 @@ TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock/purple)
 DEFINE_FLOORS(mauxite,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "floor$$mauxite";\
-	default_material = "mauxite")
+	default_material = "mauxite";\
+	uses_default_material_appearance = TRUE)
 
 DEFINE_FLOORS(bamboo,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "floor$$bamboo";\
-	default_material = "bamboo")
+	default_material = "bamboo";\
+	uses_default_material_appearance = TRUE)

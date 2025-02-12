@@ -1,9 +1,23 @@
+var/reboot_file_path = "data/restarting"
+
+/proc/Create_reboot_file()
+	file(reboot_file_path) << ""
+
+/proc/Remove_reboot_file()
+	if (fexists(reboot_file_path))
+		fdel(reboot_file_path)
+
 /world/Reboot()
 	TgsReboot()
 	shutdown_logging()
 	shutdown_byond_tracy()
 	disable_auxtools_debugger()
+	Create_reboot_file()
 	return ..()
+
+/proc/Shutdown_server()
+	Create_reboot_file()
+	shutdown()
 
 /proc/Reboot_server(var/retry)
 	//ohno the map switcher is in the midst of compiling a new map, we gotta wait for that to finish
@@ -76,7 +90,7 @@
 	if (!is_blank_string(apc_error_str))
 		text2file(apc_error_str, "errors.log")
 #endif
-	shutdown()
+	Shutdown_server()
 #endif
 
 	SPAWN(world.tick_lag)
@@ -117,7 +131,7 @@
 		message_admins("Hard reboot file detected, triggering shutdown instead of reboot. (The server will auto-restart don't worry)")
 
 		fdel("data/hard-reboot")
-		shutdown()
+		Shutdown_server()
 	else
 		//Tell client browserOutput that a restart is happening RIGHT NOW
 		for (var/client/C in clients)
@@ -127,6 +141,12 @@
 
 
 /world/proc/installUpdate()
+	#ifdef LIVE_SERVER
+	if (world.system_type == UNIX && shell())
+		logTheThing(LOG_DIARY, null, "Running update script", "admin")
+		shell("/usr/bin/bash tools/server/update.sh --from-game")
+	#else
+
 	// Simple check to see if a new dmb exists in the update folder
 	logTheThing(LOG_DIARY, null, "Checking for updated [config.dmb_filename].dmb...", "admin")
 	if(fexists("update/[config.dmb_filename].dmb"))
@@ -143,9 +163,14 @@
 		// Delete .dyn.rsc so that stupid shit doesn't happen
 		fdel("[config.dmb_filename].dyn.rsc")
 
+		if (world.system_type == UNIX && shell())
+			shell("find ./tools -type f -name '*.sh' -o -name 'dc' -exec chmod +x {} \\;")
+
 		logTheThing(LOG_DIARY, null, "Update complete.", "admin")
 	else
 		logTheThing(LOG_DIARY, null, "No update found. Skipping update process.", "admin")
+
+	#endif
 
 
 /// EXPERIMENTAL STUFF

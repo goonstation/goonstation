@@ -90,7 +90,7 @@
 			player.cooldowns["instrument_play"] += 10 SECONDS
 
 		var/turf/T = get_turf(src)
-		playsound(T, sounds_instrument[note], src.volume, randomized_pitch, pitch = pitch_set)
+		playsound(T, sounds_instrument[note], src.volume, randomized_pitch, pitch = pitch_set, channel = VOLUME_CHANNEL_INSTRUMENTS)
 
 		if (prob(5))
 			if (src.dog_bark)
@@ -191,7 +191,7 @@
 			if("play_note")
 				var/note_to_play = params["note"] + 1 // 0->1 (js->dm) array index change
 				var/volume = params["volume"]
-				playsound(get_turf(src), sounds_instrument[note_to_play], volume, randomized_pitch, pitch = pitch_set)
+				playsound(get_turf(src), sounds_instrument[note_to_play], volume, randomized_pitch, pitch = pitch_set, channel = VOLUME_CHANNEL_INSTRUMENTS)
 				. = TRUE
 			if("play_keyboard_on")
 				usr.client.apply_keybind("instrument_keyboard")
@@ -226,8 +226,6 @@
 			ui_interact(user)
 		else
 			src.play(user)
-
-
 
 /* -------------------- Large Instruments -------------------- */
 
@@ -266,6 +264,21 @@
 
 	get_desc() // so it doesn't show up as an item on examining it
 		return
+
+	attack_ai(mob/user as mob)
+		..()
+		if (!in_interact_range(src, user)) // Instruments are not wireless
+			return
+
+		if (isAI(user))
+			var/mob/living/silicon/ai/borgo = user
+			if (borgo.deployed_to_eyecam)
+				return
+
+		if(use_new_interface)
+			ui_interact(user)
+		else
+			src.play(user)
 
 /* -------------------- Piano -------------------- */
 
@@ -678,9 +691,27 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			break
 
 		if (length(bots))
-			user.AddComponent(/datum/component/secbot_command, bots, 3 SECONDS)
+			user.AddComponent(/datum/component/bot_command/security, bots, 3 SECONDS)
 
+/obj/item/instrument/whistle/janitor
+	name = "janitor whistle"
+	desc = "A whistle with a purple stripe. Good for getting the attention of nearby cleanbots."
+	icon_state = "whistle-jani"
+	var/commandtime = 5 SECONDS
+	HELP_MESSAGE_OVERRIDE("Blow this to briefly command nearby cleanbots to mop a tile. Point at the cleanbot to shut it off.")
 
+	post_play_effect(mob/user)
+		var/list/bots = list()
+		for (var/obj/machinery/bot/cleanbot/cleanbot in view(user.client.view, user))
+			if (cleanbot.emagged || !cleanbot.on)
+				continue
+			cleanbot.KillPathAndGiveUp(1, TRUE)
+			cleanbot.speak("Awaiting command...")
+			bots += cleanbot
+			break
+
+		if (length(bots))
+			user.AddComponent(/datum/component/bot_command/janitor, bots, src.commandtime)
 /* -------------------- Vuvuzela -------------------- */
 
 /obj/item/instrument/vuvuzela

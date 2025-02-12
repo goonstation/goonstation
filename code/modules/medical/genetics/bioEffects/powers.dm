@@ -161,6 +161,10 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				if (istype(A, mattereater.target_path))
 					items += A
 
+		for(var/obj/item/item as anything in items) // augh body bags
+			if(istype(item, /obj/item/body_bag) && item.w_class >= W_CLASS_BULKY)
+				items -= item
+
 		if (linked_power.power > 1)
 			items += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
 			//So people can still get the meat ending
@@ -290,7 +294,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	id = "jumpy"
 	msgGain = "Your leg muscles feel taut and strong."
 	msgLose = "Your leg muscles shrink back to normal."
-	cooldown = 30
+	cooldown = 100
 	probability = 99
 	blockCount = 4
 	blockGaps = 2
@@ -308,6 +312,10 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	can_research = 0
 	can_make_injector = 0
 	reclaim_fail = 100
+
+	OnAdd()
+		. = ..()
+		ability?.doCooldown()
 
 /datum/targetable/geneticsAbility/jumpy
 	name = "Jumpy"
@@ -329,6 +337,16 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/sleep_time = 1 / linked_power.power
 
 		if (istype(owner.loc,/turf/))
+			var/turf/T = owner.loc
+			if (istype(T, /turf/space) || T.throw_unlimited || owner.no_gravity)
+				var/push_off = FALSE
+				for(var/atom/A in oview(1, T))
+					if (A.stops_space_move)
+						push_off = TRUE
+						break
+				if(!push_off)
+					boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
+					return TRUE
 			usr.visible_message(SPAN_ALERT("<b>[owner]</b> takes a huge leap!"))
 			playsound(owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 			var/prevLayer = owner.layer
@@ -376,6 +394,16 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/sleep_time = 0.5 / linked_power.power
 
 		if (istype(owner.loc,/turf/))
+			var/turf/T = owner.loc
+			if (istype(T, /turf/space) || T.throw_unlimited || owner.no_gravity)
+				var/push_off = FALSE
+				for(var/atom/A in oview(1, T))
+					if (A.stops_space_move)
+						push_off = TRUE
+						break
+				if(!push_off)
+					boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
+					return TRUE
 			usr.visible_message(SPAN_ALERT("<b>[owner]</b> leaps far too high and comes crashing down hard!"))
 			playsound(owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 			playsound(owner.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
@@ -540,11 +568,8 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			boutput(H, SPAN_NOTICE("This only works on human hair!"))
 			return
 
-		if (istype(H.mutantrace, /datum/mutantrace/lizard))
+		if (!HAS_FLAG(H.mutantrace.mutant_appearance_flags, HAS_HUMAN_HAIR) && !H.bioHolder.HasEffect("hair_growth"))
 			boutput(H, SPAN_NOTICE("You don't have any hair!"))
-			return
-		else if (H.mutantrace?.override_hair && !istype(H.mutantrace, /datum/mutantrace/cow))
-			boutput(H, SPAN_NOTICE("Whatever hair you have isn't affected!"))
 			return
 
 		if (H.bioHolder?.mobAppearance)
@@ -935,6 +960,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				// and ended up as a newbie trap ("This sounds fun! *dead* oh.")
 				// This way it's a nice tradeoff, and you can always just pick things back up
 				boutput(owner, SPAN_ALERT("Everything you were carrying falls away as you dissolve!"))
+				logTheThing(LOG_COMBAT, owner, "dropped all their equipment from unsynchronized power [name] at [log_loc(owner)].")
 				owner.unequip_all()
 
 			spell_invisibility(owner, 50)
@@ -956,6 +982,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 					"liver","spleen","pancreas","stomach","intestines","appendix","butt")
 				var/obj/item/organ/O = owner.organHolder.drop_organ(pick(possible_drops))
 				if (O)
+					logTheThing(LOG_COMBAT, owner, "dropped organ [O] due to misfire of unsynchronized power [name] at [log_loc(owner)].")
 					boutput(owner, SPAN_ALERT("You dissolve... mostly. Oops."))
 
 			else
@@ -965,6 +992,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				// We can afford to be nice.
 				var/obj/item/I = owner.unequip_random()
 				if (I)
+					logTheThing(LOG_COMBAT, owner, "dropped item [I] due to misfire of unsynchronized Dissolve at [log_loc(owner)].")
 					boutput(owner, SPAN_ALERT("\The [I] you were carrying falls away as you dissolve!"))
 
 			spell_invisibility(owner, 50)
@@ -1342,9 +1370,11 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		else
 			if (istype(linked_power,/datum/bioEffect/power/midas))
 				var/datum/bioEffect/power/midas/linked = linked_power
+				logTheThing(LOG_COMBAT, owner, "uses [name] to transmute [log_object(the_object)] into [linked.transmute_material] at [log_loc(owner)].")
 				owner.visible_message(SPAN_ALERT("[owner] touches [the_object], turning it to [linked.transmute_material]!"))
 				the_object.setMaterial(getMaterial(linked.transmute_material))
 			else
+				logTheThing(LOG_COMBAT, owner, "uses [name] to transmute [log_object(the_object)] into gold at [log_loc(owner)].")
 				owner.visible_message(SPAN_ALERT("[owner] touches [the_object], turning it to gold!"))
 				the_object.setMaterial(getMaterial("gold"))
 		linked_power.using = 0
@@ -1382,8 +1412,12 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			owner.visible_message("[owner] touches [the_object].")
 		else
 			owner.visible_message(SPAN_ALERT("[owner] touches [the_object], turning it to flesh!"))
+			logTheThing(LOG_COMBAT, owner, "uses [name] to transmute [log_object(the_object)] into flesh at [log_loc(owner)].")
 			the_object.setMaterial(getMaterial("flesh"))
 		linked_power.using = 0
+		return
+
+	logCast(atom/target)
 		return
 
 /datum/bioEffect/power/midas/pickle

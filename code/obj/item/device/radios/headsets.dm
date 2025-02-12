@@ -129,6 +129,28 @@
 /obj/item/device/radio/headset/command/nt/consultant
 	icon_tooltip = "NanoTrasen Security Consultant"
 
+/obj/item/device/radio/headset/command/nt/engineer
+	icon_tooltip = "Nanotrasen Emergency Repair Technician"
+	secure_frequencies = list(
+		"h" = R_FREQ_COMMAND,
+		"e" = R_FREQ_ENGINEERING,
+		)
+	secure_classes = list(
+		"h" = RADIOCL_COMMAND,
+		"e" = RADIOCL_ENGINEERING,
+		)
+
+/obj/item/device/radio/headset/command/nt/medic
+	icon_tooltip = "Nanotrasen Emergency Medic"
+	secure_frequencies = list(
+		"h" = R_FREQ_COMMAND,
+		"m" = R_FREQ_MEDICAL,
+		)
+	secure_classes = list(
+		"h" = RADIOCL_COMMAND,
+		"m" = RADIOCL_MEDICAL,
+		)
+
 /obj/item/device/radio/headset/command/inspector
 	name = "inspector's headset"
 	desc = "A radio headset capable of communicating over the Command frequency, for use by official Inspectors."
@@ -294,13 +316,14 @@
 		)
 	icon_override = "sec"
 	icon_tooltip = "Security"
+	tooltip_flags = REBUILD_USER
 
 	get_desc(dist, mob/user)
-		if (user.mind?.special_role)
+		if (user.mind.is_antagonist())
 			. += SPAN_ALERT("<b>Good.</b>")
 		else
 			. += "Keep it safe!"
-
+		. += ..()
 /obj/item/device/radio/headset/detective
 	name = "detective's headset"
 	desc = "In addition to having access to the Security radio channel, this headset also features private frequency that's suited for only the sneakiest sleuthing."

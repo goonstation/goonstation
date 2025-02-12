@@ -1967,3 +1967,12 @@ proc/animate_orbit(atom/orbiter, center_x = 0, center_y = 0, radius = 32, time=8
 	animate(spark, alpha = 0, time = 0.3 SECONDS, delay = 0.3 SECONDS)
 	SPAWN(0.6 SECONDS)
 		qdel(spark)
+
+/proc/animate_little_spark(atom/A)
+	var/obj/effects/little_sparks/lit/spark = new(get_turf(A))
+	spark.pixel_y = A.pixel_y + rand(-7, 7)
+	spark.pixel_x = A.pixel_x + rand(-8, 8)
+	spark.alpha = 0
+	animate(spark, alpha = 255, time = 2 DECI SECONDS)
+	SPAWN(0.6 SECONDS)
+		qdel(spark)

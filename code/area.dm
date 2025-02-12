@@ -705,6 +705,8 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/arrival/station
 	icon_state = "shuttle"
 	flags = FLUID_DENSE
+	minimaps_to_render_on = MAP_ALL
+	station_map_colour = MAPC_NANOTRASEN
 
 /area/shuttle/escape
 	allowed_restricted_z = TRUE
@@ -775,6 +777,9 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/john/diner
 	name = "John's Bus Diner Dock"
 	icon_state = "shuttle"
+	#ifdef UNDERWATER_MAP
+	ambient_light = OCEAN_LIGHT
+	#endif
 
 /area/shuttle/john/diner/nadir
 	name = "John's Bus Station Dock"
@@ -857,6 +862,16 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 
 /area/shuttle/merchant_shuttle/diner_station
 	name = "Station Merchant Shuttle Dock Gamma"
+#if defined(MAP_OVERRIDE_NADIR) // Nadir diner shuttle is in the trench
+	sound_group = "trench"
+	force_fullbright = 0
+	requires_power = 0
+	luminosity = 0
+	sound_environment = 22
+	ambient_light = TRENCH_LIGHT
+#elif defined(UNDERWATER_MAP) // Oshan/Manta diner shuttle is at the surface sea diner
+	ambient_light = OCEAN_LIGHT
+#endif
 
 /area/shuttle/merchant_shuttle/left_station
 	name = "Station Merchant Shuttle Dock Alpha"
@@ -1257,6 +1272,17 @@ ABSTRACT_TYPE(/area/adventure)
 	requires_power = FALSE
 #endif
 
+/area/salvage_trader
+	name = "GLOMAR Salvager"
+	icon_state = "storage"
+	teleport_blocked = 1
+	sound_environment = 10
+	sound_loop = 'sound/ambience/spooky/Evilreaver_Ambience.ogg'
+	occlude_foreground_parallax_layers = TRUE
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
+
 /area/fermid_hive
 	name = "Fermid Hive"
 	icon_state = "purple"
@@ -1284,10 +1310,6 @@ ABSTRACT_TYPE(/area/adventure)
 	requires_power = FALSE
 #endif
 
-/area/spacehabitat/pool
-	name = "Pool Room"
-	icon_state = "yellow"
-	requires_power = FALSE
 
 /area/abandonedship
 	name = "Abandoned ship"
@@ -1302,6 +1324,17 @@ ABSTRACT_TYPE(/area/adventure)
 	name = "Habitat Dome Beach"
 	icon_state = "yellow"
 	force_fullbright = 1
+
+/area/spacehabitat/pool
+	name = "Pool Room"
+	icon_state = "yellow"
+	requires_power = FALSE
+
+/area/spacehabitat/owlery
+	name = "Owlery"
+	icon_state = "yellow"
+	sound_environment = 15
+	requires_power = FALSE
 
 /area/salyut
 	name = "Soviet derelict"
@@ -1552,6 +1585,10 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/mauxite_hideout
 	name = "hideout"
 	icon_state = "orange"
+
+/area/prefab/merc_outpost
+	name = "Frontier Outpost 8"
+	icon_state = "red"
 
 // Sealab trench areas //
 
@@ -2844,6 +2881,7 @@ TYPEINFO(/area/station/engine/substation)
 /area/station/engine/proto
 	name = "Prototype Engine"
 	icon_state = "prototype_engine"
+	minimaps_to_render_on = 0
 
 /area/station/engine/thermo
 	name = "Thermoelectric Generator"
@@ -2855,6 +2893,7 @@ TYPEINFO(/area/station/engine/substation)
 	luminosity = 1
 	force_fullbright = 1
 	requires_power = 0
+	minimaps_to_render_on = 0
 
 
 /area/station/teleporter
@@ -3185,6 +3224,7 @@ ABSTRACT_TYPE(/area/station/solar)
 	luminosity = 1
 	workplace = 1
 	do_not_irradiate = TRUE
+	occlude_foreground_parallax_layers = FALSE
 
 /area/station/solar/north
 	name = "North Solar Array"
@@ -3298,6 +3338,7 @@ ABSTRACT_TYPE(/area/station/janitor)
 
 /area/station/science/testchamber/bombchamber
 	name = "Bomb Testing Chamber"
+	minimaps_to_render_on = null
 
 ABSTRACT_TYPE(/area/station/science)
 /area/station/science
@@ -3618,6 +3659,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 /area/research_outpost/indigo_rye
 	name = "Indigo"
+	minimaps_to_render_on = null
 
 /area/research_outpost/hangar
 		name = "Research Outpost Hangar"
@@ -3683,7 +3725,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/salvager_space
 	name = "Salvager Vessel Magpie Space"
 	sanctuary = 1
-	teleport_blocked = 1
+	teleport_blocked = TRUE
 	// Must match /area/salvager
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/magpie
 
@@ -3691,18 +3733,22 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "Magpie Launch Area"
 	icon_state = "yellow"
 
+/area/salvager/medbay
+	name = "Magpie Med Area"
+	icon_state = "blue"
+	sanctuary = 0
+
+
 // Pirate ship:
 /area/pirate_ship
 	name = "Peregrine"
 	icon_state = "red"
 	requires_power = 0
-	sanctuary = 1
 	teleport_blocked = 1
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/pirate
 
 /area/pirate_ship_space
 	name = "Peregrine Space"
-	sanctuary = 1
 	teleport_blocked = 1
 	// Must match /area/pirate_ship
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/pirate
@@ -3995,6 +4041,7 @@ ABSTRACT_TYPE(/area/mining)
 /area/mining/magnet_control
 	name = "Mining Outpost Magnet Control"
 	icon_state = "miningp"
+	lightswitch = FALSE
 
 /area/mining/refinery
 	name = "Mining Outpost Refinery"
@@ -4260,7 +4307,7 @@ ABSTRACT_TYPE(/area/mining)
 /**
   * Causes a power alert in the area. Notifies AIs.
   */
-/area/proc/poweralert(var/state, var/source)
+/area/proc/poweralert(state, obj/machinery/power/apc/source)
 	if (state != poweralm)
 		poweralm = state
 		var/list/cameras = list()
@@ -4271,6 +4318,10 @@ ABSTRACT_TYPE(/area/mining)
 				aiPlayer.cancelAlarm("Power", src, source)
 			else
 				aiPlayer.triggerAlarm("Power", src, cameras, source)
+		if(state == 1)
+			source.RemoveComponentsOfType(/datum/component/minimap_marker/minimap)
+		else
+			source.AddComponent(/datum/component/minimap_marker/minimap, MAP_ALERTS, "alarm_power", name="[src] Power Alarm")
 	return
 
 /// This might be really stupid, but I can't think of a better way
@@ -4303,8 +4354,6 @@ ABSTRACT_TYPE(/area/mining)
 			return
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
-		for (var/obj/machinery/computer/atmosphere/alerts/a as anything in machine_registry[MACHINES_ATMOSALERTS])
-			a.triggerAlarm("Fire", src, cameras, src)
 
 /**
   * Resets the fire alert in the area. Notifies AIs.
@@ -4319,12 +4368,11 @@ ABSTRACT_TYPE(/area/mining)
 			if(get_area(F) == src)
 				F.alarm_active = FALSE
 				F.UpdateIcon()
+				F.RemoveComponentsOfType(/datum/component/minimap_marker/minimap)
 		if (src.get_z_level() != Z_LEVEL_STATION)
 			return
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.cancelAlarm("Fire", src, src)
-		for (var/obj/machinery/computer/atmosphere/alerts/a as anything in machine_registry[MACHINES_ATMOSALERTS])
-			a.cancelAlarm("Fire", src, src)
 
 /**
   * Updates the icon of the area. Mainly used for flashing it red or blue. See: old party lights

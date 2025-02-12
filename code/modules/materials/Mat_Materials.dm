@@ -1191,6 +1191,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("electrical", 2)
 		setProperty("density", 1)
 		setProperty("hard", 2)
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/ice_melt())
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/ice_life())
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/slippery_attack())
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/slippery_entered())
@@ -1750,10 +1751,12 @@ ABSTRACT_TYPE(/datum/material/fabric)
 
 	New()
 		..()
-		setProperty("flammable", 2)
-		setProperty("density", 2)
+		setProperty("electrical", 4)
+		setProperty("thermal", 4)
 		setProperty("hard", 2)
-		setProperty("thermal", 1)
+		setProperty("density", 2)
+		setProperty("flammable", 3)
+		setProperty("chemical", 4)
 
 /datum/material/fabric/hauntium
 	mat_id = "hauntium"

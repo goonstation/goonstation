@@ -27,6 +27,7 @@
 
 			boutput(user, "You plant the [src] on the [A].")
 			logTheThing(LOG_STATION, user, "plants [src] (kudzu) at [log_loc(src)].")
+			user.setStatus("kudzuwalk", INFINITE_STATUS)
 			message_admins("[key_name(user)] planted kudzu at [log_loc(src)].")
 			message_ghosts("<b>Kudzu</b> has been planted at [log_loc(src.loc, ghostjump=TRUE)].")
 			user.u_equip(src)
@@ -123,8 +124,10 @@
 	Cross(atom/A)
 		//kudzumen can pass through dense kudzu
 		if (current_stage == 3)
-			if (ishuman(A) &&  istype(A:mutantrace, /datum/mutantrace/kudzu))
+			if (ishuman(A) &&  istype(A:mutantrace, /datum/mutantrace/kudzu) || A.hasStatus("kudzuwalk"))
 				animate_door_squeeze(A)
+				if(!ON_COOLDOWN(A, "kudzuwalk", 1 SECOND))
+					playsound(A.loc, 'sound/impact_sounds/Bush_Hit.ogg', 45, 1)
 				return 1
 			return 0
 		return 1

@@ -77,6 +77,14 @@ ABSTRACT_TYPE(/datum/parallax_render_source_group)
 		for (parallax_render_source as anything in new_parallax_render_sources)
 			animate(parallax_render_source, animation_time, alpha = 255, flags = ANIMATION_PARALLEL)
 
+/datum/parallax_render_source_group/proc/update_parallax_render_source(parallax_render_source_type)
+	var/atom/movable/screen/parallax_render_source/parallax_render_source = src.parallax_render_source_types_and_sources[parallax_render_source_type]
+	if(istype(parallax_render_source))
+		parallax_render_source.tessellate()
+		for (var/client/client as anything in src.members)
+			client?.parallax_controller.recalculate_parallax_layer(parallax_render_source)
+
+
 /// Removes the specifed parallax layer render source type or types from the group, and their associated parallax layers.
 /datum/parallax_render_source_group/proc/remove_parallax_render_source(parallax_render_source_type_or_types, animation_time = 0)
 	// Format the render source types into a list to be interated through.

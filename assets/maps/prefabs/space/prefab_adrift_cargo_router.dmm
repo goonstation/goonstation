@@ -589,7 +589,7 @@
 /turf/simulated/floor/engine,
 /area/prefab/adrift_cargorouter)
 "Wm" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "XO" = (
@@ -615,7 +615,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "ZB" = (
-/obj/grille/steel/broken/melted,
+/obj/mesh/grille/steel/broken/melted,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/prefab/adrift_cargorouter)

@@ -23,11 +23,9 @@ interface AirAlarmData {
 }
 
 export const AirAlarm = () => {
-  const { act, data } = useBackend<AirAlarmData>();
+  const { data } = useBackend<AirAlarmData>();
 
   const { boundaries, gasses, temperature, safe } = data;
-
-  const T0C = 273.15;
 
   return (
     <Window width={300} height={350}>
@@ -89,7 +87,7 @@ export const AirAlarm = () => {
 };
 
 export const GasInfo = (props) => {
-  const { partial_pressure, boundary, gas_index } = props;
+  const { partial_pressure, boundary } = props;
   const max_display = 100;
   return (
     <Flex.Item grow>

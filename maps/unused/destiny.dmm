@@ -579,7 +579,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "acq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -4147,7 +4147,7 @@
 /turf/simulated/floor,
 /area/station/medical/medbay/lobby)
 "asq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -4159,7 +4159,7 @@
 	},
 /area/station/solar/west)
 "ass" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -4908,7 +4908,7 @@
 /turf/simulated/floor,
 /area/station/medical/medbay/lobby)
 "avt" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -10172,7 +10172,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/research_director)
 "aWn" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -12827,7 +12827,7 @@
 	},
 /area/station/bridge)
 "bqD" = (
-/obj/critter/opossum/morty,
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "bqN" = (
@@ -13857,7 +13857,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/station/com_dish/auxdish)
 "bxd" = (
@@ -14154,7 +14154,7 @@
 /area/station/hallway/primary/north)
 "bza" = (
 /obj/lattice,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/station/com_dish/auxdish)
 "bzi" = (
@@ -14220,7 +14220,7 @@
 	name = "Genetic Research"
 	})
 "bzy" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "bzz" = (
@@ -16829,7 +16829,7 @@
 /area/station/turret_protected/Zeta)
 "cuw" = (
 /obj/landmark/magnet_shield,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1
 	},
@@ -17686,7 +17686,7 @@
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "cOe" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
@@ -18226,7 +18226,7 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "cXc" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -22171,7 +22171,7 @@
 /area/station/engine/gas)
 "eKi" = (
 /obj/landmark/magnet_shield,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/securearea{
 	desc = "A warning sign. I guess this area is dangerous.";
 	icon_state = "magwarning2";
@@ -24678,7 +24678,7 @@
 /area/station/engine/core)
 "fMQ" = (
 /obj/landmark/magnet_shield,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -26932,7 +26932,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/lounge)
 "gWr" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/machinery/computer/magnet,
@@ -30247,7 +30247,7 @@
 	name = "autoname - Entertainment";
 	network = "Zeta"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -32572,7 +32572,7 @@
 /area/station/science/chemistry)
 "jRs" = (
 /obj/landmark/magnet_shield,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/securearea{
 	desc = "A warning sign. I guess this area is dangerous.";
 	icon_state = "magwarning2";
@@ -33027,7 +33027,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/lounge)
 "kga" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -38619,7 +38619,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/space)
 "mZE" = (
@@ -38919,7 +38919,7 @@
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "ngM" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -39293,7 +39293,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/hallway/primary/east/restroom)
 "nqM" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -41897,7 +41897,7 @@
 	dir = 9;
 	icon_state = "lattice-dir-b"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/station/com_dish/auxdish)
 "oMx" = (
@@ -44047,7 +44047,7 @@
 /area/station/crew_quarters/courtroom)
 "pQP" = (
 /obj/landmark/magnet_shield,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/securearea{
 	desc = "A warning sign. I guess this area is dangerous.";
 	icon_state = "magwarning2";
@@ -46749,7 +46749,7 @@
 /area/station/engine/core)
 "roM" = (
 /obj/landmark/magnet_shield,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/securearea{
 	desc = "A warning sign. I guess this area is dangerous.";
 	icon_state = "magwarning2";
@@ -47737,7 +47737,7 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "rNq" = (
-/obj/critter/turtle/sylvester/HoS,
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -47786,7 +47786,7 @@
 /obj/machinery/mining_magnet{
 	pixel_x = 16
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -48207,7 +48207,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/station/com_dish/auxdish)
 "saz" = (
@@ -52077,7 +52077,7 @@
 	dir = 5;
 	icon_state = "lattice-dir-b"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/station/com_dish/auxdish)
 "ucG" = (
@@ -56051,7 +56051,7 @@
 	},
 /area/station/bridge)
 "vWX" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -57915,7 +57915,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/station/com_dish/auxdish)
 "wQD" = (
@@ -58166,7 +58166,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/hydroponics/bay)
 "wVL" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/machinery/door/poddoor/blast/single{
 	id = "tox_mix";
 	layer = 4;
@@ -59076,7 +59076,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "xvv" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},

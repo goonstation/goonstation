@@ -8,13 +8,13 @@
 
 $genetek: #1b676b !default;
 
-@use '../../colors.scss' with (
+@use '../../colors' with (
   $primary: color.scale($genetek, $lightness: +25%),
   $label: #bfcc90,
   $fg-map-keys: (),
   $bg-map-keys: ()
 );
-@use '../../base.scss' with (
+@use '../../base' with (
   $color-bg: color.scale($genetek, $lightness: -45%)
 );
 

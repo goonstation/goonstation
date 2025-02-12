@@ -803,12 +803,6 @@
 			qdel(signal)
 		return
 
-	set_broken()
-		icon_state = src.base_icon_state
-		icon_state += "b"
-		status |= BROKEN
-		light.disable()
-
 	restart()
 		if(src.restarting)
 			return
@@ -820,7 +814,7 @@
 		src.temp = ""
 		src.temp_add = "Restarting system...<br>"
 		src.tgui_input_history = list()
-		src.tgui_input_index = 0
+		src.tgui_input_index = list()
 		src.updateUsrDialog()
 		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 		SPAWN(2 SECONDS)

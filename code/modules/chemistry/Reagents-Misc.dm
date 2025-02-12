@@ -606,7 +606,7 @@ datum
 
 			reaction_turf(var/turf/target, var/volume)
 				var/list/hotspots = list()
-				for (var/obj/hotspot/hotspot in target)
+				for (var/atom/movable/hotspot/hotspot in target)
 					hotspots += hotspot
 				if (length(hotspots))
 					if (istype(target, /turf/simulated))
@@ -618,7 +618,7 @@ datum
 								lowertemp.toxins = max(lowertemp.toxins-50,0)
 								lowertemp.react()
 								T.assume_air(lowertemp)
-					for (var/obj/hotspot/hotspot as anything in hotspots)
+					for (var/atom/movable/hotspot/hotspot as anything in hotspots)
 						qdel(hotspot)
 
 				var/obj/fire_foam/F = (locate(/obj/fire_foam) in target)
@@ -1146,7 +1146,7 @@ datum
 							B.dispose()
 
 				var/list/hotspots = list()
-				for (var/obj/hotspot/hotspot in target)
+				for (var/atom/movable/hotspot/hotspot in target)
 					hotspots += hotspot
 				if (length(hotspots))
 					if (istype(target, /turf/simulated))
@@ -1158,7 +1158,7 @@ datum
 							lowertemp.toxins = max(lowertemp.toxins-50,0)
 							lowertemp.react()
 							T.assume_air(lowertemp)
-					for (var/obj/hotspot/hotspot as anything in hotspots)
+					for (var/atom/movable/hotspot/hotspot as anything in hotspots)
 						qdel(hotspot)
 
 				return
@@ -1254,6 +1254,7 @@ datum
 			hygiene_value = -1.5
 			value = 3 // 1c + 1c + 1c
 			viscosity = 0.13
+			volatility = 1
 			minimum_reaction_temperature = T0C + 200
 			var/min_req_fluid = 0.25 //at least 1/4 of the fluid needs to be oil for it to ignite
 
@@ -1283,7 +1284,7 @@ datum
 							boutput(R, SPAN_NOTICE("Your joints and servos begin to run more smoothly."))
 						else if (ishuman(M))
 							var/mob/living/carbon/human/H = M
-							if (!H.mutantrace.aquaphobic)
+							if (!H.mutantrace?.aquaphobic)
 								boutput(M, "<span class='alert'>You feel greasy and gross.</span>")
 
 				return
@@ -1330,6 +1331,11 @@ datum
 						M.changeStatus("paralysis", 3 SECONDS * mult)
 						M.changeStatus("muted", 3 SECONDS * mult)
 				if (counter >= 19 && !fakedeathed)
+					#ifdef COMSIG_MOB_FAKE_DEATH
+					SEND_SIGNAL(M, COMSIG_MOB_FAKE_DEATH)
+					#endif
+					if (deathConfettiActive)
+						M.deathConfetti()
 					M.setStatusMin("paralysis", 3 SECONDS * mult)
 					M.setStatusMin("muted", 3 SECONDS * mult)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
@@ -1360,6 +1366,11 @@ datum
 					if (10 to 18)
 						M.setStatus("drowsy", 20 SECONDS)
 				if (counter >= 19 && !fakedeathed)
+					#ifdef COMSIG_MOB_FAKE_DEATH
+					SEND_SIGNAL(M, COMSIG_MOB_FAKE_DEATH)
+					#endif
+					if (deathConfettiActive)
+						M.deathConfetti()
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
 					playsound(M, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
@@ -1660,7 +1671,7 @@ datum
 						var/amt = min(volume/100,1)
 						src.holder.remove_reagent("sewage",amt)
 						M.reagents.add_reagent("sewage",amt)
-						src.reaction_mob(M,INGEST,amt)
+						src.reaction_mob(M,INGEST,amt,null,amt)
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -3226,7 +3237,7 @@ datum
 							blood.blood_DNA = bioHolder.Uid
 						blood.reagents.add_reagent(src.id, volume, src.data)
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, paramslist = 0)
 				. = ..()
 				if (!volume_passed) return
 				if (!ishuman(M)) return
@@ -3252,10 +3263,10 @@ datum
 									boutput(M, SPAN_ALERT("Fresh blood would be better..."))
 								var/bloodget = volume_passed / 3
 								var/datum/bioHolder/unlinked/bioHolder = src.data
-								M.change_vampire_blood(bloodget, 1, victim = bioHolder?.weak_owner?.deref()) // vamp_blood
 								M.change_vampire_blood(bloodget, 0, victim = bioHolder?.weak_owner?.deref()) // vamp_blood_remaining
 								V.check_for_unlocks()
-								holder.del_reagent(src.id)
+								if("digestion" in paramslist)
+									holder.del_reagent(src.id)
 								return 0
 				return 1
 
@@ -3284,6 +3295,11 @@ datum
 					if (holder.my_atom)
 						for (var/mob/O in AIviewers(get_turf(holder.my_atom), null))
 							boutput(O, SPAN_ALERT("The blood tries to climb out of [holder.my_atom] before sizzling away!"))
+						// Real world changeling tests should only happen in containers at a slow pace
+						if (!ON_COOLDOWN(global, "bloodc_logging", 4 SECONDS))
+							var/datum/bioHolder/bioHolder = src.data
+							if(bioHolder && bioHolder.ownerName)
+								logTheThing(LOG_COMBAT, bioHolder.ownerName, "Changeling blood reaction in [holder.my_atom] at [log_loc(holder.my_atom)]")
 					else
 						for(var/turf/t in covered)
 							for (var/mob/O in AIviewers(t, null))
@@ -3958,7 +3974,7 @@ datum
 			transparency = 255
 
 			reaction_turf(var/turf/T, var/volume)
-				if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (volume >= 1))
+				if (!(istype(T, /turf/space)) && (volume >= 1))
 					if (!T.messy || !locate(/obj/decal/cleanable/sakura) in T)
 						make_cleanable(/obj/decal/cleanable/sakura,T)
 

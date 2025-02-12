@@ -5,11 +5,11 @@ ABSTRACT_TYPE(/datum/minimap)
  */
 /datum/minimap
 	/// The holder for the render of the minimap, allowing for offsets and other effects to be applied to the render without modifying the render itself.
-	var/atom/movable/minimap_holder
+	var/atom/movable/minimap_render_object/minimap_holder
 	/// The minimap render to be displayed, containing both the map, dynamic area overlays, and markers.
-	var/atom/movable/minimap_render
+	var/atom/movable/minimap_render_object/minimap_render
 	/// The minimap, without minimap markers. Kept separate for the purpose of scaling the minimap without scaling the markers.
-	var/atom/movable/map
+	var/atom/movable/minimap_render_object/map
 	/// An associative list of all minimap markers the minimap is currently tracking and displaying, indexed by their target.
 	var/list/datum/minimap_marker/minimap/minimap_markers
 
@@ -45,7 +45,6 @@ ABSTRACT_TYPE(/datum/minimap)
 	. = ..()
 
 	src.minimap_holder = new
-	src.minimap_holder.vis_flags = VIS_INHERIT_LAYER
 	src.minimap_holder.appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	src.minimap_holder.mouse_opacity = 0
 
@@ -127,6 +126,7 @@ ABSTRACT_TYPE(/datum/minimap)
 
 	var/datum/minimap_marker/minimap/marker = new(target, marker_name, can_be_deleted_by_player, list_on_ui, src.marker_scale)
 	marker.map = src
+	marker.icon_state = icon_state
 	marker.marker.icon = icon(icon, icon_state)
 
 	src.minimap_markers[target] = marker
@@ -157,7 +157,9 @@ ABSTRACT_TYPE(/datum/minimap)
 	qdel(marker)
 
 
-
+/// Just a helper type to ensure all minimap render parts have the correct vis_flags set
+/atom/movable/minimap_render_object
+	vis_flags = VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
 
 
 #ifndef LIVE_SERVER

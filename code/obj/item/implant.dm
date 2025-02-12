@@ -288,10 +288,16 @@ THROWING DARTS
 			healthlist["TOX"] = 0
 			healthlist["BURN"] = 0
 			healthlist["BRUTE"] = 0
+			healthlist["HealthImplant"] = 0
 		else
 			var/mob/living/L
 			if (isliving(src.owner))
 				L = src.owner
+				healthlist["HealthImplant"] = 0
+				for (var/implant in L.implant)
+					if (istype(implant, /obj/item/implant/health))
+						healthlist["HealthImplant"] = 1
+						break
 				healthlist["OXY"] = round(L.get_oxygen_deprivation())
 				healthlist["TOX"] = round(L.get_toxin_damage())
 				healthlist["BURN"] = round(L.get_burn_damage())
@@ -2094,7 +2100,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				H.firegib(FALSE)
 			else
 				playsound(get_turf(H), 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, TRUE)
-				H.become_statue(getMaterial("ice"), "Someone completely frozen in ice. How this happened, you have no clue!")
+				H.become_statue("ice", "Someone completely frozen in ice. How this happened, you have no clue!")
 
 		..()
 

@@ -49,6 +49,8 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/impact_sounds/Flesh_Stab_2.ogg'
 
+	has_impact_particles = TRUE
+
 	/// can it ricochet off a wall?
 	var/ricochets = FALSE
 
@@ -90,13 +92,14 @@ toxic - poisons
 	a180
 		fullauto_valid = 1
 		shot_number = 1
-		damage = 15 //less accurate, hitting random parts instead of centre mass
+		damage = 18
 		cost = 1
-		shot_volume = 30
+		shot_volume = 20
 		sname = "full auto"
+		casing = null
 		on_pre_hit(atom/hit, angle, var/obj/projectile/O)
 			if (isliving(hit))
-				if (ON_COOLDOWN(hit, "american180_miss", 4 DECI SECONDS))
+				if (ON_COOLDOWN(hit, "american180_miss", 3 DECI SECONDS))
 					return TRUE
 				else
 					return FALSE
@@ -104,7 +107,7 @@ toxic - poisons
 		get_power(obj/projectile/P, atom/A)
 			var/standard_damage = P.initial_power - max(0, (P.travelled/32 - src.dissipation_delay))*src.dissipation_rate
 			if (isliving(A))
-				return rand(standard_damage/2,standard_damage) //dont kill dudes as hard
+				return rand(standard_damage-5,standard_damage) //less accurate, hitting random parts instead of centre mass
 			else
 				return min(2,standard_damage) // dont break shit as hard
 
@@ -285,6 +288,7 @@ toxic - poisons
 	dissipation_delay = 10
 	reagent_payload = "haloperidol"
 	casing = /obj/item/casing/rifle
+	has_impact_particles = FALSE
 
 	syndicate
 		reagent_payload = "sodium_thiopental" // HEH
@@ -537,11 +541,13 @@ toxic - poisons
 	dissipation_rate = 0
 	ie_type = null
 	smashes_glasses = FALSE //foam
+	has_impact_particles = FALSE
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		..()
 		var/turf/T = istype(hit, /mob) ? get_turf(hit) : get_turf(P) // drop on same tile if mob, drop 1 tile away otherwise
 		drop_as_ammo(get_turf(T))
+		qdel(P) // we dropped, don't keep going
 
 	on_max_range_die(obj/projectile/P)
 		..()
@@ -583,6 +589,7 @@ toxic - poisons
 	casing = null
 	reagent_payload = "curare"
 	implanted = /obj/item/implant/projectile/body_visible/blowdart
+	has_impact_particles = FALSE
 
 	madness
 		reagent_payload = "madness_toxin"
@@ -958,7 +965,7 @@ toxic - poisons
 /datum/projectile/bullet/improvscrap
 	name = "fragments"
 	sname = "fragments"
-	icon_state = "trace"
+	icon_state = "metalproj"
 	dissipation_delay = 4
 	dissipation_rate = 1
 	implanted = /obj/item/implant/projectile/shrapnel
@@ -967,7 +974,7 @@ toxic - poisons
 /datum/projectile/bullet/improvbone
 	name = "bone"
 	sname = "bone"
-	icon_state = "trace"
+	icon_state = "boneproj"
 	dissipation_delay = 1
 	dissipation_rate = 3
 	damage_type = D_KINETIC
@@ -976,6 +983,7 @@ toxic - poisons
 	damage = 9
 	hit_mob_sound = 'sound/effects/skeleton_break.ogg'
 	impact_image_state = null // in my mind these are just literal bones fragments being thrown at people, wouldn't stick into walls
+	has_impact_particles = FALSE
 
 	on_hit(atom/hit)
 		var/turf/T = get_turf(hit)
@@ -1070,6 +1078,7 @@ toxic - poisons
 	hit_type = DAMAGE_BLUNT
 	impact_image_state = null
 	casing = /obj/item/casing/shotgun/blue
+	has_impact_particles = FALSE
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		. = ..()
@@ -1115,6 +1124,7 @@ toxic - poisons
 	dissipation_variance = 64
 	spread_angle_variance = 7.5
 	pellets_to_fire = 7
+	has_impact_particles = TRUE
 
 /datum/projectile/bullet/flare
 	name = "flare"
@@ -1525,6 +1535,7 @@ datum/projectile/bullet/autocannon
 	hit_mob_sound = 'sound/misc/splash_1.ogg'
 	hit_object_sound = 'sound/misc/splash_1.ogg'
 	implanted = null
+	has_impact_particles = FALSE
 
 
 	on_hit(atom/hit, dirflag, atom/projectile)
@@ -1688,6 +1699,8 @@ datum/projectile/bullet/autocannon
 	on_hit(atom/hit, angle, obj/projectile/O)
 		var/turf/T = get_turf(hit)
 		if (T)
+			if (T.density) // hit previous (non-dense) turf to spread chems/effects better
+				T = get_turf(get_step(T, turn(angle, 180)))
 			src.det(T)
 		else if (O)
 			var/turf/pT = get_turf(O)
@@ -1715,6 +1728,7 @@ datum/projectile/bullet/autocannon
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
 	implanted = null
+	has_impact_particles = FALSE
 
 	on_launch(obj/projectile/O)
 		. = ..()
@@ -1986,6 +2000,7 @@ datum/projectile/bullet/autocannon
 	implanted = null
 	casing = null
 	cost = 1
+	has_impact_particles = FALSE
 
 	on_hit(atom/hit, dirflag)
 		if (ishuman(hit))
@@ -2155,6 +2170,7 @@ datum/projectile/bullet/autocannon
 	casing = null
 	hit_ground_chance = 50
 	icon_state = "random_thing"	//actually exists, looks funny enough to use as the projectile image for this
+	has_impact_particles = FALSE
 
 	on_hit(atom/hit, dirflag)
 		if (ishuman(hit))

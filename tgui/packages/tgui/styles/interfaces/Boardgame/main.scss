@@ -1,6 +1,7 @@
 @use 'sass:meta';
-@use '../../base.scss';
-@use '../../functions.scss' as *;
+@use 'sass:color';
+@use '../../base';
+@use '../../functions' as *;
 
 // The window, everything that isn't components
 
@@ -22,7 +23,7 @@
 
     display: flex;
     flex-direction: row;
-    background-color: darken(rgb(131, 100, 74), 30%);
+    background-color: color.adjust(rgb(131, 100, 74), $lightness: -30%);
 
     &* {
       -ms-user-select: none; /* Internet Explorer/Edge */

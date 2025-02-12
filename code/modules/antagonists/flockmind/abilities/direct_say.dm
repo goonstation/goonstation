@@ -50,3 +50,6 @@
 		boutput(holder.get_controlling_mob(), SPAN_ALERT("That isn't a valid target."))
 		return TRUE
 	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts narrowbeam transmission on radio [constructTarget(R)][ismob(target) ? " worn by [constructTarget(target)]" : ""] with message [message] at [log_loc(src.holder.owner)].")
+
+/datum/targetable/flockmindAbility/directSay/logCast(atom/target)
+	return

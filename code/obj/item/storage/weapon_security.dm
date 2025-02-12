@@ -21,13 +21,13 @@
 /obj/item/storage/box/morphineinjectors
 	name = "morphine autoinjector box"
 	icon_state = "box"
-	desc = "Contains six morphine autoinjectors, for security use"
+	desc = "Contains six morphine autoinjectors, for security use."
 	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/morphine = 6)
 
 /obj/item/storage/lunchbox/robustdonuts
 	name = "robust donuts lunchbox"
 	icon_state = "lunchbox"
-	desc = "Contains a robust donut and a robusted donut, for security use"
+	desc = "Contains a robust donut and a robusted donut, for security use."
 	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 1, /obj/item/reagent_containers/food/snacks/donut/custom/robusted = 1)
 
 // For sec officers and the HoS. Really love spawning with a full backpack (Convair880).

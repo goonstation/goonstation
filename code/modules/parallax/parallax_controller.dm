@@ -119,6 +119,15 @@
 		src.owner.screen += render_source
 		src.owner.screen += parallax_layer
 
+/// Creates a new parallax layer for every provided parallax layer render source.
+/datum/parallax_controller/proc/recalculate_parallax_layer(atom/movable/screen/parallax_render_source/render_source)
+	if(render_source in src.parallax_render_sources)
+		var/atom/movable/screen/parallax_layer/parallax_layer = src.parallax_render_sources[render_source]
+
+		parallax_layer.offset_layer()
+		parallax_layer.scroll_layer()
+		UPDATE_TESSELLATION_ALIGNMENT(parallax_layer)
+
 /// Removes the parallax layers corresponding to the provided parallax layer render sources.
 /datum/parallax_controller/proc/remove_parallax_layer(list/parallax_layer_render_sources)
 	for (var/atom/movable/screen/parallax_render_source/render_source as anything in parallax_layer_render_sources)
@@ -153,10 +162,6 @@
 	src.UnregisterSignal(M, XSIG_MOVABLE_AREA_CHANGED)
 	src.UnregisterSignal(M, XSIG_MOVABLE_Z_CHANGED)
 	src.UnregisterSignal(M, XSIG_OUTERMOST_MOVABLE_CHANGED)
-
-
-
-
 
 /client/var/datum/parallax_controller/parallax_controller
 

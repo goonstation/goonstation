@@ -230,7 +230,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		src.job = initial(src.job)
 
 	update_law_text(user, lawTarget)
-		src.lawText = "[lawTarget ? lawTarget : "__________"] holds the rank of [src.job], regardless of current rank or station."
+		src.lawText = "[lawTarget ? lawTarget : "__________"] hold(s) the rank of [src.job], regardless of current rank or station."
 		return ..()
 
 	attack_self(mob/user)
@@ -390,6 +390,10 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		. = ..()
 		src.name = "AI Law Module - '"+newname+"'"
 		src.lawText = newtext
+
+	centcom
+		highlight_color = rgb(26, 55, 141, 255)
+		desc = "An AI law module uploaded directly by Central Command, uh oh."
 
 /********************* EXPERIMENTAL LAWS *********************/
 //at the time of programming this, these experimental laws are *intended* to be spawned by an item spawner

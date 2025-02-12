@@ -1,3 +1,27 @@
+(t)tue feb 04 25
+(u)LeahTheTech
+(*)Added `/obj/lever/custom` as an easy way to make a player accessible button that calls procs on things. Basically lets you give players access to admin interact procs and more. Call "Set up" on it for setup interface.
+(t)sun jan 26 25
+(u)Sord
+(+)Added a "Show Mining Map" verb that shows you the Z5 mining level map to the "self" tab.
+(t)sat jan 25 25
+(u)Kyle
+(*)Add a "set max health" button to the player panel right next to "kill"
+(t)mon jan 6 25
+(u)LeahTheTech
+(*)Basketball wizard spells are now abilities and work like you'd think they should.
+(t)sun dec 8 24
+(u)LeahTheTech
+(*)Added a "Delete landmarks" verb that lets you delete all landmarks of a specific type.
+(t)sun dec 1 24
+(u)JORJ949
+(*)Added a "Recolor Syndicate" verb to easily recolor all syndicate gear.
+(t)tue nov 13 24
+(u)Azrun
+(*)Added Event Controller.  New Event Controller UI for evaluation.
+(t)fri nov 01 24
+(u)Azrun
+(*)Added Parallax Viewer.  Do parallax stuff with it! Also the Wand gives some cool options now!
 (t)mon oct 07 24
 (u)Sovexe
 (*)Added a new build mode tool Visual Mirror Setup to aid in the setup of adhoc visual mirror zones for advanced gimmicks. Use with care.

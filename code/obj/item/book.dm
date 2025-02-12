@@ -69,7 +69,8 @@ Custom Books
 	desc = "A condensed guide of job responsibilities and tips for new crewmembers."
 
 	medical
-		name = "Medbay Pocket Guide"
+		name = "Medbay Pocket Guide, Second Edition"
+		desc = "A condensed guide of job responsibilities and tips for new crewmembers."
 		icon_state = "mediguide"
 		file_path = "strings/books/medbay_pocket_guide.txt"
 
@@ -356,6 +357,8 @@ Custom Books
 			var/mob/living/carbon/human/jerk = user
 			if (!istype(jerk))
 				return
+
+			jerk.traitHolder?.addTrait("wasitsomethingisaid")
 
 			var/datum/db_record/S = data_core.security.find_record("id", jerk.datacore_id)
 			S?["criminal"] = ARREST_STATE_ARREST

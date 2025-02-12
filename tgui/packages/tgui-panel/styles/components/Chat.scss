@@ -5,8 +5,8 @@
 
 @use 'sass:color';
 @use 'sass:math';
-@use '~tgui/styles/base.scss';
-@use '~tgui/styles/colors.scss';
+@use '~tgui/styles/base';
+@use '~tgui/styles/colors';
 
 $text-color: #abc6ec !default;
 $color-bg-section: base.$color-bg-section !default;

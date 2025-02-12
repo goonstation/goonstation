@@ -1201,6 +1201,9 @@
 
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
+			if(istype(budgun, /obj/item/gun/kinetic/pumpweapon))
+				var/obj/item/gun/kinetic/pumpweapon/pumpy = budgun
+				pumpy.rack(src)
 			if((BOUNDS_DIST(target, src) == 0))
 				budgun.ShootPointBlank(target, src)
 			else
@@ -1208,9 +1211,6 @@
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up
-			if(istype(budgun, /obj/item/gun/kinetic/pumpweapon/riotgun))
-				var/obj/item/gun/kinetic/pumpweapon/riotgun/RG = budgun
-				RG.rack(src)
 		ON_COOLDOWN(src, "buddy_refire_delay", src.gunfire_cooldown)
 		return 1
 
@@ -1611,7 +1611,7 @@
 					SPAWN(3 SECONDS)
 						src.set_emotion("sad")		// Still kinda sad that someone would bully a defenseless little rectangle.
 			else if(src.tool && (src.tool.tool_id != "GUN"))
-				var/is_ranged = BOUNDS_DIST(src, target) > 0
+				var/is_ranged = BOUNDS_DIST(src, target)
 				src.tool.bot_attack(target, src, is_ranged, lethal)
 			return
 
@@ -2126,7 +2126,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 
 		// Fixed. Was completely non-functional (Convair880).
 		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
-			if(..() || !reagents || ranged) return
+			if(..() || !reagents || ranged > 64) return
 
 			if(src.last_use && world.time < src.last_use + 120)
 				return
@@ -2137,7 +2137,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 			else
 				src.reagents.add_reagent(stun_reagent, 15)
 
-			smoke_reaction(src.reagents, 3, get_turf(src))
+			classic_smoke_reaction(src.reagents, 3, get_turf(src))
 			user.visible_message(SPAN_ALERT("<b>[master] releases a cloud of gas!</b>"))
 
 			src.last_use = world.time
@@ -2242,7 +2242,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 
 			for(var/count=0, count<4, count++)
 
-				var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+				var/list/affected = drawLineObj(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 				for(var/obj/O in affected)
 					SPAWN(0.6 SECONDS) qdel(O)
@@ -3085,7 +3085,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				if(next_destination)
 					set_destination(next_destination)
 					if(!master.moving && target && (target != master.loc))
-						master.navigate_to(target, max_dist=40)
+						master.navigate_to(target, max_dist=80)
 					return
 				else
 					find_nearest_beacon()
@@ -3607,9 +3607,8 @@ TYPEINFO(/obj/item/device/guardbot_module)
 			if(master.emotion != desired_emotion)
 				master.set_emotion(desired_emotion)
 
-			if(state != STATE_AT_BEACON && state != STATE_FINDING_BEACON)
-				if(prob(tip_prob) && !ON_COOLDOWN(src.master, "tip", 3 SECONDS))
-					master.speak(get_random_tip())
+
+
 
 			switch (state)
 				if (STATE_FINDING_BEACON)
@@ -3633,6 +3632,10 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						state = STATE_FINDING_BEACON
 						return
 
+					if(prob(tip_prob) && !src.distracted && !GET_COOLDOWN(src.master, "tip"))
+						master.speak(get_random_tip())
+						ON_COOLDOWN(src.master, "tip", 10 SECONDS)
+
 					if (!src.distracted && prob(20))
 						src.look_for_neat_thing()
 
@@ -3642,7 +3645,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							return
 
 						if (current_beacon_loc != master.loc)
-							master.navigate_to(current_beacon_loc, max_dist=30)
+							master.navigate_to(current_beacon_loc, max_dist=60)
 						else
 							state = STATE_AT_BEACON
 					return
@@ -3652,20 +3655,36 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						return	//I realize this doesn't check if they're dead.  Buddies can't always tell, ok!! Maybe if people had helpful power lights too
 
 					speak_with_pause(current_tour_text, yield_to_neat=TRUE)
+					ON_COOLDOWN(src.master, "tip", 4 SECONDS)
 
 					if (next_beacon_id)
 						state = STATE_FINDING_BEACON
 						awaiting_beacon = max(awaiting_beacon, 1) //This will just serve as a delay so the buddy isn't zipping around at light speed between stops.
 					else
 						state = STATE_POST_TOUR_IDLE
-						tour_delay = 30
-						master.speak("And that concludes the tour session.  Please visit the gift shop on your way out.")
+						var/obj/machinery/guardbot_dock/dock = null
+						dock = locate() in master.loc
+						if(dock && istype(dock))
+							// Check for tour console, manual wake if present, auto wake if not
+							if (locate(/obj/machinery/computer/tour_console) in orange(1, src.master))
+								dock.connect_robot(master,0)
+							else
+								dock.connect_robot(master,2)
+							return
+						else
+							desired_emotion = "angry"
+							if(master.emotion != desired_emotion)
+								master.set_emotion(desired_emotion)
+							master.speak(pick("My dock... it's missing!", "Where's my dock? I was ready for a break.", "Hey you sleaze! My bed!"))
+							tour_delay = 30
 					return
 
 				if (STATE_POST_TOUR_IDLE)
 					if (tour_delay-- > 0)
 						return
-
+					desired_emotion = "happy"
+					if(master.emotion != desired_emotion)
+						master.set_emotion(desired_emotion)
 					next_beacon_id = initial(next_beacon_id)
 					state = STATE_FINDING_BEACON
 					neat_things = 0

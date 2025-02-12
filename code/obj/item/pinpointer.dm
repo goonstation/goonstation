@@ -223,14 +223,6 @@ TYPEINFO(/obj/item/pinpointer)
 	hudarrow_color = "#14ad00"
 	target_criteria = /obj/item/disk/data/floppy/read_only/authentication
 
-	New()
-		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		..()
-
-	disposing()
-		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		..()
-
 /obj/item/pinpointer/identificationcomputer
 	name = "pinpointer (identification computer)"
 	desc = "Points in the direction of the portable identification computer."
@@ -563,6 +555,20 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 	name = "mob pinpointer"
 	category = /mob
 	thing_name = "mob"
+
+/obj/item/pinpointer/category/mobs/single_use
+	name = "single-use mob pinpointer"
+	var/used = FALSE
+
+	attack_self(mob/user)
+		if (used)
+			user.show_text("This pinpointer has already been used and cannot be activated again.", "red")
+			return
+		. = ..()
+		used = TRUE
+
+		src.name = "[target.name] pinpointer"
+
 
 /obj/item/pinpointer/category/ouija_boards
 	name = "ouija board pinpointer"

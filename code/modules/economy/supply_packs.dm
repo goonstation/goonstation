@@ -1626,6 +1626,16 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containername = "Magnet Kit"
 #endif
 
+/datum/supply_packs/complex/mining_rockbox
+	name = "Rockbox™ Storage Container (Cardlocked \[Chief Engineer])"
+	desc = "1x Rockbox™ Ore Cloud Storage Container"
+	category = "Engineering Department"
+	frames = list(/obj/machinery/ore_cloud_storage_container)
+	cost = PAY_EMBEZZLED
+	containertype = /obj/storage/secure/crate/plasma
+	containername = "Rockbox™ Storage Container (Cardlocked \[Chief Engineer])"
+	access = access_engineering_chief
+
 /datum/supply_packs/complex/manufacturer_kit
 	name = "Manufacturer Kit"
 	desc = "Frames: 1x General Manufacturer, 1x Mining Manufacturer, 1x Science Manufacturer, 1x Gas Extractor, 1x Clothing Manufacturer, 1x Reclaimer"
