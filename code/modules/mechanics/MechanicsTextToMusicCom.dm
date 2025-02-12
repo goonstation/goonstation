@@ -37,10 +37,10 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 
 	// ----------------------------------------------------------------------------------------------------
 
-	// requires it's own proc because else the mechcomp input will be taken as first argument of ready_piano()
+	// requires it's own proc because else the mechcomp input will be taken as first argument of make_ready()
 	proc/mechcompPlay(var/datum/mechanicsMessage/input)
 		if (src.anchored)
-			src.music_player.ready_piano()
+			src.music_player.make_ready()
 
 	proc/mechcompNotes(var/datum/mechanicsMessage/input)
 		if (input.signal)
@@ -66,7 +66,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 
 	proc/mechcompConfigPlay(obj/item/W as obj, mob/user as mob)
 		if (src.anchored)
-			src.music_player.ready_piano()
+			src.music_player.make_ready()
 
 	proc/mechcompConfigNotes(obj/item/W as obj, mob/user as mob)
 		var/given_notes = tgui_input_text(user, "Input notes to play.", "Set Notes", src.music_player.note_input)

@@ -35,9 +35,9 @@ TYPEINFO(/obj/player_piano)
 
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "start autolinking", PROC_REF(mechcompConfigStartAutolinking))
 
-	// requires it's own proc because else the mechcomp input will be taken as first argument of ready_piano()
+	// requires it's own proc because else the mechcomp input will be taken as first argument of make_ready()
 	proc/mechcompPlay(var/datum/mechanicsMessage/input)
-		src.music_player.ready_piano()
+		src.music_player.make_ready()
 
 	proc/mechcompNotes(var/datum/mechanicsMessage/input)
 		if (input.signal)
@@ -166,7 +166,7 @@ TYPEINFO(/obj/player_piano)
 				src.visible_message(SPAN_ALERT("\The [src] makes an angry whirring noise and shuts down."))
 			return
 		else if (mode_sel == "Play Song")
-			src.music_player.ready_piano()
+			src.music_player.make_ready()
 			return
 		else //just in case
 			return

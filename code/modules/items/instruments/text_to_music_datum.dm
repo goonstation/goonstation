@@ -155,7 +155,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	src.is_busy = FALSE
 
 /// final checks to make sure stuff is right, gets notes into a compiled form for easy playsounding
-/datum/text_to_music/proc/ready_piano(var/is_linked)
+/datum/text_to_music/proc/make_ready(var/is_linked)
 	if (src.is_busy || src.is_stored)
 		return
 	src.is_busy = TRUE
@@ -189,7 +189,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	if (length(src.linked_music_players) > 0 && is_master)
 		for (var/datum/text_to_music/music_player in src.linked_music_players)
 			SPAWN(0)
-				music_player.ready_piano(1)
+				music_player.make_ready(1)
 	while (src.curr_note <= src.song_length)
 		src.curr_note++
 		if (src.curr_note > src.song_length || src.is_stop_requested)
