@@ -300,18 +300,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 /datum/text_to_music/proc/update_icon(var/is_active)
 	src.holder.UpdateIcon(is_active)
 
-/datum/text_to_music/proc/mouse_drop(var/user, var/obj/player_piano/piano)
-	ENSURE_TYPE(piano)
-	if (!piano)
-		return
-
-	if (piano == src.holder)
-		boutput(user, SPAN_ALERT("You can't link a [src.holder_name] with itself!"))
-		return
-
-	src.mouse_drop_check(user, piano.music_player)
-
-/datum/text_to_music/proc/mouse_drop_check(var/user, var/datum/text_to_music/other_music_player)
+/datum/text_to_music/proc/mouse_drop(var/user, var/datum/text_to_music/other_music_player)
 	if (!istype(user, /mob/living))
 		return
 	var/mob/living/living_user = user
@@ -326,10 +315,15 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	if (other_music_player.is_busy || src.is_busy)
 		boutput(living_user, SPAN_ALERT("You can't link a busy [src.holder_name]!"))
 		return
-	if (other_music_player.is_panel_exposed() && src.is_panel_exposed())
-		living_user.visible_message("[living_user] links the [src.holder_name]s.", "You link the [src.holder_name]s!")
-		src.add_music_player(other_music_player)
-		other_music_player.add_music_player(src)
+	if (!(other_music_player.is_panel_exposed() && src.is_panel_exposed()))
+		boutput(living_user, SPAN_ALERT("You can't link when the panels are on!"))
+		return
+	if (!(other_music_player.is_comp_anchored() && src.is_comp_anchored()))
+		boutput(living_user, SPAN_ALERT("You can't link while it's unanchored!"))
+		return
+	living_user.visible_message("[living_user] links the [src.holder_name]s.", "You link the [src.holder_name]s!")
+	src.add_music_player(other_music_player)
+	other_music_player.add_music_player(src)
 
 /datum/text_to_music/proc/allowChange(var/mob/M) //copypasted from mechanics code because why do something someone else already did better
 	if(hasvar(M, "l_hand") && ispulsingtool(M:l_hand)) return TRUE
@@ -400,10 +394,6 @@ ABSTRACT_TYPE(/datum/text_to_music)
 /datum/text_to_music/player_piano/event_error_event_missing_part()
 	src.holder.visible_message(SPAN_ALERT("\The [src] makes a grumpy ratchetting noise and shuts down!"))
 
-/datum/text_to_music/player_piano/is_panel_exposed()
-	var/obj/player_piano/piano = src.holder
-	return piano.panel_exposed
-
 /datum/text_to_music/player_piano/start_autolinking(obj/item/I, mob/user)
 	. = ..()
 
@@ -411,6 +401,21 @@ ABSTRACT_TYPE(/datum/text_to_music)
 		return
 
 	I.AddComponent(/datum/component/music_player_auto_linker/player_piano, src, user)
+
+/datum/text_to_music/player_piano/mouse_drop(var/user, var/obj/player_piano/piano)
+	ENSURE_TYPE(piano)
+	if (!piano)
+		return
+
+	if (piano == src.holder)
+		boutput(user, SPAN_ALERT("You can't link a [src.holder_name] with itself!"))
+		return
+
+	. = ..(user, piano.music_player)
+
+/datum/text_to_music/player_piano/is_panel_exposed()
+	var/obj/player_piano/piano = src.holder
+	return piano.panel_exposed
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -490,7 +495,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 
 	I.AddComponent(/datum/component/music_player_auto_linker/mech_comp, holder_mech_comp.music_player, user)
 
-/datum/text_to_music/mouse_drop(var/user, var/obj/item/mechanics/text_to_music/t2m_comp)
+/datum/text_to_music/mech_comp/mouse_drop(var/user, var/obj/item/mechanics/text_to_music/t2m_comp)
 	ENSURE_TYPE(t2m_comp)
 	if (!t2m_comp)
 		return
@@ -499,9 +504,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 		boutput(user, SPAN_ALERT("You can't link a [src.holder_name] with itself!"))
 		return
 
-	src.mouse_drop_check(user, t2m_comp.music_player)
-
-	. = ..()
+	. = ..(user, t2m_comp.music_player)
 
 /datum/text_to_music/is_comp_anchored()
 	var/obj/item/mechanics/text_to_music/t2m_comp = src.holder
