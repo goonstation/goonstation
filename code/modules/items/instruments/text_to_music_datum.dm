@@ -62,7 +62,6 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	var/is_stored = FALSE
 	/// List that stores our linked pianos, including the main one.
 	var/list/linked_music_players = list()
-	var/holder_path_name = /obj/player_piano
 	var/holder_name = "piano"
 	var/obj/holder = null
 
@@ -433,7 +432,6 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	)
 	var/list/error_messages = list()
 	holder_name = "Text to Music component"
-	holder_path_name = "/obj/item/mechanics/text_to_music"
 
 /datum/text_to_music/mech_comp/event_play_start()
 	animate_flash_color_fill(src.holder, "#00ff00", 2, 2)
