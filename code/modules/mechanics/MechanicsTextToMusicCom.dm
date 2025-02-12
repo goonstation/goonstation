@@ -65,8 +65,10 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 	// ----------------------------------------------------------------------------------------------------
 
 	proc/mechcompConfigPlay(obj/item/W as obj, mob/user as mob)
-		if (src.anchored)
-			src.music_player.make_ready()
+		if (!src.anchored)
+			boutput(user, SPAN_ALERT("Component is not anchored!"))
+			return
+		src.music_player.make_ready()
 
 	proc/mechcompConfigNotes(obj/item/W as obj, mob/user as mob)
 		var/given_notes = tgui_input_text(user, "Input notes to play.", "Set Notes", src.music_player.note_input)
@@ -103,6 +105,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		if (length(src.music_player.error_messages) > 0)
 			var/message = jointext(src.music_player.error_messages, "<br><hr>")
 			tgui_message(user, message, "T2M Error Messages")
+			return
 
 		boutput(user, SPAN_NOTICE("Error log is empty!"))
 
