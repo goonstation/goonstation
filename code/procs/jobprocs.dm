@@ -532,14 +532,9 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 /// Equip items from body traits
 /mob/living/carbon/human/proc/equip_body_traits()
-	if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
-		if (src.limbs)
-			if (src.limbs.l_leg)
-				src.limbs.l_leg.delete()
-			if (src.limbs.r_leg)
-				src.limbs.r_leg.delete()
-			var/obj/stool/chair/comfy/chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
-			chair.buckle_in(src, src)
+	if (src.traitHolder && src.traitHolder.hasTrait("wheelchair"))
+		var/obj/stool/chair/comfy/chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
+		chair.buckle_in(src, src)
 
 	if (src.traitHolder && src.traitHolder.hasTrait("plasmalungs"))
 		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks

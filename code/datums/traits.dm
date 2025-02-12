@@ -296,16 +296,13 @@
 	onRemove(mob/owner)
 		owner.bioHolder?.RemoveEffect("deaf")
 
-/datum/trait/nolegs
-	name = "Stumped"
-	desc = "Because of a freak accident involving a piano, a forklift, and lots of vodka, both of your legs had to be amputated. Fortunately, NT has kindly supplied you with a wheelchair out of the goodness of their heart. (due to regulations)"
-	id = "nolegs"
+/datum/trait/wheelchair
+	name = "Wheelchair"
+	desc = "Because of a freak accident involving a piano, a forklift, and lots of vodka, you have been placed on the disability list. Fortunately, NT has kindly supplied you with a wheelchair out of the goodness of their heart. (due to regulations)"
+	id = "wheelchair"
 	icon_state = "stumped"
 	category = list("body")
 	points = 0
-	disability_type = TRAIT_DISABILITY_MAJOR
-	disability_name = "Legless"
-	disability_desc = "Legs have been severed"
 
 /datum/trait/plasmalungs
 	name = "Plasma Lungs"

@@ -389,6 +389,10 @@
 			src.custom_parts = list(
 				"l_arm" = "arm_default_left",
 				"r_arm" = "arm_default_right",
+				"l_leg" = "leg_default_left",
+				"r_leg" = "leg_default_right",
+				"left_eye" = "eye_default_left",
+				"right_eye" = "eye_default_right",
 			)
 
 		// Validate trait choices
