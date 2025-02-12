@@ -1182,6 +1182,9 @@ toxic - poisons
 				hit.visible_message(SPAN_ALERT("[P] hits [hit] with almost no effect! The phoenix's power is too weak with [hit] not in space!"))
 			else
 				if (P.shooter.hasStatus("phoenix_empowered_feather"))
+					P.shooter.delStatus("phoenix_empowered_feather")
+					SPAWN(10 SECONDS)
+						P.shooter.setStatus("phoenix_empowered_feather", INFINITE_STATUS)
 					var/obj/machinery/vehicle/vehicle = hit
 					if (istype(vehicle))
 						src.damage += vehicle.health * 0.1
@@ -1196,11 +1199,6 @@ toxic - poisons
 		. = ..()
 
 	on_end(obj/projectile/P)
-		if (P.shooter.hasStatus("phoenix_empowered_feather"))
-			P.shooter.delStatus("phoenix_empowered_feather")
-			SPAWN(10 SECONDS)
-				P.shooter.setStatus("phoenix_empowered_feather", INFINITE_STATUS)
-
 		src.damage = initial(src.damage)
 		src.disruption = initial(src.disruption)
 		src.generate_stats()

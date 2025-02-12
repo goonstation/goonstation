@@ -42,6 +42,8 @@
 
 		src.setStatus("phoenix_empowered_feather", INFINITE_STATUS)
 
+		get_image_group(CLIENT_IMAGE_GROUP_TEMPERATURE_OVERLAYS).add_mob(src)
+
 	Life()
 		. = ..()
 		if (istype(get_turf(src), /turf/space))
@@ -65,6 +67,7 @@
 	death()
 		..()
 		qdel(src)
+		get_image_group(CLIENT_IMAGE_GROUP_TEMPERATURE_OVERLAYS).remove_mob(src)
 
 	setup_healths()
 		add_hh_flesh(100, 1)
@@ -102,11 +105,11 @@
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		if (brute <= 0 && burn <= 0 && tox <= 0)
 			return ..()
-		if (src.hasStatus("phoenix_ice_barrier"))
-			brute /= 2
-			burn /= 2
-			tox /= 2
-			src.delStatus("phoenix_ice_barrier")
+		if (src.hasStatus("phoenix_ice_barrier") && (brute + burn + tox) > 10)
+			var/dmg_mod = (brute + burn + tox) / 10
+			brute /= dmg_mod
+			burn /= dmg_mod
+			tox /= dmg_mod
 		src.setStatus("phoenix_vulnerable", 30 SECONDS)
 		src.radiate_cold(get_turf(src))
 		..()
@@ -218,6 +221,36 @@
 			if (icon_s)
 				floor.icon_state = icon_s
 				floor.set_dir(direct)
+
+/image/phoenix_temperature_maptext
+	layer = HUD_LAYER_UNDER_1
+	plane = PLANE_HUD
+	maptext_x = 32
+	maptext_width = 64
+	appearance_flags = PIXEL_SCALE
+	var/mob/living/carbon/human/holding_mob
+
+	New(icon, loc, icon_state, layer, dir, mob_to_add)
+		..()
+		get_image_group(CLIENT_IMAGE_GROUP_TEMPERATURE_OVERLAYS).add_image(src)
+		src.holding_mob = mob_to_add
+		src.holding_mob.vis_contents += src
+		src.update_temperature(src.holding_mob.bodytemperature)
+
+	disposing()
+		get_image_group(CLIENT_IMAGE_GROUP_TEMPERATURE_OVERLAYS).remove_image(src)
+		src.holding_mob.vis_contents -= src
+		..()
+
+	proc/update_temperature(temperature)
+		var/temp_f = floor((temperature - 273.15) * 1.8 + 32)
+		src.maptext = "[temp_f]\u00BAF"
+		if (temp_f > 60)
+			src.color = "#ffffff"
+		else if (temp_f > 0)
+			src.color = "#1696ff"
+		else
+			src.color = "#1c3eff"
 
 /obj/phoenix_snow_floor
 	name = "compacted snow floor"

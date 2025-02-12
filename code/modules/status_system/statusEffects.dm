@@ -1744,21 +1744,40 @@
 		if(istype(M))
 			M.emote("shiver")
 			M.thermoregulation_mult *= (src.phoenix_chill ? 3 : 1.5)
+			if (phoenix_chill)
+				var/mob/living/carbon/human/H = src.owner
+				if (istype(H))
+					if (!H.phoenix_temp_overlay)
+						H.phoenix_temp_overlay = new /image/phoenix_temperature_maptext(null, H, null, HUD_LAYER_UNDER_1, null, H)
 		. = ..()
 
 	onChange(optional)
 		if (optional && !src.phoenix_chill)
 			var/mob/M = owner
 			if (istype(M))
-				M.thermoregulation_mult /= 2
+				M.thermoregulation_mult *= 2
 			src.phoenix_chill = TRUE
+			var/mob/living/carbon/human/H = src.owner
+			if (istype(H))
+				if (!H.phoenix_temp_overlay)
+					H.phoenix_temp_overlay = new /image/phoenix_temperature_maptext(null, H, null, HUD_LAYER_UNDER_1, null, H)
 		. = ..()
+
+	onUpdate()
+		..()
+		if (src.phoenix_chill)
+			var/mob/living/carbon/human/H = src.owner
+			if (istype(H))
+				H.phoenix_temp_overlay.update_temperature(H.bodytemperature)
 
 	onRemove()
 		. = ..()
 		var/mob/M = owner
 		if(istype(M))
 			M.thermoregulation_mult /= (src.phoenix_chill ? 3 : 1.5)
+		if (src.phoenix_chill)
+			var/mob/living/carbon/human/H = src.owner
+			QDEL_NULL(H.phoenix_temp_overlay)
 
 /datum/statusEffect/miasma
 	id = "miasma"
@@ -3392,19 +3411,17 @@
 			REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
 		..()
 
-/datum/statusEffect/ice_phoenix
-
-/datum/statusEffect/ice_phoenix/empowered_feather
+/datum/statusEffect/ice_phoenix_empowered_feather
 	id = "phoenix_empowered_feather"
 	name = "Empowered Feather"
-	desc = "Your next feather attack will deal an extra 10% of a pod's current life on hit, as well as gain a 25% disruption chance."
+	desc = "Your next feather attack against a pod will deal an extra 10% of its current life on hit, as well as gain a 25% disruption chance."
 	icon_state = "phoenix_feather_emp"
 	effect_quality = STATUS_QUALITY_POSITIVE
 
-/datum/statusEffect/ice_phoenix/sail
+/datum/statusEffect/ice_phoenix_sail
 	id = "ice_phoenix_sail"
 	name = "Sailing"
-	desc = "You are sailing the solar winds, grating a large movement speed buff while in space."
+	desc = "You are sailing the solar winds, granting a large movement speed buff while in space."
 	icon_state = "phoenix_sail"
 	effect_quality = STATUS_QUALITY_POSITIVE
 	move_triggered = TRUE
@@ -3414,10 +3431,10 @@
 		if (!istype(get_turf(src.owner), /turf/space))
 			src.owner.delStatus(src)
 
-/datum/statusEffect/ice_phoenix/ice_barrier
+/datum/statusEffect/ice_phoenix_ice_barrier
 	id = "phoenix_ice_barrier"
 	name = "Ice Barrier"
-	desc = "The next attack against you will have its damage reduced by 50%."
+	desc = "Attacks against you can only do up to 10 damage."
 	icon_state = "phoenix_barrier"
 	effect_quality = STATUS_QUALITY_POSITIVE
 
@@ -3429,14 +3446,14 @@
 		..()
 		src.owner.remove_filter("phoenix_barrier_outline")
 
-/datum/statusEffect/ice_phoenix/vulnerable
+/datum/statusEffect/ice_phoenix_vulnerable
 	id = "phoenix_vulnerable"
 	name = "Vulnerable"
 	desc = "You've been made vulnerable, causing you to radiate ice and have halted health regeneration."
 	icon_state = "phoenix_vulnerable"
 	effect_quality = STATUS_QUALITY_NEGATIVE
 
-/datum/statusEffect/ice_phoenix/warmth_counter
+/datum/statusEffect/ice_phoenix_warmth_counter
 	id = "phoenix_warmth_counter"
 	name = "Station Warming"
 	icon_state = "phoenix_warmth"
@@ -3460,3 +3477,18 @@
 
 	getTooltip()
 		return "Being on the station increases your warmth, staying over 30 seconds and you'll start to take damage.<br><br>Current time spent: [round(src.time_passed / 10, 1)] seconds"
+
+/datum/statusEffect/cold_snap
+	id = "cold_snap"
+	name = "Cold Snap"
+	desc = "You've been chilled to a dangerous temperature by an ice phoenix!"
+	icon_state = "phoenix_cold_snap"
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onAdd()
+		..()
+		src.owner.add_filter("cold_snap_color_matrix", 1, color_matrix_filter(normalize_color_to_matrix("#000985")))
+
+	onRemove()
+		..()
+		src.owner.remove_filter("cold_snap_color_matrix")

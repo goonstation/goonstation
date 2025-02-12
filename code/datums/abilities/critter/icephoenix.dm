@@ -22,13 +22,13 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 
 /datum/targetable/critter/ice_phoenix/ice_barrier
 	name = "Ice Barrier"
-	desc = "Gives yourself a hardened ice barrier for 7 seconds, reducing the damage of the next attack against you by 50%."
+	desc = "Gives yourself a hardened ice barrier for 10 seconds, capping incoming damage to a max value of 10."
 	icon_state = "ice_barrier"
 	cooldown = 20 SECONDS
 
 	cast(atom/target)
 		. = ..()
-		src.holder.owner.setStatus("phoenix_ice_barrier", 7 SECONDS)
+		src.holder.owner.setStatus("phoenix_ice_barrier", 10 SECONDS)
 		playsound(get_turf(src.holder.owner), 'sound/misc/phoenix/phoenix_shield.ogg', 50, TRUE)
 
 /datum/targetable/critter/ice_phoenix/glacier
@@ -130,7 +130,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 
 /datum/targetable/critter/ice_phoenix/wind_chill
 	name = "Wind chill"
-	desc = "Create a freezing aura at the targeted location, inflicting cold on those within 5 tiles nearby, and freezing them solid if their body temperature is low enough."
+	desc = "Create a freezing aura at the targeted location, inflicting cold on those within 2 tiles nearby, and freezing them solid if their body temperature is low enough."
 	icon_state = "windchill"
 	cooldown = 30 SECONDS
 	targeted = TRUE
@@ -156,14 +156,16 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 				L.changeStatus("shivering", 10 SECONDS * (1 - 0.75 * L.get_cold_protection() / 100), TRUE)
 				L.bodytemperature -= 10
 				if (L.bodytemperature <= 255.372) // 0 degrees fahrenheit
-					new /obj/icecube(L.loc, L)
+					var/obj/icecube/block = new /obj/icecube(L.loc, L)
+					block.anchored = TRUE
+					block.setStatus("cold_snap", INFINITE_STATUS)
 			SPAWN(2 SECONDS)
 				qdel(sparkle)
 		playsound(center, 'sound/misc/phoenix/phoenix_wind_chill.ogg', 50, TRUE)
 
 /datum/targetable/critter/ice_phoenix/touch_of_death
 	name = "Touch of Death"
-	desc = "Delivers constant chills to an adjacent target. If their body temperature is low enough, it will deal rapid burn damage. If recently frozen by an ice cube, they will be unable to move."
+	desc = "Delivers constant chills to an adjacent target, dealing burn damage once their body temperature is low enough. If frozen by an ice cube, they will be broken out and unable to move."
 	icon_state = "touch_of_death"
 	cooldown = 60 SECONDS
 	targeted = TRUE
@@ -172,9 +174,14 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 	tryCast(atom/target, params)
 		if (BOUNDS_DIST(src.holder.owner, target) > 0)
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		if (!ishuman(target))
+		if (!ishuman(target) && !istype(target, /obj/icecube))
 			boutput(src.holder.owner, SPAN_ALERT("You can only cast this ability on humans!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		else if (istype(target, /obj/icecube))
+			var/obj/icecube/block = target
+			if (!istype(block.held_mob, /mob/living/carbon/human))
+				boutput(src.holder.owner, SPAN_ALERT("You can only cast this ability on humans!"))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		return ..()
 
 	cast(atom/target)
@@ -224,8 +231,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		playsound(target, "sound/effects/magic[pick(3, 4)].ogg", 50, TRUE)
 
 /datum/action/bar/sail
-	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED
-	duration = 10 SECONDS
+	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 8 SECONDS
 	color_success = "#4444FF"
 
 	onStart()
@@ -269,7 +276,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 
 	New(atom/target)
 		..()
-		src.target = target
+		if (istype(target, /obj/icecube))
+			var/obj/icecube/block = target
+			src.target = block.held_mob
+			qdel(block)
+		else
+			src.target = target
 
 	onUpdate()
 		..()
@@ -282,10 +294,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.owner.visible_message(SPAN_ALERT("[src.owner] grips [src.target] with its talons!"), SPAN_ALERT("You begin channeling your cold into [src.target]."))
-		if (TIME - src.target.last_cubed < 10 SECONDS)
+		if (src.target.hasStatus("cold_snap"))
 			APPLY_ATOM_PROPERTY(src.target, PROP_MOB_CANTMOVE, "phoenix_touch_of_death")
 			src.target.changeStatus("paralysis", 1.1 SECONDS)
-			src.target.last_cubed = TIME
 
 	onEnd()
 		..()
@@ -338,16 +349,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		if (src.check_for_interrupt())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		/*
-		var/area/A = get_area(src.target)
-		var/mob/living/M
-		for (var/datum/mind/mind as anything in A.population)
-			M = mind.current
-			M.changeStatus("shivering", 1 SECOND * (1 - 0.75 * L.get_cold_protection() / 100), TRUE)
-			if (!ON_COOLDOWN(M, "ice_phoenix_permafrost_chill", 1 SECOND))
-				M.TakeDamage("All", burn = 1)
-			// body temp decrease
-		*/
 
 	onEnd()
 		..()
