@@ -17,21 +17,31 @@
 
 /datum/effects/system/ion_trail_follow/proc/on_vehicle_move(atom/movable/vehicle, atom/previous_loc, direction)
 	var/turf/T = get_turf(vehicle)
+	var/has_trailblazer = FALSE
+	if (istype(vehicle, /obj/machinery/vehicle))
+		var/obj/machinery/vehicle/mover = vehicle
+		if (istype(mover.sec_system, /obj/item/shipcomponent/secondary_system/trailblazer))
+			has_trailblazer = TRUE
 	if(T != src.oldposition)
 		if(istype(oldposition, /turf) && istype(T, /turf/space) || (istype(vehicle, /obj/machinery/vehicle) && (istype(T, /turf/simulated) && T:allows_vehicles)) )
 			if (istext(istate) && istate != "blank")
 				if(src.oldposition)
-					var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
-					src.oldposition.vis_contents += I
-					flick(istate, I)
-					I.icon_state = "blank"
+					var/obj/I
+					if (!has_trailblazer)
+						I = new /obj/effects/ion_trails
+						src.oldposition.vis_contents += I
+						flick(istate, I)
+						I.icon_state = "blank"
+					else
+						I = new /atom/movable/hotspot/chemfire(src.oldposition, CHEM_FIRE_BLUE)
 					I.pixel_x = xoffset
 					I.pixel_y = yoffset
 					I.set_dir(direction)
 					SPAWN(2 SECONDS)
 						if (I && !I.disposed)
-							var/turf/vis_loc = I.vis_locs[1]
-							vis_loc.vis_contents -= I
+							if (!has_trailblazer)
+								var/turf/vis_loc = I.vis_locs[1]
+								vis_loc.vis_contents -= I
 							qdel(I)
 				src.oldposition = T
 

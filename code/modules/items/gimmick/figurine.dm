@@ -1139,9 +1139,20 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 			src.capsule_image.icon_state = "m_caps[R.product_amount]"
 			src.UpdateOverlays(src.capsule_image, "capsules")
 
+	set_broken()
+		. = ..()
+		if (.) return
+		if (src.fallen)
+			src.icon_state = "[src.base_icon_state]-fallen-broken"
+		else
+			src.icon_state = "[src.base_icon_state]-broken"
+
 	fall()
 		..()
-		src.icon_state = "[src.base_icon_state]-fallen"
+		if (src.status & BROKEN)
+			src.icon_state = "[src.base_icon_state]-fallen-broken"
+		else
+			src.icon_state = "[src.base_icon_state]-fallen"
 
 	right()
 		..()
