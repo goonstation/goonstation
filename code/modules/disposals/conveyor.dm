@@ -604,7 +604,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 		return
 
 	if (src.deconstructable)
-		src.deconstruct_flags = null
+		src.deconstruct_flags = DECON_NONE
 		src.deconstructable = FALSE
 		M.show_text("You finish closing \the [src]'s panel.", "blue")
 		if (length(src.linked_switches))

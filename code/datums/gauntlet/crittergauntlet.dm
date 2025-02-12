@@ -338,7 +338,7 @@
 		resetting = 0
 
 	proc/spawnGear(var/turf/target, var/mob/forwhom)
-		new /obj/item/storage/backpack/NT(target)
+		new /obj/item/storage/backpack/empty/NT(target)
 		new /obj/item/clothing/suit/armor/tdome/yellow(target)
 		var/list/masks = list(/obj/item/clothing/mask/batman, /obj/item/clothing/mask/clown_hat, /obj/item/clothing/mask/horse_mask, /obj/item/clothing/mask/moustache, /obj/item/clothing/mask/gas/swat, /obj/item/clothing/mask/owl_mask, /obj/item/clothing/mask/hunter, /obj/item/clothing/mask/skull, /obj/item/clothing/mask/spiderman)
 		var/masktype = pick(masks)

@@ -129,6 +129,7 @@
 		materiel_stock += new/datum/materiel/utility/nightvisionsechudgoggles
 		materiel_stock += new/datum/materiel/utility/markerrounds
 		materiel_stock += new/datum/materiel/utility/prisonerscanner
+		materiel_stock += new/datum/materiel/utility/sechudeye
 
 		materiel_stock += new/datum/materiel/ammo/medium
 		materiel_stock += new/datum/materiel/ammo/self_charging
@@ -487,6 +488,11 @@
 	name = "RecordTrak Scanner"
 	path = /obj/item/device/prisoner_scanner
 	description = "A device used to scan in prisoners and update their security records."
+
+/datum/materiel/utility/sechudeye
+	name = "Security HUD CyberEye"
+	path = /obj/item/organ/eye/cyber/sechud
+	description = "A fancy electronic eye. It has a Security HUD system installed. Note: Does not come with any installation tools."
 
 /datum/materiel/ammo/medium
 	name = "Spare Power Cell"

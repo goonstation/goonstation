@@ -13750,19 +13750,6 @@
 /area/station/storage/auxillary{
 	name = "Tool Storage"
 	})
-"dWX" = (
-/obj/strip_door,
-/obj/machinery/conveyor/SN{
-	id = "disposals";
-	move_lag = 30;
-	operating = 1
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "crusher1";
-	name = "crusher door"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "dWY" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -34038,6 +34025,19 @@
 	},
 /turf/simulated/floor/red/checker,
 /area/station/security/checkpoint/sec_foyer)
+"kmy" = (
+/obj/machinery/conveyor/SN{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/strip_door,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "crusher1";
+	name = "crusher door"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "kmE" = (
 /turf/simulated/floor/carpet/green/standard/edge{
 	dir = 8
@@ -35108,6 +35108,23 @@
 "kCF" = (
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/fitness)
+"kCI" = (
+/obj/machinery/conveyor/EW{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/strip_door{
+	dir = 4;
+	layer = 3
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 8;
+	id = "crusher1";
+	name = "crusher door"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "kCM" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -36171,17 +36188,6 @@
 	dir = 6
 	},
 /area/station/medical/head)
-"kUR" = (
-/obj/machinery/conveyor/EW{
-	id = "disposals";
-	move_lag = 30;
-	operating = 1
-	},
-/obj/strip_door{
-	dir = 4
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "kUS" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -37879,11 +37885,11 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/mapping_helper/access/research,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/chemistry,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "lwW" = (
@@ -66133,9 +66139,6 @@
 /turf/simulated/floor/yellowblack,
 /area/station/engine/ptl)
 "tZn" = (
-/obj/critter/opossum/morty{
-	dir = 4
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -66149,6 +66152,9 @@
 /obj/machinery/light_switch/west{
 	pixel_y = -6;
 	pixel_x = -27
+	},
+/mob/living/critter/small_animal/opossum/morty{
+	dir = 4
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
@@ -70703,6 +70709,7 @@
 	id = "chemistry"
 	},
 /obj/table/reinforced/chemistry/auto/clericalsup,
+/obj/mapping_helper/access/chemistry,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "vrX" = (
@@ -76092,6 +76099,7 @@
 	id = "chemistry"
 	},
 /obj/table/reinforced/chemistry/auto/clericalsup,
+/obj/mapping_helper/access/chemistry,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "wVy" = (
@@ -76661,14 +76669,6 @@
 	id = "disposals";
 	move_lag = 30;
 	operating = 1
-	},
-/obj/strip_door{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 8;
-	id = "crusher1";
-	name = "crusher door"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
@@ -78793,7 +78793,6 @@
 /area/station/hangar/science)
 "xFV" = (
 /obj/decal/stripe_delivery,
-/obj/mapping_helper/access/research,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/sci_alt{
 	dir = 4;
@@ -78802,6 +78801,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/chemistry,
 /turf/simulated/floor/black,
 /area/station/science/testchamber)
 "xGu" = (
@@ -106604,7 +106604,7 @@ pFp
 jEM
 pFp
 kxT
-dWX
+nrz
 lFJ
 ieL
 rdj
@@ -106907,7 +106907,7 @@ iNG
 ieL
 xbJ
 ieL
-ltH
+kCI
 ieL
 cNV
 rIZ
@@ -107206,10 +107206,10 @@ iSC
 eQS
 pFp
 xVy
-nrz
+kmy
 efD
 ieL
-kUR
+ltH
 ieL
 rdj
 rdj

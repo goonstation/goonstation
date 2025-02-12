@@ -61,7 +61,8 @@ proc/make_cleanable(var/type,var/loc)
 				if (istype(T, /turf/simulated/floor))
 					var/turf/simulated/floor/floor = T
 					SPAWN(0)
-						floor.cleanable_fluid_react()
+						if (istype(floor)) //pls help my floor is become space
+							floor.cleanable_fluid_react()
 
 	set_loc(newloc)
 		if(isturf(src.loc))
