@@ -1453,7 +1453,7 @@ proc/spawn_kitchen_note()
 			<li>Wires and power cells: putting both wire and a cell in your bomb will cause high voltage arcs from the point of detonation.</li>
 			<li>Plasmastone: releases a substantial amount of plasma gas upon detonation. <span style="font-family:Brush Script MT;">NB: this isn't very useful if you just blew a hole in the hull - maybe try combining with cloth?</span></li>
 		</ul>
-		Remember you can usually only fit three items into a pipe frame before it starts to affect the explosive potential.<br>
+		Remember you can usually only fit three items total into a pipe frame.<br>
 		<b>Step 4:</b> Pour something flammable into the frame. Generally the more angrily it burns the bigger the boom you'll make.<br>
 		<b>Step 5:</b> Tangle some wires around it. Don't worry about wiring diagrams, this thing only has to work <i>once.</i><br>
 		<b>FINAL STEP:</b> Stick a timer on it and resist pressing the button until you're near your target.<br><br>

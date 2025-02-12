@@ -2231,6 +2231,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		START_TRACKING_CAT(TR_CAT_BUGS)
 		src.bioHolder.AddNewPoolEffect("radioactive", scramble=TRUE)
+		src.bioHolder.AddNewPoolEffect("skitter", scramble=TRUE)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_BUGS)
