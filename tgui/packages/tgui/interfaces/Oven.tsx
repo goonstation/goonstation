@@ -123,7 +123,7 @@ export const Oven = () => {
                       src={`data:image/png;base64,${item}`}
                       style={{ transform: 'translate(0, -4px)' }}
                     />
-                    <Box mt={0.5}>{content_names[index]}</Box>
+                    <Box mt={1}>{content_names[index]}</Box>
                   </Stack.Item>
                   <Stack.Item>
                     <Button
@@ -164,7 +164,7 @@ export const Oven = () => {
                             src={`data:image/png;base64,${item}`}
                             style={{ transform: 'translate(0, -4px)' }}
                           />
-                          <Box mt={0.5}>{recipe_names[index]}</Box>
+                          <Box mt={1}>{recipe_names[index]}</Box>
                         </Stack.Item>
                       ))}
                     </Stack.Item>
