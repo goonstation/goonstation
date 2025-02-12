@@ -443,10 +443,10 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	animate_flash_color_fill(src.holder, "#ff0000", 2, 2)
 
 /datum/text_to_music/mech_comp/event_error_invalid_note(var/note_index, var/note)
-	src.log_error_message("Note \[[note]\] at position \[[note_index]\] doesn't exist for this insturment.")
+	src.log_error_message("Note <b>\[[note]\]</b> at position <b>\[[note_index]\]</b> doesn't exist for <b>\[[src.instrument_name]\]</b>.")
 
 /datum/text_to_music/mech_comp/event_error_invalid_timing(var/timing)
-	src.log_error_message("Given timing \[[timing]\] is outside of range [src.MIN_TIMING]-[src.MAX_TIMING].")
+	src.log_error_message("Given timing <b>\[[timing]\]</b> is outside of range [src.MIN_TIMING]-[src.MAX_TIMING].")
 
 /datum/text_to_music/mech_comp/event_error_event_missing_part()
 	src.log_error_message("A piece of an event was missing somewhere.")
