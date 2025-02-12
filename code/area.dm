@@ -512,7 +512,8 @@ TYPEINFO(/area)
 			T.icon_before_permafrost = icon_before_permafrost
 			T.icon_state_before_permafrost = icon_state_before_permafrost
 
-			new /obj/effects/precipitation/snow/grey/tile/light(T)
+			if (prob(25))
+				new /obj/effects/precipitation/snow/grey/tile/light(T)
 
 			T.temperature = T0C
 			T.air.temperature = T0C

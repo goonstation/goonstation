@@ -1,5 +1,6 @@
 /mob/living/critter/ice_phoenix
 	name = "space phoenix"
+	real_name = "space phoenix"
 	desc = "A majestic bird from outer space, sailing the solar winds. Until Space Station 13 came along, that is."
 	icon = 'icons/mob/critter/nonhuman/icephoenix.dmi'
 	icon_state = "icephoenix"
@@ -170,15 +171,18 @@
 			return TRUE
 		return FALSE
 
-	proc/on_sail()
-		src.setStatus("ice_phoenix_sail", 10 SECONDS)
-		var/datum/targetable/critter/ice_phoenix/sail/abil = src.abilityHolder.getAbility(/datum/targetable/critter/ice_phoenix/sail)
-		abil.afterAction()
-
-	proc/create_ice_tunnel(turf/T)
-		T.ReplaceWith(/turf/simulated/ice_phoenix_ice_tunnel, FALSE)
-		T.set_dir(get_dir(src, T))
-		playsound(T, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, TRUE)
+	proc/create_ice_tunnel(atom/A)
+		playsound(get_turf(A), 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, TRUE)
+		if (istype(A, /turf) || istype(A, /obj/window))
+			var/turf/T = get_turf(A)
+			T.ReplaceWith(/turf/simulated/ice_phoenix_ice_tunnel, FALSE)
+			T.set_dir(get_dir(src, T))
+			if (istype(A, /obj/window))
+				qdel(A)
+			for (var/obj/mesh/grille/grille in get_turf(A))
+				qdel(grille)
+		else if (istype(A, /obj/structure/girder))
+			qdel(A)
 		var/datum/targetable/critter/ice_phoenix/thermal_shock/abil = src.abilityHolder.getAbility(/datum/targetable/critter/ice_phoenix/thermal_shock)
 		abil.afterAction()
 
@@ -283,6 +287,11 @@
 
 		hit_twitch(src)
 		src.health -= I.force
+
+		if (I.firesource)
+			if (!(locate(/obj/decal/cleanable/water) in get_turf(src)))
+				make_cleanable(/obj/decal/cleanable/water, get_turf(src))
+
 		if (src.health <= 0)
 			qdel(src)
 			return
@@ -296,6 +305,11 @@
 		if (P.proj_data.ks_ratio >= 1)
 			hit_twitch(src)
 			src.health -= P.power
+
+			if (P.proj_data.damage_type == D_BURNING)
+				if (!(locate(/obj/decal/cleanable/water) in get_turf(src)))
+					make_cleanable(/obj/decal/cleanable/water, get_turf(src))
+
 			if (src.health <= 0)
 				qdel(src)
 				return
@@ -319,4 +333,8 @@
 		playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_[pick(1, 2, 3)].ogg", 75, TRUE)
 		var/area/A = get_area(src)
 		A.remove_permafrost()
+		for (var/i = 1 to rand(4, 5))
+			var/obj/item/raw_material/ice/ice_piece = new(get_turf(src))
+			ice_piece.pixel_x += rand(-10, 10)
+			ice_piece.pixel_x += rand(-7, 7)
 		..()

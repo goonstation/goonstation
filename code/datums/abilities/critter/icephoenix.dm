@@ -18,23 +18,18 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 
 	cast(atom/target)
 		. = ..()
-		var/mob/living/L = src.holder.owner
-		if (L.throwing)
-			return
-		EndSpacePush(L)
-
-		SETUP_GENERIC_ACTIONBAR(src.holder.owner, null, 10 SECONDS, /mob/living/critter/ice_phoenix/proc/on_sail, null, \
-			null, null, null, INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
+		actions.start(new /datum/action/bar/sail(), src.holder.owner)
 
 /datum/targetable/critter/ice_phoenix/ice_barrier
 	name = "Ice Barrier"
-	desc = "Gives yourself a hardened ice barrier, reducing the damage of the next attack against you by 50%."
+	desc = "Gives yourself a hardened ice barrier for 7 seconds, reducing the damage of the next attack against you by 50%."
 	icon_state = "ice_barrier"
 	cooldown = 20 SECONDS
 
 	cast(atom/target)
 		. = ..()
 		src.holder.owner.setStatus("phoenix_ice_barrier", 7 SECONDS)
+		playsound(get_turf(src.holder.owner), 'sound/misc/phoenix/phoenix_shield.ogg', 50, TRUE)
 
 /datum/targetable/critter/ice_phoenix/glacier
 	name = "Glacier"
@@ -108,7 +103,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 
 /datum/targetable/critter/ice_phoenix/thermal_shock
 	name = "Thermal Shock"
-	desc = "Channel to create an atmospheric-blocking tunnel that allows travel through by anyone. Can only be cast on walls."
+	desc = "Channel to create an atmospheric-blocking tunnel that allows travel through by anyone. This ability can be cast on walls, girders, and windows. Girders are destroyed instead."
 	icon_state = "thermal_shock"
 	cooldown = 60 SECONDS
 	targeted = TRUE
@@ -119,8 +114,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		if (BOUNDS_DIST(src.holder.owner, target) > 0)
 			boutput(src.holder.owner, SPAN_ALERT("You need to be adjacent to the target!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		if (!iswall(target))
-			boutput(src.holder.owner, SPAN_ALERT("You can only cast this ability on walls!"))
+		if (!(iswall(target) || istype(target, /obj/window) || istype(target, /obj/structure/girder)))
+			boutput(src.holder.owner, SPAN_ALERT("You can only cast this ability on girders, walls, or windows!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (isrestrictedz(target?.z))
 			boutput(src.holder.owner, SPAN_ALERT("Your power is useless here!"))
@@ -129,6 +124,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 
 	cast(atom/target)
 		..()
+		playsound(get_turf(target), 'sound/misc/phoenix/phoenix_thermal_shock.ogg', 50, TRUE)
 		SETUP_GENERIC_ACTIONBAR(src.holder.owner, null, 5 SECONDS, /mob/living/critter/ice_phoenix/proc/create_ice_tunnel, list(target), \
 			null, null, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 
@@ -163,6 +159,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 					new /obj/icecube(L.loc, L)
 			SPAWN(2 SECONDS)
 				qdel(sparkle)
+		playsound(center, 'sound/misc/phoenix/phoenix_wind_chill.ogg', 50, TRUE)
 
 /datum/targetable/critter/ice_phoenix/touch_of_death
 	name = "Touch of Death"
@@ -191,6 +188,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 	cooldown = 60 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
+	cooldown_after_action = TRUE
 
 	tryCast(atom/target, params)
 		if (GET_DIST(src.holder.owner, target) > 9)
@@ -224,6 +222,43 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		..()
 		actions.start(new /datum/action/bar/permafrost(target), src.holder.owner)
 		playsound(target, "sound/effects/magic[pick(3, 4)].ogg", 50, TRUE)
+
+/datum/action/bar/sail
+	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED
+	duration = 10 SECONDS
+	color_success = "#4444FF"
+
+	onStart()
+		..()
+		if(src.check_for_interrupt())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/living/L = src.owner
+		if (L.throwing)
+			return
+		EndSpacePush(L)
+
+	onUpdate()
+		..()
+		if (src.check_for_interrupt())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		..()
+		if(src.check_for_interrupt())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		src.owner.setStatus("ice_phoenix_sail", 10 SECONDS)
+		var/mob/living/critter/ice_phoenix/phoenix = src.owner
+		var/datum/targetable/critter/ice_phoenix/sail/abil = phoenix.getAbility(/datum/targetable/critter/ice_phoenix/sail)
+		abil.afterAction()
+		playsound(get_turf(src.owner), 'sound/misc/phoenix/phoenix_sail.ogg', 40, TRUE)
+
+	proc/check_for_interrupt()
+		var/turf/T = get_turf(src.owner)
+		return !istype(T, /turf/space)
 
 /datum/action/bar/touch_of_death
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -262,7 +297,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		src.target.bodytemperature -= 15
 		if (src.target.bodytemperature <= 255.372) // 0 degrees fahrenheit
 			src.target.TakeDamage("All", burn = 10)
-		playsound(target, 'sound/impact_sounds/burn_sizzle.ogg', 100, TRUE)
+		playsound(get_turf(target), "sound/misc/phoenix/phoenix_tod_[rand(1, 4)].ogg", 50, TRUE)
 
 		src.onRestart()
 
@@ -296,6 +331,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		src.owner.visible_message(SPAN_ALERT("[src.owner] begins channeling a beam of ice!"), SPAN_ALERT("You begin channeling your ice power."))
 		src.dummy = showLine(src.owner, target, "zigzag")
 		src.dummy.color = "#2e2af1"
+		src.dummy.mouse_opacity = 0
 
 	onUpdate()
 		..()
@@ -325,6 +361,10 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 
 		QDEL_NULL(src.dummy)
 
+		var/mob/living/critter/ice_phoenix/phoenix = src.owner
+		var/datum/targetable/critter/ice_phoenix/sail/abil = phoenix.getAbility(/datum/targetable/critter/ice_phoenix/permafrost)
+		abil.afterAction()
+
 	onInterrupt()
 		..()
 		QDEL_NULL(src.dummy)
@@ -343,13 +383,12 @@ ABSTRACT_TYPE(/obj/ice_phoenix_ice_wall)
 	layer = TURF_LAYER
 	default_material = "ice"
 	mat_changename = FALSE
+	stops_space_move = TRUE
 	var/hits_left = 3
 
 	New()
 		..()
-		//src.reagents = new /datum/reagent(25)
-		//src.reagents.my_atom = src
-		//src.reagents.add_reagent("water", 25)
+		playsound(get_turf(src), 'sound/misc/phoenix/phoenix_snow_crunch.ogg', 50, TRUE)
 
 		SPAWN(1 MINUTE)
 			qdel(src)
@@ -385,6 +424,7 @@ ABSTRACT_TYPE(/obj/ice_phoenix_ice_wall)
 	attackby(obj/item/I, mob/user)
 		attack_particle(user, src)
 		user.lastattacked = src
+		playsound(get_turf(src), 'sound/misc/phoenix/phoenix_snow_crunch.ogg', 50, TRUE)
 
 		if (isweldingtool(I) && I:welding)
 			user.visible_message(SPAN_ALERT("[user] melts [src]!"), SPAN_ALERT("You melt [src]!"))
@@ -405,6 +445,7 @@ ABSTRACT_TYPE(/obj/ice_phoenix_ice_wall)
 			boutput(user, SPAN_ALERT("Unfortunately, [I] is too weak to damage [src]."))
 
 	bullet_act(obj/projectile/P)
+		playsound(get_turf(src), 'sound/misc/phoenix/phoenix_snow_crunch.ogg', 50, TRUE)
 		if (P.power >= 20)
 			src.visible_message(SPAN_ALERT("[src] is destroyed by [P]!"))
 			qdel(src)
@@ -418,6 +459,7 @@ ABSTRACT_TYPE(/obj/ice_phoenix_ice_wall)
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
+		playsound(get_turf(src), 'sound/misc/phoenix/phoenix_snow_crunch.ogg', 50, TRUE)
 		if (AM.throwforce >= 20)
 			src.visible_message(SPAN_ALERT("[src] is destroyed by [AM]!"))
 			qdel(src)
@@ -429,18 +471,20 @@ ABSTRACT_TYPE(/obj/ice_phoenix_ice_wall)
 
 	Bumped(atom/A)
 		if (istype(A, /obj/machinery/vehicle))
+			playsound(get_turf(src), 'sound/misc/phoenix/phoenix_snow_crunch.ogg', 50, TRUE)
 			qdel(src)
 			return
 		return ..()
 
 	ex_act()
+		playsound(get_turf(src), 'sound/misc/phoenix/phoenix_snow_crunch.ogg', 50, TRUE)
 		qdel(src)
 
 	blob_act()
+		playsound(get_turf(src), 'sound/misc/phoenix/phoenix_snow_crunch.ogg', 50, TRUE)
 		qdel(src)
 
-	// need snow particle effects for destroying the wall
 	disposing()
-		// create water here
-		//src.reagents.trans_to(get_turf(src), 25)
+		if (!(locate(/obj/decal/cleanable/water) in get_turf(src)))
+			make_cleanable(/obj/decal/cleanable/water, get_turf(src))
 		..()

@@ -212,6 +212,8 @@
 	var/reloading_str = "reloading"
 	var/image/default_obscurer
 	var/muzzle_flash = null
+	// if firing this limb pushes you back in space
+	var/has_space_pushback = TRUE
 	can_beat_up_robots = TRUE //so pointblanking works
 
 	attack_range(atom/target, var/mob/user, params)
@@ -288,7 +290,7 @@
 
 /datum/limb/gun/kinetic
 	shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
-		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
+		if((..() && istype(user.loc, /turf/space) || user.no_gravity) && src.has_space_pushback)
 			user.inertia_dir = get_dir(target, user)
 			step(user, user.inertia_dir)
 
@@ -388,6 +390,7 @@
 		current_shots = 1
 		cooldown = 1 SECOND
 		reload_time = 0
+		has_space_pushback = FALSE
 
 	syringe
 		proj = new/datum/projectile/syringefilled
