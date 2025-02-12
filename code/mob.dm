@@ -2824,6 +2824,7 @@
 /mob/proc/on_reagent_react(var/datum/reagents/R, var/method = 1, var/react_volume = null)
 
 /mob/proc/HealBleeding(var/amt)
+	src.bleeding = max(src.bleeding - amt, 0)
 
 /mob/proc/find_in_equipment(var/eqtype)
 	return null
