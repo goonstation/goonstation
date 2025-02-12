@@ -213,7 +213,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 		if (concurrent_notes_played < MAX_CONCURRENT_NOTES && compiled_notes[curr_note] != "rrr")
 			var/sound_name = "[instrument_sound_path]/[compiled_notes[src.curr_note]].ogg"
 			if (sound_name in soundCache)
-				playsound(src.holder, sound_name, note_volumes[src.curr_note],0,10,0)
+				playsound(src.holder, sound_name, note_volumes[src.curr_note],0,10,0, channel = VOLUME_CHANNEL_INSTRUMENTS)
 
 		var/delays_left = src.note_delays[src.curr_note]
 
