@@ -45,7 +45,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	/// Where input is stored.
 	var/list/note_input = ""
 	/// After we break it up into chunks.
-	var/list/piano_notes = list()
+	var/list/notes = list()
 	/// List of volumes as nums (20,30,40,50,60).
 	var/list/note_volumes = list()
 	/// List of octaves as nums (0-8).
@@ -74,17 +74,17 @@ ABSTRACT_TYPE(/datum/text_to_music)
 
 /datum/text_to_music/proc/clean_input() //breaks our big input string into chunks
 	src.is_busy = TRUE
-	src.piano_notes = list()
+	src.notes = list()
 	var/list/split_input = splittext("[note_input]", "|")
 	if (length(split_input) > MAX_NOTE_INPUT)
 		return FALSE
 	for (var/string in split_input)
 		if (string)
-			piano_notes += string
+			notes += string
 	src.is_busy = FALSE
 	return TRUE
 
-/datum/text_to_music/proc/build_notes(var/list/piano_notes) //breaks our chunks apart and puts them into lists on the object
+/datum/text_to_music/proc/build_notes(var/list/notes) //breaks our chunks apart and puts them into lists on the object
 	src.is_busy = TRUE
 	src.note_volumes     = list()
 	src.note_octaves     = list()
@@ -93,8 +93,8 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	src.note_delays      = list()
 
 	// e.g. timing,20
-	if (lowertext(copytext(piano_notes[1], 1, 8)) == "timing,")
-		var/timing = splittext(piano_notes[1], ",")[2]
+	if (lowertext(copytext(notes[1], 1, 8)) == "timing,")
+		var/timing = splittext(notes[1], ",")[2]
 		// convert from centiseconds to seconds
 		timing = text2num(timing) / 100
 		if (timing < src.MIN_TIMING || timing > src.MAX_TIMING)
@@ -103,9 +103,9 @@ ABSTRACT_TYPE(/datum/text_to_music)
 			return
 		src.timing = timing
 
-		piano_notes.Remove(piano_notes[1])
+		notes.Remove(notes[1])
 
-	for (var/string in piano_notes)
+	for (var/string in notes)
 		var/list/curr_notes = splittext("[string]", ",")
 		var/curr_notes_length = length(curr_notes)
 		if (curr_notes_length != 4 && curr_notes_length != 5) // Music syntax not followed
@@ -173,7 +173,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 			continue
 		var/string = "[instrument_sound_path]/[compiled_notes[i]].ogg"
 		if (!(string in soundCache))
-			src.event_error_invalid_note(i, src.piano_notes[i])
+			src.event_error_invalid_note(i, src.notes[i])
 			src.is_busy = FALSE
 			src.update_icon(FALSE)
 			return
@@ -234,7 +234,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 		src.is_busy = FALSE
 		return FALSE
 
-	src.build_notes(src.piano_notes)
+	src.build_notes(src.notes)
 
 	return TRUE
 
@@ -261,7 +261,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	src.timing = 0.5
 	src.is_busy = FALSE
 	src.note_input = ""
-	src.piano_notes = list()
+	src.notes = list()
 	src.note_volumes = list()
 	src.note_octaves = list()
 	src.note_names = list()
