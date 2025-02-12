@@ -249,7 +249,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 
 	return TRUE
 
-/datum/text_to_music/proc/reset_piano(var/disposing) //so i dont have to have duplicate code for multiool pulsing and piano key
+/datum/text_to_music/proc/reset(var/disposing) //so i dont have to have duplicate code for multiool pulsing and piano key
 	src.update_icon(FALSE)
 	src.event_reset()
 	if (src.is_looping != 2 || disposing)
@@ -465,7 +465,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	if (..())
 		src.rebuild_tooltip()
 
-/datum/text_to_music/mech_comp/reset_piano(var/disposing) //so i dont have to have duplicate code for multiool pulsing and piano key
+/datum/text_to_music/mech_comp/reset(var/disposing) //so i dont have to have duplicate code for multiool pulsing and piano key
 	. = ..(disposing)
 
 	src.rebuild_tooltip()

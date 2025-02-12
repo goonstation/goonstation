@@ -60,7 +60,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 			src.music_player.is_stop_requested = TRUE
 
 	proc/mechcompReset(var/datum/mechanicsMessage/input)
-		src.music_player.reset_piano(0)
+		src.music_player.reset(0)
 
 	// ----------------------------------------------------------------------------------------------------
 
@@ -94,7 +94,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 			src.music_player.is_stop_requested = TRUE
 
 	proc/mechcompConfigReset(obj/item/W as obj, mob/user as mob)
-		src.music_player.reset_piano(0)
+		src.music_player.reset(0)
 
 	proc/mechcompConfigStartAutolinking(obj/item/W as obj, mob/user as mob)
 		src.music_player.start_autolinking(W, user)
@@ -112,7 +112,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		src.music_player.mouse_drop(usr, t2m_comp)
 
 	disposing() //just to clear up ANY funkiness
-		src.music_player.reset_piano(1)
+		src.music_player.reset(1)
 		..()
 
 	attackby(obj/item/W, mob/user)

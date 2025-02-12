@@ -53,7 +53,7 @@ TYPEINFO(/obj/player_piano)
 			src.music_player.is_stop_requested = TRUE
 
 	proc/mechcompReset(var/datum/mechanicsMessage/input)
-		src.music_player.reset_piano(FALSE)
+		src.music_player.reset(FALSE)
 
 	proc/mechcompConfigStartAutolinking(obj/item/W as obj, mob/user as mob)
 		src.music_player.start_autolinking(W, user)
@@ -67,7 +67,7 @@ TYPEINFO(/obj/player_piano)
 					src.music_player.is_stop_requested = TRUE
 
 				if ("Reset Piano") //reset piano B)
-					src.music_player.reset_piano()
+					src.music_player.reset()
 					src.visible_message(SPAN_ALERT("[user] sticks \the [W] into a slot on \the [src] and twists it!"))
 					return
 
@@ -145,7 +145,7 @@ TYPEINFO(/obj/player_piano)
 			if (!do_after(user, 3 SECONDS))
 				return
 			user.visible_message(SPAN_ALERT("[user] pulsed a bunch of wires in the piano!"), "You pulsed some wires in the piano!")
-			src.music_player.reset_piano()
+			src.music_player.reset()
 		else
 			..()
 
@@ -175,7 +175,7 @@ TYPEINFO(/obj/player_piano)
 		src.music_player.mouse_drop(usr, piano)
 
 	disposing() //just to clear up ANY funkiness
-		src.music_player.reset_piano(1)
+		src.music_player.reset(1)
 		..()
 
 	update_icon(var/active) //1: active, 0: inactive
@@ -203,4 +203,4 @@ TYPEINFO(/obj/player_piano)
 
 	was_deconstructed_to_frame(mob/user)
 		. = ..()
-		src.music_player.reset_piano()
+		src.music_player.reset()
