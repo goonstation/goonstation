@@ -16,11 +16,11 @@
 /// The most error messages allowed before older messages are deleted.
 #define MAX_ERROR_MESSAGES 5
 
-// ABSTRACT_TYPE(/datum/text_to_music)
+ABSTRACT_TYPE(/datum/text_to_music)
 /**
  * Datum that forms the core of Player Pianos and Text to Music components
  * Code from `playable_piano.dm`
- * Base type `/datum/text_to_music` is for Player Pianos
+ * Base type `/datum/text_to_music/player_piano` is for Player Pianos
  * Subtype `/datum/text_to_music/mech_comp` is for Text to Music components
  */
 /datum/text_to_music
@@ -38,8 +38,9 @@
 	var/song_length = 0
 	/// What note is the song on?
 	var/curr_note = 0
+	/// What's the name of the current instrument? Must be the same as the sound folder name.
 	var/instrument_name = "piano"
-	// Where are the note sounds located?
+	/// Where are the note sounds located?
 	var/instrument_sound_path = null
 	/// Where input is stored.
 	var/list/note_input = ""
@@ -60,7 +61,7 @@
 	/// Same as `is_busy`, but for automatic linking.
 	var/is_stored = FALSE
 	/// List that stores our linked pianos, including the main one.
-	var/list/linked_pianos = list()
+	var/list/linked_music_players = list()
 	var/holder_path_name = /obj/player_piano
 	var/holder_name = "piano"
 	var/obj/holder = null
@@ -70,8 +71,6 @@
 
 	src.holder = new_holder
 	src.instrument_sound_path = STANDARD_INSTRUMENT_PATH(src.instrument_name)
-
-	// SEND_SIGNAL(src.holder, COMSIG_MECHCOMP_ADD_CONFIG, "Start Autolinking", PROC_REF(start_autolinking))
 
 /datum/text_to_music/proc/clean_input() //breaks our big input string into chunks
 	src.is_busy = TRUE
@@ -158,7 +157,7 @@
 /// final checks to make sure stuff is right, gets notes into a compiled form for easy playsounding
 /datum/text_to_music/proc/ready_piano(var/is_linked)
 	if (src.is_busy || src.is_stored)
-		return// FALSE
+		return
 	src.is_busy = TRUE
 	if (note_volumes.len + note_octaves.len - note_names.len - note_accidentals.len)
 		src.event_error_event_missing_part()
@@ -177,19 +176,18 @@
 			src.event_error_invalid_note(i, src.piano_notes[i])
 			src.is_busy = FALSE
 			src.update_icon(FALSE)
-			return// FALSE
+			return
 	src.event_play_start()
 	src.update_icon(TRUE)
 	if (is_linked)
 		src.play_notes(FALSE)
 		return
 	src.play_notes(TRUE)
-	// return TRUE
 
 /datum/text_to_music/proc/play_notes(var/is_master)
 	var/concurrent_notes_played = 0
-	if (length(src.linked_pianos) > 0 && is_master)
-		for (var/datum/text_to_music/music_player in src.linked_pianos)
+	if (length(src.linked_music_players) > 0 && is_master)
+		for (var/datum/text_to_music/music_player in src.linked_music_players)
 			SPAWN(0)
 				music_player.ready_piano(1)
 	while (src.curr_note <= src.song_length)
@@ -202,7 +200,6 @@
 			src.is_busy = FALSE
 			src.curr_note = 0
 			src.event_play_end()
-			// if (!(src.is_stop_requested))
 			SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "musicStopped")
 			src.is_stop_requested = FALSE
 			src.update_icon(FALSE)
@@ -212,7 +209,6 @@
 
 		if (concurrent_notes_played < MAX_CONCURRENT_NOTES && compiled_notes[curr_note] != "rrr")
 			var/sound_name = "[instrument_sound_path]/[compiled_notes[src.curr_note]].ogg"
-			// playsound(src.get_holder(), sound_name, note_volumes[src.curr_note],0,10,0)
 			playsound(src.holder, sound_name, note_volumes[src.curr_note],0,10,0)
 
 		var/delays_left = src.note_delays[src.curr_note]
@@ -271,17 +267,17 @@
 	src.note_names = list()
 	src.note_accidentals = list()
 	src.compiled_notes = list()
-	src.linked_pianos = list()
+	src.linked_music_players = list()
 	src.note_delays = list()
 	src.is_stop_requested = FALSE
 
-/datum/text_to_music/proc/add_piano(var/datum/text_to_music/music_player)
+/datum/text_to_music/proc/add_music_player(var/datum/text_to_music/music_player)
 	var/music_player_id = "\ref[music_player]"
-	for (var/datum/text_to_music/other_music_player in src.linked_pianos)
+	for (var/datum/text_to_music/other_music_player in src.linked_music_players)
 		var/other_music_player_id = "\ref[other_music_player]"
 		if (other_music_player_id == music_player_id)
-			src.linked_pianos -= music_player
-	src.linked_pianos += music_player
+			src.linked_music_players -= music_player
+	src.linked_music_players += music_player
 
 /datum/text_to_music/proc/event_play_start()
 	return
@@ -301,30 +297,6 @@
 /datum/text_to_music/proc/event_error_event_missing_part()
 	return
 
-// /datum/text_to_music/proc/event_play_start()
-// 	src.holder.visible_message(SPAN_NOTICE("\The [src.holder] starts playing music!"))
-
-// /datum/text_to_music/proc/event_play_end()
-// 	src.holder.visible_message(SPAN_NOTICE("\The [src.holder] stops playing music."))
-
-// /datum/text_to_music/proc/event_reset()
-// 	src.holder.visible_message(SPAN_NOTICE("\The [src.holder] grumbles and shuts down completely."))
-
-// /datum/text_to_music/proc/event_error_invalid_note(var/note_index, var/note)
-// 	src.holder.visible_message(SPAN_NOTICE("\The [src.holder] makes an atrocious racket and beeps [note_index] times."))
-
-// /datum/text_to_music/proc/event_error_invalid_timing(var/timing)
-// 	src.holder.visible_message(SPAN_NOTICE("\The [src.holder] makes a loud grinding noise, followed by a boop!"))
-
-// /datum/text_to_music/proc/event_error_event_missing_part()
-// 	src.holder.visible_message(SPAN_ALERT("\The [src.holder] makes a grumpy ratchetting noise and shuts down!"))
-
-// /datum/text_to_music/proc/get_holder()
-// 	return src
-
-// /datum/text_to_music/proc/update_icon(var/is_active)
-// 	return
-
 /datum/text_to_music/proc/update_icon(var/is_active)
 	src.holder.UpdateIcon(is_active)
 
@@ -339,31 +311,6 @@
 
 	src.mouse_drop_check(user, piano.music_player)
 
-	// if (!istype(user, /mob/living))
-	// 	return
-	// var/mob/living/living_user = user
-	// if (living_user.stat)
-	// 	return
-	// if (!src.allowChange(living_user))
-	// 	boutput(living_user, SPAN_ALERT("You can't link [src.holder_name]s without a multitool!"))
-	// 	return
-	// ENSURE_TYPE(piano)
-	// if (!piano)
-	// 	return
-	// if (src.is_pulser_auto_linking(living_user))
-	// 	boutput(living_user, SPAN_ALERT("You can't link [src.holder_name]s manually while auto-linking!"))
-	// 	return
-	// if (piano == src.holder)
-	// 	boutput(living_user, SPAN_ALERT("You can't link a [src.holder_name] with itself!"))
-	// 	return
-	// if (piano.music_player.is_busy || src.is_busy)
-	// 	boutput(living_user, SPAN_ALERT("You can't link a busy [src.holder_name]!"))
-	// 	return
-	// if (piano.music_player.is_panel_exposed() && src.is_panel_exposed())
-	// 	living_user.visible_message("[living_user] links the [src.holder_name]s.", "You link the [src.holder_name]s!")
-	// 	src.add_piano(piano.music_player)
-	// 	piano.music_player.add_piano(src)
-
 /datum/text_to_music/proc/mouse_drop_check(var/user, var/datum/text_to_music/other_music_player)
 	if (!istype(user, /mob/living))
 		return
@@ -373,22 +320,16 @@
 	if (!src.allowChange(living_user))
 		boutput(living_user, SPAN_ALERT("You can't link [src.holder_name]s without a multitool!"))
 		return
-	// ENSURE_TYPE(piano)
-	// if (!piano)
-	// 	return
 	if (src.is_pulser_auto_linking(living_user))
 		boutput(living_user, SPAN_ALERT("You can't link [src.holder_name]s manually while auto-linking!"))
 		return
-	// if (piano == src.holder)
-	// 	boutput(living_user, SPAN_ALERT("You can't link a [src.holder_name] with itself!"))
-	// 	return
 	if (other_music_player.is_busy || src.is_busy)
 		boutput(living_user, SPAN_ALERT("You can't link a busy [src.holder_name]!"))
 		return
 	if (other_music_player.is_panel_exposed() && src.is_panel_exposed())
 		living_user.visible_message("[living_user] links the [src.holder_name]s.", "You link the [src.holder_name]s!")
-		src.add_piano(other_music_player)
-		other_music_player.add_piano(src)
+		src.add_music_player(other_music_player)
+		other_music_player.add_music_player(src)
 
 /datum/text_to_music/proc/allowChange(var/mob/M) //copypasted from mechanics code because why do something someone else already did better
 	if(hasvar(M, "l_hand") && ispulsingtool(M:l_hand)) return TRUE
@@ -430,7 +371,7 @@
 	if (!src.is_comp_anchored())
 		boutput(user, SPAN_ALERT("Can't link an unanchored music player!"))
 		return FALSE
-	if (length(src.linked_pianos))
+	if (length(src.linked_music_players))
 		boutput(user, SPAN_ALERT("Can't link an already linked music player!"))
 		return FALSE
 	if (src.is_stored)
@@ -440,20 +381,6 @@
 // ----------------------------------------------------------------------------------------------------
 
 /datum/text_to_music/player_piano
-	// var/obj/player_piano/holder = null
-
-// /datum/text_to_music/player_piano/New(obj/player_piano/holder)
-// 	. = ..()
-
-// 	src.holder = holder
-
-// /datum/text_to_music/player_piano/reset_piano(var/disposing) //so i dont have to have duplicate code for multiool pulsing and piano key
-// 	. = ..(disposing)
-
-// 	if (disposing)
-// 		src.holder.is_stored = FALSE
-
-// 	src.holder.linked_pianos = list()
 
 /datum/text_to_music/player_piano/event_play_start()
 	src.holder.visible_message(SPAN_NOTICE("\The [src.holder] starts playing music!"))
@@ -473,69 +400,21 @@
 /datum/text_to_music/player_piano/event_error_event_missing_part()
 	src.holder.visible_message(SPAN_ALERT("\The [src] makes a grumpy ratchetting noise and shuts down!"))
 
-// /datum/text_to_music/player_piano/ready_piano(var/is_linked)
-// 	if (src.holder.is_stored)
-// 		return
-
-// 	. =  ..()
-
-// 	if (. == FALSE)
-// 		return
-
-// 	if (is_linked)
-// 		src.play_notes(FALSE)
-// 		return
-
-// 	src.play_notes(TRUE)
-
-// /datum/text_to_music/player_piano/play_notes(var/is_master) //how notes are handled, using while and spawn to set a very strict interval, solo piano process loop was too variable to work for music
-// 	if (length(src.holder.linked_pianos) > 0 && is_master)
-// 		for (var/obj/player_piano/p in src.holder.linked_pianos)
-// 			SPAWN(0)
-// 				p.music_player.ready_piano(1)
-
-// 	return ..()
-
-// /datum/text_to_music/player_piano/set_notes(var/given_notes)
-// 	if (src.holder.is_stored)
-// 		return
-
-// 	return ..(given_notes)
-
-// /datum/text_to_music/player_piano/set_timing(var/time_sel)
-// 	if (src.holder.is_stored)
-// 		return
-
-// 	return ..(time_sel)
-
-// /datum/text_to_music/player_piano/get_holder()
-// 	return src.holder
-
-// /datum/text_to_music/player_piano/update_icon(var/is_active)
-// 	src.holder.UpdateIcon(is_active)
-
 /datum/text_to_music/player_piano/is_panel_exposed()
 	var/obj/player_piano/piano = src.holder
 	return piano.panel_exposed
 
 /datum/text_to_music/player_piano/start_autolinking(obj/item/I, mob/user)
-	// var/obj/player_piano/holder_player_piano = src.holder
-	// if (!src.is_panel_exposed())
-	// 	boutput(user, SPAN_ALERT("Can't link without an exposed panel!"))
-	// 	return
-
 	. = ..()
 
 	if (. == FALSE)
 		return
 
-	// I.AddComponent(/datum/component/music_player_auto_linker/player_piano, holder_player_piano.music_player, user)
 	I.AddComponent(/datum/component/music_player_auto_linker/player_piano, src, user)
 
 // ----------------------------------------------------------------------------------------------------
 
 /datum/text_to_music/mech_comp
-	// var/obj/item/mechanics/text_to_music/holder = null
 	/// the instruments that can be played
 	var/list/allow_list = list(
 		"banjo",
@@ -550,11 +429,6 @@
 	var/list/error_messages = list()
 	holder_name = "Text to Music component"
 	holder_path_name = "/obj/item/mechanics/text_to_music"
-
-// /datum/text_to_music/mech_comp/New(obj/player_piano/holder)
-// 	. = ..()
-
-// 	src.holder = holder
 
 /datum/text_to_music/mech_comp/event_play_start()
 	animate_flash_color_fill(src.holder, "#00ff00", 2, 2)
@@ -582,14 +456,6 @@
 
 	animate_flash_color_fill(src.holder, "#ff00ff", 2, 2)
 
-// /datum/text_to_music/mech_comp/ready_piano()
-// 	. =  ..()
-
-// 	if (. == FALSE)
-// 		return
-
-// 	src.play_notes()
-
 /datum/text_to_music/mech_comp/set_timing(var/time_sel)
 	if (..())
 		src.rebuild_tooltip()
@@ -599,9 +465,6 @@
 
 	src.rebuild_tooltip()
 	src.error_messages = list()
-
-// /datum/text_to_music/mech_comp/get_holder()
-// 	return src.holder
 
 /datum/text_to_music/mech_comp/proc/set_instrument(var/instrument)
 	if (src.is_busy || src.is_stored)
@@ -616,9 +479,6 @@
 /datum/text_to_music/mech_comp/proc/rebuild_tooltip()
 	var/obj/item/holder_item = src.holder
 	holder_item.tooltip_rebuild = TRUE
-
-// /datum/text_to_music/mech_comp/update_icon(var/is_active)
-// 	src.holder.UpdateIcon(is_active)
 
 /datum/text_to_music/mech_comp/start_autolinking(obj/item/I, mob/user)
 	var/obj/item/mechanics/text_to_music/holder_mech_comp = src.holder

@@ -1,10 +1,9 @@
 /datum/component/music_player_auto_linker
-	// var/list/pianos
 	var/list/music_players
 
 TYPEINFO(/datum/component/music_player_auto_linker)
 	initialization_args = list(
-		ARG_INFO("start_piano", DATA_INPUT_REF, "The first piano to store", null),
+		ARG_INFO("initial_music_player", DATA_INPUT_REF, "The first music player to store", null),
 		ARG_INFO("user", DATA_INPUT_REF, "The user who's using this", null)
 	)
 
@@ -28,7 +27,7 @@ TYPEINFO(/datum/component/music_player_auto_linker)
 	if (!music_player.is_comp_anchored())
 		boutput(user, SPAN_ALERT("Can't link an unanchored music player!"))
 		return FALSE
-	if (length(music_player.linked_pianos))
+	if (length(music_player.linked_music_players))
 		boutput(user, SPAN_ALERT("Can't link an already linked music player!"))
 		return FALSE
 	if (music_player in src.music_players)
@@ -49,8 +48,8 @@ TYPEINFO(/datum/component/music_player_auto_linker)
 		for (var/datum/text_to_music/link_to as anything in linking_music_players)
 			if (link_to == null)
 				break
-			link_from.add_piano(link_to)
-			link_to.add_piano(link_from)
+			link_from.add_music_player(link_to)
+			link_to.add_music_player(link_from)
 			sleep(0.1 SECOND)
 
 /datum/component/music_player_auto_linker/proc/start_storing_music_players(var/datum/text_to_music/music_player, mob/user)
@@ -64,8 +63,6 @@ TYPEINFO(/datum/component/music_player_auto_linker)
 	return TRUE
 
 /datum/component/music_player_auto_linker/proc/store_music_player(obj/item/pulser, atom/A, mob/user)
-	// if (!istype(A, /obj/player_piano) || !istype(A, /obj/item/mechanics/text_to_music))
-	// 	return FALSE
 	if (!istype(A, /datum/text_to_music))
 		return FALSE
 	var/datum/text_to_music/music_player = A
@@ -96,28 +93,9 @@ TYPEINFO(/datum/component/music_player_auto_linker)
 			music_player.is_stored = FALSE
 	. = ..()
 
+// ----------------------------------------------------------------------------------------------------
+
 /datum/component/music_player_auto_linker/player_piano
-
-// /datum/component/music_player_auto_linker/player_piano/store_music_player(obj/item/pulser, atom/A, mob/user)
-// 	// if (!istype(A, /obj/player_piano) || !istype(A, /obj/item/mechanics/text_to_music))
-// 	// 	return FALSE
-// 	if (!istype(A, /obj/player_piano))
-// 		return FALSE
-// 	var/obj/player_piano/piano = A
-// 	if (!piano.panel_exposed)
-// 		boutput(user, SPAN_ALERT("Can't link without an exposed panel!"))
-// 		return TRUE
-// 	if (!src.can_store_music_player(piano.music_player, user))
-// 		return TRUE
-// 	piano.music_player.is_stored = TRUE
-// 	src.music_players.Add(piano.music_player)
-// 	boutput(user, SPAN_NOTICE("Stored music player."))
-// 	return TRUE
-
-// /datum/component/music_player_auto_linker/player_piano/can_store_music_player(datum/text_to_music/music_player, mob/user)
-// 	if (!music_player.panel_exposed)
-// 		boutput(user, SPAN_ALERT("Can't link without an exposed panel!"))
-// 		return FALSE
 
 /datum/component/music_player_auto_linker/player_piano/store_music_player(obj/item/pulser, atom/A, mob/user)
 	if (!istype(A, /obj/player_piano))
@@ -126,6 +104,8 @@ TYPEINFO(/datum/component/music_player_auto_linker)
 	var/obj/player_piano/holder = A
 
 	. = ..(pulser, holder.music_player, user)
+
+// ----------------------------------------------------------------------------------------------------
 
 /datum/component/music_player_auto_linker/mech_comp
 
