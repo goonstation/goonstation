@@ -3375,3 +3375,106 @@
 			var/mob/mob_owner = owner
 			REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
 		..()
+
+/datum/statusEffect/silicon_radiation
+	name = "Radiological Interference"
+	desc = "Radiation is affecting your optical sensors."
+	id = "silicon_radiation"
+	unique = TRUE
+	visible = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	icon_state = "trefoil"
+
+	preCheck(atom/A)
+		. = ..()
+		if (!issilicon(A))
+			return
+
+	onAdd(Sv)
+		. = ..()
+		src.set_substatus(Sv)
+
+	onChange(Sv)
+		. = ..()
+		src.set_substatus(Sv)
+
+	proc/set_substatus(Sv)
+		if (Sv == -INFINITY) // from fullheal
+			owner.delStatus("silicon_radiation_light")
+			owner.delStatus("silicon_radiation_medium")
+			owner.delStatus("silicon_radiation_heavy")
+			owner.delStatus("silicon_radiation_extreme")
+			return
+		if (Sv <= 0)
+			return
+		if (Sv > 1) // neutronium
+			owner.setStatusMin("silicon_radiation_extreme", src.duration)
+		if (Sv > 0.6) // plutonium
+			owner.setStatusMin("silicon_radiation_heavy", src.duration)
+		if (Sv > 0.35)  // erebite
+			owner.setStatusMin("silicon_radiation_medium", src.duration)
+		owner.setStatusMin("silicon_radiation_light", src.duration) // cerenkite
+
+/datum/statusEffect/silicon_radiation_light
+	id = "silicon_radiation_light"
+	unique = TRUE
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onAdd(Sv)
+		. = ..()
+		var/mob/living/silicon/S = owner
+		S.addOverlayComposition(/datum/overlayComposition/silicon_rad_light)
+
+	onRemove()
+		. = ..()
+		var/mob/living/silicon/S = owner
+		S.removeOverlayComposition(/datum/overlayComposition/silicon_rad_light)
+
+/datum/statusEffect/silicon_radiation_medium
+	id = "silicon_radiation_medium"
+	unique = TRUE
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onAdd(Sv)
+		. = ..()
+		var/mob/living/silicon/S = owner
+		S.addOverlayComposition(/datum/overlayComposition/silicon_rad_medium)
+
+	onRemove()
+		. = ..()
+		var/mob/living/silicon/S = owner
+		S.removeOverlayComposition(/datum/overlayComposition/silicon_rad_medium)
+
+/datum/statusEffect/silicon_radiation_heavy
+	id = "silicon_radiation_heavy"
+	unique = TRUE
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onAdd(Sv)
+		. = ..()
+		var/mob/living/silicon/S = owner
+		S.addOverlayComposition(/datum/overlayComposition/silicon_rad_heavy)
+
+	onRemove()
+		. = ..()
+		var/mob/living/silicon/S = owner
+		S.removeOverlayComposition(/datum/overlayComposition/silicon_rad_heavy)
+
+/datum/statusEffect/silicon_radiation_extreme
+	id = "silicon_radiation_extreme"
+	unique = TRUE
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onAdd(Sv)
+		. = ..()
+		var/mob/living/silicon/S = owner
+		S.addOverlayComposition(/datum/overlayComposition/silicon_rad_extreme)
+
+	onRemove()
+		. = ..()
+		var/mob/living/silicon/S = owner
+		S.removeOverlayComposition(/datum/overlayComposition/silicon_rad_extreme)

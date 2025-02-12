@@ -718,3 +718,8 @@ var/global/list/module_editors = list()
 	if (!src.alertmap_controller || !src.alert_minimap_ui)
 		src.connect_to_alert_minimap()
 	src.alert_minimap_ui.ui_interact(user)
+
+/mob/living/silicon/take_radiation_dose(Sv, internal)
+	if(check_target_immunity(src, TRUE))
+		return
+	src.setStatusMin("silicon_radiation", 8 SECONDS, Sv)
