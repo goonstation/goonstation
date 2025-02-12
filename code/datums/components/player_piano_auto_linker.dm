@@ -11,7 +11,7 @@ TYPEINFO(/datum/component/music_player_auto_linker)
 	. = ..()
 	if (!ispulsingtool(parent) || initial_music_player == null || user == null || !istype(initial_music_player, /datum/text_to_music) || !istype(user, /mob))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE, PROC_REF(is_active))
+	RegisterSignal(parent, COMSIG_IS_MUSIC_PLAYER_AUTO_LINKER_ACTIVE, PROC_REF(is_active))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(store_music_player))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(finish_storing_music_players))
 	src.music_players = list()
@@ -85,7 +85,7 @@ TYPEINFO(/datum/component/music_player_auto_linker)
 	return TRUE
 
 /datum/component/music_player_auto_linker/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)
+	UnregisterSignal(parent, COMSIG_IS_MUSIC_PLAYER_AUTO_LINKER_ACTIVE)
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACKBY_PRE)
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 	for (var/datum/text_to_music/music_player as anything in src.music_players)
