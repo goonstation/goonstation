@@ -60,7 +60,8 @@ TYPEINFO(/obj/player_piano)
 
 	attackby(obj/item/W, mob/user) //this one is big and sucks, where all of our key and construction stuff is
 		if (istype(W, /obj/item/piano_key)) //piano key controls
-			var/mode_sel = input("Which do you want to do?", "Piano Control") as null|anything in list("Stop Piano", "Reset Piano", "Toggle Looping", "Adjust Timing")
+			var/piano_key_settings_list = list("Stop Piano", "Reset Piano", "Toggle Looping", "Adjust Timing", "Toggle Rest on Unavailable Notes")
+			var/mode_sel = input("Which do you want to do?", "Piano Control") as null|anything in piano_key_settings_list
 
 			switch(mode_sel)
 				if ("Stop Piano") // stops the piano without losing stored data
@@ -90,6 +91,10 @@ TYPEINFO(/obj/player_piano)
 						src.visible_message(SPAN_ALERT(">The mechanical workings of [src] emit a horrible din for several seconds before \the [src] shuts down."))
 						return
 					src.visible_message(SPAN_ALERT("[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] rumbles indifferently."))
+
+				if ("Toggle Rest on Unavailable Notes")
+					src.music_player.rest_on_notes_not_in_cache = !src.music_player.rest_on_notes_not_in_cache
+					boutput(user, SPAN_NOTICE("Set to <b>[src.music_player.rest_on_notes_not_in_cache ? "" : "not"] resting</b> on unavailable notes."))
 
 		else if (isscrewingtool(W)) //unanchoring piano
 			playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)

@@ -60,6 +60,8 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	var/list/compiled_notes = list()
 	/// Same as `is_busy`, but for automatic linking.
 	var/is_stored = FALSE
+	/// If the note sound file for this instrument is not in the sound cache, treat it as a rest note
+	var/rest_on_notes_not_in_cache = FALSE
 	/// List that stores our linked pianos, including the main one.
 	var/list/linked_music_players = list()
 	var/holder_name = "piano"
@@ -172,6 +174,8 @@ ABSTRACT_TYPE(/datum/text_to_music)
 			continue
 		var/string = "[instrument_sound_path]/[compiled_notes[i]].ogg"
 		if (!(string in soundCache))
+			if (rest_on_notes_not_in_cache)
+				continue
 			src.event_error_invalid_note(i, src.notes[i])
 			src.is_busy = FALSE
 			src.update_icon(FALSE)
@@ -208,7 +212,8 @@ ABSTRACT_TYPE(/datum/text_to_music)
 
 		if (concurrent_notes_played < MAX_CONCURRENT_NOTES && compiled_notes[curr_note] != "rrr")
 			var/sound_name = "[instrument_sound_path]/[compiled_notes[src.curr_note]].ogg"
-			playsound(src.holder, sound_name, note_volumes[src.curr_note],0,10,0)
+			if (sound_name in soundCache)
+				playsound(src.holder, sound_name, note_volumes[src.curr_note],0,10,0)
 
 		var/delays_left = src.note_delays[src.curr_note]
 
