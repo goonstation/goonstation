@@ -80,7 +80,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 		return FALSE
 	for (var/string in split_input)
 		if (string)
-			notes += string
+			src.notes += string
 	src.is_busy = FALSE
 	return TRUE
 
