@@ -1,5 +1,9 @@
 
 (t)thu feb 13 25
+(u)glowbold
+(p)22136
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Cyborg docking stations can be broken by gunfire and explosions, repaired with some common tools and wiring.
 (u)Facsimile
 (p)22276
 (e)🪲⛔📦|C-Bug, C-Removal, A-Game-Objects
