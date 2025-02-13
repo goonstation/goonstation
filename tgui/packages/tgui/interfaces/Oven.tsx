@@ -121,7 +121,7 @@ export const Oven = () => {
                       height="32px"
                       width="32px"
                       src={`data:image/png;base64,${item}`}
-                      style={{ transform: 'translate(0, -4px)' }}
+                      style={{ transform: 'translate(0, -2px)' }}
                     />
                     <Box mt={1}>{content_names[index]}</Box>
                   </Stack.Item>
@@ -162,7 +162,7 @@ export const Oven = () => {
                             height="32px"
                             width="32px"
                             src={`data:image/png;base64,${item}`}
-                            style={{ transform: 'translate(0, -4px)' }}
+                            style={{ transform: 'translate(0, -2px)' }}
                           />
                           <Box mt={1}>{recipe_names[index]}</Box>
                         </Stack.Item>
