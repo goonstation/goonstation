@@ -1,5 +1,10 @@
 
 (t)thu feb 13 25
+(u)TDHooligan
+(p)22027
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Pipeshot no longer functions outside of break-action shotguns.
+(+)The MTS shotgun now spawns with Birdshot.
 (u)Lord_Earthfire
 (p)22247
 (e)⚖📦|C-Balance, A-Game-Objects
