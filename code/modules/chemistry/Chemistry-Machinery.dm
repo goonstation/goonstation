@@ -100,7 +100,7 @@ TYPEINFO(/obj/machinery/chem_heater)
 		if (prob(25 * power/20))
 			qdel(src)
 			return
-		if (prob(25 * power/29))
+		if (prob(25 * power/20))
 			src.set_broken()
 
 	bullet_act(obj/projectile/P)
