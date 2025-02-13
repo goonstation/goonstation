@@ -571,25 +571,22 @@
 	SEND_SIGNAL(src, COMSIG_MOB_EMOTE, act, voluntary, target)
 
 /mob/proc/emote_check(voluntary = 1, time = 1 SECOND, admin_bypass = TRUE, dead_check = TRUE)
-	if (src.emote_allowed)
-		if (dead_check && isdead(src))
-			src.emote_allowed = FALSE
-			return FALSE
-		if (voluntary && (src.hasStatus("unconscious") || src.hasStatus("paralysis") || isunconscious(src)))
-			return FALSE
-		if (world.time >= (src.last_emote_time + src.last_emote_wait))
-			if (!no_emote_cooldowns && !(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
-				src.emote_allowed = FALSE
-				src.last_emote_time = world.time
-				src.last_emote_wait = time
-				SPAWN(time)
-					src.emote_allowed = TRUE
-			return TRUE
-		else
-			return FALSE
-	else
+	if ((!src.emote_allowed))
 		return FALSE
-
+	if (dead_check && isdead(src))
+		src.emote_allowed = FALSE
+		return FALSE
+	if (voluntary && (src.hasStatus("unconscious") || src.hasStatus("paralysis") || isunconscious(src)))
+		return FALSE
+	if (world.time >= (src.last_emote_time + src.last_emote_wait))
+		if (!no_emote_cooldowns && !(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
+			src.emotes_on_cooldown = TRUE
+			src.last_emote_time = world.time
+			src.last_emote_wait = time
+			SPAWN(time)
+				src.emotes_on_cooldown = FALSE
+		return TRUE
+	return FALSE
 /mob/proc/listen_ooc()
 	set name = "(Un)Mute OOC"
 	set desc = "Mute or Unmute Out Of Character chat."
