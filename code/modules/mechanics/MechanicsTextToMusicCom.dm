@@ -116,9 +116,6 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 
 	// ----------------------------------------------------------------------------------------------------
 
-	mouse_drop(obj/item/mechanics/text_to_music/t2m_comp)
-		src.music_player.mouse_drop(usr, t2m_comp)
-
 	disposing() //just to clear up ANY funkiness
 		src.music_player.reset(1)
 		..()

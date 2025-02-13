@@ -304,55 +304,6 @@ ABSTRACT_TYPE(/datum/text_to_music)
 /datum/text_to_music/proc/update_icon(var/is_active)
 	src.holder.UpdateIcon(is_active)
 
-/datum/text_to_music/proc/mouse_drop(var/user, var/datum/text_to_music/other_music_player)
-	if (!istype(user, /mob/living))
-		return
-	var/mob/living/living_user = user
-	if (living_user.stat)
-		return
-	if (!src.allowChange(living_user))
-		boutput(living_user, SPAN_ALERT("You can't link [src.holder_name]s without a multitool!"))
-		return
-	if (src.is_pulser_auto_linking(living_user))
-		boutput(living_user, SPAN_ALERT("You can't link [src.holder_name]s manually while auto-linking!"))
-		return
-	if (other_music_player.is_busy || src.is_busy)
-		boutput(living_user, SPAN_ALERT("You can't link a busy [src.holder_name]!"))
-		return
-	if (!(other_music_player.is_panel_exposed() && src.is_panel_exposed()))
-		boutput(living_user, SPAN_ALERT("You can't link when the panels are on!"))
-		return
-	if (!(other_music_player.is_comp_anchored() && src.is_comp_anchored()))
-		boutput(living_user, SPAN_ALERT("You can't link while it's unanchored!"))
-		return
-	living_user.visible_message("[living_user] links the [src.holder_name]s.", "You link the [src.holder_name]s!")
-	src.add_music_player(other_music_player)
-	other_music_player.add_music_player(src)
-
-/datum/text_to_music/proc/allowChange(var/mob/M) //copypasted from mechanics code because why do something someone else already did better
-	if(hasvar(M, "l_hand") && ispulsingtool(M:l_hand)) return TRUE
-	if(hasvar(M, "r_hand") && ispulsingtool(M:r_hand)) return TRUE
-	if(hasvar(M, "module_states"))
-		for(var/atom/A in M:module_states)
-			if(ispulsingtool(A))
-				return TRUE
-	return FALSE
-
-/datum/text_to_music/proc/is_pulser_auto_linking(var/mob/M)
-	if(ispulsingtool(M.l_hand) && SEND_SIGNAL(M.l_hand, COMSIG_IS_MUSIC_PLAYER_AUTO_LINKER_ACTIVE)) return TRUE
-	if(ispulsingtool(M.r_hand) && SEND_SIGNAL(M.r_hand, COMSIG_IS_MUSIC_PLAYER_AUTO_LINKER_ACTIVE)) return TRUE
-	if(istype(M, /mob/living/silicon/robot))
-		var/mob/living/silicon/robot/silicon_user = M
-		for(var/atom/A in silicon_user.module_states)
-			if(ispulsingtool(A) && SEND_SIGNAL(A, COMSIG_IS_MUSIC_PLAYER_AUTO_LINKER_ACTIVE))
-				return TRUE
-	if(istype(M, /mob/living/silicon/hivebot))
-		var/mob/living/silicon/hivebot/silicon_user = M
-		for(var/atom/A in silicon_user.module_states)
-			if(ispulsingtool(A) && SEND_SIGNAL(A, COMSIG_IS_MUSIC_PLAYER_AUTO_LINKER_ACTIVE))
-				return TRUE
-	return FALSE
-
 /datum/text_to_music/proc/is_panel_exposed()
 	return TRUE
 
@@ -405,17 +356,6 @@ ABSTRACT_TYPE(/datum/text_to_music)
 		return
 
 	I.AddComponent(/datum/component/music_player_auto_linker/player_piano, src, user)
-
-/datum/text_to_music/player_piano/mouse_drop(var/user, var/obj/player_piano/piano)
-	ENSURE_TYPE(piano)
-	if (!piano)
-		return
-
-	if (piano == src.holder)
-		boutput(user, SPAN_ALERT("You can't link a [src.holder_name] with itself!"))
-		return
-
-	. = ..(user, piano.music_player)
 
 /datum/text_to_music/player_piano/is_panel_exposed()
 	var/obj/player_piano/piano = src.holder
@@ -497,17 +437,6 @@ ABSTRACT_TYPE(/datum/text_to_music)
 		return
 
 	I.AddComponent(/datum/component/music_player_auto_linker/mech_comp, holder_mech_comp.music_player, user)
-
-/datum/text_to_music/mech_comp/mouse_drop(var/user, var/obj/item/mechanics/text_to_music/t2m_comp)
-	ENSURE_TYPE(t2m_comp)
-	if (!t2m_comp)
-		return
-
-	if (t2m_comp == src.holder)
-		boutput(user, SPAN_ALERT("You can't link a [src.holder_name] with itself!"))
-		return
-
-	. = ..(user, t2m_comp.music_player)
 
 /datum/text_to_music/is_comp_anchored()
 	var/obj/item/mechanics/text_to_music/t2m_comp = src.holder

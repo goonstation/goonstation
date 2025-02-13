@@ -176,9 +176,6 @@ TYPEINFO(/obj/player_piano)
 		else //just in case
 			return
 
-	mouse_drop(obj/player_piano/piano)
-		src.music_player.mouse_drop(usr, piano)
-
 	disposing() //just to clear up ANY funkiness
 		src.music_player.reset(1)
 		..()
