@@ -170,6 +170,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 			src.do_popup()
 
 		if (do_objectives)
+			src.owner.objectives = list()
 			src.assign_objectives()
 			if (!src.silent)
 				src.announce_objectives()
