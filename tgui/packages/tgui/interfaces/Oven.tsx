@@ -62,7 +62,7 @@ export const Oven = () => {
             </Button>
           }
         >
-          <Stack fontSize={1.5} justify="center">
+          <Stack justify="center">
             <Stack.Item>
               <OvenDialbuttons min={1} max={5} time={time} />
               <OvenDialbuttons min={6} max={10} time={time} />
