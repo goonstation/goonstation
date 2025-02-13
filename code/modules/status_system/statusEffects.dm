@@ -3415,66 +3415,35 @@
 			owner.setStatusMin("silicon_radiation_medium", src.duration)
 		owner.setStatusMin("silicon_radiation_light", src.duration) // cerenkite
 
-/datum/statusEffect/silicon_radiation_light
+/datum/statusEffect/silicon_radiation_effect
+	unique = TRUE
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/datum/overlayComposition/composition
+
+	onAdd(Sv)
+		. = ..()
+		var/mob/living/silicon/S = owner
+		S.addOverlayComposition(composition)
+
+	onRemove()
+		. = ..()
+		var/mob/living/silicon/S = owner
+		S.removeOverlayComposition(composition)
+
+/datum/statusEffect/silicon_radiation_effect/light
 	id = "silicon_radiation_light"
-	unique = TRUE
-	visible = FALSE
-	effect_quality = STATUS_QUALITY_NEGATIVE
+	composition = /datum/overlayComposition/silicon_rad_light
 
-	onAdd(Sv)
-		. = ..()
-		var/mob/living/silicon/S = owner
-		S.addOverlayComposition(/datum/overlayComposition/silicon_rad_light)
-
-	onRemove()
-		. = ..()
-		var/mob/living/silicon/S = owner
-		S.removeOverlayComposition(/datum/overlayComposition/silicon_rad_light)
-
-/datum/statusEffect/silicon_radiation_medium
+/datum/statusEffect/silicon_radiation_effect/medium
 	id = "silicon_radiation_medium"
-	unique = TRUE
-	visible = FALSE
-	effect_quality = STATUS_QUALITY_NEGATIVE
+	composition = /datum/overlayComposition/silicon_rad_medium
 
-	onAdd(Sv)
-		. = ..()
-		var/mob/living/silicon/S = owner
-		S.addOverlayComposition(/datum/overlayComposition/silicon_rad_medium)
-
-	onRemove()
-		. = ..()
-		var/mob/living/silicon/S = owner
-		S.removeOverlayComposition(/datum/overlayComposition/silicon_rad_medium)
-
-/datum/statusEffect/silicon_radiation_heavy
+/datum/statusEffect/silicon_radiation_effect/heavy
 	id = "silicon_radiation_heavy"
-	unique = TRUE
-	visible = FALSE
-	effect_quality = STATUS_QUALITY_NEGATIVE
+	composition = /datum/overlayComposition/silicon_rad_heavy
 
-	onAdd(Sv)
-		. = ..()
-		var/mob/living/silicon/S = owner
-		S.addOverlayComposition(/datum/overlayComposition/silicon_rad_heavy)
-
-	onRemove()
-		. = ..()
-		var/mob/living/silicon/S = owner
-		S.removeOverlayComposition(/datum/overlayComposition/silicon_rad_heavy)
-
-/datum/statusEffect/silicon_radiation_extreme
+/datum/statusEffect/silicon_radiation_effect/extreme
 	id = "silicon_radiation_extreme"
-	unique = TRUE
-	visible = FALSE
-	effect_quality = STATUS_QUALITY_NEGATIVE
+	composition = /datum/overlayComposition/silicon_rad_extreme
 
-	onAdd(Sv)
-		. = ..()
-		var/mob/living/silicon/S = owner
-		S.addOverlayComposition(/datum/overlayComposition/silicon_rad_extreme)
-
-	onRemove()
-		. = ..()
-		var/mob/living/silicon/S = owner
-		S.removeOverlayComposition(/datum/overlayComposition/silicon_rad_extreme)
