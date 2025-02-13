@@ -317,8 +317,7 @@
 					var/howMany = input(usr, "How many ([maxAmt] max)?", "Select amount", maxAmt)
 					if(howMany > maxAmt || !selectedRecipe) return //ZeWaka: Fix for null.canBuild
 					if(selectedRecipe.canBuild(howMany, src))
-						SPAWN(2.5 SECONDS)
-							selectedRecipe.build(howMany, src)
+						selectedRecipe.build(howMany, src)
 						var/list/parts = list()
 						for(var/datum/matfab_part/P in selectedRecipe.required_parts)
 							if(P.assigned)

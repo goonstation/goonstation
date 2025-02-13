@@ -26926,7 +26926,7 @@
 	},
 /area/station/engine/engineering)
 "bss" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
@@ -33761,7 +33761,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 4
 	},
 /turf/simulated/floor/black,
