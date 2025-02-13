@@ -23,7 +23,7 @@
 		light.set_brightness(light_brightness)
 		light.set_color(light_r, light_g, light_b)
 		light.attach(src)
-		if(prob(100)) //chance this is an inverting lamp
+		if(prob(50)) //chance this is an inverting lamp
 			var/color = pick(possible_color_matrices)
 			bonus_light = new /obj/effect/whackylight(src, light.radius, color)
 			src.vis_flags |= VIS_HIDE
