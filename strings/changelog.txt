@@ -1,6 +1,10 @@
 
 (t)thu feb 13 25
 (u)glowbold
+(p)22190
+(e)⚖💅📄🤖|C-Balance, C-QoL, A-UI, A-Silicons
+(+)Unpowered law racks can have modules (un)welded/screwed. You (still) cannot remove laws unless the law rack is powered.
+(u)glowbold
 (p)22281
 (e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
 (*)Radiation interferes with silicon visual sensors based on intensity.
