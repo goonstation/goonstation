@@ -158,30 +158,6 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 				if(human.limbs.r_leg?.type != limb_type)
 					human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
 
-		robo_left
-			id = "leg_robo_left"
-			slot = "l_leg"
-			part_type = /obj/item/parts/robot_parts/leg/left/light
-
-		robo_right
-			id = "leg_robo_right"
-			slot = "r_leg"
-			part_type = /obj/item/parts/robot_parts/leg/right/light
-
-		robo_standard_left
-			id = "leg_robo_standard_left"
-			slot = "l_leg"
-			part_type = /obj/item/parts/robot_parts/leg/left/standard
-			trait_cost = 1
-			incompatible_parts = list("leg_robo_standard_right")
-
-		robo_standard_right
-			id = "leg_robo_standard_right"
-			slot = "r_leg"
-			part_type = /obj/item/parts/robot_parts/leg/right/standard
-			trait_cost = 1
-			incompatible_parts = list("leg_robo_standard_left")
-
 		plant_left
 			id = "leg_plant_left"
 			slot = "l_leg"
@@ -214,6 +190,16 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 			id = "eye_plant_right"
 			slot = "right_eye"
 			part_type = /obj/item/organ/eye/synth
+
+		eye_robot_left
+			id = "eye_robot_left"
+			slot = "left_eye"
+			part_type = /obj/item/organ/eye/cyber/configurable
+
+		eye_robot_right
+			id = "eye_robot_right"
+			slot = "right_eye"
+			part_type = /obj/item/organ/eye/cyber/configurable
 
 ABSTRACT_TYPE(/datum/part_customization/human/missing)
 /datum/part_customization/human/missing
