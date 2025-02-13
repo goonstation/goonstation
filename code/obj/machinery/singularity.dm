@@ -515,7 +515,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 
 /obj/machinery/the_singularity/proc/Toxmob()
-	for (var/mob/living/carbon/M in hearers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
+	for (var/mob/living/M in hearers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
 		M.take_radiation_dose(clamp(0.2 SIEVERTS*(radius+1), 0, 2 SIEVERTS))
 		M.show_text("You feel odd.", "red")
 

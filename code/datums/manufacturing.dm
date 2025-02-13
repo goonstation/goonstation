@@ -157,7 +157,7 @@
 /******************** AI Law Rack *******************/
 
 /datum/manufacture/mechanics/lawrack
-	name = "AI Law Rack Mount"
+	name = "AI Law Rack"
 	item_requirements = list("metal" = 20,
 							 "metal_dense" = 5,
 							 "insulated" = 10,
@@ -3212,6 +3212,16 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/shielding/heavy)
 	create = 1
 	time = 25 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/auto_repair_kit
+	name = "Automatic Repair System"
+	item_requirements = list("metal_dense" = 20,
+							 "conductive" = 30,
+							 "energy" = 10)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/auto_repair_kit)
+	create = 1
+	time = 10 SECONDS
 	category = "Tool"
 
 /datum/manufacture/pod/sps
