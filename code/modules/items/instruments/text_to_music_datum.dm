@@ -1,9 +1,3 @@
-/**
- * Datum that forms the core of Player Pianos and Text to Music components
- * Code from `playable_piano.dm`
- * Please don't use `/datum/text_to_music` as-is, use a subtype or make a new one
- */
-
 #define MAX_NOTE_INPUT 1920
 #define MAX_CONCURRENT_NOTES 8
 
@@ -19,8 +13,10 @@
 ABSTRACT_TYPE(/datum/text_to_music)
 /**
  * Datum that forms the core of Player Pianos and Text to Music components
- * Code from `playable_piano.dm`
- * Base type `/datum/text_to_music/player_piano` is for Player Pianos
+ * Code from `playable_piano.dm`, with some unique additions
+ * ----------------------------------
+ * Base type `/datum/text_to_music` should not be used
+ * Subtype `/datum/text_to_music/player_piano` is for Player Pianos
  * Subtype `/datum/text_to_music/mech_comp` is for Text to Music components
  */
 /datum/text_to_music
@@ -33,6 +29,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	var/is_looping = 0
 	/// Stops people from messing about with it when its working.
 	var/is_busy = FALSE
+	/// Set to TRUE to stop a currently playing music player
 	var/is_stop_requested = FALSE
 	/// The number of notes in the song.
 	var/song_length = 0
@@ -64,7 +61,9 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	var/rest_on_notes_not_in_cache = FALSE
 	/// List that stores our linked pianos, including the main one.
 	var/list/linked_music_players = list()
+	/// Name to use when displaying messages to the user
 	var/holder_name = "piano"
+	/// The object this datum is attached to
 	var/obj/holder = null
 
 /datum/text_to_music/New(var/obj/new_holder)
@@ -341,13 +340,13 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	src.holder.visible_message(SPAN_NOTICE("\The [src.holder] grumbles and shuts down completely."))
 
 /datum/text_to_music/player_piano/event_error_invalid_note(var/note_index, var/note)
-	src.holder.visible_message(SPAN_NOTICE("\The [src] makes an atrocious racket and beeps [note_index] times."))
+	src.holder.visible_message(SPAN_NOTICE("\The [src.holder] makes an atrocious racket and beeps [note_index] times."))
 
 /datum/text_to_music/player_piano/event_error_invalid_timing(var/timing)
-	src.holder.visible_message(SPAN_NOTICE("\The [src] makes a loud grinding noise, followed by a boop!"))
+	src.holder.visible_message(SPAN_NOTICE("\The [src.holder] makes a loud grinding noise, followed by a boop!"))
 
 /datum/text_to_music/player_piano/event_error_event_missing_part()
-	src.holder.visible_message(SPAN_ALERT("\The [src] makes a grumpy ratchetting noise and shuts down!"))
+	src.holder.visible_message(SPAN_ALERT("\The [src.holder] makes a grumpy ratchetting noise and shuts down!"))
 
 /datum/text_to_music/player_piano/start_autolinking(obj/item/I, mob/user)
 	. = ..()
