@@ -720,7 +720,10 @@ var/global/list/module_editors = list()
 	src.alert_minimap_ui.ui_interact(user)
 
 /mob/living/silicon/take_radiation_dose(Sv, internal)
-	if(check_target_immunity(src, TRUE))
-		return
 	if (src.client)
 		src.setStatusMin("silicon_radiation", 6 SECONDS, Sv)
+		src.geigerclick(geiger_stage(Sv))
+
+/mob/living/silicon/proc/geigerclick(stage)
+	if(!ON_COOLDOWN(src, "geigerclick", 1 SECOND))
+		src.playsound_local(get_turf(src), "sound/items/geiger/geiger-[stage]-[stage >= 4 ? rand(1, 3) : rand(1, 2)].ogg", 20, flags = SOUND_IGNORE_SPACE)
