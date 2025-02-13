@@ -1258,7 +1258,7 @@ TYPEINFO(/atom/movable)
 
 	// slow 😩
 	if(!turf_only)
-		for (var/atom/movable/AM as anything in T)
+		for (var/atom/movable/AM in T)
 			if (!AM.anchored)
 				continue
 			if (connect_to[AM.type] && !exceptions[AM.type])
