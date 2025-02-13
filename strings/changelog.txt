@@ -1,5 +1,9 @@
 
 (t)thu feb 13 25
+(u)Facsimile
+(p)22276
+(e)🪲⛔📦|C-Bug, C-Removal, A-Game-Objects
+(+)Removed manual linking from Player Pianos. Instead, use auto-linking as described the in Player Piano book.
 (u)FlameArrow57
 (p)21919
 (e)🆕🎨🚗|C-Feature, C-Sprites, A-Vehicles
