@@ -3346,7 +3346,7 @@
 		src.last_radiation_dose_time = TIME
 		var/radres_mult = 1.0 - (tanh(0.02*rad_res)**2)
 		src.radiation_dose += radres_mult*Sv
-		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, min(max(round(Sv * 10),1),5))
+		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, geiger_stage(Sv))
 		. = radres_mult*Sv
 	else
 		src.radiation_dose = max(0, src.radiation_dose + Sv) //rad resistance shouldn't stop you healing
