@@ -791,7 +791,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "negativematter"
 	name = "negative matter"
 	desc = "It seems to repel matter."
-	color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
+	color = COLOR_MATRIX_INVERSE
 
 	New()
 		..()
