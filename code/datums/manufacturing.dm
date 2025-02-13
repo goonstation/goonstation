@@ -157,7 +157,7 @@
 /******************** AI Law Rack *******************/
 
 /datum/manufacture/mechanics/lawrack
-	name = "AI Law Rack Mount"
+	name = "AI Law Rack"
 	item_requirements = list("metal" = 20,
 							 "metal_dense" = 5,
 							 "insulated" = 10,
