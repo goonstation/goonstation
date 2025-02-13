@@ -44,34 +44,58 @@
 	activ_text = "begins to emit a steady light!"
 	deact_text = "goes dark and quiet."
 	react_xray = list(10,90,90,11,"NONE")
+	var/sound/switch_sound = null
+
+	post_setup()
+		..()
+		src.switch_sound = pick(src.artitype.lightswitch_sounds)
 
 	effect_activate(var/obj/O)
 		if (..())
 			return
-		var/obj/artifact/lamp/L = O
-		if (L.light)
-			L.light.enable()
-		var/obj/effect/whackylight/bonus = L.bonus_light
-		if(bonus)
-			bonus.active = TRUE
-			bonus.update_whacky(L,null,0)
+		src.light_on(O)
 
 	effect_deactivate(var/obj/O)
 		if (..())
 			return
-		var/obj/artifact/lamp/L = O
+		src.light_off(O)
+
+	proc/light_on(obj/artifact/lamp/L)
+		playsound(L, src.switch_sound, 40, TRUE, -10)
+		if (L.light)
+			L.light.enable()
+		var/obj/effect/whackylight/bonus = L.bonus_light
+		if(bonus)
+			L.vis_contents += bonus
+			bonus.active = TRUE
+			bonus.update_whacky(L)
+		L.anchored = TRUE
+
+	proc/light_off(obj/artifact/lamp/L)
+		playsound(L, src.switch_sound, 40, TRUE, -10)
 		if (L.light)
 			L.light.disable()
 		var/obj/effect/whackylight/bonus = L.bonus_light
 		if(bonus)
+			L.vis_contents -= bonus
 			bonus.active = FALSE
-			bonus.update_whacky(L,null,0)
+			bonus.update_whacky(L)
+		L.anchored = FALSE
+
+	effect_touch(obj/artifact/lamp/L, mob/living/user)
+		if(..())
+			return
+		if (!src.activated)
+			return
+		if (L.light.enabled)
+			src.light_off(L)
+		else
+			src.light_on(L)
 
 /obj/effect/whackylight
 
 	var/radius
 	var/active = FALSE
-	glide_size = INFINITY //no gliding for you!
 	anchored = TRUE //not really, but we do our own moving thank you very much
 
 	New(loc, radius=2, color=null)
@@ -82,11 +106,9 @@
 		else
 			src.color = color
 		src.appearance_flags |= RESET_TRANSFORM
-		RegisterSignal(loc, COMSIG_MOVABLE_SET_LOC, PROC_REF(update_whacky))
-		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, PROC_REF(update_whacky))
 		update_whacky(loc, null, 0)
 
-	proc/update_whacky(var/atom/movable/thing, prev_loc, dir)
+	proc/update_whacky(var/atom/movable/thing)
 		src.loc = get_turf(thing)
 		if(active)
 			for(var/turf/T in src.vis_contents)
