@@ -1,5 +1,9 @@
 
 (t)thu feb 13 25
+(u)Amylizzle
+(p)22139
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Lamp artifacts now have a chance to spawn with negative lighting.
 (u)TDHooligan
 (p)22027
 (e)⚖📦|C-Balance, A-Game-Objects
