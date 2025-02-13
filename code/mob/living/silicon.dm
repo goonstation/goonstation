@@ -722,4 +722,5 @@ var/global/list/module_editors = list()
 /mob/living/silicon/take_radiation_dose(Sv, internal)
 	if(check_target_immunity(src, TRUE))
 		return
-	src.setStatusMin("silicon_radiation", 8 SECONDS, Sv)
+	if (src.client)
+		src.setStatusMin("silicon_radiation", 6 SECONDS, Sv)
