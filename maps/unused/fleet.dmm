@@ -10284,7 +10284,7 @@
 /turf/simulated/floor/grey,
 /area/station/maintenance/inner/hammer)
 "wY" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 4
 	},
 /obj/cable{
@@ -12249,7 +12249,7 @@
 	name = "AI Systems Shield";
 	opacity = 0
 	},
-/obj/machinery/computer/bank_data,
+/obj/machinery/computer3/generic/bank_data,
 /obj/cable{
 	icon_state = "0-4"
 	},

@@ -131,19 +131,6 @@
 	},
 /turf/simulated/floor/longtile,
 /area/station/bridge)
-"aas" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/computer/bank_data/console_upper{
-	dir = 4
-	},
-/turf/simulated/floor/longtile,
-/area/station/bridge)
 "aau" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -15442,17 +15429,6 @@
 	icon_state = "0-2"
 	},
 /obj/item_dispenser/idcarddispenser,
-/turf/simulated/floor/wood,
-/area/station/hos)
-"aTd" = (
-/obj/machinery/computer/bank_data,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/decoration/clock{
-	pixel_y = 32
-	},
 /turf/simulated/floor/wood,
 /area/station/hos)
 "aTe" = (
@@ -39772,6 +39748,19 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"scl" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/computer3/generic/bank_data/console_upper{
+	dir = 4
+	},
+/turf/simulated/floor/longtile,
+/area/station/bridge)
 "scL" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -40628,6 +40617,17 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
+"uzH" = (
+/obj/machinery/computer3/generic/bank_data,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/decoration/clock{
+	pixel_y = 32
+	},
+/turf/simulated/floor/wood,
+/area/station/hos)
 "uFt" = (
 /obj/decal/tile_edge/line/green{
 	color = "#e7c88c";
@@ -86839,7 +86839,7 @@ aaa
 aaa
 act
 aaj
-aas
+scl
 aaD
 aaI
 ail
@@ -91695,7 +91695,7 @@ aDq
 fit
 aRS
 aaf
-aTd
+uzH
 aTI
 atL
 bAC

@@ -1,3 +1,9 @@
+
+(t)thu feb 13 25
+(u)glowbold
+(p)22225
+(e)🆕🗺🔄💡|C-Feature, A-Mapping, C-Rework, A-Station-Systems
+(*)Head of Personnel use the most up to date program for bank records management: BankBoss2!
 (t)mon feb 10 25
 (u)LeahTheTech
 (+)Smashing or throwing people into doors will now reliably open them using their ID (even while handcuffed)
