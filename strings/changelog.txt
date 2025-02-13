@@ -1,5 +1,9 @@
 
 (t)thu feb 13 25
+(u)Bartimeus973
+(p)22267
+(e)⚖💅🔨|C-Balance, C-QoL, A-Player-Actions
+(*)Visual and noisy emotes (like *flip, *fart, *scream etc...) no longer share a cooldown with other emotes (like *wave, *wink*, *flex etc...)!
 (u)glowbold
 (p)22136
 (e)🆕📦|C-Feature, A-Game-Objects
