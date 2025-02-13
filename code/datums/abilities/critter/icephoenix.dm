@@ -366,6 +366,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		var/datum/targetable/critter/ice_phoenix/sail/abil = phoenix.getAbility(/datum/targetable/critter/ice_phoenix/permafrost)
 		abil.afterAction()
 
+		phoenix.permafrosted_areas |= "[A.name]-\ref[A]"
+
 	onInterrupt()
 		..()
 		QDEL_NULL(src.dummy)

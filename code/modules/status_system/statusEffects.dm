@@ -1777,7 +1777,8 @@
 			M.thermoregulation_mult /= (src.phoenix_chill ? 3 : 1.5)
 		if (src.phoenix_chill)
 			var/mob/living/carbon/human/H = src.owner
-			QDEL_NULL(H.phoenix_temp_overlay)
+			if (istype(H))
+				QDEL_NULL(H.phoenix_temp_overlay)
 
 /datum/statusEffect/miasma
 	id = "miasma"

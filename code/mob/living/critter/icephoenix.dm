@@ -16,15 +16,29 @@
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "screeches"
 
-	blood_id = "water" // maybe remove - this causes a lot of boiling if the phoenix is heated up
+	blood_id = "water"
 
 	can_interface_with_pods = FALSE
 
 	/// if traveling off z level will return you to the station z level
 	var/travel_back_to_station = FALSE
 
+	/// extra life regen granted by dead mobs in its nest
+	var/extra_life_regen = 0
+	/// if on death, the phoenix will resurrect
+	var/has_revive = FALSE
+	var/has_revived = FALSE
+
+	/// all humans that have ever been collected in nest
+	var/list/collected_humans = list()
+	/// all critters that have ever been collected in nest
+	var/list/collected_critters = list()
+	/// all areas permafrosted that have ever been collected in nest
+	var/list/permafrosted_areas = list()
+
 	var/obj/minimap/ice_phoenix/map_obj
 	var/atom/movable/minimap_ui_handler/station_map
+	var/turf/nest_location
 
 	New()
 		..()
@@ -53,7 +67,7 @@
 
 			if (!src.hasStatus("phoenix_vulnerable") && !istype(get_area(src), /area/station))
 				var/mult = max(src.tick_spacing, TIME - src.last_life_tick) / src.tick_spacing
-				src.HealDamage("All", 2 * mult, 2 * mult)
+				src.HealDamage("All", (2 + src.extra_life_regen) * mult, (2 + src.extra_life_regen) * mult)
 				src.HealBleeding(0.1)
 
 		var/area/A = get_area(src)
@@ -66,7 +80,20 @@
 		if (src.hasStatus("phoenix_vulnerable"))
 			src.radiate_cold(get_turf(src))
 
-	death()
+		if (src.bodytemperature >= initial(src.bodytemperature))
+			src.bodytemperature = max(initial(src.bodytemperature), src.bodytemperature - 10)
+
+	death(gibbed)
+		if (src.has_revive && !gibbed)
+			src.full_heal()
+			src.has_revived = TRUE
+			src.has_revive = FALSE
+			var/turf/T = get_turf(src)
+			T.visible_message(SPAN_ALERT("[src] resurrects with a mighty grace!"))
+			src.Scale(1.5, 1.5)
+			SPAWN(3 SECONDS)
+				src.Scale(2 / 3, 2 / 3)
+			return
 		..()
 		qdel(src)
 		get_image_group(CLIENT_IMAGE_GROUP_TEMPERATURE_OVERLAYS).remove_mob(src)
@@ -104,6 +131,17 @@
 
 		return ..()
 
+	attack_hand(mob/living/M)
+		..()
+		if (M == src)
+			return
+		if (M.a_intent != INTENT_HELP)
+			return
+		M.TakeDamage("All", burn = 5)
+		M.changeStatus("shivering", 1 SECOND, TRUE)
+		M.bodytemperature -= 5
+		boutput(M, SPAN_ALERT("[src] is freezing cold!!!"))
+
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		if (brute <= 0 && burn <= 0 && tox <= 0)
 			return ..()
@@ -134,6 +172,8 @@
 	Move(turf/NewLoc, direct)
 		if (istype(get_turf(src), /turf/space))
 			var/obj/effects/ion_trails/I = new(get_turf(src))
+			if (src.has_revive)
+				I.color = "#ea00ff"
 			I.set_dir(src.dir)
 			flick("ion_fade", I)
 			I.icon_state = "blank"
@@ -213,6 +253,7 @@
 		if (!src.station_map)
 			src.station_map = new(src, "ice_phoenix_map", src.map_obj, "Space Map", "ntos")
 			src.map_obj.map.create_minimap_marker(src, 'icons/obj/minimap/minimap_markers.dmi', "pin")
+			src.map_obj.map.create_minimap_marker(src.nest_location, 'icons/obj/minimap/minimap_markers.dmi', "cryo")
 
 		src.station_map.ui_interact(src)
 
@@ -400,3 +441,44 @@
 			ice_piece.pixel_x += rand(-10, 10)
 			ice_piece.pixel_x += rand(-7, 7)
 		..()
+
+/area/phoenix_nest
+	name = "ice nest"
+	skip_sims = TRUE
+	var/mob/living/critter/ice_phoenix/owning_phoenix = null
+	var/list/humans_for_revive = list()
+	var/list/entered_humans = list()
+	var/list/entered_critters = list()
+
+	Entered(atom/movable/AM, atom/oldloc)
+		..()
+		if (istype(AM, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = AM
+			if (isdead(H) && H.last_ckey)
+				if (!(H in src.humans_for_revive))
+					src.humans_for_revive += H
+					if (length(src.humans_for_revive) >= 5 && !src.owning_phoenix.has_revive && !src.owning_phoenix.has_revived)
+						src.owning_phoenix.has_revive = TRUE
+				if (!(H in src.entered_humans))
+					src.entered_humans += H
+					src.owning_phoenix.extra_life_regen += 0.3
+				src.owning_phoenix.collected_humans |= "[H.real_name]-\ref[H]"
+		else if (istype(AM, /mob/living/critter))
+			var/mob/living/critter/C = AM
+			if (isdead(C) && !(C in src.entered_critters) && !C.last_ckey)
+				src.entered_critters += C
+				src.owning_phoenix.extra_life_regen += 0.3
+				src.owning_phoenix.collected_critters |= "[C.real_name]-\ref[C]"
+
+	Exited(atom/movable/AM)
+		..()
+		if (istype(AM, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = AM
+			if (H in src.entered_humans)
+				src.owning_phoenix.extra_life_regen -= 0.3
+				src.entered_humans -= H
+		else if (istype(AM, /mob/living/critter))
+			var/mob/living/critter/C = AM
+			if (C in src.entered_critters)
+				src.owning_phoenix.extra_life_regen -= 0.3
+				src.entered_critters -= C
