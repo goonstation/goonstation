@@ -1,5 +1,10 @@
 
 (t)thu feb 13 25
+(u)Lord_Earthfire
+(p)22247
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Airlocks no longer require all their access to be removed to be able to deconstructed, you just need to have access to them.
+(+)Emagging a door removes the need to have access to the door in order to deconstruct it.
 (u)glowbold
 (p)22190
 (e)⚖💅📄🤖|C-Balance, C-QoL, A-UI, A-Silicons
