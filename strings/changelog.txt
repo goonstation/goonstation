@@ -1,5 +1,9 @@
 
 (t)thu feb 13 25
+(u)glowbold
+(p)22281
+(e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
+(*)Radiation interferes with silicon visual sensors based on intensity.
 (u)Bartimeus973
 (p)22267
 (e)⚖💅🔨|C-Balance, C-QoL, A-Player-Actions
