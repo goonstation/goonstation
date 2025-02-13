@@ -215,18 +215,6 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 			slot = "right_eye"
 			part_type = /obj/item/organ/eye/synth
 
-		eye_camera_left
-			id = "eye_camera_left"
-			slot = "left_eye"
-			part_type = /obj/item/organ/eye/cyber/camera
-			trait_cost = 2
-
-		eye_camera_right
-			id = "eye_camera_right"
-			slot = "right_eye"
-			part_type = /obj/item/organ/eye/cyber/camera
-			trait_cost = 2
-
 ABSTRACT_TYPE(/datum/part_customization/human/missing)
 /datum/part_customization/human/missing
 	custom_icon = 'icons/ui/character_editor.dmi'
