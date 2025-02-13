@@ -20,7 +20,7 @@
 						/obj/critter/bat,
 						/obj/critter/domestic_bee,
 						/mob/living/critter/small_animal/mouse,
-						/obj/critter/opossum,
+						/mob/living/critter/small_animal/opossum,
 						/obj/critter/parrot/eclectus,
 						/mob/living/critter/small_animal/pig,
 						/mob/living/critter/small_animal/walrus)

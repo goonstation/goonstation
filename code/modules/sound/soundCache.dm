@@ -181,6 +181,7 @@ var/global/list/soundCache = list(
  	"sound/effects/chalk1.ogg" = 'sound/effects/chalk1.ogg',\
  	"sound/effects/chalk2.ogg" = 'sound/effects/chalk2.ogg',\
  	"sound/effects/chalk3.ogg" = 'sound/effects/chalk3.ogg',\
+	"sound/effects/chargeupbaton.ogg" = 'sound/effects/chargeupbaton.ogg',\
  	"sound/effects/cheridan_pop.ogg" = 'sound/effects/cheridan_pop.ogg',\
  	"sound/effects/commsdown.ogg" = 'sound/effects/commsdown.ogg',\
  	"sound/effects/crackle1.ogg" = 'sound/effects/crackle1.ogg',\

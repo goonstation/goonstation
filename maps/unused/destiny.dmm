@@ -660,7 +660,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /obj/machinery/light/incandescent{
@@ -12827,7 +12827,7 @@
 	},
 /area/station/bridge)
 "bqD" = (
-/obj/critter/opossum/morty,
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "bqN" = (
@@ -45652,7 +45652,7 @@
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "qIA" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /obj/item/device/radio/intercom/science,
@@ -50726,7 +50726,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/psychiatrist)
 "trO" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 4
 	},
 /obj/machinery/light/incandescent,

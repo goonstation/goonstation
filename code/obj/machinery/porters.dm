@@ -667,15 +667,15 @@ TYPEINFO(/obj/machinery/port_a_brig)
 								M.changeStatus("drowsy", 10 SECONDS)
 
 					if(51 to 70) //A nice tan
-						for(var/mob/living/carbon/M in src.contents)
+						for(var/mob/living/M in src.contents)
 							M.take_radiation_dose(0.5 SIEVERTS)
 							M.show_text("\The [src] buzzes oddly.", "red")
 					if(31 to 50) //A very nice tan
-						for(var/mob/living/carbon/M in src.contents)
+						for(var/mob/living/M in src.contents)
 							M.take_radiation_dose(1.25 SIEVERTS)
 							M.show_text("You feel a warm tingling sensation.", "red")
 					if(21 to 30) //The nicest tan
-						for(var/mob/living/carbon/human/M in src.contents)
+						for(var/mob/living/M in src.contents)
 							M.take_radiation_dose(2 SIEVERTS)
 							M.show_text("<B>You feel a wave of searing heat wash over you!</B>", "red")
 							//if(M.bioHolder && M.bioHolder.mobAppearance) //lol

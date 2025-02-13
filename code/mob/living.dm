@@ -1584,6 +1584,7 @@
 		src.animate_lying(src.lying)
 		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
 		actions.interrupt(src, INTERRUPT_ACT) // interrupt actions
+		SEND_SIGNAL(src, COMSIG_MOB_LAYDOWN_STANDUP, src.lying)
 
 /mob/living/proc/animate_lying(lying)
 	animate_rest(src, !lying)
@@ -1848,7 +1849,7 @@
 		return .
 
 	var/turf/T = get_turf(src)
-	if (T?.turf_flags & CAN_BE_SPACE_SAMPLE)
+	if (istype(T, /turf/space))
 		. = max(., base_speed)
 
 
@@ -2016,7 +2017,7 @@
 					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
-				if (isalive(src))
+				if (damage > 0 && isalive(src))
 					lastgasp()
 
 			if (D_PIERCING)
@@ -2024,7 +2025,7 @@
 					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				src.TakeDamage("chest", damage/rangedprot_mod, 0, 0, P.proj_data.hit_type)
-				if (isalive(src))
+				if (damage > 0 && isalive(src))
 					lastgasp()
 
 			if (D_SLASHING)
@@ -2396,3 +2397,14 @@
 	if (picked_item)
 		picked_item.pick_up_by(src)
 		return TRUE
+
+/mob/living/clamp_act()
+	if (isintangible(src))
+		return FALSE
+	src.TakeDamage("All", 6)
+	src.emote("scream", FALSE)
+	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 40, 1)
+	return TRUE
+
+/mob/living/HealBleeding(amt)
+	src.bleeding = max(src.bleeding - amt, 0)

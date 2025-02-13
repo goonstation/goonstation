@@ -845,7 +845,18 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			src.active1["p_stat"] = "Active"
 			src.active1["m_stat"] = "Stable"
 			data_core.general.add_record(src.active1)
-			found = 0
+
+			// Bank Records
+			var/bank_record = new/datum/db_record()
+			bank_record["name"] = src.active1["name"]
+			bank_record["id"] = src.active1["id"]
+			bank_record["current_money"] = 0
+			bank_record["wage"] = 0
+			bank_record["notes"] = "No notes."
+			if(istype(target.wear_id, /obj/item/device/pda2))
+				var/obj/item/device/pda2/worn_pda = target.wear_id
+				bank_record["pda_net_id"] = worn_pda.net_id
+			data_core.bank.add_record(bank_record)
 
 		////Security Records
 		var/datum/db_record/E = data_core.security.find_record("name", src.active1["name"])
@@ -868,6 +879,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			E["sec_flag"] = src.sechud_flag
 			target.update_arrest_icon()
 			return
+
 
 		src.active2 = new /datum/db_record()
 		src.active2["name"] = src.active1["name"]
