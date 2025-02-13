@@ -18,6 +18,8 @@
 
 	blood_id = "water" // maybe remove - this causes a lot of boiling if the phoenix is heated up
 
+	can_interface_with_pods = FALSE
+
 	/// if traveling off z level will return you to the station z level
 	var/travel_back_to_station = FALSE
 
@@ -113,6 +115,21 @@
 		src.setStatus("phoenix_vulnerable", 30 SECONDS)
 		src.radiate_cold(get_turf(src))
 		..()
+
+	do_disorient(stamina_damage, knockdown, stunned, unconscious, disorient, remove_stamina_below_zero, target_type, stack_stuns)
+		if (src.hasStatus("phoenix_ice_barrier"))
+			stamina_damage = min(stamina_damage, 25)
+		..()
+		if (stamina_damage > 0)
+			src.setStatus("phoenix_vulnerable", 30 SECONDS)
+			src.radiate_cold(get_turf(src))
+
+	apply_flash(animation_duration, knockdown, stun, misstep, eyes_blurry, eyes_damage, eye_tempblind, burn, uncloak_prob, stamina_damage, disorient_time)
+		if (src.hasStatus("phoenix_ice_barrier"))
+			stamina_damage = min(stamina_damage, 25)
+		..()
+		src.setStatus("phoenix_vulnerable", 30 SECONDS)
+		src.radiate_cold(get_turf(src))
 
 	Move(turf/NewLoc, direct)
 		if (istype(get_turf(src), /turf/space))
@@ -271,6 +288,18 @@
 			animate(src, 6 SECONDS, alpha = 80)
 		SPAWN(12 SECONDS) // 45 SECONDS
 			qdel(src)
+
+	Crossed(atom/movable/AM, atom)
+		..()
+		if (istype(AM, /mob/living))
+			var/mob/living/L = AM
+			L.space_damage_immune = TRUE
+
+	Uncrossed(Obj, newloc)
+		..()
+		if (istype(Obj, /mob/living))
+			var/mob/living/L = Obj
+			L.space_damage_immune = FALSE
 
 /turf/simulated/ice_phoenix_ice_tunnel
 	icon = 'icons/mob/critter/nonhuman/icephoenix.dmi'

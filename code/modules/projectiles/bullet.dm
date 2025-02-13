@@ -1159,6 +1159,7 @@ toxic - poisons
 	damage = 0.0001 // unique effect per atom hit, but set to non-zero to bypass 0 power/damage checks
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
+	armor_ignored = 1
 	disruption = 0
 	dissipation_delay = 6
 	shot_sound = 'sound/effects/swoosh2.ogg'
@@ -1170,7 +1171,7 @@ toxic - poisons
 		if (istype(hit, /mob/living) && !istype(hit, /mob/living/critter/ice_phoenix))
 			var/mob/living/L = hit
 			L.TakeDamage("All", 2.5, 5, damage_type = src.damage_type)
-			L.bodytemperature -= 5
+			L.bodytemperature -= 3
 			L.changeStatus("shivering", 3 SECONDS * (1 - 0.75 * L.get_cold_protection() / 100), TRUE)
 		else if (isvehicle(hit))
 			src.damage = 25

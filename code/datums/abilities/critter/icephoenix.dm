@@ -130,7 +130,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 
 /datum/targetable/critter/ice_phoenix/wind_chill
 	name = "Wind chill"
-	desc = "Create a freezing aura at the targeted location, inflicting cold on those within 2 tiles nearby, and freezing them solid if their body temperature is low enough."
+	desc = "Create a freezing aura at the targeted location, inflicting cold on those within 2 tiles nearby, and freezing them solid if their body temperature is below 0 degrees Fahrenheit."
 	icon_state = "windchill"
 	cooldown = 30 SECONDS
 	targeted = TRUE
@@ -209,7 +209,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 			boutput(src.holder.owner, SPAN_ALERT("You can only cast this ability on a station turf!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (A.permafrosted)
-			boutput(src.holder.owner, SPAN_ALERT("You've already used Permafrost in this area!'"))
+			boutput(src.holder.owner, SPAN_ALERT("You've already used Permafrost in this area!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		var/turf/T = get_turf(target)
 		if (iswall(T))
@@ -306,7 +306,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 
 		src.target.changeStatus("shivering", 2 SECONDS * (1 - 0.75 * target.get_cold_protection() / 100), TRUE)
 		src.target.bodytemperature -= 15
-		if (src.target.bodytemperature <= 255.372) // 0 degrees fahrenheit
+		if (src.target.bodytemperature <= 227.59) // -50 degrees fahrenheit
 			src.target.TakeDamage("All", burn = 10)
 		playsound(get_turf(target), "sound/misc/phoenix/phoenix_tod_[rand(1, 4)].ogg", 50, TRUE)
 

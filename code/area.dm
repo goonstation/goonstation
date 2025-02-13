@@ -515,8 +515,8 @@ TYPEINFO(/area)
 			if (prob(25))
 				new /obj/effects/precipitation/snow/grey/tile/light(T)
 
-			T.temperature = T0C
-			T.air.temperature = T0C
+			T.temperature = 269
+			T.air.temperature = 269
 
 			LAGCHECK(LAG_LOW)
 

@@ -390,6 +390,7 @@
 		current_shots = 1
 		cooldown = 1 SECOND
 		reload_time = 0
+		spread_angle = 2
 		has_space_pushback = FALSE
 
 	syringe
