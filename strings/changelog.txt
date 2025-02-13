@@ -1,5 +1,9 @@
 
 (t)thu feb 13 25
+(u)patricia
+(p)21916
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Backslashes now work as escape characters in mechcomp networking components and the signal splitter
 (u)Kaan
 (p)21979
 (e)🪲⚖🧛|C-Bug, C-Balance, A-Gamemodes
