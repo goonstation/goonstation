@@ -171,6 +171,9 @@ TYPEINFO(/area)
 	/// Are mobs normally excluded from restricted Z levels allowed to exist here even on restricted Z levels?
 	var/allowed_restricted_z = FALSE
 
+	/// is this area permafrosted by an ice phoenix?
+	var/permafrosted = FALSE
+
 	proc/CanEnter(var/atom/movable/A)
 		if( blocked )
 			if( ismob(A) )
@@ -485,6 +488,58 @@ TYPEINFO(/area)
 
 	proc/store_biome(turf/T, datum/biome/B)
 		return
+
+	proc/add_permafrost()
+		src.permafrosted = TRUE
+
+		for (var/turf/simulated/floor/T in src)
+			var/type_before_permafrost = T.type
+			var/dir_before_permafrsot = T.dir
+			var/icon_before_permafrost = T.icon
+			var/icon_state_before_permafrost = T.icon_state
+			if (T.intact && !istype(T, /turf/simulated/floor/glassblock))
+				T.ReplaceWith(/turf/simulated/floor/snow/snowball)
+				T.icon = 'icons/turf/snow.dmi'
+				T.icon_state = "snow[pick(1, 2, 3)]"
+				T.set_dir(pick(cardinal))
+			else
+				T.icon = 'icons/turf/floors.dmi'
+				T.icon_state = "snow[pick(null, 1, 2, 3, 4)]"
+				T.set_dir(pick(cardinal))
+
+			T.type_before_permafrost = type_before_permafrost
+			T.dir_before_permafrost = dir_before_permafrsot
+			T.icon_before_permafrost = icon_before_permafrost
+			T.icon_state_before_permafrost = icon_state_before_permafrost
+
+			if (prob(25))
+				new /obj/effects/precipitation/snow/grey/tile/light(T)
+
+			T.temperature = 269
+			T.air.temperature = 269
+
+			LAGCHECK(LAG_LOW)
+
+	proc/remove_permafrost()
+		src.permafrosted = FALSE
+
+		for (var/turf/simulated/floor/T in src)
+			if (T.type_before_permafrost) // in case a turf is replaced somehow, by RCD for example
+				var/dir_before_permafrost = T.dir_before_permafrost
+				var/icon_before_permafrost = T.icon_before_permafrost
+				var/icon_state_before_permafrost = T.icon_state_before_permafrost
+				T.ReplaceWith(T.type_before_permafrost, handle_air = TRUE)
+				T.dir = dir_before_permafrost
+				T.icon = icon_before_permafrost
+				T.icon_state = icon_state_before_permafrost
+
+			var/obj/effects/precipitation/snow/grey/tile/light/snow = locate() in T
+			qdel(snow)
+
+			T.temperature = initial(T.temperature)
+			//T.air.temperature = T.temperature
+
+			LAGCHECK(LAG_LOW)
 
 /area/space // the base area you SHOULD be using for space/ocean/etc.
 	do_not_irradiate = FALSE

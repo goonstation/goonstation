@@ -110,6 +110,8 @@
 
 	var/co2overloadtime = null
 	var/temperature_resistance = T0C+75
+	/// if this mob is damaged by space or not
+	var/space_damage_immune = FALSE
 
 	var/use_stamina = 1
 	var/stamina = STAMINA_MAX
