@@ -52,6 +52,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 	event_handler_flags = USE_FLUID_ENTER
 	/// list of conveyor_switches that have us in their conveyors list
 	var/list/linked_switches
+	/// Stored operating direction for conveyors without linked switches
+	var/stored_operating
 
 	New()
 		. = ..()
@@ -425,7 +427,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 		return
 	if(!loc)
 		return
-	if (!can_convey(AM))
+	if(!can_convey(AM))
+		walk(AM, 0)
 		return
 
 	if(src.next_conveyor && src.next_conveyor.loc == AM.loc)
@@ -446,8 +449,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 /obj/machinery/conveyor/get_desc()
 	if (src.deconstructable)
-		. += " [SPAN_NOTICE("It's cover seems to be open.")]"
-
+		. += " [SPAN_NOTICE("Its cover seems to be open.")]"
 
 /obj/machinery/conveyor/mouse_drop(over_object, src_location, over_location)
 	if (!usr)
@@ -602,13 +604,17 @@ TYPEINFO(/obj/machinery/conveyor) {
 		return
 
 	if (src.deconstructable)
-		src.deconstruct_flags = null
+		src.deconstruct_flags = DECON_NONE
 		src.deconstructable = FALSE
 		M.show_text("You finish closing \the [src]'s panel.", "blue")
 		if (length(src.linked_switches))
 			var/obj/machinery/conveyor_switch/connected_switch = src.linked_switches[1]
 			src.operating = connected_switch.position
 			src.setdir()
+		else
+			src.operating = src.stored_operating
+			src.stored_operating = null
+			src.set_dir()
 		src.update()
 		return 1
 
@@ -617,6 +623,10 @@ TYPEINFO(/obj/machinery/conveyor) {
 		src.deconstructable = TRUE
 		M.show_text("You finish opening \the [src]'s panel.", "blue")
 		if (length(src.linked_switches))
+			src.operating = CONVEYOR_STOPPED
+			src.setdir()
+		else
+			src.stored_operating = src.operating
 			src.operating = CONVEYOR_STOPPED
 			src.setdir()
 		src.update()

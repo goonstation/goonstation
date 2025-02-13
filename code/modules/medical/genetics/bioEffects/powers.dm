@@ -161,6 +161,10 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				if (istype(A, mattereater.target_path))
 					items += A
 
+		for(var/obj/item/item as anything in items) // augh body bags
+			if(istype(item, /obj/item/body_bag) && item.w_class >= W_CLASS_BULKY)
+				items -= item
+
 		if (linked_power.power > 1)
 			items += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
 			//So people can still get the meat ending
@@ -290,7 +294,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	id = "jumpy"
 	msgGain = "Your leg muscles feel taut and strong."
 	msgLose = "Your leg muscles shrink back to normal."
-	cooldown = 30
+	cooldown = 100
 	probability = 99
 	blockCount = 4
 	blockGaps = 2
@@ -308,6 +312,10 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	can_research = 0
 	can_make_injector = 0
 	reclaim_fail = 100
+
+	OnAdd()
+		. = ..()
+		ability?.doCooldown()
 
 /datum/targetable/geneticsAbility/jumpy
 	name = "Jumpy"
@@ -329,6 +337,16 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/sleep_time = 1 / linked_power.power
 
 		if (istype(owner.loc,/turf/))
+			var/turf/T = owner.loc
+			if (istype(T, /turf/space) || T.throw_unlimited || owner.no_gravity)
+				var/push_off = FALSE
+				for(var/atom/A in oview(1, T))
+					if (A.stops_space_move)
+						push_off = TRUE
+						break
+				if(!push_off)
+					boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
+					return TRUE
 			usr.visible_message(SPAN_ALERT("<b>[owner]</b> takes a huge leap!"))
 			playsound(owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 			var/prevLayer = owner.layer
@@ -376,6 +394,16 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/sleep_time = 0.5 / linked_power.power
 
 		if (istype(owner.loc,/turf/))
+			var/turf/T = owner.loc
+			if (istype(T, /turf/space) || T.throw_unlimited || owner.no_gravity)
+				var/push_off = FALSE
+				for(var/atom/A in oview(1, T))
+					if (A.stops_space_move)
+						push_off = TRUE
+						break
+				if(!push_off)
+					boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
+					return TRUE
 			usr.visible_message(SPAN_ALERT("<b>[owner]</b> leaps far too high and comes crashing down hard!"))
 			playsound(owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 			playsound(owner.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)

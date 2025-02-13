@@ -15,7 +15,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "av" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -33,7 +33,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "bi" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -43,7 +43,7 @@
 	},
 /area/space)
 "ce" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -121,7 +121,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "fp" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -169,7 +169,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "hB" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -303,8 +303,8 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "lz" = (
-/obj/grille/catwalk,
-/obj/grille/catwalk{
+/obj/mesh/catwalk,
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/simulated/floor/shuttlebay{
@@ -342,7 +342,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "mg" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/simulated/floor/shuttlebay{
@@ -354,7 +354,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "mT" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -549,7 +549,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "tb" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -620,7 +620,7 @@
 	},
 /area/built_zone)
 "vg" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/poster/wallsign/warning3,
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
@@ -693,7 +693,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "yL" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/light/beacon,
@@ -749,7 +749,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "AG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay{
@@ -758,7 +758,7 @@
 	},
 /area/space)
 "BB" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -837,7 +837,7 @@
 	},
 /area/built_zone)
 "DL" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -990,7 +990,7 @@
 	},
 /area/built_zone)
 "HG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -1055,7 +1055,7 @@
 	},
 /area/built_zone)
 "JL" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -1078,7 +1078,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "Kl" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -1102,7 +1102,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "KD" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /turf/simulated/floor/shuttle,
@@ -1118,10 +1118,10 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "KP" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
 	name = "steel shuttle bay plating"
@@ -1311,7 +1311,7 @@
 	},
 /area/shuttle/arrival/station)
 "Rv" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -1513,7 +1513,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "Yw" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -1534,7 +1534,7 @@
 /turf/space,
 /area/space)
 "YG" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
 	name = "steel shuttle bay plating"

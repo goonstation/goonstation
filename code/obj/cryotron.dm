@@ -248,7 +248,12 @@
 			boutput(user, "<b>You can't put someone in cryogenic storage if they aren't alive!</b>")
 			return FALSE
 		// Incapacitated or restrained person trying to enter storage on their own
-		if (!user && (L.stat || L.restrained() || L.getStatusDuration("unconscious") || L.sleeping))
+		var/handless = FALSE
+		if (ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if((H.limbs && (!H.limbs.l_arm && !H.limbs.r_arm)))
+				handless = TRUE
+		if (!user && (L.stat || (!handless && L.restrained()) || L.getStatusDuration("unconscious") || L.sleeping))
 			boutput(L, "<b>You can't enter cryogenic storage while incapacitated!</b>")
 			return FALSE
 		// Incapacitated or restrained person trying to put someone else in
@@ -385,7 +390,12 @@
 		if (isAIeye(usr) || isintangible(usr))
 			return
 
-		if (!can_act(usr) || !in_interact_range(src, usr))
+		var/handless = FALSE
+		if (ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			if((H.limbs && (!H.limbs.l_arm && !H.limbs.r_arm)))
+				handless = TRUE
+		if (!in_interact_range(src, usr) || is_incapacitated(usr) || (!handless && usr.restrained()))
 			return
 
 		if (isdead(usr) || isobserver(usr))

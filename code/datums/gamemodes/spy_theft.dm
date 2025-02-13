@@ -127,7 +127,7 @@
 				hostpda.uplink.purchase_log[reward.type] = 0
 			hostpda.uplink.purchase_log[reward.type]++
 			if (istype(antag_role))
-				antag_role.redeemed_item_paths.Add(reward.type)
+				antag_role.redeemed_items.Add(reward)
 
 		for(var/obj/item/uplink/integrated/pda/spy/spy_uplink in game_mode.uplinks)
 			LAGCHECK(LAG_LOW)
@@ -326,13 +326,22 @@
 	station_bounties[/obj/item/paper/book/from_file/pharmacopia] = 1
 	station_bounties[/obj/item/reagent_containers/mender] = 2
 
+	station_bounties[/obj/item/stamp/qm] = 1
+	station_bounties[/obj/item/stamp/law] = 2
+	station_bounties[/obj/item/stamp/rd] = 2
+	station_bounties[/obj/item/stamp/md] = 2
+	station_bounties[/obj/item/stamp/ce] = 2
+	station_bounties[/obj/item/stamp/cap] = 2
+	station_bounties[/obj/item/stamp/hop] = 2
+	station_bounties[/obj/item/stamp/hos] = 2
+
 	station_bounties[/obj/item/reagent_containers/food/drinks/mug/HoS] = 1
 	station_bounties[/obj/item/reagent_containers/food/drinks/rum_spaced] = 2
 	station_bounties[/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff] = 2
 	station_bounties[/obj/item/reagent_containers/food/drinks/bottle/champagne] = 2
 	station_bounties[/obj/item/pen/crayon/golden] = 2
 	station_bounties[/obj/item/remote/porter/port_a_sci] = 2
-	station_bounties[/obj/item/clothing/suit/hosmedal] = 3
+	station_bounties[/obj/item/clothing/suit/security_badge/hosmedal] = 3
 	station_bounties[/obj/item/rddiploma] = 2
 	station_bounties[/obj/item/mdlicense] = 2
 	station_bounties[/obj/item/firstbill] = 2

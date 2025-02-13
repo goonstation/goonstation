@@ -12,7 +12,7 @@
 	heat_capacity = 225000
 	default_material = "steel"
 
-	turf_flags = IS_TYPE_SIMULATED | MOB_SLIP | MOB_STEP
+	turf_flags = MOB_SLIP | MOB_STEP
 
 	can_burn = TRUE
 	can_break = TRUE
@@ -512,7 +512,7 @@
 /turf/simulated/floor/darkblue/corner
 	icon_state = "dbluecorner"
 
-/turf/simulated/floor/darkblue/checker
+/turf/simulated/floor/darkblue/checker/white
 	icon_state = "dbluechecker"
 
 /turf/simulated/floor/darkblueblack
@@ -619,7 +619,7 @@
 /turf/simulated/floor/darkpurpleblack
 	icon_state = "dpurpleblack"
 
-/turf/simulated/floor/purpleblack/corner
+/turf/simulated/floor/darkpurpleblack/corner
 	icon_state = "dpurpleblackcorner"
 
 
@@ -1545,7 +1545,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 /// wetType: [-2 = glue, -1 = slime, 0 = dry, 1 = water, 2 = lube, 3 = superlube]
 /// silent: makes the overlay invisible and prevents the sound effect
 /turf/simulated/proc/wetify(var/wetType = 2, var/timeout = 80 SECONDS, var/color = null, var/silent = FALSE)
-	var/obj/grille/catwalk/catwalk = null
+	var/obj/mesh/catwalk/catwalk = null
 	var/image/overlay = null
 	var/alpha = 60
 
@@ -1576,7 +1576,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 /turf/simulated/proc/dryify()
 	src.ClearSpecificOverlays("wet_overlay")
 	if(istype(src, /turf/simulated/floor/airless/plating/catwalk)) // ""Guh" - Leah" - Me
-		var/obj/grille/catwalk/catwalk = locate() in src
+		var/obj/mesh/catwalk/catwalk = locate() in src
 		catwalk?.ClearSpecificOverlays("wet_overlay")
 	src.wet = 0
 

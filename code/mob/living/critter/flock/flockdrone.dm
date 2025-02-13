@@ -443,7 +443,7 @@
 /mob/living/critter/flock/drone/special_movedelay_mod(delay,space_movement,aquatic_movement)
 	. = delay
 	var/turf/T = get_turf(src)
-	if (T?.turf_flags & CAN_BE_SPACE_SAMPLE)
+	if (istype(T, /turf/space))
 		. += 2
 
 /mob/living/critter/flock/drone/Cross(atom/movable/mover)
@@ -731,7 +731,7 @@
 					return
 			if (!istype(NewLoc, /turf/simulated/floor/feather))
 				for (var/obj/O in NewLoc.contents)
-					if (istype(O, /obj/grille/steel) || istype(O, /obj/window) || (istype(O, /obj/machinery/door) && O.density))
+					if (istype(O, /obj/mesh/grille) || istype(O, /obj/window) || (istype(O, /obj/machinery/door) && O.density))
 						return
 			src.set_loc(NewLoc)
 			return
@@ -1068,7 +1068,7 @@
 			if(user.a_intent == INTENT_DISARM)
 				var/turf/simulated/floor/feather/flocktarget = target
 				for (var/atom/O in flocktarget.contents)
-					if (istype(O, /obj/grille/flock))
+					if (istype(O, /obj/mesh/flock/barricade))
 						boutput(user, SPAN_ALERT("There's already a barricade here."))
 						return
 					if ((O.density && !isflockmob(O)) || istype(O, /obj/flock_structure/ghost))
@@ -1132,8 +1132,8 @@
 					var/obj/window/auto/feather/window = target
 					if (window.health < window.health_max)
 						found_target = TRUE
-				if (/obj/grille/flock)
-					var/obj/grille/flock/barricade = target
+				if (/obj/mesh/flock/barricade)
+					var/obj/mesh/flock/barricade/barricade = target
 					if (barricade.health < barricade.health_max)
 						found_target = TRUE
 				if (/obj/storage/closet/flock)

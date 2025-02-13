@@ -45,12 +45,17 @@
 	desc = "Very fuzzy, likes to roll over."
 	death_text = "%src% rolls over!"
 	icon_state = "catbrix"
+	icon_state_dead = "catbrix-dead"
 	butcherable = BUTCHER_NOT_ALLOWED
 	health = 30
 	random_name = 0
 	random_look = 0
 	health_brute = 30
 	health_burn = 30
+	bow_type = /obj/item/clothing/head/hairbow/purple
+
+	bow_icon_state()
+		return "bowtie-brix[isdead(src) ? "-dead" : ""]"
 
 /obj/item/clothing/mask/gas/swat/blue
 	name = "SWAT Mask?"
@@ -80,7 +85,7 @@
 	New()
 		..()
 		src.occupant = new /mob/living/critter/small_animal/cat/brixley(src)
-		src.build_icon()
+		src.UpdateIcon()
 
 /obj/table/wood/auto/desk/aloe
 	has_drawer = TRUE

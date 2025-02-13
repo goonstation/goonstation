@@ -10,6 +10,9 @@
 	if(voluntary && !src.emote_allowed)
 		return
 
+	if (src.hasStatus("paralysis"))
+		return //pls stop emoting :((
+
 	if (src.bioHolder.HasEffect("revenant"))
 		src.visible_message(SPAN_ALERT("[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!"), group = "revenant_emote")
 		return
@@ -65,15 +68,6 @@
 						#ifdef HALLOWEEN
 						spooktober_GH.change_points(src.ckey, 30)
 						#endif
-						var/possumMax = 15
-						for_by_tcl(responsePossum, /obj/critter/opossum)
-							if (!responsePossum.alive)
-								continue
-							if(!IN_RANGE(responsePossum, src, 4))
-								continue
-							if (possumMax-- < 0)
-								break
-							responsePossum.CritterDeath() // startled into playing dead!
 						for_by_tcl(P, /mob/living/critter/small_animal/opossum) // is this more or less intensive than a range(4)?
 							if (P.playing_dead) // already out
 								continue
@@ -264,7 +258,7 @@
 
 						var/turf/T = get_turf(src)
 						if (T && T == src.loc)
-							if (T.turf_flags & CAN_BE_SPACE_SAMPLE)
+							if (istype(T, /turf/space))
 								if (src.getStatusDuration("food_space_farts"))
 									src.inertia_dir = src.dir
 									step(src, inertia_dir)
@@ -867,8 +861,11 @@
 
 				if (src.emote_check(voluntary,20))
 					if (act == "gasp")
-						if (src.health <= 0)
-							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender]_gasp_[pick(1,5)].ogg"
+						if (src.find_ailment_by_type(/datum/ailment/malady/flatline))
+							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender]_gasp_[pick(1,3)].ogg"
+							playsound(src, dying_gasp_sfx, 40, FALSE, 0, src.get_age_pitch())
+						else if (src.health <= 0)
+							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender]_gasp_[pick(4,5)].ogg"
 							playsound(src, dying_gasp_sfx, 40, FALSE, 0, src.get_age_pitch())
 						else
 							playsound(src, src.sound_gasp, 15, 0, 0, src.get_age_pitch())
@@ -1096,7 +1093,7 @@
 					else
 						message = "<B>[src]</B> flexes [his_or_her(src)] muscles."
 						maptext_out = "<I>flexes [his_or_her(src)] muscles</I>"
-					if(src.emote_check(voluntary))
+					if(voluntary)
 						for (var/obj/item/C as anything in src.get_equipped_items())
 							if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
 								var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
@@ -1639,7 +1636,7 @@
 				m_type = 1
 
 			if ("wink")
-				if (!src.restrained() && src.emote_check(voluntary))
+				if (!src.restrained() && voluntary)
 					for (var/obj/item/C as anything in src.get_equipped_items())
 						if ((locate(/obj/item/gun/kinetic/derringer) in C) != null)
 							var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
@@ -1861,7 +1858,7 @@
 					//		animate(transform = turn(GetPooledMatrix(), -180), time = 1, loop = -1)
 					//		animate(transform = turn(GetPooledMatrix(), -270), time = 1, loop = -1)
 					//		animate(transform = turn(GetPooledMatrix(), -360), time = 1, loop = -1)
-					if (isobj(src.loc))
+					if (isobj(src.loc) && !is_incapacitated(src))
 						var/obj/container = src.loc
 						container.mob_flip_inside(src)
 
@@ -1871,9 +1868,6 @@
 							message = SPAN_ALERT("<B>[src]</b> falls over, panting and wheezing.")
 							src.changeStatus("knockdown", 2 SECONDS)
 							src.set_stamina(min(1, src.stamina))
-							src.emote_allowed = 0
-							SPAWN(1 SECOND)
-								src.emote_allowed = 1
 							goto showmessage
 
 

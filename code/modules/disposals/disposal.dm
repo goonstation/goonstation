@@ -1234,9 +1234,9 @@ TYPEINFO(/obj/disposalpipe/loafer)
 						newLoaf.loaf_factor += (newLoaf.loaf_factor / 10) + 50
 					if(!isdead(M))
 						M:emote("scream")
-					M.death()
 					if (M.mind || M.client)
 						M.ghostize()
+					M.death()
 				else if (isitem(newIngredient))
 					var/obj/item/I = newIngredient
 					newLoaf.loaf_factor += I.w_class * 5

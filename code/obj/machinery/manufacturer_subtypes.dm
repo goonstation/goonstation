@@ -118,6 +118,7 @@
 		/datum/manufacture/cybereye_spectro,
 		/datum/manufacture/cybereye_prodoc,
 		/datum/manufacture/cybereye_camera,
+		/datum/manufacture/cybereye_monitor,
 		/datum/manufacture/shell_frame,
 		/datum/manufacture/ai_interface,
 		/datum/manufacture/latejoin_brain,
@@ -235,25 +236,16 @@
 		/datum/manufacture/implant_health,
 		/datum/manufacture/implant_antirot,
 		/datum/manufacture/floppydisk,
+		/datum/manufacture/medicalalertbutton,
 		/datum/manufacture/crowbar,
 		/datum/manufacture/extinguisher,
-		/datum/manufacture/cyberappendix,
-		/datum/manufacture/cyberpancreas,
-		/datum/manufacture/cyberspleen,
-		/datum/manufacture/cyberintestines,
-		/datum/manufacture/cyberstomach,
-		/datum/manufacture/cyberkidney,
-		/datum/manufacture/cyberliver,
-		/datum/manufacture/cyberlung_left,
-		/datum/manufacture/cyberlung_right,
 		/datum/manufacture/empty_kit,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass
 	)
 
-	hidden = list(/datum/manufacture/cyberheart,
-	/datum/manufacture/cybereye)
+	hidden = list()
 
 /obj/machinery/manufacturer/science
 	name = "science fabricator"
@@ -282,6 +274,7 @@
 		/datum/manufacture/condenser,
 		/datum/manufacture/fractionalcondenser,
 		/datum/manufacture/dropper_funnel,
+		/datum/manufacture/portable_dispenser,
 		/datum/manufacture/beaker_lid_box,
 		/datum/manufacture/bunsen_burner,
 		/datum/manufacture/spectrogoggles,
@@ -378,6 +371,9 @@
 		/datum/manufacture/pod/armor_industrial,
 		/datum/manufacture/cargohold,
 		/datum/manufacture/storagehold,
+#ifndef UNDERWATER_MAP
+		/datum/manufacture/lateral_thrusters,
+#endif
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,
@@ -389,6 +385,9 @@
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
+		/datum/manufacture/pod/light_shielding,
+		/datum/manufacture/pod/heavy_shielding,
+		/datum/manufacture/pod/auto_repair_kit,
 		/datum/manufacture/beaconkit,
 		/datum/manufacture/podgps
 	)

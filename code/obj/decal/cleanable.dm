@@ -60,7 +60,9 @@ proc/make_cleanable(var/type,var/loc)
 				T.messy++
 				if (istype(T, /turf/simulated/floor))
 					var/turf/simulated/floor/floor = T
-					floor.cleanable_fluid_react()
+					SPAWN(0)
+						if (istype(floor)) //pls help my floor is become space
+							floor.cleanable_fluid_react()
 
 	set_loc(newloc)
 		if(isturf(src.loc))
@@ -1301,6 +1303,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 /obj/decal/cleanable/oil/streak
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")
+	sample_amt = 5
 
 /obj/decal/cleanable/paint
 	name = "marker paint"
@@ -1602,7 +1605,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	density = 0
 	anchored = ANCHORED
 	layer = OBJ_LAYER
-	icon = 'icons/obj/decals/graffiti.dmi'
+	icon = 'icons/obj/decals/gang_tags.dmi'
 	icon_state = "gangtag0"
 	var/datum/gang/owners = null
 

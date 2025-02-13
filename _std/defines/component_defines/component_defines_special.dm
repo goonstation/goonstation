@@ -128,6 +128,25 @@
 		/// The diner trading area
 		#define COMSIG_DOCK_TRADER_DINER "trader_diner"
 
+	// ---- Mining Shuttle docks ----
+		#define COMSIG_DOCK_MINING_STATION "mining_station"
+		#define COMSIG_DOCK_MINING_DINER "mining_diner"
+		#define COMSIG_DOCK_MINING_OUTPOST "mining_outpost"
+
+	// ---- John's Bus docks ----
+		#define COMSIG_DOCK_JOHN_OWLERY "john_owlery"
+		#define COMSIG_DOCK_JOHN_DINER "john_diner"
+		#define COMSIG_DOCK_JOHN_OUTPOST "john_outpost"
+		#define COMSIG_DOCK_JOHN_GRILLNASIUM "john_grillnasium"
+
+	// ---- Research Shuttle docks (donut2/cogmap2) ----
+		#define COMSIG_DOCK_RESEARCH_STATION "research_station"
+		#define COMSIG_DOCK_RESEARCH_OUTPOST "research_outpost"
+
+	// ---- Medical Shuttle Docks (donut3) ----
+		#define COMSIG_DOCK_MEDICAL_ASYLUM "medical_asylum"
+		#define COMSIG_DOCK_MEDICAL_MEDBAY "medical_medbay"
+		#define COMSIG_DOCK_MEDICAL_PATHOLOGY "medical_pathology"
 
 
 // ---- Light stuff, used by /datum/component/loctargeting/simple_light, .../sm_light, and .../medium_light ----
@@ -139,10 +158,6 @@
 // ---- Door signals, for bucket pranks ----
 /// When the door was bumped open, send the movable that opened it
 #define COMSIG_DOOR_OPENED "door_opened"
-
-// ---- Player Piano Automatic Linking ----
-
-#define COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE "is_player_piano_auto_linker_active"
 
 // ---- Sniper Scope integration with other gun components ----
 /// Sent to an item when its sniper_scope components scope is toggled, TRUE if on and FALSE if off

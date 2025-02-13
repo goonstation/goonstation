@@ -9,7 +9,7 @@
 	/// A list of buylist datums that this traitor has redeemed using their uplink.
 	///
 	///This tracks items redeemed with any uplink, so if a spy thief steals another spy thief's uplink, redeemed items will show up here too!
-	var/list/redeemed_item_paths = list()
+	var/list/datum/syndicate_buylist/redeemed_items = list()
 
 
 	New()
@@ -108,7 +108,7 @@
 		. = ..()
 
 		if (length(src.stolen_items) >= 7)
-			src.owner.current.unlock_medal("Professional thief", TRUE)
+			src.owner.current.unlock_medal("Professional Thief", TRUE)
 
 	get_statistics()
 		var/list/stolen_items = list()
@@ -128,13 +128,13 @@
 			)
 
 		var/list/redeemed_items = list()
-		for (var/datum/syndicate_buylist/redeemed_entry as anything in src.redeemed_item_paths)
+		for (var/datum/syndicate_buylist/redeemed_entry as anything in src.redeemed_items)
 			if(length(redeemed_entry.items) > 0)
 				var/obj/item_type = initial(redeemed_entry.items[1])
 				redeemed_items += list(
 					list(
 						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
-						"name" = "[initial(redeemed_entry[1].name)]",
+						"name" = "[initial(redeemed_entry.name)]",
 					)
 				)
 

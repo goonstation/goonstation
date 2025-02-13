@@ -1425,3 +1425,54 @@ proc/spawn_kitchen_note()
 			<br><br>
 			<i>Intelligent data ordering system proprietary, copyright of Nanotrasen (2053)</i>
 		"}
+
+//TODO: maybe a stamp for the classified thing?
+//also apparently W3schools lied to me and there is no websafe handwriting font, so these just default to Times >:(
+/obj/item/paper/pipebombs
+	name = "\improper Terra cell improvised explosive manual"
+	icon_state = "paper_burned"
+	var/detonating = FALSE
+
+	New()
+		. = ..()
+		RegisterSignal(src, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(turf_changed))
+		info = {"
+		<h2>\[FOR TERRA EYES ONLY\]</h2>
+		<b>Warning: this paper will self destruct if removed from listening outpost [rand(1,19)][pick("A", "B", "θ")].</b><br><br>
+		The pipebomb is the workhorse of the syndicate infiltrator on a budget. The... highly explosive workhorse.<br><br>
+		<b>Step 1:</b> Form three metal sheets into a pipe frame.<br>
+		<b>Step 2:</b> Weld them up nice and tight. Eye protection is <strike>recommended</strike> <span style="color:red;font-family:Brush Script MT;">for NERDS.</span><br>
+		<b>Step 3:</b> Add your payload. A lot of mundane things can produce some surprisingly nasty effects when shoved into a pipebomb so creativity is recommended. Here's a list of the more "effective" options:
+		<ul>
+			<li>Glass shards and metal scrap: Yeah take a guess what these do. Simple but effective at hurting people.</li>
+			<li>Glowsticks: splashes victims with a little boiling radium. Nasty.</li>
+			<li>Cloth: deadens the explosion, making it five times less powerful. Sounds useless but sometimes you want the attention to be on the other things you've stuck in your pipebomb.</li>
+			<li>Detached human butts: ██████ ███ █████, ██ ████ █████ -<span style="color:blue;font-family:Gochi Hand;">what the FUCK? NO! WHY WOULD YOU DO THAT??</span></li>
+			<li>Telecrystals: Hemera scientists will tell you blowing up telecrystals can lead to "catastrophically unstable telepositional events". Sounds like fun!</li>
+			<li>RCD cartridges: randomly punches holes in the floor and builds grilles out of compressed matter.</li>
+			<li>Wires and power cells: putting both wire and a cell in your bomb will cause high voltage arcs from the point of detonation.</li>
+			<li>Plasmastone: releases a substantial amount of plasma gas upon detonation. <span style="font-family:Brush Script MT;">NB: this isn't very useful if you just blew a hole in the hull - maybe try combining with cloth?</span></li>
+		</ul>
+		Remember you can usually only fit three items total into a pipe frame.<br>
+		<b>Step 4:</b> Pour something flammable into the frame. Generally the more angrily it burns the bigger the boom you'll make.<br>
+		<b>Step 5:</b> Tangle some wires around it. Don't worry about wiring diagrams, this thing only has to work <i>once.</i><br>
+		<b>FINAL STEP:</b> Stick a timer on it and resist pressing the button until you're near your target.<br><br>
+
+		Good luck, agent. Try not to blow the bloody doors off the listening post this time.
+		"}
+
+	proc/turf_changed(atom/thing, turf/old_turf, turf/new_turf)
+		if (!src.detonating && !istype(new_turf?.loc, /area/listeningpost))
+			src.detonating = TRUE
+			visible_message(SPAN_ALERT("The paper starts to beep. Huh??"))
+			SPAWN(-1)
+				playsound(src.loc, 'sound/machines/twobeep.ogg', 30, FALSE, pitch = 0.9)
+				sleep(1 SECOND)
+				playsound(src.loc, 'sound/machines/twobeep.ogg', 30, FALSE, pitch = 1.2)
+				sleep(1 SECOND)
+				playsound(src.loc, 'sound/machines/twobeep.ogg', 30, FALSE, pitch = 1.4)
+				sleep(1 SECOND)
+				src.blowthefuckup(0.5)
+	disposing()
+		. = ..()
+		UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)

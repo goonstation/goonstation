@@ -193,18 +193,6 @@
 	},
 /turf/space,
 /area/space)
-"aaJ" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/disposalpipe/segment/horizontal,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/space)
 "aaL" = (
 /turf/space,
 /area/station/solar/east)
@@ -215,70 +203,18 @@
 	},
 /turf/space,
 /area/space)
-"aaQ" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/space)
 "aaR" = (
 /obj/cable{
 	icon_state = "1-6"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"aaS" = (
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/space)
 "aaT" = (
 /obj/lattice{
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/space)
-"aaV" = (
-/obj/grille/catwalk{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
-	icon_state = "catwalk_cross"
-	},
-/area/space)
-"aaW" = (
-/obj/grille/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5
-	},
-/area/space)
-"aaX" = (
-/obj/grille/catwalk,
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/space)
-"aaY" = (
-/obj/grille/catwalk,
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 5
-	},
-/turf/simulated/floor/airless/plating/catwalk,
-/area/space)
-"aaZ" = (
-/obj/grille/catwalk{
-	dir = 9
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
-	icon_state = "catwalk_cross"
-	},
 /area/space)
 "abb" = (
 /obj/lattice{
@@ -288,60 +224,9 @@
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/space)
-"abg" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 6
-	},
-/area/space)
 "abi" = (
 /turf/simulated/wall/auto/asteroid/dark,
 /area/spacehabitat/owlery)
-"abk" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 1;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 4;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 9;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning sign. I guess this area is dangerous.";
-	icon_state = "magwarning2";
-	name = "ACTIVE MAGNET AREA"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 9
-	},
-/area/mining/magnet)
-"abl" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/space)
 "abm" = (
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/spacehabitat/owlery)
@@ -1029,10 +914,6 @@
 	dir = 8
 	},
 /area/station/hangar/main)
-"adE" = (
-/obj/grille/steel,
-/turf/simulated/floor/plating,
-/area/station/maintenance/north)
 "adH" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/north)
@@ -1050,6 +931,13 @@
 "adL" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northeast)
+"adM" = (
+/obj/mesh/catwalk,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating,
+/area/station/maintenance/west)
 "adQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -1125,21 +1013,6 @@
 /area/station/routing/eva{
 	name = "Router Cabinet"
 	})
-"aea" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 4;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/mining/magnet)
 "aec" = (
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
@@ -1369,21 +1242,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
-"aeV" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 8;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/mining/magnet)
 "aeZ" = (
 /obj/decal/poster/wallsign/warning3,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -1653,14 +1511,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/ptl)
-"agl" = (
-/obj/grille/catwalk,
-/obj/disposalpipe/segment/vertical,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/airless/plating/catwalk,
-/area/station/mining/refinery)
 "agm" = (
 /obj/lattice{
 	dir = 1;
@@ -1847,10 +1697,6 @@
 	dir = 1
 	},
 /area/station/chapel/sanctuary)
-"agY" = (
-/obj/grille/steel,
-/turf/simulated/floor/plating,
-/area/station/storage/northeast)
 "aha" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2552,12 +2398,6 @@
 /area/station/crew_quarters/clown{
 	name = "Clowntainment"
 	})
-"ajk" = (
-/obj/grille/steel,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/clown{
-	name = "Clowntainment"
-	})
 "ajl" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -3117,12 +2957,6 @@
 	},
 /turf/space,
 /area/space)
-"ald" = (
-/obj/grille/steel,
-/turf/simulated/floor/airless/plating,
-/area/station/crew_quarters/clown{
-	name = "Clowntainment"
-	})
 "ale" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -3714,8 +3548,8 @@
 	name = "Secure Consultation";
 	req_access = null
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/interrogation)
 "ane" = (
@@ -4446,13 +4280,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/west)
-"apJ" = (
-/obj/grille/steel,
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/west)
 "apK" = (
 /obj/lattice{
 	dir = 4;
@@ -4864,38 +4691,6 @@
 "aru" = (
 /turf/simulated/floor/darkblue/checker,
 /area/station/crew_quarters/radio/news_office)
-"arv" = (
-/obj/grille/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 4;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 5;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning sign. I guess this area is dangerous.";
-	icon_state = "magwarning2";
-	name = "ACTIVE MAGNET AREA"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5
-	},
-/area/mining/magnet)
 "arw" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/light{
@@ -5940,11 +5735,6 @@
 	},
 /turf/space,
 /area/space)
-"avV" = (
-/obj/grille/steel,
-/obj/disposalpipe/segment/mail/bent/north,
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/west)
 "avW" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -7310,10 +7100,6 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
-"aBy" = (
-/obj/grille/steel,
-/turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
 "aBA" = (
 /obj/machinery/disposal_pipedispenser,
 /turf/simulated/floor/grime,
@@ -8033,19 +7819,6 @@
 	},
 /turf/simulated/floor/blueblack,
 /area/station/engine/coldloop)
-"aEq" = (
-/obj/grille/catwalk{
-	dir = 9
-	},
-/obj/disposalpipe/junction/left/north,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
-	icon_state = "catwalk_cross"
-	},
-/area/station/mining/refinery)
 "aEs" = (
 /obj/decal/poster/wallsign/gym,
 /turf/simulated/wall/auto/supernorn,
@@ -8302,13 +8075,13 @@
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai)
 "aFt" = (
-/obj/machinery/computer/bank_data{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/bank_data{
+	dir = 8
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "aFu" = (
@@ -8414,15 +8187,6 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
-"aFU" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/mining/refinery)
 "aFW" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -9687,19 +9451,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"aLs" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/obj/disposalpipe/segment/bent/west,
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 6
-	},
-/area/station/mining/refinery)
 "aLv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10079,6 +9830,10 @@
 	},
 /turf/space,
 /area/space)
+"aNt" = (
+/obj/mesh/grille/steel,
+/turf/simulated/floor/black/grime,
+/area/station/routing/depot)
 "aNu" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -10132,15 +9887,6 @@
 	dir = 9
 	},
 /area/station/medical/medbay/psychiatrist)
-"aNC" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 9
-	},
-/area/space)
 "aND" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating,
@@ -10540,17 +10286,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
-"aPC" = (
-/obj/grille/catwalk,
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 1;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/turf/simulated/floor/airless/plating/catwalk,
-/area/mining/magnet)
 "aPD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -12344,21 +12079,6 @@
 /area/station/crew_quarters/info{
 	name = "Book Nook"
 	})
-"aWE" = (
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/grille/catwalk{
-	dir = 9
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
-	icon_state = "catwalk_cross"
-	},
-/area/mining/magnet)
 "aWM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -12380,13 +12100,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"aWS" = (
-/obj/grille/steel,
-/obj/disposalpipe/loafer{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/east)
 "aWT" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_east)
@@ -14054,18 +13767,6 @@
 	dir = 4
 	},
 /area/station/crew_quarters/quarters_north)
-"beJ" = (
-/obj/grille/steel,
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 4;
-	id = "tox_accessvent";
-	layer = 8;
-	name = "Buffer Vent"
-	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/science/lab)
 "beK" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
@@ -14948,16 +14649,6 @@
 	dir = 10
 	},
 /area/station/hallway/primary/west)
-"biM" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
-/obj/disposalpipe/segment/bent/east,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 9
-	},
-/area/station/mining/refinery)
 "biN" = (
 /obj/table/reinforced/auto,
 /obj/item/kitchen/rollingpin{
@@ -16730,11 +16421,6 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"bpV" = (
-/obj/grille/catwalk,
-/obj/disposalpipe/segment/transport,
-/turf/simulated/floor/airless/plating,
-/area/station/maintenance/west)
 "bpW" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -17064,13 +16750,6 @@
 "bri" = (
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"brk" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/airless/plating,
-/area/station/maintenance/west)
 "brp" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -17112,6 +16791,14 @@
 /obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment2)
+"brD" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/item/device/radio/intercom/mining,
+/turf/space,
+/area/station/mining/magnet)
 "brE" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/treatment2)
@@ -17307,10 +16994,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/airless/grey,
-/area/station/maintenance/west)
-"bsH" = (
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating,
 /area/station/maintenance/west)
 "bsI" = (
 /obj/machinery/camera{
@@ -17837,16 +17520,6 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/narrow/north,
 /area/station/maintenance/inner/east)
-"buO" = (
-/obj/grille/catwalk,
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/turf/simulated/floor/airless/plating/catwalk,
-/area/mining/magnet)
 "buP" = (
 /obj/machinery/ai_status_display{
 	pixel_y = 28
@@ -18215,17 +17888,6 @@
 /obj/pool/perspective,
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
-"bxj" = (
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 1;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/mining/magnet)
 "bxm" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor,
@@ -18769,10 +18431,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"bzr" = (
-/obj/grille/steel,
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/south)
 "bzu" = (
 /obj/landmark/gps_waypoint,
 /obj/disposalpipe/segment/horizontal,
@@ -20633,6 +20291,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/main)
+"bGF" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay3,
+/turf/space,
+/area/space)
 "bGG" = (
 /obj/disposalpipe/segment/mail/bent/west,
 /obj/landmark/gps_waypoint,
@@ -21326,25 +20992,6 @@
 	dir = 4
 	},
 /area/station/science/lobby)
-"bIW" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor/purple,
-/area/station/science/lobby)
-"bIX" = (
-/obj/machinery/drainage,
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/floor/purple,
-/area/station/science/lobby)
 "bJa" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor,
@@ -21665,9 +21312,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/computer/bank_data,
 /obj/machinery/power/data_terminal,
 /obj/cable,
+/obj/machinery/computer3/generic/bank_data,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "bKa" = (
@@ -21703,11 +21350,11 @@
 /turf/simulated/floor/carpet/green/fancy/edge/south,
 /area/station/bridge/hos)
 "bKf" = (
-/obj/machinery/computer/bank_data{
-	dir = 8
-	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/bank_data{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/bridge/hos)
 "bKg" = (
@@ -22045,14 +21692,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"bLl" = (
-/obj/grille/steel,
-/obj/disposalpipe/segment/food{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/east)
 "bLn" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -24271,15 +23910,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/south)
-"bTi" = (
-/obj/grille/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5
-	},
-/area/station/hangar/escape)
 "bTj" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -24347,14 +23977,6 @@
 /obj/item/wrench,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
-"bTB" = (
-/obj/grille/catwalk{
-	dir = 6
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	icon_state = "catwalk_cross"
-	},
-/area/space)
 "bTC" = (
 /obj/machinery/launcher_loader/west,
 /turf/simulated/floor/airless/plating,
@@ -24515,6 +24137,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "bUk" = (
@@ -24585,15 +24208,6 @@
 /area/station/maintenance/southeast)
 "bUK" = (
 /obj/machinery/launcher_loader/south,
-/turf/simulated/floor/airless/grey,
-/area/station/maintenance/southwest)
-"bUM" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
 /turf/simulated/floor/airless/grey,
 /area/station/maintenance/southwest)
 "bUN" = (
@@ -24824,12 +24438,6 @@
 	dir = 4
 	},
 /area/station/security/secwing)
-"bVS" = (
-/obj/machinery/optable{
-	name = "Autopsy Table"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "bVT" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -25103,6 +24711,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"bXA" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/station/mining/refinery)
 "bXG" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/plating,
@@ -25146,18 +24764,6 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"bXQ" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
-/obj/cable/yellow{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 9
-	},
-/area/station/solar/east)
 "bXR" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -27369,16 +26975,6 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
-"chb" = (
-/obj/grille/catwalk{
-	dir = 9
-	},
-/obj/disposalpipe/segment/bent/east,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
-	icon_state = "catwalk_cross"
-	},
-/area/space)
 "chd" = (
 /obj/machinery/light/runway_light/delay4,
 /obj/lattice{
@@ -27589,14 +27185,6 @@
 /turf/simulated/floor/grey,
 /area/station/medical/robotics)
 "chS" = (
-/turf/simulated/floor/engine,
-/area/station/science/testchamber)
-"chW" = (
-/obj/machinery/optable,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "chX" = (
@@ -28090,13 +27678,6 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/research_outpost/indigo_rye)
-"cjQ" = (
-/obj/machinery/drainage,
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/simulated/floor/white,
-/area/research_outpost/indigo_rye)
 "cjR" = (
 /turf/simulated/floor/caution/north,
 /area/research_outpost/indigo_rye)
@@ -28172,10 +27753,6 @@
 	icon_state = "engine_caution_north"
 	},
 /area/research_outpost/indigo_rye)
-"ckc" = (
-/obj/grille/steel,
-/turf/simulated/floor/airless/plating,
-/area/listeningpost)
 "ckd" = (
 /obj/machinery/door/airlock/pyro/medical/alt,
 /turf/simulated/floor/plating,
@@ -28828,10 +28405,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
-"clQ" = (
-/obj/grille/steel,
-/turf/space,
-/area/research_outpost/indigo_rye)
 "clR" = (
 /obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/carpet/grime,
@@ -28931,6 +28504,10 @@
 /obj/item/clothing/suit/wcoat,
 /obj/item/matchbook,
 /obj/item/pen/marker/red,
+/obj/item/paper/pipebombs{
+	pixel_y = 7;
+	pixel_x = 9
+	},
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
 "cmn" = (
@@ -29903,13 +29480,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
-"cpx" = (
-/obj/grille/catwalk,
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating,
-/area/station/maintenance/west)
 "cpy" = (
 /obj/lattice{
 	dir = 4;
@@ -30134,10 +29704,6 @@
 	dir = 1
 	},
 /area/station/crew_quarters/quarters_south)
-"crq" = (
-/obj/machinery/drainage,
-/turf/simulated/floor/engine,
-/area/station/science/testchamber)
 "csd" = (
 /obj/machinery/disposal/morgue{
 	desc = "A pneumatic delivery chute for sending a prisoner's items to their release zone.";
@@ -30195,21 +29761,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
-"cth" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/space)
 "ctp" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -30325,19 +29876,15 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
-/obj/mapping_helper/access/brig,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
 /area/station/security/main)
-"cyl" = (
-/obj/grille/steel,
-/turf/simulated/floor/black/grime,
-/area/station/routing/depot)
 "cyK" = (
 /obj/storage/crate/freezer,
 /obj/item/raw_material/ice,
@@ -30389,12 +29936,6 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"czk" = (
-/obj/machinery/optable{
-	id = "robotics"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/robotics)
 "czm" = (
 /obj/disposalpipe/segment/mail/bent/north,
 /obj/cable{
@@ -30416,10 +29957,6 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
-"czV" = (
-/obj/machinery/drainage,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/robotics)
 "czW" = (
 /obj/disposalpipe/segment/transport,
 /turf/space,
@@ -30615,6 +30152,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"cHs" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/purple,
+/area/station/science/lobby)
 "cIc" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
@@ -30623,6 +30171,15 @@
 /obj/landmark/halloween,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"cId" = (
+/obj/mesh/catwalk{
+	dir = 9
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/magnet)
 "cIR" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/disposalpipe/segment/transport{
@@ -30724,6 +30281,18 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
+"cMU" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
 "cNh" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Pod Bay"
@@ -30862,16 +30431,6 @@
 	dir = 8
 	},
 /area/station/mining/magnet)
-"cQW" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
-/obj/disposalpipe/segment/bent/east,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 9
-	},
-/area/space)
 "cRg" = (
 /obj/cable{
 	icon_state = "2-9"
@@ -31160,14 +30719,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"cZL" = (
-/obj/table/auto,
-/obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/machinery/light/small,
-/turf/simulated/floor/circuit,
-/area/station/bridge)
 "cZU" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/transport,
@@ -31382,7 +30933,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/critter/turtle/sylvester/HoS,
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "djU" = (
@@ -31557,6 +31108,15 @@
 	dir = 8
 	},
 /area/station/security/main)
+"doT" = (
+/obj/mesh/catwalk{
+	dir = 10;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
+/area/space)
 "dpn" = (
 /obj/machinery/chem_heater/chemistry,
 /obj/item/storage/wall{
@@ -31631,6 +31191,14 @@
 /obj/landmark/halloween,
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/hallway/primary/west)
+"drB" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/trader_left,
+/turf/space,
+/area/space)
 "drG" = (
 /turf/simulated/floor/yellow/side,
 /area/station/engine/monitoring)
@@ -31809,36 +31377,12 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "dzp" = (
-/obj/rack,
-/obj/item/clothing/mask/gas{
-	pixel_x = 8;
-	pixel_y = 5
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = -7;
-	pixel_y = 5
-	},
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = -8;
-	pixel_y = -5
-	},
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = 8;
-	pixel_y = -5
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = -7;
-	pixel_y = 11
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = 9;
-	pixel_y = 11
-	},
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/machinery/weapon_stand/phaser_rack,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -32505,22 +32049,6 @@
 /obj/machinery/chem_heater,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
-"dWu" = (
-/obj/grille/catwalk{
-	dir = 9
-	},
-/obj/cable/yellow,
-/obj/cable/yellow{
-	icon_state = "0-2"
-	},
-/obj/cable/yellow{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
-	icon_state = "catwalk_cross"
-	},
-/area/station/solar/east)
 "dWT" = (
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
@@ -32581,6 +32109,22 @@
 	dir = 8
 	},
 /area/station/mining/magnet)
+"dXS" = (
+/obj/mesh/catwalk{
+	dir = 9
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/station/solar/east)
 "dXU" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
@@ -32742,15 +32286,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/routing/security)
-"edL" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/mining/magnet)
 "edU" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -33020,7 +32555,13 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "epf" = (
-/obj/machinery/weapon_stand/phaser_rack,
+/obj/machinery/computer/announcement/station/security{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -33033,19 +32574,6 @@
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"epW" = (
-/obj/grille/catwalk{
-	icon_state = "catwalk_cross"
-	},
-/obj/cable/yellow{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/tracker/west,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/area/station/solar/west)
 "eqj" = (
 /obj/table/reinforced/auto,
 /obj/disposalpipe/segment/brig{
@@ -33483,6 +33011,17 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio/news_office)
+"eAE" = (
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/solar/west)
 "eBv" = (
 /obj/submachine/chicken_incubator,
 /obj/item/reagent_containers/food/snacks/ingredient/egg{
@@ -33588,20 +33127,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
-"eFv" = (
-/obj/grille/catwalk,
-/obj/cable/yellow{
-	icon_state = "0-2"
-	},
-/obj/cable/yellow{
-	icon_state = "0-4"
-	},
-/obj/cable/yellow{
-	icon_state = "0-8"
-	},
-/obj/cable/yellow,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/station/solar/west)
 "eFN" = (
 /obj/stool/chair{
 	dir = 4
@@ -33656,7 +33181,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
-/obj/mapping_helper/access/brig,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
@@ -33678,39 +33203,20 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
+"eHV" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/mining/magnet)
 "eIo" = (
-/obj/rack,
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = -2
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = 1;
-	pixel_y = -3
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = 4;
-	pixel_y = -6
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = -4;
-	pixel_y = 5
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = -1;
-	pixel_y = 2
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = 2;
-	pixel_y = -1
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = 5;
-	pixel_y = -4
-	},
+/obj/random_item_spawner/armory_armor_supplies,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -33767,6 +33273,10 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/crew_quarters/quarters_south)
+"eKJ" = (
+/obj/mesh/grille/steel,
+/turf/simulated/floor/grime,
+/area/station/maintenance/disposal)
 "eLr" = (
 /obj/machinery/light/small,
 /obj/machinery/computer/riotgear{
@@ -33959,11 +33469,6 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/ghostdrone_factory)
-"eQE" = (
-/obj/grille/catwalk,
-/obj/machinery/oreaccumulator,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/station/mining/refinery)
 "eRv" = (
 /obj/machinery/door_control{
 	id = "kondaru_medexit";
@@ -34017,6 +33522,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"eSn" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/station/hangar/main)
 "eTi" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -34046,16 +33560,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/south)
-"eVT" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/obj/disposalpipe/segment/bent/west,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 6
-	},
-/area/space)
 "eWB" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
@@ -34114,6 +33618,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
+"eYk" = (
+/obj/mesh/catwalk{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "eYx" = (
 /obj/table/auto,
 /obj/item/device/t_scanner,
@@ -34728,6 +34242,38 @@
 /obj/blind_switch/area/south,
 /turf/simulated/floor/sanitary,
 /area/station/security/hos)
+"ftp" = (
+/obj/mesh/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 4;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 5;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5
+	},
+/area/mining/magnet)
 "ftt" = (
 /obj/machinery/firealarm{
 	pixel_x = 6;
@@ -34813,6 +34359,12 @@
 /obj/fakeobject/microscope,
 /turf/simulated/floor/airless,
 /area/space)
+"fyR" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating,
+/area/station/maintenance/west)
 "fzb" = (
 /obj/stool/chair{
 	dir = 8
@@ -34975,6 +34527,11 @@
 	},
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
+"fFh" = (
+/obj/mesh/catwalk,
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/airless/plating,
+/area/station/maintenance/west)
 "fFj" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/black{
@@ -35106,6 +34663,15 @@
 	},
 /turf/simulated/floor/green,
 /area/station/crew_quarters/quarters_south)
+"fLO" = (
+/obj/mesh/catwalk{
+	dir = 6
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/magnet)
 "fLU" = (
 /obj/machinery/door_control/podbay/research/new_walls/west{
 	pixel_x = -23;
@@ -35130,16 +34696,6 @@
 /obj/machinery/phone,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
-"fNe" = (
-/obj/grille/steel,
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 4;
-	id = "tox_vent2";
-	layer = 8;
-	name = "Exhaust Vent"
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/science/lab)
 "fNj" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -35264,24 +34820,6 @@
 	dir = 1
 	},
 /area/station/science/chemistry)
-"fSP" = (
-/obj/grille/catwalk{
-	dir = 5
-	},
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4;
-	name = "Research Sector";
-	req_access = null
-	},
-/obj/mapping_helper/access/research_foyer,
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "research";
-	enter_id = "outer";
-	name = "Research"
-	},
-/turf/simulated/floor/purple,
-/area/station/science/lobby)
 "fTI" = (
 /obj/machinery/light{
 	dir = 1;
@@ -35321,6 +34859,10 @@
 	dir = 1
 	},
 /area/station/routing/security)
+"fVs" = (
+/obj/mesh/grille/steel,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/south)
 "fVw" = (
 /obj/machinery/plantpot,
 /obj/machinery/firealarm/east,
@@ -35450,18 +34992,6 @@
 /obj/mapping_helper/access/kitchen,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
-"fXT" = (
-/obj/grille/catwalk{
-	dir = 10;
-	icon_state = "catwalk_cross"
-	},
-/obj/machinery/computer/magnet{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 10
-	},
-/area/station/mining/magnet)
 "fYk" = (
 /obj/disposalpipe/junction/right/north,
 /turf/simulated/floor,
@@ -35610,6 +35140,15 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"geL" = (
+/obj/mesh/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/station/maintenance/southeast)
 "geT" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
@@ -36158,6 +35697,17 @@
 	icon_state = "bluechecker"
 	},
 /area/station/crew_quarters/pool)
+"gvP" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay4,
+/turf/space,
+/area/space)
+"gvQ" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/station/maintenance/southeast)
 "gvX" = (
 /obj/pool/perspective{
 	dir = 4;
@@ -36303,6 +35853,18 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
+"gBu" = (
+/obj/mesh/grille/steel,
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "tox_accessvent";
+	layer = 8;
+	name = "Buffer Vent"
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/science/lab)
 "gBY" = (
 /obj/machinery/light{
 	dir = 8;
@@ -36485,6 +36047,14 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/storage/hydroponics)
+"gGC" = (
+/obj/mesh/catwalk,
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/station/mining/refinery)
 "gGT" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -36505,6 +36075,11 @@
 	},
 /turf/simulated/floor/airless/grey,
 /area/station/maintenance/southwest)
+"gHX" = (
+/obj/mesh/catwalk,
+/obj/machinery/oreaccumulator,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/station/mining/refinery)
 "gIf" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -36622,6 +36197,13 @@
 /obj/cable,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
+"gNv" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay3,
+/turf/space,
+/area/space)
 "gNw" = (
 /obj/stool/bench/red,
 /obj/machinery/light/small{
@@ -36857,6 +36439,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"gTN" = (
+/obj/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/station/solar/east)
 "gTZ" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -36867,10 +36456,6 @@
 "gUz" = (
 /turf/simulated/floor/red/side,
 /area/station/security/secwing)
-"gUW" = (
-/obj/grille/steel,
-/turf/space,
-/area/station/com_dish/comdish)
 "gVh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -36919,6 +36504,18 @@
 	},
 /turf/simulated/floor,
 /area/station/security/secwing)
+"gWP" = (
+/obj/mesh/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/obj/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/station/solar/east)
 "gWW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -37325,6 +36922,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/main)
+"hjv" = (
+/obj/mesh/catwalk{
+	dir = 6
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "hjz" = (
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/orangeblack/side{
@@ -37417,6 +37023,17 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/south)
+"hmZ" = (
+/obj/mesh/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "hnm" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -37473,6 +37090,21 @@
 	dir = 8
 	},
 /area/station/engine/elect)
+"hoL" = (
+/obj/mesh/catwalk{
+	dir = 6
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow,
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/station/solar/west)
 "hpg" = (
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/door/airlock/pyro/glass{
@@ -37569,14 +37201,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/security)
-"hrU" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/hangar/main)
 "hsi" = (
 /obj/lattice{
 	dir = 9;
@@ -37608,6 +37232,21 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/exit)
+"huG" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay4,
+/turf/space,
+/area/space)
+"hvn" = (
+/obj/mesh/grille/steel,
+/obj/disposalpipe/segment/food{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/east)
 "hvr" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right,
@@ -38000,6 +37639,13 @@
 	dir = 8
 	},
 /area/station/medical/medbay)
+"hMb" = (
+/obj/machinery/optable{
+	id = "robotics"
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/robotics)
 "hMe" = (
 /obj/lattice{
 	dir = 6;
@@ -38044,12 +37690,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
-"hOS" = (
-/obj/grille/catwalk{
-	dir = 4
+"hPa" = (
+/obj/mesh/grille/steel,
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "tox_vent2";
+	layer = 8;
+	name = "Exhaust Vent"
 	},
-/turf/simulated/floor/airless/plating,
-/area/station/maintenance/west)
+/turf/simulated/floor/plating/airless,
+/area/station/science/lab)
 "hPz" = (
 /obj/cable{
 	icon_state = "1-10"
@@ -38289,6 +37939,38 @@
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
+"ibm" = (
+/obj/mesh/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 8;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 6;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/mining/magnet)
 "ibx" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -38368,6 +38050,11 @@
 "ieG" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/inner/east)
+"ieW" = (
+/obj/mesh/catwalk,
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
 "ifs" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
@@ -38465,17 +38152,6 @@
 	dir = 8
 	},
 /area/station/security/main)
-"ijs" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/obj/disposalpipe/segment/transport{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
 "ijx" = (
 /obj/item/device/radio/beacon,
 /obj/disposalpipe/segment/mail/vertical,
@@ -38509,6 +38185,15 @@
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/caution/corner/nw,
 /area/station/engine/gas)
+"ilj" = (
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/item/device/radio/intercom/mining,
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
+/area/station/hallway/primary/south)
 "ill" = (
 /obj/machinery/light{
 	dir = 4;
@@ -38527,28 +38212,14 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"img" = (
-/obj/grille/catwalk{
-	dir = 9
+"ilC" = (
+/obj/mesh/catwalk{
+	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4;
-	name = "Research Sector";
-	req_access = null
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
 	},
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/mapping_helper/access/research_foyer,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "research";
-	enter_id = "inner";
-	name = "Research"
-	},
-/turf/simulated/floor/purple,
-/area/station/science/lobby)
+/area/station/maintenance/southeast)
 "imB" = (
 /turf/simulated/floor/stairs/wood2/wide{
 	dir = 5
@@ -38585,13 +38256,6 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/cargobay)
-"inH" = (
-/obj/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/station/solar/west)
 "inI" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/armory_outside)
@@ -38655,6 +38319,8 @@
 	dir = 1
 	},
 /obj/table/reinforced/auto,
+/obj/item/storage/box/panic_buttons,
+/obj/item/device/panicbutton,
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
@@ -38707,14 +38373,6 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/station/turret_protected/armory_outside)
-"iuC" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/mining/magnet)
 "iuH" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -38845,10 +38503,10 @@
 /obj/machinery/door/airlock/pyro/glass/security/alt{
 	name = "Armory Foyer"
 	},
-/obj/mapping_helper/access/brig,
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/secwing)
 "iys" = (
@@ -38863,13 +38521,18 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/station/security/secwing)
+"izg" = (
+/obj/mesh/grille/steel,
+/obj/item/clothing/under/gimmick/dolan,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/showers)
 "izh" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -39088,39 +38751,6 @@
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
 	})
-"iFH" = (
-/obj/grille/catwalk{
-	dir = 10;
-	icon_state = "catwalk_cross"
-	},
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 1;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 8;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 10;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning sign. I guess this area is dangerous.";
-	icon_state = "magwarning2";
-	name = "ACTIVE MAGNET AREA"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 10
-	},
-/area/mining/magnet)
 "iFK" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
@@ -39432,38 +39062,6 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
-"iPb" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 8;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 6;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/obj/securearea{
-	desc = "A warning sign. I guess this area is dangerous.";
-	icon_state = "magwarning2";
-	name = "ACTIVE MAGNET AREA"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 6
-	},
-/area/mining/magnet)
 "iPr" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -39528,6 +39126,15 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/exit)
+"iQU" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
 "iQW" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/red/side{
@@ -39709,6 +39316,13 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
+"iVZ" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay2,
+/turf/space,
+/area/space)
 "iWG" = (
 /obj/table/wood/round/auto,
 /obj/item/device/light/candle{
@@ -39753,20 +39367,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
-"iZx" = (
-/obj/grille/steel,
-/obj/disposalpipe/segment/mail/bent/west,
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/north)
-"jal" = (
-/obj/grille/catwalk{
-	dir = 5
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	icon_state = "catwalk_cross"
-	},
-/area/station/maintenance/southeast)
 "jax" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -39981,6 +39581,10 @@
 /area/station/crew_quarters/radio/bathroom{
 	name = "News Office Bathroom"
 	})
+"jie" = (
+/obj/mesh/grille/steel,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "jin" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -40232,18 +39836,6 @@
 /area/station/maintenance/storage{
 	name = "Secure Atmospherics"
 	})
-"jpN" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/disposalpipe/segment/horizontal,
-/obj/machinery/status_display{
-	pixel_y = -30
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/mining/magnet)
 "jpX" = (
 /obj/machinery/light{
 	dir = 8;
@@ -40537,6 +40129,10 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
+"jBk" = (
+/obj/mesh/grille/steel,
+/turf/space,
+/area/station/com_dish/comdish)
 "jCn" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -40549,6 +40145,19 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
+"jCF" = (
+/obj/mesh/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/tracker/west,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/station/solar/west)
 "jDe" = (
 /obj/machinery/firealarm/east,
 /turf/simulated/floor,
@@ -40619,14 +40228,6 @@
 /area/station/crew_quarters/radio/bathroom{
 	name = "News Office Bathroom"
 	})
-"jEJ" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/maintenance/southeast)
 "jFS" = (
 /obj/storage/crate{
 	desc = "A private crate that isn't yours.";
@@ -40692,10 +40293,26 @@
 	dir = 8
 	},
 /area/station/medical/medbay)
-"jKd" = (
-/obj/grille/steel,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
+"jKj" = (
+/obj/mesh/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/obj/disposalpipe/segment/bent/west,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/station/mining/refinery)
+"jKT" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/airless/plating,
+/area/station/maintenance/west)
 "jKV" = (
 /obj/machinery/door/airlock/pyro/glass{
 	autoclose = 0;
@@ -40751,6 +40368,14 @@
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/utility)
+"jMI" = (
+/obj/mesh/catwalk{
+	dir = 6
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "jNl" = (
 /obj/table/reinforced/auto,
 /obj/item/hand_labeler{
@@ -40883,6 +40508,16 @@
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
+"jPi" = (
+/obj/mesh/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/magnet)
 "jPs" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -40919,19 +40554,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
-"jQm" = (
-/obj/grille/catwalk,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/disposalpipe/segment/transport,
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/airless/plating,
-/area/station/maintenance/west)
 "jQJ" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -40947,8 +40569,8 @@
 	name = "Secure Consultation";
 	req_access = null
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/redblack,
 /area/station/security/interrogation)
 "jRa" = (
@@ -40975,12 +40597,6 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/core)
-"jRG" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/simulated/floor/airless/grey,
-/area/station/maintenance/southwest)
 "jRX" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -41006,15 +40622,6 @@
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
-"jTw" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 6
-	},
-/area/station/maintenance/southeast)
 "jTR" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -41328,19 +40935,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/secwing)
-"kga" = (
-/obj/grille/catwalk{
-	dir = 6
-	},
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/airless/plating/catwalk{
-	icon_state = "catwalk_cross"
-	},
-/area/station/mining/magnet)
 "kgK" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/cable{
@@ -41383,6 +40981,16 @@
 	dir = 4
 	},
 /area/station/security/main)
+"khq" = (
+/obj/mesh/catwalk,
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/mining/magnet)
 "khr" = (
 /obj/lattice{
 	dir = 1;
@@ -41390,10 +40998,6 @@
 	},
 /turf/space,
 /area/station/maintenance/southwest)
-"khy" = (
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/station/maintenance/southeast)
 "kie" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/plantpot,
@@ -41659,6 +41263,10 @@
 	dir = 1
 	},
 /area/station/engine/engineering)
+"kvg" = (
+/obj/mesh/grille/steel,
+/turf/space,
+/area/research_outpost/indigo_rye)
 "kvh" = (
 /obj/tree,
 /turf/simulated/floor/grass,
@@ -41695,6 +41303,22 @@
 	dir = 1
 	},
 /area/station/security/secwing)
+"kxH" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/machinery/manufacturer/mining,
+/obj/item/device/radio/intercom/mining{
+	dir = 8
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/station/mining/magnet)
 "kyy" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9
@@ -41855,6 +41479,20 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
+"kCw" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mesh/catwalk,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "westmaint";
+	name = "West Maintenance"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "kCM" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/cable{
@@ -41956,6 +41594,19 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/cargobay)
+"kFg" = (
+/obj/mesh/catwalk,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/disposalpipe/segment/transport,
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/airless/plating,
+/area/station/maintenance/west)
 "kFN" = (
 /obj/machinery/mass_driver{
 	drive_range = 19;
@@ -42206,12 +41857,12 @@
 /obj/machinery/door/airlock/pyro/security{
 	name = "Courtroom"
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "hopdesk";
 	enter_id = "sec";
 	name = "HOP Desk"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/station/security/secwing)
 "kOP" = (
@@ -42308,6 +41959,13 @@
 /obj/item/storage/lunchbox/food1,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
+"kSc" = (
+/obj/mesh/grille/steel,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/west)
 "kSA" = (
 /obj/table/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -42315,6 +41973,21 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"kSI" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 4;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/mining/magnet)
 "kSO" = (
 /obj/vehicle/tug,
 /obj/machinery/activation_button/driver_button{
@@ -42333,7 +42006,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
-/obj/mapping_helper/access/brig,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
@@ -42495,6 +42168,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/cargobay)
+"kXh" = (
+/obj/mesh/catwalk,
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/mining/magnet)
 "kXr" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/grey,
@@ -42524,6 +42208,26 @@
 	},
 /turf/simulated/floor,
 /area/station/routing/security)
+"kYw" = (
+/obj/mesh/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/station/solar/east)
 "kZl" = (
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/darkblue/checker,
@@ -42769,6 +42473,10 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/cargobay)
+"llz" = (
+/obj/mesh/grille/steel,
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "llA" = (
 /obj/machinery/port_a_brig,
 /obj/machinery/light/small{
@@ -42802,6 +42510,15 @@
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/storage/northeast)
+"lmm" = (
+/obj/mesh/catwalk{
+	dir = 10;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
+/area/station/maintenance/southeast)
 "lmR" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -42994,6 +42711,25 @@
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/hotloop)
+"lsZ" = (
+/obj/mesh/catwalk{
+	dir = 10
+	},
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/station/solar/west)
 "ltn" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/wood/seven,
@@ -43079,13 +42815,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white/grime,
 /area/station/science/lab)
-"lvb" = (
-/obj/grille/steel,
-/obj/disposalpipe/segment/transport,
-/turf/simulated/floor/airless/plating,
-/area/station/crew_quarters/clown{
-	name = "Clowntainment"
-	})
 "lvi" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -43191,16 +42920,6 @@
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/black,
 /area/station/science/lab)
-"lya" = (
-/obj/grille/steel,
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 4;
-	id = "tox_vent1";
-	layer = 8;
-	name = "Exhaust Vent"
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/science/lab)
 "lyi" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -43268,8 +42987,8 @@
 /area/station/crew_quarters/showers)
 "lAi" = (
 /obj/machinery/door/airlock/pyro/glass/security/alt,
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -43314,22 +43033,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/bar)
-"lBj" = (
-/obj/grille/catwalk{
-	dir = 5
-	},
-/obj/cable/yellow,
-/obj/cable/yellow{
-	icon_state = "0-2"
-	},
-/obj/cable/yellow{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	icon_state = "catwalk_cross"
-	},
-/area/station/solar/east)
 "lBB" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/barber,
@@ -43398,6 +43101,14 @@
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
 /area/station/crew_quarters/quarters_north)
+"lEC" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
 "lEU" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 1
@@ -43737,17 +43448,6 @@
 /obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
-"lOf" = (
-/obj/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/solar/east)
 "lOm" = (
 /obj/machinery/floorflusher/genpop,
 /obj/disposalpipe/trunk/west,
@@ -43967,6 +43667,22 @@
 "lXB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/exit)
+"lYj" = (
+/obj/mesh/catwalk{
+	dir = 5
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/station/solar/east)
 "lYl" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
@@ -44024,22 +43740,16 @@
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
-"mbF" = (
-/obj/grille/catwalk{
-	dir = 10
+"mbe" = (
+/obj/mesh/catwalk{
+	dir = 9
 	},
-/obj/cable/yellow{
-	icon_state = "0-2"
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
 	},
-/obj/cable/yellow{
-	icon_state = "0-4"
-	},
-/obj/cable/yellow{
-	icon_state = "0-8"
-	},
-/obj/cable/yellow,
-/turf/space,
-/area/station/solar/west)
+/area/space)
 "mcO" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -44052,6 +43762,26 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/testchamber)
+"mcV" = (
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/mesh/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/station/solar/west)
 "mdn" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -44151,6 +43881,18 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
+"mjM" = (
+/obj/mesh/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/obj/cable/yellow{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5
+	},
+/area/station/solar/west)
 "mkA" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/neutral/corner{
@@ -44245,15 +43987,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/radio/news_office)
-"mnf" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/machinery/light/small,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/hangar/main)
 "mns" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -44289,6 +44022,17 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"moi" = (
+/obj/table/auto,
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
+/obj/machinery/light/small,
+/obj/item/device/radio/intercom/mining{
+	dir = 4
+	},
+/turf/simulated/floor/circuit,
+/area/station/bridge)
 "moG" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/access/artlab,
@@ -44313,6 +44057,15 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
+"mpv" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/mining/refinery)
 "mpA" = (
 /obj/table/auto,
 /obj/item/scalpel,
@@ -44436,6 +44189,13 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
+"muN" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay3,
+/turf/space,
+/area/space)
 "mvj" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/glass/beaker/large/epinephrine,
@@ -44560,6 +44320,12 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/mining/magnet)
+"mys" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/grey,
+/area/station/maintenance/southwest)
 "mzu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -44720,22 +44486,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
-"mFY" = (
-/obj/grille/catwalk,
-/obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/space)
-"mFZ" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
-/obj/disposalpipe/segment/transport{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/airless/grey,
-/area/station/maintenance/southwest)
 "mGs" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/disposalpipe/segment/vertical,
@@ -44762,26 +44512,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"mHj" = (
-/obj/grille/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
-/obj/cable/yellow,
-/obj/cable/yellow{
-	icon_state = "0-2"
-	},
-/obj/cable/yellow{
-	icon_state = "0-8"
-	},
-/obj/cable/yellow{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/area/station/solar/east)
 "mHv" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -44812,6 +44542,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"mIZ" = (
+/obj/mesh/catwalk,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/station/solar/west)
 "mJy" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -44906,6 +44650,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
+"mMz" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/hangar/main)
 "mMB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -44936,6 +44688,19 @@
 /obj/item/old_grenade/oxygen,
 /turf/simulated/floor/darkblue,
 /area/station/storage/eva)
+"mNU" = (
+/obj/mesh/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/tracker/east,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/station/solar/east)
 "mOh" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/door/airlock/pyro{
@@ -45255,6 +45020,18 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/cargobay)
+"naK" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/obj/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/station/solar/east)
 "nbc" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -45395,18 +45172,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
-"ngE" = (
-/obj/grille/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/obj/cable/yellow{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5
-	},
-/area/station/solar/west)
 "ngF" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -45562,6 +45327,24 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/mining/magnet)
+"nkj" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/solar/east)
 "nkD" = (
 /obj/machinery/light,
 /obj/machinery/turretid/computer_core{
@@ -45747,6 +45530,15 @@
 /area/station/routing/eva{
 	name = "Router Cabinet"
 	})
+"nvT" = (
+/obj/mesh/catwalk{
+	dir = 9
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "nwI" = (
 /obj/stool/chair/office/red,
 /obj/disposalpipe/segment/brig{
@@ -45888,6 +45680,13 @@
 /obj/decal/poster/wallsign/biohazard,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
+"nEw" = (
+/obj/mesh/grille/steel,
+/obj/disposalpipe/loafer{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/east)
 "nEE" = (
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
@@ -45908,21 +45707,6 @@
 "nFG" = (
 /turf/simulated/floor/escape,
 /area/station/hallway/primary/east)
-"nFK" = (
-/obj/grille/catwalk{
-	dir = 9
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
-	icon_state = "catwalk_cross"
-	},
-/area/station/maintenance/southeast)
 "nFS" = (
 /obj/machinery/sim/vr_bed{
 	name = "VR simulation pod";
@@ -46306,15 +46090,6 @@
 /area/station/routing/eva{
 	name = "Router Cabinet"
 	})
-"nRo" = (
-/obj/grille/catwalk{
-	dir = 10;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 10
-	},
-/area/space)
 "nRu" = (
 /obj/machinery/power/generatorTemp,
 /obj/cable/orange,
@@ -46520,24 +46295,6 @@
 /obj/stool/bench/auto,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
-"oad" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/cable/yellow,
-/obj/cable/yellow{
-	icon_state = "0-2"
-	},
-/obj/cable/yellow{
-	icon_state = "0-8"
-	},
-/obj/cable/yellow{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/solar/east)
 "oaz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -46684,21 +46441,6 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/crew_quarters/quarters_north)
-"ofn" = (
-/obj/grille/catwalk{
-	dir = 6
-	},
-/obj/cable/yellow,
-/obj/cable/yellow{
-	icon_state = "0-8"
-	},
-/obj/cable/yellow{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	icon_state = "catwalk_cross"
-	},
-/area/station/solar/west)
 "ofx" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -46757,6 +46499,14 @@
 	dir = 8
 	},
 /area/station/security/main)
+"ohG" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay2,
+/turf/space,
+/area/space)
 "ohR" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
@@ -46783,6 +46533,21 @@
 	},
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)
+"oip" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 8;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/mining/magnet)
 "oiw" = (
 /turf/simulated/floor/circuit/purple,
 /area/station/science/teleporter)
@@ -46843,6 +46608,15 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/bridge)
+"okL" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/space)
 "oma" = (
 /obj/stool/bench/red,
 /obj/landmark/start/job/security_officer,
@@ -47060,21 +46834,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/north)
-"osI" = (
-/obj/grille/catwalk{
-	dir = 6
-	},
-/obj/cable/yellow{
-	icon_state = "0-4"
-	},
-/obj/cable/yellow{
-	icon_state = "0-8"
-	},
-/obj/cable/yellow,
-/turf/simulated/floor/airless/plating/catwalk{
-	icon_state = "catwalk_cross"
-	},
-/area/station/solar/west)
 "osY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/inner/east)
@@ -47085,26 +46844,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/medical/medbay/lobby)
-"otS" = (
-/obj/cable/yellow,
-/obj/cable/yellow{
-	icon_state = "0-2"
-	},
-/obj/cable/yellow{
-	icon_state = "0-8"
-	},
-/obj/cable/yellow{
-	icon_state = "0-4"
-	},
-/obj/grille/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/area/station/solar/west)
 "otT" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -47219,6 +46958,13 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
+"oyo" = (
+/obj/machinery/optable{
+	name = "Autopsy Table"
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "oyu" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -47530,7 +47276,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
-/obj/mapping_helper/access/brig,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
@@ -47602,6 +47348,13 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/grey,
 /area/station/medical/robotics)
+"oOQ" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay2,
+/turf/space,
+/area/space)
 "oOS" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
@@ -47713,15 +47466,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
-"oUa" = (
-/obj/grille/catwalk{
-	dir = 9
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
-	icon_state = "catwalk_cross"
-	},
-/area/station/mining/magnet)
 "oUm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -48184,6 +47928,14 @@
 /obj/item/cell/supercell/charged,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
+"pmE" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station,
+/turf/space,
+/area/space)
 "pmK" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -48433,32 +48185,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/crew_quarters/ce)
-"pvb" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/obj/grille/catwalk,
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "westmaint";
-	name = "West Maintenance"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
-"pvc" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/obj/cable/yellow{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 6
-	},
-/area/station/solar/east)
 "pvj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -48535,6 +48261,13 @@
 /obj/disposalpipe/segment/food,
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
+"pyC" = (
+/obj/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/station/solar/west)
 "pyS" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
@@ -48591,6 +48324,13 @@
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/inner/west)
+"pBx" = (
+/obj/mesh/catwalk,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
 "pCp" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/space,
@@ -48735,6 +48475,14 @@
 /obj/decal/tile_edge/floorguide/arrow_e,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"pHq" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/trader_right,
+/turf/space,
+/area/space)
 "pHx" = (
 /obj/machinery/r_door_control/podbay/security,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -48778,11 +48526,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
-"pJw" = (
-/obj/grille/steel,
-/obj/item/clothing/under/gimmick/dolan,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/showers)
 "pJO" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4
@@ -48809,10 +48552,6 @@
 /obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/core)
-"pKT" = (
-/obj/machinery/drainage,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "pLb" = (
 /obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
@@ -48887,17 +48626,6 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/west)
-"pMR" = (
-/obj/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/solar/west)
 "pMS" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -49044,6 +48772,11 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
+"pRV" = (
+/obj/mesh/grille/steel,
+/obj/disposalpipe/segment/mail/bent/west,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/north)
 "pSg" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
@@ -49328,6 +49061,14 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
+"qaY" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/mining/magnet)
 "qbc" = (
 /obj/shrub,
 /obj/machinery/light/small{
@@ -49348,6 +49089,15 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/mining/magnet)
+"qcn" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/airless/grey,
+/area/station/maintenance/southwest)
 "qcA" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -49640,20 +49390,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/quarters_south)
-"qoc" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/machinery/magnet_chassis{
-	dir = 1
-	},
-/obj/machinery/mining_magnet{
-	dir = 1
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/mining/magnet)
 "qoi" = (
 /mob/living/critter/small_animal/cockroach,
 /obj/item/device/multitool,
@@ -49702,6 +49438,29 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"qpL" = (
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/mesh/catwalk{
+	dir = 9
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/station/solar/west)
+"qqe" = (
+/obj/machinery/drainage,
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/research_outpost/indigo_rye)
 "qqj" = (
 /obj/shrub,
 /obj/machinery/light/small{
@@ -49719,6 +49478,13 @@
 	},
 /turf/simulated/floor/stairs,
 /area/station/quartermaster/cargobay)
+"qrj" = (
+/obj/mesh/grille/steel,
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/airless/plating,
+/area/station/crew_quarters/clown{
+	name = "Clowntainment"
+	})
 "qrw" = (
 /obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 4;
@@ -49801,15 +49567,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"qtq" = (
-/obj/grille/steel,
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "tox_mix";
-	layer = 8;
-	name = "Mixing Vent"
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/science/lab)
 "qtt" = (
 /obj/shrub{
 	dir = 1
@@ -49916,22 +49673,6 @@
 /mob/living/critter/spider/nice,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"qwz" = (
-/obj/cable/yellow,
-/obj/cable/yellow{
-	icon_state = "0-2"
-	},
-/obj/cable/yellow{
-	icon_state = "0-4"
-	},
-/obj/grille/catwalk{
-	dir = 9
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
-	icon_state = "catwalk_cross"
-	},
-/area/station/solar/west)
 "qwR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -50130,6 +49871,14 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"qEW" = (
+/obj/mesh/grille/steel,
+/obj/disposalpipe/segment/food{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/east)
 "qFh" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
@@ -50154,6 +49903,21 @@
 /obj/machinery/light,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/hotloop)
+"qGY" = (
+/obj/mesh/catwalk{
+	dir = 6
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/station/solar/west)
 "qHE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -50353,6 +50117,15 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/red/checker,
 /area/station/maintenance/central)
+"qNU" = (
+/obj/mesh/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5
+	},
+/area/space)
 "qOw" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -50411,6 +50184,10 @@
 	},
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
+"qRa" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/station/mining/magnet)
 "qRn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -50781,25 +50558,6 @@
 /obj/mapping_helper/access/heads,
 /turf/simulated/floor/grey,
 /area/station/bridge)
-"rdR" = (
-/obj/grille/catwalk{
-	dir = 10
-	},
-/obj/cable/yellow{
-	icon_state = "0-2"
-	},
-/obj/cable/yellow{
-	icon_state = "0-4"
-	},
-/obj/cable/yellow{
-	icon_state = "0-8"
-	},
-/obj/cable/yellow,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
-/area/station/solar/west)
 "ree" = (
 /turf/space,
 /area/station/mining/magnet)
@@ -50871,6 +50629,10 @@
 	dir = 6
 	},
 /area/station/mining/staff_room)
+"rgv" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating,
+/area/station/maintenance/west)
 "rgw" = (
 /obj/machinery/nanofab/mining,
 /turf/simulated/floor,
@@ -50936,15 +50698,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"riw" = (
-/obj/grille/catwalk{
-	dir = 6
-	},
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/airless/plating/catwalk{
-	icon_state = "catwalk_cross"
-	},
-/area/space)
 "riF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -51373,6 +51126,28 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"rxZ" = (
+/obj/mesh/catwalk{
+	dir = 9
+	},
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "Research Sector";
+	req_access = null
+	},
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/mapping_helper/access/research_foyer,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "research";
+	enter_id = "inner";
+	name = "Research"
+	},
+/turf/simulated/floor/purple,
+/area/station/science/lobby)
 "ryq" = (
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
@@ -51407,6 +51182,16 @@
 /obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/engine/power)
+"rzZ" = (
+/obj/mesh/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/space)
 "rAa" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/emergency_injector/atropine{
@@ -51469,10 +51254,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
 /area/station/crew_quarters/bar)
-"rAK" = (
-/obj/grille/steel,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "rAS" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -51670,19 +51451,6 @@
 /obj/machinery/status_display/market,
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/south)
-"rJL" = (
-/obj/grille/catwalk{
-	icon_state = "catwalk_cross"
-	},
-/obj/cable/yellow{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/tracker/east,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/area/station/solar/east)
 "rJU" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -51695,6 +51463,15 @@
 /area/station/maintenance/storage{
 	name = "Secure Atmospherics"
 	})
+"rKa" = (
+/obj/mesh/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/space)
 "rKr" = (
 /obj/machinery/atmospherics/pipe/simple/junction,
 /turf/space,
@@ -51714,6 +51491,17 @@
 /obj/machinery/computer/card/department/medical,
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/crew_quarters/md)
+"rKN" = (
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/solar/east)
 "rLG" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/white,
@@ -51740,6 +51528,12 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/crew_quarters/quarters_south)
+"rMZ" = (
+/obj/mesh/grille/steel,
+/turf/simulated/floor/airless/plating,
+/area/station/crew_quarters/clown{
+	name = "Clowntainment"
+	})
 "rNN" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable/orange{
@@ -52015,6 +51809,21 @@
 	dir = 8
 	},
 /area/station/hallway/primary/east)
+"rWQ" = (
+/obj/disposalpipe/segment/bent/west,
+/obj/mesh/catwalk{
+	dir = 5
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/refinery)
 "rWY" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -52077,6 +51886,15 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
+"rZE" = (
+/obj/mesh/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/magnet)
 "rZZ" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/info_map,
@@ -52262,6 +52080,14 @@
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"shc" = (
+/obj/machinery/drainage,
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/purple,
+/area/station/science/lobby)
 "shm" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/fire{
@@ -52470,6 +52296,15 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/crew_quarters/md)
+"ssS" = (
+/obj/mesh/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/station/maintenance/southeast)
 "stu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -52642,7 +52477,6 @@
 /obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -52650,6 +52484,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/station/security/secwing)
 "sxY" = (
@@ -52682,8 +52517,8 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/mapping_helper/access/brig,
 /obj/machinery/atmospherics/pipe/simple,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -52811,6 +52646,12 @@
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"sBk" = (
+/obj/mesh/grille/steel,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown{
+	name = "Clowntainment"
+	})
 "sCT" = (
 /obj/cable{
 	icon_state = "6-10"
@@ -53025,11 +52866,11 @@
 /area/station/hallway/primary/north)
 "sLw" = (
 /obj/machinery/door/airlock/pyro/glass/security/alt,
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
@@ -53038,14 +52879,6 @@
 /obj/landmark/halloween,
 /turf/simulated/floor,
 /area/station/hallway/secondary/south)
-"sMG" = (
-/obj/machinery/optable,
-/obj/item/device/analyzer/healthanalyzer{
-	pixel_y = -1;
-	rand_pos = 0
-	},
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbooth)
 "sMK" = (
 /obj/machinery/light{
 	dir = 8;
@@ -53064,6 +52897,15 @@
 /mob/living/critter/small_animal/cat/jones,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/bridge)
+"sNi" = (
+/obj/mesh/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5
+	},
+/area/station/hangar/escape)
 "sNq" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -53152,6 +52994,18 @@
 	dir = 8
 	},
 /area/station/science/testchamber)
+"sPq" = (
+/obj/mesh/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/obj/machinery/computer/telescope{
+	dir = 8
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/station/mining/magnet)
 "sPt" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -53166,6 +53020,10 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/cargobay)
+"sQl" = (
+/obj/mesh/grille/steel,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "sQH" = (
 /obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/bluewhite{
@@ -53343,6 +53201,10 @@
 	dir = 6
 	},
 /area/station/hallway/primary/east)
+"sVw" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
 "sVX" = (
 /obj/table/reinforced/auto,
 /obj/item/ammo/bullets/smoke{
@@ -53427,6 +53289,15 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quarters_south)
+"sXN" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/hangar/main)
 "sXS" = (
 /obj/lattice{
 	dir = 10;
@@ -54010,19 +53881,6 @@
 /obj/machinery/photocopier,
 /turf/simulated/floor/black,
 /area/station/bridge)
-"tuN" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 9
-	},
-/area/station/maintenance/inner/east)
 "tuO" = (
 /obj/table/reinforced/chemistry/auto/basicsup,
 /obj/machinery/glass_recycler/chemistry,
@@ -54123,15 +53981,6 @@
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
-"tzN" = (
-/obj/grille/catwalk{
-	dir = 5
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	icon_state = "catwalk_cross"
-	},
-/area/station/mining/magnet)
 "tAg" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
@@ -54432,6 +54281,17 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
+"tKg" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/airless/grey,
+/area/station/maintenance/southwest)
 "tKr" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -54745,6 +54605,15 @@
 	dir = 4
 	},
 /area/station/crew_quarters/quarters_south)
+"tVu" = (
+/obj/mesh/grille/steel,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "tox_mix";
+	layer = 8;
+	name = "Mixing Vent"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
 "tVy" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -54753,6 +54622,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/coldloop)
+"tVL" = (
+/obj/mesh/grille/steel,
+/obj/disposalpipe/segment/mail/bent/north,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/west)
 "tWD" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -54765,10 +54639,6 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
-"tWL" = (
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/station/mining/magnet)
 "tWV" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -54917,6 +54787,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
+"udo" = (
+/obj/mesh/catwalk{
+	dir = 9
+	},
+/obj/disposalpipe/junction/left/north,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/refinery)
 "udD" = (
 /obj/machinery/plantpot,
 /obj/machinery/light{
@@ -55078,6 +54961,24 @@
 	dir = 9
 	},
 /area/station/medical/medbay/psychiatrist)
+"uhR" = (
+/obj/mesh/catwalk{
+	dir = 5
+	},
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "Research Sector";
+	req_access = null
+	},
+/obj/mapping_helper/access/research_foyer,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "research";
+	enter_id = "outer";
+	name = "Research"
+	},
+/turf/simulated/floor/purple,
+/area/station/science/lobby)
 "uiE" = (
 /obj/disposalpipe/segment/vertical,
 /obj/disposalpipe/segment/mail/horizontal,
@@ -55140,6 +55041,39 @@
 	dir = 8
 	},
 /area/station/science/lab)
+"ujV" = (
+/obj/mesh/catwalk{
+	dir = 10;
+	icon_state = "catwalk_cross"
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 8;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 10;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
+/area/mining/magnet)
 "ujW" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -55225,15 +55159,6 @@
 /obj/landmark/halloween,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"upK" = (
-/obj/grille/catwalk{
-	dir = 10;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 10
-	},
-/area/station/maintenance/southeast)
 "upU" = (
 /obj/cable,
 /obj/cable{
@@ -55271,16 +55196,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
-"ury" = (
-/obj/grille/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/area/station/mining/magnet)
 "urY" = (
 /obj/storage/secure/closet/command/captain,
 /obj/cable{
@@ -55377,6 +55292,15 @@
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
 	})
+"uuG" = (
+/obj/machinery/optable,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/engine,
+/area/station/science/testchamber)
 "uuW" = (
 /obj/item/caution{
 	desc = "Caution! Construction Zone!";
@@ -55705,6 +55629,18 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"uFe" = (
+/obj/mesh/catwalk{
+	dir = 10;
+	icon_state = "catwalk_cross"
+	},
+/obj/machinery/computer/magnet{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
+/area/station/mining/magnet)
 "uGb" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
@@ -55768,6 +55704,15 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/quartermaster/cargobay)
+"uHT" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/mining/magnet)
 "uIb" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -55856,6 +55801,24 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
+"uLX" = (
+/obj/mesh/catwalk{
+	dir = 10
+	},
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/station/solar/east)
 "uMr" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light,
@@ -56794,15 +56757,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/north)
-"vqs" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 9
-	},
-/area/station/hangar/main)
 "vrp" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -56918,6 +56872,9 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
@@ -57259,6 +57216,19 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"vIi" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/station/maintenance/inner/east)
 "vIN" = (
 /obj/decal/tile_edge/floorguide/arrow_n{
 	dir = 8
@@ -57550,24 +57520,6 @@
 /obj/machinery/microwave,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"vXB" = (
-/obj/grille/catwalk{
-	dir = 10
-	},
-/obj/cable/yellow{
-	icon_state = "0-2"
-	},
-/obj/cable/yellow{
-	icon_state = "0-8"
-	},
-/obj/cable/yellow{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
-/area/station/solar/east)
 "vXP" = (
 /obj/machinery/computer3/generic/communications,
 /obj/machinery/power/data_terminal,
@@ -57713,6 +57665,25 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
+"wfw" = (
+/obj/mesh/grille/steel,
+/turf/simulated/floor/plating,
+/area/station/storage/northeast)
+"wfJ" = (
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/mesh/catwalk{
+	dir = 9
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/mining/magnet)
 "wgj" = (
 /obj/machinery/atmospherics/unary/furnace_connector,
 /obj/machinery/power/furnace/thermo{
@@ -57822,6 +57793,16 @@
 	},
 /turf/simulated/floor,
 /area/station/security/secwing)
+"wkq" = (
+/obj/mesh/grille/steel,
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "tox_vent1";
+	layer = 8;
+	name = "Exhaust Vent"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/science/lab)
 "wkQ" = (
 /obj/table/reinforced/auto,
 /obj/mapping_helper/firedoor_spawn,
@@ -57941,6 +57922,39 @@
 	dir = 10
 	},
 /area/station/security/checkpoint/podbay)
+"woI" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 4;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 9;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/mining/magnet)
 "woM" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -58563,7 +58577,6 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -58574,6 +58587,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/interrogation)
 "wMb" = (
@@ -58763,35 +58777,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "wQJ" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = -10;
-	pixel_y = -1
-	},
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = 4;
-	pixel_y = -1
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = -7;
-	pixel_y = 10
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = 7;
-	pixel_y = 10
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = -7;
-	pixel_y = 9
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = 7;
-	pixel_y = 9
-	},
+/obj/random_item_spawner/armory_goggle_supplies,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
 /area/station/ai_monitored/armory)
+"wRa" = (
+/obj/mesh/catwalk,
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
 "wRj" = (
 /obj/storage/secure/closet/fridge{
 	desc = "A staff fridge."
@@ -58932,6 +58927,22 @@
 /mob/living/carbon/human/npc/monkey/tanhony,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio/news_office)
+"wVG" = (
+/obj/mesh/catwalk{
+	dir = 10
+	},
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow,
+/turf/space,
+/area/station/solar/west)
 "wVT" = (
 /obj/disposalpipe/junction/left/west,
 /turf/simulated/floor,
@@ -58946,13 +58957,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/exit)
-"wWA" = (
-/obj/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/station/solar/east)
 "wWG" = (
 /turf/simulated/floor/caution/corner/misc{
 	dir = 10
@@ -59155,12 +59159,12 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
-/obj/mapping_helper/access/brig,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "hopdesk";
 	enter_id = "outer";
 	name = "HOP Desk"
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "xdq" = (
@@ -59245,19 +59249,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/crew_quarters/quarters_south)
-"xgv" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/machinery/manufacturer/mining,
-/turf/simulated/floor/orangeblack/side{
-	dir = 4
-	},
-/area/station/mining/magnet)
 "xgA" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon10,
 /turf/simulated/floor/grey,
@@ -59356,6 +59347,21 @@
 /obj/machinery/phone,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"xjf" = (
+/obj/mesh/catwalk{
+	dir = 9
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/station/maintenance/southeast)
 "xjm" = (
 /obj/table/reinforced/auto,
 /obj/item/device/camera_viewer/telesci,
@@ -59468,6 +59474,16 @@
 /obj/decal/tile_edge/floorguide/arrow_e,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
+"xoN" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/space)
 "xpa" = (
 /obj/cable/blue{
 	icon_state = "1-2"
@@ -59719,21 +59735,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/darkblue/checker,
 /area/station/science/artifact)
-"xwP" = (
-/obj/disposalpipe/segment/bent/west,
-/obj/grille/catwalk{
-	dir = 5
-	},
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	icon_state = "catwalk_cross"
-	},
-/area/station/mining/refinery)
 "xxt" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -59773,6 +59774,21 @@
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/darkblue/checker,
 /area/station/crew_quarters/radio/news_office)
+"xzn" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
 "xzv" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -59782,6 +59798,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"xAZ" = (
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/mining/magnet)
 "xBa" = (
 /obj/kitchenspike,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -59937,6 +59964,14 @@
 /obj/machinery/navbeacon/mule/news_office/west,
 /turf/simulated/floor/carpet/red/standard/edge/south,
 /area/station/crew_quarters/radio/news_office)
+"xGF" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/mining_station/delay4,
+/turf/space,
+/area/space)
 "xGH" = (
 /obj/table/auto,
 /obj/item/storage/belt/utility,
@@ -60305,18 +60340,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/north)
-"xQB" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/obj/machinery/computer/telescope{
-	dir = 8
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 6
-	},
-/area/station/mining/magnet)
 "xQK" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/glass_recycler{
@@ -60552,6 +60575,20 @@
 	dir = 4
 	},
 /area/station/crew_quarters/quarters_north)
+"xWy" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/machinery/magnet_chassis{
+	dir = 1
+	},
+/obj/machinery/mining_magnet{
+	dir = 1
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/mining/magnet)
 "xWE" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
@@ -60619,14 +60656,6 @@
 	},
 /turf/simulated/floor/caution/west,
 /area/station/engine/gas)
-"xXJ" = (
-/obj/grille/steel,
-/obj/disposalpipe/segment/food{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/east)
 "xYi" = (
 /obj/machinery/disposal/transport{
 	desc = "A pneumatic delivery chute for transporting people from one section of maintenance to another.";
@@ -60689,6 +60718,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"ybH" = (
+/obj/mesh/grille/steel,
+/turf/simulated/floor/airless/plating,
+/area/listeningpost)
 "ycb" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -60732,6 +60765,15 @@
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
 	})
+"ydq" = (
+/obj/machinery/optable,
+/obj/item/device/analyzer/healthanalyzer{
+	pixel_y = -1;
+	rand_pos = 0
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbooth)
 "yer" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -68463,9 +68505,9 @@ ciD
 ciD
 ciD
 aaa
-clQ
-clQ
-clQ
+kvg
+kvg
+kvg
 aaa
 aaa
 aaa
@@ -68767,9 +68809,9 @@ clp
 clI
 clI
 cma
-clQ
-clQ
-clQ
+kvg
+kvg
+kvg
 aaa
 aaa
 aaa
@@ -69068,8 +69110,8 @@ ciL
 ciD
 aaa
 aaa
-clQ
-clQ
+kvg
+kvg
 aaa
 aaa
 aaa
@@ -70566,7 +70608,7 @@ ciL
 cjj
 cjt
 cjD
-cjQ
+qqe
 ckb
 ciL
 cku
@@ -70868,7 +70910,7 @@ cjd
 cjk
 cju
 cjE
-cjQ
+qqe
 ckb
 ciL
 ckv
@@ -86512,7 +86554,7 @@ abW
 chm
 chz
 chI
-chW
+uuG
 cpm
 dmF
 nAw
@@ -87116,7 +87158,7 @@ abZ
 chw
 chB
 dnP
-crq
+chS
 qrw
 kQR
 chw
@@ -88879,26 +88921,26 @@ aaa
 aaa
 aaa
 abW
-rdR
-eFv
-eFv
-eFv
-eFv
-inH
-inH
-eFv
-eFv
-eFv
-eFv
-eFv
-inH
-qwz
-inH
-eFv
-eFv
-eFv
-eFv
-osI
+lsZ
+mIZ
+mIZ
+mIZ
+mIZ
+pyC
+pyC
+mIZ
+mIZ
+mIZ
+mIZ
+mIZ
+pyC
+qpL
+pyC
+mIZ
+mIZ
+mIZ
+mIZ
+hoL
 abZ
 abZ
 abZ
@@ -89194,7 +89236,7 @@ kHw
 kHw
 kHw
 aWf
-pMR
+eAE
 aWf
 mXX
 kHw
@@ -89496,7 +89538,7 @@ aci
 aaa
 aaa
 aWg
-pMR
+eAE
 aYo
 aaa
 aaa
@@ -89798,7 +89840,7 @@ aci
 aaa
 aaa
 aWg
-pMR
+eAE
 aYo
 aaa
 aaa
@@ -90100,7 +90142,7 @@ gwE
 gwE
 aPl
 aWf
-pMR
+eAE
 aWf
 gwE
 gwE
@@ -90385,30 +90427,30 @@ aaa
 aaa
 aMM
 abZ
-epW
-inH
-inH
-eFv
-eFv
-eFv
-eFv
-eFv
-inH
-inH
-eFv
-eFv
-eFv
-eFv
-eFv
-inH
-inH
-otS
-inH
-eFv
-eFv
-eFv
-eFv
-osI
+jCF
+pyC
+pyC
+mIZ
+mIZ
+mIZ
+mIZ
+mIZ
+pyC
+pyC
+mIZ
+mIZ
+mIZ
+mIZ
+mIZ
+pyC
+pyC
+mcV
+pyC
+mIZ
+mIZ
+mIZ
+mIZ
+hoL
 abZ
 abZ
 abZ
@@ -90704,7 +90746,7 @@ kHw
 kHw
 aPn
 aWf
-pMR
+eAE
 aWf
 kHw
 kHw
@@ -91006,7 +91048,7 @@ aci
 aaa
 aaa
 aWg
-pMR
+eAE
 aYo
 aaa
 aaa
@@ -91308,7 +91350,7 @@ aci
 aaa
 aaa
 aWg
-pMR
+eAE
 aYo
 aaa
 aaa
@@ -91610,7 +91652,7 @@ aci
 aaa
 aaa
 aWg
-pMR
+eAE
 aWf
 abZ
 abZ
@@ -91912,7 +91954,7 @@ gwE
 aPl
 aPl
 aWf
-pMR
+eAE
 aYo
 aaa
 aaa
@@ -92199,22 +92241,22 @@ aaa
 aaa
 aaa
 abW
-mbF
-eFv
-eFv
-eFv
-eFv
-inH
-inH
-eFv
-eFv
-eFv
-eFv
-eFv
-inH
-inH
-inH
-ofn
+wVG
+mIZ
+mIZ
+mIZ
+mIZ
+pyC
+pyC
+mIZ
+mIZ
+mIZ
+mIZ
+mIZ
+pyC
+pyC
+pyC
+qGY
 aZj
 aUT
 aUT
@@ -92231,7 +92273,7 @@ bcK
 aaa
 aaa
 ach
-brk
+jKT
 bsE
 mRy
 aMt
@@ -92253,22 +92295,22 @@ bMB
 dkL
 fLU
 bNZ
-mFZ
-ijs
+tKg
+hmZ
 xOY
 bvo
-jRG
+mys
 aaa
 bYG
-beJ
+gBu
 bYG
-fNe
-fNe
-fNe
+hPa
+hPa
+hPa
 fVI
-lya
-lya
-lya
+wkq
+wkq
+wkq
 bYG
 ceM
 txe
@@ -92482,17 +92524,17 @@ aaa
 aaa
 aaa
 aaa
+pmE
+aaa
+ast
+ast
+ast
+ast
+ast
+ast
 aaa
 aaa
-ast
-ast
-ast
-ast
-ast
-ast
-aaa
-aaa
-aaa
+pmE
 aaa
 aaa
 aaa
@@ -92516,7 +92558,7 @@ kHw
 aPn
 aWf
 aWf
-ngE
+mjM
 kHP
 mKF
 bcP
@@ -92533,7 +92575,7 @@ cey
 aaa
 aaa
 aaa
-brk
+jKT
 bsF
 gNH
 aMt
@@ -92555,11 +92597,11 @@ bMB
 bOb
 egr
 bNZ
-bUM
+qcn
 khr
-bUM
+qcn
 khr
-jRG
+mys
 aaa
 bYG
 cbl
@@ -92784,8 +92826,8 @@ aaa
 aaa
 aaa
 aaa
+aci
 aaa
-aaa
 ast
 ast
 ast
@@ -92794,7 +92836,7 @@ ast
 ast
 ast
 aaa
-aaa
+aci
 aaa
 aaa
 aaa
@@ -92832,13 +92874,13 @@ bin
 bin
 cgd
 xnq
-bpV
-bpV
-bpV
-jQm
+fFh
+fFh
+fFh
+kFg
 cob
 bsF
-hOS
+fyR
 acO
 aaa
 ach
@@ -92857,11 +92899,11 @@ bMB
 bOb
 kXP
 bGc
-bUM
+qcn
 pht
-bUM
+qcn
 pht
-jRG
+mys
 aaa
 bYG
 vJZ
@@ -92869,7 +92911,7 @@ lFD
 ccT
 cbe
 ccT
-qtq
+tVu
 inL
 cfy
 ccS
@@ -93086,8 +93128,8 @@ aaa
 aaa
 aaa
 aaa
+ohG
 aaa
-aaa
 ast
 ast
 ast
@@ -93096,7 +93138,7 @@ ast
 ast
 ast
 ast
-aaa
+ohG
 aaa
 aaa
 aaa
@@ -93138,9 +93180,9 @@ aRt
 aRt
 cgQ
 chK
-bsH
-cpx
-bsH
+rgv
+adM
+rgv
 acO
 aaa
 ach
@@ -93388,8 +93430,8 @@ aaa
 aaa
 aaa
 aaa
+aci
 aaa
-aaa
 ast
 ast
 ast
@@ -93398,7 +93440,7 @@ ast
 ast
 ast
 ast
-aaa
+aci
 aaa
 aaa
 aaa
@@ -93441,7 +93483,7 @@ boO
 buf
 aMt
 aMt
-pvb
+kCw
 aRt
 bvo
 bvo
@@ -93690,8 +93732,8 @@ aaa
 aaa
 aaa
 aaa
+bGF
 aaa
-aaa
 ast
 ast
 ast
@@ -93700,7 +93742,7 @@ ast
 ast
 ast
 ast
-aaa
+bGF
 aaa
 aaa
 aaa
@@ -93992,8 +94034,8 @@ aaa
 aaa
 aaa
 aaa
+aci
 aaa
-aaa
 ast
 ast
 ast
@@ -94002,7 +94044,7 @@ ast
 ast
 ast
 aaa
-aaa
+aci
 aaa
 aaa
 aaa
@@ -94292,10 +94334,10 @@ aaa
 aaa
 aaa
 aaa
-abX
-aaa
 aNQ
 aaa
+xGF
+aaa
 ast
 ast
 ast
@@ -94304,7 +94346,7 @@ ast
 ast
 aaa
 aaa
-aaa
+xGF
 aaa
 aaa
 aaa
@@ -94603,10 +94645,10 @@ atH
 jVF
 eaN
 atH
-aPh
-aaa
-aaa
-aaa
+abZ
+abZ
+abZ
+acO
 aaa
 aaa
 aaa
@@ -94908,7 +94950,7 @@ aeL
 aaa
 aaa
 aaa
-aaa
+aci
 aaa
 aaa
 aaa
@@ -95210,7 +95252,7 @@ aeK
 aeK
 aaa
 aaa
-abX
+aci
 aaa
 aaa
 aaa
@@ -95497,7 +95539,7 @@ ahg
 aiq
 ajh
 afA
-ald
+rMZ
 aeK
 ang
 aeK
@@ -95541,7 +95583,7 @@ oGg
 axG
 baC
 bbC
-pKT
+bGb
 bGb
 qIt
 bfZ
@@ -95799,7 +95841,7 @@ joy
 air
 aji
 cZU
-lvb
+qrj
 mep
 anh
 aod
@@ -95843,7 +95885,7 @@ iCG
 aZn
 baD
 bbD
-bVS
+oyo
 cbV
 ccc
 bfZ
@@ -95857,8 +95899,8 @@ bfZ
 rUu
 chN
 coo
-czV
-czk
+con
+hMb
 boV
 bxK
 byP
@@ -96101,7 +96143,7 @@ ahi
 ahh
 ajj
 afA
-ald
+rMZ
 aeK
 ani
 aoe
@@ -96703,9 +96745,9 @@ ach
 agr
 ahk
 afB
-ajk
-ajk
-ajk
+sBk
+sBk
+sBk
 aeK
 aeK
 aof
@@ -97005,7 +97047,7 @@ ach
 agr
 ahl
 afB
-ajk
+sBk
 aeK
 aeK
 aeK
@@ -97380,7 +97422,7 @@ bEf
 tuO
 bAW
 bAU
-img
+rxZ
 bAU
 bLL
 xjm
@@ -97625,7 +97667,7 @@ avB
 awJ
 axJ
 axJ
-aBy
+eKJ
 axJ
 axJ
 axJ
@@ -97682,7 +97724,7 @@ bEg
 nBe
 bAW
 bHr
-bIW
+cHs
 bKt
 bLL
 bMJ
@@ -97984,7 +98026,7 @@ bEh
 bFg
 bAW
 bHs
-bIX
+shc
 obC
 bLL
 bMK
@@ -98286,7 +98328,7 @@ bEk
 bFh
 bGk
 bAU
-fSP
+uhR
 bAU
 bLL
 bML
@@ -100122,13 +100164,13 @@ cfa
 cdZ
 mpl
 aad
-aPh
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+gvP
+abZ
+muN
+abZ
+iVZ
+abZ
+drB
 aaa
 aaa
 aaa
@@ -100623,7 +100665,7 @@ aaa
 aaa
 aaa
 aci
-vqs
+eSn
 aeL
 afF
 afI
@@ -100925,7 +100967,7 @@ aaa
 acj
 xcP
 acj
-hrU
+mMz
 aeK
 vrz
 afI
@@ -101227,7 +101269,7 @@ aay
 edo
 adi
 edo
-mnf
+sXN
 aeK
 afH
 afI
@@ -103444,13 +103486,13 @@ bZJ
 bZJ
 aaf
 abZ
-aPh
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+huG
+abZ
+gNv
+abZ
+oOQ
+abZ
+pHq
 aaa
 aaa
 aaa
@@ -103697,12 +103739,12 @@ duY
 mGs
 lIg
 hOA
-agl
-agl
-agl
-agl
-aEq
-aLs
+gGC
+gGC
+gGC
+gGC
+udo
+jKj
 bmy
 bnX
 bpm
@@ -104003,7 +104045,7 @@ bff
 bgl
 bff
 bff
-aFU
+mpv
 bff
 bmA
 bnY
@@ -104305,7 +104347,7 @@ aaa
 bgm
 bfg
 bfg
-aFU
+mpv
 bfg
 bmB
 bnZ
@@ -104607,7 +104649,7 @@ aaa
 bgm
 bfg
 bfg
-aFU
+mpv
 bfg
 bmB
 bnZ
@@ -104909,7 +104951,7 @@ cpu
 bgl
 tmy
 blk
-aFU
+mpv
 blk
 bmy
 boa
@@ -105192,27 +105234,27 @@ rNZ
 tOb
 aJe
 aaf
-abk
-aPC
-aPC
-aPC
-aPC
-aPC
-bxj
-bxj
-aPC
-aPC
-aPC
-aPC
-aPC
-aPC
-iFH
+woI
+kXh
+kXh
+kXh
+kXh
+kXh
+xAZ
+xAZ
+kXh
+kXh
+kXh
+kXh
+kXh
+kXh
+ujV
 aaa
 bgm
 bfg
-biM
-xwP
-eQE
+bXA
+rWQ
+gHX
 bmy
 bob
 bpm
@@ -105494,7 +105536,7 @@ aAT
 aad
 aad
 aaf
-aea
+kSI
 aQJ
 aQJ
 aQJ
@@ -105508,11 +105550,11 @@ aQJ
 aQJ
 aQJ
 aQJ
-aeV
+oip
 aaa
 bgm
 bfg
-aFU
+mpv
 oAd
 eZW
 bmy
@@ -105796,7 +105838,7 @@ aAS
 aaa
 aaa
 ach
-aea
+kSI
 aQJ
 aQJ
 aQJ
@@ -105810,11 +105852,11 @@ aQJ
 aQJ
 aQJ
 aQJ
-aeV
+oip
 ree
 gxN
 ree
-edL
+uHT
 nkf
 qWc
 qca
@@ -106098,7 +106140,7 @@ auL
 aMK
 abZ
 aaf
-aea
+kSI
 aQJ
 aQJ
 aQJ
@@ -106112,11 +106154,11 @@ aQJ
 aQJ
 aQJ
 aQJ
-aeV
+oip
 ree
 gxN
 ree
-edL
+uHT
 lqE
 hvX
 umn
@@ -106400,7 +106442,7 @@ aLI
 aML
 aaa
 aaO
-aea
+kSI
 aQJ
 aQJ
 aQJ
@@ -106414,11 +106456,11 @@ aQJ
 aQJ
 aQJ
 aQJ
-aeV
+oip
 ree
 gxN
 ree
-edL
+uHT
 iha
 dPM
 rjP
@@ -106702,7 +106744,7 @@ aLJ
 aML
 aaa
 aaa
-aea
+kSI
 aQJ
 aQJ
 aQJ
@@ -106716,11 +106758,11 @@ aQJ
 aQJ
 aQJ
 aQJ
-aeV
+oip
 tOE
-fXT
+uFe
 tOE
-edL
+uHT
 lqE
 doq
 wDO
@@ -106737,7 +106779,7 @@ qnr
 bBt
 frY
 bmy
-bCq
+ilj
 bDA
 bFs
 bHT
@@ -107004,7 +107046,7 @@ aLI
 aML
 aaa
 aaa
-aea
+kSI
 aQJ
 aQJ
 aQJ
@@ -107018,11 +107060,11 @@ aQJ
 aQJ
 aQJ
 aQJ
-aeV
-oUa
-ury
-tWL
-kga
+oip
+cId
+jPi
+qRa
+fLO
 xkQ
 svJ
 vfH
@@ -107306,7 +107348,7 @@ aLJ
 aML
 aaa
 acb
-aea
+kSI
 aQJ
 aQJ
 aQJ
@@ -107320,11 +107362,11 @@ aQJ
 aQJ
 aQJ
 aQJ
-aeV
-qoc
+oip
+xWy
 mLb
-juf
-jpN
+brD
+eHV
 umn
 umn
 hwy
@@ -107606,9 +107648,9 @@ auL
 auL
 uvh
 azW
-nRo
+doT
 aaf
-aea
+kSI
 aQJ
 aQJ
 aQJ
@@ -107622,11 +107664,11 @@ aQJ
 aQJ
 aQJ
 aQJ
-aeV
-iuC
+oip
+qaY
 mLb
 tOE
-edL
+uHT
 jzv
 xqO
 iJA
@@ -107905,12 +107947,12 @@ syb
 sFU
 aIu
 uFb
-aaV
-aaX
-aaY
-abg
+eYk
+ieW
+pBx
+rKa
 aaf
-aea
+kSI
 aQJ
 aQJ
 aQJ
@@ -107924,11 +107966,11 @@ aQJ
 aQJ
 aQJ
 aQJ
-aeV
-tzN
-ury
-tWL
-kga
+oip
+rZE
+jPi
+qRa
+fLO
 qSo
 quY
 eEO
@@ -108207,12 +108249,12 @@ auN
 auL
 auL
 auL
-cth
+xzn
 aaf
 aMN
 aad
 aaf
-aea
+kSI
 aQJ
 aQJ
 aQJ
@@ -108226,18 +108268,18 @@ aQJ
 aQJ
 aQJ
 aQJ
-aeV
+oip
 juf
-xQB
+sPq
 juf
-edL
+uHT
 xkQ
 gJa
 xkQ
 eGc
 xkQ
 eNu
-xgv
+kxH
 hjz
 rTt
 bki
@@ -108475,9 +108517,9 @@ aca
 acc
 aca
 adH
-adE
+llz
 aeR
-adE
+llz
 agG
 ahH
 aiF
@@ -108487,13 +108529,13 @@ alt
 amz
 anC
 aoC
-apJ
+kSc
 aqN
 mrx
 asX
 auh
 auR
-avV
+tVL
 aqN
 aad
 aad
@@ -108509,12 +108551,12 @@ sHU
 aHx
 aIv
 aJu
-aaQ
+lEC
 acO
 wXw
 aaa
 ach
-aea
+kSI
 aQJ
 aQJ
 aQJ
@@ -108528,11 +108570,11 @@ aQJ
 aQJ
 aQJ
 aQJ
-aeV
+oip
 ree
 gxN
 ree
-edL
+uHT
 umn
 umn
 umn
@@ -108811,12 +108853,12 @@ aGu
 aHy
 aIw
 aCf
-aaQ
+lEC
 acO
 aaa
 aaa
 ach
-aea
+kSI
 aQJ
 aQJ
 aQJ
@@ -108830,11 +108872,11 @@ aQJ
 aQJ
 aQJ
 aQJ
-aeV
+oip
 aaa
 aci
 aaa
-abl
+iQU
 bfn
 gSr
 bok
@@ -109080,7 +109122,7 @@ aaa
 aaa
 aaa
 aeG
-aaJ
+cMU
 cpp
 aaa
 aaa
@@ -109113,12 +109155,12 @@ wSs
 hSf
 jbt
 aCf
-aaQ
+lEC
 acO
 aaa
 aaa
 ach
-aea
+kSI
 aQJ
 aQJ
 aQJ
@@ -109132,11 +109174,11 @@ aQJ
 aQJ
 aQJ
 aQJ
-aeV
+oip
 aaa
 aci
 aaa
-abl
+iQU
 coZ
 uCI
 ddx
@@ -109382,7 +109424,7 @@ aaa
 aaa
 aaa
 ach
-aaJ
+cMU
 acO
 aaa
 aaa
@@ -109415,30 +109457,30 @@ aGw
 dmH
 gnh
 aCf
-aaQ
+lEC
 acO
 aaa
 aaa
 ach
-arv
-buO
-buO
-buO
-buO
-aWE
-buO
-buO
-buO
-buO
-buO
-buO
-aWE
-buO
-iPb
+ftp
+khq
+khq
+khq
+khq
+wfJ
+khq
+khq
+khq
+khq
+khq
+khq
+wfJ
+khq
+ibm
 aaa
 aci
 aaa
-abl
+iQU
 bhK
 blr
 ddx
@@ -109684,7 +109726,7 @@ aaa
 aaa
 aaa
 ach
-aaJ
+cMU
 acO
 aaa
 aaa
@@ -109717,7 +109759,7 @@ tVy
 aCf
 aCf
 aFn
-aaQ
+lEC
 aaf
 aay
 aay
@@ -109739,8 +109781,8 @@ aaf
 aaf
 uez
 aaf
-cQW
-eVT
+xoN
+rzZ
 biT
 coQ
 ddx
@@ -109986,7 +110028,7 @@ aaa
 aaa
 aaa
 ach
-aaJ
+cMU
 acO
 aaa
 aaa
@@ -110019,29 +110061,29 @@ dlp
 aaa
 aaa
 ach
-aaW
-aaZ
-aaS
-aaS
-aaS
-aaS
-aaS
-aaS
-aaS
-aaS
-aaS
-aaS
-aaS
-aaS
-aaS
-chb
-mFY
-mFY
-mFY
-mFY
-mFY
-mFY
-eVT
+qNU
+nvT
+sVw
+sVw
+sVw
+sVw
+sVw
+sVw
+sVw
+sVw
+sVw
+sVw
+sVw
+sVw
+sVw
+mbe
+wRa
+wRa
+wRa
+wRa
+wRa
+wRa
+rzZ
 bfn
 bfn
 boj
@@ -110288,7 +110330,7 @@ aaa
 aaa
 aaa
 ach
-aaJ
+cMU
 acO
 aaa
 aaa
@@ -110322,7 +110364,7 @@ aaa
 aaa
 aaO
 aaf
-aaQ
+lEC
 aaf
 aad
 aad
@@ -110336,7 +110378,7 @@ aad
 aaf
 aad
 aad
-abl
+iQU
 aad
 aad
 aad
@@ -110590,7 +110632,7 @@ aaa
 aaa
 aaa
 ach
-aaJ
+cMU
 acO
 aaa
 aaa
@@ -110624,7 +110666,7 @@ aaa
 aaa
 aaa
 ach
-aaQ
+lEC
 acO
 aaa
 aaa
@@ -110638,7 +110680,7 @@ aaa
 aci
 aaa
 aaa
-abl
+iQU
 aaa
 aaa
 aaa
@@ -110892,7 +110934,7 @@ aaa
 aaa
 aaa
 ach
-aaJ
+cMU
 acO
 aaa
 aaa
@@ -110926,7 +110968,7 @@ abZ
 abZ
 abZ
 aaf
-aaQ
+lEC
 acO
 aaa
 aaa
@@ -110940,7 +110982,7 @@ aaa
 aci
 aaa
 aaa
-abl
+iQU
 aaa
 aaa
 aaa
@@ -111194,7 +111236,7 @@ aaa
 aaa
 aaa
 ach
-aaJ
+cMU
 acO
 aaa
 aaa
@@ -111228,7 +111270,7 @@ aaa
 aaa
 aaa
 ach
-aaQ
+lEC
 acO
 aaa
 aaa
@@ -111242,7 +111284,7 @@ aaa
 ach
 aay
 aay
-abl
+iQU
 abZ
 abZ
 abZ
@@ -111496,7 +111538,7 @@ aaa
 aaa
 aaa
 ach
-aaJ
+cMU
 acO
 aaa
 aaa
@@ -111530,7 +111572,7 @@ aaa
 aaa
 aaa
 ach
-aaQ
+lEC
 acO
 aaa
 aaa
@@ -111544,7 +111586,7 @@ aci
 aaa
 aaa
 aaa
-abl
+iQU
 aaa
 aaa
 aaa
@@ -111798,7 +111840,7 @@ aaa
 aaa
 aaa
 ach
-aaJ
+cMU
 acO
 aaa
 aaa
@@ -111832,7 +111874,7 @@ aaa
 aaa
 aaa
 aci
-aaQ
+lEC
 acO
 aaa
 aaa
@@ -111845,8 +111887,8 @@ qYs
 acO
 aaa
 aaa
-tuN
-riw
+vIi
+hjv
 aaa
 aaa
 aaa
@@ -112100,7 +112142,7 @@ aaa
 aaa
 aaa
 aeG
-aaJ
+cMU
 buM
 aaa
 aaa
@@ -112134,7 +112176,7 @@ aaa
 aaa
 aaa
 aci
-aaQ
+lEC
 aaf
 abZ
 abZ
@@ -112426,17 +112468,17 @@ aaa
 aaa
 aaa
 ach
-aNC
-aaS
-aaS
-aaS
-aaS
-aaS
-aaS
-aaS
-aaS
-aaS
-bTB
+okL
+sVw
+sVw
+sVw
+sVw
+sVw
+sVw
+sVw
+sVw
+sVw
+jMI
 acO
 aaa
 aaa
@@ -112703,9 +112745,9 @@ aaa
 aaa
 aaa
 adp
-adE
+llz
 aeR
-adE
+llz
 adp
 aaa
 aaa
@@ -112728,7 +112770,7 @@ aaa
 aaa
 aaa
 ach
-aaQ
+lEC
 aCh
 aPM
 aGF
@@ -112738,7 +112780,7 @@ bwp
 aXM
 aCh
 aad
-aaQ
+lEC
 awS
 aaa
 aaa
@@ -113040,7 +113082,7 @@ skX
 wMw
 lgL
 aay
-aaQ
+lEC
 afw
 aaa
 aaa
@@ -113061,7 +113103,7 @@ oNK
 cpa
 nFV
 bkt
-cyl
+aNt
 rpC
 jcM
 bpu
@@ -113325,7 +113367,7 @@ fpB
 xnb
 nNQ
 iRP
-iZx
+pRV
 aFv
 aaa
 aaa
@@ -113342,7 +113384,7 @@ aIA
 aXN
 aCh
 bhF
-aaQ
+lEC
 aaf
 abZ
 abZ
@@ -113644,7 +113686,7 @@ aKJ
 aKJ
 aCh
 aaf
-aaQ
+lEC
 acO
 aaa
 aaa
@@ -113675,7 +113717,7 @@ mlf
 sSa
 dZr
 fWc
-bzr
+fVs
 boo
 iGa
 uDm
@@ -113946,7 +113988,7 @@ bqC
 bEJ
 bNl
 aad
-aaQ
+lEC
 acO
 aaa
 aaa
@@ -114248,7 +114290,7 @@ xEt
 xEt
 bNo
 aaa
-aaQ
+lEC
 acO
 aaa
 aaa
@@ -114550,7 +114592,7 @@ xEt
 xEt
 bNo
 aaa
-aaQ
+lEC
 acO
 aaa
 aaa
@@ -114852,7 +114894,7 @@ xEt
 xEt
 bNo
 aaa
-aaQ
+lEC
 acO
 aaa
 aaa
@@ -115154,7 +115196,7 @@ xEt
 vwY
 aCh
 aay
-aaQ
+lEC
 acO
 mEy
 mEy
@@ -116675,7 +116717,7 @@ mEy
 mEy
 aIY
 aVz
-bLl
+hvn
 dZK
 kLJ
 aZS
@@ -116977,7 +117019,7 @@ aTc
 aPF
 tsS
 bFZ
-aWS
+nEw
 dZK
 xBa
 aZT
@@ -117279,7 +117321,7 @@ oHK
 ieG
 aZJ
 aVA
-xXJ
+qEW
 aXS
 iaN
 bVU
@@ -120021,7 +120063,7 @@ tPr
 fQi
 fhH
 bzA
-sMG
+ydq
 cpE
 bBD
 xft
@@ -121170,8 +121212,8 @@ age
 atl
 awg
 adL
-jKd
-jKd
+sQl
+sQl
 ard
 ard
 ard
@@ -122399,7 +122441,7 @@ xOu
 lYl
 vmv
 kaJ
-pJw
+izg
 kaJ
 xCS
 aMd
@@ -122972,9 +123014,9 @@ aaa
 aaa
 aaa
 adv
-agY
-agY
-agY
+wfw
+wfw
+wfw
 adv
 ahd
 akL
@@ -124245,7 +124287,7 @@ wDf
 bDY
 oek
 jNU
-cZL
+moi
 wDf
 cNv
 dfl
@@ -124874,7 +124916,7 @@ dyt
 eGX
 bDX
 bnq
-upK
+lmm
 aay
 aay
 aay
@@ -125176,11 +125218,11 @@ bHl
 bfO
 bDX
 bnq
-jal
-khy
-khy
-khy
-upK
+ssS
+gvQ
+gvQ
+gvQ
+lmm
 acO
 aaa
 aaa
@@ -125482,7 +125524,7 @@ xnF
 dsx
 dsx
 dsx
-jEJ
+ilC
 acO
 aaa
 aaa
@@ -125784,7 +125826,7 @@ dsx
 dsx
 dsx
 dsx
-jEJ
+ilC
 acO
 aaa
 aaa
@@ -126086,7 +126128,7 @@ dsx
 dsx
 dsx
 dsx
-jEJ
+ilC
 acO
 aaa
 aaa
@@ -126388,7 +126430,7 @@ xnF
 dsx
 dsx
 dsx
-jEJ
+ilC
 acO
 aaa
 aaa
@@ -126686,11 +126728,11 @@ eyk
 bfO
 bUJ
 bnq
-nFK
-khy
-khy
-khy
-jTw
+xjf
+gvQ
+gvQ
+gvQ
+geL
 acO
 aaa
 aaa
@@ -127194,7 +127236,7 @@ aaa
 aaa
 aaa
 ext
-dWu
+dXS
 wNG
 aaa
 aaa
@@ -127496,12 +127538,12 @@ aaa
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 abZ
 abZ
 ext
-dWu
+dXS
 wNG
 abZ
 abZ
@@ -127798,12 +127840,12 @@ aaa
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
@@ -128100,12 +128142,12 @@ aaa
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 abZ
 abZ
 ext
-oad
+nkj
 wNG
 abZ
 abZ
@@ -128187,10 +128229,10 @@ bHl
 bHl
 bHl
 bHl
-rAK
-rAK
-rAK
-rAK
+jie
+jie
+jie
+jie
 bnq
 bUJ
 bfO
@@ -128402,12 +128444,12 @@ aaa
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
@@ -128415,7 +128457,7 @@ aaa
 aci
 aaa
 anW
-bXQ
+naK
 qRs
 way
 anX
@@ -128704,12 +128746,12 @@ aaa
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
@@ -128717,7 +128759,7 @@ aaa
 aci
 aaa
 anW
-lOf
+rKN
 ane
 ane
 anX
@@ -129006,20 +129048,20 @@ aaa
 aaa
 aaa
 aaL
-lOf
+rKN
 adw
 adI
 adI
 adw
-lOf
-adw
-adI
+rKN
 adw
 adI
 adw
 adI
 adw
-lOf
+adI
+adw
+rKN
 adw
 avT
 anX
@@ -129038,7 +129080,7 @@ anX
 aoc
 anX
 bfs
-aaW
+qNU
 bEC
 bmI
 aHa
@@ -129308,20 +129350,20 @@ aaa
 aaa
 aaa
 aaL
-vXB
-wWA
-wWA
-wWA
-wWA
-mHj
-wWA
-wWA
-wWA
-wWA
-dWu
-wWA
-wWA
-pvc
+uLX
+gTN
+gTN
+gTN
+gTN
+kYw
+gTN
+gTN
+gTN
+gTN
+dXS
+gTN
+gTN
+gWP
 asb
 aaa
 anX
@@ -129610,17 +129652,17 @@ aaa
 aaa
 aaa
 aaL
-lOf
+rKN
 adw
 adS
 adS
 adw
-lOf
+rKN
 adw
 adS
 adS
 adw
-lOf
+rKN
 adw
 adS
 adS
@@ -129912,17 +129954,17 @@ aaa
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
@@ -130214,17 +130256,17 @@ aaa
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
@@ -130516,17 +130558,17 @@ aaa
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 abZ
 abZ
@@ -130818,17 +130860,17 @@ aaa
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
@@ -131120,17 +131162,17 @@ aaa
 aaa
 aaa
 ext
-lBj
+lYj
 wNG
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
 ext
-oad
+nkj
 wNG
 aaa
 aaa
@@ -131210,11 +131252,11 @@ aaa
 aaT
 aaa
 aaa
-gUW
+jBk
 hGp
 oUm
 sXS
-gUW
+jBk
 aaa
 aaa
 aaa
@@ -131427,12 +131469,12 @@ aaa
 aaa
 aaa
 ext
-mHj
+kYw
 wNG
 aaa
 aaa
 ext
-lBj
+lYj
 wNG
 aaa
 aaa
@@ -131512,11 +131554,11 @@ aaa
 aaa
 aaa
 abW
-gUW
+jBk
 ica
 poX
 ica
-gUW
+jBk
 agm
 aaa
 aaa
@@ -131729,7 +131771,7 @@ aaa
 aaa
 aaa
 ach
-lOf
+rKN
 acO
 aaa
 aaa
@@ -131814,11 +131856,11 @@ aaa
 aaa
 aaa
 aaa
-gUW
+jBk
 ica
 ica
 ica
-gUW
+jBk
 aaa
 aaa
 aaa
@@ -132031,7 +132073,7 @@ aaa
 aaa
 aaa
 ach
-lOf
+rKN
 acO
 aaa
 aaa
@@ -132116,11 +132158,11 @@ aaa
 aaa
 aaa
 aaa
-gUW
-gUW
-gUW
-gUW
-gUW
+jBk
+jBk
+jBk
+jBk
+jBk
 aaa
 aaa
 aaa
@@ -132333,7 +132375,7 @@ aaa
 aaa
 agj
 aaf
-rJL
+mNU
 aaf
 aPh
 aaa
@@ -132972,7 +133014,7 @@ aaa
 aaa
 aci
 ach
-bTi
+sNi
 lXB
 diS
 fqj
@@ -139737,9 +139779,9 @@ aaa
 aaa
 aaa
 hMe
-aaS
-aaS
-aaS
+sVw
+sVw
+sVw
 vWU
 aaa
 aaa
@@ -140038,11 +140080,11 @@ aaa
 aaa
 aaa
 aaa
-aaS
+sVw
 uSs
 uSs
 uSs
-aaS
+sVw
 aaa
 aaa
 aab
@@ -140340,11 +140382,11 @@ aaa
 aaa
 aaa
 aaa
-aaS
+sVw
 uSs
 jhj
 uSs
-aaS
+sVw
 aaa
 aaa
 aaa
@@ -140642,11 +140684,11 @@ aaa
 aaa
 aaa
 aaa
-aaS
+sVw
 uSs
 uSs
 uSs
-aaS
+sVw
 aaa
 aaa
 aaa
@@ -143047,9 +143089,9 @@ aaa
 aaa
 aaa
 aaa
-ckc
-ckc
-ckc
+ybH
+ybH
+ybH
 aac
 ckU
 ckY
@@ -143349,7 +143391,7 @@ aaa
 aaa
 aaa
 aaa
-ckc
+ybH
 ckj
 ckA
 ckL
@@ -143651,9 +143693,9 @@ aaa
 aaa
 aaa
 aaa
-ckc
-ckc
-ckc
+ybH
+ybH
+ybH
 aac
 ckU
 cla

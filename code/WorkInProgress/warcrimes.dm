@@ -70,6 +70,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 	icon_off = "monkey-off"
 	icon_broken = "monkey-broken"
 	icon_fallen = "monkey-fallen"
+	icon_fallen_broken = "monkey-fallen-broken"
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("It's meat you can buy!",
@@ -210,7 +211,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 
 			var/mob/living/carbon/human/john/newbody = new()
 			newbody.set_loc(target_turf)
-			newbody.overlays += image('icons/misc/32x64.dmi',"halo")
+			newbody.setStatus("in_afterlife", INFINITE_STATUS, newbody)
 			if(inafterlifebar(src))
 				qdel(src)
 			return

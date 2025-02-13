@@ -266,6 +266,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	req_access = list(access_head_of_personnel)
 	spawn_contents = list(/obj/item/device/flash,
 	/obj/item/storage/box/id_kit,
+	/obj/item/cash_briefcase,
 	/obj/item/storage/box/clothing/hop,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/suit/armor/vest,
@@ -275,7 +276,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clipboard,
 	/obj/item/clothing/suit/hopjacket,
 	/obj/item/pet_carrier,
-	/obj/item/device/pda2/hop)
+	/obj/item/device/pda2/hop,
+	/obj/item/device/panicbutton/medicalalert/hop)
 
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"
@@ -295,7 +297,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/suit/labcoat,
 	/obj/item/device/radio/headset/command/rd,
 	/obj/item/pet_carrier,
-	/obj/item/device/pda2/research_director)
+	/obj/item/device/pda2/research_director,
+	/obj/item/places_pipes/research,
+	/obj/item/rcd_ammo/big)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -402,13 +406,36 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 
 /obj/storage/secure/closet/security/equipment
 	name = "\improper Security equipment locker"
-	spawn_contents = list(/obj/item/clothing/suit/armor/vest,
+	spawn_contents = list(/obj/item/clothing/under/rank/security,
+	/obj/item/device/radio/headset/security,
+	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security,
+	/obj/item/clothing/shoes/swat,
 	/obj/item/clothing/glasses/sunglasses/sechud,
 	/obj/item/handcuffs,
 	/obj/item/handcuffs,
 	/obj/item/device/flash,
 	/obj/item/barrier)
+
+	make_my_stuff()
+		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
+			if (prob(15))
+				new /obj/item/gun/kinetic/riot40mm(src)
+			else
+				new /obj/item/chem_grenade/flashbang(src)
+			return 1
+
+/obj/storage/secure/closet/security/equipment/derelict
+	name = "derelict Security equipment locker"
+	spawn_contents = list(/obj/item/clothing/head/helmet/hardhat/security,
+	/obj/item/clothing/glasses/sunglasses/sechud,
+	/obj/item/handcuffs,
+	/obj/item/handcuffs,
+	/obj/item/device/flash,
+	/obj/item/barrier)
+
+	make_my_stuff()
+		..()
 
 /obj/storage/secure/closet/security/forensics
 	name = "Forensics equipment locker"
@@ -698,6 +725,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 /obj/storage/secure/closet/research/uniform
 	name = "science uniform locker"
 	spawn_contents = list(/obj/item/tank/air,
+	/obj/item/crowbar/purple,
 	/obj/item/storage/backpack/research,
 	/obj/item/storage/box/clothing/research,
 	/obj/item/clothing/suit/wintercoat/research,
@@ -869,6 +897,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 /obj/storage/secure/closet/civilian/ranch
 	name = "\improper Rancher supplies locker"
 	req_access = list(access_ranch)
+	icon_state = "secure_green"
+	icon_closed = "secure_green"
+	icon_opened = "secure_green-open"
 	spawn_contents = list(/obj/item/paper/ranch_guide,\
 	/obj/item/fishing_rod/basic,\
 	/obj/item/storage/box/clothing/rancher,\

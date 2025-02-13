@@ -106,6 +106,21 @@ var/global/datum/controller/throwing/throwing_controller = new
 				end_throwing = TRUE
 				break
 			thing.glide_size = (32 / (1/thr.speed)) * world.tick_lag
+			if (thr.throw_type == THROW_THROUGH_WALL)
+				var/busted = FALSE
+				if (istype(next, /turf/simulated/wall))
+					var/turf/simulated/wall/wall = next
+					wall.ReplaceWithFloor()
+					busted = TRUE
+				else
+					for (var/obj/object in next.contents)
+						if (object.density)
+							object.ex_act(1)
+							busted = TRUE
+				if (busted)
+					new /obj/effects/explosion/dangerous(next)
+					end_throwing = FALSE
+					thr.throw_type = THROW_NORMAL
 			if (!thing.Move(next))  // Grayshift: Race condition fix. bump proc calls are delayed past the end of the loop and won't trigger end condition
 				thr.hitAThing = TRUE // of !throwing on their own, so manually checking if Move failed as end condition
 				end_throwing = TRUE

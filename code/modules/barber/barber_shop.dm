@@ -114,6 +114,8 @@
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (is_special)
+			return ..()
 		if (src.remove_bandage(target, user))
 			return 1
 		if (snip_surgery(target, user))
@@ -160,6 +162,8 @@
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (is_special)
+			return ..()
 		if (scalpel_surgery(target, user))
 			return 1
 		..()

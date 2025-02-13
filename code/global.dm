@@ -48,6 +48,7 @@ var/global
 	list/mobs = list()
 	list/ai_mobs = list()
 	list/processing_items = list()
+	list/processing_mechanics = list()
 	list/health_update_queue = list()
 	list/processing_fluid_groups = list()
 	list/processing_fluid_spreads = list()
@@ -312,6 +313,7 @@ var/global
 
 	outpost_destroyed = 0
 	signal_loss = 0
+	solar_gen_rate = DEFAULT_SOLARGENRATE
 	fart_attack = 0
 	blowout = 0
 	farty_party = 0

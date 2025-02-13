@@ -8,12 +8,31 @@
 
 /obj/machinery/atmospherics/unary/tank/New()
 	..()
+	src.AddComponent(/datum/component/obj_projectile_damage)
 	src.air_contents.volume = src.volume
 	src.air_contents.temperature = T20C
 
 /obj/machinery/atmospherics/unary/tank/update_icon()
 	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, FALSE)
 
+
+/obj/machinery/atmospherics/unary/tank/attackby(obj/item/I, mob/user) //let's just make these breakable for now
+	if (I.force)
+		src.visible_message(SPAN_ALERT("[user] hits \the [src] with \a [I]!"))
+		user.lastattacked = src
+		attack_particle(user,src)
+		hit_twitch(src)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
+		logTheThing(LOG_STATION, user, "attacks [src] [log_atmos(src)] with [I] at [log_loc(src)].")
+		src.changeHealth(-I.force)
+	..()
+
+/obj/machinery/atmospherics/unary/tank/onDestroy()
+	var/atom/location = src.loc
+	location.assume_air(air_contents)
+	air_contents = null
+	src.gib(location)
+	..()
 
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide
 	icon = 'icons/obj/atmospherics/tanks/black_pipe_tank.dmi'

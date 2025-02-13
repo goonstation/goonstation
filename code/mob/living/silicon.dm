@@ -28,6 +28,9 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 	var/static/regex/monospace_say_regex = new(@"`([^`]+)`", "g")
 
+	var/obj/minimap_controller/alertmap_controller = null
+	var/atom/movable/minimap_ui_handler/minimap_controller/general_alert/alert_minimap_ui = null
+
 	can_bleed = FALSE
 	blood_id = "oil"
 	use_stamina = FALSE
@@ -53,6 +56,12 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 /mob/living/silicon/disposing()
 	req_access = null
+	if(src.alertmap_controller)
+		qdel(src.alertmap_controller)
+		src.alertmap_controller = null
+	if(src.alert_minimap_ui)
+		qdel(src.alert_minimap_ui)
+		src.alert_minimap_ui = null
 	return ..()
 
 /mob/living/silicon/can_eat()
@@ -623,7 +632,7 @@ var/global/list/module_editors = list()
 	if (user)
 		var/area/A = get_area(src.law_rack_connection)
 		boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
-	src.playsound_local(src, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
+	src.playsound_local(src, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 	src.show_text("<h3>You have been connected to a law rack</h3>", "red")
 	src.show_laws()
 
@@ -697,3 +706,24 @@ var/global/list/module_editors = list()
 
 /mob/living/silicon/get_unequippable()
 	return
+
+/mob/living/silicon/proc/connect_to_alert_minimap()
+	var/obj/minimap/alert/alert_map = get_singleton(/obj/minimap/alert)
+	if (!src.alertmap_controller)
+		src.alertmap_controller = new(alert_map)
+	if (!src.alert_minimap_ui)
+		src.alert_minimap_ui = new(src, "alert_map", src.alertmap_controller, "Alert Map", "nanotrasen")
+
+/mob/living/silicon/proc/open_alert_minimap(mob/user=src)
+	if (!src.alertmap_controller || !src.alert_minimap_ui)
+		src.connect_to_alert_minimap()
+	src.alert_minimap_ui.ui_interact(user)
+
+/mob/living/silicon/take_radiation_dose(Sv, internal)
+	if (src.client)
+		src.setStatusMin("silicon_radiation", 6 SECONDS, Sv)
+		src.geigerclick(geiger_stage(Sv))
+
+/mob/living/silicon/proc/geigerclick(stage)
+	if(!ON_COOLDOWN(src, "geigerclick", 1 SECOND))
+		src.playsound_local(get_turf(src), "sound/items/geiger/geiger-[stage]-[stage >= 4 ? rand(1, 3) : rand(1, 2)].ogg", 20, flags = SOUND_IGNORE_SPACE)

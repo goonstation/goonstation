@@ -24,8 +24,7 @@
 	New()
 		..()
 		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(attackby_pre))  // Storage for a single lure item
-		var/list/fishing_rods = list(/obj/item/fishing_rod, /obj/item/fishing_rod/basic, /obj/item/fishing_rod/upgraded, /obj/item/fishing_rod/master)
-		src.create_storage(/datum/storage, max_wclass = W_CLASS_NORMAL, slots = 1, prevent_holding = fishing_rods)
+		src.create_storage(/datum/storage, can_hold = list(/obj/item/reagent_containers/food), max_wclass = W_CLASS_NORMAL, slots = 1)
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE)
@@ -124,6 +123,12 @@
 			src.rod.UpdateIcon()
 			src.user.update_inhands()
 			return
+
+	onInterrupt(flag)
+		src.rod.is_fishing = FALSE
+		src.rod.UpdateIcon()
+		src.user.update_inhands()
+		. = ..()
 
 	onEnd()
 		if (!(BOUNDS_DIST(src.user, src.rod) == 0) || !(BOUNDS_DIST(src.user, src.target) == 0) || !src.user || !src.target || !src.rod || !src.fishing_spot)

@@ -151,6 +151,15 @@
 		else
 			if(abs(src._last_rpm_icon_update - src.RPM) > 10)
 				src._last_rpm_icon_update = src.RPM
+				// reduce image flicker while clients download the generated icon
+				var/image/old_icon
+				if(src.icon_state == "turbine_spin_speed")
+					old_icon = src.SafeGetOverlayImage("old_icon", src.icon, "turbine_spin_speed", src.layer-0.1)
+				else
+					old_icon = src.SafeGetOverlayImage("old_icon", src.icon, "turbine_main", src.layer-0.1)
+				src.AddOverlays(old_icon, "old_icon")
+				SPAWN(0.5 SECONDS)
+					src.ClearSpecificOverlays("old_icon")
 				src.icon = src.generate_icon()
 				src.icon_state = "turbine_spin_speed"
 				UpdateIcon()
@@ -230,7 +239,7 @@
 
 			src.network1?.update = TRUE
 			src.network2?.update = TRUE
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "rpm=[src.RPM]&stator=[src.stator_load]&power=[src.lastgen]&powerfmt=[engineering_notation(src.lastgen)]W")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "rpm=[src.RPM]&stator=[src.stator_load]&power=[num2text(round(src.lastgen), 50)]&powerfmt=[engineering_notation(src.lastgen)]W")
 
 	suicide(mob/user)
 		user.visible_message(SPAN_ALERT("<b>[user] puts their head into blades of \the [src]!</b>"))

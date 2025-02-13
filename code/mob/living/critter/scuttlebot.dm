@@ -82,6 +82,9 @@
 			else
 				boutput(src, SPAN_ALERT("Your conscience tries to reintegrate your body, but its already possessed by something!"))
 
+		for(var/obj/item/photo/P in src.contents)
+			P.set_loc(get_turf(src))
+
 		..(gibbed, 0)
 
 		if (!gibbed)

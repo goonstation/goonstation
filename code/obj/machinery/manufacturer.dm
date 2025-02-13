@@ -494,6 +494,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/ref in src.stored_previous_materials_data)
 			if (!(ref in refs_encountered))
 				src.stored_previous_materials_data.Remove(ref)
+				contents_changed = TRUE
 		// Do actual computation since contents changed
 		if (contents_changed)
 			return src.compute_producibility_for_blueprints()
@@ -810,8 +811,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 						// This next bit is stolen from PTL Code
 					var/list/accounts = \
-						data_core.bank.find_records("job", "Chief Engineer") + \
-						data_core.bank.find_records("job", "Miner")
+						data_core.general.find_records("rank", "Chief Engineer") + \
+						data_core.general.find_records("rank", "Miner")
 
 
 					var/datum/signal/minerSignal = get_free_signal()
