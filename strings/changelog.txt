@@ -1,5 +1,9 @@
 
 (t)thu feb 13 25
+(u)Kaan
+(p)21979
+(e)🪲⚖🧛|C-Bug, C-Balance, A-Gamemodes
+(+)The cost of the nuclear rapid deployment remote has been reduced to 2 (from 4).
 (u)glowbold
 (p)22225
 (e)🆕🗺🔄💡|C-Feature, A-Mapping, C-Rework, A-Station-Systems
