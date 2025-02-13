@@ -373,10 +373,12 @@ var/datum/signal_holder/global_signal_holder
 	// all the objects that are receiving the signal get the signal this final time.
 	// AKA: No you can't cancel the signal reception of another object by doing an unregister in the same signal.
 	var/list/queued_calls = list()
-	for(var/datum/listening_datum as anything in target)
-		queued_calls[listening_datum] = listening_datum.signal_procs[src][sigtype]
-	for(var/datum/listening_datum as anything in queued_calls)
-		. |= call(listening_datum, queued_calls[listening_datum])(arglist(arguments))
+	// This should be faster than doing `var/datum/listening_datum as anything in target` as it does not implicitly copy the list
+	for(var/i in 1 to length(target))
+		var/datum/listening_datum = target[i]
+		queued_calls.Add(listening_datum, listening_datum.signal_procs[src][sigtype])
+	for(var/i in 1 to length(queued_calls) step 2)
+		. |= call(queued_calls[i], queued_calls[i + 1])(arglist(arguments))
 
 // The type arg is casted so initial works, you shouldn't be passing a real instance into this
 /**
@@ -499,8 +501,8 @@ var/datum/signal_holder/global_signal_holder
 						new_comp = new nt(raw_args)
 					if(!QDELETED(new_comp))
 						new_comp.InheritComponent(old_comp, FALSE)
-						qdel(new_comp)
-						new_comp = null
+						qdel(old_comp)
+						old_comp = null
 				if(COMPONENT_DUPE_UNIQUE_PASSARGS)
 					if(!new_comp)
 						var/list/arguments = raw_args.Copy(2)

@@ -2405,3 +2405,6 @@
 	src.emote("scream", FALSE)
 	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 40, 1)
 	return TRUE
+
+/mob/living/HealBleeding(amt)
+	src.bleeding = max(src.bleeding - amt, 0)

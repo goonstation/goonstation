@@ -8075,13 +8075,13 @@
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai)
 "aFt" = (
-/obj/machinery/computer/bank_data{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/bank_data{
+	dir = 8
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "aFu" = (
@@ -21312,9 +21312,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/computer/bank_data,
 /obj/machinery/power/data_terminal,
 /obj/cable,
+/obj/machinery/computer3/generic/bank_data,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "bKa" = (
@@ -21350,11 +21350,11 @@
 /turf/simulated/floor/carpet/green/fancy/edge/south,
 /area/station/bridge/hos)
 "bKf" = (
-/obj/machinery/computer/bank_data{
-	dir = 8
-	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/bank_data{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/bridge/hos)
 "bKg" = (

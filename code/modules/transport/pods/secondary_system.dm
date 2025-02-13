@@ -421,6 +421,68 @@
 		src.dummy_storage = null
 		..()
 
+/obj/item/shipcomponent/secondary_system/auto_repair_kit
+	name = "Automatic Repair System"
+	desc = "When fueled with welding fuel, consumes it over time to automatically repair any damage to the ship."
+	hud_state = "auto_repair"
+	power_used = 25
+
+	New()
+		src.flags |= OPENCONTAINER
+		..()
+		src.create_reagents(100)
+
+	activate()
+		if (src.reagents.get_reagent_amount("fuel") <= 0)
+			boutput(src.ship.pilot, "[src.ship.ship_message("[src] is out of fuel!")]")
+			return
+		var/obj/machinery/vehicle/vehicle = src.ship
+		if (vehicle.health >= vehicle.maxhealth)
+			boutput(src.ship.pilot, "[src.ship.ship_message("The ship is at full health!")]")
+			return
+
+		return ..()
+
+	run_component(mult)
+		if (!src.active)
+			return
+		if (GET_COOLDOWN(src.ship, "in_combat"))
+			return
+		if (src.reagents.get_reagent_amount("fuel") <= 0)
+			boutput(src.ship.pilot, "[src.ship.ship_message("[src] is out of fuel!")]")
+			src.deactivate()
+			return
+		var/obj/machinery/vehicle/vehicle = src.ship
+		if (vehicle.health >= vehicle.maxhealth)
+			boutput(src.ship.pilot, "[src.ship.ship_message("The ship is now at full health.")]")
+			src.deactivate()
+			return
+		var/fuel_to_use = min(src.reagents.get_reagent_amount("fuel"), 1 * mult)
+		src.reagents.remove_reagent("fuel", fuel_to_use)
+		vehicle.health = min(vehicle.health + 15 * mult, vehicle.maxhealth)
+		vehicle.checkhealth()
+
+	get_desc(dist, mob/user)
+		. = ..()
+		. += "<br>[SPAN_NOTICE("[src.reagents.get_description(user, RC_SCALE)]")]"
+
+	attack_self(mob/user)
+		..()
+		if (tgui_alert(user, "Empty reagents?", "Confirmation", list("Yes", "No")) == "Yes")
+			src.reagents.trans_to(get_turf(src), src.reagents.maximum_volume)
+
+	afterattack(obj/O, mob/user)
+		..()
+		if (src.reagents.total_volume >= src.reagents.maximum_volume)
+			boutput(user, SPAN_ALERT("[src] is at max capacity!"))
+			return
+		if ((istype(O, /obj/reagent_dispensers) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && BOUNDS_DIST(src, O) == 0)
+			if (O.reagents.total_volume)
+				O.reagents.trans_to(src, 100)
+				playsound(src.loc, 'sound/effects/zzzt.ogg', 50, TRUE, -6)
+			else
+				boutput(user, SPAN_ALERT("The [O.name] is empty!"))
+
 /obj/item/shipcomponent/secondary_system/storage/Use(mob/user)
 	src.dummy_storage.storage.show_hud(user)
 
@@ -1320,3 +1382,21 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 	duration = 3 SECONDS
 	recharge_time = 120 SECONDS
 	shield_color = "#ff3916"
+
+/obj/item/shipcomponent/secondary_system/trailblazer
+	name = "Inferno Trailblazer"
+	desc = "A totally RADICAL plasma igniter for your ship! Leave behind the COOLEST flames in the Frontier! Manufacturer is not responsible for deaths this device may cause."
+	hud_state = "trailblazer"
+	f_active = TRUE
+
+	Use()
+		return
+
+	toggle()
+		return
+
+	activate()
+		return
+
+	deactivate()
+		return

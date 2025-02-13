@@ -45,3 +45,10 @@ export LD_LIBRARY_PATH=$BYONDDIR/bin${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 
 echo "Starting server..."
 DreamDaemon "goonstation.dmb" $SS13_PORT -trusted -verbose 2>&1 | bash tools/server/log.sh >> data/errors.log
+
+exitCode=${PIPESTATUS[0]}
+if [ $exitCode -ne 0 ]; then
+  echo "Crash detected!"
+	bash tools/server/crash-alert.sh
+fi
+exit $exitCode
