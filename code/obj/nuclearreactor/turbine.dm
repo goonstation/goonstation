@@ -27,7 +27,7 @@
 	/// How much power we generated last tick
 	var/lastgen = 0
 	/// Stator load is basically watts per revolution
-	var/stator_load = 10000
+	var/stator_load = 500000
 	/// Current RPM of the turbine
 	var/RPM = 0
 	/// Calibration factor which determines how much inertia the turbine has - ie, resistance to change in RPM
