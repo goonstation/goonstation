@@ -1751,6 +1751,16 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
+"ayb" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/computer3/generic/bank_data{
+	dir = 8
+	},
+/turf/simulated/floor/blueblack,
+/area/station/bridge)
 "ayc" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/mesh/catwalk/jen,
@@ -5383,16 +5393,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
-"bzS" = (
-/obj/machinery/computer/bank_data{
-	dir = 8
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/blueblack,
-/area/station/bridge)
 "bzU" = (
 /obj/railing/orange{
 	dir = 4
@@ -12099,6 +12099,19 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/office)
+"dye" = (
+/obj/decal/stripe_delivery,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 4;
+	id = "testchamber"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/chemistry,
+/turf/simulated/floor/black,
+/area/station/science/testchamber)
 "dyh" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/window_blinds/cog2/right,
@@ -13060,17 +13073,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/engineering)
-"dOe" = (
-/obj/machinery/computer/bank_data{
-	dir = 8
-	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/black,
-/area/station/security/checkpoint/customs)
 "dOk" = (
 /obj/table/wood/round/auto,
 /obj/random_item_spawner/snacks/two,
@@ -27328,6 +27330,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
+"ikX" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/chemistry,
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "ikZ" = (
 /obj/machinery/disposal/small{
 	dir = 8
@@ -37229,6 +37243,17 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
+"lnR" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/bank_data{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/security/checkpoint/customs)
 "lnT" = (
 /obj/table/wood/auto,
 /obj/computer3frame/desktop,
@@ -37880,18 +37905,6 @@
 	name = "reinforced plating"
 	},
 /area/station/engine/ptl)
-"lwQ" = (
-/obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/obj/mapping_helper/access/research,
-/obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/station/science/chemistry)
 "lwW" = (
 /turf/simulated/floor/carpet/red/fancy/edge,
 /area/station/crew_quarters/stockex)
@@ -59040,6 +59053,18 @@
 /obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
+"rUo" = (
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/window_blinds/cog2/left{
+	dir = 4;
+	id = "chemistry"
+	},
+/obj/table/reinforced/chemistry/auto/clericalsup,
+/obj/mapping_helper/access/chemistry,
+/turf/simulated/floor/plating,
+/area/station/science/chemistry)
 "rUq" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -63143,6 +63168,21 @@
 /area/station/storage/auxillary{
 	name = "Tool Storage"
 	})
+"tgi" = (
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/machinery/cashreg{
+	name = "Chemistry credit transfer device"
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 4;
+	id = "chemistry"
+	},
+/obj/table/reinforced/chemistry/auto/clericalsup,
+/obj/mapping_helper/access/chemistry,
+/turf/simulated/floor/plating,
+/area/station/science/chemistry)
 "tgj" = (
 /obj/machinery/light/incandescent/netural,
 /obj/table/auto,
@@ -66139,9 +66179,6 @@
 /turf/simulated/floor/yellowblack,
 /area/station/engine/ptl)
 "tZn" = (
-/obj/critter/opossum/morty{
-	dir = 4
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -66155,6 +66192,9 @@
 /obj/machinery/light_switch/west{
 	pixel_y = -6;
 	pixel_x = -27
+	},
+/mob/living/critter/small_animal/opossum/morty{
+	dir = 4
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
@@ -70700,17 +70740,6 @@
 /obj/stool/bench/red,
 /turf/simulated/floor/wood/five,
 /area/station/medical/asylum/main)
-"vrR" = (
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8
-	},
-/obj/window_blinds/cog2/left{
-	dir = 4;
-	id = "chemistry"
-	},
-/obj/table/reinforced/chemistry/auto/clericalsup,
-/turf/simulated/floor/plating,
-/area/station/science/chemistry)
 "vrX" = (
 /obj/table/auto,
 /obj/item/clothing/glasses/sunglasses{
@@ -76086,20 +76115,6 @@
 	dir = 8
 	},
 /area/listeningpost)
-"wVm" = (
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8
-	},
-/obj/machinery/cashreg{
-	name = "Chemistry credit transfer device"
-	},
-/obj/window_blinds/cog2/middle{
-	dir = 4;
-	id = "chemistry"
-	},
-/obj/table/reinforced/chemistry/auto/clericalsup,
-/turf/simulated/floor/plating,
-/area/station/science/chemistry)
 "wVy" = (
 /obj/table/reinforced/industrial/auto,
 /turf/simulated/floor/yellowblack{
@@ -78789,19 +78804,6 @@
 /obj/machinery/light/incandescent/harsh,
 /turf/simulated/floor,
 /area/station/hangar/science)
-"xFV" = (
-/obj/decal/stripe_delivery,
-/obj/mapping_helper/access/research,
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/sci_alt{
-	dir = 4;
-	id = "testchamber"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/station/science/testchamber)
 "xGu" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/plating/jen,
@@ -115307,7 +115309,7 @@ ixX
 ixX
 iLV
 gLl
-dOe
+lnR
 aAT
 iLV
 hWZ
@@ -115930,7 +115932,7 @@ bZT
 xLp
 jIQ
 lqP
-bzS
+ayb
 agA
 sUt
 nOG
@@ -118695,7 +118697,7 @@ aZz
 aZz
 aZz
 jzV
-xFV
+dye
 aZz
 aZz
 aRF
@@ -118991,8 +118993,8 @@ npV
 pyL
 mfI
 lqR
-wVm
-vrR
+tgi
+rUo
 bmF
 wXr
 iou
@@ -121409,10 +121411,10 @@ amn
 aFv
 jQB
 aFv
-lwQ
+ikX
 aFv
 uFb
-lwQ
+ikX
 uFb
 wUb
 afo

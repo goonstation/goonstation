@@ -68,15 +68,6 @@
 						#ifdef HALLOWEEN
 						spooktober_GH.change_points(src.ckey, 30)
 						#endif
-						var/possumMax = 15
-						for_by_tcl(responsePossum, /obj/critter/opossum)
-							if (!responsePossum.alive)
-								continue
-							if(!IN_RANGE(responsePossum, src, 4))
-								continue
-							if (possumMax-- < 0)
-								break
-							responsePossum.CritterDeath() // startled into playing dead!
 						for_by_tcl(P, /mob/living/critter/small_animal/opossum) // is this more or less intensive than a range(4)?
 							if (P.playing_dead) // already out
 								continue
@@ -1102,7 +1093,7 @@
 					else
 						message = "<B>[src]</B> flexes [his_or_her(src)] muscles."
 						maptext_out = "<I>flexes [his_or_her(src)] muscles</I>"
-					if(src.emote_check(voluntary))
+					if(voluntary)
 						for (var/obj/item/C as anything in src.get_equipped_items())
 							if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
 								var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
@@ -1645,7 +1636,7 @@
 				m_type = 1
 
 			if ("wink")
-				if (!src.restrained() && src.emote_check(voluntary))
+				if (!src.restrained() && voluntary)
 					for (var/obj/item/C as anything in src.get_equipped_items())
 						if ((locate(/obj/item/gun/kinetic/derringer) in C) != null)
 							var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
@@ -1877,9 +1868,6 @@
 							message = SPAN_ALERT("<B>[src]</b> falls over, panting and wheezing.")
 							src.changeStatus("knockdown", 2 SECONDS)
 							src.set_stamina(min(1, src.stamina))
-							src.emote_allowed = 0
-							SPAWN(1 SECOND)
-								src.emote_allowed = 1
 							goto showmessage
 
 

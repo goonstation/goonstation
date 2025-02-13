@@ -124,6 +124,12 @@
 			src.user.update_inhands()
 			return
 
+	onInterrupt(flag)
+		src.rod.is_fishing = FALSE
+		src.rod.UpdateIcon()
+		src.user.update_inhands()
+		. = ..()
+
 	onEnd()
 		if (!(BOUNDS_DIST(src.user, src.rod) == 0) || !(BOUNDS_DIST(src.user, src.target) == 0) || !src.user || !src.target || !src.rod || !src.fishing_spot)
 			..()
