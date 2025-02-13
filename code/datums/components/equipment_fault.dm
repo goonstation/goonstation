@@ -522,12 +522,6 @@ TYPEINFO(/datum/component/equipment_fault/messy)
 
 ///streaks one of a list of weighted cleanables near the machine
 /datum/component/equipment_fault/messy
-	///base probability to spawn cleanable each tick
-	var/static/base_probability = 10
-	///current probability to spawn cleanable on this process tick
-	var/current_prob
-	///increase in probability per process tick
-	var/static/prob_raise = 2
 	///list of cleanables picked to spawn when a fault is triggered
 	var/list/obj/decal/cleanable/cleanable_types = list(
 		/obj/decal/cleanable/machine_debris=40,
@@ -549,14 +543,9 @@ TYPEINFO(/datum/component/equipment_fault/messy)
 	if (!islist(cleanables))
 		return COMPONENT_INCOMPATIBLE
 	src.cleanable_types = cleanables
-	src.current_prob = src.base_probability
 
 /datum/component/equipment_fault/messy/ef_process(obj/machinery/M, mult)
-	if(probmult(current_prob))
-		src.ef_perform_fault(M)
-		src.current_prob = src.base_probability
-	else
-		src.current_prob += src.prob_raise
+	src.ef_perform_fault(M)
 
 /datum/component/equipment_fault/messy/ef_perform_fault(obj/O)
 	if(..())

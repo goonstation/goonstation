@@ -948,7 +948,19 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		return
 
 	process()
-		if (src.status & (BROKEN|NOPOWER))
+		if (src.status & NOPOWER)
+			return
+
+		if (src.status & BROKEN)
+			if (process_timer > 0)
+				process_timer--
+				return
+			// we're out of meat, switch faults
+			var/datum/component/equipment_fault/messy/messy = src.GetComponent(/datum/component/equipment_fault/messy)
+			if (istype(messy))
+				var/tool_flags = messy.interactions
+				src.RemoveComponentsOfType(/datum/component/equipment_fault/messy/)
+				AddComponent(/datum/component/equipment_fault/grumble, tool_flags)
 			return
 
 		process_timer--
@@ -1211,11 +1223,14 @@ TYPEINFO(/obj/machinery/clonegrinder)
 	set_broken()
 		. = ..()
 		if(.) return
-		AddComponent(/datum/component/equipment_fault/messy, tool_flags = TOOL_SCREWING | TOOL_WRENCHING, cleanables = list(
-			/obj/decal/cleanable/blood/gibs=50,
-			/obj/decal/cleanable/blood/gibs/core=20,
-			/obj/decal/cleanable/blood/gibs/body=10
-		))
+		if (src.process_timer > 0)
+			AddComponent(/datum/component/equipment_fault/messy, tool_flags = TOOL_SCREWING | TOOL_WRENCHING, cleanables = list(
+				/obj/decal/cleanable/blood/gibs=50,
+				/obj/decal/cleanable/blood/gibs/core=20,
+				/obj/decal/cleanable/blood/gibs/body=10
+			))
+		else
+			AddComponent(/datum/component/equipment_fault/grumble, tool_flags = TOOL_SCREWING | TOOL_WRENCHING)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
