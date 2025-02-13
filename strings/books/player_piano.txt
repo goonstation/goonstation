@@ -118,7 +118,7 @@
 <ul style="padding-left: 20px;">
 	<li>You cannot change the duration of a note.</li>
 	<li>If you want to play notes at the same time, you will need to link multiple pianos together. Input notes, make one piano play, and electronics will handle the rest.</li>
-	<li>BE SURE TO LINK ALL PIANOS TOGETHER. IF YOU HAVE THREE, YOU WILL NEED TO LINK THE FIRST AND SECOND, SECOND AND THIRD, AND FIRST AND THIRD.</li>
+	<li>BE SURE TO LINK ALL PIANOS TOGETHER.</li>
 	<li>You can only enter up to 1920 notes.</li>
 </ul>
 
@@ -133,8 +133,6 @@
 	</ul>
 	<li>You can access your piano's internal workings by prying off the front panel.</li>
 	<li>You can use a multitool to reset the piano's memory once you have access to its insides.</li>
-	<li>You can use a multitool to link player pianos together like you would a mechcomp component.</li>
-	<li>If your linked pianos sound weird, you may have linked a set of pianos together multiple times. Use a multitool or key to reset and relink <i>carefully</i>.</li>
 	<li>You can use a wirecutter to disable looping. (WARNING, THIS IS PERMANENT, DON'T LOSE YOUR DAMN KEY)</li>
 	<li>You can use a screwdriver to raise and lower the wheel bolts, making the piano moveable.</li>
 </ul>
