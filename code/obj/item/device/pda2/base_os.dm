@@ -353,18 +353,18 @@
 						. += "Address book is empty!"
 					else
 						. += "<table cellspacing=5>"
-						for(var/caller in src.all_callers)
-							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["single"];entry=[src.all_callers[caller]]'>Block</a>"
-							var/callButton = "<a href='byond://?src=\ref[src];input=message;target=[caller]'>Msg</a>"
-							var/sendButton = "<a href='byond://?src=\ref[src];input=send_file;target=[caller]'>Send File</a>"
+						for(var/address in src.all_callers)
+							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["single"];entry=[src.all_callers[address]]'>Block</a>"
+							var/callButton = "<a href='byond://?src=\ref[src];input=message;target=[address]'>Msg</a>"
+							var/sendButton = "<a href='byond://?src=\ref[src];input=send_file;target=[address]'>Send File</a>"
 							if(!src.master.fileshare_program)
 								sendButton = ""
 							else if(!src.clipboard || src.clipboard?.dont_copy)
 								sendButton = "<strike>Send File</strike>"
-							var/delButton = "<a href='byond://?src=\ref[src];delAddress=[caller]'>Del</a>"
-							if(src.all_callers[caller] in src.blocked_numbers)
-								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["single"];entry=[src.all_callers[caller]]'>Unblock</a>"
-							. += "<tr><td>[src.all_callers[caller]]</td><td>[callButton]</td><td>[muteButton]</td><td>[sendButton]</td><td>[delButton]</td></tr>"
+							var/delButton = "<a href='byond://?src=\ref[src];delAddress=[address]'>Del</a>"
+							if(src.all_callers[address] in src.blocked_numbers)
+								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["single"];entry=[src.all_callers[address]]'>Unblock</a>"
+							. += "<tr><td>[src.all_callers[address]]</td><td>[callButton]</td><td>[muteButton]</td><td>[sendButton]</td><td>[delButton]</td></tr>"
 						. += "</table>"
 					. += "<hr>"
 					. += "<h4>Primary Ringtone</h4><br>"

@@ -72,7 +72,7 @@
 /obj/machinery/nanofab
 	name = "Nano-fabricator"
 	desc = "A more complicated sibling to the manufacturers, this machine can make things that inherit material properties."// this isnt super good but it's better than what it was
-	icon = 'icons/obj/manufacturer.dmi'
+	icon = 'icons/obj/crafting.dmi'
 	icon_state = "fab2-on"
 	anchored = ANCHORED
 	density = 1
@@ -350,8 +350,6 @@
 		W.set_loc(src)
 
 	attackby(var/obj/item/W , mob/user as mob)
-		if(istype(W, /obj/item/deconstructor))
-			return ..()
 		if(issilicon(user)) // fix bug where borgs could put things into the nanofab and then reject them
 			boutput(user, SPAN_ALERT("You can't put that in, it's attached to you."))
 			return

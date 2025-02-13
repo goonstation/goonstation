@@ -56,6 +56,8 @@ TYPEINFO(/obj/machinery/microwave)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 	var/emagged = FALSE
 
+	HELP_MESSAGE_OVERRIDE("Place items inside by clicking, then click the microwave with an open hand to open cooking menu.")
+
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)
 			if (user)
@@ -73,6 +75,16 @@ TYPEINFO(/obj/machinery/microwave)
 			user.show_text("You reset the radiation levels to a more food-safe setting.", "blue")
 		src.emagged = FALSE
 		return TRUE
+
+/obj/machinery/microwave/get_help_message(dist, mob/user)
+	if(src.status & BROKEN)
+		if(src.microwave_state == MW_STATE_BROKEN_2)
+			return "The microwave is broken! Use a <b>screwing tool</b> to begin repairing."
+		if(src.microwave_state == MW_STATE_BROKEN_1)
+			return "The microwave is broken! Use a <b>wrenching tool</b> to finish repairing."
+	if (src.dirty)
+		return "The microwave is dirty! Use a <b>sponge</b> or <b>spray bottle</b> to clean it up."
+	return "Place items inside, then click the microwave with an open hand to open the cooking controls."
 
 /// After making the recipe in datums\recipes.dm, add it in here!
 /obj/machinery/microwave/New()
@@ -97,7 +109,7 @@ TYPEINFO(/obj/machinery/microwave)
 	*  Item Adding
 	*/
 
-obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
+/obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 	if(src.operating)
 		return
 	if(src.microwave_state > 0)
@@ -183,6 +195,44 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 		else
 			boutput(user, "There already seems to be an unusual item inside, so you don't add this one too.") //Let them know it failed for a reason though
 
+/obj/machinery/microwave/blob_act(power)
+	if (!src.is_broken())
+		src.set_broken()
+		return
+	..()
+
+
+/obj/machinery/microwave/bullet_act(obj/projectile/P)
+	if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
+		if(prob(P.power * P.proj_data?.ks_ratio))
+			src.set_broken()
+
+/obj/machinery/microwave/ex_act(severity)
+	switch(severity)
+		if(1)
+			qdel(src)
+			return
+		if(2)
+			if (prob(50))
+				qdel(src)
+				return
+			if (prob(50))
+				src.set_broken()
+				return
+		if(3)
+			if (prob(25))
+				qdel(src)
+				return
+			if (prob(25))
+				src.set_broken()
+				return
+
+/obj/machinery/microwave/set_broken()
+	. = ..()
+	if (.) return
+	src.icon_state = "mwb"
+	src.microwave_state = MW_STATE_BROKEN_2
+
 /obj/machinery/microwave/proc/repair(mob/user as mob)
 	if (src.microwave_state == MW_STATE_BROKEN_2)
 		src.visible_message(SPAN_NOTICE("[user] fixes part of the [src]."))
@@ -191,6 +241,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 		src.visible_message(SPAN_NOTICE("[user] fixes the [src]!"))
 		src.icon_state = "mw"
 		src.microwave_state = MW_STATE_WORKING // Fix it!
+		src.status &= ~BROKEN
 
 /obj/machinery/microwave/proc/clean(mob/user as mob)
 	if (src.dirty)
@@ -325,9 +376,8 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 				if(isnull(src))
 					return
 				elecflash(src,power=2)
-				icon_state = "mwb"
 				src.visible_message(SPAN_ALERT("The microwave breaks!"))
-				src.microwave_state = MW_STATE_BROKEN_2
+				src.set_broken()
 				src.clean_up()
 		if(MW_COOK_EGG)
 			SPAWN(4 SECONDS)

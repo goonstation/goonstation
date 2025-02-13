@@ -313,8 +313,9 @@ TYPEINFO(/obj/machinery/clonepod)
 				// just in case someone manages to pull off a miracle save
 				defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MAJOR)
 				src.occupant.bioHolder?.AddEffect("premature_clone")
-				src.occupant.take_toxin_damage(250)
-				random_brute_damage(src.occupant, 100, 0)
+				src.occupant.take_toxin_damage(350)
+				APPLY_ATOM_PROPERTY(src.occupant, PROP_HUMAN_DROP_BRAIN_ON_GIB, "puritan")
+				random_brute_damage(src.occupant, 200, 0)
 				if (ishuman(src.occupant))
 					var/mob/living/carbon/human/P = src.occupant
 					if (P.limbs)

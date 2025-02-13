@@ -11,7 +11,7 @@ var/global/list/cycling_airlocks = list()
 	name = "airlock"
 	icon = 'icons/obj/doors/SL_doors.dmi'
 	icon_state = "door_closed"
-	deconstruct_flags = DECON_NULL_ACCESS | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER | DECON_MULTITOOL
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER | DECON_MULTITOOL
 	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS
 
 	var/image/panel_image = null
@@ -1157,11 +1157,16 @@ TYPEINFO(/obj/machinery/door/airlock)
 
 /obj/machinery/door/airlock/emag_act(mob/user, obj/item/card/emag/E)
 	. = ..()
+	src.deconstruct_flags |= DECON_NO_ACCESS //emagged doors should be able to be deconstructed by anyone. It's utterly trashed, after all
 	if(src.welded && !src.locked)
 		audible_message(SPAN_ALERT("[src] lets out a loud whirring and grinding noise!"))
 		animate_shake(src, 5, 2, 2, src.pixel_x, src.pixel_y)
 		playsound(src, 'sound/items/mining_drill.ogg', 25, TRUE, 0, 0.8)
 		src.take_damage(src.health * 0.8)
+
+/obj/machinery/door/demag(var/mob/user)
+	. = ..()
+	src.deconstruct_flags &= ~DECON_NO_ACCESS //well, ya got it fixed, somehow
 
 /obj/machinery/door/airlock/receive_silicon_hotkey(var/mob/user)
 	..()

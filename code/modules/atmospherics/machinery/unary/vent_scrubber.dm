@@ -21,7 +21,7 @@
 	/// Are we sucking in all gas or only some?
 	var/scrubbing = SCRUBBING
 	// Sets up vars to scrub gases
-	#define _DEF_SCRUBBER_VAR(GAS, ...) var/scrub_##GAS = 1;
+	#define _DEF_SCRUBBER_VAR(GAS, ...) var/scrub_##GAS = 0;
 	APPLY_TO_GASES(_DEF_SCRUBBER_VAR)
 	#undef _DEF_SCRUBBER_VAR
 	/// Volume of gas to take from turf.
@@ -191,6 +191,9 @@
 	on = FALSE
 
 /obj/machinery/atmospherics/unary/vent_scrubber/breathable
+	#define _DEF_SCRUBBER_VAR(GAS, ...) scrub_##GAS = 1;
+	APPLY_TO_GASES(_DEF_SCRUBBER_VAR)
+	#undef _DEF_SCRUBBER_VAR
 	scrub_oxygen = FALSE
 	scrub_nitrogen = FALSE
 

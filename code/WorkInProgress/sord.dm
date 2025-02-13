@@ -98,6 +98,50 @@
 	color_blue = 1
 	disruption = 8
 
+/obj/item/gun/energy/stasis
+	name = "stasis rifle"
+	icon = 'icons/obj/items/guns/energy48x32.dmi'
+	icon_state = "heavyion" // wtb 1 sprite
+	item_state = "rifle"
+	force = 1
+	cell_type = /obj/item/ammo/power_cell/med_power
+	desc = "An experimental weapon that produces a cohesive electrical charge designed to hold a target in place for a limited time."
+	muzzle_flash = "muzzle_flash_bluezap"
+	uses_charge_overlay = TRUE
+	can_dual_wield = FALSE
+	two_handed = 1
+	w_class = W_CLASS_BULKY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+
+	New()
+		set_current_projectile(new/datum/projectile/energy_bolt/stasis)
+		projectiles = list(current_projectile)
+		AddComponent(/datum/component/holdertargeting/windup, 3 SECONDS)
+		..()
+
+/datum/projectile/energy_bolt/stasis
+	name = "stasis bolt"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "cyan_bolt"
+	damage = 0
+	cost = 100
+	dissipation_rate = 2
+	dissipation_delay = 8
+	shot_sound = 'sound/weapons/laser_e.ogg'
+	shot_number = 1
+	damage_type = D_ENERGY
+	hit_ground_chance = 0
+	brightness = 0.8
+	ie_type = "E"
+	has_impact_particles = TRUE
+
+	on_hit(atom/hit)
+		if (isliving(hit))
+			var/mob/living/L = hit
+			L.changeStatus("stasis", 3 SECONDS)
+		impact_image_effect(ie_type, hit)
+		return
+
 /obj/item/swords/sord
 	name = "gross sord"
 	desc = "oh no"
@@ -135,6 +179,7 @@
 	slots = 3
 
 /mob/living/carbon/human/normal/merc
+	faction = list(FACTION_MERCENARY)
 	New()
 		..()
 		src.equip_new_if_possible(/obj/item/clothing/under/misc/merc01, SLOT_W_UNIFORM)
@@ -148,10 +193,96 @@
 		var/obj/item/card/id/C = src.wear_id
 		if(C)
 			C.registered = src.real_name
-			C.assignment = "Mercenary" // company name TBD
+			C.assignment = "Greyhold Mercenary Operative"
 			C.name = "[C.registered]'s ID Card ([C.assignment])"
 
 		update_clothing()
 
 /obj/mapping_helper/mob_spawn/corpse/human/merc
 	spawn_type = /mob/living/carbon/human/normal/merc
+
+ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
+/mob/living/critter/human/mercenary
+	name = "\improper Mercenary"
+	real_name = "\improper Mercenary"
+	desc = "A very angry merc."
+	health_brute = 25
+	health_burn = 25
+	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/merc
+	human_to_copy = /mob/living/carbon/human/normal/merc
+
+	faction = list(FACTION_MERCENARY)
+
+/mob/living/critter/human/mercenary/knife
+	ai_type = /datum/aiHolder/aggressive
+	hand_count = 2
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.limb = new /datum/limb/sword
+		HH.name = "left hand"
+		HH.suffix = "-L"
+		HH.icon_state = "blade"
+		HH.limb_name = "combat knife"
+		HH.can_hold_items = FALSE
+		HH.object_for_inhand = /obj/item/dagger
+
+		HH = hands[2]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.limb = new /datum/limb
+		HH.name = "right hand"
+		HH.suffix = "-R"
+		HH.icon_state = "handr"
+		HH.limb_name = "right arm"
+
+/mob/living/critter/human/mercenary/rifle
+	ai_type = /datum/aiHolder/ranged
+	hand_count = 1
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.limb = new /datum/limb/gun/kinetic/draco
+		HH.name = "rifle"
+		HH.suffix = "-LR"
+		HH.icon_state = "handrifle"
+		HH.limb_name = "\improper Draco Pistol"
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
+		HH.object_for_inhand = /obj/item/gun/kinetic/draco
+
+/obj/item/paper/mercmanifest1
+	name = "Shipping Manifest"
+	info = {"<center><b>Manifest</b><br>
+	Target Destination: Frontier, local distrubution<br><br>
+	<li>Standard Uniform</li> - 5x<br><br>
+	Approved for processing.<br>
+	Shipping to Frontier Outpost 8.<br>
+	Received at Frontier Outpost 8.<br>
+	Awaiting local transportation.</center>"}
+
+
+/obj/item/paper/mercmanifest2
+	name = "Shipping Manifest"
+	info = {"<center><b>Manifest</b><br>
+	Target Destination: Frontier Outpost 8<br><br>
+	<li>Rations</li> - Burrito 5x<br>
+	<li>Rations</li> - TV Dinner 5x<br><br>
+	Approved for processing.<br>
+	Shipping to Frontier Outpost 8.<br>
+	Received at Frontier Outpost 8. </center>"}
+
+/obj/item/paper/mercmanifest3
+	name = "Shipping Manifest"
+	info = {"<center><b>Manifest</b><br>
+	Target Destination: Frontier, local distrubution<br><br>
+	<li>Medical Kit</li> - Standard 1x<br>
+	<li>Medical Kit</li> - Oxygen 1x<br><br>
+	Approved for processing.<br>
+	Shipping to Frontier Outpost 8.<br>
+	Received at Frontier Outpost 8.<br>
+	Awaiting local transportation.</center>"}

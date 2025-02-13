@@ -420,7 +420,7 @@
 /datum/bioEffect/bee
 	name = "Apidae Metabolism"
 	desc = {"Human worker clone batch #92 may contain inactive space bee DNA.
-	If you do not have the authorization level to know that SS13 is staffed with clones, please forget this entire message."}
+	If you do not have the authorization level to know that this subject is a clone, please forget this entire message."}
 	id = "bee"
 	msgGain = "You feel buzzed!"
 	msgLose = "You lose your buzz."
