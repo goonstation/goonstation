@@ -1413,9 +1413,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/banking_kit
 	name = "Banking Kit"
-	desc = "Circuit Boards: 1x Bank Records, 1x ATM"
-	contains = list(/obj/item/circuitboard/atm,
-					/obj/item/circuitboard/bank_data)
+	desc = "Circuit Boards: 1x ATM, Data Disks: 1x BankBoss"
+	contains = list(/obj/item/circuitboard/atm, /obj/item/disk/data/floppy/read_only/bank_progs)
 	hidden = 1
 	cost = PAY_IMPORTANT*5
 	containertype = /obj/storage/crate

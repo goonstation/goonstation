@@ -1317,7 +1317,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 /datum/syndicate_buylist/commander/deployment_pods
 	name = "Rapid Deployment Remote"
 	items = list(/obj/item/device/deployment_remote, /obj/item/paper/deployment_info)
-	cost = 4
+	cost = 2
 	desc = "A handheld remote allowing you, your team, and the nuclear device to be sent in anywhere at a moment's notice!"
 	category = "Main"
 

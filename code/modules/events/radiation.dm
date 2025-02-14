@@ -71,7 +71,7 @@
 				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
 				return
 		animate_flash_color_fill_inherit(T,"#00FF00",1,5)
-		for (var/mob/living/carbon/M in T.contents)
+		for (var/mob/M in T.contents)
 			logTheThing(LOG_STATION, M, "is hit by a radiation burst at [log_loc(M)].")
 			M.take_radiation_dose(rad_strength)
 			if (prob(mutate_prob) && M.bioHolder)
