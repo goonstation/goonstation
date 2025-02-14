@@ -1,5 +1,5 @@
 //TODO: Actually replace /obj/machinery/computer/security
-//TODO: Maybe support arrow keys...
+//TODO: Bonus - Maybe support arrow keys...
 /obj/machinery/computer/security2
 	name = "security cameras"
 	icon_state = "security"
@@ -78,6 +78,8 @@
 	if (!src.cameras_minimap_ui)
 		src.cameras_minimap_ui = new(src, "cameras_map", src.camerasmap_controller, src.name, "nanotrasen")
 		//TODO: Set a property on minimap_controller/cameras_minimap_ui to prevent adding new markers
+		//TODO: Bonus - Marker's list filter feature
+		//TODO: Bonus - Marker's list favorite feature
 
 	src.cameras_minimap_ui.ui_interact(user)
 
