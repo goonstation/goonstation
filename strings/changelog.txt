@@ -1,5 +1,10 @@
 
 (t)thu feb 13 25
+(u)glowbold
+(p)22082
+(e)🆕💅📄💊|C-Feature, C-QoL, A-UI, A-Medical
+(+)The cloning console will indicate when the SpeedyClone, Biomatter Recyler, and NecroScan modules are installed.
+(+)Clone pod and reclaimer upgrade modules can be uninstalled with a crowbar on their respective machines.
 (u)Garash2k
 (p)21411
 (e)🆕📄|C-Feature, A-UI
