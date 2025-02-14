@@ -130,7 +130,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 
 /datum/targetable/critter/ice_phoenix/wind_chill
 	name = "Wind chill"
-	desc = "Create a freezing aura at the targeted location, inflicting cold on those within 2 tiles nearby, and freezing them solid if their body temperature is below 0 degrees Fahrenheit."
+	desc = "Create a freezing aura at the targeted location, inflicting cold on those within 2 tiles nearby, and freezing them solid if they're cold enough."
 	icon_state = "windchill"
 	cooldown = 30 SECONDS
 	targeted = TRUE
@@ -295,8 +295,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 			return
 		src.owner.visible_message(SPAN_ALERT("[src.owner] grips [src.target] with its talons!"), SPAN_ALERT("You begin channeling your cold into [src.target]."))
 		if (src.target.hasStatus("cold_snap"))
-			APPLY_ATOM_PROPERTY(src.target, PROP_MOB_CANTMOVE, "phoenix_touch_of_death")
-			src.target.changeStatus("paralysis", 1.1 SECONDS)
+			src.target.changeStatus("paralysis", 1.2 SECONDS)
+			src.target.changeStatus("cold_snap", 1.2 SECONDS)
 
 	onEnd()
 		..()
@@ -310,6 +310,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 			src.target.TakeDamage("All", burn = 10)
 		playsound(get_turf(target), "sound/misc/phoenix/phoenix_tod_[rand(1, 4)].ogg", 50, TRUE)
 
+		if (src.target.hasStatus("cold_snap"))
+			src.target.changeStatus("paralysis", 1.2 SECONDS)
+			src.target.changeStatus("cold_snap", 1.2 SECONDS)
 		src.onRestart()
 
 	onInterrupt()
@@ -367,6 +370,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		abil.afterAction()
 
 		phoenix.permafrosted_areas |= "[A.name]-\ref[A]"
+
+		logTheThing(LOG_STATION, phoenix, "[phoenix] successfully casts Permafrost at [log_loc(target)]")
 
 	onInterrupt()
 		..()

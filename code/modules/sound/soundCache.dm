@@ -969,6 +969,7 @@ var/global/list/soundCache = list(
  	"sound/misc/openlootcrate.ogg" = 'sound/misc/openlootcrate.ogg',\
  	"sound/misc/openlootcrate2.ogg" = 'sound/misc/openlootcrate2.ogg',\
  	"sound/misc/PhilCollinsTom.ogg" = 'sound/misc/PhilCollinsTom.ogg',\
+ 	"sound/misc/phoenix/phoenix_revive.ogg" = 'sound/misc/phoenix/phoenix_revive.ogg',\
  	"sound/misc/phoenix/phoenix_sail.ogg" = 'sound/misc/phoenix/phoenix_sail.ogg',\
  	"sound/misc/phoenix/phoenix_shield.ogg" = 'sound/misc/phoenix/phoenix_shield.ogg',\
  	"sound/misc/phoenix/phoenix_snow_crunch.ogg" = 'sound/misc/phoenix/phoenix_snow_crunch.ogg',\

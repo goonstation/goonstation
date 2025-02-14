@@ -537,7 +537,6 @@ TYPEINFO(/area)
 			qdel(snow)
 
 			T.temperature = initial(T.temperature)
-			//T.air.temperature = T.temperature
 
 			LAGCHECK(LAG_LOW)
 

@@ -4,29 +4,14 @@
 	name = "phoenix nest";
 	desc = "The nest of a space phoenix. You better hope it's not nearby!";
 	oxygen = 0.001;
-	nitrogen = 0.001
+	nitrogen = 0.001;
+	carbon_dioxide = 0
 	},
 /area/phoenix_nest)
-"p" = (
-/turf/space,
-/area/space)
-"q" = (
+"D" = (
 /turf/unsimulated/wall/auto/adventure/icemoon,
 /area/phoenix_nest)
-"v" = (
-/obj/map/light/cyan,
-/turf/unsimulated/floor/arctic/snow/ice{
-	name = "phoenix nest";
-	desc = "The nest of a space phoenix. You better hope it's not nearby!";
-	oxygen = 0.001;
-	nitrogen = 0.001
-	},
-/area/phoenix_nest)
-"C" = (
-/obj/map/light/cyan,
-/turf/unsimulated/wall/auto/adventure/icemoon,
-/area/phoenix_nest)
-"Q" = (
+"H" = (
 /turf/unsimulated/floor/auto/snow{
 	desc = "The nest of a space phoenix. You better hope it's not nearby!";
 	name = "phoenix nest";
@@ -35,67 +20,106 @@
 	temperature = 100
 	},
 /area/phoenix_nest)
+"I" = (
+/turf/space,
+/area/space)
 
 (1,1,1) = {"
-p
-p
+I
+I
+I
+I
 a
-p
-p
-p
-p
+I
+I
+I
+I
 "}
 (2,1,1) = {"
-p
+I
+I
 a
-Q
 a
-Q
 a
-p
+a
+a
+I
+I
 "}
 (3,1,1) = {"
-p
+I
 a
-C
+H
+D
 a
-C
-Q
-p
+D
+a
+a
+I
 "}
 (4,1,1) = {"
-p
+I
 a
 a
-v
 a
+H
 a
-p
+D
+H
+a
 "}
 (5,1,1) = {"
-p
-Q
-C
 a
-v
-Q
-Q
+a
+D
+H
+H
+H
+D
+H
+a
 "}
 (6,1,1) = {"
-p
+I
 a
-Q
-q
 a
-Q
-p
+D
+a
+H
+a
+a
+I
 "}
 (7,1,1) = {"
-p
+I
 a
-p
-p
-p
 a
-p
+H
+a
+D
+H
+a
+I
+"}
+(8,1,1) = {"
+I
+I
+D
+a
+a
+a
+a
+I
+I
+"}
+(9,1,1) = {"
+I
+I
+a
+I
+a
+I
+I
+I
+I
 "}

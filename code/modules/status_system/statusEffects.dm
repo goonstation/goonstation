@@ -1748,7 +1748,7 @@
 				var/mob/living/carbon/human/H = src.owner
 				if (istype(H))
 					if (!H.phoenix_temp_overlay)
-						H.phoenix_temp_overlay = new /image/phoenix_temperature_maptext(null, H, null, HUD_LAYER_UNDER_1, null, H)
+						H.phoenix_temp_overlay = new /image/phoenix_temperature_indicator('icons/mob/space_phoenix.dmi', H, "temp_indicator", HUD_LAYER_UNDER_1, null, H)
 		. = ..()
 
 	onChange(optional)
@@ -1760,7 +1760,7 @@
 			var/mob/living/carbon/human/H = src.owner
 			if (istype(H))
 				if (!H.phoenix_temp_overlay)
-					H.phoenix_temp_overlay = new /image/phoenix_temperature_maptext(null, H, null, HUD_LAYER_UNDER_1, null, H)
+					H.phoenix_temp_overlay = new /image/phoenix_temperature_indicator('icons/mob/space_phoenix.dmi', H, "temp_indicator", HUD_LAYER_UNDER_1, null, H)
 		. = ..()
 
 	onUpdate()
@@ -3478,6 +3478,19 @@
 
 	getTooltip()
 		return "Being on the station increases your warmth, staying over 30 seconds and you'll start to take damage.<br><br>Current time spent: [round(src.time_passed / 10, 1)] seconds"
+
+
+/datum/statusEffect/in_nest
+	id = "in_phoenix_nest"
+	visible = FALSE
+
+	onUpdate()
+		..()
+		var/mob/living/L = src.owner
+		if (isdead(L))
+			var/area/phoenix_nest/A = get_area(src.owner)
+			A.atom_entered(src.owner)
+			src.owner.delStatus(src)
 
 /datum/statusEffect/cold_snap
 	id = "cold_snap"
