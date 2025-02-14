@@ -5,6 +5,7 @@
 	. = message
 
 	message.say_sound = ""
+	message.heard_range = WHISPER_EAVESDROPPING_RANGE
 
 
 /datum/message_modifier/postprocessing/whisper

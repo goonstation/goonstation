@@ -22,8 +22,10 @@
 
 //------------ Message Ranges ------------//
 /// The maximum distance from which standard spoken messages may be heard.
-#define DEFAULT_HEARING_RANGE 5
+#define DEFAULT_HEARING_RANGE 7
 /// The maximum distance from which whispered messages may be clearly heard.
 #define WHISPER_RANGE 1
+/// The maximum distance from which whispered messages may be heard, albeit distorted.
+#define WHISPER_EAVESDROPPING_RANGE 2
 /// The maximum distance from which LOOC messages may be heard.
 #define LOOC_RANGE 8

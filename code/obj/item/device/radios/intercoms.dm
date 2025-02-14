@@ -107,7 +107,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 		var/message_params = list(
 			"say_sound" = 'sound/misc/talk/bottalk_3.ogg',
 			"maptext_css_values" = list("color" = "#CC3FCC"),
-			"relays" = list(SAY_RELAY_RADIO = TRUE),
+			"relay_flags" = SAY_RELAY_RADIO,
 		)
 		src.say("AI override engaged!", flags = 0, message_params = message_params)
 		src.show_speech_bubble(image('icons/mob/mob.dmi', "ai"))
