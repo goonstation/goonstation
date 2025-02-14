@@ -738,9 +738,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		..()
 		src.eye_glider.set_loc(get_turf(P))
 		if (!(P.targets && P.targets.len && P.targets[1] && !(P.targets[1]:disposed)))
+			logTheThing(LOG_STATION, tele, "teleport projectile [P] dumped contents at [log_loc(P)] as targeted destination was disposed.")
 			P.die()
 		var/obj/item/mechanics/telecomp/target_tele = P.targets[1]
 		if (!target_tele.anchored)
+			logTheThing(LOG_STATION, tele, "teleport projectile [P] dumped contents at [log_loc(P)] as target teleporter at [log_loc(target_tele)] was unanchored.")
 			P.die()
 		if (get_turf(P) == src.starting_turf) return
 		for (var/obj/item/mechanics/telecomp/tele in get_turf(P))
@@ -748,8 +750,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(tele.loc))).Run()
 				// Dest. pad gets "from=origin&count=123"
 				SEND_SIGNAL(tele, COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"from=[tele.teleID]&count=[P.special_data["count_sent"]]")
-				if (tele != P.targets[1])
-					logTheThing(LOG_STATION, tele, "intercepted teleport projectile [P] at [log_loc(tele)] (targeted destination [log_loc(P.targets[1])])")
+				if (tele != target_tele)
+					logTheThing(LOG_STATION, tele, "intercepted teleport projectile [P] at [log_loc(tele)] (targeted destination [log_loc(target_tele)])")
 				P.die()
 
 	on_end(obj/projectile/P)
