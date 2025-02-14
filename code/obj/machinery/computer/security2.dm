@@ -88,10 +88,10 @@
 	map_path = /datum/minimap/area_map
 	map_type = MAP_CAMERA_SECURITY
 
+//TODO: Does this actually makes sense? Maybe they should work like /obj/item/device/camera_viewer instead
 /obj/minimap/cameras/public
 	name = "Television"
 	map_type = MAP_CAMERA_PUBLIC
-
 /obj/minimap/cameras/thunder
 	name = "Thunderdome"
 	map_type = MAP_CAMERA_THUNDER
