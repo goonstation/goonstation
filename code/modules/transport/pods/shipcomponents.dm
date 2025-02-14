@@ -62,7 +62,7 @@
 	return TRUE
 
 ///Component does this constantly
-/obj/item/shipcomponent/proc/run_component()
+/obj/item/shipcomponent/proc/run_component(mult)
 	return
 
 ///What the component does when deactived

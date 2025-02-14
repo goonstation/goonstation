@@ -10951,7 +10951,6 @@
 /obj/item/circuitboard/powermonitor,
 /obj/item/circuitboard/powermonitor_smes,
 /obj/item/circuitboard/genetics,
-/obj/item/circuitboard/bank_data,
 /obj/item/circuitboard/arcade,
 /obj/item/circuitboard/qmsupply,
 /obj/item/circuitboard/telescope,
@@ -17884,7 +17883,7 @@
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/north)
 "eMe" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /obj/cable{
@@ -46403,7 +46402,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/station/crew_quarters/quarters_west)
 "mgV" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /obj/cable{
@@ -61405,7 +61404,7 @@
 	},
 /area/listeningpost)
 "qcH" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 4
 	},
 /obj/machinery/shipalert{
@@ -81596,7 +81595,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/sauna)
 "vaY" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 4
 	},
 /obj/cable{
@@ -87125,7 +87124,7 @@
 	name = "Witness Protection"
 	})
 "wrf" = (
-/obj/machinery/computer/bank_data,
+/obj/machinery/computer3/generic/bank_data,
 /obj/cable{
 	icon_state = "0-4"
 	},

@@ -878,6 +878,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 	icon_state = "grinder0"
 	anchored = ANCHORED
 	density = 1
+	power_usage = 100 WATTS
 	var/list/pods = null // cloning pods we're tied to
 	var/id = null // if this isn't null, we'll only look for pods with this ID
 	var/pod_range = 4 // if we don't have an ID, we look for pods in orange(this value)
@@ -947,6 +948,21 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		return
 
 	process()
+		if (src.status & NOPOWER)
+			return
+
+		if (src.status & BROKEN)
+			if (process_timer > 0)
+				process_timer--
+				return
+			// we're out of meat, switch faults
+			var/datum/component/equipment_fault/messy/messy = src.GetComponent(/datum/component/equipment_fault/messy)
+			if (istype(messy))
+				var/tool_flags = messy.interactions
+				src.RemoveComponentsOfType(/datum/component/equipment_fault/messy/)
+				AddComponent(/datum/component/equipment_fault/grumble, tool_flags)
+			return
+
 		process_timer--
 		if (process_timer > 0)
 			// Add reagents for this tick
@@ -996,6 +1012,9 @@ TYPEINFO(/obj/machinery/clonegrinder)
 
 	attack_hand(mob/user)
 		interact_particle(user,src)
+		if (src.status & (BROKEN | NOPOWER))
+			boutput(user, SPAN_ALERT("The [src.name] is not functioning!"))
+			return
 
 		if (src.process_timer > 0)
 			boutput(user, SPAN_ALERT("The [src.name] is already running!"))
@@ -1148,10 +1167,19 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		actions.start(new /datum/action/bar/icon/put_in_reclaimer(G.affecting, src, G, 50), user)
 		return
 
-	update_icon(var/update_grindpaddle=0)
+	update_icon(update_grindpaddle=FALSE)
+		if (src.status & BROKEN)
+			src.icon_state = "grinderb"
+			ClearSpecificOverlays(TRUE, "paddle")
+			return
+
 		var/fluid_level = ((src.reagents.total_volume >= (src.reagents.maximum_volume * 0.6)) ? 2 : (src.reagents.total_volume >= (src.reagents.maximum_volume * 0.2) ? 1 : 0))
 
 		src.icon_state = "grinder[fluid_level]"
+
+		if (src.status & NOPOWER)
+			UpdateOverlays(image(src.icon, "grindpaddle0"), "paddle") // stop the paddle if no power
+			return
 
 		if (update_grindpaddle)
 			UpdateOverlays(image(src.icon, "grindpaddle[src.process_timer > 0 ? 1 : 0]"),"paddle")
@@ -1175,11 +1203,34 @@ TYPEINFO(/obj/machinery/clonegrinder)
 					return
 			if(3)
 				if (prob(25))
-					src.status |= BROKEN
-					src.icon_state = "grinderb"
+					src.set_broken()
+
+	bullet_act(obj/projectile/P)
+		. = ..()
+		if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
+			if(prob(P.power * P.proj_data?.ks_ratio))
+				src.set_broken()
 
 	is_open_container()
 		return -1
+
+	power_change()
+		. = ..()
+		src.UpdateIcon(TRUE)
+		if (src.status & BROKEN)
+			src.SubscribeToProcess()
+
+	set_broken()
+		. = ..()
+		if(.) return
+		if (src.process_timer > 0)
+			AddComponent(/datum/component/equipment_fault/messy, tool_flags = TOOL_SCREWING | TOOL_WRENCHING, cleanables = list(
+				/obj/decal/cleanable/blood/gibs=50,
+				/obj/decal/cleanable/blood/gibs/core=20,
+				/obj/decal/cleanable/blood/gibs/body=10
+			))
+		else
+			AddComponent(/datum/component/equipment_fault/grumble, tool_flags = TOOL_SCREWING | TOOL_WRENCHING)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)

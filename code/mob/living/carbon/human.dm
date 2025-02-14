@@ -2912,9 +2912,6 @@
 		return "silicon"
 	return null
 
-/mob/living/carbon/human/HealBleeding(var/amt)
-	bleeding = max(bleeding - amt, 0)
-
 /mob/living/carbon/human/proc/juggling()
 	if (islist(src.juggling) && length(src.juggling))
 		return 1

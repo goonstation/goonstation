@@ -1760,13 +1760,13 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
 			. += "<b>Location: [get_area(S)]</b><br>"
-			if(S.is_disabled())
-				.= "No response from Rockbox™ Ore Cloud Storage Container!<br><br>"
+			if (S.is_disabled())
+				. += "No response from Rockbox™ Ore Cloud Storage Container!<br><br>"
 				continue
 			if (!length(S.ores))
 				. += "No ores stored in this Rockbox™ Ore Cloud Storage Container.<br><br>"
 				continue
-			.+= "<ul>"
+			. += "<ul>"
 			var/list/ores = S.ores
 			for(var/ore in ores)
 				var/datum/ore_cloud_data/OCD = ores[ore]
