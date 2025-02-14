@@ -4,6 +4,7 @@
  * @author Garash2k (https://github.com/garash2k)
  * @license MIT
  */
+import { useState } from 'react';
 import { Button, LabeledList } from 'tgui-core/components';
 import { isEscape } from 'tgui-core/keys';
 
@@ -19,20 +20,42 @@ interface KeybindProps {
 export const Keybind = (props: KeybindProps) => {
   const { act } = useBackend<KeybindsData>();
   const { keybind, isFocused, setFocusedKey } = props;
+
+  const [lastEvent, setLastEvent] =
+    useState<React.KeyboardEvent<HTMLDivElement>>();
+
   return (
     <LabeledList.Item label={keybind.label}>
       <Button
         onKeyDown={(event) => {
           event.preventDefault();
+          if (!isFocused) {
+            return;
+          }
           if (isEscape(event.key)) {
             setFocusedKey('');
             return;
           }
           if (!isStandardKey(event)) {
+            // Store the event in case the key is released in which case we'll want to bind to this non-Standard key.
+            setLastEvent(event);
             return;
           }
           setFocusedKey('');
           const value = formatKeyboardEvent(event);
+          act('changed_key', { id: keybind.id, value });
+        }}
+        onKeyUp={(event) => {
+          event.preventDefault();
+          if (!isFocused) {
+            return;
+          }
+          if (!lastEvent) {
+            return;
+          }
+          // If we release a key and we're still in keybind editing mode, it's time to bind whatever we had.
+          setFocusedKey('');
+          const value = formatKeyboardEvent(lastEvent);
           act('changed_key', { id: keybind.id, value });
         }}
         onClick={() => {
