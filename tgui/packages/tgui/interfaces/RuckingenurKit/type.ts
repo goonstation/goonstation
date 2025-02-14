@@ -14,8 +14,8 @@ export interface RuckingenurKitData {
 }
 
 export interface ScannedItemData {
-  name: String;
-  description: String;
+  name: string;
+  description: string;
   has_item_mats: BooleanLike;
   blueprint_available: BooleanLike;
   locked: BooleanLike;

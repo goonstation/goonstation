@@ -6,12 +6,10 @@
  */
 
 import { memo } from 'react';
-import { Stack } from 'tgui-core/components';
 
 import {
   propsAreEqual,
-  ScannedItemExtraButtons,
-  ScannedItemMainButton,
+  ScannedItemButton,
   ScannedItemProps,
 } from './ScannedItem';
 
@@ -24,17 +22,12 @@ export const ScannedItemLegacyElectronicFrameMode = memo(
     const available = blueprint_available;
 
     return (
-      <Stack style={{ display: 'inline-flex' }}>
-        <ScannedItemMainButton
-          ScannedItem={ScannedItem}
-          mode={mode}
-          available={available}
-        />
-        <ScannedItemExtraButtons
-          ScannedItem={ScannedItem}
-          hide_allowed={hide_allowed}
-        />
-      </Stack>
+      <ScannedItemButton
+        ScannedItem={ScannedItem}
+        mode={mode}
+        available={available}
+        hide_allowed={hide_allowed}
+      />
     );
   },
   propsAreEqual,
