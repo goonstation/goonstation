@@ -738,11 +738,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		..()
 		src.eye_glider.set_loc(get_turf(P))
 		if (!(P.targets && P.targets.len && P.targets[1] && !(P.targets[1]:disposed)))
-			logTheThing(LOG_STATION, tele, "teleport projectile [P] dumped contents at [log_loc(P)] as targeted destination was disposed.")
+			logTheThing(LOG_STATION, P, "teleport projectile [P] dumped contents at [log_loc(P)] as targeted destination was disposed.")
 			P.die()
 		var/obj/item/mechanics/telecomp/target_tele = P.targets[1]
 		if (!target_tele.anchored)
-			logTheThing(LOG_STATION, tele, "teleport projectile [P] dumped contents at [log_loc(P)] as target teleporter at [log_loc(target_tele)] was unanchored.")
+			logTheThing(LOG_STATION, P, "teleport projectile [P] dumped contents at [log_loc(P)] as target teleporter at [log_loc(target_tele)] was unanchored.")
 			P.die()
 		if (get_turf(P) == src.starting_turf) return
 		for (var/obj/item/mechanics/telecomp/tele in get_turf(P))
