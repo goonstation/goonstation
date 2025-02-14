@@ -10,12 +10,12 @@ import { Button, Image, Stack } from 'tgui-core/components';
 import { ItemButtonProps } from '.';
 import { ItemButtonStyle } from './style';
 
-type ItemButtonMainButtonData = Pick<
+type ItemButtonMainButtonProps = Pick<
   ItemButtonProps,
   'image' | 'name' | 'disabled' | 'tooltip' | 'onMainButtonClick'
 >;
 
-export const ItemButtonMainButton = (props: ItemButtonMainButtonData) => {
+export const ItemButtonMainButton = (props: ItemButtonMainButtonProps) => {
   const { image, name, disabled, tooltip, onMainButtonClick } = props;
 
   return (

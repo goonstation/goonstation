@@ -10,11 +10,11 @@ import { Button, Icon, Stack } from 'tgui-core/components';
 import { ItemButtonProps, SideButtonProps } from '.';
 import { ItemButtonMiniButtonStyle, ItemButtonStyle } from './style';
 
-type ItemButtonSideButtonsData = Pick<
+type ItemButtonSideButtonsProps = Pick<
   ItemButtonProps,
   'sideButton1' | 'sideButton2'
 >;
-export const ItemButtonSideButtons = (props: ItemButtonSideButtonsData) => {
+export const ItemButtonSideButtons = (props: ItemButtonSideButtonsProps) => {
   const { sideButton1, sideButton2 } = props;
 
   return (
