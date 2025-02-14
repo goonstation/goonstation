@@ -70,7 +70,12 @@ TYPEINFO(/obj/player_piano)
 
 	attackby(obj/item/W, mob/user) //this one is big and sucks, where all of our key and construction stuff is
 		if (istype(W, /obj/item/piano_key)) //piano key controls
-			var/mode_sel = input("Which do you want to do?", "Piano Control") as null|anything in list("Reset Piano", "Toggle Looping", "Adjust Timing")
+			var/mode_sel = tgui_input_list(
+				user,
+				"Which do you want to do?",
+				"Piano Control",
+				list("Reset Piano", "Toggle Looping", "Adjust Timing")
+			)
 
 			switch(mode_sel)
 				if ("Reset Piano") //reset piano B)
@@ -89,8 +94,9 @@ TYPEINFO(/obj/player_piano)
 					src.visible_message(SPAN_ALERT("[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] seems different now."))
 
 				if ("Adjust Timing") //adjusts tempo
-					var/time_sel = input("Input a custom tempo from 0.25 to 0.5 BPS", "Tempo Control") as num
-					if (!src.set_timing(time_sel))
+					var/time_sel = tgui_input_text(user, "Input a custom tempo from 0.25 to 0.5 BPS", "Tempo Control", src.timing)
+					time_sel = text2num(time_sel)
+					if (!time_sel || !src.set_timing(time_sel))
 						src.visible_message(SPAN_ALERT(">The mechanical workings of [src] emit a horrible din for several seconds before \the [src] shuts down."))
 						return
 					src.visible_message(SPAN_ALERT("[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] rumbles indifferently."))
@@ -163,9 +169,9 @@ TYPEINFO(/obj/player_piano)
 		if (is_busy || is_stored)
 			src.visible_message(SPAN_ALERT("\The [src] emits an angry beep!"))
 			return
-		var/mode_sel = input("Which mode would you like?", "Mode Select") as null|anything in list("Choose Notes", "Play Song")
+		var/mode_sel = tgui_input_list(user, "Which mode would you like?", "Mode Select", list("Choose Notes", "Play Song"))
 		if (mode_sel == "Choose Notes")
-			var/given_notes = input("Write out the notes you want to be played.", "Composition Menu", note_input)
+			var/given_notes = tgui_input_text(user, "Write out the notes you want to be played.", "Composition Menu", note_input)
 			if (!set_notes(given_notes))//still room to get long piano songs in, but not too crazy
 				src.visible_message(SPAN_ALERT("\The [src] makes an angry whirring noise and shuts down."))
 			return
@@ -329,7 +335,7 @@ TYPEINFO(/obj/player_piano)
 				sleep((timing * 10)) //to get delay into 10ths of a second
 
 	proc/set_notes(var/given_notes)
-		if (src.is_busy || src.is_stored)
+		if (src.is_busy || src.is_stored || !given_notes)
 			return FALSE
 
 		src.note_input = given_notes
