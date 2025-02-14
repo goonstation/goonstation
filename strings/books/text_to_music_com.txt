@@ -55,14 +55,15 @@
 	<ul style="padding-left: 20px;">
 		<li>Will wipe all stored data, except for the instrument</li>
 	</ul>
-	</ul>
 	<li>toggle rest on unavailable notes</li>
 	<ul style="padding-left: 20px;">
 		<li>When the inputed note is not available for the current instrument, will rest instead of erroring</li>
+		<li>Is not an input</li>
 	</ul>
 	<li>start autolinking</li>
 	<ul style="padding-left: 20px;">
-		<li>See the <i>Automatic Player Piano Linking</i> section below</li>
+		<li>See the <i>Automatic Linking</i> section below</li>
+		<li>Is not an input</li>
 	</ul>
 	<li>view errors</li>
 	<ul style="padding-left: 20px;">
@@ -159,16 +160,16 @@
 	</ul>
 </ul>
 
-<h2>Automatic Player Piano Linking</h2>
+<h2>Automatic Linking</h2>
 
 <p>Steps:</p>
 <ol>
-	<li>Use a multitool on a player piano with the cover removed to start storing pianos.</li>
-	<li>Then use it on pianos without covers that you want to link.</li>
+	<li>Use a multitool on a anchored Text to Music component to start storing pianos.</li>
+	<li>Then use it on anchored components that you want to link.</li>
 	<li>Use the multitool in your hand to start linking, each link takes 0.1 seconds.</li>
 </ol>
 
-<p>4 pianos have 7 links, so it takes 0.7 seconds.</p>
+<p>4 components have 7 links, so it takes 0.7 seconds.</p>
 
 <h2>Limitations</h2>
 
