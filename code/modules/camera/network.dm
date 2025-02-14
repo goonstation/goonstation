@@ -32,6 +32,19 @@
 			counts_by_tag[tag_we_use]++
 			C.c_tag = "[tag_we_use] [counts_by_tag[tag_we_use]]"
 
+		//TODO: Use a camera icon
+		//TODO: Add callback actions on the component, one for viewing, the other to create a viewport
+		var/minimap_network
+		switch (C.network)
+			if ("SS13")
+				minimap_network = MAP_CAMERA_SECURITY
+			if ("public")
+				minimap_network = MAP_CAMERA_PUBLIC
+			if ("thunder")
+				minimap_network = MAP_CAMERA_THUNDER
+		if (minimap_network)
+			C.AddComponent(/datum/component/minimap_marker/minimap, minimap_network, "ai_eye", name=C.c_tag)
+
 /proc/build_camera_network()
 	var/list/obj/machinery/camera/cameras = by_type[/obj/machinery/camera]
 	if (!isnull(cameras))

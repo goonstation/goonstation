@@ -2328,6 +2328,7 @@
 #include "code\obj\machinery\computer\robotics.dm"
 #include "code\obj\machinery\computer\secure_data.dm"
 #include "code\obj\machinery\computer\security.dm"
+#include "code\obj\machinery\computer\security2.dm"
 #include "code\obj\machinery\computer\shuttle.dm"
 #include "code\obj\machinery\computer\teleporter.dm"
 #include "code\obj\machinery\computer\wizard_teleport_computer.dm"

@@ -6,6 +6,9 @@
 #define MAP_POD_WARS_SYNDICATE		(1<<3)
 #define	MAP_INFO 					(1<<4) //! Map that just shows station rooms
 #define MAP_ALERTS					(1<<5) //! Station General Alerts
+#define MAP_CAMERA_SECURITY			(1<<6) //! Cameras, Security Network
+#define MAP_CAMERA_PUBLIC			(1<<7) //! Cameras, Public Network
+#define MAP_CAMERA_THUNDER			(1<<8) //! Cameras, Thunderdome Network
 #define MAP_HTR_TEAM 				(1<<20)
 
 // Area groups, which will be treated as one atom/movable by the renderer, allowing for efficient recolouring across minimaps.
