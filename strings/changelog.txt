@@ -1,4 +1,9 @@
 
+(t)fri feb 14 25
+(u)Bartimeus973
+(p)22280
+(e)🆕🎨⚖📄|C-Feature, C-Sprites, C-Balance, A-UI
+(*)Legs and eyes are now modifiable in character setup!
 (t)thu feb 13 25
 (u)glowbold
 (p)22082
