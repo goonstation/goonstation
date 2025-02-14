@@ -253,122 +253,102 @@ TYPEINFO(/obj/machinery/microwave)
 	*  Microwave Menu
 	*/
 
+
+/obj/machinery/microwave/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "Microwave")
+		ui.open()
+
+/obj/machinery/microwave/ui_data(mob/user)
+	. = list(
+		"broken" = src.microwave_state > 0,
+		"operating" = src.operating,
+		"dirty" = src.dirty,
+		"eggs" = src.egg_amount,
+		"flour" = src.flour_amount,
+		"monkey_meat" = src.monkeymeat_amount,
+		"synth_meat" = src.synthmeat_amount,
+		"donk_pockets" = src.donkpocket_amount,
+		"other_meat" = src.humanmeat_amount,
+		"unclassified_item" = src.extra_item
+		)
+
+/obj/machinery/microwave/ui_act(action, params)
+	. = ..()
+	if (.)
+		return
+	switch (action)
+		if ("start_microwave")
+			src.try_cook()
+			return TRUE
+		if ("eject_contents")
+			if (length(src.contents))
+				for(var/obj/item/I in src.contents)
+					I.set_loc(get_turf(src))
+				src.clean_up()
+				boutput(usr, "You empty the contents out of the microwave.")
+				return TRUE
+
 /obj/machinery/microwave/attack_hand(mob/user)
 	if (isghostdrone(user))
 		boutput(user, SPAN_ALERT("\The [src] refuses to interface with you, as you are not a properly trained chef!"))
 		return
-	var/dat
-	if(src.microwave_state > 0)
-		dat = {"
-		<TT>Bzzzzttttt<BR>
-		It's broken! It could be fixed with some common tools.</TT><BR>
-		<BR>
-				"}
-	else if(src.operating)
-		dat = {"
-		<TT>Microwaving in progress!<BR>
-		Please wait...!</TT><BR>
-		<BR>
-		"}
-	else if(src.dirty)
-		dat = {"
-		<TT>This microwave is dirty!<BR>
-		Please clean it before use!</TT><BR>
-		<BR>
-		"}
-	else
-		dat = {"
-		<B>Eggs:</B>[src.egg_amount] eggs<BR>
-		<B>Flour:</B>[src.flour_amount] cups of flour<BR>
-		<B>Monkey Meat:</B>[src.monkeymeat_amount] slabs of meat<BR>
-		<B>Synth-Meat:</B>[src.synthmeat_amount] slabs of meat<BR>
-		<B>Meat Turnovers:</B>[src.donkpocket_amount] turnovers<BR>
-		<B>Other Meat:</B>[src.humanmeat_amount] slabs of meat<BR><HR>
-		<B>Unusual Item:</B>[src.extra_item]<BR><HR>
-		<BR>
-		<A href='?src=\ref[src];cook=1'>Turn on!<BR>
-		<A href='?src=\ref[src];cook=2'>Empty contents!<BR>
-		"}
-
-	user.Browse("<HEAD><TITLE>Microwave Controls</TITLE></HEAD><TT>[dat]</TT>", "window=microwave")
-	onclose(user, "microwave")
-	return
-
-
-/**
-	*  Microwave Menu Selection Handling
-	*/
-
-/obj/machinery/microwave/Topic(href, href_list)
-	if(..())
-		return
-
-	src.add_dialog(usr)
-	src.add_fingerprint(usr)
-
-	if(href_list["cook"])
-		if(!src.operating)
-			var/operation = text2num_safe(href_list["cook"])
-			var/cooked_item = ""
-
-			/// If cook was pressed in the menu
-			if(operation == 1)
-				src.visible_message(SPAN_NOTICE("The microwave turns on."))
-				playsound(src.loc, 'sound/machines/microwave_start.ogg', 25, 0)
-				var/diceinside = 0
-				for(var/obj/item/dice/D in src.contents)
-					if(!diceinside)
-						diceinside = 1
-					D.load()
-				if(diceinside)
-					src.cook(MW_COOK_BREAK)
-					for(var/obj/item/dice/d in src.contents)
-						d.set_loc(get_turf(src))
-					return
-				for(var/datum/recipe/R in src.available_recipes) //Look through the recipe list we made above
-					if(src.egg_amount == R.egg_amount && src.flour_amount == R.flour_amount && src.monkeymeat_amount == R.monkeymeat_amount && src.synthmeat_amount == R.synthmeat_amount && src.humanmeat_amount == R.humanmeat_amount && src.donkpocket_amount == R.donkpocket_amount) // Check if it's an accepted recipe
-						if(R.extra_item == null || (src.extra_item && src.extra_item.type == R.extra_item)) // Just in case the recipe doesn't have an extra item in it
-							src.cooked_recipe = R
-							cooked_item = R.creates // Store the item that will be created
-				if(cooked_item == "") //Oops that wasn't a recipe dummy!!!
-					if(src.flour_amount > 0 || src.water_amount > 0 || src.monkeymeat_amount > 0 || src.synthmeat_amount > 0 || src.humanmeat_amount > 0 || src.donkpocket_amount > 0 && src.extra_item == null) //Make sure there's something inside though to dirty it
-						src.cook(MW_COOK_DIRTY)
-					else if(src.egg_amount > 0) // egg was inserted alone
-						src.cook(MW_COOK_EGG)
-					else if(src.extra_item != null) // However if there's a weird item inside we want to break it, not dirty it
-						// warm if it can
-						if (istype(src.extra_item,/obj/item/organ) || src.extra_item.reagents)
-							src.visible_message(SPAN_NOTICE("The microwave begins warming [src.extra_item]!"))
-							src.cook(MW_COOK_WARM)
-						else
-							src.cook(MW_COOK_BREAK)
-					else //Otherwise it was empty, so just turn it on then off again with nothing happening
-						src.visible_message(SPAN_NOTICE("You're grilling nothing!"))
-						src.cook(MW_COOK_EMPTY)
-				else
-					var/cooking = text2path(cooked_item) // Get the item that needs to be spanwed
-					if(!isnull(cooking))
-						src.visible_message(SPAN_NOTICE("The microwave begins cooking something!"))
-						src.being_cooked = new cooking(src)
-						src.cook(MW_COOK_VALID_RECIPE)
-
-			/// If empty was selected in the menu
-			if(operation == 2)
-				if (length(src.contents))
-					for(var/obj/item/I in src.contents)
-						I.set_loc(get_turf(src))
-				src.clean_up()
-				boutput(usr, "You empty the contents out of the microwave.")
+	src.ui_interact(user)
 
 /**
 	*  Microwave Cooking
 	*/
 
+/obj/machinery/microwave/proc/try_cook()
+	if(src.operating)
+		return
+	var/cooked_item = ""
+
+	src.visible_message(SPAN_NOTICE("The microwave turns on."))
+	playsound(src.loc, 'sound/machines/microwave_start.ogg', 25, 0)
+	var/diceinside = 0
+	for(var/obj/item/dice/D in src.contents)
+		if(!diceinside)
+			diceinside = 1
+		D.load()
+	if(diceinside)
+		src.cook(MW_COOK_BREAK)
+		for(var/obj/item/dice/d in src.contents)
+			d.set_loc(get_turf(src))
+		return
+	for(var/datum/recipe/R in src.available_recipes) //Look through the recipe list we made above
+		if(src.egg_amount == R.egg_amount && src.flour_amount == R.flour_amount && src.monkeymeat_amount == R.monkeymeat_amount && src.synthmeat_amount == R.synthmeat_amount && src.humanmeat_amount == R.humanmeat_amount && src.donkpocket_amount == R.donkpocket_amount) // Check if it's an accepted recipe
+			if(R.extra_item == null || (src.extra_item && src.extra_item.type == R.extra_item)) // Just in case the recipe doesn't have an extra item in it
+				src.cooked_recipe = R
+				cooked_item = R.creates // Store the item that will be created
+	if(cooked_item == "") //Oops that wasn't a recipe dummy!!!
+		if(src.flour_amount > 0 || src.water_amount > 0 || src.monkeymeat_amount > 0 || src.synthmeat_amount > 0 || src.humanmeat_amount > 0 || src.donkpocket_amount > 0 && src.extra_item == null) //Make sure there's something inside though to dirty it
+			src.cook(MW_COOK_DIRTY)
+		else if(src.egg_amount > 0) // egg was inserted alone
+			src.cook(MW_COOK_EGG)
+		else if(src.extra_item != null) // However if there's a weird item inside we want to break it, not dirty it
+			// warm if it can
+			if (istype(src.extra_item,/obj/item/organ) || src.extra_item.reagents)
+				src.visible_message(SPAN_NOTICE("The microwave begins warming [src.extra_item]!"))
+				src.cook(MW_COOK_WARM)
+			else
+				src.cook(MW_COOK_BREAK)
+		else //Otherwise it was empty, so just turn it on then off again with nothing happening
+			src.visible_message(SPAN_NOTICE("You're grilling nothing!"))
+			src.cook(MW_COOK_EMPTY)
+	else
+		var/cooking = text2path(cooked_item) // Get the item that needs to be spanwed
+		if(!isnull(cooking))
+			src.visible_message(SPAN_NOTICE("The microwave begins cooking something!"))
+			src.being_cooked = new cooking(src)
+			src.cook(MW_COOK_VALID_RECIPE)
+
 /obj/machinery/microwave/proc/cook(var/result)
 	src.operating = TRUE
 	src.power_usage = 80
 	src.icon_state = "mw1"
-	src.updateUsrDialog()
+
 	switch(result)
 		if(MW_COOK_VALID_RECIPE)
 			SPAWN(cook_time)
