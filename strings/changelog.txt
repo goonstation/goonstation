@@ -1,5 +1,18 @@
 
 (t)thu feb 13 25
+(u)Garash2k
+(p)21411
+(e)🆕📄|C-Feature, A-UI
+(+)New UI for the Ruck Kit
+(u)glowbold
+(p)22261
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Enzymatic reclaimers can be broken by gunfire and explosions. Use common tools to fix them!
+(+)Enzymatic reclaimers require power to process meat and bodies.
+(u)Waffleloffle & glowbold
+(p)22208
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Reagent heaters can be broken by gunfire and explosions. Use common tools to repair!
 (u)Amylizzle
 (p)22139
 (e)🆕📦|C-Feature, A-Game-Objects
