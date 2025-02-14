@@ -21,7 +21,7 @@
 	get_help_message(dist, mob/user)
 		. = "You can use a <b>multitool</b> to open the settings menu, or a <b>wrench</b> to disassemble it."
 
-	New(var/atom/new_location, var/obj/item/shock_kit/new_shock_kit)
+	New(atom/new_location, obj/item/shock_kit/new_shock_kit)
 		contextLayout = new /datum/contextLayout/experimentalcircle
 		..()
 		for(var/button in childrentypesof(/datum/contextAction/electric_chair))
