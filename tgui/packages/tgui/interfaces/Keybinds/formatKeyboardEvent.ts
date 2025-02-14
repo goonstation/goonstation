@@ -47,5 +47,5 @@ export const formatKeyboardEvent = (event: React.KeyboardEvent): string => {
     text += KEY_CODE_TO_BYOND[key] || key;
   }
 
-  return text;
+  return text.replace(/\+$/, '');
 };
