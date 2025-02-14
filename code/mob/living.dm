@@ -614,12 +614,11 @@
 	if(src.client && !(target in view(src.client.view))) //don't point at things we can't see
 		return
 
-	var/obj/item/gun/G = src.equipped()
 	var/gunpoint = FALSE
-	if(!istype(G) || !ismob(target))
+	if(!cangunpoint(src.equipped()) || !ismob(target))
 		src.visible_message(SPAN_EMOTE("<b>[src]</b> points to [target]."))
 	else
-		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
+		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [src.equipped()] at [target]!</span>")
 		gunpoint = TRUE
 	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
 		..()
