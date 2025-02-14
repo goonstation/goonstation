@@ -28,6 +28,7 @@
 	<ul style="padding-left: 20px;">
 		<li>Starts playing notes</li>
 		<li>Does not work if the component is not anchored</li>
+		<li>Flashes green</li>
 	</ul>
 	<li>set notes</li>
 	<ul style="padding-left: 20px;">
@@ -50,10 +51,12 @@
 		<li>Stops the song if it's currently playing</li>
 		<li>Will always stop if the component is unwrenched</li>
 		<li>The song will start at the beginning the next time it's played</li>
+		<li>Flashes red on stop and when the song has ended</li>
 	</ul>
 	<li>reset</li>
 	<ul style="padding-left: 20px;">
 		<li>Will wipe all stored data, except for the instrument</li>
+		<li>Flashes blue</li>
 	</ul>
 	<li>toggle rest on unavailable notes</li>
 	<ul style="padding-left: 20px;">
@@ -68,6 +71,7 @@
 	<li>view errors</li>
 	<ul style="padding-left: 20px;">
 		<li>Anytime errors occur, they'll be logged into a viewable list</li>
+		<li>Flashes magenta on any errors</li>
 		<li>Only the last five errors can be viewed</li>
 		<li>The component will flash red if an error occurred</li>
 		<li>Is not an input</li>
