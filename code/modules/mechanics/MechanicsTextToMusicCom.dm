@@ -5,7 +5,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 
 /obj/item/mechanics/text_to_music // modified from playable_piano.dm and PR #21051 (Player Piano Notes Rework V2)
 	name = "Text to Music Component"
-	desc = "Converts text to music."
+	desc = "Can play multiple instruments."
 	icon_state = "comp_text_to_music"
 	cabinet_banned = TRUE // no walking music machines
 	var/datum/text_to_music/mech_comp/music_player = null
@@ -34,7 +34,10 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
-		. += "<br>[SPAN_NOTICE("Instrument: [src.music_player.instrument_name] | Timing: [src.music_player.timing] | Has Notes: [length(src.music_player.note_input) ? "Yes" : "No"]")]"
+		var/description = "Instrument: [src.music_player.instrument_name] |  \
+								Timing: [src.music_player.timing] |  \
+								Has Notes: [length(src.music_player.note_input) ? "Yes" : "No"]"
+		. += "<br>[SPAN_NOTICE(description)]"
 
 	// ----------------------------------------------------------------------------------------------------
 
@@ -89,7 +92,13 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 			src.music_player.set_timing(new_timing)
 
 	proc/mechcompConfigInstrument(obj/item/W as obj, mob/user as mob)
-		var/new_instrument = tgui_input_list(user, "Input new instrument.", "Set Instrument", src.music_player.allow_list, src.music_player.instrument_sound_path)
+		var/new_instrument = tgui_input_list(
+			user,
+			"Input new instrument.",
+			"Set Instrument",
+			src.music_player.allow_list,
+			src.music_player.instrument_sound_path
+		)
 		src.music_player.set_instrument(new_instrument)
 
 	proc/mechcompConfigStop(obj/item/W as obj, mob/user as mob)

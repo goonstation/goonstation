@@ -9,7 +9,13 @@ TYPEINFO(/datum/component/music_player_auto_linker)
 
 /datum/component/music_player_auto_linker/Initialize(atom/initial_music_player, atom/user)
 	. = ..()
-	if (!ispulsingtool(parent) || initial_music_player == null || user == null || !istype(initial_music_player, /datum/text_to_music) || !istype(user, /mob))
+	if(
+		!ispulsingtool(parent) ||
+		initial_music_player == null ||
+		user == null ||
+		!istype(initial_music_player, /datum/text_to_music) ||
+		!istype(user, /mob)
+	)
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(store_music_player))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(finish_storing_music_players))
