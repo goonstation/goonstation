@@ -137,6 +137,22 @@ export const CharacterTab = () => {
           <LabeledList.Item label="Bionics">
             <CustomPart slot_id={'r_arm'} />
             <CustomPart slot_id={'l_arm'} />
+            <CustomPart slot_id={'r_leg'} />
+            <CustomPart slot_id={'l_leg'} />
+            <Box>
+              {'Trait points: '}
+              <Box
+                as="span"
+                color={data.traitsPointsTotal > 0 ? 'good' : 'bad'}
+              >
+                {data.traitsPointsTotal}
+              </Box>
+            </Box>
+          </LabeledList.Item>
+          <LabeledList.Divider />
+          <LabeledList.Item label="Organs">
+            <CustomPart slot_id={'right_eye'} />
+            <CustomPart slot_id={'left_eye'} />
             <Box>
               {'Trait points: '}
               <Box
