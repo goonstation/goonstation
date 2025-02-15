@@ -18,7 +18,7 @@
 	var/crafting_stage_max = 5
 	New()
 		..()
-
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK, PROC_REF(assembly_check))
 		overlays_list["wires"] = new /icon('icons/obj/items/device.dmi', "bjwires")
 		overlays_list["radio"] = new /icon('icons/obj/items/device.dmi', "bjradio")
 		overlays_list["analyzer"] = new /icon('icons/obj/items/device.dmi', "bjhealthanalyzer")
@@ -36,6 +36,7 @@
 		UpdateIcon()
 
 	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK)
 		controller?.ghostize()
 		..()
 
@@ -215,8 +216,15 @@
 
 		else ..()
 
-/obj/item/device/brainjar/is_detonator_attachment()
-	return crafting_stage >= crafting_stage_max && src.the_brain
+/// ----------- Trigger/Applier-Assembly-Related Procs -----------
+
+/obj/item/device/brainjar/proc/assembly_check(var/manipulated_brainjar, var/obj/item/second_part, var/mob/user)
+	//if secured, we return TRUE and prevent the combination
+	if (src.crafting_stage < src.crafting_stage_max || !src.the_brain)
+		boutput(user, SPAN_NOTICE("The [src] is not ready yet."))
+		return TRUE
+
+/// ----------------------------------------------
 
 /obj/item/device/brainjar/detonator_act(event, var/obj/item/canbomb_detonator/det)
 	switch (event)

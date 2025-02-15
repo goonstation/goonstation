@@ -562,9 +562,6 @@
 					JOB_XP(user, "Clown", 2)
 					break
 
-	is_detonator_attachment()
-		return 1
-
 	detonator_act(event, var/obj/item/canbomb_detonator/det)
 		var/sound_to_play = islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument
 		switch (event)
@@ -758,9 +755,6 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 				M.take_ear_damage(ED)
 				boutput(M, "<font size=[max(0, ED)] color='red'>BZZZZZZZZZZZZZZZZZZZ!</font>")
 		return
-
-	is_detonator_attachment()
-		return 1
 
 	detonator_act(event, var/obj/item/canbomb_detonator/det)
 		switch (event)

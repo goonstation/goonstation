@@ -91,8 +91,8 @@ Contains:
 		//Since we set up the target addition, we undo the added assembly components
 		src.RemoveComponentsOfType(/datum/component/assembly)
 		SEND_SIGNAL(src.target, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, TRUE)
-		SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, TRUE)
-		SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, TRUE)
+		SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, new_target)
+		SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, new_target)
 	src.UpdateIcon()
 	src.UpdateName()
 
@@ -232,8 +232,6 @@ Contains:
 			// and send the different parts of the assembly their corresponding signals to set up the assembly to the state it was
 			src.RemoveComponentsOfType(/datum/component/assembly)
 			src.special_construction_identifier = null
-			SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, FALSE)
-			SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, FALSE)
 			SEND_SIGNAL(src.target, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, user)
 			src.target.set_loc(T)
 			src.target.master = null
@@ -243,21 +241,22 @@ Contains:
 			if (src.additional_components)
 				for(var/obj/item/iterated_component in src.additional_components)
 					SEND_SIGNAL(iterated_component, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, user)
-					src.additional_components =- iterated_component
+					src.additional_components -= iterated_component
 					iterated_component.set_loc(T)
 					iterated_component.master = null
+			// Now we set up the rest of the assemblyagain
 			src.w_class = max(src.trigger.w_class, src.applier.w_class)
+			SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, FALSE)
+			SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, FALSE)
 			src.UpdateIcon()
 			src.UpdateName()
 		else
 			boutput(user, SPAN_NOTICE("You disassemble the [src.name]."))
-			SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, user)
-			SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, user)
-			src.trigger.set_loc(T)
-			src.trigger.master = null
+			for(var/obj/item/removed_item in list(src.trigger, src.applier))
+				SEND_SIGNAL(removed_item, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, user)
+				removed_item.set_loc(T)
+				removed_item.master = null
 			src.trigger = null
-			src.applier.set_loc(T)
-			src.applier.master = null
 			src.applier = null
 			user.u_equip(src)
 			qdel(src)
@@ -295,8 +294,8 @@ Contains:
 	//Now we set up the attached target for overlays/other assembly steps
 	SEND_SIGNAL(manipulated_item, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, TRUE)
 	//Now we send a signal to the other two components in case we enable certain combinations, e.g. for mousetraps
-	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, TRUE)
-	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, TRUE)
+	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, to_combine_atom)
+	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, to_combine_atom)
 	//Last but not least, we update our icon, w_class and name
 	src.UpdateIcon()
 	src.UpdateName()
@@ -324,10 +323,10 @@ Contains:
 	SEND_SIGNAL(manipulated_item, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, TRUE)
 	//Now we send a signal to the other components in case we enable certain combinations, e.g. for mousetraps
 	for(var/obj/item/checked_item in list(src.trigger, src.applier, src.target))
-		SEND_SIGNAL(checked_item, COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION, src, user, TRUE)
+		SEND_SIGNAL(checked_item, COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION, src, user, to_combine_atom)
 	for(var/obj/item/checked_item in src.additional_components)
 		if(checked_item != manipulated_item)
-			SEND_SIGNAL(checked_item, COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION, src, user, TRUE)
+			SEND_SIGNAL(checked_item, COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION, src, user, to_combine_atom)
 	//Last but not least, we update our icon, w_class and name
 	src.w_class = max(src.w_class, manipulated_item.w_class)
 	src.UpdateIcon()

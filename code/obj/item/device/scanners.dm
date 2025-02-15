@@ -700,9 +700,6 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 		src.add_fingerprint(user)
 		return
 
-	is_detonator_attachment()
-		return 1
-
 	detonator_act(event, var/obj/item/canbomb_detonator/det)
 		switch (event)
 			if ("attach")

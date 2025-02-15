@@ -350,8 +350,6 @@ TYPEINFO(/obj/item/device/flash)
 	else
 		return ..()
 
-/obj/item/device/flash/is_detonator_attachment()
-	return 1
 
 /obj/item/device/flash/detonator_act(event, var/obj/item/canbomb_detonator/det)
 	switch (event)

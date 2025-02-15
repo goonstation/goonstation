@@ -40,6 +40,7 @@
 	new_assembly.set_trigger_time(90 SECONDS)
 	new_assembly.master = src
 	new_assembly.set_loc(src)
+	src.part_assembly = new_assembly
 	for(var/obj/item/checked_item in new_assembly.additional_components)
 		src.attachments += checked_item
 		checked_item.detonator_act("attach", src)
@@ -168,9 +169,6 @@
 			src.detonate()
 		else
 			failsafe_engage()
-
-/obj/item/proc/is_detonator_attachment()
-	return 0
 
 // Possible events: attach, detach, leak, process, prime, detonate, cut, pulse
 /obj/item/proc/detonator_act(event, var/obj/item/canbomb_detonator/det)

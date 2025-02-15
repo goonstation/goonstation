@@ -259,9 +259,6 @@
 		src.explode()
 	else ..()
 
-/obj/item/cell/is_detonator_attachment()
-	return 1
-
 /obj/item/cell/detonator_act(event, var/obj/item/canbomb_detonator/det)
 	switch (event)
 		if ("attach")
