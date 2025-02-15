@@ -21,7 +21,7 @@
 		C.animate_color(end, time=time, easing=SINE_EASING)
 	else
 		A.color = start
-		animate(A, color=end, time=time, easing=SINE_EASING)
+		animate(A, color=end, time=time, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
 
 /proc/animate_fade_from_grayscale(var/atom/A, var/time=5)
 	var/start = list(0.33,0.33,0.33,0, 0.33,0.33,0.33,0, 0.33,0.33,0.33,0, 0,0,0,1, 0,0,0,0)
@@ -32,7 +32,7 @@
 		C.animate_color(end, time=time, easing=SINE_EASING)
 	else
 		A.color = start
-		animate(A, color=end, time=time, easing=SINE_EASING)
+		animate(A, color=end, time=time, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
 
 /proc/animate_fade_from_drug_1(var/atom/A, var/time=5) //This smoothly fades from animated_fade_drug_inbetween_1 to normal colors
 	var/start = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1, 0,0,0,0)
@@ -43,7 +43,7 @@
 		C.animate_color(end, time=time, easing=SINE_EASING)
 	else
 		A.color = start
-		animate(A, color=end, time=time, easing=SINE_EASING)
+		animate(A, color=end, time=time, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
 
 /proc/animate_fade_from_drug_2(var/atom/A, var/time=5) //This smoothly fades from animated_fade_drug_inbetween_2 to normal colors
 	var/start = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
@@ -54,7 +54,7 @@
 		C.animate_color(end, time=time, easing=SINE_EASING)
 	else
 		A.color = start
-		animate(A, color=end, time=time, easing=SINE_EASING)
+		animate(A, color=end, time=time, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
 
 /proc/animate_fade_drug_inbetween_1(var/atom/A, var/time=5) //This fades from red being green, green being blue and blue being red to red being blue, green being red and blue being green
 	var/start = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1, 0,0,0,0)
@@ -65,7 +65,7 @@
 		C.animate_color(end, time=time, easing=SINE_EASING)
 	else
 		A.color = start
-		animate(A, color=end, time=time, easing=SINE_EASING)
+		animate(A, color=end, time=time, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
 
 /proc/animate_fade_drug_inbetween_2(var/atom/A, var/time=5) //This fades from rred being blue, green being red and blue being green to red being green, green being blue and blue being red
 	var/start = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
@@ -76,13 +76,13 @@
 		C.animate_color(end, time=time, easing=SINE_EASING)
 	else
 		A.color = start
-		animate(A, color=end, time=time, easing=SINE_EASING)
+		animate(A, color=end, time=time, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
 
 /proc/animate_melt_pixel(var/atom/A)
 	if (!istype(A))
 		return
 	//A.alpha = 200
-	animate(A, pixel_y = 0, time = 50 - A.pixel_y, alpha = 175, easing = BOUNCE_EASING)
+	animate(A, pixel_y = 0, time = 50 - A.pixel_y, alpha = 175, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
 	animate(alpha = 0, easing = LINEAR_EASING)
 	return
 
@@ -92,7 +92,7 @@
 	var/floatdegrees = rand(5, 20)
 	var/side = 1
 	side = pick(-1, 1)
-	animate(A, pixel_x = A.pixel_x + rand(-1, 1), pixel_y = A.pixel_y + rand(-1, 1), time = 5, alpha = 255)
+	animate(A, pixel_x = A.pixel_x + rand(-1, 1), pixel_y = A.pixel_y + rand(-1, 1), time = 5, alpha = 255, flags = ANIMATION_PARALLEL)
 	animate(pixel_x = A.pixel_x + rand(-1, 1), pixel_y = A.pixel_y + rand(-1, 1), time = 5, alpha = 255)
 	animate(pixel_x = A.pixel_x + rand(-1, 1), pixel_y = A.pixel_y + rand(-1, 1), time = 5, alpha = 255)
 	animate(pixel_x = A.pixel_x + rand(-1, 1), pixel_y = A.pixel_y + rand(-1, 1), time = 5, alpha = 255)
@@ -111,7 +111,7 @@
 	if (!istype(A))
 		return
 	//A.alpha = 200
-	animate(A, pixel_x = 20*sin(A.pixel_x), time = 30 + 20*sin(A.pixel_x), alpha = 175, easing = ELASTIC_EASING)
+	animate(A, pixel_x = 20*sin(A.pixel_x), time = 30 + 20*sin(A.pixel_x), alpha = 175, easing = ELASTIC_EASING, flags = ANIMATION_PARALLEL)
 	animate(pixel_x = A.pixel_x, time = 30 + 20*sin(A.pixel_x), alpha = 175, easing = ELASTIC_EASING)
 	return
 
@@ -173,12 +173,12 @@
 	var/list/col = list(1,0,0, 0,1,0, 0,0,1, 0.15,0.77,0.66)
 	var/matrix/shrink = matrix()
 	shrink.Scale(0.0, 0.0)
-	animate(A, color=col, transform=shrink, time=5, easing=SINE_EASING)
+	animate(A, color=col, transform=shrink, time=5, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
 
 /proc/animate_flock_floorrun_end(var/atom/A)
 	if(!istype(A))
 		return
-	animate(A, color=null, transform=null, time=5, easing=SINE_EASING)
+	animate(A, color=null, transform=null, time=5, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
 
 /proc/animate_tile_dropaway(var/atom/A)
 	if(!istype(A))
@@ -829,7 +829,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	SPAWN(rand(1,10))
 		if (A)
 			var/matrix/M = matrix(A.transform)
-			animate(A, pixel_y = 32, transform = M.Multiply(matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE)), time = floatspeed, loop = loopnum, easing = SINE_EASING)
+			animate(A, pixel_y = 32, transform = M.Multiply(matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE)), time = floatspeed, loop = loopnum, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
 			animate(pixel_y = 0, transform = M.Multiply(matrix(floatdegrees * (side == 1 ? -1:1), MATRIX_ROTATE)), time = floatspeed, loop = loopnum, easing = SINE_EASING)
 	return
 
@@ -842,12 +842,10 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	SPAWN(rand(1,10))
 		if (A)
-			//var/matrix/M = matrix(A.transform)
+			var/matrix/M = matrix(A.transform)
 			var/initial_y = A.pixel_y
-			//animate(A, pixel_y = initial_y + 4, transform = M.Multiply(matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE)), time = floatspeed, loop = loopnum, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
-			//animate(pixel_y = initial_y, transform = M, time = floatspeed, loop = loopnum, easing = SINE_EASING)
-			animate(A, pixel_y = initial_y + 4, transform = matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE), time = floatspeed, loop = loopnum, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
-			animate(pixel_y = initial_y, transform = null, time = floatspeed, loop = loopnum, easing = SINE_EASING)
+			animate(A, pixel_y = initial_y + 4, transform = A.transform.Multiply(matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE)), time = floatspeed, loop = loopnum, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+			animate(pixel_y = initial_y, transform = M, time = floatspeed, loop = loopnum, easing = SINE_EASING)
 	return
 
 /proc/animate_lag(atom/A, steps=15, loopnum=-1, magnitude=10, step_time_low=0.2 SECONDS, step_time_high = 0.25 SECONDS)
@@ -860,7 +858,8 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 				pixel_y = rand(-magnitude, magnitude),
 				time = randfloat(step_time_low, step_time_high),
 				loop = loopnum,
-				easing = JUMP_EASING
+				easing = JUMP_EASING,
+				flags = ANIMATION_PARALLEL
 			)
 		else
 			animate(
@@ -868,7 +867,8 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 				pixel_y = rand(-magnitude, magnitude),
 				time = randfloat(step_time_low, step_time_high),
 				loop = loopnum,
-				easing = JUMP_EASING
+				easing = JUMP_EASING,
+				flags = ANIMATION_PARALLEL
 			)
 
 /proc/animate_revenant_shockwave(var/atom/A, var/loopnum = -1, floatspeed = 20, random_side = 1)
@@ -881,7 +881,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	SPAWN(rand(1,10))
 		if (A)
 			var/matrix/M = matrix(A.transform)
-			animate(A, pixel_y = 8, transform = M.Multiply(matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE)), time = floatspeed, loop = loopnum, easing = SINE_EASING)
+			animate(A, pixel_y = 8, transform = M.Multiply(matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE)), time = floatspeed, loop = loopnum, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
 			animate(pixel_y = 0, transform = M.Multiply(matrix(floatdegrees * (side == 1 ? -1:1), MATRIX_ROTATE)), time = floatspeed, loop = loopnum, easing = SINE_EASING)
 	return
 
@@ -892,7 +892,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/looper = rand(3,5)
 	while(looper > 0)
 		looper--
-		animate(A, transform = A.transform.Scale(rand(1,20), rand(1,20)), pixel_x = A.pixel_x + rand(-12,12), pixel_z = A.pixel_z + rand(-12,12), time = 3, loop = 1, easing = LINEAR_EASING)
+		animate(A, transform = A.transform.Scale(rand(1,20), rand(1,20)), pixel_x = A.pixel_x + rand(-12,12), pixel_z = A.pixel_z + rand(-12,12), time = 3, loop = 1, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)
 		animate(transform = matrix(rand(-360,360), MATRIX_ROTATE), time = 3, loop = 1, easing = LINEAR_EASING)
 		animate(transform = A.transform.Scale(1,1), pixel_x = 0, pixel_z = 0, time = 1, loop = 1, easing = LINEAR_EASING)
 		animate(transform = M, time = 1, loop = 1, easing = LINEAR_EASING)
@@ -900,11 +900,10 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 /proc/animate_fading_leap_up(var/atom/A)
 	if (!istype(A))
 		return
-	var/matrix/M = matrix(A.transform)
 	var/do_loops = 15
 	while (do_loops > 0)
 		do_loops--
-		animate(A, transform = A.transform.Scale(1.2), pixel_z = A.pixel_z + 12, alpha = A.alpha - 17, time = 1, loop = 1, easing = LINEAR_EASING)
+		animate(A, transform = A.transform.Scale(1.2), pixel_z = A.pixel_z + 12, alpha = A.alpha - 17, time = 1, loop = 1, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)
 		sleep(0.1 SECONDS)
 	A.alpha = 0
 
@@ -916,7 +915,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	M.Scale(18,18)
 	while (do_loops > 0)
 		do_loops--
-		animate(A, transform = A.transform.Scale(0.8), pixel_z = A.pixel_z - 12, alpha = A.alpha + 17, time = 1, loop = 1, easing = LINEAR_EASING)
+		animate(A, transform = A.transform.Scale(0.8), pixel_z = A.pixel_z - 12, alpha = A.alpha + 17, time = 1, loop = 1, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)
 		sleep(0.1 SECONDS)
 	animate(A, transform = M, pixel_z = 0, alpha = 255, time = 1, loop = 1, easing = LINEAR_EASING)
 
@@ -982,7 +981,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 /proc/animate_rainbow_glow_old(var/atom/A)
 	if (!istype(A))
 		return
-	animate(A, color = "#FF0000", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
+	animate(A, color = "#FF0000", time = rand(5,10), loop = -1, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)
 	animate(color = "#00FF00", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 	animate(color = "#0000FF", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 	return
@@ -990,7 +989,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 /proc/animate_rainbow_glow(var/atom/A, min_time = 5, max_time = 10)
 	if (!istype(A) && !isclient(A) && !istype(A, /image/chat_maptext))
 		return
-	animate(A, color = "#FF0000", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
+	animate(A, color = "#FF0000", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)
 	animate(color = "#FFFF00", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
 	animate(color = "#00FF00", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
 	animate(color = "#00FFFF", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
@@ -1003,26 +1002,26 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		return
 	for(var/the_color in colors_to_swap)
 		if(the_color == colors_to_swap[1])
-			animate(A, color = the_color, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
+			animate(A, color = the_color, time = rand(5,10), loop = -1, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)
 		else
 			animate(color = the_color, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 
 /proc/animate_fade_to_color_fill(var/atom/A,var/the_color,var/time)
 	if (!istype(A) || !the_color || !time)
 		return
-	animate(A, color = the_color, time = time, easing = LINEAR_EASING)
+	animate(A, color = the_color, time = time, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)
 
 /proc/animate_flash_color_fill(var/atom/A,var/the_color,var/loops,var/time)
 	if (!istype(A) || !the_color || !time || !loops)
 		return
-	animate(A, color = the_color, time = time, easing = LINEAR_EASING)
+	animate(A, color = the_color, time = time, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)
 	animate(color = "#FFFFFF", time = 5, loop = loops, easing = LINEAR_EASING)
 
 /proc/animate_flash_color_fill_inherit(var/atom/A,var/the_color,var/loops,var/time)
 	if (!istype(A) || !the_color || !time || !loops)
 		return
 	var/color_old = A.color
-	animate(A, color = the_color, time = time, loop = loops, easing = LINEAR_EASING)
+	animate(A, color = the_color, time = time, loop = loops, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)
 	animate(color = color_old, time = time, loop = loops, easing = LINEAR_EASING)
 
 /proc/animate_clownspell(var/atom/A)
@@ -1035,7 +1034,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 /proc/animate_wiggle_then_reset(var/atom/A, var/loops = 5, var/speed = 5, var/x_var = 3, var/y_var = 3)
 	if (!istype(A) || !loops || !speed)
 		return
-	animate(A, pixel_x = rand(-x_var, x_var), pixel_y = rand(-y_var, y_var), time = speed * 2,loop = loops, easing = rand(2,7))
+	animate(A, pixel_x = rand(-x_var, x_var), pixel_y = rand(-y_var, y_var), time = speed * 2,loop = loops, easing = rand(2,7), flags = ANIMATION_PARALLEL)
 	animate(pixel_x = 0, pixel_y = 0, time = speed, easing = rand(2,7))
 
 /proc/animate_blink(var/atom/A)
@@ -1044,7 +1043,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/matrix/Orig = A.transform
 	A.Scale(0.2,0.2)
 	A.alpha = 50
-	animate(A,transform = Orig, time = 3, alpha = 255, easing = CIRCULAR_EASING)
+	animate(A,transform = Orig, time = 3, alpha = 255, easing = CIRCULAR_EASING, flags = ANIMATION_PARALLEL)
 	return
 
 /proc/animate_bullspellground(var/atom/A, var/spell_color = "#cccccc")
@@ -1137,7 +1136,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	if (slightly_random)
 		floatspeed = floatspeed * (rand(10,14) / 10)//rand_deci(1, 0, 1, 4)
-	animate(A, pixel_y = Y1, time = floatspeed, loop = loopnum, easing = LINEAR_EASING)//, flags = ANIMATION_END_NOW) - enable this once we can compile with 511 maybe (I forgot to test it)
+	animate(A, pixel_y = Y1, time = floatspeed, loop = loopnum, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)//, flags = ANIMATION_END_NOW) - enable this once we can compile with 511 maybe (I forgot to test it)
 	animate(pixel_y = Y2, time = floatspeed, loop = loopnum, easing = LINEAR_EASING)
 	return
 
@@ -1158,7 +1157,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		turndir = -90
 		turned = matrix(A.transform, -90, MATRIX_ROTATE)
 
-	animate(A, pixel_y = (A.pixel_y + 4), pixel_x = (A.pixel_x + 4), transform = turned, time = T, loop = loops, dir = EAST)
+	animate(A, pixel_y = (A.pixel_y + 4), pixel_x = (A.pixel_x + 4), transform = turned, time = T, loop = loops, dir = EAST, flags = ANIMATION_PARALLEL)
 	animate(pixel_y = (A.pixel_y + 6), transform = turned.Turn(turndir), time = T, loop = loops, dir = EAST)
 	animate(pixel_y = (A.pixel_y - 4), transform = turned.Turn(turndir), time = T, loop = loops, dir = EAST)
 	animate(pixel_y = (A.pixel_y - 6), pixel_x = (A.pixel_x - 4), transform = turned.Turn(turndir), time = T, loop = loops, dir = EAST)
@@ -1188,7 +1187,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		var/rand_var = (rand(10, 14) / 10)
 		DEBUG_MESSAGE("rand_var [rand_var]")
 		speed = speed * rand_var
-	animate(A, pixel_x = X1, time = speed, loop = loopnum, easing = LINEAR_EASING)
+	animate(A, pixel_x = X1, time = speed, loop = loopnum, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)
 	animate(pixel_x = X2, time = speed, loop = loopnum, easing = LINEAR_EASING)
 	return
 
@@ -1254,7 +1253,8 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		animate(transform = matrix(A.transform, (J!=0)*deg, MATRIX_ROTATE), \
 					 pixel_x = (radius * sin(deg*J)), \
 					 pixel_y = (radius * cos(deg*J)), \
-					 time = (T + (time_diff*J/(laps*res))) / res )
+					 time = (T + (time_diff*J/(laps*res))) / res, \
+					 flags = ANIMATION_PARALLEL)
 		DEBUG_MESSAGE("Animating D: [deg], res: [res], px: [A.pixel_x], py: [A.pixel_y], T: [T], ActualTime:[(T + (time_diff*J/(laps*res)))], J/laps:[J/(laps*res)] TD:[(time_diff*J/(laps*res))]")
 	//T += time_diff	//Modify the time with the calculated difference.
 	animate(pixel_x = 0, pixel_y = 0, time = 2)
@@ -1274,7 +1274,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/punchstr = rand(10, 20)
 	var/original_y = A.pixel_y
 	var/matrix/M = A.transform
-	animate(A, transform = A.transform.Multiply(matrix(punchstr, MATRIX_ROTATE)), pixel_y = 16, time = 2, color = "#eeeeee", easing = BOUNCE_EASING)
+	animate(A, transform = A.transform.Multiply(matrix(punchstr, MATRIX_ROTATE)), pixel_y = 16, time = 2, color = "#eeeeee", easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
 	animate(transform = A.transform.Multiply(matrix(-punchstr, MATRIX_ROTATE)), pixel_y = original_y, time = 2, color = "#ffffff", easing = BOUNCE_EASING)
 	animate(transform = M, time = 3, easing = BOUNCE_EASING)
 	return
@@ -1283,14 +1283,14 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if (!istype(A))
 		return
 
-	animate(A, pixel_z = A.pixel_z + -128, time = 3, loop = -1, easing = LINEAR_EASING)
+	animate(A, pixel_z = A.pixel_z + -128, time = 3, loop = -1, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)
 	animate(pixel_z = A.pixel_z + 128, time = 0, loop = -1, easing = LINEAR_EASING)
 
 /proc/animate_glitchy_fuckup2(var/atom/A)
 	if (!istype(A))
 		return
 
-	animate(A, pixel_x = A.pixel_x + rand(-128,128), pixel_z = A.pixel_z + rand(-128,128), time = 2, loop = -1, easing = LINEAR_EASING)
+	animate(A, pixel_x = A.pixel_x + rand(-128,128), pixel_z = A.pixel_z + rand(-128,128), time = 2, loop = -1, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)
 	animate(pixel_x = 0, pixel_z = 0, time = 0, loop = -1, easing = LINEAR_EASING)
 
 /proc/animate_glitchy_fuckup3(var/atom/A)
@@ -1300,7 +1300,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/matrix/MD = matrix()
 	var/list/scaley_numbers = list(0.25,0.5,1,1.5,2)
 	M.Scale(pick(scaley_numbers),pick(scaley_numbers))
-	animate(A, transform = M, time = 1, loop = -1, easing = LINEAR_EASING)
+	animate(A, transform = M, time = 1, loop = -1, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)
 	animate(transform = MD, time = 1, loop = -1, easing = LINEAR_EASING)
 
 // these don't use animate but they're close enough, idk
@@ -1435,9 +1435,9 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 /proc/shrink_teleport(var/atom/teleporter)
 	var/matrix/M = teleporter.transform
-	animate(teleporter, transform = teleporter.transform.Scale(0.1), pixel_y = 6, time = 4, alpha = 255, easing = SINE_EASING|EASE_OUT)
+	animate(teleporter, transform = teleporter.transform.Scale(0.1), pixel_y = 6, time = 4, alpha = 255, easing = SINE_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
 	sleep(0.2 SECONDS)
-	animate(teleporter, transform = M, time = 9, alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
+	animate(teleporter, transform = M, time = 9, alpha = 255, pixel_y = 0, easing = ELASTIC_EASING, flags = ANIMATION_PARALLEL)
 	//HAXXX sorry - kyle
 	if (istype(teleporter, /mob/dead/observer))
 		SPAWN(1 SECOND)
@@ -1449,7 +1449,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	A.transform = A.transform.Scale(0.1)
 	A.pixel_y = 300
 
-	animate(A, time = 10, pixel_y = -16, alpha = 255, easing = QUAD_EASING)
+	animate(A, time = 10, pixel_y = -16, alpha = 255, easing = QUAD_EASING, flags = ANIMATION_PARALLEL)
 
 	animate(transform = A.transform.Scale(10,1), time = 2, easing = SINE_EASING)
 
@@ -1458,7 +1458,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(transform = M)
 
 /proc/leaving_animation(var/atom/A)
-	animate(A, transform = A.transform.Scale(0.1, 1), time = 5, alpha = 255, easing = QUAD_EASING)
+	animate(A, transform = A.transform.Scale(0.1, 1), time = 5, alpha = 255, easing = QUAD_EASING, flags = ANIMATION_PARALLEL)
 	animate(time = 10, pixel_y = 512, easing = CUBIC_EASING)
 	sleep(1.5 SECONDS)
 
@@ -1591,7 +1591,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	target.add_filter("scan lines", 1, layering_filter(blend_mode = BLEND_INSET_OVERLAY, icon = scanline_icon, color = color + "00"))
 	var/filter = target.get_filter("scan lines")
 	if(!filter) return
-	animate(filter, y = -28, easing = QUAD_EASING, time = time)
+	animate(filter, y = -28, easing = QUAD_EASING, time = time, flags = ANIMATION_PARALLEL)
 	// animate(y = 0, easing = QUAD_EASING, time = time / 2) // TODO: add multiple passes option later
 	animate(color = color + alpha_hex, time = fade_time, flags = ANIMATION_PARALLEL, easing = QUAD_EASING | EASE_IN)
 	animate(color = color + "00", time = fade_time, easing = QUAD_EASING | EASE_IN)
