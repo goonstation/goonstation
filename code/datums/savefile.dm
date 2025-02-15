@@ -394,6 +394,11 @@
 				"left_eye" = "eye_default_left",
 				"right_eye" = "eye_default_right",
 			)
+		if(length(src.custom_parts) < 6) // aa a aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+			src.custom_parts["l_leg"] = "leg_default_left"
+			src.custom_parts["r_leg"] = "leg_default_right"
+			src.custom_parts["left_eye"] = "eye_default_left"
+			src.custom_parts["right_eye"] = "eye_default_right"
 
 		// Validate trait choices
 		if (src.traitPreferences.traits_selected == null)
