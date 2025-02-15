@@ -18,8 +18,8 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
-import { Window } from '../layouts';
+import { useBackend } from '../../backend';
+import { Window } from '../../layouts';
 
 // mirrors STAT_ALIVE etc. defines
 enum Status {
