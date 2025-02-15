@@ -17632,7 +17632,6 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/table/auto,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "hxU" = (
@@ -42311,7 +42310,6 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "rVx" = (
-/obj/table/auto,
 /obj/item/suture{
 	pixel_x = 2;
 	pixel_y = 7
