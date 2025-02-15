@@ -1043,9 +1043,9 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 /proc/animate_clownspell(var/atom/A)
 	if (!istype(A))
 		return
-	animate(A, transform = matrix(1.3, MATRIX_SCALE), time = 5, color = "#00ff00", easing = BACK_EASING)
-	animate(transform = null, time = 5, color = "#ffffff", easing = ELASTIC_EASING)
-	return
+	var/matrix/M = matrix(A.transform)
+	animate(A, transform = A.transform.Scale(1.3, 1.3), time = 5, color = "#00ff00", easing = BACK_EASING ,flags=ANIMATION_PARALLEL)
+	animate(transform = M, time = 5, color = "#ffffff", easing = ELASTIC_EASING)
 
 /proc/animate_wiggle_then_reset(var/atom/A, var/loops = 5, var/speed = 5, var/x_var = 3, var/y_var = 3)
 	if (!istype(A) || !loops || !speed)
