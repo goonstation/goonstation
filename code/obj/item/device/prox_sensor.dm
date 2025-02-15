@@ -22,6 +22,8 @@ TYPEINFO(/obj/item/device/prox_sensor)
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION, PROC_REF(assembly_manipulation))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION, PROC_REF(assembly_activation))
 	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(signal_dropped))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, PROC_REF(assembly_get_state))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT, PROC_REF(assembly_get_time_left))
 	// Prox-Sensor + assembly-applier -> timer/Applier-Assembly
 	src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
 
@@ -29,6 +31,8 @@ TYPEINFO(/obj/item/device/prox_sensor)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION)
 	UnregisterSignal(src, COMSIG_ITEM_DROPPED)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT)
 	..()
 
 
@@ -46,6 +50,19 @@ TYPEINFO(/obj/item/device/prox_sensor)
 		logTheThing(LOG_BOMBING, usr, "initiated a proximity's sensor's timer on a [src.master.name] at [log_loc(src.master)].")
 		//missing log about contents of beakers
 		return TRUE
+
+/obj/item/device/prox_sensor/proc/assembly_get_state(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly)
+	if(src.armed)
+		return ASSEMBLY_TRIGGER_ARMED
+	else
+		if(src.timing)
+			return ASSEMBLY_TRIGGER_PREPARING
+		else
+			return ASSEMBLY_TRIGGER_NOT_ACTIVATED
+
+/obj/item/device/prox_sensor/proc/assembly_get_time_left(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly)
+	return src.time
+
 
 /// ----------------------------------------------
 

@@ -52,7 +52,7 @@ TYPEINFO(/obj/item/device/timer)
 	return src.timing
 
 /obj/item/device/timer/proc/assembly_get_time_left(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly)
-	if src.timing
+	return src.time
 
 /// ----------------------------------------------
 
