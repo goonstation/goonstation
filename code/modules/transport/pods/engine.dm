@@ -176,6 +176,16 @@
 		if(SOUTHWEST)
 			A.pixel_y = dist*32
 			A.pixel_x = dist*32
+
+/obj/item/shipcomponent/engine/scout
+	name = "Scout Engine"
+	desc = "An engine optimized for speed and warp travel over power. Warning: Power is insufficient to operate most non-factory installed pod components."
+	powergenerated = 50
+	currentgen = 50
+	warprecharge = 5 SECONDS
+	speedmod = 0.5
+	icon_state = "engine-0"
+
 /obj/item/shipcomponent/engine/helios
 	name = "Helios Mark-II Engine"
 	desc = "A really fast engine"

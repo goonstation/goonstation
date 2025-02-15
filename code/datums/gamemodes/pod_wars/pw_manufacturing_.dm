@@ -13,6 +13,7 @@
 		/datum/manufacture/pod/preassembeled_parts,
 		/datum/manufacture/putt/preassembeled_parts,
 		/datum/manufacture/pod_wars/lock,
+		/datum/manufacture/engine_scout,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
