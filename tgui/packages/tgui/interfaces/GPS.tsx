@@ -108,11 +108,6 @@ export const GPS = () => {
                     Track
                   </Button>
                 </LabeledList.Item>
-                <LabeledList.Item label="Tracking">
-                  <Button onClick={() => act('track_gps')}>
-                    {tracking ? tracking : 'None'}
-                  </Button>
-                </LabeledList.Item>
               </LabeledList>
             </Stack.Item>
             <Stack.Item>
@@ -134,6 +129,11 @@ export const GPS = () => {
                   >
                     {distress ? 'Yes' : 'No'}
                   </Button.Checkbox>
+                </LabeledList.Item>
+                <LabeledList.Item label="Tracking">
+                  <Button onClick={() => act('track_gps')}>
+                    {tracking ? tracking : 'None'}
+                  </Button>
                 </LabeledList.Item>
               </LabeledList>
             </Stack.Item>
