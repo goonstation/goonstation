@@ -885,7 +885,6 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			var/bank_record = new/datum/db_record()
 			bank_record["name"] = src.active1["name"]
 			bank_record["id"] = src.active1["id"]
-			bank_record["job"] = src.active1["rank"]
 			bank_record["current_money"] = 0
 			bank_record["wage"] = 0
 			bank_record["notes"] = "No notes."

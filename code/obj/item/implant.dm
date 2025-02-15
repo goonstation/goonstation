@@ -2100,7 +2100,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				H.firegib(FALSE)
 			else
 				playsound(get_turf(H), 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, TRUE)
-				H.become_statue("ice", "Someone completely frozen in ice. How this happened, you have no clue!")
+				H.become_statue(getMaterial("ice"), "Someone completely frozen in ice. How this happened, you have no clue!")
 
 		..()
 

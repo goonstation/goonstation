@@ -1183,7 +1183,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
 			SPAWN(0)
-				M.become_statue("gold")
+				M.become_statue(getMaterial("gold"))
 		..()
 
 
