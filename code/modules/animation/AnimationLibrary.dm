@@ -828,8 +828,9 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	SPAWN(rand(1,10))
 		if (A)
-			animate(A, pixel_y = 32, transform = matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE), time = floatspeed, loop = loopnum, easing = SINE_EASING)
-			animate(pixel_y = 0, transform = matrix(floatdegrees * (side == 1 ? -1:1), MATRIX_ROTATE), time = floatspeed, loop = loopnum, easing = SINE_EASING)
+			var/matrix/M = matrix(A.transform)
+			animate(A, pixel_y = 32, transform = M.Multiply(matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE)), time = floatspeed, loop = loopnum, easing = SINE_EASING)
+			animate(pixel_y = 0, transform = M.Multiply(matrix(floatdegrees * (side == 1 ? -1:1), MATRIX_ROTATE)), time = floatspeed, loop = loopnum, easing = SINE_EASING)
 	return
 
 /proc/animate_levitate(var/atom/A, var/loopnum = -1, floatspeed = 20, random_side = 1)
@@ -841,7 +842,10 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	SPAWN(rand(1,10))
 		if (A)
+			//var/matrix/M = matrix(A.transform)
 			var/initial_y = A.pixel_y
+			//animate(A, pixel_y = initial_y + 4, transform = M.Multiply(matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE)), time = floatspeed, loop = loopnum, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+			//animate(pixel_y = initial_y, transform = M, time = floatspeed, loop = loopnum, easing = SINE_EASING)
 			animate(A, pixel_y = initial_y + 4, transform = matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE), time = floatspeed, loop = loopnum, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
 			animate(pixel_y = initial_y, transform = null, time = floatspeed, loop = loopnum, easing = SINE_EASING)
 	return
@@ -876,46 +880,43 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	SPAWN(rand(1,10))
 		if (A)
-			animate(A, pixel_y = 8, transform = matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE), time = floatspeed, loop = loopnum, easing = SINE_EASING)
-			animate(pixel_y = 0, transform = matrix(floatdegrees * (side == 1 ? -1:1), MATRIX_ROTATE), time = floatspeed, loop = loopnum, easing = SINE_EASING)
+			var/matrix/M = matrix(A.transform)
+			animate(A, pixel_y = 8, transform = M.Multiply(matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE)), time = floatspeed, loop = loopnum, easing = SINE_EASING)
+			animate(pixel_y = 0, transform = M.Multiply(matrix(floatdegrees * (side == 1 ? -1:1), MATRIX_ROTATE)), time = floatspeed, loop = loopnum, easing = SINE_EASING)
 	return
 
 /proc/animate_glitchy_freakout(var/atom/A)
 	if (!istype(A))
 		return
-	var/matrix/M = matrix()
+	var/matrix/M = matrix(A.transform)
 	var/looper = rand(3,5)
 	while(looper > 0)
 		looper--
-		M.Scale(rand(1,4),rand(1,4))
-		animate(A, transform = M, pixel_x = A.pixel_x + rand(-12,12), pixel_z = A.pixel_z + rand(-12,12), time = 3, loop = 1, easing = LINEAR_EASING)
+		animate(A, transform = A.transform.Scale(rand(1,20), rand(1,20)), pixel_x = A.pixel_x + rand(-12,12), pixel_z = A.pixel_z + rand(-12,12), time = 3, loop = 1, easing = LINEAR_EASING)
 		animate(transform = matrix(rand(-360,360), MATRIX_ROTATE), time = 3, loop = 1, easing = LINEAR_EASING)
-		M.Scale(1,1)
-		animate(transform = M, pixel_x = 0, pixel_z = 0, time = 1, loop = 1, easing = LINEAR_EASING)
-		animate(transform = null, time = 1, loop = 1, easing = LINEAR_EASING)
+		animate(transform = A.transform.Scale(1,1), pixel_x = 0, pixel_z = 0, time = 1, loop = 1, easing = LINEAR_EASING)
+		animate(transform = M, time = 1, loop = 1, easing = LINEAR_EASING)
 
 /proc/animate_fading_leap_up(var/atom/A)
 	if (!istype(A))
 		return
-	var/matrix/M = matrix()
+	var/matrix/M = matrix(A.transform)
 	var/do_loops = 15
 	while (do_loops > 0)
 		do_loops--
-		animate(A, transform = M, pixel_z = A.pixel_z + 12, alpha = A.alpha - 17, time = 1, loop = 1, easing = LINEAR_EASING)
-		M.Scale(1.2,1.2)
+		animate(A, transform = A.transform.Scale(1.2), pixel_z = A.pixel_z + 12, alpha = A.alpha - 17, time = 1, loop = 1, easing = LINEAR_EASING)
 		sleep(0.1 SECONDS)
 	A.alpha = 0
 
 /proc/animate_fading_leap_down(var/atom/A)
 	if (!istype(A))
 		return
-	var/matrix/M = matrix()
+	var/matrix/M = matrix(A.transform)
 	var/do_loops = 15
 	M.Scale(18,18)
 	while (do_loops > 0)
 		do_loops--
-		animate(A, transform = M, pixel_z = A.pixel_z - 12, alpha = A.alpha + 17, time = 1, loop = 1, easing = LINEAR_EASING)
-		M.Scale(0.8,0.8)
+		animate(A, transform = A.transform.Scale(0.8), pixel_z = A.pixel_z - 12, alpha = A.alpha + 17, time = 1, loop = 1, easing = LINEAR_EASING)
 		sleep(0.1 SECONDS)
 	animate(A, transform = M, pixel_z = 0, alpha = 255, time = 1, loop = 1, easing = LINEAR_EASING)
 
@@ -942,20 +943,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	//makes the person quickly increase it's y-size up and down
 	if (!istype(A))
 		return
-	var/matrix/M1 = matrix(1, 1, MATRIX_SCALE)
-	var/matrix/M2 = matrix(1, severity, MATRIX_SCALE)
+	var/matrix/M = matrix(A.transform)
 	var/current_jiggle_duration = jiggle_duration_start
 	var/do_loops = amount
 	SPAWN(0)
 		while (do_loops > 0)
 			do_loops--
-			if (istype(A))
-				animate(A, transform = M2, time = round(current_jiggle_duration / 2), easing = BOUNCE_EASING, flags=ANIMATION_PARALLEL)
-			else
-				break
+			animate(A, transform = A.transform.Scale(1, severity), time = round(current_jiggle_duration / 2), easing = BOUNCE_EASING, flags=ANIMATION_PARALLEL)
 			sleep(round(current_jiggle_duration / 2))
-			if (istype(A))
-				animate(A, transform = M1, time = round(current_jiggle_duration / 2), easing = BOUNCE_EASING, flags=ANIMATION_PARALLEL)
+			animate(A, transform = M, time = round(current_jiggle_duration / 2), easing = BOUNCE_EASING, flags=ANIMATION_PARALLEL)
 			sleep(round(current_jiggle_duration / 2) )
 			//make the jiggling slower/faster towards the end
 			current_jiggle_duration += (jiggle_duration_end - jiggle_duration_start) / min(1,(amount - 1))
@@ -1277,9 +1273,10 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		return
 	var/punchstr = rand(10, 20)
 	var/original_y = A.pixel_y
-	animate(A, transform = matrix(punchstr, MATRIX_ROTATE), pixel_y = 16, time = 2, color = "#eeeeee", easing = BOUNCE_EASING)
-	animate(transform = matrix(-punchstr, MATRIX_ROTATE), pixel_y = original_y, time = 2, color = "#ffffff", easing = BOUNCE_EASING)
-	animate(transform = null, time = 3, easing = BOUNCE_EASING)
+	var/matrix/M = A.transform
+	animate(A, transform = A.transform.Multiply(matrix(punchstr, MATRIX_ROTATE)), pixel_y = 16, time = 2, color = "#eeeeee", easing = BOUNCE_EASING)
+	animate(transform = A.transform.Multiply(matrix(-punchstr, MATRIX_ROTATE)), pixel_y = original_y, time = 2, color = "#ffffff", easing = BOUNCE_EASING)
+	animate(transform = M, time = 3, easing = BOUNCE_EASING)
 	return
 
 /proc/animate_glitchy_fuckup1(var/atom/A)
@@ -1432,17 +1429,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 /proc/animate_storage_rustle(var/atom/A)
 	var/matrix/M1 = A.transform
-	var/matrix/M2 = matrix()
-	M2.Scale(1.2,0.8)
 
-	animate(A, transform = M2, time = 3, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+	animate(A, transform = A.transform.Scale(1.2, 0.8), time = 3, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
 	animate(transform = M1, time = 2, easing = SINE_EASING)
 
 /proc/shrink_teleport(var/atom/teleporter)
-	var/matrix/M = matrix(0.1, 0.1, MATRIX_SCALE)
-	animate(teleporter, transform = M, pixel_y = 6, time = 4, alpha = 255, easing = SINE_EASING|EASE_OUT)
+	var/matrix/M = teleporter.transform
+	animate(teleporter, transform = teleporter.transform.Scale(0.1), pixel_y = 6, time = 4, alpha = 255, easing = SINE_EASING|EASE_OUT)
 	sleep(0.2 SECONDS)
-	animate(teleporter, transform = null, time = 9, alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
+	animate(teleporter, transform = M, time = 9, alpha = 255, pixel_y = 0, easing = ELASTIC_EASING)
 	//HAXXX sorry - kyle
 	if (istype(teleporter, /mob/dead/observer))
 		SPAWN(1 SECOND)
@@ -1450,21 +1445,20 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 
 /proc/spawn_animation1(var/atom/A)
-	var/matrix/M1 = matrix(0.1, 0.1, MATRIX_SCALE)
-	A.transform = M1
+	var/matrix/M = A.transform
+	A.transform = A.transform.Scale(0.1)
 	A.pixel_y = 300
 
-	animate(A, transform = M1, time = 10, pixel_y = -16, alpha = 255, easing = QUAD_EASING)
+	animate(A, time = 10, pixel_y = -16, alpha = 255, easing = QUAD_EASING)
 
-	M1.Scale(10, 1)
-	animate(transform = M1, time = 2, easing = SINE_EASING)
+	animate(transform = A.transform.Scale(10,1), time = 2, easing = SINE_EASING)
 
 
-	M1.Scale(1, 10)
-	animate(transform = null, time = 2, pixel_y = 0, easing = SINE_EASING)
+	animate(transform = A.transform.Scale(1,10), time = 2, pixel_y = 0, easing = SINE_EASING)
+	animate(transform = M)
 
 /proc/leaving_animation(var/atom/A)
-	animate(A, transform = matrix(0.1, 1, MATRIX_SCALE), time = 5, alpha = 255, easing = QUAD_EASING)
+	animate(A, transform = A.transform.Scale(0.1, 1), time = 5, alpha = 255, easing = QUAD_EASING)
 	animate(time = 10, pixel_y = 512, easing = CUBIC_EASING)
 	sleep(1.5 SECONDS)
 
