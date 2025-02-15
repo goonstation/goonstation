@@ -923,7 +923,7 @@ TYPEINFO(/obj/item/radiojammer)
 	return !src.b_stat
 
 /obj/item/device/radio/signaler/proc/assembly_manipulation(var/manipulated_signaler, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
-	src.attack_self(user)
+	src.AttackSelf(user)
 
 /obj/item/device/radio/signaler/proc/assembly_application(var/manipulated_signaler, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
 	src.send_signal()

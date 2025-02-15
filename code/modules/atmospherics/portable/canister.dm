@@ -513,7 +513,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 			src.det.failsafe_engage()
 			. = TRUE
 		if("trigger")
-			src.det.part_assembly.trigger.AttackSelf(usr)
+			var/obj/item/chosen_trigger = src.det.get_signaler()
+			chosen_trigger.AttackSelf(usr)
 			. = TRUE
 		if("timer")
 			if(!src.det.get_timing())

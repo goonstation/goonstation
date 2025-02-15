@@ -38,7 +38,7 @@ TYPEINFO(/obj/item/device/timer)
 /// ----------- Assembly-Related Procs -----------
 
 /obj/item/device/timer/proc/assembly_manipulation(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
-	src.attack_self(user)
+	src.AttackSelf(user)
 
 /obj/item/device/timer/proc/assembly_activation(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
 	//Activating a secured assembly sets it off -without- the UI. Good luck

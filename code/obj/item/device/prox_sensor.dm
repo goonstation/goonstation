@@ -41,7 +41,7 @@ TYPEINFO(/obj/item/device/prox_sensor)
 /// ----------- Assembly-Related Procs -----------
 
 /obj/item/device/prox_sensor/proc/assembly_manipulation(var/manipulated_sensor, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
-	src.attack_self(user)
+	src.AttackSelf(user)
 
 /obj/item/device/prox_sensor/proc/assembly_activation(var/manipulated_sensor, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
 	//Activating a secured assembly sets it off -without- the UI. Good luck
