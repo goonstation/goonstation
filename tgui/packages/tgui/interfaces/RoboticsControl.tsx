@@ -2,14 +2,112 @@
  * @file
  * @copyright 2025
  * @author FlameArrow57 (https://github.com/FlameArrow57)
+ * @author Mordent (https://github.com/mordent-goonstation)
  * @license ISC
  */
 
-import { BooleanLike } from 'common/react';
-import { Button, NoticeBox, Section, Table } from 'tgui-core/components';
+import type { BooleanLike } from 'common/react';
+import {
+  Box,
+  Button,
+  Icon,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+  Tooltip,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+
+// mirrors STAT_ALIVE etc. defines
+enum Status {
+  Alive = 0,
+  Unconscious = 1,
+  Dead = 2,
+}
+
+interface TooltipIconProps {
+  color?: string;
+  icon: string;
+  tooltip: string;
+}
+
+const TooltipIcon = ({ color, icon, tooltip }: TooltipIconProps) => (
+  <Tooltip position="bottom" content={tooltip}>
+    <Box color={color} position="relative">
+      <Icon name={icon} />
+    </Box>
+  </Tooltip>
+);
+
+interface CellIconProps {
+  charge: [number, number] | null;
+}
+
+const CellIcon = (props: CellIconProps) => {
+  const { charge } = props;
+  if (!charge) {
+    return (
+      <TooltipIcon
+        color="bad"
+        icon="triangle-exclamation"
+        tooltip="No cell inserted"
+      />
+    );
+  }
+  const chargeRatio = charge[0] / charge[1];
+  const tooltip = `${charge[0]} / ${charge[1]}`;
+  if (chargeRatio === 0) {
+    return <TooltipIcon color="bad" icon="battery-empty" tooltip={tooltip} />;
+  }
+  if (chargeRatio < 0.25) {
+    return (
+      <TooltipIcon color="average" icon="battery-quarter" tooltip={tooltip} />
+    );
+  }
+  if (chargeRatio < 0.5) {
+    return (
+      <TooltipIcon color="average" icon="battery-half" tooltip={tooltip} />
+    );
+  }
+  if (chargeRatio < 0.75) {
+    return (
+      <TooltipIcon
+        color="good"
+        icon="battery-three-quarters"
+        tooltip={tooltip}
+      />
+    );
+  }
+  return <TooltipIcon color="good" icon="battery-full" tooltip={tooltip} />;
+};
+
+interface StatusIconProps {
+  status: Status;
+}
+
+const StatusIcon = ({ status }: StatusIconProps) => {
+  switch (status) {
+    case Status.Alive: {
+      return (
+        <TooltipIcon color="good" icon="wifi" tooltip="Operating normally" />
+      );
+    }
+    case Status.Unconscious:
+    case Status.Dead:
+    default: {
+      return (
+        <TooltipIcon
+          color="bad"
+          icon="triangle-exclamation"
+          tooltip="ERROR: Not Responding!"
+        />
+      );
+    }
+  }
+};
 
 interface RoboticsControlData {
   user_is_ai: BooleanLike;
@@ -22,16 +120,17 @@ interface RoboticsControlData {
 interface AIData {
   name: string;
   mob_ref: string;
-  status: string;
+  status: Status;
   killswitch_time: number | null;
 }
 
 interface CyborgData {
   name: string;
   mob_ref: string;
-  status: string;
+  status: Status;
   cell_charge: number | null;
   cell_maxcharge: number | null;
+  missing_brain: BooleanLike;
   module: string | null;
   lock_time: number | null;
   killswitch_time: number | null;
@@ -43,7 +142,7 @@ interface GhostdroneData {
 }
 
 export const RoboticsControl = () => {
-  const { act, data } = useBackend<RoboticsControlData>();
+  const { data } = useBackend<RoboticsControlData>();
   const { user_is_ai, user_is_cyborg, ais, cyborgs, ghostdrones } = data;
 
   return (
@@ -51,17 +150,17 @@ export const RoboticsControl = () => {
       <Window.Content>
         <Section fill scrollable>
           <Section title="Located AI Units">
-            {ais.length ? (
+            {ais?.length ? (
               <AIStatuses
                 ais={ais}
-                user_is_robot={user_is_ai || user_is_cyborg}
+                user_is_robot={!!(user_is_ai || user_is_cyborg)}
               />
             ) : (
               'No AI units located'
             )}
           </Section>
           <Section title="Located Silicons">
-            {cyborgs.length ? (
+            {cyborgs?.length ? (
               <SiliconStatuses
                 cyborgs={cyborgs}
                 user_is_ai={user_is_ai}
@@ -72,7 +171,7 @@ export const RoboticsControl = () => {
             )}
           </Section>
           <Section title="Ghostdrones">
-            {ghostdrones.length ? (
+            {ghostdrones?.length ? (
               <GhostdroneStatuses ghostdrones={ghostdrones} />
             ) : (
               'No ghostdrones located'
@@ -85,8 +184,8 @@ export const RoboticsControl = () => {
 };
 
 interface AIStatusesProps {
-  ais;
-  user_is_robot;
+  ais: AIData[];
+  user_is_robot: boolean;
 }
 
 const AIStatuses = (props: AIStatusesProps) => {
@@ -96,14 +195,18 @@ const AIStatuses = (props: AIStatusesProps) => {
   return (
     <Table>
       <Table.Row>
-        <Table.Cell bold>Name</Table.Cell>
-        <Table.Cell bold>Status</Table.Cell>
-        <Table.Cell bold>Kill Switch</Table.Cell>
+        <Table.Cell header>Name</Table.Cell>
+        <Table.Cell header textAlign="center">
+          Status
+        </Table.Cell>
+        <Table.Cell header>Kill Switch</Table.Cell>
       </Table.Row>
       {ais.map((item) => (
         <Table.Row key={item.mob_ref}>
           <Table.Cell>{item.name}</Table.Cell>
-          <Table.Cell>{item.status}</Table.Cell>
+          <Table.Cell textAlign="center">
+            <StatusIcon status={item.status} />
+          </Table.Cell>
           <Table.Cell collapsing>
             {!item.killswitch_time ? (
               <NoticeBox warning inline>
@@ -136,9 +239,9 @@ const AIStatuses = (props: AIStatusesProps) => {
 };
 
 interface SiliconStatusesProps {
-  cyborgs;
-  user_is_ai;
-  user_is_cyborg;
+  cyborgs: CyborgData[];
+  user_is_ai: BooleanLike;
+  user_is_cyborg: BooleanLike;
 }
 
 const SiliconStatuses = (props: SiliconStatusesProps) => {
@@ -148,25 +251,49 @@ const SiliconStatuses = (props: SiliconStatusesProps) => {
   return (
     <Table>
       <Table.Row>
-        <Table.Cell bold>Name</Table.Cell>
-        <Table.Cell bold>Status</Table.Cell>
-        <Table.Cell bold>Cell Charge</Table.Cell>
-        <Table.Cell bold>Module</Table.Cell>
-        <Table.Cell bold>Lock Switch</Table.Cell>
-        <Table.Cell bold>Kill Switch</Table.Cell>
+        <Table.Cell header>Name</Table.Cell>
+        <Table.Cell header textAlign="center">
+          Status
+        </Table.Cell>
+        <Table.Cell header>Module</Table.Cell>
+        <Table.Cell header>Lock Switch</Table.Cell>
+        <Table.Cell header>Kill Switch</Table.Cell>
       </Table.Row>
       {cyborgs.map((item) => (
         <Table.Row key={item.mob_ref}>
           <Table.Cell>{item.name}</Table.Cell>
-          <Table.Cell>{item.status}</Table.Cell>
-          <Table.Cell>
-            {item.cell_maxcharge
-              ? `${item.cell_charge}/${item.cell_maxcharge}`
-              : 'No Cell Installed'}
+          <Table.Cell textAlign="center">
+            <Stack>
+              <Stack.Item grow={1}>
+                <CellIcon
+                  charge={
+                    item.cell_charge !== null && item.cell_maxcharge !== null
+                      ? [item.cell_charge, item.cell_maxcharge]
+                      : null
+                  }
+                />
+              </Stack.Item>
+              <Stack.Item grow={1}>
+                {item.missing_brain ? (
+                  <TooltipIcon
+                    color="bad"
+                    icon="triangle-exclamation"
+                    tooltip="Intelligence cortex missing"
+                  />
+                ) : (
+                  <TooltipIcon
+                    color="good"
+                    icon="brain"
+                    tooltip="Intelligence cortex present"
+                  />
+                )}
+              </Stack.Item>
+              <Stack.Item grow={1}>
+                <StatusIcon status={item.status} />
+              </Stack.Item>
+            </Stack>
           </Table.Cell>
-          <Table.Cell>
-            {item.module ? `${item.module}` : 'No Module Installed'}
-          </Table.Cell>
+          <Table.Cell>{item.module || 'None'}</Table.Cell>
           <Table.Cell>
             {!item.lock_time ? (
               <NoticeBox warning inline>
@@ -223,7 +350,7 @@ const SiliconStatuses = (props: SiliconStatusesProps) => {
 };
 
 interface GhostdroneStatusesProps {
-  ghostdrones;
+  ghostdrones: GhostdroneData[];
 }
 
 const GhostdroneStatuses = (props: GhostdroneStatusesProps) => {

@@ -164,40 +164,38 @@
 	var/list/cyborgs = list()
 
 	for_by_tcl(A, /mob/living/silicon/ai)
-		ais += list(list("name" = A.name,
-					"mob_ref" = "\ref[A]",
-					"status" = A.stat ? "ERROR: Not Responding!" : "Operating Normally",
-					"killswitch_time" = A.killswitch ? round((A.killswitch_at - TIME) / 10, 1) : null
-					))
+		ais += list(list(
+			"name" = A.name,
+			"mob_ref" = "\ref[A]",
+			"status" = A.stat,
+			"killswitch_time" = A.killswitch ? round((A.killswitch_at - TIME) / 10, 1) : null
+		))
 
-		var/robot_status
 		for(var/mob/living/silicon/robot/R in A.connected_robots)
 			if(QDELETED(R))
 				continue
 
-			if(isnull(R.part_head?.brain))
-				robot_status = "Intelligence Cortex Missing"
-			else if(R.stat)
-				robot_status = "Not Responding"
-			else
-				robot_status = "Operating Normally"
-
-			cyborgs += list(list("name" = R.name,
-							"mob_ref" = "\ref[R]",
-							"status" = robot_status,
-							"cell_charge" = R.cell?.charge,
-							"cell_maxcharge" = R.cell?.maxcharge,
-							"module" = R.module ? capitalize(R.module.name) : null,
-							"lock_time" = R.weapon_lock ? round(R.weaponlock_time, 1) : null,
-							"killswitch_time" = R.killswitch ? round((R.killswitch_at - TIME) / 10, 1) : null
-							))
+			cyborgs += list(list(
+				"name" = R.name,
+				"mob_ref" = "\ref[R]",
+				"missing_brain" = isnull(R.part_head?.brain),
+				"status" = R.stat,
+				"cell_charge" = R.cell?.charge,
+				"cell_maxcharge" = R.cell?.maxcharge,
+				"module" = R.module ? capitalize(R.module.name) : null,
+				"lock_time" = R.weapon_lock ? round(R.weaponlock_time, 1) : null,
+				"killswitch_time" = R.killswitch ? round((R.killswitch_at - TIME) / 10, 1) : null
+			))
 
 	return list(ais, cyborgs)
 
 /obj/machinery/computer/robotics/proc/update_ghostdrone_statuses()
 	var/list/ghostdrones = list()
 	for_by_tcl(drone, /mob/living/silicon/ghostdrone)
-		if(!drone.last_ckey || isdead(drone))
+		if (!drone.last_ckey || isdead(drone))
 			continue
-		ghostdrones += list(list("name" = drone.name, "mob_ref" = "\ref[drone]"))
+		ghostdrones += list(list(
+			"name" = drone.name,
+			"mob_ref" = "\ref[drone]"
+		))
 	return ghostdrones
