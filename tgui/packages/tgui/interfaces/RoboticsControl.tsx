@@ -12,11 +12,11 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 interface RoboticsControlData {
+  user_is_ai: BooleanLike;
+  user_is_cyborg: BooleanLike;
   ais: AIData[];
   cyborgs: CyborgData[];
   ghostdrones: GhostdroneData[];
-  user_is_ai: BooleanLike;
-  user_is_cyborg: BooleanLike;
 }
 
 interface AIData {
@@ -47,44 +47,37 @@ export const RoboticsControl = () => {
   const { user_is_ai, user_is_cyborg, ais, cyborgs, ghostdrones } = data;
 
   return (
-    <Window title="Robotics Control" width={1000} height={600}>
+    <Window title="Robotics Control" width={870} height={590}>
       <Window.Content>
-        <Section
-          title="Located AI Units"
-          fill
-          scrollable
-          minHeight="200px"
-          maxHeight="200px"
-        >
-          <AIStatuses ais={ais} user_is_robot={user_is_ai || user_is_cyborg} />
-        </Section>
-        <Section
-          title="Located Silicons"
-          fill
-          scrollable
-          minHeight="200px"
-          maxHeight="200px"
-        >
-          {/*
-          <SiliconStatuses
-            cyborg_names={cyborg_names}
-            cyborg_statuses={cyborg_statuses}
-            cyborg_cell_charges={cyborg_cell_charges}
-            cyborg_modules={cyborg_modules}
-            cyborg_lock_times={cyborg_lock_times}
-            cyborg_killswitch_times={cyborg_killswitch_times}
-            user_is_ai={user_is_ai}
-            user_is_cyborg={user_is_cyborg}
-          />*/}
-        </Section>
-        <Section
-          title="Ghostdrones"
-          fill
-          scrollable
-          minHeight="140px"
-          maxHeight="140px"
-        >
-          {/* <GhostdroneStatuses ghostdrone_names={ghostdrone_names} />*/}
+        <Section fill scrollable>
+          <Section title="Located AI Units">
+            {ais.length ? (
+              <AIStatuses
+                ais={ais}
+                user_is_robot={user_is_ai || user_is_cyborg}
+              />
+            ) : (
+              'No AI units located'
+            )}
+          </Section>
+          <Section title="Located Silicons">
+            {cyborgs.length ? (
+              <SiliconStatuses
+                cyborgs={cyborgs}
+                user_is_ai={user_is_ai}
+                user_is_cyborg={user_is_cyborg}
+              />
+            ) : (
+              'No cyborgs located'
+            )}
+          </Section>
+          <Section title="Ghostdrones">
+            {ghostdrones.length ? (
+              <GhostdroneStatuses ghostdrones={ghostdrones} />
+            ) : (
+              'No ghostdrones located'
+            )}
+          </Section>
         </Section>
       </Window.Content>
     </Window>
@@ -105,7 +98,7 @@ const AIStatuses = (props: AIStatusesProps) => {
       <Table.Row>
         <Table.Cell bold>Name</Table.Cell>
         <Table.Cell bold>Status</Table.Cell>
-        <Table.Cell bold>Switch</Table.Cell>
+        <Table.Cell bold>Kill Switch</Table.Cell>
       </Table.Row>
       {ais.map((item) => (
         <Table.Row key={item.mob_ref}>
@@ -120,7 +113,7 @@ const AIStatuses = (props: AIStatusesProps) => {
                     act('start_ai_killswitch', { mob_ref: item.mob_ref })
                   }
                 >
-                  Kill switch *Swipe ID*
+                  *Swipe ID*
                 </Button>
               </NoticeBox>
             ) : (
@@ -131,7 +124,7 @@ const AIStatuses = (props: AIStatusesProps) => {
                     act('stop_ai_killswitch', { mob_ref: item.mob_ref })
                   }
                 >
-                  Cancel kill switch - {item.killswitch_time} remaining
+                  Cancel - {item.killswitch_time} remaining
                 </Button>
               </NoticeBox>
             )}
@@ -141,43 +134,46 @@ const AIStatuses = (props: AIStatusesProps) => {
     </Table>
   );
 };
-/*
-const SiliconStatuses = (props) => {
+
+interface SiliconStatusesProps {
+  cyborgs;
+  user_is_ai;
+  user_is_cyborg;
+}
+
+const SiliconStatuses = (props: SiliconStatusesProps) => {
   const { act } = useBackend();
-  const {
-    cyborg_names,
-    cyborg_statuses,
-    cyborg_cell_charges,
-    cyborg_modules,
-    cyborg_lock_times,
-    cyborg_killswitch_times,
-    user_is_ai,
-    user_is_cyborg,
-  } = props;
+  const { cyborgs, user_is_ai, user_is_cyborg } = props;
 
   return (
     <Table>
       <Table.Row>
         <Table.Cell bold>Name</Table.Cell>
         <Table.Cell bold>Status</Table.Cell>
-        <Table.Cell bold>Charge</Table.Cell>
+        <Table.Cell bold>Cell Charge</Table.Cell>
         <Table.Cell bold>Module</Table.Cell>
         <Table.Cell bold>Lock Switch</Table.Cell>
         <Table.Cell bold>Kill Switch</Table.Cell>
       </Table.Row>
-      {cyborg_names.map((item, index) => (
-        <Table.Row key={index}>
-          <Table.Cell>{item}</Table.Cell>
-          <Table.Cell>{cyborg_statuses[index]}</Table.Cell>
-          <Table.Cell>{cyborg_cell_charges[index]}</Table.Cell>
-          <Table.Cell>{cyborg_modules[index]}</Table.Cell>
+      {cyborgs.map((item) => (
+        <Table.Row key={item.mob_ref}>
+          <Table.Cell>{item.name}</Table.Cell>
+          <Table.Cell>{item.status}</Table.Cell>
           <Table.Cell>
-            {!cyborg_lock_times[index] ? (
+            {item.cell_maxcharge
+              ? `${item.cell_charge}/${item.cell_maxcharge}`
+              : 'No Cell Installed'}
+          </Table.Cell>
+          <Table.Cell>
+            {item.module ? `${item.module}` : 'No Module Installed'}
+          </Table.Cell>
+          <Table.Cell>
+            {!item.lock_time ? (
               <NoticeBox warning inline>
                 <Button
                   disabled={!user_is_ai}
                   onClick={() =>
-                    act('start_silicon_lock', { index: index + 1 })
+                    act('start_silicon_lock', { mob_ref: item.mob_ref })
                   }
                 >
                   Lock
@@ -186,23 +182,25 @@ const SiliconStatuses = (props) => {
             ) : (
               <NoticeBox danger inline>
                 <Button
-                  onClick={() => act('stop_silicon_lock', { index: index + 1 })}
+                  onClick={() =>
+                    act('stop_silicon_lock', { mob_ref: item.mob_ref })
+                  }
                 >
-                  Cancel unlock - {cyborg_lock_times[index]} remaining
+                  Cancel - {item.lock_time} remaining
                 </Button>
               </NoticeBox>
             )}
           </Table.Cell>
           <Table.Cell collapsing>
-            {!cyborg_killswitch_times[index] ? (
+            {!item.killswitch_time ? (
               <NoticeBox warning inline>
                 <Button
                   disabled={user_is_cyborg || user_is_ai}
                   onClick={() =>
-                    act('start_silicon_killswitch', { index: index + 1 })
+                    act('start_silicon_killswitch', { mob_ref: item.mob_ref })
                   }
                 >
-                  Kill switch *Swipe ID*
+                  *Swipe ID*
                 </Button>
               </NoticeBox>
             ) : (
@@ -210,11 +208,10 @@ const SiliconStatuses = (props) => {
                 <Button
                   disabled={user_is_cyborg || user_is_ai}
                   onClick={() =>
-                    act('stop_silicon_killswitch', { index: index + 1 })
+                    act('stop_silicon_killswitch', { mob_ref: item.mob_ref })
                   }
                 >
-                  Cancel kill switch - {cyborg_killswitch_times[index]}{' '}
-                  remaining
+                  Cancel - {item.killswitch_time} remaining
                 </Button>
               </NoticeBox>
             )}
@@ -225,9 +222,13 @@ const SiliconStatuses = (props) => {
   );
 };
 
-const GhostdroneStatuses = (props) => {
+interface GhostdroneStatusesProps {
+  ghostdrones;
+}
+
+const GhostdroneStatuses = (props: GhostdroneStatusesProps) => {
   const { act } = useBackend();
-  const { ghostdrone_names } = props;
+  const { ghostdrones } = props;
 
   return (
     <Table>
@@ -235,14 +236,14 @@ const GhostdroneStatuses = (props) => {
         <Table.Cell bold>Name</Table.Cell>
         <Table.Cell bold>Switch</Table.Cell>
       </Table.Row>
-      {ghostdrone_names.map((item, index) => (
-        <Table.Row key={index}>
-          <Table.Cell collapsing>{item}</Table.Cell>
+      {ghostdrones.map((item) => (
+        <Table.Row key={item.mob_ref}>
+          <Table.Cell collapsing>{item.name}</Table.Cell>
           <Table.Cell collapsing>
             <NoticeBox danger inline>
               <Button
                 onClick={() =>
-                  act('killswitch_ghostdrone', { index: index + 1 })
+                  act('killswitch_ghostdrone', { mob_ref: item.mob_ref })
                 }
               >
                 Terminate
@@ -254,4 +255,3 @@ const GhostdroneStatuses = (props) => {
     </Table>
   );
 };
-*/

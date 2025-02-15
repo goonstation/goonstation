@@ -164,11 +164,11 @@
 	var/list/cyborgs = list()
 
 	for_by_tcl(A, /mob/living/silicon/ai)
-		ais += list("name" = A.name,
+		ais += list(list("name" = A.name,
 					"mob_ref" = "\ref[A]",
 					"status" = A.stat ? "ERROR: Not Responding!" : "Operating Normally",
 					"killswitch_time" = A.killswitch ? round((A.killswitch_at - TIME) / 10, 1) : null
-					)
+					))
 
 		var/robot_status
 		for(var/mob/living/silicon/robot/R in A.connected_robots)
@@ -182,15 +182,15 @@
 			else
 				robot_status = "Operating Normally"
 
-			cyborgs += list("name" = R.name,
+			cyborgs += list(list("name" = R.name,
 							"mob_ref" = "\ref[R]",
 							"status" = robot_status,
 							"cell_charge" = R.cell?.charge,
 							"cell_maxcharge" = R.cell?.maxcharge,
-							"module" = R.module?.name,
+							"module" = R.module ? capitalize(R.module.name) : null,
 							"lock_time" = R.weapon_lock ? round(R.weaponlock_time, 1) : null,
 							"killswitch_time" = R.killswitch ? round((R.killswitch_at - TIME) / 10, 1) : null
-							)
+							))
 
 	return list(ais, cyborgs)
 
@@ -199,5 +199,5 @@
 	for_by_tcl(drone, /mob/living/silicon/ghostdrone)
 		if(!drone.last_ckey || isdead(drone))
 			continue
-		ghostdrones += list("name" = drone.name, "mob_ref" = "\ref[drone]")
+		ghostdrones += list(list("name" = drone.name, "mob_ref" = "\ref[drone]"))
 	return ghostdrones
