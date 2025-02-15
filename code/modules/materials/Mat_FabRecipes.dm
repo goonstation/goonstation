@@ -78,14 +78,14 @@
 	name = "Turbine Blade"
 	desc = "A replacement blade for the reactor turbine"
 	category = "Nuclear"
-	materials = list("!any"=2)
+	materials = list("!any"=5)
 	result = /obj/item/turbine_component/blade
 
 /datum/matfab_recipe/simple/turbine/stator
 	name = "Turbine Stator"
 	desc = "A replacement stator coil for the reactor turbine"
 	category = "Nuclear"
-	materials = list("!any"=2)
+	materials = list("!any"=3)
 	result = /obj/item/turbine_component/stator
 
 /datum/matfab_recipe/spacesuit

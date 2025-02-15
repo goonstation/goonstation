@@ -378,7 +378,7 @@
 				return
 			if(I:try_weld(user,1))
 				if(src.ruined || src.blade_health < src.max_blade_health)
-					user.visible_message("[user] attempts to repair some damage to the [src]", "you start to repair the [src]")
+					user.visible_message("[user] attempts to repair some damage to the [src]", "You start to repair the [src]")
 					var/datum/action/bar/icon/callback/A = new(user, src, 1 SECONDS, PROC_REF(weld_repair_callback), list(user), user.equipped().appearance, null, \
 						"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 					A.maximum_range=3 //should action bar used bounds_dist? idk probably
@@ -390,7 +390,7 @@
 			if(src.RPM > 1)
 				boutput(user, SPAN_ALERT("you cannot replace turbine components while the turbine is spinning!"))
 			else
-				user.visible_message("[user] begins replacing a turbine component", "you begin replacing a turbine component")
+				user.visible_message("[user] begins replacing a turbine component", "You begin replacing a turbine component")
 				var/datum/action/bar/icon/callback/A = new(user, src, 4 SECONDS, PROC_REF(component_replace_callback), list(user,I), I.appearance, null, \
 						"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 				A.maximum_range=3 //should action bar used bounds_dist? idk probably
