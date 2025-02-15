@@ -17632,6 +17632,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/table/auto,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "hxU" = (
