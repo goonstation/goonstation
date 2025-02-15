@@ -12,6 +12,7 @@ import {
   Collapsible,
   Divider,
   LabeledList,
+  NumberInput,
   Section,
   Stack,
 } from 'tgui-core/components';
@@ -22,6 +23,8 @@ import { Window } from '../layouts';
 interface GPSInfo {
   src_x: number;
   src_y: number;
+  track_x: number;
+  track_y: number;
   tracking: BooleanLike;
   trackable: BooleanLike;
   src_name: string;
@@ -48,6 +51,8 @@ export const GPS = () => {
   const {
     src_x,
     src_y,
+    track_x,
+    track_y,
     tracking,
     trackable,
     src_name,
@@ -58,7 +63,7 @@ export const GPS = () => {
   } = data;
 
   return (
-    <Window title="GPS" width={420} height={555} theme="ntos">
+    <Window title="GPS" width={460} height={610} theme="ntos">
       <Window.Content>
         <Section title={`GPS Device ${src_name}`}>
           <Stack>
@@ -73,6 +78,34 @@ export const GPS = () => {
                     tooltip={gpsTooltip}
                   >
                     {src_name.slice(5, src_name.length)}
+                  </Button>
+                </LabeledList.Item>
+                <LabeledList.Item label="Coords">
+                  x:{' '}
+                  <NumberInput
+                    value={track_x}
+                    width={'3'}
+                    minValue={1}
+                    maxValue={300}
+                    step={1}
+                    onChange={(x_val: number) => act('set_x', { x: x_val })}
+                  />
+                  y:{' '}
+                  <NumberInput
+                    value={track_y}
+                    width={'3'}
+                    minValue={1}
+                    maxValue={300}
+                    step={1}
+                    onChange={(y_val: number) => act('set_y', { y: y_val })}
+                  />
+                  <Button
+                    mt={0.5}
+                    onClick={() =>
+                      act('track_coords', { x: track_x, y: track_y })
+                    }
+                  >
+                    Track
                   </Button>
                 </LabeledList.Item>
                 <LabeledList.Item label="Tracking">

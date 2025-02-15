@@ -21,6 +21,8 @@ TYPEINFO(/obj/item/device/gps)
 	var/wrenched_in = FALSE //! is this wrenched in a cabinet frame?
 
 	var/tracking_string
+	var/tracking_x = 1
+	var/tracking_y = 1
 	var/list/gps_devices = list()
 	var/list/imps = list()
 	var/list/warp_beacons = list()
@@ -122,6 +124,8 @@ TYPEINFO(/obj/item/device/gps)
 		. = list(
 			"src_x" = T.x,
 			"src_y" = T.y,
+			"track_x" = src.tracking_x,
+			"track_y" = src.tracking_y,
 			"tracking" = src.tracking_string,
 			"trackable" = src.allowtrack,
 			"src_name" = "[src.serial]-[src.identifier]",
@@ -135,13 +139,14 @@ TYPEINFO(/obj/item/device/gps)
 		. = ..()
 		if (.)
 			return
-		. = TRUE
 		switch (action)
 			if ("toggle_trackable")
 				src.allowtrack = !src.allowtrack
+				return TRUE
 			if ("toggle_distress")
 				src.distress = !src.distress
 				src.send_distress_signal(src.distress)
+				return TRUE
 			if ("change_identifier")
 				var/t = strip_html(tgui_input_text(usr, "Enter new GPS identification name (must be 4 characters)", src.identifier))
 				if(length(t) > 4)
@@ -154,6 +159,17 @@ TYPEINFO(/obj/item/device/gps)
 					return
 				src.identifier = t
 				logTheThing(LOG_STATION, usr, "sets a GPS identification name to [t].")
+				return TRUE
+			if ("set_x")
+				src.tracking_x = params["x"]
+				return TRUE
+			if ("set_y")
+				src.tracking_y = params["y"]
+				return TRUE
+			if ("track_coords")
+				var/turf/T = get_turf(src)
+				src.track_turf(locate(params["x"], params["y"], T.z))
+				return TRUE
 			if ("track_gps")
 				if ("gps_ref" in params)
 					var/gps_ref = params["gps_ref"]
@@ -168,15 +184,7 @@ TYPEINFO(/obj/item/device/gps)
 					src.active = null
 					src.icon_state = "gps-off"
 					src.tracking_string = null
-				else
-					var/target_x = tgui_input_number(usr, "Select x of target:", "Coordinate Entry", 1, world.maxx, 1, theme="ntos")
-					if (!target_x)
-						return
-					var/target_y = tgui_input_number(usr, "Select y of target:", "Coordinate Entry", 1, world.maxy, 1, theme="ntos")
-					if (!target_y)
-						return
-					var/turf/T = get_turf(src)
-					src.track_turf(locate(target_x, target_y, T.z))
+				return TRUE
 
 	proc/track_turf(turf/target_turf)
 		// This is to get a turf with the specified coordinates on the same Z as the device
