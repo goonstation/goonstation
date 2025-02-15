@@ -224,7 +224,8 @@ proc/check_stacked_tables()
 		var/turf/T = table.loc
 		for (var/obj/table/other in T)
 			if (table != other)
-				log_msg += "Stacked tables [table] and [other] at [T.x], [T.y], [T.z] in [T.loc][loaded_prefab_path ? "in prefab [global.loaded_prefab_path]" : ""].\n"
+				log_msg += "Stacked tables [table] and [other] at [T.x], [T.y], [T.z] in [loaded_prefab_path ? "prefab [global.loaded_prefab_path]" : "[T.loc]"].\n"
+				continue // we found one dupe, bail
 	if (log_msg)
 		CRASH(log_msg)
 
