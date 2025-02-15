@@ -22,16 +22,8 @@ TYPEINFO(/obj/item/device/gps)
 
 	var/tracking_string
 	var/list/gps_devices = list()
-	var/list/gps_names = list()
-	var/list/gps_coords = list()
-	var/list/gps_distress = list()
 	var/list/imps = list()
-	var/list/imp_names = list()
-	var/list/imp_coords = list()
 	var/list/warp_beacons = list()
-	var/list/warp_names = list()
-	var/list/warp_coords = list()
-	var/list/gps_refs = list()
 
 	proc/get_z_info(var/turf/T)
 		. =  "Landmark: Unknown"
@@ -62,47 +54,61 @@ TYPEINFO(/obj/item/device/gps)
 			#endif
 
 	proc/get_gps_info()
-		gps_refs = list()
+		var/list/gps_info = list()
+		src.gps_devices = list()
 
-		gps_devices = list()
-		gps_names = list()
-		gps_coords = list()
-		gps_distress = list()
 		for_by_tcl(G, /obj/item/device/gps)
 			if (!G.allowtrack)
 				continue
 			var/turf/T = get_turf(G.loc)
 			if (!T)
 				continue
-			gps_devices += G
-			gps_refs += "\ref[G]"
-			gps_names += "[G.serial]-[G.identifier]"
-			gps_coords += "Located at: [T.x], [T.y] | [src.get_z_info(T)]"
-			gps_distress += !!G.distress
+			gps_info += list(list("name" = "[G.serial]-[G.identifier]",
+								  "ref" = "\ref[G]",
+								  "x" = T.x,
+								  "y" = T.y,
+								  "z_info" = src.get_z_info(T),
+								  "distress" = !!G.distress))
 
-		imps = list()
-		imp_names = list()
-		imp_coords = list()
+			src.gps_devices += G
+
+		return gps_info
+
+	proc/get_imp_info()
+		var/list/imp_info = list()
+		src.imps = list()
+
 		for_by_tcl(imp, /obj/item/implant/tracking)
 			if (!isliving(imp.loc))
 				continue
 			var/turf/T = get_turf(imp.loc)
 			if (!T)
 				continue
-			imps += imp
-			gps_refs += "\ref[imp]"
-			imp_names += imp.loc.name
-			imp_coords += "Located at: [T.x], [T.y] | [src.get_z_info(T)]"
+			imp_info += list(list("name" = imp.loc.name,
+								  "ref" = "\ref[imp]",
+								  "x" = T.x,
+								  "y" = T.y,
+								  "z_info" = src.get_z_info(T)))
 
-		warp_beacons = list()
-		warp_names = list()
-		warp_coords = list()
+			src.imps += imp
+
+		return imp_info
+
+	proc/get_warp_info()
+		var/list/warp_info = list()
+		src.warp_beacons = list()
+
 		for (var/obj/B in by_type[/obj/warp_beacon])
 			var/turf/T = get_turf(B.loc)
-			warp_beacons += B
-			gps_refs += "\ref[B]"
-			warp_names += B.name
-			warp_coords += "Located at: [T.x], [T.y] | [src.get_z_info(T)]"
+			warp_info += list(list("name" = B.name,
+								   "ref" = "\ref[B]",
+								   "x" = T.x,
+								   "y" = T.y,
+								   "z_info" = src.get_z_info(T)))
+
+			src.warp_beacons += B
+
+		return warp_info
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -120,14 +126,9 @@ TYPEINFO(/obj/item/device/gps)
 			"trackable" = src.allowtrack,
 			"src_name" = "[src.serial]-[src.identifier]",
 			"distress" = src.distress,
-			"gps_names" = src.gps_names,
-			"gps_coords" = src.gps_coords,
-			"gps_distress" = src.gps_distress,
-			"imp_names" = src.imp_names,
-			"imp_coords" = src.imp_coords,
-			"warp_names" = src.warp_names,
-			"warp_coords" = src.warp_coords,
-			"gps_refs" = src.gps_refs
+			"gps_info" = src.get_gps_info(),
+			"imp_info" = src.get_imp_info(),
+			"warp_info" = src.get_warp_info()
 		)
 
 	ui_act(action, params)

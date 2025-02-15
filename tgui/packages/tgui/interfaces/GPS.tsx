@@ -5,6 +5,7 @@
  * @license ISC
  */
 
+import { BooleanLike } from 'common/react';
 import {
   Box,
   Button,
@@ -21,18 +22,22 @@ import { Window } from '../layouts';
 interface GPSInfo {
   src_x: number;
   src_y: number;
-  tracking: boolean;
-  trackable: boolean;
+  tracking: BooleanLike;
+  trackable: BooleanLike;
   src_name: string;
-  distress: boolean;
-  gps_names: Array<string>;
-  gps_coords: Array<string>;
-  gps_distress: Array<string>;
-  imp_names: Array<string>;
-  imp_coords: Array<string>;
-  warp_names: Array<string>;
-  warp_coords: Array<string>;
-  gps_refs: Array<string>;
+  distress: BooleanLike;
+  gps_info: GPSTrackable[];
+  imp_info: GPSTrackable[];
+  warp_info: GPSTrackable[];
+}
+
+interface GPSTrackable {
+  name: string;
+  ref: string;
+  x: number;
+  y: number;
+  z_info: string;
+  distress: BooleanLike | null;
 }
 
 const gpsTooltip =
@@ -47,14 +52,9 @@ export const GPS = () => {
     trackable,
     src_name,
     distress,
-    gps_names,
-    gps_coords,
-    gps_distress,
-    imp_names,
-    imp_coords,
-    warp_names,
-    warp_coords,
-    gps_refs,
+    gps_info,
+    imp_info,
+    warp_info,
   } = data;
 
   return (
@@ -85,12 +85,20 @@ export const GPS = () => {
             <Stack.Item>
               <LabeledList>
                 <LabeledList.Item label="Trackable">
-                  <Button.Checkbox onClick={() => act('toggle_trackable')} selected={trackable} checked={trackable}>
+                  <Button.Checkbox
+                    onClick={() => act('toggle_trackable')}
+                    selected={trackable}
+                    checked={trackable}
+                  >
                     {trackable ? 'Yes' : 'No'}
                   </Button.Checkbox>
                 </LabeledList.Item>
                 <LabeledList.Item label="Send distress">
-                  <Button.Checkbox onClick={() => act('toggle_distress')} selected={distress} checked={distress}>
+                  <Button.Checkbox
+                    onClick={() => act('toggle_distress')}
+                    selected={distress}
+                    checked={distress}
+                  >
                     {distress ? 'Yes' : 'No'}
                   </Button.Checkbox>
                 </LabeledList.Item>
@@ -100,39 +108,23 @@ export const GPS = () => {
         </Section>
         <Section title="Tracking">
           <Collapsible title="GPS Devices">
-            {!!gps_names.length && (
+            {!!gps_info.length && (
               <Stack vertical>
-                <TrackableList
-                  gps_names={gps_names}
-                  gps_coords={gps_coords}
-                  gps_distress={gps_distress}
-                  gps_refs={gps_refs}
-                />
+                <TrackableList gps_info={gps_info} />
               </Stack>
             )}
           </Collapsible>
           <Collapsible title="Implants">
-            {!!imp_names.length && (
+            {!!imp_info.length && (
               <Stack vertical>
-                <TrackableList
-                  gps_names={imp_names}
-                  gps_coords={imp_coords}
-                  gps_refs={gps_refs.slice(gps_names.length, gps_refs.length)}
-                />
+                <TrackableList gps_info={imp_info} />
               </Stack>
             )}
           </Collapsible>
           <Collapsible title="Warp Beacons">
-            {!!warp_names.length && (
+            {!!warp_info.length && (
               <Stack vertical>
-                <TrackableList
-                  gps_names={warp_names}
-                  gps_coords={warp_coords}
-                  gps_refs={gps_refs.slice(
-                    gps_names.length + imp_names.length,
-                    gps_refs.length,
-                  )}
-                />
+                <TrackableList gps_info={warp_info} />
               </Stack>
             )}
           </Collapsible>
@@ -145,28 +137,34 @@ export const GPS = () => {
 let distress_red = false;
 const TrackableList = (props) => {
   const { act } = useBackend();
-  const { gps_names, gps_coords, gps_distress, gps_refs } = props;
+  const { gps_info } = props;
   const nodes: JSX.Element[] = [];
 
   distress_red = !distress_red;
 
-  for (let i = 0; i < gps_names.length; i++) {
+  for (let i = 0; i < gps_info.length; i++) {
     const node = (
       <Box key={i} fontSize={0.8}>
         <Stack.Item>
           <Stack>
             <Stack.Item grow>
               <Stack vertical>
-                <Stack.Item><strong>{gps_names[i]}</strong></Stack.Item>
-                <Stack.Item><em>{gps_coords[i]}</em></Stack.Item>
-                {gps_distress && !!gps_distress[i] && (
-                  <Stack.Item textColor={distress_red ? "red" : "default"}>Distress Alert</Stack.Item>
+                <Stack.Item>
+                  <strong>{gps_info[i].name}</strong>
+                </Stack.Item>
+                <Stack.Item>
+                  <em>{`Located at (${gps_info[i].x}), (${gps_info[i].y}) | ${gps_info[i].z_info}`}</em>
+                </Stack.Item>
+                {gps_info[i].distress !== null && !!gps_info[i].distress && (
+                  <Stack.Item textColor={distress_red ? 'red' : 'default'}>
+                    Distress Alert
+                  </Stack.Item>
                 )}
               </Stack>
             </Stack.Item>
             <Stack.Item align="center">
               <Button
-                onClick={() => act('track_gps', { gps_ref: gps_refs[i] })}
+                onClick={() => act('track_gps', { gps_ref: gps_info[i].ref })}
                 fontSize={1}
               >
                 Track
@@ -179,5 +177,5 @@ const TrackableList = (props) => {
     );
     nodes.push(node);
   }
-  return nodes;
+  return <Box>{nodes}</Box>;
 };
