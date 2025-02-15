@@ -110,7 +110,7 @@
 	uses_charge_overlay = TRUE
 	can_dual_wield = FALSE
 	two_handed = 1
-	w_class = W_CLASS_BULKY
+	w_class = W_CLASS_NORMAL
 	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 
 	New()
