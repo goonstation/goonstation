@@ -138,7 +138,7 @@
 	on_hit(atom/hit)
 		if (isliving(hit))
 			var/mob/living/L = hit
-			L.changeStatus("stasis", 3 SECONDS)
+			L.changeStatus("stasis", 6 SECONDS)
 		impact_image_effect(ie_type, hit)
 		return
 
