@@ -20,13 +20,13 @@ import {
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-
-// mirrors STAT_ALIVE etc. defines
-enum Status {
-  Alive = 0,
-  Unconscious = 1,
-  Dead = 2,
-}
+import type {
+  AIData,
+  CyborgData,
+  GhostdroneData,
+  RoboticsControlData,
+} from './type';
+import { Status } from './type';
 
 interface TooltipIconProps {
   color?: string;
@@ -108,38 +108,6 @@ const StatusIcon = ({ status }: StatusIconProps) => {
     }
   }
 };
-
-interface RoboticsControlData {
-  user_is_ai: BooleanLike;
-  user_is_cyborg: BooleanLike;
-  ais: AIData[];
-  cyborgs: CyborgData[];
-  ghostdrones: GhostdroneData[];
-}
-
-interface AIData {
-  name: string;
-  mob_ref: string;
-  status: Status;
-  killswitch_time: number | null;
-}
-
-interface CyborgData {
-  name: string;
-  mob_ref: string;
-  status: Status;
-  cell_charge: number | null;
-  cell_maxcharge: number | null;
-  missing_brain: BooleanLike;
-  module: string | null;
-  lock_time: number | null;
-  killswitch_time: number | null;
-}
-
-interface GhostdroneData {
-  name: string;
-  mob_ref: string;
-}
 
 export const RoboticsControl = () => {
   const { data } = useBackend<RoboticsControlData>();
