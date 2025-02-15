@@ -196,6 +196,11 @@
 	#define COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK "assembly_combination_check"
 	/// Checks if that item, as additional component, adds any odd overlays on the assembly
 	#define COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS "assembly_overlay_additions"
+	/// Returns the state of the trigger of the assembly
+	#define COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE "assembly_get_trigger_state"
+	/// Returns the time left on the trigger of the assembly (if it has any, else its 0)
+	#define COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT "assembly_get_trigger_time_left"
+
 
 	// ---- implant signals ----
 

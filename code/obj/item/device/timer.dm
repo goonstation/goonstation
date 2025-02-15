@@ -20,12 +20,16 @@ TYPEINFO(/obj/item/device/timer)
 	..()
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION, PROC_REF(assembly_manipulation))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION, PROC_REF(assembly_activation))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, PROC_REF(assembly_get_state))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT, PROC_REF(assembly_get_time_left))
 	// Timer + assembly-applier -> timer/Applier-Assembly
 	src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
 
 /obj/item/device/timer/disposing()
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT)
 	..()
 
 
@@ -43,6 +47,12 @@ TYPEINFO(/obj/item/device/timer)
 		logTheThing(LOG_BOMBING, usr, "initiated a timer on a [src.master.name] at [log_loc(src.master)].")
 		//missing log about contents of beakers
 		return TRUE
+
+/obj/item/device/timer/proc/assembly_get_state(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly)
+	return src.timing
+
+/obj/item/device/timer/proc/assembly_get_time_left(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly)
+	if src.timing
 
 /// ----------------------------------------------
 
@@ -158,7 +168,7 @@ TYPEINFO(/obj/item/device/timer)
 
 /obj/item/device/timer/proc/is_detonator_trigger()
 	if (src.master)
-		if (istype(src.master, /obj/item/assembly/detonator/) && src.master.master)
+		if (istype(src.master, /obj/item/canbomb_detonator/) && src.master.master)
 			if (istype(src.master.master, /obj/machinery/portable_atmospherics/canister/) && in_interact_range(src.master.master, usr))
 				return TRUE
 

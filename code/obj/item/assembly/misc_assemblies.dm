@@ -37,6 +37,19 @@ Contains:
 
 /////////////////////////////////////// Component-Assembly /////////////////////////
 
+//------ States returned on COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE
+
+///The assembly is not secured
+#define ASSEMBLY_TRIGGER_NOT_SECURED -1
+///The assemblies trigger is not activated
+#define ASSEMBLY_TRIGGER_NOT_ACTIVATED 0
+///The assemblies trigger is ready/ticking down
+#define ASSEMBLY_TRIGGER_READY 1
+///The assemblies trigger is activated but preparing (e.g. proximity sensor timer ticking down but sensing movement)
+#define ASSEMBLY_TRIGGER_PREPARING 2
+
+//------
+
 /obj/item/assembly/complete
 	desc = "An assembly of multiple components."
 	var/obj/item/trigger = null //! This is anything that causes the Applier to fire, e.g. a signaler, mouse trap or a timer
@@ -48,6 +61,7 @@ Contains:
 	var/secured = FALSE //! If false, this does not activate and can be modified on self-use
 	var/list/additional_components = null //! This is a list of components that don't make up the main 3 components of the assembly, but can be attached after the target was added.
 	var/icon_base_offset = 0 //! offset for the base-icon of the assembly, if the target gets overriden
+	var/override_upstream = FALSE //!Set this to true if the assembly should send the signal received to its master (e.g. in case of canbombs)
 	flags = TABLEPASS | CONDUCT | NOSPLASH
 	item_function_flags = OBVIOUS_INTERACTION_BAR
 
@@ -56,7 +70,20 @@ Contains:
 	RegisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED, PROC_REF(on_floor_reveal))
 	RegisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION, PROC_REF(on_storage_interaction))
 	RegisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH, PROC_REF(on_wearer_death))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, PROC_REF(get_trigger_state))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT, PROC_REF(get_trigger_time_left))
 	..()
+
+/obj/item/assembly/complete/proc/get_trigger_state(var/affected_assembly)
+	if(src.secured)
+		//we relay the signal to the trigger, in case of mousetraps
+		return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, src)
+	else
+		return ASSEMBLY_TRIGGER_NOT_SECURED
+
+/obj/item/assembly/complete/proc/get_trigger_time_left(var/affected_assembly)
+	//we relay the signal to the trigger, in case of mousetraps
+	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT, src)
 
 /obj/item/assembly/complete/proc/on_floor_reveal(var/affected_assembly, var/turf/revealed_turf)
 	//we relay the signal to the trigger, in case of mousetraps
@@ -71,11 +98,15 @@ Contains:
 	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ON_OWNER_DEATH, dying_mob)
 
 /obj/item/assembly/complete/receive_signal(datum/signal/signal)
+	if(src.override_upstream && src.master)
+		//if we should just relay signals, we do so, no matter where they come from
+		src.master.receive_signal(signal)
+		return
 	//only secured assemblies should fire and only if the signal is not from the applier.
 	if (src.secured && (signal && signal.source != src.applier))
 		for(var/mob/O in hearers(1, src.loc))
 			O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
-		SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_APPLY, src, src.target)
+			SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_APPLY, src, src.target)
 
 
 /obj/item/assembly/complete/dropped(mob/user)
@@ -93,6 +124,8 @@ Contains:
 	UnregisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED)
 	UnregisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION)
 	UnregisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT)
 	qdel(src.trigger)
 	src.trigger = null
 	qdel(src.applier)
@@ -213,6 +246,8 @@ Contains:
 /// misc. Assembly-procs --------------------------------
 
 /obj/item/assembly/complete/proc/add_target_item(var/atom/to_combine_atom, var/mob/user)
+	if(src.target)
+		return
 	if(src.secured)
 		boutput(user, "You need to unsecure the assembly first.")
 		return
