@@ -95,12 +95,12 @@ TYPEINFO(/obj/item/device/igniter)
 	if(istype(parent_assembly.applier, /obj/item/device/multitool) && (src in parent_assembly.additional_components))
 		//were on the way to blow everything up, so lets lock in!
 		parent_assembly.special_construction_identifier = "canbomb"
-
+		// detonator assembly + cable -> cabled detonator assembly
+		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/cable_coil), TYPE_PROC_REF(/obj/item/assembly/complete, add_additional_component), TRUE)
 
 /obj/item/device/igniter/proc/assembly_overlay_addition(var/manipulated_igniter, var/obj/item/assembly/complete/parent_assembly, var/passed_overlay_offset)
 	if(parent_assembly.special_construction_identifier == "canbomb")
 		parent_assembly.overlays += image('icons/obj/items/assemblies.dmi', parent_assembly, "igniter_canbomb")
-
 /// ----------------------------------------------
 
 

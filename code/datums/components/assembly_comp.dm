@@ -102,27 +102,8 @@ TYPEINFO(/datum/component/assembly)
 	user.u_equip(checked_atom)
 	user.u_equip(src.parent)
 	var/obj/item/assembly/complete/product = new /obj/item/assembly/complete(get_turf(src.parent))
-	//for the trigger, we set each variable accordingly
-	product.trigger = src.parent
-	product.trigger.master = product
-	product.trigger.layer = initial(product.trigger.layer)
-	product.trigger_icon_prefix = initial(product.trigger.icon_state)
-	product.trigger.set_loc(product)
-	product.trigger.add_fingerprint(user)
-	// we do the same for the applier
-	product.applier = checked_atom
-	product.applier.master = product
-	product.applier.layer = initial(product.applier.layer)
-	product.applier.set_loc(product)
-	product.applier.add_fingerprint(user)
-	product.applier_icon_prefix = initial(product.applier.icon_state)
-	//we call on the applier and the trigger to see if it needs additional setup
-	SEND_SIGNAL(product.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, product, user, TRUE)
-	SEND_SIGNAL(product.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, product, user, TRUE)
-	//last but not least, we set the proper variables on the assembly
-	product.w_class = max(product.trigger.w_class, product.applier.w_class)
-	product.UpdateIcon()
-	product.UpdateName()
+	//we set up the new assembly with its corresponding proc
+	product.set_up_new(user, src.parent, checked_atom)
 	//we finished the assembly, now we give it to its proud new owner
 	product.add_fingerprint(user)
 	user.put_in_hand_or_drop(product)

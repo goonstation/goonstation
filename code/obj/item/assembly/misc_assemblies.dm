@@ -51,10 +51,13 @@ Contains:
 	var/icon_base_offset = 0 //! offset for the base-icon of the assembly, if the target gets overriden
 	var/override_upstream = FALSE //!Set this to true if the assembly should send the signal received to its master (e.g. in case of canbombs)
 	var/special_construction_identifier = null //! a string which should be used to identify special constructions, so e.g. cables in additional_components know they should show their overlay for a canbomb
+	var/override_name = null //! use this when an assembly should override the name of the assembly, e.g. canbomb assembly
+	var/override_description = null //! same for the descripion
+	var/override_help_message = null //! see override_name, just for help message
 	flags = TABLEPASS | CONDUCT | NOSPLASH
 	item_function_flags = OBVIOUS_INTERACTION_BAR
 
-/obj/item/assembly/complete/New()
+/obj/item/assembly/complete/New(var/new_location)
 	src.additional_components = list()
 	RegisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED, PROC_REF(on_floor_reveal))
 	RegisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION, PROC_REF(on_storage_interaction))
@@ -62,6 +65,36 @@ Contains:
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, PROC_REF(get_trigger_state))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT, PROC_REF(get_trigger_time_left))
 	..()
+
+/obj/item/assembly/complete/proc/set_up_new(var/mob/user, var/obj/item/new_trigger, var/obj/item/new_applier, var/obj/item/new_target)
+	if(!new_trigger || !new_applier)
+		CRASH("tried to set up an assembly without a trigger or applier")
+	var/list/to_set_up_items = list(new_trigger, new_applier)
+	src.applier = new_applier
+	src.applier_icon_prefix = initial(new_applier.icon_state)
+	src.trigger = new_trigger
+	src.trigger_icon_prefix = initial(new_trigger.icon_state)
+	if(new_target)
+		to_set_up_items += new_target
+		src.target = new_target
+	for(var/obj/item/checked_item in to_set_up_items)
+		checked_item.set_loc(src)
+		checked_item.master = src
+		checked_item.layer = initial(checked_item.layer)
+		src.w_class = max(src.w_class, checked_item.w_class)
+		if(user)
+			checked_item.add_fingerprint(user)
+	//now, to set up the assembly, we have to send the signals in the correct order like a normal assembly would be created
+	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, TRUE)
+	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, TRUE)
+	if(new_target)
+		//Since we set up the target addition, we undo the added assembly components
+		src.RemoveComponentsOfType(/datum/component/assembly)
+		SEND_SIGNAL(src.target, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, TRUE)
+		SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, TRUE)
+		SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, TRUE)
+	src.UpdateIcon()
+	src.UpdateName()
 
 /obj/item/assembly/complete/proc/get_trigger_state(var/affected_assembly)
 	if(src.secured)
@@ -255,6 +288,7 @@ Contains:
 	user.u_equip(manipulated_item)
 	manipulated_item.set_loc(src)
 	manipulated_item.add_fingerprint(user)
+	src.w_class = max(src.w_class, manipulated_item.w_class)
 	boutput(user, "You attach the [src.name] to the [manipulated_item.name].")
 	//Since we completed the assembly, remove all assembly components
 	src.RemoveComponentsOfType(/datum/component/assembly)
@@ -264,7 +298,6 @@ Contains:
 	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, TRUE)
 	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, TRUE)
 	//Last but not least, we update our icon, w_class and name
-	src.w_class = max(src.w_class, manipulated_item.w_class)
 	src.UpdateIcon()
 	src.UpdateName()
 	// Since the assembly was done, return TRUE
