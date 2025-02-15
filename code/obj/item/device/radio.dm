@@ -901,6 +901,7 @@ TYPEINFO(/obj/item/radiojammer)
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION, PROC_REF(assembly_manipulation))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, PROC_REF(assembly_get_state))
 	// Timer + assembly-applier -> timer/Applier-Assembly
 	src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
 
@@ -909,6 +910,7 @@ TYPEINFO(/obj/item/radiojammer)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE)
 	..()
 
 
@@ -929,6 +931,10 @@ TYPEINFO(/obj/item/radiojammer)
 /obj/item/device/radio/signaler/proc/assembly_setup(var/manipulated_signaler, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
 	//once integrated in the assembly, we secure the radio
 	src.b_stat = 0
+
+/obj/item/device/radio/signaler/proc/assembly_get_state(var/manipulated_signaler, var/obj/item/assembly/complete/parent_assembly)
+	//that's my secret, cap. I'm always armed.
+	return ASSEMBLY_TRIGGER_ARMED
 
 /// ----------------------------------------------
 

@@ -44,7 +44,7 @@ Contains:
 ///The assemblies trigger is not activated
 #define ASSEMBLY_TRIGGER_NOT_ACTIVATED 0
 ///The assemblies trigger is ready/ticking down
-#define ASSEMBLY_TRIGGER_READY 1
+#define ASSEMBLY_TRIGGER_ARMED 1
 ///The assemblies trigger is activated but preparing (e.g. proximity sensor timer ticking down but sensing movement)
 #define ASSEMBLY_TRIGGER_PREPARING 2
 

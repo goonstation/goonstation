@@ -44,6 +44,7 @@
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION, PROC_REF(assembly_manipulation))
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_building))
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, PROC_REF(assembly_building))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, PROC_REF(assembly_get_state))
 		// Mousetrap + assembly-applier -> mousetrap/Applier-Assembly
 		src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
 
@@ -73,6 +74,10 @@
 		src.clear_armer()
 		//mousetrap-assembly + pipebomb-frame -> mousetrap-roller-assembly
 		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/pipebomb/frame), TYPE_PROC_REF(/obj/item/assembly/complete, create_mousetrap_roller), TRUE)
+
+	proc/assembly_get_state(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly)
+		return src.armed
+
 /// ----------------------------------------------
 
 
@@ -123,6 +128,7 @@
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION)
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
 		UnregisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT)
 		. = ..()
 
 	attack_hand(mob/user)
