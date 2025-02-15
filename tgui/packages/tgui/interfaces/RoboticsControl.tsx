@@ -5,42 +5,46 @@
  * @license ISC
  */
 
-import { BooleanLike, Button, NoticeBox, Section, Table } from 'tgui-core/components';
+import { BooleanLike } from 'common/react';
+import { Button, NoticeBox, Section, Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 interface RoboticsControlData {
+  ais: AIData[];
+  cyborgs: CyborgData[];
+  ghostdrones: GhostdroneData[];
   user_is_ai: BooleanLike;
   user_is_cyborg: BooleanLike;
-  ai_names: string[];
-  ai_statuses: string[];
-  ai_killswitch_times: string[];
-  cyborg_names: string[];
-  cyborg_statuses: string[];
-  cyborg_cell_charges: string[];
-  cyborg_modules: string[];
-  cyborg_lock_times: string[];
-  cyborg_killswitch_times: string[];
-  ghostdrone_names: string[];
+}
+
+interface AIData {
+  name: string;
+  mob_ref: string;
+  status: string;
+  killswitch_time: number | null;
+}
+
+interface CyborgData {
+  name: string;
+  mob_ref: string;
+  status: string;
+  cell_charge: number | null;
+  cell_maxcharge: number | null;
+  module: string | null;
+  lock_time: number | null;
+  killswitch_time: number | null;
+}
+
+interface GhostdroneData {
+  name: string;
+  mob_ref: string;
 }
 
 export const RoboticsControl = () => {
   const { act, data } = useBackend<RoboticsControlData>();
-  const {
-    user_is_ai,
-    user_is_cyborg,
-    ai_names,
-    ai_statuses,
-    ai_killswitch_times,
-    cyborg_names,
-    cyborg_statuses,
-    cyborg_cell_charges,
-    cyborg_modules,
-    cyborg_lock_times,
-    cyborg_killswitch_times,
-    ghostdrone_names,
-  } = data;
+  const { user_is_ai, user_is_cyborg, ais, cyborgs, ghostdrones } = data;
 
   return (
     <Window title="Robotics Control" width={1000} height={600}>
@@ -52,12 +56,7 @@ export const RoboticsControl = () => {
           minHeight="200px"
           maxHeight="200px"
         >
-          <AiStatuses
-            ai_names={ai_names}
-            ai_statuses={ai_statuses}
-            ai_killswitch_times={ai_killswitch_times}
-            user_is_robot={user_is_ai || user_is_cyborg}
-          />
+          <AIStatuses ais={ais} user_is_robot={user_is_ai || user_is_cyborg} />
         </Section>
         <Section
           title="Located Silicons"
@@ -66,6 +65,7 @@ export const RoboticsControl = () => {
           minHeight="200px"
           maxHeight="200px"
         >
+          {/*
           <SiliconStatuses
             cyborg_names={cyborg_names}
             cyborg_statuses={cyborg_statuses}
@@ -75,7 +75,7 @@ export const RoboticsControl = () => {
             cyborg_killswitch_times={cyborg_killswitch_times}
             user_is_ai={user_is_ai}
             user_is_cyborg={user_is_cyborg}
-          />
+          />*/}
         </Section>
         <Section
           title="Ghostdrones"
@@ -84,16 +84,21 @@ export const RoboticsControl = () => {
           minHeight="140px"
           maxHeight="140px"
         >
-          <GhostdroneStatuses ghostdrone_names={ghostdrone_names} />
+          {/* <GhostdroneStatuses ghostdrone_names={ghostdrone_names} />*/}
         </Section>
       </Window.Content>
     </Window>
   );
 };
 
-const AiStatuses = (props) => {
+interface AIStatusesProps {
+  ais;
+  user_is_robot;
+}
+
+const AIStatuses = (props: AIStatusesProps) => {
   const { act } = useBackend();
-  const { ai_names, ai_statuses, ai_killswitch_times, user_is_robot } = props;
+  const { ais, user_is_robot } = props;
 
   return (
     <Table>
@@ -102,17 +107,17 @@ const AiStatuses = (props) => {
         <Table.Cell bold>Status</Table.Cell>
         <Table.Cell bold>Switch</Table.Cell>
       </Table.Row>
-      {ai_names.map((item, index) => (
-        <Table.Row key={index}>
-          <Table.Cell>{item}</Table.Cell>
-          <Table.Cell>{ai_statuses[index]}</Table.Cell>
+      {ais.map((item) => (
+        <Table.Row key={item.mob_ref}>
+          <Table.Cell>{item.name}</Table.Cell>
+          <Table.Cell>{item.status}</Table.Cell>
           <Table.Cell collapsing>
-            {!ai_killswitch_times[index] ? (
+            {!item.killswitch_time ? (
               <NoticeBox warning inline>
                 <Button
                   disabled={user_is_robot}
                   onClick={() =>
-                    act('start_ai_killswitch', { index: index + 1 })
+                    act('start_ai_killswitch', { mob_ref: item.mob_ref })
                   }
                 >
                   Kill switch *Swipe ID*
@@ -123,10 +128,10 @@ const AiStatuses = (props) => {
                 <Button
                   disabled={user_is_robot}
                   onClick={() =>
-                    act('stop_ai_killswitch', { index: index + 1 })
+                    act('stop_ai_killswitch', { mob_ref: item.mob_ref })
                   }
                 >
-                  Cancel kill switch - {ai_killswitch_times[index]} remaining
+                  Cancel kill switch - {item.killswitch_time} remaining
                 </Button>
               </NoticeBox>
             )}
@@ -136,7 +141,7 @@ const AiStatuses = (props) => {
     </Table>
   );
 };
-
+/*
 const SiliconStatuses = (props) => {
   const { act } = useBackend();
   const {
@@ -249,3 +254,4 @@ const GhostdroneStatuses = (props) => {
     </Table>
   );
 };
+*/
