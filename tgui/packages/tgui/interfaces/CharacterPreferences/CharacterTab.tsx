@@ -35,19 +35,27 @@ const CustomDetail = ({ id, color, style }) => {
   );
 };
 
-const CustomPart = ({ slot_id }) => {
+interface CustomPartProps {
+  slot_id: string;
+}
+
+const CustomPart = ({ slot_id }: CustomPartProps) => {
   const { act, data } = useBackend<CharacterPreferencesData>();
   return (
     <Button
-      onClick={() => act('pick_part', { slot_id: slot_id })}
-      tooltip={data.partsData[slot_id].name}
+      onClick={() => act('pick_part', { slot_id })}
+      tooltip={data.partsData[slot_id]?.name ?? 'Not Selected'}
     >
-      <Image
-        width="64px"
-        height="64px"
-        src={`data:image/png;base64,${data.partsData[slot_id].img}`}
-        backgroundColor="transparent"
-      />
+      {data.partsData[slot_id]?.img ? (
+        <Image
+          width="64px"
+          height="64px"
+          src={`data:image/png;base64,${data.partsData[slot_id]?.img}`}
+          backgroundColor="transparent"
+        />
+      ) : (
+        'Not Selected'
+      )}
     </Button>
   );
 };
@@ -135,10 +143,10 @@ export const CharacterTab = () => {
           </LabeledList.Item>
           <LabeledList.Divider />
           <LabeledList.Item label="Bionics">
-            <CustomPart slot_id={'r_arm'} />
-            <CustomPart slot_id={'l_arm'} />
-            <CustomPart slot_id={'r_leg'} />
-            <CustomPart slot_id={'l_leg'} />
+            <CustomPart slot_id="r_arm" />
+            <CustomPart slot_id="l_arm" />
+            <CustomPart slot_id="r_leg" />
+            <CustomPart slot_id="l_leg" />
             <Box>
               {'Trait points: '}
               <Box
@@ -151,8 +159,8 @@ export const CharacterTab = () => {
           </LabeledList.Item>
           <LabeledList.Divider />
           <LabeledList.Item label="Organs">
-            <CustomPart slot_id={'right_eye'} />
-            <CustomPart slot_id={'left_eye'} />
+            <CustomPart slot_id="right_eye" />
+            <CustomPart slot_id="left_eye" />
             <Box>
               {'Trait points: '}
               <Box
