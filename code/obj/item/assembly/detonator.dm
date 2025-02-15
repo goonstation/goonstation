@@ -38,6 +38,8 @@
 	var/potential_wire_colors = list("Alabama Crimson", "Antique White", "Burnt Umber", "China Rose", "Dodger Blue", "Field Drab", "Harvest Gold", "Jonquil", "Midori", "Neon Carrot", "Oxford Blue", "Periwinkle", "Purple Pizzazz", "Stil De Grain Yellow", "Toolbox Purple", "Urobilin", "Vivid Tangerine", "Yale Blue")
 	new_assembly.override_upstream = TRUE //the timer sends the signal to the assembly, the assembly sends the signal to the detonator
 	new_assembly.set_trigger_time(90 SECONDS)
+	new_assembly.master = src
+	new_assembly.set_loc(src)
 	for(var/obj/item/checked_item in new_assembly.additional_components)
 		src.attachments += checked_item
 		checked_item.detonator_act("attach", src)
@@ -50,6 +52,22 @@
 		src.WireFunctions += wire_picked_function
 		src.initial_wire_functions -= wire_picked_function
 		WireStatus += TRUE
+
+/obj/item/canbomb_detonator/disposing()
+	qdel(src.part_assembly)
+	src.part_assembly = null
+	src.builtBy = null
+	src.attachedTo = null
+	src.master = null
+	. = ..()
+
+/obj/item/canbomb_detonator/proc/disassemble()
+	src.part_assembly.set_loc(get_turf(src))
+	src.part_assembly.override_upstream = FALSE
+	src.part_assembly.master = null
+	src.part_assembly = null
+	qdel(src)
+
 
 /obj/item/canbomb_detonator/proc/detonate()
 	if (!src.attachedTo)
@@ -105,7 +123,7 @@
 	explosion_new(attachedTo, epicenter, power)
 
 /obj/item/canbomb_detonator/proc/get_timing()
-	if(SEND_SIGNAL(src.part_assembly, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE) == 1)
+	if(SEND_SIGNAL(src.part_assembly, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE) == ASSEMBLY_TRIGGER_ARMED)
 		return TRUE
 	else
 		return FALSE

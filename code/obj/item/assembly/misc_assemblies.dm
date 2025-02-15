@@ -37,18 +37,6 @@ Contains:
 
 /////////////////////////////////////// Component-Assembly /////////////////////////
 
-//------ States returned on COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE
-
-///The assembly is not secured
-#define ASSEMBLY_TRIGGER_NOT_SECURED -1
-///The assemblies trigger is not activated
-#define ASSEMBLY_TRIGGER_NOT_ACTIVATED 0
-///The assemblies trigger is ready/ticking down
-#define ASSEMBLY_TRIGGER_ARMED 1
-///The assemblies trigger is activated but preparing (e.g. proximity sensor timer ticking down but sensing movement)
-#define ASSEMBLY_TRIGGER_PREPARING 2
-
-//------
 
 /obj/item/assembly/complete
 	desc = "An assembly of multiple components."
@@ -62,6 +50,7 @@ Contains:
 	var/list/additional_components = null //! This is a list of components that don't make up the main 3 components of the assembly, but can be attached after the target was added.
 	var/icon_base_offset = 0 //! offset for the base-icon of the assembly, if the target gets overriden
 	var/override_upstream = FALSE //!Set this to true if the assembly should send the signal received to its master (e.g. in case of canbombs)
+	var/special_construction_identifier = null //! a string which should be used to identify special constructions, so e.g. cables in additional_components know they should show their overlay for a canbomb
 	flags = TABLEPASS | CONDUCT | NOSPLASH
 	item_function_flags = OBVIOUS_INTERACTION_BAR
 
@@ -180,7 +169,7 @@ Contains:
 		src.overlays += temp_image_applier
 	if (src.additional_components)
 		for(var/obj/item/iterated_component in src.additional_components)
-			//if we have anny additional components, we send them a signal to see if they add overlays to the assembly.
+			//if we have any additional components, we send them a signal to see if they add overlays to the assembly.
 			SEND_SIGNAL(iterated_component,COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS , src, overlay_offset)
 	//So the applier gets rendered over every other component, we add it here as an overlay
 	var/image/temp_image_trigger = image('icons/obj/items/assemblies.dmi', src, "trigger_[src.trigger_icon_prefix]")
@@ -209,6 +198,7 @@ Contains:
 			// We remove all assembly-components from the assembly
 			// and send the different parts of the assembly their corresponding signals to set up the assembly to the state it was
 			src.RemoveComponentsOfType(/datum/component/assembly)
+			src.special_construction_identifier = null
 			SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, FALSE)
 			SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, FALSE)
 			SEND_SIGNAL(src.target, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, user)
@@ -280,6 +270,38 @@ Contains:
 	// Since the assembly was done, return TRUE
 	return TRUE
 
+/obj/item/assembly/complete/proc/add_additional_component(var/atom/to_combine_atom, var/mob/user)
+	if(src.secured)
+		boutput(user, "You need to unsecure the assembly first.")
+		return
+	if(SEND_SIGNAL(to_combine_atom, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK, src, user))
+		//let's check if we can combine the item in the first place, e.g. in case of cabled pipebombs
+		return
+	var/obj/item/manipulated_item = to_combine_atom
+	src.additional_components += manipulated_item
+	manipulated_item.master = src
+	manipulated_item.layer = initial(manipulated_item.layer)
+	user.u_equip(manipulated_item)
+	manipulated_item.set_loc(src)
+	manipulated_item.add_fingerprint(user)
+	boutput(user, "You attach the [manipulated_item.name] to the [src.name].")
+	//Since we completed the assembly, remove all assembly components
+	src.RemoveComponentsOfType(/datum/component/assembly)
+	//Now we set up the attached target for overlays/other assembly steps
+	SEND_SIGNAL(manipulated_item, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, TRUE)
+	//Now we send a signal to the other components in case we enable certain combinations, e.g. for mousetraps
+	for(var/obj/item/checked_item in list(src.trigger, src.applier, src.target))
+		SEND_SIGNAL(checked_item, COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION, src, user, TRUE)
+	for(var/obj/item/checked_item in src.additional_components)
+		if(checked_item != manipulated_item)
+			SEND_SIGNAL(checked_item, COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION, src, user, TRUE)
+	//Last but not least, we update our icon, w_class and name
+	src.w_class = max(src.w_class, manipulated_item.w_class)
+	src.UpdateIcon()
+	src.UpdateName()
+	// Since the assembly was done, return TRUE
+	return TRUE
+
 
 ///mousetrap roller crafting proc
 /obj/item/assembly/complete/proc/create_mousetrap_roller(var/atom/to_combine_atom, var/mob/user)
@@ -318,6 +340,37 @@ Contains:
 	// we don't remove the components here since the frame and assembly can be retreived by disassembling the roller
 	// Since the assembly was done, return TRUE
 	return TRUE
+
+/obj/item/assembly/complete/proc/create_canbomb(var/atom/to_combine_atom, var/mob/user)
+	var/obj/machinery/portable_atmospherics/canister/payload = to_combine_atom
+	if(src.secured)
+		boutput(user, "You need to unsecure [src.name] first.")
+		return FALSE
+	if(payload.holding)
+		boutput(user, "You must remove the currently inserted tank from the slot first.")
+		return FALSE
+	user.u_equip(src)
+	src.secured = TRUE
+	src.UpdateIcon()
+	src.add_fingerprint(user)
+	to_combine_atom.add_fingerprint(user)
+	var/obj/item/canbomb_detonator/new_detonator = new /obj/item/canbomb_detonator(get_turf(user), src, to_combine_atom)
+	new_detonator.master = payload // i swear, i want to kill that master-variable sooooo bad
+	new_detonator.attachedTo = payload
+	new_detonator.builtBy = user
+	payload.overlay_state = "overlay_safety_on"
+	payload.det = new_detonator
+	logTheThing(LOG_BOMBING, user, "builds a canister bomb [log_atmos(payload)] at [log_loc(payload)].")
+	if(payload.air_contents.check_if_dangerous())
+		message_admins("[key_name(user)] builds a canister bomb [alert_atmos(payload)] at [log_loc(payload)].")
+	tgui_process.update_uis(payload)
+	payload.UpdateIcon()
+	// we don't remove the components here since the frame and assembly can be retreived by disassembling the canbomb
+	// Since the assembly was done, return TRUE
+	return TRUE
+
+
+
 /// -----------------------------------------------------
 
 /////////////////////////////////////// Timer/igniter /////////////////////////

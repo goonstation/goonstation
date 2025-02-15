@@ -393,28 +393,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	return
 
 /obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/W, var/mob/user)
-	if (istype(W, /obj/item/canbomb_detonator)) //Wire: canister bomb stuff
-		if (holding)
-			user.show_message(SPAN_ALERT("You must remove the currently inserted tank from the slot first."))
-		else
-			var/obj/item/canbomb_detonator/Det = W
-			if (Det.det_state != 4)
-				user.show_message(SPAN_ALERT("The assembly is incomplete."))
-			else
-				Det.set_loc(src)
-				Det.master = src
-				Det.layer = initial(W.layer)
-				user.u_equip(Det)
-				overlay_state = "overlay_safety_on"
-				src.det = Det
-				src.det.attachedTo = src
-				src.det.builtBy = user
-				logTheThing(LOG_BOMBING, user, "builds a canister bomb [log_atmos(src)] at [log_loc(src)].")
-				if(src.air_contents.check_if_dangerous())
-					message_admins("[key_name(user)] builds a canister bomb [alert_atmos(src)] at [log_loc(src)].")
-				tgui_process.update_uis(src)
-				src.UpdateIcon()
-	else if (src.det && istype(W, /obj/item/tank))
+	if (src.det && istype(W, /obj/item/tank))
 		user.show_message(SPAN_ALERT("You cannot insert a tank, as the slot is shut closed by the detonator assembly."))
 		return
 	else if (src.det && W && istool(W, TOOL_PULSING | TOOL_SNIPPING))

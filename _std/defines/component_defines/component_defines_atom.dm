@@ -190,6 +190,8 @@
 	#define COMSIG_ITEM_ASSEMBLY_ITEM_SETUP "assembly_item_setup"
 	/// Triggers on an item when a target is build into an assembly. Used when special combinations are enabled through certain components
 	#define COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION "assembly_item_on_target_addition"
+	/// Triggers on an item when a target is build into an assembly. Used when special combinations are enabled through certain components
+	#define COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION "assembly_item_on_misc_addition"
 	/// Triggers on an item when it is removed from an assembly. Used in case something needs to behave differently in an assembly than for itself
 	#define COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL "assembly_item_removal"
 	/// Checks on any item if they have special conditions under which they cannot be used in the assembly, e.g. igniters needing to be unsecured

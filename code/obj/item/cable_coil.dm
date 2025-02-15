@@ -54,6 +54,19 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		if (spawn_conductor_name)
 			applyCableMaterials(src, getMaterial(spawn_insulator_name), getMaterial(spawn_conductor_name))
 		BLOCK_SETUP(BLOCK_ROPE)
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS, PROC_REF(assembly_overlay_addition))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS)
+		. = ..()
+
+	/// ----------- Trigger/Applier-Assembly-Related Procs -----------
+
+	proc/assembly_overlay_addition(var/manipulated_coil, var/obj/item/assembly/complete/parent_assembly, overlay_offset)
+		if(parent_assembly.special_construction_identifier == "canbomb")
+			parent_assembly.overlays += image('icons/obj/items/assemblies.dmi', parent_assembly, "cable_coil_canbomb")
+
+	/// ----------------------------------------------
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message(SPAN_NOTICE("[user] begins coiling cable!"))

@@ -26,11 +26,13 @@ TYPEINFO(/obj/item/device/igniter)
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK, PROC_REF(assembly_check))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS, PROC_REF(assembly_overlay_addition))
 
 /obj/item/device/igniter/disposing()
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS)
 	..()
 
 /// ----------- Trigger/Applier-Assembly-Related Procs -----------
@@ -87,8 +89,17 @@ TYPEINFO(/obj/item/device/igniter)
 /obj/item/device/igniter/proc/assembly_setup(var/manipulated_igniter, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
 	//once integrated in the assembly, we secure the igniter
 	src.status = 1
-	// trigger-igniter- Assembly + wired pipebomb/pipebomb-frame/beaker -> trigger-igniter pipebomb/beakerbomb
-	parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/tank/plasma, /obj/item/pipebomb/frame, /obj/item/pipebomb/bomb, /obj/item/reagent_containers/glass/beaker), TYPE_PROC_REF(/obj/item/assembly/complete, add_target_item), TRUE)
+	if(parent_assembly.applier == src)
+		// trigger-igniter- Assembly + wired pipebomb/pipebomb-frame/beaker -> trigger-igniter pipebomb/beakerbomb
+		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/tank/plasma, /obj/item/pipebomb/frame, /obj/item/pipebomb/bomb, /obj/item/reagent_containers/glass/beaker), TYPE_PROC_REF(/obj/item/assembly/complete, add_target_item), TRUE)
+	if(istype(parent_assembly.applier, /obj/item/device/multitool) && (src in parent_assembly.additional_components))
+		//were on the way to blow everything up, so lets lock in!
+		parent_assembly.special_construction_identifier = "canbomb"
+
+
+/obj/item/device/igniter/proc/assembly_overlay_addition(var/manipulated_igniter, var/obj/item/assembly/complete/parent_assembly, var/passed_overlay_offset)
+	if(parent_assembly.special_construction_identifier == "canbomb")
+		parent_assembly.overlays += image('icons/obj/items/assemblies.dmi', parent_assembly, "igniter_canbomb")
 
 /// ----------------------------------------------
 
