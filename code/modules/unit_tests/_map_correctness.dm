@@ -223,7 +223,7 @@ proc/check_stacked_tables()
 	for_by_tcl(table, /obj/table)
 		var/turf/T = table.loc
 		for (var/obj/table/other in T)
-			if (table != other)
+			if (table != other && table.pixel_x == other.pixel_x && table.pixel_y == other.pixel_y) // pixel shifts okay
 				log_msg += "Stacked tables [table] and [other] at [T.x], [T.y], [T.z] in [loaded_prefab_path ? "prefab [global.loaded_prefab_path]" : "[T.loc]"].\n"
 				continue // we found one dupe, bail
 	if (log_msg)
