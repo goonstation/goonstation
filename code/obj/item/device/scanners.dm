@@ -703,8 +703,10 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 	is_detonator_attachment()
 		return 1
 
-	detonator_act(event, var/obj/item/assembly/detonator/det)
+	detonator_act(event, var/obj/item/canbomb_detonator/det)
 		switch (event)
+			if ("attach")
+				det.initial_wire_functions += src
 			if ("pulse")
 				det.attachedTo.visible_message("<span class='bold' style='color: #B7410E;'>\The [src]'s external display turns off for a moment before booting up again.</span>")
 			if ("cut")

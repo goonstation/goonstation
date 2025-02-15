@@ -565,7 +565,7 @@
 	is_detonator_attachment()
 		return 1
 
-	detonator_act(event, var/obj/item/assembly/detonator/det)
+	detonator_act(event, var/obj/item/canbomb_detonator/det)
 		var/sound_to_play = islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument
 		switch (event)
 			if ("pulse")
@@ -762,7 +762,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	is_detonator_attachment()
 		return 1
 
-	detonator_act(event, var/obj/item/assembly/detonator/det)
+	detonator_act(event, var/obj/item/canbomb_detonator/det)
 		switch (event)
 			if ("pulse")
 				playsound(det.attachedTo.loc, 'sound/musical_instruments/Vuvuzela_1.ogg', 50, 1)

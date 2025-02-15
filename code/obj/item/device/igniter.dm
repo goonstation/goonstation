@@ -103,27 +103,6 @@ TYPEINFO(/obj/item/device/igniter)
 	else return ..()
 
 /obj/item/device/igniter/attackby(obj/item/W, mob/user)
-
-	if (istype(W, /obj/item/device/multitool)) // check specifically for a multitool
-		var/obj/item/assembly/detonator/R = new /obj/item/assembly/detonator(user);
-		W.set_loc(R)
-		W.master = R
-		W.layer = initial(W.layer)
-		src.set_loc(R)
-		src.master = R
-		src.layer = initial(src.layer)
-		R.part_mt = W
-		R.part_ig = src
-		R.set_loc(user)
-		user.u_equip(src)
-		user.u_equip(W)
-
-		user.put_in_hand_or_drop(R)
-
-		R.setDetState(0)
-		src.add_fingerprint(user)
-		user.show_message(SPAN_NOTICE("You hook up the igniter to the multitool's panel."))
-
 	if (isscrewingtool(W))
 		src.status = !(src.status)
 		if (src.status)

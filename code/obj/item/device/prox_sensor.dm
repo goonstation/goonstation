@@ -24,6 +24,7 @@ TYPEINFO(/obj/item/device/prox_sensor)
 	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(signal_dropped))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, PROC_REF(assembly_get_state))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT, PROC_REF(assembly_get_time_left))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME, PROC_REF(assembly_set_time))
 	// Prox-Sensor + assembly-applier -> timer/Applier-Assembly
 	src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
 
@@ -33,6 +34,7 @@ TYPEINFO(/obj/item/device/prox_sensor)
 	UnregisterSignal(src, COMSIG_ITEM_DROPPED)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME)
 	..()
 
 
@@ -51,7 +53,7 @@ TYPEINFO(/obj/item/device/prox_sensor)
 		//missing log about contents of beakers
 		return TRUE
 
-/obj/item/device/prox_sensor/proc/assembly_get_state(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly)
+/obj/item/device/prox_sensor/proc/assembly_get_state(var/manipulated_sensor, var/obj/item/assembly/complete/parent_assembly)
 	if(src.armed)
 		return ASSEMBLY_TRIGGER_ARMED
 	else
@@ -60,9 +62,12 @@ TYPEINFO(/obj/item/device/prox_sensor)
 		else
 			return ASSEMBLY_TRIGGER_NOT_ACTIVATED
 
-/obj/item/device/prox_sensor/proc/assembly_get_time_left(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly)
+/obj/item/device/prox_sensor/proc/assembly_get_time_left(var/manipulated_sensor, var/obj/item/assembly/complete/parent_assembly)
 	return src.time
 
+/obj/item/device/prox_sensor/proc/assembly_set_time(var/manipulated_sensor, var/obj/item/assembly/complete/parent_assembly, var/time_to_set)
+	src.time = max(src.min_time, time_to_set)
+	return src.time
 
 /// ----------------------------------------------
 

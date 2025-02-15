@@ -9,7 +9,7 @@ TYPEINFO(/obj/item/device/multitool)
 	icon_state = "multitool"
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
-	tool_flags = TOOL_PULSING
+	tool_flags = TOOL_PULSING | TOOL_ASSEMBLY_APPLIER
 	w_class = W_CLASS_SMALL
 	force = 5
 	throwforce = 5
@@ -42,6 +42,29 @@ TYPEINFO(/obj/item/device/multitool)
 /obj/item/device/multitool/afterattack(atom/target, mob/user , flag)
 	. = ..()
 	get_and_return_netid(target,user)
+
+/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+/obj/item/device/multitool/proc/assembly_setup(var/manipulated_grenade, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+	//since we have different multitools
+	parent_assembly.applier_icon_prefix = "multitool"
+	if (!parent_assembly.target)
+		// trigger-multitool-Assembly + plasmatank -> trigger-multitool-plasmatank-bomb
+		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/tank/plasma), TYPE_PROC_REF(/obj/item/assembly/complete, add_target_item), TRUE)
+
+/obj/item/device/multitool/proc/assembly_application(var/manipulated_grenade, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
+	if(!assembly_target)
+		//if there is no target, we don't do anything
+		return
+	else
+		if(istype(assembly_target, /obj/item/tank/plasma))
+			var/obj/item/tank/plasma/manipulated_plasma_tank = assembly_target
+			manipulated_plasma_tank.ignite()
+			qdel(parent_assembly)
+			return
+
+/// ----------------------------------------------
+
 
 /proc/get_and_return_netid(atom/target, mob/user)
 	//Get the NETID from bots/computers/everything else

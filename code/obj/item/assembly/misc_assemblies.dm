@@ -76,7 +76,7 @@ Contains:
 
 /obj/item/assembly/complete/proc/get_trigger_state(var/affected_assembly)
 	if(src.secured)
-		//we relay the signal to the trigger, in case of mousetraps
+		//we relay the signal to the trigger, if the assembly is secured
 		return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, src)
 	else
 		return ASSEMBLY_TRIGGER_NOT_SECURED
@@ -84,6 +84,10 @@ Contains:
 /obj/item/assembly/complete/proc/get_trigger_time_left(var/affected_assembly)
 	//we relay the signal to the trigger, in case of mousetraps
 	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT, src)
+
+/obj/item/assembly/complete/proc/set_trigger_time(var/time_to_set)
+	//we send a signal on the trigger to set the time
+	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME, src, time_to_set)
 
 /obj/item/assembly/complete/proc/on_floor_reveal(var/affected_assembly, var/turf/revealed_turf)
 	//we relay the signal to the trigger, in case of mousetraps

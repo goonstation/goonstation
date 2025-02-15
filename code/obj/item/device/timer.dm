@@ -22,6 +22,7 @@ TYPEINFO(/obj/item/device/timer)
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION, PROC_REF(assembly_activation))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, PROC_REF(assembly_get_state))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT, PROC_REF(assembly_get_time_left))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME, PROC_REF(assembly_set_time))
 	// Timer + assembly-applier -> timer/Applier-Assembly
 	src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
 
@@ -30,6 +31,7 @@ TYPEINFO(/obj/item/device/timer)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME)
 	..()
 
 
@@ -52,6 +54,10 @@ TYPEINFO(/obj/item/device/timer)
 	return src.timing
 
 /obj/item/device/timer/proc/assembly_get_time_left(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly)
+	return src.time
+
+/obj/item/device/timer/proc/assembly_set_time(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly, var/time_to_set)
+	src.time = max(src.min_time, time_to_set)
 	return src.time
 
 /// ----------------------------------------------
