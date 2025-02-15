@@ -530,9 +530,11 @@ ABSTRACT_TYPE(/obj/item/turbine_component)
 	desc = "a replacement blade for the reactor's turbine"
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "turbine"
+	two_handed = TRUE
 
 /obj/item/turbine_component/stator
 	name = "turbine stator"
 	desc = "a replacement stator the reactor's turbine"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "stator"
+	two_handed = TRUE
