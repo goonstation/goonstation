@@ -402,6 +402,7 @@
 		if(src.ruined)
 			user.visible_message("[user] repairs the [src]'s casing.","You repair the [src]'s casing.")
 			src.ruined = FALSE
+			src.UpdateHealthIndicators(src.blade_health)
 		else if(src.blade_health < src.max_blade_health)
 			src.UpdateHealthIndicators(src.blade_health++)
 			boutput(user,"You repair some of the damage to the [src].")
