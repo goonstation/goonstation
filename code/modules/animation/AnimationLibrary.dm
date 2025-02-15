@@ -1,20 +1,16 @@
 //Collection of animations we can reuse for stuff.
 //Try to isolate animations you create an put them in here.
 /proc/animate_buff_in(var/atom/A)
-	var/matrix/M1 = matrix()
-	M1.Scale(0,0)
-	var/matrix/M2 = matrix()
-	A.transform = M1
+	var/matrix/M = matrix(A.transform)
+	A.transform = A.transform.Scale(0.001)
 	A.alpha = 0
-	animate(A, alpha = 255,  transform = M2, time = 10, easing = ELASTIC_EASING)
+	animate(A, alpha = 255, transform = M, time = 10, easing = ELASTIC_EASING, flags = ANIMATION_PARALLEL)
 
 /proc/animate_buff_out(var/atom/A)
-	var/matrix/M1 = matrix()
-	var/matrix/M2 = matrix()
-	M2.Scale(2,2)
-	A.transform = M1
+	var/matrix/M = matrix(A.transform)
 	A.alpha = 255
-	animate(A, alpha = 0,  transform = M2, time = 10, easing = LINEAR_EASING)
+	animate(A, alpha = 0, transform = A.transform.Scale(2, 2), time = 10, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+	animate(transform = M)
 
 /proc/animate_fade_grayscale(var/atom/A, var/time=5)
 	var/start = COLOR_MATRIX_IDENTITY
@@ -166,10 +162,10 @@
 	if(!istype(A))
 		return
 	var/list/col = list(1,0,0, 0,1,0, 0,0,1, 0.15,0.77,0.66)
-	var/matrix/shrink = matrix()
-	shrink.Scale(0.4, 0.4)
-	animate(A, color=col, transform=shrink, time=3, easing=BOUNCE_EASING)
-	animate(color=null, transform=null, time=3, easing=BOUNCE_EASING)
+	var/matrix/M = matrix(A.transform)
+	animate(A, color=col, transform=A.transform.Scale(0.4), time=3, easing=BOUNCE_EASING, flags=ANIMATION_PARALLEL)
+	animate(color=null, transform=M, time=3, easing=BOUNCE_EASING)
+	return
 
 /proc/animate_flock_floorrun_start(var/atom/A)
 	if(!istype(A))
@@ -814,21 +810,14 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(pixel_y = ipy, time = 1,easing = EASE_IN)
 
 /proc/animate_portal_appear(var/atom/A)
-	var/matrix/M1 = matrix()
-	M1.Scale(0.6,0.05)
-	var/matrix/M2 = matrix()
-
-	A.transform = M1
-	animate(A, transform = M2, time = 30, easing = ELASTIC_EASING)
+	var/matrix/M = matrix(A.transform)
+	A.transform = A.transform.Scale(0.6, 0.05)
+	animate(A, transform = M, time = 30, easing = ELASTIC_EASING, flags = ANIMATION_PARALLEL)
 
 /proc/animate_portal_tele(var/atom/A)
-	var/matrix/M1 = matrix()
-	M1.Scale(0.95,0.7)
-	var/matrix/M2 = matrix()
-
-	A.transform = M2
-	animate(A, transform = M1, time = 1, easing = EASE_OUT)
-	animate(transform = M2, time = 10, easing = ELASTIC_EASING)
+	var/matrix/M = matrix(A.transform)
+	animate(A, transform = A.transform.Scale(0.95, 0.7), time = 1, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
+	animate(transform = M, time = 10, easing = ELASTIC_EASING)
 
 /proc/animate_float(var/atom/A, var/loopnum = -1, floatspeed = 20, random_side = 1)
 	if (!istype(A))
