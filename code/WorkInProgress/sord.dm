@@ -101,8 +101,9 @@
 /obj/item/gun/energy/stasis
 	name = "stasis rifle"
 	icon = 'icons/obj/items/guns/energy48x32.dmi'
-	icon_state = "heavyion" // wtb 1 sprite
+	icon_state = "stasis"
 	item_state = "rifle"
+	charge_icon_state = "stasis"
 	force = 1
 	cell_type = /obj/item/ammo/power_cell/med_power
 	desc = "An experimental weapon that produces a cohesive electrical charge designed to hold a target in place for a limited time."
