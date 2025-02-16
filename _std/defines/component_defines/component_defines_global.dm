@@ -7,7 +7,7 @@
 #define COMSIG_GLOBAL_DRONE_DEATH "global_drone_death"
 
 // ---- client signals ----
-/// When a client is calling New()
+/// When a client is calling New() (GLOBAL_SIGNAL, client)
 #define COMSIG_GLOBAL_CLIENT_NEW "global_client_new"
 
 // ---- cargo pads ----
