@@ -345,6 +345,12 @@
 	desc = "A heavy-duty engine for pod vehicles."
 	price = PAY_TRADESMAN*5
 
+/datum/commodity/podparts/pulsed_phaser
+	comname = "Pulsed phaser"
+	comtype = /obj/item/shipcomponent/mainweapon/phaser/pulsed
+	desc = "An unconventional, but weak, hardlight modified phaser."
+	price = PAY_IMPORTANT
+
 /datum/commodity/podparts/laser
 	comname = "Mk.2 Scout Laser"
 	comtype = /obj/item/shipcomponent/mainweapon/laser
