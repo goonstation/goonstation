@@ -200,6 +200,16 @@
 	icon_state = "spes"
 	muzzle_flash = "muzzle_flash"
 
+/obj/item/shipcomponent/mainweapon/minigun
+	name = "Minigun"
+	desc = "A low damage but high firerate anti-personnel minigun stuffed into a pod weapon."
+	weapon_score = 1.25
+	firerate = 0.25 SECONDS
+	appearanceString = "pod_weapon_gun_off"
+	current_projectile = new/datum/projectile/bullet/akm/pod
+	icon_state = "minigun"
+	muzzle_flash = "muzzle_flash"
+
 /obj/item/shipcomponent/mainweapon/laser_ass // hehhh
 	name = "Mk.4 Assault Laser"
 	weapon_score = 1.25
