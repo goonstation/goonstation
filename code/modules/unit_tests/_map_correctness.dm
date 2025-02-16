@@ -21,6 +21,8 @@ proc/check_map_correctness()
 	check_turf_underlays()
 	check_mass_drivers()
 	check_stacked_tables()
+	check_stacked_shrubs()
+	check_stacked_lights()
 
 proc/check_missing_navbeacons()
 	var/list/all_beacons = list()
@@ -225,6 +227,28 @@ proc/check_stacked_tables()
 		for (var/obj/table/other in T)
 			if (table != other)
 				log_msg += "Stacked tables [table] and [other] at [T.x], [T.y], [T.z] in [loaded_prefab_path ? "prefab [global.loaded_prefab_path]" : "[T.loc]"].\n"
+				continue // we found one dupe, bail
+	if (log_msg)
+		CRASH(log_msg)
+
+proc/check_stacked_shrubs()
+	var/log_msg
+	for_by_tcl(shrub, /obj/shrub)
+		var/turf/T = shrub.loc
+		for (var/obj/shrub/other in T)
+			if (shrub != other)
+				log_msg += "Stacked shrubs [shrub] and [other] at [T.x], [T.y], [T.z] in [loaded_prefab_path ? "prefab [global.loaded_prefab_path]" : "[T.loc]"].\n"
+				continue // we found one dupe, bail
+	if (log_msg)
+		CRASH(log_msg)
+
+proc/check_stacked_lights()
+	var/log_msg
+	for_by_tcl(light, /obj/machinery/light)
+		var/turf/T = light.loc
+		for (var/obj/machinery/light/other in T)
+			if (light != other)
+				log_msg += "Stacked light [light] and [other] at [T.x], [T.y], [T.z] in [loaded_prefab_path ? "prefab [global.loaded_prefab_path]" : "[T.loc]"].\n"
 				continue // we found one dupe, bail
 	if (log_msg)
 		CRASH(log_msg)
