@@ -1,5 +1,5 @@
 TYPEINFO(/obj/item/mechanics/text_to_music)
-	mats = list("metal"      = 20,
+	mats = list("metal"      = 10,
 				"conductive" = 10,
 				"crystal"    = 10)
 
