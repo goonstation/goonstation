@@ -342,7 +342,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 					say("[JOHN_PICK("greetings")] Murray! How's it [JOHN_PICK("verbs")]?")
 					SPAWN(rand(20,40))
 						if (murray?.on && !murray.idle)
-							murray.speak("Hi, John! It's [JOHN_PICK("murraycompliment")] to see you here, of all places.")
+							murray.say("Hi, John! It's [JOHN_PICK("murraycompliment")] to see you here, of all places.")
 
 				else
 					var/mob/M = pick(alive_mobs)
@@ -647,8 +647,8 @@ Urs' Hauntdog critter
 	desc = "the hogg vorbis."
 	icon_state = "hogg"
 	icon_state_dead = "hogg-dead"
-	speechverb_say = "screams!"
-	speechverb_exclaim = "screams!"
+	speech_verb_say = "screams!"
+	speech_verb_exclaim = "screams!"
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		if(act == "scream" && src.emote_check(voluntary, 50))
