@@ -1218,8 +1218,6 @@ or don't if it uses a custom topopen overlay
 
 		if ("flip")
 			if (src.emote_check(voluntary, 50))
-				if (isdead(src))
-					src.emote_allowed = 0
 				playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				message = "<B>[src]</B> does a flip!"
 
@@ -1323,8 +1321,6 @@ or don't if it uses a custom topopen overlay
 	#ifdef DATALOGGER
 				game_stats.Increment("farts")
 	#endif
-				SPAWN(1 SECOND)
-					src.emote_allowed = 1
 		else
 			if (voluntary) src.show_text("Invalid Emote: [act]")
 			return

@@ -388,6 +388,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 			playsound(src, src.sound_deny, 25, 0)
 		return 0
 
+// we have to do these explicitly to bypass checks for smashing handcuffed people into doors
+/obj/machinery/door/grab_smash(obj/item/grab/G, mob/user)
+	var/mob/grabbee = G.affecting
+	if (..())
+		if (src.density)
+			src.bumpopen(grabbee)
+
+/obj/machinery/door/hitby(atom/movable/AM, datum/thrown_thing/thr)
+	. = ..()
+	if (src.density && ismob(AM))
+		src.bumpopen(AM)
+
 /obj/machinery/door/blob_act(var/power)
 	if(prob(power))
 		qdel(src)

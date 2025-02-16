@@ -1088,6 +1088,9 @@ var/list/radio_brains = list()
 		set waitfor = FALSE
 		if (!src.owner.lying || is_incapacitated(src.owner) || length(src.owner.grabbed_by))
 			return
+		var/turf/T = get_turf(src.owner)
+		if (!istype(T) || T.throw_unlimited)
+			return
 		if (ON_COOLDOWN(src.owner, "skitter", 7 SECONDS))
 			return
 		src.owner.visible_message(SPAN_ALERT("[src.owner] skitters away!"))

@@ -1,4 +1,96 @@
 
+(t)sat feb 15 25
+(u)Amylizzle & Nerkson
+(p)21909
+(e)🎨📄|C-Sprites, A-UI
+(*)The reactor turbine has been made repairable. Also nerfed. Also buffed.
+(+)The default turbine settings are now a viable configuration.
+(+)Turbine blades and stator can now be replaced with new ones, with material properties.
+(+)A conductive material on the stator will boost power output.
+(+)A dense material on the turbine blade will increase its mass.
+(+)A hard material on the turbine blade will increase its durability.
+(+)Flow rate on the turbine is capped to 1000 L/S
+(+)The turbine will now decapitate you if you let it spin too fast for too long.
+(+)Turbine blade sprite by Nerkson.
+(t)fri feb 14 25
+(u)Bartimeus973
+(p)22280
+(e)🆕🎨⚖📄|C-Feature, C-Sprites, C-Balance, A-UI
+(*)Legs and eyes are now modifiable in character setup!
+(t)thu feb 13 25
+(u)glowbold
+(p)22082
+(e)🆕💅📄💊|C-Feature, C-QoL, A-UI, A-Medical
+(+)The cloning console will indicate when the SpeedyClone, Biomatter Recyler, and NecroScan modules are installed.
+(+)Clone pod and reclaimer upgrade modules can be uninstalled with a crowbar on their respective machines.
+(u)Garash2k
+(p)21411
+(e)🆕📄|C-Feature, A-UI
+(+)New UI for the Ruck Kit
+(u)glowbold
+(p)22261
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Enzymatic reclaimers can be broken by gunfire and explosions. Use common tools to fix them!
+(+)Enzymatic reclaimers require power to process meat and bodies.
+(u)Waffleloffle & glowbold
+(p)22208
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Reagent heaters can be broken by gunfire and explosions. Use common tools to repair!
+(u)Amylizzle
+(p)22139
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Lamp artifacts now have a chance to spawn with negative lighting.
+(u)TDHooligan
+(p)22027
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Pipeshot no longer functions outside of break-action shotguns.
+(+)The MTS shotgun now spawns with Birdshot.
+(u)Lord_Earthfire
+(p)22247
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Airlocks no longer require all their access to be removed to be able to deconstructed, you just need to have access to them.
+(+)Emagging a door removes the need to have access to the door in order to deconstruct it.
+(u)glowbold
+(p)22190
+(e)⚖💅📄🤖|C-Balance, C-QoL, A-UI, A-Silicons
+(+)Unpowered law racks can have modules (un)welded/screwed. You (still) cannot remove laws unless the law rack is powered.
+(u)glowbold
+(p)22281
+(e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
+(*)Radiation interferes with silicon visual sensors based on intensity.
+(u)Bartimeus973
+(p)22267
+(e)⚖💅🔨|C-Balance, C-QoL, A-Player-Actions
+(*)Visual and noisy emotes (like *flip, *fart, *scream etc...) no longer share a cooldown with other emotes (like *wave, *wink*, *flex etc...)!
+(u)glowbold
+(p)22136
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Cyborg docking stations can be broken by gunfire and explosions, repaired with some common tools and wiring.
+(u)Facsimile
+(p)22276
+(e)🪲⛔📦|C-Bug, C-Removal, A-Game-Objects
+(+)Removed manual linking from Player Pianos. Instead, use auto-linking as described the in Player Piano book.
+(u)FlameArrow57
+(p)21919
+(e)🆕🎨🚗|C-Feature, C-Sprites, A-Vehicles
+(*)Added a new Automatic Repair System pod component to pod manufacturers. When filled with welding fuel and turned on, it will repair damage to your pod over time.
+(u)patricia
+(p)21916
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Backslashes now work as escape characters in mechcomp networking components and the signal splitter
+(u)Kaan
+(p)21979
+(e)🪲⚖🧛|C-Bug, C-Balance, A-Gamemodes
+(+)The cost of the nuclear rapid deployment remote has been reduced to 2 (from 4).
+(u)glowbold
+(p)22225
+(e)🆕🗺🔄💡|C-Feature, A-Mapping, C-Rework, A-Station-Systems
+(*)Head of Personnel use the most up to date program for bank records management: BankBoss2!
+(t)mon feb 10 25
+(u)LeahTheTech
+(+)Smashing or throwing people into doors will now reliably open them using their ID (even while handcuffed)
+(u)Sord
+(+)You can now buy a SecHUD cybereye from the sec weapons vendor as a utility item.
 (t)sun feb 09 25
 (u)LeahTheTech
 (+)Roaches can no longer skitter out of grabs.

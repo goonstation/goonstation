@@ -16,6 +16,7 @@ interface TurbineControlData {
   load;
   power;
   volume;
+  volume_max;
   history;
   overspeed;
   overtemp;
@@ -24,8 +25,17 @@ interface TurbineControlData {
 
 export const TurbineControl = () => {
   const { act, data } = useBackend<TurbineControlData>();
-  const { rpm, load, power, volume, history, overspeed, overtemp, undertemp } =
-    data;
+  const {
+    rpm,
+    load,
+    power,
+    volume,
+    volume_max,
+    history,
+    overspeed,
+    overtemp,
+    undertemp,
+  } = data;
   const rpmHistory = history.map((v) => v[0]);
   const rpmHistoryData = rpmHistory.map((v, i) => [i, v]);
 
@@ -127,7 +137,7 @@ export const TurbineControl = () => {
             Flow Rate:
             <NumberInput
               minValue={1}
-              maxValue={10e5}
+              maxValue={volume_max}
               value={volume}
               format={(value) => value + ' L/s'}
               step={1}

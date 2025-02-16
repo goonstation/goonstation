@@ -17,7 +17,7 @@ TYPEINFO(/datum/component/bullet_holes)
 	/// List of individual impact decals
 	var/list/impact_images
 	/// Image which holds all of the impact decals (as overlays) to display them
-	var/image/impact_image_base
+	var/static/mutable_appearance/impact_image_base
 	/// Used to track where in the list we insert the impact decals
 	var/decal_num = 0
 	/// Limit the number of redraws to prevent lag
@@ -32,15 +32,15 @@ TYPEINFO(/datum/component/bullet_holes)
 
 	src.impact_images = new/list(max_holes)
 
-	src.impact_image_base = image('icons/obj/projectiles.dmi', "blank")
-	src.impact_image_base.blend_mode = BLEND_INSET_OVERLAY // so the holes don't go over the edge of things
+	if(isnull(src.impact_image_base))
+		src.impact_image_base = mutable_appearance('icons/obj/projectiles.dmi', "blank")
+		src.impact_image_base.blend_mode = BLEND_INSET_OVERLAY // so the holes don't go over the edge of things
 
 	RegisterSignal(parent, COMSIG_ATOM_HITBY_PROJ, PROC_REF(handle_impact))
 	RegisterSignal(parent, COMSIG_UPDATE_ICON, PROC_REF(redraw_impacts)) // just in case
 	RegisterSignal(parent, COMSIG_TURF_REPLACED, PROC_REF(RemoveComponent))
 
 /datum/component/bullet_holes/UnregisterFromParent()
-	impact_image_base = null
 	impact_images.Cut()
 	UnregisterSignal(parent, COMSIG_ATOM_HITBY_PROJ)
 	UnregisterSignal(parent, COMSIG_UPDATE_ICON)

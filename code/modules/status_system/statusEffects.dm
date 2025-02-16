@@ -3354,3 +3354,96 @@
 		UnregisterSignal(src.owner, COMSIG_MOVABLE_MOVED)
 		src.owner.layer = initial(src.owner.layer)
 		. = ..()
+
+/datum/statusEffect/stasis
+	id = "stasis"
+	name = "Stasis"
+	desc = "You are caught in a stasis field. Unable to move."
+	icon_state = "stunned"
+	unique = 1
+	maxDuration = 30 SECONDS
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onAdd(optional=null)
+		if (ismob(owner) && !QDELETED(owner))
+			var/mob/mob_owner = owner
+			APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+		..()
+
+	onRemove()
+		if (ismob(owner) && !QDELETED(owner))
+			var/mob/mob_owner = owner
+			REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+		..()
+
+/datum/statusEffect/silicon_radiation
+	name = "Radiological Interference"
+	desc = "Radiation is affecting your optical sensors."
+	id = "silicon_radiation"
+	unique = TRUE
+	visible = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	icon_state = "trefoil"
+
+	preCheck(atom/A)
+		. = ..()
+		if (!issilicon(A))
+			return
+
+	onAdd(Sv)
+		. = ..()
+		src.set_substatus(Sv)
+
+	onChange(Sv)
+		. = ..()
+		src.set_substatus(Sv)
+
+	proc/set_substatus(Sv)
+		if (Sv == -INFINITY) // from fullheal
+			owner.delStatus("silicon_radiation_light")
+			owner.delStatus("silicon_radiation_medium")
+			owner.delStatus("silicon_radiation_heavy")
+			owner.delStatus("silicon_radiation_extreme")
+			return
+		if (Sv <= 0)
+			return
+		if (Sv > 1) // neutronium
+			owner.setStatusMin("silicon_radiation_extreme", src.duration)
+		if (Sv > 0.6) // plutonium
+			owner.setStatusMin("silicon_radiation_heavy", src.duration)
+		if (Sv > 0.35)  // erebite
+			owner.setStatusMin("silicon_radiation_medium", src.duration)
+		owner.setStatusMin("silicon_radiation_light", src.duration) // cerenkite
+
+/datum/statusEffect/silicon_radiation_effect
+	unique = TRUE
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/datum/overlayComposition/composition
+
+	onAdd(Sv)
+		. = ..()
+		var/mob/living/silicon/S = owner
+		S.addOverlayComposition(composition)
+
+	onRemove()
+		. = ..()
+		var/mob/living/silicon/S = owner
+		S.removeOverlayComposition(composition)
+
+/datum/statusEffect/silicon_radiation_effect/light
+	id = "silicon_radiation_light"
+	composition = /datum/overlayComposition/silicon_rad_light
+
+/datum/statusEffect/silicon_radiation_effect/medium
+	id = "silicon_radiation_medium"
+	composition = /datum/overlayComposition/silicon_rad_medium
+
+/datum/statusEffect/silicon_radiation_effect/heavy
+	id = "silicon_radiation_heavy"
+	composition = /datum/overlayComposition/silicon_rad_heavy
+
+/datum/statusEffect/silicon_radiation_effect/extreme
+	id = "silicon_radiation_extreme"
+	composition = /datum/overlayComposition/silicon_rad_extreme
+
