@@ -7,7 +7,7 @@
 
 #ifdef RP_MODE
 	ASSERT(FALSE) // >:(
-#undef
+#endif
 
 	game_start_countdown = new()
 	UPDATE_TITLE_STATUS("Initializing world")
