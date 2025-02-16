@@ -4,7 +4,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 /datum/bomb_monitor
 	var/lists_built = 0
 	var/list/obj/item/device/transfer_valve/TVs = list()
-	var/list/obj/item/assembly/detonator/dets = list()
+	var/list/obj/item/canbomb_detonator/dets = list()
 	var/list/obj/item/assembly/proximity_bomb/ST_prox = list()
 	var/list/obj/item/assembly/time_bomb/ST_time = list()
 	var/list/obj/item/assembly/radio_bomb/ST_radio = list()
@@ -30,7 +30,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 		for(var/obj/item/I in world)
 			if(istype(I, /obj/item/device/transfer_valve))
 				TVs += I
-			else if (istype(I, /obj/item/assembly/detonator))
+			else if (istype(I, /obj/item/canbomb_detonator))
 				dets += I
 			else if (istype(I, /obj/item/assembly/proximity_bomb/))
 				ST_prox += I
@@ -200,7 +200,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 						</table>"}
 
 		temp = ""
-		for(var/obj/item/assembly/detonator/det in dets)
+		for(var/obj/item/canbomb_detonator/det in dets)
 			if(!filter_active_only || det.attachedTo)
 				var/turf/T = get_turf(det)
 				if (!T || !isturf(T)) continue
@@ -308,7 +308,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 				boutput(usr, SPAN_ALERT("Unable to locate the object (it's been deleted, somehow. Explosion, probably)."))
 				return
 
-			if (istype(I, /obj/item/assembly/detonator) || istype(I, /obj/item/device/transfer_valve) || istype(I, /obj/item/assembly/proximity_bomb) || istype(I, /obj/item/assembly/time_bomb/) || istype(I, /obj/item/assembly/radio_bomb/))
+			if (istype(I, /obj/item/canbomb_detonator) || istype(I, /obj/item/device/transfer_valve) || istype(I, /obj/item/assembly/proximity_bomb) || istype(I, /obj/item/assembly/time_bomb/) || istype(I, /obj/item/assembly/radio_bomb/))
 				I:force_dud = !I:force_dud
 				display_ui(usr)
 				message_admins("[key_name(usr)] made \the [I] [I:force_dud ? "into a dud" : "able to explode again"] at [log_loc(I)].")
@@ -338,8 +338,8 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 			logTheThing(LOG_ADMIN, usr, "made \the [I] at [log_loc(I)] detonate!")
 			logTheThing(LOG_DIARY, usr, "made \the [I] at [log_loc(I)]  detonate!", "admin")
 
-			if (istype(I, /obj/item/assembly/detonator))
-				var/obj/item/assembly/detonator/D = I
+			if (istype(I, /obj/item/canbomb_detonator))
+				var/obj/item/canbomb_detonator/D = I
 				D.detonate()
 			else if (istype(I, /obj/item/device/transfer_valve))
 				var/obj/item/device/transfer_valve/TV = I
