@@ -142,6 +142,15 @@
 	icon_state = "class-a"
 	muzzle_flash = "muzzle_flash_phaser"
 
+/obj/item/shipcomponent/mainweapon/phaser/pulsed
+	name = "Pulsed Phaser"
+	desc = "A modified variant of the basic phaser that fires weak hardlight beams."
+	weapon_score = 0.3
+	appearanceString = "pod_weapon_pulsed_phaser"
+	current_projectile = new/datum/projectile/bullet/optio/hitscan/pulsed_phaser
+	icon_state = "pulsed-phaser"
+	muzzle_flash = null
+
 /obj/item/shipcomponent/mainweapon/laser
 	name = "Mk.2 Scout Laser"
 	desc = "An upgraded variant of the stock MK 1.5 phaser. Due to the concentration of energy, a higher quality engine might be necessary."

@@ -30,6 +30,7 @@
 		/datum/manufacture/pod/weapon/ltlaser,
 		/datum/manufacture/pod/weapon/mining_weak,
 		/datum/manufacture/pod/weapon/taser,
+		/datum/manufacture/pod/weapon/pulsed_phaser,
 		/datum/manufacture/pod/weapon/laser/short,
 		/datum/manufacture/pod/weapon/laser,
 		/datum/manufacture/pod/weapon/disruptor,
@@ -83,6 +84,7 @@
 		/datum/manufacture/pod/weapon/ltlaser,
 		/datum/manufacture/pod/weapon/mining_weak,
 		/datum/manufacture/pod/weapon/taser,
+		/datum/manufacture/pod/weapon/pulsed_phaser,
 		/datum/manufacture/pod/weapon/laser/short,
 		/datum/manufacture/pod/weapon/laser,
 		/datum/manufacture/pod/weapon/disruptor,
@@ -117,6 +119,7 @@
 		/datum/manufacture/pod/weapon/ltlaser,
 		/datum/manufacture/pod/weapon/mining_weak,
 		/datum/manufacture/pod/weapon/taser,
+		/datum/manufacture/pod/weapon/pulsed_phaser,
 		/datum/manufacture/pod/weapon/laser/short,
 		/datum/manufacture/pod/weapon/laser,
 		/datum/manufacture/pod/weapon/disruptor,
@@ -152,6 +155,16 @@
 							 "conductive" = 20,
 							 "crystal" = 30)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/taser)
+	create = 1
+	time = 10 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/weapon/pulsed_phaser
+	name = "Pulsed Phaser"
+	item_requirements = list("metal" = 15,
+							 "conductive" = 50,
+							 "crystal" = 50)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/phaser/pulsed)
 	create = 1
 	time = 10 SECONDS
 	category = "Tool"
