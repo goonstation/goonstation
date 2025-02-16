@@ -100,7 +100,7 @@ jobs:
       - name: Compile with RP_MODE
         if: "matrix.map == 'RP_MODE'"
         run: |
-          tools/ci/dm.sh -DCIBUILD -DRP_MODE goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DCI_RUNTIME_CHECKING -DRP_MODE goonstation.dme
 
       - name: Compile with full pre-round setup
         if: "matrix.map == 'FULL'"
@@ -205,7 +205,7 @@ jobs:
       - name: Compile with RP_MODE
         if: "matrix.map == 'RP_MODE'"
         run: |
-          tools/ci/dm.sh -DCIBUILD -DRP_MODE goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DCI_RUNTIME_CHECKING -DRP_MODE goonstation.dme
 
       - name: Compile with full pre-round setup
         if: "matrix.map == 'FULL'"
