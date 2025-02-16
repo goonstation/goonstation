@@ -18,26 +18,24 @@
 /obj/minimap/observer_minimap/proc/register_minimap_target(client/C, mob/target)
 	if (!isliving(target))
 		return
-	SPAWN(0)
-		if (QDELETED(target)) return
-		var/datum/job/J = find_job_in_controller_by_string(target.job)
-		var/job_dot
+	var/datum/job/J = find_job_in_controller_by_string(target.job)
+	var/job_dot
 
-		if (istype(J, /datum/job/civilian))
-			job_dot = "civilian_dot"
-		else if (istype(J, /datum/job/research))
-			job_dot = "research_dot"
-		else if (istype(J, /datum/job/engineering))
-			job_dot = "engineering_dot"
-		else if (istype(J, /datum/job/security))
-			job_dot = "security_dot"
-		else if (istype(J, /datum/job/command))
-			job_dot = "command_dot"
-		else if (istype(J, /datum/job/special))
-			job_dot = "special_dot"
-		else
-			job_dot = "civilian_dot"
-		target.AddComponent(/datum/component/minimap_marker/minimap, MAP_OBSERVER, job_dot, 'icons/obj/minimap/minimap_markers.dmi', null, FALSE)
+	if (istype(J, /datum/job/civilian))
+		job_dot = "civilian_dot"
+	else if (istype(J, /datum/job/research))
+		job_dot = "research_dot"
+	else if (istype(J, /datum/job/engineering))
+		job_dot = "engineering_dot"
+	else if (istype(J, /datum/job/security))
+		job_dot = "security_dot"
+	else if (istype(J, /datum/job/command))
+		job_dot = "command_dot"
+	else if (istype(J, /datum/job/special))
+		job_dot = "special_dot"
+	else
+		job_dot = "civilian_dot"
+	target.AddComponent(/datum/component/minimap_marker/minimap, MAP_OBSERVER, job_dot, 'icons/obj/minimap/minimap_markers.dmi', null, FALSE)
 
 /obj/minimap/observer_minimap/Click(location, control, params)
 	if (!(isobserver(usr) || isadmin(usr)))
