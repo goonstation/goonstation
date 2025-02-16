@@ -18,8 +18,9 @@
 /obj/minimap/observer_minimap/proc/register_minimap_target(client/C, mob/target)
 	if (!isliving(target))
 		return
-	var/datum/job/J = find_job_in_controller_by_string(target.job)
-	var/job_dot
+	if (!target.mind)
+		return
+	var/datum/job/J = find_job_in_controller_by_string(target.mind.assigned_role)
 
 	if (istype(J, /datum/job/civilian))
 		job_dot = "civilian_dot"
