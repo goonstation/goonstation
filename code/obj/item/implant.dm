@@ -717,6 +717,14 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	big_message = " emits a loud clunk"
 	small_message = " makes a small clicking noise"
 
+	can_implant(mob/target, mob/user)
+		if(!..())
+			return FALSE
+		if (isghostcritter(target) || ishelpermouse(target))
+			return FALSE
+		return TRUE
+
+
 	implanted(mob/target, mob/user)
 		..()
 		if (target == user)
