@@ -34977,7 +34977,6 @@
 /obj/item/shipcomponent/pod_lights/police_siren{
 	pixel_y = 7
 	},
-/obj/table/reinforced/auto,
 /turf/simulated/floor/redblack,
 /area/station/hangar/sec)
 "oGa" = (
@@ -42310,7 +42309,6 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "rVx" = (
-/obj/table/auto,
 /obj/item/suture{
 	pixel_x = 2;
 	pixel_y = 7

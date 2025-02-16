@@ -52471,7 +52471,6 @@
 	icon_state = "line1"
 	},
 /obj/table/wood/round/auto,
-/obj/table/wood/round/auto,
 /obj/drink_rack/mug{
 	pixel_x = 3;
 	pixel_y = 29
@@ -72077,7 +72076,6 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "vOl" = (
-/obj/table/wood/auto,
 /obj/table/wood/auto,
 /obj/item/plate{
 	pixel_x = 6;
