@@ -1,6 +1,10 @@
 
 (t)sun feb 16 25
 (u)Lord_Earthfire
+(p)22018
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Adds bulk manufacturer recipes for material sheets that produces 5 sheets instead of 1.
+(u)Lord_Earthfire
 (p)22256
 (e)🔎💅📦|C-Code-Quality, C-QoL, A-Game-Objects
 (+)You can construct shock packs now starting either with the helmet or the electropack.
