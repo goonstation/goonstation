@@ -1,4 +1,8 @@
 
+(t)sun feb 17 25
+(u)Sord
+(+)Added two new ballistic pod weapon systems, 9mm and 22, to the Listening Post and Magpie traders.
+(+)Syndicate versions have unlimited ammo, Salvager versions have limited ammo.
 (t)sat feb 15 25
 (u)Amylizzle & Nerkson
 (p)21909
