@@ -1,7 +1,3 @@
-#ifdef RP_MODE
-#error RP mode is enabled!
-#endif
-
 /obj
 	var/real_name = null
 	var/real_desc = null
