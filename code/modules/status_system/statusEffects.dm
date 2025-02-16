@@ -3125,12 +3125,14 @@
 
 		onAdd()
 			..()
+			if (src.owner.hasStatus("art_nightmare_curse"))
+				return
 			get_image_group(CLIENT_IMAGE_GROUP_ART_CURSER_NIGHTMARE).add_mob(src.owner)
 			src.spawn_creature()
 			var/mob/living/carbon/human/H = src.owner
 			H.client?.animate_color(normalize_color_to_matrix("#7e4599"), 3 SECONDS)
 			SPAWN(1 SECOND)
-				H.apply_color_matrix(normalize_color_to_matrix("#7e4599"), "art_curser_nightmare_overlay-[ref(src)]")
+				H.apply_color_matrix(normalize_color_to_matrix("#7e4599"), "art_curser_nightmare_overlay")
 
 		onUpdate(timePassed)
 			..()
@@ -3147,9 +3149,10 @@
 		onRemove()
 			get_image_group(CLIENT_IMAGE_GROUP_ART_CURSER_NIGHTMARE).remove_mob(src.owner)
 			var/mob/living/carbon/human/H = src.owner
-			H.client?.animate_color(time = 3 SECONDS)
-			SPAWN(3 SECONDS)
-				H.remove_color_matrix("art_curser_nightmare_overlay-[ref(src)]")
+			if (!H.hasStatus("art_nightmare_curse"))
+				H.client?.animate_color(time = 3 SECONDS)
+				SPAWN(3 SECONDS)
+					H.remove_color_matrix("art_curser_nightmare_overlay")
 			for (var/mob/living/critter/art_curser_nightmare/creature as anything in src.created_creatures)
 				if (!QDELETED(creature))
 					qdel(creature)
@@ -3305,3 +3308,142 @@
 		if((T.turf_flags & HAS_KUDZU) && !ON_COOLDOWN(src.owner, "kudzuwalk_heal", 2 SECONDS) && isliving(owner))
 			var/mob/living/L = owner
 			L.HealDamage("All", 0.5, 0.5, 0.25)
+
+/datum/statusEffect/robospeed
+	id = "robospeed"
+	name = "Hastened"
+	desc = "MAXIMUM OVERDRIVE (You're faster.)."
+	icon_state = "janktank"
+	unique = TRUE
+	movement_modifier = /datum/movement_modifier/healbot
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+//first_note_of_megalovania.wav
+/datum/statusEffect/undertable
+	id = "undertable"
+	name = "Under table"
+	desc = "You're hidden under a table, standing up may be a bad idea."
+	visible = FALSE
+
+	onAdd(optional)
+		. = ..()
+		RegisterSignal(src.owner, COMSIG_MOB_LAYDOWN_STANDUP, PROC_REF(standup))
+		RegisterSignal(src.owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_valid))
+
+	proc/check_valid()
+		var/obj/table/table = locate() in src.owner.loc
+		if (!table)
+			src.owner.delStatus(src)
+			return FALSE
+		return TRUE
+
+	proc/standup(_, lying)
+		if (!src.check_valid())
+			return
+		if (!lying)
+			playsound(src.owner, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
+			boutput(src.owner, SPAN_ALERT("You smack your head on the table trying to stand up. OW!"))
+			src.owner.setStatus("knockdown", 2 SECONDS)
+			src.owner.setStatus("resting", INFINITE_STATUS)
+			var/mob/mobowner = src.owner
+			mobowner.force_laydown_standup()
+			random_brute_damage(src.owner, 5)
+
+	onRemove()
+		UnregisterSignal(src.owner, COMSIG_MOB_LAYDOWN_STANDUP)
+		UnregisterSignal(src.owner, COMSIG_MOVABLE_MOVED)
+		src.owner.layer = initial(src.owner.layer)
+		. = ..()
+
+/datum/statusEffect/stasis
+	id = "stasis"
+	name = "Stasis"
+	desc = "You are caught in a stasis field. Unable to move."
+	icon_state = "stunned"
+	unique = 1
+	maxDuration = 30 SECONDS
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onAdd(optional=null)
+		if (ismob(owner) && !QDELETED(owner))
+			var/mob/mob_owner = owner
+			APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+		..()
+
+	onRemove()
+		if (ismob(owner) && !QDELETED(owner))
+			var/mob/mob_owner = owner
+			REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+		..()
+
+/datum/statusEffect/silicon_radiation
+	name = "Radiological Interference"
+	desc = "Radiation is affecting your optical sensors."
+	id = "silicon_radiation"
+	unique = TRUE
+	visible = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	icon_state = "trefoil"
+
+	preCheck(atom/A)
+		. = ..()
+		if (!issilicon(A))
+			return
+
+	onAdd(Sv)
+		. = ..()
+		src.set_substatus(Sv)
+
+	onChange(Sv)
+		. = ..()
+		src.set_substatus(Sv)
+
+	proc/set_substatus(Sv)
+		if (Sv == -INFINITY) // from fullheal
+			owner.delStatus("silicon_radiation_light")
+			owner.delStatus("silicon_radiation_medium")
+			owner.delStatus("silicon_radiation_heavy")
+			owner.delStatus("silicon_radiation_extreme")
+			return
+		if (Sv <= 0)
+			return
+		if (Sv > 1) // neutronium
+			owner.setStatusMin("silicon_radiation_extreme", src.duration)
+		if (Sv > 0.6) // plutonium
+			owner.setStatusMin("silicon_radiation_heavy", src.duration)
+		if (Sv > 0.35)  // erebite
+			owner.setStatusMin("silicon_radiation_medium", src.duration)
+		owner.setStatusMin("silicon_radiation_light", src.duration) // cerenkite
+
+/datum/statusEffect/silicon_radiation_effect
+	unique = TRUE
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/datum/overlayComposition/composition
+
+	onAdd(Sv)
+		. = ..()
+		var/mob/living/silicon/S = owner
+		S.addOverlayComposition(composition)
+
+	onRemove()
+		. = ..()
+		var/mob/living/silicon/S = owner
+		S.removeOverlayComposition(composition)
+
+/datum/statusEffect/silicon_radiation_effect/light
+	id = "silicon_radiation_light"
+	composition = /datum/overlayComposition/silicon_rad_light
+
+/datum/statusEffect/silicon_radiation_effect/medium
+	id = "silicon_radiation_medium"
+	composition = /datum/overlayComposition/silicon_rad_medium
+
+/datum/statusEffect/silicon_radiation_effect/heavy
+	id = "silicon_radiation_heavy"
+	composition = /datum/overlayComposition/silicon_rad_heavy
+
+/datum/statusEffect/silicon_radiation_effect/extreme
+	id = "silicon_radiation_extreme"
+	composition = /datum/overlayComposition/silicon_rad_extreme
+

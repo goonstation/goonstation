@@ -100,9 +100,6 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	//var/list/connected_shells = list()
 	var/list/installed_modules = list()
 	var/aiRestorePowerRoutine = 0
-	///List of currently active alarms
-	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
-	var/viewalerts = 0
 	var/printalerts = 1
 	var/glitchy_speak = 0
 	//Comm over powernet stuff
@@ -907,21 +904,9 @@ or don't if it uses a custom topopen overlay
 /mob/living/silicon/ai/triggerAlarm(var/class, area/alarm_area, var/list/camera_list, var/alarmsource)
 	if (isdead(src))
 		return
-	var/list/active_alarms = src.alarms[class]
-	for (var/area_name in active_alarms)
-		if (area_name == alarm_area.name)
-			var/list/alarm = active_alarms[area_name]
-			var/list/sources = alarm[3]
-			if (!(alarmsource in sources))
-				sources += alarmsource
-			return
 	var/obj/machinery/camera/single_camera = null
 	if (length(camera_list) == 1)
 		single_camera = camera_list[1]
-	active_alarms[alarm_area.name] = list(alarm_area, single_camera || camera_list, list(alarmsource))
-
-	if (src.viewalerts)
-		src.ai_alerts()
 
 	if (!printalerts)
 		return
@@ -943,22 +928,11 @@ or don't if it uses a custom topopen overlay
 		src.show_text("--- [class] alarm detected in [alarm_area.name]! ( No Camera )")
 
 /mob/living/silicon/ai/cancelAlarm(var/class, area/alarm_area, obj/origin)
-	var/list/active_alarms = src.alarms[class]
-	var/cleared = FALSE
-	for (var/area_name in active_alarms)
-		if (area_name == alarm_area.name)
-			var/list/alarm = active_alarms[area_name]
-			var/list/srcs  = alarm[3]
-			if (origin in srcs)
-				srcs -= origin
-			if (length(srcs) == 0)
-				cleared = TRUE
-				active_alarms -= area_name
-	if (cleared)
-		src.show_text("--- [class] alarm in [alarm_area.name] has been cleared.")
-		if (src.viewalerts)
-			src.ai_alerts()
-	return !cleared
+	if (isdead(src))
+		return
+	if (!src.printalerts)
+		return
+	src.show_text("--- [class] alarm in [alarm_area.name] has been cleared.")
 
 /mob/living/silicon/ai/death(gibbed)
 	if (deployed_to_eyecam)
@@ -966,6 +940,9 @@ or don't if it uses a custom topopen overlay
 
 	if (deployed_shell)
 		src.return_to(deployed_shell)
+
+	for(var/datum/viewport/viewport as anything in src.client?.getViewportsByType(VIEWPORT_ID_AI))
+		viewport.Close()
 
 	src.lastgasp() // calling lastgasp() here because we just died
 	setdead(src)
@@ -1241,8 +1218,6 @@ or don't if it uses a custom topopen overlay
 
 		if ("flip")
 			if (src.emote_check(voluntary, 50))
-				if (isdead(src))
-					src.emote_allowed = 0
 				playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				message = "<B>[src]</B> does a flip!"
 
@@ -1346,8 +1321,6 @@ or don't if it uses a custom topopen overlay
 	#ifdef DATALOGGER
 				game_stats.Increment("farts")
 	#endif
-				SPAWN(1 SECOND)
-					src.emote_allowed = 1
 		else
 			if (voluntary) src.show_text("Invalid Emote: [act]")
 			return
@@ -1622,39 +1595,8 @@ or don't if it uses a custom topopen overlay
 
 /mob/living/silicon/ai/proc/ai_alerts()
 	set category = "AI Commands"
-	set name = "Show Alerts"
-
-	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
-	dat += "<A HREF='?action=mach_close&window=aialerts'>Close</A><BR><BR>"
-	for (var/cat in src.alarms)
-		dat += text("<B>[cat]</B><BR><br>")
-		var/list/L = src.alarms[cat]
-		if (L.len)
-			for (var/alarm in L)
-				var/list/alm = L[alarm]
-				var/area/A = alm[1]
-				var/C = alm[2]
-				var/list/sources = alm[3]
-				dat += "<NOBR>"
-				if (C && istype(C, /list))
-					var/dat2 = ""
-					for (var/obj/machinery/camera/I in C)
-						dat2 += text("[]<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>", (dat2=="") ? "" : " | ", src, I, I.c_tag)
-					dat += text("-- [] ([])", A.name, (dat2!="") ? dat2 : "No Camera")
-				else if (C && istype(C, /obj/machinery/camera))
-					var/obj/machinery/camera/Ctmp = C
-					dat += text("-- [] (<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>)", A.name, src, C, Ctmp.c_tag)
-				else
-					dat += text("-- [] (No Camera)", A.name)
-				if (length(sources) > 1)
-					dat += text("- [] sources", sources.len)
-				dat += "</NOBR><BR><br>"
-		else
-			dat += "-- All Systems Nominal<BR><br>"
-		dat += "<BR><br>"
-
-	src.viewalerts = 1
-	src.get_message_mob().Browse(dat, "window=aialerts&can_close=0")
+	set name = "Show Alert Minimap"
+	src.open_alert_minimap()
 
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "AI Commands"
@@ -2031,7 +1973,7 @@ or don't if it uses a custom topopen overlay
 /mob/living/silicon/ai/proc/toggle_alerts_verb()
 	set category = "AI Commands"
 	set name = "Toggle Alerts"
-	set desc = "Toggle alert messages in the game window. You can always check them with 'Show Alerts'."
+	set desc = "Toggle alert messages in the game window. You can always check them with 'Show Alert Minimap'."
 
 	var/mob/message_mob = src.get_message_mob()
 	if (!src || !message_mob.client || isdead(src))

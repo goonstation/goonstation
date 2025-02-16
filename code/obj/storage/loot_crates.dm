@@ -72,7 +72,8 @@
 		/obj/item/clothing/shoes/jetpack = 20,\
 		/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider = 20, \
 		/obj/item/gun/kinetic/foamdartshotgun = 20, \
-		/obj/item/device/speech_pro = 20
+		/obj/item/device/speech_pro = 20, \
+		/obj/item/shipcomponent/secondary_system/trailblazer = 20
 	)
 
 var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_manager

@@ -1348,7 +1348,7 @@
 	proc/split(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
-		var/list/converted = params2list(input.signal)
+		var/list/converted = params2complexlist(input.signal)
 		if(length(converted))
 			if(triggerSignal in converted)
 				input.signal = converted[triggerSignal]
@@ -1924,9 +1924,10 @@
 		inp = clamp(inp, 1, buffer_max_size)
 		buffer_size = inp
 		tooltip_rebuild = 1
+		buffer.len = 0
+		ring_reader = 1
+		ring_writer = 1
 		boutput(user,"You set the buffer size to [inp]")
-		qdel(buffer)
-		buffer = list()
 
 	proc/toggleDefault(obj/item/W as obj, mob/user as mob)
 		changesig = !changesig
@@ -2161,7 +2162,7 @@
 	proc/send(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
-		var/list/converted = params2list(input.signal)
+		var/list/converted = params2complexlist(input.signal)
 		if(!length(converted) || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 
 		var/datum/signal/sendsig = get_free_signal()

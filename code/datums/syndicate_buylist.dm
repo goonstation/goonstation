@@ -1156,6 +1156,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	desc = "A signal flaregun for emergency use. Or for setting jerks on fire"
 	br_allowed = TRUE
 
+/datum/syndicate_buylist/traitor/rifle
+	name = "Old Hunting Rifle"
+	items = list(/obj/item/gun/kinetic/hunting_rifle)
+	cost = 7
+	job = list("Pest Control Specialist")
+	desc = "An old hunting rifle, comes with only four bullets. Use them wisely."
+	can_buy = UPLINK_TRAITOR
+
 /datum/syndicate_buylist/surplus/rifle
 	name = "Old Hunting Rifle"
 	items = list(/obj/item/gun/kinetic/hunting_rifle)
@@ -1309,7 +1317,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 /datum/syndicate_buylist/commander/deployment_pods
 	name = "Rapid Deployment Remote"
 	items = list(/obj/item/device/deployment_remote, /obj/item/paper/deployment_info)
-	cost = 4
+	cost = 2
 	desc = "A handheld remote allowing you, your team, and the nuclear device to be sent in anywhere at a moment's notice!"
 	category = "Main"
 

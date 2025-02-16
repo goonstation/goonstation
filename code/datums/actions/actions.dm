@@ -470,7 +470,7 @@
 			CRASH("icon state set for action bar, but no icon was set")
 		if (end_message)
 			src.end_message = end_message
-		if (interrupt_flags)
+		if (interrupt_flags != null)
 			src.interrupt_flags = interrupt_flags
 		//generate a id
 		if (src.proc_path)
@@ -1427,6 +1427,9 @@
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		var/mob/M = owner
+		M.losebreath++ // ♪ give a little bit of your life to me ♪
+		M.emote("gasp")
 
 		target.take_oxygen_deprivation(-15)
 		target.losebreath = 0
@@ -2001,6 +2004,7 @@
 		else
 			hand_icon_state = "[hand_icon]_hold_r"
 			src.pixel_x_offset = -src.pixel_x_offset
+			src.pixel_x_hand_offset = -src.pixel_x_hand_offset
 
 		var/image/overlay = src.item.SafeGetOverlayImage("showoff_overlay", src.item.icon, src.item.icon_state, MOB_LAYER + 0.1, src.pixel_x_offset, src.pixel_y_offset)
 		var/image/hand_overlay = src.item.SafeGetOverlayImage("showoff_hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, src.pixel_x_hand_offset, src.pixel_y_hand_offset, color=user.get_fingertip_color())

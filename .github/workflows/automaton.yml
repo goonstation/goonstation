@@ -32,6 +32,7 @@ jobs:
             "SPACE_PREFAB",
             "UNDERWATER_PREFAB",
             "RANDOM_ROOMS",
+            "RP_MODE",
             "FULL",
           ]
         compiletype: ["default"]
@@ -77,7 +78,7 @@ jobs:
           tools/ci/install_rust_g.sh
 
       - name: Compile map
-        if: "matrix.map != 'SPACE_PREFAB' && matrix.map != 'UNDERWATER_PREFAB' && matrix.map != 'FULL'"
+        if: "matrix.map != 'SPACE_PREFAB' && matrix.map != 'UNDERWATER_PREFAB' && matrix.map != 'RANDOM_ROOMS' && matrix.map != 'RP_MODE' && matrix.map != 'FULL'"
         run: |
           tools/ci/dm.sh -DCIBUILD -DMAP_OVERRIDE_${{ matrix.map}} -DCI_RUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
@@ -95,6 +96,11 @@ jobs:
         if: "matrix.map == 'RANDOM_ROOMS'"
         run: |
           tools/ci/dm.sh -DCIBUILD -DRANDOM_ROOM_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
+
+      - name: Compile with RP_MODE
+        if: "matrix.map == 'RP_MODE'"
+        run: |
+          tools/ci/dm.sh -DCIBUILD -DCI_RUNTIME_CHECKING -DRP_MODE goonstation.dme
 
       - name: Compile with full pre-round setup
         if: "matrix.map == 'FULL'"
@@ -126,6 +132,8 @@ jobs:
             "ATLAS",
             "SPACE_PREFAB",
             "UNDERWATER_PREFAB",
+            "RANDOM_ROOMS",
+            "RP_MODE",
             "FULL",
           ]
         compiletype: ["default"]
@@ -175,7 +183,7 @@ jobs:
           tools/ci/install_rust_g.sh
 
       - name: Compile map
-        if: "matrix.map != 'SPACE_PREFAB' && matrix.map != 'UNDERWATER_PREFAB' && matrix.map != 'FULL'"
+        if: "matrix.map != 'SPACE_PREFAB' && matrix.map != 'UNDERWATER_PREFAB' && matrix.map != 'RANDOM_ROOMS' && matrix.map != 'RP_MODE' && matrix.map != 'FULL'"
         run: |
           tools/ci/dm.sh -DCIBUILD -DMAP_OVERRIDE_${{ matrix.map}} -DCI_RUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
@@ -188,6 +196,16 @@ jobs:
         if: "matrix.map == 'UNDERWATER_PREFAB'"
         run: |
           tools/ci/dm.sh -DCIBUILD -DUNDERWATER_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
+
+      - name: Compile random rooms
+        if: "matrix.map == 'RANDOM_ROOMS'"
+        run: |
+          tools/ci/dm.sh -DCIBUILD -DRANDOM_ROOM_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
+
+      - name: Compile with RP_MODE
+        if: "matrix.map == 'RP_MODE'"
+        run: |
+          tools/ci/dm.sh -DCIBUILD -DCI_RUNTIME_CHECKING -DRP_MODE goonstation.dme
 
       - name: Compile with full pre-round setup
         if: "matrix.map == 'FULL'"

@@ -5,6 +5,7 @@
 	icon_state = "hpd-place"
 	flags = TABLEPASS | CONDUCT
 	inventory_counter_enabled = 1
+	var/department_postfix = null //used for alternate colour HPDs
 	var/dispenser_being_used = FALSE
 	var/dispenser_delay = 5 DECI SECONDS
 	var/static/list/atmospipesforcreation = null
@@ -40,9 +41,9 @@
 
 /obj/item/places_pipes/update_icon(...)
 	if (src.destroying)
-		src.icon_state = "hpd-destroy"
+		src.icon_state = "hpd-destroy" + department_postfix
 	else
-		src.icon_state = "hpd-place"
+		src.icon_state = "hpd-place" + department_postfix
 
 	var/fullness = round(src.resources/src.max_resources * 100, 25)
 	if (fullness <= 0)
@@ -430,3 +431,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/binary)
 		path = /obj/machinery/atmospherics/binary/valve/digital
 		icon_state = "digitalvalve"
 		desc = "A digital valve that can be controlled by silicons or by hitting it with a wrench."
+
+/obj/item/places_pipes/research
+	icon_state = "hpd-place-r"
+	department_postfix = "-r"

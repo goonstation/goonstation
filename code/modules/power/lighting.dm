@@ -30,6 +30,7 @@ TYPEINFO(/obj/item/light_parts)
 	var/light_type = /obj/item/light/tube
 	var/fitting = "tube"
 	var/install_type = INSTALL_WALL
+	var/has_bulb = TRUE
 
 	New()
 		..()
@@ -37,8 +38,11 @@ TYPEINFO(/obj/item/light_parts)
 
 	update_icon()
 		..()
-		var/image/light_image = SafeGetOverlayImage("light", src.icon, "[fitting]-light")
-		src.AddOverlays(light_image, "light")
+		if (src.has_bulb)
+			var/image/light_image = SafeGetOverlayImage("light", src.icon, "[fitting]-light")
+			src.AddOverlays(light_image, "light")
+			return
+		src.ClearSpecificOverlays("light")
 
 
 // For metal sheets. Can't easily change an item's vars the way it's set up (Convair880).
@@ -65,6 +69,8 @@ TYPEINFO(/obj/item/light_parts)
 	installed_icon_state = target.icon_state
 	installed_base_state = target.base_state
 	light_type = target.light_type
+	if (!target.inserted_lamp)
+		has_bulb = FALSE
 	fixture_type = target.type
 	fitting = target.fitting
 	if (fitting == "tube")
@@ -131,7 +137,10 @@ TYPEINFO(/obj/item/light_parts)
 	newlight.icon_state = src.installed_icon_state
 	newlight.base_state = src.installed_base_state
 	newlight.fitting = src.fitting
-	newlight.status = LIGHT_EMPTY
+	if (!src.has_bulb)
+		newlight.current_lamp.light_status = LIGHT_EMPTY
+		newlight.inserted_lamp = null
+		newlight.update()
 	newlight.add_fingerprint(user)
 	// this does the exact pixel positioning and stuff for the walls to line up with sprites
 	if (src.install_type == INSTALL_WALL)
@@ -937,6 +946,11 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 	src.update_icon_state()
 	elecflash(src, radius = 1, power = 2, exclude_center = 0)
 	logTheThing(LOG_STATION, null, "Light '[name]' broke itself (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
+
+/obj/machinery/light/clamp_act(mob/clamper, obj/item/clamp)
+	if (current_lamp.light_status != LIGHT_BROKEN || current_lamp.light_status != LIGHT_EMPTY)
+		src.do_break()
+		return TRUE
 
 /obj/machinery/light/proc/do_burn_out()
 	var/original_brightness = src.light.brightness
