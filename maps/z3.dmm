@@ -4640,10 +4640,6 @@
 /obj/item/guardbot_core/old,
 /turf/simulated/floor,
 /area/buddyfactory)
-"auk" = (
-/obj/critter/gunbot/drone,
-/turf/space,
-/area/space)
 "aul" = (
 /obj/stool/chair/office,
 /turf/simulated/floor,
@@ -6361,7 +6357,7 @@
 	dir = 4;
 	color = "b4b4b4"
 	},
-/obj/critter/gunbot/drone/buzzdrone,
+/obj/gunbotdrone_spawner,
 /turf/space,
 /area/abandonedship)
 "aIt" = (
@@ -7245,7 +7241,7 @@
 /turf/space,
 /area/abandonedmedicalship)
 "aLt" = (
-/obj/critter/gunbot/drone/buzzdrone,
+/obj/gunbotdrone_spawner,
 /turf/space,
 /area/space)
 "aLu" = (
@@ -7393,7 +7389,7 @@
 	icon_state = "floattiles3"
 	},
 /obj/decal/cleanable/oil,
-/obj/critter/gunbot/drone/buzzdrone,
+/obj/gunbotdrone_spawner,
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedship)
 "aLS" = (
@@ -8772,7 +8768,7 @@
 /area/space)
 "aQf" = (
 /obj/decal/cleanable/molten_item,
-/obj/critter/gunbot/drone/buzzdrone,
+/obj/gunbotdrone_spawner,
 /turf/simulated/floor/airless/plating/scorched,
 /area/space)
 "aQg" = (
@@ -14608,18 +14604,6 @@
 	icon_state = "floor3"
 	},
 /area/salyut)
-"bkx" = (
-/obj/critter/gunbot/drone/buzzdrone{
-	wanderer = 0
-	},
-/turf/space,
-/area/space)
-"bkz" = (
-/obj/critter/gunbot/drone{
-	wanderer = 0
-	},
-/turf/space,
-/area/space)
 "bkA" = (
 /obj/machinery/bathtub,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
@@ -14996,9 +14980,7 @@
 /area/space)
 "blN" = (
 /obj/item/raw_material/rock,
-/obj/critter/gunbot/drone/buzzdrone{
-	wanderer = 0
-	},
+/obj/gunbotdrone_spawner,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/abandonedship)
 "blP" = (
@@ -15130,7 +15112,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bmJ" = (
-/obj/critter/gunbot/drone/buzzdrone,
+/obj/gunbotdrone_spawner,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bmK" = (
@@ -18022,10 +18004,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/tug)
-"iIc" = (
-/obj/critter/gunbot/drone/heavydrone,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "iMD" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -38876,7 +38854,7 @@ aaa
 aaa
 aaz
 aac
-iIc
+bmJ
 aaa
 aMF
 aaa
@@ -43077,7 +43055,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+aLt
 aaa
 aaa
 aaa
@@ -45777,7 +45755,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+aLt
 aaa
 aaa
 aaa
@@ -45840,7 +45818,7 @@ aaz
 aaa
 aaa
 aaa
-bkx
+aLt
 aKi
 aao
 aaa
@@ -46411,7 +46389,7 @@ aNm
 aaa
 aaa
 aaa
-aaP
+aLt
 aMF
 aaa
 aaa
@@ -47447,7 +47425,7 @@ aaa
 aax
 aaF
 aaa
-aaP
+aLt
 aal
 gaf
 acL
@@ -51227,7 +51205,7 @@ aaa
 aaa
 aaa
 aaa
-aaP
+aLt
 aaa
 aaa
 aaa
@@ -52812,7 +52790,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+aLt
 aaa
 aaa
 aaa
@@ -53684,7 +53662,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+aLt
 aaa
 aaa
 aaa
@@ -55731,7 +55709,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+aLt
 aaa
 aaa
 aaa
@@ -58267,7 +58245,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+aLt
 aaa
 aaa
 aaa
@@ -58787,7 +58765,7 @@ aaa
 aaa
 aaa
 aaa
-aaP
+aLt
 aaa
 aaa
 aaa
@@ -60594,7 +60572,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+aLt
 aaa
 aaa
 aaa
@@ -65075,7 +65053,7 @@ aaa
 aaa
 aaa
 aaa
-bkz
+aLt
 aaa
 aaa
 aaa
@@ -65709,7 +65687,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+aLt
 aaa
 aaa
 aaa
@@ -65984,7 +65962,7 @@ aaa
 aaa
 aaa
 aaa
-bkx
+aLt
 aaa
 aaa
 aaa
@@ -71118,7 +71096,7 @@ asP
 nYg
 aAj
 aaa
-bkx
+aLt
 aaa
 aaa
 aaa
@@ -75991,7 +75969,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+aLt
 aaa
 aaa
 aaa
@@ -78488,7 +78466,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+aLt
 aaa
 aaa
 aaa
