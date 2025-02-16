@@ -56,6 +56,12 @@ ABSTRACT_TYPE(/datum/minimap)
 
 /datum/minimap/disposing()
 	STOP_TRACKING
+	// cleanup reference loops
+	minimap_holder = null
+	minimap_render = null
+	map = null
+	for (var/idx in minimap_markers)
+		qdel(minimap_markers[idx])
 	. = ..()
 
 /// Initialises the raw minimap icons and minimap render.
