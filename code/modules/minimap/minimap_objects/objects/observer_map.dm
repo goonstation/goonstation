@@ -21,7 +21,7 @@
 	if (!target.mind)
 		return
 	var/datum/job/J = find_job_in_controller_by_string(target.mind.assigned_role)
-
+	var/job_dot
 	if (istype(J, /datum/job/civilian))
 		job_dot = "civilian_dot"
 	else if (istype(J, /datum/job/research))
