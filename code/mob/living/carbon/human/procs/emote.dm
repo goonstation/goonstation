@@ -1100,7 +1100,7 @@
 					else
 						message = "<B>[src]</B> flexes [his_or_her(src)] muscles."
 						maptext_out = "<I>flexes [his_or_her(src)] muscles</I>"
-					if(src.emote_check(voluntary))
+					if(voluntary)
 						for (var/obj/item/C as anything in src.get_equipped_items())
 							if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
 								var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
@@ -1643,7 +1643,7 @@
 				m_type = 1
 
 			if ("wink")
-				if (!src.restrained() && src.emote_check(voluntary))
+				if (!src.restrained() && voluntary)
 					for (var/obj/item/C as anything in src.get_equipped_items())
 						if ((locate(/obj/item/gun/kinetic/derringer) in C) != null)
 							var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
@@ -1890,9 +1890,6 @@
 							message = SPAN_ALERT("<B>[src]</b> falls over, panting and wheezing.")
 							src.changeStatus("knockdown", 2 SECONDS)
 							src.set_stamina(min(1, src.stamina))
-							src.emote_allowed = 0
-							SPAWN(1 SECOND)
-								src.emote_allowed = 1
 							goto showmessage
 
 

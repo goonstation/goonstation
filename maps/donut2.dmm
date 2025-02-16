@@ -4073,6 +4073,12 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"awS" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/courtroom)
 "awY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10665,7 +10671,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /turf/simulated/floor/carpet{
@@ -18728,6 +18734,9 @@
 	},
 /obj/mapping_helper/access/head_of_personnel,
 /obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -23015,6 +23024,9 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "gpk" = (
@@ -25705,6 +25717,9 @@
 	},
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
@@ -29212,6 +29227,12 @@
 	},
 /turf/simulated/floor/carpet/purple/standard/innercorner,
 /area/station/crew_quarters/cafeteria)
+"keY" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/courtroom)
 "kfa" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -36540,6 +36561,9 @@
 	},
 /area/station/janitor/supply)
 "opL" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/green,
 /area/station/crew_quarters/courtroom)
 "opR" = (
@@ -38420,6 +38444,9 @@
 /area/station/engine/inner)
 "pqC" = (
 /obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "pqW" = (
@@ -46616,10 +46643,10 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/bank_data,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/computer3/generic/bank_data,
 /turf/simulated/floor,
 /area/station/bridge)
 "ubY" = (
@@ -47065,6 +47092,9 @@
 /area/station/science/gen_storage)
 "upD" = (
 /obj/machinery/firealarm/south,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -49848,6 +49878,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/heads)
+"vTy" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/courtroom)
 "vTQ" = (
 /obj/cable/orange{
 	icon_state = "1-4"
@@ -49884,9 +49920,21 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "vVq" = (
-/obj/machinery/computer/bank_data,
 /obj/machinery/light/incandescent,
+/obj/machinery/computer3/generic/bank_data,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
+/area/station/crew_quarters/courtroom)
+"vVz" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
 /area/station/crew_quarters/courtroom)
 "vVR" = (
 /obj/cable{
@@ -50938,6 +50986,9 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/researchshuttle)
 "wFj" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/south,
 /area/station/crew_quarters/courtroom)
 "wFA" = (
@@ -51328,6 +51379,9 @@
 "wUk" = (
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
@@ -52926,7 +52980,7 @@
 /obj/cable/blue{
 	icon_state = "0-6"
 	},
-/obj/machinery/computer/bank_data,
+/obj/machinery/computer3/generic/bank_data,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "xXa" = (
@@ -91714,7 +91768,7 @@ ril
 sKv
 bre
 fGI
-bre
+awS
 bre
 btY
 gMO
@@ -92016,7 +92070,7 @@ gLX
 bjC
 pqW
 bre
-bre
+awS
 bzM
 btY
 gMO
@@ -92318,8 +92372,8 @@ xHH
 bjC
 xce
 bre
-bre
-bre
+vTy
+keY
 btY
 tRj
 bwh
@@ -92923,7 +92977,7 @@ bjC
 bqm
 bpS
 bsh
-brh
+vVz
 btZ
 bwk
 bwk

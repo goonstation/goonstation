@@ -28,6 +28,7 @@
 	src.parent_tree.GetOutputByID(SPEECH_OUTPUT_EQUIPPED)?.process(radio_message)
 
 	message.flags |= SAYFLAG_WHISPER
+	message.heard_range = WHISPER_EAVESDROPPING_RANGE
 	message.say_sound = 'sound/misc/talk/radio.ogg'
 
 /datum/speech_module/prefix/postmodifier/radio/get_prefix_choices()

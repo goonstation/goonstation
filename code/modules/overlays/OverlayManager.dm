@@ -534,3 +534,46 @@
 
 		return ..()
 
+/datum/overlayComposition/silicon_rad_light
+	New()
+		var/datum/overlayDefinition/interference = new()
+		interference.d_icon = 'icons/effects/overlays/silicon_rad_light.dmi'
+		interference.d_icon_state = "interference"
+		interference.d_mouse_opacity = FALSE
+		interference.d_color = "#999999"
+		interference.d_alpha = 100
+		definitions.Add(interference)
+		return ..()
+
+/datum/overlayComposition/silicon_rad_medium
+	New()
+		var/datum/overlayDefinition/interference = new()
+		interference.d_icon = 'icons/effects/overlays/silicon_rad_medium.dmi'
+		interference.d_icon_state = "interference"
+		interference.d_mouse_opacity = FALSE
+		interference.d_color = "#777777"
+		interference.d_alpha = 150
+		definitions.Add(interference)
+		return ..()
+
+/datum/overlayComposition/silicon_rad_heavy
+	New()
+		var/datum/overlayDefinition/interference = new()
+		interference.d_icon = 'icons/effects/overlays/silicon_rad_heavy.dmi'
+		interference.d_icon_state = "interference"
+		interference.d_mouse_opacity = FALSE
+		interference.d_color = "#555555"
+		interference.d_alpha = 200
+		definitions.Add(interference)
+		return ..()
+
+/datum/overlayComposition/silicon_rad_extreme
+	New()
+		var/datum/overlayDefinition/interference = new()
+		interference.d_icon = 'icons/effects/overlays/silicon_rad_extreme.dmi'
+		interference.d_icon_state = "interference"
+		interference.d_mouse_opacity = FALSE
+		interference.d_color = "#999999"
+		interference.d_alpha = 150
+		definitions.Add(interference)
+		return ..()

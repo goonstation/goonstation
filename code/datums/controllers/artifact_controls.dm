@@ -224,6 +224,7 @@ var/datum/artifact_controller/artifact_controls
 	var/scramblechance = 10 //probability to have "fake" artifact with altered appearance
 	var/list/activation_sounds = list()
 	var/list/instrument_sounds = list()
+	var/list/lightswitch_sounds = list('sound/misc/lightswitch.ogg')
 	var/list/fault_types = list("all")
 	var/list/adjectives = list("strange","unusual","odd","curious","bizarre","weird","abnormal","peculiar")
 	var/list/nouns_large = list("object","machine","artifact","contraption","structure","edifice")
@@ -319,6 +320,7 @@ var/datum/artifact_controller/artifact_controls
 		'sound/musical_instruments/artifact/Artifact_Martian_2.ogg',
 		'sound/musical_instruments/artifact/Artifact_Martian_3.ogg',
 		'sound/musical_instruments/artifact/Artifact_Martian_4.ogg')
+	lightswitch_sounds = list('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Slimy_Hit_4.ogg', 'sound/impact_sounds/Slimy_Hit_3.ogg')
 	impact_reaction_one = 1
 	impact_reaction_two = 0
 	heat_reaction_one = 0.99
@@ -402,6 +404,7 @@ var/datum/artifact_controller/artifact_controls
 		'sound/musical_instruments/artifact/Artifact_Wizard_2.ogg',
 		'sound/musical_instruments/artifact/Artifact_Wizard_3.ogg',
 		'sound/musical_instruments/artifact/Artifact_Wizard_4.ogg')
+	lightswitch_sounds = list('sound/effects/mag_forcewall.ogg', 'sound/effects/MagShieldUp.ogg', 'sound/effects/MagShieldDown.ogg')
 	impact_reaction_one = 8
 	impact_reaction_two = 6
 	heat_reaction_one = 0.75

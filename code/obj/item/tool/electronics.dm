@@ -646,7 +646,7 @@
 		if(world.time - boot_time <= 3 SECONDS)
 			for (var/datum/electronics/scanned_item/O in originalData.scanned_items)
 				ruck_controls.scan_in(O.name, O.item_type, O.mats, O.locked) //Copy the database on digest so we never waste the effort
-			updateDialog()
+			tgui_process.update_uis(src)
 			return
 
 		return
@@ -671,7 +671,7 @@
 			return
 	var/strippedName = scanFile.scannedName
 	ruck_controls.scan_in(strippedName, scanFile.scannedPath, scanFile.scannedMats)
-	updateDialog()
+	tgui_process.update_uis(src)
 
 	if(src.net_id != host_ruck || command != "add") //Only the host sends PDA messages, and we don't send them for internal transfer
 		return
@@ -698,7 +698,7 @@
 		for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 			if (targetitem == O.name)
 				O.locked = targetlock
-				updateDialog()
+				tgui_process.update_uis(src)
 		return
 
 	if(signal.encryption)
@@ -805,97 +805,100 @@
 		else
 			boutput(user, SPAN_ALERT("No new items entered into kit."))
 
+		tgui_process.update_uis(src)
+
 	else
 		..()
 
 /obj/machinery/rkit/attack_hand(mob/user)
-	src.add_fingerprint(user)
-	var/dat
-	var/hide_allowed = src.allowed(user)
-	dat = "<b>Ruckingenur Kit</b><HR>"
+	src.ui_interact(user)
 
-	dat += "<b>Scanned Items:</b><br>"
-	for(var/datum/electronics/scanned_item/S in ruck_controls.scanned_items)
-		dat += "<u>[S.name]</u><small> "
-		//dat += "<A href='?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
-		if (S.item_mats && src.olde)
-			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
-		else if (S.blueprint)
-			if(!S.locked || hide_allowed || src.olde)
-				dat += " * <A href='?src=\ref[src];op=\ref[S];tp=blueprint'>Blueprint</A>"
-			else
-				dat += " * Blueprint Disabled"
-		if(hide_allowed)
-			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=lock'>[S.locked ? "Locked" : "Unlocked"]</A>"
-		dat += "</small><br>"
-	dat += "<br>"
+/obj/machinery/rkit/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "RuckingenurKit", src.name)
+		ui.open()
 
-	dat += "<HR>"
+/obj/machinery/rkit/ui_data(mob/user)
+	var/list/scanned_items = list()
 
-	src.add_dialog(user)
-	user.Browse("<HEAD><TITLE>Ruckingenur Kit Control Panel</TITLE></HEAD><TT>[dat]</TT>", "window=rkit")
-	onclose(user, "rkit")
+	for (var/datum/electronics/scanned_item/item as anything in ruck_controls.scanned_items)
+		var/atom/A = item.item_type
+		scanned_items.Add(list(list(
+			name = item.name,
+			description = initial(A.desc),
+			has_item_mats = !!item.item_mats,
+			blueprint_available = !!item.blueprint,
+			locked = item.locked,
+			imagePath = getItemIcon(item.item_type, C = user.client),
+			ref = ref(item),
+		)))
 
-/obj/machinery/rkit/Topic(href, href_list)
+	. = list(
+		hide_allowed = src.allowed(user),
+		scanned_items = scanned_items,
+		legacyElectronicFrameMode = src.olde
+	)
+
+/obj/machinery/rkit/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
 	if (usr.stat)
 		return
-	if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
-		src.add_dialog(usr)
+	if (!(in_interact_range(src, usr) && istype(src.loc, /turf)) && !(issilicon(usr)))
+		return
 
-		switch(href_list["tp"])
+	switch(action)
 
-			if("done")
-				if(href_list["op"])
-					var/datum/electronics/scanned_item/O = locate(href_list["op"])
-					if(istype(O,/datum/electronics/scanned_item/))
-						if (!(O.item_mats && src.olde))
-							return
-						var/obj/item/electronics/frame/F = new/obj/item/electronics/frame(src.loc)
-						F.name = "[O.name]-frame"
-						F.store_type = O.item_type
-						F.needed_parts = O.item_mats
+		if("done")
+			var/datum/electronics/scanned_item/O = locate(params["op"])
+			if(istype(O,/datum/electronics/scanned_item/))
+				if (!(O.item_mats && src.olde))
+					return
+				var/obj/item/electronics/frame/F = new/obj/item/electronics/frame(src.loc)
+				F.name = "[O.name]-frame"
+				F.store_type = O.item_type
+				F.needed_parts = O.item_mats
+				. = TRUE
 
-			if("blueprint")
-				if(href_list["op"])
-					if (ON_COOLDOWN(src,"anti_print_spam", 2.5 SECONDS))
-						usr.show_text("[src] isn't done with the previous print job.", "red")
-						return
-					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
-					if (istype(O.blueprint, /datum/manufacture/mechanics/))
-						if (!(!O.locked || src.allowed(usr) || src.olde))
-							return
-						logTheThing(LOG_STATION, usr, "printed manufactuerer blueprint for [O.item_type] from [src]")
-						usr.show_text("Print job started...", "blue")
-						var/datum/manufacture/mechanics/M = O.blueprint
-						playsound(src.loc, 'sound/machines/printer_thermal.ogg', 25, 1)
-						SPAWN(2.5 SECONDS)
-							if (src)
-								new /obj/item/paper/manufacturer_blueprint(src.loc, M)
-			if("lock")
-				if(href_list["op"])
-					if (!src.allowed(usr))
-						return
-					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
-					O.locked = !O.locked
-					logTheThing(LOG_STATION, usr, "[O.locked ? "" : "un"]locked rkit blueprint for [O.item_type]")
-					for (var/datum/electronics/scanned_item/OP in ruck_controls.scanned_items) //Lock items with the same name, that's how LOCK works
-						if(O.name == OP.name)
-							OP.locked = O.locked
-					updateDialog()
-					var/datum/signal/newsignal = get_free_signal()
-					newsignal.source = src
-					newsignal.data["address_tag"] = "TRANSRKIT"
-					newsignal.data["acc_code"] = netpass_heads
-					newsignal.data["LOCK"] = O.locked
-					newsignal.data["DATA"] = O.name
-					newsignal.data["sender"] = src.net_id
-					newsignal.encryption = "ERR_12845_NT_SECURE_PACKET:"
-					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
+		if("blueprint")
+			if (ON_COOLDOWN(src,"anti_print_spam", 2.5 SECONDS))
+				usr.show_text("[src] isn't done with the previous print job.", "red")
+				return
+			var/datum/electronics/scanned_item/O = locate(params["op"]) in ruck_controls.scanned_items
+			if (istype(O.blueprint, /datum/manufacture/mechanics/))
+				if (!(!O.locked || src.allowed(usr) || src.olde))
+					return
+				logTheThing(LOG_STATION, usr, "printed manufactuerer blueprint for [O.item_type] from [src]")
+				usr.show_text("Print job started...", "blue")
+				var/datum/manufacture/mechanics/M = O.blueprint
+				playsound(src.loc, 'sound/machines/printer_thermal.ogg', 25, 1)
+				SPAWN(2.5 SECONDS)
+					if (src)
+						new /obj/item/paper/manufacturer_blueprint(src.loc, M)
+				. = TRUE
+		if("lock")
+			if (!src.allowed(usr))
+				return
+			var/datum/electronics/scanned_item/O = locate(params["op"]) in ruck_controls.scanned_items
+			O.locked = !O.locked
+			logTheThing(LOG_STATION, usr, "[O.locked ? "" : "un"]locked rkit blueprint for [O.item_type]")
+			for (var/datum/electronics/scanned_item/OP in ruck_controls.scanned_items) //Lock items with the same name, that's how LOCK works
+				if(O.name == OP.name)
+					OP.locked = O.locked
 
-	else
-		usr.Browse(null, "window=rkit")
-		src.remove_dialog(usr)
-	return
+			var/datum/signal/newsignal = get_free_signal()
+			newsignal.source = src
+			newsignal.data["address_tag"] = "TRANSRKIT"
+			newsignal.data["acc_code"] = netpass_heads
+			newsignal.data["LOCK"] = O.locked
+			newsignal.data["DATA"] = O.name
+			newsignal.data["sender"] = src.net_id
+			newsignal.encryption = "ERR_12845_NT_SECURE_PACKET:"
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
+			. = TRUE
 
 /obj/item/deconstructor
 	name = "deconstruction device"

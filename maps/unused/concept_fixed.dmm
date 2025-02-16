@@ -30045,7 +30045,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/bank_data,
+/obj/machinery/computer3/generic/bank_data,
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
 	icon_state = "tube1";

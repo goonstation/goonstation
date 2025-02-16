@@ -86,9 +86,6 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/atm
 	name = "circuit board (ATM)"
 	computertype = /obj/machinery/computer/ATM
-/obj/item/circuitboard/bank_data
-	name = "circuit board (bank records)"
-	computertype = /obj/machinery/computer/bank_data
 /obj/item/circuitboard/robotics
 	name = "circuit board (robotics control)"
 	computertype = /obj/machinery/computer/robotics

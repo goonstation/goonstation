@@ -185,6 +185,9 @@
 
 		..()
 
+		if (W.force)
+			ON_COOLDOWN(src, "in_combat", 5 SECONDS)
+
 		attack_particle(user,src)
 		playsound(src.loc, W.hitsound, 50, 1, -1)
 		hit_twitch(src)
@@ -460,6 +463,7 @@
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		. = 'sound/impact_sounds/Metal_Clang_3.ogg'
+		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
 		if (isitem(AM))
 			var/obj/item/I = AM
 			switch(I.hit_type)
@@ -481,6 +485,8 @@
 		//Wire: fix for Cannot read null.ks_ratio below
 		if (!P.proj_data)
 			return
+
+		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
 
 		log_shot(P, src)
 
@@ -540,6 +546,7 @@
 		*/
 
 	blob_act(var/power)
+		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
 		src.health -= power * 3
 		checkhealth()
 
@@ -589,10 +596,12 @@
 					S.disrupted = FALSE
 
 	emp_act()
+		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
 		src.disrupt(10)
 		return
 
 	ex_act(severity)
+		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
 		if (sec_system)
 			if (sec_system.type == /obj/item/shipcomponent/secondary_system/crash)
 				if (sec_system:crashable)
@@ -618,6 +627,8 @@
 
 	bump(var/atom/target)
 		if (get_move_velocity_magnitude() > 5)
+			ON_COOLDOWN(src, "in_combat", 5 SECONDS)
+
 			var/power = get_move_velocity_magnitude()
 
 			src.health -= min(power * ram_self_damage_multiplier,10)
@@ -694,6 +705,7 @@
 		return
 
 	meteorhit(var/obj/O as obj)
+		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
 		src.health -= src.calculate_shielded_dmg(50)
 		checkhealth()
 
@@ -741,7 +753,7 @@
 	process(mult)
 		if(sec_system)
 			if(sec_system.active)
-				sec_system.run_component()
+				sec_system.run_component(mult)
 			if(src.engine && engine.active)
 				var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
 				var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)

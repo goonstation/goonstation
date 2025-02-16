@@ -806,8 +806,8 @@
 
 	if(pickup && !src.r_hand)
 		src.swap_hand(0)
-		if(src.put_in_hand_or_drop(pickup))
-			src.set_clothing_icon_dirty()
+		pickup.Attackhand(src)
+		src.set_clothing_icon_dirty()
 
 
 /mob/living/carbon/human/proc/ai_avoid(var/turf/T)

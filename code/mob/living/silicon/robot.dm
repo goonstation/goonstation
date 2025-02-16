@@ -566,8 +566,6 @@ TYPEINFO(/mob/living/silicon/robot)
 
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
-					if (!(src.client && src.client.holder)) src.emote_allowed = 0
-					if (isdead(src)) src.emote_allowed = 0
 					if ((src.restrained()) && (!src.getStatusDuration("knockdown")))
 						message = "<B>[src]</B> malfunctions!"
 						src.TakeDamage("head", 2, 4)
@@ -667,8 +665,6 @@ TYPEINFO(/mob/living/silicon/robot)
 	#ifdef DATALOGGER
 					game_stats.Increment("farts")
 	#endif
-					SPAWN(1 SECOND)
-						src.emote_allowed = 1
 			else
 				if (voluntary) src.show_text("Invalid Emote: [act]")
 				return

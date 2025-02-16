@@ -159,10 +159,6 @@
 /// When the door was bumped open, send the movable that opened it
 #define COMSIG_DOOR_OPENED "door_opened"
 
-// ---- Player Piano Automatic Linking ----
-
-#define COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE "is_player_piano_auto_linker_active"
-
 // ---- Sniper Scope integration with other gun components ----
 /// Sent to an item when its sniper_scope components scope is toggled, TRUE if on and FALSE if off
 #define COMSIG_SCOPE_TOGGLED "sniper_scope_toggled"

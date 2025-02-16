@@ -175,58 +175,9 @@ TYPEINFO(/obj/player_piano)
 		else //just in case
 			return
 
-	mouse_drop(obj/player_piano/piano)
-		if (!istype(usr, /mob/living))
-			return
-		if (usr.stat)
-			return
-		if (!allowChange(usr))
-			boutput(usr, SPAN_ALERT("You can't link pianos without a multitool!"))
-			return
-		ENSURE_TYPE(piano)
-		if (!piano)
-			return
-		if (is_pulser_auto_linking(usr))
-			boutput(usr, SPAN_ALERT("You can't link pianos manually while auto-linking!"))
-			return
-		if (piano == src)
-			boutput(usr, SPAN_ALERT("You can't link a piano with itself!"))
-			return
-		if (piano.is_busy || src.is_busy)
-			boutput(usr, SPAN_ALERT("You can't link a busy piano!"))
-			return
-		if (piano.panel_exposed && panel_exposed)
-			usr.visible_message("[usr] links the pianos.", "You link the pianos!")
-			src.add_piano(piano)
-			piano.add_piano(src)
-
 	disposing() //just to clear up ANY funkiness
 		reset_piano(1)
 		..()
-
-	proc/allowChange(var/mob/M) //copypasted from mechanics code because why do something someone else already did better
-		if(hasvar(M, "l_hand") && ispulsingtool(M:l_hand)) return 1
-		if(hasvar(M, "r_hand") && ispulsingtool(M:r_hand)) return 1
-		if(hasvar(M, "module_states"))
-			for(var/atom/A in M:module_states)
-				if(ispulsingtool(A))
-					return 1
-		return 0
-
-	proc/is_pulser_auto_linking(var/mob/M)
-		if(ispulsingtool(M.l_hand) && SEND_SIGNAL(M.l_hand, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)) return TRUE
-		if(ispulsingtool(M.r_hand) && SEND_SIGNAL(M.r_hand, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)) return TRUE
-		if(istype(M, /mob/living/silicon/robot))
-			var/mob/living/silicon/robot/silicon_user = M
-			for(var/atom/A in silicon_user.module_states)
-				if(ispulsingtool(A) && SEND_SIGNAL(A, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE))
-					return TRUE
-		if(istype(M, /mob/living/silicon/hivebot))
-			var/mob/living/silicon/hivebot/silicon_user = M
-			for(var/atom/A in silicon_user.module_states)
-				if(ispulsingtool(A) && SEND_SIGNAL(A, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE))
-					return TRUE
-		return FALSE
 
 	proc/clean_input() //breaks our big input string into chunks
 		src.is_busy = 1

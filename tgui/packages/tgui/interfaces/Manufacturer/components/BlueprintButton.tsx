@@ -7,22 +7,13 @@
 
 import { BooleanLike } from 'common/react';
 import { memo, useCallback } from 'react';
-import {
-  Button,
-  Icon,
-  LabeledList,
-  Section,
-  Stack,
-  Tooltip,
-} from 'tgui-core/components';
+import { Button, LabeledList, Section } from 'tgui-core/components';
 import { round } from 'tgui-core/math';
 import { shallowDiffers } from 'tgui-core/react';
 
+import { ItemButton } from '../../../components/goonstation/ItemButton';
 import { truncate } from '../../../format';
-import { BlueprintButtonStyle, BlueprintMiniButtonStyle } from '../constant';
 import type { ManufacturableData } from '../type';
-import { ButtonWithBadge } from './ButtonWithBadge';
-import { CenteredText } from './CenteredText';
 
 const getBlueprintTime = (time, manufacturerSpeed) => {
   return round(time / 10 / manufacturerSpeed, 0.01);
@@ -126,75 +117,28 @@ export const BlueprintButtonView = (props: BlueprintButtonProps) => {
     : (blueprintData?.item_descriptions?.[0] ?? '');
 
   return (
-    <Stack style={{ display: BlueprintButtonStyle.Display }}>
-      <Stack.Item
-        ml={BlueprintButtonStyle.MarginX}
-        my={BlueprintButtonStyle.MarginY}
-      >
-        <ButtonWithBadge
-          width={BlueprintButtonStyle.Width}
-          height={BlueprintButtonStyle.Height}
-          key={blueprintData.name}
-          imagePath={blueprintData.img}
-          disabled={!hasPower || notProduceable}
-          onClick={handleVendProduct}
-        >
-          <CenteredText
-            height={BlueprintButtonStyle.Height}
-            text={
-              showSoftError
-                ? 'Call 1-800-IMCODER'
-                : truncate(blueprintData?.name ?? '', 40)
-            }
-          />
-        </ButtonWithBadge>
-      </Stack.Item>
-      <Stack.Item mr={BlueprintButtonStyle.MarginX}>
-        <Stack inline vertical my={BlueprintButtonStyle.MarginY}>
-          <Stack.Item mb={BlueprintMiniButtonStyle.Spacing}>
-            <Tooltip content={content_info}>
-              <Button
-                width={BlueprintMiniButtonStyle.Width}
-                height={
-                  (BlueprintButtonStyle.Height -
-                    BlueprintMiniButtonStyle.Spacing) /
-                  2
-                }
-                align="center"
-                disabled={canDelete ? false : !hasPower || notProduceable}
-                onClick={
-                  canDelete ? memoizedOnRemoveBlueprint : handleVendProduct
-                }
-                py={BlueprintMiniButtonStyle.IconSize / 2}
-              >
-                <Icon
-                  name={canDelete ? 'trash' : 'info'}
-                  size={BlueprintMiniButtonStyle.IconSize}
-                />
-              </Button>
-            </Tooltip>
-          </Stack.Item>
-          <Stack.Item mt={BlueprintMiniButtonStyle.Spacing}>
-            <Tooltip content={content_requirements}>
-              <Button
-                width={BlueprintMiniButtonStyle.Width}
-                height={
-                  (BlueprintButtonStyle.Height -
-                    BlueprintMiniButtonStyle.Spacing) /
-                  2
-                }
-                align="center"
-                disabled={!hasPower || notProduceable}
-                onClick={handleVendProduct}
-                py={BlueprintMiniButtonStyle.IconSize / 2}
-              >
-                <Icon name="gear" size={BlueprintMiniButtonStyle.IconSize} />
-              </Button>
-            </Tooltip>
-          </Stack.Item>
-        </Stack>
-      </Stack.Item>
-    </Stack>
+    <ItemButton
+      image={blueprintData.img}
+      disabled={!hasPower || notProduceable}
+      onMainButtonClick={handleVendProduct}
+      name={
+        showSoftError
+          ? 'Call 1-800-IMCODER'
+          : truncate(blueprintData?.name ?? '', 40)
+      }
+      sideButton1={{
+        icon: canDelete ? 'trash' : 'info',
+        tooltip: content_info,
+        disabled: canDelete ? false : !hasPower || notProduceable,
+        onClick: canDelete ? memoizedOnRemoveBlueprint : handleVendProduct,
+      }}
+      sideButton2={{
+        icon: 'gear',
+        tooltip: content_requirements,
+        disabled: !hasPower || notProduceable,
+        onClick: handleVendProduct,
+      }}
+    />
   );
 };
 

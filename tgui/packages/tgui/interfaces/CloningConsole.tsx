@@ -3,6 +3,7 @@
  * @copyright 2020
  * @author Original ThePotato97 (https://github.com/ThePotato97)
  * @author Changes Mordent (https://github.com/mordent-goonstation)
+ * @author Changes glowbold (https://github.com/pgmzeta)
  * @license ISC
  */
 
@@ -21,6 +22,7 @@ import {
   Tabs,
 } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend, useSharedState } from '../backend';
 import { HealthStat } from '../components/goonstation/HealthStat';
@@ -28,6 +30,7 @@ import { COLORS } from '../constants';
 import { Window } from '../layouts';
 
 interface CloningConsoleData {
+  allowDeadScan: BooleanLike;
   allowMindErasure;
   allowedToDelete;
   balance;
@@ -43,7 +46,9 @@ interface CloningConsoleData {
   message;
   mindWipe;
   occupantScanned;
+  podEfficient: BooleanLike[];
   podNames;
+  podSpeed: BooleanLike[];
   scannerGone;
   scannerLocked;
   scannerOccupied;
@@ -240,6 +245,7 @@ export const CloningConsole = () => {
 const Functions = () => {
   const { act, data } = useBackend<CloningConsoleData>();
   const {
+    allowDeadScan,
     allowMindErasure,
     disk,
     diskReadOnly,
@@ -272,6 +278,16 @@ const Functions = () => {
           </Button>
         </Box>
       </Section>
+      {!!allowDeadScan && (
+        <Section title="Necrosis Scanning Module">
+          <Box bold>Notice:</Box>
+          <Box>
+            Installation of the NecroScan II cloner upgrade module enables
+            scanning of rotted and skeletal remains. Extreme genetic degredation
+            is not covered by the NecroScan II cloner module.
+          </Box>
+        </Section>
+      )}
       {!!allowMindErasure && (
         <Section title="Criminal Rehabilitation Controls">
           <Box>
@@ -695,7 +711,7 @@ const Records = (props: RecordsProps) => {
 
 const Pods = () => {
   const { data } = useBackend<CloningConsoleData>();
-  const { completion, meatLevels, podNames } = data;
+  const { completion, meatLevels, podNames, podSpeed, podEfficient } = data;
 
   if (!meatLevels.length) {
     return (
@@ -738,6 +754,16 @@ const Pods = () => {
             }}
           />
         </LabeledList.Item>
+        {(!!podSpeed[i] || !!podEfficient[i]) && (
+          <LabeledList.Item label="Upgrades">
+            {[
+              podSpeed[i] && 'SpeedyClone2000',
+              podEfficient[i] && 'Recycling Unit',
+            ]
+              .filter((x) => x)
+              .join(', ')}
+          </LabeledList.Item>
+        )}
       </LabeledList>
     </Section>
   ));

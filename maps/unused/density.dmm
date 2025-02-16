@@ -2359,7 +2359,7 @@
 /turf/space,
 /area/space)
 "fY" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 4;
 	icon_state = "databank"
 	},

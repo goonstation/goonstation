@@ -22,4 +22,5 @@
 	src.parent_tree.GetOutputByID(SPEECH_OUTPUT_EQUIPPED)?.process(radio_message)
 
 	message.flags |= SAYFLAG_WHISPER
+	message.heard_range = WHISPER_EAVESDROPPING_RANGE
 	message.say_sound = 'sound/misc/talk/radio.ogg'

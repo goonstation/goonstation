@@ -565,7 +565,9 @@
 				return ..()
 			var/obj/item/stolen = pick(stealable_things)
 			consumer.drop_from_slot(stolen)
-			consumer.drop_from_slot(src)
+			if (ismob(src.loc))
+				var/mob/holder = src.loc
+				holder.drop_from_slot(src)
 			playsound(get_turf(consumer), /obj/item/crowbar::hitsound, 50, TRUE)
 			random_brute_damage(consumer, 5)
 			consumer.changeStatus("knockdown", 4 SECONDS)
