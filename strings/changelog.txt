@@ -1,4 +1,17 @@
 
+(t)sat feb 15 25
+(u)Amylizzle & Nerkson
+(p)21909
+(e)🎨📄|C-Sprites, A-UI
+(*)The reactor turbine has been made repairable. Also nerfed. Also buffed.
+(+)The default turbine settings are now a viable configuration.
+(+)Turbine blades and stator can now be replaced with new ones, with material properties.
+(+)A conductive material on the stator will boost power output.
+(+)A dense material on the turbine blade will increase its mass.
+(+)A hard material on the turbine blade will increase its durability.
+(+)Flow rate on the turbine is capped to 1000 L/S
+(+)The turbine will now decapitate you if you let it spin too fast for too long.
+(+)Turbine blade sprite by Nerkson.
 (t)fri feb 14 25
 (u)Bartimeus973
 (p)22280
