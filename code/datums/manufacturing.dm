@@ -3183,12 +3183,22 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	category = "Tool"
 
 
-/datum/manufacture/lateral_thrusters
+/datum/manufacture/pod/lateral_thrusters
 	name = "Lateral Thrusters"
 	item_requirements = list("metal_dense" = 20,
 							 "conductive" = 10,
 							 "energy" = 20)
-	item_outputs = list(/obj/item/shipcomponent/secondary_system/lateral_thrusters)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/thrusters/lateral)
+	create = 1
+	time = 12 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/afterburner
+	name = "Afterburner"
+	item_requirements = list("metal" = 10,
+							 "conductive" = 20,
+							 "energy" = 20)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/thrusters/afterburner)
 	create = 1
 	time = 12 SECONDS
 	category = "Tool"

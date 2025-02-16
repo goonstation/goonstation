@@ -371,9 +371,6 @@
 		/datum/manufacture/pod/armor_industrial,
 		/datum/manufacture/cargohold,
 		/datum/manufacture/storagehold,
-#ifndef UNDERWATER_MAP
-		/datum/manufacture/lateral_thrusters,
-#endif
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,
@@ -385,6 +382,10 @@
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
+#ifndef UNDERWATER_MAP
+		/datum/manufacture/pod/lateral_thrusters,
+#endif
+		/datum/manufacture/pod/afterburner,
 		/datum/manufacture/pod/light_shielding,
 		/datum/manufacture/pod/heavy_shielding,
 		/datum/manufacture/pod/auto_repair_kit,
