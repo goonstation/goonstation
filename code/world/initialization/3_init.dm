@@ -5,10 +5,6 @@
 	Z_LOG_DEBUG("World/Init", "init() - Lagcheck enabled")
 	lagcheck_enabled = 1
 
-#ifdef RP_MODE
-	ASSERT(FALSE) // >:(
-#endif
-
 	game_start_countdown = new()
 	UPDATE_TITLE_STATUS("Initializing world")
 
