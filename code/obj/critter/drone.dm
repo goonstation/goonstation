@@ -918,6 +918,22 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			name = "Battledrone Omega-[rand(1,10)]"
 			return
 
+/obj/gunbotdrone_spawner
+	name = "gunbot drone spawner"
+	icon = 'icons/mob/critter/robotic/drone/phaser.dmi'
+	icon_state = "drone_phaser"
+	var/static/list/possible_drones = list(/obj/critter/gunbot/drone = 90,
+										   /obj/critter/gunbot/drone/buzzdrone = 100,
+										   /obj/critter/gunbot/drone/heavydrone = 25,
+										   /obj/critter/gunbot/drone/minigundrone = 25,
+										   /obj/critter/gunbot/drone/raildrone = 5)
+
+	New()
+		..()
+		var/obj/critter/gunbot/drone/drone = weighted_pick(src.possible_drones)
+		drone = new drone(get_turf(src))
+		qdel(src)
+
 TYPEINFO(/obj/critter/gunbot/drone/iridium)
 	mats = null //no
 
