@@ -1,5 +1,11 @@
 
 (t)mon feb 17 25
+(u)glowbold
+(p)22164
+(e)⚖🧫📦|C-Balance, C-Experimental, A-Game-Objects
+(*)MechComp teleporters launch projectiles with the teleported contents inside, aimed at the targeted teleporter.
+(+)MechComp teleporters cannot cross Z-levels. Use a command teleporter or telesci instead.
+(+)MechComp teleporter projectiles are intercepted by the first active teleporter they hit.
 (u)FlameArrow57
 (p)22331
 (e)🎨⚖📦🚗|C-Sprites, C-Balance, A-Game-Objects, A-Vehicles
