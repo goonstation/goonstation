@@ -609,7 +609,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 
 		// spawn to allow button clunk sound to play right away
 		SPAWN(0)
-			boutput(user, "[src.ship.ship_message("Afterburner is now active!"))
+			boutput(user, "[src.ship.ship_message("Afterburner is now active!")]")
 			src.ship.afterburner_speed_mod *= 1.5
 			sleep(5 SECONDS)
 			src.deactivate()
