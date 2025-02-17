@@ -112,8 +112,8 @@
 				if (owner.engine.warp_autopilot)
 					return FALSE
 
-				velocity_x	+= input_x * accel
-				velocity_y  += input_y * accel
+				velocity_x	+= input_x * accel * (1 + 0.25 * src.afterburner_speed_mod)
+				velocity_y  += input_y * accel * (1 + 0.25 * src.afterburner_speed_mod)
 
 
 				if (owner.rcs && input_x == 0 && input_y == 0)
@@ -138,7 +138,7 @@
 
 				vel_max /= (owner.speed ? owner.speed : 1)
 
-				if (velocity_magnitude > vel_max)
+				if (velocity_magnitude > vel_max * src.owner.afterburner_speed_mod)
 					velocity_x /= velocity_magnitude
 					velocity_y /= velocity_magnitude
 

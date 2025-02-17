@@ -582,6 +582,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 			for (var/i in 1 to 5)
 				step(src.ship, turn(src.ship.dir, turn_angle))
 				sleep(0.125 SECONDS)
+			src.deactivate(FALSE)
 
 	change_thruster_direction()
 		if (src.turn_dir == "right")
@@ -596,21 +597,26 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 
 /obj/item/shipcomponent/secondary_system/thrusters/afterburner
 	name = "Afterburner"
-	desc = "An engine augment that enhances the burning of plasma, increasing speed for a short duration."
+	desc = "An engine augment that enhances the burning of plasma, increasing maximum velocity for a short duration."
 	hud_state = "lat_thrusters_right"
 	f_active = TRUE
 	power_used = 50
 
 	use_thrusters(mob/user)
-		if (ON_COOLDOWN(src, "thruster_movement", 30 SECONDS))
+		if (ON_COOLDOWN(src, "thruster_movement", 20 SECONDS))
 			boutput(user, "[src.ship.ship_message("Afterburner is recharging! [round(GET_COOLDOWN(src, "thruster_movement") / 10, 0.1)] seconds left.")]")
 			return
 
 		// spawn to allow button clunk sound to play right away
 		SPAWN(0)
-			for (var/i in 1 to 10)
-				step(src.ship, src.ship.dir)
-				sleep(1 SECOND)
+			boutput(user, "[src.ship.ship_message("Afterburner is now active!"))
+			src.ship.afterburner_speed_mod *= 1.5
+			sleep(5 SECONDS)
+			src.deactivate()
+
+	deactivate()
+		..()
+		src.ship.afterburner_speed_mod /= 1.5
 
 /obj/item/shipcomponent/secondary_system/tractor_beam
 	name = "Tri-Corp Tractor Beam"
