@@ -282,7 +282,7 @@
 					deck.inuse = 0
 					user.u_equip(deck)
 					deck.set_loc(get_turf(user))
-					h.become_statue("ice")
+					h.become_statue(getMaterial("ice"))
 				else
 					user.reagents.add_reagent("cryostylane", 50)
 			if("Security")
