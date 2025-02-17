@@ -454,8 +454,12 @@
 	proc/AmmoPerShot()
 		return 1
 
-	proc/ShootProjectiles(var/mob/user, var/datum/projectile/PROJ, var/shoot_dir)
-		var/obj/projectile/P = shoot_projectile_DIR(src, PROJ, shoot_dir)
+	proc/ShootProjectiles(var/mob/user, var/datum/projectile/PROJ, var/shoot_dir, spread = -1)
+		var/obj/projectile/P
+		if (spread == -1)
+			P = shoot_projectile_DIR(src, PROJ, shoot_dir)
+		else
+			P = shoot_projectile_relay_pixel_spread(src, PROJ, get_step(src, shoot_dir), spread_angle = spread)
 		P.mob_shooter = user
 		if (src.m_w_system?.muzzle_flash)
 			muzzle_flash_any(src, dir_to_angle(shoot_dir), src.m_w_system.muzzle_flash)
