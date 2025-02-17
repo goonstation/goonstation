@@ -72,6 +72,8 @@
 		if (remaining_ammunition < ship.AmmoPerShot())
 			boutput(user, "[ship.ship_message("You need [ship.AmmoPerShot()] to fire the weapon. You currently have [remaining_ammunition] loaded.")]")
 			return
+		else
+			boutput(user, "[ship.ship_message("[remaining_ammunition] shots remaining.")]")
 
 	var/rdir = ship.dir
 	if (shot_dir_override > 1)
@@ -199,6 +201,42 @@
 	firerate = 10
 	icon_state = "spes"
 	muzzle_flash = "muzzle_flash"
+
+/obj/item/shipcomponent/mainweapon/gun_9mm
+	name = "PEP-9 Ballistic System"
+	desc = "A peashooter attached to a kinetic podweapon, designed to fire 9mm rounds."
+	weapon_score = 1.25
+	power_used = 30
+	current_projectile = new/datum/projectile/bullet/bullet_9mm
+	appearanceString = "pod_weapon_gun_off"
+	firerate = 10
+	icon_state = "spes"
+	muzzle_flash = "muzzle_flash"
+
+/obj/item/shipcomponent/mainweapon/gun_9mm/uses_ammo
+	name = "PEP-9L Ballistic System"
+	desc = "A peashooter attached to a kinetic podweapon, designed to fire 9mm rounds. It has an integral magazine that must be reloaded when empty."
+
+	uses_ammunition = 1
+	remaining_ammunition = 20
+
+/obj/item/shipcomponent/mainweapon/gun_22
+	name = "PEP-22 Ballistic System"
+	desc = "A peashooter attached to a kinetic podweapon, designed to fire 22 caliber rounds."
+	weapon_score = 1.25
+	power_used = 30
+	current_projectile = new/datum/projectile/bullet/bullet_22
+	appearanceString = "pod_weapon_gun_off"
+	firerate = 10
+	icon_state = "spes"
+	muzzle_flash = "muzzle_flash"
+
+/obj/item/shipcomponent/mainweapon/gun_22/uses_ammo
+	name = "PEP-22L Ballistic System"
+	desc = "A peashooter attached to a kinetic podweapon, designed to fire 22 caliber rounds. It has an integral magazine that must be reloaded when empty."
+
+	uses_ammunition = 1
+	remaining_ammunition = 20
 
 /obj/item/shipcomponent/mainweapon/laser_ass // hehhh
 	name = "Mk.4 Assault Laser"

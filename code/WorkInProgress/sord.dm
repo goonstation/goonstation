@@ -101,8 +101,9 @@
 /obj/item/gun/energy/stasis
 	name = "stasis rifle"
 	icon = 'icons/obj/items/guns/energy48x32.dmi'
-	icon_state = "heavyion" // wtb 1 sprite
+	icon_state = "stasis"
 	item_state = "rifle"
+	charge_icon_state = "stasis"
 	force = 1
 	cell_type = /obj/item/ammo/power_cell/med_power
 	desc = "An experimental weapon that produces a cohesive electrical charge designed to hold a target in place for a limited time."
@@ -110,7 +111,7 @@
 	uses_charge_overlay = TRUE
 	can_dual_wield = FALSE
 	two_handed = 1
-	w_class = W_CLASS_BULKY
+	w_class = W_CLASS_NORMAL
 	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 
 	New()
@@ -138,7 +139,7 @@
 	on_hit(atom/hit)
 		if (isliving(hit))
 			var/mob/living/L = hit
-			L.changeStatus("stasis", 3 SECONDS)
+			L.changeStatus("stasis", 6 SECONDS)
 		impact_image_effect(ie_type, hit)
 		return
 

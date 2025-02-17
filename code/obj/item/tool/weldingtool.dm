@@ -45,6 +45,8 @@
 // ----------------------- Assembly-procs -----------------------
 	///Begin of the flamethrower assembly
 	proc/welder_rod_construction(var/atom/to_combine_atom, var/mob/user)
+		if (src.welding)
+			return
 		boutput(user, SPAN_NOTICE("You attach the rod to the welding tool."))
 		var/obj/item/rods/handled_rods = to_combine_atom
 		handled_rods.add_fingerprint(user)

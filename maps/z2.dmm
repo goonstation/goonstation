@@ -68996,7 +68996,6 @@
 	pixel_x = 6;
 	pixel_y = 12
 	},
-/obj/table/regal/auto,
 /turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "png" = (
@@ -79076,7 +79075,6 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/assault_pod)
 "xoF" = (
-/obj/table/wood/auto,
 /obj/item/reagent_containers/glass/water_pipe/filled{
 	pixel_x = -5;
 	pixel_y = 15

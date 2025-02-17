@@ -12756,9 +12756,9 @@
 "aEF" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/apc{
-	areastring = "Medical Research";
+	areastring = "Genetic Research";
 	dir = 4;
-	name = "Medical Research APC";
+	name = "Genetic Research APC";
 	pixel_x = 24
 	},
 /obj/cable,

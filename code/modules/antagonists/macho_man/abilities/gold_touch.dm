@@ -61,5 +61,5 @@
 						qdel(G)
 						SPAWN(0)
 							if (H)
-								H.become_statue("gold", "A really dumb looking statue. Very shiny, though.", survive=TRUE)
+								H.become_statue(getMaterial("gold"), "A really dumb looking statue. Very shiny, though.", survive=TRUE)
 

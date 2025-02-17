@@ -28,6 +28,9 @@
 	New()
 		..()
 		//Comes with the goggles
+		src.spawn_goggles()
+
+	proc/spawn_goggles()
 		var/obj/item/clothing/glasses/scuttlebot_vr/R = new /obj/item/clothing/glasses/scuttlebot_vr(src.loc)
 		R.connected_scuttlebot = src
 
@@ -123,8 +126,9 @@
 
 /mob/living/critter/robotic/scuttlebot/ghostplayable // admin gimmick ghost spawnable version
 
-	add_abilities = list(/datum/targetable/critter/takepicture)
+	add_abilities = list(/datum/targetable/critter/takepicture/nostorage)
 
 
 	setup_hands()
 
+	spawn_goggles()

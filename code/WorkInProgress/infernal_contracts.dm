@@ -861,6 +861,6 @@ obj/item/contract/greed
 				SPAWN(10 SECONDS)
 					boutput(user, SPAN_NOTICE("Well, you were right."))
 					var/mob/living/carbon/human/H = user
-					H.become_statue("gold")
+					H.become_statue(getMaterial("gold"))
 
 		return 1

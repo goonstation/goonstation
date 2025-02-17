@@ -19,6 +19,10 @@
  * `/datum/mapPrefab/random_room`. To add a new prefab to be checked, simply
  * create a type for it.
  */
+#if defined(CI_RUNTIME_CHECKING)
+var/global/loaded_prefab_path
+#endif
+
 /proc/placeAllRandomRooms()
 #if defined(CI_RUNTIME_CHECKING)
 	var/startTime = world.timeofday
@@ -32,6 +36,7 @@
 		var/dmm_suite/D = new/dmm_suite()
 		D.read_map(loaded, T.x, T.y, T.z, R.prefabPath, DMM_OVERWRITE_MOBS | DMM_OVERWRITE_OBJS)
 		boutput(world, SPAN_ALERT("Prefab placement [R.prefabPath][R.required?" (REQUIRED)":""] succeeded. [T] @ [log_loc(T)]"))
+		global.loaded_prefab_path = R.prefabPath
 		check_map_correctness()
 		sleep(1 SECOND)
 		// cleanup
@@ -43,6 +48,7 @@
 				catch // suppress errors
 					;
 			T2.ReplaceWithSpaceForce()
+	global.loaded_prefab_path = null
 	boutput(world, SPAN_ALERT("Generated prefabs Level in [((world.timeofday - startTime)/10)] seconds!"))
 #else
 	CRASH("This proc only works if CI_RUNTIME_CHECKING is defined")

@@ -125,6 +125,10 @@ var/list/removed_jobs = list(
 			src.custom_parts = list(
 				"l_arm" = "arm_default_left",
 				"r_arm" = "arm_default_right",
+				"l_leg" = "leg_default_left",
+				"r_leg" = "leg_default_right",
+				"left_eye" = "eye_default_left",
+				"right_eye" = "eye_default_right",
 			)
 
 	ui_state(mob/user)
@@ -1878,14 +1882,14 @@ var/list/removed_jobs = list(
 				H.voice_type = H.mutantrace.voice_override
 
 	proc/apply_post_new_stuff(mob/living/character, var/role_for_traits)
-		for (var/slot_id in src.custom_parts)
-			var/part_id = src.custom_parts[slot_id]
-			var/datum/part_customization/customization = get_part_customization(part_id)
-			customization.try_apply(character, src.custom_parts)
 		if (src.traitPreferences.isValid(src.traitPreferences.traits_selected, src.custom_parts) && character.traitHolder)
 			character.traitHolder.mind_role_fallback = role_for_traits
 			for (var/T in src.traitPreferences.traits_selected)
 				character.traitHolder.addTrait(T)
+		for (var/slot_id in src.custom_parts)
+			var/part_id = src.custom_parts[slot_id]
+			var/datum/part_customization/customization = get_part_customization(part_id)
+			customization.try_apply(character, src.custom_parts)
 
 	proc/sanitize_null_values()
 		if (!src.gender || !(src.gender == MALE || src.gender == FEMALE))

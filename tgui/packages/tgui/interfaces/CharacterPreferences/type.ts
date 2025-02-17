@@ -78,7 +78,7 @@ export interface CharacterPreferencesData {
   traitsAvailable: CharacterPreferencesTraitData[];
   traitsMax: number;
   traitsPointsTotal: number;
-  partsData: Record<string, CharacterPreferencesPartData>;
+  partsData: Partial<Record<string, CharacterPreferencesPartData>>;
 }
 export interface CharacterPreferencesPartData {
   id: string;

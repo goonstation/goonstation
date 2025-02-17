@@ -440,7 +440,7 @@ var/global/meteor_shower_active = 0
 					if("statue")
 						if(distPercent < 40) // only inner 40% of range
 							if(M)
-								M.become_statue(transmute_material.getID())
+								M.become_statue(transmute_material)
 			else
 				G.setMaterial(transmute_material)
 

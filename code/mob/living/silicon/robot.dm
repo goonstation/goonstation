@@ -2042,9 +2042,9 @@ TYPEINFO(/mob/living/silicon/robot)
 	proc/get_tools()
 		RETURN_TYPE(/list)
 		var/list/tools = src.module.tools.Copy()
-		if (src.part_arm_l.add_to_tools)
+		if (src.part_arm_l?.add_to_tools)
 			tools += src.part_arm_l
-		if (src.part_arm_r.add_to_tools)
+		if (src.part_arm_r?.add_to_tools)
 			tools += src.part_arm_r
 		return tools
 

@@ -375,8 +375,20 @@
 	desc = "A kit of gold-plated pod armor plating."
 	price = PAY_EMBEZZLED*2
 
+/datum/commodity/podparts/ballistic_22
+	comname = "PEP-22 Ballistic System"
+	comtype = /obj/item/shipcomponent/mainweapon/gun_22
+	desc = "A pod-mounted kinetic weapon system."
+	price = PAY_EMBEZZLED
+
+/datum/commodity/podparts/ballistic_9mm
+	comname = "PEP-9 Ballistic System"
+	comtype = /obj/item/shipcomponent/mainweapon/gun_9mm
+	desc = "A pod-mounted kinetic weapon system."
+	price = PAY_EMBEZZLED*1.5
+
 /datum/commodity/podparts/ballistic
-	comname = "Ballistic System"
+	comname = "SPE-12 Ballistic System"
 	comtype = /obj/item/shipcomponent/mainweapon/gun
 	desc = "A pod-mounted kinetic weapon system."
 	price = PAY_DONTBUYIT

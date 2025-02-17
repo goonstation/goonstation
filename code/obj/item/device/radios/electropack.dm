@@ -44,23 +44,23 @@ TYPEINFO(/obj/item/device/radio/electropack)
 	if (src.master && (src.wires & WIRE_SIGNAL))
 		src.master.receive_signal()
 
+
+/// shock kit construction
+/obj/item/device/radio/electropack/proc/shock_kit_assembly(var/atom/to_combine_atom, var/mob/user)
+	user.u_equip(src)
+	user.u_equip(to_combine_atom)
+	var/obj/item/shock_kit/new_shock_kit = new /obj/item/shock_kit(get_turf(user), to_combine_atom, src)
+	user.put_in_hand_or_drop(new_shock_kit)
+	// Since the assembly was done, return TRUE
+	return TRUE
+
+/obj/item/device/radio/electropack/New()
+	..()
+	// Electropack + sec helmet  -> shock kit
+	src.AddComponent(/datum/component/assembly, /obj/item/clothing/head/helmet, PROC_REF(shock_kit_assembly), TRUE)
+
 /obj/item/device/radio/electropack/update_icon()
 	src.icon_state = "electropack[src.on]"
-
-/obj/item/device/radio/electropack/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/clothing/head/helmet))
-		var/obj/item/assembly/shock_kit/shock_assembly = new /obj/item/assembly/shock_kit(user, W, src)
-		W.set_loc(shock_assembly)
-		W.layer = initial(W.layer)
-		user.u_equip(W)
-		user.put_in_hand_or_drop(shock_assembly)
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		src.set_loc(shock_assembly)
-		src.add_fingerprint(user)
-
-	else
-		. = ..()
 
 /obj/item/device/radio/electropack/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

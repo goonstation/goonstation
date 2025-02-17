@@ -1820,7 +1820,7 @@ datum
 					boutput(M, SPAN_NOTICE("<b>Oh. God.</b>"))
 					SPAWN(2 SECONDS)
 						if (M)
-							M.become_statue("ice")
+							M.become_statue(getMaterial("ice"))
 				..()
 				return
 

@@ -194,6 +194,7 @@
 	var/base_icon_state	//! Initial icon state on map
 	var/list/mail_tag = null //! Tag of mail group for switching pipes
 	var/welding_cost = 3 //! Amount of welding fuel it costs to install/remove
+	var/weldable = TRUE
 
 
 	var/image/pipeimg = null
@@ -452,7 +453,7 @@
 			return		// prevent interaction with T-scanner revealed pipes
 
 		if (isweldingtool(I))
-			if (I:try_weld(user, src.welding_cost, noisy = 2))
+			if (src.weldable && I:try_weld(user, src.welding_cost, noisy = 2))
 				// check if anything changed over 2 seconds
 				var/turf/uloc = user.loc
 				var/atom/wloc = I.loc
@@ -1159,7 +1160,9 @@ TYPEINFO(/obj/disposalpipe/loafer)
 	desc = "A pipe segment designed to convert detritus into a nutritionally-complete meal for inmates."
 	icon_state = "pipe-loaf0"
 	is_syndicate = 1
+	weldable = FALSE
 	var/is_doing_stuff = FALSE
+	HELP_MESSAGE_OVERRIDE("The disciplinary loaf processor cannot be detached by welding.")
 
 	horizontal
 		dir = EAST
@@ -1582,7 +1585,9 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 	icon_state = "unblockoutlet"
 	anchored = ANCHORED
 	density = 1
+	weldable = FALSE
 	var/turf/stuff_chucking_target
+	HELP_MESSAGE_OVERRIDE("The smart disposal outlet cannot be detached by welding.")
 
 	north
 		dir = NORTH
@@ -1960,6 +1965,8 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 
 /obj/disposalpipe/trunk/zlevel
 	icon_state = "pipe-v"
+	weldable = FALSE
+	HELP_MESSAGE_OVERRIDE("This pipe cannot be detached by welding.")
 
 	getlinked()
 		return
