@@ -13373,8 +13373,6 @@
 /area/space)
 "aUe" = (
 /obj/table/round/auto,
-/obj/table/round/auto,
-/obj/table/round/auto,
 /obj/item/material_piece/coral,
 /obj/item/material_piece/coral,
 /obj/item/material_piece/coral,
@@ -13765,7 +13763,6 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "aVV" = (
-/obj/table/auto,
 /obj/table/auto,
 /obj/item/storage/box/guardbot_kit,
 /turf/simulated/floor/grime,
@@ -19983,7 +19980,6 @@
 	},
 /area/station/bridge)
 "bwl" = (
-/obj/table/wood/round/auto,
 /obj/table/wood/round/auto,
 /obj/item/decoration/flower_vase{
 	pixel_x = 6;
@@ -40425,9 +40421,6 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
 "nXQ" = (
-/obj/table/wood/auto/desk{
-	pixel_y = -2
-	},
 /obj/table/wood/auto/desk{
 	pixel_y = -2
 	},

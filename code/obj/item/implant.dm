@@ -717,6 +717,14 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	big_message = " emits a loud clunk"
 	small_message = " makes a small clicking noise"
 
+	can_implant(mob/target, mob/user)
+		if(!..())
+			return FALSE
+		if (isghostcritter(target) || ishelpermouse(target))
+			return FALSE
+		return TRUE
+
+
 	implanted(mob/target, mob/user)
 		..()
 		if (target == user)
@@ -2538,7 +2546,7 @@ TYPEINFO(/obj/item/gun/implanter)
 
 /obj/item/gun/implanter
 	name = "implant gun"
-	desc = "A gun that accepts an implant, that you can then shoot into other people! Or a wall, which certainly wouldn't be too big of a waste, since you'd only be using this to shoot people with things like health monitor implants or machine translators. Right?"
+	desc = "A gun that accepts an implant, that you can then shoot into other people! Or a wall, which certainly wouldn't be too big of a waste, since you'd only be using this to shoot people with things like health monitor or rotbusttec implants. Right?"
 	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "implant"
 	contraband = 1

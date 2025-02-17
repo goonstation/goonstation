@@ -275,7 +275,6 @@
 /area/prefab/candy_shop)
 "we" = (
 /obj/table/wood/round/auto,
-/obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/snacks/bagel{
 	rand_pos = 0
 	},

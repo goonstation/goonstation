@@ -1,4 +1,36 @@
 
+(t)mon feb 17 25
+(u)FlameArrow57
+(p)22332
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(+)Debris field syndicate drones are now randomized in occurrence per type
+(t)sun feb 16 25
+(u)tarmunora
+(+)Fixed unintended behaviour that allowed bypassing itemspecial cooldowns by using multiple of the same item in succession.
+(u)Lord_Earthfire
+(p)22018
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Adds bulk manufacturer recipes for material sheets that produces 5 sheets instead of 1.
+(u)Lord_Earthfire
+(p)22256
+(e)🔎💅📦|C-Code-Quality, C-QoL, A-Game-Objects
+(+)You can construct shock packs now starting either with the helmet or the electropack.
+(u)Sord
+(+)Added two new ballistic pod weapon systems, 9mm and 22, to the Listening Post and Magpie traders.
+(+)Syndicate versions have unlimited ammo, Salvager versions have limited ammo.
+(t)sat feb 15 25
+(u)Amylizzle & Nerkson
+(p)21909
+(e)🎨📄|C-Sprites, A-UI
+(*)The reactor turbine has been made repairable. Also nerfed. Also buffed.
+(+)The default turbine settings are now a viable configuration.
+(+)Turbine blades and stator can now be replaced with new ones, with material properties.
+(+)A conductive material on the stator will boost power output.
+(+)A dense material on the turbine blade will increase its mass.
+(+)A hard material on the turbine blade will increase its durability.
+(+)Flow rate on the turbine is capped to 1000 L/S
+(+)The turbine will now decapitate you if you let it spin too fast for too long.
+(+)Turbine blade sprite by Nerkson.
 (t)fri feb 14 25
 (u)Bartimeus973
 (p)22280
