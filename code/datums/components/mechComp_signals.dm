@@ -308,7 +308,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 		boutput(user, SPAN_ALERT("Components need to be within a range of 14 meters to connect."))
 		return
 
-	var/typesel = tgui_input_list(user, "Use [parent] as:", "Connection Type", list("Trigger", "Receiver", "*CANCEL*"))
+	var/typesel = tgui_alert(user, "Use [parent] as:", "Connection Type", list("Trigger", "Receiver", "*CANCEL*"))
 	switch(typesel)
 		if("Trigger")
 			SEND_SIGNAL(A, _COMSIG_MECHCOMP_LINK, parent, user)
