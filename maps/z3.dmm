@@ -200,10 +200,6 @@
 "aaO" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space_hive)
-"aaP" = (
-/obj/critter/gunbot/drone/heavydrone,
-/turf/space,
-/area/space)
 "aaR" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -3263,7 +3259,7 @@
 /turf/space,
 /area/space)
 "apv" = (
-/obj/critter/gunbot/drone/minigundrone,
+/obj/gunbotdrone_spawner/rare,
 /turf/space,
 /area/space)
 "apw" = (
@@ -6357,7 +6353,7 @@
 	dir = 4;
 	color = "b4b4b4"
 	},
-/obj/gunbotdrone_spawner,
+/obj/critter/gunbot/drone/buzzdrone,
 /turf/space,
 /area/abandonedship)
 "aIt" = (
@@ -7240,10 +7236,6 @@
 /obj/machinery/telejam/active,
 /turf/space,
 /area/abandonedmedicalship)
-"aLt" = (
-/obj/gunbotdrone_spawner,
-/turf/space,
-/area/space)
 "aLu" = (
 /obj/storage/crate/medical,
 /obj/item/storage/firstaid/regular,
@@ -7389,7 +7381,7 @@
 	icon_state = "floattiles3"
 	},
 /obj/decal/cleanable/oil,
-/obj/gunbotdrone_spawner,
+/obj/critter/gunbot/drone/buzzdrone,
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedship)
 "aLS" = (
@@ -8768,7 +8760,7 @@
 /area/space)
 "aQf" = (
 /obj/decal/cleanable/molten_item,
-/obj/gunbotdrone_spawner,
+/obj/gunbotdrone_spawner/common,
 /turf/simulated/floor/airless/plating/scorched,
 /area/space)
 "aQg" = (
@@ -14604,6 +14596,16 @@
 	icon_state = "floor3"
 	},
 /area/salyut)
+"bkx" = (
+/obj/critter/gunbot/drone/buzzdrone{
+	wanderer = 0
+	},
+/turf/space,
+/area/space)
+"bkz" = (
+/obj/gunbotdrone_spawner/common,
+/turf/space,
+/area/space)
 "bkA" = (
 /obj/machinery/bathtub,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
@@ -14805,7 +14807,7 @@
 /turf/space,
 /area/abandonedship)
 "blr" = (
-/obj/critter/gunbot/drone/laserdrone,
+/obj/gunbotdrone_spawner/uncommon,
 /turf/space,
 /area/space)
 "bls" = (
@@ -14980,7 +14982,9 @@
 /area/space)
 "blN" = (
 /obj/item/raw_material/rock,
-/obj/gunbotdrone_spawner,
+/obj/critter/gunbot/drone/buzzdrone{
+	wanderer = 0
+	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/abandonedship)
 "blP" = (
@@ -15112,7 +15116,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bmJ" = (
-/obj/gunbotdrone_spawner,
+/obj/critter/gunbot/drone/buzzdrone,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bmK" = (
@@ -18004,6 +18008,10 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/tug)
+"iIc" = (
+/obj/gunbotdrone_spawner/uncommon,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "iMD" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -36782,7 +36790,7 @@ aaa
 aaa
 aaa
 aaa
-aaP
+blr
 aaa
 aaa
 aaa
@@ -36816,7 +36824,7 @@ bgu
 aaa
 aaa
 aaa
-aaP
+blr
 aaa
 aaa
 aaa
@@ -38854,7 +38862,7 @@ aaa
 aaa
 aaz
 aac
-bmJ
+iIc
 aaa
 aMF
 aaa
@@ -40351,7 +40359,7 @@ aab
 aab
 aaa
 aaa
-aLt
+bkz
 aao
 aaa
 aaa
@@ -41594,7 +41602,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -43055,7 +43063,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -45755,7 +45763,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -45818,7 +45826,7 @@ aaz
 aaa
 aaa
 aaa
-aLt
+bkz
 aKi
 aao
 aaa
@@ -46389,7 +46397,7 @@ aNm
 aaa
 aaa
 aaa
-aLt
+blr
 aMF
 aaa
 aaa
@@ -47425,7 +47433,7 @@ aaa
 aax
 aaF
 aaa
-aLt
+blr
 aal
 gaf
 acL
@@ -48455,7 +48463,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -51205,7 +51213,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+blr
 aaa
 aaa
 aaa
@@ -52790,7 +52798,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -53662,7 +53670,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -54914,7 +54922,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 abg
@@ -55709,7 +55717,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -58245,7 +58253,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -58765,7 +58773,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+blr
 aaa
 aaa
 aaa
@@ -60312,7 +60320,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -60572,7 +60580,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -64869,7 +64877,7 @@ aaa
 aaa
 aad
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -65053,7 +65061,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -65687,7 +65695,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -65962,7 +65970,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -65998,7 +66006,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -71096,7 +71104,7 @@ asP
 nYg
 aAj
 aaa
-aLt
+bkx
 aaa
 aaa
 aaa
@@ -75969,7 +75977,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -78466,7 +78474,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
