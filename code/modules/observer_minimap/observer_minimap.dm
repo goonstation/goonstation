@@ -6,7 +6,7 @@
 	SHOW_VERB_DESC
 
 	if(!global.observer_minimap_ui)
-		global.observer_minimap_ui = new(null, "observer_minimap", new/obj/minimap/observer_minimap, "Station Map", "ntos" )
+		global.observer_minimap_ui = new (null, "observer_minimap", new/obj/minimap/observer_minimap, "Station Map", "ntos")
 
 	observer_minimap_ui.ui_interact(src.mob)
 
@@ -15,7 +15,7 @@
 	set category = "Ghost"
 
 	if(!global.observer_minimap_ui)
-		global.observer_minimap_ui = new(null, "observer_minimap", new/obj/minimap/observer_minimap, "Station Map", "ntos" )
+		global.observer_minimap_ui = new (null, "observer_minimap", new/obj/minimap/observer_minimap, "Station Map", "ntos")
 
 	observer_minimap_ui.ui_interact(src)
 
