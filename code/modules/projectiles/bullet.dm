@@ -200,6 +200,11 @@ toxic - poisons
 	casing = /obj/item/casing/rifle
 	ricochets = TRUE
 
+/datum/projectile/bullet/akm/pod
+	damage = 4
+	shot_number = 1
+	dissipation_delay = 7
+
 /datum/projectile/bullet/draco
 	name = "bullet"
 	shot_sound = 'sound/weapons/akm.ogg'
