@@ -80,7 +80,7 @@ ABSTRACT_TYPE(/datum/plant)
 				result_icon = icon(initial(crop.icon), initial(crop.icon_state), frame=1)
 			else if(src.plant_icon)
 				var/icon_state = src.getIconState(4)
-				if(icon_state in icon_states(src.plant_icon)) // Only if icon state is valid
+				if(icon_state in get_icon_states(src.plant_icon)) // Only if icon state is valid
 					result_icon = icon(src.plant_icon, icon_state, frame=1)
 
 			if(result_icon)

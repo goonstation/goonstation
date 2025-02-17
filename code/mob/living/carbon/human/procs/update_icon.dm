@@ -529,7 +529,7 @@
 
 	// does a suit potentially cover our tail?
 	if(our_tail.clothing_image_icon && icon_state)
-		var/tail_overrides = icon_states(our_tail.clothing_image_icon)
+		var/tail_overrides = get_icon_states(our_tail.clothing_image_icon)
 		if (islist(tail_overrides) && (icon_state in tail_overrides))
 			human_tail_image = image(our_tail.clothing_image_icon, icon_state)
 			src.tail_standing.overlays += human_tail_image
