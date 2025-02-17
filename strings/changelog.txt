@@ -1,5 +1,9 @@
 
 (t)mon feb 17 25
+(u)FlameArrow57
+(p)22331
+(e)🎨⚖📦🚗|C-Sprites, C-Balance, A-Game-Objects, A-Vehicles
+(+)Minigun drones now have a 25% chance to drop a minigun pod weapon on death. Comparable to basic phaser in strength.
 (u)Kubius
 (p)22350
 (e)🆕⚖|C-Feature, C-Balance
