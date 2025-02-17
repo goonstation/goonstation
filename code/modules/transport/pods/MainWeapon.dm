@@ -5,6 +5,8 @@
 	var/mob/gunner = null
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/light/pod
 	var/firerate = 8
+	/// change to a degree in angles to give custom spread
+	var/spread = -1
 	var/weapon_score = 0.1
 	var/appearanceString
 
@@ -80,7 +82,7 @@
 	//	if ((rdir - 1) & rdir)
 	//		rdir &= 12
 	logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
-	ship.ShootProjectiles(user, current_projectile, rdir)
+	ship.ShootProjectiles(user, current_projectile, rdir, src.spread)
 	remaining_ammunition -= ship.AmmoPerShot()
 
 /obj/item/shipcomponent/mainweapon/proc/MakeGunner(mob/M as mob)
@@ -205,6 +207,7 @@
 	desc = "A low damage but high firerate anti-personnel minigun stuffed into a pod weapon."
 	weapon_score = 1.25
 	firerate = 0.25 SECONDS
+	spread = 25
 	appearanceString = "pod_weapon_gun_off"
 	current_projectile = new/datum/projectile/bullet/akm/pod
 	icon_state = "minigun"
