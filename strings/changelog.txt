@@ -8,7 +8,6 @@
 (p)22256
 (e)🔎💅📦|C-Code-Quality, C-QoL, A-Game-Objects
 (+)You can construct shock packs now starting either with the helmet or the electropack.
-(t)sun feb 17 25
 (u)Sord
 (+)Added two new ballistic pod weapon systems, 9mm and 22, to the Listening Post and Magpie traders.
 (+)Syndicate versions have unlimited ammo, Salvager versions have limited ammo.
