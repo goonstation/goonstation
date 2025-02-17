@@ -1,4 +1,9 @@
 
+(t)mon feb 17 25
+(u)FlameArrow57
+(p)22332
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(+)Debris field syndicate drones are now randomized in occurrence per type
 (t)sun feb 16 25
 (u)tarmunora
 (+)Fixed unintended behaviour that allowed bypassing itemspecial cooldowns by using multiple of the same item in succession.
