@@ -1,5 +1,9 @@
 
 (t)mon feb 17 25
+(u)Sovexe
+(p)22185
+(e)🪲🆕🎨🚨🔨|C-Bug, C-Feature, C-Sprites, A-Admin, A-Player-Actions
+(*)Ghosts now have access to a live station minimap with crew locations
 (u)FlameArrow57
 (p)22332
 (e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
