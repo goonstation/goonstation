@@ -1,5 +1,7 @@
 
 (t)sun feb 16 25
+(u)tarmunora
+(+)Fixed unintended behaviour that allowed bypassing itemspecial cooldowns by using multiple of the same item in succession.
 (u)Lord_Earthfire
 (p)22018
 (e)⚖📦|C-Balance, A-Game-Objects
