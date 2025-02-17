@@ -31,7 +31,7 @@
 
 	START_TRACKING
 
-/datum/minimap/disposing()
+/datum/minimap/area_map/disposing()
 	STOP_TRACKING
 	. = ..()
 
