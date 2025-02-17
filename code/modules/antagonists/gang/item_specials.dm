@@ -137,6 +137,7 @@
 		while (hit && H.stamina > (staminacost_chain + staminacost_chain_additive*current_chain) && H.equipped() == master && current_chain < max_chain)
 			H.next_click = world.time + 5 SECONDS
 			last_use = world.time
+			ON_COOLDOWN(user, "[src.type]_cd", src.cooldown)
 			current_chain++
 			H.remove_stamina(staminacost_chain + staminacost_chain_additive*current_chain)
 			if (current_chain == 13)
@@ -183,6 +184,7 @@
 
 	afterUse(mob/user)
 		last_use = world.time
+		ON_COOLDOWN(user, "[src.type]_cd", src.cooldown)
 		user.next_click = world.time + 5 SECONDS
 		..()
 
