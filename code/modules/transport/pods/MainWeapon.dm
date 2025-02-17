@@ -503,10 +503,6 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			if(EFIF_MODE_FLOORS to EFIF_MODE_WALLS)
 				if(ON_COOLDOWN(src, "fire", firerate))
 					return
-				if(src.mode != EFIF_MODE_R_FLOORS && ship.z == Z_LEVEL_STATION) //antigrief
-					boutput(user,SPAN_ALERT("The construction system isn't cleared to operate in this mode within this sector."))
-					src.sadbuzz()
-					return
 				if(length(src.active_fields) >= 1)
 					return
 				if(!src.check_sheets())
