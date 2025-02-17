@@ -46,6 +46,7 @@ Contains:
 	var/applier_icon_prefix = null
 	var/obj/item/target = null //! This is anything that the applier will be used upon, e.g. a plasma tank or a beaker
 	var/target_item_prefix = null
+	var/target_overlay_invisible = FALSE ///! use this if you dont want either the target or the target_item_prefix to create an overlay
 	var/secured = FALSE //! If false, this does not activate and can be modified on self-use
 	var/list/additional_components = null //! This is a list of components that don't make up the main 3 components of the assembly, but can be attached after the target was added.
 	var/icon_base_offset = 0 //! offset for the base-icon of the assembly, if the target gets overriden
@@ -184,7 +185,7 @@ Contains:
 	var/overlay_offset = 0 //how many pixels we want to move the overlays
 	src.overlays = null
 	src.underlays = null
-	if(src.target && !src.target_item_prefix)
+	if(src.target && !src.target_item_prefix && !src.target_overlay_invisible)
 		//If the target doesn't add it's own special icon state
 		src.icon = src.target.icon
 		src.icon_state = src.target.icon_state
@@ -192,7 +193,7 @@ Contains:
 	else
 		src.icon = initial(src.icon)
 		src.icon_state = "trigger_[src.trigger_icon_prefix]"
-		if(src.target_item_prefix)
+		if(src.target_item_prefix && !src.target_overlay_invisible)
 			var/image/temp_image_target = image('icons/obj/items/assemblies.dmi', src, "target_[src.target_item_prefix]")
 			temp_image_target.pixel_y += overlay_offset + src.icon_base_offset
 			src.overlays += temp_image_target

@@ -461,6 +461,7 @@
 				if (src.payload)
 					src.payload.set_loc(src.loc)
 					//we reset the transformation here
+					src.payload.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
 					src.payload.transform = null
 					//this will deactivate the mousetrap
 					SEND_SIGNAL(src.payload.trigger, COMSIG_ITEM_ASSEMBLY_MANIPULATION, payload)
