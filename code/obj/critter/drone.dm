@@ -83,6 +83,8 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	seekrange = 15
 	flying = 1
 	var/score = 10
+	/// chance of dropping loot
+	var/drop_loot_chance = 100
 	var/obj/item/droploot = null
 	var/damaged = 0 // 1, 2, 3
 	var/dying = 0
@@ -287,7 +289,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		SPAWN(2 SECONDS)
 			if (prob(25))
 				new /obj/item/device/prox_sensor(src.loc)
-			if(droploot)
+			if(droploot && prob(src.drop_loot_chance))
 				new droploot(src.loc)
 			..()
 			return
@@ -591,7 +593,8 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		score = 120
 		alertsound1 = 'sound/machines/engine_alert1.ogg'
 		alertsound2 = 'sound/machines/engine_alert1.ogg'
-		droploot = /obj/item/bang_gun
+		drop_loot_chance = 25
+		droploot = /obj/item/shipcomponent/mainweapon/minigun
 		projectile_type = /datum/projectile/bullet/akm
 		current_projectile = new/datum/projectile/bullet/akm
 		attack_cooldown = 20

@@ -5,6 +5,8 @@
 	var/mob/gunner = null
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/light/pod
 	var/firerate = 8
+	/// change to a degree in angles to give custom spread
+	var/spread = -1
 	var/weapon_score = 0.1
 	var/appearanceString
 
@@ -82,7 +84,7 @@
 	//	if ((rdir - 1) & rdir)
 	//		rdir &= 12
 	logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
-	ship.ShootProjectiles(user, current_projectile, rdir)
+	ship.ShootProjectiles(user, current_projectile, rdir, src.spread)
 	remaining_ammunition -= ship.AmmoPerShot()
 
 /obj/item/shipcomponent/mainweapon/proc/MakeGunner(mob/M as mob)
@@ -200,6 +202,17 @@
 	appearanceString = "pod_weapon_gun_off"
 	firerate = 10
 	icon_state = "spes"
+	muzzle_flash = "muzzle_flash"
+
+/obj/item/shipcomponent/mainweapon/minigun
+	name = "Minigun"
+	desc = "A low damage but high firerate anti-personnel minigun stuffed into a pod weapon."
+	weapon_score = 1.25
+	firerate = 0.25 SECONDS
+	spread = 25
+	appearanceString = "pod_weapon_gun_off"
+	current_projectile = new/datum/projectile/bullet/akm/pod
+	icon_state = "minigun"
 	muzzle_flash = "muzzle_flash"
 
 /obj/item/shipcomponent/mainweapon/gun_9mm
@@ -502,10 +515,6 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 
 			if(EFIF_MODE_FLOORS to EFIF_MODE_WALLS)
 				if(ON_COOLDOWN(src, "fire", firerate))
-					return
-				if(src.mode != EFIF_MODE_R_FLOORS && ship.z == Z_LEVEL_STATION) //antigrief
-					boutput(user,SPAN_ALERT("The construction system isn't cleared to operate in this mode within this sector."))
-					src.sadbuzz()
 					return
 				if(length(src.active_fields) >= 1)
 					return
