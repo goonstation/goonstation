@@ -23,8 +23,6 @@
 	name = "View Minimap"
 	desc = "View the station minimap and crew locations, click to teleport."
 	icon_state = "minimap"
-	targeted = 0
-	cooldown = 0
 
 	cast(atom/target)
 		. = ..()
