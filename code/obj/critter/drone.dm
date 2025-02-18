@@ -22,6 +22,11 @@ TYPEINFO(/obj/critter/gunbot/drone/minigundrone)
 				"metal_superdense" = 24,
 				"conductive_high" = 20,
 				"crystal_dense" = 17)
+TYPEINFO(/obj/critter/gunbot/drone/maserdrone)
+	mats = list("energy_extreme" = 25,
+				"metal_superdense" = 15,
+				"conductive_high" = 25,
+				"crystal_dense" = 15)
 TYPEINFO(/obj/critter/gunbot/drone/raildrone)
 	mats = list("energy_extreme" = 19,
 				"metal_superdense" = 20,
