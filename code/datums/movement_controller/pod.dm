@@ -112,8 +112,8 @@
 				if (owner.engine.warp_autopilot)
 					return FALSE
 
-				velocity_x	+= input_x * accel * src.owner.speedmod * src.owner.engine.speedmod
-				velocity_y  += input_y * accel * src.owner.speedmod * src.owner.engine.speedmod
+				velocity_x += input_x * accel * src.owner.speedmod * src.owner.engine.speedmod
+				velocity_y += input_y * accel * src.owner.speedmod * src.owner.engine.speedmod
 
 
 				if (owner.rcs && input_x == 0 && input_y == 0)
