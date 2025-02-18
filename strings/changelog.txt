@@ -1,4 +1,9 @@
 
+(t)tue feb 18 25
+(u)FlameArrow57
+(p)22355
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)A new Syndicate cannondrone can be found in the debris field. Fires AEX.
 (t)mon feb 17 25
 (u)glowbold
 (p)22164
