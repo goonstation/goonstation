@@ -36867,10 +36867,13 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/tech)
 "cfC" = (
-/obj/machinery/power/data_terminal,
 /obj/decal/cleanable/cobweb,
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal/cable_tray/dish,
+/obj/disjoint_connector/id{
+	id = "Renanin"
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)

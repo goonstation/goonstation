@@ -38832,13 +38832,6 @@
 	dir = 1
 	},
 /area/station/mining/magnet)
-"iJB" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
 "iJR" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -46187,6 +46180,16 @@
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
 	})
+"nYg" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal/cable_tray/dish,
+/obj/disjoint_connector/id{
+	id = "Renanin"
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "nYs" = (
 /obj/disposalpipe/segment/vertical,
 /obj/landmark/halloween,
@@ -47978,6 +47981,7 @@
 /obj/machinery/communications_dish{
 	tag = "MAIN_DISH_SS13"
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/comdish)
 "ppI" = (
@@ -115443,8 +115447,8 @@ osY
 mEy
 dDe
 fwt
-iJB
 aSa
+nYg
 onX
 mEy
 xXd

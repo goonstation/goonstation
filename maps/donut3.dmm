@@ -8544,10 +8544,12 @@
 	},
 /area/station/chapel/sanctuary)
 "ctz" = (
-/obj/item/device/net_sniffer,
-/obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/power/data_terminal/cable_tray/dish,
+/obj/disjoint_connector/id{
+	id = "Renanin"
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/storage/tech)
 "ctI" = (

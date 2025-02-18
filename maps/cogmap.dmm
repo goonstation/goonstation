@@ -31151,18 +31151,25 @@
 	name = "N light switch";
 	pixel_y = 24
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
-"cjW" = (
 /obj/machinery/bot/guardbot/bootleg,
+/obj/machinery/guardbot_dock,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/guardbot_dock,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"cjW" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal/cable_tray/dish,
+/obj/disjoint_connector/id{
+	id = "Renanin"
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "cjX" = (

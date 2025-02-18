@@ -19206,6 +19206,9 @@
 /obj/stool/chair{
 	dir = 8
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/black,
 /area/station/storage/tech)
 "pQO" = (
@@ -19422,9 +19425,6 @@
 "qhk" = (
 /obj/cable{
 	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
@@ -19944,6 +19944,16 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
+"rhp" = (
+/obj/machinery/power/data_terminal/cable_tray/dish,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/disjoint_connector/id{
+	id = "Renanin"
+	},
+/turf/simulated/floor/black,
+/area/station/storage/tech)
 "rht" = (
 /obj/cable/blue{
 	icon_state = "4-8"
@@ -61156,7 +61166,7 @@ ohe
 aYR
 aRA
 uIE
-uIE
+rhp
 mdN
 aYd
 aCs

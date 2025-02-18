@@ -189,3 +189,13 @@ TYPEINFO(/obj/machinery/power/data_terminal/cable_tray)
 		if(C.netnum && unmarked)
 			continue
 		. |= C
+
+/obj/machinery/power/data_terminal/cable_tray/dish
+	name = "microwave antenna"
+	desc = "Facilitates direct powernet connectivity to matching antennae in mid-range space."
+	icon = 'icons/mob/hivebot.dmi'
+	icon_state = "hive_main"
+	density = 1
+	level = OVERFLOOR
+	layer = OBJ_LAYER
+	plane = PLANE_DEFAULT

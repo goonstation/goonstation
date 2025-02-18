@@ -14602,6 +14602,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "eaT" = (
@@ -24573,6 +24576,13 @@
 	dir = 6;
 	name = "autoname  - SS13";
 	pixel_y = 21
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal/cable_tray/dish,
+/obj/disjoint_connector/id{
+	id = "Renanin"
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)

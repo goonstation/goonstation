@@ -6941,8 +6941,11 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "aKA" = (
-/obj/machinery/power/data_terminal,
 /obj/cable,
+/obj/machinery/power/data_terminal/cable_tray/dish,
+/obj/disjoint_connector/id{
+	id = "Renanin"
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "aKC" = (

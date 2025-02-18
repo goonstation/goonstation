@@ -718,13 +718,13 @@
 	dir = 4;
 	pixel_x = -22
 	},
-/obj/fakeobject{
-	desc = "It looks like it was never even plugged in. Did this ever work?!";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "printer0";
-	name = "Broken Printer";
-	true_name = "printer?"
+/obj/cable{
+	icon_state = "0-4"
 	},
+/obj/machinery/networked/printer{
+	print_id = "Radio"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/radiostation/bridge)
 "acn" = (
@@ -990,6 +990,9 @@
 /obj/decal/tile_edge/stripe{
 	icon_state = "xtra_bigstripe-edge"
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor,
 /area/radiostation/hallway)
 "adb" = (
@@ -1091,6 +1094,9 @@
 /obj/machinery/door/unpowered/wood/pyro{
 	name = "Studio"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/wood/two,
 /area/radiostation/studio)
 "adp" = (
@@ -1141,6 +1147,9 @@
 /turf/simulated/floor/wood/two,
 /area/radiostation/studio)
 "adx" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/wood/two,
 /area/radiostation/studio)
 "ady" = (
@@ -1615,16 +1624,10 @@
 /obj/machinery/door/airlock/pyro{
 	name = "Server"
 	},
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 1;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
+/obj/cable{
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/black,
 /area/radiostation/studio)
 "aeZ" = (
 /obj/lattice{
@@ -1818,6 +1821,10 @@
 "agb" = (
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal/radioship,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/radiostation/serverroom)
 "agc" = (
@@ -1825,14 +1832,18 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "agi" = (
-/obj/table/auto,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/item/audio_tape,
-/obj/item/device/audio_log/radioship/small/radioshow,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal/cable_tray/dish,
+/obj/disjoint_connector/id{
+	id = "Renanin"
+	},
 /turf/simulated/floor/black,
 /area/radiostation/serverroom)
 "agl" = (
@@ -1879,14 +1890,8 @@
 /turf/space,
 /area/space)
 "agz" = (
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 1;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
 /area/radiostation/serverroom)
@@ -2131,6 +2136,9 @@
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/red/side,
 /area/radiostation/hallway)
@@ -3046,14 +3054,9 @@
 /obj/stool/chair{
 	dir = 1
 	},
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 10;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
+/obj/machinery/power/data_terminal/cable_tray,
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
 /area/radiostation/serverroom)
@@ -3121,31 +3124,17 @@
 /turf/simulated/floor/grime,
 /area/diner/hallway)
 "aoY" = (
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 9;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
+/obj/cable{
+	icon_state = "2-4"
 	},
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 8;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
+/obj/cable{
+	icon_state = "2-8"
 	},
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 5;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
 /area/radiostation/serverroom)
@@ -3684,14 +3673,8 @@
 /obj/machinery/light_switch/east{
 	dir = 4
 	},
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 6;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
 /area/radiostation/serverroom)
@@ -4385,17 +4368,12 @@
 /area/salyut)
 "ato" = (
 /obj/decal/stripe_caution,
+/obj/table/auto,
 /turf/simulated/floor,
 /area/radiostation/serverroom)
 "atp" = (
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 1;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/radiostation/serverroom)
@@ -5390,6 +5368,14 @@
 /obj/decal/cleanable/flockdrone_debris/fluid,
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
+"aDk" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/radiostation/hallway)
 "aDy" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/abandonedoutpostthing)
@@ -6066,11 +6052,11 @@
 /area/abandonedmedicalship)
 "aHv" = (
 /obj/decal/cleanable/dirt,
-/obj/fakeobject/tapedeck,
 /obj/machinery/light{
 	dir = 8;
 	pixel_x = -10
 	},
+/obj/fakeobject/tapedeck,
 /turf/simulated/floor/black,
 /area/radiostation/engineering)
 "aHw" = (
@@ -6101,8 +6087,11 @@
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
 "aHE" = (
-/obj/fakeobject/vacuumtape,
 /obj/decal/stripe_delivery,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/fakeobject/vacuumtape,
 /turf/simulated/floor,
 /area/radiostation/serverroom)
 "aHF" = (
@@ -6220,31 +6209,14 @@
 /turf/simulated/floor,
 /area/h7/control)
 "aHY" = (
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 6;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
+/obj/cable{
+	icon_state = "1-2"
 	},
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 10;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
+/obj/cable{
+	icon_state = "1-8"
 	},
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 1;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
 /area/radiostation/serverroom)
@@ -14215,29 +14187,14 @@
 /turf/simulated/floor/black,
 /area/radiostation/engineering)
 "biU" = (
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 6;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
+/obj/cable{
+	icon_state = "1-2"
 	},
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 10;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
+/obj/cable{
+	icon_state = "1-4"
 	},
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
 /area/radiostation/serverroom)
@@ -14261,13 +14218,16 @@
 /turf/simulated/floor/sanitary,
 /area/radiostation/bedroom)
 "bjd" = (
-/obj/fakeobject/operatorconsole,
 /obj/decal/stripe_caution,
+/obj/fakeobject/operatorconsole,
 /turf/simulated/floor,
 /area/radiostation/serverroom)
 "bje" = (
-/obj/fakeobject/cpucontroller,
 /obj/decal/stripe_delivery,
+/obj/fakeobject/cpucontroller,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/radiostation/serverroom)
 "bjf" = (
@@ -14369,20 +14329,10 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/space)
-"bjD" = (
-/obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir-b"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/space,
-/area/space)
 "bjE" = (
 /obj/lattice,
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "1-2"
 	},
 /turf/space,
 /area/space)
@@ -15440,6 +15390,12 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
 /area/diner/hallway)
+"byg" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/radiostation/hallway)
 "byl" = (
 /obj/table/reinforced/auto,
 /obj/towelbin,
@@ -15639,6 +15595,14 @@
 	dir = 6
 	},
 /area/space_hive)
+"bVY" = (
+/obj/decal/stripe_delivery,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/fakeobject/bigcabinets/rackmount,
+/turf/simulated/floor,
+/area/radiostation/serverroom)
 "bWJ" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/recharge_station,
@@ -16787,6 +16751,13 @@
 	icon_state = "floor6"
 	},
 /area/diner/jucer_trader)
+"fmT" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/radiostation/hallway)
 "fmZ" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor/airless/damaged5,
@@ -16927,6 +16898,19 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/mining/diner)
+"fLZ" = (
+/obj/decal/stripe_caution,
+/obj/table/auto,
+/obj/item/device/audio_log/radioship/small/radioshow{
+	pixel_x = -5;
+	pixel_y = 12
+	},
+/obj/item/audio_tape{
+	pixel_y = 9;
+	pixel_x = 1
+	},
+/turf/simulated/floor,
+/area/radiostation/serverroom)
 "fQg" = (
 /obj/fakeobject/shuttleengine{
 	dir = 8;
@@ -16956,6 +16940,21 @@
 /obj/machinery/door/airlock/pyro,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
+"fTG" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/wood/two,
+/area/radiostation/studio)
 "fVj" = (
 /obj/stool/chair/office{
 	dir = 1
@@ -18790,7 +18789,7 @@
 /area/diner/kitchen)
 "kKQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/black,
+/turf/simulated/floor/plating,
 /area/radiostation/hallway)
 "kLD" = (
 /obj/decal/cleanable/dirt,
@@ -18974,6 +18973,12 @@
 /obj/item/clothing/shoes/black,
 /turf/simulated/floor,
 /area/helldrone)
+"lkW" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/two,
+/area/radiostation/studio)
 "lln" = (
 /obj/item/clothing/suit/fakebeewings{
 	pixel_y = 11
@@ -19462,6 +19467,12 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/arcade)
+"msk" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
 "msD" = (
 /obj/table/reinforced/auto,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -19776,6 +19787,13 @@
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
+"ngQ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/radiostation/serverroom)
 "nhs" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/decal/cleanable/dirt,
@@ -19811,6 +19829,16 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/salyut)
+"noQ" = (
+/obj/machinery/door/airlock/pyro/command/alt{
+	name = "Bridge";
+	req_access_txt = ""
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/blue,
+/area/radiostation/hallway)
 "npr" = (
 /turf/unsimulated/floor/stairs/wide/other{
 	dir = 4
@@ -20031,6 +20059,14 @@
 "nUA" = (
 /turf/simulated/floor/carpet/green/fancy/innercorner/ne,
 /area/diner/motel/observatory)
+"nVE" = (
+/obj/decal/stripe_delivery,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/fakeobject/bigcabinets/doorcontrol,
+/turf/simulated/floor,
+/area/radiostation/serverroom)
 "nWh" = (
 /obj/fakeobject/shuttlethruster{
 	dir = 4
@@ -21513,7 +21549,7 @@
 /area/space)
 "rTq" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/black,
+/turf/simulated/floor/plating,
 /area/radiostation/serverroom)
 "rTS" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -22143,6 +22179,9 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
@@ -22783,6 +22822,9 @@
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/radiostation/studio)
 "vfr" = (
@@ -22817,6 +22859,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
+"viG" = (
+/obj/decal/stripe_delivery,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/fakeobject/vacuumtape,
+/turf/simulated/floor,
+/area/radiostation/serverroom)
 "vjf" = (
 /obj/stool/chair,
 /turf/simulated/floor/carpet{
@@ -23447,6 +23497,12 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/plating,
 /area/diner/hallway)
+"wRK" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/blueblack,
+/area/radiostation/bridge)
 "wSz" = (
 /turf/simulated/floor/scorched,
 /area/diner/hangar)
@@ -23736,6 +23792,12 @@
 /obj/machinery/telejam/active,
 /turf/simulated/floor/white,
 /area/abandonedoutpostthing)
+"xVF" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/red/side,
+/area/radiostation/hallway)
 "xYM" = (
 /obj/machinery/conveyor/WE{
 	id = "robot_factory";
@@ -105733,7 +105795,7 @@ kKQ
 kKQ
 ack
 kKQ
-kKQ
+fmT
 kKQ
 adO
 aej
@@ -106035,7 +106097,7 @@ acD
 acY
 adf
 ads
-acY
+byg
 acY
 adP
 aek
@@ -106935,10 +106997,10 @@ uiy
 aaI
 abA
 acg
-acn
-acB
-acG
-acZ
+wRK
+noQ
+aDk
+xVF
 sVk
 adv
 adx
@@ -106950,11 +107012,11 @@ adg
 agb
 aon
 ato
-aHE
+nVE
 aHE
 bjd
 rTq
-bjD
+agV
 aaa
 bjG
 aaa
@@ -107255,7 +107317,7 @@ atp
 aHY
 biU
 bje
-rTq
+ngQ
 bjE
 bjF
 bjH
@@ -107544,18 +107606,18 @@ acB
 acG
 ada
 ado
-adx
-adx
-adL
-adL
-adL
-adL
+lkW
+fTG
+msk
+msk
+msk
+msk
 aeY
 agz
 arb
-ato
-aHE
-aHE
+fLZ
+viG
+bVY
 bjf
 rTq
 aeH
@@ -108451,7 +108513,7 @@ acD
 acY
 adp
 acY
-acY
+byg
 ads
 adP
 aeq
@@ -108753,7 +108815,7 @@ kKQ
 kKQ
 ack
 kKQ
-kKQ
+fmT
 kKQ
 adO
 aej
