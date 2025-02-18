@@ -814,6 +814,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	bound_height = 64
 	view_offset_x = 16
 	view_offset_y = 16
+	speedmod = 0.9
 	//luminosity = 5 // will help with space exploration
 	var/maxboom = 0
 
@@ -1223,6 +1224,8 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 /obj/item/podarmor
 	var/overlay_state
 	var/list/vehicle_types
+	/// multiplicative ship speed modifier from weight of this pod armor
+	var/speedmod = 1
 
 /obj/item/podarmor/armor_light
 	name = "Light Pod Armor"

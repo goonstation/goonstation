@@ -9,7 +9,8 @@
 	//delay between dropping wormhole and being able to enter it
 	var/portaldelay = 3 SECONDS
 	var/status = "Normal"
-	var/speedmod = 2 // how fast should the vehicle be, lower is faster
+	// multiplicative speed modifier for equipped pod
+	var/speedmod = 1
 	var/wormholeQueued = 0 //so users cant open a million inputs and bypass all cooldowns
 	var/warp_autopilot = 0		//prevents us from mistakenly moving when trying to warp. Checked in pod movement_controller
 	power_used = 0
@@ -182,7 +183,7 @@
 	powergenerated = 300 //how much power for components the engine generates
 	currentgen = 300 //handles engine power debuffs
 	warprecharge = 150 //Interval it takes for warp to be ready again
-	speedmod = 1
+	speedmod = 1.25
 	icon_state = "engine-2"
 
 /obj/item/shipcomponent/engine/hermes
@@ -191,7 +192,7 @@
 	powergenerated = 500
 	currentgen = 500
 	warprecharge = 300
-	speedmod = 3
+	speedmod = 0.5
 	icon_state = "engine-3"
 
 /obj/item/shipcomponent/engine/zero
@@ -200,7 +201,7 @@
 	powergenerated = 190
 	currentgen = 190
 	warprecharge = -1 //This disables the ability to create wormholes completely.
-	speedmod = 2
+	speedmod = 1.1
 	icon_state = "engine-4"
 
 /obj/item/shipcomponent/engine/escape
