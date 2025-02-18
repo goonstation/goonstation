@@ -384,8 +384,8 @@
 		/datum/manufacture/pod/lock,
 #ifndef UNDERWATER_MAP
 		/datum/manufacture/pod/lateral_thrusters,
-#endif
 		/datum/manufacture/pod/afterburner,
+#endif
 		/datum/manufacture/pod/light_shielding,
 		/datum/manufacture/pod/heavy_shielding,
 		/datum/manufacture/pod/auto_repair_kit,
