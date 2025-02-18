@@ -136,6 +136,9 @@ TYPEINFO_NEW(/obj/table)
 			P = new src.parts_type(src.loc)
 		else
 			P = new (src.loc)
+		for(var/atom/movable/AM as anything in src.storage.get_contents())
+			AM.set_loc(P)
+			P.stored_items += AM
 		if (P && src.material)
 			P.setMaterial(src.material)
 		var/oldloc = src.loc
