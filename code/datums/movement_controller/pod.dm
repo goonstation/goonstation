@@ -138,7 +138,9 @@
 
 				vel_max /= (owner.speed ? owner.speed : 1)
 
-				if (velocity_magnitude > vel_max * src.owner.speedmod * src.owner.engine.speedmod)
+				var/decel_check = src.owner.speedmod * src.owner.engine.speedmod > 1 // handling modifier for pod deceleration. otherwise, pod takes very long to turn
+
+				if (velocity_magnitude > vel_max * (decel_check > 1 ? decel_check : 1))
 					velocity_x /= velocity_magnitude
 					velocity_y /= velocity_magnitude
 
