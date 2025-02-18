@@ -120,7 +120,8 @@
 			else
 				if (!istype(get_turf(user), /turf/space) || istype(get_turf(user), /turf/space/fluid))
 					var/underwater = FALSE
-					if (istype(get_turf(user), /turf/space/fluid)) underwater = TRUE
+					if (istype(get_turf(user), /turf/space/fluid))
+						underwater = TRUE
 					else
 						var/turf/T = get_turf(user)
 						if (T?.active_liquid)
