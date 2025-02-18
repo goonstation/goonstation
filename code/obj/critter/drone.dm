@@ -944,12 +944,14 @@ ABSTRACT_TYPE(/obj/gunbotdrone_spawner)
 	icon_state = "drone_laser"
 	possible_drones = list(/obj/critter/gunbot/drone/laserdrone = 100,
 						   /obj/critter/gunbot/drone/heavydrone = 75,
+						   /obj/critter/gunbot/drone/cutterdrone = 25 // these are already manually placed in some asteroids, so reduced chance for variety
 						   /obj/critter/gunbot/drone/minigundrone = 5)
 
 /obj/gunbotdrone_spawner/rare
 	icon = 'icons/mob/critter/robotic/drone/ballistic.dmi'
 	icon_state = "drone_ballistic"
-	possible_drones = list(/obj/critter/gunbot/drone/minigundrone = 100)
+	possible_drones = list(/obj/critter/gunbot/drone/minigundrone = 100,
+						   /obj/critter/gunbot/drone/cannondrone = 75)
 
 TYPEINFO(/obj/critter/gunbot/drone/iridium)
 	mats = null //no
