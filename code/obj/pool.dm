@@ -124,9 +124,8 @@
 						underwater = TRUE
 					else
 						var/turf/T = get_turf(user)
-						if (T?.active_liquid)
-							if(T.active_liquid.last_depth_level > 2)
-								underwater = TRUE
+						if (T?.active_liquid?.last_depth_level > 2)
+							underwater = TRUE
 					if (underwater)
 						playsound(user, 'sound/impact_sounds/Liquid_Hit_Big_1.ogg', 60, TRUE)
 					else
