@@ -70,6 +70,9 @@
 
 	return
 
+/obj/machinery/door/window/update_icon(toggling)
+	src.icon_state = src.base_state
+
 /obj/machinery/door/window/emp_act()
 	..()
 	if (prob(20) && (src.density && src.cant_emag != 1 && src.isblocked() != 1))
