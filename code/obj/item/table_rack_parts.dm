@@ -22,7 +22,6 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	var/furniture_name = "table"
 	var/reinforced = 0
 	var/build_duration = 50
-	var/list/obj/item/stored_items = list() //! Desk drawer items
 	var/density_check = TRUE //! Do we want to prevent building on turfs with something dense there?
 
 	New(loc)
@@ -44,10 +43,6 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 			qdel(src)
 			return
 
-		for(var/obj/item/I in src.stored_items)
-			newThing.storage.add_contents(I, visible=FALSE)
-		src.stored_items.len = 0
-
 		if (newThing)
 			if (src.material)
 				newThing.setMaterial(src.material)
@@ -59,12 +54,6 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 		return newThing
 
 	proc/deconstruct(var/reinforcement = 0)
-		if(length(src.stored_items))
-			var/turf/T = get_turf(src)
-			for(var/obj/item/I in src.stored_items)
-				I.set_loc(T)
-			src.stored_items.len = 0
-
 		var/obj/item/sheet/A = new /obj/item/sheet(get_turf(src))
 		if (src.material)
 			A.setMaterial(src.material)
@@ -96,14 +85,6 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 		. = ..()
 		if (HAS_ATOM_PROPERTY(usr, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING) && isturf(target))
 			actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, target), usr)
-
-	disposing()
-		if(length(src.stored_items))
-			var/turf/T = get_turf(src)
-			for(var/obj/item/I in src.stored_items)
-				I.set_loc(T)
-			src.stored_items.len = 0
-		..()
 
 /* ---------- Table Parts ---------- */
 #define TABLE_WARNING(user) boutput(user, SPAN_ALERT("You can't build a table under yourself! You'll have to build it somewhere adjacent instead."))
