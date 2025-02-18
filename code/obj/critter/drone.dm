@@ -573,7 +573,6 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		score = 120
 		alertsound1 = 'sound/machines/engine_alert1.ogg'
 		alertsound2 = 'sound/machines/engine_alert1.ogg'
-		droploot = /obj/item/shipcomponent/secondary_system/crash
 		projectile_type = /datum/projectile/bullet/aex
 		current_projectile = new/datum/projectile/bullet/aex
 		attack_cooldown = 50
