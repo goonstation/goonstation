@@ -824,6 +824,23 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			..()
 			name = "Drone CA-[rand(1,999)]"
 
+	maserdrone
+		name = "Maser Drone"
+		desc = "A lethal drone equipped with a weapon designed to bypass pod armor completely. It's best to not get this thing's attention."
+		icon = 'icons/mob/critter/robotic/drone/maser.dmi'
+		icon_state = "drone_maser"
+		dead_state = "drone_maser"
+		health = 100
+		maxhealth = 100
+		score = 120
+		drop_loot_chance = 25
+		droploot = /obj/item/shipcomponent/mainweapon/maser
+		projectile_type = /datum/projectile/laser/light/maser
+		current_projectile = new/datum/projectile/laser/light/maser
+
+		New()
+			..()
+			name = "Drone MA-[rand(1, 999)]"
 
 	helldrone // the worst jerk
 		name = "Syndicate Command Drone"

@@ -276,6 +276,36 @@ toxic - poisons
 				P.special_data["angle"] = 0
 			..()
 
+	maser
+		name = "maser ray"
+		icon_state = "sinebeam1"
+		sname = "maser ray"
+		damage = 0.0001 /// to bypass 0 damage checks
+		dissipation_delay = 8
+		color_red = 1
+		color_green = 1
+		color_blue = 1
+		has_impact_particles = FALSE
+		var/hit_dmg = 20
+		disruption = 5
+
+		on_hit(atom/hit)
+			if (istype(hit, /mob))
+				var/mob/M = hit
+				M.TakeDamage("All", burn = src.hit_dmg, damage_type = DAMAGE_BURN)
+			else if (istype(hit, /obj/machinery/vehicle))
+				var/obj/machinery/vehicle/vehicle = hit
+				var/mob/M = vehicle.pilot
+				if (istype(M))
+					if (istype(vehicle.sec_system, /obj/item/shipcomponent/secondary_system/shielding))
+						var/obj/item/shipcomponent/secondary_system/shielding/shielding = vehicle.sec_system
+						if (!shielding.active)
+							M.TakeDamage("All", burn = src.hit_dmg, damage_type = DAMAGE_BURN)
+			..()
+
+		pod
+			hit_dmg = 5
+
 	upgradeable
 		icon_state = "phaser_light"
 		var/datum/projectile/laser/light/launched = new/datum/projectile/laser/light
