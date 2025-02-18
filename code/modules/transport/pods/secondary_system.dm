@@ -525,6 +525,8 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 	f_active = TRUE
 	power_used = 50
 	var/power_in_use = FALSE
+	var/cooldown_time
+	var/cd_message
 
 	Use(mob/user)
 		src.activate(user)
@@ -540,6 +542,14 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 		if (user != src.ship.pilot)
 			return FALSE
 
+		if (src.disrupted)
+			boutput(src.ship.pilot, "[src.ship.ship_message("ALERT: [src] is temporarily disabled!")]")
+			return FALSE
+
+		if (ON_COOLDOWN(src, "thruster_movement", src.cooldown_time))
+			boutput(user, "[src.ship.ship_message("[src.cd_message] [round(GET_COOLDOWN(src, "thruster_movement") / 10, 0.1)] seconds left.")]")
+			return FALSE
+
 		if (!src.power_in_use)
 			if (src.ship.powercapacity < (src.ship.powercurrent + src.power_used))
 				boutput(src.ship.pilot, "[src.ship.ship_message("Not enough power to activate [src]!")]")
@@ -547,10 +557,6 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 			src.ship.powercurrent += src.power_used
 			src.active = TRUE
 			src.power_in_use = TRUE
-
-		if (src.disrupted)
-			boutput(src.ship.pilot, "[src.ship.ship_message("ALERT: [src] is temporarily disabled!")]")
-			return FALSE
 
 		src.use_thrusters(user)
 
@@ -569,12 +575,11 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 	desc = "A thruster system that provides a burst of lateral movement upon use. Note, NanoTrasen is not liable for any resulting injuries."
 	help_message = "Initialized to provide movement to the right. When installed in a pod, click the pod and use the context menu button to change direction."
 	hud_state = "lat_thrusters_right"
+	cooldown_time = 5 SECONDS
+	cd_message = "Thrusters are cooling down!"
 	var/turn_dir = "right"
 
 	use_thrusters(mob/user)
-		if (ON_COOLDOWN(src, "thruster_movement", 5 SECONDS))
-			boutput(user, "[src.ship.ship_message("Thrusters are cooling down! [round(GET_COOLDOWN(src, "thruster_movement") / 10, 0.1)] seconds left.")]")
-			return
 		var/turn_angle = src.turn_dir == "right" ? -90 : 90
 
 		// spawn to allow button clunk sound to play right away
@@ -601,12 +606,11 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 	hud_state = "lat_thrusters_right"
 	f_active = TRUE
 	power_used = 50
+	cooldown_time = 20 SECONDS
+	cd_message = "Afterburner is recharging!"
+
 
 	use_thrusters(mob/user)
-		if (ON_COOLDOWN(src, "thruster_movement", 20 SECONDS))
-			boutput(user, "[src.ship.ship_message("Afterburner is recharging! [round(GET_COOLDOWN(src, "thruster_movement") / 10, 0.1)] seconds left.")]")
-			return
-
 		// spawn to allow button clunk sound to play right away
 		SPAWN(0)
 			boutput(user, "[src.ship.ship_message("Afterburner is now active!")]")
@@ -617,7 +621,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 
 	deactivate()
 		..()
-		src.ship.afterburner_accel_mod *= 1.1
+		src.ship.afterburner_accel_mod /= 1.1
 		src.ship.afterburner_speed_mod /= 1.75
 
 /obj/item/shipcomponent/secondary_system/tractor_beam
