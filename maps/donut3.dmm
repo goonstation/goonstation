@@ -923,9 +923,7 @@
 	},
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "alB" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
@@ -1751,6 +1749,16 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
+"ayb" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/computer3/generic/bank_data{
+	dir = 8
+	},
+/turf/simulated/floor/blueblack,
+/area/station/bridge)
 "ayc" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/mesh/catwalk/jen,
@@ -3572,9 +3580,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/greenblack,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aYw" = (
 /obj/disposalpipe/segment/brig,
 /obj/machinery/door/airlock/pyro/engineering,
@@ -5042,9 +5048,7 @@
 	},
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/greenblack,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "bvI" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 4;
@@ -5383,16 +5387,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
-"bzS" = (
-/obj/machinery/computer/bank_data{
-	dir = 8
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/blueblack,
-/area/station/bridge)
 "bzU" = (
 /obj/railing/orange{
 	dir = 4
@@ -5573,9 +5567,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "bCH" = (
 /turf/simulated/wall/auto/jen/yellow,
 /area/station/maintenance/inner/se)
@@ -6014,9 +6006,7 @@
 /area/station/medical/asylum/main)
 "bJh" = (
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "bJi" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -8409,9 +8399,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "crB" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -8435,9 +8423,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "csf" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -9901,9 +9887,7 @@
 	},
 /obj/item/cloneModule/genepowermodule,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "cPl" = (
 /obj/table/wood/round/auto,
 /obj/random_item_spawner/med_kit/one,
@@ -11611,9 +11595,7 @@
 	id = "genetics"
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "doY" = (
 /obj/decal/stripe_caution,
 /obj/machinery/optable,
@@ -11984,9 +11966,7 @@
 "dws" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "dwz" = (
 /turf/simulated/floor/black,
 /area/station/ai_monitored/storage/eva)
@@ -12099,6 +12079,19 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/office)
+"dye" = (
+/obj/decal/stripe_delivery,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 4;
+	id = "testchamber"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/chemistry,
+/turf/simulated/floor/black,
+/area/station/science/testchamber)
 "dyh" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/window_blinds/cog2/right,
@@ -12296,9 +12289,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 10
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "dCw" = (
 /obj/table/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -13060,17 +13051,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/engineering)
-"dOe" = (
-/obj/machinery/computer/bank_data{
-	dir = 8
-	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/black,
-/area/station/security/checkpoint/customs)
 "dOk" = (
 /obj/table/wood/round/auto,
 /obj/random_item_spawner/snacks/two,
@@ -14655,9 +14635,7 @@
 "elK" = (
 /obj/machinery/genetics_scanner,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "elM" = (
 /turf/simulated/wall/auto/jen/yellow,
 /area/station/storage/auxillary{
@@ -15796,9 +15774,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "eGN" = (
 /obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport,
@@ -16029,9 +16005,7 @@
 /turf/simulated/floor/greenblack/corner{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "eKf" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/stairs/wide/other{
@@ -18030,9 +18004,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "fqB" = (
 /obj/machinery/turret{
 	dir = 5
@@ -22364,9 +22336,7 @@
 /area/station/hangar/science)
 "gHC" = (
 /turf/simulated/wall/auto/jen/blue,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "gHF" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail,
@@ -24983,9 +24953,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/greenblack,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "hvR" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -26423,9 +26391,7 @@
 	},
 /obj/landmark/start/job/geneticist,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "hVZ" = (
 /obj/decal/floatingtiles{
 	dir = 4
@@ -27328,6 +27294,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
+"ikX" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/chemistry,
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "ikZ" = (
 /obj/machinery/disposal/small{
 	dir = 8
@@ -27876,9 +27854,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "ivU" = (
 /obj/machinery/rkit,
 /obj/machinery/light/incandescent/warm{
@@ -29235,9 +29211,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "iRy" = (
 /turf/simulated/floor/carpet/green/fancy/narrow/se,
 /area/station/crew_quarters/heads)
@@ -30698,9 +30672,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "jnk" = (
 /turf/simulated/wall/auto/jen/yellow,
 /area/station/quartermaster/office)
@@ -33516,9 +33488,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "kfc" = (
 /obj/cable{
 	icon_state = "1-10"
@@ -34312,9 +34282,7 @@
 /turf/simulated/floor/greenblack/corner{
 	dir = 4
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "kqN" = (
 /obj/storage/closet/dresser/random,
 /obj/disposalpipe/segment/mail,
@@ -34839,9 +34807,7 @@
 	},
 /mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "kyM" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
@@ -35297,9 +35263,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 9
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "kFs" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/red/side{
@@ -35968,9 +35932,7 @@
 	id = "genetics"
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "kQt" = (
 /obj/mesh/catwalk{
 	dir = 4
@@ -36799,9 +36761,7 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor/greenblack,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "leE" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/white,
@@ -37229,6 +37189,17 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
+"lnR" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/bank_data{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/security/checkpoint/customs)
 "lnT" = (
 /obj/table/wood/auto,
 /obj/computer3frame/desktop,
@@ -37880,18 +37851,6 @@
 	name = "reinforced plating"
 	},
 /area/station/engine/ptl)
-"lwQ" = (
-/obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/chemistry,
-/turf/simulated/floor/black,
-/area/station/science/chemistry)
 "lwW" = (
 /turf/simulated/floor/carpet/red/fancy/edge,
 /area/station/crew_quarters/stockex)
@@ -43315,9 +43274,7 @@
 	},
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/greenblack,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "ndl" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line-broken3"
@@ -52514,7 +52471,6 @@
 	icon_state = "line1"
 	},
 /obj/table/wood/round/auto,
-/obj/table/wood/round/auto,
 /obj/drink_rack/mug{
 	pixel_x = 3;
 	pixel_y = 29
@@ -56582,9 +56538,7 @@
 /area/station/routing/depot)
 "rfG" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "rfI" = (
 /obj/machinery/light/incandescent/harsh{
 	dir = 1
@@ -56819,9 +56773,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "rkE" = (
 /obj/machinery/shower{
 	dir = 8;
@@ -59040,6 +58992,18 @@
 /obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
+"rUo" = (
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/window_blinds/cog2/left{
+	dir = 4;
+	id = "chemistry"
+	},
+/obj/table/reinforced/chemistry/auto/clericalsup,
+/obj/mapping_helper/access/chemistry,
+/turf/simulated/floor/plating,
+/area/station/science/chemistry)
 "rUq" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -61026,9 +60990,7 @@
 	},
 /obj/landmark/start/job/geneticist,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "syh" = (
 /obj/stool/chair/red,
 /obj/machinery/bot/medbot/no_camera,
@@ -63143,6 +63105,21 @@
 /area/station/storage/auxillary{
 	name = "Tool Storage"
 	})
+"tgi" = (
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/machinery/cashreg{
+	name = "Chemistry credit transfer device"
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 4;
+	id = "chemistry"
+	},
+/obj/table/reinforced/chemistry/auto/clericalsup,
+/obj/mapping_helper/access/chemistry,
+/turf/simulated/floor/plating,
+/area/station/science/chemistry)
 "tgj" = (
 /obj/machinery/light/incandescent/netural,
 /obj/table/auto,
@@ -70700,18 +70677,6 @@
 /obj/stool/bench/red,
 /turf/simulated/floor/wood/five,
 /area/station/medical/asylum/main)
-"vrR" = (
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8
-	},
-/obj/window_blinds/cog2/left{
-	dir = 4;
-	id = "chemistry"
-	},
-/obj/table/reinforced/chemistry/auto/clericalsup,
-/obj/mapping_helper/access/chemistry,
-/turf/simulated/floor/plating,
-/area/station/science/chemistry)
 "vrX" = (
 /obj/table/auto,
 /obj/item/clothing/glasses/sunglasses{
@@ -72111,7 +72076,6 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "vOl" = (
-/obj/table/wood/auto,
 /obj/table/wood/auto,
 /obj/item/plate{
 	pixel_x = 6;
@@ -75061,9 +75025,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "wGe" = (
 /obj/machinery/light/small/floor/netural,
 /turf/unsimulated/floor/shuttle{
@@ -76087,21 +76049,6 @@
 	dir = 8
 	},
 /area/listeningpost)
-"wVm" = (
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8
-	},
-/obj/machinery/cashreg{
-	name = "Chemistry credit transfer device"
-	},
-/obj/window_blinds/cog2/middle{
-	dir = 4;
-	id = "chemistry"
-	},
-/obj/table/reinforced/chemistry/auto/clericalsup,
-/obj/mapping_helper/access/chemistry,
-/turf/simulated/floor/plating,
-/area/station/science/chemistry)
 "wVy" = (
 /obj/table/reinforced/industrial/auto,
 /turf/simulated/floor/yellowblack{
@@ -76471,9 +76418,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "wZJ" = (
 /obj/railing/orange,
 /obj/decal/cleanable/dirt/jen,
@@ -78299,9 +78244,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "xyT" = (
 /obj/decal/cleanable/rust/jen,
 /obj/table/reinforced/auto,
@@ -78791,19 +78734,6 @@
 /obj/machinery/light/incandescent/harsh,
 /turf/simulated/floor,
 /area/station/hangar/science)
-"xFV" = (
-/obj/decal/stripe_delivery,
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/sci_alt{
-	dir = 4;
-	id = "testchamber"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/chemistry,
-/turf/simulated/floor/black,
-/area/station/science/testchamber)
 "xGu" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/plating/jen,
@@ -115309,7 +115239,7 @@ ixX
 ixX
 iLV
 gLl
-dOe
+lnR
 aAT
 iLV
 hWZ
@@ -115932,7 +115862,7 @@ bZT
 xLp
 jIQ
 lqP
-bzS
+ayb
 agA
 sUt
 nOG
@@ -118697,7 +118627,7 @@ aZz
 aZz
 aZz
 jzV
-xFV
+dye
 aZz
 aZz
 aRF
@@ -118993,8 +118923,8 @@ npV
 pyL
 mfI
 lqR
-wVm
-vrR
+tgi
+rUo
 bmF
 wXr
 iou
@@ -121411,10 +121341,10 @@ amn
 aFv
 jQB
 aFv
-lwQ
+ikX
 aFv
 uFb
-lwQ
+ikX
 uFb
 wUb
 afo

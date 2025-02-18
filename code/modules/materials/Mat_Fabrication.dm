@@ -51,7 +51,9 @@
 	/datum/matfab_recipe/simple/nuclear/heat_exchanger,
 	/datum/matfab_recipe/simple/nuclear/control_rod,
 	/datum/matfab_recipe/simple/nuclear/fuel_rod,
-	/datum/matfab_recipe/makeshift_fuel_rod)
+	/datum/matfab_recipe/makeshift_fuel_rod,
+	/datum/matfab_recipe/simple/turbine/blade,
+	/datum/matfab_recipe/simple/turbine/stator)
 
 /obj/machinery/nanofab/prototype
 	name = "Nano-fabricator (Prototype)"
@@ -317,8 +319,7 @@
 					var/howMany = input(usr, "How many ([maxAmt] max)?", "Select amount", maxAmt)
 					if(howMany > maxAmt || !selectedRecipe) return //ZeWaka: Fix for null.canBuild
 					if(selectedRecipe.canBuild(howMany, src))
-						SPAWN(2.5 SECONDS)
-							selectedRecipe.build(howMany, src)
+						selectedRecipe.build(howMany, src)
 						var/list/parts = list()
 						for(var/datum/matfab_part/P in selectedRecipe.required_parts)
 							if(P.assigned)

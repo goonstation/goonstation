@@ -98,6 +98,51 @@
 	color_blue = 1
 	disruption = 8
 
+/obj/item/gun/energy/stasis
+	name = "stasis rifle"
+	icon = 'icons/obj/items/guns/energy48x32.dmi'
+	icon_state = "stasis"
+	item_state = "rifle"
+	charge_icon_state = "stasis"
+	force = 1
+	cell_type = /obj/item/ammo/power_cell/med_power
+	desc = "An experimental weapon that produces a cohesive electrical charge designed to hold a target in place for a limited time."
+	muzzle_flash = "muzzle_flash_bluezap"
+	uses_charge_overlay = TRUE
+	can_dual_wield = FALSE
+	two_handed = 1
+	w_class = W_CLASS_NORMAL
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+
+	New()
+		set_current_projectile(new/datum/projectile/energy_bolt/stasis)
+		projectiles = list(current_projectile)
+		AddComponent(/datum/component/holdertargeting/windup, 3 SECONDS)
+		..()
+
+/datum/projectile/energy_bolt/stasis
+	name = "stasis bolt"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "cyan_bolt"
+	damage = 0
+	cost = 100
+	dissipation_rate = 2
+	dissipation_delay = 8
+	shot_sound = 'sound/weapons/laser_e.ogg'
+	shot_number = 1
+	damage_type = D_ENERGY
+	hit_ground_chance = 0
+	brightness = 0.8
+	ie_type = "E"
+	has_impact_particles = TRUE
+
+	on_hit(atom/hit)
+		if (isliving(hit))
+			var/mob/living/L = hit
+			L.changeStatus("stasis", 6 SECONDS)
+		impact_image_effect(ie_type, hit)
+		return
+
 /obj/item/swords/sord
 	name = "gross sord"
 	desc = "oh no"

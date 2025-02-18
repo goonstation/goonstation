@@ -16,10 +16,14 @@
 		/datum/manufacture/flashlight,
 		/datum/manufacture/weldingmask,
 		/datum/manufacture/metal,
+		/datum/manufacture/metal/bulk,
 		/datum/manufacture/metalR,
+		/datum/manufacture/metalR/bulk,
 		/datum/manufacture/rods2,
 		/datum/manufacture/glass,
+		/datum/manufacture/glass/bulk,
 		/datum/manufacture/glassR,
+		/datum/manufacture/glassR/bulk,
 		/datum/manufacture/atmos_can,
 		/datum/manufacture/gastank,
 		/datum/manufacture/miniplasmatank,
@@ -387,6 +391,7 @@
 		/datum/manufacture/pod/lock,
 		/datum/manufacture/pod/light_shielding,
 		/datum/manufacture/pod/heavy_shielding,
+		/datum/manufacture/pod/auto_repair_kit,
 		/datum/manufacture/beaconkit,
 		/datum/manufacture/podgps
 	)

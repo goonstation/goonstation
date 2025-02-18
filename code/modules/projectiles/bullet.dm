@@ -200,6 +200,11 @@ toxic - poisons
 	casing = /obj/item/casing/rifle
 	ricochets = TRUE
 
+/datum/projectile/bullet/akm/pod
+	damage = 4
+	shot_number = 1
+	dissipation_delay = 7
+
 /datum/projectile/bullet/draco
 	name = "bullet"
 	shot_sound = 'sound/weapons/akm.ogg'
@@ -2231,6 +2236,25 @@ datum/projectile/bullet/autocannon
 			//let's pretend these walls/objects were destroyed in the explosion
 			hit.ex_act(pick(1,2))
 		. = ..()
+
+/datum/projectile/bullet/wall_buster_shrapnel/turbine_blade
+	name = "turbine blade"
+	implanted = null //just delimbs mobs, doesn't stick in them
+	damage = 100
+
+	on_hit(atom/hit, angle, obj/projectile/O)
+		if(istype(hit, /obj/machinery/atmospherics/binary/nuclear_reactor))
+			return FALSE //the turbine blades sail gracefully over the reactor
+		if(istype(hit, /mob/living/carbon/human)) //run a chance to cut off a limb or head
+			var/mob/living/carbon/human/H = hit
+			if(prob(65))
+				H.sever_limb(pick("l_arm","r_arm","l_leg","r_leg"))
+			else
+				var/obj/item/organ/head = H.organHolder.drop_organ("head")
+				head.splat(get_turf(H))
+			return TRUE //keep going
+		. = ..() //else do normal collisions, this will kill most non-human mobs in one hit
+
 
 /datum/projectile/bullet/webley
 	name = "bullet"
