@@ -139,7 +139,7 @@
 				vel_max /= (owner.speed ? owner.speed : 1)
 
 				// lower maximum velocities result in pod being very slow to turn, so a base max velocity is set
-				if (velocity_magnitude > vel_max * max(src.owner.speedmod * src.owner.engine.speedmod : 1))
+				if (velocity_magnitude > vel_max * max(src.owner.speedmod * src.owner.engine.speedmod, 1))
 					velocity_x /= velocity_magnitude
 					velocity_y /= velocity_magnitude
 
