@@ -48,10 +48,10 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	src.botcard = new /obj/item/card/id(src)
 	if(src.syndicate)
 		src.lawset_connection = ticker?.ai_law_rack_manager.default_ai_rack_syndie.lawset
-		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default SYNDICATE rack [constructName(src.lawset_connection.host_rack)]")
+		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default SYNDICATE rack [constructName(src.lawset_connection?.host_rack)]")
 	else
 		src.lawset_connection = ticker?.ai_law_rack_manager.default_ai_rack.lawset
-		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default rack [constructName(src.lawset_connection.host_rack)]")
+		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default rack [constructName(src.lawset_connection?.host_rack)]")
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING, src)
 
 /mob/living/silicon/disposing()

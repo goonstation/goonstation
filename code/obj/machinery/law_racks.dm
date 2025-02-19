@@ -476,7 +476,7 @@
 
 	/// Saves the current laws as a list to pass to the ai_lawset datum
 	proc/format_as_list()
-		var/list/laws = list()
+		var/list/laws[LAWRACK_MAX_CIRCUITS]
 		var/law_counter = 1
 		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
 			var/obj/item/aiModule/module = law_circuits[i]

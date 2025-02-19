@@ -195,7 +195,7 @@
 		var/law_counter = 1
 		var/lawOut = list()
 		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
-			if(current_laws[i])
+			if(!current_laws[i])
 				continue
 			var/lt = current_laws[i]["law"]
 			if(islist(lt))
