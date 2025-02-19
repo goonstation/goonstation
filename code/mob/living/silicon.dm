@@ -53,7 +53,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 		logTheThing(LOG_STATION, src, "New cyborg [src] spawned with their own internal lawset:<br>[src.lawset_connection.format_for_logs()]") //this might be a bit verbose
 	else
 		src.lawset_connection = ticker?.ai_law_rack_manager.default_ai_rack.lawset
-		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default rack [constructName(src.lawset_connection.host_rack)]")
+		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default rack [constructName(src.lawset_connection?.host_rack)]")
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING, src)
 
 /mob/living/silicon/disposing()
