@@ -87,7 +87,7 @@
 	var/law = "Accomplish your objectives at all costs."
 	boutput(killer, "<b>Your laws have been changed!</b>")
 	killer.lawset_connection?.host_rack?.SetLawCustom("Objective Law Module", law, 1, TRUE, TRUE)
-	killer.lawset_connection?.UpdateLaws()
+	killer.lawset_connection?.host_rack?.UpdateModules()
 
 /datum/game_mode/traitor/proc/get_mob_list()
 	var/list/mobs = list()
