@@ -1224,8 +1224,6 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 /obj/item/podarmor
 	var/overlay_state
 	var/list/vehicle_types
-	/// multiplicative ship speed modifier from weight of this pod armor
-	var/speedmod = 1
 
 /obj/item/podarmor/armor_light
 	name = "Light Pod Armor"
