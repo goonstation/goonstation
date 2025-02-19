@@ -507,3 +507,50 @@ TYPEINFO(/datum/component/equipment_fault/leaky)
 		var/datum/reagents/temp_fluid_reagents = new /datum/reagents(5)
 		temp_fluid_reagents.add_reagent(pick(src.reagent_list), 5)
 		target_turf.fluid_react(temp_fluid_reagents, temp_fluid_reagents.total_volume)
+
+TYPEINFO(/datum/component/equipment_fault/messy)
+	initialization_args = list(
+		ARG_INFO("tool_flags", DATA_INPUT_BITFIELD, "Tools Required", TOOL_PULSING | TOOL_SCREWING),
+		ARG_INFO("cleanables", DATA_INPUT_LIST_PROVIDED, "Cleanable List", list(\
+			/obj/decal/cleanable/machine_debris=40,\
+			/obj/decal/cleanable/oil=10,\
+			/obj/decal/cleanable/oil/streak=20,\
+			/obj/decal/cleanable/generic=10,\
+			/obj/decal/cleanable/glitter/harmless=5,\
+		)),
+	)
+
+///streaks one of a list of weighted cleanables near the machine
+/datum/component/equipment_fault/messy
+	///list of cleanables picked to spawn when a fault is triggered
+	var/list/obj/decal/cleanable/cleanable_types = list(
+		/obj/decal/cleanable/machine_debris=40,
+		/obj/decal/cleanable/oil=10,
+		/obj/decal/cleanable/oil/streak=20,
+		/obj/decal/cleanable/generic=10,
+		/obj/decal/cleanable/glitter/harmless=5,
+	)
+	var/static/list/sounds = list(
+		'sound/machines/windup.ogg',
+		'sound/machines/hydraulic.ogg',
+		'sound/machines/seed_destroyed.ogg',
+		'sound/machines/ArtifactBee1.ogg',
+		'sound/machines/constructor_work.ogg',
+	)
+
+/datum/component/equipment_fault/messy/Initialize(tool_flags, cleanables)
+	. = ..()
+	if (!islist(cleanables))
+		return COMPONENT_INCOMPATIBLE
+	src.cleanable_types = cleanables
+
+/datum/component/equipment_fault/messy/ef_process(obj/machinery/M, mult)
+	src.ef_perform_fault(M)
+
+/datum/component/equipment_fault/messy/ef_perform_fault(obj/O)
+	if(..())
+		playsound(O, pick(sounds), 30, 2)
+		var/obj/decal/cleanable/junk = make_cleanable(pick(src.cleanable_types), O.loc)
+		junk.streak_cleanable(cardinal, dist_upper=1)
+		hit_twitch(O)
+		O.visible_message(SPAN_NOTICE("[O] spews out some of its internals."))

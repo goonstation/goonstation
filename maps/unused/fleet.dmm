@@ -8732,9 +8732,7 @@
 	})
 "tT" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "tV" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/latex,
@@ -9032,9 +9030,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "uD" = (
 /obj/machinery/disposal/small/north{
 	pixel_y = 32
@@ -9049,9 +9045,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "uE" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -9066,9 +9060,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "uF" = (
 /obj/stool/chair/blue{
 	dir = 4
@@ -9082,9 +9074,7 @@
 	},
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/blue/checker,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "uG" = (
 /obj/machinery/computer/genetics{
 	dir = 8
@@ -9097,15 +9087,11 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "uH" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "uJ" = (
 /obj/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
@@ -9409,18 +9395,14 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "vo" = (
 /obj/stool/chair/blue,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "vp" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -9428,9 +9410,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "vq" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -9442,9 +9422,7 @@
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "vr" = (
 /obj/machinery/genetics_scanner,
 /obj/cable{
@@ -9452,9 +9430,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/blue/checker,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "vs" = (
 /obj/cable,
 /obj/cable{
@@ -9784,9 +9760,7 @@
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/bluewhite,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "wa" = (
 /obj/machinery/light,
 /obj/disposalpipe/segment/bent/north,
@@ -9794,18 +9768,14 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/bluewhite,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "wb" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/bluewhite,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "wd" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -10193,9 +10163,7 @@
 	})
 "wP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "wQ" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Vessel Restroom"
@@ -18668,9 +18636,7 @@
 	name = "autoname - SS13"
 	},
 /turf/simulated/floor/bluewhite,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "OX" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -21686,9 +21652,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/sanitary/white,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "VE" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Teleporter Lab"
@@ -21934,9 +21898,7 @@
 	},
 /obj/mapping_helper/access/medical,
 /turf/simulated/floor/blue,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "Wf" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,

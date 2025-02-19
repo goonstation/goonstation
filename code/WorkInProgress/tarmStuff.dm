@@ -997,7 +997,7 @@ TYPEINFO(/obj/item/device/geiger)
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer/bad
 	can_swap_cell = 0
-	color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
+	color = COLOR_MATRIX_INVERSE
 
 	New()
 		set_current_projectile(new/datum/projectile/special/timegun/theBulletThatShootsTheFuture)
