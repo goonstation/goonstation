@@ -1799,6 +1799,7 @@
 
 // make ships less destructive (maybe depends on Mass and Speed?)
 
+ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 /obj/machinery/vehicle/tank
 	name = "tank"
 	icon = 'icons/obj/machines/8dirvehicles.dmi'
