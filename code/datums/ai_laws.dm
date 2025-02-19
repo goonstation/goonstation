@@ -88,7 +88,7 @@
 				logTheThing(LOG_STATION, src, "the law rack [constructName(new_rack)] claims first registered SYNDICATE, and gets Syndicate laws!")
 
 		src.registered_racks |= new_rack //shouldn't be possible, but just in case - there can only be one instance of rack in registered
-		new_rack.lawset.last_laws = new_rack.format_as_list()
+		new_rack.UpdateModules()
 
 	proc/unregister_rack(var/obj/machinery/lawrack/dead_rack)
 		logTheThing(LOG_STATION, src, "[src] unregisters the law rack [constructName(dead_rack)]")
@@ -132,7 +132,7 @@
 			if (isnull(law_number))
 				law_number = rand(1, 3)
 			if(R.cause_law_glitch(picked_law, law_number, replace))
-				R.lawset.UpdateLaws()
+				R.UpdateModules()
 				if (replace)
 					logTheThing(LOG_ADMIN, null, "Law Rack Corruption replaced inherent AI law [law_number]: [picked_law]")
 					message_admins("Law Rack Corruption replaced inherent law [law_number]: [picked_law]")
