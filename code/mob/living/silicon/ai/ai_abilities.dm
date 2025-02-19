@@ -38,7 +38,7 @@
 
 		if(istype(AI))
 			var/obj/machinery/lawrack/law_rack = AI.lawset_connection.host_rack
-			for (var/i in 1 to law_rack.MAX_CIRCUITS)
+			for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
 				var/obj/item/aiModule/ability_expansion/expansion = law_rack.law_circuits[i]
 				if(istype(expansion))
 					if(src.type in expansion.ai_abilities)

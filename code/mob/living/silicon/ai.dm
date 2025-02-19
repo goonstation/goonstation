@@ -1013,7 +1013,7 @@ or don't if it uses a custom topopen overlay
 		else
 			var/mob/living/silicon/S = user
 			ls =  S.lawset_connection
-		if(src.lawset_connection != lr)
+		if(src.lawset_connection != ls)
 			. += "[SPAN_ALERT("[src.name] is not connected to your law rack!")]<br>"
 		else
 			. += "[src.name] follows the same laws you do.<br>"

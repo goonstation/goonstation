@@ -88,7 +88,7 @@
 				logTheThing(LOG_STATION, src, "the law rack [constructName(new_rack)] claims first registered SYNDICATE, and gets Syndicate laws!")
 
 		src.registered_racks |= new_rack //shouldn't be possible, but just in case - there can only be one instance of rack in registered
-		new_rack.update_last_laws()
+		new_rack.lawset.last_laws = new_rack.format_as_list()
 
 	proc/unregister_rack(var/obj/machinery/lawrack/dead_rack)
 		logTheThing(LOG_STATION, src, "[src] unregisters the law rack [constructName(dead_rack)]")
@@ -132,7 +132,7 @@
 			if (isnull(law_number))
 				law_number = rand(1, 3)
 			if(R.cause_law_glitch(picked_law, law_number, replace))
-				R.UpdateLaws()
+				R.lawset.UpdateLaws()
 				if (replace)
 					logTheThing(LOG_ADMIN, null, "Law Rack Corruption replaced inherent AI law [law_number]: [picked_law]")
 					message_admins("Law Rack Corruption replaced inherent law [law_number]: [picked_law]")
@@ -161,7 +161,7 @@
 				for(var/mob/living/M in affected_mobs)
 					mobtextlist += M.real_name ? M.real_name : M.name
 
-				laws += "Laws for [R] at [include_link ? log_loc(R) : "([R.x], [R.y], [R.z]) in [get_area(R)]"]:[glue]" + R.format_for_logs(glue) \
+				laws += "Laws for [R] at [include_link ? log_loc(R) : "([R.x], [R.y], [R.z]) in [get_area(R)]"]:[glue]" + R.lawset.format_for_logs(glue) \
 						+ "[glue]The law rack is connected to the following silicons: "+mobtextlist.Join(", ") + "[glue]--------------[glue]"
 
 		if(!length(laws) && round_end)
@@ -170,14 +170,14 @@
 		return jointext(laws, glue)
 
 /datum/ai_lawset
-	/var/list/current_laws[LAWRACK_MAX_CIRCUITS]
-	/var/list/last_laws[LAWRACK_MAX_CIRCUITS]
-	/var/obj/machinery/lawrack/host_rack = null //law rack this datum is tied to. Might not exist
+	var/list/current_laws[LAWRACK_MAX_CIRCUITS]
+	var/list/last_laws[LAWRACK_MAX_CIRCUITS]
+	var/obj/machinery/lawrack/host_rack = null //law rack this datum is tied to. Might not exist
 	New()
 		. = ..()
 
 
-`	/// Takes a list or single target to show laws to
+	/// Takes a list or single target to show laws to
 	proc/show_laws(var/who)
 		var/list/L =list()
 		L += who
@@ -251,9 +251,9 @@
 
 		var/law_counter = 1
 		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
-			if(!curent_laws[i])
+			if(!current_laws[i])
 				continue
-			var/lt = X.get_law_text(TRUE)
+			var/lt = current_laws[i]["law"]
 			if(islist(lt))
 				for(var/law in lt)
 					laws["[law_counter++]"] = law
@@ -282,7 +282,7 @@
 				src.show_laws(E)
 				affected_mobs |= E.mainframe
 				var/mob/living/silicon/ai/holoAI = E.mainframe
-				holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
+				holoAI.holoHolder.text_expansion = src.host_rack?.holo_expansions.Copy()
 				E.abilityHolder?.updateButtons()
 		var/list/mobtextlist = list()
 		for(var/mob/living/M in affected_mobs)

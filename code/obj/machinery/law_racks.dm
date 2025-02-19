@@ -1,5 +1,3 @@
-#define LAWRACK_MAX_CIRCUITS 9
-
 /obj/machinery/lawrack
 	name = "AI Law Rack"
 	icon = 'icons/obj/large/32x48.dmi'
@@ -33,15 +31,15 @@
 		START_TRACKING
 		. = ..()
 		//if the ticker isn't initialised yet, it'll grab this rack when it is (see /datum/ai_rack_manager)
+		lawset = new/datum/ai_lawset
 		ticker?.ai_law_rack_manager.register_new_rack(src)
+		lawset.host_rack = src
 
 		src.light = new/datum/light/point
 		src.light.set_brightness(0.4)
 		src.light.attach(src)
-		lawset = new/datum/ai_lawset
-		lawset.connected_rack = src
+
 		UpdateIcon()
-		update_last_laws()
 
 	/// Causes all law modules to drop to the ground, does not call UpdateLaws()
 	proc/drop_all_modules()
@@ -159,7 +157,7 @@
 		if(law_update_needed)
 			logTheThing(LOG_STATION, causer, "[causer] damaged the [constructName(src)] causing a law update")
 			UpdateIcon()
-			UpdateLaws()
+			lawset.UpdateLaws()
 
 
 
@@ -476,11 +474,22 @@
 		else
 			. = list(start,stop)
 
+	/// Saves the current laws as a list to pass to the ai_lawset datum
+	proc/format_as_list()
+		var/list/laws = list()
+		var/law_counter = 1
+		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
+			var/obj/item/aiModule/module = law_circuits[i]
+			if (module)
+				//save the law text and the displayed law number (not the rack position)
+				laws[i] = list("law" = module.get_law_text(TRUE), "number" = law_counter++)
+			else
+				laws[i] = null
+		return laws
 	proc/UpdateModules()
-		for(mob/living/silicon/ai in mobs)
-			var/mob/living/silicon/ai/holoAI = R
+		for(var/mob/living/silicon/ai/holoAI in mobs)
 			holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
-			src.reset_ai_abilities(R)
+			src.reset_ai_abilities(holoAI)
 		calculate_power_usage()
 		lawset.current_laws = format_as_list()
 		lawset.UpdateLaws()
@@ -733,3 +742,4 @@
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
+

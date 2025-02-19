@@ -756,7 +756,7 @@
 			else
 				var/mob/living/silicon/S = user
 				ls =  S.lawset_connection
-			if(src.lawset_connection != lr && !src.syndicate)
+			if(src.lawset_connection != ls && !src.syndicate)
 				. += "[SPAN_ALERT("[src.name] is not connected to your law rack!")]<br>"
 			else
 				. += "[src.name] follows the same laws you do.<br>"

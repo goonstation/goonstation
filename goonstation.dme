@@ -38,6 +38,7 @@
 #endif
 
 // BEGIN_INCLUDE
+#include "_std\defines\lawrack.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\client.dm"
