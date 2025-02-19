@@ -262,13 +262,13 @@ var/global/logLength = 0
 		var/obj/machinery/lawrack/lawrack = null
 		if(isAIeye(mobRef))
 			var/mob/living/intangible/aieye/aieye = mobRef
-			lawrack = aieye?.mainframe?.law_rack_connection
+			lawrack = aieye?.mainframe?.lawset_connection.host_rack
 		else if(isshell(mobRef))
 			var/mob/living/silicon/sil = mobRef
-			lawrack = sil?.mainframe?.law_rack_connection
+			lawrack = sil?.mainframe?.lawset_connection.host_rack
 		else
 			var/mob/living/silicon/sil = mobRef
-			lawrack = sil?.law_rack_connection
+			lawrack = sil?.lawset_connection.host_rack
 		if(isnull(lawrack))
 			lawracktext = "NONE"
 		else
@@ -283,7 +283,7 @@ var/global/logLength = 0
 					padding: 10px;											\
 					position: absolute;										\
 					z-index: 1000;											\
-				\">[lawrack.format_for_logs()]</span>		\
+				\">[lawrack.lawset.format_for_logs()]</span>		\
 				</a>"
 
 	var/list/data = list()

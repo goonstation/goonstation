@@ -247,8 +247,8 @@
 /datum/game_mode/mixed/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs. You may ignore any of your laws to do this."
 	boutput(killer, "<b>Your laws have been changed!</b>")
-	killer.law_rack_connection?.SetLawCustom("Objective Law Module", law, 1, TRUE, TRUE)
-	killer.law_rack_connection?.UpdateLaws()
+	killer.lawset_connection?.host_rack?.SetLawCustom("Objective Law Module", law, 1, TRUE, TRUE)
+	killer.lawset_connection?.UpdateLaws()
 
 /datum/game_mode/mixed/proc/get_mob_list()
 	var/list/mobs = list()

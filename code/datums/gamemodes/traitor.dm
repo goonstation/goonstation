@@ -86,8 +86,8 @@
 /datum/game_mode/traitor/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs."
 	boutput(killer, "<b>Your laws have been changed!</b>")
-	killer.law_rack_connection?.SetLawCustom("Objective Law Module", law, 1, TRUE, TRUE)
-	killer.law_rack_connection?.UpdateLaws()
+	killer.lawset_connection?.host_rack?.SetLawCustom("Objective Law Module", law, 1, TRUE, TRUE)
+	killer.lawset_connection?.UpdateLaws()
 
 /datum/game_mode/traitor/proc/get_mob_list()
 	var/list/mobs = list()

@@ -15,7 +15,7 @@
 			return FALSE
 
 		var/mob/living/silicon/cyborg = src.owner.current
-		cyborg.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack_syndie
+		cyborg.lawset_connection = ticker?.ai_law_rack_manager?.default_ai_rack_syndie.lawset
 		cyborg.syndicate = TRUE
 		cyborg.show_laws()
 		cyborg.add_radio_upgrade(new/obj/item/device/radio_upgrade/syndicatechannel)
@@ -25,7 +25,7 @@
 			return FALSE
 
 		var/mob/living/silicon/cyborg = src.owner.current
-		cyborg.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack
+		cyborg.lawset_connection = ticker?.ai_law_rack_manager?.default_ai_rack.lawset
 		cyborg.syndicate = FALSE
 		cyborg.show_laws()
 		cyborg.remove_radio_upgrade()

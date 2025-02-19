@@ -20,7 +20,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	var/dependent = 0 // if we're host to a mainframe's mind
 	var/shell = 0 // are we available for use as a shell for an AI
 
-	var/obj/machinery/lawrack/law_rack_connection = null // which rack we're getting our laws from
+	var/datum/ai_lawset/lawset_connection = null // which lawset we're using. Usually tied to a law rack
 	/// a list of strings used as fake laws that may be stated via the State Fake Laws command, to deceive people as a rogue silicon
 	var/list/fake_laws = list()
 
@@ -47,11 +47,11 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	..()
 	src.botcard = new /obj/item/card/id(src)
 	if(src.syndicate)
-		src.law_rack_connection = ticker?.ai_law_rack_manager.default_ai_rack_syndie
-		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default SYNDICATE rack [constructName(src.law_rack_connection)]")
+		src.lawset_connection = ticker?.ai_law_rack_manager.default_ai_rack_syndie.lawset
+		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default SYNDICATE rack [constructName(src.lawset_connection.host_rack)]")
 	else
-		src.law_rack_connection = ticker?.ai_law_rack_manager.default_ai_rack
-		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default rack [constructName(src.law_rack_connection)]")
+		src.lawset_connection = ticker?.ai_law_rack_manager.default_ai_rack.lawset
+		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default rack [constructName(src.lawset_connection.host_rack)]")
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING, src)
 
 /mob/living/silicon/disposing()
@@ -575,7 +575,7 @@ var/global/list/module_editors = list()
 		if (src.mind.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED))
 			src.botcard.access += access_syndicate_shuttle
 			logTheThing(LOG_STATION, src, "[src] was made a Syndicate robot at [log_loc(src)]. [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
-			logTheThing(LOG_STATION, src, "[src.name] is connected to the default Syndicate rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+			logTheThing(LOG_STATION, src, "[src.name] is connected to the default Syndicate rack [constructName(src.lawset_connection.host_rack)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 			return TRUE
 
 	return FALSE
@@ -627,10 +627,10 @@ var/global/list/module_editors = list()
 /mob/living/silicon/proc/set_law_rack(obj/machinery/lawrack/rack, mob/user)
 	if(!(rack in ticker.ai_law_rack_manager.registered_racks))
 		return
-	src.law_rack_connection = rack
-	logTheThing(LOG_STATION, src, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)][user ? " by [constructName(user)]" : ""]")
+	src.lawset_connection = rack.lawset
+	logTheThing(LOG_STATION, src, "[src.name] is connected to the rack at [constructName(rack)][user ? " by [constructName(user)]" : ""]")
 	if (user)
-		var/area/A = get_area(src.law_rack_connection)
+		var/area/A = get_area(rack)
 		boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
 	src.playsound_local(src, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 	src.show_text("<h3>You have been connected to a law rack</h3>", "red")
@@ -658,8 +658,8 @@ var/global/list/module_editors = list()
 		return
 	var/law_base = ""
 	if(law_base_choice == "Real Laws")
-		if(src.law_rack_connection)
-			law_base = src.law_rack_connection.format_for_logs("\n")
+		if(src.lawset_connection)
+			law_base = src.lawset_connection.format_for_logs("\n")
 		else
 			law_base = ""
 	else if(law_base_choice == "Fake Laws")
