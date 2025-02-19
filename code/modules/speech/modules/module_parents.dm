@@ -41,6 +41,8 @@ ABSTRACT_TYPE(/datum/listen_module)
 	var/priority = 0
 	/// The listen tree that this module belongs to.
 	var/datum/listen_module_tree/parent_tree
+	/// Whether this listen module should ignore line of sight checks performed during message dissemination.
+	var/ignore_line_of_sight_checks = FALSE
 
 /datum/listen_module/New(datum/listen_module_tree/parent)
 	. = ..()

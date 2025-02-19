@@ -25,10 +25,8 @@
 		listen_modules_by_type[type] ||= list()
 		for (var/datum/listen_module/input/input as anything in src.listeners[type])
 			// If the listener is in range of the speaker, regardless of how nested they are, the listener may hear the message.
-			if (!IN_RANGE(message.message_origin, input.parent_tree.listener_origin, LOOC_RANGE))
-				// If the turf of the speaker has a vistarget, and the listener is in range of the vistarget, the listener may hear the message.
-				if (!centre.vistarget || !IN_RANGE(centre.vistarget, input.parent_tree.listener_origin, LOOC_RANGE))
-					continue
+			if (!INPUT_IN_RANGE(input, centre, LOOC_RANGE))
+				continue
 
 			listen_modules_by_type[type] += input
 

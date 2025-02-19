@@ -8,6 +8,9 @@
 /// Whether a message is able to be passed to a say channel.
 #define CAN_PASS_MESSAGE_TO_SAY_CHANNEL(CHANNEL, MESSAGE) (CHANNEL.enabled || (ismob(message.speaker) && message.speaker:client?:holder))
 
+/// Whether an input's parent's listener origin is within a range of a centre turf representing the position of the message origin. Takes into account turf vistargets.
+#define INPUT_IN_RANGE(INPUT, CENTRE, RANGE) (IN_RANGE(INPUT.parent_tree.listener_origin, CENTRE, RANGE) || (CENTRE.vistarget && IN_RANGE(INPUT.parent_tree.listener_origin, CENTRE.vistarget, RANGE)))
+
 /// Passes a say message datum to a say channel.
 #define PASS_MESSAGE_TO_SAY_CHANNEL(CHANNEL, MESSAGE, ARGS...) \
 	if (CAN_PASS_MESSAGE_TO_SAY_CHANNEL(CHANNEL, MESSAGE)) { \

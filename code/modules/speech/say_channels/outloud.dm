@@ -20,20 +20,26 @@
 			for (var/type in src.listeners)
 				listen_modules_by_type[type] ||= list()
 				for (var/datum/listen_module/input/outloud/input as anything in src.listeners[type])
-					// If the outermost listener's loc is a turf, they must be within the speaker's line of sight to hear the message.
+					// If the outermost listener's loc is a turf, perform line of sight and range checks.
 					if (isturf(GET_INPUT_OUTERMOST_LISTENER_LOC(input)))
-						if (!visible_turfs[GET_INPUT_OUTERMOST_LISTENER_LOC(input)])
-							continue
+						// If the outermost listener's loc is a turf, they must be within the speaker's line of sight to hear the message.
+						if (!input.ignore_line_of_sight_checks)
+							if (!visible_turfs[GET_INPUT_OUTERMOST_LISTENER_LOC(input)])
+								continue
+							// If the input's hearing range is less than the message's heard range, ensure that the speaker and listener are within that range.
+							if (input.hearing_range < message.heard_range)
+								if (!INPUT_IN_RANGE(input, centre, input.hearing_range))
+									continue
+						// If the input ignores line of sight checks, then the listener may hear the message if they are within the lower of the hearing ranges.
+						else
+							var/min_heard_range = min(input.hearing_range, message.heard_range)
+							if (!INPUT_IN_RANGE(input, centre, min_heard_range))
+								continue
 					// If the outermost listener of the listener and the speaker match, the listener may hear the message.
 					else if (GET_INPUT_OUTERMOST_LISTENER(input) != GET_MESSAGE_OUTERMOST_LISTENER(message))
 						// If the outermost listener's loc is the speaker, the listener may hear the message.
 						if (GET_INPUT_OUTERMOST_LISTENER_LOC(input) != message.message_origin)
 							continue
-					// If the input's hearing range is less than the message's heard range, ensure that the speaker and listener are within that range.
-					if (input.hearing_range < message.heard_range)
-						if (!IN_RANGE(input.parent_tree.listener_origin, centre, input.hearing_range))
-							if (!centre.vistarget || !IN_RANGE(input.parent_tree.listener_origin, centre.vistarget, input.hearing_range))
-								continue
 
 					listen_modules_by_type[type] += input
 
@@ -88,17 +94,26 @@
 				for (var/datum/listen_module/input/outloud/input as anything in src.listeners[type])
 					// If the input's hearing range is less than the message's heard range, ensure that the speaker and listener are within that range.
 					if (input.hearing_range < message.heard_range)
-						if (!IN_RANGE(input.parent_tree.listener_origin, centre, input.hearing_range))
-							if (!centre.vistarget || !IN_RANGE(input.parent_tree.listener_origin, centre.vistarget, input.hearing_range))
-								continue
+						if (!INPUT_IN_RANGE(input, centre, input.hearing_range))
+							continue
 					// If the outermost listener's loc is a turf, they must be within the speaker's line of sight to hear the message.
 					if (isturf(GET_INPUT_OUTERMOST_LISTENER_LOC(input)))
 						// If within `WHISPER_RANGE`, the message may be heard clearly.
-						if (heard_clearly_turfs[GET_INPUT_OUTERMOST_LISTENER_LOC(input)])
+						if (!input.ignore_line_of_sight_checks)
+							if (heard_clearly_turfs[GET_INPUT_OUTERMOST_LISTENER_LOC(input)])
+								heard_clearly_listen_modules_by_type[type] += input
+								continue
+						else if (INPUT_IN_RANGE(input, centre, WHISPER_RANGE))
 							heard_clearly_listen_modules_by_type[type] += input
+							continue
 						// If outside of `WHISPER_RANGE`, but still within message range, the message will be heard distorted.
-						else if (heard_distorted_turfs[GET_INPUT_OUTERMOST_LISTENER_LOC(input)])
+						if (!input.ignore_line_of_sight_checks)
+							if (heard_distorted_turfs[GET_INPUT_OUTERMOST_LISTENER_LOC(input)])
+								heard_distorted_listen_modules_by_type[type] += input
+								continue
+						else if (INPUT_IN_RANGE(input, centre, message.heard_range))
 							heard_distorted_listen_modules_by_type[type] += input
+							continue
 					// If the listener's loc is the speaker, they may hear the message clearly. Nested contents will not hear whispers.
 					else if (input.parent_tree.listener_origin.loc == message.message_origin)
 						heard_clearly_listen_modules_by_type[type] += input

@@ -1,6 +1,7 @@
 /datum/listen_module/input/outloud
 	id = LISTEN_INPUT_OUTLOUD
 	channel = SAY_CHANNEL_OUTLOUD
+	/// The range from which this listen module may hear a message.
 	var/hearing_range = DEFAULT_HEARING_RANGE
 
 

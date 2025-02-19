@@ -23,6 +23,12 @@ TYPEINFO(/obj/item/device/radio/electropack)
 	var/code = 2
 	var/on = FALSE
 
+/obj/item/device/radio/electropack/New()
+	. = ..()
+
+	// Electropack + sec helmet  -> shock kit
+	src.AddComponent(/datum/component/assembly, /obj/item/clothing/head/helmet, PROC_REF(shock_kit_assembly), TRUE)
+
 /obj/item/device/radio/electropack/receive_signal(datum/signal/signal)
 	if (!signal || !signal.data || ("[signal.data["code"]]" != "[code]"))
 		return
@@ -43,21 +49,6 @@ TYPEINFO(/obj/item/device/radio/electropack)
 
 	if (src.master && (src.wires & WIRE_SIGNAL))
 		src.master.receive_signal()
-
-
-/// shock kit construction
-/obj/item/device/radio/electropack/proc/shock_kit_assembly(var/atom/to_combine_atom, var/mob/user)
-	user.u_equip(src)
-	user.u_equip(to_combine_atom)
-	var/obj/item/shock_kit/new_shock_kit = new /obj/item/shock_kit(get_turf(user), to_combine_atom, src)
-	user.put_in_hand_or_drop(new_shock_kit)
-	// Since the assembly was done, return TRUE
-	return TRUE
-
-/obj/item/device/radio/electropack/New()
-	..()
-	// Electropack + sec helmet  -> shock kit
-	src.AddComponent(/datum/component/assembly, /obj/item/clothing/head/helmet, PROC_REF(shock_kit_assembly), TRUE)
 
 /obj/item/device/radio/electropack/update_icon()
 	src.icon_state = "electropack[src.on]"
@@ -88,6 +79,16 @@ TYPEINFO(/obj/item/device/radio/electropack)
 		"hasToggleButton" = TRUE,
 		"power" = src.on
 	)
+
+/// Shock kit construction.
+/obj/item/device/radio/electropack/proc/shock_kit_assembly(atom/to_combine_atom, mob/user)
+	user.u_equip(src)
+	user.u_equip(to_combine_atom)
+	var/obj/item/shock_kit/new_shock_kit = new /obj/item/shock_kit(get_turf(user), to_combine_atom, src)
+	user.put_in_hand_or_drop(new_shock_kit)
+
+	// Since the assembly was done, return TRUE
+	return TRUE
 
 
 #undef WIRE_SIGNAL
