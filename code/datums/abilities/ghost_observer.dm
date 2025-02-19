@@ -153,6 +153,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		src.addAbility(/datum/targetable/ghost_observer/toggle_lighting)
 		src.addAbility(/datum/targetable/ghost_observer/toggle_ghosts)
 		src.addAbility(/datum/targetable/ghost_observer/toggle_health)
+		src.addAbility(/datum/targetable/ghost_observer/view_minimap)
 		if (istype(ticker?.mode, /datum/game_mode/gang))
 			src.addAbility(/datum/targetable/ghost_observer/toggle_gang_overlay)
 

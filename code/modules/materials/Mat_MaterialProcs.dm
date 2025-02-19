@@ -302,8 +302,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(prob(50) && owner && isturf(owner) && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(entering), rand(-2, 2), rand(-2, 2))
 			entering.visible_message(SPAN_ALERT("[entering] is warped away!"))
-			playsound(owner.loc, "warp", 50)
-			boutput(entering, SPAN_ALERT("You suddenly teleport..."))
+			playsound(T, "warp", 50)
+			if(ismob(entering))
+				boutput(entering, SPAN_ALERT("You suddenly teleport..."))
 			entering.set_loc(.)
 		return
 

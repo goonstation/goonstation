@@ -437,6 +437,7 @@ var/list/admin_verbs = list(
 		/client/proc/set_round_req_bypass,
 		/client/proc/test_spacebee_command,
 		/client/proc/delete_landmarks,
+		/client/proc/admin_minimap,
 		),
 
 	7 = list(
