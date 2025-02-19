@@ -1,3 +1,5 @@
+#define LAWRACK_MAX_CIRCUITS 9
+
 /obj/machinery/lawrack
 	name = "AI Law Rack"
 	icon = 'icons/obj/large/32x48.dmi'
@@ -13,15 +15,15 @@
 	///unique id for logs - please don't ever assign except in ai_law_rack_manager.register
 	var/unique_id = "OMG THIS WASN'T SET OH NO THIS SHOULD NEVER HAPPEN AHHH"
 	var/datum/light/light
-	var/const/MAX_CIRCUITS = 9
 	/// list of aiModules ref'd by slot number.
-	var/obj/item/aiModule/law_circuits[MAX_CIRCUITS]
+	var/obj/item/aiModule/law_circuits[LAWRACK_MAX_CIRCUITS]
+	var/datum/ai_lawset/lawset
 	/// used during UpdateLaws to determine which laws have changed
-	var/list/last_laws[MAX_CIRCUITS]
+	var/list/last_laws[LAWRACK_MAX_CIRCUITS]
 	/// welded status of law module by slot number
-	var/list/welded[MAX_CIRCUITS]
+	var/list/welded[LAWRACK_MAX_CIRCUITS]
 	/// screwed status of law module by slot number
-	var/list/screwed[MAX_CIRCUITS]
+	var/list/screwed[LAWRACK_MAX_CIRCUITS]
 	/// list of hologram expansions
 	var/list/holo_expansions = list()
 	/// list of ability expansions
@@ -36,12 +38,14 @@
 		src.light = new/datum/light/point
 		src.light.set_brightness(0.4)
 		src.light.attach(src)
+		lawset = new/datum/ai_lawset
+		lawset.connected_rack = src
 		UpdateIcon()
 		update_last_laws()
 
 	/// Causes all law modules to drop to the ground, does not call UpdateLaws()
 	proc/drop_all_modules()
-		for (var/i in 1 to MAX_CIRCUITS)
+		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
 			src.welded[i] = FALSE
 			src.screwed[i] = FALSE
 			if(src.law_circuits[i])
@@ -56,7 +60,7 @@
 		. = ..()
 
 	build_deconstruction_buttons(mob/user) //mild hack to give a custom "can't be deconstructed" message
-		for (var/i in 1 to MAX_CIRCUITS)
+		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
 			if (src.law_circuits[i])
 				return "[src] cannot be deconstructed while it still has law modules inside!"
 		return ..()
@@ -127,7 +131,7 @@
 				law_update_needed = TRUE
 			else
 				var/list/mod_index_list = list()
-				for (var/i in 1 to MAX_CIRCUITS)
+				for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
 					if(src.law_circuits[i])
 						mod_index_list += i
 				if(length(mod_index_list) > 0)
@@ -142,7 +146,7 @@
 		if(_health <= 25 && prevHealth > 25)
 			//severely damaged - we're basically falling apart here
 			//break all the welds and screws, eject half of remaining modules
-			for (var/i in 1 to MAX_CIRCUITS)
+			for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
 				src.welded[i] = FALSE
 				src.screwed[i] = FALSE
 				if(src.law_circuits[i] && prob(50))
@@ -184,9 +188,9 @@
 			var/mob/living/silicon/S = user
 			var/test_connection = null
 			if(isAIeye(user) || S.dependent)
-				test_connection = S.mainframe.law_rack_connection
+				test_connection = S.mainframe.lawset_connection
 			else
-				test_connection = S.law_rack_connection
+				test_connection = S.lawset_connection
 
 			if(test_connection == src)
 				. += "<b>You are connected to this law rack.</b>"
@@ -248,7 +252,7 @@
 	update_icon()
 		var/image/circuit_image = null
 		var/image/color_overlay = null
-		for (var/i in 1 to MAX_CIRCUITS)
+		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
 			circuit_image = null
 			color_overlay = null
 			if(law_circuits[i])
@@ -273,9 +277,9 @@
 			var/mob/living/silicon/S = user
 			var/test_connection = null
 			if(isAIeye(user) || S.dependent)
-				test_connection = S.mainframe.law_rack_connection
+				test_connection = S.mainframe.lawset_connection
 			else
-				test_connection = S.law_rack_connection
+				test_connection = S.lawset_connection
 
 			if(test_connection == src)
 				boutput(user,"<b>You are connected to this law rack.</b>")
@@ -283,7 +287,7 @@
 				boutput(user,"You are not connected to this law rack.")
 
 		boutput(user,"<b>This rack's laws are:</b>")
-		src.show_laws(user)
+		src.lawset.show_laws(user)
 		return ..()
 
 
@@ -306,7 +310,7 @@
 			var/obj/item/aiModule/AIM = I
 			var/inserted = FALSE
 			var/count = 1
-			while (!inserted && count <= MAX_CIRCUITS)
+			while (!inserted && count <= LAWRACK_MAX_CIRCUITS)
 				if(!src.law_circuits[count])
 					inserted = TRUE
 				else
@@ -318,7 +322,7 @@
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		else if (istype(I, /obj/item/clothing/mask/moustache/))
 			for_by_tcl(M, /mob/living/silicon/ai)
-				if(M.law_rack_connection == src)
+				if(M.lawset_connection == src)
 					M.moustache_mode = 1
 					user.visible_message(SPAN_ALERT("<b>[user.name]</b> uploads a moustache to [M.name]!"))
 					M.update_appearance()
@@ -350,13 +354,13 @@
 
 	ui_static_data(mob/user)
 		. = list(
-			"lawSlots" = MAX_CIRCUITS
+			"lawSlots" = LAWRACK_MAX_CIRCUITS
 		)
 
 	ui_data(mob/user)
-		var/list/lawTitles[MAX_CIRCUITS]
-		var/list/lawText[MAX_CIRCUITS]
-		for (var/i in 1 to MAX_CIRCUITS)
+		var/list/lawTitles[LAWRACK_MAX_CIRCUITS]
+		var/list/lawText[LAWRACK_MAX_CIRCUITS]
+		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
 			if(law_circuits[i])
 				lawText[i] = law_circuits[i].get_law_text()
 				lawTitles[i] = law_circuits[i].get_law_name()
@@ -477,7 +481,7 @@
 		var/list/L =list()
 		L += who
 
-		var/laws_text = src.format_for_display()
+		var/laws_text = lawset.format_for_display()
 		for (var/W in L)
 			boutput(W, laws_text)
 
@@ -511,7 +515,7 @@
 		var/list/lawOut = new
 		var/list/removed_laws = new
 
-		for (var/i in 1 to MAX_CIRCUITS)
+		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
 			var/obj/item/aiModule/module = law_circuits[i]
 			if(!module)
 				if (last_laws[i])
@@ -559,16 +563,18 @@
 				laws["[law_counter++]"] = lt
 		return laws
 
-	/// Saves the current law list to last_laws so we can see diffs
-	proc/update_last_laws()
+	/// Saves the current laws as a list to pass to the ai_lawset datum
+	proc/format_as_list()
+		var/list/laws = list()
 		var/law_counter = 1
-		for (var/i in 1 to MAX_CIRCUITS)
+		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
 			var/obj/item/aiModule/module = law_circuits[i]
 			if (module)
 				//save the law text and the displayed law number (not the rack position)
-				last_laws[i] = list("law" = module.get_law_text(TRUE), "number" = law_counter++)
+				laws[i] = list("law" = module.get_law_text(TRUE), "number" = law_counter++)
 			else
-				last_laws[i] = null
+				laws[i] = null
+		return laws
 
 	/** Pushes law updates to all connected AIs and Borgs - notification text allows you to customise the header
 	* Defaults to <h3>Law update detected</h3>
@@ -578,9 +584,9 @@
 		for (var/mob/living/silicon/R in mobs)
 			if (isghostdrone(R))
 				continue
-			if(R.law_rack_connection == src || (R.dependent && R?.mainframe?.law_rack_connection == src))
-				if(R.dependent && R?.mainframe?.law_rack_connection != src)
-					R.law_rack_connection = R?.mainframe?.law_rack_connection //goddamn shells
+			if(R.lawset_connection == src || (R.dependent && R?.mainframe?.lawset_connection == src))
+				if(R.dependent && R?.mainframe?.lawset_connection != src)
+					R.lawset_connection = R?.mainframe?.lawset_connection //goddamn shells
 					continue
 				R.playsound_local(R, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 				R.show_text(notification_text, "red")
@@ -592,7 +598,7 @@
 					src.reset_ai_abilities(R)
 		src.calculate_power_usage()
 		for (var/mob/living/intangible/aieye/E in mobs)
-			if(E.mainframe?.law_rack_connection == src)
+			if(E.mainframe?.lawset_connection == src)
 				E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 				src.show_laws(E)
 				affected_mobs |= E.mainframe
@@ -604,6 +610,14 @@
 			mobtextlist += constructName(M, "admin")
 		logTheThing(LOG_STATION, src, "Law Update:<br> [src.format_for_logs()]<br>The law update affects the following mobs: "+mobtextlist.Join(", "))
 		update_last_laws()
+	proc/UpdateModules()
+		for(mob/living/silicon/ai in mobs)
+			var/mob/living/silicon/ai/holoAI = R
+			holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
+			src.reset_ai_abilities(R)
+		calculate_power_usage()
+		lawset.current_laws = format_as_list()
+		lawset.UpdateLaws()
 
 	proc/toggle_welded_callback(var/slot_number,var/mob/user)
 		if(src.welded[slot_number])
@@ -639,7 +653,7 @@
 		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> an AI law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]")
 		UpdateIcon()
-		UpdateLaws()
+		UpdateModules()
 
 	proc/remove_module_callback(var/slotNum,var/mob/user)
 		if(isnull(src.law_circuits[slotNum]))
@@ -659,7 +673,7 @@
 		src.law_circuits[slotNum] = null
 		tgui_process.update_uis(src)
 		UpdateIcon()
-		UpdateLaws()
+		UpdateModules()
 
 	proc/insert_videocard_callback(var/mob/user, var/obj/item/peripheral/videocard/I)
 		var/mob/living/target = null
@@ -717,7 +731,7 @@
 		else if(istype(src.law_circuits[slot],/obj/item/aiModule/ability_expansion))
 			var/obj/item/aiModule/ability_expansion/expansion = src.law_circuits[slot]
 			src.ai_abilities -= expansion.ai_abilities
-		if(mod && slot <= MAX_CIRCUITS)
+		if(mod && slot <= LAWRACK_MAX_CIRCUITS)
 			src.law_circuits[slot] = mod
 			src.welded[slot] = welded_in
 			src.screwed[slot] = screwed_in
@@ -760,7 +774,7 @@
 
 	/// Deletes all laws. Does not call UpdateLaws()
 	proc/DeleteAllLaws()
-		for (var/i in 1 to MAX_CIRCUITS)
+		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
 			src.DeleteLaw(i)
 
 	/**
@@ -774,7 +788,7 @@
 		if(src.law_circuits[lawnumber])
 			lawnumber_actual = lawnumber
 		else
-			for (var/i in 1 to MAX_CIRCUITS)
+			for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
 				//if the difference between target and current is less than the difference between target and best, and also is a module
 				if(src.law_circuits[i] && (abs(lawnumber - i) <= abs(lawnumber - lawnumber_actual)))
 					lawnumber_actual = i
@@ -791,7 +805,7 @@
 
 	proc/calculate_power_usage()
 		src.power_usage = 1000
-		for (var/i in 1 to MAX_CIRCUITS)
+		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
 			if (src.law_circuits[i])
 				src.power_usage += 100
 

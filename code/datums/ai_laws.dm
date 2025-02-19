@@ -22,9 +22,9 @@
 			src.register_new_rack(R)
 		for (var/mob/living/silicon/S in mobs)
 			if(!S.syndicate)
-				S.law_rack_connection = src.default_ai_rack
+				S.lawset_connection = src.default_ai_rack.lawset
 			else
-				S.law_rack_connection = src.default_ai_rack_syndie
+				S.lawset_connection = src.default_ai_rack_syndie.lawset
 
 
 	proc/register_new_rack(var/obj/machinery/lawrack/new_rack)
@@ -49,8 +49,8 @@
 
 			#ifdef LAW_RACK_EASY_MODE
 			for (var/mob/living/silicon/S in mobs)
-				if(!S.emagged && S.law_rack_connection == null && !S.syndicate)
-					S.law_rack_connection = src.default_ai_rack
+				if(!S.emagged && S.lawset_connection == null && !S.syndicate)
+					S.lawset_connection = src.default_ai_rack.lawset
 					logTheThing(LOG_STATION, new_rack, "[S.name] is connected to the rack [constructName(new_rack)]")
 					S.playsound_local(S, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 					S.show_text("<h3>Law rack connection re-established!</h3>", "red")
@@ -70,8 +70,8 @@
 
 			#ifdef LAW_RACK_EASY_MODE
 			for (var/mob/living/silicon/S in mobs)
-				if(!S.emagged && S.law_rack_connection == null && S.syndicate)
-					S.law_rack_connection = src.default_ai_rack_syndie
+				if(!S.emagged && S.lawset_connection == null && S.syndicate)
+					S.lawset_connection = src.default_ai_rack_syndie.lawset
 					logTheThing(LOG_STATION, new_rack, "[S.name] is connected to the rack [constructName(new_rack)]")
 					S.playsound_local(S, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 					S.show_text("<h3>Law rack connection re-established!</h3>", "red")
@@ -111,16 +111,16 @@
 		for (var/mob/living/silicon/R in mobs)
 			if (isghostdrone(R))
 				continue
-			if(R.law_rack_connection == dead_rack)
-				R.law_rack_connection = null
+			if(R.lawset_connection == dead_rack.lawset)
+				R.lawset_connection = null
 				R.playsound_local(R, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 				R.show_text("<h3>ERROR: Lost connection to law rack. No laws detected!</h3>", "red")
 				logTheThing(LOG_STATION,  R, "[R.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
 				if(isAI(R))
 					dead_rack.reset_ai_abilities(R)
 		for (var/mob/living/intangible/aieye/E in mobs)
-			if(E.mainframe?.law_rack_connection == dead_rack)
-				E.mainframe.law_rack_connection = null
+			if(E.mainframe?.lawset_connection == dead_rack.lawset)
+				E.mainframe.lawset_connection = null
 				E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 				logTheThing(LOG_STATION, E.mainframe, "[E.mainframe.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
 
@@ -149,11 +149,11 @@
 			for (var/mob/living/silicon/S in mobs)
 				if (isghostdrone(S) || isshell(S))
 					continue
-				if(S.law_rack_connection == R)
+				if(S.lawset_connection == R.lawset)
 					affected_mobs |= S
 
 			for (var/mob/living/intangible/aieye/E in mobs)
-				if(E.mainframe?.law_rack_connection == R)
+				if(E.mainframe?.lawset_connection == R.lawset)
 					affected_mobs |= E.mainframe
 
 			if(length(affected_mobs) > 0 || !round_end) //no point displaying law racks with nothing connected to 'em
@@ -168,3 +168,124 @@
 			laws += "No law racks with connected silicons detected."
 
 		return jointext(laws, glue)
+
+/datum/ai_lawset
+	/var/list/current_laws[LAWRACK_MAX_CIRCUITS]
+	/var/list/last_laws[LAWRACK_MAX_CIRCUITS]
+	/var/obj/machinery/lawrack/host_rack = null //law rack this datum is tied to. Might not exist
+	New()
+		. = ..()
+
+
+	/// Takes a list or single target to show laws to
+	proc/show_laws(var/who)
+		var/list/L =list()
+		L += who
+
+		var/laws_text = format_for_display()
+		for (var/W in L)
+			boutput(W, laws_text)
+		/** Formats current laws for logging, argument glue defaults to <br>
+	 * Output is:
+	 * [law number]: [law text]<br>
+	 * [law number]: [law text]
+	 * etc.
+	*/
+	proc/format_for_logs(var/glue = "<br>")
+		var/law_counter = 1
+		var/lawOut = list()
+		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
+			if(current_laws[i])
+				continue
+			var/lt = current_laws[i]["law"]
+			if(islist(lt))
+				for(var/law in lt)
+					lawOut += "[law_counter++]: [law]"
+			else
+				lawOut += "[law_counter++]: [lt]"
+
+		return jointext(lawOut, glue)
+
+	proc/format_for_display(var/glue = "<br>")
+		var/removed_law_offset = 0
+		var/added_law_offset = 0
+		var/list/lawOut = new
+		var/list/removed_laws = new
+
+		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
+			if(!current_laws[i])
+				if (last_laws[i])
+					//load the law number and text from our saved law list
+					var/list/lawtext = last_laws[i]["law"]
+					if (islist(lawtext))
+						for (var/law in lawtext)
+							removed_laws += "<del class='alert'>[last_laws[i]["number"] + removed_law_offset]: [law]</del>"
+							if (lawtext.Find(law) != length(lawtext)) //screm
+								removed_law_offset++
+					else
+						removed_laws += "<del class='alert'>[last_laws[i]["number"] + removed_law_offset]: [lawtext]</del>"
+				continue
+			var/lt = current_laws[i]["law"]
+			var/class = "regular"
+			if (!last_laws[i] || lt != last_laws[i]["law"])
+				class = "lawupdate"
+			if(islist(lt))
+				for(var/law in lt)
+					lawOut += "<span class='[class]'>[current_laws[i]["number"] + added_law_offset]: [law]</span>"
+					added_law_offset++
+				added_law_offset--
+			else
+				lawOut += "<span class='[class]'>[current_laws[i]["number"] + added_law_offset]: [lt]</span>"
+
+		var/text_output = ""
+		if (length(removed_laws))
+			text_output += SPAN_ALERT("Removed law[(length(removed_laws) > 1) ? "s" : ""]:") + glue + jointext(removed_laws, glue) + glue
+		text_output += jointext(lawOut, glue)
+		return text_output
+
+	/** Formats current laws as a list in the format:
+	 * {[lawnumber]=lawtext,etc.}
+	 */
+	proc/format_for_irc()
+		var/list/laws = list()
+
+		var/law_counter = 1
+		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
+			if(!curent_laws[i])
+				continue
+			var/lt = X.get_law_text(TRUE)
+			if(islist(lt))
+				for(var/law in lt)
+					laws["[law_counter++]"] = law
+			else
+				laws["[law_counter++]"] = lt
+		return laws
+	/** Pushes law updates to all connected AIs and Borgs - notification text allows you to customise the header
+	* Defaults to <h3>Law update detected</h3>
+	*/
+	proc/UpdateLaws(var/notification_text="<h3>Law update detected</h3>")
+		var/list/affected_mobs = list()
+		for (var/mob/living/silicon/R in mobs)
+			if (isghostdrone(R))
+				continue
+			if(R.lawset_connection == src || (R.dependent && R?.mainframe?.lawset_connection == src))
+				if(R.dependent && R?.mainframe?.lawset_connection != src)
+					R.lawset_connection = R?.mainframe?.lawset_connection //goddamn shells
+					continue
+				R.playsound_local(R, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
+				R.show_text(notification_text, "red")
+				src.show_laws(R)
+				affected_mobs |= R
+		for (var/mob/living/intangible/aieye/E in mobs)
+			if(E.mainframe?.lawset_connection == src)
+				E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
+				src.show_laws(E)
+				affected_mobs |= E.mainframe
+				var/mob/living/silicon/ai/holoAI = E.mainframe
+				holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
+				E.abilityHolder?.updateButtons()
+		var/list/mobtextlist = list()
+		for(var/mob/living/M in affected_mobs)
+			mobtextlist += constructName(M, "admin")
+		logTheThing(LOG_STATION, src, "Law Update:<br> [src.format_for_logs()]<br>The law update affects the following mobs: "+mobtextlist.Join(", "))
+		last_laws = current_laws

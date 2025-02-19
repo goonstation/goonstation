@@ -603,8 +603,8 @@ var/global/game_force_started = FALSE
 			// AI Laws
 			for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 				var/laws[] = new()
-				if (aiPlayer.law_rack_connection)
-					laws = aiPlayer.law_rack_connection.format_for_irc()
+				if (aiPlayer.lawset_connection)
+					laws = aiPlayer.lawset_connection.format_for_irc()
 				for (var/key in laws)
 					var/datum/eventRecord/AILaw/aiLawEvent = new()
 					aiLawEvent.buildAndSend(aiPlayer, key, laws[key])
