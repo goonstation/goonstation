@@ -171,6 +171,7 @@
 
 /datum/ai_lawset
 	var/list/current_laws[LAWRACK_MAX_CIRCUITS]
+	/// used during UpdateLaws to determine which laws have changed
 	var/list/last_laws[LAWRACK_MAX_CIRCUITS]
 	var/obj/machinery/lawrack/host_rack = null //law rack this datum is tied to. Might not exist
 	New()

@@ -16,8 +16,6 @@
 	/// list of aiModules ref'd by slot number.
 	var/obj/item/aiModule/law_circuits[LAWRACK_MAX_CIRCUITS]
 	var/datum/ai_lawset/lawset
-	/// used during UpdateLaws to determine which laws have changed
-	var/list/last_laws[LAWRACK_MAX_CIRCUITS]
 	/// welded status of law module by slot number
 	var/list/welded[LAWRACK_MAX_CIRCUITS]
 	/// screwed status of law module by slot number
