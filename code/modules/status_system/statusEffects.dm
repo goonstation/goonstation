@@ -3447,3 +3447,11 @@
 	id = "silicon_radiation_extreme"
 	composition = /datum/overlayComposition/silicon_rad_extreme
 
+
+/datum/statusEffect/teleporting
+	id = "teleporting"
+	name = "Teleporting"
+	desc = "You're in a semi-stable hexaquark arrangement.<br>Visibility drastically reduced."
+	icon_state = "empulsar"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEUTRAL
