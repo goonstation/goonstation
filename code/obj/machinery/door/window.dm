@@ -71,7 +71,7 @@
 	return
 
 /obj/machinery/door/window/update_icon(toggling)
-	src.icon_state = src.base_state
+	return // these use their own system for controlling icons
 
 /obj/machinery/door/window/emp_act()
 	..()
