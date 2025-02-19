@@ -277,11 +277,11 @@ ABSTRACT_TYPE(/obj/item)
 			usr.client.tooltipHolder.hideHover()
 		usr.moused_exit(src)
 
-	is_combination_consumeable()
+	assembly_cant_be_removed()
 		. = ..()
 		if((src.temp_flags & IS_LIMB_ITEM) || src.cant_drop)
 			//items on borg hands stay on borg hands as well as item limbs, damnit
-			return FALSE
+			return TRUE
 
 
 	onMaterialChanged()
