@@ -797,8 +797,8 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		icon = 'icons/mob/critter/robotic/drone/assault.dmi'
 		icon_state = "drone_assault"
 		dead_state = "drone_assault"
-		health = 150
-		maxhealth = 150
+		health = 300
+		maxhealth = 300
 		score = 100
 		projectile_type = /datum/projectile/laser/asslaser
 		current_projectile = new/datum/projectile/laser/asslaser
@@ -951,6 +951,12 @@ ABSTRACT_TYPE(/obj/gunbotdrone_spawner)
 	icon_state = "drone_ballistic"
 	possible_drones = list(/obj/critter/gunbot/drone/minigundrone = 100,
 						   /obj/critter/gunbot/drone/cannondrone = 75)
+
+/obj/gunbotdrone_spawner/very_rare
+	icon = 'icons/mob/critter/robotic/drone/railgun.dmi'
+	icon_state = "drone_railgun"
+	possible_drones = list(/obj/critter/gunbot/drone/raildrone = 100,
+						   /obj/critter/gunbot/drone/assdrone = 50)
 
 TYPEINFO(/obj/critter/gunbot/drone/iridium)
 	mats = null //no
