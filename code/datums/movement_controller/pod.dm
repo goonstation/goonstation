@@ -136,9 +136,9 @@
 				if (!input_x && !input_y)
 					vel_max = velocity_max_no_input
 
-				vel_max /= (owner.speed ? owner.speed : 1)
+				vel_max /= (owner.speed ? owner.speed : 1) * src.owner.afterburner_speed_mod
 
-				if (velocity_magnitude > vel_max * src.owner.afterburner_speed_mod)
+				if (velocity_magnitude > vel_max)
 					velocity_x /= velocity_magnitude
 					velocity_y /= velocity_magnitude
 
