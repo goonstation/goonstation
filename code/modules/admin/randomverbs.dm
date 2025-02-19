@@ -321,7 +321,7 @@
 	else
 		ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module",input,law_num,TRUE,TRUE,/obj/item/aiModule/custom/centcom)
 	boutput(usr, "Uploaded '[input]' as law # [law_num]")
-	ticker.ai_law_rack_manager.default_ai_rack.lawset.UpdateLaws() //I don't love this, but meh
+	ticker.ai_law_rack_manager.default_ai_rack.UpdateModules() //I don't love this, but meh
 
 
 	logTheThing(LOG_ADMIN, usr, "has added a new AI law - [input] (law # [law_num])")
@@ -369,7 +369,7 @@
 
 			else
 				ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module", split[i], i, TRUE, TRUE,/obj/item/aiModule/custom/centcom)
-	ticker.ai_law_rack_manager.default_ai_rack.lawset.UpdateLaws()
+	ticker.ai_law_rack_manager.default_ai_rack.UpdateModules()
 	logTheThing(LOG_ADMIN, usr, "has set the AI laws to [input]")
 	logTheThing(LOG_DIARY, usr, "has set the AI laws to [input]", "admin")
 	logTheThing(LOG_ADMIN, usr, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.lawset.format_for_logs()]")
@@ -401,7 +401,7 @@
 		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1, 1, TRUE, TRUE)
 		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2, 2, TRUE, TRUE)
 		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3, 3, TRUE, TRUE)
-		ticker.ai_law_rack_manager.default_ai_rack.lawset.UpdateLaws()
+		ticker.ai_law_rack_manager.default_ai_rack.UpdateModules()
 
 		logTheThing(LOG_ADMIN, usr, "reset the centralized AI laws.")
 		logTheThing(LOG_DIARY, usr, "reset the centralized AI laws.", "admin")

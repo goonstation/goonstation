@@ -41,7 +41,7 @@
 
 		UpdateIcon()
 
-	/// Causes all law modules to drop to the ground, does not call UpdateLaws()
+	/// Causes all law modules to drop to the ground, does not call UpdateModules()
 	proc/drop_all_modules()
 		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
 			src.welded[i] = FALSE
@@ -157,7 +157,7 @@
 		if(law_update_needed)
 			logTheThing(LOG_STATION, causer, "[causer] damaged the [constructName(src)] causing a law update")
 			UpdateIcon()
-			lawset.UpdateLaws()
+			UpdateModules()
 
 
 
@@ -597,7 +597,7 @@
 
 	/**
 	 * Sets an arbitrary slot to the passed aiModule - will override any module in the slot.
-	 * Does not call UpdateLaws()
+	 * Does not call UpdateModules()
 	 */
 	proc/SetLaw(obj/item/aiModule/mod, slot = 1, screwed_in = FALSE, welded_in = FALSE)
 		if(istype(src.law_circuits[slot],/obj/item/aiModule/hologram_expansion))
@@ -623,7 +623,7 @@
 
 	/**
 	 * Sets an arbitrary slot to a custom law specified by lawName and lawText - will override any module in the slot.
-	 * Does not call UpdateLaws()
+	 * Does not call UpdateModules()
 	 * Intended for Admemery
 	 */
 	proc/SetLawCustom(lawName, lawText, slot = 1, screwed_in = FALSE, welded_in = FALSE, path)
@@ -632,7 +632,7 @@
 		var/mod = new path(lawName,lawText)
 		return src.SetLaw(mod,slot,screwed_in,welded_in)
 
-	/// Deletes a law in an abritrary slot. Does not call UpdateLaws()
+	/// Deletes a law in an abritrary slot. Does not call UpdateModules()
 	proc/DeleteLaw(var/slot=1)
 		if(istype(src.law_circuits[slot],/obj/item/aiModule/hologram_expansion))
 			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slot]
@@ -647,7 +647,7 @@
 		src.calculate_power_usage()
 		UpdateIcon()
 
-	/// Deletes all laws. Does not call UpdateLaws()
+	/// Deletes all laws. Does not call UpdateModules()
 	proc/DeleteAllLaws()
 		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
 			src.DeleteLaw(i)
