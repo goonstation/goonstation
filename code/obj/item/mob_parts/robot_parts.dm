@@ -6,7 +6,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	item_state = "buildpipe"
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
-	tool_flags = TOOL_ASSEMBLY_APPLIER
 	streak_decal = /obj/decal/cleanable/oil
 	streak_descriptor = "oily"
 	var/appearanceString = "generic"
@@ -41,32 +40,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	New()
 		..()
 		icon_state = "[src.icon_state_base]-[appearanceString]"
-		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
-		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
-
-
-	disposing()
-		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
-		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
-		. = ..()
-
-/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
-
-
-	proc/assembly_setup(var/manipulated_arm, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
-		//since we have different robot arms (including left and right versions)
-		parent_assembly.applier_icon_prefix = "robot_arm"
-		if (!parent_assembly.target)
-			// trigger-robotarm-Assembly + pie -> trigger-robotarm-pie-assembly
-			parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/food/snacks/pie), TYPE_PROC_REF(/obj/item/assembly/complete, add_target_item), TRUE)
-
-	proc/assembly_application(var/manipulated_arm, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
-		if(!assembly_target)
-			//if there is no target, we don't do anything
-			return
-		else
-			return
-
 
 	examine()
 		. = ..()
@@ -561,11 +534,22 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 	name = "placeholder item (don't use this!)"
 	desc = "A metal arm for a cyborg. It won't be able to use as many tools without it!"
 	material_amt = ROBOT_LIMB_COST
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	max_health = 60
 	can_hold_items = 1
 	accepts_normal_human_overlays = TRUE
 	var/emagged = FALSE //contains: technical debt
 	var/add_to_tools = FALSE
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		. = ..()
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(!ismob(target))
@@ -660,6 +644,27 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 		robot.equip_slot(robo_slot, chosen_tool)
 		if (last_active)
 			robot.swap_hand(last_active)
+
+/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+
+	proc/assembly_setup(var/manipulated_arm, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+		//since we have different robot arms (including left and right versions)
+		parent_assembly.applier_icon_prefix = "robot_arm"
+		if (!parent_assembly.target)
+			// trigger-robotarm-Assembly + pie -> trigger-robotarm-pie-assembly
+			parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/food/snacks/pie), TYPE_PROC_REF(/obj/item/assembly/complete, add_target_item), TRUE)
+
+	proc/assembly_application(var/manipulated_arm, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
+		if(!assembly_target)
+			//if there is no target, we don't do anything
+			return
+		else
+			return
+
+/// ----------- ---------------------------------------------- -----------
+
+
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 /obj/item/parts/robot_parts/arm/left
