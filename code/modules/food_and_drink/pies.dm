@@ -18,16 +18,23 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 
 /obj/item/reagent_containers/food/snacks/pie/New()
 	..()
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK, PROC_REF(assembly_check))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, PROC_REF(assembly_removal))
 
 /obj/item/reagent_containers/food/snacks/pie/disposing()
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL)
 	. = ..()
 
 
 /// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+/obj/item/reagent_containers/food/snacks/pie/proc/assembly_check(var/manipulated_pie, var/obj/item/second_part, var/mob/user)
+	if (src.w_class > W_CLASS_TINY) // Transfer valve bomb pies are a thing. Shouldn't fit in a backpack, much less a box.
+		boutput(user, SPAN_NOTICE("[src] is way too large. You can't find any way to balance it on the arm."))
+		return TRUE
 
 
 /obj/item/reagent_containers/food/snacks/pie/proc/assembly_setup(var/manipulated_pie, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)

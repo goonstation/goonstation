@@ -656,15 +656,39 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 			parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/food/snacks/pie), TYPE_PROC_REF(/obj/item/assembly/complete, add_target_item), TRUE)
 
 	proc/assembly_application(var/manipulated_arm, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
+		var/mob/mob_target = null
+		var/turf/current_turf = get_turf(src)
+		for(var/mob/iterated_mob in viewers(6, current_turf))
+			//the first mob within the return of view() should also be the nearest
+			if (!isintangible(iterated_mob))
+				mob_target = iterated_mob
+				break
 		if(!assembly_target)
-			//if there is no target, we don't do anything
-			return
+			//if there is no target, we don't do anything. Else, we give them the finger.
+			if(mob_target)
+				mob_target.visible_message(SPAN_ALERT("<b>[parent_assembly.name]'s [src] flips [mob_target] off! How rude...</b>"),\
+				SPAN_ALERT("<b>[parent_assembly.name]'s [src] flips you off! How rude...</b>"))
 		else
-			return
+			var/atom/throw_target = mob_target
+			var/obj/item/pie_to_throw = parent_assembly.target
+			//if no target is found, we throw at a random turf which is 6 tiles away instead
+			if(!throw_target)
+				throw_target = get_ranged_target_turf(current_turf, pick(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST), 6 * 32)
+			else
+				throw_target.visible_message(SPAN_ALERT("<b>[parent_assembly.name]'s [src] launches [pie_to_throw] at [throw_target]!</b>"),\
+				SPAN_ALERT("<b>[parent_assembly.name]'s [src] launches [pie_to_throw] at you!</b>"))
+			parent_assembly.remove_until_minimum_components()
+			//after the pie is removed from the assembly and positioned at the ground, lets launch it!
+			if(mob_target && get_turf(mob_target) == current_turf)
+				//if the pie and the person is on the same tile, we gotta make them meet directly
+				var/datum/thrown_thing/simulated_throw = new
+				simulated_throw.user = parent_assembly.last_armer
+				simulated_throw.thing = pie_to_throw
+				pie_to_throw.throw_impact(throw_target, simulated_throw)
+			else
+				pie_to_throw.throw_at(throw_target, 6, 2, thrown_by = parent_assembly.last_armer)
 
 /// ----------- ---------------------------------------------- -----------
-
-
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 /obj/item/parts/robot_parts/arm/left

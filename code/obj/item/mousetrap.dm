@@ -1,6 +1,3 @@
-// Added support for old-style grenades (Convair880).
-
-#define HAS_TRIGGERABLE(x) (x.arm || x.butt)
 /obj/item/mousetrap
 	name = "mousetrap"
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
@@ -12,8 +9,6 @@
 	force = null
 	throwforce = null
 	var/armed = FALSE
-	var/obj/item/reagent_containers/food/snacks/pie/pie = null
-	var/obj/item/parts/arm = null
 	var/obj/item/clothing/head/butt/butt = null
 	var/mob/armer = null
 	stamina_damage = 0
@@ -157,42 +152,7 @@
 		return ..()
 
 	attackby(obj/item/C, mob/user)
-
-		if (!src.arm && (istype(C, /obj/item/parts/robot_parts/arm) || istype(C, /obj/item/parts/human_parts/arm)) && !HAS_TRIGGERABLE(src))
-			if(!(src in user.equipped_list()))
-				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
-				return
-
-			user.u_equip(C)
-			src.arm = C
-			C.set_loc(src)
-			src.UpdateOverlays(image(C.icon, C.icon_state), "triggerable")
-			user.show_text("You add [C] to [src].", "blue")
-		//this check needs to exclude the arm one
-		else if (istype(C, /obj/item/reagent_containers/food/snacks/pie) && !src.butt)
-			if (src.pie)
-				user.show_text("There's already a pie attached to [src]!", "red")
-				return
-			else if (!src.arm)
-				user.show_text("You can't quite seem to get [C] to stay on [src]. Seems like it needs something to hold it in place.", "red")
-				return
-			else if (C.w_class > W_CLASS_TINY) // Transfer valve bomb pies are a thing. Shouldn't fit in a backpack, much less a box.
-				user.show_text("[C] is way too large. You can't find any way to balance it on the arm.", "red")
-				return
-			if(!(src in user.equipped_list()))
-				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
-				return
-
-			user.u_equip(C)
-			src.pie = C
-			C.set_loc(src)
-			src.UpdateOverlays(image(C.icon, C.icon_state), "triggerable")
-			src.w_class = max(src.w_class, C.w_class)
-			user.show_text("You carefully set [C] in [src]'s [src.arm].", "blue")
-
-			logTheThing(LOG_BOMBING, user, "rigs [src] with [src.arm] and [C] at [log_loc(user)].")
-
-		else if (istype(C, /obj/item/clothing/head/butt) && !HAS_TRIGGERABLE(src))
+		if (istype(C, /obj/item/clothing/head/butt) && !src.butt)
 			if(!(src in user.equipped_list()))
 				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
 				return
@@ -205,17 +165,7 @@
 			src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-[src.butt.icon_state]"), "triggerable")
 
 		else if (iswrenchingtool(C))
-			if (src.pie)
-				user.show_text("You remove [src.pie] from [src].", "blue")
-				src.pie.layer = initial(src.pie.layer)
-				src.pie.set_loc(get_turf(src))
-				src.pie = null
-			else if (src.arm)
-				user.show_text("You remove [src.arm] from [src].", "blue")
-				src.arm.layer = initial(src.arm.layer)
-				src.arm.set_loc(get_turf(src))
-				src.arm = null
-			else if (src.butt)
+			if (src.butt)
 				user.show_text("You remove [src.butt] from [src].", "blue")
 				src.butt.layer = initial(src.butt.layer)
 				src.butt.set_loc(get_turf(src))
@@ -314,24 +264,7 @@
 		src.icon_state = "mousetrap"
 		src.armed = FALSE
 
-		if (src.pie && src.arm)
-			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.arm] and [src.pie]) at [log_loc(src)]")
-			target.visible_message(SPAN_ALERT("<b>[src]'s [src.arm] launches [src.pie] at [target]!</b>"),\
-			SPAN_ALERT("<b>[src]'s [src.arm] launches [src.pie] at you!</b>"))
-			src.pie.layer = initial(src.pie.layer)
-			src.pie.set_loc(get_turf(target))
-			var/datum/thrown_thing/thr = new
-			thr.user = armer
-			thr.thing = src.pie
-			src.pie.throw_impact(target, thr)
-			src.pie = null
-			src.arm.set_loc(get_turf(src))
-			src.arm = null
-		else if (src.arm)
-			src.arm.set_loc(get_turf(src))
-			src.arm = null
-
-		else if (src.butt)
+		if (src.butt)
 			if (src.butt.sound_fart)
 				playsound(target, src.butt.sound_fart, 50)
 			else
@@ -475,5 +408,3 @@
 		if (src.buttbomb && src.armed)
 			playsound(src, 'sound/voice/farts/poo2.ogg', 30, FALSE, 0, 1.8)
 		..()
-
-#undef HAS_TRIGGERABLE

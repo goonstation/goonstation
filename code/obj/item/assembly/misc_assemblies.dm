@@ -55,6 +55,7 @@ Contains:
 	var/override_name = null //! use this when an assembly should override the name of the assembly, e.g. canbomb assembly
 	var/override_description = null //! same for the descripion
 	var/override_help_message = null //! see override_name, just for help message
+	var/mob/last_armer = null //! for tracking/logging of who armed the assembly
 	flags = TABLEPASS | CONDUCT | NOSPLASH
 	item_function_flags = OBVIOUS_INTERACTION_BAR
 
@@ -133,7 +134,7 @@ Contains:
 	if (src.secured && (signal && signal.source != src.applier))
 		for(var/mob/O in hearers(1, src.loc))
 			O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
-			SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_APPLY, src, src.target)
+		SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_APPLY, src, src.target)
 
 
 /obj/item/assembly/complete/dropped(mob/user)
@@ -164,6 +165,7 @@ Contains:
 			src.additional_components =- iterated_component
 			qdel(iterated_component)
 	src.additional_components = null
+	src.last_armer = null
 	..()
 
 /obj/item/assembly/complete/attack_self(mob/user)
@@ -238,6 +240,7 @@ Contains:
 		boutput(user, SPAN_NOTICE("[src.name] is now [src.secured ? "secured" : "unsecured"]."))
 		src.add_fingerprint(user)
 		src.UpdateIcon()
+		src.last_armer = user
 		return
 	..()
 
