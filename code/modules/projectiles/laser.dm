@@ -440,9 +440,9 @@ toxic - poisons
 
 	lawbringer
 		color_icon = "#00FFFF"
-		shot_sound = 'sound/weapons/laser_b.ogg'
+		shot_sound = 'sound/weapons/lb_execute_laser.ogg'
 		projectile_speed = 46 //it's not quite the carbine but let's make it a little faster to go with the ANGRY shot sound
-		shot_pitch = 0.8
+		shot_pitch = 0.9
 
 	burst
 		damage = 15
