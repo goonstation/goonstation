@@ -936,7 +936,7 @@ ABSTRACT_TYPE(/obj/gunbotdrone_spawner)
 	icon_state = "drone_phaser"
 	possible_drones = list(/obj/critter/gunbot/drone = 90,
 						   /obj/critter/gunbot/drone/buzzdrone = 100,
-						   /obj/critter/gunbot/aciddrone = 25,
+						   /obj/critter/gunbot/drone/aciddrone = 25,
 						   /obj/critter/gunbot/drone/laserdrone = 5)
 
 /obj/gunbotdrone_spawner/uncommon
