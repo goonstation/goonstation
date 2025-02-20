@@ -603,6 +603,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 /obj/item/shipcomponent/secondary_system/thrusters/afterburner
 	name = "Afterburner"
 	desc = "An engine augment that enhances the burning of plasma, increasing maximum velocity for a short duration."
+	icon_state = "afterburner"
 	hud_state = "lat_thrusters_right"
 	f_active = TRUE
 	power_used = 50
