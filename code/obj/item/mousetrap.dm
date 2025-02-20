@@ -58,6 +58,7 @@
 		if(!src.armed)
 			src.toggle_armed(user)
 			parent_assembly.trigger_icon_prefix = src.icon_state
+			parent_assembly.last_armer = user
 			parent_assembly.UpdateIcon()
 			logTheThing(LOG_BOMBING, usr, "activated the mousetrap on a [parent_assembly.name] at [log_loc(parent_assembly)].")
 			//missing log about contents of beakers
@@ -365,6 +366,7 @@
 		if (src.armed)
 			return
 
+		payload.last_armer = user
 		user.visible_message(SPAN_ALERT("[user] starts up the [src.name]."), "You start up the [src.name]")
 		message_admins("[key_name(user)] releases a [src] (Payload: [src.payload.name]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
 		logTheThing(LOG_BOMBING, user, "releases a [src] (Payload: [src.payload.name]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")

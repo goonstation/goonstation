@@ -46,6 +46,7 @@ TYPEINFO(/obj/item/device/prox_sensor)
 /obj/item/device/prox_sensor/proc/assembly_activation(var/manipulated_sensor, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
 	//Activating a secured assembly sets it off -without- the UI. Good luck
 	if(!src.timing)
+		parent_assembly.last_armer = user
 		src.timing = TRUE
 		src.UpdateIcon()
 		if(timing || armed) processing_items |= src

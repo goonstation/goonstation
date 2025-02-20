@@ -43,6 +43,7 @@ TYPEINFO(/obj/item/device/timer)
 /obj/item/device/timer/proc/assembly_activation(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
 	//Activating a secured assembly sets it off -without- the UI. Good luck
 	if(!src.timing)
+		parent_assembly.last_armer = user
 		src.timing = TRUE
 		src.c_state(1)
 		processing_items |= src
