@@ -226,41 +226,12 @@ Contains:
 
 /obj/item/assembly/complete/attackby(obj/item/used_object, mob/user)
 	if (iswrenchingtool(used_object) && !src.secured)
-		var/turf/T = get_turf(src)
 		if (src.target)
 			boutput(user, SPAN_NOTICE("You remove the [src.target.name] from the assembly."))
-			// We remove all assembly-components from the assembly
-			// and send the different parts of the assembly their corresponding signals to set up the assembly to the state it was
-			src.RemoveComponentsOfType(/datum/component/assembly)
-			src.special_construction_identifier = null
-			SEND_SIGNAL(src.target, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, user)
-			src.target.set_loc(T)
-			src.target.master = null
-			src.target = null
-			src.target_item_prefix = null
-			// When we remove the target, we also rip out all additions added after that.
-			if (src.additional_components)
-				for(var/obj/item/iterated_component in src.additional_components)
-					SEND_SIGNAL(iterated_component, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, user)
-					src.additional_components -= iterated_component
-					iterated_component.set_loc(T)
-					iterated_component.master = null
-			// Now we set up the rest of the assemblyagain
-			src.w_class = max(src.trigger.w_class, src.applier.w_class)
-			SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, FALSE)
-			SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, FALSE)
-			src.UpdateIcon()
-			src.UpdateName()
+			src.remove_until_minimum_components()
 		else
 			boutput(user, SPAN_NOTICE("You disassemble the [src.name]."))
-			for(var/obj/item/removed_item in list(src.trigger, src.applier))
-				SEND_SIGNAL(removed_item, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, user)
-				removed_item.set_loc(T)
-				removed_item.master = null
-			src.trigger = null
-			src.applier = null
-			user.u_equip(src)
-			qdel(src)
+			src.tear_apart()
 		return
 	if (isscrewingtool(used_object))
 		src.secured = !(src.secured)
@@ -269,6 +240,53 @@ Contains:
 		src.UpdateIcon()
 		return
 	..()
+
+///an assembly does need at least a trigger and an applier, so this proc strips down the assembly to these parts
+/obj/item/assembly/complete/proc/remove_until_minimum_components()
+	// We remove all assembly-components from the assembly
+	// and send the different parts of the assembly their corresponding signals to set up the assembly to the state it was
+	var/turf/target_turf = get_turf(src)
+	var/list/items_to_remove = list(src.target)
+	if(src.additional_components)
+		items_to_remove = items_to_remove | src.additional_components
+	for(var/obj/item/removed_item in items_to_remove)
+		SEND_SIGNAL(removed_item, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, null)
+		removed_item.set_loc(target_turf)
+		removed_item.master = null
+		if(removed_item in src.additional_components)
+			src.additional_components -= removed_item
+	//now, we need to set the assembly to a fresh state
+	src.RemoveComponentsOfType(/datum/component/assembly)
+	src.special_construction_identifier = null
+	src.target = null
+	src.target_item_prefix = null
+	src.w_class = max(src.trigger.w_class, src.applier.w_class)
+	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
+	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
+	src.UpdateIcon()
+	src.UpdateName()
+
+
+///This proc removes all items attached to the assembly and removes it
+/obj/item/assembly/complete/proc/tear_apart()
+	var/list/items_to_remove = list(src.trigger, src.applier, src.target)
+	var/turf/target_turf = get_turf(src)
+	if(src.additional_components)
+		items_to_remove = items_to_remove | src.additional_components
+	if(ismob(src.loc))
+		var/mob/handling_user = src.loc
+		handling_user.u_equip(src)
+	for(var/obj/item/removed_item in items_to_remove)
+		SEND_SIGNAL(removed_item, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, null)
+		removed_item.set_loc(target_turf)
+		removed_item.master = null
+		if(removed_item in src.additional_components)
+			src.additional_components -= removed_item
+	src.trigger = null
+	src.applier = null
+	src.target = null
+	qdel(src)
+
 
 /// misc. Assembly-procs --------------------------------
 
