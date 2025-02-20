@@ -1136,7 +1136,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	if (slightly_random)
 		floatspeed = floatspeed * (rand(10,14) / 10)//rand_deci(1, 0, 1, 4)
-	animate(A, pixel_y = Y1, time = floatspeed, loop = loopnum, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)//, flags = ANIMATION_END_NOW) - enable this once we can compile with 511 maybe (I forgot to test it)
+	animate(A, pixel_y = Y1, time = floatspeed, loop = loopnum, easing = LINEAR_EASING)//, flags = ANIMATION_END_NOW) - enable this once we can compile with 511 maybe (I forgot to test it)
 	animate(pixel_y = Y2, time = floatspeed, loop = loopnum, easing = LINEAR_EASING)
 	return
 
