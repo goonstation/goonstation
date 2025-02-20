@@ -137,6 +137,13 @@
 	icon_state = "class-a"
 	muzzle_flash = "muzzle_flash_phaser"
 
+/obj/item/shipcomponent/mainweapon/phaser/burst_phaser
+	name = "Mk 1.5e Burst Phaser"
+	desc = "A variant of the Mk 1.5 Light Phaser that fires a stronger burst of 3 shots at a third of the firerate."
+	firerate = 2.4 SECONDS
+	current_projectile = new/datum/projectile/laser/light/pod/burst
+	icon_state = "class-a-burst"
+
 /obj/item/shipcomponent/mainweapon/phaser/short
 	name = "Mk 1.45 Light Phaser"
 	desc = "A basic, light weight phaser designed for close quarters space fights..."
@@ -1172,6 +1179,30 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	dissipation_rate = 1
 	dissipation_delay = 14
 	projectile_speed = 42
+
+/datum/projectile/laser/light/pod/burst
+	damage = 25
+	//shot_number = 3 - this would be better but is buggy
+	shot_delay = 0.2 SECONDS
+	var/initial_projectile = TRUE
+
+	on_launch(obj/projectile/P)
+		if (!P)
+			return
+		if (!src.initial_projectile)
+			return
+		SPAWN(0)
+			sleep(src.shot_delay)
+			var/datum/projectile/laser/light/pod/burst/laser = new()
+			laser.initial_projectile = FALSE
+			var/turf/T = get_turf(P)
+			var/obj/projectile/projectile = initialize_projectile(T, laser, P.xo, P.yo, P.shooter)
+			projectile.launch()
+			sleep(src.shot_delay)
+			laser = new()
+			laser.initial_projectile = FALSE
+			projectile = initialize_projectile(T, laser, P.xo, P.yo, P.shooter)
+			projectile.launch()
 
 /datum/projectile/disruptor
 	impact_range = 4
