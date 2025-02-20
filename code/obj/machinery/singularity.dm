@@ -985,6 +985,12 @@ TYPEINFO(/obj/machinery/field_generator)
 	Varedit_start = TRUE
 	power = 50
 
+/obj/machinery/field_generator/does_impact_particles(kinetic_impact)
+	if (kinetic_impact == FALSE)
+		return FALSE
+	else
+		return TRUE
+
 /////////////////////////////////////////////// Containment field //////////////////////////////////
 
 /obj/machinery/containment_field
