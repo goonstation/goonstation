@@ -1901,7 +1901,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	max_rotation_rate = 5
 	dissipation_delay = 15
 	start_speed = 15
-	explosion_power = 20
+	explosion_power = 5
 
 	is_valid_target(mob/M, obj/projectile/P)
 		. = ..()
