@@ -454,15 +454,23 @@
 	proc/AmmoPerShot()
 		return 1
 
-	proc/ShootProjectiles(var/mob/user, var/datum/projectile/PROJ, var/shoot_dir, spread = -1)
-		var/obj/projectile/P
-		if (spread == -1)
-			P = shoot_projectile_DIR(src, PROJ, shoot_dir)
-		else
-			P = shoot_projectile_relay_pixel_spread(src, PROJ, get_step(src, shoot_dir), spread_angle = spread)
-		P.mob_shooter = user
+	proc/ShootProjectiles(mob/user, datum/projectile/PROJ, shoot_dir, spread = -1)
 		if (src.m_w_system?.muzzle_flash)
 			muzzle_flash_any(src, dir_to_angle(shoot_dir), src.m_w_system.muzzle_flash)
+
+		src.create_projectile(src, user, PROJ, shoot_dir, spread)
+
+		for (var/i in 1 to (src.m_w_system.shots_to_fire - 1))
+			sleep(PROJ.shot_delay)
+			src.create_projectile(src, user, PROJ, shoot_dir, spread)
+
+	proc/create_projectile(atom/proj_start, mob/user, datum/projectile/PROJ, shoot_dir, spread = -1)
+		var/obj/projectile/P
+		if (spread == -1)
+			P = shoot_projectile_DIR(proj_start, PROJ, shoot_dir)
+		else
+			P = shoot_projectile_relay_pixel_spread(proj_start, PROJ, get_step(src, shoot_dir), spread_angle = spread)
+		P.mob_shooter = user
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		. = 'sound/impact_sounds/Metal_Clang_3.ogg'

@@ -5,6 +5,8 @@
 	var/mob/gunner = null
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/light/pod
 	var/firerate = 8
+	/// number of projectiles that are fired when weapon is fired
+	var/shots_to_fire = 1
 	/// change to a degree in angles to give custom spread
 	var/spread = -1
 	var/weapon_score = 0.1
@@ -141,6 +143,7 @@
 	name = "Mk 1.5e Burst Phaser"
 	desc = "A variant of the Mk 1.5 Light Phaser that fires a stronger burst of 3 shots at a third of the firerate."
 	firerate = 2.4 SECONDS
+	shots_to_fire = 3
 	current_projectile = new/datum/projectile/laser/light/pod/burst
 	icon_state = "class-a-burst"
 
@@ -1182,27 +1185,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 
 /datum/projectile/laser/light/pod/burst
 	damage = 25
-	//shot_number = 3 - this would be better but is buggy
 	shot_delay = 0.2 SECONDS
-	var/initial_projectile = TRUE
-
-	on_launch(obj/projectile/P)
-		if (!P)
-			return
-		if (!src.initial_projectile)
-			return
-		SPAWN(0)
-			sleep(src.shot_delay)
-			var/datum/projectile/laser/light/pod/burst/laser = new()
-			laser.initial_projectile = FALSE
-			var/turf/T = get_turf(P)
-			var/obj/projectile/projectile = initialize_projectile(T, laser, P.xo, P.yo, P.shooter)
-			projectile.launch()
-			sleep(src.shot_delay)
-			laser = new()
-			laser.initial_projectile = FALSE
-			projectile = initialize_projectile(T, laser, P.xo, P.yo, P.shooter)
-			projectile.launch()
 
 /datum/projectile/disruptor
 	impact_range = 4
