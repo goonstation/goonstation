@@ -297,10 +297,13 @@ toxic - poisons
 				var/obj/machinery/vehicle/vehicle = hit
 				var/mob/M = vehicle.pilot
 				if (istype(M))
+					var/damage_pilot = TRUE
 					if (istype(vehicle.sec_system, /obj/item/shipcomponent/secondary_system/shielding))
 						var/obj/item/shipcomponent/secondary_system/shielding/shielding = vehicle.sec_system
-						if (!shielding.active)
-							M.TakeDamage("All", burn = src.pilot_dmg, damage_type = DAMAGE_BURN)
+						if (shielding.active)
+							damage_pilot = FALSE
+					if (damage_pilot)
+						M.TakeDamage("All", burn = src.pilot_dmg, damage_type = DAMAGE_BURN)
 			..()
 
 		pod
