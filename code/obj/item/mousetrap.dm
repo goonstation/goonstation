@@ -300,10 +300,11 @@
 
 	New(ourLoc, var/obj/item/assembly/complete/new_payload, var/obj/item/pipebomb/frame/new_frame)
 		..()
-
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL, PROC_REF(on_part_disposal))
 		if (new_payload)
 			new_payload.set_loc(src)
 			src.payload = new_payload
+			src.payload.master = src
 			//we scale down the assembly and resets its icon area to position it properly on the mousetrap roller
 			src.payload.pixel_x = 0
 			src.payload.pixel_y = 0
@@ -315,11 +316,13 @@
 
 
 		if (new_frame)
-			new_frame.set_loc(src)
 			src.frame = new_frame
 		else
 			src.frame = new /obj/item/pipebomb/frame
-			src.frame.set_loc(src)
+		src.frame.set_loc(src)
+		src.frame.master = src
+		// mousetrap roller + wrench -> disassembly
+		src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(disassemble), FALSE)
 		//else
 		//	src.mousetrap = new /obj/item/mousetrap(src)
 
@@ -329,28 +332,33 @@
 		//	src.mousetrap.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
 
 	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL)
 		qdel(src.frame)
 		src.frame = null
 		qdel(src.payload)
 		src.payload = null
 		..()
 
-	attackby(obj/item/C, mob/user)
-		if (iswrenchingtool(C))
-			user.visible_message("<b>[user]</b> disassembles [src].","You disassemble [src].")
-			if (src.payload)
-				src.payload.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
-				src.payload.set_loc(get_turf(src))
-				src.payload.transform = null //we reset the transformation here
-				src.payload = null
-			if (src.frame)
-				src.frame.set_loc(get_turf(src))
-				src.frame = null
-			qdel(src)
+	proc/on_part_disposal(var/datum/removed_part)
+		spawn(1)
+			src.disassemble()
 
-		else
-			..()
-		return
+	proc/disassemble(var/atom/to_combine_atom, var/mob/user)
+		var/turf/target_turf = get_turf(src)
+		if (user)
+			user.visible_message("<b>[user]</b> disassembles [src].","You disassemble [src].")
+		for(var/obj/item/affected_item in list(src.frame,src.payload))
+			if(!affected_item.qdeled && !affected_item.disposed)
+				affected_item.set_loc(target_turf)
+			affected_item.master = null
+		if (src.payload)
+			src.payload.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
+			src.payload.transform = null //we reset the transformation here
+			src.vis_contents -= src.payload
+		src.payload = null
+		src.frame = null
+		qdel(src)
+		return TRUE
 
 	attack_hand(mob/user)
 		if (src.armed)
@@ -372,6 +380,8 @@
 		logTheThing(LOG_BOMBING, user, "releases a [src] (Payload: [src.payload.name]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
 
 		src.armed = TRUE
+		//no disassembly mid-drive
+		src.RemoveComponentsOfType(/datum/component/assembly)
 		//we arm our assembly here
 		SEND_SIGNAL(src.payload.trigger, COMSIG_ITEM_ASSEMBLY_ACTIVATION, payload, user)
 		src.set_density(1)
@@ -392,19 +402,8 @@
 				signal.source = src.payload.trigger
 				signal.data["message"] = "ACTIVATE"
 				payload.receive_signal(signal)
-				//now, if the payload still exists, we leave it on the ground
-				if (src.payload)
-					src.payload.set_loc(src.loc)
-					//we reset the transformation here
-					src.payload.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
-					src.payload.transform = null
-					//this will deactivate the mousetrap
-					SEND_SIGNAL(src.payload.trigger, COMSIG_ITEM_ASSEMBLY_MANIPULATION, payload)
-					src.payload = null
-				if (src.frame)
-					src.frame.set_loc(src.loc)
-					src.frame = null
-				qdel(src)
+				//now we leave anything on the ground that is still there
+				src.disassemble()
 
 	Move(var/turf/new_loc,direction)
 		if (src.buttbomb && src.armed)
