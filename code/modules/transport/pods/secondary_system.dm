@@ -1418,13 +1418,14 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 
 	activate()
 		. = ..(FALSE)
+		src.active = FALSE
 		if (!.)
 			return
 
 		if (!src.loaded_wep && !src.ship.m_w_system)
 			return
 
-		if (GET_COOLDOWN(src.loaded_wep, "fire") || GET_COOLDOWN(src.ship.m_w_system, "fire"))
+		if (src.loaded_wep && GET_COOLDOWN(src.loaded_wep, "fire") || src.ship.m_w_system && GET_COOLDOWN(src.ship.m_w_system, "fire"))
 			boutput(src.ship.pilot, "[src.ship.ship_message("[src] must wait for all weapons to be off cooldown to work!")]")
 			return
 
@@ -1442,6 +1443,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 			src.ship.null_part(weapon)
 		var/obj/item/shipcomponent/mainweapon/stored_weapon = src.loaded_wep
 		if (stored_weapon)
+			stored_weapon.ship = src.ship // prevents a bug in activate()
 			src.ship.Install(stored_weapon, FALSE)
 			src.loaded_wep = null
 			src.UpdateIcon()
@@ -1451,8 +1453,6 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 			src.UpdateIcon()
 
 		src.ship.myhud.update_systems()
-
-		src.active = FALSE
 
 	attack_self(mob/user)
 		src.eject_wep(user)
