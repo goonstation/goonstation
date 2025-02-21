@@ -62,7 +62,6 @@
 			p3.master = R
 			R.status = explosive
 			p1.b_stat = 0
-			p2.status = 1
 			p3.air_contents.temperature = btemp + T0C
 
 		// proximity
@@ -80,7 +79,6 @@
 			R.status = explosive
 
 			p3.air_contents.temperature = btemp + T0C
-			p2.status = 1
 
 			if(src.active)
 				R.part1.armed = TRUE
@@ -102,7 +100,6 @@
 			R.status = explosive
 
 			p3.air_contents.temperature = btemp + T0C
-			p2.status = 1
 
 	qdel(src)
 

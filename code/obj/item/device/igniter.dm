@@ -5,7 +5,6 @@ TYPEINFO(/obj/item/device/igniter)
 	name = "igniter"
 	desc = "A small electronic device can be paired with other electronics, or used to heat chemicals directly."
 	icon_state = "igniter"
-	var/status = 1
 	flags = TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBELT
 	tool_flags = TOOL_ASSEMBLY_APPLIER
@@ -23,25 +22,17 @@ TYPEINFO(/obj/item/device/igniter)
 
 /obj/item/device/igniter/New()
 	..()
-	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK, PROC_REF(assembly_check))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS, PROC_REF(assembly_overlay_addition))
 
 /obj/item/device/igniter/disposing()
-	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS)
 	..()
 
 /// ----------- Trigger/Applier-Assembly-Related Procs -----------
-
-/obj/item/device/igniter/proc/assembly_check(var/manipulated_igniter, var/obj/item/second_part, var/mob/user)
-	//if secured, we return TRUE and prevent the combination
-	if (src.status)
-		boutput(user, SPAN_NOTICE("You need to unsecure the igniter to attach it to that."))
-	return src.status
 
 /obj/item/device/igniter/proc/assembly_application(var/manipulated_igniter, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
 	if(!assembly_target)
@@ -87,8 +78,6 @@ TYPEINFO(/obj/item/device/igniter)
 
 
 /obj/item/device/igniter/proc/assembly_setup(var/manipulated_igniter, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
-	//once integrated in the assembly, we secure the igniter
-	src.status = 1
 	if(parent_assembly.applier == src)
 		// trigger-igniter- Assembly + wired pipebomb/pipebomb-frame/beaker -> trigger-igniter pipebomb/beakerbomb
 		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/tank/plasma, /obj/item/pipebomb/frame, /obj/item/pipebomb/bomb, /obj/item/reagent_containers/glass/beaker), TYPE_PROC_REF(/obj/item/assembly/complete, add_target_item), TRUE)
@@ -112,17 +101,6 @@ TYPEINFO(/obj/item/device/igniter)
 		else return ..()
 	else return ..()
 
-/obj/item/device/igniter/attackby(obj/item/W, mob/user)
-	if (isscrewingtool(W))
-		src.status = !(src.status)
-		if (src.status)
-			user.show_message(SPAN_NOTICE("The igniter is ready!"))
-		else
-			user.show_message(SPAN_NOTICE("The igniter can now be attached!"))
-		src.add_fingerprint(user)
-
-	return
-
 /obj/item/device/igniter/attack_self(mob/user as mob)
 
 	src.add_fingerprint(user)
@@ -142,7 +120,7 @@ TYPEINFO(/obj/item/device/igniter)
 		last_ignite = world.time
 
 /obj/item/device/igniter/proc/ignite()
-	if (src.status && can_ignite())
+	if (src.can_ignite())
 		var/turf/location = src.loc
 
 		if (src.master)
@@ -155,10 +133,3 @@ TYPEINFO(/obj/item/device/igniter)
 
 	return
 
-/obj/item/device/igniter/examine(mob/user)
-	. = ..()
-	if ((in_interact_range(src, user) || src.loc == user))
-		if (src.status)
-			. += "The igniter is ready!"
-		else
-			. += "The igniter can be attached!"

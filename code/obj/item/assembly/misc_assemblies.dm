@@ -530,7 +530,6 @@ Contains:
 			user.show_message(SPAN_NOTICE("The timer is now secured!"), 1)
 		else
 			user.show_message(SPAN_NOTICE("The timer is now unsecured!"), 1)
-		src.part2.status = src.status
 		src.add_fingerprint(user)
 		return
 
@@ -781,7 +780,6 @@ Contains:
 		user.show_message(SPAN_NOTICE("The proximity sensor is now secured! The igniter now works!"), 1)
 	else
 		user.show_message(SPAN_NOTICE("The proximity sensor is now unsecured! The igniter will not work."), 1)
-	src.part2.status = src.status
 	src.add_fingerprint(user)
 
 	return
@@ -999,7 +997,6 @@ Contains:
 		user.show_message(SPAN_NOTICE("The radio is now secured! The igniter now works!"), 1)
 	else
 		user.show_message(SPAN_NOTICE("The radio is now unsecured! The igniter will not work."), 1)
-	src.part2.status = src.status
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
 	return
@@ -1200,7 +1197,6 @@ Contains:
 			user.show_message(SPAN_NOTICE("The analyzer is now secured!"), 1)
 		else
 			user.show_message(SPAN_NOTICE("The analyzer is now unsecured!"), 1)
-		src.part2.status = src.status
 		src.add_fingerprint(user)
 	return
 
