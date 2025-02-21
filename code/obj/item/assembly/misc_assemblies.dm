@@ -154,6 +154,66 @@ Contains:
 	// we relay the dropping of the assembly to the trigger in case of a mouse trap
 	src.trigger.Crossed(crossing_atom)
 
+///------ Proc to transfer impulses/events onto the main components ---------
+/obj/item/assembly/complete/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled)
+	. = ..()
+	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
+		affected_item.temperature_expose(air, exposed_temperature, exposed_volume, cannot_be_cooled)
+
+/obj/item/assembly/complete/ex_act(severity)
+	..()
+	if(!src.qdeled && !src.disposed)
+		for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
+			affected_item.ex_act(severity)
+
+/obj/item/assembly/complete/material_trigger_on_mob_attacked(mob/attacker, mob/attacked, atom/weapon, situation_modifier)
+	. = ..()
+	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
+		affected_item.material_trigger_on_mob_attacked(attacker, attacked, weapon, situation_modifier)
+
+/obj/item/assembly/complete/material_trigger_on_bullet(atom/attacked, obj/projectile/projectile, situation_modifier)
+	. = ..()
+	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
+		affected_item.material_trigger_on_bullet(attacked, projectile, situation_modifier)
+
+/obj/item/assembly/complete/material_trigger_on_chems(chem, amount)
+	. = ..()
+	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
+		affected_item.material_trigger_on_chems(chem, amount)
+
+/obj/item/assembly/complete/material_trigger_on_blob_attacked(blobPower, situation_modifier)
+	. = ..()
+	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
+		affected_item.material_trigger_on_blob_attacked(blobPower, situation_modifier)
+
+/obj/item/assembly/complete/material_on_attack_use(mob/attacker, atom/attacked)
+	. = ..()
+	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
+		affected_item.material_on_attack_use(attacker, attacked)
+
+/obj/item/assembly/complete/material_trigger_when_attacked(atom/attackatom, mob/attacker, meleeorthrow, situation_modifier)
+	. = ..()
+	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
+		affected_item.material_trigger_when_attacked(attackatom, attacker, meleeorthrow, situation_modifier)
+
+/obj/item/assembly/complete/material_on_pickup(mob/user)
+	//we pick one item here the person is touching
+	. = ..()
+	var/list/item_selection = list(src.trigger, src.applier)
+	if(src.target)
+		item_selection += src.target
+	var/obj/item/picked_item = pick(item_selection)
+	picked_item.material_on_pickup(user)
+
+/obj/item/assembly/complete/material_on_drop(mob/user)
+	//we pick one item here the person is touching
+	. = ..()
+	var/list/item_selection = list(src.trigger, src.applier)
+	if(src.target)
+		item_selection += src.target
+	var/obj/item/picked_item = pick(item_selection)
+	picked_item.material_on_drop(user)
+///------ ------------------------------------------ ---------
 
 /obj/item/assembly/complete/disposing()
 	UnregisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED)
