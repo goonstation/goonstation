@@ -1913,7 +1913,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 /datum/projectile/bullet/homing/rocket/salvo
 	name = "Salvo Rocket"
 	max_rotation_rate = 5
-	dissipation_delay = 15
+	dissipation_delay = 30
 	start_speed = 15
 	explosion_power = 1
 	shot_delay = 0.3 SECONDS
