@@ -41,6 +41,7 @@
 	new_assembly.master = src
 	new_assembly.set_loc(src)
 	src.part_assembly = new_assembly
+	UnregisterSignal(new_assembly, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL) //we need the assembly to stay assembled if e.g. material parts of it blow
 	for(var/obj/item/checked_item in new_assembly.additional_components)
 		src.attachments += checked_item
 		checked_item.detonator_act("attach", src)

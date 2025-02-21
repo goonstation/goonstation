@@ -76,19 +76,25 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	New(ourLoc, var/obj/item/assembly/complete/new_payload, var/obj/item/clothing/suit/armor/vest/new_vest)
 		..()
 		RegisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH, PROC_REF(triggering))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL, PROC_REF(on_part_disposal))
 		if (!new_vest)
 			src.part_vest = new /obj/item/clothing/suit/armor/vest(src)
 		else
 			src.part_vest = new_vest
 			new_vest.set_loc(src)
+			new_vest.master = src
 		if (new_payload)
 			src.payload = new_payload
 			new_payload.set_loc(src)
+			new_payload.master = src
+		// suicide vest + wrench -> disassembly
+		src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(disassemble), FALSE)
 		//if (!src.part_igniter)
 		//	src.part_igniter = new /obj/item/assembly/anal_ignite(src)
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL)
 		qdel(src.payload)
 		src.payload = null
 		qdel(src.part_vest)
@@ -102,25 +108,24 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 		else
 			. += SPAN_ALERT("There doesn't appear to be a payload attached.")
 
-	attackby(obj/item/W, mob/user)
-		src.add_fingerprint(user)
+	proc/on_part_disposal(var/datum/removed_part)
+		spawn(1)
+			src.disassemble()
 
-		if (iswrenchingtool(W))
-			var/turf/T = get_turf(user)
-			if (src.part_vest && T)
-				src.part_vest.set_loc(T)
-				src.part_vest = null
-			if (src.payload && T)
-				src.payload.set_loc(T)
-				src.payload = null
+	proc/disassemble(var/atom/to_combine_atom, var/mob/user)
+		var/turf/T = get_turf(src)
+		if(user)
 			boutput(user, SPAN_ALERT("You disassemble [src.name]."))
 			if (src.loc == user)
 				user.u_equip(src)
-			qdel(src)
-
-		else
-			..()
-		return
+		for(var/obj/item/affected_item in list(src.part_vest, src.payload))
+			if(!affected_item.qdeled && !affected_item.disposed)
+				affected_item.set_loc(T)
+			affected_item.master = null
+		src.part_vest = null
+		src.payload = null
+		qdel(src)
+		return TRUE
 
 	proc/triggering(var/affected_assembly, var/mob/dying_mob)
 		if (!src || !dying_mob || !src.payload)
