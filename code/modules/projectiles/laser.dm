@@ -286,13 +286,13 @@ toxic - poisons
 		color_green = 1
 		color_blue = 1
 		has_impact_particles = FALSE
-		var/hit_dmg = 20
+		var/pilot_dmg = 20
 		disruption = 5
 
 		on_hit(atom/hit)
 			if (istype(hit, /mob))
 				var/mob/M = hit
-				M.TakeDamage("All", burn = src.hit_dmg, damage_type = DAMAGE_BURN)
+				M.TakeDamage("All", burn = src.pilot_dmg, damage_type = DAMAGE_BURN)
 			else if (istype(hit, /obj/machinery/vehicle))
 				var/obj/machinery/vehicle/vehicle = hit
 				var/mob/M = vehicle.pilot
@@ -300,11 +300,11 @@ toxic - poisons
 					if (istype(vehicle.sec_system, /obj/item/shipcomponent/secondary_system/shielding))
 						var/obj/item/shipcomponent/secondary_system/shielding/shielding = vehicle.sec_system
 						if (!shielding.active)
-							M.TakeDamage("All", burn = src.hit_dmg, damage_type = DAMAGE_BURN)
+							M.TakeDamage("All", burn = src.pilot_dmg, damage_type = DAMAGE_BURN)
 			..()
 
 		pod
-			hit_dmg = 10
+			pilot_dmg = 10
 
 	upgradeable
 		icon_state = "phaser_light"
