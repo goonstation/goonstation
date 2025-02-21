@@ -903,7 +903,6 @@ TYPEINFO(/obj/item/radiojammer)
 
 /obj/item/device/radio/signaler/New()
 	..()
-	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK, PROC_REF(assembly_check))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION, PROC_REF(assembly_manipulation))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
@@ -912,7 +911,6 @@ TYPEINFO(/obj/item/radiojammer)
 	src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
 
 /obj/item/device/radio/signaler/disposing()
-	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
@@ -921,12 +919,6 @@ TYPEINFO(/obj/item/radiojammer)
 
 
 /// ----------- Assembly-Related Procs -----------
-
-/obj/item/device/radio/signaler/proc/assembly_check(var/manipulated_signaler, var/obj/item/second_part, var/mob/user)
-	//if secured, we return TRUE and prevent the combination
-	if (!src.b_stat)
-		boutput(user, SPAN_NOTICE("You need to unsecure the [src.name] to attach it to that."))
-	return !src.b_stat
 
 /obj/item/device/radio/signaler/proc/assembly_manipulation(var/manipulated_signaler, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
 	src.AttackSelf(user)
