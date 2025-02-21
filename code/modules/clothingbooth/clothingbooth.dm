@@ -32,6 +32,8 @@
 	var/obj/item/clothing/preview_item
 	/// The direction that the preview mob is currently facing.
 	var/current_preview_direction = SOUTH
+	/// Store this so we can throttle getFlatIcon calls and still have something to show
+	var/icon/last_preview_icon = null
 	/// If `TRUE`, show the clothing that the occupant is currently wearing on the preview.
 	var/show_clothing = TRUE
 
@@ -163,13 +165,14 @@
 	.["name"] = src.name
 
 /obj/machinery/clothingbooth/ui_data(mob/user)
-	var/icon/preview_icon = getFlatIcon(src.preview.preview_thing, no_anim = TRUE)
+	if (!src.last_preview_icon || !ON_COOLDOWN(src, "generate_preview_icon", 1 SECOND))
+		src.last_preview_icon = getFlatIcon(src.preview.preview_thing, no_anim = TRUE)
 	. = list(
 		"accountBalance" = src.accessed_record ? src.accessed_record["current_money"] : 0,
 		"cash" = src.cash,
 		"everythingIsFree" = src.everything_is_free,
-		"previewIcon" = icon2base64(preview_icon),
-		"previewHeight" = preview_icon.Height(),
+		"previewIcon" = icon2base64(src.last_preview_icon),
+		"previewHeight" = src.last_preview_icon.Height(),
 		"previewItem" = src.preview_item,
 		"previewShowClothing" = src.show_clothing,
 		"scannedID" = src.scanned_id,
@@ -351,6 +354,7 @@
 /obj/machinery/clothingbooth/proc/eject_contents(mob/target)
 	src.clear_preview_item()
 	src.preview.remove_all_clients()
+	src.last_preview_icon = null
 	tgui_process.close_uis(src)
 	src.reset_clothingbooth_parameters()
 	var/turf/T = get_turf(src)

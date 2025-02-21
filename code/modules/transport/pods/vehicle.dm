@@ -36,6 +36,10 @@
 	var/powercapacity = 0 //How much power the ship's components can use, set by engine
 	var/powercurrent = 0 //How much power the components are using
 	var/speed = 1 //FOR PODS : While holding thruster, how much to add on to our max speed. Does nothing for tanks.
+	/// acceleration modification provided by afterburner if installed
+	var/afterburner_accel_mod = 1
+	/// speed modification provided by afterburner if installed
+	var/afterburner_speed_mod = 1
 	var/stall = 0 // slow the ship down when firing
 	var/flying = 0 // holds the direction the ship is currently drifting, or 0 if stopped
 	var/facing = SOUTH // holds the direction the ship is currently facing
@@ -454,8 +458,12 @@
 	proc/AmmoPerShot()
 		return 1
 
-	proc/ShootProjectiles(var/mob/user, var/datum/projectile/PROJ, var/shoot_dir)
-		var/obj/projectile/P = shoot_projectile_DIR(src, PROJ, shoot_dir)
+	proc/ShootProjectiles(var/mob/user, var/datum/projectile/PROJ, var/shoot_dir, spread = -1)
+		var/obj/projectile/P
+		if (spread == -1)
+			P = shoot_projectile_DIR(src, PROJ, shoot_dir)
+		else
+			P = shoot_projectile_relay_pixel_spread(src, PROJ, get_step(src, shoot_dir), spread_angle = spread)
 		P.mob_shooter = user
 		if (src.m_w_system?.muzzle_flash)
 			muzzle_flash_any(src, dir_to_angle(shoot_dir), src.m_w_system.muzzle_flash)
@@ -831,6 +839,7 @@
 /// Callback for welding repair actionbar
 /obj/machinery/vehicle/proc/weld_action(mob/user)
 	src.health += 30
+	src.delStatus("pod_corrosion")
 	src.checkhealth()
 	src.add_fingerprint(user)
 	src.visible_message(SPAN_ALERT("[user] has fixed some of the dents on [src]!"))

@@ -202,7 +202,7 @@
 			else boutput(user, SPAN_ALERT("You need to log in before depositing cash!"))
 		else if(istype(I, /obj/item/currency/buttcoin/))
 			if (src.accessed_record)
-				boutput(user, SPAN_NOTICE("You insert the cash into the ATM."))
+				boutput(user, SPAN_NOTICE("You force the cash into the ATM."))
 				boutput(user, SPAN_SUCCESS("Your transaction will complete anywhere within 10 to 10e27 minutes from now."))
 				I.amount = 0
 				qdel(I)
@@ -452,6 +452,19 @@
 				I.amount = 0
 				qdel(I)
 				src.Attackhand(user)
+			else boutput(user, SPAN_ALERT("You need to log in before depositing cash!"))
+			return
+		if (istype(I, /obj/item/currency/buttcoin))
+			if (afterlife)
+				boutput(user, SPAN_ALERT("On closer inspection, this ATM doesn't seem to have a deposit slot for credits!"))
+				return
+			if (src.accessed_record)
+				boutput(user, SPAN_NOTICE("You force the cash into the ATM."))
+				boutput(user, SPAN_SUCCESS("Your transaction will complete anywhere within 10 to 10e27 minutes from now."))
+				if (!ON_COOLDOWN(src, "sound_insertcash", 2 SECONDS))
+					playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
+				I.amount = 0
+				qdel(I)
 			else boutput(user, SPAN_ALERT("You need to log in before depositing cash!"))
 			return
 		if (istype(I, /obj/item/lotteryTicket))

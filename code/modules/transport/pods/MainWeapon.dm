@@ -5,6 +5,8 @@
 	var/mob/gunner = null
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/light/pod
 	var/firerate = 8
+	/// change to a degree in angles to give custom spread
+	var/spread = -1
 	var/weapon_score = 0.1
 	var/appearanceString
 
@@ -72,6 +74,8 @@
 		if (remaining_ammunition < ship.AmmoPerShot())
 			boutput(user, "[ship.ship_message("You need [ship.AmmoPerShot()] to fire the weapon. You currently have [remaining_ammunition] loaded.")]")
 			return
+		else
+			boutput(user, "[ship.ship_message("[remaining_ammunition] shots remaining.")]")
 
 	var/rdir = ship.dir
 	if (shot_dir_override > 1)
@@ -80,7 +84,7 @@
 	//	if ((rdir - 1) & rdir)
 	//		rdir &= 12
 	logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
-	ship.ShootProjectiles(user, current_projectile, rdir)
+	ship.ShootProjectiles(user, current_projectile, rdir, src.spread)
 	remaining_ammunition -= ship.AmmoPerShot()
 
 /obj/item/shipcomponent/mainweapon/proc/MakeGunner(mob/M as mob)
@@ -208,6 +212,53 @@
 	firerate = 10
 	icon_state = "spes"
 	muzzle_flash = "muzzle_flash"
+
+/obj/item/shipcomponent/mainweapon/minigun
+	name = "Minigun"
+	desc = "A low damage but high firerate anti-personnel minigun stuffed into a pod weapon."
+	weapon_score = 1.25
+	firerate = 0.25 SECONDS
+	spread = 25
+	appearanceString = "pod_weapon_gun_off"
+	current_projectile = new/datum/projectile/bullet/akm/pod
+	icon_state = "minigun"
+	muzzle_flash = "muzzle_flash"
+
+/obj/item/shipcomponent/mainweapon/gun_9mm
+	name = "PEP-9 Ballistic System"
+	desc = "A peashooter attached to a kinetic podweapon, designed to fire 9mm rounds."
+	weapon_score = 1.25
+	power_used = 30
+	current_projectile = new/datum/projectile/bullet/bullet_9mm
+	appearanceString = "pod_weapon_gun_off"
+	firerate = 10
+	icon_state = "spes"
+	muzzle_flash = "muzzle_flash"
+
+/obj/item/shipcomponent/mainweapon/gun_9mm/uses_ammo
+	name = "PEP-9L Ballistic System"
+	desc = "A peashooter attached to a kinetic podweapon, designed to fire 9mm rounds. It has an integral magazine that must be reloaded when empty."
+
+	uses_ammunition = 1
+	remaining_ammunition = 20
+
+/obj/item/shipcomponent/mainweapon/gun_22
+	name = "PEP-22 Ballistic System"
+	desc = "A peashooter attached to a kinetic podweapon, designed to fire 22 caliber rounds."
+	weapon_score = 1.25
+	power_used = 30
+	current_projectile = new/datum/projectile/bullet/bullet_22
+	appearanceString = "pod_weapon_gun_off"
+	firerate = 10
+	icon_state = "spes"
+	muzzle_flash = "muzzle_flash"
+
+/obj/item/shipcomponent/mainweapon/gun_22/uses_ammo
+	name = "PEP-22L Ballistic System"
+	desc = "A peashooter attached to a kinetic podweapon, designed to fire 22 caliber rounds. It has an integral magazine that must be reloaded when empty."
+
+	uses_ammunition = 1
+	remaining_ammunition = 20
 
 /obj/item/shipcomponent/mainweapon/laser_ass // hehhh
 	name = "Mk.4 Assault Laser"
@@ -473,10 +524,6 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 
 			if(EFIF_MODE_FLOORS to EFIF_MODE_WALLS)
 				if(ON_COOLDOWN(src, "fire", firerate))
-					return
-				if(src.mode != EFIF_MODE_R_FLOORS && ship.z == Z_LEVEL_STATION) //antigrief
-					boutput(user,SPAN_ALERT("The construction system isn't cleared to operate in this mode within this sector."))
-					src.sadbuzz()
 					return
 				if(length(src.active_fields) >= 1)
 					return

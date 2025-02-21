@@ -2677,7 +2677,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		ammo.amount_left = 0 // Spawn empty.
-		set_current_projectile(new /datum/projectile/bullet/homing/mrl)
+		set_current_projectile(new /datum/projectile/bullet/homing/rocket/mrl)
 		..()
 
 	disposing()

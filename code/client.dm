@@ -417,6 +417,7 @@
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding to clients")
 
 	clients += src
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
 	add_to_donator_list(src.ckey)
 
 	SPAWN(0) // to not lock up spawning process
