@@ -1,6 +1,10 @@
 
 (t)fri feb 21 25
 (u)FlameArrow57
+(p)22386
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Added a new Syndicate acid drone to the debris field, which causes pod corrosion over time that can be removed with a welding tool
+(u)FlameArrow57
 (p)22375
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
 (+)Added a new syndicate Rocket drone that can rarely appear in the debris field
