@@ -469,8 +469,8 @@
 
 #undef EJECT_PART
 
-	proc/eject_part(obj/item/shipcomponent/part)
-		part.deactivate()
+	proc/eject_part(obj/item/shipcomponent/part, give_message = TRUE)
+		part.deactivate(give_message)
 		part.set_loc(get_turf(src))
 		src.components -= part
 

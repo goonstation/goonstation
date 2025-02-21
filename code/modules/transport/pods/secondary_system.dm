@@ -1424,6 +1424,10 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 		if (!src.loaded_wep && !src.ship.m_w_system)
 			return
 
+		if (GET_COOLDOWN(src.loaded_wep, "fire") || GET_COOLDOWN(src.ship.m_w_system, "fire"))
+			boutput(src.ship.pilot, "[src.ship.ship_message("[src] must wait for all weapons to be off cooldown to work!")]")
+			return
+
 		for (var/mob/M in src.ship)
 			if (src.loaded_wep && src.ship.m_w_system)
 				boutput(M, "[src.ship.ship_message("[src.ship.m_w_system] has been swapped out for [src.loaded_wep].")]")
@@ -1434,7 +1438,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 
 		var/obj/item/shipcomponent/mainweapon/weapon = src.ship?.m_w_system
 		if (istype(weapon))
-			src.ship.eject_part(weapon)
+			src.ship.eject_part(weapon, FALSE)
 			src.ship.null_part(weapon)
 		var/obj/item/shipcomponent/mainweapon/stored_weapon = src.loaded_wep
 		if (stored_weapon)
