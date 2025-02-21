@@ -1,4 +1,9 @@
 
+(t)fri feb 21 25
+(u)FlameArrow57
+(p)22375
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Added a new syndicate Rocket drone that can rarely appear in the debris field
 (t)thu feb 20 25
 (u)Sord
 (+)Security now spawns with a panic button in their pouches
