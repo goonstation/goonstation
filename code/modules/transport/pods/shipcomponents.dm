@@ -72,10 +72,10 @@
 		return
 	src.active = 0
 	ship.powercurrent -= power_used
-	if (give_message)
-		for(var/mob/M in src.ship)
+	for(var/mob/M in src.ship)
+		if (give_message)
 			boutput(M, "[ship.ship_message("[src] is shutting down...")]")
-			mob_deactivate(M)
+		mob_deactivate(M)
 	src.ship.myhud.update_states()
 	return
 ///Handles mob entering ship

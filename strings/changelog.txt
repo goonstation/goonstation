@@ -1,4 +1,27 @@
 
+(t)fri feb 21 25
+(u)FlameArrow57
+(p)22329
+(e)🆕🎨📦🚗|C-Feature, C-Sprites, A-Game-Objects, A-Vehicles
+(+)Added a new pod Afterburner component to ship fabricators, which increases your pod's maximum velocity and acceleration for 5 seconds, with a 20 second recharge time.
+(u)Sord
+(*)Space Z5 (Mining Zlevel) now has random enemy drone spawns
+(u)FlameArrow57
+(p)22386
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Added a new Syndicate acid drone to the debris field, which causes pod corrosion over time that can be removed with a welding tool
+(u)FlameArrow57
+(p)22375
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Added a new syndicate Rocket drone that can rarely appear in the debris field
+(t)thu feb 20 25
+(u)Sord
+(+)Security now spawns with a panic button in their pouches
+(t)wed feb 19 25
+(u)Bartimeus973
+(p)22345
+(e)|
+(+)It is no longer safe to dive outside the pool from a springboard.
 (t)tue feb 18 25
 (u)FlameArrow57
 (p)22355

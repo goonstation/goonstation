@@ -374,10 +374,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			target.air.merge(payload)
 			location.material.setProperty("plasma_offgas", total_plasma)
 
-/datum/materialProc/plasmastone_on_hit
-	execute(var/atom/owner)
-		owner.material.triggerTemp(locate(owner))
-
 /datum/materialProc/molitz_temp
 	max_generations = 1
 
