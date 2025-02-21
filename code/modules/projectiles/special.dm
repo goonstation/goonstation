@@ -33,21 +33,21 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/acid
 	name = "acid"
-	icon_state = "radbolt"
-	damage = 45
-	dissipation_rate = 30
+	icon_state = "ecto"
+	damage = 0.001 // to bypass 0 damage checks
 	dissipation_delay = 10
 	sname = "acid"
 
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
-		var/power = projectile.power
-		hit.damage_corrosive(power)
-
-	potent
-		damage = 100
-
-	weak
-		damage = 15
+		if (istype(hit, /mob))
+			projectile.create_reagents(10)
+			projectile.reagents.add_reagent("pacid", 10)
+			projectile.reagents.reaction(hit, react_volume = 10)
+		else if (istype(hit, /obj/machinery/vehicle))
+			hit.changeStatus("pod_corrosion", 30 SECONDS)
+		else
+			var/power = projectile.power
+			hit.damage_corrosive(power)
 
 /datum/projectile/special/acidspit
 	name = "acid splash"

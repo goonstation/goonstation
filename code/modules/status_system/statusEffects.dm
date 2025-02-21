@@ -3455,3 +3455,23 @@
 	icon_state = "empulsar"
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEUTRAL
+
+/datum/statusEffect/pod_corrosion
+	id = "pod_corrosion"
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/dmg_per_tick = 4
+
+	onAdd()
+		..()
+		src.owner.add_filter("corrosion_color", 1, color_matrix_filter(normalize_color_to_matrix("#0c6900")))
+
+	onUpdate(timePassed)
+		..()
+		var/mult = timePassed / LIFE_PROCESS_TICK_SPACING
+		var/obj/machinery/vehicle/pod_hit = src.owner
+		pod_hit.health -= src.dmg_per_tick * mult
+		pod_hit.checkhealth()
+
+	onRemove()
+		..()
+		src.owner.remove_filter("corrosion_color")

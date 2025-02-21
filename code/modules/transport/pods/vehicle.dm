@@ -835,6 +835,7 @@
 /// Callback for welding repair actionbar
 /obj/machinery/vehicle/proc/weld_action(mob/user)
 	src.health += 30
+	src.delStatus("pod_corrosion")
 	src.checkhealth()
 	src.add_fingerprint(user)
 	src.visible_message(SPAN_ALERT("[user] has fixed some of the dents on [src]!"))
