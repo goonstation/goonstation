@@ -9,7 +9,7 @@
 		return
 
 	SPAWN(0)
-		var/audio = dectalk("\[:nk\][message.content]", BOTTALK_VOLUME)
+		var/audio = dectalk("\[:nk\][html_decode(message.content)]", BOTTALK_VOLUME)
 		if (!audio || !audio["audio"])
 			return
 

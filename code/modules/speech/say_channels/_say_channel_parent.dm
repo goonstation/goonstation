@@ -202,9 +202,14 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 		for (var/type in src.listeners)
 			listen_modules_by_type[type] ||= list()
 			for (var/datum/listen_module/input/input as anything in src.listeners[type])
-				// If the outermost listener's loc is a turf, they must be within the speaker's line of sight to hear the message.
+				// If the outermost listener's loc is a turf, perform line of sight and range checks.
 				if (isturf(GET_INPUT_OUTERMOST_LISTENER_LOC(input)))
-					if (!visible_turfs[GET_INPUT_OUTERMOST_LISTENER_LOC(input)])
+					// If the outermost listener's loc is a turf, they must be within the speaker's line of sight to hear the message.
+					if (!input.ignore_line_of_sight_checks)
+						if (!visible_turfs[GET_INPUT_OUTERMOST_LISTENER_LOC(input)])
+							continue
+					// If the input ignores line of sight checks, then the listener may hear the message if they are within the message's heard range.
+					else if (!INPUT_IN_RANGE(input, centre, message.heard_range))
 						continue
 				// If the outermost listener of the listener and the speaker match, the listener may hear the message.
 				else if (GET_INPUT_OUTERMOST_LISTENER(input) != GET_MESSAGE_OUTERMOST_LISTENER(message))

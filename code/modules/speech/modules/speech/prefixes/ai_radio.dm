@@ -82,3 +82,24 @@ ABSTRACT_TYPE(/datum/speech_module/prefix/postmodifier/ai_radio)
 		var/channel_name = global.headset_channel_lookup["[frequency]"] || "(Unknown)"
 		var/channel_frequency = global.format_frequency(frequency)
 		.["[channel_frequency] - [channel_name]"] = ":3[prefix]"
+
+
+/datum/speech_module/prefix/postmodifier/ai_radio/default_prefix
+	id = SPEECH_PREFIX_AI_RADIO_DEFAULT
+	priority = SPEECH_PREFIX_PRIORITY_DEFAULT + 4
+	prefix_id = ":"
+
+/datum/speech_module/prefix/postmodifier/ai_radio/default_prefix/get_radio(mob/living/silicon/ai/AI)
+	return AI.radio3
+
+/datum/speech_module/prefix/postmodifier/ai_radio/default_prefix/get_prefix_choices()
+	return
+
+
+/datum/speech_module/prefix/postmodifier/ai_radio/default_prefix/general
+	id = SPEECH_PREFIX_AI_RADIO_GENERAL
+	priority = SPEECH_PREFIX_PRIORITY_DEFAULT + 5
+	prefix_id = ";"
+
+/datum/speech_module/prefix/postmodifier/ai_radio/default_prefix/general/get_radio(mob/living/silicon/ai/AI)
+	return AI.radio1

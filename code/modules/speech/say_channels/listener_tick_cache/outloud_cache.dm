@@ -48,9 +48,8 @@
 		for (var/type in cached_listeners_by_range[cached_range])
 			.[type] ||= list()
 			for (var/datum/listen_module/input/input as anything in cached_listeners_by_range[cached_range][type])
-				if (!IN_RANGE(message.message_origin, input.parent_tree.listener_origin, message.heard_range))
-					if (!centre.vistarget || !IN_RANGE(centre.vistarget, input.parent_tree.listener_origin, message.heard_range))
-						continue
+				if (!INPUT_IN_RANGE(input, centre, message.heard_range))
+					continue
 
 				.[type] += input
 

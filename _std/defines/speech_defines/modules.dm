@@ -130,6 +130,8 @@
 #define SPEECH_PREFIX_AI_RADIO_1 "ai_radio_1"
 #define SPEECH_PREFIX_AI_RADIO_2 "ai_radio_2"
 #define SPEECH_PREFIX_AI_RADIO_3 "ai_radio_3"
+#define SPEECH_PREFIX_AI_RADIO_DEFAULT "ai_radio_default"
+#define SPEECH_PREFIX_AI_RADIO_GENERAL "ai_radio_default_general"
 #define SPEECH_PREFIX_DEADCHAT "deadchat"
 #define SPEECH_PREFIX_INTERCOM "intercom"
 #define SPEECH_PREFIX_LEFT_HAND "left_hand"
