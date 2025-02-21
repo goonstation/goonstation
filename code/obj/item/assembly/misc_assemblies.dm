@@ -66,6 +66,7 @@ Contains:
 	RegisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH, PROC_REF(on_wearer_death))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, PROC_REF(get_trigger_state))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT, PROC_REF(get_trigger_time_left))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL, PROC_REF(on_part_disposing))
 	..()
 
 /obj/item/assembly/complete/proc/set_up_new(var/mob/user, var/obj/item/new_trigger, var/obj/item/new_applier, var/obj/item/new_target)
@@ -137,6 +138,12 @@ Contains:
 		SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_APPLY, src, src.target)
 
 
+/obj/item/assembly/complete/proc/on_part_disposing(var/affected_assembly, var/datum/removed_datum)
+	if(src.disposed || src.qdeled)
+		return
+	spawn(1)
+		src.tear_apart()
+
 /obj/item/assembly/complete/dropped(mob/user)
 	. = ..()
 	// we relay the dropping of the assembly to the trigger in case of a proximity sensor
@@ -154,16 +161,13 @@ Contains:
 	UnregisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT)
-	qdel(src.trigger)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL)
+	var/list/items_to_remove = list(src.trigger, src.applier, src.target) | src.additional_components
+	for(var/obj/item/item_to_delete in items_to_remove)
+		qdel(item_to_delete)
 	src.trigger = null
-	qdel(src.applier)
 	src.applier = null
-	qdel(src.target)
 	src.target = null
-	if (src.additional_components)
-		for(var/obj/item/iterated_component in src.additional_components)
-			src.additional_components =- iterated_component
-			qdel(iterated_component)
 	src.additional_components = null
 	src.last_armer = null
 	..()
@@ -254,8 +258,9 @@ Contains:
 		items_to_remove = items_to_remove | src.additional_components
 	for(var/obj/item/removed_item in items_to_remove)
 		SEND_SIGNAL(removed_item, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, null)
-		removed_item.set_loc(target_turf)
 		removed_item.master = null
+		if(!removed_item.qdeled && !removed_item.disposed)
+			removed_item.set_loc(target_turf)
 		if(removed_item in src.additional_components)
 			src.additional_components -= removed_item
 	//now, we need to set the assembly to a fresh state
@@ -281,8 +286,9 @@ Contains:
 		handling_user.u_equip(src)
 	for(var/obj/item/removed_item in items_to_remove)
 		SEND_SIGNAL(removed_item, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, null)
-		removed_item.set_loc(target_turf)
 		removed_item.master = null
+		if(!removed_item.qdeled && !removed_item.disposed)
+			removed_item.set_loc(target_turf)
 		if(removed_item in src.additional_components)
 			src.additional_components -= removed_item
 	src.trigger = null

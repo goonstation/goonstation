@@ -1595,6 +1595,9 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 					if (M.client.tooltipHolder.transient.A == src)
 						M.client.tooltipHolder.transient.A = null
 
+		if(src.master)
+			SEND_SIGNAL(src.master, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL, src)
+
 		return ..()
 	var/area/Ar = T.loc
 	if (!(locate(/obj/table) in T) && !(locate(/obj/rack) in T))

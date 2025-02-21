@@ -204,7 +204,8 @@
 	#define COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT "assembly_get_trigger_time_left"
 	/// Set's the timer of the trigger to the respectable time (if it is able to)
 	#define COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME "assembly_set_trigger_time"
-
+	/// Will be send to the assembly if one of its components gets disposed
+	#define COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL "assembly_on_part_disposal"
 
 
 	// ---- implant signals ----
