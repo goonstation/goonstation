@@ -269,7 +269,7 @@
 
 		New()
 			..()
-			options = icon_states(src.icon) // gonna assume that the dmi will only ever have pride jumpsuits
+			options = get_icon_states(src.icon) // gonna assume that the dmi will only ever have pride jumpsuits
 
 		attack_self(mob/user as mob)
 			if (src.options)

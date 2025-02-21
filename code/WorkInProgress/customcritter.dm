@@ -1812,7 +1812,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 				template.icon = I
 				template.icon_state = null
 		else if (href_list["icon_state"])
-			template.icon_state = getEnum("icon state", "", icon_states(template.icon))
+			template.icon_state = getEnum("icon state", "", get_icon_states(template.icon))
 		else if (href_list["dead_icon"])
 			var/I = input("Select an image file.", "Image file", null) as icon|null
 			if (I)
@@ -1820,7 +1820,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 				template.dead_icon_state = null
 		else if (href_list["dead_icon_state"])
 			if (template.dead_icon)
-				template.dead_icon_state = getEnum("icon state", "", icon_states(template.dead_icon))
+				template.dead_icon_state = getEnum("icon state", "", get_icon_states(template.dead_icon))
 			else
 				alert("Please define an icon first.")
 		else if (href_list["icon_preset"])
