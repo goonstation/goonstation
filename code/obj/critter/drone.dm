@@ -17,6 +17,12 @@ TYPEINFO(/obj/critter/gunbot/drone/cannondrone)
 				"conductive_high" = 13,
 				"crystal_dense" = 17,
 				"erebite" = 16)
+TYPEINFO(/obj/critter/gunbot/drone/rocketdrone)
+	mats = list("energy_extreme" = 15,
+				"metal_superdense" = 25,
+				"conductive_high" = 10,
+				"crystal_dense" = 15,
+				"erebite" = 30)
 TYPEINFO(/obj/critter/gunbot/drone/minigundrone)
 	mats = list("energy_extreme" = 13,
 				"metal_superdense" = 24,
@@ -573,7 +579,6 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		score = 120
 		alertsound1 = 'sound/machines/engine_alert1.ogg'
 		alertsound2 = 'sound/machines/engine_alert1.ogg'
-		droploot = /obj/item/shipcomponent/secondary_system/crash
 		projectile_type = /datum/projectile/bullet/aex
 		current_projectile = new/datum/projectile/bullet/aex
 		attack_cooldown = 50
@@ -581,6 +586,25 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		New()
 			..()
 			name = "Drone AR-[rand(1,999)]"
+
+	rocketdrone
+		name = "Syndicate Rocket Drone"
+		desc = "A deadly Syndicate drone equipped with a pod-mounted rocket launcher."
+		icon = 'icons/mob/critter/robotic/drone/rocket.dmi'
+		icon_state = "drone_rocket"
+		dead_state = "drone_rocket"
+		health = 100
+		maxhealth = 100
+		score = 150
+		alertsound1 = 'sound/machines/engine_alert1.ogg'
+		alertsound2 = 'sound/machines/engine_alert1.ogg'
+		projectile_type = /datum/projectile/bullet/homing/rocket/gunbot_drone
+		current_projectile = new/datum/projectile/bullet/homing/rocket/gunbot_drone
+		attack_cooldown = 50
+
+		New()
+			..()
+			name = "Drone RO-[rand(1, 999)]"
 
 	minigundrone
 		name = "Syndicate BL Drone"
@@ -937,6 +961,7 @@ ABSTRACT_TYPE(/obj/gunbotdrone_spawner)
 	icon_state = "drone_phaser"
 	possible_drones = list(/obj/critter/gunbot/drone = 90,
 						   /obj/critter/gunbot/drone/buzzdrone = 100,
+						   /obj/critter/gunbot/drone/aciddrone = 25,
 						   /obj/critter/gunbot/drone/laserdrone = 5)
 
 /obj/gunbotdrone_spawner/uncommon
@@ -944,12 +969,15 @@ ABSTRACT_TYPE(/obj/gunbotdrone_spawner)
 	icon_state = "drone_laser"
 	possible_drones = list(/obj/critter/gunbot/drone/laserdrone = 100,
 						   /obj/critter/gunbot/drone/heavydrone = 75,
+						   /obj/critter/gunbot/drone/cutterdrone = 25, // these are already manually placed in some asteroids, so reduced chance for variety
 						   /obj/critter/gunbot/drone/minigundrone = 5)
 
 /obj/gunbotdrone_spawner/rare
 	icon = 'icons/mob/critter/robotic/drone/ballistic.dmi'
 	icon_state = "drone_ballistic"
-	possible_drones = list(/obj/critter/gunbot/drone/minigundrone = 100)
+	possible_drones = list(/obj/critter/gunbot/drone/minigundrone = 100,
+						   /obj/critter/gunbot/drone/cannondrone = 75,
+						   /obj/critter/gunbot/drone/rocketdrone = 50)
 
 TYPEINFO(/obj/critter/gunbot/drone/iridium)
 	mats = null //no

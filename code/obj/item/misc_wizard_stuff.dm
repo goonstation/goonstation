@@ -140,8 +140,6 @@
 	desc = "A dark staff infused with eldritch power. Trying to steal this is probably a bad idea."
 	icon_state = "staffcthulhu"
 	item_state = "staffcthulhu"
-	force = 14
-	hitsound = 'sound/effects/ghost2.ogg'
 	eldritch = 1
 
 	New()
@@ -151,6 +149,19 @@
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+	pickup(mob/user)
+		. = ..()
+		if(iswizard(user))
+			src.force = 14
+			src.hitsound = 'sound/effects/ghost2.ogg'
+			src.tooltip_rebuild = TRUE
+
+	dropped(mob/user)
+		. = ..()
+		src.force = src::force
+		src.hitsound = src::hitsound
+		src.tooltip_rebuild = TRUE
 
 	attack_hand(var/mob/user)
 		if (user.mind)

@@ -37,6 +37,10 @@
 	var/powercurrent = 0 //How much power the components are using
 	/// multiplicative ship speed modification
 	var/speedmod = 1
+	/// acceleration modification provided by afterburner if installed
+	var/afterburner_accel_mod = 1
+	/// speed modification provided by afterburner if installed
+	var/afterburner_speed_mod = 1
 	var/stall = 0 // slow the ship down when firing
 	var/flying = 0 // holds the direction the ship is currently drifting, or 0 if stopped
 	var/facing = SOUTH // holds the direction the ship is currently facing
@@ -836,6 +840,7 @@
 /// Callback for welding repair actionbar
 /obj/machinery/vehicle/proc/weld_action(mob/user)
 	src.health += 30
+	src.delStatus("pod_corrosion")
 	src.checkhealth()
 	src.add_fingerprint(user)
 	src.visible_message(SPAN_ALERT("[user] has fixed some of the dents on [src]!"))

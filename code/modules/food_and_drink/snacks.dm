@@ -645,10 +645,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		name = "warm donk-pocket"
 		warm = DONK_WARM
 
-		New()
-			..()
+	New()
+		..()
+		if (src.warm)
 			src.cooltime()
-			return
 
 	heal(var/mob/M)
 		if(src.warm == DONK_SCALDING)
