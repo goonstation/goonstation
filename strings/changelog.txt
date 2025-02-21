@@ -1,5 +1,9 @@
 
 (t)fri feb 21 25
+(u)FlameArrow57
+(p)22329
+(e)🆕🎨📦🚗|C-Feature, C-Sprites, A-Game-Objects, A-Vehicles
+(+)Added a new pod Afterburner component to ship fabricators, which increases your pod's maximum velocity and acceleration for 5 seconds, with a 20 second recharge time.
 (u)Sord
 (*)Space Z5 (Mining Zlevel) now has random enemy drone spawns
 (u)FlameArrow57
