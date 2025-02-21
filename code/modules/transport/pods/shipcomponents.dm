@@ -66,13 +66,14 @@
 	return
 
 ///What the component does when deactived
-/obj/item/shipcomponent/proc/deactivate()
+/obj/item/shipcomponent/proc/deactivate(give_message = TRUE)
 	if(src.active == 0)
 		return
 	src.active = 0
 	ship.powercurrent -= power_used
 	for(var/mob/M in src.ship)
-		boutput(M, "[ship.ship_message("[src] is shutting down...")]")
+		if (give_message)
+			boutput(M, "[ship.ship_message("[src] is shutting down...")]")
 		mob_deactivate(M)
 	src.ship.myhud.update_states()
 	return
