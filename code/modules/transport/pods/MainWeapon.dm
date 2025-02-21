@@ -251,6 +251,16 @@
 	uses_ammunition = 1
 	remaining_ammunition = 20
 
+/obj/item/shipcomponent/mainweapon/salvo_rockets
+	name = "Hydra Salvo Rockets"
+	desc = "A three-rocket salvo launcher, created in mind for multi-purpose space combat."
+	weapon_score = 1.25
+	power_used = 50
+	current_projectile = new/datum/projectile/bullet/homing/rocket/salvo
+	appearanceString = "pod_weapon_hydra"
+	firerate = 5 SECONDS
+	icon_state = "hydra-salvo-rockets"
+
 /obj/item/shipcomponent/mainweapon/laser_ass // hehhh
 	name = "Mk.4 Assault Laser"
 	weapon_score = 1.25
