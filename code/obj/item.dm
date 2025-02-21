@@ -1270,9 +1270,11 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		if (H.surgeryHolder)
 			var/datum/surgeryHolder/holder = H.surgeryHolder
 			if (holder.shortcut(user,src))
+				src.add_fingerprint(user)
 				return
 			if (holder.can_operate(user,src))
 				holder.start_surgery(user,src)
+				src.add_fingerprint(user)
 				return
 
 	if (src.Eat(target, user)) // All those checks were done in there anyway
@@ -1517,10 +1519,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (. && src.loc && ismob(src.loc))
 		var/mob/M = src.loc
 		M.update_inhands()
-
 /obj/item/proc/attach(var/mob/living/carbon/human/attachee,var/mob/attacher)
 	//if (!src.arm_icon) return //ANYTHING GOES!~!
-
+	return
+/*
 	if (src.object_flags & NO_ARM_ATTACH || src.cant_drop || src.two_handed)
 		boutput(attacher, SPAN_ALERT("You try to attach [src] to [attachee]'s stump, but it politely declines!"))
 		return
@@ -1560,7 +1562,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	SPAWN(rand(150,200))
 		if (new_arm.remove_stage == 2) new_arm.remove()
 
-	return
+	return*/
 
 /obj/item/proc/handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
 	//Refactor of the item removal code. Fuck having that shit defined in human.dm >>>>>>:C

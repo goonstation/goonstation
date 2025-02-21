@@ -3,14 +3,6 @@
 	set waitfor = 0
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 
-	// why is this not in human/attackby?
-
-	if (W.can_arm_attach() && (user.zone_sel && (user.zone_sel.selecting in list("l_arm","r_arm"))) && surgeryCheck(src,user) )
-		var/mob/living/carbon/human/H = src
-
-		if (!H.limbs.vars[user.zone_sel.selecting])
-			W.attach(src,user)
-			return
 
 	user.lastattacked = src
 

@@ -1559,6 +1559,7 @@
 #include "code\modules\medical\surgery\surgery_holder.dm"
 #include "code\modules\medical\surgery\steps\carbon.dm"
 #include "code\modules\medical\surgery\surgeries\carbon\healing.dm"
+#include "code\modules\medical\surgery\surgeries\carbon\item.dm"
 #include "code\modules\medical\surgery\surgeries\carbon\limbs.dm"
 #include "code\modules\medical\surgery\surgeries\carbon\organs.dm"
 #include "code\modules\mentor\mentorhelp.dm"

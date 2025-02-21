@@ -47,16 +47,8 @@
 		"appendix"="/obj/item/organ/appendix",
 		"butt"="/obj/item/clothing/head/butt",
 		"tail"="/obj/item/organ/tail")
-	///How cut up is our back for surgery purposes
+	///How cut up is our back for surgery purposes.
 	var/back_op_stage = BACK_SURGERY_CLOSED
-	///How cut up are our ribs?
-	var/ribs_stage = REGION_CLOSED
-	///How cut up is our subcostal region?
-	var/subcostal_stage = REGION_CLOSED
-	///How cut up is our abdominal region?
-	var/abdominal_stage = REGION_CLOSED
-	///How cut up are our flanks?
-	var/flanks_stage = REGION_CLOSED
 
 	New(var/mob/living/L, var/ling)
 		..()
@@ -1007,7 +999,7 @@
 				src.donor.emote("scream")
 				src.donor.update_clothing()
 
-	proc/receive_organ(var/obj/item/I, var/organ, var/op_stage = 0.0, var/force = 0)
+	proc/receive_organ(var/obj/item/I, var/organ, var/force = 0)
 		if (!src.donor || !I || !organ)
 			return 0
 
@@ -1032,19 +1024,19 @@
 				if (newHead.skull)
 					if (src.skull) // how
 						src.drop_organ("skull") // I mean really, how
-					src.receive_organ(newHead.skull, "skull", newHead.skull.op_stage)
+					src.receive_organ(newHead.skull, "skull")
 				if (newHead.brain)
 					if (src.brain) // ???
 						src.drop_organ("brain") // god idfk
-					//src.receive_organ(newHead.brain, "brain", newHead.brain.op_stage)
+					src.receive_organ(newHead.brain, "brain")
 				if (newHead.right_eye)
 					if (src.right_eye)
 						src.drop_organ("right_eye")
-					//src.receive_organ(newHead.right_eye, "right_eye", newHead.right_eye.op_stage)
+					src.receive_organ(newHead.right_eye, "right_eye")
 				if (newHead.left_eye)
 					if (src.left_eye)
 						src.drop_organ("left_eye")
-					//src.receive_organ(newHead.left_eye, "left_eye", newHead.left_eye.op_stage)
+					src.receive_organ(newHead.left_eye, "left_eye")
 				if (ishuman(src.donor))
 					var/mob/living/carbon/human/H = src.donor
 					if (newHead.glasses)
@@ -1099,7 +1091,6 @@
 				if (!src.head)
 					return 0
 				var/obj/item/skull/newSkull = I
-				newSkull.op_stage = op_stage
 				src.skull = newSkull
 				src.head.skull = newSkull
 				newSkull.set_loc(src.donor)
@@ -1265,12 +1256,12 @@
 					else
 						return 0
 				var/obj/item/clothing/head/butt/newButt = I
-				newButt.op_stage = op_stage
+				//newButt.op_stage = op_stage
 				src.butt = newButt
 				newButt.set_loc(src.donor)
 				newButt.holder = src
 				organ_list["butt"] = newButt
-				src.back_op_stage = op_stage
+				//src.back_op_stage = op_stage
 				success = 1
 
 			if ("left_kidney")

@@ -17,7 +17,10 @@
 	var/datum/organHolder/holder = null
 	//var/owner_job = null
 	var/value = 1
-	var/op_stage = 0
+
+	/// Is this under active surgery?
+	var/in_surgery = FALSE
+
 	var/obj/item/device/key/skull/key = null //May randomly contain a key
 	rand_pos = 1
 	default_material = "bone"

@@ -16,9 +16,10 @@
 		patient.HealDamage("All", 15, 0)
 
 /datum/surgery/organ_surgery
-	name = "Organ Surgery"
-	desc = "Modify the patients' organs."
-	default_sub_surgeries = list(/datum/surgery/ribs, /datum/surgery/subcostal, /datum/surgery/flanks, /datum/surgery/abdomen)
+	name = "Torso Surgery"
+	desc = "Modify the patients' torso and organs."
+	icon_state = "torso"
+	default_sub_surgeries = list(/datum/surgery/ribs, /datum/surgery/subcostal, /datum/surgery/flanks, /datum/surgery/abdomen, /datum/surgery/item)
 	generate_surgery_steps(mob/living/surgeon, mob/user)
 		add_next_step(new /datum/surgery_step/cut(src))
 		add_next_step(new /datum/surgery_step/snip(src))
@@ -75,6 +76,8 @@
 	restart_when_finished = TRUE
 	exit_when_finished = TRUE
 	surgery_possible(mob/living/surgeon)
+		if (implicit && surgeon.zone_sel.selecting != "chest")
+			return FALSE
 		if (patient.organHolder.get_organ(organ_var_name))
 			return TRUE
 		return FALSE
@@ -146,16 +149,47 @@
 		icon_state = "right_kidney"
 		organ_var_name = "right_kidney"
 
+
+	eye
+		generate_surgery_steps(mob/living/surgeon, mob/user)
+			add_next_step(new /datum/surgery_step/organ/eye/dislodge(src, organ_var_name)) // Makes the organ count as 'in surgery'
+			add_next_step(new /datum/surgery_step/organ/eye/cut(src, organ_var_name)) // Makes the organ unsecure
+			add_next_step(new /datum/surgery_step/organ/eye/scoop(src, organ_var_name)) // Removes the organ
+		surgery_possible(mob/living/surgeon, obj/item/I)
+			if (surgeon.zone_sel.selecting != "head")
+				return FALSE
+			if (patient.organHolder.get_organ(organ_var_name))
+				return FALSE
+			return TRUE
+		left
+			name = "Left Eye Surgery"
+			desc = "Remove the patients' left eye."
+			organ_var_name = "left_eye"
+			surgery_possible(mob/living/surgeon, obj/item/I)
+				if (surgeon.find_in_hand(I) != surgeon.l_hand)
+					return FALSE
+				return ..()
+		right
+			name = "Right Eye Surgery"
+			desc = "Remove the patients' right eye."
+			organ_var_name = "right_eye"
+			surgery_possible(mob/living/surgeon, obj/item/I)
+				if (surgeon.find_in_hand(I) != surgeon.r_hand)
+					return FALSE
+				return ..()
+
 /datum/surgery/organ/replace
 	name = "Organ Addition"
 	desc = "Replace the patients' organs."
 	visible = FALSE
-	can_shortcut = TRUE
+	implicit = TRUE
 	restart_when_finished = TRUE
 	exit_when_finished = TRUE
 	generate_surgery_steps(mob/living/surgeon, mob/user)
 		add_next_step(new /datum/surgery_step/organ/add(src,organ_var_name))
 	surgery_possible(mob/living/surgeon)
+		if (implicit && surgeon.zone_sel.selecting != "chest")
+			return FALSE
 		if (patient.organHolder.get_organ(organ_var_name))
 			return FALSE
 		return TRUE
@@ -214,3 +248,31 @@
 		desc = "Replace the patients' right kidney."
 		icon_state = "right_kidney"
 		organ_var_name = "right_kidney"
+	right_kidney
+		name = "Butt Replacement"
+		desc = "Replace the patients' butt."
+		icon_state = "right_kidney"
+		organ_var_name = "right_kidney"
+	eye
+		surgery_possible(mob/living/surgeon, obj/item/I)
+			if (surgeon.zone_sel.selecting != "head")
+				return FALSE
+			if (patient.organHolder.get_organ(organ_var_name))
+				return FALSE
+			return TRUE
+		left
+			name = "Left Eye Replacement"
+			desc = "Replace the patients' left eye."
+			organ_var_name = "left_eye"
+			surgery_possible(mob/living/surgeon, obj/item/I)
+				if (surgeon.find_in_hand(I) != surgeon.l_hand)
+					return FALSE
+				return ..()
+		right
+			name = "Right Eye Replacement"
+			desc = "Replace the patients' right eye."
+			organ_var_name = "right_eye"
+			surgery_possible(mob/living/surgeon, obj/item/I)
+				if (surgeon.find_in_hand(I) != surgeon.r_hand)
+					return FALSE
+				return ..()

@@ -386,26 +386,7 @@
 		var/mob/living/carbon/human/H = M
 		if (!H.organHolder)
 			return FALSE
-		// switch (src.region)
-		// 	//Check if our relevant region is opened up. For example hearts need the ribs to be opened up
-		// 	if (null)
-		// 		return TRUE
-		// 	if (RIBS)
-		// 		if (H.organHolder.ribs_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
-		// 			return TRUE
-		// 		return FALSE
-		// 	if (ABDOMINAL)
-		// 		if (H.organHolder.abdominal_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
-		// 			return TRUE
-		// 		return FALSE
-		// 	if (SUBCOSTAL)
-		// 		if (H.organHolder.subcostal_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
-		// 			return TRUE
-		// 	if (FLANKS)
-		// 		if (H.organHolder.flanks_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
-		// 			return TRUE
-
-		return FALSE
+		return TRUE
 
 	proc/attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Attempts to attach this organ to the target mob M, if sucessful, displays surgery notifications and updates states in both user and target.
@@ -435,7 +416,7 @@
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
-			// H.organHolder.receive_organ(src, full_organ_name, organ_location.op_stage)
+			H.organHolder.receive_organ(src, full_organ_name)
 			H.update_body()
 
 			return 1

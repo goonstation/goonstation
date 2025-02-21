@@ -56,6 +56,7 @@
 	proc/show_contexts(mob/surgeon, obj/tool)
 		var/list/datum/contextAction/surgery/contexts = list()
 		for (var/datum/surgery/surgery in surgeries)
+			surgery.infer_surgery_stage()
 			if (surgery.surgery_possible(patient) && surgery.visible)
 				contexts += surgery.get_context()
 		surgeon.showContextActions(contexts, patient, new /datum/contextLayout/experimentalcircle)
@@ -65,6 +66,12 @@
 			return FALSE
 		if (!ishuman(patient)) // is the patient not a human?
 			return FALSE
+
+		// Is this a limb that can easily be attached?
+		if (istype(tool, /obj/item/parts/human_parts))
+			var/obj/item/parts/human_parts/limb = tool
+			if (limb.easy_attach)
+				return TRUE
 		// is the patient on an optable and lying?
 		if (locate(/obj/machinery/optable, patient.loc))
 			if(patient.lying || patient == surgeon)
@@ -77,10 +84,11 @@
 			return TRUE
 		return FALSE
 
-	// 'Shortcuts' are for surgeries that might not need the context menu. For example. Cramming an organ inside someone's chest.
-	// Use them sparingly - obviously, in the case of conflict, a surgeon may end up doing something unintentional.
+	// 'Shortcuts' are for invisible surgeries that don't use a context menu. For example. Cramming an organ inside someone's chest.
 	/// Determine if this surgery will use the item without needing a context popup.
 	proc/shortcut(mob/surgeon, obj/item/tool)
+		for (var/datum/surgery/surgery in surgeries)
+			surgery.infer_surgery_stage()
 		if (!can_operate(surgeon, tool))
 			return FALSE
 		for (var/datum/surgery/surgery in surgeries)

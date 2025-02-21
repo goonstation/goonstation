@@ -181,11 +181,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 // 				return TRUE
 
 
-// 			// Move equipped item to patient's chest
-// 			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-// 			chest_item.set_loc(patient)
-// 			patient.chest_item = chest_item
-// 			logTheThing(LOG_COMBAT, patient, "received a surgical chest item implant of \the [chest_item] ([chest_item.type]) by [constructTarget(surgeon,"combat")]")
 
 // 			// Remove item from surgeon
 // 			surgeon.u_equip(chest_item)
