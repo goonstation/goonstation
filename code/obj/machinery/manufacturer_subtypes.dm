@@ -392,6 +392,7 @@
 		/datum/manufacture/pod/light_shielding,
 		/datum/manufacture/pod/heavy_shielding,
 		/datum/manufacture/pod/auto_repair_kit,
+		/datum/manufacture/pod/weapons_loader,
 		/datum/manufacture/beaconkit,
 		/datum/manufacture/podgps
 	)
