@@ -1,5 +1,9 @@
 
 (t)fri feb 21 25
+(u)RubberRats
+(p)22095
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)The Syndicate has equipped some of its operatives with a weapon of mass depilation
 (u)Bartimeus973
 (p)22400
 (e)🪲⚖🔨|C-Bug, C-Balance, A-Player-Actions
