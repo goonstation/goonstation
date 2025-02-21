@@ -310,7 +310,7 @@
 		insert
 			name = "Insert"
 			desc = "Insert the item."
-			icon_state = "chest_item"
+			icon_state = "in"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 			tool_requirement(mob/surgeon, obj/item/tool)
 				if(tool.w_class > W_CLASS_NORMAL && !(tool.type in chestitem_whitelist))
@@ -353,7 +353,7 @@
 		remove
 			name = "Remove"
 			desc = "Remove the item."
-			icon_state = "scalpel"
+			icon_state = "out"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 			flags_required = TOOL_CUTTING
 			optional = TRUE
