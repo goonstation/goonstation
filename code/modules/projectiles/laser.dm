@@ -304,7 +304,7 @@ toxic - poisons
 			..()
 
 		pod
-			hit_dmg = 5
+			hit_dmg = 10
 
 	upgradeable
 		icon_state = "phaser_light"
