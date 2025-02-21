@@ -31439,7 +31439,7 @@
 /turf/simulated/floor,
 /area/station/engine/monitoring)
 "nLA" = (
-/obj/landmark/start/job/scientist,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -38596,6 +38596,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/landmark/start/job/scientist,
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
