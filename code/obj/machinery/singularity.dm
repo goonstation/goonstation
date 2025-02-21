@@ -986,10 +986,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	power = 50
 
 /obj/machinery/field_generator/does_impact_particles(kinetic_impact)
-	if (kinetic_impact == FALSE)
-		return FALSE
-	else
-		return TRUE
+	return kinetic_impact
 
 /////////////////////////////////////////////// Containment field //////////////////////////////////
 

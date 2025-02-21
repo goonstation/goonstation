@@ -738,8 +738,6 @@ ABSTRACT_TYPE(/datum/projectile)
 
 	var/static/effect_amount = 0
 
-	var/energy_particle_types = list(D_ENERGY, D_BURNING, D_RADIOACTIVE, D_TOXIC)
-
 	New()
 		. = ..()
 		generate_stats()
@@ -871,6 +869,7 @@ ABSTRACT_TYPE(/datum/projectile)
 			if (effect_amount >= 200)
 				return
 			var/kinetic_particles = TRUE
+			var/energy_particle_types = list(D_ENERGY, D_BURNING, D_RADIOACTIVE, D_TOXIC)
 			for (var/type in energy_particle_types)
 				if (src.damage_type == type)
 					kinetic_particles = FALSE
