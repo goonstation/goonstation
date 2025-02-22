@@ -368,7 +368,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 
 /datum/statusEffect/webwalk
 	id = "webwalk"
-	name = "web walking"
+	name = "Web Walking"
 	desc = "You can walk through spider webs without any adverse effects."
 	icon_state = "foot"
 	effect_quality = STATUS_QUALITY_POSITIVE
@@ -383,7 +383,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 	icon_state = "poo"
 	targeted = 1
 	target_anything = 1
-	cooldown = 5 SECONDS
+	cooldown = 3 SECONDS
 	max_range = 1
 
 	cast(atom/target)
@@ -413,3 +413,32 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 			else
 				new/obj/spiderweb(T)
 				boutput(holder.owner, SPAN_NOTICE("You lay a web on [T]."))
+
+/mob/living/critter/spider/baby/weblaying
+	adultpath = /mob/living/critter/spider/med/weblaying
+	add_abilities = list(/datum/targetable/lay_spider_web,
+						/datum/targetable/critter/spider_bite,
+						/datum/targetable/critter/spider_flail,
+						/datum/targetable/critter/spider_drain)
+	New()
+		..()
+		src.changeStatus("webwalk", INFINITE_STATUS)
+
+/mob/living/critter/spider/med/weblaying
+	adultpath = /mob/living/critter/spider/weblaying
+	add_abilities = list(/datum/targetable/lay_spider_web,
+						/datum/targetable/critter/spider_bite,
+						/datum/targetable/critter/spider_flail,
+						/datum/targetable/critter/spider_drain)
+	New()
+		..()
+		src.changeStatus("webwalk", INFINITE_STATUS)
+
+/mob/living/critter/spider/weblaying
+	add_abilities = list(/datum/targetable/lay_spider_web,
+						/datum/targetable/critter/spider_bite,
+						/datum/targetable/critter/spider_flail,
+						/datum/targetable/critter/spider_drain)
+	New()
+		..()
+		src.changeStatus("webwalk", INFINITE_STATUS)
