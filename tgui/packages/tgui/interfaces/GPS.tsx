@@ -84,7 +84,7 @@ export const GPS = () => {
                   x:{' '}
                   <NumberInput
                     value={track_x}
-                    width={3}
+                    width="3"
                     minValue={1}
                     maxValue={300}
                     step={1}
@@ -93,7 +93,7 @@ export const GPS = () => {
                   y:{' '}
                   <NumberInput
                     value={track_y}
-                    width={3}
+                    width="3"
                     minValue={1}
                     maxValue={300}
                     step={1}
@@ -141,19 +141,13 @@ export const GPS = () => {
         </Section>
         <Section title="Tracking">
           <Collapsible title="GPS Devices">
-            {!!gps_info.length && (
-              <TrackableList gps_info={gps_info} />
-            )}
+            {!!gps_info.length && <TrackableList gps_info={gps_info} />}
           </Collapsible>
           <Collapsible title="Implants">
-            {!!imp_info.length && (
-              <TrackableList gps_info={imp_info} />
-            )}
+            {!!imp_info.length && <TrackableList gps_info={imp_info} />}
           </Collapsible>
           <Collapsible title="Warp Beacons">
-            {!!warp_info.length && (
-              <TrackableList gps_info={warp_info} />
-            )}
+            {!!warp_info.length && <TrackableList gps_info={warp_info} />}
           </Collapsible>
         </Section>
       </Window.Content>
@@ -191,7 +185,9 @@ const TrackableList = (props) => {
             </Stack.Item>
             <Stack.Item align="center">
               <Button
-                onClick={() => act('track_gps', { gps_ref: gps_info[i].obj_ref })}
+                onClick={() =>
+                  act('track_gps', { gps_ref: gps_info[i].obj_ref })
+                }
                 fontSize={1}
               >
                 Track
