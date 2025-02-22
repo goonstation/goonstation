@@ -141,13 +141,13 @@ export const GPS = () => {
         </Section>
         <Section title="Tracking">
           <Collapsible title="GPS Devices">
-            {!!gps_info.length && <TrackableList gps_info={gps_info} />}
+            <TrackableList gps_info={gps_info} />
           </Collapsible>
           <Collapsible title="Implants">
-            {!!imp_info.length && <TrackableList gps_info={imp_info} />}
+            <TrackableList gps_info={imp_info} />
           </Collapsible>
           <Collapsible title="Warp Beacons">
-            {!!warp_info.length && <TrackableList gps_info={warp_info} />}
+            <TrackableList gps_info={warp_info} />
           </Collapsible>
         </Section>
       </Window.Content>
@@ -163,7 +163,8 @@ const TrackableList = (props) => {
 
   distress_red = !distress_red;
 
-  return (<Stack vertical>{gps_info.map((item, index) => (
+  return (gps_info.length ?
+    <Stack vertical>{gps_info.map((item, index) => (
       <Box key={index}>
         <Stack.Item>
           <Stack>
@@ -196,5 +197,5 @@ const TrackableList = (props) => {
         <Divider />
       </Box>
   ))}
-          </Stack>);
+    </Stack> : "None found");
 };
