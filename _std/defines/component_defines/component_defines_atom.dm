@@ -206,7 +206,8 @@
 	#define COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME "assembly_set_trigger_time"
 	/// Will be send to the assembly if one of its components gets disposed
 	#define COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL "assembly_on_part_disposal"
-
+	/// Is send to the parts of the assembly to generate help messages. Return the string that should be added to the help messages
+	#define COMSIG_ITEM_ASSEMBLY_ON_HELP_MESSAGE "assembly_on_help_message"
 
 	// ---- implant signals ----
 

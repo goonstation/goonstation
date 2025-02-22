@@ -281,6 +281,15 @@ Contains:
 		src.underlays += temp_image_cables
 
 
+/obj/item/assembly/complete/get_help_message(dist, mob/user)
+	if(src.secured)
+		return "You can use <b>screwdriver</b> to unsecure the assembly in order to further modify it."
+
+	var/text_to_be_returned = "You can use <b>screwdriver</b> to secure the assembly. You can use a <b>wrench</b> to disassemble the assembly."
+	for(var/obj/item/checked_item in (list(src.trigger, src.applier, src.target) | src.additional_components))
+		text_to_be_returned += SEND_SIGNAL(checked_item, COMSIG_ITEM_ASSEMBLY_ON_HELP_MESSAGE, src)
+	return text_to_be_returned
+
 /obj/item/assembly/complete/UpdateName()
 	var/component_names = ""
 	if(src.trigger) //lets not crash when we initially create the assembly

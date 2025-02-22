@@ -545,10 +545,12 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 		..()
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_HELP_MESSAGE, PROC_REF(assembly_help_message))
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_HELP_MESSAGE)
 		. = ..()
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
@@ -647,6 +649,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 
 /// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
 
+	proc/assembly_help_message(var/manipulated_arm, var/obj/item/assembly/complete/parent_assembly)
+		if(!parent_assembly.target)
+			return " You can add a pie onto this assembly in order to modify it further."
 
 	proc/assembly_setup(var/manipulated_arm, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
 		//since we have different robot arms (including left and right versions)
