@@ -471,6 +471,7 @@ Obsidian Crown
 		if (armor_paired != 0 && ishuman(host))
 			if (armor_paired != -1)
 				armor_paired = -1
+				host.is_npc = TRUE
 				host.ghostize()
 				if (istype(host.ghost))
 					var/mob/dead/observer/theGhost = host.ghost
@@ -501,9 +502,7 @@ Obsidian Crown
 			humHost.set_body_icon_dirty()
 			humHost.set_face_icon_dirty()
 
-			if (!humHost.is_npc)
-				humHost.is_npc = 1
-				humHost.ai_init()
+			humHost.ai_init()
 
 			return
 

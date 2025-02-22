@@ -1,5 +1,134 @@
 
+(t)sat feb 22 25
+(u)FlameArrow57
+(p)22360
+(e)🆕⚖🚗|C-Feature, C-Balance, A-Vehicles
+(*)Pod acceleration, deceleration, and maximum velocity are now all affected per engine type and pod size.
+(+)Basic 2x2 pod is now slightly slower
+(u)FlameArrow57
+(p)22393
+(e)🆕🎨📦🚗|C-Feature, C-Sprites, A-Game-Objects, A-Vehicles
+(+)Added a new Weapons Loader pod component to ship fabricators, which lets you store a pod weapon to swap with your main weapon
+(u)FlameArrow57
+(p)22351
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(+)Added a new Syndicate Maser drone as a possible drone to appear in the debris field. It fires a projectile that bypasses pod armor, but can be blocked by pod shielding. It has a 25% chance to drop its weapon on death. Sprite by Flaborized
+(t)fri feb 21 25
+(u)LeahTheTech
+(+)You can throw things over railings now.
+(u)RubberRats
+(p)22095
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)The Syndicate has equipped some of its operatives with a weapon of mass depilation
+(u)Bartimeus973
+(p)22400
+(e)🪲⚖🔨|C-Bug, C-Balance, A-Player-Actions
+(+)You cannot enter disposal chutes by yourself if you are cuffed and held/pulled.
+(u)FlameArrow57
+(p)22329
+(e)🆕🎨📦🚗|C-Feature, C-Sprites, A-Game-Objects, A-Vehicles
+(+)Added a new pod Afterburner component to ship fabricators, which increases your pod's maximum velocity and acceleration for 5 seconds, with a 20 second recharge time.
+(u)Sord
+(*)Space Z5 (Mining Zlevel) now has random enemy drone spawns
+(u)FlameArrow57
+(p)22386
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Added a new Syndicate acid drone to the debris field, which causes pod corrosion over time that can be removed with a welding tool
+(u)FlameArrow57
+(p)22375
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Added a new syndicate Rocket drone that can rarely appear in the debris field
+(t)thu feb 20 25
+(u)Sord
+(+)Security now spawns with a panic button in their pouches
+(t)wed feb 19 25
+(u)Bartimeus973
+(p)22345
+(e)|
+(+)It is no longer safe to dive outside the pool from a springboard.
+(t)tue feb 18 25
+(u)FlameArrow57
+(p)22355
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)A new Syndicate cannondrone can be found in the debris field. Fires AEX.
+(t)mon feb 17 25
+(u)glowbold
+(p)22164
+(e)⚖🧫📦|C-Balance, C-Experimental, A-Game-Objects
+(*)MechComp teleporters launch projectiles with the teleported contents inside, aimed at the targeted teleporter.
+(+)MechComp teleporters cannot cross Z-levels. Use a command teleporter or telesci instead.
+(+)MechComp teleporter projectiles are intercepted by the first active teleporter they hit.
+(u)FlameArrow57
+(p)22331
+(e)🎨⚖📦🚗|C-Sprites, C-Balance, A-Game-Objects, A-Vehicles
+(+)Minigun drones now have a 25% chance to drop a minigun pod weapon on death. Comparable to basic phaser in strength.
+(u)Kubius
+(p)22350
+(e)🆕⚖|C-Feature, C-Balance
+(*)The EFIF-1 Construction System usable by pods no longer has a mode restriction on the station Z-level.
+(u)Sovexe
+(p)22185
+(e)🪲🆕🎨🚨🔨|C-Bug, C-Feature, C-Sprites, A-Admin, A-Player-Actions
+(*)Ghosts now have access to a live station minimap with crew locations
+(u)FlameArrow57
+(p)22332
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(+)Debris field syndicate drones are now randomized in occurrence per type
+(t)sun feb 16 25
+(u)tarmunora
+(+)Fixed unintended behaviour that allowed bypassing itemspecial cooldowns by using multiple of the same item in succession.
+(u)Lord_Earthfire
+(p)22018
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Adds bulk manufacturer recipes for material sheets that produces 5 sheets instead of 1.
+(u)Lord_Earthfire
+(p)22256
+(e)🔎💅📦|C-Code-Quality, C-QoL, A-Game-Objects
+(+)You can construct shock packs now starting either with the helmet or the electropack.
+(u)Sord
+(+)Added two new ballistic pod weapon systems, 9mm and 22, to the Listening Post and Magpie traders.
+(+)Syndicate versions have unlimited ammo, Salvager versions have limited ammo.
+(t)sat feb 15 25
+(u)Amylizzle & Nerkson
+(p)21909
+(e)🎨📄|C-Sprites, A-UI
+(*)The reactor turbine has been made repairable. Also nerfed. Also buffed.
+(+)The default turbine settings are now a viable configuration.
+(+)Turbine blades and stator can now be replaced with new ones, with material properties.
+(+)A conductive material on the stator will boost power output.
+(+)A dense material on the turbine blade will increase its mass.
+(+)A hard material on the turbine blade will increase its durability.
+(+)Flow rate on the turbine is capped to 1000 L/S
+(+)The turbine will now decapitate you if you let it spin too fast for too long.
+(+)Turbine blade sprite by Nerkson.
+(t)fri feb 14 25
+(u)Bartimeus973
+(p)22280
+(e)🆕🎨⚖📄|C-Feature, C-Sprites, C-Balance, A-UI
+(*)Legs and eyes are now modifiable in character setup!
 (t)thu feb 13 25
+(u)glowbold
+(p)22082
+(e)🆕💅📄💊|C-Feature, C-QoL, A-UI, A-Medical
+(+)The cloning console will indicate when the SpeedyClone, Biomatter Recyler, and NecroScan modules are installed.
+(+)Clone pod and reclaimer upgrade modules can be uninstalled with a crowbar on their respective machines.
+(u)Garash2k
+(p)21411
+(e)🆕📄|C-Feature, A-UI
+(+)New UI for the Ruck Kit
+(u)glowbold
+(p)22261
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Enzymatic reclaimers can be broken by gunfire and explosions. Use common tools to fix them!
+(+)Enzymatic reclaimers require power to process meat and bodies.
+(u)Waffleloffle & glowbold
+(p)22208
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Reagent heaters can be broken by gunfire and explosions. Use common tools to repair!
+(u)Amylizzle
+(p)22139
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Lamp artifacts now have a chance to spawn with negative lighting.
 (u)TDHooligan
 (p)22027
 (e)⚖📦|C-Balance, A-Game-Objects

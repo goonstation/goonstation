@@ -208,7 +208,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	name = "Signal Jammer"
 	items = list(/obj/item/radiojammer)
 	cost = 3
-	desc = "Silences radios in an area around you while activated. No one will hear them scream."
+	desc = "Silences radios and PDAs in an area around you while activated. No one will hear them scream."
 
 /datum/syndicate_buylist/generic/psink
 	name = "Power Sink"
@@ -1113,6 +1113,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	desc = "An AI law module that at a glance looks completely normal, but could tell the AI to do anything."
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
+
+/datum/syndicate_buylist/traitor/barberang
+	name = "Barberang"
+	items = list(/obj/item/razor_blade/barberang)
+	cost = 5
+	desc = "An aerodynamic, extra-sharp hand razor designed to be thrown, knocking down and shearing the hair off of anyone it hits. The razor will then return, allowing for stolen hair to be easily retrieved. Notice: hitting a bald target will disrupt the razor's aerodynamic properties and void the warranty."
+	job = list("Barber")
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
