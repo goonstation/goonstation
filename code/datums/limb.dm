@@ -363,7 +363,7 @@
 
 
 	mrl
-		proj = new /datum/projectile/bullet/homing/mrl
+		proj = new /datum/projectile/bullet/homing/rocket/mrl
 		shots = 6
 		current_shots = 6
 		cooldown = 3 SECONDS

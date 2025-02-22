@@ -704,12 +704,12 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ..() && istype(V.sec_system, /obj/item/shipcomponent/secondary_system/lateral_thrusters)
+			. = ..() && istype(V.sec_system, /obj/item/shipcomponent/secondary_system/thrusters/lateral)
 
 		execute(atom/target, mob/user)
 			..()
 			var/obj/machinery/vehicle/V = target
-			var/obj/item/shipcomponent/secondary_system/lateral_thrusters/thrusters = V.sec_system
+			var/obj/item/shipcomponent/secondary_system/thrusters/lateral/thrusters = V.sec_system
 			thrusters.change_thruster_direction()
 			if (src.icon_state == "thrusters_right")
 				src.desc = "Change the lateral thrusters to move the ship left"
