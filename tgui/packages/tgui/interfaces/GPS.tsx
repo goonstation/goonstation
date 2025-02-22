@@ -142,23 +142,17 @@ export const GPS = () => {
         <Section title="Tracking">
           <Collapsible title="GPS Devices">
             {!!gps_info.length && (
-              <Stack vertical>
-                <TrackableList gps_info={gps_info} />
-              </Stack>
+              <TrackableList gps_info={gps_info} />
             )}
           </Collapsible>
           <Collapsible title="Implants">
             {!!imp_info.length && (
-              <Stack vertical>
-                <TrackableList gps_info={imp_info} />
-              </Stack>
+              <TrackableList gps_info={imp_info} />
             )}
           </Collapsible>
           <Collapsible title="Warp Beacons">
             {!!warp_info.length && (
-              <Stack vertical>
-                <TrackableList gps_info={warp_info} />
-              </Stack>
+              <TrackableList gps_info={warp_info} />
             )}
           </Collapsible>
         </Section>
@@ -210,5 +204,5 @@ const TrackableList = (props) => {
     );
     nodes.push(node);
   }
-  return <Box>{nodes}</Box>;
+  return <Stack vertical>{nodes}</Stack>;
 };
