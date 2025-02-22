@@ -821,7 +821,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			M.force_laydown_standup()
 			boutput(M, SPAN_NOTICE("[slam_text]"))
 			playsound(M.loc, 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
-			M.lastattacker = src.master?.shooter
+			M.lastattacker = get_weakref(src.master?.shooter)
 			M.lastattackertime = TIME
 		else if(projectile.reflectcount < src.max_bounce_count)
 			shoot_reflected_bounce(projectile, A, src.max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)

@@ -139,7 +139,7 @@
 
 		// Some after attack stuff.
 		user.lastattacked = M
-		M.lastattacker = user
+		M.lastattacker = get_weakref(user)
 		M.lastattackertime = world.time
 
 
