@@ -3260,6 +3260,15 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	time = 10 SECONDS
 	category = "Tool"
 
+/datum/manufacture/pod/weapons_loader
+	name = "Weapons Loader"
+	item_requirements = list("metal_dense" = 10,
+							 "conductive" = 10)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/weapons_loader)
+	create = 1
+	time = 17 SECONDS
+	category = "Tool"
+
 /datum/manufacture/pod/sps
 	name = "Syndicate Purge System"
 	item_requirements = list("metal" = 8,

@@ -222,11 +222,29 @@
 
 //each pod part is a var so we have to macro this, yegh
 #define EJECT_PART(part) \
-	part.deactivate(); \
-	src.components -= part; \
+	src.eject_part(part); \
 	usr.put_in_hand_or_drop(part); \
-	part = null; \
+	src.null_part(part); \
 	src.updateDialog()
+
+	/// finds the part in the ship's parts and nulls it
+	proc/null_part(obj/item/shipcomponent/part)
+		if (part == src.engine)
+			src.engine = null
+		else if (part == src.lock)
+			src.lock = null
+		else if (part == src.life_support)
+			src.life_support = null
+		else if (part == src.com_system)
+			src.com_system = null
+		else if (part == src.m_w_system)
+			src.m_w_system = null
+		else if (part == src.sec_system)
+			src.sec_system = null
+		else if (part == src.sensors)
+			src.sensors = null
+		else if (part == src.lights)
+			src.lights = null
 
 	Topic(href, href_list)
 		if (is_incapacitated(usr) || usr.restrained())
@@ -454,6 +472,11 @@
 			return
 
 #undef EJECT_PART
+
+	proc/eject_part(obj/item/shipcomponent/part, give_message = TRUE)
+		part.deactivate(give_message)
+		part.set_loc(get_turf(src))
+		src.components -= part
 
 	proc/AmmoPerShot()
 		return 1
@@ -876,7 +899,7 @@
 ///////////////////////////////////////////////////////////////////////////
 ////////Install Ship Part////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
-/obj/machinery/vehicle/proc/Install(obj/item/shipcomponent/S as obj)
+/obj/machinery/vehicle/proc/Install(obj/item/shipcomponent/S as obj, give_feedback = TRUE)
 	switch(S.system)
 		if("Engine")
 			if(!src.engine)
@@ -917,7 +940,7 @@
 				if(uses_weapon_overlays && m_w_system.appearanceString)
 					src.overlays += image('icons/effects/64x64.dmi', "[m_w_system.appearanceString]")
 
-				m_w_system.activate()
+				m_w_system.activate(give_feedback)
 			else
 				boutput(usr, "That system already has a part!")
 				return
@@ -936,7 +959,8 @@
 	S.ship = src
 	if (usr) //This mean it's going on during the game!
 		usr.drop_item(S)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 0)
+		if (give_feedback)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 0)
 	S.set_loc(src)
 	myhud.update_systems()
 	myhud.update_states()
