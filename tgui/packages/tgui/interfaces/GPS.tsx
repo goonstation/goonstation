@@ -132,7 +132,7 @@ export const GPS = () => {
                 </LabeledList.Item>
                 <LabeledList.Item label="Tracking">
                   <Button onClick={() => act('track_gps')}>
-                    {tracking ? tracking : 'None'}
+                    {tracking || 'None'}
                   </Button>
                 </LabeledList.Item>
               </LabeledList>
