@@ -157,6 +157,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 				L.bodytemperature -= 10
 				if (L.bodytemperature <= 255.372) // 0 degrees fahrenheit
 					var/obj/icecube/block = new /obj/icecube(L.loc, L)
+					block.health /= 2
 					block.anchored = TRUE
 					block.setStatus("cold_snap", INFINITE_STATUS)
 			SPAWN(2 SECONDS)
