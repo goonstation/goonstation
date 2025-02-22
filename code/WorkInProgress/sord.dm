@@ -287,3 +287,129 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 	Shipping to Frontier Outpost 8.<br>
 	Received at Frontier Outpost 8.<br>
 	Awaiting local transportation.</center>"}
+
+// Spiderweb shit and abilities. woe, anyone foolish enough to gaze upon this code
+/obj/spiderweb
+	name = "spider web"
+	desc = "Not your average cobweb, it looks much thicker."
+	icon = 'icons/obj/decals/cleanables.dmi'
+	icon_state = "cobweb_small"
+	anchored = ANCHORED_ALWAYS
+	var/weblevel = 1
+	density = 0
+
+	New()
+		..()
+		src.update_self()
+
+	Cross(atom/A)
+		switch(weblevel)
+			if(1 to 2)
+				if(isliving(A) && !A.hasStatus("webwalk"))
+					A.changeStatus("slowed", 1 SECONDS)
+					if(!ON_COOLDOWN(A, "webrustle", 1 SECOND))
+						playsound(A.loc, 'sound/impact_sounds/Bush_Hit.ogg', 45, 1)
+					return 1
+				else
+					return 1
+			if(3)
+				if(isliving(A) && !A.hasStatus("webwalk"))
+					return 0
+				else
+					return 1
+
+	attackby(obj/item/W, mob/user)
+		if (!W) return
+		if (!user) return
+		var/dmg = FALSE
+		if (W.hit_type == DAMAGE_CUT || W.hit_type == DAMAGE_BURN || W.hit_type == DAMAGE_STAB)
+			playsound(src.loc, 'sound/impact_sounds/burn_sizzle.ogg', 45, 1)
+			dmg = TRUE
+		else if (W.hit_type == DAMAGE_BLUNT)
+			playsound(src.loc, 'sound/impact_sounds/Bush_Hit.ogg', 45, 1)
+			boutput(user, SPAN_NOTICE("Your [W.name] isn't effective against the [src]!"))
+			return
+
+		if(dmg == TRUE)
+			src.take_damage(1, "brute", user)
+
+		user.lastattacked  = src
+		..()
+
+/obj/spiderweb/proc/update_self()
+	playsound(src, 'sound/misc/splash_1.ogg', 45, 1)
+	switch(src.weblevel)
+		if (-INFINITY to 1)
+			src.name = initial(src.name)
+			src.set_opacity(0)
+			src.set_density(0)
+			src.icon_state = "cobweb_small"
+		if (2)
+			src.name = "thick [initial(src.name)]"
+			src.set_opacity(1)
+			src.set_density(0)
+			src.icon_state = "cobweb_floor-c"
+		if (3 to INFINITY)
+			src.name = "dense [initial(src.name)]"
+			src.set_opacity(1)
+			src.set_density(1)
+			src.icon_state = "cobweb_floor"
+
+/obj/spiderweb/proc/take_damage(var/amount, var/damtype = "brute",var/mob/user)
+	if (!isnum(amount) || amount <= 0)
+		return
+
+	src.weblevel -= 1
+	if (src.weblevel < 1)
+		qdel (src)
+	else
+		src.update_self()
+
+
+/datum/statusEffect/webwalk
+	id = "webwalk"
+	name = "web walking"
+	desc = "You can walk through spider webs without any adverse effects."
+	icon_state = "foot"
+	effect_quality = STATUS_QUALITY_POSITIVE
+	duration = INFINITE_STATUS
+	maxDuration = null
+	unique = TRUE
+
+/datum/targetable/lay_spider_web
+	name = "Lay a Web"
+	desc = "Lay a spider web on the ground. If there is already a web there, upgrade it to the next level."
+	icon = 'icons/misc/abilities.dmi'
+	icon_state = "poo"
+	targeted = 1
+	target_anything = 1
+	cooldown = 5 SECONDS
+	max_range = 1
+
+	cast(atom/target)
+		. = ..()
+		var/turf/T = get_turf(target)
+		if (isturf(T))
+			if (T.density)
+				boutput(holder.owner, SPAN_ALERT("You can't lay a web there!"))
+				return 1
+
+			for (var/obj/O in T.contents)
+				if (istype(O, /obj/window) || istype(O, /obj/forcefield) || istype(O, /obj/blob))
+					boutput(holder.owner, SPAN_ALERT("You can't lay a web there!"))
+					return 1
+
+
+			var/obj/spiderweb/web_tile = locate(/obj/spiderweb) in T.contents
+
+			if (istype(web_tile))
+				if(web_tile.weblevel < 3)
+					web_tile.weblevel += 1
+					web_tile.update_self()
+					boutput(holder.owner, SPAN_NOTICE("You reinforce the web on [T]."))
+				else
+					boutput(holder.owner, SPAN_NOTICE("You can't reinforce this web any more."))
+					return
+			else
+				new/obj/spiderweb(T)
+				boutput(holder.owner, SPAN_NOTICE("You lay a web on [T]."))
