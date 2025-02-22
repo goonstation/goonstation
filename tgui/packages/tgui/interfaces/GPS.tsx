@@ -84,7 +84,7 @@ export const GPS = () => {
                   x:{' '}
                   <NumberInput
                     value={track_x}
-                    width={3}
+                    width="3"
                     minValue={1}
                     maxValue={300}
                     step={1}
@@ -93,7 +93,7 @@ export const GPS = () => {
                   y:{' '}
                   <NumberInput
                     value={track_y}
-                    width={3}
+                    width="3"
                     minValue={1}
                     maxValue={300}
                     step={1}
@@ -163,39 +163,41 @@ const TrackableList = (props) => {
 
   distress_red = !distress_red;
 
-  return (gps_info.length ?
-    <Stack vertical>{gps_info.map((item, index) => (
-      <Box key={index}>
-        <Stack.Item>
-          <Stack>
-            <Stack.Item grow>
-              <Stack vertical>
-                <Stack.Item>
-                  <strong>{item.name}</strong>
-                </Stack.Item>
-                <Stack.Item>
-                  <em>{`Located at (${item.x}), (${item.y}) | ${item.z_info}`}</em>
-                </Stack.Item>
-                {item.distress !== null && !!item.distress && (
-                  <Stack.Item textColor={distress_red ? 'red' : 'default'}>
-                    Distress Alert
+  return gps_info.length ? (
+    <Stack vertical>
+      {gps_info.map((item, index) => (
+        <Box key={index}>
+          <Stack.Item>
+            <Stack>
+              <Stack.Item grow>
+                <Stack vertical>
+                  <Stack.Item>
+                    <strong>{item.name}</strong>
                   </Stack.Item>
-                )}
-              </Stack>
-            </Stack.Item>
-            <Stack.Item align="center">
-              <Button
-                onClick={() =>
-                  act('track_gps', { gps_ref: item.obj_ref })
-                }
-              >
-                Track
-              </Button>
-            </Stack.Item>
-          </Stack>
-        </Stack.Item>
-        <Divider />
-      </Box>
-  ))}
-    </Stack> : "None found");
+                  <Stack.Item>
+                    <em>{`Located at (${item.x}), (${item.y}) | ${item.z_info}`}</em>
+                  </Stack.Item>
+                  {item.distress !== null && !!item.distress && (
+                    <Stack.Item textColor={distress_red ? 'red' : 'default'}>
+                      Distress Alert
+                    </Stack.Item>
+                  )}
+                </Stack>
+              </Stack.Item>
+              <Stack.Item align="center">
+                <Button
+                  onClick={() => act('track_gps', { gps_ref: item.obj_ref })}
+                >
+                  Track
+                </Button>
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+          <Divider />
+        </Box>
+      ))}
+    </Stack>
+  ) : (
+    'None found'
+  );
 };
