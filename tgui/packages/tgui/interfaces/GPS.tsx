@@ -84,7 +84,7 @@ export const GPS = () => {
                   x:{' '}
                   <NumberInput
                     value={track_x}
-                    width={'3'}
+                    width={3}
                     minValue={1}
                     maxValue={300}
                     step={1}
@@ -93,7 +93,7 @@ export const GPS = () => {
                   y:{' '}
                   <NumberInput
                     value={track_y}
-                    width={'3'}
+                    width={3}
                     minValue={1}
                     maxValue={300}
                     step={1}
