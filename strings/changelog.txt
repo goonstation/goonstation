@@ -1,5 +1,29 @@
 
+(t)sat feb 22 25
+(u)FlameArrow57
+(p)22360
+(e)🆕⚖🚗|C-Feature, C-Balance, A-Vehicles
+(*)Pod acceleration, deceleration, and maximum velocity are now all affected per engine type and pod size.
+(+)Basic 2x2 pod is now slightly slower
+(u)FlameArrow57
+(p)22393
+(e)🆕🎨📦🚗|C-Feature, C-Sprites, A-Game-Objects, A-Vehicles
+(+)Added a new Weapons Loader pod component to ship fabricators, which lets you store a pod weapon to swap with your main weapon
+(u)FlameArrow57
+(p)22351
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(+)Added a new Syndicate Maser drone as a possible drone to appear in the debris field. It fires a projectile that bypasses pod armor, but can be blocked by pod shielding. It has a 25% chance to drop its weapon on death. Sprite by Flaborized
 (t)fri feb 21 25
+(u)LeahTheTech
+(+)You can throw things over railings now.
+(u)RubberRats
+(p)22095
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)The Syndicate has equipped some of its operatives with a weapon of mass depilation
+(u)Bartimeus973
+(p)22400
+(e)🪲⚖🔨|C-Bug, C-Balance, A-Player-Actions
+(+)You cannot enter disposal chutes by yourself if you are cuffed and held/pulled.
 (u)FlameArrow57
 (p)22329
 (e)🆕🎨📦🚗|C-Feature, C-Sprites, A-Game-Objects, A-Vehicles

@@ -1409,3 +1409,7 @@ TYPEINFO(/atom/movable)
 ///Returns the y component of the surface normal of the atom relative to an incident direction
 /atom/proc/normal_y(incident_dir)
 	return incident_dir == SOUTH ? -1 : (incident_dir == NORTH ?  1 : 0)
+
+///Should this atom emit particles when hit by a projectile, when the projectile is of the given type
+/atom/proc/does_impact_particles(var/kinetic_impact = TRUE)
+	return TRUE
