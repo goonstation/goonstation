@@ -120,7 +120,6 @@ TYPEINFO(/obj/item/device/gps)
 
 	ui_data(mob/user)
 		var/turf/T = get_turf(src)
-		src.get_gps_info()
 		. = list(
 			"src_x" = T.x,
 			"src_y" = T.y,
