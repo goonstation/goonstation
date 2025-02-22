@@ -89,10 +89,25 @@ TYPEINFO(/obj/machinery/chem_heater)
 				if (prob(50))
 					qdel(src)
 					return
+				if (prob(75))
+					src.set_broken()
+					return
+			if(3)
+				if (prob(50))
+					src.set_broken()
 
 	blob_act(var/power)
 		if (prob(25 * power/20))
 			qdel(src)
+			return
+		if (prob(25 * power/20))
+			src.set_broken()
+
+	bullet_act(obj/projectile/P)
+		if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
+			if(prob(P.power * P.proj_data?.ks_ratio / 2))
+				src.set_broken()
+		..()
 
 	meteorhit()
 		qdel(src)
@@ -196,6 +211,20 @@ TYPEINFO(/obj/machinery/chem_heater)
 	*/
 
 	process(mult)
+		if (status & BROKEN)
+			var/turf/simulated/T = src.loc
+			if (istype(T))
+				var/datum/gas_mixture/environment = T.return_air()
+
+				// less efficient than an HVAC so people don't abuse these for changing air temps
+				var/transfer_moles = 0.1 * TOTAL_MOLES(environment)
+				var/datum/gas_mixture/removed = environment.remove(transfer_moles)
+				if (removed && TOTAL_MOLES(removed) > 0)
+					var/heat_capacity = HEAT_CAPACITY(removed)
+					removed.temperature = (removed.temperature * heat_capacity + 200 * (src.target_temp-T20C))/heat_capacity
+					use_power(2000 WATTS) // early return below stops normal power usage check
+				T.assume_air(removed)
+
 		if (!active) return
 		if (status & (NOPOWER|BROKEN) || !beaker || !beaker.reagents.total_volume)
 			set_inactive()
@@ -241,21 +270,31 @@ TYPEINFO(/obj/machinery/chem_heater)
 		UpdateIcon()
 		tgui_process.update_uis(src)
 
+	power_change()
+		. = ..()
+		src.update_icon()
+
 	update_icon()
-		if (src.beaker)
-			src.UpdateOverlays(SafeGetOverlayImage("beaker", 'icons/obj/heater.dmi', "heater-beaker"), "beaker")
-			if (src.active && src.beaker:reagents && src.beaker:reagents:total_volume)
-				if (target_temp > src.beaker:reagents:total_temperature)
-					src.icon_state = "heater-heat"
-				else if (target_temp < src.beaker:reagents:total_temperature)
-					src.icon_state = "heater-cool"
-				else
-					src.icon_state = "heater-closed"
+		if (src.status & BROKEN)
+			src.UpdateOverlays(null, "beaker", retain_cache=TRUE)
+			src.icon_state = "heater-broken"
+			return
+
+		if (!src.beaker)
+			src.UpdateOverlays(null, "beaker", retain_cache=TRUE)
+			src.icon_state = "heater"
+			return
+
+		src.UpdateOverlays(SafeGetOverlayImage("beaker", 'icons/obj/heater.dmi', "heater-beaker"), "beaker")
+		if (src.active && src.beaker:reagents && src.beaker:reagents:total_volume)
+			if (target_temp > src.beaker:reagents:total_temperature)
+				src.icon_state = "heater-heat"
+			else if (target_temp < src.beaker:reagents:total_temperature)
+				src.icon_state = "heater-cool"
 			else
 				src.icon_state = "heater-closed"
 		else
-			src.UpdateOverlays(null, "beaker", retain_cache=TRUE)
-			src.icon_state = "heater"
+			src.icon_state = "heater-closed"
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
@@ -277,6 +316,16 @@ TYPEINFO(/obj/machinery/chem_heater)
 		else
 			boutput(usr, SPAN_ALERT("You can't use that as an output target."))
 		return
+
+	set_broken()
+		. = ..()
+		if (.) return
+		if(src.target_temp > T20C)
+			AddComponent(/datum/component/equipment_fault/embers, tool_flags = TOOL_WRENCHING | TOOL_SCREWING | TOOL_PRYING)
+		else
+			AddComponent(/datum/component/equipment_fault/smoke, tool_flags = TOOL_WRENCHING | TOOL_SCREWING | TOOL_PRYING)
+		animate_shake(src, 5, rand(3,8),rand(3,8))
+		playsound(src, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 
 	Exited(Obj, newloc)
 		if(Obj == src.beaker)

@@ -564,8 +564,6 @@
 
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
-					if (!(src.client && src.client.holder)) src.emote_allowed = 0
-					if (isdead(src)) src.emote_allowed = 0
 					if ((src.restrained()) && (!src.getStatusDuration("knockdown")))
 						message = "<B>[src]</B> malfunctions!"
 						src.TakeDamage("head", 2, 4)
@@ -665,8 +663,6 @@
 	#ifdef DATALOGGER
 					game_stats.Increment("farts")
 	#endif
-					SPAWN(1 SECOND)
-						src.emote_allowed = 1
 			else
 				if (voluntary) src.show_text("Invalid Emote: [act]")
 				return
@@ -2065,9 +2061,9 @@
 	proc/get_tools()
 		RETURN_TYPE(/list)
 		var/list/tools = src.module.tools.Copy()
-		if (src.part_arm_l.add_to_tools)
+		if (src.part_arm_l?.add_to_tools)
 			tools += src.part_arm_l
-		if (src.part_arm_r.add_to_tools)
+		if (src.part_arm_r?.add_to_tools)
 			tools += src.part_arm_r
 		return tools
 

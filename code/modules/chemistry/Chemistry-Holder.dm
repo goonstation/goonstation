@@ -355,6 +355,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		if (update_self_reagents)
 			src.update_total()
+			src.temperature_react()
 			src.handle_reactions()
 			// this was missing. why was this missing? i might be breaking the shit out of something here
 			src.reagents_changed()
@@ -364,6 +365,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		if (update_target_reagents)
 			target_reagents.update_total()
+			target_reagents.temperature_react()
 			target_reagents.handle_reactions()
 			target_reagents.reagents_changed(TRUE)
 

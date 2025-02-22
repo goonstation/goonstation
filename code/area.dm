@@ -862,6 +862,16 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 
 /area/shuttle/merchant_shuttle/diner_station
 	name = "Station Merchant Shuttle Dock Gamma"
+#if defined(MAP_OVERRIDE_NADIR) // Nadir diner shuttle is in the trench
+	sound_group = "trench"
+	force_fullbright = 0
+	requires_power = 0
+	luminosity = 0
+	sound_environment = 22
+	ambient_light = TRENCH_LIGHT
+#elif defined(UNDERWATER_MAP) // Oshan/Manta diner shuttle is at the surface sea diner
+	ambient_light = OCEAN_LIGHT
+#endif
 
 /area/shuttle/merchant_shuttle/left_station
 	name = "Station Merchant Shuttle Dock Alpha"
@@ -2953,7 +2963,7 @@ ABSTRACT_TYPE(/area/station/medical)
 	station_map_colour = MAPC_ROBOTICS
 
 /area/station/medical/research
-	name = "Medical Research"
+	name = "Genetic Research"
 	icon_state = "medresearch"
 	sound_environment = 3
 	station_map_colour = MAPC_MEDRESEARCH

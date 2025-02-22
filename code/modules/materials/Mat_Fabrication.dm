@@ -51,7 +51,9 @@
 	/datum/matfab_recipe/simple/nuclear/heat_exchanger,
 	/datum/matfab_recipe/simple/nuclear/control_rod,
 	/datum/matfab_recipe/simple/nuclear/fuel_rod,
-	/datum/matfab_recipe/makeshift_fuel_rod)
+	/datum/matfab_recipe/makeshift_fuel_rod,
+	/datum/matfab_recipe/simple/turbine/blade,
+	/datum/matfab_recipe/simple/turbine/stator)
 
 /obj/machinery/nanofab/prototype
 	name = "Nano-fabricator (Prototype)"
@@ -72,7 +74,7 @@
 /obj/machinery/nanofab
 	name = "Nano-fabricator"
 	desc = "A more complicated sibling to the manufacturers, this machine can make things that inherit material properties."// this isnt super good but it's better than what it was
-	icon = 'icons/obj/manufacturer.dmi'
+	icon = 'icons/obj/crafting.dmi'
 	icon_state = "fab2-on"
 	anchored = ANCHORED
 	density = 1
