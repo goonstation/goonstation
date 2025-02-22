@@ -1,4 +1,9 @@
 
+(t)sat feb 22 25
+(u)FlameArrow57
+(p)22351
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(+)Added a new Syndicate Maser drone as a possible drone to appear in the debris field. It fires a projectile that bypasses pod armor, but can be blocked by pod shielding. It has a 25% chance to drop its weapon on death. Sprite by Flaborized
 (t)fri feb 21 25
 (u)LeahTheTech
 (+)You can thow things over railings now.
