@@ -1,5 +1,15 @@
 
 (t)fri feb 21 25
+(u)LeahTheTech
+(+)You can thow things over railings now.
+(u)RubberRats
+(p)22095
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)The Syndicate has equipped some of its operatives with a weapon of mass depilation
+(u)Bartimeus973
+(p)22400
+(e)🪲⚖🔨|C-Bug, C-Balance, A-Player-Actions
+(+)You cannot enter disposal chutes by yourself if you are cuffed and held/pulled.
 (u)FlameArrow57
 (p)22329
 (e)🆕🎨📦🚗|C-Feature, C-Sprites, A-Game-Objects, A-Vehicles
