@@ -35,7 +35,8 @@
 	var/weapon_class = 0 //what weapon class a ship is
 	var/powercapacity = 0 //How much power the ship's components can use, set by engine
 	var/powercurrent = 0 //How much power the components are using
-	var/speed = 1 //FOR PODS : While holding thruster, how much to add on to our max speed. Does nothing for tanks.
+	/// multiplicative ship speed modification
+	var/speedmod = 1
 	/// acceleration modification provided by afterburner if installed
 	var/afterburner_accel_mod = 1
 	/// speed modification provided by afterburner if installed
@@ -1827,6 +1828,7 @@
 
 // make ships less destructive (maybe depends on Mass and Speed?)
 
+ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 /obj/machinery/vehicle/tank
 	name = "tank"
 	icon = 'icons/obj/machines/8dirvehicles.dmi'
@@ -1837,7 +1839,7 @@
 	uses_weapon_overlays = 0
 	health = 100
 	maxhealth = 100
-	speed = 0 // speed literally does nothing? what??
+	speedmod = 0 // speed literally does nothing? what??
 	stall = 0 // slow the ship down when firing
 	weapon_class = 1
 
@@ -2026,7 +2028,7 @@
 	health = 60
 	maxhealth = 60
 	weapon_class = 1
-	speed = 5
+	speedmod = 0.2
 	var/fail_type = 0
 	var/launched = 0
 	var/steps_moved = 0
