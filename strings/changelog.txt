@@ -1,6 +1,11 @@
 
 (t)sat feb 22 25
 (u)FlameArrow57
+(p)22360
+(e)🆕⚖🚗|C-Feature, C-Balance, A-Vehicles
+(*)Pod acceleration, deceleration, and maximum velocity are now all affected per engine type and pod size.
+(+)Basic 2x2 pod is now slightly slower
+(u)FlameArrow57
 (p)22393
 (e)🆕🎨📦🚗|C-Feature, C-Sprites, A-Game-Objects, A-Vehicles
 (+)Added a new Weapons Loader pod component to ship fabricators, which lets you store a pod weapon to swap with your main weapon
