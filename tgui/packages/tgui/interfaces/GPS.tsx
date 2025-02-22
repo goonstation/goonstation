@@ -36,7 +36,7 @@ interface GPSInfo {
 
 interface GPSTrackable {
   name: string;
-  ref: string;
+  obj_ref: string;
   x: number;
   y: number;
   z_info: string;
@@ -197,7 +197,7 @@ const TrackableList = (props) => {
             </Stack.Item>
             <Stack.Item align="center">
               <Button
-                onClick={() => act('track_gps', { gps_ref: gps_info[i].ref })}
+                onClick={() => act('track_gps', { gps_ref: gps_info[i].obj_ref })}
                 fontSize={1}
               >
                 Track

@@ -66,7 +66,7 @@ TYPEINFO(/obj/item/device/gps)
 			if (!T)
 				continue
 			gps_info += list(list("name" = "[G.serial]-[G.identifier]",
-								  "ref" = "\ref[G]",
+								  "obj_ref" = "\ref[G]",
 								  "x" = T.x,
 								  "y" = T.y,
 								  "z_info" = src.get_z_info(T),
@@ -87,7 +87,7 @@ TYPEINFO(/obj/item/device/gps)
 			if (!T)
 				continue
 			imp_info += list(list("name" = imp.loc.name,
-								  "ref" = "\ref[imp]",
+								  "obj_ref" = "\ref[imp]",
 								  "x" = T.x,
 								  "y" = T.y,
 								  "z_info" = src.get_z_info(T)))
@@ -103,7 +103,7 @@ TYPEINFO(/obj/item/device/gps)
 		for (var/obj/B in by_type[/obj/warp_beacon])
 			var/turf/T = get_turf(B.loc)
 			warp_info += list(list("name" = B.name,
-								   "ref" = "\ref[B]",
+								   "obj_ref" = "\ref[B]",
 								   "x" = T.x,
 								   "y" = T.y,
 								   "z_info" = src.get_z_info(T)))
