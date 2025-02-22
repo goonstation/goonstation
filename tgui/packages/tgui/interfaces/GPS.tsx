@@ -165,7 +165,7 @@ const TrackableList = (props) => {
 
   for (let i = 0; i < gps_info.length; i++) {
     const node = (
-      <Box key={i} fontSize={0.8}>
+      <Box key={i}>
         <Stack.Item>
           <Stack>
             <Stack.Item grow>
