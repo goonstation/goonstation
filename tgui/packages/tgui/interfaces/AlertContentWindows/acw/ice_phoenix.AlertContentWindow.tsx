@@ -46,8 +46,10 @@ export const acw: AlertContentWindow = {
       </p>
 
       <p>
-        This antag is currently in development and will not be found on the
-        wiki.
+        For more information, consult{' '}
+        <a href="https://wiki.ss13.co/index.php?search=Space Phoenix">
+          the wiki
+        </a>
       </p>
     </div>
   ),
