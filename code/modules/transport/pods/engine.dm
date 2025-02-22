@@ -186,7 +186,7 @@
 	powergenerated = 50
 	currentgen = 50
 	warprecharge = 5 SECONDS
-	speedmod = 0.5
+	engine_speed = 1.4
 	icon_state = "engine-0"
 
 /obj/item/shipcomponent/engine/helios
