@@ -252,14 +252,14 @@
 	remaining_ammunition = 20
 
 /obj/item/shipcomponent/mainweapon/salvo_rockets
-	name = "Hydra Salvo Rockets"
+	name = "Cerberus Salvo Rockets"
 	desc = "A three-rocket salvo launcher, created in mind for multi-purpose space combat."
 	weapon_score = 1.25
 	power_used = 50
 	current_projectile = new/datum/projectile/bullet/homing/rocket/salvo
-	appearanceString = "pod_weapon_hydra"
+	appearanceString = "pod_weapon_cerberus"
 	firerate = 5 SECONDS
-	icon_state = "hydra-salvo-rockets"
+	icon_state = "cerberus-salvo-rockets"
 
 /obj/item/shipcomponent/mainweapon/laser_ass // hehhh
 	name = "Mk.4 Assault Laser"

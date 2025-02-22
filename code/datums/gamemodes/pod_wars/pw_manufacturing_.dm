@@ -223,7 +223,7 @@
 	category = "Tool"
 
 /datum/manufacture/pod/weapon/salvo_rockets
-	name = "Hydra Salvo Rockets"
+	name = "Cerberus Salvo Rockets"
 	item_requirements = list("metal_superdense" = 30,
 							 "conductive_high" = 10,
 							 "crystal" = 10,
