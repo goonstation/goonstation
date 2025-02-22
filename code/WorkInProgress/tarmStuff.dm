@@ -182,6 +182,14 @@
 			qdel(start)
 			qdel(end)
 
+/datum/projectile/bullet/optio/hitscan/pulsed_phaser
+	damage = 5
+	damage_type = D_ENERGY
+	hit_type = DAMAGE_BURN
+	shot_volume = 100
+	shot_sound = 'sound/weapons/Taser.ogg'
+	armor_ignored = 0
+
 /datum/projectile/special/target_designator
 	sname = "foo"
 	name = "bar"
