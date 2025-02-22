@@ -163,20 +163,19 @@ const TrackableList = (props) => {
 
   distress_red = !distress_red;
 
-  for (let i = 0; i < gps_info.length; i++) {
-    const node = (
-      <Box key={i}>
+  return (<Stack vertical>{gps_info.map((item, index) => (
+      <Box key={index}>
         <Stack.Item>
           <Stack>
             <Stack.Item grow>
               <Stack vertical>
                 <Stack.Item>
-                  <strong>{gps_info[i].name}</strong>
+                  <strong>{item.name}</strong>
                 </Stack.Item>
                 <Stack.Item>
-                  <em>{`Located at (${gps_info[i].x}), (${gps_info[i].y}) | ${gps_info[i].z_info}`}</em>
+                  <em>{`Located at (${item.x}), (${item.y}) | ${item.z_info}`}</em>
                 </Stack.Item>
-                {gps_info[i].distress !== null && !!gps_info[i].distress && (
+                {item.distress !== null && !!item.distress && (
                   <Stack.Item textColor={distress_red ? 'red' : 'default'}>
                     Distress Alert
                   </Stack.Item>
@@ -186,9 +185,8 @@ const TrackableList = (props) => {
             <Stack.Item align="center">
               <Button
                 onClick={() =>
-                  act('track_gps', { gps_ref: gps_info[i].obj_ref })
+                  act('track_gps', { gps_ref: item.obj_ref })
                 }
-                fontSize={1}
               >
                 Track
               </Button>
@@ -197,8 +195,6 @@ const TrackableList = (props) => {
         </Stack.Item>
         <Divider />
       </Box>
-    );
-    nodes.push(node);
-  }
-  return <Stack vertical>{nodes}</Stack>;
+  ))}
+          </Stack>);
 };
