@@ -28,6 +28,7 @@ var opts = {
     'maxStreakGrowth': 20, //at what streak point should we stop growing the last entry?
     'messageClasses': ['admin','combat','radio','say','ooc','internal'],
     'msgOdd': false, //Is the last message odd or even?
+	'reconnectTimeout': 0,
 
     //Options menu
     'subOptionsLoop': null, //Contains the interval loop for closing the options menu
@@ -415,9 +416,10 @@ function ehjaxCallback(data) {
 
         //server is shutting down before restarting
         if (data == 'hardrestart' || data == 'updaterestart') {
-            setTimeout(function() {
+			output('<div class="internal boldnshit"><a href="byond://winset?command=.reconnect" class="reconnectClient">Click here to manually reconnect</a></div>');
+            opts.reconnectTimeout = setTimeout(function() {
 				runByond('byond://winset?command=.reconnect');
-            }, 30000); //30 seconds
+            }, 60000); //1 minute
         }
     } else if (data == 'stopaudio') {
         $('.dectalk').remove();
@@ -800,6 +802,11 @@ $(function() {
         if ($audio) {
             $audio.remove();
         }
+    });
+
+    $messages.on('click', '.reconnectClient', function() {
+		clearTimeout(opts.reconnectTimeout);
+        runByond('byond://winset?command=.reconnect');
     });
 
     $(window).on('scroll', function() {
