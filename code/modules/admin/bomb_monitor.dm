@@ -345,7 +345,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 				boutput(usr, SPAN_ALERT("Unable to locate the object (it's been deleted, somehow. Explosion, probably)."))
 				return
 
-			if (istype(I, /obj/item/canbomb_detonator) || (istype(I, /obj/assembly/complete) || istype(I, /obj/item/device/transfer_valve) || istype(I, /obj/item/assembly/proximity_bomb) || istype(I, /obj/item/assembly/time_bomb/) || istype(I, /obj/item/assembly/radio_bomb/)))
+			if (istype(I, /obj/item/canbomb_detonator) || (istype(I, /obj/item/assembly/complete) || istype(I, /obj/item/device/transfer_valve) || istype(I, /obj/item/assembly/proximity_bomb) || istype(I, /obj/item/assembly/time_bomb/) || istype(I, /obj/item/assembly/radio_bomb/)))
 				I:force_dud = !I:force_dud
 				display_ui(usr)
 				message_admins("[key_name(usr)] made \the [I] [I:force_dud ? "into a dud" : "able to explode again"] at [log_loc(I)].")
