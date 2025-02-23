@@ -1219,7 +1219,7 @@
 	name = "Northwest Breach Hull"
 	})
 "aAe" = (
-/obj/storage/cart,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
