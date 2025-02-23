@@ -12,10 +12,39 @@
 	item_state = "beaker"
 	initial_volume = 50
 	accepts_lid = TRUE
-	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO | ASSEMBLY_NEEDS_MESSAGING
 	object_flags = NO_GHOSTCRITTER
 	fluid_overlay_states = 7
 	container_style = "beaker"
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, PROC_REF(assembly_removal))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL)
+		..()
+
+
+	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/complete/parent_assembly)
+		return " [log_reagents(src)]"
+
+
+	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+		//we need to displace the icon a bit more with beakers than with other items
+		if (is_build_in && parent_assembly.target == src)
+			parent_assembly.icon_base_offset = 4
+
+
+	proc/assembly_removal(var/manipulated_bomb, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+		//we need to reset the base icon offset
+		parent_assembly.icon_base_offset = 0
+
+	/// ----------------------------------------------
 
 	update_icon()
 		. = ..()

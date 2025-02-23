@@ -29,6 +29,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	throw_speed = 4
 	throw_range = 20
 	flags = TABLEPASS | CONDUCT | EXTRADELAY
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	c_flags = ONBELT
 	is_syndicate = FALSE
 	stamina_damage = 0
@@ -38,12 +39,36 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	var/is_dangerous = TRUE
 	var/sound_armed = null
 	var/icon_state_armed = null
-	var/not_in_mousetraps = 0
 	var/issawfly = FALSE //for sawfly remote
 	///damage when loaded into a 40mm convesion chamber
 	var/launcher_damage = 25
 	var/detonating = FALSE
 	HELP_MESSAGE_OVERRIDE({"You can use a <b>screwdriver</b> to adjust the detonation time."})
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+		if(src.is_dangerous)
+			src.flags |= ASSEMBLY_NEEDS_MESSAGING
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+		..()
+
+	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	proc/assembly_setup(var/manipulated_grenade, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+		//since we have a lot of icons for grenades, but not for the assembly, we go, like with old assemblies, just with the custom chem grenade icon
+		parent_assembly.applier_icon_prefix = "chem_grenade"
+
+	proc/assembly_application(var/manipulated_grenade, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
+		src.detonate()
+		qdel(parent_assembly)
+
+	/// ----------------------------------------------
+
 
 	attack_self(mob/user as mob)
 		if (!src.armed)
@@ -816,7 +841,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	icon = 'icons/obj/items/weapons.dmi'
 	desc = "It's a small cast-iron egg-shaped object, with the words \"Pick Me Up\" in gold in it."
 	armed = FALSE
-	not_in_mousetraps = TRUE
+	tool_flags = 0 // No
 	var/old_light_grenade = 0
 	var/destination
 	HELP_MESSAGE_OVERRIDE({""})
@@ -925,6 +950,32 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	var/sound_beep = 'sound/machines/twobeep.ogg'
 	var/is_dangerous = TRUE
 	var/icon_state_armed = null
+	tool_flags = TOOL_ASSEMBLY_APPLIER
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+		..()
+
+	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	proc/assembly_setup(var/manipulated_grenade, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+		//since we have a lot of icons for grenades, but not for the assembly, we go, like with old assemblies, just with the custom chem grenade icon
+		parent_assembly.applier_icon_prefix = "chem_grenade"
+
+	proc/assembly_application(var/manipulated_grenade, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
+		src.detonate()
+		//why the fuck is do gimickbombs only vanish after 15 seconds, what the fuck?
+		parent_assembly.invisibility = INVIS_ALWAYS_ISH
+		SPAWN(15 SECONDS)
+			qdel(parent_assembly)
+
+	/// ----------------------------------------------
 
 	proc/detonate()
 		playsound(src.loc, sound_explode, 45, 1)
@@ -1660,12 +1711,45 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 
 	New()
 		. = ..()
+		//signals for trigger/applier-assembly
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK, PROC_REF(assembly_check))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, PROC_REF(assembly_removal))
 		// unwelded frame + welder -> hollow frame
 		src.AddComponent(/datum/component/assembly, TOOL_WELDING, PROC_REF(pipeframe_welding), FALSE)
 		// unwelded frame + hollow frame -> slamgun
 		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(slamgun_crafting), TRUE)
-		// unwelded frame + mousetrap -> mousetrap roller
-		src.AddComponent(/datum/component/assembly, /obj/item/mousetrap, PROC_REF(mousetrap_roller_crafting), TRUE)
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL)
+		..()
+
+	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	proc/assembly_check(var/manipulated_bomb, var/obj/item/second_part, var/mob/user)
+		if(src.state < 4)
+			boutput(user, "You have to add reagents and wires to the pipebomb before you can add it to an assembly.")
+			return TRUE
+
+	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+		//since in the assembly it functions as a full pipebomb, we change the name accordingly
+		if (src.material)
+			src.name = "[src.material.getName()] pipe bomb"
+		else
+			src.name = "pipe bomb"
+
+
+	proc/assembly_removal(var/manipulated_bomb, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+		//since outside the assembly it  does not function as a full pipebomb, we change the name accordingly
+		if (src.material)
+			src.name = "[src.material.getName()] pipe bomb frame"
+		else
+			src.name = "pipe bomb frame"
+
+	/// ----------------------------------------------
+
 
 	// Pipebomb/shot assembly procs
 
@@ -1705,26 +1789,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		user.put_in_hand_or_drop(new_gun)
 		qdel(to_combine_atom)
 		qdel(src)
-
-	///mousetrap roller crafting proc
-	proc/mousetrap_roller_crafting(var/atom/to_combine_atom, var/mob/user)
-		//This could theoretically be moved to mousetrap and enabled if a bomb is attached.
-		//But you either check if a bomb is attached or if the pipeframe is state 2, so it won't change much
-
-		var/obj/item/mousetrap/checked_trap = to_combine_atom
-
-		// Pies won't do, they require a mob as the target. Obviously, the mousetrap roller is much more
-		// likely to bump into an inanimate object.
-		if (!checked_trap.grenade && !checked_trap.grenade_old && !checked_trap.pipebomb && !checked_trap.gimmickbomb)
-			user.show_text("[checked_trap] must have a grenade or pipe bomb attached first.", "red")
-			return FALSE
-
-		user.u_equip(checked_trap)
-		user.u_equip(src)
-		new /obj/item/mousetrap_roller(get_turf(checked_trap), checked_trap, src)
-		// we don't remove the components here since the frame can be retreived by disassembling the roller
-		// Since the assembly was done, return TRUE
-		return TRUE
 
 	/// Slamgun crafting proc
 	proc/slamgun_crafting(var/atom/to_combine_atom, var/mob/user)

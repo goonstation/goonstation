@@ -48,6 +48,8 @@
 #define CLICK_DELAY_IN_CONTENTS		(1<<22)
 /// If an item cannot be crushed by the crusher
 #define UNCRUSHABLE					(1<<23)
+/// When this item is build into an assembly, this flag will cause it to message an admin
+#define ASSEMBLY_NEEDS_MESSAGING	(1<<24)
 
 //Item function flags
 
@@ -80,6 +82,7 @@
 #define TOOL_CHOPPING  (1<<10) // for fire axes, does additional damage to doors.
 #define TOOL_SOLDERING (1<<11)
 #define TOOL_WIRING    (1<<12)
+#define TOOL_ASSEMBLY_APPLIER (1<<13) // for anything that are useable for assemblies, e.g. igniters & bikehorns
 
 //omnitool flags
 #define OMNI_MODE_PRYING 1
@@ -94,6 +97,19 @@
 #define FLUID_CANISTER_MODE_OFF 1
 #define FLUID_CANISTER_MODE_SLURP 2
 #define FLUID_CANISTER_MODE_PISS 3
+
+//------ States returned on COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE
+
+///The assembly is not secured
+#define ASSEMBLY_TRIGGER_NOT_SECURED -1
+///The assemblies trigger is not activated
+#define ASSEMBLY_TRIGGER_NOT_ACTIVATED 0
+///The assemblies trigger is ready/ticking down
+#define ASSEMBLY_TRIGGER_ARMED 1
+///The assemblies trigger is activated but preparing (e.g. proximity sensor timer ticking down but sensing movement)
+#define ASSEMBLY_TRIGGER_PREPARING 2
+
+//------
 
 //tooltip flags for rebuilding
 
