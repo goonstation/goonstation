@@ -127,6 +127,10 @@ Contains:
 	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ON_OWNER_DEATH, dying_mob)
 
 /obj/item/assembly/complete/receive_signal(datum/signal/signal)
+	if(src.force_dud == TRUE)
+		message_admins("A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [key_name(src.fingerprintslast)]")
+		logTheThing(LOG_BOMBING, null, "A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+		return
 	if(src.override_upstream && src.master)
 		//if we should just relay signals, we do so, no matter where they come from
 		src.master.receive_signal(signal)

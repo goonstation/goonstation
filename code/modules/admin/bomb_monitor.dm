@@ -5,6 +5,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 	var/lists_built = 0
 	var/list/obj/item/device/transfer_valve/TVs = list()
 	var/list/obj/item/canbomb_detonator/dets = list()
+	var/list/obj/item/assembly/complete/bomb_assemblies = list()
 	var/list/obj/item/assembly/proximity_bomb/ST_prox = list()
 	var/list/obj/item/assembly/time_bomb/ST_time = list()
 	var/list/obj/item/assembly/radio_bomb/ST_radio = list()
@@ -38,6 +39,10 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 				ST_time += I
 			else if (istype(I, /obj/item/assembly/radio_bomb/))
 				ST_radio += I
+			else if (istype(I, /obj/item/assembly/complete))
+				var/obj/item/assembly/complete/checked_bomb = I
+				if(istype(checked_bomb.target, /obj/item/tank/plasma))
+					src.bomb_assemblies += I
 			LAGCHECK(LAG_LOW)
 
 		lists_built = 1
@@ -157,6 +162,38 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 						</td>
 						<td>
 							<a href='?src=\ref[src];trigger=\ref[TB]'><B>[TB.part3 ? "Trigger" : ""]</B></a>
+						</td>
+					</tr>"}
+
+
+		for (var/obj/item/assembly/complete/checked_bomb in bomb_assemblies)
+			var/turf/T = get_turf(checked_bomb)
+			if (!T || !isturf(T)) continue
+			var/ref_checked_bomb = "<a href='?src=\ref[src];airmon=\ref[checked_bomb.target]'>[checked_bomb.target]</a>"
+			temp += {"<tr>
+						<td>
+							[checked_bomb.name]
+						</td>
+						<td>
+							[get_area(T)]
+						</td>
+						<td>
+							[showCoords(T.x, T.y, T.z, 0, user.client.holder)]
+						</td>
+						<td>
+							[checked_bomb.target ? ref_checked_bomb : "Nothing"]
+						</td>
+						<td>
+							[checked_bomb.trigger ? checked_bomb.trigger : "Nothing"]
+						</td>
+						<td>
+							[checked_bomb.fingerprintslast ? checked_bomb.fingerprintslast : "N/A"]
+						</td>
+						<td>
+							<a href='?src=\ref[src];toggle_dud=\ref[checked_bomb]'>[checked_bomb.force_dud ? SPAN_ALERT("YES") : "No"]</a>
+						</td>
+						<td>
+							<a href='?src=\ref[src];trigger=\ref[checked_bomb]'><B>[checked_bomb.target ? "Trigger" : ""]</B></a>
 						</td>
 					</tr>"}
 
@@ -308,7 +345,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 				boutput(usr, SPAN_ALERT("Unable to locate the object (it's been deleted, somehow. Explosion, probably)."))
 				return
 
-			if (istype(I, /obj/item/canbomb_detonator) || istype(I, /obj/item/device/transfer_valve) || istype(I, /obj/item/assembly/proximity_bomb) || istype(I, /obj/item/assembly/time_bomb/) || istype(I, /obj/item/assembly/radio_bomb/))
+			if (istype(I, /obj/item/canbomb_detonator) || (istype(I, /obj/assembly/complete) || istype(I, /obj/item/device/transfer_valve) || istype(I, /obj/item/assembly/proximity_bomb) || istype(I, /obj/item/assembly/time_bomb/) || istype(I, /obj/item/assembly/radio_bomb/)))
 				I:force_dud = !I:force_dud
 				display_ui(usr)
 				message_admins("[key_name(usr)] made \the [I] [I:force_dud ? "into a dud" : "able to explode again"] at [log_loc(I)].")
@@ -350,6 +387,9 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 			else if (istype(I, /obj/item/assembly/time_bomb/))
 				var/obj/item/assembly/time_bomb/TB = I
 				TB.part3.ignite()
+			else if (istype(I, /obj/item/assembly/complete))
+				var/obj/item/assembly/complete/checked_bomb = I
+				SEND_SIGNAL(checked_bomb.applier, COMSIG_ITEM_ASSEMBLY_APPLY, checked_bomb, checked_bomb.target)
 			else if (istype(I, /obj/item/assembly/radio_bomb/))
 				var/obj/item/assembly/radio_bomb/RB = I
 				RB.part3.ignite()
