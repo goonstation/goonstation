@@ -552,7 +552,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 
 		if (!src.power_in_use)
 			if (src.ship.powercapacity < (src.ship.powercurrent + src.power_used))
-				boutput(src.ship.pilot, "[src.ship.ship_message("Not enough power to activate [src]!")]")
+				boutput(src.ship.pilot, "[src.ship.ship_message("Not enough power to activate [src]! ([ship.powercurrent + power_used]/[ship.powercapacity])")]")
 				return FALSE
 			src.ship.powercurrent += src.power_used
 			src.active = TRUE
