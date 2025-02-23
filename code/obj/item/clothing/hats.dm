@@ -1002,6 +1002,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 						user.drop_item(src, FALSE)
 					random_burn_damage(user, 2)
 					playsound(user.loc, 'sound/impact_sounds/burn_sizzle.ogg', 40, 1)
+					user.add_karma(-2)
 					return
 			src.color = W.customization_first_color
 			src.UpdateIcon()
