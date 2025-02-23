@@ -718,8 +718,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	invisibility = INVIS_INFRA
 
 	shot_sound = null
-	goes_through_walls = 1
-	goes_through_mobs = 1
+	goes_through_walls = TRUE
+	goes_through_mobs = TRUE
+	goes_through_singulo = TRUE
 	smashes_glasses = FALSE
 
 	silentshot = 1
