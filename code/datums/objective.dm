@@ -1079,6 +1079,27 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		else
 			return 0
 
+/datum/objective/specialist/phoenix_collect_humans
+	explanation_text = "Collect 5 dead humans in your nest."
+
+	check_completion()
+		var/mob/living/critter/ice_phoenix/phoenix = src.owner.current
+		return length(phoenix?.collected_humans) >= 5
+
+/datum/objective/specialist/phoenix_collect_critters
+	explanation_text = "Collect 5 dead critters in your nest."
+
+	check_completion()
+		var/mob/living/critter/ice_phoenix/phoenix = src.owner.current
+		return length(phoenix?.collected_critters) >= 5
+
+/datum/objective/specialist/phoenix_permafrost_areas
+	explanation_text= "Use Permafrost on 5 station areas."
+
+	check_completion()
+		var/mob/living/critter/ice_phoenix/phoenix = src.owner.current
+		return length(phoenix?.permafrosted_areas) >= 5
+
 /////////////////////////////
 // Round-ending objectives //
 /////////////////////////////
