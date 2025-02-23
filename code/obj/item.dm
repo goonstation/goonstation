@@ -1814,3 +1814,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 ///This will be called when the item is build into a /obj/item/assembly on get_help_message()
 /obj/item/proc/assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/complete/parent_assembly)
 	return
+
+///This will be called when the item is build into a /obj/item/assembly on get_admin_log_message(). Use this for additional information for logging.
+/obj/item/proc/assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/complete/parent_assembly)
+	return
+

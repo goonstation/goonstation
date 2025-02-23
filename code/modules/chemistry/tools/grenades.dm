@@ -47,6 +47,8 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 	src.initialize_assemby()
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+	if(src.is_dangerous)
+		src.flags |= ASSEMBLY_NEEDS_MESSAGING
 
 /obj/item/chem_grenade/disposing()
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
@@ -54,6 +56,13 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 	..()
 
 /// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+/obj/item/chem_grenade/assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/complete/parent_assembly)
+	var/reagents_to_log = null
+	for (var/obj/item/reagent_containers/glass/checked_beaker in src.beakers)
+		if (checked_beaker.reagents.total_volume) reagents_to_log += "[log_reagents(checked_beaker)] "
+	if (reagents_to_log)
+		return " [reagents_to_log]"
 
 /obj/item/chem_grenade/proc/assembly_setup(var/manipulated_grenade, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
 	//since we have a lot of icons for chem grenades, but not for the assembly, we go, like with old assemblies, just with the custom chem grenade icon

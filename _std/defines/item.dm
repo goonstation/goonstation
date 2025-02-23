@@ -48,6 +48,8 @@
 #define CLICK_DELAY_IN_CONTENTS		(1<<22)
 /// If an item cannot be crushed by the crusher
 #define UNCRUSHABLE					(1<<23)
+/// When this item is build into an assembly, this flag will cause it to message an admin
+#define ASSEMBLY_NEEDS_MESSAGING	(1<<24)
 
 //Item function flags
 

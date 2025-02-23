@@ -12,7 +12,7 @@
 	item_state = "beaker"
 	initial_volume = 50
 	accepts_lid = TRUE
-	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO | ASSEMBLY_NEEDS_MESSAGING
 	object_flags = NO_GHOSTCRITTER
 	fluid_overlay_states = 7
 	container_style = "beaker"
@@ -29,6 +29,9 @@
 
 
 	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/complete/parent_assembly)
+		return " [log_reagents(src)]"
 
 
 	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)

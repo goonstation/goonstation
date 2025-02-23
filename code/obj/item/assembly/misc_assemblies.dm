@@ -106,6 +106,22 @@ Contains:
 	else
 		return ASSEMBLY_TRIGGER_NOT_SECURED
 
+/// returns TRUE if the assembly has anything that condemns it worth to be logged
+/obj/item/assembly/complete/proc/requires_admin_messaging()
+	var/value_to_return = FALSE
+	if(src.target)
+		value_to_return = (value_to_return | HAS_FLAG(src.target.flags, ASSEMBLY_NEEDS_MESSAGING))
+	return (value_to_return | HAS_FLAG(src.trigger.flags, ASSEMBLY_NEEDS_MESSAGING) | HAS_FLAG(src.applier.flags, ASSEMBLY_NEEDS_MESSAGING))
+
+///this goes over every component of the assembly and checks if admins need additional informations about these.
+/obj/item/assembly/complete/proc/get_additional_logging_information(var/mob/user)
+	var/information_to_return = ""
+	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
+		var/information_to_add = affected_item.assembly_get_admin_log_message(user, src)
+		if(information_to_add)
+			information_to_return += " [affected_item]:[information_to_add];"
+	return information_to_return
+
 /obj/item/assembly/complete/proc/get_trigger_time_left(var/affected_assembly)
 	//we relay the signal to the trigger, in case of mousetraps
 	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT, src)
@@ -139,6 +155,11 @@ Contains:
 	if (src.secured && (signal && signal.source != src.applier))
 		for(var/mob/O in hearers(1, src.loc))
 			O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
+		//Some Admin logging/messaging
+		logTheThing(LOG_BOMBING, src.last_armer, "A [src.name] was activated at [log_loc(src)]. Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"];[src.get_additional_logging_information(src.last_armer)]")
+		if(src.requires_admin_messaging())
+			message_admins("A [src.name] was activated at [log_loc(src)]. Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+		//now lets blow some shit up
 		SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_APPLY, src, src.target)
 
 
@@ -244,6 +265,10 @@ Contains:
 		//if the assembly is secured, we activate that thing
 		if (SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ACTIVATION, src, user))
 			boutput(user, SPAN_NOTICE("You activate the [src.trigger.name] on the [src.name]."))
+			//Some Admin logging/messaging
+			logTheThing(LOG_BOMBING, user, "A [src.name] was armed at [log_loc(src)]. Armed by: [key_name(user)];[src.get_additional_logging_information(user)]")
+			if(src.requires_admin_messaging())
+				message_admins("A [src.name] was armed at [log_loc(src)]. Armed by: [key_name(user)]")
 	else
 		//if the assembly is unsecured, we enable modification on that thing
 		SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_MANIPULATION, src, user)
@@ -400,6 +425,10 @@ Contains:
 	//Last but not least, we update our icon, w_class and name
 	src.UpdateIcon()
 	src.UpdateName()
+	//Some Admin logging/messaging
+	logTheThing(LOG_BOMBING, user, "A [src.name] was created at [log_loc(src)]. Created by: [key_name(user)];[src.get_additional_logging_information(user)]")
+	if(src.requires_admin_messaging())
+		message_admins("A [src.name] was created at [log_loc(src)]. Created by: [key_name(user)]")
 	// Since the assembly was done, return TRUE
 	return TRUE
 
@@ -454,6 +483,10 @@ Contains:
 	var/obj/item/mousetrap_roller/new_roller = new /obj/item/mousetrap_roller(get_turf(user), src, to_combine_atom)
 	new_roller.name = "roller/[src.name]" // Roller/mousetrap/igniter/plutonium 239-pipebomb-assembly, gotta love those names
 	user.put_in_hand_or_drop(new_roller)
+	//Some Admin logging/messaging
+	logTheThing(LOG_BOMBING, user, "A [new_roller.name] was created at [log_loc(src)]. Created by: [key_name(user)];[src.get_additional_logging_information(user)]")
+	if(src.requires_admin_messaging())
+		message_admins("A [new_roller.name] was created at [log_loc(src)]. Created by: [key_name(user)]")
 	// we don't remove the components here since the frame and assembly can be retreived by disassembling the roller
 	// Since the assembly was done, return TRUE
 	return TRUE
@@ -470,6 +503,10 @@ Contains:
 	to_combine_atom.add_fingerprint(user)
 	var/obj/item/clothing/suit/armor/suicide_bomb/new_suicide_vest = new /obj/item/clothing/suit/armor/suicide_bomb(get_turf(user), src, to_combine_atom)
 	user.put_in_hand_or_drop(new_suicide_vest)
+	//Some Admin logging/messaging
+	logTheThing(LOG_BOMBING, user, "A [new_suicide_vest.name] was created at [log_loc(src)]. Created by: [key_name(user)];[src.get_additional_logging_information(user)]")
+	if(src.requires_admin_messaging())
+		message_admins("A [new_suicide_vest.name] was created at [log_loc(src)]. Created by: [key_name(user)]")
 	// we don't remove the components here since the frame and assembly can be retreived by disassembling the roller
 	// Since the assembly was done, return TRUE
 	return TRUE

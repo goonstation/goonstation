@@ -49,6 +49,8 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 		..()
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+		if(src.is_dangerous)
+			src.flags |= ASSEMBLY_NEEDS_MESSAGING
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)

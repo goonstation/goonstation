@@ -104,6 +104,10 @@ TYPEINFO(/datum/component/assembly)
 	var/obj/item/assembly/complete/product = new /obj/item/assembly/complete(get_turf(src.parent))
 	//we set up the new assembly with its corresponding proc
 	product.set_up_new(user, src.parent, checked_atom)
+	//Some Admin logging/messaging
+	logTheThing(LOG_BOMBING, user, "A [product.name] was created at [log_loc(product)]. Created by: [key_name(user)];[product.get_additional_logging_information(user)]")
+	if(product.requires_admin_messaging())
+		message_admins("A [product.name] was created at [log_loc(product)]. Created by: [key_name(user)]")
 	//we finished the assembly, now we give it to its proud new owner
 	product.add_fingerprint(user)
 	user.put_in_hand_or_drop(product)

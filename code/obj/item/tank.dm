@@ -585,6 +585,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	desc = "This heavy orange gas tank is used to contain toxic, volatile plasma. You can technically breathe from it, but you probably shouldn't without a very good reason."
 	icon_state = "plasma"
 	item_state = "plasma"
+	flags = /obj/item/tank::flags | ASSEMBLY_NEEDS_MESSAGING
 
 	New()
 		..()
@@ -597,6 +598,9 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 		..()
 
 	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/complete/parent_assembly)
+		return " [log_atmos(src)]"
 
 	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
 		//we need to add the new icon for the plasma tank
