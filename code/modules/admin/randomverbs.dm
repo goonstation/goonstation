@@ -1,9 +1,10 @@
 /verb/restart_the_fucking_server_i_mean_it()
 	set name = "Emergency Restart"
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	if(config.update_check_enabled)
-		world.installUpdate()
-	world.Reboot()
+	if (world.installUpdate())
+		Shutdown_server()
+	else
+		world.Reboot()
 
 /client/proc/rebuild_flow_networks()
 	set name = "Rebuild Flow Networks"
@@ -3201,6 +3202,16 @@ var/global/force_radio_maptext = FALSE
 		var/amount = tgui_input_number(src, "Please select reagent amount:", "Reagent Amount", 1, container.reagents.maximum_volume, 1)
 		container.reagents.add_reagent("custom_transmutation", amount, sdata=matId)
 	usr.put_in_hand_or_drop(container)
+
+/client/proc/show_mining_map()
+	set name = "Show Mining Map"
+	set desc = "Show the Z5 Mining Zlevel map."
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if (usr.client && hotspot_controller)
+		hotspot_controller.show_map(usr.client)
 
 #undef ARTIFACT_BULK_LIMIT
 #undef ARTIFACT_HARD_LIMIT

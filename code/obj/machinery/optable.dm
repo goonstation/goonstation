@@ -75,8 +75,6 @@ TYPEINFO(/obj/machinery/optable)
 
 /obj/machinery/optable/attackby(obj/item/W, mob/user)
 	if (issilicon(user)) return
-	if (istype(W, /obj/item/electronics/scanner)) return // hack
-	if (istype(W, /obj/item/deconstructor)) return //deconstruct_flags
 	if (istype(W, /obj/item/grab))
 		if(ismob(W:affecting))
 			var/mob/M = W:affecting

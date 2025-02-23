@@ -128,15 +128,10 @@
 		.= 1
 
 	set_broken()
-		if (status & BROKEN)
-			return
-		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-		smoke.set_up(5, 0, src)
-		smoke.start()
+		. = ..()
+		if (.) return
 		src.go_out()
 		icon_state = "PAG_broken"
-		light.disable()
-		status |= BROKEN
 
 	attack_hand(mob/user)
 		if (src.status & BROKEN)

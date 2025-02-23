@@ -659,16 +659,6 @@ TYPEINFO(/obj/stool/chair)
 			butt_img.icon_state = "chair_[has_butt.icon_state]"
 			UpdateOverlays(butt_img, "chairbutt")
 			return
-		if (istype(W, /obj/item/assembly/shock_kit))
-			var/obj/stool/chair/e_chair/E = new /obj/stool/chair/e_chair(src.loc, W)
-			if (src.material)
-				E.setMaterial(src.material)
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			W.set_loc(E)
-			user.u_equip(W)
-			W.layer = initial(W.layer)
-			qdel(src)
-			return
 		else
 			return ..()
 

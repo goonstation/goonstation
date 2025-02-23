@@ -118,7 +118,7 @@
 		var/Px = Sx + sin(P.angle) * dist
 		var/Py = Sy + cos(P.angle) * dist
 
-		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,0,"HalfStartRailG","HalfEndRailG",OBJ_LAYER, 0, Sx, Sy, Px, Py)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,0,"HalfStartRailG","HalfEndRailG",OBJ_LAYER, 0, Sx, Sy, Px, Py)
 		for(var/obj/O in affected)
 			O.color = list(1,2.30348,-4.4382,0,0,1.96078,0,-1.3074,3.46173)
 			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
@@ -171,7 +171,7 @@
 		var/Px = Sx + sin(P.angle) * dist
 		var/Py = Sy + cos(P.angle) * dist
 
-		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,0,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0, Sx, Sy, Px, Py)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,0,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0, Sx, Sy, Px, Py)
 		for(var/obj/O in affected)
 			O.color = list(-0.8, 0, 0, 0, -0.8, 0, 0, 0, -0.8, 1.5, 1.5, 1.5)
 			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
@@ -201,7 +201,7 @@
 		. = ..()
 		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
 		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
-		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
 		for(var/obj/O in affected)
 			O.alpha = 0
 			O.color = "#ff0000"
@@ -241,7 +241,7 @@
 		. = ..()
 		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
 		var/obj/railgun_trg_dummy/end = new(get_turf(P))
-		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
 		for(var/obj/O in affected)
 			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
 		SPAWN(1 SECOND)
@@ -864,7 +864,7 @@ TYPEINFO(/obj/item/device/geiger)
 		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
 		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
 
-		var/list/affected = DrawLine(start, end, /obj/line_obj/timeshot ,'icons/obj/projectiles.dmi',"WholeRailG",1,0,"HalfStartRailG","HalfEndRailG",OBJ_LAYER, 0)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/timeshot ,'icons/obj/projectiles.dmi',"WholeRailG",1,0,"HalfStartRailG","HalfEndRailG",OBJ_LAYER, 0)
 		var/datum/theBulletThatShootsTheFutureController/controller = new(affected, start, end, P.shooter, P.mob_shooter, followup)
 		for(var/obj/line_obj/timeshot/ts in affected)
 			ts.controller = controller
@@ -997,7 +997,7 @@ TYPEINFO(/obj/item/device/geiger)
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer/bad
 	can_swap_cell = 0
-	color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
+	color = COLOR_MATRIX_INVERSE
 
 	New()
 		set_current_projectile(new/datum/projectile/special/timegun/theBulletThatShootsTheFuture)
