@@ -270,6 +270,17 @@
 	icon_state = "assult-laser"
 	muzzle_flash = "muzzle_flash_laser"
 
+/obj/item/shipcomponent/mainweapon/hammer_railgun
+	name = "Hammerhead Railgun"
+	desc = "A powerful wall-piercing railgun designed for siege operations."
+	firerate = 5 SECONDS
+	power_used = 100
+	current_projectile = new/datum/projectile/bullet/hammer_railgun
+	weapon_score = 1.5
+	appearanceString = "pod_weapon_hammer_railgun"
+	icon_state = "hammer_railgun"
+	muzzle_flash = "muzzle_flash_launch"
+
 /obj/item/shipcomponent/mainweapon/rockdrills
 	name = "Rock Drilling Rig"
 	desc = "A sturdy drill designed for chewing up asteroids like nobodies business."
