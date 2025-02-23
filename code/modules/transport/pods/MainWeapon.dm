@@ -177,6 +177,15 @@
 	muzzle_flash = "muzzle_flash_laser"
 
 
+/obj/item/shipcomponent/mainweapon/maser
+	name = "Syndicate Maser Device"
+	desc = "A microwave beam weapon that bypasses pod armor to directly damage the pilot. Quite nasty."
+	weapon_score = 0.4
+	appearanceString = "pod_weapon_maser"
+	current_projectile = new/datum/projectile/laser/light/maser/pod
+	icon_state = "maser"
+	muzzle_flash = null
+
 /obj/item/shipcomponent/mainweapon/russian
 	name = "Svet-Oruzhiye Mk.4"
 	weapon_score = 0.6

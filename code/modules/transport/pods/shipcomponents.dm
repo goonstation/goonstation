@@ -38,7 +38,7 @@
 
 ///What the component does when activated
 ///Returns 1 if successful
-/obj/item/shipcomponent/proc/activate()
+/obj/item/shipcomponent/proc/activate(give_online_message = TRUE)
 	if(src.active == 1 || !ship)//NYI find out why ship is null
 		return FALSE
 	if(ship.powercapacity < (ship.powercurrent + power_used))
@@ -54,9 +54,10 @@
 			return FALSE
 
 	src.active = 1
-	for(var/mob/M in src.ship)
-		boutput(M, "[ship.ship_message("[src] is coming online...")]")
-		mob_activate(M)
+	if (give_online_message)
+		for(var/mob/M in src.ship)
+			boutput(M, "[ship.ship_message("[src] is coming online...")]")
+			mob_activate(M)
 	if (src.ship.myhud)
 		src.ship.myhud.update_states()
 	return TRUE
@@ -66,13 +67,14 @@
 	return
 
 ///What the component does when deactived
-/obj/item/shipcomponent/proc/deactivate()
+/obj/item/shipcomponent/proc/deactivate(give_message = TRUE)
 	if(src.active == 0)
 		return
 	src.active = 0
 	ship.powercurrent -= power_used
 	for(var/mob/M in src.ship)
-		boutput(M, "[ship.ship_message("[src] is shutting down...")]")
+		if (give_message)
+			boutput(M, "[ship.ship_message("[src] is shutting down...")]")
 		mob_deactivate(M)
 	src.ship.myhud.update_states()
 	return

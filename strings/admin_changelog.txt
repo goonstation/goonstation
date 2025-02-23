@@ -1,3 +1,6 @@
+(t)fri feb 21 25
+(u)Sovexe
+(*)Built out the betting booth system with safeties, bug fixes, and helper procs. Simply spawn two or more /obj/betting_booth and admin interact setup betting to get started with your gambling event!
 (t)sun feb 09 25
 (u)Sovexe
 (*)Added a "View Admin Minimap" verb to allow admins easy access to the observer minimap at any time.

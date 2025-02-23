@@ -94,7 +94,7 @@
 	health = 125
 	maxhealth = 125
 	weapon_class = 1
-	speed = 0.9
+	speedmod = 1.11
 	var/image/damaged = null
 	var/busted = 0
 
@@ -186,7 +186,7 @@
 	health = 250
 	maxhealth = 250
 	armor_score_multiplier = 0.7
-	speed = 0.8
+	speedmod = 1.25
 	acid_damage_multiplier = 0
 	faction = list(FACTION_SYNDICATE)
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
@@ -225,7 +225,7 @@
 	health = 250
 	maxhealth = 250
 	armor_score_multiplier = 0.7
-	speed = 0.8
+	speedmod = 1.25
 
 	security
 		init_comms_type = /obj/item/shipcomponent/communications/security
@@ -256,7 +256,7 @@
 	armor_score_multiplier = 0.8
 	health = 275
 	maxhealth = 275
-	speed = 1.3
+	speedmod = 0.77
 	desc = "A smaller version of the I-class industrial pod, the IndyPutt is useful for emergency repair work and small-scale mining operations."
 
 	armed
@@ -276,7 +276,7 @@
 	armor_score_multiplier = 1.7
 	health = 400
 	maxhealth = 400
-	speed = 1
+	speedmod = 1
 	desc = "A smaller version of the experimental Y-series of pods."
 
 ////////gold putt
@@ -284,7 +284,7 @@
 	name = "PyriPutt-"
 	icon_state = "putt_gold"
 	armor_score_multiplier = 0.6
-	speed = 0.2
+	speedmod = 5
 	desc = "A light, high-speed MiniPutt with a gold-plated armor installed. Who the hell has this kind of money and this little sense?"
 
 ////////strange putt
@@ -304,7 +304,7 @@
 	icon_state = "putt_raceBlue"
 	health = 150
 	maxhealth = 150
-	speed = 0.8
+	speedmod = 1.25
 	init_comms_type = /obj/item/shipcomponent/communications/security
 
 /obj/machinery/vehicle/miniputt/nt_robust
@@ -314,7 +314,7 @@
 	icon_state = "putt_nt_robust"
 	health = 350
 	maxhealth = 350
-	speed = 0.6
+	speedmod = 1.67
 	init_comms_type = /obj/item/shipcomponent/communications/security
 
 /obj/machinery/vehicle/miniputt/sy_light
@@ -324,7 +324,7 @@
 	icon_state = "putt_raceRed_alt"
 	health = 150
 	maxhealth = 150
-	speed = 0.8
+	speedmod = 1.25
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 /obj/machinery/vehicle/miniputt/sy_robust
@@ -334,7 +334,7 @@
 	icon_state = "putt_sy_robust"
 	health = 350
 	maxhealth = 350
-	speed = 0.6
+	speedmod = 1.67
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 //pod wars end//
 
@@ -814,15 +814,18 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	bound_height = 64
 	view_offset_x = 16
 	view_offset_y = 16
+	speedmod = 0.9
 	//luminosity = 5 // will help with space exploration
 	var/maxboom = 0
 
 	onMaterialChanged()
+		if (src.material)
+			src.speedmod /= (1 / (1 - (src.material.getProperty("electrical") - 5) / 15))
 		..()
 		if(istype(src.material))
 			src.maxhealth = max(75, src.material.getProperty("density") * 40)
 			src.health = maxhealth
-			src.speed = 1 - (src.material.getProperty("electrical") - 5) / 15
+			src.speedmod *= (1 / 1 - (src.material.getProperty("electrical") - 5) / 15)
 		return
 
 	attackby(obj/item/W, mob/living/user)
@@ -944,7 +947,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	desc = "A light, high-speed vehicle pod often used by underground pod racing clubs and people with more money than sense."
 	icon_state = "pod_gold"
 	armor_score_multiplier = 0.4
-	speed = 0.3
+	speedmod = 3.33
 
 /obj/machinery/vehicle/pod_smooth/heavy // pods made with reinforced armor
 	name = "Pod T-"
@@ -953,7 +956,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon_state = "pod_mil"
 	health = 500
 	maxhealth = 500
-	speed = 0.9
+	speedmod = 1.11
 
 	security
 		init_comms_type = /obj/item/shipcomponent/communications/security
@@ -965,7 +968,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon_state = "pod_synd"
 	health = 500
 	maxhealth = 500
-	speed = 0.9
+	speedmod = 1.11
 	acid_damage_multiplier = 0
 	faction = list(FACTION_SYNDICATE)
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
@@ -1007,7 +1010,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon_state = "pod_pre"
 	health = 800
 	maxhealth = 800
-	speed = 1.2
+	speedmod = 0.83
 
 /obj/machinery/vehicle/pod_smooth/industrial
 	name = "Pod I-"
@@ -1016,7 +1019,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon_state = "pod_industrial"
 	health = 550
 	maxhealth = 550
-	speed = 1.5
+	speedmod = 0.67
 	capacity = 4
 
 /obj/machinery/vehicle/pod_smooth/industrial/nadir
@@ -1040,7 +1043,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon_state = "pod_raceBlue"
 	health = 250
 	maxhealth = 250
-	speed = 0.9
+	speedmod = 1.11
 	init_comms_type = /obj/item/shipcomponent/communications
 
 /obj/machinery/vehicle/pod_smooth/nt_robust
@@ -1050,7 +1053,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon_state = "pod_nt_robust"
 	health = 500
 	maxhealth = 500
-	speed = 0.8
+	speedmod = 1.25
 	init_comms_type = /obj/item/shipcomponent/communications
 
 /obj/machinery/vehicle/pod_smooth/sy_light
@@ -1060,7 +1063,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon_state = "pod_raceRed"
 	health = 250
 	maxhealth = 250
-	speed = 0.9
+	speedmod = 1.11
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 /obj/machinery/vehicle/pod_smooth/sy_robust
@@ -1070,7 +1073,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon_state = "pod_sy_robust"
 	health = 500
 	maxhealth = 500
-	speed = 0.8
+	speedmod = 1.25
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 //pod wars end//
 
@@ -1450,7 +1453,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	health = 60
 	maxhealth = 60
 	weapon_class = 1
-	speed = 5
+	speedmod = 0.2
 	var/fail_type = 0
 	var/launched = 0
 	var/steps_moved = 0
