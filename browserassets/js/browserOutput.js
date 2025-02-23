@@ -416,7 +416,7 @@ function ehjaxCallback(data) {
 
         //server is shutting down before restarting
         if (data == 'hardrestart' || data == 'updaterestart') {
-			output('<div class="internal boldnshit"><a href="byond://winset?command=.reconnect" class="reconnectClient">Click here to manually reconnect</a></div>');
+			output('<div class="internal boldnshit"><a href="#" class="reconnectClient">Click here to manually reconnect</a></div>');
             opts.reconnectTimeout = setTimeout(function() {
 				runByond('byond://winset?command=.reconnect');
             }, 30000); //30 seconds
