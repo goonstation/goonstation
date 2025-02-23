@@ -552,7 +552,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 
 		if (!src.power_in_use)
 			if (src.ship.powercapacity < (src.ship.powercurrent + src.power_used))
-				boutput(src.ship.pilot, "[src.ship.ship_message("Not enough power to activate [src]!")]")
+				boutput(src.ship.pilot, "[src.ship.ship_message("Not enough power to activate [src]! ([ship.powercurrent + power_used]/[ship.powercapacity])")]")
 				return FALSE
 			src.ship.powercurrent += src.power_used
 			src.active = TRUE
@@ -1440,3 +1440,87 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 
 	deactivate()
 		return
+/obj/item/shipcomponent/secondary_system/weapons_loader
+	name = "Weapons Loader"
+	desc = "An automatic weapon loading system that quickly swaps a stored weapon with the ship's main weapon."
+	icon_state = "weapons_loader-unloaded"
+	help_message = "Attack with a pod weapon to load it in. Use in-hand to eject the loaded weapon."
+	hud_state = "weapon-swap"
+	f_active = TRUE
+	var/obj/item/shipcomponent/mainweapon/loaded_wep = null
+
+	Use(mob/user)
+		src.activate(user)
+
+	toggle()
+		src.activate()
+
+	activate()
+		. = ..(FALSE)
+		src.active = FALSE
+		if (!.)
+			return
+
+		if (!src.loaded_wep && !src.ship.m_w_system)
+			return
+
+		if (src.loaded_wep && GET_COOLDOWN(src.loaded_wep, "fire") || src.ship.m_w_system && GET_COOLDOWN(src.ship.m_w_system, "fire"))
+			boutput(src.ship.pilot, "[src.ship.ship_message("[src] must wait for all weapons to be off cooldown to work!")]")
+			return
+
+		for (var/mob/M in src.ship)
+			if (src.loaded_wep && src.ship.m_w_system)
+				boutput(M, "[src.ship.ship_message("[src.ship.m_w_system] has been swapped out for [src.loaded_wep].")]")
+			else if (src.ship.m_w_system)
+				boutput(M, "[src.ship.ship_message("[src.ship.m_w_system] has been swapped out.")]")
+			else
+				boutput(M, "[src.ship.ship_message("[src.loaded_wep] has been swapped in.")]")
+
+		var/obj/item/shipcomponent/mainweapon/weapon = src.ship?.m_w_system
+		if (istype(weapon))
+			src.ship.eject_part(weapon, FALSE)
+			src.ship.null_part(weapon)
+		var/obj/item/shipcomponent/mainweapon/stored_weapon = src.loaded_wep
+		if (stored_weapon)
+			stored_weapon.ship = src.ship // prevents a bug in activate()
+			src.ship.Install(stored_weapon, FALSE)
+			src.loaded_wep = null
+			src.UpdateIcon()
+		if (istype(weapon))
+			src.loaded_wep = weapon
+			src.loaded_wep.set_loc(src)
+			src.UpdateIcon()
+
+		src.ship.myhud.update_systems()
+
+	attack_self(mob/user)
+		src.eject_wep(user)
+
+	attack_hand(mob/user)
+		if (!src.loaded_wep || src.loc != user)
+			return ..()
+		src.eject_wep(user)
+
+	proc/eject_wep(mob/user)
+		if (!src.loaded_wep)
+			return
+		src.loaded_wep.set_loc(get_turf(src))
+		user.put_in_hand_or_drop(src.loaded_wep)
+		src.loaded_wep = null
+		src.UpdateIcon()
+
+	attackby(obj/item/W, mob/user, params)
+		..()
+		if (src.loaded_wep)
+			return
+		if (!istype(W, /obj/item/shipcomponent/mainweapon))
+			return
+		user.drop_item(W)
+		src.loaded_wep = W
+		src.loaded_wep.set_loc(src)
+		src.UpdateIcon()
+		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, FALSE)
+
+	update_icon()
+		..()
+		src.icon_state = "weapons_loader-[src.loaded_wep ? "loaded" : "unloaded"]"
