@@ -17,6 +17,10 @@ if [[ -v SS13_ID ]]; then
 	fi
 fi
 
+if [ -f data/hard-reboot ]; then
+	rm data/hard-reboot
+fi
+
 # Apply updates
 bash tools/server/update.sh
 

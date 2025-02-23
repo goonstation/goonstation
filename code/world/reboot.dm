@@ -127,18 +127,18 @@ var/reboot_file_path = "data/restarting"
 		doShutdown = TRUE
 		#endif
 
-	//if the server has a hard-reboot file, we trigger a shutdown (server supervisor process will restart the server after)
-	//this is to avoid memory leaks from leaving the server running for long periods
-	if (fexists("data/hard-reboot"))
-		//Tell client browserOutput that we're hard rebooting, so it can handle manual auto-reconnection
-		ehjax.sendAll(clients, "browseroutput", "hardrestart")
-		logTheThing(LOG_DIARY, null, "Hard reboot file detected, triggering shutdown instead of reboot.", "debug")
-		message_admins("Hard reboot file detected, triggering shutdown instead of reboot. (The server will auto-restart don't worry)")
-		fdel("data/hard-reboot")
-		doShutdown = TRUE
-	else
-		//Tell client browserOutput that a restart is happening RIGHT NOW
-		ehjax.sendAll(clients, "browseroutput", "roundrestart")
+	if (!doShutdown)
+		//if the server has a hard-reboot file, we trigger a shutdown (server supervisor process will restart the server after)
+		//this is to avoid memory leaks from leaving the server running for long periods
+		if (fexists(global.hardRebootFilePath))
+			//Tell client browserOutput that we're hard rebooting, so it can handle manual auto-reconnection
+			ehjax.sendAll(clients, "browseroutput", "hardrestart")
+			logTheThing(LOG_DIARY, null, "Hard reboot file detected, triggering shutdown instead of reboot.", "debug")
+			message_admins("Hard reboot file detected, triggering shutdown instead of reboot. (The server will auto-restart don't worry)")
+			doShutdown = TRUE
+		else
+			//Tell client browserOutput that a restart is happening RIGHT NOW
+			ehjax.sendAll(clients, "browseroutput", "roundrestart")
 
 	if (doShutdown)
 		Shutdown_server()

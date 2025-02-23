@@ -419,7 +419,7 @@ function ehjaxCallback(data) {
 			output('<div class="internal boldnshit"><a href="byond://winset?command=.reconnect" class="reconnectClient">Click here to manually reconnect</a></div>');
             opts.reconnectTimeout = setTimeout(function() {
 				runByond('byond://winset?command=.reconnect');
-            }, 60000); //1 minute
+            }, 30000); //30 seconds
         }
     } else if (data == 'stopaudio') {
         $('.dectalk').remove();
