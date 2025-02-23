@@ -27,7 +27,6 @@ TYPEINFO(/obj/item/device/multitool)
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, PROC_REF(assembly_target_addition))
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION, PROC_REF(assembly_component_addition))
-		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_HELP_MESSAGE, PROC_REF(assembly_help_message))
 
 	disposing()
 		. = ..()
@@ -35,7 +34,6 @@ TYPEINFO(/obj/item/device/multitool)
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION)
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION)
-		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_HELP_MESSAGE)
 
 
 	grey
@@ -59,7 +57,7 @@ TYPEINFO(/obj/item/device/multitool)
 
 /// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
 
-/obj/item/device/multitool/proc/assembly_help_message(var/manipulated_multitool, var/obj/item/assembly/complete/parent_assembly)
+/obj/item/device/multitool/assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/complete/parent_assembly)
 	if(!parent_assembly.target)
 		return " You can add a plasma tank onto this assembly in order to modify it further."
 	if(parent_assembly.special_construction_identifier == "canbomb")
@@ -72,7 +70,8 @@ TYPEINFO(/obj/item/device/multitool)
 			return " You can use this on a canister to build a canbomb. You can use other items, like a signaler or atmospheric scanner, to modify this further"
 		return " You can use 6 units of cable coils to continue to the construction of the canbomb detonator"
 	// there is a target, the only one able at this point is the plasma tank
-	return " You can use an igniter to start the assembly of a canbomb detonator."
+	if(istype(parent_assembly.trigger, /obj/item/device/timer))
+		return " You can use an igniter to start the assembly of a canbomb detonator."
 
 
 /obj/item/device/multitool/proc/assembly_setup(var/manipulated_multitool, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)

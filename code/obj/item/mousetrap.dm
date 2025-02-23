@@ -45,6 +45,9 @@
 
 /// ----------- Assembly-Related Procs -----------
 
+	assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/complete/parent_assembly)
+		return " You can add this to a non-welded pipe frame in order to craft a mousetrap roller-assembly."
+
 	proc/assembly_manipulation(var/manipulated_mousetrap, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
 		if(src.armed)
 			src.toggle_armed(user)
@@ -124,7 +127,7 @@
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION)
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
 		UnregisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION)
-		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE)
 		. = ..()
 
 	attack_hand(mob/user)

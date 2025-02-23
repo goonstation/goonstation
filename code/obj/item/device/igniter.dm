@@ -34,6 +34,11 @@ TYPEINFO(/obj/item/device/igniter)
 
 /// ----------- Trigger/Applier-Assembly-Related Procs -----------
 
+
+/obj/item/device/igniter/assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/complete/parent_assembly)
+	if(!parent_assembly.target)
+		return " You can add a plasma tank, pipebomb or beaker onto this assembly in order to modify it further."
+
 /obj/item/device/igniter/proc/assembly_application(var/manipulated_igniter, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
 	if(!assembly_target)
 		//if there is no target, we just heat the tile we are on

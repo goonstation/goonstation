@@ -369,9 +369,14 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION)
 		..()
 
 /// ----------- Assembly-Related Procs -----------
+
+	assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/complete/parent_assembly)
+		return " You can add this to a armor vest in order to craft a suicide bomb vest."
 
 	proc/assembly_on_wearer_death(var/affected_analyser, var/mob/dying_mob)
 		if (src.master && istype(src.master, /obj/item/assembly/complete))

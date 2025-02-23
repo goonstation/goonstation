@@ -287,7 +287,7 @@ Contains:
 
 	var/text_to_be_returned = "You can use <b>screwdriver</b> to secure the assembly. You can use a <b>wrench</b> to disassemble the assembly."
 	for(var/obj/item/checked_item in (list(src.trigger, src.applier, src.target) | src.additional_components))
-		text_to_be_returned += SEND_SIGNAL(checked_item, COMSIG_ITEM_ASSEMBLY_ON_HELP_MESSAGE, src)
+		text_to_be_returned += checked_item.assembly_get_part_help_message(dist, user, src)
 	return text_to_be_returned
 
 /obj/item/assembly/complete/UpdateName()
