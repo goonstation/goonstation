@@ -1145,7 +1145,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 				src.color = "#FFFFFF"
 
 			attackby(obj/item/dye_bottle/W, mob/user)
-				if (istype(W, /obj/item/dye_bottle))
+				if (istype(W) && W.uses_left)
+					W.use_dye()
 					src.color = W.customization_first_color
 					src.UpdateIcon()
 					var/mob/wearer = src.loc
