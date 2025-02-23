@@ -36,7 +36,8 @@
 		/datum/manufacture/pod/weapon/laser,
 		/datum/manufacture/pod/weapon/disruptor,
 		/datum/manufacture/pod/weapon/disruptor/light,
-		/datum/manufacture/pod/weapon/shotgun
+		/datum/manufacture/pod/weapon/shotgun,
+		/datum/manufacture/pod/weapon/salvo_rockets
 	)
 
 	New()
@@ -92,6 +93,7 @@
 		/datum/manufacture/pod/weapon/disruptor,
 		/datum/manufacture/pod/weapon/disruptor/light,
 		/datum/manufacture/pod/weapon/shotgun,
+		/datum/manufacture/pod/weapon/salvo_rockets,
 		/datum/manufacture/pod_wars/pod/armor_light/nt,
 		/datum/manufacture/pod_wars/pod/armor_robust/nt
 
@@ -128,6 +130,7 @@
 		/datum/manufacture/pod/weapon/disruptor,
 		/datum/manufacture/pod/weapon/disruptor/light,
 		/datum/manufacture/pod/weapon/shotgun,
+		/datum/manufacture/pod/weapon/salvo_rockets,
 		/datum/manufacture/pod_wars/pod/armor_light/sy,
 		/datum/manufacture/pod_wars/pod/armor_robust/sy
 		)
@@ -218,6 +221,17 @@
 							 "conductive_high" = 40,
 							 "crystal" = 10)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/gun)
+	create = 1
+	time = 10 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/weapon/salvo_rockets
+	name = "Cerberus Salvo Rockets"
+	item_requirements = list("metal_superdense" = 30,
+							 "conductive_high" = 10,
+							 "crystal" = 10,
+							 "erebite" = 10)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/salvo_rockets)
 	create = 1
 	time = 10 SECONDS
 	category = "Tool"
