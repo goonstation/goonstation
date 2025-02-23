@@ -409,16 +409,15 @@ function ehjaxCallback(data) {
         var blue = 0;
         var hex = rgbToHex(red, green, blue);
         $('#pingDot').css('color', '#'+hex);
-    } else if (data == 'roundrestart' || data == 'hardrestart') {
+    } else if (data == 'roundrestart' || data == 'hardrestart' || data == 'updaterestart') {
         opts.restarting = true;
         output('<div class="connectionClosed internal restarting">The connection has been closed because the server is restarting. Please wait while you automatically reconnect.</div>');
 
-        //a hard reboot was triggered, so we do our own auto-reconnection
-        if (data == 'hardrestart') {
+        //server is shutting down before restarting
+        if (data == 'hardrestart' || data == 'updaterestart') {
             setTimeout(function() {
-                runByond('byond://winset?command=.reconnect');
-                output('<span class="internal boldnshit">Auto reconnecting from hard restart...</span>');
-            }, 60000); //1 minute
+				runByond('byond://winset?command=.reconnect');
+            }, 30000); //30 seconds
         }
     } else if (data == 'stopaudio') {
         $('.dectalk').remove();

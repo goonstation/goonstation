@@ -1,9 +1,10 @@
 /verb/restart_the_fucking_server_i_mean_it()
 	set name = "Emergency Restart"
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	if(config.update_check_enabled)
-		world.installUpdate()
-	world.Reboot()
+	if (world.installUpdate())
+		Shutdown_server()
+	else
+		world.Reboot()
 
 /client/proc/rebuild_flow_networks()
 	set name = "Rebuild Flow Networks"
