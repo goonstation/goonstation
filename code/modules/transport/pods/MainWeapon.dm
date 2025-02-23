@@ -278,7 +278,7 @@
 	current_projectile = new/datum/projectile/bullet/hammer_railgun
 	weapon_score = 1.5
 	appearanceString = "pod_weapon_hammer_railgun"
-	icon_state = "hammer_railgun"
+	icon_state = "hammer-railgun"
 	muzzle_flash = "muzzle_flash_launch"
 
 /obj/item/shipcomponent/mainweapon/rockdrills
