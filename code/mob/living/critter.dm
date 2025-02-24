@@ -871,6 +871,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			O.set_loc(src)
 	src.mind?.register_death() // it'd be nice if critters get a time of death too tbh
 	set_density(0)
+	for (var/obj/item/checked_item in src.contents)
+		SEND_SIGNAL(checked_item, COMSIG_ITEM_ON_OWNER_DEATH, src)
 	if (src.can_implant)
 		for (var/obj/item/implant/H in src.implants)
 			H.on_death()
