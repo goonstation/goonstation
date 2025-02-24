@@ -114,7 +114,7 @@
 	associated_object = /obj/item/artifact/dimensional_key
 	type_name = "Dimensional key"
 	type_size = ARTIFACT_SIZE_TINY
-	rarity_weight = 0
+	rarity_weight = 200
 	validtypes = list("eldritch", "precursor")
 	react_xray = list(73, 90, 38, 4, "ANOMALOUS")
 	examine_hint = "It kinda looks like it's supposed to be inserted into something."
@@ -129,8 +129,6 @@
 		var/turf/T = artkey.fissure_region.get_center()
 		var/area/artifact_fissure/fissure_area = get_area(T)
 		fissure_area.fissure_region = artkey.fissure_region
-
-		mirrored_physical_zone_created = TRUE
 
 /****** Supporting items/atoms/etc. *******/
 
