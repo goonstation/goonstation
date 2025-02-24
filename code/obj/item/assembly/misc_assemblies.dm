@@ -322,6 +322,9 @@ Contains:
 
 
 /obj/item/assembly/attackby(obj/item/used_object, mob/user)
+	if (isghostcritter(user))
+		boutput(user, SPAN_NOTICE("Some unseen force stops you from tampering with [src.name]."))
+		return
 	if (iswrenchingtool(used_object) && !src.secured)
 		if (src.target)
 			boutput(user, SPAN_NOTICE("You remove the [src.target.name] from the assembly."))

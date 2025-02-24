@@ -53,6 +53,8 @@ TYPEINFO(/datum/component/assembly)
 
 /datum/component/assembly/proc/try_combination(var/atom/checked_atom, var/mob/user)
 	var/is_combinable = FALSE
+	if(isghostcritter(user)) //just no
+		return FALSE
 	//if to_combine_item is a list, we look if we find the item in there
 	if (islist(src.to_combine_item))
 		var/list/combinable_items = src.to_combine_item
