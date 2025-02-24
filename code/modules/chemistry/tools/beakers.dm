@@ -12,7 +12,8 @@
 	item_state = "beaker"
 	initial_volume = 50
 	accepts_lid = TRUE
-	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO | ASSEMBLY_NEEDS_MESSAGING
+	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	item_function_flags = /obj/item/reagent_containers/glass::item_function_flags | ASSEMBLY_NEEDS_MESSAGING
 	object_flags = NO_GHOSTCRITTER
 	fluid_overlay_states = 7
 	container_style = "beaker"

@@ -108,10 +108,10 @@ Contains:
 
 /// returns TRUE if the assembly has anything that condemns it worth to be logged
 /obj/item/assembly/complete/proc/requires_admin_messaging()
-	var/value_to_return = FALSE
+	var/value_to_return = 0
 	if(src.target)
-		value_to_return = (value_to_return | HAS_FLAG(src.target.flags, ASSEMBLY_NEEDS_MESSAGING))
-	return (value_to_return | HAS_FLAG(src.trigger.flags, ASSEMBLY_NEEDS_MESSAGING) | HAS_FLAG(src.applier.flags, ASSEMBLY_NEEDS_MESSAGING))
+		value_to_return = value_to_return | (src.target.item_function_flags & ASSEMBLY_NEEDS_MESSAGING)
+	return value_to_return | (src.trigger.item_function_flags & ASSEMBLY_NEEDS_MESSAGING) | (src.applier.item_function_flags & ASSEMBLY_NEEDS_MESSAGING)
 
 ///this goes over every component of the assembly and checks if admins need additional informations about these.
 /obj/item/assembly/complete/proc/get_additional_logging_information(var/mob/user)

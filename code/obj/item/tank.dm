@@ -585,7 +585,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	desc = "This heavy orange gas tank is used to contain toxic, volatile plasma. You can technically breathe from it, but you probably shouldn't without a very good reason."
 	icon_state = "plasma"
 	item_state = "plasma"
-	flags = /obj/item/tank::flags | ASSEMBLY_NEEDS_MESSAGING
+	item_function_flags = ASSEMBLY_NEEDS_MESSAGING
 
 	New()
 		..()
