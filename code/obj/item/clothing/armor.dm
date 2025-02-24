@@ -71,9 +71,9 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	hides_from_examine = 0
 
 	var/obj/item/clothing/suit/armor/vest/part_vest = null
-	var/obj/item/assembly/complete/payload = null
+	var/obj/item/assembly/payload = null
 
-	New(ourLoc, var/obj/item/assembly/complete/new_payload, var/obj/item/clothing/suit/armor/vest/new_vest)
+	New(ourLoc, var/obj/item/assembly/new_payload, var/obj/item/clothing/suit/armor/vest/new_vest)
 		..()
 		RegisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH, PROC_REF(triggering))
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL, PROC_REF(on_part_disposal))

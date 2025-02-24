@@ -67,19 +67,19 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	/// TThe amount of cable coil required for canbombs
 	#define CABLE_COIL_REQUIRED_CANBOMB 6
 
-	proc/assembly_overlay_addition(var/manipulated_coil, var/obj/item/assembly/complete/parent_assembly, overlay_offset)
+	proc/assembly_overlay_addition(var/manipulated_coil, var/obj/item/assembly/parent_assembly, overlay_offset)
 		if(parent_assembly.special_construction_identifier == "canbomb")
 			parent_assembly.overlays += image('icons/obj/items/assemblies.dmi', parent_assembly, "cable_coil_canbomb")
 
 
 	proc/assembly_check(var/manipulated_coil, var/obj/item/second_part, var/mob/user)
 		//if we're building a canbomb, we need 6 units of cablecoil
-		var/obj/item/assembly/complete/assembly_in_progress = second_part
+		var/obj/item/assembly/assembly_in_progress = second_part
 		if (assembly_in_progress.special_construction_identifier == "canbomb" && src.amount < CABLE_COIL_REQUIRED_CANBOMB)
 			boutput(user, SPAN_NOTICE("You need at least [CABLE_COIL_REQUIRED_CANBOMB] pieces of cable on this coil for this step."))
 			return TRUE
 
-	proc/assembly_setup(var/manipulated_coil, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+	proc/assembly_setup(var/manipulated_coil, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
 		//when we have a user, we know we were build, so we can split off excess cabling
 		if(is_build_in && user)
 			// we assume a standard of 5 cabling for an assembly (or whatever bullshit lower than that you enabled)

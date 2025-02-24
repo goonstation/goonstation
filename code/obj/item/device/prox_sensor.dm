@@ -40,10 +40,10 @@ TYPEINFO(/obj/item/device/prox_sensor)
 
 /// ----------- Assembly-Related Procs -----------
 
-/obj/item/device/prox_sensor/proc/assembly_manipulation(var/manipulated_sensor, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+/obj/item/device/prox_sensor/proc/assembly_manipulation(var/manipulated_sensor, var/obj/item/assembly/parent_assembly, var/mob/user)
 	src.AttackSelf(user)
 
-/obj/item/device/prox_sensor/proc/assembly_activation(var/manipulated_sensor, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+/obj/item/device/prox_sensor/proc/assembly_activation(var/manipulated_sensor, var/obj/item/assembly/parent_assembly, var/mob/user)
 	//Activating a secured assembly sets it off -without- the UI. Good luck
 	if(!src.timing)
 		parent_assembly.last_armer = user
@@ -54,7 +54,7 @@ TYPEINFO(/obj/item/device/prox_sensor)
 		//missing log about contents of beakers
 		return TRUE
 
-/obj/item/device/prox_sensor/proc/assembly_get_state(var/manipulated_sensor, var/obj/item/assembly/complete/parent_assembly)
+/obj/item/device/prox_sensor/proc/assembly_get_state(var/manipulated_sensor, var/obj/item/assembly/parent_assembly)
 	if(src.armed)
 		return ASSEMBLY_TRIGGER_ARMED
 	else
@@ -63,10 +63,10 @@ TYPEINFO(/obj/item/device/prox_sensor)
 		else
 			return ASSEMBLY_TRIGGER_NOT_ACTIVATED
 
-/obj/item/device/prox_sensor/proc/assembly_get_time_left(var/manipulated_sensor, var/obj/item/assembly/complete/parent_assembly)
+/obj/item/device/prox_sensor/proc/assembly_get_time_left(var/manipulated_sensor, var/obj/item/assembly/parent_assembly)
 	return src.time
 
-/obj/item/device/prox_sensor/proc/assembly_set_time(var/manipulated_sensor, var/obj/item/assembly/complete/parent_assembly, var/time_to_set)
+/obj/item/device/prox_sensor/proc/assembly_set_time(var/manipulated_sensor, var/obj/item/assembly/parent_assembly, var/time_to_set)
 	src.time = max(src.min_time, time_to_set)
 	return src.time
 
@@ -84,8 +84,8 @@ TYPEINFO(/obj/item/device/prox_sensor)
 	icon_state = "motion[n]"
 
 	if(src.master)
-		if(istype(src.master,/obj/item/assembly/complete))
-			var/obj/item/assembly/complete/checked_assembly = src.master
+		if(istype(src.master,/obj/item/assembly))
+			var/obj/item/assembly/checked_assembly = src.master
 			if(checked_assembly.trigger == src) //in case a sensor is used for something else than a trigger
 				checked_assembly.trigger_icon_prefix = icon_state
 				checked_assembly.UpdateIcon()

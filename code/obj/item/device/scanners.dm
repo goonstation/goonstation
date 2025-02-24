@@ -375,12 +375,12 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 
 /// ----------- Assembly-Related Procs -----------
 
-	assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/complete/parent_assembly)
+	assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
 		return " You can add this to a armor vest in order to craft a suicide bomb vest."
 
 	proc/assembly_on_wearer_death(var/affected_analyser, var/mob/dying_mob)
-		if (src.master && istype(src.master, /obj/item/assembly/complete))
-			var/obj/item/assembly/complete/triggering_assembly = src.master
+		if (src.master && istype(src.master, /obj/item/assembly))
+			var/obj/item/assembly/triggering_assembly = src.master
 			if (dying_mob.suiciding && prob(60)) // no suiciding
 				dying_mob.visible_message(SPAN_ALERT("<b>[dying_mob]'s [src.master.name] clicks softly, but nothing happens.</b>"))
 				return
@@ -396,11 +396,11 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 				signal.data["message"] = "ACTIVATE"
 				src.master.receive_signal(signal)
 
-	proc/assembly_building(var/manipulated_mousetrap, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+	proc/assembly_building(var/manipulated_mousetrap, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
 		//since we have a lot of icon states for health analysers, but they have no effect, we take a single one
 		parent_assembly.trigger_icon_prefix = "health-scanner"
 		//health-analyser-assembly + armor vest -> suicide vest
-		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/clothing/suit/armor/vest), TYPE_PROC_REF(/obj/item/assembly/complete, create_suicide_vest), TRUE)
+		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/clothing/suit/armor/vest), TYPE_PROC_REF(/obj/item/assembly, create_suicide_vest), TRUE)
 
 /// ----------------------------------------------
 

@@ -83,7 +83,6 @@
 			if(src.active)
 				R.part1.armed = TRUE
 				R.part1.icon_state = text("motion[]", 1)
-				R.c_state(1, src)
 
 		// timer
 		if (2)

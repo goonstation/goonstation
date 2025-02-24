@@ -523,11 +523,11 @@
 
 	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
 
-	proc/assembly_setup(var/manipulated_horn, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+	proc/assembly_setup(var/manipulated_horn, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
 		//we need to add the new icon for the bike-horn
 		parent_assembly.target_item_prefix = "bike-horn"
 
-	proc/assembly_application(var/manipulated_horn, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
+	proc/assembly_application(var/manipulated_horn, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
 		src.play_note(rand(1, length(src.sounds_instrument)), user = null)
 
 	/// ----------------------------------------------

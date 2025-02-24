@@ -5,7 +5,7 @@
 	desc = "A failsafe timer, wired in an incomprehensible way to a detonator assembly"
 	name = "Detonator Assembly"
 	icon_state = "multitool-igniter"
-	var/obj/item/assembly/complete/part_assembly = null
+	var/obj/item/assembly/part_assembly = null
 	var/list/initial_wire_functions = null //! a list with the in New() addec wires of the canbomb
 	var/obj/machinery/portable_atmospherics/canister/attachedTo = null
 	var/list/obj/item/attachments = null
@@ -28,7 +28,7 @@
 	throw_range = 5
 	w_class = W_CLASS_SMALL
 
-/obj/item/canbomb_detonator/New(var/new_location, var/obj/item/assembly/complete/new_assembly)
+/obj/item/canbomb_detonator/New(var/new_location, var/obj/item/assembly/new_assembly)
 	..()
 	src.initial_wire_functions = list("detonate", "defuse", "safety", "losetime", "mobility", "leak")
 	src.attachments = list()

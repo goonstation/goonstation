@@ -31,17 +31,17 @@
 
 	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
 
-	assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/complete/parent_assembly)
+	assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/parent_assembly)
 		return " [log_reagents(src)]"
 
 
-	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
 		//we need to displace the icon a bit more with beakers than with other items
 		if (is_build_in && parent_assembly.target == src)
 			parent_assembly.icon_base_offset = 4
 
 
-	proc/assembly_removal(var/manipulated_bomb, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+	proc/assembly_removal(var/manipulated_bomb, var/obj/item/assembly/parent_assembly, var/mob/user)
 		//we need to reset the base icon offset
 		parent_assembly.icon_base_offset = 0
 
@@ -49,9 +49,6 @@
 
 	update_icon()
 		. = ..()
-		if (istype(src.master,/obj/item/assembly))
-			var/obj/item/assembly/A = src.master
-			A.c_state(1)
 		signal_event("icon_updated")
 
 	attackby(obj/A, mob/user)
@@ -63,7 +60,6 @@
 				src.layer = initial(src.layer)
 				user.u_equip(src)
 				src.set_loc(W)
-				W.c_state(0)
 
 				boutput(user, "You attach [W.name] to [src].")
 			else
@@ -78,7 +74,6 @@
 				src.layer = initial(src.layer)
 				user.u_equip(src)
 				src.set_loc(W)
-				W.c_state(0)
 
 				boutput(user, "You attach [W.name] to [src].")
 			else boutput(user, "You must remove [W.part3] from the assembly before transferring chemicals to it!")
@@ -92,7 +87,6 @@
 				src.layer = initial(src.layer)
 				user.u_equip(src)
 				src.set_loc(W)
-				W.c_state(0)
 
 				boutput(user, "You attach [W.name] to [src].")
 			else boutput(user, "You must remove [W.part3] from the assembly before transferring chemicals to it!")

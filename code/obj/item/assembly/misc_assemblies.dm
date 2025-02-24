@@ -21,6 +21,7 @@ Contains:
 	name = "assembly"
 	icon = 'icons/obj/items/assemblies.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	desc = "An assembly of multiple components."
 	item_state = "assembly"
 	var/status = 0
 	throwforce = 10
@@ -30,16 +31,7 @@ Contains:
 	force = 2
 	stamina_damage = 10
 	stamina_cost = 10
-	var/force_dud = 0
-
-/obj/item/assembly/proc/c_state(n, O as obj)
-	return
-
-/////////////////////////////////////// Component-Assembly /////////////////////////
-
-
-/obj/item/assembly/complete
-	desc = "An assembly of multiple components."
+	var/force_dud = 0 //! can be set within bomb_monitor to make the assembly in question never fire
 	var/obj/item/trigger = null //! This is anything that causes the Applier to fire, e.g. a signaler, mouse trap or a timer
 	var/trigger_icon_prefix = null
 	var/obj/item/applier = null //!  This is anything that is activated by the trigger, e.g. an igniter or a bikehorn
@@ -60,7 +52,7 @@ Contains:
 	flags = TABLEPASS | CONDUCT | NOSPLASH
 	item_function_flags = OBVIOUS_INTERACTION_BAR
 
-/obj/item/assembly/complete/New(var/new_location)
+/obj/item/assembly/New(var/new_location)
 	src.additional_components = list()
 	RegisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED, PROC_REF(on_floor_reveal))
 	RegisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION, PROC_REF(on_storage_interaction))
@@ -70,7 +62,7 @@ Contains:
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL, PROC_REF(on_part_disposing))
 	..()
 
-/obj/item/assembly/complete/proc/set_up_new(var/mob/user, var/obj/item/new_trigger, var/obj/item/new_applier, var/obj/item/new_target)
+/obj/item/assembly/proc/set_up_new(var/mob/user, var/obj/item/new_trigger, var/obj/item/new_applier, var/obj/item/new_target)
 	if(!new_trigger || !new_applier)
 		CRASH("tried to set up an assembly without a trigger or applier")
 	var/list/to_set_up_items = list(new_trigger, new_applier)
@@ -100,7 +92,7 @@ Contains:
 	src.UpdateIcon()
 	src.UpdateName()
 
-/obj/item/assembly/complete/proc/get_trigger_state(var/affected_assembly)
+/obj/item/assembly/proc/get_trigger_state(var/affected_assembly)
 	if(src.secured)
 		//we relay the signal to the trigger, if the assembly is secured
 		return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, src)
@@ -108,14 +100,14 @@ Contains:
 		return ASSEMBLY_TRIGGER_NOT_SECURED
 
 /// returns TRUE if the assembly has anything that condemns it worth to be logged
-/obj/item/assembly/complete/proc/requires_admin_messaging()
+/obj/item/assembly/proc/requires_admin_messaging()
 	var/value_to_return = 0
 	if(src.target)
 		value_to_return = value_to_return | (src.target.item_function_flags & ASSEMBLY_NEEDS_MESSAGING)
 	return value_to_return | (src.trigger.item_function_flags & ASSEMBLY_NEEDS_MESSAGING) | (src.applier.item_function_flags & ASSEMBLY_NEEDS_MESSAGING)
 
 ///this goes over every component of the assembly and checks if admins need additional informations about these.
-/obj/item/assembly/complete/proc/get_additional_logging_information(var/mob/user)
+/obj/item/assembly/proc/get_additional_logging_information(var/mob/user)
 	var/information_to_return = ""
 	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
 		var/information_to_add = affected_item.assembly_get_admin_log_message(user, src)
@@ -123,27 +115,27 @@ Contains:
 			information_to_return += " [affected_item]:[information_to_add];"
 	return information_to_return
 
-/obj/item/assembly/complete/proc/get_trigger_time_left(var/affected_assembly)
+/obj/item/assembly/proc/get_trigger_time_left(var/affected_assembly)
 	//we relay the signal to the trigger, in case of mousetraps
 	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT, src)
 
-/obj/item/assembly/complete/proc/set_trigger_time(var/time_to_set)
+/obj/item/assembly/proc/set_trigger_time(var/time_to_set)
 	//we send a signal on the trigger to set the time
 	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME, src, time_to_set)
 
-/obj/item/assembly/complete/proc/on_floor_reveal(var/affected_assembly, var/turf/revealed_turf)
+/obj/item/assembly/proc/on_floor_reveal(var/affected_assembly, var/turf/revealed_turf)
 	//we relay the signal to the trigger, in case of mousetraps
 	SEND_SIGNAL(src.trigger, COMSIG_MOVABLE_FLOOR_REVEALED, revealed_turf)
 
-/obj/item/assembly/complete/proc/on_storage_interaction(var/affected_assembly, var/mob/user)
+/obj/item/assembly/proc/on_storage_interaction(var/affected_assembly, var/mob/user)
 	//we relay the signal to the trigger, in case of mousetraps
 	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_STORAGE_INTERACTION, user)
 
-/obj/item/assembly/complete/proc/on_wearer_death(var/affected_assembly, var/mob/dying_mob)
+/obj/item/assembly/proc/on_wearer_death(var/affected_assembly, var/mob/dying_mob)
 	//we relay the signal to the trigger, in case of health-analyser
 	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ON_OWNER_DEATH, dying_mob)
 
-/obj/item/assembly/complete/receive_signal(datum/signal/signal)
+/obj/item/assembly/receive_signal(datum/signal/signal)
 	if(src.force_dud == TRUE)
 		message_admins("A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [key_name(src.fingerprintslast)]")
 		logTheThing(LOG_BOMBING, null, "A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
@@ -164,65 +156,65 @@ Contains:
 		SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_APPLY, src, src.target)
 
 
-/obj/item/assembly/complete/proc/on_part_disposing(var/affected_assembly, var/datum/removed_datum)
+/obj/item/assembly/proc/on_part_disposing(var/affected_assembly, var/datum/removed_datum)
 	if(src.disposed || src.qdeled)
 		return
 	spawn(1)
 		src.tear_apart()
 
-/obj/item/assembly/complete/dropped(mob/user)
+/obj/item/assembly/dropped(mob/user)
 	. = ..()
 	// we relay the dropping of the assembly to the trigger in case of a proximity sensor
 	SEND_SIGNAL(src.trigger, COMSIG_ITEM_DROPPED, user)
 
-/obj/item/assembly/complete/Crossed(atom/movable/crossing_atom)
+/obj/item/assembly/Crossed(atom/movable/crossing_atom)
 	. = ..()
 	// we relay the dropping of the assembly to the trigger in case of a mouse trap
 	src.trigger.Crossed(crossing_atom)
 
 ///------ Proc to transfer impulses/events onto the main components ---------
-/obj/item/assembly/complete/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled)
+/obj/item/assembly/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled)
 	. = ..()
 	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
 		affected_item.temperature_expose(air, exposed_temperature, exposed_volume, cannot_be_cooled)
 
-/obj/item/assembly/complete/ex_act(severity)
+/obj/item/assembly/ex_act(severity)
 	..()
 	if(!src.qdeled && !src.disposed)
 		for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
 			affected_item.ex_act(severity)
 
-/obj/item/assembly/complete/material_trigger_on_mob_attacked(mob/attacker, mob/attacked, atom/weapon, situation_modifier)
+/obj/item/assembly/material_trigger_on_mob_attacked(mob/attacker, mob/attacked, atom/weapon, situation_modifier)
 	. = ..()
 	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
 		affected_item.material_trigger_on_mob_attacked(attacker, attacked, weapon, situation_modifier)
 
-/obj/item/assembly/complete/material_trigger_on_bullet(atom/attacked, obj/projectile/projectile, situation_modifier)
+/obj/item/assembly/material_trigger_on_bullet(atom/attacked, obj/projectile/projectile, situation_modifier)
 	. = ..()
 	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
 		affected_item.material_trigger_on_bullet(attacked, projectile, situation_modifier)
 
-/obj/item/assembly/complete/material_trigger_on_chems(chem, amount)
+/obj/item/assembly/material_trigger_on_chems(chem, amount)
 	. = ..()
 	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
 		affected_item.material_trigger_on_chems(chem, amount)
 
-/obj/item/assembly/complete/material_trigger_on_blob_attacked(blobPower, situation_modifier)
+/obj/item/assembly/material_trigger_on_blob_attacked(blobPower, situation_modifier)
 	. = ..()
 	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
 		affected_item.material_trigger_on_blob_attacked(blobPower, situation_modifier)
 
-/obj/item/assembly/complete/material_on_attack_use(mob/attacker, atom/attacked)
+/obj/item/assembly/material_on_attack_use(mob/attacker, atom/attacked)
 	. = ..()
 	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
 		affected_item.material_on_attack_use(attacker, attacked)
 
-/obj/item/assembly/complete/material_trigger_when_attacked(atom/attackatom, mob/attacker, meleeorthrow, situation_modifier)
+/obj/item/assembly/material_trigger_when_attacked(atom/attackatom, mob/attacker, meleeorthrow, situation_modifier)
 	. = ..()
 	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
 		affected_item.material_trigger_when_attacked(attackatom, attacker, meleeorthrow, situation_modifier)
 
-/obj/item/assembly/complete/material_on_pickup(mob/user)
+/obj/item/assembly/material_on_pickup(mob/user)
 	//we pick one item here the person is touching
 	. = ..()
 	var/list/item_selection = list(src.trigger, src.applier)
@@ -231,7 +223,7 @@ Contains:
 	var/obj/item/picked_item = pick(item_selection)
 	picked_item.material_on_pickup(user)
 
-/obj/item/assembly/complete/material_on_drop(mob/user)
+/obj/item/assembly/material_on_drop(mob/user)
 	//we pick one item here the person is touching
 	. = ..()
 	var/list/item_selection = list(src.trigger, src.applier)
@@ -241,7 +233,7 @@ Contains:
 	picked_item.material_on_drop(user)
 ///------ ------------------------------------------ ---------
 
-/obj/item/assembly/complete/disposing()
+/obj/item/assembly/disposing()
 	UnregisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED)
 	UnregisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION)
 	UnregisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH)
@@ -258,7 +250,7 @@ Contains:
 	src.last_armer = null
 	..()
 
-/obj/item/assembly/complete/attack_self(mob/user)
+/obj/item/assembly/attack_self(mob/user)
 	if (isghostcritter(user))
 		boutput(user, SPAN_NOTICE("Some unseen force stops you from tampering with [src.name]."))
 		return
@@ -277,7 +269,7 @@ Contains:
 	src.add_fingerprint(user)
 	return
 
-/obj/item/assembly/complete/update_icon()
+/obj/item/assembly/update_icon()
 	var/overlay_offset = 0 //how many pixels we want to move the overlays
 	src.overlays = null
 	src.underlays = null
@@ -311,7 +303,7 @@ Contains:
 		src.underlays += temp_image_cables
 
 
-/obj/item/assembly/complete/get_help_message(dist, mob/user)
+/obj/item/assembly/get_help_message(dist, mob/user)
 	if(src.secured)
 		return "You can use <b>screwdriver</b> to unsecure the assembly in order to further modify it."
 
@@ -320,7 +312,7 @@ Contains:
 		text_to_be_returned += checked_item.assembly_get_part_help_message(dist, user, src)
 	return text_to_be_returned
 
-/obj/item/assembly/complete/UpdateName()
+/obj/item/assembly/UpdateName()
 	var/component_names = ""
 	if(src.trigger) //lets not crash when we initially create the assembly
 		component_names = "[initial(src.trigger.name)]/[initial(src.applier.name)]"
@@ -329,7 +321,7 @@ Contains:
 	src.name = "[name_prefix(null, 1)][component_names]-[initial(src.name)][name_suffix(null, 1)]"
 
 
-/obj/item/assembly/complete/attackby(obj/item/used_object, mob/user)
+/obj/item/assembly/attackby(obj/item/used_object, mob/user)
 	if (iswrenchingtool(used_object) && !src.secured)
 		if (src.target)
 			boutput(user, SPAN_NOTICE("You remove the [src.target.name] from the assembly."))
@@ -348,7 +340,7 @@ Contains:
 	..()
 
 ///an assembly does need at least a trigger and an applier, so this proc strips down the assembly to these parts
-/obj/item/assembly/complete/proc/remove_until_minimum_components()
+/obj/item/assembly/proc/remove_until_minimum_components()
 	// We remove all assembly-components from the assembly
 	// and send the different parts of the assembly their corresponding signals to set up the assembly to the state it was
 	var/turf/target_turf = get_turf(src)
@@ -375,7 +367,7 @@ Contains:
 
 
 ///This proc removes all items attached to the assembly and removes it
-/obj/item/assembly/complete/proc/tear_apart()
+/obj/item/assembly/proc/tear_apart()
 	if(src.qdel_on_tear_apart)
 		qdel(src)
 		return
@@ -401,7 +393,7 @@ Contains:
 
 /// misc. Assembly-procs --------------------------------
 
-/obj/item/assembly/complete/proc/add_target_item(var/atom/to_combine_atom, var/mob/user)
+/obj/item/assembly/proc/add_target_item(var/atom/to_combine_atom, var/mob/user)
 	if(src.target)
 		return
 	if(src.secured)
@@ -436,7 +428,7 @@ Contains:
 	// Since the assembly was done, return TRUE
 	return TRUE
 
-/obj/item/assembly/complete/proc/add_additional_component(var/atom/to_combine_atom, var/mob/user)
+/obj/item/assembly/proc/add_additional_component(var/atom/to_combine_atom, var/mob/user)
 	if(src.secured)
 		boutput(user, "You need to unsecure the assembly first.")
 		return
@@ -470,7 +462,7 @@ Contains:
 
 
 ///mousetrap roller crafting proc
-/obj/item/assembly/complete/proc/create_mousetrap_roller(var/atom/to_combine_atom, var/mob/user)
+/obj/item/assembly/proc/create_mousetrap_roller(var/atom/to_combine_atom, var/mob/user)
 	if(src.w_class > W_CLASS_NORMAL)
 		boutput(user, "[src.name] is too large for a mousetrap roller assembly.")
 		return FALSE
@@ -495,7 +487,7 @@ Contains:
 	// Since the assembly was done, return TRUE
 	return TRUE
 
-/obj/item/assembly/complete/proc/create_suicide_vest(var/atom/to_combine_atom, var/mob/user)
+/obj/item/assembly/proc/create_suicide_vest(var/atom/to_combine_atom, var/mob/user)
 	if(src.secured)
 		boutput(user, "You need to unsecure [src.name] first.")
 		return FALSE
@@ -515,7 +507,7 @@ Contains:
 	// Since the assembly was done, return TRUE
 	return TRUE
 
-/obj/item/assembly/complete/proc/create_canbomb(var/atom/to_combine_atom, var/mob/user)
+/obj/item/assembly/proc/create_canbomb(var/atom/to_combine_atom, var/mob/user)
 	var/obj/machinery/portable_atmospherics/canister/payload = to_combine_atom
 	if(src.secured)
 		boutput(user, "You need to unsecure [src.name] first.")
@@ -653,29 +645,6 @@ Contains:
 		src.add_fingerprint(user)
 		return
 
-/obj/item/assembly/time_ignite/c_state(n)
-	if(!src.part3 && !src.part5)
-		src.icon = 'icons/obj/items/assemblies.dmi'
-		src.icon_state = text("timer-igniter[n]")
-		src.overlays = null
-		src.underlays = null
-		src.name = "Timer/Igniter Assembly"
-	else if(!src.part3 && src.part5)
-		src.icon = part5.icon
-		src.icon_state = part5.icon_state
-		src.overlays = null
-		src.underlays = null
-		src.overlays += image('icons/obj/items/assemblies.dmi', "timeignite_overlay[n]", layer = FLOAT_LAYER)
-		src.name = "Timer/Igniter/Pipebomb Assembly"
-	else
-		src.icon = part3.icon
-		src.icon_state = part3.icon_state
-		src.overlays = null
-		src.underlays = null
-		src.overlays += image('icons/obj/items/assemblies.dmi', "timeignite_overlay[n]", layer = FLOAT_LAYER)
-		src.underlays += part3.underlays
-		src.name = "Timer/Igniter/Beaker Assembly"
-	return
 
 /obj/item/assembly/time_ignite/verb/removebeaker()
 	set src in oview(1)
@@ -689,7 +658,6 @@ Contains:
 		src.part3.master = null
 		src.part3.Attackhand(usr)
 		src.part3 = null
-		src.c_state(src.part1.timing)
 		boutput(usr, SPAN_NOTICE("You remove the timer/igniter assembly from the beaker."))
 		//since the assembly is free of beakers, let's add the assembly components again
 		// Timer-Igniter Assembly + wired pipebomb -> timer-igniter pipebomb
@@ -713,7 +681,6 @@ Contains:
 	manipulated_beaker.layer = initial(manipulated_beaker.layer)
 	user.u_equip(manipulated_beaker)
 	manipulated_beaker.set_loc(src)
-	src.c_state(0)
 	boutput(user, "You attach the timer/igniter assembly to the beaker.")
 
 	//Since we completed the assembly, remove all assembly components
@@ -732,7 +699,6 @@ Contains:
 	manipulated_pipebomb.layer = initial(manipulated_pipebomb.layer)
 	user.u_equip(manipulated_pipebomb)
 	manipulated_pipebomb.set_loc(src)
-	src.c_state(0)
 	boutput(user, "You attach the pipebomb to the timer/igniter assembly.")
 	logTheThing(LOG_BOMBING, user, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
 	message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
@@ -770,7 +736,6 @@ Contains:
 	src.part5.master = src
 	src.part5.layer = initial(src.part5.layer)
 	src.part5.set_loc(src)
-	src.c_state(0)
 	boutput(user, "You attach the pipebomb to the timer/igniter assembly.")
 	logTheThing(LOG_BOMBING, user, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
 	message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
@@ -835,29 +800,6 @@ Contains:
 	part5 = null
 	..()
 
-/obj/item/assembly/prox_ignite/c_state(n)
-	if(!src.part3 && !src.part5)
-		src.icon = 'icons/obj/items/assemblies.dmi'
-		src.icon_state = text("prox-igniter[n]")
-		src.overlays = null
-		src.underlays = null
-		src.name = "Proximity/Igniter Assembly"
-	else if(!src.part3 && src.part5)
-		src.icon = part5.icon
-		src.icon_state = part5.icon_state
-		src.overlays = null
-		src.underlays = null
-		src.overlays += image('icons/obj/items/assemblies.dmi', "proxignite_overlay[n]", layer = FLOAT_LAYER)
-		src.name = "Proximity/Igniter/Pipebomb Assembly"
-	else
-		src.icon = part3.icon
-		src.icon_state = part3.icon_state
-		src.overlays = null
-		src.underlays = null
-		src.overlays += image('icons/obj/items/assemblies.dmi', "proxignite_overlay[n]", layer = FLOAT_LAYER)
-		src.underlays += part3.underlays
-		src.name = "Proximity/Igniter/Beaker Assembly"
-	return
 
 /obj/item/assembly/prox_ignite/attackby(obj/item/W, mob/user)
 	if (!W)
@@ -938,7 +880,6 @@ Contains:
 		src.part3.master = null
 		src.part3.Attackhand(usr)
 		src.part3 = null
-		src.c_state(src.part1.timing)
 		boutput(usr, SPAN_NOTICE("You remove the Proximity/Igniter assembly from the beaker."))
 		//since the assembly is free of beakers, let's add the assembly components again
 		// proximity-Igniter Assembly + wired pipebomb -> proximity-igniter pipebomb
@@ -964,7 +905,6 @@ Contains:
 	manipulated_beaker.layer = initial(manipulated_beaker.layer)
 	user.u_equip(manipulated_beaker)
 	manipulated_beaker.set_loc(src)
-	src.c_state(0)
 	boutput(user, "You attach the proximity/igniter assembly to the beaker.")
 
 	//Since we completed the assembly, remove all assembly components
@@ -983,7 +923,6 @@ Contains:
 	manipulated_pipebomb.layer = initial(manipulated_pipebomb.layer)
 	user.u_equip(manipulated_pipebomb)
 	manipulated_pipebomb.set_loc(src)
-	src.c_state(0)
 	boutput(user, "You attach the sensor/igniter assembly to the pipebomb.")
 	logTheThing(LOG_BOMBING, user, "made Proximity/Igniter/Beaker Assembly at [log_loc(src)].")
 	message_admins("[key_name(user)] made a Proximity/Igniter/Beaker Assembly at [log_loc(src)].")
@@ -1020,7 +959,6 @@ Contains:
 	src.part5.master = src
 	src.part5.layer = initial(src.part5.layer)
 	src.part5.set_loc(src)
-	src.c_state(0)
 	boutput(user, "You attach the sensor/igniter assembly to the pipebomb.")
 	logTheThing(LOG_BOMBING, user, "made Proximity/Igniter/Pipebomb Assembly at [log_loc(src)].")
 	message_admins("[key_name(user)] made a Proximity/Igniter/Pipebomb Assembly at [log_loc(src)].")
@@ -1156,7 +1094,6 @@ Contains:
 		src.part3.master = null
 		src.part3.Attackhand(usr)
 		src.part3 = null
-		src.c_state()
 		boutput(usr, SPAN_NOTICE("You remove the radio/igniter assembly from the beaker."))
 		//since the assembly is free of beakers, let's add the assembly components again
 		// radio-Igniter Assembly + wired pipebomb -> radio-igniter pipebomb
@@ -1167,29 +1104,6 @@ Contains:
 		src.AddComponent(/datum/component/assembly, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
 	else boutput(usr, SPAN_ALERT("That doesn't have a beaker attached to it!"))
 
-/obj/item/assembly/rad_ignite/c_state()
-	if(!src.part3 && !src.part5)
-		src.icon = 'icons/obj/items/assemblies.dmi'
-		src.icon_state = text("radio-igniter")
-		src.overlays = null
-		src.underlays = null
-		src.name = "Radio/Igniter Assembly"
-	if(!src.part3 && src.part5)
-		src.icon = part5.icon
-		src.icon_state = part5.icon_state
-		src.overlays = null
-		src.underlays = null
-		src.overlays += image('icons/obj/items/assemblies.dmi', "radignite_overlay", layer = FLOAT_LAYER)
-		src.name = "Radio/Igniter/Pipebomb Assembly"
-	else
-		src.icon = part3.icon
-		src.icon_state = part3.icon_state
-		src.overlays = null
-		src.underlays = null
-		src.overlays += image('icons/obj/items/assemblies.dmi', "radignite_overlay", layer = FLOAT_LAYER)
-		src.underlays += part3.underlays
-		src.name = "Radio/Igniter/Beaker Assembly"
-	return
 
 // proximity-ignite-assemblies
 //Oh for fucks sake, why the fuck aren't these under a single parent? I have added these assembly procs three times already.
@@ -1206,7 +1120,6 @@ Contains:
 	manipulated_beaker.layer = initial(manipulated_beaker.layer)
 	user.u_equip(manipulated_beaker)
 	manipulated_beaker.set_loc(src)
-	src.c_state()
 	boutput(user, "You attach the radio/igniter assembly to the beaker.")
 
 	//Since we completed the assembly, remove all assembly components
@@ -1225,7 +1138,6 @@ Contains:
 	manipulated_pipebomb.layer = initial(manipulated_pipebomb.layer)
 	user.u_equip(manipulated_pipebomb)
 	manipulated_pipebomb.set_loc(src)
-	src.c_state()
 	boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
 	logTheThing(LOG_BOMBING, user, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
 	message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
@@ -1261,7 +1173,6 @@ Contains:
 	src.part5.master = src
 	src.part5.layer = initial(src.part5.layer)
 	src.part5.set_loc(src)
-	src.c_state()
 	boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
 	logTheThing(LOG_BOMBING, user, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
 	message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
@@ -1443,10 +1354,6 @@ Contains:
 	status = null
 	flags = TABLEPASS | CONDUCT
 	event_handler_flags = USE_FLUID_ENTER
-
-/obj/item/assembly/rad_prox/c_state(n)
-	src.icon_state = "prox-radio[n]"
-	return
 
 /obj/item/assembly/rad_prox/disposing()
 	qdel(part1)

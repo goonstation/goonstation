@@ -101,7 +101,7 @@ TYPEINFO(/datum/component/assembly)
 	// here, we want to create our new assembly
 	user.u_equip(checked_atom)
 	user.u_equip(src.parent)
-	var/obj/item/assembly/complete/product = new /obj/item/assembly/complete(get_turf(src.parent))
+	var/obj/item/assembly/product = new /obj/item/assembly(get_turf(src.parent))
 	//we set up the new assembly with its corresponding proc
 	product.set_up_new(user, src.parent, checked_atom)
 	//Some Admin logging/messaging

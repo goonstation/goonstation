@@ -37,10 +37,10 @@ TYPEINFO(/obj/item/device/timer)
 
 /// ----------- Assembly-Related Procs -----------
 
-/obj/item/device/timer/proc/assembly_manipulation(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+/obj/item/device/timer/proc/assembly_manipulation(var/manipulated_timer, var/obj/item/assembly/parent_assembly, var/mob/user)
 	src.AttackSelf(user)
 
-/obj/item/device/timer/proc/assembly_activation(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+/obj/item/device/timer/proc/assembly_activation(var/manipulated_timer, var/obj/item/assembly/parent_assembly, var/mob/user)
 	//Activating a secured assembly sets it off -without- the UI. Good luck
 	if(!src.timing)
 		parent_assembly.last_armer = user
@@ -51,13 +51,13 @@ TYPEINFO(/obj/item/device/timer)
 		//missing log about contents of beakers
 		return TRUE
 
-/obj/item/device/timer/proc/assembly_get_state(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly)
+/obj/item/device/timer/proc/assembly_get_state(var/manipulated_timer, var/obj/item/assembly/parent_assembly)
 	return src.timing
 
-/obj/item/device/timer/proc/assembly_get_time_left(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly)
+/obj/item/device/timer/proc/assembly_get_time_left(var/manipulated_timer, var/obj/item/assembly/parent_assembly)
 	return src.time
 
-/obj/item/device/timer/proc/assembly_set_time(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly, var/time_to_set)
+/obj/item/device/timer/proc/assembly_set_time(var/manipulated_timer, var/obj/item/assembly/parent_assembly, var/time_to_set)
 	src.time = max(src.min_time, time_to_set)
 	return src.time
 
@@ -82,8 +82,8 @@ TYPEINFO(/obj/item/device/timer)
 /obj/item/device/timer/proc/c_state(n)
 	//src.icon_state = text("timer[]", n)
 	if(src.master)
-		if(istype(src.master,/obj/item/assembly/complete))
-			var/obj/item/assembly/complete/checked_assembly = src.master
+		if(istype(src.master,/obj/item/assembly))
+			var/obj/item/assembly/checked_assembly = src.master
 			if(checked_assembly.trigger == src) //in case a timer is used for something else than a trigger
 				checked_assembly.trigger_icon_prefix = "timer[n]"
 				checked_assembly.UpdateIcon()

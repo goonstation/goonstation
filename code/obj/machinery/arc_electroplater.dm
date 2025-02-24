@@ -123,7 +123,7 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 			boutput(user, SPAN_ALERT("There is no way that could fit!"))
 			return
 
-		if(istype(W, /obj/item/assembly/complete))
+		if(istype(W, /obj/item/assembly))
 			//holy heck, blacklisting from the arcplater should certainly be handled by a flag
 			boutput(user, SPAN_ALERT("[W] can't be plated in [src]!"))
 			return

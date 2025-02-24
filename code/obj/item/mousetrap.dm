@@ -45,10 +45,10 @@
 
 /// ----------- Assembly-Related Procs -----------
 
-	assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/complete/parent_assembly)
+	assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
 		return " You can add this to a non-welded pipe frame in order to craft a mousetrap roller-assembly."
 
-	proc/assembly_manipulation(var/manipulated_mousetrap, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+	proc/assembly_manipulation(var/manipulated_mousetrap, var/obj/item/assembly/parent_assembly, var/mob/user)
 		if(src.armed)
 			src.toggle_armed(user)
 			parent_assembly.trigger_icon_prefix = src.icon_state
@@ -57,7 +57,7 @@
 			//missing log about contents of beakers
 
 
-	proc/assembly_activation(var/manipulated_mousetrap, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+	proc/assembly_activation(var/manipulated_mousetrap, var/obj/item/assembly/parent_assembly, var/mob/user)
 		if(!src.armed)
 			src.toggle_armed(user)
 			parent_assembly.trigger_icon_prefix = src.icon_state
@@ -66,15 +66,15 @@
 			logTheThing(LOG_BOMBING, usr, "activated the mousetrap on a [parent_assembly.name] at [log_loc(parent_assembly)].")
 			//missing log about contents of beakers
 
-	proc/assembly_building(var/manipulated_mousetrap, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+	proc/assembly_building(var/manipulated_mousetrap, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
 		//once integrated in the assembly, we unarm the mousetrap
 		src.armed = FALSE
 		src.icon_state = "mousetrap"
 		src.clear_armer()
 		//mousetrap-assembly + pipebomb-frame -> mousetrap-roller-assembly
-		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/pipebomb/frame), TYPE_PROC_REF(/obj/item/assembly/complete, create_mousetrap_roller), TRUE)
+		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/pipebomb/frame), TYPE_PROC_REF(/obj/item/assembly, create_mousetrap_roller), TRUE)
 
-	proc/assembly_get_state(var/manipulated_timer, var/obj/item/assembly/complete/parent_assembly)
+	proc/assembly_get_state(var/manipulated_timer, var/obj/item/assembly/parent_assembly)
 		return src.armed
 
 /// ----------------------------------------------
@@ -274,8 +274,8 @@
 			else
 				playsound(target, 'sound/voice/farts/poo2.ogg', 50)
 
-		else if (src.master && istype(src.master, /obj/item/assembly/complete))
-			var/obj/item/assembly/complete/parent_assembly = src.master
+		else if (src.master && istype(src.master, /obj/item/assembly))
+			var/obj/item/assembly/parent_assembly = src.master
 			parent_assembly.trigger_icon_prefix = src.icon_state
 			parent_assembly.UpdateIcon()
 			SPAWN( 0 )
@@ -297,11 +297,11 @@
 	item_state = "mousetrap"
 	w_class = W_CLASS_TINY
 	var/armed = FALSE
-	var/obj/item/assembly/complete/payload = null
+	var/obj/item/assembly/payload = null
 	var/obj/item/pipebomb/frame/frame = null
 	var/buttbomb = FALSE
 
-	New(ourLoc, var/obj/item/assembly/complete/new_payload, var/obj/item/pipebomb/frame/new_frame)
+	New(ourLoc, var/obj/item/assembly/new_payload, var/obj/item/pipebomb/frame/new_frame)
 		..()
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL, PROC_REF(on_part_disposal))
 		if (new_payload)

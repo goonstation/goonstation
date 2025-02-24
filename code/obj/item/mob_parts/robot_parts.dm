@@ -647,18 +647,18 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 
 /// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
 
-	assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/complete/parent_assembly)
+	assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
 		if(!parent_assembly.target)
 			return " You can add a pie onto this assembly in order to modify it further."
 
-	proc/assembly_setup(var/manipulated_arm, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+	proc/assembly_setup(var/manipulated_arm, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
 		//since we have different robot arms (including left and right versions)
 		parent_assembly.applier_icon_prefix = "robot_arm"
 		if (!parent_assembly.target)
 			// trigger-robotarm-Assembly + pie -> trigger-robotarm-pie-assembly
-			parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/food/snacks/pie), TYPE_PROC_REF(/obj/item/assembly/complete, add_target_item), TRUE)
+			parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/food/snacks/pie), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
 
-	proc/assembly_application(var/manipulated_arm, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
+	proc/assembly_application(var/manipulated_arm, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
 		var/mob/mob_target = null
 		var/turf/current_turf = get_turf(src)
 		for(var/mob/iterated_mob in viewers(6, current_turf))

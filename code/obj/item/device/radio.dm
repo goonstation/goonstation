@@ -920,17 +920,17 @@ TYPEINFO(/obj/item/radiojammer)
 
 /// ----------- Assembly-Related Procs -----------
 
-/obj/item/device/radio/signaler/proc/assembly_manipulation(var/manipulated_signaler, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+/obj/item/device/radio/signaler/proc/assembly_manipulation(var/manipulated_signaler, var/obj/item/assembly/parent_assembly, var/mob/user)
 	src.AttackSelf(user)
 
-/obj/item/device/radio/signaler/proc/assembly_application(var/manipulated_signaler, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
+/obj/item/device/radio/signaler/proc/assembly_application(var/manipulated_signaler, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
 	src.send_signal()
 
-/obj/item/device/radio/signaler/proc/assembly_setup(var/manipulated_signaler, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+/obj/item/device/radio/signaler/proc/assembly_setup(var/manipulated_signaler, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
 	//once integrated in the assembly, we secure the radio
 	src.b_stat = 0
 
-/obj/item/device/radio/signaler/proc/assembly_get_state(var/manipulated_signaler, var/obj/item/assembly/complete/parent_assembly)
+/obj/item/device/radio/signaler/proc/assembly_get_state(var/manipulated_signaler, var/obj/item/assembly/parent_assembly)
 	//that's my secret, cap. I'm always armed.
 	return ASSEMBLY_TRIGGER_ARMED
 

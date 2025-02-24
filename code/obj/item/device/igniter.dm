@@ -35,11 +35,11 @@ TYPEINFO(/obj/item/device/igniter)
 /// ----------- Trigger/Applier-Assembly-Related Procs -----------
 
 
-/obj/item/device/igniter/assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/complete/parent_assembly)
+/obj/item/device/igniter/assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
 	if(!parent_assembly.target)
 		return " You can add a plasma tank, pipebomb or beaker onto this assembly in order to modify it further."
 
-/obj/item/device/igniter/proc/assembly_application(var/manipulated_igniter, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
+/obj/item/device/igniter/proc/assembly_application(var/manipulated_igniter, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
 	if(!assembly_target)
 		//if there is no target, we just heat the tile we are on
 		src.ignite()
@@ -82,16 +82,16 @@ TYPEINFO(/obj/item/device/igniter)
 			return
 
 
-/obj/item/device/igniter/proc/assembly_setup(var/manipulated_igniter, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+/obj/item/device/igniter/proc/assembly_setup(var/manipulated_igniter, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
 	if(parent_assembly.applier == src)
 		// trigger-igniter- Assembly + wired pipebomb/pipebomb-frame/beaker -> trigger-igniter pipebomb/beakerbomb
-		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/tank/plasma, /obj/item/pipebomb/frame, /obj/item/pipebomb/bomb, /obj/item/reagent_containers/glass/beaker), TYPE_PROC_REF(/obj/item/assembly/complete, add_target_item), TRUE)
+		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/tank/plasma, /obj/item/pipebomb/frame, /obj/item/pipebomb/bomb, /obj/item/reagent_containers/glass/beaker), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
 	if(istype(parent_assembly.applier, /obj/item/device/multitool) && (src in parent_assembly.additional_components))
 		//were on the way to blow everything up, so lets lock in!
 		parent_assembly.special_construction_identifier = "canbomb"
 		//the rest of the assembly will be handled in obj/item/device/multitool
 
-/obj/item/device/igniter/proc/assembly_overlay_addition(var/manipulated_igniter, var/obj/item/assembly/complete/parent_assembly, var/passed_overlay_offset)
+/obj/item/device/igniter/proc/assembly_overlay_addition(var/manipulated_igniter, var/obj/item/assembly/parent_assembly, var/passed_overlay_offset)
 	if(parent_assembly.special_construction_identifier == "canbomb")
 		parent_assembly.overlays += image('icons/obj/items/assemblies.dmi', parent_assembly, "igniter_canbomb")
 /// ----------------------------------------------

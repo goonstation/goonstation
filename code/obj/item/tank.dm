@@ -599,10 +599,10 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
 
-	assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/complete/parent_assembly)
+	assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/parent_assembly)
 		return " [log_atmos(src)]"
 
-	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
 		//we need to add the new icon for the plasma tank
 		parent_assembly.target_item_prefix = "plasma"
 

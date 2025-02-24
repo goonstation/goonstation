@@ -105,16 +105,12 @@
 		//Foreach goto(19)
 
 	src.part1.armed = FALSE
-	src.c_state(0)
 	if (src.force_dud == 1)
 		src.bomb_logs(usr, src, "proximity", 0, 1)
 		return
 	src.part3.ignite()
 
-/obj/item/assembly/proximity_bomb/c_state(n)
 
-	src.icon_state = text("prox-igniter-tank[]", n)
-	return
 
 /obj/item/assembly/proximity_bomb/bump(atom/O)
 	SPAWN(0)
@@ -152,11 +148,6 @@
 	var/obj/item/device/igniter/part2 = null
 	var/obj/item/tank/plasma/part3 = null
 	flags = TABLEPASS | CONDUCT
-
-/obj/item/assembly/time_bomb/c_state(n)
-
-	src.icon_state = text("timer-igniter-tank[]", n)
-	return
 
 /obj/item/assembly/time_bomb/examine()
 	. = ..()

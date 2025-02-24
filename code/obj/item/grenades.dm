@@ -59,11 +59,11 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 
 	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
 
-	proc/assembly_setup(var/manipulated_grenade, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+	proc/assembly_setup(var/manipulated_grenade, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
 		//since we have a lot of icons for grenades, but not for the assembly, we go, like with old assemblies, just with the custom chem grenade icon
 		parent_assembly.applier_icon_prefix = "chem_grenade"
 
-	proc/assembly_application(var/manipulated_grenade, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
+	proc/assembly_application(var/manipulated_grenade, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
 		src.detonate()
 		//can't qdel them here or we have stuff like smoke grenades creating smoke at the center of the map.... ugh
 		parent_assembly.invisibility = INVIS_ALWAYS_ISH
@@ -966,11 +966,11 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 
 	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
 
-	proc/assembly_setup(var/manipulated_grenade, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+	proc/assembly_setup(var/manipulated_grenade, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
 		//since we have a lot of icons for grenades, but not for the assembly, we go, like with old assemblies, just with the custom chem grenade icon
 		parent_assembly.applier_icon_prefix = "chem_grenade"
 
-	proc/assembly_application(var/manipulated_grenade, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
+	proc/assembly_application(var/manipulated_grenade, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
 		src.detonate()
 		//why the fuck is do gimickbombs only vanish after 15 seconds, what the fuck?
 		parent_assembly.invisibility = INVIS_ALWAYS_ISH
@@ -1734,7 +1734,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			boutput(user, "You have to add reagents and wires to the pipebomb before you can add it to an assembly.")
 			return TRUE
 
-	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
 		//since in the assembly it functions as a full pipebomb, we change the name accordingly
 		if (src.material)
 			src.name = "[src.material.getName()] pipe bomb"
@@ -1742,7 +1742,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			src.name = "pipe bomb"
 
 
-	proc/assembly_removal(var/manipulated_bomb, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+	proc/assembly_removal(var/manipulated_bomb, var/obj/item/assembly/parent_assembly, var/mob/user)
 		//since outside the assembly it  does not function as a full pipebomb, we change the name accordingly
 		if (src.material)
 			src.name = "[src.material.getName()] pipe bomb frame"

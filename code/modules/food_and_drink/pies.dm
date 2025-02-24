@@ -37,7 +37,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 		return TRUE
 
 
-/obj/item/reagent_containers/food/snacks/pie/proc/assembly_setup(var/manipulated_pie, var/obj/item/assembly/complete/parent_assembly, var/mob/user, var/is_build_in)
+/obj/item/reagent_containers/food/snacks/pie/proc/assembly_setup(var/manipulated_pie, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
 	if (is_build_in && parent_assembly.target == src)
 		//we want to handle the overlay over vis_content here
 		parent_assembly.target_overlay_invisible = TRUE
@@ -48,7 +48,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 		src.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
 		parent_assembly.vis_contents += src
 
-/obj/item/reagent_containers/food/snacks/pie/proc/assembly_removal(var/manipulated_pie, var/obj/item/assembly/complete/parent_assembly, var/mob/user)
+/obj/item/reagent_containers/food/snacks/pie/proc/assembly_removal(var/manipulated_pie, var/obj/item/assembly/parent_assembly, var/mob/user)
 	//we reset the transformations and the vis_flags here
 	src.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
 	src.transform = null
