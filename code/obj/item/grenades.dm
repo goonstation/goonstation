@@ -65,7 +65,9 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 
 	proc/assembly_application(var/manipulated_grenade, var/obj/item/assembly/complete/parent_assembly, var/obj/assembly_target)
 		src.detonate()
-		qdel(parent_assembly)
+		//can't qdel them here or we have stuff like smoke grenades creating smoke at the center of the map.... ugh
+		parent_assembly.invisibility = INVIS_ALWAYS_ISH
+		parent_assembly.qdel_on_tear_apart = TRUE
 
 	/// ----------------------------------------------
 
@@ -972,8 +974,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		src.detonate()
 		//why the fuck is do gimickbombs only vanish after 15 seconds, what the fuck?
 		parent_assembly.invisibility = INVIS_ALWAYS_ISH
-		SPAWN(15 SECONDS)
-			qdel(parent_assembly)
+		parent_assembly.qdel_on_tear_apart = TRUE
 
 	/// ----------------------------------------------
 

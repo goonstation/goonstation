@@ -55,6 +55,7 @@ Contains:
 	var/override_name = null //! use this when an assembly should override the name of the assembly, e.g. canbomb assembly
 	var/override_description = null //! same for the descripion
 	var/override_help_message = null //! see override_name, just for help message
+	var/qdel_on_tear_apart = FALSE //! set this to TRUE for applier who needs multiple spawns to do their effect before eliminating itself (because for some reason smokebombs need it, ugh)
 	var/mob/last_armer = null //! for tracking/logging of who armed the assembly
 	flags = TABLEPASS | CONDUCT | NOSPLASH
 	item_function_flags = OBVIOUS_INTERACTION_BAR
@@ -375,6 +376,9 @@ Contains:
 
 ///This proc removes all items attached to the assembly and removes it
 /obj/item/assembly/complete/proc/tear_apart()
+	if(src.qdel_on_tear_apart)
+		qdel(src)
+		return
 	var/list/items_to_remove = list(src.trigger, src.applier, src.target)
 	var/turf/target_turf = get_turf(src)
 	if(src.additional_components)
