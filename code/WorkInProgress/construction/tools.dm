@@ -575,7 +575,7 @@ TYPEINFO(/obj/item/room_planner)
 		// selectedtype gets used as our iconstate for floors or the key to the lists for walls
 		if (mode == "floors")
 			selectedtype = null
-			states += (icon_states('icons/turf/construction_floors.dmi') - list("engine", "catwalk", "catwalk_narrow", "catwalk_cross"))
+			states += (get_icon_states('icons/turf/construction_floors.dmi') - list("engine", "catwalk", "catwalk_narrow", "catwalk_cross"))
 			selectedicon = 'icons/turf/construction_floors.dmi'
 			var/newtype = tgui_input_list(message="What kind?", title="Marking", items=states)
 			if(newtype)

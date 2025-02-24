@@ -2146,10 +2146,10 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 		src.name = corruptText(src.name, 66)
 
 	on_hit(atom/hit)
-		hit.icon_state = pick(icon_states(hit.icon))
+		hit.icon_state = pick(get_icon_states(hit.icon))
 
 		for(var/atom/a in hit)
-			a.icon_state = pick(icon_states(a.icon))
+			a.icon_state = pick(get_icon_states(a.icon))
 
 		playsound(hit, 'sound/machines/glitch3.ogg', 50, TRUE)
 

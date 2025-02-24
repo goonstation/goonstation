@@ -15,11 +15,17 @@
 	var/light_g = 1
 	var/light_b = 1
 
+	// Magic numbers to align the minimap with the physical frame of the map.
+	/// map holder x offset to center the map in frame
+	var/minimap_holder_pixel_x = 5
+	/// map holder y offset to center the map in frame
+	var/minimap_holder_pixel_y = 4
+
 /obj/minimap/map_computer/initialise_minimap()
 	. = ..()
 	// Magic numbers to align the minimap with the physical frame of the map.
-	src.map.minimap_holder.pixel_x += 5
-	src.map.minimap_holder.pixel_y += 4
+	src.map.minimap_holder.pixel_x += minimap_holder_pixel_x
+	src.map.minimap_holder.pixel_y += minimap_holder_pixel_y
 
 	src.create_overlays()
 
@@ -84,7 +90,8 @@
 /obj/minimap/map_computer/pod_wars
 	name = "Debris Field Map"
 	desc = "A cutting-edge cathode ray tube monitor, actively rendering many dozens of kilobytes of reconnaissance data on the surrounding debris field."
-	map_scale = 0.3
+	map_scale = 0.25
+	minimap_holder_pixel_y = 55
 
 
 /obj/minimap/map_computer/pod_wars/nanotrasen
