@@ -51,48 +51,6 @@
 		. = ..()
 		signal_event("icon_updated")
 
-	attackby(obj/A, mob/user)
-		if (istype(A, /obj/item/assembly/time_ignite) && !(A:status))
-			var/obj/item/assembly/time_ignite/W = A
-			if (!W.part3)
-				W.part3 = src
-				src.master = W
-				src.layer = initial(src.layer)
-				user.u_equip(src)
-				src.set_loc(W)
-
-				boutput(user, "You attach [W.name] to [src].")
-			else
-				boutput(user, "You must remove [W.part3] from the assembly before transferring chemicals to it!")
-			return
-
-		if (istype(A, /obj/item/assembly/prox_ignite) && !(A:status))
-			var/obj/item/assembly/prox_ignite/W = A
-			if (!W.part3)
-				W.part3 = src
-				src.master = W
-				src.layer = initial(src.layer)
-				user.u_equip(src)
-				src.set_loc(W)
-
-				boutput(user, "You attach [W.name] to [src].")
-			else boutput(user, "You must remove [W.part3] from the assembly before transferring chemicals to it!")
-			return
-
-		if (istype(A, /obj/item/assembly/rad_ignite) && !(A:status))
-			var/obj/item/assembly/rad_ignite/W = A
-			if (!W.part3)
-				W.part3 = src
-				src.master = W
-				src.layer = initial(src.layer)
-				user.u_equip(src)
-				src.set_loc(W)
-
-				boutput(user, "You attach [W.name] to [src].")
-			else boutput(user, "You must remove [W.part3] from the assembly before transferring chemicals to it!")
-			return
-
-		..(A, user)
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */

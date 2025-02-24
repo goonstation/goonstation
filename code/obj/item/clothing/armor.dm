@@ -83,14 +83,14 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 			src.part_vest = new_vest
 			new_vest.set_loc(src)
 			new_vest.master = src
-		if (new_payload)
+		if (!new_payload)
+			src.payload = new /obj/item/assembly/anal_ignite_pipebomb(src)
+		else
 			src.payload = new_payload
 			new_payload.set_loc(src)
 			new_payload.master = src
 		// suicide vest + wrench -> disassembly
 		src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(disassemble), FALSE)
-		//if (!src.part_igniter)
-		//	src.part_igniter = new /obj/item/assembly/anal_ignite(src)
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH)
