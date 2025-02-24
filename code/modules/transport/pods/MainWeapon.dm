@@ -1183,7 +1183,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	projectile_speed = 42
 
 /datum/projectile/laser/light/pod/support_gunner
-	damage = 10
+	damage = 5
 
 /datum/projectile/disruptor
 	impact_range = 4
