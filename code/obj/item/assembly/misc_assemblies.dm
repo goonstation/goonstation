@@ -339,6 +339,27 @@ Contains:
 		return
 	..()
 
+/obj/item/assembly/return_air(direct = FALSE)
+	var/datum/gas_mixture/value_to_return = null
+	if(!direct)
+		value_to_return = ..()
+	for(var/obj/item/checked_item in list(src.target, src.applier, src.trigger)) //The order is important here. We want to check the "payload" first
+		var/datum/gas_mixture/checked_value = checked_item.return_air(TRUE)
+		if(checked_value)
+			value_to_return = checked_value
+			break
+	return value_to_return
+
+///This proc returns the reagents holder of the items in order: target, applier, trigger
+///This is needed in order to make reagent scanner work on beaker-assemblies
+/obj/item/assembly/proc/get_first_component_reagents()
+	var/datum/reagents/reagents_to_return = null
+	for(var/obj/item/checked_item in list(src.target, src.applier, src.trigger)) //The order is important here. We want to check the "payload" first
+		if(checked_item.reagents)
+			reagents_to_return = checked_item.reagents
+			break
+	return reagents_to_return
+
 ///an assembly does need at least a trigger and an applier, so this proc strips down the assembly to these parts
 /obj/item/assembly/proc/remove_until_minimum_components()
 	// We remove all assembly-components from the assembly
