@@ -759,10 +759,20 @@ ABSTRACT_TYPE(/datum/pipeshotrecipe)
 	craftname = "bone chunk"
 
 
-/obj/item/assembly/pipehulls
+/obj/item/pipehulls
 	name = "filled pipe hulls"
+	icon = 'icons/obj/items/assemblies.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "assembly"
 	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them."
 	icon_state = "Pipeshotrow"
+	throwforce = 10
+	w_class = W_CLASS_TINY
+	throw_speed = 4
+	throw_range = 10
+	force = 2
+	stamina_damage = 10
+	stamina_cost = 10
 	flags = NOSPLASH
 	var/static/list/datum/pipeshotrecipe/recipes_list = list()
 	var/datum/pipeshotrecipe/recipe = null

@@ -1905,7 +1905,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				qdel(src.reagents)
 				//make the hulls
 				boutput(user, SPAN_NOTICE("You add some propellant to the hulls."))
-				new /obj/item/assembly/pipehulls(get_turf(src))
+				new /obj/item/pipehulls(get_turf(src))
 				qdel(src)
 		// Since the assembly was done, return TRUE
 		// We return true here even if the volatility was not high enough, so we don't spill chemicals on the frame for no reason
