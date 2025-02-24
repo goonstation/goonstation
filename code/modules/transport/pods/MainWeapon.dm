@@ -1182,6 +1182,9 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	dissipation_delay = 14
 	projectile_speed = 42
 
+/datum/projectile/laser/light/pod/support_gunner
+	damage = 10
+
 /datum/projectile/disruptor
 	impact_range = 4
 	dissipation_delay = 16

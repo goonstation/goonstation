@@ -550,15 +550,21 @@
 		//Don't think I need the above, this should work here.
 		if (istype(src.loc, /obj/machinery/vehicle))
 			var/obj/machinery/vehicle/ship = src.loc
-			if (ship.sensors)
-				if (ship.sensors.active)
-					var/obj/machinery/vehicle/target_pod = target
-					if (src.loc != target_pod && istype(target_pod))
-						ship.sensors.end_tracking()
-						ship.sensors.quick_obtain_target(target_pod)
-				else
-					if (istype(target, /obj/machinery/vehicle))
-						boutput(src, SPAN_ALERT("Sensors are inactive, unable to target craft!"))
+			if (ship.pilot == src)
+				if (ship.sensors)
+					if (ship.sensors.active)
+						var/obj/machinery/vehicle/target_pod = target
+						if (src.loc != target_pod && istype(target_pod))
+							ship.sensors.end_tracking()
+							ship.sensors.quick_obtain_target(target_pod)
+					else
+						if (istype(target, /obj/machinery/vehicle))
+							boutput(src, SPAN_ALERT("Sensors are inactive, unable to target craft!"))
+			else if (istype(ship.m_w_system) && istype(ship.sec_system, /obj/item/shipcomponent/secondary_system/gunner_support))
+				var/obj/item/shipcomponent/mainweapon/weapon = ship.m_w_system
+				if (src != weapon.gunner && weapon.active)
+					var/obj/item/shipcomponent/secondary_system/gunner_support/support_gunner = ship.sec_system
+					support_gunner.fire_at(target, src)
 
 
 		if (src.next_click >= world.time) // since some of these attack functions go wild with modifying next_click, we implement the clicking grace window with a penalty instead of changing how next_click is set
