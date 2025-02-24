@@ -80,7 +80,7 @@
 		icon_state = "stingdepres"
 		venom_id = "neurodepressant"
 		inject_amount = 5
-		cooldown = 20
+		cooldown = 20 SECONDS
 
 	hemotoxin
 		name = "Hemotoxin Sting"
