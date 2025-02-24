@@ -5979,7 +5979,7 @@ area/station/security/visitation
 */
 // pod_wars Areas
 /area/pod_wars
-	minimaps_to_render_on = MAP_POD_WARS_NANOTRASEN | MAP_POD_WARS_SYNDICATE
+	minimaps_to_render_on = MAP_POD_WARS_NANOTRASEN | MAP_POD_WARS_SYNDICATE | MAP_OBSERVER
 
 /area/pod_wars/team1
 	station_map_colour = MAPC_NANOTRASEN

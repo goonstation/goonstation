@@ -200,6 +200,11 @@ toxic - poisons
 	casing = /obj/item/casing/rifle
 	ricochets = TRUE
 
+/datum/projectile/bullet/akm/pod
+	damage = 4
+	shot_number = 1
+	dissipation_delay = 7
+
 /datum/projectile/bullet/draco
 	name = "bullet"
 	shot_sound = 'sound/weapons/akm.ogg'
@@ -1799,16 +1804,16 @@ datum/projectile/bullet/autocannon
 
 		if (auto_find_targets)
 			P.targets = list()
-			for(var/mob/M in view(P,15))
-				if (!is_valid_target(M, P)) continue
-				P.targets += M
+			for(var/atom/A as anything in view(P,15))
+				if (!is_valid_target(A, P)) continue
+				P.targets += A
 
 		if (length(src.targets))
 			P.targets = src.targets
 			src.targets = list()
 
-	proc/is_valid_target(mob/M, obj/projectile/P)
-		return (M != P.shooter && M != P.mob_shooter)
+	proc/is_valid_target(atom/A, obj/projectile/P)
+		return (A != P.shooter && A != P.mob_shooter)
 
 	proc/calc_desired_x_y(var/obj/projectile/P)
 		.= 0
@@ -1853,8 +1858,9 @@ datum/projectile/bullet/autocannon
 
 		..()
 
-/datum/projectile/bullet/homing/mrl
-	name = "MRL rocket"
+ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
+/datum/projectile/bullet/homing/rocket
+	name = "Rocket"
 	window_pass = 0
 	icon = 'icons/obj/projectiles.dmi'
 	damage_type = D_KINETIC
@@ -1869,6 +1875,7 @@ datum/projectile/bullet/autocannon
 	max_speed = 10
 	start_speed = 10
 	shot_delay = 1 SECONDS
+	var/explosion_power = 15
 
 	on_hit(atom/hit)
 		var/turf/T = get_turf(hit)
@@ -1883,8 +1890,25 @@ datum/projectile/bullet/autocannon
 					boutput(M, SPAN_ALERT("You are struck by shrapnel!"))
 
 			T.hotspot_expose(700,125)
-			explosion_new(null, T, 15, range_cutoff_fraction = 0.45)
+			explosion_new(null, T, src.explosion_power, range_cutoff_fraction = 0.45)
 		return
+
+	is_valid_target(atom/A, obj/projectile/P)
+		. = ..()
+		return . && isliving(A) && !isintangible(A)
+
+/datum/projectile/bullet/homing/rocket/gunbot_drone
+	max_rotation_rate = 5
+	dissipation_delay = 15
+	start_speed = 15
+	explosion_power = 5
+
+	is_valid_target(mob/M, obj/projectile/P)
+		. = ..()
+		return . || isvehicle(M)
+
+/datum/projectile/bullet/homing/rocket/mrl
+	name = "MRL rocket"
 
 	is_valid_target(mob/M, obj/projectile/P)
 		. = ..()
@@ -2122,10 +2146,10 @@ datum/projectile/bullet/autocannon
 		src.name = corruptText(src.name, 66)
 
 	on_hit(atom/hit)
-		hit.icon_state = pick(icon_states(hit.icon))
+		hit.icon_state = pick(get_icon_states(hit.icon))
 
 		for(var/atom/a in hit)
-			a.icon_state = pick(icon_states(a.icon))
+			a.icon_state = pick(get_icon_states(a.icon))
 
 		playsound(hit, 'sound/machines/glitch3.ogg', 50, TRUE)
 

@@ -1145,7 +1145,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 				src.color = "#FFFFFF"
 
 			attackby(obj/item/dye_bottle/W, mob/user)
-				if (istype(W, /obj/item/dye_bottle))
+				if (istype(W) && W.uses_left)
+					W.use_dye()
 					src.color = W.customization_first_color
 					src.UpdateIcon()
 					var/mob/wearer = src.loc
@@ -1204,7 +1205,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		..()
 		if(!istype(get_area(src), /area/station))
 			var/nt_wear_state = "[src.wear_state || src.icon_state]-nt"
-			if(nt_wear_state in icon_states(src.wear_image_icon))
+			if(nt_wear_state in get_icon_states(src.wear_image_icon))
 				src.wear_state = nt_wear_state
 
 	setupProperties()
@@ -1539,7 +1540,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		..()
 		if(!istype(get_area(src), /area/station))
 			var/nt_wear_state = "[src.wear_state || src.icon_state]-nt"
-			if(nt_wear_state in icon_states(src.wear_image_icon))
+			if(nt_wear_state in get_icon_states(src.wear_image_icon))
 				src.wear_state = nt_wear_state
 
 	setupProperties()

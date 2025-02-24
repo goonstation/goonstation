@@ -721,7 +721,7 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 	health = 250
 	maxhealth = 250
 	armor_score_multiplier = 0.7
-	speed = 0.85
+	speedmod = 1.18
 
 	New()
 		..()

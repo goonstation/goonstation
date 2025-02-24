@@ -18,6 +18,9 @@
 
 #define hex_to_rgb_list(hex) rgb2num(hex)
 
+/// distance^2 between first and second RGB values
+#define color_dist2(_r, _g, _b, _dr, _dg, _db) ((_r-_dr)*(_r-_dr)+(_g-_dg)*(_g-_dg)+(_b-_db)*(_b-_db))
+
 /proc/random_color()
 	return rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
@@ -448,6 +451,13 @@ proc/get_average_color(icon/I, xPixelInterval = 4, yPixelInterval = 4)
 		derive_color_from_hue_offset(color, 180),
 		derive_color_from_hue_offset(color, 270)
 	)
+
+///Returns the squared euclidian distance between two colors in RGB space
+///Not great scientifically but should be good enough for our purposes
+/proc/color_dist(A, B)
+	var/list/a_rgb = hex_to_rgb_list(A)
+	var/list/b_rgb = hex_to_rgb_list(B)
+	return color_dist2(a_rgb[1], a_rgb[2], a_rgb[3], b_rgb[1], b_rgb[2], b_rgb[3])
 
 /client/proc/set_saturation(s=1)
 	src.saturation_matrix = hsv_transform_color_matrix(0, s, 1)
