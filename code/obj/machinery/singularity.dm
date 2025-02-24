@@ -462,7 +462,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	else if (isturf(A))
 		var/turf/T = A
-		if (T.turf_flags & IS_TYPE_SIMULATED)
+		if (issimulatedturf(T))
 			if (istype(T, /turf/simulated/floor))
 				T.ReplaceWithSpace()
 				gain += 2
@@ -515,7 +515,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 
 /obj/machinery/the_singularity/proc/Toxmob()
-	for (var/mob/living/carbon/M in hearers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
+	for (var/mob/living/M in hearers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
 		M.take_radiation_dose(clamp(0.2 SIEVERTS*(radius+1), 0, 2 SIEVERTS))
 		M.show_text("You feel odd.", "red")
 
@@ -542,8 +542,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (prob(70))
 			continue
 
-		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (IN_EUCLIDEAN_RANGE(sing_center, T, radius+EVENT_GROWTH+0.5)))
-			if (T.turf_flags & IS_TYPE_SIMULATED)
+		if (T && !istype(T, /turf/space) && (IN_EUCLIDEAN_RANGE(sing_center, T, radius+EVENT_GROWTH+0.5)))
+			if (issimulatedturf(T))
 				if (istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/plating))
 					var/turf/simulated/floor/F = T
 					if (!F.broken)
@@ -984,6 +984,9 @@ TYPEINFO(/obj/machinery/field_generator)
 /obj/machinery/field_generator/activated
 	Varedit_start = TRUE
 	power = 50
+
+/obj/machinery/field_generator/does_impact_particles(kinetic_impact)
+	return kinetic_impact
 
 /////////////////////////////////////////////// Containment field //////////////////////////////////
 

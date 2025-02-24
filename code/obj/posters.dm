@@ -455,25 +455,20 @@ TYPEINFO(/obj/submachine/poster_creator)
 			qdel(W)
 			return
 
-		else if (istype(W, /obj/item/paper_bin))
-			var/obj/item/paper_bin/B = W
-			var/n = B.amount
-			for (var/obj/item/paper/P in W)
-				n++
-			if (n <= 0)
-				boutput(user, SPAN_ALERT("\The [B] is empty!"))
+		else if (istype_exact(W, /obj/item/paper_bin)) // no artifact or robots pls
+			var/obj/item/paper_bin/bin = W
+			var/total_amount = bin.amount_left
+			for(var/obj/item/paper/P in bin)
+				total_amount += 1
+				qdel(P)
+			if (total_amount <= 0)
+				boutput(user, SPAN_ALERT("\The [bin] is empty!"))
 				return
-			user.visible_message("[user] loads [W] into [src].",\
-			"You load [W] into [src].")
-			src.papers += n
-			for (n, n>0, n--)
-				if (B.amount <= 0)
-					var/obj/item/paper/P = locate(/obj/item/paper) in B
-					if (P)
-						qdel(P)
-				else
-					B.amount --
-			B.update()
+			user.visible_message("[user] loads [bin] into [src].",\
+			"You load [total_amount] sheets from [bin] into [src].")
+			src.papers += total_amount
+			bin.amount_left -= bin.amount_left
+			bin.update()
 
 		else if (istype(W, /obj/item/photo))
 			var/obj/item/photo/P = W

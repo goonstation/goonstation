@@ -70,6 +70,9 @@
 
 	return
 
+/obj/machinery/door/window/update_icon(toggling)
+	return // these use their own system for controlling icons
+
 /obj/machinery/door/window/emp_act()
 	..()
 	if (prob(20) && (src.density && src.cant_emag != 1 && src.isblocked() != 1))
@@ -153,18 +156,18 @@
 	if (need_rebuild)
 		if (istype(source)) // Rebuild resp. update nearby group geometry.
 			if (source.parent)
-				air_master.groups_to_rebuild |= source.parent
+				air_master.groups_to_rebuild[source.parent] = null
 			else
-				air_master.tiles_to_update |= source
+				air_master.tiles_to_update[source] = null
 
 		if (istype(target))
 			if (target.parent)
-				air_master.groups_to_rebuild |= target.parent
+				air_master.groups_to_rebuild[target.parent] = null
 			else
-				air_master.tiles_to_update |= target
+				air_master.tiles_to_update[target] = null
 	else
-		if (istype(source)) air_master.tiles_to_update |= source
-		if (istype(target)) air_master.tiles_to_update |= target
+		if (istype(source)) air_master.tiles_to_update[source] = null
+		if (istype(target)) air_master.tiles_to_update[target] = null
 
 	if (istype(source))
 		source.selftilenotify() //for fluids

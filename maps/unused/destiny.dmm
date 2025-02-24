@@ -660,7 +660,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /obj/machinery/light/incandescent{
@@ -6270,9 +6270,7 @@
 /turf/simulated/floor/greenwhite{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aCz" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -6831,9 +6829,7 @@
 	pixel_x = 11
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aFu" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 9;
@@ -7197,9 +7193,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aGN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7226,9 +7220,7 @@
 /area/station/mining/refinery)
 "aGU" = (
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aGV" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/north)
@@ -7340,9 +7332,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aHo" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7626,9 +7616,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aIE" = (
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
@@ -8199,9 +8187,7 @@
 /turf/simulated/floor/greenwhite{
 	dir = 8
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aKW" = (
 /obj/cable,
 /obj/cable{
@@ -8244,9 +8230,7 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aKY" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/decal/tile_edge/line/purple{
@@ -8266,9 +8250,7 @@
 	},
 /obj/machinery/cashreg,
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aKZ" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -8479,9 +8461,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aMm" = (
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/west{
@@ -8645,9 +8625,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aMB" = (
 /obj/storage/closet/coffin/wood,
 /obj/item/device/radio/intercom/security,
@@ -8683,9 +8661,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aMF" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -11200,9 +11176,7 @@
 /turf/simulated/floor/greenwhite{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "bdc" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -11248,9 +11222,7 @@
 /turf/simulated/floor/greenwhite{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "bdm" = (
 /obj/disposalpipe/switch_junction{
 	desc = "An underfloor mail pipe.";
@@ -12827,7 +12799,7 @@
 	},
 /area/station/bridge)
 "bqD" = (
-/obj/critter/opossum/morty,
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "bqN" = (
@@ -14216,9 +14188,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "bzy" = (
 /obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
@@ -15544,9 +15514,7 @@
 	},
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "bUr" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -16268,9 +16236,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "clh" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16359,9 +16325,7 @@
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "cmN" = (
 /obj/stool/chair/dining/wood,
 /obj/cable{
@@ -17446,9 +17410,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "cKp" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood{
@@ -18990,9 +18952,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medlab,
 /turf/simulated/floor/grass/random,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "drA" = (
 /obj/machinery/conveyor/NS{
 	id = "disposals";
@@ -21937,9 +21897,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medlab,
 /turf/simulated/floor/plating/random,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "eFx" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -22107,9 +22065,7 @@
 /turf/simulated/floor/greenwhite{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "eJk" = (
 /obj/landmark/start/job/bartender,
 /obj/decal/tile_edge/stripe/extra_big,
@@ -22920,9 +22876,7 @@
 /area/station/crew_quarters/lounge)
 "eZD" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "eZL" = (
 /obj/cable/yellow{
 	icon_state = "0-8"
@@ -23437,9 +23391,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "flK" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/disposalpipe/segment{
@@ -23508,9 +23460,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "fmX" = (
 /obj/railing/orange/reinforced{
 	dir = 4
@@ -25827,9 +25777,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "goR" = (
 /obj/table/reinforced/auto,
 /obj/window/reinforced/west,
@@ -30649,9 +30597,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "iSC" = (
 /obj/decal/tile_edge/line/red{
 	dir = 1;
@@ -31167,9 +31113,7 @@
 /turf/simulated/floor/greenwhite{
 	dir = 10
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "jgI" = (
 /obj/stool/chair/office/yellow{
 	dir = 8
@@ -35242,9 +35186,7 @@
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "lnt" = (
 /obj/cable,
 /obj/cable,
@@ -39436,9 +39378,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "nsV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39653,9 +39593,7 @@
 	pixel_x = 11
 	},
 /turf/simulated/floor/greenwhite,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "nxN" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -40264,9 +40202,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medlab,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "nOL" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -42058,9 +41994,7 @@
 /area/station/storage/tools)
 "oRz" = (
 /turf/simulated/floor/greenwhite,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "oRI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -45652,7 +45586,7 @@
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "qIA" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /obj/item/device/radio/intercom/science,
@@ -50634,9 +50568,7 @@
 	},
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "tmJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -50726,7 +50658,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/psychiatrist)
 "trO" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 4
 	},
 /obj/machinery/light/incandescent,
@@ -53073,9 +53005,7 @@
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "uBC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -53688,9 +53618,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "uOM" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/outer/sw)
@@ -54015,9 +53943,7 @@
 /turf/simulated/floor/greenwhite{
 	dir = 8
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "uWW" = (
 /obj/item_dispenser/latex_gloves,
 /obj/stool/chair/blue,
@@ -55613,9 +55539,7 @@
 "vKa" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/greenwhite,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "vKh" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -56850,9 +56774,7 @@
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "wrw" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/storage/scanner{
@@ -58711,9 +58633,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "xmd" = (
 /obj/stool/chair/office/purple{
 	dir = 4
@@ -59195,9 +59115,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "xxW" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -59317,9 +59235,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "xzT" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -60207,9 +60123,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medlab,
 /turf/simulated/floor/white,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "xZl" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -60634,9 +60548,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "ykI" = (
 /obj/cable{
 	icon_state = "1-2"

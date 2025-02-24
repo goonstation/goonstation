@@ -916,7 +916,7 @@ TYPEINFO(/obj/submachine/seed_manipulator/kudzu)
 /obj/submachine/seed_manipulator/kudzu
 	name = "KudzuMaster V1"
 	desc = "A strange \"machine\" that seems to function via fluids and plant fibers."
-	deconstruct_flags = null
+	deconstruct_flags = DECON_NONE
 	icon = 'icons/misc/kudzu_plus.dmi'
 	icon_state = "seed-gene-console"
 	_health = 1

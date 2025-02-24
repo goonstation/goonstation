@@ -118,7 +118,8 @@ TYPEINFO(/obj/machinery/disposal_pipedispenser/mobile)
 			else if(src.removing_pipe)
 				if(!new_loc.intact || istype(new_loc,/turf/space))
 					for(var/obj/disposalpipe/pipe in old_loc)
-						qdel(pipe)
+						if (pipe.weldable)
+							qdel(pipe)
 			prev_dir = direction // might want to actually do this even when old_loc == loc but idk, it sucks with attempted diagonal movement
 
 	proc/connect_pipe(var/turf/new_loc, var/new_dir)

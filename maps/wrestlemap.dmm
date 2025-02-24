@@ -3191,7 +3191,7 @@
 /turf/simulated/floor/black/side,
 /area/station/engine/power)
 "btf" = (
-/obj/machinery/computer/bank_data,
+/obj/machinery/computer3/generic/bank_data,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -6846,7 +6846,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/critter/opossum/morty,
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "dba" = (
@@ -31439,7 +31439,7 @@
 /turf/simulated/floor,
 /area/station/engine/monitoring)
 "nLA" = (
-/obj/landmark/start/job/scientist,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -38596,6 +38596,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/landmark/start/job/scientist,
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -47438,7 +47439,7 @@
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "uTd" = (
-/obj/machinery/computer/bank_data,
+/obj/machinery/computer3/generic/bank_data,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;

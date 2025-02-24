@@ -269,6 +269,7 @@ var/global/datum/phrase_log/phrase_log = new
 			src.cached_api_phrases[category] = new_phrases
 
 		var/list/L = src.cached_api_phrases[category]
+		if (!length(L)) return .
 		. = L[length(L)]
 		L.len--
 		while(src.is_uncool(.))

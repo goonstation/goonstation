@@ -56,6 +56,12 @@ ABSTRACT_TYPE(/datum/minimap)
 
 /datum/minimap/disposing()
 	STOP_TRACKING
+	// cleanup reference loops
+	minimap_holder = null
+	minimap_render = null
+	map = null
+	for (var/idx in minimap_markers)
+		qdel(minimap_markers[idx])
 	. = ..()
 
 /// Initialises the raw minimap icons and minimap render.
@@ -126,6 +132,7 @@ ABSTRACT_TYPE(/datum/minimap)
 
 	var/datum/minimap_marker/minimap/marker = new(target, marker_name, can_be_deleted_by_player, list_on_ui, src.marker_scale)
 	marker.map = src
+	marker.icon_state = icon_state
 	marker.marker.icon = icon(icon, icon_state)
 
 	src.minimap_markers[target] = marker

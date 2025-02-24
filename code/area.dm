@@ -862,6 +862,16 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 
 /area/shuttle/merchant_shuttle/diner_station
 	name = "Station Merchant Shuttle Dock Gamma"
+#if defined(MAP_OVERRIDE_NADIR) // Nadir diner shuttle is in the trench
+	sound_group = "trench"
+	force_fullbright = 0
+	requires_power = 0
+	luminosity = 0
+	sound_environment = 22
+	ambient_light = TRENCH_LIGHT
+#elif defined(UNDERWATER_MAP) // Oshan/Manta diner shuttle is at the surface sea diner
+	ambient_light = OCEAN_LIGHT
+#endif
 
 /area/shuttle/merchant_shuttle/left_station
 	name = "Station Merchant Shuttle Dock Alpha"
@@ -1575,6 +1585,10 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/mauxite_hideout
 	name = "hideout"
 	icon_state = "orange"
+
+/area/prefab/merc_outpost
+	name = "Frontier Outpost 8"
+	icon_state = "red"
 
 // Sealab trench areas //
 
@@ -2949,7 +2963,7 @@ ABSTRACT_TYPE(/area/station/medical)
 	station_map_colour = MAPC_ROBOTICS
 
 /area/station/medical/research
-	name = "Medical Research"
+	name = "Genetic Research"
 	icon_state = "medresearch"
 	sound_environment = 3
 	station_map_colour = MAPC_MEDRESEARCH
@@ -4293,7 +4307,7 @@ ABSTRACT_TYPE(/area/mining)
 /**
   * Causes a power alert in the area. Notifies AIs.
   */
-/area/proc/poweralert(var/state, var/source)
+/area/proc/poweralert(state, obj/machinery/power/apc/source)
 	if (state != poweralm)
 		poweralm = state
 		var/list/cameras = list()
@@ -4304,6 +4318,10 @@ ABSTRACT_TYPE(/area/mining)
 				aiPlayer.cancelAlarm("Power", src, source)
 			else
 				aiPlayer.triggerAlarm("Power", src, cameras, source)
+		if(state == 1)
+			source.RemoveComponentsOfType(/datum/component/minimap_marker/minimap)
+		else
+			source.AddComponent(/datum/component/minimap_marker/minimap, MAP_ALERTS, "alarm_power", name="[src] Power Alarm")
 	return
 
 /// This might be really stupid, but I can't think of a better way
@@ -4336,8 +4354,6 @@ ABSTRACT_TYPE(/area/mining)
 			return
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
-		for (var/obj/machinery/computer/atmosphere/alerts/a as anything in machine_registry[MACHINES_ATMOSALERTS])
-			a.triggerAlarm("Fire", src, cameras, src)
 
 /**
   * Resets the fire alert in the area. Notifies AIs.
@@ -4352,12 +4368,11 @@ ABSTRACT_TYPE(/area/mining)
 			if(get_area(F) == src)
 				F.alarm_active = FALSE
 				F.UpdateIcon()
+				F.RemoveComponentsOfType(/datum/component/minimap_marker/minimap)
 		if (src.get_z_level() != Z_LEVEL_STATION)
 			return
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.cancelAlarm("Fire", src, src)
-		for (var/obj/machinery/computer/atmosphere/alerts/a as anything in machine_registry[MACHINES_ATMOSALERTS])
-			a.cancelAlarm("Fire", src, src)
 
 /**
   * Updates the icon of the area. Mainly used for flashing it red or blue. See: old party lights
@@ -5964,7 +5979,7 @@ area/station/security/visitation
 */
 // pod_wars Areas
 /area/pod_wars
-	minimaps_to_render_on = MAP_POD_WARS_NANOTRASEN | MAP_POD_WARS_SYNDICATE
+	minimaps_to_render_on = MAP_POD_WARS_NANOTRASEN | MAP_POD_WARS_SYNDICATE | MAP_OBSERVER
 
 /area/pod_wars/team1
 	station_map_colour = MAPC_NANOTRASEN

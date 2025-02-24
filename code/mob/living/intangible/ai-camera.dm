@@ -51,7 +51,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT, src)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
-		AddComponent(/datum/component/minimap_marker/minimap, MAP_AI, "ai_eye")
+		AddComponent(/datum/component/minimap_marker/minimap, MAP_AI | MAP_OBSERVER, "ai_eye")
 
 	Login()
 		.=..()
@@ -400,12 +400,16 @@
 		if (mainframe)
 			mainframe.unbolt_all_airlocks()
 
+	verb/show_alerts()
+		set category = "AI Commands"
+		set name = "Show Alert Minimap"
+		mainframe?.open_alert_minimap(src)
+
 	verb/toggle_alerts_verb()
 		set category = "AI Commands"
 		set name = "Toggle Alerts"
-		set desc = "Toggle alert messages in the game window. You can always check them with 'Show Alerts'."
-		if (mainframe)
-			mainframe.toggle_alerts_verb()
+		set desc = "Toggle alert messages in the game window. You can always check them with 'Show Alert Minimap'."
+		mainframe?.toggle_alerts_verb()
 
 	verb/access_area_apc()
 		set category = "AI Commands"

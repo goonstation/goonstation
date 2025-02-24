@@ -14,6 +14,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	stack_type = /obj/item/cable_coil // so cut cables can stack with partially depleted full coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
+	tool_flags = TOOL_WIRING
 	var/iconmod = null
 	var/namemod = null
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'

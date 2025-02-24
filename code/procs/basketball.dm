@@ -147,6 +147,12 @@
 	cooldown = 4 SECONDS
 	icon_state = "blink"
 
+/datum/targetable/bball/blitz_slam/tryCast(atom/target, params)
+	if (isrestrictedz(get_z(holder.owner)))
+		boutput(holder.owner, SPAN_ALERT("You cannot cast that here"))
+		return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+	. = ..()
+
 /datum/targetable/bball/blitz_slam/cast(atom/target)
 	. = ..()
 	var/mob/M = holder.owner

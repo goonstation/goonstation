@@ -49,6 +49,8 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/impact_sounds/Flesh_Stab_2.ogg'
 
+	has_impact_particles = TRUE
+
 	/// can it ricochet off a wall?
 	var/ricochets = FALSE
 
@@ -198,6 +200,11 @@ toxic - poisons
 	casing = /obj/item/casing/rifle
 	ricochets = TRUE
 
+/datum/projectile/bullet/akm/pod
+	damage = 4
+	shot_number = 1
+	dissipation_delay = 7
+
 /datum/projectile/bullet/draco
 	name = "bullet"
 	shot_sound = 'sound/weapons/akm.ogg'
@@ -286,6 +293,7 @@ toxic - poisons
 	dissipation_delay = 10
 	reagent_payload = "haloperidol"
 	casing = /obj/item/casing/rifle
+	has_impact_particles = FALSE
 
 	syndicate
 		reagent_payload = "sodium_thiopental" // HEH
@@ -538,6 +546,7 @@ toxic - poisons
 	dissipation_rate = 0
 	ie_type = null
 	smashes_glasses = FALSE //foam
+	has_impact_particles = FALSE
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		..()
@@ -585,6 +594,7 @@ toxic - poisons
 	casing = null
 	reagent_payload = "curare"
 	implanted = /obj/item/implant/projectile/body_visible/blowdart
+	has_impact_particles = FALSE
 
 	madness
 		reagent_payload = "madness_toxin"
@@ -978,6 +988,7 @@ toxic - poisons
 	damage = 9
 	hit_mob_sound = 'sound/effects/skeleton_break.ogg'
 	impact_image_state = null // in my mind these are just literal bones fragments being thrown at people, wouldn't stick into walls
+	has_impact_particles = FALSE
 
 	on_hit(atom/hit)
 		var/turf/T = get_turf(hit)
@@ -1072,6 +1083,7 @@ toxic - poisons
 	hit_type = DAMAGE_BLUNT
 	impact_image_state = null
 	casing = /obj/item/casing/shotgun/blue
+	has_impact_particles = FALSE
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		. = ..()
@@ -1117,6 +1129,7 @@ toxic - poisons
 	dissipation_variance = 64
 	spread_angle_variance = 7.5
 	pellets_to_fire = 7
+	has_impact_particles = TRUE
 
 /datum/projectile/bullet/flare
 	name = "flare"
@@ -1527,6 +1540,7 @@ datum/projectile/bullet/autocannon
 	hit_mob_sound = 'sound/misc/splash_1.ogg'
 	hit_object_sound = 'sound/misc/splash_1.ogg'
 	implanted = null
+	has_impact_particles = FALSE
 
 
 	on_hit(atom/hit, dirflag, atom/projectile)
@@ -1719,6 +1733,7 @@ datum/projectile/bullet/autocannon
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
 	implanted = null
+	has_impact_particles = FALSE
 
 	on_launch(obj/projectile/O)
 		. = ..()
@@ -1789,16 +1804,16 @@ datum/projectile/bullet/autocannon
 
 		if (auto_find_targets)
 			P.targets = list()
-			for(var/mob/M in view(P,15))
-				if (!is_valid_target(M, P)) continue
-				P.targets += M
+			for(var/atom/A as anything in view(P,15))
+				if (!is_valid_target(A, P)) continue
+				P.targets += A
 
 		if (length(src.targets))
 			P.targets = src.targets
 			src.targets = list()
 
-	proc/is_valid_target(mob/M, obj/projectile/P)
-		return (M != P.shooter && M != P.mob_shooter)
+	proc/is_valid_target(atom/A, obj/projectile/P)
+		return (A != P.shooter && A != P.mob_shooter)
 
 	proc/calc_desired_x_y(var/obj/projectile/P)
 		.= 0
@@ -1843,8 +1858,9 @@ datum/projectile/bullet/autocannon
 
 		..()
 
-/datum/projectile/bullet/homing/mrl
-	name = "MRL rocket"
+ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
+/datum/projectile/bullet/homing/rocket
+	name = "Rocket"
 	window_pass = 0
 	icon = 'icons/obj/projectiles.dmi'
 	damage_type = D_KINETIC
@@ -1859,6 +1875,7 @@ datum/projectile/bullet/autocannon
 	max_speed = 10
 	start_speed = 10
 	shot_delay = 1 SECONDS
+	var/explosion_power = 15
 
 	on_hit(atom/hit)
 		var/turf/T = get_turf(hit)
@@ -1873,8 +1890,25 @@ datum/projectile/bullet/autocannon
 					boutput(M, SPAN_ALERT("You are struck by shrapnel!"))
 
 			T.hotspot_expose(700,125)
-			explosion_new(null, T, 15, range_cutoff_fraction = 0.45)
+			explosion_new(null, T, src.explosion_power, range_cutoff_fraction = 0.45)
 		return
+
+	is_valid_target(atom/A, obj/projectile/P)
+		. = ..()
+		return . && isliving(A) && !isintangible(A)
+
+/datum/projectile/bullet/homing/rocket/gunbot_drone
+	max_rotation_rate = 5
+	dissipation_delay = 15
+	start_speed = 15
+	explosion_power = 5
+
+	is_valid_target(mob/M, obj/projectile/P)
+		. = ..()
+		return . || isvehicle(M)
+
+/datum/projectile/bullet/homing/rocket/mrl
+	name = "MRL rocket"
 
 	is_valid_target(mob/M, obj/projectile/P)
 		. = ..()
@@ -1990,6 +2024,7 @@ datum/projectile/bullet/autocannon
 	implanted = null
 	casing = null
 	cost = 1
+	has_impact_particles = FALSE
 
 	on_hit(atom/hit, dirflag)
 		if (ishuman(hit))
@@ -2111,10 +2146,10 @@ datum/projectile/bullet/autocannon
 		src.name = corruptText(src.name, 66)
 
 	on_hit(atom/hit)
-		hit.icon_state = pick(icon_states(hit.icon))
+		hit.icon_state = pick(get_icon_states(hit.icon))
 
 		for(var/atom/a in hit)
-			a.icon_state = pick(icon_states(a.icon))
+			a.icon_state = pick(get_icon_states(a.icon))
 
 		playsound(hit, 'sound/machines/glitch3.ogg', 50, TRUE)
 
@@ -2159,6 +2194,7 @@ datum/projectile/bullet/autocannon
 	casing = null
 	hit_ground_chance = 50
 	icon_state = "random_thing"	//actually exists, looks funny enough to use as the projectile image for this
+	has_impact_particles = FALSE
 
 	on_hit(atom/hit, dirflag)
 		if (ishuman(hit))
@@ -2219,6 +2255,25 @@ datum/projectile/bullet/autocannon
 			//let's pretend these walls/objects were destroyed in the explosion
 			hit.ex_act(pick(1,2))
 		. = ..()
+
+/datum/projectile/bullet/wall_buster_shrapnel/turbine_blade
+	name = "turbine blade"
+	implanted = null //just delimbs mobs, doesn't stick in them
+	damage = 100
+
+	on_hit(atom/hit, angle, obj/projectile/O)
+		if(istype(hit, /obj/machinery/atmospherics/binary/nuclear_reactor))
+			return FALSE //the turbine blades sail gracefully over the reactor
+		if(istype(hit, /mob/living/carbon/human)) //run a chance to cut off a limb or head
+			var/mob/living/carbon/human/H = hit
+			if(prob(65))
+				H.sever_limb(pick("l_arm","r_arm","l_leg","r_leg"))
+			else
+				var/obj/item/organ/head = H.organHolder.drop_organ("head")
+				head.splat(get_turf(H))
+			return TRUE //keep going
+		. = ..() //else do normal collisions, this will kill most non-human mobs in one hit
+
 
 /datum/projectile/bullet/webley
 	name = "bullet"

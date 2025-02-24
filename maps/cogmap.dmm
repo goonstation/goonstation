@@ -10997,6 +10997,10 @@
 	pixel_x = -5;
 	pixel_y = 4
 	},
+/obj/item/storage/box/panic_buttons{
+	pixel_x = 8
+	},
+/obj/item/device/panicbutton,
 /turf/simulated/floor/carpet,
 /area/station/security/main)
 "aNX" = (
@@ -14871,12 +14875,12 @@
 	},
 /area/station/chapel/sanctuary)
 "aYX" = (
-/obj/machinery/computer/bank_data{
-	dir = 4
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/computer3/generic/bank_data{
+	dir = 4
 	},
 /turf/simulated/floor/blueblack{
 	dir = 8
@@ -48187,10 +48191,10 @@
 	},
 /area/station/engine/elect)
 "lmb" = (
-/obj/critter/opossum/morty,
 /obj/item/device/radio/intercom/medical{
 	dir = 8
 	},
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "lmh" = (
@@ -50921,7 +50925,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -65367,9 +65371,9 @@
 "ygN" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/apc{
-	areastring = "Medical Research";
+	areastring = "Genetic Research";
 	dir = 8;
-	name = "Medical Research APC";
+	name = "Genetic Research APC";
 	pixel_x = -24
 	},
 /obj/cable,

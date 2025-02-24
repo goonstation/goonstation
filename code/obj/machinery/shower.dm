@@ -89,18 +89,20 @@
 			steam.attach(src)
 			steam.start()
 
-			for (var/atom/A in range(1, get_turf(src))) // View and oview are unreliable as heck, apparently?
-				if ( A == src ) continue
+			for (var/turf/T in view(1, get_turf(src))) // View and oview are unreliable as heck, apparently?
+				if (!T.ocean_canpass()) continue
+				SPAWN(0)
+					src.reagents.reaction(T, 1, 40)
+				for(var/atom/movable/AM as anything in T)
+					// Added. We don't care about unmodified shower heads, though (Convair880).
+					if (ismob(AM))
+						var/mob/M = AM
+						if (!isdead(M))
+							if ((!src.reagents.has_reagent("water") && !src.reagents.has_reagent("cleaner")) || ((src.reagents.has_reagent("water") && src.reagents.has_reagent("cleaner")) && length(src.reagents.reagent_list) > 2))
+								logTheThing(LOG_CHEMISTRY, M, "is hit by chemicals [log_reagents(src)] from a shower head at [log_loc(M)].")
 
-				// Added. We don't care about unmodified shower heads, though (Convair880).
-				if (ismob(A))
-					var/mob/M = A
-					if (!isdead(M))
-						if ((!src.reagents.has_reagent("water") && !src.reagents.has_reagent("cleaner")) || ((src.reagents.has_reagent("water") && src.reagents.has_reagent("cleaner")) && length(src.reagents.reagent_list) > 2))
-							logTheThing(LOG_CHEMISTRY, M, "is hit by chemicals [log_reagents(src)] from a shower head at [log_loc(M)].")
-
-				spawn(0)
-					src.reagents.reaction(A, 1, 40) // why the FUCK was this ingest ?? ?? ? ?? ? ?? ? ?? ? ???
+					spawn(0)
+						src.reagents.reaction(AM, 1, 40) // why the FUCK was this ingest ?? ?? ? ?? ? ?? ? ?? ? ???
 
 		SPAWN(5 SECONDS)
 			if (src?.reagents?.total_volume)

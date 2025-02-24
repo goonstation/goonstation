@@ -103,6 +103,23 @@
 				icon_state = "securitycomputer2"
 				base_icon_state = "securitycomputer2"
 
+		bank_data
+			name = "Bank computer"
+			icon_state = "databank"
+			base_icon_state = "databank"
+			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
+			setup_starting_peripheral2 = /obj/item/peripheral/printer
+			setup_starting_program = /datum/computer/file/terminal_program/bank_records
+
+			console_upper
+				icon = 'icons/obj/computerpanel.dmi'
+				icon_state = "bank1"
+				base_icon_state = "bank1"
+			console_lower
+				icon = 'icons/obj/computerpanel.dmi'
+				icon_state = "bank2"
+				base_icon_state = "bank2"
+
 		communications
 			name = "Communications Console"
 			icon_state = "comm"
@@ -802,12 +819,6 @@
 
 			qdel(signal)
 		return
-
-	set_broken()
-		icon_state = src.base_icon_state
-		icon_state += "b"
-		status |= BROKEN
-		light.disable()
 
 	restart()
 		if(src.restarting)

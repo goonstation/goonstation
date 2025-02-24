@@ -997,11 +997,22 @@ ABSTRACT_TYPE(/obj/item/card_group)
 	card_style = "stg"
 	total_cards = 40
 	card_name = "Spacemen the Griffening"
-	icon_state = "stg_deck_4"
+	icon_state = "stg-deck-4"
 
 	New()
 		..()
 		build_stg(1)
+
+/obj/item/card_group/stg_booster
+	desc = "A bunch of Spacemen the Griffening cards."
+	card_style = "stg"
+	total_cards = 10
+	card_name = "Spacemen the Griffening"
+	icon_state = "stg-deck-2"
+
+	New()
+		..()
+		build_stg(0)
 
 //Clow
 //--//
@@ -1138,7 +1149,6 @@ ABSTRACT_TYPE(/obj/item/card_group)
 				return
 			else //dropping cards here means the user doesnt have to go through the entire action to get them
 				actions.start(new /datum/action/bar/private/stg_tear(user,src),user)
-				ClearAllOverlays() //is all good now :D
 		else
 			..()
 
@@ -1188,7 +1198,7 @@ ABSTRACT_TYPE(/obj/item/card_group)
 
 	New()
 		..()
-		stored_deck = new /obj/item/card_group/stg(src)
+		stored_deck = new /obj/item/card_group/stg_booster(src)
 
 	attack_self(mob/user as mob)
 		if(icon_state == "stg-booster")
