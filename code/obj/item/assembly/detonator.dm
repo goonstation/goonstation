@@ -174,21 +174,3 @@
 // Possible events: attach, detach, leak, process, prime, detonate, cut, pulse
 /obj/item/proc/detonator_act(event, var/obj/item/canbomb_detonator/det)
 	return
-
-
-//For testing and I'm too lazy to hand-assemble these whenever I need one =I
-///obj/item/canbomb_detonator/finished
-
-//	New()
-//		..()
-//		var/obj/item/tank/plasma/ptank = new /obj/item/tank/plasma(src)
-//		ptank.air_contents.toxins = 30
-//		ptank.master = src
-//		src.part_t = ptank
-
-//		var/obj/item/device/timer/timer = new /obj/item/device/timer(src)
-//		timer.master = src
-//		src.part_fs = timer
-//		src.part_fs.time = 90 SECONDS //Minimum det time
-
-//		setDetState(4)

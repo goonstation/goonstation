@@ -20,15 +20,6 @@
 		icon_state = "mousetraparmed"
 		armed = TRUE
 
-		cleaner
-			name = "cleantrap"
-
-			New()
-				..()
-				//TODO Add implementation of pre-assembles assemblies
-				//src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
-				//src.grenade = new /obj/item/chem_grenade/cleaner(src)
-				return
 
 	New()
 		..()
@@ -307,15 +298,18 @@
 		if (new_payload)
 			new_payload.set_loc(src)
 			src.payload = new_payload
-			src.payload.master = src
-			//we scale down the assembly and resets its icon area to position it properly on the mousetrap roller
-			src.payload.pixel_x = 0
-			src.payload.pixel_y = 0
-			src.payload.transform *= 0.75
-			new_payload.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
-			src.vis_contents += new_payload
-			if(istype(src.payload.applier, /obj/item/gimmickbomb/butt))
-				src.buttbomb = TRUE
+		else
+			src.payload = new /obj/item/assembly/mousetrap_ignite_pipebomb(src)
+
+		src.payload.master = src
+		//we scale down the assembly and resets its icon area to position it properly on the mousetrap roller
+		src.payload.pixel_x = 0
+		src.payload.pixel_y = 0
+		src.payload.transform *= 0.75
+		src.payload.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
+		src.vis_contents += src.payload
+		if(istype(src.payload.applier, /obj/item/gimmickbomb/butt))
+			src.buttbomb = TRUE
 
 
 		if (new_frame)
@@ -326,13 +320,6 @@
 		src.frame.master = src
 		// mousetrap roller + wrench -> disassembly
 		src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(disassemble), FALSE)
-		//else
-		//	src.mousetrap = new /obj/item/mousetrap(src)
-
-		// Fallback in case something goes wrong.
-		//if (!HAS_TRIGGERABLE(src.mousetrap))
-		//	src.mousetrap.grenade = new /obj/item/chem_grenade/flashbang(src.mousetrap)
-		//	src.mousetrap.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL)

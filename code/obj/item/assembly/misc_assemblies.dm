@@ -634,6 +634,7 @@ Contains:
 /////////////////////////////////////////////////// Single tank bomb (timer) ////////////////////////////////////
 
 /obj/item/assembly/time_bomb
+	secured = TRUE
 
 /obj/item/assembly/time_bomb/New(var/new_location, var/temperature_of_plasma = 20)
 	..()
@@ -646,6 +647,7 @@ Contains:
 /////////////////////////////////////////////////// Single tank bomb (remote signaller) ////////////////////////////////////
 
 /obj/item/assembly/radio_bomb
+	secured = TRUE
 
 /obj/item/assembly/radio_bomb/New(var/new_location, var/temperature_of_plasma = 20)
 	..()
@@ -653,6 +655,31 @@ Contains:
 	var/obj/item/new_applier = new /obj/item/device/igniter(src)
 	var/obj/item/tank/plasma/new_target = new /obj/item/tank/plasma(src)
 	new_target.air_contents.temperature = temperature_of_plasma + T0C
+	src.set_up_new(null, new_trigger, new_applier, new_target)
+
+/////////////////////////////////////////////////// Cleaner Grenade Mousetrap ////////////////////////////////////
+
+/obj/item/assembly/mousetrap_cleaner
+	secured = TRUE
+
+/obj/item/assembly/mousetrap_cleaner/New()
+	..()
+	var/obj/item/new_trigger = new /obj/item/mousetrap(src)
+	var/obj/item/new_applier = new /obj/item/chem_grenade/cleaner(src)
+	src.set_up_new(null, new_trigger, new_applier)
+	// We arm the mousetrap here
+	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ACTIVATION, src)
+
+/////////////////////////////////////////////////// igniter pipebomb Mousetrap ////////////////////////////////////
+
+/obj/item/assembly/mousetrap_ignite_pipebomb //lol
+	secured = TRUE
+
+/obj/item/assembly/mousetrap_ignite_pipebomb/New()
+	..()
+	var/obj/item/new_trigger = new /obj/item/mousetrap(src)
+	var/obj/item/new_applier = new /obj/item/device/igniter(src)
+	var/obj/item/new_target = new /obj/item/pipebomb/bomb(src)
 	src.set_up_new(null, new_trigger, new_applier, new_target)
 
 //////////////////////////////////handmade shotgun shells//////////////////////////////////
