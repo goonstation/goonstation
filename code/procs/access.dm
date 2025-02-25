@@ -424,7 +424,7 @@ var/list/access_all_actually = null
 		if(access_medical_lockers)
 			return "Medical Equipment"
 		if(access_medlab)
-			return "Med-Sci/Genetics"
+			return "Genetics"
 		if(access_pathology)
 			return "Pathology"
 		if(access_morgue)

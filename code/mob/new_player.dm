@@ -659,23 +659,25 @@ a.latejoin-card:hover {
 		// deal with it
 		dat += ""
 		if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(ticker.mode,/datum/game_mode/battle_royale) && !istype(ticker.mode,/datum/game_mode/football) && !istype(ticker.mode,/datum/game_mode/pod_wars))
-			dat += {"<div class='fuck'><table class='latejoin'><tr><th colspan='2'>Command/Security</th></tr>"}
+			dat += {"<div class='fuck'><table class='latejoin'><tr><th colspan='2'>Command / Security</th></tr>"}
 			for(var/datum/job/command/J in job_controls.staple_jobs)
 				dat += LateJoinLink(J)
 			for(var/datum/job/security/J in job_controls.staple_jobs)
 				dat += LateJoinLink(J)
 			//dat += "</table></td>"
 
-			dat += {"<tr><td colspan='2'>&nbsp;</td></tr><tr><th colspan='2'>Research</th></tr>"}
+			dat += {"<tr><td colspan='2'>&nbsp;</td></tr><tr><th colspan='2'>Research / Medical</th></tr>"}
 			for(var/datum/job/research/J in job_controls.staple_jobs)
+				dat += LateJoinLink(J)
+			for(var/datum/job/medical/J in job_controls.staple_jobs)
 				dat += LateJoinLink(J)
 			//dat += "</table></td>"
 
 			//dat += {"<td valign="top"><table>"}
-			dat += {"<tr><td colspan='2'>&nbsp;</td></tr><tr><th colspan='2'>Engineering</th></tr>"}
+			dat += {"<tr><td colspan='2'>&nbsp;</td></tr><tr><th colspan='2'>Engineering / Supply</th></tr>"}
 			for(var/datum/job/engineering/J in job_controls.staple_jobs)
 				dat += LateJoinLink(J)
-			dat += {"</table></div><div class='fuck'><table class='latejoin'><tr><th colspan='2'>Civilian</th></tr>"}
+			dat += {"</table></div><div class='fuck'><table class='latejoin'><tr><th colspan='2'>Crew Service / Silicon</th></tr>"}
 
 			for(var/datum/job/civilian/J in job_controls.staple_jobs)
 				dat += LateJoinLink(J)

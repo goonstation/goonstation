@@ -26,6 +26,7 @@ const DeptBox = (props) => {
   const {
     name,
     colour,
+    style,
 
     jobs,
     current_job,
@@ -48,7 +49,7 @@ const DeptBox = (props) => {
             <>
               {!isCustomRank && (
                 <Button
-                  onClick={() => act('assign', { assign: job, colour: colour })}
+                  onClick={() => act('assign', { assign: job, style: style })}
                   key={job}
                   selected={job === current_job}
                 >
@@ -100,19 +101,39 @@ const DeptBox = (props) => {
 };
 
 interface IDComputerData {
-  mode;
-  manifest;
-  target_name;
-  target_owner;
-  target_rank;
-  target_card_look;
-  scan_name;
-  pronouns;
-  custom_names;
-  target_accesses;
-  standard_jobs;
-  accesses_by_area;
-  icons;
+  mode: string;
+  manifest: string;
+  target_name: string;
+  target_owner: string;
+  target_rank: string;
+  target_card_look: string;
+  scan_name: string;
+  pronouns: string;
+  custom_names: string[];
+  target_accesses: number[];
+  standard_jobs: StandardJob[];
+  accesses_by_area: AccessByArea[];
+  icons: CardIcon[];
+}
+
+interface StandardJob {
+  name: string;
+  color: string;
+  jobs: string[];
+  style: string;
+}
+
+interface AccessByArea {
+  name: string;
+  color: string;
+  accesses: number[];
+}
+
+interface CardIcon {
+  style: string;
+  name: string;
+  card_look: string;
+  icon: string;
 }
 
 export const IDComputer = () => {
@@ -254,6 +275,7 @@ export const IDComputer = () => {
                             colour={jobGrouping.color}
                             current_job={target_rank}
                             jobs={jobGrouping.jobs}
+                            style={jobGrouping.style}
                           />
                         ),
                     )}
@@ -285,7 +307,7 @@ export const IDComputer = () => {
                     {icons.map((icon) => (
                       <Button
                         key={icon.style}
-                        onClick={() => act('colour', { colour: icon.style })}
+                        onClick={() => act('style', { style: icon.style })}
                         selected={icon.card_look === target_card_look}
                       >
                         <Image
