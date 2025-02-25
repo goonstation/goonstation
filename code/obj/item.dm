@@ -1265,7 +1265,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (!target || !user) // not sure if this is the right thing...
 		return
 
-	if (isliving(target) && (user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM))
+	if (isliving(target))
 		var/mob/living/H = target
 		if (H.surgeryHolder)
 			var/datum/surgeryHolder/holder = H.surgeryHolder

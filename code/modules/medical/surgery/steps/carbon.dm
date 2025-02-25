@@ -1,65 +1,93 @@
 
+// the heirarchies in here could be reorganized. alas i am but 1 gamer versus 3~4 thousand lines of surgery code
+// for instance, butt/skull/eye surgery can probably cleanly reuse organ removal code. but head hurts - hooligan
 
 /datum/surgery_step
-	suture
-		name = "Suture"
-		desc = "Suture the wound."
-		icon_state = "suture"
-		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		tools_required = list(/obj/item/suture)
-		on_complete(mob/surgeon, obj/item/tool)
-			var/mob/living/carbon/human/patient = parent_surgery.patient
-			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> sutures [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds with [tool]!"),\
-				SPAN_ALERT("You suture [surgeon == patient ? "your" : "[patient]'s"] wounds with [tool]!"),\
-				SPAN_ALERT("[patient == surgeon ? "You suture" : "<b>[surgeon]</b> sutures"] your wounds with [tool]!"))
-	snip
-		name = "Snip"
-		desc = "Snip out some tissue."
-		icon_state = "scissor"
-		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_SNIPPING
-		on_complete(mob/surgeon, obj/item/tool)
-			var/mob/living/carbon/human/patient = parent_surgery.patient
-			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> makes a cut on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [tool]!"),\
-				SPAN_ALERT("You make a cut on [surgeon == patient ? "your" : "[patient]'s"] chest with [tool]!"),\
-				SPAN_ALERT("[patient == surgeon ? "You make a cut" : "<b>[surgeon]</b> makes a cut"] on your chest with [tool]!"))
+	fluff // steps that don't need to cause specific behaviors.
+		suture
+			name = "Suture"
+			desc = "Suture the wound."
+			icon_state = "suture"
+			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+			tools_required = list(/obj/item/suture)
+			on_complete(mob/surgeon, obj/item/tool)
+				var/mob/living/carbon/human/patient = parent_surgery.patient
+				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> sutures [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds with [tool]!"),\
+					SPAN_ALERT("You suture [surgeon == patient ? "your" : "[patient]'s"] wounds with [tool]!"),\
+					SPAN_ALERT("[patient == surgeon ? "You suture" : "<b>[surgeon]</b> sutures"] your wounds with [tool]!"))
+		snip
+			name = "Snip"
+			desc = "Snip out some tissue."
+			icon_state = "scissor"
+			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+			flags_required = TOOL_SNIPPING
+			on_complete(mob/surgeon, obj/item/tool)
+				var/mob/living/carbon/human/patient = parent_surgery.patient
+				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> makes a cut on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [tool]!"),\
+					SPAN_ALERT("You make a cut on [surgeon == patient ? "your" : "[patient]'s"] chest with [tool]!"),\
+					SPAN_ALERT("[patient == surgeon ? "You make a cut" : "<b>[surgeon]</b> makes a cut"] on your chest with [tool]!"))
 
-	cut
-		name = "Cut"
-		desc = "Cut through the flesh."
-		icon_state = "scalpel"
-		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_CUTTING
-		on_complete(mob/surgeon, obj/item/tool)
-			var/mob/living/carbon/human/patient = parent_surgery.patient
-			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts through [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] flesh with [tool]!"),\
-				SPAN_ALERT("You cut through [surgeon == patient ? "your" : "[patient]'s"] flesh with [tool]!"),\
-				SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] through your flesh with [tool]!"))
+		cut
+			name = "Cut"
+			desc = "Cut through the flesh."
+			icon_state = "scalpel"
+			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+			flags_required = TOOL_CUTTING
+			on_complete(mob/surgeon, obj/item/tool)
+				var/mob/living/carbon/human/patient = parent_surgery.patient
+				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts through [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] flesh with [tool]!"),\
+					SPAN_ALERT("You cut through [surgeon == patient ? "your" : "[patient]'s"] flesh with [tool]!"),\
+					SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] through your flesh with [tool]!"))
 
-	saw
-		name = "Saw"
-		desc = "Saw through the bone."
-		icon_state = "saw"
-		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_SAWING
-		on_complete(mob/surgeon, obj/item/tool)
-			var/mob/living/carbon/human/C = parent_surgery.patient
-			surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> saws through [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] bone with [tool]!"),\
-				SPAN_ALERT("You saw through [surgeon == C ? "your" : "[C]'s"] bone with [tool]!"),\
-				SPAN_ALERT("[C == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] through your bone with [tool]!"))
-	bandage
-		name = "Bandage"
-		desc = "Bandage the wound."
-		icon_state = "bandage"
-		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		tools_required = list(/obj/item/bandage)
-		on_complete(mob/surgeon, obj/item/tool)
-			var/mob/living/carbon/human/C = parent_surgery.patient
-			surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> bandages [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] wounds with [tool]!"),\
-				SPAN_ALERT("You bandage [surgeon == C ? "your" : "[C]'s"] wounds with [tool]!"),\
-				SPAN_ALERT("[C == surgeon ? "You bandage" : "<b>[surgeon]</b> bandages"] your wounds with [tool]!"))
+		saw
+			name = "Saw"
+			desc = "Saw through the bone."
+			icon_state = "saw"
+			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+			flags_required = TOOL_SAWING
+			on_complete(mob/surgeon, obj/item/tool)
+				var/mob/living/carbon/human/C = parent_surgery.patient
+				surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> saws through [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] bone with [tool]!"),\
+					SPAN_ALERT("You saw through [surgeon == C ? "your" : "[C]'s"] bone with [tool]!"),\
+					SPAN_ALERT("[C == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] through your bone with [tool]!"))
+		bandage
+			name = "Bandage"
+			desc = "Bandage the wound."
+			icon_state = "bandage"
+			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+			tools_required = list(/obj/item/bandage)
+			on_complete(mob/surgeon, obj/item/tool)
+				var/mob/living/carbon/human/C = parent_surgery.patient
+				surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> bandages [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] wounds with [tool]!"),\
+					SPAN_ALERT("You bandage [surgeon == C ? "your" : "[C]'s"] wounds with [tool]!"),\
+					SPAN_ALERT("[C == surgeon ? "You bandage" : "<b>[surgeon]</b> bandages"] your wounds with [tool]!"))
+	chest
+		cut
+			name = "Cut"
+			desc = "Cut through the flesh."
+			icon_state = "scalpel"
+			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+			flags_required = TOOL_CUTTING
+			on_complete(mob/surgeon, obj/item/tool)
+				var/mob/living/carbon/human/patient = parent_surgery.patient
+				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts through [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] flesh with [tool]!"),\
+					SPAN_ALERT("You cut through [surgeon == patient ? "your" : "[patient]'s"] flesh with [tool]!"),\
+					SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] through your flesh with [tool]!"))
+				patient.chest_cavity_clamped = FALSE
+		clamp
+			name = "Clamp"
+			desc = "Clamp the bleeders."
+			icon_state = "clamp"
+			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+			optional = TRUE
+			tools_required = list(/obj/item/hemostat)
+			on_complete(mob/surgeon, obj/item/tool)
+				var/mob/living/carbon/human/patient = parent_surgery.patient
+				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> clamps [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] bleeders with [tool]!"),\
+					SPAN_ALERT("You clamp [surgeon == patient ? "your" : "[patient]'s"] bleeders with [tool]!"),\
+					SPAN_ALERT("[patient == surgeon ? "You clamp" : "<b>[surgeon]</b> clamps"] your bleeders with [tool]!"))
+				patient.chest_cavity_clamped = TRUE
 
-	skull
 	organ
 		var/affected_organ
 		New(datum/surgery/parent_surgery, the_organ)
@@ -74,7 +102,7 @@
 			flags_required = TOOL_SNIPPING
 			on_complete(mob/surgeon, obj/item/tool)
 				var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
-				O.in_surgery = TRUE
+				O.secure = FALSE
 				var/mob/living/carbon/human/C = parent_surgery.patient
 				surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> snips out various veins and tendons from [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] [affected_organ] with [tool]!"),\
 					SPAN_ALERT("You snip out various veins and tendons from [surgeon == C ? "your" : "[C]'s"] [affected_organ] with [tool]!"),\
@@ -88,7 +116,7 @@
 			flags_required = TOOL_CUTTING
 			on_complete(mob/surgeon, obj/item/tool)
 				var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
-				O.secure = FALSE
+				O.in_surgery = TRUE
 				var/mob/living/carbon/human/C = parent_surgery.patient
 				surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> cuts through the flesh holding [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] [affected_organ] in with [tool]!"),\
 					SPAN_ALERT("You cut through the flesh holding [surgeon == C ? "your" : "[C]'s"] [affected_organ] in with [tool]!"), \
@@ -107,6 +135,22 @@
 					SPAN_ALERT("[patient == surgeon ? "You take" : "<b>[surgeon]</b> takes"] out your [affected_organ]!"))
 				logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s [affected_organ].")
 				parent_surgery.patient.organHolder.drop_organ(affected_organ)
+
+		saw
+			name = "Saw"
+			desc = "Saw through the organ."
+			icon_state = "saw"
+			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+			flags_required = TOOL_SAWING
+			on_complete(mob/surgeon, obj/item/tool)
+				var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
+				O.secure = FALSE
+				var/mob/living/carbon/human/C = parent_surgery.patient
+				surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> saws through [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] [affected_organ] with [tool]!"),\
+					SPAN_ALERT("You saw through [surgeon == C ? "your" : "[C]'s"] [affected_organ] with [tool]!"),\
+					SPAN_ALERT("[C == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] through your [affected_organ] with [tool]!"))
+
+
 
 		add
 			name = "Add"
@@ -164,6 +208,8 @@
 					surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> inserts [tool] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] eye socket!"),\
 						SPAN_ALERT("You insert [tool] into [surgeon == patient ? "your" : "[patient]'s"] [target_side] eye socket!"), \
 						SPAN_ALERT("[patient == surgeon ? "You insert" : "<b>[surgeon]</b> inserts"] [tool] into your [target_side] eye socket!"))
+					var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
+					O.in_surgery = TRUE
 
 			cut
 				name = "Cut"
@@ -176,6 +222,8 @@
 					surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts away the flesh holding [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] right eye in with [tool]!"),\
 						SPAN_ALERT("You cut away the flesh holding [surgeon == patient ? "your" : "[patient]'s"] right eye in with [tool]!"), \
 						SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] away the flesh holding your right eye in with [tool]!"))
+					var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
+					O.secure = FALSE
 
 			scoop
 				name = "Scoop"
@@ -191,6 +239,76 @@
 					logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s [target_side] eye with [tool].")
 					var/datum/organHolder/holder = patient.organHolder
 					holder.drop_organ("[target_side]_eye")
+		brain
+			cut
+				name = "Cut"
+				desc = "Cut around the scalp."
+				icon_state = "scalpel"
+				success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+				flags_required = TOOL_CUTTING
+				on_complete(mob/surgeon, obj/item/tool)
+					surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head open with [tool]!"),\
+						SPAN_ALERT("You cut [surgeon == patient ? "your" : "[patient]'s"] head open with [tool]!"), \
+						SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your head open with [tool]!"))
+					logTheThing(LOG_COMBAT, surgeon, "started removing [constructTarget(C,"combat")]'s brain with [tool].")
+					patient.organHolder.head.scalp_op_stage = 1
+
+				cut2
+					desc = "Disconnect the brain."
+					on_complete(mob/surgeon, obj/item/tool)
+						if (patient.organHolder.brain)
+							surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> removes the connections to [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] brain with [tool]!"),\
+								SPAN_ALERT("You remove [surgeon == patient ? "your" : "[patient]'s"] connections to [surgeon == patient ? "your" : "[his_or_her(patient)]"] brain with [tool]!"),\
+								SPAN_ALERT("[patient == surgeon ? "You remove" : "<b>[surgeon]</b> removes"] the connections to your brain with [tool]!"))
+						else
+							// If the brain is gone, but the suture site was closed and we're re-opening
+							surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> opens the area around [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] brain cavity with [tool]!"),\
+								SPAN_ALERT("You open the area around [surgeon == patient ? "your" : "[patient]'s"] brain cavity with [tool]!"),\
+								SPAN_ALERT("[patient == surgeon ? "You open" : "<b>[surgeon]</b> opens"] the area around your brain cavity with [tool]!"))
+						C.organHolder.head.scalp_op_stage = 3
+
+
+			saw
+				name = "Saw"
+				desc = "Saw through the skull."
+				icon_state = "saw"
+				success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+				flags_required = TOOL_SAWING
+				on_complete(mob/surgeon, obj/item/tool)
+					var/mob/living/carbon/human/C = parent_surgery.patient
+					C.organHolder.head.scalp_op_stage = 2
+					var/missing_fluff = ""
+					if (!C.organHolder.skull)
+						// If the skull is gone, but the suture site was closed and we're re-opening
+						missing_fluff = pick("region", "area")
+					surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> saws open [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] skull [missing_fluff] with [tool]!"),\
+						SPAN_ALERT("You saw open [surgeon == patient ? "your" : "[patient]'s"] skull [missing_fluff] with [tool]!"),\
+						SPAN_ALERT("[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] open your skull [missing_fluff] with [tool]!"))
+
+
+			remove
+				name = "Remove"
+				desc = "Remove the brain, or open the cavity."
+				icon_state = "saw"
+				success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+				flags_required = TOOL_CUTTING
+				on_complete(mob/surgeon, obj/item/tool)
+					var/mob/living/carbon/human/C = parent_surgery.patient
+					if (C.organHolder.brain)
+						surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> severs [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] brain's connection to the spine with [tool]!"),\
+							SPAN_ALERT("You sever [surgeon == patient ? "your" : "[patient]'s"] brain's connection to the spine with [tool]!"),\
+							SPAN_ALERT("[patient == surgeon ? "You sever" : "<b>[surgeon]</b> severs"] your brain's connection to the spine with [tool]!"))
+
+						C.organHolder.drop_organ("brain")
+					else
+						// If the brain is gone, but the suture site was closed and we're re-opening
+						surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts open [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] brain cavity with [tool]!"),\
+							SPAN_ALERT("You cut open [surgeon == patient ? "your" : "[patient]'s"] brain cavity with [tool]!"),\
+							SPAN_ALERT("[patient == surgeon ? "You cut open" : "<b>[surgeon]</b> cuts open "] your brain cavity with [tool]!"))
+					C.death()
+					C.organHolder.head.scalp_op_stage = 4
+					logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(C,"combat")]'s brain.")
+
 	limb
 		var/affected_limb
 		New(datum/surgery/parent_surgery, affected_limb)
@@ -306,12 +424,16 @@
 				var/mob/living/carbon/human/C = parent_surgery.patient
 				var/obj/item/parts/limb = C.limbs.vars[affected_limb]
 				limb.remove_stage = 0
+
 	item
 		insert
 			name = "Insert"
 			desc = "Insert the item."
 			icon_state = "in"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+			step_possible(mob/surgeon, obj/item/tool)
+				var/mob/living/carbon/human/C = parent_surgery.patient
+				return (C.chest_item == null)
 			tool_requirement(mob/surgeon, obj/item/tool)
 				if(tool.w_class > W_CLASS_NORMAL && !(tool.type in chestitem_whitelist))
 					boutput(surgeon, SPAN_ALERT("[tool] is too big to fit into [parent_surgery.patient]'s chest cavity."))
@@ -344,6 +466,9 @@
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 			tools_required = list(/obj/item/suture)
 			optional = TRUE
+			step_possible(mob/surgeon, obj/item/tool)
+				var/mob/living/carbon/human/C = parent_surgery.patient
+				return (C.chest_item != null)
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/patient = parent_surgery.patient
 				patient.chest_item_sewn = TRUE
@@ -357,6 +482,9 @@
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 			flags_required = TOOL_CUTTING
 			optional = TRUE
+			step_possible(mob/surgeon, obj/item/tool)
+				var/mob/living/carbon/human/C = parent_surgery.patient
+				return (C.chest_item != null)
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/patient = parent_surgery.patient
 				surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> removes the [patient.chest_item] from [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest cavity."),\

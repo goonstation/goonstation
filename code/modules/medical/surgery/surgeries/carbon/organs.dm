@@ -1,86 +1,88 @@
-/datum/surgery/test
-	name = "Test surgery"
-	desc = "Heal BRUTE damage."
-	restart_when_finished = TRUE
-
-	///Create the surgery steps for this surgery - These will be removed when completed
-	generate_surgery_steps(mob/living/surgeon, mob/user)
-		add_next_step(new /datum/surgery_step/cut(src))
-
-		add_next_step(new /datum/surgery_step/snip(src))
-		add_simultaneous_step(new /datum/surgery_step/saw(src))
-
-		add_next_step(new /datum/surgery_step/suture(src))
-
-	on_complete(mob/living/surgeon, mob/user)
-		patient.HealDamage("All", 15, 0)
-
 /datum/surgery/organ_surgery
 	name = "Torso Surgery"
 	desc = "Modify the patients' torso and organs."
 	icon_state = "torso"
-	default_sub_surgeries = list(/datum/surgery/ribs, /datum/surgery/subcostal, /datum/surgery/flanks, /datum/surgery/abdomen, /datum/surgery/item)
+	default_sub_surgeries = list(/datum/surgery/ribs, /datum/surgery/subcostal, /datum/surgery/flanks, /datum/surgery/abdomen, /datum/surgery/item, )
 	generate_surgery_steps(mob/living/surgeon, mob/user)
-		add_next_step(new /datum/surgery_step/cut(src))
-		add_next_step(new /datum/surgery_step/snip(src))
+		add_next_step(new /datum/surgery_step/chest/cut(src))
+		add_next_step(new /datum/surgery_step/fluff/snip(src))
+		add_simultaneous_step(new /datum/surgery_step/chest/clamp(src))
+
+/datum/surgery/head
+	name = "Head Surgery"
+	desc = "Perform surgery on the patient's head"
+	default_sub_surgeries = list(/datum/surgery/organ/eye/left, /datum/surgery/organ/eye/right)
+	visible = FALSE
+	implicit = TRUE
+	affected_zone = "head"
 
 /datum/surgery/ribs
 	name = "Rib Surgery"
 	desc = "Open the patient's ribcage"
 	icon_state = "ribs"
+	affected_zone = "chest"
 	default_sub_surgeries = list(/datum/surgery/organ/heart, /datum/surgery/organ/replace/heart,
 	/datum/surgery/organ/left_lung, /datum/surgery/organ/replace/left_lung,
 	/datum/surgery/organ/right_lung, /datum/surgery/organ/replace/right_lung)
 	generate_surgery_steps(mob/living/surgeon, mob/user)
-		add_next_step(new /datum/surgery_step/cut(src))
-		add_next_step(new /datum/surgery_step/saw(src))
-		add_next_step(new /datum/surgery_step/snip(src))
+		add_next_step(new /datum/surgery_step/fluff/cut(src))
+		add_next_step(new /datum/surgery_step/fluff/saw(src))
+		add_next_step(new /datum/surgery_step/fluff/snip(src))
 
 /datum/surgery/subcostal
 	name = "Subcostal"
 	desc = "Open the subcostal region"
 	icon_state = "subcostal"
+	affected_zone = "chest"
 	default_sub_surgeries = list(/datum/surgery/organ/liver, /datum/surgery/organ/replace/liver,
 	/datum/surgery/organ/spleen, /datum/surgery/organ/replace/spleen,
 	/datum/surgery/organ/pancreas, /datum/surgery/organ/replace/pancreas)
 	generate_surgery_steps(mob/living/surgeon, mob/user)
-		add_next_step(new /datum/surgery_step/cut(src))
-		add_next_step(new /datum/surgery_step/snip(src))
+		add_next_step(new /datum/surgery_step/fluff/cut(src))
+		add_next_step(new /datum/surgery_step/fluff/snip(src))
 
 /datum/surgery/flanks
 	name = "Flank Surgery"
 	desc = "Open the patient's flanks"
 	icon_state = "flanks"
+	affected_zone = "chest"
 	default_sub_surgeries = list(/datum/surgery/organ/left_kidney, /datum/surgery/organ/replace/left_kidney,
 	/datum/surgery/organ/right_kidney, /datum/surgery/organ/replace/right_kidney)
 	generate_surgery_steps(mob/living/surgeon, mob/user)
-		add_next_step(new /datum/surgery_step/cut(src))
-		add_next_step(new /datum/surgery_step/snip(src))
+		add_next_step(new /datum/surgery_step/fluff/cut(src))
+		add_next_step(new /datum/surgery_step/fluff/snip(src))
 
 /datum/surgery/abdomen
 	name = "Abdomen Surgery"
 	desc = "Open the patient's abdomen"
 	icon_state = "abdominal"
+	affected_zone = "chest"
 	default_sub_surgeries = list(/datum/surgery/organ/stomach, /datum/surgery/organ/replace/stomach,
 	/datum/surgery/organ/intestine, /datum/surgery/organ/replace/intestine,
 	/datum/surgery/organ/appendix, /datum/surgery/organ/replace/appendix)
 	generate_surgery_steps(mob/living/surgeon, mob/user)
-		add_next_step(new /datum/surgery_step/cut(src))
-		add_next_step(new /datum/surgery_step/snip(src))
+		add_next_step(new /datum/surgery_step/fluff/cut(src))
+		add_next_step(new /datum/surgery_step/fluff/snip(src))
 
 /datum/surgery/organ
 	name = "Base Organ Surgery"
 	desc = "Call a coder if you see this!"
 	icon_state = "heart"
-	var/organ_var_name = "heart"
+	var/organ_var_name = "thing"
 	restart_when_finished = TRUE
 	exit_when_finished = TRUE
+	affected_zone = "chest"
 	surgery_possible(mob/living/surgeon)
 		if (implicit && surgeon.zone_sel.selecting != "chest")
 			return FALSE
 		if (patient.organHolder.get_organ(organ_var_name))
 			return TRUE
 		return FALSE
+	infer_surgery_stage()
+		var/mob/living/carbon/human/C = patient
+		var/organ = C.organHolder.get_organ(organ_var_name)
+		surgery_steps[1].finished = (organ:in_surgery == TRUE)
+		surgery_steps[2].finished = (organ:secure == FALSE)
 
 	generate_surgery_steps(mob/living/surgeon, mob/user)
 		add_next_step(new /datum/surgery_step/organ/cut(src, organ_var_name)) // Makes the organ count as 'in surgery'
@@ -148,17 +150,34 @@
 		desc = "Remove the patients' right kidney."
 		icon_state = "right_kidney"
 		organ_var_name = "right_kidney"
+	butt
+		name = "Butt Replacement"
+		desc = "Remove the patients' butt."
+		implicit = TRUE
+		visible = FALSE
+		organ_var_name = "butt"
+		generate_surgery_steps(mob/living/surgeon, mob/user)
+			add_next_step(new /datum/surgery_step/organ/cut(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/organ/saw(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/organ/cut2(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/organ/remove(src, organ_var_name))
+		surgery_possible(mob/living/surgeon, obj/item/I)
+			if (surgeon?.a_intent != INTENT_GRAB)
+				return FALSE
 
+			return ..()
 
 	eye
+		affected_zone = "head"
+		implicit = TRUE
 		generate_surgery_steps(mob/living/surgeon, mob/user)
-			add_next_step(new /datum/surgery_step/organ/eye/dislodge(src, organ_var_name)) // Makes the organ count as 'in surgery'
-			add_next_step(new /datum/surgery_step/organ/eye/cut(src, organ_var_name)) // Makes the organ unsecure
-			add_next_step(new /datum/surgery_step/organ/eye/scoop(src, organ_var_name)) // Removes the organ
+			add_next_step(new /datum/surgery_step/organ/eye/dislodge(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/organ/eye/cut(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/organ/eye/scoop(src, organ_var_name))
 		surgery_possible(mob/living/surgeon, obj/item/I)
 			if (surgeon.zone_sel.selecting != "head")
 				return FALSE
-			if (patient.organHolder.get_organ(organ_var_name))
+			if (!patient.organHolder.get_organ(organ_var_name))
 				return FALSE
 			return TRUE
 		left
@@ -177,7 +196,44 @@
 				if (surgeon.find_in_hand(I) != surgeon.r_hand)
 					return FALSE
 				return ..()
-
+	brain
+		name = "Brain Surgery"
+		desc = "Perform surgery on the patients' brain."
+		affected_zone = "head"
+		organ_var_name = "brain"
+		implicit = TRUE
+		generate_surgery_steps(mob/living/surgeon, mob/user)
+			add_next_step(new /datum/surgery_step/organ/brain/cut(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/organ/brain/saw(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/organ/brain/cut2(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/organ/brain/remove(src, organ_var_name))
+		surgery_possible(mob/living/surgeon, obj/item/I)
+			if (surgeon.zone_sel.selecting != "head")
+				return FALSE
+			if (!patient.organHolder.get_organ(organ_var_name))
+				return FALSE
+			if (surgeon.a_intent == INTENT_HARM)
+				return FALSE
+			return TRUE
+	skull
+		name = "Skull Surgery"
+		desc = "Perform surgery on the patients' brain."
+		affected_zone = "head"
+		organ_var_name = "brain"
+		implicit = TRUE
+		generate_surgery_steps(mob/living/surgeon, mob/user)
+			add_next_step(new /datum/surgery_step/organ/skull/cut(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/organ/skull/saw(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/organ/skull/cut2(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/organ/skull/remove(src, organ_var_name))
+		surgery_possible(mob/living/surgeon, obj/item/I)
+			if (surgeon.zone_sel.selecting != "head")
+				return FALSE
+			if (!patient.organHolder.get_organ(organ_var_name))
+				return FALSE
+			if (surgeon.a_intent != INTENT_HARM)
+				return FALSE
+			return TRUE
 /datum/surgery/organ/replace
 	name = "Organ Addition"
 	desc = "Replace the patients' organs."
@@ -248,11 +304,14 @@
 		desc = "Replace the patients' right kidney."
 		icon_state = "right_kidney"
 		organ_var_name = "right_kidney"
-	right_kidney
+	butt
 		name = "Butt Replacement"
 		desc = "Replace the patients' butt."
-		icon_state = "right_kidney"
-		organ_var_name = "right_kidney"
+		icon_state = "butt"
+		organ_var_name = "butt"
+		affected_zone = "butt"
+
+
 	eye
 		surgery_possible(mob/living/surgeon, obj/item/I)
 			if (surgeon.zone_sel.selecting != "head")

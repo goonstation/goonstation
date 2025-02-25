@@ -1,0 +1,33 @@
+/datum/surgery/implant
+	name = "Implant Surgery"
+	desc = "Remove an implant from the patients' body."
+	icon_state = "implant"
+	visible = FALSE
+	implicit = TRUE
+	restart_when_finished = TRUE
+	surgery_possible(mob/living/surgeon)
+		if (!iscarbon(patient))
+			return FALSE
+		var/mob/living/carbon/human/C = patient
+		if (length(C.implant) == 0)
+			return FALSE
+		return TRUE
+
+	generate_surgery_steps(mob/living/surgeon, mob/user)
+		add_next_step(new/datum/surgery_step/fluff/cut(src))
+
+	on_complete(mob/surgeon, obj/item/tool)
+		for (var/obj/item/implant/projectile/I in patient.implant)
+			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts out \an [I] from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [tool]!"),\
+				SPAN_ALERT("You cut out \an [I] from [surgeon == patient ? "yourself" : "[patient]"] with [tool]!"),\
+				SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out \an [I] from you with [tool]!"))
+
+			I.on_remove(patient)
+			patient.implant.Remove(I)
+			I.set_loc(patient.loc)
+			// offset approximately around chest area, based on cutting over operating table
+			I.pixel_x = rand(-2, 5)
+			I.pixel_y = rand(-6, 1)
+			return ..()
+
+

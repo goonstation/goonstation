@@ -18,10 +18,7 @@
 	proc/setup_surgeries()
 		surgeries = list()
 		add_surgeries()
-		//TODO: does the organholder need to be authority here? probly.
-//		if (patient.organHolder)
-//			for(var/surgery in patient.organHolder.get_possible_surgeries())
-//				surgeries += surgery
+
 
 	/// Enter the top level menu for this surgery holder
 	proc/start_surgery(mob/surgeon, obj/tool)
@@ -33,16 +30,17 @@
 				take_bleeding_damage(src, null, rand(5, 10))
 
 
-	/// Enter a specific surgery, used here for tracking state of each surgeon
+	/// Used when a surgery's context menu is clicked.
 	proc/surgery_clicked(datum/surgery/surgery, mob/living/surgeon, obj/item/I)
 		if (!surgery)
 			return
 		surgery.surgery_clicked(surgeon, I)
 
+	/// Cancel all surgeries.
 	proc/cancel_all()
 		for(var/datum/surgery/surgery in surgeries)
 			surgery.cancel_surgery(null, null)
-	/// Cancel a surgery through the context menu. Places player 1 layer up.
+	/// Cancel a surgery through the context menu. This will generally re-open the context action menu.
 	proc/cancel_surgery_context(datum/surgery/surgery, mob/living/surgeon, obj/item/I)
 		if (!surgery)
 			return
@@ -53,13 +51,22 @@
 			return
 		surgery.cancel_surgery(surgeon, I)
 
-	proc/show_contexts(mob/surgeon, obj/tool)
+	/// Get the base surgeries for this holder.
+	proc/get_contexts()
 		var/list/datum/contextAction/surgery/contexts = list()
 		for (var/datum/surgery/surgery in surgeries)
 			surgery.infer_surgery_stage()
 			if (surgery.surgery_possible(patient) && surgery.visible)
 				contexts += surgery.get_context()
-		surgeon.showContextActions(contexts, patient, new /datum/contextLayout/experimentalcircle)
+		return contexts
+
+	/// Show the context action ring to the surgeon.
+	proc/show_contexts(mob/surgeon, obj/tool)
+		var/list/datum/contextAction/surgery/contexts = get_contexts()
+		if (length(contexts) == 1)
+			surgery_clicked(contexts[1].surgery, surgeon, tool)
+		else
+			surgeon.showContextActions(contexts, patient, new /datum/contextLayout/experimentalcircle)
 
 	proc/can_operate(mob/surgeon, obj/item/tool)
 		if (!patient)
@@ -110,11 +117,12 @@
 	living
 		add_surgeries()
 			..()
-			surgeries += new/datum/surgery/heal_generic(patient, src)
 			surgeries += new/datum/surgery/limb_surgery(patient, src)
-			surgeries += new/datum/surgery/test(patient, src)
-			//these two might need subtypes for different organ havers?
 			surgeries += new/datum/surgery/organ_surgery(patient, src)
+			surgeries += new/datum/surgery/head(patient, src)
+			surgeries += new/datum/surgery/implant(patient, src)
+			surgeries += new/datum/surgery/organ/butt(patient, src)
+
 
 
 

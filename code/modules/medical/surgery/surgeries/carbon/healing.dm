@@ -13,10 +13,10 @@
 	generate_surgery_steps(mob/living/surgeon, mob/user)
 		var/coin_toss = prob(50)
 		if(coin_toss)
-			add_next_step(new /datum/surgery_step/cut(src))
+			add_next_step(new /datum/surgery_step/fluff/cut(src))
 		else
-			add_next_step(new /datum/surgery_step/snip(src))
-		add_next_step(new /datum/surgery_step/suture(src))
+			add_next_step(new /datum/surgery_step/fluff/snip(src))
+		add_next_step(new /datum/surgery_step/fluff/suture(src))
 
 	on_complete(mob/living/surgeon, mob/user)
 		patient.HealDamage("All", 15, 0)
@@ -33,8 +33,8 @@
 	restart_when_finished = TRUE
 
 	generate_surgery_steps(mob/living/surgeon, mob/user)
-		add_next_step(new /datum/surgery_step/bandage(src))
-		add_next_step(new /datum/surgery_step/suture(src))
+		add_next_step(new /datum/surgery_step/fluff/bandage(src))
+		add_next_step(new /datum/surgery_step/fluff/suture(src))
 
 	on_complete(mob/living/surgeon, mob/user)
 		..()
@@ -50,7 +50,7 @@
 	restart_when_finished = TRUE
 
 	generate_surgery_steps(mob/living/surgeon, mob/user)
-		add_next_step(new /datum/surgery_step/suture(src))
+		add_next_step(new /datum/surgery_step/fluff/suture(src))
 
 	on_complete(mob/living/surgeon, mob/user)
 		patient.bleeding = 0

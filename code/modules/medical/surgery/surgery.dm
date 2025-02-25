@@ -21,12 +21,17 @@
 	/// If TRUE, this surgery will not use the context menu, and will be performed when
 	/// the user is hit with a tool that allows surgery_possible() and can_operate().
 	var/implicit = FALSE
+	/// If TRUE and implicit, then using tools in the wrong order will cause a mess up.
+	var/can_mess_up = FALSE
+	/// The part of the body this surgery is performed on.
+	var/affected_zone
 
 	var/last_surgery_step = 0 //! The last step ID added, used for sequencing steps.
 	var/active = FALSE //! If TRUE, the surgery is partially complete.
 	var/complete = FALSE //! If TRUE, the surgery is complete and will show as green.
 	var/visible = TRUE //! if TRUE, the surgery will be visible in the context menu.
-	var/holder = null
+	var/datum/surgeryHolder/holder = null
+	var/can_cancel = TRUE //! if TRUE, this surgery can be cancelled with a suture.
 	var/mob/living/patient = null
 
 	New(var/mob/living/patient, var/datum/surgeryHolder/holder, var/datum/surgery/super_surgery)
@@ -70,12 +75,6 @@
 				base *= 3.5
 		return 1
 
-
-	proc/complete_step(datum/surgery_step/step)
-		step.finished = TRUE
-		step.on_complete(patient, null)
-		step_completed(step, patient)
-
 	/// Called when the surgery's context menu is entered. This will be called when exiting child surgeries!
 	proc/enter_surgery(mob/surgeon)
 		infer_surgery_stage()
@@ -104,7 +103,7 @@
 
 	/// Called when the last step of a surgery is completed
 	proc/complete_surgery(mob/surgeon, obj/item/I)
-		on_complete()
+		on_complete(surgeon, I)
 		if (restart_when_finished)
 			restart_surgery()
 		if (exit_when_finished && !implicit)
@@ -127,6 +126,9 @@
 
 	/// Called when something cancels the surgery from within a context menu. should show another menu
 	proc/cancel_surgery_context(mob/surgeon, obj/item/I)
+		if (!istype(I, /obj/item/suture))
+			boutput(surgeon, SPAN_ALERT("You need a suture to cancel surgery!"))
+			return
 		cancel_surgery(surgeon, I)
 		if (!implicit)
 			super_surgery?.enter_surgery(surgeon)
@@ -147,7 +149,7 @@
 
 	/// If this is an invisible step, see if we should 'shortcut' past the context menu.
 	proc/do_shortcut(mob/surgeon, obj/item/I)
-		if (super_surgery?.surgery_complete() && implicit && surgery_possible(surgeon, I) && can_operate(surgeon, I))
+		if ((!super_surgery || super_surgery?.surgery_complete()) && implicit && surgery_possible(surgeon, I) && can_operate(surgeon, I))
 			for(var/datum/surgery_step/step in surgery_steps)
 				if (step.can_operate(surgeon, I))
 					step.perform_step(surgeon, I)
@@ -174,30 +176,46 @@
 				return FALSE
 		return TRUE
 
+	proc/step_accessible(datum/surgery_step/chosen_step)
+		if (chosen_step.step_number == 0)
+			return TRUE
+		var/complete = 0
+		for (var/datum/surgery_step/step in surgery_steps)
+			if (step.finished)
+				complete = max (step.step_number, complete)
+		return (chosen_step.step_number-1) <= complete
 	/// Gets the context actions for this surgeries's steps.
 	proc/get_surgery_contexts()
 		var/list/datum/contextAction/surgical_step/contexts = list()
-		var/step_locked = FALSE
 		var/completed_stages = 0
 		var/optional_contexts = list()
+
 		for (var/datum/surgery_step/step in surgery_steps)
-			var/context = step.get_context((step_locked && step.step_number > completed_stages))
-			if (!step.finished && !step_locked)
+			if (step.finished)
 				completed_stages = max(completed_stages, step.step_number)
-				step_locked = TRUE
+
+		for (var/datum/surgery_step/step in surgery_steps)
+			var/context = step.get_context((step.step_number-1 > completed_stages))
 			if (context)
 				if (step.optional && step.step_number == 0) // always-available optionals sit counter clockwise of the main step
 					optional_contexts += context
 				else
 					contexts += context
 
+
 		if (sub_surgeries_always_visible || surgery_complete())
 			for (var/datum/surgery/surgery in sub_surgeries)
 				if (surgery.surgery_possible(patient) && surgery.visible)
 					contexts += surgery.get_context()
 
-		contexts += new /datum/contextAction/surgery/step_up(holder, src)
-		contexts += new/datum/contextAction/surgery/cancel(holder,src)
+		//hacky fix to remove the back button if there's only one top-level surgery available.
+		//Keeps contexts looking identical to older code.
+		if (super_surgery != null || length(holder.get_contexts()) > 1)
+			contexts += new /datum/contextAction/surgery/step_up(holder, src)
+
+
+		if (can_cancel && get_surgery_progress() > 0)
+			contexts += new/datum/contextAction/surgery/cancel(holder,src)
 		contexts += optional_contexts
 
 
@@ -228,6 +246,7 @@
 	var/icon_state = "scissor"
 	var/success_sound = 'sound/items/Scissor.ogg'
 	var/optional = FALSE //! Whether this step is optional
+	var/visible = TRUE //! Whether this step is visible
 	var/datum/surgery/parent_surgery = null //! The surgery this step is a part of
 	var/hide_when_finished = TRUE //! Whether this step should be hidden when finished
 	var/finished = FALSE //! Whether this step is finished
@@ -241,6 +260,10 @@
 		for(var/type in tools_required)
 			if (istype(tool,type))
 				return TRUE
+
+	/// Whether this step is actually possible.
+	proc/step_possible(mob/surgeon, obj/item/tool)
+		return TRUE
 	proc/can_operate(mob/surgeon, obj/item/tool, quiet = TRUE)
 		if (finished)
 			return FALSE
@@ -248,18 +271,28 @@
 			if (!quiet)
 				boutput(surgeon,SPAN_ALERT("You're too far away!"))
 			return FALSE
+		if (!parent_surgery.step_accessible(src))
+			if (!quiet)
+				boutput(surgeon,SPAN_ALERT("You need to complete the previous steps first!"))
+			return FALSE
 		if (!tool)
 			if (flags_required == 0 && !length(tools_required))
 				return TRUE
 			else
 				if (!quiet)
-					boutput(surgeon,SPAN_ALERT("You need a tool for this step!"))
+					if (flags_required)
+						boutput(surgeon,SPAN_ALERT(get_flag_message()))
+					else
+						boutput(surgeon,SPAN_ALERT("You need a tool for this step!"))
 				return FALSE
 		if ((!flags_required || tool?.tool_flags & flags_required) && valid_subtype(tool) && tool_requirement(surgeon, tool))
 			return TRUE
 		else
 			if (!quiet)
-				boutput(surgeon,SPAN_ALERT("You can't use that tool for this step."))
+				if ((flags_required && !tool?.tool_flags & flags_required))
+					boutput(surgeon,SPAN_ALERT(get_flag_message()))
+				else
+					boutput(surgeon,SPAN_ALERT("You can't use that tool for this step."))
 			return FALSE
 
 	///Code based object requirement, IE. contains 50 units of ethanol or something
@@ -282,7 +315,7 @@
 		return TRUE
 
 	proc/perform_step(mob/surgeon, obj/item/tool) //! Perform the surgery step
-		if (can_operate(surgeon, tool, FALSE) && attempt_surgery_step(surgeon, tool))
+		if (can_operate(surgeon, tool, FALSE) && step_possible(surgeon, tool) && attempt_surgery_step(surgeon, tool))
 			if (success_sound)
 				playsound(parent_surgery.patient, success_sound, 50, TRUE)
 			on_complete(surgeon, tool)
@@ -295,13 +328,13 @@
 	/// Mark this step as finished. It's better to override on_complete unless you know what you're doing.
 	proc/finish_step(mob/user, obj/item/tool)
 		finished = TRUE
-		parent_surgery.step_completed(src, user)
+		parent_surgery.step_completed(src, user, tool)
 
 	/// Override this to add completion effects to this surgery step.
 	proc/on_complete(mob/user, obj/item/tool)
 
 	proc/get_context(var/locked) //! Get the context for this step
-		if (finished && hide_when_finished)
+		if (finished && hide_when_finished || !visible)
 			return null
 		var/datum/contextAction/surgical_step/step_context = new
 		step_context.name = name
@@ -311,17 +344,48 @@
 		if (finished)
 			step_context.icon_background = "greenbg"
 			step_context.pip_state = "check"
+		else if (locked)
+			step_context.icon_background = "redbg"
+			step_context.pip_state = "cross"
 		else if (optional)
 			step_context.icon_background = "bluebg"
 			step_context.pip_state = "squiggle"
 		else if (!locked)
 			step_context.icon_background = "yellowbg"
 			step_context.pip_state = "circle"
-		else
-			step_context.icon_background = "redbg"
-			step_context.pip_state = "cross"
 		return step_context
 
+	proc/get_flag_message()
+		if (flags_required & TOOL_CHOPPING)
+			return "You need a chopping tool for this step!"
+		else if (flags_required & TOOL_SCREWING)
+			return "You need a screwing tool for this step!"
+		else if (flags_required & TOOL_CUTTING)
+			return "You need a cutting tool for this step!"
+		else if (flags_required & TOOL_CLAMPING)
+			return "You need a clamp for this step!"
+		else if (flags_required & TOOL_PRYING)
+			return "You need a prying tool for this step!"
+		else if (flags_required & TOOL_PULSING)
+			return "You need a pulsing tool for this step!"
+		else if (flags_required & TOOL_SAWING)
+			return "You need a sawing tool for this step!"
+		else if (flags_required & TOOL_SCREWING)
+			return "You need a screwing tool for this step!"
+		else if (flags_required & TOOL_SPOONING)
+			return "You need a spooning tool for this step!"
+		else if (flags_required & TOOL_SNIPPING)
+			return "You need a snipping tool for this step!"
+		else if (flags_required & TOOL_WELDING)
+			return "You need a welding tool for this step!"
+		else if (flags_required	& TOOL_WRENCHING)
+			return "You need a wrenching tool for this step!"
+		else if (flags_required & TOOL_SOLDERING)
+			return "You need a soldering tool for this step!"
+		else if (flags_required & TOOL_WIRING)
+			return "You need wires for this step!"
+		else
+			return "You can't use that tool for this step."
 	screw
 		name = "Screw"
 		desc = "Screw the thing into place."

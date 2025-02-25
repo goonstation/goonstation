@@ -167,42 +167,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	return damage
 
-// /proc/insertChestItem(var/mob/living/carbon/human/patient, var/mob/surgeon, var/obj/item/chest_item)
-// 	// Check if surgeon is targeting chest while there's a hole in patient's chest
-// 	if (surgeon.zone_sel.selecting == "chest" && patient.organHolder?.chest?.op_stage > 1)
-// 		//First, check if the object is an organ, then check if we can attach it. If we can, do so.
-// 		if (istype(chest_item, /obj/item/organ)) //Organs shouldn't go in your guts. We try attaching them instead.
-// 			return FALSE
-
-// 		// Check if patient has item in chest already
-// 		if (patient.chest_item == null)
-// 			if(chest_item.w_class > W_CLASS_NORMAL && !(chest_item.type in chestitem_whitelist))
-// 				boutput(surgeon, SPAN_ALERT("[chest_item] is too big to fit into [patient]'s chest cavity."))
-// 				return TRUE
-
-
-
-// 			// Remove item from surgeon
-// 			surgeon.u_equip(chest_item)
-
-// 			if(surgeon.find_type_in_hand(/obj/item/suture/))
-// 				patient.chest_item_sewn = TRUE
-// 				surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> shoves [chest_item] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest and sutures it up."),\
-// 					SPAN_NOTICE("You shove [chest_item] into [surgeon == patient ? "your" : "[patient]'s"] chest and suture it up."),\
-// 					SPAN_NOTICE("[patient == surgeon ? "You shove [chest_item] into your chest and suture it up" : "<b>[surgeon]</b> shoves [chest_item] into your chest and sutures it up"]."))
-// 				patient.TakeDamage("chest", rand(5, 15), 0)
-// 			else
-// 				surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> shoves [chest_item] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest."),\
-// 					SPAN_NOTICE("You shove [chest_item] into [surgeon == patient ? "your" : "[patient]'s"] chest."),\
-// 					SPAN_NOTICE("[patient == surgeon ? "You shove" : "<b>[surgeon]</b> shoves"] [chest_item] into your chest."))
-
-// 		else if (patient.chest_item != null)
-// 			// State that there's already something in the patient's chest.
-// 			surgeon.show_text(SPAN_ALERT("[patient.chest_item] is already inside [patient]'s chest cavity."))
-// 		return TRUE
-// 	else
-// 		return FALSE
-
 
 /obj/item/proc/remove_bandage(mob/living/carbon/human/H, mob/user)
 	. = TRUE
@@ -235,6 +199,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 /// Returns a number you can estimate the 'level of surgery' going on. Higher number = more, deeper surgeries.
 /mob/living/carbon/human/get_surgery_depth(var/zone)
+
 	if (!src.organHolder)
 		DEBUG_MESSAGE("has_active_surgery failed due to [src] having no organHolder")
 		return FALSE
@@ -434,14 +399,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 		else if (patient.organHolder.head.scalp_op_stage <= 4.0)
 			if (patient.organHolder.head.scalp_op_stage == 0.0)
-				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-
-				var/removing_eye = (patient.organHolder.left_eye && patient.organHolder.left_eye.op_stage == 1.0) || (patient.organHolder.right_eye && patient.organHolder.right_eye.op_stage == 1.0)
-
-				if (removing_eye && (surgeon.find_in_hand(src, "left") || surgeon.find_in_hand(src, "right")))
-					surgeon.show_text("Wait, which eye was I operating on?")
-				else if (removing_eye && surgeon.find_in_hand(src, "middle"))
-					surgeon.show_text("Hey, there's no middle eye!")
 
 				if (prob(screw_up_prob))
 					do_slipup(surgeon, patient, "head", damage_low, fluff)
