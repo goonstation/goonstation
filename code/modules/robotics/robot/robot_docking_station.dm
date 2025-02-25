@@ -214,6 +214,8 @@ TYPEINFO(/obj/machinery/recharge_station)
 		return
 	if (src.status & (BROKEN | NOPOWER))
 		return
+	if (ishuman(AM))
+		return
 	if (isitem(AM) && can_act(user))
 		src.Attackby(AM, user)
 		return
