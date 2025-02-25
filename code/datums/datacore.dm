@@ -348,6 +348,7 @@
 				Research.Insert(1, "<b>[entry]</b>")
 			else if(rank in command_gimmicks)
 				Research.Insert(2, "<b>[entry]</b>")
+			else
 				Research.Add(entry)
 			continue
 
