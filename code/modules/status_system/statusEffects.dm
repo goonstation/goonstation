@@ -3061,11 +3061,7 @@
 		onRemove()
 			var/mob/living/carbon/human/H = src.owner
 			if (!QDELETED(H))
-				var/has_bloodcurse = FALSE
-				for(var/datum/statusEffect/art_curse/blood/status in H.statusEffects)
-					has_bloodcurse = TRUE
-					break
-				if (!has_bloodcurse)
+				if (!H.hasStatus("art_blood_curse"))
 					H.regens_blood = TRUE
 			..()
 
