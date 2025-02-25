@@ -436,12 +436,19 @@ datum
 				if(!volume_passed)
 					return
 				volume_passed = clamp(volume_passed, 0, 10)
+				var/max_effectiveness_at = M.max_health*0.25
+				var/min_effectiveness_at = M.max_health*SYNTHFLESH_MINIMUM_HEALTH_PCT
+				var/min_effectiveness = 0.25
+				var/healing_effectiveness = 0
+				var/health_remaining = (M.max_health - M.get_brute_damage() + M.get_burn_damage())
+
+				healing_effectiveness = clamp(lerp(min_effectiveness,1,(health_remaining - min_effectiveness_at) / (max_effectiveness_at - min_effectiveness_at)),0,1)
 
 				if(method == TOUCH)
 					. = 0
 					if(issilicon(M)) //Metal flesh isn't repaired by synthflesh
 						return
-					M.HealDamage("All", volume_passed * 1.5, volume_passed * 1.5)
+					M.HealDamage("All", healing_effectiveness*volume_passed * 1.5, healing_effectiveness*volume_passed * 1.5)
 					if (isliving(M))
 						var/mob/living/H = M
 						if (H.disfigured)
@@ -494,7 +501,7 @@ datum
 		medical/synaptizine // COGWERKS CHEM REVISION PROJECT. remove this, make epinephrine (epinephrine) do the same thing
 			name = "synaptizine"
 			id = "synaptizine"
-			description = "Synaptizine a mild medical stimulant. Can be used to reduce drowsyness and resist disabling symptoms such as paralysis."
+			description = "Synaptizine is a mild medical stimulant. Can be used to reduce drowsiness and resist disabling symptoms such as paralysis."
 			reagent_state = LIQUID
 			fluid_r = 200
 			fluid_g = 0
@@ -617,22 +624,45 @@ datum
 		medical/saline // COGWERKS CHEM REVISION PROJECT. magic drug, ought to use plasma or something
 			name = "saline-glucose solution"
 			id = "saline"
-			description = "This saline and glucose solution can help stabilize critically injured patients and cleanse wounds."
+			description = "This saline and glucose solution works to stabilize critically injured patients. It is rapidly reabsorbed when in large quantities."
 			reagent_state = LIQUID
 			thirst_value = 0.25
 			fluid_r = 220
 			fluid_g = 220
 			fluid_b = 220
 			transparency = 40
-			penetrates_skin = 1 // splashing saline on someones wounds would sorta help clean them
-			depletion_rate = 0.15
+			depletion_rate = 0.4
 			value = 5 // 3c + 1c + 1c
+			overdose = 100 // hypervolemia or something. dont just chug this
+
+			//prioritise hooking up to IVs - large quantities added over time needed for peak healing
+			calculate_depletion_rate(var/mob/affected_mob, var/mult = 1)
+				. = ..()
+				var/amt = holder.get_reagent_amount(src.id)
+				switch(amt)
+					if(0 to 30) // IV drip at ~20% saline (1)
+						. *= 1
+					if(30 to 50) // IV drip 50% saline (2.5)
+						. *= 2.5
+					if(50 to 70) // IV drip 100% saline (5)
+						. *= 5
+					if(70 to 100) // nerd pilled it, or slow metabolism
+						. *= 10
+					if(100 to INFINITY) // nerd tried to abuse it
+						. *= 15
+				return .
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
-				if (prob(33))
-					M.HealDamage("All", 2 * mult, 2 * mult)
+
+				var/amt = holder.get_reagent_amount(src.id)
+				var/magnitude = 1+clamp(amt/20, 1, 3) // heal faster in larger doses, but be way less efficient
+
+				if (prob(33+magnitude*10))
+					M.HealDamage("All", 2 * mult, 2 * mult, 1 * mult)
+					if (M.get_brain_damage() >= 50) // stabilize, but keep death chance high above 200% damage
+						M.take_brain_damage(-1 * mult)
 				if (blood_system && isliving(M) && prob(33))
 					var/mob/living/H = M
 					H.blood_volume += 1  * mult
@@ -640,6 +670,22 @@ datum
 				//M.UpdateDamageIcon()
 				..()
 				return
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1) //hypervolemia
+				if (!M)
+					M = holder.my_atom
+				if (isliving(M))
+					var/mob/living/H = M
+					if (probmult(20))
+						H.reagents.add_reagent("salt", 3)
+					var/datum/reagents/tempHolder = new
+					if (probmult(10))
+						if (H.organHolder)
+							H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 50)
+					if (probmult(5))
+						H.emote(pick("gasp", "choke", "cough"))
+						H.losebreath += (1 * mult)
+						H.changeStatus("knockdown", 2 SECONDS)
 
 		medical/anti_rad // COGWERKS CHEM REVISION PROJECT. replace with potassum iodide
 			name = "potassium iodide"
@@ -900,14 +946,41 @@ datum
 			fluid_g = 230
 			fluid_b = 218
 			transparency = 80
-			depletion_rate = 0.4
+			depletion_rate = 0.2
 			overdose = 20
+			threshold = THRESHOLD_INIT
+			var/last_tracked_damage = 0
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					last_tracked_damage = (M.get_brute_damage() + M.get_burn_damage() + M.get_toxin_damage())
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "heparin", 2)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "heparin")
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
 				if (holder.has_reagent("cholesterol"))
 					holder.remove_reagent("cholesterol", 2 * mult) // insulin used to do this but now doesn't, so w/e this can do it now.
+
+				var/new_damage = (M.get_brute_damage() + M.get_burn_damage() + M.get_toxin_damage())
+				var/damage_delta = (new_damage - last_tracked_damage)/mult
+				// spew blood when large damage deltas occur. force multiplier to being beaten, weaken poison mixes
+				if (volume > 1 && (damage_delta >= 10))
+					if (!ON_COOLDOWN(M, "heparin_message", 15 SECONDS))
+						M.visible_message(SPAN_ALERT("<b>[M]'s skin rapidly bruises and ruptures, bleeding everywhere!"))
+					var/bleed_volume = rand(8,15)*mult
+					bleed(M, bleed_volume, rand(1,3) * mult, reagent_transfer_override = bleed_volume)
+					take_bleeding_damage(M, 0, 10, DAMAGE_CUT, 1)
+					M.reagents.trans_to()
+
+				last_tracked_damage = new_damage
 				..()
 				return
 
@@ -1061,7 +1134,7 @@ datum
 			fluid_g = 220
 			fluid_b = 0
 			transparency = 225
-			depletion_rate = 3
+			depletion_rate = 1.5
 			value = 6 // 2c + 1c + 1c + 1c + 1c
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1081,9 +1154,19 @@ datum
 					return
 				volume_passed = clamp(volume_passed, 0, 10)
 
-				if (method == TOUCH)
+				var/max_effectiveness_at = M.max_health*0.25
+				var/min_effectiveness_at = M.max_health*SULFAZINE_MINIMUM_HEALTH_PCT
+				var/min_effectiveness = 0.5
+				var/healing_effectiveness = 0
+				var/health_remaining = (M.max_health - M.get_brute_damage() + M.get_burn_damage())
+				if (health_remaining < min_effectiveness_at)
+					healing_effectiveness = 0
+				else
+					healing_effectiveness = clamp(lerp(min_effectiveness,1,(health_remaining - min_effectiveness_at) / (max_effectiveness_at - min_effectiveness_at)),0,1)
+
+				if(method == TOUCH && healing_effectiveness > 0)
 					. = 0
-					M.HealDamage("All", 0, volume_passed)
+					M.HealDamage("All", 0, healing_effectiveness*volume_passed)
 
 					var/silent = 0
 					if (length(paramslist))
@@ -1094,6 +1177,15 @@ datum
 
 
 					M.UpdateDamageIcon()
+				else if (method == TOUCH)
+					. = 0
+					var/silent = 0
+					if (length(paramslist))
+						if ("silent" in paramslist)
+							silent = 1
+					if (!silent)
+						boutput(M, SPAN_NOTICE("The silver sulfadiazine isn't enough! The burns are too severe!"))
+
 				else if (method == INGEST)
 					boutput(M, SPAN_ALERT("You feel sick..."))
 					if (volume_passed > 0)
@@ -1323,7 +1415,7 @@ datum
 			fluid_g = 150
 			fluid_b = 150
 			transparency = 255
-			depletion_rate = 3
+			depletion_rate = 1.5
 			value = 6 // 3c + 1c + 1c + 1c
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1344,9 +1436,19 @@ datum
 				if(issilicon(M)) // Borgs shouldn't heal from this
 					return
 				volume_passed = clamp(volume_passed, 0, 10)
-				if(method == TOUCH)
+				var/max_effectiveness_at = M.max_health*0.25
+				var/min_effectiveness_at = M.max_health*STYPTIC_MINIUMUM_HEALTH_PCT
+				var/min_effectiveness = 0.5
+				var/healing_effectiveness = 0
+				var/health_remaining = (M.max_health - M.get_brute_damage() + M.get_burn_damage())
+				if (health_remaining < min_effectiveness_at)
+					healing_effectiveness = 0
+				else
+					healing_effectiveness = clamp(lerp(min_effectiveness,1,(health_remaining - min_effectiveness_at) / (max_effectiveness_at - min_effectiveness_at)),0,1)
+
+				if(method == TOUCH && healing_effectiveness > 0)
 					. = 0
-					M.HealDamage("All", volume_passed, 0)
+					M.HealDamage("All", healing_effectiveness*volume_passed, 0)
 					// M.HealBleeding(volume_passed) // At least implement your stuff properly first, thanks. Styptic also shouldn't be as good as synthflesh for healing bleeding.
 
 					/*for(var/A in M.organs)
@@ -1357,12 +1459,20 @@ datum
 						affecting.heal_damage(volume_passed, 0)*/
 
 					var/mob/living/L = M
-					if (L.bleeding == 1)
+					if (L.bleeding == 1 && healing_effectiveness > 0)
 						repair_bleeding_damage(L, 50, 1)
-					else if (L.bleeding <= 3)
+					else if (L.bleeding <= 3 && healing_effectiveness >= 1)
 						repair_bleeding_damage(L, 5, 1)
 
 					M.UpdateDamageIcon()
+				else if (method == TOUCH)
+					. = 0
+					var/silent = 0
+					if (length(paramslist))
+						if ("silent" in paramslist)
+							silent = 1
+					if (!silent)
+						boutput(M, SPAN_NOTICE("The styptic powder doesn't take, your wounds are too severe!"))
 				else if(method == INGEST)
 					boutput(M, SPAN_ALERT("You feel gross!"))
 					if (volume_passed > 0)
@@ -1382,26 +1492,50 @@ datum
 			transparency = 255
 			value = 12 // 5 3 3 1
 			target_organs = list("left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")	//RN this is all the organs. Probably I'll remove some from this list later. no "brain",  either
+			depletion_rate = 0.8 // halves itself
+			var/active = FALSE
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					if(M.bodytemperature < M.base_body_temp - 100 && M.bodytemperature > M.base_body_temp - 275)
+						active = TRUE
+						APPLY_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "cryoxadone", 0.5)
+					else
+						REMOVE_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "cryoxadone")
+						active = FALSE
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "cryoxadone")
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature < M.base_body_temp - 100 && M.bodytemperature > M.base_body_temp - 275 && !M.hasStatus("burning")) //works in approx 35K to 210K -> -238C to -63C - medbay freezer goes down to -200C
-					if(M.get_oxygen_deprivation())
-						M.take_oxygen_deprivation(-2 * mult)
-					if(M.losebreath && prob(50))
-						M.lose_breath(-1 * mult)
-					if (M.get_brain_damage())
-						M.take_brain_damage(-2 * mult)
-					M.HealDamage("All", 2 * mult, 2 * mult, 3 * mult)
+				if(M.bodytemperature < M.base_body_temp - 100 && M.bodytemperature > M.base_body_temp - 275) //works in approx 35K to 210K -> -238C to -63C - medbay freezer goes down to -200C
+					if (!active)
+						active = TRUE
+						APPLY_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "cryoxadone", 0.5)
 
-					M.take_radiation_dose(-0.025 SIEVERTS * mult)
+					if(M.get_oxygen_deprivation())
+						M.take_oxygen_deprivation(-4 * mult)
+					M.lose_breath(-1 * mult)
+					if (M.get_brain_damage())
+						M.take_brain_damage(-4 * mult)
+					// big numbers here - but this slows your metabolism by half, halving its speed
+					M.HealDamage("All", 4 * mult, 4 * mult, 6 * mult)
+
+					M.take_radiation_dose(-0.05 SIEVERTS * mult)
 					M.bodytemperature = min(M.bodytemperature + (12.5 * mult), M.base_body_temp)
 
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
 						if (H.organHolder)
-							H.organHolder.heal_organs(2*mult, 2*mult, 2*mult, target_organs)
-
+							H.organHolder.heal_organs(4*mult, 4*mult, 4*mult, target_organs)
+				else if (active)
+					active = FALSE
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_METABOLIC_RATE, "cryoxadone")
 				..()
 
 		medical/atropine // COGWERKS CHEM REVISION PROJECT. i dunno what the fuck this would be, probably something bad. maybe atropine?
