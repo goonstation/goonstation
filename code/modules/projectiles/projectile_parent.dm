@@ -891,7 +891,7 @@ ABSTRACT_TYPE(/datum/projectile)
 				var/new_impact_icon = hit.impact_icon
 				var/new_impact_icon_state = hit.impact_icon_state
 				//Bullet impacts create dust of the color of the hit thing
-				var/avrg_color = hit.get_average_color()
+				var/avrg_color = hit.get_average_color(TRUE)
 				new /obj/effects/impact_gunshot/dust(get_turf(hit), x, y, -O.xo, -O.yo, damage, avrg_color, new_impact_icon, new_impact_icon_state)
 				if (underwater)
 					new /obj/effects/impact_gunshot/bubble(get_turf(hit), x, y, -O.xo, -O.yo, damage)
