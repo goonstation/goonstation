@@ -1,3 +1,9 @@
+
+(t)tue feb 25 25
+(u)Sovexe
+(p)22439
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Rectangular maps (e.g. Podwars) are now properly supported by the minimap computers and floor displays
 (t)sun feb 23 25
 (u)LeahTheTech
 (+)Nanotrasen has begun enforcing its millinery patents.
