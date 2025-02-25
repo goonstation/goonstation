@@ -358,14 +358,12 @@ proc/mult_colors(A, B)
 		var/list/matrix = islist(A) ? A : B
 		var/hex = islist(A) ? B : A
 		var/list/hex_rgb = hex_to_rgb_list(hex)
-		for (var/i in 1 to length(hex_rgb))
-			hex_rgb[i] /= 255
 		//okay I know this looks like evil hell maths but I promise it's just an implementation of https://www.byond.com/docs/ref/#/{notes}/color-matrix
 		//multiply the RGB values of the hex color by the corresponding transformation values of the color matrix
 		//in a sane world byond would return an actual matrix object here and all this would be one multiply operation but NOOOO
-		var/red = hex_rgb[1] * matrix[1] + hex_rgb[2] * matrix[5 + 1] + hex_rgb[3] * matrix[10 + 1]
-		var/green = hex_rgb[1] * matrix[2] + hex_rgb[2] * matrix[5 + 2] + hex_rgb[3] * matrix[10 + 2]
-		var/blue = hex_rgb[1] * matrix[3] + hex_rgb[2] * matrix[5 + 3] + hex_rgb[3] * matrix[10 + 3]
+		var/red = hex_rgb[1] * matrix[1] + hex_rgb[2] * matrix[4 + 1] + hex_rgb[3] * matrix[8 + 1]
+		var/green = hex_rgb[1] * matrix[2] + hex_rgb[2] * matrix[4 + 2] + hex_rgb[3] * matrix[8 + 2]
+		var/blue = hex_rgb[1] * matrix[3] + hex_rgb[2] * matrix[4 + 3] + hex_rgb[3] * matrix[8 + 3]
 		return rgb(red, green, blue)
 	else //both of them are hex codes
 		var/list/A_rgb = hex_to_rgb_list(A)
