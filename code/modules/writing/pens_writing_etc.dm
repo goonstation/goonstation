@@ -224,6 +224,22 @@
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 
+/obj/item/pen/elite
+	name = "Elite pen"
+	desc = "The pinnacle of National Notary pens, worth more than the GDP of The Vatican City. Looks like the 'Lieutenat Corbesier' model with the platinum nib and African blackwood barrel."
+	icon_state = "pen_fancy"
+	item_state = "pen_fancy"
+	font_color = "#D4AF37"
+	font = "'Dancing Script', cursive"
+	webfont = "Dancing Script"
+	uses_handwriting = 1
+
+	material_uses = 123456
+	New()
+		..()
+		src.setMaterial(getMaterial("gold"))
+
+
 /obj/item/pen/odd
 	name = "odd pen"
 	desc = "There's something strange about this pen. Inscriptions indicate it is a National Notary 'Francis Scott' model with an electrum nib and lignum vitae barrel. Huh."
