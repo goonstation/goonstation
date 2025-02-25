@@ -900,7 +900,7 @@ ABSTRACT_TYPE(/datum/projectile)
 					new /obj/effects/impact_gunshot/smoke(get_turf(hit), x, y, -O.xo, -O.yo, damage)
 			else
 				//Energy impacts create sparks of the color of the projectile
-				var/avrg_color = O.get_average_color()
+				var/avrg_color = O.get_average_color(TRUE)
 				new /obj/effects/impact_energy/projectile_sparks(get_turf(hit), x, y, -O.xo, -O.yo, damage, avrg_color)
 				if (underwater)
 					new /obj/effects/impact_gunshot/bubble(get_turf(hit), x, y, -O.xo, -O.yo, damage)

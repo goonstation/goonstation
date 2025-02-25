@@ -336,14 +336,44 @@ proc/hsv_transform_color_matrix(h=0.0, s=1.0, v=1.0)
 
 var/global/list/list/icon_state_average_color_cache = list(list())
 
-/atom/proc/get_average_color()
+///include_local_color: multiply the cached average icon color by the specific `src.color` var of this atom
+/atom/proc/get_average_color(include_local_color = FALSE)
 	if(!icon_state_average_color_cache[src.icon] || !icon_state_average_color_cache[src.icon][src.icon_state])
 		if(!icon_state_average_color_cache[src.icon])
 			icon_state_average_color_cache[src.icon] = list()
 		var/icon/I = icon(src.icon, src.icon_state)
 		icon_state_average_color_cache[src.icon][src.icon_state] = global.get_average_color(I)
 
-	return icon_state_average_color_cache[src.icon][src.icon_state]
+	var/average_color = icon_state_average_color_cache[src.icon][src.icon_state]
+	if (include_local_color && src.color && src.color != "#ffffff")
+		return mult_colors(src.color, average_color)
+	return average_color
+
+///Multiplies two colors together in the same way Byond does, accounting for one or both being matrices
+proc/mult_colors(A, B)
+	//they're both matrices, just multiply them together and return a matrix since there's no way to losslessly convert back to a hex code
+	if (islist(A) && islist(B))
+		return mult_color_matrix(A, B)
+	if (islist(A) || islist(B)) //one of them is a matrix
+		var/list/matrix = islist(A) ? A : B
+		var/hex = islist(A) ? B : A
+		var/list/hex_rgb = hex_to_rgb_list(hex)
+		for (var/i in 1 to length(hex_rgb))
+			hex_rgb[i] /= 255
+		//okay I know this looks like evil hell maths but I promise it's just an implementation of https://www.byond.com/docs/ref/#/{notes}/color-matrix
+		//multiply the RGB values of the hex color by the corresponding transformation values of the color matrix
+		//in a sane world byond would return an actual matrix object here and all this would be one multiply operation but NOOOO
+		var/red = hex_rgb[1] * matrix[1] + hex_rgb[2] * matrix[5 + 1] + hex_rgb[3] * matrix[10 + 1]
+		var/green = hex_rgb[1] * matrix[2] + hex_rgb[2] * matrix[5 + 2] + hex_rgb[3] * matrix[10 + 2]
+		var/blue = hex_rgb[1] * matrix[3] + hex_rgb[2] * matrix[5 + 3] + hex_rgb[3] * matrix[10 + 3]
+		return rgb(red, green, blue)
+	else //both of them are hex codes
+		var/list/A_rgb = hex_to_rgb_list(A)
+		var/list/B_rgb = hex_to_rgb_list(B)
+		//can't multiply two 0-255 values together directly, so convert one to 0-1, the maths all works out in the end
+		for (var/i in 1 to length(A_rgb))
+			A_rgb[i] /= 255
+		return rgb(A_rgb[1] * B_rgb[1], A_rgb[2] * B_rgb[2], A_rgb[3] * B_rgb[3]) //return a hex code
 
 
 /**
