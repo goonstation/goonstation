@@ -741,8 +741,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			logTheThing(LOG_STATION, P, "teleport projectile [P] dumped contents at [log_loc(P)] as targeted destination was disposed.")
 			P.die()
 		var/obj/item/mechanics/telecomp/target_tele = P.targets[1]
-		if (!target_tele.anchored)
-			logTheThing(LOG_STATION, P, "teleport projectile [P] dumped contents at [log_loc(P)] as target teleporter at [log_loc(target_tele)] was unanchored.")
+		if (!target_tele.anchored || target_tele.send_only)
+			logTheThing(LOG_STATION, P, "teleport projectile [P] dumped contents at [log_loc(P)] as target teleporter at [log_loc(target_tele)] was [target_tele.anchored ? "de-anchored" : "set to send only"].")
 			P.die()
 		if (get_turf(P) == src.starting_turf) return
 		for (var/obj/item/mechanics/telecomp/tele in get_turf(P))
