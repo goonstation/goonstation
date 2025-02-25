@@ -1524,3 +1524,27 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 	update_icon()
 		..()
 		src.icon_state = "weapons_loader-[src.loaded_wep ? "loaded" : "unloaded"]"
+
+/obj/item/shipcomponent/secondary_system/gunner_support
+	name = "Gunner Module"
+	desc = "An upper-pod gunner module that hooks up to the main weapon's power inputs, allowing passengers to fire weak phaser bolts in an ordinal direction of their choosing. Requires that a main weapon be installed."
+	icon_state = "gunner_support"
+	hud_state = "gunner_support"
+	f_active = TRUE
+
+	Use()
+		return
+
+	toggle()
+		return
+
+	activate()
+		return
+
+	deactivate()
+		return
+
+	proc/fire_at(atom/A, mob/gunner)
+		if (ON_COOLDOWN(src, "fire", 0.8 SECONDS))
+			return
+		src.ship.ShootProjectiles(gunner, new/datum/projectile/laser/light/pod/support_gunner, get_dir(src.ship, A))
