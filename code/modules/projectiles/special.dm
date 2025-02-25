@@ -746,7 +746,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			P.die()
 		if (get_turf(P) == src.starting_turf) return
 		for (var/obj/item/mechanics/telecomp/tele in get_turf(P))
-			if (tele.anchored)
+			if (tele.anchored && !tele.send_only)
 				particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(tele.loc))).Run()
 				// Dest. pad gets "from=origin&count=123"
 				SEND_SIGNAL(tele, COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"from=[tele.teleID]&count=[P.special_data["count_sent"]]")
