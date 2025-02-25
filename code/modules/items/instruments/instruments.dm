@@ -686,7 +686,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			if (secbot.emagged)
 				continue
 			secbot.KillPathAndGiveUp(1)
-			secbot.speak("Awaiting command...")
+			secbot.say("Awaiting command...")
 			bots += secbot
 			break
 
@@ -706,7 +706,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			if (cleanbot.emagged || !cleanbot.on)
 				continue
 			cleanbot.KillPathAndGiveUp(1, TRUE)
-			cleanbot.speak("Awaiting command...")
+			cleanbot.say("Awaiting command...")
 			bots += cleanbot
 			break
 

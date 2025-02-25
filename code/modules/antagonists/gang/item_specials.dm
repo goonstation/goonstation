@@ -142,8 +142,7 @@
 			H.remove_stamina(staminacost_chain + staminacost_chain_additive*current_chain)
 			if (current_chain == 13)
 				sleep(0.2 SECONDS)
-				var/string ="[H] raises the machete up high!"
-				H.show_message(SPAN_ALERT(string), 1, assoc_maptext = make_chat_maptext(H, "<I>[string]</I>", "color: #C2BEBE;", alpha = 140))
+				H.emote("customv raises the machete up high!", TRUE)
 				sleep(2 SECONDS)
 				damageMult = 5
 			else if (current_chain == 3)

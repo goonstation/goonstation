@@ -1,10 +1,12 @@
 // cube refactoring courtesy of cirrial
 // all blames acknowledged 2017
 
+TYPEINFO(/mob/living/carbon/cube)
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_CUBIC)
+
 /mob/living/carbon/cube
 	name = "cube"
 	real_name = "cube"
-	say_language = "cubic" // How they communicate to each other is a mystery.
 	desc = "cubic"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "meatcube"
@@ -14,9 +16,11 @@
 	density = 1
 	nodamage = 1
 	opacity = 0
-	var/life_timer = 10
 	sound_scream = 'sound/voice/screams/male_scream.ogg'
 	use_stamina = 0
+	say_language = LANGUAGE_CUBIC
+
+	var/life_timer = 10
 
 	examine(mob/user)
 		. = list(SPAN_NOTICE("*---------*"))
@@ -27,11 +31,6 @@
 		else
 			. += SPAN_ALERT("It looks [pick("kinda", "really", "sorta", "a bit", "slightly")] [desc].")
 		. += SPAN_NOTICE("*---------*") // the fact this was missing bugged me - cirr
-
-	say_understands(var/other)
-		if (ishuman(other) || isrobot(other) || isAI(other))
-			return 1
-		return ..()
 
 	attack_hand(mob/user)
 		boutput(user, SPAN_NOTICE("You push the [src.name] but nothing happens!"))

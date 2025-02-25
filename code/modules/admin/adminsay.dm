@@ -78,7 +78,7 @@
 		if (!dd_hasprefix(maybeMurray.name, "Murray"))
 			continue
 
-		maybeMurray.speak(msg)
+		maybeMurray.say(msg)
 		break
 
 	logTheThing(LOG_ADMIN, usr, "forced Murray to beep: [msg]")
@@ -106,7 +106,7 @@
 	// Given that HS can also talk on his own (well, used to be able to)
 	// this should probably be a proc off in world.dm. Maybe. Probably nobody cares.
 	for (var/obj/machinery/bot/medbot/head_surgeon/maybeHS in machine_registry[MACHINES_BOTS])
-		maybeHS.speak(msg)
+		maybeHS.say(msg)
 		logTheThing(LOG_ADMIN, usr, "forced HeadSurgeon to beep: [msg]")
 		logTheThing(LOG_DIARY, usr, "forced HeadSurgeon: [msg]", "admin")
 		message_admins(SPAN_INTERNAL("[key_name(usr)] forced HeadSurgeon to beep: [msg]"))
@@ -114,7 +114,7 @@
 
 	for (var/obj/item/clothing/suit/cardboard_box/head_surgeon/maybeHS in world)
 		LAGCHECK(LAG_LOW)
-		maybeHS.speak(msg)
+		maybeHS.say(msg)
 		logTheThing(LOG_ADMIN, usr, "forced HeadSurgeon to beep: [msg]")
 		logTheThing(LOG_DIARY, usr, "forced HeadSurgeon: [msg]", "admin")
 		message_admins(SPAN_INTERNAL("[key_name(usr)] forced HeadSurgeon to beep: [msg]"))
@@ -139,7 +139,7 @@
 		return
 
 	for (var/obj/machinery/derelict_aiboss/ai/maybeBrad in machine_registry[MACHINES_BOTS])
-		maybeBrad.speak(msg)
+		maybeBrad.say(msg)
 		break
 
 	logTheThing(LOG_ADMIN, usr, "forced Bradbury II to beep: [msg]")
@@ -164,7 +164,7 @@
 		return
 
 	for (var/obj/machinery/bot/secbot/beepsky/maybeBeepsky in machine_registry[MACHINES_BOTS])
-		maybeBeepsky.speak(msg)
+		maybeBeepsky.say(msg)
 		break
 
 	logTheThing(LOG_ADMIN, usr, "forced Beepsky to beep: [msg]")
