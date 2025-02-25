@@ -23,9 +23,6 @@ TYPEINFO(/obj/item/device/gps)
 	var/tracking_string
 	var/tracking_x = 1
 	var/tracking_y = 1
-	var/list/gps_devices = list()
-	var/list/imps = list()
-	var/list/warp_beacons = list()
 
 	proc/get_z_info(var/turf/T)
 		. =  "Landmark: Unknown"
@@ -57,7 +54,6 @@ TYPEINFO(/obj/item/device/gps)
 
 	proc/get_gps_info()
 		var/list/gps_info = list()
-		src.gps_devices = list()
 
 		for_by_tcl(G, /obj/item/device/gps)
 			if (!G.allowtrack)
@@ -72,13 +68,10 @@ TYPEINFO(/obj/item/device/gps)
 								  "z_info" = src.get_z_info(T),
 								  "distress" = !!G.distress))
 
-			src.gps_devices += G
-
 		return gps_info
 
 	proc/get_imp_info()
 		var/list/imp_info = list()
-		src.imps = list()
 
 		for_by_tcl(imp, /obj/item/implant/tracking)
 			if (!isliving(imp.loc))
@@ -92,13 +85,10 @@ TYPEINFO(/obj/item/device/gps)
 								  "y" = T.y,
 								  "z_info" = src.get_z_info(T)))
 
-			src.imps += imp
-
 		return imp_info
 
 	proc/get_warp_info()
 		var/list/warp_info = list()
-		src.warp_beacons = list()
 
 		for (var/obj/B in by_type[/obj/warp_beacon])
 			var/turf/T = get_turf(B.loc)
@@ -107,8 +97,6 @@ TYPEINFO(/obj/item/device/gps)
 								   "x" = T.x,
 								   "y" = T.y,
 								   "z_info" = src.get_z_info(T)))
-
-			src.warp_beacons += B
 
 		return warp_info
 
@@ -171,13 +159,9 @@ TYPEINFO(/obj/item/device/gps)
 				return TRUE
 			if ("track_gps")
 				if ("gps_ref" in params)
-					var/gps_ref = params["gps_ref"]
-					var/atom/A
-					for (var/atom/atom as anything in (src.gps_devices + src.imps + src.warp_beacons))
-						if ("\ref[atom]" == gps_ref)
-							A = atom
-							break
-					src.track_turf(get_turf(A))
+					var/atom/A = locate(params["gps_ref"])
+					if (A)
+						src.track_turf(get_turf(A))
 				else if (src.tracking_target)
 					src.tracking_target = null
 					src.active = null
