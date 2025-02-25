@@ -56,6 +56,8 @@
 	var/goes_through_walls = FALSE
 	/// Whether this projectile can freely pass through mobs
 	var/goes_through_mobs = FALSE
+	/// Whether this projectile can freely pass through the singularity
+	var/goes_through_singulo = FALSE
 	/// List of atoms collided with this tick
 	var/list/hitlist = list()
 	/// Number of times this projectile has been reflected off of things. Used to cap reflections
@@ -320,6 +322,7 @@
 		pierces_left = src.proj_data.pierces
 		goes_through_walls = src.proj_data.goes_through_walls
 		goes_through_mobs = src.proj_data.goes_through_mobs
+		goes_through_singulo = src.proj_data.goes_through_singulo
 		set_icon()
 
 		var/len = src.get_len()
@@ -721,6 +724,7 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/hits_wraiths = 0
 	var/goes_through_walls = 0
 	var/goes_through_mobs = 0
+	var/goes_through_singulo = 0
 	var/smashes_glasses = TRUE
 	var/pierces = 0
 	var/ticks_between_mob_hits = 0
