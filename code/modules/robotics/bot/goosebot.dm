@@ -11,12 +11,7 @@
 	on = 1
 	health = 10
 	no_camera = 1
-
-/obj/machinery/bot/goosebot/proc/quack(var/message)
-	if (!src.on || !message || src.muted)
-		return
-	src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] blares, \"[message]\""))
-	return
+	speech_verb_say = "blares"
 
 /obj/machinery/bot/goosebot/proc/wakka_wakka()
 	src.navigate_to(get_step_rand(src), max_dist=6)
@@ -24,9 +19,7 @@
 /obj/machinery/bot/goosebot/process()
 	. = ..()
 	if(prob(50) && src.on == 1)
-		var/message = pick("HONK", "HOOOOOOONK","WACK WACK","GOWGOW","SCREEEEEE")
-		quack(message)
-		wakka_wakka()
+		src.say("[pick("HONK", "HOOOOOOONK","WACK WACK","GOWGOW","SCREEEEEE")]")
 		if(prob(50))
 			playsound(src.loc, 'sound/misc/thegoose_honk.ogg', 100, 0)
 			throw_egg_is_true()
