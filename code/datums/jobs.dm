@@ -1,3 +1,13 @@
+#define COMMAND_LINK_COLOR "#00CC00"
+#define SECURITY_LINK_COLOR "#FF0000"
+#define RESEARCH_LINK_COLOR "#9900FF"
+#define MEDICAL_LINK_COLOR "#0099FF"
+#define ENGINEERING_LINK_COLOR "#FF9900"
+#define CIVILIAN_LINK_COLOR "#9999FF"
+
+#define NANOTRASEN_LINK_COLOR "#3348ff"
+#define SYNDICATE_LINK_COLOR "#880000"
+
 /datum/job
 	var/name = null
 	var/list/alias_names = null
@@ -224,7 +234,7 @@
 
 ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command
-	linkcolor = "#00CC00"
+	linkcolor = COMMAND_LINK_COLOR
 	slot_card = /obj/item/card/id/command
 	map_can_autooverride = FALSE
 	can_join_gangs = FALSE
@@ -485,7 +495,7 @@ ABSTRACT_TYPE(/datum/job/command)
 
 ABSTRACT_TYPE(/datum/job/security)
 /datum/job/security
-	linkcolor = "#FF0000"
+	linkcolor = SECURITY_LINK_COLOR
 	slot_card = /obj/item/card/id/security
 	receives_miranda = TRUE
 	job_category = JOB_SECURITY
@@ -598,41 +608,9 @@ ABSTRACT_TYPE(/datum/job/security)
 
 ABSTRACT_TYPE(/datum/job/research)
 /datum/job/research
-	linkcolor = "#9900FF"
+	linkcolor = RESEARCH_LINK_COLOR
 	slot_card = /obj/item/card/id/research
 	job_category = JOB_RESEARCH
-
-/datum/job/research/geneticist
-	name = "Geneticist"
-	limit = 2
-	wages = PAY_DOCTORATE
-	access_string = "Geneticist"
-	slot_back = list(/obj/item/storage/backpack/genetics)
-	slot_belt = list(/obj/item/device/pda2/genetics)
-	slot_jump = list(/obj/item/clothing/under/rank/geneticist)
-	slot_foot = list(/obj/item/clothing/shoes/white)
-	slot_suit = list(/obj/item/clothing/suit/labcoat/genetics)
-	slot_ears = list(/obj/item/device/radio/headset/medical)
-	slot_poc1 = list(/obj/item/device/analyzer/genetic)
-	wiki_link = "https://wiki.ss13.co/Geneticist"
-
-/datum/job/research/roboticist
-	name = "Roboticist"
-	limit = 3
-	wages = PAY_DOCTORATE
-	trait_list = list("training_medical")
-	access_string = "Roboticist"
-	slot_back = list(/obj/item/storage/backpack/robotics)
-	slot_belt = list(/obj/item/storage/belt/roboticist/prepared)
-	slot_jump = list(/obj/item/clothing/under/rank/roboticist)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_suit = list(/obj/item/clothing/suit/labcoat/robotics)
-	slot_glov = list(/obj/item/clothing/gloves/latex)
-	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
-	slot_ears = list(/obj/item/device/radio/headset/medical)
-	slot_poc1 = list(/obj/item/device/pda2/medical/robotics)
-	slot_poc2 = list(/obj/item/reagent_containers/mender/brute)
-	wiki_link = "https://wiki.ss13.co/Roboticist"
 
 /datum/job/research/scientist
 	name = "Scientist"
@@ -667,7 +645,13 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_poc1 = list(/obj/item/pen = 50, /obj/item/pen/fancy = 25, /obj/item/pen/red = 5, /obj/item/pen/pencil = 20)
 	wiki_link = "https://wiki.ss13.co/Research_Assistant"
 
-/datum/job/research/medical_doctor
+ABSTRACT_TYPE(/datum/job/medical)
+/datum/job/medical
+	linkcolor = MEDICAL_LINK_COLOR
+	slot_card = /obj/item/card/id/medical
+	job_category = JOB_MEDICAL
+
+/datum/job/medical/medical_doctor
 	name = "Medical Doctor"
 	limit = 5
 	wages = PAY_DOCTORATE
@@ -705,7 +689,39 @@ ABSTRACT_TYPE(/datum/job/research)
 			if (!M) return
 			M.show_text("<b>Something has gone terribly wrong here! Search for survivors and escape together.</b>", "blue")
 
-/datum/job/research/medical_assistant
+/datum/job/medical/geneticist
+	name = "Geneticist"
+	limit = 2
+	wages = PAY_DOCTORATE
+	access_string = "Geneticist"
+	slot_back = list(/obj/item/storage/backpack/genetics)
+	slot_belt = list(/obj/item/device/pda2/genetics)
+	slot_jump = list(/obj/item/clothing/under/rank/geneticist)
+	slot_foot = list(/obj/item/clothing/shoes/white)
+	slot_suit = list(/obj/item/clothing/suit/labcoat/genetics)
+	slot_ears = list(/obj/item/device/radio/headset/medical)
+	slot_poc1 = list(/obj/item/device/analyzer/genetic)
+	wiki_link = "https://wiki.ss13.co/Geneticist"
+
+/datum/job/medical/roboticist
+	name = "Roboticist"
+	limit = 3
+	wages = PAY_DOCTORATE
+	trait_list = list("training_medical")
+	access_string = "Roboticist"
+	slot_back = list(/obj/item/storage/backpack/robotics)
+	slot_belt = list(/obj/item/storage/belt/roboticist/prepared)
+	slot_jump = list(/obj/item/clothing/under/rank/roboticist)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_suit = list(/obj/item/clothing/suit/labcoat/robotics)
+	slot_glov = list(/obj/item/clothing/gloves/latex)
+	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
+	slot_ears = list(/obj/item/device/radio/headset/medical)
+	slot_poc1 = list(/obj/item/device/pda2/medical/robotics)
+	slot_poc2 = list(/obj/item/reagent_containers/mender/brute)
+	wiki_link = "https://wiki.ss13.co/Roboticist"
+
+/datum/job/medical/medical_assistant
 	name = "Medical Trainee"
 	limit = 2
 	wages = PAY_UNTRAINED
@@ -725,57 +741,9 @@ ABSTRACT_TYPE(/datum/job/research)
 
 ABSTRACT_TYPE(/datum/job/engineering)
 /datum/job/engineering
-	linkcolor = "#FF9900"
+	linkcolor = ENGINEERING_LINK_COLOR
 	slot_card = /obj/item/card/id/engineering
 	job_category = JOB_ENGINEERING
-
-/datum/job/engineering/quartermaster
-	name = "Quartermaster"
-	limit = 3
-	wages = PAY_TRADESMAN
-	trait_list = list("training_quartermaster")
-	access_string = "Quartermaster"
-	slot_glov = list(/obj/item/clothing/gloves/black)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_jump = list(/obj/item/clothing/under/rank/cargo)
-	slot_belt = list(/obj/item/device/pda2/quartermaster)
-	slot_ears = list(/obj/item/device/radio/headset/shipping)
-	slot_poc1 = list(/obj/item/paper/book/from_file/pocketguide/quartermaster)
-	slot_poc2 = list(/obj/item/device/appraisal)
-	wiki_link = "https://wiki.ss13.co/Quartermaster"
-
-/datum/job/engineering/miner
-	name = "Miner"
-	#ifdef UNDERWATER_MAP
-	limit = 6
-	#else
-	limit = 5
-	#endif
-	wages = PAY_TRADESMAN
-	trait_list = list("training_miner")
-	access_string = "Miner"
-	slot_back = list(/obj/item/storage/backpack/engineering)
-	slot_mask = list(/obj/item/clothing/mask/breath)
-	slot_eyes = list(/obj/item/clothing/glasses/toggleable/meson)
-	slot_belt = list(/obj/item/storage/belt/mining/prepared)
-	slot_jump = list(/obj/item/clothing/under/rank/overalls)
-	slot_foot = list(/obj/item/clothing/shoes/orange)
-	slot_glov = list(/obj/item/clothing/gloves/black)
-	slot_ears = list(/obj/item/device/radio/headset/miner)
-	slot_poc1 = list(/obj/item/device/pda2/mining)
-	#ifdef UNDERWATER_MAP
-	slot_suit = list(/obj/item/clothing/suit/space/diving/engineering)
-	slot_head = list(/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
-	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/mining,
-							/obj/item/clothing/shoes/flippers,
-							/obj/item/item_box/glow_sticker)
-	#else
-	slot_suit = list(/obj/item/clothing/suit/space/engineer)
-	slot_head = list(/obj/item/clothing/head/helmet/space/engineer)
-	items_in_backpack = list(/obj/item/crowbar,
-							/obj/item/paper/book/from_file/pocketguide/mining)
-	#endif
-	wiki_link = "https://wiki.ss13.co/Miner"
 
 /datum/job/engineering/engineer
 	name = "Engineer"
@@ -830,11 +798,59 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_poc1 = list(/obj/item/paper/book/from_file/pocketguide/engineering)
 	wiki_link = "https://wiki.ss13.co/Technical_Assistant"
 
+/datum/job/engineering/quartermaster
+	name = "Quartermaster"
+	limit = 3
+	wages = PAY_TRADESMAN
+	trait_list = list("training_quartermaster")
+	access_string = "Quartermaster"
+	slot_glov = list(/obj/item/clothing/gloves/black)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_jump = list(/obj/item/clothing/under/rank/cargo)
+	slot_belt = list(/obj/item/device/pda2/quartermaster)
+	slot_ears = list(/obj/item/device/radio/headset/shipping)
+	slot_poc1 = list(/obj/item/paper/book/from_file/pocketguide/quartermaster)
+	slot_poc2 = list(/obj/item/device/appraisal)
+	wiki_link = "https://wiki.ss13.co/Quartermaster"
+
+/datum/job/engineering/miner
+	name = "Miner"
+	#ifdef UNDERWATER_MAP
+	limit = 6
+	#else
+	limit = 5
+	#endif
+	wages = PAY_TRADESMAN
+	trait_list = list("training_miner")
+	access_string = "Miner"
+	slot_back = list(/obj/item/storage/backpack/engineering)
+	slot_mask = list(/obj/item/clothing/mask/breath)
+	slot_eyes = list(/obj/item/clothing/glasses/toggleable/meson)
+	slot_belt = list(/obj/item/storage/belt/mining/prepared)
+	slot_jump = list(/obj/item/clothing/under/rank/overalls)
+	slot_foot = list(/obj/item/clothing/shoes/orange)
+	slot_glov = list(/obj/item/clothing/gloves/black)
+	slot_ears = list(/obj/item/device/radio/headset/miner)
+	slot_poc1 = list(/obj/item/device/pda2/mining)
+	#ifdef UNDERWATER_MAP
+	slot_suit = list(/obj/item/clothing/suit/space/diving/engineering)
+	slot_head = list(/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
+	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/mining,
+							/obj/item/clothing/shoes/flippers,
+							/obj/item/item_box/glow_sticker)
+	#else
+	slot_suit = list(/obj/item/clothing/suit/space/engineer)
+	slot_head = list(/obj/item/clothing/head/helmet/space/engineer)
+	items_in_backpack = list(/obj/item/crowbar,
+							/obj/item/paper/book/from_file/pocketguide/mining)
+	#endif
+	wiki_link = "https://wiki.ss13.co/Miner"
+
 // Civilian Jobs
 
 ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian
-	linkcolor = "#0099FF"
+	linkcolor = CIVILIAN_LINK_COLOR
 	slot_card = /obj/item/card/id/civilian
 	job_category = JOB_CIVILIAN
 
@@ -958,7 +974,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/civilian/mail_courier
 	name = "Mail Courier"
-	linkcolor = "#0099FF"
 	alias_names = "Mailman"
 	wages = PAY_TRADESMAN
 	access_string = "Mail Courier"
@@ -1133,7 +1148,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/special/attorney
 	name = "Attorney"
-	linkcolor = "#FF0000"
+	linkcolor = SECURITY_LINK_COLOR
 	wages = PAY_DOCTORATE
 	access_string = "Lawyer"
 	limit = 0
@@ -1151,7 +1166,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/special/vice_officer
 	name = "Vice Officer"
-	linkcolor = "#FF0000"
+	linkcolor = SECURITY_LINK_COLOR
 	limit = 0
 	wages = PAY_TRADESMAN
 	access_string = "Vice Officer"
@@ -1172,7 +1187,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/special/forensic_technician
 	name = "Forensic Technician"
-	linkcolor = "#FF0000"
+	linkcolor = SECURITY_LINK_COLOR
 	limit = 0
 	wages = PAY_TRADESMAN
 	access_string = "Forensic Technician"
@@ -1204,7 +1219,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/special/toxins_researcher
 	name = "Toxins Researcher"
-	linkcolor = "#9900FF"
+	linkcolor = RESEARCH_LINK_COLOR
 	limit = 0
 	wages = PAY_DOCTORATE
 	trait_list = list("training_scientist")
@@ -1218,7 +1233,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/special/chemist
 	name = "Chemist"
-	linkcolor = "#9900FF"
+	linkcolor = RESEARCH_LINK_COLOR
 	limit = 0
 	wages = PAY_DOCTORATE
 	trait_list = "training_scientist"
@@ -1231,7 +1246,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/special/atmospheric_technician
 	name = "Atmospherish Technician"
-	linkcolor = "#FF9900"
+	linkcolor = ENGINEERING_LINK_COLOR
 	limit = 0
 	wages = PAY_TRADESMAN
 	access_string = "Atmospheric Technician"
@@ -1354,6 +1369,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/special/souschef
 	name = "Sous-Chef"
+	linkcolor = CIVILIAN_LINK_COLOR
 	limit = 1
 	wages = PAY_UNTRAINED
 	trait_list = list("training_chef")
@@ -1389,7 +1405,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/medical_specialist
 	name = "Medical Specialist"
-	linkcolor = "#9900FF"
+	linkcolor = MEDICAL_LINK_COLOR
 	wages = PAY_IMPORTANT
 	trait_list = list("training_medical", "training_partysurgeon")
 	access_string = "Medical Specialist"
@@ -1429,7 +1445,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "VIP"
 	wages = PAY_EXECUTIVE
 	access_string = "VIP"
-	linkcolor = "#FF0000"
+	linkcolor = SECURITY_LINK_COLOR
 	slot_jump = list(/obj/item/clothing/under/suit/black)
 	slot_head = list(/obj/item/clothing/head/that)
 	slot_eyes = list(/obj/item/clothing/glasses/monocle)
@@ -1608,6 +1624,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/beekeeper
 	name = "Apiculturist"
 	wages = PAY_TRADESMAN
+	linkcolor = CIVILIAN_LINK_COLOR
 	access_string = "Apiculturist"
 	slot_jump = list(/obj/item/clothing/under/rank/beekeeper)
 	slot_suit = list(/obj/item/clothing/suit/hazard/beekeeper)
@@ -1642,6 +1659,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/angler
 	name = "Angler"
 	wages = PAY_TRADESMAN
+	linkcolor = CIVILIAN_LINK_COLOR
 	access_string = "Rancher"
 	slot_jump = list(/obj/item/clothing/under/rank/angler)
 	slot_head = list(/obj/item/clothing/head/black)
@@ -1654,6 +1672,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/pharmacist
 	name = "Pharmacist"
 	wages = PAY_DOCTORATE
+	linkcolor = MEDICAL_LINK_COLOR
 	trait_list = list("training_medical")
 	access_string = "Pharmacist"
 	slot_card = /obj/item/card/id/research
@@ -1696,6 +1715,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/psychiatrist
 	name = "Psychiatrist"
+	linkcolor = MEDICAL_LINK_COLOR
 	wages = PAY_DOCTORATE
 	access_string = "Psychiatrist"
 	slot_eyes = list(/obj/item/clothing/glasses/regular)
@@ -2278,7 +2298,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 #endif
 
 /datum/job/special/syndicate_weak
-	linkcolor = "#880000"
+	linkcolor = SYNDICATE_LINK_COLOR
 	name = "Junior Syndicate Operative"
 	limit = 0
 	wages = 0
@@ -2318,7 +2338,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 // hidden jobs for nt-so vs syndicate spec-ops
 
 /datum/job/special/syndicate_specialist
-	linkcolor = "#880000"
+	linkcolor = SYNDICATE_LINK_COLOR
 	name = "Syndicate Special Operative"
 	limit = 0
 	wages = 0
@@ -2363,7 +2383,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		M.show_text("<b>The assault has begun! Head over to the station and kill any and all Nanotrasen personnel you encounter!</b>", "red")
 
 /datum/job/special/pirate
-	linkcolor = "#880000"
+	linkcolor = SYNDICATE_LINK_COLOR
 	name = "Space Pirate"
 	limit = 0
 	wages = 0
@@ -2424,7 +2444,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	//more
 
 /datum/job/special/ntso_specialist
-	linkcolor = "#3348ff"
+	linkcolor = NANOTRASEN_LINK_COLOR
 	name = "Nanotrasen Special Operative"
 	limit = 0
 	wages = PAY_IMPORTANT
@@ -2461,7 +2481,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		return
 
 /datum/job/special/nt_engineer
-	linkcolor = "#3348ff"
+	linkcolor = NANOTRASEN_LINK_COLOR
 	name = "Nanotrasen Emergency Repair Technician"
 	limit = 0
 	wages = PAY_IMPORTANT
@@ -2503,7 +2523,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 			rcd.UpdateIcon()
 
 /datum/job/special/nt_medical
-	linkcolor = "#3348ff"
+	linkcolor = NANOTRASEN_LINK_COLOR
 	name = "Nanotrasen Emergency Medic"
 	limit = 0
 	wages = PAY_IMPORTANT
@@ -2537,7 +2557,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 // Use this one for late respawns to deal with existing antags. they are weaker cause they dont get a laser rifle or frags
 /datum/job/special/nt_security
-	linkcolor = "#3348ff"
+	linkcolor = NANOTRASEN_LINK_COLOR
 	name = "Nanotrasen Security Consultant"
 	limit = 1 // backup during HELL WEEK. players will probably like it
 	unique = TRUE
@@ -2578,7 +2598,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	wages = PAY_IMPORTANT
 	trait_list = list("training_miner")
 	access_string = "Head of Mining"
-	linkcolor = "#00CC00"
+	linkcolor = COMMAND_LINK_COLOR
 	cant_spawn_as_rev = TRUE
 	slot_card = /obj/item/card/id/command
 	slot_belt = list(/obj/item/device/pda2/mining)
@@ -2606,7 +2626,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 /datum/job/special/meatcube
 	name = "Meatcube"
-	linkcolor = "#FF0000"
+	linkcolor = SECURITY_LINK_COLOR
 	limit = 0
 	allow_traitors = FALSE
 	slot_ears = list()
@@ -2703,7 +2723,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 /datum/job/daily/lawyer
 	day = "Thursday"
 	name = "Lawyer"
-	linkcolor = "#FF0000"
+	linkcolor = SECURITY_LINK_COLOR
 	wages = PAY_DOCTORATE
 	access_string = "Lawyer"
 	limit = 4
@@ -2859,7 +2879,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 	nanotrasen
 		name = "NanoTrasen Pod Pilot"
-		linkcolor = "#3348ff"
+		linkcolor = NANOTRASEN_LINK_COLOR
 		no_jobban_from_this_job = TRUE
 		low_priority_job = TRUE
 		cant_allocate_unwanted = TRUE
@@ -2903,7 +2923,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 	syndicate
 		name = "Syndicate Pod Pilot"
-		linkcolor = "#FF0000"
+		linkcolor = SYNDICATE_LINK_COLOR
 		no_jobban_from_this_job = TRUE
 		low_priority_job = TRUE
 		cant_allocate_unwanted = TRUE
@@ -3031,3 +3051,12 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			F["special_spawn_location_coords"] >> maybe_coords
 			if(islist(maybe_coords))
 				src.special_spawn_location = locate(maybe_coords[1], maybe_coords[2], maybe_coords[3])
+
+#undef COMMAND_LINK_COLOR
+#undef SECURITY_LINK_COLOR
+#undef RESEARCH_LINK_COLOR
+#undef MEDICAL_LINK_COLOR
+#undef ENGINEERING_LINK_COLOR
+#undef CIVILIAN_LINK_COLOR
+#undef NANOTRASEN_LINK_COLOR
+#undef SYNDICATE_LINK_COLOR
