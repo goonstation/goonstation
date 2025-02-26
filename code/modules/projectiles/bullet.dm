@@ -2285,3 +2285,19 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	impact_image_state = "bullethole-small"
 	casing = /obj/item/casing/medium
 	ricochets = TRUE
+
+/datum/projectile/bullet/hammer_railgun
+	name = "metallic projectile"
+	damage = 25
+	icon_state = "sniper_bullet"
+	damage_type = D_PIERCING
+	hit_type = DAMAGE_STAB
+	shot_sound = 'sound/weapons/railgun.ogg'
+	shot_volume = 50
+	dissipation_delay = 10
+	dissipation_rate = 10
+	impact_image_state = "bullethole-small"
+	ricochets = TRUE
+
+	on_launch(obj/projectile/O)
+		O.AddComponent(/datum/component/sniper_wallpierce, 3, 0, TRUE)
