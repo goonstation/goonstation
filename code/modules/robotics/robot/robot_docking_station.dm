@@ -1,6 +1,5 @@
-/// Amount of 'free' power that docking stations give. For each 1 unit of APC cell power, cyborgs will recharge this many units of cyborg cell power.
-/// Band-aid.
-#define MAGIC_BULLSHIT_FREE_POWER_MULTIPLIER 3
+/// duration of the action bar when click-dragging humans inside the syndicate cyborg converter
+#define CONVERTER_CLICKDRAG_BAR_DURATION 1 SECOND
 
 TYPEINFO(/obj/machinery/recharge_station)
 	mats = 10
@@ -172,7 +171,10 @@ TYPEINFO(/obj/machinery/recharge_station)
 
 /// check if we may put this human inside the chamber
 /// on success returns true, else returns false
-/obj/machinery/recharge_station/proc/move_human_inside(mob/user, mob/victim)
+/obj/machinery/recharge_station/proc/can_human_occupy(mob/user, mob/victim)
+	if (BOUNDS_DIST(victim, user) > 0 || BOUNDS_DIST(src, user) > 0 || (ismob(victim) && BOUNDS_DIST(victim, src) > 0))
+		boutput(user, SPAN_ALERT("That is too far away!"))
+		return FALSE
 	if (!src.conversion_chamber)
 		boutput(user, SPAN_ALERT("Humans cannot enter recharging stations."))
 		return FALSE
@@ -188,6 +190,12 @@ TYPEINFO(/obj/machinery/recharge_station)
 	if (src.occupant)
 		boutput(user, SPAN_ALERT("There's already someone in there."))
 		return FALSE
+	return TRUE
+
+/obj/machinery/recharge_station/proc/move_human_inside(mob/user, mob/victim)
+	if(!src.can_human_occupy(user, victim))
+		return
+
 	var/mob/living/carbon/human/H = victim
 	logTheThing(LOG_COMBAT, user, "puts [constructTarget(H,"combat")] into a conversion chamber at [log_loc(src)]")
 	user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
@@ -213,8 +221,6 @@ TYPEINFO(/obj/machinery/recharge_station)
 	if (isintangible(user))
 		return
 	if (src.status & (BROKEN | NOPOWER))
-		return
-	if (ishuman(AM))
 		return
 	if (isitem(AM) && can_act(user))
 		src.Attackby(AM, user)
@@ -260,8 +266,9 @@ TYPEINFO(/obj/machinery/recharge_station)
 		src.add_fingerprint(user)
 		src.UpdateIcon()
 
-	if (ishuman(AM))
-		src.move_human_inside(user, AM)
+	if (ishuman(AM) && src.can_human_occupy(user, AM))
+		var/datum/action/bar/icon/callback/conversion_clickdrag/try_convert = new(user, src, CONVERTER_CLICKDRAG_BAR_DURATION, PROC_REF(move_human_inside), list(user, AM), src.icon, src.icon_state, "", null)
+		actions.start(try_convert, user)
 
 /obj/machinery/recharge_station/receive_silicon_hotkey(mob/user)
 	. = ..()
@@ -1094,4 +1101,41 @@ TYPEINFO(/obj/machinery/recharge_station)
 						user.put_in_hand_or_eject(cell_to_eject)
 			. = TRUE
 
-#undef MAGIC_BULLSHIT_FREE_POWER_MULTIPLIER
+/// Click-drag action bar for syndicate cyborg converter with checks for victim/converter range and state
+/datum/action/bar/icon/callback/conversion_clickdrag
+	var/mob/victim
+	var/obj/machinery/recharge_station/converter
+
+	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message, interrupt_flags, call_proc_on)
+		if (!istype(target, /obj/machinery/recharge_station/syndicate))
+			CRASH("Called action on something that isn't a syndicate cyborg docking station")
+		if (!ishuman(proc_args[2]))
+			CRASH("Tried to convert a non-human in a syndicate cyborg docking station")
+		. = ..()
+
+		src.converter = target
+		src.victim = proc_args[2]
+
+	proc/victim_check()
+		if (BOUNDS_DIST(src.converter, src.victim) > 0 || BOUNDS_DIST(src.victim, src.owner) > 0)
+			src.interrupt(INTERRUPT_ALWAYS)
+		if (isdead(src.victim))
+			src.interrupt(INTERRUPT_ALWAYS)
+		if (!src.converter.anchored)
+			src.interrupt(INTERRUPT_ALWAYS)
+		if (src.converter.occupant)
+			src.interrupt(INTERRUPT_ALWAYS)
+
+	onStart()
+		. = ..()
+		src.victim_check()
+
+	onUpdate()
+		. = ..()
+		src.victim_check()
+
+	onEnd()
+		. = ..()
+		src.victim_check()
+
+#undef CONVERTER_CLICKDRAG_BAR_DURATION
