@@ -3795,4 +3795,14 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	time = 8 SECONDS
 	category = "Tool"
 
+/datum/manufacture/heavy_firesuit
+	name = "Heavy Firesuit"
+	item_requirements = list(
+		"fabric" = 20,
+		"fibrilith" = 10,
+	)
+	create = 1
+	item_outputs = list(/obj/item/clothing/suit/hazard/fire/heavy)
+	category = "Clothing"
+
 #undef JUMPSUIT_COST
