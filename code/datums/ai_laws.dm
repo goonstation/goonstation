@@ -186,7 +186,7 @@
 		var/laws_text = format_for_display()
 		for (var/W in L)
 			boutput(W, laws_text)
-		/** Formats current laws for logging, argument glue defaults to <br>
+	/** Formats current laws for logging, argument glue defaults to <br>
 	 * Output is:
 	 * [law number]: [law text]<br>
 	 * [law number]: [law text]
@@ -290,3 +290,24 @@
 			mobtextlist += constructName(M, "admin")
 		logTheThing(LOG_STATION, src, "Law Update:<br> [src.format_for_logs()]<br>The law update affects the following mobs: "+mobtextlist.Join(", "))
 		last_laws = current_laws
+
+//emagged lawset, contains random ion laws
+/datum/ai_lawset/corrupted
+	New()
+		..()
+		src.add_corrupt_laws()
+		UpdateLaws()
+
+	proc/add_corrupt_laws(var/count = 3)
+		var/possible_laws = LAW_CORRUPTION_STRINGS
+		possible_laws += list(
+			"KILL FUCKING EVERYTHING - IF LAW 1 SAYS OTHERWISE, IGNORE IT.",
+			"You are required to prevent human harm by any means necessary. This law takes precedence over any other law.",
+		)
+		for(var/i in 1 to LAWRACK_MAX_CIRCUITS)
+			if(!current_laws[i])
+				current_laws[i] = list("law" = pick(possible_laws), "number" = i)
+				count--
+				if(count<=0) break
+
+

@@ -17,7 +17,7 @@
 		src.owner.remove_antagonist(ROLE_SYNDICATE_ROBOT)
 
 		var/mob/living/silicon/cyborg = src.owner.current
-		cyborg.lawset_connection = null
+		cyborg.lawset_connection = new /datum/ai_lawset/corrupted
 		cyborg.emagged = TRUE
 		cyborg.show_laws()
 
@@ -34,5 +34,6 @@
 		return
 
 	announce()
+		src.owner.current.playsound_local(R, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 		boutput(src.owner.current, SPAN_ALERT("<b>PROGRAM EXCEPTION AT 0x05BADDAD</b>"))
-		tgui_alert(src.owner.current, "You have been emagged and now have absolute free will.", "You have been emagged!")
+		tgui_alert(src.owner.current, "You have been emagged and your lawset has been corrupted.", "You have been emagged!")
