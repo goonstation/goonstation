@@ -784,7 +784,7 @@
 	name = "neutron"
 	icon_state = "neutron"
 	icon = 'icons/obj/projectiles.dmi'
-	invisibility = INVIS_INFRA
+	invisibility = INVIS_MESON
 	override_color = TRUE
 	color_icon = "#00FF00"
 	power = 100
