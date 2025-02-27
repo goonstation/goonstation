@@ -1116,7 +1116,8 @@ TYPEINFO(/obj/machinery/recharge_station)
 		src.converter = target
 		src.victim = proc_args[2]
 
-	proc/victim_check()
+	canRunCheck(in_start)
+		..()
 		if (BOUNDS_DIST(src.converter, src.victim) > 0 || BOUNDS_DIST(src.victim, src.owner) > 0)
 			src.interrupt(INTERRUPT_ALWAYS)
 		if (isdead(src.victim))
@@ -1125,17 +1126,5 @@ TYPEINFO(/obj/machinery/recharge_station)
 			src.interrupt(INTERRUPT_ALWAYS)
 		if (src.converter.occupant)
 			src.interrupt(INTERRUPT_ALWAYS)
-
-	onStart()
-		. = ..()
-		src.victim_check()
-
-	onUpdate()
-		. = ..()
-		src.victim_check()
-
-	onEnd()
-		. = ..()
-		src.victim_check()
 
 #undef CONVERTER_CLICKDRAG_BAR_DURATION
