@@ -169,7 +169,7 @@ TYPEINFO(/obj/player_piano)
 		if (is_busy || is_stored)
 			src.visible_message(SPAN_ALERT("\The [src] emits an angry beep!"))
 			return
-		var/mode_sel = tgui_input_list(user, "Which mode would you like?", "Mode Select", list("Choose Notes", "Play Song"))
+		var/mode_sel = tgui_alert(user, "Which mode would you like?", "Mode Select", list("Choose Notes", "Play Song"))
 		if (mode_sel == "Choose Notes")
 			var/given_notes = tgui_input_text(user, "Write out the notes you want to be played.", "Composition Menu", note_input)
 			if (!set_notes(given_notes))//still room to get long piano songs in, but not too crazy
