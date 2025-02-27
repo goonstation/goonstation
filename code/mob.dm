@@ -48,7 +48,7 @@
 	var/emotes_on_cooldown = FALSE
 	var/computer_id = null
 	var/datum/weakref/lastattacker = null
-	var/lastattacked = null //tell us whether or not to use Combat or Default click delays depending on whether this var was set.
+	var/datum/weakref/lastattacked = null //tell us whether or not to use Combat or Default click delays depending on whether this var was set.
 	var/lastattackertime = 0
 	var/other_mobs = null
 	var/memory = ""
@@ -265,7 +265,7 @@
 		skipped_mobs_list |= SKIPPED_MOBS_LIST
 		LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, src)
 
-	src.lastattacked = src //idk but it fixes bug
+	src.lastattacked = get_weakref(src) //idk but it fixes bug
 	render_target = "\ref[src]"
 	src.chat_text = new(null, src)
 

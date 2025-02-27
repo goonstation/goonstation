@@ -393,7 +393,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		return
 
 	attack_hand(mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 		if (user.a_intent == "harm")
 			if (user.is_hulk())
@@ -417,7 +417,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				return
 
 	attackby(obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		if (isscrewingtool(W))
 			if (state == 10) // ???

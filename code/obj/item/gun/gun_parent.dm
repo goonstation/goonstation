@@ -209,7 +209,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!target || !ismob(target)) //Wire note: Fix for Cannot modify null.lastattacker
 		return ..()
 
-	user.lastattacked = target
+	user.lastattacked = get_weakref(target)
 	target.lastattacker = get_weakref(user)
 	target.lastattackertime = world.time
 

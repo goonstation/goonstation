@@ -61,7 +61,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	else if (istype(W, /obj/item/grab))
 		var/obj/item/grab/G = W
 		if (!G.affecting) return
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		src.visible_message(SPAN_ALERT("<b>[user] is trying to shove [G.affecting] into [src]!</b>"))
 		if(!do_mob(user, G.affecting) || !W)
 			return
