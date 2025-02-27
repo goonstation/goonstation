@@ -2474,6 +2474,15 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 
 /// Ship Items -- OLD COMPONENTS
 
+/datum/manufacture/engine_scout
+	name = "Scout Engine"
+	item_requirements = list("metal_dense" = 5,
+							 "conductive" = 10)
+	item_outputs = list(/obj/item/shipcomponent/engine/scout)
+	create = 1
+	time = 5 SECONDS
+	category = "Resource"
+
 /datum/manufacture/engine
 	name = "Warp-1 Engine"
 	item_requirements = list("metal_dense" = 3,
