@@ -41,6 +41,7 @@
 	var/symbol_setting = null
 	var/material_uses = 10
 	var/can_dip = TRUE // can we dip this in reagents to write with them?
+	var/obj/decal/cleanable/writing/default_cleanable = /obj/decal/cleanable/writing
 	var/static/list/c_default = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
 	"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Exclamation Point", "Question Mark", "Period", "Comma", "Colon", "Semicolon", "Ampersand", "Left Parenthesis", "Right Parenthesis",
 	"Left Bracket", "Right Bracket", "Percent", "Plus", "Minus", "Times", "Divided", "Equals", "Less Than", "Greater Than")
@@ -123,7 +124,7 @@
 			src.in_use = 0
 			return
 		phrase_log.log_phrase("floorpen", t)
-		var/obj/decal/cleanable/writing/G = make_cleanable(/obj/decal/cleanable/writing, T)
+		var/obj/decal/cleanable/writing/G = make_cleanable(src.default_cleanable, T)
 		G.artist = user.key
 
 		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.getName()])" : null] [log_loc(T)]: [t]")
@@ -234,6 +235,13 @@
 	desc = "The horrible, the unspeakable, the dreaded <span class='alert'><b>RED PEN!!</b></span>"
 	color = "red"
 	font_color = "red"
+
+/obj/item/pen/infrared
+	name = "infrared pen"
+	desc = "A pen that can write in infrared."
+	color = "#FFEE44" // color var owns
+	font_color = "#D20040"
+	default_cleanable = /obj/decal/cleanable/writing/infrared
 
 /obj/item/pen/pencil // god this is a dumb path
 	name = "pencil"
@@ -521,6 +529,13 @@
 			..()
 			src.setMaterial(getMaterial("gold"))
 
+	infrared
+		name = "infrared crayon"
+		desc = "A crayon that can write in infrared."
+		color = "#FFEE44" // color var owns
+		font_color = "#D20040"
+		default_cleanable = /obj/decal/cleanable/writing/infrared
+
 	random
 		var/picked_color
 
@@ -699,7 +714,7 @@
 		if(src.maptext_crayon)
 			G = make_cleanable(/obj/decal/cleanable/writing/maptext_dummy, T)
 		else
-			G = make_cleanable(/obj/decal/cleanable/writing, T)
+			G = make_cleanable(src.default_cleanable, T)
 		G.artist = user.key
 
 		if(user.client) //I don't give a damn about monkeys writing stuff with crayon!!
@@ -834,51 +849,6 @@
 				user.suiciding = 0
 		qdel(src)
 		return 1
-
-/* =============== INFRARED PENS =============== */
-
-/obj/item/pen/infrared
-	desc = "A pen that can write in infrared."
-	name = "infrared pen"
-	color = "#FFEE44" // color var owns
-	font_color = "#D20040"
-
-	write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
-		if (!T || !user || src.in_use || BOUNDS_DIST(T, user) > 0)
-			return
-		if(!user.literate)
-			boutput(user, SPAN_ALERT("You don't know how to write."))
-			return
-		src.in_use = 1
-		var/t = tgui_input_text(user, "What do you want to write?", "Write")
-		if (!t || BOUNDS_DIST(T, user) > 0)
-			src.in_use = 0
-			return
-		var/obj/decal/cleanable/writing/infrared/G = make_cleanable(/obj/decal/cleanable/writing/infrared,T)
-		G.artist = user.key
-
-		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.getName()])" : null] [log_loc(T)]: [t]")
-		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
-		if (src.font_color)
-			G.color = src.font_color
-		if(apply_material_to_drawing(G, user))
-			;
-		/*if (src.uses_handwriting && user?.mind?.handwriting)
-			G.font = user.mind.handwriting
-			G.webfont = 1
-		*/
-		else if (src.font)
-			G.font = src.font
-			//if (src.webfont)
-				//G.webfont = 1
-		G.words = "[t]"
-		if (islist(params) && params["icon-y"] && params["icon-x"])
-			G.pixel_x = text2num(params["icon-x"]) - 16
-			G.pixel_y = text2num(params["icon-y"]) - 16
-		else
-			G.pixel_x = rand(-4,4)
-			G.pixel_y = rand(-4,4)
-		src.in_use = 0
 
 /* =============== HAND LABELERS =============== */
 
