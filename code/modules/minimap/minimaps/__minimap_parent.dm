@@ -75,9 +75,10 @@ ABSTRACT_TYPE(/datum/minimap)
 /// Create an alpha mask to hide anything outside the bounds of the physical map.
 /datum/minimap/proc/create_alpha_mask()
 	var/icon/mask_icon = icon('icons/obj/minimap/minimap.dmi', "blank")
-	mask_icon.Scale(src.x_max * src.map_scale, src.y_max * src.map_scale)
-	var/x_offset = ((src.x_max * src.map_scale) / 2) - 16
-	var/y_offset = ((src.y_max * src.map_scale) / 2) - 16
+	var/max_dim = max(src.x_max, src.y_max)
+	mask_icon.Scale(max_dim * src.map_scale, max_dim * src.map_scale)
+	var/x_offset = ((max_dim * src.map_scale) / 2) - 16
+	var/y_offset = ((max_dim * src.map_scale) / 2) - 16
 	src.minimap_holder.add_filter("map_cutoff", 1, alpha_mask_filter(x_offset, y_offset, mask_icon))
 
 /// Zooms the minimap by the zoom coefficient while moving the minimap so that the specified point lies at the same position on the displayed minimap as it did prior to the zoom. The alpha mask takes care of any map area scaled outside of the map boundaries.

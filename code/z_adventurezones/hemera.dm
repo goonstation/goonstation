@@ -401,11 +401,11 @@ Obsidian Crown
 			hear_voidSpeak( pick("Be spry, Friend, be nimble! We shall visit all there is to visit and do all there is to do!","Let no ache delay you, for pain is transient! Luminous beings are not held back by such mortal things!","How fantastic this space is! I had grown so tired of immaterial things.") )
 
 		//The crown takes retribution on attackers -- while slowly killing the host.
-		if (host.lastattacker && (host.lastattackertime + 40) >= world.time)
-			if(host.lastattacker != host)
+		if (host.lastattacker?.deref() && (host.lastattackertime + 40) >= world.time)
+			if(host.lastattacker.deref() != host)
 				hear_voidSpeak( pick("I shall aid, Friend!","No fear, Friend, no fear! I shall assist!","No need to raise your hand, I shall defend!") )
 
-				var/mob/M = host.lastattacker
+				var/mob/M = host.lastattacker.deref()
 				if (!istype(M))
 					return
 
