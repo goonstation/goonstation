@@ -656,6 +656,7 @@
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
 		/datum/manufacture/lightengspacesuit,
+		/datum/manufacture/heavy_firesuit,
 		/datum/manufacture/floodlight,
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
