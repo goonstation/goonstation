@@ -30,6 +30,8 @@
 	var/track_cat
 	/// If the effect is positive (buffs), negative (debuffs), or neutral (misc)
 	var/effect_quality = STATUS_QUALITY_NEUTRAL
+	/// List because they might be on different HUDs. This is kind of hacky but should be fine since the screen object cleans up in disposing.
+	var/list/atom/movable/screen/statusEffect/hud_elements = null
 
 
 	/**
@@ -3475,3 +3477,40 @@
 	onRemove()
 		..()
 		src.owner.remove_filter("corrosion_color")
+
+/datum/statusEffect/nausea
+	name = "nauseous"
+	id = "nausea"
+	icon_state = "nausea1"
+	var/stacks = 1
+	var/vomiting = FALSE
+
+	onChange(optional)
+		src.stacks += optional
+		var/old_desc = src.desc
+		switch(src.stacks)
+			if (0 to 5)
+				src.desc = "You're feeling kinda sick."
+				src.icon_state = "nausea1"
+			if (6 to 9)
+				src.desc = "You think you're going to puke."
+				src.icon_state = "nausea2"
+			if (10 to INFINITY)
+				src.desc = "You're about to throw up!"
+				src.icon_state = "nausea3"
+		if (src.stacks >= 10 && !src.vomiting)
+			src.vomiting = TRUE
+			boutput(src.owner, SPAN_ALERT(SPAN_BOLD(src.desc)))
+			for (var/atom/movable/screen/statusEffect/hud_element in src.hud_elements)
+				animate_angry_wibble(hud_element)
+			SPAWN(5 SECONDS)
+				var/mob/vomitee = src.owner
+				vomitee.vomit()
+		else if (old_desc != src.desc)
+			boutput(src.owner, SPAN_ALERT(src.desc))
+
+	onUpdate(timePassed)
+		if (prob(5))
+			src.stacks -= 1
+		if (src.stacks <= 0)
+			src.owner.delStatus(src)

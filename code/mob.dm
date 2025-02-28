@@ -2982,6 +2982,8 @@
 			equipment_proxy.aquatic_movement += 0.01
 
 
+/mob/proc/nauseate(stacks = 1)
+	src.setStatus("nausea", INFINITE_STATUS, stacks)
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
 /mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!", var/selfMessage = null)
@@ -3002,6 +3004,9 @@
 			vomit.blood_DNA = src.bioHolder.Uid
 
 	src.nutrition -= nutrition
+	src.changeStatus("stunned", 2 SECONDS)
+	src.change_misstep_chance(5)
+	src.delStatus("nausea")
 
 /mob/proc/accept_forcefeed(obj/item/item, mob/user, edibility_override) //just.. don't ask
 	item.forcefeed(src, user, edibility_override)

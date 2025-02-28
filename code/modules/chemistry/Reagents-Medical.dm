@@ -367,9 +367,7 @@ datum
 				flush(holder, 3 * mult)
 				if(M.health > 20)
 					M.take_toxin_damage(5 * mult, 1)	//calomel doesn't damage organs.
-				if(probmult(6))
-					var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-					M.vomit(0, null, vomit_message)
+				M.nauseate(1)
 				..()
 				return
 
