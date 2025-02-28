@@ -190,7 +190,7 @@
 						step(H, pick(cardinal))
 					if(prob(4))
 						H.change_misstep_chance(20 * mult)
-					if(probmult(20 + (ethanol_amt / 3)))
+					if(probmult(10 + (ethanol_amt / 4)))
 						H.nauseate(1)
 					if(prob(15))
 						H.make_dizzy(5 * mult)

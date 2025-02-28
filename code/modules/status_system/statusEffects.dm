@@ -3479,7 +3479,7 @@
 		src.owner.remove_filter("corrosion_color")
 
 /datum/statusEffect/nausea
-	name = "nauseous"
+	name = "Nauseous"
 	id = "nausea"
 	icon_state = "nausea1"
 	var/stacks = 1
@@ -3511,6 +3511,6 @@
 
 	onUpdate(timePassed)
 		if (prob(5))
-			src.stacks -= 1
+			src.stacks -= 0.5
 		if (src.stacks <= 0)
 			src.owner.delStatus(src)
