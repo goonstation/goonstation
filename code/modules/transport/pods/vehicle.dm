@@ -782,21 +782,20 @@
 		..()
 
 	process(mult)
-		if(sec_system)
-			if(sec_system.active)
-				sec_system.run_component(mult)
-			if(src.engine && engine.active)
-				var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
-				var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)
-				var/toxins = consumed?.toxins
-				if(isnull(toxins))
-					toxins = 0
+		if(sec_system?.active)
+			sec_system.run_component(mult)
+		if(src.engine && engine.active)
+			var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
+			var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)
+			var/toxins = consumed?.toxins
+			if(isnull(toxins))
+				toxins = 0
 
-				if(usage)
-					src.myhud?.update_fuel()
-					if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
-						engine.deactivate()
-				consumed?.dispose()
+			if(usage)
+				src.myhud?.update_fuel()
+				if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
+					engine.deactivate()
+			consumed?.dispose()
 
 #ifdef MAP_OVERRIDE_NADIR
 		if(src.acid_damage_multiplier > 0)
