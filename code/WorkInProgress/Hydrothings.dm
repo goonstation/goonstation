@@ -298,14 +298,14 @@
 //FUCKABLE ITEMS
 
 /obj/item/card/id/owlmaint
-	icon_state = "id_com"
+	icon_state = "id_gold"
 	access = list(access_owlerymaint)
 	registered = null
 	assignment = null
 	title = null
 
 /obj/item/card/id/owlsecurity
-	icon_state = "id_sec"
+	band_color = "red"
 	access = list(access_owlerysec)
 	registered = null
 	assignment = null
@@ -313,7 +313,7 @@
 
 /obj/item/card/id/owlgold
 	name = "identification card"
-	icon_state = "gold"
+	icon_state = "id_gold"
 	item_state = "gold_id"
 	desc = "This card is important!"
 	access = list(access_owlerycommand, access_owlerysec, access_owlerymaint)

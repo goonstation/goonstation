@@ -34,21 +34,24 @@ TYPEINFO(/obj/item/device/accessgun)
 			user.u_equip(ID)
 		ID.set_loc(src)
 
-		switch(ID.icon_state)
-			if ("id", "id_civ")
+		switch(ID.band_color)
+			if (null, "grey", "blue")
 				icon_state = "accessgun-civ"
-			if ("id_sec")
+			if ("red")
 				icon_state = "accessgun-sec"
-			if ("id_com")
+			if ("green")
 				icon_state = "accessgun-com"
-			if ("id_res")
+			if ("purple")
 				icon_state = "accessgun-res"
-			if ("id_eng")
+			if ("yellow")
 				icon_state = "accessgun-eng"
-			if ("id_clown")
-				icon_state = "accessgun-clown"
 			else
 				icon_state = "accessgun-?"
+
+		if (ID.icon_state == "id_clown")
+			icon_state = "accessgun-clown"
+		if (ID.icon_state == "id_gold")
+			icon_state = "accessgun-com"
 
 		if (!ID.access)
 			icon_state = "accessgun-null"

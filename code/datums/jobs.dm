@@ -64,6 +64,7 @@
 	var/list/items_in_belt = list() // works the same as above but is for jobs that spawn with a belt that can hold things
 	var/access_string = null // used to quickly grab access via string, i.e. "Chief Engineer", completely overrides var/list/access if non-null !!!
 	var/list/access = list(access_fuck_all) // Please define in global get_access() proc (access.dm), so it can also be used by bots etc.
+	var/id_band_override = null //Override ID band colour to whatever you want
 	var/mob/living/mob_type = /mob/living/carbon/human
 	var/datum/mutantrace/starting_mutantrace = null
 	var/change_name_on_spawn = FALSE
@@ -225,7 +226,7 @@
 ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command
 	linkcolor = "#00CC00"
-	slot_card = /obj/item/card/id/command
+	slot_card = /obj/item/card/id/gold
 	map_can_autooverride = FALSE
 	can_join_gangs = FALSE
 	job_category = JOB_COMMAND
@@ -251,8 +252,8 @@ ABSTRACT_TYPE(/datum/job/command)
 	allow_antag_fallthrough = FALSE
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	wiki_link = "https://wiki.ss13.co/Captain"
+	id_band_override = "green"
 
-	slot_card = /obj/item/card/id/gold
 	slot_belt = list(/obj/item/device/pda2/captain)
 	slot_back = list(/obj/item/storage/backpack/captain)
 	slot_jump = list(/obj/item/clothing/under/rank/captain)
@@ -293,6 +294,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_IMPORTANT
 	access_string = "Head of Personnel"
 	wiki_link = "https://wiki.ss13.co/Head_of_Personnel"
+	id_band_override = "blue"
 
 	allow_spy_theft = FALSE
 	allow_antag_fallthrough = FALSE
@@ -331,6 +333,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Head_of_Security"
+	id_band_override = "red"
 
 #ifdef SUBMARINE_MAP
 	slot_jump = list(/obj/item/clothing/under/rank/head_of_security/fancy_alt)
@@ -377,6 +380,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	announce_on_join = TRUE
 	allow_spy_theft = FALSE
 	wiki_link = "https://wiki.ss13.co/Chief_Engineer"
+	id_band_override = "yellow"
 
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_belt = list(/obj/item/storage/belt/utility/prepared/ceshielded)
@@ -418,6 +422,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = TRUE
 	announce_on_join = TRUE
 	wiki_link = "https://wiki.ss13.co/Research_Director"
+	id_band_override = "purple"
 
 	slot_back = list(/obj/item/storage/backpack/research)
 	slot_belt = list(/obj/item/device/pda2/research_director)
@@ -446,6 +451,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = TRUE
 	announce_on_join = TRUE
 	wiki_link = "https://wiki.ss13.co/Medical_Director"
+	id_band_override = "purple"
 
 	slot_back = list(/obj/item/storage/backpack/medic)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
@@ -468,11 +474,12 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = TRUE
 	announce_on_join = TRUE
 	wiki_link = "https://wiki.ss13.co/Communications_Officer"
+	id_band_override = "green"
 
+	slot_card = /obj/item/card/id
 	slot_ears = list(/obj/item/device/radio/headset/command/comm_officer)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_jump = list(/obj/item/clothing/under/rank/comm_officer)
-	slot_card = /obj/item/card/id/command
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_back = list(/obj/item/storage/backpack/withO2)
 	slot_belt = list(/obj/item/device/pda2/heads)
@@ -1456,7 +1463,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	receives_miranda = TRUE
 	cant_spawn_as_rev = TRUE
 	receives_badge = TRUE
-	slot_card = /obj/item/card/id/nt_specialist
+	slot_card = /obj/item/card/id/nanotrasen
 	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/device/pda2/ntofficial)
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer/black) // so they can slam tables
@@ -2436,6 +2443,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	receives_badge = TRUE
 	receives_miranda = TRUE
 	receives_implants = list(/obj/item/implant/health)
+	id_band_override = "red"
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/security/ntso)
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
@@ -2446,7 +2454,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_eyes = list(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_card = /obj/item/card/id/nt_specialist
+	slot_card = /obj/item/card/id/nanotrasen
 	slot_poc1 = list(/obj/item/device/pda2/ntso)
 	slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
@@ -2469,6 +2477,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	allow_traitors = FALSE
 	allow_spy_theft = FALSE
 	cant_spawn_as_rev = TRUE
+	id_band_override = "yellow"
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/utility/nt_engineer)
 	slot_jump = list(/obj/item/clothing/under/rank/engineer)
@@ -2479,7 +2488,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_eyes = list(/obj/item/clothing/glasses/toggleable/meson)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/engineer) //needs their own secret channel
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_card = /obj/item/card/id/nt_specialist
+	slot_card = /obj/item/card/id/nanotrasen
 	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 	slot_poc2 = list(/obj/item/device/pda2/nt_engineer)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
@@ -2511,6 +2520,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	allow_traitors = FALSE
 	allow_spy_theft = FALSE
 	cant_spawn_as_rev = TRUE
+	id_band_override = "purple"
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/medical)
@@ -2521,7 +2531,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/medic) //needs their own secret channel
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_card = /obj/item/card/id/nt_specialist
+	slot_card = /obj/item/card/id/nanotrasen
 	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 	slot_poc2 = list(/obj/item/device/pda2/nt_medical)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
@@ -2554,6 +2564,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	receives_badge = TRUE
 	receives_miranda = TRUE
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
+	id_band_override = "red"
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/security/ntsc) //special secbelt subtype that spawns with the NTSO gear inside
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
@@ -2564,7 +2575,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/consultant) //needs their own secret channel
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_card = /obj/item/card/id/nt_specialist
+	slot_card = /obj/item/card/id/nanotrasen
 	slot_poc1 = list(/obj/item/storage/ntsc_pouch)
 	slot_poc2 = list(/obj/item/device/pda2/ntso)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular)
@@ -2580,7 +2591,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	access_string = "Head of Mining"
 	linkcolor = "#00CC00"
 	cant_spawn_as_rev = TRUE
-	slot_card = /obj/item/card/id/command
+	id_band_override = "yellow"
+	slot_card = /obj/item/card/id/gold
 	slot_belt = list(/obj/item/device/pda2/mining)
 	slot_jump = list(/obj/item/clothing/under/rank/overalls)
 	slot_foot = list(/obj/item/clothing/shoes/orange)

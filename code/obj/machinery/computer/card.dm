@@ -222,7 +222,7 @@
 		)
 
 		.["icons"] = list(
-			list(style = "none", name = "Plain", card_look = "id", icon = getCardBase64Img("id")),
+			list(style = "none", name = "Plain", card_look = "id_basic", icon = getCardBase64Img("id_basic")),
 			list(style = "blue", name = "Civilian", card_look = "id_civ", icon = getCardBase64Img("id_civ")),
 			list(style = "yellow", name = "Engineering", card_look = "id_eng", icon = getCardBase64Img("id_eng")),
 			list(style = "purple", name = "Research", card_look = "id_res", icon = getCardBase64Img("id_res")),
@@ -498,19 +498,11 @@
 		. = TRUE
 
 	proc/update_card_colour(var/newcolour)
-		if(src.modify.keep_icon == FALSE) // ids that are FALSE will update their icon if the job changes
+		if(src.modify.no_stripe == FALSE) // ids that are FALSE will update their icon if the job changes
 			if (newcolour == "none")
-				src.modify.icon_state = "id"
-			if (newcolour == "blue")
-				src.modify.icon_state = "id_civ"
-			if (newcolour == "yellow")
-				src.modify.icon_state = "id_eng"
-			if (newcolour == "purple")
-				src.modify.icon_state = "id_res"
-			if (newcolour == "red")
-				src.modify.icon_state = "id_sec"
-			if (newcolour == "green")
-				src.modify.icon_state = "id_com"
+				src.modify.band_color = null
+			else
+				src.modify.band_color = newcolour
 
 	proc/try_authenticate()
 		if ((!( src.authenticated ) && (src.scan || ((issilicon(usr) || isAI(usr)) && !isghostdrone(usr))) && (src.modify || src.mode)))
