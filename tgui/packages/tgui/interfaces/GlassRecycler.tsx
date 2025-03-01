@@ -1,61 +1,18 @@
 import { useState } from 'react';
-import {
-  Box,
-  Button,
-  Divider,
-  Flex,
-  Section,
-  Stack,
-} from 'tgui-core/components';
+import { Button, Section, Stack } from 'tgui-core/components';
 import { pluralize } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { ProductList } from './common/ProductList';
 import { capitalize } from './common/stringUtils';
-
-const GlassRecyclerProductEntry = (props: {
-  product: Product;
-  disabled: any;
-  onClick: any;
-}) => {
-  const {
-    product: { name, cost, img },
-    disabled,
-    onClick,
-  } = props;
-
-  return (
-    <>
-      <Flex direction="row" align="center">
-        <Flex.Item>
-          <img
-            src={`data:image/png;base64,${img}`}
-            style={{
-              verticalAlign: 'middle',
-            }}
-          />
-        </Flex.Item>
-        <Flex.Item grow={1}>
-          <Box bold>{capitalize(name)}</Box>
-          <Box>{`Cost: ${cost} ${pluralize('Unit', cost)}`}</Box>
-        </Flex.Item>
-        <Flex.Item>
-          <Button onClick={onClick} disabled={disabled}>
-            Create
-          </Button>
-        </Flex.Item>
-      </Flex>
-      <Divider />
-    </>
-  );
-};
 
 interface GlassRecyclerData {
   glassAmt: number;
-  products: Product[];
+  products: ProductData[];
 }
 
-interface Product {
+interface ProductData {
   name: string;
   type: string;
   cost: number;
@@ -74,38 +31,41 @@ export const GlassRecycler = () => {
         <Stack vertical fill>
           <Stack.Item>
             <Section>
-              <Flex direction="row" align="center">
-                <Flex.Item grow={1}>
-                  <Box>
-                    {`Glass: ${glassAmt} ${pluralize('Unit', glassAmt)}`}
-                  </Box>
-                </Flex.Item>
-                <Flex.Item>
+              <Stack align="center">
+                <Stack.Item grow={1}>
+                  {`Glass: ${glassAmt} ${pluralize('Unit', glassAmt)}`}
+                </Stack.Item>
+                <Stack.Item>
                   <Button.Checkbox
                     checked={filterAvailable}
                     onClick={() => setFilterAvailable(!filterAvailable)}
                   >
                     Filter Available
                   </Button.Checkbox>
-                </Flex.Item>
-              </Flex>
+                </Stack.Item>
+              </Stack>
             </Section>
           </Stack.Item>
           <Stack.Item grow={1}>
-            <Section fill scrollable title="Products">
-              {products
-                .filter(({ cost }) => !filterAvailable || glassAmt >= cost)
-                .map((product) => {
-                  const { cost, type } = product;
-                  return (
-                    <GlassRecyclerProductEntry
-                      key={type}
-                      product={product}
-                      disabled={glassAmt < cost}
-                      onClick={() => act('create', { type })}
-                    />
-                  );
-                })}
+            <Section fill fitted scrollable title="Products">
+              <ProductList>
+                {products
+                  .filter(({ cost }) => !filterAvailable || glassAmt >= cost)
+                  .map((product) => {
+                    const { cost, img, name, type } = product;
+                    return (
+                      <ProductList.Item
+                        key={type}
+                        canBuy={glassAmt >= cost}
+                        cost={`${cost} ${pluralize('Unit', cost)}`}
+                        image={img}
+                        onBuy={() => act('create', { type })}
+                      >
+                        {capitalize(name)}
+                      </ProductList.Item>
+                    );
+                  })}
+              </ProductList>
             </Section>
           </Stack.Item>
         </Stack>
