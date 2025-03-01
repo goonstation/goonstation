@@ -1022,7 +1022,7 @@ var/list/radio_brains = list()
 		if (probmult(20))
 			src.active = !src.active
 		if (src.active)
-			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_INFRA)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
 		else
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
 

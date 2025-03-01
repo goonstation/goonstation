@@ -235,7 +235,7 @@
 	proc/set_cloaked(var/cloaked = 1)
 		if (use_cloakofdarkness)
 			if (cloaked == 1)
-				src.invisibility = INVIS_INFRA
+				src.invisibility = INVIS_MESON
 				src.alpha = 120
 				//src.UpdateOverlays(overlay_image, "batpoof_cloak")
 			else
