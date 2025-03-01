@@ -161,7 +161,7 @@ export const Vendors = () => {
                     return (
                       <ProductList.Item
                         key={name}
-                        canBuy={canVend(product)}
+                        canOutput={canVend(product)}
                         costSlot={
                           playerBuilt && unlocked ? (
                             <Button.Input
@@ -180,13 +180,15 @@ export const Vendors = () => {
                           )
                         }
                         image={img}
-                        onBuy={() =>
+                        onOutput={() =>
                           act('vend', {
                             target: ref,
                             cost,
                             amount,
                           })
                         }
+                        outputIcon="cart-shopping"
+                        outputTooltip="Buy"
                       >
                         <Box inline italic>
                           {!infinite && `${amount} x`}&nbsp;
