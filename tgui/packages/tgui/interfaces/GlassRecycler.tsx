@@ -57,7 +57,7 @@ export const GlassRecycler = () => {
                       <ProductList.Item
                         key={type}
                         canBuy={glassAmt >= cost}
-                        cost={`${cost} ${pluralize('Unit', cost)}`}
+                        costSlot={`${cost} ${pluralize('Unit', cost)}`}
                         image={img}
                         onBuy={() => act('create', { type })}
                       >

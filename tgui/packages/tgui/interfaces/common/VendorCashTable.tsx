@@ -5,50 +5,85 @@
  * @license ISC
  */
 
+import { MouseEventHandler } from 'react';
 import { Button, LabeledList } from 'tgui-core/components';
 
 import { asCreditsString } from './stringUtils';
 
-interface VendorCashTableProps {
-  cardname: string;
-  onCardClick: (e: React.MouseEvent<HTMLDivElement>) => void;
-  bankMoney: number;
+interface VendorCashTableCashAcceptProps {
   cash: number;
-  onCashClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+  rejectCash?: boolean | false;
+  onCashClick: MouseEventHandler;
 }
 
+interface VendorCashTableCashForbidProps {
+  rejectCash: true;
+}
+
+type VendorCashTableCashProps =
+  | VendorCashTableCashAcceptProps
+  | VendorCashTableCashForbidProps;
+
+interface VendorCashTableCardAcceptProps {
+  bankMoney: number;
+  cardname: string;
+  rejectCard?: false;
+  onCardClick: MouseEventHandler;
+}
+
+interface VendorCashTableCardForbidProps {
+  rejectCard: true;
+}
+
+type VendorCashTableCardProps =
+  | VendorCashTableCardAcceptProps
+  | VendorCashTableCardForbidProps;
+
+type VendorCashTableProps = VendorCashTableCashProps & VendorCashTableCardProps;
+
 export const VendorCashTable = (props: VendorCashTableProps) => {
-  const { cardname, onCardClick, bankMoney, cash, onCashClick } = props;
-  const hasAccount = !!cardname;
-  const hasCash = cash > 0;
+  const { rejectCard, rejectCash } = props;
+  if (rejectCard && rejectCash) {
+    return null;
+  }
+  const hasAccount = !rejectCard && !!props.cardname;
+  const hasCash = !rejectCash && props.cash > 0;
   return (
     <LabeledList>
-      <LabeledList.Item
-        label="Account"
-        buttons={
-          hasAccount ? (
-            <Button icon="id-card" onClick={onCardClick}>
-              {cardname}
+      {!rejectCard && (
+        <LabeledList.Item
+          label="Account"
+          buttons={
+            hasAccount ? (
+              <Button icon="id-card" onClick={props.onCardClick}>
+                {props.cardname}
+              </Button>
+            ) : (
+              <Button icon="id-card" disabled>
+                Swipe ID Card
+              </Button>
+            )
+          }
+        >
+          {hasAccount ? asCreditsString(props.bankMoney) : 'No card inserted'}
+        </LabeledList.Item>
+      )}
+      {!rejectCash && (
+        <LabeledList.Item
+          label="Cash"
+          buttons={
+            <Button
+              icon="eject"
+              disabled={!hasCash}
+              onClick={props.onCashClick}
+            >
+              Eject
             </Button>
-          ) : (
-            <Button icon="id-card" disabled>
-              Swipe ID Card
-            </Button>
-          )
-        }
-      >
-        {hasAccount ? asCreditsString(bankMoney) : 'No card inserted'}
-      </LabeledList.Item>
-      <LabeledList.Item
-        label="Cash"
-        buttons={
-          <Button icon="eject" disabled={!hasCash} onClick={onCashClick}>
-            Eject
-          </Button>
-        }
-      >
-        {hasCash ? asCreditsString(cash) : 'No cash inserted'}
-      </LabeledList.Item>
+          }
+        >
+          {hasCash ? asCreditsString(props.cash) : 'No cash inserted'}
+        </LabeledList.Item>
+      )}
     </LabeledList>
   );
 };
