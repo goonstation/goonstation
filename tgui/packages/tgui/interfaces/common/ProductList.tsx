@@ -5,56 +5,87 @@
  * @license ISC
  */
 
-import { PropsWithChildren } from 'react';
-import { Button, Image, Stack } from 'tgui-core/components';
+import {
+  ComponentProps,
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useMemo,
+} from 'react';
+import { Button, Image, Table } from 'tgui-core/components';
 
-type ProductListProps = PropsWithChildren<{}>;
+interface ProductListConfig {
+  showCount?: boolean;
+  showImage?: boolean;
+}
 
-export const ProductList = (props: ProductListProps) => {
-  const { children } = props;
-  return children;
+const defaultProductListConfig = {
+  showImage: true,
 };
 
-export type ProductListItemProps = PropsWithChildren<{
-  canOutput: boolean;
-  costSlot?: React.ReactNode;
-  image?: string;
-  onOutput: () => void;
-  outputIcon?: string;
-  outputTooltip?: string;
-}>;
+const ProductListConfigContext = createContext<ProductListConfig>(
+  defaultProductListConfig,
+);
 
-const ProductListItem = (props: ProductListItemProps) => {
-  const {
-    canOutput,
-    children,
-    costSlot,
-    image,
-    onOutput,
-    outputIcon = 'plus',
-    outputTooltip,
-  } = props;
+type ProductListProps = PropsWithChildren<ProductListConfig>;
+
+export const ProductList = (props: ProductListProps) => {
+  const { children, showCount, showImage = true } = props;
+  const productListConfig = useMemo(
+    () => ({
+      showCount,
+      showImage,
+    }),
+    [showCount, showImage],
+  );
   return (
-    <Stack align="center" className="candystripe" px={1}>
-      {image && (
-        <Stack.Item>
-          <Image src={`data:image/png;base64,${image}`} />
-        </Stack.Item>
-      )}
-      <Stack.Item grow>{children}</Stack.Item>
-      {costSlot !== null && costSlot !== undefined && (
-        <Stack.Item>{costSlot}</Stack.Item>
-      )}
-      <Stack.Item>
-        <Button
-          disabled={!canOutput}
-          icon={outputIcon}
-          onClick={onOutput}
-          tooltip={outputTooltip}
-        />
-      </Stack.Item>
-    </Stack>
+    <ProductListConfigContext.Provider value={productListConfig}>
+      <Table>{children}</Table>
+    </ProductListConfigContext.Provider>
   );
 };
 
+export type ProductListItemProps = PropsWithChildren<{
+  count?: number;
+  extraCellsSlot?: React.ReactNode;
+  image?: string;
+  outputSlot: React.ReactNode;
+}>;
+
+const ProductListItem = (props: ProductListItemProps) => {
+  const { count, children, extraCellsSlot, image, outputSlot } = props;
+  const productListConfig = useContext(ProductListConfigContext);
+  const { showCount, showImage } = productListConfig;
+  return (
+    <Table.Row className="candystripe">
+      {showImage && (
+        <Table.Cell collapsing verticalAlign="middle">
+          {image && <Image src={`data:image/png;base64,${image}`} />}
+        </Table.Cell>
+      )}
+      {showCount && (
+        <Table.Cell collapsing align="right" verticalAlign="middle" italic>
+          {count !== undefined && `${count} x`}
+        </Table.Cell>
+      )}
+      <Table.Cell verticalAlign="middle">{children}</Table.Cell>
+      {extraCellsSlot}
+      <Table.Cell collapsing minWidth={8} px={1} verticalAlign="middle">
+        {outputSlot}
+      </Table.Cell>
+    </Table.Row>
+  );
+};
+
+type ProductListOutputButtonProps = ComponentProps<typeof Button> & {
+  canOutput?: boolean;
+};
+
+const ProductListOutputButton = (props: ProductListOutputButtonProps) => {
+  // written this way to provide defaults but allow overrides if given explicitly
+  return <Button fluid textAlign="center" {...props} />;
+};
+
+ProductList.Cell = Table.Cell;
 ProductList.Item = ProductListItem;
+ProductList.OutputButton = ProductListOutputButton;

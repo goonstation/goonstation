@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Collapsible,
   Divider,
@@ -154,56 +153,57 @@ export const Vendors = () => {
           <Stack.Item grow>
             <Section fill fitted scrollable>
               {!busy && (
-                <ProductList>
+                <ProductList showCount>
                   {productList.map((product) => {
                     const { amount, cost, img, infinite, name, ref } = product;
-                    const resolvedCost = getCost(product);
-                    return (
-                      <ProductList.Item
-                        key={name}
-                        canOutput={canVend(product)}
-                        costSlot={
-                          playerBuilt && unlocked ? (
-                            <Button.Input
-                              onCommit={(e, value) =>
-                                act('setPrice', {
-                                  target: ref,
-                                  cost: value,
-                                })
-                              }
-                              tooltip="Set Cost"
-                            >
-                              {resolvedCost ?? 'Free'}
-                            </Button.Input>
-                          ) : (
-                            resolvedCost
-                          )
-                        }
-                        image={img}
-                        onOutput={() =>
-                          act('vend', {
-                            target: ref,
-                            cost,
-                            amount,
-                          })
-                        }
-                        outputIcon="cart-shopping"
-                        outputTooltip="Buy"
-                      >
-                        <Box inline italic>
-                          {!infinite && `${amount} x`}&nbsp;
-                        </Box>
-                        {name}
-                        {!!playerBuilt && !!wiresOpen && (
+                    const costString = getCost(product);
+                    const extraCellsSlot =
+                      playerBuilt && wiresOpen && unlocked ? (
+                        <ProductList.Cell verticalAlign="middle" collapsing>
                           <Button
                             icon="images"
-                            style={{ marginLeft: '5px' }}
                             onClick={() =>
                               act('setIcon', { target: product.ref })
                             }
+                            mb={0}
                             tooltip="Set as displayed product"
                           />
-                        )}
+                          <Button.Input
+                            onCommit={(e, value) =>
+                              act('setPrice', {
+                                target: ref,
+                                cost: value,
+                              })
+                            }
+                            defaultValue="0"
+                            currentValue={`${cost}`}
+                          >
+                            Set Price
+                          </Button.Input>
+                        </ProductList.Cell>
+                      ) : undefined;
+                    return (
+                      <ProductList.Item
+                        key={name}
+                        extraCellsSlot={extraCellsSlot}
+                        outputSlot={
+                          <ProductList.OutputButton
+                            disabled={!canVend(product)}
+                            onClick={() =>
+                              act('vend', {
+                                target: ref,
+                                cost,
+                              })
+                            }
+                            icon={cost ? undefined : 'eject'}
+                          >
+                            {costString || 'Vend'}
+                          </ProductList.OutputButton>
+                        }
+                        image={img}
+                        count={infinite ? undefined : amount}
+                      >
+                        {name}
                       </ProductList.Item>
                     );
                   })}
