@@ -47,6 +47,7 @@
 #define JOB_COMMAND "command"
 #define JOB_SECURITY "security"
 #define JOB_RESEARCH "research"
+#define JOB_MEDICAL "medical"
 #define JOB_ENGINEERING "engineering"
 #define JOB_CIVILIAN "civilian"
 #define JOB_CREATED "created"
