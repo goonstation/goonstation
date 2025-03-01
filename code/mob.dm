@@ -2516,6 +2516,7 @@
 	src.delStatus("drowsy")
 	src.remove_stuns()
 	src.delStatus("slowed")
+	src.delStatus("nausea")
 	src.delStatus("burning")
 	src.delStatus("radiation")
 	src.delStatus("critical_condition")
