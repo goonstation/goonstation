@@ -102,6 +102,50 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/hoodie)
 		swatch_background_color = "#3f4c5b"
 		item_path = /obj/item/clothing/suit/hoodie/black
 
+ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/hoodie_large)
+/datum/clothingbooth_item/wear_suit/hoodie_large
+	cost = PAY_UNTRAINED / 3
+
+	orange
+		name = "Orange - Large"
+		swatch_background_color = "#ebb02c"
+		item_path = /obj/item/clothing/suit/hoodie/large
+
+	pink
+		name = "Pink - Large"
+		swatch_background_color = "#ff009d"
+		item_path = /obj/item/clothing/suit/hoodie/large/pink
+
+	red
+		name = "Red - Large"
+		swatch_background_color = "#d73715"
+		item_path = /obj/item/clothing/suit/hoodie/large/red
+
+	green
+		name = "Green - Large"
+		swatch_background_color = "#3eb54e"
+		item_path = /obj/item/clothing/suit/hoodie/large/green
+
+	blue
+		name = "Blue - Large"
+		swatch_background_color = "#63a5ee"
+		item_path = /obj/item/clothing/suit/hoodie/large/blue
+
+	white
+		name = "White - Large"
+		swatch_background_color = "#ebf0f2"
+		item_path = /obj/item/clothing/suit/hoodie/large/white
+
+	black
+		name = "Black - Large"
+		swatch_background_color = "#3f4c5b"
+		item_path = /obj/item/clothing/suit/hoodie/large/black
+
+	purple
+		name = "Purple - Large"
+		swatch_background_color = "#8c00ff"
+		item_path = /obj/item/clothing/suit/hoodie/large/purple
+
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/jacket)
 /datum/clothingbooth_item/wear_suit/jacket
 	cost = PAY_TRADESMAN/3
