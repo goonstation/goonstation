@@ -7,7 +7,6 @@
 
 import {
   Button,
-  Divider,
   LabeledList,
   NumberInput,
   Section,
@@ -53,7 +52,6 @@ export const PortableScrubber = () => {
           pressure={pressure}
           maxPressure={maxPressure}
         >
-          <Divider />
           <LabeledList>
             <LabeledList.Item label="Scrubber Power">
               <Button
