@@ -4,13 +4,11 @@
  * @author FlameArrow57 (https://github.com/FlameArrow57)
  * @license ISC
  */
-
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
+import React from 'react';
 import {
-  Box,
   Button,
   Collapsible,
-  Divider,
   LabeledList,
   NumberInput,
   Section,
@@ -20,7 +18,7 @@ import {
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-interface GPSInfo {
+interface GPSData {
   src_x: number;
   src_y: number;
   track_x: number;
@@ -29,12 +27,12 @@ interface GPSInfo {
   trackable: BooleanLike;
   src_name: string;
   distress: BooleanLike;
-  gps_info: GPSTrackable[];
-  imp_info: GPSTrackable[];
-  warp_info: GPSTrackable[];
+  gps_info: GPSTrackableData[];
+  imp_info: GPSTrackableData[];
+  warp_info: GPSTrackableData[];
 }
 
-interface GPSTrackable {
+interface GPSTrackableData {
   name: string;
   obj_ref: string;
   x: number;
@@ -47,7 +45,7 @@ const gpsTooltip =
   'Each GPS is coined with a unique four digit number followed by a four letter identifier.';
 
 export const GPS = () => {
-  const { act, data } = useBackend<GPSInfo>();
+  const { act, data } = useBackend<GPSData>();
   const {
     src_x,
     src_y,
@@ -155,33 +153,35 @@ export const GPS = () => {
   );
 };
 
+interface TrackableListProps {
+  gps_info: GPSTrackableData[];
+}
+
 let distress_red = false;
-const TrackableList = (props) => {
+const TrackableList = (props: TrackableListProps) => {
   const { act } = useBackend();
   const { gps_info } = props;
-  const nodes: JSX.Element[] = [];
 
   distress_red = !distress_red;
 
   return gps_info.length ? (
     <Stack vertical>
-      {gps_info.map((item, index) => (
-        <Box key={index}>
+      {gps_info.map((item) => (
+        <React.Fragment key={item.obj_ref}>
           <Stack.Item>
             <Stack>
               <Stack.Item grow>
-                <Stack vertical>
+                <Stack
+                  vertical
+                  textColor={item.distress && distress_red ? 'bad' : undefined}
+                >
                   <Stack.Item>
                     <strong>{item.name}</strong>
+                    {!!item.distress && ' [Distress!]'}
                   </Stack.Item>
                   <Stack.Item>
                     <em>{`Located at (${item.x}), (${item.y}) | ${item.z_info}`}</em>
                   </Stack.Item>
-                  {item.distress !== null && !!item.distress && (
-                    <Stack.Item textColor={distress_red ? 'red' : 'default'}>
-                      Distress Alert
-                    </Stack.Item>
-                  )}
                 </Stack>
               </Stack.Item>
               <Stack.Item align="center">
@@ -193,8 +193,8 @@ const TrackableList = (props) => {
               </Stack.Item>
             </Stack>
           </Stack.Item>
-          <Divider />
-        </Box>
+          <Stack.Divider />
+        </React.Fragment>
       ))}
     </Stack>
   ) : (
