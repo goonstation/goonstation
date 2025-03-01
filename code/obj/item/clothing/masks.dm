@@ -10,7 +10,7 @@
 	c_flags = COVERSMOUTH
 	compatible_species = list("human", "cow", "werewolf")
 	wear_layer = MOB_HEAD_LAYER1
-	var/is_muzzle = 0
+	var/is_muzzle = FALSE
 	var/use_bloodoverlay = 1
 	var/stapled = 0
 	var/allow_staple = 1
@@ -294,7 +294,15 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH	// NOT usable for internals.
 	compatible_species = list("human", "cow", "werewolf", "martian")
-	var/new_language = "english"	// idk maybe you can varedit one so that humans speak monkey instead. who knows
+	var/new_language = LANGUAGE_ENGLISH	// idk maybe you can varedit one so that humans speak monkey instead. who knows
+
+	equipped(mob/M)
+		. = ..()
+		M.say_language = src.new_language
+
+	unequipped(mob/M)
+		M.say_language = initial(M.say_language)
+		. = ..()
 
 /obj/item/clothing/mask/breath
 	desc = "A close-fitting mask that can be connected to an air supply but does not work very well in hard vacuum without a helmet."
@@ -494,7 +502,22 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	c_flags = COVERSMOUTH
 	w_class = W_CLASS_SMALL
 	desc = "You'd probably say something like 'Hello Clarice.' if you could talk while wearing this."
-	is_muzzle = 1
+	is_muzzle = TRUE
+
+	equipped(mob/user, slot)
+		. = ..()
+
+		if (slot != SLOT_WEAR_MASK)
+			return
+
+		user.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_MUZZLE)
+
+	unequipped(mob/user)
+		if (src.equipped_in_slot == SLOT_WEAR_MASK)
+			user.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_MUZZLE)
+
+		. = ..()
+
 
 /obj/item/clothing/mask/surgical
 	name = "sterile mask"
