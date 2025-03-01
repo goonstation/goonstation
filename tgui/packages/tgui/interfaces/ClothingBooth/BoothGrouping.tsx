@@ -42,6 +42,8 @@ const BoothGroupingView = (props: BoothGroupingProps) => {
   const cn = classes([
     'clothingbooth__boothitem',
     selected && 'clothingbooth__boothitem--selected',
+    // conditionally candystripe, as we want to show selected style if selected
+    !selected && 'candystripe',
   ]);
   const handleClick = useCallback(
     () => onSelectGrouping(name),
@@ -58,7 +60,7 @@ const BoothGroupingView = (props: BoothGroupingProps) => {
   );
 
   return (
-    <Stack align="center" className={cn} onClick={handleClick} py={0.5}>
+    <Stack align="center" className={cn} onClick={handleClick} px={0.5} py={1}>
       <Stack.Item>
         <Image pixelated src={`data:image/png;base64,${list_icon}`} />
       </Stack.Item>
