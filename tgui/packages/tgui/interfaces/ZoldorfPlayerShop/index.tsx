@@ -27,12 +27,16 @@ export const ZoldorfPlayerShop = () => {
               <ProductList>
                 {products.map((product) => {
                   const { img, infinite, name, stock } = product;
-                  const buyProps: Pick<
+                  const outputProps: Pick<
                     ProductListItemProps,
-                    'canBuy' | 'costSlot' | 'onBuy'
+                    | 'canOutput'
+                    | 'costSlot'
+                    | 'onOutput'
+                    | 'outputIcon'
+                    | 'outputTooltip'
                   > = isSoulProductData(product)
                     ? {
-                        canBuy:
+                        canOutput:
                           !product.soul_percentage ||
                           user_soul >= product.soul_percentage,
                         costSlot: (
@@ -40,15 +44,19 @@ export const ZoldorfPlayerShop = () => {
                             {`${product.soul_percentage}%`}
                           </Box>
                         ),
-                        onBuy: () => act('soul_purchase', { item: name }),
+                        onOutput: () => act('soul_purchase', { item: name }),
+                        outputIcon: 'hand-holding-heart',
+                        outputTooltip: 'Sell Your Soul',
                       }
                     : {
-                        canBuy: !product.price || credits >= product.price,
+                        canOutput: !product.price || credits >= product.price,
                         costSlot: asCreditsString(product.price),
-                        onBuy: () => act('credit_purchase', { item: name }),
+                        onOutput: () => act('credit_purchase', { item: name }),
+                        outputIcon: 'shopping-cart',
+                        outputTooltip: 'Buy',
                       };
                   return (
-                    <ProductList.Item key={name} {...buyProps} image={img}>
+                    <ProductList.Item key={name} {...outputProps} image={img}>
                       {!infinite && (
                         <Box inline italic>
                           {`${stock} x`}&nbsp;
