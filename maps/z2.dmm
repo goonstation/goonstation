@@ -78834,7 +78834,7 @@
 	req_access = list(37);
 	admin_access_override = 1
 	},
-/obj/item/card/id/nt_specialist{
+/obj/item/card/id/nanotrasen{
 	pixel_y = 7;
 	desc = "It seems by punctually completing paperwork someone has gained recognition as a paperwork specialist.";
 	name = "Paperwork Specialist's ID"
