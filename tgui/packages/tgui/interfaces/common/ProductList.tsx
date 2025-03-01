@@ -15,16 +15,16 @@ export const ProductList = (props: ProductListProps) => {
   return children;
 };
 
-type ProductListItemProps = PropsWithChildren<{
+export type ProductListItemProps = PropsWithChildren<{
   buyTooltip?: string;
   canBuy: boolean;
-  cost?: React.ReactNode;
+  costSlot?: React.ReactNode;
   image?: string;
   onBuy: () => void;
 }>;
 
 const ProductListItem = (props: ProductListItemProps) => {
-  const { buyTooltip, canBuy, children, cost, image, onBuy } = props;
+  const { buyTooltip, canBuy, children, costSlot, image, onBuy } = props;
   return (
     <Stack align="center" className="candystripe" px={1}>
       {image && (
@@ -33,12 +33,14 @@ const ProductListItem = (props: ProductListItemProps) => {
         </Stack.Item>
       )}
       <Stack.Item grow>{children}</Stack.Item>
-      {cost !== null && cost !== undefined && <Stack.Item>{cost}</Stack.Item>}
+      {costSlot !== null && costSlot !== undefined && (
+        <Stack.Item>{costSlot}</Stack.Item>
+      )}
       <Stack.Item>
         <Button
-          onClick={onBuy}
           disabled={!canBuy}
           icon="plus"
+          onClick={onBuy}
           tooltip={buyTooltip}
         />
       </Stack.Item>

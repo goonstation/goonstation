@@ -162,7 +162,7 @@ export const Vendors = () => {
                       <ProductList.Item
                         key={name}
                         canBuy={canVend(product)}
-                        cost={
+                        costSlot={
                           playerBuilt && unlocked ? (
                             <Button.Input
                               onCommit={(e, value) =>
