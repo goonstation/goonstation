@@ -56,12 +56,16 @@ export const GlassRecycler = () => {
                     return (
                       <ProductList.Item
                         key={type}
-                        canOutput={glassAmt >= cost}
-                        costSlot={`${cost} ${pluralize('Unit', cost)}`}
                         image={img}
-                        onOutput={() => act('create', { type })}
-                        outputIcon="gears"
-                        outputTooltip="Create"
+                        outputSlot={
+                          <ProductList.OutputButton
+                            disabled={glassAmt < cost}
+                            icon="gears"
+                            onClick={() => act('create', { type })}
+                          >
+                            {`${cost} ${pluralize('Unit', cost)}`}
+                          </ProductList.OutputButton>
+                        }
                       >
                         {capitalize(name)}
                       </ProductList.Item>

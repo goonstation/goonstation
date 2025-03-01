@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { Box, Section, Stack } from 'tgui-core/components';
+import { Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -24,44 +24,37 @@ export const ZoldorfPlayerShop = () => {
         <Stack fill vertical>
           <Stack.Item grow>
             <Section fill fitted scrollable>
-              <ProductList>
+              <ProductList showCount>
                 {products.map((product) => {
                   const { img, infinite, name, stock } = product;
-                  const outputProps: Pick<
-                    ProductListItemProps,
-                    | 'canOutput'
-                    | 'costSlot'
-                    | 'onOutput'
-                    | 'outputIcon'
-                    | 'outputTooltip'
-                  > = isSoulProductData(product)
-                    ? {
-                        canOutput:
-                          !product.soul_percentage ||
-                          user_soul >= product.soul_percentage,
-                        costSlot: (
-                          <Box color="red" bold>
-                            {`${product.soul_percentage}%`}
-                          </Box>
-                        ),
-                        onOutput: () => act('soul_purchase', { item: name }),
-                        outputIcon: 'hand-holding-heart',
-                        outputTooltip: 'Sell Your Soul',
-                      }
-                    : {
-                        canOutput: !product.price || credits >= product.price,
-                        costSlot: asCreditsString(product.price),
-                        onOutput: () => act('credit_purchase', { item: name }),
-                        outputIcon: 'shopping-cart',
-                        outputTooltip: 'Buy',
-                      };
+                  const outputSlot: ProductListItemProps['outputSlot'] =
+                    isSoulProductData(product) ? (
+                      <ProductList.OutputButton
+                        color="red"
+                        disabled={
+                          product.soul_percentage !== 0 &&
+                          user_soul < product.soul_percentage
+                        }
+                        icon="hand-holding-heart"
+                        onClick={() => act('soul_purchase', { item: name })}
+                      >
+                        {`${product.soul_percentage}%`}
+                      </ProductList.OutputButton>
+                    ) : (
+                      <ProductList.OutputButton
+                        disabled={product.price > 0 && credits < product.price}
+                        onClick={() => act('credit_purchase', { item: name })}
+                      >
+                        {asCreditsString(product.price)}
+                      </ProductList.OutputButton>
+                    );
                   return (
-                    <ProductList.Item key={name} {...outputProps} image={img}>
-                      {!infinite && (
-                        <Box inline italic>
-                          {`${stock} x`}&nbsp;
-                        </Box>
-                      )}
+                    <ProductList.Item
+                      key={name}
+                      image={img}
+                      outputSlot={outputSlot}
+                      count={infinite ? undefined : stock}
+                    >
                       {name}
                     </ProductList.Item>
                   );
