@@ -203,7 +203,7 @@ TYPEINFO(/obj/item/device/flash)
 		src.process_burnout(user)
 
 	// Some after attack stuff.
-	user.lastattacked = M
+	user.lastattacked = get_weakref(M)
 	M.lastattacker = get_weakref(user)
 	M.lastattackertime = world.time
 

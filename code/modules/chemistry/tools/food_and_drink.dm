@@ -758,7 +758,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if (is_sealed)
 			boutput(user, SPAN_ALERT("[src] is sealed."))
 			return
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		// this shit sucks but there's no space for a cast since the following section is an if-else
 		var/turf/target_turf = CHECK_LIQUID_CLICK(target) ? get_turf(target) : null
 		if (target_turf?.active_liquid) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.

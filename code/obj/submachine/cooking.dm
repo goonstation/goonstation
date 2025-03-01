@@ -84,7 +84,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 
 	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.gloves)

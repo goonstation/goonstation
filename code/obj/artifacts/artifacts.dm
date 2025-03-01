@@ -29,7 +29,7 @@
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
 	attack_hand(mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		src.ArtifactTouched(user)
 		return
 
@@ -37,7 +37,7 @@
 		return attack_hand(user)
 
 	attackby(obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (src.Artifact_attackby(W,user))
 			..()
 

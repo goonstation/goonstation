@@ -1011,7 +1011,7 @@
 		..()
 	else
 		boutput(user, SPAN_ALERT("The grip tool can't get a good grip on [target]!"))
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 
 /datum/limb/flock_grip/harm(mob/target, var/mob/living/critter/flock/drone/user)
 	if (!user || !target)
@@ -1027,11 +1027,10 @@
 			var/list/specific_attack_messages = pick(attack_messages)
 			msgs.base_attack_message = "<span class='combat bold'>[user] [specific_attack_messages[1]] [target] [specific_attack_messages[2]]!</span>"
 			msgs.flush(FALSE)
-			user.lastattacked = target
+			user.lastattacked = get_weakref(target)
 		else
 			user.visible_message("<span class='combat bold'>[user] attempts to prod [target] but misses!</span>")
-			user.lastattacked = target
-
+			user.lastattacked = get_weakref(target)
 /////////////////////////////////////////////////////////////////////////////////
 
 /datum/limb/flock_converter

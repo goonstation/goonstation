@@ -724,7 +724,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (!I.force || health <= 0)
 				return
 
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			user.visible_message(SPAN_ALERT("<b>[user] bonks [src] with [I]!</b>"),SPAN_ALERT("<b>You hit [src] with [I]!</b>"))
 			if (iomoon_blowout_state == 0)
 				playsound(src.loc, 'sound/machines/lavamoon_alarm1.ogg', 70,0)
@@ -833,7 +833,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (!I.force || src.status != IOCORE_ACTIVE)
 				return
 
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			if (I.hit_type == DAMAGE_BURN)
 				src.health -= I.force * 0.25
 			else
@@ -867,7 +867,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (src.status != IOCORE_ACTIVE)
 				return
 
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			if (user.a_intent == "harm")
 				src.health -= rand(1,2) * 0.5
 				user.visible_message(SPAN_ALERT("<b>[user]</b> punches [src]!"), SPAN_ALERT("You punch [src]![prob(25) ? " It's about as effective as you would expect!" : null]"))

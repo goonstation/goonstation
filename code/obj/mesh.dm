@@ -196,7 +196,7 @@ TYPEINFO(/obj/mesh)
 	src.icon_state = "[src.icon_state_prefix][src.get_icon_direction()][src.get_damage_icon_suffix()]"
 
 /obj/mesh/attackby(obj/item/I, mob/user)
-	user.lastattacked = src
+	user.lastattacked = get_weakref(src)
 	attack_particle(user, src)
 	src.visible_message(SPAN_ALERT("<b>[user]</b> attacks [src] with [I]."))
 	playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
@@ -329,7 +329,7 @@ TYPEINFO_NEW(/obj/mesh/grille)
 
 /obj/mesh/grille/attack_hand(mob/user)
 	if(!src.shock(user, 70))
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		var/damage = 1
 		var/message = "[user.kickMessage] [src]"
 

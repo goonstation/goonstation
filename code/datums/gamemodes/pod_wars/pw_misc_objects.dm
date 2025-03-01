@@ -92,7 +92,7 @@
 		return
 
 	attackby(var/obj/item/W, var/mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		//Healing with welding tool
 		if (health <= health_max && isweldingtool(W))
@@ -784,7 +784,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		attack_particle(user,src)
 		take_damage(W.force)
 		playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 20, 1)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		..()
 
 	attack_hand(mob/user)
@@ -805,7 +805,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 					attack_particle(user,src)
 
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		..()
 
 	proc/take_damage(var/damage)

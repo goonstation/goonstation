@@ -305,7 +305,7 @@
 			src.take_damage(damage, 1, "burn")
 
 	attack_hand(var/mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		var/adj1
 		var/adj2 = pick_string("blob.txt", "adj2")
 		var/act1
@@ -326,7 +326,7 @@
 		return
 
 	attackby(var/obj/item/W, var/mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if(ismobcritter(user) && user:ghost_spawned || isghostdrone(user))
 			src.visible_message(SPAN_COMBAT("<b>[user.name]</b> feebly attacks [src] with [W], but is too weak to harm it!"), group="blobweaklyattacked")
 			return

@@ -94,7 +94,7 @@ A Flamethrower in various states of assembly
 				inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
 				boutput(user, SPAN_NOTICE("You refill the flamethrower's fuel tank."))
 				playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
-				user.lastattacked = target
+				user.lastattacked = get_weakref(target)
 			else
 				boutput(user, SPAN_NOTICE("Load the fuel tank first!"))
 

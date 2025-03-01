@@ -165,7 +165,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 		var/obj/item/grab/grab = W
 		if (!grab.affecting || BOUNDS_DIST(grab.affecting, src) > 0)
 			return
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		src.visible_message(SPAN_ALERT("<b>[user] is trying to shove [grab.affecting] [icon_state == "ladder"?"down":"up"] [src]!</b>"))
 		return climb(grab.affecting)
 

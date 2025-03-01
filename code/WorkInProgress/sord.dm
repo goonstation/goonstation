@@ -340,7 +340,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 		if(dmg == TRUE)
 			src.take_damage(1, "brute", user)
 
-		user.lastattacked  = src
+		user.lastattacked  = get_weakref(src)
 		..()
 
 	attack_hand(mob/user)

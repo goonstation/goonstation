@@ -1397,7 +1397,7 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 		if (!user) return
 		if (damaged || buckled_guy) return ..()
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		playsound(src.loc, "rustle", 66, 1, -5) // todo: find a better sound.
 
