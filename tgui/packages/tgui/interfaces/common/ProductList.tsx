@@ -17,10 +17,12 @@ import { Button, Image, Table } from 'tgui-core/components';
 interface ProductListConfig {
   showCount?: boolean;
   showImage?: boolean;
+  showOutput?: boolean;
 }
 
 const defaultProductListConfig = {
   showImage: true,
+  showOutput: true,
 };
 
 const ProductListConfigContext = createContext<ProductListConfig>(
@@ -30,13 +32,14 @@ const ProductListConfigContext = createContext<ProductListConfig>(
 type ProductListProps = PropsWithChildren<ProductListConfig>;
 
 export const ProductList = (props: ProductListProps) => {
-  const { children, showCount, showImage = true } = props;
+  const { children, showCount, showOutput = true, showImage = true } = props;
   const productListConfig = useMemo(
     () => ({
       showCount,
+      showOutput,
       showImage,
     }),
-    [showCount, showImage],
+    [showCount, showOutput, showImage],
   );
   return (
     <ProductListConfigContext.Provider value={productListConfig}>
@@ -49,13 +52,13 @@ export type ProductListItemProps = PropsWithChildren<{
   count?: number;
   extraCellsSlot?: React.ReactNode;
   image?: string;
-  outputSlot: React.ReactNode;
+  outputSlot?: React.ReactNode;
 }>;
 
 const ProductListItem = (props: ProductListItemProps) => {
   const { count, children, extraCellsSlot, image, outputSlot } = props;
   const productListConfig = useContext(ProductListConfigContext);
-  const { showCount, showImage } = productListConfig;
+  const { showCount, showImage, showOutput } = productListConfig;
   return (
     <Table.Row className="candystripe">
       {showImage && (
@@ -70,9 +73,11 @@ const ProductListItem = (props: ProductListItemProps) => {
       )}
       <Table.Cell verticalAlign="middle">{children}</Table.Cell>
       {extraCellsSlot}
-      <Table.Cell collapsing minWidth={8} px={1} verticalAlign="middle">
-        {outputSlot}
-      </Table.Cell>
+      {showOutput && (
+        <Table.Cell collapsing minWidth={8} px={1} verticalAlign="middle">
+          {outputSlot}
+        </Table.Cell>
+      )}
     </Table.Row>
   );
 };

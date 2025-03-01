@@ -1,77 +1,36 @@
 /**
  * @file
  * @copyright 2023
- * @author LeahTheTech (https://github.com/TobleroneSwordfish)
+ * @author Original LeahTheTech (https://github.com/TobleroneSwordfish)
+ * @author Changes Mordent (https://github.com/mordent-goonstation)
  * @license MIT
  */
 
-import { Box, Flex, Section } from 'tgui-core/components';
+import { Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { ChemChuteData } from './type';
+import { ProductList } from '../common/ProductList';
+import type { ChemChuteData } from './type';
 
 export const ChemChute = () => {
   const { data } = useBackend<ChemChuteData>();
   const { productList } = data;
   return (
-    <Window title="Medical supply chute console" width={355} height={500}>
+    <Window title="Dispensary Interlink Stock View" width={355} height={500}>
       <Window.Content>
-        <Section
-          fill
-          scrollable
-          title="Dispensary interlink stock view"
-          height="100%"
-        >
-          {productList.map((product) => {
-            return (
-              <Flex
+        <Section fill fitted scrollable>
+          <ProductList showCount showOutput={false}>
+            {productList.map((product) => (
+              <ProductList.Item
                 key={product.name}
-                justify="space-between"
-                align="stretch"
-                style={{ borderBottom: '1px #555 solid' }}
+                image={product.img}
+                count={product.amount}
               >
-                <Flex.Item direction="row">
-                  {product.img && (
-                    <Box style={{ overflow: 'show', height: '24px' }}>
-                      <img
-                        src={`data:image/png;base64,${product.img}`}
-                        style={{
-                          transform: 'translate(0, -4px)',
-                        }}
-                      />
-                    </Box>
-                  )}
-                </Flex.Item>
-                <Flex.Item
-                  direction="row"
-                  grow
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    flexDirection: 'column',
-                  }}
-                >
-                  <Box>
-                    <Box inline italic>
-                      {`${product.amount} x`}&nbsp;
-                    </Box>
-                    <Box inline>{product.name}</Box>
-                  </Box>
-                </Flex.Item>
-                <Flex.Item
-                  bold
-                  direction="row"
-                  style={{
-                    marginLeft: '5px',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    flexDirection: 'column',
-                  }}
-                />
-              </Flex>
-            );
-          })}
+                {product.name}
+              </ProductList.Item>
+            ))}
+          </ProductList>
         </Section>
       </Window.Content>
     </Window>
