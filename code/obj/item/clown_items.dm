@@ -8,7 +8,7 @@ VUVUZELA
 */
 
 /obj/item/bananapeel
-	name = "Banana Peel"
+	name = "banana peel"
 	desc = "A peel from a banana."
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
 	icon_state = "banana-peel"
