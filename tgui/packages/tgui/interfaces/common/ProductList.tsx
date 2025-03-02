@@ -82,6 +82,13 @@ const ProductListItem = (props: ProductListItemProps) => {
   );
 };
 
+type ProductListCellProps = ComponentProps<typeof Table.Cell>;
+
+const ProductListCell = (props: ProductListCellProps) => {
+  // written this way to provide defaults but allow overrides if given explicitly
+  return <Table.Cell verticalAlign="middle" {...props} />;
+};
+
 type ProductListOutputButtonProps = ComponentProps<typeof Button> & {
   canOutput?: boolean;
 };
@@ -91,6 +98,6 @@ const ProductListOutputButton = (props: ProductListOutputButtonProps) => {
   return <Button fluid textAlign="center" {...props} />;
 };
 
-ProductList.Cell = Table.Cell;
 ProductList.Item = ProductListItem;
+ProductList.Cell = ProductListCell;
 ProductList.OutputButton = ProductListOutputButton;

@@ -159,7 +159,7 @@ export const Vendors = () => {
                     const costString = getCost(product);
                     const extraCellsSlot =
                       playerBuilt && wiresOpen && unlocked ? (
-                        <ProductList.Cell verticalAlign="middle" collapsing>
+                        <ProductList.Cell collapsing>
                           <Button
                             icon="images"
                             onClick={() =>

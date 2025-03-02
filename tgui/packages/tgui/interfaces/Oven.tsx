@@ -20,6 +20,7 @@ import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { ProductList } from './common/ProductList';
 
 interface OvenData {
   time: number;
@@ -106,6 +107,7 @@ export const Oven = () => {
             <Section
               title="Contents"
               fill
+              fitted={!!content_icons?.length}
               scrollable={!!(content_icons && content_icons.length)}
               buttons={
                 <Button onClick={() => act('eject_all')}>
@@ -113,40 +115,31 @@ export const Oven = () => {
                 </Button>
               }
             >
-              {content_icons?.length
-                ? content_icons.map((item, index) => (
-                    <Stack
+              {content_icons?.length ? (
+                <ProductList showOutput={false}>
+                  {content_icons.map((item, index) => (
+                    <ProductList.Item
+                      image={item}
                       key={index}
-                      style={{ borderBottom: '0.5px #555 solid' }}
+                      extraCellsSlot={
+                        <ProductList.Cell collapsing px={1}>
+                          <Button
+                            icon="eject"
+                            onClick={() =>
+                              act('eject', { ejected_item: index + 1 })
+                            }
+                            tooltip="Eject"
+                          />
+                        </ProductList.Cell>
+                      }
                     >
-                      <Stack.Item
-                        grow
-                        style={{
-                          display: 'flex',
-                        }}
-                      >
-                        <Image
-                          height="32px"
-                          width="32px"
-                          src={`data:image/png;base64,${item}`}
-                          style={{ transform: 'translate(0, -2px)' }}
-                        />
-                        <Box mt={1}>{content_names[index]}</Box>
-                      </Stack.Item>
-                      <Stack.Item>
-                        <Button
-                          onClick={() =>
-                            act('eject', { ejected_item: index + 1 })
-                          }
-                          ml={3}
-                          style={{ transform: 'translate(0, 4px)' }}
-                        >
-                          <Icon name="eject" />
-                        </Button>
-                      </Stack.Item>
-                    </Stack>
-                  ))
-                : '(Empty)'}
+                      {content_names[index]}
+                    </ProductList.Item>
+                  ))}
+                </ProductList>
+              ) : (
+                '(Empty)'
+              )}
             </Section>
           </Stack.Item>
           <Stack.Item>
