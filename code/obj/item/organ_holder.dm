@@ -47,8 +47,6 @@
 		"appendix"="/obj/item/organ/appendix",
 		"butt"="/obj/item/clothing/head/butt",
 		"tail"="/obj/item/organ/tail")
-	///How cut up is our back for surgery purposes.
-	var/back_op_stage = BACK_SURGERY_CLOSED
 
 	New(var/mob/living/L, var/ling)
 		..()
@@ -550,7 +548,6 @@
 		if (!src.butt)
 			src.butt = new /obj/item/clothing/head/butt(src.donor, src)
 			organ_list["butt"] = butt
-			src.back_op_stage = BACK_SURGERY_CLOSED
 			src.donor.update_body()
 
 		if (!src.left_kidney)

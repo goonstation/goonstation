@@ -88,6 +88,7 @@
 	///Can this organ be inserted on either side? (literally just kidneys, wegh)
 	var/either_side = FALSE
 
+	/*
 	attack(var/mob/living/carbon/M, var/mob/user)
 		if (!ismob(M))
 			return
@@ -100,7 +101,7 @@
 		else if (isnull(attach_result)) // failure but don't attack
 			return
 		else // failure and attack them with the organ
-			return ..()
+			return ..()*/
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/analyzer/healthanalyzer))

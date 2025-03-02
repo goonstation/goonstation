@@ -184,7 +184,8 @@
 			boutput(user, SPAN_NOTICE("You're going to need to remove that mask/helmet/glasses first."))
 			return null
 
-		if (!H.organHolder.get_organ("skull") && H.organHolder.head.scalp_op_stage == 5.0)
+		var/head_stage = H.surgeryHolder.get_surgery_progress("brain_surgery")
+		if (!H.organHolder.get_organ("skull") && head_stage == 5.0)
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 
 			user.tri_message(H, SPAN_ALERT("<b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!"),\

@@ -4,7 +4,6 @@
 	icon_state = "implant"
 	visible = FALSE
 	implicit = TRUE
-	restart_when_finished = TRUE
 	surgery_possible(mob/living/surgeon)
 		if (!iscarbon(patient))
 			return FALSE
@@ -15,6 +14,10 @@
 
 	generate_surgery_steps(mob/living/surgeon, mob/user)
 		add_next_step(new/datum/surgery_step/fluff/cut(src))
+
+	infer_surgery_stage()
+		var/mob/living/carbon/human/C = patient
+		surgery_steps[1].finished = (length(C.implant) == 0)
 
 	on_complete(mob/surgeon, obj/item/tool)
 		for (var/obj/item/implant/projectile/I in patient.implant)

@@ -1,4 +1,6 @@
 /datum/surgery
+	/// The ID of the surgical procedure, for lookups
+	var/id = "base_surgery"
 	/// The name of the surgical procedure
 	var/name = "Base Surgery"
 	/// The description of the surgical procedure
@@ -14,11 +16,9 @@
 	var/list/default_sub_surgeries
 	/// If FALSE, sub surgeries are hidden until steps are completed.
 	var/sub_surgeries_always_visible = FALSE
-	/// If TRUE, the surgery will be restarted when finished.
-	var/restart_when_finished = FALSE
 	/// If TRUE, the surgery will be exited when finished, placing the user up 1 level.
 	var/exit_when_finished = FALSE
-	/// If TRUE, this surgery will not use the context menu, and will be performed when
+	/// If TRUE, this surgery will automatically be performed when
 	/// the user is hit with a tool that allows surgery_possible() and can_operate().
 	var/implicit = FALSE
 	/// If TRUE and implicit, then using tools in the wrong order will cause a mess up.
@@ -27,7 +27,6 @@
 	var/affected_zone
 
 	var/last_surgery_step = 0 //! The last step ID added, used for sequencing steps.
-	var/active = FALSE //! If TRUE, the surgery is partially complete.
 	var/complete = FALSE //! If TRUE, the surgery is complete and will show as green.
 	var/visible = TRUE //! if TRUE, the surgery will be visible in the context menu.
 	var/datum/surgeryHolder/holder = null
@@ -44,9 +43,8 @@
 			src.super_surgery = super_surgery
 		surgery_steps = list()
 		sub_surgeries = list()
-		last_surgery_step = 0
-		generate_surgery_steps()
-		get_sub_surgeries()
+		regenerate_surgery_steps()
+		populate_sub_surgeries()
 
 	proc/can_operate(mob/surgeon, obj/item/tool)
 		var/last_id = 0
@@ -59,9 +57,16 @@
 					return TRUE
 		return FALSE
 
-	proc/get_sub_surgeries()
+	proc/populate_sub_surgeries()
 		for(var/surgery in default_sub_surgeries)
 			sub_surgeries += new surgery(patient, holder, src)
+
+	proc/get_sub_surgeries()
+		var/list/datum/surgery/response = list()
+		for(var/datum/surgery/surgery in sub_surgeries)
+			response += surgery
+			response += surgery.get_sub_surgeries()
+		return sub_surgeries
 
 	proc/surgery_damage_multiplier(mob/living/surgeon, obj/item/tool)
 		var/base = 1
@@ -104,25 +109,19 @@
 	/// Called when the last step of a surgery is completed
 	proc/complete_surgery(mob/surgeon, obj/item/I)
 		on_complete(surgeon, I)
-		if (restart_when_finished)
-			restart_surgery()
 		if (exit_when_finished && !implicit)
 			super_surgery?.enter_surgery(surgeon)
 		else if (!implicit)
 			enter_surgery(surgeon)
 
-	proc/restart_surgery()
-		for(var/datum/surgery_step/step in surgery_steps)
-			step.finished = FALSE
-		active = FALSE
-
+	proc/on_cancel(mob/user, obj/item/I)
 	/// Called when something cancels the surgery.
 	proc/cancel_surgery(mob/user, obj/item/I)
+		on_cancel(user, I)
 		for(var/datum/surgery_step/step in surgery_steps)
 			step.finished = FALSE
 		for(var/datum/surgery/surgery in sub_surgeries)
 			surgery.cancel_surgery(user, I)
-		active = FALSE
 
 	/// Called when something cancels the surgery from within a context menu. should show another menu
 	proc/cancel_surgery_context(mob/surgeon, obj/item/I)
@@ -143,11 +142,11 @@
 		action.holder = holder
 		if (complete)
 			action.icon_background = "greenbg"
-		else if (active)
+		else if (get_surgery_progress())
 			action.icon_background = "yellowbg"
 		return action
 
-	/// If this is an invisible step, see if we should 'shortcut' past the context menu.
+	/// If this is an implicit step, see if we should 'shortcut' past the context menu.
 	proc/do_shortcut(mob/surgeon, obj/item/I)
 		if ((!super_surgery || super_surgery?.surgery_complete()) && implicit && surgery_possible(surgeon, I) && can_operate(surgeon, I))
 			for(var/datum/surgery_step/step in surgery_steps)
@@ -157,10 +156,17 @@
 			return FALSE
 		else
 			if (surgery_complete()) // only attempt invisible subsurgeries if this surgery is done.
+				// do the next implicit step if subsurgeries are implicit
 				for(var/datum/surgery/surgery in sub_surgeries)
 					surgery.infer_surgery_stage()
 					if (surgery.do_shortcut(surgeon, I))
 						return TRUE
+				// if we've no implicit steps, but have non-implicit children, show the context menu.
+				// for weird cases like lower back surgery
+				var/contexts = get_surgery_contexts(FALSE)
+				if (length(contexts) > 0)
+					enter_surgery(surgeon)
+					return TRUE
 		return FALSE
 
 	proc/get_surgery_progress()
@@ -168,7 +174,7 @@
 		for (var/datum/surgery_step/step in surgery_steps)
 			if (step.finished)
 				complete++
-		return complete / length(surgery_steps)
+		return complete
 
 	proc/surgery_complete()
 		for(var/datum/surgery_step/step in surgery_steps)
@@ -185,7 +191,7 @@
 				complete = max (step.step_number, complete)
 		return (chosen_step.step_number-1) <= complete
 	/// Gets the context actions for this surgeries's steps.
-	proc/get_surgery_contexts()
+	proc/get_surgery_contexts(var/add_navigation = TRUE)
 		var/list/datum/contextAction/surgical_step/contexts = list()
 		var/completed_stages = 0
 		var/optional_contexts = list()
@@ -210,25 +216,35 @@
 
 		//hacky fix to remove the back button if there's only one top-level surgery available.
 		//Keeps contexts looking identical to older code.
-		if (super_surgery != null || length(holder.get_contexts()) > 1)
-			contexts += new /datum/contextAction/surgery/step_up(holder, src)
+		if (add_navigation)
+			if (super_surgery != null || length(holder.get_contexts()) > 1)
+				contexts += new /datum/contextAction/surgery/step_up(holder, src)
 
 
-		if (can_cancel && get_surgery_progress() > 0)
-			contexts += new/datum/contextAction/surgery/cancel(holder,src)
+			if (can_cancel && get_surgery_progress() > 0)
+				contexts += new/datum/contextAction/surgery/cancel(holder,src)
+
+		//place the always-optional steps to the left of the top step.
 		contexts += optional_contexts
 
-
 		return contexts
+
 	proc/step_completed(datum/surgery_step/step, mob/user, obj/item/tool)
-		active = TRUE
 		if (surgery_complete())
 			complete_surgery(user, tool)
 		else if (!implicit)
 			enter_surgery(user)
 
-	/// Called to check if steps should be skipped due to outside conditions. IE. arm being loosened by a bomb or something.
+	/// Called before surgery completion is checked. Use this if surgery steps are dependent on some external state. IE: Wizard spells doing butt/limb loosening.
+	// See organ surgery for an example.
 	proc/infer_surgery_stage()
+
+	/// Clears all surgery steps and regenerates them.
+	proc/regenerate_surgery_steps()
+		qdel(surgery_steps)
+		surgery_steps = list()
+		last_surgery_step = 0
+		generate_surgery_steps()
 
 	///Create & add the surgery steps for this surgery
 	proc/generate_surgery_steps()
@@ -289,7 +305,7 @@
 			return TRUE
 		else
 			if (!quiet)
-				if ((flags_required && !tool?.tool_flags & flags_required))
+				if ((flags_required && !(tool?.tool_flags & flags_required)))
 					boutput(surgeon,SPAN_ALERT(get_flag_message()))
 				else
 					boutput(surgeon,SPAN_ALERT("You can't use that tool for this step."))

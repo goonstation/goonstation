@@ -1,4 +1,5 @@
 /datum/surgery/limb_surgery
+	id = "limb_surgery"
 	name = "Limb Surgery"
 	desc = "Modify the patients' limbs."
 	visible = FALSE
@@ -14,7 +15,6 @@
 	desc = "Call a coder if you see this!"
 	icon_state = "heart"
 	var/limb_var_name = "limb_var_name"
-	restart_when_finished = TRUE
 	exit_when_finished = TRUE
 	implicit = TRUE
 	visible = FALSE
@@ -36,28 +36,33 @@
 	infer_surgery_stage()
 		var/mob/living/carbon/human/C = patient
 		var/obj/item/parts/limb = C.limbs.vars[limb_var_name]
-		surgery_steps[1].finished = (limb?.remove_stage >= 1)
-		surgery_steps[2].finished = (limb?.remove_stage >= 2)
+		surgery_steps[1].finished = (!limb || limb?.remove_stage >= 1)
+		surgery_steps[2].finished = (!limb || limb?.remove_stage >= 2)
+		surgery_steps[3].finished = (!limb)
 
 	l_arm
+		id = "left_arm_surgery"
 		name = "Left Arm Surgery"
 		desc = "Remove the patients' left arm."
 		icon_state = "left_arm"
 		limb_var_name = "l_arm"
 		affected_zone = "l_arm"
 	r_arm
+		id = "right_arm_surgery"
 		name = "Right Arm Surgery"
 		desc = "Remove the patients' right arm."
 		icon_state = "right_arm"
 		limb_var_name = "r_arm"
 		affected_zone = "r_arm"
 	l_leg
+		id = "left_leg_surgery"
 		name = "Left Leg Surgery"
 		desc = "Remove the patients' left leg."
 		icon_state = "left_leg"
 		limb_var_name = "l_leg"
 		affected_zone = "l_leg"
 	r_leg
+		id = "right_leg_surgery"
 		name = "Right Leg Surgery"
 		desc = "Remove the patients' right leg."
 		icon_state = "right_leg"
@@ -65,11 +70,11 @@
 		affected_zone = "r_leg"
 
 /datum/surgery/limb/attach
+
 	name = "Limb Addition"
 	desc = "Replace the patients' limbs."
 	implicit = TRUE
 	visible = FALSE
-	restart_when_finished = TRUE
 	exit_when_finished = TRUE
 	//tool needed
 	surgery_possible(mob/living/surgeon)
@@ -85,21 +90,18 @@
 		surgery_steps[1].finished = (limb != null)
 		surgery_steps[2].finished = (limb?.remove_stage == 0)
 	arm
-		can_operate(mob/living/surgeon, mob/user)
-			var/mob/living/carbon/human/C = patient
-			if (!C?.limbs?.get_limb(limb_var_name) && get_surgery_progress()) //restart if limb falls off again
-				restart_surgery()
-			return ..()
 		generate_surgery_steps(mob/living/surgeon, mob/user)
 			add_next_step( new/datum/surgery_step/limb/attach_arm(src,limb_var_name))
 			add_next_step( new/datum/surgery_step/limb/secure(src,limb_var_name))
 		left
+			id = "left_arm_addition"
 			name = "Left Arm Replacement"
 			desc = "Replace the patients' left arm."
 			icon_state = "left_arm"
 			limb_var_name = "l_arm"
 			affected_zone = "l_arm"
 		right
+			id = "right_arm_addition"
 			name = "Right Arm Replacement"
 			desc = "Replace the patients' right arm."
 			icon_state = "right_arm"
@@ -110,12 +112,14 @@
 			add_next_step( new/datum/surgery_step/limb/attach_leg(src,limb_var_name))
 			add_next_step( new/datum/surgery_step/limb/secure(src,limb_var_name))
 		left
+			id = "left_leg_addition"
 			name = "Left Leg Replacement"
 			desc = "Replace the patients' left leg."
 			icon_state = "left_leg"
 			limb_var_name = "l_leg"
 			affected_zone = "l_leg"
 		right
+			id = "right_leg_addition"
 			name = "Right Leg Replacement"
 			desc = "Replace the patients' right leg."
 			icon_state = "right_leg"

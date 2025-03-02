@@ -185,15 +185,16 @@
 					else if (src.organHolder.right_eye.show_on_examine)
 						. += "<br>[SPAN_NOTICE("[src.name] has [bicon(src.organHolder.right_eye)] \an [src.organHolder.right_eye.organ_name] in [t_his] right eye socket.")]"
 
-				if (src.organHolder.head.scalp_op_stage > 0)
-					if (src.organHolder.head.scalp_op_stage >= 5.0)
+				var/head_stage = src.surgeryHolder.get_surgery_progress("brain_surgery")
+				if (head_stage > 0)
+					if (head_stage >= 5.0)
 						if (!src.organHolder.skull)
 							. += "<br>[SPAN_ALERT("<B>There's a gaping hole in [src.name]'s head and [t_his] skull is gone!</B>")]"
 						else if (!src.organHolder.brain)
 							. += "<br>[SPAN_ALERT("<B>There's a gaping hole in [src.name]'s head and [t_his] brain is gone!</B>")]"
 						else
 							. += "<br>[SPAN_ALERT("<B>There's a gaping hole in [src.name]'s head!</B>")]"
-					else if (src.organHolder.head.scalp_op_stage >= 4.0)
+					else if (src.surgeryHolder.get_surgery_progress("brain_surgery") >= 4.0)
 						if (!src.organHolder.brain)
 							. += "<br>[SPAN_ALERT("<B>[src.name]'s head has been cut open and [t_his] brain is gone!</B>")]"
 						else
@@ -228,11 +229,11 @@
 					else
 						. += "<br>[SPAN_NOTICE("[src.name] has [src.organHolder.tail.name] attached just above [t_his] butt.")]"
 				// don't bother telling people that you have the tail you're supposed to have. nobody congratulates me for having all my legs
-				if (src.organHolder.back_op_stage >= BACK_SURGERY_OPENED && src.mob_flags & ~IS_BONEY) // assive ass wound? and not a skeleton?
+				if (src.surgeryHolder.get_surgery_progress("lower_back_surgery") >= BACK_SURGERY_OPENED && src.mob_flags & ~IS_BONEY) // assive ass wound? and not a skeleton?
 					. += "<br>[SPAN_ALERT("<B>[src.name] has a long incision around the base of [t_his] tail!</B>")]"
 
 			else // missing a tail?
-				if (src.organHolder.back_op_stage >= BACK_SURGERY_OPENED) // first person to call this a tailhole is getting dropkicked into the sun
+				if (src.surgeryHolder.get_surgery_progress("lower_back_surgery") >= BACK_SURGERY_OPENED) // first person to call this a tailhole is getting dropkicked into the sun
 					if (src.mob_flags & SHOULD_HAVE_A_TAIL) // Are they supposed to have a tail?
 						if (!src.organHolder.butt) // Also missing a butt?
 							. += "<br>[SPAN_ALERT("<B>[src.name] has a large incision at the base of [t_his] back where [t_his] tail should be!</B>")]"
@@ -251,7 +252,7 @@
 
 		if (!src.organHolder.butt)
 			. += "<br>[SPAN_ALERT("<B>[src.name]'s butt seems to be missing!</B>")]"
-		else if (src.organHolder.back_op_stage > BACK_SURGERY_CLOSED)
+		else if (src.surgeryHolder.get_surgery_progress("lower_back_surgery") > BACK_SURGERY_CLOSED)
 			. += "<br>[SPAN_ALERT("<B>[src.name] has an open incision on [t_his] butt!</B>")]"
 
 	if (src.limbs)

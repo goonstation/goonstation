@@ -78,7 +78,8 @@
 			boutput(user, SPAN_NOTICE("You're going to need to remove that mask/helmet/glasses first."))
 			return null
 
-		if (!H.organHolder.get_organ("brain") && H.organHolder.head.scalp_op_stage >= 4.0)
+		var/head_stage = H.surgeryHolder.get_surgery_progress("brain_surgery")
+		if (!H.organHolder.get_organ("brain") && head_stage >= 4.0)
 			if (!H.organHolder.get_organ("skull"))
 				boutput(user, SPAN_NOTICE("There's no skull in there to hold the brain in place."))
 				return null
@@ -92,7 +93,6 @@
 			if (user.find_in_hand(src))
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, "brain", 3.0)
-			H.organHolder.head.scalp_op_stage = 3
 			return 1
 
 		return 0

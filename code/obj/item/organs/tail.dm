@@ -61,7 +61,6 @@
 		var/mob/living/carbon/human/H = M
 
 		var/attachment_successful = 0
-		var/boned = 0	// Tailbones just kind of pop into place
 
 		if (src.type == /obj/item/organ/tail/monkey && !ismonkey(H))	// If we are trying to attach a monkey tail to a non-monkey
 			src.human_getting_monkeytail = TRUE
@@ -75,7 +74,6 @@
 
 		if (!H.organHolder.tail && H.mob_flags & IS_BONEY)
 			attachment_successful = 1 // Just slap that tailbone in place, its fine
-			boned = 1	// No need to sew it up
 
 			var/fluff = pick("slap", "shove", "place", "press", "jam")
 
@@ -83,7 +81,7 @@
 				SPAN_ALERT("You [fluff] [src] onto the apex of [H == user ? "your" : "[H]'s"] sacrum!"),\
 				SPAN_ALERT("[H == user ? "You" : "<b>[user]</b>"] [fluff][H == user && fluff == "press" ? "es" : "s"] [src] onto the apex of your sacrum!"))
 
-		else if (!H.organHolder.tail && H.organHolder.back_op_stage == BACK_SURGERY_OPENED && src.can_attach_organ(H, user))
+		else if (!H.organHolder.tail && H.surgeryHolder.get_surgery_complete("lower_back_surgery") && src.can_attach_organ(H, user))
 			attachment_successful = 1
 
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
@@ -96,8 +94,6 @@
 			if (user.find_in_hand(src))
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, "tail", 3.0)
-			if (boned)
-				H.organHolder.back_op_stage = BACK_SURGERY_OPENED
 			src.build_mob_tail_image()
 			H.update_body()
 			H.bioHolder.RemoveEffect(src.failure_ability)
