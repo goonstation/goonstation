@@ -48,7 +48,7 @@ export const GlassRecycler = () => {
           </Stack.Item>
           <Stack.Item grow={1}>
             <Section fill fitted scrollable title="Products">
-              <ProductList>
+              <ProductList showImage showOutput>
                 {products
                   .filter(({ cost }) => !filterAvailable || glassAmt >= cost)
                   .map((product) => {

@@ -115,7 +115,7 @@ export const Oven = () => {
               }
             >
               {content_icons?.length ? (
-                <ProductList showOutput={false}>
+                <ProductList showImage>
                   {content_icons.map((item, index) => (
                     <ProductList.Item
                       image={item}
@@ -149,7 +149,7 @@ export const Oven = () => {
                     {output_icon ? (
                       <Stack vertical>
                         <Stack.Item>
-                          <ProductList showOutput={false}>
+                          <ProductList showImage>
                             {recipe_icons.map((item, index) => (
                               <ProductList.Item key={index} image={item}>
                                 {recipe_names[index]}

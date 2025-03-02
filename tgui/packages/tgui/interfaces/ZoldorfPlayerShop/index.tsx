@@ -24,7 +24,7 @@ export const ZoldorfPlayerShop = () => {
         <Stack fill vertical>
           <Stack.Item grow>
             <Section fill fitted scrollable>
-              <ProductList showCount>
+              <ProductList showCount showImage showOutput>
                 {products.map((product) => {
                   const { img, infinite, name, stock } = product;
                   const outputSlot: ProductListItemProps['outputSlot'] =

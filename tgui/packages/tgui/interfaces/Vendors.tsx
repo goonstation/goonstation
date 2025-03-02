@@ -153,7 +153,7 @@ export const Vendors = () => {
           <Stack.Item grow>
             <Section fill fitted scrollable>
               {!busy && (
-                <ProductList showCount>
+                <ProductList showCount showImage showOutput>
                   {productList.map((product) => {
                     const { amount, cost, img, infinite, name, ref } = product;
                     const costString = getCost(product);
