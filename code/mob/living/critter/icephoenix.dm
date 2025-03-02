@@ -98,8 +98,8 @@
 		var/area/phoenix_nest/A = get_area(src.nest_location)
 		A.owning_phoenix = null
 		get_image_group(CLIENT_IMAGE_GROUP_TEMPERATURE_OVERLAYS).remove_mob(src)
+		src.transform = turn(src.transform, 180)
 		..()
-		qdel(src)
 
 	setup_healths()
 		add_hh_flesh(100, 1)
