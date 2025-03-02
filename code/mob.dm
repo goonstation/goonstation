@@ -2992,7 +2992,7 @@
 	. = TRUE
 	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT)) // Anti-emetics stop vomiting from occuring
 		return 0
-	SEND_SIGNAL(src, COMSIG_MOB_VOMIT, 1)
+	specialType = SEND_SIGNAL(src, COMSIG_MOB_VOMIT, 1) || specialType
 	playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 	src.visible_message(flavorMessage, selfMessage)
 	if(specialType)

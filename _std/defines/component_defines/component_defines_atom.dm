@@ -212,7 +212,7 @@
 	#define COMSIG_MOB_SET_A_INTENT "mob_set_a_intent"
 	/// Sent when radiation status ticks on mob (stage)
 	#define COMSIG_MOB_GEIGER_TICK "mob_geiger"
-	/// When the mob vomits
+	/// When the mob vomits, return a cleanable type path here to set a special vomit type
 	#define COMSIG_MOB_VOMIT "mob_vomit"
 	/// Sent when defibbed status is added to a mob
 	#define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
