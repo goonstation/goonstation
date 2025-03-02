@@ -6,14 +6,7 @@
  */
 
 import { useState } from 'react';
-import {
-  Box,
-  Button,
-  Image,
-  NumberInput,
-  Section,
-  Stack,
-} from 'tgui-core/components';
+import { Box, Button, NumberInput, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -103,42 +96,6 @@ export const DisposalPipeRow = (props) => {
     >
       {disposalpipe.disposaltype}
     </ProductList.Item>
-  );
-  return (
-    <Stack style={{ borderBottom: '1px #555 solid' }}>
-      {disposalpipe.image && (
-        <Stack.Item>
-          <Box style={{ overflow: 'show', height: '32px' }}>
-            <Image src={`data:image/png;base64,${disposalpipe.image}`} />
-          </Box>
-        </Stack.Item>
-      )}
-      <Stack.Item grow>{disposalpipe.disposaltype}</Stack.Item>
-
-      <Stack.Item
-        style={{
-          marginLeft: '5px',
-          display: 'flex',
-          justifyContent: 'center',
-          flexDirection: 'column',
-        }}
-      >
-        <Button
-          color={dispenser_ready ? 'green' : 'grey'}
-          disabled={!dispenser_ready}
-          textAlign="center"
-          width="70px"
-          onClick={() =>
-            act('dmake', {
-              disposal_type: disposalpipe.disposaltype,
-              amount: amount,
-            })
-          }
-        >
-          Dispense
-        </Button>
-      </Stack.Item>
-    </Stack>
   );
 };
 
