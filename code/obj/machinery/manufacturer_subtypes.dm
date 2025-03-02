@@ -382,6 +382,7 @@
 		/datum/manufacture/pod/weapon/mining,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser,
+		/datum/manufacture/engine_scout,
 		/datum/manufacture/engine,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
@@ -393,6 +394,7 @@
 		/datum/manufacture/pod/light_shielding,
 		/datum/manufacture/pod/heavy_shielding,
 		/datum/manufacture/pod/auto_repair_kit,
+		/datum/manufacture/pod/weapons_loader,
 		/datum/manufacture/beaconkit,
 		/datum/manufacture/podgps
 	)
@@ -654,6 +656,7 @@
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
 		/datum/manufacture/lightengspacesuit,
+		/datum/manufacture/heavy_firesuit,
 		/datum/manufacture/floodlight,
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,

@@ -160,7 +160,8 @@ ABSTRACT_TYPE(/obj/vehicle)
 			src.eject_other_stuff()
 
 	was_deconstructed_to_frame(mob/user)
-		eject_rider(crashed=FALSE, selfdismount=FALSE, ejectall=TRUE)
+		if (src.rider)
+			eject_rider(crashed=FALSE, selfdismount=FALSE, ejectall=TRUE)
 
 	/// remove the ability buttons from the rider
 	proc/handle_button_removal()

@@ -35,7 +35,8 @@
 	var/weapon_class = 0 //what weapon class a ship is
 	var/powercapacity = 0 //How much power the ship's components can use, set by engine
 	var/powercurrent = 0 //How much power the components are using
-	var/speed = 1 //FOR PODS : While holding thruster, how much to add on to our max speed. Does nothing for tanks.
+	/// multiplicative ship speed modification
+	var/speedmod = 1
 	/// acceleration modification provided by afterburner if installed
 	var/afterburner_accel_mod = 1
 	/// speed modification provided by afterburner if installed
@@ -222,11 +223,29 @@
 
 //each pod part is a var so we have to macro this, yegh
 #define EJECT_PART(part) \
-	part.deactivate(); \
-	src.components -= part; \
+	src.eject_part(part); \
 	usr.put_in_hand_or_drop(part); \
-	part = null; \
+	src.null_part(part); \
 	src.updateDialog()
+
+	/// finds the part in the ship's parts and nulls it
+	proc/null_part(obj/item/shipcomponent/part)
+		if (part == src.engine)
+			src.engine = null
+		else if (part == src.lock)
+			src.lock = null
+		else if (part == src.life_support)
+			src.life_support = null
+		else if (part == src.com_system)
+			src.com_system = null
+		else if (part == src.m_w_system)
+			src.m_w_system = null
+		else if (part == src.sec_system)
+			src.sec_system = null
+		else if (part == src.sensors)
+			src.sensors = null
+		else if (part == src.lights)
+			src.lights = null
 
 	Topic(href, href_list)
 		if (is_incapacitated(usr) || usr.restrained())
@@ -454,6 +473,11 @@
 			return
 
 #undef EJECT_PART
+
+	proc/eject_part(obj/item/shipcomponent/part, give_message = TRUE)
+		part.deactivate(give_message)
+		part.set_loc(get_turf(src))
+		src.components -= part
 
 	proc/AmmoPerShot()
 		return 1
@@ -758,21 +782,20 @@
 		..()
 
 	process(mult)
-		if(sec_system)
-			if(sec_system.active)
-				sec_system.run_component(mult)
-			if(src.engine && engine.active)
-				var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
-				var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)
-				var/toxins = consumed?.toxins
-				if(isnull(toxins))
-					toxins = 0
+		if(sec_system?.active)
+			sec_system.run_component(mult)
+		if(src.engine && engine.active)
+			var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
+			var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)
+			var/toxins = consumed?.toxins
+			if(isnull(toxins))
+				toxins = 0
 
-				if(usage)
-					src.myhud?.update_fuel()
-					if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
-						engine.deactivate()
-				consumed?.dispose()
+			if(usage)
+				src.myhud?.update_fuel()
+				if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
+					engine.deactivate()
+			consumed?.dispose()
 
 #ifdef MAP_OVERRIDE_NADIR
 		if(src.acid_damage_multiplier > 0)
@@ -876,7 +899,7 @@
 ///////////////////////////////////////////////////////////////////////////
 ////////Install Ship Part////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
-/obj/machinery/vehicle/proc/Install(obj/item/shipcomponent/S as obj)
+/obj/machinery/vehicle/proc/Install(obj/item/shipcomponent/S as obj, give_feedback = TRUE)
 	switch(S.system)
 		if("Engine")
 			if(!src.engine)
@@ -917,7 +940,7 @@
 				if(uses_weapon_overlays && m_w_system.appearanceString)
 					src.overlays += image('icons/effects/64x64.dmi', "[m_w_system.appearanceString]")
 
-				m_w_system.activate()
+				m_w_system.activate(give_feedback)
 			else
 				boutput(usr, "That system already has a part!")
 				return
@@ -936,7 +959,8 @@
 	S.ship = src
 	if (usr) //This mean it's going on during the game!
 		usr.drop_item(S)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 0)
+		if (give_feedback)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 0)
 	S.set_loc(src)
 	myhud.update_systems()
 	myhud.update_states()
@@ -1803,6 +1827,7 @@
 
 // make ships less destructive (maybe depends on Mass and Speed?)
 
+ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 /obj/machinery/vehicle/tank
 	name = "tank"
 	icon = 'icons/obj/machines/8dirvehicles.dmi'
@@ -1813,7 +1838,7 @@
 	uses_weapon_overlays = 0
 	health = 100
 	maxhealth = 100
-	speed = 0 // speed literally does nothing? what??
+	speedmod = 0 // speed literally does nothing? what??
 	stall = 0 // slow the ship down when firing
 	weapon_class = 1
 
@@ -2002,7 +2027,7 @@
 	health = 60
 	maxhealth = 60
 	weapon_class = 1
-	speed = 5
+	speedmod = 0.2
 	var/fail_type = 0
 	var/launched = 0
 	var/steps_moved = 0

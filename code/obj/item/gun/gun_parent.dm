@@ -210,7 +210,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return ..()
 
 	user.lastattacked = target
-	target.lastattacker = user
+	target.lastattacker = get_weakref(user)
 	target.lastattackertime = world.time
 
 	if(user.a_intent != INTENT_HELP && isliving(target))

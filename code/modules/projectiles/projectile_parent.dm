@@ -868,6 +868,14 @@ ABSTRACT_TYPE(/datum/projectile)
 				return
 			if (effect_amount >= 200)
 				return
+			var/kinetic_particles = TRUE
+			var/energy_particle_types = list(D_ENERGY, D_BURNING, D_RADIOACTIVE, D_TOXIC)
+			for (var/type in energy_particle_types)
+				if (src.damage_type == type)
+					kinetic_particles = FALSE
+					break
+			if (!hit.does_impact_particles(kinetic_particles))
+				return
 			effect_amount ++
 			SPAWN(5 SECONDS)
 				effect_amount --
@@ -879,11 +887,11 @@ ABSTRACT_TYPE(/datum/projectile)
 				if (T?.active_liquid)
 					if(T.active_liquid.last_depth_level > 3)
 						underwater = TRUE
-			if ((src.damage_type != D_ENERGY && src.damage_type != D_BURNING && src.damage_type != D_RADIOACTIVE && src.damage_type != D_TOXIC) && !src.energy_particles_override)
+			if (kinetic_particles && !src.energy_particles_override)
 				var/new_impact_icon = hit.impact_icon
 				var/new_impact_icon_state = hit.impact_icon_state
 				//Bullet impacts create dust of the color of the hit thing
-				var/avrg_color = hit.get_average_color()
+				var/avrg_color = hit.get_average_color(TRUE)
 				new /obj/effects/impact_gunshot/dust(get_turf(hit), x, y, -O.xo, -O.yo, damage, avrg_color, new_impact_icon, new_impact_icon_state)
 				if (underwater)
 					new /obj/effects/impact_gunshot/bubble(get_turf(hit), x, y, -O.xo, -O.yo, damage)
@@ -892,7 +900,7 @@ ABSTRACT_TYPE(/datum/projectile)
 					new /obj/effects/impact_gunshot/smoke(get_turf(hit), x, y, -O.xo, -O.yo, damage)
 			else
 				//Energy impacts create sparks of the color of the projectile
-				var/avrg_color = O.get_average_color()
+				var/avrg_color = O.get_average_color(TRUE)
 				new /obj/effects/impact_energy/projectile_sparks(get_turf(hit), x, y, -O.xo, -O.yo, damage, avrg_color)
 				if (underwater)
 					new /obj/effects/impact_gunshot/bubble(get_turf(hit), x, y, -O.xo, -O.yo, damage)

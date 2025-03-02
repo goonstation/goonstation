@@ -783,7 +783,7 @@
 
 /datum/materiel/utility/supernightvisiongoggles
 	name = "Advanced Night Vision Goggles"
-	path = /obj/item/clothing/glasses/nightvision/sechud/flashblocking
+	path = /obj/item/clothing/glasses/nightvision/flashblocking
 	description = "An advanced pair of night vision goggles. These goggles protect the wearer from flashes"
 
 /datum/materiel/utility/pw_NTcomtac
