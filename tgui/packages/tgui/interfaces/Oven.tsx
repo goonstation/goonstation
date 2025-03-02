@@ -11,7 +11,6 @@ import {
   Divider,
   Icon,
   Image,
-  LabeledList,
   Modal,
   Section,
   Stack,
@@ -103,7 +102,7 @@ export const Oven = () => {
               </Stack>
             </Section>
           </Stack.Item>
-          <Stack.Item grow>
+          <Stack.Item grow minHeight="160px">
             <Section
               title="Contents"
               fill
@@ -146,35 +145,19 @@ export const Oven = () => {
             <Section>
               <Stack>
                 <Stack.Item grow>
-                  <Section title="Potential Recipe">
+                  <Section title="Potential Recipe" fitted={!!output_icon}>
                     {output_icon ? (
                       <Stack vertical>
                         <Stack.Item>
-                          {recipe_icons.map((item, index) => (
-                            <Stack.Item
-                              key={index}
-                              style={{
-                                borderBottom: '0.5px #555 solid',
-                                display: 'flex',
-                              }}
-                            >
-                              <Image
-                                height="32px"
-                                width="32px"
-                                src={`data:image/png;base64,${item}`}
-                                style={{ transform: 'translate(0, -2px)' }}
-                              />
-                              <Box mt={1}>{recipe_names[index]}</Box>
-                            </Stack.Item>
-                          ))}
+                          <ProductList showOutput={false}>
+                            {recipe_icons.map((item, index) => (
+                              <ProductList.Item key={index} image={item}>
+                                {recipe_names[index]}
+                              </ProductList.Item>
+                            ))}
+                          </ProductList>
                         </Stack.Item>
-                        <Stack.Item>
-                          <LabeledList>
-                            <LabeledList.Item label="Cook time">
-                              {cook_time}
-                            </LabeledList.Item>
-                          </LabeledList>
-                        </Stack.Item>
+                        <Stack.Item m={1}>Cook Time: {cook_time}</Stack.Item>
                       </Stack>
                     ) : (
                       'N/A'
