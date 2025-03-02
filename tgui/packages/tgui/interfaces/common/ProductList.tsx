@@ -22,8 +22,8 @@ interface ProductListConfig {
 
 const defaultProductListConfig = {
   showCount: false,
-  showImage: true,
-  showOutput: true,
+  showImage: false,
+  showOutput: false,
 };
 
 const ProductListConfigContext = createContext<ProductListConfig>(
@@ -33,7 +33,12 @@ const ProductListConfigContext = createContext<ProductListConfig>(
 type ProductListProps = PropsWithChildren<ProductListConfig>;
 
 export const ProductList = (props: ProductListProps) => {
-  const { children, showCount, showOutput = true, showImage = true } = props;
+  const {
+    children,
+    showCount = false,
+    showOutput = false,
+    showImage = false,
+  } = props;
   const productListConfig = useMemo(
     () => ({
       showCount,

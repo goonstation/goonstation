@@ -20,7 +20,7 @@ export const ChemChute = () => {
     <Window title="Dispensary Interlink Stock View" width={355} height={500}>
       <Window.Content>
         <Section fill fitted scrollable>
-          <ProductList showCount showOutput={false}>
+          <ProductList showCount showImage>
             {productList.map((product) => (
               <ProductList.Item
                 key={product.name}
