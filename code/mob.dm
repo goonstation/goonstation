@@ -232,6 +232,8 @@
 	var/no_stamina_stuns = FALSE
 	///A flag set temporarily when a mob is being forced to say something, used to avoid HORRIBLE SPAGHETTI in say logging. I'm sorry okay.
 	var/being_controlled = FALSE
+	///Lazy inited list of custom vomit behaviours from reagents, organs etc.
+	var/list/datum/vomit_behavior/vomit_behaviors = null
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
@@ -2992,9 +2994,13 @@
 	. = TRUE
 	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT)) // Anti-emetics stop vomiting from occuring
 		return 0
-	specialType = SEND_SIGNAL(src, COMSIG_MOB_VOMIT, 1) || specialType
+	SEND_SIGNAL(src, COMSIG_MOB_VOMIT, 1)
+	if (!specialType && length(src.vomit_behaviors))
+		var/datum/vomit_behavior/chosen = pick(src.vomit_behaviors)
+		specialType = chosen.vomit(src)
+	else
+		src.visible_message(flavorMessage, selfMessage) //assume the special behavior handles the message
 	playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-	src.visible_message(flavorMessage, selfMessage)
 	if(specialType)
 		if(!locate(specialType) in src.loc)
 			var/atom/A = new specialType(src.loc)
@@ -3008,6 +3014,13 @@
 	src.changeStatus("stunned", 2 SECONDS)
 	src.change_misstep_chance(5)
 	src.delStatus("nausea")
+
+/mob/proc/add_vomit_behavior(type)
+	LAZYLISTADDUNIQUE(src.vomit_behaviors, new type)
+
+/mob/proc/remove_vomit_behavior(type)
+	var/datum/vomit_behavior/behavior = locate(type) in src.vomit_behaviors
+	LAZYLISTREMOVE(src.vomit_behaviors, behavior)
 
 /mob/proc/accept_forcefeed(obj/item/item, mob/user, edibility_override) //just.. don't ask
 	item.forcefeed(src, user, edibility_override)

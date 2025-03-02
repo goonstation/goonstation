@@ -1794,24 +1794,13 @@ datum
 
 			on_add()
 				if (ismob(holder.my_atom))
-					RegisterSignal(holder.my_atom, COMSIG_MOB_VOMIT, PROC_REF(on_vomit))
+					var/mob/mob = holder.my_atom
+					mob.add_vomit_behavior(/datum/vomit_behavior/spider)
 
 			on_remove()
 				if (ismob(holder.my_atom))
-					UnregisterSignal(holder.my_atom, COMSIG_MOB_VOMIT)
-
-			proc/on_vomit()
-				var/mob/M = holder.my_atom
-				var/turf/T = get_turf(M)
-				random_brute_damage(M, rand(4))
-				M.visible_message(SPAN_ALERT("<b>[M]</b> [pick("barfs", "hurls", "pukes", "vomits")] up some [pick("spiders", "weird black stuff", "strange black goop", "wriggling black goo")]![pick("", " Gross!", " Ew!", " Nasty!")]"),\
-				SPAN_ALERT("<b>OH [pick("SHIT", "FUCK", "GOD")] YOU JUST [pick("BARFED", "HURLED", "PUKED", "VOMITED")] SPIDERS[pick("!", " FUCK THAT'S GROSS!", " SHIT THAT'S NASTY!", " OH GOD EW!")][pick("", "!", "!!", "!!!", "!!!!")]</b>"))
-				if (prob(50) && !(locate(/obj/decal/cleanable/vomit/spiders) in T))
-					if (prob(5))
-						new /mob/living/critter/spider/baby(M)
-					else
-						new /mob/living/critter/spider/baby/nice(M)
-				return /obj/decal/cleanable/vomit/spiders
+					var/mob/mob = holder.my_atom
+					mob.remove_vomit_behavior(/datum/vomit_behavior/spider)
 
 		hugs
 			name = "pure hugs"

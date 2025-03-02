@@ -136,6 +136,7 @@
 #include "code\datums\traits.dm"
 #include "code\datums\traits_disused.dm"
 #include "code\datums\viewport.dm"
+#include "code\datums\vomit.dm"
 #include "code\datums\Vspace.dm"
 #include "code\datums\zoldorfitems.dm"
 #include "code\datums\abilities\ability_parent.dm"
