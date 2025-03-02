@@ -21,6 +21,7 @@ interface ProductListConfig {
 }
 
 const defaultProductListConfig = {
+  showCount: false,
   showImage: true,
   showOutput: true,
 };
