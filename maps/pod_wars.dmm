@@ -1336,7 +1336,8 @@
 /area/pod_wars/team1/crewlounge)
 "ew" = (
 /obj/machinery/computer/magnet{
-	dir = 4
+	dir = 4;
+	req_access = null
 	},
 /turf/unsimulated/floor/yellow/side{
 	dir = 9
@@ -5890,7 +5891,9 @@
 	},
 /area/pod_wars/team2/hangar)
 "sU" = (
-/obj/machinery/computer/magnet,
+/obj/machinery/computer/magnet{
+	req_access = null
+	},
 /turf/unsimulated/floor/yellow/side{
 	dir = 5
 	},
@@ -11304,7 +11307,8 @@
 /area/pod_wars/team1/primaryhall)
 "Ka" = (
 /obj/machinery/computer/magnet{
-	dir = 8
+	dir = 8;
+	req_access = null
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
