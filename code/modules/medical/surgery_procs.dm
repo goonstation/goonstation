@@ -751,37 +751,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				src.surgeryConfusion(patient, surgeon, damage_high)
 				return TRUE
 
-/* ---------- SAW - BUTT ---------- */
-
-	else if (surgeon.zone_sel.selecting == "chest" && surgeon.a_intent == INTENT_GRAB)
-		switch (patient.organHolder.back_op_stage)
-			if (BACK_SURGERY_STEP_ONE)
-				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-
-				if (prob(screw_up_prob))
-					do_slipup(surgeon, patient, "chest", damage_low, fluff)
-					return TRUE
-
-				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> saws open [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] back with [src]!"),\
-					SPAN_ALERT("You saw open [surgeon == patient ? "your" : "[patient]'s"] back with [src]!"),\
-					SPAN_ALERT("[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] open your back with [src]!"))
-
-				patient.TakeDamage("chest", damage_low, 0)
-				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
-				patient.organHolder.back_op_stage = BACK_SURGERY_STEP_TWO
-				return TRUE
-
-			if (BACK_SURGERY_OPENED)
-				if (!patient.organHolder.build_back_surgery_buttons())
-					boutput(surgeon, "[patient] has no butt or tail!")
-					return TRUE
-				surgeon.showContextActions(patient.organHolder.back_contexts, patient, patient.organHolder.contextLayout)
-				return TRUE
-
-			else
-				src.surgeryConfusion(patient, surgeon, damage_high)
-				return TRUE
-
 /* ---------- SAW - ribcage ---------- */
 
 	else if (surgeon.zone_sel.selecting == "chest" && surgeon.a_intent == INTENT_HELP)

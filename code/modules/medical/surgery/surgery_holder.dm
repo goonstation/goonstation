@@ -71,7 +71,7 @@
 		var/list/datum/contextAction/surgery/contexts = list()
 		for (var/datum/surgery/surgery in base_surgeries)
 			surgery.infer_surgery_stage()
-			if (surgery.surgery_possible(patient) && surgery.visible)
+			if (surgery.surgery_possible(patient) && surgery.visible && !surgery.implicit)
 				contexts += surgery.get_context()
 		return contexts
 

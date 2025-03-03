@@ -13,7 +13,7 @@
 	id = "head_surgery"
 	name = "Head Surgery"
 	desc = "Perform surgery on the patient's head"
-	default_sub_surgeries = list(/datum/surgery/organ/eye/left, /datum/surgery/organ/eye/right)
+	default_sub_surgeries = list(/datum/surgery/organ/eye/left, /datum/surgery/organ/eye/right, /datum/surgery/organ/brain)
 	visible = FALSE
 	implicit = TRUE
 	affected_zone = "head"
@@ -247,6 +247,34 @@
 			return ..()
 		generate_surgery_steps(mob/living/surgeon, mob/user)
 			add_next_step(new /datum/surgery_step/organ/remove/saw(src, organ_var_name))
+	skull
+		id = "skull_surgery"
+		name = "Skull Surgery"
+		desc = "Remove the patients' skull."
+		icon_state = "skull"
+		organ_var_name = "skull"
+		implicit = TRUE
+
+		infer_surgery_stage()
+			var/mob/living/carbon/human/C = patient
+			var/organ = C.organHolder.get_organ(organ_var_name)
+			if (organ)
+				surgery_steps[2].finished = (!organ)
+		surgery_possible(mob/living/surgeon, obj/item/I)
+			if (surgeon.zone_sel.selecting != "head")
+				return FALSE
+			if (surgeon.a_intent == INTENT_HARM)
+				return FALSE
+			return TRUE
+
+		infer_surgery_stage()
+			var/mob/living/carbon/human/C = patient
+			var/organ = C.organHolder.get_organ(organ_var_name)
+			surgery_steps[2].finished = (organ == null)
+			return
+		generate_surgery_steps(mob/living/surgeon, mob/user)
+			add_next_step(new /datum/surgery_step/skull/cut(src))
+			add_next_step(new /datum/surgery_step/skull/remove(src))
 	tail
 		id = "tail_surgery"
 		name = "Tail Surgery"
@@ -271,35 +299,45 @@
 		affected_zone = "head"
 		organ_var_name = "brain"
 		implicit = TRUE
+		default_sub_surgeries = list(/datum/surgery/organ/skull, /datum/surgery/organ/replace/skull)
+
+		infer_surgery_stage()
+			var/mob/living/carbon/human/C = patient
+			surgery_steps[4].finished = (C.organHolder.get_organ(organ_var_name) == null)
+			surgery_steps[5].finished = (C.organHolder.get_organ(organ_var_name) != null)
+			return
 		generate_surgery_steps(mob/living/surgeon, mob/user)
 			add_next_step(new /datum/surgery_step/organ/brain/cut(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/organ/brain/saw(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/organ/brain/cut2(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/organ/brain/remove(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/organ/add(src, organ_var_name))
 		surgery_possible(mob/living/surgeon, obj/item/I)
 			if (surgeon.zone_sel.selecting != "head")
-				return FALSE
-			if (!patient.organHolder.get_organ(organ_var_name))
 				return FALSE
 			if (surgeon.a_intent == INTENT_HARM)
 				return FALSE
 			return TRUE
-	skull
-		id = "skull_surgery"
-		name = "Skull Surgery"
-		desc = "Perform surgery on the patients' brain."
+	head
+		id = "head_removal"
+		name = "Head Removal"
+		desc = "Remove the patients' head."
 		affected_zone = "head"
-		organ_var_name = "skull"
+		organ_var_name = "head"
 		implicit = TRUE
+		infer_surgery_stage()
+			var/mob/living/carbon/human/C = patient
+			surgery_steps[4].finished = (C.organHolder.get_organ(organ_var_name) == null)
+			surgery_steps[5].finished = (C.organHolder.get_organ(organ_var_name) != null)
+			return
 		generate_surgery_steps(mob/living/surgeon, mob/user)
-			add_next_step(new /datum/surgery_step/skull/cut(src, organ_var_name))
-			add_next_step(new /datum/surgery_step/skull/saw(src, organ_var_name))
-			add_next_step(new /datum/surgery_step/skull/cut2(src, organ_var_name))
-			add_next_step(new /datum/surgery_step/skull/remove(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/head/cut(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/head/saw(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/head/cut2(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/head/remove(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/organ/add(src, organ_var_name))
 		surgery_possible(mob/living/surgeon, obj/item/I)
 			if (surgeon.zone_sel.selecting != "head")
-				return FALSE
-			if (!patient.organHolder.get_organ(organ_var_name))
 				return FALSE
 			if (surgeon.a_intent != INTENT_HARM)
 				return FALSE
@@ -461,7 +499,7 @@
 				return FALSE
 			if (patient.organHolder.get_organ(organ_var_name))
 				return FALSE
-			if (surgeon.a_intent != INTENT_HARM)
+			if (surgeon.a_intent == INTENT_HARM)
 				return FALSE
 			return TRUE
 

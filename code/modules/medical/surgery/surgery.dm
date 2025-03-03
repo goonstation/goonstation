@@ -47,13 +47,23 @@
 		populate_sub_surgeries()
 
 	proc/can_operate(mob/surgeon, obj/item/tool)
-		var/last_id = 0
+		var/list/completed_ids = list()
+		// some steps ahead can be completed automatically, due to not being necessary.
 		for(var/datum/surgery_step/step in surgery_steps)
-			if (step.finished)
-				last_id = max(last_id,step.step_number)
-				continue
-			if (step.step_number <= (last_id+1)) // if we're doing the next step/some simultaneous step
-				if (step.can_operate(surgeon, tool))
+			while (length(completed_ids) < step.step_number)
+				completed_ids += TRUE
+			completed_ids[step.step_number] = (completed_ids[step.step_number] && step.finished)
+
+		var/max_step_number = 0
+		for (var/i=1, i <= length(completed_ids), i++)
+			if (completed_ids[i])
+				max_step_number = i
+			else
+				break
+		max_step_number++ //non-simultaneous steps start at 1
+		for (var/datum/surgery_step/step in surgery_steps)
+			if (step.step_number <= max_step_number)
+				if (!step.finished && step.can_operate(surgeon, tool))
 					return TRUE
 		return FALSE
 
@@ -83,7 +93,7 @@
 	/// Called when the surgery's context menu is entered. This will be called when exiting child surgeries!
 	proc/enter_surgery(mob/surgeon)
 		infer_surgery_stage()
-		var/contexts = get_surgery_contexts()
+		var/contexts = get_surgery_contexts(surgeon)
 		surgeon.showContextActions(contexts, patient, new /datum/contextLayout/experimentalcircle)
 
 	/// Adds a step to the surgery, that can only be performed after the previous step(s) are complete.
@@ -163,7 +173,7 @@
 						return TRUE
 				// if we've no implicit steps, but have non-implicit children, show the context menu.
 				// for weird cases like lower back surgery
-				var/contexts = get_surgery_contexts(FALSE)
+				var/contexts = get_surgery_contexts(surgeon, FALSE)
 				if (length(contexts) > 0)
 					enter_surgery(surgeon)
 					return TRUE
@@ -191,7 +201,7 @@
 				complete = max (step.step_number, complete)
 		return (chosen_step.step_number-1) <= complete
 	/// Gets the context actions for this surgeries's steps.
-	proc/get_surgery_contexts(var/add_navigation = TRUE)
+	proc/get_surgery_contexts(surgeon, var/add_navigation = TRUE)
 		var/list/datum/contextAction/surgical_step/contexts = list()
 		var/completed_stages = 0
 		var/optional_contexts = list()
@@ -211,7 +221,7 @@
 
 		if (sub_surgeries_always_visible || surgery_complete())
 			for (var/datum/surgery/surgery in sub_surgeries)
-				if (surgery.surgery_possible(patient) && surgery.visible)
+				if (surgery.surgery_possible(surgeon) && surgery.visible && !surgery.implicit)
 					contexts += surgery.get_context()
 
 		//hacky fix to remove the back button if there's only one top-level surgery available.
