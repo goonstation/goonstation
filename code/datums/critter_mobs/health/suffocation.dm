@@ -114,9 +114,8 @@
 			var/FARD_pp = (breath.farts/TOTAL_MOLES(breath))*breath_pressure
 			if (prob(10) && (FARD_pp > fart_smell_min))
 				boutput(holder, SPAN_ALERT("Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!"))
-				if ((FARD_pp > fart_vomit_min) && prob(50))
-					var/vomit_message = SPAN_NOTICE("[holder] vomits from the [pick("stink","stench","awful odor")]!!")
-					holder.vomit(0, null, vomit_message)
+				if (FARD_pp > fart_vomit_min)
+					holder.nauseate(1)
 			if (FARD_pp > fart_choke_min)
 				TakeDamage(3 + o2_damage)
 				o2_damage++

@@ -365,8 +365,10 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-
-				switch(counter += (1 * mult))
+				counter += (1 * mult)
+				if (counter < 175)
+					M.remove_vomit_behavior(/datum/vomit_behavior/ricin)
+				switch(counter)
 					if (75 to 125)
 						if(isliving(M) && probmult(15))
 							var/mob/living/L = M
@@ -387,13 +389,14 @@ datum
 							if (H.organHolder)
 								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 25)
 					if (175 to INFINITY)
+						M.add_vomit_behavior(/datum/vomit_behavior/ricin)
 						if (probmult(10))
 							M.emote(pick("sneeze","drool","cough","moan","groan"))
 						if (probmult(20))
 							boutput(M, SPAN_ALERT("You feel weak and drowsy."))
 							M.setStatus("slowed", 5 SECONDS)
-						if (probmult(8) && M.vomit(0, /obj/decal/cleanable/blood/splatter, SPAN_ALERT("[M] vomits a lot of blood!")))
-							playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
+						if (probmult(20))
+							M.nauseate(1)
 						else if (probmult(5))
 							boutput(M, SPAN_ALERT("You feel a sudden pain in your chest."))
 							M.setStatusMin("stunned", 6 SECONDS * mult)
@@ -406,6 +409,16 @@ datum
 								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 50)
 				..()
 				return
+
+			on_add()
+				if (ismob(holder.my_atom))
+					var/mob/mob = holder.my_atom
+					mob.add_vomit_behavior(/datum/vomit_behavior/ricin)
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/mob = holder.my_atom
+					mob.remove_vomit_behavior(/datum/vomit_behavior/ricin)
 
 		harmful/formaldehyde
 			name = "embalming fluid"
