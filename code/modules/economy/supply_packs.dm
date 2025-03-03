@@ -1599,14 +1599,16 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 
 /datum/supply_packs/complex/barbershop_kit
 	name = "Barbershop Kit"
-	desc = "1x Hair Dye Dispenser frame, 1x Barber chair parts, 2x Hair Dye, 1x Scissors, 1x Razor"
+	desc = "Everything one might need to open up a barbershop!"
 	category = "Civilian Department"
 	contains = list(/obj/item/electronics/soldering,
 					/obj/item/furniture_parts/barber_chair,
 					/obj/item/dye_bottle,
 					/obj/item/dye_bottle,
 					/obj/item/razor_blade,
-					/obj/item/scissors)
+					/obj/item/scissors,
+					/obj/item/clothing/under/misc/barber,
+					/obj/item/clothing/gloves/latex)
 	frames = list(/obj/machinery/hair_dye_dispenser)
 	cost = PAY_TRADESMAN
 	containertype = /obj/storage/crate
