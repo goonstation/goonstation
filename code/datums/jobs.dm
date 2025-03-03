@@ -226,7 +226,7 @@
 ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command
 	linkcolor = "#00CC00"
-	slot_card = /obj/item/card/id/gold
+	slot_card = /obj/item/card/id/command
 	map_can_autooverride = FALSE
 	can_join_gangs = FALSE
 	job_category = JOB_COMMAND
@@ -254,6 +254,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wiki_link = "https://wiki.ss13.co/Captain"
 	id_band_override = "green"
 
+	slot_card = /obj/item/card/id/gold
 	slot_belt = list(/obj/item/device/pda2/captain)
 	slot_back = list(/obj/item/storage/backpack/captain)
 	slot_jump = list(/obj/item/clothing/under/rank/captain)
@@ -294,7 +295,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_IMPORTANT
 	access_string = "Head of Personnel"
 	wiki_link = "https://wiki.ss13.co/Head_of_Personnel"
-	id_band_override = "blue"
 
 	allow_spy_theft = FALSE
 	allow_antag_fallthrough = FALSE
@@ -333,7 +333,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Head_of_Security"
-	id_band_override = "red"
 
 #ifdef SUBMARINE_MAP
 	slot_jump = list(/obj/item/clothing/under/rank/head_of_security/fancy_alt)
@@ -380,7 +379,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	announce_on_join = TRUE
 	allow_spy_theft = FALSE
 	wiki_link = "https://wiki.ss13.co/Chief_Engineer"
-	id_band_override = "yellow"
 
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_belt = list(/obj/item/storage/belt/utility/prepared/ceshielded)
@@ -422,7 +420,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = TRUE
 	announce_on_join = TRUE
 	wiki_link = "https://wiki.ss13.co/Research_Director"
-	id_band_override = "purple"
 
 	slot_back = list(/obj/item/storage/backpack/research)
 	slot_belt = list(/obj/item/device/pda2/research_director)
@@ -451,7 +448,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = TRUE
 	announce_on_join = TRUE
 	wiki_link = "https://wiki.ss13.co/Medical_Director"
-	id_band_override = "purple"
 
 	slot_back = list(/obj/item/storage/backpack/medic)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
@@ -474,9 +470,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = TRUE
 	announce_on_join = TRUE
 	wiki_link = "https://wiki.ss13.co/Communications_Officer"
-	id_band_override = "green"
 
-	slot_card = /obj/item/card/id
 	slot_ears = list(/obj/item/device/radio/headset/command/comm_officer)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_jump = list(/obj/item/clothing/under/rank/comm_officer)

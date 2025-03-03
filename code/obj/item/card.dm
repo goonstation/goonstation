@@ -105,9 +105,9 @@ TYPEINFO(/obj/item/card/emag)
 
 	New()
 		. = ..()
-		UpdateIcon()
+		UpdateStripe()
 
-	update_icon()
+	proc/UpdateStripe()
 		. = ..()
 		var/overlay_icon_state = null
 		if (src.band_color)
@@ -141,20 +141,19 @@ TYPEINFO(/obj/item/card/emag)
 	item_state = "gold_id"
 	desc = "A highly valuable Nanotrasen identification card used only by the most decorated idiots aboard the station."
 
+/obj/item/card/id/command
+	band_color = "green"
+
 /obj/item/card/id/security
-	icon_state = "id_basic"
 	band_color = "red"
 
 /obj/item/card/id/research
-	icon_state = "id_basic"
 	band_color = "purple"
 
 /obj/item/card/id/engineering
-	icon_state = "id_basic"
 	band_color = "yellow"
 
 /obj/item/card/id/civilian
-	icon_state = "id_basic"
 	band_color = "blue"
 
 /obj/item/card/id/clown
@@ -175,7 +174,6 @@ TYPEINFO(/obj/item/card/emag)
 	item_state = "gold_id"
 	registered = "Captain"
 	assignment = "Captain"
-	no_stripe = TRUE
 	var/touched = FALSE
 	New()
 		..()
@@ -357,7 +355,7 @@ TYPEINFO(/obj/item/card/emag)
 				src.icon_state = "id_syndie"
 			else
 				return
-		src.UpdateIcon()
+		src.UpdateStripe()
 		src.registered = reg
 		src.assignment = ass
 		src.name = "[src.registered]'s ID Card ([src.assignment])"
