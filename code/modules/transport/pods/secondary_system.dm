@@ -1469,7 +1469,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 			return
 
 		if (src.loaded_wep && ON_COOLDOWN(src, "weapon_swap", 10 SECONDS))
-			boutput(src.ship.pilot, "[src.ship.ship_message("[src] is currently recharging! [round(GET_COOLDOWN(src, "weapon_swap") / 10, 1] seconds left.")]"))
+			boutput(src.ship.pilot, "[src.ship.ship_message("[src] is currently recharging! [round(GET_COOLDOWN(src, "weapon_swap") / 10, 1)] seconds left.")]")
 			return
 
 		for (var/mob/M in src.ship)
