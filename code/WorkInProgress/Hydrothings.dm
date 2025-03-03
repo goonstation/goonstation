@@ -298,7 +298,7 @@
 //FUCKABLE ITEMS
 
 /obj/item/card/id/owlmaint
-	icon_state = "id_gold"
+	band_color = "green"
 	access = list(access_owlerymaint)
 	registered = null
 	assignment = null
