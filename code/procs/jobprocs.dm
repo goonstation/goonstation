@@ -39,7 +39,7 @@ var/global/totally_random_jobs = FALSE
 	{engineering_staff += player}\
 else if (istype(JOB, /datum/job/research/scientist))\
 	{research_staff += player}\
-else if (istype(JOB, /datum/job/research/medical_doctor))\
+else if (istype(JOB, /datum/job/medical/medical_doctor))\
 	{medical_staff += player}\
 else if (istype(JOB, /datum/job/security/security_officer))\
 	{security_officers += player}

@@ -17,7 +17,7 @@ var/datum/job_controller/job_controls
 			new /datum/job/command/head_of_security/derelict {limit = 1; name = "NT-SO Special Operative";} (),
 			new /datum/job/command/chief_engineer/derelict {limit = 1; name = "Salvage Chief";} (),
 			new /datum/job/security/security_officer/derelict {limit = 6; name = "NT-SO Officer";} (),
-			new /datum/job/research/medical_doctor/derelict {limit = 8; name = "Salvage Medic";} (),
+			new /datum/job/medical/medical_doctor/derelict {limit = 8; name = "Salvage Medic";} (),
 			new /datum/job/engineering/engineer/derelict {limit = 10; name = "Salvage Engineer";} (),
 			new /datum/job/civilian/staff_assistant (),
 			new /datum/job/civilian/chef (),
@@ -28,6 +28,7 @@ var/datum/job_controller/job_controls
 			for (var/A in concrete_typesof(/datum/job/command)) src.staple_jobs += new A(src)
 			for (var/A in concrete_typesof(/datum/job/security)) src.staple_jobs += new A(src)
 			for (var/A in concrete_typesof(/datum/job/research)) src.staple_jobs += new A(src)
+			for (var/A in concrete_typesof(/datum/job/medical)) src.staple_jobs += new A(src)
 			for (var/A in concrete_typesof(/datum/job/engineering)) src.staple_jobs += new A(src)
 			for (var/A in concrete_typesof(/datum/job/civilian)) src.staple_jobs += new A(src)
 			for (var/A in concrete_typesof(/datum/job/special)) src.special_jobs += new A(src)
