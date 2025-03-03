@@ -1610,7 +1610,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/item/clothing/under/misc/barber,
 					/obj/item/clothing/gloves/latex)
 	frames = list(/obj/machinery/hair_dye_dispenser)
-	cost = PAY_TRADESMAN
+	cost = PAY_TRADESMAN*5
 	containertype = /obj/storage/crate
 	containername = "Mechanics Reconstruction Kit"
 
