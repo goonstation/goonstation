@@ -1,4 +1,9 @@
 
+(t)sun mar 02 25
+(u)glowbold
+(p)22431
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Click-dragging people into a syndicate robot conversion chamber has a 1 second action bar.
 (t)thu feb 27 25
 (u)glowbold
 (p)22448
