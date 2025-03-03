@@ -1468,6 +1468,10 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 			boutput(src.ship.pilot, "[src.ship.ship_message("[src] must wait for all weapons to be off cooldown to work!")]")
 			return
 
+		if (src.loaded_wep && ON_COOLDOWN(src, "weapon_swap", 10 SECONDS))
+			boutput(src.ship.pilot, "[src.ship.ship_message("[src] is currently recharging! [round(GET_COOLDOWN(src, "weapon_swap") / 10, 1] seconds left.")]"))
+			return
+
 		for (var/mob/M in src.ship)
 			if (src.loaded_wep && src.ship.m_w_system)
 				boutput(M, "[src.ship.ship_message("[src.ship.m_w_system] has been swapped out for [src.loaded_wep].")]")
