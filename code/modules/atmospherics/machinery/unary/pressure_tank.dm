@@ -19,7 +19,7 @@
 /obj/machinery/atmospherics/unary/tank/attackby(obj/item/I, mob/user) //let's just make these breakable for now
 	if (I.force)
 		src.visible_message(SPAN_ALERT("[user] hits \the [src] with \a [I]!"))
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 		hit_twitch(src)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)

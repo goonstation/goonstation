@@ -137,7 +137,7 @@
 		. = "<br>[SPAN_NOTICE("It says:")]<br><blockquote style='margin: 0 0 0 1em;'>[words]</blockquote>"
 
 	attack_hand(mob/user)
-		user.lastattacked = user
+		user.lastattacked = get_weakref(user)
 		if (src.attached)
 			if (user.a_intent == INTENT_HELP)
 				boutput(user, "You peel \the [src] off of \the [src.attached].")
@@ -146,12 +146,12 @@
 				user.put_in_hand_or_drop(src)
 			else
 				src.attached.Attackhand(user)
-				user.lastattacked = user
+				user.lastattacked = get_weakref(user)
 		else
 			return ..()
 
 	attackby(obj/item/W, mob/living/user)
-		user.lastattacked = user
+		user.lastattacked = get_weakref(user)
 		if (istype(W, /obj/item/stamp))
 
 			var/obj/item/stamp/S = W
@@ -206,7 +206,7 @@
 
 		if (src.attached)
 			src.attached.Attackby(W, user)
-			user.lastattacked = user
+			user.lastattacked = get_weakref(user)
 		else
 			..()
 
@@ -632,7 +632,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 		light_c.update(0)
 
 	attack_hand(mob/user)
-		user.lastattacked = user
+		user.lastattacked = get_weakref(user)
 		if (src.attached)
 			if (user.a_intent == INTENT_HELP)
 				boutput(user, "You peel \the [src] off of \the [src.attached].")
@@ -641,7 +641,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 				user.put_in_hand_or_drop(src)
 			else
 				src.attached.Attackhand(user)
-				user.lastattacked = user
+				user.lastattacked = get_weakref(user)
 		else
 			return ..()
 

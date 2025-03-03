@@ -1103,7 +1103,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 
 
 		boutput(user, "You stick \the [W.name] into the light socket!")
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if(has_power() && (W.flags & CONDUCT))
 			if(!user.bioHolder.HasEffect("resist_electric"))
 				src.electrocute(user, 75, null, 20000)
@@ -1111,7 +1111,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 
 	// attempt to break the light
 	else if(current_lamp.light_status != LIGHT_BROKEN)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if(prob(1+W.force * 5))
 
 			boutput(user, "You hit the light, and it smashes!")

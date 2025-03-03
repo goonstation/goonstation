@@ -89,7 +89,7 @@
 		msgs.played_sound = 'sound/impact_sounds/generic_hit_2.ogg'
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		attack_twitch(user)
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
 

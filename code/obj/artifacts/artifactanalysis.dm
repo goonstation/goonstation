@@ -75,7 +75,7 @@
 		var/obj/attachedobj = src.attached
 		if(istype(attachedobj) && attachedobj.artifact) // touch artifact we are attached to
 			src.attached.Attackhand(user)
-			user.lastattacked = user
+			user.lastattacked = get_weakref(user)
 		else // do sticker things
 			..()
 
@@ -97,7 +97,7 @@
 			var/obj/attachedobj = src.attached
 			if(istype(attachedobj) && attachedobj.artifact) // hit artifact we are attached to
 				src.attached.Attackby(W, user)
-				user.lastattacked = user
+				user.lastattacked = get_weakref(user)
 			else // just sticker things
 				..()
 

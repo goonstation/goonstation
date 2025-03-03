@@ -488,7 +488,7 @@
 				M.show_message(SPAN_ALERT("[src] [acts]!"))
 
 	attack_hand(var/mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (user.a_intent != "harm")
 			visible_message("[user] pets [src]!")
 		else

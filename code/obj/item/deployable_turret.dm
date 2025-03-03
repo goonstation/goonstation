@@ -251,7 +251,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 					src.shoot(target)
 
 	attackby(obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (isweldingtool(W) && !(src.active))
 			if(!W:try_weld(user, 1))
 				return

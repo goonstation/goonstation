@@ -12,7 +12,7 @@
 			W.attach(src,user)
 			return
 
-	user.lastattacked = src
+	user.lastattacked = get_weakref(src)
 
 	SEND_SIGNAL(user, COMSIG_MOB_TRIGGER_THREAT)
 

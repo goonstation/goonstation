@@ -315,7 +315,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 				src.take_damage(I.force*4, user)
 			else
 				src.take_damage(I.force, user)
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			attack_particle(user,src)
 			playsound(src, src.hitsound , 50, 1, pitch = 1.6)
 			..()
@@ -361,7 +361,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		var/resolvedForce = I.force
 		if (I.tool_flags & TOOL_CHOPPING)
 			resolvedForce *= 4
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 		playsound(src, src.hitsound , 50, 1, pitch = 1.6)
 		src.take_damage(resolvedForce, user)

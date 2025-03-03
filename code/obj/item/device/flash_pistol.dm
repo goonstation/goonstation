@@ -138,7 +138,7 @@
 		logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
 
 		// Some after attack stuff.
-		user.lastattacked = M
+		user.lastattacked = get_weakref(M)
 		M.lastattacker = get_weakref(user)
 		M.lastattackertime = world.time
 

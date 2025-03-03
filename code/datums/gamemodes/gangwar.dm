@@ -2265,7 +2265,7 @@ proc/broadcast_to_all_gangs(var/message)
 				boutput(user, SPAN_NOTICE("[satchel] doesn't contain any cannabis."))
 			return
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		switch(W.hit_type)
 			if (DAMAGE_BURN)
 				user.visible_message(SPAN_ALERT("[user] ineffectually hits the [src] with [W]!"))

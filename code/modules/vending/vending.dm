@@ -461,7 +461,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		else
 			boutput(user, SPAN_ALERT("[W] is not compatible with [src]."))
 	else
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		hit_twitch(src)
 		attack_particle(user,src)
 		playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,TRUE)

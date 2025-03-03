@@ -649,7 +649,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 
 	attack_hand(mob/living/user)
 		if (isAI(user) || isintangible(user) || isobserver(user) || !in_interact_range(src, user)) return
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		..()
 		if(!defib || QDELETED(defib))
 			defib = null // ditch the ref, just in case we're QDEL'd but defib is still holding on
@@ -663,7 +663,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 		UpdateIcon()
 
 	attackby(obj/item/W, mob/living/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (W == src.defib)
 			src.put_back_defib()
 

@@ -224,7 +224,7 @@ TYPEINFO(/obj/item/baton)
 
 		// Some after attack stuff.
 		if (user && ismob(user))
-			user.lastattacked = dude_to_stun
+			user.lastattacked = get_weakref(dude_to_stun)
 			dude_to_stun.lastattacker = get_weakref(user)
 			dude_to_stun.lastattackertime = world.time
 
