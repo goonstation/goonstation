@@ -367,7 +367,7 @@ var/datum/signal_holder/global_signal_holder
 	var/target = comp_lookup[sigtype]
 	if(!length(target))
 		var/datum/listening_datum = target
-		return 0 || call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
+		return 0 | call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
 	. = 0
 	// This exists so that even if one of the signal receivers unregisters the signal,
 	// all the objects that are receiving the signal get the signal this final time.
