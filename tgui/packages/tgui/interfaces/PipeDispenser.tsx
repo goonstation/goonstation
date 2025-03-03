@@ -17,6 +17,7 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { ProductList } from './common/ProductList';
 
 interface PipeDispenserData {
   disposalpipes;
@@ -40,19 +41,21 @@ export const PipeDispenser = () => {
     max_disposal_pipes,
   } = data;
   return (
-    <Window title={windowName} width={325} height={mobile ? 365 : 270}>
+    <Window title={windowName} width={375} height={mobile ? 350 : 255}>
       <Window.Content scrollable>
-        <Section>
-          {disposalpipes.map((disposalpipe) => {
-            return (
-              <DisposalPipeRow
-                key={disposalpipe.disposaltype}
-                dispenser_ready={dispenser_ready}
-                max_disposal_pipes={max_disposal_pipes}
-                disposalpipe={disposalpipe}
-              />
-            );
-          })}
+        <Section fitted>
+          <ProductList showImage showOutput>
+            {disposalpipes.map((disposalpipe) => {
+              return (
+                <DisposalPipeRow
+                  key={disposalpipe.disposaltype}
+                  dispenser_ready={dispenser_ready}
+                  max_disposal_pipes={max_disposal_pipes}
+                  disposalpipe={disposalpipe}
+                />
+              );
+            })}
+          </ProductList>
         </Section>
         {!!mobile && (
           <AutoPipeLaying
@@ -71,6 +74,37 @@ export const DisposalPipeRow = (props) => {
   const { dispenser_ready, max_disposal_pipes, disposalpipe } = props;
 
   return (
+    <ProductList.Item
+      image={disposalpipe.image}
+      extraCellsSlot={
+        <ProductList.Cell align="right">
+          <Box inline>Amount:</Box>
+          <NumberInput
+            value={amount}
+            minValue={1}
+            maxValue={max_disposal_pipes}
+            step={1}
+            onChange={(value) => setAmount(Math.round(value))}
+          />
+        </ProductList.Cell>
+      }
+      outputSlot={
+        <ProductList.OutputButton
+          disabled={!dispenser_ready}
+          icon="gears"
+          onClick={() => {
+            act('dmake', {
+              disposal_type: disposalpipe.disposaltype,
+              amount,
+            });
+          }}
+        />
+      }
+    >
+      {disposalpipe.disposaltype}
+    </ProductList.Item>
+  );
+  return (
     <Stack style={{ borderBottom: '1px #555 solid' }}>
       {disposalpipe.image && (
         <Stack.Item>
@@ -80,22 +114,7 @@ export const DisposalPipeRow = (props) => {
         </Stack.Item>
       )}
       <Stack.Item grow>{disposalpipe.disposaltype}</Stack.Item>
-      <Stack.Item
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          flexDirection: 'column',
-        }}
-      >
-        Amount:
-        <NumberInput
-          value={amount}
-          minValue={1}
-          maxValue={max_disposal_pipes}
-          step={1}
-          onChange={(value) => setAmount(Math.round(value))}
-        />
-      </Stack.Item>
+
       <Stack.Item
         style={{
           marginLeft: '5px',

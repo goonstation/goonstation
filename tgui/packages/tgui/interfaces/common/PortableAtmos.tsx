@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Divider,
   LabeledList,
   RoundGauge,
   Section,
@@ -33,6 +34,7 @@ export const PortableBasicInfo = (props) => {
           {connected ? 'Connected' : 'Not Connected'}
         </LabeledList.Item>
       </LabeledList>
+      {!!children && <Divider />}
       {children}
     </Section>
   );
