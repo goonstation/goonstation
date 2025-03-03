@@ -3553,6 +3553,7 @@
 	desc = "You've been made vulnerable, causing you to radiate ice and have halted health regeneration."
 	icon_state = "phoenix_vulnerable"
 	effect_quality = STATUS_QUALITY_NEGATIVE
+	maxDuration = 30 SECONDS
 
 /datum/statusEffect/ice_phoenix_warmth_counter
 	id = "phoenix_warmth_counter"
@@ -3606,3 +3607,22 @@
 	onRemove()
 		..()
 		src.owner.remove_filter("cold_snap_color_matrix")
+
+/datum/statusEffect/phoenix_nest_counter
+	id = "phoenix_mobs_collected"
+	name = "Extra Health Regneration"
+	icon_state = "phoenix_health_regen"
+	effect_quality = STATUS_QUALITY_POSITIVE
+	var/critters_collected = 0
+	var/humans_collected = 0
+
+	getTooltip()
+		var/mob/living/critter/ice_phoenix/phoenix = src.owner
+		return "You have [src.critters_collected]/5 critters and [src.humans_collected]/5 humans collected in your nest, giving you an extra [phoenix.extra_life_regen] points of out of combat health regeneration."
+
+/datum/statusEffect/phoenix_revive_ready
+	id = "phoenix_revive_ready"
+	name = "Revival on Death"
+	icon_state = "phoenix_revive_ready"
+	desc = "You will be resurrected upon death with full health."
+	effect_quality = STATUS_QUALITY_POSITIVE

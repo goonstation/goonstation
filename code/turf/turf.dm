@@ -64,16 +64,6 @@
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
 	flags = OPENCONTAINER
 
-	/// turf type before being changed by ice phoenix permafrost
-	var/type_before_permafrost = null
-	/// turf dir before being changed by ice phoenix permafrost
-	var/dir_before_permafrost = null
-	/// turf icon before being changed by ice phoenix permafrost
-	var/icon_before_permafrost = null
-	/// turf icon state before being changed by ice phoenix permafrost
-	var/icon_state_before_permafrost = null
-
-
 	New()
 		..()
 		src.path_old = src.type

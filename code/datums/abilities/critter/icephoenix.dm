@@ -35,7 +35,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 	name = "Glacier"
 	desc = "Create a 5 tile wide compacted snow wall, perpendicular to the cast direction, or otherwise in a random direction. Can be destroyed by heat or force."
 	icon_state = "ice_wall"
-	cooldown = 20 SECONDS
+	cooldown = 30 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 
@@ -117,6 +117,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		if (!(iswall(target) || istype(target, /obj/window) || istype(target, /obj/structure/girder)))
 			boutput(src.holder.owner, SPAN_ALERT("You can only cast this ability on girders, walls, or windows!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (istype(target, /turf/unsimulated/wall))
+			boutput(src.holder.owner, SPAN_ALERT("You can't cast this ability on this wall!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (isrestrictedz(target?.z))
 			boutput(src.holder.owner, SPAN_ALERT("Your power is useless here!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
@@ -157,7 +160,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 				L.bodytemperature -= 10
 				if (L.bodytemperature <= 255.372) // 0 degrees fahrenheit
 					var/obj/icecube/block = new /obj/icecube(L.loc, L)
-					block.health /= 2
 					block.anchored = TRUE
 					block.setStatus("cold_snap", INFINITE_STATUS)
 			SPAWN(2 SECONDS)
@@ -224,6 +226,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 			if (atom.density)
 				boutput(src.holder.owner, SPAN_ALERT("This turf has a blocking object on it!"))
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (istype(get_turf(target), /turf/simulated/ice_phoenix_ice_tunnel))
+			boutput(src.holder.owner, SPAN_ALERT("You can't cast this ability in an ice tunnel!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		return ..()
 
 	cast(atom/target)
@@ -437,6 +442,8 @@ ABSTRACT_TYPE(/obj/ice_phoenix_ice_wall)
 
 		if (isweldingtool(I) && I:welding)
 			user.visible_message(SPAN_ALERT("[user] melts [src]!"), SPAN_ALERT("You melt [src]!"))
+			qdel(src)
+		else if (istype(I, /obj/item/shovel) || istype(I, /obj/item/slag_shovel) || istype(I, /obj/item/mining_tool/powered/shovel))
 			qdel(src)
 		else if (I.force)
 			if (I.force >= 20)

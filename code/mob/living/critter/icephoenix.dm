@@ -18,6 +18,9 @@
 
 	blood_id = "water"
 
+	butcherable = BUTCHER_ALLOWED
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+
 	can_interface_with_pods = FALSE
 
 	/// if traveling off z level will return you to the station z level
@@ -25,15 +28,13 @@
 
 	/// extra life regen granted by dead mobs in its nest
 	var/extra_life_regen = 0
-	/// if on death, the phoenix will resurrect
-	var/has_revive = FALSE
 	var/has_revived = FALSE
 
 	/// all humans that have ever been collected in nest
 	var/list/collected_humans = list()
 	/// all critters that have ever been collected in nest
 	var/list/collected_critters = list()
-	/// all areas permafrosted that have ever been collected in nest
+	/// all areas that have ever been permafrosted
 	var/list/permafrosted_areas = list()
 
 	var/obj/minimap/ice_phoenix/map_obj
@@ -48,6 +49,8 @@
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
 
+		QDEL_NULL(src.organHolder)
+
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/sail)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/thermal_shock)
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/ice_barrier)
@@ -57,22 +60,24 @@
 		src.abilityHolder.addAbility(/datum/targetable/critter/ice_phoenix/permafrost)
 
 		src.setStatus("phoenix_empowered_feather", INFINITE_STATUS)
+		src.setStatus("phoenix_mobs_collected", INFINITE_STATUS)
 
 		get_image_group(CLIENT_IMAGE_GROUP_TEMPERATURE_OVERLAYS).add_mob(src)
 
 	Life()
 		. = ..()
+		var/area/A = get_area(src)
+
 		if (istype(get_turf(src), /turf/space))
 			src.delStatus("burning")
 
-			if (!src.hasStatus("phoenix_vulnerable") && !istype(get_area(src), /area/station))
+			if (!src.hasStatus("phoenix_vulnerable"))
 				var/mult = max(src.tick_spacing, TIME - src.last_life_tick) / src.tick_spacing
 				src.HealDamage("All", (2 + src.extra_life_regen) * mult, (2 + src.extra_life_regen) * mult)
 				src.HealBleeding(0.1)
 
-		var/area/A = get_area(src)
-		if (istype(A, /area/station) && !A.permafrosted)
-			src.setStatus("phoenix_vulnerable", 30 SECONDS)
+		if (src.check_area_dangerous(A) && !A.permafrosted)
+			src.changeStatus("phoenix_vulnerable", 5 SECONDS)
 
 			if (!src.hasStatus("phoenix_warmth_counter"))
 				src.setStatus("phoenix_warmth_counter", INFINITE_STATUS)
@@ -84,10 +89,10 @@
 			src.bodytemperature = max(initial(src.bodytemperature), src.bodytemperature - 10)
 
 	death(gibbed)
-		if (src.has_revive && !gibbed)
+		if (src.hasStatus("phoenix_revive_ready") && !gibbed)
 			src.full_heal()
 			src.has_revived = TRUE
-			src.has_revive = FALSE
+			src.delStatus("phoenix_revive_ready")
 			var/turf/T = get_turf(src)
 			T.visible_message(SPAN_ALERT("[src] resurrects with a mighty grace!"))
 			playsound(get_turf(src), 'sound/misc/phoenix/phoenix_revive.ogg', 100, TRUE)
@@ -95,6 +100,9 @@
 			SPAWN(3 SECONDS)
 				src.Scale(2 / 3, 2 / 3)
 			return
+
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+
 		var/area/phoenix_nest/A = get_area(src.nest_location)
 		A.owning_phoenix = null
 		get_image_group(CLIENT_IMAGE_GROUP_TEMPERATURE_OVERLAYS).remove_mob(src)
@@ -159,7 +167,7 @@
 
 	do_disorient(stamina_damage, knockdown, stunned, unconscious, disorient, remove_stamina_below_zero, target_type, stack_stuns)
 		if (src.hasStatus("phoenix_ice_barrier"))
-			stamina_damage = min(stamina_damage, 25)
+			stamina_damage = min(stamina_damage, 20)
 		..()
 		if (stamina_damage > 0)
 			src.setStatus("phoenix_vulnerable", 30 SECONDS)
@@ -167,7 +175,7 @@
 
 	apply_flash(animation_duration, knockdown, stun, misstep, eyes_blurry, eyes_damage, eye_tempblind, burn, uncloak_prob, stamina_damage, disorient_time)
 		if (src.hasStatus("phoenix_ice_barrier"))
-			stamina_damage = min(stamina_damage, 25)
+			stamina_damage = min(stamina_damage, 20)
 		..()
 		src.setStatus("phoenix_vulnerable", 30 SECONDS)
 		src.radiate_cold(get_turf(src))
@@ -175,7 +183,7 @@
 	Move(turf/NewLoc, direct)
 		if (istype(get_turf(src), /turf/space))
 			var/obj/effects/ion_trails/I = new(get_turf(src))
-			if (src.has_revive)
+			if (src.hasStatus("phoenix_revive_ready"))
 				I.color = "#ea00ff"
 			I.set_dir(src.dir)
 			flick("ion_fade", I)
@@ -188,8 +196,8 @@
 		if (istype(NewLoc, /turf/space))
 			EndSpacePush(src)
 		var/area/A = get_area(src)
-		if (istype(A, /area/station) && !A.permafrosted)
-			src.setStatus("phoenix_vulnerable", 30 SECONDS)
+		if (src.check_area_dangerous(A) && !A.permafrosted)
+			src.changeStatus("phoenix_vulnerable", 5 SECONDS)
 
 			if (!src.hasStatus("phoenix_warmth_counter"))
 				src.setStatus("phoenix_warmth_counter", INFINITE_STATUS)
@@ -204,24 +212,6 @@
 		. = ..()
 		if (src.hasStatus("ice_phoenix_sail") && istype(get_turf(src), /turf/space))
 			return . / 2
-
-	//specific_emote_type(var/act)
-	//	switch (act)
-	//		if ("scream")
-	//			return 2
-	//	return ..()
-
-	//get_disorient_protection_eye()
-	//	return(max(..(), 80))
-	/*
-	death(var/gibbed)
-		playsound(src.loc, 'sound/impact_sounds/burn_sizzle.ogg', 100, 1)
-		..(gibbed, 0)
-		if (!gibbed)
-			make_cleanable(/obj/decal/cleanable/ash,src.loc)
-			ghostize()
-			qdel(src)
-	*/
 
 	is_cold_resistant()
 		return TRUE
@@ -241,9 +231,9 @@
 			T.ReplaceWith(/turf/simulated/ice_phoenix_ice_tunnel, FALSE)
 			T.set_dir(get_dir(src, T))
 			if (istype(A, /obj/window))
+				for (var/obj/mesh/grille/grille in get_turf(A))
+					qdel(grille)
 				qdel(A)
-			for (var/obj/mesh/grille/grille in get_turf(A))
-				qdel(grille)
 		else if (istype(A, /obj/structure/girder))
 			qdel(A)
 		var/datum/targetable/critter/ice_phoenix/thermal_shock/abil = src.abilityHolder.getAbility(/datum/targetable/critter/ice_phoenix/thermal_shock)
@@ -283,6 +273,9 @@
 			if (icon_s)
 				floor.icon_state = icon_s
 				floor.set_dir(direct)
+
+	proc/check_area_dangerous(area/A)
+		return A && !A.permafrosted && istype(A, /area/station) && !istype(A, /area/station/solar) && !istype(A, /area/station/shield_zone) && !istype(A, /area/station/turret_protected) && !istype(A, /area/station/com_dish)
 
 /image/phoenix_temperature_indicator
 	plane = PLANE_HUD
@@ -429,6 +422,17 @@
 			return
 		playsound(get_turf(src), 'sound/impact_sounds/Glass_Shards_Hit_1.ogg', 75, TRUE)
 
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled)
+		..()
+		if (exposed_temperature > 273.15)
+			if (exposed_temperature > 505.93)
+				src.health -= 15
+			else
+				src.health -= 5
+
+			if (src.health <= 0)
+				qdel(src)
+
 	ex_act()
 		qdel(src)
 
@@ -454,7 +458,15 @@
 
 	Entered(atom/movable/AM, atom/oldloc)
 		..()
+		if (!src.owning_phoenix)
+			if (istype(AM, /mob/living/critter/ice_phoenix))
+				src.owning_phoenix = AM
+				src.owning_phoenix.nest_location = get_turf(AM)
 		src.atom_entered(AM)
+
+	Exited(atom/movable/AM)
+		src.atom_exited(AM)
+		..()
 
 	proc/atom_entered(atom/movable/AM)
 		if (!src.owning_phoenix)
@@ -466,10 +478,13 @@
 			else if (H.last_ckey)
 				if (!(H in src.humans_for_revive))
 					src.humans_for_revive += H
-					if (length(src.humans_for_revive) >= 5 && !src.owning_phoenix.has_revive && !src.owning_phoenix.has_revived)
-						src.owning_phoenix.has_revive = TRUE
+					if (length(src.humans_for_revive) >= 5 && !src.owning_phoenix.hasStatus("phoenix_revive_ready") && !src.owning_phoenix.has_revived)
+						src.owning_phoenix.setStatus("phoenix_revive_ready", INFINITE_STATUS)
 				if (!(H in src.entered_humans))
 					src.entered_humans += H
+					var/datum/statusEffect/phoenix_nest_counter/counter = src.owning_phoenix.hasStatus("phoenix_mobs_collected")
+					counter.humans_collected++
+					counter.onUpdate()
 					src.owning_phoenix.extra_life_regen += 0.3
 				src.owning_phoenix.collected_humans |= "[H.real_name]-\ref[H]"
 				H.setStatus("cold_snap", INFINITE_STATUS)
@@ -479,12 +494,14 @@
 				C.setStatus("in_phoenix_nest", INFINITE_STATUS)
 			else if (!(C in src.entered_critters) && !C.last_ckey)
 				src.entered_critters += C
+				var/datum/statusEffect/phoenix_nest_counter/counter = src.owning_phoenix.hasStatus("phoenix_mobs_collected")
+				counter.critters_collected++
+				counter.onUpdate()
 				src.owning_phoenix.extra_life_regen += 0.3
 				src.owning_phoenix.collected_critters |= "[C.real_name]-\ref[C]"
 				C.setStatus("cold_snap", INFINITE_STATUS)
 
-	Exited(atom/movable/AM)
-		..()
+	proc/atom_exited(atom/movable/AM)
 		if (!src.owning_phoenix)
 			return
 		if (istype(AM, /mob/living/carbon/human))
@@ -494,6 +511,9 @@
 			if (H in src.entered_humans)
 				src.owning_phoenix.extra_life_regen -= 0.3
 				src.entered_humans -= H
+				var/datum/statusEffect/phoenix_nest_counter/counter = src.owning_phoenix.hasStatus("phoenix_mobs_collected")
+				counter.humans_collected--
+				counter.onUpdate()
 				H.delStatus("cold_snap")
 		else if (istype(AM, /mob/living/critter))
 			var/mob/living/critter/C = AM
@@ -502,4 +522,7 @@
 			if (C in src.entered_critters)
 				src.owning_phoenix.extra_life_regen -= 0.3
 				src.entered_critters -= C
+				var/datum/statusEffect/phoenix_nest_counter/counter = src.owning_phoenix.hasStatus("phoenix_mobs_collected")
+				counter.critters_collected--
+				counter.onUpdate()
 				C.delStatus("cold_snap")

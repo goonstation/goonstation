@@ -151,7 +151,7 @@
 				steam.set_up(10, 0, get_turf(src))
 				steam.attach(src)
 				steam.start(clear_holder=1)
-		if (src.hasStatus("cold_snap"))
+		if (src.hasStatus("cold_snap") && !istype(get_area(src), /area/phoenix_nest))
 			src.held_mob.changeStatus("cold_snap", 5 SECONDS)
 		src.held_mob = null
 		..()

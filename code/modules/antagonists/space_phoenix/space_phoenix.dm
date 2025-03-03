@@ -37,10 +37,6 @@
 		var/dmm_suite/map_loader = new
 		map_loader.read_map(file2text("assets/maps/allocated/phoenix_nest.dmm"), T.x - 4, T.y - 4, T.z)
 		src.owner.current.set_loc(T)
-		var/area/phoenix_nest/phoenix_nest = get_area(T)
-		phoenix_nest.owning_phoenix = src.owner.current
-		var/mob/living/critter/ice_phoenix/phoenix = src.owner.current
-		phoenix.nest_location = T
 
 	assign_objectives()
 		for (var/datum/objective/specialist/objective as anything in src.objectives)
