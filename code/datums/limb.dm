@@ -212,6 +212,8 @@
 	var/reloading_str = "reloading"
 	var/image/default_obscurer
 	var/muzzle_flash = null
+	// if firing this limb pushes you back in space
+	var/has_space_pushback = TRUE
 	can_beat_up_robots = TRUE //so pointblanking works
 
 	attack_range(atom/target, var/mob/user, params)
@@ -288,7 +290,7 @@
 
 /datum/limb/gun/kinetic
 	shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
-		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
+		if((..() && istype(user.loc, /turf/space) || user.no_gravity) && src.has_space_pushback)
 			user.inertia_dir = get_dir(target, user)
 			step(user, user.inertia_dir)
 
@@ -381,6 +383,15 @@
 		current_shots = 1
 		cooldown = 4 SECONDS
 		reload_time = 4 SECONDS
+
+	ice_phoenix
+		proj = new/datum/projectile/bullet/ice_phoenix_icicle
+		shots = INFINITY
+		current_shots = 1
+		cooldown = 1 SECOND
+		reload_time = 0
+		spread_angle = 2
+		has_space_pushback = FALSE
 
 	syringe
 		proj = new/datum/projectile/syringefilled
@@ -1811,6 +1822,14 @@
 /datum/limb/small_critter/possum
 	dam_low = 0
 	dam_high = 0
+
+/datum/limb/small_critter/ice_phoenix
+	dam_low = 5
+	dam_high = 10
+	dmg_type = DAMAGE_CUT
+	actions = list("scratches", "slices", "claws")
+	can_gun_grab = FALSE
+	can_beat_up_robots = TRUE
 
 /datum/limb/small_critter/med/dash
 	dam_low = 3
