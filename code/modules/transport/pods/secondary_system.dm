@@ -1465,7 +1465,8 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 			return
 
 		if (src.loaded_wep && GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || src.ship.m_w_system && GET_COOLDOWN(src.ship.m_w_system, "weapon_swap_cd"))
-			boutput(src.ship.pilot, "[src.ship.ship_message("[src.ship]'s weapons are too hot to swap out! [round(GET_COOLDOWN(src, "weapon_swap") / 10, 1)] seconds left.")]")
+			var/swap_cd = round((GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || GET_COOLDOWN(src.ship.m_w_system, "weapon_swap_cd")) / 10, 1)
+			boutput(src.ship.pilot, "[src.ship.ship_message("[src.ship]'s weapons are too hot to swap out! [swap_cd] seconds left.")]")
 			return
 
 		for (var/mob/M in src.ship)
