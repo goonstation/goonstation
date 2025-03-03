@@ -108,7 +108,6 @@ TYPEINFO(/obj/item/card/emag)
 		UpdateStripe()
 
 	proc/UpdateStripe()
-		. = ..()
 		var/overlay_icon_state = null
 		if (src.band_color)
 			overlay_icon_state = "stripe_[src.band_color]"
