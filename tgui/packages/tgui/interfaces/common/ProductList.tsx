@@ -20,15 +20,13 @@ interface ProductListConfig {
   showOutput?: boolean;
 }
 
-const defaultProductListConfig = {
+const defaultProductListConfig: ProductListConfig = {
   showCount: false,
   showImage: false,
   showOutput: false,
 };
 
-const ProductListConfigContext = createContext<ProductListConfig>(
-  defaultProductListConfig,
-);
+const ProductListConfigContext = createContext(defaultProductListConfig);
 
 type ProductListProps = PropsWithChildren<ProductListConfig>;
 
@@ -95,9 +93,7 @@ const ProductListCell = (props: ProductListCellProps) => {
   return <Table.Cell verticalAlign="middle" {...props} />;
 };
 
-type ProductListOutputButtonProps = ComponentProps<typeof Button> & {
-  canOutput?: boolean;
-};
+type ProductListOutputButtonProps = ComponentProps<typeof Button>;
 
 const ProductListOutputButton = (props: ProductListOutputButtonProps) => {
   // written this way to provide defaults but allow overrides if given explicitly
