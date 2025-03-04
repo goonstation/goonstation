@@ -410,16 +410,6 @@ datum
 				..()
 				return
 
-			on_add()
-				if (ismob(holder.my_atom))
-					var/mob/mob = holder.my_atom
-					mob.add_vomit_behavior(/datum/vomit_behavior/ricin)
-
-			on_remove()
-				if (ismob(holder.my_atom))
-					var/mob/mob = holder.my_atom
-					mob.remove_vomit_behavior(/datum/vomit_behavior/ricin)
-
 		harmful/formaldehyde
 			name = "embalming fluid"
 			id = "formaldehyde"
@@ -779,58 +769,21 @@ datum
 			depletion_rate = 0.2
 			/// how much cycles this has been in the target's system.
 			var/cycles = 0
-			/// a list with vital organs the person should, additionally to non_vital_organ_strings, loose on cycle 40 and upwards
-			var/list/vital_organs = list("brain", "heart")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				src.cycles += mult
-				if(probmult(50))
-					if (src.cycles > 10 && prob(35) && !ON_COOLDOWN(M, "hyper_vomitium_blood_vomit", 9 SECONDS)) //when after the 10th cycle, you have a chance of vomiting blood and suffering high toxin damage
-						M.visible_message(SPAN_ALERT("[M] vomits a concerning amount of blood all over themselves!"))
-						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
-						var/blood_loss = rand(10,20) * mult
-						bleed(M, blood_loss, blood_loss)
-						M.take_toxin_damage(6 * mult)
-						M.change_misstep_chance(10 * mult)
-						M.stuttering += rand(3,6)
-					else
-						var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-						M.vomit(0, null, vomit_message)
-						M.stuttering += rand(0,2)
-						M.change_misstep_chance(6 * mult)
-						M.take_toxin_damage(3 * mult)
-					if(src.cycles > 20 && isliving(M) && !ON_COOLDOWN(M, "hyper_vomitium_organ_loss", 6 SECONDS))
-						var/mob/living/victim = M
-						var/datum/organHolder/vomitable_organHolder = victim.organHolder
-						var/picked_organ = src.grab_available_organ(vomitable_organHolder, src.cycles)
-						if(picked_organ)
-							var/obj/item/organ/organ_to_loose = vomitable_organHolder.get_organ(picked_organ)
-							vomitable_organHolder.drop_organ(picked_organ, get_turf(victim))
-							M.visible_message(SPAN_ALERT("[M] also vomits out [his_or_her(M)] [organ_to_loose.name]! [pick("WHAT THE FUCK!", "HOLY HECK!", "FRIGGING HELL!")]"))
-							var/organ_blood_loss = rand(15,25) * mult
-							bleed(M, organ_blood_loss, organ_blood_loss)
-							M.change_misstep_chance(5 * mult)
-							M.setStatusMin("stunned", 2 SECOND * mult)
+				M.nauseate(rand(2,5))
 				..()
 
-			proc/grab_available_organ(var/datum/organHolder/vomitable_organHolder, var/cycles_elapsed)
-				var/cycles_for_vital_organs = 40 //! the amount of cycles that need to have passed until the target looses a vital organ
-				if(!vomitable_organHolder)
-					return
-				//we a start to build a list with the organs we're able to throw out of our victim
-				var/list/available_organs = list()
-				available_organs += non_vital_organ_strings
-				if(src.cycles > cycles_for_vital_organs)
-					//after 40 cycles (8u) this chem has a very high chance to kill by straight out vomiting out the brain or heart
-					available_organs += src.vital_organs
-				//now, we go through each organ and kick out every already missing organ from the list
-				for (var/organ in available_organs)
-					if(!vomitable_organHolder.get_organ(organ))
-						available_organs -= organ
-				//after we are finished, we look if organs are left (to account for changelings emptying all out of themselves) and then return out the ejectable organ
-				if(length(available_organs))
-					return pick(available_organs)
+			on_add()
+				if (ismob(holder.my_atom))
+					var/mob/mob = holder.my_atom
+					mob.add_vomit_behavior(/datum/vomit_behavior/hyper)
 
+			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/mob = holder.my_atom
+					mob.remove_vomit_behavior(/datum/vomit_behavior/hyper)
 
 		harmful/cholesterol
 			name = "cholesterol"

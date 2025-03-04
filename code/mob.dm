@@ -2998,7 +2998,7 @@
 	if (!specialType && length(src.vomit_behaviors))
 		var/datum/vomit_behavior/chosen = pick(src.vomit_behaviors)
 		specialType = chosen.vomit(src)
-	else
+	if (!specialType)
 		src.visible_message(flavorMessage, selfMessage) //assume the special behavior handles the message
 	playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 	if(specialType)
