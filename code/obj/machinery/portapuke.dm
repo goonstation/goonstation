@@ -117,7 +117,7 @@
 				if (O == occupant || isdead(O))
 					continue
 				O.show_message(SPAN_ALERT("<b>[occupant]</b> is puking over and over! It's all slimy and stringy. Oh god."), 1)
-				O.nauseate(4,7)
+				O.nauseate(rand(4,7))
 
 		if (prob(40))
 			SPAWN(0) // linter demands this
