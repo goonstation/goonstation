@@ -3496,8 +3496,6 @@
 			if (10 to INFINITY)
 				src.desc = "You're about to throw up!"
 				src.icon_state = "nausea3"
-		//TODO: REMOVE THIS
-		boutput(world, "[src.owner] nausea level [src.stacks]")
 		if (src.stacks >= 10 && !src.vomiting)
 			src.vomiting = TRUE
 			boutput(src.owner, SPAN_ALERT(SPAN_BOLD(src.desc)))
@@ -3515,7 +3513,5 @@
 	onUpdate(timePassed)
 		if (prob(5))
 			src.stacks -= 0.5
-			//TODO: REMOVE THIS
-			boutput(world, "[src.owner] nausea level [src.stacks]")
 		if (src.stacks <= 0)
 			src.owner.delStatus(src)
