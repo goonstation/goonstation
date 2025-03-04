@@ -19,7 +19,7 @@ ABSTRACT_TYPE(/datum/vomit_behavior)
 /datum/vomit_behavior/blood
 	vomit(mob/M)
 		M.visible_message(SPAN_ALERT("[M] vomits a lot of blood!"))
-		bleed(H, rand(5,8))
+		bleed(M, rand(5,8))
 		return /obj/decal/cleanable/blood/splatter
 
 /datum/vomit_behavior/flock
