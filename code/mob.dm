@@ -2986,7 +2986,8 @@
 
 
 /mob/proc/nauseate(stacks = 1)
-	src.setStatus("nausea", INFINITE_STATUS, stacks)
+	if (isalive(src))
+		src.setStatus("nausea", INFINITE_STATUS, stacks)
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
 /mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!", var/selfMessage = null)
