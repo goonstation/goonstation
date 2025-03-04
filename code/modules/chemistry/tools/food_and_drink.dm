@@ -502,6 +502,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				boutput(H, pick(SPAN_ALERT("It takes all your willpower to keep that food down! You feel dizzy!"), SPAN_ALERT("The sensation of the displeasing chunk sliding down your throat makes you feel lightheaded!")))
 				H.make_dizzy(10)
 				H.change_misstep_chance(25)
+				H.nauseate(5)
 
 	proc/on_bite(mob/eater, mob/feeder, ethereal_eater)
 

@@ -596,10 +596,8 @@
 					M.changeStatus("knockdown", 3 SECONDS)
 					boutput(M, SPAN_ALERT("You feel weak."))
 					M.emote("collapse")
-				if(!ON_COOLDOWN(M, "radiation_vomit_check", 5 SECONDS) && prob(stage**2))
-					M.changeStatus("knockdown", 3 SECONDS)
-					boutput(M, SPAN_ALERT("You feel sick."))
-					M.vomit()
+				if(prob(min((stage + 3)**2), 40))
+					M.nauseate(1)
 
 			return ..(timePassed)
 
@@ -1771,23 +1769,23 @@
 		var/mob/living/L = owner
 		if(!isalive(L))
 			return
-		var/puke_prob = 0
+		var/nausea_prob = 0
 		var/tox = 0
 		switch(how_miasma)
 			if(1)
 				if(probmult(1))
 					L.emote("shudder")
 			if(2)
-				puke_prob = 0.2
+				nausea_prob = 10
 				tox = 0.05
 			if(3)
-				puke_prob = 0.5
+				nausea_prob = 15
 				tox = 0.2
 			if(4)
-				puke_prob = 1
+				nausea_prob = 20
 				tox = 0.45
 			if(5)
-				puke_prob = 2
+				nausea_prob = 25
 				tox = 0.7
 		if(ismobcritter(L))
 			var/mob/living/critter/critter = L
@@ -1797,9 +1795,8 @@
 		L.take_toxin_damage(tox * mult)
 		if(weighted_average > 4)
 			weighted_average = 0
-		if(probmult(puke_prob))
-			var/vomit_message = SPAN_ALERT("[L] pukes all over [himself_or_herself(L)].")
-			L.vomit(0, null, vomit_message)
+		if(probmult(nausea_prob))
+			L.nauseate(1)
 		return ..(timePassed)
 
 	proc/changeState()
@@ -2163,25 +2160,24 @@
 	onUpdate(var/timePassed)
 		var/mob/living/L = owner
 		var/tox = 0
-		var/puke_prob = 0
+		var/nausea_prob = 0
 		switch(timePassed)
 			if(0 to 20 SECONDS)
 				tox = 0.1
-				puke_prob = 0.5
+				nausea_prob = 5
 			if(20 SECONDS to 60 SECONDS)
 				tox = 0.4
-				puke_prob = 1
+				nausea_prob = 10
 			if(60 SECONDS to INFINITY)
 				tox = 1
-				puke_prob = 2
+				nausea_prob = 20
 		L.take_toxin_damage(tox)
 		if(prob(2))
 			L.emote(pick("groan", "moan", "shudder"))
 		if(prob(2))
 			L.change_eye_blurry(rand(5,10))
-		if(prob(puke_prob))
-			var/vomit_message = SPAN_ALERT("[L] pukes all over [himself_or_herself(L)].")
-			L.vomit(0, null, vomit_message)
+		if(prob(nausea_prob))
+			L.nauseate(1)
 
 	//firstly: sorry
 	//secondly: second arg is a proportional scale. 1 is standard, 5 is every port-a-puke tick, 10 is mass emesis.

@@ -16,15 +16,26 @@ ABSTRACT_TYPE(/datum/vomit_behavior)
 				new /mob/living/critter/spider/baby/nice(M)
 		return /obj/decal/cleanable/vomit/spiders
 
-/datum/vomit_behavior/ricin
+/datum/vomit_behavior/blood
 	vomit(mob/M)
 		M.visible_message(SPAN_ALERT("[M] vomits a lot of blood!"))
+		bleed(H, rand(5,8))
 		return /obj/decal/cleanable/blood/splatter
 
 /datum/vomit_behavior/flock
 	vomit(mob/M)
 		M.visible_message(SPAN_ALERT("[M] vomits up a viscous teal liquid!"), SPAN_ALERT("You vomit up a viscous teal liquid!"))
 		return /obj/decal/cleanable/flockdrone_debris/fluid
+
+/datum/vomit_behavior/green_goo
+	vomit(mob/M)
+		M.visible_message(SPAN_ALERT("[M] vomits up some green goo."))
+		return /obj/decal/cleanable/greenpuke
+
+/datum/vomit_behavior/owl
+	vomit(mob/M)
+		new /mob/living/critter/small_animal/bird/owl(get_turf(M))
+		M.visible_message(SPAN_ALERT("<b>[M] [pick("horks", "vomits", "spews")] up an Owl!</b>"))
 
 //this is a little bit dumb and should probably be separate behaviours but I want to maintain existing functionality exactly
 /datum/vomit_behavior/hyper

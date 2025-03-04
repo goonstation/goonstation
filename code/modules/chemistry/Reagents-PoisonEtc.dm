@@ -367,7 +367,7 @@ datum
 				if (!counter) counter = 1
 				counter += (1 * mult)
 				if (counter < 175)
-					M.remove_vomit_behavior(/datum/vomit_behavior/ricin)
+					M.remove_vomit_behavior(/datum/vomit_behavior/blood)
 				switch(counter)
 					if (75 to 125)
 						if(isliving(M) && probmult(15))
@@ -389,7 +389,7 @@ datum
 							if (H.organHolder)
 								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 25)
 					if (175 to INFINITY)
-						M.add_vomit_behavior(/datum/vomit_behavior/ricin)
+						M.add_vomit_behavior(/datum/vomit_behavior/blood)
 						if (probmult(10))
 							M.emote(pick("sneeze","drool","cough","moan","groan"))
 						if (probmult(20))
@@ -1395,16 +1395,14 @@ datum
 					M.take_toxin_damage(0.75 * mult)
 					random_brute_damage(M, 0.75 * mult)
 				else if (our_amt < 40)
-					if (probmult(8))
-						var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-						M.vomit(0, null, vomit_message)
+					if (probmult(20))
+						M.nauseate(1)
 					M.take_toxin_damage(1.25 * mult)
 					delimb_counter += 0.6 * mult
 					random_brute_damage(M, 1.25 * mult)
 				else
-					if (probmult(8))
-						var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-						M.vomit(0, null, vomit_message)
+					if (probmult(20))
+						M.nauseate(1)
 					M.take_toxin_damage(2 * mult)
 					delimb_counter += 1.5 * mult
 					random_brute_damage(M, 2 * mult)
@@ -1569,9 +1567,8 @@ datum
 											SPAN_ALERT("Your feel a numbness through your [pick("hands", "fingers")].."),\
 											SPAN_ALERT("Your vision [pick("gets all blurry", "goes fuzzy")]!"),\
 											SPAN_ALERT("You feel very sick!")))
-							if(prob(10)) //no need for probmult in here as it's already behind a probmult statement
-								var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-								M.vomit(0, null, vomit_message) //so dizzy you puke
+							if(prob(30)) //no need for probmult in here as it's already behind a probmult statement
+								M.nauseate(1)
 						else if(probmult(9))
 							M.setStatus("muted", 10 SECONDS)
 							boutput(M, pick(SPAN_ALERT("You feel like the words are getting caught up in your mouth!"),\
@@ -1730,16 +1727,26 @@ datum
 			fluid_b = 30
 			transparency = 255
 
-			on_mob_life(var/mob/M, var/mult = 1)
+			on_add()
+				if (ismob(holder.my_atom))
+					var/mob/mob = holder.my_atom
+					mob.add_vomit_behavior(/datum/vomit_behavior/green_goo)
 
-				if (!M) M = holder.my_atom
+			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/mob = holder.my_atom
+					mob.remove_vomit_behavior(/datum/vomit_behavior/green_goo)
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M)
+					M = holder.my_atom
 				if (prob(10))
 					M.take_toxin_damage(rand(2,4) * mult)
 				if (prob(7))
 					boutput(M, SPAN_ALERT("A horrible migraine overpowers you."))
 					M.setStatusMin("stunned", 3 SECONDS * mult)
-				if (probmult(7) && M.vomit(0, /obj/decal/cleanable/greenpuke, SPAN_ALERT("[M] vomits up some green goo.")))
-					playsound(M.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+				if (probmult(20))
+					M.nauseate(1)
 				..()
 
 		harmful/histamine
@@ -1892,9 +1899,8 @@ datum
 						M.take_toxin_damage(1 * mult)
 						M.take_brain_damage(1 * mult)
 						M.setStatusMin("knockdown", 5 SECONDS * mult)
-				if (probmult(8))
-					var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-					M.vomit(0, null, vomit_message)
+				if (probmult(20))
+					M.nauseate(1)
 				M.take_toxin_damage(1 * mult)
 				M.take_brain_damage(1 * mult)
 				M.TakeDamage("chest", 0, 1 * mult, 0, DAMAGE_BURN)
@@ -2284,9 +2290,8 @@ datum
 					if(probmult(25))
 						H.emote(pick_string("chemistry_reagent_messages.txt", "strychnine_deadly_emotes"))
 
-					if(probmult(10))
-						var/vomit_message = SPAN_ALERT("[H] pukes all over [himself_or_herself(H)].")
-						H.vomit(0, null, vomit_message)
+					if(probmult(25))
+						H.nauseate(1)
 					else if (prob(5) && !HAS_ATOM_PROPERTY(H, PROP_MOB_CANNOT_VOMIT))
 						var/damage = rand(1,10)
 						H.visible_message(SPAN_ALERT("[H] [damage > 3 ? "vomits" : "coughs up"] blood!"), SPAN_ALERT("You [damage > 3 ? "vomit" : "cough up"] blood!"))

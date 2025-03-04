@@ -95,6 +95,7 @@
 			return
 
 		occupant.TakeDamage("All", 10, 0, 0, DAMAGE_BLUNT)
+		occupant.nauseate(4)
 
 		if (prob(5))
 			visible_message(SPAN_ALERT("[occupant] pukes [his_or_her(occupant)] guts out!"))
@@ -116,9 +117,7 @@
 				if (O == occupant || isdead(O))
 					continue
 				O.show_message(SPAN_ALERT("<b>[occupant]</b> is puking over and over! It's all slimy and stringy. Oh god."), 1)
-				if (prob(66))
-					var/vomit_message = SPAN_ALERT("[O] pukes all over [himself_or_herself(O)].")
-					O.vomit(0, null, vomit_message)
+				O.nauseate(4,7)
 
 		if (prob(40))
 			SPAWN(0) // linter demands this
