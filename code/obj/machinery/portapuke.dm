@@ -112,12 +112,13 @@
 		if (prob(30))
 			boutput(occupant, SPAN_ALERT("You [pick("have a gut-wrenching sensation", "feel horribly sick", "feel like you're going to throw up", "feel like you're going to puke")]"))
 
+		for (var/mob/O in viewers(src, null))
+			if (O == occupant || isdead(O))
+				continue
+			O.nauseate(rand(1,3))
+
 		if (prob(25))
-			for (var/mob/O in viewers(src, null))
-				if (O == occupant || isdead(O))
-					continue
-				O.show_message(SPAN_ALERT("<b>[occupant]</b> is puking over and over! It's all slimy and stringy. Oh god."), 1)
-				O.nauseate(rand(4,7))
+			src.visible_message(SPAN_ALERT("<b>[occupant]</b> is puking over and over! It's all slimy and stringy. Oh god."), 1)
 
 		if (prob(40))
 			SPAWN(0) // linter demands this
