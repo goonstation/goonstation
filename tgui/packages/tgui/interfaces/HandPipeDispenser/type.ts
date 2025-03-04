@@ -5,6 +5,8 @@
  * @license MIT
  */
 
+import type { BooleanLike } from 'tgui-core/react';
+
 export type PipeData = {
   name: string;
   image: string; // base64
@@ -15,7 +17,7 @@ export type HandPipeDispenserData = {
   atmospipes: PipeData[];
   atmosmachines: PipeData[];
   selectedimage: string; // base64 image
-  destroying: boolean;
+  destroying: BooleanLike;
   selectedcost: number;
   resources: number;
   selecteddesc: string;
