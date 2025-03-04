@@ -303,7 +303,7 @@
 	id = "plasmalungs"
 	icon_state = "plasmalungs"
 	category = list("body")
-	points = 1
+	points = 2
 	afterlife_blacklisted = TRUE
 	disability_type = TRAIT_DISABILITY_MAJOR
 	disability_name = "Plasma Lungs"
