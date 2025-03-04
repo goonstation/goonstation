@@ -1,4 +1,7 @@
 
+(t)tue mar 04 25
+(u)Sord
+(+)Plasma Lungs trait grants 2 points instead of only 1.
 (t)mon mar 03 25
 (u)Mordent
 (p)22476
