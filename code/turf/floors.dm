@@ -23,8 +23,6 @@
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
 	var/tmp/roundstart_icon_state
 	var/tmp/roundstart_dir
-	// Variable which only really exists for the sake of Grass Gro reversion, so it doesn't permanently sound like you're walking on grass
-	var/tmp/roundstart_step_material
 	/// if this turf is immune to explosion (explosion immune turfs immediately return on ex_act())
 	var/explosion_immune = FALSE
 	///Things that are hidden "in" this turf that are revealed when it is pried up.
@@ -35,7 +33,6 @@
 		..()
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
-		roundstart_step_material = step_material
 		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			switch(src.icon_state)
@@ -1585,22 +1582,21 @@ TYPEINFO(/turf/simulated/floor/grass)
 
 /turf/simulated/floor/grassify()
 	src.icon = 'icons/turf/outdoors.dmi'
-	src.icon_state = "grass"
+	src.icon_state = pick("grass_0", "grass_1", "grass_2", "grass_3")
 	src.UpdateIcon()
 	if(prob(30))
-		src.icon_state += pick("_p", "_w", "_b", "_y", "_r", "_a")
+		src.icon_state = pick("grass_p", "grass_w", "grass_b", "grass_y", "grass_r", "grass_a")
 	src.name = "grass"
-	src.set_dir(pick(cardinal))
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
 /turf/unsimulated/floor/grassify()
 	src.icon = 'icons/turf/outdoors.dmi'
-	src.icon_state = "grass"
+	src.icon_state = pick("grass_0", "grass_1", "grass_2", "grass_3")
+	src.UpdateIcon()
 	if(prob(30))
-		src.icon_state += pick("_p", "_w", "_b", "_y", "_r", "_a")
+		src.icon_state = pick("grass_p", "grass_w", "grass_b", "grass_y", "grass_r", "grass_a")
 	src.name = "grass"
-	src.set_dir(pick(cardinal))
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
@@ -2032,8 +2028,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 	if (ispryingtool(C))
 		if(src.name == "grass")
-			src.set_dir(roundstart_dir)
-			src.step_material = roundstart_step_material
+			src.step_material = initial(step_material)
 		src.pry_tile(C,user,params)
 		return
 
@@ -2074,8 +2069,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			src.Attackby(P, user, newParams)
 			do_hide = FALSE //don't stuff things under the floor if we're just swapping/replacing a broken tile
 			if(src.name == "grass")
-				src.set_dir(roundstart_dir)
-				src.step_material = roundstart_step_material
+				src.step_material = initial(step_material)
 
 		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)
