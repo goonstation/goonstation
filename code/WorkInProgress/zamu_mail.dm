@@ -453,7 +453,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/clothing/head/helmet/camera = 3,
 		),
 
-	/datum/job/research/medical_doctor = list(
+	/datum/job/medical/medical_doctor = list(
 		/obj/item/reagent_containers/mender/brute = 5,
 		/obj/item/reagent_containers/mender/burn = 5,
 		/obj/item/reagent_containers/mender/both = 3,
@@ -471,7 +471,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/reagent_containers/emergency_injector/random = 2,
 		),
 
-	/datum/job/research/roboticist = list(
+	/datum/job/medical/roboticist = list(
 		/obj/item/reagent_containers/mender/brute = 5,
 		/obj/item/reagent_containers/mender/burn = 5,
 		/obj/item/reagent_containers/mender/both = 3,
@@ -485,7 +485,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/sheet/steel/fullstack = 2,
 		),
 
-	/datum/job/research/geneticist = list(
+	/datum/job/medical/geneticist = list(
 		// so you can keep looking at your screen,
 		// even in the brightness of nuclear hellfire o7
 		/obj/item/clothing/glasses/sunglasses/tanning = 10,
