@@ -1148,6 +1148,10 @@ datum
 			overdose = 100
 			threshold = THRESHOLD_INIT
 
+			on_mob_life(var/mob/M, var/mult = 1)
+				. = ..()
+				M.nauseate(-1)
+
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom

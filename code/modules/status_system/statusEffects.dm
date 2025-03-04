@@ -3482,6 +3482,8 @@
 	var/vomiting = FALSE
 
 	onChange(optional)
+		if (src.stacks > 20 && optional > 0)
+			return
 		src.stacks += optional
 		var/old_desc = src.desc
 		switch(src.stacks)
@@ -3505,7 +3507,10 @@
 				var/mob/vomitee = src.owner
 				vomitee.vomit()
 		else if (old_desc != src.desc)
-			boutput(src.owner, SPAN_ALERT(src.desc))
+			if (optional > 0)
+				boutput(src.owner, SPAN_ALERT(src.desc))
+			else
+				boutput(src.owner, SPAN_NOTICE("You feel a little less sick."))
 
 	onUpdate(timePassed)
 		if (prob(5))
