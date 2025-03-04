@@ -1473,6 +1473,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 				boutput(M, "[src.ship.ship_message("[src.ship.m_w_system] has been swapped out for [src.loaded_wep].")]")
 			else if (src.ship.m_w_system)
 				boutput(M, "[src.ship.ship_message("[src.ship.m_w_system] has been swapped out.")]")
+				src.ship.UpdateOverlays(null, "mainweapon") //todo: make pod components actually clean up their own overlays
 			else
 				boutput(M, "[src.ship.ship_message("[src.loaded_wep] has been swapped in.")]")
 
