@@ -2186,6 +2186,8 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	name = "NTSO Tactical Badge"
 	desc = "An official badge for an NTSO operator, with a miniaturized shield projector. Small enough to be used as a backup power cell in a pinch."
 	tooltip_flags = REBUILD_ALWAYS
+	icon_state = "security_badge_shielded"
+	item_state = "security_badge_shielded"
 
 	get_desc()
 		. = ..()
