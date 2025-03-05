@@ -115,3 +115,30 @@ TYPEINFO(/datum/component/assembly)
 	user.put_in_hand_or_drop(product)
 	boutput(user, SPAN_NOTICE("You finish the construction of [product.name]."))
 	return TRUE
+
+/// this component checks assembly_cant_be_removed() on the parent, but behaves exactly the same otherwise
+/datum/component/assembly/consumes_self
+
+/datum/component/assembly/consumes_self/try_combination(var/atom/checked_atom, var/mob/user)
+	var/atom/movable/movable_parent = src.parent
+	if(movable_parent.assembly_cant_be_removed())
+		return FALSE
+	. = ..(checked_atom, user)
+/// this component checks assembly_cant_be_removed() on the other atom used, but behaves exactly the same otherwise
+/datum/component/assembly/consumes_other
+
+/datum/component/assembly/consumes_other/try_combination(var/atom/checked_atom, var/mob/user)
+	var/atom/movable/movable_checked_atom = checked_atom
+	if(movable_checked_atom.assembly_cant_be_removed())
+		return FALSE
+	. = ..(checked_atom, user)
+
+/// this component checks assembly_cant_be_removed() on all atoms involved, but behaves exactly the same otherwise
+/datum/component/assembly/consumes_all
+
+/datum/component/assembly/consumes_all/try_combination(var/atom/checked_atom, var/mob/user)
+	var/atom/movable/movable_parent = src.parent
+	var/atom/movable/movable_checked_atom = checked_atom
+	if(movable_checked_atom.assembly_cant_be_removed() || movable_parent.assembly_cant_be_removed())
+		return FALSE
+	. = ..(checked_atom, user)

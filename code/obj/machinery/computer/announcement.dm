@@ -67,7 +67,7 @@
 			"max_length" = src.max_length
 		)
 
-	ui_act(action, params)
+	ui_act(action, params, datum/tgui/ui)
 		. = ..()
 		if (.)
 			return
@@ -102,7 +102,7 @@
 				src.set_arrival_alert(usr, params["value"])
 				. = TRUE
 			if ("log")
-				logTheThing(LOG_STATION, usr, "Sets an announcement message to \"[params["value"]]\" from \"[params["old"]]\".")
+				logTheThing(LOG_STATION, ui.user, "Sets an announcement message to \"[params["value"]]\" from \"[params["old"]]\".")
 
 	proc/update_status()
 		if(!src.ID)

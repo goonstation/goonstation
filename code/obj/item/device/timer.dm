@@ -109,7 +109,7 @@ TYPEINFO(/obj/item/device/timer)
 				src.c_state(1)
 		else
 			time()
-			src.time = 0
+			src.time = src.min_time
 			src.timing = FALSE
 			src.last_tick = 0
 
@@ -151,6 +151,7 @@ TYPEINFO(/obj/item/device/timer)
 			src.set_time(round(time))
 			. = TRUE
 		if ("toggle-timing")
+			src.time = max(src.get_min_time(), src.time)
 			src.timing = !src.timing
 			if(src.timing)
 				src.c_state(1)

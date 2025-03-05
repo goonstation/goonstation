@@ -70,6 +70,7 @@
 /obj/item/shipcomponent/mainweapon/proc/Fire(var/mob/user,var/shot_dir_override = -1)
 	if(ON_COOLDOWN(src, "fire", firerate))
 		return
+	EXTEND_COOLDOWN(src, "weapon_swap_cd", 10 SECONDS)
 	if(uses_ammunition)
 		if (remaining_ammunition < ship.AmmoPerShot())
 			boutput(user, "[ship.ship_message("You need [ship.AmmoPerShot()] to fire the weapon. You currently have [remaining_ammunition] loaded.")]")
@@ -270,6 +271,17 @@
 	icon_state = "assult-laser"
 	muzzle_flash = "muzzle_flash_laser"
 
+/obj/item/shipcomponent/mainweapon/hammer_railgun
+	name = "Hammerhead Railgun"
+	desc = "A powerful wall-piercing railgun designed for siege operations."
+	firerate = 5 SECONDS
+	power_used = 100
+	current_projectile = new/datum/projectile/bullet/hammer_railgun
+	weapon_score = 1.5
+	appearanceString = "pod_weapon_hammer_railgun"
+	icon_state = "hammer-railgun"
+	muzzle_flash = "muzzle_flash_launch"
+
 /obj/item/shipcomponent/mainweapon/rockdrills
 	name = "Rock Drilling Rig"
 	desc = "A sturdy drill designed for chewing up asteroids like nobodies business."
@@ -375,6 +387,7 @@
 			if(0)
 				if(ON_COOLDOWN(src, "fire", firerate))
 					return
+				EXTEND_COOLDOWN(src, "weapon_swap_cd", 10 SECONDS)
 				var/obj/decal/D = new/obj/decal(ship.loc)
 				D.set_dir(ship.dir)
 				if (shot_dir_override > 1)
@@ -525,6 +538,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			if(EFIF_MODE_FLOORS to EFIF_MODE_WALLS)
 				if(ON_COOLDOWN(src, "fire", firerate))
 					return
+				EXTEND_COOLDOWN(src, "weapon_swap_cd", 10 SECONDS)
 				if(length(src.active_fields) >= 1)
 					return
 				if(!src.check_sheets())
@@ -544,6 +558,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			if(EFIF_MODE_REPAIR)
 				if(ON_COOLDOWN(src, "fire", firerate))
 					return
+				EXTEND_COOLDOWN(src, "weapon_swap_cd", 10 SECONDS)
 				if(length(src.active_fields) >= 1)
 					return
 
@@ -1069,6 +1084,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	Fire(var/mob/user,var/shot_dir_override = -1)
 		if(ON_COOLDOWN(src, "fire", firerate))
 			return
+		EXTEND_COOLDOWN(src, "weapon_swap_cd", 10 SECONDS)
 		if(!core_inserted)
 			boutput(ship.pilot, SPAN_ALERT("<B>The weapon requires a unique power source to function!</B>"))
 			return

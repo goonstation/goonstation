@@ -723,7 +723,7 @@
 
 	attack(var/mob/target, var/mob/user)
 		user.lastattacked = target
-		target.lastattacker = user
+		target.lastattacker = get_weakref(user)
 		target.lastattackertime = world.time
 
 
