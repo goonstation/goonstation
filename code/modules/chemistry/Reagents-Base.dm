@@ -190,9 +190,8 @@
 						step(H, pick(cardinal))
 					if(prob(4))
 						H.change_misstep_chance(20 * mult)
-					if(probmult(6))
-						var/vomit_message = SPAN_ALERT("[H] pukes all over [himself_or_herself(H)].")
-						H.vomit(0, null, vomit_message)
+					if(probmult(10 + (ethanol_amt / 4)))
+						H.nauseate(1)
 					if(prob(15))
 						H.make_dizzy(5 * mult)
 				if (ethanol_amt >= 60)
@@ -297,15 +296,9 @@
 			if(prob(10))
 				H.take_oxygen_deprivation(-1 * mult)
 	do_overdose(var/severity, var/mob/M, var/mult = 1)
-		M.take_toxin_damage(1 * mult) // Iron overdose fucks you up bad
-		if(probmult(5))
-			if (M.nutrition > 10) // Not good for your stomach either
-				var/vomit_message = SPAN_ALERT("[M] vomits on the floor profusely!")
-				M.vomit(0, null, vomit_message)
-				M.nutrition -= rand(3,5)
-				M.take_toxin_damage(10) // im bad
-				M.setStatusMin("stunned", 3 SECONDS * mult)
-				M.setStatusMin("knockdown", 3 SECONDS * mult)
+		M.take_toxin_damage(2 * mult) // Iron overdose fucks you up bad
+		if(probmult(30))
+			M.nauseate(2)
 
 /datum/reagent/lithium
 	name = "lithium"

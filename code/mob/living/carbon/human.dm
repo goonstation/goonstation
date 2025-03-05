@@ -1450,9 +1450,9 @@
 
 	if (src.bioHolder.HasEffect("food_bad_breath"))
 		for (var/mob/living/L in oview(2,src))
-			if (prob(20))
+			if (prob(50))
 				boutput(L, SPAN_ALERT("Good lord, [src]'s breath smells bad!"))
-				L.vomit()
+				L.nauseate(1)
 
 
 	if (src.stamina < STAMINA_WINDED_SPEAK_MIN && !ignore_stamina_winded)

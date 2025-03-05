@@ -973,10 +973,9 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				for (var/mob/M in AIviewers(user, null))
 					if (M != user)
 						M.show_message(SPAN_NOTICE("<b>[user]</b> is sticking their fingers into [src] and pushing it into [I]. It's all slimy and stringy. Oh god."), 1)
-						if (prob(33) && ishuman(M) && !isdead(M))
+						if (ishuman(M) && !isdead(M))
 							M.show_message(SPAN_ALERT("You feel ill from watching that."))
-							var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-							M.vomit(0, null, vomit_message)
+							M.nauseate(rand(2,4)) //this may be a bad idea
 
 				I.reagents.handle_reactions()
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)

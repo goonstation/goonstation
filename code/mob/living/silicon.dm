@@ -70,6 +70,9 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 /mob/living/silicon/can_drink()
 	return FALSE
 
+/mob/living/silicon/nauseate(stacks)
+	return
+
 ///mob/living/silicon/proc/update_canmove()
 //	..()
 	//canmove = !(src.hasStatus(list("knockdown", "unconscious", "stunned")) || buckled)

@@ -925,10 +925,7 @@ datum
 					boutput(M, SPAN_ALERT("Ugh! Why did you drink that?!"))
 					M.setStatusMin("stunned", 3 SECONDS)
 					M.setStatusMin("knockdown", 3 SECONDS)
-					if (prob(25))
-
-						M.visible_message(SPAN_ALERT("[M] horks all over [himself_or_herself(M)]. Gross!"))
-						M.vomit()
+					M.nauseate(5)
 
 
 		fooddrink/alcoholic/whiskey_sour
@@ -1354,9 +1351,7 @@ datum
 					M.setStatusMin("knockdown", 3 SECONDS)
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
-					if (prob(10))
-						M.visible_message(SPAN_ALERT("[M] horks all over [himself_or_herself(M)]. Gross!"))
-						M.vomit()
+					L.nauseate(6)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -1382,9 +1377,8 @@ datum
 				flush(holder, 4.8 * mult)
 				if(M.health > 10)
 					M.take_toxin_damage(2 * mult)
-				if(probmult(20))
-					var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)]!")
-					M.vomit(0, null, vomit_message)
+				if(probmult(40))
+					M.nauseate(2)
 				if(probmult(10))
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
@@ -4469,6 +4463,18 @@ datum
 			transparency = 255
 			taste = "like the surface of the sun"
 
+			on_add()
+				if (ismob(holder.my_atom))
+					RegisterSignal(holder.my_atom, COMSIG_MOB_VOMIT, PROC_REF(on_vomit))
+
+			proc/on_vomit()
+				boutput(holder.my_atom, SPAN_NOTICE("Thank goodness. You're not sure how long you could have held out with heat that intense!"))
+				holder.my_atom.reagents.del_reagent("ghostchilijuice")
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					UnregisterSignal(holder.my_atom, COMSIG_MOB_VOMIT)
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				//If the user drinks milk, they'll be fine.
@@ -4486,11 +4492,9 @@ datum
 					boutput(M, SPAN_ALERT("Why!? WHY!?"))
 				if(probmult(8))
 					boutput(M, SPAN_ALERT("ARGHHHH!"))
-				if(probmult(33))
-					M.visible_message(SPAN_ALERT("[M] suddenly and violently vomits!"))
-					M.vomit()
-					boutput(M, SPAN_NOTICE("Thank goodness. You're not sure how long you could have held out with heat that intense!"))
-					M.reagents.del_reagent("ghostchilijuice")
+				if(probmult(50))
+					M.nauseate(2)
+
 				if(probmult(min(10,5 * volume)))
 					boutput(M, SPAN_ALERT("<b>OH GOD OH GOD PLEASE NO!!</b>"))
 					var/mob/living/L = M
