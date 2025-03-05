@@ -51,11 +51,11 @@ interface CommonViewData {
   num_extractables: number;
   num_seeds: number;
   output_externally: BooleanLike;
-  splice_chance;
+  splice_chance: number;
   show_splicing;
   splice_seeds: [SeedData, SeedData];
-  sortBy;
-  sortAsc;
+  sortBy: string | null;
+  sortAsc: BooleanLike;
   allow_infusion: BooleanLike;
 }
 

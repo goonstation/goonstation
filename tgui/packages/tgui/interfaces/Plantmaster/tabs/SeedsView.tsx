@@ -34,7 +34,7 @@ export const SeedsView = () => {
   } = data;
   const [page, setPage] = useState(1);
   const sortedSeeds = (seeds || []).sort((a, b) =>
-    compare(a, b, sortBy, sortAsc),
+    compare(a, b, sortBy, !!sortAsc),
   );
   const seedsPerPage = show_splicing ? 7 : 10;
   const totalPages = Math.max(1, Math.ceil(sortedSeeds.length / seedsPerPage));
@@ -93,7 +93,7 @@ export const SeedsView = () => {
           }
         >
           <Table>
-            <TitleRow show_damage sortBy={sortBy} sortAsc={sortAsc} />
+            <TitleRow showDamage sortBy={sortBy} sortAsc={!!sortAsc} />
             {seedsOnPage.map((extractable) => (
               <Row
                 allow_infusion={allow_infusion}
@@ -124,10 +124,10 @@ export const SeedsView = () => {
             }
           >
             <Table>
-              <TitleRow show_damage sortBy={sortBy} sortAsc={sortAsc} />
+              <TitleRow showDamage sortBy={sortBy} sortAsc={!!sortAsc} />
               {splice_seeds
                 .filter((x) => x !== null)
-                .sort((a, b) => compare(a, b, sortBy, sortAsc))
+                .sort((a, b) => compare(a, b, sortBy, !!sortAsc))
                 .map((extractable) => (
                   <Row
                     allow_infusion={allow_infusion}

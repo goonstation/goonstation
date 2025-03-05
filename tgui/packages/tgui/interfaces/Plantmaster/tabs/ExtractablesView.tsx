@@ -20,7 +20,7 @@ export const ExtractablesView = () => {
     data;
   const [page, setPage] = useState(1);
   const sortedExtractables = (extractables || []).sort((a, b) =>
-    compare(a, b, sortBy, sortAsc),
+    compare(a, b, sortBy, !!sortAsc),
   );
   const extractablesPerPage = 10;
   const totalPages = Math.max(
@@ -81,7 +81,7 @@ export const ExtractablesView = () => {
       }
     >
       <Table>
-        <TitleRow sortBy={sortBy} sortAsc={sortAsc} />
+        <TitleRow sortBy={sortBy} sortAsc={!!sortAsc} />
         {extractablesOnPage.map((extractable) => (
           <Row
             allow_infusion={allow_infusion}

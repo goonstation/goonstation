@@ -207,7 +207,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 
 			if("sort")
 				src.sort = params["sortBy"]
-				src.sortAsc = text2num(params["asc"])
+				src.sortAsc = params["asc"]
 				. = TRUE
 
 			if("analyze")

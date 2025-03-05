@@ -45,15 +45,21 @@ const sortname = [
   '',
 ];
 
-export const TitleRow = (props) => {
+interface TitleRowProps {
+  showDamage?: boolean;
+  sortAsc: boolean;
+  sortBy?: string | null;
+}
+
+export const TitleRow = (props: TitleRowProps) => {
   const { act } = useBackend<PlantmasterData>();
-  const { show_damage, sortBy, sortAsc } = props;
+  const { showDamage, sortBy, sortAsc } = props;
 
   return (
     <Table.Row className="candystripe">
       {headings.map(
         (heading, index) =>
-          (show_damage || (heading !== 'damage' && heading !== 'count')) && (
+          (showDamage || (heading !== 'damage' && heading !== 'count')) && (
             <Table.Cell key={heading} textAlign="center">
               <Button
                 color="transparent"
@@ -67,7 +73,7 @@ export const TitleRow = (props) => {
                 onClick={() =>
                   act('sort', {
                     sortBy: sortname[index],
-                    asc: sortBy === sortname[index] ? !sortAsc : sortAsc,
+                    asc: sortBy === sortname[index] ? !sortAsc : true,
                   })
                 }
               >
