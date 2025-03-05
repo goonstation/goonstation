@@ -50,7 +50,7 @@ interface CommonViewData {
   inserted_container;
   num_extractables: number;
   num_seeds: number;
-  seedoutput;
+  output_externally: BooleanLike;
   splice_chance;
   show_splicing;
   splice_seeds: [SeedData, SeedData];

@@ -24,7 +24,7 @@ export const SeedsView = () => {
   const { act, data } = useBackend<SeedsViewData>();
   const {
     allow_infusion,
-    seedoutput,
+    output_externally,
     seeds,
     show_splicing,
     splice_seeds,
@@ -83,9 +83,9 @@ export const SeedsView = () => {
                 onClick={() => setPage(page + 1)}
               />
               <Button.Checkbox
-                checked={!seedoutput}
+                checked={!output_externally}
                 tooltip="Seeds will be extracted into the Plantmaster."
-                onClick={() => act('outputmode')}
+                onClick={() => act('toggle-output-mode')}
               >
                 Output Internally
               </Button.Checkbox>

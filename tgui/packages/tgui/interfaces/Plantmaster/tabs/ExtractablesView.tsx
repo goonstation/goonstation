@@ -16,7 +16,8 @@ import type { ExtractablesViewData } from '../type';
 
 export const ExtractablesView = () => {
   const { act, data } = useBackend<ExtractablesViewData>();
-  const { allow_infusion, seedoutput, extractables, sortBy, sortAsc } = data;
+  const { allow_infusion, output_externally, extractables, sortBy, sortAsc } =
+    data;
   const [page, setPage] = useState(1);
   const sortedExtractables = (extractables || []).sort((a, b) =>
     compare(a, b, sortBy, sortAsc),
@@ -70,9 +71,9 @@ export const ExtractablesView = () => {
             onClick={() => setPage(page + 1)}
           />
           <Button.Checkbox
-            checked={!seedoutput}
+            checked={!output_externally}
             tooltip="Seeds will be extracted into the Plantmaster."
-            onClick={() => act('outputmode')}
+            onClick={() => act('toggle-output-mode')}
           >
             Output Internally
           </Button.Checkbox>
