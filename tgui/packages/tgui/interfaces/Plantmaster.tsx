@@ -87,7 +87,6 @@ interface CommonItemData {
 interface SeedData extends CommonItemData {
   damage: DominantDataTuple<number, 0>;
   splicing: DominantDataTuple<'splicing'>;
-  allow_infusion;
 }
 
 const isSeedData = (data: CommonItemData): data is SeedData => 'damage' in data;
@@ -105,6 +104,7 @@ interface CommonViewData {
   splice_seeds: [SeedData, SeedData];
   sortBy;
   sortAsc;
+  allow_infusion: BooleanLike;
 }
 
 interface SeedsViewData extends CommonViewData {
@@ -126,6 +126,7 @@ type PlantmasterData = OverviewViewData | SeedsViewData | ExtractablesViewData;
 export const Plantmaster = () => {
   const { act, data } = useBackend<PlantmasterData>();
   const {
+    allow_infusion,
     category,
     category_lengths,
     inserted,
@@ -193,6 +194,7 @@ export const Plantmaster = () => {
             )}
             {category === 'extractables' && (
               <PlantExtractables
+                allow_infusion={allow_infusion}
                 seedoutput={seedoutput}
                 produce={data.extractables}
                 sortBy={sortBy}
@@ -203,6 +205,7 @@ export const Plantmaster = () => {
             )}
             {category === 'seedlist' && (
               <PlantSeeds
+                allow_infusion={allow_infusion}
                 seeds={data.seeds}
                 seedoutput={seedoutput}
                 splicing={show_splicing}
@@ -307,19 +310,26 @@ const TitleRow = (props) => {
   );
 };
 
-interface PlantRowProps {
+type PlantRowProps = Pick<PlantmasterData, 'allow_infusion'> & {
   extractable: ExtractableData;
   show_damage?: boolean;
   infuse?: boolean;
   extract?: boolean;
   splice?: boolean;
   splice_disable?: boolean;
-}
+};
 
 const PlantRow = (props: PlantRowProps) => {
   const { act } = useBackend<PlantmasterData>();
-  const { extractable, show_damage, infuse, extract, splice, splice_disable } =
-    props;
+  const {
+    allow_infusion,
+    extractable,
+    show_damage,
+    infuse,
+    extract,
+    splice,
+    splice_disable,
+  } = props;
   return (
     <Table.Row className="candystripe">
       <Table.Cell width="100px" textAlign="center">
@@ -438,7 +448,7 @@ const PlantRow = (props: PlantRowProps) => {
           <Button
             icon="fill-drip"
             tooltip="Infuse"
-            disabled={!extractable.allow_infusion[1]}
+            disabled={!allow_infusion}
             onClick={() => act('infuse', { infuse_ref: extractable.ref[0] })}
           />
         )}
@@ -477,7 +487,7 @@ const PlantRow = (props: PlantRowProps) => {
   );
 };
 
-type PlantSeedsProps = Pick<SeedsViewData, 'seeds'> & {
+type PlantSeedsProps = Pick<SeedsViewData, 'allow_infusion' | 'seeds'> & {
   seedoutput;
   splicing;
   splice_seeds;
@@ -491,6 +501,7 @@ type PlantSeedsProps = Pick<SeedsViewData, 'seeds'> & {
 const PlantSeeds = (props: PlantSeedsProps) => {
   const { act } = useBackend<PlantmasterData>();
   const {
+    allow_infusion,
     seedoutput,
     seeds,
     splicing,
@@ -567,6 +578,7 @@ const PlantSeeds = (props: PlantSeedsProps) => {
             <TitleRow show_damage sortBy={sortBy} sortAsc={sortAsc} />
             {extractablesOnPage.map((extractable) => (
               <PlantRow
+                allow_infusion={allow_infusion}
                 extractable={extractable}
                 key={extractable.ref[1]}
                 show_damage
@@ -600,6 +612,7 @@ const PlantSeeds = (props: PlantSeedsProps) => {
                 .sort((a, b) => compare(a, b, sortBy, sortAsc))
                 .map((extractable) => (
                   <PlantRow
+                    allow_infusion={allow_infusion}
                     extractable={extractable}
                     key={extractable.ref[1]}
                     show_damage
@@ -615,9 +628,26 @@ const PlantSeeds = (props: PlantSeedsProps) => {
   );
 };
 
-const PlantExtractables = (props, context) => {
+type PlantExtractablesProps = Pick<
+  ExtractablesViewData,
+  'allow_infusion' | 'seedoutput' | 'sortAsc' | 'sortBy'
+> & {
+  page: number;
+  setPage: (value: number) => void;
+  produce: ExtractablesViewData['extractables'];
+};
+
+const PlantExtractables = (props: PlantExtractablesProps) => {
   const { act } = useBackend<PlantmasterData>();
-  const { seedoutput, produce, sortBy, sortAsc, page, setPage } = props;
+  const {
+    allow_infusion,
+    seedoutput,
+    produce,
+    sortBy,
+    sortAsc,
+    page,
+    setPage,
+  } = props;
   const extractables = (produce || []).sort((a, b) =>
     compare(a, b, sortBy, sortAsc),
   );
@@ -683,6 +713,7 @@ const PlantExtractables = (props, context) => {
         <TitleRow sortBy={sortBy} sortAsc={sortAsc} />
         {extractablesOnPage.map((extractable) => (
           <PlantRow
+            allow_infusion={allow_infusion}
             extractable={extractable}
             key={extractable.ref[1]}
             extract
