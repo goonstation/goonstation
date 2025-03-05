@@ -1,4 +1,12 @@
-import { BooleanLike } from 'tgui-core/react';
+/**
+ * @file
+ * @copyright 2022
+ * @author Original Amylizzle (https://github.com/amylizzle)
+ * @author Changes Mordent (https://github.com/mordent-goonstation)
+ * @license MIT
+ */
+
+import type { BooleanLike } from 'tgui-core/react';
 
 export enum PlantmasterTab {
   Overview = 'overview',
