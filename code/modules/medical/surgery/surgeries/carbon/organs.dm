@@ -13,7 +13,7 @@
 	id = "head_surgery"
 	name = "Head Surgery"
 	desc = "Perform surgery on the patient's head"
-	default_sub_surgeries = list(/datum/surgery/organ/eye/left, /datum/surgery/organ/eye/right, /datum/surgery/organ/brain)
+	default_sub_surgeries = list(/datum/surgery/organ/eye/left, /datum/surgery/organ/eye/right, /datum/surgery/organ/brain,/datum/surgery/cauterize/head)
 	visible = FALSE
 	implicit = TRUE
 	affected_zone = "head"
@@ -73,7 +73,7 @@
 
 /datum/surgery/lower_back
 	id = "lower_back_surgery"
-	name = "Lower Back Removal"
+	name = "Lower Back Surgery"
 	desc = "Remove the patients' tail or butt."
 	default_sub_surgeries = list(/datum/surgery/organ/butt, /datum/surgery/organ/replace/butt,
 		/datum/surgery/organ/tail, /datum/surgery/organ/replace/tail
@@ -88,6 +88,17 @@
 		if (surgeon?.a_intent != INTENT_GRAB)
 			return FALSE
 		return ..()
+
+	// Show a context menu, even when shortcut
+	do_shortcut(mob/surgeon, obj/item/I)
+		var/result = ..()
+		if (result)
+			return result
+		else
+			var/contexts = get_surgery_contexts(surgeon, FALSE)
+			if (length(contexts) > 0)
+				enter_surgery(surgeon)
+				return TRUE
 
 
 /datum/surgery/organ
@@ -235,6 +246,7 @@
 		desc = "Remove the patients' butt."
 		icon_state = "butt"
 		organ_var_name = "butt"
+		exit_when_finished = TRUE
 
 		infer_surgery_stage()
 			var/mob/living/carbon/human/C = patient
@@ -245,6 +257,8 @@
 			if (surgeon?.a_intent != INTENT_GRAB)
 				return FALSE
 			return ..()
+		on_cancel(mob/user, obj/item/I)
+			return
 		generate_surgery_steps(mob/living/surgeon, mob/user)
 			add_next_step(new /datum/surgery_step/organ/remove/saw(src, organ_var_name))
 	skull
@@ -266,7 +280,8 @@
 			if (surgeon.a_intent == INTENT_HARM)
 				return FALSE
 			return TRUE
-
+		on_cancel(mob/user, obj/item/I)
+			return
 		infer_surgery_stage()
 			var/mob/living/carbon/human/C = patient
 			var/organ = C.organHolder.get_organ(organ_var_name)
@@ -281,6 +296,7 @@
 		desc = "Remove the patients' tail."
 		icon_state = "tail"
 		organ_var_name = "tail"
+		exit_when_finished = TRUE
 		infer_surgery_stage()
 			var/mob/living/carbon/human/C = patient
 			var/organ = C.organHolder.get_organ(organ_var_name)

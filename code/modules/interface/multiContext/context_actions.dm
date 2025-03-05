@@ -2194,6 +2194,7 @@
 	New(var/datum/surgeryHolder/holder, var/datum/surgery/surgery)
 		src.holder = holder
 		src.surgery = surgery
+		name = "Cancel [surgery.name]"
 		..()
 	execute(atom/target, mob/user)
 		..()

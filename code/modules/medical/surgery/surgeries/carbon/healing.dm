@@ -58,3 +58,90 @@
 		if (patient.bleeding > 0)
 			return TRUE
 		return FALSE
+
+/datum/surgery/cauterize
+	surgery_check(mob/living/surgeon, obj/item/tool)
+		return TRUE
+	on_complete(mob/living/surgeon, mob/user)
+		if (patient.bleeding)
+			repair_bleeding_damage(patient, 50, rand(1,3))
+	head
+		name = "Cauterize - Head"
+		desc = "Undo head surgery with a cautery."
+		implicit = TRUE
+		visible = FALSE
+
+		infer_surgery_stage()
+			surgery_steps[1].finished = (patient.surgeryHolder.get_surgery_progress("brain_surgery") == 0)
+
+		surgery_possible(mob/living/surgeon)
+			if (surgeon.zone_sel.selecting != "head" || !patient.organHolder || !patient.organHolder?.head || patient.surgeryHolder.get_surgery_progress("brain_surgery") == 0)
+				return FALSE
+			. = ..()
+
+		generate_surgery_steps(mob/living/surgeon, mob/user)
+			add_next_step( new/datum/surgery_step/cauterize/head(src))
+
+		on_complete(mob/living/surgeon, mob/user)
+			patient.surgeryHolder.cancel_surgery("brain_surgery", surgeon, user)
+			..()
+
+	bleeding
+		infer_surgery_stage()
+			surgery_steps[1].finished = (patient.bleeding == 0)
+
+		generate_surgery_steps(mob/living/surgeon, mob/user)
+			add_next_step( new/datum/surgery_step/cauterize/bleeding(src))
+
+
+/datum/surgery/sutures
+	default_sub_surgeries = list(/datum/surgery/suture/head, /datum/surgery/suture/torso, /datum/surgery/suture/r_leg, /datum/surgery/suture/l_leg, /datum/surgery/suture/r_arm, /datum/surgery/suture/l_arm)
+	name = "Suture"
+	desc = "Suture the head, torso, legs, or arms shut."
+	implicit = TRUE
+	visible = FALSE
+
+
+/datum/surgery/suture
+	name = "Suture"
+	icon_state = "suture"
+	implicit = TRUE
+	visible = FALSE
+	surgery_possible(mob/living/surgeon)
+		if (surgeon.zone_sel.selecting != affected_zone)
+			return FALSE
+		var/list/datum/surgery/surgeries = holder.get_surgeries_by_zone(affected_zone)
+		for (var/datum/surgery/surgery in surgeries)
+			if (surgery.get_surgery_progress() > 0)
+				return TRUE
+
+	head
+		desc = "Suture the head shut."
+		affected_zone = "head"
+		generate_surgery_steps(mob/living/surgeon, mob/user)
+			add_next_step(new /datum/surgery_step/suture/head(src))
+	torso
+		desc = "Suture the torso shut."
+		affected_zone = "chest"
+		generate_surgery_steps(mob/living/surgeon, mob/user)
+			add_next_step(new /datum/surgery_step/suture/torso(src))
+	r_leg
+		desc = "Suture the right leg shut."
+		affected_zone = "r_leg"
+		generate_surgery_steps(mob/living/surgeon, mob/user)
+			add_next_step(new /datum/surgery_step/suture/r_leg(src))
+	l_leg
+		desc = "Suture the left leg shut."
+		affected_zone = "l_leg"
+		generate_surgery_steps(mob/living/surgeon, mob/user)
+			add_next_step(new /datum/surgery_step/suture/l_leg(src))
+	r_arm
+		desc = "Suture the right arm shut."
+		affected_zone = "r_arm"
+		generate_surgery_steps(mob/living/surgeon, mob/user)
+			add_next_step(new /datum/surgery_step/suture/r_arm(src))
+	l_arm
+		desc = "Suture the left arm shut."
+		affected_zone = "l_arm"
+		generate_surgery_steps(mob/living/surgeon, mob/user)
+			add_next_step(new /datum/surgery_step/suture/l_arm(src))

@@ -1,4 +1,4 @@
-// haine wuz heer
+c// haine wuz heer
 // I got rid of all the various message bullshit in here
 // it's more organized and makes the code easier to read imo
 

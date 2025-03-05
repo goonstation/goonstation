@@ -750,6 +750,14 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	if (!islist(params)) params = params2list(params)
 
+	if (ishuman(over_object) && ishuman(usr) && !src.storage)
+		var/mob/living/carbon/human/patient = over_object
+		var/mob/living/carbon/human/surgeon = usr
+		if (patient.surgeryHolder?.get_surgery_complete("torso_surgery"))
+			var/datum/surgery/item/chest_surgery = patient.surgeryHolder.get_surgery("chest_item_surgery")
+			if (chest_surgery.can_perform_surgery(surgeon, src))
+				chest_surgery.do_shortcut(surgeon,src)
+
 	if (isliving(over_object) && isliving(usr) && !src.storage) //pickup action
 		if (user == over_object)
 			actions.start(new /datum/action/bar/private/icon/pickup(src), user)
@@ -1272,7 +1280,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			if (holder.shortcut(user,src))
 				src.add_fingerprint(user)
 				return
-			if (holder.can_operate(user,src))
+			if (holder.tool_relevant(user,src))
 				holder.start_surgery(user,src)
 				src.add_fingerprint(user)
 				return
