@@ -81,41 +81,6 @@ TYPEINFO(/datum/component/assembly)
 		else
 			return src.override_combination(checked_atom, user)
 
-/datum/component/assembly/trigger_applier_assembly
-	to_combine_item = TOOL_ASSEMBLY_APPLIER
-	valid_assembly_proc = null
-
-/datum/component/assembly/trigger_applier_assembly/Initialize()
-	if(!src.parent)
-		return COMPONENT_INCOMPATIBLE
-	. = ..(TOOL_ASSEMBLY_APPLIER, null, TRUE, FALSE, TRUE) //here, we use ignore_given_proc = TRUE in the parent because we want to create the assembly in src.override_combination
-
-/datum/component/assembly/trigger_applier_assembly/try_combination(var/atom/checked_atom, var/mob/user)
-	if(istype(checked_atom, src.parent.type))
-		//We don't want something like a signaller-signaller assembly. That would be akward to use
-		return FALSE
-	// We check if one of our components has some special states that are not combineable, e.g. igniters being secured
-	if(SEND_SIGNAL(checked_atom, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK, src.parent, user) || SEND_SIGNAL(src.parent, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK, checked_atom, user))
-		return FALSE
-	. = ..()
-
-/datum/component/assembly/trigger_applier_assembly/override_combination(var/atom/checked_atom, var/mob/user)
-	// here, we want to create our new assembly
-	user.u_equip(checked_atom)
-	user.u_equip(src.parent)
-	var/obj/item/assembly/product = new /obj/item/assembly(get_turf(src.parent))
-	//we set up the new assembly with its corresponding proc
-	product.set_up_new(user, src.parent, checked_atom)
-	//Some Admin logging/messaging
-	logTheThing(LOG_BOMBING, user, "A [product.name] was created at [log_loc(product)]. Created by: [key_name(user)];[product.get_additional_logging_information(user)]")
-	if(product.requires_admin_messaging())
-		message_admins("A [product.name] was created at [log_loc(product)]. Created by: [key_name(user)]")
-	//we finished the assembly, now we give it to its proud new owner
-	product.add_fingerprint(user)
-	user.put_in_hand_or_drop(product)
-	boutput(user, SPAN_NOTICE("You finish the construction of [product.name]."))
-	return TRUE
-
 /// this component checks assembly_cant_be_removed() on the parent, but behaves exactly the same otherwise
 /datum/component/assembly/consumes_self
 
@@ -142,3 +107,40 @@ TYPEINFO(/datum/component/assembly)
 	if(movable_checked_atom.assembly_cant_be_removed() || movable_parent.assembly_cant_be_removed())
 		return FALSE
 	. = ..(checked_atom, user)
+
+
+/// This component handles the creation of modular trigger-applier-assemblies
+/datum/component/assembly/consumes_all/trigger_applier_assembly
+	to_combine_item = TOOL_ASSEMBLY_APPLIER
+	valid_assembly_proc = null
+
+/datum/component/assembly/consumes_all/trigger_applier_assembly/Initialize()
+	if(!src.parent)
+		return COMPONENT_INCOMPATIBLE
+	. = ..(TOOL_ASSEMBLY_APPLIER, null, TRUE, FALSE, TRUE) //here, we use ignore_given_proc = TRUE in the parent because we want to create the assembly in src.override_combination
+
+/datum/component/assembly/consumes_all/trigger_applier_assembly/try_combination(var/atom/checked_atom, var/mob/user)
+	if(istype(checked_atom, src.parent.type))
+		//We don't want something like a signaller-signaller assembly. That would be akward to use
+		return FALSE
+	// We check if one of our components has some special states that are not combineable, e.g. igniters being secured
+	if(SEND_SIGNAL(checked_atom, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK, src.parent, user) || SEND_SIGNAL(src.parent, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK, checked_atom, user))
+		return FALSE
+	. = ..()
+
+/datum/component/assembly/consumes_all/trigger_applier_assembly/override_combination(var/atom/checked_atom, var/mob/user)
+	// here, we want to create our new assembly
+	user.u_equip(checked_atom)
+	user.u_equip(src.parent)
+	var/obj/item/assembly/product = new /obj/item/assembly(get_turf(src.parent))
+	//we set up the new assembly with its corresponding proc
+	product.set_up_new(user, src.parent, checked_atom)
+	//Some Admin logging/messaging
+	logTheThing(LOG_BOMBING, user, "A [product.name] was created at [log_loc(product)]. Created by: [key_name(user)];[product.get_additional_logging_information(user)]")
+	if(product.requires_admin_messaging())
+		message_admins("A [product.name] was created at [log_loc(product)]. Created by: [key_name(user)]")
+	//we finished the assembly, now we give it to its proud new owner
+	product.add_fingerprint(user)
+	user.put_in_hand_or_drop(product)
+	boutput(user, SPAN_NOTICE("You finish the construction of [product.name]."))
+	return TRUE

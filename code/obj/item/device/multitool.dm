@@ -79,7 +79,7 @@ TYPEINFO(/obj/item/device/multitool)
 	parent_assembly.applier_icon_prefix = "multitool"
 	if (!parent_assembly.target)
 		// trigger-multitool-Assembly + plasmatank -> trigger-multitool-plasmatank-bomb
-		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/tank/plasma), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
+		parent_assembly.AddComponent(/datum/component/assembly/consumes_other, list(/obj/item/tank/plasma), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
 
 /obj/item/device/multitool/proc/assembly_application(var/manipulated_multitool, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
 	if(!assembly_target)
@@ -96,7 +96,7 @@ TYPEINFO(/obj/item/device/multitool)
 	//canbomb require a specific assembly to be build
 	if(istype(parent_assembly.trigger, /obj/item/device/timer) && istype(new_target, /obj/item/tank/plasma))
 		// timer/multitool/plasmatank-assembly + igniter -> detonator-assembly
-		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/device/igniter), TYPE_PROC_REF(/obj/item/assembly, add_additional_component), TRUE)
+		parent_assembly.AddComponent(/datum/component/assembly/consumes_other, list(/obj/item/device/igniter), TYPE_PROC_REF(/obj/item/assembly, add_additional_component), TRUE)
 
 /obj/item/device/multitool/proc/assembly_component_addition(var/manipulated_multitool, var/obj/item/assembly/parent_assembly, var/mob/user, var/obj/item/new_component)
 	var/list/canbomb_valid_additions = list(/obj/item/instrument/bikehorn,
@@ -109,7 +109,7 @@ TYPEINFO(/obj/item/device/multitool)
 	if(parent_assembly.special_construction_identifier == "canbomb")
 		if(istype(new_component, /obj/item/device/igniter))
 			// detonator assembly + cable -> cabled detonator assembly
-			parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/cable_coil), TYPE_PROC_REF(/obj/item/assembly, add_additional_component), TRUE)
+			parent_assembly.AddComponent(/datum/component/assembly/consumes_other, list(/obj/item/cable_coil), TYPE_PROC_REF(/obj/item/assembly, add_additional_component), TRUE)
 		else
 			//in any other case, since we locked canbomb assembly, it's either the cable coil, some canbomb specifics or paper
 			//so we add the components for the complete assembly accordingly
@@ -134,7 +134,7 @@ TYPEINFO(/obj/item/device/multitool)
 			if(amount_of_attachments < max_amount_of_canbomb_attachments)
 				potential_additions |= canbomb_valid_additions
 			if(length(potential_additions) > 0)
-				parent_assembly.AddComponent(/datum/component/assembly, potential_additions, TYPE_PROC_REF(/obj/item/assembly, add_additional_component), TRUE)
+				parent_assembly.AddComponent(/datum/component/assembly/consumes_other, potential_additions, TYPE_PROC_REF(/obj/item/assembly, add_additional_component), TRUE)
 
 
 /// ----------------------------------------------

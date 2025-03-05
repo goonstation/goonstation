@@ -85,7 +85,7 @@ TYPEINFO(/obj/item/device/igniter)
 /obj/item/device/igniter/proc/assembly_setup(var/manipulated_igniter, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
 	if(parent_assembly.applier == src)
 		// trigger-igniter- Assembly + wired pipebomb/pipebomb-frame/beaker -> trigger-igniter pipebomb/beakerbomb
-		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/tank/plasma, /obj/item/pipebomb/frame, /obj/item/pipebomb/bomb, /obj/item/reagent_containers/glass/beaker), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
+		parent_assembly.AddComponent(/datum/component/assembly/consumes_other, list(/obj/item/tank/plasma, /obj/item/pipebomb/frame, /obj/item/pipebomb/bomb, /obj/item/reagent_containers/glass/beaker), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
 	if(istype(parent_assembly.applier, /obj/item/device/multitool) && (src in parent_assembly.additional_components))
 		//were on the way to blow everything up, so lets lock in!
 		parent_assembly.special_construction_identifier = "canbomb"

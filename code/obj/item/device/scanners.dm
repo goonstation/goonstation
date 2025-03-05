@@ -365,7 +365,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_building))
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, PROC_REF(assembly_building))
 		// Health-analyser + assembly-applier -> health-analyser/Applier-Assembly
-		src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
+		src.AddComponent(/datum/component/assembly/consumes_all/trigger_applier_assembly)
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH)

@@ -656,7 +656,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 		parent_assembly.applier_icon_prefix = "robot_arm"
 		if (!parent_assembly.target)
 			// trigger-robotarm-Assembly + pie -> trigger-robotarm-pie-assembly
-			parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/food/snacks/pie), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
+			parent_assembly.AddComponent(/datum/component/assembly/consumes_other, list(/obj/item/reagent_containers/food/snacks/pie), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
 
 	proc/assembly_application(var/manipulated_arm, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
 		var/mob/mob_target = null
