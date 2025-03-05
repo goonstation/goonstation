@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Button, NumberInput, Section, Table } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
 
@@ -16,23 +16,33 @@ import type { ExtractablesViewData } from '../type';
 
 export const ExtractablesView = () => {
   const { act, data } = useBackend<ExtractablesViewData>();
-  const { allow_infusion, output_externally, extractables, sortBy, sortAsc } =
+  const { allow_infusion, extractables, output_externally, sortAsc, sortBy } =
     data;
   const [page, setPage] = useState(1);
-  const sortedExtractables = (extractables || []).sort((a, b) =>
-    compare(a, b, sortBy, !!sortAsc),
+  const sortedExtractables = useMemo(
+    () =>
+      [...(extractables ?? [])].sort((a, b) =>
+        compare(a, b, sortBy, !!sortAsc),
+      ),
+    [compare, extractables, sortAsc, sortBy],
   );
   const extractablesPerPage = 10;
   const totalPages = Math.max(
     1,
     Math.ceil(sortedExtractables.length / extractablesPerPage),
   );
-  if (page < 1 || page > totalPages) {
-    setPage(clamp(page, 1, totalPages));
-  }
-  const extractablesOnPage = sortedExtractables.slice(
-    extractablesPerPage * (page - 1),
-    extractablesPerPage * (page - 1) + extractablesPerPage,
+  useEffect(() => {
+    if (page < 1 || page > totalPages) {
+      setPage(clamp(page, 1, totalPages));
+    }
+  }, [clamp, page, setPage, totalPages]);
+  const extractablesOnPage = useMemo(
+    () =>
+      sortedExtractables.slice(
+        extractablesPerPage * (page - 1),
+        extractablesPerPage * (page - 1) + extractablesPerPage,
+      ),
+    [extractablesPerPage, page, sortedExtractables],
   );
 
   return (
@@ -57,7 +67,7 @@ export const ExtractablesView = () => {
           />
           <NumberInput
             value={page}
-            format={(value) => 'Page ' + value + '/' + totalPages}
+            format={(value) => `Page ${value}/${totalPages}`}
             minValue={1}
             maxValue={totalPages}
             step={1}

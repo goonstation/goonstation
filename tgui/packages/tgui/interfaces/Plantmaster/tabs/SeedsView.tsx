@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Button,
   NumberInput,
@@ -27,21 +27,30 @@ export const SeedsView = () => {
     output_externally,
     seeds,
     show_splicing,
+    sortAsc,
+    sortBy,
     splice_seeds,
     splice_chance,
-    sortBy,
-    sortAsc,
   } = data;
   const [page, setPage] = useState(1);
-  const sortedSeeds = (seeds || []).sort((a, b) =>
-    compare(a, b, sortBy, !!sortAsc),
+  const sortedSeeds = useMemo(
+    () => [...(seeds ?? [])].sort((a, b) => compare(a, b, sortBy, !!sortAsc)),
+    [compare, seeds, sortAsc, sortBy],
   );
   const seedsPerPage = show_splicing ? 7 : 10;
   const totalPages = Math.max(1, Math.ceil(sortedSeeds.length / seedsPerPage));
-  if (page < 1 || page > totalPages) setPage(clamp(page, 1, totalPages));
-  const seedsOnPage = sortedSeeds.slice(
-    seedsPerPage * (page - 1),
-    seedsPerPage * (page - 1) + seedsPerPage,
+  useEffect(() => {
+    if (page < 1 || page > totalPages) {
+      setPage(clamp(page, 1, totalPages));
+    }
+  }, [clamp, page, setPage, totalPages]);
+  const seedsOnPage = useMemo(
+    () =>
+      sortedSeeds.slice(
+        seedsPerPage * (page - 1),
+        seedsPerPage * (page - 1) + seedsPerPage,
+      ),
+    [page, seedsPerPage, sortedSeeds],
   );
   const splice_disable = splice_seeds[0] !== null && splice_seeds[1] !== null;
   return (
@@ -69,7 +78,7 @@ export const SeedsView = () => {
               />
               <NumberInput
                 value={page}
-                format={(value) => 'Page ' + value + '/' + totalPages}
+                format={(value) => `Page ${value}/${totalPages}`}
                 minValue={1}
                 maxValue={totalPages}
                 step={1}
