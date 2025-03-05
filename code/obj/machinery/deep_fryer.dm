@@ -1,5 +1,6 @@
 TYPEINFO(/obj/machinery/deep_fryer)
 	mats = 20
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_DEVICE)
 
 /obj/machinery/deep_fryer
 	name = "Deep Fryer"
@@ -11,6 +12,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	flags = NOSPLASH
 	status = REQ_PHYSICAL_ACCESS
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
+
 	var/atom/movable/fryitem = null
 	var/cooktime = 0
 	var/frytemp = 185 + T0C //365 F is a good frying temp, right?
@@ -149,10 +151,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		if (ismob(fed_ice)) // have we asked someone for ice?
 			var/mob/ice_feeder = fed_ice
 			fed_ice = TRUE
-			var/msg = "Oh, now I can die a warrior's death! Thank you!"
-			src.audible_message("<span class='radio' style='color: #e8ae2a'>\
-					[SPAN_NAME("[src.name] [bicon(src)]")] [SPAN_MESSAGE(" says, \"[msg]\"")]</span>",
-					assoc_maptext = make_chat_maptext(src, msg, "color: #e8ae2a;"))
+			src.say("Oh, now I can die a warrior's death! Thank you!")
 			ADD_FLAG(src.status, BROKEN)
 			name = "Satiated [initial(src.name)]"
 			ice_feeder = ice_feeder || ckey_to_mob(src.fryitem.fingerprintslast) // in case someone else had to fufill, no direct ref
@@ -319,8 +318,4 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	if (prob(0.5 * shivers))
 		fed_ice = M // asked this mob
 		src.name = "Absolutely Famished [src.name]"
-		var/msg = "I'm SO hungry! Please feed me a 20 pound bag of ice!"
-		boutput(M, "<span class='radio' style='color: #e8ae2a'>\
-			[SPAN_NAME("[src.name] [bicon(src)]")] [SPAN_MESSAGE(" says, \"[msg]\"")]</span>")
-		var/image/chat_maptext/maptext = make_chat_maptext(src, msg, "color: #e8ae2a;")
-		maptext.show_to(M.client)
+		src.say("I'm SO hungry! Please feed me a 20 pound bag of ice!", atom_listeners_override = list(M))

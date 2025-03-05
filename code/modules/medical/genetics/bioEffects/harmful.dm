@@ -40,6 +40,14 @@
 	lockedTries = 10
 	icon_state  = "speech_mime"
 
+	OnAdd()
+		. = ..()
+		owner.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_MUTE)
+
+	OnRemove()
+		owner.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_MUTE)
+		. = ..()
+
 /datum/bioEffect/deaf
 	name = "Deafness"
 	desc = "Diminishes the subject's tympanic membrane, rendering them unable to hear."
@@ -136,24 +144,16 @@
 	reclaim_fail = 15
 	var/talk_prob = 10
 	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","ARGH","WOOF","CRAP","HECK","FRICK","JESUS")
-	var/empowered_popup_style = "font-weight: bold;"
 	icon_state  = "bad"
 
-	OnLife(var/mult)
-		if(..()) return
-		var/mob/living/L = owner
-		if (!L)
+	OnLife(mult)
+		if (..() || isdead(src.owner) || !probmult(talk_prob))
 			return
-		if (isdead(L))
-			return
-		if (probmult(talk_prob))
-			if(src.power > 1)
-				var/original_speechpopupstyle = L.speechpopupstyle
-				L.speechpopupstyle += empowered_popup_style
-				L.say(pick(talk_strings))
-				L.speechpopupstyle = original_speechpopupstyle
-				return
-			L.say(pick(talk_strings))
+
+		if(src.power > 1)
+			src.owner.say(pick(talk_strings), message_params = list("maptext_css_values" = list("font-weight" = "bold")))
+		else
+			src.owner.say(pick(talk_strings))
 
 /datum/bioEffect/shortsighted
 	name = "Diminished Optic Nerves"
