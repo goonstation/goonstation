@@ -12,14 +12,20 @@ import { numberOfDecimalDigits, toFixed } from 'tgui-core/math';
 import { useBackend } from '../../../backend';
 import type { FilterifficData } from '../type';
 
-export const FilterFloatEntry = (props) => {
+interface FilterFloatEntryProps {
+  value?: number | null;
+  name: string;
+  filterName: string;
+}
+
+export const FilterFloatEntry = (props: FilterFloatEntryProps) => {
   const { value, name, filterName } = props;
   const { act } = useBackend<FilterifficData>();
   const [step, setStep] = useState(0.01);
   return (
     <>
       <NumberInput
-        value={value}
+        value={value ?? 0}
         minValue={-500}
         maxValue={500}
         stepPixelSize={4}
