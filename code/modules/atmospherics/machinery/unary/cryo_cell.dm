@@ -1,3 +1,7 @@
+TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
+	mats = list("cobryl" = 100,
+				"glass" = 50,
+				"energy_high" = 20)
 /obj/machinery/atmospherics/unary/cryo_cell
 	name = "cryogenic healing pod"
 	desc = "A glass tube full of a strange fluid that uses supercooled oxygen and cryoxadone to rapidly heal patients."
@@ -7,6 +11,7 @@
 	anchored = ANCHORED_ALWAYS
 	layer = EFFECTS_LAYER_BASE//MOB_EFFECT_LAYER
 	flags = NOSPLASH
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	power_usage = 50 WATTS
 	var/on = FALSE //! Whether the cell is turned on or not
 	var/datum/light/light
@@ -304,6 +309,11 @@
 			I.attack(src.occupant, user)
 
 	tgui_process.update_uis(src)
+
+/obj/machinery/atmospherics/unary/cryo_cell/was_built_from_frame(mob/user, newly_built)
+	..()
+	src.initialize_directions = src.dir
+	src.initialize(TRUE)
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/insert_beaker(var/obj/item/reagent_containers/glass/I, var/mob/user)
 	if (!can_act(user))
