@@ -252,7 +252,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	allow_antag_fallthrough = FALSE
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	wiki_link = "https://wiki.ss13.co/Captain"
-	id_band_override = "green"
 
 	slot_card = /obj/item/card/id/gold
 	slot_belt = list(/obj/item/device/pda2/captain)
@@ -2437,7 +2436,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	receives_badge = TRUE
 	receives_miranda = TRUE
 	receives_implants = list(/obj/item/implant/health)
-	id_band_override = "red"
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/security/ntso)
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
@@ -2471,7 +2469,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	allow_traitors = FALSE
 	allow_spy_theft = FALSE
 	cant_spawn_as_rev = TRUE
-	id_band_override = "yellow"
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/utility/nt_engineer)
 	slot_jump = list(/obj/item/clothing/under/rank/engineer)
@@ -2514,7 +2511,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	allow_traitors = FALSE
 	allow_spy_theft = FALSE
 	cant_spawn_as_rev = TRUE
-	id_band_override = "purple"
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/medical)
@@ -2558,7 +2554,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	receives_badge = TRUE
 	receives_miranda = TRUE
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
-	id_band_override = "red"
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/security/ntsc) //special secbelt subtype that spawns with the NTSO gear inside
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
@@ -2585,8 +2580,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	access_string = "Head of Mining"
 	linkcolor = "#00CC00"
 	cant_spawn_as_rev = TRUE
-	id_band_override = "yellow"
-	slot_card = /obj/item/card/id/gold
+	slot_card = /obj/item/card/id/command
 	slot_belt = list(/obj/item/device/pda2/mining)
 	slot_jump = list(/obj/item/clothing/under/rank/overalls)
 	slot_foot = list(/obj/item/clothing/shoes/orange)
