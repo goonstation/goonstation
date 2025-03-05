@@ -247,7 +247,7 @@ TYPEINFO(/obj/item/device/infra_sensor)
 	status = null
 	flags = TABLEPASS | CONDUCT
 
-/obj/item/assembly/rad_infra/c_state(n)
+/obj/item/assembly/rad_infra/proc/c_state(n)
 	src.icon_state = text("infrared-radio[]", n)
 	return
 /*
