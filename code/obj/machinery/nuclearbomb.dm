@@ -151,7 +151,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		if (!user.mind || BOUNDS_DIST(src, user) > 0 || isintangible(user))
 			return
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		var/datum/game_mode/nuclear/gamemode = ticker?.mode
 		ENSURE_TYPE(gamemode)
@@ -256,7 +256,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		if (istype(W, /obj/item/disk/data/floppy/read_only/authentication))
 			if (src.disk && istype(src.disk))
@@ -628,7 +628,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			src.anchored = !src.anchored
 			boutput(user, SPAN_NOTICE("[src] is now [src.anchored ? "anchored" : "unanchored"]."))
 			return
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
 		src._health -= W.force
 		checkhealth()

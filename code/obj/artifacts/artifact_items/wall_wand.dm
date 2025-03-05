@@ -9,7 +9,7 @@
 			return
 		var/datum/artifact/A = src.artifact
 		if (A.activated && target.loc != user)
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			var/turf/T = get_turf(target)
 			A.effect_click_tile(src,user,T)
 			src.ArtifactFaultUsed(user)

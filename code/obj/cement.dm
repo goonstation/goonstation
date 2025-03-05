@@ -93,7 +93,7 @@
 
 	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (user.bioHolder.HasEffect("hulk") && (prob(100 - strength*20))) //hulk smash
 			user.visible_message(SPAN_ALERT("[user] smashes through \the [src]! OH YEAH!!!"))
 			onDestroy()
@@ -105,7 +105,7 @@
 
 	attackby(var/obj/item/I, var/mob/user)
 		src.add_fingerprint(user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		changeHealth(-I.force)
 		..()
 

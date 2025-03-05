@@ -110,7 +110,7 @@ TYPEINFO(/obj/machinery/door/firedoor)
 	src.add_fingerprint(user)
 	if (!ispryingtool(C))
 		if (src.density)
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
 			if (C)

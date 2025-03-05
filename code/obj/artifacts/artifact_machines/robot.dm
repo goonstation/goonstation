@@ -192,7 +192,7 @@
 		var/action = pick("hit", "strike", "bonk")
 		user.visible_message(SPAN_COMBAT("<b>[user] [action]s [target] with a strange club!</b>"))
 
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
 
 // AI bits are in artifact_robot.dm

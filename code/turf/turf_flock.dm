@@ -69,7 +69,7 @@ TYPEINFO(/turf/simulated/floor/feather)
 	else
 		src.visible_message(SPAN_ALERT("[SPAN_BOLD("[user]")] smacks [src] with [C]!"))
 		playsound(src, 'sound/impact_sounds/Crystal_Hit_1.ogg', 25, TRUE)
-	user.lastattacked = src
+	user.lastattacked = get_weakref(src)
 
 /turf/simulated/floor/feather/break_tile_to_plating()
 	off()
@@ -233,7 +233,7 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 				user.visible_message(SPAN_ALERT("<b>[user]</b> punches the [initial(src.name)], shattering it!"))
 			else
 				user.visible_message(SPAN_ALERT("<b>[user]</b> punches [src]! Ouch!"))
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			attack_particle(user, src)
 
 /turf/simulated/wall/auto/feather/attackby(obj/item/C, mob/user)
@@ -247,7 +247,7 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 		src.destroy()
 	else
 		src.visible_message(SPAN_ALERT("[SPAN_BOLD("[user]")] smacks [src] with [C]!"))
-	user.lastattacked = src
+	user.lastattacked = get_weakref(src)
 	attack_particle(user, src)
 
 /turf/simulated/wall/auto/feather/burn_down()

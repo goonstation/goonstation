@@ -98,7 +98,7 @@
 
 	attackby(obj/item/I, mob/user)
 		. = ..()
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 /obj/forcefield/autoexpire
 	var/duration = 30 SECONDS

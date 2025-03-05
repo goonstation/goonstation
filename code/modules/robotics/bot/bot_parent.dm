@@ -112,7 +112,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 		..()
 
 	attackby(obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 		hit_twitch(src)
 		if (W.hitsound)

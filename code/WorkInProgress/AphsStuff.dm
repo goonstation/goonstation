@@ -9,7 +9,7 @@
 	density = 1
 
 	attackby(obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		src.visible_message("<B>[src]</B> screams!")
 		playsound(src, 'sound/voice/screams/monkey_scream.ogg', 10, TRUE, -1, channel=VOLUME_CHANNEL_EMOTE)
 		..()

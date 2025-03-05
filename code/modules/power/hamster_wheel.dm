@@ -51,7 +51,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 			occupant.Attackhand(user)
 			if(user.a_intent == INTENT_DISARM || user.a_intent == INTENT_GRAB)
 				eject_occupant()
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 		else
 			. = ..()
 
@@ -74,7 +74,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 				return
 		else if(src.occupant && W.force)
 			W.attack(src.occupant, user)
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			if (occupant.hasStatus(list("knockdown", "unconscious", "stunned")))
 				eject_occupant()
 			W.visible_message(SPAN_ALERT("[user] swings at [src.occupant] with [W]!"))

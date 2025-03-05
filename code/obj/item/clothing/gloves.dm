@@ -583,7 +583,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 
 	proc/sheathe_blades_toggle(mob/living/user)
 		playsound(src.loc, 'sound/effects/sword_unsheath1.ogg', 35, 1, -3)

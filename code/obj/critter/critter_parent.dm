@@ -248,7 +248,7 @@
 			qdel(W)
 			return
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 
 		var/attack_force = 0
@@ -359,7 +359,7 @@
 			sleeping = 0
 			on_wake()
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 
 		if (user.a_intent == INTENT_HARM)
