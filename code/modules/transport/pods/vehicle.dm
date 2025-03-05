@@ -483,7 +483,7 @@
 		return 1
 
 	proc/ShootProjectiles(mob/user, datum/projectile/PROJ, shoot_dir, spread = -1)
-		if (src.m_w_system?.muzzle_flash)
+		if (src.m_w_system?.muzzle_flash && !istype(src, /obj/machinery/vehicle/pod_smooth))
 			muzzle_flash_any(src, dir_to_angle(shoot_dir), src.m_w_system.muzzle_flash)
 
 		src.create_projectile(src, user, PROJ, shoot_dir, spread)

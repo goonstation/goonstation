@@ -849,7 +849,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	AmmoPerShot()
 		return 2
 
-	ShootProjectiles(var/mob/user, var/datum/projectile/PROJ, var/shoot_dir)
+	create_projectile(atom/proj_start, mob/user, datum/projectile/PROJ, shoot_dir, spread = -1)
 		var/H = (shoot_dir & 3) ? 1 : 0
 		var/V = (shoot_dir & 12) ? 1 : 0
 
