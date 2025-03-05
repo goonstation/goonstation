@@ -760,6 +760,7 @@ proc/filter_carrier_pets(var/type)
 	random_look = TRUE
 	name_list = "names/cats.txt"
 	player_can_spawn_with_pet = TRUE
+	sound_scream = 'sound/voice/animal/cat.ogg'
 	var/cattype = 1
 	var/catnip = 0
 	var/is_annoying = FALSE
@@ -898,7 +899,7 @@ proc/filter_carrier_pets(var/type)
 		switch (act)
 			if ("scream","meow")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/animal/cat.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, src.sound_scream, 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return SPAN_EMOTE("<b>[src]</b> meows!")
 			if ("smile","purr")
 				if (src.emote_check(voluntary, 30))
