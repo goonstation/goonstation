@@ -16,20 +16,18 @@ import {
   ReagentGraph,
   ReagentList,
 } from '../../common/ReagentInfo';
-import type { PlantmasterData } from '../type';
+import type { OverviewViewData, PlantmasterData } from '../type';
 
-interface OverviewViewProps {
-  cat_lens;
-  container;
-}
+export const OverviewView = () => {
+  const { data } = useBackend<OverviewViewData>();
+  const { category_lengths, inserted, inserted_container } = data;
+  const container = inserted ? inserted_container : null;
 
-export const OverviewView = (props: OverviewViewProps) => {
-  const { cat_lens, container } = props;
   return (
     <Section title="Overview">
       <Box>
-        Items ready for extraction: <b>{cat_lens[0]}</b> <br />
-        Seeds ready for experimentation: <b>{cat_lens[1]}</b>
+        Items ready for extraction: <b>{category_lengths[0]}</b> <br />
+        Seeds ready for experimentation: <b>{category_lengths[1]}</b>
       </Box>
       <ReagentDisplay container={container} />
     </Section>

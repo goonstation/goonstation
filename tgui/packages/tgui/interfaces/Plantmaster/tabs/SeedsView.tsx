@@ -6,6 +6,7 @@
  * @license MIT
  */
 
+import { useState } from 'react';
 import {
   Button,
   NumberInput,
@@ -17,45 +18,30 @@ import { clamp } from 'tgui-core/math';
 
 import { useBackend } from '../../../backend';
 import { compare, Row, TitleRow } from '../PlantmasterTable';
-import type { PlantmasterData, SeedsViewData } from '../type';
+import type { SeedsViewData } from '../type';
 
-type SeedsViewProps = Pick<SeedsViewData, 'allow_infusion' | 'seeds'> & {
-  seedoutput;
-  splicing;
-  splice_seeds;
-  splice_chance;
-  sortBy;
-  sortAsc;
-  page;
-  setPage;
-};
-
-export const SeedsView = (props: SeedsViewProps) => {
-  const { act } = useBackend<PlantmasterData>();
+export const SeedsView = () => {
+  const { act, data } = useBackend<SeedsViewData>();
   const {
     allow_infusion,
     seedoutput,
     seeds,
-    splicing,
+    show_splicing,
     splice_seeds,
     splice_chance,
     sortBy,
     sortAsc,
-    page,
-    setPage,
-  } = props;
-  const extractables = (seeds || []).sort((a, b) =>
+  } = data;
+  const [page, setPage] = useState(1);
+  const sortedSeeds = (seeds || []).sort((a, b) =>
     compare(a, b, sortBy, sortAsc),
   );
-  const extractablesPerPage = splicing ? 7 : 10;
-  const totalPages = Math.max(
-    1,
-    Math.ceil(extractables.length / extractablesPerPage),
-  );
+  const seedsPerPage = show_splicing ? 7 : 10;
+  const totalPages = Math.max(1, Math.ceil(sortedSeeds.length / seedsPerPage));
   if (page < 1 || page > totalPages) setPage(clamp(page, 1, totalPages));
-  const extractablesOnPage = extractables.slice(
-    extractablesPerPage * (page - 1),
-    extractablesPerPage * (page - 1) + extractablesPerPage,
+  const seedsOnPage = sortedSeeds.slice(
+    seedsPerPage * (page - 1),
+    seedsPerPage * (page - 1) + seedsPerPage,
   );
   const splice_disable = splice_seeds[0] !== null && splice_seeds[1] !== null;
   return (
@@ -108,7 +94,7 @@ export const SeedsView = (props: SeedsViewProps) => {
         >
           <Table>
             <TitleRow show_damage sortBy={sortBy} sortAsc={sortAsc} />
-            {extractablesOnPage.map((extractable) => (
+            {seedsOnPage.map((extractable) => (
               <Row
                 allow_infusion={allow_infusion}
                 extractable={extractable}
@@ -122,7 +108,7 @@ export const SeedsView = (props: SeedsViewProps) => {
           </Table>
         </Section>
       </Stack.Item>
-      {splicing && (
+      {show_splicing && (
         <Stack.Item>
           <Section
             title="Splicing"

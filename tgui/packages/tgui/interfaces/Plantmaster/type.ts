@@ -68,7 +68,7 @@ export interface ExtractablesViewData extends CommonViewData {
   extractables: ExtractableData[];
 }
 
-interface OverviewViewData extends CommonViewData {
+export interface OverviewViewData extends CommonViewData {
   category: PlantmasterTab.Overview;
 }
 

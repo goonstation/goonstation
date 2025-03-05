@@ -6,7 +6,6 @@
  * @license MIT
  */
 
-import { useState } from 'react';
 import { Stack, Tabs } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
@@ -16,20 +15,7 @@ import { type PlantmasterData, PlantmasterTab } from './type';
 
 export const Plantmaster = () => {
   const { act, data } = useBackend<PlantmasterData>();
-  const {
-    allow_infusion,
-    category,
-    category_lengths,
-    inserted,
-    inserted_container,
-    seedoutput,
-    splice_chance,
-    show_splicing,
-    splice_seeds,
-    sortBy,
-    sortAsc,
-  } = data;
-  const [page, setPage] = useState(1);
+  const { category, category_lengths, inserted, inserted_container } = data;
   return (
     <Window title="Plantmaster Mk4" width={1200} height={450}>
       <Window.Content>
@@ -61,52 +47,22 @@ export const Plantmaster = () => {
                 Seeds ({category_lengths[1]})
               </Tabs.Tab>
               <Tabs.Tab
-                backgroundColor={inserted_container !== null ? 'green' : 'blue'}
-                selected={inserted_container !== null}
+                backgroundColor={inserted_container ? 'green' : 'blue'}
+                selected={!!inserted_container}
                 icon="eject"
                 onClick={() =>
-                  inserted_container !== null
-                    ? act('ejectbeaker')
-                    : act('insertbeaker')
+                  inserted_container ? act('ejectbeaker') : act('insertbeaker')
                 }
                 bold
               >
-                {inserted_container !== null ? inserted : 'Insert Beaker'}
+                {inserted_container ? inserted : 'Insert Beaker'}
               </Tabs.Tab>
             </Tabs>
           </Stack.Item>
           <Stack.Item grow>
-            {category === PlantmasterTab.Overview && (
-              <OverviewView
-                cat_lens={category_lengths}
-                container={inserted ? inserted_container : null}
-              />
-            )}
-            {category === PlantmasterTab.Extractables && (
-              <ExtractablesView
-                allow_infusion={allow_infusion}
-                seedoutput={seedoutput}
-                produce={data.extractables}
-                sortBy={sortBy}
-                sortAsc={sortAsc}
-                page={page}
-                setPage={setPage}
-              />
-            )}
-            {category === PlantmasterTab.SeedList && (
-              <SeedsView
-                allow_infusion={allow_infusion}
-                seeds={data.seeds}
-                seedoutput={seedoutput}
-                splicing={show_splicing}
-                splice_chance={splice_chance}
-                splice_seeds={splice_seeds}
-                sortBy={sortBy}
-                sortAsc={sortAsc}
-                page={page}
-                setPage={setPage}
-              />
-            )}
+            {category === PlantmasterTab.Overview && <OverviewView />}
+            {category === PlantmasterTab.Extractables && <ExtractablesView />}
+            {category === PlantmasterTab.SeedList && <SeedsView />}
           </Stack.Item>
         </Stack>
       </Window.Content>

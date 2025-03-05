@@ -6,45 +6,30 @@
  * @license MIT
  */
 
+import { useState } from 'react';
 import { Button, NumberInput, Section, Table } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
 
 import { useBackend } from '../../../backend';
 import { compare, Row, TitleRow } from '../PlantmasterTable';
-import type { ExtractablesViewData, PlantmasterData } from '../type';
+import type { ExtractablesViewData } from '../type';
 
-type ExtractablesTabProps = Pick<
-  ExtractablesViewData,
-  'allow_infusion' | 'seedoutput' | 'sortAsc' | 'sortBy'
-> & {
-  page: number;
-  setPage: (value: number) => void;
-  produce: ExtractablesViewData['extractables'];
-};
-
-export const ExtractablesView = (props: ExtractablesTabProps) => {
-  const { act } = useBackend<PlantmasterData>();
-  const {
-    allow_infusion,
-    seedoutput,
-    produce,
-    sortBy,
-    sortAsc,
-    page,
-    setPage,
-  } = props;
-  const extractables = (produce || []).sort((a, b) =>
+export const ExtractablesView = () => {
+  const { act, data } = useBackend<ExtractablesViewData>();
+  const { allow_infusion, seedoutput, extractables, sortBy, sortAsc } = data;
+  const [page, setPage] = useState(1);
+  const sortedExtractables = (extractables || []).sort((a, b) =>
     compare(a, b, sortBy, sortAsc),
   );
   const extractablesPerPage = 10;
   const totalPages = Math.max(
     1,
-    Math.ceil(extractables.length / extractablesPerPage),
+    Math.ceil(sortedExtractables.length / extractablesPerPage),
   );
   if (page < 1 || page > totalPages) {
     setPage(clamp(page, 1, totalPages));
   }
-  const extractablesOnPage = extractables.slice(
+  const extractablesOnPage = sortedExtractables.slice(
     extractablesPerPage * (page - 1),
     extractablesPerPage * (page - 1) + extractablesPerPage,
   );
