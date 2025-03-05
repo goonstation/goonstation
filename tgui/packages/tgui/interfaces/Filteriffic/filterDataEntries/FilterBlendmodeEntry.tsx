@@ -11,7 +11,14 @@ import { Button } from 'tgui-core/components';
 import { useBackend } from '../../../backend';
 import type { FilterifficData } from '../type';
 
-export const FilterBlendmodeEntry = (props) => {
+interface FilterBlendmodeEntryProps {
+  name: string;
+  value?: string | null;
+  filterName: string;
+  filterType: string;
+}
+
+export const FilterBlendmodeEntry = (props: FilterBlendmodeEntryProps) => {
   const { name, value, filterName, filterType } = props;
   const { act, data } = useBackend<FilterifficData>();
 

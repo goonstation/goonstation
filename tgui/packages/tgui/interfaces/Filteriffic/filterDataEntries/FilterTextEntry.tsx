@@ -10,15 +10,21 @@ import { Input } from 'tgui-core/components';
 import { useBackend } from '../../../backend';
 import type { FilterifficData } from '../type';
 
-export const FilterTextEntry = (props) => {
+interface FilterTextEntryProps {
+  value?: string | null;
+  name: string;
+  filterName: string;
+}
+
+export const FilterTextEntry = (props: FilterTextEntryProps) => {
   const { value, name, filterName } = props;
   const { act } = useBackend<FilterifficData>();
 
   return (
     <Input
-      value={value}
+      value={value ?? ''}
       width="250px"
-      onInput={(e, value) =>
+      onInput={(_e, value) =>
         act('modify_filter_value', {
           name: filterName,
           new_data: {

@@ -18,7 +18,13 @@ import { toFixed } from 'tgui-core/math';
 import { useBackend } from '../../../backend';
 import type { FilterifficData } from '../type';
 
-export const FilterColorEntry = (props, context) => {
+interface FilterColorEntryProps {
+  value?;
+  filterName: string;
+  name: string;
+}
+
+export const FilterColorEntry = (props: FilterColorEntryProps) => {
   const { value, filterName, name } = props;
   const { act } = useBackend<FilterifficData>();
   const prefixes = ['r', 'g', 'b', 'a', 'c'];

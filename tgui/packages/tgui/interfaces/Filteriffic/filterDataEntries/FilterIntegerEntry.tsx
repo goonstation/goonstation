@@ -10,12 +10,18 @@ import { NumberInput } from 'tgui-core/components';
 import { useBackend } from '../../../backend';
 import type { FilterifficData } from '../type';
 
-export const FilterIntegerEntry = (props) => {
+interface FilterIntegerEntryProps {
+  value?: number | null;
+  name: string;
+  filterName: string;
+}
+
+export const FilterIntegerEntry = (props: FilterIntegerEntryProps) => {
   const { value, name, filterName } = props;
   const { act } = useBackend<FilterifficData>();
   return (
     <NumberInput
-      value={value}
+      value={value ?? 0}
       minValue={-500}
       maxValue={500}
       stepPixelSize={5}

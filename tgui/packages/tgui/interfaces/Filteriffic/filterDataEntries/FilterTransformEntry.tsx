@@ -11,7 +11,13 @@ import { toFixed } from 'tgui-core/math';
 import { useBackend } from '../../../backend';
 import type { FilterifficData } from '../type';
 
-export const FilterTransformEntry = (props) => {
+interface FilterTransformEntryProps {
+  value: number[] | null;
+  name: string;
+  filterName: string;
+}
+
+export const FilterTransformEntry = (props: FilterTransformEntryProps) => {
   const { value, name, filterName } = props;
   const { act } = useBackend<FilterifficData>();
   let transMatrix = value;
