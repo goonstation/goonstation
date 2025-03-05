@@ -1,0 +1,70 @@
+import { BooleanLike } from 'tgui-core/react';
+
+export enum PlantmasterTab {
+  Overview = 'overview',
+  Extractables = 'extractables',
+  SeedList = 'seedlist',
+}
+
+type DominantDataTuple<T, TDominant extends BooleanLike = BooleanLike> = [
+  T,
+  TDominant,
+];
+
+interface CommonItemData {
+  name: DominantDataTuple<string, 0>;
+  species: DominantDataTuple<string>;
+  genome: DominantDataTuple<number, 0>;
+  generation: DominantDataTuple<number, 0>;
+  growtime: DominantDataTuple<number>;
+  harvesttime: DominantDataTuple<number>;
+  lifespan: DominantDataTuple<number>;
+  cropsize: DominantDataTuple<number>;
+  potency: DominantDataTuple<number>;
+  endurance: DominantDataTuple<number>;
+  charges: DominantDataTuple<number, 0>;
+  ref: DominantDataTuple<string, 0>;
+}
+
+interface SeedData extends CommonItemData {
+  damage: DominantDataTuple<number, 0>;
+  splicing: DominantDataTuple<'splicing'>;
+}
+
+export const isSeedData = (data: CommonItemData): data is SeedData =>
+  'damage' in data;
+
+export interface ExtractableData extends CommonItemData {}
+
+interface CommonViewData {
+  category: PlantmasterTab;
+  category_lengths;
+  inserted;
+  inserted_container;
+  seedoutput;
+  splice_chance;
+  show_splicing;
+  splice_seeds: [SeedData, SeedData];
+  sortBy;
+  sortAsc;
+  allow_infusion: BooleanLike;
+}
+
+export interface SeedsViewData extends CommonViewData {
+  category: PlantmasterTab.SeedList;
+  seeds: SeedData[];
+}
+
+export interface ExtractablesViewData extends CommonViewData {
+  category: PlantmasterTab.Extractables;
+  extractables: ExtractableData[];
+}
+
+interface OverviewViewData extends CommonViewData {
+  category: PlantmasterTab.Overview;
+}
+
+export type PlantmasterData =
+  | OverviewViewData
+  | SeedsViewData
+  | ExtractablesViewData;

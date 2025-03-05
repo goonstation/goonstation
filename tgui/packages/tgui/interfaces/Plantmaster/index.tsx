@@ -18,13 +18,20 @@ import {
   Tabs,
 } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
 
-import { useBackend } from '../backend';
-import { truncate } from '../format';
-import { Window } from '../layouts';
-import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
-import { capitalize } from './common/stringUtils';
+import { useBackend } from '../../backend';
+import { truncate } from '../../format';
+import { Window } from '../../layouts';
+import { NoContainer, ReagentGraph, ReagentList } from '../common/ReagentInfo';
+import { capitalize } from '../common/stringUtils';
+import {
+  type ExtractableData,
+  type ExtractablesViewData,
+  isSeedData,
+  type PlantmasterData,
+  PlantmasterTab,
+  type SeedsViewData,
+} from './type';
 
 const headings = [
   'name',
@@ -57,71 +64,6 @@ const sortname = [
   'endurance',
   '',
 ];
-
-enum PlantmasterTab {
-  Overview = 'overview',
-  Extractables = 'extractables',
-  SeedList = 'seedlist',
-}
-
-type DominantDataTuple<T, TDominant extends BooleanLike = BooleanLike> = [
-  T,
-  TDominant,
-];
-
-interface CommonItemData {
-  name: DominantDataTuple<string, 0>;
-  species: DominantDataTuple<string>;
-  genome: DominantDataTuple<number, 0>;
-  generation: DominantDataTuple<number, 0>;
-  growtime: DominantDataTuple<number>;
-  harvesttime: DominantDataTuple<number>;
-  lifespan: DominantDataTuple<number>;
-  cropsize: DominantDataTuple<number>;
-  potency: DominantDataTuple<number>;
-  endurance: DominantDataTuple<number>;
-  charges: DominantDataTuple<number, 0>;
-  ref: DominantDataTuple<string, 0>;
-}
-
-interface SeedData extends CommonItemData {
-  damage: DominantDataTuple<number, 0>;
-  splicing: DominantDataTuple<'splicing'>;
-}
-
-const isSeedData = (data: CommonItemData): data is SeedData => 'damage' in data;
-
-interface ExtractableData extends CommonItemData {}
-
-interface CommonViewData {
-  category: PlantmasterTab;
-  category_lengths;
-  inserted;
-  inserted_container;
-  seedoutput;
-  splice_chance;
-  show_splicing;
-  splice_seeds: [SeedData, SeedData];
-  sortBy;
-  sortAsc;
-  allow_infusion: BooleanLike;
-}
-
-interface SeedsViewData extends CommonViewData {
-  category: PlantmasterTab.SeedList;
-  seeds: SeedData[];
-}
-
-interface ExtractablesViewData extends CommonViewData {
-  category: PlantmasterTab.Extractables;
-  extractables: ExtractableData[];
-}
-
-interface OverviewViewData extends CommonViewData {
-  category: PlantmasterTab.Overview;
-}
-
-type PlantmasterData = OverviewViewData | SeedsViewData | ExtractablesViewData;
 
 export const Plantmaster = () => {
   const { act, data } = useBackend<PlantmasterData>();
