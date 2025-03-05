@@ -46,9 +46,10 @@ export interface ExtractableData extends CommonItemData {}
 
 interface CommonViewData {
   category: PlantmasterTab;
-  category_lengths;
   inserted;
   inserted_container;
+  num_extractables: number;
+  num_seeds: number;
   seedoutput;
   splice_chance;
   show_splicing;

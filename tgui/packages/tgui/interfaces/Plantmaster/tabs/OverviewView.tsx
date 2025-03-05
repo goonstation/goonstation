@@ -20,14 +20,14 @@ import type { OverviewViewData, PlantmasterData } from '../type';
 
 export const OverviewView = () => {
   const { data } = useBackend<OverviewViewData>();
-  const { category_lengths, inserted, inserted_container } = data;
+  const { inserted, inserted_container, num_extractables, num_seeds } = data;
   const container = inserted ? inserted_container : null;
 
   return (
     <Section title="Overview">
       <Box>
-        Items ready for extraction: <b>{category_lengths[0]}</b> <br />
-        Seeds ready for experimentation: <b>{category_lengths[1]}</b>
+        Items ready for extraction: <b>{num_extractables}</b> <br />
+        Seeds ready for experimentation: <b>{num_seeds}</b>
       </Box>
       <ReagentDisplay container={container} />
     </Section>

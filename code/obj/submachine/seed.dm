@@ -72,7 +72,8 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 
 		return list(
 			"category" = src.mode,
-			"category_lengths" = list(length(src.extractables),length(src.seeds)),
+			"num_extractables" = length(src.extractables),
+			"num_seeds" = length(src.seeds),
 			"inserted" =  src.inserted ? "[src.inserted.reagents.total_volume]/[src.inserted.reagents.maximum_volume] [src.inserted.name]" : "No reagent vessel",
 			"inserted_container" = thisContainerData,
 			"seedoutput" = src.seedoutput,

@@ -15,7 +15,13 @@ import { type PlantmasterData, PlantmasterTab } from './type';
 
 export const Plantmaster = () => {
   const { act, data } = useBackend<PlantmasterData>();
-  const { category, category_lengths, inserted, inserted_container } = data;
+  const {
+    category,
+    inserted,
+    inserted_container,
+    num_extractables,
+    num_seeds,
+  } = data;
   return (
     <Window title="Plantmaster Mk4" width={1200} height={450}>
       <Window.Content>
@@ -36,7 +42,7 @@ export const Plantmaster = () => {
                   act('change_tab', { tab: PlantmasterTab.Extractables });
                 }}
               >
-                Seed Extraction ({category_lengths[0]})
+                Seed Extraction ({num_extractables})
               </Tabs.Tab>
               <Tabs.Tab
                 selected={category === PlantmasterTab.SeedList}
@@ -44,7 +50,7 @@ export const Plantmaster = () => {
                   act('change_tab', { tab: PlantmasterTab.SeedList });
                 }}
               >
-                Seeds ({category_lengths[1]})
+                Seeds ({num_seeds})
               </Tabs.Tab>
               <Tabs.Tab
                 backgroundColor={inserted_container ? 'green' : 'blue'}
