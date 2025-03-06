@@ -229,6 +229,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH | TGUI_INTERACTIVE
+	/// A list of reagent_ids we will dispense by default
 	var/list/flavors = list("chocolate","vanilla","coffee")
 	var/obj/item/reagent_containers/glass/beaker = null
 	var/obj/item/reagent_containers/food/snacks/ice_cream_cone/cone = null
