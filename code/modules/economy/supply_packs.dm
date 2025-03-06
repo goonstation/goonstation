@@ -1612,7 +1612,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	frames = list(/obj/machinery/hair_dye_dispenser)
 	cost = PAY_TRADESMAN*5
 	containertype = /obj/storage/crate
-	containername = "Mechanics Reconstruction Kit"
+	containername = "Barbershop Kit"
 
 #ifndef UNDERWATER_MAP
 /datum/supply_packs/complex/mini_magnet_kit
