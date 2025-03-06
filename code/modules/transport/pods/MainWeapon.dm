@@ -65,6 +65,7 @@
 
 /obj/item/shipcomponent/mainweapon/buildTooltipContent()
 	. = ..() + src.current_projectile?.get_tooltip_content()
+	. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/frenzy.png")]\" width=\"10\" height=\"10\" /> Firerate: [src.firerate / 10] seconds"
 	src.lastTooltipContent = .
 
 /obj/item/shipcomponent/mainweapon/proc/Fire(var/mob/user,var/shot_dir_override = -1)
