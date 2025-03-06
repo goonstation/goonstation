@@ -1,4 +1,9 @@
 
+(t)wed mar 05 25
+(u)glowbold
+(p)22457
+(e)⚖|C-Balance
+(*)Infrared vision cannot see through gene-based or vampire cloaking. They can still be revealed by mesons.
 (t)tue mar 04 25
 (u)Sord
 (+)Plasma Lungs trait grants 2 points instead of only 1.

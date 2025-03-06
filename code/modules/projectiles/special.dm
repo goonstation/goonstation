@@ -715,7 +715,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	auto_find_targets = 0
 	max_speed = 6
 	start_speed = 0.1
-	invisibility = INVIS_INFRA
+	invisibility = INVIS_MESON
 
 	shot_sound = null
 	goes_through_walls = 1

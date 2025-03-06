@@ -2485,6 +2485,8 @@
 					src.lastgasp()
 					src.changeStatus("knockdown", 2 SECONDS)
 					src.force_laydown_standup()
+			if (thr.throw_type & THROW_GIB)
+				src.gib()
 		else
 			src.gib()
 
