@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import {
   Button,
   NumberInput,
@@ -14,9 +14,9 @@ import {
   Stack,
   Table,
 } from 'tgui-core/components';
-import { clamp } from 'tgui-core/math';
 
 import { useBackend } from '../../../backend';
+import { usePagination } from '../../common/hooks';
 import { compare, Row, TitleRow } from '../PlantmasterTable';
 import type { SeedsViewData } from '../type';
 
@@ -32,26 +32,23 @@ export const SeedsView = () => {
     splice_seeds,
     splice_chance,
   } = data;
-  const [page, setPage] = useState(1);
   const sortedSeeds = useMemo(
     () => [...(seeds ?? [])].sort((a, b) => compare(a, b, sortBy, !!sortAsc)),
     [compare, seeds, sortAsc, sortBy],
   );
   const seedsPerPage = show_splicing ? 7 : 10;
-  const totalPages = Math.max(1, Math.ceil(sortedSeeds.length / seedsPerPage));
-  useEffect(() => {
-    if (page < 1 || page > totalPages) {
-      setPage(clamp(page, 1, totalPages));
-    }
-  }, [clamp, page, setPage, totalPages]);
-  const seedsOnPage = useMemo(
-    () =>
-      sortedSeeds.slice(
-        seedsPerPage * (page - 1),
-        seedsPerPage * (page - 1) + seedsPerPage,
-      ),
-    [page, seedsPerPage, sortedSeeds],
-  );
+  const {
+    canDecrementPage,
+    canIncrementPage,
+    changePage,
+    decrementPage,
+    incrementPage,
+    items,
+    numPages,
+    page,
+  } = usePagination(sortedSeeds, {
+    pageSize: seedsPerPage,
+  });
   const splice_disable = splice_seeds[0] !== null && splice_seeds[1] !== null;
   return (
     <Stack vertical fill>
@@ -73,23 +70,23 @@ export const SeedsView = () => {
               <Button
                 icon="caret-left"
                 tooltip="Previous Page"
-                disabled={page < 2}
-                onClick={() => setPage(page - 1)}
+                disabled={!canDecrementPage}
+                onClick={decrementPage}
               />
               <NumberInput
-                value={page}
-                format={(value) => `Page ${value}/${totalPages}`}
+                value={page + 1}
+                format={(value) => `Page ${value}/${numPages}`}
                 minValue={1}
-                maxValue={totalPages}
+                maxValue={numPages}
                 step={1}
                 stepPixelSize={15}
-                onChange={(value) => setPage(value)}
+                onChange={(pageOneIndexed) => changePage(pageOneIndexed - 1)}
               />
               <Button
                 icon="caret-right"
                 tooltip="Next Page"
-                disabled={page > totalPages - 1}
-                onClick={() => setPage(page + 1)}
+                disabled={!canIncrementPage}
+                onClick={incrementPage}
               />
               <Button.Checkbox
                 checked={!output_externally}
@@ -103,7 +100,7 @@ export const SeedsView = () => {
         >
           <Table>
             <TitleRow showDamage sortBy={sortBy} sortAsc={!!sortAsc} />
-            {seedsOnPage.map((extractable) => (
+            {items.map((extractable) => (
               <Row
                 allow_infusion={allow_infusion}
                 extractable={extractable}

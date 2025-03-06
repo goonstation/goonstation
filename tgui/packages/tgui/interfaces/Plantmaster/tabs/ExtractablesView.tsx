@@ -6,11 +6,11 @@
  * @license MIT
  */
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Button, NumberInput, Section, Table } from 'tgui-core/components';
-import { clamp } from 'tgui-core/math';
 
 import { useBackend } from '../../../backend';
+import { usePagination } from '../../common/hooks';
 import { compare, Row, TitleRow } from '../PlantmasterTable';
 import type { ExtractablesViewData } from '../type';
 
@@ -18,7 +18,6 @@ export const ExtractablesView = () => {
   const { act, data } = useBackend<ExtractablesViewData>();
   const { allow_infusion, extractables, output_externally, sortAsc, sortBy } =
     data;
-  const [page, setPage] = useState(1);
   const sortedExtractables = useMemo(
     () =>
       [...(extractables ?? [])].sort((a, b) =>
@@ -26,25 +25,18 @@ export const ExtractablesView = () => {
       ),
     [compare, extractables, sortAsc, sortBy],
   );
-  const extractablesPerPage = 10;
-  const totalPages = Math.max(
-    1,
-    Math.ceil(sortedExtractables.length / extractablesPerPage),
-  );
-  useEffect(() => {
-    if (page < 1 || page > totalPages) {
-      setPage(clamp(page, 1, totalPages));
-    }
-  }, [clamp, page, setPage, totalPages]);
-  const extractablesOnPage = useMemo(
-    () =>
-      sortedExtractables.slice(
-        extractablesPerPage * (page - 1),
-        extractablesPerPage * (page - 1) + extractablesPerPage,
-      ),
-    [extractablesPerPage, page, sortedExtractables],
-  );
-
+  const {
+    canDecrementPage,
+    canIncrementPage,
+    changePage,
+    decrementPage,
+    incrementPage,
+    items,
+    numPages,
+    page,
+  } = usePagination(sortedExtractables, {
+    pageSize: 10,
+  });
   return (
     <Section
       title="Extractable Items"
@@ -62,23 +54,23 @@ export const ExtractablesView = () => {
           <Button
             icon="caret-left"
             tooltip="Previous Page"
-            disabled={page < 2}
-            onClick={() => setPage(page - 1)}
+            disabled={!canDecrementPage}
+            onClick={decrementPage}
           />
           <NumberInput
-            value={page}
-            format={(value) => `Page ${value}/${totalPages}`}
+            value={page + 1}
+            format={(value) => `Page ${value}/${numPages}`}
             minValue={1}
-            maxValue={totalPages}
+            maxValue={numPages}
             step={1}
             stepPixelSize={15}
-            onChange={(value) => setPage(value)}
+            onChange={(pageOneIndexed) => changePage(pageOneIndexed - 1)}
           />
           <Button
             icon="caret-right"
             tooltip="Next Page"
-            disabled={page > totalPages - 1}
-            onClick={() => setPage(page + 1)}
+            disabled={!canIncrementPage}
+            onClick={incrementPage}
           />
           <Button.Checkbox
             checked={!output_externally}
@@ -92,7 +84,7 @@ export const ExtractablesView = () => {
     >
       <Table>
         <TitleRow sortBy={sortBy} sortAsc={!!sortAsc} />
-        {extractablesOnPage.map((extractable) => (
+        {items.map((extractable) => (
           <Row
             allow_infusion={allow_infusion}
             extractable={extractable}
