@@ -1,3 +1,40 @@
+
+(t)wed mar 05 25
+(u)glowbold
+(p)22457
+(e)⚖|C-Balance
+(*)Infrared vision cannot see through gene-based or vampire cloaking. They can still be revealed by mesons.
+(t)tue mar 04 25
+(u)Sord
+(+)Plasma Lungs trait grants 2 points instead of only 1.
+(t)mon mar 03 25
+(u)Mordent
+(p)22476
+(e)📄|A-UI
+(+)Various UIs use striping instead of borders between items.
+(u)glowbold
+(p)22456
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Engineers now have access to infrared crayons.
+(t)sun mar 02 25
+(u)glowbold
+(p)22431
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Click-dragging people into a syndicate robot conversion chamber has a 1 second action bar.
+(t)thu feb 27 25
+(u)glowbold
+(p)22448
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The engineering specialist manufacturer can print heavy firesuits.
+(u)FlameArrow57
+(p)22323
+(e)🆕🎨📦🚗|C-Feature, C-Sprites, A-Game-Objects, A-Vehicles
+(+)Added a new Scout Engine pod engine. Compared to other engines, it provides the highest speed and warp travel recharge time, but provides little power to operate most pod parts that require power
+(t)tue feb 25 25
+(u)Sovexe
+(p)22439
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Rectangular maps (e.g. Podwars) are now properly supported by the minimap computers and floor displays
 (t)sun feb 23 25
 (u)LeahTheTech
 (+)Nanotrasen has begun enforcing its millinery patents.

@@ -1773,6 +1773,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Pod Mechanic"
 	#endif
 	wages = PAY_TRADESMAN
+	trait_list = list("training_engineer")
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/rank/mechanic)
 	slot_head = list(/obj/item/clothing/head/helmet/hardhat)

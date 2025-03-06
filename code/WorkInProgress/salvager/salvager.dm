@@ -425,6 +425,11 @@
 		else
 			. = ..()
 
+	set_loc(newloc, storage_check)
+		. = ..()
+		if(istype(newloc,/obj/item/storage/backpack/salvager))
+			src.anchored = TRUE
+
 /obj/item/storage/backpack/salvager
 	name = "salvager rucksack"
 	desc = "A repurposed military backpack made of high density fabric, designed to fit a wide array of tools and junk."
