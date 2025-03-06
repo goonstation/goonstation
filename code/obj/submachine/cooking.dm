@@ -251,6 +251,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 			var/datum/reagent/fooddrink/current_reagent = reagents_cache[reagent]
 			flavorsTemp.Add(list(list(
 				name = current_reagent.name,
+				id = current_reagent.id,
 				colorR = current_reagent.fluid_r,
 				colorG = current_reagent.fluid_g,
 				colorB = current_reagent.fluid_b
@@ -262,7 +263,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	ui_data(mob/user)
 		. = list(
 			"beaker" = ui_describe_reagents(src.beaker),
-			"cone" = src.cone
+			"has_cone" = src.cone ? TRUE : FALSE
 		)
 
 	ui_act(action, params)
