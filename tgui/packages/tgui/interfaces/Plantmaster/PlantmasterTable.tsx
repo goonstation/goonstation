@@ -114,8 +114,8 @@ export const Row = (props: PlantRowProps) => {
           tooltip="Click to rename"
           color="transparent"
           textColor="#FFFFFF"
-          defaultValue={extractable.name[0]}
-          currentValue={extractable.name[0]}
+          defaultValue={extractable.name}
+          currentValue={extractable.name}
           onCommit={(_e, new_name) =>
             act('label', {
               label_ref: extractable.item_ref,
@@ -123,7 +123,7 @@ export const Row = (props: PlantRowProps) => {
             })
           }
         >
-          {truncate(extractable.name[0], 10)}
+          {truncate(extractable.name, 10)}
         </Button.Input>
       </Table.Cell>
       <Table.Cell
@@ -150,21 +150,11 @@ export const Row = (props: PlantRowProps) => {
           {extractable.charges}
         </Table.Cell>
       )}
-      <Table.Cell
-        textAlign="center"
-        verticalAlign="middle"
-        bold={!!extractable.genome[1]}
-        backgroundColor={extractable.genome[1] ? '#333333' : ''}
-      >
-        {extractable.genome[0]}
+      <Table.Cell textAlign="center" verticalAlign="middle">
+        {extractable.genome}
       </Table.Cell>
-      <Table.Cell
-        textAlign="center"
-        verticalAlign="middle"
-        bold={!!extractable.generation[1]}
-        backgroundColor={extractable.generation[1] ? '#333333' : ''}
-      >
-        {extractable.generation[0]}
+      <Table.Cell textAlign="center" verticalAlign="middle">
+        {extractable.generation}
       </Table.Cell>
       <Table.Cell
         textAlign="center"

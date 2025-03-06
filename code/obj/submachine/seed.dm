@@ -626,39 +626,40 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 	proc/QuickAnalysisRow(var/obj/scanned, var/datum/plant/P, var/datum/plantgenes/DNA)
 		var/result = list()
 		if (!scanned || !P || P.cantscan || !DNA) //this shouldn't happen, but if it does, return a valid (if confusing) row, and report the error
-			result["name"] = list(scanned ? scanned.name : "???", FALSE)
+			// TODO: error result instead of all this
+			result["name"] = scanned ? scanned.name : "???"
+			result["item_ref"]= "\ref[scanned]" //in the event that scanned is somehow null, \ref[null] = [0x0]
+			result["charges"] = 0
+			result["generation"] = 0
+			result["genome"] = 0
 			result["species"] = list("???", FALSE)
-			result["genome"] = list("???", FALSE)
-			result["generation"] = list("???", FALSE)
 			result["growtime"] = list("???", FALSE)
 			result["harvesttime"] = list("???", FALSE)
 			result["lifespan"] = list("???", FALSE)
 			result["cropsize"] = list("???", FALSE)
 			result["potency"] = list("???", FALSE)
 			result["endurance"] = list("???", FALSE)
-			result["charges"] = 0
-			result["item_ref"]= "\ref[scanned]" //in the event that scanned is somehow null, \ref[null] = [0x0]
 			logTheThing(LOG_DEBUG, src, "An invalid object was placed in the plantmaster. Error recovery prevents a TGUI bluescreen. Object details: scanned: [json_encode(scanned)], P: [json_encode(P)], DNA: [json_encode(DNA)]")
 			return result
 
 		var/generation = 0
 		var/charges = 0
-		if (istype(scanned, /obj/item/seed/))
+		if (istype(scanned, /obj/item/seed))
 			var/obj/item/seed/S = scanned
 			generation = S.generation
 			charges = S.charges
-		if (istype(scanned, /obj/item/reagent_containers/food/snacks/plant/))
+		if (istype(scanned, /obj/item/reagent_containers/food/snacks/plant))
 			var/obj/item/reagent_containers/food/snacks/plant/F = scanned
 			generation = F.generation
 			charges = 1
 
-		result["charges"] = charges
+		result["name"] = scanned.name
 		result["item_ref"]= "\ref[scanned]"
+		result["charges"] = charges
+		result["generation"] = generation
+		result["genome"] = P.genome // genome is always averaged when splicing
 		// list of attributes and their dominance flag
-		result["name"] = list(scanned.name, FALSE)
 		result["species"] = list(P.name, DNA.d_species)
-		result["genome"] = list(P.genome, FALSE) // genome is always averaged
-		result["generation"] = list(generation, FALSE)
 		result["growtime"] = list(DNA.growtime, DNA.d_growtime)
 		result["harvesttime"] = list(DNA.harvtime, DNA.d_harvtime)
 		result["lifespan"] = list(DNA.harvests, DNA.d_harvests)

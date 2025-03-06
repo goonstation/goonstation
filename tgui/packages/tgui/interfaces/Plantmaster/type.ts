@@ -20,18 +20,18 @@ type DominantDataTuple<T, TDominant extends BooleanLike = BooleanLike> = [
 ];
 
 interface CommonItemData {
-  name: DominantDataTuple<string, 0>;
+  name: string;
+  item_ref: string;
+  charges: number;
+  generation: number;
+  genome: number;
   species: DominantDataTuple<string>;
-  genome: DominantDataTuple<number, 0>;
-  generation: DominantDataTuple<number, 0>;
   growtime: DominantDataTuple<number>;
   harvesttime: DominantDataTuple<number>;
   lifespan: DominantDataTuple<number>;
   cropsize: DominantDataTuple<number>;
   potency: DominantDataTuple<number>;
   endurance: DominantDataTuple<number>;
-  charges: number;
-  item_ref: string;
 }
 
 interface SeedData extends CommonItemData {
