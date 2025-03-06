@@ -636,7 +636,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			result["cropsize"] = list("???", FALSE)
 			result["potency"] = list("???", FALSE)
 			result["endurance"] = list("???", FALSE)
-			result["charges"] = list("???", FALSE)
+			result["charges"] = 0
 			result["item_ref"]= "\ref[scanned]" //in the event that scanned is somehow null, \ref[null] = [0x0]
 			logTheThing(LOG_DEBUG, src, "An invalid object was placed in the plantmaster. Error recovery prevents a TGUI bluescreen. Object details: scanned: [json_encode(scanned)], P: [json_encode(P)], DNA: [json_encode(DNA)]")
 			return result
@@ -652,10 +652,12 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			generation = F.generation
 			charges = 1
 
-		//list of attributes and their dominance flag
+		result["charges"] = charges
+		result["item_ref"]= "\ref[scanned]"
+		// list of attributes and their dominance flag
 		result["name"] = list(scanned.name, FALSE)
 		result["species"] = list(P.name, DNA.d_species)
-		result["genome"] = list(P.genome, FALSE) //genome is always averaged
+		result["genome"] = list(P.genome, FALSE) // genome is always averaged
 		result["generation"] = list(generation, FALSE)
 		result["growtime"] = list(DNA.growtime, DNA.d_growtime)
 		result["harvesttime"] = list(DNA.harvtime, DNA.d_harvtime)
@@ -663,8 +665,6 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 		result["cropsize"] = list(DNA.cropsize, DNA.d_cropsize)
 		result["potency"] = list(DNA.potency, DNA.d_potency)
 		result["endurance"] = list(DNA.endurance, DNA.d_endurance)
-		result["charges"] = list(charges, FALSE)
-		result["item_ref"]= "\ref[scanned]"
 		return result
 
 	Exited(Obj, newloc)

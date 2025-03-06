@@ -30,7 +30,7 @@ interface CommonItemData {
   cropsize: DominantDataTuple<number>;
   potency: DominantDataTuple<number>;
   endurance: DominantDataTuple<number>;
-  charges: DominantDataTuple<number, 0>;
+  charges: number;
   item_ref: string;
 }
 

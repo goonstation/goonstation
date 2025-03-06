@@ -146,13 +146,8 @@ export const Row = (props: PlantRowProps) => {
         </Table.Cell>
       )}
       {show_damage && (
-        <Table.Cell
-          textAlign="center"
-          verticalAlign="middle"
-          bold={!!extractable.charges[1]}
-          backgroundColor={extractable.charges[1] ? '#333333' : undefined}
-        >
-          {extractable.charges[0]}
+        <Table.Cell textAlign="center" verticalAlign="middle">
+          {extractable.charges}
         </Table.Cell>
       )}
       <Table.Cell
