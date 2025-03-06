@@ -71,7 +71,7 @@ export const AlertModal = () => {
   // Dynamically sets window dimensions
   const windowHeight = typedContentWindow
     ? typedContentWindow.height || DEFAULT_CONTENT_WINDOW_HEIGHT
-    : 115 + (message.length > 30 ? Math.ceil(message.length / 4) : 0);
+    : 120 + (message.length > 30 ? Math.ceil(message.length / 4) : 0);
   const windowWidth = typedContentWindow
     ? typedContentWindow.width || DEFAULT_CONTENT_WINDOW_WIDTH
     : 325 + (items.length > 2 ? 55 : 0);
@@ -135,7 +135,6 @@ export const AlertModal = () => {
                 overflowX="hidden"
                 overflowY="auto"
                 maxHeight="100%"
-                minHeight="200px"
               >
                 {typedContentWindow ? typedContentWindow.content : message}
               </Box>
