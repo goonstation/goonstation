@@ -102,9 +102,9 @@ export const SeedsView = () => {
             <TitleRow showDamage sortBy={sortBy} sortAsc={!!sortAsc} />
             {items.map((extractable) => (
               <Row
+                key={extractable.item_ref}
                 allow_infusion={allow_infusion}
                 extractable={extractable}
-                key={extractable.ref[1]}
                 show_damage
                 infuse
                 splice
@@ -138,7 +138,7 @@ export const SeedsView = () => {
                   <Row
                     allow_infusion={allow_infusion}
                     extractable={extractable}
-                    key={extractable.ref[1]}
+                    key={extractable.item_ref}
                     show_damage
                     infuse
                     splice

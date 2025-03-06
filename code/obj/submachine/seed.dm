@@ -637,7 +637,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			result["potency"] = list("???", FALSE)
 			result["endurance"] = list("???", FALSE)
 			result["charges"] = list("???", FALSE)
-			result["ref"]= list("\ref[scanned]", FALSE) //in the event that scanned is somehow null, \ref[null] = [0x0]
+			result["item_ref"]= "\ref[scanned]" //in the event that scanned is somehow null, \ref[null] = [0x0]
 			logTheThing(LOG_DEBUG, src, "An invalid object was placed in the plantmaster. Error recovery prevents a TGUI bluescreen. Object details: scanned: [json_encode(scanned)], P: [json_encode(P)], DNA: [json_encode(DNA)]")
 			return result
 
@@ -664,7 +664,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 		result["potency"] = list(DNA.potency, DNA.d_potency)
 		result["endurance"] = list(DNA.endurance, DNA.d_endurance)
 		result["charges"] = list(charges, FALSE)
-		result["ref"]= list("\ref[scanned]", FALSE)
+		result["item_ref"]= "\ref[scanned]"
 		return result
 
 	Exited(Obj, newloc)

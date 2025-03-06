@@ -86,9 +86,9 @@ export const ExtractablesView = () => {
         <TitleRow sortBy={sortBy} sortAsc={!!sortAsc} />
         {items.map((extractable) => (
           <Row
+            key={extractable.item_ref}
             allow_infusion={allow_infusion}
             extractable={extractable}
-            key={extractable.ref[1]}
             extract
           />
         ))}

@@ -118,7 +118,7 @@ export const Row = (props: PlantRowProps) => {
           currentValue={extractable.name[0]}
           onCommit={(_e, new_name) =>
             act('label', {
-              label_ref: extractable.ref[0],
+              label_ref: extractable.item_ref,
               label_new: new_name,
             })
           }
@@ -225,14 +225,16 @@ export const Row = (props: PlantRowProps) => {
             icon="fill-drip"
             tooltip="Infuse"
             disabled={!allow_infusion}
-            onClick={() => act('infuse', { infuse_ref: extractable.ref[0] })}
+            onClick={() => act('infuse', { infuse_ref: extractable.item_ref })}
           />
         )}
         {extract && (
           <Button
             icon="seedling"
             tooltip="Extract Seeds"
-            onClick={() => act('extract', { extract_ref: extractable.ref[0] })}
+            onClick={() =>
+              act('extract', { extract_ref: extractable.item_ref })
+            }
           />
         )}
         {splice && isSeedData(extractable) && (
@@ -243,7 +245,7 @@ export const Row = (props: PlantRowProps) => {
             tooltip={extractable.splicing[1] ? 'Cancel Splice' : 'Splice'}
             onClick={() =>
               act('splice_select', {
-                splice_select_ref: extractable.ref[0],
+                splice_select_ref: extractable.item_ref,
               })
             }
           />
@@ -251,12 +253,12 @@ export const Row = (props: PlantRowProps) => {
         <Button
           icon="search"
           tooltip="Analyze"
-          onClick={() => act('analyze', { analyze_ref: extractable.ref[0] })}
+          onClick={() => act('analyze', { analyze_ref: extractable.item_ref })}
         />
         <Button
           icon="eject"
           tooltip="Eject"
-          onClick={() => act('eject', { eject_ref: extractable.ref[0] })}
+          onClick={() => act('eject', { eject_ref: extractable.item_ref })}
         />
       </Table.Cell>
     </Table.Row>

@@ -31,7 +31,7 @@ interface CommonItemData {
   potency: DominantDataTuple<number>;
   endurance: DominantDataTuple<number>;
   charges: DominantDataTuple<number, 0>;
-  ref: DominantDataTuple<string, 0>;
+  item_ref: string;
 }
 
 interface SeedData extends CommonItemData {
