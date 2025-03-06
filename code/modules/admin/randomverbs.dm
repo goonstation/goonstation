@@ -1,9 +1,10 @@
 /verb/restart_the_fucking_server_i_mean_it()
 	set name = "Emergency Restart"
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	if(config.update_check_enabled)
-		world.installUpdate()
-	world.Reboot()
+	if (world.installUpdate())
+		Shutdown_server()
+	else
+		world.Reboot()
 
 /client/proc/rebuild_flow_networks()
 	set name = "Rebuild Flow Networks"
@@ -2772,6 +2773,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				src.mob.visible_message("[src.mob] manipulates the very fabric of spacetime around themselves linking their current location with another! Wow!", "You skillfully manipulate spacetime to join the space containing your office with your current location.", "You have no idea what's happening but it sure does sound cool!")
 				playsound(src.mob, 'sound/machines/door_open.ogg', 50, 1)
 				if (!mirrored_physical_zone_created)
+					logTheThing(LOG_DEBUG, null, "mirrored physical zone enabled by office summon")
 					mirrored_physical_zone_created = TRUE
 			else
 				src.mob.visible_message("[src.mob] returns the fabric of spacetime to normal! Wow!", "You wave your office away, returning the space to normal.", "You have no idea what's happening but it sure does sound cool!")

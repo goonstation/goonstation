@@ -34,7 +34,7 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 			boutput(user, SPAN_ALERT("You try to turn on [src] and jump into it, but it is not working."))
 			return 0
 		user.visible_message(SPAN_ALERT("<b>[user] jumps into [src].</b>"), SPAN_ALERT("<b>You jump into [src].</b>"))
-		var/obj/statue = user.become_statue(src.my_bar.material.getID(), survive=TRUE)
+		var/obj/statue = user.become_statue(src.my_bar.material, survive=TRUE)
 		user.TakeDamage("All", burn=200)
 		qdel(src.my_bar)
 		src.my_bar = null
@@ -172,7 +172,10 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 		if(src.status & BROKEN)
 			return // don't unsubscribe if broken to maintain equipment faults
 
-		if(!src.target_item)
+		if(!src.target_item || src.target_item.loc != src)
+			src.visible_message(SPAN_NOTICE("[src] buzzes as it no longer has anything to plate."))
+			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50)
+			src.eject_contents(FALSE)
 			UnsubscribeProcess()
 			return
 
@@ -189,10 +192,10 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 			animate_shake(src, 3, rand(2,5), rand(2,5))
 			if (status & NOPOWER)
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 100)
-				src.visible_message("[src] buzzes as it spits out everything inside it, and completely runs out of power.")
+				src.visible_message(SPAN_ALERT("[src] buzzes as it spits out everything inside it, and completely runs out of power."))
 			if (status & BROKEN)
 				playsound(src.loc, 'sound/machines/hydraulic.ogg', 100)
-				src.visible_message("[src] spits out everything inside it as it breaks down!")
+				src.visible_message(SPAN_ALERT("[src] spits out everything inside it as it breaks down!"))
 
 		if(src.my_bar && !src.target_item)
 			src.my_bar.set_loc(src.loc)

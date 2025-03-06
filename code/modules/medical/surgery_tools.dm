@@ -1072,6 +1072,12 @@ TYPEINFO(/obj/machinery/defib_mount)
 		for (var/obj/O in get_turf(src))
 			if (O.density || O.anchored || O == src)
 				continue
+			if (istype(O, /obj/storage)) // don't eat closets/crates
+				continue
+			if (istype(O, /obj/item/body_bag)) // don't eat other deployed bodybags
+				var/obj/item/body_bag/other_bag = O
+				if (other_bag.w_class == W_CLASS_BULKY)
+					continue
 			O.set_loc(src)
 		for (var/mob/M in get_turf(src))
 			if (!(M.lying || (ismobcritter(M) && isdead(M))) || M.anchored || M.buckled)

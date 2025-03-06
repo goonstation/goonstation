@@ -935,28 +935,9 @@
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<B>[user.name]</B> deconstructs [target].")
 
-		var/turf/target_loc = get_turf(target)
-		var/obj/item/electronics/frame/F = new(target_loc)
-		F.name = "[target.name] frame"
-		if(O.deconstruct_flags & DECON_DESTRUCT)
-			F.store_type = O.type
-			qdel(O)
-		else
-			F.deconstructed_thing = target
-			if(ismob(O.loc))
-				var/mob/M = O.loc
-				M.u_equip(O)
-			O.set_loc(F)
-		// move frame to the location after object is gone, so crushers do not crusher themselves
-		F.viewstat = 2
-		F.secured = 2
-		F.icon_state = "dbox_big"
-		F.w_class = W_CLASS_BULKY
+		O.become_frame(user)
 
 		elecflash(src,power=2)
-		if(!QDELETED(O))
-			O.was_deconstructed_to_frame(user)
-			F.RegisterSignal(O, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
 
 	MouseDrop_T(atom/target, mob/user)
 		src.pre_attackby(src, target, user)

@@ -1022,7 +1022,7 @@ var/list/radio_brains = list()
 		if (probmult(20))
 			src.active = !src.active
 		if (src.active)
-			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_INFRA)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
 		else
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
 
@@ -1087,6 +1087,11 @@ var/list/radio_brains = list()
 	proc/on_sprint()
 		set waitfor = FALSE
 		if (!src.owner.lying || is_incapacitated(src.owner) || length(src.owner.grabbed_by))
+			return
+		if (!isturf(src.owner.loc))
+			return
+		var/turf/T = get_turf(src.owner)
+		if (!istype(T) || T.throw_unlimited)
 			return
 		if (ON_COOLDOWN(src.owner, "skitter", 7 SECONDS))
 			return

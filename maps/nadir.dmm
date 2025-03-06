@@ -1219,7 +1219,7 @@
 	name = "Northwest Breach Hull"
 	})
 "aAe" = (
-/obj/storage/cart,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -2672,9 +2672,7 @@
 /turf/simulated/floor/blackwhite{
 	dir = 6
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "bjU" = (
 /obj/noticeboard/persistent{
 	name = "Cargo persistent notice board";
@@ -5686,9 +5684,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "cBP" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/decal/cleanable/dirt/jen,
@@ -5718,9 +5714,7 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "cDk" = (
 /obj/machinery/computer/transception{
 	dir = 8
@@ -12565,9 +12559,7 @@
 /turf/simulated/floor/blackwhite{
 	dir = 9
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "fAZ" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 8;
@@ -13989,9 +13981,7 @@
 /turf/simulated/floor/blackwhite{
 	dir = 9
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "ghz" = (
 /obj/machinery/light/small,
 /obj/stool/bed,
@@ -17669,9 +17659,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "hyl" = (
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/redblack,
@@ -19362,9 +19350,7 @@
 "igo" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "igp" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -19612,9 +19598,7 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "ilD" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -20207,9 +20191,7 @@
 /area/station/crew_quarters/catering)
 "ixn" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "ixp" = (
 /obj/stool/chair/blue{
 	dir = 8
@@ -23581,9 +23563,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "jSs" = (
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/redblack{
@@ -28889,9 +28869,7 @@
 /turf/simulated/floor/blackwhite{
 	dir = 9
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "lYy" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -32303,9 +32281,7 @@
 "nwS" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "nxg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -35001,7 +34977,6 @@
 /obj/item/shipcomponent/pod_lights/police_siren{
 	pixel_y = 7
 	},
-/obj/table/reinforced/auto,
 /turf/simulated/floor/redblack,
 /area/station/hangar/sec)
 "oGa" = (
@@ -35128,9 +35103,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "oIP" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37090,9 +37063,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "pyd" = (
 /obj/decal/poster/wallsign/fuck2,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -39237,9 +39208,7 @@
 /turf/simulated/floor/blackwhite{
 	dir = 9
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "qvZ" = (
 /obj/stool/chair/couch{
 	desc = "It's comfortable, but has an aura of unease about it, like somebody's watching you the moment you sit down.";
@@ -42340,7 +42309,6 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "rVx" = (
-/obj/table/auto,
 /obj/item/suture{
 	pixel_x = 2;
 	pixel_y = 7
@@ -43902,9 +43870,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "sFC" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
@@ -44874,9 +44840,7 @@
 /turf/simulated/floor/blackwhite{
 	dir = 6
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "tau" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/sanitary/white,
@@ -45186,9 +45150,7 @@
 	},
 /obj/machinery/light,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "thf" = (
 /obj/machinery/door/feather/friendly{
 	dir = 4
@@ -47641,9 +47603,7 @@
 /turf/simulated/floor/blackwhite{
 	dir = 6
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "uiV" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/disposalpipe/segment/mineral,
@@ -49663,9 +49623,7 @@
 /turf/simulated/floor/blackwhite{
 	dir = 9
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "vhP" = (
 /obj/stool/chair/couch{
 	dir = 4;
@@ -55564,9 +55522,7 @@
 /obj/monkeyplant,
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "xOa" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/black/grime,
@@ -56539,9 +56495,7 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 
 (1,1,1) = {"
 oeA

@@ -9,14 +9,10 @@ import { KeyboardEventHandler, useCallback } from 'react';
 import {
   Box,
   Button,
-  Divider,
-  Icon,
   Input,
   LabeledList,
   Modal,
   Section,
-  Stack,
-  Tooltip,
 } from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../backend';
@@ -24,9 +20,14 @@ import { truncate } from '../format';
 import { Window } from '../layouts';
 
 interface MixingDeskData {
-  voices;
-  selected_voice;
+  voices: VoiceData[];
+  selected_voice: number;
   say_popup;
+}
+
+interface VoiceData {
+  accent?: string;
+  name: string;
 }
 
 export const MixingDesk = () => {
@@ -107,48 +108,55 @@ export const MixingDesk = () => {
   );
 
   return (
-    <Window height={375} width={370}>
+    <Window height={370} width={370}>
       <Window.Content onKeyDown={handleKeyDown}>
         {!!say_popup && sayPopup()}
         <Section title="Voice Synthesizer">
-          <Divider />
           <LabeledList>
             {voices.map((entry, index) => (
               <LabeledList.Item
-                key={entry['name']}
-                label={`${index + 1} ${truncate(entry['name'], 18)}${entry['accent'] ? ` [${entry['accent']}]` : ''}`}
+                key={entry.name}
+                className="candystripe"
+                label={
+                  <Box>
+                    {`${index + 1} ${truncate(entry['name'], 18)}${entry.accent ? ` [${entry.accent}]` : ''}`}
+                  </Box>
+                }
                 labelColor={index + 1 === selected_voice ? 'red' : 'label'}
-              >
-                <Button
-                  icon="trash-alt"
-                  onClick={() => act('remove_voice', { id: index + 1 })}
-                />
-                <Button
-                  icon="bullhorn"
-                  onClick={() => act('say_popup', { id: index + 1 })}
-                />
-              </LabeledList.Item>
+                buttons={
+                  <>
+                    <Button
+                      icon="trash-alt"
+                      onClick={() => act('remove_voice', { id: index + 1 })}
+                    />
+                    <Button
+                      icon="bullhorn"
+                      onClick={() => act('say_popup', { id: index + 1 })}
+                    />
+                  </>
+                }
+              />
             ))}
-            <LabeledList.Item>
-              <Stack align="center">
-                <Stack.Item>
-                  <Button
-                    icon="plus"
-                    onClick={() => act('add_voice')}
-                    disabled={voices.length >= 9}
-                  />
-                </Stack.Item>
-                <Stack.Item>
-                  <Tooltip
-                    position="right"
-                    content="Press T to talk and 1-9 keys to switch voices. Press 0 to reset to your normal voice."
-                  >
-                    <Icon name="question-circle" />
-                  </Tooltip>
-                </Stack.Item>
-              </Stack>
-            </LabeledList.Item>
+            <LabeledList.Item
+              buttons={
+                <Button
+                  icon="plus"
+                  onClick={() => act('add_voice')}
+                  disabled={voices.length >= 9}
+                >
+                  Add
+                </Button>
+              }
+              className="candystripe"
+            />
           </LabeledList>
+        </Section>
+        <Section textAlign="center">
+          <Box>
+            Press T to talk and 1-9 keys to switch voices.
+            <br />
+            Press 0 to reset to your normal voice.
+          </Box>
         </Section>
       </Window.Content>
     </Window>

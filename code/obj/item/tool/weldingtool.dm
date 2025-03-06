@@ -40,11 +40,13 @@
 		AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 125, src.welding)
 
 		// Welder + rods  -> Welder/Rods Assembly
-		src.AddComponent(/datum/component/assembly, /obj/item/rods, PROC_REF(welder_rod_construction), TRUE)
+		src.AddComponent(/datum/component/assembly/consumes_self, /obj/item/rods, PROC_REF(welder_rod_construction), TRUE)
 
 // ----------------------- Assembly-procs -----------------------
 	///Begin of the flamethrower assembly
 	proc/welder_rod_construction(var/atom/to_combine_atom, var/mob/user)
+		if (src.welding)
+			return
 		boutput(user, SPAN_NOTICE("You attach the rod to the welding tool."))
 		var/obj/item/rods/handled_rods = to_combine_atom
 		handled_rods.add_fingerprint(user)

@@ -116,7 +116,7 @@
 			logTheThing(LOG_DIARY, usr, "has icegibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has icegibbed [key_name(M)]")
 
-		M.become_statue("ice")
+		M.become_statue(getMaterial("ice"))
 
 /client/proc/cmd_admin_goldgib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -137,7 +137,7 @@
 			logTheThing(LOG_DIARY, usr, "has goldgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has goldgibbed [key_name(M)]")
 
-		M.become_statue("gold", "A dumb looking statue. Very shiny, though.")
+		M.become_statue(getMaterial("gold"), "A dumb looking statue. Very shiny, though.")
 
 /client/proc/cmd_admin_spidergib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)

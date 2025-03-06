@@ -2399,7 +2399,7 @@
 	src.emote("scream")
 	. = SPAN_ALERT("<B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B>")
 	logTheThing(LOG_COMBAT, src, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
-	G.affecting.lastattacker = src
+	G.affecting.lastattacker = get_weakref(src)
 	G.affecting.lastattackertime = world.time
 	if (iswrestler(src))
 		G.affecting.changeStatus("knockdown", max(G.affecting.getStatusDuration("knockdown"), 4.4 SECONDS))
