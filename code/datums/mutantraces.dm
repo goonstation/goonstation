@@ -13,13 +13,10 @@ TYPEINFO(/datum/mutantrace)
 	/// This is used for static icons if the mutant isn't built from pieces
 	/// For chunked mutantraces this must still point to a valid full-body image to generate a staticky sprite for ghostdrones.
 	var/icon = 'icons/effects/genetics.dmi'
-	///The icon states of the above icon, cached because byond is bad
-	var/icon_states
 TYPEINFO_NEW(/datum/mutantrace) ///Load all the clothing override icons, should call parent AFTER populating `clothing_icons`
 	..()
 	for (var/category in src.clothing_icons)
 		src.clothing_icon_states[category] = icon_states(src.clothing_icons[category])
-	src.icon_states = icon_states(src.icon)
 
 ABSTRACT_TYPE(/datum/mutantrace)
 /datum/mutantrace
@@ -812,11 +809,11 @@ TYPEINFO(/datum/mutantrace/virtual)
 		var/message = null
 		if(act == "scream")
 			if(src.mob.emote_allowed)
-				src.mob.emote_allowed = 0
+				src.mob.emotes_on_cooldown = TRUE
 				message = "<B>[src.mob]</B> screams with [his_or_her(src.mob)] mind! Guh, that's creepy!"
 				playsound(src.mob, 'sound/voice/screams/Psychic_Scream_1.ogg', 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
-					src.mob?.emote_allowed = 1
+					src.mob?.emotes_on_cooldown = FALSE
 			return message
 		else
 			..()
@@ -1018,11 +1015,11 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 		var/message = null
 		if(act == "scream")
 			if(src.mob.emote_allowed)
-				src.mob.emote_allowed = 0
+				src.mob.emotes_on_cooldown = TRUE
 				message = "<B>[src.mob]</B> moans!"
 				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
-					src.mob?.emote_allowed = 1
+					src.mob?.emotes_on_cooldown = FALSE
 			return message
 		else
 			..()
@@ -1097,11 +1094,11 @@ TYPEINFO(/datum/mutantrace/vampiric_thrall)
 		var/message = null
 		if(act == "scream")
 			if(src.mob.emote_allowed)
-				src.mob.emote_allowed = 0
+				src.mob.emotes_on_cooldown = TRUE
 				message = "<B>[src.mob]</B> moans!"
 				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
-					src.mob?.emote_allowed = 1
+					src.mob?.emotes_on_cooldown = FALSE
 			return message
 		else
 			..()
@@ -1332,11 +1329,11 @@ TYPEINFO(/datum/mutantrace/abomination)
 		switch (act)
 			if ("scream")
 				if (src.mob.emote_allowed)
-					src.mob.emote_allowed = 0
+					src.mob.emotes_on_cooldown = TRUE
 					message = SPAN_ALERT("<B>[src.mob] screeches!</B>")
 					playsound(src.mob, 'sound/voice/creepyshriek.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
-						if (src.mob) src.mob.emote_allowed = 1
+						if (src.mob) src.mob.emotes_on_cooldown = FALSE
 		return message
 
 /datum/mutantrace/abomination/admin //This will not revert to human form
@@ -1458,18 +1455,18 @@ TYPEINFO_NEW(/datum/mutantrace/werewolf)
 		switch(act)
 			if("howl", "scream")
 				if(src.mob.emote_allowed)
-					src.mob.emote_allowed = 0
+					src.mob.emotes_on_cooldown = TRUE
 					message = SPAN_ALERT("<B>[src.mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B>")
 					playsound(src.mob, 'sound/voice/animal/werewolf_howl.ogg', 65, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
-						src.mob?.emote_allowed = 1
+						src.mob?.emotes_on_cooldown = FALSE
 			if("burp")
 				if(src.mob.emote_allowed)
-					src.mob.emote_allowed = 0
+					src.mob.emotes_on_cooldown = TRUE
 					message = "<B>[src.mob]</B> belches."
 					playsound(src.mob, 'sound/voice/burp_alien.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECOND)
-						src.mob?.emote_allowed = 1
+						src.mob?.emotes_on_cooldown = FALSE
 		return message
 
 	/// Has a chance to snap at mobs that try to pet them.
@@ -1782,6 +1779,10 @@ TYPEINFO(/datum/mutantrace/premature_clone)
 				sleep(rand(40, 120))
 				src.mob.gib()
 
+	disposing()
+		REMOVE_ATOM_PROPERTY(src.mob, PROP_HUMAN_DROP_BRAIN_ON_GIB, "puritan")
+		. = ..()
+
 // some new simple gimmick junk
 
 /datum/mutantrace/gross
@@ -1837,6 +1838,7 @@ TYPEINFO(/datum/mutantrace/roach)
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 100)
 		OTHER_START_TRACKING_CAT(M, TR_CAT_BUGS)
+		M.bioHolder.AddEffect("skitter", do_stability = FALSE, scannable = FALSE, innate = TRUE)
 
 	say_verb()
 		return "clicks"
@@ -1849,6 +1851,7 @@ TYPEINFO(/datum/mutantrace/roach)
 		if(ishuman(src.mob))
 			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		if(src.mob)
+			src.mob.bioHolder.RemoveEffect("skitter")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_RADPROT_INT, src)
 			OTHER_STOP_TRACKING_CAT(src.mob, TR_CAT_BUGS)
 		. = ..()
@@ -1958,20 +1961,20 @@ TYPEINFO(/datum/mutantrace/amphibian)
 		switch (act)
 			if ("scream","howl","laugh")
 				if (src.mob.emote_allowed)
-					src.mob.emote_allowed = 0
+					src.mob.emotes_on_cooldown = TRUE
 					message = SPAN_ALERT("<B>[src.mob] makes an awful noise!</B>")
 					playsound(src.mob, pick('sound/voice/screams/frogscream1.ogg','sound/voice/screams/frogscream3.ogg','sound/voice/screams/frogscream4.ogg'), 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
-						if (src.mob) src.mob.emote_allowed = 1
+						if (src.mob) src.mob.emotes_on_cooldown = FALSE
 					return message
 
 			if("burp","fart","gasp")
 				if(src.mob.emote_allowed)
-					src.mob.emote_allowed = 0
+					src.mob.emotes_on_cooldown = TRUE
 					message = "<B>[src.mob]</B> croaks."
 					playsound(src.mob, 'sound/voice/farts/frogfart.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECOND)
-						if (src.mob) src.mob.emote_allowed = 1
+						if (src.mob) src.mob.emotes_on_cooldown = FALSE
 					return message
 			else ..()
 

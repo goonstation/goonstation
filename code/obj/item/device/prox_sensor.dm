@@ -61,7 +61,7 @@ TYPEINFO(/obj/item/device/prox_sensor)
 			else src.timing = FALSE
 		else
 			src.armed = TRUE
-			src.time = 0
+			src.time = src.min_time
 			src.timing = FALSE
 			src.last_tick = 0
 			src.GetComponent(/datum/component/proximity).set_detection(TRUE)
@@ -156,6 +156,7 @@ TYPEINFO(/obj/item/device/prox_sensor)
 			. = TRUE
 
 		if ("toggle-timing")
+			src.time = max(src.min_time, src.time)
 			src.timing = !src.timing
 			src.UpdateIcon()
 			if(timing || armed) processing_items |= src

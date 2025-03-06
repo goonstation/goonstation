@@ -157,7 +157,7 @@
 /******************** AI Law Rack *******************/
 
 /datum/manufacture/mechanics/lawrack
-	name = "AI Law Rack Mount"
+	name = "AI Law Rack"
 	item_requirements = list("metal" = 20,
 							 "metal_dense" = 5,
 							 "insulated" = 10,
@@ -627,6 +627,12 @@
 	category = "Resource"
 	apply_material = TRUE
 
+/datum/manufacture/metal/bulk
+	name = "Metal Sheet (x5)"
+	item_requirements = list("metal" = 5)
+	create = 5
+	time = 5 * /datum/manufacture/metal::time
+
 /datum/manufacture/metalR
 	name = "Reinforced Metal"
 	item_requirements = list("metal" = 2)
@@ -642,14 +648,26 @@
 		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("metal")])
 		S.set_reinforcement(applicable_material.material)
 
+/datum/manufacture/metalR/bulk
+	name = "Reinforced Metal (x5)"
+	item_requirements = list("metal" = 10)
+	create = 5
+	time = 5 * /datum/manufacture/metalR::time
+
 /datum/manufacture/glass
 	name = "Glass Panel"
-	item_requirements = list("crystal" = 5)
+	item_requirements = list("crystal" = 1)
 	item_outputs = list(/obj/item/sheet)
-	create = 5
-	time = 8 SECONDS
+	create = 1
+	time = 2 SECONDS
 	category = "Resource"
 	apply_material = TRUE
+
+/datum/manufacture/glass/bulk
+	name = "Glass Panel (x5)"
+	item_requirements = list("crystal" = 5)
+	create = 5
+	time = 5 * /datum/manufacture/glass::time
 
 /datum/manufacture/glassR
 	name = "Reinforced Glass Panel"
@@ -666,6 +684,14 @@
 		var/obj/item/sheet/S = A
 		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("metal_dense")])
 		S.set_reinforcement(applicable_material.material)
+
+/datum/manufacture/glassR/bulk
+	name = "Reinforced Glass Panel (x5)"
+	item_requirements = list("crystal" = 5,
+							 "metal_dense" = 5)
+	create = 5
+	time = 5 * /datum/manufacture/glassR::time
+
 
 /datum/manufacture/rods2
 	name = "Metal Rods (x2)"
@@ -2448,6 +2474,15 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 
 /// Ship Items -- OLD COMPONENTS
 
+/datum/manufacture/engine_scout
+	name = "Scout Engine"
+	item_requirements = list("metal_dense" = 5,
+							 "conductive" = 10)
+	item_outputs = list(/obj/item/shipcomponent/engine/scout)
+	create = 1
+	time = 5 SECONDS
+	category = "Resource"
+
 /datum/manufacture/engine
 	name = "Warp-1 Engine"
 	item_requirements = list("metal_dense" = 3,
@@ -3183,12 +3218,22 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	category = "Tool"
 
 
-/datum/manufacture/lateral_thrusters
+/datum/manufacture/pod/lateral_thrusters
 	name = "Lateral Thrusters"
 	item_requirements = list("metal_dense" = 20,
 							 "conductive" = 10,
 							 "energy" = 20)
-	item_outputs = list(/obj/item/shipcomponent/secondary_system/lateral_thrusters)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/thrusters/lateral)
+	create = 1
+	time = 12 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/afterburner
+	name = "Afterburner"
+	item_requirements = list("metal" = 10,
+							 "conductive" = 20,
+							 "energy" = 20)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/thrusters/afterburner)
 	create = 1
 	time = 12 SECONDS
 	category = "Tool"
@@ -3212,6 +3257,25 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/shielding/heavy)
 	create = 1
 	time = 25 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/auto_repair_kit
+	name = "Automatic Repair System"
+	item_requirements = list("metal_dense" = 20,
+							 "conductive" = 30,
+							 "energy" = 10)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/auto_repair_kit)
+	create = 1
+	time = 10 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/weapons_loader
+	name = "Weapons Loader"
+	item_requirements = list("metal_dense" = 10,
+							 "conductive" = 10)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/weapons_loader)
+	create = 1
+	time = 17 SECONDS
 	category = "Tool"
 
 /datum/manufacture/pod/sps
@@ -3739,5 +3803,15 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	time = 8 SECONDS
 	category = "Tool"
+
+/datum/manufacture/heavy_firesuit
+	name = "Heavy Firesuit"
+	item_requirements = list(
+		"fabric" = 20,
+		"fibrilith" = 10,
+	)
+	create = 1
+	item_outputs = list(/obj/item/clothing/suit/hazard/fire/heavy)
+	category = "Clothing"
 
 #undef JUMPSUIT_COST

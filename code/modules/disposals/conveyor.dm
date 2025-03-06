@@ -287,6 +287,10 @@ TYPEINFO(/obj/machinery/conveyor) {
 	..()
 
 /obj/machinery/conveyor/disposing()
+	src.was_deconstructed_to_frame()
+	..()
+
+/obj/machinery/conveyor/was_deconstructed_to_frame(mob/user)
 	for(var/obj/machinery/conveyor/C in range(1,src))
 		if (C.next_conveyor == src)
 			C.next_conveyor = null
@@ -295,7 +299,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 	for (var/obj/machinery/conveyor_switch/S as anything in linked_switches) //conveyor switch could've been exploded
 		S.conveyors -= src
 	id = null
-	..()
+	src.operating = CONVEYOR_STOPPED
 
 /// set the dir and target turf depending on the operating direction
 /obj/machinery/conveyor/proc/setdir()
@@ -604,7 +608,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 		return
 
 	if (src.deconstructable)
-		src.deconstruct_flags = null
+		src.deconstruct_flags = DECON_NONE
 		src.deconstructable = FALSE
 		M.show_text("You finish closing \the [src]'s panel.", "blue")
 		if (length(src.linked_switches))

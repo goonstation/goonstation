@@ -3578,7 +3578,11 @@
 	},
 /area/station/bridge/customs)
 "aup" = (
-/obj/machinery/computer/bank_data,
+/obj/machinery/computer3/generic/bank_data,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
 	},
@@ -4211,6 +4215,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
@@ -11001,10 +11008,9 @@
 /obj/cable/blue{
 	icon_state = "1-2"
 	},
-/obj/cable{
-	icon_state = "0-8"
+/obj/machinery/alarm{
+	pixel_y = 25
 	},
-/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -11077,9 +11083,6 @@
 "emb" = (
 /obj/cable{
 	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
 	},
 /obj/machinery/computer/airbr{
 	density = 0;
@@ -16216,13 +16219,11 @@
 /turf/simulated/floor/yellow,
 /area/station/hangar/engine)
 "lDz" = (
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -15
-	},
+/obj/cable,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -21965,6 +21966,12 @@
 /obj/storage/secure/closet/engineering/electrical,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering)
+"uaN" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/space,
+/area/space)
 "uaO" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -23139,9 +23146,6 @@
 	},
 /area/station/science/artifact)
 "vMi" = (
-/obj/machinery/computer/bank_data{
-	dir = 4
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
@@ -23153,6 +23157,9 @@
 	},
 /obj/decal/poster/wallsign/framed_award/firstbill{
 	pixel_y = 27
+	},
+/obj/machinery/computer3/generic/bank_data{
+	dir = 4
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
@@ -26539,7 +26546,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+uaN
 aaa
 aaa
 aaa

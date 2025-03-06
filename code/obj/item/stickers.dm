@@ -659,6 +659,13 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 			F.vis_contents += src
 		light_c.update(1)
 
+	attackby(obj/item/W, mob/user, params)
+		if (src.attached)
+			src.attached.Attackby(W, user)
+			user.lastattacked = user
+		else
+			. = ..()
+
 	proc/remove_from_attached()
 		if (!src.attached)
 			return

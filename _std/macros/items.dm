@@ -30,3 +30,5 @@
 #define IS_NPC_ILLEGAL_ITEM(x) ( \
 		istype(x, /obj/item/body_bag) && x.w_class >= W_CLASS_BULKY \
 	)
+
+#define cangunpoint(x) (istype(x, /obj/item/gun) || istype(x, /obj/item/bang_gun))

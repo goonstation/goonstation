@@ -614,12 +614,12 @@
 	if(src.client && !(target in view(src.client.view))) //don't point at things we can't see
 		return
 
-	var/obj/item/gun/G = src.equipped()
+	var/obj/item/I = src.equipped()
 	var/gunpoint = FALSE
-	if(!istype(G) || !ismob(target))
+	if(!cangunpoint(I) || !ismob(target))
 		src.visible_message(SPAN_EMOTE("<b>[src]</b> points to [target]."))
 	else
-		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
+		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [I] at [target]!</span>")
 		gunpoint = TRUE
 	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
 		..()
@@ -1584,6 +1584,7 @@
 		src.animate_lying(src.lying)
 		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
 		actions.interrupt(src, INTERRUPT_ACT) // interrupt actions
+		SEND_SIGNAL(src, COMSIG_MOB_LAYDOWN_STANDUP, src.lying)
 
 /mob/living/proc/animate_lying(lying)
 	animate_rest(src, !lying)
@@ -2016,7 +2017,7 @@
 					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
-				if (isalive(src))
+				if (damage > 0 && isalive(src))
 					lastgasp()
 
 			if (D_PIERCING)
@@ -2024,7 +2025,7 @@
 					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				src.TakeDamage("chest", damage/rangedprot_mod, 0, 0, P.proj_data.hit_type)
-				if (isalive(src))
+				if (damage > 0 && isalive(src))
 					lastgasp()
 
 			if (D_SLASHING)
@@ -2083,7 +2084,7 @@
 	var/mob/M = null
 	if (ismob(P.shooter))
 		M = P.shooter
-		src.lastattacker = M
+		src.lastattacker = get_weakref(M)
 		src.lastattackertime = world.time
 	src.was_harmed(M)
 
@@ -2404,3 +2405,6 @@
 	src.emote("scream", FALSE)
 	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 40, 1)
 	return TRUE
+
+/mob/living/HealBleeding(amt)
+	src.bleeding = max(src.bleeding - amt, 0)

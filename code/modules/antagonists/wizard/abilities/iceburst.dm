@@ -75,7 +75,7 @@
 						M.visible_message(SPAN_ALERT("[M] is struck by magical ice!"))
 						playsound(holder.owner.loc, 'sound/effects/mag_iceburstimpact.ogg', 25, 1, -1)
 						M.bodytemperature = 0
-						M.lastattacker = holder.owner
+						M.lastattacker = get_weakref(holder.owner)
 						M.lastattackertime = world.time
 						qdel(A)
 						if(prob(40))

@@ -361,7 +361,7 @@
 
 
 	mrl
-		proj = new /datum/projectile/bullet/homing/mrl
+		proj = new /datum/projectile/bullet/homing/rocket/mrl
 		shots = 6
 		current_shots = 6
 		cooldown = 3 SECONDS
@@ -406,6 +406,13 @@
 
 	rifle
 		proj = new/datum/projectile/bullet/assault_rifle
+		shots = 5
+		current_shots = 5
+		cooldown = 1 SECOND
+		reload_time = 20 SECONDS
+
+	draco
+		proj = new/datum/projectile/bullet/draco
 		shots = 5
 		current_shots = 5
 		cooldown = 1 SECOND

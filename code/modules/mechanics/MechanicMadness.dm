@@ -1348,7 +1348,7 @@
 	proc/split(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
-		var/list/converted = params2list(input.signal)
+		var/list/converted = params2complexlist(input.signal)
 		if(length(converted))
 			if(triggerSignal in converted)
 				input.signal = converted[triggerSignal]
@@ -2162,7 +2162,7 @@
 	proc/send(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
-		var/list/converted = params2list(input.signal)
+		var/list/converted = params2complexlist(input.signal)
 		if(!length(converted) || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 
 		var/datum/signal/sendsig = get_free_signal()
@@ -2672,19 +2672,11 @@
 		var/targetTeleID = use_signal_id ? input.signal : src.teleID
 
 		for_by_tcl(T, /obj/item/mechanics/telecomp)
-			// Skip ourselves, disconnected pads, ones not on the ground, in restricted areas, or in send-only mode
-			if (T == src || T.level == OVERFLOOR || !isturf(T.loc) || isrestrictedz(T.z) || T.send_only) continue
+			// Skip ourselves, disconnected pads, ones not on the ground, in restricted areas, send-only mode, or on the same turf.
+			if (T == src || T.level == OVERFLOOR || !isturf(T.loc) || isrestrictedz(T.z) || T.send_only || get_turf(T) == get_turf(src)) continue
 
-			// This ordinarily skips all on other zlevels, but
-			// trying a change to let them do any non-restricted Z for now
-			/*
-#ifdef UNDERWATER_MAP
-			if (!(T.z == 5 && src.z == 1) && !(T.z == 1 && src.z == 5)) //underwater : allow TP to/from trench
-				if(T.z != src.z) continue
-#else
+			// you used to be able to cross z-levels with mechcomp teles, but no longer
 			if (T.z != src.z) continue
-#endif
-			*/
 
 			if (T.teleID == targetTeleID)
 				destinations.Add(T)
@@ -2694,19 +2686,25 @@
 			var/count_sent = 0
 			playsound(src.loc, 'sound/mksounds/boost.ogg', 50, 1)
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc))).Run()
-			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(picked.loc))).Run()
-			for(var/atom/movable/M in src.loc)
-				if(M == src || M.invisibility || M.anchored) continue
-				logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
-				do_teleport(M,get_turf(picked.loc),FALSE,use_teleblocks=FALSE,sparks=FALSE)
+			var/obj/projectile/proj = initialize_projectile_pixel_spread(src, new/datum/projectile/special/homing/mechcomp_warp, picked)
+			var/tries = 5
+			while (tries > 0 && (!proj || proj.disposed))
+				proj = initialize_projectile_pixel_spread(src, new/datum/projectile/special/homing/mechcomp_warp, picked)
+			proj.targets = list(picked)
+			proj.event_handler_flags |= IMMUNE_SINGULARITY
+			proj.has_atmosphere = TRUE
+			for(var/atom/movable/AM in src.loc)
+				if(AM == src || AM.invisibility || AM.anchored) continue
+				logTheThing(LOG_STATION, AM, "entered [src] at [log_loc(src)] targeting destination [log_loc(picked)]")
+				AM.set_loc(proj)
+				AM.changeStatus("teleporting", INFINITY)
 				if(count_sent++ > 50) break //ratelimit
-
 			input.signal = "to=[targetTeleID]&count=[count_sent]"
+			proj.special_data["count_sent"] = count_sent
+			proj.launch()
 			SPAWN(0)
 				// Origin pad gets "to=destination&count=123"
-				// Dest. pad gets "from=origin&count=123"
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
-				SEND_SIGNAL(picked,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"from=[src.teleID]&count=[count_sent]")
 		else
 			// If nowhere to go, output an error
 			input.signal = "to=[targetTeleID]&error=no destinations found"

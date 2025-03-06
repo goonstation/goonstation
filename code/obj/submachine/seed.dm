@@ -65,12 +65,10 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			splice1_geneout = QuickAnalysisRow(src.splicing1, src.splicing1.planttype, src.splicing1.plantgenes)
 			splice1_geneout["damage"] = list(src.splicing1.seeddamage, FALSE)
 			splice1_geneout["splicing"] = list("splicing", TRUE)
-			splice1_geneout["allow_infusion"]= list("allow_infusion", src.inserted?.reagents?.total_volume > 0)
 		if(src.splicing2)
 			splice2_geneout = QuickAnalysisRow(src.splicing2, src.splicing2.planttype, src.splicing2.plantgenes)
 			splice2_geneout["damage"] = list(src.splicing2.seeddamage, FALSE)
 			splice2_geneout["splicing"] = list("splicing", TRUE)
-			splice2_geneout["allow_infusion"]= list("allow_infusion", src.inserted?.reagents?.total_volume > 0)
 
 		return list(
 			"category" = src.mode,
@@ -83,6 +81,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			"splice_seeds" = list(splice1_geneout, splice2_geneout),
 			"sortBy" = src.sort,
 			"sortAsc" = src.sortAsc,
+			"allow_infusion" = src.inserted?.reagents?.total_volume > 0
 		)
 
 	ui_static_data(mob/user)
@@ -107,7 +106,6 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					geneout = QuickAnalysisRow(S, S.planttype, S.plantgenes)
 					geneout["damage"] = list(S.seeddamage, FALSE)
 					geneout["splicing"] = list("splicing", (S == src.splicing1) || (S == src.splicing2))
-					geneout["allow_infusion"]= list("allow_infusion", src.inserted?.reagents?.total_volume > 0)
 					seedlist += list(geneout)
 
 		return list(
@@ -916,7 +914,7 @@ TYPEINFO(/obj/submachine/seed_manipulator/kudzu)
 /obj/submachine/seed_manipulator/kudzu
 	name = "KudzuMaster V1"
 	desc = "A strange \"machine\" that seems to function via fluids and plant fibers."
-	deconstruct_flags = null
+	deconstruct_flags = DECON_NONE
 	icon = 'icons/misc/kudzu_plus.dmi'
 	icon_state = "seed-gene-console"
 	_health = 1

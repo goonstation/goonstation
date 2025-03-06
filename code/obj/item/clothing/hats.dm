@@ -303,6 +303,7 @@ proc/filter_trait_hats(var/type)
 //A robot in disguise, ready to go and spy on everyone for you
 /obj/item/clothing/head/det_hat/folded_scuttlebot
 	blocked_from_petasusaphilic = TRUE
+	item_function_flags = IMMUNE_TO_ACID
 	var/inspector = FALSE
 	desc = "Someone who wears this will look very smart. It looks a bit heavier than it should."
 
@@ -968,13 +969,30 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "Can be dyed with hair dye. Obviously."
 	icon_state = "beret_base"
 	item_state = "dye_beret"
+	///Associative list of hex color to patent number
+	var/static/list/copyrighted_colors = list(
+		"#2E53C1" = "23582938", //NT beret
+		"#B52D12" = "94568293", //hos beret
+		"#971CA5" = "83482372", //janitor beret
+	)
 
 	New()
 		..()
 		src.color = "#FFFFFF"
 
 	attackby(obj/item/dye_bottle/W, mob/user)
-		if (istype(W, /obj/item/dye_bottle))
+		if (istype(W) && W.uses_left)
+			W.use_dye()
+			for (var/color in src.copyrighted_colors)
+				if (color_dist(color, W.customization_first_color) < 5000) //arbitrary threshold
+					boutput(user, SPAN_NOTICE("Patent infringement attempt detected! This color infringes NT beret patent #[src.copyrighted_colors[color]]."))
+					boutput(user, SPAN_ALERT("[src] burns your fingers as its anti patent infringement fabric boils off the dye!"))
+					if (src in user.contents)
+						user.drop_item(src, FALSE)
+					random_burn_damage(user, 2)
+					playsound(user.loc, 'sound/impact_sounds/burn_sizzle.ogg', 40, 1)
+					user.add_karma(-2)
+					return
 			src.color = W.customization_first_color
 			src.UpdateIcon()
 			var/mob/wearer = src.loc

@@ -536,7 +536,7 @@
 
 	if (src.gloves.uses > 0)
 		src.lastattacked = target
-		target.lastattacker = src
+		target.lastattacker = get_weakref(src)
 		target.lastattackertime = world.time
 		logTheThing(LOG_COMBAT, src, "touches [constructTarget(target,"combat")] with stun gloves at [log_loc(src)].")
 		target.add_fingerprint(src) // Some as the other 'empty hand' melee attacks (Convair880).
@@ -985,7 +985,7 @@
 			game_stats.Increment("violence")
 #endif
 			owner.lastattacked = target
-			target.lastattacker = owner
+			target.lastattacker = get_weakref(owner)
 			target.lastattackertime = world.time
 			target.add_fingerprint(owner)
 

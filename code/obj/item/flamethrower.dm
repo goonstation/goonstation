@@ -393,155 +393,126 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 		..()
 
 // PantsNote: Dumping this shit in here until I'm sure it works.
+// Lord_Earthfire: It worked for a few years, now lets make it look cleaner
 
-/obj/item/assembly/weld_rod
+/obj/item/flamethrower_construction
+	icon = 'icons/obj/items/assemblies.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	desc = "A welding torch with metal rods attached to the flame tip."
 	name = "Welder/Rods Assembly"
 	icon_state = "welder-rods"
 	item_state = "welder"
-	var/obj/item/weldingtool/welder = null
-	var/obj/item/rods/rod = null
-	status = null
+	var/list/assembly_contents = null
+	var/state = 0
 	flags = TABLEPASS | CONDUCT
 	force = 3
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
+	stamina_damage = 10
+	stamina_cost = 10
 	w_class = W_CLASS_SMALL
 
-/obj/item/assembly/weld_rod/New()
+/obj/item/flamethrower_construction/New(var/new_location, var/obj/item/weldingtool/new_welder, var/obj/item/rods/new_rods, var/obj/item/device/igniter/new_igniter)
 	..()
-	welder = new /obj/item/weldingtool
-	rod = new /obj/item/rods
+	if(!new_welder)
+		new_welder = new /obj/item/weldingtool
+	if(!new_rods)
+		new_rods = new /obj/item/rods
+	src.assembly_contents = list(new_rods, new_welder)
+	new_welder.set_loc(src)
+	new_rods.set_loc(src)
+	var/new_state = 0
+	if (new_igniter)
+		src.assembly_contents += new_igniter
+		new_igniter.set_loc(src)
+		new_state = 1
+	src.set_construction_state(new_state)
 
-/obj/item/assembly/w_r_ignite
-	desc = "A welding torch and igniter connected by metal rods."
-	name = "Welder/Rods/Igniter Assembly"
-	icon_state = "welder-rods-igniter"
-	item_state = "welder"
-	var/obj/item/weldingtool/welder = null
-	var/obj/item/rods/rod = null
-	var/obj/item/device/igniter/igniter = null
-	status = null
-	flags = TABLEPASS | CONDUCT
-	force = 3
-	throwforce = 5
-	throw_speed = 1
-	throw_range = 5
-	w_class = W_CLASS_SMALL
+/obj/item/flamethrower_construction/proc/set_construction_state(var/new_state)
+	// reset the assembly-components to readd the ones we want
+	src.RemoveComponentsOfType(/datum/component/assembly)
+	// Welder/Rods Assembly + wrench  -> deconstruction
+	src.AddComponent(/datum/component/assembly/consumes_self, TOOL_WRENCHING, PROC_REF(deconstruction), FALSE)
+	if (new_state == 1)
+		src.state = 1
+		src.name = "Welder/Rods/Igniter Assembly"
+		src.desc = "A welding torch and igniter connected by metal rods."
+		src.icon_state = "welder-rods-igniter"
+		// Welder/Rods/igniter Assembly + screwdriver  -> assembly-completition
+		src.AddComponent(/datum/component/assembly/consumes_self, TOOL_SCREWING, PROC_REF(completition), FALSE)
+	else
+		src.state = 0
+		src.desc = "A welding torch with metal rods attached to the flame tip."
+		src.name = "Welder/Rods Assembly"
+		src.icon_state = "welder-rods"
+		// Welder/Rods Assembly + igniter  -> Welder/Rods/Igniter Assembly
+		src.AddComponent(/datum/component/assembly/consumes_other, /obj/item/device/igniter, PROC_REF(igniter_attachment), TRUE)
+	src.tooltip_rebuild = TRUE
 
-/obj/item/assembly/w_r_ignite/New()
-	..()
-	welder = new /obj/item/weldingtool
-	rod = new /obj/item/rods
-	igniter = new /obj/item/device/igniter
-
-/obj/item/assembly/weld_rod/disposing()
-	qdel(src.welder)
-	qdel(src.rod)
-	..()
-	return
-
-
-/obj/item/assembly/w_r_ignite/disposing()
-
-	qdel(src.welder)
-	qdel(src.rod)
-	qdel(src.igniter)
-	..()
-	return
+/obj/item/flamethrower_construction/disposing()
+	. = ..()
+	for(var/obj/item/affected_object in src.assembly_contents)
+		src.assembly_contents -= affected_object
+		qdel(affected_object)
+	src.assembly_contents = null
 
 
+/obj/item/flamethrower_construction/get_help_message(dist, mob/user)
+	switch(src.state)
+		if (0) // Default state
+			return "You can use a <b>wrench</b> to disassemble this object or a <b>igniter</b> to continue the construction of a flamethrower."
+		if (1) // with igniter
+			return "You can use a <b>wrench</b> to disassemble this object or a <b>screwdriver</b> to finish the construction of a flamethrower."
 
-/obj/item/assembly/weld_rod/attackby(obj/item/W, mob/user)
-	if (iswrenchingtool(W))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
-		user.show_message(SPAN_NOTICE("You remove the rod from the welding tool."), 1)
-		src.welder.set_loc(T)
-		src.rod.set_loc(T)
-		src.welder.master = null
-		src.rod.master = null
-		src.welder = null
-		src.rod = null
 
-		qdel(src)
+// ----------------------- Assembly-procs -----------------------
 
-	if (istype(W, /obj/item/device/igniter))
-		if (src.loc != user)
-			boutput(user, SPAN_ALERT("You need to be holding [src] to work on it!"))
-			return
-		var/obj/item/device/igniter/I = W
-		user.show_message(SPAN_NOTICE("You put the igniter in place, it still needs to be firmly attached."), 1)
-		var/obj/item/assembly/weld_rod/S = src
-		var/obj/item/assembly/w_r_ignite/R = new /obj/item/assembly/w_r_ignite( user )
-		R.welder = S.welder
-		S.welder.set_loc(R)
-		S.welder.master = R
-		R.rod = S.rod
-		S.rod.set_loc(R)
-		S.rod.master = R
-		S.layer = initial(S.layer)
-		user.u_equip(S)
-		user.put_in_hand_or_drop(R)
-		I.master = R
-		I.layer = initial(I.layer)
-		user.u_equip(I)
-		I.set_loc(R)
-		src.set_loc(R)
-		R.igniter = I
-		S.welder = null
-		S.rod = null
-		qdel(S)
+/// igniter attachment
+/obj/item/flamethrower_construction/proc/igniter_attachment(var/atom/to_combine_atom, var/mob/user)
+	boutput(user, SPAN_NOTICE("You put the igniter in place, it still needs to be firmly attached."))
+	var/obj/item/used_igniter = to_combine_atom
+	user.u_equip(used_igniter)
+	src.assembly_contents += used_igniter
+	used_igniter.set_loc(src)
+	src.set_construction_state(1)
+	// Since the assembly was done, return TRUE
+	return TRUE
 
-	src.add_fingerprint(user)
-	return
+/// deconstruction
+/obj/item/flamethrower_construction/proc/deconstruction(var/atom/to_combine_atom, var/mob/user)
+	boutput(user, SPAN_NOTICE("You deconstruct the [src.name]."))
+	var/turf/chosen_turf = get_turf(src)
+	for(var/obj/item/affected_object in src.assembly_contents)
+		affected_object.set_loc(chosen_turf)
+		src.assembly_contents -= affected_object
+	user.u_equip(src)
+	qdel(src)
+	// Since the assembly was done, return TRUE
+	return TRUE
 
-/obj/item/assembly/w_r_ignite/attackby(obj/item/W, mob/user)
-	if (!W)
-		return
-	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
-		user.show_message(SPAN_NOTICE("You disassemble the [src.name]"), 1)
-		src.welder.set_loc(T)
-		src.rod.set_loc(T)
-		src.igniter.set_loc(T)
-		src.welder.master = null
-		src.rod.master = null
-		src.igniter.master = null
-		src.welder = null
-		src.rod = null
-		src.igniter = null
+/// securing-completition
+/obj/item/flamethrower_construction/proc/completition(var/atom/to_combine_atom, var/mob/user)
+	boutput(user, SPAN_NOTICE("The igniter is now secured."))
+	user.u_equip(src)
+	var/obj/item/gun/flamethrower/assembled/new_flamethrower = new/obj/item/gun/flamethrower/assembled
+	for(var/obj/item/chosen_item in src.assembly_contents)
+		switch(chosen_item.type)
+			if(/obj/item/weldingtool)
+				new_flamethrower.welder = chosen_item
+			if(/obj/item/rods)
+				new_flamethrower.rod = chosen_item
+			if(/obj/item/device/igniter)
+				new_flamethrower.igniter = chosen_item
+		src.assembly_contents -= chosen_item
+		chosen_item.set_loc(new_flamethrower)
+	user.put_in_hand_or_drop(new_flamethrower)
+	qdel(src)
+	// Since the assembly was done, return TRUE
+	return TRUE
 
-		qdel(src)
-		return
-	if (isscrewingtool(W))
-		user.show_message(SPAN_NOTICE("The igniter is now secured!"), 1)
-		var/obj/item/gun/flamethrower/assembled/R = new /obj/item/gun/flamethrower/assembled(src.loc)
-		var/obj/item/assembly/w_r_ignite/S = src
-		R.welder = S.welder
-		S.welder.set_loc(R)
-		S.welder.master = R
-		R.rod = S.rod
-		S.rod.set_loc(R)
-		S.rod.master = R
-		R.igniter = S.igniter
-		S.igniter.set_loc(R)
-		S.igniter.master = R
-		S.layer = initial(S.layer)
-		S.master = R
-		S.layer = initial(S.layer)
-		user.u_equip(S)
-		user.put_in_hand_or_drop(R)
-		S.set_loc(R)
-		S.welder = null
-		S.rod = null
-		S.igniter = null
-		qdel(S)
-		return
+
+// ----------------------- -------------- -----------------------
 
 /obj/item/gun/flamethrower/process()
 	if(!lit)
@@ -616,23 +587,9 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 		var/obj/item/gun/flamethrower/assembled/S = src
 		if (( S.gastank ))
 			return
-		var/obj/item/assembly/w_r_ignite/R = new /obj/item/assembly/w_r_ignite( user )
-		R.welder = S.welder
-		S.welder.set_loc(R)
-		S.welder.master = R
-		R.rod = S.rod
-		S.rod.set_loc(R)
-		S.rod.master = R
-		R.igniter = S.igniter
-		S.igniter.set_loc(R)
-		S.igniter.master = R
-		S.layer = initial(S.layer)
+		var/obj/item/flamethrower_construction/new_construction = new /obj/item/flamethrower_construction (null, S.welder, S.rod, S.igniter)
 		user.u_equip(S)
-		user.put_in_hand_or_drop(R)
-		src.master = R
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		src.set_loc(R)
+		user.put_in_hand_or_drop(new_construction)
 		S.welder = null
 		S.rod = null
 		S.igniter = null
