@@ -2162,6 +2162,7 @@
 	desc = "Call 1-800-IMCODER."
 	icon_state = "heal_generic"
 	var/datum/surgery_step/step = null
+	var/datum/surgery/surgery = null
 	pip_enabled = TRUE
 
 	checkRequirements(atom/target, mob/user)
@@ -2170,7 +2171,7 @@
 	execute(atom/target, mob/user)
 		..()
 		var/obj/item/I = user.equipped()
-		step.perform_step(user,I)
+		surgery.perform_step(step, user,I)
 
 /// surgery context menu - starts/continues a surgery
 /datum/contextAction/surgery
@@ -2194,7 +2195,7 @@
 	New(var/datum/surgeryHolder/holder, var/datum/surgery/surgery)
 		src.holder = holder
 		src.surgery = surgery
-		name = "Cancel [surgery.name]"
+		name = "Cancel [surgery?.name]"
 		..()
 	execute(atom/target, mob/user)
 		..()

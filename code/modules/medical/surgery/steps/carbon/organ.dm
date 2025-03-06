@@ -72,6 +72,8 @@
 		icon_state = "clamp"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 		optional = TRUE
+		visible = FALSE
+		repeatable = TRUE
 		tools_required = list(/obj/item/hemostat)
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient

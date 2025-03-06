@@ -16,10 +16,10 @@
 			var/mob/living/carbon/human/C = parent_surgery.patient
 			var/obj/item/parts/limb = C.limbs.vars[affected_limb]
 			limb.remove_stage = 1
-			surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> cuts through the flesh holding [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] [affected_limb] in with [tool]!"),\
-				SPAN_ALERT("You cut through the flesh holding [surgeon == C ? "your" : "[C]'s"] [affected_limb] in with [tool]!"), \
-				SPAN_ALERT("[C == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] through the flesh holding your [affected_limb] in with [tool]!"))
-			logTheThing(LOG_COMBAT, surgeon, "started removing [constructTarget(C,"combat")]'s [affected_limb] with [tool].")
+			surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> cuts through the flesh holding [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] [limb] in with [tool]!"),\
+				SPAN_ALERT("You cut through the flesh holding [surgeon == C ? "your" : "[C]'s"] [limb] in with [tool]!"), \
+				SPAN_ALERT("[C == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] through the flesh holding your [limb] in with [tool]!"))
+			logTheThing(LOG_COMBAT, surgeon, "started removing [constructTarget(C,"combat")]'s [limb] with [tool].")
 
 	saw
 		name = "Saw"
@@ -31,24 +31,24 @@
 			var/mob/living/carbon/human/C = parent_surgery.patient
 			var/obj/item/parts/limb = C.limbs.vars[affected_limb]
 			limb.remove_stage = 2
-			surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> saws through the bone in [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] [affected_limb] with [tool]!"),\
-				SPAN_ALERT("You saw through the bone in [surgeon == C ? "your" : "[C]'s"] [affected_limb] with [tool]!"), \
-				SPAN_ALERT("[C == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] through the bone in your [affected_limb] with [tool]!"))
+			surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> saws through the bone in [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] [limb] with [tool]!"),\
+				SPAN_ALERT("You saw through the bone in [surgeon == C ? "your" : "[C]'s"] [limb] with [tool]!"), \
+				SPAN_ALERT("[C == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] through the bone in your [limb] with [tool]!"))
 
 	remove
 		name = "Remove"
 		desc = "Remove the limb."
 		icon_state = "saw"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_SAWING
+		flags_required = TOOL_CUTTING
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/C = parent_surgery.patient
 			var/obj/item/parts/limb = C.limbs.vars[affected_limb]
 			limb.remove(0)
-			surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> removes [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] [affected_limb] with [tool]!"),\
-				SPAN_ALERT("You remove [surgeon == C ? "your" : "[C]'s"] [affected_limb] with [tool]!"),\
-				SPAN_ALERT("[C == surgeon ? "You remove" : "<b>[surgeon]</b> removes"] your [affected_limb] with [tool]!"))
-			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(C,"combat")]'s [affected_limb].")
+			surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> removes [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] [limb] with [tool]!"),\
+				SPAN_ALERT("You remove [surgeon == C ? "your" : "[C]'s"] [limb] with [tool]!"),\
+				SPAN_ALERT("[C == surgeon ? "You remove" : "<b>[surgeon]</b> removes"] your [limb] with [tool]!"))
+			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(C,"combat")]'s [limb].")
 
 	attach_arm
 		name = "Add"

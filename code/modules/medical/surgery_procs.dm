@@ -1,4 +1,4 @@
-c// haine wuz heer
+// haine wuz heer
 // I got rid of all the various message bullshit in here
 // it's more organized and makes the code easier to read imo
 
@@ -193,10 +193,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	SETUP_GENERIC_ACTIONBAR(user, H, 5 SECONDS, /mob/living/carbon/human/proc/on_bandage_removal, list(user, removing), src.icon, src.icon_state, null,
 		list(INTERRUPT_MOVE, INTERRUPT_ATTACKED, INTERRUPT_STUNNED, INTERRUPT_ACTION))
+/*
 
 /mob/proc/get_surgery_depth(var/zone)
 	return FALSE
-
 /// Returns a number you can estimate the 'level of surgery' going on. Higher number = more, deeper surgeries.
 /mob/living/carbon/human/get_surgery_depth(var/zone)
 
@@ -219,7 +219,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	return FALSE
 
-
+*/
 
 /*
 /mob/proc/get_surgery_status(var/zone)

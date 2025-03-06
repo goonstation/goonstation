@@ -75,7 +75,7 @@
 	proc/cancel_surgery_context(datum/surgery/surgery, mob/living/surgeon, obj/item/I)
 		if (!surgery)
 			return
-		surgery.cancel_surgery_context(surgeon, I)
+		surgery.cancel_surgery(surgeon, I, TRUE)
 	/// Cancel a surgery. Does not interact with context menus.
 	proc/cancel_surgery(id, mob/living/surgeon, obj/item/I)
 		if (!id)

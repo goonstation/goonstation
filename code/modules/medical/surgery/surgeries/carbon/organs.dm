@@ -7,7 +7,22 @@
 	generate_surgery_steps(mob/living/surgeon, mob/user)
 		add_next_step(new /datum/surgery_step/chest/cut(src))
 		add_next_step(new /datum/surgery_step/fluff/snip(src))
+
+/datum/surgery/chest_clamp
+	id = "chest_clamp"
+	name = "Chest Clamp"
+	desc = "Clamp the patient's chest"
+	icon_state = "chest_clamp"
+	affected_zone = "chest"
+	implicit = TRUE
+	visible = FALSE
+	generate_surgery_steps()
 		add_simultaneous_step(new /datum/surgery_step/chest/clamp(src))
+
+	surgery_possible(mob/living/surgeon)
+		var/mob/living/carbon/human/C = patient
+		return C.chest_cavity_clamped == FALSE
+
 
 /datum/surgery/head
 	id = "head_surgery"
@@ -195,7 +210,7 @@
 		id = "intestine_surgery"
 		name = "Intestine Surgery"
 		desc = "Remove the patients' intestine."
-		icon_state = "intestine"
+		icon_state = "intestines"
 		organ_var_name = "intestines"
 	left_kidney
 		id = "left_kidney_surgery"

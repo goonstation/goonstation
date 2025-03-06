@@ -100,12 +100,14 @@
 	desc = "Suture the head, torso, legs, or arms shut."
 	implicit = TRUE
 	visible = FALSE
+	can_cancel = FALSE
 
 
 /datum/surgery/suture
 	name = "Suture"
 	icon_state = "suture"
 	implicit = TRUE
+	can_cancel = FALSE
 	visible = FALSE
 	surgery_possible(mob/living/surgeon)
 		if (surgeon.zone_sel.selecting != affected_zone)
