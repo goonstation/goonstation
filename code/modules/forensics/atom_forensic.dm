@@ -315,6 +315,7 @@
 		B.set_sample_reagent_custom(src.tracked_blood["sample_reagent"], 0)
 
 	var/list/states = src.get_step_image_states()
+
 	if (!src.lying && (states[1] || states[2]))
 		if (states[1])
 			B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 0.5, 0.5, src.tracked_blood, states[1], src.last_move, 0)
