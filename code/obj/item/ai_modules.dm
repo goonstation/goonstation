@@ -504,12 +504,12 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	proc/disguise(obj/item/aiModule/module, mob/user)
 		if(!istype(module))
 			return
-		logTheThing(LOG_STATION, user, "[constructName(user)] disguises AI Law \"<em>[src.realLawText]</em>\" as \"<em>[src.lawText]</em>\".")
-		message_admins("[key_name(user)] disguises AI Law \"<em>[src.realLawText]</em>\" as \"<em>[src.lawText]</em>\".")
 		src.name = module.name
 		src.lawText = module.lawText
 		src.color = module.color
 		src.highlight_color = module.highlight_color
+		logTheThing(LOG_STATION, user, "[constructName(user)] disguises AI Law \"<em>[src.realLawText]</em>\" as \"<em>[src.lawText]</em>\".")
+		message_admins("[key_name(user)] disguises AI Law \"<em>[src.realLawText]</em>\" as \"<em>[src.lawText]</em>\".")
 		boutput(user, SPAN_NOTICE("The module's stealth circuit activates and disguises itself as [module]!"))
 		src.UpdateIcon()
 		tooltip_rebuild = TRUE

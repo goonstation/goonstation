@@ -386,6 +386,13 @@
 				if(!in_interact_range(src, ui.user))
 					return
 
+				if (ui.user.equipped() && istype(ui.user.equipped(), /obj/item/aiModule/disguised))
+					boutput(ui.user,"You start switching out the inserted law!")
+					var/obj/item/aiModule/equipped = ui.user.equipped()
+					SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, PROC_REF(hotswap_module), list(slotNum,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
+					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+					return
+
 				if (!ui.user.equipped() || !isweldingtool(ui.user.equipped()))
 					boutput(ui.user,"You need a welding tool for that!")
 					return
@@ -410,6 +417,14 @@
 			if("screw")
 				if(!in_interact_range(src, ui.user))
 					return
+
+				if (ui.user.equipped() && istype(ui.user.equipped(), /obj/item/aiModule/disguised))
+					boutput(ui.user,"You start switching out the inserted law!")
+					var/obj/item/aiModule/equipped = ui.user.equipped()
+					SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, PROC_REF(hotswap_module), list(slotNum,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
+					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+					return
+
 				if (!ui.user.equipped() || !isscrewingtool(ui.user.equipped()))
 					boutput(ui.user,"You need a screwdriver for that!")
 					return
@@ -620,6 +635,19 @@
 			user.visible_message(SPAN_ALERT("[user] screws in the module."),SPAN_ALERT("You screw the module into the rack."))
 		src.screwed[slot_number] = !src.screwed[slot_number]
 		tgui_process.update_uis(src)
+
+	proc/hotswap_module(var/slotNum, var/mob/user, var/obj/item/aiModule/equipped)
+		if(!src.law_circuits[slotNum])
+			return FALSE
+		var/obj/item/aiModule/disguised/disguised_module = equipped
+		if (istype(disguised_module))
+			disguised_module.disguise(src.law_circuits[slotNum], user)
+		var/was_welded = src.welded[slotNum]
+		var/was_screwed = src.screwed[slotNum]
+		src.remove_module_callback(slotNum, user)
+		src.insert_module_callback(slotNum, user, equipped)
+		src.welded[slotNum] = was_welded
+		src.screwed[slotNum] = was_welded
 
 	proc/insert_module_callback(var/slotNum,var/mob/user,var/obj/item/aiModule/equipped)
 		if(src.law_circuits[slotNum])
