@@ -620,7 +620,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 				if(P.unlocked)
 					for (var/datum/data/vending_product/R in player_list)
 						if(ref(R) == params["target"])
-							R.product_cost = text2num(params["cost"])
+							R.product_cost = max(text2num(params["cost"]) || 0, 0)
 							P.lastPlayerPrice = R.product_cost
 				update_static_data(usr)
 		if("rename")

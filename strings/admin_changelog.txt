@@ -1,3 +1,6 @@
+(t)tue feb 25 25
+(u)LeahTheTech
+(*)Added new gas build mode that lets you release gas on a turf or inject it into a gas container.
 (t)fri feb 21 25
 (u)Sovexe
 (*)Built out the betting booth system with safeties, bug fixes, and helper procs. Simply spawn two or more /obj/betting_booth and admin interact setup betting to get started with your gambling event!

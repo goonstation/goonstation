@@ -47,7 +47,7 @@
 	var/last_emote_wait = 0
 	var/emotes_on_cooldown = FALSE
 	var/computer_id = null
-	var/lastattacker = null
+	var/datum/weakref/lastattacker = null
 	var/lastattacked = null //tell us whether or not to use Combat or Default click delays depending on whether this var was set.
 	var/lastattackertime = 0
 	var/other_mobs = null
@@ -2485,6 +2485,8 @@
 					src.lastgasp()
 					src.changeStatus("knockdown", 2 SECONDS)
 					src.force_laydown_standup()
+			if (thr.throw_type & THROW_GIB)
+				src.gib()
 		else
 			src.gib()
 

@@ -3410,12 +3410,12 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				if(!(protected in view(7,master)))
 					return 0
 				//Has our buddy been attacked??
-				if(protected.lastattacker && (protected.lastattackertime + 40) >= world.time)
-					if(protected.lastattacker != protected)
+				if(protected.lastattacker?.deref() && (protected.lastattackertime + 40) >= world.time)
+					if(protected.lastattacker.deref() != protected)
 						master.moving = 0
 						if (master.mover)
 							qdel(master.mover)
-						src.arrest_target = protected.lastattacker
+						src.arrest_target = protected.lastattacker.deref()
 						src.follow_attempts = 0
 						src.arrest_attempts = 0
 						return 1

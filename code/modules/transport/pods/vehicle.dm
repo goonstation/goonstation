@@ -386,7 +386,7 @@
 						return
 					logTheThing(LOG_VEHICLE, usr, "ejects the main weapon system ([src.m_w_system]) from [src] at [log_loc(src)]")
 					if (uses_weapon_overlays && m_w_system.appearanceString)
-						src.overlays -= image('icons/effects/64x64.dmi', "[m_w_system.appearanceString]")
+						src.UpdateOverlays(null, "mainweapon")
 					EJECT_PART(src.m_w_system)
 
 			else if (href_list["unloco"])
@@ -607,7 +607,7 @@
 		if (user)
 			user.show_text("You paint [src].", "blue")
 			user.u_equip(P)
-		src.overlays += image(src.icon, P.pod_skin)
+		src.UpdateOverlays(image(src.icon, P.pod_skin), "skin")
 		qdel(P)
 		return
 
@@ -790,21 +790,20 @@
 		..()
 
 	process(mult)
-		if(sec_system)
-			if(sec_system.active)
-				sec_system.run_component(mult)
-			if(src.engine && engine.active)
-				var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
-				var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)
-				var/toxins = consumed?.toxins
-				if(isnull(toxins))
-					toxins = 0
+		if(sec_system?.active)
+			sec_system.run_component(mult)
+		if(src.engine && engine.active)
+			var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
+			var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)
+			var/toxins = consumed?.toxins
+			if(isnull(toxins))
+				toxins = 0
 
-				if(usage)
-					src.myhud?.update_fuel()
-					if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
-						engine.deactivate()
-				consumed?.dispose()
+			if(usage)
+				src.myhud?.update_fuel()
+				if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
+					engine.deactivate()
+			consumed?.dispose()
 
 #ifdef MAP_OVERRIDE_NADIR
 		if(src.acid_damage_multiplier > 0)
@@ -838,7 +837,7 @@
 						particleMaster.SpawnSystem(new /datum/particleSystem/areaSmoke("#CCCCCC", 50, src))
 						damage_overlays = 2
 						fire_overlay = image('icons/effects/64x64.dmi', "pod_fire")
-						src.overlays += fire_overlay
+						src.UpdateOverlays(fire_overlay, "fire")
 						for(var/mob/living/carbon/human/M in src)
 							M.update_burning(35)
 							boutput(M, SPAN_ALERT("<b>The cabin bursts into flames!</b>"))
@@ -847,15 +846,15 @@
 					if(damage_overlays < 1)
 						damage_overlays = 1
 						damage_overlay = image('icons/effects/64x64.dmi', "pod_damage")
-						src.overlays += damage_overlay
+						src.UpdateOverlays(damage_overlay, "damage")
 				if(50 to INFINITY)
 					if (damage_overlays)
 						if(damage_overlays == 2)
-							src.overlays -= fire_overlay
-							src.overlays -= damage_overlay
+							src.UpdateOverlays(null, "fire")
+							src.UpdateOverlays(null, "damage")
 							fire_overlay = null
 						else if(damage_overlays == 1)
-							src.overlays -= damage_overlay
+							src.UpdateOverlays(null, "damage")
 						damage_overlays = 0
 						damage_overlay = null
 
@@ -947,7 +946,7 @@
 					return
 				m_w_system = S
 				if(uses_weapon_overlays && m_w_system.appearanceString)
-					src.overlays += image('icons/effects/64x64.dmi', "[m_w_system.appearanceString]")
+					src.UpdateOverlays(image('icons/effects/64x64.dmi', "[m_w_system.appearanceString]"), "mainweapon")
 
 				m_w_system.activate(give_feedback)
 			else
@@ -1876,7 +1875,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 				var/obj/machinery/vehicle/tank/T = src
 				if (!T.locomotion)
 					T.locomotion = S
-					T.overlays += image('icons/obj/machines/8dirvehicles.dmi', "[body_type]_[locomotion.appearanceString]")
+					T.UpdateOverlays(image('icons/obj/machines/8dirvehicles.dmi', "[body_type]_[locomotion.appearanceString]"), "locomotion")
 				else
 					if (usr) //Occuring during gameplay
 						boutput(usr, "That system already has a part!")
@@ -1891,7 +1890,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 		if (src.locomotion)
 			locomotion.deactivate()
 			components -= locomotion
-			src.overlays -= image('icons/obj/machines/8dirvehicles.dmi', "[body_type]_[locomotion.appearanceString]")
+			src.UpdateOverlays(null, "locomotion")
 			locomotion.set_loc(src.loc)
 			locomotion = null
 

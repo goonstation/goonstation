@@ -129,7 +129,7 @@
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 
 			logTheThing(LOG_COMBAT, src, "[src] chairflips into [constructTarget(M,"combat")], [log_loc(M)].")
-			M.lastattacker = src
+			M.lastattacker = get_weakref(src)
 			M.lastattackertime = world.time
 
 			if (iswrestler(src))

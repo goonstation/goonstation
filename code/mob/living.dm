@@ -2084,7 +2084,7 @@
 	var/mob/M = null
 	if (ismob(P.shooter))
 		M = P.shooter
-		src.lastattacker = M
+		src.lastattacker = get_weakref(M)
 		src.lastattackertime = world.time
 	src.was_harmed(M)
 
