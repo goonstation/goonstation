@@ -303,6 +303,7 @@ proc/filter_trait_hats(var/type)
 //A robot in disguise, ready to go and spy on everyone for you
 /obj/item/clothing/head/det_hat/folded_scuttlebot
 	blocked_from_petasusaphilic = TRUE
+	item_function_flags = IMMUNE_TO_ACID
 	var/inspector = FALSE
 	desc = "Someone who wears this will look very smart. It looks a bit heavier than it should."
 
@@ -968,13 +969,30 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "Can be dyed with hair dye. Obviously."
 	icon_state = "beret_base"
 	item_state = "dye_beret"
+	///Associative list of hex color to patent number
+	var/static/list/copyrighted_colors = list(
+		"#2E53C1" = "23582938", //NT beret
+		"#B52D12" = "94568293", //hos beret
+		"#971CA5" = "83482372", //janitor beret
+	)
 
 	New()
 		..()
 		src.color = "#FFFFFF"
 
 	attackby(obj/item/dye_bottle/W, mob/user)
-		if (istype(W, /obj/item/dye_bottle))
+		if (istype(W) && W.uses_left)
+			W.use_dye()
+			for (var/color in src.copyrighted_colors)
+				if (color_dist(color, W.customization_first_color) < 5000) //arbitrary threshold
+					boutput(user, SPAN_NOTICE("Patent infringement attempt detected! This color infringes NT beret patent #[src.copyrighted_colors[color]]."))
+					boutput(user, SPAN_ALERT("[src] burns your fingers as its anti patent infringement fabric boils off the dye!"))
+					if (src in user.contents)
+						user.drop_item(src, FALSE)
+					random_burn_damage(user, 2)
+					playsound(user.loc, 'sound/impact_sounds/burn_sizzle.ogg', 40, 1)
+					user.add_karma(-2)
+					return
 			src.color = W.customization_first_color
 			src.UpdateIcon()
 			var/mob/wearer = src.loc
@@ -983,6 +1001,15 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			user.visible_message(SPAN_ALERT("<b>[user]</b> splashes dye on [user != wearer && ismob(wearer) ? "[wearer]'s" : his_or_her(user)] beret."))
 			return
 		. = ..()
+
+/obj/item/clothing/head/beret/syndicate
+	name = "syndicate beret"
+	desc = "A dastardly beret for only the most cunning of operatives."
+	icon_state = "syndieberet"
+
+	New()
+		..()
+		src.color = null
 
 /obj/item/clothing/head/bandana
 	name = "bandana"
@@ -1601,17 +1628,31 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 
 	attackby(obj/item/W, mob/user)
 		..()
+		var/obj/item/device/radio/headset/H = W
 		if(istype(W,/obj/item/device/radio/headset))
-			user.show_message("You stuff the headset on the headband and tape it in place. [istype(src, /obj/item/clothing/head/headband/nyan) ? "Meow" : "Now"] you should be able to hear the radio using these!")
-			var/obj/item/device/radio/headset/H = W
-			H.icon = src.icon
-			H.name = src.name
-			H.icon_state = src.icon_state
-			H.wear_image_icon = src.wear_image_icon
-			H.wear_image = src.wear_image
-			H.wear_layer = MOB_FULL_SUIT_LAYER
-			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
-			qdel(src)
+			if(istype(src, /obj/item/clothing/head/headband/basic))
+				user.show_message("You stuff the headset under the headband and tape it in place. Now you should be able to hear the radio using this!")
+				H.icon = src.icon
+				H.name = src.name
+				H.icon_state = src.icon_state
+				H.wear_image_icon = src.wear_image_icon
+				H.wear_image = src.wear_image
+				H.desc = "Someone has taped a radio headset underneath the headband."
+				qdel(src)
+			else
+				user.show_message("You stuff the headset on the headband and tape it in place. [istype(src, /obj/item/clothing/head/headband/nyan) ? "Meow" : "Now"] you should be able to hear the radio using these!")
+				H.icon = src.icon
+				H.name = src.name
+				H.icon_state = src.icon_state
+				H.wear_image_icon = src.wear_image_icon
+				H.wear_image = src.wear_image
+				H.wear_layer = MOB_FULL_SUIT_LAYER
+				H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
+				qdel(src)
+		else
+			return
+
+
 
 ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 /obj/item/clothing/head/headband/nyan
@@ -1675,6 +1716,68 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 		name = "tiger ears"
 		icon_state = "cat-tiger"
 		item_state = "cat-tiger"
+
+/obj/item/clothing/head/headband/basic
+	name = "headband"
+	icon_state = "headband-black"
+	item_state = "headband-black"
+
+	black
+		name = "black headband"
+		icon_state = "headband-black"
+		item_state = "headband-black"
+	gray
+		name = "gray headband"
+		icon_state = "headband-gray"
+		item_state = "headband-gray"
+	white
+		name = "white headband"
+		icon_state = "headband-white"
+		item_state = "headband-white"
+	cream
+		name = "cream headband"
+		icon_state = "headband-cream"
+		item_state = "headband-cream"
+	pink
+		name = "pink headband"
+		icon_state = "headband-pink"
+		item_state = "headband-pink"
+	red
+		name = "red headband"
+		icon_state = "headband-red"
+		item_state = "headband-red"
+	gold
+		name = "gold headband"
+		icon_state = "headband-gold"
+		item_state = "headband-gold"
+	green
+		name = "green headband"
+		icon_state = "headband-green"
+		item_state = "headband-green"
+	mint
+		name = "mint headband"
+		icon_state = "headband-mint"
+		item_state = "headband-mint"
+	blue
+		name = "blue headband"
+		icon_state = "headband-blue"
+		item_state = "headband-blue"
+	navy
+		name = "navy headband"
+		icon_state = "headband-navy"
+		item_state = "headband-navy"
+	purple
+		name = "purple headband"
+		icon_state = "headband-purple"
+		item_state = "headband-purple"
+	shinyblack
+		name = "shiny-black headband"
+		icon_state = "headband-shinyblack"
+		item_state = "headband-shinyblack"
+	brown
+		name = "brown headband"
+		icon_state = "headband-brown"
+		item_state = "headband-brown"
 
 /obj/item/clothing/head/headband/devil
 	name = "devil horns"

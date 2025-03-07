@@ -3,6 +3,7 @@ TYPEINFO(/datum/component/assembly)
 		ARG_INFO("to_combine_item", DATA_INPUT_TYPE, "path or list of items that will trigger this proc when used on. Can take tool-bitflags like TOOL_CUTTING."),
 		ARG_INFO("proc_to_call", DATA_INPUT_REF, "The proc reference that will be called when the item can be assembled"),
 		ARG_INFO("on_tool_attack", DATA_INPUT_BOOL, "Set this to TRUE if you want the component to fire if the construction should go two-ways.", FALSE),
+		ARG_INFO("allow_on_others", DATA_INPUT_BOOL, "Set this to TRUE if you want the component to fire even though one of the items is on someone else. Sneaky.", FALSE),
 	)
 
 ///This component calls a procref with a assembly_information string on the atom it was added to when it gets attacked with an object specified in the to_combine_item
@@ -16,15 +17,18 @@ TYPEINFO(/datum/component/assembly)
 	var/to_combine_item = null
 	///The Procref that will get called when the items are compatible
 	var/valid_assembly_proc = null
+	///Set to TRUE if you want this combination to work while one of the items is on another person
+	var/allow_apply_on_others = FALSE
 
 
 
-/datum/component/assembly/Initialize(var/required_item, var/called_proc, var/on_tool_attack = FALSE)
+/datum/component/assembly/Initialize(var/required_item, var/called_proc, var/on_tool_attack = FALSE, var/allow_on_others = FALSE)
 	if(!src.parent || !required_item || !called_proc)
 		return COMPONENT_INCOMPATIBLE
 	. = ..()
 	src.to_combine_item = required_item
 	src.valid_assembly_proc = called_proc
+	src.allow_apply_on_others = allow_on_others
 	RegisterSignal(src.parent, COMSIG_ATTACKBY, PROC_REF(attackby))
 	if(on_tool_attack)
 		RegisterSignal(src.parent, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(on_pre_attack))
@@ -55,8 +59,40 @@ TYPEINFO(/datum/component/assembly)
 			is_combinable = TRUE
 	else if (istype(checked_atom, src.to_combine_item))
 		is_combinable = TRUE
+	//if you try to combine items on someone else, set allow_apply_on_others to true
+	if(!src.allow_apply_on_others)
+		for(var/obj/item/checked_item in list(src.parent, checked_atom))
+			if((ismob(checked_item.loc) && checked_item.loc != user))
+				is_combinable = FALSE
 
 	if(is_combinable)
 		//if the assembly is valid, we go and call the proc
 		//we need to return true so onattack does not trigger. Else we would still attack a completed assembly
 		return call(src.parent, src.valid_assembly_proc)(checked_atom, user)
+
+/// this component checks assembly_cant_be_removed() on the parent, but behaves exactly the same otherwise
+/datum/component/assembly/consumes_self
+
+/datum/component/assembly/consumes_self/try_combination(var/atom/checked_atom, var/mob/user)
+	var/atom/movable/movable_parent = src.parent
+	if(movable_parent.assembly_cant_be_removed())
+		return FALSE
+	. = ..(checked_atom, user)
+/// this component checks assembly_cant_be_removed() on the other atom used, but behaves exactly the same otherwise
+/datum/component/assembly/consumes_other
+
+/datum/component/assembly/consumes_other/try_combination(var/atom/checked_atom, var/mob/user)
+	var/atom/movable/movable_checked_atom = checked_atom
+	if(movable_checked_atom.assembly_cant_be_removed())
+		return FALSE
+	. = ..(checked_atom, user)
+
+/// this component checks assembly_cant_be_removed() on all atoms involved, but behaves exactly the same otherwise
+/datum/component/assembly/consumes_all
+
+/datum/component/assembly/consumes_all/try_combination(var/atom/checked_atom, var/mob/user)
+	var/atom/movable/movable_parent = src.parent
+	var/atom/movable/movable_checked_atom = checked_atom
+	if(movable_checked_atom.assembly_cant_be_removed() || movable_parent.assembly_cant_be_removed())
+		return FALSE
+	. = ..(checked_atom, user)

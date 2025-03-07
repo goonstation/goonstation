@@ -77,6 +77,7 @@
 	/// color_matrix: the client's game color (tint)
 	var/saturation_matrix = COLOR_MATRIX_IDENTITY
 	var/color_matrix = COLOR_MATRIX_IDENTITY
+	var/colorblind_matrix = COLOR_MATRIX_IDENTITY
 
 	perspective = EYE_PERSPECTIVE
 	// please ignore this for now thanks in advance - drsingh
@@ -92,7 +93,7 @@
 	var/resourcesLoaded = 0 //Has this client done the mass resource downloading yet?
 	var/datum/tooltipHolder/tooltipHolder = null
 
-	var/chui/window/keybind_menu/keybind_menu = null
+	var/datum/keybind_menu/keybind_menu = null
 
 	var/delete_state = DELETE_STOP
 
@@ -111,6 +112,12 @@
 	var/admin_intent = 0
 
 	var/hand_ghosts = 1 //pickup ghosts inhand
+
+	var/dark_screenflash = FALSE
+
+	var/protanopia_toggled = FALSE
+	var/deuteranopia_toggled = FALSE
+	var/tritanopia_toggled = FALSE
 
 /client/proc/audit(var/category, var/message, var/target)
 	if(src.holder && (src.holder.audit & category))
@@ -410,6 +417,7 @@
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding to clients")
 
 	clients += src
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
 	add_to_donator_list(src.ckey)
 
 	SPAWN(0) // to not lock up spawning process
@@ -487,15 +495,18 @@
 		if (src.byond_version < 515 || src.byond_build < 1633)
 			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
 			if (tgui_alert(src, "Consider UPDATING BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the stable release.", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("https://www.byond.com/download/")
+				src << link("https://www.byond.com/download/build/515/")
 			// kick out of date clients
 			tgui_alert(src, "Version enforcement is enabled, you will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 30 SECONDS)
 			tgui_process.close_user_uis(src.mob)
 			del(src)
 			return
-		if (src.byond_version >= 516)
-			if (tgui_alert(src, "Please DOWNGRADE BYOND to the latest stable release of version 515! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("https://www.byond.com/download/")
+		if (src.byond_version == 516)
+			if (tgui_alert(src, "We are still working on full support for BYOND 516, so you may encounter bugs! For the best experience, please downgrade to BYOND 515.1647. Would you like to visit the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
+				src << link("https://www.byond.com/download/build/515/")
+		if (src.byond_version >= 517)
+			if (tgui_alert(src, "You have connected with an unsupported BYOND client version, and you may encounter major issues. For the best experience, please downgrade to BYOND 515.1647. Would you like to visit the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
+				src << link("https://www.byond.com/download/build/515/")
 #endif
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
@@ -580,6 +591,8 @@
 		for(var/client/C)
 			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE, only_if_first=TRUE, message_who=src)
 	winset(src, null, "rpanewindow.left=infowindow")
+	if(byond_version >= 516)
+		winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
 	login_success = 1
@@ -658,6 +671,8 @@
 
 	// Set view tint
 	view_tint = winget( src, "menu.set_tint", "is-checked" ) == "true"
+
+	dark_screenflash = winget( src, "menu.toggle_dark_screenflashes", "is-checked") == "true"
 
 /client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE, only_if_first=FALSE, message_who=null)
 	var/static/list/list/ip_to_ckeys = list()
@@ -931,7 +946,11 @@ var/global/curr_day = null
 	set name = "RP Rules"
 	set category = "Commands"
 
-	tgui_alert(src, content_window = "rpRules", do_wait = FALSE)
+	var/cant_interact_time = null
+	if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10)
+		cant_interact_time = 15 SECONDS
+
+	tgui_alert(src, content_window = "rpRules", do_wait = FALSE, cant_interact = cant_interact_time)
 #endif
 
 /client/verb/changeServer(var/server as text)
@@ -1147,10 +1166,6 @@ var/global/curr_day = null
 			var/t1 = text("window=[window]")
 			usr.remove_dialogs()
 			usr.Browse(null, t1)
-			//Special cases
-			switch (window)
-				if ("aialerts")
-					usr:viewalerts = 0
 
 		//A thing for the chat output to call so that links open in the user's default browser, rather than IE
 		if ("openLink")
@@ -1226,6 +1241,12 @@ var/global/curr_day = null
 	if (src.mob?.respect_view_tint_settings)
 		src.set_color(length(src.mob.active_color_matrix) ? src.mob.active_color_matrix : COLOR_MATRIX_IDENTITY, src.mob.respect_view_tint_settings)
 
+/client/verb/toggle_dark_screenflashes()
+	set hidden = 1
+	set name = "toggle-dark-screenflashes"
+
+	dark_screenflash = !dark_screenflash
+
 /client/verb/adjust_saturation()
 	set hidden = TRUE
 	set name = "adjust-saturation"
@@ -1249,6 +1270,8 @@ var/global/curr_day = null
 
 	else
 		src.recoil_controller?.disable()
+
+
 
 /client/proc/set_view_size(var/x, var/y)
 	//These maximum values make for a near-fullscreen game view at 32x32 tile size, 1920x1080 monitor resolution.
@@ -1433,6 +1456,78 @@ var/global/curr_day = null
 	set hidden = 1
 	set name = "set-hand-ghosts"
 	hand_ghosts = winget( src, "menu.use_hand_ghosts", "is-checked" ) == "true"
+
+/client/verb/disable_colorblind_modes()
+	set hidden = TRUE
+	set name = "disable-colorblind-modes"
+
+	if (src.protanopia_toggled)
+		src.toggle_protanopia_mode()
+	else if (src.deuteranopia_toggled)
+		src.toggle_deuteranopia_mode()
+	else if (src.tritanopia_toggled)
+		src.toggle_tritanopia_mode()
+	src.mob?.update_active_matrix()
+
+/client/verb/toggle_protanopia_mode()
+	set hidden = TRUE
+	set name = "toggle-protanopia-mode"
+
+	if (src.deuteranopia_toggled)
+		src.toggle_deuteranopia_mode()
+	else if (src.tritanopia_toggled)
+		src.toggle_tritanopia_mode()
+
+	if (!src.protanopia_toggled)
+		src.colorblind_matrix = COLOR_MATRIX_PROTANOPIA_ACCESSIBILITY
+	else
+		src.colorblind_matrix = COLOR_MATRIX_IDENTITY
+	src.set_color()
+	src.protanopia_toggled = !src.protanopia_toggled
+	src.deuteranopia_toggled = FALSE
+	src.tritanopia_toggled = FALSE
+
+	src.mob?.update_active_matrix()
+
+/client/verb/toggle_deuteranopia_mode()
+	set hidden = TRUE
+	set name = "toggle-deuteranopia-mode"
+
+	if (src.protanopia_toggled)
+		src.toggle_protanopia_mode()
+	else if (src.tritanopia_toggled)
+		src.toggle_tritanopia_mode()
+
+	if (!src.deuteranopia_toggled)
+		src.colorblind_matrix = COLOR_MATRIX_DEUTERANOPIA_ACCESSIBILITY
+	else
+		src.colorblind_matrix = COLOR_MATRIX_IDENTITY
+	src.set_color()
+	src.deuteranopia_toggled = !src.deuteranopia_toggled
+	src.protanopia_toggled = FALSE
+	src.tritanopia_toggled = FALSE
+
+	src.mob?.update_active_matrix()
+
+/client/verb/toggle_tritanopia_mode()
+	set hidden = TRUE
+	set name = "toggle-tritanopia-mode"
+
+	if (src.protanopia_toggled)
+		src.toggle_protanopia_mode()
+	else if (src.deuteranopia_toggled)
+		src.toggle_deuteranopia_mode()
+
+	if (!src.tritanopia_toggled)
+		src.colorblind_matrix = COLOR_MATRIX_TRITANOPIA_ACCESSIBILITY
+	else
+		src.colorblind_matrix = COLOR_MATRIX_IDENTITY
+	src.set_color()
+	src.tritanopia_toggled = !src.tritanopia_toggled
+	src.protanopia_toggled = FALSE
+	src.deuteranopia_toggled = FALSE
+
+	src.mob?.update_active_matrix()
 
 //These size helpers are invisible browser windows that help with getting client screen dimensions
 /client/proc/initSizeHelpers()

@@ -732,7 +732,7 @@
 	if (!HAS_ATOM_PROPERTY(src, PROP_MOB_SUPPRESS_DEATH_SOUND))
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
-	if (!inafterlife(src) && !istestdummy(src) && !isvirtual(src) && current_state >= GAME_STATE_PLAYING) // prevent corpse spawners from reducing cheer; TODO: better fix
+	if (!inafterlife(src) && !istestdummy(src) && !isvirtual(src) && !src.hasStatus("in_afterlife") && current_state >= GAME_STATE_PLAYING) // prevent corpse spawners from reducing cheer; TODO: better fix
 		modify_christmas_cheer(-7)
 
 
@@ -1089,7 +1089,7 @@
 			logTheThing(LOG_COMBAT, src, "throws [constructTarget(C,"combat")] [dir2text(throw_dir)] at [log_loc(src)].")
 		else
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
-			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)] " : ""][dir2text(throw_dir)] at [log_loc(src)].")
 		if (istype(src.loc, /turf/space) || src.no_gravity) //they're in space, move em one space in the opposite direction
 			src.inertia_dir = get_dir(target, src) // Float opposite direction from throw
 			step(src, inertia_dir)
@@ -2436,7 +2436,6 @@
 				I.set_loc(get_turf(src))
 				continue
 
-	update_body()
 	update_face()
 	return
 
@@ -2659,13 +2658,13 @@
 			processed += organHolder.brain
 		if (organHolder.head)
 			processed += organHolder.head
-		if (prob(40))
+		if (prob(40) || HAS_ATOM_PROPERTY(src, PROP_HUMAN_DROP_BRAIN_ON_GIB))
 			if (prob(15) && organHolder.head && organHolder.head.loc == src)
 				ret += organHolder.drop_organ("head", src)
 			else
 				if (organHolder.skull && organHolder.skull.loc == src)
 					ret += organHolder.skull
-				if (prob(15) && organHolder.brain && organHolder.brain.loc == src)
+				if ((prob(15) || HAS_ATOM_PROPERTY(src, PROP_HUMAN_DROP_BRAIN_ON_GIB)) && organHolder.brain && organHolder.brain.loc == src)
 					ret += organHolder.brain
 		if (organHolder.left_eye)
 			processed += organHolder.left_eye
@@ -2740,9 +2739,9 @@
 
 /mob/living/carbon/human/proc/is_bald()
 	var/datum/appearanceHolder/AH = src.bioHolder.mobAppearance
-	return istype(AH.customizations["hair_bottom"], /datum/customization_style/none) \
-	&& istype(AH.customizations["hair_middle"], /datum/customization_style/none) \
-	&& istype(AH.customizations["hair_top"], /datum/customization_style/none)
+	return istype(AH.customizations["hair_bottom"].style, /datum/customization_style/none) \
+	&& istype(AH.customizations["hair_middle"].style, /datum/customization_style/none) \
+	&& istype(AH.customizations["hair_top"].style, /datum/customization_style/none)
 
 /mob/living/carbon/human/proc/create_wig(var/keep_hair = FALSE)
 	if (!src.bioHolder || !src.bioHolder.mobAppearance)
@@ -2791,14 +2790,18 @@
 
 /mob/living/carbon/human/proc/sever_limb(var/limb)
 	if (!src.limbs)
-		return
-	if(!(limb in list("l_arm","r_arm","l_leg","r_leg"))) return
+		return FALSE
+	if(!(limb in list("l_arm","r_arm","l_leg","r_leg"))) return FALSE
 
 	//not exactly elegant, but fuck it, src.vars[limb].sever() didn't want to work :effort:
 	if(limb == "l_arm" && src.limbs.l_arm) src.limbs.l_arm.sever()
 	else if(limb == "r_arm" && src.limbs.r_arm) src.limbs.r_arm.sever()
 	else if(limb == "l_leg" && src.limbs.l_leg) src.limbs.l_leg.sever()
 	else if(limb == "r_leg" && src.limbs.r_leg) src.limbs.r_leg.sever()
+	else
+		return FALSE
+
+	return TRUE
 
 /mob/living/carbon/human/proc/has_limb(var/limb)
 	if (!src.limbs)
@@ -2908,9 +2911,6 @@
 	if (secure_mode == "s" && ((locate(/obj/item/implant/robotalk) in implant) || src.traitHolder.hasTrait("roboears")))
 		return "silicon"
 	return null
-
-/mob/living/carbon/human/HealBleeding(var/amt)
-	bleeding = max(bleeding - amt, 0)
 
 /mob/living/carbon/human/proc/juggling()
 	if (islist(src.juggling) && length(src.juggling))
@@ -3370,7 +3370,7 @@
 	var/turf/T = get_turf(src)
 
 	if (T)
-		if (T.turf_flags & CAN_BE_SPACE_SAMPLE)
+		if (istype(T, /turf/space))
 			. -= space_movement
 
 		if (!(src.mutantrace && src.mutantrace.aquatic) && !src.hasStatus("aquabreath"))
@@ -3401,7 +3401,7 @@
 	if(((src.in_throw_mode && src.a_intent == "help") || src.client?.check_key(KEY_THROW)) && !src.equipped())
 		if((src.hand && (!src.limbs.l_arm)) || (!src.hand && (!src.limbs.r_arm)) || src.hasStatus("handcuffed") || (prob(60) && src.bioHolder.HasEffect("clumsy")) || ismob(AM) || (thr?.get_throw_travelled() <= 1 && AM.last_throw_x == AM.x && AM.last_throw_y == AM.y))
 			src.visible_message(SPAN_ALERT("[src] has been hit by [AM]."))
-			logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? thr.user : "a non-mob"]).")
+			logTheThing(LOG_COMBAT, src, "is struck by [AM][AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? thr.user : "a non-mob"]).")
 			random_brute_damage(src, AM.throwforce,1)
 			if(thr?.user)
 				src.was_harmed(thr.user, AM)

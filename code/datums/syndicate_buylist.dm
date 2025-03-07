@@ -146,6 +146,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 1
 	desc = "A counterfeit identification card, designed to prevent tracking by the station's AI systems. It features a one-time programmable identification circuit, allowing the entry of a custom false identity. It is also capable of scanning other ID cards and replicating their access credentials."
 
+/datum/syndicate_buylist/generic/cashcase
+	name = "Cash Briefcase"
+	items = list(/obj/item/cash_briefcase/syndicate/loaded)
+	cost = 2
+	max_buy = 2
+	desc = "A syndicate briefcase designed to hold large quantities of cash. Comes loaded with 15 thousand credits."
+
 /datum/syndicate_buylist/generic/emag
 	name = "Electromagnet Card (EMAG)"
 	items = list(/obj/item/card/emag)
@@ -201,7 +208,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	name = "Signal Jammer"
 	items = list(/obj/item/radiojammer)
 	cost = 3
-	desc = "Silences radios in an area around you while activated. No one will hear them scream."
+	desc = "Silences radios and PDAs in an area around you while activated. No one will hear them scream."
 
 /datum/syndicate_buylist/generic/psink
 	name = "Power Sink"
@@ -284,7 +291,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	name = "Wrestling Belt"
 	items = list(/obj/item/storage/belt/wrestling)
 	cost = 7
-	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past. Wearing it unlocks a number of wrestling moves, which can be accessed in a separate command tab."
+	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past. Wearing it unlocks a number of wrestling moves."
 	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
@@ -586,7 +593,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	items = list(/obj/item/storage/briefcase/satan)
 	cost = 8
 	desc = "Comes complete with three soul binding contracts, three extra-pointy pens, and one suit provided by Lucifer himself."
-	job = list("Chaplain")
+	job = list("Chaplain", "Lawyer")
 	not_in_crates = TRUE
 	vr_allowed = FALSE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY
@@ -1107,6 +1114,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
+/datum/syndicate_buylist/traitor/barberang
+	name = "Barberang"
+	items = list(/obj/item/razor_blade/barberang)
+	cost = 5
+	desc = "An aerodynamic, extra-sharp hand razor designed to be thrown, knocking down and shearing the hair off of anyone it hits. The razor will then return, allowing for stolen hair to be easily retrieved. Notice: hitting a bald target will disrupt the razor's aerodynamic properties and void the warranty."
+	job = list("Barber")
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
@@ -1148,6 +1163,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	cost = 2
 	desc = "A signal flaregun for emergency use. Or for setting jerks on fire"
 	br_allowed = TRUE
+
+/datum/syndicate_buylist/traitor/rifle
+	name = "Old Hunting Rifle"
+	items = list(/obj/item/gun/kinetic/hunting_rifle)
+	cost = 7
+	job = list("Pest Control Specialist")
+	desc = "An old hunting rifle, comes with only four bullets. Use them wisely."
+	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/surplus/rifle
 	name = "Old Hunting Rifle"
@@ -1302,7 +1325,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 /datum/syndicate_buylist/commander/deployment_pods
 	name = "Rapid Deployment Remote"
 	items = list(/obj/item/device/deployment_remote, /obj/item/paper/deployment_info)
-	cost = 4
+	cost = 2
 	desc = "A handheld remote allowing you, your team, and the nuclear device to be sent in anywhere at a moment's notice!"
 	category = "Main"
 
@@ -1442,3 +1465,9 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 	items = list(/obj/item/tool/quickhack/syndicate)
 	cost = 1
 	desc = "An illegal, home-made tool able to fake up to 10 AI 'open' signals to unbolted doors."
+
+/datum/syndicate_buylist/surplus/basketball
+	name = "Extremely illegal basketball"
+	items = list(/obj/item/basketball/lethal)
+	cost = 3
+	desc = "An even more illegal basketball capable of dangerous levels of balling."

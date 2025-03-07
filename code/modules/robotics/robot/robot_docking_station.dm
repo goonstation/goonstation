@@ -1,6 +1,5 @@
-/// Amount of 'free' power that docking stations give. For each 1 unit of APC cell power, cyborgs will recharge this many units of cyborg cell power.
-/// Band-aid.
-#define MAGIC_BULLSHIT_FREE_POWER_MULTIPLIER 3
+/// duration of the action bar when click-dragging humans inside the syndicate cyborg converter
+#define CONVERTER_CLICKDRAG_BAR_DURATION 1 SECOND
 
 TYPEINFO(/obj/machinery/recharge_station)
 	mats = 10
@@ -31,7 +30,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 	src.flags |= NOSPLASH
 	src.create_reagents(500)
 	src.reagents.add_reagent("fuel", 250)
-	src.build_icon()
+	src.UpdateIcon()
 	START_TRACKING
 
 /obj/machinery/recharge_station/disposing()
@@ -69,7 +68,24 @@ TYPEINFO(/obj/machinery/recharge_station)
 	src.go_out()
 	if (severity > 1 && src.conversion_chamber) //syndie version is a little tougher
 		return
-	return ..(severity)
+	. = ..(severity)
+	if(QDELETED(src))
+		return
+	switch(severity)
+		if (2)
+			src.set_broken()
+		if (3)
+			if (prob(50))
+				src.set_broken()
+
+/obj/machinery/recharge_station/bullet_act(obj/projectile/P)
+	if (src.conversion_chamber)
+		return ..() // syndie version is a little tougher
+	if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
+		if(prob(P.power * P.proj_data?.ks_ratio / 5)) // they're a sturdy metal shell, a .22 won't cut it
+			src.set_broken()
+	. = ..()
+
 
 /obj/machinery/recharge_station/attack_hand(mob/user)
 	if (src.status & BROKEN)
@@ -155,7 +171,10 @@ TYPEINFO(/obj/machinery/recharge_station)
 
 /// check if we may put this human inside the chamber
 /// on success returns true, else returns false
-/obj/machinery/recharge_station/proc/move_human_inside(mob/user, mob/victim)
+/obj/machinery/recharge_station/proc/can_human_occupy(mob/user, mob/victim)
+	if (BOUNDS_DIST(victim, user) > 0 || BOUNDS_DIST(src, user) > 0 || (ismob(victim) && BOUNDS_DIST(victim, src) > 0))
+		boutput(user, SPAN_ALERT("That is too far away!"))
+		return FALSE
 	if (!src.conversion_chamber)
 		boutput(user, SPAN_ALERT("Humans cannot enter recharging stations."))
 		return FALSE
@@ -171,6 +190,12 @@ TYPEINFO(/obj/machinery/recharge_station)
 	if (src.occupant)
 		boutput(user, SPAN_ALERT("There's already someone in there."))
 		return FALSE
+	return TRUE
+
+/obj/machinery/recharge_station/proc/move_human_inside(mob/user, mob/victim)
+	if(!src.can_human_occupy(user, victim))
+		return
+
 	var/mob/living/carbon/human/H = victim
 	logTheThing(LOG_COMBAT, user, "puts [constructTarget(H,"combat")] into a conversion chamber at [log_loc(src)]")
 	user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
@@ -179,7 +204,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 	H.set_loc(src)
 	src.add_fingerprint(user)
 	src.occupant = H
-	src.build_icon()
+	src.UpdateIcon()
 	return TRUE
 
 /obj/machinery/recharge_station/Click(location, control, params)
@@ -194,6 +219,8 @@ TYPEINFO(/obj/machinery/recharge_station)
 	if (!isliving(user) || isAI(user))
 		return
 	if (isintangible(user))
+		return
+	if (src.status & (BROKEN | NOPOWER))
 		return
 	if (isitem(AM) && can_act(user))
 		src.Attackby(AM, user)
@@ -219,7 +246,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 		if (R.client)
 			src.Attackhand(R)
 		src.add_fingerprint(user)
-		src.build_icon()
+		src.UpdateIcon()
 
 	if (isshell(AM))
 		var/mob/living/silicon/hivebot/H = AM
@@ -237,10 +264,11 @@ TYPEINFO(/obj/machinery/recharge_station)
 		if (H.client)
 			src.Attackhand(H)
 		src.add_fingerprint(user)
-		src.build_icon()
+		src.UpdateIcon()
 
-	if (ishuman(AM))
-		src.move_human_inside(user, AM)
+	if (ishuman(AM) && src.can_human_occupy(user, AM))
+		var/datum/action/bar/icon/callback/conversion_clickdrag/try_convert = new(user, src, CONVERTER_CLICKDRAG_BAR_DURATION, PROC_REF(move_human_inside), list(user, AM), src.icon, src.icon_state, "", null)
+		actions.start(try_convert, user)
 
 /obj/machinery/recharge_station/receive_silicon_hotkey(mob/user)
 	. = ..()
@@ -259,19 +287,31 @@ TYPEINFO(/obj/machinery/recharge_station)
 		if (src.occupant)
 			mainframe.deploy_to_shell(src.occupant)
 
-/obj/machinery/recharge_station/proc/build_icon()
+/obj/machinery/recharge_station/set_broken(mob/user)
+	. = ..()
+	if(.) return
+	AddComponent(/datum/component/equipment_fault/shorted, tool_flags = TOOL_SCREWING | TOOL_WIRING | TOOL_SNIPPING | TOOL_PRYING)
+	src.visible_message(SPAN_ALERT("[src] shutters and breaks down!"))
+	playsound(src, pick('sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg'), 50, 2)
+
+/obj/machinery/recharge_station/power_change()
+	..()
+	if((src.status & (NOPOWER|BROKEN)) && src.occupant)
+		src.go_out()
+
+/obj/machinery/recharge_station/update_icon()
 	if (src.occupant)
 		src.UpdateOverlays(image('icons/obj/robot_parts.dmi', "station-occu"), "occupant")
 	else
 		src.UpdateOverlays(null, "occupant")
 	if (src.status & BROKEN)
 		src.icon_state = "station-broke"
-		src.UpdateOverlays(null, "power")
-		return
+	else
+		src.icon_state = "station"
 	if (src.status & NOPOWER)
 		src.UpdateOverlays(null, "power")
-		return
-	src.UpdateOverlays(image('icons/obj/robot_parts.dmi', "station-pow"), "power")
+	else
+		src.UpdateOverlays(image('icons/obj/robot_parts.dmi', "station-pow"), "power")
 
 /obj/machinery/recharge_station/proc/process_occupant(mult)
 	if (src.occupant)
@@ -341,7 +381,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 						qdel(H)
 					else
 						H.Robotize_MK2(TRUE, syndicate=TRUE)
-					src.build_icon()
+					src.UpdateIcon()
 					playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 			else
 				H.bioHolder.AddEffect("eaten")
@@ -354,7 +394,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 /obj/machinery/recharge_station/proc/go_out()
 	MOVE_OUT_TO_TURF_SAFE(src.occupant, src)
 	src.occupant = null
-	src.build_icon()
+	src.UpdateIcon()
 
 /obj/machinery/recharge_station/was_deconstructed_to_frame(mob/user)
 	src.go_out()
@@ -389,7 +429,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 	src.occupant = usr
 	src.Attackhand(usr)
 	src.add_fingerprint(usr)
-	src.build_icon()
+	src.UpdateIcon()
 
 /obj/machinery/recharge_station/syndicate
 	conversion_chamber = 1
@@ -406,6 +446,9 @@ TYPEINFO(/obj/machinery/recharge_station)
 		playsound(src, 'sound/items/Ratchet.ogg', 40, FALSE, 0)
 		return
 	..()
+
+/obj/machinery/recharge_station/syndicate/set_broken(mob/user)
+	return TRUE // cannot be broken, must be made of sturdy stuff
 
 /obj/machinery/recharge_station/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -1058,4 +1101,30 @@ TYPEINFO(/obj/machinery/recharge_station)
 						user.put_in_hand_or_eject(cell_to_eject)
 			. = TRUE
 
-#undef MAGIC_BULLSHIT_FREE_POWER_MULTIPLIER
+/// Click-drag action bar for syndicate cyborg converter with checks for victim/converter range and state
+/datum/action/bar/icon/callback/conversion_clickdrag
+	var/mob/victim
+	var/obj/machinery/recharge_station/converter
+
+	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message, interrupt_flags, call_proc_on)
+		if (!istype(target, /obj/machinery/recharge_station/syndicate))
+			CRASH("Called action on something that isn't a syndicate cyborg docking station")
+		if (!ishuman(proc_args[2]))
+			CRASH("Tried to convert a non-human in a syndicate cyborg docking station")
+		. = ..()
+
+		src.converter = target
+		src.victim = proc_args[2]
+
+	canRunCheck(in_start)
+		..()
+		if (BOUNDS_DIST(src.converter, src.victim) > 0 || BOUNDS_DIST(src.victim, src.owner) > 0)
+			src.interrupt(INTERRUPT_ALWAYS)
+		if (isdead(src.victim))
+			src.interrupt(INTERRUPT_ALWAYS)
+		if (!src.converter.anchored)
+			src.interrupt(INTERRUPT_ALWAYS)
+		if (src.converter.occupant)
+			src.interrupt(INTERRUPT_ALWAYS)
+
+#undef CONVERTER_CLICKDRAG_BAR_DURATION

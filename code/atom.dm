@@ -87,6 +87,11 @@ TYPEINFO(/atom)
 	/// Whether the last material applied updated appearance. Used for re-applying material appearance on icon update
 	var/material_applied_appearance = FALSE
 
+	/// What icon to use if we want to create specific particles when hit by a projectile
+	var/impact_icon = null
+	/// What icon state to use if we want to create specific particles when hit by a projectile
+	var/impact_icon_state = null
+
 	New(turf/newLoc)
 		. = ..()
 		// Lets stop having 5 implementations of this that all do it differently
@@ -521,6 +526,8 @@ TYPEINFO(/atom/movable)
 		src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
+	if(istype(src, /atom/movable/hotspot)) //hotspots arent really tangible things
+		return
 	if (isturf(src.loc))
 		var/turf/T = src.loc
 		if(src.opacity)
@@ -713,6 +720,10 @@ TYPEINFO(/atom/movable)
 		update_medium_light_visibility()
 	if (src.mdir_lights)
 		update_mdir_light_visibility(src.dir)
+
+/// Use this proc to check if you can't use and permanently change this atom within /datum/component/assembly
+/atom/movable/proc/assembly_cant_be_removed()
+	return FALSE
 
 /atom/proc/get_desc(dist, mob/user)
 	// If we click something on/under the floor, then analyze fluid/smoke as well
@@ -1251,7 +1262,7 @@ TYPEINFO(/atom/movable)
 
 	// slow 😩
 	if(!turf_only)
-		for (var/atom/movable/AM in T)
+		for (var/atom/movable/AM as anything in T)
 			if (!AM.anchored)
 				continue
 			if (connect_to[AM.type] && !exceptions[AM.type])
@@ -1402,3 +1413,7 @@ TYPEINFO(/atom/movable)
 ///Returns the y component of the surface normal of the atom relative to an incident direction
 /atom/proc/normal_y(incident_dir)
 	return incident_dir == SOUTH ? -1 : (incident_dir == NORTH ?  1 : 0)
+
+///Should this atom emit particles when hit by a projectile, when the projectile is of the given type
+/atom/proc/does_impact_particles(var/kinetic_impact = TRUE)
+	return TRUE

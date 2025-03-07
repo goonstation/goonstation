@@ -94,7 +94,7 @@ var/global/obj/fuckyou/flashDummy
 	O.set_loc(target)
 	playsound(target, 'sound/effects/elec_bigzap.ogg', volume, 1)
 
-	var/list/affected = DrawLine(from, O, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+	var/list/affected = drawLineObj(from, O, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 	for(var/obj/Q in affected)
 		SPAWN(0.6 SECONDS) qdel(Q)
@@ -134,7 +134,7 @@ var/global/obj/fuckyou/flashDummy
 
 	playsound(target, 'sound/effects/elec_bigzap.ogg', 30, TRUE)
 
-	var/list/affected = DrawLine(from, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+	var/list/affected = drawLineObj(from, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 	for(var/obj/O in affected)
 		SPAWN(0.6 SECONDS) qdel(O)
@@ -1258,6 +1258,8 @@ proc/outermost_movable(atom/movable/target)
 	if(T?.vistarget)
 		// this turf is being shown elsewhere through a visual mirror, make sure they get to hear too
 		. |= all_hearers(range, T.vistarget)
+	for (var/turf/listener as anything in T?.listening_turfs)
+		. |= all_hearers(range, listener)
 
 	for(var/atom/movable/screen/viewport_handler/viewport_handler in T?.vis_locs)
 		if(viewport_handler.listens)
@@ -2752,3 +2754,57 @@ proc/search_snippet(var/inputStyle = "", var/inputPlaceholder = "filter packages
 				}
 			});
 		</script>"}
+
+//stolen from katana code, turns out blackbody color is quite universal!
+proc/blackbody_color(temperature)
+	var/input = temperature / 100
+
+	var/red
+	if (input <= 66)
+		red = 255
+	else
+		red = input - 60
+		red = 329.698727446 * (red ** -0.1332047592)
+	red = clamp(red, 0, 255)
+
+	var/green
+	if (input <= 66)
+		green = max(0.001, input)
+		green = 99.4708025861 * log(green) - 161.1195681661
+	else
+		green = input - 60
+		green = 288.1221695283 * (green ** -0.0755148492)
+	green = clamp(green, 0, 255)
+
+	var/blue
+	if (input >= 66)
+		blue = 255
+	else
+		if (input <= 19)
+			blue = 0
+		else
+			blue = input - 10
+			blue = 138.5177312231 * log(blue) - 305.0447927307
+	blue = clamp(blue, 0, 255)
+
+	return rgb(red, green, blue)
+
+proc/pick_reagent(mob/user)
+	RETURN_TYPE(/datum/reagent)
+	var/list/reagents_list = list()
+	var/searchFor = input(user, "Look for a part of the reagent ID (or leave blank for all)", "Add reagent") as null|text
+	if(searchFor)
+		for(var/id in global.reagents_cache)
+			if(findtext("[id]", searchFor))
+				reagents_list += id
+	else
+		reagents_list = reagents_cache //you really asked for the 500+ IDs I guess
+
+	if(length(reagents_list) == 1)
+		return global.reagents_cache[reagents_list[1]]
+	else if(length(reagents_list) > 1)
+		var/id = input(user,"Select Reagent:","Reagents",null) as null|anything in reagents_list
+		return global.reagents_cache[id]
+	else
+		user.show_text("No reagents matching that name", "red")
+		return null

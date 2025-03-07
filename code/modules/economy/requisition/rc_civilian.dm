@@ -428,7 +428,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/item/cannabis
 	name = "cannabis"
-	commodity = /datum/commodity/drugs/cannabis
+	commodity = /datum/commodity/drugs/buy/cannabis
 	feemod = 420
 
 /datum/rc_entry/reagent/glitter
@@ -475,7 +475,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			if("stone")
 				src.rc_entries += rc_buildentry(/datum/rc_entry/stack/rock,rand(8,14)*2*req_quant)
 			if("turf seed")
-				src.rc_entries += rc_buildentry(/datum/rc_entry/seed/grass,rand(20,30)*req_quant)
+				src.rc_entries += rc_buildentry(/datum/rc_entry/plant/seed/grass,rand(20,30)*req_quant)
 			if("window treatment")
 				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/silicate,rand(3,10)*10*req_quant)
 			if("wood")
@@ -493,7 +493,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 				if("stone")
 					src.rc_entries += rc_buildentry(/datum/rc_entry/stack/rock,rand(8,14)*2)
 				if("turf seed")
-					src.rc_entries += rc_buildentry(/datum/rc_entry/seed/grass,rand(20,30))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/plant/seed/grass,rand(20,30))
 				if("window treatment")
 					src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/silicate,rand(3,10)*10)
 				if("wood")
@@ -514,7 +514,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	typepath = /obj/item/raw_material/rock
 	feemod = PAY_UNTRAINED
 
-/datum/rc_entry/seed/grass
+/datum/rc_entry/plant/seed/grass
 	name = "grass seed"
 	cropname = "Grass"
 	feemod = PAY_TRADESMAN
@@ -803,4 +803,94 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			if(8 to 10)
 				name = "ship's navigation GPS"
 				typepath = /obj/item/shipcomponent/secondary_system/gps
+		..()
+
+
+/datum/req_contract/civilian/botanical
+	payout = PAY_TRADESMAN*15*2
+	var/list/namevary = list("Diplomatic Meal Preparation","High-Grade Dinner Prep","Captain's Meal Ingredients","NT-Official Kitchen","NT Pantry Stocking")
+	var/list/desc_wherebuying = list(
+		"A nearby outpost hosting an NT official",
+		"A passing high-class cruiser",
+		"A VIP shuttle",
+		"A \[redacted\]", // military vessel commanders probably also have gourmet appetites
+		"Central command's kitchen",
+		"The kitchen staff of an affiliated station",
+		"The kitchen staff of an affiliated vessel",
+		"A luxury exploratory vessel"
+	)
+	var/list/desc_plants = list("high-quality produce","upscale fruit and veg","gourmet produce","high-grade ingredients",
+								"artisan fruits and greens","boutique ingredients")
+	var/list/desc_bonusflavor = list(
+		null,
+		" Ensure all produce is free from blemishes or signs of spoilage.",
+		" Double-check that no substandard crops are included before packaging.",
+		" Certify that produce has been grown without synthetic fertilisers.",
+		" Individually wrapping each item will ensure maximum freshness.",
+		" Shipment should include detailed cultivation records for quality assurance.",
+		" Ensure any fruits will be fully ripened prior to reception."
+	)
+
+	New()
+		src.name = pick(namevary)
+		src.flavor_desc = "[pick(desc_wherebuying)] is stocking [pick(desc_plants)] with very particular genetically-inclined flavour profiles. [pick(desc_bonusflavor)]"
+		src.payout += rand(0,30) * 10
+		var/quant = 0
+		var/randm = rand(1, 100)
+		if (randm > 50)
+			quant = 2
+			if (prob(30))
+				src.item_rewarders += new /datum/rc_itemreward/plant_cartridge
+		else if (randm > 5)
+			quant = 1
+		else
+			quant = 3
+			src.payout += 8000
+			src.item_rewarders += new /datum/rc_itemreward/plant_cartridge
+
+		for (var/i = 1; i <= quant; i++)
+			src.rc_entries += GetFruitOrVegEntry()
+		if(prob(30))
+			src.item_rewarders += new /datum/rc_itemreward/strange_seed
+		else
+			src.item_rewarders += new /datum/rc_itemreward/tumbleweed
+		..()
+
+	proc/GetFruitOrVegEntry()
+		if (prob(50))
+			return rc_buildentry(/datum/rc_entry/plant/civilian/fruit,rand(4,10))
+		else
+			return rc_buildentry(/datum/rc_entry/plant/civilian/veg,rand(4,10))
+
+/datum/rc_entry/plant/civilian
+	name = "genetically fussy plant"
+	cropname = "Durian"
+	feemod = PAY_DOCTORATE
+	// This worked for seeds, but it only works for produce because all fruits and veg products are members of
+	// obj/item/reagent_containers/food/snacks/plant and thus have plant genes. As long as that remains a hard-stuck rule though, this should be fine.
+	var/crop_genpath = /datum/plant
+
+	fruit
+		crop_genpath = /datum/plant/fruit
+	veg
+		crop_genpath = /datum/plant/veg
+	crop
+		crop_genpath = /datum/plant/crop
+
+	New()
+		var/datum/plant/plantalyze = pick(concrete_typesof(crop_genpath))
+		src.cropname = initial(plantalyze.name)
+
+		switch(rand(1,7))
+			if(1) src.gene_reqs["Maturation"] = rand(10,20)
+			if(2) src.gene_reqs["Production"] = rand(10,20)
+			if(3)
+				src.gene_reqs["Production"] = rand(5,10)
+				src.gene_reqs["Potency"] = rand(3,5)
+			if(4) src.gene_reqs["Yield"] = rand(3,5)
+			if(5) src.gene_reqs["Potency"] = rand(3,5)
+			if(6) src.gene_reqs["Endurance"] = rand(3,5)
+			if(7)
+				src.gene_reqs["Maturation"] = rand(5,10)
+				src.gene_reqs["Production"] = rand(5,10)
 		..()

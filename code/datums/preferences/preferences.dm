@@ -21,6 +21,7 @@ var/list/removed_jobs = list(
 	var/name_first
 	var/name_middle
 	var/name_last
+	var/hyphenate_name
 	var/robot_name
 	var/gender = MALE
 	var/age = 30
@@ -124,6 +125,10 @@ var/list/removed_jobs = list(
 			src.custom_parts = list(
 				"l_arm" = "arm_default_left",
 				"r_arm" = "arm_default_right",
+				"l_leg" = "leg_default_left",
+				"r_leg" = "leg_default_right",
+				"left_eye" = "eye_default_left",
+				"right_eye" = "eye_default_right",
 			)
 
 	ui_state(mob/user)
@@ -222,6 +227,7 @@ var/list/removed_jobs = list(
 			"nameFirst" = src.name_first,
 			"nameMiddle" = src.name_middle,
 			"nameLast" = src.name_last,
+			"hyphenateName" = src.hyphenate_name,
 			"robotName" = src.robot_name,
 			"randomName" = src.be_random_name,
 			"gender" = src.gender == MALE ? "Male" : "Female",
@@ -444,7 +450,7 @@ var/list/removed_jobs = list(
 
 				if (new_name)
 					src.name_first = new_name
-					src.real_name = src.name_first + " " + src.name_last
+					src.set_real_name()
 					src.profile_modified = TRUE
 					return TRUE
 
@@ -486,9 +492,15 @@ var/list/removed_jobs = list(
 
 				if (new_name)
 					src.name_last = new_name
-					src.real_name = src.name_first + " " + src.name_last
+					src.set_real_name()
 					src.profile_modified = TRUE
 					return TRUE
+
+			if ("toggle-hyphenation")
+				src.hyphenate_name = !src.hyphenate_name
+				src.set_real_name()
+				src.profile_modified = TRUE
+				return TRUE
 
 			if ("update-robotName")
 				var/new_name = tgui_input_text(usr, "Your preferred cyborg name, leave empty for random.", "Character Generation", src.robot_name)
@@ -1099,7 +1111,7 @@ var/list/removed_jobs = list(
 				src.name_middle = capitalize(pick_string_autokey("names/first_female.txt"))
 		if (last)
 			src.name_last = capitalize(pick_string_autokey("names/last.txt"))
-		src.real_name = src.name_first + " " + src.name_last
+		src.set_real_name()
 
 	proc/randomizeLook() // im laze
 		if (!src.AH)
@@ -1124,7 +1136,13 @@ var/list/removed_jobs = list(
 		if (length(src.name_last) < NAME_CHAR_MIN || length(src.name_last) > NAME_CHAR_MAX || is_blank_string(src.name_last) || !character_name_validation.Find(src.name_last))
 			src.randomize_name(0, 0, 1)
 
-		src.real_name = src.name_first + " " + src.name_last
+		src.set_real_name()
+
+	proc/set_real_name()
+		if (!src.name_middle)
+			src.real_name = src.name_first + (!src.hyphenate_name ? " " : "-") + src.name_last
+		else
+			src.real_name = src.name_first + (!src.hyphenate_name ? " " : "-[src.name_middle]-") + src.name_last
 
 
 	proc/update_preview_icon()
@@ -1830,7 +1848,7 @@ var/list/removed_jobs = list(
 					src.copy_to(character, user, TRUE) // apply the other stuff again but with the random name
 
 		//character.real_name = real_name
-		src.real_name = src.name_first + " " + src.name_last
+		src.set_real_name()
 		character.real_name = src.real_name
 		phrase_log.log_phrase("name-human", character.real_name, no_duplicates=TRUE)
 
@@ -1864,14 +1882,14 @@ var/list/removed_jobs = list(
 				H.voice_type = H.mutantrace.voice_override
 
 	proc/apply_post_new_stuff(mob/living/character, var/role_for_traits)
-		for (var/slot_id in src.custom_parts)
-			var/part_id = src.custom_parts[slot_id]
-			var/datum/part_customization/customization = get_part_customization(part_id)
-			customization.try_apply(character, src.custom_parts)
 		if (src.traitPreferences.isValid(src.traitPreferences.traits_selected, src.custom_parts) && character.traitHolder)
 			character.traitHolder.mind_role_fallback = role_for_traits
 			for (var/T in src.traitPreferences.traits_selected)
 				character.traitHolder.addTrait(T)
+		for (var/slot_id in src.custom_parts)
+			var/part_id = src.custom_parts[slot_id]
+			var/datum/part_customization/customization = get_part_customization(part_id)
+			customization.try_apply(character, src.custom_parts)
 
 	proc/sanitize_null_values()
 		if (!src.gender || !(src.gender == MALE || src.gender == FEMALE))

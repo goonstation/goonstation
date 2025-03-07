@@ -332,11 +332,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				/*if(istype(current_reagent, /datum/reagent/disease))
 					target_reagents.add_reagent_disease(current_reagent, (transfer_amt * multiplier), current_reagent.data, current_reagent.temperature)
 				else*/
-				target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, !update_target_reagents)
+				target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, TRUE, TRUE)
 
 				current_reagent.on_transfer(src, target_reagents, receive_amt)
 
-				src.remove_reagent(reagent_id, transfer_amt, update_self_reagents, update_self_reagents)
+				src.remove_reagent(reagent_id, transfer_amt, FALSE, FALSE)
 		else //Only transfer one reagent
 			var/CI = 1
 			for(var/reagent_id in reagent_list)
@@ -345,26 +345,29 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				if ( CI++ == index )
 					var/datum/reagent/current_reagent = reagent_list[reagent_id]
 					if (isnull(current_reagent) || current_reagent.volume == 0)
-						return 0
+						break
 					var/transfer_amt = min(current_reagent.volume,amount)
 					var/receive_amt = transfer_amt * multiplier
-					target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, !update_target_reagents)
+					target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, TRUE, TRUE)
 					current_reagent.on_transfer(src, target_reagents, receive_amt)
-					src.remove_reagent(reagent_id, transfer_amt, update_self_reagents, update_self_reagents)
-					return 0
+					src.remove_reagent(reagent_id, transfer_amt, FALSE, FALSE)
+					break
 
 		if (update_self_reagents)
 			src.update_total()
+			src.temperature_react()
 			src.handle_reactions()
 			// this was missing. why was this missing? i might be breaking the shit out of something here
-			reagents_changed()
+			src.reagents_changed()
 
 		if (!target_reagents) // on_transfer may murder the target, see: nitroglycerin
 			return amount
 
 		if (update_target_reagents)
 			target_reagents.update_total()
+			target_reagents.temperature_react()
 			target_reagents.handle_reactions()
+			target_reagents.reagents_changed(TRUE)
 
 		reagents_transferred()
 		return amount
@@ -764,7 +767,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 						if(ismob(A) && !isobserver(A))
 							//SPAWN(0)
 								//if (current_reagent) //This is in a spawn. Between our first check and the execution, this may be bad.
-							if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction, paramslist))
+							if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction, paramslist, current_reagent.volume*volume_fraction))
 								.+= current_id
 						if(isturf(A))
 							//SPAWN(0)
@@ -951,7 +954,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	/// returns text description of reagent(s)
 	/// plus exact text of reagents if using correct equipment
 	proc/get_description(mob/user, rc_flags=0)
-		if (rc_flags == 0)	// Report nothing about the reagents in this case
+		if (rc_flags == 0 || !user.sight_check(1))	// Report nothing about the reagents in this case
 			return null
 
 		if (length(reagent_list))

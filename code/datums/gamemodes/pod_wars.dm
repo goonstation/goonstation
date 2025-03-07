@@ -417,8 +417,8 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 	..()
 
-datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars_team/our_team, var/datum/pod_wars_team/enemy_team)
-	our_team.change_points(-1)
+/datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars_team/our_team, var/datum/pod_wars_team/enemy_team)
+	our_team.change_points(-0.5)
 	var/nt_death = world.load_intra_round_value("nt_death")
 	var/sy_death = world.load_intra_round_value("sy_death")
 	if(isnull(nt_death))
@@ -826,7 +826,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	maxhealth = 100
 	anchored = UNANCHORED
 	var/weapon_type = /obj/item/shipcomponent/mainweapon/phaser/short
-	speed = 1.7
+	speedmod = 0.59
 
 	New()
 		..()

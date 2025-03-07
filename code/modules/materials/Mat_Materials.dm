@@ -791,7 +791,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "negativematter"
 	name = "negative matter"
 	desc = "It seems to repel matter."
-	color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
+	color = COLOR_MATRIX_INVERSE
 
 	New()
 		..()
@@ -930,7 +930,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/plasmastone())
 		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/plasmastone())
-		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/plasmastone_on_hit())
+		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/plasmastone())
 
 
 /datum/material/crystal/plasmaglass
@@ -1751,10 +1751,12 @@ ABSTRACT_TYPE(/datum/material/fabric)
 
 	New()
 		..()
-		setProperty("flammable", 2)
-		setProperty("density", 2)
+		setProperty("electrical", 4)
+		setProperty("thermal", 4)
 		setProperty("hard", 2)
-		setProperty("thermal", 1)
+		setProperty("density", 2)
+		setProperty("flammable", 3)
+		setProperty("chemical", 4)
 
 /datum/material/fabric/hauntium
 	mat_id = "hauntium"

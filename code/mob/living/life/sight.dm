@@ -66,6 +66,10 @@
 
 				robot_owner.sight &= ~SEE_OBJS
 				robot_owner.see_in_dark = SEE_DARK_FULL
+			if(hivebot_owner)
+				hivebot_owner.see_invisible = INVIS_CLOAK
+			if(ai_mainframe_owner)
+				ai_mainframe_owner.see_invisible = INVIS_CLOAK
 ////Ship sight
 		if (istype(owner.loc, /obj/machinery/vehicle))
 			var/obj/machinery/vehicle/ship = owner.loc
@@ -139,8 +143,8 @@
 			if (owner.see_in_dark < initial(owner.see_in_dark) + 1)
 				owner.see_in_dark++
 			owner.render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (owner.client?.widescreen))
-			if (owner.see_invisible < INVIS_INFRA)
-				owner.see_invisible = INVIS_INFRA
+			if (owner.see_invisible < INVIS_MESON)
+				owner.see_invisible = INVIS_MESON
 
 		if (human_owner)////Glasses handled separately because i dont have a fast way to get glasses on any mob type
 			if (istype(human_owner.glasses, /obj/item/clothing/glasses/construction) && (T && !isrestrictedz(T.z)))

@@ -26,6 +26,7 @@
 		"hemophilia",
 		"nohair",
 		"nowig",
+		"infrared",
 	)
 
 	var/list/traitData = list()
@@ -296,24 +297,13 @@
 	onRemove(mob/owner)
 		owner.bioHolder?.RemoveEffect("deaf")
 
-/datum/trait/nolegs
-	name = "Stumped"
-	desc = "Because of a freak accident involving a piano, a forklift, and lots of vodka, both of your legs had to be amputated. Fortunately, NT has kindly supplied you with a wheelchair out of the goodness of their heart. (due to regulations)"
-	id = "nolegs"
-	icon_state = "stumped"
-	category = list("body")
-	points = 0
-	disability_type = TRAIT_DISABILITY_MAJOR
-	disability_name = "Legless"
-	disability_desc = "Legs have been severed"
-
 /datum/trait/plasmalungs
 	name = "Plasma Lungs"
 	desc = "You signed up for a maintenance experiment involving someone who was definitely a scientist and your lungs are now only capable of breathing in plasma. At least they gave you a free tank to breathe from."
 	id = "plasmalungs"
 	icon_state = "plasmalungs"
 	category = list("body")
-	points = 1
+	points = 2
 	afterlife_blacklisted = TRUE
 	disability_type = TRAIT_DISABILITY_MAJOR
 	disability_name = "Plasma Lungs"
@@ -504,7 +494,7 @@
 	id = "infravision"
 	icon_state = "infravisionG"
 	points = -1
-	category = list("vision")
+	category = list("vision", "infrared")
 
 /datum/trait/wasitsomethingisaid
 	name = "Was It Something I Said?"
@@ -669,6 +659,13 @@
 	points = 0
 	category = list("trinkets", "nopug","nowig")
 
+/datum/trait/wheelchair
+	name = "Wheelchair"
+	desc = "Because of a freak accident involving a piano, a forklift, and lots of vodka, you have been placed on the disability list. Fortunately, NT has kindly supplied you with a wheelchair out of the goodness of their heart. (due to regulations)"
+	id = "wheelchair"
+	icon_state = "stumped"
+	category = list("trinkets")
+	points = 0
 
 // Skill - White Border
 
@@ -802,8 +799,8 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 	onAdd(var/mob/owner)
 		owner.AddComponent(/datum/component/death_confetti)
-		owner.bioHolder?.AddEffect("accent_comic", magical = TRUE)
-		owner.bioHolder?.AddEffect("clumsy", magical = TRUE)
+		owner.bioHolder?.AddEffect("accent_comic", innate = TRUE)
+		owner.bioHolder?.AddEffect("clumsy", innate = TRUE)
 
 /datum/trait/job/mime
 	name = "Mime Training"
@@ -811,8 +808,8 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "training_mime"
 
 	onAdd(var/mob/owner)
-		owner.bioHolder?.AddEffect("mute", magical = TRUE)
-		owner.bioHolder?.AddEffect("blankman", magical = TRUE)
+		owner.bioHolder?.AddEffect("mute", innate = TRUE)
+		owner.bioHolder?.AddEffect("blankman", innate = TRUE)
 
 /datum/trait/job/miner
 	name = "Miner Training"
@@ -1190,6 +1187,7 @@ TYPEINFO(/datum/trait/partyanimal)
 		if(probmult(0.01))
 			owner.setStatus("burning", 100 SECONDS, 60 SECONDS)
 			playsound(owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+			logTheThing(LOG_COMBAT, owner, "gets set on fire by their spontaneous combustion trait")
 			owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> suddenly bursts into flames!"))
 
 /datum/trait/carpenter
@@ -1297,7 +1295,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "You are an abhorrent humanoid reptile, cold-blooded and ssssibilant."
 	id = "lizard"
 	points = -1
-	category = list("species")
+	category = list("species", "infrared")
 	mutantRace = /datum/mutantrace/lizard
 
 /datum/trait/cow
@@ -1324,7 +1322,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "One space-morning, on the shuttle-ride to the station, you found yourself transformed in your seat into a horrible vermin. A cockroach, specifically."
 	id = "roach"
 	points = -1
-	category = list("species")
+	category = list("species", "infrared")
 	mutantRace = /datum/mutantrace/roach
 
 /datum/trait/pug
@@ -1390,7 +1388,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	icon_state = "hair"
 
 	onAdd(mob/owner)
-		owner.bioHolder.AddEffect("hair_growth", magical = TRUE)
+		owner.bioHolder.AddEffect("hair_growth", innate = TRUE)
 
 	onRemove(mob/owner)
 		owner.bioHolder.RemoveEffect("hair_growth")

@@ -319,6 +319,7 @@ var/list/admin_verbs = list(
 		// moved down from coder. shows artists, atmos etc
 		/client/proc/SetInfoOverlay,
 		/client/proc/SetInfoOverlayAlias,
+		/client/proc/show_mining_map,
 
 		),
 
@@ -434,6 +435,7 @@ var/list/admin_verbs = list(
 		/client/proc/set_round_req_bypass,
 		/client/proc/test_spacebee_command,
 		/client/proc/delete_landmarks,
+		/client/proc/admin_minimap,
 		),
 
 	7 = list(
@@ -2356,6 +2358,9 @@ var/list/fun_images = list()
 		if ("Activate Artifact")
 			var/obj/object = A
 			object.ArtifactActivated()
+		if ("Object Speak")
+			var/obj/object = A
+			object.admin_command_obj_speak()
 
 	src.update_cursor()
 

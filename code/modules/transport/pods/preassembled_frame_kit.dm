@@ -110,7 +110,10 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 	var/datum/action/bar/icon/callback/action_bar
 
 	if (I)
-		action_bar = new /datum/action/bar/icon/callback(user, src, src.step_build_time, \
+		var/duration = src.step_build_time
+		if (user?.traitHolder?.hasTrait("training_engineer") || istype(ticker?.mode, /datum/game_mode/pod_wars))
+			duration /= 2
+		action_bar = new /datum/action/bar/icon/callback(user, src, duration, \
 			/obj/structure/preassembeled_vehicleframe/proc/step_wrench_1, \
 			list(user), I.icon, I.icon_state, null, null)
 		action_bar.maximum_range = 2

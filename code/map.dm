@@ -132,7 +132,7 @@ var/global/list/mapNames = list(
 	var/window_layer_south = null
 	var/auto_windows = FALSE
 
-	var/ext_airlocks = /obj/machinery/door/airlock/external
+	var/ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	var/airlock_style = "gannets"
 
 	var/escape_centcom = /area/shuttle/escape/centcom
@@ -267,7 +267,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_centcom = null
@@ -299,7 +298,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = SOUTH
@@ -332,7 +330,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = NORTH
@@ -378,7 +375,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = SOUTH
@@ -445,7 +441,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = EAST
@@ -602,7 +597,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = EAST
@@ -651,7 +645,6 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	windows = /obj/window/auto
@@ -685,6 +678,8 @@ var/global/list/mapNames = list(
 	if(!station_repair.station_generator && prob(66))
 		if( !mapSwitcher.thisMapWasVotedFor )
 			logTheThing(LOG_DEBUG, null, "Automatic Atlas Terrainify skipped due to unvoted map change")
+			for_by_tcl(spawner, /obj/eva_suit_spawner)
+				spawner.spawn_gear()
 			return
 
 		var/list/terrainify_options = list(/datum/terrainify/caveify,
@@ -693,6 +688,8 @@ var/global/list/mapNames = list(
 										/datum/terrainify/forestify,
 										/datum/terrainify/desertify)
 		var/datum/terrainify/T = pick(terrainify_options)
+		for_by_tcl(spawner, /obj/eva_suit_spawner)
+			spawner.spawn_gear(T)
 		T = new T()
 		var/terrain_params = T.get_default_params()
 
@@ -708,6 +705,9 @@ var/global/list/mapNames = list(
 #if defined(LIVE_SERVER)
 		T.perform_terrainify(terrain_params, src)
 #endif
+	else
+		for_by_tcl(spawner, /obj/eva_suit_spawner)
+			spawner.spawn_gear()
 
 
 /datum/map_settings/destiny
@@ -727,7 +727,6 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	windows = /obj/window/auto
@@ -827,7 +826,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = EAST
@@ -884,7 +882,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = EAST
@@ -935,7 +932,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 	shuttle_map_turf = /turf/space/fluid/manta
 
@@ -977,7 +973,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = EAST
@@ -1083,7 +1078,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = EAST
@@ -1113,7 +1107,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	default_shuttle = "east_density"
@@ -1158,7 +1151,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = EAST
@@ -1201,8 +1193,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
-
 	escape_dir = EAST
 
 	merchant_left_centcom = null
@@ -1233,7 +1223,6 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	windows = /obj/window/auto

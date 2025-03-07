@@ -88,7 +88,7 @@
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W, /obj/item/pen)) // write on it
 			ui_interact(user)
-		else if((iscuttingtool(W) || issnippingtool(W)) && user.a_intent == INTENT_HELP && src.attached) // remove attached paper from artifact
+		else if((iscuttingtool(W) || issnippingtool(W)) && user.a_intent == INTENT_HELP && src.attached && !ismob(src.attached)) // remove attached paper from artifact
 			boutput(user, "You manage to scrape \the [src] off of \the [src.attached].")
 			src.remove_from_attached()
 			src.add_fingerprint(user)

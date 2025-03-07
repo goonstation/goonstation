@@ -10660,6 +10660,10 @@
 /obj/table/wood/auto,
 /obj/item/disk/data/cartridge/captain,
 /obj/item/disk/data/cartridge/captain,
+/obj/item/paper/pipebombs{
+	pixel_y = 5;
+	pixel_x = 5
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "bmn" = (
@@ -20609,10 +20613,10 @@
 	},
 /area/station/hallway/secondary/entry)
 "iKs" = (
-/obj/critter/opossum/morty,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "iKt" = (
@@ -21561,7 +21565,7 @@
 /obj/cable/blue{
 	icon_state = "0-6"
 	},
-/obj/machinery/computer/bank_data,
+/obj/machinery/computer3/generic/bank_data,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "jBD" = (
@@ -23148,7 +23152,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -37475,7 +37479,7 @@
 /area/station/hallway/primary/south)
 "vjs" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 4
 	},
 /obj/cable{

@@ -645,10 +645,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		name = "warm donk-pocket"
 		warm = DONK_WARM
 
-		New()
-			..()
+	New()
+		..()
+		if (src.warm)
 			src.cooltime()
-			return
 
 	heal(var/mob/M)
 		if(src.warm == DONK_SCALDING)
@@ -940,7 +940,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			name = "[random_spaghetti_name()] noodles"
 
 	attackby(obj/item/W, mob/user)
-		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/ketchup) && icon_state == "spag_plain" )// don't forget, other shit inherits this too!
+		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/ketchup) && icon_state == /obj/item/reagent_containers/food/snacks/spaghetti::icon_state)// don't forget, other shit inherits this too!
 			boutput(user, SPAN_NOTICE("You create [random_spaghetti_name()] with tomato sauce..."))
 			var/obj/item/reagent_containers/food/snacks/spaghetti/sauce/D
 			if (user.mob_flags & IS_BONEY)
@@ -971,7 +971,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			return ..()
 
 	heal(var/mob/M) // ditto goddammit - arrabiata is not fuckin bland you dorks
-		if (icon_state == "spag_plain")
+		if (icon_state == /obj/item/reagent_containers/food/snacks/spaghetti::icon_state)
 			boutput(M, SPAN_ALERT("This is really bland."))
 		. = ..()
 
@@ -1393,6 +1393,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon_state = "mushroom-magic"
 	food_color = "#A76933"
 	heal_amt = 1
+
+/obj/item/reagent_containers/food/snacks/mushroom/psilocybin/spawnable
+	initial_reagents = list("psilocybin" = 40)
 
 /obj/item/reagent_containers/food/snacks/mushroom/cloak
 	name = "space mushroom"
@@ -2009,6 +2012,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 /obj/item/reagent_containers/food/snacks/omelette/bee
 	name = "deep-space hell omelette"
 	desc = "<tt>BEE EGGS</tt> make this a delightful breakfast food."
+	icon_state = "hell-omelette"
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 /obj/item/reagent_containers/food/snacks/pancake

@@ -35,7 +35,12 @@
 	var/weapon_class = 0 //what weapon class a ship is
 	var/powercapacity = 0 //How much power the ship's components can use, set by engine
 	var/powercurrent = 0 //How much power the components are using
-	var/speed = 1 //FOR PODS : While holding thruster, how much to add on to our max speed. Does nothing for tanks.
+	/// multiplicative ship speed modification
+	var/speedmod = 1
+	/// acceleration modification provided by afterburner if installed
+	var/afterburner_accel_mod = 1
+	/// speed modification provided by afterburner if installed
+	var/afterburner_speed_mod = 1
 	var/stall = 0 // slow the ship down when firing
 	var/flying = 0 // holds the direction the ship is currently drifting, or 0 if stopped
 	var/facing = SOUTH // holds the direction the ship is currently facing
@@ -184,6 +189,9 @@
 
 		..()
 
+		if (W.force)
+			ON_COOLDOWN(src, "in_combat", 5 SECONDS)
+
 		attack_particle(user,src)
 		playsound(src.loc, W.hitsound, 50, 1, -1)
 		hit_twitch(src)
@@ -215,11 +223,29 @@
 
 //each pod part is a var so we have to macro this, yegh
 #define EJECT_PART(part) \
-	part.deactivate(); \
-	src.components -= part; \
+	src.eject_part(part); \
 	usr.put_in_hand_or_drop(part); \
-	part = null; \
+	src.null_part(part); \
 	src.updateDialog()
+
+	/// finds the part in the ship's parts and nulls it
+	proc/null_part(obj/item/shipcomponent/part)
+		if (part == src.engine)
+			src.engine = null
+		else if (part == src.lock)
+			src.lock = null
+		else if (part == src.life_support)
+			src.life_support = null
+		else if (part == src.com_system)
+			src.com_system = null
+		else if (part == src.m_w_system)
+			src.m_w_system = null
+		else if (part == src.sec_system)
+			src.sec_system = null
+		else if (part == src.sensors)
+			src.sensors = null
+		else if (part == src.lights)
+			src.lights = null
 
 	Topic(href, href_list)
 		if (is_incapacitated(usr) || usr.restrained())
@@ -360,7 +386,7 @@
 						return
 					logTheThing(LOG_VEHICLE, usr, "ejects the main weapon system ([src.m_w_system]) from [src] at [log_loc(src)]")
 					if (uses_weapon_overlays && m_w_system.appearanceString)
-						src.overlays -= image('icons/effects/64x64.dmi', "[m_w_system.appearanceString]")
+						src.UpdateOverlays(null, "mainweapon")
 					EJECT_PART(src.m_w_system)
 
 			else if (href_list["unloco"])
@@ -448,17 +474,27 @@
 
 #undef EJECT_PART
 
+	proc/eject_part(obj/item/shipcomponent/part, give_message = TRUE)
+		part.deactivate(give_message)
+		part.set_loc(get_turf(src))
+		src.components -= part
+
 	proc/AmmoPerShot()
 		return 1
 
-	proc/ShootProjectiles(var/mob/user, var/datum/projectile/PROJ, var/shoot_dir)
-		var/obj/projectile/P = shoot_projectile_DIR(src, PROJ, shoot_dir)
+	proc/ShootProjectiles(var/mob/user, var/datum/projectile/PROJ, var/shoot_dir, spread = -1)
+		var/obj/projectile/P
+		if (spread == -1)
+			P = shoot_projectile_DIR(src, PROJ, shoot_dir)
+		else
+			P = shoot_projectile_relay_pixel_spread(src, PROJ, get_step(src, shoot_dir), spread_angle = spread)
 		P.mob_shooter = user
 		if (src.m_w_system?.muzzle_flash)
 			muzzle_flash_any(src, dir_to_angle(shoot_dir), src.m_w_system.muzzle_flash)
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		. = 'sound/impact_sounds/Metal_Clang_3.ogg'
+		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
 		if (isitem(AM))
 			var/obj/item/I = AM
 			switch(I.hit_type)
@@ -481,11 +517,13 @@
 		if (!P.proj_data)
 			return
 
+		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
+
 		log_shot(P, src)
 
 		src.material_trigger_on_bullet(src, P)
 
-		var/damage = round(P.power, 1.0)
+		var/damage = src.calculate_shielded_dmg(round(P.power, 1.0))
 
 		var/hitsound = null
 
@@ -539,6 +577,7 @@
 		*/
 
 	blob_act(var/power)
+		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
 		src.health -= power * 3
 		checkhealth()
 
@@ -548,13 +587,19 @@
 			var/t_ind = clamp(round(keyed/10), 0, 10)
 			. += "It has been keyed [keyed] time[s_es(keyed)]! [t_ind ? t[t_ind] : null]"
 
+	proc/calculate_shielded_dmg(dmg)
+		if (!istype(src.sec_system, /obj/item/shipcomponent/secondary_system/shielding))
+			return dmg
+		var/obj/item/shipcomponent/secondary_system/shielding/shielding_comp = src.sec_system
+		return shielding_comp.process_incoming_dmg(dmg)
+
 	proc/paint_pod(var/obj/item/pod/paintjob/P as obj, var/mob/user as mob)
 		if (!P || !istype(P))
 			return
 		if (user)
 			user.show_text("You paint [src].", "blue")
 			user.u_equip(P)
-		src.overlays += image(src.icon, P.pod_skin)
+		src.UpdateOverlays(image(src.icon, P.pod_skin), "skin")
 		qdel(P)
 		return
 
@@ -582,10 +627,12 @@
 					S.disrupted = FALSE
 
 	emp_act()
+		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
 		src.disrupt(10)
 		return
 
 	ex_act(severity)
+		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
 		if (sec_system)
 			if (sec_system.type == /obj/item/shipcomponent/secondary_system/crash)
 				if (sec_system:crashable)
@@ -597,16 +644,13 @@
 
 		switch (severity)
 			if (1)
-				src.health -= round(src.maxhealth / 3)
-				src.health -= 65
+				src.health -= src.calculate_shielded_dmg(round(src.maxhealth / 3) + 65)
 				checkhealth()
 			if(2)
-				src.health -= round(src.maxhealth / 4)
-				src.health -= 40
+				src.health -= src.calculate_shielded_dmg(round(src.maxhealth / 4) + 40)
 				checkhealth()
 			if(3)
-				src.health -= round(src.maxhealth / 5)
-				src.health -= 25
+				src.health -= src.calculate_shielded_dmg(round(src.maxhealth / 5) + 25)
 				checkhealth()
 
 	proc/get_move_velocity_magnitude()
@@ -614,6 +658,8 @@
 
 	bump(var/atom/target)
 		if (get_move_velocity_magnitude() > 5)
+			ON_COOLDOWN(src, "in_combat", 5 SECONDS)
+
 			var/power = get_move_velocity_magnitude()
 
 			src.health -= min(power * ram_self_damage_multiplier,10)
@@ -690,7 +736,8 @@
 		return
 
 	meteorhit(var/obj/O as obj)
-		src.health -= 50
+		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
+		src.health -= src.calculate_shielded_dmg(50)
 		checkhealth()
 
 	Move(NewLoc,Dir=0,step_x=0,step_y=0)
@@ -735,21 +782,20 @@
 		..()
 
 	process(mult)
-		if(sec_system)
-			if(sec_system.active)
-				sec_system.run_component()
-			if(src.engine && engine.active)
-				var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
-				var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)
-				var/toxins = consumed?.toxins
-				if(isnull(toxins))
-					toxins = 0
+		if(sec_system?.active)
+			sec_system.run_component(mult)
+		if(src.engine && engine.active)
+			var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
+			var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)
+			var/toxins = consumed?.toxins
+			if(isnull(toxins))
+				toxins = 0
 
-				if(usage)
-					src.myhud?.update_fuel()
-					if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
-						engine.deactivate()
-				consumed?.dispose()
+			if(usage)
+				src.myhud?.update_fuel()
+				if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
+					engine.deactivate()
+			consumed?.dispose()
 
 #ifdef MAP_OVERRIDE_NADIR
 		if(src.acid_damage_multiplier > 0)
@@ -783,7 +829,7 @@
 						particleMaster.SpawnSystem(new /datum/particleSystem/areaSmoke("#CCCCCC", 50, src))
 						damage_overlays = 2
 						fire_overlay = image('icons/effects/64x64.dmi', "pod_fire")
-						src.overlays += fire_overlay
+						src.UpdateOverlays(fire_overlay, "fire")
 						for(var/mob/living/carbon/human/M in src)
 							M.update_burning(35)
 							boutput(M, SPAN_ALERT("<b>The cabin bursts into flames!</b>"))
@@ -792,15 +838,15 @@
 					if(damage_overlays < 1)
 						damage_overlays = 1
 						damage_overlay = image('icons/effects/64x64.dmi', "pod_damage")
-						src.overlays += damage_overlay
+						src.UpdateOverlays(damage_overlay, "damage")
 				if(50 to INFINITY)
 					if (damage_overlays)
 						if(damage_overlays == 2)
-							src.overlays -= fire_overlay
-							src.overlays -= damage_overlay
+							src.UpdateOverlays(null, "fire")
+							src.UpdateOverlays(null, "damage")
 							fire_overlay = null
 						else if(damage_overlays == 1)
-							src.overlays -= damage_overlay
+							src.UpdateOverlays(null, "damage")
 						damage_overlays = 0
 						damage_overlay = null
 
@@ -816,6 +862,7 @@
 /// Callback for welding repair actionbar
 /obj/machinery/vehicle/proc/weld_action(mob/user)
 	src.health += 30
+	src.delStatus("pod_corrosion")
 	src.checkhealth()
 	src.add_fingerprint(user)
 	src.visible_message(SPAN_ALERT("[user] has fixed some of the dents on [src]!"))
@@ -852,7 +899,7 @@
 ///////////////////////////////////////////////////////////////////////////
 ////////Install Ship Part////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
-/obj/machinery/vehicle/proc/Install(obj/item/shipcomponent/S as obj)
+/obj/machinery/vehicle/proc/Install(obj/item/shipcomponent/S as obj, give_feedback = TRUE)
 	switch(S.system)
 		if("Engine")
 			if(!src.engine)
@@ -891,9 +938,9 @@
 					return
 				m_w_system = S
 				if(uses_weapon_overlays && m_w_system.appearanceString)
-					src.overlays += image('icons/effects/64x64.dmi', "[m_w_system.appearanceString]")
+					src.UpdateOverlays(image('icons/effects/64x64.dmi', "[m_w_system.appearanceString]"), "mainweapon")
 
-				m_w_system.activate()
+				m_w_system.activate(give_feedback)
 			else
 				boutput(usr, "That system already has a part!")
 				return
@@ -912,7 +959,8 @@
 	S.ship = src
 	if (usr) //This mean it's going on during the game!
 		usr.drop_item(S)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 0)
+		if (give_feedback)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 0)
 	S.set_loc(src)
 	myhud.update_systems()
 	myhud.update_states()
@@ -992,7 +1040,7 @@
 	else
 		src.ion_trail?.stop()
 
-	logTheThing(LOG_VEHICLE, ejectee, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
+	logTheThing(LOG_VEHICLE, ejectee, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b> at [log_loc(src)]")
 
 /obj/machinery/vehicle/proc/leave_pod(mob/ejectee as mob)
 	// Assert facing direction for eject location offset
@@ -1105,7 +1153,7 @@
 
 	boutput(M, SPAN_HINT("You can also use the Space Bar to fire!"))
 
-	logTheThing(LOG_VEHICLE, M, "enters vehicle: <b>[constructTarget(src.name,"vehicle")]</b>")
+	logTheThing(LOG_VEHICLE, M, "enters vehicle: <b>[constructTarget(src.name,"vehicle")]</b> at [log_loc(src)]")
 
 /obj/machinery/vehicle/proc/eject_occupants()
 	if(isghostdrone(usr))
@@ -1779,6 +1827,7 @@
 
 // make ships less destructive (maybe depends on Mass and Speed?)
 
+ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 /obj/machinery/vehicle/tank
 	name = "tank"
 	icon = 'icons/obj/machines/8dirvehicles.dmi'
@@ -1789,7 +1838,7 @@
 	uses_weapon_overlays = 0
 	health = 100
 	maxhealth = 100
-	speed = 0 // speed literally does nothing? what??
+	speedmod = 0 // speed literally does nothing? what??
 	stall = 0 // slow the ship down when firing
 	weapon_class = 1
 
@@ -1818,7 +1867,7 @@
 				var/obj/machinery/vehicle/tank/T = src
 				if (!T.locomotion)
 					T.locomotion = S
-					T.overlays += image('icons/obj/machines/8dirvehicles.dmi', "[body_type]_[locomotion.appearanceString]")
+					T.UpdateOverlays(image('icons/obj/machines/8dirvehicles.dmi', "[body_type]_[locomotion.appearanceString]"), "locomotion")
 				else
 					if (usr) //Occuring during gameplay
 						boutput(usr, "That system already has a part!")
@@ -1833,7 +1882,7 @@
 		if (src.locomotion)
 			locomotion.deactivate()
 			components -= locomotion
-			src.overlays -= image('icons/obj/machines/8dirvehicles.dmi', "[body_type]_[locomotion.appearanceString]")
+			src.UpdateOverlays(null, "locomotion")
 			locomotion.set_loc(src.loc)
 			locomotion = null
 
@@ -1978,7 +2027,7 @@
 	health = 60
 	maxhealth = 60
 	weapon_class = 1
-	speed = 5
+	speedmod = 0.2
 	var/fail_type = 0
 	var/launched = 0
 	var/steps_moved = 0

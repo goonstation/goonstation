@@ -27,6 +27,7 @@
 
 			boutput(user, "You plant the [src] on the [A].")
 			logTheThing(LOG_STATION, user, "plants [src] (kudzu) at [log_loc(src)].")
+			user.setStatus("kudzuwalk", INFINITE_STATUS)
 			message_admins("[key_name(user)] planted kudzu at [log_loc(src)].")
 			message_ghosts("<b>Kudzu</b> has been planted at [log_loc(src.loc, ghostjump=TRUE)].")
 			user.u_equip(src)
@@ -120,14 +121,23 @@
 			if (21 to INFINITY) flavor = "vivacious"
 		return "[..()] It looks [flavor]."
 
+	proc/can_kudzu_walk(atom/A)
+		return ishuman(A) && istype(A:mutantrace, /datum/mutantrace/kudzu) || A.hasStatus("kudzuwalk")
+
 	Cross(atom/A)
 		//kudzumen can pass through dense kudzu
 		if (current_stage == 3)
-			if (ishuman(A) &&  istype(A:mutantrace, /datum/mutantrace/kudzu))
-				animate_door_squeeze(A)
+			if (src.can_kudzu_walk(A))
 				return 1
 			return 0
 		return 1
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		if (current_stage == 3 && src.can_kudzu_walk(AM))
+			animate_door_squeeze(AM)
+			if(!ON_COOLDOWN(AM, "kudzuwalk", 1 SECOND))
+				playsound(AM.loc, 'sound/impact_sounds/Bush_Hit.ogg', 45, 1)
 
 	New(turf/loc, var/to_spread = KUDZU_TO_SPREAD_INITIAL)
 		src.to_spread = to_spread

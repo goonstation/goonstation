@@ -169,10 +169,22 @@ proc/filter_carrier_pets(var/type)
 	player_can_spawn_with_pet = TRUE
 	var/attack_damage = 3
 	var/use_custom_color = TRUE
+	var/shiny_chance = 4096 ///One in this chance of being shiny
+	var/is_shiny = FALSE
 
 	New()
 		..()
-		fur_color =	pick("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D","#D8C078", "#E3CC88", "#F2DA91", "#F21AE", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
+		if(src.shiny_chance && (rand(1, src.shiny_chance) == 1))
+			src.real_name = "shiny [src.name]"
+			src.fur_color = "#aeff45"
+			src.icon_state = "mouse-shiny"
+			src.icon_state_dead = "mouse-shiny-dead"
+			src.use_custom_color = FALSE
+			src.name = src.real_name
+			src.is_shiny = TRUE
+			src.desc += " This one seems rare."
+		else
+			fur_color =	pick("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D","#D8C078", "#E3CC88", "#F2DA91", "#F21AE", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
 		eye_color = "#FFFFF"
 		setup_overlays()
 		src.bioHolder.AddNewPoolEffect("albinism", scramble=TRUE)
@@ -295,6 +307,7 @@ proc/filter_carrier_pets(var/type)
 /mob/living/critter/small_animal/mouse/mad/rat_den
 	var/obj/machinery/wraith/rat_den/linked_den = null
 	player_can_spawn_with_pet = FALSE
+	shiny_chance = 0
 
 	death()
 		if(linked_den?.linked_critters > 0)
@@ -314,6 +327,7 @@ proc/filter_carrier_pets(var/type)
 	ai_type = /datum/aiHolder/mouse_remy
 	use_custom_color = FALSE
 	player_can_spawn_with_pet = FALSE
+	shiny_chance = 0
 
 	New()
 		. = ..()
@@ -746,10 +760,14 @@ proc/filter_carrier_pets(var/type)
 	random_look = TRUE
 	name_list = "names/cats.txt"
 	player_can_spawn_with_pet = TRUE
+	sound_scream = 'sound/voice/animal/cat.ogg'
 	var/cattype = 1
 	var/catnip = 0
 	var/is_annoying = FALSE
 	var/attack_damage = 3
+	var/obj/item/clothing/head/hairbow/bow = null
+	///if set, only accept bows of this type
+	var/bow_type = null
 
 	New()
 		..()
@@ -762,6 +780,17 @@ proc/filter_carrier_pets(var/type)
 			src.icon_state = "cat[cattype]"
 			src.icon_state_alive = src.icon_state
 			src.icon_state_dead = "cat[cattype]-dead"
+
+
+	update_body(...)
+		. = ..()
+		if (src.bow)
+			src.UpdateOverlays(image('icons/misc/critterbowtie.dmi', src.bow_icon_state()), "bowtie")
+		else
+			src.ClearSpecificOverlays("bowtie")
+
+	proc/bow_icon_state()
+		return "[replacetext(src.bow.icon_state, "hbow", "bowtie")][isdead(src) ? "-dead" : ""]"
 
 	setup_hands()
 		..()
@@ -787,6 +816,19 @@ proc/filter_carrier_pets(var/type)
 			src.catnip_effect()
 			user.u_equip(W)
 			qdel(W)
+		else if (istype(W, /obj/item/clothing/head/hairbow))
+			if (src.bow_type && !istype(W, src.bow_type))
+				boutput(user, "[src] gives you a withering look and refuses the bow. Perhaps they'd prefer a different color?")
+				return
+			var/oldbow = src.bow
+
+			user.drop_item(W)
+			src.bow = W
+			W.set_loc(src)
+			src.update_body()
+
+			if (oldbow)
+				user.put_in_hand_or_drop(oldbow)
 		else
 			..()
 
@@ -857,7 +899,7 @@ proc/filter_carrier_pets(var/type)
 		switch (act)
 			if ("scream","meow")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/animal/cat.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, src.sound_scream, 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return SPAN_EMOTE("<b>[src]</b> meows!")
 			if ("smile","purr")
 				if (src.emote_check(voluntary, 30))
@@ -2200,6 +2242,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		START_TRACKING_CAT(TR_CAT_BUGS)
 		src.bioHolder.AddNewPoolEffect("radioactive", scramble=TRUE)
+		src.bioHolder.AddNewPoolEffect("skitter", scramble=TRUE)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_BUGS)
@@ -4336,14 +4379,20 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	void_mindswappable = FALSE
 	player_can_spawn_with_pet = FALSE
 	has_genes = FALSE
+	shiny_chance = 0
 
 	New()
 		..()
-		src.real_name = "[pick_string("mentor_mice_prefixes.txt", "mentor_mouse_prefix")] [src.name]"
+		if(src.is_shiny)
+			src.icon_state = "mouse-large-shiny"
+			src.icon_state_dead = "mouse-large-shiny-dead"
+			src.icon_state_exclaim = "mouse-large-shiny-exclaim"
+		else
+			src.real_name = "[pick_string("mentor_mice_prefixes.txt", "mentor_mouse_prefix")] [src.name]"
+			src.fur_color = "#a175cf"
 		src.name = src.real_name
 		abilityHolder.addAbility(/datum/targetable/critter/mentordisappear)
 		abilityHolder.addAbility(/datum/targetable/critter/mentortoggle)
-		src.fur_color = "#a175cf"
 
 	setup_overlays()
 		if(!src.colorkey_overlays)
@@ -4505,6 +4554,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	is_npc = FALSE
 	use_custom_color = FALSE
 	player_can_spawn_with_pet = FALSE
+	shiny_chance = 1365 //Odds with the shiny charm, because of how charming these guys are before they run you over with a truck!
 
 	New()
 		. = ..()
@@ -4558,7 +4608,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_exclaim = "snaps"
 	health_brute = 15
 	health_burn = 15
-	pet_text = list("gently pets", "rubs", "cuddles, coddles")
+	pet_text = list("gently pets", "rubs", "cuddles", "coddles")
 	player_can_spawn_with_pet = TRUE
 	var/can_hat = TRUE
 
@@ -4901,7 +4951,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				if (G.state >= GRAB_STRONG && isturf(src.loc) && isturf(G.affecting.loc))
 					src.emote("scream")
 					logTheThing(LOG_COMBAT, src, "crunches [constructTarget(G.affecting,"combat")] [log_loc(src)]")
-					M.lastattacker = src
+					M.lastattacker = get_weakref(src)
 					M.lastattackertime = world.time
 					G.affecting.TakeDamage("head", rand(2,8), 0, 0, DAMAGE_BLUNT)
 					playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1, pitch = 1.3)

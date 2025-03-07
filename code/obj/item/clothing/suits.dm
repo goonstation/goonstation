@@ -1145,7 +1145,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 				src.color = "#FFFFFF"
 
 			attackby(obj/item/dye_bottle/W, mob/user)
-				if (istype(W, /obj/item/dye_bottle))
+				if (istype(W) && W.uses_left)
+					W.use_dye()
 					src.color = W.customization_first_color
 					src.UpdateIcon()
 					var/mob/wearer = src.loc
@@ -1204,7 +1205,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		..()
 		if(!istype(get_area(src), /area/station))
 			var/nt_wear_state = "[src.wear_state || src.icon_state]-nt"
-			if(nt_wear_state in icon_states(src.wear_image_icon))
+			if(nt_wear_state in get_icon_states(src.wear_image_icon))
 				src.wear_state = nt_wear_state
 
 	setupProperties()
@@ -1476,6 +1477,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	april_fools
 		icon_state = "espace-alt"
 		item_state = "es_suit-alt"
+		wear_state = "espace-alt"
 
 /obj/item/clothing/suit/space/neon
 	name = "neon space suit"
@@ -1538,7 +1540,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		..()
 		if(!istype(get_area(src), /area/station))
 			var/nt_wear_state = "[src.wear_state || src.icon_state]-nt"
-			if(nt_wear_state in icon_states(src.wear_image_icon))
+			if(nt_wear_state in get_icon_states(src.wear_image_icon))
 				src.wear_state = nt_wear_state
 
 	setupProperties()
@@ -1591,9 +1593,6 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		icon_state = "diving_suit-eng"
 		item_state = "diving_suit-eng"
 
-TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
-	mats = 45 //should not be cheap to make at mechanics, increased from 15.
-
 /obj/item/clothing/suit/space/industrial
 #ifdef MAP_OVERRIDE_NADIR
 	desc = "Armored, immersion-tight suit. Protects from a wide gamut of environmental hazards, including radiation and explosions."
@@ -1641,6 +1640,10 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		..()
 		setProperty("space_movespeed", 0)
 
+TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
+	mats = list("metal_superdense" = 15,
+				"conductive_high" = 15,
+				"crystal_dense" = 5)
 /obj/item/clothing/suit/space/industrial/syndicate
 	name = "\improper Syndicate command armor"
 	desc = "An armored space suit, not for your average expendable chumps. No sir."
@@ -2164,22 +2167,27 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	get_desc()
 		. += "This one belongs to [badge_owner_name], the [badge_owner_job]."
 
-	attack_self(mob/user as mob)
+	proc/show_off_badge(var/mob/user, var/mob/target = null)
 		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
 			return
-		user.visible_message("[user] flashes the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
+		if (istype(target))
+			user.visible_message("[user] flashes the badge at [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge to [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
+		else
+			user.visible_message("[user] flashes the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
 		actions.start(new /datum/action/show_item(user, src, "badge"), user)
 
+	attack_self(mob/user as mob)
+		src.show_off_badge(user)
+
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
-			return
-		user.visible_message("[user] flashes the badge at [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge to [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
-		actions.start(new /datum/action/show_item(user, src, "badge"), user)
+		src.show_off_badge(user, target)
 
 /obj/item/clothing/suit/security_badge/shielded
 	name = "NTSO Tactical Badge"
 	desc = "An official badge for an NTSO operator, with a miniaturized shield projector. Small enough to be used as a backup power cell in a pinch."
 	tooltip_flags = REBUILD_ALWAYS
+	icon_state = "security_badge_shielded"
+	item_state = "security_badge_shielded"
 
 	get_desc()
 		. = ..()
@@ -2197,7 +2205,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	desc = "A piece of soggy notebook paper with a red S doodled on it, presumably to represent security."
 	icon_state = "security_badge_paper"
 
-/obj/item/clothing/suit/hosmedal
+/obj/item/clothing/suit/security_badge/hosmedal
 	name = "war medal"
 	desc = ""
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
@@ -2205,6 +2213,16 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "hosmedal"
 	icon_state = "hosmedal"
+	var/award_text = "This is a medal. There are many like it, but this one's mine."
+
+	show_off_badge(var/mob/user, var/mob/target = null)
+		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+			return
+		if (istype(target))
+			user.visible_message("[user] flashes the medal at [target.name]. It reads: <br>[SPAN_BOLD("[bicon(src)]\"[src.award_text]\".")]", "You show off the medal to [target.name]. It reads: <br>[SPAN_BOLD("[bicon(src)]\"[src.award_text]\".")]")
+		else
+			user.visible_message("[user] flashes the medal. It reads: <br>[SPAN_BOLD("[bicon(src)]\"[src.award_text]\".")]", "You show off the medal. It reads: <br>[SPAN_BOLD("[bicon(src)]\"[src.award_text]\".")]")
+		actions.start(new /datum/action/show_item(user, src, "badge", x_hand_offset = -5, y_hand_offset = -3), user)
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind?.assigned_role == "Head of Security")
@@ -2222,10 +2240,11 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	item_state = "snowcoat"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_SHOES
+	var/style = "snowcoat"
 
 	New()
 		..()
-		src.AddComponent(/datum/component/toggle_hood, hood_style = "snowcoat")
+		src.AddComponent(/datum/component/toggle_hood, hood_style = src.style)
 
 	setupProperties()
 		..()
@@ -2242,6 +2261,10 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 			setProperty("coldprot", 70)
 		else
 			setProperty("coldprot", 50)
+
+/obj/item/clothing/suit/snow/grey
+	icon_state = "snowcoat-grey"
+	style = "snowcoat-grey"
 
 /obj/item/clothing/suit/jean_jacket
 	name = "jean jacket"

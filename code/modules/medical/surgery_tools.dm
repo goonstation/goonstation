@@ -54,7 +54,7 @@ CONTAINS:
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
-		if (!scalpel_surgery(target, user))
+		if (is_special || !scalpel_surgery(target, user))
 			return ..()
 		else
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
@@ -122,7 +122,7 @@ CONTAINS:
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
-		if (!saw_surgery(target, user))
+		if (is_special || !saw_surgery(target,user))
 			return ..()
 		else
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
@@ -189,7 +189,7 @@ CONTAINS:
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
-		if (!spoon_surgery(target, user))
+		if (is_special || !spoon_surgery(target, user))
 			return ..()
 		else
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
@@ -705,6 +705,8 @@ TYPEINFO(/obj/machinery/defib_mount)
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (is_special)
+			return ..()
 		if (!suture_surgery(target,user))
 			if (ishuman(target))
 				var/mob/living/carbon/human/H = target
@@ -1070,9 +1072,15 @@ TYPEINFO(/obj/machinery/defib_mount)
 		for (var/obj/O in get_turf(src))
 			if (O.density || O.anchored || O == src)
 				continue
+			if (istype(O, /obj/storage)) // don't eat closets/crates
+				continue
+			if (istype(O, /obj/item/body_bag)) // don't eat other deployed bodybags
+				var/obj/item/body_bag/other_bag = O
+				if (other_bag.w_class == W_CLASS_BULKY)
+					continue
 			O.set_loc(src)
 		for (var/mob/M in get_turf(src))
-			if (!M.lying || M.anchored || M.buckled)
+			if (!(M.lying || (ismobcritter(M) && isdead(M))) || M.anchored || M.buckled)
 				continue
 			M.set_loc(src)
 		src.open = 0

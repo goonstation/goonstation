@@ -32,6 +32,8 @@
 	var/obj/item/clothing/preview_item
 	/// The direction that the preview mob is currently facing.
 	var/current_preview_direction = SOUTH
+	/// Store this so we can throttle getFlatIcon calls and still have something to show
+	var/icon/last_preview_icon = null
 	/// If `TRUE`, show the clothing that the occupant is currently wearing on the preview.
 	var/show_clothing = TRUE
 
@@ -79,11 +81,17 @@
 	if (src.powered())
 		src.status &= ~NOPOWER
 		src.ambient_light.enable()
+		src.icon_state = "clothingbooth-open"
 	else
 		src.status |= NOPOWER
 		src.ambient_light.disable()
+		src.remove_occupant()
+		SPAWN(2 SECONDS) // allow remove_occupant to finish animating
+			src.icon_state = "clothingbooth-off"
 
 /obj/machinery/clothingbooth/attackby(obj/item/W, mob/user)
+	if (src.status & NOPOWER)
+		return
 	var/obj/item/card/id/id_card = get_id_card(W)
 	if (istype(id_card))
 		src.process_card(user, id_card)
@@ -107,6 +115,8 @@
 	..()
 
 /obj/machinery/clothingbooth/attack_hand(mob/user)
+	if (status & NOPOWER)
+		return
 	if (!ishuman(user))
 		boutput(user, SPAN_ALERT("Human clothes don't fit you!"))
 		return
@@ -155,13 +165,14 @@
 	.["name"] = src.name
 
 /obj/machinery/clothingbooth/ui_data(mob/user)
-	var/icon/preview_icon = getFlatIcon(src.preview.preview_thing, no_anim = TRUE)
+	if (!src.last_preview_icon || !ON_COOLDOWN(src, "generate_preview_icon", 1 SECOND))
+		src.last_preview_icon = getFlatIcon(src.preview.preview_thing, no_anim = TRUE)
 	. = list(
 		"accountBalance" = src.accessed_record ? src.accessed_record["current_money"] : 0,
 		"cash" = src.cash,
 		"everythingIsFree" = src.everything_is_free,
-		"previewIcon" = icon2base64(preview_icon),
-		"previewHeight" = preview_icon.Height(),
+		"previewIcon" = icon2base64(src.last_preview_icon),
+		"previewHeight" = src.last_preview_icon.Height(),
 		"previewItem" = src.preview_item,
 		"previewShowClothing" = src.show_clothing,
 		"scannedID" = src.scanned_id,
@@ -343,6 +354,7 @@
 /obj/machinery/clothingbooth/proc/eject_contents(mob/target)
 	src.clear_preview_item()
 	src.preview.remove_all_clients()
+	src.last_preview_icon = null
 	tgui_process.close_uis(src)
 	src.reset_clothingbooth_parameters()
 	var/turf/T = get_turf(src)
@@ -400,10 +412,10 @@
 		preview_mob.vars[src.selected_grouping.slot] = src.preview_item //hehe hoohoo
 	var/datum/human_limbs/preview_mob_limbs = preview_mob.limbs
 	// Get those limbs!
-	preview_mob_limbs.replace_with("l_arm", src.occupant.limbs.l_arm.type, src.occupant)
-	preview_mob_limbs.replace_with("r_arm", src.occupant.limbs.r_arm.type, src.occupant)
-	preview_mob_limbs.replace_with("l_leg", src.occupant.limbs.l_leg.type, src.occupant)
-	preview_mob_limbs.replace_with("r_leg", src.occupant.limbs.r_leg.type, src.occupant)
+	preview_mob_limbs.replace_with("l_arm", src.occupant.limbs.l_arm.type, show_message = FALSE)
+	preview_mob_limbs.replace_with("r_arm", src.occupant.limbs.r_arm.type, show_message = FALSE)
+	preview_mob_limbs.replace_with("l_leg", src.occupant.limbs.l_leg.type, show_message = FALSE)
+	preview_mob_limbs.replace_with("r_leg", src.occupant.limbs.r_leg.type, show_message = FALSE)
 	src.update_preview()
 
 /obj/machinery/clothingbooth/proc/reset_clothingbooth_parameters()

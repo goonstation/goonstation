@@ -6,7 +6,7 @@
 	health = 60
 	maxhealth = 60
 	weapon_class = 1
-	speed = 2.8
+	speedmod = 0.36
 	var/launched = 0
 	var/steps_moved = 0
 	var/failing = 0

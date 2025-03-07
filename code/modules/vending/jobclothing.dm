@@ -6,9 +6,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	desc = "A vending machine that vends Security clothing."
 	icon_state = "secclothing"
 	icon_panel = "snack-panel"
-	icon_off = "secclothing-off"
-	icon_broken = "secclothing-broken"
-	icon_fallen = "secclothing-fallen"
 	pay = 1
 	acceptcard = 1
 	req_access = list(access_security)
@@ -53,9 +50,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	desc = "A vending machine that vends Security clothing."
 	icon_state = "secclothing"
 	icon_panel = "snack-panel"
-	icon_off = "secclothing-off"
-	icon_broken = "secclothing-broken"
-	icon_fallen = "secclothing-fallen"
 	pay = 1
 	acceptcard = 1
 	req_access = null
@@ -92,9 +86,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	desc = "A vending machine that vends Medical clothing."
 	icon_state = "medclothing"
 	icon_panel = "snack-panel"
-	icon_off = "medclothing-off"
-	icon_broken = "medclothing-broken"
-	icon_fallen = "medclothing-fallen"
 	pay = 1
 	acceptcard = 1
 	req_access = list(access_medical)
@@ -151,9 +142,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	desc = "A vending machine that vends Medical clothing."
 	icon_state = "medclothing"
 	icon_panel = "snack-panel"
-	icon_off = "medclothing-off"
-	icon_broken = "medclothing-broken"
-	icon_fallen = "medclothing-fallen"
 	pay = 1
 	acceptcard = 1
 	req_access = null
@@ -202,9 +190,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	desc = "A vending machine that vends Engineering clothing."
 	icon_state = "engclothing"
 	icon_panel = "snack-panel"
-	icon_off = "engclothing-off"
-	icon_broken = "engclothing-broken"
-	icon_fallen = "engclothing-fallen"
 	pay = 1
 	acceptcard = 1
 	req_access = list(access_engineering)
@@ -253,9 +238,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	desc = "A vending machine that vends Engineering clothing."
 	icon_state = "engclothing"
 	icon_panel = "snack-panel"
-	icon_off = "engclothing-off"
-	icon_broken = "engclothing-broken"
-	icon_fallen = "engclothing-fallen"
 	pay = 1
 	acceptcard = 1
 	req_access = null
@@ -296,9 +278,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	desc = "A vending machine that vends Catering clothing."
 	icon_state = "catclothing" //At first it was static on the bartender outfit, but it made it feel like it was only a bartender vendor, so I made it animated to switch between chef and bartender clothing.
 	icon_panel = "snack-panel"
-	icon_off = "catclothing-off"
-	icon_broken = "catclothing-broken"
-	icon_fallen = "catclothing-fallen"
 	pay = 1
 	acceptcard = 1
 	req_access = list(access_bar, access_kitchen)
@@ -338,9 +317,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	desc = "A vending machine that vends Catering clothing."
 	icon_state = "catclothing"
 	icon_panel = "snack-panel"
-	icon_off = "catclothing-off"
-	icon_broken = "catclothing-broken"
-	icon_fallen = "catclothing-fallen"
 	pay = 1
 	acceptcard = 1
 	req_access = null
@@ -377,9 +353,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	desc = "A vending machine that vends Research clothing."
 	icon_state = "sciclothing"
 	icon_panel = "snack-panel"
-	icon_off = "sciclothing-off"
-	icon_broken = "sciclothing-broken"
-	icon_fallen = "sciclothing-fallen"
 	pay = 1
 	acceptcard = 1
 	req_access = list(access_research)
@@ -420,9 +393,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	desc = "A vending machine that vends Research clothing."
 	icon_state = "sciclothing"
 	icon_panel = "snack-panel"
-	icon_off = "sciclothing-off"
-	icon_broken = "sciclothing-broken"
-	icon_fallen = "sciclothing-fallen"
 	pay = 1
 	acceptcard = 1
 	req_access = null
@@ -457,9 +427,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	desc = "A vending machine that vends Syndicate clothing."
 	icon_state = "syndieclothing"
 	icon_panel = "snack-panel"
-	icon_off = "syndieclothing-off"
-	icon_broken = "syndieclothing-broken"
-	icon_fallen = "syndieclothing-fallen"
 	pay = 1
 	acceptcard = 1
 	req_access = list()
@@ -479,6 +446,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/fingerless, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/black, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/swat, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/beret/syndicate, 4)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/syndie, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/syndie, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/fanny/syndie, 1)

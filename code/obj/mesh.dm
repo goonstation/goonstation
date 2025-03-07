@@ -221,16 +221,14 @@ TYPEINFO(/obj/mesh)
 		for (var/dir in cardinal)
 			var/turf/T = get_step(src, dir)
 			var/connectable_turf = FALSE
-			if(length(connects_to_turf))
-				for (var/i in 1 to length(connects_to_turf))
-					if (istype(T, connects_to_turf[i]))
-						connectdir |= dir
-						connectable_turf = TRUE
-						break
-			if (!connectable_turf && length(connects_to_obj)) //no turfs to connect to, check for obj's
-				for (var/i in 1 to length(connects_to_obj))
-					var/atom/movable/AM = locate(connects_to_obj[i]) in T
-					if (AM?.anchored)
+			if(connects_to_turf?[T.type])
+				connectdir |= dir
+				connectable_turf = TRUE
+			if (!connectable_turf) //no turfs to connect to, check for obj's
+				for (var/atom/movable/AM as anything in T)
+					if (!AM.anchored)
+						continue
+					if (connects_to_obj?[AM.type])
 						connectdir |= dir
 						break
 	return connectdir
@@ -241,11 +239,11 @@ TYPEINFO(/obj/mesh)
 	switch(diff)
 		if(-INFINITY to 25)
 			return "-3"
-		if(26 to 50)
+		if(25 to 50)
 			return "-2"
-		if(51 to 75)
+		if(50 to 75)
 			return "-1"
-		if(76 to INFINITY)
+		if(75 to INFINITY)
 			return "-0"
 
 ///Handle special icon states for cut/corroded/melted meshes

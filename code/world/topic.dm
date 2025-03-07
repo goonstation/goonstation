@@ -342,7 +342,7 @@
 
 		if (findtext(addr, ":")) // remove port if present
 			addr = splittext(addr, ":")[1]
-		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip)
+		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip && addr != config.goonhub_ci_ip)
 			return 0 //ip filtering
 
 		var/list/plist = params2list(T)
@@ -867,7 +867,7 @@
 				)
 
 				var/datum/player/player = make_player(plist["ckey"])
-				if(isnull(player.last_seen))
+				if(!player.cached_round_stats)
 					player.cache_round_stats_blocking()
 				if(player)
 					response["last_seen"] = player.last_seen
