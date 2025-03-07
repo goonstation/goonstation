@@ -275,7 +275,8 @@
 				floor.set_dir(direct)
 
 	proc/check_area_dangerous(area/A)
-		return A && !A.permafrosted && istype(A, /area/station) && !istype(A, /area/station/solar) && !istype(A, /area/station/shield_zone) && !istype(A, /area/station/turret_protected) && !istype(A, /area/station/com_dish)
+		return A && !A.permafrosted && istype(A, /area/station) && !istype(A, /area/station/solar) && !istype(A, /area/station/shield_zone) && \
+			!istype(A, /area/station/turret_protected) && !istype(A, /area/station/com_dish)
 
 /image/phoenix_temperature_indicator
 	plane = PLANE_HUD
