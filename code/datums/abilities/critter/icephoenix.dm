@@ -156,6 +156,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 			sparkle = new /obj/particle/cryo_sparkle(T)
 			sparkle.alpha = rand(180, 255)
 			for (var/mob/living/L in T)
+				if (isrobot(L) || isintangible(L))
+					continue
 				L.changeStatus("shivering", 10 SECONDS * (1 - 0.75 * L.get_cold_protection() / 100), TRUE)
 				L.bodytemperature -= 10
 				if (L.bodytemperature <= 255.372) // 0 degrees fahrenheit
