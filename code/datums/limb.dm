@@ -212,8 +212,6 @@
 	var/reloading_str = "reloading"
 	var/image/default_obscurer
 	var/muzzle_flash = null
-	// if firing this limb pushes you back in space
-	var/has_space_pushback = TRUE
 	can_beat_up_robots = TRUE //so pointblanking works
 
 	attack_range(atom/target, var/mob/user, params)
@@ -289,6 +287,9 @@
 		return (GET_COOLDOWN(src, "[src] reload") || GET_COOLDOWN(src, "[src] shoot"))
 
 /datum/limb/gun/kinetic
+	// if firing this limb pushes you back in space
+	var/has_space_pushback = TRUE
+
 	shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
 		if((..() && istype(user.loc, /turf/space) || user.no_gravity) && src.has_space_pushback)
 			user.inertia_dir = get_dir(target, user)
