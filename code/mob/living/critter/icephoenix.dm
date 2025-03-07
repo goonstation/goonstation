@@ -332,13 +332,13 @@
 		..()
 		if (istype(AM, /mob/living))
 			var/mob/living/L = AM
-			L.space_damage_immune = TRUE
+			APPLY_ATOM_PROPERTY(L, PROP_MOB_SPACE_DAMAGE_IMMUNE, "phoenix_snow_floor")
 
 	Uncrossed(Obj, newloc)
 		..()
 		if (istype(Obj, /mob/living))
 			var/mob/living/L = Obj
-			L.space_damage_immune = FALSE
+			REMOVE_ATOM_PROPERTY(L, PROP_MOB_SPACE_DAMAGE_IMMUNE, "phoenix_snow_floor")
 
 /turf/simulated/ice_phoenix_ice_tunnel
 	icon = 'icons/mob/critter/nonhuman/icephoenix.dmi'
