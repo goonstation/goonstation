@@ -498,6 +498,8 @@ TYPEINFO(/area)
 			else
 				T.AddOverlays(image('icons/turf/floors.dmi', T, "snow[pick(null, 1, 2, 3, 4)]", TURF_LAYER, pick(cardinal)), "phoenix_permafrost")
 
+			T.pryable = FALSE
+
 			if (prob(25))
 				new /obj/effects/precipitation/snow/grey/tile/light(T)
 
@@ -511,6 +513,8 @@ TYPEINFO(/area)
 
 		for (var/turf/simulated/floor/T in src)
 			T.ClearSpecificOverlays("phoenix_permafrost")
+
+			T.pryable = initial(T.pryable)
 
 			var/obj/effects/precipitation/snow/grey/tile/light/snow = locate() in T
 			qdel(snow)
