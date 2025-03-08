@@ -1,4 +1,9 @@
 
+(t)sat mar 08 25
+(u)JORJ949
+(p)22493
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Added barbershop kit to list of cargo orders.
 (t)wed mar 05 25
 (u)glowbold
 (p)22457
