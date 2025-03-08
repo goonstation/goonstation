@@ -255,11 +255,6 @@
 
 // stuff from old ritualstuff_after.dm
 
-/obj/hear_talk(mob/M as mob, text, real_name)
-	..()
-	if(src.ritualComponent)
-		src.ritualComponent.hear_talk(M, text, real_name)
-
 /atom/movable/set_loc(var/newloc as turf|mob|obj in world)
 	if (..() && loc != newloc)
 		if (src.ritualComponent)
