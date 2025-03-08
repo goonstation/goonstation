@@ -1597,6 +1597,23 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/crate
 	containername = "Mechanics Reconstruction Kit"
 
+/datum/supply_packs/complex/barbershop_kit
+	name = "Barbershop Kit"
+	desc = "Everything one might need to open up a barbershop!"
+	category = "Civilian Department"
+	contains = list(/obj/item/electronics/soldering,
+					/obj/item/furniture_parts/barber_chair,
+					/obj/item/dye_bottle,
+					/obj/item/dye_bottle,
+					/obj/item/razor_blade,
+					/obj/item/scissors,
+					/obj/item/clothing/under/misc/barber,
+					/obj/item/clothing/gloves/latex)
+	frames = list(/obj/machinery/hair_dye_dispenser)
+	cost = PAY_TRADESMAN*5
+	containertype = /obj/storage/crate
+	containername = "Barbershop Kit"
+
 #ifndef UNDERWATER_MAP
 /datum/supply_packs/complex/mini_magnet_kit
 	name = "Small Magnet Kit"
@@ -2056,6 +2073,32 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/item/instrument/bass)
 	containertype = /obj/storage/crate/wooden
 
+/datum/supply_packs/complex/player_piano
+	name = "Player Piano Kit"
+	desc = "1x Player Piano Kit"
+	category = "Civilian Department"
+	cost = PAY_TRADESMAN*3
+	containername = "Player Piano Kit"
+	frames = list(/obj/player_piano)
+	containertype = /obj/storage/crate/wooden
+
+/datum/supply_packs/complex/piano
+	name = "Piano Kit"
+	desc = "1x Piano Kit"
+	category = "Civilian Department"
+	cost = PAY_TRADESMAN*3
+	containername = "Piano Kit"
+	frames = list(/obj/item/instrument/large/piano)
+	containertype = /obj/storage/crate/wooden
+
+/datum/supply_packs/complex/piano_grand
+	name = "Grand Piano Kit"
+	desc = "1x Grand Piano Kit"
+	category = "Civilian Department"
+	cost = PAY_TRADESMAN*3
+	containername = "Grand Piano Kit"
+	frames = list(/obj/item/instrument/large/piano/grand)
+	containertype = /obj/storage/crate/wooden
 
 //Western
 /datum/supply_packs/west_coats

@@ -299,25 +299,31 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 	var/weblevel = 1
 	density = 0
 
+	proc/can_web_walk(atom/A)
+		return isliving(A) && A.hasStatus("webwalk")
+
 	New()
 		..()
 		src.update_self()
 
 	Cross(atom/A)
 		switch(weblevel)
-			if(1 to 2)
-				if(isliving(A) && !A.hasStatus("webwalk"))
-					A.changeStatus("slowed", 1 SECONDS)
-					if(!ON_COOLDOWN(A, "webrustle", 1 SECOND))
-						playsound(A.loc, 'sound/impact_sounds/Bush_Hit.ogg', 45, 1)
-					return 1
-				else
-					return 1
-			if(3)
-				if(isliving(A) && !A.hasStatus("webwalk"))
+			if(-INFINITY to 2)
+				return 1 //is this even necessary? idk
+			if(3 to INFINITY)
+				if(!src.can_web_walk(A))
 					return 0
 				else
 					return 1
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		switch(weblevel)
+			if(-INFINITY to 2)
+				if(!src.can_web_walk(AM))
+					AM.changeStatus("slowed", 1 SECONDS)
+					if(!ON_COOLDOWN(AM, "webrustle", 1 SECOND))
+						playsound(AM.loc, 'sound/impact_sounds/Bush_Hit.ogg', 45, 1)
 
 	attackby(obj/item/W, mob/user)
 		if (!W) return
@@ -334,8 +340,14 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 		if(dmg == TRUE)
 			src.take_damage(1, "brute", user)
 
-		user.lastattacked  = src
+		user.lastattacked  = get_weakref(src)
 		..()
+
+	attack_hand(mob/user)
+		. = ..()
+		if(!ON_COOLDOWN(user, "pokeweb", 1 SECOND))
+			src.visible_message(SPAN_ALERT("<b>[user]</b> [pick("gently", "angrily", "fondly", "subtly", "horrifyingly")] [pick("pokes", "whacks", "punches", "touches")] the [src]!"))
+			playsound(src.loc, 'sound/impact_sounds/Bush_Hit.ogg', 45, 1)
 
 /obj/spiderweb/proc/update_self()
 	playsound(src, 'sound/misc/splash_1.ogg', 45, 1)
@@ -385,11 +397,11 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 			var/mob/living/L = owner
 			L.HealDamage("All", 0.75, 0.75, 0.75)
 
-/datum/targetable/lay_spider_web
+/datum/targetable/spider/lay_spider_web
 	name = "Lay a Web"
 	desc = "Lay a spider web on the ground. If there is already a web there, upgrade it to the next level."
-	icon = 'icons/misc/abilities.dmi'
-	icon_state = "poo"
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "spider_web"
 	targeted = 1
 	target_anything = 1
 	cooldown = 3 SECONDS
@@ -427,21 +439,18 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 	name = "weblaying spider"
 	real_name = "weblaying spider"
 	desc = "Terrifying. These creatures will build a nest of horror if left unchecked."
-	add_abilities = list(/datum/targetable/lay_spider_web,
+	add_abilities = list(/datum/targetable/spider/lay_spider_web,
 						/datum/targetable/critter/spider_bite,
 						/datum/targetable/critter/spider_flail,
-						/datum/targetable/critter/spider_drain)
+						/datum/targetable/critter/spider_drain,
+						/datum/targetable/spider/lay_spider_egg)
 
 	health_brute = 50
 	health_brute_vuln = 0.75
 	health_burn = 50
 	health_burn_vuln = 0.3
 	reagent_capacity = 0
-
-	New()
-		..()
-		src.changeStatus("webwalk", INFINITE_STATUS)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
+	var/obj/spookMarker/spawn_marker = null
 
 /mob/living/critter/spider/weblaying/baby
 	name = "li'l weblaying spider"
@@ -461,6 +470,10 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 	adultpath = /mob/living/critter/spider/weblaying/med
 	bite_transfer_amt = 0.3
 	reagent_capacity = 0
+	add_abilities = list(/datum/targetable/spider/lay_spider_web,
+						/datum/targetable/critter/spider_bite,
+						/datum/targetable/critter/spider_flail,
+						/datum/targetable/critter/spider_drain)
 
 /mob/living/critter/spider/weblaying/med
 	name = "medium weblaying spider"
@@ -479,3 +492,73 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 	babyspider = 1
 	adultpath = /mob/living/critter/spider/weblaying
 	bite_transfer_amt = 0.6
+	add_abilities = list(/datum/targetable/spider/lay_spider_web,
+						/datum/targetable/critter/spider_bite,
+						/datum/targetable/critter/spider_flail,
+						/datum/targetable/critter/spider_drain)
+
+
+/datum/targetable/spider/lay_spider_egg
+	name = "Lay Spider Egg"
+	desc = "Lay a tiny egg that will hatch into a new spider."
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "spider_lay_egg"
+	cooldown = 5 MINUTES
+	ignore_holder_lock = TRUE
+	var/in_use = FALSE
+	var/ghost_confirmation_delay = 30 SECONDS
+
+	cast(atom/target, params)
+		if (..())
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		var/turf/T = get_turf(src.holder.owner)
+		if (!isturf(T) || istype(T, /turf/space))
+			boutput(src.holder.owner, SPAN_ALERT("You can't lay an egg!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		boutput(holder.owner, SPAN_NOTICE("You lay a teeny tiny egg."))
+		src.doCooldown()
+		make_weblaying_spider(src.holder.owner, get_turf(src.holder.owner))
+		return CAST_ATTEMPT_SUCCESS
+
+	proc/make_weblaying_spider(mob/living/critter/spider/weblaying/W, turf/T, tries = 0)
+		if (QDELETED(W))
+			return
+		if (!istype(W))
+			boutput(W, "something went terribly wrong, call 1-800-CODER")
+			return
+
+		var/obj/spookMarker/marker = new /obj/spookMarker(T)
+		W.spawn_marker = marker
+		var/list/text_messages = list()
+		text_messages.Add("Would you like to respawn as a weblaying spider? Your name will be added to the list of eligible candidates.")
+		text_messages.Add("You are eligible to be respawned as a weblaying spider. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
+		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
+
+		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
+		message_ghosts("A <b>weblaying spider egg</b> has been placed at [log_loc(T, ghostjump = TRUE)].")
+		message_admins("Sending weblaying spider offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
+		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
+		if (!islist(candidates) || length(candidates) <= 0)
+			message_admins("Couldn't set up weblaying spider; no ghosts responded. [tries < 1 ? "Trying again in 3 minutes." : "Aborting."] Source: [src.holder]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up weblaying spider; no ghosts responded. [tries < 1 ? "Trying again in 3 minutes." : "Aborting."] Source: [src.holder]")
+			if (tries >= 1)
+				boutput(W, SPAN_ALERT("None of the eggs hatch. The egg withers and dies."))
+				qdel(marker)
+				return
+			else
+				boutput(W, SPAN_ALERT("None of the eggs hatch. Trying again in three minutes..."))
+				qdel(marker)
+				SPAWN(3 MINUTES)
+					make_weblaying_spider(W, T, tries++)
+			return
+		var/datum/mind/lucky_dude = candidates[1]
+		if (lucky_dude.add_antagonist(ROLE_ANTAGONIST_CRITTER, source = ANTAGONIST_SOURCE_SUMMONED))
+			log_respawn_event(lucky_dude, "weblaying_spider", src.holder.owner)
+			message_admins("[lucky_dude.key] respawned as a weblaying_spider for [src.holder.owner].")
+			usr.playsound_local(usr.loc, 'sound/misc/splash_1.ogg', 50)
+			var/mob/living/critter/spider/weblaying/baby/B = lucky_dude.current
+			B.make_critter(/mob/living/critter/spider/weblaying/baby, marker.loc)
+			message_ghosts("A <b>baby weblaying spider</b> has been born at [log_loc(B, ghostjump = TRUE)].")
+			boutput(W, SPAN_NOTICE("The egg you planted at [marker.loc] has hatched into a new spider!"))
+		W.spawn_marker = null
+		qdel(marker)

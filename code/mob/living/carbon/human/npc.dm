@@ -234,7 +234,7 @@
 
 		//Why do we WANT to go after this jerk?
 		if(M.client) rating += 20 //We'd rather go after actual non-braindead players
-		if(src.lastattacker == M && M != src) rating += 10 //Hey, you're a jerk! (but I'm not a jerk)
+		if(src.lastattacker?.deref() == M && M != src) rating += 10 //Hey, you're a jerk! (but I'm not a jerk)
 
 
 		//Why do we NOT want to go after this jerk

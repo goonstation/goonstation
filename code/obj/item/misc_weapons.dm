@@ -557,7 +557,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	if(ismob(A))
 		var/mob/M = A
 		if (ismob(usr))
-			M.lastattacker = usr
+			M.lastattacker = get_weakref(usr)
 			M.lastattackertime = world.time
 		M.changeStatus("knockdown", 6 SECONDS)
 		M.force_laydown_standup()
@@ -1981,7 +1981,7 @@ obj/item/whetstone
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			if (ismob(usr))
-				C.lastattacker = usr
+				C.lastattacker = get_weakref(usr)
 				C.lastattackertime = world.time
 			C.changeStatus("knockdown", 3 SECONDS)
 			C.force_laydown_standup()

@@ -186,7 +186,7 @@ TYPEINFO(/obj/storage/closet/flock)
 			if(SEND_SIGNAL(src, COMSIG_FLOCK_ATTACK, user, TRUE))
 				return
 			var/force = W.force
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			attack_particle(user, src)
 			playsound(src.loc, src.hitsound, 50, 1, pitch = 1.6)
 			src.take_damage(force, user)

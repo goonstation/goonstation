@@ -43,7 +43,7 @@
 		return FALSE
 	if(ship.powercapacity < (ship.powercurrent + power_used))
 		for(var/mob/M in ship)
-			boutput(M, "[ship.ship_message("Not enough power to activate [src]!")]")
+			boutput(M, "[ship.ship_message("Not enough power to activate [src]! ([ship.powercurrent + power_used]/[ship.powercapacity])")]")
 			return FALSE
 	else
 		ship.powercurrent += power_used
