@@ -66,6 +66,9 @@
 	var/init_comms_type = /obj/item/shipcomponent/communications
 	var/faction = null // I don't really want to atom level define this, but it does make sense for pods to have faction too
 
+	/// allow muzzle flash when firing pod weapon
+	var/allow_muzzle_flash = TRUE
+
 	//////////////////////////////////////////////////////
 	///////Life Support Stuff ////////////////////////////
 	/////////////////////////////////////////////////////
@@ -483,7 +486,7 @@
 		return 1
 
 	proc/ShootProjectiles(mob/user, datum/projectile/PROJ, shoot_dir, spread = -1)
-		if (src.m_w_system?.muzzle_flash && !istype(src, /obj/machinery/vehicle/pod_smooth))
+		if (src.m_w_system?.muzzle_flash && src.allow_muzzle_flash)
 			muzzle_flash_any(src, dir_to_angle(shoot_dir), src.m_w_system.muzzle_flash)
 
 		src.create_projectile(src, user, PROJ, shoot_dir, spread)

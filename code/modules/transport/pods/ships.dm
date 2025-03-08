@@ -815,6 +815,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	view_offset_x = 16
 	view_offset_y = 16
 	speedmod = 0.9
+	allow_muzzle_flash = FALSE
 	//luminosity = 5 // will help with space exploration
 	var/maxboom = 0
 
