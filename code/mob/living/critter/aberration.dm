@@ -83,7 +83,7 @@
 			return
 		M.visible_message(SPAN_COMBAT("<b>[M] shocks the [src.name] with [I]!</b>"),
 			SPAN_COMBAT("<b>While your baton passes through, the [src.name] appears damaged!</b>"))
-		M.lastattacked = src
+		M.lastattacked = get_weakref(src)
 		B.process_charges(-1, M)
 
 		src.hurt(50)

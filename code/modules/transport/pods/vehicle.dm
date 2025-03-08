@@ -118,7 +118,7 @@
 	////////////////////////////////////////////////////////
 
 	attackby(obj/item/W, mob/living/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (health < maxhealth && isweldingtool(W) && W:welding)
 			if (actions.hasAction(user, /datum/action/bar/private/welding/loop/vehicle))
 				return

@@ -83,7 +83,7 @@ TYPEINFO(/obj/item/saw)
 
 		if (src.active)
 
-			user.lastattacked = target
+			user.lastattacked = get_weakref(target)
 			target.lastattacker = get_weakref(user)
 			target.lastattackertime = world.time
 

@@ -132,7 +132,7 @@
 			if (src.icon_state != "fig-shelterfrog-dead")
 				make_cleanable(/obj/decal/cleanable/blood,get_turf(src))
 				src.icon_state = "fig-shelterfrog-dead"
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		return 0
 
 	attack_self(mob/user as mob)

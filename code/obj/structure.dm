@@ -418,7 +418,7 @@ TYPEINFO(/obj/structure/woodwall)
 				return
 
 		if (ishuman(user))
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			src.visible_message(SPAN_ALERT("<b>[user]</b> bashes [src]!"))
 			playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 100, 1)
 			//Zombies do less damage
@@ -439,7 +439,7 @@ TYPEINFO(/obj/structure/woodwall)
 			actions.start(new /datum/action/bar/icon/wood_repair_wall(W, src, 30), user)
 			return
 		..()
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		src.changeHealth(-W.force)
 		hit_twitch(src)
 		return

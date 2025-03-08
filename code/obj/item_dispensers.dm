@@ -44,7 +44,7 @@
 		if (is_dead_or_ghost_role(user))
 			return 1
 		add_fingerprint(user)
-		user.lastattacked = src //prevents spam
+		user.lastattacked = get_weakref(src) //prevents spam
 		if (src.cant_withdraw)
 			..()
 			return 1
