@@ -28,14 +28,16 @@
 	crime_buffer = list()
 	for (var/token in crime_buffer_tokenised)
 		var/victim = null
+		var/substitute_human = "[pick_string_autokey("names/first.txt")] [pick_string_autokey("names/last.txt")]
+		var/substitute_robot = "[pick_string_autokey("names/ai.txt")]"
 		if (findtext(token, "$HUMAN"))
-			victim = length(humans) ? pick(humans) : "[pick_string_autokey("names/first.txt")] [pick_string_autokey("names/last.txt")]"
+			victim = length(humans) ? pick(humans) : substitute_human
 			token = replacetext(token, "$HUMAN", victim)
 		if (findtext(token, "$ROBOT"))
-			victim = length(robots) ? pick(robots) : pick_string_autokey("names/ai.txt")
+			victim = length(robots) ? pick(robots) : substitute_robot
 			token = replacetext(token, "$ROBOT", victim)
 		if (findtext(token, "$MOB"))
-			victim = length(targets) ? pick(targets) : (prob(50) ? "[pick_string_autokey("names/first.txt")] [pick_string_autokey("names/last.txt")]" : "[pick_string_autokey("names/ai.txt")]")
+			victim = length(targets) ? pick(targets) : (prob(50) ? substitute_human : substitute_robot)
 			token = replacetext(token, "$MOB", victim)
 		crime_buffer += token
 	crime_buffer = jointext(crime_buffer, " ")
