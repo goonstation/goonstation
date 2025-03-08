@@ -1068,7 +1068,7 @@ TYPEINFO(/turf/simulated)
 /turf/simulated/aprilfools/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
-	icon_state = "grass"
+	icon_state = "grass_0"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
@@ -1094,7 +1094,7 @@ TYPEINFO(/turf/simulated)
 /turf/unsimulated/aprilfools/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
-	icon_state = "grass"
+	icon_state = "grass_0"
 	opacity = 0
 	density = 0
 
@@ -1123,7 +1123,7 @@ TYPEINFO(/turf/simulated)
 /turf/simulated/grass
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
-	icon_state = "grass"
+	icon_state = "grass_0"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
@@ -1372,7 +1372,7 @@ TYPEINFO(/turf/simulated)
 /turf/unsimulated/grass
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
-	icon_state = "grass"
+	icon_state = "grass_0"
 
 /turf/unsimulated/dirt
 	name = "Dirt"
@@ -1414,7 +1414,7 @@ TYPEINFO(/turf/simulated)
 /turf/unsimulated/nicegrass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
-	icon_state = "grass"
+	icon_state = "grass_0"
 
 /turf/unsimulated/nicegrass/random
 	New()
@@ -1424,7 +1424,7 @@ TYPEINFO(/turf/simulated)
 /turf/simulated/nicegrass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
-	icon_state = "grass"
+	icon_state = "grass_0"
 
 /turf/simulated/nicegrass/random
 	New()

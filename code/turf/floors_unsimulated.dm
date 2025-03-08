@@ -1017,11 +1017,11 @@ TYPEINFO(/turf/unsimulated/floor/grass)
 /turf/unsimulated/floor/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
-	icon_state = "grass"
+	icon_state = "grass_0"
 	#ifdef SEASON_AUTUMN
 	icon_state = "grass_autumn"
 	#else
-	icon_state = "grass"
+	icon_state = "grass_0"
 	#endif
 	mat_changename = 0
 	mat_changedesc = 0
