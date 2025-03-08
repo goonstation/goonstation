@@ -128,74 +128,9 @@
 
 	if(H.traitHolder.hasTrait("jailbird"))
 		S["criminal"] = ARREST_STATE_ARREST
-		S["mi_crim"] = pick(\
-								"Public urination.",\
-								"Reading highly confidential private information.",\
-								"Vandalism.",\
-								"Illegal manufacturing of space goods.",\
-								"Tresspassing.",\
-								"Killing a monkey.",\
-								"Negligence.",\
-								"Pushing down and farting on a member of security.",\
-								"Throwing a toolbox at a member of security.",\
-								"Being drunk.",\
-								"Being high.",\
-								"Excessive force.",\
-								"Impersonating a security officer.",\
-								"Stealing shoes.",\
-								"Littering.",\
-								"Existing.",\
-								"Illegal haircutting.",\
-								"Staring at a bee for over an hour.",\
-								"Not showering before entering pool.",\
-								"Rampant idiocy.",\
-								"Never tipping the catering staff.",\
-								"Disregarding previous tickets.",\
-								"Fashion crimes.",\
-								"Gambling.",\
-								"Bribery.",\
-								"Sleeping on the job.",\
-								"Unauthorized stamp collecting.",\
-								"Refusing to wash their hands.",\
-								"Maintenance lurking.",\
-								"Dumpster diving.",\
-								"Not covering their mouth when sneezing.",\
-								"Open mouth chewing.",\
-								"Riding pods without a license.",\
-								"Breathing loudly.",\
-								"Riding a segway directly into the captain.",\
-								"Wearing their shirt backwards.",\
-								"Excessive swearing",\
-								"Cutting in line.",\
-								"Tying the captain's shoelaces together.",\
-								"Forgetting the captain's birthday.")
+		S["mi_crim"] = global.pick_crime(H)
 		S["mi_crim_d"] = "No details provided."
-		S["ma_crim"] = pick(\
-								"Grand theft apidae.",\
-								"Bee murder.",\
-								"Superfarted on the captain.",\
-								"Released the singularity.",\
-								"Stole the captain's spare ID.",\
-								"Arson, murder, jaywalking.",\
-								"Arson.",\
-								"Murder.",\
-								"Jaywalking.",\
-								"Skating right through the bounds of real-space. Wicked sick, but highly illegal.",\
-								"Being a really really bad surgeon.",\
-								"Distributing meth.",\
-								"Dismemberment and decapitation.",\
-								"Running around with a chainsaw.",\
-								"Throwing explosive tomatoes at people.",\
-								"Caused multiple seemingly unrelated accidents.",\
-								"Dabbing.",\
-								"Assembling explosives.",\
-								"Being in the wrong place at the wrong time.",\
-								"Assault.",\
-								"Tossing someone in space.",\
-								"Over-escalation.",\
-								"Manslaughter",\
-								"Refusing to share their meth.",\
-								"Grand larceny.")
+		S["ma_crim"] = global.pick_crime(H, is_major = TRUE)
 		S["ma_crim_d"] = "No details provided."
 		H.update_arrest_icon()
 
