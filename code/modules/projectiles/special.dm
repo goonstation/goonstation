@@ -715,7 +715,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	auto_find_targets = 0
 	max_speed = 6
 	start_speed = 0.1
-	invisibility = INVIS_INFRA
+	invisibility = INVIS_MESON
 
 	shot_sound = null
 	goes_through_walls = 1
@@ -741,12 +741,12 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			logTheThing(LOG_STATION, P, "teleport projectile [P] dumped contents at [log_loc(P)] as targeted destination was disposed.")
 			P.die()
 		var/obj/item/mechanics/telecomp/target_tele = P.targets[1]
-		if (!target_tele.anchored)
-			logTheThing(LOG_STATION, P, "teleport projectile [P] dumped contents at [log_loc(P)] as target teleporter at [log_loc(target_tele)] was unanchored.")
+		if (!target_tele.anchored || target_tele.send_only)
+			logTheThing(LOG_STATION, P, "teleport projectile [P] dumped contents at [log_loc(P)] as target teleporter at [log_loc(target_tele)] was [target_tele.anchored ? "de-anchored" : "set to send only"].")
 			P.die()
 		if (get_turf(P) == src.starting_turf) return
 		for (var/obj/item/mechanics/telecomp/tele in get_turf(P))
-			if (tele.anchored)
+			if (tele.anchored && !tele.send_only)
 				particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(tele.loc))).Run()
 				// Dest. pad gets "from=origin&count=123"
 				SEND_SIGNAL(tele, COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"from=[tele.teleID]&count=[P.special_data["count_sent"]]")
@@ -821,7 +821,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			M.force_laydown_standup()
 			boutput(M, SPAN_NOTICE("[slam_text]"))
 			playsound(M.loc, 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
-			M.lastattacker = src.master?.shooter
+			M.lastattacker = get_weakref(src.master?.shooter)
 			M.lastattackertime = TIME
 		else if(projectile.reflectcount < src.max_bounce_count)
 			shoot_reflected_bounce(projectile, A, src.max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)

@@ -5,6 +5,8 @@
 	var/mob/gunner = null
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/light/pod
 	var/firerate = 8
+	/// number of projectiles that are fired when weapon is fired
+	var/shots_to_fire = 1
 	/// change to a degree in angles to give custom spread
 	var/spread = -1
 	var/weapon_score = 0.1
@@ -65,11 +67,13 @@
 
 /obj/item/shipcomponent/mainweapon/buildTooltipContent()
 	. = ..() + src.current_projectile?.get_tooltip_content()
+	. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/frenzy.png")]\" width=\"10\" height=\"10\" /> Firerate: [src.firerate / 10] seconds"
 	src.lastTooltipContent = .
 
 /obj/item/shipcomponent/mainweapon/proc/Fire(var/mob/user,var/shot_dir_override = -1)
 	if(ON_COOLDOWN(src, "fire", firerate))
 		return
+	EXTEND_COOLDOWN(src, "weapon_swap_cd", 10 SECONDS)
 	if(uses_ammunition)
 		if (remaining_ammunition < ship.AmmoPerShot())
 			boutput(user, "[ship.ship_message("You need [ship.AmmoPerShot()] to fire the weapon. You currently have [remaining_ammunition] loaded.")]")
@@ -136,6 +140,14 @@
 	current_projectile = new/datum/projectile/laser/light/pod
 	icon_state = "class-a"
 	muzzle_flash = "muzzle_flash_phaser"
+
+/obj/item/shipcomponent/mainweapon/phaser/burst_phaser
+	name = "Mk 1.5e Burst Phaser"
+	desc = "A variant of the Mk 1.5 Light Phaser that fires a stronger burst of 3 shots at a third of the firerate."
+	firerate = 2.4 SECONDS
+	shots_to_fire = 3
+	current_projectile = new/datum/projectile/laser/light/pod/burst
+	icon_state = "class-a-burst"
 
 /obj/item/shipcomponent/mainweapon/phaser/short
 	name = "Mk 1.45 Light Phaser"
@@ -270,6 +282,17 @@
 	icon_state = "assult-laser"
 	muzzle_flash = "muzzle_flash_laser"
 
+/obj/item/shipcomponent/mainweapon/hammer_railgun
+	name = "Hammerhead Railgun"
+	desc = "A powerful wall-piercing railgun designed for siege operations."
+	firerate = 5 SECONDS
+	power_used = 100
+	current_projectile = new/datum/projectile/bullet/hammer_railgun
+	weapon_score = 1.5
+	appearanceString = "pod_weapon_hammer_railgun"
+	icon_state = "hammer-railgun"
+	muzzle_flash = "muzzle_flash_launch"
+
 /obj/item/shipcomponent/mainweapon/rockdrills
 	name = "Rock Drilling Rig"
 	desc = "A sturdy drill designed for chewing up asteroids like nobodies business."
@@ -375,6 +398,7 @@
 			if(0)
 				if(ON_COOLDOWN(src, "fire", firerate))
 					return
+				EXTEND_COOLDOWN(src, "weapon_swap_cd", 10 SECONDS)
 				var/obj/decal/D = new/obj/decal(ship.loc)
 				D.set_dir(ship.dir)
 				if (shot_dir_override > 1)
@@ -525,6 +549,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			if(EFIF_MODE_FLOORS to EFIF_MODE_WALLS)
 				if(ON_COOLDOWN(src, "fire", firerate))
 					return
+				EXTEND_COOLDOWN(src, "weapon_swap_cd", 10 SECONDS)
 				if(length(src.active_fields) >= 1)
 					return
 				if(!src.check_sheets())
@@ -544,6 +569,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			if(EFIF_MODE_REPAIR)
 				if(ON_COOLDOWN(src, "fire", firerate))
 					return
+				EXTEND_COOLDOWN(src, "weapon_swap_cd", 10 SECONDS)
 				if(length(src.active_fields) >= 1)
 					return
 
@@ -1069,6 +1095,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	Fire(var/mob/user,var/shot_dir_override = -1)
 		if(ON_COOLDOWN(src, "fire", firerate))
 			return
+		EXTEND_COOLDOWN(src, "weapon_swap_cd", 10 SECONDS)
 		if(!core_inserted)
 			boutput(ship.pilot, SPAN_ALERT("<B>The weapon requires a unique power source to function!</B>"))
 			return
@@ -1181,6 +1208,10 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	dissipation_rate = 1
 	dissipation_delay = 14
 	projectile_speed = 42
+
+/datum/projectile/laser/light/pod/burst
+	damage = 25
+	shot_delay = 0.2 SECONDS
 
 /datum/projectile/disruptor
 	impact_range = 4

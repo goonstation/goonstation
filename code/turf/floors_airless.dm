@@ -997,7 +997,7 @@ TYPEINFO(/turf/simulated/floor/airless/grass)
 /turf/simulated/floor/airless/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
-	icon_state = "grass"
+	icon_state = "grass_0"
 	mat_changename = 0
 	mat_changedesc = 0
 	default_material = "synthrubber"

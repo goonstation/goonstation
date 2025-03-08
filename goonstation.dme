@@ -667,6 +667,7 @@
 #include "code\modules\admin\buildmodes\fireflash.dm"
 #include "code\modules\admin\buildmodes\flock.dm"
 #include "code\modules\admin\buildmodes\fluids.dm"
+#include "code\modules\admin\buildmodes\gas.dm"
 #include "code\modules\admin\buildmodes\glue.dm"
 #include "code\modules\admin\buildmodes\lighting.dm"
 #include "code\modules\admin\buildmodes\load_map.dm"

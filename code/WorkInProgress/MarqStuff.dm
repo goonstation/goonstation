@@ -722,8 +722,8 @@
 		src.UpdateIcon(0)
 
 	attack(var/mob/target, var/mob/user)
-		user.lastattacked = target
-		target.lastattacker = user
+		user.lastattacked = get_weakref(target)
+		target.lastattacker = get_weakref(user)
 		target.lastattackertime = world.time
 
 

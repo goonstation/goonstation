@@ -42,7 +42,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/martian)
 			src.gib()
 
 	attackby(obj/item/W, mob/user, params)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if(istype(W, /obj/item/spray_paint_gang) || istype(W, /obj/item/spray_paint_graffiti) || istype(W, /obj/item/gang_flyer))
 			return
 

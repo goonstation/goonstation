@@ -143,8 +143,8 @@
 			if (owner.see_in_dark < initial(owner.see_in_dark) + 1)
 				owner.see_in_dark++
 			owner.render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (owner.client?.widescreen))
-			if (owner.see_invisible < INVIS_INFRA)
-				owner.see_invisible = INVIS_INFRA
+			if (owner.see_invisible < INVIS_MESON)
+				owner.see_invisible = INVIS_MESON
 
 		if (human_owner)////Glasses handled separately because i dont have a fast way to get glasses on any mob type
 			if (istype(human_owner.glasses, /obj/item/clothing/glasses/construction) && (T && !isrestrictedz(T.z)))

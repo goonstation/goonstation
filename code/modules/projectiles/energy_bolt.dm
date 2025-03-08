@@ -255,8 +255,8 @@ toxic - poisons
 	cost = 50
 	dissipation_rate = 5
 	dissipation_delay = 3
-	color_red = 255
-	color_green = 165
+	color_red = 1
+	color_green = 0.65
 	color_blue = 0
 	max_range = 7 //slight range boost
 	damage_type = D_ENERGY

@@ -11008,10 +11008,9 @@
 /obj/cable/blue{
 	icon_state = "1-2"
 	},
-/obj/cable{
-	icon_state = "0-8"
+/obj/machinery/alarm{
+	pixel_y = 25
 	},
-/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -11084,9 +11083,6 @@
 "emb" = (
 /obj/cable{
 	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
 	},
 /obj/machinery/computer/airbr{
 	density = 0;
@@ -16223,13 +16219,11 @@
 /turf/simulated/floor/yellow,
 /area/station/hangar/engine)
 "lDz" = (
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -15
-	},
+/obj/cable,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},

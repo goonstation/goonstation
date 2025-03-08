@@ -1099,7 +1099,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// Handling for calling parent proc + hitting the machine
 		else
 			..()
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			attack_particle(user,src)
 			hit_twitch(src)
 			if (W.hitsound)

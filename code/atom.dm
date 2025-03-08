@@ -721,6 +721,10 @@ TYPEINFO(/atom/movable)
 	if (src.mdir_lights)
 		update_mdir_light_visibility(src.dir)
 
+/// Use this proc to check if you can't use and permanently change this atom within /datum/component/assembly
+/atom/movable/proc/assembly_cant_be_removed()
+	return FALSE
+
 /atom/proc/get_desc(dist, mob/user)
 	// If we click something on/under the floor, then analyze fluid/smoke as well
 	// a million things don't call the parent for this but the things I care about don't override it so kicking it down the road
