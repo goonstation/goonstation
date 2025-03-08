@@ -280,6 +280,8 @@
 	current_projectile = new/datum/projectile/bullet/homing/rocket/salvo
 	appearanceString = "pod_weapon_cerberus"
 	firerate = 5 SECONDS
+	shots_to_fire = 3
+	spread = 30
 	icon_state = "cerberus-salvo-rockets"
 
 /obj/item/shipcomponent/mainweapon/laser_ass // hehhh

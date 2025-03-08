@@ -1919,23 +1919,6 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	shot_delay = 0.3 SECONDS
 	var/initial_projectile = TRUE
 
-	on_launch(obj/projectile/P)
-		..()
-		if (!P)
-			return
-		if (!src.initial_projectile)
-			return
-		P.rotateDirection(rand(-30, 30))
-		SPAWN(0)
-			for (var/i in 1 to 2)
-				sleep(src.shot_delay)
-				var/datum/projectile/bullet/homing/rocket/salvo/rocket = new()
-				rocket.initial_projectile = FALSE
-				var/turf/T = get_turf(P.shooter)
-				var/obj/projectile/new_rocket = initialize_projectile(T, rocket, P.xo, P.yo, P.shooter)
-				new_rocket?.rotateDirection(rand(-30, 30))
-				new_rocket?.launch()
-
 	is_valid_target(atom/A, obj/projectile/P)
 		. = ..()
 		return . && (isvehicle(A) || isliving(A) && !isintangible(A))
