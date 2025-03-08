@@ -3032,7 +3032,7 @@
 		onAdd(optional)
 			..()
 			var/mob/living/carbon/human/H = src.owner
-			H.regens_blood = FALSE // curse steals all your blood
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_BLOOD_REGEN, src)
 
 		onUpdate(timePassed)
 			..()
@@ -3061,8 +3061,7 @@
 		onRemove()
 			var/mob/living/carbon/human/H = src.owner
 			if (!QDELETED(H))
-				if (!H.hasStatus("art_blood_curse"))
-					H.regens_blood = TRUE
+				REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_BLOOD_REGEN, src)
 			..()
 
 	aging
