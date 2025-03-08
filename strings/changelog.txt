@@ -1,5 +1,9 @@
 
 (t)sat mar 08 25
+(u)cringe
+(p)22489
+(e)|
+(*)You can now make cryogenic cells at a high cost.
 (u)Facsimile
 (p)22298
 (e)🆕📦|C-Feature, A-Game-Objects
