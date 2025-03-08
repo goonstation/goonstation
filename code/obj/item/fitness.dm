@@ -8,7 +8,7 @@
 	layer = MOB_LAYER_BASE+1 // TODO LAYER
 
 	attack_hand(mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		flick("[icon_state]2", src)
 		playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
 		if (ishuman(user))
@@ -35,7 +35,7 @@
 		icon_state = "bopbag"
 
 		attack_hand(mob/user)
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			flick("[icon_state]2", src)
 			playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
 			playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
