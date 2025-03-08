@@ -2073,6 +2073,32 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/item/instrument/bass)
 	containertype = /obj/storage/crate/wooden
 
+/datum/supply_packs/complex/player_piano
+	name = "Player Piano Kit"
+	desc = "1x Player Piano Kit"
+	category = "Civilian Department"
+	cost = PAY_TRADESMAN*3
+	containername = "Player Piano Kit"
+	frames = list(/obj/player_piano)
+	containertype = /obj/storage/crate/wooden
+
+/datum/supply_packs/complex/piano
+	name = "Piano Kit"
+	desc = "1x Piano Kit"
+	category = "Civilian Department"
+	cost = PAY_TRADESMAN*3
+	containername = "Piano Kit"
+	frames = list(/obj/item/instrument/large/piano)
+	containertype = /obj/storage/crate/wooden
+
+/datum/supply_packs/complex/piano_grand
+	name = "Grand Piano Kit"
+	desc = "1x Grand Piano Kit"
+	category = "Civilian Department"
+	cost = PAY_TRADESMAN*3
+	containername = "Grand Piano Kit"
+	frames = list(/obj/item/instrument/large/piano/grand)
+	containertype = /obj/storage/crate/wooden
 
 //Western
 /datum/supply_packs/west_coats
