@@ -35,7 +35,7 @@
 			victim = length(robots) ? pick(robots) : pick_string_autokey("names/ai.txt")
 			token = replacetext(token, "$ROBOT", victim)
 		if (findtext(token, "$MOB"))
-			victim = length(targets) ? pick(targets) : (prob(50) ? [pick_string_autokey("names/first.txt")] [pick_string_autokey("names/last.txt")] : pick_string_autokey("names/ai.txt"))
+			victim = length(targets) ? pick(targets) : (prob(50) ? "[pick_string_autokey("names/first.txt")] [pick_string_autokey("names/last.txt")]" : "[pick_string_autokey("names/ai.txt")]")
 			token = replacetext(token, "$MOB", victim)
 		crime_buffer += token
 	crime_buffer = jointext(crime_buffer, " ")
