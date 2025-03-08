@@ -505,6 +505,7 @@ TYPEINFO(/area)
 
 			T.temperature = 269
 			T.air.temperature = 269
+			T.parent?.air.temperature = 269
 
 			LAGCHECK(LAG_LOW)
 
