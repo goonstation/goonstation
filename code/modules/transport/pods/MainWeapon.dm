@@ -65,6 +65,10 @@
 			return
 		return
 
+	/// unique setup for post projectile launch
+	proc/post_launch(obj/projectile/P)
+		return
+
 /obj/item/shipcomponent/mainweapon/buildTooltipContent()
 	. = ..() + src.current_projectile?.get_tooltip_content()
 	. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/frenzy.png")]\" width=\"10\" height=\"10\" /> Firerate: [src.firerate / 10] seconds"
@@ -283,6 +287,10 @@
 	shots_to_fire = 3
 	spread = 30
 	icon_state = "cerberus-salvo-rockets"
+
+	post_launch(obj/projectile/P)
+		..()
+		P.proj_data.on_launch(P) // needed as a fix for large pods to set homing target
 
 /obj/item/shipcomponent/mainweapon/laser_ass // hehhh
 	name = "Mk.4 Assault Laser"
