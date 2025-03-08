@@ -28,7 +28,7 @@
 	crime_buffer = list()
 	for (var/token in crime_buffer_tokenised)
 		var/victim = null
-		var/substitute_human = "[pick_string_autokey("names/first.txt")] [pick_string_autokey("names/last.txt")]
+		var/substitute_human = "[pick_string_autokey("names/first.txt")] [pick_string_autokey("names/last.txt")]"
 		var/substitute_robot = "[pick_string_autokey("names/ai.txt")]"
 		if (findtext(token, "$HUMAN"))
 			victim = length(humans) ? pick(humans) : substitute_human
