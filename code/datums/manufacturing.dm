@@ -3198,6 +3198,16 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	time = 20 SECONDS
 	category = "Tool"
 
+/datum/manufacture/pod/weapon/burst_ltlaser
+	name = "Mk.1.5e Burst Phasers"
+	item_requirements = list("metal_dense" = 15,
+							 "conductive" = 45,
+							 "crystal" = 45)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/phaser/burst_phaser)
+	create = 1
+	time = 25 SECONDS
+	category = "Tool"
+
 /datum/manufacture/pod/weapon/efif1
 	name = "EFIF-1 Construction System"
 	item_requirements = list("metal_superdense" = 50,
