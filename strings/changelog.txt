@@ -1,5 +1,9 @@
 
 (t)sat mar 08 25
+(u)FlameArrow57
+(p)22389
+(e)🆕🎨📦🚗|C-Feature, C-Sprites, A-Game-Objects, A-Vehicles
+(+)Added a new burst phaser pod weapon to pod manufacturers. Deals 5 more damage per bolt
 (u)cringe
 (p)22489
 (e)|
