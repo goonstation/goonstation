@@ -470,7 +470,7 @@ ABSTRACT_TYPE(/obj/ice_phoenix_ice_wall)
 			qdel(src)
 		else if (P.power)
 			src.hits_left--
-			if (src.hits_left > 0)
+			if (src.hits_left <= 0)
 				src.visible_message(SPAN_ALERT("[src] is destroyed by [P]!"))
 				qdel(src)
 			else
