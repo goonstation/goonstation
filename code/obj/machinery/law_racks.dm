@@ -647,7 +647,7 @@
 		src.remove_module_callback(slotNum, user)
 		src.insert_module_callback(slotNum, user, equipped)
 		src.welded[slotNum] = was_welded
-		src.screwed[slotNum] = was_welded
+		src.screwed[slotNum] = was_screwed
 
 	proc/insert_module_callback(var/slotNum,var/mob/user,var/obj/item/aiModule/equipped)
 		if(src.law_circuits[slotNum])
