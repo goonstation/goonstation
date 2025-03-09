@@ -1519,7 +1519,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 	#ifdef SEASON_AUTUMN
 	icon_state = "grass_autumn"
 	#else
-	icon_state = "grass_0"
+	icon_state = "grass"
 	#endif
 	mat_changename = 0
 	mat_changedesc = 0
