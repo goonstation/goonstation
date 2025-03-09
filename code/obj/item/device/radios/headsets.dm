@@ -451,6 +451,27 @@
 	icon_override = "ghost_buster"
 	icon_tooltip = "Ghost Buster"
 
+/obj/item/device/radio/headset/ghost_buster/werewolf_hunter
+	name = "\improper Werewolf Hunter's headset"
+	desc = "To hear the cries of the downtrodden, those defenseless against The Beast."
+	icon_state = "multi headset"
+	secure_frequencies = list(
+		"g" = R_FREQ_SECURITY,
+		"e" = R_FREQ_ENGINEERING,
+		"r" = R_FREQ_RESEARCH,
+		"m" = R_FREQ_MEDICAL,
+		"c" = R_FREQ_CIVILIAN,
+		)
+	secure_classes = list(
+		"g" = RADIOCL_SECURITY,
+		"e" = RADIOCL_ENGINEERING,
+		"r" = RADIOCL_RESEARCH,
+		"m" = RADIOCL_MEDICAL,
+		"c" = RADIOCL_CIVILIAN,
+		)
+	icon_override = "ghost_buster"
+	icon_tooltip = "Werewolf Hunter"
+
 /obj/item/device/radio/headset/command/nt/commander
 	name = "\improper NT Commander's headset"
 	desc = "Issued to NanoTrasen Commanders, this radio headset can access several secure radio channels."
