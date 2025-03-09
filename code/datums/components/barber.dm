@@ -656,6 +656,17 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	proc/getHairStyles()
 		return list()
 
+	proc/spawn_hair_clipping(var/mob/living/carbon/human/M, var/color)
+		if (!M || !M.loc)
+			return
+		else
+			var/obj/decal/cleanable/hair/O = new(M.loc)
+
+			if (color)
+				O.color = color
+				O.update_color()
+
+
 	New(var/mob/living/carbon/human/barbee, var/mob/living/carbon/human/barber, var/succ, var/nustyle, var/whichp)
 		src.M = barbee
 		src.user = barber
@@ -692,6 +703,9 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 				M.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
 				M.bioHolder.mobAppearance.customizations["hair_middle"].style = new /datum/customization_style/none
 				M.bioHolder.mobAppearance.customizations["hair_top"].style = new /datum/customization_style/none
+				spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_bottom"].color)
+				spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_middle"].color)
+				spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_top"].color)
 				M.TakeDamage("head", rand(10,20), 0)
 				take_bleeding_damage(M, user, 2, DAMAGE_CUT, 1)
 				M.emote("scream")
@@ -717,10 +731,13 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 				switch(rand(1,3))
 					if(1)
 						M.bioHolder.mobAppearance.customizations["hair_bottom"].style = new_style
+						spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_bottom"].color)
 					if(2)
 						M.bioHolder.mobAppearance.customizations["hair_middle"].style = new_style
+						spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_middle"].color)
 					if(3)
 						M.bioHolder.mobAppearance.customizations["hair_top"].style = new_style
+						spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_top"].color)
 				M.tri_message(user, "[user] [cuts] [M]'s hair.",\
 											SPAN_NOTICE("[user] [cuts] your hair."),\
 																					SPAN_NOTICE("You [cut] [M]'s hair, but it doesn't quite look like what you had in mind! Maybe they wont notice?"))
@@ -744,10 +761,13 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 					switch(which_part)
 						if (BOTTOM_DETAIL)
 							M.bioHolder.mobAppearance.customizations["hair_bottom"].style = new_style
+							spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_bottom"].color)
 						if (MIDDLE_DETAIL)
 							M.bioHolder.mobAppearance.customizations["hair_middle"].style = new_style
+							spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_middle"].color)
 						if (TOP_DETAIL)
 							M.bioHolder.mobAppearance.customizations["hair_top"].style = new_style
+							spawn_hair_clipping(M, M.bioHolder.mobAppearance.customizations["hair_top"].color)
 
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
 		M.update_colorful_parts()
