@@ -1582,7 +1582,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 
 /turf/simulated/floor/grassify()
 	src.icon = 'icons/turf/outdoors.dmi'
-	src.icon_state = pick("grass_0", "grass_1", "grass_2", "grass_3")
+	src.icon_state = pick("grass", "grass_1", "grass_2", "grass_3")
 	src.UpdateIcon()
 	if(prob(30))
 		src.icon_state = pick("grass_p", "grass_w", "grass_b", "grass_y", "grass_r", "grass_a")
@@ -1592,7 +1592,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 
 /turf/unsimulated/floor/grassify()
 	src.icon = 'icons/turf/outdoors.dmi'
-	src.icon_state = pick("grass_0", "grass_1", "grass_2", "grass_3")
+	src.icon_state = pick("grass", "grass_1", "grass_2", "grass_3")
 	src.UpdateIcon()
 	if(prob(30))
 		src.icon_state = pick("grass_p", "grass_w", "grass_b", "grass_y", "grass_r", "grass_a")
