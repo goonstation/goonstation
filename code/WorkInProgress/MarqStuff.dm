@@ -861,7 +861,6 @@
 	item_state = "crossbow"
 	force = MELEE_DMG_PISTOL
 	can_dual_wield = TRUE // :getin:
-	two_handed = FALSE
 
 /obj/item/gun/bow/crossbow/update_icon(draw_fraction)
 	// do not call parent

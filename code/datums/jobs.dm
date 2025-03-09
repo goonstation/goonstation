@@ -3010,10 +3010,10 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	limit = 0
 	change_name_on_spawn = TRUE
 	slot_head = list(/obj/item/clothing/head/witchfinder)
-	slot_ears = list(/obj/item/device/radio/headset/ghost_buster/werewolf_hunter)
+	slot_ears = list(/obj/item/device/radio/headset/werewolf_hunter)
 	slot_suit = list(/obj/item/clothing/suit/witchfinder)
 	slot_jump = list(/obj/item/clothing/under/gimmick/witchfinder)
-	slot_glov = list(/obj/item/clothing/shoes/black)
+	slot_glov = list(/obj/item/clothing/gloves/black)
 	slot_foot = list(/obj/item/clothing/shoes/witchfinder)
 	slot_back = list(/obj/item/quiver/leather/stocked)
 	slot_belt = list(/obj/item/storage/belt/crossbow)
