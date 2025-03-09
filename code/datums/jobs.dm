@@ -3024,6 +3024,28 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			return
 		M.bioHolder.AddEffect("accent_goodmin", magical=1)
 
+/datum/job/special/werewolf_hunter
+	name = "Werewolf Hunter"
+	access_string = "Staff Assistant"
+	limit = 0
+	change_name_on_spawn = TRUE
+	slot_head = list(/obj/item/clothing/head/witchfinder)
+	slot_ears = list(/obj/item/device/radio/headset/ghost_buster/werewolf_hunter)
+	slot_suit = list(/obj/item/clothing/suit/witchfinder)
+	slot_jump = list(/obj/item/clothing/under/gimmick/witchfinder)
+	slot_glov = list(/obj/item/clothing/shoes/black)
+	slot_foot = list(/obj/item/clothing/shoes/witchfinder)
+	slot_back = list(/obj/item/quiver/leather/stocked)
+	slot_belt = list(/obj/item/storage/belt/crossbow)
+	items_in_belt = list(
+		/obj/item/gun/bow/crossbow/wooden,
+		/obj/item/gun/bow/crossbow/wooden,
+		/obj/item/handcuffs/silver,
+		/obj/item/handcuffs/silver,
+		/obj/item/plant/herb/aconite,
+		/obj/item/plant/herb/aconite,
+	)
+
 /*---------------------------------------------------------------*/
 
 /datum/job/created

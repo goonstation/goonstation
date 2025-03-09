@@ -5,6 +5,8 @@
 	var/mob/gunner = null
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/light/pod
 	var/firerate = 8
+	/// number of projectiles that are fired when weapon is fired
+	var/shots_to_fire = 1
 	/// change to a degree in angles to give custom spread
 	var/spread = -1
 	var/weapon_score = 0.1
@@ -138,6 +140,14 @@
 	current_projectile = new/datum/projectile/laser/light/pod
 	icon_state = "class-a"
 	muzzle_flash = "muzzle_flash_phaser"
+
+/obj/item/shipcomponent/mainweapon/phaser/burst_phaser
+	name = "Mk 1.5e Burst Phaser"
+	desc = "A variant of the Mk 1.5 Light Phaser that fires a stronger burst of 3 shots at a third of the firerate."
+	firerate = 2.4 SECONDS
+	shots_to_fire = 3
+	current_projectile = new/datum/projectile/laser/light/pod/burst
+	icon_state = "class-a-burst"
 
 /obj/item/shipcomponent/mainweapon/phaser/short
 	name = "Mk 1.45 Light Phaser"
@@ -1198,6 +1208,10 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	dissipation_rate = 1
 	dissipation_delay = 14
 	projectile_speed = 42
+
+/datum/projectile/laser/light/pod/burst
+	damage = 25
+	shot_delay = 0.2 SECONDS
 
 /datum/projectile/disruptor
 	impact_range = 4

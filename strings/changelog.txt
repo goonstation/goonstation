@@ -1,4 +1,21 @@
 
+(t)sat mar 08 25
+(u)FlameArrow57
+(p)22389
+(e)🆕🎨📦🚗|C-Feature, C-Sprites, A-Game-Objects, A-Vehicles
+(+)Added a new burst phaser pod weapon to pod manufacturers. Deals 5 more damage per bolt
+(u)cringe
+(p)22489
+(e)|
+(*)You can now make cryogenic cells at a high cost.
+(u)Facsimile
+(p)22298
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Adds supply packs to cargo for the Player Piano, Piano, and Grand Piano.
+(u)JORJ949
+(p)22493
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Added barbershop kit to list of cargo orders.
 (t)wed mar 05 25
 (u)glowbold
 (p)22457

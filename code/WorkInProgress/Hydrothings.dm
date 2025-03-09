@@ -984,7 +984,7 @@
 			break
 
 	attackby(obj/item/W, mob/living/user) //ARRRRGH WHY
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		var/attack_force = 0
 		var/damage_type = "brute"
@@ -1039,7 +1039,7 @@
 		src.task = "chasing"
 
 	attack_hand(var/mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (!src.alive)
 			..()
 			return
