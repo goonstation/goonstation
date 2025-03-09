@@ -184,3 +184,8 @@
 	icon_state = "buddycuff"
 	m_amt = 0
 	strength = 1
+
+/obj/item/handcuffs/silver
+/obj/item/handcuffs/silver/New()
+	. = ..()
+	src.setMaterial(getMaterial("silver"))
