@@ -2312,6 +2312,22 @@
 		update_bodypart(part = "head")
 		return 1
 
+	verb/cmd_pick_scream()
+		set category = "Robot Commands"
+		set name = "Change scream"
+
+		var/scream = tgui_input_list(usr, "Select a scream sound", "Scream settings", list("scream 1", "scream 2"))
+		if (!scream) return 0
+		var/mob/living/user = usr
+
+		switch (scream)
+			if ("scream 1")
+				user.sound_scream = 'sound/voice/screams/robot_scream.ogg'
+			if ("scream 2")
+				user.sound_scream = 'sound/voice/screams/Robot_Scream_2.ogg'
+		return 1
+
+
 	verb/access_internal_pda()
 		set category = "Robot Commands"
 		set name = "Cyborg PDA"
