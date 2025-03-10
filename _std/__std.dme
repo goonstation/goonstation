@@ -55,6 +55,7 @@
 #include "defines\crew_credits.dm"
 #include "defines\critter.dm"
 #include "defines\data_input.dm"
+#include "defines\decal.dm"
 #include "defines\dialogue.dm"
 #include "defines\dmm_suite.dm"
 #include "defines\door.dm"
