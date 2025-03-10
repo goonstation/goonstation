@@ -495,18 +495,15 @@
 		if (src.byond_version < 515 || src.byond_build < 1633)
 			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
 			if (tgui_alert(src, "Consider UPDATING BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the stable release.", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("https://www.byond.com/download/build/515/")
+				src << link("https://www.byond.com/download")
 			// kick out of date clients
 			tgui_alert(src, "Version enforcement is enabled, you will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 30 SECONDS)
 			tgui_process.close_user_uis(src.mob)
 			del(src)
 			return
-		if (src.byond_version == 516)
-			if (tgui_alert(src, "We are still working on full support for BYOND 516, so you may encounter bugs! For the best experience, please downgrade to BYOND 515.1647. Would you like to visit the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("https://www.byond.com/download/build/515/")
 		if (src.byond_version >= 517)
-			if (tgui_alert(src, "You have connected with an unsupported BYOND client version, and you may encounter major issues. For the best experience, please downgrade to BYOND 515.1647. Would you like to visit the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("https://www.byond.com/download/build/515/")
+			if (tgui_alert(src, "You have connected with an unsupported BYOND beta version, and you may encounter major issues. For the best experience, please downgrade BYOND to the current stable release. Would you like to visit the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
+				src << link("https://www.byond.com/download")
 #endif
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
