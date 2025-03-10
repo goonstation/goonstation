@@ -857,3 +857,27 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
 			return
 		src.clear_overlays(M)
 		src.generate_overlays(M)
+
+/obj/item/clothing/glasses/eyestrain
+	name = "blue-light filtering glasses"
+	desc = "A pair of glasses that reduce eye-strain from staring a computer screen all shift."
+	icon_state = "oglasses"
+	// would be nice if these tinted TGUI
+
+	color_r = 1
+	color_g = 0.9
+	color_b = 0.8
+
+	equipped(mob/user, slot)
+		..()
+		var/mob/living/carbon/human/H = user
+		if(istype(H) && slot == SLOT_GLASSES)
+			if(H.client)
+				user.apply_color_matrix(COLOR_MATRIX_BLUELIGHT, COLOR_MATRIX_BLUELIGHT_LABEL)
+
+	unequipped(mob/user, slot)
+		..()
+		var/mob/living/carbon/human/H = user
+		if(istype(H))
+			if (H.client)
+				user.remove_color_matrix(COLOR_MATRIX_BLUELIGHT_LABEL)
