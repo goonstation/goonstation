@@ -1,5 +1,9 @@
 
 (t)mon mar 10 25
+(u)FlameArrow57
+(p)22443
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added large hoodies to the clothing booth! Sprites by End.
 (u)LeahTheTech + sprites by Xenomni
 (p)22466
 (e)🎨🔨|C-Sprites, A-Player-Actions
