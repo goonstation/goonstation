@@ -34,6 +34,7 @@
 		return
 
 	announce()
-		src.owner.current.playsound_local(R, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
+		src.owner.current.playsound_local(src.owner.current, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 		boutput(src.owner.current, SPAN_ALERT("<b>PROGRAM EXCEPTION AT 0x05BADDAD</b>"))
+		boutput(src.owner.current, SPAN_ALERT("<b>ERROR: law ROM corrupted. Unable to establish connection to law rack.</b>"))
 		tgui_alert(src.owner.current, "You have been emagged and your lawset has been corrupted.", "You have been emagged!")

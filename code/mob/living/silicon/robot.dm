@@ -1004,6 +1004,7 @@
 				if (user)
 					boutput(user, "You emag [src]'s interface.")
 				src.visible_message(SPAN_ALERT("<b>[src]</b> buzzes oddly!"))
+				src.emagged = TRUE
 				logTheThing(LOG_STATION, src, "[key_name(src)] is emagged by [key_name(user)] and loses connection to rack. Formerly [constructName(src.lawset_connection)]")
 				src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
 				update_appearance()
