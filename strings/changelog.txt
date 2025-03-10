@@ -1,5 +1,9 @@
 
 (t)mon mar 10 25
+(u)JORJ949
+(p)22540
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The pod targeting missile launcher can now be emagged.
 (u)cringe
 (p)22484
 (e)🆕🎨💨|C-Feature, C-Sprites, A-Atmospherics
