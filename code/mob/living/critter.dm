@@ -1701,3 +1701,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 
 	is_heat_resistant()
 		return TRUE
+
+	nauseate(stacks)
+		return

@@ -2443,6 +2443,7 @@ proc/broadcast_to_all_gangs(var/message)
 		playsound(H.loc, 'sound/misc/meat_plop.ogg', 30, 0)
 		H.reagents.reaction(get_turf(H.loc),TOUCH, H.reagents.total_volume)
 		H.vomit()
+		H.nauseate(6)
 		//un-kill organs
 		for (var/organ_slot in H.organHolder.organ_list)
 			var/obj/item/organ/O = H.organHolder.organ_list[organ_slot]
