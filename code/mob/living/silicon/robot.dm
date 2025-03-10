@@ -2327,7 +2327,6 @@
 				user.sound_scream = 'sound/voice/screams/Robot_Scream_2.ogg'
 		return 1
 
-
 	verb/access_internal_pda()
 		set category = "Robot Commands"
 		set name = "Cyborg PDA"
