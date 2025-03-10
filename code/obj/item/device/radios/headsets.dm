@@ -113,13 +113,15 @@
 	icon_tooltip = "Artificial Intelligence"
 
 /obj/item/device/radio/headset/command/nt
-	name = "\improper NT headset"
+	name = "\improper Corporate headset"
 	desc = "Issued to NanoTrasen ancillaries, this radio headset can access several secure radio channels."
 	secure_frequencies = list(
+		"t" = R_FREQ_CORPORATE,
 		"h" = R_FREQ_COMMAND,
 		"g" = R_FREQ_SECURITY,
 		)
 	secure_classes = list(
+		"t" = RADIOCL_CORPORATE,
 		"h" = RADIOCL_COMMAND,
 		"g" = RADIOCL_SECURITY,
 		)
@@ -132,10 +134,12 @@
 /obj/item/device/radio/headset/command/nt/engineer
 	icon_tooltip = "Nanotrasen Emergency Repair Technician"
 	secure_frequencies = list(
+		"t" = R_FREQ_CORPORATE,
 		"h" = R_FREQ_COMMAND,
 		"e" = R_FREQ_ENGINEERING,
 		)
 	secure_classes = list(
+		"t" = RADIOCL_CORPORATE,
 		"h" = RADIOCL_COMMAND,
 		"e" = RADIOCL_ENGINEERING,
 		)
@@ -143,10 +147,12 @@
 /obj/item/device/radio/headset/command/nt/medic
 	icon_tooltip = "Nanotrasen Emergency Medic"
 	secure_frequencies = list(
+		"t" = R_FREQ_CORPORATE,
 		"h" = R_FREQ_COMMAND,
 		"m" = R_FREQ_MEDICAL,
 		)
 	secure_classes = list(
+		"t" = RADIOCL_CORPORATE,
 		"h" = RADIOCL_COMMAND,
 		"m" = RADIOCL_MEDICAL,
 		)
@@ -156,6 +162,14 @@
 	desc = "A radio headset capable of communicating over the Command frequency, for use by official Inspectors."
 	icon_override = "inspector"
 	icon_tooltip = "Inspector"
+	secure_frequencies = list(
+		"t" = R_FREQ_CORPORATE,
+		"h" = R_FREQ_COMMAND,
+		)
+	secure_classes = list(
+		"t" = RADIOCL_CORPORATE,
+		"h" = RADIOCL_COMMAND,
+		)
 
 /obj/item/device/radio/headset/command/captain
 	name = "captain's headset"
@@ -454,14 +468,15 @@
 /obj/item/device/radio/headset/command/nt/commander
 	name = "\improper NT Commander's headset"
 	desc = "Issued to NanoTrasen Commanders, this radio headset can access several secure radio channels."
-	icon_state = "command headset"
 	secure_frequencies = list(
+		"t" = R_FREQ_CORPORATE,
 		"h" = R_FREQ_COMMAND,
-		"g" = R_FREQ_SECURITY
+		"g" = R_FREQ_SECURITY,
 		)
 	secure_classes = list(
+		"t" = RADIOCL_CORPORATE,
 		"h" = RADIOCL_COMMAND,
-		"g" = RADIOCL_SECURITY
+		"g" = RADIOCL_SECURITY,
 		)
 	icon_override = "ntboss"
 	icon_tooltip = "Nanotrasen Commander"

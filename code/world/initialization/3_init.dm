@@ -81,6 +81,7 @@
 		"[R_FREQ_RESEARCH]" = "Research",
 		"[R_FREQ_MEDICAL]" = "Medical",
 		"[R_FREQ_ENGINEERING]" = "Engineering",
+		"[R_FREQ_CORPORATE]" = "Corporate",
 		"[R_FREQ_COMMAND]" = "Command",
 		"[R_FREQ_SECURITY]" = "Security",
 		"[R_FREQ_CIVILIAN]" = "Civilian",
