@@ -1877,7 +1877,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	shot_delay = 1 SECONDS
 	var/explosion_power = 15
 
-	on_hit(atom/hit)
+	on_hit(atom/hit, angle, obj/projectile/P)
 		var/turf/T = get_turf(hit)
 		if (T)
 			for (var/mob/living/carbon/human/M in view(hit, 2))
@@ -1891,11 +1891,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 
 			T.hotspot_expose(700,125)
 			explosion_new(null, T, src.explosion_power, range_cutoff_fraction = 0.45)
-		return
-
-	is_valid_target(atom/A, obj/projectile/P)
-		. = ..()
-		return . && isliving(A) && !isintangible(A)
+			P.die()
 
 /datum/projectile/bullet/homing/rocket/gunbot_drone
 	max_rotation_rate = 5
@@ -1903,9 +1899,9 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	start_speed = 15
 	explosion_power = 5
 
-	is_valid_target(mob/M, obj/projectile/P)
+	is_valid_target(atom/A, obj/projectile/P)
 		. = ..()
-		return . || isvehicle(M)
+		return . && (isvehicle(A) || isliving(A) && !isintangible(A))
 
 /datum/projectile/bullet/homing/rocket/mrl
 	name = "MRL rocket"
@@ -1913,6 +1909,19 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	is_valid_target(mob/M, obj/projectile/P)
 		. = ..()
 		return . && isliving(M) && !isintangible(M)
+
+/datum/projectile/bullet/homing/rocket/salvo
+	name = "Salvo Rocket"
+	max_rotation_rate = 5
+	dissipation_delay = 30
+	start_speed = 15
+	explosion_power = 1
+	shot_delay = 0.3 SECONDS
+	var/initial_projectile = TRUE
+
+	is_valid_target(atom/A, obj/projectile/P)
+		. = ..()
+		return . && (isvehicle(A) || isliving(A) && !isintangible(A))
 
 /datum/projectile/bullet/homing/pod_seeking_missile
 	name = "pod-seeking missile"
