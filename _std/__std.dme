@@ -75,6 +75,7 @@
 #include "defines\invisibility.dm"
 #include "defines\jobs.dm"
 #include "defines\landmarks.dm"
+#include "defines\lawrack.dm"
 #include "defines\layer.dm"
 #include "defines\life.dm"
 #include "defines\lighting.dm"
