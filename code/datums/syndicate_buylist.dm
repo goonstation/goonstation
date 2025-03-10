@@ -1027,10 +1027,11 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/syndicate_radio_upgrade
-	name = "Syndicate Radio Upgrade"
-	items = list(/obj/item/device/radio_upgrade/syndicatechannel)
+	name = "Syndicate Radio Upgrades"
+	items = list(/obj/item/device/radio_upgrade/syndicatechannel,
+				/obj/item/device/radio_upgrade/syndicatechannel)
 	cost = 1
-	desc = "A small device that may be installed in a headset to grant access to a radio channel reserved for Syndicate operatives."
+	desc = "A pair of small devices that may be installed in a headset to grant access to a secure radio channel reserved for Syndicate operatives."
 	vr_allowed = FALSE
 	can_buy = UPLINK_TRAITOR
 
