@@ -645,8 +645,14 @@
 
 	//tg controls end
 
-	use_chui = winget( src, "menu.use_chui", "is-checked" ) == "true"
-	use_chui_custom_frames = winget( src, "menu.use_chui_custom_frames", "is-checked" ) == "true"
+	if (src.byond_version >= 516)
+		use_chui = FALSE
+		winset(src, "use_chui", "is-checked=false")
+		use_chui_custom_frames = FALSE
+		winset(src, "use_chui_custom_frames", "is-checked=false")
+	else
+		use_chui = winget( src, "menu.use_chui", "is-checked" ) == "true"
+		use_chui_custom_frames = winget( src, "menu.use_chui_custom_frames", "is-checked" ) == "true"
 
 	//wow its the future we can choose between 3 fps values omg
 	if (winget( src, "menu.fps_chunky", "is-checked" ) == "true")
@@ -1413,6 +1419,10 @@ var/global/curr_day = null
 /client/verb/set_chui()
 	set hidden = 1
 	set name = "set-chui"
+	if (byond_version >= 516)
+		tgui_alert(mob, "Error: Chui is deprecated in BYOND 516+ and cannot be enabled.", "Chui Deprecation")
+		winset(src, "use_chui", "is-checked=false")
+		return
 	if (src.use_chui)
 		src.use_chui = 0
 	else
@@ -1421,6 +1431,10 @@ var/global/curr_day = null
 /client/verb/set_chui_custom_frames()
 	set hidden = 1
 	set name = "set-chui-custom-frames"
+	if (byond_version >= 516)
+		tgui_alert(mob, "Error: Chui is deprecated in BYOND 516+ and cannot be enabled.", "Chui Deprecation")
+		winset(src, "use_chui_custom_frames", "is-checked=false")
+		return
 	if (src.use_chui_custom_frames)
 		src.use_chui_custom_frames = 0
 	else
