@@ -2549,6 +2549,15 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			return
 		..()
 
+	emag_act(mob/user)
+		var/datum/component/holdertargeting/smartgun/homing/pod/targeting_comp = src.GetComponent(/datum/component/holdertargeting/smartgun/homing/pod)
+		if(istype(targeting_comp, /datum/component/holdertargeting/smartgun/homing/pod/emagged))
+			boutput(user, SPAN_ALERT("[src]'s targeting system is already malfunctioning!"))
+		else
+			qdel(targeting_comp)
+			AddComponent(/datum/component/holdertargeting/smartgun/homing/pod/emagged, 1)
+			boutput(user, SPAN_ALERT("You short circuit [src]'s targeting circuit!"))
+
 	proc/set_collapsed_state(var/collapsed)
 		if (src.setTwoHanded(!collapsed))
 			src.collapsed = collapsed
