@@ -1,6 +1,6 @@
 TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	mats = list("cobryl" = 100,
-				"glass" = 50,
+				"crystal" = 50,
 				"energy_high" = 20)
 /obj/machinery/atmospherics/unary/cryo_cell
 	name = "cryogenic healing pod"
