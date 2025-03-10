@@ -1,4 +1,11 @@
 
+(t)mon mar 10 25
+(u)LeahTheTech + sprites by Xenomni
+(p)22466
+(e)🎨🔨|C-Sprites, A-Player-Actions
+(*)Most sources of instant vomiting will now instead give you a stacking "nausea" debuff, with a vomit and a short stun at the end. Please report any issues with chemical/other balance cause by this.
+(+)Eating low quality food will now give you nausea stacks and only give you food poisoning if you eat several bites of really nasty food.
+(+)Food poisoning will go away on its own more often.
 (t)sat mar 08 25
 (u)FlameArrow57
 (p)22389
