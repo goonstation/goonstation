@@ -1,5 +1,9 @@
 
 (t)mon mar 10 25
+(u)glowbold
+(p)22536
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Quickhacks are now marked as contraband.
 (u)JORJ949
 (p)22540
 (e)🆕📦|C-Feature, A-Game-Objects
