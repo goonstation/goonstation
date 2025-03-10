@@ -2502,6 +2502,7 @@ proc/broadcast_to_all_gangs(var/message)
 	throwforce = 1
 	force = 1
 	w_class = W_CLASS_TINY
+	contraband = 2
 	var/max_charges = 5
 	var/charges = 5
 
@@ -2596,7 +2597,7 @@ proc/broadcast_to_all_gangs(var/message)
 	category = "Country Western"
 /datum/gang_item/space
 	category = "Space Gang"
-/datum/gang_item/space
+/datum/gang_item/weapon
 	category = "Weapon"
 /datum/gang_item/equipment
 	category = "Consumable"
