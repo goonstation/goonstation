@@ -1,0 +1,100 @@
+minor@=
+	Public urination.
+	Reading highly confidential private information.
+	Vandalism.
+	Illegal manufacturing of space goods.
+	Tresspassing.
+	Killing a monkey.
+	Negligence.
+	Pushing down and farting on a member of security.
+	Throwing a toolbox at a member of security.
+	Being drunk.
+	Being high.
+	Excessive force.
+	Impersonating a security officer.
+	Stealing shoes.
+	Littering.
+	Existing.
+	Illegal haircutting.
+	Staring at a bee for over an hour.
+	Not showering before entering pool.
+	Rampant idiocy.
+	Never tipping the catering staff.
+	Disregarding previous tickets.
+	Fashion crimes.
+	Gambling.
+	Bribery.
+	Sleeping on the job.
+	Unauthorized stamp collecting.
+	Refusing to wash their hands.
+	Maintenance lurking.
+	Dumpster diving.
+	Not covering their mouth when sneezing.
+	Open mouth chewing.
+	Riding pods without a license.
+	Breathing loudly.
+	Riding a segway directly into the captain.
+	Wearing their shirt backwards.
+	Excessive swearing
+	Cutting in line.
+	Tying the captain's shoelaces together.
+	Forgetting the captain's birthday.
+minor_targeted@=
+	Breaking into $HUMAN's house.
+	Burgled $HUMAN's house.
+	Calling $MOB mean names.
+	Cyberbullied $MOB.
+	Drawing on $HUMAN's face while they were sleeping.
+	Eating $HUMAN's appendix after surgery.
+	Forging $HUMAN's signature on divorce papers.
+	Giving $HUMAN a RIDICULOUS haircut.
+	Kept throwing rocks at $MOB.
+	Leaving the stove on in $HUMAN's home.
+	Pickpocketed $HUMAN.
+	Placing a kick me sign on $HUMAN's back.
+	Pushed $HUMAN into a disposal chute.
+	Put $ROBOT through a boot loop.
+	Shoved $HUMAN to the ground and farted in their face.
+	Slipped $HUMAN out of an airlock with a banana peel.
+	Slipped $HUMAN with a banana peel.
+	Stealing $ROBOT's wig.
+	Stole $HUMAN's lunch from the company fridge.
+	Tying $HUMAN's shoelaces together PERMANENTLY!
+	Watching a really scary movie in vicinity of $MOB.
+	Wearing the same outfit as $HUMAN to the work luncheon.
+major@=
+	Grand theft apidae.
+	Bee murder.
+	Superfarted on the captain.
+	Released the singularity.
+	Stole the captain's spare ID.
+	Arson, murder, jaywalking.
+	Arson.
+	Murder.
+	Jaywalking.
+	Skating right through the bounds of real-space. Wicked sick, but highly illegal.
+	Being a really really bad surgeon.
+	Distributing meth.
+	Dismemberment and decapitation.
+	Running around with a chainsaw.
+	Throwing explosive tomatoes at people.
+	Caused multiple seemingly unrelated accidents.
+	Dabbing.
+	Assembling explosives.
+	Being in the wrong place at the wrong time.
+	Assault.
+	Over-escalation.
+	Manslaughter
+	Refusing to share their meth.
+	Grand larceny.
+major_targeted@=
+	Asking $ROBOT to divide by zero.
+	Burning down $HUMAN's house.
+	Dropping a grand piano onto $MOB.
+	Hit $MOB in a vehicular accident.
+	Running over $MOB with a forklift while not certified.
+	Lighting $MOB's hair on fire.
+	Poisoned $HUMAN's lunch.
+	Slipped $HUMAN out of an airlock with a banana peel.
+	Stole $HUMAN's identity.
+	Tossing $MOB into space.
