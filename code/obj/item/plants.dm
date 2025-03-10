@@ -1,5 +1,6 @@
 #define HERB_SMOKE_TRANSFER_HARDCAP 20
 #define HERB_HOTBOX_MULTIPLIER 1.2
+// note: flowers that aren't in here are most likely wearable variants, and are in the clothing folder
 
 ABSTRACT_TYPE(/obj/item/plant)
 /// Inedible Produce
@@ -10,8 +11,11 @@ ABSTRACT_TYPE(/obj/item/plant)
 	desc = "You shouldn't be able to see this item ingame!"
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	rand_pos = 1
+	var/can_bouquet = FALSE
 
 	New()
+		if (can_bouquet)
+			src.AddComponent(/datum/component/bouquet)
 		..()
 		make_reagents()
 
@@ -207,6 +211,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	desc = "Never eat shredded wheat."
 	icon_state = "wheat"
 	brew_result = list("beer"=20)
+	can_bouquet = TRUE
 
 /obj/item/plant/wheat/durum
 	name = "durum wheat"
@@ -228,6 +233,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	name = "oat"
 	desc = "A bland but healthy cereal crop. Good source of fiber."
 	icon_state = "oat"
+	can_bouquet = TRUE
 
 /obj/item/plant/oat/salt
 	name = " salted oat"
@@ -245,6 +251,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	name = "grass"
 	desc = "Fresh free-range spacegrass."
 	icon_state = "grass"
+	can_bouquet = TRUE
 
 	attack_hand(mob/user)
 		. = ..()
@@ -395,12 +402,14 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	desc = "Otherwise known as catnip or catswort.  Cat drugs."
 	icon_state = "catnip"
 	brew_result = list("catdrugs"=20)
+	can_bouquet = TRUE
 
 /obj/item/plant/herb/poppy
 	name = "poppy"
 	crop_suffix	= ""
 	desc = "A distinctive red flower."
 	icon_state = "poppy"
+	can_bouquet = TRUE
 
 /obj/item/plant/herb/poppy/spawnable
 	make_reagents()
@@ -486,6 +495,7 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 	name = "rose"
 	desc = "By any other name, would smell just as sweet. This one likes to be called "
 	icon_state = "rose"
+	can_bouquet = TRUE
 	var/thorned = TRUE
 	var/backup_name_txt = "names/first.txt"
 
