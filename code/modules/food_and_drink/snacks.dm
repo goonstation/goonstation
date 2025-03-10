@@ -795,11 +795,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				if (H.bioHolder.HasEffect("accent_swedish"))
 					return
 				boutput(H, SPAN_ALERT("[stinkString()]"), "stink_message")
-				if(prob(30))
-					H.changeStatus("stunned", 2 SECONDS)
-					boutput(H, SPAN_ALERT("[stinkString()]"), "stink_message")
-					var/vomit_message = SPAN_ALERT("[H] vomits, unable to handle the fishy stank!")
-					H.vomit(0, null, vomit_message)
+				H.nauseate(1)
 
 	disposing()
 		processing_items.Remove(src)

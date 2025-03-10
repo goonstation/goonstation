@@ -446,6 +446,7 @@
 				if(2)
 					boutput(M, SPAN_ALERT("Good grief, that tasted awful!"))
 					M.take_toxin_damage(2)
+					M.nauseate(3)
 				if(3)
 					boutput(M, SPAN_ALERT("There was a cyst in that burger. Now your mouth is full of pus OH JESUS THATS DISGUSTING OH FUCK"))
 					var/vomit_message = SPAN_ALERT("[M.name] suddenly and violently vomits!")
