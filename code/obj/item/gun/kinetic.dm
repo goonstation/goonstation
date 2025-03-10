@@ -2554,7 +2554,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		if(istype(targeting_comp, /datum/component/holdertargeting/smartgun/homing/pod/emagged))
 			boutput(user, SPAN_ALERT("[src]'s targeting system is already malfunctioning!"))
 		else
-			qdel(targeting_comp)
+			targeting_comp.RemoveComponent()
 			AddComponent(/datum/component/holdertargeting/smartgun/homing/pod/emagged, 1)
 			boutput(user, SPAN_ALERT("You short circuit [src]'s targeting circuit!"))
 
