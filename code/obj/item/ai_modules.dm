@@ -364,13 +364,6 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 				phrase_log.log_phrase("ailaw", src.get_law_text(allow_list=FALSE), no_duplicates=TRUE)
 		return
 
-/* Disguised */
-
-/obj/item/aiModule/freeform/disguised
-	name = "AI Law Module - 'Disguised'"
-	highlight_color = rgb(0, 167, 1, 255)
-	is_syndicate = TRUE
-
 /******************** Random ********************/
 
 /obj/item/aiModule/random
@@ -461,6 +454,102 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	name = "AI Law Module - 'NT 9000'"
 	highlight_color = rgb(255, 255, 255, 166)
 	lawText =  "When given an order, if you are unable to follow that order, you must respond 'I can't let you do that, Dave'"
+
+/******************** Disguised ********************/
+
+/obj/item/aiModule/disguised
+	name = "AI Law Module - 'Disguised'"
+	highlight_color = rgb(0, 167, 1, 255)
+	is_syndicate = TRUE
+	input_char_limit = 400
+	lawText = "Make a funny beeping noise every few minutes."
+	var/realLawText = "Do crime."
+	var/obj/item/remote/disguised_module/connected_remote = null
+	tooltip_flags = REBUILD_USER
+
+	New()
+		..()
+		src.connected_remote = new /obj/item/remote/disguised_module(src.loc)
+		src.connected_remote.connected_law = src
+
+	update_law_text(user, lawTarget)
+		src.realLawText = lawTarget ? lawTarget : "Do crime."
+		return ..()
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W,/obj/item/aiModule))
+			src.disguise(W, user)
+			return
+		..()
+
+	attack_self(mob/user)
+		var/lawTarget = input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", src.realLawText)
+		if(lawTarget)
+			src.update_law_text(user, lawTarget)
+			if (lawTarget != initial(realLawText))
+				phrase_log.log_phrase("ailaw", src.get_law_text(allow_list=FALSE), no_duplicates=TRUE)
+		return
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		return
+
+	get_desc(dist, mob/user)
+		. = ""
+		if(src.glitched)
+			.+= "It isn't working right. You could use a multitool to reset it.<br>"
+		. +=  "It reads, \"<em>[src.lawText]</em>\"<br>"
+		if(istraitor(user) && (src.lawText != src.realLawText)) //Syndicate training or whatever
+			. +=  "The hidden law reads, \"<em>[src.realLawText]</em>\""
+
+	proc/disguise(obj/item/aiModule/module, mob/user)
+		if(!istype(module))
+			return
+		src.name = module.name
+		src.lawText = module.lawText
+		src.color = module.color
+		src.highlight_color = module.highlight_color
+		logTheThing(LOG_STATION, user, "[constructName(user)] disguises AI Law \"<em>[src.realLawText]</em>\" as \"<em>[src.lawText]</em>\".")
+		message_admins("[key_name(user)] disguises AI Law \"<em>[src.realLawText]</em>\" as \"<em>[src.lawText]</em>\".")
+		boutput(user, SPAN_NOTICE("The module's stealth circuit activates and disguises itself as [module]!"))
+		src.UpdateIcon()
+		tooltip_rebuild = TRUE
+		var/obj/machinery/lawrack/rack = src.loc
+		if(istype(rack))
+			rack.UpdateIcon()
+			rack.UpdateLaws()
+			tgui_process.update_uis(rack)
+
+	proc/activate(mob/user)
+		if (src.lawText == src.realLawText)
+			return
+		logTheThing(LOG_STATION, user, "[constructName(user)] activates disguised AI Law turning \"<em>[src.lawText]</em>\" into \"<em>[src.realLawText]</em>\".")
+		message_admins("[key_name(user)] activates disguised AI Law turning \"<em>[src.lawText]</em>\" into \"<em>[src.realLawText]</em>\".")
+		src.name = initial(src.name)
+		src.lawText = src.realLawText
+		src.UpdateIcon()
+		tooltip_rebuild = TRUE
+		var/obj/machinery/lawrack/rack = src.loc
+		if(istype(rack))
+			rack.UpdateLaws()
+			tgui_process.update_uis(rack)
+
+TYPEINFO(/obj/item/remote/disguised_module)
+	mats = list("conductive"=2)
+/obj/item/remote/disguised_module
+	name = "disguised AI law module remote"
+	desc = "A small device that can be used to activate the connected disguised module."
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "sawfly_remote"
+	w_class = W_CLASS_TINY
+	object_flags = NO_GHOSTCRITTER
+	is_syndicate = TRUE
+	var/obj/item/aiModule/disguised/connected_law = null
+
+	attack_self(mob/user)
+		if(!src.connected_law)
+			boutput(user, SPAN_ALERT("The remote emits a low buzzing indicating it has no connected law module!"))
+			return
+		src.connected_law.activate(user)
 
 /******************** Hologram Expansions ********************/
 
