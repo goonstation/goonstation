@@ -1,5 +1,9 @@
 
 (t)mon mar 10 25
+(u)FlameArrow57
+(p)22373
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(+)The debris field X-drone may instead appear as an assault laser drone.
 (u)glowbold
 (p)22536
 (e)⚖📦|C-Balance, A-Game-Objects
