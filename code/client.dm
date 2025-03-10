@@ -313,6 +313,10 @@
 				del(src)
 			return
 
+	// Record a login, sets player.id, which is used by almost every future API call for a player
+	// So we need to do this early, and outside of a spawn
+	src.player.record_login()
+
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
 	var/list/checkBan = bansHandler.check(src.ckey, src.computer_id, src.address)
 
@@ -354,10 +358,6 @@
 		//Load custom chat
 		SPAWN(-1)
 			src.chatOutput.start()
-
-	// Record a login, sets player.id, which is used by almost every future API call for a player
-	// So we need to do this early, and outside of a spawn
-	src.player.record_login()
 
 	//admins and mentors can enter a server through player caps.
 	var/admin_status = init_admin()
