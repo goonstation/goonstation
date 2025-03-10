@@ -12,7 +12,7 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (!src.donor.regens_blood)
+		if (HAS_ATOM_PROPERTY(src.donor, PROP_MOB_NO_BLOOD_REGEN))
 			return
 		if (donor.blood_volume < 500 && donor.blood_volume > 0) // if we're full or empty, don't bother v
 			if (prob(66))
