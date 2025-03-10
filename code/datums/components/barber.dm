@@ -659,12 +659,11 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	proc/spawn_hair_clipping(var/mob/living/carbon/human/M, var/color)
 		if (!M || !M.loc)
 			return
-		else
-			var/obj/decal/cleanable/hair/O = new(M.loc)
+		var/obj/decal/cleanable/hair/hair = new(M.loc)
 
-			if (color)
-				O.color = color
-				O.update_color()
+		if (color)
+			hair.color = color
+			hair.update_color()
 
 
 	New(var/mob/living/carbon/human/barbee, var/mob/living/carbon/human/barber, var/succ, var/nustyle, var/whichp)
