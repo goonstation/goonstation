@@ -550,7 +550,7 @@
 					message = "<b>[src]</b> birdwells."
 
 			if ("scream")
-				if (src.emote_check(voluntary, 50))
+				if (src.emote_check(voluntary, src.scream_instrument.note_time))
 					var/note_index = src.scream_note
 					if (istext(src.scream_note))
 						note_index = src.scream_instrument.notes.Find(src.scream_note)

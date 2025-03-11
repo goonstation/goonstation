@@ -962,6 +962,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	icon_state = "scream_synth"
 	pick_random_note = TRUE
 	sounds_instrument = list('sound/voice/screams/robot_scream.ogg', 'sound/voice/screams/Robot_Scream_2.ogg')
+	note_time = 5 SECONDS
 
 	attack_self(mob/user)
 		return //no imitating borg screams
