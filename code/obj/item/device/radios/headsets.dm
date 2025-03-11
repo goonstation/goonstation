@@ -113,15 +113,15 @@
 	icon_tooltip = "Artificial Intelligence"
 
 /obj/item/device/radio/headset/command/nt
-	name = "\improper Corporate headset"
+	name = "\improper NanoTrasen headset"
 	desc = "Issued to NanoTrasen ancillaries, this radio headset can access several secure radio channels."
 	secure_frequencies = list(
-		"t" = R_FREQ_CORPORATE,
+		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
 		"g" = R_FREQ_SECURITY,
 		)
 	secure_classes = list(
-		"t" = RADIOCL_CORPORATE,
+		"n" = RADIOCL_NANOTRASEN,
 		"h" = RADIOCL_COMMAND,
 		"g" = RADIOCL_SECURITY,
 		)
@@ -134,12 +134,12 @@
 /obj/item/device/radio/headset/command/nt/engineer
 	icon_tooltip = "Nanotrasen Emergency Repair Technician"
 	secure_frequencies = list(
-		"t" = R_FREQ_CORPORATE,
+		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
 		"e" = R_FREQ_ENGINEERING,
 		)
 	secure_classes = list(
-		"t" = RADIOCL_CORPORATE,
+		"n" = RADIOCL_NANOTRASEN,
 		"h" = RADIOCL_COMMAND,
 		"e" = RADIOCL_ENGINEERING,
 		)
@@ -147,12 +147,12 @@
 /obj/item/device/radio/headset/command/nt/medic
 	icon_tooltip = "Nanotrasen Emergency Medic"
 	secure_frequencies = list(
-		"t" = R_FREQ_CORPORATE,
+		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
 		"m" = R_FREQ_MEDICAL,
 		)
 	secure_classes = list(
-		"t" = RADIOCL_CORPORATE,
+		"n" = RADIOCL_NANOTRASEN,
 		"h" = RADIOCL_COMMAND,
 		"m" = RADIOCL_MEDICAL,
 		)
@@ -163,11 +163,11 @@
 	icon_override = "inspector"
 	icon_tooltip = "Inspector"
 	secure_frequencies = list(
-		"t" = R_FREQ_CORPORATE,
+		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
 		)
 	secure_classes = list(
-		"t" = RADIOCL_CORPORATE,
+		"n" = RADIOCL_NANOTRASEN,
 		"h" = RADIOCL_COMMAND,
 		)
 
@@ -469,12 +469,12 @@
 	name = "\improper NT Commander's headset"
 	desc = "Issued to NanoTrasen Commanders, this radio headset can access several secure radio channels."
 	secure_frequencies = list(
-		"t" = R_FREQ_CORPORATE,
+		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
 		"g" = R_FREQ_SECURITY,
 		)
 	secure_classes = list(
-		"t" = RADIOCL_CORPORATE,
+		"n" = RADIOCL_NANOTRASEN,
 		"h" = RADIOCL_COMMAND,
 		"g" = RADIOCL_SECURITY,
 		)
