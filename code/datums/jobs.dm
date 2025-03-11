@@ -1409,7 +1409,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	wages = PAY_IMPORTANT
 	trait_list = list("training_medical", "training_partysurgeon")
 	access_string = "Medical Specialist"
-	slot_card = /obj/item/card/id/research
+	slot_card = /obj/item/card/id/medical
 	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_back = list(/obj/item/storage/backpack/medic)
@@ -1675,7 +1675,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	linkcolor = MEDICAL_LINK_COLOR
 	trait_list = list("training_medical")
 	access_string = "Pharmacist"
-	slot_card = /obj/item/card/id/research
+	slot_card = /obj/item/card/id/medical
 	slot_belt = list(/obj/item/device/pda2/medical)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/shirt_pants)
@@ -1719,7 +1719,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	wages = PAY_DOCTORATE
 	access_string = "Psychiatrist"
 	slot_eyes = list(/obj/item/clothing/glasses/regular)
-	slot_card = /obj/item/card/id/research
+	slot_card = /obj/item/card/id/medical
 	slot_belt = list(/obj/item/device/pda2/medical)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/shirt_pants)
