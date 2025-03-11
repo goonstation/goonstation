@@ -868,16 +868,3 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
 	color_g = 0.9
 	color_b = 0.8
 
-	equipped(mob/user, slot)
-		..()
-		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == SLOT_GLASSES)
-			if(H.client)
-				user.apply_color_matrix(COLOR_MATRIX_BLUELIGHT, COLOR_MATRIX_BLUELIGHT_LABEL)
-
-	unequipped(mob/user, slot)
-		..()
-		var/mob/living/carbon/human/H = user
-		if(istype(H))
-			if (H.client)
-				user.remove_color_matrix(COLOR_MATRIX_BLUELIGHT_LABEL)
