@@ -32,7 +32,7 @@
 	var/dog_bark = 1
 	var/affect_fun = 5
 	var/special_index = 0
-	var/notes = list("c4")
+	var/list/notes = list("c4")
 	var/note = "c4"
 	var/note_range = list("c2", "c7")
 	var/use_new_interface = FALSE
@@ -955,6 +955,14 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	use_new_interface = TRUE
 	//Start at E3
 	key_offset = 5
+
+/obj/item/instrument/roboscream
+	name = "scream synthesizer"
+	pick_random_note = TRUE
+	sounds_instrument = list('sound/voice/screams/robot_scream.ogg', 'sound/voice/screams/Robot_Scream_2.ogg')
+
+	attack_self(mob/user)
+		return //no imitating borg screams
 
 /obj/storage/crate/wooden/instruments
 	name = "instruments box"

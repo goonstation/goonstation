@@ -50,6 +50,8 @@
 	var/obj/item/device/radio/headset/radio = null
 	var/obj/item/device/radio/headset/ai_radio = null // Radio used for when this is an AI-controlled shell.
 	var/obj/item/device/radio_upgrade/radio_upgrade = null // Used for syndicate robots
+	var/obj/item/instrument/scream_instrument = null
+	var/scream_note = 1 //! Either a string note or an index of the sound to play (instruments are weird)
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/machinery/camera/camera = null
 	var/obj/item/robot_module/module = null
@@ -266,8 +268,8 @@
 			if (src.syndicate)
 				src.show_antag_popup(ROLE_SYNDICATE_ROBOT)
 
-		if (prob(50))
-			src.sound_scream = 'sound/voice/screams/Robot_Scream_2.ogg'
+		src.scream_instrument = new /obj/item/instrument/roboscream(src)
+		src.scream_note = rand(1,2)
 
 		for (var/datum/movement_modifier/MM in src.movement_modifiers) // Spawning borgs applies human only movemods, this cleans that up
 			if (!istype(MM, /datum/movement_modifier/robot_part))
@@ -549,7 +551,13 @@
 
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, src.sound_scream, 80, 0, 0, vocal_pitch, channel=VOLUME_CHANNEL_EMOTE) // vocal pitch added
+					var/sound/scream_sound = null
+					if (istext(src.scream_note))
+						var/index = src.scream_instrument.notes.Find(src.scream_note)
+						scream_sound = src.scream_instrument.sounds_instrument[index]
+					else
+						scream_sound = src.scream_instrument.sounds_instrument[src.scream_note]
+					playsound(src, scream_sound, 80, 0, 0, vocal_pitch, channel=VOLUME_CHANNEL_EMOTE) // vocal pitch added
 					message = "<b>[src]</b> screams!"
 
 			if ("johnny")
@@ -1226,7 +1234,16 @@
 
 		else if (istype(W, /obj/item/card/emag))
 			return
-
+		else if (istype(W, /obj/item/instrument) && opened)
+			user.drop_item(W)
+			W.set_loc(src)
+			user.put_in_hand_or_drop(src.scream_instrument)
+			src.scream_instrument = W
+			if (src.scream_instrument.pick_random_note)
+				src.scream_note = rand(1, length(src.scream_instrument.sounds_instrument))
+			else
+				src.scream_note = pick(src.scream_instrument.notes)
+			user.visible_message(SPAN_NOTICE("[user] inserts [src.scream_instrument] into [src]'s chest."))
 		else if (istype(W, /obj/item/organ/brain) && src.brainexposed)
 			if (!src.part_head)
 				boutput(user, SPAN_ALERT("That cyborg doesn't even have a head. Where are you going to put [W]?"))
