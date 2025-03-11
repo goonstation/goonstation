@@ -1369,7 +1369,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/special/souschef
 	name = "Sous-Chef"
-	linkcolor = CIVILIAN_LINK_COLOR
 	limit = 1
 	wages = PAY_UNTRAINED
 	trait_list = list("training_chef")
@@ -1624,7 +1623,6 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/beekeeper
 	name = "Apiculturist"
 	wages = PAY_TRADESMAN
-	linkcolor = CIVILIAN_LINK_COLOR
 	access_string = "Apiculturist"
 	slot_jump = list(/obj/item/clothing/under/rank/beekeeper)
 	slot_suit = list(/obj/item/clothing/suit/hazard/beekeeper)
@@ -1659,7 +1657,6 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/angler
 	name = "Angler"
 	wages = PAY_TRADESMAN
-	linkcolor = CIVILIAN_LINK_COLOR
 	access_string = "Rancher"
 	slot_jump = list(/obj/item/clothing/under/rank/angler)
 	slot_head = list(/obj/item/clothing/head/black)
@@ -1686,6 +1683,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/radioshowhost
 	name = "Radio Show Host"
 	wages = PAY_TRADESMAN
+	linkcolor = CIVILIAN_LINK_COLOR
 	access_string = "Radio Show Host"
 #ifdef MAP_OVERRIDE_MANTA
 	limit = 0
@@ -2182,6 +2180,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween/cowboy
 	name = "Space Cowboy"
 	limit = 1
+	linkcolor = CIVILIAN_LINK_COLOR
 	wages = PAY_UNTRAINED
 	starting_mutantrace = /datum/mutantrace/cow
 	receives_badge = TRUE
