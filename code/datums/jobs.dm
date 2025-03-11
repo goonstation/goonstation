@@ -1,18 +1,20 @@
-#define COMMAND_LINK_COLOR "#00CC00"
-#define SECURITY_LINK_COLOR "#FF0000"
-#define RESEARCH_LINK_COLOR "#9900FF"
-#define MEDICAL_LINK_COLOR "#0099FF"
-#define ENGINEERING_LINK_COLOR "#FF9900"
-#define CIVILIAN_LINK_COLOR "#99CCCC"
+#define COMMAND_LINK_COLOR "#0C0"
+#define SECURITY_LINK_COLOR "#F00"
+#define RESEARCH_LINK_COLOR "#90F"
+#define MEDICAL_LINK_COLOR "#F9F"
+#define ENGINEERING_LINK_COLOR "#CC0"
+#define SUPPLY_LINK_COLOR "#F90"
+#define CIVILIAN_LINK_COLOR "#099"
+#define SILICON_LINK_COLOR "#999"
 
 #define NANOTRASEN_LINK_COLOR "#3348ff"
-#define SYNDICATE_LINK_COLOR "#880000"
+#define SYNDICATE_LINK_COLOR "#800"
 
 /datum/job
 	var/name = null
 	var/list/alias_names = null
 	var/initial_name = null
-	var/linkcolor = "#0FF"
+	var/linkcolor = "#09F"
 
 	/// Job starting wages
 	var/wages = 0
@@ -800,6 +802,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 
 /datum/job/engineering/quartermaster
 	name = "Quartermaster"
+	linkcolor = SUPPLY_LINK_COLOR
 	limit = 3
 	wages = PAY_TRADESMAN
 	trait_list = list("training_quartermaster")
@@ -815,6 +818,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 
 /datum/job/engineering/miner
 	name = "Miner"
+	linkcolor = SUPPLY_LINK_COLOR
 	#ifdef UNDERWATER_MAP
 	limit = 6
 	#else
@@ -995,7 +999,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	wages = PAY_DUMBCLOWN
 	trait_list = list("training_clown")
 	access_string = "Clown"
-	linkcolor = "#FF99FF"
+	linkcolor = MEDICAL_LINK_COLOR // :o)
 	slot_back = list()
 	slot_belt = list(/obj/item/storage/fanny/funny)
 	slot_mask = list(/obj/item/clothing/mask/clown_hat)
@@ -1016,7 +1020,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/civilian/AI
 	name = "AI"
-	linkcolor = "#999999"
+	linkcolor = SILICON_LINK_COLOR
 	limit = 1
 	no_late_join = TRUE
 	high_priority_job = TRUE
@@ -1038,7 +1042,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/civilian/cyborg
 	name = "Cyborg"
-	linkcolor = "#999999"
+	linkcolor = SILICON_LINK_COLOR
 	limit = 8
 	no_late_join = TRUE
 	allow_traitors = FALSE
@@ -1130,6 +1134,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/mime
 	name = "Mime"
 	limit = 1
+	linkcolor = SILICON_LINK_COLOR // greyscale mimes
 	wages = PAY_DUMBCLOWN*2 // lol okay whatever
 	trait_list = list("training_mime")
 	access_string = "Mime"
@@ -1467,6 +1472,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/inspector
 	name = "Inspector"
 	wages = PAY_IMPORTANT
+	linkcolor = NANOTRASEN_LINK_COLOR
 	access_string = "Inspector"
 	receives_miranda = TRUE
 	cant_spawn_as_rev = TRUE
@@ -2644,7 +2650,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 /datum/job/special/ghostdrone
 	name = "Drone"
-	linkcolor = "#999999"
+	linkcolor = SILICON_LINK_COLOR
 	limit = 0
 	wages = 0
 	allow_traitors = FALSE
@@ -2740,7 +2746,6 @@ ABSTRACT_TYPE(/datum/job/daily)
 	name = "Tourist"
 	limit = 100
 	wages = 0
-	linkcolor = "#FF99FF"
 	slot_back = null
 	slot_belt = list(/obj/item/storage/fanny)
 	slot_jump = list(/obj/item/clothing/under/misc/tourist)
@@ -3079,6 +3084,8 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 #undef RESEARCH_LINK_COLOR
 #undef MEDICAL_LINK_COLOR
 #undef ENGINEERING_LINK_COLOR
+#undef SUPPLY_LINK_COLOR
 #undef CIVILIAN_LINK_COLOR
+#undef SILICON_LINK_COLOR
 #undef NANOTRASEN_LINK_COLOR
 #undef SYNDICATE_LINK_COLOR
