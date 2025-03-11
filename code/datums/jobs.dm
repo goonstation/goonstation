@@ -2,8 +2,7 @@
 #define SECURITY_LINK_COLOR "#F00"
 #define RESEARCH_LINK_COLOR "#90F"
 #define MEDICAL_LINK_COLOR "#F9F"
-#define ENGINEERING_LINK_COLOR "#CC0"
-#define SUPPLY_LINK_COLOR "#F90"
+#define ENGINEERING_LINK_COLOR "#F90"
 #define CIVILIAN_LINK_COLOR "#099"
 #define SILICON_LINK_COLOR "#999"
 
@@ -802,7 +801,6 @@ ABSTRACT_TYPE(/datum/job/engineering)
 
 /datum/job/engineering/quartermaster
 	name = "Quartermaster"
-	linkcolor = SUPPLY_LINK_COLOR
 	limit = 3
 	wages = PAY_TRADESMAN
 	trait_list = list("training_quartermaster")
@@ -818,7 +816,6 @@ ABSTRACT_TYPE(/datum/job/engineering)
 
 /datum/job/engineering/miner
 	name = "Miner"
-	linkcolor = SUPPLY_LINK_COLOR
 	#ifdef UNDERWATER_MAP
 	limit = 6
 	#else
@@ -3084,7 +3081,6 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 #undef RESEARCH_LINK_COLOR
 #undef MEDICAL_LINK_COLOR
 #undef ENGINEERING_LINK_COLOR
-#undef SUPPLY_LINK_COLOR
 #undef CIVILIAN_LINK_COLOR
 #undef SILICON_LINK_COLOR
 #undef NANOTRASEN_LINK_COLOR
