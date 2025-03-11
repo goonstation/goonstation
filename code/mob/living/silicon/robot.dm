@@ -2329,6 +2329,23 @@
 		update_bodypart(part = "head")
 		return 1
 
+	verb/cmd_pick_scream()
+		set category = "Robot Commands"
+		set name = "Change scream note"
+
+		var/list/notes_list = list()
+		if (src.scream_instrument.pick_random_note)
+			for (var/i in 1 to length(src.scream_instrument.sounds_instrument))
+				notes_list += i
+		else
+			notes_list = src.scream_instrument.notes
+
+		var/note = tgui_input_list(usr, "Select a scream note", "Select scream", notes_list)
+		if (!note || !(note in notes_list))
+			return
+
+		src.scream_note = note
+
 	verb/access_internal_pda()
 		set category = "Robot Commands"
 		set name = "Cyborg PDA"
