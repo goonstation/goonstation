@@ -47,6 +47,8 @@
 	var/note_keys_string = ""
 	/// The directory in which the sound files for the instrument are stored; represented as a string. Used for new interface instruments.
 	var/instrument_sound_directory = "sound/musical_instruments/piano/notes/"
+	/// Can it go in a mechcomp component?
+	var/automatable = TRUE
 
 	New()
 		..()
@@ -963,6 +965,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	pick_random_note = TRUE
 	sounds_instrument = list('sound/voice/screams/robot_scream.ogg', 'sound/voice/screams/Robot_Scream_2.ogg')
 	note_time = 5 SECONDS
+	automatable = FALSE
 
 	attack_self(mob/user)
 		return //no imitating borg screams
