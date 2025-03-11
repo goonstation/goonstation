@@ -1,5 +1,10 @@
 
 (t)tue mar 11 25
+(u)LeahTheTech + Valtsu0
+(p)22557
+(e)🎨🔊🤖|C-Sprites, C-Sound, A-Silicons
+(*)Musical instruments can now be inserted into cyborgs to be used as their scream sound.
+(+)Cyborgs can now select their scream sound using the verb "Change scream note"
 (u)JORJ949
 (p)22542
 (e)🆕🔨|C-Feature, A-Player-Actions
