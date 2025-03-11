@@ -217,22 +217,22 @@
 					command_jobs = null
 
 		.["standard_jobs"] = list(
-			list(name = "Civilian", color = "blue", jobs = civilian_jobs, style="civilian"),
-			list(name = "Engineering and Supply", color = "yellow", jobs = engineering_jobs, style="engineering"),
-			list(name = "Research", color = "purple", jobs = research_jobs, style="research"),
-			list(name = "Medical", color = "blue", jobs = medical_jobs, style="medical"),
-			list(name = "Security", color = "red", jobs = security_jobs, style="security"),
-			list(name = "Command", color = "green", jobs = command_jobs, style="command"),
+			list(name = "Civilian", color = "civilian", jobs = civilian_jobs, style="civilian"),
+			list(name = "Engineering and Supply", color = "engineering", jobs = engineering_jobs, style="engineering"),
+			list(name = "Research", color = "research", jobs = research_jobs, style="research"),
+			list(name = "Medical", color = "medical", jobs = medical_jobs, style="medical"),
+			list(name = "Security", color = "security", jobs = security_jobs, style="security"),
+			list(name = "Command", color = "command", jobs = command_jobs, style="command"),
 		)
 
 		.["accesses_by_area"] = list(
-			list(name = "Civilian", color = "blue", accesses = civilian_access),
-			list(name = "Engineering", color = "yellow", accesses = engineering_access),
-			list(name = "Supply", color = "yellow", accesses = supply_access),
-			list(name = "Science", color = "purple", accesses = research_access),
-			list(name = "Medical", color = "blue", accesses = medical_access),
-			list(name = "Security", color = "red", accesses = security_access),
-			list(name = "Command", color = "green", accesses = command_access),
+			list(name = "Civilian", color = "civilian", accesses = civilian_access),
+			list(name = "Engineering", color = "engineering", accesses = engineering_access),
+			list(name = "Supply", color = "engineering", accesses = supply_access),
+			list(name = "Science", color = "research", accesses = research_access),
+			list(name = "Medical", color = "medical", accesses = medical_access),
+			list(name = "Security", color = "security", accesses = security_access),
+			list(name = "Command", color = "command", accesses = command_access),
 		)
 
 		.["icons"] = list(
