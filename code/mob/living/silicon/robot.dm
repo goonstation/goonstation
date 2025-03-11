@@ -2334,7 +2334,7 @@
 		set name = "Change scream note"
 
 		var/list/notes_list = list()
-		if (src.scream_instrument.pick_random_note)
+		if (src.scream_instrument.pick_random_note || !src.scream_instrument.use_new_interface)
 			for (var/i in 1 to length(src.scream_instrument.sounds_instrument))
 				notes_list += i
 		else
