@@ -562,7 +562,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 		return {"
 			<tr>
 				<td class='latejoin-link[J.is_highlighted() ? " highlighted" : ""]'>
-					[((limit == -1 || c < limit) && allowed) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=prompt' style='color: [J.linkcolor];' title='[hover_text]'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is unavailable.'>[J.name]</span>"]
+					[((limit == -1 || c < limit) && allowed) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=prompt' style='color: [J.linkcolor];[istype(J, /datum/job/civilian/clown) ? "font-family: Comic Sans MS;" : ""]' title='[hover_text]'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is unavailable.'>[J.name]</span>"]
 				</td>
 				<td class='latejoin-cards'>[jointext(slots, " ")]</td>
 			</tr>
