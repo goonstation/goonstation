@@ -189,8 +189,6 @@ chui/window
 		if(!title)
 			datah["needstitle"] = 1
 
-
-
 		// use_chui_custom_frames allows enabling the standard Windows UI,
 		// which allows people an out if chui decides to go berzerk
 		var/list/built = list( "js" = list(), "css" = list(), "title" = (title || ""), data = datah )//todo, better this.
