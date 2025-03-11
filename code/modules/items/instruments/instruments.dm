@@ -79,7 +79,7 @@
 				src.note = src.notes[i]
 				src.sounds_instrument += (src.instrument_sound_directory + "[note].ogg")
 
-	proc/play_note(var/note, var/mob/user)
+	proc/play_note(var/note, var/mob/user, var/pitch_override = null, var/volume_override = null)
 		if (note != clamp(note, 1, length(sounds_instrument)))
 			return FALSE
 		var/atom/player = user || src
@@ -90,7 +90,7 @@
 			player.cooldowns["instrument_play"] += 10 SECONDS
 
 		var/turf/T = get_turf(src)
-		playsound(T, sounds_instrument[note], src.volume, randomized_pitch, pitch = pitch_set, channel = VOLUME_CHANNEL_INSTRUMENTS)
+		playsound(T, sounds_instrument[note], volume_override || src.volume, randomized_pitch, pitch = pitch_override || pitch_set, channel = VOLUME_CHANNEL_INSTRUMENTS)
 
 		if (prob(5))
 			if (src.dog_bark)
@@ -191,7 +191,7 @@
 			if("play_note")
 				var/note_to_play = params["note"] + 1 // 0->1 (js->dm) array index change
 				var/volume = params["volume"]
-				playsound(get_turf(src), sounds_instrument[note_to_play], volume, randomized_pitch, pitch = pitch_set, channel = VOLUME_CHANNEL_INSTRUMENTS)
+				src.play_note(note_to_play, ui.user, volume_override = volume)
 				. = TRUE
 			if("play_keyboard_on")
 				usr.client.apply_keybind("instrument_keyboard")

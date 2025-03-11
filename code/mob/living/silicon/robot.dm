@@ -551,13 +551,11 @@
 
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					var/sound/scream_sound = null
+					var/note_index = src.scream_note
 					if (istext(src.scream_note))
-						var/index = src.scream_instrument.notes.Find(src.scream_note)
-						scream_sound = src.scream_instrument.sounds_instrument[index]
-					else
-						scream_sound = src.scream_instrument.sounds_instrument[src.scream_note]
-					playsound(src, scream_sound, 80, 0, 0, vocal_pitch, channel=VOLUME_CHANNEL_EMOTE) // vocal pitch added
+						note_index = src.scream_instrument.notes.Find(src.scream_note)
+
+					src.scream_instrument.play_note(note_index, src, src.vocal_pitch)
 					message = "<b>[src]</b> screams!"
 
 			if ("johnny")
