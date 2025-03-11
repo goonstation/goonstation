@@ -1,4 +1,9 @@
 
+(t)tue mar 11 25
+(u)JORJ949
+(p)22542
+(e)🆕🔨|C-Feature, A-Player-Actions
+(*)Added the Nanotrasen radio channel (:n) to corporate based jobs such as the NTSC and Inspector
 (t)mon mar 10 25
 (u)FlameArrow57
 (p)22373
