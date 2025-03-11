@@ -451,7 +451,7 @@
 	icon_override = "ghost_buster"
 	icon_tooltip = "Ghost Buster"
 
-/obj/item/device/radio/headset/ghost_buster/werewolf_hunter
+/obj/item/device/radio/headset/werewolf_hunter
 	name = "\improper Werewolf Hunter's headset"
 	desc = "To hear the cries of the downtrodden, those defenseless against The Beast."
 	icon_state = "multi headset"

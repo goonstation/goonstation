@@ -661,8 +661,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 					if(81 to INFINITY) //Travel sickness!
 						for(var/mob/living/carbon/M in src.contents)
 							SPAWN(rand(10,40))
-								var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-								M.vomit(0, null, vomit_message)
+								M.nauseate(8,11)
 								M.change_misstep_chance(40)
 								M.changeStatus("drowsy", 10 SECONDS)
 

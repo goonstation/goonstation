@@ -1,4 +1,31 @@
 
+(t)mon mar 10 25
+(u)FlameArrow57
+(p)22373
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(+)The debris field X-drone may instead appear as an assault laser drone.
+(u)glowbold
+(p)22536
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Quickhacks are now marked as contraband.
+(u)JORJ949
+(p)22540
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The pod targeting missile launcher can now be emagged.
+(u)cringe
+(p)22484
+(e)🆕🎨💨|C-Feature, C-Sprites, A-Atmospherics
+(+)The HPD now has the pipe to pipe heat exchanger.
+(u)FlameArrow57
+(p)22443
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added large hoodies to the clothing booth! Sprites by End.
+(u)LeahTheTech + sprites by Xenomni
+(p)22466
+(e)🎨🔨|C-Sprites, A-Player-Actions
+(*)Most sources of instant vomiting will now instead give you a stacking "nausea" debuff, with a vomit and a short stun at the end. Please report any issues with chemical/other balance cause by this.
+(+)Eating low quality food will now give you nausea stacks and only give you food poisoning if you eat several bites of really nasty food.
+(+)Food poisoning will go away on its own more often.
 (t)sat mar 08 25
 (u)FlameArrow57
 (p)22389

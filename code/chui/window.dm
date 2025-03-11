@@ -337,6 +337,7 @@ chui/window
 //A chui substitute for usr << browse()
 //Mostly the same syntax.
 /client/proc/Browse( var/html, var/opts, var/forceChui )
+	if (byond_version >= 516) forceChui = FALSE // no chui for webview2 users
 	chui.staticinst.bbrowse( src, html, opts, forceChui )
 	var/list/params_list = params2list(opts)
 	if (params_list["window"])
