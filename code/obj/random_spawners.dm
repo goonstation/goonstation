@@ -1927,6 +1927,33 @@
 		min_amt2spawn = 5
 		max_amt2spawn = 7
 
+/obj/random_item_spawner/armoryweapon
+	name = "armory special weapon spawner"
+	icon_state = "rand_gun"
+	amt2spawn = 1
+
+	items2spawn = list(/obj/item/gun/energy/stasis,
+	/obj/item/gun/energy/egun,
+	/obj/item/gun/energy/egun_jr,
+	/obj/item/gun/energy/phaser_huge)
+
+	one
+		amt2spawn = 1
+
+	two
+		amt2spawn = 2
+
+	three
+		amt2spawn = 3
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	bunch
+		min_amt2spawn = 5
+		max_amt2spawn = 7
+
 /obj/random_item_spawner/ai_experimental //used to spawn 'experimental' AI law modules
 //intended to add random chance to what pre-fab 'gimmicky' law modules are available at round-start, such as Equality
 
