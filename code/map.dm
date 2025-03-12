@@ -1001,10 +1001,10 @@ var/global/list/mapNames = list(
 		/datum/job/civilian/clown = 2,
 		/datum/job/security/security_officer = 6,
 		/datum/job/security/detective = 1,
-		/datum/job/research/geneticist = 3,
-		/datum/job/research/roboticist = 3,
+		/datum/job/medical/geneticist = 3,
+		/datum/job/medical/roboticist = 3,
 		/datum/job/research/scientist = 6,
-		/datum/job/research/medical_doctor = 7,
+		/datum/job/medical/medical_doctor = 7,
 		/datum/job/engineering/miner = 4,
 		/datum/job/engineering/engineer = 6,
 		/datum/job/civilian/chef = 2,
@@ -1137,7 +1137,7 @@ var/global/list/mapNames = list(
 		/datum/job/special/atmospheric_technician = 1,
 		/datum/job/special/hairdresser = 1,
 		/datum/job/research/research_assistant = 2,
-		/datum/job/research/medical_assistant = 2
+		/datum/job/medical/medical_assistant = 2
 	)
 
 	windows = /obj/window/auto
