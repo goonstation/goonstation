@@ -13,7 +13,6 @@
 	logTheThing(LOG_DEBUG, null, "Failed to load CDN manifest")
 	return list()
 
-var/global/list/cdnManifest = loadCdnManifest()
 
 //Generates file paths for browser resources when used in html tags e.g. <img>
 /proc/resource(file, group)

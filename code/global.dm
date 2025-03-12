@@ -461,6 +461,7 @@ var/global
 	list/localResources = list()
 	list/cachedResources = list()
 	cdn = "" //Contains link to CDN as specified in the config (if not locally testing)
+	list/cdnManifest = list()
 	disableResourceCache = 0
 
 	// for translating a zone_sel's id to its name

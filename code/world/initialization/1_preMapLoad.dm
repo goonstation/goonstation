@@ -85,6 +85,7 @@
 	// apply some settings from config..
 	abandon_allowed = config.respawn
 	cdn = config.cdn
+	cdnManifest = loadCdnManifest()
 	disableResourceCache = config.disableResourceCache
 	chui = new()
 	if (config.env == "dev") //WIRE TODO: Only do this (fallback to local files) if the coder testing has no internet
