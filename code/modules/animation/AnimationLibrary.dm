@@ -12,6 +12,11 @@
 	animate(A, alpha = 0, transform = A.transform.Scale(2, 2), time = 10, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 	animate(transform = M)
 
+/proc/animate_angry_wibble(atom/A)
+	var/matrix/M = matrix(A.transform)
+	animate(A, transform = A.transform.Scale(0.8), time = 1, easing = ELASTIC_EASING, loop = -1)
+	animate(transform = M, time = 3, easing = ELASTIC_EASING, loop = -1)
+
 /proc/animate_fade_grayscale(var/atom/A, var/time=5)
 	var/start = COLOR_MATRIX_IDENTITY
 	var/end = list(0.33,0.33,0.33,0, 0.33,0.33,0.33,0, 0.33,0.33,0.33,0, 0,0,0,1, 0,0,0,0)

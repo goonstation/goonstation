@@ -202,6 +202,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	if(src.air_contents.check_if_dangerous())
 		message_admins("[src] [alert_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
 	logTheThing(LOG_STATION, null, "[src] [log_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
+	message_ghosts("<b>[src]</b> was destructively opened at [log_loc(src, ghostjump = TRUE)].")
 
 	var/atom/location = src.loc
 	location.assume_air(air_contents)

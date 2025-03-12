@@ -69,30 +69,3 @@ TYPEINFO(/datum/component/assembly)
 		//if the assembly is valid, we go and call the proc
 		//we need to return true so onattack does not trigger. Else we would still attack a completed assembly
 		return call(src.parent, src.valid_assembly_proc)(checked_atom, user)
-
-/// this component checks assembly_cant_be_removed() on the parent, but behaves exactly the same otherwise
-/datum/component/assembly/consumes_self
-
-/datum/component/assembly/consumes_self/try_combination(var/atom/checked_atom, var/mob/user)
-	var/atom/movable/movable_parent = src.parent
-	if(movable_parent.assembly_cant_be_removed())
-		return FALSE
-	. = ..(checked_atom, user)
-/// this component checks assembly_cant_be_removed() on the other atom used, but behaves exactly the same otherwise
-/datum/component/assembly/consumes_other
-
-/datum/component/assembly/consumes_other/try_combination(var/atom/checked_atom, var/mob/user)
-	var/atom/movable/movable_checked_atom = checked_atom
-	if(movable_checked_atom.assembly_cant_be_removed())
-		return FALSE
-	. = ..(checked_atom, user)
-
-/// this component checks assembly_cant_be_removed() on all atoms involved, but behaves exactly the same otherwise
-/datum/component/assembly/consumes_all
-
-/datum/component/assembly/consumes_all/try_combination(var/atom/checked_atom, var/mob/user)
-	var/atom/movable/movable_parent = src.parent
-	var/atom/movable/movable_checked_atom = checked_atom
-	if(movable_checked_atom.assembly_cant_be_removed() || movable_parent.assembly_cant_be_removed())
-		return FALSE
-	. = ..(checked_atom, user)

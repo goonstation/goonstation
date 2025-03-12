@@ -37635,6 +37635,13 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
+"oNo" = (
+/obj/cable/blue{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai)
 "oNG" = (
 /obj/machinery/teleport/portal_ring,
 /obj/cable/blue{
@@ -125605,8 +125612,8 @@ wEi
 bCb
 bCM
 wEi
-bDB
-jPK
+wEi
+oNo
 wEi
 jPK
 wEi

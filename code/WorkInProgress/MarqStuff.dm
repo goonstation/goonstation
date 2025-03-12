@@ -533,7 +533,7 @@
 				arrow.clone(src)
 				arrow.change_stack_amount(-1)
 		else
-			user.u_equip(arrow)
+			user?.u_equip(arrow)
 			arrow.set_loc(src)
 		src.updateAppearance()
 
@@ -599,6 +599,20 @@
 	equipped(mob/user, slot)
 		. = ..()
 		src.inventory_counter.show_count()
+
+/obj/item/quiver/leather
+	New()
+		..()
+		src.setMaterial(getMaterial("leather"))
+
+/obj/item/quiver/leather/stocked
+	New()
+		..()
+		var/obj/item/arrow/arrows = new()
+		arrows.amount = 20
+		arrows.setHeadMaterial(getMaterial("silver"))
+		arrows.setShaftMaterial(getMaterial("wood"))
+		src.loadArrow(arrows)
 
 /datum/projectile/arrow
 	name = "arrow"
@@ -837,3 +851,21 @@
 
 		src.loadArrow(I, user)
 
+// not obtainable through normal means
+/obj/item/gun/bow/crossbow
+	name = "crossbow"
+	desc = "Though old in make, it's remarkably well cared for."
+	icon = 'icons/obj/items/guns/energy.dmi'
+	icon_state = "crossbow"
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	item_state = "crossbow"
+	force = MELEE_DMG_PISTOL
+	can_dual_wield = TRUE // :getin:
+
+/obj/item/gun/bow/crossbow/update_icon(draw_fraction)
+	// do not call parent
+
+/obj/item/gun/bow/crossbow/wooden
+/obj/item/gun/bow/crossbow/wooden/New()
+	. = ..()
+	src.setMaterial(getMaterial("wood"))

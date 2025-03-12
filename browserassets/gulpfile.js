@@ -1,18 +1,16 @@
 import fs from "fs";
 import minimist from "minimist";
-import gulp from "gulp";
+import { series, parallel, src, dest } from "gulp";
 import { deleteAsync } from "del";
 import replace from "gulp-replace";
 import htmlmin from "gulp-htmlmin";
 import postcss from "gulp-postcss";
 import babel from "gulp-babel";
-import imagemin, { optipng } from "gulp-imagemin";
 import autoprefixer from "autoprefixer";
 import cssnano from "cssnano";
 
 const uglify = (await import("gulp-uglify-es")).default.default;
 const argv = minimist(process.argv.slice(2));
-const { series, parallel, src, dest } = gulp;
 
 // Build Directories
 const dirs = {
@@ -29,9 +27,8 @@ const sources = {
 };
 
 // Build CDN subdomain from server type argument
-const serverType = argv.servertype || "main1";
-const cdnSubdomain = `cdn-${serverType}`;
-const cdn = argv.cdn || `https://${cdnSubdomain}.goonhub.com`;
+const server = argv.server || "main1";
+const cdn = argv.cdn || `https://cdn-${server}.goonhub.com`;
 
 // Read git revision from stamped file (stamped during build process)
 let rev = fs.readFileSync("./revision", "utf-8") || "1";
@@ -99,14 +96,8 @@ function javascript(cb) {
 		.pipe(dest(dirs.dest + "/js"));
 }
 
-function images(cb) {
-	return src(sources.images, { encoding: false })
-		.pipe(imagemin([optipng({ optimizationLevel: 2 })]))
-		.pipe(dest(dirs.dest + "/images"));
-}
-
 function copy(cb) {
-	return src(["vendor/**/*", "css/fonts/**/*", "misc/**/*", "tgui/**/*"], {
+	return src(["vendor/**/*", "css/fonts/**/*", "misc/**/*", "tgui/**/*", "images/**/*"], {
 		base: dirs.src,
 		encoding: false,
 	})
@@ -116,6 +107,9 @@ function copy(cb) {
 
 export const build = series(
 	clean,
-	parallel(html, css, javascript, images),
+	parallel(html, css, javascript),
 	copy,
 );
+
+build.description = "Build CDN Assets";
+build.flags = { '--server': 'Server to build for' }

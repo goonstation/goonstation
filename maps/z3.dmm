@@ -12559,7 +12559,7 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "bcA" = (
-/obj/critter/gunbot/drone/raildrone,
+/obj/gunbotdrone_spawner/very_rare,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "bcB" = (

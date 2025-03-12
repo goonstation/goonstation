@@ -418,20 +418,25 @@
 	max_stages = 3
 	associated_reagent = "hootonium" // associated reagent, duh
 
+/datum/ailment/disease/hootonium/on_infection(mob/living/affected_mob, datum/ailment_data/D)
+	. = ..()
+	affected_mob.add_vomit_behavior(/datum/vomit_behavior/owl)
+
+/datum/ailment/disease/hootonium/on_remove(mob/living/affected_mob, datum/ailment_data/D)
+	. = ..()
+	affected_mob.remove_vomit_behavior(/datum/vomit_behavior/owl)
+
 /datum/ailment/disease/hootonium/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
+	if (probmult(30))
+		affected_mob.nauseate(2)
 	switch(D.stage)
 		if(1)
 			if (probmult(25))
 				boutput(affected_mob, "<B>[pick("It feels wrong, I feel wrong.", "Am I okay?", "I can feel it, its under my skin.", "I need help, I WANT HELP!")]<B/>")
 			if (probmult(50))
 				affected_mob.make_jittery(25)
-			if (probmult(15))
-				affected_mob.vomit()
-				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
-				for(var/mob/O in viewers(affected_mob, null))
-					boutput(O, SPAN_ALERT("<b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>"))
 
 		if(2)
 			playsound(affected_mob, 'sound/effects/HeartBeatLong.ogg', 70, TRUE)
@@ -448,11 +453,6 @@
 				affected_mob.hand = !affected_mob.hand
 			if  (probmult(35))
 				boutput(affected_mob, "<B>[pick("Oh g-HOOT", "Whats happe-ho-ing to me?", "It hurts!")]</B>")
-			if (probmult(15))
-				affected_mob.vomit()
-				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
-				for(var/mob/O in viewers(affected_mob, null))
-					boutput(O, SPAN_ALERT("<b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>"))
 
 		if(3)
 			if(probmult(25))
@@ -473,11 +473,6 @@
 					O.show_message(SPAN_ALERT("<B>[affected_mob]</B> hoots uncontrollably!"), 1)
 			if(probmult(25))
 				boutput(affected_mob, "<B>[pick("Who-WHO", "HOoooT", "neST!")]</B>")
-			if (probmult(15))
-				affected_mob.vomit()
-				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
-				for(var/mob/O in viewers(affected_mob, null))
-					boutput(O, SPAN_ALERT("<b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>"))
 			if(probmult(10))
 				var/obj/critter/hootening/P = new/obj/critter/hootening(affected_mob.loc)
 				P.name = affected_mob.real_name

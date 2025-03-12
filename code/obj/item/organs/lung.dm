@@ -123,9 +123,8 @@
 
 		if (prob(15) && (FARD_pp > fart_smell_min))
 			boutput(donor, SPAN_ALERT("Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!"))
-			if ((FARD_pp > fart_vomit_min) && prob(50))
-				var/vomit_message = SPAN_NOTICE("[donor] vomits from the [pick("stink","stench","awful odor")]!!")
-				donor.vomit(0, null, vomit_message)
+			if ((FARD_pp > fart_vomit_min))
+				donor.nauseate(1)
 		if (FARD_pp > fart_choke_min)
 			donor.take_oxygen_deprivation(6.9 * mult/LUNG_COUNT)
 			if (prob(20))
