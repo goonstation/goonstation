@@ -63,22 +63,21 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 
 		if(src.splicing1)
 			splice1_geneout = QuickAnalysisRow(src.splicing1, src.splicing1.planttype, src.splicing1.plantgenes)
-			splice1_geneout["damage"] = list(src.splicing1.seeddamage, FALSE)
-			splice1_geneout["splicing"] = list("splicing", TRUE)
+			splice1_geneout["damage"] = src.splicing1.seeddamage
+			splice1_geneout["splicing"] = TRUE
 		if(src.splicing2)
 			splice2_geneout = QuickAnalysisRow(src.splicing2, src.splicing2.planttype, src.splicing2.plantgenes)
-			splice2_geneout["damage"] = list(src.splicing2.seeddamage, FALSE)
-			splice2_geneout["splicing"] = list("splicing", TRUE)
+			splice2_geneout["damage"] = src.splicing2.seeddamage
+			splice2_geneout["splicing"] = TRUE
 
 		return list(
 			"category" = src.mode,
 			"num_extractables" = length(src.extractables),
 			"num_seeds" = length(src.seeds),
-			"inserted" =  src.inserted ? "[src.inserted.reagents.total_volume]/[src.inserted.reagents.maximum_volume] [src.inserted.name]" : "No reagent vessel",
+			"inserted_desc" =  src.inserted ? "[src.inserted.reagents.total_volume]/[src.inserted.reagents.maximum_volume] [src.inserted.name]" : "No reagent vessel",
 			"inserted_container" = thisContainerData,
 			"output_externally" = src.output_externally,
 			"splice_chance" = splice_chance,
-			"show_splicing" = src.splicing1 || src.splicing2,
 			"splice_seeds" = list(splice1_geneout, splice2_geneout),
 			"sortBy" = src.sort,
 			"sortAsc" = src.sortAsc,
@@ -105,8 +104,8 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				for (var/obj/item/seed/S in src.seeds)
 					if((S == src.splicing1) || (S == src.splicing2)) continue;
 					geneout = QuickAnalysisRow(S, S.planttype, S.plantgenes)
-					geneout["damage"] = list(S.seeddamage, FALSE)
-					geneout["splicing"] = list("splicing", (S == src.splicing1) || (S == src.splicing2))
+					geneout["damage"] = S.seeddamage
+					geneout["splicing"] = (S == src.splicing1) || (S == src.splicing2)
 					seedlist += list(geneout)
 
 		return list(
@@ -626,7 +625,6 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 	proc/QuickAnalysisRow(var/obj/scanned, var/datum/plant/P, var/datum/plantgenes/DNA)
 		var/result = list()
 		if (!scanned || !P || P.cantscan || !DNA) //this shouldn't happen, but if it does, return a valid (if confusing) row, and report the error
-			// TODO: error result instead of all this
 			result["name"] = scanned ? scanned.name : "???"
 			result["item_ref"]= "\ref[scanned]" //in the event that scanned is somehow null, \ref[null] = [0x0]
 			result["charges"] = 0

@@ -20,28 +20,28 @@ import type { OverviewViewData, PlantmasterData } from '../type';
 
 export const OverviewView = () => {
   const { data } = useBackend<OverviewViewData>();
-  const { inserted, inserted_container, num_extractables, num_seeds } = data;
-  const container = inserted ? inserted_container : null;
+  const { inserted_container, num_extractables, num_seeds } = data;
 
   return (
     <Section title="Overview">
       <Box>
-        Items ready for extraction: <b>{num_extractables}</b> <br />
+        Items ready for extraction: <b>{num_extractables}</b>
+        <br />
         Seeds ready for experimentation: <b>{num_seeds}</b>
       </Box>
-      <ReagentDisplay container={container} />
+      <ReagentDisplay container={inserted_container} />
     </Section>
   );
 };
 
 interface ReagentDisplayProps {
-  container?: ReagentContainer | null;
+  container: ReagentContainer | null;
 }
 
 const ReagentDisplay = (props: ReagentDisplayProps) => {
   const { container } = props;
   const { act } = useBackend<PlantmasterData>();
-  const resolvedContainer = props.container || NoContainer;
+  const resolvedContainer = container ?? NoContainer;
 
   return (
     <Section title={capitalize(resolvedContainer.name ?? '')}>

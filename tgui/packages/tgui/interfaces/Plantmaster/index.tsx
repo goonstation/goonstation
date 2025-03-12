@@ -11,13 +11,13 @@ import { Stack, Tabs } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { ExtractablesView, OverviewView, SeedsView } from './tabs';
-import { type PlantmasterData, PlantmasterTab } from './type';
+import type { PlantmasterData } from './type';
 
 export const Plantmaster = () => {
   const { act, data } = useBackend<PlantmasterData>();
   const {
     category,
-    inserted,
+    inserted_desc,
     inserted_container,
     num_extractables,
     num_seeds,
@@ -29,25 +29,25 @@ export const Plantmaster = () => {
           <Stack.Item>
             <Tabs>
               <Tabs.Tab
-                selected={category === PlantmasterTab.Overview}
+                selected={category === 'overview'}
                 onClick={() => {
-                  act('change_tab', { tab: PlantmasterTab.Overview });
+                  act('change_tab', { tab: 'overview' });
                 }}
               >
                 Overview
               </Tabs.Tab>
               <Tabs.Tab
-                selected={category === PlantmasterTab.Extractables}
+                selected={category === 'extractables'}
                 onClick={() => {
-                  act('change_tab', { tab: PlantmasterTab.Extractables });
+                  act('change_tab', { tab: 'extractables' });
                 }}
               >
                 Seed Extraction ({num_extractables})
               </Tabs.Tab>
               <Tabs.Tab
-                selected={category === PlantmasterTab.SeedList}
+                selected={category === 'seedlist'}
                 onClick={() => {
-                  act('change_tab', { tab: PlantmasterTab.SeedList });
+                  act('change_tab', { tab: 'seedlist' });
                 }}
               >
                 Seeds ({num_seeds})
@@ -61,14 +61,14 @@ export const Plantmaster = () => {
                 }
                 bold
               >
-                {inserted_container ? inserted : 'Insert Beaker'}
+                {inserted_container ? inserted_desc : 'Insert Beaker'}
               </Tabs.Tab>
             </Tabs>
           </Stack.Item>
           <Stack.Item grow>
-            {category === PlantmasterTab.Overview && <OverviewView />}
-            {category === PlantmasterTab.Extractables && <ExtractablesView />}
-            {category === PlantmasterTab.SeedList && <SeedsView />}
+            {category === 'overview' && <OverviewView />}
+            {category === 'extractables' && <ExtractablesView />}
+            {category === 'seedlist' && <SeedsView />}
           </Stack.Item>
         </Stack>
       </Window.Content>

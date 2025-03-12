@@ -8,69 +8,70 @@
 
 import type { BooleanLike } from 'tgui-core/react';
 
-export enum PlantmasterTab {
-  Overview = 'overview',
-  Extractables = 'extractables',
-  SeedList = 'seedlist',
+import { ReagentContainer } from '../common/ReagentInfo';
+
+export type PlantmasterTab = 'overview' | 'extractables' | 'seedlist';
+
+export interface Sort {
+  sortBy: string;
+  sortAsc: boolean;
 }
 
-type DominantDataTuple<T, TDominant extends BooleanLike = BooleanLike> = [
-  T,
-  TDominant,
-];
+export interface SortProps {
+  onSort: () => void;
+  sortAsc: boolean | null;
+}
 
-interface CommonItemData {
-  name: string;
-  item_ref: string;
+type DominantDataTuple<T> = [T, BooleanLike];
+
+interface PlantmasterItemData {
   charges: number;
+  cropsize: DominantDataTuple<number>;
+  endurance: DominantDataTuple<number>;
+  item_ref: string;
   generation: number;
   genome: number;
-  species: DominantDataTuple<string>;
-  growtime: DominantDataTuple<number>;
-  harvesttime: DominantDataTuple<number>;
   lifespan: DominantDataTuple<number>;
-  cropsize: DominantDataTuple<number>;
+  harvesttime: DominantDataTuple<number>;
+  growtime: DominantDataTuple<number>;
+  name: string;
   potency: DominantDataTuple<number>;
-  endurance: DominantDataTuple<number>;
+  species: DominantDataTuple<string>;
 }
 
-interface SeedData extends CommonItemData {
-  damage: DominantDataTuple<number, 0>;
-  splicing: DominantDataTuple<'splicing'>;
+export interface SeedData extends PlantmasterItemData {
+  damage: number;
+  splicing?: BooleanLike;
 }
 
-export const isSeedData = (data: CommonItemData): data is SeedData =>
-  'damage' in data;
-
-export interface ExtractableData extends CommonItemData {}
+export interface ExtractableData extends PlantmasterItemData {}
 
 interface CommonViewData {
   category: PlantmasterTab;
-  inserted;
-  inserted_container;
+  inserted_desc: string;
+  inserted_container: ReagentContainer | null;
   num_extractables: number;
   num_seeds: number;
   output_externally: BooleanLike;
-  splice_chance: number;
-  show_splicing;
-  splice_seeds: [SeedData, SeedData];
   sortBy: string | null;
   sortAsc: BooleanLike;
   allow_infusion: BooleanLike;
 }
 
 export interface SeedsViewData extends CommonViewData {
-  category: PlantmasterTab.SeedList;
+  category: 'seedlist';
   seeds: SeedData[];
+  splice_chance: number;
+  splice_seeds: [SeedData | null, SeedData | null];
 }
 
 export interface ExtractablesViewData extends CommonViewData {
-  category: PlantmasterTab.Extractables;
+  category: 'extractables';
   extractables: ExtractableData[];
 }
 
 export interface OverviewViewData extends CommonViewData {
-  category: PlantmasterTab.Overview;
+  category: 'overview';
 }
 
 export type PlantmasterData =
