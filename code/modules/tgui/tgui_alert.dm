@@ -147,7 +147,6 @@
 		"content_window" = content_window,
 		"theme" = theme,
 		"cdn" = cdn,
-		"VCS_REVISION" = VCS_REVISION,
 	)
 
 /datum/tgui_modal/ui_act(action, list/params)

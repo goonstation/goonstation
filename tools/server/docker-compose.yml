@@ -26,5 +26,3 @@ services:
       timeout: 5s
       retries: 3
       start_period: 60s
-    labels:
-      - monocker.enable=true
