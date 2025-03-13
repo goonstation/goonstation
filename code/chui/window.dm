@@ -142,6 +142,7 @@ chui/window
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	[who.byond_version >= 516 ? "<link rel='stylesheet' type='text/css' href='[resource("vendor/css/font-awesome.css")]'>" : ""]
 	<style type='text/css'>
 		body {
 			font-family: Tahoma, Arial, sans-serif;
