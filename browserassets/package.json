@@ -6,8 +6,8 @@
 	"main": "index.js",
 	"type": "module",
 	"scripts": {
-		"build": "gulp --no-deprecation --no-color --no-experimental-require-module build",
-		"tgui:manifest": "gulp --no-deprecation --no-color --no-experimental-require-module tgui:manifest"
+		"build": "gulp build",
+		"tgui:manifest": "gulp tgui:manifest"
 	},
 	"author": "",
 	"license": "ISC",
