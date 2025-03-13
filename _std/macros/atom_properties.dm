@@ -202,7 +202,7 @@ To remove:
 #define PROP_UPDATE_OCEANPUSH(target, prop, old_val) do { \
 	var/new_val = GET_ATOM_PROPERTY_RAW(target, prop); \
 	if (new_val) oceanPushList |= target; else oceanPushList -= target;\
-	new_val = old_val;\ /* this is to defeat the linter, macros have a set number of args and this one is unused */
+	new_val = old_val;\
 } while(0)
 // Property defines
 //
