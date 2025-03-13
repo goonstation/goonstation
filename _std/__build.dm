@@ -142,6 +142,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_CLARION      // NSS Clarion (Used to be Destiny's Alt), by Dionsu and a69andahalf.
 //#define MAP_OVERRIDE_OSHAN        // Oshan Laboratory, Abzu, by committee
 //#define MAP_OVERRIDE_NADIR        // Nadir Extraction Site by Kubius
+#define MAP_OVERRIDE_NEON					// Neon by Sord
 
 //-------Discontinued or gimmick maps:
 //#define MAP_OVERRIDE_MANTA        // NSS Manta by Azungar
@@ -154,8 +155,6 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_DENSITY2     // Density2 (second smallest map), by Emily
 //#define MAP_OVERRIDE_OZYMANDIAS   // Ozymandias (large map), by Kubius
 //#define MAP_OVERRIDE_FLEET        // Bellerophon fleet (Multiple stations stuck together), by Kubius
-
-
 
 //------------ Unit Test Framework ------------//
 
