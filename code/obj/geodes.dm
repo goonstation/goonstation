@@ -84,7 +84,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 		var/spawn_type = pick(100; /obj/item/raw_material/molitz, 50; src.crystal_path, 10; /obj/item/raw_material/gemstone)
 		var/obj/item/crystal = new spawn_type(src.loc)
 		boutput(user, SPAN_NOTICE("You pry \a [crystal] from [src]."))
-		user.lastattacked = src //is this how this works?
+		user.lastattacked = get_weakref(src) //is this how this works?
 
 	claretine
 		amount = 6

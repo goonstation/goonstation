@@ -1219,7 +1219,7 @@
 	name = "Northwest Breach Hull"
 	})
 "aAe" = (
-/obj/storage/cart,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -39436,9 +39436,7 @@
 	},
 /area/station/medical/medbay/surgery)
 "qyO" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Emergency Storage"
-	},
+/obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/mail/vertical,
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,

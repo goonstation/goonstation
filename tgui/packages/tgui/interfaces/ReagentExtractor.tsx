@@ -9,7 +9,6 @@ import { Fragment, useState } from 'react';
 import {
   Button,
   Dimmer,
-  Divider,
   Flex,
   NumberInput,
   Section,
@@ -241,33 +240,30 @@ const ExtractableList = () => {
       <Flex height="100%" direction="column">
         <Flex.Item grow>
           <Section scrollable fill>
-            {extractablesOnPage.map((extractable, index) => (
-              <Fragment key={extractable.id}>
-                <Flex>
-                  <Flex.Item grow>{extractable.name}</Flex.Item>
-                  <Flex.Item nowrap>
-                    <Button
-                      onClick={() =>
-                        act('extractingredient', {
-                          ingredient_id: extractable.id,
-                        })
-                      }
-                    >
-                      Extract
-                    </Button>
-                    <Button
-                      icon="eject"
-                      tooltip="Eject"
-                      onClick={() =>
-                        act('ejectingredient', {
-                          ingredient_id: extractable.id,
-                        })
-                      }
-                    />
-                  </Flex.Item>
-                </Flex>
-                <Divider />
-              </Fragment>
+            {extractablesOnPage.map((extractable) => (
+              <Flex key={extractable.id} className="candystripe">
+                <Flex.Item grow>{extractable.name}</Flex.Item>
+                <Flex.Item nowrap>
+                  <Button
+                    onClick={() =>
+                      act('extractingredient', {
+                        ingredient_id: extractable.id,
+                      })
+                    }
+                  >
+                    Extract
+                  </Button>
+                  <Button
+                    icon="eject"
+                    tooltip="Eject"
+                    onClick={() =>
+                      act('ejectingredient', {
+                        ingredient_id: extractable.id,
+                      })
+                    }
+                  />
+                </Flex.Item>
+              </Flex>
             ))}
           </Section>
         </Flex.Item>

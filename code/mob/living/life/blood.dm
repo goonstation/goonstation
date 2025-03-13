@@ -76,7 +76,7 @@
 						if (5)
 							bleed(owner, final_bleed, 4)
 
-		if (critter_owner)
+		if (critter_owner && !HAS_ATOM_PROPERTY(critter_owner, PROP_MOB_NO_BLOOD_REGEN))
 			if (critter_owner.blood_volume < 500 && critter_owner.blood_volume > 0) // if we're full or empty, don't bother v
 				if (prob(66))
 					critter_owner.blood_volume += 1 * mult // maybe get a little blood back ^

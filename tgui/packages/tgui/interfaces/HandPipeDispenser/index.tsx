@@ -19,13 +19,17 @@ import {
 import { useBackend, useSharedState } from '../../backend';
 import { Icon } from '../../components';
 import { Window } from '../../layouts';
+import { ProductList } from '../common/ProductList';
 import { ByondDir, HandPipeDispenserData, PipeData, Tab } from './type';
+
+const RESOURCE_ICON_NAME = 'boxes-stacked';
 
 export const HandPipeDispenser = () => {
   const { act, data } = useBackend<HandPipeDispenserData>();
   const {
     atmospipes,
     atmosmachines,
+    destroying,
     selectedimage,
     selectedcost,
     resources,
@@ -40,14 +44,14 @@ export const HandPipeDispenser = () => {
             fill
             title={
               <>
-                Resources: {resources} <Icon name="boxes-stacked" />
+                Resources: {resources} <Icon name={RESOURCE_ICON_NAME} />
               </>
             }
           >
             {/* Stack hell zone aka the preview with buttons */}
             <Stack vertical>
               <Box position="absolute" right="7px">
-                {selectedcost} <Icon name="boxes-stacked" />
+                {selectedcost} <Icon name={RESOURCE_ICON_NAME} />
               </Box>
               <Stack.Item>
                 <Box textAlign="center">
@@ -98,22 +102,20 @@ export const HandPipeDispenser = () => {
                 </Box>
               </Stack.Item>
               <Stack.Item>
-                {/* Mode switch button */}
-                {!!data.destroying && (
+                {destroying ? (
                   <Button
                     textAlign="center"
-                    width="100%"
+                    fluid
                     color="red"
                     icon="xmark"
                     onClick={() => act('toggle-destroying')}
                   >
                     Removing
                   </Button>
-                )}
-                {!data.destroying && (
+                ) : (
                   <Button
                     textAlign="center"
-                    width="100%"
+                    fluid
                     color="green"
                     icon="plus"
                     onClick={() => act('toggle-destroying')}
@@ -153,19 +155,61 @@ export const HandPipeDispenser = () => {
                 </Tabs.Tab>
               </Tabs>
               {tab === Tab.AtmosPipes && (
-                <Section>
-                  {atmospipes.map((atmospipe: PipeData) => {
-                    return <ItemRow {...atmospipe} key={atmospipe.name} />;
-                  })}
+                <Section fitted>
+                  <ProductList showImage showOutput>
+                    {atmospipes.map((atmospipe: PipeData) => {
+                      return (
+                        <ProductList.Item
+                          key={atmospipe.name}
+                          image={atmospipe.image}
+                          outputSlot={
+                            <ProductList.OutputButton
+                              icon={RESOURCE_ICON_NAME}
+                              onClick={() =>
+                                act('select', {
+                                  name: atmospipe.name,
+                                })
+                              }
+                              tooltip="Select"
+                            >
+                              {atmospipe.cost}
+                            </ProductList.OutputButton>
+                          }
+                        >
+                          {atmospipe.name}
+                        </ProductList.Item>
+                      );
+                    })}
+                  </ProductList>
                 </Section>
               )}
               {tab === Tab.AtmosMachines && (
-                <Section>
-                  {atmosmachines.map((atmosmachine: PipeData) => {
-                    return (
-                      <ItemRow key={atmosmachine.name} {...atmosmachine} />
-                    );
-                  })}
+                <Section fitted>
+                  <ProductList showImage showOutput>
+                    {atmosmachines.map((atmosmachine: PipeData) => {
+                      return (
+                        <ProductList.Item
+                          key={atmosmachine.name}
+                          image={atmosmachine.image}
+                          outputSlot={
+                            <ProductList.OutputButton
+                              icon={RESOURCE_ICON_NAME}
+                              onClick={() =>
+                                act('select', {
+                                  name: atmosmachine.name,
+                                })
+                              }
+                              tooltip="Select"
+                            >
+                              {atmosmachine.cost}
+                            </ProductList.OutputButton>
+                          }
+                        >
+                          {atmosmachine.name}
+                        </ProductList.Item>
+                      );
+                    })}
+                  </ProductList>
                 </Section>
               )}
             </Section>
@@ -173,47 +217,5 @@ export const HandPipeDispenser = () => {
         </Flex.Item>
       </Flex>
     </Window>
-  );
-};
-
-export const ItemRow = (item: PipeData) => {
-  const { act } = useBackend();
-
-  return (
-    <Stack style={{ borderBottom: '1px #555 solid' }}>
-      {item.image && (
-        <Stack.Item>
-          <Box style={{ overflow: 'show', height: '32px' }}>
-            <Image src={`data:image/png;base64,${item.image}`} />
-          </Box>
-        </Stack.Item>
-      )}
-      <Stack.Item grow>
-        {item.name}
-        <br />
-        {item.cost} <Icon name="boxes-stacked" />
-      </Stack.Item>
-      <Stack.Item
-        style={{
-          marginLeft: '5px',
-          display: 'flex',
-          justifyContent: 'center',
-          flexDirection: 'column',
-        }}
-      >
-        <Button
-          color="green"
-          textAlign="center"
-          width="70px"
-          onClick={() =>
-            act('select', {
-              name: item.name,
-            })
-          }
-        >
-          Select
-        </Button>
-      </Stack.Item>
-    </Stack>
   );
 };

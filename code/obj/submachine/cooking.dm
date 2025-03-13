@@ -84,7 +84,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 
 	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.gloves)
@@ -217,6 +217,8 @@ TYPEINFO(/obj/submachine/chef_sink)
 
 		src.onRestart()
 
+
+ADMIN_INTERACT_PROCS(/obj/submachine/ice_cream_dispenser, proc/add_flavor)
 TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	mats = 18
 
@@ -229,6 +231,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH | TGUI_INTERACTIVE
+	/// A list of reagent_ids we will dispense by default
 	var/list/flavors = list("chocolate","vanilla","coffee")
 	var/obj/item/reagent_containers/glass/beaker = null
 	var/obj/item/reagent_containers/food/snacks/ice_cream_cone/cone = null
@@ -250,6 +253,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 			var/datum/reagent/fooddrink/current_reagent = reagents_cache[reagent]
 			flavorsTemp.Add(list(list(
 				name = current_reagent.name,
+				id = current_reagent.id,
 				colorR = current_reagent.fluid_r,
 				colorG = current_reagent.fluid_g,
 				colorB = current_reagent.fluid_b
@@ -261,7 +265,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	ui_data(mob/user)
 		. = list(
 			"beaker" = ui_describe_reagents(src.beaker),
-			"cone" = src.cone
+			"has_cone" = src.cone ? TRUE : FALSE
 		)
 
 	ui_act(action, params)
@@ -381,6 +385,20 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 		src.icon_state = "ice_creamer[src.cone ? "1" : "0"]"
 
 		return
+
+	proc/add_flavor()
+		set name = "Add flavor"
+
+		var/datum/reagent/reagent = pick_reagent(usr)
+		if (!reagent)
+			return
+
+		if (reagent.id in src.flavors)
+			boutput(usr, "[src] already has flavor [reagent.name]")
+			return
+
+		src.flavors += reagent.id
+		src.update_static_data_for_all_viewers()
 
 /// COOKING RECODE ///
 

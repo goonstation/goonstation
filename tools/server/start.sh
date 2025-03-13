@@ -17,6 +17,10 @@ if [[ -v SS13_ID ]]; then
 	fi
 fi
 
+if [ -f data/hard-reboot ]; then
+	rm data/hard-reboot
+fi
+
 # Apply updates
 bash tools/server/update.sh
 
@@ -25,15 +29,8 @@ if [ -e ".env.build" ]; then
 	eval $(cat .env.build)
 fi
 
-# Temp conditional for transition to new .env.build system
-if [[ -v RUSTG_VERSION ]]; then
-	cp -a "/rust-g/$RUSTG_VERSION/librust_g.so" .
-else
-	cp -a "/rust-g/librust_g.so" .
-fi
-
 # Update external libraries
-# cp -a "/rust-g/$RUSTG_VERSION/librust_g.so" .
+cp "/rust-g/$RUSTG_VERSION/librust_g.so" .
 cp "/byond-tracy/libprof.so" .
 
 chmod -R 770 /ss13_server
