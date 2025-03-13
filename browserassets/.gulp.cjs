@@ -1,3 +1,3 @@
 module.exports = {
-	nodeFlags: ["--no-deprecation"],
+	nodeFlags: ["--no-deprecation", "--no-experimental-require-module"],
 };
