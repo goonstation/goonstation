@@ -296,7 +296,6 @@
 	New()
 		..()
 		src.add_corrupt_laws()
-		UpdateLaws()
 
 	proc/add_corrupt_laws(var/count = 3)
 		var/possible_laws = LAW_CORRUPTION_STRINGS
