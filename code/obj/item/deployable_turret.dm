@@ -115,6 +115,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	name = "fucked up abstract turret that should never exist"
 	desc = "why did you do this"
 	icon = 'icons/obj/deployableturret.dmi'
+	icon_state = "maphelper" //this gets set properly in new
 	anchored = UNANCHORED
 	density = 1
 	var/health = 250
@@ -140,6 +141,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	var/associated_deployer = null //what kind of turret deployer should this deconstruct to?
 	var/deconstructable = TRUE
 	var/can_toggle_activation = TRUE // whether you can enable or disable the turret with a screwdriver, used for map setpiece turrets
+	var/emagged = FALSE
 
 	New(loc, direction, forensics_id)
 		..()
@@ -169,6 +171,14 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 		#ifdef LOW_SECURITY
 		START_TRACKING_CAT(TR_CAT_DELETE_ME)
 		#endif
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (src.emagged)
+			return
+		src.emagged = TRUE
+		boutput(user, SPAN_ALERT("You short out [src]'s targeting systems."))
+		src.visible_message(SPAN_ALERT(SPAN_BOLD("[src] buzzes oddly!")))
+		playsound(src, "sound/effects/sparks[rand(1, 6)].ogg", 40, 1, extrarange = -10)
 
 	disposing()
 		processing_items.Remove(src)
@@ -241,7 +251,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 					src.shoot(target)
 
 	attackby(obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (isweldingtool(W) && !(src.active))
 			if(!W:try_weld(user, 1))
 				return
@@ -310,6 +320,8 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 				user.show_message(SPAN_ALERT("The activation switch is protected! You can't toggle the power!"))
 				return
 
+		else if (istype(W, /obj/item/card/emag)) //emags should be sneaky
+			..()
 		else
 			src.health = src.health - W.force
 			playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 25, 1)
@@ -440,7 +452,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 			var/mob/living/carbon/human/H = C
 			if (H.hasStatus(list("resting", "knockdown", "stunned", "unconscious"))) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
 				return FALSE
-		if (is_friend(C))
+		if (is_friend(C) && !src.emagged)
 			return FALSE
 
 		var/angle = get_angle(get_turf(src),get_turf(C))
@@ -586,6 +598,9 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	icon_tag = "op"
 	quick_deploy_fuel = 0
 	associated_deployer = /obj/item/turret_deployer/outpost
+
+	is_friend(var/mob/living/C)
+		return (FACTION_MERCENARY in C.faction)
 
 /obj/deployable_turret/outpost/active
 	can_toggle_activation = FALSE // for map placement so people don't cheese them by rushing them with a screwdriver

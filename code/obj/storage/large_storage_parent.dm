@@ -84,6 +84,9 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 						A.set_loc(src)
 
 	disposing()
+		if(src.vis_controller)
+			qdel(src.vis_controller)
+			src.vis_controller = null
 		STOP_TRACKING
 		..()
 
@@ -95,13 +98,20 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		var/i = 1
 		for (var/thing in src.spawn_contents)
 			var/amt = 1
-			if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
-				amt = abs(spawn_contents[thing])
-			do
-				var/atom/A = new thing(src)
-				A.layer += 0.00001 * i
-				i++
-			while (--amt > 0)
+			if(!istext(thing)) //cannot use ispath for reasons BYOND comprehension
+				if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
+					amt = abs(spawn_contents[thing])
+				do
+					var/atom/A = new thing(src)
+					A.layer += 0.00001 * i
+					i++
+				while (--amt > 0)
+			else if (thing in reagents_cache)
+				var/turf/T = get_turf(src)
+				var/vol = 1
+				if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
+					vol = abs(spawn_contents[thing])
+				T.fluid_react_single(thing, vol)
 
 	proc/get_welding_positions()
 		var/start
@@ -208,7 +218,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			return
 		src.last_relaymove_time = world.time
 
-		if (istype(get_turf(src), /turf/space))
+		if (istype(get_turf(src), /turf/space) || !get_turf(src))
 			if (!istype(get_turf(src), /turf/space/fluid))
 				return
 
@@ -406,7 +416,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		src.pried_open = TRUE
 		src.locked = FALSE
 		src.open = TRUE
-		src.dump_contents(user)
+		src.dump_direct_contents(user)
 		src.UpdateIcon()
 		p_class = initial(p_class)
 
@@ -546,6 +556,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				for (var/obj/thing in view(1,user))
 					if(!istype(thing, drag_type))
 						continue
+					if (QDELETED(thing))
+						continue
 					if (thing.anchored)
 						continue
 					if (thing in user)
@@ -643,9 +655,9 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				AM.set_loc(src.open ? src.loc : src)
 
 		if (user)
-			src.dump_contents(user)
+			src.dump_direct_contents(user)
 		else
-			src.dump_contents()
+			src.dump_direct_contents()
 		if (!is_short)
 			src.set_density(0)
 		src.open = 1
@@ -762,7 +774,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (!src.intact_frame)
 			return 0
 
-	proc/dump_contents(var/mob/user)
+	proc/dump_direct_contents(mob/user)
 		if(src.spawn_contents && make_my_stuff()) //Make the stuff when the locker is first opened.
 			spawn_contents = null
 
@@ -778,6 +790,16 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 		for (var/mob/M in src)
 			M.set_loc(newloc)
+
+	proc/dump_vis_contents()
+		if (src.vis_controller && length(src.vis_controller.vis_items))
+			for (var/atom/movable/AM in src.vis_controller.vis_items)
+				AM.set_loc(src.loc)
+			src.vis_controller.vis_items = list()
+
+	proc/dump_contents(mob/user)
+		src.dump_direct_contents(user)
+		src.dump_vis_contents()
 
 	proc/toggle(var/mob/user)
 		if (src.open)

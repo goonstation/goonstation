@@ -528,7 +528,7 @@
 
 			handimage = I.inhand_image
 			var/state = I.item_state ? I.item_state + "-LR" : (I.icon_state ? I.icon_state + "-LR" : "LR")
-			if(!(state in icon_states(I.inhand_image_icon)))
+			if(!(state in get_icon_states(I.inhand_image_icon)))
 				state = I.item_state ? I.item_state + "-L" : (I.icon_state ? I.icon_state + "-L" : "L")
 			handimage.icon_state = state
 
@@ -563,13 +563,13 @@
 			remove_object = null
 
 	getHandIconState()
-		if (handlistPart && !(handlistPart in icon_states(special_icons)))
+		if (handlistPart && !(handlistPart in get_icon_states(special_icons)))
 			.= handimage
 		else
 			.=..()
 
 	getPartIconState()
-		if (partlistPart && !(partlistPart in icon_states(special_icons)))
+		if (partlistPart && !(partlistPart in get_icon_states(special_icons)))
 			.= handimage
 		else
 			.=..()
@@ -657,7 +657,7 @@
 
 			handimage = I.inhand_image
 			var/state = I.item_state ? I.item_state + "-LR" : (I.icon_state ? I.icon_state + "-LR" : "LR")
-			if(!(state in icon_states(I.inhand_image_icon)))
+			if(!(state in get_icon_states(I.inhand_image_icon)))
 				state = I.item_state ? I.item_state + "-R" : (I.icon_state ? I.icon_state + "-R" : "R")
 
 			handimage.pixel_y = H.mutantrace.hand_offset + 6
@@ -689,13 +689,13 @@
 			qdel(remove_object)
 
 	getHandIconState()
-		if (handlistPart && !(handlistPart in icon_states(special_icons)))
+		if (handlistPart && !(handlistPart in get_icon_states(special_icons)))
 			.= handimage
 		else
 			.=..()
 
 	getPartIconState()
-		if (partlistPart && !(partlistPart in icon_states(special_icons)))
+		if (partlistPart && !(partlistPart in get_icon_states(special_icons)))
 			.= handimage
 		else
 			.=..()
@@ -1051,6 +1051,7 @@
 	/// Supernatural if not abnormally gross
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
+	breaks_cuffs = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1071,6 +1072,7 @@
 	streak_descriptor = "undeadly"
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
+	breaks_cuffs = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)

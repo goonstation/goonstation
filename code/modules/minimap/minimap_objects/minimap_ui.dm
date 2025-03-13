@@ -109,7 +109,7 @@
 	. = ..()
 	var/list/placable_marker_states = list()
 	var/list/placable_marker_images = list()
-	for (var/icon_state in icon_states('icons/obj/minimap/minimap_markers.dmi'))
+	for (var/icon_state in get_icon_states('icons/obj/minimap/minimap_markers.dmi'))
 		placable_marker_states.Add(icon_state)
 		var/icon/marker_icon = icon('icons/obj/minimap/minimap_markers.dmi', icon_state)
 		placable_marker_images[icon_state] = icon2base64(marker_icon)
@@ -137,7 +137,8 @@
 			"visible" = marker.visible,
 			"can_be_deleted" = marker.can_be_deleted_by_player,
 			"marker" = marker,
-			"index" = length(minimap_markers_list) + 1
+			"index" = length(minimap_markers_list) + 1,
+			"icon_state" = marker.icon_state
 		)))
 
 	. = list(
@@ -155,6 +156,7 @@
 		src.minimap_controller.selected_y = null
 
 /atom/movable/minimap_ui_handler/minimap_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	var/mob/user = ui.user
 
 	if (is_incapacitated(user))
@@ -224,3 +226,11 @@
 			src.minimap_controller.delete_marker(marker)
 
 	return TRUE
+
+/atom/movable/minimap_ui_handler/minimap_controller/general_alert
+
+/atom/movable/minimap_ui_handler/minimap_controller/general_alert/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "GeneralAlert")
+		ui.open()

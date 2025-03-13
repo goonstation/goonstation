@@ -186,11 +186,17 @@ var/global/meteor_shower_active = 0
 
 				var/turf/pickedstart = locate(start_x, start_y, 1)
 				var/target = locate(targ_x, targ_y, 1)
-				var/obj/newmeteor/M = new meteor_type(pickedstart,target)
-				if(transmute_material_instead)
-					M.set_transmute(transmute_material_instead)
-					M.meteorhit_chance = 20
-				M.pix_speed = meteor_speed + rand(0 - meteor_speed_variance,meteor_speed_variance)
+				var/thrown_thing = new meteor_type(pickedstart,target)
+				if (istype(thrown_thing, /obj/newmeteor))
+					var/obj/newmeteor/meteor = thrown_thing
+					if(transmute_material_instead)
+						meteor.set_transmute(transmute_material_instead)
+						meteor.meteorhit_chance = 20
+					meteor.pix_speed = meteor_speed + rand(0 - meteor_speed_variance,meteor_speed_variance)
+				if (istype(thrown_thing, /mob))
+					var/mob/meat = thrown_thing
+					meat.throw_at(target, 300, meteor_speed + rand(0 - meteor_speed_variance,meteor_speed_variance), throw_type=THROW_GIB)
+
 				sleep(delay_between_meteors)
 
 			meteor_shower_active = 0
@@ -232,12 +238,20 @@ var/global/meteor_shower_active = 0
 			return
 
 		var/transmute_material_instead = null
-		if(tgui_alert(usr, "Do you want the meteor to transmute into a material instead of exploding?", "Meteor Shower", list("Yes", "No")) == "Yes")
-			var/matid = tgui_input_list(usr, "Select material to transmute to:", "Set Material", material_cache)
-			transmute_material_instead = getMaterial(matid)
+		if (istype_exact(src, /datum/random_event/major/meteor_shower))
+			if(tgui_alert(usr, "Do you want the meteor to transmute into a material instead of exploding?", "Meteor Shower", list("Yes", "No")) == "Yes")
+				var/matid = tgui_input_list(usr, "Select material to transmute to:", "Set Material", material_cache)
+				transmute_material_instead = getMaterial(matid)
 
 		src.event_effect(source,amtinput,dirinput,delinput,timinput,spdinput,  transmute_material_instead)
 		return
+
+
+/datum/random_event/major/meteor_shower/meatier
+	name = "Meatier Shower"
+	shower_name = "Meatier Shower"
+	meteor_type = /mob/living/carbon/human/normal
+	disabled = TRUE // maybe a little silly
 
 ////////////////////////////////////////
 // Defines for the meteors themselves //
@@ -267,7 +281,7 @@ var/global/meteor_shower_active = 0
 	var/sound_explode = 'sound/effects/exlow.ogg'
 	var/list/oredrops = list(/obj/item/raw_material/rock)
 	var/list/oredrops_rare = list(/obj/item/raw_material/rock)
-	var/transmute_material = null
+	var/datum/material/transmute_material = null
 	var/transmute_range = 4
 	var/meteorhit_chance = 100
 
@@ -374,6 +388,8 @@ var/global/meteor_shower_active = 0
 				continue
 			//let's not just go straight through unsimmed turfs and total the inside of the listening post
 			if (!issimulatedturf(T) || !istype(T, /turf/unsimulated))
+				if(istype(T, /turf/unsimulated/wall))
+					qdel(src)
 				continue
 			hit_object = 1
 			if (prob(meteorhit_chance))
@@ -438,7 +454,7 @@ var/global/meteor_shower_active = 0
 					if("statue")
 						if(distPercent < 40) // only inner 40% of range
 							if(M)
-								M.become_statue(transmute_material)
+								M.become_statue(transmute_material, survive = TRUE)
 			else
 				G.setMaterial(transmute_material)
 

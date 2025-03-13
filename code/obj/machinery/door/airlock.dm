@@ -11,7 +11,7 @@ var/global/list/cycling_airlocks = list()
 	name = "airlock"
 	icon = 'icons/obj/doors/SL_doors.dmi'
 	icon_state = "door_closed"
-	deconstruct_flags = DECON_NULL_ACCESS | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER | DECON_MULTITOOL
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER | DECON_MULTITOOL
 	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS
 
 	var/image/panel_image = null
@@ -983,12 +983,12 @@ TYPEINFO(/obj/machinery/door/airlock)
 		switch( lowertext(signal.data["command"]) )
 			if("open")
 				SPAWN(0)
-					src.open(1)
+					src.open(surpress_send = 1)
 					src.send_status(,senderid)
 
 			if("close")
 				SPAWN(0)
-					src.close(1)
+					src.close(surpress_send = 1)
 					src.send_status(,senderid)
 
 			if("unlock")
@@ -1010,7 +1010,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 					if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 						src.set_unlocked()
 
-					src.open(1)
+					src.open(surpress_send = 1)
 					sleep(0.5 SECONDS)
 
 					if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
@@ -1027,7 +1027,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 					if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 						src.set_unlocked()
 
-					src.close(1)
+					src.close(surpress_send = 1)
 					sleep(0.5 SECONDS)
 
 					if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
@@ -1072,7 +1072,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, radiorange)
 
-	open(surpress_send)
+	open(manual_activation, surpress_send)
 		. = ..()
 		if(!surpress_send && (src.last_update_time + 100 < ticker.round_elapsed_ticks))
 			var/user_name = "???"
@@ -1090,7 +1090,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 			send_status(user_name)
 			src.last_update_time = ticker.round_elapsed_ticks
 
-	close(surpress_send, is_auto = 0)
+	close(manual_activation, surpress_send, is_auto = 0)
 		. = ..()
 		if(!surpress_send && (src.last_update_time + 100 < ticker.round_elapsed_ticks))
 			var/user_name = "???"
@@ -1157,11 +1157,16 @@ TYPEINFO(/obj/machinery/door/airlock)
 
 /obj/machinery/door/airlock/emag_act(mob/user, obj/item/card/emag/E)
 	. = ..()
+	src.deconstruct_flags |= DECON_NO_ACCESS //emagged doors should be able to be deconstructed by anyone. It's utterly trashed, after all
 	if(src.welded && !src.locked)
 		audible_message(SPAN_ALERT("[src] lets out a loud whirring and grinding noise!"))
 		animate_shake(src, 5, 2, 2, src.pixel_x, src.pixel_y)
 		playsound(src, 'sound/items/mining_drill.ogg', 25, TRUE, 0, 0.8)
 		src.take_damage(src.health * 0.8)
+
+/obj/machinery/door/demag(var/mob/user)
+	. = ..()
+	src.deconstruct_flags &= ~DECON_NO_ACCESS //well, ya got it fixed, somehow
 
 /obj/machinery/door/airlock/receive_silicon_hotkey(var/mob/user)
 	..()

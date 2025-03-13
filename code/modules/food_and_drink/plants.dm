@@ -24,6 +24,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		src.plantgenes = new /datum/plantgenes(src)
 		src.make_reagents()
 
+	clamp_act(mob/clamper, obj/item/clamp)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+		if(src.reagents)
+			var/turf/T = get_turf(src)
+			T.fluid_react(src.reagents, src.reagents.total_volume, FALSE)
+		qdel(src)
+		return TRUE
+
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		// If we've got a piece of fruit or veg that contains seeds. More often than
 		// not this is fruit but some veg do this too.
@@ -1074,18 +1082,34 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	brew_result = list("juice_pumpkin"= 40)
 	var/obj/item/clothing/head/carving_result = /obj/item/clothing/head/pumpkin
 	var/obj/item/reagent_containers/food/spoon_result = /obj/item/reagent_containers/food/drinks/bowl/pumpkin
+	var/obj/item/ai_plating_kit/wire_result = /obj/item/ai_plating_kit/pumpkin
 
 	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/cable_coil))
+			var/obj/item/cable_coil/coil = W
+			if (coil.use(3))
+				user.visible_message(SPAN_NOTICE("[user] adds wiring to the [src]!"))
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
+				var/obj/item/ai_plating_kit/result = new src.wire_result(user.loc)
+				user.put_in_hand_or_drop(result)
+				qdel(src)
+				if (coil.amount < 1)
+					user.drop_item()
+					qdel(coil)
+			else
+				boutput(user, "You need at least three lengths of cable to add to [src]!")
 		if (iscuttingtool(W))
 			src.carving_message(W, user)
 			var/obj/item/clothing/head/result = new src.carving_result(user.loc)
 			result.name = "carved [src.name]"
+			result.transform = src.transform
 			qdel(src)
 		else if (isspooningtool(W))
 			src.spoon_message(W, user)
 			var/obj/item/reagent_containers/result = new src.spoon_result(user.loc)
 			result.reagents.maximum_volume = max(result.reagents.maximum_volume, src.reagents.total_volume)
 			src.reagents.trans_to(result, src.reagents.maximum_volume)
+			result.transform = src.transform
 			qdel(src)
 
 	proc/carving_message(obj/item/knife, mob/user)

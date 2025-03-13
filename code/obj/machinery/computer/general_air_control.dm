@@ -1,6 +1,3 @@
-#define _GET_SIGNAL_GAS(GAS, _, NAME, ID, ...) if(data[ID + #GAS]) { mixer_part += "<FONT color='[gas_text_color(#GAS)]'>[data[ID + #GAS]]% [NAME]</FONT>  " }
-#define GET_SIGNAL_MIXTURE(ID) APPLY_TO_GASES(_GET_SIGNAL_GAS, ID)
-
 obj/machinery/computer/general_air_control
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
@@ -350,110 +347,10 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				signal.data["parameter"] = num2text(volume_rate + amount)
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
-/obj/machinery/computer/general_alert
-	New()
-		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "control", frequency)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "respond", respond_frequency)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "receive", receive_frequency)
-
-	receive_signal(datum/signal/signal)
-		if(!signal || signal.encryption) return
-
-		//Oh, someone is asking us for data instead of reporting a thing.
-		if((signal.data["command"] == "report_alerts") && signal.data["sender"])
-			var/datum/signal/newsignal = get_free_signal()
-
-			newsignal.data["address_1"] = signal.data["sender"]
-			newsignal.data["command"] = "reply_alerts"
-			if(priority_alarms.len)
-				newsignal.data["severe_list"] = jointext(priority_alarms, ";")
-			if(minor_alarms.len)
-				newsignal.data["minor_list"] = jointext(minor_alarms, ";")
-
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "respond")
-			return
-
-
-		var/zone = signal.data["zone"]
-		var/severity = signal.data["alert"]
-
-		if(!zone || !severity) return
-
-		priority_alarms -= zone
-		minor_alarms -= zone
-
-		if (severity == "severe")
-			priority_alarms += zone
-		else if (severity == "minor")
-			minor_alarms += zone
-
-
-	attack_hand(mob/user)
-		user.Browse(return_text(),"window=computer")
-		src.add_dialog(user)
-		onclose(user, "computer")
-
-	process()
-		if(priority_alarms.len)
-			icon_state = "alert:2"
-
-		else if(minor_alarms.len)
-			icon_state = "alert:1"
-
-		else
-			icon_state = "alert:0"
-
-		..()
-
-		src.updateDialog()
-
-	proc/return_text()
-		var/priority_text
-		var/minor_text
-
-		if(priority_alarms.len)
-			for(var/zone in priority_alarms)
-				priority_text += "<FONT color='red'><B>[zone]</B></FONT>  <A href='?src=\ref[src];priority_clear=[ckey(zone)]'>X</A><BR>"
-		else
-			priority_text = "No priority alerts detected.<BR>"
-
-		if(minor_alarms.len)
-			for(var/zone in minor_alarms)
-				minor_text += "<B>[zone]</B>  <A href='?src=\ref[src];minor_clear=[ckey(zone)]'>X</A><BR>"
-		else
-			minor_text = "No minor alerts detected.<BR>"
-
-		var/output = {"<B>[name]</B><HR>
-<B>Priority Alerts:</B><BR>
-[priority_text]
-<BR>
-<HR>
-<B>Minor Alerts:</B><BR>
-[minor_text]
-<BR>"}
-
-		return output
-
-	Topic(href, href_list)
-		if(..())
-			return
-
-		if(href_list["priority_clear"])
-			var/removing_zone = href_list["priority_clear"]
-			for(var/zone in priority_alarms)
-				if(ckey(zone) == removing_zone)
-					priority_alarms -= zone
-
-		if(href_list["minor_clear"])
-			var/removing_zone = href_list["minor_clear"]
-			for(var/zone in minor_alarms)
-				if(ckey(zone) == removing_zone)
-					minor_alarms -= zone
-
-
 #define MAX_PRESSURE 20 * ONE_ATMOSPHERE
 /obj/machinery/computer/atmosphere/mixercontrol
+	name = "Gas Mixer Control"
+	icon_state = "atmos"
 	var/obj/machinery/atmospherics/trinary/mixer/mixerid
 	var/mixer_information
 	req_access = list(access_engineering_engine, access_tox_storage)
@@ -483,15 +380,8 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 	attack_hand(mob/user)
 		if(status & (BROKEN | NOPOWER))
 			return
-		user.Browse(return_text(),"window=computer")
-		src.add_dialog(user)
-		onclose(user, "computer")
 
-	process()
-		..()
-		if(status & (BROKEN | NOPOWER))
-			return
-		src.updateDialog()
+		ui_interact(user)
 
 	receive_signal(datum/signal/signal)
 		//boutput(world, "[id] actually can receive a signal!")
@@ -503,132 +393,83 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 		//boutput(world, "[id] received a signal from [id_tag]!")
 		mixer_information = signal.data
 
-	proc/return_text()
-		var/mixer_data
-		if(mixerid)
-			var/long_name = mixerid
-			var/list/data = mixer_information
-			var/mixer_part = ""
+		tgui_process.update_uis(src)
 
-			if(data)
-				mixer_part += "<B>Input 1 Composition</B>: <BR>"
-				GET_SIGNAL_MIXTURE("In1")
-				if(data["in1tg"])
-					mixer_part += "<FONT color='black'>[data["in1tg"]]% OTHER</FONT>   "
-				if (data["in1kpa"] && data["in1temp"])
-					mixer_part += "<br>Pressure: [data["in1kpa"]] kPa / Temperature: [data["in1temp"]] &deg;C"
-				mixer_part += "<BR>"
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "GasMixer")
+			ui.open()
 
-				mixer_part += "<B>Input 2 Composition</B>: <BR>"
-				GET_SIGNAL_MIXTURE("In2")
-				if(data["in2tg"])
-					mixer_part += "<FONT color='black'>[data["in2tg"]]% OTHER</FONT>   "
-				if (data["in2kpa"] && data["in2temp"])
-					mixer_part += "<br>Pressure: [data["in2kpa"]] kPa / Temperature: [data["in2temp"]] &deg;C"
+	ui_data(mob/user)
+		. = ..()
+		.["name"] = name
+		.["mixerid"] = mixerid
+		.["MAX_PRESSURE"] = MAX_PRESSURE
+		.["mixer_information"] = mixer_information
+		.["allowed"] = src.allowed(user)
 
-				mixer_part += "<hr>"
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
 
-				mixer_part += "<b>Output Target Pressure</b>: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=\ref[src];pressure_adj=-10'>-</A> <A href='?src=\ref[src];pressure_set=1'>[data["target_pressure"]] kPa</A> <A href='?src=\ref[src];pressure_adj=10'>+</A> <A href='?src=\ref[src];pressure_adj=100'>+</A><BR>"
-				mixer_part += "<b>Pump Status</b>: <A href='?src=\ref[src];toggle_pump=1'>[data["pump_status"]]</A><BR>"
-				mixer_part += "<B>Gas Input Ratio</b>: <A href='?src=\ref[src];ratio=5'><<</A> <A href='?src=\ref[src];ratio=1'><</A> [data["i1trans"]]% /  [data["i2trans"]]% <A href='?src=\ref[src];ratio=-1'>></A> <A href='?src=\ref[src];ratio=-5'>>></A>"
-
-				mixer_part += "<HR><B>Resulting Composition</B>: <BR>"
-				GET_SIGNAL_MIXTURE("Out")
-				if(data["outtg"])
-					mixer_part += "<FONT color='black'>[data["outtg"]]% OTHER</FONT>   "
-				if (data["outkpa"] && data["outtemp"])
-					mixer_part += "<br>Pressure: [data["outkpa"]] kPa / Temperature: [data["outtemp"]] &deg;C"
-				mixer_part += "<BR>"
-
-				mixer_data += mixer_part
-
-			else
-				mixer_part = "<FONT color='red'>[long_name] can not be found!<A href='?src=\ref[src];refresh_status'>Search</A></FONT><BR>"
-
-				mixer_data += mixer_part
-
-		else
-			mixer_data = "No mixers connected."
-
-		var/output = {"<B>[name]</B><HR>
-<B>Mixer Data: <BR></B>
-[mixer_data]<HR>"}
-
-		return output
-
-	Topic(href, href_list)
-		if (..())
-			return 0
 		if (!src.allowed(usr))
 			boutput(usr, SPAN_ALERT("Access denied!"))
-			return 0
+			return FALSE
 
 		var/datum/signal/signal = get_free_signal()
 		if (!signal || !istype(signal))
-			return 0
+			return FALSE
 
-		src.add_fingerprint(usr)
 		signal.transmission_method = 1 //radio
 		signal.source = src
 		signal.data["tag"] = id
 
-		if (href_list["toggle_pump"])
-			var/status = mixer_information["pump_status"]
-			var/command
-			if (status)
-				if (status == "Offline")
-					command = "power_on"
-				else if (status == "Online")
-					command = "power_off"
+		switch (action)
+			if ("toggle_pump")
+				var/status = mixer_information["pump_status"]
+				var/command
+				if (status)
+					if (status == "Offline")
+						command = "power_on"
+					else if (status == "Online")
+						command = "power_off"
 
-			if (command)
-				signal.data["command"] = "toggle_pump"
-				signal.data["parameter"] = command
+				if (command)
+					signal.data["command"] = "toggle_pump"
+					signal.data["parameter"] = command
 
-		if (href_list["pressure_adj"] || href_list["pressure_set"])
-			var/pressure = mixer_information["target_pressure"]
-
-			var/amount = 0
-			if (href_list["pressure_adj"])
-				var/diff = text2num_safe(href_list["pressure_adj"])
-				amount = clamp(pressure + diff, 0, MAX_PRESSURE)
-
-			else if (href_list["pressure_set"])
-				var/change = input(usr,"Target Pressure (0 - [MAX_PRESSURE]):", "Enter target pressure", pressure) as num
+			if ("pressure_set")
+				var/target_pressure = params["target_pressure"]
 				if ((BOUNDS_DIST(src, usr) > 0 && !issilicon(usr)) || !isliving(usr) || iswraith(usr) || isintangible(usr))
-					return 0
+					return FALSE
 				if (is_incapacitated(usr) || usr.restrained())
-					return 0
+					return FALSE
 				if (!src.allowed(usr))
 					boutput(usr, SPAN_ALERT("Access denied!"))
-					return 0
-				if (!isnum_safe(change))
-					return 0
+					return FALSE
+				if (!isnum_safe(target_pressure))
+					return FALSE
 
-				amount = clamp(change, 0, MAX_PRESSURE)
+				var/amount = clamp(target_pressure, 0, MAX_PRESSURE)
 
-			signal.data["command"] = "set_pressure"
-			signal.data["parameter"] = num2text(amount)
+				signal.data["command"] = "set_pressure"
+				signal.data["parameter"] = num2text(amount)
 
-		if (href_list["ratio"])
-			var/amount = text2num_safe(href_list["ratio"])
-			var/volume_rate = mixer_information["i1trans"]
+			if ("ratio")
+				signal.data["command"] = "set_ratio"
+				signal.data["parameter"] = params["ratio"]
 
-			signal.data["command"] = "set_ratio"
-			signal.data["parameter"] = num2text(volume_rate + amount)
+				if (src.id == "pmix_control")
+					if (((src.last_change + src.message_delay) <= world.time))
+						src.last_change = world.time
+						logTheThing(LOG_STATION, usr, "has just edited the plasma mixer at [log_loc(src)].")
+						message_admins("[key_name(usr)] has just edited the plasma mixer at at [log_loc(src)].")
 
-			if (src.id == "pmix_control")
-				if (((src.last_change + src.message_delay) <= world.time))
-					src.last_change = world.time
-					logTheThing(LOG_STATION, usr, "has just edited the plasma mixer at [log_loc(src)].")
-					message_admins("[key_name(usr)] has just edited the plasma mixer at at [log_loc(src)].")
-
-		if (href_list["refresh_status"])
-			signal.data["status"] = 1
+			if ("refresh_status")
+				signal.data["status"] = 1
 
 		if (signal)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
-#undef MAX_PRESSURE
+			. = TRUE
 
-#undef _GET_SIGNAL_GAS
-#undef GET_SIGNAL_MIXTURE
+#undef MAX_PRESSURE

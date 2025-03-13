@@ -68,9 +68,6 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/secure_data
 	name = "circuit board (secure data)"
 	computertype = /obj/machinery/computer/secure_data
-/obj/item/circuitboard/atmospherealerts
-	name = "circuit board (atmosphere alerts)"
-	computertype = /obj/machinery/computer/atmosphere/alerts
 /obj/item/circuitboard/atmospheresiphonswitch
 	name = "circuit board (atmosphere siphon control)"
 	computertype = /obj/machinery/computer/atmosphere/siphonswitch
@@ -89,9 +86,6 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/atm
 	name = "circuit board (ATM)"
 	computertype = /obj/machinery/computer/ATM
-/obj/item/circuitboard/bank_data
-	name = "circuit board (bank records)"
-	computertype = /obj/machinery/computer/bank_data
 /obj/item/circuitboard/robotics
 	name = "circuit board (robotics control)"
 	computertype = /obj/machinery/computer/robotics
@@ -209,6 +203,8 @@ TYPEINFO(/obj/item/circuitboard/announcement/bridge)
 	computertype = /obj/machinery/computer/announcement/syndicate
 	is_syndicate = TRUE
 
+TYPEINFO(/obj/item/circuitboard/announcement/clown)
+	mats = null
 /obj/item/circuitboard/announcement/clown
 	name = "circuit board (clown announcement computer)"
 	computertype = /obj/machinery/computer/announcement/clown

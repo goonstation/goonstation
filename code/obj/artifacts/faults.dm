@@ -14,7 +14,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 	var/halt_loop = 0
 
 	proc/deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
-		if (!O || !user)
+		if (!O || !user || user.nodamage)
 			return 1
 		return 0
 
@@ -197,7 +197,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 			else
 				user.say(generate_message(O, user))
 			var/datum/artifact/A = O.artifact
-			logTheThing(LOG_SAY, src, "SAY: [html_encode(msg)] [log_loc(user)] (was forced to speak by artifact of type [A.type] due to fault [src.type])")
+			logTheThing(LOG_SAY, user, "SAY: [html_encode(msg)] [log_loc(user)] (was forced to speak by artifact of type [A.type] due to fault [src.type])")
 			return
 		switch(text_style)
 			if ("small")

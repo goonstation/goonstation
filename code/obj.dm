@@ -30,6 +30,10 @@
 			var/turf/T = get_turf(src)
 			T?.UpdateDirBlocks()
 		src.update_access_from_txt()
+#ifdef CHECK_MORE_RUNTIMES
+		if (src.req_access && !islist(src.req_access))
+			stack_trace("[src] ([src.type]) initialized at \[[src.x], [src.y], [src.z]\] with non-list req_access >:(")
+#endif
 
 	Move(NewLoc, direct)
 		if(usr==0) usr = null
@@ -222,6 +226,9 @@
 	proc/shatter_chemically(var/projectiles = TRUE) //!shatter effect, caused by chemicals inside object, should return TRUE if object actually shatters
 		return FALSE
 
+	clamp_act(mob/clamper, obj/item/clamp)
+		return src.shatter_chemically()
+
 	proc/get_chemical_effect_position() //!how many pixels up or down chemistry reaction animations should shift, to fit the item it's reacting in
 		return 7 //default is up a bit since most objects are centered
 
@@ -392,9 +399,10 @@
 		replica.set_dir(O.dir)
 		qdel(O)
 
-/obj/proc/place_on(obj/item/W as obj, mob/user as mob, params)
+/obj/proc/place_on(obj/item/W as obj, mob/user as mob, params, imprecise = FALSE)
 	. = FALSE
-	if (W && !isghostdrone(user)) // im allowing borgs to do this when its specifically overridden into a mousedrop - mylie
+	if (!islist(params)) params = params2list(params)
+	if (W && !isghostdrone(user) && W.should_place_on(src, params)) // im allowing borgs to do this when its specifically overridden into a mousedrop - mylie
 		var/dirbuffer //*hmmpf* it's not like im a hacky coder or anything... (＃￣^￣)
 		dirbuffer = W.dir //though actually this will preserve item rotation when placed on tables so they don't rotate when placed. (this is a niche bug with silverware, but I thought I might as well stop it from happening with other things <3)
 		if (user)
@@ -404,10 +412,13 @@
 		if(W.dir != dirbuffer)
 			W.set_dir(dirbuffer)
 		W.set_loc(src.loc)
-		if (islist(params) && params["icon-y"] && params["icon-x"])
+		if (imprecise) // place item imprecisely by randomising offset
+			W.pixel_x = rand(-10, 10) // offsets avoid the edges just for niceness
+			W.pixel_y = rand(-10, 10)
+		else if (islist(params) && params["icon-y"] && params["icon-x"])
 			W.pixel_x = text2num(params["icon-x"]) - 16
 			W.pixel_y = text2num(params["icon-y"]) - 16
-		if(W.layer < src.layer)
+		if(W.layer <= src.layer)
 			W.layer = src.layer + 0.1
 		. = TRUE
 
@@ -446,7 +457,6 @@
 	qdel(src)
 
 
-ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
 /obj/proc/admin_command_obj_speak()
 	set name = "Object Speak"
 	var/msg = tgui_input_text(usr, "Speak message through [src]", "Speak", "")
@@ -487,3 +497,26 @@ ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
 		for(var/i = 1 to 10) // 20 characters are way too fuckin' long for anyone to care about
 			. += "[pick(numbersAndLetters)]"
 	while(. in forensic_IDs)
+
+/obj/proc/become_frame(mob/user)
+	var/turf/target_loc = get_turf(src)
+	var/obj/item/electronics/frame/F = new(target_loc)
+	F.name = "[src.name] frame"
+	if(src.deconstruct_flags & DECON_DESTRUCT)
+		F.store_type = src.type
+		qdel(src)
+	else
+		F.deconstructed_thing = src
+		if(ismob(src.loc))
+			var/mob/M = src.loc
+			M.u_equip(src)
+		src.set_loc(F)
+	// move frame to the location after object is gone, so crushers do not crusher themselves
+	F.viewstat = 2
+	F.secured = 2
+	F.icon_state = "dbox_big"
+	F.w_class = W_CLASS_BULKY
+	if(!QDELETED(src))
+		src.was_deconstructed_to_frame(user)
+		F.RegisterSignal(src, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
+	return F

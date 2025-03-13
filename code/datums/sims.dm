@@ -442,12 +442,7 @@
 	var/list/motives = list()
 	var/list/datum/simsHolder/simsHolders = list()
 	var/list/datum/simsMotive/simsMotives = list()
-
-#ifdef RP_MODE
 	var/provide_plumbobs = 0
-#else
-	var/provide_plumbobs = 1
-#endif
 
 	New()
 		..()
@@ -585,16 +580,11 @@ var/global/datum/simsControl/simsController = new()
 		make_motives()
 			addMotive(/datum/simsMotive/hunger)
 			addMotive(/datum/simsMotive/hunger/thirst)
-			//addMotive(/datum/simsMotive/hygiene)
-			//addMotive(/datum/simsMotive/bladder)
-			//addMotive(/datum/simsMotive/energy)
-			//addMotive(/datum/simsMotive/sanity)
 
 		wolf
 			make_motives()
 				addMotive(/datum/simsMotive/hunger/wolfy)
 				addMotive(/datum/simsMotive/hunger/thirst)
-				//addMotive(/datum/simsMotive/hygiene)
 
 	New(var/mob/living/L)
 		..()
@@ -664,6 +654,12 @@ var/global/datum/simsControl/simsController = new()
 			return
 		motives[initial(M.name)] = M
 		M.holder = src
+
+	proc/removeMotive(var/name)
+		if((name in src.motives))
+			var/datum/simsMotive/S = src.motives[name]
+			src.motives.Remove(name)
+			qdel(S)
 
 	proc/getValue(var/name)
 		if (name in motives)

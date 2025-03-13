@@ -97,7 +97,15 @@
 
 		if(src.ore || prob(8)) // provide less rock
 			default_ore = /obj/item/raw_material/rock
+		var/could_build = src.can_build
 		. = ..()
+		if(could_build)
+			src.can_build = could_build
+
+			var/turf/unsimulated/T = src
+			if(istype(T))
+				T.can_replace_with_stuff = TRUE
+
 		for (var/turf/unsimulated/floor/plating/asteroid/A in range(src,1))
 			A.UpdateIcon()
 

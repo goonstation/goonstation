@@ -9,7 +9,8 @@
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 365
 	validtypes = list("ancient","eldritch","precursor")
-	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,/datum/artifact_trigger/heat)
+	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,/datum/artifact_trigger/heat,
+		/datum/artifact_trigger/language)
 	fault_blacklist = list(ITEM_ONLY_FAULTS,TOUCH_ONLY_FAULTS)
 	activ_text = "starts emitting HUGE flames!"
 	deact_text = "stops emitting flames."
@@ -18,6 +19,7 @@
 	var/recharge_time = 20 SECONDS
 	var/fire_range = 4
 	var/temperature = 7000 KELVIN
+	var/fire_color
 
 	post_setup()
 		..()
@@ -29,6 +31,14 @@
 				fire_range = rand(2,6)
 				temperature = rand(4000, 8900) KELVIN
 
+		switch(artitype.name)
+			if ("ancient")
+				src.fire_color = pick(CHEM_FIRE_RED, CHEM_FIRE_BLACK, CHEM_FIRE_WHITE)
+			if ("eldritch")
+				src.fire_color = pick(CHEM_FIRE_RED, CHEM_FIRE_DARKRED, CHEM_FIRE_PURPLE)
+			if ("precursor")
+				src.fire_color = pick(CHEM_FIRE_RED, CHEM_FIRE_BLUE, CHEM_FIRE_GREEN)
+
 	effect_activate(var/obj/O)
 		if (..())
 			return
@@ -38,6 +48,6 @@
 		var/turf/T = get_turf(O)
 		playsound(O.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 		T.visible_message(SPAN_ALERT("<b>[O]</b> erupts into a huge column of flames! Holy shit!"))
-		fireflash_melting(T, fire_range, temperature, temperature / fire_range, chemfire = CHEM_FIRE_RED)
+		fireflash_melting(T, fire_range, temperature, temperature / fire_range, chemfire = src.fire_color)
 		SPAWN(3 SECONDS)
 			O.ArtifactDeactivated()

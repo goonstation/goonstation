@@ -5,22 +5,26 @@
 #define ALARM_SEVERE 0
 #define ALARM_MINOR 1
 #define ALARM_GOOD 2
+#define ALARM_BROKEN 3
+#define ALARM_NOPOWER 4
 
 /obj/machinery/alarm
 	name = "air monitor"
 	icon = 'icons/obj/monitors.dmi'
-	icon_state = "alarm_unpowered"
+	icon_state = "alarm"
 	power_usage = 5
 	power_channel = ENVIRON
 	anchored = ANCHORED
+	plane = PLANE_NOSHADOW_ABOVE
 	/// save some CPU by only checking every tick when something is amiss
 	var/skipprocess = 0
 	var/alarm_frequency = FREQ_ALARM
 	var/alarm_zone = null
 	var/control_frequency = FREQ_AIR_ALARM_CONTROL
 	/// keeps track of last alarm status
-	var/last_safe = ALARM_GOOD
+	var/last_safe = ALARM_NOPOWER
 	var/datum/gas_mixture/environment
+	var/alertingAI = FALSE // Does this alarm currently have an AI alarm active
 
 	/// this is a list of safe & good partial pressures of each gas. If all gasses are in the good range, the alarm will show green. If any gas is outside the safe range, the alarm will show alert. Otherwise caution.
 	/// most of these values are taken from lung.dm
@@ -95,10 +99,15 @@
 	var/safe = ALARM_GOOD
 
 	if(status & NOPOWER)
-		icon_state = "alarm_unpowered"
+		if (src.last_safe != ALARM_NOPOWER)
+			src.UpdateOverlays(null, "light")
+			src.last_safe = ALARM_NOPOWER
 		return
 	if(status & BROKEN)
-		icon_state = "alarm_broken"
+		src.icon_state = "alarm_broken"
+		if (src.last_safe != ALARM_BROKEN)
+			src.UpdateOverlays(null, "light")
+			src.last_safe = ALARM_BROKEN
 		return
 
 	if (src.skipprocess)
@@ -131,18 +140,42 @@
 				if(partial_pressure > entry["good_max"] || partial_pressure < entry["good_min"])
 					safe = ALARM_MINOR
 
-	switch(safe)
-		if(ALARM_SEVERE)
-			src.icon_state = "alarm_alert"
-		if(ALARM_MINOR)
-			src.icon_state = "alarm_safe"
-		if(ALARM_GOOD)
-			src.icon_state = "alarm_good"
-
 	if(safe == ALARM_GOOD)
 		src.skipprocess = 2
 
-	if(alarm_frequency && last_safe != safe)
+	if (src.last_safe == safe) //no change, no icon update/alert
+		return
+
+	var/overlay_icon_state = null
+	switch(safe)
+		if(ALARM_SEVERE)
+			overlay_icon_state = "alarm_alert"
+		if(ALARM_MINOR)
+			overlay_icon_state = "alarm_safe"
+		if(ALARM_GOOD)
+			overlay_icon_state = "alarm_good"
+
+	var/mutable_appearance/light_ov = mutable_appearance(src.icon, overlay_icon_state)
+	light_ov.plane = PLANE_SELFILLUM
+	src.UpdateOverlays(light_ov, "light")
+
+	if (safe == ALARM_GOOD)
+		if (src.alertingAI)
+			for_by_tcl(aiPlayer, /mob/living/silicon/ai)
+				aiPlayer.cancelAlarm("Atmosphere", get_area(src), src)
+			src.alertingAI = FALSE
+		src.RemoveComponentsOfType(/datum/component/minimap_marker/minimap)
+	else
+		var/list/cameras = list()
+		for_by_tcl(C, /obj/machinery/camera)
+			if(get_area(C) == get_area(src))
+				cameras += C
+		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
+			aiPlayer.triggerAlarm("Atmosphere", get_area(src), cameras, src)
+		src.alertingAI = TRUE
+		src.AddComponent(/datum/component/minimap_marker/minimap, MAP_ALERTS, "alarm_air", name="[get_area(src)] Air Alarm")
+
+	if(alarm_frequency)
 		post_alert(safe)
 		last_safe = safe
 

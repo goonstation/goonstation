@@ -58,6 +58,16 @@
 		return 1
 	return 0
 
+/obj/machinery/bot/cambot/attackby(obj/item/W, mob/user) //guh
+	. = ..()
+	switch(W.hit_type)
+		if (DAMAGE_BURN)
+			src.health -= W.force * 0.75
+		else
+			src.health -= W.force * 0.5
+	if (src.health <= 0)
+		src.explode()
+
 /obj/machinery/bot/cambot/demag(var/mob/user)
 	if (!src.emagged)
 		return 0

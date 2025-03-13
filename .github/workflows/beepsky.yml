@@ -11,7 +11,7 @@ on:
 jobs:
   lint:
     name: Run Linters
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
           cache: "yarn"
           cache-dependency-path: ./tgui/yarn.lock
 
@@ -71,8 +71,12 @@ jobs:
 
   odlint:
     name: Lint with OpenDream
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4.2.0
+        with:
+          dotnet-version: 9.0.100
       - uses: actions/checkout@v4
       - uses: robinraju/release-downloader@v1.11
         with:
@@ -84,7 +88,7 @@ jobs:
 
   compile:
     name: Compile
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v4
@@ -123,7 +127,7 @@ jobs:
 
   compile_full:
     name: "Compile and Lint with Secret Submodule"
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: |
       ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
     steps:
@@ -159,7 +163,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
           cache: "yarn"
           cache-dependency-path: ./tgui/yarn.lock
 

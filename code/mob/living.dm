@@ -153,8 +153,9 @@
 	if (src.isFlying)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 
+	sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
+
 	SPAWN(0)
-		sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
 		if(!ishuman(src))
 			init_preferences?.apply_post_new_stuff(src, role_for_traits)
 
@@ -167,6 +168,8 @@
 	ai_target = null
 	ai_target_old.len = 0
 	move_laying = null
+
+	QDEL_NULL(src.vision)
 
 	if(use_stamina)
 		STOP_TRACKING_CAT(TR_CAT_STAMINA_MOBS)
@@ -196,11 +199,13 @@
 	..()
 
 /mob/living/death(gibbed)
-	#define VALID_MOB(M) (!isVRghost(M) && !isghostcritter(M) && !inafterlife(M))
+	#define VALID_MOB(M) (!isVRghost(M) && !isghostcritter(M) && !inafterlife(M) && !M.hasStatus("in_afterlife"))
 	src.remove_ailments()
 	src.lastgasp(allow_dead = TRUE)
 	if (src.ai) src.ai.disable()
-	if (src.key)
+	if (src.isFlying)
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+	if (src.key && VALID_MOB(src))
 		var/datum/eventRecord/Death/deathEvent = new
 		deathEvent.buildAndSend(src, gibbed)
 	#ifndef NO_SHUTTLE_CALLS
@@ -366,7 +371,7 @@
 /mob/living/proc/hand_range_attack(atom/target, params, location, control, origParams)
 	var/datum/limb/L = src.equipped_limb()
 	if (L && L.attack_range(target, src, params))
-		src.lastattacked = src
+		src.lastattacked = get_weakref(src)
 		return TRUE
 	return FALSE
 
@@ -530,14 +535,14 @@
 					hand_attack(target, params, location, control)
 
 				//If lastattacked was set, this must be a combat action!! Use combat click delay ||  the other condition is whether a special attack was just triggered.
-				if ((lastattacked != null && (src.lastattacked == target || src.lastattacked == equipped || src.lastattacked == src) && use_delay) || (equipped && equipped.special && equipped.special.last_use >= world.time - src.click_delay))
+				if ((lastattacked?.deref() != null && (src.lastattacked.deref() == target || src.lastattacked.deref() == equipped || src.lastattacked.deref() == src) && use_delay) || (equipped && equipped.special && equipped.special.last_use >= world.time - src.click_delay))
 					src.next_click = world.time + (equipped ? max(equipped.click_delay,src.combat_click_delay) : src.combat_click_delay)
 					src.lastattacked = null
 
 			else if (!equipped)
 				hand_range_attack(target, params, location, control)
 
-				if (lastattacked != null && (src.lastattacked == target || src.lastattacked == equipped || src.lastattacked == src) && use_delay)
+				if (lastattacked?.deref() != null && (src.lastattacked.deref() == target || src.lastattacked.deref() == equipped || src.lastattacked.deref() == src) && use_delay)
 					src.next_click = world.time + src.combat_click_delay
 					src.lastattacked = null
 
@@ -608,14 +613,19 @@
 	if(src.client && !(target in view(src.client.view))) //don't point at things we can't see
 		return
 
-	var/obj/item/gun/G = src.equipped()
-	if(!istype(G) || !ismob(target))
+	var/obj/item/I = src.equipped()
+	var/gunpoint = FALSE
+	if(!cangunpoint(I) || !ismob(target))
 		src.visible_message(SPAN_EMOTE("<b>[src]</b> points to [target]."))
 	else
-		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
+		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [I] at [target]!</span>")
+		gunpoint = TRUE
 	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
 		..()
-		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color=get_symbol_color(), pointer=src)
+		var/obj/decal/point/point = make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color=get_symbol_color(), pointer=src)
+		if (gunpoint)
+			point.icon_state = "gun_point"
+			point.color = null
 
 /// Currently used for the color of pointing at things. Might be useful for other things that should have a color based off a mob.
 /mob/living/proc/get_symbol_color()
@@ -1152,8 +1162,7 @@
 	if (!message_range && speechpopups && src.chat_text)
 		var/heard_name = src.get_heard_name(just_name_itself=TRUE)
 		if(!last_heard_name || heard_name != src.last_heard_name)
-			var/num = hex2num(copytext(md5(heard_name), 1, 7))
-			src.last_chat_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
+			src.last_chat_color = living_maptext_color(heard_name)
 			src.last_heard_name = heard_name
 
 		var/turf/T = get_turf(say_location)
@@ -1574,6 +1583,7 @@
 		src.animate_lying(src.lying)
 		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
 		actions.interrupt(src, INTERRUPT_ACT) // interrupt actions
+		SEND_SIGNAL(src, COMSIG_MOB_LAYDOWN_STANDUP, src.lying)
 
 /mob/living/proc/animate_lying(lying)
 	animate_rest(src, !lying)
@@ -1583,7 +1593,7 @@
 	if (!M || !src) //Apparently M could be a meatcube and this causes HELLA runtimes.
 		return
 
-	M.lastattacked = src
+	M.lastattacked = get_weakref(src)
 
 	attack_particle(M,src)
 
@@ -1779,6 +1789,8 @@
 				if (GET_DIST(src,A) > 0 && GET_DIST(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
 					if(pull_slowing)
 						. *= max(A.p_class, 1)
+					else if (A.always_slow_pull)
+						. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
 					else
 						if(istype(A,/obj/machinery/nuclearbomb)) //can't speed off super fast with the nuke, it's heavy
 							. *= max(A.p_class, 1)
@@ -1798,8 +1810,6 @@
 								. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
 							else if (locate(/obj/item/gang_loot) in A.contents)
 								. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
-						else if (A.always_slow_pull)
-							. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
 
 			. = lerp(1, . , pushpull_multiplier)
 
@@ -1838,7 +1848,7 @@
 		return .
 
 	var/turf/T = get_turf(src)
-	if (T?.turf_flags & CAN_BE_SPACE_SAMPLE)
+	if (istype(T, /turf/space))
 		. = max(., base_speed)
 
 
@@ -2006,7 +2016,7 @@
 					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
-				if (isalive(src))
+				if (damage > 0 && isalive(src))
 					lastgasp()
 
 			if (D_PIERCING)
@@ -2014,7 +2024,7 @@
 					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				src.TakeDamage("chest", damage/rangedprot_mod, 0, 0, P.proj_data.hit_type)
-				if (isalive(src))
+				if (damage > 0 && isalive(src))
 					lastgasp()
 
 			if (D_SLASHING)
@@ -2073,7 +2083,7 @@
 	var/mob/M = null
 	if (ismob(P.shooter))
 		M = P.shooter
-		src.lastattacker = M
+		src.lastattacker = get_weakref(M)
 		src.lastattackertime = world.time
 	src.was_harmed(M)
 
@@ -2193,6 +2203,8 @@
 			. = 'sound/impact_sounds/Flesh_Stab_3.ogg'
 			if(thr?.user)
 				src.was_harmed(thr.user, AM)
+	if (AM.throwforce > 5) //number
+		src.changeStatus("staggered", 5 SECONDS)
 	..()
 
 /mob/living/proc/check_singing_prefix(var/message)
@@ -2361,3 +2373,37 @@
 		if (istype(H.glasses, /obj/item/clothing/glasses/visor))
 			return
 	src.vision.set_scan(0)
+
+/mob/living/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!", var/selfMessage = null)
+	. = ..()
+	if(.)
+		var/returnItem = src.organHolder?.stomach?.vomit()
+		if(returnItem)
+			. = returnItem
+		src.lastgasp(FALSE, grunt = pick("BLARGH", "blblbl", "BLUH", "BLURGH"))
+
+/// makes mob auto pick up the highest weight item on a turf. if multiple have that weight, last one in the order of contents var is picked
+/mob/living/proc/auto_pickup_item(atom/target_loc)
+	var/turf/T = get_turf(target_loc)
+	if (!T)
+		return
+	var/obj/item/picked_item
+	for (var/obj/item/I in T.contents)
+		if (I.anchored)
+			continue
+		if (I.w_class >= picked_item?.w_class) // order of contents is roughly random
+			picked_item = I
+	if (picked_item)
+		picked_item.pick_up_by(src)
+		return TRUE
+
+/mob/living/clamp_act()
+	if (isintangible(src))
+		return FALSE
+	src.TakeDamage("All", 6)
+	src.emote("scream", FALSE)
+	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 40, 1)
+	return TRUE
+
+/mob/living/HealBleeding(amt)
+	src.bleeding = max(src.bleeding - amt, 0)

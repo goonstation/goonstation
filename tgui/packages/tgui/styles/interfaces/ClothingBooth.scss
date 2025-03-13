@@ -1,31 +1,45 @@
-@use '.././components/Button.scss';
+@use 'sass:color';
+@use '../base';
+@use '../colors';
+@use '../functions' as *;
 
-.clothingbooth__ {
-  &dropdown {
-    margin-bottom: 0 !important;
-    margin-right: 0 !important;
+.clothingbooth {
+  &__boothitem {
+    cursor: pointer;
+
+    &:hover {
+      background-color: color.adjust(colors.$good, $lightness: -30%);
+    }
+
+    &--selected,
+    &--selected:hover {
+      background-color: colors.$good;
+    }
   }
 
-  &boothitem {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+  &__swatch-box {
+    &:hover {
+      outline: 0.167rem solid colors.$good;
+    }
   }
 
-  &boothitem > div {
-    pointer-events: none;
+  // If any swatch foreground shapes need custom styling, this is where it lives.
+  &__swatch-icon {
+    &--rainbow {
+      background-image: linear-gradient(
+        45deg,
+        red,
+        orange,
+        yellow,
+        green,
+        blue,
+        indigo,
+        violet
+      );
+    }
   }
 
-  &boothitem:hover,
-  &boothitem-selected {
-    background-color: Button.$color-selected;
-  }
-
-  &boothitem:active {
-    background-color: lighten(Button.$color-selected, 30%);
-  }
-
-  &preview {
-    width: 64px;
-    height: 128px;
+  &__groupingtag {
+    border-radius: base.$border-radius;
   }
 }

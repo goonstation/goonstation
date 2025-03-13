@@ -9,6 +9,10 @@
 #define DISPOSAL_CHUTE_CHARGING 1
 #define DISPOSAL_CHUTE_CHARGED 2
 
+#define DISPOSAL_REPAIR_STEP_FIXED 0
+#define DISPOSAL_REPAIR_STEP_SCREWDRIVER 1
+#define DISPOSAL_REPAIR_STEP_CROWBAR 2
+
 TYPEINFO(/obj/machinery/disposal)
 	mats = 20			// whats the point of letting people build trunk pipes if they cant build new disposals?
 ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
@@ -30,6 +34,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	var/light_style = "disposal" // for the lights and stuff
 	var/image/handle_image = null
 	var/destination_tag = null
+	var/repair_step = DISPOSAL_REPAIR_STEP_FIXED
 	///How fast do we repressurize
 	var/repressure_speed = 0.1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER
@@ -108,6 +113,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 		. = ..()
 
+	HELP_MESSAGE_OVERRIDE("Place held satches, boxes, and bags by clicking with the <b>Disarm</b>, <b>Grab</b>, or <b>Harm</b> intent.")
+
+	get_help_message(dist, mob/user)
+		. = ..()
+		if (src.status & BROKEN)
+			switch(src.repair_step)
+				if(DISPOSAL_REPAIR_STEP_SCREWDRIVER)
+					return "[src] is broken. You can begin repairing by using a <b>screwdriver</b>."
+				if(DISPOSAL_REPAIR_STEP_CROWBAR)
+					return "[src] is broken. You can finish repairing by using a <b>crowbar</b>."
+
 	proc/initair()
 		air_contents = new /datum/gas_mixture
 		air_contents.volume = 255
@@ -122,9 +138,26 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	attackby(var/obj/item/I, var/mob/user)
 		var/obj/item/storage/mechanics/mechitem = null
 		if(status & BROKEN)
-			return
-		if (istype(I,/obj/item/deconstructor))
-			user.visible_message(SPAN_ALERT("<B>[user] hits [src] with [I]!</B>"))
+			switch(src.repair_step)
+				if(DISPOSAL_REPAIR_STEP_SCREWDRIVER)
+					if(isscrewingtool(I))
+						playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, TRUE)
+						src.visible_message("[user] loosens the jammed retaining screws.")
+						src.repair_step = DISPOSAL_REPAIR_STEP_CROWBAR
+					else
+						boutput(user, SPAN_HINT("You need to <b>loosen</b> the retaining screws."))
+
+				if(DISPOSAL_REPAIR_STEP_CROWBAR)
+					if(ispryingtool(I))
+						playsound(src.loc, 'sound/machines/airlock_pry.ogg', 35, TRUE)
+						src.visible_message("[user] pries the chute locking panels back in place")
+						src.repair_step = DISPOSAL_REPAIR_STEP_FIXED
+						src.status &= ~BROKEN
+						src.mode = DISPOSAL_CHUTE_CHARGING
+						src.icon_state = initial(icon_state)
+						src.update()
+					else
+						boutput(user, SPAN_HINT("You need to <b>pry</b> the locking panels."))
 			return
 		if (istype(I, /obj/item/handheld_vacuum))
 			return
@@ -203,6 +236,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		//jesus fucking christ
 		if (BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(target, src) > 0 || isAI(user) || is_incapacitated(user) || isghostcritter(user) || !src.fits_in(target))
 			return
+		if (src.status & BROKEN)
+			return
+		if(user.restrained() && (user.pulled_by || length(user.grabbed_by)))
+			return
 		if (istype(target, /obj/machinery/bot))
 			var/obj/machinery/bot/bot = target
 			bot.set_loc(src)
@@ -268,6 +305,20 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		else
 			return ..()
 
+	attack_hand(mob/user)
+		. = ..()
+		if (src.status & (BROKEN | NOPOWER))
+			src.eject() //don't let people hide in depowered disposal chutes indefinitely
+
+	set_broken()
+		. = ..()
+		if (.) return
+		src.eject()
+		src.loc.assume_air(src.air_contents)
+		playsound(src, 'sound/impact_sounds/locker_break.ogg', 50, TRUE)
+		src.status |= BROKEN
+		src.repair_step = DISPOSAL_REPAIR_STEP_SCREWDRIVER
+		src.update()
 
 	// can breath normally in the disposal
 	alter_health()
@@ -289,6 +340,25 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			user.force_laydown_standup()
 		update()
 		return
+
+	ex_act(severity)
+		switch(severity)
+			if(1)
+				qdel(src)
+			if(2)
+				if (prob(50))
+					src.set_broken()
+			if(3)
+				if (prob(25))
+					src.set_broken()
+
+	bullet_act(obj/projectile/P)
+		. = ..()
+		switch (P.proj_data.damage_type)
+			if (D_KINETIC, D_PIERCING, D_SLASHING)
+				if (prob(P.power))
+					if (!(status & BROKEN))
+						src.set_broken()
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -344,7 +414,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	// update the icon & overlays to reflect mode & status
 	proc/update()
 		if (status & BROKEN)
-			icon_state = "disposal-broken"	// this icon state doesn't apparently exist
+			icon_state = "[icon_style]-broken"
 			ClearAllOverlays()
 			mode = DISPOSAL_CHUTE_OFF
 			flush = 0
@@ -669,7 +739,28 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		return
 
 	attackby(var/obj/item/I, var/mob/user)
-		return
+		if(status & BROKEN)
+			switch(src.repair_step)
+				if(DISPOSAL_REPAIR_STEP_SCREWDRIVER)
+					if(isscrewingtool(I))
+						playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, TRUE)
+						src.visible_message("[user] loosens the jammed retaining screws.")
+						src.repair_step = DISPOSAL_REPAIR_STEP_CROWBAR
+					else
+						boutput(user, SPAN_HINT("You need to <b>loosen</b> the retaining screws."))
+
+				if(DISPOSAL_REPAIR_STEP_CROWBAR)
+					if(ispryingtool(I))
+						playsound(src.loc, 'sound/machines/airlock_pry.ogg', 35, TRUE)
+						src.visible_message("[user] pries the chute locking panels back in place")
+						src.repair_step = DISPOSAL_REPAIR_STEP_FIXED
+						src.status &= ~BROKEN
+						src.mode = DISPOSAL_CHUTE_CHARGING
+						src.icon_state = initial(icon_state)
+						src.update()
+					else
+						boutput(user, SPAN_HINT("You need to <b>pry</b> the locking panels."))
+			return
 
 	Entered()
 		. = ..()
@@ -697,7 +788,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	attack_ai(mob/user as mob)
 		return
 
-	attack_hand(mob/user)
+	ui_interact(mob/user, datum/tgui/ui)
 		return
 
 
@@ -706,6 +797,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	desc = "A small chute designed to send chemical supplies to medbay. An attached monitoring console shows the levels of supplies present."
 	icon_state = "chemlink_on"
 	destination_tag = "chemlink"
+	icon_style = "chemlink"
 	//stuff to emulate computer look
 	var/datum/light/light
 	var/image/screen_image
@@ -802,13 +894,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 
 	//no overlays
 	update()
-		return
+		if(src.status & BROKEN)
+			icon_state = "[icon_style]-broken"
+			mode = DISPOSAL_CHUTE_OFF
+			flush = 0
+			power_usage = 0
 
 	process()
 		if (src.static_data_invalid)
 			src.static_data_invalid = FALSE
-			for (var/datum/tgui/ui as anything in tgui_process.get_uis(src))
-				src.update_static_data(null, ui)
+			src.update_static_data_for_all_viewers()
 
 /datum/action/bar/icon/shoveMobIntoChute
 	duration = 0.2 SECONDS
@@ -871,6 +966,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			interrupt(INTERRUPT_ALWAYS)
 			return FALSE
 		return TRUE
+
+
+#undef DISPOSAL_REPAIR_STEP_FIXED
+#undef DISPOSAL_REPAIR_STEP_SCREWDRIVER
+#undef DISPOSAL_REPAIR_STEP_CROWBAR
 
 #undef DISPOSAL_CHUTE_OFF
 #undef DISPOSAL_CHUTE_CHARGING

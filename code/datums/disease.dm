@@ -417,7 +417,7 @@
 
 		if (istype(A,/datum/ailment/disease/))
 			var/datum/ailment/disease/D = A
-			resist_prob -= D.virulence
+			resist_prob = 100 - (((100 - resist_prob) / 100) * D.virulence)
 
 	if (prob(resist_prob))
 		return 0

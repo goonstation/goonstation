@@ -384,7 +384,7 @@
 				logTheThing(LOG_DIARY, "[user] (Discord)", null, "displayed an alert to  [constructTarget(C,"diary")] with the message \"[message]\"", "admin")
 				if (C?.mob)
 					SPAWN(0)
-						C.mob.playsound_local(C.mob, 'sound/voice/animal/goose.ogg', 100, flags = SOUND_IGNORE_SPACE)
+						C.mob.playsound_local(C.mob, 'sound/voice/animal/goose.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 						if (alert(C.mob, message, "!! Admin Alert !!", "OK") == "OK")
 							message_admins("[ckey] acknowledged the alert from [user] (Discord).")
 							system.reply("[ckey] acknowledged the alert.", user)
@@ -751,7 +751,7 @@
 	name = "vpnwhitelist"
 	help_message = "Whitelists a given ckey from the VPN checker."
 	argument_types = list(/datum/command_argument/string/ckey="ckey")
-	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	server_targeting = COMMAND_TARGETING_LIVE_SERVERS
 
 	execute(user, ckey)
 		try
@@ -977,3 +977,20 @@
 		logTheThing(LOG_DIARY, "[user] (Discord)", "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.", "admin")
 		message_admins("[user] (Discord) [enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")
 		system.reply("[enabled ? "Enabled" : "Disabled"] Tracy profiling for the next round.", user)
+
+/datum/spacebee_extension_command/egg_stats
+	name = "eggstats"
+	server_targeting = COMMAND_TARGETING_LIVE_SERVERS
+	help_message = "Return the state of all live server's oldest century eggs"
+	argument_types = list()
+
+	execute(user)
+		var/obj/item/reagent_containers/food/snacks/ingredient/egg/century/oldest = null
+		for_by_tcl(egg, /obj/item/reagent_containers/food/snacks/ingredient/egg/century)
+			if (!oldest || (egg.timestamp_created && egg.timestamp_created < oldest.timestamp_created))
+				oldest = egg
+		if (!oldest)
+			system.reply("No century eggs :(")
+			return
+		var/turf/T = get_turf(oldest)
+		system.reply("Map: [global.map_settings.name]. Oldest egg found at ([T.x], [T.y]) in [get_area(T)] - aged for [oldest.get_age_string()]")

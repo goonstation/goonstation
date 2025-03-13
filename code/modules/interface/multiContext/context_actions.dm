@@ -457,7 +457,7 @@
 	var/success_sound
 
 	proc/success_feedback(atom/target, mob/user)
-		user.show_text(replacetext(success_text, "%target%", target), "blue")
+		user.show_text(replacetext(success_text, "%target%", "[target]"), "blue")
 		if (success_sound)
 			playsound(target, success_sound, 50, TRUE)
 
@@ -697,6 +697,26 @@
 			var/obj/machinery/vehicle/V = target
 			V.use_external_speaker()
 
+	change_thruster_direction
+		name = "Lateral Thruster Direction"
+		desc = "Change the lateral thrusters to move the ship left"
+		icon_state = "thrusters_left"
+
+		checkRequirements(atom/target, mob/user)
+			var/obj/machinery/vehicle/V = target
+			. = ..() && istype(V.sec_system, /obj/item/shipcomponent/secondary_system/thrusters/lateral)
+
+		execute(atom/target, mob/user)
+			..()
+			var/obj/machinery/vehicle/V = target
+			var/obj/item/shipcomponent/secondary_system/thrusters/lateral/thrusters = V.sec_system
+			thrusters.change_thruster_direction()
+			if (src.icon_state == "thrusters_right")
+				src.desc = "Change the lateral thrusters to move the ship left"
+				src.icon_state = "thrusters_left"
+			else
+				src.desc = "Change the lateral thrusters to move the ship right"
+				src.icon_state = "thrusters_right"
 
 /datum/contextAction/cellphone
 	name = "Cellphone action"

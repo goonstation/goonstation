@@ -1,4 +1,4 @@
-/*
+/*!
  * External tgui definitions, such as src_object APIs.
  *
  * Copyright (c) 2020 Aleksej Komarov
@@ -65,6 +65,17 @@
 /**
  * public
  *
+ * Will force an update on static data for all viewers.
+ * Should be done manually whenever something happens to
+ * change static data.
+ */
+/datum/proc/update_static_data_for_all_viewers()
+	for (var/datum/tgui/window as anything in open_uis)
+		window.send_full_update()
+
+/**
+ * public
+ *
  * Called on a UI when the UI receieves a href.
  * Think of this as Topic().
  *
@@ -74,6 +85,7 @@
  * return bool If the UI should be updated or not.
  */
 /datum/proc/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	SHOULD_CALL_PARENT(TRUE)
 	// If UI is not interactive or usr calling Topic is not the UI user, bail.
 	if(!ui || ui.status != UI_INTERACTIVE)
 		return 1
@@ -131,6 +143,13 @@
 /client/var/list/tgui_windows = list()
 
 /**
+ * global
+ *
+ * TRUE if cache was reloaded by tgui dev server at least once.
+ */
+/client/var/tgui_cache_reloaded = FALSE
+
+/**
  * public
  *
  * Called on a UI's object when the UI is closed, not to be confused with
@@ -173,6 +192,19 @@
 			context += " ([href_list["ns"]])"
 		log_tgui(usr, href_list["message"],
 			context = context)
+	// Reload all tgui windows
+	if(type == "cacheReloaded")
+		if(!isadmin(usr) || usr.client.tgui_cache_reloaded)
+			return TRUE
+		// Mark as reloaded
+		usr.client.tgui_cache_reloaded = TRUE
+		// Notify windows
+		var/list/windows = usr.client.tgui_windows
+		for(var/window_id in windows)
+			var/datum/tgui_window/window = windows[window_id]
+			if (window.status == TGUI_WINDOW_READY)
+				window.on_message(type, null, href_list)
+		return TRUE
 	// Locate window
 	var/window_id = href_list["window_id"]
 	var/datum/tgui_window/window
@@ -187,7 +219,13 @@
 	// Decode payload
 	var/payload
 	if(href_list["payload"])
-		payload = json_decode(href_list["payload"])
+		var/payload_text = href_list["payload"]
+
+		if (!rustg_json_is_valid(payload_text))
+			log_tgui(usr, "Error: Invalid JSON")
+			return TRUE
+
+		payload = json_decode(payload_text)
 	// Pass message to window
 	window?.on_message(type, payload, href_list)
 	return TRUE

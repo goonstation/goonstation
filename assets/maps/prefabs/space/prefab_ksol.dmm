@@ -10,7 +10,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "ad" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
@@ -36,7 +36,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "ah" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
@@ -47,7 +47,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/noGenerate)
 "ai" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
@@ -66,7 +66,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/noGenerate)
 "aj" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
@@ -194,7 +194,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "az" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/item/breaching_charge/mining/hacked,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/noGenerate)
@@ -978,7 +978,7 @@
 	},
 /area/noGenerate)
 "cz" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "cA" = (
@@ -1159,7 +1159,7 @@
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "cX" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/item/raw_material/shard/glass,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)

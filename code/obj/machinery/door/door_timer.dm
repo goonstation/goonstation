@@ -4,7 +4,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doortimer0"
 	desc = "A remote control switch for a door."
-	req_access = list(access_security)
+	req_access = list(access_brig)
 	anchored = ANCHORED
 	var/id = null
 	var/time = 30
@@ -282,6 +282,7 @@
 		if (B.id == src.id && B.our_timer == src)
 			if (B.locked)
 				B.locked = 0
+				B.open()
 				B.UpdateIcon()
 				B.visible_message(SPAN_NOTICE("[B.name] unlocks automatically."))
 

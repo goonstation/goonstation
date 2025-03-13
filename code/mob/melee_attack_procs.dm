@@ -15,11 +15,14 @@
 /mob/proc/do_help(var/mob/living/M)
 	if (!istype(M))
 		return
-	src.lastattacked = M
+	src.lastattacked = get_weakref(M)
 	if (src != M && M.getStatusDuration("burning")) //help others put out fires!!
 		src.help_put_out_fire(M)
 	else if (src == M && src.getStatusDuration("burning"))
 		M.resist()
+	else if (src != M && M.hasStatus("paralysis")) // we "dead"
+		src.visible_message(SPAN_ALERT("<B>[src] tries to perform CPR, but it's too late for [M]!</B>"))
+		return
 	//If we use an empty hand on a cut up person, we might wanna rip out their organs by hand
 	else if (surgeryCheck(M, src) && M.organHolder?.chest?.op_stage >= 2 && ishuman(src))
 		if (M.organHolder.build_region_buttons())
@@ -190,7 +193,7 @@
 		boutput(src, SPAN_ALERT("You're already doing CPR!"))
 		return
 
-	src.lastattacked = target
+	src.lastattacked = get_weakref(target)
 
 	actions.start(new /datum/action/bar/icon/CPR(target), src)
 
@@ -493,7 +496,8 @@
 		if (show_msg)
 			visible_message(SPAN_COMBAT("<b>[src] narrowly dodges [attacker]'s attack!"))
 		playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, TRUE, 1)
-
+		if (!ON_COOLDOWN(src, "matrix_sound_effect", 1 SECOND))
+			src.playsound_local(src, 'sound/effects/graffiti_hit.ogg', 40, pitch = 0.8)
 		add_stamina(STAMINA_FLIP_COST * 0.25) //Refunds some stamina if you successfully dodge.
 		stamina_stun()
 		fuckup_attack_particle(attacker)
@@ -531,8 +535,8 @@
 		return 0
 
 	if (src.gloves.uses > 0)
-		src.lastattacked = target
-		target.lastattacker = src
+		src.lastattacked = get_weakref(target)
+		target.lastattacker = get_weakref(src)
 		target.lastattackertime = world.time
 		logTheThing(LOG_COMBAT, src, "touches [constructTarget(target,"combat")] with stun gloves at [log_loc(src)].")
 		target.add_fingerprint(src) // Some as the other 'empty hand' melee attacks (Convair880).
@@ -725,7 +729,7 @@
 		user.visible_message(SPAN_COMBAT("<b>[user]'s attack bounces off [target] uselessly!</B>"))
 		return
 
-	user.lastattacked = target
+	user.lastattacked = get_weakref(target)
 
 	var/damage = 0
 	var/send_flying = 0 // 1: a little bit | 2: across the room
@@ -980,8 +984,8 @@
 #ifdef DATALOGGER
 			game_stats.Increment("violence")
 #endif
-			owner.lastattacked = target
-			target.lastattacker = owner
+			owner.lastattacked = get_weakref(target)
+			target.lastattacker = get_weakref(owner)
 			target.lastattackertime = world.time
 			target.add_fingerprint(owner)
 

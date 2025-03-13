@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import { BooleanLike } from 'common/react';
+import { BooleanLike } from 'tgui-core/react';
 
 export enum CrewCreditsTabKeys {
   Crew,
@@ -32,11 +32,10 @@ export interface CrewMemberProps {
   head?: boolean;
 }
 
-
 export interface AntagonistTabData {
   game_mode: string;
-  verbose_antagonist_data: VerboseAntagonistProps[]
-  succinct_antagonist_data: SuccinctAntagonistProps[]
+  verbose_antagonist_data: VerboseAntagonistProps[];
+  succinct_antagonist_data: SuccinctAntagonistProps[];
 }
 
 export interface VerboseAntagonistProps {
@@ -46,10 +45,10 @@ export interface VerboseAntagonistProps {
   job_role: string;
   status: string;
 
-  objectives: ObjectiveProps[]
-  antagonist_statistics: AntagonistStatisticsProps[]
+  objectives: ObjectiveProps[];
+  antagonist_statistics: AntagonistStatisticsProps[];
 
-  subordinate_antagonists: SuccinctAntagonistProps[]
+  subordinate_antagonists: SuccinctAntagonistProps[];
 }
 
 export interface ObjectiveProps {
@@ -69,7 +68,6 @@ export interface SuccinctAntagonistProps {
   player: string;
   dead: BooleanLike;
 }
-
 
 export interface ScoreTabData {
   victory_headline: string;
@@ -105,20 +103,20 @@ export interface CitationsByTargetData {
 }
 
 export interface TicketData {
-  reason: string,
-  issuer: string,
-  issuer_job: string,
+  reason: string;
+  issuer: string;
+  issuer_job: string;
 }
 
 export interface FineData extends TicketData {
-  amount: number,
-  approver: string,
-  approver_job: string,
-  paid_amount: number,
-  paid: BooleanLike,
+  amount: number;
+  approver: string;
+  approver_job: string;
+  paid_amount: number;
+  paid: BooleanLike;
 }
 
-export type CitationData = TicketData | FineData
+export type CitationData = TicketData | FineData;
 
 export const isFineData = (value: CitationData): value is FineData =>
   'amount' in value;

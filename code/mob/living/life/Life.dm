@@ -10,6 +10,7 @@
 	var/mob/living/carbon/human/human_owner = null
 	var/mob/living/silicon/hivebot/hivebot_owner = null
 	var/mob/living/silicon/robot/robot_owner = null
+	var/mob/living/silicon/ai/ai_mainframe_owner = null
 	var/mob/living/critter/critter_owner = null
 
 	New(new_owner,arguments)
@@ -23,6 +24,8 @@
 			hivebot_owner = owner
 		if (istype(owner,/mob/living/silicon/robot))
 			robot_owner = owner
+		if (istype(owner,/mob/living/silicon/ai))
+			ai_mainframe_owner = owner
 		if (istype(owner,/mob/living/critter))
 			critter_owner = owner
 
@@ -32,6 +35,7 @@
 		human_owner = null
 		hivebot_owner = null
 		robot_owner = null
+		ai_mainframe_owner = null
 		critter_owner = null
 
 	proc/Process(datum/gas_mixture/environment)
@@ -487,17 +491,6 @@
 		sleeping = clamp(sleeping, 0, 20)
 		stuttering = clamp(stuttering, 0, 50)
 		losebreath = clamp(losebreath, 0, 25) // stop going up into the thousands, goddamn
-
-	proc/stink()
-		if (prob(15))
-			for (var/mob/living/carbon/C in view(6,get_turf(src)))
-				if (C == src || !C.client)
-					continue
-				boutput(C, SPAN_ALERT("[stinkString()]"), "stink_message")
-				if (prob(30))
-					C.vomit()
-					C.changeStatus("stunned", 2 SECONDS)
-					boutput(C, SPAN_ALERT("[stinkString()]"), "stink_message")
 
 	proc/update_sight()
 		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/sight]

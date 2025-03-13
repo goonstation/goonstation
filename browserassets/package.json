@@ -1,31 +1,32 @@
 {
 	"private": true,
 	"name": "goonstation-browserassets",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "",
 	"main": "index.js",
+	"type": "module",
 	"scripts": {
-		"build": "gulp build"
+		"build": "gulp build",
+		"tgui:manifest": "gulp tgui:manifest"
 	},
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
 		"@babel/core": "^7.25.2",
 		"@babel/preset-env": "^7.25.4",
-		"imagemin-oxipng-include-oxipng-bin": "^3.0.0",
 		"autoprefixer": "^10.4.20",
 		"cssnano": "^7.0.6",
 		"del": "^7.1.0",
 		"gulp": "^5.0.0",
 		"gulp-babel": "^8.0.0",
+		"gulp-hash-filename": "^4.1.0",
 		"gulp-htmlmin": "^5.0.1",
-		"gulp-imagemin": "^9.1.0",
 		"gulp-postcss": "^10.0.0",
+		"gulp-rename": "^2.0.0",
 		"gulp-replace": "^1.1.4",
 		"gulp-uglify-es": "^3.0.0",
 		"minimist": "^1.2.8",
-		"postcss": "^8.4.47",
-		"gulp-debug": "^5.0.0"
+		"postcss": "^8.4.47"
 	},
 	"browserslist": [
 		"ie >= 11"

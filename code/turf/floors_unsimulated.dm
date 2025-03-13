@@ -352,6 +352,26 @@
 /turf/unsimulated/floor/darkblue/checker/other
 	icon_state = "blue-dblue2"
 
+/turf/unsimulated/floor/darkblue/side
+	icon_state = "dblue"
+
+/turf/unsimulated/floor/darkblue/corner
+	icon_state = "dbluecorner"
+
+/turf/unsimulated/floor/darkblue/checker
+	icon_state = "dbluechecker"
+
+/turf/unsimulated/floor/darkblueblack
+	icon_state = "dblueblack"
+
+/turf/unsimulated/floor/darkblueblack/corner
+	icon_state = "dblueblackcorner"
+
+/turf/unsimulated/floor/darkbluewhite
+	icon_state = "dbluewhite"
+
+/turf/unsimulated/floor/darkbluewhite/corner
+	icon_state = "dbluewhitecorner"
 /////////////////////////////////////////
 
 /turf/unsimulated/floor/darkpurple
@@ -363,6 +383,20 @@
 /turf/unsimulated/floor/darkpurple/corner
 	icon_state = "dpurplecorner"
 
+/turf/unsimulated/floor/darkpurple/checker
+	icon_state = "dpurplechecker"
+
+/turf/unsimulated/floor/darkpurpleblack
+	icon_state = "dpurpleblack"
+
+/turf/unsimulated/floor/darkpurpleblack/corner
+	icon_state = "dpurpleblackcorner"
+
+/turf/unsimulated/floor/darkpurplewhite
+	icon_state = "dpurplewhite"
+
+/turf/unsimulated/floor/darkpurplewhite/corner
+	icon_state = "dpurplewhitecorner"
 /////////////////////////////////////////
 
 /turf/unsimulated/floor/bluegreen
@@ -1138,7 +1172,7 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 							T.ClearSpecificOverlays("edge_[direction]") // Cull overlaps
 							continue
 					if(turn(direction, 180) & connectdir)
-						T.ClearSpecificOverlays("edge_[direction]") // Cull diagnals
+						T.ClearSpecificOverlays("edge_[direction]") // Cull diagonals
 						continue
 					var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
 					edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
@@ -1178,6 +1212,8 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 	icon_state = "dirt"
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
 	icon_state_edge = "dirtedge"
+	step_material = "step_outdoors"
+	step_priority = STEP_PRIORITY_MED
 
 /turf/unsimulated/floor/auto/sand
 	name = "sand"

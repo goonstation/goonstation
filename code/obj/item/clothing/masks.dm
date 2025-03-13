@@ -47,6 +47,9 @@
 			return
 	else if (issnippingtool(W))
 		if (src.vchange)
+			if (src.vchange.permanent)
+				user.show_text("[src]'s [src.vchange.name] cannot be removed!", "red")
+				return
 			user.show_text("You begin removing [src.vchange] from [src].", "blue")
 			if (!do_after(user, 2 SECONDS))
 				user.show_text("You were interrupted!", "red")
@@ -224,7 +227,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 
 	syndicate
 		name = "syndicate field protective mask"
-		desc = "A tight-fitting mask designed to protect syndicate operatives from all manner of toxic inhalants. Worn with a buckle around the back of the head."
+		desc = "A tight-fitting mask designed to protect syndicate operatives from all manner of toxic inhalants. Has a built-in voice changer."
 		icon_state = "gas_mask_syndicate"
 		item_state = "gas_mask_syndicate"
 		color_r = 0.8 //this one's also green
@@ -235,6 +238,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		New()
 			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 			..()
+			src.vchange = new /obj/item/voice_changer/permanent(src)
 
 		disposing()
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -272,7 +276,11 @@ TYPEINFO(/obj/item/voice_changer)
 	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discretely fits inside most masks, and can be removed with wirecutters."
 	icon_state = "voicechanger"
 	is_syndicate = 1
+	var/permanent = FALSE
 	HELP_MESSAGE_OVERRIDE({"Use the voice changer on a face-concealing mask to fit it inside. You will speak as and appear in chat as the name of your worn ID, or as "unknown" if you aren't wearing your ID. Use wirecutters on the mask to remove the voice changer."})
+
+/obj/item/voice_changer/permanent
+	permanent = TRUE
 
 TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	mats = 12	// 2x voice changer cost. It's complicated ok
@@ -494,7 +502,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	icon_state = "sterile"
 	item_state = "s_mask"
 	w_class = W_CLASS_TINY
-	c_flags = COVERSMOUTH
+	c_flags = COVERSMOUTH | BLOCKMIASMA
 
 	setupProperties()
 		..()
@@ -641,14 +649,16 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	see_face = FALSE
 	allow_staple = 0
 	var/low_visibility = TRUE
+	material_amt = 0.5
 
 	attackby(obj/item/W, mob/user) // Allows the mask be modified, if one only wants the fashion
 		if (isweldingtool(W) && low_visibility)
 			if(!W:try_weld(user, 1))
 				return
 			user.visible_message(SPAN_ALERT("<B>[user]</B> melts the mask's eye slits to be larger."))
-			user.removeOverlayComposition(/datum/overlayComposition/steelmask)
-			user.updateOverlaysClient(user.client)
+			if(src in user.get_equipped_items())
+				user.removeOverlayComposition(/datum/overlayComposition/steelmask)
+				user.updateOverlaysClient(user.client)
 			setProperty("meleeprot_head", 3)
 			delProperty("disorient_resist_eye")
 			src.low_visibility = FALSE

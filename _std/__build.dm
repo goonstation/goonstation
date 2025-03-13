@@ -42,8 +42,9 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
-//#define DISABLE_DEVFILE // Don't load things defined in '__local.development.dm'. Use if you have some breaking changes in there or whatnot
+//#define DISABLE_DEVFILE // Don't load things defined in '__build.local.dm'. Use if you have some breaking changes in there or whatnot
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
+//#define I_MEAN_ALL_ACCESS // Captain level ID's have EVERY access
 //#define NO_COOLDOWNS // disables all /datum/targetable cooldowns
 //#define BONUS_POINTS // gives a bunch of starting points to various abilities/uplinks/weapon vendors
 //#define SHUT_UP_AND_GIVE_ME_MEDAL_STUFF // causes has_medal to always return true - good for testing medal rewards etc.
@@ -69,12 +70,13 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define QUICK_MOB_DELETION // Enables deleting mobs with build mode right click on obj place mode
 //#define SHUT_UP_ABOUT_MY_PAY // disables PDA messages from the wagesystem
 //#define FUCK_OFF_WITH_THE_MAIL // Disables random crew mail system
+//#define GHOSTDRONES_ON_STRIKE // prevents ghostdrone factory objs from doing stuff
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
 //------------- PROFILING OPTIONS -------------//
 
-//#define TRACY_PROFILER_HOOK // Enables the hook for the DM Tracy profiler in world/init(), read the code guide
+// #define TRACY_PROFILER_HOOK // Enables the hook for the DM Tracy profiler in world/init(), read the code guide
 
 //#define SERVER_SIDE_PROFILING_FULL_ROUND 1 // Generate and save profiler data for the entire round
 //#define SERVER_SIDE_PROFILING_PREGAME 1	// Generate and save profiler data for pregame work (before "Welcome to pregame lobby")
@@ -110,8 +112,8 @@ o+`        `-` ``..-:yooos-..----------..`
 // Makes the delete queue go through every single datum in the game when a hard del happens
 // It gets reported to the debug log. This process takes about 4 minutes per hard deletion
 // (during that time the server will be frozen).
-//#define LOG_HARD_DELETE_REFERENCES
-//#define LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
+// #define LOG_HARD_DELETE_REFERENCES
+// #define LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
 
 // Toggle this to turn .dispose() into qdel( ). Useful for trying to find lingering references locally.
 //#define DISPOSE_IS_QDEL
@@ -159,6 +161,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //#define UNIT_TESTS
 //#define UNIT_TESTS_RUN_TILL_COMPLETION // Bypass 10 Second Limit
+//#define UNIT_TEST_TYPES /datum/unit_test/explosion_test, /datum/unit_test/deletion_regressions // Only run tests of these types - comma separated list of types
 
 #ifdef CI_RUNTIME_CHECKING
 #define CHECK_MORE_RUNTIMES 1
@@ -195,6 +198,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define QUICK_MOB_DELETION
 #define SHUT_UP_ABOUT_MY_PAY
 #define FUCK_OFF_WITH_THE_MAIL
+#define GHOSTDRONES_ON_STRIKE
 #endif
 
 #ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE

@@ -43,6 +43,7 @@ var/list/job_mailgroup_list = list(
 	"Chief Engineer" = MGD_COMMAND,
 	"Quartermaster" = MGD_CARGO,
 	"Engineer" = MGD_STATIONREPAIR,
+	"Technical Trainee" = MGD_STATIONREPAIR,
 	"Janitor" = MGD_STATIONREPAIR,
 	"Miner" = MGD_MINING,
 	"Botanist" = MGD_BOTANY,
@@ -51,6 +52,7 @@ var/list/job_mailgroup_list = list(
 	"Geneticist" = MGD_MEDRESEACH,
 	"Pathologist" = MGD_MEDRESEACH,
 	"Medical Doctor" = MGD_MEDBAY,
+	"Medical Trainee" = MGD_MEDBAY,
 	"Chaplain" = MGD_SPIRITUALAFFAIRS)
 
 //Used for PDA department paging.
@@ -100,16 +102,19 @@ var/list/engineering_jobs = list(
 	"Engineer",
 	"Miner",
 	"Quartermaster",
+	"Technical Trainee",
 )
 var/list/medical_jobs = list(
 	"Medical Director",
 	"Medical Doctor",
 	"Roboticist",
-	"Geneticist"
+	"Geneticist",
+	"Medical Trainee",
 )
 var/list/science_jobs = list(
 	"Research Director",
 	"Scientist",
+	"Research Trainee",
 )
 var/list/medsci_jobs = medical_jobs + science_jobs
 var/list/service_jobs = list(
@@ -131,13 +136,12 @@ var/list/command_gimmicks = list(
 )
 var/list/security_gimmicks = list(
 	"Vice Officer",
-	"Forensic Technician",
+	"Forensic Technician"
 )
 var/list/engineering_gimmicks = list(
 	"Head of Mining",
 	"Station Builder",
 	"Atmospherish Technician",
-	"Technical Assistant",
 )
 var/list/medical_gimmicks = list(
 	"Acupuncturist",
@@ -169,7 +173,6 @@ var/list/medical_gimmicks = list(
 var/list/science_gimmicks = list(
 	"Toxins Researcher",
 	"Chemist",
-	"Research Assistant",
 	"Test Subject",
 )
 var/list/medsci_gimmicks = medical_gimmicks + science_gimmicks
@@ -187,5 +190,6 @@ var/list/service_gimmicks = list(
 	"Waiter",
 	"Life Coach",
 	"Stowaway",
+	"Hall Monitor",
 )
 

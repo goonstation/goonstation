@@ -397,13 +397,8 @@
 	desc = "A core of pure Hootonium, you can feel immense power radiating from within it."
 	icon = 'icons/misc/owlzone.dmi'
 	icon_state = "hootonium"
+	ability_path = /obj/ability_button/owl_slam
 	var/chosen = 0
-
-	plutonize(var/usrverbs)
-		usrverbs += /proc/owl_slam
-
-	unplutonize(var/usrverbs)
-		usrverbs -= /proc/owl_slam
 
 	attack_self(mob/user as mob)
 		var/input = tgui_alert(user, "Would you like to attempt to absorb the core into your body?", "Hoot or not to hoot.", list("Yes", "No"))
@@ -423,20 +418,25 @@
 	max_stages = 3
 	associated_reagent = "hootonium" // associated reagent, duh
 
+/datum/ailment/disease/hootonium/on_infection(mob/living/affected_mob, datum/ailment_data/D)
+	. = ..()
+	affected_mob.add_vomit_behavior(/datum/vomit_behavior/owl)
+
+/datum/ailment/disease/hootonium/on_remove(mob/living/affected_mob, datum/ailment_data/D)
+	. = ..()
+	affected_mob.remove_vomit_behavior(/datum/vomit_behavior/owl)
+
 /datum/ailment/disease/hootonium/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
+	if (probmult(30))
+		affected_mob.nauseate(2)
 	switch(D.stage)
 		if(1)
 			if (probmult(25))
 				boutput(affected_mob, "<B>[pick("It feels wrong, I feel wrong.", "Am I okay?", "I can feel it, its under my skin.", "I need help, I WANT HELP!")]<B/>")
 			if (probmult(50))
 				affected_mob.make_jittery(25)
-			if (probmult(15))
-				affected_mob.vomit()
-				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
-				for(var/mob/O in viewers(affected_mob, null))
-					boutput(O, SPAN_ALERT("<b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>"))
 
 		if(2)
 			playsound(affected_mob, 'sound/effects/HeartBeatLong.ogg', 70, TRUE)
@@ -453,11 +453,6 @@
 				affected_mob.hand = !affected_mob.hand
 			if  (probmult(35))
 				boutput(affected_mob, "<B>[pick("Oh g-HOOT", "Whats happe-ho-ing to me?", "It hurts!")]</B>")
-			if (probmult(15))
-				affected_mob.vomit()
-				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
-				for(var/mob/O in viewers(affected_mob, null))
-					boutput(O, SPAN_ALERT("<b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>"))
 
 		if(3)
 			if(probmult(25))
@@ -478,11 +473,6 @@
 					O.show_message(SPAN_ALERT("<B>[affected_mob]</B> hoots uncontrollably!"), 1)
 			if(probmult(25))
 				boutput(affected_mob, "<B>[pick("Who-WHO", "HOoooT", "neST!")]</B>")
-			if (probmult(15))
-				affected_mob.vomit()
-				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
-				for(var/mob/O in viewers(affected_mob, null))
-					boutput(O, SPAN_ALERT("<b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>"))
 			if(probmult(10))
 				var/obj/critter/hootening/P = new/obj/critter/hootening(affected_mob.loc)
 				P.name = affected_mob.real_name
@@ -540,7 +530,7 @@
 /obj/machinery/power/apc/owlery
 	noalerts = 1
 	start_charge = 0
-	req_access = access_owlerymaint
+	req_access = list(access_owlerymaint)
 
 
 /obj/owlerysign/owlplaque
@@ -989,7 +979,7 @@
 			break
 
 	attackby(obj/item/W, mob/living/user) //ARRRRGH WHY
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		var/attack_force = 0
 		var/damage_type = "brute"
@@ -1044,7 +1034,7 @@
 		src.task = "chasing"
 
 	attack_hand(var/mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (!src.alive)
 			..()
 			return
@@ -1287,16 +1277,16 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	sound_loop = 'sound/ambience/station/JazzLounge1.ogg'
 
 //Other fuckable things
-/proc/owl_slam()
-	set category = "Spells"
-	set name = "Owl Slam"
-	set desc = "Hoot the entire station with the power of an owl."
+/obj/ability_button/owl_slam
+	name = "Owl Slam"
+	desc = "Hoot the entire station with the power of an owl."
+	targeted = FALSE
+	icon = 'icons/mob/spell_buttons.dmi'
+	icon_state = "owlslam"
 
-	var/mob/M = usr
-
-	if(M.stat)
-		boutput(M, "Not when you're incapacitated.")
-		return
+/obj/ability_button/owl_slam/execute_ability()
+	. = ..()
+	var/mob/M = the_mob
 
 	var/equipped_thing = M.equipped()
 	if(istype(equipped_thing, /obj/item/basketball))
@@ -1312,7 +1302,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 		boutput(M, SPAN_ALERT("You can't slam without a b-ball, yo!"))
 		return
 
-	M.verbs -= /proc/owl_slam
+	the_item.remove_item_ability(the_mob, src.type)
 	APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "owlslam") //you cannot move while doing this
 	logTheThing(LOG_COMBAT, M, "<b>triggers a owl slam in [M.loc.loc] ([log_loc(M)])!</b>")
 

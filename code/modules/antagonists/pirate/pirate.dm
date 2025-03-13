@@ -3,6 +3,8 @@
 	display_name = "\improper Pirate"
 	antagonist_icon = "pirate"
 	antagonist_panel_tab_type = /datum/antagonist_panel_tab/bundled/pirate
+	has_info_popup = FALSE
+
 
 	is_compatible_with(datum/mind/mind)
 		return isliving(mind.current)
@@ -124,7 +126,7 @@ TYPEINFO(/obj/gold_bee)
 
 	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		src.visible_message(SPAN_COMBAT("<b>[user]</b> hits [src] with [W]!"))
 		src.take_damage(W.force / 3)

@@ -121,6 +121,7 @@
 		materiel_stock += new/datum/materiel/loadout/control
 		materiel_stock += new/datum/materiel/loadout/suppression
 		materiel_stock += new/datum/materiel/loadout/justabaton
+
 		materiel_stock += new/datum/materiel/utility/morphineinjectors
 		materiel_stock += new/datum/materiel/utility/donuts
 		materiel_stock += new/datum/materiel/utility/flashbangs
@@ -128,8 +129,11 @@
 		materiel_stock += new/datum/materiel/utility/nightvisionsechudgoggles
 		materiel_stock += new/datum/materiel/utility/markerrounds
 		materiel_stock += new/datum/materiel/utility/prisonerscanner
+		materiel_stock += new/datum/materiel/utility/sechudeye
+
 		materiel_stock += new/datum/materiel/ammo/medium
 		materiel_stock += new/datum/materiel/ammo/self_charging
+
 		materiel_stock += new/datum/materiel/assistant/basic
 
 	vended(var/atom/A)
@@ -294,6 +298,82 @@
 		else
 			return ..()
 
+/obj/submachine/weapon_vendor/podwars
+	name = "Weapons Vendor"
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "weapon"
+	desc = "An automated quartermaster service for supplying your team with weapons and gear."
+	token_accepted = /obj/item/requisition_token/podwars
+	log_purchase = TRUE
+
+	accepted_token(var/token)
+		src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
+		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
+		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
+		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
+		..()
+
+/obj/submachine/weapon_vendor/podwars/neutral // Neutral for admin gimmicks, spawns non-team aligned gear usable by anyone
+	name = "Weapons Vendor"
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "weapon"
+	desc = "An automated quartermaster service for supplying your team with weapons and gear."
+	token_accepted = /obj/item/requisition_token/podwars
+	log_purchase = TRUE
+	New()
+		..()
+		materiel_stock += new/datum/materiel/loadout/pw_pistol
+		materiel_stock += new/datum/materiel/loadout/pw_smg
+		materiel_stock += new/datum/materiel/loadout/pw_shotgun
+
+		materiel_stock += new/datum/materiel/utility/miscpouch
+		materiel_stock += new/datum/materiel/utility/pw_advanced_belt
+		materiel_stock += new/datum/materiel/utility/preparedtoolbelt
+		materiel_stock += new/datum/materiel/utility/pw_medical_pouch
+		materiel_stock += new/datum/materiel/utility/noslip_boots
+		materiel_stock += new/datum/materiel/utility/beartraps
+		materiel_stock += new/datum/materiel/utility/supernightvisiongoggles
+		materiel_stock += new/datum/materiel/utility/comtac
+
+
+/obj/submachine/weapon_vendor/podwars/NT
+	token_accepted = /obj/item/requisition_token/podwars/NT
+	color = "#3399ff" // so it's easy to tell which one you spawned
+
+	New()
+		..()
+		materiel_stock += new/datum/materiel/loadout/pw_NTpistol
+		materiel_stock += new/datum/materiel/loadout/pw_NTsmg
+		materiel_stock += new/datum/materiel/loadout/pw_NTshotgun
+
+		materiel_stock += new/datum/materiel/utility/miscpouch
+		materiel_stock += new/datum/materiel/utility/pw_advanced_belt
+		materiel_stock += new/datum/materiel/utility/preparedtoolbelt
+		materiel_stock += new/datum/materiel/utility/pw_medical_pouch
+		materiel_stock += new/datum/materiel/utility/noslip_boots
+		materiel_stock += new/datum/materiel/utility/beartraps
+		materiel_stock += new/datum/materiel/utility/supernightvisiongoggles
+		materiel_stock += new/datum/materiel/utility/pw_NTcomtac
+
+/obj/submachine/weapon_vendor/podwars/SY
+	token_accepted = /obj/item/requisition_token/podwars/SY
+	color = "#ff9966" // so it's easy to tell which one you spawned
+
+	New()
+		..()
+		materiel_stock += new/datum/materiel/loadout/pw_SYpistol
+		materiel_stock += new/datum/materiel/loadout/pw_SYsmg
+		materiel_stock += new/datum/materiel/loadout/pw_SYshotgun
+
+		materiel_stock += new/datum/materiel/utility/miscpouch
+		materiel_stock += new/datum/materiel/utility/pw_advanced_belt
+		materiel_stock += new/datum/materiel/utility/preparedtoolbelt
+		materiel_stock += new/datum/materiel/utility/pw_medical_pouch
+		materiel_stock += new/datum/materiel/utility/noslip_boots
+		materiel_stock += new/datum/materiel/utility/beartraps
+		materiel_stock += new/datum/materiel/utility/supernightvisiongoggles
+		materiel_stock += new/datum/materiel/utility/pw_SYcomtac
+
 // Materiel avaliable for purchase:
 
 /datum/materiel
@@ -405,9 +485,14 @@
 	description = "One case of 40mm Paint Marker Rounds, totalling 5 rounds, for the Riot Launcher."
 
 /datum/materiel/utility/prisonerscanner
-	name = "RecordTrak Scannner"
+	name = "RecordTrak Scanner"
 	path = /obj/item/device/prisoner_scanner
 	description = "A device used to scan in prisoners and update their security records."
+
+/datum/materiel/utility/sechudeye
+	name = "Security HUD CyberEye"
+	path = /obj/item/organ/eye/cyber/sechud
+	description = "A fancy electronic eye. It has a Security HUD system installed. Note: Does not come with any installation tools."
 
 /datum/materiel/ammo/medium
 	name = "Spare Power Cell"
@@ -437,7 +522,7 @@
 	description = "A gun-belt containing a semi-automatic, 9mm caliber service pistol and four magazines."
 
 /datum/materiel/sidearm/revolver
-	name = "Predator Revolver"
+	name = "Kestrel Revolver"
 	path = /obj/item/storage/belt/gun/revolver
 	description = "A gun-belt containing a hefty combat revolver and three .357 caliber speedloaders."
 
@@ -630,6 +715,90 @@
 	description = "A Wall Mount to attach fish to and show it off."
 	cost = 10
 
+// Pod wars stuff
+// Includes neutral loadouts for admin gimmicks
+
+//Pod wars weapon loadouts
+/datum/materiel/loadout/pw_pistol
+	name = "Blaster Pistol"
+	path = /obj/item/storage/belt/podwars/pistol
+	description = "A small holster containing a high power blaster pistol and machete."
+
+/datum/materiel/loadout/pw_NTpistol
+	name = "Blaster Pistol"
+	path = /obj/item/storage/belt/podwars/NTpistol
+	description = "A small holster containing a high power blaster pistol and machete."
+
+/datum/materiel/loadout/pw_SYpistol
+	name = "Blaster Pistol"
+	path = /obj/item/storage/belt/podwars/SYpistol
+	description = "A small holster containing a high power blaster pistol and machete."
+
+/datum/materiel/loadout/pw_smg
+	name = "SMG"
+	path = /obj/item/storage/belt/podwars/smg
+	description = "A small holster containing a rapid fire SMG and machete."
+
+/datum/materiel/loadout/pw_NTsmg
+	name = "SMG"
+	path = /obj/item/storage/belt/podwars/NTsmg
+	description = "A small holster containing a rapid fire SMG and machete."
+
+/datum/materiel/loadout/pw_SYsmg
+	name = "SMG"
+	path = /obj/item/storage/belt/podwars/SYsmg
+	description = "A small holster containing a rapid fire SMG and machete."
+
+/datum/materiel/loadout/pw_shotgun
+	name = "Shotgun"
+	path = /obj/item/storage/belt/podwars/shotgun
+	description = "A small holster containing a shotgun and machete."
+
+/datum/materiel/loadout/pw_NTshotgun
+	name = "Shotgun"
+	path = /obj/item/storage/belt/podwars/NTshotgun
+	description = "A small holster containing a shotgun and machete."
+
+/datum/materiel/loadout/pw_SYshotgun
+	name = "Shotgun"
+	path = /obj/item/storage/belt/podwars/SYshotgun
+	description = "A small holster containing a shotgun and machete."
+
+// Pod wars specific utilities
+/datum/materiel/utility/pw_medical_pouch
+	name = "Medical Pouch"
+	path = /obj/item/storage/pw_medical_pouch
+	description = "A small pouch containing four advanced medical autoinjectors."
+	cost = 2
+
+/datum/materiel/utility/pw_advanced_belt
+	name = "Tactical Belt"
+	path = /obj/item/storage/belt/podwars/advanced
+	description = "A belt to replace your standard issue holster, capable of carrying many more items into battle."
+
+/datum/materiel/utility/preparedtoolbelt
+	name = "Loaded Utility Toolbelt"
+	path = /obj/item/storage/belt/utility/prepared
+	description = "A fully loaded utility toolbelt."
+
+/datum/materiel/utility/supernightvisiongoggles
+	name = "Advanced Night Vision Goggles"
+	path = /obj/item/clothing/glasses/nightvision/flashblocking
+	description = "An advanced pair of night vision goggles. These goggles protect the wearer from flashes"
+
+/datum/materiel/utility/pw_NTcomtac
+	name = "Military Headset"
+	path = /obj/item/device/radio/headset/pod_wars/nanotrasen/comtac
+	description = "A two-way radio headset designed to protect against any incoming hazardous noise, including flashbangs."
+
+/datum/materiel/utility/pw_SYcomtac
+	name = "Military Headset"
+	path = /obj/item/device/radio/headset/pod_wars/syndicate/comtac
+	description = "A two-way radio headset designed to protect against any incoming hazardous noise, including flashbangs."
+
+// End of pod wars stuff
+
+
 // Requisition tokens
 /obj/item/requisition_token
 	name = "requisition token"
@@ -663,6 +832,16 @@
 		name = "doubloon"
 		desc = "A finely stamped gold coin compatible with the Pirate Weapons Vendor."
 		icon_state = "doubloon"
+
+	podwars
+		desc = "A credit token compatible with an advanced armory vendor."
+		icon_state = "req-token-secass"
+
+		NT
+			icon_state = "req-token-sec"
+
+		SY
+			icon_state ="req-token"
 
 #undef WEAPON_VENDOR_CATEGORY_SIDEARM
 #undef WEAPON_VENDOR_CATEGORY_LOADOUT

@@ -11,17 +11,15 @@ import { AutomaticAnnouncement } from './automatic';
 import { ManualAnnouncement } from './manual';
 import { AnnouncementCompData } from './type';
 
-export const AnnouncementComputer = (_props, context) => {
-  const { act, data } = useBackend<AnnouncementCompData>(context);
+export const AnnouncementComputer = (_props: unknown) => {
+  const { data } = useBackend<AnnouncementCompData>();
   const { announces_arrivals, theme } = data;
 
   return (
     <Window theme={theme} width={400} height={announces_arrivals ? 326 : 215}>
       <Window.Content textAlign="center">
         <ManualAnnouncement />
-        {!!announces_arrivals && (
-          <AutomaticAnnouncement />
-        )}
+        {!!announces_arrivals && <AutomaticAnnouncement />}
       </Window.Content>
     </Window>
   );

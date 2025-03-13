@@ -56,7 +56,7 @@ datum
 		var/random_chem_blacklisted = 0 // will not appear in random chem sources oddcigs/artifacts/etc
 		var/boiling_point = T0C + 100
 		var/can_crack = 0 // used by organic chems
-		var/threshold_volume = null //defaults to not using threshold
+		var/threshold_volume = null //defaults to depletion rate of reagent if unspecified
 		var/threshold = null
 		/// Has this chem been in the person's bloodstream for at least one cycle?
 		var/initial_metabolized = FALSE
@@ -168,8 +168,8 @@ datum
 								boutput(H, "<span class='alert'><b>The water! It[pick(" burns"," hurts","'s so terrible","'s ruining your skin"," is your true mortal enemy!")]!</b></span>", group = "aquaphobia")
 							if (!ON_COOLDOWN(H, "bingus_damage", 3 SECONDS))
 								random_burn_damage(H, clamp(0.3 * volume, 4, 20))
-						if (hygiene_value && H.sims?.getValue("Hygiene"))
-							var/hygiene = H.sims.getValue("Hygiene")
+						var/hygiene = H.sims?.getValue("Hygiene")
+						if (hygiene_value && H.sims && hygiene >= 0)
 							var/hygiene_restore = hygiene_value
 							var/hygiene_cap = 100 - H.get_chem_protection() * 4 // Hygiene will not restore above this cap; typical minimum of 40%
 							var/hygiene_distance_from_cap = hygiene_cap - hygiene

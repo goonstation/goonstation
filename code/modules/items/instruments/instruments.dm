@@ -32,7 +32,7 @@
 	var/dog_bark = 1
 	var/affect_fun = 5
 	var/special_index = 0
-	var/notes = list("c4")
+	var/list/notes = list("c4")
 	var/note = "c4"
 	var/note_range = list("c2", "c7")
 	var/use_new_interface = FALSE
@@ -47,6 +47,8 @@
 	var/note_keys_string = ""
 	/// The directory in which the sound files for the instrument are stored; represented as a string. Used for new interface instruments.
 	var/instrument_sound_directory = "sound/musical_instruments/piano/notes/"
+	/// Can it go in a mechcomp component?
+	var/automatable = TRUE
 
 	New()
 		..()
@@ -79,18 +81,18 @@
 				src.note = src.notes[i]
 				src.sounds_instrument += (src.instrument_sound_directory + "[note].ogg")
 
-	proc/play_note(var/note, var/mob/user)
+	proc/play_note(var/note, var/mob/user, var/pitch_override = null, var/volume_override = null, var/use_cooldown = TRUE)
 		if (note != clamp(note, 1, length(sounds_instrument)))
 			return FALSE
 		var/atom/player = user || src
-		if(ON_COOLDOWN(player, "instrument_play", src.note_time)) // on user or src because sometimes instruments play themselves
+		if(use_cooldown && ON_COOLDOWN(player, "instrument_play", src.note_time)) // on user or src because sometimes instruments play themselves
 			return FALSE
 
 		if (special_index && note >= special_index) // Add additional time if we just played a special note
 			player.cooldowns["instrument_play"] += 10 SECONDS
 
 		var/turf/T = get_turf(src)
-		playsound(T, sounds_instrument[note], src.volume, randomized_pitch, pitch = pitch_set)
+		playsound(T, sounds_instrument[note], volume_override || src.volume, randomized_pitch, pitch = pitch_override || pitch_set, channel = VOLUME_CHANNEL_INSTRUMENTS)
 
 		if (prob(5))
 			if (src.dog_bark)
@@ -191,7 +193,7 @@
 			if("play_note")
 				var/note_to_play = params["note"] + 1 // 0->1 (js->dm) array index change
 				var/volume = params["volume"]
-				playsound(get_turf(src), sounds_instrument[note_to_play], volume, randomized_pitch, pitch = pitch_set)
+				src.play_note(note_to_play, ui.user, volume_override = volume, use_cooldown = FALSE)
 				. = TRUE
 			if("play_keyboard_on")
 				usr.client.apply_keybind("instrument_keyboard")
@@ -226,8 +228,6 @@
 			ui_interact(user)
 		else
 			src.play(user)
-
-
 
 /* -------------------- Large Instruments -------------------- */
 
@@ -266,6 +266,21 @@
 
 	get_desc() // so it doesn't show up as an item on examining it
 		return
+
+	attack_ai(mob/user as mob)
+		..()
+		if (!in_interact_range(src, user)) // Instruments are not wireless
+			return
+
+		if (isAI(user))
+			var/mob/living/silicon/ai/borgo = user
+			if (borgo.deployed_to_eyecam)
+				return
+
+		if(use_new_interface)
+			ui_interact(user)
+		else
+			src.play(user)
 
 /* -------------------- Piano -------------------- */
 
@@ -678,9 +693,27 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			break
 
 		if (length(bots))
-			user.AddComponent(/datum/component/secbot_command, bots, 3 SECONDS)
+			user.AddComponent(/datum/component/bot_command/security, bots, 3 SECONDS)
 
+/obj/item/instrument/whistle/janitor
+	name = "janitor whistle"
+	desc = "A whistle with a purple stripe. Good for getting the attention of nearby cleanbots."
+	icon_state = "whistle-jani"
+	var/commandtime = 5 SECONDS
+	HELP_MESSAGE_OVERRIDE("Blow this to briefly command nearby cleanbots to mop a tile. Point at the cleanbot to shut it off.")
 
+	post_play_effect(mob/user)
+		var/list/bots = list()
+		for (var/obj/machinery/bot/cleanbot/cleanbot in view(user.client.view, user))
+			if (cleanbot.emagged || !cleanbot.on)
+				continue
+			cleanbot.KillPathAndGiveUp(1, TRUE)
+			cleanbot.speak("Awaiting command...")
+			bots += cleanbot
+			break
+
+		if (length(bots))
+			user.AddComponent(/datum/component/bot_command/janitor, bots, src.commandtime)
 /* -------------------- Vuvuzela -------------------- */
 
 /obj/item/instrument/vuvuzela
@@ -924,6 +957,18 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	use_new_interface = TRUE
 	//Start at E3
 	key_offset = 5
+
+/obj/item/instrument/roboscream
+	name = "scream synthesizer"
+	desc = "A cheap looking sound synthesizer. It has no buttons or controls."
+	icon_state = "scream_synth"
+	pick_random_note = TRUE
+	sounds_instrument = list('sound/voice/screams/robot_scream.ogg', 'sound/voice/screams/Robot_Scream_2.ogg')
+	note_time = 5 SECONDS
+	automatable = FALSE
+
+	attack_self(mob/user)
+		return //no imitating borg screams
 
 /obj/storage/crate/wooden/instruments
 	name = "instruments box"

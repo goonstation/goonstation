@@ -82,13 +82,19 @@
 /datum/movement_modifier/reagent/cocktail_triple
 	multiplicative_slowdown = 0.333
 
-/datum/movement_modifier/reagent/energydrink // also meth //also mechboots (for now)
+/datum/movement_modifier/reagent/energydrink // also meth
 	ask_proc = 1
 
 /datum/movement_modifier/reagent/energydrink/modifiers(mob/user, move_target, running)
 	if (user.movement_modifiers[/datum/movement_modifier/disoriented])
 		return list(0,0.85)
 	return list(0,0.5)
+
+/datum/movement_modifier/artifact_talisman_swiftness
+	ask_proc = 1
+
+	modifiers(mob/user, move_target, running)
+		return list(0, 1 - GET_ATOM_PROPERTY(user, PROP_MOB_TALISMAN_SWIFTNESS))
 
 // robot legs for humans
 /datum/movement_modifier/robotleg_right
@@ -317,3 +323,6 @@
 
 /datum/movement_modifier/syndie_fishing
 	multiplicative_slowdown = 1.5
+
+/datum/movement_modifier/healbot
+	additive_slowdown = -0.4

@@ -1,13 +1,13 @@
-import { Window } from '../../layouts';
-import { useBackend } from '../../backend';
-import { adjustSizes, handleEvents } from './utils/window';
-import { Component } from 'inferno';
+import { Component } from 'react';
+import { Box, Dimmer, Icon } from 'tgui-core/components';
 
-import { Box, Dimmer, Icon } from '../../components';
-import { BoardgameData, useStates } from './utils';
-import { TitleBar } from './Components/common/TitleBar';
-import { HeldPieceRenderer } from './Components/common/HeldPieceRenderer';
+import { useBackend } from '../../backend';
+import { Window } from '../../layouts';
 import { BoardgameContents } from './Components/common/BoardgameContents';
+import { HeldPieceRenderer } from './Components/common/HeldPieceRenderer';
+import { TitleBar } from './Components/common/TitleBar';
+import { BoardgameData, useStates } from './utils';
+import { adjustSizes, handleEvents } from './utils/window';
 
 export class Boardgame extends Component<BoardgameData, any> {
   constructor(props) {
@@ -15,12 +15,12 @@ export class Boardgame extends Component<BoardgameData, any> {
   }
 
   componentDidUpdate() {
-    handleEvents(this.context);
-    adjustSizes(this.context);
+    handleEvents();
+    adjustSizes();
   }
 
   render() {
-    const { data } = useBackend<BoardgameData>(this.context);
+    const { data } = useBackend<BoardgameData>();
     const name = data?.boardInfo?.name || 'Boardgame';
 
     return (
@@ -34,8 +34,8 @@ export class Boardgame extends Component<BoardgameData, any> {
   }
 }
 
-const HelpModal = (props, context) => {
-  const { helpModalClose, isHelpModalOpen } = useStates(context);
+const HelpModal = () => {
+  const { helpModalClose, isHelpModalOpen } = useStates();
 
   if (!isHelpModalOpen) return null;
 
@@ -46,7 +46,8 @@ const HelpModal = (props, context) => {
           <strong>Help</strong>
         </p>
         <p>
-          <Icon name="mouse" /> Click on a piece to select it, click on a tile to move it there.
+          <Icon name="mouse" /> Click on a piece to select it, click on a tile
+          to move it there.
         </p>
         <p>Pieces may also be click-dragged to a target tile.</p>
         <p>

@@ -444,12 +444,12 @@ this is already used where it needs to be used, you can probably ignore it.
 				M.blood_volume = 0
 				//BLOOD_DEBUG("[H]'s blood volume dropped below 0 and was reset to 0")
 
+		if (B.reagents && M.reagents?.total_volume)
+			//BLOOD_DEBUG("[H] transfers reagents to blood decal [log_reagents(H)]")
+			M.reagents.trans_to(B, (reagents_to_transfer))
 		B.add_volume(blood_color_to_pass, M.blood_id, blood_to_transfer, vis_amount, blood_reagent_data = M.get_blood_bioholder())
 		//BLOOD_DEBUG("[H] adds volume to existing blood decal")
 
-		if (B.reagents && M.reagents?.total_volume)
-			//BLOOD_DEBUG("[H] transfers reagents to blood decal [log_reagents(H)]")
-			M.reagents.trans_to(B, (num_amount - blood_to_transfer))
 
 /* ====================================== */
 /* ---------- transfer_blood() ---------- */
@@ -771,7 +771,7 @@ this is already used where it needs to be used, you can probably ignore it.
 	throwforce = 0
 	throw_range = 16
 	flags = TABLEPASS | NOSHIELD
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 
 	New()
 		..()

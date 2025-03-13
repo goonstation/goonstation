@@ -120,8 +120,6 @@
 			initial_reagents = list("bread"=30,"cornsyrup"=30,"honey"=60)
 			slice_product = /obj/item/reagent_containers/food/snacks/breadslice/corn/sweet/honey
 
-#ifdef XMAS
-
 /obj/item/reagent_containers/food/snacks/breadloaf/fruit_cake
 	name = "fruitcake"
 	desc = "The most disgusting dessert ever devised. Legend says there's only one of these in the galaxy, passed from location to location by vengeful deities."
@@ -138,8 +136,6 @@
 		..()
 		eater.show_text("It's so hard it breaks one of your teeth by the end AND it tastes disgusting! Why would you ever eat this?","red")
 		random_brute_damage(eater, 3)
-
-#endif
 
 /obj/item/reagent_containers/food/snacks/breadloaf/toast
 	name = "loaf of toast"
@@ -249,8 +245,6 @@
 		real_name = "french bread"
 		food_color = "#C78000"
 
-#ifdef XMAS
-
 	fruit_cake
 		name = "slice of fruit cake"
 		desc = "The most despicable dessert ever sliced. According to legend, a vengeful deity invented sliced bread solely to allow the distribution of these miniature monstrosities to unsuspecting crewmembers."
@@ -266,8 +260,6 @@
 			..()
 			eater.show_text("It’s so rock-solid it chips a tooth, and the taste is horrendous! What were you thinking cutting it into six slices?","red")
 			random_brute_damage(eater, 1)
-
-#endif
 
 	New()
 		..()

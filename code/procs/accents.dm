@@ -1036,8 +1036,13 @@ proc/random_accent()
 /proc/say_drunk(var/string)
 	var/modded = ""
 	var/datum/text_roamer/T = new/datum/text_roamer(string)
-
 	for(var/i = 0, i < length(string), i++)
+		var/digit_value = text2num(T.curr_char)
+		if (digit_value && prob(50))
+			modded += "[digit_value + rand(-1, 1)]"
+			T.curr_char_pos++
+			T.update()
+			continue
 		switch(T.curr_char)
 			if("k")
 				if(lowertext(T.prev_char) == "n" || lowertext(T.prev_char) == "c")

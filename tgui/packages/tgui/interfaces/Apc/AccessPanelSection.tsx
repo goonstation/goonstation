@@ -6,29 +6,23 @@
  * @license MIT
  */
 
-import { useBackend } from '../../backend';
-import {
-  Box,
-  Divider,
-  LabeledList,
-  Section,
-} from '../../components';
-import { WireList } from './WireList';
-import type { ApcData } from './types';
+import { Box, Divider, LabeledList, Section } from 'tgui-core/components';
 
-export const AccessPanelSection = (_props, context) => {
-  const { data } = useBackend<ApcData>(context);
-  const {
-    net_id,
-    locked,
-    shorted,
-    aidisabled,
-  } = data;
+import { useBackend } from '../../backend';
+import type { ApcData } from './types';
+import { WireList } from './WireList';
+
+export const AccessPanelSection = (_props: unknown) => {
+  const { data } = useBackend<ApcData>();
+  const { net_id, locked, shorted, aidisabled } = data;
 
   return (
     <Section title="Access Panel">
       <Box>
-        {'An identifier is engraved above the APC\'s wires:'} <Box inline italic>{net_id}</Box>
+        {"An identifier is engraved above the APC's wires: "}
+        <Box inline italic>
+          {net_id}
+        </Box>
       </Box>
       <Divider />
       <WireList />
@@ -40,7 +34,10 @@ export const AccessPanelSection = (_props, context) => {
         <LabeledList.Item label="Circuitry" color={shorted ? 'red' : 'green'}>
           {shorted ? 'Shorted' : 'Working'}
         </LabeledList.Item>
-        <LabeledList.Item label="AI Control" color={aidisabled ? 'red' : 'green'}>
+        <LabeledList.Item
+          label="AI Control"
+          color={aidisabled ? 'red' : 'green'}
+        >
           {aidisabled ? 'Disabled' : 'Enabled'}
         </LabeledList.Item>
       </LabeledList>

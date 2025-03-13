@@ -407,7 +407,7 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 			return TRUE
 
 		var/atom/tentacle_end = new /obj/martian_tentacle_end_dummy(get_turf(target))
-		var/list/tentacles = DrawLine(holder.owner, tentacle_end, /obj/line_obj/martian_tentacle, 'icons/obj/artifacts/artifactLimbs.dmi', "tentacle-whole", TRUE, TRUE, "tentacle-half-start", "tentacle-half-end")
+		var/list/tentacles = drawLineObj(holder.owner, tentacle_end, /obj/line_obj/martian_tentacle, 'icons/obj/artifacts/artifactLimbs.dmi', "tentacle-whole", TRUE, TRUE, "tentacle-half-start", "tentacle-half-end")
 
 		var/found_target = FALSE
 		var/done_early = FALSE

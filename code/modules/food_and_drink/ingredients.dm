@@ -33,9 +33,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 			blood--
 		..()
 
+	on_temperature_cook()
+		src.visible_message("[src] begins to brown in the heat!")
+		playsound(src.loc, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE, pitch = 0.8)
+
+
 /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat
 	name = "human meat"
 	desc = "A slab of meat from a human."
+	heats_into = /obj/item/reagent_containers/food/snacks/steak_h
 	var/subjectname = "Human"
 	var/subjectjob = "Human Being"
 
@@ -56,6 +62,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat
 	name = "monkeymeat"
 	desc = "A slab of meat from a monkey."
+	heats_into = /obj/item/reagent_containers/food/snacks/steak_m
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
 	name = "lesser slug"
@@ -153,18 +160,21 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	initial_volume = 20
 	food_color = "#228822"
 	initial_reagents = list("synthflesh"=2)
+	heats_into = /obj/item/reagent_containers/food/snacks/steak_s
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 	name = "mystery meat"
 	desc = "What the fuck is this??"
 	icon_state = "meat-mystery"
 	var/cybermeat = 0
+	var/splatted = FALSE
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		if (src.cybermeat)
 			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
-			if (istype(T))
+			if (istype(T) && !splatted)
+				splatted = TRUE
 				make_cleanable(/obj/decal/cleanable/oil,T)
 				..()
 			else
@@ -177,6 +187,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	icon_state = "meat-changeling"
 	initial_volume = 30
 	initial_reagents = list("neurotoxin" = 20, "bloodc" = 10)
+	heats_into = /obj/item/reagent_containers/food/snacks/steak_ling
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody
 	name = "meaty bit"
@@ -213,6 +224,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 		icon_state = "bacon-raw"
 		blood = 2
 		real_name = "bacon"
+		heats_into = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+
+		on_temperature_cook()
+			src.visible_message("The bacon sizzles enticingly!")
+			playsound(src.loc, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE, pitch = 0.8)
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
 	name = "chicken nugget"
@@ -258,48 +274,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 
 	attack_self(mob/user as mob)
 		attack(user, user)
-
-/obj/item/reagent_containers/food/snacks/ingredient/egg
-	name = "egg"
-	desc = "An egg!"
-	icon_state = "egg"
-	food_color = "#FFFFFF"
-	initial_volume = 20
-	initial_reagents = list("egg"=5)
-	fill_amt = 0.5
-	doants = 0 // They're protected by a shell
-
-	throw_impact(atom/A, datum/thrown_thing/thr)
-		var/turf/T = get_turf(A)
-		src.visible_message(SPAN_ALERT("[src] splats onto the floor messily!"))
-		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
-		make_cleanable(/obj/decal/cleanable/eggsplat,T)
-		qdel (src)
-
-/obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
-	name = "hard-boiled egg"
-	desc = "You're a loose cannon, egg. I'm taking you off the menu."
-	icon_state = "egg-hardboiled"
-	food_color = "#FFFFFF"
-	initial_volume = 20
-	food_effects = list("food_brute", "food_cateyes")
-
-	New()
-		..()
-		reagents.add_reagent("egg", 5)
-
-	throw_impact(atom/A, datum/thrown_thing/thr)
-		src.visible_message(SPAN_ALERT("[src] flops onto the floor!"))
-
-	attackby(obj/item/W, mob/user)
-		if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
-			boutput(user, SPAN_NOTICE("You cut [src] in half"))
-			new /obj/item/reagent_containers/food/snacks/deviledegg(get_turf(src))
-			new /obj/item/reagent_containers/food/snacks/deviledegg(get_turf(src))
-			if (prob(25))
-				JOB_XP(user, "Chef", 1)
-			qdel(src)
-		else ..()
 
 /obj/item/reagent_containers/food/snacks/ingredient/yerba
 	name = "yerba mate packet"
@@ -504,6 +478,11 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	icon_state = "dough"
 	food_color = "#FFFFFF"
 	custom_food = 0
+
+	clamp_act(mob/clamper, obj/item/clamp)
+		new /obj/item/reagent_containers/food/snacks/ingredient/pizza_base(src.loc)
+		qdel(src)
+		return TRUE
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/sugar))

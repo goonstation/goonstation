@@ -4,6 +4,7 @@
 	antagonist_icon = "blob"
 	mob_path = /mob/living/intangible/blob_overmind
 	uses_pref_name = FALSE
+	has_info_popup = FALSE
 
 	/// All mobs absorbed by this blob.
 	var/list/mob/absorbed_victims = list()

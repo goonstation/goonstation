@@ -21,7 +21,7 @@
 	/// Are we sucking in all gas or only some?
 	var/scrubbing = SCRUBBING
 	// Sets up vars to scrub gases
-	#define _DEF_SCRUBBER_VAR(GAS, ...) var/scrub_##GAS = 1;
+	#define _DEF_SCRUBBER_VAR(GAS, ...) var/scrub_##GAS = 0;
 	APPLY_TO_GASES(_DEF_SCRUBBER_VAR)
 	#undef _DEF_SCRUBBER_VAR
 	/// Volume of gas to take from turf.
@@ -99,8 +99,25 @@
 
 	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
 
+/obj/machinery/atmospherics/unary/vent_scrubber/proc/broadcast_status()
+	var/datum/signal/signal = get_free_signal()
+	signal.transmission_method = TRANSMISSION_RADIO
+	signal.source = src
+
+	signal.data["tag"] = src.id
+	signal.data["sender"] = src.net_id
+	signal.data["power"] = src.on ? "on": "off"
+	signal.data["mode"] = src.scrubbing ? "scrubbing" : "siphoning"
+	#define GET_GAS_SCUB_STATUS(GAS, ...) signal.data[#GAS] = scrub_##GAS;
+	APPLY_TO_GASES(GET_GAS_SCUB_STATUS)
+	#undef GET_GAS_SCUB_STATUS
+
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+
+	return TRUE
+
 /obj/machinery/atmospherics/unary/vent_scrubber/receive_signal(datum/signal/signal)
-	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["netid"] && (signal.data["netid"] == src.net_id))))
+	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["address_1"] == src.net_id)))
 		if(signal.data["command"] != "broadcast_status")
 			return FALSE
 
@@ -125,6 +142,19 @@
 			src.scrubbing = SCRUBBING
 			. = TRUE
 
+		if("toggle_scrub_gas")
+			switch(signal.data["parameter"])
+				#define _FILTER_OUT_GAS(GAS, ...) \
+				if(#GAS) { \
+					scrub_##GAS = !scrub_##GAS; \
+				}
+				APPLY_TO_GASES(_FILTER_OUT_GAS)
+				#undef _FILTER_OUT_GAS
+			. = TRUE
+
+		if("broadcast_status")
+			SPAWN(0.5 SECONDS) broadcast_status()
+
 		if("help")
 			var/datum/signal/help = get_free_signal()
 			help.transmission_method = TRANSMISSION_RADIO
@@ -136,7 +166,7 @@
 									power_toggle - Toggles scrubber. \
 									set_siphon - Begins siphoning all gas. \
 									set_scrubbing - Begins scrubbing select gases. \
-									set_volume_rate (parameter: Number) - Sets rate in liters to parameter. Max at [src.air_contents.volume] L."
+									toggle_scrub_gas (parameter: String) - Toggles filtering for a specific gas. Uses the shortform name for a gas."
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
 
@@ -161,6 +191,9 @@
 	on = FALSE
 
 /obj/machinery/atmospherics/unary/vent_scrubber/breathable
+	#define _DEF_SCRUBBER_VAR(GAS, ...) scrub_##GAS = 1;
+	APPLY_TO_GASES(_DEF_SCRUBBER_VAR)
+	#undef _DEF_SCRUBBER_VAR
 	scrub_oxygen = FALSE
 	scrub_nitrogen = FALSE
 

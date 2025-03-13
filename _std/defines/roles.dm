@@ -22,6 +22,7 @@
 #define ROLE_SALVAGER "salvager"
 #define ROLE_ANTAGONIST_CRITTER "antagonist_critter"
 #define ROLE_MISC "misc"
+#define ROLE_BASKETBALL_WIZARD "bball_wizard"
 
 // special antagonist roles
 #define ROLE_MACHO_MAN "macho_man"
@@ -52,3 +53,4 @@
 #define ROLE_PIRATE "pirate"
 #define ROLE_PIRATE_FIRST_MATE "pirate_first_mate"
 #define ROLE_PIRATE_CAPTAIN "pirate_captain"
+#define ROLE_CONFIRMED_CRIMINAL "confirmed_criminal"

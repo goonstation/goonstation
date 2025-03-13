@@ -1186,6 +1186,10 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"agv" = (
+/obj/spawner/ancient_robot_artifact,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/crater/cave/lower)
 "agE" = (
 /obj/machinery/door_control{
 	desc = "A remote control switch for the outer blast door.";
@@ -2038,7 +2042,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
 "akD" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "1-10"
 	},
@@ -2256,7 +2260,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "alS" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -5522,13 +5526,13 @@
 	dir = 1;
 	name = "river pipe"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/owllock)
 "aBC" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/disposalpipe/segment{
@@ -6029,6 +6033,7 @@
 /obj/machinery/bot/guardbot/old/tourguide/lunar{
 	beacon_freq = 1441
 	},
+/obj/machinery/navbeacon/lunar/tour18,
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum)
 "aDu" = (
@@ -6807,6 +6812,15 @@
 /area/crater/cave)
 "aIJ" = (
 /obj/storage/crate/haunted,
+/obj/item/clothing/suit/cultist,
+/obj/item/clothing/suit/cultist,
+/obj/item/clothing/suit/cultist,
+/obj/item/clothing/mask/burnedcultmask,
+/obj/item/clothing/mask/burnedcultmask,
+/obj/item/clothing/mask/burnedcultmask,
+/obj/map/light/graveyard,
+/obj/item/clothing/suit/bedsheet/cape/royal,
+/obj/item/sacdagger,
 /turf/unsimulated/floor/setpieces{
 	desc = "A strange jet black metal floor. There are odd lines carved into it.";
 	icon = 'icons/turf/floors.dmi';
@@ -8151,7 +8165,7 @@
 	},
 /area/upper_arctic/exterior/surface)
 "aNo" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/comms)
 "aNp" = (
@@ -8595,7 +8609,7 @@
 	},
 /area/upper_arctic/exterior/surface)
 "aOO" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating/scorched,
 /area/lower_arctic/mining)
 "aOP" = (
@@ -8779,7 +8793,7 @@
 /turf/space/fluid/cenote,
 /area/crater)
 "aPj" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/channel{
@@ -9140,7 +9154,7 @@
 	},
 /area/crater/biodome/north)
 "aQu" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/research)
 "aQv" = (
@@ -9433,22 +9447,29 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aRu" = (
-/obj/decal/cliff{
-	dir = 1
+/obj/spawner/ancient_robot_artifact,
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
 	},
-/obj/decal/cleanable/cobweb,
-/turf/unsimulated/floor/setpieces/ancient_pit{
-	name = "Dark Pit"
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
 	},
-/area/crater/cave)
+/area/crater/cave/lower)
 "aRv" = (
-/obj/decal/cliff{
-	dir = 1
-	},
-/turf/unsimulated/floor/setpieces/ancient_pit{
-	name = "Dark Pit"
-	},
-/area/crater/cave)
+/turf/unsimulated/wall/auto/adventure/iomoon/interior,
+/area/crater/cave/lower)
 "aRw" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor{
@@ -9686,8 +9707,15 @@
 /turf/unsimulated/wall/auto/adventure/cave,
 /area/crater/cave)
 "aSu" = (
-/turf/unsimulated/floor/setpieces/ancient_pit{
-	name = "Dark Pit"
+/obj/map/light/void,
+/obj/ladder{
+	id = "ancientpit"
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
 	},
 /area/crater/cave)
 "aSv" = (
@@ -9795,7 +9823,7 @@
 /turf/unsimulated/floor/arctic/cliff,
 /area/upper_arctic/exterior/surface)
 "aSO" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/exterior/abyss)
 "aSP" = (
@@ -10063,7 +10091,7 @@
 /area/upper_arctic/exterior/abyss)
 "aTH" = (
 /obj/decal/icefloor,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/exterior/abyss)
 "aTI" = (
@@ -10088,7 +10116,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aTL" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/crew)
 "aTN" = (
@@ -10782,13 +10810,13 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "aVS" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/floor/arctic/plating,
 /area/lower_arctic/lower)
 "aVT" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/creepy_sound_trigger_glacier,
@@ -10811,6 +10839,12 @@
 	icon_state = "corner_east"
 	},
 /area/crater/biodome/crew)
+"aWb" = (
+/turf/unsimulated/floor/carpet{
+	icon_state = "fblue2";
+	dir = 10
+	},
+/area/afterlife/bar/sanctuary)
 "aWf" = (
 /obj/item/raw_material/char,
 /turf/unsimulated/floor/cave,
@@ -11413,7 +11447,7 @@
 /obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty2"
 	},
@@ -11711,7 +11745,7 @@
 /obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/setpieces/martian,
 /area/marsoutpost/duststorm)
 "aYX" = (
@@ -11788,7 +11822,7 @@
 /area/upper_arctic/pod1)
 "aZj" = (
 /obj/decal/icefloor,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -11798,7 +11832,7 @@
 /area/upper_arctic/exterior/abyss)
 "aZk" = (
 /obj/decal/icefloor,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/floor/arctic/plating,
@@ -11821,7 +11855,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aZq" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/channel{
 	required_to_pass = 1e+009
 	},
@@ -11973,7 +12007,7 @@
 	},
 /area/upper_arctic/pod1)
 "aZT" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -11982,7 +12016,7 @@
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/exterior/abyss)
 "aZU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/floor/arctic/plating,
@@ -12678,7 +12712,7 @@
 /turf/space/fluid/cenote,
 /area/crater)
 "bcn" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/channel{
@@ -12819,7 +12853,7 @@
 	},
 /area/marsoutpost)
 "bcy" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating/scorched,
 /area/upper_arctic/mining)
 "bcB" = (
@@ -12832,7 +12866,7 @@
 	},
 /area/upper_arctic/exterior/surface)
 "bcF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -12999,7 +13033,7 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bdb" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -14024,7 +14058,7 @@
 /obj/item/raw_material/shard/glass{
 	icon_state = "small"
 	},
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bgB" = (
@@ -14370,7 +14404,7 @@
 /obj/item/raw_material/shard/glass{
 	icon_state = "medium"
 	},
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bhV" = (
@@ -14892,6 +14926,12 @@
 /area/crater/cave/lower)
 "bjo" = (
 /obj/map/light/void,
+/obj/decal/lightshaft,
+/obj/ladder{
+	icon_state = "ladder_wall";
+	id = "ancientpit";
+	pixel_y = 24
+	},
 /turf/unsimulated/floor/setpieces{
 	desc = "A strange jet black metal floor. There are odd lines carved into it.";
 	icon = 'icons/turf/floors.dmi';
@@ -14901,12 +14941,7 @@
 /area/crater/cave/lower)
 "bjp" = (
 /obj/decal/cleanable/cobweb2,
-/turf/unsimulated/floor/setpieces{
-	desc = "A strange jet black metal floor. There are odd lines carved into it.";
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "ancient";
-	name = "strange surface"
-	},
+/turf/unsimulated/iomoon/ancient_floor,
 /area/crater/cave/lower)
 "bjq" = (
 /obj/item/tile/steel,
@@ -15218,15 +15253,16 @@
 	},
 /area/crater/cave/lower)
 "bkd" = (
-/obj/fakeobject{
+/obj/decal/glow{
 	anchored = 1;
-	density = 1;
-	desc = "It seems slightly warm.";
-	icon = 'icons/obj/artifacts/artifacts.dmi';
-	icon_state = "eldritch-5";
-	name = "warped figure"
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
 	},
-/obj/map/light/dimreddish,
 /turf/unsimulated/floor/setpieces{
 	desc = "A strange jet black metal floor. There are odd lines carved into it.";
 	icon = 'icons/turf/floors.dmi';
@@ -15721,12 +15757,7 @@
 	icon_state = "eldritch-3";
 	name = "unpleasant statue"
 	},
-/turf/unsimulated/floor/setpieces{
-	desc = "A strange jet black metal floor. There are odd lines carved into it.";
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "ancient";
-	name = "strange surface"
-	},
+/turf/unsimulated/iomoon/ancient_floor,
 /area/crater/cave/lower)
 "blz" = (
 /obj/decal/cleanable/cobweb2,
@@ -15739,12 +15770,7 @@
 	icon_state = "eldritch-3";
 	name = "unpleasant statue"
 	},
-/turf/unsimulated/floor/setpieces{
-	desc = "A strange jet black metal floor. There are odd lines carved into it.";
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "ancient";
-	name = "strange surface"
-	},
+/turf/unsimulated/iomoon/ancient_floor,
 /area/crater/cave/lower)
 "blA" = (
 /obj/decal/cleanable/cobweb2,
@@ -15806,7 +15832,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "blH" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -15871,6 +15897,7 @@
 /area/precursor)
 "blP" = (
 /obj/landmark/fall/ice/deep,
+/obj/landmark/icemoon_medal,
 /turf/unsimulated/floor/void{
 	desc = "You can barely see ...";
 	icon = 'icons/misc/worlds.dmi';
@@ -15946,8 +15973,8 @@
 /turf/unsimulated/floor/setpieces/bluefloor,
 /area/precursor)
 "bmc" = (
-/obj/grille/catwalk,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/watchful_eye_sensor)
@@ -16067,6 +16094,8 @@
 /area/crater/cave/lower)
 "bmu" = (
 /obj/decal/cleanable/cobweb,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "bmw" = (
@@ -16279,7 +16308,7 @@
 	},
 /area/marsoutpost)
 "bnk" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
@@ -16318,7 +16347,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
 "bnr" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	dir = 8
@@ -16332,7 +16361,7 @@
 /turf/unsimulated/floor,
 /area/drone/office)
 "bns" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	dir = 2
@@ -16344,7 +16373,7 @@
 /turf/unsimulated/floor,
 /area/drone/office)
 "bnt" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	dir = 4
@@ -16615,7 +16644,7 @@
 	},
 /area/drone)
 "boe" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	dir = 8
@@ -16629,7 +16658,7 @@
 /turf/unsimulated/floor,
 /area/drone/assembly)
 "bof" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	dir = 2
@@ -16641,7 +16670,7 @@
 /turf/unsimulated/floor,
 /area/drone/assembly)
 "bog" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	dir = 4
@@ -18861,6 +18890,7 @@
 /turf/unsimulated/floor/grime,
 /area/iomoon/base/underground)
 "bxB" = (
+/obj/decal/tile_edge/flowers,
 /turf/unsimulated/floor/grasslush,
 /area/afterlife/bar/sanctuary)
 "bxE" = (
@@ -18945,6 +18975,7 @@
 "bxT" = (
 /obj/landmark/fall/ice/deep,
 /obj/map/light/dimred,
+/obj/landmark/icemoon_medal,
 /turf/unsimulated/floor/void{
 	desc = "You can barely see ...";
 	icon = 'icons/misc/worlds.dmi';
@@ -20928,6 +20959,19 @@
 "bGw" = (
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins/boss_chamber)
+"bGA" = (
+/obj/rack/iomoon,
+/obj/item/parts/robot_parts/chest/ancient/actuator,
+/obj/item/parts/robot_parts/head/ancient/actuator,
+/obj/item/parts/robot_parts/arm/left/ancient/actuator{
+	pixel_x = 6
+	},
+/obj/item/parts/robot_parts/arm/right/ancient/actuator{
+	pixel_x = -6
+	},
+/obj/map/light/dimreddish,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber)
 "bGC" = (
 /obj/fakeobject/lightbulb_broken{
 	desc = "This light is probably broken.  It looks pretty new and ok, though, so it's probably just not wired up.";
@@ -21230,13 +21274,17 @@
 	},
 /area/crypt/graveyard)
 "bHL" = (
-/turf/unsimulated/iomoon/ancient_wall{
-	desc = "Not only is it one hell of a foreboding door, it's also sealed fast.  It doesn't have any apparent means of opening.";
-	dir = 4;
-	icon_state = "ancientwall2";
-	name = "sealed door"
+/obj/decal/cleanable/cobweb,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
 	},
-/area/iomoon/robot_ruins/boss_chamber)
+/area/crater/cave/lower)
 "bHM" = (
 /obj/map/light/cyan,
 /obj/iomoon_boss/core,
@@ -23797,7 +23845,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/crew)
 "bQr" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-2"
 	},
@@ -24039,21 +24087,16 @@
 /area/crunch)
 "bRc" = (
 /obj/machinery/navbeacon{
-	codes_txt = "tour";
+	codes_txt = "tour;next_tour=tour9";
 	location = "tour8"
 	},
 /turf/unsimulated/floor/blue/checker,
 /area/crunch)
 "bRd" = (
-/obj/overlay{
-	density = 1;
-	desc = "It wont budge.";
-	dir = 4;
+/obj/fakeobject/airlock_broken{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "door_closed";
-	layer = 6;
-	name = "broken door";
-	opacity = 1
+	dir = 4
 	},
 /turf/unsimulated/floor/blue/checker,
 /area/crunch)
@@ -24274,6 +24317,10 @@
 	name = "old docking station"
 	},
 /obj/machinery/bot/guardbot/old/tourguide,
+/obj/machinery/navbeacon{
+	codes_txt = "tour";
+	location = "tour9"
+	},
 /turf/unsimulated/floor/blue/checker,
 /area/crunch)
 "bRW" = (
@@ -25108,6 +25155,10 @@
 "bVn" = (
 /turf/unsimulated/floor/carpet/red/fancy/edge/ne,
 /area/syndicate_station/battlecruiser)
+"bVp" = (
+/obj/decal/mule/beacon,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "bVt" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles6"
@@ -27676,6 +27727,12 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
+"cfN" = (
+/obj/river{
+	dir = 9
+	},
+/turf/unsimulated/floor/cave,
+/area/crater/cave/lower)
 "cfO" = (
 /obj/bookshelf/persistent{
 	density = 0;
@@ -28811,7 +28868,7 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "cjE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -29544,13 +29601,13 @@
 /turf/unsimulated/floor/void,
 /area/crunch)
 "clG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/floor/void,
 /area/crunch)
 "clH" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk_cross"
 	},
 /obj/item/cable_coil/cut{
@@ -29629,7 +29686,7 @@
 /turf/unsimulated/floor/cave,
 /area/cavetiny)
 "cmd" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/item/aiboss_tape/void,
 /turf/unsimulated/floor/void,
 /area/crunch)
@@ -29675,6 +29732,11 @@
 	name = "sand"
 	},
 /area/sim/area2)
+"cmj" = (
+/obj/map/light/brighterwhite,
+/obj/machinery/vending/jobclothing/afterlife/engineering,
+/turf/unsimulated/floor/carpet/blue/fancy/narrow/northsouth,
+/area/afterlife/bar/sanctuary)
 "cmm" = (
 /obj/iomoon_puzzle/meat_ganglion{
 	id = "meatland_maze1";
@@ -29698,7 +29760,7 @@
 	},
 /area/crunch)
 "cmo" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/void,
 /area/crunch)
 "cmp" = (
@@ -31312,7 +31374,7 @@
 	},
 /area/crunch/wtc)
 "crZ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/machinery/power/smes/magical,
@@ -31421,7 +31483,7 @@
 "csx" = (
 /obj/window/reinforced/west,
 /obj/window/reinforced/east,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject/shuttleengine{
 	dir = 4
 	},
@@ -32510,16 +32572,17 @@
 /turf/unsimulated/floor/carpet/red/fancy/edge/se,
 /area/syndicate_station/battlecruiser)
 "cvV" = (
-/obj/stool/chair/office/red{
-	dir = 1
-	},
+/obj/storage/crate/wooden,
+/obj/item/storage/box/record/radio/host,
+/obj/item/radio_tape/audio_book/commander_support,
+/obj/item/radio_tape/audio_book/commander_resignation,
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/battlecruiser)
 "cvW" = (
-/obj/storage/crate/wooden,
-/obj/item/storage/box/record/radio/host,
-/obj/item/radio_tape/audio_book/commander_resignation,
-/obj/item/radio_tape/audio_book/commander_support,
+/obj/table/wood/auto,
+/obj/submachine/record_player/portable{
+	pixel_y = 5
+	},
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/battlecruiser)
 "cvZ" = (
@@ -32631,7 +32694,7 @@
 /turf/unsimulated/floor/plating/random,
 /area/syndicate_station/battlecruiser)
 "cwq" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/channel{
 	required_to_pass = 1e+009
 	},
@@ -37587,7 +37650,7 @@
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -39419,7 +39482,7 @@
 	dir = 1;
 	name = "exhibit window"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/disposalpipe/segment{
@@ -39679,7 +39742,7 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/disposalpipe/segment{
@@ -40206,7 +40269,7 @@
 	desc = "An underfloor transport pipe.";
 	name = "river pipe"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
 "cSs" = (
@@ -40429,7 +40492,7 @@
 	desc = "An underfloor transport pipe.";
 	name = "river pipe"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
 "cTd" = (
@@ -40513,6 +40576,10 @@
 	dir = 4
 	},
 /area/owlery/owllock)
+"cTr" = (
+/obj/river,
+/turf/unsimulated/floor/cave,
+/area/crater/cave/lower)
 "cTs" = (
 /obj/disposalpipe/segment{
 	desc = "An underfloor transport pipe.";
@@ -40539,7 +40606,7 @@
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cTw" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
 	dir = 8;
@@ -40553,7 +40620,7 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/owllock)
 "cTx" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
 	dir = 4;
@@ -40583,7 +40650,7 @@
 /area/owlery/owllock)
 "cTz" = (
 /obj/decal/cleanable/oil/streak,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -40627,7 +40694,7 @@
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
 "cTD" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
 	dir = 8;
@@ -40791,7 +40858,7 @@
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cTW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -40913,6 +40980,17 @@
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait2)
+"cUj" = (
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "cUl" = (
 /obj/decal/cleanable/oil,
 /turf/unsimulated/floor/stairs/quilty{
@@ -41315,7 +41393,7 @@
 	},
 /area/owlery/Owlmait2)
 "cVv" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/disposalpipe/segment{
@@ -41361,7 +41439,7 @@
 /turf/unsimulated/floor/caution/north,
 /area/owlery/Owlmait2)
 "cVD" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/disposalpipe/segment{
@@ -42547,7 +42625,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/syndicate/minerva5/command)
 "cYE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/disposalpipe/segment{
@@ -42771,7 +42849,7 @@
 /turf/unsimulated/floor/pool/no_animate,
 /area/owlery/Owlmait2)
 "cZj" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/disposalpipe/segment{
@@ -42876,6 +42954,17 @@
 	dir = 6
 	},
 /area/owlery/owleryhall)
+"cZw" = (
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/crater/cave/lower)
 "cZx" = (
 /obj/item/cigbutt,
 /turf/unsimulated/floor/plating,
@@ -43005,7 +43094,7 @@
 	},
 /area/afterlife/arena)
 "dak" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/channel{
@@ -43140,9 +43229,8 @@
 /turf/unsimulated/floor/black,
 /area/afterlife/bar)
 "daL" = (
-/obj/storage/closet/wardrobe/pride,
-/obj/map/light/brightwhite,
-/turf/unsimulated/floor/carpet/grime,
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/wood/six,
 /area/afterlife/bar/sanctuary)
 "daM" = (
 /obj/decal/stage_edge,
@@ -43435,10 +43523,14 @@
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
 "dbX" = (
-/obj/machinery/door/airlock/pyro{
-	dir = 4
+/obj/stool/bar{
+	name = "stool"
 	},
-/turf/unsimulated/floor/carpet/grime,
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/carpet{
+	dir = 10;
+	icon_state = "red2"
+	},
 /area/afterlife/bar/sanctuary)
 "dbY" = (
 /obj/storage/closet/office,
@@ -43480,7 +43572,12 @@
 	},
 /area/afterlife/bar/sanctuary)
 "dcg" = (
-/turf/unsimulated/floor/carpet/grime,
+/obj/stool/bar{
+	name = "stool"
+	},
+/turf/unsimulated/floor/carpet{
+	icon_state = "red2"
+	},
 /area/afterlife/bar/sanctuary)
 "dch" = (
 /obj/item/cigbutt{
@@ -43525,11 +43622,13 @@
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dcn" = (
-/obj/submachine/ATM/atm_alt{
-	dir = 8
+/obj/stool/bar{
+	name = "stool"
 	},
-/obj/map/light/brightwhite,
-/turf/unsimulated/floor/wood/six,
+/turf/unsimulated/floor/carpet{
+	dir = 6;
+	icon_state = "red2"
+	},
 /area/afterlife/bar/sanctuary)
 "dco" = (
 /obj/disposalpipe/segment/vertical,
@@ -43556,21 +43655,20 @@
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/bar/sanctuary)
 "dcs" = (
-/obj/stove,
-/obj/item/soup_pot,
-/obj/item/ladle,
 /obj/map/light/brighterwhite,
-/turf/unsimulated/floor/grey,
-/area/afterlife/bar)
+/obj/machinery/vending/jobclothing/afterlife/medical,
+/turf/unsimulated/floor/carpet{
+	icon_state = "fblue2";
+	dir = 9
+	},
+/area/afterlife/bar/sanctuary)
 "dct" = (
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dcu" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk/south,
-/obj/map/light/brighterwhite,
-/turf/unsimulated/floor/grey,
-/area/afterlife/bar)
+/obj/item/storage/wall/clothingrack/dresses,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "dcv" = (
 /turf/unsimulated/floor/stairs/dark{
 	dir = 8
@@ -43608,19 +43706,20 @@
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
 "dcB" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 4;
-	pixel_x = -4
+/obj/item/storage/box/glassbox,
+/obj/storage/secure/closet/kitchen{
+	locked = 0
 	},
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dcC" = (
-/obj/storage/secure/closet/fridge/kitchen{
-	locked = 0
+/obj/storage/crate/packing,
+/obj/random_item_spawner/formalclothes/few,
+/turf/unsimulated/floor/carpet{
+	icon_state = "fblue2";
+	dir = 5
 	},
-/obj/item/plant/herb/cannabis/spawnable,
-/turf/unsimulated/floor/grey,
-/area/afterlife/bar)
+/area/afterlife/bar/sanctuary)
 "dcD" = (
 /obj/item/cigbutt{
 	pixel_x = 6;
@@ -43638,6 +43737,10 @@
 /area/crater)
 "dcF" = (
 /obj/map/light/brighterwhite,
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -4
+	},
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dcG" = (
@@ -43738,10 +43841,11 @@
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dcU" = (
-/obj/submachine/foodprocessor{
-	dir = 8
-	},
 /obj/map/light/brighterwhite,
+/obj/storage/secure/closet/fridge/kitchen{
+	locked = 0
+	},
+/obj/item/plant/herb/cannabis/spawnable,
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dcV" = (
@@ -43927,10 +44031,12 @@
 	},
 /area/afterlife/bar)
 "ddx" = (
-/obj/machinery/deep_fryer{
-	dir = 8
-	},
 /obj/map/light/brighterwhite,
+/obj/submachine/chef_oven{
+	desc = "An appliance back from the dead.";
+	dir = 8;
+	name = "salvaged oven"
+	},
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "ddy" = (
@@ -43967,12 +44073,13 @@
 	},
 /area/afterlife/bar)
 "ddE" = (
-/obj/storage/secure/closet/kitchen{
-	locked = 0
+/obj/map/light/brighterwhite,
+/obj/machinery/vending/jobclothing/afterlife/research,
+/turf/unsimulated/floor/carpet{
+	dir = 6;
+	icon_state = "fblue2"
 	},
-/obj/item/storage/box/glassbox,
-/turf/unsimulated/floor/grey,
-/area/afterlife/bar)
+/area/afterlife/bar/sanctuary)
 "ddF" = (
 /obj/disposalpipe/segment/bent/east,
 /turf/unsimulated/floor/grey,
@@ -45252,7 +45359,7 @@
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "dhi" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/fakeobject{
 	desc = "It's probably broken.";
 	dir = 6;
@@ -45750,7 +45857,7 @@
 	},
 /area/syndicate_station/battlecruiser)
 "diY" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -45765,14 +45872,14 @@
 /turf/unsimulated/floor,
 /area/centcom/lounge)
 "dja" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
 /turf/space,
 /area/syndicate_station/battlecruiser)
 "djb" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/instant,
 /turf/unsimulated/floor/black,
 /area/sim/racing_track)
 "djc" = (
@@ -46266,7 +46373,7 @@
 /area/shuttle/battle)
 "dlh" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/battle)
 "dli" = (
@@ -46279,7 +46386,7 @@
 	},
 /area/shuttle/battle)
 "dll" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -46314,13 +46421,13 @@
 /area/shuttle/battle)
 "dlr" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
 /area/shuttle/battle)
 "dls" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -46385,7 +46492,7 @@
 	},
 /area/shuttle/battle)
 "dlD" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -46753,6 +46860,12 @@
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/hospital/underground)
+"doO" = (
+/obj/item/storage/wall/clothingrack/clothes3{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "doQ" = (
 /obj/fakeobject/tallsmes,
 /obj/fakeobject{
@@ -47021,7 +47134,7 @@
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
 "drV" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -47142,7 +47255,7 @@
 /area/hospital/underground)
 "dsu" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -47567,7 +47680,7 @@
 /area/crypt/sigma/lab)
 "dvi" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -47867,8 +47980,8 @@
 /turf/unsimulated/floor/wood/three,
 /area/centcom/offices/shotgunbill)
 "dwo" = (
-/obj/machinery/computer/tetris,
 /obj/map/light/brightwhite,
+/obj/submachine/laundry_machine,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dwp" = (
@@ -49716,7 +49829,7 @@
 /turf/unsimulated/floor/dojo/sand,
 /area/centcom/offices/zamujasa)
 "dDC" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/fakeobject{
 	desc = "It's probably broken.";
 	dir = 6;
@@ -50803,7 +50916,7 @@
 /area/centcom/lounge)
 "dHz" = (
 /obj/table/wood/round/auto,
-/obj/item/reagent_containers/food/snacks/ice_cream/random,
+/obj/item/paper/newspaper/rolled/centcom_plasma,
 /turf/unsimulated/floor/specialroom/bar,
 /area/centcom/lounge)
 "dHA" = (
@@ -52135,6 +52248,15 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
+"dLs" = (
+/obj/creepy_sound_trigger,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave)
 "dLt" = (
 /turf/unsimulated/floor/wood,
 /area/centcom/garden)
@@ -52352,6 +52474,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
+/obj/item/paper/newspaper/rolled/centcom_plasma,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fpurple2"
 	},
@@ -52556,7 +52679,7 @@
 /area/centcom/lobby)
 "dMB" = (
 /obj/decal/nav_danger,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-6"
 	},
@@ -52943,7 +53066,7 @@
 /turf/unsimulated/floor/darkblue,
 /area/centcom/lobby)
 "dNN" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/two,
@@ -54132,8 +54255,12 @@
 	},
 /area/afterlife/bar/sanctuary)
 "dSi" = (
-/obj/machinery/clothingbooth,
-/turf/unsimulated/floor/carpet/grime,
+/obj/machinery/computer/tetris,
+/obj/map/light/dimred,
+/turf/unsimulated/floor/carpet{
+	icon_state = "red2";
+	dir = 4
+	},
 /area/afterlife/bar/sanctuary)
 "dSj" = (
 /obj/stool/chair/comfy/blue{
@@ -54270,12 +54397,12 @@
 /turf/unsimulated/floor/specialroom/gym,
 /area/afterlife/bar)
 "dSI" = (
-/obj/stool/bar{
-	name = "stool"
+/obj/decal/tile_edge/stripe{
+	dir = 1
 	},
-/obj/map/light/brightwhite,
+/obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/wood/two,
-/area/afterlife/bar)
+/area/afterlife/bar/sanctuary)
 "dSJ" = (
 /obj/table/wood/round/auto,
 /obj/item/boardgame/chess,
@@ -54530,10 +54657,8 @@
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dTr" = (
-/obj/submachine/chef_oven{
-	desc = "An appliance back from the dead.";
-	dir = 8;
-	name = "salvaged oven"
+/obj/submachine/foodprocessor{
+	dir = 8
 	},
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
@@ -55075,7 +55200,7 @@
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -55099,6 +55224,14 @@
 	dir = 8
 	},
 /area/crypt/graveyard)
+"ehb" = (
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/crater/cave/lower)
 "ehl" = (
 /obj/window/cubicle{
 	dir = 4
@@ -55111,6 +55244,7 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb,
 /mob/living/critter/spider/spacerachnid,
+/obj/item/material_piece/cloth/spidersilk,
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "ehJ" = (
@@ -55622,7 +55756,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
 "eFm" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable,
@@ -55660,6 +55794,16 @@
 	},
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
+"eHV" = (
+/obj/decoration/floralarrangement{
+	pixel_y = 4
+	},
+/obj/map/light/brighterwhite,
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar/sanctuary)
 "eHZ" = (
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /turf/unsimulated/floor/yellow,
@@ -55727,6 +55871,15 @@
 	dir = 9
 	},
 /area/iomoon/base)
+"eNc" = (
+/obj/creepy_sound_trigger,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black set of metal stairs.";
+	dir = 4;
+	icon_state = "ancient_stairs";
+	name = "strange stairs"
+	},
+/area/crater/cave/lower)
 "eNi" = (
 /obj/item/reagent_containers/food/drinks/water,
 /turf/unsimulated/floor/plating,
@@ -55758,6 +55911,19 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
+"ePi" = (
+/obj/item/clothing/suit/armor/ancient,
+/obj/item/clothing/mask/skull{
+	pixel_y = 10
+	},
+/obj/map/light/dimreddish,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "ePs" = (
 /turf/unsimulated/floor/stairs{
 	dir = 10;
@@ -55854,6 +56020,14 @@
 /mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/crew)
+"eSF" = (
+/obj/creepy_sound_trigger,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black set of metal stairs.";
+	icon_state = "ancient_stairs";
+	name = "strange stairs"
+	},
+/area/crater/cave/lower)
 "eTd" = (
 /obj/fakeobject/robot{
 	anchored = 1;
@@ -55879,7 +56053,7 @@
 	})
 "eTR" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -55933,7 +56107,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
 "eUP" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/item/raw_material/shard,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -55948,7 +56122,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/tdome/tdome1)
 "eWw" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -56048,15 +56222,18 @@
 /turf/unsimulated/floor/purple/side,
 /area/iomoon/base)
 "eZl" = (
-/obj/storage/closet/wardrobe/black/formalwear,
-/obj/item/clothing/under/misc/lawyer,
-/obj/item/storage/box/lightbox/tubes/red,
-/turf/unsimulated/floor/carpet/grime,
+/obj/decal/cleanable/glitter/harmless,
+/turf/unsimulated/floor/wood/six,
 /area/afterlife/bar/sanctuary)
 "eZW" = (
 /obj/fakeobject/dreambeach/sticks,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"fap" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/shoe/lots,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "faP" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/pod1)
@@ -56088,7 +56265,7 @@
 	},
 /area/iomoon/base)
 "fcM" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -56104,6 +56281,15 @@
 "fdC" = (
 /turf/unsimulated/floor/caution/west,
 /area/observatory)
+"fdV" = (
+/obj/item/implant/artifact/ancient/ancient_good,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "fen" = (
 /obj/structure/woodwall,
 /turf/unsimulated/floor/plating,
@@ -56205,12 +56391,12 @@
 /turf/unsimulated/floor/grime,
 /area/upper_arctic/mining)
 "fgU" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/item/raw_material/shard/glass,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "fgX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/railing/orange/reinforced{
@@ -56262,6 +56448,11 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"fiT" = (
+/turf/unsimulated/floor/carpet{
+	icon_state = "fblue3"
+	},
+/area/afterlife/bar/sanctuary)
 "fiY" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/paper/book/from_file/monster_manual,
@@ -56302,7 +56493,7 @@
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/firing_range)
 "fkC" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -56400,7 +56591,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
 "foM" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/railing/orange/reinforced{
@@ -56443,8 +56634,8 @@
 	},
 /area/iomoon/base)
 "fsA" = (
-/obj/item/brick,
 /obj/decal/cleanable/dirt/dirt4,
+/obj/machinery/vending/murderbox_gang,
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
 "fth" = (
@@ -56490,6 +56681,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
+"fuV" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/john_owlery/delay5,
+/turf/space,
+/area/space)
 "fvA" = (
 /obj/fakeobject{
 	icon = 'icons/misc/critter.dmi';
@@ -56555,7 +56754,7 @@
 /obj/cable{
 	icon_state = "5-10"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/space,
 /area/watchful_eye_sensor)
 "fzW" = (
@@ -56625,6 +56824,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
+"fBq" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "fBC" = (
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_xg7"
@@ -56829,7 +57034,7 @@
 /area/centcom/gallery)
 "fKE" = (
 /obj/decal/nav_danger,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
 "fKT" = (
@@ -56880,7 +57085,7 @@
 /turf/unsimulated/floor/engine,
 /area/drone/assembly)
 "fLO" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/communications_dish,
 /obj/cable/green{
 	icon_state = "0-5"
@@ -56934,7 +57139,7 @@
 /area/sim/tdome/tdome1)
 "fPL" = (
 /obj/decal/nav_danger,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-9"
 	},
@@ -57069,6 +57274,12 @@
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
+"fVi" = (
+/turf/unsimulated/floor/carpet{
+	icon_state = "fblue2";
+	dir = 9
+	},
+/area/afterlife/bar/sanctuary)
 "fVo" = (
 /turf/unsimulated/wall/auto/lead/white{
 	name = "virtual lead wall"
@@ -57087,6 +57298,13 @@
 /obj/decal/cleanable/fungus,
 /turf/unsimulated/floor/black,
 /area/owlery/Owlmait2)
+"fVL" = (
+/obj/decal/cleanable/glitter/harmless,
+/obj/decal/tile_edge/stripe{
+	dir = 1
+	},
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar/sanctuary)
 "fWh" = (
 /obj/map/light/lava,
 /obj/fakeobject/pipe{
@@ -57141,8 +57359,15 @@
 /mob/living/critter/skeleton,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
+"fXX" = (
+/obj/stool/chair/comfy,
+/obj/landmark/spawner/random_trader/diner,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/diner_centcom)
 "fZb" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
@@ -57362,7 +57587,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait2)
 "giu" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject{
 	anchored = 1;
 	density = 1;
@@ -57395,7 +57620,7 @@
 /turf/unsimulated/floor/plating,
 /area/marsoutpost)
 "giS" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -57456,7 +57681,7 @@
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/observatory)
 "gkG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/railing/orange/reinforced,
@@ -57721,7 +57946,7 @@
 	icon_state = "blue"
 	})
 "gwQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -57751,6 +57976,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
+"gxj" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/john_owlery/delay5,
+/turf/space,
+/area/space)
 "gxE" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -57826,7 +58059,7 @@
 /turf/space,
 /area/space)
 "gzZ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject{
 	anchored = 1;
 	density = 1;
@@ -57863,8 +58096,9 @@
 	},
 /area/centcom)
 "gAK" = (
-/obj/submachine/claw_machine,
-/turf/unsimulated/floor/wood/six,
+/turf/unsimulated/floor/stairs/wood/wide{
+	dir = 6
+	},
 /area/afterlife/bar/sanctuary)
 "gAY" = (
 /obj/lattice{
@@ -57969,12 +58203,44 @@
 	},
 /area/wizard_station)
 "gDK" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "4-9"
 	},
 /turf/space,
 /area/watchful_eye_sensor)
+"gEi" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 5;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 9;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "gEk" = (
 /obj/table/reinforced/auto,
 /obj/traitorifier/virtual/wizard,
@@ -58008,7 +58274,7 @@
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/teleport)
 "gHt" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "gHO" = (
@@ -58139,6 +58405,16 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
+"gLr" = (
+/obj/map/light/dimreddish,
+/obj/fakeobject/cultiststatue,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "gLs" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-19"
@@ -58184,7 +58460,7 @@
 /turf/unsimulated/floor/airless/plating/damaged2,
 /area/crunch)
 "gNL" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
@@ -58330,7 +58606,7 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
@@ -58351,7 +58627,7 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
 "gWW" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
@@ -58435,13 +58711,6 @@
 	opacity = 0
 	},
 /area/centcom/lounge)
-"gZG" = (
-/obj/stool/chair/comfy,
-/obj/npc/trader/random,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/diner_centcom)
 "gZQ" = (
 /turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
@@ -58469,7 +58738,7 @@
 	icon_state = "rwindow";
 	reinf = 1
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/greenwhite{
 	dir = 1
 	},
@@ -58638,6 +58907,17 @@
 /obj/securearea,
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/research)
+"hkZ" = (
+/obj/item/implant/artifact/ancient/ancient_good,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/crater/cave/lower)
 "hla" = (
 /obj/machinery/light,
 /obj/cauldron/candy/ephemeral,
@@ -58863,7 +59143,7 @@
 	},
 /area/owlery/gangzone)
 "huB" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject{
 	anchored = 1;
 	density = 1;
@@ -58981,7 +59261,7 @@
 /obj/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
 "hxO" = (
@@ -59049,7 +59329,7 @@
 	},
 /area/centcom/lobby)
 "hBx" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -59118,6 +59398,13 @@
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/T_south,
 /area/centcom/offices/rodney)
+"hFf" = (
+/obj/map/light/brighterwhite,
+/obj/machinery/deep_fryer{
+	dir = 4
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/bar)
 "hFk" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -59128,7 +59415,7 @@
 /turf/space,
 /area/syndicate_station_space)
 "hFv" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -59498,7 +59785,7 @@
 	},
 /area/owlery/staffhall)
 "hXz" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "2-9"
 	},
@@ -59567,6 +59854,12 @@
 	dir = 4
 	},
 /area/iomoon/base/underground)
+"icC" = (
+/turf/unsimulated/floor/carpet{
+	dir = 6;
+	icon_state = "fblue2"
+	},
+/area/afterlife/bar/sanctuary)
 "icJ" = (
 /obj/burning_barrel,
 /turf/unsimulated/floor/setpieces/rootfloor,
@@ -59603,7 +59896,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "idI" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -59681,7 +59974,7 @@
 	},
 /area/crunch/wtc)
 "ihz" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/nav_danger,
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
@@ -59791,6 +60084,11 @@
 /obj/rack,
 /turf/unsimulated/floor/grey/blackgrime,
 /area/owlery/Owlmait2)
+"ime" = (
+/obj/item/parts/robot_parts/head/ancient/guardian,
+/obj/item/parts/robot_parts/head/ancient/guardian,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber)
 "imi" = (
 /obj/machinery/light/runway_light/delay4,
 /obj/lattice{
@@ -59812,7 +60110,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
 "ina" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -59930,6 +60228,11 @@
 /obj/railing/velvet,
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
+"irw" = (
+/obj/spawner/ancient_robot_artifact,
+/obj/spawner/ancient_robot_artifact,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber)
 "irM" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 8;
@@ -59939,7 +60242,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/offices/flaborized)
 "irO" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-10"
 	},
@@ -59988,7 +60291,7 @@
 /turf/unsimulated/floor/plating,
 /area/sim/tdome/tdome1)
 "isv" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -60085,7 +60388,7 @@
 /turf/simulated/floor/white/grime,
 /area/observatory)
 "ivt" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -60233,7 +60536,7 @@
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
 "iDJ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -60333,6 +60636,11 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"iGw" = (
+/obj/decal/cleanable/glitter/harmless,
+/obj/random_item_spawner/dressup/one,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "iGD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -60378,7 +60686,7 @@
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/sw,
 /area/centcom/offices/rodney)
 "iIC" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -60443,6 +60751,12 @@
 	},
 /turf/unsimulated/floor/lava,
 /area/iomoon)
+"iKv" = (
+/obj/river{
+	dir = 6
+	},
+/turf/unsimulated/floor/cave,
+/area/crater/cave/lower)
 "iKM" = (
 /turf/unsimulated/floor/stairs/wood/wide,
 /area/afterlife/bar/sanctuary)
@@ -60540,7 +60854,7 @@
 /obj/machinery/conveyor/SN{
 	id = "owlery_trash"
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/instant,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "iPZ" = (
@@ -60551,7 +60865,7 @@
 /obj/fakeobject/shuttleweapon{
 	dir = 1
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -60630,7 +60944,7 @@
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -60661,7 +60975,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/pod1)
 "iTv" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "4-8"
 	},
@@ -60696,7 +61010,7 @@
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "iUI" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-5"
 	},
@@ -60729,8 +61043,14 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"iVw" = (
+/obj/item/storage/wall/clothingrack/clothes4{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "iVD" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
@@ -60754,7 +61074,7 @@
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -60815,6 +61135,14 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/sand,
 /area/centcom/offices/azrun)
+"jag" = (
+/obj/map/light/brighterwhite,
+/obj/machinery/vending/jobclothing/afterlife/security,
+/turf/unsimulated/floor/carpet{
+	icon_state = "fblue2";
+	dir = 10
+	},
+/area/afterlife/bar/sanctuary)
 "jav" = (
 /obj/item/extinguisher,
 /obj/decal/cleanable/blood,
@@ -60910,7 +61238,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "jcL" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-4"
@@ -61088,7 +61416,7 @@
 /obj/item/raw_material/shard/glass{
 	icon_state = "small"
 	},
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/soviet)
 "jhY" = (
@@ -61201,7 +61529,7 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
 "jlh" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -61439,7 +61767,7 @@
 /turf/unsimulated/floor/plating,
 /area/marsoutpost)
 "jvd" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-2"
 	},
@@ -61550,6 +61878,12 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"jxQ" = (
+/turf/unsimulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue3"
+	},
+/area/afterlife/bar/sanctuary)
 "jxX" = (
 /turf/unsimulated/wall/auto/sengoku{
 	icon_state = "1";
@@ -61576,6 +61910,14 @@
 	},
 /turf/unsimulated/floor/pool/no_animate,
 /area/centcom/garden)
+"jyN" = (
+/obj/random_item_spawner/dressup/one,
+/obj/random_item_spawner/dressup/one{
+	pixel_x = -7;
+	pixel_y = -6
+	},
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "jyU" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -61584,7 +61926,7 @@
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
 "jzk" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating/random,
 /area/sim/gunsim/maintenance)
 "jzt" = (
@@ -61665,7 +62007,7 @@
 	},
 /area/iomoon/base)
 "jCA" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "5-8"
 	},
@@ -61686,6 +62028,9 @@
 /obj/item/device/light/flashlight,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"jEc" = (
+/turf/unsimulated/floor/carpet/blue/fancy/narrow/eastwest,
+/area/afterlife/bar/sanctuary)
 "jEp" = (
 /turf/unsimulated/floor/stairs,
 /area/void_diner)
@@ -61771,7 +62116,7 @@
 /turf/unsimulated/floor/void,
 /area/crunch)
 "jIK" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/nav_danger,
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -61934,7 +62279,7 @@
 /turf/space,
 /area/syndicate_station_space)
 "jQN" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-10"
 	},
@@ -61960,7 +62305,7 @@
 	icon_state = "blue"
 	})
 "jRS" = (
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -62001,6 +62346,15 @@
 /obj/item/device/audio_log/meatland_01,
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
+"jUj" = (
+/obj/spawner/ancient_robot_artifact,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "jUW" = (
 /obj/fakeobject/airlock_broken/firelock{
 	desc = "This blast door looks rusted over.  Junk.";
@@ -62083,6 +62437,15 @@
 	dir = 8
 	},
 /area/crunch/wtc)
+"jYm" = (
+/obj/creepy_sound_trigger,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black set of metal stairs.";
+	dir = 8;
+	icon_state = "ancient_stairs";
+	name = "strange stairs"
+	},
+/area/crater/cave/lower)
 "jYz" = (
 /obj/fakeobject/robot{
 	anchored = 1;
@@ -62130,7 +62493,7 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
 "kay" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "2-5"
 	},
@@ -62318,7 +62681,7 @@
 /turf/unsimulated/floor/engine/caution/east,
 /area/hospital/samostrel)
 "kiK" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -62472,7 +62835,7 @@
 /turf/unsimulated/floor/plating/random,
 /area/syndicate_station/firing_range)
 "kmI" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -62619,7 +62982,7 @@
 /turf/unsimulated/floor/plating,
 /area/solarium)
 "ktJ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "4-8"
 	},
@@ -62716,6 +63079,10 @@
 "kxa" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/storage)
+"kxB" = (
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/carpet/blue/fancy/narrow/eastwest,
+/area/afterlife/bar/sanctuary)
 "kxS" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 1
@@ -62732,6 +63099,26 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
+"kzI" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 6;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "kzP" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -62808,7 +63195,7 @@
 	},
 /area/crypt/graveyard)
 "kCa" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject{
 	anchored = 1;
 	density = 1;
@@ -62998,6 +63385,19 @@
 	dir = 4
 	},
 /area/centcom/offices/varshie)
+"kJQ" = (
+/obj/rack/iomoon,
+/obj/item/parts/robot_parts/chest/ancient/actuator,
+/obj/item/parts/robot_parts/head/ancient/actuator,
+/obj/item/parts/robot_parts/arm/left/ancient/actuator{
+	pixel_x = 6
+	},
+/obj/item/parts/robot_parts/arm/right/ancient/actuator{
+	pixel_x = -6
+	},
+/obj/map/light/dimreddish,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/crater/cave/lower)
 "kJR" = (
 /turf/unsimulated/floor/carpet/green/fancy/edge/north,
 /area/centcom/offices{
@@ -63031,7 +63431,7 @@
 /turf/unsimulated/floor/black,
 /area/owlery/Owlmait2)
 "kKD" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/channel{
 	required_to_pass = 1e+009
 	},
@@ -63049,7 +63449,7 @@
 	},
 /area/iomoon/caves)
 "kMj" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject{
 	anchored = 1;
 	density = 1;
@@ -63253,7 +63653,7 @@
 	},
 /area/owlery/staffhall)
 "kUo" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject{
 	anchored = 1;
 	density = 1;
@@ -63342,7 +63742,7 @@
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/janantilles)
 "kXv" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
@@ -63403,7 +63803,7 @@
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
@@ -63889,7 +64289,7 @@
 /turf/unsimulated/wall/auto/supernorn/wood,
 /area/wizard_station)
 "ltJ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "5-8"
 	},
@@ -64014,14 +64414,6 @@
 	icon_state = "shore-31"
 	},
 /area/titlescreen)
-"lyi" = (
-/obj/machinery/light/runway_light/delay5,
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/space)
 "lzl" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_station/battlecruiser)
@@ -64087,13 +64479,24 @@
 /turf/unsimulated/floor/wood,
 /area/centcom/lounge)
 "lCM" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
 "lDq" = (
 /obj/machinery/light/small,
 /turf/unsimulated/floor/plating,
 /area/upper_arctic/pod1)
+"lDx" = (
+/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
+/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
+/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "lDQ" = (
 /obj/shrub{
 	dir = 1;
@@ -64214,7 +64617,7 @@
 /turf/unsimulated/floor/wood/eight,
 /area/centcom/offices/bilo)
 "lKe" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -64475,7 +64878,7 @@
 	},
 /area/marsoutpost)
 "lVt" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/lattice,
 /turf/space,
 /area/watchful_eye_sensor)
@@ -64534,7 +64937,7 @@
 	},
 /area/owlery/gangzone)
 "lXZ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
 "lYb" = (
@@ -64653,7 +65056,7 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
 "mdz" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -64721,7 +65124,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital)
 "mhP" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/map/light/lava,
 /obj/railing/orange/reinforced{
 	dir = 4
@@ -64857,11 +65260,6 @@
 	dir = 10
 	},
 /area/hospital/samostrel)
-"moP" = (
-/obj/storage/closet/wardrobe/wizard,
-/obj/map/light/brightwhite,
-/turf/unsimulated/floor/carpet/grime,
-/area/afterlife/bar/sanctuary)
 "mpq" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid1"
@@ -64944,6 +65342,26 @@
 	dir = 8
 	},
 /area/owlery/owleryhall)
+"mtQ" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 5;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "muz" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -64958,7 +65376,7 @@
 	icon_state = "rwindow";
 	reinf = 1
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/greenwhite,
 /area/owlery/owleryhall)
 "muL" = (
@@ -65071,8 +65489,12 @@
 "myh" = (
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/main)
+"mzj" = (
+/obj/submachine/slot_machine,
+/turf/unsimulated/floor/carpet/red,
+/area/afterlife/bar/sanctuary)
 "mzo" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/space,
 /area/watchful_eye_sensor)
 "mzp" = (
@@ -65560,6 +65982,10 @@
 "mXo" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
+"mXu" = (
+/obj/spawner/ancient_robot_artifact,
+/turf/unsimulated/floor/ancient,
+/area/crunch)
 "mXS" = (
 /mob/living/critter/spider/spacerachnid,
 /turf/unsimulated/floor/cave,
@@ -65665,7 +66091,7 @@
 /obj/fakeobject/shuttleweapon{
 	dir = 1
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -65835,6 +66261,18 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"nkn" = (
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "nlC" = (
 /turf/unsimulated/floor/black/corner{
 	dir = 1
@@ -66352,7 +66790,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
 "nFq" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
@@ -66498,7 +66936,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -66659,7 +67097,7 @@
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "6-10"
 	},
@@ -66795,8 +67233,11 @@
 	tag = "icon-fpurple1"
 	},
 /area/centcom/lounge)
+"nSq" = (
+/turf/unsimulated/iomoon/ancient_floor,
+/area/crater/cave/lower)
 "nSH" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -66857,7 +67298,7 @@
 /turf/unsimulated/floor/grey/blackgrime,
 /area/owlery/Owlmait2)
 "nTU" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/map/light/lava,
 /obj/railing/orange/reinforced{
 	dir = 4
@@ -67068,6 +67509,21 @@
 "obN" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/leah)
+"ocI" = (
+/obj/rack/iomoon,
+/obj/item/parts/robot_parts/chest/ancient,
+/obj/item/parts/robot_parts/arm/left/ancient{
+	pixel_x = 6
+	},
+/obj/item/parts/robot_parts/arm/right/ancient{
+	pixel_x = -6
+	},
+/obj/item/parts/robot_parts/head/ancient{
+	pixel_y = 4
+	},
+/obj/map/light/yellow,
+/turf/unsimulated/floor/ancient,
+/area/crunch)
 "ocV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -67196,6 +67652,15 @@
 /obj/decal/cleanable/oil,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
+"ohZ" = (
+/obj/decal/cleanable/glitter/harmless,
+/obj/machinery/vending/jobclothing/afterlife/catering,
+/turf/unsimulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue1";
+	tag = "icon-fblue2 (NORTHWEST)"
+	},
+/area/afterlife/bar/sanctuary)
 "oiq" = (
 /obj/table/wood/auto/desk,
 /obj/item/clipboard,
@@ -67399,6 +67864,12 @@
 "oqj" = (
 /turf/unsimulated/floor/carpet/regalcarpet,
 /area/centcom/offices/janantilles)
+"ors" = (
+/turf/unsimulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue3"
+	},
+/area/afterlife/bar/sanctuary)
 "ort" = (
 /obj/spacevine{
 	density = 1;
@@ -67479,7 +67950,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait2)
 "owa" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/watchful_eye_sensor)
@@ -67579,7 +68050,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "oBN" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "6-8"
 	},
@@ -67629,7 +68100,7 @@
 /obj/cable{
 	icon_state = "6-9"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/space,
 /area/watchful_eye_sensor)
 "oEX" = (
@@ -67741,6 +68212,38 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
+"oJi" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 6;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 10;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "oJy" = (
 /obj/stool/chair/dining/wood{
 	dir = 4
@@ -67784,7 +68287,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital)
 "oMX" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-9"
 	},
@@ -67797,7 +68300,7 @@
 /turf/space,
 /area/watchful_eye_sensor)
 "oNm" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/nav_danger,
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -67808,7 +68311,7 @@
 /turf/space,
 /area/watchful_eye_sensor)
 "oNz" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-9"
 	},
@@ -68137,6 +68640,14 @@
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/upper_arctic/hall)
+"pcP" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/john_owlery,
+/turf/space,
+/area/space)
 "pds" = (
 /obj/machinery/door/poddoor{
 	dir = 8;
@@ -68194,6 +68705,14 @@
 	name = "Fireplace"
 	},
 /area/centcom/offices/flaborized)
+"pfH" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/john_owlery/delay3,
+/turf/space,
+/area/space)
 "pfM" = (
 /turf/simulated/wall/auto/jen/dark2,
 /area/syndicate/minerva5/command)
@@ -68274,9 +68793,31 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
 "pho" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
+"phr" = (
+/obj/decal/cleanable/cobweb2,
+/obj/spawner/ancient_robot_artifact,
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "phv" = (
 /obj/fakeobject/airlock_broken/firelock{
 	density = 1;
@@ -68321,6 +68862,14 @@
 	},
 /turf/space,
 /area/space)
+"pjm" = (
+/obj/submachine/claw_machine,
+/obj/map/light/dimred,
+/turf/unsimulated/floor/carpet{
+	icon_state = "red2";
+	dir = 8
+	},
+/area/afterlife/bar/sanctuary)
 "pjz" = (
 /obj/tree,
 /turf/unsimulated/grass,
@@ -68392,7 +68941,7 @@
 /turf/unsimulated/floor/engine,
 /area/shuttle/merchant_shuttle/diner_centcom)
 "pmn" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -68447,7 +68996,6 @@
 	pixel_x = 6;
 	pixel_y = 12
 	},
-/obj/table/regal/auto,
 /turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "png" = (
@@ -68531,7 +69079,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
 "pou" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/railing/orange/reinforced,
@@ -68556,7 +69104,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
 "pry" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "4-10"
 	},
@@ -68665,7 +69213,7 @@
 /obj/fakeobject/shuttleweapon/base{
 	dir = 1
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -68803,7 +69351,7 @@
 /turf/unsimulated/floor,
 /area/centcom/offices/pali)
 "pAm" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -68918,6 +69466,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
+"pFf" = (
+/obj/river{
+	dir = 4
+	},
+/turf/unsimulated/floor/cave,
+/area/crater/cave/lower)
 "pFm" = (
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
@@ -69051,6 +69605,11 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
+"pKi" = (
+/obj/machinery/clothingbooth/free,
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/carpet/blue/fancy/narrow/northsouth,
+/area/afterlife/bar/sanctuary)
 "pKM" = (
 /obj/shrub/dead,
 /turf/unsimulated/floor/purple/side{
@@ -69371,7 +69930,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
 "pWf" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/nav_danger,
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -69421,12 +69980,17 @@
 /obj/machinery/power/data_terminal,
 /turf/space,
 /area/space)
+"pXb" = (
+/obj/decal/cleanable/cobweb2,
+/obj/item/material_piece/cloth/spidersilk,
+/turf/unsimulated/floor/cave,
+/area/crater/cave/lower)
 "pXh" = (
 /obj/machinery/light/small/broken,
 /turf/unsimulated/floor/scorched,
 /area/watchful_eye_sensor)
 "pXt" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject{
 	anchored = 1;
 	density = 1;
@@ -69679,6 +70243,13 @@
 /obj/item/basketball/catball,
 /turf/unsimulated/floor,
 /area/centcom/offices/pali)
+"qjv" = (
+/obj/decal/poster/wallsign/neonretro{
+	pixel_y = 23
+	},
+/obj/map/light/purple,
+/turf/unsimulated/wall/auto/lead/gray,
+/area/afterlife/bar/sanctuary)
 "qkO" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-6"
@@ -69741,7 +70312,7 @@
 /turf/unsimulated/floor/setpieces/gauntlet,
 /area/sim/racing_track)
 "qnW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -69948,7 +70519,7 @@
 /area/crunch)
 "qvj" = (
 /obj/map/light/lava,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/railing/orange/reinforced,
@@ -70040,6 +70611,27 @@
 	},
 /turf/unsimulated/floor/caution/east,
 /area/drone/assembly)
+"qzU" = (
+/obj/map/light/void,
+/obj/creepy_sound_trigger,
+/obj/trigger/spooky_emote,
+/obj/effects/lightshaft,
+/obj/stool/chair/comfy/throne_gold{
+	anchored = 1
+	},
+/obj/item/skull/gold,
+/obj/item/clothing/head/crown{
+	rarity = 5;
+	name = "crown of the underworld";
+	pixel_y = 11
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "qAh" = (
 /obj/cable/green{
 	icon_state = "6-9"
@@ -70062,7 +70654,7 @@
 /turf/unsimulated/floor/plating,
 /area/crypt/sigma)
 "qBh" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -70170,6 +70762,38 @@
 	},
 /turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
+"qEp" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 10;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 6;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "qEK" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -70452,6 +71076,12 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
+"qOB" = (
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/carpet{
+	icon_state = "blue1"
+	},
+/area/afterlife/bar/sanctuary)
 "qOO" = (
 /obj/fakeobject/dreambeach/mars,
 /turf/unsimulated/floor/dream/beach,
@@ -70513,7 +71143,7 @@
 /turf/space,
 /area/space)
 "qRe" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject{
 	anchored = 1;
 	density = 1;
@@ -70621,7 +71251,7 @@
 /area/watchful_eye_sensor)
 "qWF" = (
 /obj/item/raw_material/shard/glass,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "qWW" = (
@@ -70648,7 +71278,7 @@
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
 "qYb" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "0-5"
 	},
@@ -70688,7 +71318,7 @@
 /area/iomoon/base)
 "raS" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -70776,6 +71406,10 @@
 "rcQ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"rcX" = (
+/obj/decal/art_curser_sigil,
+/turf/unsimulated/wall/auto/adventure/ancient,
+/area/crater/cave/lower)
 "rdE" = (
 /obj/overlay{
 	density = 1;
@@ -70793,7 +71427,7 @@
 	icon_state = "blue"
 	})
 "reH" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/void_diner)
 "rfw" = (
@@ -70866,7 +71500,7 @@
 /turf/unsimulated/grass,
 /area/centcom/lounge)
 "rim" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -70911,6 +71545,26 @@
 	},
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
+"rjf" = (
+/obj/rack/iomoon,
+/obj/item/parts/robot_parts/head/ancient/stonecutter{
+	pixel_y = 5
+	},
+/obj/item/parts/robot_parts/arm/right/ancient/stonecutter{
+	pixel_x = -5
+	},
+/obj/item/parts/robot_parts/chest/ancient/stonecutter,
+/obj/item/parts/robot_parts/arm/left/ancient/stonecutter{
+	pixel_x = 5
+	},
+/obj/map/light/dimreddish,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "rjl" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -70939,7 +71593,7 @@
 	},
 /area/sim/racing_track)
 "rkj" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/map/light/lava,
@@ -71060,7 +71714,7 @@
 	},
 /area/centcom/offices/marknstein)
 "rqo" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/map/light/lava,
@@ -71103,7 +71757,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/lobby)
 "rsL" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/railing/orange/reinforced{
@@ -71311,7 +71965,7 @@
 	},
 /area/afterlife/heaven/hydroponics/inside)
 "ryq" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-6"
 	},
@@ -71407,7 +72061,7 @@
 	},
 /area/observatory)
 "rBm" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "1-6"
 	},
@@ -71587,7 +72241,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base/underground)
 "rHu" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/nav_danger,
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -71768,6 +72422,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
+"rNt" = (
+/turf/unsimulated/floor/carpet{
+	icon_state = "fblue3";
+	dir = 1
+	},
+/area/afterlife/bar/sanctuary)
 "rNx" = (
 /turf/unsimulated/wall/generic{
 	desc = "It won't budge.";
@@ -71785,7 +72445,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/void_diner)
 "rPG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -71959,6 +72619,19 @@
 /obj/item/weldingtool,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"rYo" = (
+/obj/river{
+	desc = "It's pouring down from somewhere far above.";
+	name = "Waterfall"
+	},
+/obj/effects/harmless_smoke{
+	name = "mist";
+	opacity = 0
+	},
+/obj/decal/lightshaft,
+/obj/map/light/secretblue,
+/turf/unsimulated/wall/auto/adventure/cave,
+/area/crater/cave/lower)
 "rYq" = (
 /turf/unsimulated/wall/generic{
 	dir = 8;
@@ -72021,7 +72694,7 @@
 /area/moon/museum)
 "sat" = (
 /obj/map/light/lava,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/railing/orange/reinforced,
@@ -72339,7 +73012,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
 "sls" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -72704,7 +73377,7 @@
 	},
 /area/crunch/wtc)
 "sCG" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
 "sCP" = (
@@ -72718,7 +73391,7 @@
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "sCW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -72801,6 +73474,15 @@
 	},
 /turf/unsimulated/floor/carpet/arcade,
 /area/sim/racing_entry)
+"sHM" = (
+/obj/table/glass/reinforced/auto,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/item/paper/newspaper/rolled/centcom_plasma,
+/turf/unsimulated/floor/darkblue,
+/area/centcom/lobby)
 "sHZ" = (
 /obj/item/paper{
 	pixel_x = 7;
@@ -73042,6 +73724,10 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"sSC" = (
+/obj/storage/closet/wardrobe/wizard,
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar/sanctuary)
 "sSJ" = (
 /obj/rail/cap{
 	dir = 8
@@ -73322,7 +74008,7 @@
 /area/centcom/outside)
 "tja" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -73400,6 +74086,9 @@
 	icon_state = "shore-30"
 	},
 /area/titlescreen)
+"tox" = (
+/turf/unsimulated/floor/carpet/blue/fancy/narrow/northsouth,
+/area/afterlife/bar/sanctuary)
 "toK" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -73439,6 +74128,12 @@
 	},
 /turf/unsimulated/wall/auto/adventure/mars,
 /area/marsoutpost)
+"tqO" = (
+/obj/map/light/brightwhite,
+/obj/table/auto,
+/obj/towelbin,
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar)
 "trc" = (
 /obj/fakeobject/airlock_broken/firelock{
 	dir = 8;
@@ -73508,6 +74203,21 @@
 	name = "\proper the murderbox"
 	},
 /area/sim/gunsim/arena)
+"tsS" = (
+/obj/rack/iomoon,
+/obj/item/parts/robot_parts/chest/ancient,
+/obj/item/parts/robot_parts/arm/left/ancient{
+	pixel_x = 6
+	},
+/obj/item/parts/robot_parts/arm/right/ancient{
+	pixel_x = -6
+	},
+/obj/item/parts/robot_parts/head/ancient{
+	pixel_y = 4
+	},
+/obj/map/light/yellow,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "ttl" = (
 /obj/surgery_tray,
 /obj/item/scalpel,
@@ -73560,7 +74270,7 @@
 	},
 /area/iomoon/base)
 "twK" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -73615,7 +74325,7 @@
 /area/owlery/Owlmait2)
 "tze" = (
 /obj/faint_shimmer,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/crunch/wtc)
 "tzl" = (
@@ -73683,7 +74393,7 @@
 /area/wizard_station)
 "tHf" = (
 /obj/map/light/lava,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/railing/orange/reinforced,
@@ -73705,6 +74415,7 @@
 /obj/item/cable_coil/cut/small{
 	pixel_y = 4
 	},
+/obj/item/brick,
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
 "tHH" = (
@@ -73874,7 +74585,7 @@
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
 "tPY" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/machinery/light/small/sticky/frostedred{
 	dir = 4;
 	pixel_x = 10
@@ -73900,6 +74611,10 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/diner_centcom)
+"tRD" = (
+/obj/decoration/frontwalldamage,
+/turf/unsimulated/wall/auto/lead/gray,
+/area/afterlife/bar/sanctuary)
 "tSc" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/void,
@@ -73936,6 +74651,10 @@
 	},
 /turf/unsimulated/floor/lava,
 /area/iomoon)
+"tVj" = (
+/obj/item/storage/wall/clothingrack/dresses2,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "tVB" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -74214,7 +74933,7 @@
 	icon_state = "blue"
 	})
 "udS" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -74271,6 +74990,10 @@
 /obj/mapping_helper/access/owlmaint,
 /turf/unsimulated/floor/plating,
 /area/owlery/owllock)
+"ufy" = (
+/obj/geode/crystal/uqill,
+/turf/unsimulated/floor/cave,
+/area/crater/cave/lower)
 "ufO" = (
 /obj/decal/stripe_delivery,
 /mob/living/critter/robotic/gunbot/light,
@@ -74296,6 +75019,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
+"uhb" = (
+/obj/decal/cleanable/cobweb,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/crater/cave/lower)
 "uhr" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -74405,6 +75132,18 @@
 	icon_state = "shore-46"
 	},
 /area/titlescreen)
+"unU" = (
+/obj/decal/cleanable/cobweb2,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "uoE" = (
 /obj/shrub{
 	dir = 1
@@ -74461,6 +75200,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"urS" = (
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/carpet/blue/fancy/narrow/northsouth,
+/area/afterlife/bar/sanctuary)
 "use" = (
 /obj/overlay{
 	density = 1;
@@ -74701,7 +75444,7 @@
 /area/centcom/offices/efrem)
 "uBB" = (
 /obj/decal/nav_danger,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/light/small/sticky/warm/very{
 	dir = 8
 	},
@@ -74962,7 +75705,7 @@
 /area/moon/museum/west)
 "uKz" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -74974,11 +75717,11 @@
 /area/titlescreen)
 "uLf" = (
 /obj/lattice,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/watchful_eye_sensor)
 "uLU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -75044,7 +75787,7 @@
 	icon_state = "blue"
 	})
 "uOT" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -75134,7 +75877,7 @@
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "uRD" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable{
@@ -75226,7 +75969,7 @@
 	color = "b4b4b4";
 	dir = 4
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
 "uXv" = (
@@ -75368,7 +76111,7 @@
 	},
 /area/afterlife/hell)
 "vcR" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/map/light/lava,
@@ -75482,7 +76225,7 @@
 	icon_state = "blue"
 	})
 "vir" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
@@ -75529,7 +76272,7 @@
 	icon_state = "blue"
 	})
 "vjo" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -75598,6 +76341,11 @@
 /obj/machinery/light/lamp/green,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"vlH" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/hat/lots,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "vlQ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -75670,7 +76418,7 @@
 /turf/space,
 /area/syndicate_station/assault_pod)
 "vnY" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/nav_danger,
 /obj/cable/yellow{
 	icon_state = "2-4"
@@ -75768,11 +76516,18 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
 "vpA" = (
-/turf/unsimulated/wall/setpieces/stranger{
-	icon = 'icons/turf/walls/ancient.dmi';
-	icon_state = "ancient-2"
+/obj/rack/iomoon,
+/obj/item/parts/robot_parts/chest/ancient,
+/obj/item/parts/robot_parts/arm/left/ancient{
+	pixel_x = 6
 	},
-/area/crater/cave/lower)
+/obj/item/parts/robot_parts/arm/right/ancient{
+	pixel_x = -6
+	},
+/obj/item/parts/robot_parts/head/ancient/worker,
+/obj/map/light/yellow,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "vpM" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -75790,8 +76545,8 @@
 /turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim/lobby)
 "vqK" = (
-/obj/grille/catwalk,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
+/obj/mesh/catwalk,
 /turf/space,
 /area/watchful_eye_sensor)
 "vqT" = (
@@ -76247,7 +77002,7 @@
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "5-9"
 	},
@@ -76382,6 +77137,26 @@
 	dir = 8
 	},
 /area/void_diner)
+"vQW" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 10;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "vRa" = (
 /obj/machinery/door/poddoor/blast/single{
 	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
@@ -76631,7 +77406,7 @@
 /turf/unsimulated/floor/dojo/sand,
 /area/centcom/offices/zamujasa)
 "vZo" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -76751,7 +77526,7 @@
 /turf/unsimulated/floor/black/side,
 /area/iomoon/base)
 "wfy" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
@@ -76835,7 +77610,7 @@
 /turf/unsimulated/floor/engine,
 /area/marsoutpost)
 "wgg" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -76893,7 +77668,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/void_diner)
 "wlA" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/communications_dish,
 /obj/cable/green{
 	icon_state = "0-9"
@@ -77083,7 +77858,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
 "wpT" = (
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/unsimulated/floor/plating/random,
 /area/sim/gunsim/maintenance)
 "wpX" = (
@@ -77137,7 +77912,7 @@
 /obj/fakeobject/shuttleweapon/base{
 	dir = 1
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -77256,7 +78031,7 @@
 	},
 /area/sim/gunsim/lobby)
 "wxW" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
@@ -77290,6 +78065,12 @@
 	icon_state = "shuttlecock_mining"
 	},
 /area/shuttle/john/owlery)
+"wyy" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/dressup/lots,
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/carpet/blue/fancy/narrow/eastwest,
+/area/afterlife/bar/sanctuary)
 "wyH" = (
 /obj/critter/moonspy,
 /obj/cable{
@@ -77351,7 +78132,7 @@
 /area/space)
 "wCG" = (
 /obj/decal/nav_danger,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-10"
 	},
@@ -77451,7 +78232,7 @@
 	},
 /area/iomoon/caves)
 "wFc" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/communications_dish,
 /obj/cable/green{
 	icon_state = "0-6"
@@ -77564,7 +78345,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
 "wIE" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "4-8"
 	},
@@ -77629,7 +78410,7 @@
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "wLj" = (
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -77644,11 +78425,11 @@
 	},
 /area/titlescreen)
 "wLK" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/crypt/sigma)
 "wLZ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/orange/reinforced{
 	dir = 4
 	},
@@ -77854,7 +78635,7 @@
 /turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
 "wVh" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
@@ -77907,9 +78688,12 @@
 /area/owlery/office)
 "wXl" = (
 /obj/map/light/dimreddish,
-/turf/unsimulated/wall/setpieces/stranger{
-	icon = 'icons/turf/walls/ancient.dmi';
-	icon_state = "ancient-2"
+/obj/item/implant/artifact/ancient/ancient_gimmick,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
 	},
 /area/crater/cave/lower)
 "wXp" = (
@@ -77969,6 +78753,15 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/centcom/lobby)
+"xbl" = (
+/obj/item/implant/artifact/ancient/ancient_gimmick,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "xbB" = (
 /obj/decal/cleanable/dirt,
 /obj/reagent_dispensers/still,
@@ -78015,6 +78808,11 @@
 	tag = "icon-fblue2 (NORTHWEST)"
 	},
 /area/afterlife/bar)
+"xcY" = (
+/obj/decal/cleanable/dirt,
+/obj/geode/crystal/uqill,
+/turf/unsimulated/floor/cave,
+/area/crater/cave/lower)
 "xdm" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/meat_derelict/main)
@@ -78145,7 +78943,7 @@
 	},
 /area/centcom)
 "xjx" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/green{
 	icon_state = "6-8"
 	},
@@ -78203,7 +79001,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "xlM" = (
@@ -78277,7 +79075,6 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/assault_pod)
 "xoF" = (
-/obj/table/wood/auto,
 /obj/item/reagent_containers/glass/water_pipe/filled{
 	pixel_x = -5;
 	pixel_y = 15
@@ -78323,6 +79120,15 @@
 "xpW" = (
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base/underground)
+"xqf" = (
+/obj/creepy_sound_trigger,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black set of metal stairs.";
+	dir = 1;
+	icon_state = "ancient_stairs";
+	name = "strange stairs"
+	},
+/area/crater/cave/lower)
 "xqq" = (
 /obj/table/clothred/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute{
@@ -78412,6 +79218,12 @@
 /obj/map/light/brightwhite,
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
+"xrQ" = (
+/obj/disposalpipe/trunk/south,
+/obj/machinery/disposal,
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/grey,
+/area/afterlife/bar)
 "xsc" = (
 /obj/decal/tile_edge/flowers{
 	icon_state = "flowers4"
@@ -78691,6 +79503,10 @@
 	name = "???"
 	},
 /area/precursor/pit)
+"xzs" = (
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "xzM" = (
 /obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
@@ -78773,7 +79589,7 @@
 	dir = 1;
 	name = "grimy pipe"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
 "xBc" = (
@@ -79153,6 +79969,13 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/centcom/lobby)
+"xSl" = (
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/crater/cave/lower)
 "xSW" = (
 /obj/stool/bar,
 /mob/living/carbon/human/don_glab/cow,
@@ -79202,6 +80025,27 @@
 /obj/mapping_helper/access/owlcommand,
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
+"xUA" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/spawner/ancient_robot_artifact,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "xUF" = (
 /obj/map/light/lava,
 /obj/fakeobject/pipe{
@@ -79237,6 +80081,14 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
+"xVb" = (
+/obj/storage/closet/wardrobe/pride{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/decal/cleanable/glitter/harmless,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "xVg" = (
 /obj/machinery/door/airlock/pyro/classic{
 	name = "Crew Quarters"
@@ -79291,7 +80143,7 @@
 /turf/unsimulated/floor/martian,
 /area/crunch)
 "xXF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -79318,7 +80170,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
 "xXW" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
@@ -79343,7 +80195,7 @@
 	icon_state = "airlock_locked";
 	name = "broken airlock"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/nav_danger,
 /obj/cable/yellow{
 	icon_state = "4-8"
@@ -79379,8 +80231,12 @@
 	icon_state = "beach-3"
 	},
 /area/titlescreen)
+"xZn" = (
+/obj/submachine/ATM/afterlife,
+/turf/unsimulated/wall/auto/lead/gray,
+/area/afterlife/bar/sanctuary)
 "xZu" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/map/light/lava,
@@ -79460,7 +80316,7 @@
 /turf/unsimulated/floor/plating,
 /area/crunch/wtc)
 "ybF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/map/light/lava,
@@ -79496,7 +80352,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
 "ycV" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/map/light/lava,
@@ -79555,6 +80411,26 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
+"yfy" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "yfL" = (
 /obj/decal/poster/wallsign/stencil/left/f,
 /turf/unsimulated/floor/setpieces/gauntlet,
@@ -80606,7 +81482,7 @@ aIq
 cnw
 cnw
 aIq
-cnw
+fuV
 cEJ
 cFc
 cFc
@@ -80907,8 +81783,8 @@ aEN
 mqi
 cCS
 cCS
-lyi
-cnw
+mqi
+pfH
 cEJ
 caq
 aNz
@@ -81209,8 +82085,8 @@ cnw
 bHD
 cnw
 cnw
-bDu
-cnw
+bBm
+pcP
 cEJ
 caq
 bjh
@@ -81700,7 +82576,7 @@ bIY
 bIY
 bJE
 bJE
-bKu
+ocI
 bJV
 bJV
 bJV
@@ -82003,7 +82879,7 @@ bIY
 bJE
 bJE
 bKv
-bJV
+bKu
 bKS
 bJV
 bJV
@@ -82304,7 +83180,7 @@ bIY
 bIY
 bJE
 bJE
-bJV
+ocI
 bJV
 bJV
 bJV
@@ -83022,7 +83898,7 @@ fGT
 cEE
 cEE
 fGT
-cnw
+pcP
 cEJ
 caq
 bsL
@@ -83324,7 +84200,7 @@ fGT
 cEE
 cEE
 fGT
-cnw
+pfH
 cEJ
 caq
 but
@@ -83518,7 +84394,7 @@ bJV
 bJE
 bJE
 bJE
-bJV
+mXu
 bJV
 bJV
 bJV
@@ -83626,7 +84502,7 @@ fGT
 cNV
 cPH
 fGT
-cnw
+gxj
 cEJ
 cFc
 cFc
@@ -84122,7 +84998,7 @@ bJV
 bJE
 bJE
 bJE
-bJV
+mXu
 bJV
 bJV
 bJV
@@ -103488,7 +104364,7 @@ crm
 cnH
 aaa
 dcp
-gAK
+dbY
 daP
 daP
 dcx
@@ -103790,9 +104666,9 @@ crn
 cnH
 aaa
 dcp
-dbY
 daP
-dcn
+daP
+dTj
 dcx
 daP
 dcp
@@ -104092,9 +104968,9 @@ fzq
 cnH
 aaa
 dcp
-dcp
+pjm
 dbX
-dcp
+daP
 hIh
 daP
 dcp
@@ -104394,9 +105270,9 @@ cro
 cnH
 aaa
 dcp
-moP
+mzj
 dcg
-dcp
+daP
 rKC
 dcf
 dcp
@@ -104697,7 +105573,7 @@ cnH
 aaa
 dcp
 dSi
-dcg
+dcn
 daL
 dcp
 dbi
@@ -104998,9 +105874,9 @@ cog
 cog
 aaa
 dcp
-moP
-dcg
-dcg
+xzs
+daP
+daP
 dcp
 bxB
 ddn
@@ -105299,10 +106175,10 @@ aaa
 aaa
 aaa
 aaa
-dcp
+xZn
+bVp
+daP
 eZl
-dcg
-daL
 dcp
 rWd
 ddn
@@ -105594,18 +106470,18 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
 aaa
 dcp
 dcp
 dcp
 dcp
-daN
+dcp
+tRD
+dcp
+dcp
+qjv
+fBq
+dcp
 daN
 daN
 daN
@@ -105896,23 +106772,23 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
 aaa
-aaa
-aaa
-aaa
-aaa
-daN
+dcp
 ddE
+daP
+eZl
+wyy
+tVj
+eZl
+daP
+iKM
+fVL
+sSC
+daN
 dcB
 dcF
 ddt
-dcF
+hFf
 dfi
 dcN
 daN
@@ -106197,20 +107073,20 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
 aaa
+aaa
+dcp
+eZl
+iGw
+daP
+kxB
+xzs
+daP
+daP
+gAK
+dSI
+eHV
 daN
-dcs
 dct
 dbd
 ddt
@@ -106499,21 +107375,21 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
 aaa
+dcp
+dcp
+doO
+daP
+fVi
+jxQ
+aWb
+fap
+daP
+dcp
+dcp
+dcp
 daN
-dcu
-dcJ
+xrQ
 dcS
 ddu
 dTq
@@ -106801,21 +107677,21 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+dcp
+pKi
+tox
+urS
+rNt
+qOB
+fiT
+urS
+tox
+cmj
+dcp
 aaa
 daN
 daO
-dcC
 dcU
 dTr
 ddx
@@ -106823,7 +107699,7 @@ dSF
 dTv
 daN
 dwo
-dSI
+tqO
 ddz
 dTJ
 ekl
@@ -107103,19 +107979,19 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
 aaa
-daN
+dcp
+tRD
+iVw
+daP
+dcC
+ors
+icC
+jyN
+daP
+tRD
+dcp
+aaa
 daN
 dcw
 daN
@@ -107405,17 +108281,17 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+aaa
+dcp
+xVb
+daP
+daP
+kxB
+daP
+eZl
+vlH
+dcp
 aaa
 aaa
 aaa
@@ -107708,16 +108584,16 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+dcp
+jag
+xzs
+eZl
+jEc
+dcu
+daP
+dcs
+dcp
 aaa
 cil
 cil
@@ -108010,16 +108886,16 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+dcp
+dcp
+dcp
+dcp
+ohZ
+dcp
+dcp
+dcp
+dcp
 aaa
 bXs
 bXs
@@ -108312,16 +109188,16 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+aaa
+aaa
+aaa
+dcp
+dcp
+dcp
+aaa
+aaa
+aaa
 aaa
 bXs
 bOh
@@ -108617,11 +109493,11 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+aaa
+aaa
+aaa
+aaa
 cnw
 cnw
 aaa
@@ -110820,7 +111696,7 @@ dir
 lzl
 cvJ
 cvQ
-cvQ
+cvV
 lzl
 dje
 djj
@@ -111122,7 +111998,7 @@ dis
 lzl
 cgS
 cvR
-cvV
+cvQ
 lzl
 djg
 djj
@@ -119392,15 +120268,15 @@ biL
 biL
 biL
 biL
-biL
-biL
-biL
-biL
-biL
-biL
-biL
-biL
-biL
+aRv
+aRv
+aRv
+aRv
+aRv
+aRv
+aRv
+aRv
+aRv
 biL
 biL
 biL
@@ -119692,27 +120568,27 @@ aaa
 biL
 biL
 bjn
-bjm
-bjm
-bkz
-bjm
+yfy
 bjm
 bkz
-bjm
-bjm
-bjm
-biL
-biL
+nSq
+nSq
+bkz
+nSq
+nSq
+nSq
+aRv
+aRv
 bjm
 bjm
 bnP
 biL
 bjm
-bjm
+yfy
 biL
+jUj
 bjm
-bjm
-bjm
+jUj
 biL
 aaa
 bva
@@ -119994,24 +120870,24 @@ aaa
 biL
 biL
 bjm
-bjm
+yfy
 biL
-biL
-biL
-biL
-biL
-bjm
-bjm
-bjm
-bjm
+aRv
+aRv
+aRv
+aRv
+nSq
+nSq
+nSq
+nSq
 bmj
 bjm
 bjm
 bjm
 biL
 bjm
-bjm
-bkz
+yfy
+xqf
 bjm
 bjm
 bjm
@@ -120296,23 +121172,23 @@ aaa
 biL
 biL
 bjm
-bjm
+yfy
+biL
+aRv
+cZw
+hkZ
+aRv
+agv
+nSq
+nSq
+aRv
+aRv
+biL
+biL
 biL
 biL
 bjm
-bjm
-biL
-bjm
-bjm
-bjm
-biL
-biL
-biL
-biL
-biL
-biL
-bjm
-bjm
+yfy
 biL
 bjm
 bjm
@@ -120598,23 +121474,23 @@ aaa
 biL
 bjl
 bjm
-bjm
+yfy
 bjl
-biL
-bjm
-bjm
-biL
-bjm
-bjm
-bjm
-bjm
+aRv
+nSq
+nSq
+aRv
+nSq
+nSq
+nSq
+nSq
 bmj
 bjm
 boo
 bjm
 biL
 bjm
-bjm
+yfy
 biL
 biL
 bjZ
@@ -120899,10 +121775,10 @@ aIr
 aaa
 biL
 biL
-bjm
-bjm
+bkd
+kzI
 biL
-biL
+aRv
 bjZ
 blx
 blx
@@ -120910,15 +121786,15 @@ blx
 bjZ
 blx
 blx
-biL
+aRv
 bjm
 bjm
 bnP
 biL
 bjm
-bjm
+yfy
 biL
-bjn
+bHL
 bjm
 bjm
 biL
@@ -121212,7 +122088,7 @@ bkY
 bkY
 bmK
 blx
-biL
+aRv
 biL
 biL
 biL
@@ -121220,7 +122096,7 @@ biL
 bpn
 biL
 biL
-bjm
+cUj
 bjm
 bjm
 biL
@@ -121520,9 +122396,9 @@ biL
 bjm
 bjm
 bjm
-bjm
+yfy
 biL
-bjp
+unU
 bjm
 bjm
 biL
@@ -121804,25 +122680,25 @@ aIr
 aIr
 aaa
 biL
+ePi
 bjm
 bjm
-biL
-biL
+bmj
 bkY
 bkY
 blx
 blx
-bkY
-bkY
-bkY
-bkY
-blx
+ufy
+cfN
+cTr
+cTr
+aRv
 bkY
 biL
 box
 bjm
 bjm
-bjm
+yfy
 biL
 biL
 bjZ
@@ -122106,25 +122982,25 @@ aIr
 aIr
 aaa
 biL
+biL
 bjm
 bjm
-bkz
-bkY
+bmj
 bkY
 bkY
 blx
 blx
 bmt
-bkY
+pFf
 bkY
 bkY
 bmj
 bkY
 biL
+fdV
 bjm
 bjm
-bjm
-bjm
+aRu
 biL
 bjm
 bjm
@@ -122408,16 +123284,16 @@ aIr
 aIr
 aaa
 biL
+ePi
 bjm
 bjm
-biL
-bkY
+bmj
 blo
 blx
 blx
 blx
-blx
-bkY
+rYo
+iKv
 mXS
 blx
 blx
@@ -122711,13 +123587,13 @@ aIr
 aaa
 biL
 biL
-bka
+jYm
 biL
 biL
 biL
-biL
-biL
-biL
+aRv
+aRv
+aRv
 blx
 blx
 bka
@@ -122728,11 +123604,11 @@ bkY
 bna
 biL
 bjm
-bjm
+mtQ
 biL
-bjm
-bjm
-bjm
+bkd
+bkd
+bkd
 biL
 bri
 bkY
@@ -123012,14 +123888,14 @@ aIr
 aIr
 aaa
 biL
+lDx
 bjm
 bjm
-bjm
-bjm
+biL
 biL
 bly
-bjm
-biL
+nSq
+aRv
 bmu
 bkY
 bkY
@@ -123027,7 +123903,7 @@ bkY
 blx
 bkY
 bkY
-bkY
+ufy
 biL
 bjm
 bjm
@@ -123036,7 +123912,7 @@ biL
 bjZ
 biL
 biL
-blA
+pXb
 bkY
 mXS
 blx
@@ -123314,14 +124190,14 @@ aIr
 aIr
 aaa
 biL
+lDx
 bjm
 bjm
-bjm
-bjm
+xUA
 biL
-bjm
-bjm
-bmj
+nSq
+nSq
+eSF
 bkY
 bkY
 bkY
@@ -123616,25 +124492,25 @@ aIr
 aIr
 aaa
 biL
-bjm
+biL
 bkb
 bjm
-bjm
+yfy
 biL
 bjp
-bjm
-biL
-biL
-biL
-biL
-biL
-biL
+nSq
+aRv
+aRv
+aRv
+aRv
+aRv
+aRv
 biL
 bka
 biL
 biL
 biL
-bjZ
+eNc
 biL
 biL
 biL
@@ -123921,16 +124797,21 @@ biL
 bjm
 bjm
 bjm
-bjm
+yfy
 biL
-bjn
-bjm
+uhb
+nSq
 bmj
+nSq
+nSq
+nSq
+ehb
+aRv
+yfy
 bjm
-bjm
-bjm
-bjm
+aRu
 biL
+bjl
 bjm
 bjm
 bjm
@@ -123939,12 +124820,7 @@ bjl
 bjm
 bjm
 bjm
-biL
-bjm
-bjm
-bjm
-bjm
-bjm
+bjl
 biL
 biL
 aaa
@@ -124223,19 +125099,19 @@ biL
 biL
 biL
 biL
-bka
+yfy
 biL
 blz
+nSq
+aRv
+nSq
+nSq
+nSq
+xSl
+aRv
+yfy
 bjm
-biL
-bjm
-bjm
-bjm
-bjm
-biL
-bjm
-bjm
-bjm
+yfy
 biL
 biL
 bjZ
@@ -124522,33 +125398,33 @@ aIr
 aIr
 aaa
 biL
-bjm
-bjm
-bjm
-bjm
+biL
+bkd
+bkd
+oJi
 biL
 biL
 biL
-biL
-biL
-biL
+aRv
+aRv
+aRv
 bka
+aRv
+aRv
+kzI
+bjm
+mtQ
 biL
-biL
-bjm
-bjm
-bjm
-biL
-bjm
+vQW
 bjm
 bkz
 bjm
 biL
+bjl
 bjm
 bjm
 bjm
-bjm
-bjm
+bjl
 biL
 biL
 biL
@@ -124824,24 +125700,24 @@ aIr
 aIr
 aaa
 biL
+rjf
 bjm
 bjm
+yfy
 bjm
 bjm
-bjm
-bjm
-biL
-blx
-blx
-biL
-bjm
-bjm
-bjm
-bjm
-bjm
-bjm
+bkz
+bkY
+bkY
 biL
 bjm
+yfy
+bjm
+bjm
+xbl
+xbl
+biL
+yfy
 bjm
 biL
 bjl
@@ -125126,31 +126002,31 @@ aIr
 aIr
 aaa
 biL
+gLr
+qzU
 bjm
+gEi
+bkd
+bkd
+biL
+bkY
+bkY
+blx
+blx
+blx
+biL
 bjm
-bjm
-bjm
-biL
-bjZ
-biL
-blx
-blx
-blx
-blx
-blx
-biL
-biL
 wXl
+xbl
+biL
+yfy
+bjm
+biL
+biL
 biL
 biL
 bjm
-bjm
-biL
-biL
-biL
-biL
-bjm
-bjm
+kJQ
 bjm
 biL
 biL
@@ -125428,24 +126304,24 @@ aIr
 aIr
 aaa
 biL
-biL
-vpA
-vpA
-biL
-biL
+rjf
+bjm
+bjm
+yfy
+bjm
 bjm
 bkz
 bkY
 bkY
-bkY
+ufy
 blx
 blx
 biL
-bjm
+xbl
 bjm
 bjm
 biL
-bjm
+yfy
 bjm
 biL
 biL
@@ -125730,10 +126606,10 @@ aIr
 aIr
 aaa
 biL
-bjn
-bjm
-bjm
-bjm
+biL
+bkd
+bkd
+qEp
 biL
 biL
 biL
@@ -125747,7 +126623,7 @@ bjm
 bjm
 bjm
 boO
-bjm
+yfy
 bjm
 box
 biL
@@ -126032,10 +126908,10 @@ aIr
 aIr
 aaa
 biL
-bjm
-bjo
-bjm
-bjm
+biL
+biL
+rcX
+yfy
 biL
 blx
 blX
@@ -126049,15 +126925,15 @@ bjm
 bjm
 bjm
 biL
+yfy
 bjm
 bjm
-bjm
 biL
 biL
 biL
-biL
-bka
-biL
+rcX
+jYm
+rcX
 biL
 biL
 blx
@@ -126335,10 +127211,10 @@ aIr
 aaa
 biL
 bjo
-bkd
-bjo
-bjm
-biL
+bmj
+bmj
+yfy
+xqf
 bkY
 bkY
 bkY
@@ -126351,7 +127227,7 @@ bjm
 bjm
 bjm
 bkz
-bjm
+yfy
 bjm
 box
 biL
@@ -126361,7 +127237,7 @@ bkY
 bkY
 bkY
 btA
-btA
+xcY
 blx
 blx
 aaa
@@ -126636,10 +127512,10 @@ aIr
 aIr
 aaa
 biL
-bjp
-bjo
-bjm
-bjm
+biL
+biL
+rcX
+yfy
 biL
 blA
 bkY
@@ -126649,11 +127525,11 @@ blx
 blx
 blx
 biL
-bjm
-bjm
-bjm
+nkn
+nkn
+nkn
 biL
-bjp
+phr
 bjm
 biL
 biL
@@ -126958,7 +127834,7 @@ biL
 biL
 biL
 biL
-bkY
+ufy
 brj
 bkY
 bkY
@@ -130209,7 +131085,7 @@ aaa
 bAt
 bAt
 aIK
-bAt
+mNW
 aIK
 aKn
 aIK
@@ -130314,7 +131190,7 @@ ahX
 bFN
 bFN
 bFN
-bHL
+bFN
 bFN
 bFN
 bFN
@@ -130615,9 +131491,9 @@ bFN
 bFN
 bFN
 bFN
+bGA
 bFN
-bGw
-bFN
+bGA
 bFN
 bFN
 bFN
@@ -130826,8 +131702,8 @@ bAt
 bAt
 bAt
 bAt
-aRu
-aSu
+bAt
+bAt
 bAt
 aIr
 aIr
@@ -130907,7 +131783,7 @@ bBZ
 bpo
 bpo
 bpo
-bqb
+tsS
 bqb
 brT
 bpo
@@ -131115,9 +131991,6 @@ aaa
 bAt
 bAt
 aIN
-aJs
-aIK
-aIK
 aIK
 aJs
 aIK
@@ -131128,7 +132001,10 @@ aIK
 aIK
 aIK
 aJs
-aRv
+aIK
+dLs
+aIK
+aJs
 aSu
 bAt
 aIr
@@ -131511,7 +132387,7 @@ bpo
 bpo
 bpo
 bpo
-bqb
+vpA
 bqb
 brT
 bpo
@@ -132000,7 +132876,7 @@ aES
 aES
 tRB
 hjf
-gZG
+fXX
 xBV
 mrd
 usM
@@ -133323,7 +134199,7 @@ bpo
 bpo
 bpo
 bpo
-bqb
+vpA
 bqb
 brT
 bpo
@@ -133927,7 +134803,7 @@ bvb
 bpo
 bpo
 bpo
-bqb
+tsS
 bqb
 brT
 bpo
@@ -134541,7 +135417,7 @@ bFN
 bFN
 bFN
 bFN
-bHt
+ime
 bGw
 bIh
 bFN
@@ -135145,7 +136021,7 @@ aaa
 aaa
 bFN
 bFN
-bHt
+irw
 bHP
 bHt
 bFN
@@ -150117,7 +150993,7 @@ dLh
 dLY
 dMy
 dMX
-dMy
+sHM
 dNG
 dLh
 hla

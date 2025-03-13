@@ -267,6 +267,7 @@ What can break when adding new gases:
 	* Returns the color of a given gas ID.
 	*
 	* This is used only in the gas mixer computer as of now.
+	* Garash - 2024: Hi, this is the tgui gas mixer computer speaking, we still use it!
 	*/
 proc/gas_text_color(gas_id)
 	switch(gas_id)

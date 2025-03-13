@@ -5,11 +5,11 @@ ABSTRACT_TYPE(/datum/minimap)
  */
 /datum/minimap
 	/// The holder for the render of the minimap, allowing for offsets and other effects to be applied to the render without modifying the render itself.
-	var/atom/movable/minimap_holder
+	var/atom/movable/minimap_render_object/minimap_holder
 	/// The minimap render to be displayed, containing both the map, dynamic area overlays, and markers.
-	var/atom/movable/minimap_render
+	var/atom/movable/minimap_render_object/minimap_render
 	/// The minimap, without minimap markers. Kept separate for the purpose of scaling the minimap without scaling the markers.
-	var/atom/movable/map
+	var/atom/movable/minimap_render_object/map
 	/// An associative list of all minimap markers the minimap is currently tracking and displaying, indexed by their target.
 	var/list/datum/minimap_marker/minimap/minimap_markers
 
@@ -45,7 +45,6 @@ ABSTRACT_TYPE(/datum/minimap)
 	. = ..()
 
 	src.minimap_holder = new
-	src.minimap_holder.vis_flags = VIS_INHERIT_LAYER
 	src.minimap_holder.appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	src.minimap_holder.mouse_opacity = 0
 
@@ -57,6 +56,12 @@ ABSTRACT_TYPE(/datum/minimap)
 
 /datum/minimap/disposing()
 	STOP_TRACKING
+	// cleanup reference loops
+	minimap_holder = null
+	minimap_render = null
+	map = null
+	for (var/idx in minimap_markers)
+		qdel(minimap_markers[idx])
 	. = ..()
 
 /// Initialises the raw minimap icons and minimap render.
@@ -70,9 +75,10 @@ ABSTRACT_TYPE(/datum/minimap)
 /// Create an alpha mask to hide anything outside the bounds of the physical map.
 /datum/minimap/proc/create_alpha_mask()
 	var/icon/mask_icon = icon('icons/obj/minimap/minimap.dmi', "blank")
-	mask_icon.Scale(src.x_max * src.map_scale, src.y_max * src.map_scale)
-	var/x_offset = ((src.x_max * src.map_scale) / 2) - 16
-	var/y_offset = ((src.y_max * src.map_scale) / 2) - 16
+	var/max_dim = max(src.x_max, src.y_max)
+	mask_icon.Scale(max_dim * src.map_scale, max_dim * src.map_scale)
+	var/x_offset = ((max_dim * src.map_scale) / 2) - 16
+	var/y_offset = ((max_dim * src.map_scale) / 2) - 16
 	src.minimap_holder.add_filter("map_cutoff", 1, alpha_mask_filter(x_offset, y_offset, mask_icon))
 
 /// Zooms the minimap by the zoom coefficient while moving the minimap so that the specified point lies at the same position on the displayed minimap as it did prior to the zoom. The alpha mask takes care of any map area scaled outside of the map boundaries.
@@ -127,6 +133,7 @@ ABSTRACT_TYPE(/datum/minimap)
 
 	var/datum/minimap_marker/minimap/marker = new(target, marker_name, can_be_deleted_by_player, list_on_ui, src.marker_scale)
 	marker.map = src
+	marker.icon_state = icon_state
 	marker.marker.icon = icon(icon, icon_state)
 
 	src.minimap_markers[target] = marker
@@ -157,7 +164,9 @@ ABSTRACT_TYPE(/datum/minimap)
 	qdel(marker)
 
 
-
+/// Just a helper type to ensure all minimap render parts have the correct vis_flags set
+/atom/movable/minimap_render_object
+	vis_flags = VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
 
 
 #ifndef LIVE_SERVER

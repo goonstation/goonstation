@@ -5,6 +5,7 @@
 	icon_state = "filecabinet" //i guess its a feature now               ok bye
 	anchored = ANCHORED
 	density = 1
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/paper) || istype(W, /obj/item/folder))

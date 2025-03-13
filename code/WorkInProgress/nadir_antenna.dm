@@ -517,7 +517,7 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 	desc = "Endpoint for status reporting and configuration for a nearby transception array."
 
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "alert:0"
+	icon_state = "atmos"
 	flags = TGUI_INTERACTIVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 

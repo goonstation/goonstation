@@ -79,10 +79,12 @@
 	var/system_path = /datum/particleSystem/sparkles
 
 	OnAdd()
+		. = ..()
 		if (!particleMaster.CheckSystemExists(system_path, owner))
 			particleMaster.SpawnSystem(new system_path(owner))
 
 	OnRemove()
+		. = ..()
 		if (particleMaster.CheckSystemExists(system_path, owner))
 			particleMaster.RemoveSystem(system_path, owner)
 
@@ -95,6 +97,7 @@
 	var/holder_skin = null
 
 	OnAdd()
+		. = ..()
 		if (!ishuman(owner))
 			return
 
@@ -112,6 +115,9 @@
 		H.update_body()
 
 	OnRemove()
+		. = ..()
+		if (!.)
+			return
 		if (!ishuman(owner))
 			return
 
@@ -142,6 +148,7 @@
 	var/skintone_to_use = "#FFFFFF"
 
 	OnAdd()
+		. = ..()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			for (var/ID in H.bioHolder.effects)
@@ -162,7 +169,12 @@
 			H.update_colorful_parts()
 
 	OnRemove()
+		. = ..()
+		if (!.)
+			return
 		if (ishuman(owner))
+			if (QDELETED(owner))
+				return
 			var/mob/living/carbon/human/H = owner
 			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
 			AH.e_color = AH.e_color_original
@@ -408,7 +420,7 @@
 /datum/bioEffect/bee
 	name = "Apidae Metabolism"
 	desc = {"Human worker clone batch #92 may contain inactive space bee DNA.
-	If you do not have the authorization level to know that SS13 is staffed with clones, please forget this entire message."}
+	If you do not have the authorization level to know that this subject is a clone, please forget this entire message."}
 	id = "bee"
 	msgGain = "You feel buzzed!"
 	msgLose = "You lose your buzz."

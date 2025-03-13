@@ -2,6 +2,10 @@
 //       when you re-enable old credentials or add new ones.
 //       Also check proc/get_access_desc() (ID computer lookup) in access.dm
 
+
+// for stuff that is never allowed to open. Don't put this on any IDs etc
+#define access_impossible -1
+
 /// This is useful for scenarios where login is required but no particular access is needed.
 #define access_fuck_all 0 // Because completely empty access lists can make things grump
 #define access_security 1
@@ -16,7 +20,7 @@
 #define access_medical_lockers 10
 #define access_research_director 11
 #define access_maint_tunnels 12
-#define access_external_airlocks 13 // Unused
+#define access_ticket 13 // issuing tickets
 #define access_emergency_storage 14 // Unused
 #define access_change_ids 15
 #define access_ai_upload 16

@@ -5,31 +5,38 @@
  * @license ISC
  */
 
-@use '../colors.scss';
+@use '../colors';
 
+.IDComputer__DeptBox > div:first-child {
+  text-shadow:
+    1px 1px 1px black,
+    1px -1px 1px black,
+    -1px -1px 1px black,
+    -1px 1px 1px black;
+  .mode-light & {
+    text-shadow:
+      1px 1px 1px white,
+      1px -1px 1px white,
+      -1px -1px 1px white,
+      -1px 1px 1px white;
+  }
 
-.Section__title {
-  .IDComputer__DeptBox & {
-    text-shadow: 1px 1px 1px black, 1px -1px 1px black, -1px -1px 1px black, -1px 1px 1px black;
-    .mode-light & {
-      text-shadow: 1px 1px 1px white, 1px -1px 1px white, -1px -1px 1px white, -1px 1px 1px white;
-    }
+  background-color: colors.$grey;
+}
 
-    background-color: colors.$grey;
-  }
-  .IDComputer__DeptBox_color_blue & {
-    background-color: colors.$blue;
-  }
-  .IDComputer__DeptBox_color_yellow & {
-    background-color: colors.$yellow;
-  }
-  .IDComputer__DeptBox_color_purple & {
-    background-color: colors.$purple;
-  }
-  .IDComputer__DeptBox_color_red & {
-    background-color: colors.$red;
-  }
-  .IDComputer__DeptBox_color_green & {
-    background-color: colors.$green;
-  }
+// Color just the titles
+.IDComputer__DeptBox_color_blue > div:first-child {
+  background-color: colors.$blue;
+}
+.IDComputer__DeptBox_color_yellow > div:first-child {
+  background-color: colors.$yellow;
+}
+.IDComputer__DeptBox_color_purple > div:first-child {
+  background-color: colors.$purple;
+}
+.IDComputer__DeptBox_color_red > div:first-child {
+  background-color: colors.$red;
+}
+.IDComputer__DeptBox_color_green > div:first-child {
+  background-color: colors.$green;
 }

@@ -71,7 +71,8 @@ THROWING DARTS
 	// called when an implant is implanted into M by I
 	proc/implanted(mob/M, mob/I)
 		SHOULD_CALL_PARENT(TRUE)
-		logTheThing(LOG_COMBAT, I, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
+		if(!istype(get_area(M), /area/sim/gunsim))
+			logTheThing(LOG_COMBAT, I, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
 		src.set_loc(M)
 		implanted = TRUE
 		SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_IMPLANTED, M)
@@ -288,10 +289,16 @@ THROWING DARTS
 			healthlist["TOX"] = 0
 			healthlist["BURN"] = 0
 			healthlist["BRUTE"] = 0
+			healthlist["HealthImplant"] = 0
 		else
 			var/mob/living/L
 			if (isliving(src.owner))
 				L = src.owner
+				healthlist["HealthImplant"] = 0
+				for (var/implant in L.implant)
+					if (istype(implant, /obj/item/implant/health))
+						healthlist["HealthImplant"] = 1
+						break
 				healthlist["OXY"] = round(L.get_oxygen_deprivation())
 				healthlist["TOX"] = round(L.get_toxin_damage())
 				healthlist["BURN"] = round(L.get_burn_damage())
@@ -710,6 +717,14 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	name = "microbomb implant"
 	big_message = " emits a loud clunk"
 	small_message = " makes a small clicking noise"
+
+	can_implant(mob/target, mob/user)
+		if(!..())
+			return FALSE
+		if (isghostcritter(target) || ishelpermouse(target))
+			return FALSE
+		return TRUE
+
 
 	implanted(mob/target, mob/user)
 		..()
@@ -1710,6 +1725,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				..()
 				access.access = get_access("Chef")
 
+		admin_mouse
+			New()
+				..()
+				access.access = get_access("Admin")
+
 
 /* ============================================================ */
 /* --------------------- Artifact Implants -------------------- */
@@ -2527,7 +2547,7 @@ TYPEINFO(/obj/item/gun/implanter)
 
 /obj/item/gun/implanter
 	name = "implant gun"
-	desc = "A gun that accepts an implant, that you can then shoot into other people! Or a wall, which certainly wouldn't be too big of a waste, since you'd only be using this to shoot people with things like health monitor implants or machine translators. Right?"
+	desc = "A gun that accepts an implant, that you can then shoot into other people! Or a wall, which certainly wouldn't be too big of a waste, since you'd only be using this to shoot people with things like health monitor or rotbusttec implants. Right?"
 	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "implant"
 	contraband = 1

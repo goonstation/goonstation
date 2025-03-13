@@ -5,8 +5,9 @@
  * @license MIT
  */
 
+import { Box, Button, LabeledList, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, Button, LabeledList, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { TransceptionInterlinkData } from './type';
 
@@ -25,11 +26,11 @@ const PadStatusToColor = (status: string) => {
   }
 };
 
-export const TransceptionInterlink = (_props, context) => {
-  const { data, act } = useBackend<TransceptionInterlinkData>(context);
+export const TransceptionInterlink = () => {
+  const { data, act } = useBackend<TransceptionInterlinkData>();
   const { pads, crate_count } = data;
   return (
-    <Window title="Transception Interlink" height="252" width="475">
+    <Window title="Transception Interlink" height={252} width={475}>
       <Window.Content>
         <Stack vertical>
           <Stack.Item>
@@ -40,7 +41,9 @@ export const TransceptionInterlink = (_props, context) => {
                   {crate_count === 0 && 'No pending crates'}
                 </Stack.Item>
                 <Stack.Item>
-                  <Button icon="refresh" content="Link Transception Pads" onClick={() => act('ping')} />
+                  <Button icon="refresh" onClick={() => act('ping')}>
+                    Link Transception Pads
+                  </Button>
                 </Stack.Item>
               </Stack>
             </Section>
@@ -67,16 +70,23 @@ export const TransceptionInterlink = (_props, context) => {
                         <>
                           <Button
                             icon="arrow-up"
-                            content="Send"
-                            onClick={() => act('send', { device_netid: pad.device_netid })}
-                          />
+                            onClick={() =>
+                              act('send', { device_netid: pad.device_netid })
+                            }
+                          >
+                            Send
+                          </Button>
                           <Button
                             icon="arrow-down"
-                            content="Receive"
-                            onClick={() => act('receive', { device_netid: pad.device_netid })}
-                          />
+                            onClick={() =>
+                              act('receive', { device_netid: pad.device_netid })
+                            }
+                          >
+                            Receive
+                          </Button>
                         </>
-                      }>
+                      }
+                    >
                       {pad.array_link}
                     </LabeledList.Item>
                   ))}

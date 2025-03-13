@@ -48,6 +48,10 @@
 #define PROCESSING_TIER_MULTI(target) (1<<(target.current_processing_tier-1)) //! Scalar to behave as if it were running at full speed
 #define MACHINE_PROCS_PER_SEC (MACHINE_PROC_INTERVAL / (1 SECOND))
 
+// Previous SOLARGENRATE was 1500 WATTS processed every 3.3 SECONDS.  This provides 455 WATTS every second
+// Adjust accordingly based on machine proc rate
+#define DEFAULT_SOLARGENRATE (455 * MACHINE_PROCS_PER_SEC)
+
 #define PROCESSING_FULL      1
 #define PROCESSING_HALF      2
 #define PROCESSING_QUARTER   3
@@ -58,7 +62,7 @@
 #define PROCESSING_MAX_IN_USE PROCESSING_32TH
 
 #define MACHINES_CONVEYORS				1 // Conveyor belts
-#define MACHINES_ATMOSALERTS			2 // /obj/machinery/computer/atmosphere/alerts
+#define MACHINES_GENERAL_ALERT			2 // /obj/machinery/computer/general_alert
 #define MACHINES_COMMSCONSOLES		3 // /obj/machinery/computer/communications
 #define MACHINES_POWER						4 // /obj/machinery/power, perhaps worth splitting further
 #define MACHINES_PIPES						5 // /obj/machinery/pipes

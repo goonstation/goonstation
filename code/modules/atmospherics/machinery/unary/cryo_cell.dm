@@ -1,3 +1,7 @@
+TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
+	mats = list("cobryl" = 100,
+				"crystal" = 50,
+				"energy_high" = 20)
 /obj/machinery/atmospherics/unary/cryo_cell
 	name = "cryogenic healing pod"
 	desc = "A glass tube full of a strange fluid that uses supercooled oxygen and cryoxadone to rapidly heal patients."
@@ -7,6 +11,7 @@
 	anchored = ANCHORED_ALWAYS
 	layer = EFFECTS_LAYER_BASE//MOB_EFFECT_LAYER
 	flags = NOSPLASH
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	power_usage = 50 WATTS
 	var/on = FALSE //! Whether the cell is turned on or not
 	var/datum/light/light
@@ -255,7 +260,7 @@
 			boutput(user, SPAN_ALERT("The beaker in [src] is full."))
 			return
 		var/transferred = I.reagents.trans_to(src.beaker, 5)
-		src.visible_message(SPAN_ALERT("<B>[user] injects [transferred] into [src].</B>"))
+		src.visible_message(SPAN_ALERT("<B>[user] injects [transferred] units into [src]'s beaker.</B>"))
 		src.beaker.on_reagent_change()
 		return
 	else if (istype(I, /obj/item/device/analyzer/healthanalyzer_upgrade))
@@ -304,6 +309,11 @@
 			I.attack(src.occupant, user)
 
 	tgui_process.update_uis(src)
+
+/obj/machinery/atmospherics/unary/cryo_cell/was_built_from_frame(mob/user, newly_built)
+	..()
+	src.initialize_directions = src.dir
+	src.initialize(TRUE)
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/insert_beaker(var/obj/item/reagent_containers/glass/I, var/mob/user)
 	if (!can_act(user))
@@ -398,7 +408,8 @@
 		return
 	var/remove_amount = TOTAL_MOLES(src.air_contents)/100
 	var/datum/gas_mixture/expel_gas = air_contents.remove(remove_amount)
-	expel_gas.temperature = T20C // Lets expel hot gas and see if that helps people not die as they are removed
+	if (expel_gas.temperature < T20C)
+		expel_gas.temperature = T20C // Lets expel hot gas and see if that helps people not die as they are removed
 	loc.assume_air(expel_gas)
 
 /obj/machinery/atmospherics/unary/cryo_cell/verb/move_eject()

@@ -45,6 +45,15 @@ CONTENTS:
 	area_parallax_render_source_group = null
 	teleport_blocked = 2
 
+/area/crunch/art_labyrinth
+	name = "unknown pocket dimension"
+	icon_state = ""
+	filler_turf = null
+	teleport_blocked = 2
+	allowed_restricted_z = TRUE
+	ambient_light = null
+	area_parallax_render_source_group = null
+
 TYPEINFO(/turf/unsimulated/wall/void)
 	mat_appearances_to_ignore = list("steel")
 /turf/unsimulated/wall/void
@@ -101,7 +110,7 @@ TYPEINFO(/turf/unsimulated/floor/auto/void)
 							T.ClearSpecificOverlays("edge_[direction]") // Cull overlaps
 							continue
 					if(turn(direction, 180) & connectdir)
-						T.ClearSpecificOverlays("edge_[direction]") // Cull diagnals
+						T.ClearSpecificOverlays("edge_[direction]") // Cull diagonals
 						continue
 					T.add_filter("edge_[direction]", 0, alpha_mask_filter(icon=icon(src.icon, "[icon_state_edge][direction]", dir=pick(cardinal)), flags = MASK_INVERSE))
 

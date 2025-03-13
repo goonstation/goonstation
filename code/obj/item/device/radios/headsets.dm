@@ -70,6 +70,12 @@
 		src.set_secure_frequencies()
 
 /obj/item/device/radio/headset/wizard
+	name = "wizard headset"
+	desc = "A headset reversed engineered by only the highest of archmages for use by wizards. Immune to EMPs."
+	icon_state = "wizard headset"
+	icon_override = "wizard"
+	icon_tooltip = "Wizard"
+
 	emp_act()
 		return //hax
 
@@ -107,13 +113,15 @@
 	icon_tooltip = "Artificial Intelligence"
 
 /obj/item/device/radio/headset/command/nt
-	name = "\improper NT headset"
+	name = "\improper NanoTrasen headset"
 	desc = "Issued to NanoTrasen ancillaries, this radio headset can access several secure radio channels."
 	secure_frequencies = list(
+		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
 		"g" = R_FREQ_SECURITY,
 		)
 	secure_classes = list(
+		"n" = RADIOCL_NANOTRASEN,
 		"h" = RADIOCL_COMMAND,
 		"g" = RADIOCL_SECURITY,
 		)
@@ -123,11 +131,45 @@
 /obj/item/device/radio/headset/command/nt/consultant
 	icon_tooltip = "NanoTrasen Security Consultant"
 
+/obj/item/device/radio/headset/command/nt/engineer
+	icon_tooltip = "Nanotrasen Emergency Repair Technician"
+	secure_frequencies = list(
+		"n" = R_FREQ_NANOTRASEN,
+		"h" = R_FREQ_COMMAND,
+		"e" = R_FREQ_ENGINEERING,
+		)
+	secure_classes = list(
+		"n" = RADIOCL_NANOTRASEN,
+		"h" = RADIOCL_COMMAND,
+		"e" = RADIOCL_ENGINEERING,
+		)
+
+/obj/item/device/radio/headset/command/nt/medic
+	icon_tooltip = "Nanotrasen Emergency Medic"
+	secure_frequencies = list(
+		"n" = R_FREQ_NANOTRASEN,
+		"h" = R_FREQ_COMMAND,
+		"m" = R_FREQ_MEDICAL,
+		)
+	secure_classes = list(
+		"n" = RADIOCL_NANOTRASEN,
+		"h" = RADIOCL_COMMAND,
+		"m" = RADIOCL_MEDICAL,
+		)
+
 /obj/item/device/radio/headset/command/inspector
 	name = "inspector's headset"
 	desc = "A radio headset capable of communicating over the Command frequency, for use by official Inspectors."
 	icon_override = "inspector"
 	icon_tooltip = "Inspector"
+	secure_frequencies = list(
+		"n" = R_FREQ_NANOTRASEN,
+		"h" = R_FREQ_COMMAND,
+		)
+	secure_classes = list(
+		"n" = RADIOCL_NANOTRASEN,
+		"h" = RADIOCL_COMMAND,
+		)
 
 /obj/item/device/radio/headset/command/captain
 	name = "captain's headset"
@@ -288,13 +330,14 @@
 		)
 	icon_override = "sec"
 	icon_tooltip = "Security"
+	tooltip_flags = REBUILD_USER
 
 	get_desc(dist, mob/user)
-		if (user.mind?.special_role)
+		if (user.mind.is_antagonist())
 			. += SPAN_ALERT("<b>Good.</b>")
 		else
 			. += "Keep it safe!"
-
+		. += ..()
 /obj/item/device/radio/headset/detective
 	name = "detective's headset"
 	desc = "In addition to having access to the Security radio channel, this headset also features private frequency that's suited for only the sneakiest sleuthing."
@@ -422,17 +465,39 @@
 	icon_override = "ghost_buster"
 	icon_tooltip = "Ghost Buster"
 
+/obj/item/device/radio/headset/werewolf_hunter
+	name = "\improper Werewolf Hunter's headset"
+	desc = "To hear the cries of the downtrodden, those defenseless against The Beast."
+	icon_state = "multi headset"
+	secure_frequencies = list(
+		"g" = R_FREQ_SECURITY,
+		"e" = R_FREQ_ENGINEERING,
+		"r" = R_FREQ_RESEARCH,
+		"m" = R_FREQ_MEDICAL,
+		"c" = R_FREQ_CIVILIAN,
+		)
+	secure_classes = list(
+		"g" = RADIOCL_SECURITY,
+		"e" = RADIOCL_ENGINEERING,
+		"r" = RADIOCL_RESEARCH,
+		"m" = RADIOCL_MEDICAL,
+		"c" = RADIOCL_CIVILIAN,
+		)
+	icon_override = "ghost_buster"
+	icon_tooltip = "Werewolf Hunter"
+
 /obj/item/device/radio/headset/command/nt/commander
 	name = "\improper NT Commander's headset"
 	desc = "Issued to NanoTrasen Commanders, this radio headset can access several secure radio channels."
-	icon_state = "command headset"
 	secure_frequencies = list(
+		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
-		"g" = R_FREQ_SECURITY
+		"g" = R_FREQ_SECURITY,
 		)
 	secure_classes = list(
+		"n" = RADIOCL_NANOTRASEN,
 		"h" = RADIOCL_COMMAND,
-		"g" = RADIOCL_SECURITY
+		"g" = RADIOCL_SECURITY,
 		)
 	icon_override = "ntboss"
 	icon_tooltip = "Nanotrasen Commander"

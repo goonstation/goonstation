@@ -17,7 +17,7 @@
 	if (isalive(usr))
 		. += "<br>[SPAN_NOTICE("You look closely at <B>[src.name] ([src.get_pronouns()])</B>.")]"
 
-	if (!istype(usr, /mob/dead/target_observer))
+	if (!isobserver(usr) && !isintangible(usr))
 		if (!ignore_checks && (GET_DIST(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
 			return "[jointext(., "")]<br>[SPAN_ALERT("<B>[src.name]</B> is too far away to see clearly.")]"
 
@@ -326,7 +326,7 @@
 	if (C?.in_fakedeath)
 		changeling_fakedeath = 1
 
-	if ((isdead(src)) || changeling_fakedeath || src.bioHolder?.HasEffect("dead_scan") == 2 || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("knockdown")) || (src.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting")))
+	if ((isdead(src)) || changeling_fakedeath || src.bioHolder?.HasEffect("dead_scan") == 2 || (src.reagents.has_reagent("capulettium") && is_incapacitated(src)) || (src.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting")))
 		if (!src.decomp_stage)
 			. += "<br>[SPAN_ALERT("[src] is limp and unresponsive, a dull lifeless look in [t_his] eyes.")]"
 	else
@@ -409,6 +409,27 @@
 			items += ", [O]"
 		items = copytext(items, 3)
 		. += "<br>[SPAN_NOTICE("[src] is juggling [items]!")]"
+
+	if (src.reagents.has_reagent("ethanol") && !isdead(src) && !src.hasStatus("paralysis"))
+		var/et_amt = src.reagents.get_reagent_amount("ethanol")
+		var/drunk_assess = ""
+		if (!isalcoholresistant(src) || src.reagents.has_reagent("moonshine"))
+			switch (et_amt)
+				if (0 to 10)
+					drunk_assess = "[capitalize("[he_or_she(src)]")] seem[blank_or_s(src)] <b>buzzed.</b>"
+				if (10 to 20)
+					drunk_assess = "[capitalize("[he_or_she(src)]")] look[blank_or_s(src)] a little <b>tipsy.</b>"
+				if (20 to 40)
+					drunk_assess = "[capitalize("[hes_or_shes(src)]")] pretty <b>[prob(10)? "stewed" : "drunk"].</b>"
+				if (40 to 70)
+					drunk_assess = "[capitalize("[hes_or_shes(src)]")] totally <b>smashed.</b>"
+				if (70 to 100)
+					drunk_assess = SPAN_ALERT("[capitalize("[hes_or_shes(src)]")] <b>[prob(3)? " zonked</b> off [his_or_her(src)] <b>rocker" : "badly inebriated"].</b>")
+				if (100 to INFINITY)
+					drunk_assess = SPAN_ALERT("[capitalize("[hes_or_shes(src)]")] <b>dying of drink.</b>")
+		else
+			drunk_assess = "[capitalize("[his_or_her(src)]")] inebriaton is almost <b>imperceptible</b> to you."
+		. += "<br> [drunk_assess]"
 
 	. += "<br>[SPAN_NOTICE("*---------*")]"
 
