@@ -826,7 +826,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	maxhealth = 100
 	anchored = UNANCHORED
 	var/weapon_type = /obj/item/shipcomponent/mainweapon/phaser/short
-	speed = 1.7
+	speedmod = 0.59
 
 	New()
 		..()

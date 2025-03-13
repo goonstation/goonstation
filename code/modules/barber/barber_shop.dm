@@ -180,6 +180,55 @@
 				user.suiciding = 0
 		return 1
 
+/obj/item/razor_blade/barberang
+	desc = "Used to cut facial hair. This one seems sharper than normal."
+	force = 12
+	throwforce = 20
+	throw_range = 10
+	throw_speed = 1
+	throw_return = 1
+	var/obj/item/clothing/head/wig/stolen_hair
+
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		if( ishuman(thr.user))
+			var/mob/living/carbon/human/user = thr.user
+			if(hit_atom == user)
+				user.put_in_hand_or_drop(src)
+				if(stolen_hair)
+					var/obj/item/clothing/head/wig/I = stolen_hair
+					user.put_in_hand_or_drop(I)
+					stolen_hair = null
+
+				return
+			else if (ishuman(hit_atom))
+				var/mob/living/carbon/human/victim = hit_atom
+				playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 50)
+				var/yoinked = FALSE
+				if(!stolen_hair)
+					if(istype(victim.head, /obj/item/clothing/head/wig))
+						//they are wearing a wig
+						stolen_hair = victim.head
+						victim.u_equip(stolen_hair)
+						boutput(victim, SPAN_ALERT("the [src] snatches your wig right off your head!"))
+						yoinked = TRUE
+					else if(!victim.is_bald())
+						//they have hair to yoink
+						stolen_hair = victim.create_wig()
+						boutput(victim, SPAN_ALERT("the [src] takes your hair clean off!"))
+						yoinked = TRUE
+				if(yoinked)
+					victim.changeStatus("knockdown", 4 SECONDS)
+					victim.force_laydown_standup()
+				else
+					boutput(victim, SPAN_ALERT("the [src] slashes your head really bad!"))
+					take_bleeding_damage(victim, user, throwforce)
+					throw_return = FALSE
+					SPAWN(2 SECONDS)
+						throw_return = TRUE
+
+		. = ..()
+
+
 /obj/item/dye_bottle
 	name = "hair dye bottle"
 	desc = "Used to dye hair a different color. Seems to be made of tough, unshatterable plastic."
@@ -218,6 +267,14 @@
 			if (EYES)
 				which_part = "eyes"
 		boutput(user, SPAN_HINT("You change your grip on the [src] to one that'll aim for the recipient's [which_part]."))
+
+	proc/use_dye(all = FALSE)
+		if (all)
+			src.uses_left = 0
+		else
+			src.uses_left--
+		if (src.uses_left <= 0)
+			src.ClearSpecificOverlays("dye_color")
 
 /obj/item/reagent_containers/food/drinks/hairgrowth
 	name = "\improper EZ-Hairgrowth"
@@ -347,15 +404,13 @@
 												result_msg3)
 			if (bottle.hair_group == ALL_HAIR)
 				boutput(user, "That was a big dyejob! It used the whole bottle!")
-				src.uses_left = 0
-				src.ClearSpecificOverlays("dye_color")
+				src.use_dye(TRUE)
 			else if(src.uses_left > 1 && is_barber && bottle.hair_group != ALL_HAIR)
-				src.uses_left --
+				src.use_dye()
 				boutput(user, "Hey, there's still some dye left in the bottle! Looks about [get_english_num(src.uses_left)] third\s full!")
 			else
 				boutput(user, "You used the whole bottle!")
-				src.uses_left = 0
-				src.ClearSpecificOverlays("dye_color")
+				src.use_dye()
 
 		M.update_colorful_parts()
 	return 1

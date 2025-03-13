@@ -2549,6 +2549,15 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			return
 		..()
 
+	emag_act(mob/user)
+		var/datum/component/holdertargeting/smartgun/homing/pod/targeting_comp = src.GetComponent(/datum/component/holdertargeting/smartgun/homing/pod)
+		if(istype(targeting_comp, /datum/component/holdertargeting/smartgun/homing/pod/emagged))
+			boutput(user, SPAN_ALERT("[src]'s targeting system is already malfunctioning!"))
+		else
+			targeting_comp.RemoveComponent()
+			AddComponent(/datum/component/holdertargeting/smartgun/homing/pod/emagged, 1)
+			boutput(user, SPAN_ALERT("You short circuit [src]'s targeting circuit!"))
+
 	proc/set_collapsed_state(var/collapsed)
 		if (src.setTwoHanded(!collapsed))
 			src.collapsed = collapsed
@@ -2677,7 +2686,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		ammo.amount_left = 0 // Spawn empty.
-		set_current_projectile(new /datum/projectile/bullet/homing/mrl)
+		set_current_projectile(new /datum/projectile/bullet/homing/rocket/mrl)
 		..()
 
 	disposing()

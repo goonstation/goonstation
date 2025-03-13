@@ -302,8 +302,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(prob(50) && owner && isturf(owner) && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(entering), rand(-2, 2), rand(-2, 2))
 			entering.visible_message(SPAN_ALERT("[entering] is warped away!"))
-			playsound(owner.loc, "warp", 50)
-			boutput(entering, SPAN_ALERT("You suddenly teleport..."))
+			playsound(T, "warp", 50)
+			if(ismob(entering))
+				boutput(entering, SPAN_ALERT("You suddenly teleport..."))
 			entering.set_loc(.)
 		return
 
@@ -372,10 +373,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 			target.air.merge(payload)
 			location.material.setProperty("plasma_offgas", total_plasma)
-
-/datum/materialProc/plasmastone_on_hit
-	execute(var/atom/owner)
-		owner.material.triggerTemp(locate(owner))
 
 /datum/materialProc/molitz_temp
 	max_generations = 1

@@ -127,6 +127,11 @@ chui/window
 	proc/bbrowse( client/who, var/body, var/options, var/forceChui )
 		var/list/config = params2list( options )
 
+		// chui is deprecated for 516 and onwards
+		if (who.byond_version >= 516)
+			who.use_chui_custom_frames = FALSE
+			forceChui = FALSE
+
 		if (!forceChui && !who.use_chui && !config["override_setting"])	//"override_setting=1"
 			// hello, yes, this is evil. but it works. feel free to replace with something non-evil that works. --pali
 			// Zamu here - using this as a good time to inject "make most nonchui popups suck less ass" code.
@@ -137,6 +142,7 @@ chui/window
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	[who.byond_version >= 516 ? "<link rel='stylesheet' type='text/css' href='[resource("vendor/css/font-awesome.css")]'>" : ""]
 	<style type='text/css'>
 		body {
 			font-family: Tahoma, Arial, sans-serif;
@@ -337,6 +343,7 @@ chui/window
 //A chui substitute for usr << browse()
 //Mostly the same syntax.
 /client/proc/Browse( var/html, var/opts, var/forceChui )
+	if (byond_version >= 516) forceChui = FALSE // no chui for webview2 users
 	chui.staticinst.bbrowse( src, html, opts, forceChui )
 	var/list/params_list = params2list(opts)
 	if (params_list["window"])

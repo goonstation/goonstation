@@ -930,7 +930,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/plasmastone())
 		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/plasmastone())
-		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/plasmastone_on_hit())
+		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/plasmastone())
 
 
 /datum/material/crystal/plasmaglass

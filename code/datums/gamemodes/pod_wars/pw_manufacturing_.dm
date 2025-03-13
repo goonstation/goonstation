@@ -13,28 +13,33 @@
 		/datum/manufacture/pod/preassembeled_parts,
 		/datum/manufacture/putt/preassembeled_parts,
 		/datum/manufacture/pod_wars/lock,
+		/datum/manufacture/engine_scout,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
+		/datum/manufacture/pod/lateral_thrusters,
+		/datum/manufacture/pod/afterburner,
 		/datum/manufacture/pod/light_shielding,
 		/datum/manufacture/pod/heavy_shielding,
 		/datum/manufacture/pod/auto_repair_kit,
+		/datum/manufacture/pod/weapons_loader,
 		/datum/manufacture/cargohold,
 		/datum/manufacture/storagehold,
-		/datum/manufacture/lateral_thrusters,
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,
 		/datum/manufacture/pod/weapon/mining_podwars,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser,
+		/datum/manufacture/pod/weapon/burst_ltlaser,
 		/datum/manufacture/pod/weapon/mining_weak,
 		/datum/manufacture/pod/weapon/taser,
 		/datum/manufacture/pod/weapon/laser/short,
 		/datum/manufacture/pod/weapon/laser,
 		/datum/manufacture/pod/weapon/disruptor,
 		/datum/manufacture/pod/weapon/disruptor/light,
-		/datum/manufacture/pod/weapon/shotgun
+		/datum/manufacture/pod/weapon/shotgun,
+		/datum/manufacture/pod/weapon/hammer_railgun
 	)
 
 	New()
@@ -69,18 +74,21 @@
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
+		/datum/manufacture/pod/lateral_thrusters,
+		/datum/manufacture/pod/afterburner,
 		/datum/manufacture/pod/light_shielding,
 		/datum/manufacture/pod/heavy_shielding,
 		/datum/manufacture/pod/auto_repair_kit,
+		/datum/manufacture/pod/weapons_loader,
 		/datum/manufacture/cargohold,
 		/datum/manufacture/storagehold,
-		/datum/manufacture/lateral_thrusters,
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,
 		/datum/manufacture/pod/weapon/mining_podwars,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser,
+		/datum/manufacture/pod/weapon/burst_ltlaser,
 		/datum/manufacture/pod/weapon/mining_weak,
 		/datum/manufacture/pod/weapon/taser,
 		/datum/manufacture/pod/weapon/laser/short,
@@ -88,6 +96,7 @@
 		/datum/manufacture/pod/weapon/disruptor,
 		/datum/manufacture/pod/weapon/disruptor/light,
 		/datum/manufacture/pod/weapon/shotgun,
+		/datum/manufacture/pod/weapon/hammer_railgun,
 		/datum/manufacture/pod_wars/pod/armor_light/nt,
 		/datum/manufacture/pod_wars/pod/armor_robust/nt
 
@@ -103,18 +112,21 @@
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
+		/datum/manufacture/pod/lateral_thrusters,
+		/datum/manufacture/pod/afterburner,
 		/datum/manufacture/pod/light_shielding,
 		/datum/manufacture/pod/heavy_shielding,
 		/datum/manufacture/pod/auto_repair_kit,
+		/datum/manufacture/pod/weapons_loader,
 		/datum/manufacture/cargohold,
 		/datum/manufacture/storagehold,
-		/datum/manufacture/lateral_thrusters,
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,
 		/datum/manufacture/pod/weapon/mining_podwars,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser,
+		/datum/manufacture/pod/weapon/burst_ltlaser,
 		/datum/manufacture/pod/weapon/mining_weak,
 		/datum/manufacture/pod/weapon/taser,
 		/datum/manufacture/pod/weapon/laser/short,
@@ -122,6 +134,7 @@
 		/datum/manufacture/pod/weapon/disruptor,
 		/datum/manufacture/pod/weapon/disruptor/light,
 		/datum/manufacture/pod/weapon/shotgun,
+		/datum/manufacture/pod/weapon/hammer_railgun,
 		/datum/manufacture/pod_wars/pod/armor_light/sy,
 		/datum/manufacture/pod_wars/pod/armor_robust/sy
 		)
@@ -202,6 +215,16 @@
 							 "crystal" = 30,
 							 "telecrystal" = 30)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/laser_ass)
+	create = 1
+	time = 10 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/weapon/hammer_railgun
+	name = "Hammerhead Railgun"
+	item_requirements = list("metal_dense" = 20,
+							 "conductive_high" = 40,
+							 "energy_high" = 30)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/hammer_railgun)
 	create = 1
 	time = 10 SECONDS
 	category = "Tool"

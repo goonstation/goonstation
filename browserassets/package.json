@@ -4,8 +4,9 @@
 	"version": "1.1.1",
 	"description": "",
 	"main": "index.js",
+	"type": "module",
 	"scripts": {
-		"build": "gulp build"
+		"build": "gulp --no-color --no-experimental-require-module build"
 	},
 	"author": "",
 	"license": "ISC",
@@ -18,7 +19,6 @@
 		"gulp": "^5.0.0",
 		"gulp-babel": "^8.0.0",
 		"gulp-htmlmin": "^5.0.1",
-		"gulp-imagemin": "^9.1.0",
 		"gulp-postcss": "^10.0.0",
 		"gulp-replace": "^1.1.4",
 		"gulp-uglify-es": "^3.0.0",

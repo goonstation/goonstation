@@ -84,7 +84,7 @@
 /obj/minimap/map_computer/pod_wars
 	name = "Debris Field Map"
 	desc = "A cutting-edge cathode ray tube monitor, actively rendering many dozens of kilobytes of reconnaissance data on the surrounding debris field."
-	map_scale = 0.3
+	map_scale = 0.25
 
 
 /obj/minimap/map_computer/pod_wars/nanotrasen

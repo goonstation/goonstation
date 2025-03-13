@@ -30,6 +30,7 @@ TYPEINFO(/obj/item/light_parts)
 	var/light_type = /obj/item/light/tube
 	var/fitting = "tube"
 	var/install_type = INSTALL_WALL
+	var/has_bulb = TRUE
 
 	New()
 		..()
@@ -37,8 +38,11 @@ TYPEINFO(/obj/item/light_parts)
 
 	update_icon()
 		..()
-		var/image/light_image = SafeGetOverlayImage("light", src.icon, "[fitting]-light")
-		src.AddOverlays(light_image, "light")
+		if (src.has_bulb)
+			var/image/light_image = SafeGetOverlayImage("light", src.icon, "[fitting]-light")
+			src.AddOverlays(light_image, "light")
+			return
+		src.ClearSpecificOverlays("light")
 
 
 // For metal sheets. Can't easily change an item's vars the way it's set up (Convair880).
@@ -65,6 +69,8 @@ TYPEINFO(/obj/item/light_parts)
 	installed_icon_state = target.icon_state
 	installed_base_state = target.base_state
 	light_type = target.light_type
+	if (!target.inserted_lamp)
+		has_bulb = FALSE
 	fixture_type = target.type
 	fitting = target.fitting
 	if (fitting == "tube")
@@ -131,7 +137,10 @@ TYPEINFO(/obj/item/light_parts)
 	newlight.icon_state = src.installed_icon_state
 	newlight.base_state = src.installed_base_state
 	newlight.fitting = src.fitting
-	newlight.status = LIGHT_EMPTY
+	if (!src.has_bulb)
+		newlight.current_lamp.light_status = LIGHT_EMPTY
+		newlight.inserted_lamp = null
+		newlight.update()
 	newlight.add_fingerprint(user)
 	// this does the exact pixel positioning and stuff for the walls to line up with sprites
 	if (src.install_type == INSTALL_WALL)
@@ -1094,7 +1103,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 
 
 		boutput(user, "You stick \the [W.name] into the light socket!")
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if(has_power() && (W.flags & CONDUCT))
 			if(!user.bioHolder.HasEffect("resist_electric"))
 				src.electrocute(user, 75, null, 20000)
@@ -1102,7 +1111,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 
 	// attempt to break the light
 	else if(current_lamp.light_status != LIGHT_BROKEN)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if(prob(1+W.force * 5))
 
 			boutput(user, "You hit the light, and it smashes!")

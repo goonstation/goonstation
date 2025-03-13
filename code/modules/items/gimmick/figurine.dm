@@ -132,7 +132,7 @@
 			if (src.icon_state != "fig-shelterfrog-dead")
 				make_cleanable(/obj/decal/cleanable/blood,get_turf(src))
 				src.icon_state = "fig-shelterfrog-dead"
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		return 0
 
 	attack_self(mob/user as mob)
@@ -1065,6 +1065,10 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Harper Costache"
 		icon_state = "harpercostache"
 		ckey = "gibusgame"
+	lazybones123
+		name = "\improper Normal Human"
+		icon_state = "normalhuman"
+		ckey = "lazybones123"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

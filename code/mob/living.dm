@@ -95,7 +95,6 @@
 	var/metabolizes = 1
 
 	var/can_bleed = 1
-	var/regens_blood = TRUE
 	var/blood_id = null
 	var/blood_volume = 500
 	var/blood_pressure = null
@@ -372,7 +371,7 @@
 /mob/living/proc/hand_range_attack(atom/target, params, location, control, origParams)
 	var/datum/limb/L = src.equipped_limb()
 	if (L && L.attack_range(target, src, params))
-		src.lastattacked = src
+		src.lastattacked = get_weakref(src)
 		return TRUE
 	return FALSE
 
@@ -536,14 +535,14 @@
 					hand_attack(target, params, location, control)
 
 				//If lastattacked was set, this must be a combat action!! Use combat click delay ||  the other condition is whether a special attack was just triggered.
-				if ((lastattacked != null && (src.lastattacked == target || src.lastattacked == equipped || src.lastattacked == src) && use_delay) || (equipped && equipped.special && equipped.special.last_use >= world.time - src.click_delay))
+				if ((lastattacked?.deref() != null && (src.lastattacked.deref() == target || src.lastattacked.deref() == equipped || src.lastattacked.deref() == src) && use_delay) || (equipped && equipped.special && equipped.special.last_use >= world.time - src.click_delay))
 					src.next_click = world.time + (equipped ? max(equipped.click_delay,src.combat_click_delay) : src.combat_click_delay)
 					src.lastattacked = null
 
 			else if (!equipped)
 				hand_range_attack(target, params, location, control)
 
-				if (lastattacked != null && (src.lastattacked == target || src.lastattacked == equipped || src.lastattacked == src) && use_delay)
+				if (lastattacked?.deref() != null && (src.lastattacked.deref() == target || src.lastattacked.deref() == equipped || src.lastattacked.deref() == src) && use_delay)
 					src.next_click = world.time + src.combat_click_delay
 					src.lastattacked = null
 
@@ -614,12 +613,12 @@
 	if(src.client && !(target in view(src.client.view))) //don't point at things we can't see
 		return
 
-	var/obj/item/gun/G = src.equipped()
+	var/obj/item/I = src.equipped()
 	var/gunpoint = FALSE
-	if(!istype(G) || !ismob(target))
+	if(!cangunpoint(I) || !ismob(target))
 		src.visible_message(SPAN_EMOTE("<b>[src]</b> points to [target]."))
 	else
-		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
+		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [I] at [target]!</span>")
 		gunpoint = TRUE
 	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
 		..()
@@ -1594,7 +1593,7 @@
 	if (!M || !src) //Apparently M could be a meatcube and this causes HELLA runtimes.
 		return
 
-	M.lastattacked = src
+	M.lastattacked = get_weakref(src)
 
 	attack_particle(M,src)
 
@@ -2084,7 +2083,7 @@
 	var/mob/M = null
 	if (ismob(P.shooter))
 		M = P.shooter
-		src.lastattacker = M
+		src.lastattacker = get_weakref(M)
 		src.lastattackertime = world.time
 	src.was_harmed(M)
 
