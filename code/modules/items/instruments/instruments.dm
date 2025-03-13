@@ -81,11 +81,11 @@
 				src.note = src.notes[i]
 				src.sounds_instrument += (src.instrument_sound_directory + "[note].ogg")
 
-	proc/play_note(var/note, var/mob/user, var/pitch_override = null, var/volume_override = null)
+	proc/play_note(var/note, var/mob/user, var/pitch_override = null, var/volume_override = null, var/use_cooldown = TRUE)
 		if (note != clamp(note, 1, length(sounds_instrument)))
 			return FALSE
 		var/atom/player = user || src
-		if(ON_COOLDOWN(player, "instrument_play", src.note_time)) // on user or src because sometimes instruments play themselves
+		if(use_cooldown && ON_COOLDOWN(player, "instrument_play", src.note_time)) // on user or src because sometimes instruments play themselves
 			return FALSE
 
 		if (special_index && note >= special_index) // Add additional time if we just played a special note
@@ -193,7 +193,7 @@
 			if("play_note")
 				var/note_to_play = params["note"] + 1 // 0->1 (js->dm) array index change
 				var/volume = params["volume"]
-				src.play_note(note_to_play, ui.user, volume_override = volume)
+				src.play_note(note_to_play, ui.user, volume_override = volume, use_cooldown = FALSE)
 				. = TRUE
 			if("play_keyboard_on")
 				usr.client.apply_keybind("instrument_keyboard")

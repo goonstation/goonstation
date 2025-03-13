@@ -60,8 +60,12 @@ TYPEINFO(/obj/player_piano)
 
 	attackby(obj/item/W, mob/user) //this one is big and sucks, where all of our key and construction stuff is
 		if (istype(W, /obj/item/piano_key)) //piano key controls
-			var/piano_key_settings_list = list("Stop Piano", "Reset Piano", "Toggle Looping", "Adjust Timing", "Toggle Rest on Unavailable Notes")
-			var/mode_sel = input("Which do you want to do?", "Piano Control") as null|anything in piano_key_settings_list
+			var/mode_sel = tgui_input_list(
+				user,
+				"Which do you want to do?",
+				"Piano Control",
+				list("Reset Piano", "Toggle Looping", "Adjust Timing", "Toggle Rest on Unavailable Notes")
+			)
 
 			switch(mode_sel)
 				if ("Stop Piano") // stops the piano without losing stored data
@@ -83,11 +87,14 @@ TYPEINFO(/obj/player_piano)
 					src.visible_message(SPAN_ALERT("[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] seems different now."))
 
 				if ("Adjust Timing") //adjusts tempo
-					var/time_sel = input(
+					var/time_sel = tgui_input_text(
+						user,
 						"Input a new timing between [src.music_player.MIN_TIMING] and [src.music_player.MAX_TIMING] seconds.",
-						"Tempo Control"
-					) as num
-					if (!src.music_player.set_timing(time_sel))
+						"Tempo Control",
+						src.timing
+					)
+					time_sel = text2num(time_sel)
+					if (!time_sel || !src.music_player.set_timing(time_sel))
 						src.visible_message(SPAN_ALERT(">The mechanical workings of [src] emit a horrible din for several seconds before \the [src] shuts down."))
 						return
 					src.visible_message(SPAN_ALERT("[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] rumbles indifferently."))
@@ -164,9 +171,9 @@ TYPEINFO(/obj/player_piano)
 		if (src.music_player.is_busy || src.music_player.is_stored)
 			src.visible_message(SPAN_ALERT("\The [src] emits an angry beep!"))
 			return
-		var/mode_sel = input("Which mode would you like?", "Mode Select") as null|anything in list("Choose Notes", "Play Song")
+		var/mode_sel = tgui_alert(user, "Which mode would you like?", "Mode Select", list("Choose Notes", "Play Song"))
 		if (mode_sel == "Choose Notes")
-			var/given_notes = input("Write out the notes you want to be played.", "Composition Menu", src.music_player.note_input)
+			var/given_notes = tgui_input_text(user, "Write out the notes you want to be played.", "Composition Menu", src.music_player.note_input)
 			if (!src.music_player.set_notes(given_notes))//still room to get long piano songs in, but not too crazy
 				src.visible_message(SPAN_ALERT("\The [src] makes an angry whirring noise and shuts down."))
 			return
