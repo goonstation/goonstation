@@ -119,7 +119,7 @@
 
 	if(length(inline_assets_str))
 		inline_assets_str = "<script>\n" + inline_assets_str + "</script>\n"
-	html = replacetextEx(html, "<!-- tgui:assets -->\n", inline_assets_str)
+	html = replacetextEx(html, "<!-- tgui:assets -->", inline_assets_str)
 
 	// Inject inline HTML
 	if (inline_html)
