@@ -1,4 +1,9 @@
 
+(t)thu mar 13 25
+(u)Lyy
+(p)22532
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Cutting someone's hair now leaves a cleanable hair pile.
 (t)wed mar 12 25
 (u)Facsimile
 (p)22574
