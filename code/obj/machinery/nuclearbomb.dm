@@ -7,7 +7,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	icon_state = "nuclearbomb"//1"
 	density = 1
 	anchored = UNANCHORED
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_OCEAN_PUSH
 	_health = 150
 	_max_health = 150
 	processing_tier = PROCESSING_FULL

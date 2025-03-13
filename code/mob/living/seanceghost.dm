@@ -10,7 +10,7 @@
 	blinded = 0
 	anchored = ANCHORED
 	alpha = 180
-	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
+	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY
 	var/obj/machinery/playerzoldorf/homebooth
 	var/mob/originalmob
 

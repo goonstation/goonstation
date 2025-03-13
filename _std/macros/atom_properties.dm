@@ -199,6 +199,11 @@ To remove:
 	}; \
 } while(0)
 
+#define PROP_UPDATE_OCEANPUSH(target, prop, old_val) do { \
+	var/new_val = GET_ATOM_PROPERTY_RAW(target, prop); \
+	if (new_val) oceanPushList |= target; else oceanPushList -= target;\
+	new_val = old_val;\ /* this is to defeat the linter, macros have a set number of args and this one is unused */
+} while(0)
 // Property defines
 //
 // These must be defined as macros in the format PROP_<yourproperty>(x) x("property key name", MACRO TO APPLY THE PROPERTY, MACRO TO REMOVE THE PROPERTY)
@@ -312,6 +317,7 @@ To remove:
 #define PROP_MOVABLE_VISIBLE_GUNS(x) x("visible_firearms", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM) //! The visible firearm contraband level of this movable
 #define PROP_MOVABLE_CONTRABAND_OVERRIDE(x) x("contraband_pverride", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX) //! Thing is considered to have this contraband value, takes max if has multiple of these props
 #define PROP_MOVABLE_KLEPTO_IGNORE(x) x("klepto_go_away", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOVABLE_OCEAN_PUSH(x) x("ocean_push", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM, PROP_UPDATE_OCEANPUSH) //! Value is the direction it's being pushed in
 //-------------------- TURF PROPS -----------------------
 //-------------------- ATOM PROPS -----------------------
 #define PROP_ATOM_NEVER_DENSE(x) x("neverdense", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)

@@ -1107,6 +1107,7 @@
 #include "code\modules\cross_server\game_servers.dm"
 #include "code\modules\cross_server\server_list.dm"
 #include "code\modules\cross_server\cross_server_messages\announce.dm"
+#include "code\modules\currents\currents.dm"
 #include "code\modules\disposals\conveyor.dm"
 #include "code\modules\disposals\crusher.dm"
 #include "code\modules\disposals\disposal-construction.dm"

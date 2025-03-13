@@ -131,48 +131,45 @@ proc/EndSpacePush(var/atom/movable/A)
 
 
 		//now manta!
-		debugPushList = mantaPushList
-		if(mantaMoving == 1)
-			for (var/atom/movable/M as anything in mantaPushList)
-				if(!M)
+		debugPushList = oceanPushList
+		for (var/atom/movable/M as anything in oceanPushList)
+			if(!M)
+				continue
+
+			var/turf/T = get_turf(M)
+
+			if (T != M.loc)
+				continue
+
+			if(M.throwing)
+				continue
+
+			if ((M.event_handler_flags & IMMUNE_OCEAN_PUSH || M.anchored || M.throwing) && !istype(M,/obj/decal)) //mbc : decal is here for blood cleanables, consider somehow optimizing or adjusting later
+				continue
+
+			if(ismob(M))
+				var/mob/B = M
+				if(B.client && B.client.flying || (ismob(B) && HAS_ATOM_PROPERTY(B, PROP_MOB_NOCLIP)))
 					continue
 
-				var/turf/T = get_turf(M)
-				if (T && ! (T.turf_flags & MANTA_PUSH) )
+				if (ishuman(B))
+					var/mob/living/carbon/human/H = B
+					if (H.back && H.back.c_flags & IS_JETPACK)
+						if (istype(H.back, /obj/item/tank/jetpack)) //currently unnecessary but what if we have IS_JETPACK on clothing items that are not back-wear later on?
+							var/obj/item/tank/jetpack/J = H.back
+							if(J.allow_thrust(0.01, H))
+								continue
+
+				if (isghostdrone(B) && MagneticTether)
 					continue
 
-				if (T != M.loc)
-					continue
-
-				if(M.throwing)
-					continue
-
-				if ((M.event_handler_flags & IMMUNE_MANTA_PUSH || M.anchored || M.throwing) && !istype(M,/obj/decal)) //mbc : decal is here for blood cleanables, consider somehow optimizing or adjusting later
-					continue
-
-				if(ismob(M))
-					var/mob/B = M
-					if(B.client && B.client.flying || (ismob(B) && HAS_ATOM_PROPERTY(B, PROP_MOB_NOCLIP)))
-						continue
-
-					if (ishuman(B))
-						var/mob/living/carbon/human/H = B
-						if (H.back && H.back.c_flags & IS_JETPACK)
-							if (istype(H.back, /obj/item/tank/jetpack)) //currently unnecessary but what if we have IS_JETPACK on clothing items that are not back-wear later on?
-								var/obj/item/tank/jetpack/J = H.back
-								if(J.allow_thrust(0.01, H))
-									continue
-
-					if (isghostdrone(B) && MagneticTether)
-						continue
-
-					M.setStatus("slowed", 2 SECONDS, 20)
-
-				if(!step(M, SOUTH))
-					var/dirMod = pick(1, -1)
-					if(!step(M, turn(SOUTH, 90*dirMod)))
-						step(M, turn(SOUTH, 90*-dirMod))
+				M.setStatus("slowed", 2 SECONDS, 20)
+			var/dir = GET_ATOM_PROPERTY(M, PROP_MOVABLE_OCEAN_PUSH)
+			if(!step(M, dir))
+				var/dirMod = pick(1, -1)
+				if(!step(M, turn(dir, 90*dirMod)))
+					step(M, turn(dir, 90*-dirMod))
 		return
 
 	tickDetail()
-		boutput(usr, "<b>ForcedMovement:</b> Managing [mantaPushList.len] mantapush objects and [spacePushList.len] spacepush objects")
+		boutput(usr, "<b>ForcedMovement:</b> Managing [oceanPushList.len] mantapush objects and [spacePushList.len] spacepush objects")
