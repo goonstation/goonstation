@@ -91,7 +91,7 @@ TYPEINFO(/obj/player_piano)
 						user,
 						"Input a new timing between [src.music_player.MIN_TIMING] and [src.music_player.MAX_TIMING] seconds.",
 						"Tempo Control",
-						src.timing
+						src.music_player.timing
 					)
 					time_sel = text2num(time_sel)
 					if (!time_sel || !src.music_player.set_timing(time_sel))
