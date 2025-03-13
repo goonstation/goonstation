@@ -1,5 +1,9 @@
 
 (t)thu mar 13 25
+(u)Chasu
+(p)22559
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Animal control lockers now come with one pet carrier each.
 (u)Lyy
 (p)22532
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
