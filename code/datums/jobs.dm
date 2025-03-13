@@ -2558,17 +2558,15 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/security/ntsc) //special secbelt subtype that spawns with the NTSO gear inside
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
-	slot_suit = list(/obj/item/clothing/suit/space/ntso)
 	slot_head = list(/obj/item/clothing/head/NTberet)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_glov = list(/obj/item/clothing/gloves/swat/NT)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/consultant) //needs their own secret channel
-	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_card = /obj/item/card/id/nt_specialist
 	slot_poc1 = list(/obj/item/storage/ntsc_pouch)
 	slot_poc2 = list(/obj/item/device/pda2/ntso)
-	items_in_backpack = list(/obj/item/storage/firstaid/regular)
+	items_in_backpack = list(/obj/item/device/locker_deployer/ntsc)
 	wiki_link = "https://wiki.ss13.co/Nanotrasen_Security_Consultant"
 
 	faction = list(FACTION_NANOTRASEN)

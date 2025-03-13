@@ -218,7 +218,7 @@
 						access_research, access_dwaine_superuser, access_hydro, access_ranch, access_mail, access_ai_upload,
 						access_engineering, access_teleporter, access_engineering_engine, access_engineering_control,
 						access_mining, access_pathology, access_researchfoyer, access_chapel_office, access_telesci,
-						access_engineering_eva, access_engineering_storage, access_engineering_mechanic)
+						access_engineering_eva, access_engineering_storage, access_engineering_mechanic, access_security_consultant)
 		if("Research Director")
 			return list(access_research, access_research_director, access_dwaine_superuser,
 						access_tech_storage, access_maint_tunnels, access_heads, access_eva, access_tox,
@@ -243,7 +243,7 @@
 
 		// --------------------------- Security
 		if("Nanotrasen Security Consultant")
-			return get_access("Security Officer") + list(access_heads, access_eva)
+			return get_access("Security Officer") + list(access_heads, access_eva, access_security_consultant)
 		if("Security Officer")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_securitylockers, access_brig,  access_ticket,
 			access_maint_tunnels, access_medical, access_morgue, access_research, access_cargo, access_engineering, access_engineering_control,

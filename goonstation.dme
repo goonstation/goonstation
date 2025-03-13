@@ -2054,6 +2054,7 @@
 #include "code\obj\item\kendo.dm"
 #include "code\obj\item\keys.dm"
 #include "code\obj\item\kitchen.dm"
+#include "code\obj\item\lockerdeployer.dm"
 #include "code\obj\item\magtractor.dm"
 #include "code\obj\item\manudrive.dm"
 #include "code\obj\item\manufacturing_blueprints.dm"

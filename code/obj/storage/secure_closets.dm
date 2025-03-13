@@ -389,6 +389,35 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		/obj/item/clothing/head/helmet/space/light/engineer,
 		/obj/item/device/pda2/chiefengineer
 	)
+/obj/storage/secure/closet/nanotrasen
+	name = "nanotrasen locker"
+	_max_health = LOCKER_HEALTH_STRONG
+	_health = LOCKER_HEALTH_STRONG
+	req_access = list(access_centcom)
+	icon_state = "nanotrasen"
+	icon_closed = "nanotrasen"
+	icon_opened = "secure_blue-open"
+	bolted = TRUE
+
+
+/obj/storage/secure/closet/nanotrasen/ntsc
+	name = "\improper Security Consultant's locker"
+	req_access = list(access_security_consultant)
+	spawn_contents = list(/obj/item/handcuffs,
+	/obj/item/device/flash,
+	/obj/item/clothing/under/misc/turds,
+	/obj/item/clothing/suit/space/ntso,
+	/obj/item/clothing/head/helmet/space/ntso,
+	/obj/item/cloth/handkerchief/nt,
+	/obj/item/clothing/head/NTberet,
+	/obj/item/clothing/shoes/swat,
+	/obj/item/clothing/suit/armor/vest,
+	/obj/item/clothing/glasses/sunglasses/sechud,
+	/obj/item/device/radio/headset/command/nt/consultant,
+	/obj/item/device/pda2/ntso,
+	/obj/item/barrier,
+	/obj/item/storage/firstaid/regular)
+
 
 /* ==================== */
 /* ----- Security ----- */
