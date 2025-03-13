@@ -1,7 +1,16 @@
 
+(t)thu mar 13 25
+(u)Lyy
+(p)22532
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Cutting someone's hair now leaves a cleanable hair pile.
 (t)wed mar 12 25
+(u)Facsimile
+(p)22574
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Fixes instrument chord bug introduced by PR #22557 (Cyborg instrument screams).
 (u)Sord
-(+)The Special Equipment crate now contains a random special armory firearm.
+(+)The Special Equipment crate in the armory now contains a random special armory firearm.
 (+)Random firearm can be an energy gun, egun jr, stasis rifle, or macro phaser.
 (+)The Experimental Security Equipment crate in cargo now contains a stasis rifle.
 (t)tue mar 11 25
