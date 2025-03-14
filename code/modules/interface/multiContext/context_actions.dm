@@ -2,6 +2,9 @@
 	var/icon = 'icons/ui/context16x16.dmi'
 	var/icon_state = "eye"
 	var/icon_background = "bg"
+	var/pip_icon = 'icons/ui/context_pips.dmi'
+	var/pip_state = ""
+	var/pip_enabled = FALSE
 	var/name = ""
 	var/desc = ""
 	var/tooltip_flags = null
@@ -1419,6 +1422,7 @@
 	execute(var/obj/item/robospray/robospray, var/mob/user)
 		robospray.change_reagent(src.reagent_id, user)
 
+/*
 /// Organ context action to pick a region to operate on
 /datum/contextAction/surgery_region
 	name = "Open up surgery region"
@@ -1690,7 +1694,8 @@
 			else
 				src.open = FALSE
 			. = ..()
-
+*/
+/*
 /// Organ context action to pick an organ to operate on
 /datum/contextAction/organs
 	name = "Cut out organ"
@@ -1886,101 +1891,6 @@
 		desc = "Cut out the tail."
 		icon_state = "tail"
 		organ_path = "tail"
-
-///Context action for the steps to remove a specific organ
-/datum/contextAction/organ_surgery
-	icon = 'icons/ui/context16x16.dmi'
-	name = "Prepare an organ to be taken out"
-	icon_state = "scalpel"
-	var/success_text = null
-	var/success_sound
-	var/slipup_text = null
-
-	execute(atom/target, mob/user)
-		if (istype(target, /obj/item/organ))
-			var/obj/item/organ/O = target
-			if (!O)
-				boutput(user, SPAN_ALERT("The organ you are operating on is no longer in the patient."))
-				return
-			if (!O.holder || !O.holder.donor)
-				return
-			if (!ishuman(O.holder.donor))
-				return
-			var/mob/living/carbon/human/H = O.holder.donor
-			if (!surgeryCheck(H, user))
-				return
-			var/screw_up_prob = calc_screw_up_prob(H, user)
-			if (prob(screw_up_prob))
-				var/damage = calc_surgery_damage(user, screw_up_prob, rand(5,10))
-				do_slipup(user, H, "chest", damage, slipup_text)
-				user.showContextActions(O.surgery_contexts, O, O.contextLayout)
-				return
-			if (O.surgery_contexts)
-				if (src.success_text)
-					user.visible_message(SPAN_NOTICE("[user] [success_text]."))
-				if (src.success_sound)
-					if (O.holder?.donor)
-						playsound(O.holder.donor, src.success_sound, 50, 1)
-				attack_particle(user, H)
-				attack_twitch(user)
-				random_brute_damage(H, rand(2, 4))
-				O.surgery_contexts -= src
-				O.removal_stage = 1
-				switch (O.region)
-					if (RIBS)
-						if (!H.organHolder.build_inside_ribs_buttons())
-							boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
-							return
-					if (SUBCOSTAL)
-						if (!H.organHolder.build_inside_subcostal_buttons())
-							boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
-							return
-					if (ABDOMINAL)
-						if (!H.organHolder.build_inside_abdomen_buttons())
-							boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
-							return
-					if (FLANKS)
-						if (!H.organHolder.build_inside_flanks_buttons())
-							boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
-							return
-				if (length(O.surgery_contexts) <= 0)
-					boutput(user, SPAN_NOTICE("It seems the organ is ready to be removed."))
-					if (O.holder)
-						O.removal_stage = 2
-						switch (O.region)
-							if (RIBS)
-								if (!H.organHolder.build_inside_ribs_buttons())
-									boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
-									return
-							if (SUBCOSTAL)
-								if (!H.organHolder.build_inside_subcostal_buttons())
-									boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
-									return
-							if (ABDOMINAL)
-								if (!H.organHolder.build_inside_abdomen_buttons())
-									boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
-									return
-							if (FLANKS)
-								if (!H.organHolder.build_inside_flanks_buttons())
-									boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
-									return
-						switch (O.region)
-							if (RIBS)
-								user.showContextActions(O.holder.inside_ribs_contexts, O.holder.donor, O.holder.contextLayout)
-							if (SUBCOSTAL)
-								user.showContextActions(O.holder.inside_subcostal_contexts, O.holder.donor, O.holder.contextLayout)
-							if (ABDOMINAL)
-								user.showContextActions(O.holder.inside_abdomen_contexts, O.holder.donor, O.holder.contextLayout)
-							if (FLANKS)
-								user.showContextActions(O.holder.inside_flanks_contexts, O.holder.donor, O.holder.contextLayout)
-					return
-				else
-					user.showContextActions(O.surgery_contexts, O, O.contextLayout)
-					return
-		else
-			target.removeContextAction(src.type)
-			return
-
 	cut
 		name = "Cut"
 		desc = "Cut surrounding tissues."
@@ -2242,6 +2152,72 @@
 				boutput(user, SPAN_NOTICE("You need a snipping tool."))
 				return FALSE
 			return TRUE
+*/
+
+
+
+/// surgical step - performs a step of a surgery
+/datum/contextAction/surgical_step
+	name = "Generic Surgery Step"
+	desc = "Call 1-800-IMCODER."
+	icon_state = "heal_generic"
+	var/datum/surgery_step/step = null
+	var/datum/surgery/surgery = null
+	pip_enabled = TRUE
+
+	checkRequirements(atom/target, mob/user)
+		return TRUE
+
+	execute(atom/target, mob/user)
+		..()
+		var/obj/item/I = user.equipped()
+		surgery.perform_step(step, user,I)
+
+/// surgery context menu - starts/continues a surgery
+/datum/contextAction/surgery
+	name = "Generic Surgery"
+	desc = "Call 1-800-IMCODER."
+	icon_state = "heal_generic"
+	var/datum/surgeryHolder/holder = null
+	var/datum/surgery/surgery = null
+	checkRequirements(atom/target, mob/user)
+		..()
+		return TRUE
+	execute(atom/target, mob/user)
+		..()
+		var/obj/item/I = user.equipped()
+		holder.surgery_clicked(surgery,user,I)
+/datum/contextAction/surgery/cancel
+	name = "Cancel"
+	desc = "Cancels this surgery, and all surgeries beneath it."
+	icon_state = "cancel"
+
+	New(var/datum/surgeryHolder/holder, var/datum/surgery/surgery)
+		src.holder = holder
+		src.surgery = surgery
+		name = "Cancel [surgery?.name]"
+		..()
+	execute(atom/target, mob/user)
+		..()
+		user.closeContextActions()
+		var/obj/item/I = user.equipped()
+		holder.cancel_surgery_context(surgery,user,I)
+/datum/contextAction/surgery/step_up
+	name = "Back"
+	desc = "Go up a level."
+	icon_state = "back_arrow"
+
+	New(var/datum/surgeryHolder/holder, var/datum/surgery/surgery)
+		src.holder = holder
+		src.surgery = surgery
+		..()
+	execute(atom/target, mob/user)
+		..()
+		user.closeContextActions()
+		var/obj/item/I = user.equipped()
+		holder.exit_surgery(surgery,user,I)
+
+
 #define BUNSEN_OFF "off"
 #define BUNSEN_LOW "low"
 #define BUNSEN_MEDIUM "medium"

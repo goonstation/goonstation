@@ -24,9 +24,9 @@
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (is_special || !wrench_surgery(target, user))
-			return ..()
+	// attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	// 	if (is_special || !wrench_surgery(target, user))
+	// 		return ..()
 
 /obj/item/wrench/gold
 	name = "golden wrench"

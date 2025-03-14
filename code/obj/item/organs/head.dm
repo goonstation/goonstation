@@ -8,7 +8,6 @@
 	desc = "Well, shit."
 	organ_holder_name = "head"
 	organ_holder_location = "head"
-	var/scalp_op_stage = 0.0 // Needed to track a scalp gash (brain and skull removal) separately from op_stage (head removal)
 	icon = 'icons/mob/human_head.dmi'
 	icon_state = "invis" // we'll overlay some shit on here
 	inhand_image_icon = 'icons/mob/inhand/hand_skulls.dmi'
@@ -133,16 +132,17 @@
 				else
 					. += "<br>[SPAN_NOTICE("[src.name] has a [bicon(src.glasses)] [src.glasses.name] on its face.")]"
 
-		if (!src.skull  && src.scalp_op_stage >= 3)
+		var/head_stage = holder.donor.surgeryHolder.get_surgery_progress("brain_surgery")
+		if (!src.skull  && head_stage >= 3)
 			. += "<br>[SPAN_ALERT("<B>[src.name] no longer has a skull in it, its face is just empty skin mush!</B>")]"
 
-		if (!src.skull && src.scalp_op_stage >= 5)
+		if (!src.skull && head_stage >= 5)
 			. += "<br>[SPAN_ALERT("<B>[src.name] has been cut open and its skull is gone!</B>")]"
-		else if (!src.brain && src.scalp_op_stage >= 4)
+		else if (!src.brain && head_stage >= 4)
 			. += "<br>[SPAN_ALERT("<B>[src.name] has been cut open and its brain is gone!</B>")]"
-		else if (src.scalp_op_stage >= 3)
+		else if (head_stage >= 3)
 			. += "<br>[SPAN_ALERT("<B>[src.name]'s head has been cut open!</B>")]"
-		else if (src.scalp_op_stage > 0)
+		else if (head_stage > 0)
 			. += "<br>[SPAN_ALERT("<B>[src.name] has an open incision on it!</B>")]"
 
 		if (!src.right_eye)
@@ -441,92 +441,92 @@
 		if (src.skull || src.brain)
 
 			// scalpel surgery
-			if (iscuttingtool(W))
-				if (src.right_eye && src.right_eye.op_stage == 1.0 && user.find_in_hand(W) == user.r_hand)
-					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-					user.visible_message(SPAN_ALERT("<b>[user]</b> cuts away the flesh holding [src]'s right eye in with [W]!"),\
-					SPAN_ALERT("You cut away the flesh holding [src]'s right eye in with [W]!"))
-					src.right_eye.op_stage = 2
-				else if (src.left_eye && src.left_eye.op_stage == 1.0 && user.find_in_hand(W) == user.l_hand)
-					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-					user.visible_message(SPAN_ALERT("<b>[user]</b> cuts away the flesh holding [src]'s left eye in with [W]!"),\
-					SPAN_ALERT("You cut away the flesh holding [src]'s left eye in with [W]!"))
-					src.left_eye.op_stage = 2
-				else if (src.brain)
-					if (src.brain.op_stage == 0.0)
-						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-						user.visible_message(SPAN_ALERT("<b>[user]</b> cuts [src] open with [W]!"),\
-						SPAN_ALERT("You cut [src] open with [W]!"))
-						src.brain.op_stage = 1
-					else if (src.brain.op_stage == 2)
-						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-						user.visible_message(SPAN_ALERT("<b>[user]</b> removes the connections to [src]'s brain with [W]!"),\
-						SPAN_ALERT("You remove [src]'s connections to [src]'s brain with [W]!"))
-						src.brain.op_stage = 3
-					else
-						return ..()
-				else if (src.skull && src.skull.op_stage == 0.0)
-					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-					user.visible_message(SPAN_ALERT("<b>[user]</b> cuts [src]'s skull away from the skin with [W]!"),\
-					SPAN_ALERT("You cut [src]'s skull away from the skin with [W]!"))
-					src.skull.op_stage = 1
-				else
-					return ..()
+			// if (iscuttingtool(W))
+			// 	if (src.right_eye && src.right_eye.op_stage == 1.0 && user.find_in_hand(W) == user.r_hand)
+			// 		playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
+			// 		user.visible_message(SPAN_ALERT("<b>[user]</b> cuts away the flesh holding [src]'s right eye in with [W]!"),\
+			// 		SPAN_ALERT("You cut away the flesh holding [src]'s right eye in with [W]!"))
+			// 		// src.right_eye.op_stage = 2
+			// 	else if (src.left_eye && src.left_eye.op_stage == 1.0 && user.find_in_hand(W) == user.l_hand)
+			// 		playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
+			// 		user.visible_message(SPAN_ALERT("<b>[user]</b> cuts away the flesh holding [src]'s left eye in with [W]!"),\
+			// 		SPAN_ALERT("You cut away the flesh holding [src]'s left eye in with [W]!"))
+			// 		// src.left_eye.op_stage = 2
+			// 	else if (src.brain)
+			// 		if (src.brain.op_stage == 0.0)
+			// 			playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
+			// 			user.visible_message(SPAN_ALERT("<b>[user]</b> cuts [src] open with [W]!"),\
+			// 			SPAN_ALERT("You cut [src] open with [W]!"))
+			// 			// src.brain.op_stage = 1
+			// 		else if (src.brain.op_stage == 2)
+			// 			playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
+			// 			user.visible_message(SPAN_ALERT("<b>[user]</b> removes the connections to [src]'s brain with [W]!"),\
+			// 			SPAN_ALERT("You remove [src]'s connections to [src]'s brain with [W]!"))
+			// 			// src.brain.op_stage = 3
+			// 		else
+			// 			return ..()
+			// 	else if (src.skull && src.skull.op_stage == 0.0)
+			// 		playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
+			// 		user.visible_message(SPAN_ALERT("<b>[user]</b> cuts [src]'s skull away from the skin with [W]!"),\
+			// 		SPAN_ALERT("You cut [src]'s skull away from the skin with [W]!"))
+			// 		src.skull.op_stage = 1
+			// 	else
+			// 		return ..()
 
-			// saw surgery
-			else if (istype(W, /obj/item/circular_saw) || istype(W, /obj/item/saw) || istype(W, /obj/item/kitchen/utensil/fork))
-				if (src.brain)
-					if (src.brain.op_stage == 1.0)
-						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-						user.visible_message(SPAN_ALERT("<b>[user]</b> saws open [src]'s skull with [W]!"),\
-						SPAN_ALERT("You saw open [src]'s skull with [W]!"))
-						src.brain.op_stage = 2
-					else if (src.brain.op_stage == 3.0)
-						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-						user.visible_message(SPAN_ALERT("<b>[user]</b> saws open [src]'s skull with [W]!"),\
-						SPAN_ALERT("You saw open [src]'s skull with [W]!"))
-						src.brain.set_loc(get_turf(src))
-						src.brain = null
-					else
-						return ..()
-				else if (src.skull && src.skull.op_stage == 1.0)
-					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-					user.visible_message(SPAN_ALERT("<b>[user]</b> saws [src]'s skull out with [W]!"),\
-					SPAN_ALERT("You saw [src]'s skull out with [W]!"))
-					src.skull.set_loc(get_turf(src))
-					src.skull = null
-				else
-					return ..()
+			// // saw surgery
+			// else if (istype(W, /obj/item/circular_saw) || istype(W, /obj/item/saw) || istype(W, /obj/item/kitchen/utensil/fork))
+			// 	if (src.brain)
+			// 		if (src.brain.op_stage == 1.0)
+			// 			playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
+			// 			user.visible_message(SPAN_ALERT("<b>[user]</b> saws open [src]'s skull with [W]!"),\
+			// 			SPAN_ALERT("You saw open [src]'s skull with [W]!"))
+			// 			src.brain.op_stage = 2
+			// 		else if (src.brain.op_stage == 3.0)
+			// 			playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
+			// 			user.visible_message(SPAN_ALERT("<b>[user]</b> saws open [src]'s skull with [W]!"),\
+			// 			SPAN_ALERT("You saw open [src]'s skull with [W]!"))
+			// 			src.brain.set_loc(get_turf(src))
+			// 			src.brain = null
+			// 		else
+			// 			return ..()
+			// 	else if (src.skull && src.skull.op_stage == 1.0)
+			// 		playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
+			// 		user.visible_message(SPAN_ALERT("<b>[user]</b> saws [src]'s skull out with [W]!"),\
+			// 		SPAN_ALERT("You saw [src]'s skull out with [W]!"))
+			// 		src.skull.set_loc(get_turf(src))
+			// 		src.skull = null
+			// 	else
+			// 		return ..()
 
 			// spoon surgery
-			else if (isspooningtool(W))
-				if (src.right_eye && src.right_eye.op_stage == 0.0 && user.find_in_hand(W) == user.r_hand)
-					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-					user.visible_message(SPAN_ALERT("<b>[user]</b> inserts [W] into [src]'s right eye socket!"),\
-					SPAN_ALERT("You insert [W] into [src]'s right eye socket!"))
-					src.right_eye.op_stage = 1
-				else if (src.left_eye && src.left_eye.op_stage == 0.0 && user.find_in_hand(W) == user.l_hand)
-					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-					user.visible_message(SPAN_ALERT("<b>[user]</b> inserts [W] into [src]'s left eye socket!"),\
-					SPAN_ALERT("You insert [W] into [src]'s left eye socket!"))
-					src.left_eye.op_stage = 1
-				else if (src.right_eye && src.right_eye.op_stage == 2 && user.find_in_hand(W) == user.r_hand)
-					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-					user.visible_message(SPAN_ALERT("<b>[user]</b> removes [src]'s right eye with [W]!"),\
-					SPAN_ALERT("You remove [src]'s right eye with [W]!"))
-					src.right_eye.set_loc(get_turf(src))
-					src.right_eye = null
-				else if (src.left_eye && src.left_eye.op_stage == 2 && user.find_in_hand(W) == user.l_hand)
-					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-					user.visible_message(SPAN_ALERT("<b>[user]</b> removes [src]'s left eye with [W]!"),\
-					SPAN_ALERT("You remove [src]'s left eye with [W]!"))
-					src.left_eye.set_loc(get_turf(src))
-					src.left_eye = null
-				else
-					return ..()
+			// else if (isspooningtool(W))
+			// 	if (src.right_eye && src.right_eye.op_stage == 0.0 && user.find_in_hand(W) == user.r_hand)
+			// 		playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
+			// 		user.visible_message(SPAN_ALERT("<b>[user]</b> inserts [W] into [src]'s right eye socket!"),\
+			// 		SPAN_ALERT("You insert [W] into [src]'s right eye socket!"))
+			// 		src.right_eye.op_stage = 1
+			// 	else if (src.left_eye && src.left_eye.op_stage == 0.0 && user.find_in_hand(W) == user.l_hand)
+			// 		playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
+			// 		user.visible_message(SPAN_ALERT("<b>[user]</b> inserts [W] into [src]'s left eye socket!"),\
+			// 		SPAN_ALERT("You insert [W] into [src]'s left eye socket!"))
+			// 		src.left_eye.op_stage = 1
+			// 	else if (src.right_eye && src.right_eye.op_stage == 2 && user.find_in_hand(W) == user.r_hand)
+			// 		playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
+			// 		user.visible_message(SPAN_ALERT("<b>[user]</b> removes [src]'s right eye with [W]!"),\
+			// 		SPAN_ALERT("You remove [src]'s right eye with [W]!"))
+			// 		src.right_eye.set_loc(get_turf(src))
+			// 		src.right_eye = null
+			// 	else if (src.left_eye && src.left_eye.op_stage == 2 && user.find_in_hand(W) == user.l_hand)
+			// 		playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
+			// 		user.visible_message(SPAN_ALERT("<b>[user]</b> removes [src]'s left eye with [W]!"),\
+			// 		SPAN_ALERT("You remove [src]'s left eye with [W]!"))
+			// 		src.left_eye.set_loc(get_turf(src))
+			// 		src.left_eye = null
+			// 	else
+			// 		return ..()
 
-			else
-				return ..()
+			// else
+			// 	return ..()
 		else
 			return ..()
 
@@ -553,11 +553,11 @@
 				user.u_equip(src)
 			H.update_equipment_screen_loc()
 
-			SPAWN(rand(50,500))
-				if (H?.organHolder?.head == src && src.op_stage != 0.0) // head has not been secured
-					H.visible_message(SPAN_ALERT("<b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b>"),\
-					SPAN_ALERT("<b>Your head comes loose and tumbles off of your neck!</b>"))
-					H.organHolder.drop_organ("head") // :I
+			// SPAWN(rand(50,500))
+			// 	if (H?.organHolder?.head == src && src.op_stage != 0.0) // head has not been secured
+			// 		H.visible_message(SPAN_ALERT("<b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b>"),\
+			// 		SPAN_ALERT("<b>Your head comes loose and tumbles off of your neck!</b>"))
+			// 		H.organHolder.drop_organ("head") // :I
 
 			return 1
 		else
@@ -569,7 +569,6 @@
 			// rebuild, start with a human head
 			src.name = "head"
 			src.desc = "Well, shit."
-			src.scalp_op_stage = 0
 			src.head_type = mutant_race
 
 			// then set the head icon

@@ -168,6 +168,13 @@
 			background = image('icons/ui/context16x16.dmi', src, "[action.getBackground(target, user)]0")
 			background.appearance_flags = RESET_COLOR | PIXEL_SCALE
 
+		if(action.pip_enabled)
+			var/image/pip = image(action.pip_icon, src, action.pip_state)
+			pip.appearance_flags = RESET_COLOR | PIXEL_SCALE
+			pip.pixel_x=10
+			pip.pixel_y=-3
+			src.overlays += pip
+
 		if (A.background_color)
 			src.background.color = A.background_color
 		src.underlays += background

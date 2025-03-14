@@ -332,7 +332,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		if (H.bleeding < 0)
 			H.bleeding = 0
 			//BLOOD_DEBUG("[H]'s bleeding dropped below 0 and was reset to 0")
-		if (H.bleeding && H.get_surgery_status())
+		if (H.bleeding && H.get_surgery_depth())
 			H.bleeding ++
 		switch (H.bleeding)
 			if (-INFINITY to 0)
