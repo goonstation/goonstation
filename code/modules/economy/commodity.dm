@@ -1560,6 +1560,12 @@ datum/commodity/drugs/sell/poppies
 	desc = "A not-at-all scary rabbit suit! Steam clean only."
 	price = PAY_UNTRAINED
 
+/datum/commodity/costume/blorbosuit
+	comname = "Mx. Blorbo suit"
+	comtype = /obj/item/storage/box/costume/blorbosuit
+	desc = "The delightful regalia of a terrible polkadot mascot."
+	price = PAY_UNTRAINED
+
 /datum/commodity/backpack/breadpack
 	comname = "Bag-uette"
 	comtype = /obj/item/storage/backpack/breadpack

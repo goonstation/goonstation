@@ -489,3 +489,9 @@
 	desc = "Be the mascot you always knew you could be."
 	spawn_contents = list(/obj/item/clothing/head/rabbithat,
 	/obj/item/clothing/suit/rabbitsuit)
+
+/obj/item/storage/box/costume/blorbosuit
+	name = "Mx Blorbo suit costume set"
+	desc = "The entertaining guise of an oversized abominable creature of entertainment."
+	spawn_contents = list(/obj/item/clothing/head/blorbohat,
+	/obj/item/clothing/suit/blorbosuit)
