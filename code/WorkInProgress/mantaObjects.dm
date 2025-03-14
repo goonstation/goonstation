@@ -1374,7 +1374,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	proc/addManta(atom/movable/Obj)
 		if(!istype(Obj, /obj/overlay) && !istype(Obj, /obj/machinery/light_area_manager) && istype(Obj, /atom/movable))
 			if(!(HAS_ATOM_PROPERTY(Obj, PROP_MOVABLE_OCEAN_PUSH)) && !(Obj.event_handler_flags & IMMUNE_OCEAN_PUSH) && !Obj.anchored)
-				APPLY_ATOM_PROPERTY(Obj, PROP_MOVABLE_OCEAN_PUSH, src, 0.5 SECONDS)
+				APPLY_ATOM_PROPERTY(Obj, PROP_MOVABLE_OCEAN_PUSH, src)
 				BeginOceanPush(Obj)
 		return
 

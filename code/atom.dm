@@ -546,9 +546,6 @@ TYPEINFO(/atom/movable)
 
 
 /atom/movable/disposing()
-	if (HAS_ATOM_PROPERTY(src, PROP_MOVABLE_OCEAN_PUSH))
-		EndOceanPush(src, GET_ATOM_PROPERTY(src, PROP_MOVABLE_OCEAN_PUSH))
-
 	if (temp_flags & SPACE_PUSHING)
 		EndSpacePush(src)
 

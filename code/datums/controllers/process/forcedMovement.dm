@@ -12,40 +12,42 @@ proc/EndSpacePush(var/atom/movable/A)
 	controller.space_controller.push_list -= A
 	A.temp_flags &= ~SPACE_PUSHING
 
-proc/BeginOceanPush(atom/movable/AM, interval = 0.5 SECONDS, dir = SOUTH)
+proc/BeginOceanPush(atom/movable/AM, dir = SOUTH)
 	var/datum/controller/process/fMove/controller = global.processScheduler.getProcess("Forced movement")
-	var/datum/force_push_controller/ocean/sub_controller = controller.ocean_controllers["[interval]"]
-	if (!sub_controller)
-		sub_controller = new
-		sub_controller.interval = interval
-		controller.ocean_controllers["[interval]"] = sub_controller
-	sub_controller.addAtom(AM, dir)
+	controller.ocean_controller.addAtom(AM, dir)
 
-proc/EndOceanPush(atom/movable/AM, interval = 0.5 SECONDS)
+proc/EndOceanPush(atom/movable/AM)
 	if (!global.processScheduler) //grumble grumble race conditions
 		return
 	var/datum/controller/process/fMove/controller = global.processScheduler.getProcess("Forced movement")
-	var/datum/force_push_controller/ocean/sub_controller = controller.ocean_controllers["[interval]"]
-	sub_controller.removeAtom(AM)
+	controller.ocean_controller.removeAtom(AM)
 
 /// Controls forced movements
 /datum/controller/process/fMove
 	name = "Forced movement"
-	var/list/datum/force_push_controller/ocean/ocean_controllers = list()
+	var/datum/force_push_controller/ocean/ocean_controller = new
 	var/datum/force_push_controller/space/space_controller = new
+	var/list/datum/force_push_controller/ocean/current_controllers = list()
 	setup()
 		name = "Forced movement"
 		schedule_interval = 0.1 SECONDS
 
+		for (var/turf/T in landmarks["current spawner"]) //this sucks but we need to init currents after the process scheduler init, which is WAAAY after mapload
+			var/obj/landmark/current_spawner/landmark = locate() in T
+			landmark?.set_up(src)
+
 	doWork()
-		if ((ticks % text2num(src.space_controller.interval)) == 0)
-			src.space_controller.doWork()
-		for (var/interval in src.ocean_controllers)
-			if ((ticks % text2num(interval)) == 0)
-				src.ocean_controllers[interval].doWork()
+		for (var/datum/force_push_controller/ocean/controller in (src.current_controllers + src.ocean_controller + src.space_controller))
+			if ((ticks % text2num(controller.interval)) == 0)
+				controller.doWork()
 
 	tickDetail()
 		// boutput(usr, "<b>ForcedMovement:</b> Managing [oceanPushList.len] mantapush objects and [spacePushList.len] spacepush objects")
+
+	proc/requestCurrentController()
+		var/datum/force_push_controller/ocean/new_controller = new
+		src.current_controllers += new_controller
+		return new_controller
 
 ABSTRACT_TYPE(/datum/force_push_controller)
 /datum/force_push_controller
@@ -174,6 +176,9 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 		//for glide size
 		var/adjusted_interval = src.last_tick_time < 0 ? src.interval : TIME - src.last_tick_time
 		for (var/atom/movable/M as anything in src.push_list)
+			if (QDELETED(M))
+				src.removeAtom(M)
+				continue
 			if(!M)
 				continue
 
