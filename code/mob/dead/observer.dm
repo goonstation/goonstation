@@ -254,13 +254,13 @@
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, ghost_invisibility)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_SPECTRO, src)
-
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	src.see_invisible = INVIS_SPOOKY
 	src.see_in_dark = SEE_DARK_FULL
 	animate_bumble(src) // floaty ghosts  c:
 	src.verbs += /mob/dead/observer/proc/toggle_tgui_auto_open
 	src.verbs += /mob/dead/observer/proc/toggle_ghost_chem_vision
+	src.verbs += /mob/dead/observer/proc/toggle_ghost_law_vision
 	if (ismob(corpse))
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
@@ -287,6 +287,9 @@
 	SPAWN(0.5 SECONDS)
 		if (src.mind && istype(src.mind.purchased_bank_item, /datum/bank_purchaseable/golden_ghost))
 			src.setMaterial(getMaterial("gold"))
+		if (src.mind?.get_player()?.dnr)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_LAW_VISION, src)
+
 //#ifdef HALLOWEEN
 //	src.sd_SetLuminosity(GHOST_LUM) // comment all of these back out after hallowe'en
 //#endif
@@ -611,6 +614,19 @@
 	else
 		boutput(src, "Enabled viewing chemical composition of objects")
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_SPECTRO, src)
+
+/mob/dead/observer/proc/toggle_ghost_law_vision()
+	set category = "Ghost"
+	set name = "Toggle Silicon Law Vision"
+	if(!mind || !mind.get_player()?.dnr)
+		boutput( usr, SPAN_ALERT("You must enable DNR to use this.") )
+		return
+	if(HAS_ATOM_PROPERTY(src, PROP_MOB_LAW_VISION))
+		boutput(src, "No longer viewing laws of examined silicons.")
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_LAW_VISION, src)
+	else
+		boutput(src, "Enabled viewing laws of examined silicons.")
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_LAW_VISION, src)
 
 /mob/dead/observer/proc/reenter_corpse()
 	set category = null

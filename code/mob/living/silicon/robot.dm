@@ -770,7 +770,16 @@
 			else
 				. += "[src.name] follows the same laws you do.<br>"
 
-		. += SPAN_NOTICE("*---------*")
+		. += SPAN_NOTICE("*---------*<br>")
+		if(HAS_ATOM_PROPERTY(user, PROP_MOB_LAW_VISION))
+			var/law_output = null
+			if(!lawset_connection)
+				law_output = "They do not have any laws!"
+			else
+				law_output = lawset_connection.host_rack ? "They are connected to rack ID [lawset_connection.host_rack.unique_id].<br>" : "They are not connected to a law rack.<br>"
+				law_output += "Their laws are:<br>" + lawset_connection.format_for_display()
+			. += "[SPAN_HINT(law_output)]"
+
 
 	choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 		var/newname

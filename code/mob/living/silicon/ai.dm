@@ -1025,6 +1025,14 @@ or don't if it uses a custom topopen overlay
 			. += "[SPAN_ALERT("[src.name] is not connected to your law rack!")]<br>"
 		else
 			. += "[src.name] follows the same laws you do.<br>"
+	if(HAS_ATOM_PROPERTY(user, PROP_MOB_LAW_VISION))
+		var/law_output = null
+		if(!lawset_connection)
+			law_output = "They do not have any laws!"
+		else
+			law_output = lawset_connection.host_rack ? "They are connected to rack ID [lawset_connection.host_rack.unique_id].<br>" : "They are not connected to a law rack.<br>"
+			law_output += "Their laws are:<br>" + lawset_connection.format_for_display()
+		. += "[SPAN_HINT(law_output)]"
 
 /mob/living/silicon/ai/emote(var/act, var/voluntary = 0)
 	..()
