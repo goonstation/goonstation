@@ -108,6 +108,7 @@
 				src.next_shaft = null
 				src.last_shaft?.next_shaft = null
 				src.last_shaft = null
+			return
 		. = ..()
 
 	///Try to attach to other shafts to form a beeg one
@@ -222,6 +223,12 @@
 			return TRUE
 		. = ..()
 
+	attackby(obj/item/W, mob/user)
+		if (iswrenchingtool(W))
+			return src.shaft?.Attackby(W, user)
+		else
+			. = ..()
+
 	process(mult)
 		if (!src.turbine)
 			src.generation = 0
@@ -232,5 +239,6 @@
 			return
 		src.generation = 40 KILO WATTS / current.interval //caps out at 40KW by default
 		src.add_avail(src.generation)
+
 
 #undef TURBINE_MOVE_TIME
