@@ -190,7 +190,11 @@
 
 	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
-			return src.shaft?.Attackby(W, user)
+			if (src.shaft)
+				return src.shaft.Attackby(W, user)
+			else
+				var/obj/turbine_shaft/shaft = locate() in get_turf(src)
+				shaft?.Attackby(W, user)
 		else
 			. = ..()
 
