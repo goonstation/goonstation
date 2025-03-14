@@ -36,13 +36,12 @@
 
 #define TURBINE_MOVE_TIME (2 SECONDS)
 
-/obj/machinery/current_turbine
+/obj/turbine_shaft/turbine
 	name = "NT40 tidal current turbine"
 	anchored = ANCHORED
 	icon = 'icons/obj/power.dmi'
 	icon_state = "current_turbine0" //TODO: animated states (fear)
 	density = TRUE
-	glide_size = 32 / TURBINE_MOVE_TIME
 
 /obj/turbine_shaft
 	name = "turbine shaft"
@@ -53,43 +52,48 @@
 	density = FALSE
 	layer = FLOOR_EQUIP_LAYER1
 	glide_size = 32 / TURBINE_MOVE_TIME
+	dir = NORTH
 
-	//this is all kind of unoptimized but it's only going to be running every few seconds and for relatively short shafts
-	//refactor to be less pretty and more faster if we end up supporting very very long shafts for some reason
+	var/obj/turbine_shaft/next_shaft = null
+	var/obj/turbine_shaft/last_shaft = null
+
+	///Try to move all upstream shafts in dir
 	proc/shove(dir)
-		var/list/forward = src.get_connected(dir)
-		var/turf/end_turf = length(forward) ? get_turf(forward[length(forward)]) : get_turf(src)
-		var/turf/push_turf = get_step(end_turf, dir)
-		if (push_turf.density)
-			return FALSE //give up
-		var/list/full_list = forward + list(src) + src.get_connected(turn(dir, 180))
-		for (var/obj/machinery/current_turbine/turbine in full_list)
-			if (locate(/obj/machinery/power/current_turbine_base) in get_step(turbine, dir)) //we're going to smack the turbine into the base
-				return FALSE
-		for (var/obj/shaft_piece in full_list)
-			shaft_piece.set_loc(get_step(shaft_piece, dir))
-		return TRUE
+		var/obj/turbine_shaft/shoved_shaft = null
+		var/turf/test_turf = null
+		if (dir == src.dir)
+			test_turf = src.next_turf()
+			shoved_shaft = src.next_shaft
+		else
+			test_turf = src.last_turf()
+			shoved_shaft = src.last_shaft
+		var/success = FALSE
+		if (!shoved_shaft)
+			if (test_turf && !test_turf.density)
+				success = TRUE
+		else
+			success = shoved_shaft.shove(dir)
 
-	proc/get_connected(dir)
-		var/list/connected = list()
-		var/turf/next_turf = get_step(src, dir)
-		while(TRUE)
-			if (next_turf.density)
-				return connected
-			var/found_shaft = FALSE
-			for (var/obj/object in next_turf.contents)
-				if ((object.dir != dir && object.dir != turn(dir, 180)) || !object.anchored)
-					continue
-				if (istype(object, /obj/machinery/current_turbine))
-					connected += object
-					return connected //we found the turbine on the end, return
-				if (istype(object, /obj/turbine_shaft))
-					connected += object
-					found_shaft = TRUE
-					break
-			if (!found_shaft) //no next piece, return
-				return connected
-			next_turf = get_step(next_turf, dir)
+		if (success)
+			src.set_loc(test_turf)
+			return TRUE
+		return FALSE
+
+	proc/next_turf()
+		RETURN_TYPE(/turf)
+		return get_step(src, src.dir)
+
+	proc/last_turf()
+		RETURN_TYPE(/turf)
+		return get_step(src, turn(src.dir, 180))
+
+	///Lock them to NORTH/WEST dirs just to make things easier
+	set_dir(new_dir)
+		if (new_dir == EAST)
+			new_dir = WEST
+		else if (new_dir == SOUTH)
+			new_dir = NORTH
+		. = ..(new_dir)
 
 	attackby(obj/item/I, mob/user)
 		if (iswrenchingtool(I))
@@ -97,10 +101,28 @@
 			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 			if (anchored)
 				src.visible_message("[user] secures [src] in place.")
+				src.attach()
 			else
 				src.visible_message("[user] unsecures [src].")
+				src.next_shaft?.last_shaft = null
+				src.next_shaft = null
+				src.last_shaft?.next_shaft = null
+				src.last_shaft = null
 		. = ..()
 
+	///Try to attach to other shafts to form a beeg one
+	proc/attach()
+		src.set_dir(src.dir)
+		for (var/obj/turbine_shaft/other_shaft in src.next_turf())
+			if (other_shaft.dir == src.dir && other_shaft.anchored)
+				src.next_shaft = other_shaft
+				other_shaft.last_shaft = src
+				break
+		for (var/obj/turbine_shaft/other_shaft in src.last_turf())
+			if (other_shaft.dir == src.dir && other_shaft.anchored)
+				src.last_shaft = other_shaft
+				other_shaft.next_shaft = src
+				break
 
 /obj/machinery/power/current_turbine_base
 	name = "turbine base"
@@ -110,7 +132,7 @@
 	density = TRUE
 	flags = FLUID_DENSE | TGUI_INTERACTIVE
 	///The actual turbine on the end. TODO: handle multiple turbines?
-	var/obj/machinery/current_turbine/turbine = null
+	var/obj/turbine_shaft/turbine/turbine = null
 	///The current shaft, can be null if some idiot overextends the shaft all the way out
 	var/obj/turbine_shaft/shaft = null
 	///How many extra lengths of shaft stick out the back
@@ -155,11 +177,25 @@
 		var/turf/T = get_turf(src)
 		src.turbine = new(get_step(T, src.dir))
 		src.shaft = new(T)
+		src.shaft.attach()
 		for (var/i in 1 to initial_length)
 			T = get_step(T, turn(src.dir, 180)) //step backwards
 			if (!T || T.density)
 				break
-			new /obj/turbine_shaft(T)
+			var/obj/turbine_shaft/shaft = new(T)
+			shaft.attach()
+
+	///Return either end of the current shaft
+	proc/end_shaft(dir)
+		RETURN_TYPE(/obj/turbine_shaft)
+		var/obj/turbine_shaft/current_shaft = src.shaft
+		if (dir == current_shaft.dir)
+			while (current_shaft?.last_shaft)
+				current_shaft = current_shaft.last_shaft
+		else
+			while (current_shaft?.next_shaft)
+				current_shaft = current_shaft.next_shaft
+		return current_shaft
 
 	proc/move_shaft(backwards = FALSE)
 		if (GET_COOLDOWN(src, "move_shaft"))
@@ -174,12 +210,17 @@
 		var/dir = src.dir
 		if (backwards)
 			dir = turn(src.dir, 180)
-		if (!src.shaft.shove(dir))
+		if (!src.end_shaft(dir).shove(dir))
 			src.visible_message(SPAN_ALERT("[src] makes a protesting grinding noise."))
 			animate_storage_thump(src)
 			return
 		src.shaft = locate() in get_turf(src)
 		playsound(src, 'sound/machines/button.ogg', 50, 1)
+
+	Cross(atom/movable/mover)
+		if (istype(mover, /obj/turbine_shaft) && (mover.dir == NORTH || mover.dir == SOUTH))
+			return TRUE
+		. = ..()
 
 	process(mult)
 		if (!src.turbine)
