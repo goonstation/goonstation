@@ -55,17 +55,19 @@
 
 	attackby(obj/item/I, mob/user)
 		if (iswrenchingtool(I))
-			src.anchored = !src.anchored
-			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-			if (anchored)
-				src.visible_message("[user] secures [src] in place.")
-				src.attach()
-			else
+			if (src.last_shaft || src.next_shaft)
 				src.visible_message("[user] unsecures [src].")
+				src.anchored = FALSE
 				src.next_shaft?.last_shaft = null
 				src.next_shaft = null
 				src.last_shaft?.next_shaft = null
 				src.last_shaft = null
+				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+			else
+				src.attach()
+				if (src.last_shaft || src.next_shaft)
+					src.visible_message("[user] secures [src] in place.")
+					playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 			return
 		. = ..()
 
@@ -73,15 +75,19 @@
 	proc/attach()
 		src.set_dir(src.dir)
 		for (var/obj/turbine_shaft/other_shaft in src.next_turf())
-			if (other_shaft.dir == src.dir && other_shaft.anchored)
+			if (other_shaft.dir == src.dir)
 				src.next_shaft = other_shaft
 				other_shaft.last_shaft = src
+				other_shaft.anchored = ANCHORED
 				break
 		for (var/obj/turbine_shaft/other_shaft in src.last_turf())
-			if (other_shaft.dir == src.dir && other_shaft.anchored)
+			if (other_shaft.dir == src.dir)
 				src.last_shaft = other_shaft
 				other_shaft.next_shaft = src
+				other_shaft.anchored = ANCHORED
 				break
+		if (src.next_shaft || src.last_shaft)
+			src.anchored = ANCHORED
 
 /obj/turbine_shaft/turbine
 	name = "NT40 tidal current turbine"
