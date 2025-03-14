@@ -46,6 +46,7 @@
 
 /obj/turbine_shaft
 	name = "turbine shaft"
+	desc = "A heavy duty metal shaft."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "turbine_shaft"
 	anchored = ANCHORED
@@ -75,16 +76,31 @@
 		while(TRUE)
 			if (next_turf.density)
 				return connected
-			var/obj/machinery/current_turbine/turbine = locate() in next_turf.contents
-			var/obj/turbine_shaft/next_shaft = locate() in next_turf.contents
-			if (turbine)
-				connected += turbine
-				return connected
-			if (next_shaft)
-				connected += next_shaft
-			else
+			var/found_shaft = FALSE
+			for (var/obj/object in next_turf.contents)
+				if ((object.dir != dir && object.dir != turn(dir, 180)) || !object.anchored)
+					continue
+				if (istype(object, /obj/machinery/current_turbine))
+					connected += object
+					return connected //we found the turbine on the end, return
+				if (istype(object, /obj/turbine_shaft))
+					connected += object
+					found_shaft = TRUE
+					break
+			if (!found_shaft) //no next piece, return
 				return connected
 			next_turf = get_step(next_turf, dir)
+
+	attackby(obj/item/I, mob/user)
+		if (iswrenchingtool(I))
+			src.anchored = !src.anchored
+			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+			if (anchored)
+				src.visible_message("[user] secures [src] in place.")
+			else
+				src.visible_message("[user] unsecures [src].")
+		. = ..()
+
 
 /obj/machinery/power/current_turbine_base
 	name = "turbine base"
@@ -146,7 +162,7 @@
 			new /obj/turbine_shaft(T)
 
 	proc/move_shaft(backwards = FALSE)
-		if (GET_COOLDOWN(src, "move_shaft", TURBINE_MOVE_TIME))
+		if (GET_COOLDOWN(src, "move_shaft"))
 			return
 		ON_COOLDOWN(src, "move_shaft", TURBINE_MOVE_TIME)
 		if (!src.shaft)
