@@ -497,7 +497,7 @@ TYPEINFO(/turf/simulated/wall)
 	name = "tall grass"
 	desc = "Looks like a... regular wall that's been painted in a grassy pattern. Clever!"
 	icon = 'icons/turf/outdoors.dmi'
-	icon_state = "grass_0"
+	icon_state = "grass"
 
 #ifdef SEASON_AUTUMN
 	New()

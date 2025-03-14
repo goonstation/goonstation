@@ -2042,6 +2042,14 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	time = 90 SECONDS
 	category = "Component"
 
+/datum/manufacture/scream_synth
+	name = "Scream Synthesizer"
+	item_requirements = list("conductive" = 2, "metal" = 2, "insulated" = 2)
+	item_outputs = list(/obj/item/instrument/roboscream)
+	create = 1
+	time = 30 SECONDS
+	category = "Component"
+
 /datum/manufacture/implant_robotalk
 	name = "Machine Translator Implant"
 	item_requirements = list("conductive" = 3,

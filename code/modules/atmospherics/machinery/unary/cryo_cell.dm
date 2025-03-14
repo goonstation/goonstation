@@ -1,6 +1,6 @@
 TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	mats = list("cobryl" = 100,
-				"glass" = 50,
+				"crystal" = 50,
 				"energy_high" = 20)
 /obj/machinery/atmospherics/unary/cryo_cell
 	name = "cryogenic healing pod"
@@ -408,7 +408,8 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		return
 	var/remove_amount = TOTAL_MOLES(src.air_contents)/100
 	var/datum/gas_mixture/expel_gas = air_contents.remove(remove_amount)
-	expel_gas.temperature = T20C // Lets expel hot gas and see if that helps people not die as they are removed
+	if (expel_gas.temperature < T20C)
+		expel_gas.temperature = T20C // Lets expel hot gas and see if that helps people not die as they are removed
 	loc.assume_air(expel_gas)
 
 /obj/machinery/atmospherics/unary/cryo_cell/verb/move_eject()
