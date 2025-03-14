@@ -90,6 +90,7 @@
 			current_blood_amt += owner.reagents.total_volume / 4 // dropping how much reagents count so that people stop going hypertensive at the drop of a hat
 			var/cho_amt = owner.reagents.get_reagent_amount("cholesterol")
 			var/gnesis_amt = owner.reagents.get_reagent_amount("flockdrone_fluid")
+			var/saline_amt = owner.reagents.get_reagent_amount("saline")
 			if (anticoag_amt)
 				current_blood_amt -= ((anticoag_amt / 4) + anticoag_amt) * mult// set the total back to what it would be without the heparin, then remove the total of the heparin
 			if (coag_amt)
@@ -101,6 +102,11 @@
 			if (gnesis_amt)
 				current_blood_amt -= (gnesis_amt / 4) * mult
 				current_blood_amt += (gnesis_amt / 2) * mult //makes it stay somewhat constant with regular spleen and conversion so you wont feel the effects of blood loss. since gnesis is flock blood and this is human blood so it must be similar right?
+			if (saline_amt) //saline should be easy to administer and easier to keep beneficial.
+				if (current_blood_amt < 500)
+					var/max_safe_blood = current_blood_amt - 500
+					current_blood_amt += clamp(saline_amt , 0, max_safe_blood) // 1u saline = 0.25~1.25u blood. unrealistic, but depletes quickly.
+
 		current_blood_amt = round(current_blood_amt, 1)
 
 		// very low (70/50 or lower) (<300u)
