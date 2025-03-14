@@ -14,12 +14,6 @@
 	if (PN?.avail > 0)
 		elecflash(src)
 
-	// 1.5MW is the min threshold for doing arcflashes, and 1.5MW shocks do 60 burn. Time to fry the airlock.
-	if ((PN?.avail > 1500000) && istype(src, /obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/door = src
-		// we dont force overload here since we dont know if the shock came from hacking or not
-		door.shock_overload()
-
 	if(ignore_range || in_interact_range(src, user))
 		return user.shock(src, PN ? PN.avail : 0, user.hand == LEFT_HAND ? "l_arm": "r_arm", 1, ignore_gloves ? 1 : 0)
 

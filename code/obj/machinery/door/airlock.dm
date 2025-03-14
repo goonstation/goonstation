@@ -457,11 +457,16 @@ var/global/list/cycling_airlocks = list()
 	if (!in_interact_range(src, user))
 		return 0
 	if(src.electrocute(user, 100, net)) //this is on purpose so the rng wont roll twice
-		return 1
-
+		. = 1
 	else
 		return 0
-
+	var/datum/powernet/PN
+	if(powernets && length(powernets) >= net)
+		PN = powernets[net]
+	// 1.5MW is the min threshold for doing arcflashes, and 1.5MW shocks do 60 burn. Time to fry the airlock.
+	// We also only want to overload if we actually zap someone
+	if(. == 1 && (PN?.avail > 1500000))
+		src.shock_overload()
 
 /obj/machinery/door/airlock/update_icon(var/toggling = 0, override_parent = TRUE)
 	if(toggling ? !density : density)
