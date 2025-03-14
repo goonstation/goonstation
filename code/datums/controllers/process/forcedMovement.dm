@@ -38,7 +38,7 @@ proc/EndOceanPush(atom/movable/AM, interval = 0.5 SECONDS)
 		schedule_interval = 0.1 SECONDS
 
 	doWork()
-		if ((ticks % src.space_controller.interval) == 0)
+		if ((ticks % text2num(src.space_controller.interval)) == 0)
 			src.space_controller.doWork()
 		for (var/interval in src.ocean_controllers)
 			if ((ticks % text2num(interval)) == 0)
@@ -51,6 +51,7 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 /datum/force_push_controller
 	var/interval = 0.5 SECONDS
 	var/list/push_list = list()
+	var/last_tick_time = -1
 
 	proc/doWork()
 		return
@@ -170,6 +171,8 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 		src.push_list -= AM
 
 	doWork()
+		//for glide size
+		var/adjusted_interval = src.last_tick_time < 0 ? src.interval : TIME - src.last_tick_time
 		for (var/atom/movable/M as anything in src.push_list)
 			if(!M)
 				continue
@@ -203,7 +206,12 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 
 				M.setStatus("slowed", 2 SECONDS, 20)
 			var/dir = src.push_list[M]
+			var/glide = (32 / adjusted_interval) * world.tick_lag
+			M.glide_size = glide
+			M.animate_movement = SLIDE_STEPS
 			if(!step(M, dir))
 				var/dirMod = pick(1, -1)
 				if(!step(M, turn(dir, 90*dirMod)))
 					step(M, turn(dir, 90*-dirMod))
+			M.glide_size = glide
+		src.last_tick_time = TIME
