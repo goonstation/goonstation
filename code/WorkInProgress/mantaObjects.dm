@@ -9,7 +9,6 @@
 
 //-------------------------------------------- MANTA COMPATIBLE LISTS HERE --------------------------------------------
 
-var/list/oceanPushList = list()
 var/mantaMoving = 1
 var/MagneticTether = 1
 var/obj/manta_speed_lever/mantaLever = null
@@ -1369,12 +1368,14 @@ var/obj/manta_speed_lever/mantaLever = null
 /area
 	proc/removeManta(atom/movable/Obj)
 		REMOVE_ATOM_PROPERTY(Obj, PROP_MOVABLE_OCEAN_PUSH, src)
+		EndOceanPush(Obj)
 		return
 
 	proc/addManta(atom/movable/Obj)
 		if(!istype(Obj, /obj/overlay) && !istype(Obj, /obj/machinery/light_area_manager) && istype(Obj, /atom/movable))
 			if(!(HAS_ATOM_PROPERTY(Obj, PROP_MOVABLE_OCEAN_PUSH)) && !(Obj.event_handler_flags & IMMUNE_OCEAN_PUSH) && !Obj.anchored)
-				APPLY_ATOM_PROPERTY(Obj, PROP_MOVABLE_OCEAN_PUSH, src, SOUTH)
+				APPLY_ATOM_PROPERTY(Obj, PROP_MOVABLE_OCEAN_PUSH, src, 0.5 SECONDS)
+				BeginOceanPush(Obj)
 		return
 
 /area/propellerpower
