@@ -296,6 +296,7 @@
 	New()
 		..()
 		src.add_corrupt_laws()
+		last_laws = current_laws //so they don't show as new each time the laws are shown
 
 	proc/add_corrupt_laws(var/count = 3)
 		var/possible_laws = LAW_CORRUPTION_STRINGS
