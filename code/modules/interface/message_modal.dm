@@ -4,7 +4,7 @@
  * Arguments:
  * * user - The user to show the modal to.
  * * message - The content of the modal, shown in the body of the TGUI window.
- * * title - The of the modal modal, shown on the top of the TGUI window.
+ * * title - The title of the modal, shown on the top of the TGUI window.
  * * timeout - The timeout of the modal, after which the modal will close and qdel itself. Set to zero for no timeout.
  * * theme - The TGUI theme used for the window.
  * * sanitize - Toggle the html sanitization safety feature on or off. See MessageModal.tsx for allowed tags.
