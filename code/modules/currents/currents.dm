@@ -90,16 +90,48 @@
 	icon_state = "turbine_base"
 	anchored = ANCHORED
 	density = TRUE
+	flags = FLUID_DENSE | TGUI_INTERACTIVE
 	///The actual turbine on the end. TODO: handle multiple turbines?
 	var/obj/machinery/current_turbine/turbine = null
 	///The current shaft, can be null if some idiot overextends the shaft all the way out
 	var/obj/turbine_shaft/shaft = null
 	///How many extra lengths of shaft stick out the back
-	var/initial_length = 4
+	var/initial_length = 5
+
+	var/reversed = FALSE
+
+	var/generation = 0
 
 	New(new_loc)
 		. = ..()
 		src.init()
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "CurrentTurbine")
+			ui.open()
+
+	ui_data(mob/user)
+		return list(
+			"reversed" = src.reversed,
+			"generation" = src.generation * (src.reversed ? -1 : 1),
+		)
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if (.)
+			return FALSE
+		switch(action)
+			if ("reverse")
+				if (src.generation > 0)
+					playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+				else
+					src.reversed = !src.reversed
+			if ("retract")
+				src.move_shaft(backwards = TRUE)
+			if ("extend")
+				src.move_shaft(backwards = FALSE)
 
 	proc/init()
 		var/turf/T = get_turf(src)
@@ -130,10 +162,11 @@
 
 	process(mult)
 		if (!src.turbine)
+			src.generation = 0
 			return
 		var/obj/effects/current/current = locate() in get_turf(src.turbine)
 		if (!current)
+			src.generation = 0
 			return
-		var/power_gen = 40 KILO WATTS / current.interval //caps out at 40KW by default
-		src.maptext = power_gen
-		src.add_avail(power_gen)
+		src.generation = 40 KILO WATTS / current.interval //caps out at 40KW by default
+		src.add_avail(src.generation)
