@@ -249,7 +249,7 @@
 			"You feed [E] to [src]. Fuck!")
 
 		sleep(2 SECONDS)
-		E.icon_state = "gold"
+		E.icon_state = "id_gold"
 		E.desc += "  It appears to be covered in honey.  Gross."
 		src.visible_message("<b>[src]</b> regurgitates [E]!")
 		E.name = "sticky [E.name]"
