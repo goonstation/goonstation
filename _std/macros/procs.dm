@@ -19,6 +19,7 @@
 
 /// returns early if x is an overlay or effect
 #define return_if_overlay_or_effect(x) if (istype(x, /obj/overlay) || istype(x, /obj/effects) || istype(x, /obj/effect) || istype(x, /obj/itemspecialeffect)) return
+#define continue_if_overlay_or_effect(x) if (istype(x, /obj/overlay) || istype(x, /obj/effects) || istype(x, /obj/effect) || istype(x, /obj/itemspecialeffect)) continue
 
 /proc/CallAsync(datum/object, delegate, list/callingArguments) // Adapted from /datum/callback/proc/InvokeAsync, which is PD, unlike this proc on tg
 	set waitfor = 0

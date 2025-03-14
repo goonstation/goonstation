@@ -121,16 +121,23 @@
 			if (21 to INFINITY) flavor = "vivacious"
 		return "[..()] It looks [flavor]."
 
+	proc/can_kudzu_walk(atom/A)
+		return ishuman(A) && istype(A:mutantrace, /datum/mutantrace/kudzu) || A.hasStatus("kudzuwalk")
+
 	Cross(atom/A)
 		//kudzumen can pass through dense kudzu
 		if (current_stage == 3)
-			if (ishuman(A) &&  istype(A:mutantrace, /datum/mutantrace/kudzu) || A.hasStatus("kudzuwalk"))
-				animate_door_squeeze(A)
-				if(!ON_COOLDOWN(A, "kudzuwalk", 1 SECOND))
-					playsound(A.loc, 'sound/impact_sounds/Bush_Hit.ogg', 45, 1)
+			if (src.can_kudzu_walk(A))
 				return 1
 			return 0
 		return 1
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		if (current_stage == 3 && src.can_kudzu_walk(AM))
+			animate_door_squeeze(AM)
+			if(!ON_COOLDOWN(AM, "kudzuwalk", 1 SECOND))
+				playsound(AM.loc, 'sound/impact_sounds/Bush_Hit.ogg', 45, 1)
 
 	New(turf/loc, var/to_spread = KUDZU_TO_SPREAD_INITIAL)
 		src.to_spread = to_spread
@@ -190,7 +197,7 @@
 
 		src.take_damage(dmg, "brute", user)
 
-		user.lastattacked  = src
+		user.lastattacked = get_weakref(src)
 		..()
 
 /obj/spacevine/proc/update_self()

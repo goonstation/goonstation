@@ -1546,23 +1546,9 @@
 		A.create_reagents(100) // we don't ask for a specific amount since if you exceed 100 it gets asked about below
 		reagents = A.reagents
 
-	var/list/L = list()
-	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
-	if(searchFor)
-		for(var/R in concrete_typesof(/datum/reagent))
-			if(findtext("[R]", searchFor)) L += R
-
-	var/type
-	if(length(L) == 1)
-		type = L[1]
-	else if(length(L) > 1)
-		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
-	else
-		usr.show_text("No reagents matching that name", "red")
+	var/datum/reagent/reagent = pick_reagent(src.mob)
+	if (!reagent)
 		return
-
-	if(!type) return
-	var/datum/reagent/reagent = new type()
 
 	var/amount = input(usr, "Amount:", "Amount", 50) as null|num
 	if(!amount)
@@ -1864,25 +1850,9 @@
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
-	var/list/L = list()
-	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
-	if(searchFor)
-		for(var/R in concrete_typesof(/datum/reagent))
-			if(findtext("[R]", searchFor)) L += R
-	else
-		L = concrete_typesof(/datum/reagent)
-
-	var/type
-	if(length(L) == 1)
-		type = L[1]
-	else if(length(L) > 1)
-		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
-	else
-		usr.show_text("No reagents matching that name", "red")
+	var/datum/reagent/reagent = pick_reagent(src.mob)
+	if (!reagent)
 		return
-
-	if(!type) return
-	var/datum/reagent/reagent = new type()
 
 	var/amount = input(usr,"Amount:","Amount",50) as null|num
 	if(!amount) return
@@ -1910,25 +1880,9 @@
 	if (!T)
 		return
 
-	var/list/L = list()
-	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
-	if(searchFor)
-		for(var/R in concrete_typesof(/datum/reagent))
-			if(findtext("[R]", searchFor)) L += R
-	else
-		L = concrete_typesof(/datum/reagent)
-
-	var/type = 0
-	if(length(L) == 1)
-		type = L[1]
-	else if(length(L) > 1)
-		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
-	else
-		usr.show_text("No reagents matching that name", "red")
+	var/datum/reagent/reagent = pick_reagent(src.mob)
+	if (!reagent)
 		return
-
-	if(!type) return
-	var/datum/reagent/reagent = new type()
 	var/amount = input(usr,"Amount:","Amount",100) as null|num
 	if(!amount) return
 
@@ -1937,58 +1891,6 @@
 	message_admins("[key_name(src)] created fluid at [T] : [reagent.id] with volume [amount] at [log_loc(T)].)")
 
 	T.fluid_react_single(reagent.id, amount)
-
-/*
-/client/proc/admin_airborne_fluid(var/turf/T in world)
-	set name = "Create Airborne Fluid"
-	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
-	set desc = "Attempt an airborne fluid reaction on a turf."
-	set popup_menu = 1
-	ADMIN_ONLY
-
-	if (!T)
-		return
-
-	var/list/L = list()
-	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
-	if(searchFor)
-		for(var/R in concrete_typesof(/datum/reagent))
-			if(findtext("[R]", searchFor)) L += R
-	else
-		L = concrete_typesof(/datum/reagent)
-
-	var/type = 0
-	if(length(L) == 1)
-		type = L[1]
-	else if(length(L) > 1)
-		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
-	else
-		usr.show_text("No reagents matching that name", "red")
-		return
-
-	if(!type) return
-	var/datum/reagent/reagent = new type()
-	var/amount = input(usr,"Amount:","Amount",100) as null|num
-	if(!amount) return
-
-
-	logTheThing(LOG_ADMIN, src, "created fluid at [T] : [reagent.id] with volume [amount] at [log_loc(T)].")
-	message_admins("[key_name(src)] created fluid at [T] : [reagent.id] with volume [amount] at [log_loc(T)].)")
-
-	T.fluid_react_single(reagent.id, amount, airborne = 1)
-
-
-	if (T.active_airborne_liquid && T.active_airborne_liquid.group)
-		var/datum/fluid_group/FG
-		FG = T.active_airborne_liquid.group
-		spawn()
-			FG.required_to_spread = 1
-			FG.update_once()
-			FG.update_once()
-			FG.update_once()
-			FG.required_to_spread = initial(FG.required_to_spread)
-*/
-
 
 /client/proc/admin_follow_mobject(var/atom/target as mob|obj in world)
 	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
@@ -2773,6 +2675,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				src.mob.visible_message("[src.mob] manipulates the very fabric of spacetime around themselves linking their current location with another! Wow!", "You skillfully manipulate spacetime to join the space containing your office with your current location.", "You have no idea what's happening but it sure does sound cool!")
 				playsound(src.mob, 'sound/machines/door_open.ogg', 50, 1)
 				if (!mirrored_physical_zone_created)
+					logTheThing(LOG_DEBUG, null, "mirrored physical zone enabled by office summon")
 					mirrored_physical_zone_created = TRUE
 			else
 				src.mob.visible_message("[src.mob] returns the fabric of spacetime to normal! Wow!", "You wave your office away, returning the space to normal.", "You have no idea what's happening but it sure does sound cool!")

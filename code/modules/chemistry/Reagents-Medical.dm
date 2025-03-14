@@ -367,9 +367,7 @@ datum
 				flush(holder, 3 * mult)
 				if(M.health > 20)
 					M.take_toxin_damage(5 * mult, 1)	//calomel doesn't damage organs.
-				if(probmult(6))
-					var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-					M.vomit(0, null, vomit_message)
+				M.nauseate(1)
 				..()
 				return
 
@@ -530,22 +528,21 @@ datum
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				var/effect = ..(severity, M)
 				if (severity == 1)
-					if( effect <= 1)
-						var/vomit_message = SPAN_ALERT("[M.name] suddenly and violently vomits!")
-						M.vomit(0, null, vomit_message)
-					else if (effect <= 3) M.emote(pick("groan","moan"))
-					if (effect <= 8)
+					if (effect <= 3)
+						M.emote(pick("groan","moan"))
+					else if (effect <= 8)
 						M.take_toxin_damage(1 * mult)
+					else if (effect <= 30)
+						M.nauseate(1)
 				else if (severity == 2)
-					if( effect <= 2)
-						var/vomit_message = SPAN_ALERT("[M.name] suddenly and violently vomits!")
-						M.vomit(0, null, vomit_message)
-					else if (effect <= 5)
+					if (effect <= 5)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> staggers and drools, their eyes crazed and bloodshot!"))
 						M.dizziness += 8
 						M.reagents.add_reagent("madness_toxin", randfloat(2.5 , 5) * src.calculate_depletion_rate(M, mult))
-					if (effect <= 15)
+					else if (effect <= 15)
 						M.take_toxin_damage(1 * mult)
+					else if(effect <= 40)
+						M.nauseate(1)
 
 		medical/omnizine // COGWERKS CHEM REVISION PROJECT. magic drug, ought to use plasma or something
 			name = "omnizine"
@@ -876,20 +873,21 @@ datum
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				var/effect = ..(severity, M)
 				if (severity == 1)
-					if( effect <= 1)
-						var/vomit_message = SPAN_ALERT("[M.name] suddenly and violently vomits!")
-						M.vomit(0, null, vomit_message)
-					else if (effect <= 3) M.emote(pick("groan","moan"))
-					if (effect <= 8) M.emote("collapse")
+					if (effect <= 3)
+						M.emote(pick("groan","moan"))
+					else if (effect <= 8)
+						M.emote("collapse")
+					else if (effect <= 20)
+						M.nauseate(1)
 				else if (severity == 2)
-					if( effect <= 2)
-						var/vomit_message = SPAN_ALERT("[M.name] suddenly and violently vomits!")
-						M.vomit(0, null, vomit_message)
-					else if (effect <= 5)
+					if (effect <= 5)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> staggers and drools, their eyes bloodshot!"))
 						M.dizziness += 2
 						M.setStatusMin("knockdown", 4 SECONDS * mult)
-					if (effect <= 15) M.emote("collapse")
+					else if (effect <= 15)
+						M.emote("collapse")
+					else if (effect <= 20)
+						M.nauseate(1)
 
 		medical/heparin
 			name = "heparin"
@@ -1150,6 +1148,10 @@ datum
 			overdose = 100
 			threshold = THRESHOLD_INIT
 
+			on_mob_life(var/mob/M, var/mult = 1)
+				. = ..()
+				M.nauseate(-1)
+
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
@@ -1230,23 +1232,21 @@ datum
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				var/effect = ..(severity, M)
 				if (severity == 1)
-					if( effect <= 1)
-						var/vomit_message = SPAN_ALERT("[M.name] suddenly and violently vomits!")
-						M.vomit(0, null, vomit_message)
-					else if (effect <= 3) M.emote(pick("groan","moan"))
-					if (effect <= 8)
+					if (effect <= 3)
+						M.emote(pick("groan","moan"))
+					else if (effect <= 8)
 						M.take_toxin_damage(1 * mult)
+					else if (effect <= 20)
+						M.nauseate(1)
 				else if (severity == 2)
-					if( effect <= 2)
-						var/vomit_message = SPAN_ALERT("[M.name] suddenly and violently vomits!")
-						M.vomit(0, null, vomit_message)
-						M.add_karma(1)
-					else if (effect <= 5)
+					if (effect <= 5)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> staggers and drools, their eyes bloodshot!"))
 						M.dizziness += 8
 						M.setStatusMin("knockdown", 5 SECONDS * mult)
-					if (effect <= 15)
+					else if (effect <= 15)
 						M.take_toxin_damage(1 * mult)
+					else if (effect <= 30)
+						M.nauseate(1)
 
 
 		medical/penteticacid // COGWERKS CHEM REVISION PROJECT. should be a potent chelation agent, maybe roll this into tribenzocytazine as Pentetic Acid
@@ -1635,9 +1635,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(M.health > 25)
 					M.take_toxin_damage(1 * mult)
-				if(probmult(25))
-					var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-					M.vomit(0, null, vomit_message)
+				M.nauseate(2) //ur gonna puke a lot
 				if(probmult(5))
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)

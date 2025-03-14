@@ -174,4 +174,4 @@
 		msgs.played_sound = "sound/impact_sounds/Flesh_Stab_3.ogg"
 		msgs.damage_type = DAMAGE_STAB
 		msgs.flush(SUPPRESS_LOGS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)

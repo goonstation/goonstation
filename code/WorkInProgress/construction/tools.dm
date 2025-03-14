@@ -626,6 +626,7 @@ TYPEINFO(/obj/item/room_planner)
 				//T.icon_state = initial(T.icon_state)
 				if (istype(T, /turf/simulated/wall/auto))
 					var/turf/simulated/wall/auto/W = T
+					W.mod = W::mod
 					W.UpdateIcon()
 					W.update_neighbors()
 			return
@@ -894,6 +895,7 @@ TYPEINFO(/obj/item/room_planner)
 			var/turf/simulated/wall/auto/AT = T
 			AT.icon = src.icon
 			AT.icon_state = "[selectedmod][connectdir]"
+			AT.mod = selectedmod
 
 			qdel(src)
 

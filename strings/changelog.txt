@@ -1,3 +1,112 @@
+
+(t)thu mar 13 25
+(u)Chasu
+(p)22559
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Animal control lockers now come with one pet carrier each.
+(u)Lyy
+(p)22532
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Cutting someone's hair now leaves a cleanable hair pile.
+(t)wed mar 12 25
+(u)Facsimile
+(p)22574
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Fixes instrument chord bug introduced by PR #22557 (Cyborg instrument screams).
+(u)Sord
+(+)The Special Equipment crate in the armory now contains a random special armory firearm.
+(+)Random firearm can be an energy gun, egun jr, stasis rifle, or macro phaser.
+(+)The Experimental Security Equipment crate in cargo now contains a stasis rifle.
+(t)tue mar 11 25
+(u)LeahTheTech + Valtsu0
+(p)22557
+(e)🎨🔊🤖|C-Sprites, C-Sound, A-Silicons
+(*)Musical instruments can now be inserted into cyborgs to be used as their scream sound.
+(+)Cyborgs can now select their scream sound using the verb "Change scream note"
+(u)JORJ949
+(p)22542
+(e)🆕🔨|C-Feature, A-Player-Actions
+(*)Added the Nanotrasen radio channel (:n) to corporate based jobs such as the NTSC and Inspector
+(t)mon mar 10 25
+(u)FlameArrow57
+(p)22373
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(+)The debris field X-drone may instead appear as an assault laser drone.
+(u)glowbold
+(p)22536
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Quickhacks are now marked as contraband.
+(u)JORJ949
+(p)22540
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The pod targeting missile launcher can now be emagged.
+(u)cringe
+(p)22484
+(e)🆕🎨💨|C-Feature, C-Sprites, A-Atmospherics
+(+)The HPD now has the pipe to pipe heat exchanger.
+(u)FlameArrow57
+(p)22443
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added large hoodies to the clothing booth! Sprites by End.
+(u)LeahTheTech + sprites by Xenomni
+(p)22466
+(e)🎨🔨|C-Sprites, A-Player-Actions
+(*)Most sources of instant vomiting will now instead give you a stacking "nausea" debuff, with a vomit and a short stun at the end. Please report any issues with chemical/other balance cause by this.
+(+)Eating low quality food will now give you nausea stacks and only give you food poisoning if you eat several bites of really nasty food.
+(+)Food poisoning will go away on its own more often.
+(t)sat mar 08 25
+(u)FlameArrow57
+(p)22389
+(e)🆕🎨📦🚗|C-Feature, C-Sprites, A-Game-Objects, A-Vehicles
+(+)Added a new burst phaser pod weapon to pod manufacturers. Deals 5 more damage per bolt
+(u)cringe
+(p)22489
+(e)|
+(*)You can now make cryogenic cells at a high cost.
+(u)Facsimile
+(p)22298
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Adds supply packs to cargo for the Player Piano, Piano, and Grand Piano.
+(u)JORJ949
+(p)22493
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Added barbershop kit to list of cargo orders.
+(t)wed mar 05 25
+(u)glowbold
+(p)22457
+(e)⚖|C-Balance
+(*)Infrared vision cannot see through gene-based or vampire cloaking. They can still be revealed by mesons.
+(t)tue mar 04 25
+(u)Sord
+(+)Plasma Lungs trait grants 2 points instead of only 1.
+(t)mon mar 03 25
+(u)Mordent
+(p)22476
+(e)📄|A-UI
+(+)Various UIs use striping instead of borders between items.
+(u)glowbold
+(p)22456
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Engineers now have access to infrared crayons.
+(t)sun mar 02 25
+(u)glowbold
+(p)22431
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Click-dragging people into a syndicate robot conversion chamber has a 1 second action bar.
+(t)thu feb 27 25
+(u)glowbold
+(p)22448
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The engineering specialist manufacturer can print heavy firesuits.
+(u)FlameArrow57
+(p)22323
+(e)🆕🎨📦🚗|C-Feature, C-Sprites, A-Game-Objects, A-Vehicles
+(+)Added a new Scout Engine pod engine. Compared to other engines, it provides the highest speed and warp travel recharge time, but provides little power to operate most pod parts that require power
+(t)tue feb 25 25
+(u)Sovexe
+(p)22439
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Rectangular maps (e.g. Podwars) are now properly supported by the minimap computers and floor displays
 (t)sun feb 23 25
 (u)LeahTheTech
 (+)Nanotrasen has begun enforcing its millinery patents.

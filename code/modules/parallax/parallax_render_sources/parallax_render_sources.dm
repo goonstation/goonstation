@@ -81,6 +81,12 @@
 	parallax_value = 0.03
 	tessellate = FALSE
 
+/atom/movable/screen/parallax_render_source/planet/gimmick1
+/atom/movable/screen/parallax_render_source/planet/gimmick2
+/atom/movable/screen/parallax_render_source/planet/gimmick3
+/atom/movable/screen/parallax_render_source/planet/gimmick4
+/atom/movable/screen/parallax_render_source/planet/gimmick5
+
 
 /// inner system - Diner debris belt
 
