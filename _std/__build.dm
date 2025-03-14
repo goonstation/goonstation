@@ -71,6 +71,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define SHUT_UP_ABOUT_MY_PAY // disables PDA messages from the wagesystem
 //#define FUCK_OFF_WITH_THE_MAIL // Disables random crew mail system
 //#define GHOSTDRONES_ON_STRIKE // prevents ghostdrone factory objs from doing stuff
+//#define STOP_BREAKING_THE_FUCKING_LIGHTS_I_WANT_TO_SEE_SHIT // Stops lights from breaking or burning out when spawning or turning on/off
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
@@ -197,6 +198,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define SHUT_UP_ABOUT_MY_PAY
 #define FUCK_OFF_WITH_THE_MAIL
 #define GHOSTDRONES_ON_STRIKE
+#define STOP_BREAKING_THE_FUCKING_LIGHTS_I_WANT_TO_SEE_SHIT
 #endif
 
 #ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
