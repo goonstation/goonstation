@@ -34,13 +34,15 @@
 			T = get_step(T, src.dir)
 		..()
 
+#define TURBINE_MOVE_TIME (2 SECONDS)
+
 /obj/machinery/current_turbine
 	name = "NT40 tidal current turbine"
 	anchored = ANCHORED
 	icon = 'icons/obj/power.dmi'
 	icon_state = "current_turbine0" //TODO: animated states (fear)
 	density = TRUE
-	glide_size = 32 / (1 SECOND)
+	glide_size = 32 / TURBINE_MOVE_TIME
 
 /obj/turbine_shaft
 	name = "turbine shaft"
@@ -49,7 +51,7 @@
 	anchored = ANCHORED
 	density = FALSE
 	layer = FLOOR_EQUIP_LAYER1
-	glide_size = 32 / (1 SECOND)
+	glide_size = 32 / TURBINE_MOVE_TIME
 
 	//this is all kind of unoptimized but it's only going to be running every few seconds and for relatively short shafts
 	//refactor to be less pretty and more faster if we end up supporting very very long shafts for some reason
@@ -144,6 +146,9 @@
 			new /obj/turbine_shaft(T)
 
 	proc/move_shaft(backwards = FALSE)
+		if (GET_COOLDOWN(src, "move_shaft", TURBINE_MOVE_TIME))
+			return
+		ON_COOLDOWN(src, "move_shaft", TURBINE_MOVE_TIME)
 		if (!src.shaft)
 			src.shaft = locate() in get_turf(src)
 		if (!src.shaft)
@@ -170,3 +175,5 @@
 			return
 		src.generation = 40 KILO WATTS / current.interval //caps out at 40KW by default
 		src.add_avail(src.generation)
+
+#undef TURBINE_MOVE_TIME
