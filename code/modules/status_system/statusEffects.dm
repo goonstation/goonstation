@@ -1747,8 +1747,7 @@
 			if (phoenix_chill)
 				var/mob/living/carbon/human/H = src.owner
 				if (istype(H))
-					if (!H.phoenix_temp_overlay)
-						H.phoenix_temp_overlay = new /image/phoenix_temperature_indicator('icons/mob/space_phoenix.dmi', H, "temp_indicator", HUD_LAYER_UNDER_1, null, H)
+					H.changeStatus("phoenix_temp_visible", 5 SECONDS)
 		. = ..()
 
 	onChange(optional)
@@ -1757,28 +1756,17 @@
 			if (istype(M))
 				M.thermoregulation_mult *= 2
 			src.phoenix_chill = TRUE
-			var/mob/living/carbon/human/H = src.owner
-			if (istype(H))
-				if (!H.phoenix_temp_overlay)
-					H.phoenix_temp_overlay = new /image/phoenix_temperature_indicator('icons/mob/space_phoenix.dmi', H, "temp_indicator", HUD_LAYER_UNDER_1, null, H)
-		. = ..()
-
-	onUpdate()
-		..()
 		if (src.phoenix_chill)
 			var/mob/living/carbon/human/H = src.owner
 			if (istype(H))
-				H.phoenix_temp_overlay.update_temperature(H.bodytemperature)
+				H.changeStatus("phoenix_temp_visible", 5 SECONDS)
+		. = ..()
 
 	onRemove()
 		. = ..()
 		var/mob/M = owner
 		if(istype(M))
 			M.thermoregulation_mult /= (src.phoenix_chill ? 3 : 1.5)
-		if (src.phoenix_chill)
-			var/mob/living/carbon/human/H = src.owner
-			if (istype(H))
-				QDEL_NULL(H.phoenix_temp_overlay)
 
 /datum/statusEffect/miasma
 	id = "miasma"
@@ -3607,6 +3595,34 @@
 	onRemove()
 		..()
 		src.owner.remove_filter("cold_snap_color_matrix")
+
+/datum/statusEffect/phoenix_temp_visible
+	id = "phoenix_temp_visible"
+	name = "Temperature Visible"
+	visible = FALSE
+	maxDuration = 5 SECONDS
+
+	onAdd()
+		..()
+		var/mob/living/carbon/human/H = src.owner
+		if (!H.phoenix_temp_overlay)
+			H.phoenix_temp_overlay = new /image/phoenix_temperature_indicator('icons/mob/space_phoenix.dmi', H, "temp_indicator", HUD_LAYER_UNDER_1, null, H)
+
+	onChange()
+		..()
+		var/mob/living/carbon/human/H = src.owner
+		if (!H.phoenix_temp_overlay)
+			H.phoenix_temp_overlay = new /image/phoenix_temperature_indicator('icons/mob/space_phoenix.dmi', H, "temp_indicator", HUD_LAYER_UNDER_1, null, H)
+
+	onUpdate()
+		..()
+		var/mob/living/carbon/human/H = src.owner
+		H.phoenix_temp_overlay.update_temperature(H.bodytemperature)
+
+	onRemove()
+		..()
+		var/mob/living/carbon/human/H = src.owner
+		QDEL_NULL(H.phoenix_temp_overlay)
 
 /datum/statusEffect/phoenix_nest_counter
 	id = "phoenix_mobs_collected"
