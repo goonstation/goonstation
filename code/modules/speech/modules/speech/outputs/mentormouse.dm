@@ -9,7 +9,7 @@
 		mind_ref = "\ref[mob_speaker.mind]"
 
 	message.say_verb = "whispers"
-	message.flags |= SAYFLAG_NO_MAPTEXT
+	message.flags |= SAYFLAG_NO_MAPTEXT | SAYFLAG_DO_NOT_PASS_TO_IMPORTING_TREES
 
 	// Handles mentor/admin mouse speech, since they are just rebranded mentor mice
 	var/ooc_flavor = "mhelp"

@@ -177,6 +177,10 @@
 				return
 
 	src.add_message_to_buffer(message)
+
+	if (message.flags & SAYFLAG_DO_NOT_PASS_TO_IMPORTING_TREES)
+		return
+
 	for (var/datum/listen_module_tree/tree as anything in src.message_importing_trees)
 		if (!tree.enabled)
 			continue
