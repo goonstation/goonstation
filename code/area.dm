@@ -503,9 +503,10 @@ TYPEINFO(/area)
 			if (prob(25))
 				new /obj/effects/precipitation/snow/grey/tile/light(T)
 
-			T.temperature = 269
-			T.air.temperature = 269
-			T.parent?.air.temperature = 269
+			// about 24 degrees fahrenheit, chosen based off gameplay
+			T.temperature = T0C - 4
+			T.air.temperature = T0C - 4
+			T.parent?.air.temperature = T0C - 4
 
 			LAGCHECK(LAG_LOW)
 
