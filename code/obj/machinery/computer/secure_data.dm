@@ -484,6 +484,8 @@
 									src.active_record_general["sex"] = "Other"
 								if ("Other")
 									src.active_record_general["sex"] = "Male"
+								else
+									src.active_record_general["sex"] = "Other"
 					if ("pronouns")
 						if (istype(src.active_record_general, /datum/db_record))
 							var/datum/pronouns/pronouns = choose_pronouns(usr, "Please select pronouns:", "Security Records", src.active_record_general["pronouns"])
