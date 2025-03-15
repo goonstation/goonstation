@@ -477,10 +477,13 @@
 							src.active_record_general["fingerprint"] = t1
 					if ("sex")
 						if (istype(src.active_record_general, /datum/db_record))
-							if (src.active_record_general["sex"] == "Male")
-								src.active_record_general["sex"] = "Female"
-							else
-								src.active_record_general["sex"] = "Male"
+							switch(src.active_record_general["sex"])
+								if("Male")
+									src.active_record_general["sex"] = "Female"
+								if ("Female")
+									src.active_record_general["sex"] = "Other"
+								if ("Other")
+									src.active_record_general["sex"] = "Male"
 					if ("pronouns")
 						if (istype(src.active_record_general, /datum/db_record))
 							var/datum/pronouns/pronouns = choose_pronouns(usr, "Please select pronouns:", "Security Records", src.active_record_general["pronouns"])
