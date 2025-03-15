@@ -505,8 +505,10 @@ TYPEINFO(/area)
 
 			// about 24 degrees fahrenheit, chosen based off gameplay
 			T.temperature = T0C - 4
-			T.air.temperature = T0C - 4
-			T.parent?.air.temperature = T0C - 4
+			if (T.parent?.group_processing)
+				T.parent.air.temperature = T0C - 4
+			else
+				T.air.temperature = T0C - 4
 
 			LAGCHECK(LAG_LOW)
 
