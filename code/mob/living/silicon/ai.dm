@@ -776,7 +776,7 @@ or don't if it uses a custom topopen overlay
 					boutput(user, SPAN_ALERT("You stub your toe! Ouch!"))
 					M.TakeDamage(M.hand ? "r_leg" : "l_leg", 3, 0, 0, DAMAGE_BLUNT)
 					user.changeStatus("knockdown", 2 SECONDS)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 	src.update_appearance()
 
 /mob/living/silicon/ai/blob_act(var/power)

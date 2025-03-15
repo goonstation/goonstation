@@ -251,7 +251,7 @@
 		src.health -= dmg
 		if (src.health < 1)
 			qdel (src)
-		user.lastattacked  = src
+		user.lastattacked = get_weakref(src)
 		..()
 
 

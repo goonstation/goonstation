@@ -122,7 +122,8 @@
 	name = "\improper Special Equipment crate"
 	spawn_contents = list(/obj/item/requisition_token/security = 2,
 	/obj/item/requisition_token/security/assistant = 2,
-	/obj/item/turret_deployer/riot = 2)
+	/obj/item/turret_deployer/riot = 2,
+	/obj/random_item_spawner/armoryweapon/one)
 
 /obj/storage/secure/crate/gear/armory/equipment/looted
 	spawn_contents = list()

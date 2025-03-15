@@ -300,7 +300,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 /datum/targetable/changeling/give_control
 	name = "Grant Control to Hivemind Member"
 	desc = "Allow one of the members of the hive mind to control our form."
-	icon_state = "hivesay"
+	icon_state = "givecontrol"
 	cooldown = 0
 	targeted = 0
 	target_anything = 0

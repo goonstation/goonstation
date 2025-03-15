@@ -82,6 +82,9 @@ TYPEINFO(/mob/living/silicon)
 /mob/living/silicon/can_drink()
 	return FALSE
 
+/mob/living/silicon/nauseate(stacks)
+	return
+
 ///mob/living/silicon/proc/update_canmove()
 //	..()
 	//canmove = !(src.hasStatus(list("knockdown", "unconscious", "stunned")) || buckled)

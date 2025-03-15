@@ -90,8 +90,7 @@ TYPEINFO(/mob/living/carbon/cube)
 							if (M == src || !M.lying) continue
 							message = SPAN_ALERT("<B>[src]</B> jumps and farts all over [M]! That's disgusting!")
 							fart_on_other = 1
-							if(prob(20))
-								M.vomit()
+							M.nauseate(1)
 							break
 						if(!fart_on_other)
 							switch (rand(1, 10))

@@ -1295,7 +1295,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	amount_left = 6
 	max_amount = 6
 	icon_state = "mrl_rocketpack"
-	ammo_type = new /datum/projectile/bullet/homing/mrl
+	ammo_type = new /datum/projectile/bullet/homing/rocket/mrl
 	ammo_cat = AMMO_ROCKET_MRL
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1

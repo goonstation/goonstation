@@ -518,7 +518,7 @@
 		return ..()
 
 /mob/living/silicon/hivebot/attack_hand(mob/user)
-	user.lastattacked = src
+	user.lastattacked = get_weakref(src)
 	if(!user.stat)
 		if (user.a_intent != INTENT_HELP)
 			actions.interrupt(src, INTERRUPT_ATTACKED)

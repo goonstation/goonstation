@@ -28,6 +28,7 @@ var opts = {
     'maxStreakGrowth': 20, //at what streak point should we stop growing the last entry?
     'messageClasses': ['admin','combat','radio','say','ooc','internal'],
     'msgOdd': false, //Is the last message odd or even?
+	'reconnectTimeout': 0,
 
     //Options menu
     'subOptionsLoop': null, //Contains the interval loop for closing the options menu
@@ -409,16 +410,16 @@ function ehjaxCallback(data) {
         var blue = 0;
         var hex = rgbToHex(red, green, blue);
         $('#pingDot').css('color', '#'+hex);
-    } else if (data == 'roundrestart' || data == 'hardrestart') {
+    } else if (data == 'roundrestart' || data == 'hardrestart' || data == 'updaterestart') {
         opts.restarting = true;
         output('<div class="connectionClosed internal restarting">The connection has been closed because the server is restarting. Please wait while you automatically reconnect.</div>');
 
-        //a hard reboot was triggered, so we do our own auto-reconnection
-        if (data == 'hardrestart') {
-            setTimeout(function() {
-                runByond('byond://winset?command=.reconnect');
-                output('<span class="internal boldnshit">Auto reconnecting from hard restart...</span>');
-            }, 60000); //1 minute
+        //server is shutting down before restarting
+        if (data == 'hardrestart' || data == 'updaterestart') {
+			output('<div class="internal boldnshit"><a href="#" class="reconnectClient">Click here to manually reconnect</a></div>');
+            opts.reconnectTimeout = setTimeout(function() {
+				runByond('byond://winset?command=.reconnect');
+            }, 30000); //30 seconds
         }
     } else if (data == 'stopaudio') {
         $('.dectalk').remove();
@@ -801,6 +802,11 @@ $(function() {
         if ($audio) {
             $audio.remove();
         }
+    });
+
+    $messages.on('click', '.reconnectClient', function() {
+		clearTimeout(opts.reconnectTimeout);
+        runByond('byond://winset?command=.reconnect');
     });
 
     $(window).on('scroll', function() {

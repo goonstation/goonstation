@@ -431,6 +431,11 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/binary)
 		path = /obj/machinery/atmospherics/binary/valve/digital
 		icon_state = "digitalvalve"
 		desc = "A digital valve that can be controlled by silicons or by hitting it with a wrench."
+	pipepipehe
+		name = "Pipe heat exchanger"
+		path = /obj/machinery/atmospherics/binary/heat_exchanger
+		icon_state = "heatexchanger"
+		desc = "Not to be confused with the Heat exchanging pipe, this exchanges heat between pipes without mixing."
 
 /obj/item/places_pipes/research
 	icon_state = "hpd-place-r"

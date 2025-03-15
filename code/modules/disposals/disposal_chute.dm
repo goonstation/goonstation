@@ -238,6 +238,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			return
 		if (src.status & BROKEN)
 			return
+		if(user.restrained() && (user.pulled_by || length(user.grabbed_by)))
+			return
 		if (istype(target, /obj/machinery/bot))
 			var/obj/machinery/bot/bot = target
 			bot.set_loc(src)
@@ -302,6 +304,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			update()
 		else
 			return ..()
+
+	attack_hand(mob/user)
+		. = ..()
+		if (src.status & (BROKEN | NOPOWER))
+			src.eject() //don't let people hide in depowered disposal chutes indefinitely
 
 	set_broken()
 		. = ..()
@@ -781,7 +788,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	attack_ai(mob/user as mob)
 		return
 
-	attack_hand(mob/user)
+	ui_interact(mob/user, datum/tgui/ui)
 		return
 
 

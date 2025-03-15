@@ -256,7 +256,7 @@ TYPEINFO(/obj/flock_structure)
 
 /obj/flock_structure/attack_hand(var/mob/user)
 	attack_particle(user, src)
-	user.lastattacked = src
+	user.lastattacked = get_weakref(src)
 
 	if(user.a_intent == INTENT_HARM)
 		if(isflockmob(user))
@@ -282,7 +282,7 @@ TYPEINFO(/obj/flock_structure)
 	src.visible_message(SPAN_ALERT("<b>[user]</b> attacks [src] with [W]!"))
 	src.report_attack()
 	attack_particle(user, src)
-	user.lastattacked = src
+	user.lastattacked = get_weakref(src)
 
 	var/damtype = "brute"
 	if (W.hit_type == DAMAGE_BURN)

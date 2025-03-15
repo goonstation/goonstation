@@ -13,13 +13,10 @@ TYPEINFO(/datum/mutantrace)
 	/// This is used for static icons if the mutant isn't built from pieces
 	/// For chunked mutantraces this must still point to a valid full-body image to generate a staticky sprite for ghostdrones.
 	var/icon = 'icons/effects/genetics.dmi'
-	///The icon states of the above icon, cached because byond is bad
-	var/icon_states
 TYPEINFO_NEW(/datum/mutantrace) ///Load all the clothing override icons, should call parent AFTER populating `clothing_icons`
 	..()
 	for (var/category in src.clothing_icons)
 		src.clothing_icon_states[category] = icon_states(src.clothing_icons[category])
-	src.icon_states = icon_states(src.icon)
 
 ABSTRACT_TYPE(/datum/mutantrace)
 /datum/mutantrace

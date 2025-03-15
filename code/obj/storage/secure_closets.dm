@@ -53,7 +53,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		else if (user.a_intent == INTENT_HELP)
 			..()
 		else if (I.force > 0)
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			if (src.reinforced)
 				boutput(user, SPAN_ALERT("[src] is too reinforced to bash into!"))
 				attack_particle(user,src)
@@ -709,7 +709,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	spawn_contents = list(/obj/item/device/radio/signaler,
 	/obj/item/device/radio/electropack = 5,
 	/obj/item/clothing/glasses/blindfold = 2,
-	/obj/item/clothing/mask/monkey_translator = 2)
+	/obj/item/clothing/mask/monkey_translator = 2,
+	/obj/item/pet_carrier)
 
 /* ==================== */
 /* ----- Research ----- */
@@ -831,6 +832,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/glasses/toggleable/meson,
 	/obj/item/clothing/glasses/toggleable/atmos,
 	/obj/item/pen/infrared,
+	/obj/item/pen/crayon/infrared,
 	/obj/item/lamp_manufacturer/organic,
 	/obj/item/device/light/floodlight/with_cell,
 	/obj/item/pinpointer/category/apcs/station)

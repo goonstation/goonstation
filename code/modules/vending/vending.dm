@@ -462,7 +462,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		else
 			boutput(user, SPAN_ALERT("[W] is not compatible with [src]."))
 	else
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		hit_twitch(src)
 		attack_particle(user,src)
 		playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,TRUE)
@@ -621,7 +621,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				if(P.unlocked)
 					for (var/datum/data/vending_product/R in player_list)
 						if(ref(R) == params["target"])
-							R.product_cost = text2num(params["cost"])
+							R.product_cost = max(text2num(params["cost"]) || 0, 0)
 							P.lastPlayerPrice = R.product_cost
 				update_static_data(usr)
 		if("rename")

@@ -15,7 +15,7 @@
 /mob/proc/do_help(var/mob/living/M)
 	if (!istype(M))
 		return
-	src.lastattacked = M
+	src.lastattacked = get_weakref(M)
 	if (src != M && M.getStatusDuration("burning")) //help others put out fires!!
 		src.help_put_out_fire(M)
 	else if (src == M && src.getStatusDuration("burning"))
@@ -193,7 +193,7 @@
 		boutput(src, SPAN_ALERT("You're already doing CPR!"))
 		return
 
-	src.lastattacked = target
+	src.lastattacked = get_weakref(target)
 
 	actions.start(new /datum/action/bar/icon/CPR(target), src)
 
@@ -535,8 +535,8 @@
 		return 0
 
 	if (src.gloves.uses > 0)
-		src.lastattacked = target
-		target.lastattacker = src
+		src.lastattacked = get_weakref(target)
+		target.lastattacker = get_weakref(src)
 		target.lastattackertime = world.time
 		logTheThing(LOG_COMBAT, src, "touches [constructTarget(target,"combat")] with stun gloves at [log_loc(src)].")
 		target.add_fingerprint(src) // Some as the other 'empty hand' melee attacks (Convair880).
@@ -729,7 +729,7 @@
 		user.visible_message(SPAN_COMBAT("<b>[user]'s attack bounces off [target] uselessly!</B>"))
 		return
 
-	user.lastattacked = target
+	user.lastattacked = get_weakref(target)
 
 	var/damage = 0
 	var/send_flying = 0 // 1: a little bit | 2: across the room
@@ -984,8 +984,8 @@
 #ifdef DATALOGGER
 			game_stats.Increment("violence")
 #endif
-			owner.lastattacked = target
-			target.lastattacker = owner
+			owner.lastattacked = get_weakref(target)
+			target.lastattacker = get_weakref(owner)
 			target.lastattackertime = world.time
 			target.add_fingerprint(owner)
 

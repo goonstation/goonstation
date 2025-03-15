@@ -447,7 +447,7 @@ TYPEINFO(/mob/living/intangible/wraith)
 		. = ..()
 
 	attack_hand(var/mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (user.a_intent != "harm")
 			visible_message("[user] pets [src]!")
 		else

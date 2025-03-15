@@ -310,6 +310,10 @@
 				del(src)
 			return
 
+	// Record a login, sets player.id, which is used by almost every future API call for a player
+	// So we need to do this early, and outside of a spawn
+	src.player.record_login()
+
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
 	var/list/checkBan = bansHandler.check(src.ckey, src.computer_id, src.address)
 
@@ -351,10 +355,6 @@
 		//Load custom chat
 		SPAWN(-1)
 			src.chatOutput.start()
-
-	// Record a login, sets player.id, which is used by almost every future API call for a player
-	// So we need to do this early, and outside of a spawn
-	src.player.record_login()
 
 	//admins and mentors can enter a server through player caps.
 	var/admin_status = init_admin()
@@ -492,15 +492,15 @@
 		if (src.byond_version < 515 || src.byond_build < 1633)
 			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
 			if (tgui_alert(src, "Consider UPDATING BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the stable release.", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("https://www.byond.com/download/")
+				src << link("https://www.byond.com/download")
 			// kick out of date clients
 			tgui_alert(src, "Version enforcement is enabled, you will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 30 SECONDS)
 			tgui_process.close_user_uis(src.mob)
 			del(src)
 			return
-		if (src.byond_version >= 516)
-			if (tgui_alert(src, "Please DOWNGRADE BYOND to the latest stable release of version 515! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("https://www.byond.com/download/")
+		if (src.byond_version >= 517)
+			if (tgui_alert(src, "You have connected with an unsupported BYOND beta version, and you may encounter major issues. For the best experience, please downgrade BYOND to the current stable release. Would you like to visit the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
+				src << link("https://www.byond.com/download")
 #endif
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
@@ -585,6 +585,8 @@
 		for(var/client/C)
 			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE, only_if_first=TRUE, message_who=src)
 	winset(src, null, "rpanewindow.left=infowindow")
+	if(byond_version >= 516)
+		winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
 	login_success = 1
@@ -637,8 +639,14 @@
 
 	//tg controls end
 
-	use_chui = winget( src, "menu.use_chui", "is-checked" ) == "true"
-	use_chui_custom_frames = winget( src, "menu.use_chui_custom_frames", "is-checked" ) == "true"
+	if (src.byond_version >= 516)
+		use_chui = FALSE
+		winset(src, "use_chui", "is-checked=false")
+		use_chui_custom_frames = FALSE
+		winset(src, "use_chui_custom_frames", "is-checked=false")
+	else
+		use_chui = winget( src, "menu.use_chui", "is-checked" ) == "true"
+		use_chui_custom_frames = winget( src, "menu.use_chui_custom_frames", "is-checked" ) == "true"
 
 	//wow its the future we can choose between 3 fps values omg
 	if (winget( src, "menu.fps_chunky", "is-checked" ) == "true")
@@ -1420,6 +1428,10 @@ var/global/curr_day = null
 /client/verb/set_chui()
 	set hidden = 1
 	set name = "set-chui"
+	if (byond_version >= 516)
+		tgui_alert(mob, "Error: Chui is deprecated in BYOND 516+ and cannot be enabled.", "Chui Deprecation")
+		winset(src, "use_chui", "is-checked=false")
+		return
 	if (src.use_chui)
 		src.use_chui = 0
 	else
@@ -1428,6 +1440,10 @@ var/global/curr_day = null
 /client/verb/set_chui_custom_frames()
 	set hidden = 1
 	set name = "set-chui-custom-frames"
+	if (byond_version >= 516)
+		tgui_alert(mob, "Error: Chui is deprecated in BYOND 516+ and cannot be enabled.", "Chui Deprecation")
+		winset(src, "use_chui_custom_frames", "is-checked=false")
+		return
 	if (src.use_chui_custom_frames)
 		src.use_chui_custom_frames = 0
 	else

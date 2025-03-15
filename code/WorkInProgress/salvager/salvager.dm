@@ -425,6 +425,11 @@
 		else
 			. = ..()
 
+	set_loc(newloc, storage_check)
+		. = ..()
+		if(istype(newloc,/obj/item/storage/backpack/salvager))
+			src.anchored = TRUE
+
 /obj/item/storage/backpack/salvager
 	name = "salvager rucksack"
 	desc = "A repurposed military backpack made of high density fabric, designed to fit a wide array of tools and junk."
@@ -721,7 +726,7 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 	health = 250
 	maxhealth = 250
 	armor_score_multiplier = 0.7
-	speed = 0.85
+	speedmod = 1.18
 
 	New()
 		..()

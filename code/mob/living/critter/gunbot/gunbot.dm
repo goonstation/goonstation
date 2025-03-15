@@ -99,7 +99,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 		return(50)
 
 	attack_hand(mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if(!user.stat)
 			if (user.a_intent != INTENT_HELP)
 				actions.interrupt(src, INTERRUPT_ATTACKED)
@@ -439,7 +439,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/chainsaw)
 
 	attackby(var/obj/item/I, var/mob/user)
 		src.add_fingerprint(user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		changeHealth(-I.force)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		hit_twitch(src)

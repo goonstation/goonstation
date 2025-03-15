@@ -23,6 +23,8 @@ TYPEINFO(/mob/living/intangible)
 		src.see_in_dark = SEE_DARK_FULL
 		src.flags |= UNCRUSHABLE
 
+	nauseate(stacks)
+		return
 	can_strip()
 		return 0
 	can_use_hands()

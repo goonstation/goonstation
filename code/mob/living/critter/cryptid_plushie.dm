@@ -501,12 +501,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleportation)
 	cast(atom/target)
 		if (..())
 			return 1
-		if (holder.owner.lastattacker && (holder.owner.lastattackertime + 40) >= world.time)
-			if(holder.owner.lastattacker != holder.owner)
-				var/mob/M = holder.owner.lastattacker
+		if (holder.owner.lastattacker?.deref() && (holder.owner.lastattackertime + 40) >= world.time)
+			if(holder.owner.lastattacker.deref() != holder.owner)
+				var/mob/M = holder.owner.lastattacker.deref()
 				if (!istype(M))
 					return
-				var/mob/attacker = holder.owner.lastattacker
+				var/mob/attacker = M
 				holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner]'s eyes emit a vengeful glare at [attacker]!</B>"))
 				var/obj/itemspecialeffect/glare/E = new /obj/itemspecialeffect/glare
 				E.color = "#ff0000"

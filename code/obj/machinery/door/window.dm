@@ -70,6 +70,9 @@
 
 	return
 
+/obj/machinery/door/window/update_icon(toggling)
+	return // these use their own system for controlling icons
+
 /obj/machinery/door/window/emp_act()
 	..()
 	if (prob(20) && (src.density && src.cant_emag != 1 && src.isblocked() != 1))

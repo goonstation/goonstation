@@ -12,11 +12,6 @@ Contributing:
 Old Code To Remove:
 - Check span defines in `chat_output.dm`. Some may now be unused.
 
-Refactors:
-- Some form of centralised preference manager for toggling inputs/outputs for types?
-	- `toggle_ooc`, `toggle_looc`
-	- Most have dedicated procs for themselves, and some implementation on Login or New.
-
 Unfixable:
 - Living mobs that are dead can no longer send and receive messages to and from deadchat. This is a limitation of death/revive code.
 

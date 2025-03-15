@@ -246,8 +246,8 @@
 				src.state = GRAB_AGGRESSIVE
 				if (!src.affecting.buckled)
 					set_affected_loc()
-				src.assailant.lastattacked = src.affecting
-				src.affecting.lastattacker = src.assailant
+				src.assailant.lastattacked = get_weakref(src.affecting)
+				src.affecting.lastattacker = get_weakref(src.assailant)
 				src.affecting.lastattackertime = world.time
 				logTheThing(LOG_COMBAT, src.assailant, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 				user.next_click = world.time + user.combat_click_delay
@@ -288,8 +288,8 @@
 					O.show_message(SPAN_ALERT("[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!"), 1)
 		src.state = GRAB_CHOKE
 		REMOVE_ATOM_PROPERTY(src.assailant, PROP_MOB_CANTMOVE, src)
-		src.assailant.lastattacked = src.affecting
-		src.affecting.lastattacker = src.assailant
+		src.assailant.lastattacked = get_weakref(src.affecting)
+		src.affecting.lastattacker = get_weakref(src.assailant)
 		src.affecting.lastattackertime = world.time
 		if (!src.affecting.buckled)
 			set_affected_loc()
@@ -317,8 +317,8 @@
 
 		src.state = GRAB_PIN
 
-		src.assailant.lastattacked = src.affecting
-		src.affecting.lastattacker = src.assailant
+		src.assailant.lastattacked = get_weakref(src.affecting)
+		src.affecting.lastattacker = get_weakref(src.assailant)
 		src.affecting.lastattackertime = world.time
 
 		step_to(src.assailant,T)
@@ -444,7 +444,7 @@
 			qdel(src)
 			return 0
 
-		src.affecting.lastattacker = src.assailant
+		src.affecting.lastattacker = get_weakref(src.assailant)
 		src.affecting.lastattackertime = world.time
 		.= src.affecting
 		user.u_equip(src)

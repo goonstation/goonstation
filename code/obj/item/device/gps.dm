@@ -20,6 +20,10 @@ TYPEINFO(/obj/item/device/gps)
 	var/net_id
 	var/wrenched_in = FALSE //! is this wrenched in a cabinet frame?
 
+	var/tracking_string
+	var/tracking_x = 1
+	var/tracking_y = 1
+
 	proc/get_z_info(var/turf/T)
 		. =  "Landmark: Unknown"
 		if (!T)
@@ -47,98 +51,135 @@ TYPEINFO(/obj/item/device/gps)
 			#else
 			. =  "Landmark: Asteroid Field"
 			#endif
-		return
 
-	proc/show_HTML(var/mob/user)
-		if (!user)
-			return
-		src.add_dialog(user)
-		var/list/HTML = list({"<style type="text/css">
-		.desc {
-			background: #21272C;
-			width: calc(100% - 5px);
-			padding: 2px;
-		}
-		.buttons a {
-			display: inline-flex;
-			background: #58B4DC;
-			width: calc(50% - 7px);
-			text-transform: uppercase;
-			text-decoration: none;
-			color: #fff;
-			margin: 1px;
-			padding: 2px 0 2px 5px;
-			font-size: 11px;
-		}
-		.buttons.refresh a {
-			padding: 1px 0 1px 5px;
-			width: calc(100% - 7px);
-		}
-		.buttons a:hover {
-			background: #6BC7E8;
-		}
-		.buttons.gps a {
-			display: block;
-			width: calc(100% - 7px);
-  			text-transform: none;
-			border-top: 1px solid #58B4DC;
-			background: #21272C;
-			padding: 3px;
-			margin: 0 0 1px 0;
-			font-size: 11px;
-		}
-		.buttons.gps.distress a {
-			border-top: 2px solid #BE3737;
-			background: #2C2121;
-		}
-		.gps.group {
-			background: #58B4DC;
-			margin: 0;
-			font-size: 12px;
-		}
-		</style>"})
-		HTML += build_html_gps_form(src, FALSE, src.tracking_target)
-		HTML += "<div><div class='buttons refresh'><A href='byond://?src=\ref[src];refresh=6'>(Refresh)</A></div>"
-		HTML += "<div class='desc'>Each GPS is coined with a unique four digit number followed by a four letter identifier.<br>This GPS is assigned <b>[serial]-[identifier]</b>.</div><hr>"
-		HTML += "<HR>"
-		if (allowtrack == 0)
-			HTML += "<A href='byond://?src=\ref[src];track1=2'>Enable Tracking</A> | "
-		if (allowtrack == 1)
-			HTML += "<A href='byond://?src=\ref[src];track2=3'>Disable Tracking</A> | "
-		HTML += "<A href='byond://?src=\ref[src];changeid=4'>Change Identifier</A> | "
-		HTML += "<A href='byond://?src=\ref[src];help=5'>Toggle Distress Signal</A></div>"
-		HTML += "<hr>"
+	proc/get_gps_info()
+		var/list/gps_info = list()
 
-		HTML += "<div class='gps group'><b>GPS Units</b></div>"
 		for_by_tcl(G, /obj/item/device/gps)
-			LAGCHECK(LAG_LOW)
-			if (G.allowtrack == 1)
-				var/turf/T = get_turf(G.loc)
-				if (!T)
-					continue
-				var/name = "[G.serial]-[G.identifier]"
-				HTML += "<div class='buttons gps [G.distress ? "distress" : ""]'><A href='byond://?src=\ref[src];dest_cords=1;x=[T.x];y=[T.y];z=[T.z];name=[name]'><span><b>[name]</b>"
-				HTML += "<span style='font-size:85%;float:right'>[G.distress ? "<font color=\"red\">(DISTRESS)</font>" : "<font color=666666>(DISTRESS)</font>"]</span><br>"
-				HTML += "Located at: [T.x], [T.y]<span style='float:right'>[src.get_z_info(T)]</span></span></A></div>"
+			if (!G.allowtrack)
+				continue
+			var/turf/T = get_turf(G.loc)
+			if (!T)
+				continue
+			gps_info += list(list("name" = "[G.serial]-[G.identifier]",
+								  "obj_ref" = "\ref[G]",
+								  "x" = T.x,
+								  "y" = T.y,
+								  "z_info" = src.get_z_info(T),
+								  "distress" = !!G.distress))
 
-		HTML += "<div class='gps group'><b>Tracking Implants</b></div>"
+		return gps_info
+
+	proc/get_imp_info()
+		var/list/imp_info = list()
+
 		for_by_tcl(imp, /obj/item/implant/tracking)
-			LAGCHECK(LAG_LOW)
-			if (isliving(imp.loc))
-				var/turf/T = get_turf(imp.loc)
-				if (!T)
-					continue
-				HTML += "<div class='buttons gps'><A href='byond://?src=\ref[src];dest_cords=1;x=[T.x];y=[T.y];z=[T.z];name=[imp.loc.name]'><span><b>[imp.loc.name]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></A></div>"
-		HTML += "<hr>"
+			if (!isliving(imp.loc))
+				continue
+			var/turf/T = get_turf(imp.loc)
+			if (!T)
+				continue
+			imp_info += list(list("name" = imp.loc.name,
+								  "obj_ref" = "\ref[imp]",
+								  "x" = T.x,
+								  "y" = T.y,
+								  "z_info" = src.get_z_info(T)))
 
-		HTML += "<div class='gps group'><b>Beacons</b></div>"
+		return imp_info
+
+	proc/get_warp_info()
+		var/list/warp_info = list()
+
 		for (var/obj/B in by_type[/obj/warp_beacon])
 			var/turf/T = get_turf(B.loc)
-			HTML += "<div class='buttons gps'><A href='byond://?src=\ref[src];dest_cords=1;x=[T.x];y=[T.y];z=[T.z];name=[B.name]'><span><b>[B.name]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></A></div>"
-		HTML += "<br></div>"
+			warp_info += list(list("name" = B.name,
+								   "obj_ref" = "\ref[B]",
+								   "x" = T.x,
+								   "y" = T.y,
+								   "z_info" = src.get_z_info(T)))
 
-		user.Browse(HTML.Join(), "window=gps_[src];title=GPS;size=400x540;override_setting=1")
-		onclose(user, "gps")
+		return warp_info
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "GPS")
+			ui.open()
+
+	ui_data(mob/user)
+		var/turf/T = get_turf(src)
+		. = list(
+			"src_x" = T.x,
+			"src_y" = T.y,
+			"track_x" = src.tracking_x,
+			"track_y" = src.tracking_y,
+			"tracking" = src.tracking_string,
+			"trackable" = src.allowtrack,
+			"src_name" = "[src.serial]-[src.identifier]",
+			"distress" = src.distress,
+			"gps_info" = src.get_gps_info(),
+			"imp_info" = src.get_imp_info(),
+			"warp_info" = src.get_warp_info()
+		)
+
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return
+		switch (action)
+			if ("toggle_trackable")
+				src.allowtrack = !src.allowtrack
+				return TRUE
+			if ("toggle_distress")
+				src.distress = !src.distress
+				src.send_distress_signal(src.distress)
+				return TRUE
+			if ("change_identifier")
+				var/t = strip_html(tgui_input_text(usr, "Enter new GPS identification name (must be 4 characters)", src.identifier))
+				if(length(t) > 4)
+					boutput(usr, SPAN_ALERT("Input too long."))
+					return
+				if(length(t) < 4)
+					boutput(usr, SPAN_ALERT("Input too short."))
+					return
+				if(!t)
+					return
+				src.identifier = t
+				logTheThing(LOG_STATION, usr, "sets a GPS identification name to [t].")
+				return TRUE
+			if ("set_x")
+				src.tracking_x = params["x"]
+				return TRUE
+			if ("set_y")
+				src.tracking_y = params["y"]
+				return TRUE
+			if ("track_coords")
+				var/turf/T = get_turf(src)
+				src.track_turf(locate(params["x"], params["y"], T.z))
+				return TRUE
+			if ("track_gps")
+				if ("gps_ref" in params)
+					var/atom/A = locate(params["gps_ref"])
+					if (A)
+						src.track_turf(get_turf(A))
+				else if (src.tracking_target)
+					src.tracking_target = null
+					src.active = null
+					src.icon_state = "gps-off"
+					src.tracking_string = null
+				return TRUE
+
+	proc/track_turf(turf/target_turf)
+		// This is to get a turf with the specified coordinates on the same Z as the device
+		var/turf/T = get_turf(src) //bugfix for this not working when src was in containers
+		T = locate(target_turf.x, target_turf.y, T.z)
+		//Set located turf to be the tracking_target
+		if (!isturf(T))
+			return
+		src.tracking_target = T
+		src.active = TRUE
+		src.tracking_string = "([T.x], [T.y])"
+		process()
 
 	attack_hand(mob/user)
 		if(src.wrenched_in) return
@@ -162,79 +203,8 @@ TYPEINFO(/obj/item/device/gps)
 					return
 		..()
 
-	attack_ai(mob/user)
-		. = ..()
-		src.show_HTML(user)
-
 	attack_self(mob/user as mob)
-		if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0))
-			src.show_HTML(user)
-		else
-			user.Browse(null, "window=gps_[src]")
-			src.remove_dialog(user)
-		return
-
-	Topic(href, href_list)
-		..()
-		if (usr.stat || usr.restrained() || usr.lying)
-			return
-		if (usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr) || issilicon(usr) || isAIeye(usr))
-			src.add_dialog(usr)
-			var/turf/T = get_turf(src)
-			if(href_list["getcords"])
-				boutput(usr, SPAN_NOTICE("Located at: <b>X</b>: [T.x], <b>Y</b>: [T.y]"))
-				return
-
-			if(href_list["track1"])
-				boutput(usr, SPAN_NOTICE("Tracking enabled."))
-				src.allowtrack = 1
-			if(href_list["track2"])
-				boutput(usr, SPAN_NOTICE("Tracking disabled."))
-				src.allowtrack = 0
-			if(href_list["changeid"])
-				var/t = strip_html(input(usr, "Enter new GPS identification name (must be 4 characters)", src.identifier) as text)
-				if(length(t) > 4)
-					boutput(usr, SPAN_ALERT("Input too long."))
-					return
-				if(length(t) < 4)
-					boutput(usr, SPAN_ALERT("Input too short."))
-					return
-				if(!t)
-					return
-				src.identifier = t
-				logTheThing(LOG_STATION, usr, "sets a GPS identification name to [t].")
-			if(href_list["help"])
-				if(!distress)
-					boutput(usr, SPAN_ALERT("Sending distress signal."))
-					distress = 1
-					src.send_distress_signal(distress)
-				else
-					distress = 0
-					boutput(usr, SPAN_ALERT("Distress signal cleared."))
-					src.send_distress_signal(distress)
-			if(href_list["refresh"])
-				..()
-
-			if(href_list["dest_cords"])
-				obtain_target_from_coords(href_list)
-			if(href_list["stop_tracking"])
-				tracking_target = null
-				active = null
-				icon_state = "gps-off"
-
-			var/obj/item/target = src.master || src
-			target.updateSelfDialog()
-			//we want this to do self dialog updates UNLESS the user is a silicon in which case we do regular updates
-			for (var/client/client in src.clients_operating)
-				var/mob/user = client.mob
-				if (issilicon(user) || isAIeye(user))
-					target.attack_ai(user)
-			src.add_fingerprint(usr)
-		else
-			usr.Browse(null, "window=gps_[src]")
-			return
-		return
-
+		src.ui_interact(user)
 
 	New()
 		..()
@@ -256,39 +226,6 @@ TYPEINFO(/obj/item/device/gps)
 		if (dist > 2)
 			return
 		. += "<br>There's a sticker on the back saying \"Net Identifier: [net_id]\" on it."
-
-	proc/obtain_target_from_coords(href_list)
-		if (href_list["dest_cords"])
-			tracking_target = null
-			var/x = text2num_safe(href_list["x"])
-			var/y = text2num_safe(href_list["y"])
-			if (!x || !y)
-				boutput(usr, SPAN_ALERT("Bad Topc call, if you see this something has gone wrong. And it's probably YOUR FAULT!"))
-				return
-			// This is to get a turf with the specified coordinates on the same Z as the device
-			var/turf/T = get_turf(src) //bugfix for this not working when src was in containers
-			var/z = T.z
-
-
-			T = locate(x,y,z)
-			//Set located turf to be the tracking_target
-			if (isturf(T))
-				src.tracking_target = T
-				boutput(usr, SPAN_NOTICE("Now tracking: <b>[href_list["name"]]</b> at <b>X</b>: [T.x], <b>Y</b>: [T.y]"))
-
-				begin_tracking()
-			else
-				boutput(usr, SPAN_ALERT("Invalid GPS coordinates."))
-		sleep(1 SECOND)
-
-	proc/begin_tracking()
-		if(!active)
-			if (!src.tracking_target)
-				usr.show_text("No target specified, cannot activate the pinpointer.", "red")
-				return
-			active = 1
-			process()
-			boutput(usr, SPAN_NOTICE("You activate the gps."))
 
 	proc/send_distress_signal(distress)
 		var/distressAlert = distress ? "help" : "clear"
