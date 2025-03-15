@@ -1,6 +1,5 @@
 TYPEINFO(/mob/dead/target_observer/mentor_mouse_observer)
-	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_RADIO_GLOBAL, LISTEN_INPUT_MENTOR_MOUSE)
-	start_listen_languages = list(LANGUAGE_ALL)
+	start_listen_inputs = list(LISTEN_INPUT_MENTOR_MOUSE)
 	start_speech_outputs = list(SPEECH_OUTPUT_MENTOR_MOUSE)
 
 /mob/dead/target_observer/mentor_mouse_observer

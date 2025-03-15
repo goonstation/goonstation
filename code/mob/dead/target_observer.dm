@@ -1,7 +1,7 @@
 TYPEINFO(/mob/dead/target_observer)
 	start_listen_modifiers = null
 	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT)
-	start_listen_languages = null
+	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT_GHOST)
 
@@ -23,6 +23,8 @@ TYPEINFO(/mob/dead/target_observer)
 		START_TRACKING
 
 	disposing()
+		src.target?.listen_tree.remove_message_importing_tree(src.listen_tree)
+
 		//If our target is a mob we should also clean ourselves up and leave their observer list without a null in it.
 		var/mob/living/M = src.target
 		if(istype(M))
@@ -89,6 +91,8 @@ TYPEINFO(/mob/dead/target_observer)
 			return //No sense in doing all this if we're not changing targets
 
 		if(src.target)
+			src.target.listen_tree.remove_message_importing_tree(src.listen_tree)
+
 			var/mob/living/M = src.target
 			src.target = null
 			M.removeOverlaysClient(src.client)
@@ -118,6 +122,8 @@ TYPEINFO(/mob/dead/target_observer)
 		if (isobj(target))
 			src.RegisterSignal(target, COMSIG_PARENT_PRE_DISPOSING, VERB_REF(stop_observing))
 
+		src.target.ensure_listen_tree().add_message_importing_tree(src.ensure_listen_tree())
+
 	click(atom/target, params, location, control)
 		if(!isnull(target) && (target.flags & TGUI_INTERACTIVE))
 			if(ismob(src.target))
@@ -143,10 +149,7 @@ TYPEINFO(/mob/dead/target_observer)
 
 
 TYPEINFO(/mob/dead/target_observer/slasher_ghost)
-	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_EARS)
-	start_listen_languages = list(LANGUAGE_ENGLISH)
-	start_speech_modifiers = null
+	start_listen_inputs = null
 	start_speech_outputs = null
 
 /mob/dead/target_observer/slasher_ghost

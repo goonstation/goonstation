@@ -16,6 +16,10 @@
 	VAR_PROTECTED/list/atom/secondary_parents
 	/// A list of all auxiliary listen module trees with this listen module tree registered as a target.
 	VAR_PROTECTED/list/datum/listen_module_tree/auxiliary/auxiliary_trees
+	/// A list of all listen module trees that buffer messages processed by this listen module tree.
+	VAR_PROTECTED/list/datum/listen_module_tree/message_importing_trees
+	/// A list of all listen module trees that this listen module tree buffers processed messages from.
+	VAR_PROTECTED/list/datum/listen_module_tree/message_exporting_trees
 	/// A temporary buffer of all received messages that are to be outputted to the parent when the buffer is flushed.
 	VAR_PROTECTED/list/datum/say_message/message_buffer
 	/// An associative list of all signal recipients that may cause the message buffer to flush.
@@ -59,6 +63,8 @@
 	src.listener_origin = parent
 	src.secondary_parents = list()
 	src.auxiliary_trees = list()
+	src.message_importing_trees = list()
+	src.message_exporting_trees = list()
 	src.message_buffer = list()
 	src.signal_recipients = list()
 
@@ -98,6 +104,12 @@
 	for (var/datum/signal_recipient as anything in src.signal_recipients)
 		src.UnregisterSignal(signal_recipient, COMSIG_FLUSH_MESSAGE_BUFFER)
 
+	for (var/datum/listen_module_tree/tree as anything in src.message_importing_trees)
+		src.remove_message_importing_tree(tree)
+
+	for (var/datum/listen_module_tree/tree as anything in src.message_exporting_trees)
+		tree.remove_message_importing_tree(src)
+
 	for (var/datum/listen_module_tree/auxiliary/auxiliary_tree as anything in src.auxiliary_trees)
 		auxiliary_tree.update_target_listen_tree(null)
 
@@ -124,6 +136,8 @@
 	src.listener_origin = null
 	src.secondary_parents = null
 	src.auxiliary_trees = null
+	src.message_importing_trees = null
+	src.message_exporting_trees = null
 	src.message_buffer = null
 	src.signal_recipients = null
 
@@ -162,6 +176,15 @@
 			if (QDELETED(message))
 				return
 
+	src.add_message_to_buffer(message)
+	for (var/datum/listen_module_tree/tree as anything in src.message_importing_trees)
+		if (!tree.enabled)
+			continue
+
+		tree.add_message_to_buffer(message.Copy())
+
+/// Adds a message to the message buffer, and registers the appropriate signals to the tree.
+/datum/listen_module_tree/proc/add_message_to_buffer(datum/say_message/message)
 	// If a message of this ID already exists in the buffer, do not buffer the new message unless it was heard by a higher priority module.
 	if (src.message_buffer[message.id] && (message.received_module.priority <= src.message_buffer[message.id].received_module.priority))
 		return
@@ -247,6 +270,26 @@
 	src.listener_origin = new_origin
 
 	SEND_SIGNAL(src, COMSIG_LISTENER_ORIGIN_UPDATED, old_origin, new_origin)
+
+/// Register a listen module tree to buffer messages processed by this listen module tree.
+/datum/listen_module_tree/proc/add_message_importing_tree(datum/listen_module_tree/tree)
+	if (src.message_importing_trees[tree] || (src == tree))
+		return
+
+	src.message_importing_trees[tree] = TRUE
+	tree.message_exporting_trees[src] = TRUE
+
+	src.request_enable()
+
+/// Unregister a listen module tree from buffering messages processed by this listen module tree.
+/datum/listen_module_tree/proc/remove_message_importing_tree(datum/listen_module_tree/tree)
+	if (!src.message_importing_trees[tree] || (src == tree))
+		return
+
+	src.message_importing_trees -= tree
+	tree.message_exporting_trees -= src
+
+	src.unrequest_enable()
 
 /// Adds a new listen input module to the tree. Returns a reference to the new input module on success.
 /datum/listen_module_tree/proc/_AddListenInput(input_id, list/arguments = list(), count = 1)
