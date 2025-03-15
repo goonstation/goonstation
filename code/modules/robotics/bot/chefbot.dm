@@ -1,4 +1,7 @@
 #define CHEFBOT_MOVE_SPEED 8
+TYPEINFO(/obj/machinery/bot/chefbot)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_CHEF)
+
 /obj/machinery/bot/chefbot
 	name = "Dramatic Chef"
 	desc = "Who let this guy in the kitchen? Does he even know how to cook, or is he just there to criticize?"
@@ -32,11 +35,6 @@
 /obj/machinery/bot/chefbot/proc/drama()
 	playsound(src,'sound/effects/dramatic.ogg', vol = 100)
 
-/obj/machinery/bot/chefbot/speak(var/message)
-	if (message)
-		message = uppertext(message)
-	. = ..()
-
 /obj/machinery/bot/chefbot/proc/why_is_it_bad()
 	return pick("IS FUCKING [pick("RAW", "BLAND", "UNDERCOOKED", "OVERCOOKED", "INEDIBLE", "RANCID", "DISGUSTING")]", "LOOKS LIKE [pick("BABY VOMIT", "A MUSHY PIG'S ASS", "REGURGITATED DONKEY SHIT", "A PILE OF ROTTING FLIES", "REFINED CAT PISS")]")
 
@@ -57,7 +55,7 @@
 			break
 		if (!food_to_judge)
 			if(prob(30))
-				speak(pick_string("chefbot.txt", "get_to_work"))
+				src.say(pick_string("chefbot.txt", "get_to_work"))
 			return
 		if (food_to_judge.quality > 1 && food_to_judge.quality < 5 && !src.emagged)
 			how_shit = FOOD_QUALITY_SHIT
@@ -86,36 +84,36 @@
 		if (thechef)
 			point(food_to_judge)
 			src.navigate_to(food_to_judge, CHEFBOT_MOVE_SPEED / (1+src.emagged), 1, 15) // Shit food can't hide!
-			speak(pick_string("chefbot.txt", "found_food"))
+			src.say(pick_string("chefbot.txt", "found_food"))
 			sleep(1 SECOND)
 			drama()
 			sleep(3 SECONDS)
 			if (is_thechef_the_chef && thechef)
 				point(thechef)
-				speak(pick_string("chefbot.txt", "call_chef"))
+				src.say(pick_string("chefbot.txt", "call_chef"))
 			else
 				if (GET_COOLDOWN(src, "judged_\ref[food_to_judge]")) //We already judged this food and it's STILL HERE, GET MAD
-					speak(pick_string("chefbot.txt", "stale_food"))
+					src.say(pick_string("chefbot.txt", "stale_food"))
 					src.calm_down()
 					return
 				switch (how_shit)
 					if (FOOD_QUALITY_HORSESHIT)
-						speak(pick_string("chefbot.txt", "question_shit_food"))
+						src.say(pick_string("chefbot.txt", "question_shit_food"))
 					else
-						speak(pick_string("chefbot.txt", "question_food"))
+						src.say(pick_string("chefbot.txt", "question_food"))
 				ON_COOLDOWN(src, "judged_\ref[food_to_judge]", INFINITY) // We judged this food, remember it.
 			sleep(3 SECONDS)
 			if (food_to_judge)
 				switch(how_shit)
 					if (FOOD_QUALITY_HORSESHIT)
 						if (dork && prob(10))
-							speak("THIS [food_to_judge.name] LOOKS LIKE [dork]!")
+							src.say("THIS [food_to_judge.name] LOOKS LIKE [dork]!")
 						else
-							speak("THIS [food_to_judge.name] [why_is_it_bad()]!")
+							src.say("THIS [food_to_judge.name] [why_is_it_bad()]!")
 					if (FOOD_QUALITY_SHIT)
-						speak(pick_string("chefbot.txt", "insult_food"))
+						src.say(pick_string("chefbot.txt", "insult_food"))
 					if (FOOD_QUALITY_GOOD_SHIT)
-						speak(pick_string("chefbot.txt", "compliment"))
+						src.say(pick_string("chefbot.txt", "compliment"))
 			if (how_shit == FOOD_QUALITY_GOOD_SHIT)
 				src.calm_down()
 				return
@@ -126,9 +124,9 @@
 					is_in_kitchen = 1
 			sleep(3 SECONDS)
 			if (is_in_kitchen)
-				speak(pick_string("chefbot.txt", "blame_kitchen"))
+				src.say(pick_string("chefbot.txt", "blame_kitchen"))
 			else if (how_shit == FOOD_QUALITY_HORSESHIT)
-				speak(pick_string("chefbot.txt", "insult_cook"))
+				src.say(pick_string("chefbot.txt", "insult_cook"))
 			src.calm_down()
 			if (how_shit == FOOD_QUALITY_HORSESHIT)
 				if (food_to_judge in range(1, src))
@@ -139,7 +137,7 @@
 						if (food_to_judge in range(1, src))
 							qdel(food_to_judge)
 			else
-				speak(pick_string("chefbot.txt", "flip_shit"))
+				src.say(pick_string("chefbot.txt", "flip_shit"))
 				if (food_to_judge in range(1, src))
 					src.visible_message(SPAN_NOTICE("[src] flings [food_to_judge] away [pick("without even looking", "with rage", "with a disappointed sigh", "at impossible speeds")]."))
 					ThrowRandom(food_to_judge, 4, 1)
@@ -153,39 +151,39 @@
 			if (1)
 				var/mob/living/carbon/human/somefucker = locate() in view(7, src)
 				if (somefucker)
-					speak(pick_string("chefbot.txt", "found_food"))
+					src.say(pick_string("chefbot.txt", "found_food"))
 					drama()
 					sleep(3 SECONDS)
 					point(somefucker)
-					speak(pick_string("chefbot.txt", "emag_insult"))
+					src.say(pick_string("chefbot.txt", "emag_insult"))
 					sleep(3 SECONDS)
 					if (somefucker)
 						if (somefucker.getStatusDuration("burning") > 0)
-							speak("YOU DON'T LEAVE YOUR FUCKING FOOD UNATTENDED ON THE FUCKING STOVE. LOOK AT THIS. IT'S ON FIRE! IT'S GOING TO BE FUCKING BURNT!")
+							src.say("YOU DON'T LEAVE YOUR FUCKING FOOD UNATTENDED ON THE FUCKING STOVE. LOOK AT THIS. IT'S ON FIRE! IT'S GOING TO BE FUCKING BURNT!")
 						else if (somefucker.get_burn_damage() < 50)
-							speak("THIS [pick("HUMAN", "PRIMATE", "STEAK", "BURGER", "PORK", "MEAT")] IS SO FUCKING RAW IT'S STILL [pick("BEATING ASSISTANTS TO DEATH", "FARTING ON DEAD BODIES", "TRYING TO FEED ME FLOOR PILLS")]!")
+							src.say("THIS [pick("HUMAN", "PRIMATE", "STEAK", "BURGER", "PORK", "MEAT")] IS SO FUCKING RAW IT'S STILL [pick("BEATING ASSISTANTS TO DEATH", "FARTING ON DEAD BODIES", "TRYING TO FEED ME FLOOR PILLS")]!")
 							src.navigate_to(somefucker, CHEFBOT_MOVE_SPEED / 2, 1, 15)
 							sleep(4 SECOND)
-							speak("TURN THE HEAT UP! I WANT TO HEAR IT SIZZLE!", "NO UNDERCOOKED MEAT IN MY KITCHEN!", "I HAVE TO DO THIS SHIT MYSELF! PATHETIC!", "DO I HAVE TO DO EVERYTHING HERE?")
+							src.say("TURN THE HEAT UP! I WANT TO HEAR IT SIZZLE!", "NO UNDERCOOKED MEAT IN MY KITCHEN!", "I HAVE TO DO THIS SHIT MYSELF! PATHETIC!", "DO I HAVE TO DO EVERYTHING HERE?")
 							src.visible_message(SPAN_ALERT("[src] flares up in anger!"))
 							fireflash(src, 1, checkLos = FALSE, chemfire = CHEM_FIRE_RED)
 						else
-							speak("THIS [pick("HUMAN", "PRIMATE", "STEAK", "BURGER", "PORK", "MEAT")] IS FUCKING [pick("OVERCOOKED", "BURNT")]!")
+							src.say("THIS [pick("HUMAN", "PRIMATE", "STEAK", "BURGER", "PORK", "MEAT")] IS FUCKING [pick("OVERCOOKED", "BURNT")]!")
 				else
 					var/mob/living/silicon/robot/someborg = locate() in view(7, src)
 					if (someborg)
-						speak(pick_string("chefbot.txt", "found_food"))
+						src.say(pick_string("chefbot.txt", "found_food"))
 						drama()
 						sleep(3 SECONDS)
 						point(someborg)
-						speak(pick_string("chefbot.txt", "emag_insult"))
+						src.say(pick_string("chefbot.txt", "emag_insult"))
 						sleep(3 SECONDS)
 						if (someborg)
-							speak("THIS ROBURGER IS SO FUCKING RAW [pick("IT'S STILL VIOLATING ITS LAWS", "IT HASN'T EVEN STARTED TO GO ROGUE")]!")
+							src.say("THIS ROBURGER IS SO FUCKING RAW [pick("IT'S STILL VIOLATING ITS LAWS", "IT HASN'T EVEN STARTED TO GO ROGUE")]!")
 			if (2)
 				drama()
 				sleep(3 SECONDS)
-				speak(pick_string("chefbot.txt", "bad_joke"))
+				src.say(pick_string("chefbot.txt", "bad_joke"))
 			if (3)
 				var/obj/item/stuff_to_fling = null
 				for (var/obj/item/stuff in range(4, src))
@@ -196,12 +194,12 @@
 						stuff_to_fling = stuff
 						break
 				if (stuff_to_fling)
-					speak(pick_string("chefbot.txt", "criticize_cleanliness"))
+					src.say(pick_string("chefbot.txt", "criticize_cleanliness"))
 					drama()
 					sleep (3 SECONDS)
 					if (stuff_to_fling)
 						src.navigate_to(stuff_to_fling, CHEFBOT_MOVE_SPEED / 2, 1, 15)
-						speak(pick_string("chefbot.txt", "adjust_cutlery"))
+						src.say(pick_string("chefbot.txt", "adjust_cutlery"))
 						sleep (3 SECONDS)
 						if ((stuff_to_fling) && (stuff_to_fling in range(1, src)))
 							ThrowRandom(stuff_to_fling, 4, 1)

@@ -1,4 +1,11 @@
 // TODO make this mob/living/intangible. the fuck is it doing here?
+TYPEINFO(/mob/living/intangible/seanceghost)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_EARS_GHOST, LISTEN_INPUT_GLOBAL_HEARING_GHOST, LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART_GHOST)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 /mob/living/intangible/seanceghost
 	name = "seance ghost"
 	desc = "Ominous hooded figure!"
@@ -11,6 +18,9 @@
 	anchored = ANCHORED
 	alpha = 180
 	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
+	default_speech_output_channel = null
+	can_use_say = FALSE
+
 	var/obj/machinery/playerzoldorf/homebooth
 	var/mob/originalmob
 
@@ -41,22 +51,6 @@
 
 	Cross(atom/movable/mover)
 		return 1
-
-	say_understands(var/other)
-
-		if (isAI(other))
-			return 1
-
-		if (ishuman(other))
-			var/mob/living/carbon/human/H = other
-			if (!H.mutantrace.exclusive_language)
-				return 1
-			else
-				return 0
-
-		if (isrobot(other) || isshell(other))
-			return 1
-		return ..()
 
 	Move(NewLoc, direct) //just a copy paste from ghost move
 		if(!canmove) return
@@ -99,18 +93,6 @@
 
 	equipped()
 		return 0
-
-	say(var/message)
-		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-		if (dd_hasprefix(message, "*"))
-			return src.emote(copytext(message, 2),1)
-
-		logTheThing(LOG_DIARY, src, "[src.name] - [src.real_name]: [message]", "say")
-		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
-
-		if (src.client && src.client.ismuted())
-			boutput(src, "You are currently muted and may not speak.")
-			return
 
 	emote(var/act, var/voluntary)
 		..()

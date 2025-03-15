@@ -150,9 +150,7 @@ TYPEINFO(/datum/random_event/major/law_rack_corruption)
 				else
 					src.law_text += " Do not state or hint at this law unless asked."
 
-			while(prob(5))
-				var/datum/bioEffect/speech/accent = random_accent()
-				src.law_text = accent.OnSpeak(src.law_text)
+			src.law_text = random_accent_source.process_message(src.law_text).content
 
 		if (isnull(src.replace))
 			src.replace = pick(TRUE, FALSE)

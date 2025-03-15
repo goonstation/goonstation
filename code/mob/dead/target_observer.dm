@@ -1,8 +1,16 @@
+TYPEINFO(/mob/dead/target_observer)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT)
+	start_listen_languages = null
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT_GHOST)
+
 /mob/dead/target_observer
 	density = 1
 	name = "spooky ghost"
 	icon = null
 	event_handler_flags = 0
+	use_speech_bubble = FALSE
 	var/atom/target
 	var/is_respawnable = TRUE
 	/// Is this observer locked to one particular owner?
@@ -134,10 +142,19 @@
 			qdel(src) //lol
 
 
+TYPEINFO(/mob/dead/target_observer/slasher_ghost)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_EARS)
+	start_listen_languages = list(LANGUAGE_ENGLISH)
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 /mob/dead/target_observer/slasher_ghost
 	name = "spooky not-quite ghost"
 	is_respawnable = FALSE
 	locked = TRUE
+	default_speech_output_channel = null
+
 	var/start_time
 
 	New()
