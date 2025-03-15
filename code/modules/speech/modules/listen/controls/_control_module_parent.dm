@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/datum/listen_module/control)
 	return
 
 
-ABSTRACT_TYPE(/datum/listen_module/client_verb)
+ABSTRACT_TYPE(/datum/listen_module/control/client_verb)
 /**
  *	Client verb listen control module datums permit other listen modules to be manipulated through the use of a verb added to a
  *	client. The module handles updating client verb lists as they log in and out of the parent tree's listener parent.
