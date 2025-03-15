@@ -1,3 +1,10 @@
+TYPEINFO(/mob/dead/target_observer)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT)
+	start_listen_languages = null
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT_GHOST)
+
 /mob/dead/target_observer
 	density = 1
 	name = "spooky ghost"
@@ -43,10 +50,6 @@
 
 		STOP_TRACKING
 		..()
-
-	Login()
-		. = ..()
-		src.toggle_hearing_all(FALSE)
 
 	// Observer Life() only runs for admin ghosts (Convair880).
 	Life(datum/controller/process/mobs/parent)

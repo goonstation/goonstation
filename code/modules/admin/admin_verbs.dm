@@ -32,8 +32,6 @@ var/list/admin_verbs = list(
 		/client/proc/marsay,
 		/client/proc/silisay,
 		/client/proc/thrallsay,
-		/client/proc/toggle_hearing_all_looc,
-		/client/proc/toggle_hearing_all,
 		/client/proc/cmd_admin_prison_unprison,
 		/client/proc/cmd_admin_playermode,
 		/client/proc/cmd_create_viewport,
@@ -526,7 +524,6 @@ var/list/admin_verbs = list(
 var/list/special_admin_observing_verbs = list(
 	/datum/admins/proc/toggle_respawns,
 	/datum/admins/proc/toggledeadchat,
-	/client/proc/togglepersonaldeadchat,
 	/client/proc/Getmob,
 	)
 

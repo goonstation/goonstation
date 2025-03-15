@@ -174,7 +174,8 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 /datum/say_channel/delimited/local
 	/// Whether this local channel should request registered input modules to track their outermost listeners.
 	var/track_outermost_listener = TRUE
-
+	/// An associative list of listen module trees, with the associated number of times a signal has been registered to them.
+	var/list/listen_trees_signal_registrations
 	/// The listener tick cache is responsible for storing the "listeners by type" lists calculated by `PassToChannel()` for a single tick.
 	var/datum/listener_tick_cache/listener_tick_cache
 	/// The type of listener tick cache that this say channel should use.
@@ -183,7 +184,13 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 /datum/say_channel/delimited/local/New()
 	. = ..()
 
+	src.listen_trees_signal_registrations = list()
 	src.listener_tick_cache = new src.listener_tick_cache_type
+
+/datum/say_channel/delimited/local/disposing()
+	src.listen_trees_signal_registrations = null
+
+	. = ..()
 
 /datum/say_channel/delimited/local/PassToChannel(datum/say_message/message)
 	var/list/list/datum/listen_module/input/listen_modules_by_type = src.listener_tick_cache.read_from_cache(message)
@@ -255,12 +262,19 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 
 	if (src.track_outermost_listener)
 		registree.parent_tree.listener_origin.ensure_outermost_listener_tracker().request_track()
-		src.RegisterSignal(registree.parent_tree, COMSIG_LISTENER_ORIGIN_UPDATED, PROC_REF(rerequest_track))
+
+		src.listen_trees_signal_registrations[registree.parent_tree] += 1
+		if (src.listen_trees_signal_registrations[registree.parent_tree] == 1)
+			src.RegisterSignal(registree.parent_tree, COMSIG_LISTENER_ORIGIN_UPDATED, PROC_REF(rerequest_track))
 
 /datum/say_channel/delimited/local/UnregisterInput(datum/listen_module/input/registered)
 	if (src.track_outermost_listener)
 		registered.parent_tree.listener_origin.ensure_outermost_listener_tracker().unrequest_track()
-		src.UnregisterSignal(registered.parent_tree, COMSIG_LISTENER_ORIGIN_UPDATED)
+
+		src.listen_trees_signal_registrations[registered.parent_tree] -= 1
+		if (src.listen_trees_signal_registrations[registered.parent_tree] == 0)
+			src.UnregisterSignal(registered.parent_tree, COMSIG_LISTENER_ORIGIN_UPDATED)
+			src.listen_trees_signal_registrations -= registered.parent_tree
 
 	. = ..()
 

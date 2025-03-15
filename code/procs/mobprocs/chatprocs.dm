@@ -109,39 +109,6 @@
 	usr.client.preferences.auto_capitalization = !usr.client.preferences.auto_capitalization
 	boutput(usr, SPAN_NOTICE("[usr.client.preferences.auto_capitalization ? "Now": "No Longer"] auto capitalizing messages."))
 
-/mob/dead/verb/togglelocaldeadchat()
-	set desc = "Toggle whether you can hear all chat while dead or just local chat"
-	set name = "Toggle Deadchat Range"
-	set category = "Ghost"
-
-	if (!usr.client) //How could this even happen?
-		return
-
-	usr.client.preferences.local_deadchat = !usr.client.preferences.local_deadchat
-	src.toggle_hearing_all(!usr.client.preferences.local_deadchat)
-	boutput(usr, SPAN_NOTICE("[usr.client.preferences.local_deadchat ? "Now" : "No longer"] hearing local chat only."))
-
-/mob/dead/Login()
-	. = ..()
-	src.toggle_hearing_all(!usr.client.preferences.local_deadchat)
-
-/mob/dead/verb/toggle_ghost_radio()
-	set desc = "Toggle whether you can hear radio chatter while dead"
-	set name = "Toggle Ghost Radio"
-	set category = "Ghost"
-
-	if (!usr.client) //How could this even happen?
-		return
-
-	usr.client.mute_ghost_radio = !usr.client.mute_ghost_radio
-
-	if (usr.client.mute_ghost_radio)
-		src.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_RADIO_GLOBAL)
-	else
-		src.ensure_listen_tree().AddListenInput(LISTEN_INPUT_RADIO_GLOBAL)
-
-	boutput(usr, SPAN_NOTICE("[usr.client.mute_ghost_radio ? "No longer" : "Now"] hearing radio as a ghost."))
-
 /mob/verb/toggleflyingchat()
 	set desc = "Toggle seeing what people say over their heads"
 	set name = "Toggle Flying Chat"

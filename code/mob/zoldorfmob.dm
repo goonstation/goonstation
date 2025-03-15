@@ -1,6 +1,6 @@
 TYPEINFO(/mob/zoldorf)
 	start_listen_modifiers = null
-	start_listen_inputs = null
+	start_listen_inputs = list(LISTEN_INPUT_EARS_GHOST, LISTEN_INPUT_GLOBAL_HEARING_GHOST, LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART_GHOST)
 	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_modifiers = null
 	start_speech_outputs = null
@@ -37,8 +37,6 @@ TYPEINFO(/mob/zoldorf)
 		src.see_invisible = INVIS_GHOST
 		src.see_in_dark = SEE_DARK_FULL
 		src.flags |= UNCRUSHABLE
-		src.ensure_listen_tree()
-		src.toggle_hearing_all(TRUE)
 
 	proc/addAllAbilities()
 		src.addAbility(/datum/targetable/zoldorfAbility/fortune)

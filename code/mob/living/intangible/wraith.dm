@@ -2,7 +2,7 @@
 
 TYPEINFO(/mob/living/intangible/wraith)
 	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_DEADCHAT)
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_RADIO_GLOBAL_GHOST)
 	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT_WRAITH)

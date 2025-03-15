@@ -11,6 +11,8 @@
 #define AddListenModifier(modifier_id, arguments...) _AddListenModifier(modifier_id, list(##arguments))
 /// A wrapper for _AddListenEffect that permits the usage of named arguments.
 #define AddListenEffect(effect_id, arguments...) _AddListenEffect(effect_id, list(##arguments))
+/// A wrapper for _AddListenControl that permits the usage of named arguments.
+#define AddListenControl(control_id, arguments...) _AddListenControl(control_id, list(##arguments))
 
 
 //------------ Cooldowns ------------//

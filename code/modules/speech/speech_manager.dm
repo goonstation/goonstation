@@ -16,6 +16,8 @@ var/global/datum/speech_manager/SpeechManager = new()
 	VAR_PRIVATE/list/listen_modifier_cache
 	/// An associative list of cached listen effect module types, indexed by their ID.
 	VAR_PRIVATE/list/listen_effect_cache
+	/// An associative list of cached listen control module types, indexed by their ID.
+	VAR_PRIVATE/list/listen_control_cache
 
 	/// An associative list of cached shared input format module datum singletons, indexed by their ID.
 	VAR_PRIVATE/list/datum/shared_input_format_module/shared_input_format_cache
@@ -83,6 +85,13 @@ var/global/datum/speech_manager/SpeechManager = new()
 		if (src.listen_effect_cache[module_id])
 			CRASH("Non unique listen effect found: [module_id]. These MUST be unique.")
 		src.listen_effect_cache[module_id] = T
+
+	src.listen_control_cache = list()
+	for (var/datum/listen_module/control/T as anything in concrete_typesof(/datum/listen_module/control))
+		var/module_id = T::id
+		if (src.listen_control_cache[module_id])
+			CRASH("Non unique listen control found: [module_id]. These MUST be unique.")
+		src.listen_control_cache[module_id] = T
 
 	// Populate the shared input format module cache.
 	src.shared_input_format_cache = list()
@@ -194,6 +203,15 @@ var/global/datum/speech_manager/SpeechManager = new()
 		return new result(arglist(arguments))
 	else
 		CRASH("Invalid listen effect lookup: [effect_id]")
+
+/// Returns a unique instance of the listen control module requested, or runtimes on bad ID.
+/datum/speech_manager/proc/GetListenControlInstance(control_id, list/arguments)
+	RETURN_TYPE(/datum/listen_module/control)
+	var/result = src.listen_control_cache[control_id]
+	if (result)
+		return new result(arglist(arguments))
+	else
+		CRASH("Invalid listen control lookup: [control_id]")
 
 /// Returns the global instance of the shared input module datum corresponding to the ID given. Does not runtime of bad ID.
 /datum/speech_manager/proc/GetSharedInputFormatModuleInstance(module_id)

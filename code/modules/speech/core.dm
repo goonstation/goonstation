@@ -14,7 +14,7 @@ Old Code To Remove:
 
 Refactors:
 - Some form of centralised preference manager for toggling inputs/outputs for types?
-	- `togglepersonaldeadchat`, `toggle_ghost_radio`, `toggle_ooc`, `toggle_looc`, etc.
+	- `toggle_ooc`, `toggle_looc`
 	- Most have dedicated procs for themselves, and some implementation on Login or New.
 
 Unfixable:
@@ -33,6 +33,8 @@ Follow-Up PRs:
 
 TYPEINFO(/atom)
 	// Default Listen Modules:
+	/// The listen controls that this atom *starts* with. It will not be updated nor used again after initialisation.
+	var/list/start_listen_controls = null
 	/// The listen effects that this atom *starts* with. It will not be updated nor used again after initialisation.
 	var/list/start_listen_effects = null
 	/// The listen modifiers that this atom *starts* with. It will not be updated nor used again after initialisation.
@@ -122,7 +124,7 @@ TYPEINFO(/atom)
 /atom/proc/ensure_listen_tree()
 	RETURN_TYPE(/datum/listen_module_tree)
 	var/typeinfo/atom/typeinfo = src.get_typeinfo()
-	src.listen_tree ||= new(src, typeinfo.start_listen_inputs, typeinfo.start_listen_modifiers, typeinfo.start_listen_effects, typeinfo.start_listen_languages)
+	src.listen_tree ||= new(src, typeinfo.start_listen_inputs, typeinfo.start_listen_modifiers, typeinfo.start_listen_effects, typeinfo.start_listen_controls, typeinfo.start_listen_languages)
 	return src.listen_tree
 
 /// Returns this atom's speech module tree. If this atom does not possess a speech module tree, instantiates one.
@@ -200,7 +202,10 @@ TYPEINFO(/atom)
 /client/proc/ensure_listen_tree()
 	RETURN_TYPE(/datum/listen_module_tree/auxiliary)
 
-	src.listen_tree = new(null, null, null, list(LISTEN_EFFECT_DISPLAY_TO_CLIENT), null, src.mob.listen_tree)
+	if (src.listen_tree)
+		return src.listen_tree
+
+	src.listen_tree = new(null, null, null, list(LISTEN_EFFECT_DISPLAY_TO_CLIENT), null, null, src.mob.listen_tree)
 
 	src.preferences.listen_ooc = !src.preferences.listen_ooc
 	src.toggle_ooc(!src.preferences.listen_ooc)
@@ -216,6 +221,9 @@ TYPEINFO(/atom)
 /// Returns this client's auxiliary speech module tree. If this client does not possess an auxiliary speech module tree, instantiates one.
 /client/proc/ensure_speech_tree()
 	RETURN_TYPE(/datum/speech_module_tree/auxiliary)
+
+	if (src.speech_tree)
+		return src.speech_tree
 
 	src.speech_tree = new(null, list(SPEECH_OUTPUT_OOC, SPEECH_OUTPUT_LOOC), null, null, src.mob.speech_tree)
 	if (src.holder && !src.player_mode)
@@ -251,19 +259,13 @@ TYPEINFO(/atom)
 
 	if (src.preferences.listen_looc)
 		if (src.holder && !src.player_mode)
-			if (src.only_local_looc)
-				src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
-			else
-				src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
+			src.listen_tree.AddListenControl(LISTEN_CONTROL_TOGGLE_HEARING_ALL_LOOC)
 		else
 			src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC)
 
 	else
 		if (src.holder && !src.player_mode)
-			if (src.only_local_looc)
-				src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
-			else
-				src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
+			src.listen_tree.RemoveListenControl(LISTEN_CONTROL_TOGGLE_HEARING_ALL_LOOC)
 		else
 			src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC)
 

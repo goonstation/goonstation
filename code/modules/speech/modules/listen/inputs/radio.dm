@@ -3,6 +3,11 @@
 	channel = SAY_CHANNEL_GLOBAL_RADIO
 
 
+SET_UP_LISTEN_CONTROL(/datum/listen_module/input/global_radio/ghost, LISTEN_CONTROL_TOGGLE_GHOST_RADIO)
+/datum/listen_module/input/global_radio/ghost
+	id = LISTEN_INPUT_RADIO_GLOBAL_GHOST
+
+
 /datum/listen_module/input/distorted_radio
 	id = LISTEN_INPUT_RADIO_DISTORTED
 	priority = LISTEN_INPUT_PRIORITY_DISTORTED

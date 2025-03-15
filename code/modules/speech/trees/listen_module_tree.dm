@@ -40,6 +40,11 @@
 	/// An associative list of listen effect modules, indexed by the module ID.
 	VAR_PROTECTED/list/datum/listen_module/effect/listen_effects_by_id
 
+	/// An associative list of listen control module subscription counts, indexed by the module ID.
+	VAR_PROTECTED/list/listen_control_ids_with_subcount
+	/// An associative list of listen control modules, indexed by the module ID.
+	VAR_PROTECTED/list/datum/listen_module/control/listen_controls_by_id
+
 	/// An associative list of language datum subscription counts, indexed by the language ID.
 	VAR_PROTECTED/list/known_language_ids_with_subcount
 	/// An associative list of language datums, indexed by the language ID.
@@ -47,7 +52,7 @@
 	/// Whether this listen module tree is capable of understanding all languages.
 	VAR_PROTECTED/understands_all_languages = FALSE
 
-/datum/listen_module_tree/New(atom/parent, list/inputs = list(), list/modifiers = list(), list/effects = list(), list/languages = list())
+/datum/listen_module_tree/New(atom/parent, list/inputs = list(), list/modifiers = list(), list/effects = list(), list/controls = list(), list/languages = list())
 	. = ..()
 
 	src.listener_parent = parent
@@ -68,6 +73,9 @@
 	src.listen_effect_ids_with_subcount = list()
 	src.listen_effects_by_id = list()
 
+	src.listen_control_ids_with_subcount = list()
+	src.listen_controls_by_id = list()
+
 	src.known_language_ids_with_subcount = list()
 	src.known_languages_by_id = list()
 
@@ -80,6 +88,9 @@
 	for (var/effect_id in effects)
 		src.AddListenEffect(effect_id)
 
+	for (var/control_id in controls)
+		src.AddListenControl(control_id)
+
 	for (var/language_id in languages)
 		src.AddKnownLanguage(language_id)
 
@@ -89,6 +100,9 @@
 
 	for (var/datum/listen_module_tree/auxiliary/auxiliary_tree as anything in src.auxiliary_trees)
 		auxiliary_tree.update_target_listen_tree(null)
+
+	for (var/control_id in src.listen_controls_by_id)
+		qdel(src.listen_controls_by_id[control_id])
 
 	for (var/effect_id in src.listen_effects_by_id)
 		qdel(src.listen_effects_by_id[effect_id])
@@ -117,6 +131,7 @@
 	src.listen_inputs_by_channel = null
 	src.listen_modifiers_by_id = null
 	src.listen_effects_by_id = null
+	src.listen_controls_by_id = null
 
 	. = ..()
 
@@ -192,14 +207,14 @@
 /datum/listen_module_tree/proc/request_enable()
 	src.enable_requests += 1
 
-	if (!src.enabled)
+	if ((src.enable_requests > 0) && !src.enabled)
 		src.enable()
 
 /// Remove an enable request from this listen module tree.
 /datum/listen_module_tree/proc/unrequest_enable()
 	src.enable_requests -= 1
 
-	if (!src.enable_requests)
+	if ((src.enable_requests <= 0) && src.enabled)
 		src.disable()
 
 /// Migrates this listen module tree to a new speaker parent and origin.
@@ -219,6 +234,9 @@
 
 	new_parent.listen_tree = src
 	src.secondary_parents -= new_parent
+
+	if (old_parent != new_parent)
+		SEND_SIGNAL(src, COMSIG_LISTENER_PARENT_UPDATED, old_parent, new_parent)
 
 	if (old_origin != new_origin)
 		SEND_SIGNAL(src, COMSIG_LISTENER_ORIGIN_UPDATED, old_origin, new_origin)
@@ -345,6 +363,39 @@
 /datum/listen_module_tree/proc/GetEffectByID(effect_id)
 	RETURN_TYPE(/list/datum/listen_module/effect)
 	return src.listen_effects_by_id[effect_id]
+
+/// Adds a new listen control module to the tree. Returns a reference to the new control module on success.
+/datum/listen_module_tree/proc/_AddListenControl(control_id, list/arguments = list(), count = 1)
+	RETURN_TYPE(/datum/listen_module/control)
+
+	src.listen_control_ids_with_subcount[control_id] += count
+	if (src.listen_controls_by_id[control_id])
+		return src.listen_controls_by_id[control_id]
+
+	arguments["parent"] = src
+	var/datum/listen_module/control/new_control = global.SpeechManager.GetListenControlInstance(control_id, arguments)
+	if (!istype(new_control))
+		return
+
+	src.listen_controls_by_id[control_id] = new_control
+	return new_control
+
+/// Removes a listen control module from the tree. Returns TRUE on success, FALSE on failure.
+/datum/listen_module_tree/proc/RemoveListenControl(control_id, count = 1)
+	if (!src.listen_controls_by_id[control_id])
+		return FALSE
+
+	src.listen_control_ids_with_subcount[control_id] -= count
+	if (!src.listen_control_ids_with_subcount[control_id])
+		qdel(src.listen_controls_by_id[control_id])
+		src.listen_controls_by_id -= control_id
+
+	return TRUE
+
+/// Returns the listen control module that matches the specified ID.
+/datum/listen_module_tree/proc/GetControlByID(control_id)
+	RETURN_TYPE(/list/datum/listen_module/control)
+	return src.listen_controls_by_id[control_id]
 
 /// Adds a known language to this listen tree. Known languages allow messages to be understood. Returns TRUE on success, FALSE on failure.
 /datum/listen_module_tree/proc/AddKnownLanguage(language_id, count = 1)

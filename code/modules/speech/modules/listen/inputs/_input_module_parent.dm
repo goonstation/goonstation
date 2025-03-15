@@ -12,6 +12,8 @@ ABSTRACT_TYPE(/datum/listen_module/input)
 	var/channel = "none"
 	/// The say channel datum that this module is currently listening on.
 	var/datum/say_channel/say_channel
+	/// Whether this listen module should ignore line of sight checks performed during message dissemination.
+	var/ignore_line_of_sight_checks = FALSE
 
 /datum/listen_module/input/New(datum/listen_module_tree/parent)
 	. = ..()

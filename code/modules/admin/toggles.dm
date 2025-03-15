@@ -131,51 +131,6 @@ var/global/IP_alerts = 1
 	logTheThing(LOG_DIARY, usr, "has toggled same-IP alerts [(IP_alerts ? "On" : "Off")]", "admin")
 	message_admins("[key_name(usr)] has toggled same-IP alerts [(IP_alerts ? "On" : "Off")]")
 
-/client/proc/toggle_hearing_all_looc()
-	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	set name = "Toggle Hearing All LOOC"
-	set desc = "Toggles the ability to hear all LOOC messages regardless of where you are"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	src.only_local_looc = !src.only_local_looc
-	if (src.only_local_looc)
-		src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
-		src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
-	else
-		src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
-		src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
-
-	boutput(usr, SPAN_NOTICE("Toggled seeing all LOOC messages [src.only_local_looc ?"off":"on"]!"))
-
-/client/proc/toggle_hearing_all()
-	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	set name = "Toggle Hearing All"
-	set desc = "Toggles the ability to hear all messages regardless of where you are, like a ghost."
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	if(src.mob)
-		src.mob.toggle_hearing_all(!(src.mob.mob_flags & MOB_HEARS_ALL))
-		boutput(usr, SPAN_NOTICE("Toggled seeing all messages [src.mob.mob_flags & MOB_HEARS_ALL ? "on" : "off"]!"))
-	else
-		boutput(usr, SPAN_NOTICE("You don't have a mob, somehow, what!"))
-
-/mob/proc/toggle_hearing_all(global_hearing_enabled)
-	if (global_hearing_enabled && !(src.mob_flags & MOB_HEARS_ALL))
-		src.mob_flags |= MOB_HEARS_ALL
-
-		src.listen_tree.RemoveListenInput(LISTEN_INPUT_EARS)
-		src.listen_tree.AddListenInput(LISTEN_INPUT_GLOBAL_HEARING)
-		src.listen_tree.AddListenInput(LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART)
-
-	else if (src.mob_flags & MOB_HEARS_ALL)
-		src.mob_flags &= ~MOB_HEARS_ALL
-
-		src.listen_tree.RemoveListenInput(LISTEN_INPUT_GLOBAL_HEARING)
-		src.listen_tree.RemoveListenInput(LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART)
-		src.listen_tree.AddListenInput(LISTEN_INPUT_EARS)
-
 /client/proc/toggle_attack_messages()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Attack Alerts"
@@ -303,10 +258,7 @@ client/proc/toggle_ghost_respawns()
 			src.listen_tree.AddListenInput(LISTEN_INPUT_OOC_ADMIN)
 			src.listen_tree.RemoveListenInput(LISTEN_INPUT_OOC)
 		if (src.preferences.listen_looc)
-			if (src.only_local_looc)
-				src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
-			else
-				src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
+			src.listen_tree.AddListenControl(LISTEN_CONTROL_TOGGLE_HEARING_ALL_LOOC)
 			src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC)
 
 		src.holder.admin_speech_tree.update_target_speech_tree(src.speech_tree)
@@ -373,10 +325,7 @@ client/proc/toggle_ghost_respawns()
 			src.listen_tree.RemoveListenInput(LISTEN_INPUT_OOC_ADMIN)
 		if (src.preferences.listen_looc)
 			src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC)
-			if (src.only_local_looc)
-				src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
-			else
-				src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
+			src.listen_tree.RemoveListenControl(LISTEN_CONTROL_TOGGLE_HEARING_ALL_LOOC)
 
 		src.holder.admin_speech_tree.update_target_speech_tree()
 		src.holder.admin_listen_tree.update_target_listen_tree()
@@ -899,23 +848,6 @@ client/proc/toggle_ghost_respawns()
 	late_traitors = !( late_traitors )
 	sound_waiting = !( sound_waiting )
 	message_admins("[key_name(usr)] toggled Dead OOC  [dooc_allowed ? "on" : "off"], Global Player Cap  [player_capa ? "on" : "off"], Entering [enter_allowed ? "on" : "off"],Playing as the AI [config.allow_ai ? "on" : "off"], Sound Preference override [soundpref_override ? "on" : "off"], Abandoning [abandon_allowed ? "on" : "off"], Admin Jumping [config.allow_admin_jump ? "on" : "off"], Admin sound playing [config.allow_admin_sounds ? "on" : "off"], Admin Spawning [config.allow_admin_spawning ? "on" : "off"], Admin Reviving [config.allow_admin_rev ? "on" : "off"], Farting [farting_allowed ? "on" : "off"], Blood system [blood_system ? "on" : "off"], Suicide [suicide_allowed ? "on" : "off"], Monkey/Human communication [monkeysspeakhuman ? "on" : "off"], Late Traitors [late_traitors ? "on" : "off"], and Sound Queuing [sound_waiting ? "on" : "off"]   ")
-
-/client/proc/togglepersonaldeadchat()
-	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	set desc = "Toggle whether you can see deadchat or not"
-	set name = "Toggle Your Deadchat"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	NOT_IF_TOGGLES_ARE_OFF
-
-	if (!src.deadchatoff)
-		src.deadchatoff = TRUE
-		src.listen_tree.RemoveListenInput(LISTEN_INPUT_DEADCHAT)
-		boutput(usr, SPAN_NOTICE("No longer viewing deadchat."))
-	else
-		src.deadchatoff = FALSE
-		src.listen_tree.AddListenInput(LISTEN_INPUT_DEADCHAT)
-		boutput(usr, SPAN_NOTICE("Now viewing deadchat."))
 
 /datum/admins/proc/toggleaprilfools()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)

@@ -1,3 +1,16 @@
+//------------ Macros ------------//
+/// Sets up a listen module with the addition and removal of a listen control module.
+#define SET_UP_LISTEN_CONTROL(TYPE, ID) \
+	TYPE/New(datum/listen_module_tree/parent) { \
+		. = ..(); \
+		src.parent_tree.AddListenControl(ID); \
+	} \
+	TYPE/disposing() { \
+		src.parent_tree.RemoveListenControl(ID); \
+		. = ..(); \
+	}
+
+
 //------------ Speech Outputs ------------//
 #define SPEECH_OUTPUT_BLOBCHAT "blobchat"
 #define SPEECH_OUTPUT_DEADCHAT "deadchat"
@@ -146,8 +159,10 @@
 //------------ Listen Inputs ------------//
 #define LISTEN_INPUT_BLOBCHAT "blobchat"
 #define LISTEN_INPUT_DEADCHAT "deadchat"
+#define LISTEN_INPUT_DEADCHAT_ADMIN "admin_deadchat"
 #define LISTEN_INPUT_EARS "ears"
 #define LISTEN_INPUT_EARS_AI "ai_ears"
+#define LISTEN_INPUT_EARS_GHOST "ghost_ears"
 #define LISTEN_INPUT_EARS_GHOSTDRONE "ghostdrone_ears"
 #define LISTEN_INPUT_EQUIPPED "equipped"
 #define LISTEN_INPUT_FLOCK "flock"
@@ -156,7 +171,9 @@
 #define LISTEN_INPUT_FLOCKMIND "flockmind"
 #define LISTEN_INPUT_GHOSTDRONE "ghostdrone"
 #define LISTEN_INPUT_GLOBAL_HEARING "global_hearing"
+#define LISTEN_INPUT_GLOBAL_HEARING_GHOST "ghost_global_hearing"
 #define LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART "global_hearing_local_counterpart"
+#define LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART_GHOST "ghost_global_hearing_local_counterpart"
 #define LISTEN_INPUT_HIVECHAT "hivechat"
 #define LISTEN_INPUT_HIVECHAT_GLOBAL "global_hivechat"
 #define LISTEN_INPUT_KUDZUCHAT "kudzuchat"
@@ -174,6 +191,7 @@
 #define LISTEN_INPUT_RADIO_DISTORTED "distorted_radio"
 #define LISTEN_INPUT_RADIO_GLOBAL "global_radio"
 #define LISTEN_INPUT_RADIO_GLOBAL_DEFAULT_ONLY "global_radio_default"
+#define LISTEN_INPUT_RADIO_GLOBAL_GHOST "global_radio_ghost"
 #define LISTEN_INPUT_RADIO_GLOBAL_UNPROTECTED_ONLY "global_radio_unprotected"
 #define LISTEN_INPUT_SILICONCHAT "siliconchat"
 #define LISTEN_INPUT_SILICONCHAT_DISTORTED "distorted_siliconchat"
@@ -209,3 +227,11 @@
 #define LISTEN_EFFECT_RITUAL "ritual"
 #define LISTEN_EFFECT_SIMS_SOCIAL_MOTIVE "sims_social_motive"
 #define LISTEN_EFFECT_SKULLBOT "skullbot"
+
+
+//------------ Listen Controls ------------//
+#define LISTEN_CONTROL_TOGGLE_ADMIN_DEADCHAT "toggle_admin_deadchat"
+#define LISTEN_CONTROL_TOGGLE_GLOBAL_HEARING_ADMIN "toggle_admin_global_hearing"
+#define LISTEN_CONTROL_TOGGLE_GLOBAL_HEARING_GHOST "toggle_ghost_global_hearing"
+#define LISTEN_CONTROL_TOGGLE_GHOST_RADIO "toggle_ghost_radio"
+#define LISTEN_CONTROL_TOGGLE_HEARING_ALL_LOOC "toggle_hearing_all_looc"

@@ -1,6 +1,4 @@
 //various mob_flags go here
-/// For mobs who can hear everything (mainly observer ghossts)
-#define MOB_HEARS_ALL 1
 // God Ecaps
 
 #define SEE_THRU_CAMERAS (1 << 3)	//for ai eye

@@ -22,9 +22,6 @@
 	var/player_mode_asay = 0
 	var/player_mode_ahelp = 0
 	var/player_mode_mhelp = 0
-	var/only_local_looc = 0
-	var/deadchatoff = 0
-	var/mute_ghost_radio = FALSE
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0
