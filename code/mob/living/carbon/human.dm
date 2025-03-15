@@ -683,6 +683,9 @@
 				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(src) //we spawn the headspider inside this dude immediately.
 				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove)) //if this dude gets grindered or cremated or whatever, we go with it
 				mind?.transfer_to(HS) //ok we're a headspider now
+				HS.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = "\ref[C]")
+				HS.ensure_listen_tree().AddListenInput(LISTEN_INPUT_HIVECHAT, subchannel = "\ref[C]")
+				HS.default_speech_output_channel = SAY_CHANNEL_HIVEMIND
 				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
 				HS.changeling = C
 				// alright everything to do with headspiders is a blasted hellscape but here's what goes on here
