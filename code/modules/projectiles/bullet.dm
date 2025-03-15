@@ -1051,6 +1051,30 @@ toxic - poisons
 				M.update_canmove()
 			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
 
+/datum/projectile/bullet/potato		//Improvised slug
+	name = "potato"
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	damage = 5
+	stun = 25
+	dissipation_rate = 7
+	dissipation_delay = 3
+	implanted = null
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	impact_image_state = "bullethole"
+	casing = /obj/item/casing/shotgun/pipe
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if(proj.power >= 16)
+				var/throw_range = (proj.power > 20) ? 3 : 1
+
+				var/turf/target = get_edge_target_turf(M, dirflag)
+				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
+				M.update_canmove()
+			hit.changeStatus("staggered", clamp(proj.power/10, 5, 1) SECONDS)
+
 /datum/projectile/bullet/sledgehammer
 	name = "\"sledgehammer\" round"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'

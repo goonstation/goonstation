@@ -881,6 +881,12 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/bone
 	icon_state = "makeshiftbone"
 
+/obj/item/ammo/bullets/pipeshot/potato // scrap handmade bone shells
+	sname = "potato load"
+	desc = "This appears to be some potatoes haphazardly shoved into a few cut open pipe frames. They're too crude for advanced shotgun receivers."
+	ammo_type = new/datum/projectile/bullet/potato
+	icon_state = "makeshiftbone"
+
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"
 	name = "nailshot ammo box"
