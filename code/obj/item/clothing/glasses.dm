@@ -857,3 +857,14 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
 			return
 		src.clear_overlays(M)
 		src.generate_overlays(M)
+
+/obj/item/clothing/glasses/eyestrain
+	name = "blue-light filtering glasses"
+	desc = "A pair of glasses that reduce eye-strain from staring a computer screen all shift."
+	icon_state = "oglasses"
+	// would be nice if these tinted TGUI
+
+	color_r = 1
+	color_g = 0.9
+	color_b = 0.8
+

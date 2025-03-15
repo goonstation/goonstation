@@ -169,12 +169,15 @@ export const Vendors = () => {
                             tooltip="Set as displayed product"
                           />
                           <Button.Input
-                            onCommit={(e, value) =>
-                              act('setPrice', {
-                                target: ref,
-                                cost: value,
-                              })
-                            }
+                            onCommit={(_e, value) => {
+                              const parsedPrice = parseInt(value, 10);
+                              if (!isNaN(parsedPrice)) {
+                                act('setPrice', {
+                                  target: ref,
+                                  cost: Math.max(parsedPrice, 0),
+                                });
+                              }
+                            }}
                             defaultValue="0"
                             currentValue={`${cost}`}
                           >

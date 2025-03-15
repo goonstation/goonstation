@@ -1,3 +1,6 @@
+(t)fri mar 07 25
+(u)LeahTheTech
+(*)Added throw mode flags to the throw buildmode. Ever wanted to throw someone through a wall? Now you can!
 (t)tue feb 25 25
 (u)LeahTheTech
 (*)Added new gas build mode that lets you release gas on a turf or inject it into a gas container.

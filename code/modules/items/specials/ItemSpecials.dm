@@ -766,12 +766,15 @@
 	baseball
 		name = "Baseball Swing"
 		desc = "An AoE attack with a chance for a home run."
+		var/hit_range = 4
+		var/hit_speed = 1
+		var/hit_sound = 'sound/impact_sounds/bat_wood_crit.ogg'
 
 		modify_attack_result(mob/user, mob/target, datum/attackResults/msgs)
 			if (msgs.damage > 0 && msgs.stamina_crit)
 				var/turf/target_turf = get_edge_target_turf(target, get_dir(user, target))
-				target.throw_at(target_turf, 4, 1, throw_type = THROW_BASEBALL)
-				msgs.played_sound = 'sound/impact_sounds/bat_wood_crit.ogg'
+				target.throw_at(target_turf, hit_range, hit_speed, throw_type = THROW_BASEBALL)
+				msgs.played_sound = hit_sound
 			return msgs
 
 /datum/item_special/launch_projectile
@@ -1927,7 +1930,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 						user.visible_message(SPAN_ALERT("<b>[user] flings a tile from [turf] into the air!</b>"))
 						logTheThing(LOG_COMBAT, user, "fling throws a floor tile ([F]) [get_dir(user, target)] from [turf].")
 
-						user.lastattacked = user //apply combat click delay
+						user.lastattacked = get_weakref(user) //apply combat click delay
 						tile.throw_at(target, tile.throw_range, tile.throw_speed, params, bonus_throwforce = 3)
 
 			if (!hit)

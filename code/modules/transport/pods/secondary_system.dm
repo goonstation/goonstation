@@ -1464,8 +1464,9 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 		if (!src.loaded_wep && !src.ship.m_w_system)
 			return
 
-		if (src.loaded_wep && GET_COOLDOWN(src.loaded_wep, "fire") || src.ship.m_w_system && GET_COOLDOWN(src.ship.m_w_system, "fire"))
-			boutput(src.ship.pilot, "[src.ship.ship_message("[src] must wait for all weapons to be off cooldown to work!")]")
+		if (src.loaded_wep && GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || src.ship.m_w_system && GET_COOLDOWN(src.ship.m_w_system, "weapon_swap_cd"))
+			var/swap_cd = round((GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || GET_COOLDOWN(src.ship.m_w_system, "weapon_swap_cd")) / 10, 1)
+			boutput(src.ship.pilot, "[src.ship.ship_message("[src.ship]'s weapons are too hot to swap out! [swap_cd] seconds left.")]")
 			return
 
 		for (var/mob/M in src.ship)
@@ -1473,6 +1474,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 				boutput(M, "[src.ship.ship_message("[src.ship.m_w_system] has been swapped out for [src.loaded_wep].")]")
 			else if (src.ship.m_w_system)
 				boutput(M, "[src.ship.ship_message("[src.ship.m_w_system] has been swapped out.")]")
+				src.ship.UpdateOverlays(null, "mainweapon") //todo: make pod components actually clean up their own overlays
 			else
 				boutput(M, "[src.ship.ship_message("[src.loaded_wep] has been swapped in.")]")
 

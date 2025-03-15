@@ -968,7 +968,7 @@
 			playsound(src, 'sound/machines/airlock_pry.ogg', 35, TRUE)
 		src.open()
 	else if (C && src.density && !src.operating)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 		playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
 		src.take_damage(C.force)

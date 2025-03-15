@@ -2265,7 +2265,7 @@ proc/broadcast_to_all_gangs(var/message)
 				boutput(user, SPAN_NOTICE("[satchel] doesn't contain any cannabis."))
 			return
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		switch(W.hit_type)
 			if (DAMAGE_BURN)
 				user.visible_message(SPAN_ALERT("[user] ineffectually hits the [src] with [W]!"))
@@ -2443,6 +2443,7 @@ proc/broadcast_to_all_gangs(var/message)
 		playsound(H.loc, 'sound/misc/meat_plop.ogg', 30, 0)
 		H.reagents.reaction(get_turf(H.loc),TOUCH, H.reagents.total_volume)
 		H.vomit()
+		H.nauseate(6)
 		//un-kill organs
 		for (var/organ_slot in H.organHolder.organ_list)
 			var/obj/item/organ/O = H.organHolder.organ_list[organ_slot]
@@ -2502,6 +2503,7 @@ proc/broadcast_to_all_gangs(var/message)
 	throwforce = 1
 	force = 1
 	w_class = W_CLASS_TINY
+	contraband = 2
 	var/max_charges = 5
 	var/charges = 5
 
@@ -2596,7 +2598,7 @@ proc/broadcast_to_all_gangs(var/message)
 	category = "Country Western"
 /datum/gang_item/space
 	category = "Space Gang"
-/datum/gang_item/space
+/datum/gang_item/weapon
 	category = "Weapon"
 /datum/gang_item/equipment
 	category = "Consumable"

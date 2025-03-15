@@ -197,7 +197,7 @@
 
 		src.take_damage(dmg, "brute", user)
 
-		user.lastattacked  = src
+		user.lastattacked = get_weakref(src)
 		..()
 
 /obj/spacevine/proc/update_self()

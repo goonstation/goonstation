@@ -48,7 +48,7 @@
 	var/emotes_on_cooldown = FALSE
 	var/computer_id = null
 	var/datum/weakref/lastattacker = null
-	var/lastattacked = null //tell us whether or not to use Combat or Default click delays depending on whether this var was set.
+	var/datum/weakref/lastattacked = null //tell us whether or not to use Combat or Default click delays depending on whether this var was set.
 	var/lastattackertime = 0
 	var/other_mobs = null
 	var/memory = ""
@@ -232,6 +232,8 @@
 	var/no_stamina_stuns = FALSE
 	///A flag set temporarily when a mob is being forced to say something, used to avoid HORRIBLE SPAGHETTI in say logging. I'm sorry okay.
 	var/being_controlled = FALSE
+	///Lazy inited list of custom vomit behaviours from reagents, organs etc.
+	var/list/datum/vomit_behavior/vomit_behaviors = null
 
 	/// if this mob can interface with pod context menu by left clicking
 	var/can_interface_with_pods = TRUE
@@ -268,7 +270,7 @@
 		skipped_mobs_list |= SKIPPED_MOBS_LIST
 		LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, src)
 
-	src.lastattacked = src //idk but it fixes bug
+	src.lastattacked = get_weakref(src) //idk but it fixes bug
 	render_target = "\ref[src]"
 	src.chat_text = new(null, src)
 
@@ -2488,6 +2490,8 @@
 					src.lastgasp()
 					src.changeStatus("knockdown", 2 SECONDS)
 					src.force_laydown_standup()
+			if (thr.throw_type & THROW_GIB)
+				src.gib()
 		else
 			src.gib()
 
@@ -2519,6 +2523,7 @@
 	src.delStatus("drowsy")
 	src.remove_stuns()
 	src.delStatus("slowed")
+	src.delStatus("nausea")
 	src.delStatus("burning")
 	src.delStatus("radiation")
 	src.delStatus("critical_condition")
@@ -2985,6 +2990,9 @@
 			equipment_proxy.aquatic_movement += 0.01
 
 
+/mob/proc/nauseate(stacks = 1)
+	if (isalive(src))
+		src.setStatus("nausea", INFINITE_STATUS, stacks)
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
 /mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!", var/selfMessage = null)
@@ -2993,8 +3001,12 @@
 	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT)) // Anti-emetics stop vomiting from occuring
 		return 0
 	SEND_SIGNAL(src, COMSIG_MOB_VOMIT, 1)
+	if (!specialType && length(src.vomit_behaviors))
+		var/datum/vomit_behavior/chosen = pick(src.vomit_behaviors)
+		specialType = chosen.vomit(src)
+	if (!specialType)
+		src.visible_message(flavorMessage, selfMessage) //assume the special behavior handles the message
 	playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-	src.visible_message(flavorMessage, selfMessage)
 	if(specialType)
 		if(!locate(specialType) in src.loc)
 			var/atom/A = new specialType(src.loc)
@@ -3005,6 +3017,16 @@
 			vomit.blood_DNA = src.bioHolder.Uid
 
 	src.nutrition -= nutrition
+	src.changeStatus("stunned", 2 SECONDS)
+	src.change_misstep_chance(5)
+	src.delStatus("nausea")
+
+/mob/proc/add_vomit_behavior(type)
+	LAZYLISTADDUNIQUE(src.vomit_behaviors, new type)
+
+/mob/proc/remove_vomit_behavior(type)
+	var/datum/vomit_behavior/behavior = locate(type) in src.vomit_behaviors
+	LAZYLISTREMOVE(src.vomit_behaviors, behavior)
 
 /mob/proc/accept_forcefeed(obj/item/item, mob/user, edibility_override) //just.. don't ask
 	item.forcefeed(src, user, edibility_override)

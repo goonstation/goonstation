@@ -117,7 +117,7 @@
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/stasis)
 		projectiles = list(current_projectile)
-		AddComponent(/datum/component/holdertargeting/windup, 3 SECONDS)
+		AddComponent(/datum/component/holdertargeting/windup, 2 SECONDS)
 		..()
 
 /datum/projectile/energy_bolt/stasis
@@ -340,7 +340,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 		if(dmg == TRUE)
 			src.take_damage(1, "brute", user)
 
-		user.lastattacked  = src
+		user.lastattacked  = get_weakref(src)
 		..()
 
 	attack_hand(mob/user)

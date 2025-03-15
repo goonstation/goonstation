@@ -30,6 +30,8 @@
 	var/track_cat
 	/// If the effect is positive (buffs), negative (debuffs), or neutral (misc)
 	var/effect_quality = STATUS_QUALITY_NEUTRAL
+	/// List because they might be on different HUDs. This is kind of hacky but should be fine since the screen object cleans up in disposing.
+	var/list/atom/movable/screen/statusEffect/hud_elements = null
 
 
 	/**
@@ -594,10 +596,8 @@
 					M.changeStatus("knockdown", 3 SECONDS)
 					boutput(M, SPAN_ALERT("You feel weak."))
 					M.emote("collapse")
-				if(!ON_COOLDOWN(M, "radiation_vomit_check", 5 SECONDS) && prob(stage**2))
-					M.changeStatus("knockdown", 3 SECONDS)
-					boutput(M, SPAN_ALERT("You feel sick."))
-					M.vomit()
+				if(prob(min((stage + 3)**2, 40)))
+					M.nauseate(1)
 
 			return ..(timePassed)
 
@@ -1793,23 +1793,23 @@
 		var/mob/living/L = owner
 		if(!isalive(L))
 			return
-		var/puke_prob = 0
+		var/nausea_prob = 0
 		var/tox = 0
 		switch(how_miasma)
 			if(1)
 				if(probmult(1))
 					L.emote("shudder")
 			if(2)
-				puke_prob = 0.2
+				nausea_prob = 10
 				tox = 0.05
 			if(3)
-				puke_prob = 0.5
+				nausea_prob = 15
 				tox = 0.2
 			if(4)
-				puke_prob = 1
+				nausea_prob = 20
 				tox = 0.45
 			if(5)
-				puke_prob = 2
+				nausea_prob = 25
 				tox = 0.7
 		if(ismobcritter(L))
 			var/mob/living/critter/critter = L
@@ -1819,9 +1819,8 @@
 		L.take_toxin_damage(tox * mult)
 		if(weighted_average > 4)
 			weighted_average = 0
-		if(probmult(puke_prob))
-			var/vomit_message = SPAN_ALERT("[L] pukes all over [himself_or_herself(L)].")
-			L.vomit(0, null, vomit_message)
+		if(probmult(nausea_prob))
+			L.nauseate(1)
 		return ..(timePassed)
 
 	proc/changeState()
@@ -2185,25 +2184,24 @@
 	onUpdate(var/timePassed)
 		var/mob/living/L = owner
 		var/tox = 0
-		var/puke_prob = 0
+		var/nausea_prob = 0
 		switch(timePassed)
 			if(0 to 20 SECONDS)
 				tox = 0.1
-				puke_prob = 0.5
+				nausea_prob = 5
 			if(20 SECONDS to 60 SECONDS)
 				tox = 0.4
-				puke_prob = 1
+				nausea_prob = 10
 			if(60 SECONDS to INFINITY)
 				tox = 1
-				puke_prob = 2
+				nausea_prob = 20
 		L.take_toxin_damage(tox)
 		if(prob(2))
 			L.emote(pick("groan", "moan", "shudder"))
 		if(prob(2))
 			L.change_eye_blurry(rand(5,10))
-		if(prob(puke_prob))
-			var/vomit_message = SPAN_ALERT("[L] pukes all over [himself_or_herself(L)].")
-			L.vomit(0, null, vomit_message)
+		if(prob(nausea_prob))
+			L.nauseate(1)
 
 	//firstly: sorry
 	//secondly: second arg is a proportional scale. 1 is standard, 5 is every port-a-puke tick, 10 is mass emesis.
@@ -3056,7 +3054,7 @@
 		onAdd(optional)
 			..()
 			var/mob/living/carbon/human/H = src.owner
-			H.regens_blood = FALSE // curse steals all your blood
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_BLOOD_REGEN, src)
 
 		onUpdate(timePassed)
 			..()
@@ -3085,11 +3083,7 @@
 		onRemove()
 			var/mob/living/carbon/human/H = src.owner
 			if (!QDELETED(H))
-				var/count
-				for(var/datum/statusEffect/art_curse/blood/status in H.statusEffects)
-					count += 1
-				if (count == 1)
-					H.regens_blood = TRUE
+				REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_BLOOD_REGEN, src)
 			..()
 
 	aging
@@ -3499,6 +3493,48 @@
 	onRemove()
 		..()
 		src.owner.remove_filter("corrosion_color")
+
+/datum/statusEffect/nausea
+	name = "Nauseous"
+	id = "nausea"
+	icon_state = "nausea1"
+	var/stacks = 1
+	var/vomiting = FALSE
+
+	onChange(optional)
+		if (src.stacks > 20 && optional > 0)
+			return
+		src.stacks += optional
+		var/old_desc = src.desc
+		switch(src.stacks)
+			if (0 to 5)
+				src.desc = "You're feeling kinda sick."
+				src.icon_state = "nausea1"
+			if (6 to 9)
+				src.desc = "You think you're going to puke."
+				src.icon_state = "nausea2"
+			if (10 to INFINITY)
+				src.desc = "You're about to throw up!"
+				src.icon_state = "nausea3"
+		if (src.stacks >= 10 && !src.vomiting)
+			src.vomiting = TRUE
+			boutput(src.owner, SPAN_ALERT(SPAN_BOLD(src.desc)))
+			for (var/atom/movable/screen/statusEffect/hud_element in src.hud_elements)
+				animate_angry_wibble(hud_element)
+			SPAWN(5 SECONDS)
+				var/mob/vomitee = src.owner
+				vomitee.vomit()
+		else if (old_desc != src.desc)
+			if (optional > 0)
+				boutput(src.owner, SPAN_ALERT(src.desc))
+			else
+				boutput(src.owner, SPAN_NOTICE("You feel a little less sick."))
+
+	onUpdate(timePassed)
+		if (prob(5))
+			src.stacks -= 0.5
+		if (src.stacks <= 0)
+			src.owner.delStatus(src)
 
 /datum/statusEffect/ice_phoenix_empowered_feather
 	id = "phoenix_empowered_feather"

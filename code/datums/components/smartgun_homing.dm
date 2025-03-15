@@ -108,3 +108,10 @@
 			farthest_target_from_cursor = A
 
 	return farthest_target_from_cursor
+
+
+/datum/component/holdertargeting/smartgun/homing/pod/emagged
+	type_to_target = /mob/living
+
+/datum/component/holdertargeting/smartgun/homing/pod/emagged/is_valid_target(mob/user, atom/A)
+	return (istype(A, /mob/living))
