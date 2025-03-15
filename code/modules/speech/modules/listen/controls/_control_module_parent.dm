@@ -1,7 +1,7 @@
 ABSTRACT_TYPE(/datum/listen_module/control)
 /**
- *	Listen control modules permit the manipulation of other listen modules to be linked to a module that may be added to a listen
- *	module tree.
+ *	Listen control module datums permit the manipulation of other listen modules to be linked to a module that may be added to a
+ *	listen module tree.
  */
 /datum/listen_module/control
 	id = "control_base"
@@ -13,8 +13,8 @@ ABSTRACT_TYPE(/datum/listen_module/control)
 
 ABSTRACT_TYPE(/datum/listen_module/client_verb)
 /**
- *	Client verb listen control modules permit other listen modules to be manipulated through the use of a verb added to a client.
- *	The module handles updating client verb lists as they log in and out of the listen tree's listener parent.
+ *	Client verb listen control module datums permit other listen modules to be manipulated through the use of a verb added to a
+ *	client. The module handles updating client verb lists as they log in and out of the parent tree's listener parent.
  */
 /datum/listen_module/control/client_verb
 	id = "client_verb_base"
