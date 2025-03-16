@@ -1054,11 +1054,11 @@ toxic - poisons
 /datum/projectile/bullet/potatoslug		//Improvised slug
 	name = "potato"
 	icon_state = "potatoslug"
-	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	shot_sound = 'sound/weapons/launcher.ogg'
 	damage = 5
 	stun = 20
 	dissipation_rate = 7	//Potatoes aren't very aerodynamic
-	dissipation_delay = 3
+	dissipation_delay = 2
 	implanted = null
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT

@@ -885,7 +885,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	sname = "potato load"
 	desc = "This appears to be some potatoes haphazardly shoved into a few cut open pipe frames. They're too crude for advanced shotgun receivers."
 	ammo_type = new/datum/projectile/bullet/potatoslug
-	icon_state = "makeshiftbone"
+	icon_state = "makeshiftpotato"
 
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"
