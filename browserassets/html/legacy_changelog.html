@@ -14,24 +14,37 @@
 	.log li.testmerge {background: rgb(216, 230, 240) !important;}
 	.log li.admin {font-size: 1.2em; padding: 5px 5px 5px 10px;}
 	.log li.admin span {color: #2A76E7;}
-
-	/* themeing for minor changes expandable dropdowns */
-	.log li.minor-changes { padding: 0px; }
-	.log li.minor-changes details { padding: 5px 5px; background: rgb(225, 225, 225); cursor: default; }
-	.log li.minor-changes details[open], .log li.minor-changes details:hover { background: rgb(202, 215, 224);	}
-	.log li.minor-changes details[open] div { background: rgb(243, 243, 243); max-height: none; margin: 5px 0 5px;}
-	.log li.minor-changes details summary { font-weight: bold; cursor: pointer; outline: none; }
+	.log li.collapse-button { background: rgb(243, 243, 243); padding-left: 5px; cursor: pointer;}
+	.log .collapsible { max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out;}
 
 	.log.ass {background: #ffe9de;}
 	.log.ass li.title {background: #fce5cb;}
 	.log.ass li.date {background: #fce5cb;}
-	.log.ass li.minor-changes details { background: #fce9d9 }
+	.log.ass li.collapse-button { background: #fce9d9; }
 
 	h3 {padding: 0 10px; margin: 0; color: #58B4DC;}
 	.team, .lic {padding: 10px; margin: 0; line-height: 1.4;}
 	.lic {font-size: 0.9em;}
 
-	.log.ass li.minor-changes details[open], .log.ass li.minor-changes details:hover {
+	.collapse-button:before {
+		content: '\02795'; /* Unicode character for "plus" sign (+) */
+		font-size: 13px;
+		margin-right: 5px;
+	}
+
+	.active:before {
+		content: "\2796"; /* Unicode character for "minus" sign (-) */
+	}
+
+	li.collapse-button.active, li.collapse-button:hover {
+		background: rgb(225, 225, 225);
+	}
+
+	li.collapse-button.active.testmerge, li.collapse-button:hover {
+		background: rgb(202, 215, 224) !important;
+	}
+
+	.log.ass li.collapse-button.active, .log.ass li.collapse-button:hover {
 		background: #ffd4b0;
 	}
 
@@ -78,5 +91,23 @@
 		visibility: visible;
 	}
 </style>
+
+<script>
+window.onload = function(e) {
+	var coll = document.getElementsByClassName("collapse-button");
+	var i;
+	for (i = 0; i < coll.length; i++) {
+		coll[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+			var content = this.nextElementSibling;
+			if (content.style.maxHeight){
+				content.style.maxHeight = null;
+			} else {
+				content.style.maxHeight = content.scrollHeight + "px";
+			}
+		});
+	}
+}
+</script>
 <!-- CSS INJECT GOES HERE -->
 <!-- HTML GOES HERE -->
