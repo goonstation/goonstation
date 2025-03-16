@@ -208,8 +208,8 @@ TYPEINFO(/obj/item/card/emag)
 		team = 1
 
 		commander
-			name = "NanoTrasen Commander"
-			assignment = "NanoTrasen Commander"
+			name = "NanoTrasen Pod Commander"
+			assignment = "NanoTrasen Pod Commander"
 			access = list(access_heads, access_captain)
 
 	syndicate
@@ -220,8 +220,8 @@ TYPEINFO(/obj/item/card/emag)
 		team = 2
 
 		commander
-			name = "Syndicate Commander"
-			assignment = "Syndicate Commander"
+			name = "Syndicate Pod Commander"
+			assignment = "Syndicate Pod Commander"
 			access = list(access_syndicate_shuttle, access_syndicate_commander)
 
 
