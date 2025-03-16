@@ -8,12 +8,13 @@
 				src.Browse(null, "window=changes")
 			else
 				var/changelogHtml
+				var/data
 				if (byond_version >= 516)
-
 					changelogHtml = grabResource("html/changelog.html")
+					data = changelog.html
 				else
 					changelogHtml = grabResource("html/legacy_changelog.html")
-				var/data = changelog:html
+					data = legacy_changelog.html
 				var/fontcssdata = {"
 				<style type="text/css">
 				@font-face {
