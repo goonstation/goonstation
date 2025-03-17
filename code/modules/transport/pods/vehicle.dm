@@ -502,7 +502,6 @@
 		else
 			P = shoot_projectile_relay_pixel_spread(proj_start, PROJ, get_step(src, shoot_dir), spread_angle = spread)
 		P.mob_shooter = user
-		src.m_w_system.post_launch(P)
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		. = 'sound/impact_sounds/Metal_Clang_3.ogg'

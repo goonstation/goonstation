@@ -861,24 +861,20 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				if (P)
 					P.shooter = src
 					P.mob_shooter = user
-					src.m_w_system.post_launch(P)
 				var/turf/E = get_step(get_turf(src), EAST)
 				P = shoot_projectile_DIR(get_step(E, EAST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
 					P.shooter = src
 					P.mob_shooter = user
-					src.m_w_system.post_launch(P)
 			if (shoot_dir == SOUTHWEST)
 				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), WEST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
 					P.shooter = src
 					P.mob_shooter = user
-					src.m_w_system.post_launch(P)
 				P = shoot_projectile_DIR(get_step(get_turf(src), SOUTH), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
 					P.shooter = src
 					P.mob_shooter = user
-					src.m_w_system.post_launch(P)
 
 			if (shoot_dir == NORTHEAST)
 				var/turf/NE = get_step(get_turf(src), NORTHEAST)
@@ -887,12 +883,10 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				if (P)
 					P.shooter = src
 					P.mob_shooter = user
-					src.m_w_system.post_launch(P)
 				P = shoot_projectile_DIR(get_step(NE, EAST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
 					P.shooter = src
 					P.mob_shooter = user
-					src.m_w_system.post_launch(P)
 
 			if (shoot_dir == NORTHWEST)
 				var/turf/N = get_step(get_turf(src), NORTH)
@@ -900,12 +894,10 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				if (P)
 					P.mob_shooter = user
 					P.shooter = src
-					src.m_w_system.post_launch(P)
 				P = shoot_projectile_DIR(get_step(N, NORTH), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
 					P.shooter = src
 					P.mob_shooter = user
-					src.m_w_system.post_launch(P)
 		else
 			if (shoot_dir == SOUTH || shoot_dir == WEST)
 				var/obj/projectile/P = shoot_projectile_DIR(src, PROJ, shoot_dir, remote_sound_source = src)
@@ -914,7 +906,6 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 					P.mob_shooter = user
 					P.pixel_x = H * -5
 					P.pixel_y = V * -5
-					src.m_w_system.post_launch(P)
 			if (shoot_dir == SOUTH || shoot_dir == EAST)
 				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), EAST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
@@ -922,7 +913,6 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 					P.mob_shooter = user
 					P.pixel_x = H * 5
 					P.pixel_y = V * -5
-					src.m_w_system.post_launch(P)
 			if (shoot_dir == NORTH || shoot_dir == WEST)
 				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), NORTH), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
@@ -930,7 +920,6 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 					P.mob_shooter = user
 					P.pixel_x = H * -5
 					P.pixel_y = V * 5
-					src.m_w_system.post_launch(P)
 			if (shoot_dir == NORTH || shoot_dir == EAST)
 				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), NORTHEAST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
@@ -938,7 +927,6 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 					P.mob_shooter = user
 					P.pixel_x = H * 5
 					P.pixel_y = V * 5
-					src.m_w_system.post_launch(P)
 	ex_act(severity)
 		if(!maxboom)
 			SPAWN(0.1 SECONDS)
@@ -946,6 +934,11 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				maxboom = 0
 		maxboom = max(severity, maxboom)
 
+	Install(obj/item/shipcomponent/ship_component as obj, give_feedback)
+		if (!ship_component.large_pod_compatible)
+			boutput(usr, SPAN_ALERT("This part isn't compatible with pods of this size!"))
+			return
+		return ..()
 
 
 /obj/machinery/vehicle/pod_smooth/light // standard civilian pods

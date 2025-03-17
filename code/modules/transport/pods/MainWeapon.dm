@@ -65,10 +65,6 @@
 			return
 		return
 
-	/// unique setup for post projectile launch
-	proc/post_launch(obj/projectile/P)
-		return
-
 /obj/item/shipcomponent/mainweapon/buildTooltipContent()
 	. = ..() + src.current_projectile?.get_tooltip_content()
 	. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/frenzy.png")]\" width=\"10\" height=\"10\" /> Firerate: [src.firerate / 10] seconds"
@@ -278,7 +274,8 @@
 
 /obj/item/shipcomponent/mainweapon/salvo_rockets
 	name = "Cerberus Salvo Rockets"
-	desc = "A three-rocket salvo launcher, created in mind for multi-purpose space combat."
+	desc = "A three-rocket salvo launcher, created in mind for multi-purpose space combat. Usable only by small pods."
+	icon_state = "cerberus-salvo-rockets"
 	weapon_score = 1.25
 	power_used = 50
 	current_projectile = new/datum/projectile/bullet/homing/rocket/salvo
@@ -286,11 +283,7 @@
 	firerate = 5 SECONDS
 	shots_to_fire = 3
 	spread = 30
-	icon_state = "cerberus-salvo-rockets"
-
-	post_launch(obj/projectile/P)
-		..()
-		P.proj_data.on_launch(P) // needed as a fix for large pods to set homing target
+	large_pod_compatible = FALSE
 
 /obj/item/shipcomponent/mainweapon/laser_ass // hehhh
 	name = "Mk.4 Assault Laser"
