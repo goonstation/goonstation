@@ -24,7 +24,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/name = null
 
 	/// The mutation associted with the mutantrace. Saurian genetics for lizards, for instance
-	var/race_mutation = null
+	var/datum/bioEffect/mutantrace/race_mutation = null
 
 	/// The mutant's own appearanceholder, modified to suit our target appearance
 	var/datum/appearanceHolder/AH
@@ -2518,6 +2518,16 @@ TYPEINFO(/datum/mutantrace/pug)
 			new /obj/item/implant/robotalk(H)
 			SPAWN(1 SECOND)
 				H.update_colorful_parts()
+
+///Returns whether the given mutantrace type is safe to randomly mutate people into.
+proc/safe_mutantrace_filter(type)
+	var/datum/mutantrace/mutrace = type
+	return !initial(mutrace.dna_mutagen_banned)
+
+///Returns whether the given mutantrace type is safe to randomly mutate people into, but only the ones that don't occur in genepools.
+proc/safe_mutantrace_nogenepool_filter(type)
+	var/datum/mutantrace/mutrace = type
+	return !initial(mutrace.dna_mutagen_banned) && mutrace.race_mutation && !mutrace.race_mutation.occur_in_genepools
 
 #undef OVERRIDE_ARM_L
 #undef OVERRIDE_ARM_R
