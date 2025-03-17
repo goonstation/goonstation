@@ -51,7 +51,6 @@
 
 		var/turf/T = get_turf(src)
 		var/left_delta = 0
-		//TODO: make this check all current tiles and not just the center one
 		while(istype(T, /turf/space/fluid))
 			//pick a turn dir making sure it's not outside our max variance
 			if (prob(10))
@@ -62,6 +61,8 @@
 			else //just do a normal straight segment
 				for (var/i in 1 to src.width)
 					var/turf/spawn_turf = get_steps(T, turn(dir, 90), center_index - i)
+					if (!istype(spawn_turf, /turf/space/fluid))
+						return
 					var/obj/effects/current/new_current = new(spawn_turf)
 					new_current.dir = dir
 					new_current.controller = src.currents[i]
@@ -81,6 +82,8 @@
 		for (var/forward in 1 to src.width)
 			for (var/across in 1 to src.width + 1)
 				var/turf/spawn_turf = get_steps(T, turn(dir, angle), across - center_index)
+				if (!istype(spawn_turf, /turf/space/fluid))
+					return null
 				var/obj/effects/current/new_current = new(spawn_turf)
 				if (angle > 0 && across == forward || angle < 0 && ((src.width + 1 - across) == forward))
 					new_current.dir = turn(dir, angle)
