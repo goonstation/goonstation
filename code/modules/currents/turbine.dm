@@ -6,7 +6,6 @@
 	desc = "A heavy duty metal shaft."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "turbine_shaft"
-	anchored = ANCHORED
 	density = FALSE
 	layer = FLOOR_EQUIP_LAYER1
 	glide_size = 32 / TURBINE_MOVE_TIME
@@ -91,7 +90,6 @@
 
 /obj/turbine_shaft/turbine
 	name = "NT40 tidal current turbine"
-	anchored = ANCHORED
 	icon = 'icons/obj/power.dmi'
 	icon_state = "current_turbine0" //TODO: animated states (fear)
 	density = TRUE
