@@ -212,7 +212,7 @@
 		if (!current)
 			src.generation = 0
 			return
-		src.generation = 40 KILO WATTS / current.controller.interval //caps out at 40KW by default
+		src.generation = 0.4 KILO WATTS * current.controller.get_flow_rate() //caps out at 40KW by default
 		src.add_avail(src.generation)
 
 

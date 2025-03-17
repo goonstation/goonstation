@@ -37,15 +37,15 @@ proc/EndOceanPush(atom/movable/AM)
 			landmark?.set_up(src)
 
 	doWork()
-		for (var/datum/force_push_controller/ocean/controller in (src.current_controllers + src.ocean_controller + src.space_controller))
-			if ((ticks % text2num(controller.interval)) == 0)
+		for (var/datum/force_push_controller/controller in (src.current_controllers + src.ocean_controller + src.space_controller))
+			if (src.ticks % text2num(controller.interval) == 0)
 				controller.doWork()
 
 	tickDetail()
 		// boutput(usr, "<b>ForcedMovement:</b> Managing [oceanPushList.len] mantapush objects and [spacePushList.len] spacepush objects")
 
 	proc/requestCurrentController()
-		var/datum/force_push_controller/ocean/new_controller = new
+		var/datum/force_push_controller/ocean/current/new_controller = new
 		src.current_controllers += new_controller
 		return new_controller
 
@@ -220,3 +220,21 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 					step(M, turn(dir, 90*-dirMod))
 			M.glide_size = glide
 		src.last_tick_time = TIME
+
+/datum/force_push_controller/ocean/current
+	VAR_PRIVATE/flow_rate = 100
+	New()
+		src.set_flow_rate(src.flow_rate)
+		. = ..()
+
+	proc/set_flow_rate(value)
+		src.flow_rate = value
+		src.interval = round((1/flow_rate) * 100)
+
+	proc/get_flow_rate()
+		return src.flow_rate
+
+	doWork()
+		if (prob(2))
+			src.set_flow_rate(clamp(src.flow_rate + rand(-2, 2), 1, 100))
+		. = ..()
