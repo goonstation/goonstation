@@ -1,5 +1,9 @@
 
 (t)mon mar 17 25
+(u)glowbold
+(p)22628
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(*)You can select the "Random Species" trait to be a random roundstart mutant race.
 (u)Nexusuxen
 (p)22632
 (e)🪲⚙|C-Bug, A-Internal
