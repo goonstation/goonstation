@@ -23,6 +23,7 @@ body {
 	position: sticky;
 	top: 0;
 	z-index: 10;
+	min-height: 50px;
 }
 
 #runtime-header .stats {
@@ -31,18 +32,28 @@ body {
 }
 
 #runtime-header .refresh {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	cursor: pointer;
 	background: none;
 	border: 1px solid #333;
-	padding: 5px 12px;
+	padding: 6px 14px;
 	border-radius: 4px;
 	color: #e0e0e0;
 	font-size: 1em;
+	line-height: 1;
+	height: 100%;
 }
 
 #runtime-header .refresh:hover {
 	background: #333;
 	color: #58B4DC;
+}
+
+#runtime-header .refresh i.icon-refresh {
+    margin-right: 6px;
+    vertical-align: middle;
 }
 
 #runtime-list {
