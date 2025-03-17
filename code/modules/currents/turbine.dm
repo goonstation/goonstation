@@ -134,7 +134,7 @@
 			return FALSE
 		switch(action)
 			if ("reverse")
-				if (src.generation > 0)
+				if (src.generation > 0) //can't reverse while it's spinning
 					playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
 				else
 					src.reversed = !src.reversed
@@ -155,7 +155,7 @@
 			var/obj/turbine_shaft/shaft = new(T)
 			shaft.attach()
 
-	///Return either end of the current shaft
+	///Return either end of the current shaft, depending on dir
 	proc/end_shaft(dir)
 		RETURN_TYPE(/obj/turbine_shaft)
 		var/obj/turbine_shaft/current_shaft = src.shaft
@@ -174,7 +174,7 @@
 		if (!src.shaft)
 			src.shaft = locate() in get_turf(src)
 		if (!src.shaft)
-			src.visible_message(SPAN_ALERT("[src] whirrs pointlessly."))
+			src.visible_message(SPAN_ALERT("[src] whirrs pointlessly.")) //you messed up
 			playsound(src, 'sound/machines/hydraulic.ogg', 50, 1)
 			return
 		var/dir = src.dir
@@ -184,6 +184,7 @@
 			src.visible_message(SPAN_ALERT("[src] makes a protesting grinding noise."))
 			animate_storage_thump(src)
 			return
+		//TODO: why doesn't this null when you overextend the shaft??
 		src.shaft = locate() in get_turf(src)
 		playsound(src, 'sound/machines/button.ogg', 50, 1)
 
@@ -210,6 +211,7 @@
 		if (!current)
 			src.generation = 0
 			return
+		//TODO: make this spin up and down over time?
 		src.generation = 0.4 KILO WATTS * current.controller.get_flow_rate() //caps out at 40KW by default
 		src.add_avail(src.generation)
 

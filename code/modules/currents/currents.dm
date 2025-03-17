@@ -1,5 +1,8 @@
 //slightly cursed path because we just want the "immune to everything" quality
+//maybe this should just be a turf component/var?
+//Idk how the performance overhead of all these objects compares to defining Crossed/Uncrossed on every ocean turf
 /obj/effects/current
+	//TODO: remove this debug icon
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "arrow"
 	var/datum/force_push_controller/ocean/current/controller = null
@@ -16,6 +19,7 @@
 		REMOVE_ATOM_PROPERTY(AM, PROP_MOVABLE_OCEAN_PUSH, src)
 		src.controller.removeAtom(AM, dir)
 
+//TODO: make this spawn junk occasionally?
 /obj/landmark/current_spawner
 	name = "current spawner"
 	icon = 'icons/effects/effects.dmi'
@@ -23,6 +27,7 @@
 	add_to_landmarks = TRUE
 	deleted_on_start = FALSE
 	var/width = 3
+	///How far the current can curve away from the center, used to keep it vaguely straight
 	var/max_variance = 4
 	var/list/datum/force_push_controller/ocean/currents = list()
 
@@ -46,6 +51,7 @@
 
 		var/turf/T = get_turf(src)
 		var/left_delta = 0
+		//TODO: make this check all current tiles and not just the center one
 		while(istype(T, /turf/space/fluid))
 			//pick a turn dir making sure it's not outside our max variance
 			if (prob(10))
