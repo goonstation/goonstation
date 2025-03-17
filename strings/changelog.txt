@@ -1,5 +1,9 @@
 
 (t)mon mar 17 25
+(u)Nexusuxen
+(p)22632
+(e)🪲⚙|C-Bug, A-Internal
+(*)Custom keybinds should properly save between rounds now.
 (u)JORJ949
 (p)22543
 (e)🎨⚖📦|C-Sprites, C-Balance, A-Game-Objects
