@@ -167,6 +167,7 @@
 		/datum/manufacture/robup_visualizer,
 		/datum/manufacture/robup_efficiency,
 		/datum/manufacture/robup_repair,
+		/datum/manufacture/scream_synth,
 		/datum/manufacture/sbradio,
 		/datum/manufacture/implant_health,
 		/datum/manufacture/implant_antirot,

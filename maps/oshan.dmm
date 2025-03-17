@@ -43629,7 +43629,13 @@
 /area/station/ranch)
 "svs" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/door/poddoor/pyro/podbay_autoclose/research_horizontal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "scienceteleporter";
+	name = "Teleporter Pad Blast Shield";
+	opacity = 0
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/science/teleporter)
 "swC" = (

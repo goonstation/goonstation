@@ -381,6 +381,7 @@ h1.alert, h2.alert {color: #000000;}
 
 .rstandard {color: #008000;}
 .rintercom {color: #006080;}
+.rnanotrasen {color: #6b6402;}
 .rcommand {color: #334E6D;}
 .rsecurity {color: #E00000;}
 .rdetective {color: #a00000;}
@@ -550,6 +551,7 @@ body.theme-dark .connectionClosed.restored {background: green;}
 
 body.theme-dark .rstandard {color: #3fcc3f;}
 body.theme-dark .rintercom {color: #81f7ff;}
+body.theme-dark .rnanotrasen {color: #dfd000;}
 body.theme-dark .rcommand {color: #7397c0;}
 body.theme-dark .rsecurity {color: #e43535;}
 body.theme-dark .rdetective {color: #af4242;}

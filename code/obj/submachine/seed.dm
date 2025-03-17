@@ -13,7 +13,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/mode = "overview"
 	var/list/seeds = list()
-	var/seedoutput = FALSE
+	var/output_externally = FALSE
 	var/sort = "name"
 	var/sortAsc = FALSE
 	var/obj/item/seed/splicing1 = null
@@ -63,21 +63,21 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 
 		if(src.splicing1)
 			splice1_geneout = QuickAnalysisRow(src.splicing1, src.splicing1.planttype, src.splicing1.plantgenes)
-			splice1_geneout["damage"] = list(src.splicing1.seeddamage, FALSE)
-			splice1_geneout["splicing"] = list("splicing", TRUE)
+			splice1_geneout["damage"] = src.splicing1.seeddamage
+			splice1_geneout["splicing"] = TRUE
 		if(src.splicing2)
 			splice2_geneout = QuickAnalysisRow(src.splicing2, src.splicing2.planttype, src.splicing2.plantgenes)
-			splice2_geneout["damage"] = list(src.splicing2.seeddamage, FALSE)
-			splice2_geneout["splicing"] = list("splicing", TRUE)
+			splice2_geneout["damage"] = src.splicing2.seeddamage
+			splice2_geneout["splicing"] = TRUE
 
 		return list(
 			"category" = src.mode,
-			"category_lengths" = list(length(src.extractables),length(src.seeds)),
-			"inserted" =  src.inserted ? "[src.inserted.reagents.total_volume]/[src.inserted.reagents.maximum_volume] [src.inserted.name]" : "No reagent vessel",
+			"num_extractables" = length(src.extractables),
+			"num_seeds" = length(src.seeds),
+			"inserted_desc" =  src.inserted ? "[src.inserted.reagents.total_volume]/[src.inserted.reagents.maximum_volume] [src.inserted.name]" : "No reagent vessel",
 			"inserted_container" = thisContainerData,
-			"seedoutput" = src.seedoutput,
+			"output_externally" = src.output_externally,
 			"splice_chance" = splice_chance,
-			"show_splicing" = src.splicing1 || src.splicing2,
 			"splice_seeds" = list(splice1_geneout, splice2_geneout),
 			"sortBy" = src.sort,
 			"sortAsc" = src.sortAsc,
@@ -104,8 +104,8 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				for (var/obj/item/seed/S in src.seeds)
 					if((S == src.splicing1) || (S == src.splicing2)) continue;
 					geneout = QuickAnalysisRow(S, S.planttype, S.plantgenes)
-					geneout["damage"] = list(S.seeddamage, FALSE)
-					geneout["splicing"] = list("splicing", (S == src.splicing1) || (S == src.splicing2))
+					geneout["damage"] = S.seeddamage
+					geneout["splicing"] = (S == src.splicing1) || (S == src.splicing2)
 					seedlist += list(geneout)
 
 		return list(
@@ -206,7 +206,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 
 			if("sort")
 				src.sort = params["sortBy"]
-				src.sortAsc = text2num(params["asc"])
+				src.sortAsc = params["asc"]
 				. = TRUE
 
 			if("analyze")
@@ -229,8 +229,8 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				else
 					boutput(ui.user, SPAN_ALERT("Item cannot be scanned."))
 
-			if("outputmode")
-				src.seedoutput = !src.seedoutput
+			if("toggle-output-mode")
+				src.output_externally = !src.output_externally
 				. = TRUE
 
 			if("label")
@@ -261,7 +261,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					else
 						boutput(ui.user, SPAN_NOTICE("Extracted [give] seeds from [I]."))
 						var/obj/item/seed/S = HYPgenerateseedcopy(DNA, stored, P.generation, src, give)
-						if (!src.seedoutput)
+						if (!src.output_externally)
 							src.seeds.Add(S)
 						else
 							S.set_loc(src.loc)
@@ -475,8 +475,10 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					playsound(src, 'sound/machines/ping.ogg', 50, TRUE)
 					//0 xp for a 100% splice, 4 xp for a 10% splice
 					JOB_XP(usr, "Botanist", clamp(round((100 - splice_chance) / 20), 0, 4))
-					if (!src.seedoutput) src.seeds.Add(S)
-					else S.set_loc(src.loc)
+					if (!src.output_externally)
+						src.seeds.Add(S)
+					else
+						S.set_loc(src.loc)
 
 				else
 					// It fucked up - we don't need to do anything else other than tell the user
@@ -623,45 +625,45 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 	proc/QuickAnalysisRow(var/obj/scanned, var/datum/plant/P, var/datum/plantgenes/DNA)
 		var/result = list()
 		if (!scanned || !P || P.cantscan || !DNA) //this shouldn't happen, but if it does, return a valid (if confusing) row, and report the error
-			result["name"] = list(scanned ? scanned.name : "???", FALSE)
+			result["name"] = scanned ? scanned.name : "???"
+			result["item_ref"]= "\ref[scanned]" //in the event that scanned is somehow null, \ref[null] = [0x0]
+			result["charges"] = 0
+			result["generation"] = 0
+			result["genome"] = 0
 			result["species"] = list("???", FALSE)
-			result["genome"] = list("???", FALSE)
-			result["generation"] = list("???", FALSE)
 			result["growtime"] = list("???", FALSE)
 			result["harvesttime"] = list("???", FALSE)
 			result["lifespan"] = list("???", FALSE)
 			result["cropsize"] = list("???", FALSE)
 			result["potency"] = list("???", FALSE)
 			result["endurance"] = list("???", FALSE)
-			result["charges"] = list("???", FALSE)
-			result["ref"]= list("\ref[scanned]", FALSE) //in the event that scanned is somehow null, \ref[null] = [0x0]
 			logTheThing(LOG_DEBUG, src, "An invalid object was placed in the plantmaster. Error recovery prevents a TGUI bluescreen. Object details: scanned: [json_encode(scanned)], P: [json_encode(P)], DNA: [json_encode(DNA)]")
 			return result
 
 		var/generation = 0
 		var/charges = 0
-		if (istype(scanned, /obj/item/seed/))
+		if (istype(scanned, /obj/item/seed))
 			var/obj/item/seed/S = scanned
 			generation = S.generation
 			charges = S.charges
-		if (istype(scanned, /obj/item/reagent_containers/food/snacks/plant/))
+		if (istype(scanned, /obj/item/reagent_containers/food/snacks/plant))
 			var/obj/item/reagent_containers/food/snacks/plant/F = scanned
 			generation = F.generation
 			charges = 1
 
-		//list of attributes and their dominance flag
-		result["name"] = list(scanned.name, FALSE)
+		result["name"] = scanned.name
+		result["item_ref"]= "\ref[scanned]"
+		result["charges"] = charges
+		result["generation"] = generation
+		result["genome"] = P.genome // genome is always averaged when splicing
+		// list of attributes and their dominance flag
 		result["species"] = list(P.name, DNA.d_species)
-		result["genome"] = list(P.genome, FALSE) //genome is always averaged
-		result["generation"] = list(generation, FALSE)
 		result["growtime"] = list(DNA.growtime, DNA.d_growtime)
 		result["harvesttime"] = list(DNA.harvtime, DNA.d_harvtime)
 		result["lifespan"] = list(DNA.harvests, DNA.d_harvests)
 		result["cropsize"] = list(DNA.cropsize, DNA.d_cropsize)
 		result["potency"] = list(DNA.potency, DNA.d_potency)
 		result["endurance"] = list(DNA.endurance, DNA.d_endurance)
-		result["charges"] = list(charges, FALSE)
-		result["ref"]= list("\ref[scanned]", FALSE)
 		return result
 
 	Exited(Obj, newloc)

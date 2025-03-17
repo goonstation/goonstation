@@ -550,12 +550,13 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/security_upgrade
 	name = "Weapons Crate - Experimental Security Equipment (Cardlocked \[Security Equipment])"
-	desc = "1x Clock 180, x1 Elite Security Helmet, x1 Lethal Grenade Kit, 1x Experimental Grenade Kit"
+	desc = "1x Clock 180, x1 Elite Security Helmet, x1 Lethal Grenade Kit, 1x Experimental Grenade Kit, 1x Stasis Rifle"
 	category = "Security Department"
 	contains = list(/obj/item/gun/kinetic/clock_188/boomerang,
 					/obj/item/storage/box/QM_grenadekit_security,
 					/obj/item/storage/box/QM_grenadekit_experimentalweapons,
-					/obj/item/clothing/head/helmet/hardhat/security/improved)
+					/obj/item/clothing/head/helmet/hardhat/security/improved,
+					/obj/item/gun/energy/stasis)
 	cost = PAY_EXECUTIVE*2
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Weapons Crate - Experimental Security Equipment (Cardlocked \[Security Equipment])"

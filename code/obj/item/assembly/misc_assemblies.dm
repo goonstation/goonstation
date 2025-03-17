@@ -53,11 +53,11 @@ Contains:
 /obj/item/assembly/time_ignite/New()
 	..()
 	// Timer-Igniter Assembly + wired pipebomb -> timer-igniter pipebomb
-	src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/pipebomb/frame, PROC_REF(pipebomb_frame_assembly), TRUE)
+	src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(pipebomb_frame_assembly), TRUE)
 	// Timer-Igniter Assembly + pipebomb -> timer-igniter pipebomb
-	src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/pipebomb/bomb, PROC_REF(pipebomb_assembly), TRUE)
+	src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/bomb, PROC_REF(pipebomb_assembly), TRUE)
 	// Timer-Igniter Assembly + beaker -> timer-igniter beakerbomb
-	src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
+	src.AddComponent(/datum/component/assembly, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
 	SPAWN(0)
 		if(!part1)
 			part1 = new(src)
@@ -182,11 +182,11 @@ Contains:
 		boutput(usr, SPAN_NOTICE("You remove the timer/igniter assembly from the beaker."))
 		//since the assembly is free of beakers, let's add the assembly components again
 		// Timer-Igniter Assembly + wired pipebomb -> timer-igniter pipebomb
-		src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/pipebomb/frame, PROC_REF(pipebomb_frame_assembly), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(pipebomb_frame_assembly), TRUE)
 		// Timer-Igniter Assembly + pipebomb -> timer-igniter pipebomb
-		src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/pipebomb/bomb, PROC_REF(pipebomb_assembly), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/bomb, PROC_REF(pipebomb_assembly), TRUE)
 		// Timer-Igniter Assembly + beaker -> timer-igniter beakerbomb
-		src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
 	else boutput(usr, SPAN_ALERT("That doesn't have a beaker attached to it!"))
 
 // Timer-igniter-assemblies
@@ -297,11 +297,11 @@ Contains:
 /obj/item/assembly/prox_ignite/New()
 	..()
 	// Proximity-Igniter Assembly + wired pipebomb -> Proximity-igniter pipebomb
-	src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/pipebomb/frame, PROC_REF(pipebomb_frame_assembly), TRUE)
+	src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(pipebomb_frame_assembly), TRUE)
 	// Proximity-Igniter Assembly + pipebomb -> Proximity-igniter pipebomb
-	src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/pipebomb/bomb, PROC_REF(pipebomb_assembly), TRUE)
+	src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/bomb, PROC_REF(pipebomb_assembly), TRUE)
 	// Proximity-Igniter Assembly + beaker -> Proximity-igniter beakerbomb
-	src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
+	src.AddComponent(/datum/component/assembly, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
 	SPAWN(0)
 		if(!part1)
 			part1 = new(src)
@@ -432,11 +432,11 @@ Contains:
 		boutput(usr, SPAN_NOTICE("You remove the Proximity/Igniter assembly from the beaker."))
 		//since the assembly is free of beakers, let's add the assembly components again
 		// proximity-Igniter Assembly + wired pipebomb -> proximity-igniter pipebomb
-		src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/pipebomb/frame, PROC_REF(pipebomb_frame_assembly), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(pipebomb_frame_assembly), TRUE)
 		// proximity-Igniter Assembly + pipebomb -> proximity-igniter pipebomb
-		src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/pipebomb/bomb, PROC_REF(pipebomb_assembly), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/bomb, PROC_REF(pipebomb_assembly), TRUE)
 		// proximity-Igniter Assembly + beaker -> proximity-igniter beakerbomb
-		src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
 	else boutput(usr, SPAN_ALERT("That doesn't have a beaker attached to it!"))
 
 
@@ -538,11 +538,11 @@ Contains:
 /obj/item/assembly/rad_ignite/New()
 	..()
 	// radio-Igniter Assembly + wired pipebomb -> radio-igniter pipebomb
-	src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/pipebomb/frame, PROC_REF(pipebomb_frame_assembly), TRUE)
+	src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(pipebomb_frame_assembly), TRUE)
 	// radio-Igniter Assembly + pipebomb -> radio-igniter pipebomb
-	src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/pipebomb/bomb, PROC_REF(pipebomb_assembly), TRUE)
+	src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/bomb, PROC_REF(pipebomb_assembly), TRUE)
 	// radio-Igniter Assembly + beaker -> radio-igniter beakerbomb
-	src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
+	src.AddComponent(/datum/component/assembly, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
 	SPAWN(0)
 		if(!part1)
 			part1 = new(src)
@@ -651,11 +651,11 @@ Contains:
 		boutput(usr, SPAN_NOTICE("You remove the radio/igniter assembly from the beaker."))
 		//since the assembly is free of beakers, let's add the assembly components again
 		// radio-Igniter Assembly + wired pipebomb -> radio-igniter pipebomb
-		src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/pipebomb/frame, PROC_REF(pipebomb_frame_assembly), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(pipebomb_frame_assembly), TRUE)
 		// radio-Igniter Assembly + pipebomb -> radio-igniter pipebomb
-		src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/pipebomb/bomb, PROC_REF(pipebomb_assembly), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/bomb, PROC_REF(pipebomb_assembly), TRUE)
 		// radio-Igniter Assembly + beaker -> radio-igniter beakerbomb
-		src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
 	else boutput(usr, SPAN_ALERT("That doesn't have a beaker attached to it!"))
 
 /obj/item/assembly/rad_ignite/c_state()
