@@ -1569,16 +1569,16 @@
 	name = "Clowntainment"
 	})
 "agt" = (
-/obj/machinery/power/apc/autoname_west,
+/obj/machinery/power/apc/autoname_west{
+	areastring = "Clowntainment"
+	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/decal/cleanable/dirt,
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/clown{
-	name = "Clowntainment"
-	})
+/area/station/maintenance/northwest)
 "agw" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -1807,9 +1807,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/clown{
-	name = "Clowntainment"
-	})
+/area/station/maintenance/northwest)
 "ahn" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -2167,15 +2165,14 @@
 	name = "W light switch";
 	pixel_x = -23;
 	pixel_y = -7;
-	dir = 8
+	dir = 8;
+	otherarea = "station/crew_quarters/clown"
 	},
 /obj/cable{
 	icon_state = "2-5"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/clown{
-	name = "Clowntainment"
-	})
+/area/station/maintenance/northwest)
 "ait" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/radio/news_office)
@@ -35276,11 +35273,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"gjB" = (
-/obj/decal/cleanable/dirt,
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating,
-/area/station/science/lab)
 "gjD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -94355,7 +94347,7 @@ bSt
 bQU
 bQU
 bzR
-gjB
+bAP
 bYG
 ccV
 cbi
