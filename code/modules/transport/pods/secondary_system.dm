@@ -1161,7 +1161,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 					ship.locked = !ship.locked
 					boutput(user, SPAN_ALERT("[ship] is now [ship.locked ? "locked" : "unlocked"]!"))
 				else
-					boutput(user, SPAN_ALERT("You are not recognized as the key for [ship]!"))
+					boutput(user, SPAN_ALERT("You are not recognized by the biometric lock for [ship]!"))
 			ship.myhud.update_states()
 
 	is_set()
