@@ -1345,7 +1345,29 @@ TYPEINFO(/datum/trait/partyanimal)
 	onAdd(mob/owner)
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			H.default_mutantrace = pick(/datum/mutantrace/lizard, /datum/mutantrace/cow, /datum/mutantrace/skeleton, /datum/mutantrace/roach)
+			var/list/datum/mutantrace/default_species = list(
+						/datum/mutantrace/lizard,
+						/datum/mutantrace/cow,
+						/datum/mutantrace/skeleton,
+						/datum/mutantrace/roach,
+					)
+			var/datum/mutantrace/new_mutantrace_type = null
+			if (prob(1) && prob(1)) // 0.01% chance of a non-dna mutagen banned mutrace that *isn't* a -1 point mutrace
+				var/max_iterations = 50 // safety
+				var/iteration = 0
+				while ( \
+					isnull(new_mutantrace_type) || \
+					initial(new_mutantrace_type:dna_mutagen_banned) || \
+					(new_mutantrace_type in default_species) || \
+					(iteration < max_iterations) \
+				)
+					iteration += 1
+					new_mutantrace_type = pick(concrete_typesof(/datum/mutantrace))
+			else // otherwise, pick any -1 point mutrace
+				new_mutantrace_type = pick(default_species)
+			if (isnull(new_mutantrace_type))
+				new_mutantrace_type = /datum/mutantrace/human
+			H.default_mutantrace = new_mutantrace_type
 			H.set_mutantrace(H.default_mutantrace)
 
 	onRemove(mob/owner)
