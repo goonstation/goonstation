@@ -69,7 +69,6 @@ body {
 	cursor: pointer;
 	color: #90caf9;
 	font-size: 1.6em;
-	transition: color 0.3s;
 }
 
 .input-area .randomise:hover {
@@ -84,8 +83,12 @@ body {
 	border-radius: 4px;
 	cursor: pointer;
 	font-size: 1em;
-	transition: background 0.3s, color 0.3s;
 	margin-bottom: 15px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1; /* prevents IE11/Trident baseline clipping */
+	min-height: 44px;
 }
 
 .input-area .button:hover {
