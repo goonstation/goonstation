@@ -1,89 +1,76 @@
-var triggerError = attachErrorHandler('runtimeViewer', true);
+// var triggerError = attachErrorHandler('runtimeViewer', true);
 var decoder = decodeURIComponent || unescape;
 
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
 	var runtimes = null;
 	var loading = true;
 	var viewingDetails = false;
 	var occurrences = {};
 
-	var $wrap = $('#runtime-wrap');
-	var $header = $('#runtime-header');
-	var $list = $('#runtime-list');
-	var $details = $('#runtime-details');
-
+	var $wrap = document.querySelector('#runtime-wrap');
+	var $header = document.querySelector('#runtime-header');
+	var $list = document.querySelector('#runtime-list');
+	var $details = document.querySelector('#runtime-details');
 
 	/***********************
 	* METHODS
 	***********************/
 
-	//At some point the json is gonna be fucked up ok
 	function parseRuntimes(json) {
 		try {
-			runtimes = $.parseJSON(json);
-		} catch(e) {
+			runtimes = JSON.parse(json);
+		} catch (e) {
 			triggerError('JSON parse error: ' + e + '. For runtime data: ' + json);
-			return
+			return;
 		}
 	}
 
-	//Actually builds the main list of runtimes, while building secondary datasets at the same time
 	function buildView() {
 		var count = 0;
 		occurrences = {};
-		$list.empty();
+		$list.innerHTML = '';
 
-		$.each(runtimes, function(key, run) {
-			var row = null;
-
+		Object.entries(runtimes).forEach(function([key, run]) {
+			var row = document.createElement('li');
 			if (run.invalid) {
-				row = $('<li>', {'class': 'runtime runtime-invalid well'}).append(
-					$('<span>', {'class': 'seen', text: '[' + run.seen + ']'}),
-					' Invalid exception in error handler: ',
-					$('<span>', {'class': 'name', text: run.name})
-				);
-
+				row.className = 'runtime runtime-invalid well';
+				row.innerHTML = `<span class="seen">[${run.seen}]</span> Invalid exception in error handler: <span class="name">${run.name}</span>`;
 			} else {
-				row = $('<li>', {'class': 'runtime well'}).append(
-					$('<span>', {'class': 'seen', text: '[' + run.seen + ']'}),
-					' In ',
-					$('<span>', {'class': 'file', text: run.file}),
-					', line ',
-					$('<span>', {'class': 'line', text: run.line}),
-					': ',
-					$('<span>', {'class': 'name', text: run.name})
-				);
-
+				row.className = 'runtime well';
+				row.innerHTML = `
+					<span class="seen">[${run.seen}]</span> In
+					<span class="file">${run.file}</span>, line
+					<span class="line">${run.line}</span>:
+					<span class="name">${run.name}</span>
+				`;
 				if (run.desc) {
-					row.append(
-						$('<span>', {'class': 'desc', html: run.desc})
-					);
+					var descSpan = document.createElement('span');
+					descSpan.className = 'desc';
+					descSpan.innerHTML = run.desc;
+					row.appendChild(descSpan);
 				}
-
 				if (run.usr) {
-					row.append(
-						$('<span>', {'class': 'usr', html: run.usr})
-					);
+					var usrSpan = document.createElement('span');
+					usrSpan.className = 'usr';
+					usrSpan.innerHTML = run.usr;
+					row.appendChild(usrSpan);
 				}
 
 				var uid = run.file + run.line + run.name;
-				if (typeof occurrences[uid] !== 'undefined') {
-					occurrences[uid]++;
-				} else {
-					occurrences[uid] = 1;
-				}
+				occurrences[uid] = (occurrences[uid] || 0) + 1;
 			}
 
-			$list.prepend(row);
+			$list.insertBefore(row, $list.firstChild);
 			count++;
 		});
 
-		$header.find('.total-runtimes').text(count);
-		$('#content').nanoScroller(); //refreshes scrollbar for new height
+		$header.querySelector('.total-runtimes').textContent = count;
+		if (window.nanoScroller) {
+			document.querySelector('#content').nanoScroller();
+		}
 		loading = false;
 	}
 
-	//Byond hits this via error_handling.dm
 	window.refreshRuntimes = function(json) {
 		if (!json) {
 			triggerError('Got no json in refreshRuntimes');
@@ -95,77 +82,72 @@ $(document).ready(function() {
 		buildView();
 	};
 
-
 	/***********************
 	* EVENTS
 	***********************/
 
-	//Trigger refresh
-	$header.on('click', '.refresh', function() {
-		if (loading) {
-			return;
+	$header.addEventListener('click', function(e) {
+		if (e.target.closest('.refresh')) {
+			if (loading) return;
+
+			if (viewingDetails) {
+				$details.style.display = 'none';
+				$list.style.display = 'block';
+				viewingDetails = false;
+			}
+
+			$list.innerHTML = '<li class="loading well">Loading...</li>';
+			window.location = '?action=getRuntimeData';
 		}
-
-		if (viewingDetails) {
-			$details.hide();
-			$list.show();
-			viewingDetails = false;
-		}
-
-		$list.html(
-			$('<li>', {'class': 'loading well', text: 'Loading...'})
-		);
-
-		window.location = '?action=getRuntimeData';
 	});
 
-	//Show details view
-	$list.on('click', '.runtime:not(.runtime-invalid)', function() {
-		if (loading || viewingDetails) {
-			return;
-		}
+	$list.addEventListener('click', function(e) {
+		var target = e.target.closest('.runtime:not(.runtime-invalid)');
+		if (!target || loading || viewingDetails) return;
 
 		viewingDetails = true;
 
-		var $this = $(this);
-		var file = $this.find('.file').text();
-		var line = $this.find('.line').text();
-		var name = $this.find('.name').text();
-		var usr = $this.find('.usr').text();
+		var file = target.querySelector('.file').textContent;
+		var line = target.querySelector('.line').textContent;
+		var name = target.querySelector('.name').textContent;
+		var usr = target.querySelector('.usr') ? target.querySelector('.usr').textContent : '';
 
 		var uid = file + line + name;
 
 		var details = '<h2><i class="icon-pencil"></i> Summary</h2>';
-		details += 'This runtime has occurred <strong>' + occurrences[uid] + '</strong> times.<br><br>';
+		details += `This runtime has occurred <strong>${occurrences[uid]}</strong> times.<br><br>`;
 
 		details += '<table><tbody>';
-		details += '<tr><td><strong>File</strong></td><td>' + file + '</td></tr>';
-		details += '<tr><td><strong>Line</strong></td><td>' + line + '</td></tr>';
-		details += '<tr><td><strong>Error</strong></td><td>' + name + '</td></tr>';
-		details += '<tr><td><strong>Usr</strong></td><td>' + usr + '</td></tr>';
+		details += `<tr><td><strong>File</strong></td><td>${file}</td></tr>`;
+		details += `<tr><td><strong>Line</strong></td><td>${line}</td></tr>`;
+		details += `<tr><td><strong>Error</strong></td><td>${name}</td></tr>`;
+		details += `<tr><td><strong>Usr</strong></td><td>${usr}</td></tr>`;
 		details += '</tbody></table>';
 
 		details += '<h2><i class="icon-code"></i> Description</h2>';
-		details += '<pre>' + $this.find('.desc').html() + '</pre>';
+		details += `<pre>${target.querySelector('.desc') ? target.querySelector('.desc').innerHTML : ''}</pre>`;
 
-		$details.find('.details').html(details);
-		$list.hide();
-		$details.show();
-		$('#content').nanoScroller(); //refreshes scrollbar for new height
+		$details.querySelector('.details').innerHTML = details;
+		$list.style.display = 'none';
+		$details.style.display = 'block';
+		if (window.nanoScroller) {
+			document.querySelector('#content').nanoScroller();
+		}
 	});
 
-	//Hide details view
-	$details.on('click', '.back', function() {
-		$details.hide();
-		$list.show();
-		$('#content').nanoScroller(); //refreshes scrollbar for new height
-		viewingDetails = false;
+	$details.addEventListener('click', function(e) {
+		if (e.target.closest('.back')) {
+			$details.style.display = 'none';
+			$list.style.display = 'block';
+			if (window.nanoScroller) {
+				document.querySelector('#content').nanoScroller();
+			}
+			viewingDetails = false;
+		}
 	});
-
 
 	/***********************
 	* INIT
 	***********************/
-
 	window.location = '?action=getRuntimeData';
 });
