@@ -188,8 +188,9 @@ TYPEINFO(/datum/component/pitfall/target_coordinates)
 		if (..())
 			if (!src.TargetList || !length(src.TargetList))
 				src.update_targets()
+#ifndef GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
 			src.fall_to(pick(src.TargetList), AM, src.BruteDamageMax)
-
+#endif
 
 	update_targets()
 		src.TargetList = list()
