@@ -1334,6 +1334,26 @@ TYPEINFO(/datum/trait/partyanimal)
 	category = list("species", "nopug", "nohair")
 	mutantRace = /datum/mutantrace/pug
 
+/datum/trait/random_species
+	name = "Random Species"
+	icon_state = "randomspecies"
+	desc = "You feel like something's different today, but you can't quite put your finger/tail/hoof/antennae on it."
+	id = "random_species"
+	points = -1
+	category = list("species", "infrared", "cloner_stuff", "nohair", "hemophilia")
+
+	onAdd(mob/owner)
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.default_mutantrace = pick(/datum/mutantrace/lizard, /datum/mutantrace/cow, /datum/mutantrace/skeleton, /datum/mutantrace/roach)
+			H.set_mutantrace(H.default_mutantrace)
+
+	onRemove(mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.default_mutantrace = /datum/mutantrace/human
+			H.set_mutantrace(H.default_mutantrace)
+
 /datum/trait/super_slips
 	name = "Slipping Hazard"
 	id = "super_slips"
