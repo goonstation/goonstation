@@ -1208,6 +1208,31 @@ proc/spawn_kitchen_note()
 	You know where to find us larry, bring the money, 100,000 credits.
 	"}
 
+/obj/item/paper/radshuttle
+	name = "bloody note"
+	desc = "The bottom half of this paper is soaked in blood."
+	icon_state = "paper_caution_bloody"
+	info = {"<span style="color:red;font-family:Lucida Handwriting;">
+	ten souls aboard<br>
+	no food, no water, no medkids, the worst toilet in the universe,<br>
+	all crammed into the space of the crew lounge.<br><br>
+
+	Donnovan keeps looking at the engine compartment - hes scared.<br>
+	seats by the back are blistering hot; the front is witch-tit cold.<br>
+	probably has something to do with why people are throwing up so much.<br><br>
+
+	this shuttle was a damn garbage scow ten hours ago! I dont deserve this! <br>
+	I just had a bad performance review for the month! <br>
+	station transfer my ass!<br>
+	this whole damn thing is a detroit pink slip for ten people!<br><br>
+
+	the others killed the security guard to to vent their anger,<br>
+	another guy got beat so bad he crawled out the airlock.<br><br>
+
+	Tonio is playing us farewell on that weird mouth organ. bless the man.<br>
+	they took all my space cash before we left.<br>
+	so I gave him my old lucky coin for a tip.<br>"}
+
 /obj/item/paper/labdrawertips
 	name = "stern lab safety warning"
 	icon_state = "paper"

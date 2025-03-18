@@ -1,0 +1,73 @@
+"aa" = (/mob/living/critter/small_animal/fly,/mob/living/critter/zombie/security,/obj/item/handcuffs/tape{pixel_y = 8},/obj/item_dispenser/handcuffs{pixel_x = 9},/obj/item/device/geiger{pixel_x = 6},/obj/stool/chair/comfy/shuttle/red,/obj/decal/cleanable/blood/splatter,/obj/map/light/dimreddish,/obj/fakeobject/apc_broken{dir = 8; pixel_x = -20},/obj/decal/cleanable/tomatosplat{pixel_y = 30},/obj/decal/cleanable/eggsplat{pixel_y = 30},/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"ab" = (/mob/living/critter/small_animal/cockroach/robo,/mob/living/critter/spider/baby,/obj/decoration/toiletholder{dir = 4; pixel_x = 4},/obj/item/storage/toilet/random/escapetools,/obj/decal/cleanable/fungus,/obj/decal/cleanable/greenpuke,/obj/decal/cleanable/rust,/obj/decal/cleanable/dirt,/obj/decal/cleanable/slime,/obj/machinery/light/small/harsh/very{dir = 1},/obj/mapping_helper/mob_spawn/corpse/human/clown,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"ac" = (/mob/living/critter/small_animal/fly,/obj/stool/chair/comfy/shuttle/green{dir = 4},/obj/random_item_spawner/shoe/one_or_zero,/obj/decal/cleanable/slime,/obj/decal/poster/wallsign/space{pixel_x = -29; pixel_y = 3},/obj/mapping_helper/mob_spawn/corpse/human/skeleton,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"ad" = (/mob/living/critter/small_animal/fly,/obj/stool/chair/comfy/shuttle/green{dir = 8},/obj/decal/cleanable/greenpuke,/obj/random_item_spawner/shoe/one_or_zero,/obj/decal/cleanable/dirt/dirt3,/obj/decal/cleanable/slime,/obj/mapping_helper/mob_spawn/corpse/human/skeleton,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"ae" = (/mob/living/critter/small_animal/fly,/obj/table/folding,/obj/decal/cleanable/blood/splatter,/obj/decal/cleanable/dirt/dirt5,/obj/mapping_helper/mob_spawn/corpse/human,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"af" = (/mob/living/critter/small_animal/cockroach,/obj/stool/chair/comfy/shuttle/green{dir = 4},/obj/decal/cleanable/vomit,/obj/random_item_spawner/hat/one_or_zero,/obj/mapping_helper/mob_spawn/corpse/human/skeleton,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"ag" = (/mob/living/critter/small_animal/cockroach,/obj/stool/chair/comfy/shuttle/green{dir = 8},/obj/decal/cleanable/dirt/dirt4{dir = 4},/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"ah" = (/mob/living/critter/small_animal/fly,/obj/stool/chair/comfy/shuttle/green{dir = 1},/obj/decal/cleanable/greenpuke,/obj/mapping_helper/mob_spawn/corpse/human/skeleton,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"ai" = (/mob/living/critter/zombie/radiation,/obj/stool/chair/comfy/shuttle/green{dir = 1},/obj/decal/cleanable/greenpuke,/obj/decal/cleanable/dirt/dirt4,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"aj" = (/obj/stool/chair/green,/obj/decal/cleanable/greenpuke,/obj/decal/cleanable/blood/splatter/extra,/obj/item/paper/radshuttle,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"ak" = (/mob/living/critter/small_animal/cockroach,/obj/item/pen/omni{pixel_x = -3; pixel_y = -6},/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"al" = (/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"bE" = (/obj/table/folding,/obj/machinery/light/worn{desc = "A rather old-looks"; dir = 8},/obj/random_item_spawner/junk/lots,/obj/decal/cleanable/dirt/dirt5,/obj/item/reagent_containers/patch/mini/burn,/obj/item/reagent_containers/patch/mini/bruise{pixel_y = 5},/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"cm" = (/obj/indestructible/shuttle_corner{icon_state = "wall_trans"; dir = 4},/turf/space,/area/abandonedship)
+"dr" = (/turf/space,/area/abandonedship)
+"fm" = (/obj/stool/chair/comfy/shuttle/green{dir = 8},/obj/random_item_spawner/hat/one_or_zero,/obj/mapping_helper/mob_spawn/corpse/human/skeleton,/obj/item/tank/emergency_oxygen/extended/empty,/obj/item/clothing/mask/breath,/obj/decal/cleanable/dirt/dirt4,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"gz" = (/obj/machinery/door/unpowered/shuttle,/turf/space,/area/abandonedship)
+"hj" = (/obj/stool/chair/comfy/shuttle/green{dir = 1},/obj/decal/cleanable/greenpuke,/obj/decal/cleanable/dirt/dirt3,/obj/mapping_helper/mob_spawn/corpse/human/skeleton,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"mM" = (/obj/decal/poster/wallsign/stencil/left/seven{pixel_x = 30; pixel_y = 11},/obj/decal/poster/wallsign/stencil/left/seven{pixel_x = 30; pixel_y = 0},/turf/space,/area/space)
+"nc" = (/obj/table/reinforced/auto,/obj/item/handcuffs/tape_roll/crappy,/obj/decal/cleanable/dirt/dirt5,/obj/decal/cleanable/rust,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"pa" = (/obj/decal/cleanable/slime,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"pk" = (/obj/decal/poster/wallsign/stencil/left/c{pixel_x = 30; pixel_y = 11},/turf/space,/area/space)
+"po" = (/obj/fakeobject/shuttlethruster,/turf/space,/area/space)
+"pq" = (/obj/indestructible/shuttle_corner{icon_state = "wall_trans"},/turf/simulated/wall/auto/shuttle,/area/abandonedship)
+"qX" = (/obj/table/folding,/obj/machinery/light/worn{desc = "A rather old-looks"; dir = 4},/obj/random_item_spawner/junk/lots,/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen/extended/empty,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"rN" = (/obj/decal/cleanable/dirt/dirt4,/obj/item/gun/kinetic/zipgun,/obj/item/casing/shotgun/red,/obj/item/casing/shotgun/red{pixel_x = -5},/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"sC" = (/obj/indestructible/shuttle_corner{icon_state = "wall_trans"; dir = 10},/turf/space,/area/abandonedship)
+"uU" = (/obj/table/reinforced/auto,/obj/machinery/light/worn{desc = "A rather old-looks"; dir = 8},/obj/decal/cleanable/desk_clutter,/obj/random_item_spawner/desk_stuff/some,/obj/decal/cleanable/rust,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"vk" = (/obj/machinery/power/rtg{pixel_x = 0; pixel_y = 0},/turf/simulated/floor/airless/plating/damaged3,/area/abandonedship)
+"wd" = (/obj/decal/poster/wallsign/stencil/left/n{pixel_x = 30},/obj/decal/poster/wallsign/stencil/left/s{pixel_x = 30; pixel_y = -7},/turf/space,/area/space)
+"yg" = (/obj/decal/cleanable/paper,/obj/decal/cleanable/wood_debris,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"Af" = (/obj/decal/cleanable/oil,/obj/decal/cleanable/cobweb,/obj/decal/cleanable/blood/tracks{dir = 4},/obj/decal/cleanable/dirt,/obj/decal/cleanable/ripped_poster{pixel_y = 28},/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"Av" = (/obj/decal/poster/wallsign/stencil/left/w{pixel_x = 30; pixel_y = 0},/obj/decal/poster/wallsign/stencil/left/t{pixel_x = 30; pixel_y = -15},/turf/space,/area/space)
+"Bt" = (/obj/indestructible/shuttle_corner{icon_state = "wall_trans"; dir = 8},/turf/space,/area/abandonedship)
+"Bw" = (/turf/simulated/wall/auto/shuttle,/area/abandonedship)
+"BB" = (/obj/machinery/door/airlock/gannets/security{dir = 4},/obj/decal/cleanable/dirt/dirt4,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"CZ" = (/obj/decal/poster/wallsign/security_left{pixel_y = 25},/obj/decal/cleanable/dirt/dirt4,/obj/item/instrument/harmonica,/obj/item/clothing/head/merchant_hat,/obj/item/coin,/obj/decal/cleanable/writing{pixel_y = 35},/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"Eu" = (/obj/decal/cleanable/blood/tracks{dir = 4},/obj/decal/cleanable/dirt/dirt4{dir = 8},/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"ED" = (/mob/living/critter/small_animal/cockroach,/obj/random_item_spawner/hat/one_or_zero,/obj/decal/cleanable/dirt/dirt4,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"ES" = (/obj/map/light/green,/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"GY" = (/turf/space,/area/space)
+"Kj" = (/obj/decal/poster/wallsign/stencil/left/s{pixel_x = 30; pixel_y = -20},/turf/space,/area/space)
+"Kl" = (/obj/decal/poster/wallsign/stencil/left/four{pixel_x = 30; pixel_y = 11},/obj/decal/poster/wallsign/stencil/left/three{pixel_x = 30; pixel_y = 0},/turf/space,/area/space)
+"OA" = (/obj/storage/crate/bloody,/obj/decal/cleanable/cobweb2,/obj/decal/cleanable/blood/gibs,/obj/machinery/light/worn{desc = "A rather old-looks"; dir = 4},/obj/random_item_spawner/organs/bloody/one_to_three,/obj/decal/cleanable/ripped_poster{pixel_y = 28},/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"OL" = (/obj/stool/chair/comfy/shuttle/green{dir = 4},/obj/decal/cleanable/greenpuke,/obj/decal/cleanable/slime,/obj/decal/cleanable/leaves,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"Pm" = (/obj/decal/cleanable/vomit,/obj/decal/cleanable/blood/tracks{dir = 8},/obj/landmark/spawner/loot,/obj/decal/poster/wallsign/cdnp{pixel_y = 30},/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"Pt" = (/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"QQ" = (/obj/fakeobject/shuttleengine{icon_state = "alt_heater"},/turf/simulated/floor/airless/plating/damaged3,/area/abandonedship)
+"Sk" = (/obj/decal/poster/wallsign/stencil/left/s{pixel_x = 30},/turf/space,/area/space)
+"SE" = (/obj/decal/cleanable/dirt/dirt3,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"SI" = (/obj/decal/cleanable/blood/tracks{dir = 8},/obj/decal/cleanable/ripped_poster{pixel_y = 28},/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"Td" = (/obj/stool/chair/comfy/shuttle/green{dir = 4},/obj/decal/cleanable/greenpuke,/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen/extended/empty,/obj/decal/cleanable/dirt/dirt4{dir = 8},/obj/decal/cleanable/generic,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"UR" = (/obj/item/chair/folded,/obj/machinery/light/worn{desc = "A rather old-looks"; dir = 4},/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"VZ" = (/obj/stool/chair/comfy/shuttle/green{dir = 8},/obj/decal/cleanable/dirt/dirt3,/obj/item/clothing/under/misc/dirty_vest,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"Wd" = (/obj/machinery/door/unpowered/wood/stall{dir = 8},/obj/decal/cleanable/dirt/dirt2,/obj/decal/poster/wallsign/no_smoking{pixel_x = 4; pixel_y = 26},/obj/decal/cleanable/paper,/turf/simulated/floor/shuttle/green,/area/abandonedship)
+"Zb" = (/turf/simulated/wall/auto/shuttle{pixel_x = 0; pixel_y = 0},/area/abandonedship)
+
+(1,1,1) = {"
+GYGYGYGYGYGYGYGYGY
+GYBtBwBwBwZbBwsCGY
+wdBwaaBBCZWdabBwGY
+SkBwuUncURdrBwBwGY
+GYgzAfSIEuPmOABwGY
+KjBwacpaEDPtadBwGY
+AvBwTdPtaeSEfmBwGY
+GYBwafrNajygagBwGY
+KlBwOLSEakPtVZBwGY
+mMBwbEhjahaiqXBwGY
+pkBwalalESalalBwGY
+GYBwvkvkvkvkvkBwGY
+GYpqQQQQQQQQQQcmGY
+GYGYpopopopopoGYGY
+"}
