@@ -278,11 +278,6 @@ TYPEINFO(/mob/living/intangible/aieye)
 		if (mainframe)
 			mainframe.emote(act, voluntary)
 
-	hearing_check(var/consciousness_check = 0, for_audio = FALSE) //can't hear SHIT - everything is passed from the AI mob through send_message and whatever
-		if (for_audio)
-			return TRUE
-		return 0
-
 	resist()
 		return 0 //can't actually resist anything because there's nothing to resist, but maybe the hot key could be used for something?
 
