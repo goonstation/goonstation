@@ -108,7 +108,12 @@
 		..()
 
 	attack_hand(mob/user)
-		user.Browse(buildHtml(), "window=nfab;size=550x680;title=Nano-fabricator;fade_in=0;can_resize=0", 1)
+		var/html = buildHtml()
+		if (user.client.byond_version >= 516)
+			html = "<link rel='stylesheet' type='text/css' href='[resource("css/mat_fabricator.css")]' />" + html
+			user.Browse(html, "window=nfab;size=550x680;title=Nano-fabricator;fade_in=0;can_resize=0")
+		else
+			user.Browse(html, "window=nfab;size=550x650;title=Nano-fabricator;fade_in=0;can_resize=0", 1)
 		return
 
 	mouse_drop(over_object, src_location, over_location)
@@ -177,7 +182,6 @@
 
 	proc/buildHtml()
 		var/html = list()
-		html += "<link rel='stylesheet' type='text/css' href='[resource("css/mat_fabricator.css")]' />"
 		html += "<a href='?src=\ref[src];tab=recipes'><i class='icon-list'></i> Blueprints</a>  "
 		html += "<a href='?src=\ref[src];tab=storage'><i class='icon-folder-open'></i> Storage</a>  "
 		html += "<a href='?src=\ref[src];tab=progress'><i class='icon-cog'></i> Progress</a>  "
