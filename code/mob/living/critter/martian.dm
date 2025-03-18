@@ -2,7 +2,7 @@
 	could also possibly use the martian mutantrace */
 
 TYPEINFO(/mob/living/critter/martian)
-	start_listen_modifiers = null
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
 	start_listen_inputs = list(LISTEN_INPUT_MARTIAN, LISTEN_INPUT_EARS, LISTEN_INPUT_GHOSTLY_WHISPER)
 	start_listen_languages = list(LANGUAGE_MARTIAN)
 	start_speech_modifiers = null

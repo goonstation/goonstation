@@ -1,5 +1,5 @@
 TYPEINFO(/mob)
-	start_listen_modifiers = null
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
 	start_listen_inputs = list(LISTEN_INPUT_EARS)
 	start_listen_languages = list(LANGUAGE_ENGLISH)
 	start_speech_modifiers = null

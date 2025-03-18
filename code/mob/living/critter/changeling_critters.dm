@@ -2,7 +2,7 @@
 //mbc : the indentation of this file got all fucked up somehow. That's why we work on different indentation levels depending on the proc. Have fun!
 
 TYPEINFO(/mob/living/critter/changeling)
-	start_listen_modifiers = null
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
 	start_listen_inputs = list(LISTEN_INPUT_EARS)
 	start_listen_languages = list(LANGUAGE_ENGLISH)
 	start_speech_modifiers = null

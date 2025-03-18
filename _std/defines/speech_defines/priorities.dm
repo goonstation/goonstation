@@ -32,4 +32,5 @@
 
 
 //------------ Listen Modifiers ------------//
+#define LISTEN_MODIFIER_PRIORITY_VERY_HIGH 100
 #define LISTEN_MODIFIER_PRIORITY_DEFAULT 0

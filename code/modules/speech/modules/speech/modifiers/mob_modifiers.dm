@@ -4,6 +4,7 @@
 
 /datum/speech_module/modifier/mob_modifiers/process(datum/say_message/message)
 	. = message
+
 	if (!isliving(message.speaker))
 		return
 

@@ -81,7 +81,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	"Devious (Inverted)" = "ai_devious-lod") // this should be in typeinfo
 
 TYPEINFO(/mob/living/silicon/ai)
-	start_listen_modifiers = null
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
 	start_listen_inputs = list(LISTEN_INPUT_EARS_AI, LISTEN_INPUT_SILICONCHAT, LISTEN_INPUT_FLOCK_DISTORTED, LISTEN_INPUT_GHOSTLY_WHISPER)
 	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_SILICON, LANGUAGE_BINARY)
 	start_speech_prefixes = list(SPEECH_PREFIX_AI_RADIO_1, SPEECH_PREFIX_AI_RADIO_2, SPEECH_PREFIX_AI_RADIO_3, SPEECH_PREFIX_AI_RADIO_DEFAULT, SPEECH_PREFIX_AI_RADIO_GENERAL)

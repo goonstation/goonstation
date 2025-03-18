@@ -1831,6 +1831,7 @@
 #include "code\modules\speech\modules\listen\inputs\shared_input_format_modules\spooky.dm"
 #include "code\modules\speech\modules\listen\modifiers\_listen_modifier_parent.dm"
 #include "code\modules\speech\modules\listen\modifiers\chat_context_flags.dm"
+#include "code\modules\speech\modules\listen\modifiers\mob_modifiers.dm"
 #include "code\modules\speech\modules\listen\modifiers\phone_formatting.dm"
 #include "code\modules\speech\modules\listen\modifiers\radio_formatting.dm"
 #include "code\modules\speech\modules\speech\modifiers\_speech_modifier_parent.dm"

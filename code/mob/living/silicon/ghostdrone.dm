@@ -1,7 +1,7 @@
 #define DRONE_LUM 2
 
 TYPEINFO(/mob/living/silicon/ghostdrone)
-	start_listen_modifiers = null
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
 	start_listen_inputs = list(LISTEN_INPUT_GHOSTDRONE, LISTEN_INPUT_EARS_GHOSTDRONE, LISTEN_INPUT_DEADCHAT)
 	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_MONOSPACE_DECORATOR)

@@ -202,6 +202,7 @@
 
 //------------ Listen Modifiers ------------//
 #define LISTEN_MODIFIER_CHAT_CONTEXT_FLAGS "chat_context_flags"
+#define LISTEN_MODIFIER_MOB_MODIFIERS "mob_modifiers"
 #define LISTEN_MODIFIER_PHONE "phone_formatting"
 #define LISTEN_MODIFIER_RADIO "radio_formatting"
 

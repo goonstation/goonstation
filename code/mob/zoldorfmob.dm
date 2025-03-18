@@ -1,5 +1,5 @@
 TYPEINFO(/mob/zoldorf)
-	start_listen_modifiers = null
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
 	start_listen_inputs = list(LISTEN_INPUT_EARS_GHOST, LISTEN_INPUT_GLOBAL_HEARING_GHOST, LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART_GHOST)
 	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_modifiers = null
