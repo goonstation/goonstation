@@ -111,7 +111,7 @@
 		var/html = buildHtml()
 		if (user.client.byond_version >= 516)
 			html = "<link rel='stylesheet' type='text/css' href='[resource("css/mat_fabricator.css")]' />" + html
-			user.Browse(html, "window=nfab;size=550x680;title=Nano-fabricator;fade_in=0;can_resize=0")
+			user.Browse(html, "window=nfab;size=600x680;title=Nano-fabricator;fade_in=0;can_resize=0")
 		else
 			user.Browse(html, "window=nfab;size=550x650;title=Nano-fabricator;fade_in=0;can_resize=0", 1)
 		return
