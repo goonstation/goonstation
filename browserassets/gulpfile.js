@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-import minimist from "minimist";
 import { series, parallel, src, dest } from "gulp";
 import { deleteAsync } from "del";
 import replace from "gulp-replace";
@@ -13,7 +12,9 @@ import hash from "gulp-hash-filename";
 import rename from "gulp-rename";
 
 const uglify = (await import("gulp-uglify-es")).default.default;
-const argv = minimist(process.argv.slice(2));
+
+const CDN_VERSION = process.env.CDN_VERSION || 1;
+const SERVER_TARGET = process.env.SERVER_TARGET || "main1";
 
 // Build Directories
 const dirs = {
@@ -25,7 +26,7 @@ const dirs = {
 const sources = {
 	all: `${dirs.src}/(css|html|images|js|misc|tgui|vendor)/**/*.*`,
 	styles: `${dirs.src}/css/**/*.css`,
-	html: `${dirs.src}/html/**/*.html`,
+	html: `${dirs.src}/html/**/*.(html|htm)`,
 	scripts: `${dirs.src}/js/**/*.js`,
 	copyable: `${dirs.src}/(css/fonts|images|misc|tgui|vendor)/**/*.*`,
 	// Files that tgui includes via resource() calls
@@ -33,13 +34,12 @@ const sources = {
 };
 
 // Build CDN subdomain from server type argument
-const server = argv.server || "main1";
-const cdn = argv.cdn || `https://cdn-${server}.goonhub.com`;
+const cdn = `https://cdn-${SERVER_TARGET}.goonhub.com`;
 
 // Replace {{resource(path/to/file)}} in files with proper CDN URLs
 const resourceMacroRegex = /\{\{resource\(\"(.*?)\"\)\}\}/gi;
 
-const hashFormat = "{name}.{hash:8}{ext}";
+const hashFormat = `{name}.{hash:8}{ext}?v=${CDN_VERSION}`;
 
 let buildManifest = {};
 
@@ -177,4 +177,3 @@ export const build = series(
 );
 
 build.description = "Build CDN Assets";
-build.flags = { "--server": "Server to build for" };

@@ -370,7 +370,11 @@
 	desc = "A hardshell case for musical instruments."
 	icon_state = "briefcase_black"
 	item_state = "sec-case"
-	spawn_contents = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
+	spawn_contents = list(/obj/item/instrument/saxophone,\
+	/obj/item/instrument/guitar,\
+	/obj/item/instrument/bagpipe,\
+	/obj/item/instrument/fiddle,\
+	/obj/item/instrument/glockenspiel)
 
 /obj/item/storage/briefcase/instruments/blowgun
 	spawn_contents = list(/obj/item/gun/kinetic/blowgun,\
