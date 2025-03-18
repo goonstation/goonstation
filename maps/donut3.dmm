@@ -67639,10 +67639,10 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
 /obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
