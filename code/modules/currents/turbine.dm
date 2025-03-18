@@ -101,6 +101,7 @@
 	anchored = ANCHORED
 	density = TRUE
 	flags = FLUID_DENSE | TGUI_INTERACTIVE
+	processing_tier = PROCESSING_HALF
 	///The actual turbine on the end. TODO: handle multiple turbines?
 	var/obj/turbine_shaft/turbine/turbine = null
 	///The current shaft, can be null if some idiot overextends the shaft all the way out
@@ -111,6 +112,13 @@
 	var/reversed = FALSE
 
 	var/generation = 0
+
+	var/rpm = 0
+
+	//power = stator load * rpm/60
+	//sooo if we want the power to cap out at ~40kw and 100rpm (big slow water turbine)
+	//stator load = (60 * 40 * 1000)/100 = 24kj/rev
+	var/stator_load = 24 KILO //per revolution
 
 	New(new_loc)
 		. = ..()
@@ -126,6 +134,7 @@
 		return list(
 			"reversed" = src.reversed,
 			"generation" = src.generation * (src.reversed ? -1 : 1),
+			"rpm" = src.rpm,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -184,8 +193,9 @@
 			src.visible_message(SPAN_ALERT("[src] makes a protesting grinding noise."))
 			animate_storage_thump(src)
 			return
-		//TODO: why doesn't this null when you overextend the shaft??
 		src.shaft = locate() in get_turf(src)
+		if (!src.shaft)
+			src.turbine = null
 		playsound(src, 'sound/machines/button.ogg', 50, 1)
 
 	Cross(atom/movable/mover)
@@ -203,16 +213,28 @@
 		else
 			. = ..()
 
+	// 1/2 * 1000 * pi * ((0.5) ** 2) * (v ** 3) = [roughly] total energy applied to the turbine per second
+	// E = I(ω ** 2)
+	// I = (1/2)m(r ** 2) [modelling the turbine as a disc for intertial purposes]
+	//what the fuck is the mass?
+	//are any of these equations even sane in context??
+
+	//a bit less physically simulated than the reactor turbine, both because Amy is smarter than me and because we're not really fully simulating the currents
+	//see above for my sanity loss trying to figure out the fluid energy transfer maths
 	process(mult)
 		if (!src.turbine)
 			src.generation = 0
 			return
+		var/flow_rate = 0
 		var/obj/effects/current/current = locate() in get_turf(src.turbine)
-		if (!current)
-			src.generation = 0
-			return
-		//TODO: make this spin up and down over time?
-		src.generation = 0.4 KILO WATTS * current.controller.get_flow_rate() //caps out at 40KW by default
+		if (current)
+			flow_rate = current.controller.get_flow_rate()
+			//this part is total hand-waving, just do some basic maths to make the RPM slowly increase and decrease with the flow rate
+			src.rpm += (flow_rate - src.rpm)/4
+		else
+			src.rpm = max(src.rpm - 2 - src.rpm/4, 0) //spin down rapidly if there's no current
+		//this part is physics though!
+		src.generation = src.stator_load * src.rpm/60
 		src.add_avail(src.generation)
 
 
