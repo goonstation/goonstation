@@ -198,6 +198,8 @@
 /// Global lookup proc for access levels based on a job string (e.g. "Captain")
 /proc/get_access(job)
 	switch(job)
+		if("Nanotrasen Responder")
+			return get_all_accesses() + list(access_centcom)
 		// --------------------------- Heads of staff
 		if("Captain")
 			return get_all_accesses()

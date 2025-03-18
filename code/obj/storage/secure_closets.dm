@@ -709,7 +709,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	spawn_contents = list(/obj/item/device/radio/signaler,
 	/obj/item/device/radio/electropack = 5,
 	/obj/item/clothing/glasses/blindfold = 2,
-	/obj/item/clothing/mask/monkey_translator = 2)
+	/obj/item/clothing/mask/monkey_translator = 2,
+	/obj/item/pet_carrier)
 
 /* ==================== */
 /* ----- Research ----- */

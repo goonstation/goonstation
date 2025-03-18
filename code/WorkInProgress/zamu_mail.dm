@@ -489,6 +489,7 @@ var/global/mail_types_by_job = list(
 		// so you can keep looking at your screen,
 		// even in the brightness of nuclear hellfire o7
 		/obj/item/clothing/glasses/sunglasses/tanning = 10,
+		/obj/item/clothing/glasses/eyestrain = 10,
 		),
 
 

@@ -213,6 +213,9 @@
 						yoinked = TRUE
 					else if(!victim.is_bald())
 						//they have hair to yoink
+						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations["hair_bottom"].color, victim.bioHolder.mobAppearance.customizations["hair_bottom"].style)
+						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations["hair_middle"].color, victim.bioHolder.mobAppearance.customizations["hair_middle"].style)
+						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations["hair_top"].color, victim.bioHolder.mobAppearance.customizations["hair_top"].style)
 						stolen_hair = victim.create_wig()
 						boutput(victim, SPAN_ALERT("the [src] takes your hair clean off!"))
 						yoinked = TRUE
@@ -228,6 +231,17 @@
 
 		. = ..()
 
+	proc/spawn_hair_clipping(var/mob/living/carbon/human/M, var/color, var/old_style)
+		if (!M || !M.loc)
+			return
+		if (!color)
+			return
+		if (istype(old_style, /datum/customization_style/none))
+			return
+
+		var/obj/decal/cleanable/hair/hair = new(M.loc)
+		hair.color = color
+		hair.update_color()
 
 /obj/item/dye_bottle
 	name = "hair dye bottle"
