@@ -62,10 +62,11 @@
 	for (var/atom/movable/screen/parallax_layer/parallax_layer as anything in src.parallax_layers)
 		// Multiply the pixel change by the parallax value to determine the number of pixels the layer should move by.
 		// Update the position of the parallax layer on the client's screen, and animate the movement, using a time value derived from the client's mob's speed.
+		// Round to 1s to not blur sprites
 		animate( \
 			parallax_layer, \
 			animation_time, \
-			transform = matrix(	1, 0, round(x_pixel_change * parallax_layer.parallax_render_source.parallax_value, 1), \ // Round to 1s to not blur sprites
+			transform = matrix(	1, 0, round(x_pixel_change * parallax_layer.parallax_render_source.parallax_value, 1), \
 								0, 1, round(y_pixel_change * parallax_layer.parallax_render_source.parallax_value, 1)), \
 			flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE \
 		)
