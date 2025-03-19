@@ -1055,7 +1055,7 @@ toxic - poisons
 	name = "potato"
 	icon_state = "potatoslug"
 	shot_sound = 'sound/weapons/launcher.ogg'
-	damage = 5
+	damage = 15
 	stun = 20
 	dissipation_rate = 7	//Potatoes aren't very aerodynamic
 	dissipation_delay = 2
@@ -1069,7 +1069,7 @@ toxic - poisons
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			if(proj.power >= 16)
-				var/throw_range = (proj.power > 20) ? 3 : 1
+				var/throw_range = min(ceil(proj.power / 10), 3)
 
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
