@@ -1,4 +1,8 @@
 
+(t)wed mar 19 25
+(u)ZeWaka, LemonInTheDark
+(e)💅🎨|C-QoL, C-Sprites
+(+)Parallax should now be 90% less blurry and look much better.
 (t)mon mar 17 25
 (u)cringe
 (p)22591
