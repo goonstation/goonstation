@@ -934,6 +934,7 @@
 
 				if (dive_attack_hit)
 					var/damage = rand(1,6)
+					var/area/AR = get_area(dive_attack_hit)
 					if (ishuman(user))
 						var/mob/living/carbon/human/H = user
 						if (H.shoes)
@@ -946,6 +947,10 @@
 						playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
 						for (var/mob/O in AIviewers(user))
 							O.show_message(SPAN_ALERT("<b>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!</b>"))
+					else if (AR.sanctuary)
+						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, TRUE, -1)
+						for (var/mob/O in AIviewers(user))
+							O.show_message(SPAN_ALERT("<B>[user] slides into [dive_attack_hit] harmlessly!</B>"), 1)
 					else
 						dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
 						dive_attack_hit.was_harmed(user)
