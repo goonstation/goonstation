@@ -401,7 +401,7 @@ TYPEINFO(/obj/item/device/flash/turbo)
 		if (iswrenchingtool(W) && !(src.secure))
 			boutput(user, "You disassemble [src]!")
 			src.cell.set_loc(get_turf(src))
-			var/obj/item/device/flash/F = new /obj/item/device/flash(get_turf(src.cell)) // is src.cell's turf src's turf causes #22144 somehow
+			var/obj/item/device/flash/F = new /obj/item/device/flash(get_turf(src.cell)) // is src.cell's turf because src's turf causes #22144 somehow
 			if(!src.status)
 				F.status = 0
 				F.set_icon_state("flash3")
