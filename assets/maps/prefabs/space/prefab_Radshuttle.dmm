@@ -304,7 +304,6 @@
 	dir = 8
 	},
 /obj/decal/cleanable/generic,
-/obj/item/random_trinket_spawner,
 /turf/simulated/floor/shuttle/green,
 /area/prefab/radshuttle)
 "aH" = (
@@ -378,7 +377,6 @@
 /obj/decal/cleanable/greenpuke,
 /obj/decal/cleanable/slime,
 /obj/decal/cleanable/leaves,
-/obj/item/random_trinket_spawner,
 /turf/simulated/floor/shuttle/green,
 /area/prefab/radshuttle)
 "aQ" = (
@@ -395,7 +393,6 @@
 	},
 /obj/decal/cleanable/dirt/dirt3,
 /obj/item/clothing/under/misc/dirty_vest,
-/obj/item/random_lost_item_spawner,
 /turf/simulated/floor/shuttle/green,
 /area/prefab/radshuttle)
 "aS" = (
@@ -428,7 +425,6 @@
 	},
 /obj/decal/cleanable/greenpuke,
 /obj/mapping_helper/mob_spawn/corpse/human/skeleton,
-/obj/item/random_lost_item_spawner,
 /turf/simulated/floor/shuttle/green,
 /area/prefab/radshuttle)
 "aV" = (
