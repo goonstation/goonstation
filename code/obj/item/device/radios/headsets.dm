@@ -10,6 +10,7 @@
 	rand_pos = 0
 	var/protective_temperature = 0
 	speaker_range = 0
+	initial_speaker_enabled = TRUE
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew."
 	flags = TABLEPASS | CONDUCT
 	icon_override = "civ"

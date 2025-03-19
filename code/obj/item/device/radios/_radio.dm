@@ -69,7 +69,7 @@ TYPEINFO(/obj/item/device/radio)
 	/// Whether this radio's speaker is enabled. If not, received radio messages will not be spoken.
 	var/speaker_enabled = FALSE
 	/// Whether this radio's speaker starts enabled.
-	var/initial_speaker_enabled = TRUE
+	var/initial_speaker_enabled = FALSE
 
 	// Radio Uplink Variables:
 	/// If TRUE, messages sent over a protected channel cannot be picked up by the `radio_brain` bioeffect.
