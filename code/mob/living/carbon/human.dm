@@ -885,6 +885,7 @@
 		newbody.traitHolder.owner = newbody
 		if (src.spell_soulguard)
 			newbody.equip_sensory_items()
+			newbody.equip_body_traits(is_antagonist=(src.spell_soulguard==SOULGUARD_SPELL))
 
 	// Prone to causing runtimes, don't enable.
 /*	if (src.mutantrace && !src.spell_soulguard)
@@ -1949,6 +1950,23 @@
 				else
 					return 0
 
+/**
+Attempts to put an item in the hand of a mob, if not possible then stow it, then by default delete the item.
+
+ * @param I The item to put in the hand.
+
+ * @param hand The hand to put the item in.
+
+ * @param delete_item If TRUE, the item will be deleted if it cannot be put in hand or stowed. If FALSE, the item is dropped at the current location.
+
+ * @return TRUE if the item was successfully put in hand or stowed, FALSE otherwise.
+**/
+/mob/living/carbon/human/proc/put_in_hand_or_stow(obj/item/I, hand, delete_item = TRUE)
+	if (!src.put_in_hand(I, hand))
+		if(!src.stow_in_available(I, delete_item))
+			return FALSE
+	return TRUE
+
 /mob/living/carbon/human/proc/get_slot(slot)
 	switch(slot)
 		if (SLOT_BACK)
@@ -2295,24 +2313,34 @@
 			src.drop_from_slot(current, get_turf(current))
 	src.force_equip(I, slot)
 	return TRUE
-///Tries to put an item in an available backpack, pocket, or hand slot, default specified to delete the item if unsuccessful
+
+/**
+Tries to put an item in an available backpack, belt storage, pocket, or hand slot. Will delete items that cannot be placed by default.
+
+ * @param I The item to stow.
+
+ * @param delete_item If TRUE, the item will be deleted if it cannot be stowed. If FALSE, the item is dropped at the current location.
+
+ * @return TRUE if the item was stowed, FALSE if it was not.
+**/
 /mob/living/carbon/human/proc/stow_in_available(obj/item/I, delete_item = TRUE)
 	if (src.autoequip_slot(I, SLOT_IN_BACKPACK))
-		return
+		return TRUE
 	if (src.autoequip_slot(I, SLOT_IN_BELT))
-		return
+		return TRUE
 	if (src.autoequip_slot(I, SLOT_L_STORE))
-		return
+		return TRUE
 	if (src.autoequip_slot(I, SLOT_R_STORE))
-		return
+		return TRUE
 	if (src.autoequip_slot(I, SLOT_L_HAND))
-		return
+		return TRUE
 	if (src.autoequip_slot(I, SLOT_R_HAND))
-		return
+		return TRUE
 	if (delete_item)
 		qdel(I)
 	else
 		I.set_loc(get_turf(src))
+	return FALSE
 
 /mob/living/carbon/human/swap_hand(var/specify=-1)
 	if(src.hand == specify)
