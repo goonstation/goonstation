@@ -584,14 +584,14 @@ TYPEINFO(/obj/item/heat_dowsing)
 					placed = 0
 
 					src.speech_bubble_icon_say = "[val]"
-					src.say("Estimated distance to centre: [val]")
+					src.say("Estimated distance to centre: [val]", flags = SAYFLAG_NO_MAPTEXT)
 
 					if (true_center) //stomper does this anywya, lets let them dowse for the true center instead of accidntally stomping and being annoying
 						playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE,0.1,0.7)
 						if (true_center > 1)
-							src.say("[true_center] centres have been located!")
+							src.say("[true_center] centres have been located!", flags = SAYFLAG_NO_MAPTEXT)
 						else
-							src.say("True centre has been located!")
+							src.say("True centre has been located!", flags = SAYFLAG_NO_MAPTEXT)
 
 	attackby(var/obj/item/I, var/mob/M)
 		if (ispryingtool(I))
