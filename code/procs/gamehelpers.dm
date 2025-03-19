@@ -115,6 +115,9 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 	ENSURE_TYPE(mobuser)
 	if(mobuser?.client?.holder?.ghost_interaction)
 		return TRUE
+	if(!istype(mobuser.loc, /turf)) // if we're not on a turf, we can only interact with stuff inside the same object or in ourselves
+		if(!((source in mobuser.loc) || (source in mobuser)))
+			return FALSE
 	if(istype(source, /mob))
 		var/mob/target = source
 		if (target.next_move > world.time && IN_RANGE(target.prev_loc, user, 1))
