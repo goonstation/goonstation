@@ -3,7 +3,7 @@
 	channel = SAY_CHANNEL_GLOBAL_OUTLOUD
 
 
-SET_UP_LISTEN_CONTROL(/datum/listen_module/input/outloud/global_hearing/ghost, LISTEN_CONTROL_TOGGLE_GLOBAL_HEARING_ADMIN)
+SET_UP_LISTEN_CONTROL(/datum/listen_module/input/outloud/global_hearing/admin, LISTEN_CONTROL_TOGGLE_GLOBAL_HEARING_ADMIN)
 /datum/listen_module/input/outloud/global_hearing/admin
 	id = LISTEN_INPUT_GLOBAL_HEARING
 
