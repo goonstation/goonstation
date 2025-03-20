@@ -389,10 +389,9 @@
 		if(rgba[4] > 140)
 			rgba[4] -= 70
 			medium = 1
-		if(medium == 0)
-			src.remove_medium_light(id)
-		else
 			src.remove_simple_light(id)
+		else
+			src.remove_medium_light(id)
 
 	if (directional)
 		src.add_mdir_light(id, rgba)
@@ -423,7 +422,7 @@
 	for (var/atom/thing as anything in src.contents)
 		if (thing.simple_light?.invisibility == INVIS_NONE)
 			return TRUE
-		for(var/obj/overlay/simple_light/medium/light in thing.medium_lights)
+		for(var/obj/overlay/simple_light/medium/light as anything in thing.medium_lights)
 			if (light.invisibility == INVIS_NONE)
 				return TRUE
 
@@ -433,7 +432,7 @@
 	if (src.contains_simple_light())
 		return TRUE
 	//then neighbouring turfs
-	for (var/turf/T in block(locate(src.x + 1, src.y + 1, src.z), locate(src.x - 1, src.y - 1, src.z)))
+	for (var/turf/T in range(1, src)) //apparently turf search in range is fairly optimised?
 		if (T.contains_simple_light())
 			return TRUE
 	//finally we check in compass directions for directional lights shining on us
@@ -448,9 +447,9 @@
 				var/turf/reached_turf = getlineopaqueblocked(src,target_turf)
 				turfs += block(start_turf, reached_turf)
 
-		for (var/turf/T in turfs)
-			for (var/atom/movable/thing in T.contents) //find something with a directional light
-				for (var/obj/overlay/simple_light/medium/directional/light in thing.mdir_lights)
+		for (var/turf/T as anything in turfs)
+			for (var/atom/movable/thing as anything in T.contents) //find something with a directional light
+				for (var/obj/overlay/simple_light/medium/directional/light as anything in thing.mdir_lights)
 					if (light.invisibility != INVIS_NONE)
 						continue
 					//this assumes that lights always point in the same direction as their parent object, but lights don't seem to store dir so :iiam:
