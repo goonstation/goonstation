@@ -20,7 +20,7 @@
 	show_simple_light()
 
 	if (length(simple_light_rgbas) == 1) //dont loop/average if list only contains 1 thing
-		simple_light.color = rgb(rgba[1], rgba[2], rgba[3], rgba[4])
+		simple_light.color = rgba
 	else
 		update_simple_light_color()
 
@@ -36,10 +36,10 @@
 	else
 		simple_light_rgbas.len = 0
 
-	if (length(simple_light_rgbas) <= 0)
-		hide_simple_light()
-	else
+	if (length(simple_light_rgbas))
 		update_simple_light_color()
+	else
+		hide_simple_light()
 
 /atom/proc/update_simple_light_color()
 	var/avg_r = 0
@@ -58,7 +58,7 @@
 	avg_b /= length(simple_light_rgbas)
 	sum_a = min(255,sum_a)
 
-	simple_light.color = rgb(avg_r, avg_g, avg_b, sum_a)
+	simple_light.color = list(avg_r, avg_g, avg_b, sum_a)
 
 /atom/proc/show_simple_light()
 	if(!length(simple_light_rgbas))
@@ -73,12 +73,9 @@
 	src.simple_light.invisibility = INVIS_NONE
 
 /atom/proc/hide_simple_light()
-	if (src.simple_light)
-		src.simple_light.invisibility = INVIS_ALWAYS
+	src.simple_light?.invisibility = INVIS_ALWAYS
 
 /atom/proc/destroy_simple_light()
-	if (length(simple_light_rgbas))
-		hide_simple_light()
 	src:vis_contents -= simple_light
 	simple_light_rgbas = null
 	qdel(simple_light)
