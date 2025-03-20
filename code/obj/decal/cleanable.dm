@@ -61,7 +61,8 @@ proc/make_cleanable(var/type,var/loc)
 				if (istype(T, /turf/simulated/floor))
 					var/turf/simulated/floor/floor = T
 					SPAWN(0)
-						floor.cleanable_fluid_react()
+						if (istype(floor)) //pls help my floor is become space
+							floor.cleanable_fluid_react()
 
 	set_loc(newloc)
 		if(isturf(src.loc))
@@ -618,7 +619,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "You can try to clean it up, but there'll always be a little bit left."
 	icon = 'icons/effects/glitter.dmi'
 	icon_state = "glitter"
-	random_dir = EAST
+	random_dir = RANDOM_DIR_CARDINAL
 	random_icon_states = list("glitter-1", "glitter-2", "glitter-3", "glitter-4", "glitter-5", "glitter-6", "glitter-7", "glitter-8", "glitter-9", "glitter-10")
 	can_sample = 1
 	sample_reagent = "glitter"
@@ -645,7 +646,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "Ripped up little flecks of paper."
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "paper"
-	random_dir = EAST
+	random_dir = RANDOM_DIR_CARDINAL
 	can_sample = 1
 	sample_reagent = "paper"
 	sample_verb = "scrape"
@@ -661,14 +662,14 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "A sad little pile of leaves from a sad, destroyed bush."
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "leaves"
-	random_dir = EAST
+	random_dir = RANDOM_DIR_CARDINAL
 
 /obj/decal/cleanable/wood_debris
 	name = "wood debris"
 	desc = "A few scattered pieces of wood that broke off something bigger."
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "wood"
-	random_dir = NORTH
+	random_dir = RANDOM_DIR_CARDINAL
 
 /obj/decal/cleanable/rust
 	name = "rust"
@@ -972,10 +973,9 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				for (var/mob/M in AIviewers(user, null))
 					if (M != user)
 						M.show_message(SPAN_NOTICE("<b>[user]</b> is sticking their fingers into [src] and pushing it into [I]. It's all slimy and stringy. Oh god."), 1)
-						if (prob(33) && ishuman(M) && !isdead(M))
+						if (ishuman(M) && !isdead(M))
 							M.show_message(SPAN_ALERT("You feel ill from watching that."))
-							var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-							M.vomit(0, null, vomit_message)
+							M.nauseate(rand(2,4)) //this may be a bad idea
 
 				I.reagents.handle_reactions()
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
@@ -1068,7 +1068,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "Someone should clean that up."
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "dirt"
-	random_dir = NORTH
+	random_dir = RANDOM_DIR_CARDINAL
 	stain = /datum/stain/dirt
 	can_sample = 1
 	sample_reagent = "carbon"
@@ -1737,3 +1737,21 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				if (!src.reagents)
 					src.create_reagents(src.sample_amt)
 				src.reagents.add_reagent("thermite", src.sample_amt)
+
+/obj/decal/cleanable/hair
+	name = "hair pile"
+	desc = "A small pile of cut hair. Gross."
+	icon = 'icons/obj/decals/cleanables.dmi'
+	icon_state = "hair"
+	random_dir = RANDOM_DIR_CARDINAL
+	var/color_name = ""
+
+	New()
+		..()
+		src.pixel_y += rand(-4,4)
+		src.pixel_x += rand(-4,4)
+
+	proc/update_color()
+		if (src.color)
+			color_name = hex2color_name(src.color)
+			src.name = "[color_name] hair pile"

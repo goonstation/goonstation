@@ -603,7 +603,7 @@
 					dat += "<center><font color=red>Fatal Error 0x17<br>"
 					dat += "No System Software Loaded</font></center>"
 
-		user << output(dat, "pda2_\ref[src].texto")
+		user.Browse(dat, "window=pda2_\ref[src].texto")
 
 
 	winshow(user,"pda2_\ref[src]",1)
@@ -738,6 +738,9 @@
 
 	else if (istype(C, /obj/item/currency/spacecash))
 		src.insert_cash(C, user)
+
+	else if (istype(C, /obj/item/currency/buttcoin))
+		src.insert_buttcoin(C, user)
 
 /obj/item/device/pda2/examine()
 	. = ..()
@@ -930,6 +933,21 @@
 			cash.amount = 0
 			qdel(cash)
 			playsound(src.loc, 'sound/machines/paper_shredder.ogg', 50, 1)
+			src.updateSelfDialog()
+		else
+			if (src.ID_card && !src.accessed_record)
+				boutput(user, SPAN_ALERT("\The [src] refuses your [cash]. The inserted ID card doesn't have a bank account associated with it."))
+			else if (!src.ID_card)
+				boutput(user, SPAN_ALERT("\The [src] refuses your [cash]. There is no ID card inserted."))
+		return
+
+	proc/insert_buttcoin(obj/item/currency/buttcoin/cash, mob/user)
+		if (src.ID_card && src.accessed_record)
+			boutput(user, SPAN_NOTICE("You force [cash] into \the [src]."))
+			boutput(user, SPAN_SUCCESS("Your transaction will complete anywhere within 10 to 10e27 minutes from now."))
+			cash.amount = 0
+			qdel(cash)
+			playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
 			src.updateSelfDialog()
 		else
 			if (src.ID_card && !src.accessed_record)

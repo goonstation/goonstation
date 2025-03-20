@@ -7,6 +7,10 @@ mob/verb/checkrewards()
 	set name = "Check Job Rewards"
 	set category = "Commands"
 
+	if(isdead(usr))
+		boutput(usr, SPAN_NOTICE("You can't claim rewards while dead!"))
+		return
+
 	SPAWN(0)
 		var/mob/M = usr
 		if(!winexists(M, "winjobrewards_[M.ckey]"))

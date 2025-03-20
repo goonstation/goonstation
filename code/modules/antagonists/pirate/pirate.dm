@@ -126,7 +126,7 @@ TYPEINFO(/obj/gold_bee)
 
 	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		src.visible_message(SPAN_COMBAT("<b>[user]</b> hits [src] with [W]!"))
 		src.take_damage(W.force / 3)

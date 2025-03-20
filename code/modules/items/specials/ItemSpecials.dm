@@ -241,7 +241,7 @@
 			var/mob/living/carbon/human/H = user
 			if(H.stamina < staminaReqAmt) return 0
 
-		if(world.time < (last_use + cooldown))
+		if(GET_COOLDOWN(user, "[src.type]_cd"))
 			return 0
 
 		if(user.a_intent == "help" || user.a_intent == "grab")
@@ -277,6 +277,7 @@
 				person.movement_delay_modifier += moveDelay
 				sleep(moveDelayDuration)
 				person?.movement_delay_modifier -= moveDelay
+		ON_COOLDOWN(person, "[src.type]_cd", src.cooldown)
 		last_use = world.time
 
 	//Should be called after everything is done and all attacks are finished. Make sure you call this when appropriate in your mouse procs etc.
@@ -325,7 +326,7 @@
 	proc/rush(atom/movable/user, atom/target, progress, params)
 		preUse(user)
 		action = null
-		src.cooldown = round(max(10, initial(src.cooldown) * progress))
+		OVERRIDE_COOLDOWN(user, "[src.type]_cd", round(max(10, initial(src.cooldown) * progress)))
 
 		var/atom/lastTurf = null
 		var/direction = get_dir_pixel(user, target, params)
@@ -552,6 +553,7 @@
 					A.Attackby(master, user, params, 1)
 					hit = TRUE
 					last_use = world.time - (cooldown - success_cooldown)
+					OVERRIDE_COOLDOWN(user, "[src.type]_cd", src.success_cooldown)
 					break
 
 			afterUse(user)
@@ -764,12 +766,15 @@
 	baseball
 		name = "Baseball Swing"
 		desc = "An AoE attack with a chance for a home run."
+		var/hit_range = 4
+		var/hit_speed = 1
+		var/hit_sound = 'sound/impact_sounds/bat_wood_crit.ogg'
 
 		modify_attack_result(mob/user, mob/target, datum/attackResults/msgs)
 			if (msgs.damage > 0 && msgs.stamina_crit)
 				var/turf/target_turf = get_edge_target_turf(target, get_dir(user, target))
-				target.throw_at(target_turf, 4, 1, throw_type = THROW_BASEBALL)
-				msgs.played_sound = 'sound/impact_sounds/bat_wood_crit.ogg'
+				target.throw_at(target_turf, hit_range, hit_speed, throw_type = THROW_BASEBALL)
+				msgs.played_sound = hit_sound
 			return msgs
 
 /datum/item_special/launch_projectile
@@ -1925,7 +1930,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 						user.visible_message(SPAN_ALERT("<b>[user] flings a tile from [turf] into the air!</b>"))
 						logTheThing(LOG_COMBAT, user, "fling throws a floor tile ([F]) [get_dir(user, target)] from [turf].")
 
-						user.lastattacked = user //apply combat click delay
+						user.lastattacked = get_weakref(user) //apply combat click delay
 						tile.throw_at(target, tile.throw_range, tile.throw_speed, params, bonus_throwforce = 3)
 
 			if (!hit)

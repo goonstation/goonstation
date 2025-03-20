@@ -130,8 +130,6 @@
 		var/area/artifact_fissure/fissure_area = get_area(T)
 		fissure_area.fissure_region = artkey.fissure_region
 
-		mirrored_physical_zone_created = TRUE
-
 /****** Supporting items/atoms/etc. *******/
 
 ABSTRACT_TYPE(/obj/art_fissure_objs)
@@ -139,6 +137,9 @@ ABSTRACT_TYPE(/obj/art_fissure_objs)
 	name = ""
 	desc = ""
 	anchored = ANCHORED_ALWAYS
+
+	ex_act()
+		return
 
 ABSTRACT_TYPE(/obj/art_fissure_objs/cross_dummy)
 /obj/art_fissure_objs/cross_dummy

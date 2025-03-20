@@ -704,7 +704,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	if (HH && (HH.can_range_attack || HH.can_special_attack()) && HH.limb)
 		HH.limb.attack_range(target, src, params)
 		HH.set_cooldown_overlay()
-		src.lastattacked = src
+		src.lastattacked = get_weakref(src)
 		return TRUE
 	return FALSE
 
@@ -1701,3 +1701,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 
 	is_heat_resistant()
 		return TRUE
+
+	nauseate(stacks)
+		return
