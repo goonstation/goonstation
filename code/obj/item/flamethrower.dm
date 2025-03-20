@@ -433,21 +433,21 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 	// reset the assembly-components to readd the ones we want
 	src.RemoveComponentsOfType(/datum/component/assembly)
 	// Welder/Rods Assembly + wrench  -> deconstruction
-	src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(deconstruction), FALSE)
+	src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(deconstruction), FALSE, new /datum/assembly_comp_helper/consumes_self)
 	if (new_state == 1)
 		src.state = 1
 		src.name = "Welder/Rods/Igniter Assembly"
 		src.desc = "A welding torch and igniter connected by metal rods."
 		src.icon_state = "welder-rods-igniter"
 		// Welder/Rods/igniter Assembly + screwdriver  -> assembly-completition
-		src.AddComponent(/datum/component/assembly, TOOL_SCREWING, PROC_REF(completition), FALSE)
+		src.AddComponent(/datum/component/assembly, TOOL_SCREWING, PROC_REF(completition), FALSE, new /datum/assembly_comp_helper/consumes_self)
 	else
 		src.state = 0
 		src.desc = "A welding torch with metal rods attached to the flame tip."
 		src.name = "Welder/Rods Assembly"
 		src.icon_state = "welder-rods"
 		// Welder/Rods Assembly + igniter  -> Welder/Rods/Igniter Assembly
-		src.AddComponent(/datum/component/assembly, /obj/item/device/igniter, PROC_REF(igniter_attachment), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/device/igniter, PROC_REF(igniter_attachment), TRUE, new /datum/assembly_comp_helper/consumes_all)
 	src.tooltip_rebuild = TRUE
 
 /obj/item/flamethrower_construction/disposing()

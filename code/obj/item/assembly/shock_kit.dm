@@ -30,9 +30,9 @@
 		affected_object.set_loc(src)
 		affected_object.master = src
 	// Shock kit + wrench  -> deconstruction
-	src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(deconstruction), FALSE)
+	src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(deconstruction), FALSE, new /datum/assembly_comp_helper/consumes_self)
 	// Shock kit + stool  -> electric chair
-	src.AddComponent(/datum/component/assembly, /obj/stool/chair, PROC_REF(electric_chair_construction), TRUE)
+	src.AddComponent(/datum/component/assembly, /obj/stool/chair, PROC_REF(electric_chair_construction), TRUE, new /datum/assembly_comp_helper/consumes_all)
 
 /obj/item/shock_kit/disposing()
 	qdel(src.helmet_part)

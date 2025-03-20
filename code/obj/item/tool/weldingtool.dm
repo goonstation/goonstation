@@ -40,7 +40,7 @@
 		AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 125, src.welding)
 
 		// Welder + rods  -> Welder/Rods Assembly
-		src.AddComponent(/datum/component/assembly, /obj/item/rods, PROC_REF(welder_rod_construction), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/rods, PROC_REF(welder_rod_construction), TRUE, new /datum/assembly_comp_helper/consumes_all)
 
 // ----------------------- Assembly-procs -----------------------
 	///Begin of the flamethrower assembly
