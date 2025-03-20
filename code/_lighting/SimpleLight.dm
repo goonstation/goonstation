@@ -87,7 +87,7 @@
 		destroy_simple_light()
 
 
-/obj/overlay/simple_light/medium
+/atom/movable/light/simple_light/medium/medium
 	icon_state = "medium_dir"
 	New(loc, dir=0)
 		..()
@@ -105,7 +105,7 @@
 				icon_state = "medium_center"
 
 /atom/var/list/medium_light_rgbas = null
-/atom/var/list/obj/overlay/simple_light/medium/medium_lights
+/atom/var/list/atom/movable/light/simple_light/medium/medium_lights
 /atom/var/static/list/medium_light_dirs = list(0, NORTH, SOUTH, EAST, WEST)
 
 // for medium lights the light intensity keeps increasing as you increase alpha past 255
@@ -164,7 +164,7 @@
 	avg_b /= length(medium_light_rgbas)
 	var/list/unscaled = list(avg_r, avg_g, avg_b, min(255, sum_a))
 	var/list/scaled = list(avg_r, avg_g, avg_b, min(255, sum_a / 2)) // divided by two because the directional sprites are brighter
-	for(var/obj/overlay/simple_light/medium/medium_light in src.medium_lights)
+	for(var/atom/movable/light/simple_light/medium/medium_light in src.medium_lights)
 		if(medium_light.icon_state == "medium_center")
 			medium_light.color = unscaled
 		else
@@ -176,19 +176,19 @@
 	if (!medium_lights)
 		medium_lights = list()
 		for(var/light_dir in src.medium_light_dirs)
-			var/obj/overlay/simple_light/medium/light = new(null, light_dir)
+			var/atom/movable/light/simple_light/medium/light = new(null, light_dir)
 			src:vis_contents += light
 			src.medium_lights += light
-	for(var/obj/overlay/simple_light/medium/light as anything in src.medium_lights)
+	for(var/atom/movable/light/simple_light/medium/light as anything in src.medium_lights)
 		light.invisibility = INVIS_NONE
 	update_medium_light_visibility()
 
 /atom/proc/hide_medium_light()
-	for(var/obj/overlay/simple_light/medium/light as anything in src.medium_lights)
+	for(var/atom/movable/light/simple_light/medium/light as anything in src.medium_lights)
 		light.invisibility = INVIS_ALWAYS
 
 /atom/proc/destroy_medium_light()
-	for(var/obj/overlay/simple_light/medium/light as anything in src.medium_lights)
+	for(var/atom/movable/light/simple_light/medium/light as anything in src.medium_lights)
 		src:vis_contents -= light
 		qdel(light)
 	medium_light_rgbas = null
@@ -203,10 +203,10 @@
 	if(src.medium_lights[1].invisibility == INVIS_ALWAYS) // toggled off
 		return
 	if(!isturf(src.loc) && !isturf(src))
-		for (var/obj/overlay/simple_light/medium/light as anything in src.medium_lights)
+		for (var/atom/movable/light/simple_light/medium/light as anything in src.medium_lights)
 			src:vis_contents -= light
 		return
-	for (var/obj/overlay/simple_light/medium/light as anything in src.medium_lights)
+	for (var/atom/movable/light/simple_light/medium/light as anything in src.medium_lights)
 		if(light.icon_state == "medium_center")
 			src:vis_contents += light
 			continue
@@ -220,13 +220,13 @@
 
 
 
-/obj/overlay/simple_light/medium/directional
+/atom/movable/light/simple_light/medium/directional
 	icon_state = "medium_dir"
 	var/dist = 0
 
 
 /atom/var/list/mdir_light_rgbas = null
-/atom/var/list/obj/overlay/simple_light/medium/directional/mdir_lights
+/atom/var/list/atom/movable/light/simple_light/medium/directional/mdir_lights
 /atom/var/static/list/mdir_light_dists = list(0, 2.5, 5)
 
 // for medium lights the light intensity keeps increasing as you increase alpha past 255
@@ -242,7 +242,7 @@
 	if (length(mdir_light_rgbas) == 1) //dont loop/average if list only contains 1 thing
 		var/alpha = rgba[4]
 		var/alpha_scaled = min(255, alpha * 0.4) // divided by two because the directional sprites are brighter
-		for(var/obj/overlay/simple_light/medium/directional/mdir_light as anything in src.mdir_lights)
+		for(var/atom/movable/light/simple_light/medium/directional/mdir_light as anything in src.mdir_lights)
 			if(mdir_light.dist == mdir_light_dists[length(mdir_light_dists)])
 				rgba[4] = min(255, alpha)
 			else
@@ -287,7 +287,7 @@
 
 	var/list/unscaled = list(avg_r, avg_g, avg_b, min(255, sum_a))
 	var/list/scaled = list(avg_r, avg_g, avg_b, min(255, sum_a * 0.4))
-	for(var/obj/overlay/simple_light/medium/directional/mdir_light as anything in src.mdir_lights)
+	for(var/atom/movable/light/simple_light/medium/directional/mdir_light as anything in src.mdir_lights)
 		if(mdir_light.dist == mdir_light_dists[length(mdir_light_dists)])
 			mdir_light.color = unscaled
 		else
@@ -300,20 +300,20 @@
 	if (!mdir_lights)
 		mdir_lights = list()
 		for(var/light_dist in src.mdir_light_dists)
-			var/obj/overlay/simple_light/medium/directional/light = new(null, null)
+			var/atom/movable/light/simple_light/medium/directional/light = new(null, null)
 			light.dist = light_dist
 			src:vis_contents += light
 			src.mdir_lights += light
-	for(var/obj/overlay/simple_light/medium/directional/light as anything in src.mdir_lights)
+	for(var/atom/movable/light/simple_light/medium/directional/light as anything in src.mdir_lights)
 		light.invisibility = INVIS_NONE
 	update_mdir_light_visibility(src.dir)
 
 /atom/proc/hide_mdir_light()
-	for(var/obj/overlay/simple_light/medium/directional/light as anything in src.mdir_lights)
+	for(var/atom/movable/light/simple_light/medium/directional/light as anything in src.mdir_lights)
 		light.invisibility = INVIS_ALWAYS
 
 /atom/proc/destroy_mdir_light()
-	for(var/obj/overlay/simple_light/medium/directional/light as anything in src.mdir_lights)
+	for(var/atom/movable/light/simple_light/medium/directional/light as anything in src.mdir_lights)
 		src:vis_contents -= light
 		qdel(light)
 	mdir_light_rgbas = null
@@ -328,7 +328,7 @@
 	if(!length(src.mdir_lights) || src.mdir_lights[1].invisibility == INVIS_ALWAYS) // toggled off
 		return
 	if(!isturf(src.loc))
-		for (var/obj/overlay/simple_light/medium/directional/light as anything in src.mdir_lights)
+		for (var/atom/movable/light/simple_light/medium/directional/light as anything in src.mdir_lights)
 			src:vis_contents -= light
 		return
 	if (!direct)
@@ -369,7 +369,7 @@
 	var/turf/TT = getlineopaqueblocked(src,T)
 	var/dist = GET_DIST(src,TT)-1
 
-	for (var/obj/overlay/simple_light/medium/directional/light as anything in src.mdir_lights)
+	for (var/atom/movable/light/simple_light/medium/directional/light as anything in src.mdir_lights)
 		if(light.icon_state == "medium_center" && light.dist == 0)
 			src:vis_contents += light
 			continue
@@ -422,7 +422,7 @@
 	for (var/atom/thing as anything in src.contents)
 		if (thing.simple_light?.invisibility == INVIS_NONE)
 			return TRUE
-		for(var/obj/overlay/simple_light/medium/light as anything in thing.medium_lights)
+		for(var/atom/movable/light/simple_light/medium/light as anything in thing.medium_lights)
 			if (light.invisibility == INVIS_NONE)
 				return TRUE
 
@@ -449,7 +449,7 @@
 
 		for (var/turf/T as anything in turfs)
 			for (var/atom/movable/thing as anything in T.contents) //find something with a directional light
-				for (var/obj/overlay/simple_light/medium/directional/light as anything in thing.mdir_lights)
+				for (var/atom/movable/light/simple_light/medium/directional/light as anything in thing.mdir_lights)
 					if (light.invisibility != INVIS_NONE)
 						continue
 					//this assumes that lights always point in the same direction as their parent object, but lights don't seem to store dir so :iiam:

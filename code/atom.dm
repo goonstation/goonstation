@@ -521,13 +521,13 @@ TYPEINFO(/atom/movable)
 //some more of these event handler flag things are handled in set_loc far below . . .
 /atom/movable/New()
 	..()
+	if(istype(src, /atom/movable/hotspot) || istype(src, /atom/movable/light)) //hotspots arent really tangible things, nor are lights
+		return
 	var/typeinfo/obj/typeinfo = src.get_typeinfo()
 	if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
 		src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
-	if(istype(src, /atom/movable/hotspot)) //hotspots arent really tangible things
-		return
 	if (isturf(src.loc))
 		var/turf/T = src.loc
 		if(src.opacity)

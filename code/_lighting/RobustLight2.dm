@@ -363,9 +363,7 @@ proc/get_moving_lights_stats()
 	var/turf/middle = locate(src.x, src.y, src.z)
 	var/atten
 	for (var/turf/T in view(src.radius, middle))
-		if (T.opacity)
-			continue
-		if (T.opaque_atom_count > 0)
+		if (T.opacity || T.opaque_atom_count)
 			continue
 
 		RL_APPLY_LIGHT_EXPOSED_ATTEN(T, src.x, src.y, src.brightness, height2, r, g, b)
@@ -822,7 +820,7 @@ proc/get_moving_lights_stats()
 				// Detach the light from its holder so that it gets cleaned up right if
 				// needed.
 				attached.detach()
-			src.RL_Attached:len = 0
+			src.RL_Attached.len = 0
 			src.RL_Attached = null
 		if (opacity)
 			set_opacity(0)
