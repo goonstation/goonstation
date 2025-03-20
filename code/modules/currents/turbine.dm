@@ -12,6 +12,7 @@
 	dir = NORTH
 
 	var/base_icon_state = "shaft"
+	var/speed_state = 0
 	var/obj/turbine_shaft/next_shaft = null
 	var/obj/turbine_shaft/last_shaft = null
 
@@ -90,15 +91,15 @@
 			src.anchored = ANCHORED
 
 	update_icon(rpm)
-		var/state = 0
+		src.speed_state = 0
 		switch(rpm)
 			if (1 to 33)
-				state = 3
+				src.speed_state = 3
 			if (34 to 66)
-				state = 2
+				src.speed_state = 2
 			if (67 to INFINITY)
-				state = 1
-		src.icon_state = "[src.base_icon_state]_[state]"
+				src.speed_state = 1
+		src.icon_state = "[src.base_icon_state]_[src.speed_state]"
 		src.next_shaft?.UpdateIcon(rpm)
 
 /obj/turbine_shaft/turbine
@@ -107,9 +108,18 @@
 	base_icon_state = "turbine"
 	density = TRUE
 
+	New()
+		. = ..()
+		src.UpdateOverlays(image(src.icon, "turbine_anchor", layer = src.layer - 0.1), "anchor")
+		src.UpdateIcon(0)
+
+	update_icon(rpm)
+		. = ..()
+		src.UpdateOverlays(image(src.icon, "[/obj/turbine_shaft::base_icon_state]_[src.speed_state]", layer = src.layer - 0.1), "internal_shaft")
+
 /obj/machinery/power/current_turbine_base
 	name = "turbine base"
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/current_turbine.dmi'
 	icon_state = "turbine_base"
 	anchored = ANCHORED
 	density = TRUE
@@ -248,7 +258,7 @@
 		else
 			src.rpm = max(src.rpm - 2 - src.rpm/4, 0) //spin down rapidly if there's no current
 		if (last_rpm != src.rpm) //just stop it updating when still
-			src.end_shaft(turn(src.dir, 180)).UpdateIcon(src.rpm)
+			src.end_shaft(src.dir).UpdateIcon(src.rpm)
 		//this part is physics though!
 		src.generation = src.stator_load * src.rpm/60
 		src.add_avail(src.generation)
