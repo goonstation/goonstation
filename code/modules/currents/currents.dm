@@ -86,7 +86,7 @@
 					return null
 				var/obj/effects/current/new_current = new(spawn_turf)
 				//this is just defining a diagonal line like x = y
-				if (angle > 0 && across == forward || angle < 0 && ((src.width + 1 - across) == forward))
+				if ((src.width + 1 - across) == forward)
 					new_current.dir = turn(dir, angle)
 				else
 					new_current.dir = dir
