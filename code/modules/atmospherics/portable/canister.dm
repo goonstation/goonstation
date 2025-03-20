@@ -202,6 +202,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	if(src.air_contents.check_if_dangerous())
 		message_admins("[src] [alert_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
 	logTheThing(LOG_STATION, null, "[src] [log_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
+	message_ghosts("<b>[src]</b> was destructively opened at [log_loc(src, ghostjump = TRUE)].")
 
 	var/atom/location = src.loc
 	location.assume_air(air_contents)
@@ -422,7 +423,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 		return
 	else if(!iswrenchingtool(W) && !istype(W, /obj/item/tank) && !istype(W, /obj/item/device/analyzer/atmospheric) && !istype(W, /obj/item/device/pda2) && !(W.flags & SUPPRESSATTACK))
 		src.visible_message(SPAN_ALERT("[user] hits the [src] with a [W]!"))
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 		hit_twitch(src)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)

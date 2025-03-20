@@ -227,7 +227,7 @@ proc/ui_describe_reagents(atom/A)
 
 	// this proc is a mess ow
 	afterattack(obj/target, mob/user , flag)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 
 		// this shit sucks but this is an if-else so there's no space to fit a cast in there
 		var/turf/target_turf = CHECK_LIQUID_CLICK(target) ? get_turf(target) : null
@@ -512,7 +512,8 @@ proc/ui_describe_reagents(atom/A)
 		. = ..()
 		if (src.is_open_container() && src.reagents && src.reagents.total_volume > 0)
 			if(user.mind.assigned_role == "Bartender")
-				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
+				user.visible_message("[user] deftly [pick("spins, twirls")] [src], managing to keep all the contents inside.",
+				 "You deftly [pick("spin", "twirl")] [src], managing to keep all the contents inside.")
 			else
 				user.visible_message(SPAN_ALERT("<b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b>"))
 				src.reagents.reaction(get_turf(user), TOUCH)
@@ -1303,7 +1304,7 @@ proc/ui_describe_reagents(atom/A)
 
 		else
 			if (W.force >= 5) //gotta smack it with something a little hefty at least
-				user.lastattacked = src
+				user.lastattacked = get_weakref(src)
 				attack_particle(user,src)
 				hit_twitch(src)
 				playsound(src, 'sound/impact_sounds/Generic_Slap_1.ogg', 50,TRUE)

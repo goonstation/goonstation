@@ -910,10 +910,12 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 						message_admins("[key_name(current_lamp.rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
 						logTheThing(LOG_COMBAT, current_lamp.rigger, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([log_loc(src)])")
 					explode()
+				#ifndef STOP_BREAKING_THE_FUCKING_LIGHTS_I_WANT_TO_SEE_SHIT
 				if(prob(current_lamp.breakprob))
 					src.do_break()
 				if(prob(current_lamp.burnprob))
 					src.do_burn_out()
+				#endif
 			if (LIGHT_BURNED)
 				if(prob(current_lamp.breakprob))
 					src.do_break()
@@ -1103,7 +1105,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 
 
 		boutput(user, "You stick \the [W.name] into the light socket!")
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if(has_power() && (W.flags & CONDUCT))
 			if(!user.bioHolder.HasEffect("resist_electric"))
 				src.electrocute(user, 75, null, 20000)
@@ -1111,7 +1113,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 
 	// attempt to break the light
 	else if(current_lamp.light_status != LIGHT_BROKEN)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if(prob(1+W.force * 5))
 
 			boutput(user, "You hit the light, and it smashes!")

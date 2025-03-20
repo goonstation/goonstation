@@ -175,9 +175,9 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 		T.fluid_react_single("blood", 20, airborne = 1)
 
 	for (var/mob/living/carbon/human/V in oviewers(user, null))
-		if (prob(33))
+		if (prob(50))
 			V.show_message(SPAN_ALERT("Oh fuck, that's going to leave a mark on your psyche."), 1)
-			V.vomit()
+			V.nauseate(rand(7,10))
 	if (user) //ZeWaka: Fix for null.loc
 		health_update_queue |= user
 	SPAWN(50 SECONDS)

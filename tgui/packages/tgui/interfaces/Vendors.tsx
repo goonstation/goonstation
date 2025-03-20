@@ -8,11 +8,21 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { ProductList } from './common/ProductList';
 import { VendorCashTable } from './common/VendorCashTable';
+
+interface ProductData {
+  amount: number;
+  cost: number | null;
+  img: string;
+  infinite: BooleanLike;
+  name: string;
+  ref: string;
+}
 
 interface VendorsData {
   bankMoney;
@@ -26,7 +36,7 @@ interface VendorsData {
   name;
   owner;
   playerBuilt;
-  productList;
+  productList: ProductData[];
   requiresMoney;
   unlocked;
   windowName;
@@ -57,9 +67,11 @@ export const Vendors = () => {
     currentlyVending,
   } = data;
 
-  const canVend = (a) =>
-    (a.cost <= cash || a.cost <= bankMoney || !requiresMoney) && a.amount > 0;
-  const getCost = (a) => (a.cost && requiresMoney ? `${a.cost}⪽` : undefined);
+  const canVend = (a: ProductData) =>
+    (!requiresMoney || (a.cost ?? 0) <= cash || (a.cost ?? 0) <= bankMoney) &&
+    (a.infinite || a.amount > 0);
+  const getCostString = (a: ProductData) =>
+    a.cost && requiresMoney ? `${a.cost}⪽` : undefined;
 
   return (
     <Window title={windowName} width={500} height={600}>
@@ -156,7 +168,7 @@ export const Vendors = () => {
                 <ProductList showCount showImage showOutput>
                   {productList.map((product) => {
                     const { amount, cost, img, infinite, name, ref } = product;
-                    const costString = getCost(product);
+                    const costString = getCostString(product);
                     const extraCellsSlot =
                       playerBuilt && wiresOpen && unlocked ? (
                         <ProductList.Cell collapsing>
@@ -169,14 +181,17 @@ export const Vendors = () => {
                             tooltip="Set as displayed product"
                           />
                           <Button.Input
-                            onCommit={(e, value) =>
-                              act('setPrice', {
-                                target: ref,
-                                cost: value,
-                              })
-                            }
+                            onCommit={(_e, value) => {
+                              const parsedPrice = parseInt(value, 10);
+                              if (!isNaN(parsedPrice)) {
+                                act('setPrice', {
+                                  target: ref,
+                                  cost: Math.max(parsedPrice, 0),
+                                });
+                              }
+                            }}
                             defaultValue="0"
-                            currentValue={`${cost}`}
+                            currentValue={`${cost ?? 0}`}
                           >
                             Set Price
                           </Button.Input>
@@ -215,7 +230,7 @@ export const Vendors = () => {
                     <Image
                       height="128px"
                       width="128px"
-                      src={`data:image/png;base64,${productList.find((product) => product.name === currentlyVending).img}`}
+                      src={`data:image/png;base64,${productList.find((product) => product.name === currentlyVending)?.img}`}
                     />
                   </Stack.Item>
                   <Stack.Item align="center">{busyphrase}</Stack.Item>

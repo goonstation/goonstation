@@ -815,6 +815,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	view_offset_x = 16
 	view_offset_y = 16
 	speedmod = 0.9
+	allow_muzzle_flash = FALSE
 	//luminosity = 5 // will help with space exploration
 	var/maxboom = 0
 
@@ -849,7 +850,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	AmmoPerShot()
 		return 2
 
-	ShootProjectiles(var/mob/user, var/datum/projectile/PROJ, var/shoot_dir)
+	create_projectile(atom/proj_start, mob/user, datum/projectile/PROJ, shoot_dir, spread = -1)
 		var/H = (shoot_dir & 3) ? 1 : 0
 		var/V = (shoot_dir & 12) ? 1 : 0
 
@@ -933,6 +934,11 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				maxboom = 0
 		maxboom = max(severity, maxboom)
 
+	Install(obj/item/shipcomponent/ship_component as obj, give_feedback)
+		if (!ship_component.large_pod_compatible)
+			boutput(usr, SPAN_ALERT("This part isn't compatible with pods of this size!"))
+			return
+		return ..()
 
 
 /obj/machinery/vehicle/pod_smooth/light // standard civilian pods

@@ -94,7 +94,7 @@ A Flamethrower in various states of assembly
 				inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
 				boutput(user, SPAN_NOTICE("You refill the flamethrower's fuel tank."))
 				playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
-				user.lastattacked = target
+				user.lastattacked = get_weakref(target)
 			else
 				boutput(user, SPAN_NOTICE("Load the fuel tank first!"))
 
@@ -433,21 +433,21 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 	// reset the assembly-components to readd the ones we want
 	src.RemoveComponentsOfType(/datum/component/assembly)
 	// Welder/Rods Assembly + wrench  -> deconstruction
-	src.AddComponent(/datum/component/assembly/consumes_self, TOOL_WRENCHING, PROC_REF(deconstruction), FALSE)
+	src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(deconstruction), FALSE)
 	if (new_state == 1)
 		src.state = 1
 		src.name = "Welder/Rods/Igniter Assembly"
 		src.desc = "A welding torch and igniter connected by metal rods."
 		src.icon_state = "welder-rods-igniter"
 		// Welder/Rods/igniter Assembly + screwdriver  -> assembly-completition
-		src.AddComponent(/datum/component/assembly/consumes_self, TOOL_SCREWING, PROC_REF(completition), FALSE)
+		src.AddComponent(/datum/component/assembly, TOOL_SCREWING, PROC_REF(completition), FALSE)
 	else
 		src.state = 0
 		src.desc = "A welding torch with metal rods attached to the flame tip."
 		src.name = "Welder/Rods Assembly"
 		src.icon_state = "welder-rods"
 		// Welder/Rods Assembly + igniter  -> Welder/Rods/Igniter Assembly
-		src.AddComponent(/datum/component/assembly/consumes_other, /obj/item/device/igniter, PROC_REF(igniter_attachment), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/device/igniter, PROC_REF(igniter_attachment), TRUE)
 	src.tooltip_rebuild = TRUE
 
 /obj/item/flamethrower_construction/disposing()

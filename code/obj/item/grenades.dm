@@ -1521,6 +1521,8 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		return
 
 	proc/check_placeable_target(atom/A)
+		if (A.plane == PLANE_HUD) //stop putting mining charges on your HUD buttons
+			return FALSE
 		if (!istype(A, /obj/item))
 			return TRUE
 		if (A.storage) // no blowing yourself up if you have full storage
@@ -1772,9 +1774,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		// hollow frame + cutters  -> unfilled pipeshot
 		src.AddComponent(/datum/component/assembly, TOOL_SNIPPING, PROC_REF(pipeshot_crafting), FALSE)
 		// hollow frame + *stuff*  -> hollow frame + pipebomb special effects
-		src.AddComponent(/datum/component/assembly/consumes_other, src.allowed_items, PROC_REF(pipebomb_stuffing), TRUE)
+		src.AddComponent(/datum/component/assembly, src.allowed_items, PROC_REF(pipebomb_stuffing), TRUE)
 		// hollow frame + staple gun  -> zipgun
-		src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/staple_gun, PROC_REF(zipgun_crafting), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/staple_gun, PROC_REF(zipgun_crafting), TRUE)
 		// hollow frame + fuel  -> unwired pipebombs
 		src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/drinks,), PROC_REF(pipebomb_filling), FALSE)
 		// Since the assembly was done, return TRUE
@@ -1831,7 +1833,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			if (length(item_mods) == 1)
 				src.RemoveComponentsOfType(/datum/component/assembly)
 				// hollow frame + *stuff*  -> hollow frame + pipebomb special effects
-				src.AddComponent(/datum/component/assembly/consumes_other, src.allowed_items, PROC_REF(pipebomb_stuffing), TRUE)
+				src.AddComponent(/datum/component/assembly, src.allowed_items, PROC_REF(pipebomb_stuffing), TRUE)
 				// hollow frame + fuel  -> unwired pipebombs
 				src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/drinks,), PROC_REF(pipebomb_filling), FALSE)
 			// Since the assembly was done, return TRUE
@@ -1928,7 +1930,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		//Since we changed the state, remove all assembly components and add the next state ones
 		src.RemoveComponentsOfType(/datum/component/assembly)
 		// timer + wired pipebomb -> standard pipebomb
-		src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/device/timer, PROC_REF(standard_pipebomb_crafting), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/device/timer, PROC_REF(standard_pipebomb_crafting), TRUE)
 		// Since the assembly was done, return TRUE
 		return TRUE
 

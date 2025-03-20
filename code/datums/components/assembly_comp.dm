@@ -81,45 +81,17 @@ TYPEINFO(/datum/component/assembly)
 		else
 			return src.override_combination(checked_atom, user)
 
-/// this component checks assembly_cant_be_removed() on the parent, but behaves exactly the same otherwise
-/datum/component/assembly/consumes_self
-
-/datum/component/assembly/consumes_self/try_combination(var/atom/checked_atom, var/mob/user)
-	var/atom/movable/movable_parent = src.parent
-	if(movable_parent.assembly_cant_be_removed())
-		return FALSE
-	. = ..(checked_atom, user)
-/// this component checks assembly_cant_be_removed() on the other atom used, but behaves exactly the same otherwise
-/datum/component/assembly/consumes_other
-
-/datum/component/assembly/consumes_other/try_combination(var/atom/checked_atom, var/mob/user)
-	var/atom/movable/movable_checked_atom = checked_atom
-	if(movable_checked_atom.assembly_cant_be_removed())
-		return FALSE
-	. = ..(checked_atom, user)
-
-/// this component checks assembly_cant_be_removed() on all atoms involved, but behaves exactly the same otherwise
-/datum/component/assembly/consumes_all
-
-/datum/component/assembly/consumes_all/try_combination(var/atom/checked_atom, var/mob/user)
-	var/atom/movable/movable_parent = src.parent
-	var/atom/movable/movable_checked_atom = checked_atom
-	if(movable_checked_atom.assembly_cant_be_removed() || movable_parent.assembly_cant_be_removed())
-		return FALSE
-	. = ..(checked_atom, user)
-
-
 /// This component handles the creation of modular trigger-applier-assemblies
-/datum/component/assembly/consumes_all/trigger_applier_assembly
+/datum/component/assembly/trigger_applier_assembly
 	to_combine_item = TOOL_ASSEMBLY_APPLIER
 	valid_assembly_proc = null
 
-/datum/component/assembly/consumes_all/trigger_applier_assembly/Initialize()
+/datum/component/assembly/trigger_applier_assembly/Initialize()
 	if(!src.parent)
 		return COMPONENT_INCOMPATIBLE
 	. = ..(TOOL_ASSEMBLY_APPLIER, null, TRUE, FALSE, TRUE) //here, we use ignore_given_proc = TRUE in the parent because we want to create the assembly in src.override_combination
 
-/datum/component/assembly/consumes_all/trigger_applier_assembly/try_combination(var/atom/checked_atom, var/mob/user)
+/datum/component/assembly/trigger_applier_assembly/try_combination(var/atom/checked_atom, var/mob/user)
 	if(istype(checked_atom, src.parent.type))
 		//We don't want something like a signaller-signaller assembly. That would be akward to use
 		return FALSE
@@ -128,7 +100,7 @@ TYPEINFO(/datum/component/assembly)
 		return FALSE
 	. = ..()
 
-/datum/component/assembly/consumes_all/trigger_applier_assembly/override_combination(var/atom/checked_atom, var/mob/user)
+/datum/component/assembly/trigger_applier_assembly/override_combination(var/atom/checked_atom, var/mob/user)
 	// here, we want to create our new assembly
 	user.u_equip(checked_atom)
 	user.u_equip(src.parent)

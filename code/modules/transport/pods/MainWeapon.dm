@@ -5,6 +5,8 @@
 	var/mob/gunner = null
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/light/pod
 	var/firerate = 8
+	/// number of projectiles that are fired when weapon is fired
+	var/shots_to_fire = 1
 	/// change to a degree in angles to give custom spread
 	var/spread = -1
 	var/weapon_score = 0.1
@@ -65,6 +67,7 @@
 
 /obj/item/shipcomponent/mainweapon/buildTooltipContent()
 	. = ..() + src.current_projectile?.get_tooltip_content()
+	. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/frenzy.png")]\" width=\"10\" height=\"10\" /> Firerate: [src.firerate / 10] seconds"
 	src.lastTooltipContent = .
 
 /obj/item/shipcomponent/mainweapon/proc/Fire(var/mob/user,var/shot_dir_override = -1)
@@ -137,6 +140,14 @@
 	current_projectile = new/datum/projectile/laser/light/pod
 	icon_state = "class-a"
 	muzzle_flash = "muzzle_flash_phaser"
+
+/obj/item/shipcomponent/mainweapon/phaser/burst_phaser
+	name = "Mk 1.5e Burst Phaser"
+	desc = "A variant of the Mk 1.5 Light Phaser that fires a stronger burst of 3 shots at a third of the firerate."
+	firerate = 2.4 SECONDS
+	shots_to_fire = 3
+	current_projectile = new/datum/projectile/laser/light/pod/burst
+	icon_state = "class-a-burst"
 
 /obj/item/shipcomponent/mainweapon/phaser/short
 	name = "Mk 1.45 Light Phaser"
@@ -260,6 +271,19 @@
 
 	uses_ammunition = 1
 	remaining_ammunition = 20
+
+/obj/item/shipcomponent/mainweapon/salvo_rockets
+	name = "Cerberus Salvo Rockets"
+	desc = "A three-rocket salvo launcher, created in mind for multi-purpose space combat. Usable only by small pods."
+	icon_state = "cerberus-salvo-rockets"
+	weapon_score = 1.25
+	power_used = 50
+	current_projectile = new/datum/projectile/bullet/homing/rocket/salvo
+	appearanceString = "pod_weapon_cerberus"
+	firerate = 5 SECONDS
+	shots_to_fire = 3
+	spread = 30
+	large_pod_compatible = FALSE
 
 /obj/item/shipcomponent/mainweapon/laser_ass // hehhh
 	name = "Mk.4 Assault Laser"
@@ -1197,6 +1221,10 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	dissipation_rate = 1
 	dissipation_delay = 14
 	projectile_speed = 42
+
+/datum/projectile/laser/light/pod/burst
+	damage = 25
+	shot_delay = 0.2 SECONDS
 
 /datum/projectile/disruptor
 	impact_range = 4
