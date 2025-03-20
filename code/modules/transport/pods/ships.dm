@@ -934,6 +934,11 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				maxboom = 0
 		maxboom = max(severity, maxboom)
 
+	Install(obj/item/shipcomponent/ship_component as obj, give_feedback)
+		if (!ship_component.large_pod_compatible)
+			boutput(usr, SPAN_ALERT("This part isn't compatible with pods of this size!"))
+			return
+		return ..()
 
 
 /obj/machinery/vehicle/pod_smooth/light // standard civilian pods

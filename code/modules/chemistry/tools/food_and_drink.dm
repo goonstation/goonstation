@@ -645,7 +645,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			if(src.is_sealed)
 				return
 			if(user.traitHolder.hasTrait("training_bartender"))
-				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
+				user.visible_message("[user] deftly [pick("spins, twirls")] [src], managing to keep all the contents inside.",
+				 "You deftly [pick("spin", "twirl")] [src], managing to keep all the contents inside.")
 				if(user.mind.assigned_role == "Bartender" && !ON_COOLDOWN(user, "bartender spinning xp", 180 SECONDS)) //only for real cups
 					JOB_XP(user, "Bartender", 1)
 			else
