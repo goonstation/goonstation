@@ -4,13 +4,14 @@
 /obj/turbine_shaft
 	name = "turbine shaft"
 	desc = "A heavy duty metal shaft."
-	icon = 'icons/obj/power.dmi'
-	icon_state = "turbine_shaft"
+	icon = 'icons/obj/machines/current_turbine.dmi'
+	icon_state = "shaft_0"
 	density = FALSE
 	layer = FLOOR_EQUIP_LAYER1
 	glide_size = 32 / TURBINE_MOVE_TIME
 	dir = NORTH
 
+	var/base_icon_state = "shaft"
 	var/obj/turbine_shaft/next_shaft = null
 	var/obj/turbine_shaft/last_shaft = null
 
@@ -88,10 +89,22 @@
 		if (src.next_shaft || src.last_shaft)
 			src.anchored = ANCHORED
 
+	update_icon(rpm)
+		var/state = 0
+		switch(rpm)
+			if (1 to 33)
+				state = 3
+			if (34 to 66)
+				state = 2
+			if (67 to INFINITY)
+				state = 1
+		src.icon_state = "[src.base_icon_state]_[state]"
+		src.next_shaft?.UpdateIcon(rpm)
+
 /obj/turbine_shaft/turbine
 	name = "NT40 tidal current turbine"
-	icon = 'icons/obj/power.dmi'
-	icon_state = "current_turbine0" //TODO: animated states (fear)
+	icon_state = "turbine_0"
+	base_icon_state = "turbine"
 	density = TRUE
 
 /obj/machinery/power/current_turbine_base
@@ -225,6 +238,7 @@
 		if (!src.turbine)
 			src.generation = 0
 			return
+		var/last_rpm = src.rpm
 		var/flow_rate = 0
 		var/obj/effects/current/current = locate() in get_turf(src.turbine)
 		if (current)
@@ -233,6 +247,8 @@
 			src.rpm += (flow_rate - src.rpm)/4
 		else
 			src.rpm = max(src.rpm - 2 - src.rpm/4, 0) //spin down rapidly if there's no current
+		if (last_rpm != src.rpm) //just stop it updating when still
+			src.end_shaft(turn(src.dir, 180)).UpdateIcon(src.rpm)
 		//this part is physics though!
 		src.generation = src.stator_load * src.rpm/60
 		src.add_avail(src.generation)
