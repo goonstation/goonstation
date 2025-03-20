@@ -749,7 +749,7 @@ proc/get_moving_lights_stats()
 			src.RL_AddOverlay = null
 
 /atom
-	var/RL_Attached = null
+	var/list/RL_Attached = null
 	var/old_dir = null //rl only right now
 	var/next_light_dir_update = 0
 
