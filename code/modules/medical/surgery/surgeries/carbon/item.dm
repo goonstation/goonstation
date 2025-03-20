@@ -4,9 +4,10 @@
 	name = "Item insertion Surgery"
 	desc = "Insert an item into the patients' chest."
 	icon_state = "chest_item"
-	can_cancel = FALSE
 	exit_when_finished = FALSE
 	affected_zone = "chest"
+	cancel_possible()
+		return FALSE
 	surgery_possible(mob/living/surgeon)
 		if (!iscarbon(patient))
 			return FALSE

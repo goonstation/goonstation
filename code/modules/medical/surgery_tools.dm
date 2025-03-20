@@ -301,12 +301,6 @@ CONTAINS:
 		if (!surgeryCheck(H, user))
 			return ..()
 
-		if (user.zone_sel.selecting in H.limbs.vars) //ugly copy paste in surgery_procs.dm for suture
-			var/obj/item/parts/surgery_limb = H.limbs.vars[user.zone_sel.selecting]
-			if (istype(surgery_limb))
-				src.ammo--
-				surgery_limb.surgery(src)
-			return
 
 
 // a mostly decorative thing from z2 areas I want to add to office closets
@@ -711,7 +705,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	// 		if (ishuman(target))
 	// 			var/mob/living/carbon/human/H = target
 	// 			var/zone = user.zone_sel.selecting
-	// 			var/surgery_status = H.get_surgery_depth(zone)
+	// 			var/surgery_status = H.surgeryHolder.get_active_surgeries(zone)
 	// 			if (surgery_status && H.organHolder)
 	// 				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(1,2), Vrb = "sutur"), user)
 	// 				src.in_use = 1
@@ -789,7 +783,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/zone = user.zone_sel.selecting
-			var/surgery_status = H.get_surgery_depth(zone)
+			var/surgery_status = H.surgeryHolder.get_active_surgeries(zone)
 			if (surgery_status && H.organHolder)
 				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(2,5), brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
@@ -1115,7 +1109,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 				return
 			return ..()
 		var/mob/living/carbon/human/H = target
-		var/surgery_status = H.get_surgery_depth(user.zone_sel.selecting)
+		var/surgery_status = length(H.surgeryHolder.get_active_surgeries(user.zone_sel.selecting))
 		if (!surgery_status)
 			if (user.a_intent == INTENT_HELP)
 				return

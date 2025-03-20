@@ -1,9 +1,13 @@
 /datum/surgery/implant
+	id = "implant_surgery"
 	name = "Implant Surgery"
 	desc = "Remove an implant from the patients' body."
 	icon_state = "implant"
 	visible = FALSE
 	implicit = TRUE
+	cancel_possible()
+		return FALSE
+
 	surgery_possible(mob/living/surgeon)
 		if (!iscarbon(patient))
 			return FALSE

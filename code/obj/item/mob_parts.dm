@@ -331,9 +331,6 @@ ABSTRACT_TYPE(/obj/item/parts)
 
 		return TRUE
 
-	proc/surgery(var/obj/item/I) //placeholder
-		return
-
 	proc/getMobIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT, icon/mutantrace_override, force = FALSE)
 		if(no_icon)
 			return 0

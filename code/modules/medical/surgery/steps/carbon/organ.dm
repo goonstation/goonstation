@@ -169,7 +169,13 @@
 						return TRUE
 			return FALSE
 
+		eye
 
+			tool_requirement(mob/surgeon, obj/item/tool)
+				var/obj/item/organ/O = tool
+				if (O.can_attach_organ(parent_surgery.patient, surgeon))
+					return TRUE
+			tools_required = list(/obj/item/organ/eye)
 
 	eye
 		var/target_side

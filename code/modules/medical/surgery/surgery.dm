@@ -28,9 +28,7 @@
 	var/last_surgery_step = 0 //! The last step ID added, used for sequencing steps.
 	var/complete = FALSE //! If TRUE, the surgery is complete and will show as green.
 	var/visible = TRUE //! if TRUE, the surgery will be visible in the context menu.
-	var/active = FALSE //! Whether this surgery is underway.
 	var/datum/surgeryHolder/holder = null
-	var/can_cancel = TRUE //! if TRUE, this surgery can be cancelled with a suture.
 	var/mob/living/patient = null
 
 	New(var/mob/living/patient, var/datum/surgeryHolder/holder, var/datum/surgery/super_surgery)
@@ -45,6 +43,7 @@
 		current_sub_surgeries = list()
 		regenerate_surgery_steps()
 		populate_sub_surgeries()
+		complete = surgery_complete() // in case this surgery has no steps
 
 	// ----------
 	// Sub-surgery & step generation
@@ -86,10 +85,9 @@
 
 	/// Perform a given step with a given tool.
 	proc/perform_step(datum/surgery_step/step, mob/surgeon, obj/item/tool)
-		active = TRUE
 		step.perform_step(surgeon, tool)
 
-	/// Check if any steps are possible on the target using the given tool.
+	/// Check if any steps are possible on the target using the given tool. Return the first possible step.
 	proc/surgery_step_possible(mob/surgeon, obj/item/tool)
 		var/list/completed_ids = list()
 		if (!surgery_check(surgeon, tool))
@@ -116,78 +114,64 @@
 		for (var/datum/surgery_step/step in surgery_steps)
 			if (step.step_number <= max_step_number)
 				if (!step.finished && step.can_operate(surgeon, tool))
-					return TRUE
+					return step
 		return FALSE
 
 	/// Called when the last step of a surgery is completed. Override on_complete to handle completion.
 	proc/complete_surgery(mob/surgeon, obj/item/I)
+		complete = TRUE
 		on_complete(surgeon, I)
 		if (exit_when_finished && !implicit)
 			super_surgery?.enter_surgery(surgeon)
 		else if (!implicit)
 			enter_surgery(surgeon)
 
+
 	/// Cancel the surgery. Override on_cancel to handle cancellation.
-	proc/cancel_surgery(mob/user, obj/item/I, var/from_context = FALSE)
-		if (!istype(I, /obj/item/suture))
-			boutput(surgeon, SPAN_ALERT("You need a suture to cancel surgery!"))
+	proc/cancel_surgery(mob/surgeon, obj/item/I, var/from_context = FALSE)
+		if (!istype(I, /obj/item/suture) && !istype(I, /obj/item/staple_gun))
+			boutput(surgeon, SPAN_ALERT("You need a suture or staple gun to cancel surgery!"))
 			return
-		on_cancel(user, I)
+		if (istype(I, /obj/item/staple_gun))
+			var/obj/item/staple_gun/stapler = I
+			if (stapler.ammo < 1)
+				boutput(surgeon, SPAN_ALERT("Your staple gun is out of staples!"))
+				return
+			stapler.ammo--
+		on_cancel(surgeon, I)
 		for(var/datum/surgery_step/step in surgery_steps)
 			step.finished = FALSE
 		for(var/datum/surgery/surgery in current_sub_surgeries)
-			surgery.cancel_surgery(user, I)
-		active = FALSE
+			surgery.cancel_surgery(surgeon, I)
 		if (from_context)
 			super_surgery?.enter_surgery(surgeon)
 
 
 	/// If this surgery is implicit, attempt to complete a step with this tool. If complete, attempt to complete a sub-surgery step.
 	proc/do_shortcut(mob/surgeon, obj/item/I)
-		if ((!super_surgery || super_surgery?.surgery_complete()) && can_perform_surgery(surgeon, I) && implicit && can_operate(surgeon, I))
-			for(var/datum/surgery_step/step in surgery_steps)
-				if (step.can_operate(surgeon, I))
-					active = TRUE
-					step.perform_step(surgeon, I)
+		if ((!super_surgery || super_surgery?.complete) && implicit && can_perform_surgery(surgeon, I))
+			var/datum/surgery_step/step = surgery_step_possible(surgeon, I)
+			if (step)
+				step.perform_step(surgeon, I)
+				return TRUE
+		if (complete || sub_surgeries_always_possible) // only attempt subsurgeries if this surgery is done.
+			// do the next implicit step if subsurgeries are implicit
+			for(var/datum/surgery/surgery in current_sub_surgeries)
+				surgery.infer_surgery_stage()
+				if (surgery.do_shortcut(surgeon, I))
 					return TRUE
-			return FALSE
-		else
-			if (surgery_complete() || sub_surgeries_always_possible) // only attempt subsurgeries if this surgery is done.
-				// do the next implicit step if subsurgeries are implicit
-				for(var/datum/surgery/surgery in current_sub_surgeries)
-					surgery.infer_surgery_stage()
-					if (surgery.do_shortcut(surgeon, I))
-						return TRUE
 		return FALSE
 
 	/// Can this step be performed - Are all previous steps complete?
 	proc/step_accessible(datum/surgery_step/chosen_step)
 		if (chosen_step.step_number == 0)
 			return TRUE
-		var/complete = 0
+		var/steps_complete = 0
 		for (var/datum/surgery_step/step in surgery_steps)
 			if (step.finished)
-				complete = max (step.step_number, complete)
-		return (chosen_step.step_number-1) <= complete
+				steps_complete = max (step.step_number, steps_complete)
+		return (chosen_step.step_number-1) <= steps_complete
 
-		if (sub_surgeries_always_possible || surgery_complete())
-			for (var/datum/surgery/surgery in current_sub_surgeries)
-				if (surgery.can_perform_surgery(surgeon) && surgery.visible)
-					contexts += surgery.get_context()
-
-		//hacky fix to remove the back button if there's only one top-level surgery available.
-		//Keeps contexts looking identical to older code.
-		if (add_navigation)
-			if (super_surgery != null || length(holder.get_contexts()) > 1)
-				contexts += new /datum/contextAction/surgery/step_up(holder, src)
-
-			if (can_cancel && get_surgery_progress() > 0)
-				contexts += new/datum/contextAction/surgery/cancel(holder,src)
-
-		//place the always-optional steps to the left of the top step.
-		contexts += optional_contexts
-
-		return contexts
 
 	/// Called when a step is completed. Handles if the surgery is complete and re-entering the surgery UI.
 	proc/step_completed(datum/surgery_step/step, mob/user, obj/item/tool)
@@ -196,13 +180,18 @@
 		else if (!implicit)
 			enter_surgery(user)
 
+
+	/// Determine if this surgery is possible on the target.
+	proc/can_perform_surgery(mob/living/surgeon)
+		return surgery_possible(surgeon)
+
 	// ----------
 	// UI Interaction
 	// ----------
 
 	/// Called when the surgery's context icon is clicked.
 	proc/surgery_clicked(mob/living/surgeon, obj/item/I)
-		if (super_surgery && !super_surgery.surgery_complete())
+		if (super_surgery && !super_surgery.complete)
 			super_surgery.enter_surgery(surgeon)
 		else
 			enter_surgery(surgeon)
@@ -224,6 +213,7 @@
 		action.icon_state = icon_state
 		action.surgery = src
 		action.holder = holder
+		complete = surgery_complete()
 		if (complete)
 			action.icon_background = "greenbg"
 		else if (get_surgery_progress())
@@ -248,6 +238,26 @@
 						optional_contexts += context
 					else
 						contexts += context
+
+		if (sub_surgeries_always_possible || complete)
+			for (var/datum/surgery/surgery in current_sub_surgeries)
+				if (surgery.can_perform_surgery(surgeon) && surgery.visible)
+					contexts += surgery.get_context()
+
+		//hacky fix to remove the back button if there's only one top-level surgery available.
+		//Keeps contexts looking identical to older code.
+		if (add_navigation)
+			if (super_surgery != null || length(holder.get_contexts(surgeon)) > 1)
+				contexts += new /datum/contextAction/surgery/step_up(holder, src)
+
+			if (cancel_possible() && get_surgery_progress() > 0)
+				contexts += new/datum/contextAction/surgery/cancel(holder,src)
+
+		//place the always-optional steps to the left of the top step.
+		contexts += optional_contexts
+
+		return contexts
+
 	// ----------
 	// Getters
 	// ----------
@@ -317,6 +327,9 @@
 				base *= 3.5
 		return 1
 
+	proc/cancel_possible()
+		return (get_surgery_progress() > 0)
+
 	//-----
 	// Hooks
 	//-----
@@ -328,7 +341,7 @@
 	proc/generate_surgery_steps()
 
 	///Whether this surgery is possible on the target - Otherwise, will be hidden from the context menu
-	proc/surgery_possible(mob/living/surgeon)
+	proc/surgery_possible()
 		return TRUE
 
 	/// Called on completion of the surgery.
@@ -351,7 +364,8 @@
 	var/finished = FALSE //! Whether this step is finished
 	var/success_chance = 90 //! The chance of success for this step, before modifiers
 	var/repeatable = FALSE //! Whether this step can be repeated. If TRUE, the step won't automatically be marked as finished.
-
+	var/damage_dealt = 5 //! The damage dealt by this step
+	var/damage_type = DAMAGE_CUT
 	New(datum/surgery/parent_surgery)
 		src.parent_surgery = parent_surgery
 		..()
@@ -526,7 +540,12 @@
 			on_mess_up(surgeon,tool)
 			return FALSE
 
-		return do_surgery_step(surgeon, tool)
+		var/success = do_surgery_step(surgeon, tool)
+		if (success && damage_dealt > 0)
+			parent_surgery.patient.TakeDamage("chest",damage_dealt,0,damage_type=damage_type)
+			if (damage_type in list(DAMAGE_CRUSH,DAMAGE_CUT,DAMAGE_STAB))
+				take_bleeding_damage(parent_surgery.patient, tool.the_mob, damage = damage_dealt, damage_type = damage_type, surgery_bleed = TRUE)
+		return success
 
 	proc/on_mess_up(mob/surgeon, obj/item/tool)
 		return
@@ -534,7 +553,7 @@
 	proc/perform_step(mob/surgeon, obj/item/tool) //! Perform the surgery step
 		if (parent_surgery.super_surgery && !parent_surgery.super_surgery.surgery_complete())
 			return FALSE
-		if (can_operate(surgeon, tool, FALSE) && surgery_step_possible(surgeon, tool) && attempt_surgery_step(surgeon, tool))
+		if (can_operate(surgeon, tool, FALSE) && step_possible(surgeon, tool) && attempt_surgery_step(surgeon, tool))
 			if (success_sound)
 				playsound(parent_surgery.patient, success_sound, 50, TRUE)
 			on_complete(surgeon, tool)

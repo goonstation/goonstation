@@ -37,15 +37,19 @@
 		show_contexts(surgeon, tool)
 
 	proc/do_life(var/mult)
-		for(var/datum/surgery/surgery in base_surgeries)
-			if (surgery.get_surgery_progress() > 0)
-				boutput(world, "Surgery: [surgery.id] Progress: [surgery.get_surgery_progress()]")
+		return
 
 	/// Get's a surgery's progress by ID.
 	proc/get_surgery_progress(var/surgery_id)
 		return all_surgeries[surgery_id].get_surgery_progress()
 	proc/get_surgery_complete(var/surgery_id)
 		return all_surgeries[surgery_id].surgery_complete()
+	proc/get_active_surgeries(var/zone)
+		var/list/datum/surgery/surgeries = list()
+		for (var/datum/surgery/surgery in all_surgeries)
+			if (surgery.affected_zone == zone && surgery.get_surgery_progress() > 0)
+				surgeries += surgery
+		return surgeries
 	proc/get_surgery(var/surgery_id)
 		return all_surgeries[surgery_id]
 	proc/get_surgeries_by_zone(var/zone)
@@ -83,17 +87,17 @@
 		all_surgeries[id].cancel_surgery(surgeon, I)
 
 	/// Get the top-level surgery context icons for this holder.
-	proc/get_contexts()
+	proc/get_contexts(var/surgeon)
 		var/list/datum/contextAction/surgery/contexts = list()
 		for (var/datum/surgery/surgery in base_surgeries)
 			surgery.infer_surgery_stage()
-			if (surgery.can_perform_surgery(patient) && surgery.visible)
+			if (surgery.surgery_possible(surgeon) && surgery.visible)
 				contexts += surgery.get_context()
 		return contexts
 
 	/// Show the context action ring to the surgeon. Returns TRUE if a context menu was shown.
 	proc/show_contexts(mob/surgeon, obj/tool)
-		var/list/datum/contextAction/surgery/contexts = get_contexts()
+		var/list/datum/contextAction/surgery/contexts = get_contexts(surgeon)
 		if (length(contexts) == 1) // if only one top-level surgery available. go straight into it. mimics old behavior to instantly enter torso surgery
 			surgery_clicked(contexts[1].surgery, surgeon, tool)
 		else
