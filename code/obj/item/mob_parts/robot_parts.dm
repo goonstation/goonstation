@@ -242,14 +242,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			if ( !(B.owner && B.owner.key) && !istype(W, /obj/item/organ/brain/latejoin) )
 				boutput(user, SPAN_ALERT("This brain doesn't look any good to use."))
 				return
-			else if ( B.owner  &&  (jobban_isbanned(B.owner.current,"Cyborg") || B.owner.get_player().dnr) ) //If the borg-to-be is jobbanned or has DNR set
-				boutput(user, SPAN_ALERT("The brain disintigrates in your hands!"))
-				user.drop_item()
-				qdel(B)
-				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-				smoke.set_up(1, 0, user.loc)
-				smoke.start()
-				return
 			user.drop_item()
 			B.set_loc(src)
 			src.brain = B
@@ -1204,23 +1196,34 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			return
 
 		if(borg.part_head.brain?.owner?.key)
-			if(borg.part_head.brain.owner.current)
-				borg.gender = borg.part_head.brain.owner.current.gender
-				if(borg.part_head.brain.owner.current.client)
-					borg.lastKnownIP = borg.part_head.brain.owner.current.client.address
-			var/mob/M = find_ghost_by_key(borg.part_head.brain.owner.key)
+			var/obj/item/organ/brain/brain = borg.part_head.brain
+			if(brain.owner.current)
+				borg.gender = brain.owner.current.gender
+				if(brain.owner.current.client)
+					borg.lastKnownIP = brain.owner.current.client.address
+			var/mob/M = find_ghost_by_key(brain.owner.key)
 			if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
 				src.visible_message(SPAN_ALERT("<b>[src]</b> remains inactive, as the conciousness associated with that brain could not be reached."))
 				borg.death()
 				qdel(src)
 				return
+			if ( brain.owner  &&  (jobban_isbanned(brain.owner.current,"Cyborg") || (brain.owner.get_player().dnr && !src.syndicate)) ) //If the borg-to-be is jobbanned or has DNR set and the frame isn't syndie
+				src.visible_message(SPAN_ALERT("The brain inside [src] disintegrates!"))
+				borg.part_head.brain = null
+				qdel(brain)
+				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+				smoke.set_up(1, 0, src.loc)
+				smoke.start()
+				borg.death()
+				qdel(src)
+				return
 			if (!isdead(M)) // so if they're in VR, the afterlife bar, or a ghostcritter
 				boutput(M, SPAN_NOTICE("You feel yourself being pulled out of your current plane of existence!"))
-				borg.part_head.brain.owner = M.ghostize()?.mind
+				brain.owner = M.ghostize()?.mind
 				qdel(M)
 			else
 				boutput(M, SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
-			borg.part_head.brain.owner.transfer_to(borg)
+			brain.owner.transfer_to(borg)
 			if (isdead(M) && !isliving(M))
 				qdel(M)
 
