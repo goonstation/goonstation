@@ -330,7 +330,7 @@ ABSTRACT_TYPE(/datum/plant)
 			if("harvtime")
 				output_base = src.harvtime
 			if("harvests")
-				output_base = src.harvtime
+				output_base = src.harvests
 			if("cropsize")
 				output_base = src.cropsize
 			if("potency")
