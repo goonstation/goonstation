@@ -141,6 +141,21 @@
             }
         });
     }
+
+	function updateStickyHeaderState(table, containerId) {
+		var stickyHeader = document.getElementById(containerId + "-sticky-header");
+		if (!stickyHeader) { return; }
+		var origCells = table.querySelector("thead").querySelectorAll("td");
+		var cloneCells = stickyHeader.querySelector("thead").querySelectorAll("td");
+		for (var i = 0; i < origCells.length && i < cloneCells.length; i++) {
+			var state = origCells[i].getAttribute("data-dir");
+			if (state) {
+				cloneCells[i].setAttribute("data-dir", state);
+			} else {
+				cloneCells[i].removeAttribute("data-dir");
+			}
+		}
+	}
     // --- End Sticky Header Code ---
 
     // --- Sorting Code with State Persistence ---
@@ -250,6 +265,7 @@
             var sortingState = { column: index, direction: newDir };
             localStorage.setItem("tableSorting_" + table.parentNode.id, JSON.stringify(sortingState));
         }
+		updateStickyHeaderState(table, table.parentNode.id);
     }
     // --- End Sorting Code ---
 
