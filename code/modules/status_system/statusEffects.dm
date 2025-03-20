@@ -30,6 +30,8 @@
 	var/track_cat
 	/// If the effect is positive (buffs), negative (debuffs), or neutral (misc)
 	var/effect_quality = STATUS_QUALITY_NEUTRAL
+	/// List because they might be on different HUDs. This is kind of hacky but should be fine since the screen object cleans up in disposing.
+	var/list/atom/movable/screen/statusEffect/hud_elements = null
 
 
 	/**
@@ -594,10 +596,8 @@
 					M.changeStatus("knockdown", 3 SECONDS)
 					boutput(M, SPAN_ALERT("You feel weak."))
 					M.emote("collapse")
-				if(!ON_COOLDOWN(M, "radiation_vomit_check", 5 SECONDS) && prob(stage**2))
-					M.changeStatus("knockdown", 3 SECONDS)
-					boutput(M, SPAN_ALERT("You feel sick."))
-					M.vomit()
+				if(prob(min((stage + 3)**2, 40)))
+					M.nauseate(1)
 
 			return ..(timePassed)
 
@@ -1769,23 +1769,23 @@
 		var/mob/living/L = owner
 		if(!isalive(L))
 			return
-		var/puke_prob = 0
+		var/nausea_prob = 0
 		var/tox = 0
 		switch(how_miasma)
 			if(1)
 				if(probmult(1))
 					L.emote("shudder")
 			if(2)
-				puke_prob = 0.2
+				nausea_prob = 10
 				tox = 0.05
 			if(3)
-				puke_prob = 0.5
+				nausea_prob = 15
 				tox = 0.2
 			if(4)
-				puke_prob = 1
+				nausea_prob = 20
 				tox = 0.45
 			if(5)
-				puke_prob = 2
+				nausea_prob = 25
 				tox = 0.7
 		if(ismobcritter(L))
 			var/mob/living/critter/critter = L
@@ -1795,9 +1795,8 @@
 		L.take_toxin_damage(tox * mult)
 		if(weighted_average > 4)
 			weighted_average = 0
-		if(probmult(puke_prob))
-			var/vomit_message = SPAN_ALERT("[L] pukes all over [himself_or_herself(L)].")
-			L.vomit(0, null, vomit_message)
+		if(probmult(nausea_prob))
+			L.nauseate(1)
 		return ..(timePassed)
 
 	proc/changeState()
@@ -2161,25 +2160,24 @@
 	onUpdate(var/timePassed)
 		var/mob/living/L = owner
 		var/tox = 0
-		var/puke_prob = 0
+		var/nausea_prob = 0
 		switch(timePassed)
 			if(0 to 20 SECONDS)
 				tox = 0.1
-				puke_prob = 0.5
+				nausea_prob = 5
 			if(20 SECONDS to 60 SECONDS)
 				tox = 0.4
-				puke_prob = 1
+				nausea_prob = 10
 			if(60 SECONDS to INFINITY)
 				tox = 1
-				puke_prob = 2
+				nausea_prob = 20
 		L.take_toxin_damage(tox)
 		if(prob(2))
 			L.emote(pick("groan", "moan", "shudder"))
 		if(prob(2))
 			L.change_eye_blurry(rand(5,10))
-		if(prob(puke_prob))
-			var/vomit_message = SPAN_ALERT("[L] pukes all over [himself_or_herself(L)].")
-			L.vomit(0, null, vomit_message)
+		if(prob(nausea_prob))
+			L.nauseate(1)
 
 	//firstly: sorry
 	//secondly: second arg is a proportional scale. 1 is standard, 5 is every port-a-puke tick, 10 is mass emesis.
@@ -3032,7 +3030,7 @@
 		onAdd(optional)
 			..()
 			var/mob/living/carbon/human/H = src.owner
-			H.regens_blood = FALSE // curse steals all your blood
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_BLOOD_REGEN, src)
 
 		onUpdate(timePassed)
 			..()
@@ -3061,11 +3059,7 @@
 		onRemove()
 			var/mob/living/carbon/human/H = src.owner
 			if (!QDELETED(H))
-				var/count
-				for(var/datum/statusEffect/art_curse/blood/status in H.statusEffects)
-					count += 1
-				if (count == 1)
-					H.regens_blood = TRUE
+				REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_BLOOD_REGEN, src)
 			..()
 
 	aging
@@ -3125,12 +3119,14 @@
 
 		onAdd()
 			..()
+			if (src.owner.hasStatus("art_nightmare_curse"))
+				return
 			get_image_group(CLIENT_IMAGE_GROUP_ART_CURSER_NIGHTMARE).add_mob(src.owner)
 			src.spawn_creature()
 			var/mob/living/carbon/human/H = src.owner
 			H.client?.animate_color(normalize_color_to_matrix("#7e4599"), 3 SECONDS)
 			SPAWN(1 SECOND)
-				H.apply_color_matrix(normalize_color_to_matrix("#7e4599"), "art_curser_nightmare_overlay-[ref(src)]")
+				H.apply_color_matrix(normalize_color_to_matrix("#7e4599"), "art_curser_nightmare_overlay")
 
 		onUpdate(timePassed)
 			..()
@@ -3147,9 +3143,10 @@
 		onRemove()
 			get_image_group(CLIENT_IMAGE_GROUP_ART_CURSER_NIGHTMARE).remove_mob(src.owner)
 			var/mob/living/carbon/human/H = src.owner
-			H.client?.animate_color(time = 3 SECONDS)
-			SPAWN(3 SECONDS)
-				H.remove_color_matrix("art_curser_nightmare_overlay-[ref(src)]")
+			if (!H.hasStatus("art_nightmare_curse"))
+				H.client?.animate_color(time = 3 SECONDS)
+				SPAWN(3 SECONDS)
+					H.remove_color_matrix("art_curser_nightmare_overlay")
 			for (var/mob/living/critter/art_curser_nightmare/creature as anything in src.created_creatures)
 				if (!QDELETED(creature))
 					qdel(creature)
@@ -3314,3 +3311,203 @@
 	unique = TRUE
 	movement_modifier = /datum/movement_modifier/healbot
 	effect_quality = STATUS_QUALITY_POSITIVE
+
+//first_note_of_megalovania.wav
+/datum/statusEffect/undertable
+	id = "undertable"
+	name = "Under table"
+	desc = "You're hidden under a table, standing up may be a bad idea."
+	visible = FALSE
+
+	onAdd(optional)
+		. = ..()
+		RegisterSignal(src.owner, COMSIG_MOB_LAYDOWN_STANDUP, PROC_REF(standup))
+		RegisterSignal(src.owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_valid))
+
+	proc/check_valid()
+		var/obj/table/table = locate() in src.owner.loc
+		if (!table)
+			src.owner.delStatus(src)
+			return FALSE
+		return TRUE
+
+	proc/standup(_, lying)
+		if (!src.check_valid())
+			return
+		if (!lying)
+			playsound(src.owner, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
+			boutput(src.owner, SPAN_ALERT("You smack your head on the table trying to stand up. OW!"))
+			src.owner.setStatus("knockdown", 2 SECONDS)
+			src.owner.setStatus("resting", INFINITE_STATUS)
+			var/mob/mobowner = src.owner
+			mobowner.force_laydown_standup()
+			random_brute_damage(src.owner, 5)
+
+	onRemove()
+		UnregisterSignal(src.owner, COMSIG_MOB_LAYDOWN_STANDUP)
+		UnregisterSignal(src.owner, COMSIG_MOVABLE_MOVED)
+		src.owner.layer = initial(src.owner.layer)
+		. = ..()
+
+/datum/statusEffect/stasis
+	id = "stasis"
+	name = "Stasis"
+	desc = "You are caught in a stasis field. Unable to move."
+	icon_state = "stunned"
+	unique = 1
+	maxDuration = 30 SECONDS
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onAdd(optional=null)
+		if (ismob(owner) && !QDELETED(owner))
+			var/mob/mob_owner = owner
+			APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+		..()
+
+	onRemove()
+		if (ismob(owner) && !QDELETED(owner))
+			var/mob/mob_owner = owner
+			REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+		..()
+
+/datum/statusEffect/silicon_radiation
+	name = "Radiological Interference"
+	desc = "Radiation is affecting your optical sensors."
+	id = "silicon_radiation"
+	unique = TRUE
+	visible = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	icon_state = "trefoil"
+
+	preCheck(atom/A)
+		. = ..()
+		if (!issilicon(A))
+			return
+
+	onAdd(Sv)
+		. = ..()
+		src.set_substatus(Sv)
+
+	onChange(Sv)
+		. = ..()
+		src.set_substatus(Sv)
+
+	proc/set_substatus(Sv)
+		if (Sv == -INFINITY) // from fullheal
+			owner.delStatus("silicon_radiation_light")
+			owner.delStatus("silicon_radiation_medium")
+			owner.delStatus("silicon_radiation_heavy")
+			owner.delStatus("silicon_radiation_extreme")
+			return
+		if (Sv <= 0)
+			return
+		if (Sv > 1) // neutronium
+			owner.setStatusMin("silicon_radiation_extreme", src.duration)
+		if (Sv > 0.6) // plutonium
+			owner.setStatusMin("silicon_radiation_heavy", src.duration)
+		if (Sv > 0.35)  // erebite
+			owner.setStatusMin("silicon_radiation_medium", src.duration)
+		owner.setStatusMin("silicon_radiation_light", src.duration) // cerenkite
+
+/datum/statusEffect/silicon_radiation_effect
+	unique = TRUE
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/datum/overlayComposition/composition
+
+	onAdd(Sv)
+		. = ..()
+		var/mob/living/silicon/S = owner
+		S.addOverlayComposition(composition)
+
+	onRemove()
+		. = ..()
+		var/mob/living/silicon/S = owner
+		S.removeOverlayComposition(composition)
+
+/datum/statusEffect/silicon_radiation_effect/light
+	id = "silicon_radiation_light"
+	composition = /datum/overlayComposition/silicon_rad_light
+
+/datum/statusEffect/silicon_radiation_effect/medium
+	id = "silicon_radiation_medium"
+	composition = /datum/overlayComposition/silicon_rad_medium
+
+/datum/statusEffect/silicon_radiation_effect/heavy
+	id = "silicon_radiation_heavy"
+	composition = /datum/overlayComposition/silicon_rad_heavy
+
+/datum/statusEffect/silicon_radiation_effect/extreme
+	id = "silicon_radiation_extreme"
+	composition = /datum/overlayComposition/silicon_rad_extreme
+
+
+/datum/statusEffect/teleporting
+	id = "teleporting"
+	name = "Teleporting"
+	desc = "You're in a semi-stable hexaquark arrangement.<br>Visibility drastically reduced."
+	icon_state = "empulsar"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEUTRAL
+
+/datum/statusEffect/pod_corrosion
+	id = "pod_corrosion"
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/dmg_per_tick = 4
+
+	onAdd()
+		..()
+		src.owner.add_filter("corrosion_color", 1, color_matrix_filter(normalize_color_to_matrix("#0c6900")))
+
+	onUpdate(timePassed)
+		..()
+		var/mult = timePassed / LIFE_PROCESS_TICK_SPACING
+		var/obj/machinery/vehicle/pod_hit = src.owner
+		pod_hit.health -= src.dmg_per_tick * mult
+		pod_hit.checkhealth()
+
+	onRemove()
+		..()
+		src.owner.remove_filter("corrosion_color")
+
+/datum/statusEffect/nausea
+	name = "Nauseous"
+	id = "nausea"
+	icon_state = "nausea1"
+	var/stacks = 1
+	var/vomiting = FALSE
+
+	onChange(optional)
+		if (src.stacks > 20 && optional > 0)
+			return
+		src.stacks += optional
+		var/old_desc = src.desc
+		switch(src.stacks)
+			if (0 to 5)
+				src.desc = "You're feeling kinda sick."
+				src.icon_state = "nausea1"
+			if (6 to 9)
+				src.desc = "You think you're going to puke."
+				src.icon_state = "nausea2"
+			if (10 to INFINITY)
+				src.desc = "You're about to throw up!"
+				src.icon_state = "nausea3"
+		if (src.stacks >= 10 && !src.vomiting)
+			src.vomiting = TRUE
+			boutput(src.owner, SPAN_ALERT(SPAN_BOLD(src.desc)))
+			for (var/atom/movable/screen/statusEffect/hud_element in src.hud_elements)
+				animate_angry_wibble(hud_element)
+			SPAWN(5 SECONDS)
+				var/mob/vomitee = src.owner
+				vomitee.vomit()
+		else if (old_desc != src.desc)
+			if (optional > 0)
+				boutput(src.owner, SPAN_ALERT(src.desc))
+			else
+				boutput(src.owner, SPAN_NOTICE("You feel a little less sick."))
+
+	onUpdate(timePassed)
+		if (prob(5))
+			src.stacks -= 0.5
+		if (src.stacks <= 0)
+			src.owner.delStatus(src)

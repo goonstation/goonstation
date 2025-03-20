@@ -82,7 +82,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 
 		if (quality <= 0.5)
 			boutput(M, SPAN_ALERT("Ugh! That tasted horrible!"))
-			if (prob(20))
+			M.nauseate(rand(1,2))
+			var/nasty_bites = 0
+			for (var/obj/item/bite in M.organHolder?.stomach?.stomach_contents)
+				if (bite.quality <= 0.5)
+					nasty_bites++
+			if (nasty_bites > 4 && prob(30))
 				M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 			healing = 0
 
@@ -502,6 +507,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				boutput(H, pick(SPAN_ALERT("It takes all your willpower to keep that food down! You feel dizzy!"), SPAN_ALERT("The sensation of the displeasing chunk sliding down your throat makes you feel lightheaded!")))
 				H.make_dizzy(10)
 				H.change_misstep_chance(25)
+				H.nauseate(5)
 
 	proc/on_bite(mob/eater, mob/feeder, ethereal_eater)
 
@@ -513,6 +519,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			else
 				var/obj/item/reagent_containers/food/snacks/bite/B = new /obj/item/reagent_containers/food/snacks/bite
 				B.fill_amt = src.fill_amt/src.uneaten_bites_left //so all the bites add up to the full item fillness
+				B.quality = src.quality //nasty food stays nasty
 				if(src.reagents)
 					B.reagents.maximum_volume = reagents.total_volume/((src.bites_left+1) || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
 					src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
@@ -638,7 +645,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			if(src.is_sealed)
 				return
 			if(user.traitHolder.hasTrait("training_bartender"))
-				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
+				user.visible_message("[user] deftly [pick("spins, twirls")] [src], managing to keep all the contents inside.",
+				 "You deftly [pick("spin", "twirl")] [src], managing to keep all the contents inside.")
 				if(user.mind.assigned_role == "Bartender" && !ON_COOLDOWN(user, "bartender spinning xp", 180 SECONDS)) //only for real cups
 					JOB_XP(user, "Bartender", 1)
 			else
@@ -758,7 +766,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if (is_sealed)
 			boutput(user, SPAN_ALERT("[src] is sealed."))
 			return
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		// this shit sucks but there's no space for a cast since the following section is an if-else
 		var/turf/target_turf = CHECK_LIQUID_CLICK(target) ? get_turf(target) : null
 		if (target_turf?.active_liquid) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
@@ -1459,6 +1467,10 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			if(prob(30))
 				src.smash()
 		. = ..()
+
+	clamp_act(mob/clamper, obj/item/clamp)
+		src.smash()
+		return TRUE
 
 	proc/smash(var/atom/A)
 		if (src.smashed)

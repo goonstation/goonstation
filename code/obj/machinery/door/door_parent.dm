@@ -315,7 +315,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 				src.take_damage(I.force*4, user)
 			else
 				src.take_damage(I.force, user)
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			attack_particle(user,src)
 			playsound(src, src.hitsound , 50, 1, pitch = 1.6)
 			..()
@@ -361,7 +361,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		var/resolvedForce = I.force
 		if (I.tool_flags & TOOL_CHOPPING)
 			resolvedForce *= 4
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 		playsound(src, src.hitsound , 50, 1, pitch = 1.6)
 		src.take_damage(resolvedForce, user)
@@ -387,6 +387,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if (src.sound_deny)
 			playsound(src, src.sound_deny, 25, 0)
 		return 0
+
+// we have to do these explicitly to bypass checks for smashing handcuffed people into doors
+/obj/machinery/door/grab_smash(obj/item/grab/G, mob/user)
+	var/mob/grabbee = G.affecting
+	if (..())
+		if (src.density)
+			src.bumpopen(grabbee)
+
+/obj/machinery/door/hitby(atom/movable/AM, datum/thrown_thing/thr)
+	. = ..()
+	if (src.density && ismob(AM))
+		src.bumpopen(AM)
 
 /obj/machinery/door/blob_act(var/power)
 	if(prob(power))

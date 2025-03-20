@@ -492,17 +492,6 @@
 		stuttering = clamp(stuttering, 0, 50)
 		losebreath = clamp(losebreath, 0, 25) // stop going up into the thousands, goddamn
 
-	proc/stink()
-		if (prob(15))
-			for (var/mob/living/carbon/C in view(6,get_turf(src)))
-				if (C == src || !C.client)
-					continue
-				boutput(C, SPAN_ALERT("[stinkString()]"), "stink_message")
-				if (prob(30))
-					C.vomit()
-					C.changeStatus("stunned", 2 SECONDS)
-					boutput(C, SPAN_ALERT("[stinkString()]"), "stink_message")
-
 	proc/update_sight()
 		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/sight]
 		if (L)

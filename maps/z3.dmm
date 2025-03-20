@@ -200,10 +200,6 @@
 "aaO" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space_hive)
-"aaP" = (
-/obj/critter/gunbot/drone/heavydrone,
-/turf/space,
-/area/space)
 "aaR" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -1432,12 +1428,11 @@
 	},
 /area/radiostation/podbay)
 "aes" = (
-/obj/structure/vehicleframe/puttframe,
-/obj/item/shipcomponent/life_support,
 /obj/decal/cleanable/oil/streak,
 /obj/machinery/light_switch/north{
 	pixel_y = 30
 	},
+/obj/structure/preassembeled_vehicleframe/puttframe,
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aet" = (
@@ -2676,10 +2671,8 @@
 	dir = 1;
 	icon_state = "tile1"
 	},
-/obj/machinery/door/airlock/pyro/external{
-	icon_state = "airlock_locked";
-	locked = 1
-	},
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/bolter,
 /turf/simulated/floor/industrial,
 /area/space)
 "amp" = (
@@ -3266,7 +3259,7 @@
 /turf/space,
 /area/space)
 "apv" = (
-/obj/critter/gunbot/drone/minigundrone,
+/obj/gunbotdrone_spawner/rare,
 /turf/space,
 /area/space)
 "apw" = (
@@ -4643,10 +4636,6 @@
 /obj/item/guardbot_core/old,
 /turf/simulated/floor,
 /area/buddyfactory)
-"auk" = (
-/obj/critter/gunbot/drone,
-/turf/space,
-/area/space)
 "aul" = (
 /obj/stool/chair/office,
 /turf/simulated/floor,
@@ -7247,10 +7236,6 @@
 /obj/machinery/telejam/active,
 /turf/space,
 /area/abandonedmedicalship)
-"aLt" = (
-/obj/critter/gunbot/drone/buzzdrone,
-/turf/space,
-/area/space)
 "aLu" = (
 /obj/storage/crate/medical,
 /obj/item/storage/firstaid/regular,
@@ -8213,10 +8198,7 @@
 	icon_state = "solar_panel-b";
 	name = "solar panel"
 	},
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
+/turf/simulated/floor/airless/solar,
 /area/derelict_ai_sat/solar)
 "aOz" = (
 /turf/simulated/floor/grime,
@@ -8246,8 +8228,7 @@
 /area/derelict_ai_sat/core)
 "aOD" = (
 /obj/machinery/door/airlock/pyro/classic{
-	dir = 4;
-	tag = "icon-old_closed (EAST)"
+	dir = 4
 	},
 /turf/simulated/floor/grime,
 /area/derelict_ai_sat/core)
@@ -8566,11 +8547,10 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/classic{
-	dir = 8;
-	name = "sealed airlock";
-	tag = "icon-old_closed (WEST)";
-	welded = 1
+	dir = 4;
+	name = "sealed airlock"
 	},
+/obj/mapping_helper/airlock/welder,
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
 "aPw" = (
@@ -8626,8 +8606,7 @@
 /area/derelict_ai_sat/core)
 "aPF" = (
 /obj/machinery/door/airlock/pyro/classic{
-	dir = 8;
-	tag = "icon-old_closed (WEST)"
+	dir = 8
 	},
 /turf/simulated/floor/grime,
 /area/derelict_ai_sat/core)
@@ -8781,7 +8760,7 @@
 /area/space)
 "aQf" = (
 /obj/decal/cleanable/molten_item,
-/obj/critter/gunbot/drone/buzzdrone,
+/obj/gunbotdrone_spawner/common,
 /turf/simulated/floor/airless/plating/scorched,
 /area/space)
 "aQg" = (
@@ -8984,9 +8963,9 @@
 /area/h7)
 "aQN" = (
 /obj/machinery/door/airlock/pyro/classic{
-	name = "AI Core";
-	welded = 1
+	name = "AI Core"
 	},
+/obj/mapping_helper/airlock/welder,
 /turf/simulated/floor/grime,
 /area/derelict_ai_sat/core)
 "aQO" = (
@@ -9215,7 +9194,7 @@
 	},
 /area/fermid_hive)
 "aRH" = (
-/obj/storage/secure/closet/security/equipment,
+/obj/storage/secure/closet/security/equipment/derelict,
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
@@ -9559,7 +9538,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aSI" = (
-/obj/storage/secure/closet/security/equipment,
+/obj/storage/secure/closet/security/equipment/derelict,
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -12580,7 +12559,7 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "bcA" = (
-/obj/critter/gunbot/drone/raildrone,
+/obj/gunbotdrone_spawner/very_rare,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "bcB" = (
@@ -13518,8 +13497,7 @@
 /area/derelict_ai_sat)
 "bgT" = (
 /obj/machinery/door/supernorn/engineering{
-	name = "Satellite Power Control";
-	req_access_txt = ""
+	name = "Satellite Power Control"
 	},
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
@@ -14625,9 +14603,7 @@
 /turf/space,
 /area/space)
 "bkz" = (
-/obj/critter/gunbot/drone{
-	wanderer = 0
-	},
+/obj/gunbotdrone_spawner/common,
 /turf/space,
 /area/space)
 "bkA" = (
@@ -14831,7 +14807,7 @@
 /turf/space,
 /area/abandonedship)
 "blr" = (
-/obj/critter/gunbot/drone/laserdrone,
+/obj/gunbotdrone_spawner/uncommon,
 /turf/space,
 /area/space)
 "bls" = (
@@ -16141,7 +16117,7 @@
 /turf/simulated/floor/grime,
 /area/diner/arcade)
 "dfF" = (
-/mob/living/carbon/human/normal/merc,
+/obj/mapping_helper/mob_spawn/corpse/human/merc,
 /turf/simulated/floor/airless/damaged5,
 /area/abandonedship)
 "dfH" = (
@@ -16500,6 +16476,15 @@
 "ejg" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/mining/diner)
+"elH" = (
+/obj/fakeobject{
+	desc = "It's probably broken.";
+	icon = 'icons/obj/power.dmi';
+	icon_state = "solar_panel-b";
+	name = "solar panel"
+	},
+/turf/simulated/floor/airless/solar,
+/area/space)
 "elM" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/decal/tile_edge/stripe/big{
@@ -16536,10 +16521,7 @@
 "eoC" = (
 /obj/machinery/power/tracker/diner,
 /obj/cable,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
+/turf/simulated/floor/airless/solar,
 /area/diner/solar)
 "epP" = (
 /obj/securearea{
@@ -16793,10 +16775,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/solar/diner,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
+/turf/simulated/floor/airless/solar,
 /area/diner/solar)
 "fkr" = (
 /obj/structure/woodwall,
@@ -17357,10 +17336,9 @@
 /area/diner/dining)
 "gNo" = (
 /obj/machinery/door/airlock/pyro/command{
-	aiControlDisabled = 1;
-	name = "Drone Computer Core";
-	req_access_txt = ""
+	name = "Drone Computer Core"
 	},
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/orangeblack,
 /area/helldrone)
 "gNH" = (
@@ -17616,6 +17594,17 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/diner/dining)
+"hzu" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 8;
+	name = "sealed airlock"
+	},
+/obj/mapping_helper/airlock/welder,
+/turf/simulated/floor/plating,
+/area/derelict_ai_sat)
 "hAu" = (
 /obj/decal/cleanable/machine_debris,
 /obj/indestructible/shuttle_corner{
@@ -18020,7 +18009,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/diner/tug)
 "iIc" = (
-/obj/critter/gunbot/drone/heavydrone,
+/obj/gunbotdrone_spawner/uncommon,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "iMD" = (
@@ -18102,9 +18091,9 @@
 /area/diner/tug)
 "iUA" = (
 /obj/machinery/door/airlock/pyro/classic{
-	name = "sealed airlock";
-	welded = 1
+	name = "sealed airlock"
 	},
+/obj/mapping_helper/airlock/welder,
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
 "iUF" = (
@@ -18615,6 +18604,15 @@
 	},
 /turf/space,
 /area/salvage_trader)
+"khR" = (
+/obj/machinery/power/solar/east{
+	id = "derelict_ai_sat"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/solar,
+/area/derelict_ai_sat/solar)
 "kjj" = (
 /obj/machinery/door_control{
 	id = "zdrone_hangar";
@@ -19009,11 +19007,10 @@
 /area/space)
 "lsq" = (
 /obj/machinery/door/airlock/pyro/command{
-	aiControlDisabled = 1;
 	dir = 4;
-	name = "Drone Computer Core";
-	req_access_txt = ""
+	name = "Drone Computer Core"
 	},
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/orangeblack,
 /area/helldrone/core)
 "luF" = (
@@ -19359,9 +19356,9 @@
 /area/diner/dining)
 "mdO" = (
 /obj/machinery/door/airlock/pyro/classic{
-	locked = 1;
 	name = "rusty airlock"
 	},
+/obj/mapping_helper/airlock/bolter,
 /turf/simulated/floor/black/grime,
 /area/diner/hallway/docking)
 "mea" = (
@@ -19571,8 +19568,10 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "mKS" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
+	},
 /turf/simulated/shuttle/wall{
-	dir = 10;
 	icon_state = "wall_3_trans"
 	},
 /area/diner/tug)
@@ -19962,9 +19961,6 @@
 /area/abandonedship)
 "nIX" = (
 /obj/reagent_dispensers/fueltank,
-/obj/machinery/door_control/podbay/diner1/new_walls/south{
-	pixel_y = -24
-	},
 /turf/simulated/floor/caution/west,
 /area/diner/hangar)
 "nJi" = (
@@ -20295,6 +20291,10 @@
 /turf/simulated/floor/arrival,
 /area/diner/hallway)
 "oQX" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall3_trans"
+	},
 /turf/simulated/shuttle/wall{
 	dir = 8;
 	icon_state = "wall_3_trans"
@@ -21319,10 +21319,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/solar/diner,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
+/turf/simulated/floor/airless/solar,
 /area/diner/solar)
 "rtS" = (
 /obj/machinery/vending/cigarette,
@@ -21593,10 +21590,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "sdO" = (
-/obj/machinery/door/airlock/pyro/external{
-	icon_state = "door_locked";
-	locked = 1
-	},
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/bolter,
 /turf/simulated/floor/grime,
 /area/diner/hallway/docking)
 "sel" = (
@@ -21643,7 +21638,9 @@
 /area/diner/kitchen)
 "smO" = (
 /obj/reagent_dispensers/fueltank,
-/obj/machinery/door_control/podbay/diner2/new_walls/north,
+/obj/machinery/door_control/podbay/diner2/new_walls/north{
+	dir = 2
+	},
 /turf/simulated/floor/caution/west,
 /area/diner/hangar)
 "soj" = (
@@ -22358,6 +22355,15 @@
 /obj/item/tank/oxygen,
 /turf/simulated/floor/plating,
 /area/helldrone)
+"ugk" = (
+/obj/machinery/power/solar/east{
+	id = "derelict_ai_sat"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless/solar,
+/area/derelict_ai_sat/solar)
 "ugu" = (
 /obj/decal/floatingtiles{
 	dir = 4;
@@ -22515,6 +22521,7 @@
 "uBn" = (
 /obj/item/cigbutt,
 /obj/machinery/vending/air_vendor/plasma,
+/obj/machinery/door_control/podbay/diner1/new_walls/east,
 /turf/simulated/floor/caution/west,
 /area/diner/hangar)
 "uBo" = (
@@ -22700,8 +22707,7 @@
 /area/helldrone)
 "uWf" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "East Engine Compartment";
-	req_access_txt = ""
+	name = "East Engine Compartment"
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
@@ -22889,10 +22895,7 @@
 "vuF" = (
 /obj/cable,
 /obj/machinery/power/solar/diner,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
+/turf/simulated/floor/airless/solar,
 /area/diner/solar)
 "vuQ" = (
 /obj/decal/cleanable/oil,
@@ -22941,8 +22944,7 @@
 /area/helldrone)
 "vBW" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "West Engine Compartment";
-	req_access_txt = ""
+	name = "West Engine Compartment"
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
@@ -23317,7 +23319,7 @@
 /turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "wzh" = (
-/obj/window/reinforced/east,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -36788,7 +36790,7 @@ aaa
 aaa
 aaa
 aaa
-aaP
+blr
 aaa
 aaa
 aaa
@@ -36822,7 +36824,7 @@ bgu
 aaa
 aaa
 aaa
-aaP
+blr
 aaa
 aaa
 aaa
@@ -40357,7 +40359,7 @@ aab
 aab
 aaa
 aaa
-aLt
+bkz
 aao
 aaa
 aaa
@@ -41600,7 +41602,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -43061,7 +43063,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa
@@ -45761,7 +45763,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa
@@ -45824,7 +45826,7 @@ aaz
 aaa
 aaa
 aaa
-bkx
+bkz
 aKi
 aao
 aaa
@@ -46395,7 +46397,7 @@ aNm
 aaa
 aaa
 aaa
-aaP
+blr
 aMF
 aaa
 aaa
@@ -47431,7 +47433,7 @@ aaa
 aax
 aaF
 aaa
-aaP
+blr
 aal
 gaf
 acL
@@ -48461,7 +48463,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -51211,7 +51213,7 @@ aaa
 aaa
 aaa
 aaa
-aaP
+blr
 aaa
 aaa
 aaa
@@ -52796,7 +52798,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa
@@ -53668,7 +53670,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa
@@ -54920,7 +54922,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 abg
@@ -55715,7 +55717,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa
@@ -56058,8 +56060,8 @@ aaa
 aaa
 aaa
 aaa
-aNH
-aNH
+elH
+elH
 aaa
 aaa
 aaa
@@ -56661,7 +56663,7 @@ aaa
 aaa
 aaa
 aaa
-aNH
+elH
 aaa
 aaa
 aaa
@@ -58251,7 +58253,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa
@@ -58771,7 +58773,7 @@ aaa
 aaa
 aaa
 aaa
-aaP
+blr
 aaa
 aaa
 aaa
@@ -60318,7 +60320,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -60578,7 +60580,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa
@@ -64875,7 +64877,7 @@ aaa
 aaa
 aad
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -65693,7 +65695,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa
@@ -65968,7 +65970,7 @@ aaa
 aaa
 aaa
 aaa
-bkx
+bkz
 aaa
 aaa
 aaa
@@ -66004,7 +66006,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -69051,7 +69053,7 @@ xbB
 tYP
 amR
 aPg
-aPv
+hzu
 amR
 amR
 iMD
@@ -69950,21 +69952,21 @@ aaa
 aaa
 meT
 aao
-aOh
-aOh
-aOh
-aOh
-aOh
-aOh
+khR
+khR
+khR
+khR
+khR
+khR
 aaa
 bhZ
 aaa
-aOh
-aOh
-aOh
-aOh
-aOh
-aOh
+khR
+khR
+khR
+khR
+khR
+khR
 aao
 aaa
 aaa
@@ -70554,21 +70556,21 @@ aaa
 aaa
 meT
 aao
-aOf
-aOf
-aOf
-aOf
-aOf
-aOf
+ugk
+ugk
+ugk
+ugk
+ugk
+ugk
 qte
 aPK
 aaa
-aOf
-aOf
-aOf
-aOf
-aOf
-aOf
+ugk
+ugk
+ugk
+ugk
+ugk
+ugk
 aao
 meT
 aaa
@@ -71167,12 +71169,12 @@ aOh
 aaa
 aPK
 aaa
-aOh
-aOh
-aOh
-aOh
-aOh
-aOh
+khR
+khR
+khR
+khR
+khR
+khR
 aao
 meT
 aaa
@@ -71771,12 +71773,12 @@ aOf
 aaa
 aPK
 aaa
-aOf
-aOf
-aOf
-aOf
-aOf
-aOf
+ugk
+ugk
+ugk
+ugk
+ugk
+ugk
 aao
 meT
 aaa
@@ -72366,21 +72368,21 @@ aaa
 aaa
 meT
 aao
-aOh
-aOh
-aOh
-aOh
-aOh
-aOh
+khR
+khR
+khR
+khR
+khR
+khR
 aaa
 aPK
 aaa
-aOh
-aOh
-aOh
-aOh
-aOh
-aOh
+khR
+khR
+khR
+khR
+khR
+khR
 aao
 aKI
 aaa
@@ -72970,21 +72972,21 @@ aaa
 aaa
 meT
 aao
-aOf
-aOf
-aOf
-aOf
-aOf
-aOf
+ugk
+ugk
+ugk
+ugk
+ugk
+ugk
 aaa
 bic
 aaa
-aOf
-aOf
-aOf
-aOf
-aOf
-aOf
+ugk
+ugk
+ugk
+ugk
+ugk
+ugk
 aao
 aKI
 aaa
@@ -75975,7 +75977,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa
@@ -78472,7 +78474,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa

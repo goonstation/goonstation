@@ -14875,12 +14875,12 @@
 	},
 /area/station/chapel/sanctuary)
 "aYX" = (
-/obj/machinery/computer/bank_data{
-	dir = 4
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/computer3/generic/bank_data{
+	dir = 4
 	},
 /turf/simulated/floor/blueblack{
 	dir = 8
@@ -21644,7 +21644,7 @@
 /area/station/turret_protected/ai_upload_foyer)
 "bzQ" = (
 /obj/decal/cleanable/cobweb,
-/obj/storage/crate,
+/obj/machinery/sheet_extruder,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -48191,10 +48191,10 @@
 	},
 /area/station/engine/elect)
 "lmb" = (
-/obj/critter/opossum/morty,
 /obj/item/device/radio/intercom/medical{
 	dir = 8
 	},
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "lmh" = (
@@ -50925,7 +50925,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -60737,12 +60737,6 @@
 	icon_state = "L1"
 	},
 /area/station/crew_quarters/market)
-"uBA" = (
-/obj/machinery/sheet_extruder,
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/mining/magnet)
 "uCf" = (
 /obj/storage/secure/closet/brig_automatic/minibrig,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -65371,9 +65365,9 @@
 "ygN" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/apc{
-	areastring = "Medical Research";
+	areastring = "Genetic Research";
 	dir = 8;
-	name = "Medical Research APC";
+	name = "Genetic Research APC";
 	pixel_x = -24
 	},
 /obj/cable,
@@ -130403,7 +130397,7 @@ adC
 bWn
 bzQ
 bzR
-uBA
+bzR
 cbz
 cdX
 cdU

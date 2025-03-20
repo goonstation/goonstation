@@ -206,6 +206,8 @@
 		if(owner)
 			owner.set_loc(src.loc)
 			owner = 0
+		for(var/atom/movable/AM in src)
+			AM.set_loc(src.loc)
 		//overlay_image = 0
 		if (use_cloakofdarkness)
 			processing_items.Remove(src)
@@ -233,7 +235,7 @@
 	proc/set_cloaked(var/cloaked = 1)
 		if (use_cloakofdarkness)
 			if (cloaked == 1)
-				src.invisibility = INVIS_INFRA
+				src.invisibility = INVIS_MESON
 				src.alpha = 120
 				//src.UpdateOverlays(overlay_image, "batpoof_cloak")
 			else

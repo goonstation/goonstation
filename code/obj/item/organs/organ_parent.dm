@@ -113,7 +113,7 @@
 				return
 
 		else
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			attack_particle(user,src)
 			hit_twitch(src)
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 100, TRUE)

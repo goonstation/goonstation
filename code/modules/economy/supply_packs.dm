@@ -550,12 +550,13 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/security_upgrade
 	name = "Weapons Crate - Experimental Security Equipment (Cardlocked \[Security Equipment])"
-	desc = "1x Clock 180, x1 Elite Security Helmet, x1 Lethal Grenade Kit, 1x Experimental Grenade Kit"
+	desc = "1x Clock 180, x1 Elite Security Helmet, x1 Lethal Grenade Kit, 1x Experimental Grenade Kit, 1x Stasis Rifle"
 	category = "Security Department"
 	contains = list(/obj/item/gun/kinetic/clock_188/boomerang,
 					/obj/item/storage/box/QM_grenadekit_security,
 					/obj/item/storage/box/QM_grenadekit_experimentalweapons,
-					/obj/item/clothing/head/helmet/hardhat/security/improved)
+					/obj/item/clothing/head/helmet/hardhat/security/improved,
+					/obj/item/gun/energy/stasis)
 	cost = PAY_EXECUTIVE*2
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Weapons Crate - Experimental Security Equipment (Cardlocked \[Security Equipment])"
@@ -1413,9 +1414,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/banking_kit
 	name = "Banking Kit"
-	desc = "Circuit Boards: 1x Bank Records, 1x ATM"
-	contains = list(/obj/item/circuitboard/atm,
-					/obj/item/circuitboard/bank_data)
+	desc = "Circuit Boards: 1x ATM, Data Disks: 1x BankBoss"
+	contains = list(/obj/item/circuitboard/atm, /obj/item/disk/data/floppy/read_only/bank_progs)
 	hidden = 1
 	cost = PAY_IMPORTANT*5
 	containertype = /obj/storage/crate
@@ -1597,6 +1597,23 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	cost = PAY_TRADESMAN*10
 	containertype = /obj/storage/crate
 	containername = "Mechanics Reconstruction Kit"
+
+/datum/supply_packs/complex/barbershop_kit
+	name = "Barbershop Kit"
+	desc = "Everything one might need to open up a barbershop!"
+	category = "Civilian Department"
+	contains = list(/obj/item/electronics/soldering,
+					/obj/item/furniture_parts/barber_chair,
+					/obj/item/dye_bottle,
+					/obj/item/dye_bottle,
+					/obj/item/razor_blade,
+					/obj/item/scissors,
+					/obj/item/clothing/under/misc/barber,
+					/obj/item/clothing/gloves/latex)
+	frames = list(/obj/machinery/hair_dye_dispenser)
+	cost = PAY_TRADESMAN*5
+	containertype = /obj/storage/crate
+	containername = "Barbershop Kit"
 
 #ifndef UNDERWATER_MAP
 /datum/supply_packs/complex/mini_magnet_kit
@@ -2057,6 +2074,32 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/item/instrument/bass)
 	containertype = /obj/storage/crate/wooden
 
+/datum/supply_packs/complex/player_piano
+	name = "Player Piano Kit"
+	desc = "1x Player Piano Kit"
+	category = "Civilian Department"
+	cost = PAY_TRADESMAN*3
+	containername = "Player Piano Kit"
+	frames = list(/obj/player_piano)
+	containertype = /obj/storage/crate/wooden
+
+/datum/supply_packs/complex/piano
+	name = "Piano Kit"
+	desc = "1x Piano Kit"
+	category = "Civilian Department"
+	cost = PAY_TRADESMAN*3
+	containername = "Piano Kit"
+	frames = list(/obj/item/instrument/large/piano)
+	containertype = /obj/storage/crate/wooden
+
+/datum/supply_packs/complex/piano_grand
+	name = "Grand Piano Kit"
+	desc = "1x Grand Piano Kit"
+	category = "Civilian Department"
+	cost = PAY_TRADESMAN*3
+	containername = "Grand Piano Kit"
+	frames = list(/obj/item/instrument/large/piano/grand)
+	containertype = /obj/storage/crate/wooden
 
 //Western
 /datum/supply_packs/west_coats

@@ -198,6 +198,8 @@ TYPEINFO_NEW(/obj/table)
 		var/turf/OL = get_turf(src)
 		if (!OL)
 			return
+		for(var/atom/movable/AM as anything in src.storage?.get_contents())
+			AM.set_loc(OL)
 		if (!(locate(/obj/table) in OL) && !(locate(/obj/rack) in OL))
 			var/area/Ar = OL.loc
 			for (var/obj/item/I in OL)

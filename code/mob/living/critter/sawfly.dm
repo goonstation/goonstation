@@ -128,7 +128,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		if(!(issawflybuddy(user) || (user in src.friends) || (user.health < 40)))//are you an eligible target: nonantag or healthy enough?
 			if(prob(50) && !ON_COOLDOWN(src, "sawfly_retaliate_cd", 5 SECONDS) && !isdead(src))//now that you're eligible, are WE eligible?
 				if(ai && (ai.target != user))
-					src.lastattacker = user
+					src.lastattacker = get_weakref(user)
 					src.retaliate = TRUE
 					src.visible_message(SPAN_ALERT("<b>[src]'s targeting subsystems identify [user] as a high priority threat!</b>"))
 					playsound(src, pick(src.beeps), 40, 1)
@@ -210,8 +210,8 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			dobeep()
 
 	seek_target(range) //ai mob critter targetting behaviour - returns a list of acceptable targets
-		if(src.lastattacker && src.retaliate && GET_DIST(src, src.lastattacker) <= range)
-			return list(src.lastattacker)
+		if(src.lastattacker?.deref() && src.retaliate && GET_DIST(src, src.lastattacker.deref()) <= range)
+			return list(src.lastattacker.deref())
 		var/targetcount = 0
 		. = list()
 		for (var/mob/living/C in viewers(range, src))

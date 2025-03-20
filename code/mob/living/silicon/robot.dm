@@ -50,6 +50,8 @@
 	var/obj/item/device/radio/headset/radio = null
 	var/obj/item/device/radio/headset/ai_radio = null // Radio used for when this is an AI-controlled shell.
 	var/obj/item/device/radio_upgrade/radio_upgrade = null // Used for syndicate robots
+	var/obj/item/instrument/scream_instrument = null
+	var/scream_note = 1 //! Either a string note or an index of the sound to play (instruments are weird)
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/machinery/camera/camera = null
 	var/obj/item/robot_module/module = null
@@ -266,8 +268,8 @@
 			if (src.syndicate)
 				src.show_antag_popup(ROLE_SYNDICATE_ROBOT)
 
-		if (prob(50))
-			src.sound_scream = 'sound/voice/screams/Robot_Scream_2.ogg'
+		src.scream_instrument = new /obj/item/instrument/roboscream(src)
+		src.scream_note = rand(1,2)
 
 		for (var/datum/movement_modifier/MM in src.movement_modifiers) // Spawning borgs applies human only movemods, this cleans that up
 			if (!istype(MM, /datum/movement_modifier/robot_part))
@@ -548,8 +550,12 @@
 					message = "<b>[src]</b> birdwells."
 
 			if ("scream")
-				if (src.emote_check(voluntary, 50))
-					playsound(src, src.sound_scream, 80, 0, 0, vocal_pitch, channel=VOLUME_CHANNEL_EMOTE) // vocal pitch added
+				if (src.emote_check(voluntary, src.scream_instrument.note_time))
+					var/note_index = src.scream_note
+					if (istext(src.scream_note))
+						note_index = src.scream_instrument.notes.Find(src.scream_note)
+
+					src.scream_instrument.play_note(note_index, src, src.vocal_pitch)
 					message = "<b>[src]</b> screams!"
 
 			if ("johnny")
@@ -564,8 +570,6 @@
 
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
-					if (!(src.client && src.client.holder)) src.emote_allowed = 0
-					if (isdead(src)) src.emote_allowed = 0
 					if ((src.restrained()) && (!src.getStatusDuration("knockdown")))
 						message = "<B>[src]</B> malfunctions!"
 						src.TakeDamage("head", 2, 4)
@@ -665,8 +669,6 @@
 	#ifdef DATALOGGER
 					game_stats.Increment("farts")
 	#endif
-					SPAWN(1 SECOND)
-						src.emote_allowed = 1
 			else
 				if (voluntary) src.show_text("Invalid Emote: [act]")
 				return
@@ -1230,7 +1232,16 @@
 
 		else if (istype(W, /obj/item/card/emag))
 			return
-
+		else if (istype(W, /obj/item/instrument) && opened)
+			user.drop_item(W)
+			W.set_loc(src)
+			user.put_in_hand_or_drop(src.scream_instrument)
+			src.scream_instrument = W
+			if (src.scream_instrument.pick_random_note)
+				src.scream_note = rand(1, length(src.scream_instrument.sounds_instrument))
+			else
+				src.scream_note = pick(src.scream_instrument.notes)
+			user.visible_message(SPAN_NOTICE("[user] inserts [src.scream_instrument] into [src]'s chest."))
 		else if (istype(W, /obj/item/organ/brain) && src.brainexposed)
 			if (!src.part_head)
 				boutput(user, SPAN_ALERT("That cyborg doesn't even have a head. Where are you going to put [W]?"))
@@ -1590,7 +1601,7 @@
 
 			update_appearance()
 		else //We're just bapping the borg
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			if(!user.stat)
 				if (user.a_intent != INTENT_HELP)
 					actions.interrupt(src, INTERRUPT_ATTACKED)
@@ -1949,8 +1960,6 @@
 					IT.dropped(src) // Handle light datums and the like.
 				if (I in module.tools)
 					I.set_loc(module)
-				else
-					qdel(I)
 			src.module_active = null
 			src.module_states[i] = null
 
@@ -2064,6 +2073,14 @@
 
 		hud.toggle_equipment()
 
+	proc/get_tools()
+		RETURN_TYPE(/list)
+		var/list/tools = src.module.tools.Copy()
+		if (src.part_arm_l?.add_to_tools)
+			tools += src.part_arm_l
+		if (src.part_arm_r?.add_to_tools)
+			tools += src.part_arm_r
+		return tools
 
 	proc/installed_modules()
 		if(weapon_lock)
@@ -2309,6 +2326,23 @@
 		targethead.mode = newMode
 		update_bodypart(part = "head")
 		return 1
+
+	verb/cmd_pick_scream()
+		set category = "Robot Commands"
+		set name = "Change scream note"
+
+		var/list/notes_list = list()
+		if (src.scream_instrument.pick_random_note || !src.scream_instrument.use_new_interface)
+			for (var/i in 1 to length(src.scream_instrument.sounds_instrument))
+				notes_list += i
+		else
+			notes_list = src.scream_instrument.notes
+
+		var/note = tgui_input_list(usr, "Select a scream note", "Select scream", notes_list)
+		if (!note || !(note in notes_list))
+			return
+
+		src.scream_note = note
 
 	verb/access_internal_pda()
 		set category = "Robot Commands"
@@ -2727,11 +2761,11 @@
 		if (part == "l_arm" || update_all)
 			if (src.part_arm_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if (src.part_arm_l.slot == "arm_both")
-					src.i_arm_l = image('icons/mob/robots.dmi', "arm-" + src.part_arm_l.appearanceString, layer=MOB_LIMB_LAYER)
-					src.i_hand_l = image('icons/mob/robots.dmi', "hand-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_arm_l = image('icons/mob/robots.dmi', "arm-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_hand_l = image('icons/mob/robots.dmi', "hand-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER2)
 				else
-					src.i_arm_l = image('icons/mob/robots.dmi', "l_arm-" + src.part_arm_l.appearanceString, layer=MOB_LIMB_LAYER)
-					src.i_hand_l = image('icons/mob/robots.dmi', "l_hand-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_arm_l = image('icons/mob/robots.dmi', "l_arm-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_hand_l = image('icons/mob/robots.dmi', "l_hand-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER2)
 				if (color_matrix)
 					src.internal_paint_part(src.i_arm_l, color_matrix)
 					src.internal_paint_part(src.i_hand_l, color_matrix)
@@ -2742,11 +2776,11 @@
 		if (part == "r_arm" || update_all)
 			if (src.part_arm_r && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if (src.part_arm_r.slot == "arm_both")
-					src.i_arm_r = image('icons/mob/robots.dmi', "arm-" + src.part_arm_r.appearanceString, layer=MOB_LIMB_LAYER)
-					src.i_hand_r = image('icons/mob/robots.dmi', "hand-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_arm_r = image('icons/mob/robots.dmi', "arm-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_hand_r = image('icons/mob/robots.dmi', "hand-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER2)
 				else
-					src.i_arm_r = image('icons/mob/robots.dmi', "r_arm-" + src.part_arm_r.appearanceString, layer=MOB_LIMB_LAYER)
-					src.i_hand_r = image('icons/mob/robots.dmi', "r_hand-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_arm_r = image('icons/mob/robots.dmi', "r_arm-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_hand_r = image('icons/mob/robots.dmi', "r_hand-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER2)
 				if (color_matrix)
 					src.internal_paint_part(src.i_arm_r, color_matrix)
 					src.internal_paint_part(src.i_hand_r, color_matrix)
@@ -2771,7 +2805,7 @@
 				src.i_head_decor = null
 
 			if (C.ches_mod && src.part_chest)
-				src.i_chest_decor = image('icons/mob/robots_decor.dmi', "body-" + C.ches_mod, layer=MOB_BODYDETAIL_LAYER2)
+				src.i_chest_decor = image('icons/mob/robots_decor.dmi', "body-" + C.ches_mod, layer=MOB_ARMOR_LAYER - 0.1) //layer just under outer suits
 			else
 				src.i_chest_decor = null
 

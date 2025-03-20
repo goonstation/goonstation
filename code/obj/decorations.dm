@@ -71,7 +71,7 @@
 			if (I.hitsound)
 				playsound(I, I.hitsound, 50, 1)
 			src._health -= I.force
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			if (src._health <= 0)
 				if (src.falling)
 					return
@@ -274,7 +274,7 @@
 		else if (destroyed)
 			return ..()
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (iscow(user) && user.a_intent == INTENT_HELP)	//Cow people may want to eat some of the bush's leaves
 			graze(user)
 			return 0
@@ -333,14 +333,14 @@
 			REMOVE_ATOM_PROPERTY(AM, PROP_MOB_HIDE_ICONS, src)
 
 	attackby(var/obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		hit_twitch(src)
 		attack_particle(user,src)
 		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, TRUE, 0)
 		src.take_damage(W.force)
 		user.visible_message(SPAN_ALERT("<b>[user] hacks at [src] with [W]!</b>"))
 
-	proc/graze(mob/living/carbon/human/user)
+	proc/take_bite()
 		src.bites -= 1
 		var/desired_mask = (src.bites / initial(src.bites)) * 5
 		desired_mask = round(desired_mask)
@@ -350,6 +350,10 @@
 			current_mask = desired_mask
 			src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
+		if(src.bites <= 0)
+			destroy()
+
+	proc/graze(mob/living/carbon/human/user)
 		eat_twitch(user)
 		playsound(user, 'sound/items/eatfood.ogg', rand(10,50), 1)
 
@@ -363,9 +367,13 @@
 			user.visible_message(SPAN_NOTICE("[user] takes a bite out of [src]."), SPAN_NOTICE("You munch on some of [src]'s leaves, like any normal human would."))
 			user.sims?.affectMotive("Hunger", 10)
 
-		if(src.bites <= 0)
-			destroy()
+		src.take_bite()
+
 		return 0
+
+	clamp_act(mob/clamper, obj/item/clamp)
+		src.take_bite()
+		return TRUE
 
 	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
@@ -483,7 +491,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 				boutput(M, SPAN_ALERT("You suddenly feel hollow. Something very dear to you has been lost."))
 
 	graze(mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (user.mind && user.mind.assigned_role == "Captain")
 			boutput(user, SPAN_NOTICE("You catch yourself almost taking a bite out of your precious bonzai but stop just in time!"))
 			return
@@ -1990,6 +1998,33 @@ ADMIN_INTERACT_PROCS(/obj/lever, proc/toggle)
 
 	proc/off()
 		return
+
+
+ADMIN_INTERACT_PROCS(/obj/lever/custom, proc/set_up)
+/obj/lever/custom
+	var/datum/target = null
+	var/on_proc = ""
+	var/off_proc = ""
+
+	proc/set_up()
+		var/list/data = usr.client.get_proccall_arglist(list(
+			ARG_INFO("target_datum", DATA_INPUT_REFPICKER, "Target"),
+			ARG_INFO("on_proc", DATA_INPUT_TEXT, "Name of proc to call when the lever is pulled ON"),
+			ARG_INFO("off_proc", DATA_INPUT_TEXT, "Name of proc to call when the lever is pulled OFF")
+		))
+		src.target = data["target_datum"]
+		src.on_proc = data["on_proc"]
+		src.off_proc = data["off_proc"]
+
+	on()
+		if (src.target && length(src.on_proc))
+			call(src.target, src.on_proc)()
+
+	off()
+		if (src.target && length(src.off_proc))
+			call(src.target, src.off_proc)()
+
+
 /obj/decoration/paperstack/massive
 	name = "Pile of papers"
 	desc = "The pile of papers is so overwhelming it crush you."

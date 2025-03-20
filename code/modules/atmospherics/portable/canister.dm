@@ -1,4 +1,4 @@
-ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_valve)
+ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_valve, proc/break_open)
 
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
@@ -186,31 +186,40 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 		return 1
 
 	if (src.health <= 10)
-		tgui_process.close_uis(src)
-		if(src.air_contents.check_if_dangerous())
-			message_admins("[src] [alert_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
-		logTheThing(LOG_STATION, null, "[src] [log_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
-
-		var/atom/location = src.loc
-		location.assume_air(air_contents)
-		air_contents = null
-		disconnect()
-
-		if (src.det)
-			processing_items.Remove(src.det)
-
-		src.destroyed = 1
-		playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
-		src.set_density(0)
-		UpdateIcon()
-
-		if (src.holding)
-			src.holding.set_loc(src.loc)
-			src.holding = null
+		src.break_open(user)
 		return 1
 	else
 		return 1
 
+/obj/machinery/portable_atmospherics/canister/clamp_act(mob/clamper, obj/item/clamp)
+	if (!src.destroyed)
+		src.break_open()
+		return TRUE
+
+/obj/machinery/portable_atmospherics/canister/proc/break_open(mob/user)
+	user = user || usr
+	tgui_process.close_uis(src)
+	if(src.air_contents.check_if_dangerous())
+		message_admins("[src] [alert_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
+	logTheThing(LOG_STATION, null, "[src] [log_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
+	message_ghosts("<b>[src]</b> was destructively opened at [log_loc(src, ghostjump = TRUE)].")
+
+	var/atom/location = src.loc
+	location.assume_air(air_contents)
+	air_contents = null
+	disconnect()
+
+	if (src.det)
+		processing_items.Remove(src.det)
+
+	src.destroyed = 1
+	playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+	src.set_density(0)
+	UpdateIcon()
+
+	if (src.holding)
+		src.holding.set_loc(src.loc)
+		src.holding = null
 
 /obj/machinery/portable_atmospherics/canister/process()
 	if (!loc) return
@@ -435,7 +444,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 		return
 	else if(!iswrenchingtool(W) && !istype(W, /obj/item/tank) && !istype(W, /obj/item/device/analyzer/atmospheric) && !istype(W, /obj/item/device/pda2) && !(W.flags & SUPPRESSATTACK))
 		src.visible_message(SPAN_ALERT("[user] hits the [src] with a [W]!"))
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 		hit_twitch(src)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)

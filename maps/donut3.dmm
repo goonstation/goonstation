@@ -923,9 +923,7 @@
 	},
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "alB" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
@@ -1751,6 +1749,16 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
+"ayb" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/computer3/generic/bank_data{
+	dir = 8
+	},
+/turf/simulated/floor/blueblack,
+/area/station/bridge)
 "ayc" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/mesh/catwalk/jen,
@@ -2060,12 +2068,6 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
 	},
 /turf/simulated/floor/black,
 /area/station/teleporter)
@@ -2591,7 +2593,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 1
 	},
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "aIU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -3578,9 +3580,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/greenblack,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aYw" = (
 /obj/disposalpipe/segment/brig,
 /obj/machinery/door/airlock/pyro/engineering,
@@ -4830,9 +4830,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "btk" = (
 /obj/item/clothing/suit/bedsheet/blue,
 /obj/stool/bed,
@@ -5050,9 +5048,7 @@
 	},
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/greenblack,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "bvI" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 4;
@@ -5391,16 +5387,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
-"bzS" = (
-/obj/machinery/computer/bank_data{
-	dir = 8
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/blueblack,
-/area/station/bridge)
 "bzU" = (
 /obj/railing/orange{
 	dir = 4
@@ -5537,7 +5523,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "bCd" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -5581,9 +5567,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "bCH" = (
 /turf/simulated/wall/auto/jen/yellow,
 /area/station/maintenance/inner/se)
@@ -6022,9 +6006,7 @@
 /area/station/medical/asylum/main)
 "bJh" = (
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "bJi" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -6287,9 +6269,7 @@
 "bMf" = (
 /obj/shrub,
 /turf/simulated/floor/grass/random,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "bMm" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
@@ -6938,7 +6918,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "bZs" = (
 /obj/machinery/computer/tanning{
 	pixel_y = 32
@@ -7992,7 +7972,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "cmE" = (
 /obj/stool/chair/comfy,
 /obj/cable{
@@ -8419,9 +8399,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "crB" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -8445,9 +8423,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "csf" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -9112,9 +9088,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 9
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "cBb" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -9373,6 +9347,9 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
+"cEv" = (
+/turf/simulated/floor/wood/six,
+/area/station/chapel/funeral_parlor)
 "cEz" = (
 /obj/cable,
 /obj/cable{
@@ -9910,9 +9887,7 @@
 	},
 /obj/item/cloneModule/genepowermodule,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "cPl" = (
 /obj/table/wood/round/auto,
 /obj/random_item_spawner/med_kit/one,
@@ -10925,7 +10900,7 @@
 	},
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "dfr" = (
 /obj/mesh/catwalk{
 	dir = 4
@@ -10980,7 +10955,7 @@
 /area/station/crew_quarters/heads)
 "dfM" = (
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "dfW" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/machinery/firealarm/west,
@@ -11620,9 +11595,7 @@
 	id = "genetics"
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "doY" = (
 /obj/decal/stripe_caution,
 /obj/machinery/optable,
@@ -11811,6 +11784,12 @@
 "dsw" = (
 /turf/simulated/floor/sanitary/white,
 /area/station/maintenance/inner/sw)
+"dsD" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
 "dsW" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 1;
@@ -11917,9 +11896,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/carpet/green/fancy/edge,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "duN" = (
 /turf/simulated/wall/auto/reinforced/jen/yellow,
 /area/station/quartermaster/office)
@@ -11939,7 +11916,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/jen,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "dve" = (
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
@@ -11989,9 +11966,7 @@
 "dws" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "dwz" = (
 /turf/simulated/floor/black,
 /area/station/ai_monitored/storage/eva)
@@ -12104,6 +12079,19 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/office)
+"dye" = (
+/obj/decal/stripe_delivery,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 4;
+	id = "testchamber"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/chemistry,
+/turf/simulated/floor/black,
+/area/station/science/testchamber)
 "dyh" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/window_blinds/cog2/right,
@@ -12217,7 +12205,7 @@
 "dAn" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "dAv" = (
 /turf/space,
 /area/shuttle/asylum/pathology)
@@ -12301,9 +12289,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 10
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "dCw" = (
 /obj/table/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -12471,7 +12457,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/green/fancy/edge,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "dEr" = (
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment/mail{
@@ -12646,7 +12632,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "dHM" = (
 /obj/table/auto,
 /obj/item/decoration/ashtray{
@@ -13065,17 +13051,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/engineering)
-"dOe" = (
-/obj/machinery/computer/bank_data{
-	dir = 8
-	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/black,
-/area/station/security/checkpoint/customs)
 "dOk" = (
 /obj/table/wood/round/auto,
 /obj/random_item_spawner/snacks/two,
@@ -13248,9 +13223,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "dQz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -13757,19 +13730,6 @@
 /area/station/storage/auxillary{
 	name = "Tool Storage"
 	})
-"dWX" = (
-/obj/strip_door,
-/obj/machinery/conveyor/SN{
-	id = "disposals";
-	move_lag = 30;
-	operating = 1
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "crusher1";
-	name = "crusher door"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "dWY" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -13971,12 +13931,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
-"eaG" = (
-/obj/disposalpipe/segment/food{
-	dir = 4
-	},
-/turf/simulated/wall/auto/jen,
-/area/station/chapel/sanctuary)
 "eaL" = (
 /obj/machinery/light/incandescent/warm,
 /obj/table/auto,
@@ -14521,9 +14475,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "eis" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -14683,9 +14635,7 @@
 "elK" = (
 /obj/machinery/genetics_scanner,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "elM" = (
 /turf/simulated/wall/auto/jen/yellow,
 /area/station/storage/auxillary{
@@ -15261,7 +15211,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "evr" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/arrival{
@@ -15824,9 +15774,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "eGN" = (
 /obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport,
@@ -16057,9 +16005,7 @@
 /turf/simulated/floor/greenblack/corner{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "eKf" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/stairs/wide/other{
@@ -17774,9 +17720,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "flK" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/machinery/light/small/sticky{
@@ -17810,9 +17754,7 @@
 /turf/simulated/floor/carpet/green/fancy/innercorner{
 	dir = 5
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "fmA" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white,
@@ -18062,9 +18004,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "fqB" = (
 /obj/machinery/turret{
 	dir = 5
@@ -18505,9 +18445,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 1
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "fyq" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -18584,9 +18522,7 @@
 "fzD" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "fzE" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
@@ -19671,9 +19607,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "fPh" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -20681,7 +20615,7 @@
 	},
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "ggr" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/mesh/catwalk/jen,
@@ -20999,7 +20933,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "gln" = (
 /obj/disposalpipe/trunk/mail,
 /obj/machinery/disposal/mail/small/autoname/hydroponics/north{
@@ -21710,7 +21644,7 @@
 "gwq" = (
 /obj/disposalpipe/segment/food,
 /turf/simulated/wall/auto/reinforced/jen,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "gws" = (
 /obj/fakeobject/bookcase{
 	dir = 4;
@@ -21763,7 +21697,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 5
 	},
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "gwZ" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/jersey,
@@ -22402,9 +22336,7 @@
 /area/station/hangar/science)
 "gHC" = (
 /turf/simulated/wall/auto/jen/blue,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "gHF" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail,
@@ -23728,7 +23660,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 10
 	},
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "hcX" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -25021,9 +24953,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/greenblack,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "hvR" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25275,9 +25205,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "hzO" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -26073,7 +26001,7 @@
 	},
 /obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "hNp" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -26369,9 +26297,7 @@
 "hTU" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "hTW" = (
 /obj/decal/stripe_caution,
 /obj/machinery/sheet_extruder,
@@ -26465,9 +26391,7 @@
 	},
 /obj/landmark/start/job/geneticist,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "hVZ" = (
 /obj/decal/floatingtiles{
 	dir = 4
@@ -26646,7 +26570,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/wall/auto/reinforced/jen,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "iaa" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -26742,7 +26666,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 9
 	},
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "iaJ" = (
 /obj/table/glass/reinforced/auto,
 /obj/random_item_spawner/desk_stuff/one_or_zero,
@@ -26876,9 +26800,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/green/fancy/narrow/northsouth,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "icx" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -27151,7 +27073,7 @@
 /area/station/science/storage)
 "igQ" = (
 /turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "iha" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -27372,6 +27294,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
+"ikX" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/chemistry,
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "ikZ" = (
 /obj/machinery/disposal/small{
 	dir = 8
@@ -27570,7 +27504,7 @@
 	icon_state = "5-10"
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "iof" = (
 /obj/item/storage/wall/clothingrack/clothes4{
 	dir = 2
@@ -27847,9 +27781,7 @@
 /turf/simulated/floor/carpet/green/fancy/junction{
 	dir = 9
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "iuz" = (
 /obj/table/wood/round/auto,
 /obj/item/device/light/candle/haunted{
@@ -27922,9 +27854,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "ivU" = (
 /obj/machinery/rkit,
 /obj/machinery/light/incandescent/warm{
@@ -28423,7 +28353,7 @@
 "iDB" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/wall/auto/reinforced/jen,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "iDD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -29281,9 +29211,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "iRy" = (
 /turf/simulated/floor/carpet/green/fancy/narrow/se,
 /area/station/crew_quarters/heads)
@@ -29544,9 +29472,7 @@
 /area/station/maintenance/outer/north)
 "iUS" = (
 /turf/simulated/floor/carpet/green/fancy/narrow/T_west,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "iVe" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail,
@@ -30126,9 +30052,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "jdn" = (
 /obj/submachine/foodprocessor,
 /obj/disposalpipe/segment/morgue{
@@ -30262,9 +30186,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "jgj" = (
 /obj/table/glass/auto,
 /obj/machinery/coffeemaker/medbay{
@@ -30750,9 +30672,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "jnk" = (
 /turf/simulated/wall/auto/jen/yellow,
 /area/station/quartermaster/office)
@@ -31136,7 +31056,6 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "juB" = (
-/obj/cable,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -31150,6 +31069,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/cable,
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "juD" = (
@@ -31185,11 +31105,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
-"jvj" = (
-/turf/simulated/wall/auto/reinforced/jen,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
 "jvq" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/maintenance/inner/south)
@@ -31726,11 +31641,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"jCk" = (
-/turf/simulated/wall/auto/jen,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
 "jCs" = (
 /obj/machinery/disposal/mail/small/autoname/bridge/east,
 /obj/cable{
@@ -31976,7 +31886,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "jGq" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -32001,13 +31911,6 @@
 /area/station/engine/engineering)
 "jGx" = (
 /obj/storage/closet/emergency,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "mining_shutters";
-	name = "Mining Blast Shutters";
-	opacity = 0
-	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "jGC" = (
@@ -33585,9 +33488,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "kfc" = (
 /obj/cable{
 	icon_state = "1-10"
@@ -33773,6 +33674,9 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
+"khe" = (
+/turf/simulated/wall/auto/reinforced/jen,
+/area/station/chapel/funeral_parlor)
 "khw" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -34091,6 +33995,19 @@
 	},
 /turf/simulated/floor/red/checker,
 /area/station/security/checkpoint/sec_foyer)
+"kmy" = (
+/obj/machinery/conveyor/SN{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/strip_door,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "crusher1";
+	name = "crusher door"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "kmE" = (
 /turf/simulated/floor/carpet/green/standard/edge{
 	dir = 8
@@ -34365,9 +34282,7 @@
 /turf/simulated/floor/greenblack/corner{
 	dir = 4
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "kqN" = (
 /obj/storage/closet/dresser/random,
 /obj/disposalpipe/segment/mail,
@@ -34767,9 +34682,7 @@
 /area/station/medical/robotics)
 "kxi" = (
 /turf/simulated/floor/carpet/green/fancy,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "kxj" = (
 /mob/living/critter/small_animal/walrus,
 /turf/simulated/floor/pool/no_animate,
@@ -34894,16 +34807,12 @@
 	},
 /mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "kyM" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "kyV" = (
 /obj/machinery/door_control/podbay/qm{
 	pixel_y = 10;
@@ -35165,6 +35074,23 @@
 "kCF" = (
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/fitness)
+"kCI" = (
+/obj/machinery/conveyor/EW{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/strip_door{
+	dir = 4;
+	layer = 3
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 8;
+	id = "crusher1";
+	name = "crusher door"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "kCM" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -35337,9 +35263,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 9
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "kFs" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/red/side{
@@ -35932,9 +35856,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 5
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "kPy" = (
 /obj/stool/chair/green{
 	dir = 4
@@ -36010,9 +35932,7 @@
 	id = "genetics"
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "kQt" = (
 /obj/mesh/catwalk{
 	dir = 4
@@ -36230,17 +36150,6 @@
 	dir = 6
 	},
 /area/station/medical/head)
-"kUR" = (
-/obj/machinery/conveyor/EW{
-	id = "disposals";
-	move_lag = 30;
-	operating = 1
-	},
-/obj/strip_door{
-	dir = 4
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "kUS" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -36852,9 +36761,7 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor/greenblack,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "leE" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/white,
@@ -36966,7 +36873,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/jen,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "lhv" = (
 /obj/table/auto,
 /obj/item/storage/box/evidence{
@@ -36980,8 +36887,12 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "lhw" = (
 /obj/storage/secure/closet/civilian/kitchen,
 /obj/item/hand_labeler,
@@ -37278,6 +37189,17 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
+"lnR" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/bank_data{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/security/checkpoint/customs)
 "lnT" = (
 /obj/table/wood/auto,
 /obj/computer3frame/desktop,
@@ -37929,18 +37851,6 @@
 	name = "reinforced plating"
 	},
 /area/station/engine/ptl)
-"lwQ" = (
-/obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/obj/mapping_helper/access/research,
-/obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/station/science/chemistry)
 "lwW" = (
 /turf/simulated/floor/carpet/red/fancy/edge,
 /area/station/crew_quarters/stockex)
@@ -38079,11 +37989,6 @@
 	icon_state = "fblue1"
 	},
 /area/station/crew_quarters/cafeteria)
-"lyl" = (
-/turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
 "lyo" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -38846,9 +38751,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/green/fancy/narrow/south,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "lHL" = (
 /obj/landmark/random_room/size3x5,
 /turf/simulated/floor/plating/jen,
@@ -39095,9 +38998,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/green/fancy/narrow/east,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "lLX" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39208,9 +39109,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/jen,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "lNh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -40048,9 +39947,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "lXG" = (
 /obj/cable/yellow{
 	icon_state = "0-2"
@@ -40096,9 +39993,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/sanctuary)
 "lXZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -40292,9 +40187,7 @@
 /area/station/hangar/arrivals)
 "mbM" = (
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "mbO" = (
 /obj/landmark/magnet_shield,
 /obj/securearea{
@@ -41491,9 +41384,7 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/carpet/grime,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "mxG" = (
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -41904,12 +41795,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"mEh" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/wood/six,
-/area/station/library)
 "mEj" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -43389,9 +43274,7 @@
 	},
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/greenblack,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "ndl" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line-broken3"
@@ -44244,7 +44127,7 @@
 	},
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "nqy" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer3/generic/personal/personel_alt,
@@ -44639,9 +44522,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "nxd" = (
 /obj/stool,
 /obj/disposalpipe/segment/brig,
@@ -44677,7 +44558,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/green/fancy/edge,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "nxO" = (
 /obj/machinery/vending/player/chemicals,
 /obj/disposalpipe/trunk/mail,
@@ -45419,9 +45300,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 5
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "nKx" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail,
@@ -45828,7 +45707,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 6
 	},
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "nOU" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -46008,9 +45887,7 @@
 	req_access = null
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "nRW" = (
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/specialroom/chapel{
@@ -47489,9 +47366,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "oqJ" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -48599,7 +48474,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/reinforced/jen,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "oHS" = (
 /obj/decal/stripe_delivery,
 /obj/cable{
@@ -48944,9 +48819,7 @@
 "oMm" = (
 /obj/storage/closet/wardrobe/black,
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "oMn" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
@@ -49124,9 +48997,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "oPf" = (
 /turf/simulated/wall/auto/reinforced/jen/purple,
 /area/station/science/lobby)
@@ -49174,9 +49045,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "oPR" = (
 /obj/cable{
 	icon_state = "5-8"
@@ -49288,9 +49157,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 6
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "oSz" = (
 /obj/rack,
 /obj/item/clothing/suit/space{
@@ -49379,9 +49246,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/carpet/green/fancy/narrow/northsouth,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "oTW" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -49458,9 +49323,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 9
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "oVh" = (
 /turf/simulated/floor/yellow/corner{
 	dir = 4
@@ -49945,7 +49808,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/jen,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "pdD" = (
 /obj/table/auto,
 /obj/decal/cleanable/dirt/jen,
@@ -50205,7 +50068,7 @@
 	},
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "phT" = (
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
@@ -51576,9 +51439,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "pDI" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail{
@@ -52040,9 +51901,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "pJL" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/landmark/antagonist/blob,
@@ -52611,7 +52470,6 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/table/wood/round/auto,
 /obj/table/wood/round/auto,
 /obj/drink_rack/mug{
 	pixel_x = 3;
@@ -53192,7 +53050,7 @@
 "qcT" = (
 /obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "qcZ" = (
 /obj/decal/tile_edge/line/white{
 	color = "#ffccff";
@@ -53575,7 +53433,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "qiF" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
@@ -54122,7 +53980,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "qsJ" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1"
@@ -54678,7 +54536,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "qBU" = (
 /obj/stool/chair/dining/wood{
 	dir = 8
@@ -55737,7 +55595,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "qSx" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -55950,6 +55808,9 @@
 /area/station/maintenance/inner/se)
 "qVE" = (
 /obj/machinery/light_switch/north,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "qVM" = (
@@ -56107,9 +55968,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/grass/random,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "qXP" = (
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 10
@@ -56679,9 +56538,7 @@
 /area/station/routing/depot)
 "rfG" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "rfI" = (
 /obj/machinery/light/incandescent/harsh{
 	dir = 1
@@ -56717,7 +56574,7 @@
 "rgr" = (
 /obj/mesh/grille/steel,
 /turf/simulated/floor/plating/jen,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "rgS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -56916,9 +56773,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "rkE" = (
 /obj/machinery/shower{
 	dir = 8;
@@ -59137,6 +58992,18 @@
 /obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
+"rUo" = (
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/window_blinds/cog2/left{
+	dir = 4;
+	id = "chemistry"
+	},
+/obj/table/reinforced/chemistry/auto/clericalsup,
+/obj/mapping_helper/access/chemistry,
+/turf/simulated/floor/plating,
+/area/station/science/chemistry)
 "rUq" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -60105,9 +59972,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "shN" = (
 /obj/machinery/launcher_loader{
 	dir = 8
@@ -61125,9 +60990,7 @@
 	},
 /obj/landmark/start/job/geneticist,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "syh" = (
 /obj/stool/chair/red,
 /obj/machinery/bot/medbot/no_camera,
@@ -62097,7 +61960,7 @@
 /obj/machinery/traymachine/morgue,
 /obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "sOf" = (
 /obj/landmark/magnet_shield,
 /obj/securearea{
@@ -62294,9 +62157,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 1
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "sSb" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
@@ -62307,9 +62168,7 @@
 /area/station/ranch)
 "sSA" = (
 /turf/simulated/floor/carpet/green/fancy/narrow/eastwest,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "sSC" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 1
@@ -62610,9 +62469,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "sVZ" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -63248,6 +63105,21 @@
 /area/station/storage/auxillary{
 	name = "Tool Storage"
 	})
+"tgi" = (
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/machinery/cashreg{
+	name = "Chemistry credit transfer device"
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 4;
+	id = "chemistry"
+	},
+/obj/table/reinforced/chemistry/auto/clericalsup,
+/obj/mapping_helper/access/chemistry,
+/turf/simulated/floor/plating,
+/area/station/science/chemistry)
 "tgj" = (
 /obj/machinery/light/incandescent/netural,
 /obj/table/auto,
@@ -63614,7 +63486,7 @@
 	},
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "tlF" = (
 /obj/decal/poster/wallsign/poster_cool{
 	pixel_x = 5;
@@ -63940,6 +63812,12 @@
 	},
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/security/detectives_office)
+"tqY" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/jen,
+/area/station/medical/crematorium)
 "tqZ" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -65298,7 +65176,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/jen,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "tLr" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/mesh/catwalk/jen,
@@ -65871,7 +65749,7 @@
 /obj/machinery/disposal/morgue,
 /obj/disposalpipe/trunk/morgue,
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "tTM" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -65989,9 +65867,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "tVE" = (
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
@@ -66240,9 +66116,6 @@
 /turf/simulated/floor/yellowblack,
 /area/station/engine/ptl)
 "tZn" = (
-/obj/critter/opossum/morty{
-	dir = 4
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -66256,6 +66129,9 @@
 /obj/machinery/light_switch/west{
 	pixel_y = -6;
 	pixel_x = -27
+	},
+/mob/living/critter/small_animal/opossum/morty{
+	dir = 4
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
@@ -67677,11 +67553,15 @@
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
 "uzh" = (
+/obj/cable,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "uzm" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -67957,6 +67837,9 @@
 	icon_state = "fblue6"
 	},
 /area/station/crew_quarters/courtroom)
+"uCX" = (
+/turf/simulated/wall/auto/jen,
+/area/station/chapel/funeral_parlor)
 "uDb" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -68292,9 +68175,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "uHc" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
@@ -68581,9 +68462,7 @@
 /area/station/mining/staff_room)
 "uLm" = (
 /turf/simulated/floor/carpet/green/fancy/edge,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "uLI" = (
 /obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/transport,
@@ -69153,7 +69032,7 @@
 /obj/machinery/light/incandescent/cool/very,
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "uUo" = (
 /obj/machinery/light/lamp/green{
 	pixel_y = 8
@@ -69729,14 +69608,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
-"vdA" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/wall/auto/jen,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
 "vdB" = (
 /obj/stool/chair{
 	dir = 4
@@ -70195,7 +70066,7 @@
 	icon_state = "5-8"
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "vjv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -70806,17 +70677,6 @@
 /obj/stool/bench/red,
 /turf/simulated/floor/wood/five,
 /area/station/medical/asylum/main)
-"vrR" = (
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8
-	},
-/obj/window_blinds/cog2/left{
-	dir = 4;
-	id = "chemistry"
-	},
-/obj/table/reinforced/chemistry/auto/clericalsup,
-/turf/simulated/floor/plating,
-/area/station/science/chemistry)
 "vrX" = (
 /obj/table/auto,
 /obj/item/clothing/glasses/sunglasses{
@@ -72217,7 +72077,6 @@
 /area/station/science/lab)
 "vOl" = (
 /obj/table/wood/auto,
-/obj/table/wood/auto,
 /obj/item/plate{
 	pixel_x = 6;
 	pixel_y = 10
@@ -72969,7 +72828,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "vZU" = (
 /obj/machinery/portableowl/attached{
 	name = "Jowls"
@@ -73627,9 +73486,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "wkc" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/window_blinds/cog2/right{
@@ -74235,7 +74092,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "wst" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/medbooth)
@@ -74270,7 +74127,7 @@
 	},
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "wsU" = (
 /obj/decal/stage_edge{
 	layer = 2.8
@@ -75168,9 +75025,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "wGe" = (
 /obj/machinery/light/small/floor/netural,
 /turf/unsimulated/floor/shuttle{
@@ -76194,20 +76049,6 @@
 	dir = 8
 	},
 /area/listeningpost)
-"wVm" = (
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8
-	},
-/obj/machinery/cashreg{
-	name = "Chemistry credit transfer device"
-	},
-/obj/window_blinds/cog2/middle{
-	dir = 4;
-	id = "chemistry"
-	},
-/obj/table/reinforced/chemistry/auto/clericalsup,
-/turf/simulated/floor/plating,
-/area/station/science/chemistry)
 "wVy" = (
 /obj/table/reinforced/industrial/auto,
 /turf/simulated/floor/yellowblack{
@@ -76564,7 +76405,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "wZH" = (
 /obj/stool/chair,
 /obj/machinery/power/apc/autoname_north,
@@ -76577,9 +76418,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "wZJ" = (
 /obj/railing/orange,
 /obj/decal/cleanable/dirt/jen,
@@ -76648,7 +76487,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "xah" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -76753,9 +76592,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 1
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "xbF" = (
 /obj/railing/orange,
 /obj/decal/cleanable/dirt/jen,
@@ -76777,14 +76614,6 @@
 	id = "disposals";
 	move_lag = 30;
 	operating = 1
-	},
-/obj/strip_door{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 8;
-	id = "crusher1";
-	name = "crusher door"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
@@ -78035,7 +77864,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/floor/sanitary,
-/area/station/chapel/sanctuary)
+/area/station/medical/crematorium)
 "xsX" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet/grime,
@@ -78270,9 +78099,7 @@
 "xxd" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "xxf" = (
 /obj/decal/tile_edge/line/grey{
 	dir = 8;
@@ -78417,9 +78244,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "xyT" = (
 /obj/decal/cleanable/rust/jen,
 /obj/table/reinforced/auto,
@@ -78777,9 +78602,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/wood/six,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "xEj" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -78911,19 +78734,6 @@
 /obj/machinery/light/incandescent/harsh,
 /turf/simulated/floor,
 /area/station/hangar/science)
-"xFV" = (
-/obj/decal/stripe_delivery,
-/obj/mapping_helper/access/research,
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/sci_alt{
-	dir = 4;
-	id = "testchamber"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/station/science/testchamber)
 "xGu" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/plating/jen,
@@ -79667,6 +79477,9 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering)
+"xRy" = (
+/turf/simulated/wall/auto/reinforced/jen,
+/area/station/medical/crematorium)
 "xRM" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -79759,9 +79572,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "xTs" = (
 /obj/stool/bench/auto,
 /turf/simulated/floor/greenwhite/other,
@@ -80678,9 +80489,7 @@
 /turf/simulated/floor/carpet/green/fancy/innercorner{
 	dir = 9
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "yfH" = (
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/hor)
@@ -80905,7 +80714,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 1
 	},
-/area/station/chapel/sanctuary)
+/area/station/chapel/funeral_parlor)
 "yja" = (
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/firedoor_spawn,
@@ -106044,11 +105853,11 @@ vIm
 lGO
 sGu
 qVE
-mEh
+gcw
 gcw
 juB
-gcw
 dpm
+quz
 fUD
 sIK
 fJg
@@ -106725,7 +106534,7 @@ pFp
 jEM
 pFp
 kxT
-dWX
+nrz
 lFJ
 ieL
 rdj
@@ -107028,7 +106837,7 @@ iNG
 ieL
 xbJ
 ieL
-ltH
+kCI
 ieL
 cNV
 rIZ
@@ -107327,10 +107136,10 @@ iSC
 eQS
 pFp
 xVy
-nrz
+kmy
 efD
 ieL
-kUR
+ltH
 ieL
 rdj
 rdj
@@ -115076,13 +114885,13 @@ rdj
 rdj
 rdj
 rdj
-qxz
-pdw
+xRy
+tqY
 duV
 evq
-qxz
-qxz
-qxz
+xRy
+xRy
+xRy
 cvD
 dSJ
 gdE
@@ -115378,13 +115187,13 @@ rdj
 rdj
 rdj
 rdj
-qxz
+xRy
 qSp
 lhv
 uzh
 qcT
 sNX
-qxz
+xRy
 heD
 gIj
 pzE
@@ -115430,7 +115239,7 @@ ixX
 ixX
 iLV
 gLl
-dOe
+lnR
 aAT
 iLV
 hWZ
@@ -115683,10 +115492,10 @@ rdj
 oHQ
 jGi
 dHg
-uzh
+dsD
 dfM
 dfM
-qxz
+xRy
 blY
 dSJ
 gdE
@@ -115982,7 +115791,7 @@ rdj
 rdj
 rdj
 rdj
-pdw
+tqY
 xaf
 bBZ
 glb
@@ -116053,7 +115862,7 @@ bZT
 xLp
 jIQ
 lqP
-bzS
+ayb
 agA
 sUt
 nOG
@@ -116284,7 +116093,7 @@ rdj
 rdj
 rdj
 rdj
-pdw
+tqY
 tTt
 deW
 dAn
@@ -116586,7 +116395,7 @@ rdj
 rdj
 rdj
 rdj
-pdw
+tqY
 qBC
 nqc
 tlf
@@ -116888,13 +116697,13 @@ rdj
 rdj
 rdj
 rdj
-pdw
+tqY
 lhi
 duV
-qxz
+xRy
 hNm
-qxz
-qxz
+xRy
+xRy
 wRc
 eaQ
 oOC
@@ -118697,11 +118506,11 @@ rdj
 rdj
 rdj
 rdj
-jvj
-jvj
-qxz
+khe
+khe
+khe
 tLp
-eaG
+lNg
 wZE
 igQ
 igQ
@@ -118818,7 +118627,7 @@ aZz
 aZz
 aZz
 jzV
-xFV
+dye
 aZz
 aZz
 aRF
@@ -118998,8 +118807,8 @@ rdj
 rdj
 rdj
 rdj
-jvj
-jvj
+khe
+khe
 jfL
 jfL
 lXC
@@ -119114,8 +118923,8 @@ npV
 pyL
 mfI
 lqR
-wVm
-vrR
+tgi
+rUo
 bmF
 wXr
 iou
@@ -119295,19 +119104,19 @@ rdj
 rdj
 rdj
 fNJ
-jvj
-jvj
-jvj
-jvj
-jvj
-jvj
+khe
+khe
+khe
+khe
+khe
+khe
 nwY
-lyl
-lyl
+cEv
+cEv
 dQu
 shH
 pDy
-lyl
+cEv
 oMm
 bAD
 mWR
@@ -119597,7 +119406,7 @@ rdj
 rdj
 rdj
 vLJ
-jvj
+khe
 bMf
 cAY
 iuv
@@ -119899,7 +119708,7 @@ rdj
 rdj
 rdj
 vLJ
-jvj
+khe
 qXJ
 xbC
 uLm
@@ -119912,7 +119721,7 @@ tVB
 shH
 pDy
 flF
-lyl
+cEv
 bAD
 bJZ
 aaz
@@ -120214,7 +120023,7 @@ uHa
 lNg
 vXX
 eic
-jCk
+uCX
 mpU
 mpU
 mpU
@@ -120511,8 +120320,8 @@ hTU
 sSA
 kyM
 hzG
-jCk
-vdA
+uCX
+tLp
 lNg
 yeH
 rcW
@@ -120813,7 +120622,7 @@ hTU
 sSA
 fOY
 fzD
-jCk
+uCX
 aAA
 xbF
 gKg
@@ -121115,7 +120924,7 @@ hTU
 sSA
 oPQ
 hzG
-jCk
+uCX
 gtk
 euw
 gKg
@@ -121417,7 +121226,7 @@ hTU
 lLR
 oPb
 mbM
-jCk
+uCX
 aAA
 oIC
 xUL
@@ -121532,10 +121341,10 @@ amn
 aFv
 jQB
 aFv
-lwQ
+ikX
 aFv
 uFb
-lwQ
+ikX
 uFb
 wUb
 afo
@@ -121714,12 +121523,12 @@ xxd
 xxd
 xxd
 xxd
-jvj
-jvj
-jvj
-jvj
-jvj
-jvj
+khe
+khe
+khe
+khe
+khe
+khe
 cqD
 ewH
 gKg

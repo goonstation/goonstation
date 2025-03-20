@@ -38,7 +38,7 @@
 		return 2
 
 	setup_equipment_slots()
-		return
+		equipment += new /datum/equipmentHolder/ears/intercom/syndicate(src)
 
 /mob/living/critter/robotic/gunbot/engineerbot/strong // Midrounds
 	hand_count = 3
@@ -89,7 +89,8 @@
 		msgs.played_sound = 'sound/impact_sounds/generic_hit_2.ogg'
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
+		attack_twitch(user)
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
 
 /datum/targetable/critter/nano_repair
@@ -146,6 +147,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/sound = pick('sound/effects/elec_bzzz.ogg', 'sound/items/Welder.ogg', 'sound/items/mining_drill.ogg', 'sound/impact_sounds/Metal_Clang_1.ogg', 'sound/impact_sounds/Metal_Clang_3.ogg')
+		user.set_dir(get_dir(user, target))
 		attack_twitch(user)
 		playsound(user.loc, sound, 50, TRUE)
 
@@ -168,6 +170,7 @@
 //Borrowing this, sorry Azrun!
 /obj/item/salvager/gunbot
 	name = "deconstructor"
+	decon_time_mult = 0.5
 	use_power(watts)
 		return TRUE
 

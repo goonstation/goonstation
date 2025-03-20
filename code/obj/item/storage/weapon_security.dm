@@ -21,13 +21,13 @@
 /obj/item/storage/box/morphineinjectors
 	name = "morphine autoinjector box"
 	icon_state = "box"
-	desc = "Contains six morphine autoinjectors, for security use"
+	desc = "Contains six morphine autoinjectors, for security use."
 	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/morphine = 6)
 
 /obj/item/storage/lunchbox/robustdonuts
 	name = "robust donuts lunchbox"
 	icon_state = "lunchbox"
-	desc = "Contains a robust donut and a robusted donut, for security use"
+	desc = "Contains a robust donut and a robusted donut, for security use."
 	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 1, /obj/item/reagent_containers/food/snacks/donut/custom/robusted = 1)
 
 // For sec officers and the HoS. Really love spawning with a full backpack (Convair880).
@@ -370,7 +370,11 @@
 	desc = "A hardshell case for musical instruments."
 	icon_state = "briefcase_black"
 	item_state = "sec-case"
-	spawn_contents = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
+	spawn_contents = list(/obj/item/instrument/saxophone,\
+	/obj/item/instrument/guitar,\
+	/obj/item/instrument/bagpipe,\
+	/obj/item/instrument/fiddle,\
+	/obj/item/instrument/glockenspiel)
 
 /obj/item/storage/briefcase/instruments/blowgun
 	spawn_contents = list(/obj/item/gun/kinetic/blowgun,\

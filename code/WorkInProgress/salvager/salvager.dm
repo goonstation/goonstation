@@ -22,6 +22,7 @@
 	inventory_counter_enabled = 1
 	/// do we really actually for real want this to work in adventure zones?? just do this with varedit dont make children with this on
 	var/really_actually_bypass_z_restriction = FALSE
+	var/decon_time_mult = 1
 
 	New()
 		..()
@@ -113,6 +114,8 @@
 
 		if(user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
 			. = round(. * 0.75)
+
+		. *= src.decon_time_mult
 
 		if(.)
 			. = max(., 2 SECONDS)
@@ -422,6 +425,11 @@
 		else
 			. = ..()
 
+	set_loc(newloc, storage_check)
+		. = ..()
+		if(istype(newloc,/obj/item/storage/backpack/salvager))
+			src.anchored = TRUE
+
 /obj/item/storage/backpack/salvager
 	name = "salvager rucksack"
 	desc = "A repurposed military backpack made of high density fabric, designed to fit a wide array of tools and junk."
@@ -718,7 +726,7 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 	health = 250
 	maxhealth = 250
 	armor_score_multiplier = 0.7
-	speed = 0.85
+	speedmod = 1.18
 
 	New()
 		..()

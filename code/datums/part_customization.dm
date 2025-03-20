@@ -60,6 +60,14 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 			var/obj/item/organ/new_organ = new chosen_part_type()
 			if(!istype(human.organHolder?.get_organ(src.slot), chosen_part_type))
 				human.organHolder.receive_organ(new_organ, src.slot, force = TRUE)
+		var/chosen_part_type = pick(src.part_type)
+		if (istype(src, /datum/part_customization/human/arm) || istype(src, /datum/part_customization/human/leg))
+			if(human.limbs.get_limb(slot)?.type != chosen_part_type)
+				human.limbs.replace_with(src.slot, chosen_part_type, null, FALSE, TRUE) //pick can totally handle single values apparently
+		else
+			var/obj/item/organ/new_organ = new chosen_part_type()
+			if(!istype(human.organHolder?.get_organ(src.slot), chosen_part_type))
+				human.organHolder.receive_organ(new_organ, src.slot, force = TRUE)
 
 	can_apply(mob/M)
 		return ..() && ishuman(M)
@@ -69,7 +77,20 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 			id = "arm_default_left"
 			slot = "l_arm"
 			part_type = /obj/item/parts/human_parts/arm/left
+	arm
+		default_left
+			id = "arm_default_left"
+			slot = "l_arm"
+			part_type = /obj/item/parts/human_parts/arm/left
 
+			apply_to(mob/living/carbon/human/human)
+				var/limb_type = human.mutantrace.l_limb_arm_type_mutantrace
+				if (human.gender == FEMALE) //gendered limbs???
+					limb_type = human.mutantrace.l_limb_arm_type_mutantrace_f || limb_type
+				if (!limb_type)
+					limb_type = src.part_type
+				if(human.limbs.l_arm?.type != limb_type)
+					human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
 			apply_to(mob/living/carbon/human/human)
 				var/limb_type = human.mutantrace.l_limb_arm_type_mutantrace
 				if (human.gender == FEMALE) //gendered limbs???
@@ -92,7 +113,19 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 					limb_type = src.part_type
 				if(!human.limbs.r_arm?.type == limb_type)
 					human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
+			apply_to(mob/living/carbon/human/human)
+				var/limb_type = human.mutantrace.r_limb_arm_type_mutantrace
+				if (human.gender == FEMALE) //gendered limbs???
+					limb_type = human.mutantrace.r_limb_arm_type_mutantrace_f || limb_type
+				if (!limb_type)
+					limb_type = src.part_type
+				if(!human.limbs.r_arm?.type == limb_type)
+					human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
 
+		robo_left
+			id = "arm_robo_left"
+			slot = "l_arm"
+			part_type = /obj/item/parts/robot_parts/arm/left/light
 		robo_left
 			id = "arm_robo_left"
 			slot = "l_arm"
@@ -102,7 +135,17 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 			id = "arm_robo_right"
 			slot = "r_arm"
 			part_type = /obj/item/parts/robot_parts/arm/right/light
+		robo_right
+			id = "arm_robo_right"
+			slot = "r_arm"
+			part_type = /obj/item/parts/robot_parts/arm/right/light
 
+		robo_standard_left
+			id = "arm_robo_standard_left"
+			slot = "l_arm"
+			part_type = /obj/item/parts/robot_parts/arm/left/standard
+			trait_cost = 1
+			incompatible_parts = list("arm_robo_standard_right")
 		robo_standard_left
 			id = "arm_robo_standard_left"
 			slot = "l_arm"
@@ -116,13 +159,29 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 			part_type = /obj/item/parts/robot_parts/arm/right/standard
 			trait_cost = 1
 			incompatible_parts = list("arm_robo_standard_left")
+		robo_standard_right
+			id = "arm_robo_standard_right"
+			slot = "r_arm"
+			part_type = /obj/item/parts/robot_parts/arm/right/standard
+			trait_cost = 1
+			incompatible_parts = list("arm_robo_standard_left")
 
 		plant_left
 			id = "arm_plant_left"
 			slot = "l_arm"
 			trait_cost = 1
 			part_type = list(/obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/left/synth)
+		plant_left
+			id = "arm_plant_left"
+			slot = "l_arm"
+			trait_cost = 1
+			part_type = list(/obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/left/synth)
 
+		plant_right
+			id = "arm_plant_right"
+			slot = "r_arm"
+			trait_cost = 1
+			part_type = list(/obj/item/parts/human_parts/arm/right/synth/bloom, /obj/item/parts/human_parts/arm/right/synth)
 		plant_right
 			id = "arm_plant_right"
 			slot = "r_arm"
@@ -227,6 +286,78 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 			slot = "right_eye"
 			part_type = /obj/item/organ/eye/cyber/configurable
 
+	leg
+		default_left
+			id = "leg_default_left"
+			slot = "l_leg"
+			part_type = /obj/item/parts/human_parts/leg/left
+
+			apply_to(mob/living/carbon/human/human)
+				var/limb_type = human.mutantrace.l_limb_leg_type_mutantrace
+				if (human.gender == FEMALE)
+					limb_type = human.mutantrace.l_limb_leg_type_mutantrace_f || limb_type
+				if (!limb_type)
+					limb_type = src.part_type
+				if(human.limbs.l_leg?.type != limb_type)
+					human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
+
+		default_right
+			id = "leg_default_right"
+			slot = "r_leg"
+			part_type = /obj/item/parts/human_parts/leg/right
+
+			apply_to(mob/living/carbon/human/human)
+				var/limb_type = human.mutantrace.r_limb_leg_type_mutantrace
+				if (human.gender == FEMALE)
+					limb_type = human.mutantrace.r_limb_leg_type_mutantrace_f || limb_type
+				if (!limb_type)
+					limb_type = src.part_type
+				if(human.limbs.r_leg?.type != limb_type)
+					human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
+
+		plant_left
+			id = "leg_plant_left"
+			slot = "l_leg"
+			trait_cost = 1
+			part_type = list(/obj/item/parts/human_parts/leg/left/synth/bloom, /obj/item/parts/human_parts/leg/left/synth)
+
+		plant_right
+			id = "leg_plant_right"
+			slot = "r_leg"
+			trait_cost = 1
+			part_type = list(/obj/item/parts/human_parts/leg/right/synth/bloom, /obj/item/parts/human_parts/leg/right/synth)
+
+	organ
+		eye_default_left
+			id = "eye_default_left"
+			slot = "left_eye"
+			part_type = /obj/item/organ/eye/left
+
+		eye_default_right
+			id = "eye_default_right"
+			slot = "right_eye"
+			part_type = /obj/item/organ/eye/right
+
+		eye_plant_left
+			id = "eye_plant_left"
+			slot = "left_eye"
+			part_type = /obj/item/organ/eye/synth
+
+		eye_plant_right
+			id = "eye_plant_right"
+			slot = "right_eye"
+			part_type = /obj/item/organ/eye/synth
+
+		eye_robot_left
+			id = "eye_robot_left"
+			slot = "left_eye"
+			part_type = /obj/item/organ/eye/cyber/configurable
+
+		eye_robot_right
+			id = "eye_robot_right"
+			slot = "right_eye"
+			part_type = /obj/item/organ/eye/cyber/configurable
+
 ABSTRACT_TYPE(/datum/part_customization/human/missing)
 /datum/part_customization/human/missing
 	custom_icon = 'icons/ui/character_editor.dmi'
@@ -247,7 +378,23 @@ ABSTRACT_TYPE(/datum/part_customization/human/missing)
 			id = "arm_missing_left"
 			slot = "l_arm"
 			incompatible_parts = list("arm_missing_right")
+		if (istype(src, /datum/part_customization/human/missing/organ))
+			var/obj/item/organ/old_organ = human.organHolder?.get_organ(src.slot)
+			if(old_organ)
+				human.organHolder.drop_organ(src.slot)
+				qdel(old_organ)
+		else
+			var/obj/item/parts/limb = human.limbs.get_limb(src.slot)
+			limb?.remove(0)
+			qdel(limb)
+	arm
+		left
+			id = "arm_missing_left"
+			slot = "l_arm"
+			incompatible_parts = list("arm_missing_right")
 
+			get_name()
+				return "missing left arm"
 			get_name()
 				return "missing left arm"
 
@@ -255,9 +402,47 @@ ABSTRACT_TYPE(/datum/part_customization/human/missing)
 			id = "arm_missing_right"
 			slot = "r_arm"
 			incompatible_parts = list("arm_missing_left")
+		right
+			id = "arm_missing_right"
+			slot = "r_arm"
+			incompatible_parts = list("arm_missing_left")
 
 			get_name()
 				return "missing right arm"
+			get_name()
+				return "missing right arm"
+
+	leg
+		left
+			id = "leg_missing_left"
+			slot = "l_leg"
+
+			get_name()
+				return "missing left leg"
+
+		right
+			id = "leg_missing_right"
+			slot = "r_leg"
+
+			get_name()
+				return "missing right leg"
+
+	organ
+		eye_left
+			id = "eye_missing_left"
+			slot = "left_eye"
+			trait_cost = 1
+
+			get_name()
+				return "missing left eye"
+
+		eye_right
+			id = "eye_missing_right"
+			slot = "right_eye"
+			trait_cost = 1
+
+			get_name()
+				return "missing right eye"
 
 	leg
 		left

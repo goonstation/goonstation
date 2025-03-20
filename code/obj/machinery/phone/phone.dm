@@ -136,7 +136,7 @@ TYPEINFO(/obj/machinery/phone)
 		..()
 		src._health -= P.force
 		attack_particle(user,src)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		hit_twitch(src)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		if(src._health <= 0)

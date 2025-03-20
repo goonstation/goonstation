@@ -10,7 +10,7 @@ var/global/tracy_init_reason = null
 
 	world.log << "Enabling the Tracy Profiler Hook."
 
-	var/init_result = LIBCALL(TRACY_DLL_PATH , "init")("block")
+	var/init_result = call_ext(TRACY_DLL_PATH , "init")("block")
 	if (length(init_result) != 0 && init_result[1] == ".") // if first character is ., then it returned the output filename
 		world.log << "byond-tracy initialized (logfile: [init_result])"
 		global.tracy_initialized = TRUE

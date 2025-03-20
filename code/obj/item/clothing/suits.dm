@@ -139,6 +139,52 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 			hcolor = "blue"
 		..()
 
+/obj/item/clothing/suit/hoodie/large
+	icon_state = "hoodieL"
+	item_state = "hoodieL"
+
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_hood, hood_style="hoodieL[src.hcolor ? "-[hcolor]" : null]")
+		src.icon_state = "hoodieL[src.hcolor ? "-[hcolor]" : null]"
+		src.item_state = "hoodieL[src.hcolor ? "-[hcolor]" : null]"
+
+	white
+		icon_state = "hoodieL-white"
+		item_state = "hoodieL-white"
+		hcolor = "white"
+
+	pink
+		icon_state = "hoodieL-pink"
+		item_state = "hoodieL-pink"
+		hcolor = "pink"
+
+	black
+		icon_state = "hoodieL-black"
+		item_state = "hoodieL-black"
+		hcolor = "black"
+
+	green
+		icon_state = "hoodieL-green"
+		item_state = "hoodieL-green"
+		hcolor = "green"
+
+	red
+		icon_state = "hoodieL-red"
+		item_state = "hoodieL-red"
+		hcolor = "red"
+
+	blue
+		desc = "Would fit well on a skeleton."
+		icon_state = "hoodieL-blue"
+		item_state = "hoodieL-blue"
+		hcolor = "blue"
+
+	purple
+		icon_state = "hoodieL-purple"
+		item_state = "hoodieL-purple"
+		hcolor = "purple"
+
 /* ======== Jackets ======== */
 
 ABSTRACT_TYPE(/obj/item/clothing/suit/jacket)
@@ -1145,7 +1191,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 				src.color = "#FFFFFF"
 
 			attackby(obj/item/dye_bottle/W, mob/user)
-				if (istype(W, /obj/item/dye_bottle))
+				if (istype(W) && W.uses_left)
+					W.use_dye()
 					src.color = W.customization_first_color
 					src.UpdateIcon()
 					var/mob/wearer = src.loc
@@ -1204,7 +1251,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		..()
 		if(!istype(get_area(src), /area/station))
 			var/nt_wear_state = "[src.wear_state || src.icon_state]-nt"
-			if(nt_wear_state in icon_states(src.wear_image_icon))
+			if(nt_wear_state in get_icon_states(src.wear_image_icon))
 				src.wear_state = nt_wear_state
 
 	setupProperties()
@@ -1539,7 +1586,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		..()
 		if(!istype(get_area(src), /area/station))
 			var/nt_wear_state = "[src.wear_state || src.icon_state]-nt"
-			if(nt_wear_state in icon_states(src.wear_image_icon))
+			if(nt_wear_state in get_icon_states(src.wear_image_icon))
 				src.wear_state = nt_wear_state
 
 	setupProperties()
@@ -2185,6 +2232,8 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	name = "NTSO Tactical Badge"
 	desc = "An official badge for an NTSO operator, with a miniaturized shield projector. Small enough to be used as a backup power cell in a pinch."
 	tooltip_flags = REBUILD_ALWAYS
+	icon_state = "security_badge_shielded"
+	item_state = "security_badge_shielded"
 
 	get_desc()
 		. = ..()

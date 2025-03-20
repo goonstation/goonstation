@@ -294,7 +294,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 // also add overlays for indicator lights
 /obj/machinery/power/apc/update_icon()
 	ClearAllOverlays(1)
-	if(opened)
+	if(src.status & BROKEN)
+		icon_state = "apc-b"
+	else if(opened)
 		icon_state = "apc1"
 
 		if (cell)
@@ -1448,11 +1450,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		set_broken()
 
 
-/obj/machinery/power/apc/proc/set_broken()
-	status |= BROKEN
-	icon_state = "apc-b"
-	ClearAllOverlays() //no need to cache since nobody repairs these
-
+/obj/machinery/power/apc/set_broken()
+	. = ..()
+	if(.) return
 	operating = 0
 	update()
 

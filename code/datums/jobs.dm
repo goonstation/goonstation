@@ -1753,6 +1753,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Pod Mechanic"
 	#endif
 	wages = PAY_TRADESMAN
+	trait_list = list("training_engineer")
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/rank/mechanic)
 	slot_head = list(/obj/item/clothing/head/helmet/hardhat)
@@ -2423,75 +2424,60 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_belt = list(/obj/item/storage/fanny)
 	//more
 
-/datum/job/special/ntso_specialist
+ABSTRACT_TYPE(/datum/job/special/nt)
+/datum/job/special/nt
 	linkcolor = "#3348ff"
-	name = "Nanotrasen Special Operative"
 	limit = 0
 	wages = PAY_IMPORTANT
-	trait_list = list("training_security")
+	//Emergency responders shouldn't be antags
 	allow_traitors = FALSE
 	allow_spy_theft = FALSE
 	can_join_gangs = FALSE
 	cant_spawn_as_rev = TRUE
-	receives_badge = TRUE
-	receives_miranda = TRUE
-	receives_implants = list(/obj/item/implant/health)
+	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
+	access_string = "Nanotrasen Responder" // "All Access" + Centcom
+
 	slot_back = list(/obj/item/storage/backpack/NT)
-	slot_belt = list(/obj/item/storage/belt/security/ntso)
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
-	slot_suit = list(/obj/item/clothing/suit/space/ntso)
-	slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_glov = list(/obj/item/clothing/gloves/swat/NT)
-	slot_eyes = list(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
-	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_card = /obj/item/card/id/nt_specialist
+	faction = list(FACTION_NANOTRASEN)
+
+/datum/job/special/nt/special_operative
+	name = "Nanotrasen Special Operative"
+	trait_list = list("training_security")
+	receives_miranda = TRUE
+	receives_badge = TRUE
+	slot_belt = list(/obj/item/storage/belt/security/ntso)
+	slot_suit = list(/obj/item/clothing/suit/space/ntso)
+	slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
+	slot_eyes = list(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
+	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_poc1 = list(/obj/item/device/pda2/ntso)
 	slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
-							/obj/item/clothing/head/NTberet,
-							/obj/item/currency/spacecash/fivehundred)
+							/obj/item/clothing/head/NTberet)
 
-	faction = list(FACTION_NANOTRASEN)
-
-	New()
-		..()
-		src.access = get_all_accesses() + access_centcom
-		return
-
-/datum/job/special/nt_engineer
-	linkcolor = "#3348ff"
+/datum/job/special/nt/engineer
 	name = "Nanotrasen Emergency Repair Technician"
-	limit = 0
-	wages = PAY_IMPORTANT
 	trait_list = list("training_engineer")
-	allow_traitors = FALSE
-	allow_spy_theft = FALSE
-	cant_spawn_as_rev = TRUE
-	slot_back = list(/obj/item/storage/backpack/NT)
+
 	slot_belt = list(/obj/item/storage/belt/utility/nt_engineer)
 	slot_jump = list(/obj/item/clothing/under/rank/engineer)
 	slot_suit = list(/obj/item/clothing/suit/space/industrial/nt_specialist)
 	slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
 	slot_foot = list(/obj/item/clothing/shoes/magnetic)
-	slot_glov = list(/obj/item/clothing/gloves/yellow)
 	slot_eyes = list(/obj/item/clothing/glasses/toggleable/meson)
-	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
+	slot_ears = list(/obj/item/device/radio/headset/command/nt/engineer)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_card = /obj/item/card/id/nt_specialist
 	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 	slot_poc2 = list(/obj/item/device/pda2/nt_engineer)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/device/flash,
 							/obj/item/sheet/steel/fullstack,
 							/obj/item/sheet/glass/reinforced/fullstack)
-
-	faction = list(FACTION_NANOTRASEN)
-
-	New()
-		..()
-		src.access = get_all_accesses() + access_centcom
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2502,16 +2488,10 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 			rcd.tooltip_rebuild = TRUE
 			rcd.UpdateIcon()
 
-/datum/job/special/nt_medical
-	linkcolor = "#3348ff"
+/datum/job/special/nt/medic
 	name = "Nanotrasen Emergency Medic"
-	limit = 0
-	wages = PAY_IMPORTANT
 	trait_list = list("training_medical")
-	allow_traitors = FALSE
-	allow_spy_theft = FALSE
-	cant_spawn_as_rev = TRUE
-	slot_back = list(/obj/item/storage/backpack/NT)
+
 	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/medical)
 	slot_suit = list(/obj/item/clothing/suit/hazard/paramedic/armored)
@@ -2519,9 +2499,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
-	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
+	slot_ears = list(/obj/item/device/radio/headset/command/nt/medic)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_card = /obj/item/card/id/nt_specialist
 	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 	slot_poc2 = list(/obj/item/device/pda2/nt_medical)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
@@ -2529,15 +2508,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/reagent_containers/glass/bottle/omnizine,
 							/obj/item/reagent_containers/glass/bottle/ether)
 
-	faction = list(FACTION_NANOTRASEN)
-
-	New()
-		..()
-		src.access = get_all_accesses() + access_centcom
-
 // Use this one for late respawns to deal with existing antags. they are weaker cause they dont get a laser rifle or frags
-/datum/job/special/nt_security
-	linkcolor = "#3348ff"
+/datum/job/special/nt/security_consultant
 	name = "Nanotrasen Security Consultant"
 	limit = 1 // backup during HELL WEEK. players will probably like it
 	unique = TRUE
@@ -2547,30 +2519,21 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	requires_whitelist = TRUE
 	requires_supervisor_job = "Head of Security"
 	counts_as = "Security Officer"
-	allow_traitors = FALSE
-	allow_spy_theft = FALSE
-	can_join_gangs = FALSE
-	cant_spawn_as_rev = TRUE
-	receives_badge = TRUE
 	receives_miranda = TRUE
-	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
-	slot_back = list(/obj/item/storage/backpack/NT)
-	slot_belt = list(/obj/item/storage/belt/security/ntsc) //special secbelt subtype that spawns with the NTSO gear inside
-	slot_jump = list(/obj/item/clothing/under/misc/turds)
+	receives_badge = TRUE
+
+	slot_belt = list(/obj/item/storage/belt/security/ntsc)
 	slot_suit = list(/obj/item/clothing/suit/space/ntso)
 	slot_head = list(/obj/item/clothing/head/NTberet)
-	slot_foot = list(/obj/item/clothing/shoes/swat)
-	slot_glov = list(/obj/item/clothing/gloves/swat/NT)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
-	slot_ears = list(/obj/item/device/radio/headset/command/nt/consultant) //needs their own secret channel
+	slot_ears = list(/obj/item/device/radio/headset/command/nt/consultant)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_card = /obj/item/card/id/nt_specialist
 	slot_poc1 = list(/obj/item/storage/ntsc_pouch)
 	slot_poc2 = list(/obj/item/device/pda2/ntso)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular)
 	wiki_link = "https://wiki.ss13.co/Nanotrasen_Security_Consultant"
 
-	faction = list(FACTION_NANOTRASEN)
+//NT RESPONDER JOBS END
 
 /datum/job/special/headminer
 	name = "Head of Mining"
@@ -3002,6 +2965,28 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		if (!M)
 			return
 		M.bioHolder.AddEffect("accent_goodmin", magical=1)
+
+/datum/job/special/werewolf_hunter
+	name = "Werewolf Hunter"
+	access_string = "Staff Assistant"
+	limit = 0
+	change_name_on_spawn = TRUE
+	slot_head = list(/obj/item/clothing/head/witchfinder)
+	slot_ears = list(/obj/item/device/radio/headset/werewolf_hunter)
+	slot_suit = list(/obj/item/clothing/suit/witchfinder)
+	slot_jump = list(/obj/item/clothing/under/gimmick/witchfinder)
+	slot_glov = list(/obj/item/clothing/gloves/black)
+	slot_foot = list(/obj/item/clothing/shoes/witchfinder)
+	slot_back = list(/obj/item/quiver/leather/stocked)
+	slot_belt = list(/obj/item/storage/belt/crossbow)
+	items_in_belt = list(
+		/obj/item/gun/bow/crossbow/wooden,
+		/obj/item/gun/bow/crossbow/wooden,
+		/obj/item/handcuffs/silver,
+		/obj/item/handcuffs/silver,
+		/obj/item/plant/herb/aconite,
+		/obj/item/plant/herb/aconite,
+	)
 
 /*---------------------------------------------------------------*/
 
