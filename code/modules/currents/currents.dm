@@ -115,7 +115,7 @@
 		SPAWN(0)
 			while (!QDELETED(src))
 				process()
-				sleep(5 SECONDS)
+				sleep(rand(4,6) SECONDS)
 
 	proc/process()
 		if (prob(10))
