@@ -32,7 +32,7 @@
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, PROC_REF(assembly_building))
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, PROC_REF(assembly_get_state))
 		// Mousetrap + assembly-applier -> mousetrap/Applier-Assembly
-		src.AddComponent(/datum/component/assembly/consumes_all/trigger_applier_assembly)
+		src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
 
 /// ----------- Assembly-Related Procs -----------
 

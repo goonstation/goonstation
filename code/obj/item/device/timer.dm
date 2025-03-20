@@ -24,7 +24,7 @@ TYPEINFO(/obj/item/device/timer)
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT, PROC_REF(assembly_get_time_left))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME, PROC_REF(assembly_set_time))
 	// Timer + assembly-applier -> timer/Applier-Assembly
-	src.AddComponent(/datum/component/assembly/consumes_all/trigger_applier_assembly)
+	src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
 
 /obj/item/device/timer/disposing()
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION)

@@ -1721,7 +1721,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		// unwelded frame + welder -> hollow frame
 		src.AddComponent(/datum/component/assembly, TOOL_WELDING, PROC_REF(pipeframe_welding), FALSE)
 		// unwelded frame + hollow frame -> slamgun
-		src.AddComponent(/datum/component/assembly/consumes_all, /obj/item/pipebomb/frame, PROC_REF(slamgun_crafting), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(slamgun_crafting), TRUE)
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK)
