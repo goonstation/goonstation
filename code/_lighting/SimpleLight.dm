@@ -122,12 +122,14 @@
 	show_medium_light()
 
 	if (length(medium_light_rgbas) == 1) //dont loop/average if list only contains 1 thing
-		for(var/obj/overlay/simple_light/medium/medium_light in src.medium_lights)
+		var/alpha = rgba[4]
+		var/alpha_scaled = min(255, alpha / 2) // divided by two because the directional sprites are brighter
+		for(var/atom/movable/light/simple_light/medium/medium_light as anything in src.medium_lights)
 			if(medium_light.icon_state == "medium_center")
-				medium_light.color = rgb(rgba[1], rgba[2], rgba[3], min(255, rgba[4]))
+				rgba[4] = min(255, alpha)
 			else
-				// divided by two because the directional sprites are brighter
-				medium_light.color = rgb(rgba[1], rgba[2], rgba[3], min(255, rgba[4] / 2))
+				rgba[4] = alpha_scaled
+			medium_light.color = rgba
 	else
 		update_medium_light_color()
 
@@ -143,10 +145,10 @@
 	else
 		medium_light_rgbas.len = 0
 
-	if (length(medium_light_rgbas) <= 0)
-		hide_medium_light()
-	else
+	if (length(medium_light_rgbas))
 		update_medium_light_color()
+	else
+		hide_medium_light()
 
 /atom/proc/update_medium_light_color()
 	var/avg_r = 0
@@ -163,13 +165,13 @@
 	avg_r /= length(medium_light_rgbas)
 	avg_g /= length(medium_light_rgbas)
 	avg_b /= length(medium_light_rgbas)
-
+	var/list/unscaled = list(avg_r, avg_g, avg_b, min(255, sum_a))
+	var/list/scaled = list(avg_r, avg_g, avg_b, min(255, sum_a / 2)) // divided by two because the directional sprites are brighter
 	for(var/obj/overlay/simple_light/medium/medium_light in src.medium_lights)
 		if(medium_light.icon_state == "medium_center")
-			medium_light.color = rgb(avg_r, avg_g, avg_b, min(255, sum_a))
+			medium_light.color = unscaled
 		else
-			// divided by two because the directional sprites are brighter
-			medium_light.color = rgb(avg_r, avg_g, avg_b, min(255, sum_a / 2))
+			medium_light.color = scaled
 
 /atom/proc/show_medium_light()
 	if(!length(medium_light_rgbas))
@@ -180,22 +182,20 @@
 			var/obj/overlay/simple_light/medium/light = new(null, light_dir)
 			src:vis_contents += light
 			src.medium_lights += light
-	for(var/obj/overlay/simple_light/medium/light in src.medium_lights)
+	for(var/obj/overlay/simple_light/medium/light as anything in src.medium_lights)
 		light.invisibility = INVIS_NONE
 	update_medium_light_visibility()
 
 /atom/proc/hide_medium_light()
-	for(var/obj/overlay/simple_light/medium/light in src.medium_lights)
+	for(var/obj/overlay/simple_light/medium/light as anything in src.medium_lights)
 		light.invisibility = INVIS_ALWAYS
 
 /atom/proc/destroy_medium_light()
-	if (length(medium_light_rgbas))
-		hide_medium_light()
-	for(var/obj/overlay/simple_light/medium/light in src.medium_lights)
+	for(var/obj/overlay/simple_light/medium/light as anything in src.medium_lights)
 		src:vis_contents -= light
 		qdel(light)
 	medium_light_rgbas = null
-	src.medium_lights = null
+	src.medium_lights.len = 0
 
 /atom/disposing()
 	..()
@@ -203,7 +203,7 @@
 		destroy_medium_light()
 
 /atom/proc/update_medium_light_visibility()
-	if(src.medium_lights[1].invisibility == 101) // toggled off
+	if(src.medium_lights[1].invisibility == INVIS_ALWAYS) // toggled off
 		return
 	if(!isturf(src.loc) && !isturf(src))
 		for (var/obj/overlay/simple_light/medium/light as anything in src.medium_lights)
