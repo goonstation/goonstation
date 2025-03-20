@@ -1218,6 +1218,9 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 
 
 
+/obj/npc/trader/bee/sea
+	name = "Bambini"
+
 // Hon- I mean, hello sir.
 
 /obj/npc/trader/exclown
