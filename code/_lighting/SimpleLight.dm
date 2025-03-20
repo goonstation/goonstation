@@ -240,12 +240,15 @@
 	show_mdir_light()
 
 	if (length(mdir_light_rgbas) == 1) //dont loop/average if list only contains 1 thing
-		for(var/obj/overlay/simple_light/medium/directional/mdir_light in src.mdir_lights)
-			if(mdir_light.dist == mdir_light_dists[mdir_light_dists.len])
-				mdir_light.color = rgb(rgba[1], rgba[2], rgba[3], min(255, rgba[4]))
+		var/alpha = rgba[4]
+		var/alpha_scaled = min(255, alpha * 0.4) // divided by two because the directional sprites are brighter
+		for(var/obj/overlay/simple_light/medium/directional/mdir_light as anything in src.mdir_lights)
+			if(mdir_light.dist == mdir_light_dists[length(mdir_light_dists)])
+				rgba[4] = min(255, alpha)
 			else
 				// divided by two because the directional sprites are brighter
-				mdir_light.color = rgb(rgba[1], rgba[2], rgba[3], min(255, rgba[4] * 0.4))
+				rgba[4] = alpha_scaled
+			mdir_light.color = rgba
 	else
 		update_mdir_light_color()
 
@@ -282,12 +285,14 @@
 	avg_g /= length(mdir_light_rgbas)
 	avg_b /= length(mdir_light_rgbas)
 
-	for(var/obj/overlay/simple_light/medium/directional/mdir_light in src.mdir_lights)
-		if(mdir_light.dist == mdir_light_dists[mdir_light_dists.len])
-			mdir_light.color = rgb(avg_r, avg_g, avg_b, min(255, sum_a))
+	var/list/unscaled = list(avg_r, avg_g, avg_b, min(255, sum_a))
+	var/list/scaled = list(avg_r, avg_g, avg_b, min(255, sum_a * 0.4))
+	for(var/obj/overlay/simple_light/medium/directional/mdir_light as anything in src.mdir_lights)
+		if(mdir_light.dist == mdir_light_dists[length(mdir_light_dists)])
+			mdir_light.color = unscaled
 		else
 			// divided by two because the directional sprites are brighter
-			mdir_light.color = rgb(avg_r, avg_g, avg_b, min(255, sum_a  * 0.4))
+			mdir_light.color = scaled
 
 /atom/proc/show_mdir_light()
 	if(!length(mdir_light_rgbas))
@@ -299,22 +304,20 @@
 			light.dist = light_dist
 			src:vis_contents += light
 			src.mdir_lights += light
-	for(var/obj/overlay/simple_light/medium/directional/light in src.mdir_lights)
+	for(var/obj/overlay/simple_light/medium/directional/light as anything in src.mdir_lights)
 		light.invisibility = INVIS_NONE
 	update_mdir_light_visibility(src.dir)
 
 /atom/proc/hide_mdir_light()
-	for(var/obj/overlay/simple_light/medium/directional/light in src.mdir_lights)
+	for(var/obj/overlay/simple_light/medium/directional/light as anything in src.mdir_lights)
 		light.invisibility = INVIS_ALWAYS
 
 /atom/proc/destroy_mdir_light()
-	if (length(mdir_light_rgbas))
-		hide_mdir_light()
-	for(var/obj/overlay/simple_light/medium/directional/light in src.mdir_lights)
+	for(var/obj/overlay/simple_light/medium/directional/light as anything in src.mdir_lights)
 		src:vis_contents -= light
 		qdel(light)
 	mdir_light_rgbas = null
-	src.mdir_lights = null
+	src.mdir_lights.len = 0
 
 /atom/disposing()
 	..()
@@ -322,7 +325,7 @@
 		destroy_mdir_light()
 
 /atom/proc/update_mdir_light_visibility(direct)
-	if(!length(src.mdir_lights) || src.mdir_lights[1].invisibility == 101) // toggled off
+	if(!length(src.mdir_lights) || src.mdir_lights[1].invisibility == INVIS_ALWAYS) // toggled off
 		return
 	if(!isturf(src.loc))
 		for (var/obj/overlay/simple_light/medium/directional/light as anything in src.mdir_lights)
@@ -337,31 +340,31 @@
 	switch(direct)
 		if (NORTH)
 			vx = 0
-			vy = 1
+			vy = 32
 		if (NORTHEAST)
-			vx = 0.7071
-			vy = 0.7071
+			vx = 22.627417 //sqrt(2)/2 * 32
+			vy = 22.627417
 		if (EAST)
-			vx = 1
+			vx = 32
 			vy = 0
 		if (SOUTHEAST)
-			vx = 0.7071
-			vy = -0.7071
+			vx = 22.627417
+			vy = -22.627417
 		if (SOUTH)
 			vx = 0
-			vy = -1
+			vy = -32
 		if (SOUTHWEST)
-			vx = -0.7071
-			vy = -0.7071
+			vx = -22.627417
+			vy = -22.627417
 		if (WEST)
-			vx = -1
+			vx = -32
 			vy = 0
 		if (NORTHWEST)
-			vx = -0.7071
-			vy = 0.7071
+			vx = -22.627417
+			vy = 22.627417
 
 	var/turf/T = get_steps(src, direct, 5)
-	if (!src || !T)
+	if (!T)
 		return
 	var/turf/TT = getlineopaqueblocked(src,T)
 	var/dist = GET_DIST(src,TT)-1
@@ -374,7 +377,7 @@
 		////light.pixel_x = (vx * min(dist,light.dist) * 32) - 32
 		//light.pixel_y = (vy * min(dist,light.dist) * 32) - 32
 
-		animate(light,pixel_x = ((vx * min(dist,light.dist) * 32) - 32), pixel_y = ((vy * min(dist,light.dist) * 32) - 32), time = 1, easing = EASE_IN)
+		animate(light,pixel_x = ((vx * min(dist,light.dist)) - 32), pixel_y = ((vy * min(dist,light.dist)) - 32), time = 1, easing = EASE_IN)
 
 		src:vis_contents += light
 
