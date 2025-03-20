@@ -3832,4 +3832,12 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/clothing/suit/hazard/fire/heavy)
 	category = "Clothing"
 
+/datum/manufacture/turbine_shaft
+	name = "Turbine Shaft"
+	item_requirements = list("metal_dense" = 30)
+	create = 1
+	item_outputs = list(/obj/turbine_shaft)
+	time = 40 SECONDS
+	category = "Machinery"
+
 #undef JUMPSUIT_COST
