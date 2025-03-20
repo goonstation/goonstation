@@ -19,7 +19,6 @@
 		REMOVE_ATOM_PROPERTY(AM, PROP_MOVABLE_OCEAN_PUSH, src)
 		src.controller.removeAtom(AM, dir)
 
-//TODO: make this spawn junk occasionally?
 /obj/landmark/current_spawner
 	name = "current spawner"
 	icon = 'icons/effects/effects.dmi'
@@ -48,6 +47,7 @@
 			//scale the starting flow values so the middle one is largest and they drop off towards the edges
 			new_current.set_flow_rate(100 - 10 * (2 * dist_from_center) ** 2)
 			currents += new_current
+			new /obj/landmark/flotsam_spawner(get_steps(src, turn(src.dir, 90), i - center_index))
 
 		var/turf/T = get_turf(src)
 		var/left_delta = 0
@@ -85,6 +85,7 @@
 				if (!istype(spawn_turf, /turf/space/fluid))
 					return null
 				var/obj/effects/current/new_current = new(spawn_turf)
+				//this is just defining a diagonal line like x = y
 				if (angle > 0 && across == forward || angle < 0 && ((src.width + 1 - across) == forward))
 					new_current.dir = turn(dir, angle)
 				else
@@ -96,4 +97,29 @@
 			T = get_step(T, dir) //step forward one
 		//we've moved width steps forward and one step to the side
 		return get_step(T, turn(dir, angle))
+
+/obj/landmark/flotsam_spawner
+	add_to_landmarks = FALSE
+	deleted_on_start = FALSE
+	//TODO: add more to this
+	var/list/flotsam_types = list(
+		/obj/item/seashell = 10,
+		/obj/item/reagent_containers/food/snacks/ingredient/seaweed = 2,
+		/obj/item/raw_material/gold = 1,
+	)
+
+	New()
+		. = ..()
+		//yes this is dumb but there'll only ever be like 3 of these on the map so I'm not making a process scheduler just for that
+		//feel free to laugh at me in the future when there's 4289 of these for some reason
+		SPAWN(0)
+			while (!QDELETED(src))
+				process()
+				sleep(5 SECONDS)
+
+	proc/process()
+		if (prob(10))
+			var/type = weighted_pick(src.flotsam_types)
+			var/atom/movable/thing = new type(src.loc)
+			APPLY_ATOM_PROPERTY(thing, PROP_ATOM_FLOTSAM, src)
 

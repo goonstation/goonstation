@@ -23,8 +23,10 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 	var/FallTime = 0.3 SECONDS
 	/// Whether anchored == ANCHORED atoms are supposed to fall down or not. Currently defaults to true because minisubs and such.
 	var/allow_anchored = TRUE
+	/// Whether to delete PROP_ATOM_FLOTSAM objects that fall down here
+	var/DeleteFlotsam = FALSE
 
-	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS)
+	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, DeleteFlotsam = FALSE)
 		. = ..()
 		if (!istype(src.parent, /turf))
 			return COMPONENT_INCOMPATIBLE
@@ -33,6 +35,7 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 		RegisterSignal(src.parent, COMSIG_TURF_REPLACED, PROC_REF(RemoveComponent))
 		src.BruteDamageMax	= BruteDamageMax
 		src.FallTime		= FallTime
+		src.DeleteFlotsam   = DeleteFlotsam
 
 	UnregisterFromParent()
 		. = ..()
@@ -63,7 +66,9 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 				return
 
 		return_if_overlay_or_effect(AM)
-
+		if (src.DeleteFlotsam && HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOTSAM))
+			qdel(AM)
+			return
 		// if the fall has coyote time, then delay it
 		if (src.FallTime)
 			SPAWN(src.FallTime)
@@ -127,7 +132,7 @@ TYPEINFO(/datum/component/pitfall/target_landmark)
 	/// The landmark that the fall sends you to. Should be a landmark define.
 	var/TargetLandmark = ""
 
-	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, TargetLandmark = "")
+	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, DeleteFlotsam = FALSE, TargetLandmark = "")
 		..()
 		src.TargetLandmark = TargetLandmark
 		if (!src.TargetLandmark)
@@ -149,7 +154,7 @@ TYPEINFO(/datum/component/pitfall/target_area)
 	/// The area path that the target falls into. For area targeting
 	var/TargetArea = null
 
-	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, TargetArea = null)
+	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, DeleteFlotsam = FALSE, TargetArea = null)
 		..()
 		src.TargetArea = TargetArea
 		if (!src.TargetArea || !ispath(src.TargetArea, /area))
@@ -176,7 +181,7 @@ TYPEINFO(/datum/component/pitfall/target_coordinates)
 	/// If truthy, try to find a spot around the target to land on in range(x).
 	var/LandingRange = 8
 
-	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, TargetZ = 5, LandingRange = 8)
+	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, DeleteFlotsam = FALSE, TargetZ = 5, LandingRange = 8)
 		..()
 		src.TargetZ			= TargetZ
 		src.LandingRange	= LandingRange
