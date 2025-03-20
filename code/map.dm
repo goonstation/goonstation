@@ -1281,10 +1281,10 @@ var/global/list/mapNames = list(
 	default_shuttle = "oshan"
 	shuttle_map_turf = /turf/space/fluid
 
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
 
 	shipping_destinations = list("North", "South")
 
@@ -1292,9 +1292,9 @@ var/global/list/mapNames = list(
 		"the quartermaster's office" = list(/area/station/quartermaster/office),
 		"the warehouse" = list(/area/station/storage/warehouse),
 		"the chapel" = list(/area/station/chapel/sanctuary),
-		"the brig processing room" = list(/area/station/security/processing),
 		"the main engineering room" = list(/area/station/engine/engineering),
-		"the mining staff room" = list(/area/station/mining/staff_room))
+		"the mining staff room" = list(/area/station/mining/staff_room),
+		"the toxins lab" = list(/area/station/science/lab))
 
 
 /area/shuttle/merchant_shuttle/left_centcom
