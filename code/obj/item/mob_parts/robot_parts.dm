@@ -1207,7 +1207,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 				borg.death()
 				qdel(src)
 				return
-			if ( brain.owner  &&  (jobban_isbanned(brain.owner.current,"Cyborg") || (brain.owner.get_player().dnr && !src.syndicate)) ) //If the borg-to-be is jobbanned or has DNR set and the frame isn't syndie
+			if ( brain.owner  &&  (jobban_isbanned(brain.owner.current,"Cyborg") || brain.owner.get_player().dnr) ) //If the borg-to-be is jobbanned or has DNR set
 				src.visible_message(SPAN_ALERT("The brain inside [src] disintegrates!"))
 				borg.part_head.brain = null
 				qdel(brain)
