@@ -2847,7 +2847,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_poc2 = list(/obj/item/requisition_token/podwars/NT)
 
 		commander
-			name = "NanoTrasen Commander"
+			name = "NanoTrasen Pod Commander"
 #ifdef MAP_OVERRIDE_POD_WARS
 			limit = 1
 #else
@@ -2892,7 +2892,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_poc2 = list(/obj/item/requisition_token/podwars/SY)
 
 		commander
-			name = "Syndicate Commander"
+			name = "Syndicate Pod Commander"
 #ifdef MAP_OVERRIDE_POD_WARS
 			limit = 1
 #else
