@@ -1,6 +1,10 @@
 
 (t)thu mar 20 25
 (u)Sovexe
+(p)22639
+(e)❗📄|E-FUCK, A-UI
+(+)Character creator previews and minimaps now scale correctly in 516
+(u)Sovexe
 (p)22633
 (e)📄|A-UI
 (+)The Station Renamer has been updated to support BYOND 516
