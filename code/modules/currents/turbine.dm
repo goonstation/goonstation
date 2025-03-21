@@ -90,7 +90,7 @@
 		if (src.next_shaft || src.last_shaft)
 			src.anchored = ANCHORED
 
-	update_icon(rpm)
+	proc/update(rpm)
 		src.speed_state = 0
 		switch(rpm)
 			if (1 to 33)
@@ -99,8 +99,11 @@
 				src.speed_state = 2
 			if (67 to INFINITY)
 				src.speed_state = 1
+		src.UpdateIcon()
+		src.next_shaft?.update(rpm)
+
+	update_icon()
 		src.icon_state = "[src.base_icon_state]_[src.speed_state]"
-		src.next_shaft?.UpdateIcon(rpm)
 
 /obj/turbine_shaft/turbine
 	name = "NT40 tidal current turbine"
@@ -139,7 +142,7 @@
 					human.limbs.sever(pick("l_arm", "r_arm", "l_leg", "r_leg", "both_legs"))
 
 
-	update_icon(rpm)
+	update_icon()
 		. = ..()
 		src.UpdateOverlays(image(src.icon, "[/obj/turbine_shaft::base_icon_state]_[src.speed_state]", layer = src.layer - 0.1), "internal_shaft")
 
@@ -284,7 +287,7 @@
 		else
 			src.rpm = max(src.rpm - 2 - src.rpm/4, 0) //spin down rapidly if there's no current
 		if (last_rpm != src.rpm) //just stop it updating when still
-			src.end_shaft(src.shaft.dir).UpdateIcon(src.rpm)
+			src.end_shaft(src.shaft.dir).update(src.rpm)
 			src.UpdateIcon()
 		//this part is physics though!
 		src.generation = src.stator_load * src.rpm/60
