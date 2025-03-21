@@ -98,17 +98,6 @@
 #define FLUID_CANISTER_MODE_SLURP 2
 #define FLUID_CANISTER_MODE_PISS 3
 
-//------ States returned on COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE
-
-///The assembly is not secured
-#define ASSEMBLY_TRIGGER_NOT_SECURED -1
-///The assemblies trigger is not activated
-#define ASSEMBLY_TRIGGER_NOT_ACTIVATED 0
-///The assemblies trigger is ready/ticking down
-#define ASSEMBLY_TRIGGER_ARMED 1
-///The assemblies trigger is activated but preparing (e.g. proximity sensor timer ticking down but sensing movement)
-#define ASSEMBLY_TRIGGER_PREPARING 2
-
 //------
 
 //tooltip flags for rebuilding

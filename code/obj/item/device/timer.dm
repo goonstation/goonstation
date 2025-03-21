@@ -54,12 +54,13 @@ TYPEINFO(/obj/item/device/timer)
 /obj/item/device/timer/proc/assembly_get_state(var/manipulated_timer, var/obj/item/assembly/parent_assembly)
 	return src.timing
 
-/obj/item/device/timer/proc/assembly_get_time_left(var/manipulated_timer, var/obj/item/assembly/parent_assembly)
-	return src.time
+/obj/item/device/timer/proc/assembly_get_time_left(var/manipulated_timer, var/datum/assembly_signal_helper/send_helper)
+	send_helper.time_left_on_trigger = src.time
+	return TRUE
 
 /obj/item/device/timer/proc/assembly_set_time(var/manipulated_timer, var/obj/item/assembly/parent_assembly, var/time_to_set)
 	src.time = max(src.min_time, time_to_set)
-	return src.time
+	return TRUE
 
 /// ----------------------------------------------
 

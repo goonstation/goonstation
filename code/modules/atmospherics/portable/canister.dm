@@ -521,7 +521,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 			if(!src.det.get_timing())
 				var/new_time = params["newTime"]
 				if(isnum(new_time))
-					src.det.part_assembly.set_trigger_time(new_time)
+					src.det.part_assembly.set_trigger_time(max(new_time, 90 SECONDS))
 					. = TRUE
 		if("wire-interact")
 			var/tool = null

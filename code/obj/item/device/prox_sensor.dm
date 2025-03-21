@@ -55,20 +55,16 @@ TYPEINFO(/obj/item/device/prox_sensor)
 		return TRUE
 
 /obj/item/device/prox_sensor/proc/assembly_get_state(var/manipulated_sensor, var/obj/item/assembly/parent_assembly)
-	if(src.armed)
-		return ASSEMBLY_TRIGGER_ARMED
-	else
-		if(src.timing)
-			return ASSEMBLY_TRIGGER_PREPARING
-		else
-			return ASSEMBLY_TRIGGER_NOT_ACTIVATED
+	return src.armed
 
-/obj/item/device/prox_sensor/proc/assembly_get_time_left(var/manipulated_sensor, var/obj/item/assembly/parent_assembly)
-	return src.time
+
+/obj/item/device/prox_sensor/proc/assembly_get_time_left(var/manipulated_timer, var/datum/assembly_signal_helper/send_helper)
+	send_helper.time_left_on_trigger = src.time
+	return TRUE
 
 /obj/item/device/prox_sensor/proc/assembly_set_time(var/manipulated_sensor, var/obj/item/assembly/parent_assembly, var/time_to_set)
 	src.time = max(src.min_time, time_to_set)
-	return src.time
+	return TRUE
 
 /// ----------------------------------------------
 

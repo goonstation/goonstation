@@ -37,7 +37,7 @@
 	src.WireStatus = list()
 	var/potential_wire_colors = list("Alabama Crimson", "Antique White", "Burnt Umber", "China Rose", "Dodger Blue", "Field Drab", "Harvest Gold", "Jonquil", "Midori", "Neon Carrot", "Oxford Blue", "Periwinkle", "Purple Pizzazz", "Stil De Grain Yellow", "Toolbox Purple", "Urobilin", "Vivid Tangerine", "Yale Blue")
 	new_assembly.override_upstream = TRUE //the timer sends the signal to the assembly, the assembly sends the signal to the detonator
-	new_assembly.set_trigger_time(90 SECONDS)
+	new_assembly.set_trigger_time(90 SECONDS, TRUE)
 	new_assembly.master = src
 	new_assembly.set_loc(src)
 	src.part_assembly = new_assembly
@@ -125,17 +125,14 @@
 	explosion_new(attachedTo, epicenter, power)
 
 /obj/item/canbomb_detonator/proc/get_timing()
-	if(SEND_SIGNAL(src.part_assembly, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE) == ASSEMBLY_TRIGGER_ARMED)
-		return TRUE
-	else
-		return FALSE
+	return (SEND_SIGNAL(src.part_assembly, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE))
 
 /obj/item/canbomb_detonator/proc/get_signaler()
 	for(var/obj/item/device/radio/signaler/found_trigger in src.part_assembly.additional_components)
 		return found_trigger
 
 /obj/item/canbomb_detonator/proc/get_time_left()
-	return SEND_SIGNAL(src.part_assembly, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT)
+	return src.part_assembly.get_trigger_time_left()
 
 /obj/item/canbomb_detonator/proc/failsafe_engage()
 	if (!src.attachedTo || !src.master) // if the detonator assembly isn't wired to anything, then no need to prime it

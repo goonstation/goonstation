@@ -15,6 +15,13 @@ Contains:
 
 */
 
+//////////////////////////////////////// Assembly signal helper /////////////////////////////////
+
+/// This datum exists because we cannot return anything else than bitflags in signals. So we pass this with the signal and have it modified by whatever catches the signal at the end.
+/datum/assembly_signal_helper
+	var/time_left_on_trigger = null //! we pass the time remaining of the trigger of the assembly here
+
+
 //////////////////////////////////////// Assembly parent /////////////////////////////////
 
 /obj/item/assembly
@@ -58,7 +65,6 @@ Contains:
 	RegisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION, PROC_REF(on_storage_interaction))
 	RegisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH, PROC_REF(on_wearer_death))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, PROC_REF(get_trigger_state))
-	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT, PROC_REF(get_trigger_time_left))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL, PROC_REF(on_part_disposing))
 	..()
 
@@ -96,8 +102,6 @@ Contains:
 	if(src.secured)
 		//we relay the signal to the trigger, if the assembly is secured
 		return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, src)
-	else
-		return ASSEMBLY_TRIGGER_NOT_SECURED
 
 /// returns TRUE if the assembly has anything that condemns it worth to be logged
 /obj/item/assembly/proc/requires_admin_messaging()
@@ -115,13 +119,18 @@ Contains:
 			information_to_return += " [affected_item]:[information_to_add];"
 	return information_to_return
 
-/obj/item/assembly/proc/get_trigger_time_left(var/affected_assembly)
-	//we relay the signal to the trigger, in case of mousetraps
-	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT, src)
+/obj/item/assembly/proc/get_trigger_time_left()
+	var/datum/assembly_signal_helper/signal_helper = new /datum/assembly_signal_helper
+	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT, signal_helper)
+	var/time_to_return = signal_helper.time_left_on_trigger
+	qdel(signal_helper)
+	return time_to_return
 
 /obj/item/assembly/proc/set_trigger_time(var/time_to_set)
 	//we send a signal on the trigger to set the time
-	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME, src, time_to_set)
+	if(SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME, src, time_to_set))
+		//now we return the remaining time
+		return src.get_trigger_time_left()
 
 /obj/item/assembly/proc/on_floor_reveal(var/affected_assembly, var/turf/revealed_turf)
 	//we relay the signal to the trigger, in case of mousetraps
@@ -239,7 +248,6 @@ Contains:
 	UnregisterSignal(src, COMSIG_ITEM_STORAGE_INTERACTION)
 	UnregisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE)
-	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL)
 	var/list/items_to_remove = list(src.trigger, src.applier, src.target) | src.additional_components
 	for(var/obj/item/item_to_delete in items_to_remove)

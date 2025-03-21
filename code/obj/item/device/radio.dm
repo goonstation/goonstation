@@ -932,7 +932,7 @@ TYPEINFO(/obj/item/radiojammer)
 
 /obj/item/device/radio/signaler/proc/assembly_get_state(var/manipulated_signaler, var/obj/item/assembly/parent_assembly)
 	//that's my secret, cap. I'm always armed.
-	return ASSEMBLY_TRIGGER_ARMED
+	return TRUE
 
 /// ----------------------------------------------
 
