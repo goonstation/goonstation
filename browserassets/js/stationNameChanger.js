@@ -1,145 +1,144 @@
-var triggerError = attachErrorHandler('stationNamer', true);
+document.addEventListener('DOMContentLoaded', function() {
+    // Cached elements
+    var $page = document.getElementById('stationNameChanger');
+    var $form = $page.querySelector('.input-area');
+    var $name = document.getElementById('station-name');
+    var $error = $form.querySelector('.error-message');
+    var $submit = $form.querySelector('button[type="submit"]');
+    var $randomise = $form.querySelector('.randomise');
 
-$(document).ready(function() {
-	//Cached elements
-	var $page = $('#stationNameChanger');
-	var $form = $page.find('.input-area');
-	var $name = $('#station-name');
-	var $error = $form.find('.error-message');
-	var $submit = $form.find('button[type="submit"]');
-	var $randomise = $form.find('.randomise');
+    var whitelistSectioned = JSON.parse(document.getElementById('whitelist-json').textContent);
+    var whitelist = [];
+    var valid = false;
+    var submitted = false;
+    var maxNameLength = 0;
+    var adminUser = false;
+    var fillerSections = [].concat(
+        whitelistSectioned['Admins'],
+        whitelistSectioned['Frontier Locations'],
+        whitelistSectioned['Frontier Bodies'],
+        whitelistSectioned['Sol System Bodies'],
+        whitelistSectioned['Organizations'],
+        whitelistSectioned['Countries'],
+        whitelistSectioned['Directions'],
+        whitelistSectioned['Greek'],
+        whitelistSectioned['Military Letters'],
+        whitelistSectioned['Misc. Nonsense'],
+        whitelistSectioned['Nouns'],
+        whitelistSectioned['Numbers'],
+        whitelistSectioned['Petting Zoo Animals'],
+        whitelistSectioned['Verbs']
+    );
 
-	var whitelistSectioned = $.parseJSON($('#whitelist-json').text());
-	var whitelist = [];
-	var valid = false; //is the name valid or not?
-	var submitted = false; //prevent spam submissions
-	var maxNameLength = 0;
-	var adminUser = false; //is an admin using the panel?
-	var fillerSections = [].concat( //sections used as "filler" for the randomiser
-		whitelistSectioned['Admins'],
-		whitelistSectioned['Frontier Locations'],
-		whitelistSectioned['Frontier Bodies'],
-		whitelistSectioned['Sol System Bodies'],
-		whitelistSectioned['Organizations'],
-		whitelistSectioned['Countries'],
-		whitelistSectioned['Directions'],
-		whitelistSectioned['Greek'],
-		whitelistSectioned['Military Letters'],
-		whitelistSectioned['Misc. Nonsense'],
-		whitelistSectioned['Nouns'],
-		whitelistSectioned['Numbers'],
-		whitelistSectioned['Petting Zoo Animals'],
-		whitelistSectioned['Verbs']
-	);
+    // Build whitelist HTML
+    var whiteListHtml = '<h2>Whitelist</h2>';
+    for (var section in whitelistSectioned) {
+        if (whitelistSectioned.hasOwnProperty(section)) {
+            var words = whitelistSectioned[section];
+            whiteListHtml += '<h3>' + section + '</h3><p>';
+            for (var i = 0; i < words.length; i++) {
+                whiteListHtml += words[i].toLowerCase();
+                if (i < words.length - 1) {
+                    whiteListHtml += ', ';
+                }
+                whitelist.push(words[i].toLowerCase());
+            }
+            whiteListHtml += '</p>';
+        }
+    }
+    document.querySelector('.whitelist').innerHTML = whiteListHtml;
+    if (window.nanoScroller) {
+        document.getElementById('content').nanoScroller();
+    }
 
+    function setValid() {
+        valid = true;
+        $name.className = $name.className.replace(' error', '') + ' valid';
+        $error.innerHTML = '&nbsp;';
+        $submit.removeAttribute('disabled');
+    }
 
-	//Build human-readable whitelist and flattened whitelist array
-	var whiteListHtml = '<h2>Whitelist</h2>';
-	$.each(whitelistSectioned, function(section, words) {
-		whiteListHtml += '<h3>' + section + '</h3>';
-		whiteListHtml += '<p>';
+    function setInvalid(msg) {
+        valid = false;
+        $name.className = $name.className.replace(' valid', '') + ' error';
+        $error.innerHTML = msg;
+        $submit.setAttribute('disabled', 'disabled');
+    }
 
-		$.each(words, function(i, word) {
-			whiteListHtml += word.toLowerCase() + (i < words.length - 1 ? ', ' : '');
-			whitelist.push(word.toLowerCase());
-		});
+    function pick(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+    }
 
-		whiteListHtml += '</p>';
-	});
-	$('.whitelist').html(whiteListHtml);
-	$('#content').nanoScroller(); //refreshes scrollbar for new height
+    function randomName() {
+        var prefix = pick(whitelistSectioned['Prefixes']);
+        var adjective = pick(whitelistSectioned['Adjectives']);
+        var suffix = pick(whitelistSectioned['Suffixes']);
+        var consumedLength = (prefix + adjective + suffix).length + 3;
 
-	var setValid = function() {
-		valid = true;
-		$name.removeClass('error').addClass('valid');
-		$error.html('&nbsp;');
-		$submit.removeAttr('disabled');
-	};
+        var filler, lengthCheck = false;
+        while (!lengthCheck) {
+            filler = pick(fillerSections);
+            lengthCheck = filler.length <= maxNameLength - consumedLength;
+        }
 
-	var setInvalid = function(msg) {
-		valid = false;
-		$name.removeClass('valid').addClass('error');
-		$error.html(msg);
-		$submit.attr('disabled', 'disabled');
-	};
+        return prefix + ' ' + adjective + ' ' + filler + ' ' + suffix;
+    }
 
-	function pick(thing) {
-		return thing[Math.floor(Math.random() * thing.length)];
-	}
+    // Validation logic
+    $name.addEventListener('keyup', function() {
+        var name = $name.value.trim();
 
-	var randomName = function() {
-		//prefix, adjective, <any>, suffix
-		var prefix = pick(whitelistSectioned['Prefixes']);
-		var adjective = pick(whitelistSectioned['Adjectives']);
-		var suffix = pick(whitelistSectioned['Suffixes']);
-		var consumedLength = (prefix + adjective + suffix).length + 3; //4 words total means 3 spaces
+        if (name.length < 1 || name.length > maxNameLength) {
+            return setInvalid('Name must be between 0 and ' + (maxNameLength + 1) + ' characters.');
+        }
 
-		var filler;
-		var lengthCheck = false;
-		while (!lengthCheck) {
-			filler = pick(fillerSections);
-			lengthCheck = filler.length <= maxNameLength - consumedLength;
-		}
+        if (adminUser) {
+            return setValid();
+        }
 
-		return prefix + ' ' + adjective + ' ' + filler + ' ' + suffix;
-	};
+        var words = name.split(' ');
+        for (var i = 0; i < words.length; i++) {
+            var word = words[i];
+            if (!isNaN(word)) continue;
+            if (whitelist.indexOf(word.toLowerCase()) === -1) {
+                return setInvalid('"' + word + '" is an invalid word!');
+            }
+        }
 
-	//Show validation errors
-	$name.on('keyup', function() {
-		var name = $.trim($name.val());
+        setValid();
+    });
 
-		if (name.length < 1 || name.length > maxNameLength) {
-			return setInvalid('Name must be between 0 and ' + (maxNameLength + 1) + ' characters.');
-		}
+    $randomise.addEventListener('click', function() {
+        var random = randomName();
+        $name.value = random;
+        var event = document.createEvent('Event');
+        event.initEvent('keyup', true, true);
+        $name.dispatchEvent(event);
+    });
 
-		//admins can do anything their little heart desires
-		if (adminUser) {
-			return setValid();
-		}
-
-		var words = name.split(' ');
-		for (var i = 0; i < words.length; i++) {
-			var word = words[i];
-
-			if ($.isNumeric(word)) {
-				continue;
-			}
-
-			if ($.inArray(word.toLowerCase(), whitelist) === -1) {
-				return setInvalid('"' + word + '" is an invalid word!');
-			}
-		}
-
-		setValid();
-	});
-
-	$randomise.on('click', function() {
-		var random = randomName();
-		$name.val(random).trigger('keyup');
-	});
-
-	//Form submit handler
-	$form.on('submit', function(e) {
+    // Form submission
+	$form.addEventListener('submit', function(e) {
 		e.preventDefault();
-
-		if (submitted) {
-			return;
-		}
+		if (submitted) return;
 
 		if (valid) {
 			submitted = true;
-			window.location = $form.attr('action') + $.param({newName: $.trim($name.val())});
+			var action = $form.getAttribute('action'); // this now grabs the full DM-provided URL
+
+			// Append ?newName= correctly depending on DM output
+			var separator = action.indexOf('?') > -1 ? '&' : '?';
+			window.location = action + separator + 'newName=' + encodeURIComponent($name.value.trim());
 		}
 	});
 
+    // Init
+    maxNameLength = parseInt($name.getAttribute('maxlength'), 10);
+    adminUser = document.getElementById('admin-user').value === '1';
+    $name.focus();
 
-	//Init
-	maxNameLength = parseInt($name.attr('maxlength'));
-	adminUser = $('#admin-user').val() === '1';
-	$name.focus();
-
-	//Admin user crap
-	if (adminUser) {
-		$page.find('.tips').addClass('admin-mode').html('Admin mode is on, there are no restrictions, go nuts!');
-	}
+    if (adminUser) {
+        var tips = $page.querySelector('.tips');
+        tips.className += ' admin-mode';
+        tips.innerHTML = 'Admin mode is on, there are no restrictions, go nuts!';
+    }
 });
