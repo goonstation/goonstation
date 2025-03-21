@@ -1,5 +1,9 @@
 
 (t)fri mar 21 25
+(u)Mouse
+(p)22644
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)The appearance of a skull chalice now depends on the appearance of the skull it was made from.  Some skulls are better at holding liquids than others.
 (u)FlameArrow57
 (p)22678
 (e)🆕🎨⚖💨📦|C-Feature, C-Sprites, C-Balance, A-Atmospherics, A-Game-Objects
