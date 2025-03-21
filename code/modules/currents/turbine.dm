@@ -4,7 +4,7 @@
 /obj/turbine_shaft
 	name = "turbine shaft"
 	desc = "A heavy duty metal shaft."
-	icon = 'icons/obj/machines/current_turbine.dmi'
+	icon = 'icons/obj/machines/current_turbine.dmi' //TODO: east west sprites
 	icon_state = "shaft_0"
 	density = FALSE
 	layer = FLOOR_EQUIP_LAYER1
@@ -69,6 +69,9 @@
 				if (src.last_shaft || src.next_shaft)
 					src.visible_message("[user] secures [src] in place.")
 					playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+			return
+		if (ispryingtool(I))
+			src.set_dir(turn(src.dir, 90))
 			return
 		. = ..()
 
