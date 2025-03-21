@@ -13062,10 +13062,10 @@
 	},
 /area/station/bridge)
 "aTW" = (
-/obj/stool/chair/comfy,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/stool/chair/comfy/purple,
 /turf/simulated/floor/carpet{
 	icon_state = "blue1"
 	},
@@ -13476,6 +13476,9 @@
 	},
 /area/station/bridge)
 "aVj" = (
+/obj/stool/chair/comfy{
+	dir = 4
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue2"
@@ -14533,11 +14536,11 @@
 	},
 /area/station/bridge)
 "aXW" = (
-/obj/stool/chair/comfy{
-	dir = 1
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/stool/chair/comfy/green{
+	dir = 1
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "blue1"
@@ -45660,6 +45663,15 @@
 /obj/machinery/door/airlock/pyro,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
+"joX" = (
+/obj/stool/chair/comfy/red{
+	dir = 4
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue2"
+	},
+/area/station/bridge)
 "jpj" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -52546,6 +52558,17 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
+"oCc" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/stool/chair/comfy/yellow{
+	dir = 1
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "blue1"
+	},
+/area/station/bridge)
 "oCo" = (
 /obj/storage/secure/closet/civilian/janitor,
 /obj/item/reagent_containers/glass/bottle/cleaner,
@@ -58074,6 +58097,15 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/engine/coldloop)
+"sHp" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/stool/chair/comfy/blue,
+/turf/simulated/floor/carpet{
+	icon_state = "blue1"
+	},
+/area/station/bridge)
 "sHJ" = (
 /obj/machinery/computer/solar_control/east{
 	dir = 4
@@ -90172,7 +90204,7 @@ aQL
 aQN
 aQN
 aTU
-aVj
+joX
 aVj
 aXU
 aQN
@@ -91077,10 +91109,10 @@ aPN
 aQN
 aQN
 aSO
-aTW
+sHp
 aVm
 aOH
-aXW
+oCc
 aYZ
 aQN
 baS

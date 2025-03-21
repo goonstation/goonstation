@@ -14231,15 +14231,15 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "dJD" = (
-/obj/stool/chair/comfy/blue{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/stool/chair/office/blue{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -33167,7 +33167,7 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "rEV" = (
-/obj/stool/chair/comfy/blue{
+/obj/stool/chair/comfy/yellow{
 	dir = 8
 	},
 /obj/cable{
@@ -39400,7 +39400,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/stool/chair/comfy/blue{
+/obj/stool/chair/comfy/ergonomic{
 	dir = 1
 	},
 /obj/landmark/start/job/captain,
@@ -40021,7 +40021,7 @@
 /turf/simulated/floor/carpet/blue/fancy,
 /area/station/hallway/primary/south)
 "wvu" = (
-/obj/stool/chair/comfy/blue{
+/obj/stool/chair/comfy/purple{
 	dir = 8
 	},
 /obj/cable{
@@ -40108,7 +40108,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/stool/chair/comfy/blue{
+/obj/stool/chair/comfy/green{
 	dir = 8
 	},
 /obj/landmark/start/job/head_of_personnel,
@@ -41917,7 +41917,7 @@
 /turf/simulated/floor/greenblack,
 /area/station/hallway/primary/east)
 "xTZ" = (
-/obj/stool/chair/comfy/blue{
+/obj/stool/chair/comfy/red{
 	dir = 4
 	},
 /obj/cable{
