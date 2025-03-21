@@ -113,6 +113,32 @@
 		src.UpdateOverlays(image(src.icon, "turbine_anchor", layer = src.layer - 0.1), "anchor")
 		src.UpdateIcon(0)
 
+	Bumped(mob/living/M)
+		if (!istype(M) || isintangible(M))
+			return
+		switch(src.speed_state)
+			if (3)
+				src.visible_message(SPAN_ALERT("[M] smacks into [src]. Ow!"))
+				random_brute_damage(M, rand(10,15))
+				playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+			if (2)
+				src.visible_message(SPAN_ALERT("[M] gets slashed by the spinning blades of [src]!"))
+				random_brute_damage(M, rand(15, 20))
+				playsound(src, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, 1)
+				M.changeStatus("stunned", 3 SECONDS)
+				if (ishuman(M) && prob(30))
+					var/mob/living/carbon/human/human = M
+					human.limbs.sever(pick("l_arm", "r_arm", "l_leg", "r_leg"))
+			if (1)
+				src.visible_message(SPAN_ALERT("[M] gets mangled by the rapidly spinning blades of [src]! SHIT!"))
+				random_brute_damage(M, rand(20, 30))
+				playsound(src, 'sound/impact_sounds/Flesh_Tear_1.ogg', 50, 1)
+				M.changeStatus("knockdown", 6 SECONDS)
+				if (ishuman(M))
+					var/mob/living/carbon/human/human = M
+					human.limbs.sever(pick("l_arm", "r_arm", "l_leg", "r_leg", "both_legs"))
+
+
 	update_icon(rpm)
 		. = ..()
 		src.UpdateOverlays(image(src.icon, "[/obj/turbine_shaft::base_icon_state]_[src.speed_state]", layer = src.layer - 0.1), "internal_shaft")
@@ -258,7 +284,7 @@
 		else
 			src.rpm = max(src.rpm - 2 - src.rpm/4, 0) //spin down rapidly if there's no current
 		if (last_rpm != src.rpm) //just stop it updating when still
-			src.end_shaft(src.dir).UpdateIcon(src.rpm)
+			src.end_shaft(src.shaft.dir).UpdateIcon(src.rpm)
 			src.UpdateIcon()
 		//this part is physics though!
 		src.generation = src.stator_load * src.rpm/60
