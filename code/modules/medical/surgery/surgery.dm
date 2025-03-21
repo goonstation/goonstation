@@ -128,7 +128,7 @@
 
 
 	/// Cancel the surgery. Override on_cancel to handle cancellation.
-	proc/cancel_surgery(mob/surgeon, obj/item/I, var/from_context = FALSE)
+	proc/cancel_surgery(mob/surgeon, obj/item/I, var/from_context = FALSE, var/quiet = TRUE)
 		if (!istype(I, /obj/item/suture) && !istype(I, /obj/item/staple_gun))
 			boutput(surgeon, SPAN_ALERT("You need a suture or staple gun to cancel surgery!"))
 			return
@@ -138,11 +138,12 @@
 				boutput(surgeon, SPAN_ALERT("Your staple gun is out of staples!"))
 				return
 			stapler.ammo--
-		on_cancel(surgeon, I)
+		on_cancel(surgeon, I, quiet=quiet)
+		complete = FALSE
 		for(var/datum/surgery_step/step in surgery_steps)
 			step.finished = FALSE
 		for(var/datum/surgery/surgery in current_sub_surgeries)
-			surgery.cancel_surgery(surgeon, I)
+			surgery.cancel_surgery(surgeon, I, quiet=TRUE)
 		if (from_context)
 			super_surgery?.enter_surgery(surgeon)
 
@@ -347,7 +348,7 @@
 	/// Called on completion of the surgery.
 	proc/on_complete(mob/surgeon, obj/item/I)
 	/// Called when something cancels the surgery.
-	proc/on_cancel(mob/user, obj/item/I)
+	proc/on_cancel(mob/user, obj/item/I, quiet)
 
 /datum/surgery_step
 	var/flags_required = 0 //! Flags for tools that are accepted for this step

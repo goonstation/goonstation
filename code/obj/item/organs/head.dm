@@ -438,16 +438,16 @@
 			user.visible_message(SPAN_NOTICE("[user] tries to feed [W] to [src] but it cannot swallow!"))
 			return
 
+		/* temporarily disabled til these either get a surgeryholder, or I give up and add more vars to the organs again. -tdhooligan
 		if (src.skull || src.brain)
-
 			// scalpel surgery
 			if (iscuttingtool(W))
-				if (src.right_eye && src.right_eye.op_stage == 1.0 && user.find_in_hand(W) == user.r_hand)
+				if (src.right_eye && src.right_eye.secure && user.find_in_hand(W) == user.r_hand)
 					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 					user.visible_message(SPAN_ALERT("<b>[user]</b> cuts away the flesh holding [src]'s right eye in with [W]!"),\
 					SPAN_ALERT("You cut away the flesh holding [src]'s right eye in with [W]!"))
 					src.right_eye.secure = FALSE
-				else if (src.left_eye && src.left_eye.op_stage == 1.0 && user.find_in_hand(W) == user.l_hand)
+				else if (src.left_eye && src.left_eye.secure && user.find_in_hand(W) == user.l_hand)
 					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 					user.visible_message(SPAN_ALERT("<b>[user]</b> cuts away the flesh holding [src]'s left eye in with [W]!"),\
 					SPAN_ALERT("You cut away the flesh holding [src]'s left eye in with [W]!"))
@@ -524,11 +524,11 @@
 					src.left_eye = null
 				else
 					return ..()
-
 			else
 				return ..()
 		else
-			return ..()
+		*/
+		return ..()
 
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for attaching heads. */
@@ -553,11 +553,11 @@
 				user.u_equip(src)
 			H.update_equipment_screen_loc()
 
-			// SPAWN(rand(50,500))
-			// 	if (H?.organHolder?.head == src && src.op_stage != 0.0) // head has not been secured
-			// 		H.visible_message(SPAN_ALERT("<b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b>"),\
-			// 		SPAN_ALERT("<b>Your head comes loose and tumbles off of your neck!</b>"))
-			// 		H.organHolder.drop_organ("head") // :I
+			SPAWN(rand(50,500))
+				if (H?.organHolder?.head == src && !src.secure) // head has not been secured
+					H.visible_message(SPAN_ALERT("<b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b>"),\
+					SPAN_ALERT("<b>Your head comes loose and tumbles off of your neck!</b>"))
+					H.organHolder.drop_organ("head") // :I
 
 			return 1
 		else

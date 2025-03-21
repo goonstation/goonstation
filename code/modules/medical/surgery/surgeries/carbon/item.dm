@@ -24,3 +24,4 @@
 		surgery_steps[2].finished = (C.chest_item_sewn)
 		surgery_steps[3].finished = !item_present
 		surgery_steps[3].visible = item_present
+

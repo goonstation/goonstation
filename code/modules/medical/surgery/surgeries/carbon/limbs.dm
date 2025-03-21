@@ -43,7 +43,7 @@
 		var/obj/item/parts/limb = C.limbs.vars[limb_var_name]
 		return (limb && limb.remove_stage != 0)
 
-	on_cancel(mob/surgeon, obj/item/tool)
+	on_cancel(mob/surgeon, obj/item/tool, quiet)
 		var/mob/living/carbon/human/C = patient
 		var/obj/item/parts/limb = C.limbs.vars[limb_var_name]
 		if (limb && limb.remove_stage != 0)

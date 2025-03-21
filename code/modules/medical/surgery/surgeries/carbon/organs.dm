@@ -8,7 +8,7 @@
 		add_next_step(new /datum/surgery_step/chest/cut(src))
 		add_next_step(new /datum/surgery_step/fluff/snip(src))
 
-	on_cancel(mob/surgeon, obj/item/tool)
+	on_cancel(mob/surgeon, obj/item/tool, quiet)
 		surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest closed with [tool]."),\
 			SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] chest closed with [tool]."),\
 			SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your chest closed with [tool]."))
@@ -34,10 +34,11 @@
 	id = "head_surgery"
 	name = "Head Surgery"
 	desc = "Perform surgery on the patient's head"
-	default_sub_surgeries = list(/datum/surgery/organ/eye/left, /datum/surgery/organ/eye/right, /datum/surgery/organ/brain,/datum/surgery/cauterize/head)
+	default_sub_surgeries = list(/datum/surgery/organ/eye/left, /datum/surgery/organ/eye/right, /datum/surgery/organ/brain,/datum/surgery/cauterize/head, /datum/surgery/organ/head)
 	visible = FALSE
 	implicit = TRUE
 	affected_zone = "head"
+
 
 /datum/surgery/ribs
 	id = "rib_surgery"
@@ -112,6 +113,11 @@
 			return FALSE
 		return ..()
 
+	on_cancel(mob/surgeon, obj/item/tool, quiet)
+		surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] lower back closed with [tool]."),\
+			SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] lower back closed with [tool]."),\
+			SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your lower back closed with [tool]."))
+
 	// Show a context menu, even when shortcut
 	do_shortcut(mob/surgeon, obj/item/I)
 		var/result = ..()
@@ -130,8 +136,10 @@
 	desc = "Call a coder if you see this!"
 	icon_state = "heart"
 	var/organ_var_name = "thing"
+	var/organ_pretty_name
 	exit_when_finished = TRUE
 	affected_zone = "chest"
+
 	surgery_possible(mob/living/surgeon)
 		if (implicit && surgeon.zone_sel.selecting != "chest")
 			return FALSE
@@ -150,11 +158,18 @@
 			surgery_steps[2].finished = TRUE
 			surgery_steps[3].finished = TRUE
 
-	on_cancel(mob/living/surgeon, obj/item/I)
+	on_cancel(mob/living/surgeon, obj/item/tool, quiet)
 		var/obj/item/organ/O = patient.organHolder.vars[organ_var_name]
+
+		var/organ_name = organ_pretty_name? organ_pretty_name : organ_var_name
 		if (O)
 			O.in_surgery = FALSE
 			O.secure = TRUE
+			if (!quiet)
+				surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> secures [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [organ_name] back into place with [tool]."),\
+				SPAN_NOTICE("You secure [surgeon == patient ? "your" : "[patient]'s"] [organ_name] back into place with [tool]."),\
+				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] your [organ_name] back  into place closed with [tool]."))
+
 
 	cancel_possible()
 		var/obj/item/organ/O = patient.organHolder.vars[organ_var_name]
@@ -231,12 +246,14 @@
 		desc = "Remove the patients' left kidney."
 		icon_state = "left_kidney"
 		organ_var_name = "left_kidney"
+		organ_pretty_name = "left kidney"
 	right_kidney
 		id = "right_kidney_surgery"
 		name = "Right Kidney Surgery"
 		desc = "Remove the patients' right kidney."
 		icon_state = "right_kidney"
 		organ_var_name = "right_kidney"
+		organ_pretty_name = "right kidney"
 	eye
 		affected_zone = "head"
 		implicit = TRUE
@@ -260,6 +277,7 @@
 			name = "Left Eye Surgery"
 			desc = "Remove the patients' left eye."
 			organ_var_name = "left_eye"
+			organ_pretty_name = "left eye"
 			surgery_step_possible(mob/living/surgeon, obj/item/I)
 				if (surgeon.find_in_hand(I) != surgeon.l_hand)
 					return FALSE
@@ -275,6 +293,7 @@
 			name = "Right Eye Surgery"
 			desc = "Remove the patients' right eye."
 			organ_var_name = "right_eye"
+			organ_pretty_name = "right eye"
 			surgery_step_possible(mob/living/surgeon, obj/item/I)
 				if (surgeon.find_in_hand(I) != surgeon.r_hand)
 					return FALSE
@@ -312,6 +331,7 @@
 		icon_state = "skull"
 		organ_var_name = "skull"
 		implicit = TRUE
+		affected_zone = "head"
 
 		infer_surgery_stage()
 			var/mob/living/carbon/human/C = patient
@@ -324,7 +344,7 @@
 			if (surgeon.a_intent == INTENT_HARM)
 				return FALSE
 			return TRUE
-		on_cancel(mob/surgeon, obj/item/tool)
+		on_cancel(mob/surgeon, obj/item/tool, quiet)
 			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck closed with [tool]."),\
 					SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] neck closed with [tool]."),\
 					SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your neck closed with [tool]."))
@@ -336,6 +356,7 @@
 		generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
 			add_next_step(new /datum/surgery_step/skull/cut(src))
 			add_next_step(new /datum/surgery_step/skull/remove(src))
+			add_next_step(new /datum/surgery_step/organ/add(src, organ_var_name))
 	tail
 		id = "tail_surgery"
 		name = "Tail Surgery"
@@ -377,7 +398,7 @@
 			add_next_step(new /datum/surgery_step/organ/brain/remove(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/organ/add(src, organ_var_name))
 
-		on_cancel(mob/surgeon, obj/item/tool)
+		on_cancel(mob/surgeon, obj/item/tool, quiet)
 			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head closed with [tool]."),\
 				SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] head closed with [tool]."),\
 				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your head closed with [tool]."))
@@ -404,7 +425,7 @@
 			add_next_step(new /datum/surgery_step/head/saw(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/head/cut2(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/head/remove(src, organ_var_name))
-			add_next_step(new /datum/surgery_step/organ/add(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/organ/add/head(src, organ_var_name))
 		surgery_possible(mob/living/surgeon)
 			if (surgeon.zone_sel.selecting != "head")
 				return FALSE
@@ -455,12 +476,14 @@
 		desc = "Replace the patients' left lung."
 		icon_state = "left_lung"
 		organ_var_name = "left_lung"
+		organ_pretty_name = "left lung"
 	right_lung
 		id = "right_lung_replacement"
 		name = "Right Lung Replacement"
 		desc = "Replace the patients' right lung."
 		icon_state = "right_lung"
 		organ_var_name = "right_lung"
+		organ_pretty_name = "right lung"
 	stomach
 		id = "stomach_replacement"
 		name = "Stomach Replacement"
@@ -491,12 +514,14 @@
 		desc = "Replace the patients' left kidney."
 		icon_state = "left_kidney"
 		organ_var_name = "left_kidney"
+		organ_pretty_name = "left kidney"
 	right_kidney
 		id = "right_kidney_replacement"
 		name = "Right Kidney Replacement"
 		desc = "Replace the patients' right kidney."
 		icon_state = "right_kidney"
 		organ_var_name = "right_kidney"
+		organ_pretty_name = "right kidney"
 	butt
 		id = "butt_replacement"
 		name = "Butt Replacement"
@@ -524,6 +549,7 @@
 			name = "Left Eye Replacement"
 			desc = "Replace the patients' left eye."
 			organ_var_name = "left_eye"
+			organ_pretty_name = "left eye"
 			surgery_step_possible(mob/living/surgeon, obj/item/I)
 				if (surgeon.find_in_hand(I) != surgeon.l_hand)
 					return FALSE
@@ -533,6 +559,7 @@
 			name = "Right Eye Replacement"
 			desc = "Replace the patients' right eye."
 			organ_var_name = "right_eye"
+			organ_pretty_name = "right eye"
 			surgery_step_possible(mob/living/surgeon, obj/item/I)
 				if (surgeon.find_in_hand(I) != surgeon.r_hand)
 					return FALSE

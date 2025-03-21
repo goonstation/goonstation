@@ -79,7 +79,7 @@
 	proc/cancel_surgery_context(datum/surgery/surgery, mob/living/surgeon, obj/item/I)
 		if (!surgery)
 			return
-		surgery.cancel_surgery(surgeon, I, TRUE)
+		surgery.cancel_surgery(surgeon, I, quiet=FALSE)
 	/// Cancel a surgery. Does not interact with context menus.
 	proc/cancel_surgery(id, mob/living/surgeon, obj/item/I)
 		if (!id)
@@ -136,6 +136,7 @@
 			base_surgeries += new/datum/surgery/organ_surgery(patient, src)
 			base_surgeries += new/datum/surgery/head(patient, src)
 			base_surgeries += new/datum/surgery/implant(patient, src)
+			base_surgeries += new/datum/surgery/parasite(patient, src)
 			base_surgeries += new/datum/surgery/lower_back(patient, src)
 			base_surgeries += new/datum/surgery/sutures(patient, src)
 

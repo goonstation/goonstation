@@ -36,6 +36,10 @@
 					SPAN_ALERT("You cut through [surgeon == patient ? "your" : "[patient]'s"] flesh with [tool]!"),\
 					SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] through your flesh with [tool]!"))
 
+			remove_implant
+				desc = "Remove an implant."
+				on_complete(mob/user, obj/item/tool)
+					return
 		saw
 			name = "Saw"
 			desc = "Saw through the bone."
