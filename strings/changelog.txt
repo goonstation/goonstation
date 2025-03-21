@@ -1,4 +1,9 @@
 
+(t)thu mar 20 25
+(u)Sovexe
+(p)22622
+(e)📄🚨⚙|A-UI, A-Admin, A-Internal
+(+)The changelog has been updated to support 516, a legacy version remains for 515
 (t)wed mar 19 25
 (u)ZeWaka, LemonInTheDark
 (e)💅🎨|C-QoL, C-Sprites
