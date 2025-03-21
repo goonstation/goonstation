@@ -1078,12 +1078,12 @@ toxic - poisons
 
 		if (iswall(hit))
 			var/turf/W = get_turf(hit)
-			playsound(W, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+			playsound(W, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
 			make_cleanable(/obj/decal/cleanable/potatosplat, W)
 
 	on_max_range_die(obj/projectile/O)
 		var/turf/T = get_turf(O)
-		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+		playsound(T, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
 		make_cleanable(/obj/decal/cleanable/potatosplat, T)
 
 
