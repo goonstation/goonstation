@@ -6,7 +6,8 @@
 	"main": "index.js",
 	"type": "module",
 	"scripts": {
-		"build": "gulp --no-color --no-experimental-require-module build"
+		"build": "gulp build",
+		"tgui:manifest": "gulp tgui:manifest"
 	},
 	"author": "",
 	"license": "ISC",
@@ -20,9 +21,10 @@
 		"gulp-babel": "^8.0.0",
 		"gulp-htmlmin": "^5.0.1",
 		"gulp-postcss": "^10.0.0",
+		"gulp-rename": "^2.0.0",
 		"gulp-replace": "^1.1.4",
 		"gulp-uglify-es": "^3.0.0",
-		"minimist": "^1.2.8",
+		"istextorbinary": "^9.5.0",
 		"postcss": "^8.4.47"
 	},
 	"browserslist": [

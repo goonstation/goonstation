@@ -516,13 +516,14 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 
 	update_icon()
 		if (current_projectile.type == /datum/projectile/laser/diffuse)
-			charge_icon_state = "[icon_state]kill"
+			charge_icon_state = "[initial(charge_icon_state)]kill"
 			muzzle_flash = "muzzle_flash_laser"
 			item_state = "egun-jrkill"
 		else if(current_projectile.type == /datum/projectile/energy_bolt/diffuse)
-			charge_icon_state = "[icon_state]stun"
+			charge_icon_state = "[initial(charge_icon_state)]stun"
 			muzzle_flash = "muzzle_flash_elec"
 			item_state = "egun-jrstun"
+		..()
 
 	attack_self(var/mob/M)
 		..()

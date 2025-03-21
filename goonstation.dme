@@ -1439,6 +1439,7 @@
 #include "code\modules\interface\keybind_menu_chui.dm"
 #include "code\modules\interface\keybind_style.dm"
 #include "code\modules\interface\keymap.dm"
+#include "code\modules\interface\message_modal.dm"
 #include "code\modules\interface\mob_input.dm"
 #include "code\modules\interface\name_tag.dm"
 #include "code\modules\interface\skin_input_box.dm"
