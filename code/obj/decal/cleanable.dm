@@ -1006,7 +1006,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 /obj/decal/cleanable/potatosplat
 	name = "smashed potato"
-	desc = "ruined potato"
+	desc = "A ruined potato."
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "potatosplat"
 	slippery = 2

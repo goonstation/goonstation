@@ -1085,7 +1085,7 @@ ABSTRACT_TYPE(/datum/pipeshotrecipe)
 	thingsneeded = 2
 	result = /obj/item/ammo/bullets/pipeshot/potato
 	accepteditem = /obj/item/reagent_containers/food/snacks/plant/potato
-	craftname = "potato"
+	craftname = "potatoe"
 
 
 /obj/item/assembly/pipehulls
