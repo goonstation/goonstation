@@ -259,9 +259,14 @@
 			src.rpm = max(src.rpm - 2 - src.rpm/4, 0) //spin down rapidly if there's no current
 		if (last_rpm != src.rpm) //just stop it updating when still
 			src.end_shaft(src.dir).UpdateIcon(src.rpm)
+			src.UpdateIcon()
 		//this part is physics though!
 		src.generation = src.stator_load * src.rpm/60
 		src.add_avail(src.generation)
 
+	update_icon(...)
+		var/image/indicator_overlay = image(src.icon, "indicator_[round(src.rpm/10, 1)]")
+		indicator_overlay.plane = PLANE_ABOVE_LIGHTING
+		src.UpdateOverlays(indicator_overlay, "indicator")
 
 #undef TURBINE_MOVE_TIME
