@@ -3,7 +3,7 @@
 #define RESEARCH_LINK_COLOR "#90F"
 #define MEDICAL_LINK_COLOR "#F9F"
 #define ENGINEERING_LINK_COLOR "#F90"
-#define CIVILIAN_LINK_COLOR "#099"
+#define CIVILIAN_LINK_COLOR "#09F"
 #define SILICON_LINK_COLOR "#999"
 
 #define NANOTRASEN_LINK_COLOR "#3348ff"
@@ -13,7 +13,7 @@
 	var/name = null
 	var/list/alias_names = null
 	var/initial_name = null
-	var/linkcolor = "#09F"
+	var/linkcolor = "#099"
 
 	/// Job starting wages
 	var/wages = 0
