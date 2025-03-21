@@ -8,4 +8,4 @@ Remove useless `-webkit-font-smoothing:antialiased;` and `-moz-osx-font-smoothin
 
 Remove brand related css.
 
-Finally, run `yarn tgui-polyfill:static-css ..\..\..\browserassets\vendor\css\tgui\`
+Finally, run `yarn tgui-polyfill:static-css ..\..\..\browserassets\src\vendor\css\tgui\`

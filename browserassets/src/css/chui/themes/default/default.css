@@ -476,7 +476,7 @@ Text: #fff
 
 .matcomptext{width: 100%;text-align: center;margin: 0;padding: 0;font-weight:normal;color:#000000;letter-spacing:0pt;word-spacing:1pt;font-size:12px;font-family:arial, helvetica, sans-serif;line-height:1;}
 
-#manubody {background:url(images/bluebg.png{{resource("images/bluebg.png")}}) top left no-repeat; background-attachment:fixed; width: 100%; height: 100%; text-align: center; margin:0; padding:15px; padding-right:0px;}
+#manubody {width: 100%; height: 100%; text-align: center; margin:0; padding:15px; padding-right:0px;}
 #manudiv {border:none 0px; width: 100%; height: 100%; overflow-y: auto; overflow-x: hidden;}
 div.manuborder{background-color: #0b5091; border:solid 3px #0053ED; border-radius: 15px; width:50%; padding: 3px; margin: 0 auto; font-family: "Arial", sans-serif; color: white; text-align: center; display: block;}
 a.manulink {border:none 0px; font-family: "Arial", sans-serif; color: white; text-align: center; display: block;}

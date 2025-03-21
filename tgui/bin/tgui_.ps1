@@ -20,7 +20,7 @@ function Throw-On-Native-Failure {
 $basedir = Split-Path $MyInvocation.MyCommand.Path
 $basedir = Resolve-Path "$($basedir)\.."
 $rootdir = Resolve-Path "$($basedir)\.."
-$targetdir = Resolve-Path "$($rootdir)\browserassets\tgui"
+$targetdir = Resolve-Path "$($rootdir)\browserassets\src\tgui"
 Set-Location $basedir
 [Environment]::CurrentDirectory = $basedir
 
@@ -85,11 +85,11 @@ function task-sonar {
 
 ## Mr. Proper
 function task-clean {
-  Remove-Quiet -Recurse -Force ../browserassets/tgui/.tmp
-  Remove-Quiet -Force ../browserassets/tgui/*.map
-  Remove-Quiet -Force ../browserassets/tgui/*.chunk.*
-  Remove-Quiet -Force ../browserassets/tgui/*.bundle.*
-  Remove-Quiet -Force ../browserassets/tgui/*.hot-update.*
+  Remove-Quiet -Recurse -Force ../browserassets/src/tgui/.tmp
+  Remove-Quiet -Force ../browserassets/src/tgui/*.map
+  Remove-Quiet -Force ../browserassets/src/tgui/*.chunk.*
+  Remove-Quiet -Force ../browserassets/src/tgui/*.bundle.*
+  Remove-Quiet -Force ../browserassets/src/tgui/*.hot-update.*
   ## Yarn artifacts
   Remove-Quiet -Recurse -Force ".yarn\cache"
   Remove-Quiet -Recurse -Force ".yarn\unplugged"
@@ -112,7 +112,7 @@ function task-clean {
 
 ## Validates current build against the build stored in git
 function task-validate-build {
-  $diff = git diff --text ../browserassets/tgui/*
+  $diff = git diff --text ../browserassets/src/tgui/*
   if ($diff) {
     Write-Output "Error: our build differs from the build committed into git."
     Write-Output "Please rebuild tgui."

@@ -37,8 +37,8 @@ module.exports = (env = {}, argv) => {
     },
     output: {
       path: argv.useTmpFolder
-        ? path.resolve(__dirname, '../browserassets/tgui/.tmp')
-        : path.resolve(__dirname, '../browserassets/tgui'),
+        ? path.resolve(__dirname, '../browserassets/src/tgui/.tmp')
+        : path.resolve(__dirname, '../browserassets/src/tgui'),
       filename: '[name].bundle.js',
       chunkFilename: '[name].bundle.js',
       chunkLoadTimeout: 15000,
