@@ -1076,7 +1076,7 @@ toxic - poisons
 				M.update_canmove()
 			hit.changeStatus("staggered", clamp(proj.power/10, 5, 1) SECONDS)
 
-		else:
+		else
 			var/turf/W = get_turf(hit)
 			playsound(W, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
 			make_cleanable(/obj/decal/cleanable/potatosplat, W)
