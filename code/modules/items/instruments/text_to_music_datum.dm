@@ -372,7 +372,8 @@ ABSTRACT_TYPE(/datum/text_to_music)
 		"guitar",
 		"piano",
 		"saxophone",
-		"trumpet"
+		"trumpet",
+		"glockenspiel"
 	)
 	var/list/error_messages = list()
 	holder_name = "Text to Music component"
