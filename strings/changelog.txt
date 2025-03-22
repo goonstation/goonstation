@@ -1,5 +1,9 @@
 
 (t)sat mar 22 25
+(u)glowbold
+(p)22438
+(e)🆕🎨📄💡|C-Feature, C-Sprites, A-UI, A-Station-Systems
+(*)Medical and research jobs have unique ID sprites and are otherwise separated in most lists/contexts.
 (u)Chasu
 (p)22609
 (e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
