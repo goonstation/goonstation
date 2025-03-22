@@ -1100,7 +1100,7 @@
 		boutput(boarder, SPAN_ALERT("You can't squeeze your wide cube body through the access door!"))
 		return
 
-	if(isflockmob(boarder))
+	if(isflockmob(boarder) || istype(boarder, /mob/living/critter/ice_phoenix))
 		boutput(boarder, SPAN_ALERT("You're unable to use this vehicle!"))
 		return
 

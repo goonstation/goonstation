@@ -77,7 +77,8 @@
 	<a href='?src=\ref[src];action=harbinger'>Harbinger wraith</a> |
 	<a href='?src=\ref[src];action=trickster'>Trickster wraith</a> |
 	<a href='?src=\ref[src];action=[ROLE_PLAGUE_RAT]'>Plague rat</a> |
-	<a href='?src=\ref[src];action=[ROLE_ZOMBIE]'>Zombie</a>
+	<a href='?src=\ref[src];action=[ROLE_ZOMBIE]'>Zombie</a> |
+	<a href='?src=\ref[src];action=[ROLE_PHOENIX]'>Space Phoenix</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Ghost roles</b>
 	<a href='?src=\ref[src];action=ghostdrone'>Ghostdrone</a> |
