@@ -13,7 +13,7 @@
 	var/name = null
 	var/list/alias_names = null
 	var/initial_name = null
-	var/linkcolor = "#099"
+	var/linkcolor = "#0FF"
 
 	/// Job starting wages
 	var/wages = 0
