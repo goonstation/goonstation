@@ -596,7 +596,7 @@
 					M.changeStatus("knockdown", 3 SECONDS)
 					boutput(M, SPAN_ALERT("You feel weak."))
 					M.emote("collapse")
-				if(prob(min((stage + 3)**2, 40)))
+				if(stage > 1 && prob(min((stage + 2)**2, 40)))
 					M.nauseate(1)
 
 			return ..(timePassed)

@@ -1,5 +1,7 @@
 
 (t)sat mar 22 25
+(u)LeahTheTech
+(+)Radiation now makes you less nauseus and won't make you vomit at very low levels.
 (u)glowbold
 (p)22438
 (e)🆕🎨📄💡|C-Feature, C-Sprites, A-UI, A-Station-Systems
