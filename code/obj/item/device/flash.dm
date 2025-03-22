@@ -203,8 +203,8 @@ TYPEINFO(/obj/item/device/flash)
 		src.process_burnout(user)
 
 	// Some after attack stuff.
-	user.lastattacked = M
-	M.lastattacker = user
+	user.lastattacked = get_weakref(M)
+	M.lastattacker = get_weakref(user)
 	M.lastattackertime = world.time
 
 	return
@@ -400,12 +400,11 @@ TYPEINFO(/obj/item/device/flash/turbo)
 			return
 		if (iswrenchingtool(W) && !(src.secure))
 			boutput(user, "You disassemble [src]!")
-			src.cell.set_loc(get_turf(src))
-			var/obj/item/device/flash/F = new /obj/item/device/flash( get_turf(src) )
+			var/obj/item/device/flash/F = new /obj/item/device/flash(get_turf(src))
 			if(!src.status)
 				F.status = 0
 				F.set_icon_state("flash3")
-			qdel(src)
+			src.cell.set_loc(get_turf(src)) //Do this last as removing the cell deletes the turboflash
 		else if (isscrewingtool(W))
 			boutput(user, SPAN_NOTICE("You [src.secure ? "unscrew" : "secure"] the access panel."))
 			secure = !secure

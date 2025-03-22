@@ -1469,6 +1469,8 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		return
 
 	proc/check_placeable_target(atom/A)
+		if (A.plane == PLANE_HUD) //stop putting mining charges on your HUD buttons
+			return FALSE
 		if (!istype(A, /obj/item))
 			return TRUE
 		if (A.storage) // no blowing yourself up if you have full storage

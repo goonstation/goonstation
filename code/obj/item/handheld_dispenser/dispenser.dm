@@ -14,7 +14,6 @@
 	var/static/list/exemptedtypes = typecacheof(list(/obj/machinery/atmospherics/binary/circulatorTemp,
 		/obj/machinery/atmospherics/binary/nuclear_reactor,
 		/obj/machinery/atmospherics/binary/reactor_turbine,
-		/obj/machinery/atmospherics/unary/cold_sink/freezer,
 		/obj/machinery/atmospherics/unary/cryo_cell))
 	var/datum/pipe_recipe/selection = /datum/pipe_recipe/pipe/simple
 	var/selectedimage
@@ -377,6 +376,12 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/unary)
 		path = /obj/machinery/atmospherics/unary/tank
 		icon_state = "tank"
 		desc = "A 1620 litre pressurized storage tank."
+	freezer
+		cost = 10
+		name = "Freezer"
+		path = /obj/machinery/atmospherics/unary/cold_sink/freezer
+		icon_state = "freezer"
+		desc = "A freezing unit that cools connected gases to a set temperature."
 	connector
 		name = "Portable Connector"
 		path = /obj/machinery/atmospherics/unary/portables_connector
@@ -431,6 +436,11 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/binary)
 		path = /obj/machinery/atmospherics/binary/valve/digital
 		icon_state = "digitalvalve"
 		desc = "A digital valve that can be controlled by silicons or by hitting it with a wrench."
+	pipepipehe
+		name = "Pipe heat exchanger"
+		path = /obj/machinery/atmospherics/binary/heat_exchanger
+		icon_state = "heatexchanger"
+		desc = "Not to be confused with the Heat exchanging pipe, this exchanges heat between pipes without mixing."
 
 /obj/item/places_pipes/research
 	icon_state = "hpd-place-r"

@@ -9,7 +9,7 @@
 
  * @example
  * // Run the script with a directory containing CSS files
- * // yarn tgui-polyfill:static-css ..\..\..\browserassets\vendor\css\tgui\
+ * // yarn tgui-polyfill:static-css ..\..\..\browserassets\src\vendor\css\tgui\
  */
 const { readdirSync, readFile, writeFile } = require('fs');
 const { extname, join } = require('path');

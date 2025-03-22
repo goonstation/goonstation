@@ -16,6 +16,8 @@
 
 	can_burn = TRUE
 	can_break = TRUE
+	/// if this floor can be pried up
+	var/pryable = TRUE
 	var/has_material = TRUE
 
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
@@ -1582,22 +1584,21 @@ TYPEINFO(/turf/simulated/floor/grass)
 
 /turf/simulated/floor/grassify()
 	src.icon = 'icons/turf/outdoors.dmi'
-	src.icon_state = "grass"
+	src.icon_state = pick("grass", "grass_1", "grass_2", "grass_3")
 	src.UpdateIcon()
 	if(prob(30))
-		src.icon_state += pick("_p", "_w", "_b", "_y", "_r", "_a")
+		src.icon_state = pick("grass_p", "grass_w", "grass_b", "grass_y", "grass_r", "grass_a")
 	src.name = "grass"
-	src.set_dir(pick(cardinal))
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
 /turf/unsimulated/floor/grassify()
 	src.icon = 'icons/turf/outdoors.dmi'
-	src.icon_state = "grass"
+	src.icon_state = pick("grass", "grass_1", "grass_2", "grass_3")
+	src.UpdateIcon()
 	if(prob(30))
-		src.icon_state += pick("_p", "_w", "_b", "_y", "_r", "_a")
+		src.icon_state = pick("grass_p", "grass_w", "grass_b", "grass_y", "grass_r", "grass_a")
 	src.name = "grass"
-	src.set_dir(pick(cardinal))
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
@@ -1988,6 +1989,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 /turf/simulated/floor/proc/pry_tile(obj/item/C as obj, mob/user as mob, params)
 	if (!intact)
 		return
+	if (!src.pryable)
+		return
 	if(src.reinforced)
 		boutput(user, SPAN_ALERT("You can't pry apart reinforced flooring! You'll have to loosen it with a welder or wrench instead."))
 		return
@@ -2028,6 +2031,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		return 0
 
 	if (ispryingtool(C))
+		if(src.name == "grass")
+			src.step_material = initial(step_material)
 		src.pry_tile(C,user,params)
 		return
 
@@ -2067,6 +2072,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			newParams["quick_replace"] = TRUE
 			src.Attackby(P, user, newParams)
 			do_hide = FALSE //don't stuff things under the floor if we're just swapping/replacing a broken tile
+			if(src.name == "grass")
+				src.step_material = initial(step_material)
 
 		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)

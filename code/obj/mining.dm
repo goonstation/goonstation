@@ -658,7 +658,7 @@
 			for (var/obj/forcefield/mining/M in wall_bits)
 				M.set_opacity(0)
 				M.set_density(0)
-				M.invisibility = INVIS_INFRA
+				M.invisibility = INVIS_MESON
 			active = 0
 			boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
 			return
@@ -2282,7 +2282,8 @@ TYPEINFO(/obj/item/cargotele)
 
 		boutput(user, SPAN_NOTICE("Teleporting [cargo] to [src.target]..."))
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
-		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, src.teleport_delay, PROC_REF(finish_teleport), list(cargo, user), null, null, null, null)
+		var/datum/action/bar/private/icon/callback/teleport = new(user, cargo, src.teleport_delay, PROC_REF(finish_teleport), list(cargo, user), null, null, null, null, src)
+		actions.start(teleport, user)
 		return TRUE
 
 

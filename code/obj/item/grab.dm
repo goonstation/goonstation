@@ -246,8 +246,8 @@
 				src.state = GRAB_AGGRESSIVE
 				if (!src.affecting.buckled)
 					set_affected_loc()
-				src.assailant.lastattacked = src.affecting
-				src.affecting.lastattacker = src.assailant
+				src.assailant.lastattacked = get_weakref(src.affecting)
+				src.affecting.lastattacker = get_weakref(src.assailant)
 				src.affecting.lastattackertime = world.time
 				logTheThing(LOG_COMBAT, src.assailant, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 				user.next_click = world.time + user.combat_click_delay
@@ -288,8 +288,8 @@
 					O.show_message(SPAN_ALERT("[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!"), 1)
 		src.state = GRAB_CHOKE
 		REMOVE_ATOM_PROPERTY(src.assailant, PROP_MOB_CANTMOVE, src)
-		src.assailant.lastattacked = src.affecting
-		src.affecting.lastattacker = src.assailant
+		src.assailant.lastattacked = get_weakref(src.affecting)
+		src.affecting.lastattacker = get_weakref(src.assailant)
 		src.affecting.lastattackertime = world.time
 		if (!src.affecting.buckled)
 			set_affected_loc()
@@ -317,8 +317,8 @@
 
 		src.state = GRAB_PIN
 
-		src.assailant.lastattacked = src.affecting
-		src.affecting.lastattacker = src.assailant
+		src.assailant.lastattacked = get_weakref(src.affecting)
+		src.affecting.lastattacker = get_weakref(src.assailant)
 		src.affecting.lastattackertime = world.time
 
 		step_to(src.assailant,T)
@@ -444,7 +444,7 @@
 			qdel(src)
 			return 0
 
-		src.affecting.lastattacker = src.assailant
+		src.affecting.lastattacker = get_weakref(src.assailant)
 		src.affecting.lastattackertime = world.time
 		.= src.affecting
 		user.u_equip(src)
@@ -934,6 +934,7 @@
 
 				if (dive_attack_hit)
 					var/damage = rand(1,6)
+					var/area/AR = get_area(dive_attack_hit)
 					if (ishuman(user))
 						var/mob/living/carbon/human/H = user
 						if (H.shoes)
@@ -943,15 +944,16 @@
 						else if (H.limbs.l_leg)
 							damage += H.limbs.l_leg.limb_hit_bonus
 					if(issilicon(dive_attack_hit))
-						playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
-						for (var/mob/O in AIviewers(user))
-							O.show_message(SPAN_ALERT("<b>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!</b>"))
+						playsound(user, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
+						user.visible_message(SPAN_ALERT("<b>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!</b>"))
+					else if (AR.sanctuary)
+						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, TRUE, -1)
+						user.visible_message(SPAN_ALERT("<B>[user] slides into [dive_attack_hit] harmlessly!</B>"))
 					else
 						dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
 						dive_attack_hit.was_harmed(user)
 						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, TRUE, -1)
-						for (var/mob/O in AIviewers(user))
-							O.show_message(SPAN_ALERT("<B>[user] slides into [dive_attack_hit]!</B>"), 1)
+						user.visible_message(SPAN_ALERT("<B>[user] slides into [dive_attack_hit]!</B>"))
 					logTheThing(LOG_COMBAT, user, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
 
 

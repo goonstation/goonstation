@@ -34,10 +34,10 @@
 
 // Pod targeting variant.
 /datum/component/holdertargeting/smartgun/homing/pod
-	type_to_target = /obj
+	type_to_target = /atom
 
 /datum/component/holdertargeting/smartgun/homing/pod/is_valid_target(mob/user, atom/A)
-	return ((istype(A, /obj/critter/gunbot/drone) || istype(A, /obj/machinery/vehicle/miniputt) || istype(A, /obj/machinery/vehicle/pod_smooth) || istype(A, /obj/machinery/vehicle/tank)) && !A.invisibility)
+	return ((istype(A, /obj/critter/gunbot/drone) || istype(A, /obj/machinery/vehicle/miniputt) || istype(A, /obj/machinery/vehicle/pod_smooth) || istype(A, /obj/machinery/vehicle/tank) || istype(A, /mob/living/critter/ice_phoenix)) && !A.invisibility)
 
 /datum/component/holdertargeting/smartgun/homing/pod/track_targets(mob/user)
 	set waitfor = 0
@@ -108,3 +108,10 @@
 			farthest_target_from_cursor = A
 
 	return farthest_target_from_cursor
+
+
+/datum/component/holdertargeting/smartgun/homing/pod/emagged
+	type_to_target = /mob/living
+
+/datum/component/holdertargeting/smartgun/homing/pod/emagged/is_valid_target(mob/user, atom/A)
+	return (istype(A, /mob/living))

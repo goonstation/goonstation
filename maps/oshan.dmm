@@ -38101,7 +38101,7 @@
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "leR" = (
-/obj/stool/chair/comfy/green{
+/obj/stool/chair/comfy/ergonomic{
 	dir = 4
 	},
 /obj/cable{
@@ -38328,7 +38328,7 @@
 	},
 /area/station/bridge/hos)
 "lvP" = (
-/obj/stool/chair/dining/wood{
+/obj/stool/chair/comfy/yellow{
 	dir = 4
 	},
 /obj/landmark/start/job/chief_engineer,
@@ -38774,7 +38774,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "lZJ" = (
-/obj/stool/chair/dining/wood{
+/obj/stool/chair/comfy/purple{
 	dir = 8
 	},
 /obj/cable{
@@ -43170,7 +43170,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "rHv" = (
-/obj/stool/chair/dining/wood{
+/obj/stool/chair/comfy/blue{
 	dir = 8
 	},
 /obj/cable{
@@ -43629,7 +43629,13 @@
 /area/station/ranch)
 "svs" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/door/poddoor/pyro/podbay_autoclose/research_horizontal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "scienceteleporter";
+	name = "Teleporter Pad Blast Shield";
+	opacity = 0
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/science/teleporter)
 "swC" = (
@@ -44078,7 +44084,7 @@
 /turf/simulated/floor/grass,
 /area/spacehabitat/owlery)
 "tbN" = (
-/obj/stool/chair/dining/wood{
+/obj/stool/chair/comfy/red{
 	dir = 8
 	},
 /obj/cable{
@@ -44282,7 +44288,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "toV" = (
-/obj/stool/chair/dining/wood{
+/obj/stool/chair/comfy/green{
 	dir = 4
 	},
 /obj/landmark/start/job/head_of_personnel,

@@ -250,11 +250,11 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// Display a greeting to the player to inform that they're an antagonist. This can be anything, but by default it's just the name.
 	proc/announce()
-		boutput(owner.current, SPAN_ALERT("<h3>You are \a [src.display_name]!</h3>"))
+		boutput(owner.current, SPAN_ALERT("<h1 class='system'>You are \a [src.display_name]!</h1>"))
 
 	/// Display something when this antagonist is removed.
 	proc/announce_removal(source)
-		boutput(owner.current, SPAN_ALERT("<h3>You are no longer \a [src.display_name]!</h3>"))
+		boutput(owner.current, SPAN_ALERT("<h1 class='system'>You are no longer \a [src.display_name]!</h1>"))
 
 	/// Show a popup window for this antagonist. Defaults to using the same ID as the antagonist itself.
 	proc/do_popup()

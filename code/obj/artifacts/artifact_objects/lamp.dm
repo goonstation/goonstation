@@ -100,12 +100,14 @@
 
 	New(loc, radius=2, color=null)
 		.=..(get_turf(loc))
-		src.radius = radius
+		src.radius = ceil(radius)
 		if(isnull(color))
 			src.color = COLOR_MATRIX_INVERSE
 		else
 			src.color = color
 		src.appearance_flags |= RESET_TRANSFORM
+		RegisterSignal(loc, COMSIG_MOVABLE_SET_LOC, PROC_REF(update_whacky))
+		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, PROC_REF(update_whacky))
 		update_whacky(loc, null, 0)
 
 	proc/update_whacky(var/atom/movable/thing)

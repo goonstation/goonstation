@@ -26,6 +26,8 @@
 		job_dot = "civilian_dot"
 	else if (istype(J, /datum/job/research))
 		job_dot = "research_dot"
+	else if (istype(J, /datum/job/medical))
+		job_dot = "medical_dot"
 	else if (istype(J, /datum/job/engineering))
 		job_dot = "engineering_dot"
 	else if (istype(J, /datum/job/security))

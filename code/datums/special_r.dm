@@ -259,7 +259,7 @@ datum/special_respawn
 				W.name = "meaty wall"
 				if(istype(W, /turf/simulated/wall/auto))
 					var/turf/simulated/wall/auto/WA = W
-					WA.force_state = TRUE
+					WA.mod = "meatier-"
 			else
 				var/overlay
 				if(istype(W,/turf/simulated/wall/auto/supernorn) || istype(W,/turf/simulated/wall/auto/reinforced/supernorn))

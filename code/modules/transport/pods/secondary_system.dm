@@ -861,6 +861,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 	icon_state = "lock"
 	var/code = ""
 	var/configure_mode = 0 //If true, entering a valid code sets that as the code.
+	var/can_reset = TRUE //! Can you reset the code for this lock?
 
 	disposing()
 		if (ship)
@@ -1106,23 +1107,28 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 				boutput(usr, SPAN_ALERT("You must be inside the ship to do that!"))
 				return
 
+			if (src.is_set())
+				if(!src.can_reset)
+					boutput(usr, SPAN_ALERT("This lock cannot have its code reset."))
+					return
+				boutput(usr, SPAN_NOTICE("Code reset. Please type new code and press enter."))
+
 			src.configure_mode = 1
 			if (src.ship)
 				src.ship.locked = 0
 			src.code = ""
 
-			boutput(usr, "Code reset.  Please type new code and press enter.")
 			show_lock_panel(usr)
+		ship.myhud.update_states()
+
+	/// Has this lock been set
+	proc/is_set()
+		return !(code == "")
 
 /obj/item/shipcomponent/secondary_system/lock/bioscan
 	name = "Biometric Hatch Locking Unit"
 	desc = "A basic hatch locking mechanism with a biometric scan."
-	system = "Lock"
-	f_active = 1
-	power_used = 0
-	icon_state = "lock"
-	code = ""
-	configure_mode = 0 //If true, entering a valid code sets that as the code.
+	can_reset = FALSE
 	var/bdna = null
 
 	show_lock_panel(mob/living/user)
@@ -1154,6 +1160,12 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 						src.ship.visible_message("[user] holds [valid_dna_source] against the [src.ship] for a moment.")
 					ship.locked = !ship.locked
 					boutput(user, SPAN_ALERT("[ship] is now [ship.locked ? "locked" : "unlocked"]!"))
+				else
+					boutput(user, SPAN_ALERT("You are not recognized by the biometric lock for [ship]!"))
+			ship.myhud.update_states()
+
+	is_set()
+		return !isnull(bdna)
 
 /obj/item/shipcomponent/secondary_system/crash
 	name = "Syndicate Explosive Entry Device"
@@ -1464,8 +1476,9 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 		if (!src.loaded_wep && !src.ship.m_w_system)
 			return
 
-		if (src.loaded_wep && GET_COOLDOWN(src.loaded_wep, "fire") || src.ship.m_w_system && GET_COOLDOWN(src.ship.m_w_system, "fire"))
-			boutput(src.ship.pilot, "[src.ship.ship_message("[src] must wait for all weapons to be off cooldown to work!")]")
+		if (src.loaded_wep && GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || src.ship.m_w_system && GET_COOLDOWN(src.ship.m_w_system, "weapon_swap_cd"))
+			var/swap_cd = round((GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || GET_COOLDOWN(src.ship.m_w_system, "weapon_swap_cd")) / 10, 1)
+			boutput(src.ship.pilot, "[src.ship.ship_message("[src.ship]'s weapons are too hot to swap out! [swap_cd] seconds left.")]")
 			return
 
 		for (var/mob/M in src.ship)
@@ -1473,6 +1486,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 				boutput(M, "[src.ship.ship_message("[src.ship.m_w_system] has been swapped out for [src.loaded_wep].")]")
 			else if (src.ship.m_w_system)
 				boutput(M, "[src.ship.ship_message("[src.ship.m_w_system] has been swapped out.")]")
+				src.ship.UpdateOverlays(null, "mainweapon") //todo: make pod components actually clean up their own overlays
 			else
 				boutput(M, "[src.ship.ship_message("[src.loaded_wep] has been swapped in.")]")
 

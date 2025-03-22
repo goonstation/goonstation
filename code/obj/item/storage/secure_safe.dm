@@ -279,6 +279,8 @@ TYPEINFO(/obj/item/storage/secure/sbriefcase)
 	w_class = W_CLASS_BULKY
 	spawn_contents = list(/obj/item/paper,\
 	/obj/item/pen)
+	check_wclass = TRUE
+	can_hold = list(/obj/item/stamped_bullion)
 
 TYPEINFO(/obj/item/storage/secure/ssafe)
 	mats = 8

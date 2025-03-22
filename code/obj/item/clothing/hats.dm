@@ -969,33 +969,22 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "Can be dyed with hair dye. Obviously."
 	icon_state = "beret_base"
 	item_state = "dye_beret"
-	//there's too much damn patent infringement around here
-	var/static/list/copyrighted_berets = list(
-		/obj/item/clothing/head/hosberet,
-		/obj/item/clothing/head/NTberet,
-		/obj/item/clothing/head/NTberet/commander,
-		/obj/item/clothing/head/janiberet
-	)
 	///Associative list of hex color to patent number
-	var/static/list/copyrighted_colors = null
+	var/static/list/copyrighted_colors = list(
+		"#2E53C1" = "23582938", //NT beret
+		"#B52D12" = "94568293", //hos beret
+		"#971CA5" = "83482372", //janitor beret
+	)
 
 	New()
 		..()
 		src.color = "#FFFFFF"
 
-	proc/generate_copyrighted_colors()
-		src.copyrighted_colors = list()
-		for (var/obj/item/clothing/head/type as anything in src.copyrighted_berets)
-			var/icon/icon = icon(type::icon, type::icon_state)
-			copyrighted_colors[global.get_average_color(icon)] = rand(10000, 999999)
-
 	attackby(obj/item/dye_bottle/W, mob/user)
 		if (istype(W) && W.uses_left)
 			W.use_dye()
-			if (!src.copyrighted_colors)
-				src.generate_copyrighted_colors()
 			for (var/color in src.copyrighted_colors)
-				if (color_dist(color, W.customization_first_color) < 15000) //arbitrary threshold
+				if (color_dist(color, W.customization_first_color) < 5000) //arbitrary threshold
 					boutput(user, SPAN_NOTICE("Patent infringement attempt detected! This color infringes NT beret patent #[src.copyrighted_colors[color]]."))
 					boutput(user, SPAN_ALERT("[src] burns your fingers as its anti patent infringement fabric boils off the dye!"))
 					if (src in user.contents)
@@ -2543,4 +2532,16 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	icon_state = "rabbithat"
 	item_state = "rabbithat"
+	seal_hair = TRUE
+
+// Mx Blorbo's lovable visage.
+
+/obj/item/clothing/head/blorbohat
+	name = "Blorbo costume head"
+	desc = "Everyone's favourite gimmick character, Mx. Blorbo!"
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
+	icon_state = "blorbohat"
+	item_state = "blorbohat"
 	seal_hair = TRUE

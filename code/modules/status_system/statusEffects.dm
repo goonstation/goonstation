@@ -30,6 +30,8 @@
 	var/track_cat
 	/// If the effect is positive (buffs), negative (debuffs), or neutral (misc)
 	var/effect_quality = STATUS_QUALITY_NEUTRAL
+	/// List because they might be on different HUDs. This is kind of hacky but should be fine since the screen object cleans up in disposing.
+	var/list/atom/movable/screen/statusEffect/hud_elements = null
 
 
 	/**
@@ -594,10 +596,8 @@
 					M.changeStatus("knockdown", 3 SECONDS)
 					boutput(M, SPAN_ALERT("You feel weak."))
 					M.emote("collapse")
-				if(!ON_COOLDOWN(M, "radiation_vomit_check", 5 SECONDS) && prob(stage**2))
-					M.changeStatus("knockdown", 3 SECONDS)
-					boutput(M, SPAN_ALERT("You feel sick."))
-					M.vomit()
+				if(prob(min((stage + 3)**2, 40)))
+					M.nauseate(1)
 
 			return ..(timePassed)
 
@@ -1730,19 +1730,43 @@
 	visible = TRUE
 	effect_quality = STATUS_QUALITY_NEGATIVE
 	movement_modifier = /datum/movement_modifier/shiver
+	/// chilled by an ice phoenix
+	var/phoenix_chill = FALSE
 
-	onAdd(optional=null)
+	preCheck(atom/A)
+		. = ..()
+		if (istype(A, /mob/living/critter/ice_phoenix))
+			. = FALSE
+
+	onAdd(optional)
+		src.phoenix_chill = optional
 		var/mob/M = owner
 		if(istype(M))
 			M.emote("shiver")
-			M.thermoregulation_mult *= 3
+			M.thermoregulation_mult *= (src.phoenix_chill ? 3 : 1.5)
+			if (phoenix_chill)
+				var/mob/living/carbon/human/H = src.owner
+				if (istype(H))
+					H.changeStatus("phoenix_temp_visible", 5 SECONDS)
+		. = ..()
+
+	onChange(optional)
+		if (optional && !src.phoenix_chill)
+			var/mob/M = owner
+			if (istype(M))
+				M.thermoregulation_mult *= 2
+			src.phoenix_chill = TRUE
+		if (src.phoenix_chill)
+			var/mob/living/carbon/human/H = src.owner
+			if (istype(H))
+				H.changeStatus("phoenix_temp_visible", 5 SECONDS)
 		. = ..()
 
 	onRemove()
 		. = ..()
 		var/mob/M = owner
 		if(istype(M))
-			M.thermoregulation_mult /= 3
+			M.thermoregulation_mult /= (src.phoenix_chill ? 3 : 1.5)
 
 /datum/statusEffect/miasma
 	id = "miasma"
@@ -1769,23 +1793,23 @@
 		var/mob/living/L = owner
 		if(!isalive(L))
 			return
-		var/puke_prob = 0
+		var/nausea_prob = 0
 		var/tox = 0
 		switch(how_miasma)
 			if(1)
 				if(probmult(1))
 					L.emote("shudder")
 			if(2)
-				puke_prob = 0.2
+				nausea_prob = 10
 				tox = 0.05
 			if(3)
-				puke_prob = 0.5
+				nausea_prob = 15
 				tox = 0.2
 			if(4)
-				puke_prob = 1
+				nausea_prob = 20
 				tox = 0.45
 			if(5)
-				puke_prob = 2
+				nausea_prob = 25
 				tox = 0.7
 		if(ismobcritter(L))
 			var/mob/living/critter/critter = L
@@ -1795,9 +1819,8 @@
 		L.take_toxin_damage(tox * mult)
 		if(weighted_average > 4)
 			weighted_average = 0
-		if(probmult(puke_prob))
-			var/vomit_message = SPAN_ALERT("[L] pukes all over [himself_or_herself(L)].")
-			L.vomit(0, null, vomit_message)
+		if(probmult(nausea_prob))
+			L.nauseate(1)
 		return ..(timePassed)
 
 	proc/changeState()
@@ -2161,25 +2184,24 @@
 	onUpdate(var/timePassed)
 		var/mob/living/L = owner
 		var/tox = 0
-		var/puke_prob = 0
+		var/nausea_prob = 0
 		switch(timePassed)
 			if(0 to 20 SECONDS)
 				tox = 0.1
-				puke_prob = 0.5
+				nausea_prob = 5
 			if(20 SECONDS to 60 SECONDS)
 				tox = 0.4
-				puke_prob = 1
+				nausea_prob = 10
 			if(60 SECONDS to INFINITY)
 				tox = 1
-				puke_prob = 2
+				nausea_prob = 20
 		L.take_toxin_damage(tox)
 		if(prob(2))
 			L.emote(pick("groan", "moan", "shudder"))
 		if(prob(2))
 			L.change_eye_blurry(rand(5,10))
-		if(prob(puke_prob))
-			var/vomit_message = SPAN_ALERT("[L] pukes all over [himself_or_herself(L)].")
-			L.vomit(0, null, vomit_message)
+		if(prob(nausea_prob))
+			L.nauseate(1)
 
 	//firstly: sorry
 	//secondly: second arg is a proportional scale. 1 is standard, 5 is every port-a-puke tick, 10 is mass emesis.
@@ -3032,7 +3054,7 @@
 		onAdd(optional)
 			..()
 			var/mob/living/carbon/human/H = src.owner
-			H.regens_blood = FALSE // curse steals all your blood
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_BLOOD_REGEN, src)
 
 		onUpdate(timePassed)
 			..()
@@ -3061,11 +3083,7 @@
 		onRemove()
 			var/mob/living/carbon/human/H = src.owner
 			if (!QDELETED(H))
-				var/count
-				for(var/datum/statusEffect/art_curse/blood/status in H.statusEffects)
-					count += 1
-				if (count == 1)
-					H.regens_blood = TRUE
+				REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_BLOOD_REGEN, src)
 			..()
 
 	aging
@@ -3475,3 +3493,188 @@
 	onRemove()
 		..()
 		src.owner.remove_filter("corrosion_color")
+
+/datum/statusEffect/nausea
+	name = "Nauseous"
+	id = "nausea"
+	icon_state = "nausea1"
+	var/stacks = 1
+	var/vomiting = FALSE
+
+	onChange(optional)
+		if (src.stacks > 20 && optional > 0)
+			return
+		src.stacks += optional
+		var/old_desc = src.desc
+		switch(src.stacks)
+			if (0 to 5)
+				src.desc = "You're feeling kinda sick."
+				src.icon_state = "nausea1"
+			if (6 to 9)
+				src.desc = "You think you're going to puke."
+				src.icon_state = "nausea2"
+			if (10 to INFINITY)
+				src.desc = "You're about to throw up!"
+				src.icon_state = "nausea3"
+		if (src.stacks >= 10 && !src.vomiting)
+			src.vomiting = TRUE
+			boutput(src.owner, SPAN_ALERT(SPAN_BOLD(src.desc)))
+			for (var/atom/movable/screen/statusEffect/hud_element in src.hud_elements)
+				animate_angry_wibble(hud_element)
+			SPAWN(5 SECONDS)
+				var/mob/vomitee = src.owner
+				vomitee.vomit()
+		else if (old_desc != src.desc)
+			if (optional > 0)
+				boutput(src.owner, SPAN_ALERT(src.desc))
+			else
+				boutput(src.owner, SPAN_NOTICE("You feel a little less sick."))
+
+	onUpdate(timePassed)
+		if (prob(5))
+			src.stacks -= 0.5
+		if (src.stacks <= 0)
+			src.owner.delStatus(src)
+
+/datum/statusEffect/ice_phoenix_empowered_feather
+	id = "phoenix_empowered_feather"
+	name = "Empowered Feather"
+	desc = "Your next feather attack against a pod will deal an extra 10% of its current life on hit, as well as gain a 25% disruption chance."
+	icon_state = "phoenix_feather_emp"
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+/datum/statusEffect/ice_phoenix_sail
+	id = "ice_phoenix_sail"
+	name = "Sailing"
+	desc = "You are sailing the solar winds, granting a large movement speed buff while in space."
+	icon_state = "phoenix_sail"
+	effect_quality = STATUS_QUALITY_POSITIVE
+	move_triggered = TRUE
+
+	move_trigger()
+		..()
+		if (!istype(get_turf(src.owner), /turf/space))
+			src.owner.delStatus(src)
+
+/datum/statusEffect/ice_phoenix_ice_barrier
+	id = "phoenix_ice_barrier"
+	name = "Ice Barrier"
+	desc = "Attacks against you can only do up to 10 damage."
+	icon_state = "phoenix_barrier"
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+	onAdd()
+		..()
+		src.owner.add_filter("phoenix_barrier_outline", 1, outline_filter(1, "#09e5f5"))
+
+	onRemove()
+		..()
+		src.owner.remove_filter("phoenix_barrier_outline")
+
+/datum/statusEffect/ice_phoenix_vulnerable
+	id = "phoenix_vulnerable"
+	name = "Vulnerable"
+	desc = "You've been made vulnerable, causing you to radiate ice and have halted health regeneration."
+	icon_state = "phoenix_vulnerable"
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	maxDuration = 30 SECONDS
+
+/datum/statusEffect/ice_phoenix_warmth_counter
+	id = "phoenix_warmth_counter"
+	name = "Station Warming"
+	icon_state = "phoenix_warmth"
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/time_passed = 0
+
+	onUpdate(timePassed)
+		..()
+		var/area/A = get_area(src.owner)
+		if (istype(A, /area/station) && !A.permafrosted)
+			src.time_passed = min(src.time_passed + timePassed, 30 SECONDS)
+			if (src.time_passed >= 30 SECONDS)
+				var/mob/living/critter/ice_phoenix/phoenix = src.owner
+				if (!ON_COOLDOWN(phoenix, "warmth_damage", 1 SECOND))
+					var/mult = max(LIFE_PROCESS_TICK_SPACING, timePassed) / LIFE_PROCESS_TICK_SPACING
+					phoenix.TakeDamage("All", burn = 4 * mult)
+		else
+			src.time_passed -= timePassed
+			if (src.time_passed <= 0)
+				src.owner.delStatus(src)
+
+	getTooltip()
+		return "Being on the station increases your warmth, staying over 30 seconds and you'll start to take damage.<br><br>Current time spent: [round(src.time_passed / 10, 1)] seconds"
+
+
+/datum/statusEffect/in_nest
+	id = "in_phoenix_nest"
+	visible = FALSE
+
+	onUpdate()
+		..()
+		var/mob/living/L = src.owner
+		if (isdead(L))
+			var/area/phoenix_nest/A = get_area(src.owner)
+			A.atom_entered(src.owner)
+			src.owner.delStatus(src)
+
+/datum/statusEffect/cold_snap
+	id = "cold_snap"
+	name = "Cold Snap"
+	desc = "You've been chilled to a dangerous temperature by an ice phoenix!"
+	icon_state = "phoenix_cold_snap"
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onAdd()
+		..()
+		src.owner.add_filter("cold_snap_color_matrix", 1, color_matrix_filter(normalize_color_to_matrix("#000985")))
+
+	onRemove()
+		..()
+		src.owner.remove_filter("cold_snap_color_matrix")
+
+/datum/statusEffect/phoenix_temp_visible
+	id = "phoenix_temp_visible"
+	name = "Temperature Visible"
+	visible = FALSE
+	maxDuration = 5 SECONDS
+
+	onAdd()
+		..()
+		var/mob/living/carbon/human/H = src.owner
+		if (!H.phoenix_temp_overlay)
+			H.phoenix_temp_overlay = new /image/phoenix_temperature_indicator('icons/mob/space_phoenix.dmi', H, "temp_indicator", HUD_LAYER_UNDER_1, null, H)
+
+	onChange()
+		..()
+		var/mob/living/carbon/human/H = src.owner
+		if (!H.phoenix_temp_overlay)
+			H.phoenix_temp_overlay = new /image/phoenix_temperature_indicator('icons/mob/space_phoenix.dmi', H, "temp_indicator", HUD_LAYER_UNDER_1, null, H)
+
+	onUpdate()
+		..()
+		var/mob/living/carbon/human/H = src.owner
+		H.phoenix_temp_overlay.update_temperature(H.bodytemperature)
+
+	onRemove()
+		..()
+		var/mob/living/carbon/human/H = src.owner
+		QDEL_NULL(H.phoenix_temp_overlay)
+
+/datum/statusEffect/phoenix_nest_counter
+	id = "phoenix_mobs_collected"
+	name = "Extra Health Regneration"
+	icon_state = "phoenix_health_regen"
+	effect_quality = STATUS_QUALITY_POSITIVE
+	var/critters_collected = 0
+	var/humans_collected = 0
+
+	getTooltip()
+		var/mob/living/critter/ice_phoenix/phoenix = src.owner
+		return "You have [src.critters_collected]/5 critters and [src.humans_collected]/5 humans collected in your nest, giving you an extra [phoenix.extra_life_regen] points of out of combat health regeneration."
+
+/datum/statusEffect/phoenix_revive_ready
+	id = "phoenix_revive_ready"
+	name = "Revival on Death"
+	icon_state = "phoenix_revive_ready"
+	desc = "You will be resurrected upon death with full health."
+	effect_quality = STATUS_QUALITY_POSITIVE

@@ -117,7 +117,7 @@
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/stasis)
 		projectiles = list(current_projectile)
-		AddComponent(/datum/component/holdertargeting/windup, 3 SECONDS)
+		AddComponent(/datum/component/holdertargeting/windup, 2 SECONDS)
 		..()
 
 /datum/projectile/energy_bolt/stasis
@@ -299,25 +299,31 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 	var/weblevel = 1
 	density = 0
 
+	proc/can_web_walk(atom/A)
+		return isliving(A) && A.hasStatus("webwalk")
+
 	New()
 		..()
 		src.update_self()
 
 	Cross(atom/A)
 		switch(weblevel)
-			if(1 to 2)
-				if(isliving(A) && !A.hasStatus("webwalk"))
-					A.changeStatus("slowed", 1 SECONDS)
-					if(!ON_COOLDOWN(A, "webrustle", 1 SECOND))
-						playsound(A.loc, 'sound/impact_sounds/Bush_Hit.ogg', 45, 1)
-					return 1
-				else
-					return 1
-			if(3)
-				if(isliving(A) && !A.hasStatus("webwalk"))
+			if(-INFINITY to 2)
+				return 1 //is this even necessary? idk
+			if(3 to INFINITY)
+				if(!src.can_web_walk(A))
 					return 0
 				else
 					return 1
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		switch(weblevel)
+			if(-INFINITY to 2)
+				if(!src.can_web_walk(AM))
+					AM.changeStatus("slowed", 1 SECONDS)
+					if(!ON_COOLDOWN(AM, "webrustle", 1 SECOND))
+						playsound(AM.loc, 'sound/impact_sounds/Bush_Hit.ogg', 45, 1)
 
 	attackby(obj/item/W, mob/user)
 		if (!W) return
@@ -334,8 +340,14 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 		if(dmg == TRUE)
 			src.take_damage(1, "brute", user)
 
-		user.lastattacked  = src
+		user.lastattacked  = get_weakref(src)
 		..()
+
+	attack_hand(mob/user)
+		. = ..()
+		if(!ON_COOLDOWN(user, "pokeweb", 1 SECOND))
+			src.visible_message(SPAN_ALERT("<b>[user]</b> [pick("gently", "angrily", "fondly", "subtly", "horrifyingly")] [pick("pokes", "whacks", "punches", "touches")] the [src]!"))
+			playsound(src.loc, 'sound/impact_sounds/Bush_Hit.ogg', 45, 1)
 
 /obj/spiderweb/proc/update_self()
 	playsound(src, 'sound/misc/splash_1.ogg', 45, 1)
@@ -536,7 +548,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 			else
 				boutput(W, SPAN_ALERT("None of the eggs hatch. Trying again in three minutes..."))
 				qdel(marker)
-				SPAWN(1 SECOND) //set back to 3 minutes later
+				SPAWN(3 MINUTES)
 					make_weblaying_spider(W, T, tries++)
 			return
 		var/datum/mind/lucky_dude = candidates[1]
@@ -546,7 +558,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 			usr.playsound_local(usr.loc, 'sound/misc/splash_1.ogg', 50)
 			var/mob/living/critter/spider/weblaying/baby/B = lucky_dude.current
 			B.make_critter(/mob/living/critter/spider/weblaying/baby, marker.loc)
-			B.spawn_marker = marker
 			message_ghosts("A <b>baby weblaying spider</b> has been born at [log_loc(B, ghostjump = TRUE)].")
 			boutput(W, SPAN_NOTICE("The egg you planted at [marker.loc] has hatched into a new spider!"))
 		W.spawn_marker = null
+		qdel(marker)
