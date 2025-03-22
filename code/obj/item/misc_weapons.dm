@@ -1405,8 +1405,8 @@ TYPEINFO(/obj/item/swords/captain)
 
 /obj/item/swords/ntboss
 	icon_state = "ntboss_sword"
-	name = "Syndicate Commander's Sabre"
-	desc = "A sharp sabre for the most trusted and competent Nanotrasen Commanders. The blue paint is peeling a bit..."
+	name = "NanoTrasen Commander's Sabre"
+	desc = "A sharp sabre for the most trusted and competent NanoTrasen Commanders. The blue paint is peeling a bit..."
 	force = 20
 	contraband = 4
 
