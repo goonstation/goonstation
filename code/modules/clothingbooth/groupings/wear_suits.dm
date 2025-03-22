@@ -166,7 +166,7 @@
 	name = "Denim Dress"
 	item_paths = list(
 		/datum/clothingbooth_item/wear_suit/denim_dress/blue,
-		/datum/clothingbooth_item/wear_suit/denim_dress/dark_blue,
+		/datum/clothingbooth_item/wear_suit/denim_dress/turquoise,
 		/datum/clothingbooth_item/wear_suit/denim_dress/white,
 		/datum/clothingbooth_item/wear_suit/denim_dress/black,
 		/datum/clothingbooth_item/wear_suit/denim_dress/grey,

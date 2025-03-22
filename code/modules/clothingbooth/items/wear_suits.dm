@@ -288,10 +288,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/denim_dress)
 		swatch_background_color = "#3c6dc3"
 		item_path = /obj/item/clothing/suit/dress/denim/blue
 
-	dark_blue
+	turquoise
 		name = "Dark Blue"
 		swatch_background_color = "#053a4e"
-		item_path = /obj/item/clothing/suit/dress/denim/dark_blue
+		item_path = /obj/item/clothing/suit/dress/denim/turquoise
 
 	white
 		name = "White"
