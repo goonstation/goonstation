@@ -944,19 +944,16 @@
 						else if (H.limbs.l_leg)
 							damage += H.limbs.l_leg.limb_hit_bonus
 					if(issilicon(dive_attack_hit))
-						playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
-						for (var/mob/O in AIviewers(user))
-							O.show_message(SPAN_ALERT("<b>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!</b>"))
+						playsound(user, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
+						user.visible_message(SPAN_ALERT("<b>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!</b>"))
 					else if (AR.sanctuary)
 						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, TRUE, -1)
-						for (var/mob/O in AIviewers(user))
-							O.show_message(SPAN_ALERT("<B>[user] slides into [dive_attack_hit] harmlessly!</B>"), 1)
+						user.visible_message(SPAN_ALERT("<B>[user] slides into [dive_attack_hit] harmlessly!</B>"))
 					else
 						dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
 						dive_attack_hit.was_harmed(user)
 						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, TRUE, -1)
-						for (var/mob/O in AIviewers(user))
-							O.show_message(SPAN_ALERT("<B>[user] slides into [dive_attack_hit]!</B>"), 1)
+						user.visible_message(SPAN_ALERT("<B>[user] slides into [dive_attack_hit]!</B>"))
 					logTheThing(LOG_COMBAT, user, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
 
 
