@@ -1077,9 +1077,9 @@ toxic - poisons
 			hit.changeStatus("staggered", clamp(proj.power/10, 5, 1) SECONDS)
 
 		else
-			var/turf/W = get_turf(hit)
-			playsound(W, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
-			make_cleanable(/obj/decal/cleanable/potatosplat, W)
+			var/turf/T = get_turf(hit)
+			playsound(T, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
+			make_cleanable(/obj/decal/cleanable/potatosplat, T)
 
 	on_max_range_die(obj/projectile/O)
 		var/turf/T = get_turf(O)
