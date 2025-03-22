@@ -12,18 +12,13 @@
 		H.equip_new_if_possible(pick(concrete_typesof(/obj/item/clothing/under/jersey)), SLOT_W_UNIFORM)
 		H.equip_new_if_possible(/obj/item/clothing/shoes/white, SLOT_SHOES)
 		H.equip_new_if_possible(pick(concrete_typesof(/obj/item/clothing/head/wizard)), SLOT_HEAD)
-		H.equip_if_possible(new /obj/item/device/radio/headset/wizard(H), SLOT_EARS)
+		H.equip_new_if_possible(/obj/item/device/radio/headset/wizard, SLOT_EARS)
+		H.equip_new_if_possible(/obj/item/tank/emergency_oxygen/extended, SLOT_L_STORE)
 		H.equip_new_if_possible(/obj/item/bball_uplink, SLOT_R_STORE)
 		H.equip_new_if_possible(/obj/item/storage/backpack, SLOT_BACK)
 		H.equip_new_if_possible(/obj/item/basketball, SLOT_R_HAND)
 		SPAWN(0)
 			H.choose_name(what_you_are="Basketball Wizard")
 
-		if("plasmalungs" in H.client?.preferences.traitPreferences.traits_selected)
-			H.equip_if_possible(new /obj/item/clothing/mask/breath(H), SLOT_WEAR_MASK)
-			H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended/plasma(H), SLOT_L_STORE)
-		else
-			H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), SLOT_L_STORE)
-
 		H.equip_sensory_items()
-
+		H.equip_body_traits(is_antagonist=TRUE)
