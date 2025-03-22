@@ -824,7 +824,7 @@ TYPEINFO(/obj/item/radiojammer)
 /obj/item/device/radio/electropack/New()
 	..()
 	// Electropack + sec helmet  -> shock kit
-	src.AddComponent(/datum/component/assembly, /obj/item/clothing/head/helmet, PROC_REF(shock_kit_assembly), TRUE)
+	src.AddComponent(/datum/component/assembly, /obj/item/clothing/head/helmet, PROC_REF(shock_kit_assembly), TRUE, new /datum/assembly_comp_helper/consumes_all)
 
 /obj/item/device/radio/electropack/update_icon()
 	src.icon_state = "electropack[src.on]"

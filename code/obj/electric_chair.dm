@@ -35,7 +35,7 @@
 		src.set_dir(SOUTH)
 		src.UpdateIcon()
 		// Electric chair + wrench  -> deconstruction
-		src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(deconstruction), FALSE)
+		src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(deconstruction), FALSE, new /datum/assembly_comp_helper/consumes_self)
 		// Electric chair + multitool  -> open context options
 		src.AddComponent(/datum/component/assembly, TOOL_PULSING, PROC_REF(show_context_options), FALSE)
 
