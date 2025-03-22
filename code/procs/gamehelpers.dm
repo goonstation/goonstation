@@ -120,7 +120,7 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 		if (target.next_move > world.time && IN_RANGE(target.prev_loc, user, 1))
 			return TRUE
 	if(BOUNDS_DIST(source, user) == 0 || (IN_RANGE(source, user, 1))) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
-		if(!istype(mobuser.loc, /turf)) // if we're not on a turf, we can only interact with stuff inside the same object or in ourselves
+		if(mobuser && !istype(mobuser.loc, /turf)) // if we're not on a turf, we can only interact with stuff inside the same object or in ourselves
 			if(!((source == mobuser.loc) || (source in mobuser.loc) || (source in mobuser)))
 				return FALSE
 		return TRUE
