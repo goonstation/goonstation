@@ -637,17 +637,37 @@
 		tgui_process.update_uis(src)
 
 	proc/hotswap_module(var/slotNum, var/mob/user, var/obj/item/aiModule/equipped)
-		if(!src.law_circuits[slotNum])
+		var/obj/item/aiModule/target_law = src.law_circuits[slotNum]
+		if(!target_law)
 			return FALSE
+
+		var/update_laws = TRUE //Hotswapping a disguised law shouldnt announce it to silicons
 		var/obj/item/aiModule/disguised/disguised_module = equipped
+		var/extralog = null
 		if (istype(disguised_module))
+			extralog = "(Disguised) Hidden law: [disguised_module.realLawText]"
 			disguised_module.disguise(src.law_circuits[slotNum], user)
-		var/was_welded = src.welded[slotNum]
-		var/was_screwed = src.screwed[slotNum]
-		src.remove_module_callback(slotNum, user)
-		src.insert_module_callback(slotNum, user, equipped)
-		src.welded[slotNum] = was_welded
-		src.screwed[slotNum] = was_screwed
+			update_laws = FALSE
+
+		user.put_in_hand_or_drop(target_law)
+		src.law_circuits[slotNum] = equipped
+		user.u_equip(equipped)
+		equipped.set_loc(src)
+
+		if(istype(target_law,/obj/item/aiModule/hologram_expansion))
+			var/obj/item/aiModule/hologram_expansion/holo = target_law
+			src.holo_expansions -= holo.expansion
+		else if(istype(target_law,/obj/item/aiModule/ability_expansion))
+			var/obj/item/aiModule/ability_expansion/expansion = target_law
+			src.ai_abilities -= expansion.ai_abilities
+
+		user.visible_message(SPAN_ALERT("[user] slides a module into the law rack"), SPAN_ALERT("You slide the module into the rack."))
+
+		if(update_laws)
+			src.UpdateLaws()
+
+		logTheThing(LOG_STATION, user, "[constructName(user)] <b>hotswaps</b> an AI law module into rack([constructName(src)]): [target_law]:[target_law.get_law_text()] is replaced with [equipped]:[equipped.get_law_text()] at slot [slotNum]. [extralog]")
+		message_admins("[key_name(user)] hotswapped a law to rack at [log_loc(src)]: [target_law]:[target_law.get_law_text()] is replaced with [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]. [extralog]")
 
 	proc/insert_module_callback(var/slotNum,var/mob/user,var/obj/item/aiModule/equipped)
 		if(src.law_circuits[slotNum])

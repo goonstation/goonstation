@@ -1106,11 +1106,11 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/ai_disguised_module
 	name = "Disguised AI Law Module"
-	items = list(/obj/item/aiModule/disguised)
+	items = list(/obj/item/aiModule/disguised, /obj/item/remote/disguised_module)
 	cost = 2
 	vr_allowed = FALSE
 	not_in_crates = TRUE
-	desc = "An AI law module that at a glance looks completely normal, but could tell the AI to do anything."
+	desc = "An AI law module that at first looks completely normal, but when a connected remote is used activates the secret hidden law within! Comes with new patented syndicate hotswap technology allowing discreet replacement of standard NanoTrasen laws. Don't forget to link the remote first!"
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 

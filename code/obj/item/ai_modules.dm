@@ -467,11 +467,6 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	var/obj/item/remote/disguised_module/connected_remote = null
 	tooltip_flags = REBUILD_USER
 
-	New()
-		..()
-		src.connected_remote = new /obj/item/remote/disguised_module(src.loc)
-		src.connected_remote.connected_law = src
-
 	update_law_text(user, lawTarget)
 		src.realLawText = lawTarget ? lawTarget : "Do crime."
 		return ..()
@@ -480,6 +475,8 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		if(istype(W,/obj/item/aiModule))
 			src.disguise(W, user)
 			return
+		if(istype(W,/obj/item/remote/disguised_module))
+			src.link_to_remote(W, user)
 		..()
 
 	attack_self(mob/user)
@@ -513,11 +510,6 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		boutput(user, SPAN_NOTICE("The module's stealth circuit activates and disguises itself as [module]!"))
 		src.UpdateIcon()
 		tooltip_rebuild = TRUE
-		var/obj/machinery/lawrack/rack = src.loc
-		if(istype(rack))
-			rack.UpdateIcon()
-			rack.UpdateLaws()
-			tgui_process.update_uis(rack)
 
 	proc/activate(mob/user)
 		if (src.lawText == src.realLawText)
@@ -532,24 +524,48 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		if(istype(rack))
 			rack.UpdateLaws()
 			tgui_process.update_uis(rack)
+			return TRUE
+		return FALSE
+
+	proc/link_to_remote(obj/item/remote/disguised_module/module, mob/user)
+		if (!istype(module))
+			return
+		if (src in module.connected_laws)
+			boutput(user, SPAN_ALERT("That module is aready connected to the remote!"))
+			return
+		module.connected_laws += src
+		boutput(user, SPAN_NOTICE("You connect the module to the remote!"))
 
 TYPEINFO(/obj/item/remote/disguised_module)
 	mats = list("conductive"=2)
+
 /obj/item/remote/disguised_module
-	name = "disguised AI law module remote"
-	desc = "A small device that can be used to activate the connected disguised module."
+	name = "syndicate remote"
+	desc = "A small syndicate remote with a big dastardly button."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "sawfly_remote"
 	w_class = W_CLASS_TINY
 	object_flags = NO_GHOSTCRITTER
 	is_syndicate = TRUE
-	var/obj/item/aiModule/disguised/connected_law = null
+	var/obj/item/aiModule/disguised/connected_laws = list()
+
+	attackby(obj/item/W, mob/user)
+		var/obj/item/aiModule/disguised/module = W
+		if(istype(module))
+			module.link_to_remote(src, user)
+			return
+		..()
 
 	attack_self(mob/user)
-		if(!src.connected_law)
-			boutput(user, SPAN_ALERT("The remote emits a low buzzing indicating it has no connected law module!"))
+		if(!length(src.connected_laws))
+			boutput(user, SPAN_ALERT("The remote emits a low buzzing!"))
 			return
-		src.connected_law.activate(user)
+		var/laws_updated = FALSE
+		for (var/obj/item/aiModule/disguised/law_module in src.connected_laws)
+			if(law_module.activate(user))
+				laws_updated = TRUE
+		if(laws_updated)
+			boutput(user, SPAN_ALERT("The remote emits a single beep!"))
 
 /******************** Hologram Expansions ********************/
 
