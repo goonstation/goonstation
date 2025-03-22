@@ -2622,11 +2622,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/dress/denim)
 	icon_state = "denim_dress-blue"
 	item_state = "denim_dress-blue"
 	c_flags = SLEEVELESS
-	material_piece = /obj/item/material_piece/cloth/jean
-
-	New()
-		. = ..()
-		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/suit/dress/denim/blue
 	name = "blue denim dress"
