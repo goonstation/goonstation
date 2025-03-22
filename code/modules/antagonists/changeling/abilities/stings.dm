@@ -69,18 +69,35 @@
 		return 0
 
 	neurotoxin
-		name = "Neurotoxic Sting"
-		desc = "Transfer some neurotoxin into your target."
+		name = "Neurotoxin Sting"
+		desc = "Transfer neurotoxin into your target. Very good at ambushing a single target."
 		icon_state = "stingneuro"
 		venom_id = "neurotoxin"
 
-	//neuro replacement for RP
-	capulettium
-		name = "Capulettium Sting"
-		desc = "Transfer some capulettium into your target."
-		icon_state = "stingneuro"
-		venom_id = "capulettium"
-		inject_amount = 20
+	neurodepressant
+		name = "Neurodepressant Sting"
+		desc = "Transfer neurodepressant into your target. Good for escaping chases and disorienting targets."
+		icon_state = "stingdepres"
+		venom_id = "neurodepressant"
+		inject_amount = 5
+		cooldown = 20 SECONDS
+
+	hemotoxin
+		name = "Hemotoxin Sting"
+		desc = "Transfer hemotoxin into your target. Drains target's blood, may need multiple stings to be lethal."
+		icon_state = "stinghemot"
+		venom_id = "hemotoxin"
+		inject_amount = 9
+		cooldown = 300
+
+	madness
+		name = "Madness Toxin Sting"
+		desc = "Transfer Rajaijah into your target. Causes a target to attack all nearby, but has a long cooldown and DNA cost."
+		icon_state = "stingmadness"
+		venom_id = "madness_toxin"
+		inject_amount = 15
+		pointCost = 5
+		cooldown = 2400
 
 	lsd
 		name = "Hallucinogenic Sting"
@@ -129,6 +146,66 @@
 		inject_amount = 25
 		cooldown = 600
 
+	chemical
+		name = "Neurotoxic Sting"
+		desc = "Transfer chemicals into your target."
+		icon_state = "stingneuro"
+		venom_id = "neurotoxin"
+		inject_amount = 50
+		cooldown = 1400
+		var/datum/targetable/changeling/sting_chem_select/targeting = null
+
+		New()
+			..()
+
+		onAttach(var/datum/abilityHolder/H)
+			targeting = H.addAbility(/datum/targetable/changeling/sting_chem_select)
+			targeting.chemical = src
+
+/datum/targetable/changeling/sting_chem_select
+	name = "Cycle Stings"
+	desc = "Cycle through available sting toxins"
+	icon_state = "stingcycle"
+	cooldown = 0
+	targeted = 0
+	target_anything = 0
+	copiable = 0
+	lock_holder = FALSE
+	ignore_holder_lock = 1
+	var/list/possible_stings = list(
+				/datum/targetable/changeling/sting/neurotoxin,
+				/datum/targetable/changeling/sting/neurodepressant,
+				/datum/targetable/changeling/sting/hemotoxin,
+				/datum/targetable/changeling/sting/madness)
+	var/current_sting_index = 1;
+	var/datum/targetable/changeling/sting/chemical = null
+	sticky = 1
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		var/datum/abilityHolder/changeling/H = holder
+		if (!istype(H))
+			boutput(holder.owner, SPAN_ALERT("That ability is incompatible with our abilities. We should report this to a coder."))
+			return 1
+
+		current_sting_index +=1
+		if (current_sting_index > length(possible_stings))
+			current_sting_index = 1
+
+		var/datum/targetable/changeling/sting/chosen_sting = possible_stings[current_sting_index]
+
+		if (chemical)
+			chemical.name = chosen_sting.name
+			chemical.desc = chosen_sting.desc
+			chemical.icon_state = chosen_sting.icon_state
+			chemical.venom_id = chosen_sting.venom_id
+			chemical.inject_amount = chosen_sting.inject_amount
+			chemical.cooldown = chosen_sting.cooldown
+			chemical.pointCost = chosen_sting.pointCost
+
+		return 0
 
 /datum/targetable/changeling/dna_target_select
 	name = "Select DNA Sting target"
