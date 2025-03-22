@@ -266,8 +266,6 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 	desc = "Patented NT technology compacting many different HUDs into one compact set of glasses.  Enhanced shielding blocks many flashes."
 	icon_state = "nt"
 	item_state = "sunglasses"
-	protective_temperature = 1300
-	var/already_worn = 0
 	color_r = 0.85
 	color_g = 0.85
 	color_b = 1
@@ -275,8 +273,6 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 	equipped(var/mob/user, var/slot)
 		..()
 		if (slot == SLOT_GLASSES)
-			//Night Vision
-			APPLY_ATOM_PROPERTY(user, PROP_MOB_NIGHTVISION, src)
 			//Security
 			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(user)
 			//Medical
@@ -285,8 +281,6 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 
 	unequipped(var/mob/user)
 		if(src.equipped_in_slot == SLOT_GLASSES)
-			//Night Vision
-			REMOVE_ATOM_PROPERTY(user, PROP_MOB_NIGHTVISION, src)
 			//Security
 			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)
 			//Medical
