@@ -32,7 +32,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the tiny map Devtest, no other zlevels. Boots way faster
 
-#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // All of the below
+//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // All of the below
 
 //#define SKIP_FEA_SETUP // Skip setting up atmospheric system
 //#define SKIP_Z5_SETUP // Skip generation of mining level
@@ -50,10 +50,10 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define SHUT_UP_AND_GIVE_ME_MEDAL_STUFF // causes has_medal to always return true - good for testing medal rewards etc.
 //#define SHOW_ME_STATUSES // incredibly hacky visible status effects
 //#define ME_AND_MY_40_ALT_ACCOUNTS // Override game mode minimum player requirements for testing revs, nukies etc.
-#define I_WANNA_BE_THE_JOB "Botanist" // Spawn as a 'imcoder' job. Gives CE belt, captain ID, etc. Change string to different job ID as needed
+//#define I_WANNA_BE_THE_JOB "IMCODER" // Spawn as a 'imcoder' job. Gives CE belt, captain ID, etc. Change string to different job ID as needed
 //#define BANISH_PREGAME_HTML // Prevents the HTML titlescreen from loading. Useful if you experience debilitating lag due to it.
 
-#define STOP_DISTRACTING_ME //All of the below
+//#define STOP_DISTRACTING_ME //All of the below
 
 //#define I_AM_ABOVE_THE_LAW // Prevents all secbots and guardbuddies from spawning, useful for gun testing
 //#define ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP // Prevents ALL bots from spawning (not cyborgs)
