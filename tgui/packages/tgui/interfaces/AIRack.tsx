@@ -38,10 +38,10 @@ export const AIRack = () => {
                 <Button
                   icon={item ? 'circle' : 'circle-o'}
                   onClick={() => act('rack', { rack_index: index + 1 })}
-                  disabled={
-                    (!powered && item ? true : false) ||
-                    welded[index] ||
-                    screwed[index]
+                  color={
+                    welded[index] || screwed[index] || (!powered && item)
+                      ? 'grey'
+                      : 'green'
                   }
                   tooltip={moduleTooltip(
                     item ? true : false,

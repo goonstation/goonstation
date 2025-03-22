@@ -386,13 +386,6 @@
 				if(!in_interact_range(src, ui.user))
 					return
 
-				if (ui.user.equipped() && istype(ui.user.equipped(), /obj/item/aiModule/disguised))
-					boutput(ui.user,"You start switching out the inserted law!")
-					var/obj/item/aiModule/equipped = ui.user.equipped()
-					SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, PROC_REF(hotswap_module), list(slotNum,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
-					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
-					return
-
 				if (!ui.user.equipped() || !isweldingtool(ui.user.equipped()))
 					boutput(ui.user,"You need a welding tool for that!")
 					return
@@ -418,13 +411,6 @@
 				if(!in_interact_range(src, ui.user))
 					return
 
-				if (ui.user.equipped() && istype(ui.user.equipped(), /obj/item/aiModule/disguised))
-					boutput(ui.user,"You start switching out the inserted law!")
-					var/obj/item/aiModule/equipped = ui.user.equipped()
-					SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, PROC_REF(hotswap_module), list(slotNum,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
-					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
-					return
-
 				if (!ui.user.equipped() || !isscrewingtool(ui.user.equipped()))
 					boutput(ui.user,"You need a screwdriver for that!")
 					return
@@ -444,6 +430,12 @@
 				return
 			if("rack")
 				if(!in_interact_range(src, ui.user))
+					return
+				if (ui.user.equipped() && istype(ui.user.equipped(), /obj/item/aiModule/disguised) && law_circuits[slotNum])
+					boutput(ui.user,"You start switching out the inserted law!")
+					var/obj/item/aiModule/equipped = ui.user.equipped()
+					SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, PROC_REF(hotswap_module), list(slotNum,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
+					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 					return
 				if (welded[slotNum])
 					ui.user.visible_message(SPAN_ALERT("[ui.user] tries to tug a module out of the rack, but it's welded in place!"), SPAN_ALERT("You struggle with the module but it's welded in place!"))
