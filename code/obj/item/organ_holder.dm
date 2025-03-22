@@ -1417,6 +1417,7 @@
 				newtail.holder = src
 				organ_list["tail"] = newtail
 				src.donor.update_body()
+				src.donor.bioHolder.RemoveEffect(newtail.failure_ability)
 				success = 1
 
 		if (success)

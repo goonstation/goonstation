@@ -2494,3 +2494,15 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	icon_state = "rabbithat"
 	item_state = "rabbithat"
 	seal_hair = TRUE
+
+// Mx Blorbo's lovable visage.
+
+/obj/item/clothing/head/blorbohat
+	name = "Blorbo costume head"
+	desc = "Everyone's favourite gimmick character, Mx. Blorbo!"
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
+	icon_state = "blorbohat"
+	item_state = "blorbohat"
+	seal_hair = TRUE

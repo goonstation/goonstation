@@ -381,33 +381,23 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		if (isliving(user))
 			var/obj/item/card/id/I = user.get_id()
 
+			if(!istype(I, /obj/item/card/id/pod_wars))
+				boutput(user, SPAN_ALERT("[ship]'s locking mechanism is incompatible with your ID!"))
+				return
+			var/obj/item/card/id/pod_wars/PW_ID = I
 			if (isnull(assigned_id))
 				if (istype(I))
 					boutput(user, SPAN_NOTICE("[ship]'s locking mechinism recognizes [I] as its key!"))
 					playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 					assigned_id = I
-					team_num = get_team(I)
+					team_num = PW_ID.team
 					ship.locked = 0
 					return
 
 			if (istype(I))
-				if (I == assigned_id || get_team(I) == team_num)
+				if (I == assigned_id || PW_ID.team == team_num)
 					ship.locked = !ship.locked
 					boutput(user, SPAN_ALERT("[ship] is now [ship.locked ? "locked" : "unlocked"]!"))
-
-
-
-	proc/get_team(var/obj/item/card/id/I)
-		switch(I.assignment)
-			if("NanoTrasen Commander")
-				return TEAM_NANOTRASEN
-			if("NanoTrasen Pilot")
-				return TEAM_NANOTRASEN
-			if("Syndicate Commander")
-				return TEAM_SYNDICATE
-			if("Syndicate Pilot")
-				return TEAM_SYNDICATE
-		return -1
 
 ////////////////////PDAs and PDA Accessories/////////////////////
 /obj/item/device/pda2/pod_wars

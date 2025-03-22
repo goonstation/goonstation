@@ -31,7 +31,7 @@
 	src.handler = new
 	src.handler.plane = PLANE_BLACKNESS
 	src.handler.mouse_opacity = 0
-	src.handler.screen_loc = "[src.minimap_id]:1,1"
+	src.handler.set_position(src.minimap_id,1,1)
 
 	src.minimap = minimap
 	src.minimap.screen_loc = "[src.minimap_id]:1,1"

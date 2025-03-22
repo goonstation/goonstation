@@ -210,7 +210,7 @@ var/global/list/job_start_locations = list()
 	icon_state = "pod_nt"
 
 /obj/landmark/start/job/podwars/NT/commander
-	name = "NanoTrasen Commander"
+	name = "NanoTrasen Pod Commander"
 	icon_state = "pod_nt_commander"
 
 /obj/landmark/start/job/podwars/syndie
@@ -218,7 +218,7 @@ var/global/list/job_start_locations = list()
 	icon_state = "pod_syndie"
 
 /obj/landmark/start/job/podwars/syndie/commander
-	name = "Syndicate Commander"
+	name = "Syndicate Pod Commander"
 	icon_state = "pod_syndie_commander"
 
 /* ===== Antagonist Starts ===== */

@@ -272,6 +272,19 @@
 	uses_ammunition = 1
 	remaining_ammunition = 20
 
+/obj/item/shipcomponent/mainweapon/salvo_rockets
+	name = "Cerberus Salvo Rockets"
+	desc = "A three-rocket salvo launcher, created in mind for multi-purpose space combat. Usable only by small pods."
+	icon_state = "cerberus-salvo-rockets"
+	weapon_score = 1.25
+	power_used = 50
+	current_projectile = new/datum/projectile/bullet/homing/rocket/salvo
+	appearanceString = "pod_weapon_cerberus"
+	firerate = 5 SECONDS
+	shots_to_fire = 3
+	spread = 30
+	large_pod_compatible = FALSE
+
 /obj/item/shipcomponent/mainweapon/laser_ass // hehhh
 	name = "Mk.4 Assault Laser"
 	weapon_score = 1.25

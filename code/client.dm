@@ -473,8 +473,8 @@
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 			if (!changes && preferences.view_changelog && !is_newbie)
 				if (!cdn)
-					//src << browse_rsc(file("browserassets/images/changelog/postcardsmall.jpg"))
-					src << browse_rsc(file("browserassets/images/changelog/88x31.png"))
+					//src << browse_rsc(file("browserassets/src/images/changelog/postcardsmall.jpg"))
+					src << browse_rsc(file("browserassets/src/images/changelog/88x31.png"))
 				changes()
 
 			if (src.holder && rank_to_level(src.holder.rank) >= LEVEL_MOD) // No admin changelog for goat farts (Convair880).

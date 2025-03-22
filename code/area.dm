@@ -1701,6 +1701,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Ocean Mining Outpost"
 	icon_state = "purple"
 
+/area/prefab/radshuttle
+	name = "Irradiated Shuttle"
+	icon_state = "green"
+
 TYPEINFO(/area/station/turret_protected/sea_crashed)
 	valid_bounty_area = FALSE
 /area/station/turret_protected/sea_crashed //dumb area pathing aRRGHHH

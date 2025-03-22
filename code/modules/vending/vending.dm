@@ -527,13 +527,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	for (var/datum/data/vending_product/R in plist)
 		if (R.product_hidden && !src.extended_inventory)
 			continue
-		var/display_amount = R.product_amount
-		if (R.product_amount < 1)
-			display_amount = "OUT OF STOCK"
 		.["productList"] += list(list(
 			"ref" = ref(R),
 			"name" = R.product_name,
-			"amount" = display_amount,
+			"amount" = R.product_amount || 0,
 			"cost" = R.product_cost,
 			"img" = R.getBase64Img(),
 			"infinite" = R.infinite

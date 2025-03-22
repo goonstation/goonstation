@@ -714,7 +714,7 @@ proc/filter_carrier_pets(var/type)
 		src.UpdateIcon()
 
 /mob/living/critter/small_animal/turtle/sylvester/Commander
-	beret_remove_job_needed = "NanoTrasen Commander"
+	beret_remove_job_needed = "NanoTrasen Pod Commander"
 
 	New()
 		..()
