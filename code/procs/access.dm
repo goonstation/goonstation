@@ -198,6 +198,8 @@
 /// Global lookup proc for access levels based on a job string (e.g. "Captain")
 /proc/get_access(job)
 	switch(job)
+		if("Nanotrasen Responder")
+			return get_all_accesses() + list(access_centcom)
 		// --------------------------- Heads of staff
 		if("Captain")
 			return get_all_accesses()
@@ -424,7 +426,7 @@ var/list/access_all_actually = null
 		if(access_medical_lockers)
 			return "Medical Equipment"
 		if(access_medlab)
-			return "Med-Sci/Genetics"
+			return "Genetics"
 		if(access_pathology)
 			return "Pathology"
 		if(access_morgue)

@@ -888,7 +888,7 @@
 
 /obj/item/paper/folded/examine()
 	if (src.sealed)
-		return list(desc)
+		return list("This is \an [src.name].", desc)
 	else
 		return ..()
 

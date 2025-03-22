@@ -4438,14 +4438,13 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "azs" = (
-/obj/stool/chair/office/red{
-	dir = 4;
-	tag = "icon-office_chair_red (EAST)"
-	},
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/stool/chair/comfy/blue{
+	dir = 4
 	},
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
@@ -4464,14 +4463,13 @@
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
 "azv" = (
-/obj/stool/chair/office/purple{
-	dir = 8;
-	tag = "icon-office_chair_purple (WEST)"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
+/obj/stool/chair/comfy/green{
+	dir = 8
+	},
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
 "azx" = (
@@ -4620,13 +4618,12 @@
 /turf/simulated/floor/stairs/medical,
 /area/station/medical/medbay/cloner)
 "aAg" = (
-/obj/stool/chair/office/red{
-	dir = 4;
-	tag = "icon-office_chair_red (EAST)"
-	},
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/stool/chair/comfy/purple{
+	dir = 4
 	},
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
@@ -4805,12 +4802,11 @@
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
 "aAX" = (
-/obj/stool/chair/office/yellow{
-	dir = 1;
-	tag = "icon-office_chair_yellow (NORTH)"
-	},
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/stool/chair/comfy/ergonomic{
+	dir = 1
 	},
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
@@ -7964,11 +7960,11 @@
 	},
 /area/station/medical/medbay)
 "aSW" = (
-/obj/stool/chair/office/blue,
 /obj/machinery/light_switch/auto,
 /obj/machinery/alarm{
 	pixel_y = 25
 	},
+/obj/stool/chair/office/blue,
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
 "aSY" = (
@@ -8515,7 +8511,6 @@
 	},
 /area/station/medical/medbay)
 "aWz" = (
-/obj/stool/chair/office/blue,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -8523,6 +8518,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/stool/chair/office/blue,
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
 "aWA" = (
@@ -17183,6 +17179,15 @@
 /obj/machinery/power/apc/autoname_north/hardened,
 /turf/simulated/floor/black,
 /area/listeningpost/power)
+"mLT" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/stool/chair/comfy/red{
+	dir = 1
+	},
+/turf/simulated/floor/wood/two,
+/area/station/bridge/united_command)
 "mMP" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/head/helmet/welding{
@@ -24413,13 +24418,12 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "xBH" = (
-/obj/stool/chair/office/purple{
-	dir = 8;
-	tag = "icon-office_chair_purple (WEST)"
-	},
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/stool/chair/comfy/yellow{
+	dir = 8
 	},
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
@@ -82072,7 +82076,7 @@ azf
 aSW
 azu
 aAi
-aAX
+mLT
 azf
 wrZ
 ayi
