@@ -1,5 +1,8 @@
 var/HasturPresent = 0
 
+TYPEINFO(/mob/living/critter/hastur)
+	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_VOID)
+
 /mob/living/critter/hastur
 	name = "????"
 	real_name = "????"
@@ -16,12 +19,11 @@ var/HasturPresent = 0
 	see_invisible = INVIS_ADVENTURE
 	stat = STAT_DEAD
 	stepsound = 'sound/misc/hastur/tentacle_walk.ogg'
-	speechverb_say = "states"
-	speechverb_exclaim = "declares"
-	speechverb_ask = "inquires"
+	speech_verb_say = "states"
+	speech_verb_exclaim = "declares"
+	speech_verb_ask = "inquires"
 	bound_height = 32
 	bound_width = 32
-	speech_void = 1
 	layer = 40
 	var/icon/northsouth = null
 	var/icon/eastwest = null
@@ -35,7 +37,7 @@ var/HasturPresent = 0
 		changeIcon()
 		src.nodamage = 1
 		HasturPresent = 1
-		radio_brains[src] = 2
+		bioHolder.AddEffect("radio_brain", 2)
 		abilityHolder.addAbility(/datum/targetable/hastur/devour)
 		abilityHolder.addAbility(/datum/targetable/hastur/insanityaura)
 		abilityHolder.addAbility(/datum/targetable/hastur/masswhisper)

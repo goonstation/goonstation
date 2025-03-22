@@ -741,9 +741,9 @@
 						W.set_loc(myHead)
 						myHead.wear_mask = W
 					if (isskeleton(src.donor) && myHead.head_type == HEAD_SKELETON) // must be skeleton AND have skeleton head
-						src.donor.set_eye(myHead)
 						var/datum/mutantrace/skeleton/S = H.mutantrace
 						S.set_head(myHead)
+						S.head_moved(TRUE) // update tracking
 
 				myHead.set_loc(location)
 				myHead.update_head_image()
@@ -1104,7 +1104,7 @@
 						var/datum/mutantrace/skeleton/S = H.mutantrace
 						if (newHead.head_type == HEAD_SKELETON) // only set head / reset eye if we can link to it
 							S.set_head(newHead)
-							H.set_eye(null)
+							S.head_moved() // update tracking
 					else
 						H.set_eye(null)
 
@@ -1161,12 +1161,7 @@
 					var/mob/living/carbon/human/H = src.head.linked_human
 					if (H && (!isskeleton(src.donor) && H != src.donor))
 						var/datum/mutantrace/skeleton/S = H?.mutantrace
-						if (!QDELETED(S))
-							S.head_tracker = null
-						H.set_eye(null)
-						src.head.UnregisterSignal(src.head.linked_human, COMSIG_CREATE_TYPING)
-						src.head.UnregisterSignal(src.head.linked_human, COMSIG_REMOVE_TYPING)
-						src.head.UnregisterSignal(src.head.linked_human, COMSIG_SPEECH_BUBBLE)
+						S.set_head(null)
 
 				newBrain.set_loc(src.donor)
 				newBrain.holder = src

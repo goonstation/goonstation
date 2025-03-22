@@ -22,9 +22,6 @@
 	var/player_mode_asay = 0
 	var/player_mode_ahelp = 0
 	var/player_mode_mhelp = 0
-	var/only_local_looc = 0
-	var/deadchatoff = 0
-	var/mute_ghost_radio = FALSE
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0
@@ -1212,6 +1209,21 @@ var/global/curr_day = null
 	if (!src.ckey)
 		return 0
 	return (src.ckey in muted_keys) && muted_keys[src.ckey]
+
+/client/proc/desuss_zap(source, datum/say_message/message)
+	if (!forced_desussification)
+		return
+
+	if (!phrase_log.is_sussy(message.original_content))
+		return
+
+	arcFlash(message.speaker, message.speaker, forced_desussification)
+	if (issilicon(message.speaker))
+		var/mob/M = message.speaker
+		M.apply_flash(20, knockdown = 2, stamina_damage = 20, disorient_time = 3)
+
+	if (forced_desussification_worse)
+		forced_desussification *= 1.1
 
 /client/proc/message_one_admin(source, message)
 	if(!src.holder)

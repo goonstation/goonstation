@@ -7,31 +7,13 @@
 	/// Hivemind pointing uses an image rather than a decal
 	var/static/point_img = null
 
+	default_speech_output_channel = null
+
 	New()
 		. = ..()
 		if (!point_img)
 			point_img = image('icons/mob/screen1.dmi', icon_state = "arrow")
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
-
-	say_understands(var/other)
-		return 1
-
-	say(var/message)
-		message = trimtext(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
-
-		if (!message)
-			return
-
-		if (dd_hasprefix(message, "*"))
-			return
-
-		logTheThing(LOG_DIARY, src, "(HIVEMIND): [message]", "hivesay")
-
-		if (src.client && src.client.ismuted())
-			boutput(src, "You are currently muted and may not speak.")
-			return
-		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
-		. = src.say_hive(message, hivemind_owner)
 
 	stop_observing()
 		set hidden = 1
