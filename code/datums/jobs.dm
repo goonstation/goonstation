@@ -2463,6 +2463,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 /datum/job/special/nt/commander
 	name = "Nanotrasen Commander"
 	trait_list = list("training_security", "training_medical")
+	wages = PAY_EXECUTIVE //The big boss
 	receives_miranda = TRUE
 	receives_badge = TRUE
 	receives_disk = /obj/item/disk/data/floppy/sec_command
