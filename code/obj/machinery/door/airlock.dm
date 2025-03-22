@@ -63,6 +63,14 @@ var/global/list/cycling_airlocks = list()
 	brainloss_stumble = TRUE
 
 	get_desc()
+		var/netnum = get_connection()
+		if(netnum)
+			var/datum/powernet/PN
+			if(powernets && length(powernets) >= netnum)
+				PN = powernets[netnum]
+			if(PN.avail > 1500000) // 1.5MW is the min threshold for arc flashes, 60 burn average
+				. += SPAN_ALERT("[src] is dangerously sparking with electricity!<br>")
+
 		var/healthpercent = src.health/src.health_max * 100
 		switch(healthpercent)
 			if(90 to 99) //dont want to clog up the description unless it's actually damaged
@@ -449,11 +457,16 @@ var/global/list/cycling_airlocks = list()
 	if (!in_interact_range(src, user))
 		return 0
 	if(src.electrocute(user, 100, net)) //this is on purpose so the rng wont roll twice
-		return 1
-
+		. = 1
 	else
 		return 0
-
+	var/datum/powernet/PN
+	if(powernets && length(powernets) >= net)
+		PN = powernets[net]
+	// 1.5MW is the min threshold for doing arcflashes, and 1.5MW shocks do 60 burn. Time to fry the airlock.
+	// We also only want to overload if we actually zap someone
+	if(. == 1 && (PN?.avail > 1500000))
+		src.shock_overload()
 
 /obj/machinery/door/airlock/update_icon(var/toggling = 0, override_parent = TRUE)
 	if(toggling ? !density : density)
@@ -1466,6 +1479,26 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door/airlock, proc/play_deny, proc/toggle_bo
 		close()
 	else
 		open()
+
+/// Handles airlocks blowing open and burning out its power wires
+/obj/machinery/door/airlock/proc/shock_overload(var/force_overload = FALSE)
+	if((!src.isElectrified() || !src.arePowerSystemsOn()) && !force_overload)
+		return //normally we only want to overload when electrified, otherwise it's nearly impossible to hack during hotwire
+	src.open()
+	// using cut() expects a mob to be physically cutting wires so we take a shortcut. maybe bad idea? idk
+	wires &= ~airlockIndexToFlag[AIRLOCK_WIRE_MAIN_POWER1]
+	wires &= ~airlockIndexToFlag[AIRLOCK_WIRE_MAIN_POWER2]
+	wires &= ~airlockIndexToFlag[AIRLOCK_WIRE_BACKUP_POWER1]
+	wires &= ~airlockIndexToFlag[AIRLOCK_WIRE_BACKUP_POWER2]
+	src.loseMainPower()
+	src.loseBackupPower()
+	src.visible_message(SPAN_ALERT("[src] violently overloads with a harsh electrical pop!"))
+	playsound(src, 'sound/effects/elec_bzzz.ogg', 35, TRUE, 0.8)
+	SPAWN(0.3 SECONDS)
+		playsound(src, 'sound/effects/electric_pop.ogg', 45, TRUE, 0.8)
+	if(src.health > (src.health_max * 0.4)) // without check you can spam mend wires to quickly break a door
+		src.take_damage(src.health_max * 0.1) // 10% of max health is somewhat arbitrary, feel free to tweak
+		// door already takes damage from strong hotwires due to the explosion. this accelerates the door breaking from that
 
 // ================= global procs ==================
 

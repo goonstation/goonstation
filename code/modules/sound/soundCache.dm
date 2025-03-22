@@ -197,6 +197,7 @@ var/global/list/soundCache = list(
  	"sound/effects/dramatic.ogg" = 'sound/effects/dramatic.ogg',\
  	"sound/effects/elec_bigzap.ogg" = 'sound/effects/elec_bigzap.ogg',\
  	"sound/effects/elec_bzzz.ogg" = 'sound/effects/elec_bzzz.ogg',\
+ 	"sound/effects/electric_pop.ogg" = 'sound/effects/electric_pop.ogg',\
  	"sound/effects/electric_shock.ogg" = 'sound/effects/electric_shock.ogg',\
  	"sound/effects/electric_shock_short.ogg" = 'sound/effects/electric_shock_short.ogg',\
  	"sound/effects/env_damage.ogg" = 'sound/effects/env_damage.ogg',\
