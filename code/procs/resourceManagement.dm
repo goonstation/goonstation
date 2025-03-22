@@ -61,7 +61,7 @@
 
 		else //No CDN, grab from local directory
 			Z_LOG_DEBUG("Resource/Grab", "[path] - locally loaded, parsing")
-			file = parseAssetLinks(file("browserassets/[path]"))
+			file = parseAssetLinks(file("browserassets/src/[path]"))
 
 		Z_LOG_DEBUG("Resource/Grab", "[path] - complete")
 
@@ -164,7 +164,7 @@
 				LAGCHECK(LAG_HIGH)
 				recursiveFileLoader(dir + i)
 		else //Is file
-			if (dir == "browserassets/") //skip files in base dir (hardcoding dir name here because im lazy ok)
+			if (dir == "browserassets/src/") //skip files in base dir (hardcoding dir name here because im lazy ok)
 				continue
 			else
 				localResources["[dir][i]"] = file("[dir][i]")

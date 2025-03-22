@@ -1153,6 +1153,9 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 
 	fall()
 		..()
+		src.capsule_image.pixel_x = src.pixel_x - 4
+		src.capsule_image.pixel_y = src.pixel_y - 8
+		src.UpdateOverlays(src.capsule_image, "capsules")
 		if (src.status & BROKEN)
 			src.icon_state = "[src.base_icon_state]-fallen-broken"
 		else
@@ -1160,6 +1163,9 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 
 	right()
 		..()
+		src.capsule_image.pixel_x = src.pixel_x
+		src.capsule_image.pixel_y = src.pixel_y
+		src.UpdateOverlays(src.capsule_image, "capsules")
 		src.icon_state = src.base_icon_state
 
 	powered()

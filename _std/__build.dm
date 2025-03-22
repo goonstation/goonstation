@@ -228,7 +228,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define BUILD_TIME_TIMEZONE_OFFSET -0500
 #define BUILD_TIME_FULL "2009-02-13 18:31:30"
 #define BUILD_TIME_YEAR 2053
-#define BUILD_TIME_MONTH 01
+#define BUILD_TIME_MONTH 03
 #define BUILD_TIME_DAY 13
 #define BUILD_TIME_HOUR 18
 #define BUILD_TIME_MINUTE 31

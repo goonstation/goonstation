@@ -16,17 +16,20 @@ import { Loader } from './common/Loader';
 
 type MessageInputData = {
   message: string;
-  timeout: number;
   title: string;
+  timeout: number;
+  width: number;
+  height: number;
   theme: string;
   sanitize: BooleanLike;
 };
 
 export const MessageModal = () => {
   const { act, data } = useBackend<MessageInputData>();
-  const { message, timeout, title, theme, sanitize } = data;
+  const { message, title, timeout, width, height, theme, sanitize } = data;
+  const windowWidth = width ? width : 300;
   // Dynamically changes the window height based on the message.
-  const windowHeight = 125 + Math.ceil(message?.length / 3);
+  const windowHeight = height ? height : 125 + Math.ceil(message?.length / 3);
 
   let outputMessage = message;
   if (sanitize) {
@@ -43,11 +46,11 @@ export const MessageModal = () => {
   return (
     <Window
       title={title}
-      width={300}
+      width={windowWidth}
       height={windowHeight}
       theme={theme || 'nanotrasen'}
     >
-      {timeout && <Loader value={timeout} />}
+      {(timeout && <Loader value={timeout} />) || null}
       <Window.Content
         onKeyDown={(event) => {
           const keyCode = window.event ? event.which : event.keyCode;

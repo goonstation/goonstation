@@ -259,7 +259,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				src.damage_heat(rand(10, 25))
 
 	meteorhit(var/obj/M)
-		if (istype(M, /obj/newmeteor/massive))
+		if (istype(M, /obj/newmeteor/massive) && !(IS_ARRIVALS(get_area(src))))
 			smash()
 			return
 		src.damage_blunt(20)
