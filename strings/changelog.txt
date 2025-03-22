@@ -1,5 +1,9 @@
 
 (t)sat mar 22 25
+(u)Chasu
+(p)22609
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(*)Added potato pipeshot ammo, a makeshift slug equivalent for break-action shotguns.
 (u)FlameArrow57
 (p)22686
 (e)🆕🧫🧛|C-Feature, C-Experimental, A-Gamemodes
