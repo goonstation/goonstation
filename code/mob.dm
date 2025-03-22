@@ -992,6 +992,8 @@
 		src.verbs -= list(/mob/verb/setdnr)
 		src.mind.get_player()?.dnr = TRUE
 		boutput(src, SPAN_ALERT("DNR status set!"))
+		if(istype(src, /mob/dead/observer))
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_LAW_VISION, src)
 #endif
 
 /mob/proc/unequip_all(var/delete_stuff=0, atom/drop_loc = null)
