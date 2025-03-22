@@ -21,4 +21,4 @@
 			H.choose_name(what_you_are="Basketball Wizard")
 
 		H.equip_sensory_items()
-		H.equip_body_traits(is_antagonist=TRUE)
+		H.equip_body_traits(extended_tank=TRUE)

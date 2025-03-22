@@ -62,7 +62,7 @@
 		H.equip_if_possible(new /obj/item/pirate_hand_tele(H), SLOT_R_HAND)
 
 		H.equip_sensory_items()
-		H.equip_body_traits(is_antagonist=TRUE)
+		H.equip_body_traits(extended_tank=TRUE)
 
 		H.traitHolder.addTrait("training_drinker")
 		H.addBioEffect("accent_pirate")

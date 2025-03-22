@@ -58,7 +58,7 @@
 			H.equip_if_possible(new /obj/item/device/radio/headset/syndicate(H), SLOT_EARS)
 
 		H.equip_sensory_items()
-		H.equip_body_traits(is_antagonist=TRUE)
+		H.equip_body_traits(extended_tank=TRUE)
 
 		var/obj/item/card/id/syndicate/ID
 		if(src.id == ROLE_NUKEOP_COMMANDER)

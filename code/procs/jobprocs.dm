@@ -533,10 +533,10 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 /**
 Equip items from body traits.
 
- * @param is_antagonist - If TRUE, the mob is an antagonist and will spawn with a pocket extended tank instead of a mini tank.
+ * @param extended_tank - If TRUE, the mob will spawn with a pocket extended tank instead of a mini tank.
 
 **/
-/mob/living/carbon/human/proc/equip_body_traits(is_antagonist=FALSE)
+/mob/living/carbon/human/proc/equip_body_traits(extended_tank=FALSE)
 	if (src.traitHolder && src.traitHolder.hasTrait("plasmalungs"))
 		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks
 			src.stow_in_available(src.wear_mask)
@@ -544,7 +544,7 @@ Equip items from body traits.
 		if(!src.wear_mask)
 			src.equip_if_possible(new /obj/item/clothing/mask/breath(src), SLOT_WEAR_MASK)
 		var/obj/item/tank/good_air
-		if (is_antagonist)
+		if (extended_tank)
 			good_air = new /obj/item/tank/emergency_oxygen/extended/plasma(src)
 			// TODO: antagonists spawn tanks in the left pocket by practice(copy/paste), not pattern
 			if (istype(src.l_store, /obj/item/tank/emergency_oxygen/extended))
