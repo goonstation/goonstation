@@ -1773,8 +1773,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		hand = "L"
 	var/state = src.item_state ? src.item_state + "-[hand]" : (src.icon_state ? src.icon_state + "-[hand]" : hand)
 	if(!(state in get_icon_states(src.inhand_image_icon)))
-		// stack_trace("ZeWaka {TEMP}: [src] has no icon state [state] in [src.inhand_image_icon] | iconstate: [src.icon_state] | itemstate: [src.item_state]")
-		state = src.item_state ? src.item_state + "-L" : (src.icon_state ? src.icon_state + "-L" : "L")
+		logTheThing(LOG_DEBUG, src, "item of type [src.type] has item_state [state] missing from its inhand_image_icon file [src.inhand_image_icon]")
 
 	src.inhand_image.icon_state = state
 	if (src.color)
