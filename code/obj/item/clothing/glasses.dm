@@ -261,6 +261,43 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 	color_b = 1
 	contraband = 4 // illegal (stolen) crimefighting vigilante gear
 
+/obj/item/clothing/glasses/nt_operative
+	name = "\improper NanoTrasen Operative HUD"
+	desc = "Patented NT technology compacting many different HUDs into one compact set of glasses.  Enhanced shielding blocks many flashes."
+	icon_state = "nt"
+	item_state = "sunglasses"
+	protective_temperature = 1300
+	var/already_worn = 0
+	color_r = 0.85
+	color_g = 0.85
+	color_b = 1
+
+	equipped(var/mob/user, var/slot)
+		..()
+		if (slot == SLOT_GLASSES)
+			//Night Vision
+			APPLY_ATOM_PROPERTY(user, PROP_MOB_NIGHTVISION, src)
+			//Security
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(user)
+			//Medical
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
+			APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
+
+	unequipped(var/mob/user)
+		if(src.equipped_in_slot == SLOT_GLASSES)
+			//Night Vision
+			REMOVE_ATOM_PROPERTY(user, PROP_MOB_NIGHTVISION, src)
+			//Security
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)
+			//Medical
+			REMOVE_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
+		..()
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 100)
+
 TYPEINFO(/obj/item/clothing/glasses/thermal)
 	mats = 8
 

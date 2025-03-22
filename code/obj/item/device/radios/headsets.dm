@@ -493,11 +493,13 @@
 		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
 		"g" = R_FREQ_SECURITY,
+		"m" = R_FREQ_MEDICAL,
 		)
 	secure_classes = list(
 		"n" = RADIOCL_NANOTRASEN,
 		"h" = RADIOCL_COMMAND,
 		"g" = RADIOCL_SECURITY,
+		"m" = RADIOCL_MEDICAL,
 		)
 	icon_override = "ntboss"
 	icon_tooltip = "Nanotrasen Commander"

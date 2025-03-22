@@ -2460,6 +2460,26 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/clothing/head/NTberet)
 
+/datum/job/special/nt/commander
+	name = "Nanotrasen Commander"
+	trait_list = list("training_security", "training_medical")
+	receives_miranda = TRUE
+	receives_badge = TRUE
+	receives_disk = /obj/item/disk/data/floppy/sec_command
+
+	slot_belt = list(/obj/item/swords_sheaths/ntboss)
+	slot_jump = list(/obj/item/clothing/under/misc/NT)
+	slot_suit = list(/obj/item/clothing/suit/space/nanotrasen/pilot/commander)
+	slot_head = list(/obj/item/clothing/head/NTberet/commander)
+	slot_foot = list(/obj/item/clothing/shoes/swat/heavy)
+	slot_eyes = list(/obj/item/clothing/glasses/nt_operative)
+	slot_ears = list(/obj/item/device/radio/headset/command/nt/commander)
+	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
+	slot_poc1 = list(/obj/item/device/pda2/ntso)
+	slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
+	items_in_backpack = list(/obj/item/storage/firstaid/regular)
+
+
 /datum/job/special/nt/engineer
 	name = "Nanotrasen Emergency Repair Technician"
 	trait_list = list("training_engineer")
