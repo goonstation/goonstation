@@ -1157,6 +1157,60 @@ toxic - poisons
 		else
 			fireflash(get_turf(hit) || get_turf(P), 0, chemfire = CHEM_FIRE_RED)
 
+/datum/projectile/bullet/ice_phoenix_icicle
+	name = "ice feather"
+	sname = "ice feather"
+	icon_state = "laser_anim_blue"
+	damage = 0.0001 // unique effect per atom hit, but set to non-zero to bypass 0 power/damage checks
+	damage_type = D_PIERCING
+	hit_type = DAMAGE_STAB
+	armor_ignored = 1
+	disruption = 0
+	dissipation_delay = 6
+	shot_sound = 'sound/effects/swoosh2.ogg'
+	shot_volume = 50
+	implanted = /obj/item/implant/projectile/ice_feather
+
+	on_pre_hit(atom/hit, angle, obj/projectile/P)
+		. = ..()
+		if (istype(hit, /mob/living) && !istype(hit, /mob/living/critter/ice_phoenix))
+			var/mob/living/L = hit
+			L.TakeDamage("All", 2.5, 5, damage_type = src.damage_type)
+			L.bodytemperature -= 3
+			L.changeStatus("shivering", 3 SECONDS * (1 - 0.75 * L.get_cold_protection() / 100), TRUE)
+		else if (isvehicle(hit))
+			src.damage = 25
+			src.disruption = 5
+			var/turf/T = get_turf(hit)
+			if (!istype(T, /turf/space))
+				src.damage = 5
+				src.disruption = 0
+				hit.visible_message(SPAN_ALERT("[P] hits [hit] with almost no effect! The phoenix's power is too weak with [hit] not in space!"))
+			else
+				if (P.shooter.hasStatus("phoenix_empowered_feather"))
+					P.shooter.delStatus("phoenix_empowered_feather")
+					SPAWN(10 SECONDS)
+						P.shooter.setStatus("phoenix_empowered_feather", INFINITE_STATUS)
+					var/obj/machinery/vehicle/vehicle = hit
+					if (istype(vehicle))
+						src.damage += vehicle.health * 0.1
+						src.disruption = 25
+		src.generate_stats()
+		P.initial_power = src.power
+
+	on_hit(atom/hit, direction, obj/projectile/P)
+		if (istype(hit, /obj/window))
+			hit.visible_message(SPAN_ALERT("[P] uselessly clunks off [hit]!"))
+			playsound(hit, 'sound/impact_sounds/Glass_Hit_1.ogg', 75, TRUE)
+		. = ..()
+
+	on_end(obj/projectile/P)
+		src.damage = initial(src.damage)
+		src.disruption = initial(src.disruption)
+		src.generate_stats()
+		P.initial_power = src.power
+		..()
+
 /datum/projectile/bullet/flare/UFO
 	name = "heat beam"
 	window_pass = 1
@@ -1951,7 +2005,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 				boutput(M, pod.ship_message(message))
 
 	on_hit(atom/hit, angle, obj/projectile/O)
-		if (istype(hit, /obj/critter/gunbot/drone) || istype(hit, /obj/machinery/vehicle/miniputt) || istype(hit, /obj/machinery/vehicle/pod_smooth)|| istype(hit, /obj/machinery/vehicle/tank))
+		if (istype(hit, /obj/critter/gunbot/drone) || istype(hit, /obj/machinery/vehicle/miniputt) || istype(hit, /obj/machinery/vehicle/pod_smooth)|| istype(hit, /obj/machinery/vehicle/tank) || istype(hit, /mob/living/critter/ice_phoenix))
 			explosion_new(null, get_turf(O), 12)
 
 			if(istype(hit, /obj/machinery/vehicle))

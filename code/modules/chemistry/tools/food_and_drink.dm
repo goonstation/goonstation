@@ -1942,6 +1942,59 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	item_state = "skullchalice"
 	can_recycle = FALSE
 
+/obj/item/reagent_containers/food/drinks/skull_chalice/strange
+	name = "strange skull chalice"
+	desc = "This is one ugly drinking vessel."
+	icon_state = "skullchaliceP"
+	item_state = "skullchalice"
+	can_recycle = FALSE
+
+/obj/item/reagent_containers/food/drinks/skull_chalice/odd
+	name = "odd skull chalice"
+	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. This one's got fewer holes and more room. Convenient!"
+	icon_state = "skullchaliceA"
+	item_state = "skullchalice"
+	can_recycle = FALSE
+	initial_volume = 60
+
+/obj/item/reagent_containers/food/drinks/skull_chalice/peculiar
+	name = "peculiar skull chalice"
+	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. The magic keeps the contents from spilling out."
+	icon_state = "skullchalice_strange"
+	item_state = "skullchalice"
+	can_recycle = FALSE
+
+/obj/item/reagent_containers/food/drinks/skull_chalice/menacing
+	name = "menacing skull chalice"
+	desc = "In Space Soviet Russia, chalice drink out of YOU!"
+	icon_state = "skullchalice_menacing"
+	item_state = "skullchalice"
+	can_recycle = FALSE
+	initial_reagents = list("blood" = 50)
+
+/obj/item/reagent_containers/food/drinks/skull_chalice/crystal
+	name = "skull chalice"
+	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. You have an odd urge to serve champagne in this."
+	icon_state = "skullchalice_crystal"
+	item_state = "skullchalice_crystal"
+	can_recycle = FALSE
+	initial_volume = 60
+
+/obj/item/reagent_containers/food/drinks/skull_chalice/gold
+	name = "golden skull chalice"
+	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. Smells a bit like processed meat snacks."
+	icon_state = "skullchalice_gold"
+	item_state = "skullchalice_gold"
+	can_recycle = FALSE
+
+/obj/item/reagent_containers/food/drinks/skull_chalice/noface
+	name = "faceless skull chalice"
+	desc = "A thing which you can drink fluids out of. Maybe. Possibly. Hypothetically."
+	icon_state = "skullchalice_noface"
+	item_state = "skullchalice"
+	can_recycle = FALSE
+	initial_volume = 5
+
 /obj/item/reagent_containers/food/drinks/mug
 	name = "mug"
 	desc = "A standard mug, for coffee or tea or whatever you wanna drink."

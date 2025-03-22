@@ -1472,6 +1472,17 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			..()
 			implant_overlay = null
 
+	ice_feather
+		name = "ice feather"
+		desc = "A feather made of ice, sharp on all edges."
+		icon = 'icons/obj/items/items.dmi'
+		icon_state = "ice_feather"
+		burn_possible = FALSE
+		default_material = "ice"
+		mat_changename = FALSE
+		mat_changedesc = FALSE
+		mat_changeappearance = FALSE
+
 	body_visible
 		bleed_time = 0
 		leaves_wound = FALSE

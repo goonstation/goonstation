@@ -4131,6 +4131,12 @@
 	dir = 6
 	},
 /area/station/crew_quarters/market)
+"bPW" = (
+/obj/stool/chair/comfy/blue{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/station/bridge)
 "bQb" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -7261,6 +7267,15 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
+"dnE" = (
+/obj/stool/chair/comfy/red{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
+/area/station/bridge)
 "dnH" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -8923,7 +8938,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_east)
 "dYQ" = (
-/obj/stool/chair/comfy{
+/obj/stool/chair/comfy/yellow{
 	dir = 1
 	},
 /obj/disposalpipe/segment/mail/horizontal,
@@ -26249,7 +26264,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/pharmacy)
 "kVX" = (
-/obj/stool/chair/comfy,
+/obj/stool/chair/office/blue,
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/bridge)
@@ -40614,7 +40629,7 @@
 	},
 /area/station/medical/medbay)
 "rhk" = (
-/obj/stool/chair/comfy,
+/obj/stool/chair/office/blue,
 /obj/item/device/radio/intercom/bridge{
 	broadcasting = 0
 	},
@@ -41946,6 +41961,13 @@
 "rNu" = (
 /turf/simulated/floor/engine/caution/corner,
 /area/shuttle/sea_elevator/upper)
+"rNP" = (
+/obj/stool/chair/comfy/green{
+	dir = 1
+	},
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
+/area/station/bridge)
 "rOp" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/east,
@@ -52632,7 +52654,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "wwq" = (
-/obj/stool/chair/comfy{
+/obj/stool/chair/comfy/purple{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
@@ -99256,7 +99278,7 @@ azs
 bRH
 iPe
 nKK
-tvE
+dnE
 tvE
 lsG
 ldw
@@ -99560,7 +99582,7 @@ iPe
 kVX
 tbq
 sQw
-dYQ
+rNP
 cdL
 ihW
 lHV
@@ -100162,7 +100184,7 @@ wOo
 gMN
 iPe
 xvD
-wwq
+bPW
 wwq
 qzz
 kyo
