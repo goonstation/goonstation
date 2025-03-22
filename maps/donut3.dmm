@@ -1246,7 +1246,7 @@
 	},
 /area/station/engine/monitoring)
 "apH" = (
-/obj/stool/chair/comfy,
+/obj/stool/chair/comfy/blue,
 /obj/landmark/start/job/medical_director,
 /turf/simulated/floor/blueblack,
 /area/station/bridge)
@@ -4172,7 +4172,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "biw" = (
-/obj/stool/chair/comfy{
+/obj/stool/chair/comfy/red{
 	dir = 1
 	},
 /obj/landmark/start/job/head_of_security,
@@ -10803,7 +10803,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/security/beepsky)
 "ddA" = (
-/obj/stool/chair/comfy{
+/obj/stool/chair/comfy/green{
 	dir = 8
 	},
 /obj/landmark/start/job/head_of_personnel,
@@ -23512,7 +23512,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "haF" = (
-/obj/stool/chair/comfy,
+/obj/stool/chair/comfy/purple,
 /obj/landmark/start/job/research_director,
 /obj/disposalpipe/segment/mail{
 	dir = 8;
@@ -62723,7 +62723,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/south)
 "tac" = (
-/obj/stool/chair/comfy{
+/obj/stool/chair/comfy/yellow{
 	dir = 1
 	},
 /obj/landmark/start/job/chief_engineer,

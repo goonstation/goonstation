@@ -399,7 +399,7 @@
 		else if (!equipped)
 			hand_range_attack(target, params)
 
-		if (src.lastattacked == target && use_delay) //If lastattacked was set, this must be a combat action!! Use combat click delay.
+		if (src.lastattacked?.deref() == target && use_delay) //If lastattacked was set, this must be a combat action!! Use combat click delay.
 			src.next_click = world.time + (equipped ? max(equipped.click_delay,src.combat_click_delay) : src.combat_click_delay)
 			src.lastattacked = null
 

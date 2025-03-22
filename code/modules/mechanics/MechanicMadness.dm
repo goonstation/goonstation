@@ -2691,7 +2691,7 @@
 			while (tries > 0 && (!proj || proj.disposed))
 				proj = initialize_projectile_pixel_spread(src, new/datum/projectile/special/homing/mechcomp_warp, picked)
 			proj.targets = list(picked)
-			proj.event_handler_flags &= IMMUNE_SINGULARITY
+			proj.event_handler_flags |= IMMUNE_SINGULARITY
 			proj.has_atmosphere = TRUE
 			for(var/atom/movable/AM in src.loc)
 				if(AM == src || AM.invisibility || AM.anchored) continue
@@ -3404,12 +3404,15 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			return 0
 		else if (istype(W, /obj/item/instrument)) //BLUH these aren't consolidated under any combined type hello elseif chain // i fix - haine
 			var/obj/item/instrument/I = W
-			instrument = I
-			sounds = I.sounds_instrument
-			volume = I.volume
-			delay = I.note_time
-			if(I.note_time < 1 SECOND)
-				allow_polyphony = TRUE
+			if (!I.automatable)
+				boutput(user, SPAN_ALERT("[I] doesn't fit in there!"))
+			else
+				instrument = I
+				sounds = I.sounds_instrument
+				volume = I.volume
+				delay = I.note_time
+				if(I.note_time < 1 SECOND)
+					allow_polyphony = TRUE
 		else if (istype(W, /obj/item/clothing/head/butt))
 			instrument = W
 			sounds = 'sound/voice/farts/poo2.ogg'

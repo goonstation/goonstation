@@ -364,6 +364,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/cable_coil = 3,
 		/obj/item/lamp_manufacturer/organic = 5,
 		/obj/item/pen/infrared = 4,
+		/obj/item/pen/crayon/infrared = 4,
 		/obj/item/sheet/steel/fullstack = 2,
 		/obj/item/sheet/glass/fullstack = 2,
 		/obj/item/rods/steel/fullstack = 1,
@@ -488,6 +489,7 @@ var/global/mail_types_by_job = list(
 		// so you can keep looking at your screen,
 		// even in the brightness of nuclear hellfire o7
 		/obj/item/clothing/glasses/sunglasses/tanning = 10,
+		/obj/item/clothing/glasses/eyestrain = 10,
 		),
 
 
@@ -499,6 +501,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/cable_coil = 6,
 		/obj/item/lamp_manufacturer/organic = 5,
 		/obj/item/pen/infrared = 7,
+		/obj/item/pen/crayon/infrared = 7,
 		/obj/item/sheet/steel/fullstack = 2,
 		/obj/item/sheet/glass/fullstack = 2,
 		/obj/item/rods/steel/fullstack = 2,

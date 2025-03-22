@@ -86,25 +86,9 @@ Ctrl + Alt + Shift Left Click          - Edit Precipitation Controller<br>
 		update_button_text()
 
 	proc/add_reagents(datum/precipitation_controller/PC)
-		var/list/L = list()
-		var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
-		if(searchFor)
-			for(var/R in concrete_typesof(/datum/reagent))
-				if(findtext("[R]", searchFor)) L += R
-		else
-			L = concrete_typesof(/datum/reagent)
-
-		var/type
-		if(length(L) == 1)
-			type = L[1]
-		else if(length(L) > 1)
-			type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
-		else
-			usr.show_text("No reagents matching that name", "red")
+		var/datum/reagent/reagent = pick_reagent(usr)
+		if (!reagent)
 			return
-
-		if(!type) return
-		var/datum/reagent/reagent = new type()
 
 		var/amount = input(usr,"Amount:","Amount",50) as null|num
 		if(!amount) return
@@ -228,25 +212,7 @@ Ctrl + Alt + Shift Left Click          - Edit Precipitation Controller<br>
 
 
 /datum/precipitation_editor/proc/add_reagents(datum/precipitation_controller/PC)
-	var/list/L = list()
-	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
-	if(searchFor)
-		for(var/R in concrete_typesof(/datum/reagent))
-			if(findtext("[R]", searchFor)) L += R
-	else
-		L = concrete_typesof(/datum/reagent)
-
-	var/type
-	if(length(L) == 1)
-		type = L[1]
-	else if(length(L) > 1)
-		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
-	else
-		usr.show_text("No reagents matching that name", "red")
-		return
-
-	if(!type) return
-	var/datum/reagent/reagent = new type()
+	var/datum/reagent/reagent = pick_reagent(src)
 
 	var/amount = input(usr,"Amount:","Amount",50) as null|num
 	if(!amount) return
