@@ -386,6 +386,13 @@
 				if(!in_interact_range(src, ui.user))
 					return
 
+				if (ui.user.equipped() && istype(ui.user.equipped(), /obj/item/aiModule/disguised))
+					boutput(ui.user,"You start switching out the inserted law!")
+					var/obj/item/aiModule/equipped = ui.user.equipped()
+					SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, PROC_REF(hotswap_module), list(slotNum,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
+					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+					return
+
 				if (!ui.user.equipped() || !isweldingtool(ui.user.equipped()))
 					boutput(ui.user,"You need a welding tool for that!")
 					return
@@ -410,6 +417,14 @@
 			if("screw")
 				if(!in_interact_range(src, ui.user))
 					return
+
+				if (ui.user.equipped() && istype(ui.user.equipped(), /obj/item/aiModule/disguised))
+					boutput(ui.user,"You start switching out the inserted law!")
+					var/obj/item/aiModule/equipped = ui.user.equipped()
+					SETUP_GENERIC_ACTIONBAR(ui.user, src, 5 SECONDS, PROC_REF(hotswap_module), list(slotNum,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
+					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+					return
+
 				if (!ui.user.equipped() || !isscrewingtool(ui.user.equipped()))
 					boutput(ui.user,"You need a screwdriver for that!")
 					return
@@ -621,6 +636,39 @@
 		src.screwed[slot_number] = !src.screwed[slot_number]
 		tgui_process.update_uis(src)
 
+	proc/hotswap_module(var/slotNum, var/mob/user, var/obj/item/aiModule/equipped)
+		var/obj/item/aiModule/target_law = src.law_circuits[slotNum]
+		if(!target_law)
+			return FALSE
+
+		var/update_laws = TRUE //Hotswapping a disguised law shouldnt announce it to silicons
+		var/obj/item/aiModule/disguised/disguised_module = equipped
+		var/extralog = null
+		if (istype(disguised_module))
+			extralog = "(Disguised) Hidden law: [disguised_module.realLawText]"
+			disguised_module.disguise(src.law_circuits[slotNum], user)
+			update_laws = FALSE
+
+		user.put_in_hand_or_drop(target_law)
+		src.law_circuits[slotNum] = equipped
+		user.u_equip(equipped)
+		equipped.set_loc(src)
+
+		if(istype(target_law,/obj/item/aiModule/hologram_expansion))
+			var/obj/item/aiModule/hologram_expansion/holo = target_law
+			src.holo_expansions -= holo.expansion
+		else if(istype(target_law,/obj/item/aiModule/ability_expansion))
+			var/obj/item/aiModule/ability_expansion/expansion = target_law
+			src.ai_abilities -= expansion.ai_abilities
+
+		user.visible_message(SPAN_ALERT("[user] slides a module into the law rack"), SPAN_ALERT("You slide the module into the rack."))
+
+		if(update_laws)
+			src.UpdateLaws()
+
+		logTheThing(LOG_STATION, user, "[constructName(user)] <b>hotswaps</b> an AI law module into rack([constructName(src)]): [target_law]:[target_law.get_law_text()] is replaced with [equipped]:[equipped.get_law_text()] at slot [slotNum]. [extralog]")
+		message_admins("[key_name(user)] hotswapped a law to rack at [log_loc(src)]: [target_law]:[target_law.get_law_text()] is replaced with [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]. [extralog]")
+
 	proc/insert_module_callback(var/slotNum,var/mob/user,var/obj/item/aiModule/equipped)
 		if(src.law_circuits[slotNum])
 			return FALSE
@@ -630,14 +678,18 @@
 		playsound(src, 'sound/machines/law_insert.ogg', 80)
 		user.visible_message(SPAN_ALERT("[user] slides a module into the law rack"), SPAN_ALERT("You slide the module into the rack."))
 		tgui_process.update_uis(src)
+		var/extralog = null
 		if(istype(equipped,/obj/item/aiModule/hologram_expansion))
 			var/obj/item/aiModule/hologram_expansion/holo = equipped
 			src.holo_expansions |= holo.expansion
 		else if(istype(equipped,/obj/item/aiModule/ability_expansion))
 			var/obj/item/aiModule/ability_expansion/expansion = equipped
 			src.ai_abilities |= expansion.ai_abilities
-		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> an AI law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
-		message_admins("[key_name(user)] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]")
+		else if(istype(equipped,/obj/item/aiModule/disguised))
+			var/obj/item/aiModule/disguised/disguised = equipped
+			extralog = "(Disguised) Hidden law: [disguised.realLawText]"
+		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> an AI law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]. [extralog]")
+		message_admins("[key_name(user)] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]. [extralog]")
 		UpdateIcon()
 		UpdateLaws()
 
