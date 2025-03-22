@@ -389,7 +389,9 @@ var/global
 	datum/configuration/config = null
 	datum/sun/sun = null
 
+	datum/changelog/legacy_changelog = null
 	datum/changelog/changelog = null
+	datum/admin_changelog/legacy_admin_changelog = null
 	datum/admin_changelog/admin_changelog = null
 
 	list/datum/powernet/powernets = null

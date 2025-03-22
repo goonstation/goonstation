@@ -1,4 +1,64 @@
 
+(t)sat mar 22 25
+(u)bork
+(p)22651
+(e)🎨|C-Sprites
+(+)resprites the glockenspiel
+(t)fri mar 21 25
+(u)Mouse
+(p)22644
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)The appearance of a skull chalice now depends on the appearance of the skull it was made from.  Some skulls are better at holding liquids than others.
+(u)FlameArrow57
+(p)22678
+(e)🆕🎨⚖💨📦|C-Feature, C-Sprites, C-Balance, A-Atmospherics, A-Game-Objects
+(*)The handheld pipe dispenser can now create freezers
+(u)Loaded4Bears
+(p)22641
+(e)🗺|A-Mapping
+(+)Added a small setpiece.
+(u)Lefinch
+(p)22582
+(e)🎨|C-Sprites
+(+)A new pink and yellow polkadot costume has been added to Honkington's intinerary.
+(t)thu mar 20 25
+(u)Sovexe
+(p)22639
+(e)❗📄|E-FUCK, A-UI
+(+)Character creator previews and minimaps now scale correctly in 516
+(u)Sovexe
+(p)22633
+(e)📄|A-UI
+(+)The Station Renamer has been updated to support BYOND 516
+(u)Sovexe
+(p)22640
+(e)📄📦|A-UI, A-Game-Objects
+(+)Mat Fabricators have been given proper styling in BYOND 516
+(u)Sovexe
+(p)22622
+(e)📄🚨⚙|A-UI, A-Admin, A-Internal
+(+)The changelog has been updated to support 516, a legacy version remains for 515
+(t)wed mar 19 25
+(u)ZeWaka, LemonInTheDark
+(e)💅🎨|C-QoL, C-Sprites
+(+)Parallax should now be 90% less blurry and look much better.
+(t)mon mar 17 25
+(u)cringe
+(p)22591
+(e)🆕🎨🔊|C-Feature, C-Sprites, C-Sound
+(+)Adds a neat glockenspiel.
+(u)glowbold
+(p)22628
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(*)You can select the "Random Species" trait to be a random roundstart mutant race.
+(u)Nexusuxen
+(p)22632
+(e)🪲⚙|C-Bug, A-Internal
+(*)Custom keybinds should properly save between rounds now.
+(u)JORJ949
+(p)22543
+(e)🎨⚖📦|C-Sprites, C-Balance, A-Game-Objects
+(+)Syndicate radio upgrades now come as a pair.
 (t)thu mar 13 25
 (u)Chasu
 (p)22559

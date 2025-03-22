@@ -166,7 +166,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 
 	var/non_murderous_failure = 0
 	var/mob/living/carbon/human/H = M
-	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
+	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSMOUTH) || (H.wear_mask &&  H.wear_mask.c_flags & COVERSMOUTH) || (H.glasses && H.glasses.c_flags & COVERSMOUTH)))
 		// you can't stab someone in the eyes wearing a mask!
 		boutput(user, SPAN_NOTICE("You're going to need to remove that mask/helmet/glasses first."))
 		non_murderous_failure = BARBERY_FAILURE
@@ -179,33 +179,39 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		boutput(user, SPAN_ALERT("You don't know how to shave that! At least without cutting its face off."))
 		non_murderous_failure = BARBERY_FAILURE
 
-	if(iswizard(M))
+	if(non_murderous_failure != BARBERY_FAILURE && iswizard(M))
 		if (user == M)
 			boutput(user, "<span style='font-size: 1.5em; font-weight:bold; color:red'>And just what do you think you're doing?</span>\
 							<br>It took you [SPAN_ALERT("years")] to grow that <span style='font-family: Dancing Script, cursive;'>majestic</span> thing!\
 							<br>To even <span style='font-family: Dancing Script, cursive;'>fathom</span> an existence without it fills the [voidSpeak("void")] where your soul used to be with [SPAN_ALERT("RAGE.")]")
 			non_murderous_failure = BARBERY_FAILURE
-		thing.visible_message(SPAN_ALERT("<b>[user]</b> quickly shaves off [M]'s beard!"))
-		M.bioHolder.AddEffect("arcane_shame", timeleft = 120)
-		M.bioHolder.mobAppearance.customizations["hair_middle"].style = new /datum/customization_style/none
-		M.set_face_icon_dirty()
-		M.emote("cry")
-		M.emote("scream")
-		if (M.organHolder?.head)
-			M.organHolder.head.UpdateIcon()
+		if (istype(M.bioHolder.mobAppearance.customizations["hair_middle"].style, /datum/customization_style/none))
+			boutput(user, SPAN_ALERT("[M]'s beard is already gone!"))
+		else
+			thing.visible_message(SPAN_ALERT("<b>[user]</b> quickly shaves off [M]'s beard!"))
+			M.bioHolder.AddEffect("arcane_shame", timeleft = 120)
+			M.bioHolder.mobAppearance.customizations["hair_middle"].style = new /datum/customization_style/none
+			M.set_face_icon_dirty()
+			M.emote("cry")
+			M.emote("scream")
+			if (M.organHolder?.head)
+				M.organHolder.head.UpdateIcon()
 		return ATTACK_PRE_DONT_ATTACK // gottem
 
-	if(H.is_bald())
+	if(non_murderous_failure != BARBERY_FAILURE && H.is_bald())
 		boutput(user, SPAN_ALERT("There is nothing to cut!"))
 		non_murderous_failure = BARBERY_FAILURE
 
-	if(!mutant_barber_fluff(M, user, "shave"))
+	if(non_murderous_failure != BARBERY_FAILURE && !mutant_barber_fluff(M, user, "shave"))
 		if (istype(H))
 			logTheThing(LOG_COMBAT, user, "tried to shave [constructTarget(H,"combat")]'s hair but failed due to target's [H?.mutantrace?.name] mutant race at [log_loc(user)].")
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(non_murderous_failure)
-		if (thing.force_use_as_tool || (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop))))
+		if (thing.force_use_as_tool)
+			boutput(user, SPAN_NOTICE("You poke [M] with your [thing]. If you want to attack [M], you'll need to wield \the [thing] as a weapon first."))
+			return ATTACK_PRE_DONT_ATTACK
+		else if (user.a_intent == INTENT_HELP && (istype(M.buckled, /obj/stool/chair/comfy/barber_chair) || istype(get_area(M), /area/station/crew_quarters/barber_shop)))
 			boutput(user, SPAN_NOTICE("You poke [M] with your [thing]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first."))
 			return ATTACK_PRE_DONT_ATTACK
 		else
