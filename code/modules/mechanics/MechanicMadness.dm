@@ -4771,7 +4771,19 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	New()
 		..()
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "guess", PROC_REF(guess))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Set Puzzle", PROC_REF(setPuzzleAutomatically))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Set Puzzle", PROC_REF(setPuzzle))
+
+	proc/setPuzzleAutomatically(var/datum/mechanicsMessage/input)
+		if (input.signal != "")
+			src.guesses = 0
+			src.bad_guesses = 0
+			src.solved = FALSE
+			src.letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",\
+			                   "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
+			var/output_puzzle_text = src.filter_puzzle(input.signal)
+			// src.obj_speak("new puzzle set: [src.puzzle] -- filtered: [src.puzzle_filtered] -- current: [src.puzzle_current]")
+			SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "solved=[src.solved]&guesses=[src.guesses]&bad_guesses=[src.bad_guesses]&puzzle=[output_puzzle_text]")
 
 
 	proc/setPuzzle(obj/item/W as obj, mob/user as mob)
