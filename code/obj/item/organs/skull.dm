@@ -17,7 +17,10 @@
 	var/datum/organHolder/holder = null
 	//var/owner_job = null
 	var/value = 1
-	var/op_stage = 0
+
+	/// Is this under active surgery?
+	var/in_surgery = FALSE
+
 	var/obj/item/device/key/skull/key = null //May randomly contain a key
 	rand_pos = 1
 	default_material = "bone"
@@ -206,7 +209,8 @@
 			boutput(user, SPAN_NOTICE("You're going to need to remove that mask/helmet/glasses first."))
 			return null
 
-		if (!H.organHolder.get_organ("skull") && H.organHolder.head.scalp_op_stage == 5.0)
+		var/head_stage = H.surgeryHolder.get_surgery_progress("skull_surgery")
+		if (!H.organHolder.get_organ("skull") && head_stage >= 1)
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 
 			user.tri_message(H, SPAN_ALERT("<b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!"),\

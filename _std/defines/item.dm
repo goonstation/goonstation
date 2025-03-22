@@ -80,6 +80,7 @@
 #define TOOL_CHOPPING  (1<<10) // for fire axes, does additional damage to doors.
 #define TOOL_SOLDERING (1<<11)
 #define TOOL_WIRING    (1<<12)
+#define TOOL_CAUTERY    (1<<13)
 
 //omnitool flags
 #define OMNI_MODE_PRYING 1

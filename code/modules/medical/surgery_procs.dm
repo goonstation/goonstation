@@ -14,7 +14,7 @@ So op_stage is a number that tells you how cut up the meatbag is.
 
 Step 3 - the exceptions
 
-Removing a head is done with patient.organHolder.head.op_stage and represents cuts to the neck. 3.0 is just before removing a head.
+Removing a head is done with patient.organHolder.head.op _stage and represents cuts to the neck. 3.0 is just before removing a head.
 
 Brain and skull use patient.organHolder.head.scalp_op_stage , ranging from 0.0 to 5.0 and is used to track an incisions in the top of the head/scalp.
 3.0 is right before brain removal, 4 is a missing brain, 5 is before skull removal. Skull must be there to add a brain, adding a brain resets the stage to 3
@@ -167,47 +167,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	return damage
 
-/proc/insertChestItem(var/mob/living/carbon/human/patient, var/mob/surgeon, var/obj/item/chest_item)
-	// Check if surgeon is targeting chest while there's a hole in patient's chest
-	if (surgeon.zone_sel.selecting == "chest" && patient.organHolder?.chest?.op_stage > 1)
-		//First, check if the object is an organ, then check if we can attach it. If we can, do so.
-		if (istype(chest_item, /obj/item/organ)) //Organs shouldn't go in your guts. We try attaching them instead.
-			return FALSE
-
-		// Check if patient has item in chest already
-		if (patient.chest_item == null)
-			if(chest_item.w_class > W_CLASS_NORMAL && !(chest_item.type in chestitem_whitelist))
-				boutput(surgeon, SPAN_ALERT("[chest_item] is too big to fit into [patient]'s chest cavity."))
-				return TRUE
-
-
-			// Move equipped item to patient's chest
-			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-			chest_item.set_loc(patient)
-			patient.chest_item = chest_item
-			logTheThing(LOG_COMBAT, patient, "received a surgical chest item implant of \the [chest_item] ([chest_item.type]) by [constructTarget(surgeon,"combat")]")
-
-			// Remove item from surgeon
-			surgeon.u_equip(chest_item)
-
-			if(surgeon.find_type_in_hand(/obj/item/suture/))
-				patient.chest_item_sewn = TRUE
-				surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> shoves [chest_item] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest and sutures it up."),\
-					SPAN_NOTICE("You shove [chest_item] into [surgeon == patient ? "your" : "[patient]'s"] chest and suture it up."),\
-					SPAN_NOTICE("[patient == surgeon ? "You shove [chest_item] into your chest and suture it up" : "<b>[surgeon]</b> shoves [chest_item] into your chest and sutures it up"]."))
-				patient.TakeDamage("chest", rand(5, 15), 0)
-			else
-				surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> shoves [chest_item] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest."),\
-					SPAN_NOTICE("You shove [chest_item] into [surgeon == patient ? "your" : "[patient]'s"] chest."),\
-					SPAN_NOTICE("[patient == surgeon ? "You shove" : "<b>[surgeon]</b> shoves"] [chest_item] into your chest."))
-
-		else if (patient.chest_item != null)
-			// State that there's already something in the patient's chest.
-			surgeon.show_text(SPAN_ALERT("[patient.chest_item] is already inside [patient]'s chest cavity."))
-		return TRUE
-	else
-		return FALSE
-
 
 /obj/item/proc/remove_bandage(mob/living/carbon/human/H, mob/user)
 	. = TRUE
@@ -234,10 +193,37 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	SETUP_GENERIC_ACTIONBAR(user, H, 5 SECONDS, /mob/living/carbon/human/proc/on_bandage_removal, list(user, removing), src.icon, src.icon_state, null,
 		list(INTERRUPT_MOVE, INTERRUPT_ATTACKED, INTERRUPT_STUNNED, INTERRUPT_ACTION))
+/*
 
-/mob/proc/get_surgery_status(var/zone)
+/mob/proc/get_surgery_depth(var/zone)
+	return FALSE
+/// Returns a number you can estimate the 'level of surgery' going on. Higher number = more, deeper surgeries.
+/mob/living/carbon/human/get_surgery_depth(var/zone)
+
+	if (!src.organHolder)
+		DEBUG_MESSAGE("has_active_surgery failed due to [src] having no organHolder")
+		return FALSE
+
+	if (!zone || zone == "head")
+		if (src.organHolder.head && src.organHolder.head.in_surgery > 0)
+			return TRUE
+
+	if (!zone || zone == "chest")
+		if (src.organHolder.chest && src.organHolder.chest.in_surgery > 0)
+			return TRUE
+
+	if (!zone || (zone in list("l_arm","r_arm","l_leg","r_leg")))
+		var/obj/item/parts/surgery_limb = src.limbs.vars[zone]
+		if (istype(surgery_limb) && surgery_limb.remove_stage > 0)
+			return TRUE
+
 	return FALSE
 
+*/
+
+/*
+/mob/proc/get_surgery_status(var/zone)
+	return FALSE
 /mob/living/carbon/human/get_surgery_status(var/zone)
 	if (!src.organHolder)
 		DEBUG_MESSAGE("get_surgery_status failed due to [src] having no organHolder")
@@ -286,7 +272,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	//DEBUG_MESSAGE("get_surgery_status for [src] returning [return_thing]")
 	return return_thing
+*/
 
+/*
 /* ============================= */
 /* ---------- SCALPEL ---------- */
 /* ============================= */
@@ -411,14 +399,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 		else if (patient.organHolder.head.scalp_op_stage <= 4.0)
 			if (patient.organHolder.head.scalp_op_stage == 0.0)
-				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-
-				var/removing_eye = (patient.organHolder.left_eye && patient.organHolder.left_eye.op_stage == 1.0) || (patient.organHolder.right_eye && patient.organHolder.right_eye.op_stage == 1.0)
-
-				if (removing_eye && (surgeon.find_in_hand(src, "left") || surgeon.find_in_hand(src, "right")))
-					surgeon.show_text("Wait, which eye was I operating on?")
-				else if (removing_eye && surgeon.find_in_hand(src, "middle"))
-					surgeon.show_text("Hey, there's no middle eye!")
 
 				if (prob(screw_up_prob))
 					do_slipup(surgeon, patient, "head", damage_low, fluff)
@@ -767,37 +747,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.unlock_medal("Red Hood", 1)
 				patient.set_clothing_icon_dirty()
 				return TRUE
-			else
-				src.surgeryConfusion(patient, surgeon, damage_high)
-				return TRUE
-
-/* ---------- SAW - BUTT ---------- */
-
-	else if (surgeon.zone_sel.selecting == "chest" && surgeon.a_intent == INTENT_GRAB)
-		switch (patient.organHolder.back_op_stage)
-			if (BACK_SURGERY_STEP_ONE)
-				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-
-				if (prob(screw_up_prob))
-					do_slipup(surgeon, patient, "chest", damage_low, fluff)
-					return TRUE
-
-				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> saws open [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] back with [src]!"),\
-					SPAN_ALERT("You saw open [surgeon == patient ? "your" : "[patient]'s"] back with [src]!"),\
-					SPAN_ALERT("[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] open your back with [src]!"))
-
-				patient.TakeDamage("chest", damage_low, 0)
-				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
-				patient.organHolder.back_op_stage = BACK_SURGERY_STEP_TWO
-				return TRUE
-
-			if (BACK_SURGERY_OPENED)
-				if (!patient.organHolder.build_back_surgery_buttons())
-					boutput(surgeon, "[patient] has no butt or tail!")
-					return TRUE
-				surgeon.showContextActions(patient.organHolder.back_contexts, patient, patient.organHolder.contextLayout)
-				return TRUE
-
 			else
 				src.surgeryConfusion(patient, surgeon, damage_high)
 				return TRUE
@@ -1429,7 +1378,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			playsound(patient, 'sound/items/Ratchet.ogg', 50, TRUE)
 			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s [limb] with [src].")
 			return TRUE
-
+*/
 ///You messed up. Cause damage and spawn some indicators.
 /proc/do_slipup(var/mob/surgeon, var/mob/patient, var/damage_target, var/damage_value, var/fluff_text)
 	surgeon.visible_message(SPAN_ALERT("<b>[surgeon][fluff_text]!</b>"))
@@ -1595,7 +1544,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		src.surgeon.tri_message(src.target, SPAN_NOTICE("<b>[src.surgeon]</b> clamps the bleeders on [src.surgeon == src.target ? "[his_or_her(src.target)]" : "[src.target]'s"] chest wound."),\
 			SPAN_NOTICE("You clamp the bleeders on [src.surgeon == src.target ? "your" : "[src.target]'s"] chest wound."),\
 			SPAN_ALERT("[src.target == src.surgeon ? "You clamp" : "<b>[src.surgeon]</b> clamps"] the bleeders on your chest wound!"))
-		if (src.target.organHolder.chest.op_stage > 0)
-			src.target.chest_cavity_clamped = TRUE
+		// if (src.target.organHolder.chest.op_stage > 0)
+		// 	src.target.chest_cavity_clamped = TRUE
 		if (src.target.bleeding)
 			repair_bleeding_damage(src.target, 50, rand(2,5))
