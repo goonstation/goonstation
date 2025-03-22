@@ -3836,7 +3836,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	name = "Turbine Shaft"
 	item_requirements = list("metal_dense" = 30)
 	create = 1
-	item_outputs = list(/obj/turbine_shaft)
+	item_outputs = list(/obj/machinery/turbine_shaft)
 	time = 30 SECONDS
 	category = "Machinery"
 

@@ -1,7 +1,7 @@
 #define TURBINE_MOVE_TIME (2 SECONDS)
 
 
-/obj/turbine_shaft
+/obj/machinery/turbine_shaft
 	name = "turbine shaft"
 	desc = "A heavy duty metal shaft."
 	icon = 'icons/obj/machines/current_turbine.dmi' //TODO: east west sprites
@@ -13,12 +13,13 @@
 
 	var/base_icon_state = "shaft"
 	var/speed_state = 0
-	var/obj/turbine_shaft/next_shaft = null
-	var/obj/turbine_shaft/last_shaft = null
+	var/obj/machinery/turbine_shaft/next_shaft = null
+	var/obj/machinery/turbine_shaft/last_shaft = null
+	var/obj/machinery/power/current_turbine_base/base = null
 
 	///Try to move all upstream shafts in dir
 	proc/shove(dir)
-		var/obj/turbine_shaft/shoved_shaft = null
+		var/obj/machinery/turbine_shaft/shoved_shaft = null
 		var/turf/test_turf = null
 		if (dir == src.dir)
 			test_turf = src.next_turf()
@@ -63,6 +64,7 @@
 				src.next_shaft = null
 				src.last_shaft?.next_shaft = null
 				src.last_shaft = null
+				src.base = null
 				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 			else
 				src.attach()
@@ -78,13 +80,13 @@
 	///Try to attach to other shafts to form a beeg one
 	proc/attach()
 		src.set_dir(src.dir)
-		for (var/obj/turbine_shaft/other_shaft in src.next_turf())
+		for (var/obj/machinery/turbine_shaft/other_shaft in src.next_turf())
 			if (other_shaft.dir == src.dir)
 				src.next_shaft = other_shaft
 				other_shaft.last_shaft = src
 				other_shaft.anchored = ANCHORED
 				break
-		for (var/obj/turbine_shaft/other_shaft in src.last_turf())
+		for (var/obj/machinery/turbine_shaft/other_shaft in src.last_turf())
 			if (other_shaft.dir == src.dir)
 				src.last_shaft = other_shaft
 				other_shaft.next_shaft = src
@@ -93,9 +95,11 @@
 		if (src.next_shaft || src.last_shaft)
 			src.anchored = ANCHORED
 
-	proc/update(rpm)
+	proc/update(obj/machinery/power/current_turbine_base/base)
+		ON_COOLDOWN(src, "last_updated", 2 SECONDS)
 		src.speed_state = 0
-		switch(rpm)
+		src.base = base
+		switch(base.rpm)
 			if (1 to 33)
 				src.speed_state = 3
 			if (34 to 66)
@@ -103,12 +107,18 @@
 			if (67 to INFINITY)
 				src.speed_state = 1
 		src.UpdateIcon()
-		src.next_shaft?.update(rpm)
+		src.next_shaft?.update(base)
+
+	process(mult)
+		if (GET_COOLDOWN(src, "last_updated"))
+			return
+		src.speed_state = 0
+		src.UpdateIcon()
 
 	update_icon()
 		src.icon_state = "[src.base_icon_state]_[src.speed_state]"
 
-/obj/turbine_shaft/turbine
+/obj/machinery/turbine_shaft/turbine
 	name = "NT40 tidal current turbine"
 	icon_state = "turbine_0"
 	base_icon_state = "turbine"
@@ -147,7 +157,12 @@
 
 	update_icon()
 		. = ..()
-		src.UpdateOverlays(image(src.icon, "[/obj/turbine_shaft::base_icon_state]_[src.speed_state]", layer = src.layer - 0.1), "internal_shaft")
+		src.UpdateOverlays(image(src.icon, "[/obj/machinery/turbine_shaft::base_icon_state]_[src.speed_state]", layer = src.layer - 0.1), "internal_shaft")
+
+	update(obj/machinery/power/current_turbine_base/base)
+		. = ..()
+		base.turbine = src //TODO: handle multiple turbines???
+
 
 /obj/machinery/power/current_turbine_base
 	name = "turbine base"
@@ -158,9 +173,9 @@
 	flags = FLUID_DENSE | TGUI_INTERACTIVE
 	processing_tier = PROCESSING_HALF
 	///The actual turbine on the end. TODO: handle multiple turbines?
-	var/obj/turbine_shaft/turbine/turbine = null
+	var/obj/machinery/turbine_shaft/turbine/turbine = null
 	///The current shaft, can be null if some idiot overextends the shaft all the way out
-	var/obj/turbine_shaft/shaft = null
+	var/obj/machinery/turbine_shaft/shaft = null
 	///How many extra lengths of shaft stick out the back
 	var/initial_length = 5
 
@@ -216,13 +231,13 @@
 			T = get_step(T, turn(src.dir, 180)) //step backwards
 			if (!T || T.density)
 				break
-			var/obj/turbine_shaft/shaft = new(T)
+			var/obj/machinery/turbine_shaft/shaft = new(T)
 			shaft.attach()
 
 	///Return either end of the current shaft, depending on dir
 	proc/end_shaft(dir)
-		RETURN_TYPE(/obj/turbine_shaft)
-		var/obj/turbine_shaft/current_shaft = src.shaft
+		RETURN_TYPE(/obj/machinery/turbine_shaft)
+		var/obj/machinery/turbine_shaft/current_shaft = src.shaft
 		if (dir == current_shaft.dir)
 			while (current_shaft?.last_shaft)
 				current_shaft = current_shaft.last_shaft
@@ -254,7 +269,7 @@
 		playsound(src, 'sound/machines/button.ogg', 50, 1)
 
 	Cross(atom/movable/mover)
-		if (istype(mover, /obj/turbine_shaft) && (mover.dir == NORTH || mover.dir == SOUTH))
+		if (istype(mover, /obj/machinery/turbine_shaft) && (mover.dir == NORTH || mover.dir == SOUTH))
 			return TRUE
 		. = ..()
 
@@ -263,7 +278,7 @@
 			if (src.shaft)
 				return src.shaft.Attackby(W, user)
 			else
-				var/obj/turbine_shaft/shaft = locate() in get_turf(src)
+				var/obj/machinery/turbine_shaft/shaft = locate() in get_turf(src)
 				shaft?.Attackby(W, user)
 		else
 			. = ..()
@@ -290,7 +305,7 @@
 		else
 			src.rpm = max(src.rpm - 2 - src.rpm/4, 0) //spin down rapidly if there's no current
 		if (last_rpm != src.rpm) //just stop it updating when still
-			src.end_shaft(src.shaft.dir).update(src.rpm)
+			src.end_shaft(src.shaft.dir).update(src)
 			src.UpdateIcon()
 		//this part is physics though!
 		src.generation = src.stator_load * src.rpm/60
