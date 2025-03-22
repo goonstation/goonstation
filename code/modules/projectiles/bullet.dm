@@ -1051,6 +1051,42 @@ toxic - poisons
 				M.update_canmove()
 			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
 
+/datum/projectile/bullet/potatoslug		//Improvised slug
+	name = "potato"
+	icon_state = "potatoslug"
+	shot_sound = 'sound/weapons/launcher.ogg'
+	damage = 15
+	stun = 20
+	dissipation_rate = 7	//Potatoes aren't very aerodynamic
+	dissipation_delay = 2
+	implanted = null
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	impact_image_state = null
+	casing = /obj/item/casing/shotgun/pipe
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if(proj.power >= 16)
+				var/throw_range = min(ceil(proj.power / 10), 3)
+
+				var/turf/target = get_edge_target_turf(M, dirflag)
+				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
+				M.update_canmove()
+			hit.changeStatus("staggered", clamp(proj.power/10, 5, 1) SECONDS)
+
+		else
+			var/turf/T = get_turf(hit)
+			playsound(T, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
+			make_cleanable(/obj/decal/cleanable/potatosplat, T)
+
+	on_max_range_die(obj/projectile/O)
+		var/turf/T = get_turf(O)
+		playsound(T, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
+		make_cleanable(/obj/decal/cleanable/potatosplat, T)
+
+
 /datum/projectile/bullet/sledgehammer
 	name = "\"sledgehammer\" round"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
