@@ -68,7 +68,7 @@ Contents:
 * icons/turf/dojo.dmi <-- floor icons
 * icons/obj/dojo.dmi <-- object icons
 * radiotelescope.dm
-* browserassets/images/radioTelescope
+* browserassets/src/images/radioTelescope
 * icons/effects/224x160.dmi
 * weapons.dmi
 * hand_weapons.dmi
@@ -203,37 +203,7 @@ Contents:
 
 	// black body radiation color temperature
 	proc/set_real_color()
-		var/input = temperature / 100
-
-		var/red
-		if (input <= 66)
-			red = 255
-		else
-			red = input - 60
-			red = 329.698727446 * (red ** -0.1332047592)
-		red = clamp(red, 0, 255)
-
-		var/green
-		if (input <= 66)
-			green = max(0.001, input)
-			green = 99.4708025861 * log(green) - 161.1195681661
-		else
-			green = input - 60
-			green = 288.1221695283 * (green ** -0.0755148492)
-		green = clamp(green, 0, 255)
-
-		var/blue
-		if (input >= 66)
-			blue = 255
-		else
-			if (input <= 19)
-				blue = 0
-			else
-				blue = input - 10
-				blue = 138.5177312231 * log(blue) - 305.0447927307
-		blue = clamp(blue, 0, 255)
-
-		color = rgb(red, green, blue)
+		src.color = blackbody_color(src.temperature)
 
 	afterattack(var/atom/target, var/mob/user)
 		var/obj/item/reagent_containers/RC = target

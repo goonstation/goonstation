@@ -23,6 +23,8 @@
 #define PLANE_OVERLAY_EFFECTS 25
 #define PLANE_MUL_OVERLAY_EFFECTS 26 //! Multiplicative blend mode
 #define PLANE_HUD 30
+#define PLANE_ABOVE_HUD 31
+#define PLANE_ANTAG_ICONS 33
 #define PLANE_SCREEN_OVERLAYS 40
 
 /atom/movable/screen/plane_parent
@@ -90,7 +92,7 @@ client
 
 	New()
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding plane_parents")
-		add_plane(new /atom/movable/screen/plane_parent(PLANE_DISTORTION, name = "*distortion_plane", mouse_opacity = 0, is_screen = TRUE, distort = FALSE))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_DISTORTION, appearance_flags = NO_CLIENT_COLOR, name = "*distortion_plane", mouse_opacity = 0, is_screen = TRUE, distort = FALSE))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_UNDERFLOOR, name = "underfloor_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SPACE, name = "space_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_PARALLAX, appearance_flags = TILE_BOUND, mouse_opacity = 0, name = "parallax_plane", is_screen = TRUE))
@@ -113,6 +115,7 @@ client
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_OVERLAY_EFFECTS, mouse_opacity = 0, name = "overlay_effects_plane", is_screen = 1, distort = FALSE))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_MUL_OVERLAY_EFFECTS, mouse_opacity = 0, name = "mul_overlay_effects_plane", is_screen = 1, distort = FALSE, blend_mode = BLEND_MULTIPLY))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_HUD, appearance_flags = NO_CLIENT_COLOR, name = "hud_plane", is_screen = 1, distort = FALSE))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_ANTAG_ICONS, appearance_flags = NO_CLIENT_COLOR, name = "antag_icons_plane", is_screen = 1, distort = FALSE))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SCREEN_OVERLAYS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "screen_overlays_plane", is_screen = 1, distort = FALSE))
 
 		var/atom/movable/screen/plane_parent/occlusion_plane = src.get_plane(PLANE_FOREGROUND_PARALLAX_OCCLUSION)
@@ -160,6 +163,10 @@ client
 
 	proc/add_plane(var/atom/movable/screen/plane_parent/plane)
 		RETURN_TYPE(/atom/movable/screen/plane_parent)
+#ifdef CHECK_MORE_RUNTIMES
+		if (src.plane_parents["[plane.plane]"])
+			CRASH("Attempting to add plane parent with id [plane.plane] that is already taken by another plane!")
+#endif
 		src.plane_parents["[plane.plane]"] = plane
 		return plane
 

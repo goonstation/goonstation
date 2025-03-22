@@ -142,11 +142,13 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 
 /obj/ladder/attack_hand(mob/user)
 	if (src.unclimbable) return
-	if (user.stat || user.getStatusDuration("knockdown") || BOUNDS_DIST(user, src) > 0)
+	if (is_incapacitated(user) || BOUNDS_DIST(user, src) > 0)
 		return
 	src.climb(user)
 
 /obj/ladder/attack_ai(mob/user)
+	if(isAIeye(user))
+		return
 	return src.Attackhand(user)
 
 /obj/ladder/Click(location, control, params)
@@ -163,7 +165,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 		var/obj/item/grab/grab = W
 		if (!grab.affecting || BOUNDS_DIST(grab.affecting, src) > 0)
 			return
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		src.visible_message(SPAN_ALERT("<b>[user] is trying to shove [grab.affecting] [icon_state == "ladder"?"down":"up"] [src]!</b>"))
 		return climb(grab.affecting)
 

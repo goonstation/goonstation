@@ -242,21 +242,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()
-
-	if(status & BROKEN)
-		switch(repair_status)
-			if(0)
-				. += "<br>It's completely busted! It seems you need to use a screwdriver and disconnect the control board first, to begin the repair process.</br>"
-			if(1)
-				. += "<br>The control board has been disconnected. The autotransformer's wiring is all messed up! You need to grab some cables and fix it.</br>"
-			if(2)
-				. += "<br>The control panel is disconnected and the autotransformer seems to be in a good condition. You just need to tune it with a wrench now.</br>"
-			if(3)
-				. += "<br>The autotransformer seems to be working fine now. The next step is resetting the control board with a multitool.</br>"
-			if(4)
-				. += "<br>The autotransformer is working fine and the control board has been reset! Now you just need to reconnect it with a screwdriver, to finish the repair process.</br>"
-		return
-
 	if(user && !user.stat)
 		. += "A control terminal for the area electrical systems."
 		if(opened)
@@ -286,6 +271,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/atom/last = src
 
 	var/list/starts = new/list()
+
+	for_by_tcl(IX, /obj/machinery/interdictor)
+		if (IX.expend_interdict(500, src))
+			arcFlash(last, IX, 500000)
+			return 1
+
 	for(var/mob/living/M in oview(5, src))
 		if(M.invisibility) continue
 		starts.Add(M)
@@ -303,7 +294,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 // also add overlays for indicator lights
 /obj/machinery/power/apc/update_icon()
 	ClearAllOverlays(1)
-	if(opened)
+	if(src.status & BROKEN)
+		icon_state = "apc-b"
+	else if(opened)
 		icon_state = "apc1"
 
 		if (cell)
@@ -459,7 +452,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 					else
 						boutput(user, SPAN_ALERT("Not enough cable! <I>(Requires four pieces)</I>"))
 						return
-					SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /obj/machinery/power/apc/proc/fix_wiring,\
+					SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/machinery/power/apc/proc/fix_wiring,\
 					list(theCoil, user), W.icon, W.icon_state, null, null)
 					return
 				if (2)
@@ -475,8 +468,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 				if (1)
 					boutput(user, SPAN_ALERT("You must repair the autotransformer's windings prior to tuning it."))
 				if (2)
-					boutput(user, "You begin to carefully tune the autotransformer.  This might take a little while.")
-					SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, /obj/machinery/power/apc/proc/fix_autotransformer,\
+					boutput(user, "You begin to carefully tune the autotransformer.")
+					SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/power/apc/proc/fix_autotransformer,\
 					list(user), W.icon, W.icon_state, null, null)
 				else
 					boutput(user, "The autotransformer is already tuned.")
@@ -1199,6 +1192,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		if(!area.requires_power)
 			return
 	else
+		if (QDELETED(src)) //we're in the failed-to-gc pile, stop generating runtimes
+			src.UnsubscribeProcess()
+			return
 		SPAWN(1)
 			qdel(src)
 		CRASH("Broken-ass APC [identify_object(src)] @[x],[y],[z] on [map_settings ? map_settings.name : "UNKNOWN"]")
@@ -1454,11 +1450,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		set_broken()
 
 
-/obj/machinery/power/apc/proc/set_broken()
-	status |= BROKEN
-	icon_state = "apc-b"
-	ClearAllOverlays() //no need to cache since nobody repairs these
-
+/obj/machinery/power/apc/set_broken()
+	. = ..()
+	if(.) return
 	operating = 0
 	update()
 
@@ -1646,3 +1640,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	. = ..()
 	if(Obj == src.cell)
 		src.cell = null
+
+/obj/machinery/power/apc/get_help_message(dist, mob/user)
+	if (!(src.status & BROKEN))
+		return null
+	switch(repair_status)
+		if(0)
+			. += "It's completely busted! It seems you need to use a <b>screwdriver</b> and disconnect the control board first, to begin the repair process."
+		if(1)
+			. += "The control board has been disconnected. The autotransformer's wiring is all messed up! You need to grab some cables and fix it."
+		if(2)
+			. += "The control panel is disconnected and the autotransformer seems to be in a good condition. You just need to tune it with a <b>wrench</b> now."
+		if(3)
+			. += "The autotransformer seems to be working fine now. The next step is resetting the control board with a <b>multitool</b>."
+		if(4)
+			. += "<br>The autotransformer is working fine and the control board has been reset! Now you just need to reconnect it with a <b>screwdriver</b>, to finish the repair process.</br>"

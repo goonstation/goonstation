@@ -282,7 +282,7 @@
 					deck.inuse = 0
 					user.u_equip(deck)
 					deck.set_loc(get_turf(user))
-					h.become_statue_ice()
+					h.become_statue(getMaterial("ice"))
 				else
 					user.reagents.add_reagent("cryostylane", 50)
 			if("Security")
@@ -350,10 +350,11 @@
 				var/list/buylist = concrete_typesof(/datum/syndicate_buylist)
 				var/datum/syndicate_buylist/thing = pick(buylist)
 				var/datum/syndicate_buylist/thing2 = new thing
-				if(thing2.item != null)
-					user.put_in_hand_or_drop(new thing2.item)
+				if(length(thing2.items) > 0)
+					for(var/item in thing2.items)
+						user.put_in_hand_or_drop(new item)
 				else
-					boutput(user,SPAN_ALERT("Hmmm...The card seems to have shorted out."))
+					boutput(user,SPAN_ALERT("Hmmm... The card seems to have shorted out."))
 				qdel(thing2)
 			if("Roboticist")
 				user.contract_disease(/datum/ailment/disease/robotic_transformation,null,null,1)

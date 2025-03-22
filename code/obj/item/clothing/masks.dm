@@ -649,14 +649,16 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	see_face = FALSE
 	allow_staple = 0
 	var/low_visibility = TRUE
+	material_amt = 0.5
 
 	attackby(obj/item/W, mob/user) // Allows the mask be modified, if one only wants the fashion
 		if (isweldingtool(W) && low_visibility)
 			if(!W:try_weld(user, 1))
 				return
 			user.visible_message(SPAN_ALERT("<B>[user]</B> melts the mask's eye slits to be larger."))
-			user.removeOverlayComposition(/datum/overlayComposition/steelmask)
-			user.updateOverlaysClient(user.client)
+			if(src in user.get_equipped_items())
+				user.removeOverlayComposition(/datum/overlayComposition/steelmask)
+				user.updateOverlaysClient(user.client)
 			setProperty("meleeprot_head", 3)
 			delProperty("disorient_resist_eye")
 			src.low_visibility = FALSE

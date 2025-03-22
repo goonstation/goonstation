@@ -355,6 +355,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					if (ispath(origin))
 						H.wear_suit.icon_state = origin.icon_state
 						H.wear_suit.item_state = origin.item_state
+						H.wear_suit.wear_state = origin.wear_state
 						H.wear_suit.desc = initial(origin.desc)
 						if (istype(H.wear_suit, /obj/item/clothing/suit/labcoat))
 							H.wear_suit.coat_style = origin.coat_style
@@ -485,6 +486,17 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			var/mob/living/carbon/human/H = M
 			if(istype(H))
 				H.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+			var/mob/living/silicon/sillycon = M
+			if(istype(sillycon))
+				var/obj/item/organ/brain/latejoin/latejoin_brain = null
+				if (istype(sillycon,/mob/living/silicon/ai))
+					var/mob/living/silicon/ai/AI = sillycon
+					latejoin_brain = AI.brain
+				if (istype(sillycon,/mob/living/silicon/robot))
+					var/mob/living/silicon/robot/R = sillycon
+					latejoin_brain = R.part_head?.brain
+				if(istype(latejoin_brain))
+					return FALSE //Don't missile launch latejoin silicons that already exist
 			SPAWN(0)
 				if(istype(M.loc, /obj/storage))
 					launch_with_missile(M.loc)

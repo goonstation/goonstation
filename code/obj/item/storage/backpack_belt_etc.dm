@@ -65,6 +65,12 @@
 		item_state = "backpackg"
 		desc = "A thick, wearable container made of synthetic fibers. The green variation reminds you of a botanist's garden..."
 
+	NT
+		name = "\improper NT backpack"
+		desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
+		icon_state = "NTbackpack"
+		item_state = "NTbackpack"
+
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
@@ -856,7 +862,7 @@
 	item_state = "rancher"
 	can_hold = list(
 		/obj/item/chicken_carrier,
-		/obj/item/fishing_rod/basic)
+		/obj/item/fishing_rod)
 	check_wclass = 1
 
 	prepared
@@ -882,6 +888,17 @@
 	item_state = "hunter"
 	max_wclass = W_CLASS_NORMAL
 	item_function_flags = IMMUNE_TO_ACID
+
+/obj/item/storage/belt/crossbow
+	name = "old hunting belt"
+	desc = "Holds all the things you need for a proper werewolf hunt."
+	icon_state = "hunterbelt"
+	item_state = "hunter"
+	check_wclass = TRUE
+	can_hold = list(
+		/obj/item/gun/bow/crossbow,
+		/obj/item/plant/herb/aconite,
+	)
 
 /obj/item/storage/belt/security
 	name = "security toolbelt"
@@ -1084,7 +1101,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 TYPEINFO(/obj/item/storage/belt/wrestling)
 	mats = list("metal_dense" = 5,
 				"dense_super" = 10,
-				"fabric" = 5)
+				"hauntium" = 20)
 /obj/item/storage/belt/wrestling
 	name = "championship wrestling belt"
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."
@@ -1106,6 +1123,11 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 		if (!user.mind?.get_antagonist(ROLE_WRESTLER))
 			user.remove_wrestle_powers(src.fake)
 
+TYPEINFO(/obj/item/storage/belt/wrestling/fake)
+	mats = list("metal_dense" = 5,
+				"dense_super" = 10,
+				"fabric" = 5
+	)
 /obj/item/storage/belt/wrestling/fake
 	name = "fake wrestling belt"
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."
@@ -1148,3 +1170,52 @@ TYPEINFO(/obj/item/inner_tube)
 		if (prob(40))
 			src.icon_state = "pool_ring-[pick("duck","giraffe","flamingo")]"
 			src.item_state = src.icon_state
+
+
+// Pod Wars belts and holsters
+/obj/item/storage/belt/podwars // Didn't use gun belt because the belt can hold any pod wars weapons
+	name = "small holster"
+	desc = "A small sidearm holster with a clip for a machete and a small pouch that attaches to your jumpsuit's belt loops."
+	icon_state = "inspector_holster"
+	item_state = "inspector_holster"
+	can_hold = list(/obj/item/gun/energy/blaster_pod_wars,
+	/obj/item/survival_machete)
+	check_wclass = 1
+	slots = 3
+
+/obj/item/storage/belt/podwars/pistol
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars, /obj/item/survival_machete)
+
+/obj/item/storage/belt/podwars/NTpistol
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/nanotrasen, /obj/item/survival_machete)
+
+/obj/item/storage/belt/podwars/SYpistol
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/syndicate, /obj/item/survival_machete/syndicate)
+
+/obj/item/storage/belt/podwars/smg
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/smg, /obj/item/survival_machete)
+
+/obj/item/storage/belt/podwars/NTsmg
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/smg/nanotrasen, /obj/item/survival_machete)
+
+/obj/item/storage/belt/podwars/SYsmg
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/smg/syndicate, /obj/item/survival_machete/syndicate)
+
+/obj/item/storage/belt/podwars/shotgun
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/shotgun, /obj/item/survival_machete)
+
+/obj/item/storage/belt/podwars/NTshotgun
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/shotgun/nanotrasen, /obj/item/survival_machete)
+
+/obj/item/storage/belt/podwars/SYshotgun
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/shotgun/syndicate, /obj/item/survival_machete/syndicate)
+
+/obj/item/storage/belt/podwars/advanced
+	name = "tactical belt"
+	desc = "A heavy duty tactical belt capable of holding a large number of objects"
+	icon_state = "secbelt"
+	item_state = "secbelt"
+	check_wclass = 0
+	slots = 6
+
+// End of pod wars belts and holsters

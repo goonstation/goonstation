@@ -92,7 +92,7 @@
 		return
 
 	attackby(var/obj/item/W, var/mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		//Healing with welding tool
 		if (health <= health_max && isweldingtool(W))
@@ -381,33 +381,23 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		if (isliving(user))
 			var/obj/item/card/id/I = user.get_id()
 
+			if(!istype(I, /obj/item/card/id/pod_wars))
+				boutput(user, SPAN_ALERT("[ship]'s locking mechanism is incompatible with your ID!"))
+				return
+			var/obj/item/card/id/pod_wars/PW_ID = I
 			if (isnull(assigned_id))
 				if (istype(I))
 					boutput(user, SPAN_NOTICE("[ship]'s locking mechinism recognizes [I] as its key!"))
 					playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 					assigned_id = I
-					team_num = get_team(I)
+					team_num = PW_ID.team
 					ship.locked = 0
 					return
 
 			if (istype(I))
-				if (I == assigned_id || get_team(I) == team_num)
+				if (I == assigned_id || PW_ID.team == team_num)
 					ship.locked = !ship.locked
 					boutput(user, SPAN_ALERT("[ship] is now [ship.locked ? "locked" : "unlocked"]!"))
-
-
-
-	proc/get_team(var/obj/item/card/id/I)
-		switch(I.assignment)
-			if("NanoTrasen Commander")
-				return TEAM_NANOTRASEN
-			if("NanoTrasen Pilot")
-				return TEAM_NANOTRASEN
-			if("Syndicate Commander")
-				return TEAM_SYNDICATE
-			if("Syndicate Pilot")
-				return TEAM_SYNDICATE
-		return -1
 
 ////////////////////PDAs and PDA Accessories/////////////////////
 /obj/item/device/pda2/pod_wars
@@ -543,6 +533,15 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		icon_override = "ntboss"	//get better thingy // better thingy gotten
 		icon_tooltip = "NanoTrasen Commander"
 
+/obj/item/device/radio/headset/pod_wars/nanotrasen/comtac
+	name = "military headset"
+	icon_state = "radio" // blue enough
+	desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise during gunfights."
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_ear", 100)
+
 /obj/item/device/radio/headset/pod_wars/syndicate
 	name = "radio headset"
 	desc = "A radio headset that is also capable of communicating over, this one is tuned into a Syndicate frequency"
@@ -558,6 +557,15 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	commander
 		icon_override = "syndieboss"
 		icon_tooltip = "Syndicate Commander"
+
+/obj/item/device/radio/headset/pod_wars/syndicate/comtac
+	name = "military headset"
+	icon_state = "comtac"
+	desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise during gunfights."
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_ear", 100)
 
 
 /////////shit//////////////
@@ -766,7 +774,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		attack_particle(user,src)
 		take_damage(W.force)
 		playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 20, 1)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		..()
 
 	attack_hand(mob/user)
@@ -787,7 +795,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 					attack_particle(user,src)
 
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		..()
 
 	proc/take_damage(var/damage)

@@ -51,7 +51,9 @@
 	/datum/matfab_recipe/simple/nuclear/heat_exchanger,
 	/datum/matfab_recipe/simple/nuclear/control_rod,
 	/datum/matfab_recipe/simple/nuclear/fuel_rod,
-	/datum/matfab_recipe/makeshift_fuel_rod)
+	/datum/matfab_recipe/makeshift_fuel_rod,
+	/datum/matfab_recipe/simple/turbine/blade,
+	/datum/matfab_recipe/simple/turbine/stator)
 
 /obj/machinery/nanofab/prototype
 	name = "Nano-fabricator (Prototype)"
@@ -72,7 +74,7 @@
 /obj/machinery/nanofab
 	name = "Nano-fabricator"
 	desc = "A more complicated sibling to the manufacturers, this machine can make things that inherit material properties."// this isnt super good but it's better than what it was
-	icon = 'icons/obj/manufacturer.dmi'
+	icon = 'icons/obj/crafting.dmi'
 	icon_state = "fab2-on"
 	anchored = ANCHORED
 	density = 1
@@ -106,7 +108,12 @@
 		..()
 
 	attack_hand(mob/user)
-		user.Browse(buildHtml(), "window=nfab;size=550x650;title=Nano-fabricator;fade_in=0;can_resize=0", 1)
+		var/html = buildHtml()
+		if (user.client.byond_version >= 516)
+			html = "<link rel='stylesheet' type='text/css' href='[resource("css/mat_fabricator.css")]' />" + html
+			user.Browse(html, "window=nfab;size=600x680;title=Nano-fabricator;fade_in=0;can_resize=0")
+		else
+			user.Browse(html, "window=nfab;size=550x650;title=Nano-fabricator;fade_in=0;can_resize=0", 1)
 		return
 
 	mouse_drop(over_object, src_location, over_location)
@@ -350,8 +357,6 @@
 		W.set_loc(src)
 
 	attackby(var/obj/item/W , mob/user as mob)
-		if(istype(W, /obj/item/deconstructor))
-			return ..()
 		if(issilicon(user)) // fix bug where borgs could put things into the nanofab and then reject them
 			boutput(user, SPAN_ALERT("You can't put that in, it's attached to you."))
 			return

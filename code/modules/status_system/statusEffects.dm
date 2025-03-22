@@ -30,6 +30,8 @@
 	var/track_cat
 	/// If the effect is positive (buffs), negative (debuffs), or neutral (misc)
 	var/effect_quality = STATUS_QUALITY_NEUTRAL
+	/// List because they might be on different HUDs. This is kind of hacky but should be fine since the screen object cleans up in disposing.
+	var/list/atom/movable/screen/statusEffect/hud_elements = null
 
 
 	/**
@@ -350,6 +352,11 @@
 			onChange(optional=null)
 				. = ..(change)
 
+		talisman_artifact
+			id = "talisman_extra_hp"
+			unique = FALSE
+			visible = FALSE
+
 	simplehot //Simple heal over time.
 		id = "simplehot"
 		effect_quality = STATUS_QUALITY_POSITIVE
@@ -589,10 +596,8 @@
 					M.changeStatus("knockdown", 3 SECONDS)
 					boutput(M, SPAN_ALERT("You feel weak."))
 					M.emote("collapse")
-				if(!ON_COOLDOWN(M, "radiation_vomit_check", 5 SECONDS) && prob(stage**2))
-					M.changeStatus("knockdown", 3 SECONDS)
-					boutput(M, SPAN_ALERT("You feel sick."))
-					M.vomit()
+				if(prob(min((stage + 3)**2, 40)))
+					M.nauseate(1)
 
 			return ..(timePassed)
 
@@ -1764,23 +1769,23 @@
 		var/mob/living/L = owner
 		if(!isalive(L))
 			return
-		var/puke_prob = 0
+		var/nausea_prob = 0
 		var/tox = 0
 		switch(how_miasma)
 			if(1)
 				if(probmult(1))
 					L.emote("shudder")
 			if(2)
-				puke_prob = 0.2
+				nausea_prob = 10
 				tox = 0.05
 			if(3)
-				puke_prob = 0.5
+				nausea_prob = 15
 				tox = 0.2
 			if(4)
-				puke_prob = 1
+				nausea_prob = 20
 				tox = 0.45
 			if(5)
-				puke_prob = 2
+				nausea_prob = 25
 				tox = 0.7
 		if(ismobcritter(L))
 			var/mob/living/critter/critter = L
@@ -1790,9 +1795,8 @@
 		L.take_toxin_damage(tox * mult)
 		if(weighted_average > 4)
 			weighted_average = 0
-		if(probmult(puke_prob))
-			var/vomit_message = SPAN_ALERT("[L] pukes all over [himself_or_herself(L)].")
-			L.vomit(0, null, vomit_message)
+		if(probmult(nausea_prob))
+			L.nauseate(1)
 		return ..(timePassed)
 
 	proc/changeState()
@@ -2156,25 +2160,24 @@
 	onUpdate(var/timePassed)
 		var/mob/living/L = owner
 		var/tox = 0
-		var/puke_prob = 0
+		var/nausea_prob = 0
 		switch(timePassed)
 			if(0 to 20 SECONDS)
 				tox = 0.1
-				puke_prob = 0.5
+				nausea_prob = 5
 			if(20 SECONDS to 60 SECONDS)
 				tox = 0.4
-				puke_prob = 1
+				nausea_prob = 10
 			if(60 SECONDS to INFINITY)
 				tox = 1
-				puke_prob = 2
+				nausea_prob = 20
 		L.take_toxin_damage(tox)
 		if(prob(2))
 			L.emote(pick("groan", "moan", "shudder"))
 		if(prob(2))
 			L.change_eye_blurry(rand(5,10))
-		if(prob(puke_prob))
-			var/vomit_message = SPAN_ALERT("[L] pukes all over [himself_or_herself(L)].")
-			L.vomit(0, null, vomit_message)
+		if(prob(nausea_prob))
+			L.nauseate(1)
 
 	//firstly: sorry
 	//secondly: second arg is a proportional scale. 1 is standard, 5 is every port-a-puke tick, 10 is mass emesis.
@@ -2524,7 +2527,7 @@
 	var/mob/living/carbon/human/H
 
 	getTooltip()
-		. = "You are recovering from being in critical condition. Max stamina reduced by 50 and stamina regen reduced by 2."
+		. = "You are recovering from being in critical condition. Max stamina reduced by 50 and stamina regen reduced by 2. Maybe you should find some painkillers..."
 
 	onAdd(optional=null)
 		. = ..()
@@ -2665,6 +2668,10 @@
 		..()
 		var/mob/M = owner
 		if (ismobcritter(M) && isalive(M))
+			var/mob/living/critter/C = M
+			C.empty_hands()
+			C.drop_equipment()
+
 			original.set_loc(M.loc)
 			original.hibernating = FALSE
 			M.mind?.transfer_to(original)
@@ -2887,3 +2894,620 @@
 
 	getTooltip()
 		return "You've [alpha == 0 ? "completely" : "partially"] faded from view! People can still hear you and see light from anything you're carrying."
+
+/datum/statusEffect/talisman_fortune
+	id = "art_talisman_fortune"
+	unique = FALSE
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_POSITIVE
+	var/time_passed = 0
+	var/time_threshold
+
+	preCheck(atom/A)
+		if (!ishuman(A))
+			return
+		return ..()
+
+	onAdd(optional)
+		..()
+		src.time_threshold = rand(60, 300) SECONDS
+
+	onUpdate(timePassed)
+		..()
+		src.time_passed += timePassed
+		if (src.time_passed < src.time_threshold)
+			return
+		src.time_passed = 0
+		src.time_threshold = rand(60, 300) SECONDS
+		var/obj/item/currency/spacecash/money = new
+		money.amount = rand(100, 500)
+		money.UpdateStackAppearance()
+		var/mob/living/carbon/human/H = src.owner
+		H.stow_in_available(money, FALSE)
+		if (prob(25)) // mostly so there's no spam of the same message for 30+ minutes
+			var/msg = pick(list("You feel slightly heavier...", "Is that the smell of money...?", "You feel like you won big.", \
+				"Luck is on your side... wait, what...?"))
+			boutput(H, SPAN_NOTICE(msg))
+
+/datum/statusEffect/talisman_held
+	id = "art_talisman_held"
+	unique = FALSE
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEUTRAL // still rolls a chance for art faults though
+	var/fault_time_passed = 0
+	var/fault_threshold
+	var/glimmer_time_passed = 0
+	var/glimmer_threshold
+	var/obj/item/artifact/talisman/art
+	var/obj/decal/ceshield/talisman/glimmer
+
+	preCheck(atom/A)
+		if (!ishuman(A))
+			return
+		return ..()
+
+	onAdd(optional)
+		..()
+		src.art = optional
+		src.glimmer = new
+		src.art.active_user.vis_contents += src.glimmer
+
+		src.fault_threshold = rand(1, 3) MINUTES
+		src.glimmer_threshold = rand(15, 30) SECONDS
+
+	onUpdate(timePassed)
+		..()
+		src.fault_time_passed += timePassed
+		src.glimmer_time_passed += timePassed
+
+		if (src.glimmer_time_passed >= src.glimmer_threshold)
+			src.glimmer_time_passed = 0
+			src.glimmer_threshold = rand(15, 30) SECONDS
+			src.glimmer.activate_glimmer()
+
+		if (src.fault_time_passed < src.fault_threshold)
+			return
+		src.fault_time_passed = 0
+		src.fault_threshold = rand(1, 3) MINUTES
+		src.art.ArtifactFaultUsed(src.owner, src.art)
+
+	onRemove()
+		src.art.active_user.vis_contents -= src.glimmer
+		..()
+		src.art = null
+		qdel(src.glimmer)
+		src.glimmer = null
+
+
+/datum/statusEffect/art_curse
+	icon_state = "art_curse"
+	desc = "You've been cursed by an Eldritch artifact!"
+	unique = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	var/extra_desc = ""
+	var/removal_msg = ""
+	var/outputs_desc = TRUE
+	var/outputs_removal_msg = TRUE
+
+	var/datum/artifact/curser/linked_curser
+
+	New()
+		src.desc += " [src.extra_desc]"
+		..()
+
+	preCheck(atom/A)
+		. = ..()
+		if (!ishuman(A))
+			return FALSE
+
+	onAdd(optional)
+		..()
+		if (src.outputs_desc)
+			boutput(src.owner, SPAN_ALERT(src.desc))
+		src.linked_curser = optional
+
+	onRemove()
+		if (QDELETED(src.owner))
+			return ..()
+		var/mob/living/L = src.owner
+		if (!isdead(L) && src.outputs_removal_msg)
+			boutput(L, SPAN_NOTICE(src.removal_msg))
+		src.linked_curser = null
+		..()
+
+	proc/get_mult(timePassed)
+		return timePassed / LIFE_PROCESS_TICK_SPACING
+
+	blood
+		id = "art_blood_curse"
+		name = "Blood Curse"
+		duration = null
+		extra_desc = "Your blood is being drained. The artifact requires 600u of human blood, or your drained body, no matter the cost. Figure out how to supply it before you die."
+		removal_msg = "Your blood curse has been lifted!"
+		var/blood_to_collect = 600
+
+		onAdd(optional)
+			..()
+			var/mob/living/carbon/human/H = src.owner
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_BLOOD_REGEN, src)
+
+		onUpdate(timePassed)
+			..()
+			var/mob/living/carbon/human/H = src.owner
+			var/mult = src.get_mult(timePassed)
+			H.blood_volume -= 1.5 * mult
+			if (H.bleeding <= 1) // mostly enabled to show bleed indicator
+				H.bleeding = 1
+			src.blood_to_collect -= 1.5 * mult
+			if (probmult(7))
+				boutput(H, SPAN_ALERT(pick("You see things", "You have thoughts about blood", "You can feel an Eldritch presence", "You can feel your blood",
+					"You get the sense something is stealing from you", "Something doesn't feel right", "The artifact hungers", "You see visions of Eldritch artifacts",
+					"You're reminded of your blood curse", "You have a pact to fulfill", "You're going to die unless blood is given", "Blood is required")))
+
+			if (src.blood_to_collect <= 0)
+				src.linked_curser.lift_curse(TRUE)
+			else if (H.blood_volume <= 0 || isdead(H))
+				H.visible_message(SPAN_ALERT("[H] spontaneously implodes!!! <b>HOLY FUCK!!</b>"), SPAN_ALERT("<b>Ohhhh shit</b>"))
+				for (var/i in 1 to rand(3, 4))
+					var/obj/decal/cleanable/blood_splat = make_cleanable(/obj/decal/cleanable/blood/splatter, get_turf(H))
+					blood_splat.streak_cleanable(pick(cardinal), full_streak = prob(25), dist_upper = rand(4, 6))
+				playsound(H, 'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 40, TRUE)
+				H.implode(TRUE)
+				src.linked_curser.lift_curse_specific(FALSE, H)
+
+		onRemove()
+			var/mob/living/carbon/human/H = src.owner
+			if (!QDELETED(H))
+				REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_BLOOD_REGEN, src)
+			..()
+
+	aging
+		id = "art_aging_curse"
+		name = "Aging Curse"
+		extra_desc = "You're rapidly aging and will die... You're going to need to get three other people younger than you to touch the artifact."
+		removal_msg = "You're returned to your original age! Though your hair is still grey."
+		var/original_age
+		var/hair_greyed
+		var/final_msg_given
+
+		onAdd()
+			..()
+			var/mob/living/carbon/human/H = src.owner
+			src.original_age = H.bioHolder.age
+
+		onUpdate(timePassed)
+			..()
+			var/mob/living/carbon/human/H = src.owner
+			H.bioHolder.age += src.get_mult(timePassed)
+			src.duration = (120 - (H.bioHolder.age - src.original_age) + 1) SECONDS // +1 is a safety buffer
+			var/mult = src.get_mult(timePassed)
+			if (probmult(7))
+				boutput(H, SPAN_ALERT(pick("Your joints hurt...", "Everything aches!", "Your eyes are sort of blurry", "It hurts to move",
+					"Your hands hurt", "Your skin feels strange", "The curse is aging you", "You have to do something quick", "Will you live long enough to remove the curse?",
+					"You can feel your age", "You see visions of eldritch beings")))
+			if (H.bioHolder.age >= 50 && !src.hair_greyed)
+				boutput(H, SPAN_ALERT("<b>Your hair greys!</b>"))
+				H.bioHolder.mobAppearance.customizations["hair_bottom"].color = "#b1b1b1"
+				H.bioHolder.mobAppearance.customizations["hair_middle"].color = "#b1b1b1"
+				H.bioHolder.mobAppearance.customizations["hair_top"].color = "#b1b1b1"
+				H.update_colorful_parts()
+				src.hair_greyed = TRUE
+			if (H.bioHolder.age >= src.original_age + 100 && !src.final_msg_given)
+				boutput(H, SPAN_ALERT("<b>You're over 100 years old... It's over soon. No going back.</b>"))
+				src.final_msg_given = TRUE
+				H.playsound_local(H, 'sound/ambience/spooky/Void_Calls.ogg', 75, FALSE)
+			if (H.bioHolder.age >= src.original_age + 120)
+				H.death(FALSE)
+				H.skeletonize()
+				src.linked_curser.lift_curse_specific(FALSE, H)
+
+		onRemove()
+			var/mob/living/carbon/human/H = src.owner
+			if (!QDELETED(H) && !isdead(H))
+				H.bioHolder.age = src.original_age
+			..()
+
+	nightmare
+		id = "art_nightmare_curse"
+		name = "Nightmare Curse"
+		extra_desc = "You're being haunted by nightmares! Kill them 7 of them or perish."
+		removal_msg = "The nightmare ends, along with the creatures..."
+		var/list/created_creatures = list()
+		var/creatures_to_kill = 7
+		var/time_passed = 0 SECONDS
+
+		onAdd()
+			..()
+			if (src.owner.hasStatus("art_nightmare_curse"))
+				return
+			get_image_group(CLIENT_IMAGE_GROUP_ART_CURSER_NIGHTMARE).add_mob(src.owner)
+			src.spawn_creature()
+			var/mob/living/carbon/human/H = src.owner
+			H.client?.animate_color(normalize_color_to_matrix("#7e4599"), 3 SECONDS)
+			SPAWN(1 SECOND)
+				H.apply_color_matrix(normalize_color_to_matrix("#7e4599"), "art_curser_nightmare_overlay")
+
+		onUpdate(timePassed)
+			..()
+			var/mob/living/carbon/human/H = src.owner
+			if (src.creatures_to_kill <= 0 || QDELETED(H) || isdead(H))
+				src.linked_curser.lift_curse_specific(!QDELETED(H) && !isdead(H), H)
+				return
+			src.time_passed += timePassed
+			if (src.time_passed < 10 SECONDS)
+				return
+			src.time_passed = 0
+			src.spawn_creature()
+
+		onRemove()
+			get_image_group(CLIENT_IMAGE_GROUP_ART_CURSER_NIGHTMARE).remove_mob(src.owner)
+			var/mob/living/carbon/human/H = src.owner
+			if (!H.hasStatus("art_nightmare_curse"))
+				H.client?.animate_color(time = 3 SECONDS)
+				SPAWN(3 SECONDS)
+					H.remove_color_matrix("art_curser_nightmare_overlay")
+			for (var/mob/living/critter/art_curser_nightmare/creature as anything in src.created_creatures)
+				if (!QDELETED(creature))
+					qdel(creature)
+			src.created_creatures = null
+			..()
+
+		proc/spawn_creature()
+			if (length(src.created_creatures) >= 2 || !istype(src.owner.loc, /turf))
+				return
+			var/mob/living/critter/art_curser_nightmare/creature = new(get_turf(src.owner), src)
+			src.created_creatures += creature
+			creature.register_target(src.owner)
+
+	maze
+		id = "art_maze_curse"
+		name = "Maze Curse"
+		extra_desc = "You're trapped in a labyrinth! Find your way out... if there is one..."
+		removal_msg = "You've found your way out! You could've been trapped there for eternity..."
+		var/turf/original_turf
+
+		onAdd(optional)
+			..()
+			src.original_turf = get_turf(src.owner)
+
+		onUpdate()
+			..()
+			var/mob/living/carbon/human/H = src.owner
+			if (QDELETED(H) || isdead(H))
+				src.linked_curser.lift_curse_specific(FALSE, H)
+
+		onRemove()
+			var/mob/living/carbon/human/H = src.owner
+			if (!QDELETED(H) && !isdead(H))
+				H.set_loc(src.original_turf)
+			else
+				var/mob/dead_ghost = H.ghostize() || ckey_to_mob_maybe_disconnected(H.last_ckey) // died or gibbed
+				dead_ghost.set_loc(src.original_turf)
+			..()
+
+	displacement
+		id = "art_displacement_curse"
+		var/mob/living/carbon/human/original_body
+		var/mob/living/intangible/art_curser_displaced_soul/soul
+		outputs_desc = FALSE
+
+		onAdd()
+			..()
+			src.soul = new(get_turf(src.owner), src.owner)
+			var/mob/living/carbon/human/H = src.owner
+			H.mind.transfer_to(soul)
+			src.original_body = H
+			src.soul.setStatus("art_curser_displaced_soul", src.duration, src.original_body)
+
+		onUpdate()
+			..()
+			if (QDELETED(src.original_body) || isdead(src.original_body))
+				src.linked_curser.lift_curse_specific(FALSE, src.original_body)
+
+		onRemove()
+			src.soul.delStatus("art_curser_displaced_soul")
+			if (QDELETED(src.original_body) || isdead(src.original_body))
+				boutput(src.soul, SPAN_ALERT("<b>Your body has died!</b>"))
+			if (!QDELETED(src.original_body))
+				src.soul.mind.transfer_to(src.original_body)
+			QDEL_NULL(src.soul)
+			src.original_body = null
+			..()
+
+	displaced_soul
+		id = "art_curser_displaced_soul"
+		name = "Soul Displacement Curse"
+		extra_desc = "Your soul has been displaced from your body! You're going to need to wait a short while or for someone to touch the artifact to return you."
+		removal_msg = "You're returned to your body! You feel a strong sense of relief."
+		var/mob/living/carbon/human/original_body
+
+		preCheck(atom/A)
+			. = ..()
+			if (istype(A, /mob/living/intangible/art_curser_displaced_soul))
+				return TRUE
+
+		onAdd(optional)
+			src.original_body = optional
+			..()
+
+		onRemove()
+			if (QDELETED(src.original_body) || isdead(src.original_body))
+				src.outputs_removal_msg = FALSE
+			src.original_body = null
+			..()
+
+	light
+		id = "art_light_curse"
+		name = "Light Curse"
+		extra_desc = "The light is extra harmful... stay out of it for a short while."
+		removal_msg = "You no longer feel harmed by light... thank goodness."
+		var/time_passed = 0
+
+		onUpdate(timePassed)
+			..()
+			src.time_passed += timePassed
+			var/turf/T = src.owner.loc
+			if (ON_COOLDOWN(src.owner, "art_curse_light_burn", 2 SECONDS))
+				return
+			if (istype(T) && T.is_lit())
+				var/mob/living/carbon/human/H = src.owner
+				H.TakeDamage("All", burn = 5 * src.get_mult(time_passed), damage_type = DAMAGE_BURN)
+			src.time_passed = 0
+
+/datum/statusEffect/art_fissure_corrosion
+	id = "art_fissure_corrosion"
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/corrosion_stacks = 0 // 1 stack per tick
+
+	preCheck(atom/A)
+		if (!isobj(A) || (!A.density && !istype(A, /obj/item)) || A.invisibility >= INVIS_ALWAYS_ISH)
+			return
+		var/obj/O = A
+		if (O.artifact || istype(A, /obj/art_fissure_objs/door))
+			return
+		return ..()
+
+	onAdd(optional)
+		..()
+		var/turf/T = get_turf(src.owner)
+		T.visible_message(SPAN_ALERT("[src.owner] starts corroding!"))
+		src.corrosion_stacks = GET_ATOM_PROPERTY(src.owner, PROP_ATOM_ART_FISSURE_CORROSION_COUNT)
+
+	onUpdate(timePassed)
+		..()
+		var/mult = timePassed / LIFE_PROCESS_TICK_SPACING
+		if (istype(get_area(src.owner), /area/artifact_fissure) && istype(src.owner.loc, /turf))
+			src.corrosion_stacks += 1 * mult
+		if (src.corrosion_stacks >= 8)
+			src.owner.visible_message(SPAN_ALERT("[src.owner] fully corrodes and is destroyed!!"))
+			new /obj/decal/cleanable/molten_item(get_turf(src.owner))
+			logTheThing(LOG_STATION, src.owner, "[src.owner] destroyed by dimensional key artifact corrosion at [log_loc(src.owner)].")
+			qdel(src.owner)
+			src.owner.delStatus(src)
+		else
+			APPLY_ATOM_PROPERTY(src.owner, PROP_ATOM_ART_FISSURE_CORROSION_COUNT, "art_fissure_corrosion", src.corrosion_stacks)
+
+
+/datum/statusEffect/kudzuwalk
+	id = "kudzuwalk"
+	name = "Kudzu Walking"
+	desc = "You have a mutual understanding with kudzu, and know how to slip between the vines. Dense kudzu will not hinder your movements, and you slowly heal while standing in the vines."
+	icon_state = "photosynth"
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+	onUpdate(timePassed)
+		. = ..()
+		var/turf/T = get_turf(owner)
+		if((T.turf_flags & HAS_KUDZU) && !ON_COOLDOWN(src.owner, "kudzuwalk_heal", 2 SECONDS) && isliving(owner))
+			var/mob/living/L = owner
+			L.HealDamage("All", 0.5, 0.5, 0.25)
+
+/datum/statusEffect/robospeed
+	id = "robospeed"
+	name = "Hastened"
+	desc = "MAXIMUM OVERDRIVE (You're faster.)."
+	icon_state = "janktank"
+	unique = TRUE
+	movement_modifier = /datum/movement_modifier/healbot
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+//first_note_of_megalovania.wav
+/datum/statusEffect/undertable
+	id = "undertable"
+	name = "Under table"
+	desc = "You're hidden under a table, standing up may be a bad idea."
+	visible = FALSE
+
+	onAdd(optional)
+		. = ..()
+		RegisterSignal(src.owner, COMSIG_MOB_LAYDOWN_STANDUP, PROC_REF(standup))
+		RegisterSignal(src.owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_valid))
+
+	proc/check_valid()
+		var/obj/table/table = locate() in src.owner.loc
+		if (!table)
+			src.owner.delStatus(src)
+			return FALSE
+		return TRUE
+
+	proc/standup(_, lying)
+		if (!src.check_valid())
+			return
+		if (!lying)
+			playsound(src.owner, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
+			boutput(src.owner, SPAN_ALERT("You smack your head on the table trying to stand up. OW!"))
+			src.owner.setStatus("knockdown", 2 SECONDS)
+			src.owner.setStatus("resting", INFINITE_STATUS)
+			var/mob/mobowner = src.owner
+			mobowner.force_laydown_standup()
+			random_brute_damage(src.owner, 5)
+
+	onRemove()
+		UnregisterSignal(src.owner, COMSIG_MOB_LAYDOWN_STANDUP)
+		UnregisterSignal(src.owner, COMSIG_MOVABLE_MOVED)
+		src.owner.layer = initial(src.owner.layer)
+		. = ..()
+
+/datum/statusEffect/stasis
+	id = "stasis"
+	name = "Stasis"
+	desc = "You are caught in a stasis field. Unable to move."
+	icon_state = "stunned"
+	unique = 1
+	maxDuration = 30 SECONDS
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onAdd(optional=null)
+		if (ismob(owner) && !QDELETED(owner))
+			var/mob/mob_owner = owner
+			APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+		..()
+
+	onRemove()
+		if (ismob(owner) && !QDELETED(owner))
+			var/mob/mob_owner = owner
+			REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+		..()
+
+/datum/statusEffect/silicon_radiation
+	name = "Radiological Interference"
+	desc = "Radiation is affecting your optical sensors."
+	id = "silicon_radiation"
+	unique = TRUE
+	visible = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	icon_state = "trefoil"
+
+	preCheck(atom/A)
+		. = ..()
+		if (!issilicon(A))
+			return
+
+	onAdd(Sv)
+		. = ..()
+		src.set_substatus(Sv)
+
+	onChange(Sv)
+		. = ..()
+		src.set_substatus(Sv)
+
+	proc/set_substatus(Sv)
+		if (Sv == -INFINITY) // from fullheal
+			owner.delStatus("silicon_radiation_light")
+			owner.delStatus("silicon_radiation_medium")
+			owner.delStatus("silicon_radiation_heavy")
+			owner.delStatus("silicon_radiation_extreme")
+			return
+		if (Sv <= 0)
+			return
+		if (Sv > 1) // neutronium
+			owner.setStatusMin("silicon_radiation_extreme", src.duration)
+		if (Sv > 0.6) // plutonium
+			owner.setStatusMin("silicon_radiation_heavy", src.duration)
+		if (Sv > 0.35)  // erebite
+			owner.setStatusMin("silicon_radiation_medium", src.duration)
+		owner.setStatusMin("silicon_radiation_light", src.duration) // cerenkite
+
+/datum/statusEffect/silicon_radiation_effect
+	unique = TRUE
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/datum/overlayComposition/composition
+
+	onAdd(Sv)
+		. = ..()
+		var/mob/living/silicon/S = owner
+		S.addOverlayComposition(composition)
+
+	onRemove()
+		. = ..()
+		var/mob/living/silicon/S = owner
+		S.removeOverlayComposition(composition)
+
+/datum/statusEffect/silicon_radiation_effect/light
+	id = "silicon_radiation_light"
+	composition = /datum/overlayComposition/silicon_rad_light
+
+/datum/statusEffect/silicon_radiation_effect/medium
+	id = "silicon_radiation_medium"
+	composition = /datum/overlayComposition/silicon_rad_medium
+
+/datum/statusEffect/silicon_radiation_effect/heavy
+	id = "silicon_radiation_heavy"
+	composition = /datum/overlayComposition/silicon_rad_heavy
+
+/datum/statusEffect/silicon_radiation_effect/extreme
+	id = "silicon_radiation_extreme"
+	composition = /datum/overlayComposition/silicon_rad_extreme
+
+
+/datum/statusEffect/teleporting
+	id = "teleporting"
+	name = "Teleporting"
+	desc = "You're in a semi-stable hexaquark arrangement.<br>Visibility drastically reduced."
+	icon_state = "empulsar"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEUTRAL
+
+/datum/statusEffect/pod_corrosion
+	id = "pod_corrosion"
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/dmg_per_tick = 4
+
+	onAdd()
+		..()
+		src.owner.add_filter("corrosion_color", 1, color_matrix_filter(normalize_color_to_matrix("#0c6900")))
+
+	onUpdate(timePassed)
+		..()
+		var/mult = timePassed / LIFE_PROCESS_TICK_SPACING
+		var/obj/machinery/vehicle/pod_hit = src.owner
+		pod_hit.health -= src.dmg_per_tick * mult
+		pod_hit.checkhealth()
+
+	onRemove()
+		..()
+		src.owner.remove_filter("corrosion_color")
+
+/datum/statusEffect/nausea
+	name = "Nauseous"
+	id = "nausea"
+	icon_state = "nausea1"
+	var/stacks = 1
+	var/vomiting = FALSE
+
+	onChange(optional)
+		if (src.stacks > 20 && optional > 0)
+			return
+		src.stacks += optional
+		var/old_desc = src.desc
+		switch(src.stacks)
+			if (0 to 5)
+				src.desc = "You're feeling kinda sick."
+				src.icon_state = "nausea1"
+			if (6 to 9)
+				src.desc = "You think you're going to puke."
+				src.icon_state = "nausea2"
+			if (10 to INFINITY)
+				src.desc = "You're about to throw up!"
+				src.icon_state = "nausea3"
+		if (src.stacks >= 10 && !src.vomiting)
+			src.vomiting = TRUE
+			boutput(src.owner, SPAN_ALERT(SPAN_BOLD(src.desc)))
+			for (var/atom/movable/screen/statusEffect/hud_element in src.hud_elements)
+				animate_angry_wibble(hud_element)
+			SPAWN(5 SECONDS)
+				var/mob/vomitee = src.owner
+				vomitee.vomit()
+		else if (old_desc != src.desc)
+			if (optional > 0)
+				boutput(src.owner, SPAN_ALERT(src.desc))
+			else
+				boutput(src.owner, SPAN_NOTICE("You feel a little less sick."))
+
+	onUpdate(timePassed)
+		if (prob(5))
+			src.stacks -= 0.5
+		if (src.stacks <= 0)
+			src.owner.delStatus(src)

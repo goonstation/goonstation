@@ -1,5 +1,6 @@
 /world/New()
 	..()
+	Remove_reboot_file()
 	current_state = GAME_STATE_WORLD_NEW
 	Z_LOG_DEBUG("World/New", "World New()")
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
@@ -30,8 +31,10 @@
 	makepowernets()
 
 	Z_LOG_DEBUG("World/New", "Setting up changelogs...")
-	changelog = new /datum/changelog()
-	admin_changelog = new /datum/admin_changelog()
+	legacy_changelog = new /datum/changelog()
+	changelog = new /datum/changelog(TRUE)
+	legacy_admin_changelog = new /datum/admin_changelog()
+	admin_changelog = new /datum/admin_changelog(TRUE)
 
 #ifdef DATALOGGER
 	game_stats = new

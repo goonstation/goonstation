@@ -347,7 +347,7 @@
 	density = 1
 
 /obj/fakeobject/lawrack
-	name = "defunct AI Law Mount Rack"
+	name = "defunct AI Law Rack"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs. This one looks non-functional."
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "airack_empty"
@@ -445,6 +445,8 @@
 	icon_state = "bigcabinet1"
 	bound_width = 32
 	bound_height = 64
+	anchored = 1
+	density = 1
 
 	gauges
 		icon_state = "bigcabinet2"
@@ -473,6 +475,8 @@
 	icon_state = "bigatmos1"
 	bound_width = 32
 	bound_height = 64
+	anchored = 1
+	density = 1
 
 	bigatmos2
 		icon_state = "bigatmos2"
@@ -487,6 +491,8 @@
 	icon_state = "displays"
 	bound_width = 64
 	bound_height = 64
+	anchored = 1
+	density = 1
 
 	gauges
 		icon_state = "gauges"
@@ -506,6 +512,8 @@
 	icon_state = "tower1"
 	bound_width = 32
 	bound_height = 32 // ignore the top part i guess
+	anchored = 1
+	density = 1
 
 	tower2
 		icon_state = "tower2"

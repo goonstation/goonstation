@@ -145,7 +145,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 						for (var/mob/C in oviewers(src))
 							shake_camera(C, 8, 24)
 							C.show_message(SPAN_ALERT("<B>[src] crashes into [O]!</B>"), 1)
-						if ((istype(O, /obj/window) && !istype(O, /obj/window/auto/reinforced/indestructible)) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
+						if ((istype(O, /obj/window) && !istype(O, /obj/window/auto/reinforced/indestructible)) || istype(O, /obj/mesh/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 							qdel(O)
 						else
 							var/turf/target = get_edge_target_turf(src, src.dir)
@@ -346,75 +346,69 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					src.visible_message(SPAN_ALERT("<b>[src] yells out a battle cry!</b>"))
 			else
 				..()
-/obj/critter/microman
+
+/mob/living/critter/microman
 	name = "Micro Man"
 	desc = "All the macho madness you'd ever need, shrunk down to pocket size."
 	icon = 'icons/mob/critter/humanoid/microman.dmi'
 	icon_state = "microman"
-	health = 25
-	aggressive = 1
-	defensive = 1
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
-	atkcarbon = 1
-	atksilicon = 1
-	atcritter = 1
-	density = 0
-	angertext = "rages at"
+	is_npc = TRUE
+	ai_type = /datum/aiHolder/aggressive
+	can_lie = FALSE
+	butcherable = BUTCHER_NOT_ALLOWED
+	health_brute = 25
+	health_burn = 25
+	health_brute_vuln = 1
+	health_burn_vuln = 1
+	hand_count = 1
+	add_abilities = list(/datum/targetable/critter/tackle/weak)
+	ai_attacks_per_ability = 1
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0
+	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
+	use_stamina = FALSE
 
 	New()
-		..()
+		. = ..()
 		if (prob(50))
 			playsound(src.loc, pick(snd_macho_rage), 50, 1, 0, 1.75)
 
-	ai_think()
-		..()
+	setup_healths()
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
+
+	// microman does teensy damage, just enough to reliably punch through armor
+	calculate_melee_attack(mob/target, base_damage_low, base_damage_high, extra_damage, stamina_damage_mult, can_crit, can_punch, can_kick, datum/limb/limb)
+		. = ..(target, 2, 3, extra_damage, stamina_damage_mult, can_crit, can_punch, can_kick, limb)
+
+	critter_attack(mob/target)
+		. = ..()
+		playsound(src.loc, "swing_hit", 30, 0)
+		if (prob(10))
+			playsound(src.loc, pick(snd_macho_rage), 50, 1, 0, 1.75)
+
+	critter_ability_attack(mob/target)
+		var/datum/targetable/critter/tackle/weak/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/tackle/weak)
+		if(pounce && !pounce.disabled && pounce.cooldowncheck())
+			pounce.handleCast(target)
+			if (prob(50))
+				playsound(src.loc, pick(snd_macho_rage), 50, 1, 0, 1.75)
+			return TRUE
+
+	valid_target(mob/living/C)
+		if (is_incapacitated(C)) return FALSE
+		return ..()
+
+	Life(datum/controller/process/mobs/parent)
+		. = ..()
 		if (prob(10))
 			playsound(src.loc, pick(snd_macho_idle), 50, 1, 0, 1.75)
 
-	attack_hand(mob/user)
-		if (src.alive && (user.a_intent != INTENT_HARM))
-			src.visible_message(SPAN_ALERT("<b>[user]</b> pets [src]!"))
-			return
-		..()
-
-	CritterAttack(mob/M)
-		if (ismob(M))
-			src.attacking = 1
-			var/attack_message = ""
-			switch(rand(1,3))
-				if (1)
-					attack_message = "<B>[src]</B> punches [src.target] in the stomach!"
-				if (2)
-					attack_message = "<B>[src]</B> kicks [src.target] with his shoes!"
-				if (3)
-					attack_message = "<B>[src]</B> headbutts [src.target]!"
-			for (var/mob/O in viewers(src, null))
-				O.show_message(SPAN_ALERT("[attack_message]"), 1)
-			playsound(src.loc, "swing_hit", 30, 0)
-			if (prob(10))
-				playsound(src.loc, pick(snd_macho_rage), 50, 1, 0, 1.75)
-			random_brute_damage(src.target, rand(0,1))
-			SPAWN(rand(1,3))
-				src.attacking = 0
-
-	ChaseAttack(mob/M)
-		for (var/mob/O in viewers(src, null))
-			O.show_message(SPAN_ALERT("<B>[src]</B> charges at [M]!"), 1)
-		if (prob(50))
-			playsound(src.loc, pick(snd_macho_rage), 50, 1, 0, 1.75)
-		M.changeStatus("stunned", 1 SECOND)
-		if (prob(25))
-			M.changeStatus("knockdown", 2 SECONDS)
-			random_brute_damage(M, rand(1,2))
-	CritterDeath()
-		..()
-		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
-		var/obj/decal/cleanable/blood/gibs/gib = null
-		gib = make_cleanable(/obj/decal/cleanable/blood/gibs,src.loc)
-		gib.streak_cleanable(NORTH)
-		qdel(src)
-
+	death(gibbed, do_drop_equipment)
+		if(!gibbed)
+			src.visible_message("[src] explodes in a shower of meat!")
+			return src.gib()
+		. = ..()
 
 /obj/item/clothing/under/gimmick/macho
 	name = "wrestling pants"

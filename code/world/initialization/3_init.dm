@@ -8,6 +8,13 @@
 	game_start_countdown = new()
 	UPDATE_TITLE_STATUS("Initializing world")
 
+	Z_LOG_DEBUG("World/Init", "Loading admins...")
+	load_admins()//UGH
+	Z_LOG_DEBUG("World/Init", "Loading whitelist...")
+	load_whitelist() //WHY ARE WE UGH-ING
+	Z_LOG_DEBUG("World/Init", "Loading playercap bypass keys...")
+	load_playercap_bypass()
+
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
 	roundManagement.recordStart()
 #ifdef LIVE_SERVER
@@ -23,15 +30,9 @@
 			message_admins("Roundstart API query succeeded after [counter] failed attempts.")
 			logTheThing(LOG_DEBUG, src, "Roundstart API query succeeded after [counter] failed attempts.")
 #endif
-
 	Z_LOG_DEBUG("World/Init", "Loading MOTD...")
 	src.load_motd()//GUH
-	Z_LOG_DEBUG("World/Init", "Loading admins...")
-	load_admins()//UGH
-	Z_LOG_DEBUG("World/Init", "Loading whitelist...")
-	load_whitelist() //WHY ARE WE UGH-ING
-	Z_LOG_DEBUG("World/Init", "Loading playercap bypass keys...")
-	load_playercap_bypass()
+
 
 	Z_LOG_DEBUG("World/Init", "Starting input loop")
 	start_input_loop()
@@ -80,6 +81,7 @@
 		"[R_FREQ_RESEARCH]" = "Research",
 		"[R_FREQ_MEDICAL]" = "Medical",
 		"[R_FREQ_ENGINEERING]" = "Engineering",
+		"[R_FREQ_NANOTRASEN]" = "NanoTrasen",
 		"[R_FREQ_COMMAND]" = "Command",
 		"[R_FREQ_SECURITY]" = "Security",
 		"[R_FREQ_CIVILIAN]" = "Civilian",
@@ -132,7 +134,7 @@
 	build_supply_pack_cache()
 	build_syndi_buylist_cache()
 	build_manufacturer_icons()
-	clothingbooth_setup()
+	build_clothingbooth_caches()
 	initialize_biomes()
 
 	Z_LOG_DEBUG("World/Init", "Setting up airlock/APC wires...")

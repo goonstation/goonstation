@@ -34,7 +34,7 @@ export const CyborgDockingStation = () => {
       theme={
         conversion_chamber && occupant?.kind === 'human'
           ? 'syndicate'
-          : 'neutral'
+          : 'nanotrasen'
       }
     >
       <Window.Content scrollable>

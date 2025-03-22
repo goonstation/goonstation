@@ -32,6 +32,8 @@ TYPEINFO(/turf/simulated/wall)
 
 		src.AddComponent(/datum/component/bullet_holes, 15, 10)
 
+		for(var/obj/decal/cleanable/clean in src)
+			clean.plane = PLANE_FLOOR
 		src.selftilenotify() // displace fluid
 
 		#ifdef XMAS

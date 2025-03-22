@@ -109,7 +109,7 @@ var/list/globalPropList = null
 	var/name = ""
 	var/id = ""
 	var/desc = ""
-	var/tooltipImg = "" //Stored in browserassets\images\tooltips
+	var/tooltipImg = "" //Stored in browserassets\src\images\tooltips
 	var/defaultValue = 1 //Default value. Used to get an idea of what's "normal" for any given property.
 	var/goodDirection = 1 //Dumb name. Tells us which direction the number should grow in for it to be considered "good", 1=positive, -1 negative
 	var/hidden = 0 //does not get printed in item tooltips

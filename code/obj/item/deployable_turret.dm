@@ -251,7 +251,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 					src.shoot(target)
 
 	attackby(obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (isweldingtool(W) && !(src.active))
 			if(!W:try_weld(user, 1))
 				return
@@ -598,6 +598,9 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	icon_tag = "op"
 	quick_deploy_fuel = 0
 	associated_deployer = /obj/item/turret_deployer/outpost
+
+	is_friend(var/mob/living/C)
+		return (FACTION_MERCENARY in C.faction)
 
 /obj/deployable_turret/outpost/active
 	can_toggle_activation = FALSE // for map placement so people don't cheese them by rushing them with a screwdriver

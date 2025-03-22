@@ -16,6 +16,13 @@
 	var/can_be_deleted_by_player = FALSE
 	/// Whether this minimap marker appears on the controller UI, permitting it's visibility to be toggled, or for it to be deleted.
 	var/list_on_ui = TRUE
+	/// Marker's icon_state
+	var/icon_state = null
+
+/datum/minimap_marker/minimap/disposing()
+	// cleanup reference loops
+	map = null
+	. = ..()
 
 /datum/minimap_marker/minimap/New(atom/target, name, can_be_deleted_by_player = FALSE, list_on_ui = TRUE, marker_scale)
 	. = ..()
@@ -26,6 +33,7 @@
 	src.scale_marker(marker_scale)
 
 /datum/minimap_marker/minimap/handle_move(datum/component/component, turf/old_turf, turf/new_turf)
+	. = ..()
 	if (!src.map || !new_turf)
 		return
 

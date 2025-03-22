@@ -163,6 +163,8 @@ proc/pluralize(word)
 	else
 		. += "s"
 
+proc/list2text(L, d = "")
+	return jointext(L, d)
 
 
 // DM simultaneously makes cursed shit like this work...
@@ -175,3 +177,4 @@ var/static/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
   * Removes the special data inserted via use of \improper etc in strings
   */
 #define stripTextMacros(text) replacetext(text, regexTextMacro, "")
+

@@ -7,7 +7,7 @@
 	anchored = ANCHORED
 	layer = OBJ_LAYER
 	plane = PLANE_NOSHADOW_BELOW
-	invisibility = INVIS_CLOAK
+	invisibility = INVIS_ALWAYS
 	density = 0
 	machine_registry_idx = MACHINES_TURRETS
 	power_usage = 50
@@ -184,7 +184,7 @@
 			src.cover.icon_state = "turretCover"
 		SPAWN(1.3 SECONDS)
 			if (popping==-1)
-				invisibility = INVIS_CLOAK
+				invisibility = INVIS_ALWAYS
 				popping = 0
 				set_density(0)
 

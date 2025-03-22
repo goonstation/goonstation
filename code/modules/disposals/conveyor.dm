@@ -52,6 +52,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 	event_handler_flags = USE_FLUID_ENTER
 	/// list of conveyor_switches that have us in their conveyors list
 	var/list/linked_switches
+	/// Stored operating direction for conveyors without linked switches
+	var/stored_operating
 
 	New()
 		. = ..()
@@ -285,6 +287,10 @@ TYPEINFO(/obj/machinery/conveyor) {
 	..()
 
 /obj/machinery/conveyor/disposing()
+	src.was_deconstructed_to_frame()
+	..()
+
+/obj/machinery/conveyor/was_deconstructed_to_frame(mob/user)
 	for(var/obj/machinery/conveyor/C in range(1,src))
 		if (C.next_conveyor == src)
 			C.next_conveyor = null
@@ -293,7 +299,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 	for (var/obj/machinery/conveyor_switch/S as anything in linked_switches) //conveyor switch could've been exploded
 		S.conveyors -= src
 	id = null
-	..()
+	src.operating = CONVEYOR_STOPPED
 
 /// set the dir and target turf depending on the operating direction
 /obj/machinery/conveyor/proc/setdir()
@@ -320,11 +326,11 @@ TYPEINFO(/obj/machinery/conveyor) {
 		operating = CONVEYOR_STOPPED
 	if(!operating || (status & NOPOWER))
 		power_usage = 0
-		for(var/atom/movable/A in loc.contents)
+		for(var/atom/movable/A in loc?.contents)
 			walk(A, 0)
 	else
 		power_usage = 100
-		for(var/atom/movable/A in loc.contents)
+		for(var/atom/movable/A in loc?.contents)
 			move_thing(A)
 
 	var/new_icon = "conveyor-"
@@ -425,7 +431,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 		return
 	if(!loc)
 		return
-	if (!can_convey(AM))
+	if(!can_convey(AM))
+		walk(AM, 0)
 		return
 
 	if(src.next_conveyor && src.next_conveyor.loc == AM.loc)
@@ -446,8 +453,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 /obj/machinery/conveyor/get_desc()
 	if (src.deconstructable)
-		. += " [SPAN_NOTICE("It's cover seems to be open.")]"
-
+		. += " [SPAN_NOTICE("Its cover seems to be open.")]"
 
 /obj/machinery/conveyor/mouse_drop(over_object, src_location, over_location)
 	if (!usr)
@@ -602,13 +608,17 @@ TYPEINFO(/obj/machinery/conveyor) {
 		return
 
 	if (src.deconstructable)
-		src.deconstruct_flags = null
+		src.deconstruct_flags = DECON_NONE
 		src.deconstructable = FALSE
 		M.show_text("You finish closing \the [src]'s panel.", "blue")
 		if (length(src.linked_switches))
 			var/obj/machinery/conveyor_switch/connected_switch = src.linked_switches[1]
 			src.operating = connected_switch.position
 			src.setdir()
+		else
+			src.operating = src.stored_operating
+			src.stored_operating = null
+			src.set_dir()
 		src.update()
 		return 1
 
@@ -617,6 +627,10 @@ TYPEINFO(/obj/machinery/conveyor) {
 		src.deconstructable = TRUE
 		M.show_text("You finish opening \the [src]'s panel.", "blue")
 		if (length(src.linked_switches))
+			src.operating = CONVEYOR_STOPPED
+			src.setdir()
+		else
+			src.stored_operating = src.operating
 			src.operating = CONVEYOR_STOPPED
 			src.setdir()
 		src.update()
@@ -1039,7 +1053,7 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 			LAGCHECK(LAG_MED)
 
 		for (var/obj/machinery/conveyor/C as anything in conveyors)
-			if (C.id == src.id)
+			if (C.id == src.id && !C.deconstructable)
 				C.operating = src.position
 				C.setdir()
 				C.move_lag = CALC_DELAY(C)

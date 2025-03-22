@@ -446,6 +446,7 @@
 				if(2)
 					boutput(M, SPAN_ALERT("Good grief, that tasted awful!"))
 					M.take_toxin_damage(2)
+					M.nauseate(3)
 				if(3)
 					boutput(M, SPAN_ALERT("There was a cyst in that burger. Now your mouth is full of pus OH JESUS THATS DISGUSTING OH FUCK"))
 					var/vomit_message = SPAN_ALERT("[M.name] suddenly and violently vomits!")
@@ -565,7 +566,9 @@
 				return ..()
 			var/obj/item/stolen = pick(stealable_things)
 			consumer.drop_from_slot(stolen)
-			consumer.drop_from_slot(src)
+			if (ismob(src.loc))
+				var/mob/holder = src.loc
+				holder.drop_from_slot(src)
 			playsound(get_turf(consumer), /obj/item/crowbar::hitsound, 50, TRUE)
 			random_brute_damage(consumer, 5)
 			consumer.changeStatus("knockdown", 4 SECONDS)

@@ -25,6 +25,7 @@
 	can_bleed = FALSE
 	metabolizes = FALSE
 	blood_id = null
+	use_stamina = FALSE // floating ghostly eyes dont get tired
 
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0
@@ -50,7 +51,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT, src)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
-		AddComponent(/datum/component/minimap_marker/minimap, MAP_AI, "ai_eye")
+		AddComponent(/datum/component/minimap_marker/minimap, MAP_AI | MAP_OBSERVER, "ai_eye")
 
 	Login()
 		.=..()
@@ -283,7 +284,9 @@
 		if (mainframe)
 			mainframe.emote(act, voluntary)
 
-	hearing_check(var/consciousness_check = 0) //can't hear SHIT - everything is passed from the AI mob through send_message and whatever
+	hearing_check(var/consciousness_check = 0, for_audio = FALSE) //can't hear SHIT - everything is passed from the AI mob through send_message and whatever
+		if (for_audio)
+			return TRUE
 		return 0
 
 	resist()
@@ -397,12 +400,16 @@
 		if (mainframe)
 			mainframe.unbolt_all_airlocks()
 
+	verb/show_alerts()
+		set category = "AI Commands"
+		set name = "Show Alert Minimap"
+		mainframe?.open_alert_minimap(src)
+
 	verb/toggle_alerts_verb()
 		set category = "AI Commands"
 		set name = "Toggle Alerts"
-		set desc = "Toggle alert messages in the game window. You can always check them with 'Show Alerts'."
-		if (mainframe)
-			mainframe.toggle_alerts_verb()
+		set desc = "Toggle alert messages in the game window. You can always check them with 'Show Alert Minimap'."
+		mainframe?.toggle_alerts_verb()
 
 	verb/access_area_apc()
 		set category = "AI Commands"

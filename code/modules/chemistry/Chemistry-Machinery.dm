@@ -89,10 +89,25 @@ TYPEINFO(/obj/machinery/chem_heater)
 				if (prob(50))
 					qdel(src)
 					return
+				if (prob(75))
+					src.set_broken()
+					return
+			if(3)
+				if (prob(50))
+					src.set_broken()
 
 	blob_act(var/power)
 		if (prob(25 * power/20))
 			qdel(src)
+			return
+		if (prob(25 * power/20))
+			src.set_broken()
+
+	bullet_act(obj/projectile/P)
+		if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
+			if(prob(P.power * P.proj_data?.ks_ratio / 2))
+				src.set_broken()
+		..()
 
 	meteorhit()
 		qdel(src)
@@ -196,6 +211,20 @@ TYPEINFO(/obj/machinery/chem_heater)
 	*/
 
 	process(mult)
+		if (status & BROKEN)
+			var/turf/simulated/T = src.loc
+			if (istype(T))
+				var/datum/gas_mixture/environment = T.return_air()
+
+				// less efficient than an HVAC so people don't abuse these for changing air temps
+				var/transfer_moles = 0.1 * TOTAL_MOLES(environment)
+				var/datum/gas_mixture/removed = environment.remove(transfer_moles)
+				if (removed && TOTAL_MOLES(removed) > 0)
+					var/heat_capacity = HEAT_CAPACITY(removed)
+					removed.temperature = (removed.temperature * heat_capacity + 200 * (src.target_temp-T20C))/heat_capacity
+					use_power(2000 WATTS) // early return below stops normal power usage check
+				T.assume_air(removed)
+
 		if (!active) return
 		if (status & (NOPOWER|BROKEN) || !beaker || !beaker.reagents.total_volume)
 			set_inactive()
@@ -241,21 +270,31 @@ TYPEINFO(/obj/machinery/chem_heater)
 		UpdateIcon()
 		tgui_process.update_uis(src)
 
+	power_change()
+		. = ..()
+		src.update_icon()
+
 	update_icon()
-		if (src.beaker)
-			src.UpdateOverlays(SafeGetOverlayImage("beaker", 'icons/obj/heater.dmi', "heater-beaker"), "beaker")
-			if (src.active && src.beaker:reagents && src.beaker:reagents:total_volume)
-				if (target_temp > src.beaker:reagents:total_temperature)
-					src.icon_state = "heater-heat"
-				else if (target_temp < src.beaker:reagents:total_temperature)
-					src.icon_state = "heater-cool"
-				else
-					src.icon_state = "heater-closed"
+		if (src.status & BROKEN)
+			src.UpdateOverlays(null, "beaker", retain_cache=TRUE)
+			src.icon_state = "heater-broken"
+			return
+
+		if (!src.beaker)
+			src.UpdateOverlays(null, "beaker", retain_cache=TRUE)
+			src.icon_state = "heater"
+			return
+
+		src.UpdateOverlays(SafeGetOverlayImage("beaker", 'icons/obj/heater.dmi', "heater-beaker"), "beaker")
+		if (src.active && src.beaker:reagents && src.beaker:reagents:total_volume)
+			if (target_temp > src.beaker:reagents:total_temperature)
+				src.icon_state = "heater-heat"
+			else if (target_temp < src.beaker:reagents:total_temperature)
+				src.icon_state = "heater-cool"
 			else
 				src.icon_state = "heater-closed"
 		else
-			src.UpdateOverlays(null, "beaker", retain_cache=TRUE)
-			src.icon_state = "heater"
+			src.icon_state = "heater-closed"
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
@@ -277,6 +316,16 @@ TYPEINFO(/obj/machinery/chem_heater)
 		else
 			boutput(usr, SPAN_ALERT("You can't use that as an output target."))
 		return
+
+	set_broken()
+		. = ..()
+		if (.) return
+		if(src.target_temp > T20C)
+			AddComponent(/datum/component/equipment_fault/embers, tool_flags = TOOL_WRENCHING | TOOL_SCREWING | TOOL_PRYING)
+		else
+			AddComponent(/datum/component/equipment_fault/smoke, tool_flags = TOOL_WRENCHING | TOOL_SCREWING | TOOL_PRYING)
+		animate_shake(src, 5, rand(3,8),rand(3,8))
+		playsound(src, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 
 	Exited(Obj, newloc)
 		if(Obj == src.beaker)
@@ -526,11 +575,14 @@ TYPEINFO(/obj/machinery/chem_master)
 		/obj/item/reagent_containers/patch // 30u
 	)
 
-	New()
+	var/obj/item/robot_chemaster/prototype/parent_item = null
+
+	New(var/loc, var/obj/item/robot_chemaster/prototype/parent_item = null)
 		..()
 		if (!src.emagged && islist(global.chem_whitelist) && length(global.chem_whitelist))
 			src.whitelist = global.chem_whitelist
 		AddComponent(/datum/component/transfer_output)
+		src.parent_item = parent_item
 
 	// borrowed from the reagent heater/cooler code
 	proc/tryInsert(obj/item/reagent_containers/glass/B, var/mob/user)
@@ -710,7 +762,7 @@ TYPEINFO(/obj/machinery/chem_master)
 			bottle_icons.Add(list(list(bottle_capacity, icon2base64(bottle_icon))))
 		qdel(bottle)
 		.["bottle_icons"] = bottle_icons
-
+		.["name_max_len"] = CHEMMASTER_ITEMNAME_MAXSIZE
 		var/list/patch_icons = list()
 
 		for(var/patch_path in patches_list)
@@ -796,7 +848,7 @@ TYPEINFO(/obj/machinery/chem_master)
 		if(dir == WEST)
 			tube_x = -8
 			tube_y = 0
-		var/datum/lineResult/result = drawLine(src, barrel, "chemmaster", "chemmaster_end", src.pixel_x + tube_x, src.pixel_y + tube_y, barrel.pixel_x + 6, barrel.pixel_y + 8)
+		var/datum/lineResult/result = drawLineImg(src, barrel, "chemmaster", "chemmaster_end", src.pixel_x + tube_x, src.pixel_y + tube_y, barrel.pixel_x + 6, barrel.pixel_y + 8)
 		result.lineImage.pixel_x = -src.pixel_x
 		result.lineImage.pixel_y = -src.pixel_y
 		if(src.layer > barrel.layer) //this should ensure it renders above both the barrel and chemmaster
@@ -1163,6 +1215,12 @@ TYPEINFO(/obj/machinery/chem_master)
 			src.UpdateIcon()
 			global.tgui_process.update_uis(src)
 
+	ui_status()
+		if (src.parent_item)
+			return src.parent_item.ui_status(arglist(args))
+		else
+			return ..()
+
 #undef CHEMMASTER_NO_CONTAINER_MAX
 #undef CHEMMASTER_ITEMNAME_MAXSIZE
 #undef CHEMMASTER_MAX_PILL
@@ -1417,413 +1475,27 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 	desc = "A prototype of a compact CheMaster/Reagent Extractor device."
 	icon_state = "minichem_proto"
 	flags = NOSPLASH
-	var/mode = "overview"
-	var/autoextract = 0
-	var/obj/item/reagent_containers/glass/extract_to = null
-	var/obj/item/reagent_containers/glass/inserted = null
-	var/obj/item/reagent_containers/glass/storage_tank_1 = null
-	var/obj/item/reagent_containers/glass/storage_tank_2 = null
-	var/list/ingredients = list()
+	var/obj/submachine/chem_extractor/reagent_extractor
+	var/obj/machinery/chem_master/che_master
 	var/list/allowed = list(/obj/item/reagent_containers/food/snacks/,/obj/item/plant/,/obj/item/seashell)
-	var/output_target = null
 
 	New()
 		..()
-		src.storage_tank_1 = new /obj/item/reagent_containers/glass/beaker/large(src)
-		src.storage_tank_2 = new /obj/item/reagent_containers/glass/beaker/large(src)
-		var/count = 1
-		for (var/obj/item/reagent_containers/glass/beaker/large/ST in src.contents)
-			ST.name = "Small Storage Tank [count]"
-			count++
-		output_target = src.loc
+		//Loc needs to be this item itself otherwise we get "nopower"
+		reagent_extractor = new(src, src)
+		che_master = new(src, src)
+		AddComponent(/datum/component/transfer_input/quickloading, allowed, "tryLoading")
 
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/reagent_containers/glass/))
-			var/obj/item/reagent_containers/glass/B = W
+	//We don't want anything to do with /obj/item/robot_chemaster's attackby(...)
+	attackby(var/obj/item/W, var/mob/user)
+		return
 
-			if (working)
-				boutput(user, SPAN_ALERT("CheMaster is working, be patient"))
-				return
-			var/mode_type = input("Which mode do you want to use?", "Mini-CheMaster",null,null) in list("CheMaster", "Reagent Extractor")
-			if(mode_type == "CheMaster")
-				if(!B.reagents.reagent_list.len || B.reagents.total_volume < 1)
-					boutput(user, SPAN_ALERT("That beaker is empty! There are no reagents for the [src.name] to process!"))
-					return
-				working = 1
-				var/holder = src.loc
-				var/the_reagent = input("Which reagent do you want to manipulate?","Mini-CheMaster",null,null) in B.reagents.reagent_list
-				if (src.loc != holder || !the_reagent)
-					return
-				var/action = input("What do you want to do with the [the_reagent]?","Mini-CheMaster",null,null) in list("Isolate","Purge","Remove One Unit","Remove Five Units","Create Pill","Create Pill Bottle","Create Bottle","Create Patch","Create Ampoule","Do Nothing")
-				if (src.loc != holder || !action || action == "Do Nothing")
-					working = 0
-					return
-
-				switch(action)
-					if("Isolate") B.reagents.isolate_reagent(the_reagent)
-					if("Purge") B.reagents.del_reagent(the_reagent)
-					if("Remove One Unit") B.reagents.remove_reagent(the_reagent, 1)
-					if("Remove Five Units") B.reagents.remove_reagent(the_reagent, 5)
-					if("Create Pill")
-						var/obj/item/reagent_containers/pill/P = new/obj/item/reagent_containers/pill(user.loc)
-						var/default = B.reagents.get_master_reagent_name()
-						var/name = copytext(html_encode(input(user,"Name:","Name your pill!",default)), 1, 32)
-						if(!name || name == " ") name = default
-						if(name && name != default)
-							phrase_log.log_phrase("pill", name, no_duplicates=TRUE)
-						P.name = "[name] pill"
-						B.reagents.trans_to(P,B.reagents.total_volume)
-					if("Create Pill Bottle")
-						// copied from chem_master because fuck fixing everything at once jeez
-						var/default = B.reagents.get_master_reagent_name()
-						var/pillname = copytext( html_encode( input( user, "Name:", "Name the pill!", default ) ), 1, 32)
-						if(!pillname || pillname == " ")
-							pillname = default
-						if(pillname && pillname != default)
-							phrase_log.log_phrase("pill", pillname, no_duplicates=TRUE)
-
-						var/pillvol = input( user, "Volume:", "Volume of chemical per pill!", "5" ) as num
-						if( !pillvol || !isnum_safe(pillvol) || pillvol < 5 )
-							pillvol = 5
-
-						var/pillcount = round( B.reagents.total_volume / pillvol ) // round with a single parameter is actually floor because byond
-						if(!pillcount)
-							boutput(user, "[src] makes a weird grinding noise. That can't be good.")
-						else
-							var/obj/item/chem_pill_bottle/pillbottle = new /obj/item/chem_pill_bottle(user.loc)
-							pillbottle.create_from_reagents(B.reagents, pillname, pillvol, pillcount)
-					if("Create Bottle")
-						var/obj/item/reagent_containers/glass/bottle/P = new/obj/item/reagent_containers/glass/bottle/plastic(user.loc)
-						var/default = B.reagents.get_master_reagent_name()
-						var/name = copytext(html_encode(input(user,"Name:","Name your bottle!",default)), 1, 32)
-						if(!name || name == " ") name = default
-						if(name && name != default)
-							phrase_log.log_phrase("bottle", name, no_duplicates=TRUE)
-						P.name = "[name] bottle"
-						B.reagents.trans_to(P,30)
-					if("Create Patch")
-						var/datum/reagents/R = B.reagents
-						var/input_name = input(user, "Name the patch:", "Name", R.get_master_reagent_name()) as null|text
-						var/patchname = copytext(html_encode(input_name), 1, 32)
-						if (isnull(patchname) || !length(patchname) || patchname == " ")
-							working = 0
-							return
-						var/all_safe = 1
-						for (var/reagent_id in R.reagent_list)
-							if (!global.chem_whitelist.Find(reagent_id))
-								all_safe = 0
-						var/obj/item/reagent_containers/patch/P
-						if (R.total_volume <= 15)
-							P = new /obj/item/reagent_containers/patch/mini(user.loc)
-							P.name = "[patchname] mini-patch"
-							R.trans_to(P, P.initial_volume)
-						else
-							P = new /obj/item/reagent_containers/patch(user.loc)
-							P.name = "[patchname] patch"
-							R.trans_to(P, P.initial_volume)
-						P.medical = all_safe
-						P.on_reagent_change()
-						logTheThing(LOG_CHEMISTRY, user, "used the [src.name] to create a [patchname] patch containing [log_reagents(P)] at [log_loc(src)].")
-					if("Create Ampoule")
-						var/datum/reagents/R = B.reagents
-						var/input_name = input(user, "Name the ampoule:", "Name", R.get_master_reagent_name()) as null|text
-						var/ampoulename = copytext(html_encode(input_name), 1, 32)
-						if(!ampoulename)
-							working = 0
-							return
-						if(ampoulename == " ")
-							ampoulename = R.get_master_reagent_name()
-						var/obj/item/reagent_containers/ampoule/A
-						A = new /obj/item/reagent_containers/ampoule(user.loc)
-						A.name = "ampoule ([ampoulename])"
-						R.trans_to(A, 5)
-						logTheThing(LOG_CHEMISTRY, user, "used the [src.name] to create a [ampoulename] ampoule containing [log_reagents(A)] at [log_loc(src)].")
-
-				working = 0
-			else if(mode_type == "Reagent Extractor")
-				if(src.inserted)
-					boutput(user, SPAN_ALERT("A container is already loaded into the machine."))
-					return
-				src.inserted =  W
-				user.drop_item()
-				W.set_loc(src)
-				boutput(user, SPAN_NOTICE("You add [W] to the machine!"))
-				src.updateUsrDialog()
-
-		else if (istype(W,/obj/item/satchel/hydro)) //Extractor
-			var/obj/item/satchel/S = W
-			var/loadcount = 0
-			for (var/obj/item/I in S.contents)
-				if (src.canExtract(I) && (src.tryLoading(I, user)))
-					loadcount++
-			if (!loadcount)
-				boutput(user, SPAN_ALERT("No items were loaded from the satchel!"))
-			else if (src.autoextract)
-				boutput(user, SPAN_NOTICE("[loadcount] items were automatically extracted from the satchel!"))
-			else
-				boutput(user, SPAN_NOTICE("[loadcount] items were loaded from the satchel!"))
-
-			S.UpdateIcon()
-			S.tooltip_rebuild = 1
-			src.updateUsrDialog()
-
-		else
-			if (!src.canExtract(W))
-				boutput(user, SPAN_ALERT("The extractor cannot accept that!"))
-				return
-
-			if (!src.tryLoading(W, user)) return
-			boutput(user, SPAN_NOTICE("You add [W] to the machine!"))
-
-			user.u_equip(W)
-			W.dropped(user)
-
-			src.updateUsrDialog()
-			return
+	attack_self(mob/user as mob)
+		reagent_extractor.ui_interact(user)
+		che_master.ui_interact(user)
 
 	attack_ai(var/mob/user as mob)
 		return
 
-	attack_hand(mob/user)
-		if(src in user.equipped_list())
-			src.add_dialog(user)
-			var/list/dat = list("<B>Reagent Extractor</B><BR><HR>")
-			if (src.mode == "overview")
-				dat += "<b><u>Extractor Overview</u></b><br><br>"
-				// Overview mode is just a general outline of what's in the machine at the time
-				// Internal Storage Tanks
-				if (src.storage_tank_1)
-					dat += "<b>Storage Tank 1:</b> ([src.storage_tank_1.reagents.total_volume]/[src.storage_tank_1.reagents.maximum_volume])<br>"
-					if(src.storage_tank_1.reagents.reagent_list.len)
-						for(var/current_id in storage_tank_1.reagents.reagent_list)
-							var/datum/reagent/current_reagent = storage_tank_1.reagents.reagent_list[current_id]
-							dat += "* <i>[current_reagent.volume] units of [current_reagent.name]</i><br>"
-					else dat += "Empty<BR>"
-					dat += "<br>"
-				else dat += "<b>Storage Tank 1 Missing!</b><br>"
-				if (src.storage_tank_2)
-					dat += "<b>Storage Tank 2:</b> ([src.storage_tank_2.reagents.total_volume]/[src.storage_tank_2.reagents.maximum_volume])<br>"
-					if(src.storage_tank_2.reagents.reagent_list.len)
-						for(var/current_id in storage_tank_2.reagents.reagent_list)
-							var/datum/reagent/current_reagent = storage_tank_2.reagents.reagent_list[current_id]
-							dat += "* <i>[current_reagent.volume] units of [current_reagent.name]</i><br>"
-					else dat += "Empty<BR>"
-					dat += "<br>"
-				else dat += "<b>Storage Tank 2 Missing!</b><br>"
-				// Inserted Beaker or whatever
-				if (src.inserted)
-					dat += "<B>Receptacle:</B> [src.inserted] ([src.inserted.reagents.total_volume]/[src.inserted.reagents.maximum_volume]) <A href='?src=\ref[src];ejectbeaker=1'>(Eject)</A><BR>"
-					dat += "<b>Contents:</b> "
-					if(src.inserted.reagents.reagent_list.len)
-						for(var/current_id in inserted.reagents.reagent_list)
-							var/datum/reagent/current_reagent = inserted.reagents.reagent_list[current_id]
-							dat += "<BR><i>[current_reagent.volume] units of [current_reagent.name]</i>"
-					else dat += "Empty<BR>"
-				else dat += "<B>No receptacle inserted!</B><BR>"
-
-				if(src.ingredients.len)
-					dat += "<BR><B>[src.ingredients.len] Items Ready for Extraction</B>"
-				else
-					dat += "<BR><B>No Items inserted!</B>"
-
-			else if (src.mode == "extraction")
-				dat += "<b><u>Extraction Management</u></b><br><br>"
-				if (src.autoextract)
-					dat += "<b>Auto-Extraction:</b> <A href='?src=\ref[src];autoextract=1'>Enabled</A>"
-				else
-					dat += "<b>Auto-Extraction:</b> <A href='?src=\ref[src];autoextract=1'>Disabled</A>"
-				dat += "<br>"
-				if (src.extract_to)
-					dat += "<b>Extraction Target:</b> <A href='?src=\ref[src];extracttarget=1'>[src.extract_to]</A> ([src.extract_to.reagents.total_volume]/[src.extract_to.reagents.maximum_volume])"
-					if (src.extract_to == src.inserted) dat += "<A href='?src=\ref[src];ejectbeaker=1'>(Eject)</A>"
-				else dat += "<A href='?src=\ref[src];extracttarget=1'><b>No current extraction target set.</b></A>"
-
-				if(src.ingredients.len)
-					dat += "<br><br><B>Extractable Items:</B><br><br>"
-					for (var/obj/item/I in src.ingredients)
-						dat += "* [I]<br>"
-						dat += "<A href='?src=\ref[src];extractingred=\ref[I]'>(Extract)</A> <A href='?src=\ref[src];ejectingred=\ref[I]'>(Eject)</A><br>"
-				else dat += "<br><br><B>No Items inserted!</B>"
-
-			else if (src.mode == "transference")
-				dat += "<b><u>Transfer Management</u></b><br><br>"
-
-				if (src.inserted)
-					dat += "<A href='?src=\ref[src];chemtransfer=\ref[src.inserted]'><b>[src.inserted]:</b></A> ([src.inserted.reagents.total_volume]/[src.inserted.reagents.maximum_volume]) <A href='?src=\ref[src];flush=\ref[src.inserted]'>(Flush All)</A> <A href='?src=\ref[src];ejectbeaker=1'>(Eject)</A><br>"
-					if(src.inserted.reagents.reagent_list.len)
-						for(var/current_id in inserted.reagents.reagent_list)
-							var/datum/reagent/current_reagent = inserted.reagents.reagent_list[current_id]
-							dat += "* <i>[current_reagent.volume] units of [current_reagent.name]</i> <A href='?src=\ref[src];flush=\ref[src.inserted];flush_reagent=[current_id]'>(X)</A><br>"
-					else dat += "Empty<BR>"
-				else dat += "<b>No receptacle inserted!</b><br>"
-
-				dat += "<br>"
-
-				dat += "<A href='?src=\ref[src];chemtransfer=\ref[src.storage_tank_1]'><b>Storage Tank 1:</b></A> ([src.storage_tank_1.reagents.total_volume]/[src.storage_tank_1.reagents.maximum_volume]) <A href='?src=\ref[src];flush=\ref[src.storage_tank_1]'>(Flush All)</A><br>"
-				if(src.storage_tank_1.reagents.reagent_list.len)
-					for(var/current_id in storage_tank_1.reagents.reagent_list)
-						var/datum/reagent/current_reagent = storage_tank_1.reagents.reagent_list[current_id]
-						dat += "* <i>[current_reagent.volume] units of [current_reagent.name]</i> <A href='?src=\ref[src];flush=\ref[src.storage_tank_1];flush_reagent=[current_id]'>(X)</A><br>"
-				else dat += "Empty<BR>"
-
-				dat += "<br>"
-				dat += "<A href='?src=\ref[src];chemtransfer=\ref[src.storage_tank_2]'><b>Storage Tank 2:</b></A> ([src.storage_tank_2.reagents.total_volume]/[src.storage_tank_2.reagents.maximum_volume]) <A href='?src=\ref[src];flush=\ref[src.storage_tank_2]'>(Flush All)</A><br>"
-				if(src.storage_tank_2.reagents.reagent_list.len)
-					for(var/current_id in storage_tank_2.reagents.reagent_list)
-						var/datum/reagent/current_reagent = storage_tank_2.reagents.reagent_list[current_id]
-						dat += "* <i>[current_reagent.volume] units of [current_reagent.name]</i> <A href='?src=\ref[src];flush=\ref[src.storage_tank_2];flush_reagent=[current_id]'>(X)</A><br>"
-				else dat += "Empty<BR>"
-
-			else
-				dat += {"<b>Software Error.</b><br>
-				<A href='?src=\ref[src];page=1'>Please click here to return to the Overview.</A>"}
-
-			dat += "<HR>"
-			dat += "<b><u>Mode:</u></b> <A href='?src=\ref[src];page=1'>(Overview)</A> <A href='?src=\ref[src];page=2'>(Extraction)</A> <A href='?src=\ref[src];page=3'>(Transference)</A>"
-
-			user.Browse(dat.Join(), "window=rextractor;size=370x500")
-			onclose(user, "rextractor")
-		else
-			return ..()
-
-	attack_self(mob/user)
-		src.Attackhand(user)
-
-	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		return
-
-	handle_event(var/event, var/sender)
-		if (event == "reagent_holder_update")
-			src.updateUsrDialog()
-
-	Topic(href, href_list)
-		if(BOUNDS_DIST(usr, src) > 0 && !issilicon(usr) && !isAI(usr) )
-			boutput(usr, SPAN_ALERT("You need to be closer to the extractor to do that!"))
-			return
-		if(href_list["page"])
-			var/ops = text2num_safe(href_list["page"])
-			switch(ops)
-				if(2) src.mode = "extraction"
-				if(3) src.mode = "transference"
-				else src.mode = "overview"
-			src.updateUsrDialog()
-
-		else if(href_list["ejectbeaker"])
-			if (!src.inserted) boutput(usr, SPAN_ALERT("No receptacle found to eject."))
-			else
-				if (src.inserted == src.extract_to) src.extract_to = null
-				src.inserted.set_loc(src.output_target)
-				usr.put_in_hand_or_eject(inserted)
-				src.inserted = null
-			src.updateUsrDialog()
-
-		else if(href_list["ejectingred"])
-			var/obj/item/I = locate(href_list["ejectingred"]) in src
-			if (istype(I))
-				src.ingredients.Remove(I)
-				I.set_loc(src.output_target)
-				boutput(usr, SPAN_NOTICE("You eject [I] from the machine!"))
-			src.updateUsrDialog()
-
-		else if (href_list["autoextract"])
-			src.autoextract = !src.autoextract
-			src.updateUsrDialog()
-
-		else if (href_list["flush_reagent"])
-			var/id = href_list["flush_reagent"]
-			var/obj/item/reagent_containers/T = locate(href_list["flush"]) in src
-			if (istype(T, /obj/item/reagent_containers/food/drinks) || istype(T, /obj/item/reagent_containers/glass) && T.reagents)
-				T.reagents.remove_reagent(id, 500)
-			src.updateUsrDialog()
-
-		else if (href_list["flush"])
-			var/obj/item/reagent_containers/T = locate(href_list["flush"]) in src
-			if (istype(T, /obj/item/reagent_containers/food/drinks) || istype(T, /obj/item/reagent_containers/glass) && T.reagents)
-				T.reagents.clear_reagents()
-			src.updateUsrDialog()
-
-		else if(href_list["extracttarget"])
-			var/list/ext_targets = list(src.storage_tank_1,src.storage_tank_2)
-			if (src.inserted) ext_targets.Add(src.inserted)
-			var/target = input(usr, "Extract to which target?", "Reagent Extractor", 0) in ext_targets
-			if(BOUNDS_DIST(usr, src) > 0) return
-			src.extract_to = target
-			src.updateUsrDialog()
-
-		else if(href_list["extractingred"])
-			if (!src.extract_to)
-				boutput(usr, SPAN_ALERT("You must first select an extraction target."))
-			else
-				if (src.extract_to.reagents.total_volume == src.extract_to.reagents.maximum_volume)
-					boutput(usr, SPAN_ALERT("The extraction target is already full."))
-				else
-					var/obj/item/I = locate(href_list["extractingred"]) in src
-					if (!istype(I) || !I.reagents)
-						return
-
-					src.doExtract(I)
-					src.ingredients -= I
-					qdel(I)
-			src.updateUsrDialog()
-
-		else if(href_list["chemtransfer"])
-			var/obj/item/reagent_containers/glass/G = locate(href_list["chemtransfer"]) in src
-			if (!G)
-				boutput(usr, SPAN_ALERT("Transfer target not found."))
-				src.updateUsrDialog()
-				return
-			else if (!G.reagents.total_volume)
-				boutput(usr, SPAN_ALERT("Nothing in container to transfer."))
-				src.updateUsrDialog()
-				return
-
-			var/list/ext_targets = list(src.storage_tank_1,src.storage_tank_2)
-			if (src.inserted) ext_targets.Add(src.inserted)
-			ext_targets.Remove(G)
-			var/target = input(usr, "Transfer to which target?", "Reagent Extractor", 0) in ext_targets
-			if(BOUNDS_DIST(usr, src) > 0) return
-			var/obj/item/reagent_containers/glass/T = target
-
-			if (!T) boutput(usr, SPAN_ALERT("Transfer target not found."))
-			else if (G == T) boutput(usr, SPAN_ALERT("Cannot transfer a container's contents to itself."))
-			else
-				var/amt = input(usr, "Transfer how many units?", "Chemical Transfer", 0) as null|num
-				if(!isnum_safe(amt))
-					return
-				if(BOUNDS_DIST(usr, src) > 0) return
-				if (amt < 1) boutput(usr, SPAN_ALERT("Invalid transfer quantity."))
-				else G.reagents.trans_to(T,amt)
-
-			src.updateUsrDialog()
-
-/obj/item/robot_chemaster/prototype/proc/doExtract(var/obj/item/I)
-	// Welp -- we don't want anyone extracting these. They'll probably
-	// feed them to monkeys and then exsanguinate them trying to get at the chemicals.
-	if (istype(I, /obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor))
-		src.extract_to.reagents.add_reagent("sugar", 50)
-		return
-
-	I.reagents.trans_to(src.extract_to, I.reagents.total_volume)
-
-/obj/item/robot_chemaster/prototype/proc/canExtract(O)
-	. = FALSE
-	for(var/check_path in src.allowed)
-		if(istype(O, check_path))
-			return TRUE
-
-/obj/item/robot_chemaster/prototype/proc/tryLoading(var/obj/item/O, var/mob/user as mob)
-	// Pre: make sure that the item type can be extracted
-	if (src.autoextract)
-		if (!src.extract_to)
-			boutput(user, SPAN_ALERT("You must first select an extraction target if you want items to be automatically extracted."))
-			return FALSE
-		if (src.extract_to.reagents.total_volume >= src.extract_to.reagents.maximum_volume)
-			boutput(user, SPAN_ALERT("The auto-extraction target is full."))
-			return FALSE
-		src.doExtract(O)
-		qdel(O)
-		return TRUE
-	else
-		O.set_loc(src)
-		src.ingredients += O
-		return TRUE
+	proc/tryLoading(atom/movable/incoming)
+		reagent_extractor.tryLoading(incoming)

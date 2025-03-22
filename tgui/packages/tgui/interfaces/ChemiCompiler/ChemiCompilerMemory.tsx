@@ -12,7 +12,7 @@ import { ChemiCompilerData } from './type';
 
 export const ChemiCompilerMemory = () => {
   const { act, data } = useBackend<ChemiCompilerData>();
-  const { buttons, sx, tx, ax, theme } = data;
+  const { buttons, sx, tx, ax } = data;
   return (
     <Section title="Memory">
       <Stack>

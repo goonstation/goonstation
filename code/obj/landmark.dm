@@ -210,7 +210,7 @@ var/global/list/job_start_locations = list()
 	icon_state = "pod_nt"
 
 /obj/landmark/start/job/podwars/NT/commander
-	name = "NanoTrasen Commander"
+	name = "NanoTrasen Pod Commander"
 	icon_state = "pod_nt_commander"
 
 /obj/landmark/start/job/podwars/syndie
@@ -218,7 +218,7 @@ var/global/list/job_start_locations = list()
 	icon_state = "pod_syndie"
 
 /obj/landmark/start/job/podwars/syndie/commander
-	name = "Syndicate Commander"
+	name = "Syndicate Pod Commander"
 	icon_state = "pod_syndie_commander"
 
 /* ===== Antagonist Starts ===== */
@@ -539,6 +539,16 @@ var/global/list/job_start_locations = list()
 /obj/landmark/lrt/watchfuleye
 	name = "Watchful-Eye Sensor"
 
+/obj/landmark/icemoon_medal
+	deleted_on_start = FALSE
+	add_to_landmarks = FALSE
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		var/mob/living/L = AM
+		if (istype(L) && !isintangible(L))
+			L.unlock_medal("Ice Cold", TRUE)
+
 /obj/landmark/character_preview_spawn
 	name = LANDMARK_CHARACTER_PREVIEW_SPAWN
 
@@ -632,6 +642,10 @@ var/global/list/job_start_locations = list()
 	warptarget_modifier = LANDMARK_VM_WARP_NONE
 /// target turf for projecting its contents elsewhere
 /turf/var/turf/vistarget = null
+/// turfs to project speech to (overlaps with vistarget speech)
+/turf/var/list/listening_turfs = null
+/// turfs to project reachability of objects to  (overlaps somewhat with vistarget)
+/turf/var/list/reachable_turfs = null
 /// target turf for teleporting its contents elsewhere
 /turf/var/turf/warptarget = null
 /// control who gets warped to warptarget

@@ -132,7 +132,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 		C.real_name = "[target.real_name] the [C.real_name]"
 		C.name = C.real_name
 		C.is_npc = FALSE
-		logTheThing(LOG_COMBAT, M, "casts the Polymorph spell on [constructTarget(target,"combat")] turning them into [constructTarget(C,"combat")] at [log_loc(C)].")
+		logTheThing(LOG_COMBAT, M, "successfully casts the Polymorph spell on [constructTarget(target,"combat")] turning them into [constructTarget(C,"combat")] at [log_loc(C)].")
 		C.butcherable = BUTCHER_ALLOWED // we would like the brain to be recoverable, please
 		if (istype(C, /mob/living/critter/small_animal/bee))
 			var/mob/living/critter/small_animal/bee/B = C

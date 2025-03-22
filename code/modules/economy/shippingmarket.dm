@@ -398,7 +398,7 @@
 		// calculate price
 		price = calculate_artifact_price(modifier, max(pap?.lastAnalysis, 1))
 		price *= randfloat(0.9, 1.3)
-		price = round(price, 5)
+		price = round(price, 4)
 
 		// track score
 		if(pap)
@@ -652,16 +652,26 @@
 
 	//NADIR: Transception antenna cargo I/O
 #ifdef MAP_OVERRIDE_NADIR
-	proc/receive_crate(atom/movable/shipped_thing)
+	proc/receive_crate(atom/movable/shipped_thing, force = FALSE)
 
-		pending_crates.Add(shipped_thing)
+		if(force)
+			var/obj/machinery/transception_pad/toRecv = pick(by_type[/obj/machinery/transception_pad])
+			var/turf/T = get_turf(toRecv) || get_turf(pick_landmark(LANDMARK_LATEJOIN)) //AAAAA
+			shipped_thing.set_loc(T)
+			if(get_turf(toRecv))
+				showswirl(get_turf(toRecv))
 
-		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="New shipment pending transport: [shipped_thing.name].")
-		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+
+
+		else
+			pending_crates.Add(shipped_thing)
+
+			var/datum/signal/pdaSignal = get_free_signal()
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="New shipment pending transport: [shipped_thing.name].")
+			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 #else
-	proc/receive_crate(atom/movable/shipped_thing)
+	proc/receive_crate(atom/movable/shipped_thing, force = FALSE)
 
 		var/turf/spawnpoint
 		for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
@@ -674,10 +684,14 @@
 			break
 
 		if (!spawnpoint)
+			if(force)
+				shipped_thing.set_loc(get_turf(pick_landmark(LANDMARK_LATEJOIN)))
 			logTheThing(LOG_DEBUG, null, "<b>Shipping: </b> No spawn turfs found! Can't deliver crate")
 			return
 
 		if (!target)
+			if(force)
+				shipped_thing.set_loc(get_turf(pick_landmark(LANDMARK_LATEJOIN)))
 			logTheThing(LOG_DEBUG, null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
 			return
 

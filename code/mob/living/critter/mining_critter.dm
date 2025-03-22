@@ -122,10 +122,10 @@
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/sting = src.abilityHolder.getAbility(/datum/targetable/critter/sting/fermid)
 		var/datum/targetable/critter/bite = src.abilityHolder.getAbility(/datum/targetable/critter/bite/fermid_bite)
-		if (!sting.disabled && sting.cooldowncheck())
+		if (sting && !sting.disabled && sting.cooldowncheck())
 			sting.handleCast(target)
 			return TRUE
-		else if (!bite.disabled && bite.cooldowncheck())
+		else if (bite && !bite.disabled && bite.cooldowncheck())
 			bite.handleCast(target)
 			return TRUE
 

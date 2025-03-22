@@ -76,7 +76,7 @@
 	attack_hand(mob/user)
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many ores do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
+			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum) || QDELETED(src))
 				boutput(user, SPAN_ALERT("Invalid entry, try again."))
 				return
 			var/obj/item/raw_material/new_stack = split_stack(splitnum)
@@ -560,7 +560,7 @@
 		src.setItemSpecial(/datum/item_special/double)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if(!scalpel_surgery(target,user)) return ..()
+		if(is_special || !scalpel_surgery(target, user)) return ..()
 		else return
 
 	Crossed(atom/movable/AM as mob|obj)

@@ -70,7 +70,12 @@ TYPEINFO(/obj/player_piano)
 
 	attackby(obj/item/W, mob/user) //this one is big and sucks, where all of our key and construction stuff is
 		if (istype(W, /obj/item/piano_key)) //piano key controls
-			var/mode_sel = input("Which do you want to do?", "Piano Control") as null|anything in list("Reset Piano", "Toggle Looping", "Adjust Timing")
+			var/mode_sel = tgui_input_list(
+				user,
+				"Which do you want to do?",
+				"Piano Control",
+				list("Reset Piano", "Toggle Looping", "Adjust Timing")
+			)
 
 			switch(mode_sel)
 				if ("Reset Piano") //reset piano B)
@@ -89,8 +94,9 @@ TYPEINFO(/obj/player_piano)
 					src.visible_message(SPAN_ALERT("[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] seems different now."))
 
 				if ("Adjust Timing") //adjusts tempo
-					var/time_sel = input("Input a custom tempo from 0.25 to 0.5 BPS", "Tempo Control") as num
-					if (!src.set_timing(time_sel))
+					var/time_sel = tgui_input_text(user, "Input a custom tempo from 0.25 to 0.5 BPS", "Tempo Control", src.timing)
+					time_sel = text2num(time_sel)
+					if (!time_sel || !src.set_timing(time_sel))
 						src.visible_message(SPAN_ALERT(">The mechanical workings of [src] emit a horrible din for several seconds before \the [src] shuts down."))
 						return
 					src.visible_message(SPAN_ALERT("[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] rumbles indifferently."))
@@ -163,9 +169,9 @@ TYPEINFO(/obj/player_piano)
 		if (is_busy || is_stored)
 			src.visible_message(SPAN_ALERT("\The [src] emits an angry beep!"))
 			return
-		var/mode_sel = input("Which mode would you like?", "Mode Select") as null|anything in list("Choose Notes", "Play Song")
+		var/mode_sel = tgui_alert(user, "Which mode would you like?", "Mode Select", list("Choose Notes", "Play Song"))
 		if (mode_sel == "Choose Notes")
-			var/given_notes = input("Write out the notes you want to be played.", "Composition Menu", note_input)
+			var/given_notes = tgui_input_text(user, "Write out the notes you want to be played.", "Composition Menu", note_input)
 			if (!set_notes(given_notes))//still room to get long piano songs in, but not too crazy
 				src.visible_message(SPAN_ALERT("\The [src] makes an angry whirring noise and shuts down."))
 			return
@@ -175,58 +181,9 @@ TYPEINFO(/obj/player_piano)
 		else //just in case
 			return
 
-	mouse_drop(obj/player_piano/piano)
-		if (!istype(usr, /mob/living))
-			return
-		if (usr.stat)
-			return
-		if (!allowChange(usr))
-			boutput(usr, SPAN_ALERT("You can't link pianos without a multitool!"))
-			return
-		ENSURE_TYPE(piano)
-		if (!piano)
-			return
-		if (is_pulser_auto_linking(usr))
-			boutput(usr, SPAN_ALERT("You can't link pianos manually while auto-linking!"))
-			return
-		if (piano == src)
-			boutput(usr, SPAN_ALERT("You can't link a piano with itself!"))
-			return
-		if (piano.is_busy || src.is_busy)
-			boutput(usr, SPAN_ALERT("You can't link a busy piano!"))
-			return
-		if (piano.panel_exposed && panel_exposed)
-			usr.visible_message("[usr] links the pianos.", "You link the pianos!")
-			src.add_piano(piano)
-			piano.add_piano(src)
-
 	disposing() //just to clear up ANY funkiness
 		reset_piano(1)
 		..()
-
-	proc/allowChange(var/mob/M) //copypasted from mechanics code because why do something someone else already did better
-		if(hasvar(M, "l_hand") && ispulsingtool(M:l_hand)) return 1
-		if(hasvar(M, "r_hand") && ispulsingtool(M:r_hand)) return 1
-		if(hasvar(M, "module_states"))
-			for(var/atom/A in M:module_states)
-				if(ispulsingtool(A))
-					return 1
-		return 0
-
-	proc/is_pulser_auto_linking(var/mob/M)
-		if(ispulsingtool(M.l_hand) && SEND_SIGNAL(M.l_hand, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)) return TRUE
-		if(ispulsingtool(M.r_hand) && SEND_SIGNAL(M.r_hand, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)) return TRUE
-		if(istype(M, /mob/living/silicon/robot))
-			var/mob/living/silicon/robot/silicon_user = M
-			for(var/atom/A in silicon_user.module_states)
-				if(ispulsingtool(A) && SEND_SIGNAL(A, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE))
-					return TRUE
-		if(istype(M, /mob/living/silicon/hivebot))
-			var/mob/living/silicon/hivebot/silicon_user = M
-			for(var/atom/A in silicon_user.module_states)
-				if(ispulsingtool(A) && SEND_SIGNAL(A, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE))
-					return TRUE
-		return FALSE
 
 	proc/clean_input() //breaks our big input string into chunks
 		src.is_busy = 1
@@ -363,7 +320,7 @@ TYPEINFO(/obj/player_piano)
 
 			if (concurrent_notes_played < MAX_CONCURRENT_NOTES)
 				var/sound_name = "sound/musical_instruments/piano/notes/[compiled_notes[curr_note]].ogg"
-				playsound(src, sound_name, note_volumes[curr_note],0,10,0)
+				playsound(src, sound_name, note_volumes[curr_note],0,10,0, channel = VOLUME_CHANNEL_INSTRUMENTS)
 
 			var/delays_left = src.note_delays[curr_note]
 
@@ -378,7 +335,7 @@ TYPEINFO(/obj/player_piano)
 				sleep((timing * 10)) //to get delay into 10ths of a second
 
 	proc/set_notes(var/given_notes)
-		if (src.is_busy || src.is_stored)
+		if (src.is_busy || src.is_stored || !given_notes)
 			return FALSE
 
 		src.note_input = given_notes

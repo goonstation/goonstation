@@ -29,89 +29,94 @@ import {
   TabSectionData,
 } from './type';
 
-export const AntagonistTypeTabBody = (props: AntagonistPanelData) => (
-  <Box>
-    {props.currentTabSections ? (
-      props.currentTabSections.map((section, index) => (
-        <AntagonistTabSection key={index} {...section} />
-      ))
-    ) : (
-      <GeneralInformation {...props} />
-    )}
-  </Box>
-);
+export const AntagonistTypeTabBody = (props: AntagonistPanelData) => {
+  const { currentTabSections } = props;
+  return (
+    <Box>
+      {currentTabSections ? (
+        currentTabSections.map((section, index) => (
+          <AntagonistTabSection key={index} {...section} />
+        ))
+      ) : (
+        <GeneralInformation {...props} />
+      )}
+    </Box>
+  );
+};
 
-const GeneralInformation = (props: AntagonistPanelData) => (
-  <>
-    <Section>
-      <Stack vertical align="center" my={3}>
-        <Stack.Item mb={-2.5} italic>
-          The Game Mode Is:
+const GeneralInformation = (props: AntagonistPanelData) => {
+  const { gameMode, mortalityRates } = props;
+  return (
+    <>
+      <Section>
+        <Stack vertical align="center" my={3}>
+          <Stack.Item mb={-2.5} italic>
+            The Game Mode Is:
+          </Stack.Item>
+          <Stack.Item fontSize={2.75} bold>
+            {toTitleCase(gameMode)}
+          </Stack.Item>
+        </Stack>
+      </Section>
+      <Stack justify="space-around">
+        <Stack.Item grow>
+          <Section title="Antagonist Mortality Rate">
+            <ProgressBar
+              minValue={0}
+              maxValue={
+                mortalityRates.antagonistsAlive +
+                  mortalityRates.antagonistsDead || 1
+              }
+              value={mortalityRates.antagonistsDead}
+              color="red"
+              backgroundColor="green"
+              mb={1}
+            />
+            <LabeledList>
+              <LabeledList.Item label="Alive Antagonists">
+                {mortalityRates.antagonistsAlive}
+              </LabeledList.Item>
+              <LabeledList.Item label="Dead Antagonists">
+                {mortalityRates.antagonistsDead}
+              </LabeledList.Item>
+            </LabeledList>
+          </Section>
         </Stack.Item>
-        <Stack.Item fontSize={2.75} bold>
-          {toTitleCase(props.gameMode)}
+        <Stack.Item grow>
+          <Section title="Crew Mortality Rate">
+            <ProgressBar
+              minValue={0}
+              maxValue={mortalityRates.crewAlive + mortalityRates.crewDead || 1}
+              value={mortalityRates.crewDead}
+              color="red"
+              backgroundColor="green"
+              mb={1}
+            />
+            <LabeledList>
+              <LabeledList.Item label="Alive Crew">
+                {mortalityRates.crewAlive}
+              </LabeledList.Item>
+              <LabeledList.Item label="Dead Crew">
+                {mortalityRates.crewDead}
+              </LabeledList.Item>
+            </LabeledList>
+          </Section>
         </Stack.Item>
       </Stack>
-    </Section>
-    <Stack justify="space-around">
-      <Stack.Item grow>
-        <Section title="Antagonist Mortality Rate">
-          <ProgressBar
-            minValue={0}
-            maxValue={
-              props.mortalityRates.antagonistsAlive +
-                props.mortalityRates.antagonistsDead || 1
-            }
-            value={props.mortalityRates.antagonistsDead}
-            color="red"
-            backgroundColor="green"
-            mb={1}
-          />
-          <LabeledList>
-            <LabeledList.Item label="Alive Antagonists">
-              {props.mortalityRates.antagonistsAlive}
-            </LabeledList.Item>
-            <LabeledList.Item label="Dead Antagonists">
-              {props.mortalityRates.antagonistsDead}
-            </LabeledList.Item>
-          </LabeledList>
-        </Section>
-      </Stack.Item>
-      <Stack.Item grow>
-        <Section title="Crew Mortality Rate">
-          <ProgressBar
-            minValue={0}
-            maxValue={
-              props.mortalityRates.crewAlive + props.mortalityRates.crewDead ||
-              1
-            }
-            value={props.mortalityRates.crewDead}
-            color="red"
-            backgroundColor="green"
-            mb={1}
-          />
-          <LabeledList>
-            <LabeledList.Item label="Alive Crew">
-              {props.mortalityRates.crewAlive}
-            </LabeledList.Item>
-            <LabeledList.Item label="Dead Crew">
-              {props.mortalityRates.crewDead}
-            </LabeledList.Item>
-          </LabeledList>
-        </Section>
-      </Stack.Item>
-    </Stack>
-  </>
-);
+    </>
+  );
+};
 
 const AntagonistTabSection = (props: TabSectionData) => {
-  const SectionContents = getSectionComponent(props.sectionType);
+  const { sectionType } = props;
+  const SectionContents = getSectionComponent(sectionType);
 
   return <SectionContents {...props} />;
 };
 
 const AntagonistList = (props: TabSectionData) => {
-  const antagonistData: AntagonistData[] = props.sectionData;
+  const { sectionData, sectionName } = props;
+  const antagonistData: AntagonistData[] = sectionData;
 
   if (!antagonistData.length) {
     return;
@@ -126,9 +131,7 @@ const AntagonistList = (props: TabSectionData) => {
     <Section>
       <Table>
         <Table.Row bold>
-          <Table.Cell>
-            {props.sectionName ? props.sectionName : 'Name'}
-          </Table.Cell>
+          <Table.Cell>{sectionName || 'Name'}</Table.Cell>
           <Table.Cell>Location</Table.Cell>
           <Table.Cell>Commands</Table.Cell>
         </Table.Row>
@@ -156,10 +159,11 @@ const TableDividerRow = () => (
 );
 
 const TableAntagonistEntry = (props: AntagonistData) => {
+  const { antagonist_datum, has_subordinate_antagonists, mind_ref } = props;
   const { act, data } = useBackend<AntagonistPanelData>();
 
   const sortSubordinateAntagonists =
-    data.subordinateAntagonists[props.antagonist_datum]?.sort((a, b) =>
+    data.subordinateAntagonists[antagonist_datum]?.sort((a, b) =>
       a.real_name.localeCompare(b.real_name),
     ) || [];
 
@@ -176,25 +180,25 @@ const TableAntagonistEntry = (props: AntagonistData) => {
             }
           >
             <Box inline>
-              {!!props.has_subordinate_antagonists && (
+              {!!has_subordinate_antagonists && (
                 <Button
                   width={2}
                   textAlign="center"
                   my={-0.5}
                   mr={0.8}
                   icon={
-                    data.subordinateAntagonists[props.antagonist_datum]
+                    data.subordinateAntagonists[antagonist_datum]
                       ? 'chevron-down'
                       : 'chevron-right'
                   }
                   onClick={() =>
                     act(
                       `${
-                        data.subordinateAntagonists[props.antagonist_datum]
+                        data.subordinateAntagonists[antagonist_datum]
                           ? 'unrequest_subordinate_antagonist_data'
                           : 'request_subordinate_antagonist_data'
                       }`,
-                      { antagonist_datum: props.antagonist_datum },
+                      { antagonist_datum },
                     )
                   }
                   tooltip="Subordinate Antagonists"
@@ -205,8 +209,8 @@ const TableAntagonistEntry = (props: AntagonistData) => {
           </Tooltip>
         </Table.Cell>
         <TablePositionCell
-          mind_ref={props.mind_ref}
-          {...data.mindLocations[props.mind_ref]}
+          mind_ref={mind_ref}
+          {...data.mindLocations[mind_ref]}
         />
         <TableButtonsCell {...props} />
       </Table.Row>
@@ -241,7 +245,7 @@ const AntagonistRoleTooltip = (props) => {
 
   return (
     <LabeledList.Item label="Antagonist Role">
-      {toTitleCase(props.display_name)}
+      {toTitleCase(display_name)}
     </LabeledList.Item>
   );
 };
@@ -251,9 +255,7 @@ const ClientTooltip = (props) => {
 
   return (
     <LabeledList.Item label="Client">
-      {props.ckey ? (
-        props.ckey
-      ) : (
+      {ckey || (
         <Box inline italic>
           No Client
         </Box>
@@ -267,9 +269,7 @@ const JobTooltip = (props) => {
 
   return (
     <LabeledList.Item label="Job">
-      {props.job ? (
-        props.job
-      ) : (
+      {job || (
         <Box inline italic>
           N/A
         </Box>
@@ -283,8 +283,8 @@ const PlayerName = (props) => {
 
   return (
     <Box inline>
-      {!!props.dead && <Icon name="skull" />} {`${props.real_name} `}
-      {!props.ckey && (
+      {!!dead && <Icon name="skull" />} {`${real_name} `}
+      {!ckey && (
         <Box inline italic>
           (no client)
         </Box>
@@ -294,15 +294,15 @@ const PlayerName = (props) => {
 };
 
 const TablePositionCell = (props) => {
-  const { act } = useBackend<AntagonistPanelData>();
   const { mind_ref, area, coordinates } = props;
+  const { act } = useBackend<AntagonistPanelData>();
 
   return (
     <Table.Cell>
       {area}
       <Button
         color="transparent"
-        onClick={() => act('jump_to', { target: props.mind_ref })}
+        onClick={() => act('jump_to', { target: mind_ref })}
         tooltip="Jump To Position"
       >
         {coordinates}
@@ -320,8 +320,8 @@ const TableButtonsCell = (props: AntagonistData) => (
 );
 
 const AdminPMButton = (props) => {
-  const { act } = useBackend<AntagonistPanelData>();
   const { mind_ref } = props;
+  const { act } = useBackend<AntagonistPanelData>();
 
   return (
     <Button
@@ -335,8 +335,8 @@ const AdminPMButton = (props) => {
 };
 
 const PlayerOptionsButton = (props) => {
-  const { act } = useBackend<AntagonistPanelData>();
   const { mind_ref } = props;
+  const { act } = useBackend<AntagonistPanelData>();
 
   return (
     <Button
@@ -351,8 +351,8 @@ const PlayerOptionsButton = (props) => {
 };
 
 const ViewVariablesButton = (props) => {
-  const { act } = useBackend<AntagonistPanelData>();
   const { antagonist_datum } = props;
+  const { act } = useBackend<AntagonistPanelData>();
 
   return (
     <Button
@@ -366,16 +366,17 @@ const ViewVariablesButton = (props) => {
 };
 
 const NuclearBombReadout = (props: TabSectionData) => {
-  const { sectionData } = props;
+  const { sectionData, sectionName } = props;
+  const { act } = useBackend<AntagonistPanelData>();
+
   if (!sectionData) {
-    return;
+    return null;
   }
 
-  const { act } = useBackend<AntagonistPanelData>();
   const nuclearBombData: NuclearBombData = sectionData;
 
   return (
-    <Section title={toTitleCase(props.sectionName)}>
+    <Section title={toTitleCase(sectionName)}>
       <Stack align="center">
         <Stack.Item>
           <Box
@@ -421,7 +422,8 @@ const NuclearBombReadout = (props: TabSectionData) => {
 };
 
 const HeadsList = (props: TabSectionData) => {
-  const headsData: HeadsData[] = props.sectionData;
+  const { sectionData } = props;
+  const headsData: HeadsData[] = sectionData;
 
   if (!headsData.length) {
     return;
@@ -473,11 +475,12 @@ const HeadsList = (props: TabSectionData) => {
 };
 
 const TableHeadEntry = (props: HeadsData) => {
-  const { data, act } = useBackend<AntagonistPanelData>();
+  const { mind_ref, role } = props;
+  const { data } = useBackend<AntagonistPanelData>();
 
   return (
     <Table.Row>
-      <Table.Cell py="0.5em">{toTitleCase(props.role)}</Table.Cell>
+      <Table.Cell py="0.5em">{toTitleCase(role)}</Table.Cell>
       <Table.Cell>
         <Tooltip
           content={
@@ -492,8 +495,8 @@ const TableHeadEntry = (props: HeadsData) => {
         </Tooltip>
       </Table.Cell>
       <TablePositionCell
-        mind_ref={props.mind_ref}
-        {...data.mindLocations[props.mind_ref]}
+        mind_ref={mind_ref}
+        {...data.mindLocations[mind_ref]}
       />
       <Table.Cell>
         <AdminPMButton {...props} />
@@ -504,14 +507,15 @@ const TableHeadEntry = (props: HeadsData) => {
 };
 
 const GangReadout = (props: TabSectionData) => {
-  const gangData: TabSectionData[] = props.sectionData;
+  const { sectionData, sectionName } = props;
+  const gangData: TabSectionData[] = sectionData;
 
   if (!gangData.length) {
     return;
   }
 
   return (
-    <Section title={props.sectionName}>
+    <Section title={sectionName}>
       {gangData.map((section, index) => (
         <AntagonistTabSection key={index} {...section} />
       ))}
@@ -520,16 +524,18 @@ const GangReadout = (props: TabSectionData) => {
 };
 
 const GangLockerReadout = (props: TabSectionData) => {
-  if (!props.sectionData) {
-    return;
+  const { sectionData, sectionName } = props;
+  const { act } = useBackend<AntagonistPanelData>();
+
+  if (!sectionData) {
+    return null;
   }
 
-  const { act } = useBackend<AntagonistPanelData>();
-  const gangLockerData: GangLockerData = props.sectionData;
+  const gangLockerData: GangLockerData = sectionData;
 
   return (
     <Section>
-      <Box bold>{toTitleCase(props.sectionName)}</Box>
+      <Box bold>{toTitleCase(sectionName)}</Box>
       <Divider />
       <LabeledList>
         <LabeledList.Item label="Location" verticalAlign="middle">

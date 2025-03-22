@@ -421,13 +421,13 @@
 
 			if (master.emagged)
 				if (master.reagents) // ZeWaka: Fix for null.remove_reagent()
-					master.reagents.remove_reagent(master.reagent_emagged, 10)
-					if (master.reagents.get_reagent_amount(master.reagent_emagged) <= 0)
+					master.reagents.remove_any(10)
+					if (master.reagents.total_volume <= 0)
 						master.reagents.add_reagent(master.reagent_emagged, 50)
 			else
 				if (master.reagents)
-					master.reagents.remove_reagent(master.reagent_normal, 10)
-					if (master.reagents.get_reagent_amount(master.reagent_normal) <= 0)
+					master.reagents.remove_any(10)
+					if (master.reagents.total_volume <= 0)
 						master.reagents.add_reagent(master.reagent_normal, 50)
 
 			if (T.active_liquid)

@@ -78,7 +78,7 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 
 		working = 1
 
-		SPAWN(5 SECONDS)
+		SPAWN(2 SECONDS)
 			for(var/turf/simulated/T in maintaining_turfs)
 				if(!T.air && T.density)
 					continue
@@ -344,6 +344,9 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 		starts_established = 0
 
 	proc/update_status()
+		if(src.status & BROKEN)
+			return
+
 		if (!links.len)
 			get_links()
 
@@ -467,15 +470,6 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 				icon_state = "airbroff"
 				status |= NOPOWER
 				light.disable()
-	set_broken()
-		if (status & BROKEN) return
-		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-		smoke.set_up(5, 0, src)
-		smoke.start()
-		icon_state = initial(icon_state)
-		icon_state = "airbrbr"
-		light.disable()
-		status |= BROKEN
 
 /obj/machinery/computer/airbr/emergency_shuttle
 	emergency = 1
@@ -485,6 +479,15 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 
 /obj/machinery/computer/airbr/trader_right
 	connected_dock = COMSIG_DOCK_TRADER_EAST
+
+/obj/machinery/computer/airbr/medical_medbay
+	connected_dock = COMSIG_DOCK_MEDICAL_MEDBAY
+
+/obj/machinery/computer/airbr/medical_pathology
+	connected_dock = COMSIG_DOCK_MEDICAL_PATHOLOGY
+
+/obj/machinery/computer/airbr/mining_station
+	connected_dock = COMSIG_DOCK_MINING_STATION
 
 /* -------------------- Button -------------------- */
 /obj/machinery/airbr_test_button

@@ -40,7 +40,7 @@
 
 		H.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(H), SLOT_W_UNIFORM)
 		H.equip_if_possible(new /obj/item/clothing/shoes/swat/noslip(H), SLOT_SHOES)
-		H.equip_if_possible(new /obj/item/clothing/gloves/swat(H), SLOT_GLOVES)
+		H.equip_if_possible(new /obj/item/clothing/gloves/swat/syndicate(H), SLOT_GLOVES)
 		H.equip_if_possible(new /obj/item/storage/backpack/syndie/tactical(H), SLOT_BACK)
 		H.equip_if_possible(new /obj/item/clothing/mask/gas/swat/syndicate(H), SLOT_WEAR_MASK)
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(H), SLOT_GLASSES)
@@ -57,6 +57,7 @@
 			H.equip_if_possible(new /obj/item/device/radio/headset/syndicate/leader(H), SLOT_EARS)
 			H.equip_if_possible(new /obj/item/swords_sheaths/nukeop(H), SLOT_BELT)
 			H.equip_if_possible(new /obj/item/device/nukeop_commander_uplink(H), SLOT_L_HAND)
+			H.equip_if_possible(new /obj/item/pinpointer/disk, SLOT_IN_BACKPACK)
 		else
 			H.equip_if_possible(new /obj/item/device/radio/headset/syndicate(H), SLOT_EARS)
 
@@ -118,7 +119,7 @@
 	get_statistics()
 		var/list/purchases = list()
 		// Add items purchased from the nukies weapon vendor
-		for (var/datum/materiel/purchased_item as anything in src.purchased_items)
+		for (var/datum/materiel/purchased_item in src.purchased_items)
 			var/obj/item_type = initial(purchased_item.path)
 			purchases += list(
 				list(
@@ -128,14 +129,15 @@
 			)
 
 		// Add items from custom uplinks and the commander's special uplink
-		for (var/datum/syndicate_buylist/purchased_item as anything in src.uplink_items)
-			var/obj/item_type = initial(purchased_item.item)
-			purchases += list(
-				list(
-					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
-					"name" = "[purchased_item.name]", // Dont include TC cost bc commander uplink doesnt use TC
+		for (var/datum/syndicate_buylist/purchased_item in src.uplink_items)
+			if(length(purchased_item.items) > 0)
+				var/obj/item_type = initial(purchased_item.items[1])
+				purchases += list(
+					list(
+						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+						"name" = "[purchased_item[1].name]", // Dont include TC cost bc commander uplink doesnt use TC
+					)
 				)
-			)
 
 		. = list(
 			list(

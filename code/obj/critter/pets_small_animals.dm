@@ -1,59 +1,3 @@
-/obj/critter/opossum
-	name = "space opossum"
-	desc = "A possum that came from space. Or maybe went to space. Who knows how it got here?"
-	icon_state = "possum"
-	density = FALSE
-	health = 15
-	aggressive = 1
-	defensive = 1
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	atkcarbon = 0
-	atksilicon = 0
-	firevuln = 1
-	brutevuln = 1
-	butcherable = BUTCHER_ALLOWED
-	pet_text = list("gently baps", "pets", "cuddles")
-	feed_text = "chatters happily!"
-
-	skinresult = /obj/item/material_piece/cloth/leather
-	max_skins = 1
-
-	New()
-		. = ..()
-		START_TRACKING
-
-	disposing()
-		. = ..()
-		STOP_TRACKING
-
-	on_revive()
-		..()
-		src.alive = TRUE
-		src.visible_message(SPAN_NOTICE("<b>[src]</b> stops playing dead and gets back up!"))
-		src.health = initial(src.health)
-		src.icon_state = src.living_state ? src.living_state : initial(src.icon_state)
-		src.target = null
-		src.task = "wandering"
-
-	CritterDeath()
-		..()
-		SPAWN(rand(20 SECONDS, 80 SECONDS))
-			if (src && !src.alive)
-				src.on_revive()
-
-	attackby(obj/item/W, mob/living/user)
-		if (!src.alive)
-			if (iscuttingtool(W) || issawingtool(W) || issnippingtool(W))
-				src.on_revive()
-				. = ..()
-		else
-			. = ..()
-
-/obj/critter/opossum/morty
-	name = "Morty"
-	generic = 0
-
 #define PARROT_MAX_WORDS 64		// may as well try and be careful I guess
 #define PARROT_MAX_PHRASES 32	// doesn't hurt, does it?
 
@@ -245,6 +189,8 @@
 			if (!isturf(I.loc))
 				continue
 			if (I.anchored || I.density)
+				continue
+			if(I.w_class >= W_CLASS_GIGANTIC || IS_NPC_ILLEGAL_ITEM(I))
 				continue
 			stuff_near_me += I
 		if (stuff_near_me.len)
