@@ -2,7 +2,7 @@
 //enables travel to other Z-Spaces.
 /obj/item/shipcomponent/engine
 	name = "Warp-1 Engine"
-	desc = "A standard engine"
+	desc = "A standard engine."
 	var/powergenerated = 200 //how much power for components the engine generates
 	var/currentgen = 200 //handles engine power debuffs
 	var/warprecharge = 300 //Interval it takes for warp to be ready again
@@ -16,6 +16,9 @@
 	power_used = 0
 	system = "Engine"
 	icon_state = "engine-1"
+
+	get_desc()
+		return "Rated for [src.powergenerated] units of continuous power output."
 
 	activate()
 		..()
@@ -179,9 +182,19 @@
 		if(SOUTHWEST)
 			A.pixel_y = dist*32
 			A.pixel_x = dist*32
+
+/obj/item/shipcomponent/engine/scout
+	name = "Scout Engine"
+	desc = "An engine optimized for speed and warp travel over power. Warning: Power is insufficient to operate most non-factory installed pod components."
+	powergenerated = 50
+	currentgen = 50
+	warprecharge = 5 SECONDS
+	engine_speed = 1.4
+	icon_state = "engine-0"
+
 /obj/item/shipcomponent/engine/helios
 	name = "Helios Mark-II Engine"
-	desc = "A really fast engine"
+	desc = "A really fast engine."
 	powergenerated = 300 //how much power for components the engine generates
 	currentgen = 300 //handles engine power debuffs
 	warprecharge = 150 //Interval it takes for warp to be ready again
@@ -190,7 +203,7 @@
 
 /obj/item/shipcomponent/engine/hermes
 	name = "Hermes 3.0 Engine"
-	desc = "An incredibly powerful but slow engine"
+	desc = "An incredibly powerful but slow engine."
 	powergenerated = 500
 	currentgen = 500
 	warprecharge = 300
@@ -199,7 +212,7 @@
 
 /obj/item/shipcomponent/engine/zero
 	name = "Warp-0 Engine"
-	desc = "An old prototype engine"
+	desc = "An old prototype engine."
 	powergenerated = 190
 	currentgen = 190
 	warprecharge = -1 //This disables the ability to create wormholes completely.

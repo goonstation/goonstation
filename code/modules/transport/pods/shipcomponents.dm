@@ -18,6 +18,8 @@
 	var/system = "part"
 	/// The part is disrupted by an attack and is forced to be off
 	var/disrupted = FALSE
+	/// Can this part be used by 2x2 pods
+	var/large_pod_compatible = TRUE
 
 // Code to clean up a shipcomponent that is no longer in use
 /obj/item/shipcomponent/disposing()
@@ -43,7 +45,7 @@
 		return FALSE
 	if(ship.powercapacity < (ship.powercurrent + power_used))
 		for(var/mob/M in ship)
-			boutput(M, "[ship.ship_message("Not enough power to activate [src]!")]")
+			boutput(M, "[ship.ship_message("Not enough power to activate [src]! ([ship.powercurrent + power_used]/[ship.powercapacity])")]")
 			return FALSE
 	else
 		ship.powercurrent += power_used

@@ -259,7 +259,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				src.damage_heat(rand(10, 25))
 
 	meteorhit(var/obj/M)
-		if (istype(M, /obj/newmeteor/massive))
+		if (istype(M, /obj/newmeteor/massive) && !(IS_ARRIVALS(get_area(src))))
 			smash()
 			return
 		src.damage_blunt(20)
@@ -393,7 +393,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		return
 
 	attack_hand(mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 		if (user.a_intent == "harm")
 			if (user.is_hulk())
@@ -417,7 +417,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				return
 
 	attackby(obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		if (isscrewingtool(W))
 			if (state == 10) // ???

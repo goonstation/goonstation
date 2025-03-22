@@ -51,7 +51,7 @@
 				fishing_spot_type = type2parent(fishing_spot_type)
 			if (fishing_spot)
 				if (fishing_spot.rod_tier_required > src.tier)
-					user.visible_message(SPAN_ALERT("You need a higher tier rod to fish here!"))
+					boutput(user, SPAN_ALERT("You need a higher tier rod to fish here!"))
 					return TRUE
 				actions.start(new /datum/action/fishing(user, src, fishing_spot, target), user)
 				return TRUE //cancel the attack because we're fishing now

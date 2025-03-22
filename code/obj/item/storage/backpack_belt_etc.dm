@@ -889,6 +889,17 @@
 	max_wclass = W_CLASS_NORMAL
 	item_function_flags = IMMUNE_TO_ACID
 
+/obj/item/storage/belt/crossbow
+	name = "old hunting belt"
+	desc = "Holds all the things you need for a proper werewolf hunt."
+	icon_state = "hunterbelt"
+	item_state = "hunter"
+	check_wclass = TRUE
+	can_hold = list(
+		/obj/item/gun/bow/crossbow,
+		/obj/item/plant/herb/aconite,
+	)
+
 /obj/item/storage/belt/security
 	name = "security toolbelt"
 	desc = "For the trend-setting officer on the go. Has a place on it to clip a baton and a holster for a small gun."

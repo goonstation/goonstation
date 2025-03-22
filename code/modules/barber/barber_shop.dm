@@ -213,6 +213,9 @@
 						yoinked = TRUE
 					else if(!victim.is_bald())
 						//they have hair to yoink
+						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations["hair_bottom"].color, victim.bioHolder.mobAppearance.customizations["hair_bottom"].style)
+						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations["hair_middle"].color, victim.bioHolder.mobAppearance.customizations["hair_middle"].style)
+						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations["hair_top"].color, victim.bioHolder.mobAppearance.customizations["hair_top"].style)
 						stolen_hair = victim.create_wig()
 						boutput(victim, SPAN_ALERT("the [src] takes your hair clean off!"))
 						yoinked = TRUE
@@ -228,6 +231,17 @@
 
 		. = ..()
 
+	proc/spawn_hair_clipping(var/mob/living/carbon/human/M, var/color, var/old_style)
+		if (!M || !M.loc)
+			return
+		if (!color)
+			return
+		if (istype(old_style, /datum/customization_style/none))
+			return
+
+		var/obj/decal/cleanable/hair/hair = new(M.loc)
+		hair.color = color
+		hair.update_color()
 
 /obj/item/dye_bottle
 	name = "hair dye bottle"
@@ -267,6 +281,14 @@
 			if (EYES)
 				which_part = "eyes"
 		boutput(user, SPAN_HINT("You change your grip on the [src] to one that'll aim for the recipient's [which_part]."))
+
+	proc/use_dye(all = FALSE)
+		if (all)
+			src.uses_left = 0
+		else
+			src.uses_left--
+		if (src.uses_left <= 0)
+			src.ClearSpecificOverlays("dye_color")
 
 /obj/item/reagent_containers/food/drinks/hairgrowth
 	name = "\improper EZ-Hairgrowth"
@@ -396,15 +418,13 @@
 												result_msg3)
 			if (bottle.hair_group == ALL_HAIR)
 				boutput(user, "That was a big dyejob! It used the whole bottle!")
-				src.uses_left = 0
-				src.ClearSpecificOverlays("dye_color")
+				src.use_dye(TRUE)
 			else if(src.uses_left > 1 && is_barber && bottle.hair_group != ALL_HAIR)
-				src.uses_left --
+				src.use_dye()
 				boutput(user, "Hey, there's still some dye left in the bottle! Looks about [get_english_num(src.uses_left)] third\s full!")
 			else
 				boutput(user, "You used the whole bottle!")
-				src.uses_left = 0
-				src.ClearSpecificOverlays("dye_color")
+				src.use_dye()
 
 		M.update_colorful_parts()
 	return 1

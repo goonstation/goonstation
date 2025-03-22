@@ -123,6 +123,18 @@
 	src.minimap_render.pixel_x += x_offset
 	src.minimap_render.pixel_y += y_offset
 
+	var/max_dim = (max(src.x_max, src.y_max) * zoom * src.map_scale)
+	// Calculate Horizontal Centering Offset
+	var/map_width = src.x_max * zoom * src.map_scale
+	var/horizontal_centering_offset = (max_dim - map_width) / 2
+
+	// Calculate Vertical Centering Offset
+	var/map_height = src.y_max * zoom * src.map_scale
+	var/vertical_centering_offset = (max_dim - map_height) / 2
+
+	src.minimap_render.pixel_x += horizontal_centering_offset
+	src.minimap_render.pixel_y += vertical_centering_offset
+
 	src.zoom_coefficient = zoom
 
 	for (var/atom/target as anything in src.minimap_markers)

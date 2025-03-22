@@ -711,11 +711,22 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 
+	flashblocking //Admin or gimmick spawn option
+		name = "advanced night vision sechud goggles"
+		desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark AND with darkened lenses? Wowee!"
+		color_r = 0.8
+		color_g = 0.8
+		color_b = 0.8
+
+		setupProperties()
+			..()
+			setProperty("disorient_resist_eye", 100)
+
 	sechud
 		name = "night vision sechud goggles"
 		icon_state = "nightvisionsechud"
 		desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark. Keep away from bright lights. This version also has built in SecHUD functionality."
-		color_r = 1
+		color_r = 0.8
 		color_g = 0.5
 		color_b = 0.5
 
@@ -846,3 +857,14 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
 			return
 		src.clear_overlays(M)
 		src.generate_overlays(M)
+
+/obj/item/clothing/glasses/eyestrain
+	name = "blue-light filtering glasses"
+	desc = "A pair of glasses that reduce eye-strain from staring a computer screen all shift."
+	icon_state = "oglasses"
+	// would be nice if these tinted TGUI
+
+	color_r = 1
+	color_g = 0.9
+	color_b = 0.8
+

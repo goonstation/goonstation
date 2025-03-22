@@ -1701,6 +1701,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Ocean Mining Outpost"
 	icon_state = "purple"
 
+/area/prefab/radshuttle
+	name = "Irradiated Shuttle"
+	icon_state = "green"
+
 TYPEINFO(/area/station/turret_protected/sea_crashed)
 	valid_bounty_area = FALSE
 /area/station/turret_protected/sea_crashed //dumb area pathing aRRGHHH
@@ -5979,7 +5983,7 @@ area/station/security/visitation
 */
 // pod_wars Areas
 /area/pod_wars
-	minimaps_to_render_on = MAP_POD_WARS_NANOTRASEN | MAP_POD_WARS_SYNDICATE
+	minimaps_to_render_on = MAP_POD_WARS_NANOTRASEN | MAP_POD_WARS_SYNDICATE | MAP_OBSERVER
 
 /area/pod_wars/team1
 	station_map_colour = MAPC_NANOTRASEN

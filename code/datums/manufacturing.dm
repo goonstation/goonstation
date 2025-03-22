@@ -2042,6 +2042,14 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	time = 90 SECONDS
 	category = "Component"
 
+/datum/manufacture/scream_synth
+	name = "Scream Synthesizer"
+	item_requirements = list("conductive" = 2, "metal" = 2, "insulated" = 2)
+	item_outputs = list(/obj/item/instrument/roboscream)
+	create = 1
+	time = 30 SECONDS
+	category = "Component"
+
 /datum/manufacture/implant_robotalk
 	name = "Machine Translator Implant"
 	item_requirements = list("conductive" = 3,
@@ -2473,6 +2481,15 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	category = "Clothing"
 
 /// Ship Items -- OLD COMPONENTS
+
+/datum/manufacture/engine_scout
+	name = "Scout Engine"
+	item_requirements = list("metal_dense" = 5,
+							 "conductive" = 10)
+	item_outputs = list(/obj/item/shipcomponent/engine/scout)
+	create = 1
+	time = 5 SECONDS
+	category = "Resource"
 
 /datum/manufacture/engine
 	name = "Warp-1 Engine"
@@ -3189,6 +3206,16 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	time = 20 SECONDS
 	category = "Tool"
 
+/datum/manufacture/pod/weapon/burst_ltlaser
+	name = "Mk.1.5e Burst Phasers"
+	item_requirements = list("metal_dense" = 15,
+							 "conductive" = 45,
+							 "crystal" = 45)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/phaser/burst_phaser)
+	create = 1
+	time = 25 SECONDS
+	category = "Tool"
+
 /datum/manufacture/pod/weapon/efif1
 	name = "EFIF-1 Construction System"
 	item_requirements = list("metal_superdense" = 50,
@@ -3803,5 +3830,15 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	time = 8 SECONDS
 	category = "Tool"
+
+/datum/manufacture/heavy_firesuit
+	name = "Heavy Firesuit"
+	item_requirements = list(
+		"fabric" = 20,
+		"fibrilith" = 10,
+	)
+	create = 1
+	item_outputs = list(/obj/item/clothing/suit/hazard/fire/heavy)
+	category = "Clothing"
 
 #undef JUMPSUIT_COST

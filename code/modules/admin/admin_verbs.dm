@@ -1724,8 +1724,14 @@ var/list/fun_images = list()
 	if (winexists(src, "adminchanges") && winget(src, "adminchanges", "is-visible") == "true")
 		src.Browse(null, "window=adminchanges")
 	else
-		var/changelogHtml = grabResource("html/changelog.html")
-		var/data = admin_changelog:html
+		var/changelogHtml
+		var/data
+		if (src.byond_version >= 516)
+			changelogHtml = grabResource("html/changelog.html")
+			data = admin_changelog.html
+		else
+			changelogHtml = grabResource("html/legacy_changelog.html")
+			data = legacy_admin_changelog.html
 		var/fontcssdata = {"
 				<style type="text/css">
 				@font-face {
@@ -1739,7 +1745,10 @@ var/list/fun_images = list()
 		"}
 		changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
 		changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
-		src.Browse(changelogHtml, "window=adminchanges;size=500x650;title=Admin+Changelog;", 1)
+		if (src.byond_version >= 516)
+			message_modal(src, changelogHtml, "Admin Changelog", width = 500, height = 650, sanitize = FALSE)
+		else
+			src.Browse(changelogHtml, "window=adminchanges;size=500x650;title=Admin+Changelog;", 1)
 
 /client/proc/removeSelf()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
