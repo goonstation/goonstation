@@ -115,14 +115,14 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 	ENSURE_TYPE(mobuser)
 	if(mobuser?.client?.holder?.ghost_interaction)
 		return TRUE
-	if(!istype(mobuser.loc, /turf)) // if we're not on a turf, we can only interact with stuff inside the same object or in ourselves
-		if(!((source == mobuser.loc) || (source in mobuser.loc) || (source in mobuser)))
-			return FALSE
 	if(istype(source, /mob))
 		var/mob/target = source
 		if (target.next_move > world.time && IN_RANGE(target.prev_loc, user, 1))
 			return TRUE
 	if(BOUNDS_DIST(source, user) == 0 || (IN_RANGE(source, user, 1))) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
+		if(!istype(mobuser.loc, /turf)) // if we're not on a turf, we can only interact with stuff inside the same object or in ourselves
+			if(!((source == mobuser.loc) || (source in mobuser.loc) || (source in mobuser)))
+				return FALSE
 		return TRUE
 	else if (source in bible_contents)
 		for_by_tcl(B, /obj/item/bible) // o coder past, quieten your rage
@@ -141,7 +141,7 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 				var/Z = source:z
 				if (isrestrictedz(Z) || isrestrictedz(user:z))
 					boutput(user, SPAN_ALERT("Your telekinetic powers don't seem to work here."))
-					return 0
+					return FALSE
 				SPAWN(0)
 					//I really shouldnt put this here but i dont have a better idea
 					var/obj/overlay/O = new /obj/overlay ( locate(X,Y,Z) )
