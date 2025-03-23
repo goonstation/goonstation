@@ -1456,6 +1456,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	uses = 1
 	icon_state = "sunhatr-stun"
 	item_state = "sunhatr-stun"
+	blocked_from_petasusaphilic = TRUE
 	var/wattage = 3 MEGA WATTS //equivalent to ~120 burn damage
 
 	zap_headpatter(mob/target)
