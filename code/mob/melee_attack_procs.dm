@@ -138,13 +138,8 @@
 		else
 			if (ishuman(target) && ishuman(src))
 				var/mob/living/carbon/human/Z = src
-				var/mob/living/carbon/human/X = target
-
 				if (Z.zone_sel && Z.zone_sel.selecting == "head")
-					var/obj/item/clothing/head/sunhat/hat = X.head
-					if(istype(hat) && hat.uses)
-					else
-						src.visible_message(SPAN_NOTICE("[src] gently pats [target] on the head."))
+					src.visible_message(SPAN_NOTICE("[src] gently pats [target] on the head."))
 					return
 
 			if (ismobcritter(target))
