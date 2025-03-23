@@ -138,7 +138,7 @@
 		else
 			if (ishuman(target) && ishuman(src))
 				var/mob/living/carbon/human/Z = src
-				if (Z.zone_sel && Z.zone_sel.selecting == "head")
+				if (Z.zone_sel?.selecting == "head")
 					src.visible_message(SPAN_NOTICE("[src] gently pats [target] on the head."))
 					return
 
