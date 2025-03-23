@@ -1,4 +1,9 @@
 
+(t)sun mar 23 25
+(u)Mordent
+(p)22702
+(e)💅📄|C-QoL, A-UI
+(+)Rockbox UI adjusted for better readability
 (t)sat mar 22 25
 (u)LeahTheTech
 (+)Radiation now makes you less nauseus and won't make you vomit at very low levels.
