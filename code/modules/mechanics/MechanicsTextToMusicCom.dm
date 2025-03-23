@@ -1,7 +1,9 @@
 TYPEINFO(/obj/item/mechanics/text_to_music)
-	mats = list("metal"      = 10,
-				"conductive" = 5,
-				"crystal"    = 5)
+	mats = list(
+		"metal"      = 10,
+		"conductive" = 5,
+		"crystal"    = 5
+	)
 
 /obj/item/mechanics/text_to_music // modified from playable_piano.dm and PR #21051 (Player Piano Notes Rework V2)
 	name = "Text to Music Component"
@@ -35,8 +37,8 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
 		var/description = "Instrument: [src.music_player.instrument_name] |  \
-								Timing: [src.music_player.timing] |  \
-								Has Notes: [length(src.music_player.note_input) ? "Yes" : "No"]"
+											Timing: [src.music_player.timing] |  \
+											Has Notes: [length(src.music_player.note_input) ? "Yes" : "No"]"
 		. += "<br>[SPAN_NOTICE(description)]"
 
 	// ----------------------------------------------------------------------------------------------------
