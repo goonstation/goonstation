@@ -713,7 +713,7 @@
 	name = "Touch Shy"
 	id = "touchshy"
 	desc = "You really don't like people touching your head, and will reflexively shove anyone who tries."
-	icon_state = "no"
+	icon_state = "touchshy"
 	category = list("skill")
 	points = -1
 
