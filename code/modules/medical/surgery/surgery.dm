@@ -22,7 +22,7 @@
 	/// the user is hit with a tool that allows surgery_possible() and can_operate().
 	var/implicit = FALSE
 
-	/// The part of the body this surgery is performed on. Used for cancelling surgeries.
+	/// Roughly the part of the body this surgery is performed on. Used for cancelling surgeries.
 	var/affected_zone = "chest"
 
 	var/last_surgery_step = 0 //! The last step ID added, used for sequencing steps.
@@ -90,8 +90,6 @@
 	/// Check if any steps are possible on the target using the given tool. Return the first possible step.
 	proc/surgery_step_possible(mob/surgeon, obj/item/tool)
 		var/list/completed_ids = list()
-		if (!surgery_check(surgeon, tool))
-			return FALSE
 
 		// Create a list, where each index is the step number, and the value is whether all steps matching that step number are complete
 		for(var/datum/surgery_step/step in surgery_steps)
@@ -150,12 +148,14 @@
 
 	/// If this surgery is implicit, attempt to complete a step with this tool. If complete, attempt to complete a sub-surgery step.
 	proc/do_shortcut(mob/surgeon, obj/item/I)
-		if ((!super_surgery || super_surgery?.complete) && implicit && can_perform_surgery(surgeon, I))
+		if (!surgery_check(surgeon, I))
+			return FALSE
+		if ((!super_surgery || super_surgery?.complete) && implicit && can_perform_surgery(surgeon))
 			var/datum/surgery_step/step = surgery_step_possible(surgeon, I)
 			if (step)
 				step.perform_step(surgeon, I)
 				return TRUE
-		if (complete || sub_surgeries_always_possible) // only attempt subsurgeries if this surgery is done.
+		if (can_perform_surgery(surgeon) && sub_surgery_possible(surgeon)) // only attempt subsurgeries if this surgery is done.
 			// do the next implicit step if subsurgeries are implicit
 			for(var/datum/surgery/surgery in current_sub_surgeries)
 				surgery.infer_surgery_stage()
@@ -239,8 +239,7 @@
 						optional_contexts += context
 					else
 						contexts += context
-
-		if (sub_surgeries_always_possible || complete)
+		if (sub_surgery_possible(surgeon))
 			for (var/datum/surgery/surgery in current_sub_surgeries)
 				if (surgery.can_perform_surgery(surgeon) && surgery.visible)
 					contexts += surgery.get_context()
@@ -289,6 +288,10 @@
 	// ----------
 	// Surgery logic
 	// ----------
+
+	/// Returns true if sub surgeries are possible.
+	proc/sub_surgery_possible(mob/surgeon, obj/item/I)
+		return (sub_surgeries_always_possible || complete)
 
 	/// Check if the patient can have this surgery performed on them. IE: on a table.
 	proc/surgery_check(mob/surgeon, obj/item/tool)

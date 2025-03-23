@@ -219,9 +219,6 @@
 			if (affected_organ == "right_eye")
 				if (surgeon.find_in_hand(tool) != surgeon.r_hand)
 					return FALSE
-			if (!headSurgeryCheck(parent_surgery.patient))
-				surgeon.show_text("You're going to need to remove that mask/helmet/glasses first.", "blue")
-				return FALSE
 			if (!parent_surgery.patient.organHolder.head)
 				boutput(surgeon, SPAN_ALERT("[parent_surgery.patient] doesn't have a head!"))
 				return FALSE
@@ -285,6 +282,7 @@
 					SPAN_ALERT("You cut [surgeon == C ? "your" : "[C]'s"] head open with [tool]!"), \
 					SPAN_ALERT("[C == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your head open with [tool]!"))
 				logTheThing(LOG_COMBAT, surgeon, "started removing [constructTarget(C,"combat")]'s brain with [tool].")
+				C.organHolder.brain.in_surgery= TRUE
 
 		cut2
 			name = "Cut"
@@ -303,6 +301,7 @@
 					surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> opens the area around [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] brain cavity with [tool]!"),\
 						SPAN_ALERT("You open the area around [surgeon == C ? "your" : "[C]'s"] brain cavity with [tool]!"),\
 						SPAN_ALERT("[C == surgeon ? "You open" : "<b>[surgeon]</b> opens"] the area around your brain cavity with [tool]!"))
+				C.organHolder.brain.secure = FALSE
 
 
 		saw

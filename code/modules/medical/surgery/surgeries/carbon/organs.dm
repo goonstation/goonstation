@@ -34,10 +34,23 @@
 	id = "head_surgery"
 	name = "Head Surgery"
 	desc = "Perform surgery on the patient's head"
-	default_sub_surgeries = list(/datum/surgery/organ/eye/left, /datum/surgery/organ/eye/right, /datum/surgery/organ/brain,/datum/surgery/cauterize/head, /datum/surgery/organ/head)
+	default_sub_surgeries = list(/datum/surgery/organ/eye/left, /datum/surgery/organ/eye/right, /datum/surgery/organ/brain,
+	/datum/surgery/cauterize/head, /datum/surgery/organ/head)
 	visible = FALSE
 	implicit = TRUE
 	affected_zone = "head"
+	on_cancel(mob/surgeon, obj/item/tool, quiet)
+		if (!quiet)
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head closed with [tool]."),\
+				SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] head closed with [tool]."),\
+				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your head closed with [tool]."))
+
+
+	sub_surgery_possible(mob/living/surgeon)
+		if (!headSurgeryCheck(patient))
+			surgeon.show_text("You're going to need to remove that mask/helmet/glasses first.", "blue")
+			return FALSE
+		return ..()
 
 
 /datum/surgery/ribs
@@ -356,7 +369,7 @@
 		generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
 			add_next_step(new /datum/surgery_step/skull/cut(src))
 			add_next_step(new /datum/surgery_step/skull/remove(src))
-			add_next_step(new /datum/surgery_step/organ/add(src, organ_var_name))
+			add_next_step(new /datum/surgery_step/organ/add/skull(src, organ_var_name))
 	tail
 		id = "tail_surgery"
 		name = "Tail Surgery"
