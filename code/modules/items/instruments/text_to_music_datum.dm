@@ -58,7 +58,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	/// Same as `is_busy`, but for automatic linking.
 	var/is_stored = FALSE
 	/// If the note sound file for this instrument is not in the sound cache, treat it as a rest note
-	var/rest_on_notes_not_in_cache = FALSE
+	var/rest_on_notes_not_in_cache = TRUE
 	/// List that stores our linked pianos, including the main one.
 	var/list/linked_music_players = list()
 	/// Name to use when displaying messages to the user
