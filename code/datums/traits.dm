@@ -709,6 +709,27 @@
 	category = list("skill")
 	points = -1
 
+/datum/trait/anti_headpat
+	name = "Touch Shy"
+	id = "touchshy"
+	desc = "You really don't like people touching your head, and will reflexively shove anyone who tries."
+	icon_state = "no"
+	category = list("skill")
+	points = -1
+
+	onAdd(mob/owner)
+		. = ..()
+		RegisterSignal(owner, COMSIG_ATTACKHAND, PROC_REF(defend_personal_space))
+
+	onRemove(mob/owner)
+		. = ..()
+		UnregisterSignal(owner, COMSIG_ATTACKHAND)
+
+	proc/defend_personal_space(mob/owner, mob/target)
+		if(owner != target && target.a_intent == INTENT_HELP && target.zone_sel?.selecting == "head")
+			owner.disarm(target, is_special = TRUE)
+			playsound(owner, "sound/impact_sounds/Generic_Swing_1.ogg", 50, TRUE)
+
 /* Hey dudes, I moved these over from the old bioEffect/Genetics system so they work on clone */
 
 ABSTRACT_TYPE(/datum/trait/job)
