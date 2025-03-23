@@ -726,7 +726,7 @@
 		UnregisterSignal(owner, COMSIG_ATTACKHAND)
 
 	proc/defend_personal_space(mob/owner, mob/target)
-		if(owner != target && target.a_intent == INTENT_HELP && target.zone_sel?.selecting == "head")
+		if(owner != target && can_act(owner) && target.a_intent == INTENT_HELP && target.zone_sel?.selecting == "head")
 			owner.disarm(target, is_special = TRUE)
 			playsound(owner, "sound/impact_sounds/Generic_Swing_1.ogg", 50, TRUE)
 
