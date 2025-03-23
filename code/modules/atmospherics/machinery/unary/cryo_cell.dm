@@ -355,13 +355,11 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	else
 		src.light.disable()
 		src.icon_state = "celltop-p"
-	if(src.node)
-		src.UpdateOverlays(src.SafeGetOverlayImage("bottom", 'icons/obj/Cryogenic2.dmi', "cryo_bottom_[src.on]", 1, pixel_y=-32), "bottom")
-	else
-		src.UpdateOverlays(src.SafeGetOverlayImage("bottom", 'icons/obj/Cryogenic2.dmi', "cryo_bottom", 1, pixel_y=-32), "bottom")
+	src.UpdateOverlays(src.SafeGetOverlayImage("bottom", 'icons/obj/Cryogenic2.dmi', "cryo_bottom_[src.on]", 1, pixel_y= -32), "bottom")
+	src.UpdateOverlays(src.SafeGetOverlayImage("pipes", 'icons/obj/Cryogenic2.dmi', "cryo_pipes", 2, pixel_y = -32), "pipes")
 	src.pixel_y = 32
 	if(src.defib)
-		src.UpdateOverlays(src.SafeGetOverlayImage("defib", 'icons/obj/Cryogenic2.dmi', "defib-on", 2, pixel_y=-32), "defib")
+		src.UpdateOverlays(src.SafeGetOverlayImage("defib", 'icons/obj/Cryogenic2.dmi', "defib-on", 3, pixel_y=-32), "defib")
 	else
 		src.UpdateOverlays(null, "defib")
 

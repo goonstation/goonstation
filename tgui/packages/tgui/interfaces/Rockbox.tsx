@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -24,11 +24,11 @@ export const Rockbox = () => {
   const { autosell, default_price, ores } = data;
   const [takeAmount, setTakeAmount] = useState(1);
   return (
-    <Window title="Rockbox" width={375} height={400}>
+    <Window title="Rockbox" width={400} height={400}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            <Section fill>
+            <Section>
               <Box>
                 {'Amount to eject: '}
                 <NumberInput
@@ -69,76 +69,89 @@ export const Rockbox = () => {
               </Button.Checkbox>
             </Section>
           </Stack.Item>
-          <Stack.Item grow={1}>
+          <Stack.Item grow>
             <Section fill scrollable>
               {ores.length ? (
-                <Box>
+                <Table>
+                  <Table.Row header>
+                    <Table.Cell>Name</Table.Cell>
+                    <Table.Cell collapsing textAlign="right">
+                      Amount
+                    </Table.Cell>
+                    <Table.Cell collapsing textAlign="right">
+                      Sold
+                    </Table.Cell>
+                    <Table.Cell collapsing textAlign="right">
+                      Price
+                    </Table.Cell>
+                    <Table.Cell collapsing>For Sale</Table.Cell>
+                    <Table.Cell collapsing />
+                  </Table.Row>
                   {data.ores.map((currentOre) => (
-                    <Fragment key={currentOre.name}>
-                      <Tooltip position="bottom" content={currentOre.stats}>
-                        <Table>
-                          <Table.Row>
-                            <Table.Cell style={{ verticalAlign: 'top' }}>
-                              <Box>{`${currentOre.name}: ${currentOre.amount}`}</Box>
-                            </Table.Cell>
-                            <Table.Cell textAlign="right">
-                              <Stack vertical textAlign="left" inline>
-                                <Stack.Item>
-                                  {'Price: '}
-                                  <NumberInput
-                                    value={currentOre.price}
-                                    minValue={0}
-                                    maxValue={Infinity}
-                                    step={1}
-                                    format={(value) => value + '⪽'}
-                                    onChange={(value) =>
-                                      act('set-ore-price', {
-                                        newPrice: value,
-                                        ore: currentOre.name,
-                                      })
-                                    }
-                                  />
-                                  <Button.Checkbox
-                                    content="For Sale"
-                                    color={currentOre.forSale ? 'green' : 'red'}
-                                    checked={currentOre.forSale}
-                                    onClick={() =>
-                                      act('toggle-ore-sell-status', {
-                                        ore: currentOre.name,
-                                      })
-                                    }
-                                  />
-                                  <Button
-                                    color={
-                                      currentOre.amount < takeAmount
-                                        ? 'orange'
-                                        : 'default'
-                                    }
-                                    disabled={currentOre.amount === 0}
-                                    onClick={() =>
-                                      act('dispense-ore', {
-                                        ore: currentOre.name,
-                                        take: takeAmount,
-                                      })
-                                    }
-                                  >
-                                    Eject
-                                  </Button>
-                                </Stack.Item>
-                                <Stack.Item>
-                                  {!!currentOre.amountSold && (
-                                    <Box>{`Amount sold: ${currentOre.amountSold}`}</Box>
-                                  )}
-                                </Stack.Item>
-                              </Stack>
-                            </Table.Cell>
-                          </Table.Row>
-                        </Table>
-                      </Tooltip>
-                      <Divider />
-                    </Fragment>
+                    <Table.Row key={currentOre.name} className="candystripe">
+                      <Table.Cell>
+                        <Tooltip position="bottom" content={currentOre.stats}>
+                          <Box>{currentOre.name}</Box>
+                        </Tooltip>
+                      </Table.Cell>
+                      <Table.Cell textAlign="right">
+                        {currentOre.amount}
+                      </Table.Cell>
+                      <Table.Cell textAlign="right">
+                        {currentOre.amountSold || 0}
+                      </Table.Cell>
+                      <Table.Cell textAlign="right">
+                        <NumberInput
+                          value={currentOre.price}
+                          minValue={0}
+                          maxValue={Infinity}
+                          step={1}
+                          format={(value) => value + '⪽'}
+                          onChange={(value) =>
+                            act('set-ore-price', {
+                              newPrice: value,
+                              ore: currentOre.name,
+                            })
+                          }
+                          fluid
+                        />
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Button.Checkbox
+                          color={currentOre.forSale ? 'green' : 'red'}
+                          checked={currentOre.forSale}
+                          onClick={() =>
+                            act('toggle-ore-sell-status', {
+                              ore: currentOre.name,
+                            })
+                          }
+                          fluid
+                          textAlign="center"
+                        >
+                          {currentOre.forSale ? 'Yes' : 'No'}
+                        </Button.Checkbox>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Button
+                          color={
+                            currentOre.amount < takeAmount
+                              ? 'orange'
+                              : 'default'
+                          }
+                          disabled={currentOre.amount === 0}
+                          onClick={() =>
+                            act('dispense-ore', {
+                              ore: currentOre.name,
+                              take: takeAmount,
+                            })
+                          }
+                          icon="eject"
+                          tooltip="Eject"
+                        />
+                      </Table.Cell>
+                    </Table.Row>
                   ))}
-                </Box>
+                </Table>
               ) : (
                 <Box>No ores stored</Box>
               )}

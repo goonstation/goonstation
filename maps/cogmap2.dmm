@@ -28519,7 +28519,7 @@
 /turf/simulated/floor/circuit/off,
 /area/station/bridge)
 "bHF" = (
-/obj/stool/chair/comfy{
+/obj/stool/chair/comfy/yellow{
 	dir = 4
 	},
 /turf/simulated/floor/carpet{
@@ -28537,7 +28537,7 @@
 	},
 /area/station/bridge)
 "bHI" = (
-/obj/stool/chair/comfy{
+/obj/stool/chair/comfy/green{
 	dir = 8
 	},
 /turf/simulated/floor/carpet{
@@ -29313,9 +29313,6 @@
 /turf/simulated/floor/circuit/off,
 /area/station/bridge)
 "bJC" = (
-/obj/stool/chair/comfy{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -29323,6 +29320,9 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/stool/chair/comfy/purple{
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -30056,11 +30056,11 @@
 	},
 /area/station/bridge)
 "bLm" = (
-/obj/stool/chair/comfy{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/stool/chair/comfy/red{
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "blue1"
@@ -68045,6 +68045,15 @@
 /obj/machinery/firealarm/south,
 /turf/simulated/floor/blue/side,
 /area/station/medical/medbay/surgery/storage)
+"pYa" = (
+/obj/stool/chair/comfy/blue{
+	dir = 4
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue2"
+	},
+/area/station/bridge)
 "pYd" = (
 /obj/machinery/atmospherics/unary/vent{
 	dir = 4
@@ -143539,7 +143548,7 @@ hJe
 bBN
 bDK
 bFG
-bHF
+pYa
 bJC
 bHF
 bMU

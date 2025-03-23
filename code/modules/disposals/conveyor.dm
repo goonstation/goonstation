@@ -1053,7 +1053,7 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 			LAGCHECK(LAG_MED)
 
 		for (var/obj/machinery/conveyor/C as anything in conveyors)
-			if (C.id == src.id)
+			if (C.id == src.id && !C.deconstructable)
 				C.operating = src.position
 				C.setdir()
 				C.move_lag = CALC_DELAY(C)
