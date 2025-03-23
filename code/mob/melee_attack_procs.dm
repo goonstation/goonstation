@@ -53,7 +53,7 @@
 			if (src.is_heat_resistant())
 				boutput(H, SPAN_NOTICE("Being fire resistant protects you from the flames!"))
 			else
-				boutput(H, SPAN_NOTICE("Your [G] protect you from the flames!"))
+				boutput(H, SPAN_NOTICE("Your [G.name] protect you from the flames!"))
 		else
 			M.update_burning(-1.2)
 			H.TakeDamage(prob(50) ? "l_arm" : "r_arm", 0, rand(1,2))

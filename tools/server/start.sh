@@ -44,7 +44,7 @@ echo "Starting server..."
 DreamDaemon "goonstation.dmb" $SS13_PORT -trusted -verbose 2>&1 | bash tools/server/log.sh >> data/errors.log
 
 exitCode=${PIPESTATUS[0]}
-if [ $exitCode -ne 0 ]; then
+if [ $exitCode -ne 0 ] && [ ! -f "data/restarting" ]; then
   echo "Crash detected!"
 	bash tools/server/crash-alert.sh
 fi

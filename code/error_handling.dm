@@ -61,8 +61,8 @@ var/global/blame_for_runtimes = FALSE
 
 	if (!cdn)
 		var/list/viewerResources = list(
-			"browserassets/js/runtimeViewer.js",
-			"browserassets/css/runtimeViewer.css"
+			"browserassets/src/js/runtimeViewer.js",
+			"browserassets/src/css/runtimeViewer.css"
 		)
 		src.loadResourcesFromList(viewerResources)
 

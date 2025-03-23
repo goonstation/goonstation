@@ -14,7 +14,8 @@
 	var/list/civilian_access_list = list(access_morgue, access_maint_tunnels, access_chapel_office, access_tech_storage, access_bar, access_janitor, access_crematorium, access_kitchen, access_hydro, access_ranch)
 	var/list/engineering_access_list = list(access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_mechanic, access_engineering_atmos, access_engineering_control)
 	var/list/supply_access_list = list(access_cargo, access_supply_console, access_mining, access_mining_outpost)
-	var/list/research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_medical_lockers, access_research, access_robotics, access_chemistry, access_pathology, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
+	var/list/research_access_list = list(access_tox, access_tox_storage, access_research, access_chemistry, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
+	var/list/medical_access_list = list(access_medical, access_medical_lockers, access_medlab, access_robotics, access_pathology)
 	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_armory, access_securitylockers, access_carrypermit, access_contrabandpermit, access_ticket)
 	var/list/command_access_list = list(access_research_director, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_dwaine_superuser, access_money)
 	var/list/allowed_access_list
@@ -137,6 +138,7 @@
 		var/list/civilian_jobs = list()
 		var/list/engineering_jobs = list()
 		var/list/research_jobs = list()
+		var/list/medical_jobs = list()
 		var/list/security_jobs = list()
 		var/list/command_jobs = list()
 
@@ -149,6 +151,9 @@
 		for (var/datum/job/job as anything in concrete_typesof(/datum/job/research))
 			if (initial(job.name))
 				research_jobs.Add(initial(job.name))
+		for (var/datum/job/job as anything in concrete_typesof(/datum/job/medical))
+			if (initial(job.name))
+				medical_jobs.Add(initial(job.name))
 		for (var/datum/job/job as anything in concrete_typesof(/datum/job/security))
 			if (initial(job.name))
 				security_jobs.Add(initial(job.name))
@@ -160,6 +165,7 @@
 		var/list/engineering_access = list()
 		var/list/supply_access = list()
 		var/list/research_access = list()
+		var/list/medical_access = list()
 		var/list/security_access = list()
 		var/list/command_access = list()
 
@@ -172,6 +178,8 @@
 				supply_access.Add(access_data(A))
 			if (access_name_lookup[A] in research_access_list)
 				research_access.Add(access_data(A))
+			if (access_name_lookup[A] in medical_access_list)
+				medical_access.Add(access_data(A))
 			if (access_name_lookup[A] in security_access_list)
 				security_access.Add(access_data(A))
 			if (access_name_lookup[A] in command_access_list)
@@ -182,52 +190,59 @@
 				if (1) // eng
 					civilian_jobs = list("Staff Assistant")
 					//stock engineering_jobs are good
+					medical_jobs = null
 					research_jobs = null
 					security_jobs = null
 					command_jobs = null
 				if (2) // med
 					civilian_jobs = list("Staff Assistant")
 					engineering_jobs = null
-					research_jobs = list("Medical Doctor", "Geneticist", "Roboticist")
+					// stock medical_jobs are good
+					research_jobs = null
 					security_jobs = null
 					command_jobs = null
 				if (3) // research
 					civilian_jobs = list("Staff Assistant")
 					engineering_jobs = null
-					research_jobs = list("Scientist")
+					medical_jobs = null
+					// stock research_jobs are good
 					security_jobs = null
 					command_jobs = null
 				if (4) // sec
 					civilian_jobs = list("Staff Assistant", "Clown")
 					engineering_jobs = null
+					medical_jobs = null
 					research_jobs = null
 					//stock security_jobs are good
 					command_jobs = null
 
 		.["standard_jobs"] = list(
-			list(name = "Civilian", color = "blue", jobs = civilian_jobs),
-			list(name = "Supply and Maintenance", color = "yellow", jobs = engineering_jobs),
-			list(name = "Research and Medical", color = "purple", jobs = research_jobs),
-			list(name = "Security", color = "red", jobs = security_jobs),
-			list(name = "Command", color = "green", jobs = command_jobs),
+			list(name = "Civilian", color = "civilian", jobs = civilian_jobs, style="civilian"),
+			list(name = "Engineering and Supply", color = "engineering", jobs = engineering_jobs, style="engineering"),
+			list(name = "Research", color = "research", jobs = research_jobs, style="research"),
+			list(name = "Medical", color = "medical", jobs = medical_jobs, style="medical"),
+			list(name = "Security", color = "security", jobs = security_jobs, style="security"),
+			list(name = "Command", color = "command", jobs = command_jobs, style="command"),
 		)
 
 		.["accesses_by_area"] = list(
-			list(name = "Civilian", color = "blue", accesses = civilian_access),
-			list(name = "Engineering", color = "yellow", accesses = engineering_access),
-			list(name = "Supply", color = "yellow", accesses = supply_access),
-			list(name = "Science and Medical", color = "purple", accesses = research_access),
-			list(name = "Security", color = "red", accesses = security_access),
-			list(name = "Command", color = "green", accesses = command_access),
+			list(name = "Civilian", color = "civilian", accesses = civilian_access),
+			list(name = "Engineering", color = "engineering", accesses = engineering_access),
+			list(name = "Supply", color = "engineering", accesses = supply_access),
+			list(name = "Science", color = "research", accesses = research_access),
+			list(name = "Medical", color = "medical", accesses = medical_access),
+			list(name = "Security", color = "security", accesses = security_access),
+			list(name = "Command", color = "command", accesses = command_access),
 		)
 
 		.["icons"] = list(
 			list(style = "none", name = "Plain", card_look = "id", icon = getCardBase64Img("id")),
-			list(style = "blue", name = "Civilian", card_look = "id_civ", icon = getCardBase64Img("id_civ")),
-			list(style = "yellow", name = "Engineering", card_look = "id_eng", icon = getCardBase64Img("id_eng")),
-			list(style = "purple", name = "Research", card_look = "id_res", icon = getCardBase64Img("id_res")),
-			list(style = "red", name = "Security", card_look = "id_sec", icon = getCardBase64Img("id_sec")),
-			list(style = "green", name = "Command", card_look = "id_com", icon = getCardBase64Img("id_com")),
+			list(style = "civilian", name = "Civilian", card_look = "id_civ", icon = getCardBase64Img("id_civ")),
+			list(style = "engineering", name = "Engineering", card_look = "id_eng", icon = getCardBase64Img("id_eng")),
+			list(style = "research", name = "Research", card_look = "id_res", icon = getCardBase64Img("id_res")),
+			list(style = "medical", name = "Medical", card_look = "id_med", icon = getCardBase64Img("id_med")),
+			list(style = "security", name = "Security", card_look = "id_sec", icon = getCardBase64Img("id_sec")),
+			list(style = "command", name = "Command", card_look = "id_com", icon = getCardBase64Img("id_com")),
 		)
 
 	ui_data(mob/user)
@@ -415,8 +430,8 @@
 					if (src.authenticated && src.modify)
 						src.modify.assignment = t1
 
-					if (params["colour"])
-						update_card_colour(params["colour"])
+					if (params["style"])
+						update_card_style(params["style"])
 
 					src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
 
@@ -463,8 +478,8 @@
 				src.authenticated = 0
 				src.scan_access = null
 				src.mode = text2num_safe(params["mode"])
-			if ("colour")
-				update_card_colour(params["colour"])
+			if ("style")
+				update_card_style(params["style"])
 			if ("save")
 				var/slot = text2num_safe(params["save"])
 				if (!src.modify.assignment)
@@ -497,19 +512,21 @@
 
 		. = TRUE
 
-	proc/update_card_colour(var/newcolour)
+	proc/update_card_style(band_color)
 		if(src.modify.keep_icon == FALSE) // ids that are FALSE will update their icon if the job changes
-			if (newcolour == "none")
+			if (band_color == "none")
 				src.modify.icon_state = "id"
-			if (newcolour == "blue")
+			if (band_color == "civilian")
 				src.modify.icon_state = "id_civ"
-			if (newcolour == "yellow")
+			if (band_color == "engineering")
 				src.modify.icon_state = "id_eng"
-			if (newcolour == "purple")
+			if (band_color == "research")
 				src.modify.icon_state = "id_res"
-			if (newcolour == "red")
+			if (band_color == "medical")
+				src.modify.icon_state = "id_med"
+			if (band_color == "security")
 				src.modify.icon_state = "id_sec"
-			if (newcolour == "green")
+			if (band_color == "command")
 				src.modify.icon_state = "id_com"
 
 	proc/try_authenticate()
@@ -578,9 +595,10 @@
 	department = 1
 	req_access = list(access_engineering_chief)
 
-	civilian_access_list = list( access_maint_tunnels, access_tech_storage)
-	engineering_access_list = list(access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_mechanic, access_engineering_atmos, access_engineering_control)
-	supply_access_list = list(access_cargo, access_supply_console, access_mining, access_mining_outpost)
+	civilian_access_list = list(access_maint_tunnels, access_tech_storage)
+	// stock engineering_access_list
+	// stock supply_access_list
+	medical_access_list = null
 	research_access_list = null
 	security_access_list = null
 	command_access_list = list(access_eva) //allow heads to give out eva access in emergencies
@@ -593,7 +611,8 @@
 	civilian_access_list = list(access_morgue, access_maint_tunnels, access_tech_storage)
 	engineering_access_list = null
 	supply_access_list = null
-	research_access_list = list(access_medical, access_medlab, access_medical_lockers, access_robotics, access_pathology)
+	// stock medical_access_list
+	research_access_list = null
 	security_access_list = null
 	command_access_list = list(access_eva)
 
@@ -606,7 +625,8 @@
 	civilian_access_list = list(access_maint_tunnels, access_tech_storage)
 	engineering_access_list = null
 	supply_access_list = null
-	research_access_list = list(access_tox, access_tox_storage, access_research, access_chemistry, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
+	medical_access_list = null
+	// stock research_access_list
 	security_access_list = null
 	command_access_list = list(access_eva)
 
@@ -619,7 +639,8 @@
 	civilian_access_list = list(access_morgue, access_maint_tunnels, access_tech_storage, access_bar, access_crematorium, access_kitchen, access_hydro)
 	engineering_access_list = list(access_engineering, access_engineering_control)
 	supply_access_list = list(access_cargo)
-	research_access_list = list(access_medical, access_research, access_chemistry, access_researchfoyer)
+	medical_access_list = list(access_medical)
+	research_access_list = list(access_research, access_chemistry, access_researchfoyer)
 	security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_armory, access_securitylockers, access_carrypermit, access_contrabandpermit)
 	command_access_list = list(access_eva)
 

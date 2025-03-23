@@ -165,7 +165,7 @@
 /turf/simulated/floor/white,
 /area/bee_trader)
 "u" = (
-/obj/npc/trader/bee{
+/obj/npc/trader/bee/sea{
 	dir = 4
 	},
 /turf/simulated/floor{

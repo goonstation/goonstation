@@ -1004,6 +1004,14 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	sample_amt = 5
 	sample_reagent = "egg"
 
+/obj/decal/cleanable/potatosplat
+	name = "smashed potato"
+	desc = "A ruined potato."
+	icon = 'icons/obj/decals/cleanables.dmi'
+	icon_state = "potatosplat"
+	slippery = 2
+	can_sample = 0
+
 /obj/decal/cleanable/ash
 	name = "ashes"
 	desc = "Ashes to ashes, dust to dust."

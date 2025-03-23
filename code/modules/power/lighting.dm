@@ -910,10 +910,12 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 						message_admins("[key_name(current_lamp.rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
 						logTheThing(LOG_COMBAT, current_lamp.rigger, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([log_loc(src)])")
 					explode()
+				#ifndef STOP_BREAKING_THE_FUCKING_LIGHTS_I_WANT_TO_SEE_SHIT
 				if(prob(current_lamp.breakprob))
 					src.do_break()
 				if(prob(current_lamp.burnprob))
 					src.do_burn_out()
+				#endif
 			if (LIGHT_BURNED)
 				if(prob(current_lamp.breakprob))
 					src.do_break()

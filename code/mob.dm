@@ -235,6 +235,9 @@
 	///Lazy inited list of custom vomit behaviours from reagents, organs etc.
 	var/list/datum/vomit_behavior/vomit_behaviors = null
 
+	/// if this mob can interface with pod context menu by left clicking
+	var/can_interface_with_pods = TRUE
+
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
 	return 0 //0=couldnt do it(other hand full etc), 1=worked just fine.
