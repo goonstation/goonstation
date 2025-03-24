@@ -500,7 +500,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 					var/obj/item/clothing/head/det_hat/folded_scuttlebot/newscuttle = new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
 					if (S.is_inspector)
 						newscuttle.make_inspector()
-			boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whir.")
+			boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
 			for(var/obj/item/photo/P in S.contents)
 				P.set_loc(get_turf(src))
 
