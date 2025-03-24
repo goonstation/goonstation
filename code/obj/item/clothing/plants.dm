@@ -29,7 +29,7 @@
 
 /obj/item/clothing/head/flower/hydrangea
 	name = "hydrangea"
-	desc = " Hydrangea act as natural pH indicators, sporting blue flowers when the soil is acidic and pink ones when the soil is alkaline. Popular ornamental flowers due to their colourful, pastel flower arrangements; this one has been trimmed nicely for wear as an accessory."
+	desc = " Hydrangeas act as natural pH indicators, sporting blue flowers when the soil is acidic and pink ones when the soil is alkaline. They are popular ornamental flowers due to their colorful pastel blooms; this one has been trimmed nicely for wear as an accessory."
 	icon_state = "flower_hyd"
 	item_state = "flower_hyd"
 
