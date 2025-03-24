@@ -427,32 +427,10 @@ TYPEINFO(/obj/item/fish_portal)
 			W.set_loc(src)
 			W.dropped(user)
 
-	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (!isliving(user))
-			boutput(user, SPAN_ALERT("You can't do that while dead, this isn't Davy Jones' Locker!"))
-			return
-		if (BOUNDS_DIST(user, src) > 0)
-			boutput(user, SPAN_ALERT("You need to move closer to the [src] to do that."))
-			return
-		if (BOUNDS_DIST(O, user) > 0)
-			boutput(user, SPAN_ALERT("[O] is too far away to load into the [src]!"))
-			return
-		if (src.working)
-			boutput(user, SPAN_ALERT("The [src] is busy!"))
-			return
-
-		if (istype(O, /obj/item/reagent_containers/food/fish/))
-			user.visible_message(SPAN_NOTICE("[user] begins quickly stuffing [O] into the [src]!"))
-			var/itemtype = O.type
-			var/staystill = user.loc
-			for(var/obj/item/P in view(1,user))
-				if (user.loc != staystill) break
-				if (P.type != itemtype) continue
-				P.set_loc(src)
-				playsound(src.loc, 'sound/effects/bubbles_short.ogg', 85, 1)
-				sleep(0.3 SECONDS)
-			boutput(user, SPAN_NOTICE("You finish stuffing [O] into the [src]!"))
-			return
+	New()
+		..()
+		AddComponent(/datum/component/transfer_input/quickloading, allowed)
+		AddComponent(/datum/component/transfer_output)
 
 /obj/submachine/fishing_upload_terminal/portable
 	anchored = 0
