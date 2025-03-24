@@ -1,6 +1,6 @@
 /obj/item/clothing/head/rafflesia
 	name = "rafflesia"
-	desc = "Usually reffered to as corpseflower due to its horrid odor, perfect for masking the smell of your stinky head."
+	desc = "Usually referred to as corpseflower due to its horrid odor. Perfect for masking the smell of your stinky head."
 	icon_state = "rafflesiahat"
 	item_state = "rafflesiahat"
 
@@ -29,7 +29,7 @@
 
 /obj/item/clothing/head/flower/hydrangea
 	name = "hydrangea"
-	desc = " Hydrangea act as natural pH indicators, sporting blue flowers when the soil is acidic and pink ones when the soil is alkaline. A popular ornamental flowers due to their colourful, pastel flower arrangements; this one has been trimmed nicely for wear as an accessory."
+	desc = " Hydrangea act as natural pH indicators, sporting blue flowers when the soil is acidic and pink ones when the soil is alkaline. Popular ornamental flowers due to their colourful, pastel flower arrangements; this one has been trimmed nicely for wear as an accessory."
 	icon_state = "flower_hyd"
 	item_state = "flower_hyd"
 
