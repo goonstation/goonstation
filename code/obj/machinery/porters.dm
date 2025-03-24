@@ -420,7 +420,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 	Exited(atom/movable/Obj)
 		..()
 		if(Obj == src.occupant)
-			logTheThing(LOG_STATION, obj, "exits [src.name] at [log_loc(src)].")
+			logTheThing(LOG_STATION, Obj, "exits [src.name] at [log_loc(src)].")
 			src.occupant = null
 			build_icon()
 			for (var/obj/item/I in src) //What if you drop something while inside? WHAT THEN HUH?
