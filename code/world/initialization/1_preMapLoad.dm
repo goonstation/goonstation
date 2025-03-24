@@ -85,11 +85,12 @@
 	// apply some settings from config..
 	abandon_allowed = config.respawn
 	cdn = config.cdn
+	cdnManifest = loadCdnManifest()
 	disableResourceCache = config.disableResourceCache
 	chui = new()
 	if (config.env == "dev") //WIRE TODO: Only do this (fallback to local files) if the coder testing has no internet
 		Z_LOG_DEBUG("Preload", "Loading local browserassets...")
-		recursiveFileLoader("browserassets/")
+		recursiveFileLoader("browserassets/src/")
 
 	Z_LOG_DEBUG("Preload", "Z-level datums...")
 	init_zlevel_datums()

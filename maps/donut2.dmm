@@ -28581,7 +28581,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/chair/comfy/blue{
+/obj/stool/chair/comfy/yellow{
 	dir = 4
 	},
 /obj/landmark/start/job/chief_engineer,
@@ -33759,7 +33759,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/chair/comfy/blue{
+/obj/stool/chair/comfy/red{
 	dir = 8
 	},
 /obj/landmark/start/job/head_of_security,
@@ -45955,7 +45955,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/chair/comfy/blue{
+/obj/stool/chair/comfy/purple{
 	dir = 4
 	},
 /obj/landmark/start/job/research_director,
@@ -49353,7 +49353,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/chair/comfy/blue{
+/obj/stool/chair/comfy/ergonomic{
 	dir = 8
 	},
 /obj/landmark/start/job/captain,
@@ -52363,7 +52363,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "xza" = (
-/obj/stool/chair/comfy/blue{
+/obj/stool/chair/comfy/green{
 	dir = 8
 	},
 /obj/landmark/start/job/head_of_personnel,
