@@ -475,7 +475,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 			if(connected_scuttlebot.mind)
 				boutput(user, SPAN_ALERT("The scuttlebot is already active somehow!"))
 			else if(!connected_scuttlebot.loc)
-				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot couldnt be found."))
+				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot couldn't be found."))
 			else
 				H.network_device = src.connected_scuttlebot
 				connected_scuttlebot.controller = H
@@ -500,7 +500,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 					var/obj/item/clothing/head/det_hat/folded_scuttlebot/newscuttle = new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
 					if (S.is_inspector)
 						newscuttle.make_inspector()
-			boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
+			boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whir.")
 			for(var/obj/item/photo/P in S.contents)
 				P.set_loc(get_turf(src))
 
