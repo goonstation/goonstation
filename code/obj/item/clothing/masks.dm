@@ -562,7 +562,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	icon_state = "domino"
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "domino"
-	desc = "A little mask, made of paper. It isn't gonna stay on anyone's face like this, though."
+	desc = "A little mask, made of paper. It isn't gunna stay on anyone's face like this, though."
 	burn_point = 220
 	burn_output = 900
 	burn_possible = TRUE
