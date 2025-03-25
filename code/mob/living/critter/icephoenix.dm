@@ -149,7 +149,7 @@
 
 	attack_hand(mob/living/M)
 		..()
-		if (M == src)
+		if (istype(M, /mob/living/critter/ice_phoenix))
 			return
 		if (M.a_intent != INTENT_HELP)
 			return
