@@ -501,6 +501,8 @@ var/global
 
 	list/allowed_favorite_ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks) - concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter) - list(
 		/obj/item/reagent_containers/food/snacks/burger/humanburger,
+		/obj/item/reagent_containers/food/snacks/burger/plague,
+		/obj/item/reagent_containers/food/snacks/burger/burgle,
 		/obj/item/reagent_containers/food/snacks/donut/custom/robust,
 		/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat,
 		/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock,
