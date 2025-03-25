@@ -31833,7 +31833,7 @@
 /area/station/maintenance/east)
 "bQm" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bQn" = (
 /obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/disposalpipe/segment/ejection{
@@ -32261,7 +32261,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bRv" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/teleporter)
@@ -32388,7 +32388,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bRO" = (
 /obj/machinery/disposal,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -32400,7 +32400,7 @@
 	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bRP" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -32412,7 +32412,7 @@
 	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bRS" = (
 /obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
@@ -33054,12 +33054,12 @@
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bTw" = (
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bTx" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
@@ -33076,18 +33076,18 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bTz" = (
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bTA" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bTB" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -33099,7 +33099,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bTC" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/coldloop)
@@ -33594,13 +33594,13 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bUW" = (
 /turf/simulated/floor/yellow/corner,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bUX" = (
 /turf/simulated/floor/yellow/side,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bUY" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -33617,7 +33617,7 @@
 /turf/simulated/floor/yellow/corner{
 	dir = 8
 	},
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bVa" = (
 /obj/stool/chair/red{
 	dir = 4
@@ -33640,7 +33640,7 @@
 /obj/machinery/portable_atmospherics/pump,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bVc" = (
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -34165,7 +34165,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bWC" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
@@ -34181,7 +34181,7 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bWE" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -34189,7 +34189,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bWF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -34197,14 +34197,14 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bWG" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bWI" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/cable{
@@ -34647,7 +34647,7 @@
 /obj/machinery/light_switch/north,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bXV" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -34655,7 +34655,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bXW" = (
 /obj/rack,
 /obj/item/clothing/suit/hazard/fire,
@@ -34675,13 +34675,13 @@
 	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bXX" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bXY" = (
 /obj/rack,
 /obj/item/clothing/suit/space/engineer,
@@ -34701,7 +34701,7 @@
 	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bXZ" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -34709,11 +34709,11 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bYa" = (
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bYc" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/caution/corner/sw,
@@ -35112,7 +35112,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bZl" = (
 /obj/rack,
 /obj/item/clothing/suit/hazard/fire,
@@ -35124,26 +35124,26 @@
 /obj/item/extinguisher,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bZm" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bZn" = (
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bZo" = (
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bZp" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "bZr" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
@@ -35412,17 +35412,17 @@
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "caq" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "car" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "cat" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer{
 	current_temperature = 150;
@@ -35762,7 +35762,7 @@
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "cbO" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
@@ -56179,7 +56179,7 @@
 /obj/mapping_helper/access/engineering_storage,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "ezW" = (
 /obj/mesh/catwalk{
 	dir = 4
@@ -57175,7 +57175,7 @@
 /obj/decal/stripe_caution,
 /obj/storage/cart/mechcart/breach,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "fEF" = (
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
@@ -57630,7 +57630,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "fZP" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -57929,7 +57929,7 @@
 /obj/decal/stripe_caution,
 /obj/storage/cart/mechcart/breach,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "grd" = (
 /obj/table/reinforced/auto,
 /obj/mapping_helper/firedoor_spawn,
@@ -62589,7 +62589,7 @@
 /obj/machinery/manufacturer/general,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "kFD" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -65004,7 +65004,7 @@
 /obj/mapping_helper/access/engineering_storage,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "mRx" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/ai_experimental,
@@ -71256,7 +71256,7 @@
 /obj/decal/stripe_caution,
 /obj/machinery/manufacturer/engineering,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "tgt" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -72513,7 +72513,7 @@
 /obj/mapping_helper/access/engineering_storage,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
-/area/station/storage/emergency)
+/area/station/engine/storage)
 "uyh" = (
 /obj/cable{
 	icon_state = "4-8"
