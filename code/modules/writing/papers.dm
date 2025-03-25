@@ -880,6 +880,43 @@ proc/spawn_kitchen_note()
 	NT Marching Band Director
 	"}
 
+/obj/item/paper/treehausnote // for the nerd treehouse prefab
+	name = "faded note"
+	desc = "This paper is faded and stained."
+	icon_state = "paper_caution"
+	info = {"<span style="font-family:Lucida Handwriting;"
+<b><u>Dear Byron</u></b><br>
+<i>Please don't be angry I'm not here as usual.<br>
+This wasn't how I wanted to end things. But I don't know how else to.<br>
+We've kept the Squires of the Supper Table going for so long,<br>
+its become almost like a 2nd family over the years<br>.
+But we're <u>old</u>, Byron. My arthritis is making writing<br>
+very hard now. And I can tell you can barely read the pages,<br>
+even with the new Jumbo-font reprints.<br><br>
+
+Yesterday a medical team took Anthony to the ICU; his implant sent an<br>
+alarm after he went to sleep. I doubt he's coming back. And let's be<br>
+honest...he's already been gone for awhile.<br><br>
+
+How many months has our group let him sit in that chair playing<br>
+chess against himself while we run his character as an NPC for the<br>
+<u>handful</u> of times that he randomly 'comes back' to be the person <br>
+he was before the accident?<br><br>
+
+Out of eight players we're down to two who can <b>actually play</b><br>
+and in-game we've been stuck in the foyer of the abandoned castle<br>
+since June.<br><br>
+
+I don't even remember what happened to the group treasury;<br>
+it's been so long since we took money out to buy a new<br>
+book or dice-bag or anything for our gaming sessions.<br>
+So grab whatever you'd like and meet me at the bar for a toast.<br>
+It's time for what's left of the Untouchable Eight to part ways.<br>
+Including you and I.<br><br>
+
+Savannah "Orc-Skewer", Elven Ranger.</i>
+"}
+
 
 /obj/item/paper/businesscard
 	name = "business card"

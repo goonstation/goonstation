@@ -1705,6 +1705,19 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Irradiated Shuttle"
 	icon_state = "green"
 
+/area/prefab/minimart
+	name = "MiniMart"
+	icon_state = "purple"
+	requires_power = FALSE
+
+/area/prefab/angelshuttle
+	name = "NSS Mercy"
+	icon_state = "purple"
+
+/area/prefab/treehaus
+	name = "Treehouse"
+	icon_state = "green"
+
 TYPEINFO(/area/station/turret_protected/sea_crashed)
 	valid_bounty_area = FALSE
 /area/station/turret_protected/sea_crashed //dumb area pathing aRRGHHH

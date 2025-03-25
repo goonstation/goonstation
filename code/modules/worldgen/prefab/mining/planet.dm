@@ -79,6 +79,13 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 				if (our_area.occlude_foreground_parallax_layers)
 					T.update_parallax_occlusion_overlay()
 
+	dnd_den
+		maxNum = 1
+		probability = 5
+		prefabPath = "assets/maps/prefabs/planet/prefab_nerd_treehaus.dmm"
+		prefabSizeX = 12
+		prefabSizeY = 15
+
 	bear_trap
 		maxNum = 1
 		probability = 10
