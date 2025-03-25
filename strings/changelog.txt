@@ -1,4 +1,9 @@
 
+(t)tue mar 25 25
+(u)RubberRats
+(p)22730
+(e)🪲🍝|C-Bug, A-Catering
+(+)The burgle can no longer appear in chef objectives, or as the favorite food of picky eaters
 (t)sun mar 23 25
 (u)LeahTheTech
 (*)Shield generators now accept mechcomp inputs.
