@@ -1561,6 +1561,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 6)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/bird, 2)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, 2)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO,3)
@@ -1571,8 +1572,6 @@ TYPEINFO(/obj/machinery/vending/medical)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 3)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/flashbang, 7)
 
-		if (!restocked) //technically, this deletes any ammo left over on restock. oh well.
-			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
 
 /obj/machinery/vending/htr_team
 	name = "SecTech"
