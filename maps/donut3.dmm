@@ -35849,7 +35849,7 @@
 /area/station/library/reading2)
 "kPt" = (
 /obj/table/wood/auto,
-/obj/item/plant/flower/rose{
+/obj/item/clothing/head/flower/rose{
 	pixel_x = 3;
 	pixel_y = 4
 	},
