@@ -63,6 +63,12 @@
 	config = new /datum/configuration()
 	config.load("config/config.txt")
 
+#ifdef RP_MODE
+	config.load("config/gamemodes_rp.txt")
+#else
+	config.load("config/gamemodes.txt")
+#endif
+
 	if (config.server_specific_configs && world.port > 0)
 		var/specific_config = "config/config-[world.port].txt"
 		if (fexists(specific_config))
