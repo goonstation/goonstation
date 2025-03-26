@@ -1,4 +1,10 @@
+
 (t)wed mar 26 25
+(u)JORJ949
+(p)22732
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Armory will now only authorise objects that have armory access.
+(+)Bringing an armory access object to armory will update its access to match auth status.
 (u)LeahTheTech
 (+)Critters now always heal bleeding naturally and regenerate lost blood faster.
 (t)tue mar 25 25
