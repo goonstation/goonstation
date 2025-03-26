@@ -633,6 +633,11 @@ ABSTRACT_TYPE(/obj/item/record/random/funk)
 	record_name = "Monkey Riot"
 	song = 'sound/radio_station/music/monkey_riot.ogg'
 
+/obj/item/record/random/funk/space_gardener
+	name = "record - \"Space Gardener\""
+	record_name = "Space Gardener"
+	song = 'sound/radio_station/music/space_gardener.ogg'
+
 ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /obj/item/record/random/notaquario
 	New()
