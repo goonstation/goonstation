@@ -1193,7 +1193,7 @@ toxic - poisons
 		else
 			fireflash(get_turf(hit) || get_turf(P), 0, chemfire = CHEM_FIRE_RED)
 
-/datum/projectile/bullet/ice_phoenix_icicle
+/datum/projectile/bullet/space_phoenix_icicle
 	name = "ice feather"
 	sname = "ice feather"
 	icon_state = "laser_anim_blue"
@@ -1209,7 +1209,7 @@ toxic - poisons
 
 	on_pre_hit(atom/hit, angle, obj/projectile/P)
 		. = ..()
-		if (istype(hit, /mob/living) && !istype(hit, /mob/living/critter/ice_phoenix))
+		if (istype(hit, /mob/living) && !istype(hit, /mob/living/critter/space_phoenix))
 			var/mob/living/L = hit
 			L.TakeDamage("All", 2.5, 5, damage_type = src.damage_type)
 			L.bodytemperature -= 3
@@ -2041,7 +2041,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 				boutput(M, pod.ship_message(message))
 
 	on_hit(atom/hit, angle, obj/projectile/O)
-		if (istype(hit, /obj/critter/gunbot/drone) || istype(hit, /obj/machinery/vehicle/miniputt) || istype(hit, /obj/machinery/vehicle/pod_smooth)|| istype(hit, /obj/machinery/vehicle/tank) || istype(hit, /mob/living/critter/ice_phoenix))
+		if (istype(hit, /obj/critter/gunbot/drone) || istype(hit, /obj/machinery/vehicle/miniputt) || istype(hit, /obj/machinery/vehicle/pod_smooth)|| istype(hit, /obj/machinery/vehicle/tank) || istype(hit, /mob/living/critter/space_phoenix))
 			explosion_new(null, get_turf(O), 12)
 
 			if(istype(hit, /obj/machinery/vehicle))
