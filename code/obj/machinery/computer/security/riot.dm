@@ -29,11 +29,6 @@
 
 		src.net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, control_frequency)
-
-		/*for (var/obj/machinery/door/airlock/D in armory_area)
-			if (D.has_access(access_armory))
-				D.no_access = 1
-		*/
 		..()
 
 	disposing()
@@ -137,26 +132,18 @@
 		src.icon_state = "drawbr-alert"
 		src.UpdateIcon()
 
-		ON_COOLDOWN(src, "unauth", 5 MINUTES)
+		ON_COOLDOWN(src, "unauth", 5 SECONDS)
 
 		src.authorized = null
 		src.authorized_registered = null
 
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_ARMORY_AUTH)
 
-		for (var/obj/machinery/door/airlock/D in armory_area)
-			if (D.has_access(access_armory))
-				D.req_access = list(access_security)
-				//D.no_access = 0
-			LAGCHECK(LAG_REALTIME)
-
 		if (armory_area)
 			for(var/obj/O in armory_area)
-				if (istype(O,/obj/storage/secure/crate))
-					O.req_access = list(access_security)
-				else if (istype(O,/obj/machinery/vending))
-					O.req_access = list(access_security)
-
+				if(!(access_armory in O.req_access)) //Did it have armory access in the first place?
+					continue
+				O.req_access += access_security
 				LAGCHECK(LAG_REALTIME)
 
 		SPAWN(0.5 SECONDS)
@@ -165,32 +152,26 @@
 			playsound(src, 'sound/vox/authorized.ogg', 50, vary=FALSE, extrarange=10)
 
 	proc/unauthorize()
-		if(src.authed)
+		if(!src.authed)
+			return
 
-			logTheThing(LOG_STATION, usr, "unauthorized armory access")
-			command_announcement("<br><b>[SPAN_ALERT("Armory weapons access has been revoked from all security personnel. All crew are advised to hand in riot gear to the Head of Security.")]</b>", "Security Level Decreased", "sound/misc/announcement_1.ogg")
-			authed = 0
-			src.ClearSpecificOverlays("screen_image")
-			icon_state = "drawbr"
-			src.UpdateIcon()
+		logTheThing(LOG_STATION, usr, "unauthorized armory access")
+		command_announcement("<br><b>[SPAN_ALERT("Armory weapons access has been revoked from all security personnel. All crew are advised to hand in riot gear to the Head of Security.")]</b>", "Security Level Decreased", "sound/misc/announcement_1.ogg")
+		authed = 0
+		src.ClearSpecificOverlays("screen_image")
+		icon_state = "drawbr"
+		src.UpdateIcon()
 
-			src.authorized = null
-			src.authorized_registered = null
+		src.authorized = null
+		src.authorized_registered = null
 
-			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_ARMORY_UNAUTH)
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_ARMORY_UNAUTH)
 
-			for (var/obj/machinery/door/airlock/D in armory_area)
-				if (D.has_access(access_security))
-					D.req_access = list(access_armory)
-				LAGCHECK(LAG_REALTIME)
-
-			if (armory_area)
-				for(var/obj/O in armory_area)
-					if (istype(O,/obj/storage/secure/crate))
-						O.req_access = list(access_armory)
-					else if (istype(O,/obj/machinery/vending))
-						O.req_access = list(access_armory)
-
+		if (armory_area)
+			for(var/obj/O in armory_area)
+				if(!(access_armory in O.req_access)) //Did it have armory access in the first place?
+					continue
+				O.req_access = list(access_armory)
 				LAGCHECK(LAG_REALTIME)
 
 	proc/print_auth_needed(var/mob/author)
