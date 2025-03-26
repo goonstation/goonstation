@@ -1,5 +1,9 @@
 
 (t)wed mar 26 25
+(u)glowbold
+(p)22656
+(e)🪲🔨|C-Bug, A-Player-Actions
+(*)When inside an object or mob, you cannot interact with things outside it.
 (u)FlameArrow57
 (p)22683
 (e)🔊📦|C-Sound, A-Game-Objects
