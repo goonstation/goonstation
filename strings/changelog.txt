@@ -1,5 +1,10 @@
 
 (t)wed mar 26 25
+(u)RubberRats and Xenomni
+(p)22698
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(*)Adds a new trait: Touch Shy. Icon sprite by Xenomni
+(*)Touch Shy will cause you to automatically attempt to shove anyone who tries to headpat you or do another help intent interaction.
 (u)JORJ949
 (p)22732
 (e)💅📦|C-QoL, A-Game-Objects
