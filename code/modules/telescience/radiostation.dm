@@ -57,6 +57,22 @@
 	sound_environment = 3
 	workplace = 1
 
+/area/radiostation/tv_set
+	name = "Radio TV Station"
+	icon_state = "green"
+
+/area/radiostation/green
+	name = "Radio Green Room"
+	icon_state = "green"
+
+/area/radiostation/teleporter
+	name = "Radio Teleporter"
+	icon_state = "red"
+
+/area/radiostation/press
+	name = "Radio Press"
+	icon_state = "yellow"
+
 //objects
 
 // Audio log players
