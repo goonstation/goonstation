@@ -132,7 +132,7 @@
 		src.icon_state = "drawbr-alert"
 		src.UpdateIcon()
 
-		ON_COOLDOWN(src, "unauth", 5 SECONDS)
+		ON_COOLDOWN(src, "unauth", 5 MINUTES)
 
 		src.authorized = null
 		src.authorized_registered = null
