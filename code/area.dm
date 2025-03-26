@@ -3910,6 +3910,18 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 
 	Entered(atom/movable/A, atom/oldloc)
 		. = ..()
+		if (current_state == GAME_STATE_PLAYING) //Don't worry about this in setup.
+			var/obj/O = A
+			if (istype(O))
+				if(access_armory in O.req_access) // Auto update access for armory stuff when it enters armory if it mismatches current auth status
+					if(src.armory_auth && !O.has_access(access_security))
+						O.req_access += access_security
+						O.visible_message(SPAN_NOTICE("[O]'s access is automatically updated!"))
+						playsound(O, 'sound/machines/chime.ogg', 50)
+					else if (!src.armory_auth && O.has_access(access_security))
+						O.req_access = list(access_armory)
+						O.visible_message(SPAN_NOTICE("[O]'s access is automatically reset!"))
+						playsound(O, 'sound/machines/chime.ogg', 50)
 		if (current_state < GAME_STATE_FINISHED)
 			if(istype(A, /mob/living) && !istype(A, /mob/living/intangible))
 				var/mob/living/M = A
@@ -3924,7 +3936,6 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 				SPAWN(120 SECONDS)
 					entered_ckeys -= ckey
 				logTheThing(LOG_STATION, M, "entered the Armory [log_loc(M)].[armory_auth ? "" : " - Armory unauthorized."]")
-
 // // // // // //
 
 /// Turret protected areas, will activate AI turrets to pop up when entered, and vice-versa when exited.
