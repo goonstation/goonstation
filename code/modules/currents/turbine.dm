@@ -89,7 +89,7 @@
 /obj/turbine_shaft
 	name = "turbine shaft"
 	desc = "A heavy duty metal shaft."
-	icon = 'icons/obj/machines/current_turbine.dmi' //TODO: east west sprites
+	icon = 'icons/obj/machines/current_turbine.dmi'
 	icon_state = "shaft_0"
 	density = FALSE
 	layer = FLOOR_EQUIP_LAYER1
@@ -103,6 +103,12 @@
 	New()
 		. = ..()
 		src.network.shafts = list(src) //me, myself and I
+
+	get_help_message(dist, mob/user)
+		if (length(src.network.shafts) > 1)
+			. = "You can use a <b>wrench</b> to unsecure it from other shafts."
+		else
+			. = "You can use a <b>wrench</b> to secure it to other shafts,\nor a <b>crowbar</b> to rotate it."
 
 	///Lock them to NORTH/WEST dirs just to make things easier
 	set_dir(new_dir)
@@ -167,8 +173,10 @@
 
 /obj/turbine_shaft/turbine
 	name = "NT40 tidal current turbine"
+	desc = "A heavy turbine designed to harness ocean currents. The blades look worryingly sharp."
 	icon_state = "turbine_0"
 	base_icon_state = "turbine"
+	layer = OBJ_LAYER
 	density = TRUE
 
 	New()
