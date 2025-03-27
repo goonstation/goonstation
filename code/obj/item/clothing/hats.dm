@@ -1443,6 +1443,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 				wearer.show_text("The sunhat is no longer electrically charged.", "red")
 			else
 				wearer.show_text("The stunhat has [src.uses] charges left!", "red")
+			return TRUE
 
 	proc/zap_headpatter(mob/target)
 		elecflash(src)
