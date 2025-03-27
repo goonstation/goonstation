@@ -50,7 +50,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/space)
 		prefabSizeX = 9
 		prefabSizeY = 14
 
-			nssmercy //A 'final flight' for those whose time is short
+	nssmercy //A 'final flight' for those whose time is short
 		maxNum = 1
 		probability = 25
 		prefabPath = "assets/maps/prefabs/space/prefab_NSS_Mercy.dmm"
