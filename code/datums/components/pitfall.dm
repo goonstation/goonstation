@@ -66,9 +66,6 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 				return
 
 		return_if_overlay_or_effect(AM)
-		if (src.DeleteFlotsam && HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOTSAM))
-			qdel(AM)
-			return
 		// if the fall has coyote time, then delay it
 		if (src.FallTime)
 			SPAWN(src.FallTime)
@@ -94,6 +91,9 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 	/// a proc that makes a movable atom 'A' fall from 'src.typecasted_parent()' to 'T' with a maximum of 'brutedamage' brute damage
 	proc/fall_to(var/turf/T, var/atom/movable/A, var/brutedamage = 50)
 		SHOULD_NOT_OVERRIDE(TRUE)
+		if (src.DeleteFlotsam && HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOTSAM))
+			qdel(A)
+			return
 		if(istype(A, /obj/overlay) || A.anchored >= ANCHORED_ALWAYS)
 			return
 		#ifdef CHECK_MORE_RUNTIMES
