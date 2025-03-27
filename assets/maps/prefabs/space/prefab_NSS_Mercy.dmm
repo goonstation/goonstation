@@ -76,11 +76,8 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/prefab/angelshuttle)
 "s" = (
-/obj/computer3frame/desktop,
-/obj/table/nanotrasen{
-	desc = "An industrial grade table with an azure glass panel on the top. The glass looks extremely sturdy."s"\t},/turf/simulated/floor/carpet/blue/fancy,/area/space)"j" = (/turf/simulated/floor/carpet/blue/fancy/edge/se,/area/space)"l" = (/turf/space,/area/space)"m" = (/obj/stool/chair/comfy/shuttle/pilot{\tdir = 4;\tdesc = "Onlythemostimportantcrewmembergetstosithere.Everyoneissuperenviousofwhoeversitsinthischair."s"
-	},
-/turf/simulated/floor/carpet/blue/decal/outercross,
+/obj/fakeobject/console_radar,
+/turf/simulated/floor/carpet/blue/fancy,
 /area/prefab/angelshuttle)
 "t" = (
 /mob/living/critter/small_animal/butterfly,
