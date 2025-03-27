@@ -59,16 +59,12 @@
 
 	///Try to move the whole shaft in a direction, returns TRUE on success and FALSE on failure
 	proc/try_move(dir)
-		var/turf/test_turf = null
-		if (dir == src.shafts[1].dir)
-			test_turf = get_step(src.shafts[length(src.shafts)], dir)
-		else
-			test_turf = get_step(src.shafts[1], dir)
-		if (test_turf && !test_turf.density) // TODO: better check? Make sure turbines can't pass through things
-			for (var/obj/turbine_shaft/shaft as anything in src.shafts)
-				shaft.set_loc(get_step(shaft, dir))
-			return TRUE
-		return FALSE
+		for(var/obj/turbine_shaft/shaft as anything in src.shafts)
+			if (!shaft.can_move(get_step(shaft, dir)))
+				return FALSE
+		for (var/obj/turbine_shaft/shaft as anything in src.shafts)
+			shaft.set_loc(get_step(shaft, dir))
+		return TRUE
 
 	proc/process()
 		if (!length(src.shafts))
@@ -148,6 +144,12 @@
 		if (length(src.network.shafts) > 1)
 			src.anchored = ANCHORED
 
+	///Distinct from Cross because we want to not be blocked by our own parts while moving but still have them collide with each other
+	proc/can_move(turf/T)
+		if (!T || T.density)
+			return FALSE
+		return TRUE
+
 	proc/update(rpm)
 		switch(rpm)
 			if (-INFINITY to 0)
@@ -177,6 +179,14 @@
 	proc/get_flow_rate()
 		var/obj/effects/current/current = locate() in get_turf(src)
 		return current?.controller.get_flow_rate() || 0
+
+	can_move(turf/T)
+		if (!..())
+			return FALSE
+		for (var/atom/movable/AM in T.contents)
+			if (AM.density && !istype(AM, src.type))
+				return FALSE
+		return TRUE
 
 	Bumped(mob/living/M)
 		if (!istype(M) || isintangible(M))
