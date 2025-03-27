@@ -186,13 +186,17 @@
 	req_access_txt = "";
 	dir = 1
 	},
-/turf/simulated/floor/darkblue/side{
-	dir = 1
+/obj/cable{
+	icon_state = "1-4"
 	},
+/turf/simulated/floor/darkblueblack,
 /area/radiostation/bridge)
 "aaM" = (
 /obj/table/auto,
 /obj/item/device/audio_log/radioship/large/distress,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/darkblue,
 /area/radiostation/bridge)
 "aaN" = (
@@ -370,8 +374,8 @@
 /obj/machinery/computer/security{
 	dir = 4
 	},
-/turf/simulated/floor/red/corner{
-	dir = 4
+/turf/simulated/floor/redblack/corner{
+	dir = 8
 	},
 /area/radiostation/bridge)
 "abs" = (
@@ -446,6 +450,9 @@
 	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/red,
 /area/radiostation/bridge)
@@ -548,7 +555,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/red/corner{
+/turf/simulated/floor/redblack/corner{
 	dir = 1
 	},
 /area/radiostation/bridge)
@@ -567,9 +574,7 @@
 /obj/table/auto,
 /obj/item/cigpacket,
 /obj/item/matchbook,
-/turf/simulated/floor/grey/side{
-	dir = 8
-	},
+/turf/simulated/floor/black,
 /area/radiostation/bridge)
 "abV" = (
 /obj/lattice{
@@ -663,7 +668,7 @@
 /turf/unsimulated/floor/honeyblocks/corner,
 /area/space_hive)
 "acg" = (
-/turf/simulated/floor/red/side{
+/turf/simulated/floor/redblack{
 	dir = 5
 	},
 /area/radiostation/bridge)
@@ -677,7 +682,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/red/side{
+/turf/simulated/floor/redblack{
 	dir = 9
 	},
 /area/radiostation/bridge)
@@ -691,9 +696,7 @@
 	desc = "It appears to be a Martian brand of donuts.";
 	name = "Robust Donuts"
 	},
-/turf/simulated/floor/grey/side{
-	dir = 4
-	},
+/turf/simulated/floor/black,
 /area/radiostation/bridge)
 "ack" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -1006,12 +1009,13 @@
 /area/space)
 "adf" = (
 /obj/machinery/door/airlock/pyro{
-	dir = 4
+	dir = 4;
+	name = "Green Room"
 	},
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/green,
 /area/radiostation/green)
 "adg" = (
 /turf/simulated/wall/auto/supernorn,
@@ -16605,11 +16609,15 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/hangar)
 "eqN" = (
-/obj/machinery/door/airlock/pyro,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
+/obj/machinery/door/airlock/pyro{
+	name = "Printing Press"
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
 /area/radiostation/press)
 "ery" = (
 /obj/mopbucket,
@@ -17734,12 +17742,13 @@
 /area/diner/hallway)
 "hmV" = (
 /obj/machinery/door/airlock/pyro{
-	dir = 8
+	dir = 8;
+	name = "Cargo Intake"
 	},
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/orange,
 /area/radiostation/teleporter)
 "hnx" = (
 /obj/fakeobject/pipe{
@@ -18713,6 +18722,13 @@
 /obj/map/light/yellowbright,
 /turf/unsimulated/floor/stairs/dark,
 /area/space_hive)
+"jEf" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/radiostation/bridge)
 "jGV" = (
 /obj/fakeobject/pipe{
 	dir = 9;
@@ -20005,6 +20021,13 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/grime,
 /area/diner/arcade)
+"mGI" = (
+/obj/machinery/door/airlock/pyro/command/alt{
+	name = "Bridge";
+	req_access_txt = ""
+	},
+/turf/simulated/floor/darkblue,
+/area/radiostation/bridge)
 "mHv" = (
 /obj/table/reinforced/auto,
 /obj/decal/cleanable/dirt,
@@ -108137,7 +108160,7 @@ aaI
 abA
 acg
 acn
-acB
+mGI
 xJr
 kga
 lgl
@@ -108434,7 +108457,7 @@ aaa
 aaa
 aaw
 aaB
-uiy
+jEf
 aaL
 xcP
 aat
