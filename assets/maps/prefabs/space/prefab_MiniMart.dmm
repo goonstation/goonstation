@@ -29,21 +29,21 @@
 	pixel_x = -5;
 	pixel_y = -2
 	},
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "h" = (
 /obj/decal/poster/wallsign/poster_octocluwne{
 	pixel_x = -5;
 	pixel_y = 1
 	},
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "i" = (
 /obj/decal/cleanable/rust,
 /obj/decal/poster/wallsign/poster_human{
 	pixel_y = 1
 	},
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "k" = (
 /obj/cable/auto/purple/node,
@@ -73,11 +73,6 @@
 "n" = (
 /turf/space,
 /area/noGenerate)
-"q" = (
-/obj/lattice/auto/turf_attaching,
-/obj/lattice/auto/turf_attaching,
-/turf/space,
-/area/prefab/minimart)
 "s" = (
 /turf/unsimulated/floor/airless/twotone/black,
 /area/prefab/minimart)
@@ -127,14 +122,14 @@
 	pixel_x = -5;
 	pixel_y = 1
 	},
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "J" = (
 /obj/decal/poster/wallsign/stencil/right/h{
 	pixel_x = 12;
 	pixel_y = 10
 	},
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "K" = (
 /obj/machinery/light{
@@ -152,7 +147,7 @@
 	pixel_x = 12;
 	pixel_y = 10
 	},
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "O" = (
 /obj/decal/cleanable/dirt/dirt3,
@@ -164,20 +159,14 @@
 	pixel_x = 12;
 	pixel_y = 10
 	},
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "U" = (
 /obj/decal/poster/wallsign/stencil/right/s{
 	pixel_x = 12;
 	pixel_y = 10
 	},
-/turf/unsimulated/wall/auto/adventure,
-/area/prefab/minimart)
-"V" = (
-/obj/machinery/light/runway_light/delay4,
-/obj/lattice/auto/turf_attaching,
-/obj/lattice/auto/turf_attaching,
-/turf/space,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "W" = (
 /obj/decal/cleanable/dirt/dirt2,
@@ -228,7 +217,7 @@ n
 n
 A
 Y
-V
+A
 n
 n
 "}
@@ -237,7 +226,7 @@ n
 n
 F
 l
-q
+Y
 l
 f
 n
@@ -288,7 +277,7 @@ n
 u
 Y
 Y
-q
+Y
 u
 n
 "}

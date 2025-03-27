@@ -30,24 +30,18 @@
 /area/space)
 "j" = (
 /obj/machinery/illuminated_sign/open_neon,
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "k" = (
 /obj/machinery/light/incandescent/blueish,
 /turf/unsimulated/floor/airless/techfloor,
-/area/space)
-"m" = (
-/obj/machinery/light/runway_light/delay4,
-/obj/lattice/auto/turf_attaching,
-/obj/lattice/auto/turf_attaching,
-/turf/space,
 /area/space)
 "n" = (
 /obj/decal/poster/wallsign/stencil/right/s{
 	pixel_x = 12;
 	pixel_y = 5
 	},
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "t" = (
 /obj/window/bulletproof/west,
@@ -69,7 +63,7 @@
 	pixel_x = 12;
 	pixel_y = 10
 	},
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "E" = (
 /obj/decal/tile_edge/floorguide/arrow_e{
@@ -87,7 +81,7 @@
 	pixel_x = 12;
 	pixel_y = 10
 	},
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "L" = (
 /obj/machinery/light/runway_light/delay5,
@@ -106,16 +100,11 @@
 	pixel_x = 12;
 	pixel_y = 5
 	},
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "P" = (
 /turf/space,
 /area/noGenerate)
-"Q" = (
-/obj/lattice/auto/turf_attaching,
-/obj/lattice/auto/turf_attaching,
-/turf/space,
-/area/space)
 "S" = (
 /obj/machinery/vending/floppy,
 /turf/unsimulated/floor/airless/techfloor,
@@ -125,7 +114,7 @@
 /turf/unsimulated/floor/airless/techfloor,
 /area/space)
 "Y" = (
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "Z" = (
 /turf/unsimulated/floor/airless/techfloor,
@@ -157,7 +146,7 @@ P
 P
 a
 N
-m
+a
 P
 P
 "}
@@ -166,7 +155,7 @@ P
 P
 b
 i
-Q
+N
 i
 E
 P
@@ -217,7 +206,7 @@ P
 x
 N
 N
-Q
+N
 x
 P
 "}

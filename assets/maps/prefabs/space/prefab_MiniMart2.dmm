@@ -34,7 +34,7 @@
 	pixel_x = 12;
 	pixel_y = 10
 	},
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "j" = (
 /obj/decal/tile_edge/floorguide/arrow_e{
@@ -62,7 +62,7 @@
 /area/prefab/minimart)
 "n" = (
 /obj/decal/cleanable/rust,
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "q" = (
 /obj/machinery/light/runway_light/delay5,
@@ -75,7 +75,7 @@
 /area/prefab/minimart)
 "s" = (
 /obj/decal/poster/wallsign/poster_y4nt,
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "v" = (
 /obj/machinery/light{
@@ -95,14 +95,14 @@
 /turf/space,
 /area/noGenerate)
 "A" = (
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "B" = (
 /obj/decal/poster/wallsign/stencil/right/s{
 	pixel_x = 12;
 	pixel_y = 10
 	},
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "C" = (
 /obj/machinery/light/runway_light/delay4,
@@ -129,16 +129,10 @@
 	},
 /turf/simulated/floor/airless/caution/west,
 /area/prefab/minimart)
-"J" = (
-/obj/machinery/light/runway_light/delay4,
-/obj/lattice/auto/turf_attaching,
-/obj/lattice/auto/turf_attaching,
-/turf/space,
-/area/prefab/minimart)
 "L" = (
 /obj/decal/cleanable/rust,
 /obj/decal/poster/wallsign/poster_y4nt,
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "M" = (
 /obj/decal/cleanable/dirt/dirt5,
@@ -149,7 +143,7 @@
 	pixel_x = 12;
 	pixel_y = 10
 	},
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "S" = (
 /obj/cable/auto/purple/node,
@@ -170,7 +164,7 @@
 	pixel_x = 12;
 	pixel_y = 10
 	},
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "W" = (
 /obj/cable/auto/purple/node,
@@ -220,7 +214,7 @@ x
 x
 C
 r
-J
+C
 x
 x
 "}
@@ -229,7 +223,7 @@ x
 x
 H
 a
-X
+r
 a
 b
 x

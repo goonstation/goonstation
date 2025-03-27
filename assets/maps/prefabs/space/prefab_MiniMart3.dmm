@@ -23,7 +23,7 @@
 /area/prefab/minimart)
 "d" = (
 /obj/decal/poster/wallsign/fuck1,
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "e" = (
 /obj/decal/cleanable/dirt/dirt3,
@@ -40,7 +40,7 @@
 /area/allowGenerate)
 "n" = (
 /obj/decal/poster/wallsign/dont_panic,
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "q" = (
 /obj/machinery/light/runway_light/delay5,
@@ -54,7 +54,7 @@
 /area/prefab/minimart)
 "t" = (
 /obj/decal/poster/wallsign/fuck2,
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "u" = (
 /turf/space,
@@ -107,11 +107,6 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/airless/plating/damaged2,
 /area/prefab/minimart)
-"H" = (
-/obj/lattice/auto/turf_attaching,
-/obj/lattice/auto/turf_attaching,
-/turf/space,
-/area/prefab/minimart)
 "I" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/blood/tracks,
@@ -121,12 +116,11 @@
 "J" = (
 /obj/machinery/light/runway_light/delay4,
 /obj/lattice/auto/turf_attaching,
-/obj/lattice/auto/turf_attaching,
 /turf/space,
 /area/prefab/minimart)
 "K" = (
 /obj/decal/cleanable/ripped_poster,
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 "L" = (
 /obj/decal/cleanable/dirt/dirt5,
@@ -226,7 +220,7 @@
 /area/prefab/minimart)
 "Y" = (
 /obj/decal/cleanable/gang_graffiti,
-/turf/unsimulated/wall/auto/adventure,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/prefab/minimart)
 
 (1,1,1) = {"
@@ -264,7 +258,7 @@ u
 u
 S
 b
-H
+R
 b
 c
 u
@@ -315,7 +309,7 @@ u
 T
 R
 R
-H
+R
 Q
 u
 "}
