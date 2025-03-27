@@ -41,7 +41,7 @@
 "i" = (
 /obj/decal/cleanable/rust,
 /obj/decal/poster/wallsign/poster_human{
-	pixel_y = dddddddddddddddddd
+	pixel_y = 1
 	},
 /turf/unsimulated/wall/auto/adventure,
 /area/prefab/minimart)
