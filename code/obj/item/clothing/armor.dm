@@ -315,7 +315,7 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 
 /obj/item/clothing/suit/armor/capcoat //old alt armour for the captain
 	name = "captain's coat"
-	desc = "A luxorious formal coat made for the station's captain. It seems to be made out of some thermally resistant material."
+	desc = "A luxurious formal coat made for the station's captain. It seems to be made out of some thermally resistant material."
 	icon_state = "capcoat"
 	item_state = "capcoat"
 	hides_from_examine = 0

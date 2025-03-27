@@ -16,6 +16,8 @@
 
 	can_burn = TRUE
 	can_break = TRUE
+	/// if this floor can be pried up
+	var/pryable = TRUE
 	var/has_material = TRUE
 
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
@@ -1986,6 +1988,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 /turf/simulated/floor/proc/pry_tile(obj/item/C as obj, mob/user as mob, params)
 	if (!intact)
+		return
+	if (!src.pryable)
 		return
 	if(src.reinforced)
 		boutput(user, SPAN_ALERT("You can't pry apart reinforced flooring! You'll have to loosen it with a welder or wrench instead."))

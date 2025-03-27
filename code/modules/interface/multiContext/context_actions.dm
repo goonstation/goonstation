@@ -607,7 +607,7 @@
 		return
 
 	checkRequirements(atom/target, mob/user)
-		. = (user.loc == target) && can_act(user)
+		. = (user.loc == target) && can_act(user) && user.can_interface_with_pods
 
 	board
 		name = "Board"
@@ -616,7 +616,7 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
+			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()
@@ -630,7 +630,7 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
+			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()
@@ -645,7 +645,7 @@
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
 			if (V.locked && V.lock)
-				. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
+				. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()
@@ -659,7 +659,7 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
+			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()

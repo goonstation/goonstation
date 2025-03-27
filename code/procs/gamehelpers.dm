@@ -119,7 +119,18 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 		var/mob/target = source
 		if (target.next_move > world.time && IN_RANGE(target.prev_loc, user, 1))
 			return TRUE
+	var/has_telekinesis = FALSE
+	var/is_carbon = FALSE
+	if (iscarbon(user))
+		is_carbon = TRUE
+		var/mob/living/carbon/C = user
+		if (C.bioHolder?.HasEffect("telekinesis"))
+			has_telekinesis = TRUE
+
 	if(BOUNDS_DIST(source, user) == 0 || (IN_RANGE(source, user, 1))) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
+		if(!has_telekinesis && mobuser && !istype(mobuser.loc, /turf)) // if we're not on a turf, we can only interact with stuff inside the same object or in ourselves
+			if(!((source == mobuser.loc) || (source in mobuser.loc) || (source in mobuser)))
+				return FALSE
 		return TRUE
 	else if (source in bible_contents)
 		for_by_tcl(B, /obj/item/bible) // o coder past, quieten your rage
@@ -129,36 +140,32 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 		for_by_tcl(TR, /obj/item/terminus_drive)
 			if(IN_RANGE(user,TR,1))
 				return TRUE
-	else
-		if (iscarbon(user))
-			var/mob/living/carbon/C = user
-			if (C.bioHolder?.HasEffect("telekinesis") && GET_DIST(source, user) <= 7) //You can only reach stuff within your screen.
-				var/X = source:x
-				var/Y = source:y
-				var/Z = source:z
-				if (isrestrictedz(Z) || isrestrictedz(user:z))
-					boutput(user, SPAN_ALERT("Your telekinetic powers don't seem to work here."))
-					return 0
-				SPAWN(0)
-					//I really shouldnt put this here but i dont have a better idea
-					var/obj/overlay/O = new /obj/overlay ( locate(X,Y,Z) )
-					O.name = "sparkles"
-					O.anchored = ANCHORED
-					O.set_density(0)
-					O.layer = FLY_LAYER
-					O.set_dir(pick(cardinal))
-					O.icon = 'icons/effects/effects.dmi'
-					O.icon_state = "nothing"
-					flick("empdisable",O)
-					sleep(0.5 SECONDS)
-					qdel(O)
+	else if (has_telekinesis && GET_DIST(source, user) <= 7) //You can only reach stuff within your screen.
+		var/X = source:x
+		var/Y = source:y
+		var/Z = source:z
+		if (isrestrictedz(Z) || isrestrictedz(user:z))
+			boutput(user, SPAN_ALERT("Your telekinetic powers don't seem to work here."))
+			return FALSE
+		SPAWN(0)
+			//I really shouldnt put this here but i dont have a better idea
+			var/obj/overlay/O = new /obj/overlay ( locate(X,Y,Z) )
+			O.name = "sparkles"
+			O.anchored = ANCHORED
+			O.set_density(0)
+			O.layer = FLY_LAYER
+			O.set_dir(pick(cardinal))
+			O.icon = 'icons/effects/effects.dmi'
+			O.icon_state = "nothing"
+			flick("empdisable",O)
+			sleep(0.5 SECONDS)
+			qdel(O)
 
-				return TRUE
-
-		else if (isobj(source))
-			var/obj/SO = source
-			if(SO.can_access_remotely(user))
-				return TRUE
+		return TRUE
+	else if (!is_carbon && isobj(source))
+		var/obj/SO = source
+		if(SO.can_access_remotely(user))
+			return TRUE
 
 	if (mirrored_physical_zone_created) //checking for vistargets if true
 		var/turf/T = get_turf(source)

@@ -1,0 +1,125 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/floor/arctic/snow/ice{
+	name = "phoenix nest";
+	desc = "The nest of a space phoenix. You better hope it's not nearby!";
+	oxygen = 0.001;
+	nitrogen = 0.001;
+	carbon_dioxide = 0
+	},
+/area/phoenix_nest)
+"D" = (
+/turf/unsimulated/wall/auto/adventure/icemoon,
+/area/phoenix_nest)
+"H" = (
+/turf/unsimulated/floor/auto/snow{
+	desc = "The nest of a space phoenix. You better hope it's not nearby!";
+	name = "phoenix nest";
+	oxygen = 0.001;
+	nitrogen = 0.001;
+	temperature = 100
+	},
+/area/phoenix_nest)
+"I" = (
+/turf/space,
+/area/space)
+
+(1,1,1) = {"
+I
+I
+I
+I
+a
+I
+I
+I
+I
+"}
+(2,1,1) = {"
+I
+I
+a
+a
+a
+a
+a
+I
+I
+"}
+(3,1,1) = {"
+I
+a
+H
+D
+a
+D
+a
+a
+I
+"}
+(4,1,1) = {"
+I
+a
+a
+a
+H
+a
+D
+H
+a
+"}
+(5,1,1) = {"
+a
+a
+D
+H
+H
+H
+D
+H
+a
+"}
+(6,1,1) = {"
+I
+a
+a
+D
+a
+H
+a
+a
+I
+"}
+(7,1,1) = {"
+I
+a
+a
+H
+a
+D
+H
+a
+I
+"}
+(8,1,1) = {"
+I
+I
+D
+a
+a
+a
+a
+I
+I
+"}
+(9,1,1) = {"
+I
+I
+a
+I
+a
+I
+I
+I
+I
+"}

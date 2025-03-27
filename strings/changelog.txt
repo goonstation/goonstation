@@ -1,4 +1,71 @@
 
+(t)wed mar 26 25
+(u)glowbold
+(p)22656
+(e)🪲🔨|C-Bug, A-Player-Actions
+(*)When inside an object or mob, you cannot interact with things outside it.
+(u)FlameArrow57
+(p)22683
+(e)🔊📦|C-Sound, A-Game-Objects
+(+)Added a new radio station song, Space Gardener
+(u)RubberRats and Xenomni
+(p)22698
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(*)Adds a new trait: Touch Shy. Icon sprite by Xenomni
+(*)Touch Shy will cause you to automatically attempt to shove anyone who tries to headpat you or do another help intent interaction.
+(u)JORJ949
+(p)22732
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Armory will now only authorise objects that have armory access.
+(+)Bringing an armory access object to armory will update its access to match auth status.
+(u)LeahTheTech
+(+)Critters now always heal bleeding naturally and regenerate lost blood faster.
+(t)tue mar 25 25
+(u)Munien and Thrush
+(p)22703
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)Roses and Holoroses can now be worn on your head!
+(u)RubberRats
+(p)22730
+(e)🪲🍝|C-Bug, A-Catering
+(+)The burgle can no longer appear in chef objectives, or as the favorite food of picky eaters
+(t)sun mar 23 25
+(u)LeahTheTech
+(*)Shield generators now accept mechcomp inputs.
+(u)Mordent
+(p)22702
+(e)💅📄|C-QoL, A-UI
+(+)Rockbox UI adjusted for better readability
+(t)sat mar 22 25
+(u)LeahTheTech
+(+)Radiation now makes you less nauseus and won't make you vomit at very low levels.
+(u)glowbold
+(p)22438
+(e)🆕🎨📄💡|C-Feature, C-Sprites, A-UI, A-Station-Systems
+(*)Medical and research jobs have unique ID sprites and are otherwise separated in most lists/contexts.
+(u)Chasu
+(p)22609
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(*)Added potato pipeshot ammo, a makeshift slug equivalent for break-action shotguns.
+(u)FlameArrow57
+(p)22686
+(e)🆕🧫🧛|C-Feature, C-Experimental, A-Gamemodes
+(*)Space Phoenix is enabled on RP servers!
+(u)FlameArrow57
+(p)21597
+(e)🆕🗺🎨🧫🔊📄🏅🧛|C-Feature, A-Mapping, C-Sprites, C-Experimental, C-Sound, A-UI, A-Medal, A-Gamemodes
+(*)Added a new midround spawn antagonist, the Space Phoenix! See minor changelog for details.
+(+)The Space Phoenix/Ice Phoenix is a spacefaring creature living in a nest somewhere on the station Z level. It receives extra buffs while in space, and natural debuffs while on the station.
+(+)The phoenix is better at sustained poking rather than hit and run, but tends to be dangerous in 1v1s
+(+)When being attacked, the Space Phoenix leaves a trail of ice in space that can be walked on and protects against space damage, so you can chase it into space without a space suit and without drifting off
+(u)WyrdDoe
+(p)22611
+(e)🔊📦|C-Sound, A-Game-Objects
+(+)Added a new radio station record, Monkey Riot!
+(u)bork
+(p)22651
+(e)🎨|C-Sprites
+(+)resprites the glockenspiel
 (t)fri mar 21 25
 (u)Mouse
 (p)22644

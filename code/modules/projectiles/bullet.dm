@@ -1051,6 +1051,42 @@ toxic - poisons
 				M.update_canmove()
 			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
 
+/datum/projectile/bullet/potatoslug		//Improvised slug
+	name = "potato"
+	icon_state = "potatoslug"
+	shot_sound = 'sound/weapons/launcher.ogg'
+	damage = 15
+	stun = 20
+	dissipation_rate = 7	//Potatoes aren't very aerodynamic
+	dissipation_delay = 2
+	implanted = null
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	impact_image_state = null
+	casing = /obj/item/casing/shotgun/pipe
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if(proj.power >= 16)
+				var/throw_range = min(ceil(proj.power / 10), 3)
+
+				var/turf/target = get_edge_target_turf(M, dirflag)
+				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
+				M.update_canmove()
+			hit.changeStatus("staggered", clamp(proj.power/10, 5, 1) SECONDS)
+
+		else
+			var/turf/T = get_turf(hit)
+			playsound(T, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
+			make_cleanable(/obj/decal/cleanable/potatosplat, T)
+
+	on_max_range_die(obj/projectile/O)
+		var/turf/T = get_turf(O)
+		playsound(T, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
+		make_cleanable(/obj/decal/cleanable/potatosplat, T)
+
+
 /datum/projectile/bullet/sledgehammer
 	name = "\"sledgehammer\" round"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
@@ -1156,6 +1192,60 @@ toxic - poisons
 			fireflash(hit, 0, chemfire = CHEM_FIRE_RED)
 		else
 			fireflash(get_turf(hit) || get_turf(P), 0, chemfire = CHEM_FIRE_RED)
+
+/datum/projectile/bullet/ice_phoenix_icicle
+	name = "ice feather"
+	sname = "ice feather"
+	icon_state = "laser_anim_blue"
+	damage = 0.0001 // unique effect per atom hit, but set to non-zero to bypass 0 power/damage checks
+	damage_type = D_PIERCING
+	hit_type = DAMAGE_STAB
+	armor_ignored = 1
+	disruption = 0
+	dissipation_delay = 6
+	shot_sound = 'sound/effects/swoosh2.ogg'
+	shot_volume = 50
+	implanted = /obj/item/implant/projectile/ice_feather
+
+	on_pre_hit(atom/hit, angle, obj/projectile/P)
+		. = ..()
+		if (istype(hit, /mob/living) && !istype(hit, /mob/living/critter/ice_phoenix))
+			var/mob/living/L = hit
+			L.TakeDamage("All", 2.5, 5, damage_type = src.damage_type)
+			L.bodytemperature -= 3
+			L.changeStatus("shivering", 3 SECONDS * (1 - 0.75 * L.get_cold_protection() / 100), TRUE)
+		else if (isvehicle(hit))
+			src.damage = 25
+			src.disruption = 5
+			var/turf/T = get_turf(hit)
+			if (!istype(T, /turf/space))
+				src.damage = 5
+				src.disruption = 0
+				hit.visible_message(SPAN_ALERT("[P] hits [hit] with almost no effect! The phoenix's power is too weak with [hit] not in space!"))
+			else
+				if (P.shooter.hasStatus("phoenix_empowered_feather"))
+					P.shooter.delStatus("phoenix_empowered_feather")
+					SPAWN(10 SECONDS)
+						P.shooter.setStatus("phoenix_empowered_feather", INFINITE_STATUS)
+					var/obj/machinery/vehicle/vehicle = hit
+					if (istype(vehicle))
+						src.damage += vehicle.health * 0.1
+						src.disruption = 25
+		src.generate_stats()
+		P.initial_power = src.power
+
+	on_hit(atom/hit, direction, obj/projectile/P)
+		if (istype(hit, /obj/window))
+			hit.visible_message(SPAN_ALERT("[P] uselessly clunks off [hit]!"))
+			playsound(hit, 'sound/impact_sounds/Glass_Hit_1.ogg', 75, TRUE)
+		. = ..()
+
+	on_end(obj/projectile/P)
+		src.damage = initial(src.damage)
+		src.disruption = initial(src.disruption)
+		src.generate_stats()
+		P.initial_power = src.power
+		..()
 
 /datum/projectile/bullet/flare/UFO
 	name = "heat beam"
@@ -1951,7 +2041,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 				boutput(M, pod.ship_message(message))
 
 	on_hit(atom/hit, angle, obj/projectile/O)
-		if (istype(hit, /obj/critter/gunbot/drone) || istype(hit, /obj/machinery/vehicle/miniputt) || istype(hit, /obj/machinery/vehicle/pod_smooth)|| istype(hit, /obj/machinery/vehicle/tank))
+		if (istype(hit, /obj/critter/gunbot/drone) || istype(hit, /obj/machinery/vehicle/miniputt) || istype(hit, /obj/machinery/vehicle/pod_smooth)|| istype(hit, /obj/machinery/vehicle/tank) || istype(hit, /mob/living/critter/ice_phoenix))
 			explosion_new(null, get_turf(O), 12)
 
 			if(istype(hit, /obj/machinery/vehicle))

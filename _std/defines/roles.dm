@@ -29,6 +29,7 @@
 #define ROLE_GANG_MEMBER "gang_member"
 #define ROLE_HUNTER "hunter"
 #define ROLE_WRESTLER "wrestler"
+#define ROLE_PHOENIX "ice_phoenix"
 #define ROLE_EMAGGED_ROBOT "emagged_robot"
 #define ROLE_SYNDICATE_ROBOT "syndicate_robot"
 #define ROLE_CHANGELING_HIVEMIND_MEMBER "changeling_hivemind_member"

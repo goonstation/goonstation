@@ -180,7 +180,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 
 	unremovable
 		name = "slasher's gas mask"
-		desc = "A close-fitting sealed gas mask, this one seems to be protruding some kind of dark aura."
+		desc = "A close-fitting sealed gas mask, this one seems to be producing some kind of dark aura."
 		cant_self_remove = 1
 		cant_other_remove = 1
 		icon_state = "slasher_mask"
@@ -273,7 +273,7 @@ TYPEINFO(/obj/item/voice_changer)
 
 /obj/item/voice_changer
 	name = "voice changer"
-	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discretely fits inside most masks, and can be removed with wirecutters."
+	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discreetly fits inside most masks, and can be removed with wirecutters."
 	icon_state = "voicechanger"
 	is_syndicate = 1
 	var/permanent = FALSE
@@ -393,7 +393,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 
 	autumn
 		name = "autumn clown wig and mask"
-		desc = "A special clown mask made to celebrate Autumn. Orange you glad you have it!!"
+		desc = "A special clown mask made to celebrate Autumn. Orange you glad you have it?!"
 		icon_state = "clown_autumn"
 		item_state = "clown_autumn"
 		base_icon_state = "clown_autumn"
@@ -843,7 +843,7 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 
 /obj/item/clothing/mask/greencultmask
 	name = "lost horror veil"
-	desc = "A dark green shroud with loose fabric tendrils at the end of the face You feel dizzy and lost just gazing into the visage."
+	desc = "A dark green shroud with loose fabric tendrils at the end of the face. You feel dizzy and lost just gazing into the visage."
 	item_state = "greencultmask"
 	icon_state = "greencultmask"
 	wear_layer = MOB_OVER_TOP_LAYER

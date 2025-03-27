@@ -149,6 +149,12 @@ TYPEINFO(/obj/item/card/emag)
 /obj/item/card/id/research
 	band_color = "purple"
 
+/obj/item/card/id/medical
+	icon_state = "id_med"
+
+/obj/item/card/id/medical
+	icon_state = "id_med"
+
 /obj/item/card/id/engineering
 	band_color = "yellow"
 
