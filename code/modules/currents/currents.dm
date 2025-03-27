@@ -50,13 +50,16 @@
 			new /obj/landmark/flotsam_spawner(get_steps(src, turn(src.dir, 90), i - center_index))
 
 		var/turf/T = get_turf(src)
+		//keep track of how far "left" we've moved total, so we can avoid straying too far off the original line
 		var/left_delta = 0
 		while(istype(T, /turf/space/fluid))
 			//pick a turn dir making sure it's not outside our max variance
 			if (prob(10))
-				if (prob(50) && left_delta < src.max_variance)
+				if (prob(50) && left_delta > -src.max_variance)
+					left_delta--
 					T = src.do_corner(T, src.dir, -90)
-				else if (left_delta > -src.max_variance)
+				else if (left_delta < src.max_variance)
+					left_delta++
 					T = src.do_corner(T, src.dir, 90)
 			else //just do a normal straight segment
 				for (var/i in 1 to src.width)
