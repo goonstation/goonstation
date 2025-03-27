@@ -22241,6 +22241,8 @@
 /area/diner/hallway)
 "rVC" = (
 /obj/machinery/light,
+/obj/storage/closet/dresser,
+/obj/random_item_spawner/dressup/lots,
 /turf/simulated/floor,
 /area/radiostation/hallway)
 "rVO" = (
@@ -23259,6 +23261,11 @@
 	},
 /turf/space,
 /area/bee_trader)
+"uwH" = (
+/obj/storage/closet/dresser,
+/obj/random_item_spawner/hat/lots,
+/turf/simulated/floor,
+/area/radiostation/hallway)
 "uxh" = (
 /obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater"
@@ -23499,6 +23506,12 @@
 /obj/item/plate/tray,
 /turf/simulated/floor/plating/damaged1,
 /area/diner/kitchen)
+"uSr" = (
+/obj/machinery/light,
+/obj/storage/closet/dresser,
+/obj/random_item_spawner/shoe/lots,
+/turf/simulated/floor,
+/area/radiostation/hallway)
 "uSs" = (
 /obj/machinery/computer/tetris,
 /obj/item/paper/businesscard/skulls{
@@ -23685,6 +23698,11 @@
 /obj/item/wrench,
 /turf/simulated/floor,
 /area/radiostation/engineering)
+"vsG" = (
+/obj/storage/closet/dresser,
+/obj/random_item_spawner/mask/lots,
+/turf/simulated/floor,
+/area/radiostation/hallway)
 "vub" = (
 /obj/lattice{
 	dir = 4;
@@ -106959,7 +106977,7 @@ aek
 acY
 kga
 acY
-acY
+uwH
 rVC
 kEW
 kEW
@@ -109979,8 +109997,8 @@ aeq
 acY
 kga
 acY
-acY
-rVC
+vsG
+uSr
 dll
 dll
 dll
