@@ -229,8 +229,6 @@
 	processing_tier = PROCESSING_HALF
 	///The current shaft, can be null if some idiot overextends the shaft all the way out
 	var/obj/turbine_shaft/shaft = null
-	///How many extra lengths of shaft stick out the back
-	var/initial_length = 5
 
 	var/reversed = FALSE
 
@@ -240,10 +238,6 @@
 	//sooo if we want the power to cap out at ~40kw and 100rpm (big slow water turbine)
 	//stator load = (60 * 40 * 1000)/100 = 24kj/rev
 	var/stator_load = 24 KILO //per revolution
-
-	New(new_loc)
-		. = ..()
-		src.init()
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -272,18 +266,6 @@
 				src.move_shaft(backwards = TRUE)
 			if ("extend")
 				src.move_shaft(backwards = FALSE)
-
-	proc/init()
-		var/turf/T = get_turf(src)
-		new /obj/turbine_shaft/turbine(get_step(T, src.dir))
-		src.shaft = new(T)
-		src.shaft.attach()
-		for (var/i in 1 to initial_length)
-			T = get_step(T, turn(src.dir, 180)) //step backwards
-			if (!T || T.density)
-				break
-			var/obj/turbine_shaft/shaft = new(T)
-			shaft.attach()
 
 	proc/move_shaft(backwards = FALSE)
 		if (GET_COOLDOWN(src, "move_shaft"))
@@ -348,5 +330,26 @@
 		var/image/indicator_overlay = image(src.icon, "indicator_[round(src.get_rpm()/10, 1)]")
 		indicator_overlay.plane = PLANE_ABOVE_LIGHTING
 		src.UpdateOverlays(indicator_overlay, "indicator")
+
+/obj/mapping_helper/current_turbine
+	name = "current turbine spawner"
+	icon = 'icons/obj/machines/current_turbine.dmi'
+	icon_state = "turbine_base"
+	///How many extra lengths of shaft stick out the back
+	var/tail_length = 4
+
+	setup()
+		var/turf/T = get_turf(src)
+		var/obj/machinery/power/current_turbine_base/base = new(T)
+		base.dir = src.dir
+		new /obj/turbine_shaft/turbine(get_steps(T, src.dir, 2))
+		var/obj/turbine_shaft/connector = new(get_step(T, src.dir))
+		connector.attach()
+		for (var/i in 0 to src.tail_length)
+			T = get_steps(src, turn(src.dir, 180), i) //step backwards
+			if (!T || T.density)
+				break
+			var/obj/turbine_shaft/shaft = new(T)
+			shaft.attach()
 
 #undef TURBINE_MOVE_TIME
