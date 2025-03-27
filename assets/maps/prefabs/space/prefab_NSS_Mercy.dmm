@@ -222,8 +222,8 @@
 /obj/item/storage/wall/emergency{
 	pixel_y = 30
 	},
-/obj/stool/chair/comfy/shuttle/pilot,
 /obj/item/bible,
+/obj/stool/chair/comfy/shuttle,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/prefab/angelshuttle)
 "V" = (
