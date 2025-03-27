@@ -14,7 +14,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	locked = 1
 	},
-/turf/space,
+/turf/simulated/floor/carpet/blue/fancy,
 /area/prefab/angelshuttle)
 "g" = (
 /obj/fakeobject/skeleton,
