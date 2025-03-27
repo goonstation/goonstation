@@ -1811,7 +1811,6 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	items_in_backpack = list(/obj/item/storage/box/random_colas, /obj/item/clothing/head/helmet/camera, /obj/item/device/camera_viewer/public)
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
-#ifdef HALLOWEEN
 /*
  * Halloween jobs
  */
@@ -1819,13 +1818,17 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween
 	linkcolor = "#FF7300"
 	wiki_link = "https://wiki.ss13.co/Jobs#Spooktober_Jobs"
+#ifdef HALLOWEEN
+	limit = 1
+#else
+	limit = 0
+#endif
 
 /datum/job/special/halloween/blue_clown
 	name = "Blue Clown"
 	wages = PAY_DUMBCLOWN
 	trait_list = list("training_clown")
 	access_string = "Clown"
-	limit = 1
 	change_name_on_spawn = TRUE
 	slot_back = list()
 	slot_mask = list(/obj/item/clothing/mask/clown_hat/blue)
@@ -1848,7 +1851,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "Candy Salesman"
 	wages = PAY_UNTRAINED
 	access_string = "Salesman"
-	limit = 1
 	slot_head = list(/obj/item/clothing/head/that/purple)
 	slot_ears = list(/obj/item/device/radio/headset)
 	slot_jump = list(/obj/item/clothing/under/suit/purple)
@@ -1862,7 +1864,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "Pumpkin Head"
 	wages = PAY_UNTRAINED
 	access_string = "Staff Assistant"
-	limit = 1
 	change_name_on_spawn = TRUE
 	slot_head = list(/obj/item/clothing/head/pumpkin)
 	slot_ears = list(/obj/item/device/radio/headset)
@@ -1882,7 +1883,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "WannaBEE"
 	wages = PAY_UNTRAINED
 	access_string = "Botanist"
-	limit = 1
 	slot_head = list(/obj/item/clothing/head/headband/bee)
 	slot_suit = list(/obj/item/clothing/suit/bee)
 	slot_ears = list(/obj/item/device/radio/headset)
@@ -1903,7 +1903,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "Discount Dracula"
 	wages = PAY_UNTRAINED
 	access_string = "Staff Assistant"
-	limit = 1
 	change_name_on_spawn = TRUE
 	slot_head = list(/obj/item/clothing/head/that)
 	slot_suit = list(/obj/item/clothing/suit/gimmick/vampire)
@@ -1926,7 +1925,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "Discount Werewolf"
 	wages = PAY_UNTRAINED
 	access_string = "Staff Assistant"
-	limit = 1
 	change_name_on_spawn = TRUE
 	slot_head = list(/obj/item/clothing/head/werewolf)
 	slot_jump = list(/obj/item/clothing/under/shorts)
@@ -1944,7 +1942,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "Discount Mummy"
 	wages = PAY_UNTRAINED
 	access_string = "Staff Assistant"
-	limit = 1
 	change_name_on_spawn = TRUE
 	slot_mask = list(/obj/item/clothing/mask/mummy)
 	slot_jump = list(/obj/item/clothing/under/gimmick/mummy)
@@ -1962,7 +1959,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "Hot Dog"
 	wages = PAY_UNTRAINED
 	access_string = "Staff Assistant"
-	limit = 1
 	change_name_on_spawn = TRUE
 	slot_jump = list(/obj/item/clothing/under/shorts)
 	slot_suit = list(/obj/item/clothing/suit/gimmick/hotdog)
@@ -1977,7 +1973,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "Discount Godzilla"
 	wages = PAY_UNTRAINED
 	access_string = "Staff Assistant"
-	limit = 1
 	change_name_on_spawn = TRUE
 	slot_head = list(/obj/item/clothing/head/biglizard)
 	slot_ears = list(/obj/item/device/radio/headset)
@@ -1998,7 +1993,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "Discount Macho Man"
 	wages = PAY_UNTRAINED
 	access_string = "Staff Assistant"
-	limit = 1
 	change_name_on_spawn = TRUE
 	slot_head = list(/obj/item/clothing/head/helmet/macho)
 	slot_eyes = list(/obj/item/clothing/glasses/macho)
@@ -2018,7 +2012,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween/ghost
 	name = "Ghost"
 	wages = PAY_UNTRAINED
-	limit = 1
 	change_name_on_spawn = TRUE
 	slot_eyes = list(/obj/item/clothing/glasses/regular/ecto/goggles)
 	slot_suit = list(/obj/item/clothing/suit/bedsheet)
@@ -2034,7 +2027,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "Ghost Buster"
 	wages = PAY_UNTRAINED
 	access_string = "Staff Assistant"
-	limit = 1
 	change_name_on_spawn = TRUE
 	slot_ears = list(/obj/item/device/radio/headset/ghost_buster)
 	slot_eyes = list(/obj/item/clothing/glasses/regular/ecto/goggles)
@@ -2053,7 +2045,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_UNTRAINED
 	trait_list = list("training_chaplain")
 	access_string = "Chaplain"
-	limit = 1
 	change_name_on_spawn = TRUE
 	slot_head = list(/obj/item/clothing/head/laurels/gold)
 	slot_ears = list(/obj/item/device/radio/headset)
@@ -2073,7 +2064,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween/vendor
 	name = "Costume Vendor"
 	wages = PAY_TRADESMAN
-	limit = 1
 	change_name_on_spawn = TRUE
 	slot_jump = list(/obj/item/clothing/under/gimmick/trashsinglet)
 	slot_foot = list(/obj/item/clothing/shoes/sandal)
@@ -2157,7 +2147,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "Pickle"
 	wages = PAY_DUMBCLOWN
 	access_string = "Staff Assistant"
-	limit = 1
 	change_name_on_spawn = TRUE
 	slot_ears = list(/obj/item/device/radio/headset)
 	slot_suit = list(/obj/item/clothing/suit/gimmick/pickle)
@@ -2182,7 +2171,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 /datum/job/special/halloween/cowboy
 	name = "Space Cowboy"
-	limit = 1
 	linkcolor = CIVILIAN_LINK_COLOR
 	wages = PAY_UNTRAINED
 	starting_mutantrace = /datum/mutantrace/cow
@@ -2203,7 +2191,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 /datum/job/special/halloween/wizard
 	name = "Discount Wizard"
-	limit = 1
 	wages = PAY_UNTRAINED
 	change_name_on_spawn = TRUE
 	access_string = "Staff Assistant"
@@ -2222,7 +2209,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween/spy
 	name = "Super Spy"
 	wages = PAY_UNTRAINED
-	limit = 1
 	access_string = "Staff Assistant"
 	slot_jump = list(/obj/item/clothing/under/suit/black)
 	slot_eyes = list(/obj/item/clothing/glasses/eyepatch)
@@ -2256,8 +2242,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter/plush
 	name = "Plush Toy"
 	trusted_only = FALSE
+#ifdef HALLOWEEN
 	limit = 2
-
+#endif
 	special_setup(var/mob/living/carbon/human/M)
 		..()
 		if (!M)
@@ -2266,7 +2253,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 /datum/job/special/halloween/critter/remy
 	name = "Remy"
-	limit = 1
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2277,7 +2263,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 /datum/job/special/halloween/critter/bumblespider
 	name = "Bumblespider"
-	limit = 1
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2288,7 +2273,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 /datum/job/special/halloween/critter/crow
 	name = "Crow"
-	limit = 1
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2298,7 +2282,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		C.flags = null
 
 // end halloween jobs
-#endif
 
 /datum/job/special/syndicate_weak
 	linkcolor = SYNDICATE_LINK_COLOR

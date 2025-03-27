@@ -827,7 +827,6 @@ var/global/noir = 0
 							<b>Regular Modes:</b><br>
 							<A href='?src=\ref[src];action=[cmd];type=secret'>Secret</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=action'>Secret: Action</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=intrigue'>Secret: Intrigue</A><br>
 							"})
 				for(var/item in regular_modes)
 					dat += "<A href='?src=\ref[src];action=[cmd];type=[regular_modes[item]]'>[item]</A><br>"

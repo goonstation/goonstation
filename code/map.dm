@@ -387,7 +387,7 @@ var/global/list/mapNames = list(
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
 		"the cargo office (QM)" = list(/area/station/quartermaster/office),
-		"the engineering control room" = list(/area/station/engine/engineering, /area/station/engine/power),
+		"the engineering control room" = list(/area/station/engine/monitoring, /area/station/engine/power),
 		"the central warehouse" = list(/area/station/storage/warehouse),
 		"the courtroom" = list(/area/station/crew_quarters/courtroom, /area/station/crew_quarters/juryroom),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery, /area/station/medical/medbay/lobby),

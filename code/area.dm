@@ -2830,21 +2830,9 @@ ABSTRACT_TYPE(/area/station/engine)
 /area/station/engine/core/nuclear
 	name = "Nuclear reactor room"
 
-/area/mining/miningoutpost
-	name = "Mining Outpost"
-	icon_state = "engine"
-
 /area/station/engine/storage
 	name = "Engineering Storage"
-	icon_state = "engine_hallway"
-
-/area/station/engine/shield_gen
-	name = "Engineering Shield Generator"
-	icon_state = "engine_monitoring"
-
-/area/station/engine/shields
-	name = "Engineering Shields"
-	icon_state = "engine_monitoring"
+	icon_state = "engine_storage"
 
 /area/station/engine/elect
 	name = "Mechanic's Lab"
@@ -2853,12 +2841,12 @@ ABSTRACT_TYPE(/area/station/engine)
 
 /area/station/engine/power
 	name = "Engineering Power Room"
-	icon_state = "showers"
+	icon_state = "engine_power"
 	sound_environment = 5
 
 /area/station/engine/monitoring
 	name = "Engineering Control Room"
-	icon_state = "green"
+	icon_state = "engine_control"
 
 TYPEINFO(/area/station/engine/singcore)
 	valid_bounty_area = FALSE
@@ -2869,7 +2857,7 @@ TYPEINFO(/area/station/engine/singcore)
 
 /area/station/engine/eva
 	name = "Engineering EVA"
-	icon_state = "showers"
+	icon_state = "engine_eva"
 
 /area/station/engine/core
 	name = "Thermo-Electric Generator"
@@ -3508,10 +3496,6 @@ ABSTRACT_TYPE(/area/station/chapel)
 	icon_state = "eva"
 	sound_environment = 3
 
-/area/station/storage/eeva
-	name = "Engineering EVA Storage"
-	icon_state = "eva"
-
 /area/station/storage/secure
 	name = "Secure Storage"
 	icon_state = "storage"
@@ -3910,6 +3894,18 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 
 	Entered(atom/movable/A, atom/oldloc)
 		. = ..()
+		if (current_state == GAME_STATE_PLAYING) //Don't worry about this in setup.
+			var/obj/O = A
+			if (istype(O))
+				if(access_armory in O.req_access) // Auto update access for armory stuff when it enters armory if it mismatches current auth status
+					if(src.armory_auth && !O.has_access(access_security))
+						O.req_access += access_security
+						O.visible_message(SPAN_NOTICE("[O]'s access is automatically updated!"))
+						playsound(O, 'sound/machines/chime.ogg', 50)
+					else if (!src.armory_auth && O.has_access(access_security))
+						O.req_access = list(access_armory)
+						O.visible_message(SPAN_NOTICE("[O]'s access is automatically reset!"))
+						playsound(O, 'sound/machines/chime.ogg', 50)
 		if (current_state < GAME_STATE_FINISHED)
 			if(istype(A, /mob/living) && !istype(A, /mob/living/intangible))
 				var/mob/living/M = A
@@ -3924,7 +3920,6 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 				SPAWN(120 SECONDS)
 					entered_ckeys -= ckey
 				logTheThing(LOG_STATION, M, "entered the Armory [log_loc(M)].[armory_auth ? "" : " - Armory unauthorized."]")
-
 // // // // // //
 
 /// Turret protected areas, will activate AI turrets to pop up when entered, and vice-versa when exited.
@@ -4039,9 +4034,12 @@ TYPEINFO(/area/station/turret_protected/AIbaseoutside)
 ABSTRACT_TYPE(/area/mining)
 /area/mining
 	name = "Mining Outpost"
-	icon_state = "engine"
+	icon_state = "mining"
 	workplace = 1
 	station_map_colour = MAPC_MINING
+
+/area/mining/miningoutpost
+	name = "Mining Outpost"
 
 /area/mining/power
 	name = "Outpost Power Room"

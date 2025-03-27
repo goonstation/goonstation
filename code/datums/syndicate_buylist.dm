@@ -1052,7 +1052,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/rose
 	name = "Poison rose"
-	items = list(/obj/item/plant/flower/rose/poisoned)
+	items = list(/obj/item/clothing/head/flower/rose/poisoned)
 	cost = 4
 	desc = "A regular looking rose hiding a poison capable of muting and briefly incapacitating anyone who smells it."
 	job = list("Mime")
