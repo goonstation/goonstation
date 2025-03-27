@@ -2,9 +2,9 @@
 //maybe this should just be a turf component/var?
 //Idk how the performance overhead of all these objects compares to defining Crossed/Uncrossed on every ocean turf
 /obj/effects/current
-	//TODO: remove this debug icon
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "arrow"
+	//debug icon, turn on when u want to debug
+	// icon = 'icons/effects/effects.dmi'
+	// icon_state = "arrow"
 	var/datum/force_push_controller/ocean/current/controller = null
 
 	Crossed(atom/movable/AM)
@@ -107,8 +107,12 @@
 	//TODO: add more to this
 	var/list/flotsam_types = list(
 		/obj/item/seashell = 10,
-		/obj/item/reagent_containers/food/snacks/ingredient/seaweed = 2,
+		/obj/item/raw_material/rock = 4,
+		/obj/item/raw_material/scrap_metal = 3,
+		/obj/item/reagent_containers/food/snacks/ingredient/seaweed = 2, //I know these are pressed sheets but shhh, pretend they fell off a sushi boat or something
+		/obj/item/reagent_containers/food/fish/shrimp = 2,
 		/obj/item/raw_material/gold = 1,
+		/obj/naval_mine/rusted = 0.1, //hehehe - won't damage turbines but will look scary
 	)
 
 	New()
@@ -118,11 +122,13 @@
 		SPAWN(0)
 			while (!QDELETED(src))
 				process()
-				sleep(rand(10,15) SECONDS)
+				sleep(rand(8,12) SECONDS)
 
 	proc/process()
 		if (prob(10))
 			var/type = weighted_pick(src.flotsam_types)
 			var/atom/movable/thing = new type(src.loc)
+			if (istype(thing, /obj/item/raw_material/scrap_metal))
+				thing.setMaterial(getMaterial(pick("bohrum", "steel", "mauxite")))
 			APPLY_ATOM_PROPERTY(thing, PROP_ATOM_FLOTSAM, src)
 
