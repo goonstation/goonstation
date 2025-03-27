@@ -415,6 +415,19 @@
 				var/image/frame_overlay = src.SafeGetOverlayImage("frame_overlay", 'icons/obj/large/64x48.dmi', "frame-caution", src.layer+0.2)
 				src.UpdateOverlays(frame_overlay, "frame_overlay")
 
+
+		update_icon(...)
+			. = ..()
+			if (src.contents_icon_state)
+				var/image/contents_overlay = src.SafeGetOverlayImage("contents_overlay", contents_icon, contents_icon_state, src.layer+0.1, contents_pixel_x, contents_pixel_y)
+				src.UpdateOverlays(contents_overlay, "contents_overlay")
+			else
+				src.ClearSpecificOverlays(FALSE, "contents_overlay")
+			if (src.has_caution_frame)
+				var/image/frame_overlay = src.SafeGetOverlayImage("frame_overlay", 'icons/obj/large/64x48.dmi', "frame-caution", src.layer+0.2)
+				src.UpdateOverlays(frame_overlay, "frame_overlay")
+			else
+				src.ClearSpecificOverlays(FALSE, "frame_overlay")
 		lunar_cab
 
 			contents_icon_state = "cab-engineer"
@@ -443,6 +456,7 @@
 
 			tanker
 				contents_icon_state = "car-tanker"
+				has_caution_frame = TRUE
 
 			barrels
 				contents_icon_state = "car-barrels"
@@ -467,6 +481,7 @@
 
 			nuclear
 				contents_icon_state = "car-nukes"
+				has_caution_frame = TRUE
 
 			industrial
 				contents_icon_state = "car-industrial"
@@ -482,6 +497,10 @@
 
 			firebarrel
 				contents_icon_state = "car-fire"
+
+			howitzer
+				icon_state = "car-platform-green"
+				contents_icon_state = "car-howitzer"
 
 
 /obj/decoration/railyard
