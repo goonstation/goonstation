@@ -439,10 +439,10 @@
 			contents_icon_state = "car-passenger-middle"
 
 			start
-				icon_state = "car-passenger-start"
+				contents_icon_state = "car-passenger-start"
 
 			end
-				icon_state = "car-passenger-end"
+				contents_icon_state = "car-passenger-end"
 
 		container
 			contents_icon_state = "car-container-green"
