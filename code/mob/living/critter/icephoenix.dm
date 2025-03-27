@@ -149,7 +149,7 @@
 
 	attack_hand(mob/living/M)
 		..()
-		if (M == src)
+		if (istype(M, /mob/living/critter/ice_phoenix))
 			return
 		if (M.a_intent != INTENT_HELP)
 			return
@@ -377,7 +377,7 @@
 
 	attack_hand(mob/user)
 		attack_particle(user, src)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		boutput(user, SPAN_NOTICE("It's really cold!"))
 		if (!ON_COOLDOWN(src, "hit_impact_sound", 2 SECONDS))
 			playsound(get_turf(src), 'sound/impact_sounds/Glass_Shards_Hit_1.ogg', 75, TRUE)
@@ -386,7 +386,7 @@
 	attackby(obj/item/I, mob/user)
 		..()
 		attack_particle(user, src)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		if (!I.force)
 			return

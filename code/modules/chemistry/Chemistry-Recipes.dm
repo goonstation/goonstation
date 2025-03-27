@@ -670,7 +670,7 @@
 		result_amount = 0.2
 		instant = 0
 		reaction_speed = 0.4
-		mix_phrase = "The oil starts to bubble and turn into a back tar."
+		mix_phrase = "The oil starts to bubble and turn into a black tar."
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			if(holder?.my_atom?.is_open_container())
