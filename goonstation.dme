@@ -357,6 +357,7 @@
 #include "code\datums\controllers\process\tgui.dm"
 #include "code\datums\controllers\process\ticker.dm"
 #include "code\datums\controllers\process\tracker_hud.dm"
+#include "code\datums\controllers\process\turbine_shafts.dm"
 #include "code\datums\controllers\process\world.dm"
 #include "code\datums\crew_credits\crew_credits.dm"
 #include "code\datums\crew_credits\crew_credits_debug.dm"

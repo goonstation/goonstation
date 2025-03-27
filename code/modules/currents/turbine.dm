@@ -3,10 +3,16 @@
 
 /datum/shaft_network
 	var/rpm = 0
-	var/max_flow_rate = 0
-	///Are we waiting for the end of the tick to update our RPM?
-	var/waiting = FALSE
 	var/list/obj/machinery/turbine_shaft/shafts = list()
+
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		shafts = null
+		STOP_TRACKING
+		..()
 
 	///Split the network in two around the specified shaft
 	proc/split(obj/machinery/turbine_shaft/split_on)
@@ -26,6 +32,8 @@
 			shaft.network = new_network
 		if (length(new_network.shafts) == 1)
 			new_network.shafts[1].anchored = FALSE
+		if (length(src.shafts) == 0)
+			qdel(src)
 
 	///Join two networks together
 	proc/join(obj/machinery/turbine_shaft/new_shaft, obj/machinery/turbine_shaft/adjacent)
@@ -38,10 +46,16 @@
 			CRASH("Attempting to add shaft to non-end shaft, what??")
 		//claim the other shafts
 		for (var/obj/machinery/turbine_shaft/other_network_shaft in new_shaft.network.shafts)
+			other_network_shaft.network.remove_shaft(other_network_shaft)
 			other_network_shaft.network = src
 			other_network_shaft.update(src.rpm)
 			other_network_shaft.anchored = TRUE
 		adjacent.anchored = TRUE
+
+	proc/remove_shaft(obj/machinery/turbine_shaft/shaft)
+		src.shafts -= shaft
+		if (length(src.shafts) == 0)
+			qdel(src)
 
 	proc/try_move(dir)
 		var/turf/test_turf = null
@@ -49,28 +63,28 @@
 			test_turf = get_step(src.shafts[length(src.shafts)], dir)
 		else
 			test_turf = get_step(src.shafts[1], dir)
-		if (test_turf && !test_turf.density) // TODO: better check?
+		if (test_turf && !test_turf.density) // TODO: better check? Make sure turbines can't pass through things
 			for (var/obj/machinery/turbine_shaft/shaft as anything in src.shafts)
 				shaft.set_loc(get_step(shaft, dir))
 			return TRUE
 		return FALSE
 
-	///Called by each turbine, registering its flow rate, RPM is then calculated from the maximum of all flow rates at end of tick
-	proc/turbine_input(flow_rate)
-		src.max_flow_rate = max(src.max_flow_rate, flow_rate) //maaaybe could do something smarter than this in future but for now this does at least provide a slight advantage to multiple turbines
-		if (!src.waiting)
-			src.waiting = TRUE
-			SPAWN(0)
-				src.waiting = FALSE
-				src.update_rpm()
+	proc/process()
+		if (!length(src.shafts))
+			qdel(src)
+			return
+		var/max_flow_rate = 0
+		for (var/obj/machinery/turbine_shaft/turbine/turbine in src.shafts)
+			//maaaybe could do something smarter than this in future but for now this does at least provide a slight advantage to multiple turbines
+			max_flow_rate = max(max_flow_rate, turbine.get_flow_rate())
+		src.update_rpm(max_flow_rate)
 
-	proc/update_rpm()
-		if (src.max_flow_rate)
+	proc/update_rpm(max_flow_rate)
+		if (max_flow_rate)
 			//this part is total hand-waving, just do some basic maths to make the RPM slowly increase and decrease with the flow rate
-			src.rpm += (src.max_flow_rate - src.rpm)/4
+			src.rpm += (max_flow_rate - src.rpm)/4
 		else
 			src.rpm = max(src.rpm - 2 - src.rpm/4, 0) //spin down rapidly if there's no current
-		src.max_flow_rate = 0
 		for (var/obj/machinery/turbine_shaft/shaft as anything in src.shafts)
 			shaft.update(src.rpm)
 
@@ -149,10 +163,6 @@
 	update_icon()
 		src.icon_state = "[src.base_icon_state]_[src.speed_state]"
 
-	//this is a bit weird but think of it as drag causing the network to spin down over time if there's no turbines
-	process(mult)
-		src.network.turbine_input(0)
-
 /obj/machinery/turbine_shaft/turbine
 	name = "NT40 tidal current turbine"
 	icon_state = "turbine_0"
@@ -165,12 +175,9 @@
 		src.UpdateIcon(0)
 		src.SubscribeToProcess()
 
-	process(mult)
+	proc/get_flow_rate()
 		var/obj/effects/current/current = locate() in get_turf(src)
-		if (current)
-			src.network.turbine_input(current.controller.get_flow_rate())
-		else
-			src.network.turbine_input(0)
+		return current?.controller.get_flow_rate() || 0
 
 	Bumped(mob/living/M)
 		if (!istype(M) || isintangible(M))
