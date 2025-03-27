@@ -23785,7 +23785,7 @@
 /area/derelict_ai_sat)
 "vIB" = (
 /obj/decal/stage_edge,
-/obj/machinery/camera/television/auto{
+/obj/machinery/camera/television/tv_studio{
 	dir = 1
 	},
 /turf/simulated/floor/wood/two,
