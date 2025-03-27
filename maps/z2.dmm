@@ -55224,6 +55224,12 @@
 	dir = 8
 	},
 /area/crypt/graveyard)
+"egJ" = (
+/obj/machinery/bathtub{
+	default_reagent = "hemolymph"
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/glowbold)
 "ehb" = (
 /obj/item/material_piece/uqill,
 /obj/item/material_piece/uqill,
@@ -55710,6 +55716,25 @@
 	},
 /turf/space,
 /area/watchful_eye_sensor)
+"eBZ" = (
+/obj/item/disk/data/floppy/read_only/bank_progs{
+	pixel_y = 4;
+	pixel_x = 8
+	},
+/obj/item/clothing/head/NTberet{
+	pixel_y = 11;
+	pixel_x = 5;
+	name = "shameful stolen counterfeit Nanotrasen beret";
+	contraband = 9;
+	desc = "They've been looking for this thing for a long time."
+	},
+/obj/item/storage/box/ic_cones{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/table/wood/auto,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/glowbold)
 "eCA" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -57945,6 +57970,20 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"gwN" = (
+/obj/machinery/disposal{
+	status = 1;
+	name = "turbo-busted disposal unit"
+	},
+/obj/item/currency/buttcoin{
+	pixel_y = 2;
+	pixel_x = -6
+	},
+/obj/decoration/railyard/schedule{
+	pixel_y = 27
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/glowbold)
 "gwQ" = (
 /obj/mesh/catwalk{
 	dir = 1;
@@ -59806,6 +59845,26 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
+"hYK" = (
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/item/storage/box/prosthesis_kit/eye_meson{
+	pixel_y = 8;
+	pixel_x = 7
+	},
+/obj/item/pen/crayon/infrared{
+	pixel_y = -1;
+	pixel_x = -8
+	},
+/obj/item/device/t_scanner{
+	pixel_x = -6;
+	pixel_y = 11
+	},
+/obj/table/wood/auto/desk,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/glowbold)
 "hZA" = (
 /turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 6
@@ -60023,6 +60082,14 @@
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/greenwhite,
 /area/owlery/owleryhall)
+"ijo" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 8;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/glowbold)
 "ijU" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/access/owlmaint,
@@ -65936,6 +66003,22 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"mVU" = (
+/obj/decal/poster/flag/nb{
+	pixel_y = 32
+	},
+/obj/item/quiver/leather/stocked,
+/obj/item/gun/bow/crossbow/wooden{
+	pixel_y = -3;
+	pixel_x = 3
+	},
+/obj/item/gun/bow/crossbow/wooden{
+	pixel_y = 9;
+	pixel_x = -5
+	},
+/obj/table/wood/auto,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/glowbold)
 "mWd" = (
 /obj/disposaloutlet{
 	dir = 1;
@@ -68279,6 +68362,12 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
+"oKw" = (
+/obj/stool/chair/office/purple{
+	dir = 4
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/glowbold)
 "oLg" = (
 /obj/fakeobject/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
@@ -72662,6 +72751,9 @@
 "rZe" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/drone/office)
+"rZl" = (
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/glowbold)
 "rZE" = (
 /obj/map/light/lava,
 /obj/indestructible/shuttle_corner{
@@ -75314,6 +75406,14 @@
 /obj/sign_accidents,
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma)
+"uxt" = (
+/obj/decal/cleanable/writing/infrared{
+	pixel_y = -10;
+	pixel_x = 6;
+	words = "Only 2048 bugs to go..."
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/glowbold)
 "uxv" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-39"
@@ -75983,6 +76083,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"uXG" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/glowbold)
 "uYE" = (
 /obj/cable/green{
 	icon_state = "5-10"
@@ -77930,6 +78034,17 @@
 /obj/stool,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"wup" = (
+/obj/admin_plaque{
+	name = "Glowbold's Office";
+	pixel_x = 32
+	},
+/turf/unsimulated/floor/grey/side{
+	dir = 4
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "wuv" = (
 /obj/fakeobject/skeleton/unanchored,
 /obj/item/clothing/head/wizard,
@@ -78091,6 +78206,13 @@
 	dir = 6
 	},
 /area/owlery/gangzone)
+"wzH" = (
+/obj/machinery/computer3/generic/personal{
+	pixel_y = 3
+	},
+/obj/table/wood/auto,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/glowbold)
 "wAJ" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -78854,6 +78976,12 @@
 /obj/item/clothing/glasses/sunglasses,
 /turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
+"xeg" = (
+/obj/submachine/ice_cream_dispenser{
+	flavors = list("shirley_temple")
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/glowbold)
 "xem" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -157668,7 +157796,7 @@ rER
 rER
 dxn
 rER
-rER
+wup
 rER
 rER
 rER
@@ -157971,7 +158099,7 @@ oaN
 wel
 wel
 wel
-oaN
+ijo
 wel
 wel
 wel
@@ -158272,9 +158400,9 @@ dvW
 dvW
 dvW
 wel
-dvW
-dvW
-dvW
+gwN
+uxt
+egJ
 wel
 dvW
 dvW
@@ -158574,9 +158702,9 @@ dvW
 dvW
 dvW
 wel
-dvW
-dvW
-dvW
+rZl
+rZl
+uXG
 wel
 dvW
 dvW
@@ -158876,9 +159004,9 @@ lRO
 dvW
 dvW
 wel
-lRO
-dvW
-dvW
+hYK
+oKw
+xeg
 wel
 lRO
 dvW
@@ -159178,9 +159306,9 @@ dvW
 dvW
 dvW
 wel
-dvW
-dvW
-dvW
+mVU
+wzH
+eBZ
 wel
 dvW
 dvW
