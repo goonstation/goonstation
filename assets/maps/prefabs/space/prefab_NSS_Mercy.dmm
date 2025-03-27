@@ -1,0 +1,404 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"b" = (
+/obj/stool/chair/comfy/wheelchair{
+	dir = 4
+	},
+/obj/fakeobject/skeleton,
+/obj/item/paper/book/from_file/deep_blue_sea,
+/turf/simulated/floor/carpet/blue/fancy/edge,
+/area/prefab/angelshuttle)
+"e" = (
+/obj/machinery/door/airlock/pyro/glass/med{
+	locked = 1
+	},
+/turf/space,
+/area/prefab/angelshuttle)
+"g" = (
+/obj/fakeobject/skeleton,
+/obj/item/clothing/head/helmet/bucket/hat,
+/obj/stool/chair/comfy/blue,
+/obj/item/clothing/head/goggles/blue,
+/obj/item/baton/cane,
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/prefab/angelshuttle)
+"h" = (
+/turf/simulated/floor/carpet/blue/fancy,
+/area/prefab/angelshuttle)
+"i" = (
+/obj/fakeobject/skeleton,
+/obj/stool/bed/moveable/hospital,
+/obj/item/instrument/bikehorn/lucky{
+	pixel_y = -9
+	},
+/obj/item/tank/oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/bedsheet/blue,
+/turf/simulated/floor/carpet/blue/fancy/edge,
+/area/prefab/angelshuttle)
+"j" = (
+/obj/fakeobject/skeleton,
+/obj/stool/bed/moveable/hospital/halloween,
+/obj/item/toy/handheld,
+/obj/item/tank/oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/bedsheet/blue,
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/prefab/angelshuttle)
+"l" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/se,
+/area/prefab/angelshuttle)
+"n" = (
+/obj/machinery/communications_dish,
+/turf/space,
+/area/prefab/angelshuttle)
+"o" = (
+/obj/decal/poster/wallsign/medbay,
+/turf/simulated/wall/auto/shuttle,
+/area/prefab/angelshuttle)
+"q" = (
+/obj/item/toy/ornate_baton,
+/obj/fakeobject/skeleton,
+/obj/stool/chair/comfy/blue{
+	dir = 8
+	},
+/obj/item/instrument/triangle,
+/turf/simulated/floor/carpet/blue/fancy/edge,
+/area/prefab/angelshuttle)
+"r" = (
+/obj/fakeobject/skeleton,
+/obj/item/toy/plush/small/arthur,
+/obj/stool/chair/comfy/wheelchair{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/prefab/angelshuttle)
+"s" = (
+/obj/computer3frame/desktop,
+/obj/table/nanotrasen{
+	desc = "An industrial grade table with an azure glass panel on the top. The glass looks extremely sturdy."s"\t},/turf/simulated/floor/carpet/blue/fancy,/area/space)"j" = (/turf/simulated/floor/carpet/blue/fancy/edge/se,/area/space)"l" = (/turf/space,/area/space)"m" = (/obj/stool/chair/comfy/shuttle/pilot{\tdir = 4;\tdesc = "Onlythemostimportantcrewmembergetstosithere.Everyoneissuperenviousofwhoeversitsinthischair."s"
+	},
+/turf/simulated/floor/carpet/blue/decal/outercross,
+/area/prefab/angelshuttle)
+"t" = (
+/mob/living/critter/small_animal/butterfly,
+/turf/simulated/floor/carpet/blue/fancy,
+/area/prefab/angelshuttle)
+"u" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans";
+	dir = 5
+	},
+/turf/space,
+/area/prefab/angelshuttle)
+"v" = (
+/obj/fakeobject/skeleton,
+/obj/item/toy/plush/small/chris,
+/obj/stool/chair/comfy/wheelchair{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge,
+/area/prefab/angelshuttle)
+"w" = (
+/obj/stool/bed/moveable/hospital,
+/obj/fakeobject/skeleton,
+/obj/item/paper/book/from_file/space_law{
+	pixel_x = -5
+	},
+/obj/item/toy/judge_block,
+/obj/item/toy/judge_gavel,
+/turf/simulated/floor/carpet/blue/fancy/edge,
+/area/prefab/angelshuttle)
+"x" = (
+/obj/decal/poster/wallsign/no_smoking{
+	pixel_y = 25
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/prefab/angelshuttle)
+"A" = (
+/obj/fakeobject/skeleton,
+/obj/stool/bed/moveable/hospital,
+/obj/item/tank/oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/bedsheet/blue,
+/turf/simulated/floor/carpet/blue/fancy/edge/nw,
+/area/prefab/angelshuttle)
+"B" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans";
+	dir = 10
+	},
+/turf/space,
+/area/prefab/angelshuttle)
+"D" = (
+/obj/fakeobject/skeleton,
+/obj/stool/bed/moveable/hospital,
+/obj/item/device/pda2,
+/obj/item/disk/data/cartridge/ringtone_dogs,
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/prefab/angelshuttle)
+"E" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 4
+	},
+/turf/space,
+/area/prefab/angelshuttle)
+"F" = (
+/obj/mapping_helper/wingrille_spawn/full,
+/turf/space,
+/area/prefab/angelshuttle)
+"G" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/prefab/angelshuttle)
+"H" = (
+/obj/decal/poster/wallsign/medbay{
+	pixel_y = 32;
+	pixel_x = 7
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"I" = (
+/obj/stool/chair/comfy/wheelchair{
+	dir = 4
+	},
+/obj/fakeobject/skeleton,
+/obj/item/storage/box/crayon/basic{
+	pixel_x = -3
+	},
+/obj/item/paper{
+	pixel_x = 3
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/prefab/angelshuttle)
+"J" = (
+/obj/item/storage/secure/ssafe/loot{
+	pixel_y = 30
+	},
+/obj/item/reagent_containers/syringe/haloperidol{
+	pixel_y = 30
+	},
+/obj/item/reagent_containers/glass/bottle/haloperidol{
+	pixel_y = 30
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/prefab/angelshuttle)
+"K" = (
+/obj/fakeobject/skeleton,
+/obj/stool/bed/moveable/hospital,
+/obj/item/tank/oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/bedsheet/blue,
+/turf/simulated/floor/carpet/blue/fancy/edge/sw,
+/area/prefab/angelshuttle)
+"M" = (
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip,
+/turf/simulated/floor/carpet/blue/fancy,
+/area/prefab/angelshuttle)
+"N" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans";
+	dir = 1
+	},
+/turf/space,
+/area/prefab/angelshuttle)
+"P" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"Q" = (
+/turf/simulated/wall/auto/shuttle,
+/area/prefab/angelshuttle)
+"R" = (
+/obj/item/pen/marker/blue,
+/turf/simulated/floor/carpet/blue/fancy,
+/area/prefab/angelshuttle)
+"S" = (
+/obj/machinery/light/small/floor/warm/very,
+/turf/simulated/floor/carpet/blue/fancy,
+/area/prefab/angelshuttle)
+"U" = (
+/obj/item/storage/wall/emergency{
+	pixel_y = 30
+	},
+/obj/stool/chair/comfy/shuttle/pilot,
+/obj/item/bible,
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/prefab/angelshuttle)
+"V" = (
+/obj/machinery/light/small/floor/warm/very,
+/obj/item/reagent_containers/iv_drip,
+/obj/iv_stand,
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
+/area/prefab/angelshuttle)
+"W" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans";
+	dir = 6
+	},
+/obj/decal/poster/wallsign/medbay{
+	pixel_x = 8;
+	pixel_y = -1
+	},
+/turf/space,
+/area/prefab/angelshuttle)
+"Z" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/decal/cleanable/writing{
+	pixel_x = 30;
+	pixel_y = 3;
+	words = "My spirit is so weary."
+	},
+/obj/item/storage/backpack/bpangel,
+/obj/item/clothing/under/misc/chaplain,
+/obj/decal/cleanable/writing{
+	pixel_x = 30;
+	pixel_y = -3;
+	words = "I have met a friend and left my postss."
+	},
+/turf/simulated/floor/carpet/blue/fancy,
+/area/prefab/angelshuttle)
+
+(1,1,1) = {"
+P
+P
+a
+a
+a
+a
+a
+P
+"}
+(2,1,1) = {"
+a
+a
+a
+E
+E
+E
+a
+a
+"}
+(3,1,1) = {"
+a
+o
+Q
+Q
+Q
+Q
+W
+a
+"}
+(4,1,1) = {"
+a
+B
+Q
+A
+V
+K
+Q
+a
+"}
+(5,1,1) = {"
+a
+a
+Q
+j
+M
+i
+Q
+a
+"}
+(6,1,1) = {"
+P
+a
+Q
+r
+S
+v
+Q
+a
+"}
+(7,1,1) = {"
+P
+a
+Q
+D
+t
+w
+Q
+a
+"}
+(8,1,1) = {"
+P
+a
+Q
+I
+S
+b
+Q
+a
+"}
+(9,1,1) = {"
+P
+a
+Q
+g
+h
+q
+Q
+a
+"}
+(10,1,1) = {"
+P
+a
+Q
+x
+G
+l
+Q
+H
+"}
+(11,1,1) = {"
+a
+a
+Q
+J
+R
+Z
+e
+a
+"}
+(12,1,1) = {"
+a
+n
+Q
+U
+s
+Q
+u
+a
+"}
+(13,1,1) = {"
+a
+a
+N
+F
+F
+u
+a
+a
+"}
+(14,1,1) = {"
+P
+a
+a
+a
+a
+a
+a
+P
+"}

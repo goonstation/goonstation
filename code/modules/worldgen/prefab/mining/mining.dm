@@ -50,6 +50,41 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/space)
 		prefabSizeX = 9
 		prefabSizeY = 14
 
+			nssmercy //A 'final flight' for those whose time is short
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/space/prefab_NSS_Mercy.dmm"
+		prefabSizeX = 14
+		prefabSizeY = 8
+
+	minimart //one of 4 tiny 'rest stops'
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/space/prefab_MiniMart.dmm"
+		prefabSizeX = 10
+		prefabSizeY = 8
+
+	minimart2 //one of 4 tiny 'rest stops'
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/space/prefab_MiniMart2.dmm"
+		prefabSizeX = 10
+		prefabSizeY = 8
+
+	minimart3 //one of 4 tiny 'rest stops'
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/space/prefab_MiniMart3.dmm"
+		prefabSizeX = 10
+		prefabSizeY = 8
+
+	minimart4 //one of 4 tiny 'rest stops'
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/space/prefab_MiniMart4.dmm"
+		prefabSizeX = 10
+		prefabSizeY = 8
+
 	shuttle
 		maxNum = 1
 		probability = 25

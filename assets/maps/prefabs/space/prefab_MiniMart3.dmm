@@ -1,0 +1,331 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/decal/cleanable/blood/tracks,
+/obj/item/casing/shotgun/pipe{
+	desc = "A slightly scorched lengs"
+	},
+/obj/decal/cleanable/blood/splatter,
+/turf/unsimulated/floor/airless/plating/damaged1,
+/area/prefab/minimart)
+"b" = (
+/obj/lattice/auto/turf_attaching,
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/prefab/minimart)
+"c" = (
+/obj/decal/tile_edge/floorguide/arrow_e{
+	pixel_x = 7
+	},
+/obj/decal/cleanable/rust,
+/obj/decal/cleanable/gang_graffiti,
+/turf/simulated/floor/airless/caution/west,
+/area/prefab/minimart)
+"d" = (
+/obj/decal/poster/wallsign/fuck1,
+/turf/unsimulated/wall/auto/adventure,
+/area/prefab/minimart)
+"e" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/unsimulated/floor/airless/plating/damaged1,
+/area/prefab/minimart)
+"g" = (
+/obj/machinery/light/runway_light/delay2,
+/obj/fakeobject/lighttube_broken,
+/obj/decal/cleanable/dirt/dirt3,
+/turf/unsimulated/floor/airless/plating/damaged1,
+/area/prefab/minimart)
+"k" = (
+/turf/space,
+/area/allowGenerate)
+"n" = (
+/obj/decal/poster/wallsign/dont_panic,
+/turf/unsimulated/wall/auto/adventure,
+/area/prefab/minimart)
+"q" = (
+/obj/machinery/light/runway_light/delay5,
+/obj/lattice/auto/turf_attaching,
+/turf/space,
+/area/prefab/minimart)
+"s" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/decal/cleanable/sec_tape,
+/turf/unsimulated/floor/airless/plating/damaged3,
+/area/prefab/minimart)
+"t" = (
+/obj/decal/poster/wallsign/fuck2,
+/turf/unsimulated/wall/auto/adventure,
+/area/prefab/minimart)
+"u" = (
+/turf/space,
+/area/noGenerate)
+"z" = (
+/obj/fakeobject/lighttube_broken,
+/obj/decal/cleanable/dirt/dirt5,
+/turf/unsimulated/floor/airless/plating/damaged1,
+/area/prefab/minimart)
+"B" = (
+/obj/fakeobject/lighttube_broken{
+	dir = 1
+	},
+/turf/space,
+/area/noGenerate)
+"C" = (
+/obj/cable/auto/purple/node,
+/obj/machinery/light/small/floor/cool/very,
+/obj/decal/cleanable/dirt,
+/obj/window/bulletproof/west,
+/obj/decal/cleanable/rust,
+/obj/fakeobject{
+	desc = "The goods inside the machine probably expired before you were even born.";
+	icon = 'icons/obj/vending.dmi';
+	icon_state = "robust-broken";
+	name = "broken vending machine"
+	},
+/turf/unsimulated/floor/airless/twotone/black,
+/area/prefab/minimart)
+"D" = (
+/obj/cable/auto/purple/node,
+/obj/machinery/light/small/floor/cool/very,
+/obj/decal/cleanable/dirt,
+/obj/window/bulletproof/east,
+/obj/decal/cleanable/cobweb2,
+/obj/decal/cleanable/rust,
+/obj/machinery/vending/cigarette,
+/turf/unsimulated/floor/airless/twotone/black,
+/area/prefab/minimart)
+"F" = (
+/obj/cable/purple,
+/obj/cable/auto/purple/node,
+/obj/machinery/light/small/floor/cool/very,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/rust,
+/obj/machinery/vending/paint/broken,
+/turf/unsimulated/floor/airless/twotone/black,
+/area/prefab/minimart)
+"G" = (
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/airless/plating/damaged2,
+/area/prefab/minimart)
+"H" = (
+/obj/lattice/auto/turf_attaching,
+/obj/lattice/auto/turf_attaching,
+/turf/space,
+/area/prefab/minimart)
+"I" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood/tracks,
+/obj/decal/cleanable/sec_tape,
+/turf/unsimulated/floor/airless/plating/damaged2,
+/area/prefab/minimart)
+"J" = (
+/obj/machinery/light/runway_light/delay4,
+/obj/lattice/auto/turf_attaching,
+/obj/lattice/auto/turf_attaching,
+/turf/space,
+/area/prefab/minimart)
+"K" = (
+/obj/decal/cleanable/ripped_poster,
+/turf/unsimulated/wall/auto/adventure,
+/area/prefab/minimart)
+"L" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/unsimulated/floor/airless/plating/damaged3,
+/area/prefab/minimart)
+"O" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/decal/cleanable/blood/tracks,
+/turf/unsimulated/floor/airless/plating/damaged2,
+/area/prefab/minimart)
+"P" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/unsimulated/floor/airless/plating/damaged3,
+/area/prefab/minimart)
+"Q" = (
+/obj/decal/tile_edge/floorguide/arrow_e{
+	pixel_x = 10
+	},
+/obj/decal/cleanable/gang_graffiti,
+/turf/simulated/floor/airless/caution/east,
+/area/prefab/minimart)
+"R" = (
+/obj/lattice/auto/turf_attaching,
+/turf/space,
+/area/prefab/minimart)
+"S" = (
+/obj/decal/tile_edge/floorguide/arrow_e{
+	pixel_x = 7
+	},
+/obj/fakeobject/rockpile,
+/obj/decal/cleanable/robot_debris/gib,
+/turf/simulated/floor/airless/caution/west,
+/area/prefab/minimart)
+"T" = (
+/obj/decal/tile_edge/floorguide/arrow_e{
+	pixel_x = 10
+	},
+/obj/decal/cleanable/wood_debris,
+/obj/decoration/damagedchair,
+/turf/simulated/floor/airless/caution/east,
+/area/prefab/minimart)
+"U" = (
+/obj/lattice/auto/turf_attaching,
+/obj/item/casing/small{
+	pixel_y = 5
+	},
+/obj/item/casing/small{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/casing/small{
+	pixel_y = 3;
+	pixel_x = -3
+	},
+/obj/item/casing/small{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/casing/small{
+	pixel_x = -5
+	},
+/turf/space,
+/area/prefab/minimart)
+"V" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/decal/cleanable/sec_tape,
+/turf/unsimulated/floor/airless/plating/damaged1,
+/area/prefab/minimart)
+"W" = (
+/obj/cable/auto/purple/node,
+/obj/machinery/light/small/floor/cool/very,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/rust,
+/obj/item/gang_loot,
+/obj/fakeobject/skeleton,
+/obj/decal/cleanable/blood/gibs/core,
+/obj/decal/cleanable/eggsplat{
+	pixel_y = 30
+	},
+/obj/item/currency/fakecash/million{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/currency/fakecash/million,
+/obj/item/currency/fakecash/million{
+	pixel_x = 3
+	},
+/obj/item/currency/fakecash/million{
+	pixel_x = 1;
+	pixel_y = -2
+	},
+/obj/item/currency/fakecash/million{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/turf/unsimulated/floor/airless/twotone/black,
+/area/prefab/minimart)
+"Y" = (
+/obj/decal/cleanable/gang_graffiti,
+/turf/unsimulated/wall/auto/adventure,
+/area/prefab/minimart)
+
+(1,1,1) = {"
+k
+k
+u
+u
+u
+u
+u
+k
+"}
+(2,1,1) = {"
+k
+k
+u
+q
+R
+U
+u
+k
+"}
+(3,1,1) = {"
+k
+k
+u
+R
+R
+J
+u
+u
+"}
+(4,1,1) = {"
+u
+u
+S
+b
+H
+b
+c
+u
+"}
+(5,1,1) = {"
+u
+d
+C
+V
+L
+g
+Y
+B
+"}
+(6,1,1) = {"
+u
+K
+W
+I
+O
+a
+Y
+u
+"}
+(7,1,1) = {"
+u
+t
+F
+s
+G
+P
+Y
+u
+"}
+(8,1,1) = {"
+u
+n
+D
+L
+e
+z
+Y
+B
+"}
+(9,1,1) = {"
+u
+u
+T
+R
+R
+H
+Q
+u
+"}
+(10,1,1) = {"
+k
+u
+u
+u
+u
+u
+u
+u
+"}

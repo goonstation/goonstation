@@ -1,0 +1,304 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/cleanable/oil,
+/turf/unsimulated/floor/airless/twotone/black,
+/area/prefab/minimart)
+"b" = (
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 4
+	},
+/turf/space,
+/area/noGenerate)
+"d" = (
+/obj/cable/purple,
+/obj/cable/auto/purple/node,
+/obj/machinery/vending/coffee,
+/obj/machinery/light/small/floor/cool/very,
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/airless/twotone/black,
+/area/prefab/minimart)
+"f" = (
+/obj/decal/tile_edge/floorguide/arrow_e{
+	pixel_x = 7
+	},
+/turf/simulated/floor/airless/caution/west,
+/area/prefab/minimart)
+"g" = (
+/obj/decal/poster/wallsign/poster_nt{
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/turf/unsimulated/wall/auto/adventure,
+/area/prefab/minimart)
+"h" = (
+/obj/decal/poster/wallsign/poster_octocluwne{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/turf/unsimulated/wall/auto/adventure,
+/area/prefab/minimart)
+"i" = (
+/obj/decal/cleanable/rust,
+/obj/decal/poster/wallsign/poster_human{
+	pixel_y = dddddddddddddddddd
+	},
+/turf/unsimulated/wall/auto/adventure,
+/area/prefab/minimart)
+"k" = (
+/obj/cable/auto/purple/node,
+/obj/machinery/light/small/floor/cool/very,
+/obj/decal/cleanable/cobweb2,
+/obj/decal/cleanable/dirt/dirt2,
+/obj/decal/cleanable/dirt,
+/obj/reagent_dispensers/fueltank,
+/turf/unsimulated/floor/airless/twotone/black,
+/area/prefab/minimart)
+"l" = (
+/obj/lattice/auto/turf_attaching,
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/prefab/minimart)
+"m" = (
+/obj/item/casing/derringer{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/item/casing/derringer{
+	pixel_x = -4;
+	pixel_y = null
+	},
+/turf/unsimulated/floor/airless/twotone/black,
+/area/prefab/minimart)
+"n" = (
+/turf/space,
+/area/noGenerate)
+"q" = (
+/obj/lattice/auto/turf_attaching,
+/obj/lattice/auto/turf_attaching,
+/turf/space,
+/area/prefab/minimart)
+"s" = (
+/turf/unsimulated/floor/airless/twotone/black,
+/area/prefab/minimart)
+"t" = (
+/obj/machinery/light/runway_light/delay5,
+/obj/lattice/auto/turf_attaching,
+/turf/space,
+/area/prefab/minimart)
+"u" = (
+/obj/decal/tile_edge/floorguide/arrow_e{
+	pixel_x = 10
+	},
+/turf/simulated/floor/airless/caution/east,
+/area/prefab/minimart)
+"y" = (
+/turf/space,
+/area/allowGenerate)
+"z" = (
+/obj/decal/cleanable/generic,
+/turf/unsimulated/floor/airless/twotone/black,
+/area/prefab/minimart)
+"A" = (
+/obj/machinery/light/runway_light/delay4,
+/obj/lattice/auto/turf_attaching,
+/turf/space,
+/area/prefab/minimart)
+"C" = (
+/obj/cable/auto/purple/node,
+/obj/machinery/vending/air_vendor,
+/obj/machinery/light/small/floor/cool/very,
+/obj/decal/cleanable/dirt,
+/obj/window/bulletproof/west,
+/turf/unsimulated/floor/airless/twotone/black,
+/area/prefab/minimart)
+"F" = (
+/obj/decal/tile_edge/floorguide/arrow_e{
+	pixel_x = 7
+	},
+/obj/decal/cleanable/machine_debris,
+/obj/storage/cart/trash{
+	pixel_y = 10
+	},
+/turf/simulated/floor/airless/caution/west,
+/area/prefab/minimart)
+"G" = (
+/obj/decal/poster/wallsign/poster_discount{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/turf/unsimulated/wall/auto/adventure,
+/area/prefab/minimart)
+"J" = (
+/obj/decal/poster/wallsign/stencil/right/h{
+	pixel_x = 12;
+	pixel_y = 10
+	},
+/turf/unsimulated/wall/auto/adventure,
+/area/prefab/minimart)
+"K" = (
+/obj/machinery/light{
+	dir = 3
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/unsimulated/floor/airless/twotone/black,
+/area/prefab/minimart)
+"M" = (
+/obj/decal/poster/wallsign/no_smoking,
+/turf/unsimulated/floor/airless/twotone/black,
+/area/prefab/minimart)
+"N" = (
+/obj/decal/poster/wallsign/stencil/right/p{
+	pixel_x = 12;
+	pixel_y = 10
+	},
+/turf/unsimulated/wall/auto/adventure,
+/area/prefab/minimart)
+"O" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/machinery/light/runway_light/delay2,
+/turf/unsimulated/floor/airless/twotone/black,
+/area/prefab/minimart)
+"T" = (
+/obj/decal/poster/wallsign/stencil/right/o{
+	pixel_x = 12;
+	pixel_y = 10
+	},
+/turf/unsimulated/wall/auto/adventure,
+/area/prefab/minimart)
+"U" = (
+/obj/decal/poster/wallsign/stencil/right/s{
+	pixel_x = 12;
+	pixel_y = 10
+	},
+/turf/unsimulated/wall/auto/adventure,
+/area/prefab/minimart)
+"V" = (
+/obj/machinery/light/runway_light/delay4,
+/obj/lattice/auto/turf_attaching,
+/obj/lattice/auto/turf_attaching,
+/turf/space,
+/area/prefab/minimart)
+"W" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/machinery/light{
+	dir = 3
+	},
+/turf/unsimulated/floor/airless/twotone/black,
+/area/prefab/minimart)
+"X" = (
+/obj/cable/auto/purple/node,
+/obj/machinery/vending/snack,
+/obj/machinery/light/small/floor/cool/very,
+/obj/decal/cleanable/cobweb,
+/obj/decal/cleanable/dirt/dirt3,
+/obj/decal/cleanable/dirt,
+/obj/window/bulletproof/east,
+/obj/random_item_spawner/snacks/one,
+/turf/unsimulated/floor/airless/twotone/black,
+/area/prefab/minimart)
+"Y" = (
+/obj/lattice/auto/turf_attaching,
+/turf/space,
+/area/prefab/minimart)
+
+(1,1,1) = {"
+y
+y
+n
+n
+n
+n
+n
+y
+"}
+(2,1,1) = {"
+y
+y
+n
+t
+Y
+t
+n
+y
+"}
+(3,1,1) = {"
+y
+n
+n
+A
+Y
+V
+n
+n
+"}
+(4,1,1) = {"
+n
+n
+F
+l
+q
+l
+f
+n
+"}
+(5,1,1) = {"
+n
+g
+C
+O
+s
+K
+U
+b
+"}
+(6,1,1) = {"
+n
+h
+k
+M
+a
+s
+J
+n
+"}
+(7,1,1) = {"
+n
+i
+d
+m
+s
+s
+T
+n
+"}
+(8,1,1) = {"
+n
+G
+X
+z
+s
+W
+N
+b
+"}
+(9,1,1) = {"
+n
+n
+u
+Y
+Y
+q
+u
+n
+"}
+(10,1,1) = {"
+y
+n
+n
+n
+n
+n
+n
+n
+"}
