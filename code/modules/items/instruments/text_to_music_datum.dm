@@ -76,7 +76,9 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	src.is_busy = TRUE
 	src.notes = list()
 	var/list/split_input = splittext("[note_input]", "|")
-	if (length(split_input) > MAX_NOTE_INPUT)
+	var/split_list_length = length(split_input)
+	if (split_list_length > MAX_NOTE_INPUT)
+		src.event_error_notes_over_limit(split_list_length)
 		return FALSE
 	for (var/string in split_input)
 		if (string)
@@ -85,6 +87,8 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	return TRUE
 
 /datum/text_to_music/proc/build_notes(var/list/notes) //breaks our chunks apart and puts them into lists on the object
+	. = FALSE
+
 	src.is_busy = TRUE
 	src.note_volumes     = list()
 	src.note_octaves     = list()
@@ -99,17 +103,19 @@ ABSTRACT_TYPE(/datum/text_to_music)
 		timing = text2num(timing) / 100
 		if (timing < src.MIN_TIMING || timing > src.MAX_TIMING)
 			src.event_error_invalid_timing(timing)
-			src.is_busy = FALSE
-			return
+			return FALSE
 		src.timing = timing
 
 		notes.Remove(notes[1])
 
+	var/note_index = 0
 	for (var/string in notes)
 		var/list/curr_notes = splittext("[string]", ",")
 		var/curr_notes_length = length(curr_notes)
+		note_index++
 		if (curr_notes_length != 4 && curr_notes_length != 5) // Music syntax not followed
-			break
+			src.event_error_invalid_note(string, note_index)
+			return FALSE
 		if (lowertext(curr_notes[2]) == "b") // Correct enharmonic pitches to conform to music syntax; transforming flats to sharps
 			if (lowertext(curr_notes[1]) == "a")
 				curr_notes[1] = "g"
@@ -144,6 +150,9 @@ ABSTRACT_TYPE(/datum/text_to_music)
 		src.note_volumes += curr_notes[3]
 		if (curr_notes_length == 5)
 			var/delay = text2num_safe(curr_notes[5])
+			if (delay == null)
+				src.event_error_invalid_note(string, note_index)
+				return FALSE
 			if (curr_notes[3] > 0)
 				delay = clamp(delay, DELAY_NOTE_MIN, DELAY_NOTE_MAX)
 			else
@@ -153,6 +162,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 			src.note_delays += 1
 		LAGCHECK(LAG_LOW)
 	src.is_busy = FALSE
+	return TRUE
 
 /// final checks to make sure stuff is right, gets notes into a compiled form for easy playsounding
 /datum/text_to_music/proc/make_ready(var/is_linked)
@@ -175,7 +185,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 		if (!(string in soundCache))
 			if (rest_on_notes_not_in_cache)
 				continue
-			src.event_error_invalid_note(i, src.notes[i])
+			src.event_error_note_not_found(i, src.notes[i])
 			src.is_busy = FALSE
 			src.update_icon(FALSE)
 			return
@@ -232,12 +242,10 @@ ABSTRACT_TYPE(/datum/text_to_music)
 
 	src.note_input = given_notes
 
-	if (!src.clean_input())
+	if (!src.clean_input() || !src.build_notes(src.notes))
 		src.note_input = ""
 		src.is_busy = FALSE
 		return FALSE
-
-	src.build_notes(src.notes)
 
 	return TRUE
 
@@ -291,13 +299,19 @@ ABSTRACT_TYPE(/datum/text_to_music)
 /datum/text_to_music/proc/event_reset()
 	return
 
-/datum/text_to_music/proc/event_error_invalid_note(var/note_index, var/note)
+/datum/text_to_music/proc/event_error_note_not_found(var/note_index, var/note)
 	return
 
 /datum/text_to_music/proc/event_error_invalid_timing(var/timing)
 	return
 
 /datum/text_to_music/proc/event_error_event_missing_part()
+	return
+
+/datum/text_to_music/proc/event_error_invalid_note(var/note, var/note_index)
+	return
+
+/datum/text_to_music/proc/event_error_notes_over_limit(var/song_length)
 	return
 
 /datum/text_to_music/proc/update_icon(var/is_active)
@@ -339,14 +353,20 @@ ABSTRACT_TYPE(/datum/text_to_music)
 /datum/text_to_music/player_piano/event_reset()
 	src.holder.visible_message(SPAN_NOTICE("\The [src.holder] grumbles and shuts down completely."))
 
-/datum/text_to_music/player_piano/event_error_invalid_note(var/note_index, var/note)
-	src.holder.visible_message(SPAN_NOTICE("\The [src.holder] makes an atrocious racket and beeps [note_index] times."))
+/datum/text_to_music/player_piano/event_error_note_not_found(var/note_index, var/note)
+	src.holder.visible_message(SPAN_ALERT("\The [src.holder] makes an atrocious racket and beeps [note_index] times."))
 
 /datum/text_to_music/player_piano/event_error_invalid_timing(var/timing)
-	src.holder.visible_message(SPAN_NOTICE("\The [src.holder] makes a loud grinding noise, followed by a boop!"))
+	src.holder.visible_message(SPAN_ALERT("\The [src.holder] makes a loud grinding noise, followed by a boop!"))
 
 /datum/text_to_music/player_piano/event_error_event_missing_part()
 	src.holder.visible_message(SPAN_ALERT("\The [src.holder] makes a grumpy ratchetting noise and shuts down!"))
+
+/datum/text_to_music/player_piano/event_error_invalid_note(var/note, var/note_index)
+	src.holder.visible_message(SPAN_ALERT("\The [src.holder] makes a high-pitched screeching sound and beeps [note_index] times!"))
+
+/datum/text_to_music/player_piano/event_error_notes_over_limit(var/song_length)
+	src.holder.visible_message(SPAN_ALERT("\The [src.holder] quakes violently before beeping [song_length] times!"))
 
 /datum/text_to_music/player_piano/start_autolinking(obj/item/I, mob/user)
 	. = ..()
@@ -387,7 +407,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 /datum/text_to_music/mech_comp/event_reset()
 	animate_flash_color_fill(src.holder, "#0000ff", 2, 2)
 
-/datum/text_to_music/mech_comp/event_error_invalid_note(var/note_index, var/note)
+/datum/text_to_music/mech_comp/event_error_note_not_found(var/note_index, var/note)
 	src.log_error_message("Note <b>\[[note]\]</b> at position <b>\[[note_index]\]</b> doesn't exist for <b>\[[src.instrument_name]\]</b>.")
 
 /datum/text_to_music/mech_comp/event_error_invalid_timing(var/timing)
@@ -395,6 +415,12 @@ ABSTRACT_TYPE(/datum/text_to_music)
 
 /datum/text_to_music/mech_comp/event_error_event_missing_part()
 	src.log_error_message("A piece of an event was missing somewhere.")
+
+/datum/text_to_music/mech_comp/event_error_invalid_note(var/note, var/note_index)
+	src.log_error_message("Note <b>\[[note]\]</b> at index <b>\[[note_index]\]</b> is invalid.")
+
+/datum/text_to_music/mech_comp/event_error_notes_over_limit(var/song_length)
+	src.log_error_message("Song entered is <b>\[[song_length]\]</b> notes long, over the max notes limit of <b>\[[MAX_NOTE_INPUT]\]</b>.")
 
 /datum/text_to_music/mech_comp/proc/log_error_message(var/error_message)
 	src.error_messages.Insert(1, error_message)

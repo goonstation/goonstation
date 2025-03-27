@@ -174,8 +174,7 @@ TYPEINFO(/obj/player_piano)
 		var/mode_sel = tgui_alert(user, "Which mode would you like?", "Mode Select", list("Choose Notes", "Play Song"))
 		if (mode_sel == "Choose Notes")
 			var/given_notes = tgui_input_text(user, "Write out the notes you want to be played.", "Composition Menu", src.music_player.note_input)
-			if (!src.music_player.set_notes(given_notes))//still room to get long piano songs in, but not too crazy
-				src.visible_message(SPAN_ALERT("\The [src] makes an angry whirring noise and shuts down."))
+			src.music_player.set_notes(given_notes) //still room to get long piano songs in, but not too crazy
 			return
 		else if (mode_sel == "Play Song")
 			src.music_player.make_ready()
