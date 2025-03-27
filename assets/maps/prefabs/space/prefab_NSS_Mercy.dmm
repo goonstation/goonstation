@@ -143,9 +143,9 @@
 /turf/space,
 /area/prefab/angelshuttle)
 "F" = (
-/obj/mapping_helper/wingrille_spawn/full,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/space,
-/area/prefab/angelshuttle)
+/area/space)
 "G" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/prefab/angelshuttle)
