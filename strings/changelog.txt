@@ -1,4 +1,34 @@
 
+(t)wed mar 26 25
+(u)glowbold
+(p)22656
+(e)🪲🔨|C-Bug, A-Player-Actions
+(*)When inside an object or mob, you cannot interact with things outside it.
+(u)FlameArrow57
+(p)22683
+(e)🔊📦|C-Sound, A-Game-Objects
+(+)Added a new radio station song, Space Gardener
+(u)RubberRats and Xenomni
+(p)22698
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(*)Adds a new trait: Touch Shy. Icon sprite by Xenomni
+(*)Touch Shy will cause you to automatically attempt to shove anyone who tries to headpat you or do another help intent interaction.
+(u)JORJ949
+(p)22732
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Armory will now only authorise objects that have armory access.
+(+)Bringing an armory access object to armory will update its access to match auth status.
+(u)LeahTheTech
+(+)Critters now always heal bleeding naturally and regenerate lost blood faster.
+(t)tue mar 25 25
+(u)Munien and Thrush
+(p)22703
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)Roses and Holoroses can now be worn on your head!
+(u)RubberRats
+(p)22730
+(e)🪲🍝|C-Bug, A-Catering
+(+)The burgle can no longer appear in chef objectives, or as the favorite food of picky eaters
 (t)sun mar 23 25
 (u)LeahTheTech
 (*)Shield generators now accept mechcomp inputs.

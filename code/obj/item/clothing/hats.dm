@@ -449,7 +449,7 @@ proc/filter_trait_hats(var/type)
 	attack_self (mob/user as mob)
 		if(!(src in user.equipped_list())) //lagspikes can allow a doubleinput here. or something
 			return
-		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b>"))
+		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] DetGadget hat into a spiffy scuttlebot!</b>"))
 		var/mob/living/critter/robotic/scuttlebot/weak/S = new /mob/living/critter/robotic/scuttlebot/weak(get_turf(src))
 		if (src.inspector == TRUE)
 			S.make_inspector()
@@ -1164,7 +1164,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 
 /obj/item/clothing/head/bighat/syndicate/biggest
 	name = "very syndicate hat"
-	desc = "An actual war crime, under the space geneva convention"
+	desc = "An actual war crime, under the space Geneva Convention"
 	icon_state = "syndicate_top_biggest"
 	item_state = "syndicate_top"
 	contraband = 100 // heh
@@ -1458,7 +1458,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 
 /obj/item/clothing/head/jester
 	name = "jester's hat"
-	desc = "The hat of not-so-funny-clown."
+	desc = "The hat of a not-so-funny-clown."
 	icon_state = "jester"
 	item_state = "jester"
 	seal_hair = 1

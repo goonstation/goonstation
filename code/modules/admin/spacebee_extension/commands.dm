@@ -476,7 +476,7 @@
 /datum/spacebee_extension_command/mode
 	name = "mode"
 	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
-	help_message = "Check the gamemode of a server or set it by providing an argument (\"secret\", \"intrigue\", \"extended\")."
+	help_message = "Check the gamemode of a server or set it by providing an argument (\"secret\", \"extended\")."
 	argument_types = list(/datum/command_argument/string/optional="new_mode")
 
 	execute(user, new_mode)
