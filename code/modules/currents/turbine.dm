@@ -3,7 +3,7 @@
 
 /datum/shaft_network
 	var/rpm = 0
-	var/list/obj/machinery/turbine_shaft/shafts = list()
+	var/list/obj/turbine_shaft/shafts = list()
 
 	New()
 		..()
@@ -14,21 +14,21 @@
 		STOP_TRACKING
 		..()
 
-	///Split the network in two around the specified shaft
-	proc/split(obj/machinery/turbine_shaft/split_on)
+	///Split the network in two around the specified shaft, leaving up to three separate networks
+	proc/split(obj/turbine_shaft/split_on)
 		src.split_internal(split_on)
-		if (length(split_on.network.shafts) > 1)
+		if (length(split_on.network.shafts) > 1) //still connected? split the other way too
 			var/next_shaft = split_on.network.shafts[split_on.network.shafts.Find(split_on) + 1]
 			split_on.network.split_internal(next_shaft)
 
-	proc/split_internal(obj/machinery/turbine_shaft/split_on)
+	proc/split_internal(obj/turbine_shaft/split_on)
 		var/index = src.shafts.Find(split_on)
 		if (index == 0)
 			CRASH("Attempting to split on shaft not in network!!")
 		var/datum/shaft_network/new_network = new
 		new_network.shafts = src.shafts.Copy(index)
 		src.shafts.Cut(index)
-		for (var/obj/machinery/turbine_shaft/shaft as anything in new_network.shafts)
+		for (var/obj/turbine_shaft/shaft as anything in new_network.shafts)
 			shaft.network = new_network
 		if (length(new_network.shafts) == 1)
 			new_network.shafts[1].anchored = FALSE
@@ -36,7 +36,7 @@
 			qdel(src)
 
 	///Join two networks together
-	proc/join(obj/machinery/turbine_shaft/new_shaft, obj/machinery/turbine_shaft/adjacent)
+	proc/join(obj/turbine_shaft/new_shaft, obj/turbine_shaft/adjacent)
 		//put them in the right place in the network
 		if (adjacent == src.shafts[1])
 			src.shafts = new_shaft.network.shafts + src.shafts
@@ -45,18 +45,19 @@
 		else
 			CRASH("Attempting to add shaft to non-end shaft, what??")
 		//claim the other shafts
-		for (var/obj/machinery/turbine_shaft/other_network_shaft in new_shaft.network.shafts)
+		for (var/obj/turbine_shaft/other_network_shaft in new_shaft.network.shafts)
 			other_network_shaft.network.remove_shaft(other_network_shaft)
 			other_network_shaft.network = src
 			other_network_shaft.update(src.rpm)
 			other_network_shaft.anchored = TRUE
 		adjacent.anchored = TRUE
 
-	proc/remove_shaft(obj/machinery/turbine_shaft/shaft)
+	proc/remove_shaft(obj/turbine_shaft/shaft)
 		src.shafts -= shaft
 		if (length(src.shafts) == 0)
 			qdel(src)
 
+	///Try to move the whole shaft in a direction, returns TRUE on success and FALSE on failure
 	proc/try_move(dir)
 		var/turf/test_turf = null
 		if (dir == src.shafts[1].dir)
@@ -64,7 +65,7 @@
 		else
 			test_turf = get_step(src.shafts[1], dir)
 		if (test_turf && !test_turf.density) // TODO: better check? Make sure turbines can't pass through things
-			for (var/obj/machinery/turbine_shaft/shaft as anything in src.shafts)
+			for (var/obj/turbine_shaft/shaft as anything in src.shafts)
 				shaft.set_loc(get_step(shaft, dir))
 			return TRUE
 		return FALSE
@@ -74,7 +75,7 @@
 			qdel(src)
 			return
 		var/max_flow_rate = 0
-		for (var/obj/machinery/turbine_shaft/turbine/turbine in src.shafts)
+		for (var/obj/turbine_shaft/turbine/turbine in src.shafts)
 			//maaaybe could do something smarter than this in future but for now this does at least provide a slight advantage to multiple turbines
 			max_flow_rate = max(max_flow_rate, turbine.get_flow_rate())
 		src.update_rpm(max_flow_rate)
@@ -85,11 +86,11 @@
 			src.rpm += (max_flow_rate - src.rpm)/4
 		else
 			src.rpm = max(src.rpm - 2 - src.rpm/4, 0) //spin down rapidly if there's no current
-		for (var/obj/machinery/turbine_shaft/shaft as anything in src.shafts)
+		for (var/obj/turbine_shaft/shaft as anything in src.shafts)
 			shaft.update(src.rpm)
 
 
-/obj/machinery/turbine_shaft
+/obj/turbine_shaft
 	name = "turbine shaft"
 	desc = "A heavy duty metal shaft."
 	icon = 'icons/obj/machines/current_turbine.dmi' //TODO: east west sprites
@@ -98,7 +99,6 @@
 	layer = FLOOR_EQUIP_LAYER1
 	glide_size = 32 / TURBINE_MOVE_TIME
 	dir = NORTH
-	processing_tier = PROCESSING_QUARTER
 
 	var/base_icon_state = "shaft"
 	var/speed_state = 0
@@ -137,11 +137,11 @@
 	///Try to attach to other shafts to form a beeg one
 	proc/attach()
 		src.set_dir(src.dir)
-		for (var/obj/machinery/turbine_shaft/other_shaft in get_step(src, src.dir))
+		for (var/obj/turbine_shaft/other_shaft in get_step(src, src.dir))
 			if (other_shaft.dir == src.dir)
 				other_shaft.network.join(src, other_shaft)
 				break
-		for (var/obj/machinery/turbine_shaft/other_shaft in get_step(src, turn(src.dir, 180)))
+		for (var/obj/turbine_shaft/other_shaft in get_step(src, turn(src.dir, 180)))
 			if (other_shaft.dir == src.dir)
 				src.network.join(other_shaft, src)
 				break
@@ -163,7 +163,7 @@
 	update_icon()
 		src.icon_state = "[src.base_icon_state]_[src.speed_state]"
 
-/obj/machinery/turbine_shaft/turbine
+/obj/turbine_shaft/turbine
 	name = "NT40 tidal current turbine"
 	icon_state = "turbine_0"
 	base_icon_state = "turbine"
@@ -173,7 +173,6 @@
 		. = ..()
 		src.UpdateOverlays(image(src.icon, "turbine_anchor", layer = src.layer - 0.1), "anchor")
 		src.UpdateIcon(0)
-		src.SubscribeToProcess()
 
 	proc/get_flow_rate()
 		var/obj/effects/current/current = locate() in get_turf(src)
@@ -207,7 +206,7 @@
 
 	update_icon()
 		. = ..()
-		src.UpdateOverlays(image(src.icon, "[/obj/machinery/turbine_shaft::base_icon_state]_[src.speed_state]", layer = src.layer - 0.1), "internal_shaft")
+		src.UpdateOverlays(image(src.icon, "[/obj/turbine_shaft::base_icon_state]_[src.speed_state]", layer = src.layer - 0.1), "internal_shaft")
 
 
 /obj/machinery/power/current_turbine_base
@@ -219,7 +218,7 @@
 	flags = FLUID_DENSE | TGUI_INTERACTIVE
 	processing_tier = PROCESSING_HALF
 	///The current shaft, can be null if some idiot overextends the shaft all the way out
-	var/obj/machinery/turbine_shaft/shaft = null
+	var/obj/turbine_shaft/shaft = null
 	///How many extra lengths of shaft stick out the back
 	var/initial_length = 5
 
@@ -266,14 +265,14 @@
 
 	proc/init()
 		var/turf/T = get_turf(src)
-		new /obj/machinery/turbine_shaft/turbine(get_step(T, src.dir))
+		new /obj/turbine_shaft/turbine(get_step(T, src.dir))
 		src.shaft = new(T)
 		src.shaft.attach()
 		for (var/i in 1 to initial_length)
 			T = get_step(T, turn(src.dir, 180)) //step backwards
 			if (!T || T.density)
 				break
-			var/obj/machinery/turbine_shaft/shaft = new(T)
+			var/obj/turbine_shaft/shaft = new(T)
 			shaft.attach()
 
 	proc/move_shaft(backwards = FALSE)
@@ -300,7 +299,7 @@
 		return src.shaft?.network.rpm || 0
 
 	Cross(atom/movable/mover)
-		if (istype(mover, /obj/machinery/turbine_shaft) && (mover.dir == NORTH || mover.dir == SOUTH))
+		if (istype(mover, /obj/turbine_shaft) && (mover.dir == NORTH || mover.dir == SOUTH))
 			return TRUE
 		. = ..()
 
@@ -309,7 +308,7 @@
 			if (src.shaft)
 				return src.shaft.Attackby(W, user)
 			else
-				var/obj/machinery/turbine_shaft/shaft = locate() in get_turf(src)
+				var/obj/turbine_shaft/shaft = locate() in get_turf(src)
 				shaft?.Attackby(W, user)
 		else
 			. = ..()

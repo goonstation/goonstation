@@ -570,7 +570,7 @@ proc/debug_map_apc_count(delim,zlim)
 	turbine_shafts
 		name = "turbine shafts"
 		GetInfo(turf/theTurf, image/debugoverlay/img)
-			var/obj/machinery/turbine_shaft/shaft = locate() in theTurf
+			var/obj/turbine_shaft/shaft = locate() in theTurf
 			if (!shaft)
 				img.app.alpha = 0
 				return
