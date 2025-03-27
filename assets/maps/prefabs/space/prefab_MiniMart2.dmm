@@ -177,11 +177,6 @@
 /obj/decal/cleanable/rust,
 /turf/unsimulated/floor/airless/twotone/black,
 /area/prefab/minimart)
-"X" = (
-/obj/lattice/auto/turf_attaching,
-/obj/lattice/auto/turf_attaching,
-/turf/space,
-/area/prefab/minimart)
 "Y" = (
 /obj/machinery/light/runway_light/delay2,
 /obj/decal/cleanable/dirt/dirt2,
@@ -274,7 +269,7 @@ x
 j
 r
 r
-X
+r
 j
 x
 "}
