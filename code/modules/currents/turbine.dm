@@ -1,6 +1,80 @@
 #define TURBINE_MOVE_TIME (2 SECONDS)
 
 
+/datum/shaft_network
+	var/rpm = 0
+	var/max_flow_rate = 0
+	///Are we waiting for the end of the tick to update our RPM?
+	var/waiting = FALSE
+	var/list/obj/machinery/turbine_shaft/shafts = list()
+
+	///Split the network in two around the specified shaft
+	proc/split(obj/machinery/turbine_shaft/split_on)
+		src.split_internal(split_on)
+		if (length(split_on.network.shafts) > 1)
+			var/next_shaft = split_on.network.shafts[split_on.network.shafts.Find(split_on) + 1]
+			split_on.network.split_internal(next_shaft)
+
+	proc/split_internal(obj/machinery/turbine_shaft/split_on)
+		var/index = src.shafts.Find(split_on)
+		if (index == 0)
+			CRASH("Attempting to split on shaft not in network!!")
+		var/datum/shaft_network/new_network = new
+		new_network.shafts = src.shafts.Copy(index)
+		src.shafts.Cut(index)
+		for (var/obj/machinery/turbine_shaft/shaft as anything in new_network.shafts)
+			shaft.network = new_network
+		if (length(new_network.shafts) == 1)
+			new_network.shafts[1].anchored = FALSE
+
+	///Join two networks together
+	proc/join(obj/machinery/turbine_shaft/new_shaft, obj/machinery/turbine_shaft/adjacent)
+		//put them in the right place in the network
+		if (adjacent == src.shafts[1])
+			src.shafts = new_shaft.network.shafts + src.shafts
+		else if (adjacent == src.shafts[length(src.shafts)])
+			src.shafts = src.shafts + new_shaft.network.shafts
+		else
+			CRASH("Attempting to add shaft to non-end shaft, what??")
+		//claim the other shafts
+		for (var/obj/machinery/turbine_shaft/other_network_shaft in new_shaft.network.shafts)
+			other_network_shaft.network = src
+			other_network_shaft.update(src.rpm)
+			other_network_shaft.anchored = TRUE
+		adjacent.anchored = TRUE
+
+	proc/try_move(dir)
+		var/turf/test_turf = null
+		if (dir == src.shafts[1].dir)
+			test_turf = get_step(src.shafts[length(src.shafts)], dir)
+		else
+			test_turf = get_step(src.shafts[1], dir)
+		if (test_turf && !test_turf.density) // TODO: better check?
+			for (var/obj/machinery/turbine_shaft/shaft as anything in src.shafts)
+				shaft.set_loc(get_step(shaft, dir))
+			return TRUE
+		return FALSE
+
+	///Called by each turbine, registering its flow rate, RPM is then calculated from the maximum of all flow rates at end of tick
+	proc/turbine_input(flow_rate)
+		src.max_flow_rate = max(src.max_flow_rate, flow_rate) //maaaybe could do something smarter than this in future but for now this does at least provide a slight advantage to multiple turbines
+		if (!src.waiting)
+			src.waiting = TRUE
+			SPAWN(0)
+				src.waiting = FALSE
+				src.update_rpm()
+
+	proc/update_rpm()
+		if (src.max_flow_rate)
+			//this part is total hand-waving, just do some basic maths to make the RPM slowly increase and decrease with the flow rate
+			src.rpm += (src.max_flow_rate - src.rpm)/4
+		else
+			src.rpm = max(src.rpm - 2 - src.rpm/4, 0) //spin down rapidly if there's no current
+		src.max_flow_rate = 0
+		for (var/obj/machinery/turbine_shaft/shaft as anything in src.shafts)
+			shaft.update(src.rpm)
+
+
 /obj/machinery/turbine_shaft
 	name = "turbine shaft"
 	desc = "A heavy duty metal shaft."
@@ -10,42 +84,15 @@
 	layer = FLOOR_EQUIP_LAYER1
 	glide_size = 32 / TURBINE_MOVE_TIME
 	dir = NORTH
+	processing_tier = PROCESSING_QUARTER
 
 	var/base_icon_state = "shaft"
 	var/speed_state = 0
-	var/obj/machinery/turbine_shaft/next_shaft = null
-	var/obj/machinery/turbine_shaft/last_shaft = null
-	var/obj/machinery/power/current_turbine_base/base = null
+	var/datum/shaft_network/network = new
 
-	///Try to move all upstream shafts in dir
-	proc/shove(dir)
-		var/obj/machinery/turbine_shaft/shoved_shaft = null
-		var/turf/test_turf = null
-		if (dir == src.dir)
-			test_turf = src.next_turf()
-			shoved_shaft = src.next_shaft
-		else
-			test_turf = src.last_turf()
-			shoved_shaft = src.last_shaft
-		var/success = FALSE
-		if (!shoved_shaft)
-			if (test_turf && !test_turf.density)
-				success = TRUE
-		else
-			success = shoved_shaft.shove(dir)
-
-		if (success)
-			src.set_loc(test_turf)
-			return TRUE
-		return FALSE
-
-	proc/next_turf()
-		RETURN_TYPE(/turf)
-		return get_step(src, src.dir)
-
-	proc/last_turf()
-		RETURN_TYPE(/turf)
-		return get_step(src, turn(src.dir, 180))
+	New()
+		. = ..()
+		src.network.shafts = list(src) //me, myself and I
 
 	///Lock them to NORTH/WEST dirs just to make things easier
 	set_dir(new_dir)
@@ -57,18 +104,14 @@
 
 	attackby(obj/item/I, mob/user)
 		if (iswrenchingtool(I))
-			if (src.last_shaft || src.next_shaft)
+			if (length(src.network.shafts) > 1)
 				src.visible_message("[user] unsecures [src].")
+				src.network.split(src)
 				src.anchored = FALSE
-				src.next_shaft?.last_shaft = null
-				src.next_shaft = null
-				src.last_shaft?.next_shaft = null
-				src.last_shaft = null
-				src.base = null
 				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 			else
 				src.attach()
-				if (src.last_shaft || src.next_shaft)
+				if (length(src.network.shafts) > 1)
 					src.visible_message("[user] secures [src] in place.")
 					playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 			return
@@ -80,26 +123,21 @@
 	///Try to attach to other shafts to form a beeg one
 	proc/attach()
 		src.set_dir(src.dir)
-		for (var/obj/machinery/turbine_shaft/other_shaft in src.next_turf())
+		for (var/obj/machinery/turbine_shaft/other_shaft in get_step(src, src.dir))
 			if (other_shaft.dir == src.dir)
-				src.next_shaft = other_shaft
-				other_shaft.last_shaft = src
-				other_shaft.anchored = ANCHORED
+				other_shaft.network.join(src, other_shaft)
 				break
-		for (var/obj/machinery/turbine_shaft/other_shaft in src.last_turf())
+		for (var/obj/machinery/turbine_shaft/other_shaft in get_step(src, turn(src.dir, 180)))
 			if (other_shaft.dir == src.dir)
-				src.last_shaft = other_shaft
-				other_shaft.next_shaft = src
-				other_shaft.anchored = ANCHORED
+				src.network.join(other_shaft, src)
 				break
-		if (src.next_shaft || src.last_shaft)
+		if (length(src.network.shafts) > 1)
 			src.anchored = ANCHORED
 
-	proc/update(obj/machinery/power/current_turbine_base/base)
-		ON_COOLDOWN(src, "last_updated", 2 SECONDS)
-		src.speed_state = 0
-		src.base = base
-		switch(base.rpm)
+	proc/update(rpm)
+		switch(rpm)
+			if (-INFINITY to 0)
+				src.speed_state = 0
 			if (1 to 33)
 				src.speed_state = 3
 			if (34 to 66)
@@ -107,16 +145,13 @@
 			if (67 to INFINITY)
 				src.speed_state = 1
 		src.UpdateIcon()
-		src.next_shaft?.update(base)
-
-	process(mult)
-		if (GET_COOLDOWN(src, "last_updated"))
-			return
-		src.speed_state = 0
-		src.UpdateIcon()
 
 	update_icon()
 		src.icon_state = "[src.base_icon_state]_[src.speed_state]"
+
+	//this is a bit weird but think of it as drag causing the network to spin down over time if there's no turbines
+	process(mult)
+		src.network.turbine_input(0)
 
 /obj/machinery/turbine_shaft/turbine
 	name = "NT40 tidal current turbine"
@@ -128,6 +163,14 @@
 		. = ..()
 		src.UpdateOverlays(image(src.icon, "turbine_anchor", layer = src.layer - 0.1), "anchor")
 		src.UpdateIcon(0)
+		src.SubscribeToProcess()
+
+	process(mult)
+		var/obj/effects/current/current = locate() in get_turf(src)
+		if (current)
+			src.network.turbine_input(current.controller.get_flow_rate())
+		else
+			src.network.turbine_input(0)
 
 	Bumped(mob/living/M)
 		if (!istype(M) || isintangible(M))
@@ -159,10 +202,6 @@
 		. = ..()
 		src.UpdateOverlays(image(src.icon, "[/obj/machinery/turbine_shaft::base_icon_state]_[src.speed_state]", layer = src.layer - 0.1), "internal_shaft")
 
-	update(obj/machinery/power/current_turbine_base/base)
-		. = ..()
-		base.turbine = src //TODO: handle multiple turbines???
-
 
 /obj/machinery/power/current_turbine_base
 	name = "turbine base"
@@ -172,8 +211,6 @@
 	density = TRUE
 	flags = FLUID_DENSE | TGUI_INTERACTIVE
 	processing_tier = PROCESSING_HALF
-	///The actual turbine on the end. TODO: handle multiple turbines?
-	var/obj/machinery/turbine_shaft/turbine/turbine = null
 	///The current shaft, can be null if some idiot overextends the shaft all the way out
 	var/obj/machinery/turbine_shaft/shaft = null
 	///How many extra lengths of shaft stick out the back
@@ -182,8 +219,6 @@
 	var/reversed = FALSE
 
 	var/generation = 0
-
-	var/rpm = 0
 
 	//power = stator load * rpm/60
 	//sooo if we want the power to cap out at ~40kw and 100rpm (big slow water turbine)
@@ -204,7 +239,7 @@
 		return list(
 			"reversed" = src.reversed,
 			"generation" = src.generation * (src.reversed ? -1 : 1),
-			"rpm" = src.rpm,
+			"rpm" = src.get_rpm(),
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -224,7 +259,7 @@
 
 	proc/init()
 		var/turf/T = get_turf(src)
-		src.turbine = new(get_step(T, src.dir))
+		new /obj/machinery/turbine_shaft/turbine(get_step(T, src.dir))
 		src.shaft = new(T)
 		src.shaft.attach()
 		for (var/i in 1 to initial_length)
@@ -233,18 +268,6 @@
 				break
 			var/obj/machinery/turbine_shaft/shaft = new(T)
 			shaft.attach()
-
-	///Return either end of the current shaft, depending on dir
-	proc/end_shaft(dir)
-		RETURN_TYPE(/obj/machinery/turbine_shaft)
-		var/obj/machinery/turbine_shaft/current_shaft = src.shaft
-		if (dir == current_shaft.dir)
-			while (current_shaft?.last_shaft)
-				current_shaft = current_shaft.last_shaft
-		else
-			while (current_shaft?.next_shaft)
-				current_shaft = current_shaft.next_shaft
-		return current_shaft
 
 	proc/move_shaft(backwards = FALSE)
 		if (GET_COOLDOWN(src, "move_shaft"))
@@ -259,14 +282,15 @@
 		var/dir = src.dir
 		if (backwards)
 			dir = turn(src.dir, 180)
-		if (!src.end_shaft(dir).shove(dir))
+		if (!src.shaft.network.try_move(dir))
 			src.visible_message(SPAN_ALERT("[src] makes a protesting grinding noise."))
 			animate_storage_thump(src)
 			return
 		src.shaft = locate() in get_turf(src)
-		if (!src.shaft)
-			src.turbine = null
 		playsound(src, 'sound/machines/button.ogg', 50, 1)
+
+	proc/get_rpm()
+		return src.shaft?.network.rpm || 0
 
 	Cross(atom/movable/mover)
 		if (istype(mover, /obj/machinery/turbine_shaft) && (mover.dir == NORTH || mover.dir == SOUTH))
@@ -292,27 +316,20 @@
 	//a bit less physically simulated than the reactor turbine, both because Amy is smarter than me and because we're not really fully simulating the currents
 	//see above for my sanity loss trying to figure out the fluid energy transfer maths
 	process(mult)
-		if (!src.turbine)
+		if (!src.shaft)
+			src.shaft = locate() in get_turf(src)
+		if (!src.shaft)
+			if (src.generation != 0)
+				src.UpdateIcon()
 			src.generation = 0
 			return
-		var/last_rpm = src.rpm
-		var/flow_rate = 0
-		var/obj/effects/current/current = locate() in get_turf(src.turbine)
-		if (current)
-			flow_rate = current.controller.get_flow_rate()
-			//this part is total hand-waving, just do some basic maths to make the RPM slowly increase and decrease with the flow rate
-			src.rpm += (flow_rate - src.rpm)/4
-		else
-			src.rpm = max(src.rpm - 2 - src.rpm/4, 0) //spin down rapidly if there's no current
-		if (last_rpm != src.rpm) //just stop it updating when still
-			src.end_shaft(src.shaft.dir).update(src)
-			src.UpdateIcon()
 		//this part is physics though!
-		src.generation = src.stator_load * src.rpm/60
+		src.generation = src.stator_load * src.shaft.network.rpm/60
 		src.add_avail(src.generation)
+		src.UpdateIcon()
 
 	update_icon(...)
-		var/image/indicator_overlay = image(src.icon, "indicator_[round(src.rpm/10, 1)]")
+		var/image/indicator_overlay = image(src.icon, "indicator_[round(src.get_rpm()/10, 1)]")
 		indicator_overlay.plane = PLANE_ABOVE_LIGHTING
 		src.UpdateOverlays(indicator_overlay, "indicator")
 
