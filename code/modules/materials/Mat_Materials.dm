@@ -548,7 +548,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 
 /datum/material/metal/rock
 	mat_id = "rock"
-	name = "rock"
+	name = "stone"
 	desc = "Near useless asteroid rock with some traces of random metals."
 	color = "#ACACAC"
 	texture = "rock"
@@ -1742,21 +1742,6 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("hard", 4)
 		setProperty("thermal", 9)
 		setProperty("electrical", 7)
-
-/datum/material/metal/censorium
-	mat_id = "censorium"
-	name = "censorium"
-	desc = "A charred rock. Doesn't do much."
-	color = "#948686"
-
-	New()
-		..()
-		setProperty("electrical", 4)
-		setProperty("thermal", 4)
-		setProperty("hard", 2)
-		setProperty("density", 2)
-		setProperty("flammable", 3)
-		setProperty("chemical", 4)
 
 /datum/material/fabric/hauntium
 	mat_id = "hauntium"
