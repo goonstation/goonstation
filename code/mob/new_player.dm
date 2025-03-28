@@ -302,7 +302,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 		global.latespawning.lock()
 
 		if (JOB && (force || job_controls.check_job_eligibility(src, JOB, STAPLE_JOBS | SPECIAL_JOBS)))
-			var/mob/character = create_character(JOB, JOB.allow_traitors)
+			var/mob/character = create_character(JOB, JOB.can_roll_antag)
 			if (isnull(character))
 				global.latespawning.unlock()
 				return
@@ -826,7 +826,7 @@ a.latejoin-card:hover {
 					// Check if they have this antag type enabled. If not, too bad!
 					// get_preference_for_role can't handle antag types under 'misc' like wrestler or wolf, so we need to special case those
 					var/antag_enabled = new_character.client?.preferences.vars[get_preference_for_role(bad_type) || get_preference_for_role(ROLE_MISC)]
-					if (antag_enabled)
+					if (antag_enabled && job.can_be_antag(bad_type))
 						if ((!livingtraitor && prob(40)) || (livingtraitor && !ticker.mode.latejoin_only_if_all_antags_dead && prob(4)))
 							makebad(new_character, bad_type)
 							new_character.mind.late_special_role = TRUE

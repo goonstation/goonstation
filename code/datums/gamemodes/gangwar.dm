@@ -123,7 +123,7 @@
 
 /proc/can_join_gangs(mob/M) //stupid frickin 515 call syntax making me make this a global grumble grumble
 	var/datum/job/job = find_job_in_controller_by_string(M.mind.assigned_role)
-	. = !job || job.can_join_gangs
+	. = (!job || !job.can_be_antag(ROLE_GANG_LEADER) || !job.can_be_antag(ROLE_GANG_LEADER))
 
 /datum/game_mode/gang/send_intercept()
 	..(src.traitors)
@@ -2378,7 +2378,7 @@ proc/broadcast_to_all_gangs(var/message)
 			return
 
 		var/datum/job/job = find_job_in_controller_by_string(target.mind.assigned_role)
-		if(job && !job.can_join_gangs)
+		if(job && (!job.can_be_antag(ROLE_GANG_MEMBER) || !job.can_be_antag(ROLE_GANG_LEADER)))
 			boutput(target, SPAN_ALERT("You are too responsible to join a gang!"))
 			return
 
