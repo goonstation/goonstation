@@ -1607,17 +1607,18 @@
 		effect_quality = STATUS_QUALITY_NEUTRAL
 		var/play_KO_fx = FALSE
 		var/remove_all = FALSE /// We want to remove all nearby people's wrestling status if one goes down by getting KO'd
+		var/area/room
+		var/remove = FALSE
 
 		onUpdate(timePassed)
 			var/mob/M = null
+			src.room = get_area(owner)
 			if(ismob(owner))
 				M = owner
 			else
 				return ..(timePassed)
 
-			if (M.health < 0 | !istype(get_turf(M), /turf/simulated/floor/specialroom/gym))
-				play_KO_fx = TRUE
-				remove_all = TRUE
+			if (M.health <= 0 | !istype(get_turf(M), /turf/simulated/floor/specialroom/gym))
 				M.delStatus("wrestler")
 
 		onRemove()
@@ -1625,23 +1626,17 @@
 			var/mob/M = null
 			if(ismob(owner))
 				M = owner
+			if (M.health > 0)
+				return
 
-			if (play_KO_fx)
-				SPAWN(0)
-					playsound(M.loc, 'sound/misc/knockout_new.ogg', 50)
-				playsound(M.loc, 'sound/misc/Boxingbell.ogg', 50,1)
-				M.make_dizzy(140)
-				M.UpdateOverlays(image('icons/mob/critter/overlays.dmi', "dizzy"), "dizzy")
-				M.setStatus("resting", INFINITE_STATUS)
-				SPAWN(10 SECONDS)
-					M.UpdateOverlays(null, "dizzy")
-				play_KO_fx = FALSE
-
-			if (remove_all)
-				for (var/mob/living/carbon/human/human in view(10, M))
-					if (human.hasStatus("wrestler"))
-						human.delStatus("wrestler")
-			remove_all = FALSE
+			SPAWN(0)
+				playsound(M.loc, 'sound/misc/knockout_new.ogg', 50)
+			playsound(M.loc, 'sound/misc/Boxingbell.ogg', 50,1)
+			M.make_dizzy(140)
+			M.UpdateOverlays(image('icons/mob/critter/overlays.dmi', "dizzy"), "dizzy")
+			M.setStatus("resting", INFINITE_STATUS)
+			SPAWN(10 SECONDS)
+				M.UpdateOverlays(null, "dizzy")
 
 /datum/statusEffect/bloodcurse
 	id = "bloodcurse"

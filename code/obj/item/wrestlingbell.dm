@@ -79,8 +79,8 @@
 		if (user.a_intent != "harm")
 			src.put_back_hammer()
 			return
-		else if (!ON_COOLDOWN(src, "bell", 20 SECONDS))
-			toggle_boxing_mode()
+		else if (!ON_COOLDOWN(src, "bell", 10 SECONDS))
+			playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
 
 	/// snap back if too far away
 	proc/hammer_move()
@@ -96,13 +96,6 @@
 
 			UpdateIcon()
 
-	proc/toggle_boxing_mode()
-		playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
-		for (var/turf/simulated/floor/specialroom/gym/turf in view(10, src))
-			for (var/mob/living/carbon/human/human in turf.contents)
-				if (human.hasStatus("wrestler"))
-					human.delStatus("wrestler")
-				else
-					human.setStatus("wrestler")
+
 
 
