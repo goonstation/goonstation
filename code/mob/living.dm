@@ -559,11 +559,9 @@
 					else
 						if (istype(target, /obj/machinery/vehicle))
 							boutput(src, SPAN_ALERT("Sensors are inactive, unable to target craft!"))
-			else if (istype(ship.m_w_system) && istype(ship.sec_system, /obj/item/shipcomponent/secondary_system/gunner_support))
-				var/obj/item/shipcomponent/mainweapon/weapon = ship.m_w_system
-				if (src != weapon.gunner && weapon.active)
-					var/obj/item/shipcomponent/secondary_system/gunner_support/support_gunner = ship.sec_system
-					support_gunner.fire_at(target, src)
+			else if (istype(ship.sec_system, /obj/item/shipcomponent/secondary_system/gunner_support) && ship.sec_system.active)
+				var/obj/item/shipcomponent/secondary_system/gunner_support/support_gunner = ship.sec_system
+				support_gunner.fire_at(target, src)
 
 
 		if (src.next_click >= world.time) // since some of these attack functions go wild with modifying next_click, we implement the clicking grace window with a penalty instead of changing how next_click is set
