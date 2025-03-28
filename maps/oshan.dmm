@@ -34077,7 +34077,6 @@
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4;
 	name = "Head of Personnel's Office";
-	req_access = list(55);
 	id = "quarters_hop"
 	},
 /obj/mapping_helper/access/head_of_personnel,
@@ -34646,7 +34645,6 @@
 "gqh" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	name = "Head of Personnel's Office";
-	req_access = list(55);
 	id = "quarters_hop"
 	},
 /obj/mapping_helper/access/head_of_personnel,
@@ -38664,7 +38662,6 @@
 "lSE" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	name = "Head of Personnel's Office";
-	req_access = list(55);
 	id = "quarters_hop"
 	},
 /obj/mapping_helper/access/head_of_personnel,
@@ -46057,8 +46054,7 @@
 "wea" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4;
-	name = "Head of Personnel's Office";
-	req_access = list(55)
+	name = "Head of Personnel's Office"
 	},
 /obj/mapping_helper/access/head_of_personnel,
 /obj/mapping_helper/firedoor_spawn,
