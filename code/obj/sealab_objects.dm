@@ -172,6 +172,30 @@
 	icon_state = "tubesponge_small"
 	database_id = "sea_plant_tubesponge-small"
 
+#ifdef MAP_OVERRIDE_NEON
+//Neon Plasma Coral
+/obj/sea_plant/bulbous_plasma
+	name = "bulbous plasmacoral"
+	icon_state = "bulbous"
+	database_id = "sea_plant_bluecoral"
+	drop_type = /obj/item/raw_material/plasmastone
+	default_material = "plasmacoral"
+
+/obj/sea_plant/branching_plasma
+	name = "branching plasmacoral"
+	icon_state = "branching"
+	database_id = "sea_plant_branchcoral"
+	drop_type = /obj/item/raw_material/plasmastone
+	default_material = "plasmacoral"
+
+/obj/sea_plant/coralfingers_plasma
+	name = "stylophora plasmacoral"
+	icon_state = "coralfingers"
+	database_id = "sea_plant_fingercoral"
+	drop_type = /obj/item/raw_material/plasmastone
+	default_material = "plasmacoral"
+#endif
+
 //NADIR DOODADS (indev)
 //stony and weird "plants" and rocks that you can mine, sometimes yielding resources
 /obj/nadir_doodad

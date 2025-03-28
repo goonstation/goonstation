@@ -866,6 +866,13 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/virtual)
 	mat_changename = TRUE
 	uses_default_material_appearance = TRUE
 
+/turf/unsimulated/wall/auto/plasmacoral
+	name = "dense plasmacoral"
+	desc = "A large formation of plasmacoral, completely impassable."
+	default_material = "plasmacoral"
+	mat_changename = TRUE
+	uses_default_material_appearance = TRUE
+
 // lead wall resprite by skeletonman0.... hooray for smoothwalls!
 //ABSTRACT_TYPE(/turf/unsimulated/wall/auto/lead) // zewaka: unsimwall/auto used in places - parent abstract tree
 TYPEINFO(/turf/unsimulated/wall/auto/lead)

@@ -434,6 +434,13 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	default_material = "coral"
 	uses_default_material_appearance = FALSE
 
+/obj/item/material_piece/plasmacoral
+	name = "chunk"
+	desc = "A strange piece of coral seemingly infused with plasmastone."
+	icon_state = "coral"
+	default_material = "plasmacoral"
+	uses_default_material_appearance = TRUE
+
 /obj/item/material_piece/neutronium
 	desc = "Neutrons condensed into a solid form."
 	icon_state = "bar"
