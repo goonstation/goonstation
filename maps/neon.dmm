@@ -152,6 +152,10 @@
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"ahy" = (
+/obj/item/device/light/floodlight/starts_on,
+/turf/simulated/floor/plating,
+/area/station/engine/substation/west)
 "ahA" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining)
@@ -31088,6 +31092,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/abandonedmedicalship/robot_trader)
+"wAe" = (
+/obj/item/device/light/floodlight/starts_on,
+/turf/simulated/floor/plating,
+/area/station/engine/substation/east)
 "wAy" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/blue/corner,
@@ -72036,7 +72044,7 @@ xJD
 msK
 msK
 oXX
-mfL
+ahy
 aNP
 qpn
 qpn
@@ -86230,7 +86238,7 @@ yfT
 nQk
 rOA
 ofr
-cBE
+wAe
 ccb
 qpn
 qpn
