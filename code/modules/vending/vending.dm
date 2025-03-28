@@ -113,6 +113,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	var/fallen = FALSE // Is it CURRENTLY knocked over?
 	var/can_hack = TRUE //Can this machine have it's panel open?
 
+
 	var/panel_open = FALSE //Hacking that vending machine. Gonna get a free candy bar.
 	var/wires = 15
 
@@ -135,6 +136,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	var/datum/data/vending_product/currently_vending = null // zuh
 
 	var/uses_mechcomp = TRUE //Can this vending machine take mechcomp inputs?
+
 
 	power_usage = 50
 
@@ -170,7 +172,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	was_built_from_frame(mob/user, newly_built)
 		. = ..()
 		if(newly_built)
-			src.product_list = new()
+			if(istype(src, /obj/machinery/vending/pizza)) //Pizza vendors need an exception so copies have inventory & don't start with money
+				src.credit = 0
+			else
+				src.product_list = new()
 
 	proc/vendinput(var/datum/mechanicsMessage/inp)
 		if (!src.vend_ready)
@@ -2466,6 +2471,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	vend_delay = 20 SECONDS
 	var/sharpen = FALSE
 	var/price = 50
+
 	light_r =1
 	light_g = 0.6
 	light_b = 0.2
