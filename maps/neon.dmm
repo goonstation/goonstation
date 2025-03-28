@@ -16394,10 +16394,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
-"lPU" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/turf/simulated/floor/plating,
-/area/station/engine/substation/west)
 "lQg" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -72767,7 +72763,7 @@ byN
 byN
 byN
 aNP
-lPU
+msK
 msK
 pnq
 mfL
@@ -87477,7 +87473,7 @@ qpn
 qpn
 qpn
 qpn
-obW
+iDL
 qgn
 wiB
 cdy
