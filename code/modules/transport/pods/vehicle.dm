@@ -452,7 +452,6 @@
 					src.fueltank = W
 					src.updateDialog()
 					src.myhud?.update_fuel()
-					src.engine?.activate()
 				else
 					boutput(usr, SPAN_ALERT("That doesn't fit there."))
 					return
