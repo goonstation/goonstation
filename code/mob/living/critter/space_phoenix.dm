@@ -66,8 +66,6 @@
 
 	Life()
 		. = ..()
-		var/area/A = get_area(src)
-
 		if (istype(get_turf(src), /turf/space))
 			src.delStatus("burning")
 
@@ -76,7 +74,7 @@
 				src.HealDamage("All", (2 + src.extra_life_regen) * mult, (2 + src.extra_life_regen) * mult)
 				src.HealBleeding(0.1)
 
-		if (src.check_area_dangerous(A) && !A.permafrosted)
+		if (src.in_dangerous_place())
 			src.changeStatus("phoenix_vulnerable", 5 SECONDS)
 
 			if (!src.hasStatus("phoenix_warmth_counter"))
@@ -204,8 +202,8 @@
 		..()
 		if (istype(NewLoc, /turf/space))
 			EndSpacePush(src)
-		var/area/A = get_area(src)
-		if (src.check_area_dangerous(A) && !A.permafrosted)
+
+		if (src.in_dangerous_place())
 			src.changeStatus("phoenix_vulnerable", 5 SECONDS)
 
 			if (!src.hasStatus("phoenix_warmth_counter"))
@@ -284,9 +282,15 @@
 				floor.icon_state = icon_s
 				floor.set_dir(direct)
 
-	proc/check_area_dangerous(area/A)
-		return A && !A.permafrosted && istype(A, /area/station) && !istype(A, /area/station/solar) && !istype(A, /area/station/shield_zone) && \
-			!istype(A, /area/station/turret_protected) && !istype(A, /area/station/com_dish)
+	///Check our current location to see if we're in a dangerous(ly warm) place
+	proc/in_dangerous_place()
+		. = TRUE
+		var/area/A = get_area(src)
+		if (A.permafrosted || !istype(A, /area/station))
+			return FALSE
+		var/turf/T = get_turf(src)
+		if (istype(T, /turf/space) || istype(T, /turf/simulated/floor/airless))
+			return FALSE
 
 /image/phoenix_temperature_indicator
 	plane = PLANE_HUD
