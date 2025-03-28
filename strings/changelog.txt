@@ -1,4 +1,23 @@
+
 (t)wed mar 26 25
+(u)glowbold
+(p)22656
+(e)🪲🔨|C-Bug, A-Player-Actions
+(*)When inside an object or mob, you cannot interact with things outside it.
+(u)FlameArrow57
+(p)22683
+(e)🔊📦|C-Sound, A-Game-Objects
+(+)Added a new radio station song, Space Gardener
+(u)RubberRats and Xenomni
+(p)22698
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(*)Adds a new trait: Touch Shy. Icon sprite by Xenomni
+(*)Touch Shy will cause you to automatically attempt to shove anyone who tries to headpat you or do another help intent interaction.
+(u)JORJ949
+(p)22732
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Armory will now only authorise objects that have armory access.
+(+)Bringing an armory access object to armory will update its access to match auth status.
 (u)LeahTheTech
 (+)Critters now always heal bleeding naturally and regenerate lost blood faster.
 (t)tue mar 25 25

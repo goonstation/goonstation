@@ -336,7 +336,7 @@
 								SEND_SIGNAL(pack_item, COMSIG_CELL_CHARGE, 5)
 								do_flash = TRUE
 		if(do_flash)
-			flick("bp_recharger_activate", src)
+			FLICK("bp_recharger_activate", src)
 
 /obj/item/storage/backpack/satchel
 	name = "satchel"

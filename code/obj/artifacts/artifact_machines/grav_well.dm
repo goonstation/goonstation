@@ -19,7 +19,7 @@
 	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
 
 	proc/pulse()
-		flick("pulse",src)
+		FLICK("pulse",src)
 
 /datum/artifact/gravity_well_generator
 	associated_object = /obj/machinery/artifact/gravity_well_generator

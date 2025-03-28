@@ -49,7 +49,7 @@
 			var/turf/target = locate(params["target"])
 			if(target)
 				busy = 1
-				flick("lrport1", src)
+				FLICK("lrport1", src)
 				playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 				playsound(target, 'sound/machines/lrteleport.ogg', 60, TRUE)
 
@@ -72,7 +72,7 @@
 			var/turf/target = locate(params["target"])
 			if(target)
 				busy = 1
-				flick("lrport1", src)
+				FLICK("lrport1", src)
 				playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 				playsound(target, 'sound/machines/lrteleport.ogg', 60, TRUE)
 				for(var/atom/movable/M in target)
@@ -149,7 +149,7 @@
 		var/turf/target = locate(params["target"])
 		if(target)
 			busy = 1
-			flick("lrport1", my_teleporter)
+			FLICK("lrport1", my_teleporter)
 			playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 			playsound(target, 'sound/machines/lrteleport.ogg', 60, TRUE)
 			for(var/atom/movable/M in target)

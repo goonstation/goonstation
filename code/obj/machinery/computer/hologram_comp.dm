@@ -48,7 +48,7 @@
 	if(..())
 		return
 	if (in_interact_range(src, usr))
-		flick("holo_console1", src)
+		FLICK("holo_console1", src)
 		if (href_list["power"])
 			if (src.projector.projection)
 				src.projector.icon_state = "hologram0"
