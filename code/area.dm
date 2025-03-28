@@ -171,7 +171,7 @@ TYPEINFO(/area)
 	/// Are mobs normally excluded from restricted Z levels allowed to exist here even on restricted Z levels?
 	var/allowed_restricted_z = FALSE
 
-	/// is this area permafrosted by an ice phoenix?
+	/// is this area permafrosted by a space phoenix?
 	var/permafrosted = FALSE
 
 	proc/CanEnter(var/atom/movable/A)
@@ -2830,21 +2830,9 @@ ABSTRACT_TYPE(/area/station/engine)
 /area/station/engine/core/nuclear
 	name = "Nuclear reactor room"
 
-/area/mining/miningoutpost
-	name = "Mining Outpost"
-	icon_state = "engine"
-
 /area/station/engine/storage
 	name = "Engineering Storage"
-	icon_state = "engine_hallway"
-
-/area/station/engine/shield_gen
-	name = "Engineering Shield Generator"
-	icon_state = "engine_monitoring"
-
-/area/station/engine/shields
-	name = "Engineering Shields"
-	icon_state = "engine_monitoring"
+	icon_state = "engine_storage"
 
 /area/station/engine/elect
 	name = "Mechanic's Lab"
@@ -2853,12 +2841,12 @@ ABSTRACT_TYPE(/area/station/engine)
 
 /area/station/engine/power
 	name = "Engineering Power Room"
-	icon_state = "showers"
+	icon_state = "engine_power"
 	sound_environment = 5
 
 /area/station/engine/monitoring
 	name = "Engineering Control Room"
-	icon_state = "green"
+	icon_state = "engine_control"
 
 TYPEINFO(/area/station/engine/singcore)
 	valid_bounty_area = FALSE
@@ -2869,7 +2857,7 @@ TYPEINFO(/area/station/engine/singcore)
 
 /area/station/engine/eva
 	name = "Engineering EVA"
-	icon_state = "showers"
+	icon_state = "engine_eva"
 
 /area/station/engine/core
 	name = "Thermo-Electric Generator"
@@ -3508,10 +3496,6 @@ ABSTRACT_TYPE(/area/station/chapel)
 	icon_state = "eva"
 	sound_environment = 3
 
-/area/station/storage/eeva
-	name = "Engineering EVA Storage"
-	icon_state = "eva"
-
 /area/station/storage/secure
 	name = "Secure Storage"
 	icon_state = "storage"
@@ -4050,9 +4034,12 @@ TYPEINFO(/area/station/turret_protected/AIbaseoutside)
 ABSTRACT_TYPE(/area/mining)
 /area/mining
 	name = "Mining Outpost"
-	icon_state = "engine"
+	icon_state = "mining"
 	workplace = 1
 	station_map_colour = MAPC_MINING
+
+/area/mining/miningoutpost
+	name = "Mining Outpost"
 
 /area/mining/power
 	name = "Outpost Power Room"

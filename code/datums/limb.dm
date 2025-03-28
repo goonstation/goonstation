@@ -385,8 +385,8 @@
 		cooldown = 4 SECONDS
 		reload_time = 4 SECONDS
 
-	ice_phoenix
-		proj = new/datum/projectile/bullet/ice_phoenix_icicle
+	space_phoenix
+		proj = new/datum/projectile/bullet/space_phoenix_icicle
 		shots = INFINITY
 		current_shots = 1
 		cooldown = 1 SECOND
@@ -1824,7 +1824,7 @@
 	dam_low = 0
 	dam_high = 0
 
-/datum/limb/small_critter/ice_phoenix
+/datum/limb/small_critter/space_phoenix
 	dam_low = 5
 	dam_high = 10
 	dmg_type = DAMAGE_CUT

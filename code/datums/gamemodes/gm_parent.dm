@@ -34,8 +34,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 	boutput(world, "<B>[src] did not define announce()</B>")
 
 /datum/game_mode/proc/pre_setup()
-	if (global.ticker.roundstart_player_count(FALSE) < 20)
-		return FALSE
 	return TRUE
 
 /datum/game_mode/proc/post_setup()
