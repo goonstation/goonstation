@@ -1103,32 +1103,6 @@ TYPEINFO(/obj/machinery/defib_mount)
 	stamina_crit_chance = 15
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (!ishuman(target))
-			if (user.a_intent == INTENT_HELP)
-				return
-			return ..()
-		var/mob/living/carbon/human/H = target
-		var/surgery_status = length(H.surgeryHolder.get_active_surgeries(user.zone_sel.selecting))
-		if (!surgery_status)
-			if (user.a_intent == INTENT_HELP)
-				return
-			return ..()
-		if (!surgeryCheck(H, user))
-			if (user.a_intent == INTENT_HELP)
-				return
-			return ..()
-		if (H.chest_cavity_clamped && !H.bleeding)
-			boutput(user, SPAN_NOTICE("[target]'s blood vessels are already clamped."))
-			return
-		// if (H.organHolder.chest.op_stage > 0 || H.bleeding)
-		// 	user.tri_message(H, SPAN_ALERT("<b>[user]</b> begins clamping the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src]."),\
-		// 		SPAN_ALERT("You begin clamping the bleeders in [user == H ? "your" : "[H]'s"] incision with [src]."),\
-		// 		SPAN_ALERT("[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src]."))
-
-		// 	actions.start(new/datum/action/bar/icon/clamp_bleeders(user, H), user)
-		// 	return
-
 /* ======================================================= */
 /* -------------------- Reflex Hammer -------------------- */
 /* ======================================================= */

@@ -148,12 +148,14 @@
 
 	/// If this surgery is implicit, attempt to complete a step with this tool. If complete, attempt to complete a sub-surgery step.
 	proc/do_shortcut(mob/surgeon, obj/item/I)
-		if ((!super_surgery || super_surgery?.complete) && implicit && can_perform_surgery(surgeon, I))
+		if (!implicit)
+			return FALSE
+		if ((!super_surgery || super_surgery?.complete) && can_perform_surgery(surgeon, I))
 			var/datum/surgery_step/step = surgery_step_possible(surgeon, I)
 			if (step)
 				step.perform_step(surgeon, I)
 				return TRUE
-		if (can_perform_surgery(surgeon, I) && sub_surgery_possible(surgeon)) // only attempt subsurgeries if this surgery is done.
+		if (sub_surgery_possible(surgeon)) // only attempt subsurgeries if this surgery is done.
 			// do the next implicit step if subsurgeries are implicit
 			for(var/datum/surgery/surgery in current_sub_surgeries)
 				surgery.infer_surgery_stage()

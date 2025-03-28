@@ -3,6 +3,7 @@
 	name = "Limb Surgery"
 	desc = "Modify the patients' limbs."
 	visible = FALSE
+	implicit = TRUE
 
 	default_sub_surgeries = list(/datum/surgery/limb/arm/l_arm,
 	/datum/surgery/limb/arm/r_arm,

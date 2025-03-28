@@ -1544,7 +1544,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		src.surgeon.tri_message(src.target, SPAN_NOTICE("<b>[src.surgeon]</b> clamps the bleeders on [src.surgeon == src.target ? "[his_or_her(src.target)]" : "[src.target]'s"] chest wound."),\
 			SPAN_NOTICE("You clamp the bleeders on [src.surgeon == src.target ? "your" : "[src.target]'s"] chest wound."),\
 			SPAN_ALERT("[src.target == src.surgeon ? "You clamp" : "<b>[src.surgeon]</b> clamps"] the bleeders on your chest wound!"))
-		// if (src.target.organHolder.chest.op_stage > 0)
-		// 	src.target.chest_cavity_clamped = TRUE
+		var/chest_stage = src.target.surgeryHolder.get_surgery_progress("torso_surgery")
+		if (chest_stage > 0)
+			src.target.chest_cavity_clamped = TRUE
 		if (src.target.bleeding)
 			repair_bleeding_damage(src.target, 50, rand(2,5))

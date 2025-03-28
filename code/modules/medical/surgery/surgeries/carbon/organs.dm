@@ -3,7 +3,7 @@
 	name = "Torso Surgery"
 	desc = "Modify the patients' torso and organs."
 	icon_state = "torso"
-	default_sub_surgeries = list(/datum/surgery/ribs, /datum/surgery/subcostal, /datum/surgery/flanks, /datum/surgery/abdomen, /datum/surgery/item, )
+	default_sub_surgeries = list(/datum/surgery/ribs, /datum/surgery/subcostal, /datum/surgery/flanks, /datum/surgery/abdomen, /datum/surgery/item, /datum/surgery/chest_clamp)
 	generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
 		add_next_step(new /datum/surgery_step/chest/cut(src))
 		add_next_step(new /datum/surgery_step/fluff/snip(src))
@@ -28,6 +28,10 @@
 	surgery_possible(mob/living/surgeon)
 		var/mob/living/carbon/human/C = patient
 		return C.chest_cavity_clamped == FALSE
+
+		if (H.chest_cavity_clamped && !H.bleeding)
+			boutput(user, SPAN_NOTICE("[target]'s blood vessels are already clamped."))
+			return // if surgery_conditions and fail maybe??
 
 
 /datum/surgery/head

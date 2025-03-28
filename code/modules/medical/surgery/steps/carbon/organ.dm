@@ -72,6 +72,7 @@
 				SPAN_ALERT("You cut through [surgeon == patient ? "your" : "[patient]'s"] flesh with [tool]!"),\
 				SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] through your flesh with [tool]!"))
 			patient.chest_cavity_clamped = FALSE
+			patient.organHolder.chest.in_surgery = TRUE
 	clamp
 		name = "Clamp"
 		desc = "Clamp the bleeders."
@@ -82,11 +83,12 @@
 		repeatable = TRUE
 		tools_required = list(/obj/item/hemostat)
 		on_complete(mob/surgeon, obj/item/tool)
-			var/mob/living/carbon/human/patient = parent_surgery.patient
-			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> clamps [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] bleeders with [tool]!"),\
-				SPAN_ALERT("You clamp [surgeon == patient ? "your" : "[patient]'s"] bleeders with [tool]!"),\
-				SPAN_ALERT("[patient == surgeon ? "You clamp" : "<b>[surgeon]</b> clamps"] your bleeders with [tool]!"))
-			patient.chest_cavity_clamped = TRUE
+			user.tri_message(H, SPAN_ALERT("<b>[user]</b> begins clamping the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src]."),\
+				SPAN_ALERT("You begin clamping the bleeders in [user == H ? "your" : "[H]'s"] incision with [src]."),\
+				SPAN_ALERT("[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src]."))
+
+			actions.start(new/datum/action/bar/icon/clamp_bleeders(user, H), user)
+			return
 
 /datum/surgery_step/organ
 	var/affected_organ
@@ -140,14 +142,6 @@
 		saw
 			flags_required = TOOL_SAWING
 			icon_state = "saw"
-		on_complete(mob/surgeon, obj/item/tool)
-			var/patient = parent_surgery.patient
-			var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
-			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> takes out [surgeon == patient ? "[his_or_her(patient)]" : "[patient]'s"] [O.name]."),\
-				SPAN_NOTICE("You take out [surgeon == patient ? "your" : "[patient]'s"] [O.name]."),\
-				SPAN_ALERT("[patient == surgeon ? "You take" : "<b>[surgeon]</b> takes"] out your [O.name]!"))
-			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s [affected_organ].")
-
 	saw
 		name = "Saw"
 		desc = "Saw through the organ."
@@ -161,8 +155,6 @@
 			surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> saws through [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] [O.name] with [tool]!"),\
 				SPAN_ALERT("You saw through [surgeon == C ? "your" : "[C]'s"] [O.name] with [tool]!"),\
 				SPAN_ALERT("[C == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] through your [O.name] with [tool]!"))
-
-
 
 	add
 		name = "Add"
