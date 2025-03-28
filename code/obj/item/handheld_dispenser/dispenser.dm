@@ -96,7 +96,7 @@
 
 	else
 		if(istype(target, /turf/simulated))
-			retur
+			return
 		var/directs = selection.get_directions(direction)
 		for(var/obj/machinery/atmospherics/device in target)
 			if((device.initialize_directions & directs))
