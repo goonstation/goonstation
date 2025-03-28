@@ -101,23 +101,8 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 
 	proc/start_auto_profile(prof_flags)
 		src.automatic_profiling_count++
-		if (src.automatic_profiling_count > 3)
+		if (src.automatic_profiling_count > 3 && !global.flick_hack_enabled)
 			global.flick_hack_enabled = TRUE
 			ircbot.export_async("admin_debug", list("msg"="Autoprofiler triggered 4 times this round, enabling ACCURSED FLICK HACK."))
+			message_admins("Autoprofiler triggered 4 times this round, enabling ACCURSED FLICK HACK.")
 		return world.Profile(prof_flags, null, "json")
-
-// ---- stupid flick hell zone ----
-var/global/flick_hack_enabled = FALSE
-
-//conditionally replace flick with an approximation carved out of animate calls, it's not good but it's better than crashing the server
-//credit goes to Melbert and RufusZero for this abomination
-#define FLICK(icon_state, thing)\
-do {\
-	if (global.flick_hack_enabled) {\
-		var/___old_state = thing.icon_state;\
-		animate(thing, icon_state = icon_state, easing = JUMP_EASING|EASE_IN, time = 0.5 SECONDS);\
-		animate(icon_state = ___old_state, easing = JUMP_EASING|EASE_IN, time = 0.5 SECONDS);\
-	} else {\
-		FLICK(icon_state, thing);\
-	};\
-} while(FALSE)

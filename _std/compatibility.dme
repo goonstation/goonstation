@@ -16,3 +16,19 @@
 #else
 	#define BYOND_VERSION_OK
 #endif
+
+// ---- stupid flick hell zone ----
+var/global/flick_hack_enabled = FALSE
+
+//conditionally replace flick with an approximation carved out of animate calls, it's not good but it's better than crashing the server
+//credit goes to Melbert and RufusZero for this abomination
+#define FLICK(state, thing)\
+do {\
+	if (global.flick_hack_enabled) {\
+		var/___old_state = thing.icon_state;\
+		animate(thing, icon_state = state, easing = JUMP_EASING|EASE_IN, time = 0.3 SECONDS);\
+		animate(icon_state = ___old_state, easing = JUMP_EASING|EASE_IN, time = 0.3 SECONDS);\
+	} else {\
+		flick(state, thing);\
+	};\
+} while(FALSE)
