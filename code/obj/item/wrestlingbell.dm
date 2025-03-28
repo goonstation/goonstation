@@ -79,7 +79,7 @@
 		if (user.a_intent != "harm")
 			src.put_back_hammer()
 			return
-		else
+		else if (!ON_COOLDOWN(src, "bell", 20 SECONDS))
 			toggle_boxing_mode()
 
 	/// snap back if too far away
