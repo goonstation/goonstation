@@ -9,7 +9,6 @@
 
 //-------------------------------------------- MANTA COMPATIBLE LISTS HERE --------------------------------------------
 
-var/list/mantaPushList = list()
 var/mantaMoving = 1
 var/MagneticTether = 1
 var/obj/manta_speed_lever/mantaLever = null
@@ -20,7 +19,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	density = 0
 	anchored = ANCHORED_ALWAYS
 	layer =  EFFECTS_LAYER_4
-	event_handler_flags = IMMUNE_MANTA_PUSH | USE_FLUID_ENTER
+	event_handler_flags = IMMUNE_OCEAN_PUSH | USE_FLUID_ENTER
 	name = ""
 	mouse_opacity = 0
 
@@ -1368,14 +1367,15 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /area
 	proc/removeManta(atom/movable/Obj)
-		mantaPushList.Remove(Obj)
-		Obj.temp_flags &= ~MANTA_PUSHING
+		REMOVE_ATOM_PROPERTY(Obj, PROP_MOVABLE_OCEAN_PUSH, src)
+		EndOceanPush(Obj)
 		return
+
 	proc/addManta(atom/movable/Obj)
 		if(!istype(Obj, /obj/overlay) && !istype(Obj, /obj/machinery/light_area_manager) && istype(Obj, /atom/movable))
-			if(!(Obj.temp_flags & MANTA_PUSHING) && !(Obj.event_handler_flags & IMMUNE_MANTA_PUSH) && !Obj.anchored)
-				mantaPushList.Add(Obj)
-				Obj.temp_flags |= MANTA_PUSHING
+			if(!(HAS_ATOM_PROPERTY(Obj, PROP_MOVABLE_OCEAN_PUSH)) && !(Obj.event_handler_flags & IMMUNE_OCEAN_PUSH) && !Obj.anchored)
+				APPLY_ATOM_PROPERTY(Obj, PROP_MOVABLE_OCEAN_PUSH, src)
+				BeginOceanPush(Obj)
 		return
 
 /area/propellerpower

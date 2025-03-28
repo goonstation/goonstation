@@ -19,7 +19,7 @@
 	opacity = 0
 	layer = EFFECTS_LAYER_BASE
 	animate_movement = NO_STEPS //Stop shifting around recycled particles.
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_OCEAN_PUSH
 	var/atom/target = null // target location for directional particles
 	var/override_state = null
 	var/death = 0

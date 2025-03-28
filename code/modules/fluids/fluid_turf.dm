@@ -333,6 +333,7 @@
 		src.AddComponent(/datum/component/pitfall/target_area,\
 			BruteDamageMax = 6,\
 			FallTime = 0.3 SECONDS,\
+			DeleteFlotsam = TRUE,\
 			TargetArea = /area/trench_landing)
 
 	edge
@@ -361,6 +362,7 @@
 		src.AddComponent(/datum/component/pitfall/target_coordinates,\
 			BruteDamageMax = 6,\
 			FallTime = 0.3 SECONDS,\
+			DeleteFlotsam = TRUE,\
 			TargetZ = 5,\
 			LandingRange = 8)
 
