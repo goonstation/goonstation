@@ -989,6 +989,12 @@ DEFINE_FLOORS(minitiles/black,
 	name = "boxing mat"
 	icon_state = "boxing"
 
+	Entered(atom/movable/M)
+		M.setStatus("wrestler")
+
+	Exited(atom/movable/M)
+		M.delStatus("wrestler")
+
 /turf/simulated/floor/specialroom/gym/alt
 	name = "gym mat"
 	icon_state = "gym_mat"
