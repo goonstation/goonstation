@@ -743,7 +743,8 @@
 		if(level == OVERFLOOR) return
 		if(input?.signal && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time) && trunk && !trunk.disposed)
 			for(var/atom/movable/M in src.loc)
-				if(M == src || M.anchored || isAI(M)) continue
+				if(M == src || M.anchored || isAI(M) || istype(M, /obj/projectile))
+					continue
 				if(count == src.max_capacity)
 					break
 				M.set_loc(src)
