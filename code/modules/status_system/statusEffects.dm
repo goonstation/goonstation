@@ -1643,7 +1643,6 @@
 						human.delStatus("wrestler")
 			remove_all = FALSE
 
-
 /datum/statusEffect/bloodcurse
 	id = "bloodcurse"
 	name = "Cursed"
