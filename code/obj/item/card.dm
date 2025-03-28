@@ -78,7 +78,7 @@ TYPEINFO(/obj/item/card/emag)
 	name = "identification card"
 	icon_state = "id_basic"
 	item_state = "card-id"
-	var/band_color = null // The departmental stripe that lays over the ID
+	var/band_type = null // The departmental stripe that lays over the ID
 	var/no_stripe = FALSE // Prevent departmental stripe from ever showing (clown ID)
 	desc = "A standardized NanoTrasen microchipped identification card that contains data that is scanned when attempting to access various doors and computers."
 	flags = TABLEPASS | ATTACK_SELF_DELAY
@@ -109,8 +109,8 @@ TYPEINFO(/obj/item/card/emag)
 
 	proc/UpdateStripe()
 		var/overlay_icon_state = null
-		if (src.band_color)
-			overlay_icon_state = "stripe_[src.band_color]"
+		if (src.band_type)
+			overlay_icon_state = "stripe_[src.band_type]"
 		else
 			overlay_icon_state = null
 		var/image/stripeoverlay = null
@@ -141,25 +141,22 @@ TYPEINFO(/obj/item/card/emag)
 	desc = "A highly valuable Nanotrasen identification card used only by the most decorated idiots aboard the station."
 
 /obj/item/card/id/command
-	band_color = "green"
+	band_type = "command"
 
 /obj/item/card/id/security
-	band_color = "red"
+	band_type = "security"
 
 /obj/item/card/id/research
-	band_color = "purple"
+	band_type = "research"
 
 /obj/item/card/id/medical
-	icon_state = "id_med"
-
-/obj/item/card/id/medical
-	icon_state = "id_med"
+	band_type = "medical"
 
 /obj/item/card/id/engineering
-	band_color = "yellow"
+	band_type = "engineering"
 
 /obj/item/card/id/civilian
-	band_color = "blue"
+	band_type = "civilian"
 
 /obj/item/card/id/clown
 	icon_state = "id_clown"
@@ -333,15 +330,15 @@ TYPEINFO(/obj/item/card/emag)
 		var/ass = copytext(src.sanitize_name(tgui_input_text(user, "What occupation would you like to put on this card?\n Note: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Staff Assistant"), 1), 1, 100)
 		var/list/bases = list("basic", "gold", "clown", "nanotrasen", "syndicate")
 		var/base = tgui_input_list(user, "What should the base of the ID be?\nClick cancel to abort the forging process.", "ID Forging", bases, "basic")
-		var/list/colors = list("blue","red","green","purple","yellow", "grey", "none")
-		var/color = tgui_input_list(user, "What color should the ID's color band be?\nClick cancel to abort the forging process.", "ID Forging", colors, "none")
+		var/list/band_types = list("civilian","security","command","research", "medical", "engineering", "basic", "none")
+		var/band_type = tgui_input_list(user, "What department should the ID's color band mimic?\nClick cancel to abort the forging process.", "ID Forging", band_types, "none")
 		var/datum/pronouns/pronouns = choose_pronouns(user, "What pronouns would you like to put on this card?", "Pronouns")
 		src.pronouns = pronouns
-		switch (color)
+		switch (band_type)
 			if ("none")
-				src.band_color = null
-			if ("grey", "blue", "red", "green", "purple", "yellow")
-				src.band_color = color
+				src.band_type = null
+			if ("civilian","security","command","research", "medical", "engineering", "basic")
+				src.band_type = band_type
 			else
 				return // Abort process.
 		switch(base)
@@ -457,16 +454,16 @@ TYPEINFO(/obj/item/card/emag)
 				icon_state = "id_basic"
 				assignment = "Rookie Gladiator ([matches] rounds played)"
 			if (11 to 20)
-				band_color = "purple"
+				band_type = "research"
 				assignment = "Beginner Gladiator ([matches] rounds played)"
 			if (21 to 35)
-				band_color = "yellow"
+				band_type = "engineering"
 				assignment = "Skilled Gladiator ([matches] rounds played)"
 			if (36 to 55)
-				band_color = "red"
+				band_type = "security"
 				assignment = "Advanced Gladiator ([matches] rounds played)"
 			if (56 to 75)
-				band_color = "green"
+				band_type = "command"
 				assignment = "Expert Gladiator ([matches] rounds played)"
 			if (76 to INFINITY)
 				icon_state = "id_gold"

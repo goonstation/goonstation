@@ -312,14 +312,14 @@
 //FUCKABLE ITEMS
 
 /obj/item/card/id/owlmaint
-	band_color = "green"
+	band_type = "command"
 	access = list(access_owlerymaint)
 	registered = null
 	assignment = null
 	title = null
 
 /obj/item/card/id/owlsecurity
-	band_color = "red"
+	band_type = "security"
 	access = list(access_owlerysec)
 	registered = null
 	assignment = null

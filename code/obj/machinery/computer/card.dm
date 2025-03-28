@@ -237,11 +237,12 @@
 
 		.["icons"] = list(
 			list(style = "none", name = "Plain", card_look = "none", icon = getCardBase64Img("none")),
-			list(style = "blue", name = "Civilian", card_look = "blue", icon = getCardBase64Img("blue")),
-			list(style = "yellow", name = "Engineering", card_look = "yellow", icon = getCardBase64Img("yellow")),
-			list(style = "purple", name = "Research", card_look = "purple", icon = getCardBase64Img("purple")),
-			list(style = "red", name = "Security", card_look = "red", icon = getCardBase64Img("red")),
-			list(style = "green", name = "Command", card_look = "green", icon = getCardBase64Img("green")),
+			list(style = "civilian", name = "Civilian", card_look = "civilian", icon = getCardBase64Img("civilian")),
+			list(style = "engineering", name = "Engineering", card_look = "engineering", icon = getCardBase64Img("engineering")),
+			list(style = "research", name = "Research", card_look = "research", icon = getCardBase64Img("research")),
+			list(style = "medical", name = "Medical", card_look = "medical", icon = getCardBase64Img("medical")),
+			list(style = "security", name = "Security", card_look = "security", icon = getCardBase64Img("security")),
+			list(style = "command", name = "Command", card_look = "command", icon = getCardBase64Img("command")),
 		)
 
 	ui_data(mob/user)
@@ -286,7 +287,7 @@
 
 				.["custom_names"] = custom_names
 
-				.["target_card_look"] = src.modify.band_color
+				.["target_card_look"] = src.modify.band_type
 
 				.["target_accesses"] = src.modify.access
 				if(!isobserver(user))
@@ -302,14 +303,14 @@
 		))
 
 
-	proc/getCardBase64Img(var/band_color)
+	proc/getCardBase64Img(var/band_type)
 		var/static/base64_preview_cache = list() // Base64 preview images for item types, for use in ui interfaces.
 
-		. = base64_preview_cache[band_color]
+		. = base64_preview_cache[band_type]
 		if(isnull(.))
 			var/icon/result_icon = icon('icons/obj/items/card.dmi', "id_basic")
-			if(band_color && band_color != "none")
-				var/icon/stripeoverlay = icon('icons/obj/items/card.dmi', "stripe_[band_color]")
+			if(band_type && band_type != "none")
+				var/icon/stripeoverlay = icon('icons/obj/items/card.dmi', "stripe_[band_type]")
 				result_icon.Blend(stripeoverlay, ICON_OVERLAY)
 
 
@@ -317,7 +318,7 @@
 				. = icon2base64(result_icon)
 			else
 				. = "" // Empty but not null
-			base64_preview_cache[band_color] = .
+			base64_preview_cache[band_type] = .
 
 	ui_act(action, params)
 		. = ..()
@@ -515,12 +516,12 @@
 
 		. = TRUE
 
-	proc/update_card_colour(var/newcolour)
+	proc/update_card_style(var/newcolour)
 		if(src.modify.no_stripe == FALSE) // ids that are FALSE will update their icon if the job changes
 			if (newcolour == "none")
-				src.modify.band_color = null
+				src.modify.band_type = null
 			else
-				src.modify.band_color = newcolour
+				src.modify.band_type = newcolour
 			src.modify.UpdateStripe()
 
 	proc/try_authenticate()
