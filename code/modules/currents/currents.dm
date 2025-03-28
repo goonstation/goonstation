@@ -27,7 +27,7 @@
 	deleted_on_start = FALSE
 	var/width = 3
 	///How far the current can curve away from the center, used to keep it vaguely straight
-	var/max_variance = 4
+	var/max_variance = 3
 	var/list/datum/force_push_controller/ocean/currents = list()
 
 	init(delay_qdel = FALSE)
@@ -52,7 +52,7 @@
 		var/turf/T = get_turf(src)
 		//keep track of how far "left" we've moved total, so we can avoid straying too far off the original line
 		var/left_delta = 0
-		while(istype(T, /turf/space/fluid))
+		while(src.valid_turf(T))
 			//pick a turn dir making sure it's not outside our max variance
 			if (prob(10))
 				if (prob(50) && left_delta > -src.max_variance)
@@ -64,7 +64,7 @@
 			else //just do a normal straight segment
 				for (var/i in 1 to src.width)
 					var/turf/spawn_turf = get_steps(T, turn(dir, 90), center_index - i)
-					if (!istype(spawn_turf, /turf/space/fluid))
+					if (!src.valid_turf(spawn_turf))
 						return
 					var/obj/effects/current/new_current = new(spawn_turf)
 					new_current.dir = dir
@@ -85,7 +85,7 @@
 		for (var/forward in 1 to src.width)
 			for (var/across in 1 to src.width + 1)
 				var/turf/spawn_turf = get_steps(T, turn(dir, angle), across - center_index)
-				if (!istype(spawn_turf, /turf/space/fluid))
+				if (!src.valid_turf(spawn_turf))
 					return null
 				var/obj/effects/current/new_current = new(spawn_turf)
 				//this is just defining a diagonal line like x = y
@@ -100,6 +100,9 @@
 			T = get_step(T, dir) //step forward one
 		//we've moved width steps forward and one step to the side
 		return get_step(T, turn(dir, angle))
+
+	proc/valid_turf(turf/T)
+		return istype(T, /turf/space/fluid) || istype(T, /turf/simulated/floor/plating/airless) //let currents flow over the toxins vent turf
 
 /obj/landmark/flotsam_spawner
 	add_to_landmarks = FALSE
