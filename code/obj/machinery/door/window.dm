@@ -66,7 +66,7 @@
 			src.close()
 	else
 		if (src.density)
-			flick(text("[]deny", src.base_state), src)
+			FLICK(text("[]deny", src.base_state), src)
 
 	return
 
@@ -87,7 +87,7 @@
 
 /obj/machinery/door/window/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (src.density && src.cant_emag != 1 && src.isblocked() != 1)
-		flick(text("[]spark", src.base_state), src)
+		FLICK(text("[]spark", src.base_state), src)
 		SPAWN(0.6 SECONDS)
 			if (src)
 				src.open(1)
@@ -181,7 +181,7 @@
 		return 0
 	src.operating = 1
 
-	flick(text("[]opening", src.base_state), src)
+	FLICK(text("[]opening", src.base_state), src)
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state = text("[]open", src.base_state)
 
@@ -208,7 +208,7 @@
 		return 0
 	src.operating = 1
 
-	flick(text("[]closing", src.base_state), src)
+	FLICK(text("[]closing", src.base_state), src)
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state = text("[]", src.base_state)
 

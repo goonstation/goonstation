@@ -119,7 +119,7 @@
 		if(user)
 			boutput(user, SPAN_ALERT("You short out [src]'s valve control circuit!"))
 		src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
-		flick("firebot_spark", src)
+		FLICK("firebot_spark", src)
 		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
@@ -141,7 +141,7 @@
 	..()
 	if (!src.emagged && prob(75))
 		src.visible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
-		flick("firebot_spark", src)
+		FLICK("firebot_spark", src)
 		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
@@ -312,7 +312,7 @@
 
 	var/list/the_targets = list(T,T1,T2)
 
-	flick("firebot-c", src)
+	FLICK("firebot-c", src)
 	if (src.setup_party)
 		playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 75, 1, -3)
 

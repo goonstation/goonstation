@@ -225,7 +225,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 					if (T && !T.density)
 						casing_turfs += T
 			for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
-				flick("[src.icon_tag]_fire",src)
+				FLICK("[src.icon_tag]_fire",src)
 				muzzle_flash_any(src, 0, "muzzle_flash")
 				if (src.current_projectile.casing)
 					picked_turf = pick(casing_turfs)

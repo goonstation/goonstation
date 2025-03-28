@@ -1474,7 +1474,7 @@
 
 			msgs.played_sound = 'sound/misc/hastur/tentacle_hit.ogg'
 			msgs.damage = rand(8, 17)
-			flick("hastur-attack", user)
+			FLICK("hastur-attack", user)
 			msgs.damage_type = DAMAGE_CUT // Nasty tentacles with sharp spikes!
 
 		else

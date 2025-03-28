@@ -812,7 +812,7 @@ TYPEINFO(/obj/machinery/field_generator)
 		return
 	if(P.proj_data.damage_type == D_ENERGY)
 		src.power += P.power
-		flick("Field_Gen_Flash", src)
+		FLICK("Field_Gen_Flash", src)
 
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))

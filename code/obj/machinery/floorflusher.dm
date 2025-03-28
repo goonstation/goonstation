@@ -320,7 +320,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	proc/openup()
 		open = 1
 		opening = TRUE
-		flick("floorflush_a", src)
+		FLICK("floorflush_a", src)
 		src.icon_state = "floorflush_o"
 		for(var/atom/movable/AM in src.loc)
 			src.Crossed(AM) // try to flush them
@@ -330,7 +330,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	proc/closeup()
 		open = 0
 		opening = TRUE
-		flick("floorflush_a2", src)
+		FLICK("floorflush_a2", src)
 		src.icon_state = "floorflush_c"
 		SPAWN(0.7 SECONDS)
 			opening = FALSE

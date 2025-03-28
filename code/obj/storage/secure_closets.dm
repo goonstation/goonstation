@@ -110,9 +110,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		if (ON_COOLDOWN(src, "locker_projectile_hit", 0.3 SECONDS))
 			return
 		if (block)
-			flick("block_spark_armor",src.attack_particle)
+			FLICK("block_spark_armor",src.attack_particle)
 		else
-			flick("block_spark",src.attack_particle)
+			FLICK("block_spark",src.attack_particle)
 		src.attack_particle.alpha = 255
 		src.attack_particle.loc = src.loc
 		src.attack_particle.pixel_x = 0

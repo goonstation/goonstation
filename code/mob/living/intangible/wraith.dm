@@ -272,7 +272,7 @@
 			animation.icon = 'icons/mob/mob.dmi'
 			animation.icon_state = "wraithdie"
 			animation.master = src
-			flick(death_icon_state, animation)
+			FLICK(death_icon_state, animation)
 
 			src.ghostize()
 			qdel(src)
