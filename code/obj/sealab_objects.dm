@@ -176,24 +176,27 @@
 //Neon Plasma Coral
 /obj/sea_plant/bulbous_plasma
 	name = "bulbous plasmacoral"
-	icon_state = "bulbous"
+	icon_state = "plascoral3"
 	database_id = "sea_plant_bluecoral"
 	drop_type = /obj/item/raw_material/plasmastone
 	default_material = "plasmacoral"
+	uses_default_material_appearance = FALSE
 
 /obj/sea_plant/branching_plasma
 	name = "branching plasmacoral"
-	icon_state = "branching"
+	icon_state = "plascoral2"
 	database_id = "sea_plant_branchcoral"
 	drop_type = /obj/item/raw_material/plasmastone
 	default_material = "plasmacoral"
+	uses_default_material_appearance = FALSE
 
 /obj/sea_plant/coralfingers_plasma
 	name = "stylophora plasmacoral"
-	icon_state = "coralfingers"
+	icon_state = "plascoral1"
 	database_id = "sea_plant_fingercoral"
 	drop_type = /obj/item/raw_material/plasmastone
 	default_material = "plasmacoral"
+	uses_default_material_appearance = FALSE
 #endif
 
 //NADIR DOODADS (indev)

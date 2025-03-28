@@ -2883,6 +2883,18 @@ TYPEINFO(/area/station/engine/substation)
 	name = "North Electrical Substation"
 	do_not_irradiate = TRUE
 
+/area/station/engine/substation/northwest
+	name = "Northwest Electrical Substation"
+	do_not_irradiate = TRUE
+
+/area/station/engine/substation/southwest
+	name = "Southwest Electrical Substation"
+	do_not_irradiate = TRUE
+
+/area/station/engine/substation/southeast
+	name = "Southeast Electrical Substation"
+	do_not_irradiate = TRUE
+
 /area/station/engine/proto
 	name = "Prototype Engine"
 	icon_state = "prototype_engine"

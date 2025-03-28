@@ -2371,3 +2371,140 @@
 	lots
 		min_amt2spawn = 5
 		max_amt2spawn = 7
+
+/obj/random_item_spawner/gross_with_junk
+	name = "random gross/junk spawner"
+	icon_state = "rand_junk"
+	color = "#699a00"
+	min_amt2spawn = 2
+	max_amt2spawn = 7
+	rare_chance = 5
+
+	items2spawn = list(/obj/item/brick,
+	/obj/item/c_sheet,
+	/obj/item/c_tube,
+	/obj/item/cable_coil/cut,
+	/obj/item/camera_film,
+	/obj/item/casing,
+	/obj/item/casing/rifle,
+	/obj/item/casing/small,
+	/obj/item/cigbutt,
+	/obj/item/clothing/head/paper_hat,
+	/obj/item/clothing/mask/gas,
+	/obj/item/clothing/mask/medical,
+	/obj/item/clothing/mask/surgical,
+	/obj/item/clothing/shoes/black,
+	/obj/item/coin,
+	/obj/item/device/infra_sensor,
+	/obj/item/device/radio,
+	/obj/item/device/timer,
+	/obj/item/folder,
+	/obj/item/hand_labeler,
+	/obj/item/light/bulb/neutral,
+	/obj/item/light/tube/neutral,
+	/obj/item/match,
+	/obj/item/mining_tool,
+	/obj/item/mousetrap,
+	/obj/item/mousetrap/armed,
+	/obj/item/paper,
+	/obj/item/sheet/wood,
+	/obj/item/plate,
+	/obj/item/pen,
+	/obj/item/pen/crayon/random,
+	/obj/item/raw_material/shard/glass,
+	/obj/item/reagent_containers/food/drinks/paper_cup,
+	/obj/item/rods/steel,
+	/obj/item/rubberduck,
+	/obj/item/scissors,
+	/obj/item/scrap,
+	/obj/item/sheet/glass,
+	/obj/item/sheet/steel,
+	/obj/item/currency/spacecash/five,
+	/obj/item/currency/spacecash/really_small,
+	/obj/item/currency/spacecash/small,
+	/obj/item/stamp,
+	/obj/item/stick,
+	/obj/item/tile/steel,
+	/obj/decal/cleanable/vomit,
+	/obj/decal/cleanable/vomit,
+	/obj/decal/cleanable/vomit/spiders,
+	/obj/decal/cleanable/greenpuke,
+	/obj/decal/cleanable/tomatosplat,
+	/obj/decal/cleanable/eggsplat,
+	/obj/decal/cleanable/ash,
+	/obj/decal/cleanable/ash,
+	/obj/decal/cleanable/slime,
+	/obj/decal/cleanable/dirt,
+	/obj/decal/cleanable/dirt,
+	/obj/decal/cleanable/machine_debris,
+	/obj/decal/cleanable/robot_debris,
+	/obj/decal/cleanable/oil,
+	/obj/decal/cleanable/oil,
+	/obj/decal/cleanable/saltpile,
+	/obj/decal/cleanable/blood,
+	/obj/decal/cleanable/glitter/harmless,
+	/obj/decal/cleanable/ketchup,
+	/obj/decal/cleanable/paper,
+	/obj/decal/cleanable/wood_debris,
+	/obj/decal/cleanable/balloon)
+
+	rare_items2spawn = list(/obj/item/bluntwrap,
+	/obj/item/cell,
+	/obj/item/crowbar,
+	/obj/item/electronics/scanner,
+	/obj/item/electronics/soldering,
+	/obj/item/light_parts,
+	/obj/item/light_parts/bulb,
+	/obj/item/light_parts/floor,
+	/obj/item/screwdriver,
+	/obj/item/spraybottle,
+	/obj/item/spongecaps,
+	/obj/item/storage/toolbox/mechanical,
+	/obj/item/storage/toolbox/electrical,
+	/obj/item/storage/toolbox/emergency,
+	/obj/item/tank/air,
+	/obj/item/tank/emergency_oxygen,
+	/obj/item/tank/mini_oxygen,
+	/obj/item/weldingtool,
+	/obj/item/wrench)
+
+	one
+		amt2spawn = 1
+
+	two
+		amt2spawn = 2
+
+	three
+		amt2spawn = 3
+
+	four
+		amt2spawn = 4
+
+	five
+		amt2spawn = 5
+
+	six
+		amt2spawn = 6
+
+	seven
+		amt2spawn = 7
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	maybe_few
+		min_amt2spawn = 0
+		max_amt2spawn = 2
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	some
+		min_amt2spawn = 3
+		max_amt2spawn = 5
+
+	lots
+		min_amt2spawn = 5
+		max_amt2spawn = 7
