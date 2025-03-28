@@ -576,6 +576,17 @@ proc/debug_map_apc_count(delim,zlim)
 				return
 			img.app.color = debug_color_of(shaft.network)
 
+	currents
+		name = "currents"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			var/obj/effects/current/current = locate() in theTurf
+			if (!current)
+				img.app.alpha = 0
+				return
+			img.app.icon = 'icons/effects/effects.dmi'
+			img.app.icon_state = "arrow"
+			img.app.dir = current.dir
+
 	powernet
 		name = "power networks"
 		help = {"red - contains 0 (no powernet), that's probably bad<br>white - contains multiple powernets<br>other - coloured based on the single powernet<br>numbers - ids of all powernets on the tile"}

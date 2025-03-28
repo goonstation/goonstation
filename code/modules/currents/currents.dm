@@ -2,9 +2,6 @@
 //maybe this should just be a turf component/var?
 //Idk how the performance overhead of all these objects compares to defining Crossed/Uncrossed on every ocean turf
 /obj/effects/current
-	//debug icon, turn on when u want to debug
-	// icon = 'icons/effects/effects.dmi'
-	// icon_state = "arrow"
 	var/datum/force_push_controller/ocean/current/controller = null
 
 	Crossed(atom/movable/AM)
