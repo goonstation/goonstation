@@ -100,10 +100,6 @@
 	icon_state = "wrestling"
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEUTRAL
-	var/play_KO_fx = FALSE
-	var/remove_all = FALSE /// We want to remove all nearby people's wrestling status if one goes down by getting KO'd
-	var/area/room
-	var/remove = FALSE
 
 	onUpdate(timePassed)
 		var/mob/M = null
