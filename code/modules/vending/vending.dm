@@ -113,6 +113,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	var/fallen = FALSE // Is it CURRENTLY knocked over?
 	var/can_hack = TRUE //Can this machine have it's panel open?
 
+
 	var/panel_open = FALSE //Hacking that vending machine. Gonna get a free candy bar.
 	var/wires = 15
 
@@ -135,6 +136,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	var/datum/data/vending_product/currently_vending = null // zuh
 
 	var/uses_mechcomp = TRUE //Can this vending machine take mechcomp inputs?
+
 
 	power_usage = 50
 
@@ -170,7 +172,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	was_built_from_frame(mob/user, newly_built)
 		. = ..()
 		if(newly_built)
-			src.product_list = new()
+			if(istype(src, /obj/machinery/vending/pizza)) //Pizza vendors need an exception so copies have inventory & don't start with money
+				src.credit = 0
+			else
+				src.product_list = new()
 
 	proc/vendinput(var/datum/mechanicsMessage/inp)
 		if (!src.vend_ready)
@@ -651,22 +656,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 				account = FindBankAccountByName(src.scan?.registered)
 				if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID))
 					boutput(usr, SPAN_ALERT("Access denied.")) //Unless emagged of course
-					flick(src.icon_deny,src)
+					FLICK(src.icon_deny,src)
 					return
 				if (src.pay)
 					if (src.acceptcard && src.scan)
 						if (!account)
 							boutput(usr, SPAN_ALERT("No bank account associated with ID found."))
-							flick(src.icon_deny,src)
+							FLICK(src.icon_deny,src)
 							return
 						if (account["current_money"] < params["cost"])
 							boutput(usr, SPAN_ALERT("Insufficient funds in account. To use machine credit, log out."))
-							flick(src.icon_deny,src)
+							FLICK(src.icon_deny,src)
 							return
 					else
 						if (src.credit < params["cost"])
 							boutput(usr, SPAN_ALERT("Insufficient Credit."))
-							flick(src.icon_deny,src)
+							FLICK(src.icon_deny,src)
 							return
 
 				var/product_amount = 0 // this is to make absolutely sure that these numbers arent desynced
@@ -771,7 +776,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 			if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
 				boutput(usr, SPAN_ALERT("Access denied.")) //Unless emagged of course
-				flick(src.icon_deny,src)
+				FLICK(src.icon_deny,src)
 				return
 
 			var/datum/data/vending_product/R = locate(href_list["vend"]) in src.product_list
@@ -804,16 +809,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 					account = FindBankAccountByName(src.scan.registered)
 					if (!account)
 						boutput(usr, SPAN_ALERT("No bank account associated with ID found."))
-						flick(src.icon_deny,src)
+						FLICK(src.icon_deny,src)
 						return
 					if (account["current_money"] < R.product_cost)
 						boutput(usr, SPAN_ALERT("Insufficient funds in account. To use machine credit, log out."))
-						flick(src.icon_deny,src)
+						FLICK(src.icon_deny,src)
 						return
 				else
 					if (src.credit < R.product_cost)
 						boutput(usr, SPAN_ALERT("Insufficient Credit."))
-						flick(src.icon_deny,src)
+						FLICK(src.icon_deny,src)
 						return
 
 			if (((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
@@ -823,7 +828,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 			use_power(10)
 			if (src.icon_vend) //Show the vending animation if needed
-				flick(src.icon_vend,src)
+				FLICK(src.icon_vend,src)
 
 			src.vend_ready = 0
 			src.prevend_effect()
@@ -1118,7 +1123,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 			R.product_amount--
 		use_power(10)
 		if (src.icon_vend) //Show the vending animation if needed
-			flick(src.icon_vend,src)
+			FLICK(src.icon_vend,src)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")
 		ON_COOLDOWN(throw_item, "PipeEject", 2 SECONDS)
 		throw_item.throw_at(target, 16, 3)
@@ -2466,6 +2471,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	vend_delay = 20 SECONDS
 	var/sharpen = FALSE
 	var/price = 50
+
 	light_r =1
 	light_g = 0.6
 	light_b = 0.2
@@ -2788,18 +2794,18 @@ TYPEINFO(/obj/machinery/vending/monkey)
 			sleep(2 SECONDS)
 			playsound(src.loc, sound_greeting_broken, 65, 1)
 			if (src.icon_vend)
-				flick(src.icon_vend,src)
+				FLICK(src.icon_vend,src)
 			speak("F*!@$*(9HZZZZ9**###!")
 			sleep(2.5 SECONDS)
 			src.visible_message(SPAN_NOTICE("[src] spasms violently!"))
 			playsound(src.loc, pick(sounds_broken), 40, 1)
 			if (src.icon_vend)
-				flick(src.icon_vend,src)
+				FLICK(src.icon_vend,src)
 			sleep(1 SECOND)
 			src.visible_message(SPAN_NOTICE("[src] makes an obscene gesture!</b>"))
 			playsound(src.loc, pick(sounds_broken), 40, 1)
 			if (src.icon_vend)
-				flick(src.icon_vend,src)
+				FLICK(src.icon_vend,src)
 			sleep(1.5 SECONDS)
 			playsound(src.loc, sound_laugh_broken, 65, 1)
 			speak("AHHH#######!")
@@ -2810,18 +2816,18 @@ TYPEINFO(/obj/machinery/vending/monkey)
 			sleep(2 SECONDS)
 			playsound(src.loc, sound_greeting, 65, 1)
 			if (src.icon_vend)
-				flick(src.icon_vend,src)
+				FLICK(src.icon_vend,src)
 			speak("The great wizard Zoldorf is here!")
 			sleep(2.5 SECONDS)
 			src.visible_message(SPAN_NOTICE("[src] rocks back and forth!"))
 			playsound(src.loc, pick(sounds_working), 40, 1)
 			if (src.icon_vend)
-				flick(src.icon_vend,src)
+				FLICK(src.icon_vend,src)
 			sleep(1 SECOND)
 			src.visible_message(SPAN_NOTICE("[src] makes a mystical gesture!</b>"))
 			playsound(src.loc, pick(sounds_working), 40, 1)
 			if (src.icon_vend)
-				flick(src.icon_vend,src)
+				FLICK(src.icon_vend,src)
 			sleep(1.5 SECONDS)
 			playsound(src.loc, sound_laugh, 65, 1)
 			speak("Ha ha ha ha ha!")

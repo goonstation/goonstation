@@ -2,6 +2,7 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 
 /datum/controller/lag_detection
 	var/tmp/highCpuCount = 0 // how many times in a row has the cpu been high
+	var/tmp/automatic_profiling_count = 0 // how many times has the auto-profiler been triggered this round
 	var/tmp/automatic_profiling_on = FALSE
 	var/tmp/automatic_profiling_started = 0
 	var/tmp/manual_profiling_on = FALSE
@@ -71,7 +72,7 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 				highCpuCount++
 			if(world.cpu >= cpu_start_profiling_immediately_threshold || time_since_last > tick_time_profiling_threshold)
 				#ifdef PRE_PROFILING_ENABLED
-				var/output = world.Profile(PROFILE_REFRESH, null, "json")
+				var/output = src.start_auto_profile(PROFILE_REFRESH)
 				var/fname = "data/logs/profiling/[global.roundLog_date]_automatic_[profilerLogID++]_spike.json"
 				rustg_file_write(output, fname)
 				#endif
@@ -85,7 +86,7 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 				#ifndef PRE_PROFILING_ENABLED
 				prof_flags |= PROFILE_CLEAR
 				#endif
-				world.Profile(prof_flags , null, "json")
+				src.start_auto_profile(prof_flags)
 				message_admins("CPU at [world.cpu], map CPU at [world.map_cpu], last tick time at [time_since_last], turning on profiling.")
 				logTheThing(LOG_DEBUG, null, "Automatic profiling started, CPU at [world.cpu], map CPU at [world.map_cpu], last tick time at [time_since_last].")
 				ircbot.export_async("admin_debug", list("msg"="Automatic profiling started, CPU at [world.cpu], map CPU at [world.map_cpu], last tick time at [time_since_last]."))
@@ -98,3 +99,10 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 		manual_profiling_on = TRUE
 		manual_profiling_disable_time = TIME + delay
 
+	proc/start_auto_profile(prof_flags)
+		src.automatic_profiling_count++
+		if (src.automatic_profiling_count > 3 && !global.flick_hack_enabled)
+			global.flick_hack_enabled = TRUE
+			ircbot.export_async("admin_debug", list("msg"="Autoprofiler triggered 4 times this round, enabling ACCURSED FLICK HACK."))
+			message_admins("Autoprofiler triggered 4 times this round, enabling ACCURSED FLICK HACK.")
+		return world.Profile(prof_flags, null, "json")

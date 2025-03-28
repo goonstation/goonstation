@@ -69,7 +69,7 @@
 					if(BOUNDS_DIST(src, M) == 0)
 						src.CritterAttack(M)
 					else
-						flick("[src.species]-flaploop", src)
+						FLICK("[src.species]-flaploop", src)
 			else
 				spawn(rand(4,10))
 					chatter(1)
@@ -264,7 +264,7 @@
 			if (prob(5) && !src.muted)
 				src.audible_message(SPAN_NOTICE("<b>[src]</b> [pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles", "fusses", "preens", "clicks its beak", "fluffs up", "poofs up")]!"))
 			if (prob(15))
-				flick("[src.species]-flaploop", src)
+				FLICK("[src.species]-flaploop", src)
 			//if (prob(1) && prob(22) && (src.last_feather_time + 3000) <= world.time)
 				//src.create_feather()
 		return ..()
@@ -272,7 +272,7 @@
 	seek_target()
 		..()
 		if (src.target)
-			flick("[src.species]-flaploop", src)
+			FLICK("[src.species]-flaploop", src)
 
 	patrol_to(var/turf/towhat)
 		.=..()
@@ -287,7 +287,7 @@
 
 	CritterAttack(mob/M as mob)
 		src.attacking = 1
-		flick("[src.species]-flaploop", src)
+		FLICK("[src.species]-flaploop", src)
 		if (iscarbon(M))
 			if (prob(60)) //Go for the eyes!
 				src.visible_message(SPAN_COMBAT("<B>[src]</B> pecks [M] in the eyes!"))
@@ -546,7 +546,7 @@
 			src.dance()
 		else
 			src.visible_message(SPAN_NOTICE("\The [src] flaps and bobs [pick("to the beat", "in tune", "approvingly", "happily")]."))
-			flick("[src.species]-flaploop", src)
+			FLICK("[src.species]-flaploop", src)
 		if (prob(3))
 			src.create_feather()
 
@@ -889,7 +889,7 @@
 
 	CritterAttack(mob/M as mob)
 		src.attacking = 1
-		flick("crow-flaploop", src)
+		FLICK("crow-flaploop", src)
 		if (iscarbon(M))
 			if (prob(60)) //Go for the eyes!
 				src.visible_message(SPAN_COMBAT("<B>[src]</B> pecks [M] in the eyes!"))

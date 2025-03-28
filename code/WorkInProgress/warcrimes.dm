@@ -608,7 +608,7 @@ Urs' Hauntdog critter
 		var/turf/moveto = locate(src.x + rand(-1,1),src.y + rand(-1, 1),src.z)
 
 		if(isturf(moveto) && !moveto.density)
-			flick("hauntdog-hop",src)
+			FLICK("hauntdog-hop",src)
 			step_towards(src, moveto)
 		if(src.aggressive) seek_target()
 		steps += 1
@@ -621,7 +621,7 @@ Urs' Hauntdog critter
 
 	proc/flip()
 		src.visible_message("<b>[src]</b> does a flip!")
-		flick("hauntdog-flip",src)
+		FLICK("hauntdog-flip",src)
 		sleep(1.3 SECONDS)
 
 	CritterDeath()

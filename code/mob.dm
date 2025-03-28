@@ -1795,7 +1795,7 @@
 
 		animation = new(src.loc)
 		animation.master = src
-		flick("gibbed", animation)
+		FLICK("gibbed", animation)
 
 	if (src.client) // I feel like every player should be ghosted when they get gibbed
 		var/mob/dead/observer/newmob = ghostize()
@@ -1881,7 +1881,7 @@
 	if (ishuman(src))
 		animation = new(src.loc)
 		animation.master = src
-		flick("elecgibbed", animation)
+		FLICK("elecgibbed", animation)
 		if(ispath(light_type))
 			light = new light_type
 			light.set_brightness(brightness)
@@ -1923,7 +1923,7 @@
 	if (ishuman(src))
 		animation = new(src.loc)
 		animation.master = src
-		flick("firegibbed", animation)
+		FLICK("firegibbed", animation)
 		if (drop_equipment)
 			for (var/obj/item/W in src)
 				if (istype(W, /obj/item/clothing))
@@ -1968,7 +1968,7 @@
 
 		animation = new(src.loc)
 		animation.master = src
-		flick("gibbed", animation)
+		FLICK("gibbed", animation)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
@@ -2011,7 +2011,7 @@
 
 		animation = new(src.loc)
 		animation.master = src
-		flick("owlgibbed", animation)
+		FLICK("owlgibbed", animation)
 		if (transfer_mind_to_owl)
 			src.make_critter(/mob/living/critter/small_animal/bird/owl, src.loc)
 		else
@@ -2050,7 +2050,7 @@
 	if (ishuman(src))
 		animation = new(src.loc)
 		animation.master = src
-		flick("disintegrated", animation)
+		FLICK("disintegrated", animation)
 
 		if (prob(20))
 			make_cleanable(/obj/decal/cleanable/ash, src.loc)
@@ -2087,7 +2087,7 @@
 	if (ishuman(src))
 		animation = new(src.loc)
 		animation.master = src
-		flick("implode", animation)
+		FLICK("implode", animation)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
@@ -2195,7 +2195,7 @@
 
 		animation = new(src.loc)
 		animation.master = src
-		flick("gibbed", animation)
+		FLICK("gibbed", animation)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()

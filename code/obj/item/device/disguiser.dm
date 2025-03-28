@@ -80,7 +80,7 @@ TYPEINFO(/obj/item/device/disguiser)
 		src.anti_spam = world.time
 		var/obj/overlay/T = new/obj/overlay(get_turf(src))
 		T.icon = 'icons/effects/effects.dmi'
-		flick("emppulse",T)
+		FLICK("emppulse",T)
 		SPAWN(0.8 SECONDS)
 			if (T) qdel(T)
 		return 1
@@ -97,7 +97,7 @@ TYPEINFO(/obj/item/device/disguiser)
 			src.anti_spam = world.time
 			var/obj/overlay/T = new/obj/overlay(get_turf(src))
 			T.icon = 'icons/effects/effects.dmi'
-			flick("emppulse",T)
+			FLICK("emppulse",T)
 			SPAWN(0.8 SECONDS)
 				if (T) qdel(T)
 		src.active = 0
