@@ -1626,17 +1626,17 @@
 			var/mob/M = null
 			if(ismob(owner))
 				M = owner
-			if (M.health > 0)
-				return
+				if (M.health > 0)
+					return
 
-			SPAWN(0)
-				playsound(M.loc, 'sound/misc/knockout_new.ogg', 50)
-			playsound(M.loc, 'sound/misc/Boxingbell.ogg', 50,1)
-			M.make_dizzy(140)
-			M.UpdateOverlays(image('icons/mob/critter/overlays.dmi', "dizzy"), "dizzy")
-			M.setStatus("resting", INFINITE_STATUS)
-			SPAWN(10 SECONDS)
-				M.UpdateOverlays(null, "dizzy")
+				SPAWN(0)
+					playsound(M.loc, 'sound/misc/knockout_new.ogg', 50)
+				playsound(M.loc, 'sound/misc/Boxingbell.ogg', 50,1)
+				M.make_dizzy(140)
+				M.UpdateOverlays(image('icons/mob/critter/overlays.dmi', "dizzy"), "dizzy")
+				M.setStatus("resting", INFINITE_STATUS)
+				SPAWN(10 SECONDS)
+					M.UpdateOverlays(null, "dizzy")
 
 /datum/statusEffect/bloodcurse
 	id = "bloodcurse"

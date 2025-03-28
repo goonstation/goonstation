@@ -64,9 +64,6 @@
 		if (isAI(user) || isintangible(user) || isobserver(user) || !in_interact_range(src, user)) return
 		user.lastattacked = src
 		..()
-		if(!hammer || QDELETED(hammer))
-			hammer = null
-			return
 		if(hammer.loc != src)
 			return //if someone else has it, don't put it in user's hand
 		user.put_in_hand_or_drop(src.hammer)
