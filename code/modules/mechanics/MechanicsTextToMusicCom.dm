@@ -30,6 +30,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set instrument", PROC_REF(mechcompConfigInstrument))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "stop", PROC_REF(mechcompConfigStop))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "reset", PROC_REF(mechcompConfigReset))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "toggle looping", PROC_REF(mechcompConfigToggleLooping))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "toggle rest on unavailable notes", PROC_REF(mechcompConfigToggleRestOnUnavailableNotes))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "start autolinking", PROC_REF(mechcompConfigStartAutolinking))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "view errors", PROC_REF(mechcompConfigViewErrors))
@@ -109,6 +110,10 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 
 	proc/mechcompConfigReset(obj/item/W as obj, mob/user as mob)
 		src.music_player.reset(0)
+
+	proc/mechcompConfigToggleLooping(obj/item/W as obj, mob/user as mob)
+		src.music_player.is_looping = !src.music_player.is_looping
+		boutput(user, SPAN_NOTICE("Currently <b>[src.music_player.is_looping ? "" : "not"] looping</b>."))
 
 	proc/mechcompConfigToggleRestOnUnavailableNotes(obj/item/W as obj, mob/user as mob)
 		src.music_player.rest_on_notes_not_in_cache = !src.music_player.rest_on_notes_not_in_cache
