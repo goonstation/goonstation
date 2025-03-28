@@ -190,6 +190,9 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 			if(M.throwing)
 				continue
 
+			if(M.anchored)
+				continue
+
 			if ((M.event_handler_flags & IMMUNE_OCEAN_PUSH || M.anchored || M.throwing) && !istype(M,/obj/decal)) //mbc : decal is here for blood cleanables, consider somehow optimizing or adjusting later
 				continue
 
