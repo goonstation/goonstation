@@ -19219,10 +19219,6 @@
 	},
 /turf/simulated/floor,
 /area/station/storage/tools)
-"obW" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "occ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -86265,8 +86261,8 @@ qpn
 qpn
 qpn
 qpn
-obW
-obW
+iDL
+iDL
 iDL
 cdy
 pWF
