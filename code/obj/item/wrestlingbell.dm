@@ -28,6 +28,7 @@
 	anchored = ANCHORED
 	object_flags = NO_GHOSTCRITTER
 	density = 1
+	cooldown = 10 SECONDS
 	icon = 'icons/obj/wrestlingbell.dmi'
 	icon_state = "wrestlingbell1"
 	var/last_ring = 0
@@ -78,13 +79,8 @@
 		if (user.a_intent != "harm")
 			src.put_back_hammer()
 			return
-		if(istype(W, /obj/item/wrestlingbell/hammer) && user.a_intent == "harm")
-			if(last_ring + 10 SECONDS >= world.time)
-				return
-			else
-				last_ring = world.time
-
-				toggle_boxing_mode()
+		else
+			toggle_boxing_mode()
 
 	/// snap back if too far away
 	proc/hammer_move()
@@ -101,8 +97,6 @@
 			UpdateIcon()
 
 	proc/toggle_boxing_mode()
-		SPAWN(0)
-			playsound(src.loc, 'sound/misc/knockout_new.ogg', 50)
 		playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
 		for (var/turf/simulated/floor/specialroom/gym/turf in view(10, src))
 			for (var/mob/living/carbon/human/human in turf.contents)
