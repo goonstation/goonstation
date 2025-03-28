@@ -1235,7 +1235,6 @@
 				else
 					boutput(user, SPAN_ALERT("Access denied."))
 
-
 		else if (istype(W, /obj/item/instrument) && opened)
 			user.drop_item(W)
 			W.set_loc(src)
