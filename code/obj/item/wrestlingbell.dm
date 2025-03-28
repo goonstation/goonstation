@@ -28,7 +28,7 @@
 	anchored = ANCHORED
 	object_flags = NO_GHOSTCRITTER
 	density = 1
-	cooldown = 10 SECONDS
+	var/cooldown = 10 SECONDS
 	icon = 'icons/obj/wrestlingbell.dmi'
 	icon_state = "wrestlingbell1"
 	var/last_ring = 0

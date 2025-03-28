@@ -271,11 +271,42 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 /obj/decal/boxingropeenter
 	name = "Ring entrance"
 	desc = "Do not exit the ring."
-	density = 0
+	density = 1
 	anchored = ANCHORED
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
+	object_flags = HAS_DIRECTIONAL_BLOCKING
+	flags = USEDELAY | ON_BORDER
+	dir = SOUTH
+
+	Cross(atom/movable/O as mob|obj) // code respectfully snatched from railings
+		if (O == null)
+			return 0
+		if (!src.density || (O.flags & TABLEPASS) || istype(O, /obj/newmeteor) || istype(O, /obj/linked_laser) )
+			return 1
+		if (dir & get_dir(loc, O))
+			return !density
+		return 1
+
+	Uncross(atom/movable/O, do_bump = TRUE)
+		if (!src.density || (O.flags & TABLEPASS) || istype(O, /obj/newmeteor) || istype(O, /obj/linked_laser) )
+			. = 1
+		else if (dir & get_dir(O.loc, O.movement_newloc))
+			. = 0
+		else
+			. = 1
+		UNCROSS_BUMP_CHECK(O)
+
+	Bumped(var/mob/AM as mob)
+		. = ..()
+		if(!istype(AM)) return
+		if(AM.client?.check_key(KEY_RUN) || AM.client?.check_key(KEY_BOLT))
+			src.try_vault(AM, TRUE)
+
+	proc/try_vault(mob/user, use_owner_dir = FALSE)
+		if(!actions.hasAction(user, /datum/action/bar/icon/railing_jump))
+			actions.start(new /datum/action/bar/icon/railing_jump(user, src, use_owner_dir), user)
 
 /obj/decal/alienflower
 	name = "strange alien flower"
