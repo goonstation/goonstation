@@ -1,3 +1,4 @@
+
 /datum/random_event/minor/artifact
 	name = "Artifact Spawn"
 
