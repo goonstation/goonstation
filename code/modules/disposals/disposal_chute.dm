@@ -159,9 +159,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					else
 						boutput(user, SPAN_HINT("You need to <b>pry</b> the locking panels."))
 			return
-		if (istype(I,/obj/item/deconstructor))
-			user.visible_message(SPAN_ALERT("<B>[user] hits [src] with [I]!</B>"))
-			return
 		if (istype(I, /obj/item/handheld_vacuum))
 			return
 		if (istype(I,/obj/item/satchel/) && I.contents.len)
@@ -241,6 +238,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			return
 		if (src.status & BROKEN)
 			return
+		if(user.restrained() && (user.pulled_by || length(user.grabbed_by)))
+			return
 		if (istype(target, /obj/machinery/bot))
 			var/obj/machinery/bot/bot = target
 			bot.set_loc(src)
@@ -305,6 +304,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			update()
 		else
 			return ..()
+
+	attack_hand(mob/user)
+		. = ..()
+		if (src.status & (BROKEN | NOPOWER))
+			src.eject() //don't let people hide in depowered disposal chutes indefinitely
 
 	set_broken()
 		. = ..()
@@ -518,7 +522,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	proc/flush()
 
 		flushing = 1
-		flick("[icon_style]-flush", src)
+		FLICK("[icon_style]-flush", src)
 
 		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
@@ -784,7 +788,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	attack_ai(mob/user as mob)
 		return
 
-	attack_hand(mob/user)
+	ui_interact(mob/user, datum/tgui/ui)
 		return
 
 
@@ -797,7 +801,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	//stuff to emulate computer look
 	var/datum/light/light
 	var/image/screen_image
-	///A dummy object in vis_contents so we can use flick() to animate the flush overlay
+	///A dummy object in vis_contents so we can use FLICK() to animate the flush overlay
 	var/obj/dummy/flush_dummy = null
 	///The vendor at the other end
 	var/obj/machinery/vending/player/chemicals/linked = null
@@ -862,7 +866,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if (!isnull(src.destination_tag))
 			H.mail_tag = src.destination_tag
 		H.start(src)
-		flick("chemlink_flush", src.flush_dummy)
+		FLICK("chemlink_flush", src.flush_dummy)
 		playsound(src, 'sound/misc/handle_click.ogg', 50, TRUE)
 
 	ui_interact(mob/user, datum/tgui/ui)

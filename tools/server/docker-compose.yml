@@ -1,5 +1,3 @@
-version: '3'
-
 name: "ss13-${SS13_ID:-main}"
 
 services:
@@ -26,5 +24,3 @@ services:
       timeout: 5s
       retries: 3
       start_period: 60s
-    labels:
-      - monocker.enable=true

@@ -6,6 +6,8 @@
 #define MAP_POD_WARS_SYNDICATE		(1<<3)
 #define	MAP_INFO 					(1<<4) //! Map that just shows station rooms
 #define MAP_ALERTS					(1<<5) //! Station General Alerts
+#define MAP_OBSERVER				(1<<6) // observer map
+#define MAP_SPACE_PHOENIX			(1<<7)
 #define MAP_HTR_TEAM 				(1<<20)
 
 // Area groups, which will be treated as one atom/movable by the renderer, allowing for efficient recolouring across minimaps.

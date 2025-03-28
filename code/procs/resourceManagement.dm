@@ -3,12 +3,23 @@
 * GENERIC HELPERS FOR BOTH SYSTEMS
 *********************************/
 
+/proc/loadCdnManifest()
+	if (!cdn) return list()
+	if (rustg_file_exists("cdn-manifest.json"))
+		var/manifestJson = file2text("cdn-manifest.json")
+		if (rustg_json_is_valid(manifestJson))
+			logTheThing(LOG_DEBUG, null, "Successfully loaded CDN manifest")
+			return json_decode(manifestJson)
+	logTheThing(LOG_DEBUG, null, "Failed to load CDN manifest")
+	return list()
+
 
 //Generates file paths for browser resources when used in html tags e.g. <img>
 /proc/resource(file, group)
 	if (!file) return
 	if (cdn)
-		. = "[cdn]/[file]?v=" + VCS_REVISION
+		if (cdnManifest[file]) file = cdnManifest[file]
+		. = "[cdn]/[file]"
 	else
 		if (findtext(file, "{{resource")) //Got here via the dumb regex proc (local only)
 			file = group
@@ -21,6 +32,7 @@
 //Returns the file contents for storage in memory or further processing during runtime (e.g. many html files)
 /proc/grabResource(path, preventCache = 0)
 	if (!path) return 0
+	if (cdn && cdnManifest[path]) path = cdnManifest[path]
 
 	Z_LOG_DEBUG("Resource/Grab", "[path]")
 	var/file
@@ -36,7 +48,7 @@
 
 			//Actually get the file contents from the CDN
 			var/datum/http_request/request = new()
-			request.prepare(RUSTG_HTTP_METHOD_GET, "[cdn]/[path]?v=" + VCS_REVISION, "", "")
+			request.prepare(RUSTG_HTTP_METHOD_GET, "[cdn]/[path]", "", "")
 			request.begin_async()
 			UNTIL(request.is_complete())
 			var/datum/http_response/response = request.into_response()
@@ -49,7 +61,7 @@
 
 		else //No CDN, grab from local directory
 			Z_LOG_DEBUG("Resource/Grab", "[path] - locally loaded, parsing")
-			file = parseAssetLinks(file("browserassets/[path]"))
+			file = parseAssetLinks(file("browserassets/src/[path]"))
 
 		Z_LOG_DEBUG("Resource/Grab", "[path] - complete")
 
@@ -152,7 +164,7 @@
 				LAGCHECK(LAG_HIGH)
 				recursiveFileLoader(dir + i)
 		else //Is file
-			if (dir == "browserassets/") //skip files in base dir (hardcoding dir name here because im lazy ok)
+			if (dir == "browserassets/src/") //skip files in base dir (hardcoding dir name here because im lazy ok)
 				continue
 			else
 				localResources["[dir][i]"] = file("[dir][i]")

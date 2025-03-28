@@ -1533,9 +1533,8 @@ datum
 					M.take_toxin_damage(1 * mult)
 					random_brute_damage(M, 1 * mult)
 				else if (our_amt < 10)
-					if (probmult(8))
-						var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-						M.vomit(0, null, vomit_message)
+					if (probmult(30))
+						M.nauseate(1)
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
 
@@ -1575,9 +1574,8 @@ datum
 					M.take_toxin_damage(1 * mult)
 					random_brute_damage(M, 1 * mult)
 				else if (our_amt < 20)
-					if (probmult(8))
-						M.visible_message(SPAN_ALERT("[M] hoots all over [himself_or_herself(M)]."), SPAN_ALERT("You hoot all over yourself!"))
-						M.vomit()
+					if (probmult(30))
+						M.nauseate(1)
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
 				else if (probmult(4))
@@ -1679,6 +1677,7 @@ datum
 				if (prob(7))
 					M.emote(pick("twitch","drool","moan"))
 					M.take_toxin_damage(1 * mult)
+					M.nauseate(2)
 				..()
 				return
 
@@ -1773,7 +1772,6 @@ datum
 				if (!M) M = holder.my_atom
 				if(istype(M, /mob/living/critter/spider))
 					return
-				var/turf/T = get_turf(M)
 				if (prob(50))
 					random_brute_damage(M, 1 * mult)
 				else if (prob(10))
@@ -1787,19 +1785,22 @@ datum
 					M.setStatusMin("knockdown", 2 SECONDS * mult)
 					M.visible_message(SPAN_ALERT("<b>[M.name]</b> tears at [his_or_her(M)] own skin!"),\
 					SPAN_ALERT("<b>OH [pick("SHIT", "FUCK", "GOD")] GET THEM OUT![pick("", "!", "!!", "!!!", "!!!!")]"))
-				else if (prob(10) && !HAS_ATOM_PROPERTY(M, PROP_MOB_CANNOT_VOMIT)) //doesn't just go thru mob/proc/vomit because we don't want to re-vomit if there are already spiders on the floor, to not spam spiderlings
-					if (!locate(/obj/decal/cleanable/vomit) in T)
-						M.vomit(0, /obj/decal/cleanable/vomit/spiders)
-						random_brute_damage(M, rand(4))
-						M.visible_message(SPAN_ALERT("<b>[M]</b> [pick("barfs", "hurls", "pukes", "vomits")] up some [pick("spiders", "weird black stuff", "strange black goop", "wriggling black goo")]![pick("", " Gross!", " Ew!", " Nasty!")]"),\
-						SPAN_ALERT("<b>OH [pick("SHIT", "FUCK", "GOD")] YOU JUST [pick("BARFED", "HURLED", "PUKED", "VOMITED")] SPIDERS[pick("!", " FUCK THAT'S GROSS!", " SHIT THAT'S NASTY!", " OH GOD EW!")][pick("", "!", "!!", "!!!", "!!!!")]</b>"))
-						if (prob(33))
-							if (prob(5))
-								new /mob/living/critter/spider/baby(M)
-							else
-								new /mob/living/critter/spider/baby/nice(M)
+
+				if (prob(30))
+					M.nauseate(2)
+
 				..()
 				return
+
+			on_add()
+				if (ismob(holder.my_atom))
+					var/mob/mob = holder.my_atom
+					mob.add_vomit_behavior(/datum/vomit_behavior/spider)
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/mob = holder.my_atom
+					mob.remove_vomit_behavior(/datum/vomit_behavior/spider)
 
 		hugs
 			name = "pure hugs"

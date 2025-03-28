@@ -132,8 +132,6 @@
 		var/area/artifact_fissure/fissure_area = get_area(T)
 		fissure_area.fissure_region = artkey.fissure_region
 
-		mirrored_physical_zone_created = TRUE
-
 /****** Supporting items/atoms/etc. *******/
 
 ABSTRACT_TYPE(/obj/art_fissure_objs)
@@ -278,7 +276,7 @@ ABSTRACT_TYPE(/obj/art_fissure_objs/cross_dummy)
 	proc/open(recursion_check = TRUE)
 		src.icon_state = "door0"
 		playsound(src, 'sound/machines/door_open.ogg', 50, TRUE)
-		flick("doorc0", src)
+		FLICK("doorc0", src)
 		src.set_opacity(FALSE)
 		src.density = FALSE
 		src.open = TRUE
@@ -288,7 +286,7 @@ ABSTRACT_TYPE(/obj/art_fissure_objs/cross_dummy)
 	proc/close(recursion_check = TRUE)
 		src.icon_state = "door1"
 		playsound(src, 'sound/machines/door_close.ogg', 50, TRUE)
-		flick("doorc1", src)
+		FLICK("doorc1", src)
 		src.set_opacity(TRUE)
 		src.density = TRUE
 		src.open = FALSE
@@ -296,7 +294,7 @@ ABSTRACT_TYPE(/obj/art_fissure_objs/cross_dummy)
 			src.linked_door.close(FALSE)
 
 	proc/deny_open()
-		flick("door_deny", src)
+		FLICK("door_deny", src)
 		if (ON_COOLDOWN(src, "deny_sound", 1 SECOND))
 			return
 		playsound(src, 'sound/machines/door_locked.ogg', 40, FALSE)

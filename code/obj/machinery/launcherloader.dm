@@ -44,7 +44,7 @@
 	proc/activate()
 		if(operating || !isturf(src.loc) || driver_operating) return
 		operating = 1
-		flick("launcher_loader_1",src)
+		FLICK("launcher_loader_1",src)
 		playsound(src, 'sound/effects/pump.ogg', 50, TRUE)
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM in src.loc)
@@ -89,7 +89,7 @@
 
 	Crossed(atom/movable/A)
 		..()
-		if (istype(A, /mob/dead) || A.anchored || isintangible(A) || iswraith(A) || isflockmob(A)) return
+		if (istype(A, /mob/dead) || A.anchored || isintangible(A) || iswraith(A) || isflockmob(A) || istype(A, /obj/projectile)) return
 		return_if_overlay_or_effect(A)
 		activate()
 
@@ -148,7 +148,7 @@
 
 		operating = 1
 
-		flick("amdl_1",src)
+		FLICK("amdl_1",src)
 		playsound(src, 'sound/effects/pump.ogg', 50, TRUE)
 
 		SPAWN(0.3 SECONDS)

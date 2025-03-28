@@ -654,7 +654,7 @@
 
 				logTheThing(LOG_STATION, user, "pays [price] credit to activate the mechcomp payment component at [log_loc(src)].")
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"payment=[price]&total=[collected]&customer=[user.name]")
-				flick("comp_money1", src)
+				FLICK("comp_money1", src)
 				return 1
 			else
 				componentSay("Insufficient funds. Price: [src.price].")
@@ -681,7 +681,7 @@
 
 					logTheThing(LOG_STATION, user, "pays [price] credit to activate the mechcomp payment component at [log_loc(src)].")
 					SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"payment=[price]&total=[collected]&customer=[user.name]")
-					flick("comp_money1", src)
+					FLICK("comp_money1", src)
 					return 1
 				else
 					componentSay("Insufficient funds on card. Price: [src.price]. Available: [round(account["current_money"])].")
@@ -743,7 +743,8 @@
 		if(level == OVERFLOOR) return
 		if(input?.signal && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time) && trunk && !trunk.disposed)
 			for(var/atom/movable/M in src.loc)
-				if(M == src || M.anchored || isAI(M)) continue
+				if(M == src || M.anchored || isAI(M) || istype(M, /obj/projectile))
+					continue
 				if(count == src.max_capacity)
 					break
 				M.set_loc(src)
@@ -762,7 +763,7 @@
 
 		ZERO_GASES(air_contents)
 
-		flick("comp_flush1", src)
+		FLICK("comp_flush1", src)
 		sleep(1 SECOND)
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
 
@@ -805,7 +806,7 @@
 		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		if(input)
 			LIGHT_UP_HOUSING
-			flick("comp_tprint1",src)
+			FLICK("comp_tprint1",src)
 			if(paper_left > 0)
 				playsound(src.loc, 'sound/machines/printer_thermal.ogg', 35, 0, -10)
 				var/obj/item/paper/thermal/P = new/obj/item/paper/thermal(src.loc)
@@ -875,7 +876,7 @@
 				boutput(user, SPAN_ALERT("This scanner only accepts thermal paper."))
 				return 0
 			LIGHT_UP_HOUSING
-			flick("comp_pscan1",src)
+			FLICK("comp_pscan1",src)
 			playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
 			var/obj/item/paper/P = W
 			var/saniStr = strip_html_tags(sanitize(html_encode(P.info)))
@@ -1006,7 +1007,7 @@
 		if(level == UNDERFLOOR && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			if(ishuman(user) && user.bioHolder)
 				LIGHT_UP_HOUSING
-				flick("comp_hscan1",src)
+				FLICK("comp_hscan1",src)
 				playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
 				var/sendstr = (send_name ? user.real_name : user.bioHolder.fingerprints)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,sendstr)
@@ -1348,7 +1349,7 @@
 	proc/split(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
-		var/list/converted = params2list(input.signal)
+		var/list/converted = params2complexlist(input.signal)
 		if(length(converted))
 			if(triggerSignal in converted)
 				input.signal = converted[triggerSignal]
@@ -1813,7 +1814,7 @@
 	proc/relay(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
-		flick("[under_floor ? "u":""]comp_relay1", src)
+		FLICK("[under_floor ? "u":""]comp_relay1", src)
 		var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
 		SPAWN(0) SEND_SIGNAL(src,transmissionStyle,input)
 		return
@@ -1994,7 +1995,7 @@
 			if(isnull(signal)) return
 
 			LIGHT_UP_HOUSING
-			flick("[under_floor ? "u":""]comp_buffer1", src)
+			FLICK("[under_floor ? "u":""]comp_buffer1", src)
 			var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
 			SPAWN(0) SEND_SIGNAL(src,transmissionStyle,signal)
 
@@ -2162,7 +2163,7 @@
 	proc/send(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
-		var/list/converted = params2list(input.signal)
+		var/list/converted = params2complexlist(input.signal)
 		if(!length(converted) || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 
 		var/datum/signal/sendsig = get_free_signal()
@@ -2664,7 +2665,7 @@
 		var/turf/myTurf = get_turf(src)
 		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time) || isrestrictedz(myTurf.z)) return
 		LIGHT_UP_HOUSING
-		flick("[under_floor ? "u":""]comp_tele1", src)
+		FLICK("[under_floor ? "u":""]comp_tele1", src)
 		var/list/destinations = new/list()
 
 		// if we're using the signal id and this matches the signal, use the signal id
@@ -2672,19 +2673,11 @@
 		var/targetTeleID = use_signal_id ? input.signal : src.teleID
 
 		for_by_tcl(T, /obj/item/mechanics/telecomp)
-			// Skip ourselves, disconnected pads, ones not on the ground, in restricted areas, or in send-only mode
-			if (T == src || T.level == OVERFLOOR || !isturf(T.loc) || isrestrictedz(T.z) || T.send_only) continue
+			// Skip ourselves, disconnected pads, ones not on the ground, in restricted areas, send-only mode, or on the same turf.
+			if (T == src || T.level == OVERFLOOR || !isturf(T.loc) || isrestrictedz(T.z) || T.send_only || get_turf(T) == get_turf(src)) continue
 
-			// This ordinarily skips all on other zlevels, but
-			// trying a change to let them do any non-restricted Z for now
-			/*
-#ifdef UNDERWATER_MAP
-			if (!(T.z == 5 && src.z == 1) && !(T.z == 1 && src.z == 5)) //underwater : allow TP to/from trench
-				if(T.z != src.z) continue
-#else
+			// you used to be able to cross z-levels with mechcomp teles, but no longer
 			if (T.z != src.z) continue
-#endif
-			*/
 
 			if (T.teleID == targetTeleID)
 				destinations.Add(T)
@@ -2694,19 +2687,25 @@
 			var/count_sent = 0
 			playsound(src.loc, 'sound/mksounds/boost.ogg', 50, 1)
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc))).Run()
-			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(picked.loc))).Run()
-			for(var/atom/movable/M in src.loc)
-				if(M == src || M.invisibility || M.anchored) continue
-				logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
-				do_teleport(M,get_turf(picked.loc),FALSE,use_teleblocks=FALSE,sparks=FALSE)
+			var/obj/projectile/proj = initialize_projectile_pixel_spread(src, new/datum/projectile/special/homing/mechcomp_warp, picked)
+			var/tries = 5
+			while (tries > 0 && (!proj || proj.disposed))
+				proj = initialize_projectile_pixel_spread(src, new/datum/projectile/special/homing/mechcomp_warp, picked)
+			proj.targets = list(picked)
+			proj.event_handler_flags |= IMMUNE_SINGULARITY
+			proj.has_atmosphere = TRUE
+			for(var/atom/movable/AM in src.loc)
+				if(AM == src || AM.invisibility || AM.anchored) continue
+				logTheThing(LOG_STATION, AM, "entered [src] at [log_loc(src)] targeting destination [log_loc(picked)]")
+				AM.set_loc(proj)
+				AM.changeStatus("teleporting", INFINITY)
 				if(count_sent++ > 50) break //ratelimit
-
 			input.signal = "to=[targetTeleID]&count=[count_sent]"
+			proj.special_data["count_sent"] = count_sent
+			proj.launch()
 			SPAWN(0)
 				// Origin pad gets "to=destination&count=123"
-				// Dest. pad gets "from=origin&count=123"
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
-				SEND_SIGNAL(picked,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"from=[src.teleID]&count=[count_sent]")
 		else
 			// If nowhere to go, output an error
 			input.signal = "to=[targetTeleID]&error=no destinations found"
@@ -2998,7 +2997,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 	proc/press(mob/user)
 		set name = "Press"
-		flick(icon_down, src)
+		FLICK(icon_down, src)
 		LIGHT_UP_HOUSING
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
 		logTheThing(LOG_STATION, user || usr, "presses the mechcomp button at [log_loc(src)].")
@@ -3195,7 +3194,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				var/selected_button = input(user, "Press a button", "Button Panel") in src.active_buttons + "*CANCEL*"
 				if (!selected_button || selected_button == "*CANCEL*" || !in_interact_range(src, user)) return
 				LIGHT_UP_HOUSING
-				flick(icon_down, src)
+				FLICK(icon_down, src)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, src.active_buttons[selected_button])
 				logTheThing(LOG_STATION, user, "presses the mechcomp button [selected_button] at [log_loc(src)].")
 				return 1
@@ -3406,12 +3405,15 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			return 0
 		else if (istype(W, /obj/item/instrument)) //BLUH these aren't consolidated under any combined type hello elseif chain // i fix - haine
 			var/obj/item/instrument/I = W
-			instrument = I
-			sounds = I.sounds_instrument
-			volume = I.volume
-			delay = I.note_time
-			if(I.note_time < 1 SECOND)
-				allow_polyphony = TRUE
+			if (!I.automatable)
+				boutput(user, SPAN_ALERT("[I] doesn't fit in there!"))
+			else
+				instrument = I
+				sounds = I.sounds_instrument
+				volume = I.volume
+				delay = I.note_time
+				if(I.note_time < 1 SECOND)
+					allow_polyphony = TRUE
 		else if (istype(W, /obj/item/clothing/head/butt))
 			instrument = W
 			sounds = 'sound/voice/farts/poo2.ogg'
@@ -3451,18 +3453,18 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			volume_channel = VOLUME_CHANNEL_EMOTE
 		if (islist(sounds) && length(sounds) > 1 && index > 0 && index <= length(sounds))
 			ON_COOLDOWN(src, SEND_COOLDOWN_ID, delay)
-			flick("comp_instrument1", src)
+			FLICK("comp_instrument1", src)
 			playsound(get_turf(src), sounds[index], volume, 0, channel=volume_channel)
 		else if (signum &&((signum >= 0.1 && signum <= 2) || (signum <= -0.1 && signum >= -2) || pitchUnlocked))
 			var/mod_delay = delay
 			if(abs(signum) < 1)
 				mod_delay /= abs(signum)
 			ON_COOLDOWN(src, SEND_COOLDOWN_ID, mod_delay)
-			flick("comp_instrument1", src)
+			FLICK("comp_instrument1", src)
 			playsound(src, sounds, volume, 0, 0, signum, channel=volume_channel)
 		else
 			ON_COOLDOWN(src, SEND_COOLDOWN_ID, delay)
-			flick("comp_instrument1", src)
+			FLICK("comp_instrument1", src)
 			playsound(src, sounds, volume, 1, channel=volume_channel)
 			return
 
@@ -4770,7 +4772,19 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	New()
 		..()
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "guess", PROC_REF(guess))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Set Puzzle", PROC_REF(setPuzzleAutomatically))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Set Puzzle", PROC_REF(setPuzzle))
+
+	proc/setPuzzleAutomatically(var/datum/mechanicsMessage/input)
+		if (input.signal != "")
+			src.guesses = 0
+			src.bad_guesses = 0
+			src.solved = FALSE
+			src.letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",\
+			                   "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
+			var/output_puzzle_text = src.filter_puzzle(input.signal)
+			// src.obj_speak("new puzzle set: [src.puzzle] -- filtered: [src.puzzle_filtered] -- current: [src.puzzle_current]")
+			SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "solved=[src.solved]&guesses=[src.guesses]&bad_guesses=[src.bad_guesses]&puzzle=[output_puzzle_text]")
 
 
 	proc/setPuzzle(obj/item/W as obj, mob/user as mob)

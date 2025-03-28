@@ -140,8 +140,6 @@
 	desc = "A dark staff infused with eldritch power. Trying to steal this is probably a bad idea."
 	icon_state = "staffcthulhu"
 	item_state = "staffcthulhu"
-	force = 14
-	hitsound = 'sound/effects/ghost2.ogg'
 	eldritch = 1
 
 	New()
@@ -151,6 +149,19 @@
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+	pickup(mob/user)
+		. = ..()
+		if(iswizard(user))
+			src.force = 14
+			src.hitsound = 'sound/effects/ghost2.ogg'
+			src.tooltip_rebuild = TRUE
+
+	dropped(mob/user)
+		. = ..()
+		src.force = src::force
+		src.hitsound = src::hitsound
+		src.tooltip_rebuild = TRUE
 
 	attack_hand(var/mob/user)
 		if (user.mind)
@@ -236,7 +247,7 @@
 		playsound(T, 'sound/effects/electric_shock_short.ogg', 70, TRUE)
 		lightning.caster = user
 		UpdateIcon()
-		flick("[icon_state]_fire", src)
+		FLICK("[icon_state]_fire", src)
 		..()
 
 	attack_hand(var/mob/user)
@@ -282,7 +293,7 @@
 		if(thunder_charges <= 3) //doesn't ever reduce charge even though three is usually max
 			thunder_charges = 3
 		UpdateIcon()
-		flick("[icon_state]_fire", src)
+		FLICK("[icon_state]_fire", src)
 
 	proc/zap_person(var/mob/target) //purposefully doesn't do any damage, here to offer non-chat feedback when trying to pick up
 		boutput(target, SPAN_ALERT("Static electricity arcs from [name] to your hand when you try and touch it!"))

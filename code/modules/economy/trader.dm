@@ -1021,6 +1021,8 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 		src.goods_sell += new /datum/commodity/contraband/eguncell_highcap(src)
 		src.goods_sell += new /datum/commodity/podparts/cloak(src)
 		src.goods_sell += new /datum/commodity/podparts/redarmor(src)
+		src.goods_sell += new /datum/commodity/podparts/ballistic_22(src)
+		src.goods_sell += new /datum/commodity/podparts/ballistic_9mm(src)
 		src.goods_sell += new /datum/commodity/podparts/ballistic(src)
 		src.goods_sell += new /datum/commodity/podparts/artillery(src)
 		src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
@@ -1216,6 +1218,9 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 
 
 
+/obj/npc/trader/bee/sea
+	name = "Bambini"
+
 // Hon- I mean, hello sir.
 
 /obj/npc/trader/exclown
@@ -1252,6 +1257,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/costume/mime(src)
 		src.goods_sell += new /datum/commodity/costume/mime/alt(src) //suspenders and such
 		src.goods_sell += new /datum/commodity/costume/jester(src)
+		src.goods_sell += new /datum/commodity/costume/blorbosuit(src)
 		src.goods_sell += new /datum/commodity/backpack/breadpack(src)
 		src.goods_sell += new /datum/commodity/backpack/bearpack(src)
 		src.goods_sell += new /datum/commodity/backpack/turtlebrown(src)

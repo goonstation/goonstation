@@ -39,7 +39,7 @@ var/global/totally_random_jobs = FALSE
 	{engineering_staff += player}\
 else if (istype(JOB, /datum/job/research/scientist))\
 	{research_staff += player}\
-else if (istype(JOB, /datum/job/research/medical_doctor))\
+else if (istype(JOB, /datum/job/medical/medical_doctor))\
 	{medical_staff += player}\
 else if (istype(JOB, /datum/job/security/security_officer))\
 	{security_officers += player}
@@ -530,26 +530,29 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			src.stow_in_available(src.ears)
 		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), SLOT_EARS)
 
-/// Equip items from body traits
-/mob/living/carbon/human/proc/equip_body_traits()
-	if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
-		if (src.limbs)
-			if (src.limbs.l_leg)
-				src.limbs.l_leg.delete()
-			if (src.limbs.r_leg)
-				src.limbs.r_leg.delete()
-			var/obj/stool/chair/comfy/chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
-			chair.buckle_in(src, src)
+/**
+Equip items from body traits.
 
+ * @param extended_tank - If TRUE, the mob will spawn with a pocket extended tank instead of a mini tank.
+
+**/
+/mob/living/carbon/human/proc/equip_body_traits(extended_tank=FALSE)
 	if (src.traitHolder && src.traitHolder.hasTrait("plasmalungs"))
 		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks
 			src.stow_in_available(src.wear_mask)
 
 		if(!src.wear_mask)
 			src.equip_if_possible(new /obj/item/clothing/mask/breath(src), SLOT_WEAR_MASK)
-
-		var/obj/item/tank/good_air = new /obj/item/tank/mini_plasma(src)
-		src.put_in_hand_or_drop(good_air)
+		var/obj/item/tank/good_air
+		if (extended_tank)
+			good_air = new /obj/item/tank/emergency_oxygen/extended/plasma(src)
+			// TODO: antagonists spawn tanks in the left pocket by practice(copy/paste), not pattern
+			if (istype(src.l_store, /obj/item/tank/emergency_oxygen/extended))
+				qdel(src.l_store)
+			src.equip_if_possible(good_air, SLOT_L_STORE)
+		else
+			good_air = new /obj/item/tank/mini_plasma(src)
+			src.put_in_hand_or_stow(good_air, delete_item=FALSE)
 		if (!good_air.using_internal())//set tank ON
 			good_air.toggle_valve()
 
@@ -658,6 +661,10 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		trinket = new random_lunchbox_path(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("allergic"))
 		trinket = new/obj/item/reagent_containers/emergency_injector/epinephrine(src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("wheelchair"))
+		var/obj/stool/chair/comfy/wheelchair/the_chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
+		trinket = the_chair
+		the_chair.buckle_in(src, src)
 	else
 		trinket = new T(src)
 
@@ -699,9 +706,9 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 	// Special mutantrace items
 	if (src.traitHolder && src.traitHolder.hasTrait("pug"))
-		src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
+		src.put_in_hand_or_stow(new /obj/item/reagent_containers/food/snacks/cookie/dog, delete_item = FALSE)
 	else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
-		src.put_in_hand_or_drop(new /obj/item/joint_wax)
+		src.put_in_hand_or_stow(new /obj/item/joint_wax, delete_item = FALSE)
 
 	src.equip_sensory_items()
 

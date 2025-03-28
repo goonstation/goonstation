@@ -535,7 +535,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 							if(distPercent < 40) // only inner 40% of range
 								O.ArtifactFaultUsed(M)
 								if(M)
-									M.become_statue(mat.getID())
+									M.become_statue(mat)
 				else
 					G.setMaterial(mat)
 

@@ -70,6 +70,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 	icon_off = "monkey-off"
 	icon_broken = "monkey-broken"
 	icon_fallen = "monkey-fallen"
+	icon_fallen_broken = "monkey-fallen-broken"
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("It's meat you can buy!",
@@ -607,7 +608,7 @@ Urs' Hauntdog critter
 		var/turf/moveto = locate(src.x + rand(-1,1),src.y + rand(-1, 1),src.z)
 
 		if(isturf(moveto) && !moveto.density)
-			flick("hauntdog-hop",src)
+			FLICK("hauntdog-hop",src)
 			step_towards(src, moveto)
 		if(src.aggressive) seek_target()
 		steps += 1
@@ -620,7 +621,7 @@ Urs' Hauntdog critter
 
 	proc/flip()
 		src.visible_message("<b>[src]</b> does a flip!")
-		flick("hauntdog-flip",src)
+		FLICK("hauntdog-flip",src)
 		sleep(1.3 SECONDS)
 
 	CritterDeath()

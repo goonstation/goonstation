@@ -34,7 +34,7 @@
 		playsound(src, 'sound/machines/hiss.ogg', 50, TRUE, -1)
 		boutput(user, "You load [taken_piece] into [src].")
 		SPAWN(2 SECONDS)
-			flick("fab3-work", src)
+			FLICK("fab3-work", src)
 			sleep(0.5 SECONDS)
 			src.working = FALSE
 			if (src.is_disabled() || QDELETED(src) || QDELETED(taken_piece))
@@ -150,7 +150,7 @@
 		var/amt = input(usr, "How many? ([maxamt] max)", "Select amount", maxamt) as null|num
 		amt = max(0, amt)
 		if(amt && isnum_safe(amt) && FP && FP.amount >= amt && SP && SP.amount >= amt && (FP in src) && (SP in src))
-			flick("smelter1",src)
+			FLICK("smelter1",src)
 			var/datum/material/merged = getFusedMaterial(FP.material, SP.material)
 			var/datum/material_recipe/RE = matchesMaterialRecipe(merged)
 			var/newtype = getProcessedMaterialForm(merged)
@@ -233,9 +233,13 @@
 				boutput(user, SPAN_ALERT("This material can not be used in \the [src]."))
 				return
 
-			user.visible_message(SPAN_NOTICE("[user] puts \the [W] in \the [src]."))
 			if( istype(W, /obj/item/material_piece) || istype(W, /obj/item/raw_material) )
-				addMaterial(W, user, params)
+				if (src.first_part && src.second_part)
+					boutput(user, SPAN_ALERT("\The [src] is full!"))
+				else
+					user.visible_message(SPAN_NOTICE("[user] puts \the [W] in \the [src]."))
+					addMaterial(W, user, params)
+					src.ui_interact(user)
 			else
 				boutput(user, SPAN_ALERT("The crucible can only use raw materials."))
 				return

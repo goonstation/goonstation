@@ -104,13 +104,13 @@
 		name = "commander's space helmet"
 		icon_state = "space-captain-blue"
 		item_state = "space-captain-blue"
-		desc = "Helps protect against vacuum. Comes in a fasionable blue befitting a commander."
+		desc = "Helps protect against vacuum. Comes in a fashionable blue befitting a commander."
 
 	red
 		name = "commander's space helmet"
 		icon_state = "space-captain-red"
 		item_state = "space-captain-red"
-		desc = "Helps protect against vacuum. Comes in a fasionable red befitting a commander."
+		desc = "Helps protect against vacuum. Comes in a fashionable red befitting a commander."
 
 /obj/item/clothing/head/helmet/space/neon
 	name = "neon space helmet"
@@ -181,7 +181,7 @@
 
 /obj/item/clothing/head/helmet/space/engineer/diving //hijacking engiehelms for the flashlight
 	name = "diving helmet"
-	desc = "Comes equipped with a builtin flashlight."
+	desc = "Comes equipped with a built-in flashlight."
 	icon_state = "diving0"
 	acid_survival_time = 8 MINUTES
 
@@ -1202,7 +1202,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 
 /obj/item/clothing/head/helmet/captain
 	name = "captain's helmet"
-	desc = "Somewhat protects an important person's head from being bashed in. Comes in a intriqueing shade of green befitting of a captain"
+	desc = "Somewhat protects an important person's head from being bashed in. Comes in a intriguing shade of green befitting of a captain"
 	c_flags = COVERSEYES | BLOCKCHOKE
 	icon_state = "helmet-captain"
 	item_state = "helmet-captain"

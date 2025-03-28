@@ -200,10 +200,6 @@
 "aaO" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space_hive)
-"aaP" = (
-/obj/critter/gunbot/drone/heavydrone,
-/turf/space,
-/area/space)
 "aaR" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -3263,7 +3259,7 @@
 /turf/space,
 /area/space)
 "apv" = (
-/obj/critter/gunbot/drone/minigundrone,
+/obj/gunbotdrone_spawner/rare,
 /turf/space,
 /area/space)
 "apw" = (
@@ -4640,10 +4636,6 @@
 /obj/item/guardbot_core/old,
 /turf/simulated/floor,
 /area/buddyfactory)
-"auk" = (
-/obj/critter/gunbot/drone,
-/turf/space,
-/area/space)
 "aul" = (
 /obj/stool/chair/office,
 /turf/simulated/floor,
@@ -7244,10 +7236,6 @@
 /obj/machinery/telejam/active,
 /turf/space,
 /area/abandonedmedicalship)
-"aLt" = (
-/obj/critter/gunbot/drone/buzzdrone,
-/turf/space,
-/area/space)
 "aLu" = (
 /obj/storage/crate/medical,
 /obj/item/storage/firstaid/regular,
@@ -8772,7 +8760,7 @@
 /area/space)
 "aQf" = (
 /obj/decal/cleanable/molten_item,
-/obj/critter/gunbot/drone/buzzdrone,
+/obj/gunbotdrone_spawner/common,
 /turf/simulated/floor/airless/plating/scorched,
 /area/space)
 "aQg" = (
@@ -12571,7 +12559,7 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "bcA" = (
-/obj/critter/gunbot/drone/raildrone,
+/obj/gunbotdrone_spawner/very_rare,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "bcB" = (
@@ -14615,9 +14603,7 @@
 /turf/space,
 /area/space)
 "bkz" = (
-/obj/critter/gunbot/drone{
-	wanderer = 0
-	},
+/obj/gunbotdrone_spawner/common,
 /turf/space,
 /area/space)
 "bkA" = (
@@ -14821,7 +14807,7 @@
 /turf/space,
 /area/abandonedship)
 "blr" = (
-/obj/critter/gunbot/drone/laserdrone,
+/obj/gunbotdrone_spawner/uncommon,
 /turf/space,
 /area/space)
 "bls" = (
@@ -18023,7 +18009,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/diner/tug)
 "iIc" = (
-/obj/critter/gunbot/drone/heavydrone,
+/obj/gunbotdrone_spawner/uncommon,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "iMD" = (
@@ -36804,7 +36790,7 @@ aaa
 aaa
 aaa
 aaa
-aaP
+blr
 aaa
 aaa
 aaa
@@ -36838,7 +36824,7 @@ bgu
 aaa
 aaa
 aaa
-aaP
+blr
 aaa
 aaa
 aaa
@@ -40373,7 +40359,7 @@ aab
 aab
 aaa
 aaa
-aLt
+bkz
 aao
 aaa
 aaa
@@ -41616,7 +41602,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -43077,7 +43063,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa
@@ -45777,7 +45763,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa
@@ -45840,7 +45826,7 @@ aaz
 aaa
 aaa
 aaa
-bkx
+bkz
 aKi
 aao
 aaa
@@ -46411,7 +46397,7 @@ aNm
 aaa
 aaa
 aaa
-aaP
+blr
 aMF
 aaa
 aaa
@@ -47447,7 +47433,7 @@ aaa
 aax
 aaF
 aaa
-aaP
+blr
 aal
 gaf
 acL
@@ -48477,7 +48463,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -51227,7 +51213,7 @@ aaa
 aaa
 aaa
 aaa
-aaP
+blr
 aaa
 aaa
 aaa
@@ -52812,7 +52798,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa
@@ -53684,7 +53670,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa
@@ -54936,7 +54922,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 abg
@@ -55731,7 +55717,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa
@@ -58267,7 +58253,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa
@@ -58787,7 +58773,7 @@ aaa
 aaa
 aaa
 aaa
-aaP
+blr
 aaa
 aaa
 aaa
@@ -60334,7 +60320,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -60594,7 +60580,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa
@@ -64891,7 +64877,7 @@ aaa
 aaa
 aad
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -65709,7 +65695,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa
@@ -65984,7 +65970,7 @@ aaa
 aaa
 aaa
 aaa
-bkx
+bkz
 aaa
 aaa
 aaa
@@ -66020,7 +66006,7 @@ aaa
 aaa
 aaa
 aaa
-aLt
+bkz
 aaa
 aaa
 aaa
@@ -75991,7 +75977,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa
@@ -78488,7 +78474,7 @@ aaa
 aaa
 aaa
 aaa
-auk
+bkz
 aaa
 aaa
 aaa

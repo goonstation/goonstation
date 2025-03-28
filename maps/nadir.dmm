@@ -1219,7 +1219,7 @@
 	name = "Northwest Breach Hull"
 	})
 "aAe" = (
-/obj/storage/cart,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -2672,9 +2672,7 @@
 /turf/simulated/floor/blackwhite{
 	dir = 6
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "bjU" = (
 /obj/noticeboard/persistent{
 	name = "Cargo persistent notice board";
@@ -4133,6 +4131,12 @@
 	dir = 6
 	},
 /area/station/crew_quarters/market)
+"bPW" = (
+/obj/stool/chair/comfy/blue{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/station/bridge)
 "bQb" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -5686,9 +5690,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "cBP" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/decal/cleanable/dirt/jen,
@@ -5718,9 +5720,7 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "cDk" = (
 /obj/machinery/computer/transception{
 	dir = 8
@@ -7267,6 +7267,15 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
+"dnE" = (
+/obj/stool/chair/comfy/red{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
+/area/station/bridge)
 "dnH" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -8929,7 +8938,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_east)
 "dYQ" = (
-/obj/stool/chair/comfy{
+/obj/stool/chair/comfy/yellow{
 	dir = 1
 	},
 /obj/disposalpipe/segment/mail/horizontal,
@@ -12565,9 +12574,7 @@
 /turf/simulated/floor/blackwhite{
 	dir = 9
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "fAZ" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 8;
@@ -13989,9 +13996,7 @@
 /turf/simulated/floor/blackwhite{
 	dir = 9
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "ghz" = (
 /obj/machinery/light/small,
 /obj/stool/bed,
@@ -17669,9 +17674,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "hyl" = (
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/redblack,
@@ -19362,9 +19365,7 @@
 "igo" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "igp" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -19612,9 +19613,7 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "ilD" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -20207,9 +20206,7 @@
 /area/station/crew_quarters/catering)
 "ixn" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "ixp" = (
 /obj/stool/chair/blue{
 	dir = 8
@@ -23299,15 +23296,15 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
 "jOJ" = (
-/obj/machinery/computer/bank_data{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/computer3/generic/bank_data{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/bridge/hos{
@@ -23581,9 +23578,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "jSs" = (
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/redblack{
@@ -24935,7 +24930,6 @@
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "kta" = (
-/obj/machinery/computer/bank_data,
 /obj/machinery/power/apc/autoname_north,
 /obj/item_dispenser/idcarddispenser{
 	pixel_x = 25;
@@ -24945,6 +24939,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/bank_data,
 /turf/simulated/floor/black/corner{
 	dir = 4
 	},
@@ -26269,7 +26264,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/pharmacy)
 "kVX" = (
-/obj/stool/chair/comfy,
+/obj/stool/chair/office/blue,
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/bridge)
@@ -28889,9 +28884,7 @@
 /turf/simulated/floor/blackwhite{
 	dir = 9
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "lYy" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -32303,9 +32296,7 @@
 "nwS" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "nxg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -35001,7 +34992,6 @@
 /obj/item/shipcomponent/pod_lights/police_siren{
 	pixel_y = 7
 	},
-/obj/table/reinforced/auto,
 /turf/simulated/floor/redblack,
 /area/station/hangar/sec)
 "oGa" = (
@@ -35128,9 +35118,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "oIP" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37090,9 +37078,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "pyd" = (
 /obj/decal/poster/wallsign/fuck2,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -39243,9 +39229,7 @@
 /turf/simulated/floor/blackwhite{
 	dir = 9
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "qvZ" = (
 /obj/stool/chair/couch{
 	desc = "It's comfortable, but has an aura of unease about it, like somebody's watching you the moment you sit down.";
@@ -39473,9 +39457,7 @@
 	},
 /area/station/medical/medbay/surgery)
 "qyO" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Emergency Storage"
-	},
+/obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/mail/vertical,
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
@@ -40653,7 +40635,7 @@
 	},
 /area/station/medical/medbay)
 "rhk" = (
-/obj/stool/chair/comfy,
+/obj/stool/chair/office/blue,
 /obj/item/device/radio/intercom/bridge{
 	broadcasting = 0
 	},
@@ -41985,6 +41967,13 @@
 "rNu" = (
 /turf/simulated/floor/engine/caution/corner,
 /area/shuttle/sea_elevator/upper)
+"rNP" = (
+/obj/stool/chair/comfy/green{
+	dir = 1
+	},
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
+/area/station/bridge)
 "rOp" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/east,
@@ -42346,7 +42335,6 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "rVx" = (
-/obj/table/auto,
 /obj/item/suture{
 	pixel_x = 2;
 	pixel_y = 7
@@ -43053,14 +43041,14 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/computer/bank_data{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/light_switch/west,
+/obj/machinery/computer3/generic/bank_data{
+	dir = 4
+	},
 /turf/simulated/floor/engine,
 /area/station/communications/centre)
 "snL" = (
@@ -43908,9 +43896,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "sFC" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
@@ -44880,9 +44866,7 @@
 /turf/simulated/floor/blackwhite{
 	dir = 6
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "tau" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/sanitary/white,
@@ -45192,9 +45176,7 @@
 	},
 /obj/machinery/light,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "thf" = (
 /obj/machinery/door/feather/friendly{
 	dir = 4
@@ -47650,9 +47632,7 @@
 /turf/simulated/floor/blackwhite{
 	dir = 6
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "uiV" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/disposalpipe/segment/mineral,
@@ -47886,7 +47866,7 @@
 	desc = "A solid metal frame with some padding on it, useful for sleeping on. It's got wheels, and smells vaguely of fur and death.";
 	name = "Morty's roller bed"
 	},
-/obj/critter/opossum/morty{
+/mob/living/critter/small_animal/opossum/morty{
 	dir = 4
 	},
 /turf/simulated/floor/blackwhite{
@@ -49676,9 +49656,7 @@
 /turf/simulated/floor/blackwhite{
 	dir = 9
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "vhP" = (
 /obj/stool/chair/couch{
 	dir = 4;
@@ -52689,7 +52667,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "wwq" = (
-/obj/stool/chair/comfy{
+/obj/stool/chair/comfy/purple{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
@@ -55577,9 +55555,7 @@
 /obj/monkeyplant,
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "xOa" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/black/grime,
@@ -56552,9 +56528,7 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 
 (1,1,1) = {"
 oeA
@@ -99317,7 +99291,7 @@ azs
 bRH
 iPe
 nKK
-tvE
+dnE
 tvE
 lsG
 ldw
@@ -99621,7 +99595,7 @@ iPe
 kVX
 tbq
 sQw
-dYQ
+rNP
 cdL
 ihW
 lHV
@@ -100223,7 +100197,7 @@ wOo
 gMN
 iPe
 xvD
-wwq
+bPW
 wwq
 qzz
 kyo

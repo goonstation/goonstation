@@ -134,7 +134,11 @@ TYPEINFO(/obj/item/device/chameleon)
 		if (target.plane == PLANE_HUD && !isitem(target)) //don't grab hud stuff _unless_ it's an item. Grabs are the only exception I know
 			return
 		//Okay, enough scanning shit without actual icons yo.
-		if ((target.icon && target.icon_state || length(target.overlays) || length(target.underlays)) && isobj(target))
+		if ((target.icon && target.icon_state || length(target.overlays) || length(target.underlays)) && isobj(target) && target.alpha > 5)
+			var/icon/testIcon = getFlatIcon(target)
+			if(!testIcon) //weird edgecases
+				return
+
 			if (!cham)
 				cham = new(src)
 				cham.master = src
@@ -145,7 +149,7 @@ TYPEINFO(/obj/item/device/chameleon)
 			cham.real_name = target.name
 			cham.desc = target.desc
 			cham.real_desc = target.desc
-			cham.icon = getFlatIcon(target)
+			cham.icon = testIcon
 			cham.set_dir(target.dir)
 			can_use = 1
 			tooltip_rebuild = 1
@@ -167,7 +171,7 @@ TYPEINFO(/obj/item/device/chameleon)
 			cham.set_loc(src)
 			boutput(user, SPAN_NOTICE("You deactivate the [src]."))
 			anim.set_loc(get_turf(src))
-			flick("emppulse",anim)
+			FLICK("emppulse",anim)
 			SPAWN(0.8 SECONDS)
 				anim.set_loc(src)
 		else
@@ -183,7 +187,7 @@ TYPEINFO(/obj/item/device/chameleon)
 
 			boutput(user, SPAN_NOTICE("You activate the [src]."))
 			anim.set_loc(get_turf(src))
-			flick("emppulse",anim)
+			FLICK("emppulse",anim)
 			SPAWN(0.8 SECONDS)
 				anim.set_loc(src)
 

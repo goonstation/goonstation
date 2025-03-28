@@ -1669,7 +1669,7 @@ TYPEINFO(/obj/machinery/networked/radio)
 
 				SPAWN(0)
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, rsignal, transmission_range, "f[newFreq]")
-					flick("net_radio-blink", src)
+					FLICK("net_radio-blink", src)
 				src.post_status(target,"command","term_message","data","command=status&status=success")
 
 				return
@@ -2063,7 +2063,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 			sheets_remaining--
 			use_power(200)
 
-			flick("printer-printing",src)
+			FLICK("printer-printing",src)
 			playsound(src.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
 			SPAWN(3.2 SECONDS)
 
@@ -2356,7 +2356,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 			return 1
 
 		scanning = 1
-		flick("scanner-scanning",src)
+		FLICK("scanner-scanning",src)
 		sleep(2 SECONDS)
 		if (scan_buffer)
 			scan_buffer.dispose()
@@ -3730,7 +3730,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 						src.visible_message("<b>[src.name]</b> extends its stand.")
 						src.set_density(1)
 						src.setup_base_icon_state = "impactstand"
-						flick("impactpad-extend",src)
+						FLICK("impactpad-extend",src)
 						src.UpdateIcon()
 						playsound(src.loc, 'sound/effects/pump.ogg', 50, 1)
 					else
@@ -3741,7 +3741,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					src.visible_message("<b>[src.name]</b> retracts its stand.")
 					src.set_density(0)
 					src.setup_base_icon_state = "impactpad"
-					flick("impactstand-retract",src)
+					FLICK("impactstand-retract",src)
 					src.UpdateIcon()
 					playsound(src.loc, 'sound/effects/pump.ogg', 50, 1)
 					message_host("command=ack")

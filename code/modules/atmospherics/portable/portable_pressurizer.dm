@@ -215,7 +215,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 		if(iswrenchingtool(I) || istype(I,/obj/item/device/analyzer/atmospheric) || istype(I,/obj/item/card/emag))
 			..()
 			return
-		if(istype(I,/obj/item/electronics/scanner) || istype(I,/obj/item/deconstructor) || (istype(I,/obj/item/device/pda2)))
+		if(istype(I,/obj/item/device/pda2))
 			user.visible_message(SPAN_ALERT("<B>[user] hits [src] with [I]!</B>"))
 			return
 		if (istype(I,/obj/item/satchel/) && I.contents.len)
@@ -278,7 +278,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 						air_contents.oxygen/TOTAL_MOLES(air_contents)*255,	\
 						air_contents.oxygen+air_contents.toxins/TOTAL_MOLES(air_contents)*255)
 		poof.alpha = clamp(MIXTURE_PRESSURE(src.air_contents)/src.maximum_pressure*180, 90, 220)
-		flick("pressurizer-poof", poof)
+		FLICK("pressurizer-poof", poof)
 		SPAWN(0.8 SECONDS)
 			if(poof) qdel(poof)
 

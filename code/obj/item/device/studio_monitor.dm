@@ -31,7 +31,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		headset_channel_lookup["[R_FREQ_LOUDSPEAKERS]"] = "Loudspeakers"
 
 	send_hear()
-		flick("amp_stack_actv", src)
+		FLICK("amp_stack_actv", src)
 
 		last_transmission = world.time
 		var/list/hear = hearers(src.speaker_range, get_turf(src))
@@ -439,7 +439,6 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	id = "infrasound_nausea"
 	name = "Nausea"
 	desc = "Something doesn't feel quite right."
-	icon_state = "miasma1"
 	unique = 1
 	duration = 10 SECONDS
 	maxDuration = null
@@ -461,7 +460,6 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 				L.do_disorient(25, disorient=1 SECOND)
 			var/vomit_message = SPAN_ALERT("[L] pukes all over [himself_or_herself(L)].")
 			L.vomit(0, null, vomit_message)
-			icon_state = "miasma5"
 
 		return ..(timePassed)
 

@@ -361,7 +361,7 @@ TYPEINFO(/obj/item/sword)
 		else
 			src.icon_state = "[state_name]1-[src.bladecolor]"
 			src.item_state = "[state_name]1-[src.bladecolor]"
-			flick("sword_extend-[src.bladecolor]", src)
+			FLICK("sword_extend-[src.bladecolor]", src)
 		light_c.update(TRUE)
 	else
 		if(robusted)
@@ -371,7 +371,7 @@ TYPEINFO(/obj/item/sword)
 
 			src.icon_state = "[state_name]0"
 			src.item_state = "[state_name]0"
-			flick("sword_retract-[src.bladecolor]", src)
+			FLICK("sword_retract-[src.bladecolor]", src)
 		light_c.update(FALSE)
 
 /obj/item/sword/red
@@ -557,7 +557,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	if(ismob(A))
 		var/mob/M = A
 		if (ismob(usr))
-			M.lastattacker = usr
+			M.lastattacker = get_weakref(usr)
 			M.lastattackertime = world.time
 		M.changeStatus("knockdown", 6 SECONDS)
 		M.force_laydown_standup()
@@ -920,7 +920,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			src.AddComponent(/datum/component/send_to_target_mob, src)
 			src.hunter_key = M.mind.key
 			START_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
-			flick("[src.icon_state]-tele", src)
+			FLICK("[src.icon_state]-tele", src)
 
 	disposing()
 		. = ..()
@@ -1981,7 +1981,7 @@ obj/item/whetstone
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			if (ismob(usr))
-				C.lastattacker = usr
+				C.lastattacker = get_weakref(usr)
 				C.lastattackertime = world.time
 			C.changeStatus("knockdown", 3 SECONDS)
 			C.force_laydown_standup()

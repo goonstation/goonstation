@@ -176,7 +176,7 @@ TYPEINFO(/obj/item/baton)
 			if ("failed")
 				logTheThing(LOG_COMBAT, user, "accidentally stuns [himself_or_herself(user)] with the [src.name] at [log_loc(user)].")
 				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles with the [src.name] and accidentally stuns [himself_or_herself(user)]!"))
-				flick(flick_baton_active, src)
+				FLICK(flick_baton_active, src)
 				playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 50, TRUE, -1)
 
 			if ("failed_stun")
@@ -198,7 +198,7 @@ TYPEINFO(/obj/item/baton)
 				user.visible_message(SPAN_ALERT("<B>[victim] has been stunned with the [src.name] by [user]!</B>"))
 				logTheThing(LOG_COMBAT, user, "stuns [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 				playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 50, TRUE, -1)
-				flick(flick_baton_active, src)
+				FLICK(flick_baton_active, src)
 				JOB_XP(victim, "Clown", 3)
 
 			else
@@ -224,8 +224,8 @@ TYPEINFO(/obj/item/baton)
 
 		// Some after attack stuff.
 		if (user && ismob(user))
-			user.lastattacked = dude_to_stun
-			dude_to_stun.lastattacker = user
+			user.lastattacked = get_weakref(dude_to_stun)
+			dude_to_stun.lastattacker = get_weakref(user)
 			dude_to_stun.lastattackertime = world.time
 
 		return TRUE

@@ -48534,7 +48534,7 @@
 /area/centcom/offices/drsingh)
 "dya" = (
 /obj/table/auto/desk,
-/obj/item/plant/flower/rose,
+/obj/item/clothing/head/flower/rose,
 /turf/unsimulated/floor/void,
 /area/centcom/offices/lyra)
 "dyc" = (
@@ -53066,7 +53066,7 @@
 /turf/unsimulated/floor/darkblue,
 /area/centcom/lobby)
 "dNN" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/two,
@@ -55267,7 +55267,7 @@
 /obj/kudzu_marker{
 	icon_state = "kudzu-benign-3"
 	},
-/obj/item/plant/flower/rose{
+/obj/item/clothing/head/flower/rose{
 	burning = 0;
 	desc = "By any other name, would smell just as sweet. This one likes to be called Lily. Or ";
 	name = "extra-beautiful rose"
@@ -68996,7 +68996,6 @@
 	pixel_x = 6;
 	pixel_y = 12
 	},
-/obj/table/regal/auto,
 /turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "png" = (
@@ -79076,7 +79075,6 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/assault_pod)
 "xoF" = (
-/obj/table/wood/auto,
 /obj/item/reagent_containers/glass/water_pipe/filled{
 	pixel_x = -5;
 	pixel_y = 15
@@ -79358,7 +79356,7 @@
 /area/iomoon/base)
 "xxs" = (
 /obj/table/wood/auto/desk,
-/obj/item/plant/flower/rose/poisoned{
+/obj/item/clothing/head/flower/rose/poisoned{
 	name = "very suspicious rose";
 	pixel_x = -4;
 	pixel_y = 8;

@@ -258,7 +258,7 @@ TYPEINFO(/obj/item/old_grenade/graviton)
 			if (user?.bioHolder.HasEffect("clumsy"))
 				boutput(user, SPAN_ALERT("Huh? How does this thing work?!"))
 				src.icon_state = src.icon_state_exploding
-				flick(src.icon_state_armed, src)
+				FLICK(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(0.5 SECONDS)
@@ -267,7 +267,7 @@ TYPEINFO(/obj/item/old_grenade/graviton)
 			else
 				boutput(user, SPAN_ALERT("You prime [src]! [det_time/10] seconds!"))
 				src.icon_state = src.icon_state_exploding
-				flick(src.icon_state_armed, src)
+				FLICK(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(src.det_time)
@@ -327,7 +327,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			if (user?.bioHolder.HasEffect("clumsy"))
 				boutput(user, SPAN_ALERT("Huh? How does this thing work?!"))
 				src.icon_state = src.icon_state_exploding
-				flick(src.icon_state_armed, src)
+				FLICK(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(0.5 SECONDS)
@@ -336,7 +336,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			else
 				boutput(user, SPAN_ALERT("You prime [src]! [det_time/10] seconds!"))
 				src.icon_state = src.icon_state_exploding
-				flick(src.icon_state_armed, src)
+				FLICK(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(src.det_time)
@@ -1134,7 +1134,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
 			SPAWN(0)
-				M.become_statue("gold")
+				M.become_statue(getMaterial("gold"))
 		..()
 
 
@@ -1469,6 +1469,8 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		return
 
 	proc/check_placeable_target(atom/A)
+		if (A.plane == PLANE_HUD) //stop putting mining charges on your HUD buttons
+			return FALSE
 		if (!istype(A, /obj/item))
 			return TRUE
 		if (A.storage) // no blowing yourself up if you have full storage

@@ -1,5 +1,4 @@
 /datum/component/toggle_hood
-	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/hooded = FALSE
 	var/hood_style = null
 	var/obj/item/clothing/suit/suit = null

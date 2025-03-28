@@ -23,7 +23,7 @@
 
 	New()
 		..()
-		flick("nav_sat_extend",src)
+		FLICK("nav_sat_extend",src)
 
 	/*
 		flags |= HAS_ARTEMIS_SCAN
@@ -85,7 +85,7 @@
 					ship.buoy_count++
 					qdel(O)
 					icon_state = "loader"
-					flick("loader_open", src)
+					FLICK("loader_open", src)
 				else
 					boutput(user, SPAN_ALERT("The ship seems to refuse the [O]."))
 			else

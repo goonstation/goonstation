@@ -124,7 +124,7 @@ var/global/list/extinguisher_blacklist_melt = list("acid",
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 		boutput(user, SPAN_NOTICE("Extinguisher refilled..."))
 		playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		return
 
 	if (!safety && !target.storage)
@@ -195,7 +195,7 @@ var/global/list/extinguisher_blacklist_melt = list("acid",
 
 		logTheThing(LOG_CHEMISTRY, user, "sprays [src] at [constructTarget(T,"combat")], [log_reagents(src)] at [log_loc(user)] ([get_area(user)])")
 
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 
 		for (var/a = 0, a < reagents_per_dist, a++)
 			SPAWN(0)

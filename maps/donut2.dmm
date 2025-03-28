@@ -4073,6 +4073,12 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"awS" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/courtroom)
 "awY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9243,8 +9249,8 @@
 	name = "Autopsy Table"
 	},
 /obj/machinery/drainage,
-/obj/critter/opossum/morty,
 /obj/random_item_spawner/organs/bloody,
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "aWQ" = (
@@ -10665,7 +10671,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /turf/simulated/floor/carpet{
@@ -18728,6 +18734,9 @@
 	},
 /obj/mapping_helper/access/head_of_personnel,
 /obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -23015,6 +23024,9 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "gpk" = (
@@ -25705,6 +25717,9 @@
 	},
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
@@ -28575,7 +28590,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/chair/comfy/blue{
+/obj/stool/chair/comfy/yellow{
 	dir = 4
 	},
 /obj/landmark/start/job/chief_engineer,
@@ -29221,6 +29236,12 @@
 	},
 /turf/simulated/floor/carpet/purple/standard/innercorner,
 /area/station/crew_quarters/cafeteria)
+"keY" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/courtroom)
 "kfa" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -33758,7 +33779,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/chair/comfy/blue{
+/obj/stool/chair/comfy/red{
 	dir = 8
 	},
 /obj/landmark/start/job/head_of_security,
@@ -36560,6 +36581,9 @@
 	},
 /area/station/janitor/supply)
 "opL" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/green,
 /area/station/crew_quarters/courtroom)
 "opR" = (
@@ -37631,6 +37655,13 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
+"oNo" = (
+/obj/cable/blue{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai)
 "oNG" = (
 /obj/machinery/teleport/portal_ring,
 /obj/cable/blue{
@@ -38440,6 +38471,9 @@
 /area/station/engine/inner)
 "pqC" = (
 /obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "pqW" = (
@@ -40440,7 +40474,7 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
-/obj/item/plant/flower/rose{
+/obj/item/clothing/head/flower/rose{
 	name = "Rose of Demeter"
 	},
 /turf/simulated/floor/wood/seven,
@@ -40892,7 +40926,7 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
-/obj/item/plant/flower/rose{
+/obj/item/clothing/head/flower/rose{
 	name = "Rose of Apollo"
 	},
 /turf/simulated/floor/wood/seven,
@@ -45941,7 +45975,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/chair/comfy/blue{
+/obj/stool/chair/comfy/purple{
 	dir = 4
 	},
 /obj/landmark/start/job/research_director,
@@ -46636,10 +46670,10 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/bank_data,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/computer3/generic/bank_data,
 /turf/simulated/floor,
 /area/station/bridge)
 "ubY" = (
@@ -47085,6 +47119,9 @@
 /area/station/science/gen_storage)
 "upD" = (
 /obj/machinery/firealarm/south,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -49336,7 +49373,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/chair/comfy/blue{
+/obj/stool/chair/comfy/ergonomic{
 	dir = 8
 	},
 /obj/landmark/start/job/captain,
@@ -49868,6 +49905,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/heads)
+"vTy" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/courtroom)
 "vTQ" = (
 /obj/cable/orange{
 	icon_state = "1-4"
@@ -49904,9 +49947,21 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "vVq" = (
-/obj/machinery/computer/bank_data,
 /obj/machinery/light/incandescent,
+/obj/machinery/computer3/generic/bank_data,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
+/area/station/crew_quarters/courtroom)
+"vVz" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
 /area/station/crew_quarters/courtroom)
 "vVR" = (
 /obj/cable{
@@ -50958,6 +51013,9 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/researchshuttle)
 "wFj" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/south,
 /area/station/crew_quarters/courtroom)
 "wFA" = (
@@ -51348,6 +51406,9 @@
 "wUk" = (
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
@@ -52322,7 +52383,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "xza" = (
-/obj/stool/chair/comfy/blue{
+/obj/stool/chair/comfy/green{
 	dir = 8
 	},
 /obj/landmark/start/job/head_of_personnel,
@@ -52946,7 +53007,7 @@
 /obj/cable/blue{
 	icon_state = "0-6"
 	},
-/obj/machinery/computer/bank_data,
+/obj/machinery/computer3/generic/bank_data,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "xXa" = (
@@ -91734,7 +91795,7 @@ ril
 sKv
 bre
 fGI
-bre
+awS
 bre
 btY
 gMO
@@ -92036,7 +92097,7 @@ gLX
 bjC
 pqW
 bre
-bre
+awS
 bzM
 btY
 gMO
@@ -92338,8 +92399,8 @@ xHH
 bjC
 xce
 bre
-bre
-bre
+vTy
+keY
 btY
 tRj
 bwh
@@ -92943,7 +93004,7 @@ bjC
 bqm
 bpS
 bsh
-brh
+vVz
 btZ
 bwk
 bwk
@@ -125571,8 +125632,8 @@ wEi
 bCb
 bCM
 wEi
-bDB
-jPK
+wEi
+oNo
 wEi
 jPK
 wEi

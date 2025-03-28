@@ -42,6 +42,7 @@ toxic - poisons
 	disruption = 8
 
 	hit_mob_sound = 'sound/impact_sounds/taser_hit.ogg'
+	has_impact_particles = TRUE
 
 
 //Any special things when it hits shit?
@@ -84,6 +85,7 @@ toxic - poisons
 	color_green = 0.6
 	color_blue = 0.8
 	ie_type = "E"
+	has_impact_particles = TRUE
 
 	on_hit(atom/hit)
 		if (isliving(hit))
@@ -253,8 +255,8 @@ toxic - poisons
 	cost = 50
 	dissipation_rate = 5
 	dissipation_delay = 3
-	color_red = 255
-	color_green = 165
+	color_red = 1
+	color_green = 0.65
 	color_blue = 0
 	max_range = 7 //slight range boost
 	damage_type = D_ENERGY
@@ -319,6 +321,7 @@ toxic - poisons
 	color_red = 0.18
 	color_green = 0.2
 	color_blue = 1
+	energy_particles_override = TRUE
 
 	disruption = 8
 
@@ -360,6 +363,7 @@ toxic - poisons
 	color_red = 0.18
 	color_green = 0.2
 	color_blue = 1
+	energy_particles_override = TRUE
 
 	disruption = 25
 

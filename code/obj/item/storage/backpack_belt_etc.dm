@@ -336,7 +336,7 @@
 								SEND_SIGNAL(pack_item, COMSIG_CELL_CHARGE, 5)
 								do_flash = TRUE
 		if(do_flash)
-			flick("bp_recharger_activate", src)
+			FLICK("bp_recharger_activate", src)
 
 /obj/item/storage/backpack/satchel
 	name = "satchel"
@@ -888,6 +888,17 @@
 	item_state = "hunter"
 	max_wclass = W_CLASS_NORMAL
 	item_function_flags = IMMUNE_TO_ACID
+
+/obj/item/storage/belt/crossbow
+	name = "old hunting belt"
+	desc = "Holds all the things you need for a proper werewolf hunt."
+	icon_state = "hunterbelt"
+	item_state = "hunter"
+	check_wclass = TRUE
+	can_hold = list(
+		/obj/item/gun/bow/crossbow,
+		/obj/item/plant/herb/aconite,
+	)
 
 /obj/item/storage/belt/security
 	name = "security toolbelt"

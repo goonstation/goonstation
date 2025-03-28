@@ -64,7 +64,6 @@
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
 	flags = OPENCONTAINER
 
-
 	New()
 		..()
 		src.path_old = src.type
@@ -1300,6 +1299,10 @@ TYPEINFO(/turf/simulated)
 			if(target_turf)
 				zlevel = target_turf.z
 			V.going_home = 0
+	else if (istype(A, /mob/living/critter/space_phoenix))
+		var/mob/living/critter/space_phoenix/phoenix = A
+		if (phoenix.travel_back_to_station)
+			zlevel = Z_LEVEL_STATION
 	if (istype(A, /obj/newmeteor))
 		qdel(A)
 		return

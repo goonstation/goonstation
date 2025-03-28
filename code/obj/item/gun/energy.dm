@@ -516,13 +516,14 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 
 	update_icon()
 		if (current_projectile.type == /datum/projectile/laser/diffuse)
-			charge_icon_state = "[icon_state]kill"
+			charge_icon_state = "[initial(charge_icon_state)]kill"
 			muzzle_flash = "muzzle_flash_laser"
 			item_state = "egun-jrkill"
 		else if(current_projectile.type == /datum/projectile/energy_bolt/diffuse)
-			charge_icon_state = "[icon_state]stun"
+			charge_icon_state = "[initial(charge_icon_state)]stun"
 			muzzle_flash = "muzzle_flash_elec"
 			item_state = "egun-jrstun"
+		..()
 
 	attack_self(var/mob/M)
 		..()
@@ -1221,7 +1222,7 @@ TYPEINFO(/obj/item/gun/energy/plasma_gun/hunter)
 			src.AddComponent(/datum/component/send_to_target_mob, src)
 			src.hunter_key = M.mind.key
 			START_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
-			flick("[src.base_item_state]-tele", src)
+			FLICK("[src.base_item_state]-tele", src)
 
 	disposing()
 		. = ..()
@@ -1919,7 +1920,7 @@ TYPEINFO(/obj/item/gun/energy/cornicen3)
 		src.extended = !src.extended
 		UpdateIcon()
 		if(src.extended)
-			flick("cornicen_open", src)
+			FLICK("cornicen_open", src)
 		M.update_inhands()
 
 TYPEINFO(/obj/item/gun/energy/vexillifer4)
@@ -1988,7 +1989,7 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 
 		shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 			if(src.canshoot(user))
-				flick("lasercannon-fire", src)
+				FLICK("lasercannon-fire", src)
 			. = ..()
 
 /obj/item/gun/energy/tasersmg
@@ -2361,8 +2362,8 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user))
 			..()
-			flick("burst_laser", src)
-			flick(src.charge_image, src.charge_image)
+			FLICK("burst_laser", src)
+			FLICK(src.charge_image, src.charge_image)
 			SPAWN(6 DECI SECONDS)
 				playsound(user, 'sound/effects/tinyhiss.ogg', 60, TRUE)
 			return

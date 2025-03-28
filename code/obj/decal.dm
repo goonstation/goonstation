@@ -75,7 +75,7 @@
 		y_blur = 2
 
 		proc/activate_glimmer()
-			flick("glimmer", src)
+			FLICK("glimmer", src)
 
 /obj/decal/floatingtiles
 	name = "floating tiles"
@@ -290,7 +290,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	desc = "Is it going to eat you if you get too close?"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
-	random_dir = WEST
+	random_dir = RANDOM_DIR_ALL
 	anchored = ANCHORED
 	plane = PLANE_DEFAULT
 
