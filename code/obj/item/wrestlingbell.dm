@@ -101,9 +101,11 @@
 			UpdateIcon()
 
 	proc/toggle_boxing_mode()
+		SPAWN(0)
+			playsound(src.loc, 'sound/misc/knockout_new.ogg', 50)
 		playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
-		for (var/mob/living/carbon/human/human in view(10, src))
-			if (istype(get_turf(human), /turf/simulated/floor/specialroom/gym) && human.health > 0)
+		for (var/turf/simulated/floor/specialroom/gym/turf in view(10, src))
+			for (var/mob/living/carbon/human/human in turf.contents)
 				if (human.hasStatus("wrestler"))
 					human.delStatus("wrestler")
 				else
