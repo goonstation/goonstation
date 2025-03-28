@@ -1615,7 +1615,7 @@
 			else
 				return ..(timePassed)
 
-			if (M.health < 0)
+			if (M.health < 0 | !istype(get_turf(M), /turf/simulated/floor/specialroom/gym))
 				play_KO_fx = TRUE
 				remove_all = TRUE
 				M.delStatus("wrestler")
