@@ -2787,10 +2787,6 @@
 /mob/living/carbon/human/hand_attack(atom/target, params, location, control)
 	if (src.lying && src.buckled != target) //lol we need to allow unbuckling here i guess...
 		return
-
-	if (!target.hasStatus("wrestler") && src.hasStatus("wrestler"))
-		target.setStatus("wrestler")
-
 	if (mutantrace?.override_attack)
 		if(mutantrace.custom_attack(target))
 			return
