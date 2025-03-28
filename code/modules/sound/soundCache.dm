@@ -1925,6 +1925,7 @@ var/global/list/soundCache = list(
  	"sound/voice/screams/mascream7.ogg" = 'sound/voice/screams/mascream7.ogg',\
  	"sound/voice/screams/monkey_scream.ogg" = 'sound/voice/screams/monkey_scream.ogg',\
  	"sound/voice/screams/moo.ogg" = 'sound/voice/screams/moo.ogg',\
+ 	"sound/voice/screams/phoenix_scream.ogg" = 'sound/voice/screams/phoenix_scream.ogg',\
  	"sound/voice/screams/Psychic_Scream_1.ogg" = 'sound/voice/screams/Psychic_Scream_1.ogg',\
  	"sound/voice/screams/pug.ogg" = 'sound/voice/screams/pug.ogg',\
  	"sound/voice/screams/pugg.ogg" = 'sound/voice/screams/pugg.ogg',\
