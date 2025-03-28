@@ -95,8 +95,8 @@
 			 null, null, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED)
 
 	else
-		if(!isturf(target))
-			return
+		if(istype(target, /turf/simulated))
+			retur
 		var/directs = selection.get_directions(direction)
 		for(var/obj/machinery/atmospherics/device in target)
 			if((device.initialize_directions & directs))
