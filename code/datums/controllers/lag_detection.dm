@@ -118,6 +118,6 @@ do {\
 		animate(thing, icon_state = icon_state, easing = JUMP_EASING|EASE_IN, time = 0.5 SECONDS);\
 		animate(icon_state = ___old_state, easing = JUMP_EASING|EASE_IN, time = 0.5 SECONDS);\
 	} else {\
-		flick(icon_state, thing);\
+		FLICK(icon_state, thing);\
 	};\
 } while(FALSE)

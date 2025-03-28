@@ -294,7 +294,7 @@
 		src.active = 1
 		playsound(src, "rustle", 75, 1)
 		A.invisibility = INVIS_ALWAYS_ISH
-		flick("bbasket1", src)
+		FLICK("bbasket1", src)
 		SPAWN(1.5 SECONDS)
 			A.invisibility = INVIS_NONE
 			src.active = 0

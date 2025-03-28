@@ -831,7 +831,7 @@ toxic - poisons
 		blood_image.alpha = 0
 		P.special_data["blood_image"] = blood_image
 		P.UpdateOverlays(blood_image, "blood_image")
-		flick(icon_state,P) // this is a bit hacky - guarantees the full spread animation will play before swapping to bloodloop
+		FLICK(icon_state,P) // this is a bit hacky - guarantees the full spread animation will play before swapping to bloodloop
 		. = ..()
 	on_hit(atom/hit, dirflag, obj/projectile/P)
 		if (isliving(hit) && !isrobot(hit))

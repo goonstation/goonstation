@@ -1418,7 +1418,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	New()
 		..()
-		flick("ectoplasm-a", src)
+		FLICK("ectoplasm-a", src)
 		src.setMaterial(getMaterial("ectoplasm"), appearance = 0, setname = 0)
 
 	heal(mob/M)

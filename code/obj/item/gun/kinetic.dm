@@ -212,7 +212,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if (fire_animation)
 			if(src.ammo?.amount_left >= 1)
 				var/flick_state = src.has_fire_anim_state && src.fire_anim_state ? src.fire_anim_state : src.icon_state
-				flick(flick_state, src)
+				FLICK(flick_state, src)
 
 		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
 			user.inertia_dir = get_dir(target, user)

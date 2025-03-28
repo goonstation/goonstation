@@ -230,7 +230,7 @@
 		usr.visible_message(SPAN_ALERT("<B>[usr] unleashes a tremendous kick to the jaw towards [T]!</B>"), SPAN_ALERT("<B>You unleash a tremendous kick to the jaw towards [T]!</B>"))
 		playsound(T.loc, "swing_hit", 25, 1, -1)
 		batman_pow(T.loc)
-		//flick("e_flash", T.flash)
+		//FLICK("e_flash", T.flash)
 		T.setStatus("knockdown", T.getStatusDuration("knockdown") + 6 SECONDS)
 		step_away(T,usr,15)
 		sleep(0.1 SECONDS)

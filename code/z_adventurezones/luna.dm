@@ -863,7 +863,7 @@ Contents:
 
 		if(!src.operating) //in case of emag
 			src.operating = 1
-		flick("bdoor[doordir]c0", src)
+		FLICK("bdoor[doordir]c0", src)
 		src.icon_state = "bdoor[doordir]0"
 		SPAWN(1 SECOND)
 			src.set_density(0)
@@ -892,7 +892,7 @@ Contents:
 			SPAWN(0)
 				tourDoor.close(src)
 
-		flick("bdoor[doordir]c1", src)
+		FLICK("bdoor[doordir]c1", src)
 		src.icon_state = "bdoor[doordir]1"
 		src.set_density(1)
 		if (src.visible)
@@ -941,7 +941,7 @@ Contents:
 
 		playsound(src.loc, 'sound/machines/airlock_break_very_temp.ogg', 50, 1)
 		SPAWN(0)
-			flick("breakairlock1", src)
+			FLICK("breakairlock1", src)
 			src.icon_state = "breakairlock2"
 			sleep (2)
 			src.set_opacity(0)

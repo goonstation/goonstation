@@ -191,7 +191,7 @@
 			if (src.hasStatus("phoenix_revive_ready"))
 				I.color = "#ea00ff"
 			I.set_dir(src.dir)
-			flick("ion_fade", I)
+			FLICK("ion_fade", I)
 			I.icon_state = "blank"
 			I.pixel_x = src.pixel_x
 			I.pixel_y = src.pixel_y

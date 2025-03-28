@@ -782,7 +782,7 @@
 					playsound(src.loc, 'sound/voice/animal/hoot.ogg', 50, 1)
 			else
 				if (prob(10))
-					flick("[src.icon_state]-flap", src)
+					FLICK("[src.icon_state]-flap", src)
 					src.visible_message("<b>[src]</b> flaps.")
 					playsound(src.loc, pick(sounds_rustle), 50, 1)
 
@@ -875,7 +875,7 @@
 		return
 
 	ChaseAttack(mob/M)
-		flick("[src.icon_state]-flaploop", src)
+		FLICK("[src.icon_state]-flaploop", src)
 		if(prob(50))
 			playsound(src.loc, pick(sounds_rustle), 50, 1, -1)
 		if(ismob(M))
