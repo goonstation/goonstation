@@ -1280,8 +1280,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			if (holder.shortcut(user,src))
 				src.add_fingerprint(user)
 				return
-			if (holder.tool_relevant(user,src))
-				holder.start_surgery(user,src)
+			if (holder.tool_relevant(user,src) && holder.start_surgery(user,src))
 				src.add_fingerprint(user)
 				return
 

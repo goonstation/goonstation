@@ -137,7 +137,7 @@
 		if (result)
 			return result
 		else
-			var/contexts = get_surgery_contexts(surgeon, FALSE)
+			var/contexts = get_surgery_contexts(surgeon, I, FALSE)
 			if (length(contexts) > 0)
 				enter_surgery(surgeon)
 				return TRUE

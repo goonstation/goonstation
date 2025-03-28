@@ -52,16 +52,16 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 /proc/headSurgeryCheck(var/mob/living/carbon/human/patient as mob)
 	if (!patient) // did we not get passed a patient?
-		return FALSE // head surgery is not okay
+		return FALSE
 	if (!ishuman(patient)) // is the patient not a human?
-		return FALSE // head surgery is not okay
+		return FALSE
 
 	if (patient.head && patient.head.c_flags & COVERSEYES) // does the patient have a head, and on their head they have something covering their eyes?
-		return FALSE // head surgery is not okay
+		return FALSE
 	else if (patient.wear_mask && patient.wear_mask.c_flags & COVERSEYES) // does the patient have a mask, and their mask covers their eyes?
-		return FALSE // head surgery is not okay
+		return FALSE
 /*	else if (patient.glasses && patient.glasses.c_flags & COVERSEYES) // does the patient have glasses, and their glasses, uh, cover their eyes?
-		return FALSE // head surgery is not okay
+		return FALSE
 */
 	else // if all else fails?
 		return TRUE // head surgery is okay

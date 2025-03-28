@@ -60,7 +60,7 @@
 		return FALSE
 
 /datum/surgery/cauterize
-	surgery_check(mob/living/surgeon, obj/item/tool)
+	surgery_conditions_met(mob/living/surgeon, obj/item/tool)
 		return TRUE
 	on_complete(mob/living/surgeon, mob/user)
 		if (patient.bleeding)

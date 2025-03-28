@@ -148,14 +148,12 @@
 
 	/// If this surgery is implicit, attempt to complete a step with this tool. If complete, attempt to complete a sub-surgery step.
 	proc/do_shortcut(mob/surgeon, obj/item/I)
-		if (!surgery_check(surgeon, I))
-			return FALSE
-		if ((!super_surgery || super_surgery?.complete) && implicit && can_perform_surgery(surgeon))
+		if ((!super_surgery || super_surgery?.complete) && implicit && can_perform_surgery(surgeon, I))
 			var/datum/surgery_step/step = surgery_step_possible(surgeon, I)
 			if (step)
 				step.perform_step(surgeon, I)
 				return TRUE
-		if (can_perform_surgery(surgeon) && sub_surgery_possible(surgeon)) // only attempt subsurgeries if this surgery is done.
+		if (can_perform_surgery(surgeon, I) && sub_surgery_possible(surgeon)) // only attempt subsurgeries if this surgery is done.
 			// do the next implicit step if subsurgeries are implicit
 			for(var/datum/surgery/surgery in current_sub_surgeries)
 				surgery.infer_surgery_stage()
@@ -183,8 +181,8 @@
 
 
 	/// Determine if this surgery is possible on the target.
-	proc/can_perform_surgery(mob/living/surgeon)
-		return surgery_possible(surgeon)
+	proc/can_perform_surgery(mob/living/surgeon, obj/item/tool)
+		return surgery_conditions_met(surgeon, tool) && surgery_possible(surgeon)
 
 	// ----------
 	// UI Interaction
@@ -198,12 +196,12 @@
 			enter_surgery(surgeon)
 
 	/// Called when the surgery's context menu is entered.
-	proc/enter_surgery(mob/surgeon)
+	proc/enter_surgery(mob/surgeon, obj/item/tool)
 		infer_surgery_stage()
 		if (super_surgery && !super_surgery.complete) // hop up a level if this surgery is no longer accessible
 			super_surgery.enter_surgery(surgeon)
 		else
-			var/contexts = get_surgery_contexts(surgeon)
+			var/contexts = get_surgery_contexts(surgeon, tool)
 			surgeon.showContextActions(contexts, patient, new /datum/contextLayout/experimentalcircle)
 
 	/// Gets the context action for this surgery.
@@ -222,7 +220,7 @@
 		return action
 
 	/// Gets the context actions for this surgeries's steps.
-	proc/get_surgery_contexts(surgeon, var/add_navigation = TRUE)
+	proc/get_surgery_contexts(surgeon, obj/item/tool, var/add_navigation = TRUE)
 		var/list/datum/contextAction/surgical_step/contexts = list()
 		var/completed_stages = 0
 		var/optional_contexts = list()
@@ -239,9 +237,9 @@
 						optional_contexts += context
 					else
 						contexts += context
-		if (sub_surgery_possible(surgeon))
+		if (sub_surgery_possible(surgeon, tool))
 			for (var/datum/surgery/surgery in current_sub_surgeries)
-				if (surgery.can_perform_surgery(surgeon) && surgery.visible)
+				if (surgery.can_perform_surgery(surgeon, tool) && surgery.visible)
 					contexts += surgery.get_context()
 
 		//hacky fix to remove the back button if there's only one top-level surgery available.
@@ -293,18 +291,13 @@
 	proc/sub_surgery_possible(mob/surgeon, obj/item/I)
 		return (sub_surgeries_always_possible || complete)
 
-	/// Check if the patient can have this surgery performed on them. IE: on a table.
-	proc/surgery_check(mob/surgeon, obj/item/tool)
+	/// Check if the patient can have this surgery performed on them here. IE: on a table.
+	/// Use 'tool' here to see if an item could ignore being on a table.
+	proc/surgery_conditions_met(mob/surgeon, obj/item/tool)
 		if (!patient)
 			return FALSE
 		if (!ishuman(patient)) // is the patient not a human?
 			return FALSE
-
-		// Is this a limb that can easily be attached?
-		if (istype(tool, /obj/item/parts/human_parts))
-			var/obj/item/parts/human_parts/limb = tool
-			if (limb.easy_attach)
-				return TRUE
 		// is the patient on an optable and lying?
 		if (locate(/obj/machinery/optable, patient.loc))
 			if(patient.lying || patient == surgeon)

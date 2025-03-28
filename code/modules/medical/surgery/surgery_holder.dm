@@ -32,9 +32,9 @@
 		for (var/datum/surgery/surgery in surgery_list)
 			all_surgeries[surgery.id] = surgery
 
-	/// Enter the top level context menu for this surgery holder
+	/// Enter the top level context menu for this surgery holder. Returns TRUE if a context menu was shown.
 	proc/start_surgery(mob/surgeon, obj/tool)
-		show_contexts(surgeon, tool)
+		return show_contexts(surgeon, tool)
 
 	proc/do_life(var/mult)
 		return
@@ -87,22 +87,24 @@
 		all_surgeries[id].cancel_surgery(surgeon, I)
 
 	/// Get the top-level surgery context icons for this holder.
-	proc/get_contexts(var/surgeon)
+	proc/get_contexts(var/surgeon, var/obj/item/tool)
 		var/list/datum/contextAction/surgery/contexts = list()
 		for (var/datum/surgery/surgery in base_surgeries)
 			surgery.infer_surgery_stage()
-			if (surgery.surgery_possible(surgeon) && surgery.visible)
+			if (surgery.surgery_conditions_met(surgeon, tool) && surgery.surgery_possible(surgeon) && surgery.visible)
 				contexts += surgery.get_context()
 		return contexts
 
 	/// Show the context action ring to the surgeon. Returns TRUE if a context menu was shown.
 	proc/show_contexts(mob/surgeon, obj/tool)
-		var/list/datum/contextAction/surgery/contexts = get_contexts(surgeon)
+		var/list/datum/contextAction/surgery/contexts = get_contexts(surgeon, tool)
+		if (!length(contexts))
+			return FALSE
 		if (length(contexts) == 1) // if only one top-level surgery available. go straight into it. mimics old behavior to instantly enter torso surgery
 			surgery_clicked(contexts[1].surgery, surgeon, tool)
 		else
 			surgeon.showContextActions(contexts, patient, new /datum/contextLayout/experimentalcircle)
-
+		return TRUE
 
 
 	// 'Shortcuts' are for implicit surgeries that don't use a context menu. For example. Cramming an organ inside someone's chest.

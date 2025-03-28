@@ -19,6 +19,15 @@
 	implicit = TRUE
 	visible = FALSE
 
+	surgery_conditions_met(mob/surgeon, obj/item/tool)
+		// Is this a limb that can easily be attached?
+		if (istype(tool, /obj/item/parts/human_parts))
+			var/obj/item/parts/human_parts/limb = tool
+			if (limb.easy_attach)
+				return TRUE
+		. = ..()
+
+
 	surgery_possible(mob/living/surgeon)
 		if (!iscarbon(patient))
 			return FALSE
