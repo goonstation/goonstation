@@ -19,6 +19,8 @@
 	tooltip_flags = REBUILD_ALWAYS //TODO: handle better??
 	max_damage = INFINITY
 	throw_speed = 1
+	var/default_hat_y = 0
+	var/default_hat_x = 0
 
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/skull/skull = null

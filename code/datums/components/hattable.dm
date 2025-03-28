@@ -40,7 +40,7 @@ TYPEINFO(/datum/component/hattable) // Take a walk through my TWISTED mind.... I
 	var/offsetBy_x = 0
 
 
-	if (istype(item, /obj/item/clothing/head/))
+	if (istype(item, /obj/item/clothing/head/) | istype(item, /obj/item/organ/head))
 		src.hat = item
 		ADD_FLAG(src.hat.appearance_flags, KEEP_TOGETHER) // Flags needed for wigs!
 		ADD_FLAG(src.hat.vis_flags, VIS_INHERIT_DIR)
