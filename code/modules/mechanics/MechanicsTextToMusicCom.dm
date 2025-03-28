@@ -9,7 +9,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 	name = "Text to Music Component"
 	desc = "Can play multiple instruments."
 	icon_state = "comp_text_to_music"
-	cabinet_banned = TRUE // no walking music machines
+	cabinet_prevent_move = TRUE // no walking music machines
 	var/datum/text_to_music/mech_comp/music_player = null
 
 	New()
