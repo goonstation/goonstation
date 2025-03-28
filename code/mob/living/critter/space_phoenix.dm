@@ -144,6 +144,10 @@
 		if (act == "flex" || act == "flexmuscles")
 			if (src.emote_check(voluntary, 1 SECOND))
 				return SPAN_ALERT("[src] proudly shows off its wings")
+		else if (act == "scream" && voluntary && src.emote_check(voluntary, 5 SECONDS))
+			if (src.emote_check(voluntary, 5 SECONDS))
+				playsound(src.loc, 'sound/voice/screams/phoenix_scream.ogg', 80, TRUE)
+				return SPAN_ALERT("[src] makes a mysterious sound!")
 
 		return ..()
 
