@@ -49698,9 +49698,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/maintenance/west)
-"vMd" = (
-/turf/space,
-/area/station/hangar/qm)
 "vMe" = (
 /obj/machinery/light_switch/east,
 /obj/disposalpipe/segment/mail,
@@ -85638,7 +85635,7 @@ aaa
 aaa
 aaa
 aaa
-vMd
+aaa
 aaa
 alH
 alH

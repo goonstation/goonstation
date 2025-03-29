@@ -76897,7 +76897,7 @@
 	delay = 200
 	},
 /turf/simulated/floor/sand,
-/area/station/quartermaster/cargobay)
+/area/station/engine/engineering/ce)
 "xgn" = (
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/carpet/green/fancy/innercorner{
