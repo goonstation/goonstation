@@ -29,22 +29,22 @@
 	attack_self(var/mob/user)
 		user.showContextActions(src.contexts, src, src.contextLayout)
 
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (src.mode == OMNI_MODE_PRYING)
-			if (is_special || !pry_surgery(target, user))
-				return ..()
-		else if (src.mode == OMNI_MODE_WELDING)
-			if (is_special)
-				return ..()
-			if (src.welding && ishuman(target) && (user.a_intent != INTENT_HARM))
-				var/mob/living/carbon/human/H = target
-				if (H.bleeding || (H.organHolder?.back_op_stage > BACK_SURGERY_OPENED && user.zone_sel.selecting == "chest"))
-					if (!src.cautery_surgery(H, user, 15, src.welding))
-						return ..()
-			else
-				..()
-		else
-			..()
+	// attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	// 	if (src.mode == OMNI_MODE_PRYING)
+	// 		// if (is_special || !pry_surgery(target, user))
+	// 		// 	return ..()
+	// 	else if (src.mode == OMNI_MODE_WELDING)
+	// 		// if (is_special)
+	// 		// 	return ..()
+	// 		// if (src.welding && ishuman(target) && (user.a_intent != INTENT_HARM))
+	// 		// 	var/mob/living/carbon/human/H = target
+	// 		// 	if (H.bleeding || (H.organHolder?.back_op_stage > BACK_SURGERY_OPENED && user.zone_sel.selecting == "chest"))
+	// 		// 		if (!src.cautery_surgery(H, user, 15, src.welding))
+	// 		// 			return ..()
+	// 		// else
+	// 		// 	..()
+	// 	else
+	// 		..()
 
 	afterattack(atom/target, mob/user, reach, params)
 		. = ..()
