@@ -1604,6 +1604,7 @@
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src, optional)
 
 		onRemove()
+
 			. = ..()
 			if(ismob(owner))
 				var/mob/M = owner
