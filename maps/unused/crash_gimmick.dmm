@@ -14970,7 +14970,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/brig,
-/obj/machinery/door/airlock/pyro/glass/brig{
+/obj/machinery/door/airlock/pyro/glass{
 	name = "Brig"
 	},
 /obj/mapping_helper/access/brig,
@@ -33470,7 +33470,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/brig{
+/obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Solitary"
 	},
@@ -65556,7 +65556,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "sfw" = (
-/obj/machinery/door/airlock/pyro/glass/brig{
+/obj/machinery/door/airlock/pyro/glass{
 	name = "microbrig"
 	},
 /obj/mapping_helper/access/brig,
@@ -70225,7 +70225,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/brig{
+/obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Solitary"
 	},
