@@ -2945,7 +2945,9 @@
 			src.i_upgrades.overlays.Cut()
 			for (var/obj/item/roboupgrade/R in src.upgrades)
 				if (R.activated && R.borg_overlay)
-					src.i_upgrades.overlays += image('icons/mob/robots.dmi', R.borg_overlay)
+					var/image/I = image('icons/mob/robots.dmi', R.borg_overlay)
+					I.alpha = R.borg_overlay_alpha
+					src.i_upgrades.overlays += I
 			AddOverlays(src.i_upgrades, "upgrades", TRUE)
 		else
 			ClearSpecificOverlays("upgrades")
