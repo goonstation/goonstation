@@ -32,6 +32,7 @@
 	var/can_be_anchored = UNANCHORED
 	var/default_hat_y = 0
 	var/default_hat_x = 0
+	var/amount_of_prevent_move_comps = 0
 	custom_suicide = TRUE
 	open_to_sound = TRUE
 
@@ -194,6 +195,21 @@
 					SEND_SIGNAL(M, _COMSIG_MECHCOMP_RM_OUTGOING, comp)
 					discons++
 			return discons
+		unanchor_movement_comps()
+			// called when a cabinet_prevent_move comp is first added
+			var/removed_comp_amount = 0
+			for (var/atom/comp in src.contents)
+				var/obj/item/mechanics/movement/mov_comp = comp
+				if (!istype(mov_comp))
+					continue
+				if (mov_comp.level == UNDERFLOOR)
+					mov_comp.level = OVERFLOOR
+					mov_comp.anchored = UNANCHORED
+					mov_comp.clear_owner()
+					mov_comp.loosen()
+					removed_comp_amount++
+			return removed_comp_amount
+
 	disposing()
 		..()
 		processing_items.Remove(src)
@@ -365,6 +381,8 @@
 	var/cabinet_banned = FALSE
 	/// whether or not this component can only be used in cabinets
 	var/cabinet_only = FALSE
+	/// whether or not this component prevents the Movement Component from being anchored in cabinets
+	var/cabinet_prevent_move = FALSE
 	/// if true makes it so that only one component can be wrenched on the tile
 	var/one_per_tile = FALSE
 	// override disconnect all on unanchor/anchor. this is mostly for the bomb :|
@@ -459,12 +477,20 @@
 					logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
 					level = OVERFLOOR
 					anchored = UNANCHORED
+					if (src.cabinet_prevent_move && IN_CABINET)
+						var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
+						cabinet.amount_of_prevent_move_comps--
 					clear_owner()
 					loosen()
 				if(OVERFLOOR) //Level 2 = loose
 					if(!isturf(src.loc) && !(IN_CABINET)) // allow items to be deployed inside housings, but not in other stuff like toolboxes
 						boutput(user, SPAN_ALERT("[src] needs to be on the ground  [src.cabinet_banned ? "" : "or in a component housing"] for that to work."))
 						return 0
+					if (IN_CABINET && istype(src, /obj/item/mechanics/movement))
+						var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
+						if (cabinet.amount_of_prevent_move_comps > 0)
+							boutput(user, SPAN_ALERT("[src] is not allowed since an anchored component is preventing cabinet movement."))
+							return
 					if(IN_CABINET && src.cabinet_banned)
 						boutput(user,SPAN_ALERT("[src] is not allowed in component housings."))
 						return
@@ -479,6 +505,11 @@
 					if(anchored)
 						boutput(user,SPAN_ALERT("[src] is already attached to something somehow."))
 						return
+					if (IN_CABINET && src.cabinet_prevent_move)
+						var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
+						cabinet.amount_of_prevent_move_comps++
+						if (cabinet.amount_of_prevent_move_comps == 1 && cabinet.unanchor_movement_comps() > 0)
+							boutput(user, SPAN_ALERT("The cabinet unanchored all movement components!"))
 					boutput(user, "You attach the [src] to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
 					logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = UNDERFLOOR
