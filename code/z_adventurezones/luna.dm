@@ -840,7 +840,7 @@ Contents:
 	name = "security door"
 	desc = "A security door used to separate museum compartments."
 	autoclose = FALSE
-	req_access_txt = ""
+	req_access = null
 	object_flags = BOTS_DIRBLOCK
 
 /obj/machinery/door/poddoor/blast/lunar/tour
@@ -918,7 +918,7 @@ Contents:
 	opacity = 1
 	autoclose = FALSE
 	cant_emag = TRUE
-	req_access_txt = "999"
+	req_access = list(access_impossible)
 
 	var/broken = 0
 
