@@ -743,6 +743,9 @@ Equip items from body traits.
 		C.access = JOB.access.Copy()
 		C.pronouns = src.get_pronouns()
 
+		if(JOB.id_band_override)
+			C.band_type = JOB.id_band_override
+			C.UpdateIcon()
 		if(!src.equip_if_possible(C, SLOT_WEAR_ID))
 			src.equip_if_possible(C, SLOT_IN_BACKPACK)
 
