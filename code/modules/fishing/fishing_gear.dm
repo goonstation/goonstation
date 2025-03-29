@@ -432,6 +432,11 @@ TYPEINFO(/obj/item/fish_portal)
 			W.set_loc(src)
 			W.dropped(user)
 
+	New()
+		..()
+		AddComponent(/datum/component/transfer_input/quickloading, allowed)
+		AddComponent(/datum/component/transfer_output)
+
 /obj/submachine/fishing_upload_terminal/portable
 	anchored = 0
 
