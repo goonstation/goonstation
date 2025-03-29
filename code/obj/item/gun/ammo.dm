@@ -382,6 +382,16 @@
 	ammo_type = new/datum/projectile/bullet/bullet_22/HP
 	ammo_cat = AMMO_PISTOL_22
 
+/obj/item/ammo/bullets/bullet_22match
+	sname = ".22 Match grade"
+	name = ".22 Match grade magazine"
+	desc = "Exceedingly precise rounds for competitions or exceedingly demanding operators."
+	icon_state = "pistol_magazine_hp"
+	amount_left = 10
+	max_amount = 10
+	ammo_type = new/datum/projectile/bullet/bullet_22/match
+	ammo_cat = AMMO_PISTOL_22
+
 //0.223
 /obj/item/ammo/bullets/assault_rifle
 	sname = "5.56x45mm NATO"
