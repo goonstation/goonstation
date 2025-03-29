@@ -2651,10 +2651,11 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
+/obj/landmark/supply_delivery,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8
 	},
-/area/supply/delivery_point)
+/area/station/routing/depot)
 "aJx" = (
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/white,
@@ -39492,7 +39493,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8
 	},
-/area/space)
+/area/station/routing/depot)
 "lSP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -76896,7 +76897,7 @@
 	delay = 200
 	},
 /turf/simulated/floor/sand,
-/area/station/engine/engineering/ce)
+/area/station/quartermaster/cargobay)
 "xgn" = (
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/carpet/green/fancy/innercorner{

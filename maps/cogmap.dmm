@@ -42458,6 +42458,10 @@
 /obj/landmark/observer,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"gKC" = (
+/obj/lattice,
+/turf/space,
+/area/station/quartermaster/office)
 "gKO" = (
 /obj/cable,
 /obj/cable{
@@ -47199,7 +47203,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/space)
+/area/station/hangar/qm)
 "ktW" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -49179,7 +49183,7 @@
 	id = "qmin"
 	},
 /turf/space,
-/area/space)
+/area/station/hangar/qm)
 "mhv" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -61916,8 +61920,9 @@
 /obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
+/obj/landmark/supply_delivery,
 /turf/space,
-/area/supply/delivery_point)
+/area/station/hangar/qm)
 "vzz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -120437,7 +120442,7 @@ aaq
 aaq
 aaq
 aaq
-aap
+gKC
 aaq
 aaq
 cpT

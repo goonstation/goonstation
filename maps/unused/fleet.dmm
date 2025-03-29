@@ -647,8 +647,9 @@
 	name = "cargo belt - east";
 	operating = 1
 	},
+/obj/landmark/supply_delivery,
 /turf/space,
-/area/supply/delivery_point)
+/area/station/quartermaster/office)
 "bJ" = (
 /obj/cable{
 	icon_state = "9-10"

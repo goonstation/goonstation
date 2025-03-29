@@ -4300,8 +4300,9 @@
 /obj/machinery/conveyor/WE{
 	id = "inbound"
 	},
+/obj/landmark/supply_delivery,
 /turf/space/fluid,
-/area/supply/delivery_point)
+/area/station/quartermaster/office)
 "apd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/research_director)

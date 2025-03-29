@@ -4092,8 +4092,8 @@
 /turf/space,
 /area/supply/spawn_point)
 "ain" = (
-/turf/space,
-/area/supply/delivery_point)
+/obj/landmark/supply_delivery,
+/turf/space)
 "aio" = (
 /obj/machinery/conveyor/WE{
 	id = "qmin"

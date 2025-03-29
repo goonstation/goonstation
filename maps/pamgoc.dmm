@@ -27873,7 +27873,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/space)
+/area/station/hangar/qm)
 "bux" = (
 /obj/machinery/conveyor/EW{
 	id = "qmin"
@@ -27941,8 +27941,9 @@
 /obj/machinery/conveyor/EW{
 	id = "qmin"
 	},
+/obj/landmark/supply_delivery,
 /turf/space,
-/area/supply/delivery_point)
+/area/station/hangar/qm)
 "buD" = (
 /obj/machinery/conveyor/EW{
 	id = "qmout"
@@ -56187,7 +56188,7 @@
 	id = "qmin"
 	},
 /turf/space,
-/area/space)
+/area/station/hangar/qm)
 "iNG" = (
 /obj/cable{
 	icon_state = "1-2"

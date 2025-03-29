@@ -3929,8 +3929,8 @@
 	name = "cargo belt - east";
 	operating = 1
 	},
-/turf/space,
-/area/supply/delivery_point)
+/obj/landmark/supply_delivery,
+/turf/space)
 "amM" = (
 /obj/machinery/camera{
 	c_tag = "Cargo Recieving Dock";

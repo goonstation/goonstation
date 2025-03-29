@@ -2482,8 +2482,9 @@
 	id = "cargobelt_in";
 	operating = 1
 	},
+/obj/landmark/supply_delivery,
 /turf/space,
-/area/supply/delivery_point)
+/area/station/quartermaster/office)
 "aoV" = (
 /turf/space,
 /area/supply/sell_point)
@@ -18852,7 +18853,7 @@
 	operating = 1
 	},
 /turf/space,
-/area/space)
+/area/station/quartermaster/office)
 "dMz" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -24601,7 +24602,7 @@
 	operating = 1
 	},
 /turf/space,
-/area/space)
+/area/station/quartermaster/office)
 "hld" = (
 /mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/random,
@@ -49697,6 +49698,9 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/maintenance/west)
+"vMd" = (
+/turf/space,
+/area/station/hangar/qm)
 "vMe" = (
 /obj/machinery/light_switch/east,
 /obj/disposalpipe/segment/mail,
@@ -85634,7 +85638,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+vMd
 aaa
 alH
 alH

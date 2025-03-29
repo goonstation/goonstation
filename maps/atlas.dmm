@@ -3409,15 +3409,16 @@
 "atM" = (
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
-	operating = 1
-	},
-/obj/machinery/door/poddoor/blast/pyro{
-	id = "qm_dock"
+	operating = 1;
+	id = "inbound"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/machinery/door/poddoor/blast/pyro{
+	id = "qm_dock"
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
@@ -4975,8 +4976,9 @@
 	name = "cargo belt - south";
 	operating = 1
 	},
+/obj/landmark/supply_delivery,
 /turf/space,
-/area/supply/delivery_point)
+/area/station/quartermaster/office)
 "aBU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/substation/east)
@@ -8144,7 +8146,7 @@
 	operating = 1
 	},
 /turf/space,
-/area/space)
+/area/station/quartermaster/office)
 "aUh" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -21131,6 +21133,9 @@
 	dir = 10
 	},
 /area/station/security/main)
+"sUI" = (
+/turf/space,
+/area/station/quartermaster/office)
 "sUL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -64814,7 +64819,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+sUI
 aaa
 aaa
 aaa

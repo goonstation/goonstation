@@ -1,0 +1,5965 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aM" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light,
+/turf/space,
+/area/space)
+"aX" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/space)
+"bp" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/space)
+"bB" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/black,
+/area/radiostation/bridge)
+"bC" = (
+/obj/machinery/vending/coffee,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/radiostation/hallway)
+"bT" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/radiostation/studio)
+"cN" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay4,
+/turf/space,
+/area/space)
+"cO" = (
+/turf/simulated/floor/stairs/wood,
+/area/radiostation/tv_set)
+"de" = (
+/obj/machinery/light,
+/turf/simulated/floor/red/side,
+/area/radiostation/hallway)
+"dJ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/radiostation/tv_set)
+"eC" = (
+/obj/fakeobject/vacuumtape,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/radiostation/serverroom)
+"eE" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = "radio_podbay1";
+	name = "Radio Ship Dock"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/radiostation/podbay)
+"eS" = (
+/turf/simulated/wall/auto/supernorn,
+/area/radiostation/bedroom)
+"eY" = (
+/obj/storage/crate/bin,
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/item/radio_tape/advertisement/grones{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/radio_tape/audio_book/heisenbee,
+/obj/item/radio_tape/advertisement/danitos_burritos{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/item/radio_tape/advertisement/quik_noodles{
+	pixel_x = 2;
+	pixel_y = -6
+	},
+/obj/item/radio_tape/advertisement/security_psa{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/radio_tape/advertisement/cloning_psa,
+/obj/item/radio_tape/advertisement/captain_psa{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
+"fa" = (
+/obj/stool/chair/blue{
+	dir = 8
+	},
+/turf/simulated/floor/airless/green/checker,
+/area/radiostation/green)
+"fL" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/space,
+/area/space)
+"fN" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/space,
+/area/space)
+"fS" = (
+/obj/machinery/r_door_control/podbay/mainpod2{
+	id = "radio_podbay1"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/radiostation/podbay)
+"gb" = (
+/obj/decal/cleanable/dirt,
+/obj/item/storage/toolbox/mechanical,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/radiostation/engineering)
+"gv" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 5
+	},
+/turf/simulated/floor/sanitary,
+/area/radiostation/bedroom)
+"hc" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/radiostation/green)
+"hA" = (
+/obj/table/auto,
+/obj/item/device/audio_log/radioship/large/distress,
+/turf/simulated/floor/blue,
+/area/radiostation/bridge)
+"hC" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/radiostation/tv_set)
+"hH" = (
+/obj/machinery/computer/stockexchange{
+	dir = 8
+	},
+/turf/simulated/floor/red/corner{
+	dir = 1
+	},
+/area/radiostation/bridge)
+"hI" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/closed/right,
+/turf/simulated/floor/plating,
+/area/radiostation/tv_set)
+"hR" = (
+/obj/machinery/vending/cola/blue,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/radiostation/hallway)
+"iy" = (
+/turf/simulated/floor/red/side{
+	dir = 5
+	},
+/area/radiostation/bridge)
+"iI" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/radiostation/studio)
+"iL" = (
+/obj/stool/chair/office/blue,
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
+"iT" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/radiostation/serverroom)
+"iY" = (
+/turf/simulated/wall/auto/supernorn,
+/area/radiostation/teleporter)
+"jm" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay4,
+/turf/space,
+/area/space)
+"jw" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/radiostation/studio)
+"jY" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay3,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/space,
+/area/space)
+"ku" = (
+/turf/simulated/floor/caution/north,
+/area/radiostation/hallway)
+"kw" = (
+/obj/machinery/phone,
+/obj/table/wood/auto,
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
+"kX" = (
+/turf/simulated/floor/darkpurpleblack{
+	dir = 9
+	},
+/area/radiostation/teleporter)
+"lh" = (
+/obj/stool/chair/office{
+	dir = 8
+	},
+/turf/simulated/floor/red,
+/area/radiostation/bridge)
+"lX" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/radiostation/bedroom)
+"mj" = (
+/turf/space,
+/area/space)
+"mm" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/lattice,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/space,
+/area/space)
+"mo" = (
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/radiostation/serverroom)
+"my" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 5;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/simulated/floor/black,
+/area/radiostation/serverroom)
+"mG" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	icon_state = "bdoorleft1";
+	id = "radio_podbay2";
+	name = "Radio Ship Dock"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/radiostation/podbay)
+"ng" = (
+/obj/lattice,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/space,
+/area/space)
+"nM" = (
+/obj/machinery/door/airlock/pyro{
+	name = "Server"
+	},
+/turf/simulated/floor/black,
+/area/radiostation/studio)
+"og" = (
+/turf/simulated/floor/purple,
+/area/radiostation/engineering)
+"ot" = (
+/obj/table/auto,
+/obj/machinery/computer3/generic/personal/radioship,
+/turf/simulated/floor/black,
+/area/radiostation/serverroom)
+"oJ" = (
+/obj/juggleplaque{
+	desc = "NSV Renanin, Nanotrasen Communications Buoy, Leave the high Nest to tempt the liquid Air.";
+	name = "dedication plaque"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/radiostation/bridge)
+"oQ" = (
+/obj/lattice,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/space)
+"pa" = (
+/turf/simulated/wall/auto/supernorn,
+/area/radiostation/studio)
+"pg" = (
+/obj/fakeobject/broadcastcomputer,
+/turf/simulated/floor/black,
+/area/radiostation/engineering)
+"pp" = (
+/obj/machinery/light_switch/north{
+	pixel_y = 30
+	},
+/turf/simulated/floor/darkpurpleblack{
+	dir = 5
+	},
+/area/radiostation/teleporter)
+"ps" = (
+/obj/machinery/light,
+/turf/simulated/floor,
+/area/radiostation/hallway)
+"pv" = (
+/obj/machinery/shuttle/engine/propulsion{
+	icon_state = "alt_propulsion"
+	},
+/turf/space,
+/area/space)
+"pE" = (
+/obj/table/auto,
+/obj/machinery/light_switch/west{
+	dir = 4;
+	pixel_x = -22
+	},
+/obj/fakeobject{
+	desc = "It looks like it was never even plugged in. Did this ever work?!";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "printer0";
+	name = "Broken Printer";
+	true_name = "printer?"
+	},
+/turf/simulated/floor/black,
+/area/radiostation/bridge)
+"qa" = (
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/radiostation/serverroom)
+"qb" = (
+/turf/simulated/floor/red/side{
+	dir = 9
+	},
+/area/radiostation/bridge)
+"qe" = (
+/obj/fakeobject/operatorconsole,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/radiostation/serverroom)
+"qm" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/radiostation/studio)
+"qp" = (
+/turf/simulated/floor{
+	icon_state = "carpetNE"
+	},
+/area/radiostation/bedroom)
+"qy" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/radiostation/engineering)
+"qK" = (
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/wood/two,
+/area/radiostation/studio)
+"qO" = (
+/obj/table/wood/auto,
+/turf/simulated/floor{
+	icon_state = "carpetSW"
+	},
+/area/radiostation/bedroom)
+"qT" = (
+/turf/simulated/wall/auto/supernorn,
+/area/radiostation/hallway)
+"rH" = (
+/obj/machinery/light_switch/north{
+	pixel_y = 30
+	},
+/turf/simulated/floor/wood/two,
+/area/radiostation/bedroom)
+"rQ" = (
+/turf/simulated/floor/black,
+/area/radiostation/teleporter)
+"rS" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/radiostation/tv_set)
+"se" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/radiostation/hallway)
+"sZ" = (
+/obj/machinery/vending/cigarette,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/radiostation/hallway)
+"te" = (
+/turf/simulated/floor/stairs/wide{
+	dir = 4
+	},
+/area/radiostation/hallway)
+"ti" = (
+/obj/machinery/light,
+/obj/machinery/light_switch/west,
+/turf/simulated/floor,
+/area/radiostation/press)
+"tm" = (
+/obj/machinery/door/airlock/pyro{
+	name = "Server"
+	},
+/turf/simulated/floor/darkpurple,
+/area/radiostation/teleporter)
+"tA" = (
+/obj/decal/stage_edge,
+/turf/simulated/floor/wood/two,
+/area/radiostation/tv_set)
+"tG" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/fakeobject/tapedeck,
+/turf/simulated/floor/black,
+/area/radiostation/engineering)
+"um" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/radiostation/tv_set)
+"uO" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/space)
+"vn" = (
+/obj/table/auto,
+/turf/simulated/floor/airless/green/checker,
+/area/radiostation/green)
+"vo" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/radiostation/tv_set)
+"vv" = (
+/turf/simulated/wall/auto/supernorn,
+/area/radiostation/podbay)
+"vF" = (
+/obj/machinery/computer/teleporter,
+/turf/simulated/floor/darkpurpleblack{
+	dir = 10
+	},
+/area/radiostation/teleporter)
+"vW" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/blue,
+/area/radiostation/bridge)
+"wa" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/wood/eight,
+/area/radiostation/tv_set)
+"wb" = (
+/turf/simulated/wall/auto/supernorn,
+/area/radiostation/engineering)
+"wc" = (
+/turf/simulated/floor,
+/area/radiostation/engineering)
+"wg" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	name = "Studio"
+	},
+/turf/simulated/floor/wood/two,
+/area/radiostation/studio)
+"wi" = (
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/radiostation/podbay)
+"wr" = (
+/turf/simulated/floor/wood/two,
+/area/radiostation/bedroom)
+"ww" = (
+/obj/decal/tile_edge/stripe{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/red/side,
+/area/radiostation/hallway)
+"wy" = (
+/obj/machinery/computer/security{
+	dir = 4
+	},
+/turf/simulated/floor/red/corner{
+	dir = 4
+	},
+/area/radiostation/bridge)
+"wN" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/space,
+/area/space)
+"wX" = (
+/turf/simulated/floor/airless/green/checker,
+/area/radiostation/green)
+"xs" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	icon_state = "bdoorright1";
+	id = "radio_podbay1";
+	name = "Radio Ship Dock"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/radiostation/podbay)
+"yn" = (
+/obj/machinery/communications_dish,
+/obj/mesh/catwalk,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/space,
+/area/space)
+"yo" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay5,
+/turf/space,
+/area/space)
+"yr" = (
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/radiostation/hallway)
+"yB" = (
+/obj/stool/chair/office{
+	dir = 4
+	},
+/turf/simulated/floor/red,
+/area/radiostation/bridge)
+"yH" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/radiostation/studio)
+"yJ" = (
+/turf/simulated/floor/stairs{
+	dir = 1
+	},
+/area/radiostation/hallway)
+"yP" = (
+/obj/machinery/door/airlock/pyro{
+	name = "Bathroom"
+	},
+/turf/simulated/floor/wood/two,
+/area/radiostation/bedroom)
+"yX" = (
+/turf/simulated/floor/orange/side{
+	dir = 1
+	},
+/area/radiostation/hallway)
+"zb" = (
+/obj/machinery/vending/snack,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/radiostation/hallway)
+"zl" = (
+/turf/simulated/floor/purple/side,
+/area/radiostation/engineering)
+"zs" = (
+/turf/simulated/floor/grime,
+/area/radiostation/press)
+"zv" = (
+/obj/machinery/vehicle/miniputt,
+/obj/machinery/light_switch/north{
+	pixel_y = 30
+	},
+/turf/simulated/floor/shuttlebay,
+/area/radiostation/podbay)
+"zw" = (
+/obj/decal/poster/wallsign/danger_highvolt,
+/turf/simulated/wall/auto/supernorn,
+/area/radiostation/podbay)
+"zz" = (
+/turf/simulated/floor/shuttlebay,
+/area/radiostation/podbay)
+"zE" = (
+/obj/decal/cleanable/dirt,
+/obj/storage/crate,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/device/microphone,
+/obj/item/device/key/generic/radio,
+/turf/simulated/floor/black,
+/area/radiostation/engineering)
+"zJ" = (
+/turf/simulated/floor/darkpurple/side,
+/area/radiostation/press)
+"zV" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light,
+/turf/space,
+/area/space)
+"zY" = (
+/obj/machinery/light,
+/turf/simulated/floor/darkpurpleblack{
+	dir = 8
+	},
+/area/radiostation/teleporter)
+"Ac" = (
+/turf/simulated/floor/stairs/wide/other{
+	dir = 8
+	},
+/area/radiostation/hallway)
+"Ai" = (
+/obj/item/reagent_containers/glass/oilcan,
+/obj/machinery/light,
+/obj/decal/cleanable/oil/streak,
+/turf/simulated/floor/shuttlebay,
+/area/radiostation/podbay)
+"Am" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/radiostation/hallway)
+"Au" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay3,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/space,
+/area/space)
+"AC" = (
+/obj/rack,
+/obj/item/clothing/suit/space,
+/obj/item/clothing/head/helmet/space,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/jetpack/micro,
+/turf/simulated/floor/caution/west,
+/area/radiostation/podbay)
+"AK" = (
+/obj/storage/secure/closet/fridge{
+	desc = "A staff fridge."
+	},
+/obj/item/storage/box/donkpocket_kit,
+/obj/item/reagent_containers/food/drinks/cola,
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater,
+/obj/item/reagent_containers/food/snacks/soup/oatmeal,
+/obj/item/reagent_containers/food/snacks/soup/chili,
+/obj/item/reagent_containers/food/snacks/condiment/ketchup,
+/obj/item/reagent_containers/food/snacks/condiment/hotsauce,
+/obj/item/reagent_containers/food/snacks/plant/grape,
+/obj/item/reagent_containers/food/snacks/plant/apple,
+/obj/item/reagent_containers/food/snacks/plant/apple,
+/obj/item/reagent_containers/food/snacks/plant/orange,
+/obj/item/reagent_containers/food/snacks/plant/carrot,
+/turf/simulated/floor/airless/green/checker,
+/area/radiostation/green)
+"AX" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/radiostation/serverroom)
+"Bg" = (
+/obj/table/wood/auto,
+/obj/submachine/record_player,
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
+"Br" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor/black,
+/area/radiostation/bridge)
+"BL" = (
+/obj/machinery/light,
+/obj/table/auto,
+/obj/machinery/coffeemaker,
+/turf/simulated/floor/airless/green/checker,
+/area/radiostation/green)
+"Cc" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light,
+/turf/space,
+/area/space)
+"Cl" = (
+/obj/machinery/light_switch/east{
+	dir = 4
+	},
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/black,
+/area/radiostation/serverroom)
+"CJ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/radiostation/studio)
+"CS" = (
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
+"CZ" = (
+/obj/machinery/teleport/portal_ring,
+/turf/simulated/floor/darkpurpleblack{
+	dir = 6
+	},
+/area/radiostation/teleporter)
+"Dr" = (
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	name = "Storage";
+	req_access_txt = ""
+	},
+/turf/simulated/floor,
+/area/radiostation/engineering)
+"Dv" = (
+/obj/machinery/computer/announcement{
+	name = "Radio Station Announcement Computer";
+	req_access_txt = ""
+	},
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/radiostation/bridge)
+"DA" = (
+/obj/rack,
+/obj/item/clothing/suit/space,
+/obj/item/clothing/head/helmet/space,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/jetpack/micro,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/radiostation/podbay)
+"DQ" = (
+/obj/machinery/light_switch/south{
+	pixel_x = 5
+	},
+/obj/blind_switch/area/south{
+	pixel_x = -5
+	},
+/turf/simulated/floor/wood/two,
+/area/radiostation/tv_set)
+"DZ" = (
+/obj/submachine/tape_deck,
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
+"Ea" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/radiostation/engineering)
+"Es" = (
+/obj/item/storage/toilet{
+	dir = 8
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/sanitary,
+/area/radiostation/bedroom)
+"EF" = (
+/obj/mopbucket,
+/obj/item/mop,
+/obj/item/caution,
+/turf/simulated/floor/purple,
+/area/radiostation/engineering)
+"EH" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/plating,
+/area/radiostation/serverroom)
+"Fd" = (
+/obj/storage/closet/emergency,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/radiostation/podbay)
+"Ff" = (
+/turf/simulated/floor/stairs,
+/area/radiostation/hallway)
+"Fs" = (
+/obj/table/auto,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/item/audio_tape,
+/obj/item/device/audio_log/radioship/small/radioshow,
+/turf/simulated/floor/black,
+/area/radiostation/serverroom)
+"Fu" = (
+/obj/noticeboard{
+	pixel_x = -14
+	},
+/turf/simulated/floor/airless/green/checker,
+/area/radiostation/green)
+"FO" = (
+/turf/simulated/floor/caution/south,
+/area/radiostation/hallway)
+"Go" = (
+/turf/simulated/floor/stairs/wide/middle{
+	dir = 8
+	},
+/area/radiostation/hallway)
+"Gy" = (
+/obj/machinery/light_switch/west{
+	pixel_x = -22
+	},
+/turf/simulated/floor/sanitary,
+/area/radiostation/bedroom)
+"GK" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/radiostation/teleporter)
+"Hq" = (
+/turf/simulated/floor/blue,
+/area/radiostation/bridge)
+"Hv" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	name = "Quarters"
+	},
+/turf/simulated/floor/wood/two,
+/area/radiostation/bedroom)
+"HA" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/radiostation/bedroom)
+"HH" = (
+/obj/decal/cleanable/oil/streak,
+/obj/decal/poster/wallsign/psa_bucket{
+	pixel_x = -28;
+	pixel_y = 3
+	},
+/turf/simulated/floor,
+/area/radiostation/engineering)
+"HI" = (
+/obj/stool/chair/blue,
+/turf/simulated/floor/airless/green/checker,
+/area/radiostation/green)
+"HQ" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor/airless/green/checker,
+/area/radiostation/green)
+"HV" = (
+/obj/stool/chair/blue{
+	dir = 1
+	},
+/turf/simulated/floor/airless/green/checker,
+/area/radiostation/green)
+"HW" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor,
+/area/radiostation/hallway)
+"Ia" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"Ic" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/radiostation/studio)
+"Ii" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/shuttlebay,
+/area/radiostation/podbay)
+"Is" = (
+/obj/table/wood/auto,
+/obj/item/device/radio/intercom/radiostation,
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
+"IA" = (
+/obj/machinery/light/small,
+/obj/storage/closet,
+/obj/item/storage/box/trash_bags,
+/obj/item/clothing/head/bio_hood,
+/obj/item/clothing/suit/hazard/bio_suit,
+/obj/item/reagent_containers/glass/bottle/cleaner,
+/obj/item/caution,
+/obj/item/caution,
+/obj/item/caution,
+/obj/item/caution,
+/obj/item/chem_grenade/cleaner,
+/turf/simulated/floor/purple,
+/area/radiostation/engineering)
+"IL" = (
+/obj/table/wood/auto,
+/obj/item/decoration/ashtray,
+/obj/item/reagent_containers/food/drinks/mug/random_color{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fpurple2"
+	},
+/area/radiostation/studio)
+"IO" = (
+/obj/table/wood/auto,
+/obj/machinery/light/lamp/black{
+	on = 1
+	},
+/turf/simulated/floor/wood/two,
+/area/radiostation/studio)
+"IQ" = (
+/turf/simulated/floor/stairs/wide{
+	dir = 8
+	},
+/area/radiostation/hallway)
+"Jg" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/radiostation/press)
+"Ji" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/closed/left,
+/turf/simulated/floor/plating,
+/area/radiostation/tv_set)
+"Jk" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/radiostation/studio)
+"Jl" = (
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/airless/green/checker,
+/area/radiostation/green)
+"JU" = (
+/obj/shrub{
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/turf/simulated/floor/wood/two,
+/area/radiostation/studio)
+"JV" = (
+/turf/simulated/floor,
+/area/radiostation/hallway)
+"JY" = (
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/table/auto,
+/obj/item/kitchen/food_box/donut_box{
+	desc = "It appears to be a Martian brand of donuts.";
+	name = "Robust Donuts"
+	},
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/radiostation/bridge)
+"Kc" = (
+/obj/machinery/teleport/portal_generator,
+/turf/simulated/floor/darkpurpleblack,
+/area/radiostation/teleporter)
+"Kz" = (
+/obj/machinery/light,
+/turf/simulated/floor/shuttlebay,
+/area/radiostation/podbay)
+"KD" = (
+/turf/simulated/floor/stairs/wide/other{
+	dir = 4
+	},
+/area/radiostation/hallway)
+"KZ" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/radiostation/green)
+"Lc" = (
+/turf/simulated/floor/wood/eight,
+/area/radiostation/tv_set)
+"Lf" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/radiostation/podbay)
+"LC" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	icon_state = "bdoorright1";
+	id = "radio_podbay2";
+	name = "Radio Ship Dock"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/radiostation/podbay)
+"LH" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	icon_state = "bdoorleft1";
+	id = "radio_podbay1";
+	name = "Radio Ship Dock"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/radiostation/podbay)
+"LJ" = (
+/obj/fakeobject/cpucontroller,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/radiostation/serverroom)
+"LL" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-R"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"LN" = (
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/table/auto,
+/obj/item/cigpacket,
+/obj/item/matchbook,
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/radiostation/bridge)
+"LP" = (
+/turf/simulated/floor/red/side,
+/area/radiostation/hallway)
+"Mc" = (
+/obj/stool/chair/office/red{
+	dir = 1
+	},
+/obj/blind_switch/area/south{
+	pixel_x = -5
+	},
+/obj/machinery/light_switch/south{
+	pixel_x = 5
+	},
+/obj/landmark{
+	name = "Radio-Show-Host-Spawn"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
+"Ml" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"Mm" = (
+/obj/decal/cleanable/oil,
+/obj/item/screwdriver,
+/obj/item/cigbutt,
+/turf/simulated/floor/black,
+/area/radiostation/engineering)
+"ME" = (
+/turf/simulated/floor/caution/west,
+/area/radiostation/podbay)
+"ML" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/radiostation/press)
+"Nb" = (
+/obj/lattice,
+/obj/machinery/communications_dish,
+/obj/mesh/catwalk,
+/obj/cable,
+/turf/space,
+/area/space)
+"Nc" = (
+/obj/item/device/radio/intercom,
+/obj/machinery/light,
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/radiostation/hallway)
+"Ng" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/radiostation/tv_set)
+"Nh" = (
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
+/area/radiostation/hallway)
+"Nt" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/space,
+/area/space)
+"NB" = (
+/obj/item/shipcomponent/secondary_system/cargo/small,
+/turf/simulated/floor/shuttlebay,
+/area/radiostation/podbay)
+"NN" = (
+/turf/simulated/floor/darkpurpleblack{
+	dir = 4
+	},
+/area/radiostation/teleporter)
+"NT" = (
+/obj/machinery/light,
+/turf/simulated/floor/wood/eight,
+/area/radiostation/tv_set)
+"Oe" = (
+/obj/machinery/light,
+/turf/simulated/floor/orange/side{
+	dir = 1
+	},
+/area/radiostation/hallway)
+"Oo" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = "radio_podbay2";
+	name = "Radio Ship Dock"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/radiostation/podbay)
+"OE" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/red/side,
+/area/radiostation/hallway)
+"Pv" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/radiostation/tv_set)
+"Py" = (
+/turf/simulated/floor/wood/two,
+/area/radiostation/studio)
+"PF" = (
+/obj/table/wood/auto,
+/obj/submachine/mixing_desk,
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
+"PG" = (
+/obj/stool/chair/office/blue,
+/turf/simulated/floor/wood/eight,
+/area/radiostation/tv_set)
+"PM" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
+	name = "Pod Bay"
+	},
+/turf/simulated/floor,
+/area/radiostation/podbay)
+"Qt" = (
+/obj/machinery/r_door_control/podbay/mainpod2{
+	id = "radio_podbay2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/radiostation/podbay)
+"QV" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-L"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"Rh" = (
+/obj/machinery/printing_press,
+/turf/simulated/floor/grime,
+/area/radiostation/press)
+"Rt" = (
+/obj/table/wood/auto,
+/obj/loudspeaker{
+	layer = 4;
+	pixel_y = -6
+	},
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fpurple2"
+	},
+/area/radiostation/studio)
+"Rx" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"RC" = (
+/obj/machinery/door/airlock/pyro{
+	name = "Server";
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/radiostation/hallway)
+"RH" = (
+/obj/table/auto,
+/obj/item/clipboard,
+/obj/item/paper,
+/obj/item/pen/pencil,
+/turf/simulated/floor/blue,
+/area/radiostation/bridge)
+"RJ" = (
+/turf/simulated/floor/blueblack,
+/area/radiostation/bridge)
+"RO" = (
+/obj/decal/cleanable/oil/streak,
+/obj/item/wrench,
+/turf/simulated/floor/shuttlebay,
+/area/radiostation/podbay)
+"Sj" = (
+/obj/lattice,
+/turf/space,
+/area/space)
+"Sx" = (
+/obj/table/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor/airless/green/checker,
+/area/radiostation/green)
+"Sz" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/space,
+/area/space)
+"SN" = (
+/obj/machinery/camera/television/mobile,
+/turf/simulated/floor/purple/side,
+/area/radiostation/engineering)
+"Tc" = (
+/obj/mic_stand{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
+"Te" = (
+/turf/simulated/floor/wood/two,
+/area/radiostation/tv_set)
+"Tg" = (
+/turf/simulated/floor/darkpurpleblack{
+	dir = 1
+	},
+/area/radiostation/teleporter)
+"Th" = (
+/obj/machinery/door/airlock/pyro{
+	name = "Server";
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/radiostation/hallway)
+"Tr" = (
+/obj/submachine/chef_sink/chem_sink{
+	desc = "A water-filled unit intended for hand-washing purposes.";
+	dir = 4;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/glass/bucket,
+/turf/simulated/floor/purple,
+/area/radiostation/engineering)
+"Tw" = (
+/obj/decal/cleanable/oil/streak,
+/obj/machinery/light_switch/north{
+	pixel_y = 30
+	},
+/obj/structure/preassembeled_vehicleframe/puttframe,
+/turf/simulated/floor/shuttlebay,
+/area/radiostation/podbay)
+"TI" = (
+/turf/simulated/wall/auto/supernorn,
+/area/radiostation/tv_set)
+"Ue" = (
+/obj/table/wood/auto,
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/loudspeaker{
+	layer = 4;
+	pixel_y = -6
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fpurple2"
+	},
+/area/radiostation/studio)
+"Uf" = (
+/obj/machinery/communications_dish,
+/obj/mesh/catwalk,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/space,
+/area/space)
+"Ug" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/black,
+/area/radiostation/serverroom)
+"Ul" = (
+/turf/simulated/floor,
+/area/radiostation/press)
+"Uv" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/radiostation/bridge)
+"UY" = (
+/obj/stool/chair/office{
+	dir = 1
+	},
+/turf/simulated/floor/blue,
+/area/radiostation/bridge)
+"Vc" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/radiostation/studio)
+"Ve" = (
+/turf/simulated/floor/stairs/wide/middle{
+	dir = 4
+	},
+/area/radiostation/hallway)
+"Vt" = (
+/obj/lattice,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/space)
+"Vz" = (
+/obj/decal/stage_edge,
+/obj/machinery/camera/television/auto{
+	dir = 1
+	},
+/turf/simulated/floor/wood/two,
+/area/radiostation/tv_set)
+"VB" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/radiostation/serverroom)
+"VE" = (
+/obj/table/auto,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = -5
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_y = 7;
+	pixel_x = 4
+	},
+/obj/drink_rack/mug{
+	pixel_y = 29
+	},
+/turf/simulated/floor/airless/green/checker,
+/area/radiostation/green)
+"VM" = (
+/obj/storage/closet/emergency,
+/turf/simulated/floor/caution/west,
+/area/radiostation/podbay)
+"VP" = (
+/obj/stool/chair/couch{
+	dir = 8
+	},
+/turf/simulated/floor/wood/two,
+/area/radiostation/studio)
+"Wh" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-M"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"Wk" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/space,
+/area/space)
+"Wt" = (
+/obj/table/wood/auto,
+/obj/item/storage/box/record/radio/host{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/storage/box/record/radio/host,
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
+"Wy" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/black,
+/area/radiostation/serverroom)
+"WD" = (
+/obj/machinery/door/airlock/pyro/classic{
+	name = "Janitor's Closet"
+	},
+/turf/simulated/floor/purple,
+/area/radiostation/engineering)
+"WH" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	name = "Studio";
+	dir = 1
+	},
+/turf/simulated/floor/wood/two,
+/area/radiostation/tv_set)
+"WN" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/turf/simulated/floor{
+	icon_state = "carpetSE"
+	},
+/area/radiostation/bedroom)
+"Xn" = (
+/obj/storage/secure/closet/personal,
+/obj/item/device/microphone,
+/obj/item/clothing/under/gimmick/sweater,
+/turf/simulated/floor{
+	icon_state = "carpetNW"
+	},
+/area/radiostation/bedroom)
+"Xy" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/space,
+/area/space)
+"XO" = (
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fred2"
+	},
+/area/radiostation/bedroom)
+"XS" = (
+/obj/stool/chair/office/red,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred2"
+	},
+/area/radiostation/bedroom)
+"XY" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/light/small{
+	base_state = "radio";
+	brightness = 1.1;
+	desc = "Are we live?";
+	icon_state = "radio0";
+	name = "sign";
+	pixel_y = -6;
+	removable_bulb = 0
+	},
+/obj/window_blinds/cog2,
+/turf/simulated/floor/plating,
+/area/radiostation/studio)
+"Ym" = (
+/obj/machinery/door/airlock/pyro/command/alt{
+	name = "Bridge";
+	req_access_txt = ""
+	},
+/turf/simulated/floor/blue,
+/area/radiostation/hallway)
+"YK" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/decal/cleanable/cobweb2,
+/obj/machinery/light_switch/north{
+	pixel_y = 30
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/radiostation/engineering)
+"YN" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/radiostation/teleporter)
+"Zd" = (
+/obj/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	name = "VACUUM AREA"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/radiostation/podbay)
+"Zl" = (
+/obj/item/cable_coil/cut/small,
+/turf/simulated/floor/grime,
+/area/radiostation/engineering)
+"ZM" = (
+/obj/machinery/shower{
+	dir = 8;
+	pixel_y = 6
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary,
+/area/radiostation/bedroom)
+"ZP" = (
+/obj/table/wood/auto/desk,
+/obj/item/paper_bin{
+	pixel_y = 5;
+	pixel_x = 8
+	},
+/obj/item/paper_bin{
+	pixel_y = 7;
+	pixel_x = -5
+	},
+/turf/simulated/floor,
+/area/radiostation/press)
+"ZY" = (
+/turf/simulated/floor/green/side{
+	dir = 8
+	},
+/area/radiostation/hallway)
+"ZZ" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/warp_beacon{
+	name = "Radio Station"
+	},
+/turf/space,
+/area/space)
+
+(1,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(2,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(3,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(4,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(5,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(6,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(7,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(8,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(9,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(10,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(11,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(12,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(13,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(14,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(15,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(16,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(17,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(18,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(19,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(20,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(21,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(22,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(23,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+yn
+mj
+yn
+mj
+mj
+mj
+mj
+mj
+KZ
+hc
+hc
+hc
+KZ
+hc
+hc
+hc
+Zd
+LH
+eE
+xs
+fS
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(24,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+Nt
+mj
+Nt
+mj
+jm
+mj
+mj
+mj
+KZ
+HI
+vn
+HV
+wX
+HI
+vn
+HV
+Lf
+zz
+zz
+zz
+Lf
+Ea
+qy
+Ea
+Ea
+Ea
+Ea
+Ml
+aM
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(25,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+jY
+fL
+oQ
+Wk
+Sj
+Ml
+yo
+mj
+KZ
+Fu
+fa
+wX
+wX
+wX
+fa
+wX
+Lf
+zv
+zz
+Kz
+Lf
+Ea
+SN
+wb
+Tr
+IA
+Ea
+QV
+pv
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(26,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+se
+se
+se
+Am
+Am
+Am
+se
+se
+se
+se
+VE
+BL
+wX
+Jl
+HQ
+AK
+Sx
+Lf
+VM
+ME
+AC
+vv
+Ea
+zl
+WD
+og
+EF
+Ea
+Wh
+pv
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(27,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+se
+se
+se
+se
+ps
+JV
+JV
+JV
+JV
+JV
+JV
+ps
+qT
+qT
+qT
+Th
+qT
+qT
+qT
+qT
+Lf
+vv
+PM
+vv
+zw
+Ea
+wc
+wb
+wb
+wb
+Ea
+Wh
+pv
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(28,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+HW
+JV
+HW
+JV
+JV
+JV
+JV
+JV
+ps
+JV
+JV
+JV
+JV
+Ff
+ZY
+ZY
+ZY
+yJ
+JV
+JV
+ps
+JV
+JV
+JV
+JV
+Dr
+Zl
+HH
+tG
+pg
+Ea
+LL
+pv
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(29,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+bB
+bB
+Uv
+Uv
+qT
+hR
+JV
+se
+se
+TI
+TI
+TI
+Pv
+dJ
+um
+TI
+Ac
+Go
+IQ
+pa
+jw
+Ic
+yH
+pa
+pa
+pa
+pa
+Ea
+YK
+gb
+Mm
+zE
+qy
+Rx
+bp
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(30,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+bB
+oJ
+wy
+LN
+pE
+qT
+zb
+JV
+se
+mj
+Ji
+Lc
+NT
+Lc
+tA
+Te
+TI
+yX
+JV
+LP
+qm
+IO
+Py
+iL
+Ue
+Is
+DZ
+pa
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(31,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+zV
+bB
+RH
+lh
+iy
+RJ
+Ym
+yr
+JV
+Am
+mj
+vo
+Lc
+wa
+Lc
+cO
+Te
+WH
+ku
+JV
+de
+iI
+VP
+Py
+iL
+IL
+PF
+Mc
+pa
+ot
+Ug
+mo
+eC
+eC
+qe
+VB
+fN
+mj
+aX
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(32,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+ZZ
+mm
+bB
+Dv
+UY
+vW
+Hq
+qT
+Nc
+JV
+Am
+mj
+vo
+PG
+wa
+Lc
+Vz
+Te
+TI
+yX
+JV
+OE
+Jk
+qK
+Py
+iL
+Rt
+Bg
+Tc
+pa
+Fs
+my
+AX
+EH
+iT
+LJ
+VB
+ng
+Sz
+Nb
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(33,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+Cc
+bB
+hA
+yB
+qb
+RJ
+Ym
+yr
+JV
+Am
+mj
+vo
+Lc
+wa
+Lc
+tA
+DQ
+TI
+Oe
+JV
+FO
+wg
+Py
+Py
+CS
+CS
+CS
+CS
+nM
+Wy
+Cl
+mo
+eC
+eC
+qa
+VB
+Ia
+mj
+uO
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(34,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+bB
+Uv
+hH
+JY
+Br
+qT
+sZ
+JV
+se
+mj
+hI
+Lc
+NT
+Lc
+tA
+Te
+TI
+yX
+JV
+ww
+XY
+JU
+Py
+CS
+eY
+Wt
+kw
+pa
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(35,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+bB
+bB
+Uv
+Uv
+qT
+bC
+JV
+se
+se
+TI
+TI
+TI
+rS
+Ng
+hC
+TI
+te
+Ve
+KD
+pa
+Vc
+CJ
+bT
+pa
+pa
+pa
+pa
+lX
+rH
+Xn
+XS
+qO
+HA
+Ml
+bp
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(36,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+HW
+JV
+HW
+JV
+JV
+JV
+JV
+JV
+ps
+JV
+JV
+JV
+JV
+Ff
+Nh
+Nh
+Nh
+yJ
+JV
+JV
+ps
+JV
+JV
+JV
+JV
+Hv
+wr
+qp
+XO
+WN
+lX
+QV
+pv
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(37,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+se
+se
+se
+se
+ps
+JV
+JV
+JV
+JV
+JV
+JV
+ps
+qT
+qT
+qT
+RC
+qT
+qT
+qT
+qT
+Lf
+vv
+PM
+vv
+vv
+lX
+wr
+eS
+eS
+eS
+lX
+Wh
+pv
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(38,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+se
+se
+se
+Am
+Am
+Am
+se
+se
+se
+se
+ZP
+ti
+Ul
+iY
+kX
+zY
+vF
+Lf
+Fd
+wi
+DA
+vv
+lX
+wr
+yP
+Gy
+ZM
+lX
+Wh
+pv
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(39,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+Au
+Xy
+Vt
+wN
+Sj
+Rx
+yo
+mj
+ML
+Rh
+Ul
+zJ
+tm
+Tg
+rQ
+Kc
+Lf
+Tw
+Ii
+Ai
+Lf
+lX
+wr
+eS
+gv
+Es
+lX
+LL
+pv
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(40,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+Nt
+mj
+Nt
+mj
+cN
+mj
+mj
+mj
+ML
+zs
+Ul
+Ul
+iY
+pp
+NN
+CZ
+Lf
+NB
+RO
+zz
+Lf
+lX
+HA
+lX
+lX
+lX
+lX
+Rx
+aM
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(41,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+Uf
+mj
+Uf
+mj
+mj
+mj
+mj
+mj
+ML
+Jg
+Jg
+Jg
+GK
+YN
+YN
+YN
+Zd
+mG
+Oo
+LC
+Qt
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(42,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(43,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(44,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(45,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(46,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(47,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(48,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(49,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(50,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(51,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(52,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(53,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(54,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(55,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(56,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(57,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(58,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(59,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(60,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(61,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(62,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(63,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}
+(64,1,1) = {"
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+"}

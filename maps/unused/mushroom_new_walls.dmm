@@ -3007,7 +3007,7 @@
 	id = "qmin"
 	},
 /turf/space,
-/area/space)
+/area/station/quartermaster/office)
 "arg" = (
 /obj/machinery/power/data_terminal,
 /obj/computer3frame{
@@ -4541,13 +4541,14 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/space)
+/area/station/quartermaster/office)
 "azk" = (
 /obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
+/obj/landmark/supply_delivery,
 /turf/space,
-/area/supply/delivery_point)
+/area/station/quartermaster/office)
 "azl" = (
 /turf/simulated/floor/caution/east{
 	dir = 8

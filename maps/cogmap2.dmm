@@ -63084,8 +63084,9 @@
 	name = "cargo belt - north";
 	operating = 1
 	},
+/obj/landmark/supply_delivery,
 /turf/simulated/floor/engine/vacuum,
-/area/supply/delivery_point)
+/area/station/hangar/qm)
 "lcc" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
@@ -72180,7 +72181,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/space)
+/area/station/hangar/qm)
 "tXI" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/science)
