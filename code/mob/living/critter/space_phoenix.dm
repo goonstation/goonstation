@@ -289,7 +289,7 @@
 		if (A.permafrosted || !istype(A, /area/station))
 			return FALSE
 		var/turf/T = get_turf(src)
-		if (istype(T, /turf/space) || istype(T, /turf/simulated/floor/airless))
+		if (istype(T, /turf/space) || istype(T, /turf/simulated/floor/airless) || istype(T, /turf/simulated/space_phoenix_ice_tunnel))
 			return FALSE
 
 /image/phoenix_temperature_indicator
