@@ -1090,7 +1090,7 @@
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/card/emag))
 			return
-		if (user.a_intent != INTENT_HELP)
+		if (user.a_intent == INTENT_HARM)
 			..()
 			return
 		if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
