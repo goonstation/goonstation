@@ -103,7 +103,6 @@
 
 	onUpdate(timePassed)
 		var/mob/M = null
-		src.room = get_area(owner)
 		if(ismob(owner))
 			M = owner
 		else
