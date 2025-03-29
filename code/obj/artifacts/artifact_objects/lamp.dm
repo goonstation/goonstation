@@ -41,6 +41,7 @@
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,
 	/datum/artifact_trigger/cold, /datum/artifact_trigger/language)
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 	activ_text = "begins to emit a steady light!"
 	deact_text = "goes dark and quiet."
 	react_xray = list(10,90,90,11,"NONE")
