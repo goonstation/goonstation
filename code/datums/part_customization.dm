@@ -170,6 +170,31 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 			trait_cost = 1
 			part_type = list(/obj/item/parts/human_parts/leg/right/synth/bloom, /obj/item/parts/human_parts/leg/right/synth)
 
+		robo_left
+			id = "leg_robo_left"
+			slot = "l_leg"
+			trait_cost = 1
+			part_type = /obj/item/parts/robot_parts/leg/left/light
+
+		robo_right
+			id = "leg_robo_right"
+			slot = "r_leg"
+			trait_cost = 1
+			part_type = /obj/item/parts/robot_parts/leg/right/light
+
+		robo_standard_left
+			id = "leg_robo_standard_left"
+			slot = "l_leg"
+			part_type = /obj/item/parts/robot_parts/leg/left/standard
+			trait_cost = 2
+			incompatible_parts = list("leg_robo_standard_right")
+
+		robo_standard_right
+			id = "leg_robo_standard_right"
+			slot = "r_leg"
+			part_type = /obj/item/parts/robot_parts/leg/right/standard
+			trait_cost = 2
+			incompatible_parts = list("leg_robo_standard_left")
 	organ
 		eye_default_left
 			id = "eye_default_left"
